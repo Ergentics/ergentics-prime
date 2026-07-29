@@ -121,6 +121,15 @@ signal, process-level allocation failure, or other fatal path before it can
 write one. Missing worker observations remain unavailable rather than being
 rewritten as `false`.
 
+Loader authority is process-scoped. The staged worker checks its own live
+Bundle/framework search context, working directory, environment,
+instrumentation, executable, and sibling bundle before and after MLX work.
+After that process exits, the supervisor does not reinterpret its own loaded
+bundles as child state. It independently verifies the staged executable
+binding, the three target-local alternate loader paths, and the complete
+immutable sibling-bundle tree before finalizing either `GROUNDED` or
+`ABSTAIN`.
+
 The current filesystem claim is deliberately bounded. Mode, ownership,
 descriptor, tree, hash, loader-shadow, environment, and pre/post checks protect
 against accidental and persistent mutation. The artifact root remains owned

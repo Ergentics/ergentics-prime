@@ -141,7 +141,7 @@ enum PrimeMLXBundleStageCLI {
             ) {
                 let binding = expectedBinding()
                 try PrimePinnedMLXMetallib
-                    .reverifySibling(
+                    .reverifyStagedRuntimeImage(
                         of: destinationHost,
                         matches: binding
                     )
@@ -168,7 +168,7 @@ enum PrimeMLXBundleStageCLI {
                         into: destinationRoot
                     )
             try PrimePinnedMLXMetallib
-                .reverifySibling(
+                .reverifyStagedRuntimeImage(
                     of: destinationHost,
                     matches: binding
                 )

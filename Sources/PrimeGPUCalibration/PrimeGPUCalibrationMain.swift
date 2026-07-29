@@ -1398,15 +1398,28 @@ private func publishFailure(
     receiptPath: String,
     artifactRoot: PrimeArtifactRoot,
     seeds: PrimeExecutionSeeds,
-    artifacts: PrimeExecutionArtifactBindings
+    artifacts: PrimeExecutionArtifactBindings,
+    metallibReverification:
+        PrimeMetallibReverification
 ) throws -> PrimeArtifactBinding {
-    try PrimePinnedMLXMetallib.reverifySibling(
-        of: try stagedExecutableURL(
-            artifactRoot: artifactRoot,
-            artifacts: artifacts
-        ),
-        matches: artifacts.mlxDefaultMetallib
+    let executableURL = try stagedExecutableURL(
+        artifactRoot: artifactRoot,
+        artifacts: artifacts
     )
+    switch metallibReverification {
+    case .currentProcess:
+        try PrimePinnedMLXMetallib.reverifySibling(
+            of: executableURL,
+            matches: artifacts.mlxDefaultMetallib
+        )
+    case .stagedRuntimeImage:
+        try PrimePinnedMLXMetallib
+            .reverifyStagedRuntimeImage(
+                of: executableURL,
+                matches:
+                    artifacts.mlxDefaultMetallib
+            )
+    }
     let failure = PrimeGPUCalibrationFailureReceipt(
         recordedAtUTC:
             ISO8601DateFormatter()
@@ -1447,6 +1460,11 @@ private func publishFailure(
         throw CalibrationError.receiptRoundTripMismatch
     }
     return binding
+}
+
+private enum PrimeMetallibReverification {
+    case currentProcess
+    case stagedRuntimeImage
 }
 
 private enum VerifiedWorkerReceipt {
@@ -1547,7 +1565,9 @@ private func runWorker(
                 workerCandidateReceiptPath,
             artifactRoot: artifactRoot,
             seeds: seeds,
-            artifacts: artifacts
+            artifacts: artifacts,
+            metallibReverification:
+                .currentProcess
         )
         throw CalibrationError.publishedFailure(
             "Prime GPU worker published Metal-lease ABSTAIN: receipt_sha256=\(binding.sha256)"
@@ -1634,7 +1654,9 @@ private func runWorker(
                 workerCandidateReceiptPath,
             artifactRoot: artifactRoot,
             seeds: seeds,
-            artifacts: artifacts
+            artifacts: artifacts,
+            metallibReverification:
+                .currentProcess
         )
         throw CalibrationError.publishedFailure(
             "Prime GPU calibration ABSTAIN receipt published: reason=\(failureReason(for: error).rawValue) receipt_sha256=\(binding.sha256)"
@@ -1747,7 +1769,9 @@ private func runSupervisor(
             receiptPath: arguments.receiptPath,
             artifactRoot: artifactRoot,
             seeds: seeds,
-            artifacts: artifacts
+            artifacts: artifacts,
+            metallibReverification:
+                .stagedRuntimeImage
         )
         throw CalibrationError.publishedFailure(
             "Prime GPU calibration ABSTAIN receipt published: reason=executor_failure receipt_sha256=\(binding.sha256)"
@@ -1859,7 +1883,9 @@ private func runSupervisor(
             receiptPath: arguments.receiptPath,
             artifactRoot: artifactRoot,
             seeds: seeds,
-            artifacts: artifacts
+            artifacts: artifacts,
+            metallibReverification:
+                .stagedRuntimeImage
         )
         throw CalibrationError.publishedFailure(
             "Prime GPU supervisor published ABSTAIN after hard timeout: receipt_sha256=\(binding.sha256)"
@@ -1907,7 +1933,9 @@ private func runSupervisor(
                             arguments.receiptPath,
                         artifactRoot: artifactRoot,
                         seeds: seeds,
-                        artifacts: artifacts
+                        artifacts: artifacts,
+                        metallibReverification:
+                            .stagedRuntimeImage
                     )
                     throw CalibrationError.publishedFailure(
                         "Prime GPU supervisor published ABSTAIN after grounded-candidate termination divergence: receipt_sha256=\(binding.sha256)"
@@ -1928,7 +1956,7 @@ private func runSupervisor(
                         runAuthorityLeaseHeld: true
                     )
                 try PrimePinnedMLXMetallib
-                    .reverifySibling(
+                    .reverifyStagedRuntimeImage(
                         of: try stagedExecutableURL(
                             artifactRoot:
                                 artifactRoot,
@@ -1993,7 +2021,9 @@ private func runSupervisor(
                     receiptPath: arguments.receiptPath,
                     artifactRoot: artifactRoot,
                     seeds: seeds,
-                    artifacts: artifacts
+                    artifacts: artifacts,
+                    metallibReverification:
+                        .stagedRuntimeImage
                 )
                 throw CalibrationError.publishedFailure(
                     "Prime GPU supervisor: verified worker ABSTAIN and published final ABSTAIN reason=\(receipt.reason.rawValue) receipt_sha256=\(binding.sha256)"
@@ -2027,7 +2057,9 @@ private func runSupervisor(
                 receiptPath: arguments.receiptPath,
                 artifactRoot: artifactRoot,
                 seeds: seeds,
-                artifacts: artifacts
+                artifacts: artifacts,
+                metallibReverification:
+                    .stagedRuntimeImage
             )
             throw CalibrationError.publishedFailure(
                 "Prime GPU supervisor published ABSTAIN after invalid worker candidate: receipt_sha256=\(binding.sha256)"
@@ -2066,7 +2098,9 @@ private func runSupervisor(
         receiptPath: arguments.receiptPath,
         artifactRoot: artifactRoot,
         seeds: seeds,
-        artifacts: artifacts
+        artifacts: artifacts,
+        metallibReverification:
+            .stagedRuntimeImage
     )
     throw CalibrationError.publishedFailure(
         "Prime GPU supervisor published ABSTAIN after worker termination without candidate: receipt_sha256=\(binding.sha256)"

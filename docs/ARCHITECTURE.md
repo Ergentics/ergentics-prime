@@ -13,8 +13,12 @@ The implemented authority chain is intentionally narrow:
    `mlx-swift_Cmlx.bundle`, rejects alternate loader paths and unsafe
    filesystem metadata, then acquires the Metal lease and performs MLX work
    without Python or shell scientific authority.
-4. The worker reverifies the bundle after execution, and the supervisor
-   reverifies it again before any final GROUNDED or ABSTAIN publication.
+4. The worker reverifies its live loader context and bundle after execution.
+   The supervisor then separately verifies the staged executable binding,
+   target-local alternate loader paths, and exact immutable bundle tree before
+   any final GROUNDED or ABSTAIN publication. It does not treat the
+   supervisor's own Bundle/framework/cwd state as evidence about the exited
+   child.
 5. Immutable mechanics receipts bind source, executable, configuration, both
    pinned MLX bundle artifacts, factorized seed records, device observations,
    and optimizer state observations. Missing observations remain `nil`; they

@@ -101,7 +101,8 @@ public enum PrimePinnedMLXMetallib {
         try requireNoLoaderShadowPaths(
             executableDirectory:
                 executableDirectory,
-            sourceURL: sourceURL
+            sourceURL: sourceURL,
+            includeCurrentProcessContext: true
         )
 
         let bundleData = try readExactBundle(
@@ -190,22 +191,79 @@ public enum PrimePinnedMLXMetallib {
         matches binding:
             PrimePinnedMLXMetallibBinding
     ) throws {
-        try binding.validateDeclaration()
         let executableURL =
-            runningExecutableURL.standardizedFileURL
+            runningExecutableURL
+            .resolvingSymlinksInPath()
+            .standardizedFileURL
+        guard try resolvesToCurrentExecutable(
+            executableURL
+        ) else {
+            throw PrimeDurableArtifactError.invalidSemantics(
+                "current-process MLX reverification requires the actual running executable"
+            )
+        }
+        try reverifyRuntimeImage(
+            executableURL,
+            matches: binding,
+            includeCurrentProcessContext: true
+        )
+    }
+
+    /// Revalidates an exact staged worker image from its supervising process.
+    ///
+    /// Loaded bundles, frameworks, the current working directory, runtime
+    /// environment, and instrumentation belong to the supervisor process and
+    /// cannot attest the exited worker's loader context. The worker already
+    /// verifies those live-process conditions before publishing its candidate.
+    /// This independent pass therefore validates only trusted target
+    /// executable metadata, its colocated loader paths, and the exact immutable
+    /// bundle tree. The caller must separately verify the executable's bound
+    /// bytes before invoking this method.
+    public static func reverifyStagedRuntimeImage(
+        of stagedExecutableURL: URL,
+        matches binding:
+            PrimePinnedMLXMetallibBinding
+    ) throws {
+        let executableURL =
+            stagedExecutableURL
+            .resolvingSymlinksInPath()
+            .standardizedFileURL
+        guard try !resolvesToCurrentExecutable(
+            executableURL
+        ) else {
+            throw PrimeDurableArtifactError.invalidSemantics(
+                "staged-image MLX reverification cannot replace current-process loader admission"
+            )
+        }
+        try reverifyRuntimeImage(
+            executableURL,
+            matches: binding,
+            includeCurrentProcessContext: false
+        )
+    }
+
+    private static func reverifyRuntimeImage(
+        _ executableURL: URL,
+        matches binding:
+            PrimePinnedMLXMetallibBinding,
+        includeCurrentProcessContext: Bool
+    ) throws {
+        try binding.validateDeclaration()
         let executableDirectory =
             executableURL.deletingLastPathComponent()
-        _ = try requireSanitizedDynamicLoaderEnvironment()
-        let releaseInstrumentationPolicy =
-            try PrimeReleaseInstrumentationAdmissionPolicy
-                .validateCurrentProcess()
-                .declaration
-        guard releaseInstrumentationPolicy
-                == binding
-                    .releaseInstrumentationPolicy else {
-            throw PrimeDurableArtifactError.invalidSemantics(
-                "the current executable diverges from the bound Release instrumentation admission policy"
-            )
+        if includeCurrentProcessContext {
+            _ = try requireSanitizedDynamicLoaderEnvironment()
+            let releaseInstrumentationPolicy =
+                try PrimeReleaseInstrumentationAdmissionPolicy
+                    .validateCurrentProcess()
+                    .declaration
+            guard releaseInstrumentationPolicy
+                    == binding
+                        .releaseInstrumentationPolicy else {
+                throw PrimeDurableArtifactError.invalidSemantics(
+                    "the current executable diverges from the bound Release instrumentation admission policy"
+                )
+            }
         }
         try requireNoLoaderShadowPaths(
             executableDirectory:
@@ -215,7 +273,9 @@ public enum PrimePinnedMLXMetallib {
                     .appendingPathComponent(
                         sourceBundleRelativePath
                     )
-                    .standardizedFileURL
+                    .standardizedFileURL,
+            includeCurrentProcessContext:
+                includeCurrentProcessContext
         )
 
         let rootDescriptor = executableDirectory.path
@@ -676,7 +736,8 @@ public enum PrimePinnedMLXMetallib {
 
     private static func requireNoLoaderShadowPaths(
         executableDirectory: URL,
-        sourceURL: URL
+        sourceURL: URL,
+        includeCurrentProcessContext: Bool
     ) throws {
         let executableCandidates = [
             "mlx.metallib",
@@ -694,6 +755,10 @@ public enum PrimePinnedMLXMetallib {
                 candidate,
                 displayedPath: candidate.path
             )
+        }
+
+        guard includeCurrentProcessContext else {
+            return
         }
 
         var bundleCandidates = [URL]()
@@ -768,6 +833,36 @@ public enum PrimePinnedMLXMetallib {
                     defaultCandidate.path
             )
         }
+    }
+
+    private static func resolvesToCurrentExecutable(
+        _ candidate: URL
+    ) throws -> Bool {
+        var requiredSize: UInt32 = 0
+        _ = _NSGetExecutablePath(nil, &requiredSize)
+        guard requiredSize > 1 else {
+            throw PrimeDurableArtifactError.invalidSemantics(
+                "could not resolve the current executable for MLX loader admission"
+            )
+        }
+        var buffer = [CChar](
+            repeating: 0,
+            count: Int(requiredSize)
+        )
+        guard _NSGetExecutablePath(
+            &buffer,
+            &requiredSize
+        ) == 0 else {
+            throw PrimeDurableArtifactError.invalidSemantics(
+                "could not resolve the current executable for MLX loader admission"
+            )
+        }
+        let current = URL(
+            fileURLWithPath: String(cString: buffer)
+        ).resolvingSymlinksInPath()
+            .standardizedFileURL
+        return candidate.resolvingSymlinksInPath()
+            .standardizedFileURL == current
     }
 
     private static func requireAbsentLoaderCandidate(

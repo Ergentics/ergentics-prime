@@ -15,7 +15,12 @@ final class PrimeGPUCalibrationSourceContractTests:
         )
         try assertOrdered(
             [
+                "let executableURL = try stagedExecutableURL(",
+                "switch metallibReverification",
+                "case .currentProcess:",
                 "PrimePinnedMLXMetallib.reverifySibling(",
+                "case .stagedRuntimeImage:",
+                ".reverifyStagedRuntimeImage(",
                 "let failure = PrimeGPUCalibrationFailureReceipt(",
                 "try failure.validate(in: artifactRoot)",
                 "try artifactRoot.publishCanonical(",
@@ -44,12 +49,57 @@ final class PrimeGPUCalibrationSourceContractTests:
             [
                 "guard supervisorDisposition(",
                 "PrimePinnedMLXMetallib",
-                ".reverifySibling(",
+                ".reverifyStagedRuntimeImage(",
                 "let finalReceipt = receipt.finalized(",
                 "try finalReceipt.validate(",
                 "try artifactRoot.publishCanonical(",
             ],
             in: grounded
+        )
+    }
+
+    func testWorkerAndSupervisorFailurePathsBindExactRuntimeRole()
+        throws
+    {
+        let source = try calibrationSource()
+        let worker = try slice(
+            source,
+            from: "private func runWorker(",
+            until: "private func runSupervisor("
+        )
+        XCTAssertEqual(
+            occurrences(
+                of: ".currentProcess",
+                in: worker
+            ),
+            2
+        )
+        XCTAssertEqual(
+            occurrences(
+                of: ".stagedRuntimeImage",
+                in: worker
+            ),
+            0
+        )
+
+        let supervisor = try slice(
+            source,
+            from: "private func runSupervisor(",
+            until: "@main"
+        )
+        XCTAssertEqual(
+            occurrences(
+                of: ".stagedRuntimeImage",
+                in: supervisor
+            ),
+            6
+        )
+        XCTAssertEqual(
+            occurrences(
+                of: ".currentProcess",
+                in: supervisor
+            ),
+            0
         )
     }
 
@@ -100,5 +150,21 @@ final class PrimeGPUCalibrationSourceContractTests:
             )
             cursor = match.upperBound
         }
+    }
+
+    private func occurrences(
+        of needle: String,
+        in source: Substring
+    ) -> Int {
+        var count = 0
+        var cursor = source.startIndex
+        while let match = source.range(
+            of: needle,
+            range: cursor ..< source.endIndex
+        ) {
+            count += 1
+            cursor = match.upperBound
+        }
+        return count
     }
 }

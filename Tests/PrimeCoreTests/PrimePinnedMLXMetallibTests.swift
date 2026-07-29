@@ -84,6 +84,13 @@ final class PrimePinnedMLXMetallibTests: XCTestCase {
         )
         XCTAssertNoThrow(
             try PrimePinnedMLXMetallib
+                .reverifyStagedRuntimeImage(
+                    of: fixture.executable,
+                    matches: binding
+                )
+        )
+        XCTAssertThrowsError(
+            try PrimePinnedMLXMetallib
                 .reverifySibling(
                     of: fixture.executable,
                     matches: binding
@@ -100,7 +107,7 @@ final class PrimePinnedMLXMetallibTests: XCTestCase {
         }
         XCTAssertThrowsError(
             try PrimePinnedMLXMetallib
-                .reverifySibling(
+                .reverifyStagedRuntimeImage(
                     of: fixture.executable,
                     matches: binding
                 )
@@ -126,7 +133,7 @@ final class PrimePinnedMLXMetallibTests: XCTestCase {
         }
         XCTAssertThrowsError(
             try PrimePinnedMLXMetallib
-                .reverifySibling(
+                .reverifyStagedRuntimeImage(
                     of: infoFixture.executable,
                     matches: infoBinding
                 )
@@ -382,6 +389,74 @@ final class PrimePinnedMLXMetallibTests: XCTestCase {
                     of: equalityFixture.executable,
                     into:
                         equalityFixture.artifactRoot
+                )
+        )
+    }
+
+    func testStagedReverificationSeparatesSupervisorContextFromTargetShadows()
+        throws
+    {
+        let fixture = try makeFixture()
+        let binding =
+            try PrimePinnedMLXMetallib
+                .captureSibling(
+                    of: fixture.executable,
+                    into: fixture.artifactRoot
+                )
+        let supervisorContext = temporaryURL
+            .appendingPathComponent(
+                "supervisor-context",
+                isDirectory: true
+            )
+        try FileManager.default.createDirectory(
+            at: supervisorContext,
+            withIntermediateDirectories: false
+        )
+        try Data("supervisor-only-shadow".utf8)
+            .write(
+                to:
+                    supervisorContext
+                    .appendingPathComponent(
+                        "default.metallib"
+                    )
+            )
+        let originalDirectory =
+            FileManager.default.currentDirectoryPath
+        defer {
+            XCTAssertTrue(
+                FileManager.default
+                    .changeCurrentDirectoryPath(
+                        originalDirectory
+                    )
+            )
+        }
+        XCTAssertTrue(
+            FileManager.default
+                .changeCurrentDirectoryPath(
+                    supervisorContext.path
+                )
+        )
+        XCTAssertNoThrow(
+            try PrimePinnedMLXMetallib
+                .reverifyStagedRuntimeImage(
+                    of: fixture.executable,
+                    matches: binding
+                )
+        )
+
+        try Data("target-local-shadow".utf8)
+            .write(
+                to:
+                    fixture.hostRoot
+                    .appendingPathComponent(
+                        "mlx.metallib"
+                    )
+            )
+        XCTAssertThrowsError(
+            try PrimePinnedMLXMetallib
+                .reverifyStagedRuntimeImage(
+                    of: fixture.executable,
+                    matches: binding
                 )
         )
     }
