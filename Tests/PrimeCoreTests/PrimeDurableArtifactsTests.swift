@@ -394,7 +394,10 @@ final class PrimeDurableArtifactsTests: XCTestCase {
         let artifacts = PrimeExecutionArtifactBindings(
             executable: wrongExecutable,
             configuration: fixture.configuration,
-            sourceSnapshot: fixture.source
+            sourceSnapshot: fixture.source,
+            mlxDefaultMetallib:
+                fixture.artifacts
+                    .mlxDefaultMetallib
         )
         let authorization = PrimeRunAuthorization(
             seeds: fixture.seeds,
@@ -442,6 +445,9 @@ final class PrimeDurableArtifactsTests: XCTestCase {
             seeds: fixture.seeds,
             executable: fixture.executable,
             sourceSnapshot: fixture.source,
+            mlxDefaultMetallib:
+                fixture.artifacts
+                    .mlxDefaultMetallib,
             pythonExecutionAuthorized: true,
             externalExecutionExclusionReason:
                 fixture.exclusionReason
@@ -454,7 +460,10 @@ final class PrimeDurableArtifactsTests: XCTestCase {
         let artifacts = PrimeExecutionArtifactBindings(
             executable: fixture.executable,
             configuration: changedBinding,
-            sourceSnapshot: fixture.source
+            sourceSnapshot: fixture.source,
+            mlxDefaultMetallib:
+                fixture.artifacts
+                    .mlxDefaultMetallib
         )
         let authorization = PrimeRunAuthorization(
             seeds: fixture.seeds,
@@ -502,6 +511,9 @@ final class PrimeDurableArtifactsTests: XCTestCase {
             seeds: wrongSeeds,
             executable: fixture.executable,
             sourceSnapshot: fixture.source,
+            mlxDefaultMetallib:
+                fixture.artifacts
+                    .mlxDefaultMetallib,
             externalExecutionExclusionReason:
                 fixture.exclusionReason
         )
@@ -515,7 +527,10 @@ final class PrimeDurableArtifactsTests: XCTestCase {
             artifacts: PrimeExecutionArtifactBindings(
                 executable: fixture.executable,
                 configuration: changedBinding,
-                sourceSnapshot: fixture.source
+                sourceSnapshot: fixture.source,
+                mlxDefaultMetallib:
+                    fixture.artifacts
+                        .mlxDefaultMetallib
             ),
             calibrationReceipt: fixture.calibration,
             externalExecutionExclusionReason:
@@ -575,6 +590,9 @@ final class PrimeDurableArtifactsTests: XCTestCase {
             at: "source.snapshot",
             purpose: .immutableData
         )
+        let metallib =
+            try PinnedMLXMetallibTestSupport
+                .publish(in: root)
         let reason =
             PrimeSwiftExecutionBoundary.strictExclusionReason
         let configuration =
@@ -582,6 +600,7 @@ final class PrimeDurableArtifactsTests: XCTestCase {
                 seeds: seeds,
                 executable: executable,
                 sourceSnapshot: source,
+                mlxDefaultMetallib: metallib,
                 externalExecutionExclusionReason: reason
             )
         let configurationBinding =
@@ -592,7 +611,8 @@ final class PrimeDurableArtifactsTests: XCTestCase {
         let artifacts = PrimeExecutionArtifactBindings(
             executable: executable,
             configuration: configurationBinding,
-            sourceSnapshot: source
+            sourceSnapshot: source,
+            mlxDefaultMetallib: metallib
         )
         let evidence = PrimeExecutionReceiptEvidence(
             seeds: seeds,

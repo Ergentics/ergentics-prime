@@ -453,24 +453,10 @@ public final class PrimeMetalDeviceLease: @unchecked Sendable {
             }
             throw metadataError(errno)
         }
-        defer {
-            acl_free(
-                UnsafeMutableRawPointer(accessControlList)
-            )
-        }
-
-        var entry: acl_entry_t?
-        let result = acl_get_entry(
-            accessControlList,
-            Int32(ACL_FIRST_ENTRY.rawValue),
-            &entry
+        acl_free(
+            UnsafeMutableRawPointer(accessControlList)
         )
-        if result > 0 {
-            throw accessControlListError
-        }
-        if result < 0 {
-            throw metadataError(errno)
-        }
+        throw accessControlListError
     }
 
     private static let permittedSystemExtendedAttributes:

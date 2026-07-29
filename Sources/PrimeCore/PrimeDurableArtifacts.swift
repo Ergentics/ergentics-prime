@@ -150,7 +150,7 @@ public struct PrimeArtifactBinding:
         self.purpose = purpose
     }
 
-    fileprivate func validateDeclaration() throws {
+    func validateDeclaration() throws {
         _ = try PrimeArtifactRoot.components(
             of: relativePath
         )
@@ -1186,22 +1186,12 @@ public final class PrimeArtifactRoot: @unchecked Sendable {
             descriptor,
             ACL_TYPE_EXTENDED
         ) {
-            defer {
-                acl_free(
-                    UnsafeMutableRawPointer(
-                        accessControlList
-                    )
+            acl_free(
+                UnsafeMutableRawPointer(
+                    accessControlList
                 )
-            }
-            var entry: acl_entry_t?
-            let result = acl_get_entry(
-                accessControlList,
-                Int32(ACL_FIRST_ENTRY.rawValue),
-                &entry
             )
-            guard result == 0 else {
-                throw kind.error(path: path)
-            }
+            throw kind.error(path: path)
         } else if errno != ENOENT {
             throw kind.error(path: path)
         }
@@ -1438,6 +1428,100 @@ public enum PrimeExecutionLanguage: String, Codable, Sendable {
     case swift = "Swift"
 }
 
+public struct PrimePinnedMLXMetallibBinding:
+    Codable,
+    Equatable,
+    Sendable
+{
+    public let mlxSwiftVersion: String
+    public let sourceBundleRelativePath: String
+    public let artifact: PrimeArtifactBinding
+    public let infoPlistSourceRelativePath: String
+    public let infoPlistArtifact: PrimeArtifactBinding
+    public let runtimeEnvironmentPolicy:
+        PrimeMLXRuntimeEnvironmentPolicyDeclaration
+    public let runtimeImageLayout:
+        PrimeMLXRuntimeImageLayoutDeclaration
+    public let releaseInstrumentationPolicy:
+        PrimeReleaseInstrumentationAdmissionPolicyDeclaration
+
+    public init(
+        mlxSwiftVersion: String,
+        sourceBundleRelativePath: String,
+        artifact: PrimeArtifactBinding,
+        infoPlistSourceRelativePath: String,
+        infoPlistArtifact: PrimeArtifactBinding,
+        runtimeEnvironmentPolicy:
+            PrimeMLXRuntimeEnvironmentPolicyDeclaration,
+        runtimeImageLayout:
+            PrimeMLXRuntimeImageLayoutDeclaration,
+        releaseInstrumentationPolicy:
+            PrimeReleaseInstrumentationAdmissionPolicyDeclaration
+    ) {
+        self.mlxSwiftVersion = mlxSwiftVersion
+        self.sourceBundleRelativePath =
+            sourceBundleRelativePath
+        self.artifact = artifact
+        self.infoPlistSourceRelativePath =
+            infoPlistSourceRelativePath
+        self.infoPlistArtifact =
+            infoPlistArtifact
+        self.runtimeEnvironmentPolicy =
+            runtimeEnvironmentPolicy
+        self.runtimeImageLayout =
+            runtimeImageLayout
+        self.releaseInstrumentationPolicy =
+            releaseInstrumentationPolicy
+    }
+
+    func validateDeclaration() throws {
+        try artifact.validateDeclaration()
+        try infoPlistArtifact.validateDeclaration()
+        guard mlxSwiftVersion
+                == PrimePinnedMLXMetallib.mlxSwiftVersion,
+              sourceBundleRelativePath
+                == PrimePinnedMLXMetallib
+                    .sourceBundleRelativePath,
+              artifact.relativePath
+                == PrimePinnedMLXMetallib
+                    .artifactRelativePath,
+              artifact.purpose == .immutableData,
+              artifact.byteCount
+                == PrimePinnedMLXMetallib
+                    .expectedByteCount,
+              artifact.sha256
+                == PrimePinnedMLXMetallib
+                    .expectedSHA256,
+              infoPlistSourceRelativePath
+                == PrimePinnedMLXMetallib
+                    .infoPlistSourceRelativePath,
+              infoPlistArtifact.relativePath
+                == PrimePinnedMLXMetallib
+                    .infoPlistArtifactRelativePath,
+              infoPlistArtifact.purpose
+                == .immutableData,
+              infoPlistArtifact.byteCount
+                == PrimePinnedMLXMetallib
+                    .expectedInfoPlistByteCount,
+              infoPlistArtifact.sha256
+                == PrimePinnedMLXMetallib
+                    .expectedInfoPlistSHA256,
+              runtimeEnvironmentPolicy
+                == PrimeMLXRuntimeEnvironmentPolicy
+                    .declaration,
+              runtimeImageLayout
+                == PrimeMLXRuntimeImageLayout
+                    .declaration,
+              releaseInstrumentationPolicy
+                == PrimeReleaseInstrumentationAdmissionPolicy
+                    .declaration else {
+            throw PrimeDurableArtifactError.invalidSemantics(
+                "the MLX bundle binding must name the frozen package version, exact bundle paths, immutable artifact paths, byte counts, and independently reproduced SHA-256 values"
+            )
+        }
+    }
+}
+
 public struct PrimeExecutionArtifactBindings:
     Codable,
     Equatable,
@@ -1446,15 +1530,21 @@ public struct PrimeExecutionArtifactBindings:
     public let executable: PrimeArtifactBinding
     public let configuration: PrimeArtifactBinding
     public let sourceSnapshot: PrimeArtifactBinding
+    public let mlxDefaultMetallib:
+        PrimePinnedMLXMetallibBinding
 
     public init(
         executable: PrimeArtifactBinding,
         configuration: PrimeArtifactBinding,
-        sourceSnapshot: PrimeArtifactBinding
+        sourceSnapshot: PrimeArtifactBinding,
+        mlxDefaultMetallib:
+            PrimePinnedMLXMetallibBinding
     ) {
         self.executable = executable
         self.configuration = configuration
         self.sourceSnapshot = sourceSnapshot
+        self.mlxDefaultMetallib =
+            mlxDefaultMetallib
     }
 }
 
@@ -1594,6 +1684,8 @@ public struct PrimeNative3BFP32ExecutionConfiguration:
     public let seeds: PrimeExecutionSeeds
     public let executable: PrimeArtifactBinding
     public let sourceSnapshot: PrimeArtifactBinding
+    public let mlxDefaultMetallib:
+        PrimePinnedMLXMetallibBinding
     public let calibrationPlan: PrimeGPUCalibrationPlan
     public let implementationLanguage: PrimeExecutionLanguage
     public let pythonExecutionAuthorized: Bool
@@ -1601,13 +1693,15 @@ public struct PrimeNative3BFP32ExecutionConfiguration:
     public let externalExecutionExclusionReason: String
 
     public init(
-        schemaVersion: Int = 1,
+        schemaVersion: Int = 2,
         profile: PrimeNativeModelProfile =
             PrimeNativeProfiles.exact3B,
         precision: PrimeNumericPrecision = .float32,
         seeds: PrimeExecutionSeeds,
         executable: PrimeArtifactBinding,
         sourceSnapshot: PrimeArtifactBinding,
+        mlxDefaultMetallib:
+            PrimePinnedMLXMetallibBinding,
         calibrationPlan: PrimeGPUCalibrationPlan =
             .initialAllocationProbe,
         implementationLanguage: PrimeExecutionLanguage =
@@ -1622,6 +1716,8 @@ public struct PrimeNative3BFP32ExecutionConfiguration:
         self.seeds = seeds
         self.executable = executable
         self.sourceSnapshot = sourceSnapshot
+        self.mlxDefaultMetallib =
+            mlxDefaultMetallib
         self.calibrationPlan = calibrationPlan
         self.implementationLanguage = implementationLanguage
         self.pythonExecutionAuthorized =
@@ -1633,7 +1729,7 @@ public struct PrimeNative3BFP32ExecutionConfiguration:
     }
 
     public func validate() throws {
-        guard schemaVersion == 1,
+        guard schemaVersion == 2,
               profile == PrimeNativeProfiles.exact3B,
               precision == .float32,
               implementationLanguage == .swift else {
@@ -1645,10 +1741,16 @@ public struct PrimeNative3BFP32ExecutionConfiguration:
         try calibrationPlan.validate()
         try executable.validateDeclaration()
         try sourceSnapshot.validateDeclaration()
+        try mlxDefaultMetallib.validateDeclaration()
         guard executable.purpose == .executable,
-              sourceSnapshot.purpose == .immutableData else {
+              sourceSnapshot.purpose == .immutableData,
+              mlxDefaultMetallib.artifact.purpose
+                == .immutableData,
+              mlxDefaultMetallib
+                .infoPlistArtifact.purpose
+                == .immutableData else {
             throw PrimeDurableArtifactError.invalidSemantics(
-                "configuration artifact purposes are not executable+source"
+                "configuration artifact purposes are not executable+source+metallib"
             )
         }
         guard !pythonExecutionAuthorized,
@@ -2018,7 +2120,7 @@ public struct PrimeGPUCalibrationReceipt:
     public let nextAction: String
 
     public init(
-        schemaVersion: Int = 1,
+        schemaVersion: Int = 2,
         outcome: PrimeGPUCalibrationOutcome,
         claimScope: String,
         recordedAtUTC: String,
@@ -2057,7 +2159,7 @@ public struct PrimeGPUCalibrationReceipt:
     ) {
         self.schemaVersion = schemaVersion
         artifactKind =
-            "ergentics_prime_3b_fp32_gpu_mechanics_calibration"
+            "ergentics_prime_3b_fp32_gpu_mechanics_calibration_v2"
         self.outcome = outcome
         self.claimScope = claimScope
         self.recordedAtUTC = recordedAtUTC
@@ -2110,9 +2212,9 @@ public struct PrimeGPUCalibrationReceipt:
     private func validateMechanicsContent(
         in root: PrimeArtifactRoot
     ) throws -> PrimeGPUCalibrationPlan {
-        guard schemaVersion == 1,
+        guard schemaVersion == 2,
               artifactKind
-                == "ergentics_prime_3b_fp32_gpu_mechanics_calibration",
+                == "ergentics_prime_3b_fp32_gpu_mechanics_calibration_v2",
               outcome == .grounded,
               profile == PrimeNativeProfiles.exact3B,
               expectedParameterCount
@@ -2429,6 +2531,8 @@ public enum PrimeGPUCalibrationFailureStage:
     case modelAllocation = "model_allocation"
     case forwardBackwardUpdate =
         "forward_backward_update"
+    case metallibReverification =
+        "metallib_reverification"
     case receiptValidation = "receipt_validation"
     case workerTermination = "worker_termination"
 }
@@ -2504,7 +2608,7 @@ public struct PrimeGPUCalibrationFailureReceipt:
     public let nextAction: String
 
     public init(
-        schemaVersion: Int = 1,
+        schemaVersion: Int = 2,
         recordedAtUTC: String,
         claimScope: String,
         profile: PrimeNativeModelProfile =
@@ -2533,7 +2637,7 @@ public struct PrimeGPUCalibrationFailureReceipt:
     ) {
         self.schemaVersion = schemaVersion
         artifactKind =
-            "ergentics_prime_3b_fp32_gpu_calibration_failure"
+            "ergentics_prime_3b_fp32_gpu_calibration_failure_v2"
         outcome = .abstain
         self.recordedAtUTC = recordedAtUTC
         self.claimScope = claimScope
@@ -2563,9 +2667,9 @@ public struct PrimeGPUCalibrationFailureReceipt:
     public func validate(
         in root: PrimeArtifactRoot
     ) throws {
-        guard schemaVersion == 1,
+        guard schemaVersion == 2,
               artifactKind
-                == "ergentics_prime_3b_fp32_gpu_calibration_failure",
+                == "ergentics_prime_3b_fp32_gpu_calibration_failure_v2",
               outcome == .abstain,
               profile == PrimeNativeProfiles.exact3B,
               !recordedAtUTC.isEmpty,
@@ -2880,10 +2984,18 @@ public struct PrimeExecutionReceiptEvidence:
         try artifacts.executable.validateDeclaration()
         try artifacts.configuration.validateDeclaration()
         try artifacts.sourceSnapshot.validateDeclaration()
+        try artifacts.mlxDefaultMetallib
+            .validateDeclaration()
         guard artifacts.executable.purpose == .executable,
               artifacts.configuration.purpose
                 == .immutableData,
               artifacts.sourceSnapshot.purpose
+                == .immutableData,
+              artifacts.mlxDefaultMetallib
+                .artifact.purpose
+                == .immutableData,
+              artifacts.mlxDefaultMetallib
+                .infoPlistArtifact.purpose
                 == .immutableData else {
             throw PrimeDurableArtifactError.invalidSemantics(
                 "receipt artifact purposes are invalid"
@@ -2938,7 +3050,7 @@ public struct PrimeCalibrationReceipt:
     public let evidence: PrimeExecutionReceiptEvidence
 
     public init(
-        schemaVersion: Int = 1,
+        schemaVersion: Int = 2,
         receiptID: String,
         recordedAtUTC: String,
         verdict: PrimeCalibrationVerdict,
@@ -2952,7 +3064,7 @@ public struct PrimeCalibrationReceipt:
     }
 
     public func validate(in root: PrimeArtifactRoot) throws {
-        guard schemaVersion == 1,
+        guard schemaVersion == 2,
               !receiptID.isEmpty,
               !recordedAtUTC.isEmpty else {
             throw PrimeDurableArtifactError.invalidSemantics(
@@ -3003,7 +3115,7 @@ public struct PrimeRunReceipt:
     public let evidence: PrimeExecutionReceiptEvidence
 
     public init(
-        schemaVersion: Int = 1,
+        schemaVersion: Int = 2,
         receiptID: String,
         recordedAtUTC: String,
         calibrationReceipt: PrimeArtifactBinding,
@@ -3017,7 +3129,7 @@ public struct PrimeRunReceipt:
     }
 
     public func validate(in root: PrimeArtifactRoot) throws {
-        guard schemaVersion == 1,
+        guard schemaVersion == 2,
               !receiptID.isEmpty,
               !recordedAtUTC.isEmpty,
               calibrationReceipt.purpose == .immutableData else {
@@ -3074,7 +3186,7 @@ public struct PrimeRunAuthorization:
     public let externalExecutionExclusionReason: String
 
     public init(
-        schemaVersion: Int = 1,
+        schemaVersion: Int = 2,
         profile: PrimeNativeModelProfile =
             PrimeNativeProfiles.exact3B,
         precision: PrimeNumericPrecision = .float32,
@@ -3105,7 +3217,7 @@ public struct PrimeRunAuthorization:
     public func resolve(
         in root: PrimeArtifactRoot
     ) throws -> PrimeResolvedRunAuthorization {
-        guard schemaVersion == 1,
+        guard schemaVersion == 2,
               profile == PrimeNativeProfiles.exact3B,
               precision == .float32,
               implementationLanguage == .swift,
@@ -3134,6 +3246,12 @@ public struct PrimeRunAuthorization:
                 == .immutableData,
               artifacts.sourceSnapshot.purpose
                 == .immutableData,
+              artifacts.mlxDefaultMetallib
+                .artifact.purpose
+                == .immutableData,
+              artifacts.mlxDefaultMetallib
+                .infoPlistArtifact.purpose
+                == .immutableData,
               calibrationReceipt.purpose
                 == .immutableData else {
             throw PrimeDurableArtifactError.invalidSemantics(
@@ -3146,6 +3264,13 @@ public struct PrimeRunAuthorization:
         )
         let source = try root.verify(
             artifacts.sourceSnapshot
+        )
+        let metallib = try root.verify(
+            artifacts.mlxDefaultMetallib.artifact
+        )
+        let metallibInfoPlist = try root.verify(
+            artifacts.mlxDefaultMetallib
+                .infoPlistArtifact
         )
         let configuration:
             PrimeNative3BFP32ExecutionConfiguration =
@@ -3161,6 +3286,8 @@ public struct PrimeRunAuthorization:
                 == artifacts.executable,
               configuration.sourceSnapshot
                 == artifacts.sourceSnapshot,
+              configuration.mlxDefaultMetallib
+                == artifacts.mlxDefaultMetallib,
               configuration.pythonExecutionAuthorized
                 == pythonExecutionAuthorized,
               configuration
@@ -3210,6 +3337,9 @@ public struct PrimeRunAuthorization:
             executable: executable,
             configuration: configurationArtifact,
             sourceSnapshot: source,
+            mlxDefaultMetallib: metallib,
+            mlxBundleInfoPlist:
+                metallibInfoPlist,
             calibrationReceipt: calibrationArtifact
         )
     }
@@ -3223,6 +3353,8 @@ public struct PrimeResolvedRunAuthorization:
     public let executable: PrimeVerifiedArtifact
     public let configuration: PrimeVerifiedArtifact
     public let sourceSnapshot: PrimeVerifiedArtifact
+    public let mlxDefaultMetallib: PrimeVerifiedArtifact
+    public let mlxBundleInfoPlist: PrimeVerifiedArtifact
     public let calibrationReceipt: PrimeVerifiedArtifact
 }
 
@@ -3254,6 +3386,9 @@ private enum PrimeReceiptAuthorization {
                 == evidence.artifacts.executable,
               configuration.sourceSnapshot
                 == evidence.artifacts.sourceSnapshot,
+              configuration.mlxDefaultMetallib
+                == evidence.artifacts
+                    .mlxDefaultMetallib,
               configuration.pythonExecutionAuthorized == false,
               configuration
                 .shellScientificAuthorityAuthorized == false,
@@ -3266,5 +3401,13 @@ private enum PrimeReceiptAuthorization {
         _ = try root.verify(evidence.artifacts.executable)
         _ = try root.verify(evidence.artifacts.configuration)
         _ = try root.verify(evidence.artifacts.sourceSnapshot)
+        _ = try root.verify(
+            evidence.artifacts.mlxDefaultMetallib
+                .artifact
+        )
+        _ = try root.verify(
+            evidence.artifacts.mlxDefaultMetallib
+                .infoPlistArtifact
+        )
     }
 }

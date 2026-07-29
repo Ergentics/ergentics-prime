@@ -89,7 +89,7 @@ private struct Arguments {
     var historicalEvidenceRoot: URL?
     var leaseFile: URL?
     var receiptPath =
-        "prime-gpu-calibration-receipt.v1.json"
+        "prime-gpu-calibration-receipt.v2.json"
     var gpuAuthorized = false
     var internalWorker = false
     var internalWorkerCapabilitySHA256: String?
@@ -97,7 +97,7 @@ private struct Arguments {
 
 private let workerCandidateReceiptPath =
     "content-staging/" +
-    "prime-gpu-calibration-worker-candidate.v1.json"
+    "prime-gpu-calibration-worker-candidate.v2.json"
 private let supervisorAuthorityLeaseName =
     ".prime-supervisor-authority.lock"
 
@@ -277,7 +277,7 @@ private func parseArguments() throws -> Arguments {
         )
     }
     guard result.receiptPath
-            == "prime-gpu-calibration-receipt.v1.json" else {
+            == "prime-gpu-calibration-receipt.v2.json" else {
         throw CalibrationError.invalidArgument(
             "--receipt-path is frozen for the initial allocation probe"
         )
@@ -891,6 +891,12 @@ private func prepareArtifacts(
     seeds: PrimeExecutionSeeds,
     plan: PrimeGPUCalibrationPlan
 ) throws -> PrimeExecutionArtifactBindings {
+    let executableURL = try runningExecutableURL()
+    let mlxDefaultMetallib =
+        try PrimePinnedMLXMetallib.captureSibling(
+            of: executableURL,
+            into: root
+        )
     for seed in [
         seeds.initialization,
         seeds.trainingSchedule,
@@ -932,8 +938,14 @@ private func prepareArtifacts(
         try root.verifySeedProvenance(seed)
     }
     let executable = try root.publish(
-        runningExecutableData(),
-        at: "PrimeGPUCalibration.executable",
+        regularFileData(
+            at: executableURL,
+            maximumBytes: 256 * 1024 * 1024
+        ),
+        at:
+            PrimeMLXRuntimeImageLayout
+                .declaration
+                .stagedExecutableRelativePath,
         purpose: .executable
     )
     let snapshot = try sourceSnapshot(
@@ -948,6 +960,8 @@ private func prepareArtifacts(
             seeds: seeds,
             executable: executable,
             sourceSnapshot: source,
+            mlxDefaultMetallib:
+                mlxDefaultMetallib,
             calibrationPlan: plan,
             externalExecutionExclusionReason:
                 PrimeSwiftExecutionBoundary
@@ -958,13 +972,38 @@ private func prepareArtifacts(
         try root.publishCanonical(
             configuration,
             at:
-                "prime-3b-fp32-execution-configuration.v1.json"
+                "prime-3b-fp32-execution-configuration.v2.json"
         )
     return PrimeExecutionArtifactBindings(
         executable: executable,
         configuration: configurationBinding,
-        sourceSnapshot: source
+        sourceSnapshot: source,
+        mlxDefaultMetallib:
+            mlxDefaultMetallib
     )
+}
+
+private func stagedExecutableURL(
+    artifactRoot: PrimeArtifactRoot,
+    artifacts: PrimeExecutionArtifactBindings
+) throws -> URL {
+    guard artifacts.executable.relativePath
+            == PrimeMLXRuntimeImageLayout
+                .declaration
+                .stagedExecutableRelativePath,
+          artifacts.executable.purpose
+            == .executable else {
+        throw CalibrationError.executableUnreadable(
+            artifacts.executable.relativePath
+        )
+    }
+    _ = try artifactRoot.verify(
+        artifacts.executable
+    )
+    return artifactRoot.directoryURL
+        .appendingPathComponent(
+            artifacts.executable.relativePath
+        )
 }
 
 private func failureReason(
@@ -1361,6 +1400,13 @@ private func publishFailure(
     seeds: PrimeExecutionSeeds,
     artifacts: PrimeExecutionArtifactBindings
 ) throws -> PrimeArtifactBinding {
+    try PrimePinnedMLXMetallib.reverifySibling(
+        of: try stagedExecutableURL(
+            artifactRoot: artifactRoot,
+            artifacts: artifacts
+        ),
+        matches: artifacts.mlxDefaultMetallib
+    )
     let failure = PrimeGPUCalibrationFailureReceipt(
         recordedAtUTC:
             ISO8601DateFormatter()
@@ -1471,6 +1517,7 @@ private func runWorker(
     let executionClock = ContinuousClock()
     let executionStarted = executionClock.now
     let progress = GPUExecutionProgress()
+    let executableURL = try runningExecutableURL()
     let lease: PrimeMetalDeviceLease
     do {
         lease = try PrimeMetalDeviceLease.acquire(
@@ -1521,11 +1568,36 @@ private func runWorker(
                 progress: progress
             )
         }
+        progress.failureStage =
+            .metallibReverification
+        try PrimePinnedMLXMetallib
+            .reverifySibling(
+                of: executableURL,
+                matches:
+                    artifacts
+                        .mlxDefaultMetallib
+            )
         progress.failureStage = .receiptValidation
         try receipt.validateWorkerCandidate(
             in: artifactRoot
         )
     } catch {
+        let mechanicsError = error
+        let reportedError: Error
+        do {
+            try PrimePinnedMLXMetallib
+                .reverifySibling(
+                    of: executableURL,
+                    matches:
+                        artifacts
+                            .mlxDefaultMetallib
+                )
+            reportedError = mechanicsError
+        } catch {
+            progress.failureStage =
+                .metallibReverification
+            reportedError = error
+        }
         let elapsed = durationSeconds(
             executionStarted.duration(
                 to: executionClock.now
@@ -1534,8 +1606,11 @@ private func runWorker(
         let peak = Memory.peakMemory
         let binding = try publishFailure(
             stage: progress.failureStage,
-            reason: failureReason(for: error),
-            detail: String(describing: error),
+            reason: failureReason(
+                for: reportedError
+            ),
+            detail:
+                String(describing: reportedError),
             elapsedSeconds:
                 elapsed > 0
                     ? .observed(elapsed)
@@ -1597,7 +1672,10 @@ private func runSupervisor(
         PrimeSHA256.hexDigest(of: capabilityData)
     let supervisorInput = Pipe()
     let process = Process()
-    process.executableURL = try runningExecutableURL()
+    process.executableURL = try stagedExecutableURL(
+        artifactRoot: artifactRoot,
+        artifacts: artifacts
+    )
     process.arguments = [
         "--artifact-root",
         arguments.artifactRoot!.path,
@@ -1848,6 +1926,17 @@ private func runSupervisor(
                         hardTimeoutObserved: false,
                         capabilityVerified: true,
                         runAuthorityLeaseHeld: true
+                    )
+                try PrimePinnedMLXMetallib
+                    .reverifySibling(
+                        of: try stagedExecutableURL(
+                            artifactRoot:
+                                artifactRoot,
+                            artifacts: artifacts
+                        ),
+                        matches:
+                            artifacts
+                                .mlxDefaultMetallib
                     )
                 let finalReceipt = receipt.finalized(
                     with: attestation

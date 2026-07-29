@@ -4,15 +4,21 @@ The implemented authority chain is intentionally narrow:
 
 1. `PrimeCore` defines exact profiles, factorized controls, arm mechanics,
    artifact schemas, mutation contracts, and fail-closed validation.
-2. A compiled Swift supervisor launches the exact same hashed binary as a
-   worker, without a shell, and enforces the hard process deadline.
-3. The worker acquires the Metal device lease and performs MLX work without
-   Python or shell scientific authority. A development shell may invoke that
-   exact hashed supervisor but cannot select scientific knobs.
-4. Immutable mechanics receipts bind source, executable, configuration,
-   factorized seed records, device observations, and optimizer state
-   observations. Missing observations remain `nil`; they are never rewritten
-   as `false`.
+2. The outer Swift supervisor validates the independently reproduced MLX
+   bundle, publishes that exact tree and its own exact executable into the
+   descriptor-rooted artifact directory, rejects coverage/profile/sanitizer
+   instrumentation in its loaded Mach-O image, and launches the staged
+   executable beside the staged bundle without a shell.
+3. The staged worker independently resolves and verifies its own sibling
+   `mlx-swift_Cmlx.bundle`, rejects alternate loader paths and unsafe
+   filesystem metadata, then acquires the Metal lease and performs MLX work
+   without Python or shell scientific authority.
+4. The worker reverifies the bundle after execution, and the supervisor
+   reverifies it again before any final GROUNDED or ABSTAIN publication.
+5. Immutable mechanics receipts bind source, executable, configuration, both
+   pinned MLX bundle artifacts, factorized seed records, device observations,
+   and optimizer state observations. Missing observations remain `nil`; they
+   are never rewritten as `false`.
 
 The first-party tokenizer/corpus, training receipts, independent Swift
 evaluator, raw fixed-cap/EOS generation artifacts, statistical battery,
@@ -34,3 +40,14 @@ corresponding artifacts exist and resolve.
 The three fidelity arms are mechanisms, not arbitrary budgets. Wall and
 convergence bounds are derived from a completed fixed-token calibration and
 must align to optimizer-step and curriculum-block boundaries.
+
+## Threat boundary
+
+The staged-image contract covers accidental and persistent mutation through
+exact tree, owner, mode, link, ACL, xattr, environment, loader-shadow, and
+pre/post hash checks. The same user must retain write authority over the
+artifact root so the worker and supervisor can publish receipts. A malicious
+concurrent process running as that same user could attempt a transient
+swap/load/restore attack; resistance to that actor is not claimed. Closing
+that boundary requires a separately isolated runtime identity or exact
+loader-return attestation from the maintained MLX runtime.

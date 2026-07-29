@@ -73,8 +73,11 @@ The executable accepts paths and the explicit human allocation authorization;
 scientific knobs are frozen in the canonical Swift configuration:
 
 ```sh
-swift build -c release --product PrimeGPUCalibration
-.build/release/PrimeGPUCalibration \
+swift build -c release
+xcodebuild -downloadComponent MetalToolchain
+xcodebuild -scheme PrimeGPUCalibration -configuration Release -destination 'platform=macOS,arch=arm64' -toolchain com.apple.dt.toolchain.Metal.32023.883 -derivedDataPath .build/apple build
+.build/arm64-apple-macosx/release/PrimeMLXBundleStage --source-host .build/apple/Build/Products/Release/PrimeGPUCalibration --destination-host .build/arm64-apple-macosx/release/PrimeGPUCalibration
+.build/arm64-apple-macosx/release/PrimeGPUCalibration \
   --artifact-root /private/tmp/ergentics-prime-calibration \
   --source-root "$PWD" \
   --historical-evidence-root /path/to/pmhnp-companion-ergentics \
@@ -85,17 +88,54 @@ swift build -c release --product PrimeGPUCalibration
 Both the artifact root and lease parent must already be private directories.
 The embedded source identity must be regenerated after any admitted source
 change; a debug, stale, or source-divergent executable fails before Metal.
+The Xcode host in the staging command is never executed and is not admitted as
+benchmark evidence; Xcode is used only to build the official package resource.
+`PrimeMLXBundleStage` validates that resource against the independently
+reproduced identities and places it beside the uninstrumented SwiftPM Release
+host. The architecture-specific, non-symlink SwiftPM path is intentional:
+descriptor-root admission rejects `.build/release`, which is a symlink.
+Before staging or execution is admitted, Swift inspects the loaded main
+executable through Darwin dyld/Mach-O APIs and rejects LLVM
+coverage/profiling segments or sections and known sanitizer runtimes. That
+frozen instrumentation policy is configuration- and receipt-bound.
+The uninstrumented SwiftPM release host must have the independently reproduced
+Xcode Release `mlx-swift_Cmlx.bundle` as an exact sibling. Before any MLX
+device call, Swift verifies that the bundle contains only `Contents/Info.plist`
+and `Contents/Resources/default.metallib`, checks their frozen byte counts and
+SHA-256 values for mlx-swift 0.31.3, rejects ACLs, unsafe modes, links,
+unapproved extended attributes, loader-shadow metallibs, and forbidden
+MLX/DYLD/LLVM-profile environment overrides, then publishes immutable copies
+into the artifact root. Apple provenance/build-system attributes are admitted
+only by the explicitly declared allowlist. Both files
+are configuration- and receipt-bound and are reverified after worker execution
+before any success or failure candidate can be published.
 The executable imports and independently verifies the three exact historical
 seed records before it acquires Metal. It then self-snapshots the complete
 Swift source and executable, publishes configuration and evidence with
 descriptor-anchored no-replace semantics, and emits a canonical receipt.
 The release executable is also a Swift supervisor: it launches the same
-release binary as an internal worker without a shell, applies a hard
-end-to-end timeout, verifies the worker receipt, and publishes a distinct
-`ABSTAIN` receipt if the worker terminates through a signal, process-level
-allocation failure, or other fatal path before it can write one. Missing
-worker observations remain unavailable rather than being rewritten as
-`false`.
+release binary from the artifact root beside the exact staged bundle, without
+a shell. It applies a hard end-to-end timeout, verifies the worker receipt, and
+publishes a distinct `ABSTAIN` receipt if the worker terminates through a
+signal, process-level allocation failure, or other fatal path before it can
+write one. Missing worker observations remain unavailable rather than being
+rewritten as `false`.
+
+The current filesystem claim is deliberately bounded. Mode, ownership,
+descriptor, tree, hash, loader-shadow, environment, and pre/post checks protect
+against accidental and persistent mutation. The artifact root remains owned
+and writable by the invoking account so receipts can be published. This does
+not prove resistance to a malicious process running concurrently as that same
+user that swaps and restores bytes between checks. That stronger claim would
+require a separately isolated identity or an upstream loader-return
+attestation that MLX Swift does not currently expose.
+
+The complete Swift test suite requires the independently built bundle and does
+not skip its bundle/receipt tests when that fixture is absent:
+
+```sh
+PRIME_TEST_PINNED_MLX_METALLIB=.build/apple/Build/Products/Release/mlx-swift_Cmlx.bundle/Contents/Resources/default.metallib swift test
+```
 
 The requested 96 GiB MLX memory setting is an MLX scheduler limit, not a claim
 that process RSS cannot exceed 96 GiB.

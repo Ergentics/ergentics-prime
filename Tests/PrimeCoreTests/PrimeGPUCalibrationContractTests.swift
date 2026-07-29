@@ -321,6 +321,187 @@ final class PrimeGPUCalibrationContractTests: XCTestCase {
         }
     }
 
+    func testPinnedMLXBundleBindingRejectsIdentityMutations()
+        throws
+    {
+        let metallib = PrimeArtifactBinding(
+            relativePath:
+                PrimePinnedMLXMetallib
+                    .artifactRelativePath,
+            sha256:
+                PrimePinnedMLXMetallib
+                    .expectedSHA256,
+            byteCount:
+                PrimePinnedMLXMetallib
+                    .expectedByteCount,
+            purpose: .immutableData
+        )
+        let infoPlist = PrimeArtifactBinding(
+            relativePath:
+                PrimePinnedMLXMetallib
+                    .infoPlistArtifactRelativePath,
+            sha256:
+                PrimePinnedMLXMetallib
+                    .expectedInfoPlistSHA256,
+            byteCount:
+                PrimePinnedMLXMetallib
+                    .expectedInfoPlistByteCount,
+            purpose: .immutableData
+        )
+        func binding(
+            version: String =
+                PrimePinnedMLXMetallib
+                    .mlxSwiftVersion,
+            metallibSource: String =
+                PrimePinnedMLXMetallib
+                    .sourceBundleRelativePath,
+            metallibArtifact:
+                PrimeArtifactBinding = metallib,
+            infoSource: String =
+                PrimePinnedMLXMetallib
+                    .infoPlistSourceRelativePath,
+            infoArtifact:
+                PrimeArtifactBinding = infoPlist,
+            runtimeEnvironmentPolicy:
+                PrimeMLXRuntimeEnvironmentPolicyDeclaration =
+                    PrimeMLXRuntimeEnvironmentPolicy
+                    .declaration,
+            runtimeImageLayout:
+                PrimeMLXRuntimeImageLayoutDeclaration =
+                    PrimeMLXRuntimeImageLayout
+                    .declaration,
+            releaseInstrumentationPolicy:
+                PrimeReleaseInstrumentationAdmissionPolicyDeclaration =
+                    PrimeReleaseInstrumentationAdmissionPolicy
+                    .declaration
+        ) -> PrimePinnedMLXMetallibBinding {
+            PrimePinnedMLXMetallibBinding(
+                mlxSwiftVersion: version,
+                sourceBundleRelativePath:
+                    metallibSource,
+                artifact: metallibArtifact,
+                infoPlistSourceRelativePath:
+                    infoSource,
+                infoPlistArtifact: infoArtifact,
+                runtimeEnvironmentPolicy:
+                    runtimeEnvironmentPolicy,
+                runtimeImageLayout:
+                    runtimeImageLayout,
+                releaseInstrumentationPolicy:
+                    releaseInstrumentationPolicy
+            )
+        }
+        let changedMetallibHash =
+            PrimeArtifactBinding(
+                relativePath:
+                    metallib.relativePath,
+                sha256:
+                    String(repeating: "0", count: 64),
+                byteCount: metallib.byteCount,
+                purpose: .immutableData
+            )
+        let changedMetallibSize =
+            PrimeArtifactBinding(
+                relativePath:
+                    metallib.relativePath,
+                sha256: metallib.sha256,
+                byteCount:
+                    metallib.byteCount - 1,
+                purpose: .immutableData
+            )
+        let changedInfoHash =
+            PrimeArtifactBinding(
+                relativePath:
+                    infoPlist.relativePath,
+                sha256:
+                    String(repeating: "f", count: 64),
+                byteCount: infoPlist.byteCount,
+                purpose: .immutableData
+            )
+
+        XCTAssertNoThrow(
+            try binding().validateDeclaration()
+        )
+        for mutation in [
+            binding(version: "0.31.2"),
+            binding(
+                metallibSource:
+                    "mlx-swift_Cmlx.bundle/default.metallib"
+            ),
+            binding(
+                metallibArtifact:
+                    changedMetallibHash
+            ),
+            binding(
+                metallibArtifact:
+                    changedMetallibSize
+            ),
+            binding(
+                infoSource:
+                    "mlx-swift_Cmlx.bundle/Info.plist"
+            ),
+            binding(
+                infoArtifact: changedInfoHash
+            ),
+            binding(
+                runtimeEnvironmentPolicy:
+                    PrimeMLXRuntimeEnvironmentPolicyDeclaration(
+                        policyID:
+                            "mutated_environment_policy",
+                        policyVersion: 1,
+                        forbiddenKeyPrefixes: [
+                            "DYLD_",
+                            "LLVM_PROFILE_",
+                            "MLX_",
+                        ]
+                    )
+            ),
+            binding(
+                runtimeImageLayout:
+                    PrimeMLXRuntimeImageLayoutDeclaration(
+                        layoutID:
+                            "mutated_runtime_layout",
+                        layoutVersion: 1,
+                        stagedExecutableRelativePath:
+                            "PrimeGPUCalibration.executable",
+                        siblingBundleRelativePath:
+                            PrimePinnedMLXMetallib
+                                .bundleRelativePath
+                    )
+            ),
+            binding(
+                releaseInstrumentationPolicy:
+                    PrimeReleaseInstrumentationAdmissionPolicyDeclaration(
+                        policyID:
+                            "mutated_instrumentation_policy",
+                        policyVersion: 1,
+                        inspectedImageScope:
+                            "dyld_main_executable_image_index_zero",
+                        machOInspectionAPI:
+                            "Darwin._dyld_get_image_header+MachO.getsegmentdata/getsectiondata",
+                        runtimeSymbolInspectionAPI:
+                            "Darwin.dlopen(nil)+dlsym",
+                        forbiddenMachOSegmentNames: [
+                            "__LLVM_COV",
+                        ],
+                        searchedMachOSegmentNames: [
+                            "__DATA",
+                        ],
+                        forbiddenMachOSectionNames: [
+                            "__llvm_prf_cnts",
+                        ],
+                        forbiddenRuntimeSymbolNames: [
+                            "__asan_init",
+                        ]
+                    )
+            ),
+        ] {
+            XCTAssertThrowsError(
+                try mutation.validateDeclaration()
+            )
+        }
+    }
+
     func testGroundedReceiptRejectsSupervisorMutations()
         throws
     {
@@ -538,6 +719,9 @@ final class PrimeGPUCalibrationContractTests: XCTestCase {
                     fixture.artifacts.executable,
                 sourceSnapshot:
                     fixture.artifacts.sourceSnapshot,
+                mlxDefaultMetallib:
+                    fixture.artifacts
+                        .mlxDefaultMetallib,
                 externalExecutionExclusionReason:
                     changedReason
             )
@@ -554,7 +738,10 @@ final class PrimeGPUCalibrationContractTests: XCTestCase {
                 configuration:
                     changedConfigurationBinding,
                 sourceSnapshot:
-                    fixture.artifacts.sourceSnapshot
+                    fixture.artifacts.sourceSnapshot,
+                mlxDefaultMetallib:
+                    fixture.artifacts
+                        .mlxDefaultMetallib
             )
         let mutation = PrimeRunAuthorization(
             seeds: fixture.seeds,
@@ -672,11 +859,15 @@ final class PrimeGPUCalibrationContractTests: XCTestCase {
             at: "source.snapshot",
             purpose: .immutableData
         )
+        let metallib =
+            try PinnedMLXMetallibTestSupport
+                .publish(in: root)
         let configuration =
             PrimeNative3BFP32ExecutionConfiguration(
                 seeds: seeds,
                 executable: executable,
                 sourceSnapshot: source,
+                mlxDefaultMetallib: metallib,
                 calibrationPlan: .initialAllocationProbe,
                 externalExecutionExclusionReason:
                     PrimeSwiftExecutionBoundary
@@ -694,7 +885,8 @@ final class PrimeGPUCalibrationContractTests: XCTestCase {
             artifacts: PrimeExecutionArtifactBindings(
                 executable: executable,
                 configuration: configurationBinding,
-                sourceSnapshot: source
+                sourceSnapshot: source,
+                mlxDefaultMetallib: metallib
             )
         )
     }

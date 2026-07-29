@@ -19,6 +19,10 @@ let package = Package(
             name: "PrimeLeaseHolder",
             targets: ["PrimeLeaseHolder"]
         ),
+        .executable(
+            name: "PrimeMLXBundleStage",
+            targets: ["PrimeMLXBundleStage"]
+        ),
     ],
     dependencies: [
         .package(
@@ -58,6 +62,10 @@ let package = Package(
         ),
         .executableTarget(
             name: "PrimeLeaseHolder",
+            dependencies: ["PrimeCore"]
+        ),
+        .executableTarget(
+            name: "PrimeMLXBundleStage",
             dependencies: ["PrimeCore"]
         ),
         .testTarget(
