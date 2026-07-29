@@ -140,6 +140,71 @@ final class PrimePinnedMLXMetallibTests: XCTestCase {
         )
     }
 
+    func testExplicitRuntimeRolesRejectCrossRoleSubstitution()
+        throws
+    {
+        let calibrationFixture = try makeFixture()
+        let calibrationBinding =
+            try PrimePinnedMLXMetallib
+                .captureSibling(
+                    of:
+                        calibrationFixture
+                        .executable,
+                    into:
+                        calibrationFixture
+                        .artifactRoot
+                )
+        XCTAssertEqual(
+            calibrationBinding.runtimeImageLayout,
+            PrimeMLXRuntimeImageLayout
+                .calibration
+        )
+        XCTAssertThrowsError(
+            try PrimePinnedMLXMetallib
+                .reverifyStagedRuntimeImage(
+                    of:
+                        calibrationFixture
+                        .executable,
+                    matches:
+                        calibrationBinding,
+                    runtimeRole:
+                        .optimizerRestoreProbe
+                )
+        )
+
+        let restoreFixture = try makeFixture()
+        let restoreBinding =
+            try PrimePinnedMLXMetallib
+                .captureSibling(
+                    of: restoreFixture.executable,
+                    into:
+                        restoreFixture.artifactRoot,
+                    runtimeRole:
+                        .optimizerRestoreProbe
+                )
+        XCTAssertEqual(
+            restoreBinding.runtimeImageLayout,
+            PrimeMLXRuntimeImageLayout
+                .optimizerRestoreProbe
+        )
+        XCTAssertNoThrow(
+            try PrimePinnedMLXMetallib
+                .reverifyStagedRuntimeImage(
+                    of: restoreFixture.executable,
+                    matches: restoreBinding,
+                    runtimeRole:
+                        .optimizerRestoreProbe
+                )
+        )
+        XCTAssertThrowsError(
+            try PrimePinnedMLXMetallib
+                .reverifyStagedRuntimeImage(
+                    of: restoreFixture.executable,
+                    matches: restoreBinding
+                )
+        )
+    }
+
     func testCaptureRejectsSafeModeSubstitution()
         throws
     {

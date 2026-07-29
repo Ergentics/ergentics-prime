@@ -41,7 +41,9 @@ enum PinnedMLXMetallibTestSupport {
     }
 
     static func publish(
-        in root: PrimeArtifactRoot
+        in root: PrimeArtifactRoot,
+        runtimeRole: PrimeMLXRuntimeRole =
+            .calibration
     ) throws -> PrimePinnedMLXMetallibBinding {
         let source = try sourceMetallibURL()
         let data = try Data(
@@ -138,7 +140,9 @@ enum PinnedMLXMetallibTestSupport {
                     .declaration,
             runtimeImageLayout:
                 PrimeMLXRuntimeImageLayout
-                    .declaration,
+                    .declaration(
+                        for: runtimeRole
+                    ),
             releaseInstrumentationPolicy:
                 PrimeReleaseInstrumentationAdmissionPolicy
                     .declaration

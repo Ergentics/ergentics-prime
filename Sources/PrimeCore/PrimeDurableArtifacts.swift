@@ -1477,6 +1477,9 @@ public struct PrimePinnedMLXMetallibBinding:
     func validateDeclaration() throws {
         try artifact.validateDeclaration()
         try infoPlistArtifact.validateDeclaration()
+        _ = try PrimeMLXRuntimeImageLayout.role(
+            for: runtimeImageLayout
+        )
         guard mlxSwiftVersion
                 == PrimePinnedMLXMetallib.mlxSwiftVersion,
               sourceBundleRelativePath
@@ -1508,9 +1511,6 @@ public struct PrimePinnedMLXMetallibBinding:
                     .expectedInfoPlistSHA256,
               runtimeEnvironmentPolicy
                 == PrimeMLXRuntimeEnvironmentPolicy
-                    .declaration,
-              runtimeImageLayout
-                == PrimeMLXRuntimeImageLayout
                     .declaration,
               releaseInstrumentationPolicy
                 == PrimeReleaseInstrumentationAdmissionPolicy
@@ -1678,6 +1678,12 @@ public struct PrimeNative3BFP32ExecutionConfiguration:
     Equatable,
     Sendable
 {
+    public static let requiredPrimeSourceRelativePaths:
+        Set<String> = [
+            "Sources/PrimeGPUCalibration/PrimeGPUCalibrationMain.swift",
+            "Sources/PrimeCore/PrimeNative3BProfile.swift",
+        ]
+
     public let schemaVersion: Int
     public let profile: PrimeNativeModelProfile
     public let precision: PrimeNumericPrecision
@@ -1742,6 +1748,10 @@ public struct PrimeNative3BFP32ExecutionConfiguration:
         try executable.validateDeclaration()
         try sourceSnapshot.validateDeclaration()
         try mlxDefaultMetallib.validateDeclaration()
+        try PrimeMLXRuntimeImageLayout.require(
+            mlxDefaultMetallib.runtimeImageLayout,
+            for: .calibration
+        )
         guard executable.purpose == .executable,
               sourceSnapshot.purpose == .immutableData,
               mlxDefaultMetallib.artifact.purpose
@@ -3262,9 +3272,11 @@ public struct PrimeRunAuthorization:
         let executable = try root.verify(
             artifacts.executable
         )
-        let source = try root.verify(
-            artifacts.sourceSnapshot
-        )
+        let source = try PrimeReceiptAuthorization
+            .verifyReleaseSourceSnapshot(
+                artifacts.sourceSnapshot,
+                in: root
+            )
         let metallib = try root.verify(
             artifacts.mlxDefaultMetallib.artifact
         )
@@ -3359,6 +3371,26 @@ public struct PrimeResolvedRunAuthorization:
 }
 
 private enum PrimeReceiptAuthorization {
+    static func verifyReleaseSourceSnapshot(
+        _ binding: PrimeArtifactBinding,
+        in root: PrimeArtifactRoot
+    ) throws -> PrimeVerifiedArtifact {
+        let verified = try root.verify(binding)
+        let snapshot = try root.decodeVerified(
+            PrimeSwiftSourceSnapshot.self,
+            binding: binding,
+            maximumByteCount: 64 * 1024 * 1024
+        )
+        try PrimeSwiftSourceProvenance
+            .validateReleaseEvidence(
+                snapshot,
+                requiredRelativePaths:
+                    PrimeNative3BFP32ExecutionConfiguration
+                    .requiredPrimeSourceRelativePaths
+            )
+        return verified
+    }
+
     static func validateEvidence(
         _ evidence: PrimeExecutionReceiptEvidence,
         in root: PrimeArtifactRoot
@@ -3400,7 +3432,10 @@ private enum PrimeReceiptAuthorization {
         }
         _ = try root.verify(evidence.artifacts.executable)
         _ = try root.verify(evidence.artifacts.configuration)
-        _ = try root.verify(evidence.artifacts.sourceSnapshot)
+        _ = try verifyReleaseSourceSnapshot(
+            evidence.artifacts.sourceSnapshot,
+            in: root
+        )
         _ = try root.verify(
             evidence.artifacts.mlxDefaultMetallib
                 .artifact

@@ -48,6 +48,18 @@ public enum PrimePinnedMLXMetallib {
         of runningExecutableURL: URL,
         into artifactRoot: PrimeArtifactRoot
     ) throws -> PrimePinnedMLXMetallibBinding {
+        try captureSibling(
+            of: runningExecutableURL,
+            into: artifactRoot,
+            runtimeRole: .calibration
+        )
+    }
+
+    public static func captureSibling(
+        of runningExecutableURL: URL,
+        into artifactRoot: PrimeArtifactRoot,
+        runtimeRole: PrimeMLXRuntimeRole
+    ) throws -> PrimePinnedMLXMetallibBinding {
         guard runningExecutableURL.isFileURL else {
             throw PrimeDurableArtifactError.unsafeArtifact(
                 runningExecutableURL.absoluteString
@@ -174,11 +186,17 @@ public enum PrimePinnedMLXMetallib {
                 runtimeEnvironmentPolicy,
             runtimeImageLayout:
                 PrimeMLXRuntimeImageLayout
-                    .declaration,
+                    .declaration(
+                        for: runtimeRole
+                    ),
             releaseInstrumentationPolicy:
                 releaseInstrumentationPolicy
         )
         try binding.validateDeclaration()
+        try PrimeMLXRuntimeImageLayout.require(
+            binding.runtimeImageLayout,
+            for: runtimeRole
+        )
         return binding
     }
 
@@ -190,6 +208,19 @@ public enum PrimePinnedMLXMetallib {
         of runningExecutableURL: URL,
         matches binding:
             PrimePinnedMLXMetallibBinding
+    ) throws {
+        try reverifySibling(
+            of: runningExecutableURL,
+            matches: binding,
+            runtimeRole: .calibration
+        )
+    }
+
+    public static func reverifySibling(
+        of runningExecutableURL: URL,
+        matches binding:
+            PrimePinnedMLXMetallibBinding,
+        runtimeRole: PrimeMLXRuntimeRole
     ) throws {
         let executableURL =
             runningExecutableURL
@@ -205,6 +236,7 @@ public enum PrimePinnedMLXMetallib {
         try reverifyRuntimeImage(
             executableURL,
             matches: binding,
+            runtimeRole: runtimeRole,
             includeCurrentProcessContext: true
         )
     }
@@ -224,6 +256,19 @@ public enum PrimePinnedMLXMetallib {
         matches binding:
             PrimePinnedMLXMetallibBinding
     ) throws {
+        try reverifyStagedRuntimeImage(
+            of: stagedExecutableURL,
+            matches: binding,
+            runtimeRole: .calibration
+        )
+    }
+
+    public static func reverifyStagedRuntimeImage(
+        of stagedExecutableURL: URL,
+        matches binding:
+            PrimePinnedMLXMetallibBinding,
+        runtimeRole: PrimeMLXRuntimeRole
+    ) throws {
         let executableURL =
             stagedExecutableURL
             .resolvingSymlinksInPath()
@@ -238,6 +283,7 @@ public enum PrimePinnedMLXMetallib {
         try reverifyRuntimeImage(
             executableURL,
             matches: binding,
+            runtimeRole: runtimeRole,
             includeCurrentProcessContext: false
         )
     }
@@ -246,9 +292,14 @@ public enum PrimePinnedMLXMetallib {
         _ executableURL: URL,
         matches binding:
             PrimePinnedMLXMetallibBinding,
+        runtimeRole: PrimeMLXRuntimeRole,
         includeCurrentProcessContext: Bool
     ) throws {
         try binding.validateDeclaration()
+        try PrimeMLXRuntimeImageLayout.require(
+            binding.runtimeImageLayout,
+            for: runtimeRole
+        )
         let executableDirectory =
             executableURL.deletingLastPathComponent()
         if includeCurrentProcessContext {

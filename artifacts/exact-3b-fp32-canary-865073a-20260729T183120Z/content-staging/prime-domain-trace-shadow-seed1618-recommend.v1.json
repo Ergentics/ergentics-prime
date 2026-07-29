@@ -1,0 +1,75 @@
+{
+  "direct_one_shot_authorized" : false,
+  "domain_trace_authorized" : true,
+  "engine_authoritative" : true,
+  "family_id" : "ergentics_prime_domain_trace_shadow",
+  "holdout_abstain_accuracy" : 1,
+  "holdout_direct_accuracy" : 0.8914893617021277,
+  "holdout_trace_accuracy" : 0.9723404255319149,
+  "legs" : [
+    {
+      "detail" : "engine=v2.1.8-shareGuardOn-fmtSplit-decisionTruth train=1338 validation=429 holdout=470 mutation=470",
+      "id" : "D1_swift_engine_derived_manifest",
+      "pass" : true
+    },
+    {
+      "detail" : "train_families=6 holdout_families=2",
+      "id" : "D2_disjoint_domain_pair_families",
+      "pass" : true
+    },
+    {
+      "detail" : "parameters=10227968 imported=false",
+      "id" : "D3_first_party_profile_and_provenance",
+      "pass" : true
+    },
+    {
+      "detail" : "steps=2400 tps=18538.749616168396 reload=0.0",
+      "id" : "D4_real_optimization_and_durability",
+      "pass" : true
+    },
+    {
+      "detail" : "aggregate_match=true",
+      "id" : "D5_swift_raw_prediction_regrade",
+      "pass" : true
+    },
+    {
+      "detail" : "validation=1.0,1.0 holdout=1.0,1.0",
+      "id" : "D6_candidate_summary_transfer",
+      "pass" : true
+    },
+    {
+      "detail" : "validation=0.9603729603729604 holdout=0.9723404255319149 mutation=0.9170212765957447",
+      "id" : "D7_autoregressive_domain_trace",
+      "pass" : true
+    },
+    {
+      "detail" : "trace=0.9446808510638298 direct=0.8638297872340426 delta=0.08085106382978724",
+      "id" : "D8_measurable_gain_over_direct_control",
+      "pass" : true
+    },
+    {
+      "detail" : "validation=1.0 holdout=1.0 mutation=1.0",
+      "id" : "D9_malformed_state_abstention",
+      "pass" : true
+    },
+    {
+      "detail" : "engine_authoritative=true promotion=false",
+      "id" : "D10_engine_authority_and_product_scope",
+      "pass" : true
+    }
+  ],
+  "malformed_state_abstention_authorized" : true,
+  "measurable_trace_gain" : true,
+  "measured_peak_memory_bytes" : 336638020,
+  "measured_tokens_per_second" : 18538.749616168396,
+  "mutation_abstain_accuracy" : 1,
+  "mutation_direct_accuracy" : 0.8361702127659575,
+  "mutation_trace_accuracy" : 0.9170212765957447,
+  "next_action" : "await_multi_seed_domain_trace_consensus",
+  "outcome" : "GROUNDED",
+  "product_promotion_authorized" : false,
+  "schema_version" : "1",
+  "seed" : 1618,
+  "trace_gain" : 0.08085106382978724,
+  "validation_trace_accuracy" : 0.9603729603729604
+}

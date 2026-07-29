@@ -1,80 +1,9 @@
 import Foundation
 import PrimeCore
 
-private enum BundleStageError: Error, LocalizedError {
-    case invalidArgument(String)
-
-    var errorDescription: String? {
-        switch self {
-        case let .invalidArgument(detail):
-            return detail
-        }
-    }
-}
-
-private struct Arguments {
-    var sourceHost: URL?
-    var destinationHost: URL?
-}
-
-private func parseArguments() throws -> Arguments {
-    var result = Arguments()
-    var values = Array(CommandLine.arguments.dropFirst())
-    while !values.isEmpty {
-        let key = values.removeFirst()
-        guard !values.isEmpty else {
-            throw BundleStageError.invalidArgument(
-                "\(key) requires a value"
-            )
-        }
-        let value = values.removeFirst()
-        switch key {
-        case "--source-host":
-            guard result.sourceHost == nil else {
-                throw BundleStageError.invalidArgument(
-                    "--source-host may be provided once"
-                )
-            }
-            result.sourceHost = URL(
-                fileURLWithPath: value
-            )
-        case "--destination-host":
-            guard result.destinationHost == nil else {
-                throw BundleStageError.invalidArgument(
-                    "--destination-host may be provided once"
-                )
-            }
-            result.destinationHost = URL(
-                fileURLWithPath: value
-            )
-        default:
-            throw BundleStageError.invalidArgument(
-                "unsupported argument: \(key)"
-            )
-        }
-    }
-    guard let sourceHost = result.sourceHost,
-          let destinationHost =
-            result.destinationHost else {
-        throw BundleStageError.invalidArgument(
-            "--source-host and --destination-host are required"
-        )
-    }
-    let resolvedSource =
-        sourceHost.resolvingSymlinksInPath()
-    let resolvedDestination =
-        destinationHost.resolvingSymlinksInPath()
-    guard resolvedSource != resolvedDestination else {
-        throw BundleStageError.invalidArgument(
-            "source and destination hosts must differ"
-        )
-    }
-    result.sourceHost = resolvedSource
-    result.destinationHost = resolvedDestination
-    return result
-}
-
-private func expectedBinding()
+private func expectedBinding(
+    runtimeRole: PrimeMLXRuntimeRole
+)
     -> PrimePinnedMLXMetallibBinding
 {
     PrimePinnedMLXMetallibBinding(
@@ -115,7 +44,9 @@ private func expectedBinding()
                 .declaration,
         runtimeImageLayout:
             PrimeMLXRuntimeImageLayout
-                .declaration,
+                .declaration(
+                    for: runtimeRole
+                ),
         releaseInstrumentationPolicy:
             PrimeReleaseInstrumentationAdmissionPolicy
                 .declaration
@@ -126,9 +57,17 @@ private func expectedBinding()
 enum PrimeMLXBundleStageCLI {
     static func main() {
         do {
-            let arguments = try parseArguments()
+            let arguments =
+                try PrimeMLXBundleStageArguments
+                    .parse(
+                        Array(
+                            CommandLine.arguments
+                                .dropFirst()
+                        )
+                    )
+            let runtimeRole = arguments.runtimeRole
             let destinationHost =
-                arguments.destinationHost!
+                arguments.destinationHost
             let destinationBundle =
                 destinationHost
                     .deletingLastPathComponent()
@@ -139,14 +78,18 @@ enum PrimeMLXBundleStageCLI {
             if FileManager.default.fileExists(
                 atPath: destinationBundle.path
             ) {
-                let binding = expectedBinding()
+                let binding = expectedBinding(
+                    runtimeRole: runtimeRole
+                )
                 try PrimePinnedMLXMetallib
                     .reverifyStagedRuntimeImage(
                         of: destinationHost,
-                        matches: binding
+                        matches: binding,
+                        runtimeRole: runtimeRole
                     )
                 print(
                     "Prime MLX bundle already staged: " +
+                        "runtime_role=\(runtimeRole.rawValue) " +
                         "mlx_swift=\(binding.mlxSwiftVersion) " +
                         "metallib_sha256=" +
                         binding.artifact.sha256 + " " +
@@ -164,16 +107,19 @@ enum PrimeMLXBundleStageCLI {
             let binding =
                 try PrimePinnedMLXMetallib
                     .captureSibling(
-                        of: arguments.sourceHost!,
-                        into: destinationRoot
+                        of: arguments.sourceHost,
+                        into: destinationRoot,
+                        runtimeRole: runtimeRole
                     )
             try PrimePinnedMLXMetallib
                 .reverifyStagedRuntimeImage(
                     of: destinationHost,
-                    matches: binding
+                    matches: binding,
+                    runtimeRole: runtimeRole
                 )
             print(
                 "Prime MLX bundle staged: " +
+                    "runtime_role=\(runtimeRole.rawValue) " +
                     "mlx_swift=\(binding.mlxSwiftVersion) " +
                     "metallib_sha256=\(binding.artifact.sha256) " +
                     "info_plist_sha256=" +

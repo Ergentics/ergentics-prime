@@ -23,6 +23,10 @@ let package = Package(
             name: "PrimeMLXBundleStage",
             targets: ["PrimeMLXBundleStage"]
         ),
+        .executable(
+            name: "PrimeOptimizerRestoreProbe",
+            targets: ["PrimeOptimizerRestoreProbe"]
+        ),
     ],
     dependencies: [
         .package(
@@ -67,6 +71,24 @@ let package = Package(
         .executableTarget(
             name: "PrimeMLXBundleStage",
             dependencies: ["PrimeCore"]
+        ),
+        .executableTarget(
+            name: "PrimeOptimizerRestoreProbe",
+            dependencies: [
+                "PrimeCore",
+                .product(
+                    name: "MLX",
+                    package: "mlx-swift"
+                ),
+                .product(
+                    name: "MLXNN",
+                    package: "mlx-swift"
+                ),
+                .product(
+                    name: "MLXOptimizers",
+                    package: "mlx-swift"
+                ),
+            ]
         ),
         .testTarget(
             name: "PrimeCoreTests",

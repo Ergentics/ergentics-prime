@@ -4,6 +4,37 @@ import XCTest
 final class PrimeGPUCalibrationSourceContractTests:
     XCTestCase
 {
+    func testSourceSnapshotDelegatesToSharedProvenance()
+        throws
+    {
+        let source = try calibrationSource()
+        let function = try slice(
+            source,
+            from: "private func sourceSnapshot(",
+            until: "private func runningExecutableURL("
+        )
+        try assertOrdered(
+            [
+                "PrimeSwiftSourceProvenance",
+                ".capture(",
+                "at: sourceRoot",
+                "PrimeNative3BFP32ExecutionConfiguration",
+                ".requiredPrimeSourceRelativePaths",
+            ],
+            in: function
+        )
+        XCTAssertFalse(
+            function.contains(
+                "FileManager.default.enumerator"
+            )
+        )
+        XCTAssertFalse(
+            function.contains(
+                "PrimeSHA256.hexDigest"
+            )
+        )
+    }
+
     func testFailurePublicationRetainsOrderedMetallibGate()
         throws
     {

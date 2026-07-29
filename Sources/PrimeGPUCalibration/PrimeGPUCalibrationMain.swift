@@ -101,42 +101,6 @@ private let workerCandidateReceiptPath =
 private let supervisorAuthorityLeaseName =
     ".prime-supervisor-authority.lock"
 
-private struct SourceFileSnapshot: Codable {
-    let relativePath: String
-    let sha256: String
-    let byteCount: UInt64
-    let contents: Data
-
-    private enum CodingKeys: String, CodingKey {
-        case relativePath = "relative_path"
-        case sha256
-        case byteCount = "byte_count"
-        case contents
-    }
-}
-
-private struct CalibrationSourceSnapshot: Codable {
-    let schemaVersion = 1
-    let artifactKind =
-        "ergentics_prime_swift_source_snapshot"
-    let sourceIdentitySHA256: String
-    let embeddedSourceIdentitySHA256: String
-    let buildConfiguration: String
-    let files: [SourceFileSnapshot]
-
-    private enum CodingKeys: String, CodingKey {
-        case schemaVersion = "schema_version"
-        case artifactKind = "artifact_kind"
-        case sourceIdentitySHA256 =
-            "source_identity_sha256"
-        case embeddedSourceIdentitySHA256 =
-            "embedded_source_identity_sha256"
-        case buildConfiguration =
-            "build_configuration"
-        case files
-    }
-}
-
 private final class GPUExecutionProgress {
     var deviceArchitecture: String?
     var deviceDescription: String?
@@ -145,40 +109,6 @@ private final class GPUExecutionProgress {
     var failureStage:
         PrimeGPUCalibrationFailureStage =
             .workerPreflight
-}
-
-private struct SourceIdentityRecord: Codable {
-    let relativePath: String
-    let sha256: String
-    let byteCount: UInt64
-
-    private enum CodingKeys: String, CodingKey {
-        case relativePath = "relative_path"
-        case sha256
-        case byteCount = "byte_count"
-    }
-}
-
-private func canonicalEmbeddedProvenanceSource(
-    sourceIdentitySHA256: String
-) -> Data {
-    let lines = [
-        "enum PrimeEmbeddedBuildProvenance {",
-        "    #if DEBUG",
-        "        static let buildConfiguration = \"debug\"",
-        "    #else",
-        "        static let buildConfiguration = \"release\"",
-        "    #endif",
-        "",
-        "    // This file is excluded only to avoid a self-referential digest. Runtime",
-        "    // verification requires this exact canonical template and digest; every",
-        "    // other admitted package, source, test, and architecture file is hashed.",
-        "    static let sourceIdentitySHA256 =",
-        "        \"\(sourceIdentitySHA256)\"",
-        "}",
-        "",
-    ]
-    return Data(lines.joined(separator: "\n").utf8)
 }
 
 private func parseArguments() throws -> Arguments {
@@ -621,164 +551,43 @@ private func regularFileData(
 
 private func sourceSnapshot(
     at sourceRoot: URL
-) throws -> CalibrationSourceSnapshot {
-    let root = sourceRoot.standardizedFileURL
-    let rootPrefix = root.path + "/"
-    var urls = [URL]()
-    let fixedFiles = [
-        ".gitignore",
-        "LICENSE",
-        "Package.swift",
-        "Package.resolved",
-        "README.md",
-        "THIRD_PARTY_NOTICES.md",
-    ]
-    for relativePath in fixedFiles {
-        urls.append(
-            root.appendingPathComponent(relativePath)
-        )
-    }
-    for directory in ["Sources", "Tests", "docs"] {
-        let directoryURL =
-            root.appendingPathComponent(
-                directory,
-                isDirectory: true
+) throws -> PrimeSwiftSourceSnapshot {
+    do {
+        return try PrimeSwiftSourceProvenance
+            .capture(
+                at: sourceRoot,
+                requiredRelativePaths:
+                    PrimeNative3BFP32ExecutionConfiguration
+                    .requiredPrimeSourceRelativePaths
             )
-        guard let enumerator =
-                FileManager.default.enumerator(
-                    at: directoryURL,
-                    includingPropertiesForKeys: nil,
-                    options: [.skipsHiddenFiles]
-                ) else {
-            throw CalibrationError.incompleteSourceSnapshot
-        }
-        for case let fileURL as URL in enumerator {
-            var metadata = stat()
-            guard lstat(fileURL.path, &metadata) == 0 else {
-                throw CalibrationError.unsafeSourceFile(
-                    fileURL.path
+    } catch let error as
+        PrimeSwiftSourceProvenanceError
+    {
+        switch error {
+        case let .unsafeSourceFile(path):
+            throw CalibrationError
+                .unsafeSourceFile(path)
+        case .incompleteSourceSnapshot:
+            throw CalibrationError
+                .incompleteSourceSnapshot
+        case let .sourceIdentityMismatch(
+            expected,
+            observed
+        ):
+            throw CalibrationError
+                .sourceIdentityMismatch(
+                    expected: expected,
+                    observed: observed
                 )
-            }
-            if metadata.st_mode & S_IFMT == S_IFDIR {
-                continue
-            }
-            guard metadata.st_mode & S_IFMT == S_IFREG else {
-                throw CalibrationError.unsafeSourceFile(
-                    fileURL.path
+        case let .releaseBuildRequired(
+            configuration
+        ):
+            throw CalibrationError
+                .releaseBuildRequired(
+                    configuration
                 )
-            }
-            urls.append(fileURL)
         }
     }
-
-    var snapshots = [SourceFileSnapshot]()
-    var observedPaths = Set<String>()
-    for url in urls {
-        let standardized = url.standardizedFileURL
-        guard standardized.path.hasPrefix(rootPrefix) else {
-            throw CalibrationError.unsafeSourceFile(
-                standardized.path
-            )
-        }
-        let relativePath = String(
-            standardized.path.dropFirst(rootPrefix.count)
-        )
-        guard observedPaths.insert(relativePath).inserted else {
-            throw CalibrationError.unsafeSourceFile(
-                relativePath
-            )
-        }
-        let data = try regularFileData(
-            at: standardized,
-            maximumBytes: 8 * 1024 * 1024
-        )
-        snapshots.append(
-            SourceFileSnapshot(
-                relativePath: relativePath,
-                sha256:
-                    PrimeSHA256.hexDigest(of: data),
-                byteCount: UInt64(data.count),
-                contents: data
-            )
-        )
-    }
-    snapshots.sort {
-        $0.relativePath < $1.relativePath
-    }
-    guard observedPaths.contains("Package.swift"),
-          observedPaths.contains("LICENSE"),
-          observedPaths.contains(
-              "THIRD_PARTY_NOTICES.md"
-          ),
-          observedPaths.contains(
-              "Sources/PrimeGPUCalibration/" +
-              "PrimeGPUCalibrationMain.swift"
-          ),
-          observedPaths.contains(
-              "Sources/PrimeCore/" +
-              "PrimeNative3BProfile.swift"
-          ) else {
-        throw CalibrationError.incompleteSourceSnapshot
-    }
-    let embeddedPath =
-        "Sources/PrimeGPUCalibration/" +
-        "PrimeEmbeddedBuildProvenance.swift"
-    guard observedPaths.contains(embeddedPath) else {
-        throw CalibrationError.incompleteSourceSnapshot
-    }
-    let identityRecords = snapshots
-        .filter {
-            $0.relativePath != embeddedPath
-        }
-        .map {
-            SourceIdentityRecord(
-                relativePath: $0.relativePath,
-                sha256: $0.sha256,
-                byteCount: $0.byteCount
-            )
-        }
-    let identityData = try PrimeCanonicalJSON.encode(
-        identityRecords
-    )
-    let observedIdentity =
-        PrimeSHA256.hexDigest(of: identityData)
-    let embeddedIdentity =
-        PrimeEmbeddedBuildProvenance
-            .sourceIdentitySHA256
-    guard let embeddedSnapshot =
-            snapshots.first(where: {
-                $0.relativePath == embeddedPath
-            }),
-          embeddedSnapshot.contents
-            == canonicalEmbeddedProvenanceSource(
-                sourceIdentitySHA256:
-                    embeddedIdentity
-            ) else {
-        throw CalibrationError.unsafeSourceFile(
-            embeddedPath
-        )
-    }
-    guard observedIdentity == embeddedIdentity else {
-        throw CalibrationError.sourceIdentityMismatch(
-            expected: embeddedIdentity,
-            observed: observedIdentity
-        )
-    }
-    let buildConfiguration =
-        PrimeEmbeddedBuildProvenance
-            .buildConfiguration
-    guard buildConfiguration == "release" else {
-        throw CalibrationError.releaseBuildRequired(
-            buildConfiguration
-        )
-    }
-    return CalibrationSourceSnapshot(
-        sourceIdentitySHA256: observedIdentity,
-        embeddedSourceIdentitySHA256:
-            embeddedIdentity,
-        buildConfiguration: buildConfiguration,
-        files: snapshots
-    )
 }
 
 private func runningExecutableURL() throws -> URL {

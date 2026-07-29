@@ -585,10 +585,12 @@ final class PrimeDurableArtifactsTests: XCTestCase {
             at: "PrimeGPUCalibration",
             purpose: .executable
         )
-        let source = try root.publish(
-            Data("source-snapshot".utf8),
-            at: "source.snapshot",
-            purpose: .immutableData
+        let sourceSnapshot =
+            try PrimeSwiftSourceSnapshotTestSupport
+                .currentReleaseSnapshot()
+        let source = try root.publishCanonical(
+            sourceSnapshot,
+            at: "source.snapshot"
         )
         let metallib =
             try PinnedMLXMetallibTestSupport

@@ -67,6 +67,61 @@ restore setter. Long interrupted/resumed training therefore remains
 fail-closed until a maintained typed restore API is available and trajectory
 identity is proven.
 
+## Optimizer resume feasibility gate
+
+`PrimeOptimizerRestoreProbe` is the Swift-only spend gate in front of any
+resumable training work. It runs a deterministic tiny FP32 `MLXNN.Linear`
+model and one real maintained `MLXOptimizers.AdamW` step on MLX's CPU device,
+then crosses two fresh Swift processes:
+
+- the writer publishes immutable model and optimizer-state safetensors plus
+  dtype, shape, logical-byte count, and logical-byte SHA-256 catalogs;
+- the verifier reloads both files, proves exact logical tensor equality, and
+  restores the model through `Module.update(parameters:verify:)`;
+- the supervisor matches both child-reported PIDs to the exact `Process`
+  instances it launched, binds both child records, and publishes the final
+  receipt from their durable CPU-device observations.
+
+The gate binds the exact `mlx-swift` 0.31.3 revision and audited API-source
+hashes, including the nested flattening implementation that defines anonymous
+optimizer-slot order. It also binds the complete admitted Prime Swift source
+snapshot to the embedded Release source identity. It never calls
+`_updateInternal`, uses reflection, or substitutes a Prime-written AdamW
+equation. With the pinned stock package, model restore and optimizer-state
+serialization can be grounded, but optimizer restore and continued-trajectory
+identity remain `ABSTAIN` because no supported typed state setter exists.
+That result does not authorize a 3B checkpoint write or long training.
+
+The CPU tensor lane is intentional: this gate answers an API and serialization
+question, not GPU throughput. The maintained MLX scheduler still initializes
+its Metal runtime and requires `default.metallib` even when the graph is
+CPU-scoped. Prime therefore stages and binds the same exact pinned metallib and
+Info.plist under a separate frozen probe runtime role; it does not reinterpret
+that loader dependency as GPU tensor execution. The exact 3B FP32 raw
+checkpoint floor is about 31.52 GiB before manifests and safetensors headers:
+10.51 GiB of model weights and 21.01 GiB of Adam moments.
+
+Run the gate from a Release build with a new, empty mode-0700 artifact root:
+
+```sh
+swift build -c release
+xcodebuild -downloadComponent MetalToolchain
+xcodebuild -scheme PrimeGPUCalibration -configuration Release -destination 'platform=macOS,arch=arm64' -toolchain com.apple.dt.toolchain.Metal.32023.883 -derivedDataPath .build/apple build
+.build/arm64-apple-macosx/release/PrimeMLXBundleStage \
+  --source-host .build/apple/Build/Products/Release/PrimeGPUCalibration \
+  --destination-host .build/arm64-apple-macosx/release/PrimeOptimizerRestoreProbe \
+  --runtime-role optimizer_restore_probe
+.build/arm64-apple-macosx/release/PrimeOptimizerRestoreProbe \
+  --artifact-root /private/tmp/ergentics-prime-optimizer-restore \
+  --source-root "$PWD"
+```
+
+An evidence-backed API-limit `ABSTAIN` intentionally exits with status `2`
+after publishing the receipt; status `0` is never a parent-gate success signal.
+Preflight, child, or artifact failures exit with status `1` and do not
+authorize training. Consumers must verify the canonical receipt rather than
+collapsing either nonzero status into a successful restore.
+
 ## Initial calibration
 
 The executable accepts paths and the explicit human allocation authorization;
@@ -76,7 +131,10 @@ scientific knobs are frozen in the canonical Swift configuration:
 swift build -c release
 xcodebuild -downloadComponent MetalToolchain
 xcodebuild -scheme PrimeGPUCalibration -configuration Release -destination 'platform=macOS,arch=arm64' -toolchain com.apple.dt.toolchain.Metal.32023.883 -derivedDataPath .build/apple build
-.build/arm64-apple-macosx/release/PrimeMLXBundleStage --source-host .build/apple/Build/Products/Release/PrimeGPUCalibration --destination-host .build/arm64-apple-macosx/release/PrimeGPUCalibration
+.build/arm64-apple-macosx/release/PrimeMLXBundleStage \
+  --source-host .build/apple/Build/Products/Release/PrimeGPUCalibration \
+  --destination-host .build/arm64-apple-macosx/release/PrimeGPUCalibration \
+  --runtime-role calibration
 .build/arm64-apple-macosx/release/PrimeGPUCalibration \
   --artifact-root /private/tmp/ergentics-prime-calibration \
   --source-root "$PWD" \

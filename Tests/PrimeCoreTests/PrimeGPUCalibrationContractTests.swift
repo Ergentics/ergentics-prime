@@ -20,6 +20,7 @@ final class PrimeGPUCalibrationContractTests: XCTestCase {
         let root: PrimeArtifactRoot
         let seeds: PrimeExecutionSeeds
         let artifacts: PrimeExecutionArtifactBindings
+        let sourceSnapshot: PrimeSwiftSourceSnapshot
     }
 
     private var temporaryURL: URL!
@@ -87,6 +88,19 @@ final class PrimeGPUCalibrationContractTests: XCTestCase {
         for mutation in mutations {
             XCTAssertThrowsError(try mutation.validate())
         }
+    }
+
+    func testGPUReplayRequiresFrozenPrimeSourcePaths() {
+        XCTAssertEqual(
+            PrimeNative3BFP32ExecutionConfiguration
+                .requiredPrimeSourceRelativePaths,
+            [
+                "Sources/PrimeGPUCalibration/" +
+                    "PrimeGPUCalibrationMain.swift",
+                "Sources/PrimeCore/" +
+                    "PrimeNative3BProfile.swift",
+            ]
+        )
     }
 
     func testGroundedReceiptMatchesFrozenPlanAndCounts()
@@ -422,6 +436,13 @@ final class PrimeGPUCalibrationContractTests: XCTestCase {
         XCTAssertNoThrow(
             try binding().validateDeclaration()
         )
+        XCTAssertNoThrow(
+            try binding(
+                runtimeImageLayout:
+                    PrimeMLXRuntimeImageLayout
+                    .optimizerRestoreProbe
+            ).validateDeclaration()
+        )
         for mutation in [
             binding(version: "0.31.2"),
             binding(
@@ -499,6 +520,168 @@ final class PrimeGPUCalibrationContractTests: XCTestCase {
             XCTAssertThrowsError(
                 try mutation.validateDeclaration()
             )
+        }
+    }
+
+    func testCalibrationConfigurationRejectsOptimizerRestoreRuntimeRole()
+        throws
+    {
+        let fixture = try makeFixture()
+        let calibrationBinding =
+            fixture.artifacts
+                .mlxDefaultMetallib
+        let restoreBinding =
+            PrimePinnedMLXMetallibBinding(
+                mlxSwiftVersion:
+                    calibrationBinding
+                    .mlxSwiftVersion,
+                sourceBundleRelativePath:
+                    calibrationBinding
+                    .sourceBundleRelativePath,
+                artifact:
+                    calibrationBinding.artifact,
+                infoPlistSourceRelativePath:
+                    calibrationBinding
+                    .infoPlistSourceRelativePath,
+                infoPlistArtifact:
+                    calibrationBinding
+                    .infoPlistArtifact,
+                runtimeEnvironmentPolicy:
+                    calibrationBinding
+                    .runtimeEnvironmentPolicy,
+                runtimeImageLayout:
+                    PrimeMLXRuntimeImageLayout
+                    .optimizerRestoreProbe,
+                releaseInstrumentationPolicy:
+                    calibrationBinding
+                    .releaseInstrumentationPolicy
+            )
+        XCTAssertNoThrow(
+            try restoreBinding.validateDeclaration()
+        )
+
+        let configuration =
+            PrimeNative3BFP32ExecutionConfiguration(
+                seeds: fixture.seeds,
+                executable:
+                    fixture.artifacts.executable,
+                sourceSnapshot:
+                    fixture.artifacts
+                    .sourceSnapshot,
+                mlxDefaultMetallib:
+                    restoreBinding,
+                externalExecutionExclusionReason:
+                    PrimeSwiftExecutionBoundary
+                    .strictExclusionReason
+            )
+        XCTAssertThrowsError(
+            try configuration.validate()
+        )
+    }
+
+    func testReceiptReplayRejectsFabricatedAndTamperedSourceSnapshots()
+        throws
+    {
+        let fixture = try makeFixture()
+        let sourcePath =
+            "Sources/PrimeGPUCalibration/" +
+            "PrimeGPUCalibrationMain.swift"
+        var tamperedFiles =
+            fixture.sourceSnapshot.files
+        let sourceIndex = try XCTUnwrap(
+            tamperedFiles.firstIndex(where: {
+                $0.relativePath == sourcePath
+            })
+        )
+        let sourceFile = tamperedFiles[sourceIndex]
+        tamperedFiles[sourceIndex] =
+            PrimeSwiftSourceFileSnapshot(
+                relativePath: sourceFile.relativePath,
+                sha256: sourceFile.sha256,
+                byteCount: sourceFile.byteCount,
+                contents:
+                    sourceFile.contents
+                    + Data([0x0a])
+            )
+        let tampered = PrimeSwiftSourceSnapshot(
+            sourceIdentitySHA256:
+                fixture.sourceSnapshot
+                .sourceIdentitySHA256,
+            embeddedSourceIdentitySHA256:
+                fixture.sourceSnapshot
+                .embeddedSourceIdentitySHA256,
+            buildConfiguration: "release",
+            files: tamperedFiles
+        )
+        let fabricated = PrimeSwiftSourceSnapshot(
+            sourceIdentitySHA256:
+                String(repeating: "0", count: 64),
+            embeddedSourceIdentitySHA256:
+                fixture.sourceSnapshot
+                .embeddedSourceIdentitySHA256,
+            buildConfiguration: "release",
+            files: fixture.sourceSnapshot.files
+        )
+
+        for (index, mutation) in
+            [tampered, fabricated].enumerated()
+        {
+            let sourceBinding =
+                try fixture.root.publishCanonical(
+                    mutation,
+                    at:
+                        "source-snapshot-mutation-\(index).json"
+                )
+            let configuration =
+                PrimeNative3BFP32ExecutionConfiguration(
+                    seeds: fixture.seeds,
+                    executable:
+                        fixture.artifacts.executable,
+                    sourceSnapshot: sourceBinding,
+                    mlxDefaultMetallib:
+                        fixture.artifacts
+                        .mlxDefaultMetallib,
+                    externalExecutionExclusionReason:
+                        PrimeSwiftExecutionBoundary
+                        .strictExclusionReason
+                )
+            try configuration.validate()
+            let configurationBinding =
+                try fixture.root.publishCanonical(
+                    configuration,
+                    at:
+                        "source-snapshot-mutation-config-\(index).json"
+                )
+            let artifacts =
+                PrimeExecutionArtifactBindings(
+                    executable:
+                        fixture.artifacts.executable,
+                    configuration:
+                        configurationBinding,
+                    sourceSnapshot: sourceBinding,
+                    mlxDefaultMetallib:
+                        fixture.artifacts
+                        .mlxDefaultMetallib
+                )
+            let mutatedFixture = Fixture(
+                root: fixture.root,
+                seeds: fixture.seeds,
+                artifacts: artifacts,
+                sourceSnapshot: mutation
+            )
+            XCTAssertThrowsError(
+                try makeWorkerCandidate(
+                    fixture: mutatedFixture
+                ).validateWorkerCandidate(
+                    in: fixture.root
+                )
+            ) { error in
+                XCTAssertTrue(
+                    error is
+                        PrimeSwiftSourceProvenanceError,
+                    "unexpected error: \(error)"
+                )
+            }
         }
     }
 
@@ -854,10 +1037,12 @@ final class PrimeGPUCalibrationContractTests: XCTestCase {
             at: "PrimeGPUCalibration",
             purpose: .executable
         )
-        let source = try root.publish(
-            Data("source-snapshot".utf8),
-            at: "source.snapshot",
-            purpose: .immutableData
+        let sourceSnapshot =
+            try PrimeSwiftSourceSnapshotTestSupport
+                .currentReleaseSnapshot()
+        let source = try root.publishCanonical(
+            sourceSnapshot,
+            at: "source.snapshot"
         )
         let metallib =
             try PinnedMLXMetallibTestSupport
@@ -882,12 +1067,15 @@ final class PrimeGPUCalibrationContractTests: XCTestCase {
         return Fixture(
             root: root,
             seeds: seeds,
-            artifacts: PrimeExecutionArtifactBindings(
-                executable: executable,
-                configuration: configurationBinding,
-                sourceSnapshot: source,
-                mlxDefaultMetallib: metallib
-            )
+            artifacts:
+                PrimeExecutionArtifactBindings(
+                    executable: executable,
+                    configuration:
+                        configurationBinding,
+                    sourceSnapshot: source,
+                    mlxDefaultMetallib: metallib
+                ),
+            sourceSnapshot: sourceSnapshot
         )
     }
 

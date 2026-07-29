@@ -45,6 +45,41 @@ The three fidelity arms are mechanisms, not arbitrary budgets. Wall and
 convergence bounds are derived from a completed fixed-token calibration and
 must align to optimizer-step and curriculum-block boundaries.
 
+## Optimizer checkpoint admission
+
+Optimizer checkpoint admission is separate from the Metal allocation result.
+The stock lane may read and serialize `AdamW.innerState()`, but anonymous
+read-only arrays are not a supported restoration schema. Prime does not
+reinterpret MLX's public-for-cross-module `_updateInternal` implementation
+hook as an application API.
+
+The admission sequence is:
+
+1. bind the exact dependency revision, audited upstream source identities,
+   and the complete Prime Swift source snapshot to the embedded Release
+   source identity;
+2. stage and bind the exact pinned MLX metallib under the frozen optimizer
+   probe runtime role, because the maintained scheduler requires it even for
+   CPU-scoped tensors;
+3. run a deterministic maintained AdamW step in a Swift writer process;
+4. publish model and moment safetensors, the writer PID, and observed CPU
+   device/stream state with an independent logical tensor catalog;
+5. reload and exact-compare them in a fresh Swift verifier process, bind both
+   child records, and reconcile both reported PIDs to the supervisor's
+   launched processes;
+6. restore the model through the maintained typed module API;
+7. require a maintained named optimizer-state import API before attempting
+   `N -> checkpoint -> restart -> N+1` trajectory identity.
+
+Steps 1 through 6 can be grounded with stock `mlx-swift` 0.31.3. Step 7 cannot,
+so the gate is `ABSTAIN` and convergence-capped or resumable training remains
+unauthorized. The parent publishes that receipt and exits with status `2`, so
+exit-status-only automation cannot promote the API-limit result. A future
+Ergentics-pinned MLX fork may add only the typed
+state-import seam while preserving the maintained AdamW arithmetic; it must
+pass exact uninterrupted-versus-restarted trajectory comparison on a tiny
+model before any 3B checkpoint I/O.
+
 ## Threat boundary
 
 The staged-image contract covers accidental and persistent mutation through
