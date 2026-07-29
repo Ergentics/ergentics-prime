@@ -5,6 +5,34 @@ import XCTest
 final class PrimeSwiftSourceProvenanceTests:
     XCTestCase
 {
+    func testLiveRepositoryMatchesEmbeddedSourceIdentity()
+        throws
+    {
+        let root = URL(
+            fileURLWithPath:
+                FileManager.default
+                .currentDirectoryPath,
+            isDirectory: true
+        )
+        let expectation =
+            PrimeSwiftSourceProvenanceExpectation(
+                sourceIdentitySHA256:
+                    PrimeEmbeddedBuildProvenance
+                    .sourceIdentitySHA256,
+                buildConfiguration: "release"
+            )
+        let snapshot =
+            try PrimeSwiftSourceProvenance.capture(
+                at: root,
+                requiredRelativePaths: [],
+                expectation: expectation
+            )
+        XCTAssertEqual(
+            snapshot.sourceIdentitySHA256,
+            expectation.sourceIdentitySHA256
+        )
+    }
+
     func testCapturePreservesCanonicalSnapshotContract()
         throws
     {
@@ -50,6 +78,18 @@ final class PrimeSwiftSourceProvenanceTests:
         XCTAssertTrue(
             snapshot.files.contains(where: {
                 $0.relativePath == ".gitignore"
+            })
+        )
+        XCTAssertTrue(
+            snapshot.files.contains(where: {
+                $0.relativePath
+                    == ".swiftpm/configuration/mirrors.json"
+            })
+        )
+        XCTAssertTrue(
+            snapshot.files.contains(where: {
+                $0.relativePath
+                    == "Tests/PrimeTypedOptimizerRestoreMechanicsValidation/.swiftpm/configuration/mirrors.json"
             })
         )
         XCTAssertNoThrow(
@@ -209,6 +249,108 @@ final class PrimeSwiftSourceProvenanceTests:
         }
     }
 
+    func testDependencyMirrorMutationFailsSourceIdentity()
+        throws
+    {
+        let fixture = try makeFixture()
+        defer {
+            try? FileManager.default.removeItem(
+                at: fixture.root
+            )
+        }
+        let snapshot =
+            try PrimeSwiftSourceProvenance.capture(
+                at: fixture.root,
+                requiredRelativePaths: [],
+                expectation:
+                    fixture.expectation
+            )
+        let files = snapshot.files.map { file in
+            guard file.relativePath
+                == ".swiftpm/configuration/mirrors.json"
+            else {
+                return file
+            }
+            let contents =
+                file.contents + Data([0x0a])
+            return PrimeSwiftSourceFileSnapshot(
+                relativePath: file.relativePath,
+                sha256:
+                    PrimeSHA256.hexDigest(of: contents),
+                byteCount: UInt64(contents.count),
+                contents: contents
+            )
+        }
+        let mutation = PrimeSwiftSourceSnapshot(
+            sourceIdentitySHA256:
+                snapshot.sourceIdentitySHA256,
+            embeddedSourceIdentitySHA256:
+                snapshot
+                .embeddedSourceIdentitySHA256,
+            buildConfiguration:
+                snapshot.buildConfiguration,
+            files: files
+        )
+
+        XCTAssertThrowsError(
+            try PrimeSwiftSourceProvenance.validate(
+                mutation,
+                requiredRelativePaths: [],
+                expectation:
+                    fixture.expectation
+            )
+        ) { error in
+            guard case
+                .sourceIdentityMismatch =
+                    error as?
+                    PrimeSwiftSourceProvenanceError
+            else {
+                return XCTFail(
+                    "unexpected error: \(error)"
+                )
+            }
+        }
+    }
+
+    func testMissingDependencyMirrorFailsCapture()
+        throws
+    {
+        let fixture = try makeFixture()
+        defer {
+            try? FileManager.default.removeItem(
+                at: fixture.root
+            )
+        }
+        try FileManager.default.removeItem(
+            at: fixture.root.appendingPathComponent(
+                ".swiftpm/configuration/mirrors.json"
+            )
+        )
+
+        XCTAssertThrowsError(
+            try PrimeSwiftSourceProvenance.capture(
+                at: fixture.root,
+                requiredRelativePaths: [],
+                expectation:
+                    fixture.expectation
+            )
+        ) { error in
+            guard case let .unsafeSourceFile(path) =
+                error as?
+                    PrimeSwiftSourceProvenanceError
+            else {
+                return XCTFail(
+                    "unexpected error: \(error)"
+                )
+            }
+            XCTAssertTrue(
+                path.hasSuffix(
+                    ".swiftpm/configuration/mirrors.json"
+                )
+            )
+        }
+    }
+
     func testDebugBuildExpectationIsRejected()
         throws
     {
@@ -271,6 +413,8 @@ final class PrimeSwiftSourceProvenanceTests:
                 isDirectory: true
             )
         for directory in [
+            ".swiftpm/configuration",
+            "Tests/PrimeTypedOptimizerRestoreMechanicsValidation/.swiftpm/configuration",
             "Sources/PrimeCore",
             "Tests",
             "docs",
@@ -285,6 +429,36 @@ final class PrimeSwiftSourceProvenanceTests:
         }
         var contents: [String: Data] = [
             ".gitignore": Data(".build/\n".utf8),
+            ".swiftpm/configuration/mirrors.json":
+                Data(
+                    """
+                    {
+                      "object" : [
+                        {
+                          "mirror" : "https://github.com/Ergentics/ergentics-mlx-swift",
+                          "original" : "https://github.com/ml-explore/mlx-swift"
+                        }
+                      ],
+                      "version" : 1
+                    }
+
+                    """.utf8
+                ),
+            "Tests/PrimeTypedOptimizerRestoreMechanicsValidation/.swiftpm/configuration/mirrors.json":
+                Data(
+                    """
+                    {
+                      "object" : [
+                        {
+                          "mirror" : "https://github.com/Ergentics/ergentics-mlx-swift",
+                          "original" : "https://github.com/ml-explore/mlx-swift"
+                        }
+                      ],
+                      "version" : 1
+                    }
+
+                    """.utf8
+                ),
             "LICENSE": Data("first-party\n".utf8),
             "Package.swift":
                 Data("// swift-tools-version: 5.10\n".utf8),

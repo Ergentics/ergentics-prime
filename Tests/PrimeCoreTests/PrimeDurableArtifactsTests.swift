@@ -159,6 +159,30 @@ final class PrimeDurableArtifactsTests: XCTestCase {
         )
     }
 
+    func testNewRunRootMustBeEmpty()
+        throws
+    {
+        let root = try PrimeArtifactRoot(
+            directoryURL: temporaryURL
+        )
+        XCTAssertNoThrow(
+            try root.requireEmpty()
+        )
+        _ = try root.publish(
+            Data("prior run".utf8),
+            at: "prior-run.json",
+            purpose: .immutableData
+        )
+        XCTAssertThrowsError(
+            try root.requireEmpty()
+        ) { error in
+            XCTAssertEqual(
+                error as? PrimeDurableArtifactError,
+                .nonemptyArtifactRoot
+            )
+        }
+    }
+
     func testPrivateDirectoryAndOutputPreflightUseTrustedRoot()
         throws
     {

@@ -140,6 +140,284 @@ final class PrimePinnedMLXMetallibTests: XCTestCase {
         )
     }
 
+    func testStageExactXcodeMetallibPublishesOnlyMissingMetallibAndIsIdempotent()
+        throws
+    {
+        let donor = try makeXcodeDonorFixture()
+        let destination = try makeFixture(
+            executableName:
+                "PrimeTypedOptimizerRestoreProbe"
+        )
+        let destinationInfoPlist =
+            infoPlistURL(for: destination)
+        let canonicalInfoPlist = try Data(
+            contentsOf: destinationInfoPlist
+        )
+        XCTAssertEqual(
+            UInt64(canonicalInfoPlist.count),
+            PrimePinnedMLXMetallib
+                .expectedInfoPlistByteCount
+        )
+        XCTAssertEqual(
+            PrimeSHA256.hexDigest(
+                of: canonicalInfoPlist
+            ),
+            PrimePinnedMLXMetallib
+                .expectedInfoPlistSHA256
+        )
+        try FileManager.default.removeItem(
+            at: destination.metallib
+        )
+
+        let first =
+            try PrimePinnedMLXMetallib
+                .stageExactXcodeMetallib(
+                    from: donor.executable,
+                    beside: destination.executable,
+                    runtimeRole:
+                        .typedOptimizerRestoreProbe
+                )
+        XCTAssertTrue(
+            first
+                .destinationMetallibInitiallyAbsent
+        )
+        XCTAssertEqual(
+            try Data(
+                contentsOf: destinationInfoPlist
+            ),
+            canonicalInfoPlist
+        )
+        let stagedMetallib = try Data(
+            contentsOf: destination.metallib
+        )
+        XCTAssertEqual(
+            UInt64(stagedMetallib.count),
+            PrimePinnedMLXMetallib
+                .expectedByteCount
+        )
+        XCTAssertEqual(
+            PrimeSHA256.hexDigest(
+                of: stagedMetallib
+            ),
+            PrimePinnedMLXMetallib
+                .expectedSHA256
+        )
+        XCTAssertNoThrow(
+            try PrimePinnedMLXMetallib
+                .reverifyStagedRuntimeImage(
+                    of: destination.executable,
+                    matches: first.binding,
+                    runtimeRole:
+                        .typedOptimizerRestoreProbe
+                )
+        )
+
+        let second =
+            try PrimePinnedMLXMetallib
+                .stageExactXcodeMetallib(
+                    from: donor.executable,
+                    beside: destination.executable,
+                    runtimeRole:
+                        .typedOptimizerRestoreProbe
+                )
+        XCTAssertFalse(
+            second
+                .destinationMetallibInitiallyAbsent
+        )
+        XCTAssertEqual(second.binding, first.binding)
+        XCTAssertEqual(
+            try Data(
+                contentsOf: destinationInfoPlist
+            ),
+            canonicalInfoPlist
+        )
+        XCTAssertEqual(
+            try Data(
+                contentsOf: destination.metallib
+            ),
+            stagedMetallib
+        )
+    }
+
+    func testStageValidatesDonorEvenWhenDestinationIsExact()
+        throws
+    {
+        let donor = try makeXcodeDonorFixture()
+        let destination = try makeFixture(
+            executableName:
+                "PrimeTypedOptimizerRestoreProbe"
+        )
+        let originalDestinationMetallib =
+            try Data(
+                contentsOf: destination.metallib
+            )
+        let donorInfoPlist =
+            infoPlistURL(for: donor)
+        var invalidDonorInfoPlist =
+            try Data(contentsOf: donorInfoPlist)
+        invalidDonorInfoPlist[
+            invalidDonorInfoPlist.count - 1
+        ] ^= 0xff
+        try withOwnerWritableFile(
+            at: donorInfoPlist
+        ) {
+            try invalidDonorInfoPlist.write(
+                to: donorInfoPlist
+            )
+        }
+
+        XCTAssertThrowsError(
+            try PrimePinnedMLXMetallib
+                .stageExactXcodeMetallib(
+                    from: donor.executable,
+                    beside: destination.executable,
+                    runtimeRole:
+                        .typedOptimizerRestoreProbe
+                )
+        )
+        XCTAssertEqual(
+            try Data(
+                contentsOf: destination.metallib
+            ),
+            originalDestinationMetallib
+        )
+    }
+
+    func testStageRejectsWrongExistingDestinationWithoutOverwrite()
+        throws
+    {
+        let donor = try makeXcodeDonorFixture()
+        let destination = try makeFixture(
+            executableName:
+                "PrimeTypedOptimizerRestoreProbe"
+        )
+        var wrongDestinationMetallib =
+            try Data(
+                contentsOf: destination.metallib
+            )
+        wrongDestinationMetallib[
+            wrongDestinationMetallib.count - 1
+        ] ^= 0xff
+        try withOwnerWritableFile(
+            at: destination.metallib
+        ) {
+            try wrongDestinationMetallib.write(
+                to: destination.metallib
+            )
+        }
+
+        XCTAssertThrowsError(
+            try PrimePinnedMLXMetallib
+                .stageExactXcodeMetallib(
+                    from: donor.executable,
+                    beside: destination.executable,
+                    runtimeRole:
+                        .typedOptimizerRestoreProbe
+                )
+        )
+        XCTAssertEqual(
+            try Data(
+                contentsOf: destination.metallib
+            ),
+            wrongDestinationMetallib
+        )
+    }
+
+    func testStageRejectsSourceAndDestinationManifestRoleSubstitution()
+        throws
+    {
+        do {
+            let canonicalSource =
+                try makeFixture()
+            let destination = try makeFixture(
+                executableName:
+                    "PrimeTypedOptimizerRestoreProbe"
+            )
+            XCTAssertThrowsError(
+                try PrimePinnedMLXMetallib
+                    .stageExactXcodeMetallib(
+                        from:
+                            canonicalSource
+                            .executable,
+                        beside:
+                            destination
+                            .executable,
+                        runtimeRole:
+                            .typedOptimizerRestoreProbe
+                    )
+            )
+        }
+
+        do {
+            let donor =
+                try makeXcodeDonorFixture()
+            let destination = try makeFixture(
+                executableName:
+                    "PrimeTypedOptimizerRestoreProbe"
+            )
+            try convertCanonicalInfoPlistToXcodeDonor(
+                in: destination
+            )
+            XCTAssertThrowsError(
+                try PrimePinnedMLXMetallib
+                    .stageExactXcodeMetallib(
+                        from: donor.executable,
+                        beside:
+                            destination
+                            .executable,
+                        runtimeRole:
+                            .typedOptimizerRestoreProbe
+                    )
+            )
+        }
+
+        do {
+            let donor =
+                try makeXcodeDonorFixture()
+            let destination = try makeFixture(
+                executableName:
+                    "PrimeTypedOptimizerRestoreProbe"
+            )
+            XCTAssertThrowsError(
+                try PrimePinnedMLXMetallib
+                    .stageExactXcodeMetallib(
+                        from: donor.executable,
+                        beside:
+                            destination
+                            .executable,
+                        runtimeRole: .calibration
+                    )
+            )
+        }
+    }
+
+    func testStageRejectsExtraXcodeDonorBundleEntry()
+        throws
+    {
+        let donor = try makeXcodeDonorFixture()
+        let destination = try makeFixture(
+            executableName:
+                "PrimeTypedOptimizerRestoreProbe"
+        )
+        let extra = donor.metallib
+            .deletingLastPathComponent()
+            .appendingPathComponent(
+                "unadmitted.metallib"
+            )
+        try Data("unadmitted".utf8).write(
+            to: extra
+        )
+        XCTAssertThrowsError(
+            try PrimePinnedMLXMetallib
+                .stageExactXcodeMetallib(
+                    from: donor.executable,
+                    beside: destination.executable,
+                    runtimeRole:
+                        .typedOptimizerRestoreProbe
+                )
+        )
+    }
+
     func testExplicitRuntimeRolesRejectCrossRoleSubstitution()
         throws
     {
@@ -201,6 +479,49 @@ final class PrimePinnedMLXMetallibTests: XCTestCase {
                 .reverifyStagedRuntimeImage(
                     of: restoreFixture.executable,
                     matches: restoreBinding
+                )
+        )
+
+        let typedRestoreFixture = try makeFixture()
+        let typedRestoreBinding =
+            try PrimePinnedMLXMetallib
+                .captureSibling(
+                    of:
+                        typedRestoreFixture
+                        .executable,
+                    into:
+                        typedRestoreFixture
+                        .artifactRoot,
+                    runtimeRole:
+                        .typedOptimizerRestoreProbe
+                )
+        XCTAssertEqual(
+            typedRestoreBinding.runtimeImageLayout,
+            PrimeMLXRuntimeImageLayout
+                .typedOptimizerRestoreProbe
+        )
+        XCTAssertNoThrow(
+            try PrimePinnedMLXMetallib
+                .reverifyStagedRuntimeImage(
+                    of:
+                        typedRestoreFixture
+                        .executable,
+                    matches:
+                        typedRestoreBinding,
+                    runtimeRole:
+                        .typedOptimizerRestoreProbe
+                )
+        )
+        XCTAssertThrowsError(
+            try PrimePinnedMLXMetallib
+                .reverifyStagedRuntimeImage(
+                    of:
+                        typedRestoreFixture
+                        .executable,
+                    matches:
+                        typedRestoreBinding,
+                    runtimeRole:
+                        .optimizerRestoreProbe
                 )
         )
     }
@@ -526,7 +847,10 @@ final class PrimePinnedMLXMetallibTests: XCTestCase {
         )
     }
 
-    private func makeFixture() throws -> Fixture {
+    private func makeFixture(
+        executableName: String =
+            "PrimeGPUCalibration"
+    ) throws -> Fixture {
         let identifier = UUID().uuidString
         let hostRoot = temporaryURL
             .appendingPathComponent(
@@ -554,7 +878,7 @@ final class PrimePinnedMLXMetallibTests: XCTestCase {
 
         let executable = hostRoot
             .appendingPathComponent(
-                "PrimeGPUCalibration"
+                executableName
             )
         try Data("Mach-O-test-host".utf8).write(
             to: executable
@@ -590,6 +914,89 @@ final class PrimePinnedMLXMetallibTests: XCTestCase {
                 directoryURL: artifactDirectory
             )
         )
+    }
+
+    private func makeXcodeDonorFixture()
+        throws -> Fixture
+    {
+        let fixture = try makeFixture()
+        try convertCanonicalInfoPlistToXcodeDonor(
+            in: fixture
+        )
+        return fixture
+    }
+
+    private func convertCanonicalInfoPlistToXcodeDonor(
+        in fixture: Fixture
+    ) throws {
+        let infoPlist = infoPlistURL(
+            for: fixture
+        )
+        let canonicalData = try Data(
+            contentsOf: infoPlist
+        )
+        XCTAssertEqual(
+            UInt64(canonicalData.count),
+            PrimePinnedMLXMetallib
+                .expectedInfoPlistByteCount
+        )
+        XCTAssertEqual(
+            PrimeSHA256.hexDigest(
+                of: canonicalData
+            ),
+            PrimePinnedMLXMetallib
+                .expectedInfoPlistSHA256
+        )
+        var contents = try XCTUnwrap(
+            String(
+                data: canonicalData,
+                encoding: .utf8
+            )
+        )
+        let canonicalIdentifier =
+            "mlx-swift.Cmlx.resources"
+        let donorIdentifier =
+            "ergentics-mlx-swift.Cmlx.resources"
+        XCTAssertEqual(
+            contents.components(
+                separatedBy:
+                    canonicalIdentifier
+            ).count,
+            2
+        )
+        contents = contents.replacingOccurrences(
+            of: canonicalIdentifier,
+            with: donorIdentifier
+        )
+        let donorData = Data(contents.utf8)
+        XCTAssertEqual(
+            UInt64(donorData.count),
+            PrimePinnedMLXMetallib
+                .expectedXcodeDonorInfoPlistByteCount
+        )
+        XCTAssertEqual(
+            PrimeSHA256.hexDigest(
+                of: donorData
+            ),
+            PrimePinnedMLXMetallib
+                .expectedXcodeDonorInfoPlistSHA256
+        )
+        try withOwnerWritableFile(
+            at: infoPlist
+        ) {
+            try donorData.write(
+                to: infoPlist
+            )
+        }
+    }
+
+    private func infoPlistURL(
+        for fixture: Fixture
+    ) -> URL {
+        fixture.metallib
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+            .appendingPathComponent("Info.plist")
     }
 
     private func addUnapprovedExtendedAttribute(

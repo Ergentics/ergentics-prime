@@ -11,6 +11,13 @@ let package = Package(
             name: "PrimeCore",
             targets: ["PrimeCore"]
         ),
+        .library(
+            name:
+                "PrimeTypedOptimizerRestoreMechanics",
+            targets: [
+                "PrimeTypedOptimizerRestoreMechanics",
+            ]
+        ),
         .executable(
             name: "PrimeGPUCalibration",
             targets: ["PrimeGPUCalibration"]
@@ -24,14 +31,25 @@ let package = Package(
             targets: ["PrimeMLXBundleStage"]
         ),
         .executable(
+            name: "PrimeMLXTestBundleStage",
+            targets: ["PrimeMLXTestBundleStage"]
+        ),
+        .executable(
             name: "PrimeOptimizerRestoreProbe",
             targets: ["PrimeOptimizerRestoreProbe"]
+        ),
+        .executable(
+            name: "PrimeTypedOptimizerRestoreProbe",
+            targets: [
+                "PrimeTypedOptimizerRestoreProbe",
+            ]
         ),
     ],
     dependencies: [
         .package(
-            url: "https://github.com/ml-explore/mlx-swift",
-            exact: "0.31.3"
+            url: "https://github.com/Ergentics/ergentics-mlx-swift",
+            revision:
+                "68904d54b72871f26968261ae05d4fbb7c5e3142"
         ),
         .package(
             url: "https://github.com/ml-explore/mlx-swift-lm",
@@ -42,21 +60,40 @@ let package = Package(
         .target(
             name: "PrimeCore"
         ),
+        .target(
+            name:
+                "PrimeTypedOptimizerRestoreMechanics",
+            dependencies: [
+                "PrimeCore",
+                .product(
+                    name: "MLX",
+                    package: "ergentics-mlx-swift"
+                ),
+                .product(
+                    name: "MLXNN",
+                    package: "ergentics-mlx-swift"
+                ),
+                .product(
+                    name: "MLXOptimizers",
+                    package: "ergentics-mlx-swift"
+                ),
+            ]
+        ),
         .executableTarget(
             name: "PrimeGPUCalibration",
             dependencies: [
                 "PrimeCore",
                 .product(
                     name: "MLX",
-                    package: "mlx-swift"
+                    package: "ergentics-mlx-swift"
                 ),
                 .product(
                     name: "MLXNN",
-                    package: "mlx-swift"
+                    package: "ergentics-mlx-swift"
                 ),
                 .product(
                     name: "MLXOptimizers",
-                    package: "mlx-swift"
+                    package: "ergentics-mlx-swift"
                 ),
                 .product(
                     name: "MLXLLM",
@@ -73,20 +110,39 @@ let package = Package(
             dependencies: ["PrimeCore"]
         ),
         .executableTarget(
+            name: "PrimeMLXTestBundleStage",
+            dependencies: ["PrimeCore"]
+        ),
+        .executableTarget(
             name: "PrimeOptimizerRestoreProbe",
             dependencies: [
                 "PrimeCore",
                 .product(
                     name: "MLX",
-                    package: "mlx-swift"
+                    package: "ergentics-mlx-swift"
                 ),
                 .product(
                     name: "MLXNN",
-                    package: "mlx-swift"
+                    package: "ergentics-mlx-swift"
                 ),
                 .product(
                     name: "MLXOptimizers",
-                    package: "mlx-swift"
+                    package: "ergentics-mlx-swift"
+                ),
+            ]
+        ),
+        .executableTarget(
+            name: "PrimeTypedOptimizerRestoreProbe",
+            dependencies: [
+                "PrimeCore",
+                "PrimeTypedOptimizerRestoreMechanics",
+                .product(
+                    name: "MLX",
+                    package: "ergentics-mlx-swift"
+                ),
+                .product(
+                    name: "MLXOptimizers",
+                    package: "ergentics-mlx-swift"
                 ),
             ]
         ),

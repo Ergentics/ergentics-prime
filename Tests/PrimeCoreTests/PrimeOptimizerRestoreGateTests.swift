@@ -628,6 +628,8 @@ final class PrimeOptimizerRestoreGateTests:
     {
         let relativePaths = [
             ".gitignore",
+            ".swiftpm/configuration/mirrors.json",
+            "Tests/PrimeTypedOptimizerRestoreMechanicsValidation/.swiftpm/configuration/mirrors.json",
             "LICENSE",
             "Package.swift",
             "Package.resolved",
@@ -747,51 +749,53 @@ final class PrimeOptimizerRestoreGateTests:
         let checkout = repository
             .appendingPathComponent(".build")
             .appendingPathComponent("checkouts")
-            .appendingPathComponent("mlx-swift")
+            .appendingPathComponent(
+                PrimeTypedOptimizerDependencyTree
+                    .checkoutDirectoryName
+            )
         let publications: [
             (
-                source: URL,
+                data: Data,
                 binding: PrimeArtifactBinding
             )
         ] = [
             (
-                repository.appendingPathComponent(
-                    "Package.resolved"
-                ),
+                frozenDependencyResolutionData(),
                 evidence.dependencyResolution
             ),
-            (
-                checkout.appendingPathComponent("LICENSE"),
-                evidence.licenseArtifact
+            try sourcePublication(
+                repositoryRelativePath: "LICENSE",
+                artifact: evidence.licenseArtifact,
+                checkout: checkout
             ),
-            sourcePublication(
+            try sourcePublication(
                 evidence.optimizer,
                 checkout: checkout
             ),
-            sourcePublication(
+            try sourcePublication(
                 evidence.updatableProtocol,
                 checkout: checkout
             ),
-            sourcePublication(
+            try sourcePublication(
                 evidence.arrayMutation,
                 checkout: checkout
             ),
-            sourcePublication(
+            try sourcePublication(
                 evidence.nestedStructure,
                 checkout: checkout
             ),
-            sourcePublication(
+            try sourcePublication(
                 evidence.tensorIO,
                 checkout: checkout
             ),
-            sourcePublication(
+            try sourcePublication(
                 evidence.moduleRestore,
                 checkout: checkout
             ),
         ]
         for publication in publications {
             let observed = try root.publish(
-                Data(contentsOf: publication.source),
+                publication.data,
                 at: publication.binding.relativePath,
                 purpose: .immutableData
             )
@@ -811,15 +815,88 @@ final class PrimeOptimizerRestoreGateTests:
         _ binding:
             PrimeOptimizerRestoreSourceAPIBinding,
         checkout: URL
-    ) -> (
-        source: URL,
+    ) throws -> (
+        data: Data,
+        binding: PrimeArtifactBinding
+    ) {
+        try sourcePublication(
+            repositoryRelativePath:
+                binding.repositoryRelativePath,
+            artifact: binding.sourceArtifact,
+            checkout: checkout
+        )
+    }
+
+    private func sourcePublication(
+        repositoryRelativePath: String,
+        artifact: PrimeArtifactBinding,
+        checkout: URL
+    ) throws -> (
+        data: Data,
         binding: PrimeArtifactBinding
     ) {
         (
-            checkout.appendingPathComponent(
-                binding.repositoryRelativePath
+            try Data(
+                contentsOf:
+                    checkout.appendingPathComponent(
+                        repositoryRelativePath
+                    )
             ),
-            binding.sourceArtifact
+            artifact
+        )
+    }
+
+    private func frozenDependencyResolutionData()
+        -> Data
+    {
+        Data(
+            (
+                """
+                {
+                  "originHash" : "246faf1a10ea04cf6f3f626caf50db0e2c2a64bf4b309079da451a7ea1f00ea7",
+                  "pins" : [
+                    {
+                      "identity" : "mlx-swift",
+                      "kind" : "remoteSourceControl",
+                      "location" : "https://github.com/ml-explore/mlx-swift",
+                      "state" : {
+                        "revision" : "61b9e011e09a62b489f6bd647958f1555bdf2896",
+                        "version" : "0.31.3"
+                      }
+                    },
+                    {
+                      "identity" : "mlx-swift-lm",
+                      "kind" : "remoteSourceControl",
+                      "location" : "https://github.com/ml-explore/mlx-swift-lm",
+                      "state" : {
+                        "revision" : "1c05248bb0899e2a7a4962b84d319cf12f4e12aa",
+                        "version" : "3.31.3"
+                      }
+                    },
+                    {
+                      "identity" : "swift-numerics",
+                      "kind" : "remoteSourceControl",
+                      "location" : "https://github.com/apple/swift-numerics",
+                      "state" : {
+                        "revision" : "0c0290ff6b24942dadb83a929ffaaa1481df04a2",
+                        "version" : "1.1.1"
+                      }
+                    },
+                    {
+                      "identity" : "swift-syntax",
+                      "kind" : "remoteSourceControl",
+                      "location" : "https://github.com/swiftlang/swift-syntax.git",
+                      "state" : {
+                        "revision" : "0687f71944021d616d34d922343dcef086855920",
+                        "version" : "600.0.1"
+                      }
+                    }
+                  ],
+                  "version" : 3
+                }
+                """
+                    + "\n"
+            ).utf8
         )
     }
 

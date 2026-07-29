@@ -8,11 +8,29 @@ import Foundation
 /// The exact maintained MLX Metal library admitted by the initial native
 /// calibration lane.
 ///
-/// The source must be the Xcode-built SwiftPM resource bundle adjacent to the
-/// running executable. The bytes are descriptor-walked without following
-/// symlinks, validated before and after the read, and then published through
+/// Runtime capture and receipts bind the canonical SwiftPM resource bundle
+/// adjacent to the running executable. The dedicated staging bridge separately
+/// validates the exact Xcode donor bundle and transfers only its admitted Metal
+/// library into an already-existing canonical SwiftPM bundle. Every tree is
+/// descriptor-walked without following symlinks, and publication uses
 /// `PrimeArtifactRoot`'s immutable no-replace path before any MLX device use.
 public enum PrimePinnedMLXMetallib {
+    private enum InfoPlistManifest {
+        case canonicalSwiftPMRuntime
+        case xcodeDonor
+
+        var expectedByteCount: UInt64 {
+            switch self {
+            case .canonicalSwiftPMRuntime:
+                PrimePinnedMLXMetallib
+                    .expectedInfoPlistByteCount
+            case .xcodeDonor:
+                PrimePinnedMLXMetallib
+                    .expectedXcodeDonorInfoPlistByteCount
+            }
+        }
+    }
+
     public static let mlxSwiftVersion = "0.31.3"
     public static let bundleRelativePath =
         "mlx-swift_Cmlx.bundle"
@@ -32,6 +50,10 @@ public enum PrimePinnedMLXMetallib {
         UInt64 = 1_120
     public static let expectedInfoPlistSHA256 =
         "62486b35d9253522fe58dba1487d910b3d00d892954558145c553051bd61684d"
+    public static let expectedXcodeDonorInfoPlistByteCount:
+        UInt64 = 1_130
+    public static let expectedXcodeDonorInfoPlistSHA256 =
+        "124c82bbfd7fe1ea93aa05b5a50d1e5828759fb268556ed119399212726e6a1e"
 
     private static let permittedExtendedAttributes:
         Set<String> = [
@@ -118,7 +140,9 @@ public enum PrimePinnedMLXMetallib {
         )
 
         let bundleData = try readExactBundle(
-            from: rootDescriptor
+            from: rootDescriptor,
+            infoPlistManifest:
+                .canonicalSwiftPMRuntime
         )
         guard UInt64(bundleData.metallib.count)
                 == expectedByteCount,
@@ -198,6 +222,333 @@ public enum PrimePinnedMLXMetallib {
             for: runtimeRole
         )
         return binding
+    }
+
+    /// Verifies the independently Xcode-built private-package resource and
+    /// installs only its exact Metal library into the canonical SwiftPM
+    /// runtime bundle beside `destinationExecutableURL`.
+    ///
+    /// Xcode derives the donor bundle identifier from the private repository
+    /// identity, while SwiftPM derives the runtime identifier from the
+    /// package name. Both manifests are exact, role-specific inputs. The
+    /// donor manifest is never substituted for the runtime manifest.
+    public static func stageExactXcodeMetallib(
+        from xcodeExecutableURL: URL,
+        beside destinationExecutableURL: URL,
+        runtimeRole: PrimeMLXRuntimeRole
+    ) throws -> (
+        binding: PrimePinnedMLXMetallibBinding,
+        destinationMetallibInitiallyAbsent: Bool
+    ) {
+        guard xcodeExecutableURL.isFileURL,
+              destinationExecutableURL.isFileURL else {
+            throw PrimeDurableArtifactError
+                .unsafeArtifact(
+                    "MLX staging hosts must be file URLs"
+                )
+        }
+        let sourceExecutable =
+            xcodeExecutableURL.standardizedFileURL
+        let destinationExecutable =
+            destinationExecutableURL.standardizedFileURL
+        guard sourceExecutable
+                .resolvingSymlinksInPath()
+                .standardizedFileURL
+                == sourceExecutable,
+              destinationExecutable
+                .resolvingSymlinksInPath()
+                .standardizedFileURL
+                == destinationExecutable else {
+            throw PrimeDurableArtifactError
+                .unsafeArtifact(
+                    "MLX staging hosts must not traverse symlinks"
+                )
+        }
+        guard sourceExecutable
+                != destinationExecutable else {
+            throw PrimeDurableArtifactError
+                .invalidSemantics(
+                    "Xcode donor and SwiftPM runtime hosts must be distinct"
+                )
+        }
+        let expectedDestinationName =
+            PrimeMLXRuntimeImageLayout
+            .destinationHostExecutableName(
+                for: runtimeRole
+            )
+        guard destinationExecutable
+                .lastPathComponent
+                == expectedDestinationName else {
+            throw PrimeDurableArtifactError
+                .invalidSemantics(
+                    "SwiftPM runtime host must be \(expectedDestinationName) for \(runtimeRole.rawValue)"
+                )
+        }
+
+        let runtimeEnvironmentPolicy =
+            try requireSanitizedDynamicLoaderEnvironment()
+        let releaseInstrumentationPolicy =
+            try PrimeReleaseInstrumentationAdmissionPolicy
+                .validateCurrentProcess()
+                .declaration
+
+        let sourceDirectory =
+            sourceExecutable.deletingLastPathComponent()
+        let sourceDescriptor = sourceDirectory.path
+            .withCString {
+                open(
+                    $0,
+                    O_RDONLY | O_DIRECTORY
+                        | O_NOFOLLOW | O_CLOEXEC
+                )
+            }
+        guard sourceDescriptor >= 0 else {
+            throw posix(
+                operation:
+                    "open Xcode MLX donor root",
+                path: sourceDirectory.path
+            )
+        }
+        defer {
+            _ = close(sourceDescriptor)
+        }
+        try requireTrustedDirectory(
+            sourceDescriptor,
+            path: sourceDirectory.path,
+            permittedExtendedAttributes:
+                permittedBuildRootExtendedAttributes
+        )
+        try requireTrustedExecutable(
+            named: sourceExecutable.lastPathComponent,
+            in: sourceDescriptor,
+            displayedPath: sourceExecutable.path
+        )
+        try requireNoLoaderShadowPaths(
+            executableDirectory: sourceDirectory,
+            sourceURL:
+                sourceDirectory
+                .appendingPathComponent(
+                    sourceBundleRelativePath
+                )
+                .standardizedFileURL,
+            includeCurrentProcessContext: false
+        )
+        let donor = try readExactBundle(
+            from: sourceDescriptor,
+            infoPlistManifest: .xcodeDonor
+        )
+        let donorMetallibSHA256 =
+            PrimeSHA256.hexDigest(
+                of: donor.metallib
+            )
+        guard UInt64(donor.metallib.count)
+                == expectedByteCount,
+              donorMetallibSHA256
+                == expectedSHA256 else {
+            throw PrimeDurableArtifactError
+                .hashMismatch(
+                    path: sourceBundleRelativePath,
+                    expected: expectedSHA256,
+                    actual: donorMetallibSHA256
+                )
+        }
+        let donorInfoPlistSHA256 =
+            PrimeSHA256.hexDigest(
+                of: donor.infoPlist
+            )
+        guard UInt64(donor.infoPlist.count)
+                == expectedXcodeDonorInfoPlistByteCount,
+              donorInfoPlistSHA256
+                == expectedXcodeDonorInfoPlistSHA256 else {
+            throw PrimeDurableArtifactError
+                .hashMismatch(
+                    path: infoPlistSourceRelativePath,
+                    expected:
+                        expectedXcodeDonorInfoPlistSHA256,
+                    actual: donorInfoPlistSHA256
+                )
+        }
+
+        let destinationDirectory =
+            destinationExecutable
+            .deletingLastPathComponent()
+        let destinationDescriptor =
+            destinationDirectory.path.withCString {
+                open(
+                    $0,
+                    O_RDONLY | O_DIRECTORY
+                        | O_NOFOLLOW | O_CLOEXEC
+                )
+            }
+        guard destinationDescriptor >= 0 else {
+            throw posix(
+                operation:
+                    "open SwiftPM MLX runtime root",
+                path: destinationDirectory.path
+            )
+        }
+        defer {
+            _ = close(destinationDescriptor)
+        }
+        try requireTrustedDirectory(
+            destinationDescriptor,
+            path: destinationDirectory.path,
+            permittedExtendedAttributes:
+                permittedBuildRootExtendedAttributes
+        )
+        try requireTrustedExecutable(
+            named:
+                destinationExecutable
+                .lastPathComponent,
+            in: destinationDescriptor,
+            displayedPath:
+                destinationExecutable.path
+        )
+        try requireNoLoaderShadowPaths(
+            executableDirectory:
+                destinationDirectory,
+            sourceURL:
+                destinationDirectory
+                .appendingPathComponent(
+                    sourceBundleRelativePath
+                )
+                .standardizedFileURL,
+            includeCurrentProcessContext: false
+        )
+        let destinationBefore =
+            try readCanonicalRuntimeBundleForStaging(
+                from: destinationDescriptor
+            )
+        let destinationInfoPlistSHA256 =
+            PrimeSHA256.hexDigest(
+                of: destinationBefore.infoPlist
+            )
+        guard UInt64(
+                destinationBefore.infoPlist.count
+              ) == expectedInfoPlistByteCount,
+              destinationInfoPlistSHA256
+                == expectedInfoPlistSHA256 else {
+            throw PrimeDurableArtifactError
+                .hashMismatch(
+                    path:
+                        infoPlistSourceRelativePath,
+                    expected:
+                        expectedInfoPlistSHA256,
+                    actual:
+                        destinationInfoPlistSHA256
+                )
+        }
+
+        let destinationMetallibInitiallyAbsent: Bool
+        if let existing =
+            destinationBefore.metallib
+        {
+            destinationMetallibInitiallyAbsent =
+                false
+            let existingSHA256 =
+                PrimeSHA256.hexDigest(of: existing)
+            guard UInt64(existing.count)
+                    == expectedByteCount,
+                  existingSHA256
+                    == expectedSHA256 else {
+                throw PrimeDurableArtifactError
+                    .hashMismatch(
+                        path:
+                            sourceBundleRelativePath,
+                        expected: expectedSHA256,
+                        actual: existingSHA256
+                    )
+            }
+        } else {
+            let destinationRoot =
+                try PrimeArtifactRoot(
+                    directoryURL:
+                        destinationDirectory
+                )
+            let published =
+                try destinationRoot.publish(
+                    donor.metallib,
+                    at: artifactRelativePath,
+                    purpose: .immutableData
+                )
+            guard published.sha256
+                    == expectedSHA256,
+                  published.byteCount
+                    == expectedByteCount else {
+                throw PrimeDurableArtifactError
+                    .invalidSemantics(
+                        "staged MLX metallib binding diverges from the frozen donor"
+                )
+            }
+            destinationMetallibInitiallyAbsent =
+                true
+        }
+
+        let donorAfterPublication =
+            try readExactBundle(
+                from: sourceDescriptor,
+                infoPlistManifest: .xcodeDonor
+            )
+        guard donorAfterPublication.infoPlist
+                == donor.infoPlist,
+              donorAfterPublication.metallib
+                == donor.metallib else {
+            throw PrimeDurableArtifactError
+                .unsafeArtifact(
+                    "Xcode MLX donor changed during staging"
+                )
+        }
+
+        let binding =
+            PrimePinnedMLXMetallibBinding(
+                mlxSwiftVersion:
+                    mlxSwiftVersion,
+                sourceBundleRelativePath:
+                    sourceBundleRelativePath,
+                artifact:
+                    PrimeArtifactBinding(
+                        relativePath:
+                            artifactRelativePath,
+                        sha256:
+                            expectedSHA256,
+                        byteCount:
+                            expectedByteCount,
+                        purpose:
+                            .immutableData
+                    ),
+                infoPlistSourceRelativePath:
+                    infoPlistSourceRelativePath,
+                infoPlistArtifact:
+                    PrimeArtifactBinding(
+                        relativePath:
+                            infoPlistArtifactRelativePath,
+                        sha256:
+                            expectedInfoPlistSHA256,
+                        byteCount:
+                            expectedInfoPlistByteCount,
+                        purpose:
+                            .immutableData
+                    ),
+                runtimeEnvironmentPolicy:
+                    runtimeEnvironmentPolicy,
+                runtimeImageLayout:
+                    PrimeMLXRuntimeImageLayout
+                    .declaration(
+                        for: runtimeRole
+                    ),
+                releaseInstrumentationPolicy:
+                    releaseInstrumentationPolicy
+            )
+        try binding.validateDeclaration()
+        try reverifyStagedRuntimeImage(
+            of: destinationExecutable,
+            matches: binding,
+            runtimeRole: runtimeRole
+        )
+        return (
+            binding,
+            destinationMetallibInitiallyAbsent
+        )
     }
 
     /// Revalidates the exact sibling bytes after MLX execution. This closes
@@ -360,7 +711,9 @@ public enum PrimePinnedMLXMetallib {
         )
 
         let bundleData = try readExactBundle(
-            from: rootDescriptor
+            from: rootDescriptor,
+            infoPlistManifest:
+                .canonicalSwiftPMRuntime
         )
         let observedSHA256 = PrimeSHA256
             .hexDigest(of: bundleData.metallib)
@@ -395,10 +748,97 @@ public enum PrimePinnedMLXMetallib {
     }
 
     private static func readExactBundle(
-        from buildProductRoot: Int32
+        from buildProductRoot: Int32,
+        infoPlistManifest: InfoPlistManifest
     ) throws -> (
         infoPlist: Data,
         metallib: Data
+    ) {
+        let bundle = try openTrustedDirectory(
+            named: bundleRelativePath,
+            in: buildProductRoot,
+            displayedPath: bundleRelativePath
+        )
+        defer {
+            _ = close(bundle)
+        }
+        try requireExactDirectoryEntries(
+            bundle,
+            expected: ["Contents"],
+            path: bundleRelativePath
+        )
+
+        let contents = try openTrustedDirectory(
+            named: "Contents",
+            in: bundle,
+            displayedPath:
+                "\(bundleRelativePath)/Contents"
+        )
+        defer {
+            _ = close(contents)
+        }
+        try requireExactDirectoryEntries(
+            contents,
+            expected: ["Info.plist", "Resources"],
+            path: "\(bundleRelativePath)/Contents"
+        )
+        let infoPlist = try readTrustedImmutableFile(
+            named: "Info.plist",
+            in: contents,
+            displayedPath:
+                infoPlistSourceRelativePath,
+            expectedByteCount:
+                infoPlistManifest
+                .expectedByteCount
+        )
+
+        let resources = try openTrustedDirectory(
+            named: "Resources",
+            in: contents,
+            displayedPath:
+                "\(bundleRelativePath)/Contents/Resources"
+        )
+        defer {
+            _ = close(resources)
+        }
+        try requireExactDirectoryEntries(
+            resources,
+            expected: ["default.metallib"],
+            path:
+                "\(bundleRelativePath)/Contents/Resources"
+        )
+        let metallib = try readTrustedImmutableFile(
+            named: "default.metallib",
+            in: resources,
+            displayedPath:
+                sourceBundleRelativePath,
+            expectedByteCount:
+                expectedByteCount
+        )
+        try requireExactDirectoryEntries(
+            resources,
+            expected: ["default.metallib"],
+            path:
+                "\(bundleRelativePath)/Contents/Resources"
+        )
+        try requireExactDirectoryEntries(
+            contents,
+            expected: ["Info.plist", "Resources"],
+            path: "\(bundleRelativePath)/Contents"
+        )
+        try requireExactDirectoryEntries(
+            bundle,
+            expected: ["Contents"],
+            path: bundleRelativePath
+        )
+        return (infoPlist, metallib)
+    }
+
+    private static func readCanonicalRuntimeBundleForStaging(
+        from buildProductRoot: Int32
+    ) throws -> (
+        infoPlist: Data,
+        metallib: Data?
     ) {
         let bundle = try openTrustedDirectory(
             named: bundleRelativePath,
@@ -446,26 +886,51 @@ public enum PrimePinnedMLXMetallib {
         defer {
             _ = close(resources)
         }
-        try requireExactDirectoryEntries(
-            resources,
-            expected: ["default.metallib"],
-            path:
-                "\(bundleRelativePath)/Contents/Resources"
-        )
-        let metallib = try readTrustedImmutableFile(
-            named: "default.metallib",
-            in: resources,
-            displayedPath:
-                sourceBundleRelativePath,
-            expectedByteCount:
-                expectedByteCount
-        )
-        try requireExactDirectoryEntries(
-            resources,
-            expected: ["default.metallib"],
-            path:
-                "\(bundleRelativePath)/Contents/Resources"
-        )
+        var metadata = stat()
+        let status = "default.metallib"
+            .withCString {
+                fstatat(
+                    resources,
+                    $0,
+                    &metadata,
+                    AT_SYMLINK_NOFOLLOW
+                )
+            }
+        let statusError = errno
+        let metallib: Data?
+        if status == 0 {
+            try requireExactDirectoryEntries(
+                resources,
+                expected: ["default.metallib"],
+                path:
+                    "\(bundleRelativePath)/Contents/Resources"
+            )
+            metallib =
+                try readTrustedImmutableFile(
+                    named: "default.metallib",
+                    in: resources,
+                    displayedPath:
+                        sourceBundleRelativePath,
+                    expectedByteCount:
+                        expectedByteCount
+                )
+        } else {
+            guard statusError == ENOENT else {
+                throw posix(
+                    operation:
+                        "inspect canonical SwiftPM metallib",
+                    path:
+                        sourceBundleRelativePath
+                )
+            }
+            try requireExactDirectoryEntries(
+                resources,
+                expected: [],
+                path:
+                    "\(bundleRelativePath)/Contents/Resources"
+            )
+            metallib = nil
+        }
         try requireExactDirectoryEntries(
             contents,
             expected: ["Info.plist", "Resources"],

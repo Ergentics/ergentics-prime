@@ -1,13 +1,13 @@
-Copyright (c) 2026 Ergentics. All rights reserved.
+Copyright (c) 2026 Ergentics, LLC. All rights reserved.
 
 The first-party source code, model architecture definitions, data-generation
 contracts, evaluation contracts, and generated Prime artifacts in this
-repository are proprietary to Ergentics unless a file expressly states
+repository are proprietary to Ergentics, LLC unless a file expressly states
 otherwise.
 
 No permission is granted to use, copy, modify, distribute, sublicense, or
 create derivative works from this first-party material without prior written
-authorization from Ergentics.
+authorization from Ergentics, LLC.
 
 Third-party dependencies remain governed by their respective licenses. See
 THIRD_PARTY_NOTICES.md.

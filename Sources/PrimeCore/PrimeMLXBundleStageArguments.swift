@@ -95,10 +95,31 @@ public struct PrimeMLXBundleStageArguments:
                     "--source-host, --destination-host, and --runtime-role are required"
                 )
         }
+        let standardizedSource =
+            sourceHost.standardizedFileURL
+        let standardizedDestination =
+            destinationHost.standardizedFileURL
         let resolvedSource =
-            sourceHost.resolvingSymlinksInPath()
+            standardizedSource
+            .resolvingSymlinksInPath()
+            .standardizedFileURL
         let resolvedDestination =
-            destinationHost.resolvingSymlinksInPath()
+            standardizedDestination
+            .resolvingSymlinksInPath()
+            .standardizedFileURL
+        guard standardizedSource == resolvedSource else {
+            throw PrimeMLXBundleStageArgumentError
+                .invalidArgument(
+                    "--source-host must not traverse symbolic links"
+                )
+        }
+        guard standardizedDestination
+                == resolvedDestination else {
+            throw PrimeMLXBundleStageArgumentError
+                .invalidArgument(
+                    "--destination-host must not traverse symbolic links"
+                )
+        }
         guard resolvedSource != resolvedDestination else {
             throw PrimeMLXBundleStageArgumentError
                 .invalidArgument(

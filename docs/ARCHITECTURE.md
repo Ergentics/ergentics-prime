@@ -20,9 +20,9 @@ The implemented authority chain is intentionally narrow:
    supervisor's own Bundle/framework/cwd state as evidence about the exited
    child.
 5. Immutable mechanics receipts bind source, executable, configuration, both
-   pinned MLX bundle artifacts, factorized seed records, device observations,
-   and optimizer state observations. Missing observations remain `nil`; they
-   are never rewritten as `false`.
+   pinned MLX bundle artifacts, dependency build inputs, factorized seed
+   records, device observations, and optimizer state observations. Missing
+   observations remain `nil`; they are never rewritten as `false`.
 
 The first-party tokenizer/corpus, training receipts, independent Swift
 evaluator, raw fixed-cap/EOS generation artifacts, statistical battery,
@@ -53,40 +53,63 @@ read-only arrays are not a supported restoration schema. Prime does not
 reinterpret MLX's public-for-cross-module `_updateInternal` implementation
 hook as an application API.
 
-The admission sequence is:
+The historical stock-API probe remains an `ABSTAIN`: `mlx-swift` 0.31.3 can
+export anonymous optimizer arrays but cannot import named Adam state through a
+supported public API. That evidence is preserved rather than reinterpreted.
 
-1. bind the exact dependency revision, audited upstream source identities,
-   and the complete Prime Swift source snapshot to the embedded Release
-   source identity;
-2. stage and bind the exact pinned MLX metallib under the frozen optimizer
-   probe runtime role, because the maintained scheduler requires it even for
+The typed candidate admission sequence is:
+
+1. bind the exact dependency revision, root and isolated-test mirror
+   configurations, the complete admitted MLX Swift `Package.swift` plus
+   `Source/**` tree, reviewed state-transport sources, retained MIT license,
+   and the complete Prime Swift source snapshot;
+2. stage and bind the exact pinned MLX metallib under the frozen typed-probe
+   runtime role, because the maintained scheduler requires it even for
    CPU-scoped tensors;
-3. run a deterministic maintained AdamW step in a Swift writer process;
-4. publish model and moment safetensors, the writer PID, and observed CPU
-   device/stream state with an independent logical tensor catalog;
-5. reload and exact-compare them in a fresh Swift verifier process, bind both
-   child records, and reconcile both reported PIDs to the supervisor's
-   launched processes;
-6. restore the model through the maintained typed module API;
-7. require a maintained named optimizer-state import API before attempting
-   `N -> checkpoint -> restart -> N+1` trajectory identity.
+3. launch fresh control, writer, and restorer processes from one immutable
+   Release executable with an empty environment, stdin bound to EOF, capped
+   asynchronously drained output, observed termination, and no shell;
+4. run maintained AdamW on both a flat fixture and a nested fixture with
+   same-shaped sibling tensors;
+5. publish immutable model and named first/second-moment safetensors, validate
+   their ordered manifest before dictionary materialization, then import them
+   through the public typed candidate API in the fresh restorer;
+6. require exact evaluated FP32 logical bytes for loss, output, gradients,
+   model parameters, and both moments at the applicable `N` and `N+1`
+   boundaries, with finite nonzero gradients and changing state;
+7. run the declared same-process structural proposal/detector/disposal
+   self-checks, explicitly claiming no independent scientific oracle;
+8. recapture Prime source and reverify the parent runtime, staged runtime,
+   dependency tree, every worker record, every checkpoint, and the canonical
+   receipt before success.
 
-Steps 1 through 6 can be grounded with stock `mlx-swift` 0.31.3. Step 7 cannot,
-so the gate is `ABSTAIN` and convergence-capped or resumable training remains
-unauthorized. The parent publishes that receipt and exits with status `2`, so
-exit-status-only automation cannot promote the API-limit result. A future
-Ergentics-pinned MLX fork may add only the typed
-state-import seam while preserving the maintained AdamW arithmetic; it must
-pass exact uninterrupted-versus-restarted trajectory comparison on a tiny
-model before any 3B checkpoint I/O.
+The minimal typed state-transport derivative is implemented at private
+revision `68904d54b72871f26968261ae05d4fbb7c5e3142`; its fork and downstream
+mechanics tests pass, and authenticated cache-empty clone resolution from the
+authorized private mirror has been observed. The separately pinned
+`swift-numerics` source tree is not yet a receipt artifact, so full transitive
+build-source closure is not claimed. A canonical Release execution observed
+exact flat and nested `N+1` continuation across three fresh worker processes
+and disposed all 19 declared structural mutations. The dependency source is
+privately remote-resolvable; the generated CPU receipt remains locally
+preserved evidence until it is copied to separately controlled off-device
+storage.
+Convergence-capped, long, 3B, functional, quantization, and product authority
+remain unauthorized.
+
+MLX-linked mechanics tests run in a separate XCTest bundle. A compiled Swift
+stager places the exact pinned resource into that bundle. PrimeCore's
+loader-shadow tests remain in an MLX-free test process, so test convenience
+does not weaken the production rule that rejects alternate loader candidates.
 
 ## Threat boundary
 
 The staged-image contract covers accidental and persistent mutation through
-exact tree, owner, mode, link, ACL, xattr, environment, loader-shadow, and
-pre/post hash checks. The same user must retain write authority over the
-artifact root so the worker and supervisor can publish receipts. A malicious
-concurrent process running as that same user could attempt a transient
-swap/load/restore attack; resistance to that actor is not claimed. Closing
-that boundary requires a separately isolated runtime identity or exact
-loader-return attestation from the maintained MLX runtime.
+exact tree, owner, mode, link, ACL, xattr, environment, loader-shadow,
+bounded-output, observed-termination, and pre/post hash checks. The same user
+must retain write authority over the artifact root so the worker and
+supervisor can publish receipts. A malicious concurrent process running as
+that same user could attempt a transient swap/load/restore attack; resistance
+to that actor is not claimed. Closing that boundary requires a separately
+isolated runtime identity or exact loader-return attestation from the
+maintained MLX runtime.
