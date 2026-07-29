@@ -10,6 +10,7 @@ import Foundation
 public enum PrimeDurableArtifactError: Error, Equatable, Sendable {
     case invalidRelativePath(String)
     case untrustedDirectory(String)
+    case nonemptyArtifactRoot
     case unsafeArtifact(String)
     case conflictingArtifact(String)
     case artifactTooLarge(String)
@@ -41,6 +42,8 @@ extension PrimeDurableArtifactError: LocalizedError {
             return "invalid descriptor-relative artifact path: \(path)"
         case let .untrustedDirectory(path):
             return "artifact directory is not trusted: \(path)"
+        case .nonemptyArtifactRoot:
+            return "artifact root must be empty before a new run"
         case let .unsafeArtifact(path):
             return "artifact is not a safe, single-link regular file: \(path)"
         case let .conflictingArtifact(path):
@@ -241,6 +244,52 @@ public final class PrimeArtifactRoot: @unchecked Sendable {
 
     deinit {
         _ = close(descriptor)
+    }
+
+    /// Requires a new run to begin in an empty descriptor-bound root.
+    ///
+    /// This prevents prior-run success or failure artifacts from being
+    /// mistaken for evidence produced by the current supervisor invocation.
+    public func requireEmpty() throws {
+        let duplicate = dup(descriptor)
+        guard duplicate >= 0,
+              lseek(duplicate, 0, SEEK_SET) >= 0,
+              let directory = fdopendir(duplicate) else {
+            if duplicate >= 0 {
+                _ = close(duplicate)
+            }
+            throw Self.posix(
+                "enumerate artifact root",
+                directoryURL.path
+            )
+        }
+        defer {
+            _ = closedir(directory)
+        }
+        errno = 0
+        while let entry = readdir(directory) {
+            let name = withUnsafePointer(
+                to: entry.pointee.d_name
+            ) {
+                $0.withMemoryRebound(
+                    to: CChar.self,
+                    capacity: Int(MAXNAMLEN) + 1
+                ) {
+                    String(cString: $0)
+                }
+            }
+            if name != ".", name != ".." {
+                throw PrimeDurableArtifactError
+                    .nonemptyArtifactRoot
+            }
+            errno = 0
+        }
+        guard errno == 0 else {
+            throw Self.posix(
+                "enumerate artifact root",
+                directoryURL.path
+            )
+        }
     }
 
     /// Creates or verifies one descriptor-relative private directory.

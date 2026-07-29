@@ -18,7 +18,7 @@ enum PinnedMLXMetallibTestSupport {
                 URL(fileURLWithPath: $0)
             },
             repositoryRoot.appendingPathComponent(
-                ".build/apple/Build/Products/Release/" +
+                ".build/arm64-apple-macosx/release/" +
                     PrimePinnedMLXMetallib
                     .sourceBundleRelativePath
             ),

@@ -32,6 +32,8 @@ public enum PrimeMLXRuntimeRole:
     case calibration
     case optimizerRestoreProbe =
         "optimizer_restore_probe"
+    case typedOptimizerRestoreProbe =
+        "typed_optimizer_restore_probe"
 }
 
 public enum PrimeMLXRuntimeImageLayoutError:
@@ -71,6 +73,18 @@ public enum PrimeMLXRuntimeImageLayout {
                     .bundleRelativePath
         )
 
+    public static let typedOptimizerRestoreProbe =
+        PrimeMLXRuntimeImageLayoutDeclaration(
+            layoutID:
+                "ergentics_prime_typed_optimizer_restore_probe_mlx_sibling_bundle",
+            layoutVersion: 1,
+            stagedExecutableRelativePath:
+                "PrimeTypedOptimizerRestoreProbe.executable",
+            siblingBundleRelativePath:
+                PrimePinnedMLXMetallib
+                    .bundleRelativePath
+        )
+
     /// Compatibility spelling for the original calibration role.
     public static let declaration = calibration
 
@@ -82,6 +96,8 @@ public enum PrimeMLXRuntimeImageLayout {
             return calibration
         case .optimizerRestoreProbe:
             return optimizerRestoreProbe
+        case .typedOptimizerRestoreProbe:
+            return typedOptimizerRestoreProbe
         }
     }
 
@@ -93,6 +109,8 @@ public enum PrimeMLXRuntimeImageLayout {
             return "PrimeGPUCalibration"
         case .optimizerRestoreProbe:
             return "PrimeOptimizerRestoreProbe"
+        case .typedOptimizerRestoreProbe:
+            return "PrimeTypedOptimizerRestoreProbe"
         }
     }
 
@@ -105,6 +123,9 @@ public enum PrimeMLXRuntimeImageLayout {
         }
         if declaration == optimizerRestoreProbe {
             return .optimizerRestoreProbe
+        }
+        if declaration == typedOptimizerRestoreProbe {
+            return .typedOptimizerRestoreProbe
         }
         throw PrimeMLXRuntimeImageLayoutError
             .undeclaredLayout

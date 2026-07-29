@@ -22,6 +22,10 @@ final class PrimeMLXBundleStageSourceContractTests:
                 .optimizerRestoreProbe,
                 "PrimeOptimizerRestoreProbe"
             ),
+            (
+                .typedOptimizerRestoreProbe,
+                "PrimeTypedOptimizerRestoreProbe"
+            ),
         ]
 
         for testCase in cases {
@@ -50,49 +54,42 @@ final class PrimeMLXBundleStageSourceContractTests:
     }
 
     func testSharedCLIParserRejectsCrossRoleHosts() {
-        let cases: [
-            (
-                role: PrimeMLXRuntimeRole,
-                destination: String
-            )
-        ] = [
-            (
-                .calibration,
-                "PrimeOptimizerRestoreProbe"
-            ),
-            (
-                .optimizerRestoreProbe,
-                "PrimeGPUCalibration"
-            ),
-        ]
-
-        for testCase in cases {
-            XCTAssertThrowsError(
-                try PrimeMLXBundleStageArguments
-                    .parse(
-                        [
-                            "--source-host",
-                            "/tmp/PrimeMLXBundleDonor",
-                            "--destination-host",
-                            "/tmp/\(testCase.destination)",
-                            "--runtime-role",
-                            testCase.role.rawValue,
-                        ]
+        for role in PrimeMLXRuntimeRole.allCases {
+            for otherRole
+            in PrimeMLXRuntimeRole.allCases
+            where otherRole != role {
+                let destination =
+                    PrimeMLXRuntimeImageLayout
+                    .destinationHostExecutableName(
+                        for: otherRole
                     )
-            ) { error in
-                XCTAssertEqual(
-                    error as?
-                        PrimeMLXBundleStageArgumentError,
-                    .invalidArgument(
-                        "--destination-host basename must be " +
-                            PrimeMLXRuntimeImageLayout
-                            .destinationHostExecutableName(
-                                for: testCase.role
-                            ) +
-                            " for --runtime-role " +
-                            testCase.role.rawValue
+                XCTAssertThrowsError(
+                    try PrimeMLXBundleStageArguments
+                        .parse(
+                            [
+                                "--source-host",
+                                "/tmp/PrimeMLXBundleDonor",
+                                "--destination-host",
+                                "/tmp/\(destination)",
+                                "--runtime-role",
+                                role.rawValue,
+                            ]
+                        )
+                ) { error in
+                    XCTAssertEqual(
+                        error as?
+                            PrimeMLXBundleStageArgumentError,
+                        .invalidArgument(
+                            "--destination-host basename must be " +
+                                PrimeMLXRuntimeImageLayout
+                                .destinationHostExecutableName(
+                                    for: role
+                                ) +
+                                " for --runtime-role " +
+                                role.rawValue
+                        )
                     )
-                )
+                }
             }
         }
     }
@@ -135,25 +132,128 @@ final class PrimeMLXBundleStageSourceContractTests:
         }
     }
 
-    func testSelectedRoleBindsCaptureAndBothStagedVerificationPaths()
+    func testSharedCLIParserRejectsSymlinkTraversalBeforeResolution()
+        throws
+    {
+        let root =
+            FileManager.default
+            .temporaryDirectory
+            .appendingPathComponent(
+                "prime-mlx-stage-arguments-\(UUID().uuidString)",
+                isDirectory: true
+            )
+        defer {
+            try? FileManager.default.removeItem(
+                at: root
+            )
+        }
+        let sourceDirectory =
+            root.appendingPathComponent(
+                "source",
+                isDirectory: true
+            )
+        let destinationDirectory =
+            root.appendingPathComponent(
+                "destination",
+                isDirectory: true
+            )
+        try FileManager.default.createDirectory(
+            at: sourceDirectory,
+            withIntermediateDirectories: true
+        )
+        try FileManager.default.createDirectory(
+            at: destinationDirectory,
+            withIntermediateDirectories: true
+        )
+        let sourceHost =
+            sourceDirectory.appendingPathComponent(
+                "PrimeMLXBundleDonor"
+            )
+        let destinationHost =
+            destinationDirectory
+            .appendingPathComponent(
+                "PrimeGPUCalibration"
+            )
+        try Data().write(to: sourceHost)
+        try Data().write(to: destinationHost)
+
+        let sourceAlias =
+            root.appendingPathComponent(
+                "source-alias",
+                isDirectory: true
+            )
+        try FileManager.default
+            .createSymbolicLink(
+                at: sourceAlias,
+                withDestinationURL:
+                    sourceDirectory
+            )
+        XCTAssertThrowsError(
+            try PrimeMLXBundleStageArguments
+                .parse(
+                    [
+                        "--source-host",
+                        sourceAlias
+                            .appendingPathComponent(
+                                "PrimeMLXBundleDonor"
+                            ).path,
+                        "--destination-host",
+                        destinationHost.path,
+                        "--runtime-role",
+                        "calibration",
+                    ]
+                )
+        ) { error in
+            XCTAssertEqual(
+                error as?
+                    PrimeMLXBundleStageArgumentError,
+                .invalidArgument(
+                    "--source-host must not traverse symbolic links"
+                )
+            )
+        }
+
+        let destinationAlias =
+            root.appendingPathComponent(
+                "destination-alias",
+                isDirectory: true
+            )
+        try FileManager.default
+            .createSymbolicLink(
+                at: destinationAlias,
+                withDestinationURL:
+                    destinationDirectory
+            )
+        XCTAssertThrowsError(
+            try PrimeMLXBundleStageArguments
+                .parse(
+                    [
+                        "--source-host",
+                        sourceHost.path,
+                        "--destination-host",
+                        destinationAlias
+                            .appendingPathComponent(
+                                "PrimeGPUCalibration"
+                            ).path,
+                        "--runtime-role",
+                        "calibration",
+                    ]
+                )
+        ) { error in
+            XCTAssertEqual(
+                error as?
+                    PrimeMLXBundleStageArgumentError,
+                .invalidArgument(
+                    "--destination-host must not traverse symbolic links"
+                )
+            )
+        }
+    }
+
+    func testSelectedRoleBindsOneUnconditionalExactStageAndManifestOutput()
         throws
     {
         let source = try stageSource()
-        let expectedBinding = try slice(
-            source,
-            from: "private func expectedBinding(",
-            until: "@main"
-        )
-        try assertOrdered(
-            [
-                "runtimeRole: PrimeMLXRuntimeRole",
-                "PrimeMLXRuntimeImageLayout",
-                ".declaration(",
-                "for: runtimeRole",
-            ],
-            in: expectedBinding
-        )
-
         let main = try slice(
             source,
             from: "@main",
@@ -162,36 +262,96 @@ final class PrimeMLXBundleStageSourceContractTests:
         )
         XCTAssertEqual(
             occurrences(
-                of: "runtimeRole: runtimeRole",
+                of: ".stageExactXcodeMetallib(",
                 in: main
             ),
-            4
+            1
         )
         try assertOrdered(
             [
                 "PrimeMLXBundleStageArguments",
                 ".parse(",
                 "let runtimeRole =",
-                "let destinationBundle =",
-                "expectedBinding(",
+                ".stageExactXcodeMetallib(",
+                "from: arguments.sourceHost",
+                "beside: arguments.destinationHost",
                 "runtimeRole: runtimeRole",
-                ".reverifyStagedRuntimeImage(",
-                "runtimeRole: runtimeRole",
+                "destination_metallib_initially_absent=",
+                "result.destinationMetallibInitiallyAbsent",
+                "xcode_donor_info_plist_sha256=",
+                "expectedXcodeDonorInfoPlistSHA256",
+                "runtime_info_plist_sha256=",
+                "expectedInfoPlistSHA256",
+                "metallib_sha256=",
+                "result.binding.artifact.sha256",
             ],
             in: main
         )
         XCTAssertFalse(
             main.contains("runtimeRole!")
         )
-        try assertOrdered(
-            [
-                ".captureSibling(",
-                "runtimeRole: runtimeRole",
-                ".reverifyStagedRuntimeImage(",
-                "runtimeRole: runtimeRole",
-            ],
-            in: main
+        for forbidden in [
+            "fileExists(",
+            ".captureSibling(",
+            "python",
+            "/bin/sh",
+            "/bin/zsh",
+            "copyItem(",
+            "moveItem(",
+            "removeItem(",
+        ] {
+            XCTAssertFalse(
+                main.contains(forbidden),
+                "forbidden exact-stage route \(forbidden)"
+            )
+        }
+    }
+
+    func testIsolatedMechanicsTestStagerIsSwiftOnlyAndPathBound()
+        throws
+    {
+        let source = try String(
+            contentsOf: URL(
+                fileURLWithPath:
+                    FileManager.default
+                    .currentDirectoryPath,
+                isDirectory: true
+            ).appendingPathComponent(
+                "Sources/PrimeMLXTestBundleStage/" +
+                    "PrimeMLXTestBundleStageMain.swift"
+            ),
+            encoding: .utf8
         )
+        for required in [
+            "testBundle.pathExtension",
+            "== \"xctest\"",
+            "== \"Contents\"",
+            "== \"Resources\"",
+            "PrimeMLXRuntimeEnvironmentPolicy",
+            "PrimeArtifactRoot(",
+            ".captureSibling(",
+            ".typedOptimizerRestoreProbe",
+            "existingBundleMismatch",
+        ] {
+            XCTAssertTrue(
+                source.contains(required),
+                "missing isolated-stage boundary \(required)"
+            )
+        }
+        for forbidden in [
+            "python",
+            "/bin/sh",
+            "/bin/zsh",
+            "copyItem(",
+            "moveItem(",
+            "removeItem(",
+            "\\(error)",
+        ] {
+            XCTAssertFalse(
+                source.contains(forbidden),
+                "forbidden isolated-stage route \(forbidden)"
+            )
+        }
     }
 
     private func stageSource() throws -> String {

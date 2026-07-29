@@ -146,6 +146,8 @@ public enum PrimeSwiftSourceProvenance {
 
     private static let fixedRelativePaths = [
         ".gitignore",
+        ".swiftpm/configuration/mirrors.json",
+        "Tests/PrimeTypedOptimizerRestoreMechanicsValidation/.swiftpm/configuration/mirrors.json",
         "LICENSE",
         "Package.swift",
         "Package.resolved",

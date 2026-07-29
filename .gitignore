@@ -1,5 +1,8 @@
 .build/
-.swiftpm/
+.swiftpm/*
+!.swiftpm/configuration/
+.swiftpm/configuration/*
+!.swiftpm/configuration/mirrors.json
 .DS_Store
 DerivedData/
 artifacts/

@@ -10,12 +10,18 @@ final class PrimeMLXRuntimeImageLayoutTests:
             [
                 .calibration,
                 .optimizerRestoreProbe,
+                .typedOptimizerRestoreProbe,
             ]
         )
         XCTAssertEqual(
             PrimeMLXRuntimeRole
                 .optimizerRestoreProbe.rawValue,
             "optimizer_restore_probe"
+        )
+        XCTAssertEqual(
+            PrimeMLXRuntimeRole
+                .typedOptimizerRestoreProbe.rawValue,
+            "typed_optimizer_restore_probe"
         )
         XCTAssertNil(
             PrimeMLXRuntimeRole(
@@ -68,6 +74,28 @@ final class PrimeMLXRuntimeImageLayoutTests:
             PrimePinnedMLXMetallib
                 .bundleRelativePath
         )
+
+        let typedRestoreProbe =
+            PrimeMLXRuntimeImageLayout
+                .typedOptimizerRestoreProbe
+        XCTAssertEqual(
+            typedRestoreProbe.layoutID,
+            "ergentics_prime_typed_optimizer_restore_probe_mlx_sibling_bundle"
+        )
+        XCTAssertEqual(
+            typedRestoreProbe.layoutVersion,
+            1
+        )
+        XCTAssertEqual(
+            typedRestoreProbe
+                .stagedExecutableRelativePath,
+            "PrimeTypedOptimizerRestoreProbe.executable"
+        )
+        XCTAssertEqual(
+            typedRestoreProbe.siblingBundleRelativePath,
+            PrimePinnedMLXMetallib
+                .bundleRelativePath
+        )
         XCTAssertEqual(
             PrimeMLXRuntimeImageLayout
                 .destinationHostExecutableName(
@@ -81,6 +109,14 @@ final class PrimeMLXRuntimeImageLayoutTests:
                     for: .optimizerRestoreProbe
                 ),
             "PrimeOptimizerRestoreProbe"
+        )
+        XCTAssertEqual(
+            PrimeMLXRuntimeImageLayout
+                .destinationHostExecutableName(
+                    for:
+                        .typedOptimizerRestoreProbe
+                ),
+            "PrimeTypedOptimizerRestoreProbe"
         )
 
         for role in PrimeMLXRuntimeRole.allCases {
@@ -164,38 +200,31 @@ final class PrimeMLXRuntimeImageLayoutTests:
     }
 
     func testCrossRoleSubstitutionIsRejected() {
-        XCTAssertThrowsError(
-            try PrimeMLXRuntimeImageLayout.require(
-                PrimeMLXRuntimeImageLayout
-                    .optimizerRestoreProbe,
-                for: .calibration
-            )
-        ) { error in
-            XCTAssertEqual(
-                error as?
-                    PrimeMLXRuntimeImageLayoutError,
-                .roleMismatch(
-                    expected: .calibration,
-                    actual: .optimizerRestoreProbe
-                )
-            )
-        }
-        XCTAssertThrowsError(
-            try PrimeMLXRuntimeImageLayout.require(
-                PrimeMLXRuntimeImageLayout
-                    .calibration,
-                for: .optimizerRestoreProbe
-            )
-        ) { error in
-            XCTAssertEqual(
-                error as?
-                    PrimeMLXRuntimeImageLayoutError,
-                .roleMismatch(
-                    expected:
-                        .optimizerRestoreProbe,
-                    actual: .calibration
-                )
-            )
+        for expectedRole
+        in PrimeMLXRuntimeRole.allCases {
+            for actualRole
+            in PrimeMLXRuntimeRole.allCases
+            where actualRole != expectedRole {
+                XCTAssertThrowsError(
+                    try PrimeMLXRuntimeImageLayout
+                        .require(
+                            PrimeMLXRuntimeImageLayout
+                                .declaration(
+                                    for: actualRole
+                                ),
+                            for: expectedRole
+                        )
+                ) { error in
+                    XCTAssertEqual(
+                        error as?
+                            PrimeMLXRuntimeImageLayoutError,
+                        .roleMismatch(
+                            expected: expectedRole,
+                            actual: actualRole
+                        )
+                    )
+                }
+            }
         }
     }
 }
