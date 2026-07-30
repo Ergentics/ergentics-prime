@@ -46,6 +46,25 @@ public enum PrimeNativeCorpusReplayOverlay {
         UInt64 = 4 * 1024 * 1024
     private static let primeRemoteURL =
         "https://github.com/Ergentics/ergentics-prime.git"
+    private static let
+        canonicalHistorical20260730RequiredPrimeSourcePaths:
+        Set<String> = [
+            "Package.swift",
+            "Sources/PrimeCore/PrimeDurableArtifacts.swift",
+            "Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift",
+            "Sources/PrimeCore/PrimeNativeGitBlobTransport.swift",
+            "Sources/PrimeCore/PrimeSecureRunningExecutableCapture.swift",
+            "Sources/PrimeCore/PrimeSwiftSourceProvenance.swift",
+            "Sources/PrimeNativeCorpusReplayMechanics/PrimeNativeByteTokenizer.swift",
+            "Sources/PrimeNativeCorpusReplayMechanics/ErgenticsPrimeNativeTextCorpus.swift",
+            "Sources/PrimeNativeCorpusReplayMechanics/SeedBridge.swift",
+            "Sources/PrimeNativeCorpusReplayMechanics/PrimeNativeCorpusReplayObservation.swift",
+            "Sources/PrimeNativeCorpusReplay/PrimeNativeCorpusReplayContract.swift",
+            "Sources/PrimeNativeCorpusReplay/PrimeNativeCorpusReplayArguments.swift",
+            "Sources/PrimeNativeCorpusReplay/PrimeNativeCorpusReplayOverlay.swift",
+            "Sources/PrimeNativeCorpusReplayProbe/PrimeNativeCorpusReplayProbeMain.swift",
+            "Sources/PrimeNativeCorpusReplayVerifier/PrimeNativeCorpusReplayVerifierMain.swift",
+        ]
 
     public static func publishCandidate(
         primeSourceRoot: URL,
@@ -426,6 +445,24 @@ public enum PrimeNativeCorpusReplayOverlay {
             PrimeNativeCorpusReplayCandidate,
         in root: PrimeArtifactRoot
     ) throws {
+        try validate(
+            candidate,
+            in: root,
+            historicalSourcePin: nil,
+            requiredPrimeSourcePaths:
+                PrimeNativeCorpusReplayPlan
+                .requiredPrimeSourcePaths
+        )
+    }
+
+    private static func validate(
+        _ candidate:
+            PrimeNativeCorpusReplayCandidate,
+        in root: PrimeArtifactRoot,
+        historicalSourcePin:
+            PrimePinnedHistoricalReleaseSource?,
+        requiredPrimeSourcePaths: Set<String>
+    ) throws {
         let plan = PrimeNativeCorpusReplayPlan.frozenV1
         try plan.validate()
         let expected =
@@ -500,12 +537,21 @@ public enum PrimeNativeCorpusReplayOverlay {
                 maximumByteCount:
                     maximumSnapshotBytes
             )
-        try PrimeSwiftSourceProvenance.validate(
-            snapshot,
-            requiredRelativePaths:
-                PrimeNativeCorpusReplayPlan
-                .requiredPrimeSourcePaths
-        )
+        if let historicalSourcePin {
+            try PrimeSwiftSourceProvenance
+                .validatePinnedReleaseEvidence(
+                    snapshot,
+                    requiredRelativePaths:
+                        requiredPrimeSourcePaths,
+                    pin: historicalSourcePin
+                )
+        } else {
+            try PrimeSwiftSourceProvenance.validate(
+                snapshot,
+                requiredRelativePaths:
+                    requiredPrimeSourcePaths
+            )
+        }
         try validateTransplants(in: snapshot)
         _ = try root.verify(
             candidate.probeExecutable
@@ -539,6 +585,109 @@ public enum PrimeNativeCorpusReplayOverlay {
         _ receipt:
             PrimeNativeCorpusReplayReceipt,
         in root: PrimeArtifactRoot
+    ) throws {
+        try validate(
+            receipt,
+            in: root,
+            historicalSourcePin: nil,
+            requiredPrimeSourcePaths:
+                PrimeNativeCorpusReplayPlan
+                .requiredPrimeSourcePaths
+        )
+    }
+
+    /// Replays the exact canonical 2026-07-30 full-corpus parent.
+    public static func
+        validateCanonicalHistorical20260730(
+        _ receipt:
+            PrimeNativeCorpusReplayReceipt,
+        binding: PrimeArtifactBinding,
+        in root: PrimeArtifactRoot
+    ) throws {
+        guard binding.relativePath
+                == "prime-native-full-corpus-replay-receipt.v1.json",
+              binding.sha256
+                == "88d243827c1aff0ce8125402f84c4ffe4012d058dedaf88f614099e975dafdc2",
+              binding.byteCount == 2_965,
+              binding.purpose == .immutableData,
+              receipt.primeSourceRevision
+                == "e17d031af4ec48b644a326646da7bcb8ce24388d",
+              receipt.primeSourceTreeOID
+                == "3f061674b652cca9cbc2429dc44c85a3aa803665",
+              receipt.candidate.relativePath
+                == "corpus-replay/probe-candidate.v1.json",
+              receipt.candidate.sha256
+                == "a9319a41b436075523c4ace314233f69370af1917725e1caea91ed36409a292f",
+              receipt.candidate.byteCount == 2_011,
+              receipt.candidate.purpose
+                == .immutableData
+        else {
+            throw PrimeNativeCorpusReplayError
+                .invalidReceipt(
+                    "canonical historical identity"
+                )
+        }
+        let persisted =
+            try root.decodeVerified(
+                PrimeNativeCorpusReplayReceipt.self,
+                binding: binding,
+                maximumByteCount:
+                    maximumJSONBytes
+            )
+        guard persisted == receipt else {
+            throw PrimeNativeCorpusReplayError
+                .invalidReceipt(
+                    "canonical historical receipt binding"
+                )
+        }
+        let candidate =
+            try root.decodeVerified(
+                PrimeNativeCorpusReplayCandidate
+                    .self,
+                binding: receipt.candidate,
+                maximumByteCount:
+                    maximumJSONBytes
+            )
+        guard candidate.preSourceState.remoteURL
+                == primeRemoteURL,
+              candidate.preSourceState.revision
+                == receipt.primeSourceRevision,
+              candidate.preSourceState.treeOID
+                == receipt.primeSourceTreeOID,
+              candidate.preSourceState.clean,
+              candidate.postSourceState
+                == candidate.preSourceState,
+              candidate.sourceSnapshot.relativePath
+                == "source/prime-swift-source-snapshot.v1.json",
+              candidate.sourceSnapshot.sha256
+                == "0811b735c3162269907ce44db5321733dc01fc85454f45a8ebb19e0520b02d37",
+              candidate.sourceSnapshot.byteCount
+                == 3_400_268,
+              candidate.sourceSnapshot.purpose
+                == .immutableData
+        else {
+            throw PrimeNativeCorpusReplayError
+                .invalidReceipt(
+                    "canonical historical candidate identity"
+                )
+        }
+        try validate(
+            receipt,
+            in: root,
+            historicalSourcePin:
+                .nativeFullCorpusReplay20260730,
+            requiredPrimeSourcePaths:
+                canonicalHistorical20260730RequiredPrimeSourcePaths
+        )
+    }
+
+    private static func validate(
+        _ receipt:
+            PrimeNativeCorpusReplayReceipt,
+        in root: PrimeArtifactRoot,
+        historicalSourcePin:
+            PrimePinnedHistoricalReleaseSource?,
+        requiredPrimeSourcePaths: Set<String>
     ) throws {
         let plan = PrimeNativeCorpusReplayPlan.frozenV1
         try plan.validate()
@@ -626,7 +775,14 @@ public enum PrimeNativeCorpusReplayOverlay {
                 maximumByteCount:
                     maximumJSONBytes
             )
-        try validate(candidate, in: root)
+        try validate(
+            candidate,
+            in: root,
+            historicalSourcePin:
+                historicalSourcePin,
+            requiredPrimeSourcePaths:
+                requiredPrimeSourcePaths
+        )
         guard receipt.primeSourceRevision
                 == candidate.postSourceState.revision,
               receipt.primeSourceTreeOID

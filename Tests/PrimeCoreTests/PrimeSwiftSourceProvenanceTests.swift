@@ -123,6 +123,53 @@ final class PrimeSwiftSourceProvenanceTests:
         )
     }
 
+    func testArbitrarySelfConsistentReleaseSnapshotCannotCreateHistoricalAuthority()
+        throws
+    {
+        let fixture = try makeFixture()
+        defer {
+            try? FileManager.default.removeItem(
+                at: fixture.root
+            )
+        }
+        let snapshot =
+            try PrimeSwiftSourceProvenance.capture(
+                at: fixture.root,
+                requiredRelativePaths: [
+                    "Sources/Fixture.swift",
+                ],
+                expectation:
+                    fixture.expectation
+            )
+
+        for pin in [
+            PrimePinnedHistoricalReleaseSource
+                .nativeGenerationContractProjection20260730,
+            .nativeFullCorpusReplay20260730,
+        ] {
+            XCTAssertThrowsError(
+                try PrimeSwiftSourceProvenance
+                    .validatePinnedReleaseEvidence(
+                        snapshot,
+                        requiredRelativePaths: [
+                            "Sources/Fixture.swift",
+                        ],
+                        pin: pin
+                    )
+            ) { error in
+                guard case
+                    .sourceIdentityMismatch =
+                        error as?
+                        PrimeSwiftSourceProvenanceError
+                else {
+                    return XCTFail(
+                        "unexpected error: \(error)"
+                    )
+                }
+            }
+        }
+    }
+
     func testNonEmbeddedMutationChangesIdentityAndFailsClosed()
         throws
     {

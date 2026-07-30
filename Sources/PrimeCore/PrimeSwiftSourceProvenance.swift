@@ -136,6 +136,31 @@ private struct PrimeSwiftSourceIdentityRecord:
     }
 }
 
+/// Closed authority tokens for historical Prime Release snapshots that remain
+/// prerequisites of a current receipt contract.
+///
+/// This deliberately has no raw-value conformance, associated value, or
+/// public initializer. Callers can select an admitted historical source, but
+/// cannot turn an artifact-supplied digest into a new authority token.
+public enum PrimePinnedHistoricalReleaseSource:
+    Sendable
+{
+    case nativeGenerationContractProjection20260730
+    case nativeFullCorpusReplay20260730
+
+    public var sourceIdentitySHA256:
+        String
+    {
+        switch self {
+        case
+            .nativeGenerationContractProjection20260730:
+            "a634994a9aedb2803b61353ffd30f0fcd0f1bad4356ce738f7d150f3cd08d2fb"
+        case .nativeFullCorpusReplay20260730:
+            "d13a817e2918e94972174b78eb1372dd0d4395161fca08b63850e7c2bfbbb08f"
+        }
+    }
+}
+
 public enum PrimeSwiftSourceProvenance {
     public static let snapshotSchemaVersion = 1
     public static let snapshotArtifactKind =
@@ -198,6 +223,29 @@ public enum PrimeSwiftSourceProvenance {
                 requiredRelativePaths,
             expectation:
                 embeddedReleaseEvidenceExpectation
+        )
+    }
+
+    /// Validates a historical Release snapshot against a closed identity pin.
+    ///
+    /// The snapshot never supplies its own authority. Parent-specific receipt
+    /// validators must still authenticate the exact receipt, Git state, and
+    /// snapshot binding before invoking this mechanics-only validator.
+    public static func validatePinnedReleaseEvidence(
+        _ snapshot: PrimeSwiftSourceSnapshot,
+        requiredRelativePaths: Set<String> = [],
+        pin: PrimePinnedHistoricalReleaseSource
+    ) throws {
+        try validate(
+            snapshot,
+            requiredRelativePaths:
+                requiredRelativePaths,
+            expectation:
+                PrimeSwiftSourceProvenanceExpectation(
+                    sourceIdentitySHA256:
+                        pin.sourceIdentitySHA256,
+                    buildConfiguration: "release"
+                )
         )
     }
 

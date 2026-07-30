@@ -384,6 +384,12 @@ not the historical 46 semantic mutations. NeuralKit's
 it is not AgentContractKit's four-tier TriadAudit and is not evidence of ten
 separately implemented authorities.
 
+The two parent receipt hashes are paired with closed historical Prime source
+pins and exact Git/snapshot tuples. Parent replay therefore authenticates each
+older Release snapshot against its own frozen identity while the new
+probe/verifier authenticate the current clean source; artifacts cannot supply
+an arbitrary expected digest.
+
 The Stage-A source contract is implemented. A canonical result exists only
 when a repository-durable evidence note is present under
 `artifacts/native-neural-gate-contract-projection-canonical-2026-07-30/`.

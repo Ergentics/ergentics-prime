@@ -263,6 +263,71 @@ final class PrimeNativeNeuralGateContractSourceContractTests:
         )
     }
 
+    func testHistoricalParentAuthorityUsesClosedPinsAndExactTuples()
+        throws
+    {
+        let provenance = try source(
+            "Sources/PrimeCore/PrimeSwiftSourceProvenance.swift"
+        )
+        let generation = try source(
+            "Sources/PrimeCore/PrimeNativeGenerationContractOverlay.swift"
+        )
+        let corpus = try source(
+            "Sources/PrimeNativeCorpusReplay/PrimeNativeCorpusReplayOverlay.swift"
+        )
+        let adapter = try source(
+            "Sources/PrimeNativeNeuralGateContract/PrimeNativeNeuralGateContractOverlay.swift"
+        )
+
+        XCTAssertTrue(
+            provenance.contains(
+                "public enum PrimePinnedHistoricalReleaseSource"
+            )
+        )
+        XCTAssertFalse(
+            provenance.contains(
+                "expectedSourceIdentitySHA256"
+            )
+        )
+        XCTAssertFalse(
+            generation.contains(
+                "expectedPrimeSourceIdentitySHA256"
+            )
+        )
+        XCTAssertFalse(
+            corpus.contains(
+                "expectedPrimeSourceIdentitySHA256"
+            )
+        )
+        for required in [
+            "validateCanonicalHistorical20260730",
+            "28906ef704f4d8727ea0da5e068f6ecbe52330ab",
+            "c2d07ff9f4a011f7dddf8eb91dcd7278d873b18c",
+            "f3b51e4a01f4af2725fff1e1256db7d1378e0d412b6f22d26840ef5f97ff15c7",
+            "guard persisted == self",
+        ] {
+            XCTAssertTrue(generation.contains(required))
+        }
+        for required in [
+            "validateCanonicalHistorical20260730",
+            "e17d031af4ec48b644a326646da7bcb8ce24388d",
+            "3f061674b652cca9cbc2429dc44c85a3aa803665",
+            "a9319a41b436075523c4ace314233f69370af1917725e1caea91ed36409a292f",
+            "0811b735c3162269907ce44db5321733dc01fc85454f45a8ebb19e0520b02d37",
+            "guard persisted == receipt",
+        ] {
+            XCTAssertTrue(corpus.contains(required))
+        }
+        XCTAssertEqual(
+            occurrences(
+                of:
+                    ".validateCanonicalHistorical20260730(",
+                in: adapter
+            ),
+            4
+        )
+    }
+
     private func source(
         _ relativePath: String
     ) throws -> String {

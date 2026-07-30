@@ -73,6 +73,10 @@ Phase 3 now has five separately receipt-bound boundaries:
 
 Stage-A artifact publication is descriptor-rooted, and its terminal receipt
 uses exclusive no-replace publication after replay and source closure.
+The generation and corpus receipt hashes are paired with closed historical
+source tokens plus exact clean Git and snapshot tuples. Historical parents
+are never reinterpreted under the current binary's source seal, and no public
+raw-digest API permits a snapshot to declare its own authority.
 `/usr/bin/git` is directly executed only for fixed read-only source identity
 or raw-object transport; it is not scientific authority. Python, shell,
 NeuralKit, PMHNP, and model execution remain outside the new adapter.

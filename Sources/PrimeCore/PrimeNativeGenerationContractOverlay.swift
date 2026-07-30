@@ -423,6 +423,76 @@ public struct PrimeNativeGenerationContractOverlayReceipt:
     public func validate(
         in root: PrimeArtifactRoot
     ) throws {
+        try validate(
+            in: root,
+            historicalSourcePin: nil,
+            requiredPrimeSourcePaths:
+                PrimeNativeGenerationContractOverlay
+                .requiredPrimeSourcePaths
+        )
+    }
+
+    /// Replays the exact canonical 2026-07-30 generation-contract parent.
+    public func validateCanonicalHistorical20260730(
+        binding: PrimeArtifactBinding,
+        in root: PrimeArtifactRoot
+    ) throws {
+        guard binding.relativePath
+                == "prime-native-generation-contract-projection-receipt.v1.json",
+              binding.sha256
+                == "05d135bb04bc377b85b7bce98a6eebbab35a80172567407d2c4625f4af9b990b",
+              binding.byteCount == 20_010,
+              binding.purpose == .immutableData,
+              primeSourceRemoteURL
+                == "https://github.com/Ergentics/ergentics-prime.git",
+              primeSourceRevision
+                == "28906ef704f4d8727ea0da5e068f6ecbe52330ab",
+              primeSourceTreeOID
+                == "c2d07ff9f4a011f7dddf8eb91dcd7278d873b18c",
+              primeSourceTreeClean,
+              primeSourceSnapshot.relativePath
+                == "generation-contract/prime-swift-source-snapshot.v1.json",
+              primeSourceSnapshot.sha256
+                == "f3b51e4a01f4af2725fff1e1256db7d1378e0d412b6f22d26840ef5f97ff15c7",
+              primeSourceSnapshot.byteCount
+                == 2_858_617,
+              primeSourceSnapshot.purpose
+                == .immutableData
+        else {
+            throw PrimeNativeGenerationContractOverlayError
+                .invalidReceipt(
+                    "canonical historical identity"
+                )
+        }
+        let persisted =
+            try root.decodeVerified(
+                PrimeNativeGenerationContractOverlayReceipt
+                    .self,
+                binding: binding,
+                maximumByteCount: 4 * 1024 * 1024
+            )
+        guard persisted == self else {
+            throw PrimeNativeGenerationContractOverlayError
+                .invalidReceipt(
+                    "canonical historical receipt binding"
+                )
+        }
+        try validate(
+            in: root,
+            historicalSourcePin:
+                .nativeGenerationContractProjection20260730,
+            requiredPrimeSourcePaths:
+                PrimeNativeGenerationContractOverlay
+                .canonicalHistorical20260730RequiredPrimeSourcePaths
+        )
+    }
+
+    private func validate(
+        in root: PrimeArtifactRoot,
+        historicalSourcePin:
+            PrimePinnedHistoricalReleaseSource?,
+        requiredPrimeSourcePaths: Set<String>
+    ) throws {
         try validate()
         let parent =
             try root.decodeVerified(
@@ -454,12 +524,21 @@ public struct PrimeNativeGenerationContractOverlayReceipt:
                 maximumByteCount:
                     64 * 1024 * 1024
             )
-        try PrimeSwiftSourceProvenance.validate(
-            sourceSnapshot,
-            requiredRelativePaths:
-                PrimeNativeGenerationContractOverlay
-                .requiredPrimeSourcePaths
-        )
+        if let historicalSourcePin {
+            try PrimeSwiftSourceProvenance
+                .validatePinnedReleaseEvidence(
+                    sourceSnapshot,
+                    requiredRelativePaths:
+                        requiredPrimeSourcePaths,
+                    pin: historicalSourcePin
+                )
+        } else {
+            try PrimeSwiftSourceProvenance.validate(
+                sourceSnapshot,
+                requiredRelativePaths:
+                    requiredPrimeSourcePaths
+            )
+        }
         _ = try root.verify(projectionExecutable)
 
         let projection =
@@ -507,6 +586,25 @@ public enum PrimeNativeGenerationContractOverlay {
         "Sources/PrimeNativeGenerationContractProjectionProbe/PrimeNativeGenerationContractProjectionProbeMain.swift",
         "Sources/PrimeNativeGenerationContractProjectionVerifier/PrimeNativeGenerationContractProjectionVerifierMain.swift",
     ]
+
+    static let
+        canonicalHistorical20260730RequiredPrimeSourcePaths:
+        Set<String> = [
+            "Sources/PrimeCore/PrimeNativeGenerationContractProjection.swift",
+            "Sources/PrimeCore/PrimeNativeGenerationContractOverlay.swift",
+            "Sources/PrimeCore/PrimeNativeGenerationContractArguments.swift",
+            "Sources/PrimeCore/PrimeDurableArtifacts.swift",
+            "Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift",
+            "Sources/PrimeCore/PrimeNativeContractMigration.swift",
+            "Sources/PrimeCore/PrimeNativeContractMigrationResolver.swift",
+            "Sources/PrimeCore/PrimeNativeGitBlobTransport.swift",
+            "Sources/PrimeCore/PrimeNativeResolvedContractAdapter.swift",
+            "Sources/PrimeCore/PrimeNativeResolvedContractModels.swift",
+            "Sources/PrimeCore/PrimeSecureRunningExecutableCapture.swift",
+            "Sources/PrimeCore/PrimeSwiftSourceProvenance.swift",
+            "Sources/PrimeNativeGenerationContractProjectionProbe/PrimeNativeGenerationContractProjectionProbeMain.swift",
+            "Sources/PrimeNativeGenerationContractProjectionVerifier/PrimeNativeGenerationContractProjectionVerifierMain.swift",
+        ]
 
     public static func publish(
         adapterRoot: PrimeArtifactRoot,

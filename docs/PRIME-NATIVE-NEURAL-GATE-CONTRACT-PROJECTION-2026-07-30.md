@@ -47,6 +47,21 @@ process; this can strand a candidate but cannot create a false PASS.
 | Fixed-cap/EOS generation projection | `prime-native-generation-contract-projection-receipt.v1.json` | 20,010 | `05d135bb04bc377b85b7bce98a6eebbab35a80172567407d2c4625f4af9b990b` |
 | Full corpus regeneration/regrade | `prime-native-full-corpus-replay-receipt.v1.json` | 2,965 | `88d243827c1aff0ce8125402f84c4ffe4012d058dedaf88f614099e975dafdc2` |
 
+Those exact receipt hashes transitively bind each parent's historical Git and
+source-snapshot tuple. Stage A also checks the complete tuple directly:
+
+| Parent | Prime revision / tree | Snapshot path | Snapshot bytes / SHA-256 | Source identity |
+| --- | --- | --- | --- | --- |
+| Generation projection | `28906ef704f4d8727ea0da5e068f6ecbe52330ab` / `c2d07ff9f4a011f7dddf8eb91dcd7278d873b18c` | `generation-contract/prime-swift-source-snapshot.v1.json` | 2,858,617 / `f3b51e4a01f4af2725fff1e1256db7d1378e0d412b6f22d26840ef5f97ff15c7` | `a634994a9aedb2803b61353ffd30f0fcd0f1bad4356ce738f7d150f3cd08d2fb` |
+| Full corpus replay | `e17d031af4ec48b644a326646da7bcb8ce24388d` / `3f061674b652cca9cbc2429dc44c85a3aa803665` | `source/prime-swift-source-snapshot.v1.json` | 3,400,268 / `0811b735c3162269907ce44db5321733dc01fc85454f45a8ebb19e0520b02d37` | `d13a817e2918e94972174b78eb1372dd0d4395161fca08b63850e7c2bfbbb08f` |
+
+Both parent source states are clean Release snapshots from
+`https://github.com/Ergentics/ergentics-prime.git`. A historical parent is
+validated against its compiled closed authority token, not the source identity
+of the currently running Stage-A binary and not a digest read back from the
+artifact. Prime exposes no public raw-string expectation that could let an
+arbitrary internally consistent snapshot nominate itself as authority.
+
 The full-corpus parent regenerated and embedded-regraded all 155,648 rows, but
 its semantic evaluator is the same implementation family as the corpus
 generator. This projection does not upgrade that result into an independent

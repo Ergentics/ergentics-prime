@@ -6,6 +6,41 @@ import Testing
 @Suite
 struct PrimeNativeNeuralGateContractProjectionTests {
     @Test
+    func historicalParentsBindExactReceiptAndSourcePairs()
+        throws
+    {
+        let plan =
+            PrimeNativeNeuralGateContractPlan
+            .frozenV1
+        try plan.validate()
+
+        #expect(
+            plan.generationReceiptSHA256
+                == "05d135bb04bc377b85b7bce98a6eebbab35a80172567407d2c4625f4af9b990b"
+        )
+        #expect(
+            plan
+                .generationParentSourceIdentitySHA256
+                == "a634994a9aedb2803b61353ffd30f0fcd0f1bad4356ce738f7d150f3cd08d2fb"
+        )
+        #expect(
+            plan.corpusReplayReceiptSHA256
+                == "88d243827c1aff0ce8125402f84c4ffe4012d058dedaf88f614099e975dafdc2"
+        )
+        #expect(
+            plan
+                .corpusReplayParentSourceIdentitySHA256
+                == "d13a817e2918e94972174b78eb1372dd0d4395161fca08b63850e7c2bfbbb08f"
+        )
+        #expect(
+            plan
+                .generationParentSourceIdentitySHA256
+                != plan
+                .corpusReplayParentSourceIdentitySHA256
+        )
+    }
+
+    @Test
     func frozenProjectionBindsExactDonorAuthority()
         throws
     {

@@ -47,9 +47,13 @@ public struct PrimeNativeNeuralGateContractPlan:
     public let generationReceiptPath: String
     public let generationReceiptSHA256: String
     public let generationReceiptByteCount: UInt64
+    public let generationParentSourceIdentitySHA256:
+        String
     public let corpusReplayReceiptPath: String
     public let corpusReplayReceiptSHA256: String
     public let corpusReplayReceiptByteCount: UInt64
+    public let corpusReplayParentSourceIdentitySHA256:
+        String
     public let sourceSnapshotPath: String
     public let probeExecutablePath: String
     public let verifierExecutablePath: String
@@ -86,11 +90,15 @@ public struct PrimeNativeNeuralGateContractPlan:
         generationReceiptSHA256:
             "05d135bb04bc377b85b7bce98a6eebbab35a80172567407d2c4625f4af9b990b",
         generationReceiptByteCount: 20_010,
+        generationParentSourceIdentitySHA256:
+            "a634994a9aedb2803b61353ffd30f0fcd0f1bad4356ce738f7d150f3cd08d2fb",
         corpusReplayReceiptPath:
             "prime-native-full-corpus-replay-receipt.v1.json",
         corpusReplayReceiptSHA256:
             "88d243827c1aff0ce8125402f84c4ffe4012d058dedaf88f614099e975dafdc2",
         corpusReplayReceiptByteCount: 2_965,
+        corpusReplayParentSourceIdentitySHA256:
+            "d13a817e2918e94972174b78eb1372dd0d4395161fca08b63850e7c2bfbbb08f",
         sourceSnapshotPath:
             "neural-gate-contract/prime-swift-source-snapshot.v1.json",
         probeExecutablePath:
@@ -166,9 +174,23 @@ public struct PrimeNativeNeuralGateContractPlan:
               generationReceiptSHA256.utf8.count
                 == 64,
               generationReceiptByteCount > 0,
+              Self.isLowercaseSHA256(
+                  generationParentSourceIdentitySHA256
+              ),
+              generationParentSourceIdentitySHA256
+                == PrimePinnedHistoricalReleaseSource
+                .nativeGenerationContractProjection20260730
+                .sourceIdentitySHA256,
               corpusReplayReceiptSHA256.utf8.count
                 == 64,
               corpusReplayReceiptByteCount > 0,
+              Self.isLowercaseSHA256(
+                  corpusReplayParentSourceIdentitySHA256
+              ),
+              corpusReplayParentSourceIdentitySHA256
+                == PrimePinnedHistoricalReleaseSource
+                .nativeFullCorpusReplay20260730
+                .sourceIdentitySHA256,
               projectionPath
                 == PrimeNativeNeuralGateContractProjection
                 .frozenV1.projectionRelativePath,
@@ -202,6 +224,16 @@ public struct PrimeNativeNeuralGateContractPlan:
         )
     }
 
+    private static func isLowercaseSHA256(
+        _ value: String
+    ) -> Bool {
+        value.utf8.count == 64
+            && value.utf8.allSatisfy {
+                ($0 >= 48 && $0 <= 57)
+                    || ($0 >= 97 && $0 <= 102)
+            }
+    }
+
     private enum CodingKeys: String, CodingKey {
         case schemaVersion = "schema_version"
         case planID = "plan_id"
@@ -212,12 +244,16 @@ public struct PrimeNativeNeuralGateContractPlan:
             "generation_receipt_sha256"
         case generationReceiptByteCount =
             "generation_receipt_byte_count"
+        case generationParentSourceIdentitySHA256 =
+            "generation_parent_source_identity_sha256"
         case corpusReplayReceiptPath =
             "corpus_replay_receipt_path"
         case corpusReplayReceiptSHA256 =
             "corpus_replay_receipt_sha256"
         case corpusReplayReceiptByteCount =
             "corpus_replay_receipt_byte_count"
+        case corpusReplayParentSourceIdentitySHA256 =
+            "corpus_replay_parent_source_identity_sha256"
         case sourceSnapshotPath =
             "source_snapshot_path"
         case probeExecutablePath =
@@ -1473,7 +1509,12 @@ public enum PrimeNativeNeuralGateContractOverlay {
                 maximumByteCount:
                     maximumJSONBytes
             )
-        try generation.validate(in: root)
+        try generation
+            .validateCanonicalHistorical20260730(
+                binding:
+                    candidate.generationReceipt,
+                in: root
+            )
         let corpus =
             try root.decodeVerified(
                 PrimeNativeCorpusReplayReceipt.self,
@@ -1482,10 +1523,13 @@ public enum PrimeNativeNeuralGateContractOverlay {
                 maximumByteCount:
                     maximumJSONBytes
             )
-        try PrimeNativeCorpusReplayOverlay.validate(
-            corpus,
-            in: root
-        )
+        try PrimeNativeCorpusReplayOverlay
+            .validateCanonicalHistorical20260730(
+                corpus,
+                binding:
+                    candidate.corpusReplayReceipt,
+                in: root
+            )
         guard try expectedParentEvidence(
                   generation: generation,
                   corpus: corpus,
@@ -1912,7 +1956,11 @@ public enum PrimeNativeNeuralGateContractOverlay {
                 maximumByteCount:
                     maximumJSONBytes
             )
-        try receipt.validate(in: root)
+        try receipt
+            .validateCanonicalHistorical20260730(
+                binding: binding,
+                in: root
+            )
         return (
             receipt,
             binding,
@@ -1952,10 +2000,12 @@ public enum PrimeNativeNeuralGateContractOverlay {
                 maximumByteCount:
                     maximumJSONBytes
             )
-        try PrimeNativeCorpusReplayOverlay.validate(
-            receipt,
-            in: root
-        )
+        try PrimeNativeCorpusReplayOverlay
+            .validateCanonicalHistorical20260730(
+                receipt,
+                binding: binding,
+                in: root
+            )
         return (
             receipt,
             binding,

@@ -423,6 +423,12 @@ intended functional claim, leakage execution, per-family confidence/margin
 statistics, explicit dependency-family audit, and real-artifact
 fingerprinting.
 
+The Stage-A parent chain is historical by construction. Exact generation and
+corpus receipt hashes bind their own clean Release Git/snapshot tuples and
+closed source-identity tokens; those parents are not required to equal a later
+Stage-A binary's current source seal, and artifact-provided expected digests
+are never admitted as authority.
+
 Passage authorizes only an interrupted small canary. A same-device Metal
 trajectory gate follows. Immediate imported state at `N` remains exact because
 import performs no optimizer arithmetic. If `N+1` requires a preregistered
