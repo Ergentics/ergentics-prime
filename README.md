@@ -24,6 +24,8 @@ ledger, and the non-overwrite continuation rule are recorded in
 The typed no-rebuild inventory between Prime, `prime-runtime`, NeuralKit, and
 the Lab is recorded in
 [`docs/PRIME-NEURALKIT-ARC-CONTINUITY-2026-07-29.md`](docs/PRIME-NEURALKIT-ARC-CONTINUITY-2026-07-29.md).
+The narrow post-Phase-2 companion-blob resolver boundary is recorded in
+[`docs/PRIME-NATIVE-CONTRACT-RESOLVER-2026-07-29.md`](docs/PRIME-NATIVE-CONTRACT-RESOLVER-2026-07-29.md).
 The exact private-MLX migration sequence, narrow commit-identity rewrite
 boundary, recovery anchors, and post-migration evidence gates are recorded in
 [`docs/PRIME-PICKUP-PRIVATE-MLX-MIRROR-2026-07-29.md`](docs/PRIME-PICKUP-PRIVATE-MLX-MIRROR-2026-07-29.md).
@@ -45,7 +47,7 @@ screen already exist at the frozen companion revision. They are not yet
 migrated into Prime's training authority and do not imply an accepted
 checkpoint or functional-language result.
 
-The first GPU action is the frozen
+The first GPU action was the frozen
 `exact_3b_fp32_allocation_update_probe_b1_s128_a1`: one optimizer step at
 batch 1, sequence 128, and accumulation 1. It allocates the exact 3B FP32
 model, executes forward/backward, proves nonzero Adam state, and changes model
@@ -237,7 +239,7 @@ The mechanics gate now uses a seed-bound odd-stride modular schedule with 128
 distinct IDs from its 256-token synthetic domain. It fails closed unless every
 training input is collision-free. This removes the observed atomic contention
 without changing the exact 3B tied-Llama topology, AdamW, Metal execution,
-process interruption, or exact comparisons. A passing result would prove only
+process interruption, or exact comparisons. The passing result proves only
 the declared collision-free synthetic continuation mechanics; arbitrary
 repeated-token training determinism remains unresolved.
 
@@ -254,6 +256,17 @@ dtype admission and rebuilds optimizer storage in the target model topology.
 A retained-checkpoint replay passed model and moment loading, typed rebinding,
 and a real GPU forward/backward/AdamW step. That replay is feasibility
 diagnosis, not an authoritative continuation receipt.
+
+The source-sealed run at Prime commit
+`7c3989bd0e448eddf3b8b8b87d83c90f518a7d0c` then passed the exact declared
+step-1 and step-2 comparisons across three fresh workers. Its canonical
+receipt SHA-256 is
+`2943fd00df212df597dc85f7a70bfb779933bb75751fbdd772f9a26cbe2efe1e`.
+The receipt is repository- and off-device-durable. The complete approximately
+32 GiB descriptor-backed checkpoint/runtime root remains local-only, so a
+later checkpoint-consuming action still requires separate off-device
+durability. This `PASS` closes only the collision-free, random-initialized
+Phase 2 continuation-mechanics gate.
 
 Run only from a source-sealed Release build. The artifact root and the parent
 directory of the Metal lease file must be separate, empty/private as
@@ -277,6 +290,38 @@ Each checkpoint component is capped at 12 GiB before load. The expected raw
 model-plus-Adam floor is about 31.52 GiB, so the artifact root is local
 research evidence unless its exact bindings are separately copied to durable
 off-device storage.
+
+## Phase 3 frozen-contract resolver
+
+The current implementation slice is a Swift-authoritative, resolver-only
+transition. It binds exactly eight already-frozen companion artifacts,
+totalling 11,969,097 bytes, at companion commit
+`163fc100710ece48119bc25954452d10f6a84f7f` and tree
+`9009daa4f8a07fbd5897e00b9571cef44ec292db`. `/usr/bin/git` is used only as a
+directly executed, read-only raw-object transport; Swift owns revision, tree,
+path, mode, object type, object ID, byte-count, SHA-256, mutation, publication,
+and receipt decisions.
+
+Admission requires an empty artifact root with exact mode `0700`. Prime's
+remote, revision, tree, and complete tracked/untracked cleanliness state are
+checked before source snapshotting and again after running-executable capture;
+both observations must remain identical and clean. Executable capture opens
+the running image without following links, binds the file descriptor's device
+and inode to the executable vnode loaded in the current process, and rejects
+metadata change across the read.
+
+`PrimeNativeContractResolutionVerifier` is a separate Swift-only executable
+with only an artifact-root input. In a fresh process it rebinds the canonical
+receipt and validates the complete persisted descriptor root twice. It has no
+Git, donor-selection, or execution knobs and claims no independent scientific
+oracle; it tests persistence and structural replay only.
+
+Implementation and gates are in progress. No canonical resolver receipt is
+claimed yet. This slice does not perform compatibility replay, implement an
+adapter, expand the archived profile screen, execute companion or NeuralKit
+code, execute a model, train, quantize, or authorize product use. The next
+admissible step is the compatibility adapter only after canonical resolver
+evidence validates.
 
 ## Initial calibration
 

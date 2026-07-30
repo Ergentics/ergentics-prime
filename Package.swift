@@ -29,6 +29,18 @@ let package = Package(
             ]
         ),
         .executable(
+            name: "PrimeNativeContractResolutionProbe",
+            targets: [
+                "PrimeNativeContractResolutionProbe",
+            ]
+        ),
+        .executable(
+            name: "PrimeNativeContractResolutionVerifier",
+            targets: [
+                "PrimeNativeContractResolutionVerifier",
+            ]
+        ),
+        .executable(
             name: "PrimeLeaseHolder",
             targets: ["PrimeLeaseHolder"]
         ),
@@ -128,6 +140,14 @@ let package = Package(
                     package: "mlx-swift-lm"
                 ),
             ]
+        ),
+        .executableTarget(
+            name: "PrimeNativeContractResolutionProbe",
+            dependencies: ["PrimeCore"]
+        ),
+        .executableTarget(
+            name: "PrimeNativeContractResolutionVerifier",
+            dependencies: ["PrimeCore"]
         ),
         .executableTarget(
             name: "PrimeLeaseHolder",

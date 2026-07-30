@@ -36,22 +36,56 @@ full-pool NeuralKit regrade exists yet.
 
 `PrimeNativeArcContinuityPlan.frozenV1` inventories that no-rebuild boundary
 and requires Prime-produced research evidence to flow downstream into
-NeuralKit. It does not resolve or hash-check the external repositories by
-itself; a Swift compatibility resolver remains pending. The Prime tensor core
-does not import its consumer/regrader.
+NeuralKit. It remains the frozen historical inventory; the post-Phase-2
+resolver adds a new typed gate instead of changing that record. The Prime
+tensor core does not import its consumer/regrader.
 
-## Current AdamW admission sequence
+Phase 2 is complete for its exact narrow mechanics claim. The source-sealed,
+random-initialized exact 3B FP32 run matched step 1 and step 2 across
+uninterrupted and fresh-process-restored Metal trajectories. Its canonical
+receipt SHA-256 is
+`2943fd00df212df597dc85f7a70bfb779933bb75751fbdd772f9a26cbe2efe1e`.
+The receipt is repository- and off-device-durable; the complete approximately
+32 GiB descriptor-backed checkpoint/runtime root remains local-only.
 
-- resolve and hash-check only the four Prime-owned exact-3B/CPU evidence
-  bindings required by the current AdamW slice; the typed-restore root is
-  already repository-durable at `3481ffc`;
-- run only the required Prime/private-MLX source, dependency, and runtime
-  compatibility checks;
-- prove exact typed AdamW interrupted Metal continuation on the existing exact
-  3B geometry, operator-selected for bounded mechanics only.
+## Current Phase 3 resolver admission
+
+`PrimeNativeContractMigrationPlan.frozenV1` defines the resolver-only
+transition now being implemented. It admits exactly eight existing companion
+Git blobs, totalling 11,969,097 bytes, at commit
+`163fc100710ece48119bc25954452d10f6a84f7f` and tree
+`9009daa4f8a07fbd5897e00b9571cef44ec292db`.
+
+- `/usr/bin/git` is directly executed only for read-only revision, tree, and
+  raw-object transport; no shell or Python is scientific authority.
+- Swift owns repository identity, revision, tree, path, mode, object type,
+  object ID, byte-count, SHA-256, mutation, immutable publication, and receipt
+  validation.
+- Publication requires a fresh, empty artifact root with exact mode `0700`.
+  Prime remote, revision, tree, and tracked/untracked cleanliness are observed
+  before the source snapshot and after running-executable capture; both states
+  must remain identical and clean.
+- Running-executable capture opens the no-follow descriptor and requires its
+  device and inode to match the executable vnode loaded in the current
+  process, with stable size and timestamps across the read.
+- Wrong revision, wrong path, missing artifact, changed bytes, and authority
+  expansion must fail before a canonical receipt can validate.
+- A separately invoked Swift-only
+  `PrimeNativeContractResolutionVerifier` accepts only the artifact root and
+  revalidates the persisted receipt and descriptor bindings in a fresh
+  process. It has no Git, donor-selection, or execution knobs and is a
+  persistence validator, not an independent scientific oracle.
+- Implementation and gates are in progress. No canonical resolver execution
+  or compatibility replay is claimed yet.
+
+This resolver does not implement an adapter, expand the archived profile
+screen, execute companion or NeuralKit code, execute a model, train, quantize,
+or authorize product use.
 
 ## Separately scoped future admission
 
+- implement the compatibility adapter only after canonical resolver evidence
+  validates;
 - reuse archived mechanics, factorized-seed, profile-screen, and synthetic
   NeuralKit evidence without wholesale reruns;
 - durably bind the resulting checkpoint and evaluation shards;
@@ -60,8 +94,9 @@ does not import its consumer/regrader.
 - run the existing independent NeuralKit regrade, statistics, SZ fingerprint,
   triadic audit, and mutation sweep over real artifacts.
 
-This future list is not authorized by the AdamW slice. The current task does
-not migrate tokenizer/corpus/evaluator contracts or execute NeuralKit.
+This future list is not authorized by the resolver slice. The current task
+materializes opaque frozen blobs but does not interpret tokenizer, corpus, or
+evaluator contracts and does not execute NeuralKit.
 
 The three fidelity arms are mechanisms, not arbitrary budgets. Wall and
 convergence bounds are derived from a completed fixed-token calibration and

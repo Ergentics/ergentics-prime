@@ -1,6 +1,7 @@
 # Prime and NeuralKit arc continuity
 
-Status: frozen typed inventory; cross-repository replay pending
+Status: Phase 2 exact continuation `PASS`; Phase 3 resolver implementation and
+gates in progress
 
 Snapshot date: 2026-07-29
 
@@ -46,10 +47,10 @@ not a dependency on the PMHNP application tree.
 
 `PrimeNativeArcContinuityPlan.frozenV1` is the typed inventory for this
 boundary. Its `validate()` method detects in-process inventory drift; it does
-not resolve repositories or verify artifact bytes. A Swift resolver and
-narrow compatibility replay remain future integration gates. They are not
-prerequisites for the current AdamW slice beyond its four Prime-owned evidence
-bindings.
+not resolve repositories or verify artifact bytes.
+`PrimeNativeContractMigrationPlan.frozenV1` is the new, non-overwriting
+resolver-only transition. Its implementation and gates are in progress; no
+canonical resolver receipt or compatibility replay is claimed yet.
 
 ## Authority and migration boundaries
 
@@ -96,6 +97,13 @@ bindings.
   `fafc7d236a8a9b8f857d4a5bd9f34a3ed12012dd061a8a4c984fe85876fb569d`.
   Its complete 34 MiB evidence root is repository-durable at
   `3481ffc24f3a81a26197fc8625510cab66e6e29b`.
+- Prime's exact random-initialized 3B FP32 Metal continuation passed its
+  collision-free synthetic step-1 and step-2 equality contract across three
+  fresh workers. Its canonical receipt SHA-256 is
+  `2943fd00df212df597dc85f7a70bfb779933bb75751fbdd772f9a26cbe2efe1e`.
+  The receipt is repository- and off-device-durable. The complete
+  approximately 32 GiB descriptor-backed checkpoint/runtime root remains
+  local-only.
 
 These archives are not to be recreated merely because work moved repositories.
 Narrow source/dependency compatibility replay is still required when Prime
@@ -103,18 +111,33 @@ adapts a frozen schema. These results remain distinct; none may be relabeled
 as functional language, accepted checkpoint, quantization, product, clinical,
 or broad-language evidence.
 
-## Current slice — AdamW continuation only
+## Current slice — frozen companion resolver only
 
-1. Resolve and byte-verify only the Prime-owned exact-3B mechanics receipt,
-   execution configuration, source snapshot, and CPU typed-restore receipt.
-2. Run the scoped Prime/private-MLX source, dependency, and runtime
-   compatibility checks needed by the AdamW continuation.
-3. Execute the bounded exact-3B interruption gate below.
+1. Bind the exact companion repository at commit
+   `163fc100710ece48119bc25954452d10f6a84f7f` and tree
+   `9009daa4f8a07fbd5897e00b9571cef44ec292db`.
+2. Resolve exactly the eight companion blobs already frozen by
+   `PrimeNativeArcContinuityPlan.frozenV1`, totalling 11,969,097 bytes.
+3. Use `/usr/bin/git` only as directly executed, read-only raw-object
+   transport. Swift owns revision, tree, path, mode, object type, object ID,
+   byte-count, SHA-256, mutation, publication, and receipt authority.
+4. Require a fresh, empty mode-`0700` artifact root. Observe Prime remote,
+   revision, tree, and complete tracked/untracked cleanliness before source
+   snapshotting and after loaded-vnode-bound running-executable capture;
+   require identical clean states and stable executable metadata.
+5. Fail closed on wrong revision, wrong path, missing artifact, changed bytes,
+   or expanded authority before a canonical receipt can validate.
+6. In a separately invoked Swift-only fresh process, have
+   `PrimeNativeContractResolutionVerifier` rebind and revalidate the persisted
+   receipt and descriptor root. It accepts only the artifact root, exposes no
+   Git, donor-selection, or execution knobs, and does not claim an independent
+   scientific oracle.
 
-Tokenizer/corpus migration, evaluator adapters, NeuralKit execution, PMHNP
-consumer changes, broad cross-repository resolution, and functional training
-are outside this slice. Historical artifacts stay inventoried so a later task
-does not recreate them, but they are not imported now.
+Implementation and gates are in progress; no canonical resolver run is
+claimed. This slice materializes opaque frozen blobs only. It does not perform
+compatibility replay, implement an adapter, expand the archived profile
+screen, execute companion or NeuralKit code, execute a model, train, quantize,
+change a PMHNP consumer, or authorize product use.
 
 ## Fresh CPU reissue diagnostics
 
@@ -134,7 +157,7 @@ Those two roots remain local, gitignored diagnostics. They are not AdamW
 failures and are not promoted. The unsandboxed reissue is the only new
 repository-durable exact receipt.
 
-## Exact unresolved execution boundary
+## Phase 2 continuation boundary and result
 
 The historical native-language executor saves model parameters only. It
 records `bounded_diagnostic_no_optimizer_resume` and
@@ -158,25 +181,31 @@ gradient, logits, next-batch identity, schedule position, factorized
 seed-domain bindings, executable, dependency source, metallib, and process
 evidence. Tolerance cannot promote resumable authority.
 
-This is a two-step mechanics continuation on an existing geometry. It is not a
-long training run, profile promotion, new language experiment, scale
-authorization, or new model family.
+The source-sealed run at Prime commit
+`7c3989bd0e448eddf3b8b8b87d83c90f518a7d0c` passed this exact declared
+boundary. The result is still only a two-step mechanics continuation on an
+existing geometry. It is not a long training run, profile promotion, new
+language experiment, scale authorization, or new model family.
 
-## Separately scoped follow-on after exact continuation
+## Separately scoped follow-on after resolver evidence
 
-1. Preserve the 3B Metal receipt in separately controlled off-device storage.
-2. Bind a physical native checkpoint and evaluation-shard inventory.
-3. Execute the already-frozen prompt-only fixed-cap-64/EOS cached and uncached
+1. Implement the dependency-light compatibility adapter only after a canonical
+   resolver receipt validates.
+2. Copy the complete approximately 32 GiB Phase 2 descriptor root to
+   separately controlled off-device storage before any later action consumes
+   that checkpoint/runtime root.
+3. Bind a physical native checkpoint and evaluation-shard inventory.
+4. Execute the already-frozen prompt-only fixed-cap-64/EOS cached and uncached
    regrade on a trained checkpoint.
-4. Feed those research artifacts through the existing NeuralKit SZ, triadic,
+5. Feed those research artifacts through the existing NeuralKit SZ, triadic,
    mutation, and VerifyAbstain gate for three real seeds using a read-only
    pinned source and isolated work root. Store inputs/outputs only in Prime or
    separately controlled external artifact storage, never in the companion
    checkout.
-5. Keep product safety/clinical verification in the PMHNP app and
+6. Keep product safety/clinical verification in the PMHNP app and
    recommendation/candidate-selection authority in PMHNP `EngineV21` plus
    `Recommender.recommend`.
-6. Only after an unquantized native checkpoint is accepted may quantization,
+7. Only after an unquantized native checkpoint is accepted may quantization,
    including diagonal-Hessian calibration, be reassessed.
 
 No existing companion or Lab result is overwritten, regenerated for
