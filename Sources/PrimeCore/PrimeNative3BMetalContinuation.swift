@@ -1187,23 +1187,21 @@ public struct PrimeNative3BContinuationDependencyPlan:
         forkRepository:
             "https://github.com/Ergentics/ergentics-mlx-swift",
         forkRevision:
-            "275cf507d262c12b6f5759af209a7218810c4912",
+            "d37885a278f1c37484a94d0f401a418735e66519",
         packageManifestSHA256:
-            "8d13eeb9a464d6b6d236285fd727b1df2f6994c28a848b4966f9faef25a0e6ac",
+            "43b8b1a887f6f61d0dd2c5afc118e941b904ee7f96aedb11e0000a378872c8cc",
         packageResolutionSHA256:
-            "ab5eeafad74b443c52c865d297fc5e52e5696b0c666e3341fd25cbb28e83a696",
+            "da7f7baa10f6da34b01ad69dc116f8a2d31140eca6770cb562ac05a7c50b356c",
         mirrorConfigurationSHA256:
             "6124788421eab5803c52b508338ec085a95753b871582951acbb3005b1dc2cc6",
         dependencyTreeManifestSHA256:
-            "e4b71d72817196af7427a0ef08c08153a0465d7aa66d0f7b2f934593c474bef7",
+            "91c9f71a7d32a21a5f23e5aaf0b6d54036a2858f88c30128e5910ea8f17e175f",
         licenseSHA256:
             PrimeTypedOptimizerRestorePlan
                 .frozenSchemaV2
                 .dependencyLicenseSHA256,
         typedStateSourceSHA256:
-            PrimeTypedOptimizerRestorePlan
-                .frozenSchemaV2
-                .typedStateSourceSHA256,
+            "175f6325730aa9a658f7aab91b9eb7d6c6d11b375cfa951297db447dfd9ae86d",
         optimizerSourceSHA256:
             PrimeTypedOptimizerRestorePlan
                 .frozenSchemaV2

@@ -241,6 +241,20 @@ process interruption, or exact comparisons. A passing result would prove only
 the declared collision-free synthetic continuation mechanics; arbitrary
 repeated-token training determinism remains unresolved.
 
+The next sealed attempt at commit `5477d27` admitted the control and writer and
+published all three exact checkpoint components, then failed closed in the
+restorer. Two independent Swift diagnostics localized the causes. MLX 0.31.3
+does not implement descriptor-backed `Load` on Metal, so immutable checkpoint
+bytes are now materialized and verified through its maintained CPU load stream
+before the model and optimizer continue on Metal. The loaded moment trees also
+lose parameterless module containers during flat safetensor serialization.
+Ergentics MLX PR 2, merged as
+`d37885a278f1c37484a94d0f401a418735e66519`, keeps exact path, shape, and
+dtype admission and rebuilds optimizer storage in the target model topology.
+A retained-checkpoint replay passed model and moment loading, typed rebinding,
+and a real GPU forward/backward/AdamW step. That replay is feasibility
+diagnosis, not an authoritative continuation receipt.
+
 Run only from a source-sealed Release build. The artifact root and the parent
 directory of the Metal lease file must be separate, empty/private as
 applicable, precreated directories with mode `0700`:

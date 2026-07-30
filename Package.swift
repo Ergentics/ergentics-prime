@@ -55,7 +55,7 @@ let package = Package(
         .package(
             url: "https://github.com/Ergentics/ergentics-mlx-swift",
             revision:
-                "275cf507d262c12b6f5759af209a7218810c4912"
+                "d37885a278f1c37484a94d0f401a418735e66519"
         ),
         .package(
             url: "https://github.com/ml-explore/mlx-swift-lm",
