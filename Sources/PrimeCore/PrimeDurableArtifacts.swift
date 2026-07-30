@@ -436,35 +436,11 @@ public final class PrimeArtifactRoot: @unchecked Sendable {
                 purpose: purpose,
                 expectedByteCount: byteCount
             )
-            var hasher = SHA256()
-            var buffer = [UInt8](
-                repeating: 0,
-                count: 64 * 1024
+            let digest = try Self.streamDigest(
+                opened,
+                path: relativePath,
+                expectedByteCount: byteCount
             )
-            while true {
-                let count = buffer.withUnsafeMutableBytes {
-                    read(
-                        opened,
-                        $0.baseAddress,
-                        $0.count
-                    )
-                }
-                if count < 0, errno == EINTR {
-                    continue
-                }
-                guard count >= 0 else {
-                    throw Self.posix(
-                        "read existing artifact",
-                        relativePath
-                    )
-                }
-                if count == 0 {
-                    break
-                }
-                hasher.update(
-                    data: Data(buffer[0 ..< count])
-                )
-            }
             let after = try Self.artifactMetadata(
                 opened,
                 parent: parent,
@@ -473,17 +449,14 @@ public final class PrimeArtifactRoot: @unchecked Sendable {
                 purpose: purpose,
                 expectedByteCount: byteCount
             )
-            guard before.st_dev == after.st_dev,
-                  before.st_ino == after.st_ino,
-                  before.st_size == after.st_size else {
-                throw PrimeDurableArtifactError
-                    .unsafeArtifact(relativePath)
-            }
+            try Self.requireStableFile(
+                before,
+                after,
+                path: relativePath
+            )
             return PrimeArtifactBinding(
                 relativePath: relativePath,
-                sha256: PrimeSHA256.encode(
-                    hasher.finalize()
-                ),
+                sha256: digest.sha256,
                 byteCount: byteCount,
                 purpose: purpose
             )
@@ -650,6 +623,375 @@ public final class PrimeArtifactRoot: @unchecked Sendable {
         }
     }
 
+    /// Publishes a file produced by a synchronous descriptor generator without
+    /// materializing its bytes in `Data`.
+    ///
+    /// The generator receives a borrowed `CLOEXEC` duplicate for a hidden,
+    /// precreated file in the destination directory. It must not close, retain,
+    /// or use the descriptor after `generate` returns. The original descriptor
+    /// and parent descriptor remain open across generation. The file is
+    /// accepted only if the descriptor-relative name still resolves to that
+    /// exact single-link inode after generation.
+    ///
+    /// `maximumByteCount` is a post-generation acceptance limit, not a write
+    /// quota. The generator must enforce any resource or time limit while it
+    /// writes; this method rejects an oversized final extent only after
+    /// `generate` returns, reclaims the held inode's storage, and leaves a
+    /// zero-length fail-closed marker if its hidden name remains bound.
+    public func publishGeneratedFile(
+        at relativePath: String,
+        purpose: PrimeArtifactPurpose,
+        maximumByteCount: UInt64,
+        generate: (Int32) throws -> Void
+    ) throws -> PrimeArtifactBinding {
+        let parsed = try Self.components(of: relativePath)
+        let temporaryName =
+            ".prime-partial-\(UUID().uuidString)"
+        return try withParentDescriptor(
+            components: parsed.parents,
+            relativePath: relativePath
+        ) { parent in
+            var existing = stat()
+            let existingStatus = parsed.leaf.withCString {
+                fstatat(
+                    parent,
+                    $0,
+                    &existing,
+                    AT_SYMLINK_NOFOLLOW
+                )
+            }
+            if existingStatus == 0 {
+                guard existing.st_mode & mode_t(S_IFMT)
+                        == mode_t(S_IFREG) else {
+                    throw PrimeDurableArtifactError
+                        .unsafeArtifact(relativePath)
+                }
+                throw PrimeDurableArtifactError
+                    .conflictingArtifact(relativePath)
+            }
+            let existingError = errno
+            guard existingError == ENOENT else {
+                throw PrimeDurableArtifactError.posix(
+                    operation:
+                        "descriptor-relative generated output preflight",
+                    path: relativePath,
+                    code: existingError
+                )
+            }
+
+            let generated = temporaryName.withCString {
+                openat(
+                    parent,
+                    $0,
+                    O_RDWR | O_CREAT | O_EXCL
+                        | O_NOFOLLOW | O_CLOEXEC,
+                    mode_t(0o600)
+                )
+            }
+            guard generated >= 0 else {
+                throw Self.posix(
+                    "openat generated artifact",
+                    temporaryName
+                )
+            }
+
+            var temporaryNeedsReclamation = true
+            defer {
+                _ = close(generated)
+            }
+
+            do {
+                _ = try Self.regularFileMetadata(
+                    generated,
+                    parent: parent,
+                    leaf: temporaryName,
+                    path: temporaryName,
+                    expectedMode: mode_t(0o600),
+                    expectedByteCount: 0
+                )
+                try Self.withDuplicatedDescriptor(
+                    generated,
+                    operation:
+                        "duplicate generated artifact descriptor",
+                    path: relativePath,
+                    body: generate
+                )
+                try Self.requireTrustedDirectory(
+                    parent,
+                    path: relativePath
+                )
+                let generatedMetadata =
+                    try Self.regularFileMetadata(
+                        generated,
+                        parent: parent,
+                        leaf: temporaryName,
+                        path: temporaryName,
+                        expectedMode: mode_t(0o600),
+                        expectedByteCount: nil
+                    )
+                let byteCount = UInt64(
+                    generatedMetadata.st_size
+                )
+                guard byteCount <= maximumByteCount else {
+                    throw PrimeDurableArtifactError
+                        .artifactTooLarge(relativePath)
+                }
+                guard fchmod(generated, purpose.mode) == 0 else {
+                    throw Self.posix(
+                        "fchmod generated artifact",
+                        temporaryName
+                    )
+                }
+                try Self.synchronize(
+                    generated,
+                    operation:
+                        "synchronize generated artifact",
+                    path: temporaryName
+                )
+                let beforeHash = try Self.artifactMetadata(
+                    generated,
+                    parent: parent,
+                    leaf: temporaryName,
+                    path: temporaryName,
+                    purpose: purpose,
+                    expectedByteCount: byteCount
+                )
+                let digest = try Self.streamDigest(
+                    generated,
+                    path: temporaryName,
+                    expectedByteCount: byteCount
+                )
+                let afterHash = try Self.artifactMetadata(
+                    generated,
+                    parent: parent,
+                    leaf: temporaryName,
+                    path: temporaryName,
+                    purpose: purpose,
+                    expectedByteCount: byteCount
+                )
+                try Self.requireStableFile(
+                    beforeHash,
+                    afterHash,
+                    path: temporaryName
+                )
+                let binding = PrimeArtifactBinding(
+                    relativePath: relativePath,
+                    sha256: digest.sha256,
+                    byteCount: digest.byteCount,
+                    purpose: purpose
+                )
+
+                let renamed = Self.renameNoReplace(
+                    parent: parent,
+                    source: temporaryName,
+                    destination: parsed.leaf
+                )
+                let renameError = errno
+                if renamed != 0 {
+                    if renameError == EEXIST {
+                        throw PrimeDurableArtifactError
+                            .conflictingArtifact(relativePath)
+                    } else {
+                        throw PrimeDurableArtifactError.posix(
+                            operation:
+                                "exclusive generated artifact publication",
+                            path: relativePath,
+                            code: renameError
+                        )
+                    }
+                } else {
+                    temporaryNeedsReclamation = false
+                    try Self.requireTrustedDirectory(
+                        parent,
+                        path: relativePath
+                    )
+                    try Self.synchronize(
+                        parent,
+                        operation:
+                            "synchronize generated publication parent",
+                        path: relativePath
+                    )
+                    let publishedBefore =
+                        try Self.artifactMetadata(
+                            generated,
+                            parent: parent,
+                            leaf: parsed.leaf,
+                            path: relativePath,
+                            purpose: purpose,
+                            expectedByteCount: byteCount
+                        )
+                    try Self.requireStableFile(
+                        afterHash,
+                        publishedBefore,
+                        path: relativePath,
+                        compareStatusChangeTime: false
+                    )
+                    let publishedDigest =
+                        try Self.streamDigest(
+                            generated,
+                            path: relativePath,
+                            expectedByteCount: byteCount
+                        )
+                    guard publishedDigest.sha256
+                            == binding.sha256 else {
+                        throw PrimeDurableArtifactError.hashMismatch(
+                            path: relativePath,
+                            expected: binding.sha256,
+                            actual: publishedDigest.sha256
+                        )
+                    }
+                    let publishedAfter =
+                        try Self.artifactMetadata(
+                            generated,
+                            parent: parent,
+                            leaf: parsed.leaf,
+                            path: relativePath,
+                            purpose: purpose,
+                            expectedByteCount: byteCount
+                        )
+                    try Self.requireStableFile(
+                        publishedBefore,
+                        publishedAfter,
+                        path: relativePath
+                    )
+                }
+                return binding
+            } catch {
+                let publicationError = error
+                if temporaryNeedsReclamation {
+                    // Never unlink this descriptor-relative name after a
+                    // separate identity check. Another process could rebound
+                    // the name between that check and unlinkat, causing
+                    // unrelated data to be destroyed. Reclaim only the inode
+                    // held by this descriptor and leave any still-bound,
+                    // zero-length partial as explicit fail-closed debris.
+                    temporaryNeedsReclamation = false
+                    do {
+                        try Self
+                            .reclaimTemporaryArtifactStorage(
+                                generated,
+                                parent: parent,
+                                leaf: temporaryName,
+                                path: temporaryName
+                            )
+                    } catch {
+                        throw error
+                    }
+                }
+                throw publicationError
+            }
+        }
+    }
+
+    /// Opens and verifies an immutable artifact around a descriptor loader.
+    ///
+    /// `load` may return lazy state. `materialize` is therefore mandatory and
+    /// runs before the held descriptor, descriptor-relative name, metadata,
+    /// byte count, and SHA-256 are verified again. `load` receives a borrowed
+    /// `CLOEXEC` duplicate which remains open through `materialize`. Neither
+    /// closure may close, retain, or use it after `materialize` returns.
+    public func withVerifiedArtifactDescriptor<Loaded, Result>(
+        _ binding: PrimeArtifactBinding,
+        load: (Int32) throws -> Loaded,
+        materialize: (Loaded) throws -> Result
+    ) throws -> Result {
+        try binding.validateDeclaration()
+        let parsed = try Self.components(
+            of: binding.relativePath
+        )
+        return try withParentDescriptor(
+            components: parsed.parents,
+            relativePath: binding.relativePath
+        ) { parent in
+            let opened = try openArtifact(
+                parent: parent,
+                leaf: parsed.leaf,
+                relativePath: binding.relativePath
+            )
+            defer { _ = close(opened) }
+
+            let before = try Self.artifactMetadata(
+                opened,
+                parent: parent,
+                leaf: parsed.leaf,
+                path: binding.relativePath,
+                purpose: binding.purpose,
+                expectedByteCount: binding.byteCount
+            )
+            let initialDigest = try Self.streamDigest(
+                opened,
+                path: binding.relativePath,
+                expectedByteCount: binding.byteCount
+            )
+            guard initialDigest.sha256 == binding.sha256 else {
+                throw PrimeDurableArtifactError.hashMismatch(
+                    path: binding.relativePath,
+                    expected: binding.sha256,
+                    actual: initialDigest.sha256
+                )
+            }
+            guard lseek(opened, 0, SEEK_SET) >= 0 else {
+                throw Self.posix(
+                    "seek verified artifact for loader",
+                    binding.relativePath
+                )
+            }
+            let result = try Self.withDuplicatedDescriptor(
+                opened,
+                operation:
+                    "duplicate verified artifact descriptor",
+                path: binding.relativePath
+            ) { borrowed in
+                let loaded = try load(borrowed)
+                return try materialize(loaded)
+            }
+
+            try Self.requireTrustedDirectory(
+                parent,
+                path: binding.relativePath
+            )
+            let after = try Self.artifactMetadata(
+                opened,
+                parent: parent,
+                leaf: parsed.leaf,
+                path: binding.relativePath,
+                purpose: binding.purpose,
+                expectedByteCount: binding.byteCount
+            )
+            try Self.requireStableFile(
+                before,
+                after,
+                path: binding.relativePath
+            )
+            let finalDigest = try Self.streamDigest(
+                opened,
+                path: binding.relativePath,
+                expectedByteCount: binding.byteCount
+            )
+            guard finalDigest.sha256 == binding.sha256 else {
+                throw PrimeDurableArtifactError.hashMismatch(
+                    path: binding.relativePath,
+                    expected: binding.sha256,
+                    actual: finalDigest.sha256
+                )
+            }
+            let finalMetadata = try Self.artifactMetadata(
+                opened,
+                parent: parent,
+                leaf: parsed.leaf,
+                path: binding.relativePath,
+                purpose: binding.purpose,
+                expectedByteCount: binding.byteCount
+            )
+            try Self.requireStableFile(
+                after,
+                finalMetadata,
+                path: binding.relativePath
+            )
+            return result
+        }
+    }
+
     public func publishCanonical<Value: Encodable>(
         _ value: Value,
         at relativePath: String
@@ -687,30 +1029,10 @@ public final class PrimeArtifactRoot: @unchecked Sendable {
                 purpose: binding.purpose,
                 expectedByteCount: binding.byteCount
             )
-            var hasher = SHA256()
-            var buffer = [UInt8](repeating: 0, count: 64 * 1024)
-            while true {
-                let count = buffer.withUnsafeMutableBytes {
-                    read(
-                        opened,
-                        $0.baseAddress,
-                        $0.count
-                    )
-                }
-                if count < 0, errno == EINTR { continue }
-                guard count >= 0 else {
-                    throw Self.posix(
-                        "read artifact",
-                        binding.relativePath
-                    )
-                }
-                if count == 0 { break }
-                hasher.update(
-                    data: Data(buffer[0..<count])
-                )
-            }
-            let actualHash = PrimeSHA256.encode(
-                hasher.finalize()
+            let digest = try Self.streamDigest(
+                opened,
+                path: binding.relativePath,
+                expectedByteCount: binding.byteCount
             )
             let after = try Self.artifactMetadata(
                 opened,
@@ -720,18 +1042,16 @@ public final class PrimeArtifactRoot: @unchecked Sendable {
                 purpose: binding.purpose,
                 expectedByteCount: binding.byteCount
             )
-            guard before.st_dev == after.st_dev,
-                  before.st_ino == after.st_ino,
-                  before.st_size == after.st_size else {
-                throw PrimeDurableArtifactError.unsafeArtifact(
-                    binding.relativePath
-                )
-            }
-            guard actualHash == binding.sha256 else {
+            try Self.requireStableFile(
+                before,
+                after,
+                path: binding.relativePath
+            )
+            guard digest.sha256 == binding.sha256 else {
                 throw PrimeDurableArtifactError.hashMismatch(
                     path: binding.relativePath,
                     expected: binding.sha256,
-                    actual: actualHash
+                    actual: digest.sha256
                 )
             }
             return PrimeVerifiedArtifact(
@@ -948,6 +1268,124 @@ public final class PrimeArtifactRoot: @unchecked Sendable {
         return (components.dropLast(), leaf)
     }
 
+    private static func requireStableFile(
+        _ before: stat,
+        _ after: stat,
+        path: String,
+        compareStatusChangeTime: Bool = true
+    ) throws {
+        let stableTimes: Bool
+        #if canImport(Darwin)
+        stableTimes =
+            before.st_mtimespec.tv_sec
+                == after.st_mtimespec.tv_sec
+            && before.st_mtimespec.tv_nsec
+                == after.st_mtimespec.tv_nsec
+            && (
+                !compareStatusChangeTime
+                || (
+                    before.st_ctimespec.tv_sec
+                        == after.st_ctimespec.tv_sec
+                    && before.st_ctimespec.tv_nsec
+                        == after.st_ctimespec.tv_nsec
+                )
+            )
+        #else
+        stableTimes = !compareStatusChangeTime
+        #endif
+        guard before.st_dev == after.st_dev,
+              before.st_ino == after.st_ino,
+              before.st_size == after.st_size,
+              stableTimes else {
+            throw PrimeDurableArtifactError.unsafeArtifact(
+                path
+            )
+        }
+    }
+
+    private static func streamDigest(
+        _ descriptor: Int32,
+        path: String,
+        expectedByteCount: UInt64
+    ) throws -> (
+        sha256: String,
+        byteCount: UInt64
+    ) {
+        guard lseek(descriptor, 0, SEEK_SET) >= 0 else {
+            throw posix("seek artifact", path)
+        }
+        var hasher = SHA256()
+        var total: UInt64 = 0
+        var buffer = [UInt8](
+            repeating: 0,
+            count: 1024 * 1024
+        )
+        while true {
+            let count = buffer.withUnsafeMutableBytes {
+                read(
+                    descriptor,
+                    $0.baseAddress,
+                    $0.count
+                )
+            }
+            if count < 0, errno == EINTR {
+                continue
+            }
+            guard count >= 0 else {
+                throw posix("read artifact", path)
+            }
+            if count == 0 {
+                break
+            }
+            let (next, overflow) = total.addingReportingOverflow(
+                UInt64(count)
+            )
+            guard !overflow,
+                  next <= expectedByteCount else {
+                throw PrimeDurableArtifactError
+                    .byteCountMismatch(
+                        path: path,
+                        expected: expectedByteCount,
+                        actual: overflow
+                            ? UInt64.max : next
+                    )
+            }
+            hasher.update(
+                data: Data(buffer[0 ..< count])
+            )
+            total = next
+        }
+        guard total == expectedByteCount else {
+            throw PrimeDurableArtifactError.byteCountMismatch(
+                path: path,
+                expected: expectedByteCount,
+                actual: total
+            )
+        }
+        return (
+            PrimeSHA256.encode(hasher.finalize()),
+            total
+        )
+    }
+
+    private static func withDuplicatedDescriptor<Result>(
+        _ descriptor: Int32,
+        operation: String,
+        path: String,
+        body: (Int32) throws -> Result
+    ) throws -> Result {
+        let duplicated = fcntl(
+            descriptor,
+            F_DUPFD_CLOEXEC,
+            0
+        )
+        guard duplicated >= 0 else {
+            throw posix(operation, path)
+        }
+        defer { _ = close(duplicated) }
+        return try body(duplicated)
+    }
+
     private func withParentDescriptor<Result>(
         components: ArraySlice<String>,
         relativePath: String,
@@ -1007,7 +1445,8 @@ public final class PrimeArtifactRoot: @unchecked Sendable {
             openat(
                 parent,
                 $0,
-                O_RDONLY | O_NOFOLLOW | O_CLOEXEC
+                O_RDONLY | O_NONBLOCK
+                    | O_NOFOLLOW | O_CLOEXEC
             )
         }
         guard opened >= 0 else {
@@ -1030,7 +1469,8 @@ public final class PrimeArtifactRoot: @unchecked Sendable {
             openat(
                 parent,
                 $0,
-                O_RDONLY | O_NOFOLLOW | O_CLOEXEC
+                O_RDONLY | O_NONBLOCK
+                    | O_NOFOLLOW | O_CLOEXEC
             )
         }
         if opened < 0 {
@@ -1136,6 +1576,24 @@ public final class PrimeArtifactRoot: @unchecked Sendable {
         purpose: PrimeArtifactPurpose,
         expectedByteCount: UInt64
     ) throws -> stat {
+        try regularFileMetadata(
+            descriptor,
+            parent: parent,
+            leaf: leaf,
+            path: path,
+            expectedMode: purpose.mode,
+            expectedByteCount: expectedByteCount
+        )
+    }
+
+    private static func regularFileMetadata(
+        _ descriptor: Int32,
+        parent: Int32,
+        leaf: String,
+        path: String,
+        expectedMode: mode_t,
+        expectedByteCount: UInt64?
+    ) throws -> stat {
         var opened = stat()
         guard fstat(descriptor, &opened) == 0 else {
             throw posix("fstat artifact", path)
@@ -1161,12 +1619,15 @@ public final class PrimeArtifactRoot: @unchecked Sendable {
               opened.st_dev == bound.st_dev,
               opened.st_ino == bound.st_ino,
               opened.st_size >= 0,
-              UInt64(opened.st_size) == expectedByteCount,
+              expectedByteCount.map({
+                  UInt64(opened.st_size) == $0
+              }) ?? true,
               opened.st_mode & mode_t(0o7777)
-                == purpose.mode,
+                == expectedMode,
               bound.st_mode & mode_t(0o7777)
-                == purpose.mode else {
-            if opened.st_size >= 0,
+                == expectedMode else {
+            if let expectedByteCount,
+               opened.st_size >= 0,
                UInt64(opened.st_size) != expectedByteCount {
                 throw PrimeDurableArtifactError.byteCountMismatch(
                     path: path,
@@ -1176,6 +1637,11 @@ public final class PrimeArtifactRoot: @unchecked Sendable {
             }
             throw PrimeDurableArtifactError.unsafeArtifact(path)
         }
+        try requireStableFile(
+            opened,
+            bound,
+            path: path
+        )
         try requireTrustedDescriptorMetadata(
             descriptor,
             path: path,
@@ -1304,6 +1770,94 @@ public final class PrimeArtifactRoot: @unchecked Sendable {
             "Prime artifact descriptor ACL/xattr validation requires Darwin"
         )
         #endif
+    }
+
+    /// Reclaims storage only from the inode held by `descriptor`.
+    ///
+    /// The descriptor-relative name is never unlinked: pathname identity can
+    /// change after any separate `fstatat` check. A name still bound to this
+    /// inode is preserved as a zero-length fail-closed marker. A missing name
+    /// needs no further action, and a rebound name is preserved and rejected.
+    private static func reclaimTemporaryArtifactStorage(
+        _ descriptor: Int32,
+        parent: Int32,
+        leaf: String,
+        path: String
+    ) throws {
+        var before = stat()
+        guard fstat(descriptor, &before) == 0 else {
+            throw posix(
+                "fstat generated artifact reclamation",
+                path
+            )
+        }
+        guard before.st_mode & mode_t(S_IFMT)
+                == mode_t(S_IFREG),
+              before.st_uid == geteuid() else {
+            throw PrimeDurableArtifactError
+                .unsafeArtifact(path)
+        }
+        guard ftruncate(descriptor, 0) == 0 else {
+            throw posix(
+                "truncate generated artifact reclamation",
+                path
+            )
+        }
+        guard fsync(descriptor) == 0 else {
+            throw posix(
+                "synchronize generated artifact reclamation",
+                path
+            )
+        }
+        var held = stat()
+        guard fstat(descriptor, &held) == 0 else {
+            throw posix(
+                "fstat reclaimed generated artifact",
+                path
+            )
+        }
+        guard before.st_dev == held.st_dev,
+              before.st_ino == held.st_ino,
+              held.st_mode & mode_t(S_IFMT)
+                == mode_t(S_IFREG),
+              held.st_uid == geteuid(),
+              held.st_size == 0 else {
+            throw PrimeDurableArtifactError
+                .unsafeArtifact(path)
+        }
+
+        var bound = stat()
+        let status = leaf.withCString {
+            fstatat(
+                parent,
+                $0,
+                &bound,
+                AT_SYMLINK_NOFOLLOW
+            )
+        }
+        if status != 0 {
+            let statusError = errno
+            if statusError == ENOENT {
+                return
+            }
+            throw posix(
+                "fstatat generated artifact reclamation",
+                path,
+                code: statusError
+            )
+        }
+        guard held.st_dev == bound.st_dev,
+              held.st_ino == bound.st_ino,
+              held.st_nlink == 1,
+              bound.st_nlink == 1,
+              bound.st_mode & mode_t(S_IFMT)
+                == mode_t(S_IFREG),
+              bound.st_uid == geteuid(),
+              bound.st_size == 0 else {
+            throw PrimeDurableArtifactError.unsafeArtifact(
+                path
+            )
+        }
     }
 
     private static func writeAll(

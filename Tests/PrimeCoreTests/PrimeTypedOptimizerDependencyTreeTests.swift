@@ -5,7 +5,7 @@ import XCTest
 final class PrimeTypedOptimizerDependencyTreeTests:
     XCTestCase
 {
-    func testLiveDependencyBuildInputTreeMatchesFrozenIdentity()
+    func testLiveDependencyBuildInputTreeMatchesContinuationIdentity()
         throws
     {
         let checkout = URL(
@@ -24,6 +24,39 @@ final class PrimeTypedOptimizerDependencyTreeTests:
         let evidence =
             try PrimeTypedOptimizerDependencyTree
             .capture(at: checkout)
+        try PrimeTypedOptimizerDependencyTree
+            .validateStructure(evidence)
+        let plan =
+            PrimeNative3BContinuationDependencyPlan
+                .frozenV1
+        try plan.validate()
+        XCTAssertEqual(
+            PrimeSHA256.hexDigest(
+                of:
+                    try PrimeCanonicalJSON
+                    .encode(evidence)
+            ),
+            plan.dependencyTreeManifestSHA256
+        )
+    }
+
+    func testHistoricalTypedRestoreEvidenceMatchesFrozenIdentity()
+        throws
+    {
+        let evidenceURL = URL(
+            fileURLWithPath:
+                FileManager.default
+                .currentDirectoryPath,
+            isDirectory: true
+        )
+        .appendingPathComponent(
+            "artifacts/typed-optimizer-restore-6465beb-20260729T184600Z/content-staging/evidence/mlx-swift/dependency-source-tree.v1.json"
+        )
+        let evidence = try JSONDecoder().decode(
+            PrimeTypedOptimizerDependencyTreeEvidence
+                .self,
+            from: Data(contentsOf: evidenceURL)
+        )
         try PrimeTypedOptimizerDependencyTree
             .validateFrozen(evidence)
     }

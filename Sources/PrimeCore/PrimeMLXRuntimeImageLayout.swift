@@ -34,6 +34,8 @@ public enum PrimeMLXRuntimeRole:
         "optimizer_restore_probe"
     case typedOptimizerRestoreProbe =
         "typed_optimizer_restore_probe"
+    case native3BMetalContinuationProbe =
+        "native_3b_metal_continuation_probe"
 }
 
 public enum PrimeMLXRuntimeImageLayoutError:
@@ -85,6 +87,18 @@ public enum PrimeMLXRuntimeImageLayout {
                     .bundleRelativePath
         )
 
+    public static let native3BMetalContinuationProbe =
+        PrimeMLXRuntimeImageLayoutDeclaration(
+            layoutID:
+                "ergentics_prime_native_3b_metal_continuation_probe_mlx_sibling_bundle",
+            layoutVersion: 1,
+            stagedExecutableRelativePath:
+                "PrimeNative3BMetalContinuationProbe.executable",
+            siblingBundleRelativePath:
+                PrimePinnedMLXMetallib
+                    .bundleRelativePath
+        )
+
     /// Compatibility spelling for the original calibration role.
     public static let declaration = calibration
 
@@ -98,6 +112,8 @@ public enum PrimeMLXRuntimeImageLayout {
             return optimizerRestoreProbe
         case .typedOptimizerRestoreProbe:
             return typedOptimizerRestoreProbe
+        case .native3BMetalContinuationProbe:
+            return native3BMetalContinuationProbe
         }
     }
 
@@ -111,6 +127,8 @@ public enum PrimeMLXRuntimeImageLayout {
             return "PrimeOptimizerRestoreProbe"
         case .typedOptimizerRestoreProbe:
             return "PrimeTypedOptimizerRestoreProbe"
+        case .native3BMetalContinuationProbe:
+            return "PrimeNative3BMetalContinuationProbe"
         }
     }
 
@@ -126,6 +144,11 @@ public enum PrimeMLXRuntimeImageLayout {
         }
         if declaration == typedOptimizerRestoreProbe {
             return .typedOptimizerRestoreProbe
+        }
+        if declaration
+            == native3BMetalContinuationProbe
+        {
+            return .native3BMetalContinuationProbe
         }
         throw PrimeMLXRuntimeImageLayoutError
             .undeclaredLayout

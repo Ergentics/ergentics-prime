@@ -201,6 +201,48 @@ SHA-256 is
 Both source revisions are remote-resolvable. This remains optimizer-resume
 mechanics, not Metal training or functional evidence.
 
+## Exact 3B interrupted Metal continuation
+
+`PrimeNative3BMetalContinuationProbe` is the single bounded follow-on to the
+typed CPU restore gate. It creates the exact 2,820,320,256-parameter Prime
+profile from deterministic random initialization with the maintained MLX Swift
+Llama implementation, runs AdamW step 1 and step 2 in one fresh Metal worker,
+then independently repeats step 1, saves model plus both typed Adam moment
+families through descriptor-backed safetensors, restores them into a poisoned
+fresh process, and runs step 2 again. It downloads or loads no pretrained
+weights, tokenizer, corpus, adapter, or external model artifact.
+
+The parent admits checkpoint publication only after the control and writer
+step-1 state match exactly. `PASS` requires exact tensor-byte catalogs and
+fixed-logit equality before save, immediately after restore, and after the
+continued step. Parent-observed worker role, PID, exit status, bounded output,
+and record identity are receipt-bound. A mismatch or incomplete process
+boundary produces `ABSTAIN`; it does not select a profile or authorize
+training, quantization, language claims, or product use.
+
+Run only from a source-sealed Release build. The artifact root and the parent
+directory of the Metal lease file must be separate, empty/private as
+applicable, precreated directories with mode `0700`:
+
+```sh
+swift build -c release
+xcodebuild -downloadComponent MetalToolchain
+xcodebuild -scheme PrimeGPUCalibration -configuration Release -destination 'platform=macOS,arch=arm64' -toolchain com.apple.dt.toolchain.Metal.32023.883 -derivedDataPath .build/apple build
+.build/arm64-apple-macosx/release/PrimeMLXBundleStage \
+  --source-host .build/apple/Build/Products/Release/PrimeGPUCalibration \
+  --destination-host .build/arm64-apple-macosx/release/PrimeNative3BMetalContinuationProbe \
+  --runtime-role native_3b_metal_continuation_probe
+.build/arm64-apple-macosx/release/PrimeNative3BMetalContinuationProbe \
+  --artifact-root /absolute/private/artifact-root \
+  --source-root "$PWD" \
+  --metal-lease-file /absolute/private/lease-parent/prime-metal.lock
+```
+
+Each checkpoint component is capped at 12 GiB before load. The expected raw
+model-plus-Adam floor is about 31.52 GiB, so the artifact root is local
+research evidence unless its exact bindings are separately copied to durable
+off-device storage.
+
 ## Initial calibration
 
 The executable accepts paths and the explicit human allocation authorization;

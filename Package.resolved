@@ -1,12 +1,12 @@
 {
-  "originHash" : "5fbeb59ca4397ef8eb1f788b40d8ea7646462d39623f54c7ef7ebe92336afe6a",
+  "originHash" : "8d13eeb9a464d6b6d236285fd727b1df2f6994c28a848b4966f9faef25a0e6ac",
   "pins" : [
     {
       "identity" : "ergentics-mlx-swift",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/ml-explore/mlx-swift",
       "state" : {
-        "revision" : "68904d54b72871f26968261ae05d4fbb7c5e3142"
+        "revision" : "275cf507d262c12b6f5759af209a7218810c4912"
       }
     },
     {

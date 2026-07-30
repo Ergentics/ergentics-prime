@@ -283,6 +283,63 @@ final class PrimePinnedMLXMetallibTests: XCTestCase {
         )
     }
 
+    func testStageAndReverifyNative3BMetalContinuationRuntimeRole()
+        throws
+    {
+        let donor = try makeXcodeDonorFixture()
+        let destination = try makeFixture(
+            executableName:
+                "PrimeNative3BMetalContinuationProbe"
+        )
+        try FileManager.default.removeItem(
+            at: destination.metallib
+        )
+
+        let staged =
+            try PrimePinnedMLXMetallib
+                .stageExactXcodeMetallib(
+                    from: donor.executable,
+                    beside: destination.executable,
+                    runtimeRole:
+                        .native3BMetalContinuationProbe
+                )
+        XCTAssertTrue(
+            staged.destinationMetallibInitiallyAbsent
+        )
+        XCTAssertEqual(
+            staged.binding.runtimeImageLayout,
+            PrimeMLXRuntimeImageLayout
+                .native3BMetalContinuationProbe
+        )
+        XCTAssertNoThrow(
+            try PrimePinnedMLXMetallib
+                .reverifyStagedRuntimeImage(
+                    of: destination.executable,
+                    matches: staged.binding,
+                    runtimeRole:
+                        .native3BMetalContinuationProbe
+                )
+        )
+        XCTAssertThrowsError(
+            try PrimePinnedMLXMetallib
+                .reverifyStagedRuntimeImage(
+                    of: destination.executable,
+                    matches: staged.binding,
+                    runtimeRole:
+                        .typedOptimizerRestoreProbe
+                )
+        )
+        XCTAssertThrowsError(
+            try PrimePinnedMLXMetallib
+                .stageExactXcodeMetallib(
+                    from: donor.executable,
+                    beside: destination.executable,
+                    runtimeRole:
+                        .typedOptimizerRestoreProbe
+                )
+        )
+    }
+
     func testStageRejectsWrongExistingDestinationWithoutOverwrite()
         throws
     {
@@ -522,6 +579,50 @@ final class PrimePinnedMLXMetallibTests: XCTestCase {
                         typedRestoreBinding,
                     runtimeRole:
                         .optimizerRestoreProbe
+                )
+        )
+
+        let continuationFixture = try makeFixture(
+            executableName:
+                "PrimeNative3BMetalContinuationProbe"
+        )
+        let continuationBinding =
+            try PrimePinnedMLXMetallib
+                .captureSibling(
+                    of: continuationFixture.executable,
+                    into:
+                        continuationFixture.artifactRoot,
+                    runtimeRole:
+                        .native3BMetalContinuationProbe
+                )
+        XCTAssertEqual(
+            continuationBinding.runtimeImageLayout,
+            PrimeMLXRuntimeImageLayout
+                .native3BMetalContinuationProbe
+        )
+        XCTAssertNoThrow(
+            try PrimePinnedMLXMetallib
+                .reverifyStagedRuntimeImage(
+                    of: continuationFixture.executable,
+                    matches: continuationBinding,
+                    runtimeRole:
+                        .native3BMetalContinuationProbe
+                )
+        )
+        XCTAssertThrowsError(
+            try PrimePinnedMLXMetallib
+                .reverifyStagedRuntimeImage(
+                    of: continuationFixture.executable,
+                    matches: continuationBinding,
+                    runtimeRole:
+                        .typedOptimizerRestoreProbe
+                )
+        )
+        XCTAssertThrowsError(
+            try PrimePinnedMLXMetallib
+                .reverifyStagedRuntimeImage(
+                    of: continuationFixture.executable,
+                    matches: continuationBinding
                 )
         )
     }
