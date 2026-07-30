@@ -41,6 +41,18 @@ let package = Package(
             ]
         ),
         .executable(
+            name: "PrimeNativeResolvedContractAdapterProbe",
+            targets: [
+                "PrimeNativeResolvedContractAdapterProbe",
+            ]
+        ),
+        .executable(
+            name: "PrimeNativeResolvedContractAdapterVerifier",
+            targets: [
+                "PrimeNativeResolvedContractAdapterVerifier",
+            ]
+        ),
+        .executable(
             name: "PrimeLeaseHolder",
             targets: ["PrimeLeaseHolder"]
         ),
@@ -147,6 +159,14 @@ let package = Package(
         ),
         .executableTarget(
             name: "PrimeNativeContractResolutionVerifier",
+            dependencies: ["PrimeCore"]
+        ),
+        .executableTarget(
+            name: "PrimeNativeResolvedContractAdapterProbe",
+            dependencies: ["PrimeCore"]
+        ),
+        .executableTarget(
+            name: "PrimeNativeResolvedContractAdapterVerifier",
             dependencies: ["PrimeCore"]
         ),
         .executableTarget(

@@ -26,6 +26,9 @@ the Lab is recorded in
 [`docs/PRIME-NEURALKIT-ARC-CONTINUITY-2026-07-29.md`](docs/PRIME-NEURALKIT-ARC-CONTINUITY-2026-07-29.md).
 The narrow post-Phase-2 companion-blob resolver boundary is recorded in
 [`docs/PRIME-NATIVE-CONTRACT-RESOLVER-2026-07-29.md`](docs/PRIME-NATIVE-CONTRACT-RESOLVER-2026-07-29.md).
+The bounded Swift compatibility adapter over that frozen resolver output is
+recorded in
+[`docs/PRIME-NATIVE-CONTRACT-COMPATIBILITY-2026-07-30.md`](docs/PRIME-NATIVE-CONTRACT-COMPATIBILITY-2026-07-30.md).
 The exact private-MLX migration sequence, narrow commit-identity rewrite
 boundary, recovery anchors, and post-migration evidence gates are recorded in
 [`docs/PRIME-PICKUP-PRIVATE-MLX-MIRROR-2026-07-29.md`](docs/PRIME-PICKUP-PRIVATE-MLX-MIRROR-2026-07-29.md).
@@ -293,7 +296,7 @@ off-device storage.
 
 ## Phase 3 frozen-contract resolver
 
-The current implementation slice is a Swift-authoritative, resolver-only
+The completed resolver slice was a Swift-authoritative, resolver-only
 transition. It binds exactly eight already-frozen companion artifacts,
 totalling 11,969,097 bytes, at companion commit
 `163fc100710ece48119bc25954452d10f6a84f7f` and tree
@@ -323,7 +326,26 @@ claims persistence and structural replay, not an independent scientific
 oracle. This slice does not perform compatibility replay, implement an
 adapter, expand the archived profile screen, execute companion or NeuralKit
 code, execute a model, train, quantize, or authorize product use. The next
-admissible step is the narrowly scoped compatibility adapter.
+admissible step was the narrowly scoped compatibility adapter.
+
+## Resolved-contract compatibility adapter
+
+The current implementation adds a dependency-light Swift adapter over the
+exact frozen resolver result. It revalidates the parent descriptor root,
+replays the NFC UTF-8 byte tokenizer through two native byte paths, validates
+the corpus/evaluation manifest and inert historical Verify/Abstain envelope,
+and publishes a typed Prime projection into a fresh descriptor-backed
+artifact root with immutable receipt-bound files.
+
+This is not full Phase 3 compatibility. The resolved inventory embeds neither
+the corpus rows nor a standalone fixed-cap/EOS generation wire contract, so
+the adapter cannot claim corpus regeneration, semantic row regrade,
+generation-behavior compatibility, model or NeuralKit execution, training,
+quantization, product authority, or an independent scientific oracle. Its
+canonical Release status, receipt identity, and fresh-process verifier result
+are recorded only in
+`artifacts/native-resolved-contract-adapter-canonical-2026-07-30/README.md`
+when that evidence exists; absence of that note means the result is pending.
 
 ## Initial calibration
 
