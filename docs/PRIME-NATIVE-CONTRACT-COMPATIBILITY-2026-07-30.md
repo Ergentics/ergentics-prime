@@ -246,6 +246,13 @@ The next prerequisite is:
 
 `resolve_exact_fixed_cap_eos_generation_contract_projection`
 
+Implementation status on 2026-07-30: this bounded slice is in progress on
+`feat/prime-fixed-cap-eos-generation-projection`. Source review and typed
+contract construction are development work only. No canonical projection,
+receipt, fresh-process verifier outcome, or new evidence hash is claimed yet,
+and all generation-behavior, physical-shard, and independent-regrade
+completion flags remain false.
+
 Create one standalone, Swift-generated, versioned projection blob that freezes
 the source-reviewed schema-4 generation boundary without expanding the
 historical archive. It should bind at least:
@@ -256,8 +263,9 @@ historical archive. It should bind at least:
   `prompt_byte_token_count_excluding_bos_v1`;
 - target-independent decision budget `64`;
 - EOS token `70` available at every decision;
-- allowed support equal to EOS plus byte-token IDs `256...511`;
-- the target-free prompt request fields;
+- ordered allowed support equal to EOS followed by byte-token IDs
+  `256...511`;
+- the target-free in-memory prompt request fields;
 - EOS and fixed-cap termination rules;
 - executed-decision mean-log-probability treatment, including immediate EOS;
 - raw-result and post-generation regrade field projections;
@@ -270,13 +278,106 @@ Source-reviewed development references at companion revision
 | Source | Git blob | SHA-256 |
 | --- | --- | --- |
 | `prime-runtime/Sources/ErgenticsPrimeRuntime/ErgenticsNativeLanguageCanary.swift` | `027a25b49dde1acfb4cd8af970e05ecd8241f427` | `8706343bf93c1dac70f5c263f7111667574da751cd27d6c3321a92fd822f063f` |
+| `prime-runtime/Sources/PrimeNativeLanguageSwiftCanary/main.swift` | `94227842cdff73434c926527a6081aaf20f37155` | `7a3ba9477a7ac82dccfe6dcc7ec09af738b40298cdab6b259ddf1e9d36ec15b4` |
 | `neural-kit/Sources/NeuralKit/PrimeNeuralNativeLanguageVerifyAbstainGate.swift` | `795fff7c458ec68ba4562b6cd1c674fe8de7ffc4` | `c3c93c637cb15f3a6944e78d8d44c0045f873f7df54f6121ee2d25e4f166b0f6` |
+
+The source-reviewed boundary has three distinct shapes that the projection
+must not collapse:
+
+- `PromptOnlyEvaluationRow` is an in-memory, non-`Codable` Swift type with
+  `rowID`, `promptText`, derived prompt-byte grouping key, and the fixed
+  decision budget. The donor revision defines no standalone prompt-request
+  wire schema. Seed is bound outside that row, and target material is
+  unavailable to the generation call.
+- The schema-4 report contains target-bearing post-generation
+  `raw_predictions`. Each row binds prompt and target identity plus the
+  grouping, budget, allowed-support, EOS, zero-shot, and trained regrade
+  witnesses. This report object is evidence after generation; it is not a
+  permissible model input.
+- Physical generation shards use schema version `2`, not `4`. Their envelope
+  binds phase, profile, seed, corpus, generation contract, fixed cap, model
+  binding, row range, and entries. Each entry contains `row_id` plus the
+  donor's camel-case `generated` fields: nullable `text`, token IDs, token log
+  probabilities, executed-decision mean, EOS state and reason, UTF-8
+  validity, nullable EOS log probability, unrestricted-argmax parity,
+  disallowed-argmax count and mass, and positive latency.
+
+The exact generation mechanics are:
+
+- prompt grouping is NFC UTF-8 byte-token count excluding BOS; generation
+  performs one cached prompt prefill and at most `64` cached one-token
+  decisions;
+- each generation batch has one new KV cache and equal prompt-token lengths
+  including BOS. One batched cached prompt prefill supplies the first
+  decision logits; every subsequent decode call supplies exactly one token
+  per batch row to the same cache. Prompt tokens including BOS plus all `64`
+  fixed-cap decisions must fit the profile maximum sequence length, the
+  generation context must equal that profile limit, and the insufficient-row
+  set must be empty;
+- the `_kv_v2` acceptance contract also requires cached-versus-uncached
+  witnesses: the single-step maximum logit delta is finite and at most
+  `1e-4` with full-vocabulary greedy parity on
+  `[1,321,322,323,324,325,326,70]`; the two multi-step prompt-only paths use
+  prompts `[1,300,301]` and `[1,310,311,312,313]`, continuations `[321,70]`
+  and `[341,342,343,70]`, compare exactly `6` decisions, and end in uneven
+  EOS. They require ordered-allowed-support greedy parity and a finite
+  nonnegative maximum logit delta at most `1e-4`. This projection binds those
+  requirements but does not claim to have observed their values;
+- the ordered support material is `[70, 256, 257, ..., 511]`, whose
+  newline-joined decimal SHA-256 is
+  `e3c1f6e4fc7b0329c2df97af2a32bff273d5534d7ccf54eaa1ef00b78b0d1768`;
+  the executor's ordered Swift `max` therefore favors EOS on an exact allowed
+  tie, while a full-vocabulary all-token tie favors token `0`;
+- EOS is available at every active decision. An EOS result uses termination
+  reason `eos`, excludes EOS from generated byte-token IDs, records its log
+  probability separately, and counts it as an executed decision. A non-EOS
+  result is valid only at exactly `64` byte tokens with reason `fixed_cap` and
+  a nil EOS log probability;
+- the mean log probability covers every executed decision, including EOS.
+  Immediate EOS consequently has no byte-token log probabilities and has a
+  mean equal to its EOS log probability;
+- donor regrade requires token and EOS log-probability values to be finite,
+  but does not independently require them to be nonpositive. Prime's
+  nonpositive-log-probability check is a stricter fail-closed guard and must
+  not be described as exact donor parity;
+- executor logits and full-vocabulary log-softmax values are extracted as
+  `Float` before promotion to `Double`. At each active decision, the
+  disallowed probability mass is the sum of `Foundation.exp` over every
+  token in `0...511` outside the allowed support, and the recorded witness is
+  the maximum of those sums across active decisions. Full-vocabulary argmax
+  parity is accumulated across active decisions and disallowed argmaxes are
+  counted. The projection binds this computation but does not observe logits
+  or recompute these witness values;
+- generation latency must be finite and strictly positive;
+- invalid UTF-8 is an admitted raw diagnostic shape with nullable generated
+  text, `utf8_valid: false`, and failed semantic/capability flags. It is not
+  an executor crash and cannot ground capability. For valid UTF-8, the donor
+  tokenizer may NFC-normalize generated text while retaining the original
+  byte token IDs, so compatibility uses Swift canonical `String` equality
+  against decoded token bytes rather than requiring byte-identical
+  `text.utf8`.
+
+Synthesized donor `Codable` optionals are omitted when nil on encode, while
+decode treats a missing key and explicit JSON `null` equivalently. This
+applies to generated text, EOS log probability, and the corresponding
+schema-4 prediction fields. It is separate from the evaluation-row identity
+hash, where an absent `mutation_id` is deliberately encoded as explicit JSON
+`null`. Donor decoders also do not establish a reject-unknown-keys rule, so a
+stricter Prime decoder must identify that behavior as hardening rather than
+historical wire parity.
 
 Those source references are design lineage, not currently resolved source
 artifacts. The new projection must become its own exact admitted blob before
 the adapter may set `fixedCapEOSGenerationContractBound` to true. Even then,
-generation-behavior compatibility remains false until physical result
-artifacts are independently regraded.
+generation-behavior compatibility, physical-shard observation, and
+independent semantic regrade remain false until physical result artifacts are
+admitted and independently regraded. The overlay records
+`source_blob_evidence_resolved_at_execution: false`; it does not turn the
+three declared identities into copied source artifacts. Its fresh verifier is
+also intentionally same-source: future verification requires checking out
+the recorded Prime revision and building the Release verifier with the same
+embedded source identity rather than treating an arbitrary later verifier as
+equivalent.
 
 ### 2. Transplant the source-pinned full corpus generator
 

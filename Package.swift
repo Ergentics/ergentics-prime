@@ -53,6 +53,18 @@ let package = Package(
             ]
         ),
         .executable(
+            name: "PrimeNativeGenerationContractProjectionProbe",
+            targets: [
+                "PrimeNativeGenerationContractProjectionProbe",
+            ]
+        ),
+        .executable(
+            name: "PrimeNativeGenerationContractProjectionVerifier",
+            targets: [
+                "PrimeNativeGenerationContractProjectionVerifier",
+            ]
+        ),
+        .executable(
             name: "PrimeLeaseHolder",
             targets: ["PrimeLeaseHolder"]
         ),
@@ -167,6 +179,14 @@ let package = Package(
         ),
         .executableTarget(
             name: "PrimeNativeResolvedContractAdapterVerifier",
+            dependencies: ["PrimeCore"]
+        ),
+        .executableTarget(
+            name: "PrimeNativeGenerationContractProjectionProbe",
+            dependencies: ["PrimeCore"]
+        ),
+        .executableTarget(
+            name: "PrimeNativeGenerationContractProjectionVerifier",
             dependencies: ["PrimeCore"]
         ),
         .executableTarget(
