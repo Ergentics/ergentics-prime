@@ -1988,9 +1988,13 @@ private func loadCheckpointComponent(
         .withVerifiedArtifactDescriptor(
             binding,
             load: { descriptor in
+                // MLX 0.31.3 does not implement descriptor-backed Load on
+                // Metal. Materialize and verify the immutable checkpoint on
+                // the maintained CPU load path; the restored model and AdamW
+                // continuation still execute under the GPU default device.
                 try MLX.loadArraysAndMetadata(
                     fileDescriptor: descriptor,
-                    stream: .gpu
+                    stream: .cpu
                 )
             },
             materialize: { loaded in

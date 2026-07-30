@@ -495,10 +495,20 @@ final class PrimeNative3BMetalContinuationSourceContractTests:
                 "withVerifiedArtifactDescriptor(",
                 "loadArraysAndMetadata(",
                 "fileDescriptor:",
+                "stream: .cpu",
                 "materialize:",
                 "eval(",
             ],
             in: load
+        )
+        XCTAssertFalse(
+            load.contains("stream: .gpu"),
+            "descriptor-backed MLX Load has no Metal implementation"
+        )
+        XCTAssertTrue(
+            load.contains(
+                "continuation still execute under the GPU default device"
+            )
         )
         XCTAssertFalse(
             load.contains("Data(contentsOf:")
