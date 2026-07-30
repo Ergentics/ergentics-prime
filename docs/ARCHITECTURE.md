@@ -24,15 +24,17 @@ The implemented authority chain is intentionally narrow:
    records, device observations, and optimizer state observations. Missing
    observations remain `nil`; they are never rewritten as `false`.
 
-The first-party tokenizer/corpus, historical training receipts, independent
-Swift evaluator, fixed-cap/EOS generation contract, triadic audit, SZ
-fingerprint, and mutation-sweep contract already exist in the frozen
-companion/NeuralKit arc. They are upstream evidence and migration inputs, not
-outputs of Prime's allocation probe. PMHNP is a read-only migration oracle,
-not Prime's runtime or write target. Prime must verify and materialize its own
-immutable fixtures/adapters without rebuilding the scientific contracts or
-adding a PMHNP runtime dependency. No accepted trained checkpoint or real
-full-pool NeuralKit regrade exists yet.
+The first-party tokenizer/corpus, historical training receipts, Swift
+evaluator/gate, fixed-cap/EOS generation contract, count-derived triadic label,
+SZ fingerprint, and mutation-sweep contract already exist in the frozen
+companion/NeuralKit arc. The evaluator is not an independent implementation
+family, and the count label is not AgentContractKit's four-tier TriadAudit.
+They are upstream evidence and migration inputs, not outputs of Prime's
+allocation probe. PMHNP is a read-only migration oracle, not Prime's runtime or
+write target. Prime must verify and materialize its own immutable
+fixtures/adapters without rebuilding the scientific contracts or adding a
+PMHNP runtime dependency. No accepted trained checkpoint or real full-pool
+NeuralKit regrade exists yet.
 
 `PrimeNativeArcContinuityPlan.frozenV1` inventories that no-rebuild boundary
 and requires Prime-produced research evidence to flow downstream into
@@ -95,10 +97,73 @@ compatibility. A canonical Stage-A result is recorded only by the evidence
 note under
 `artifacts/native-neural-gate-contract-projection-canonical-2026-07-30/`.
 
+The Stage-B execution contract is now frozen separately and still has no
+implementation or receipt authority. A forward source audit found that the
+pinned historical fixture sizes output and decision counts from target data
+and copies expected completions into predictions while declaring a
+target-independent budget. Stage B therefore requires two distinct
+fingerprint namespaces: an exact historical forensic replay that remains
+`ABSTAIN` on target independence, and a corrected Prime-owned prompt-only
+fixed-cap-64/EOS replay. Both arms, all raw invariant records, direct and
+accelerated fingerprint equality, all ten Verify/Abstain legs, projected
+statistics and fixed-prompt margin, count-derived verdict, ordered mutation
+detection/restoration, and fresh-process reconstruction are mandatory for a
+terminal Stage-B mechanics pass. Root containment/disjointness, unchanged
+companion pre/post identity, exact copied-donor paths, lossless copied Stage-A
+descriptor closure, typed donor-to-Prime adaptation proofs, the current clean
+Prime source closure, required compiled-source/process record schemas,
+independent direct `swift-package describe` captures of the frozen Xcode 26.6
+build 17F113 byte image, its exact contract-pinned full-file hash and
+descriptor metadata, and the typed descriptor-open → complete checked
+suspended region-query transcript/mapped-vnode join → pre-resume stability →
+`SIGCONT` → raw exact-PID wait/clean reap → post-reap stability sequence are
+part of the same contract. A PrimeCore-only non-`Codable` trusted-capture
+capability must bind the role, exact launch/working-root policy, identity
+derived from descriptor-read bytes, the transcript/wait result, paths, stream
+limits/overflow/drain outcomes, and separately drained bytes before public
+validation accepts a record. The future factory must read/hash bytes through
+the same held descriptor represented by its `fstat` snapshot and
+descriptor-validate the Prime working root. Native capability calibration,
+overflow-free drains, typed clean termination,
+observed death/reap, and distinct descriptor-captured Release executables are
+also required. The direct executable launch path, `proc_pidpath` pathname, and
+code-sign fields are non-authoritative telemetry; no Apple trust claim is
+made. The native calibrated external-child factory is not implemented. No
+Stage-B process record has been observed yet. Because the
+source-faithful historical fixture inherits traps, a sealed Swift worker owns
+the full historical arm. Probe and verifier supervise separate bounded worker
+invocations; successful stdout/stderr are empty, worker death/reap and exact
+role-prefix inventory are mandatory, and a worker result cannot authorize
+mechanics `PASS` until the verifier decodes and recomputes every semantic
+artifact. An abnormal outcome internally abstains, poisons the root, accepts no
+result as evidence, publishes no successful-execution record or terminal
+receipt, and permits no retry.
+The verifier revalidates those copied inputs from the artifact root rather
+than receiving the live Stage-A or companion roots.
+Ordinary evidence is immutable data at `0444`; captured executable evidence is
+`0555`; and the mixed-purpose Stage-A descriptor graph preserves each original
+binding instead of receiving a blanket mode. Stage A contains 35 reachable
+typed bindings plus its separately pinned terminal receipt: 36 copied
+artifacts total.
+Historical target independence and model capability remain `ABSTAIN`; neither
+blocks a correctly scoped mechanics pass.
+
 ## Separately scoped future admission
 
-- reconstruct the source-pinned synthetic fixture in a Prime-owned Swift
-  replay target;
+- first bind the donor-to-Prime adaptation proof, copied/revalidated Stage-A
+  descriptor closure, current clean Prime source closure, independently
+  captured SwiftPM authority subgraph, complete external-child region-query
+  transcript, vnode/descriptor/byte identity, raw exact-PID wait/clean reap,
+  non-`Codable` trusted-capture capability, and overflow-free stream evidence.
+  Also bind validated six-process records, distinct descriptor-captured Release
+  probe/verifier images, the sealed historical worker, exact pre-receipt
+  realized path-and-metadata inventory, and separate typed artifact-content
+  validation required by the frozen Stage-B wrapper;
+- reconstruct the source-pinned historical fixture in a Prime-owned Swift
+  forensic replay target without treating its target-derived construction as
+  eligible semantics;
+- construct the corrected prompt-only fixed-cap-64/EOS fixture in a separately
+  fingerprinted Prime-owned Swift arm;
 - publish and bind the complete invariant-record set and per-mutation
   observations;
 - recompute direct and accelerated finite-field fingerprints and require
@@ -113,7 +178,8 @@ note under
 - run the real-artifact gate before any RecommendationProvider or product
   promotion.
 
-The first four items are synthetic gate mechanics. They still do not prove
+The wrapper plus the next five items are synthetic gate mechanics. They still
+do not prove
 model capability, checkpoint causality, broad-language function learning, or
 product benefit.
 

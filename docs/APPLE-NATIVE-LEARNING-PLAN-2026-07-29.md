@@ -155,16 +155,21 @@ cannot yet import that optimizer state. Gradients, activations, allocator
 headroom, graph state, control state, and atomic checkpoint staging add to
 those floors.
 
-Prime does not yet contain a migrated/admitted copy or adapter for the
-companion arc's:
+Prime now admits the exact isolated byte-tokenizer/compositional-corpus replay,
+the prompt-only fixed-cap/EOS generation contract, and the bounded Stage-A
+native-gate schema projection. Those receipts establish source/schema and
+synthetic replay mechanics only.
 
-- first-party tokenizer manifest;
-- compositional training/validation/holdout corpus;
-- full native-language training executor;
-- independent NeuralKit evaluator;
-- fixed-cap/EOS generation regrade;
-- functional statistical battery, triadic audit, or SZ fingerprint;
-- accepted functional checkpoint.
+Prime still does not contain:
+
+- the dual-arm Stage-B execution, including its sealed trap-containment worker;
+- a full native-language training executor;
+- an evaluator disjoint enough for a broad functional claim;
+- AgentContractKit four-tier TriadAudit or an explicit dependency-family
+  audit;
+- per-family confidence/rank/decision-margin analysis;
+- a complete functional executor joined to a physical evaluation shard; or
+- an accepted functional checkpoint.
 
 Prime now contains a private public-API typed optimizer-state transport
 candidate,
@@ -179,10 +184,12 @@ durable at Prime revision `3481ffc24f3a81a26197fc8625510cab66e6e29b`;
 its canonical receipt has SHA-256
 `fafc7d236a8a9b8f857d4a5bd9f34a3ed12012dd061a8a4c984fe85876fb569d`.
 
-The historical companion has working, checked-in versions of every listed
-foundation except an accepted functional checkpoint. They are frozen donors
-and downstream authorities, not work to recreate and not proof that Prime has
-already admitted their schemas. The exact boundary is frozen in
+The historical companion has checked-in tokenizer/corpus, evaluator/gate,
+fixed-cap/EOS, count-label, fingerprint, and mutation materials. Its evaluator
+is not an independent implementation family, and its count-derived triadic
+label is not a four-tier TriadAudit. Those materials are frozen donors and
+downstream inputs, not proof of a complete functional executor or accepted
+checkpoint. The exact boundary is frozen in
 [the Prime/NeuralKit continuity contract](PRIME-NEURALKIT-ARC-CONTINUITY-2026-07-29.md).
 
 PMHNP already links NeuralKit, and `StudyAskChatTurn` calls `PrimeAskBrain`.
@@ -418,10 +425,50 @@ scientific mutation families. Phase 3 now source-projects the NeuralKit gate's
 functional mutation catalog, guarded loss-statistics formulas, fixed-prompt
 runner-up-margin predicate, count-derived triadic label, all-critical rule,
 finite-field mechanics, and selected capability thresholds. It still requires
-a source-pinned synthetic replay, an evaluator disjoint enough for the
-intended functional claim, leakage execution, per-family confidence/margin
+a source-pinned historical forensic replay, a separately fingerprinted
+Prime-owned prompt-only fixed-cap/EOS replay, an evaluator disjoint enough for
+the intended functional claim, leakage execution, per-family confidence/margin
 statistics, explicit dependency-family audit, and real-artifact
-fingerprinting.
+fingerprinting. The historical fixture cannot establish target independence:
+it consumes target length in output and decision-count construction and copies
+the expected completion into the trained prediction. Its exact replay remains
+mechanics evidence only.
+
+The frozen Stage-B plan also requires a typed source proof for every
+donor-to-Prime adaptation, a lossless independently revalidated copy of the
+Stage-A descriptor closure, a complete current clean Prime Swift source
+snapshot, required compiled-source/process record schemas, and independent
+direct `swift-package describe` authority-subgraph captures of the frozen
+Xcode 26.6 build 17F113 byte image. Its full-file hash and descriptor metadata
+are pinned, and typed evidence orders descriptor open, a complete checked
+suspended region-query transcript/mapped-vnode join, pre-resume stability,
+`SIGCONT`, raw exact-PID wait/clean reap, and post-reap stability after native
+capability calibration. A PrimeCore-produced non-`Codable` capability must
+bind the role, exact launch/working-root policy, identity derived from
+descriptor-read bytes, paths, the transcript/wait result, stream
+limits/overflow/drain outcomes, and separately drained bytes before public
+validation accepts the decoded record. The future factory must read/hash bytes
+through the same held descriptor represented by its `fstat` snapshot and
+descriptor-validate the Prime working root. Overflow-free drains, typed clean
+termination, descriptor-bound running
+Release probe/verifier executables, two SwiftPM children, two historical
+workers, and one sealed Swift worker image are also required. The direct
+executable launch path, `proc_pidpath` pathname, and code-sign fields are
+non-authoritative telemetry; no Apple trust claim is made. The native
+calibrated external-child factory is not yet implemented. None of those
+Stage-B records has been observed yet. The Stage-A
+copy is 35 reachable typed bindings plus its separately pinned terminal
+receipt, or 36 copied artifacts total. Separate bounded probe/verifier worker
+invocations own the complete
+trap-bearing historical arm and publish role-separated evidence; death/reap,
+exact role-prefix inventory, terminal semantic recomputation, exact
+pre-receipt realized path-and-metadata inventory, and separate typed
+artifact-content validation are mandatory. An abnormal worker outcome poisons
+the root, accepts no result as evidence, and publishes no successful-execution
+record or terminal receipt. The
+non-`Codable` fixture and inherited traps never enter the authoritative
+supervisor processes. Behavior-only reconciliation cannot substitute for
+source equivalence.
 
 The Stage-A parent chain is historical by construction. Exact generation and
 corpus receipt hashes bind their own clean Release Git/snapshot tuples and
@@ -824,13 +871,35 @@ Deliver:
 - exact native tokenizer and deterministic first-party compositional-corpus
   artifact bindings;
 - existing fixed-cap/EOS raw-generation contract;
-- existing independent regrade, Verify/Abstain, statistics, triad, SZ, and
-  mutation records;
+- exact historical forensic gate replay, explicitly ineligible to establish
+  target independence;
+- separately fingerprinted Prime-owned prompt-only fixed-cap-64/EOS gate
+  replay with construction-level leakage mutations;
+- complete raw invariant records, direct and accelerated fingerprints, and
+  ordered Verify/Abstain, statistics, count-label, SZ, and mutation
+  observations;
+- typed donor-to-Prime adaptation proof, copied and revalidated Stage-A
+  descriptor evidence, complete Prime source closure, independent SwiftPM
+  captures of the frozen Xcode 26.6 `swift-package` image with exact full-file
+  hash/metadata, typed descriptor-open → complete checked suspended
+  region-query transcript/mapped-vnode join → pre-resume stability →
+  `SIGCONT` → raw exact-PID wait/clean reap → post-reap stability evidence, a
+  PrimeCore-only non-`Codable` live-capture capability, overflow-free bounded
+  streams, required
+  six-process/image records, distinct bound Release probe/verifier
+  executables, exact pre-receipt path-and-metadata inventory, separate typed
+  artifact-content validation, and a sealed bounded historical worker;
 - revised Prime EngineRecommend that separates canary, broad-language,
   profile, and product claims.
 
-Exit: frozen donor fixtures reconcile, leakage mutations fail, and every
-artifact is generated/graded in Swift.
+Exit: both replay arms reconcile under distinct Release probe/verifier
+supervisors; the historical arm additionally reconciles two separate bounded
+worker invocations. Every arm recomputes all ten gate legs, projected
+statistics/margin, count-derived verdict, SZ fingerprints, and its complete
+mutation catalog; leakage mutations fail; and every artifact is generated and
+graded in Swift. Historical target independence and model capability remain
+explicit `ABSTAIN` outcomes. This synthetic mechanics exit still does not prove
+checkpoint causality, broad-language function learning, or product authority.
 
 ### Phase 4 — calibrated M5 Max executor
 
@@ -915,19 +984,25 @@ The non-training implementation slices now stand as follows:
    - typed named state export/import;
    - exact upstream/fork diff guards;
    - source/API tests inside the fork and an ordinary downstream import test.
-2. **Prime/NeuralKit continuity inventory — frozen; adapter pending**
-   - inventory the companion byte tokenizer, controlled corpus, fixed-cap/EOS
-     evaluator, SZ, Verify/Abstain, and mutation fixtures;
-   - freeze licenses, provenance, wire schemas, donor fixtures, and the
-     downstream NeuralKit authority direction;
-   - implement a revision/path/SHA resolver before claiming the inventory is
-     bound in Prime;
-   - materialize Prime-owned immutable fixtures/adapters without adding a
-     PMHNP runtime dependency or writing to the companion tree;
+2. **Prime/NeuralKit continuity — Stage A complete; Stage-B execution pending**
+   - the companion byte tokenizer, controlled corpus, fixed-cap/EOS evaluator,
+     SZ, Verify/Abstain, and mutation inventory is frozen;
+   - licenses, provenance, wire schemas, donor fixtures, and the downstream
+     NeuralKit authority direction are frozen;
+   - the revision/path/SHA resolver and bounded Stage-A source projection are
+     implemented with a canonical Release receipt;
+   - the dual-arm Stage-B adapter/execution contract is frozen, but its
+     Prime-owned immutable fixtures, native full-region-transcript SwiftPM
+     capture factory and non-`Codable` trust capability, raw exact-PID wait
+     lifecycle, typed worker-artifact recomputation, sealed historical worker,
+     probe, verifier, exact path-and-metadata inventory evidence, separately
+     typed artifact-content validation, and receipt do not yet exist;
+   - Stage B must add no PMHNP runtime dependency and must not write to the
+     companion tree;
    - document exclusions, especially Python/Core ML bridge and shell-derived
      authority;
    - do not yet start functional training;
-   - this migration/adapter work is not part of the current AdamW continuation
+   - this migration/adapter work remains separate from the AdamW continuation
      slice.
 3. **Prime exact CPU N+1 gate — private-revision canonical Release proof
    complete**

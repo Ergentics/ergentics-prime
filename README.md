@@ -37,6 +37,10 @@ The bounded NeuralKit gate source projection, exact ten-leg and 46-mutation
 catalog, count-label correction, and Stage-A/Stage-B truth boundary are
 recorded in
 [`docs/PRIME-NATIVE-NEURAL-GATE-CONTRACT-PROJECTION-2026-07-30.md`](docs/PRIME-NATIVE-NEURAL-GATE-CONTRACT-PROJECTION-2026-07-30.md).
+The forward-audited Stage-B execution contract, historical target-data leak,
+dual replay arms, exact invariant serialization, and direct/accelerated
+fingerprint boundary are recorded in
+[`docs/PRIME-NATIVE-NEURAL-GATE-FIXTURE-REPLAY-PLAN-2026-07-30.md`](docs/PRIME-NATIVE-NEURAL-GATE-FIXTURE-REPLAY-PLAN-2026-07-30.md).
 The exact private-MLX migration sequence, narrow commit-identity rewrite
 boundary, recovery anchors, and post-migration evidence gates are recorded in
 [`docs/PRIME-PICKUP-PRIVATE-MLX-MIRROR-2026-07-29.md`](docs/PRIME-PICKUP-PRIVATE-MLX-MIRROR-2026-07-29.md).
@@ -393,8 +397,51 @@ an arbitrary expected digest.
 The Stage-A source contract is implemented. A canonical result exists only
 when a repository-durable evidence note is present under
 `artifacts/native-neural-gate-contract-projection-canonical-2026-07-30/`.
-The exact next prerequisite remains
-`source_pinned_synthetic_fixture_materialization_and_gate_replay`.
+The next execution contract is frozen but not implemented and authorizes no
+receipt. It requires two separately fingerprinted arms: exact historical
+forensic replay, which remains `ABSTAIN` on target independence because the
+pinned fixture consumes target length and expected completion, and a corrected
+Prime-owned prompt-only fixed-cap-64/EOS replay. Each arm must publish the full
+raw invariant multiset, match direct and accelerated fingerprints, recompute
+all ten Verify/Abstain legs plus the projected statistics/margin and
+count-derived verdict, and detect/diverge/restore its complete frozen mutation
+catalog in a distinct Release verifier. Root relationships, companion
+pre/post identity, copied donor and Stage-A evidence paths, typed
+donor-to-Prime adaptation proofs, a complete clean Prime source closure,
+required compiled-source/process record schemas, and independent direct
+`swift-package describe` captures of the frozen Xcode 26.6 build 17F113 byte
+image. Its exact full-file hash and descriptor metadata are contract-pinned,
+and typed evidence orders descriptor open, a complete checked suspended
+mapped-region query transcript and descriptor-vnode join, pre-resume
+stability, `SIGCONT`, raw exact-PID wait/clean reap, and post-reap stability
+after native capability calibration. Public validation additionally requires
+a PrimeCore-produced non-`Codable` capability binding the role, exact
+launch/working-root policy, identity derived from descriptor-read bytes, the
+transcript/wait result, paths, stream limits/overflow/drain outcomes, and
+drained bytes; decoded fields cannot validate themselves. The future factory
+must read/hash bytes through the same held descriptor represented by its
+`fstat` snapshot and descriptor-validate the Prime working root. Overflow-free
+drains, typed clean termination, a
+validated six-process topology, distinct running Release executable bindings,
+exact pre-receipt realized path-and-metadata inventory, separate typed
+artifact-content validation, purpose-correct `0444` data / `0555` executable
+publication, and scoped `PASS`/`ABSTAIN` composition are typed in the plan;
+none has been observed in a Stage-B run yet. The direct `swift-package` launch
+path, `proc_pidpath` pathname, and code-sign fields are non-authoritative
+telemetry; no Apple trust claim is made. The required native calibrated
+external-child factory is not implemented.
+Because the source-faithful fixture inherits traps, a sealed Swift worker owns
+the entire historical arm; probe and verifier supervise separate bounded
+invocations with
+empty successful stdout/stderr, mandatory death/reap, exact role-prefix
+inventory, and role-separated artifact evidence. An abnormal worker outcome
+poisons the root, accepts no result as evidence, emits no successful-execution
+record or terminal receipt, and permits no retry; partial files remain
+non-authoritative. Worker result transport cannot authorize mechanics `PASS`;
+the verifier must decode and recompute the semantic artifacts. Stage A
+is copied as 35 reachable typed bindings plus its separately pinned receipt,
+or 36 artifacts total. The exact next prerequisite is
+`implement_stage_b_primecore_trusted_external_child_factory_direct_swift_package_executable_suspended_full_region_query_transcript_mapped_vnode_descriptor_read_fstat_hash_capability_calibration_raw_exact_pid_wait_fail_closed_stream_lifecycle_historical_worker_typed_artifact_recomputation_corrected_fixed_cap_eos_probe_verifier_and_exact_path_metadata_inventory`.
 
 ## Initial calibration
 

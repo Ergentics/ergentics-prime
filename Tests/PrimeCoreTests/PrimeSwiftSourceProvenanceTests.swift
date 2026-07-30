@@ -146,6 +146,7 @@ final class PrimeSwiftSourceProvenanceTests:
             PrimePinnedHistoricalReleaseSource
                 .nativeGenerationContractProjection20260730,
             .nativeFullCorpusReplay20260730,
+            .nativeNeuralGateContractProjection20260730,
         ] {
             XCTAssertThrowsError(
                 try PrimeSwiftSourceProvenance
