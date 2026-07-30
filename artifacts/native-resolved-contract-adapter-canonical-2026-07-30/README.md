@@ -84,3 +84,45 @@ scientific oracle.
 
 The next exact prerequisite remains:
 `resolve_exact_fixed_cap_eos_generation_contract_projection`.
+
+## Git checkout mode normalization
+
+Git preserves only the executable permission bit. A fresh checkout can
+therefore rematerialize the two tracked, receipt-bound immutable files as
+`0644` even when their bytes remain exact. The fresh verifier must reject that
+state; this is not permission to weaken the immutable-file gate.
+
+Before repairing anything, require an owner-controlled mode-`0700` root and
+inspect these exact files:
+
+```zsh
+stat -f '%Sp %u %l %z %N' \
+  artifacts/native-resolved-contract-adapter-canonical-2026-07-30/prime-native-resolved-contract-adapter-receipt.v1.json \
+  artifacts/native-resolved-contract-adapter-canonical-2026-07-30/adapter/prime-native-resolved-contract-projection.v1.json
+shasum -a 256 \
+  artifacts/native-resolved-contract-adapter-canonical-2026-07-30/prime-native-resolved-contract-adapter-receipt.v1.json \
+  artifacts/native-resolved-contract-adapter-canonical-2026-07-30/adapter/prime-native-resolved-contract-projection.v1.json
+```
+
+The receipt must be owned by the current user, have link count `1`, contain
+exactly `13,293` bytes, and hash to
+`0c5cb638a5ba4e157f9e9a62b648862fe5511841e43f18b87c9d94d5b4b3a867`.
+The projection must have the same ownership and link requirements, contain
+exactly `3,964` bytes, and hash to
+`ddba956b7b4f7e3996fde6d8f11046ec3a222ef62467b806b5170887ef7620bf`.
+
+Only when every condition is exact, restore immutable-data mode on those two
+files and rerun the Release verifier:
+
+```zsh
+chmod 0444 \
+  artifacts/native-resolved-contract-adapter-canonical-2026-07-30/prime-native-resolved-contract-adapter-receipt.v1.json \
+  artifacts/native-resolved-contract-adapter-canonical-2026-07-30/adapter/prime-native-resolved-contract-projection.v1.json
+.build/release/PrimeNativeResolvedContractAdapterVerifier \
+  --artifact-root "$PWD/artifacts/native-resolved-contract-adapter-canonical-2026-07-30"
+```
+
+Do not change modes recursively. Do not repair a symlink, hard link,
+wrong-owner file, wrong-size file, or wrong-hash file. The human-readable
+index and raw output files are not receipt-bound immutable inputs and do not
+need this normalization.
