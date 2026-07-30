@@ -58,17 +58,15 @@ Before any resumable training, complete this sequence:
 3. prove exact `N -> checkpoint -> fresh process -> N+1` trajectory identity
    on tiny CPU FP32 flat and nested models — complete in a canonical Release
    run bound to the private revision across three fresh worker processes, with
-   all 19 declared structural mutations disposed; off-device receipt
-   durability remains pending;
-4. preserve the complete CPU evidence root in separately controlled off-device
-   storage and verify it there;
-5. resolve and byte-verify only the four Prime-owned exact-3B/CPU evidence
+   all 19 declared structural mutations disposed; a fresh reissue and its
+   complete evidence root are repository-durable at `3481ffc`;
+4. resolve and byte-verify only the four Prime-owned exact-3B/CPU evidence
    bindings required by this slice, then run the scoped
    Prime/private-MLX source/dependency/runtime compatibility replay;
-6. prove an interrupted two-step Metal canary on the existing native 3B
+5. prove an interrupted two-step Metal canary on the existing native 3B
    geometry, operator-selected for bounded mechanics only, with complete
    training-state restoration;
-7. only then consider separately scoped functional profile calibration,
+6. only then consider separately scoped functional profile calibration,
    corpus-schema migration, retained checkpoint I/O, or long training.
 
 Assess MPSGraph as a small Swift primitive-level numerical verifier where its
@@ -176,8 +174,10 @@ Release CPU `N+1` receipt bound to the private revision. These are
 optimizer-resume mechanics, not a functional model or learning-quality
 result, and the self-check is not an independent scientific oracle. The exact
 derivative revision is privately remote-resolvable and authenticated-clone
-resolution is observed. The canonical receipt remains locally preserved, so
-off-device artifact durability is still required.
+resolution is observed. The complete successful evidence root is repository
+durable at Prime revision `3481ffc24f3a81a26197fc8625510cab66e6e29b`;
+its canonical receipt has SHA-256
+`fafc7d236a8a9b8f857d4a5bd9f34a3ed12012dd061a8a4c984fe85876fb569d`.
 
 The historical companion has working, checked-in versions of every listed
 foundation except an accepted functional checkpoint. They are frozen donors
@@ -201,7 +201,7 @@ real accepted challenger to that seam later, not rebuild it.
 
 | Technology | Training/autodiff | Exact optimizer restore | Intended Prime role |
 | --- | --- | --- | --- |
-| MLX Swift | Yes; maintained Swift API over Apple silicon/Metal | Stock 0.31.3 lacks import; private Ergentics revision `68904d54b72871f26968261ae05d4fbb7c5e3142` adds a public typed transport seam without changing optimizer arithmetic | Candidate primary trainer; private-revision CPU restore is exact, while resumable Metal use still requires interrupted-Metal evidence and the generated receipt still needs off-device preservation |
+| MLX Swift | Yes; maintained Swift API over Apple silicon/Metal | Stock 0.31.3 lacks import; private Ergentics revision `68904d54b72871f26968261ae05d4fbb7c5e3142` adds a public typed transport seam without changing optimizer arithmetic | Candidate primary trainer; private-revision CPU restore evidence is exact and repository durable, while resumable Metal use still requires interrupted-Metal evidence |
 | MPSGraph | Yes; graph/autodiff APIs and Adam operations with explicit moment inputs and updated-moment outputs | Feasible for an app-owned Adam-state graph; AdamW trajectory parity with pinned MLX is unproved | Candidate primitive-level moment/Adam oracle after a semantics assay |
 | Core ML | Inference plus constrained on-device updates for eligible legacy neural-network models | No public exact Adam moment/step import/export contract found | Product inference; later audited Core ML Tools conversion/export; tightly bounded personalization experiments |
 | Core AI | Preliminary Swift inference runtime; authoring/conversion/optimization is described through Python/PyTorch tooling | No training optimizer contract | Future deployment comparator after final/supported toolchain admission |
@@ -926,14 +926,17 @@ The non-training implementation slices now stand as follows:
    - complete admitted MLX Swift manifest/source tree plus runtime closure;
    - exact CPU trajectory;
    - 19-case same-process structural self-check and immutable receipt;
+   - fresh full evidence root preserved by repository revision `3481ffc` with
+     receipt SHA-256
+     `fafc7d236a8a9b8f857d4a5bd9f34a3ed12012dd061a8a4c984fe85876fb569d`;
    - separate MLX mechanics/security-test processes with a compiled Swift
      resource stager.
 
-First preserve the CPU evidence root off-device and verify only the four
-Prime-owned exact-3B/CPU bindings required by this task. The next execution is
-only a two-step exact 3B continuation gate. Tokenizer/corpus/evaluator
-migration and NeuralKit execution are outside this slice. Do not start a long
-3B training loop, broad corpus ingestion, BF16 profile race, quantization, or
+The CPU evidence root is now off-device durable. Verify only the four
+Prime-owned exact-3B/CPU bindings required by this task; the next execution is
+the two-step exact 3B continuation gate. Tokenizer/corpus/evaluator migration
+and NeuralKit execution are outside this slice. Do not start a long 3B
+training loop, broad corpus ingestion, BF16 profile race, quantization, or
 custom kernels in these slices.
 
 ## Decision ledger

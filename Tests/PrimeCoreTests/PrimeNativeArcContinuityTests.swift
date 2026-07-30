@@ -106,7 +106,7 @@ final class PrimeNativeArcContinuityTests:
         )
     }
 
-    func testDurabilityAndResolutionPrecedeMetalContinuation()
+    func testDurabilityIsCompleteBeforeMetalContinuation()
         throws
     {
         let plan =
@@ -114,7 +114,6 @@ final class PrimeNativeArcContinuityTests:
         XCTAssertEqual(
             plan.orderedNextActions,
             [
-                "preserve_typed_adamw_cpu_receipt_off_device",
                 "resolve_and_verify_current_slice_prime_exact_3b_and_cpu_evidence_bindings",
                 "implement_exact_3b_typed_adamw_metal_interrupted_continuation_with_scoped_runtime_compatibility_replay",
             ]
@@ -129,6 +128,11 @@ final class PrimeNativeArcContinuityTests:
         )
         XCTAssertFalse(plan.longTrainingAuthorized)
         XCTAssertFalse(plan.productPromotionAuthorized)
+        XCTAssertTrue(
+            plan.completedEvidenceIDs.contains(
+                "typed_adamw_cpu_receipt_off_device_durability"
+            )
+        )
     }
 
     func testCurrentSliceDoesNotImportHistoricalSubsystems()
@@ -163,7 +167,7 @@ final class PrimeNativeArcContinuityTests:
         )
     }
 
-    func testTypedRestoreLocalLocatorAndDurabilityGapAreExplicit()
+    func testTypedRestoreEvidenceIsRepositoryDurable()
         throws
     {
         let artifact =
@@ -178,17 +182,29 @@ final class PrimeNativeArcContinuityTests:
             )
         XCTAssertEqual(
             artifact.locatorScope,
-            .codexTaskOutputsRelative
+            .repositoryRelativeAtPinnedRevision
         )
         XCTAssertEqual(
             artifact.locator,
-            "prime-typed-restore-eeea8abe/prime-typed-optimizer-restore-receipt.v2.json"
+            "artifacts/typed-optimizer-restore-6465beb-20260729T184600Z/prime-typed-optimizer-restore-receipt.v2.json"
         )
         XCTAssertEqual(
             artifact.disposition,
-            .localOnlyPendingOffDeviceDurability
+            .checkedInContractEvidence
         )
-        XCTAssertTrue(
+        XCTAssertEqual(
+            artifact.sha256,
+            "fafc7d236a8a9b8f857d4a5bd9f34a3ed12012dd061a8a4c984fe85876fb569d"
+        )
+        XCTAssertEqual(
+            PrimeNativeArcContinuityPlan
+                .frozenV1
+                .artifactRepositoryRevisions[
+                    artifact.artifactID
+                ],
+            "3481ffc24f3a81a26197fc8625510cab66e6e29b"
+        )
+        XCTAssertFalse(
             PrimeNativeArcContinuityPlan
                 .frozenV1
                 .unresolvedEvidenceIDs
@@ -230,6 +246,11 @@ final class PrimeNativeArcContinuityTests:
             XCTAssertEqual(
                 PrimeSHA256.hexDigest(of: data),
                 artifact.sha256
+            )
+            XCTAssertNotNil(
+                plan.artifactRepositoryRevisions[
+                    artifact.artifactID
+                ]
             )
         }
     }

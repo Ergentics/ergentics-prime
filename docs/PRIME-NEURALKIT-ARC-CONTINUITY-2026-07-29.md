@@ -90,10 +90,12 @@ bindings.
   `GROUNDED` only for
   `allocation_forward_backward_adamw_step_only_no_language_capability`.
 - Prime's CPU typed AdamW transport proves exact fresh-process `N+1` for flat
-  and same-shaped nested fixtures. Its canonical receipt SHA-256 is
-  `eeea8abed91cba08daacda2cc13ef88a0c6a0cb56b76a53e6a76ee0c869ae6e1`;
-  the complete 34 MiB evidence root remains local pending off-device
-  preservation.
+  and same-shaped nested fixtures. The fresh reissue from Prime source
+  `6465beb184228f2e6ff03f08d5f5e523210e5d7e` has canonical receipt
+  SHA-256
+  `fafc7d236a8a9b8f857d4a5bd9f34a3ed12012dd061a8a4c984fe85876fb569d`.
+  Its complete 34 MiB evidence root is repository-durable at
+  `3481ffc24f3a81a26197fc8625510cab66e6e29b`.
 
 These archives are not to be recreated merely because work moved repositories.
 Narrow source/dependency compatibility replay is still required when Prime
@@ -103,18 +105,34 @@ or broad-language evidence.
 
 ## Current slice — AdamW continuation only
 
-1. Preserve the complete CPU typed-restore evidence root in separately
-   controlled off-device storage and verify it there.
-2. Resolve and byte-verify only the Prime-owned exact-3B mechanics receipt,
+1. Resolve and byte-verify only the Prime-owned exact-3B mechanics receipt,
    execution configuration, source snapshot, and CPU typed-restore receipt.
-3. Run the scoped Prime/private-MLX source, dependency, and runtime
+2. Run the scoped Prime/private-MLX source, dependency, and runtime
    compatibility checks needed by the AdamW continuation.
-4. Execute the bounded exact-3B interruption gate below.
+3. Execute the bounded exact-3B interruption gate below.
 
 Tokenizer/corpus migration, evaluator adapters, NeuralKit execution, PMHNP
 consumer changes, broad cross-repository resolution, and functional training
 are outside this slice. Historical artifacts stay inventoried so a later task
 does not recreate them, but they are not imported now.
+
+## Fresh CPU reissue diagnostics
+
+The fresh preservation sequence failed closed twice before the exact reissue:
+
+- receipt
+  `c8ea425296e2f3c3e65cc1288fa144bf1a96ab8a7c37d4035e4463d823d295d1`
+  abstained during source staging because a final Markdown normalization had
+  changed the source identity after its embedded seal;
+- receipt
+  `3951956d313b866c92d09aa311df6c1555c11231868ccb183ad2539a1a1b811a`
+  abstained at the control worker when the command sandbox exposed no Metal
+  device. A copied worker reproduced MLX's device-enumeration
+  `NSRangeException`; the same committed binary passed outside that sandbox.
+
+Those two roots remain local, gitignored diagnostics. They are not AdamW
+failures and are not promoted. The unsandboxed reissue is the only new
+repository-durable exact receipt.
 
 ## Exact unresolved execution boundary
 

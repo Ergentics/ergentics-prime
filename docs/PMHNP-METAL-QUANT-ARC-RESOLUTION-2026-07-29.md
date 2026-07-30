@@ -170,32 +170,32 @@ the 2026-07-26 pickup.
 
 ## Prime continuation order
 
-1. The local canonical Release CPU typed-state receipt is complete. It
+1. The canonical Release CPU typed-state receipt is complete. It
    observed exact flat and same-shape nested `N -> checkpoint -> fresh process
    -> N+1` continuation across three distinct worker processes and disposed
    all 19 declared structural mutations. The typed transport source is now
    pinned to an authenticated-clone-resolvable private revision; the
-   canonical private-revision receipt answers only local public-API
+   fresh reissue is repository-durable at `3481ffc` with receipt SHA-256
+   `fafc7d236a8a9b8f857d4a5bd9f34a3ed12012dd061a8a4c984fe85876fb569d`.
+   This evidence answers only public-API
    state-transport feasibility and is not Metal training or functional
    authority.
-2. Preserve the complete local CPU evidence root in separately controlled
-   off-device storage and verify it there.
-3. Resolve and byte-verify only the four Prime-owned exact-3B/CPU evidence
+2. Resolve and byte-verify only the four Prime-owned exact-3B/CPU evidence
    bindings required by this AdamW slice, then run only the
    Prime/private-MLX source/dependency/runtime compatibility checks.
-4. Run one bounded two-step interrupted MLX Swift/Metal continuation canary on
+3. Run one bounded two-step interrupted MLX Swift/Metal continuation canary on
    the existing exact `ergentics_prime_native_3b_gqa_v1` geometry,
    operator-selected for bounded mechanics only, with complete model,
    optimizer, schedule, RNG/domain, cursor, executable, dependency, metallib,
    and device evidence. This does not overturn the schema-6 `ABSTAIN` or
    authorize the scale. Do not create a new model family or rerun the 10M
    mechanics and 15-trial profile screens wholesale.
-5. Compare the resumed Metal trajectory against a preregistered uninterrupted
+4. Compare the resumed Metal trajectory against a preregistered uninterrupted
    control. Record exactness where observed; otherwise use a declared
    numerical/behavioral tolerance and keep resumable authority `ABSTAIN`.
-6. Reconcile the new receipt into this map without deleting or relabeling the
+5. Reconcile the new receipt into this map without deleting or relabeling the
    companion reports.
-7. Only after the Metal resume gate may EngineRecommend reassess executor
+6. Only after the Metal resume gate may EngineRecommend reassess executor
    feasibility, profile calibration, or a first-party functional canary.
 
 Tokenizer/corpus/evaluator migration, NeuralKit execution, and PMHNP consumer

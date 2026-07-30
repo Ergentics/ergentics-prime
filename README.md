@@ -192,9 +192,14 @@ promotion, or a broad-language claim.
 The canonical Release gate bound to private revision
 `68904d54b72871f26968261ae05d4fbb7c5e3142` observed exact continuation
 across three fresh worker processes for both fixtures and disposed all 19
-declared structural mutations. The source revision is
-authenticated-clone-resolvable. This remains optimizer-resume mechanics, and
-the locally preserved receipt is not an off-device artifact backup.
+declared structural mutations. A fresh reissue from Prime source
+`6465beb184228f2e6ff03f08d5f5e523210e5d7e` is preserved in full at
+`artifacts/typed-optimizer-restore-6465beb-20260729T184600Z` by repository
+revision `3481ffc24f3a81a26197fc8625510cab66e6e29b`; its canonical receipt
+SHA-256 is
+`fafc7d236a8a9b8f857d4a5bd9f34a3ed12012dd061a8a4c984fe85876fb569d`.
+Both source revisions are remote-resolvable. This remains optimizer-resume
+mechanics, not Metal training or functional evidence.
 
 ## Initial calibration
 

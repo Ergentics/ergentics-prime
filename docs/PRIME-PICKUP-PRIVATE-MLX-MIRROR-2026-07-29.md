@@ -318,9 +318,9 @@ executable, dependency source, metallib, raw observations, and resource
 measurements. Passing that gate authorizes planning the next mechanics slice;
 it does not authorize functional or long training.
 
-Before executing it, preserve the complete CPU typed-restore evidence root in
-separately controlled off-device storage, resolve only the four Prime-owned
-exact-3B/CPU evidence bindings required by this task, and run the narrowly
+The complete CPU typed-restore evidence root is now repository-durable at
+`3481ffc`. Before executing the Metal gate, resolve only the four Prime-owned
+exact-3B/CPU evidence bindings required by this task and run the narrowly
 scoped compatibility checks needed for the current Prime/private-MLX runtime.
 Tokenizer/corpus/evaluator migration, NeuralKit execution, and PMHNP consumer
 changes are outside this AdamW slice. PMHNP remains a read-only historical

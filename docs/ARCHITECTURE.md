@@ -42,9 +42,9 @@ does not import its consumer/regrader.
 
 ## Current AdamW admission sequence
 
-- preserve the local CPU typed-restore evidence off-device;
 - resolve and hash-check only the four Prime-owned exact-3B/CPU evidence
-  bindings required by the current AdamW slice;
+  bindings required by the current AdamW slice; the typed-restore root is
+  already repository-durable at `3481ffc`;
 - run only the required Prime/private-MLX source, dependency, and runtime
   compatibility checks;
 - prove exact typed AdamW interrupted Metal continuation on the existing exact

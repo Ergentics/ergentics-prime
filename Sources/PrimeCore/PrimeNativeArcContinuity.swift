@@ -106,6 +106,8 @@ public struct PrimeNativeArcContinuityPlan:
     public let continuationInterruptionStep: Int
     public let continuationComparisonStep: Int
     public let artifacts: [PrimeNativeArcArtifact]
+    public let artifactRepositoryRevisions:
+        [String: String]
     public let currentSliceScope: String
     public let currentSliceRequiredArtifactIDs: [String]
     public let nativeContractAdapterMigrationAuthorizedInCurrentSlice:
@@ -318,14 +320,39 @@ public struct PrimeNativeArcContinuityPlan:
                 authorityOwner:
                     "Ergentics/ergentics-prime",
                 locatorScope:
-                    .codexTaskOutputsRelative,
+                    .repositoryRelativeAtPinnedRevision,
                 locator:
-                    "prime-typed-restore-eeea8abe/prime-typed-optimizer-restore-receipt.v2.json",
+                    "artifacts/typed-optimizer-restore-6465beb-20260729T184600Z/prime-typed-optimizer-restore-receipt.v2.json",
                 sha256:
-                    "eeea8abed91cba08daacda2cc13ef88a0c6a0cb56b76a53e6a76ee0c869ae6e1",
-                disposition:
-                    .localOnlyPendingOffDeviceDurability
+                    "fafc7d236a8a9b8f857d4a5bd9f34a3ed12012dd061a8a4c984fe85876fb569d",
+                disposition: .checkedInContractEvidence
             ),
+        ],
+        artifactRepositoryRevisions: [
+            "native_byte_tokenizer_manifest":
+                "163fc100710ece48119bc25954452d10f6a84f7f",
+            "native_compositional_corpus_manifest":
+                "163fc100710ece48119bc25954452d10f6a84f7f",
+            "native_10m_metal_mechanics_report":
+                "163fc100710ece48119bc25954452d10f6a84f7f",
+            "native_schema4_profile_screen_archive":
+                "163fc100710ece48119bc25954452d10f6a84f7f",
+            "native_schema6_profile_screen_audit":
+                "163fc100710ece48119bc25954452d10f6a84f7f",
+            "native_schema6_truth_projection":
+                "163fc100710ece48119bc25954452d10f6a84f7f",
+            "neuralkit_native_language_verify_abstain_receipt":
+                "163fc100710ece48119bc25954452d10f6a84f7f",
+            "neuralkit_package_lock":
+                "163fc100710ece48119bc25954452d10f6a84f7f",
+            "prime_exact_3b_fp32_mechanics_receipt":
+                "ddf0f96a3ec73c60810a297b32fc6ea26d32ca5f",
+            "prime_exact_3b_fp32_execution_configuration":
+                "ddf0f96a3ec73c60810a297b32fc6ea26d32ca5f",
+            "prime_exact_3b_fp32_source_snapshot":
+                "ddf0f96a3ec73c60810a297b32fc6ea26d32ca5f",
+            "prime_typed_optimizer_restore_receipt":
+                "3481ffc24f3a81a26197fc8625510cab66e6e29b",
         ],
         currentSliceScope:
             "exact_3b_typed_adamw_metal_interrupted_continuation_only",
@@ -346,9 +373,9 @@ public struct PrimeNativeArcContinuityPlan:
             "synthetic_neuralkit_sz_triadic_verify_abstain_contract",
             "exact_3b_fp32_allocation_forward_backward_adamw_step",
             "typed_adamw_cpu_fresh_process_n_plus_1",
+            "typed_adamw_cpu_receipt_off_device_durability",
         ],
         unresolvedEvidenceIDs: [
-            "typed_restore_receipt_off_device_durability",
             "cross_repository_artifact_resolution_and_compatibility_replay",
             "exact_3b_typed_adamw_metal_interrupted_trajectory",
             "physical_native_checkpoint_and_evaluation_shard_binding",
@@ -356,7 +383,6 @@ public struct PrimeNativeArcContinuityPlan:
             "real_three_seed_neuralkit_functional_regrade",
         ],
         orderedNextActions: [
-            "preserve_typed_adamw_cpu_receipt_off_device",
             "resolve_and_verify_current_slice_prime_exact_3b_and_cpu_evidence_bindings",
             "implement_exact_3b_typed_adamw_metal_interrupted_continuation_with_scoped_runtime_compatibility_replay",
         ]
@@ -367,6 +393,14 @@ public struct PrimeNativeArcContinuityPlan:
         let artifactIDs = artifacts.map(\.artifactID)
         let artifactHashes = artifacts.map(\.sha256)
         let knownArtifactIDs = Set(artifactIDs)
+        let repositoryArtifactIDs = Set(
+            artifacts
+                .filter({
+                    $0.locatorScope
+                        == .repositoryRelativeAtPinnedRevision
+                })
+                .map(\.artifactID)
+        )
         guard self == expected,
               schemaVersion == 1,
               [companionRevision, primeBaselineRevision]
@@ -410,6 +444,15 @@ public struct PrimeNativeArcContinuityPlan:
               continuationInterruptionStep == 1,
               continuationComparisonStep == 2,
               Set(artifactIDs).count == artifactIDs.count,
+              Set(artifactRepositoryRevisions.keys)
+                == repositoryArtifactIDs,
+              artifactRepositoryRevisions.values
+                .allSatisfy({
+                    $0.count == 40
+                        && $0.allSatisfy {
+                            "0123456789abcdef".contains($0)
+                        }
+                }),
               knownArtifactIDs.contains(
                   initializationEvidenceArtifactID
               ),
@@ -446,15 +489,22 @@ public struct PrimeNativeArcContinuityPlan:
                   $0.artifactID
                     == "prime_typed_optimizer_restore_receipt"
                     && $0.locatorScope
-                        == .codexTaskOutputsRelative
+                        == .repositoryRelativeAtPinnedRevision
                     && $0.disposition
-                        == .localOnlyPendingOffDeviceDurability
+                        == .checkedInContractEvidence
+                    && $0.sha256
+                        == "fafc7d236a8a9b8f857d4a5bd9f34a3ed12012dd061a8a4c984fe85876fb569d"
               }),
+              artifactRepositoryRevisions[
+                  "prime_typed_optimizer_restore_receipt"
+              ] == "3481ffc24f3a81a26197fc8625510cab66e6e29b",
+              !unresolvedEvidenceIDs.contains(
+                  "typed_restore_receipt_off_device_durability"
+              ),
               unresolvedEvidenceIDs.contains(
                   "exact_3b_typed_adamw_metal_interrupted_trajectory"
               ),
               orderedNextActions == [
-                  "preserve_typed_adamw_cpu_receipt_off_device",
                   "resolve_and_verify_current_slice_prime_exact_3b_and_cpu_evidence_bindings",
                   "implement_exact_3b_typed_adamw_metal_interrupted_continuation_with_scoped_runtime_compatibility_replay",
               ]

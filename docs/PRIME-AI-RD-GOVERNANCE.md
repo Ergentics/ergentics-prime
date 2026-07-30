@@ -91,7 +91,7 @@ only with repository-local code and tests.
 | Fail-closed `ABSTAIN` and immutable receipts | Implemented for admitted existing probes |
 | General Python or shell scientific authority | Explicitly not implemented or authorized |
 | Public typed Adam/AdamW state transport | Implemented in private derivative revision `68904d54b72871f26968261ae05d4fbb7c5e3142`; authenticated cache-empty clone resolution is observed, while public/upstream acceptance and CI credentialing are not claimed |
-| Exact typed optimizer `N -> checkpoint -> fresh process -> N+1` gate | Canonical Release evidence bound to private revision `68904d54b72871f26968261ae05d4fbb7c5e3142` observed exact continuation across three fresh worker processes and disposed all 19 declared structural mutations; off-device receipt durability remains pending |
+| Exact typed optimizer `N -> checkpoint -> fresh process -> N+1` gate | Canonical Release evidence bound to private revision `68904d54b72871f26968261ae05d4fbb7c5e3142` observed exact continuation across three fresh worker processes and disposed all 19 declared structural mutations; fresh full evidence root is repository-durable at `3481ffc` |
 | Interrupted exact-3B two-step Metal resume gate | Operator-selected bounded mechanics gate; historical profile/scale verdict remains `ABSTAIN`; execution follows CPU evidence durability and byte-verification of only the four current Prime-owned exact-3B/CPU bindings |
 | Corpus, tokenizer, model, and evaluator cards | Frozen companion/NeuralKit fixtures exist; exact Prime adapter and accepted checkpoint card remain pending |
 | PMHNP companion dependency | Historical read-only migration oracle only; new Prime runtime and evidence stay in `ergentics-prime` |
