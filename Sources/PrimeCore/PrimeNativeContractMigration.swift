@@ -808,7 +808,7 @@ public struct PrimeNativeContractMigrationReceipt:
               PrimeNativeContractMigrationPlan
                 .isSHA256(gitTool.versionOutputSHA256),
               gitTool.environmentPolicyID
-                == "prime_git_read_only_empty_environment_v1",
+                == "prime_git_read_only_fixed_environment_v2",
               plan.acceptedRemoteURLs.contains(
                   repository.observedRemoteURL
               ),

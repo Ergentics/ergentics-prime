@@ -673,6 +673,32 @@ final class PrimeNativeContractMigrationTests:
         )
     }
 
+    func testOptInLivePinnedCompanionTransport()
+        throws
+    {
+        guard let path = ProcessInfo.processInfo
+                .environment[
+                    "PRIME_NATIVE_COMPANION_ROOT"
+                ] else {
+            throw XCTSkip(
+                "set PRIME_NATIVE_COMPANION_ROOT for the opt-in live pinned transport test"
+            )
+        }
+        let root = URL(
+            fileURLWithPath: path,
+            isDirectory: true
+        ).standardizedFileURL
+        let input = try PrimeNativeGitBlobTransport()
+            .resolve(companionRoot: root)
+        try PrimeNativeContractMigrationResolver
+            .validate(input)
+        XCTAssertEqual(
+            input.blobsByArtifactID.count,
+            PrimeNativeContractMigrationPlan
+                .frozenV1.expectedArtifactCount
+        )
+    }
+
     private func makePassReceipt()
         -> PrimeNativeContractMigrationReceipt
     {
@@ -784,7 +810,7 @@ final class PrimeNativeContractMigrationTests:
                     "git version fixture"
                 ).sha256,
             environmentPolicyID:
-                "prime_git_read_only_empty_environment_v1"
+                "prime_git_read_only_fixed_environment_v2"
         )
     }
 

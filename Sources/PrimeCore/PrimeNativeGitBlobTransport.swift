@@ -11,7 +11,7 @@ public final class PrimeNativeGitBlobTransport:
     public static let gitExecutableURL =
         URL(fileURLWithPath: "/usr/bin/git")
     public static let environmentPolicyID =
-        "prime_git_read_only_empty_environment_v1"
+        "prime_git_read_only_fixed_environment_v2"
 
     private static let processTimeoutSeconds: Double = 30
     private static let stderrMaximumByteCount = 64 * 1024
@@ -510,6 +510,7 @@ public final class PrimeNativeGitBlobTransport:
             "GIT_FLUSH": "1",
             "LC_ALL": "C",
             "LANG": "C",
+            "TMPDIR": "/private/tmp",
         ]
         process.currentDirectoryURL =
             URL(fileURLWithPath: "/")

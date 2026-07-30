@@ -534,7 +534,7 @@ public enum PrimeNativeContractMigrationResolver {
                     binding.versionOutputSHA256
                 ),
               binding.environmentPolicyID
-                == "prime_git_read_only_empty_environment_v1"
+                == "prime_git_read_only_fixed_environment_v2"
         else {
             throw PrimeNativeContractMigrationError
                 .receiptInvalid("git tool binding")
@@ -694,7 +694,7 @@ public enum PrimeNativeContractMigrationResolver {
                 ).count else {
             throw PrimeNativeContractMigrationError
                 .receiptInvalid(
-                    "git command output bindings"
+                    "git command output binding: count"
                 )
         }
         let byOperation = Dictionary(
@@ -705,76 +705,117 @@ public enum PrimeNativeContractMigrationResolver {
         let emptyHash = PrimeSHA256.hexDigest(
             of: Data()
         )
-        guard byOperation.count == observations.count,
-              observations.allSatisfy({
-                  $0.stderrByteCount == 0
-                      && $0.stderrSHA256 == emptyHash
-              }),
-              output(
-                  byOperation["git_version"],
-                  equalsLine: gitTool.version
-              ),
-              byOperation["git_version"]?
-                .stdoutSHA256
-                == gitTool.versionOutputSHA256,
-              output(
-                  byOperation["remote_identity"],
-                  equalsLine:
+        guard byOperation.count == observations.count
+        else {
+            throw PrimeNativeContractMigrationError
+                .receiptInvalid(
+                    "git command output binding: duplicate"
+                )
+        }
+        for observation in observations {
+            try requireOutput(
+                observation.operation + ":stderr",
+                observation.stderrByteCount == 0
+                    && observation.stderrSHA256
+                        == emptyHash
+            )
+        }
+        try requireOutput(
+            "git_version",
+            output(
+                byOperation["git_version"],
+                equalsLine: gitTool.version
+            )
+                && byOperation["git_version"]?
+                    .stdoutSHA256
+                    == gitTool.versionOutputSHA256
+        )
+        try requireOutput(
+            "remote_identity",
+            output(
+                byOperation["remote_identity"],
+                equalsLine:
                     repository.observedRemoteURL
-              ),
-              output(
-                  byOperation["object_format"],
-                  equalsLine:
-                    repository.objectFormat
-              ),
-              output(
-                  byOperation["resolved_revision"],
-                  equalsLine:
+            )
+        )
+        try requireOutput(
+            "object_format",
+            output(
+                byOperation["object_format"],
+                equalsLine: repository.objectFormat
+            )
+        )
+        try requireOutput(
+            "resolved_revision",
+            output(
+                byOperation["resolved_revision"],
+                equalsLine:
                     repository.resolvedRevision
-              ),
-              output(
-                  byOperation["resolved_tree"],
-                  equalsLine: repository.treeOID
-              ),
-              output(
-                  byOperation["raw_commit"],
-                  byteCount:
+            )
+        )
+        try requireOutput(
+            "resolved_tree",
+            output(
+                byOperation["resolved_tree"],
+                equalsLine: repository.treeOID
+            )
+        )
+        try requireOutput(
+            "raw_commit",
+            output(
+                byOperation["raw_commit"],
+                byteCount:
                     repository.rawCommitByteCount,
-                  sha256:
-                    repository.rawCommitSHA256
-              ),
-              output(
-                  byOperation["inventory_tree"],
-                  equals:
+                sha256: repository.rawCommitSHA256
+            )
+        )
+        try requireOutput(
+            "inventory_tree",
+            output(
+                byOperation["inventory_tree"],
+                equals:
                     expectedInventoryTreeOutput(
                         plan: plan
                     )
-              ),
-              output(
-                  byOperation[
-                      "post_resolved_revision"
-                  ],
-                  equalsLine:
+            )
+        )
+        for specification in plan.artifacts {
+            let operation =
+                "blob:\(specification.artifactID)"
+            try requireOutput(
+                operation,
+                output(
+                    byOperation[operation],
+                    byteCount: specification.byteCount,
+                    sha256: specification.sha256
+                )
+            )
+        }
+        try requireOutput(
+            "post_resolved_revision",
+            output(
+                byOperation["post_resolved_revision"],
+                equalsLine:
                     repository.resolvedRevision
-              ),
-              output(
-                  byOperation["post_resolved_tree"],
-                  equalsLine: repository.treeOID
-              ),
-              plan.artifacts.allSatisfy({
-                  specification in
-                  output(
-                      byOperation[
-                          "blob:\(specification.artifactID)"
-                      ],
-                      byteCount:
-                        specification.byteCount,
-                      sha256: specification.sha256
-                  )
-              }) else {
+            )
+        )
+        try requireOutput(
+            "post_resolved_tree",
+            output(
+                byOperation["post_resolved_tree"],
+                equalsLine: repository.treeOID
+            )
+        )
+    }
+
+    private static func requireOutput(
+        _ operation: String,
+        _ condition: @autoclosure () -> Bool
+    ) throws {
+        guard condition() else {
             throw PrimeNativeContractMigrationError
                 .receiptInvalid(
-                    "git command output bindings"
+                    "git command output binding: \(operation)"
                 )
         }
     }
