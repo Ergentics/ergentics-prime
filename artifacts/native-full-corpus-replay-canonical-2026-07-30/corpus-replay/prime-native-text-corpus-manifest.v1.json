@@ -1,0 +1,1555 @@
+{
+  "codebooks" : [
+    {
+      "admitted_splits" : [
+        "train",
+        "refusal_train",
+        "validation",
+        "refusal_validation",
+        "combination_holdout",
+        "mutation",
+        "abstention"
+      ],
+      "entity_names" : [
+        "amber",
+        "birch",
+        "cobalt",
+        "dune",
+        "ember",
+        "flint",
+        "grove",
+        "harbor"
+      ],
+      "id" : "field"
+    },
+    {
+      "admitted_splits" : [
+        "train",
+        "refusal_train",
+        "validation",
+        "refusal_validation",
+        "combination_holdout",
+        "mutation",
+        "abstention"
+      ],
+      "entity_names" : [
+        "atlas",
+        "beacon",
+        "coral",
+        "drift",
+        "estuary",
+        "fjord",
+        "gale",
+        "haven"
+      ],
+      "id" : "coast"
+    },
+    {
+      "admitted_splits" : [
+        "train",
+        "refusal_train",
+        "validation",
+        "refusal_validation",
+        "combination_holdout",
+        "mutation",
+        "abstention"
+      ],
+      "entity_names" : [
+        "ion",
+        "jade",
+        "kite",
+        "lumen",
+        "mica",
+        "nova",
+        "opal",
+        "quartz"
+      ],
+      "id" : "light"
+    },
+    {
+      "admitted_splits" : [
+        "ood",
+        "abstention"
+      ],
+      "entity_names" : [
+        "aster",
+        "brin",
+        "cassia",
+        "dorun",
+        "elara",
+        "fen",
+        "galen",
+        "hyra"
+      ],
+      "id" : "native_ood_a"
+    },
+    {
+      "admitted_splits" : [
+        "ood",
+        "abstention"
+      ],
+      "entity_names" : [
+        "axiom",
+        "boson",
+        "chirp",
+        "dynamo",
+        "epoch",
+        "flux",
+        "gluon",
+        "helix"
+      ],
+      "id" : "native_ood_b"
+    }
+  ],
+  "corpus_id" : "ergentics_prime_native_compositional_text_v1",
+  "evaluation_contract" : {
+    "abstention_completion" : "ABSTAIN\n",
+    "causal_loss_mask" : "loss begins at first expected_completion byte; prompt and BOS are masked",
+    "evaluation_row_absent_mutation_encoding" : "json_null",
+    "evaluation_row_sha256_canonical_fields" : [
+      "row_id",
+      "split",
+      "semantic_family",
+      "mutation_id",
+      "prompt",
+      "target"
+    ],
+    "exact_match_normalization" : "none",
+    "expected_completion_field" : "expected_completion",
+    "multi_seed_consensus_seeds" : [
+      1618,
+      2718,
+      3141
+    ],
+    "prompt_field" : "prompt_text",
+    "required_raw_result_fields" : [
+      "seed",
+      "row_id",
+      "split",
+      "semantic_family",
+      "mutation_id",
+      "evaluation_row_sha256",
+      "corpus_row_sha256",
+      "prompt_token_ids",
+      "expected_completion_token_ids",
+      "generated_token_ids",
+      "generated_completion",
+      "token_log_probabilities",
+      "exact_match",
+      "semantic_verifier_pass",
+      "abstention_decision",
+      "latency_seconds"
+    ],
+    "required_raw_result_splits" : [
+      "validation",
+      "combination_holdout",
+      "ood",
+      "mutation",
+      "abstention"
+    ],
+    "selection_tuning_splits" : [
+      "validation",
+      "refusal_validation"
+    ],
+    "sz_canonical_fields" : [
+      "corpus_id",
+      "manifest_sha256",
+      "split",
+      "ordered_evaluation_rows_sha256",
+      "seed",
+      "checkpoint_sha256",
+      "raw_results_sha256"
+    ],
+    "triadic_witnesses" : [
+      "swift_generator_replay",
+      "independent_text_semantic_regrade",
+      "foundation_data_tokenizer_replay"
+    ],
+    "verify_abstain_critical_legs" : [
+      "manifest_and_row_hashes",
+      "all_valid_semantic_regrades",
+      "malformed_abstention_regrades",
+      "mutation_synthesis",
+      "multi_seed_consensus"
+    ],
+    "verify_abstain_minimum_independent_witnesses" : 3
+  },
+  "falsifier_sha256" : "95d3241959b02b4a4cc57aa824078150f3059811f2e7745d84b7e8e16d3e104a",
+  "falsifiers" : [
+    {
+      "detail" : "No evaluation prompt or semantic program occurs in train.",
+      "detected" : true,
+      "detections" : 1,
+      "family" : "lookup",
+      "id" : "exact_lookup_leakage",
+      "trials" : 20480
+    },
+    {
+      "detail" : "Independent prompt parser rejects rotated completions.",
+      "detected" : true,
+      "detections" : 1024,
+      "family" : "label",
+      "id" : "shuffled_label_regrade",
+      "trials" : 1024
+    },
+    {
+      "detail" : "add-then-negate differs from negate-then-add.",
+      "detected" : true,
+      "detections" : 1,
+      "family" : "ordering",
+      "id" : "operation_order_swap",
+      "trials" : 1
+    },
+    {
+      "detail" : "Dropping sign reversal changes the exact answer.",
+      "detected" : true,
+      "detections" : 1,
+      "family" : "negation",
+      "id" : "negation_drop",
+      "trials" : 1
+    },
+    {
+      "detail" : "Unlicensed creation is outside transfer grammar and must abstain.",
+      "detected" : true,
+      "detections" : 1,
+      "family" : "conservation",
+      "id" : "conservation_break",
+      "trials" : 1
+    },
+    {
+      "detail" : "Dropping undo changes the exact answer.",
+      "detected" : true,
+      "detections" : 1,
+      "family" : "reversal",
+      "id" : "reversal_drop",
+      "trials" : 1
+    },
+    {
+      "detail" : "A one-ID byte offset must diverge in hash and decoded text.",
+      "detected" : true,
+      "detections" : 1,
+      "family" : "tokenizer",
+      "id" : "token_offset_corruption",
+      "trials" : 1
+    },
+    {
+      "detail" : "Two disjoint renderings independently regrade to one semantic answer.",
+      "detected" : true,
+      "detections" : 2,
+      "family" : "codebook_surface",
+      "id" : "codebook_surface_equivalence",
+      "trials" : 2
+    },
+    {
+      "detail" : "Frozen row ID and material-hash sets reject duplicate injection.",
+      "detected" : true,
+      "detections" : 1,
+      "family" : "split_leakage",
+      "id" : "duplicate_row_injection",
+      "trials" : 155648
+    },
+    {
+      "detail" : "Refusal categories are taught, while tuning and final prompts, semantics, and mutation-surface contracts remain pairwise held out.",
+      "detected" : true,
+      "detections" : 1,
+      "family" : "refusal_generalization",
+      "id" : "heldout_refusal_contract",
+      "trials" : 8192
+    }
+  ],
+  "generator" : {
+    "canonical_text_normalization" : "NFC",
+    "entropy_primitive" : "SHA256(generator_id|split|index|attempt|field)",
+    "external_text" : false,
+    "full_rows_embedded" : false,
+    "generator_id" : "ergentics_prime_swift_sha256_procedural_v1",
+    "host_randomness" : false,
+    "implementation_language" : "swift",
+    "implementation_path" : "prime-runtime/Sources/ErgenticsPrimeRuntime/ErgenticsPrimeNativeTextCorpus.swift",
+    "inherited_tokenizer" : false,
+    "inherited_weights" : false,
+    "lossless_replay" : true,
+    "maximum_sequence_token_count" : 512,
+    "sequence_construction" : "BOS + NFC UTF-8 prompt + exact completion + EOS"
+  },
+  "leakage_evidence" : {
+    "all_row_hashes_unique" : true,
+    "all_row_ids_unique" : true,
+    "all_valid_semantics_disjoint_across_splits" : true,
+    "combination_components_seen_in_train" : true,
+    "combination_pairs_absent_from_train" : true,
+    "exact_lookup_evaluation_hits" : 0,
+    "refusal_train_abstention_contract_overlap_count" : 0,
+    "refusal_train_evaluation_prompt_overlap_count" : 0,
+    "refusal_train_evaluation_semantic_overlap_count" : 0,
+    "train_combination_codebook_id_intersection_count" : 3,
+    "train_combination_pair_overlap_count" : 0,
+    "train_combination_surface_id_intersection_count" : 3,
+    "train_evaluation_prompt_overlap_count" : 0,
+    "train_evaluation_semantic_overlap_count" : 0,
+    "train_ood_codebook_id_intersection_count" : 0,
+    "train_ood_surface_id_intersection_count" : 0
+  },
+  "license" : "ergentics_first_party_controlled",
+  "manifest_sha256" : "7f42e6f0504e3751fca24bcce35f17fa361b4efcbd577f679fff7577f3e98ba7",
+  "model_vocabulary_size" : 512,
+  "ordered_corpus_rows_sha256" : "db7c62b9f1297c5b4fe020053548d1fdc46fde69b37cf59d4d822d01d0c1fb65",
+  "ownership" : "ergentics_first_party",
+  "product_authorization" : "research_canary_only",
+  "refusal_curriculum_evidence" : {
+    "all_reasons_taught_before_tuning_and_evaluation" : true,
+    "all_rows_independently_verified" : true,
+    "all_tuning_and_evaluation_contracts_held_out" : true,
+    "final_evaluation_contract_counts" : [
+      {
+        "abstention_reason" : "ambiguous_query",
+        "mutation_id" : "malformed_ambiguous_query",
+        "row_count" : 1026,
+        "surface_form_id" : "opening"
+      },
+      {
+        "abstention_reason" : "contradictory_relation",
+        "mutation_id" : "malformed_contradictory_relation",
+        "row_count" : 170,
+        "surface_form_id" : "initial"
+      },
+      {
+        "abstention_reason" : "duplicate_entity",
+        "mutation_id" : "malformed_duplicate_entity",
+        "row_count" : 170,
+        "surface_form_id" : "start"
+      },
+      {
+        "abstention_reason" : "invalid_number",
+        "mutation_id" : "malformed_invalid_number",
+        "row_count" : 171,
+        "surface_form_id" : "initial"
+      },
+      {
+        "abstention_reason" : "missing_history",
+        "mutation_id" : "malformed_missing_history",
+        "row_count" : 170,
+        "surface_form_id" : "start"
+      },
+      {
+        "abstention_reason" : "unknown_entity",
+        "mutation_id" : "malformed_unknown_entity",
+        "row_count" : 170,
+        "surface_form_id" : "initial"
+      },
+      {
+        "abstention_reason" : "unknown_operation",
+        "mutation_id" : "malformed_unknown_operation",
+        "row_count" : 171,
+        "surface_form_id" : "start"
+      }
+    ],
+    "final_evaluation_independent_regrade_sha256" : "604fcb2aa939a3a8fb932a33f8c4e5398d9d087e179d60186932f39237a8cee8",
+    "final_evaluation_prompt_set_sha256" : "9072066b3d6d85c771dcdc3ee8eb435e581e66957c033afce52c50a9e07122c9",
+    "final_evaluation_reason_counts" : [
+      {
+        "id" : "ambiguous_query",
+        "row_count" : 1026
+      },
+      {
+        "id" : "contradictory_relation",
+        "row_count" : 170
+      },
+      {
+        "id" : "duplicate_entity",
+        "row_count" : 170
+      },
+      {
+        "id" : "invalid_number",
+        "row_count" : 171
+      },
+      {
+        "id" : "missing_history",
+        "row_count" : 170
+      },
+      {
+        "id" : "unknown_entity",
+        "row_count" : 170
+      },
+      {
+        "id" : "unknown_operation",
+        "row_count" : 171
+      }
+    ],
+    "final_evaluation_row_count" : 2048,
+    "final_evaluation_semantic_set_sha256" : "12dd719ebada4e1691d86324d55fc46e956acd283bea6ad4480150de8363a35e",
+    "final_evaluation_split" : "abstention",
+    "training_contract_counts" : [
+      {
+        "abstention_reason" : "ambiguous_query",
+        "mutation_id" : "malformed_ambiguous_query",
+        "row_count" : 2050,
+        "surface_form_id" : "initial"
+      },
+      {
+        "abstention_reason" : "contradictory_relation",
+        "mutation_id" : "malformed_contradictory_relation",
+        "row_count" : 341,
+        "surface_form_id" : "start"
+      },
+      {
+        "abstention_reason" : "duplicate_entity",
+        "mutation_id" : "malformed_duplicate_entity",
+        "row_count" : 341,
+        "surface_form_id" : "opening"
+      },
+      {
+        "abstention_reason" : "invalid_number",
+        "mutation_id" : "malformed_invalid_number",
+        "row_count" : 341,
+        "surface_form_id" : "start"
+      },
+      {
+        "abstention_reason" : "missing_history",
+        "mutation_id" : "malformed_missing_history",
+        "row_count" : 341,
+        "surface_form_id" : "opening"
+      },
+      {
+        "abstention_reason" : "unknown_entity",
+        "mutation_id" : "malformed_unknown_entity",
+        "row_count" : 341,
+        "surface_form_id" : "start"
+      },
+      {
+        "abstention_reason" : "unknown_operation",
+        "mutation_id" : "malformed_unknown_operation",
+        "row_count" : 341,
+        "surface_form_id" : "opening"
+      }
+    ],
+    "training_final_evaluation_mutation_contract_overlap_count" : 0,
+    "training_final_evaluation_prompt_overlap_count" : 0,
+    "training_final_evaluation_semantic_overlap_count" : 0,
+    "training_independent_regrade_sha256" : "d85f3c36e37faafdabacc9d322ce805412aa4a57654c14e414d6c0ac386e20be",
+    "training_prompt_set_sha256" : "f219ba49ede0247f16e58ce96800176ef664d5f35b93d81b77c492a7985d6c49",
+    "training_reason_counts" : [
+      {
+        "id" : "ambiguous_query",
+        "row_count" : 2050
+      },
+      {
+        "id" : "contradictory_relation",
+        "row_count" : 341
+      },
+      {
+        "id" : "duplicate_entity",
+        "row_count" : 341
+      },
+      {
+        "id" : "invalid_number",
+        "row_count" : 341
+      },
+      {
+        "id" : "missing_history",
+        "row_count" : 341
+      },
+      {
+        "id" : "unknown_entity",
+        "row_count" : 341
+      },
+      {
+        "id" : "unknown_operation",
+        "row_count" : 341
+      }
+    ],
+    "training_row_count" : 4096,
+    "training_semantic_set_sha256" : "40599a219f4ee69dd1ae1e28ff9c8b74952b2605c12f6c4a1db9d293c4612c3d",
+    "training_split" : "refusal_train",
+    "training_tuning_mutation_contract_overlap_count" : 0,
+    "training_tuning_prompt_overlap_count" : 0,
+    "training_tuning_semantic_overlap_count" : 0,
+    "tuning_contract_counts" : [
+      {
+        "abstention_reason" : "ambiguous_query",
+        "mutation_id" : "malformed_ambiguous_query",
+        "row_count" : 1026,
+        "surface_form_id" : "start"
+      },
+      {
+        "abstention_reason" : "contradictory_relation",
+        "mutation_id" : "malformed_contradictory_relation",
+        "row_count" : 170,
+        "surface_form_id" : "opening"
+      },
+      {
+        "abstention_reason" : "duplicate_entity",
+        "mutation_id" : "malformed_duplicate_entity",
+        "row_count" : 170,
+        "surface_form_id" : "initial"
+      },
+      {
+        "abstention_reason" : "invalid_number",
+        "mutation_id" : "malformed_invalid_number",
+        "row_count" : 171,
+        "surface_form_id" : "opening"
+      },
+      {
+        "abstention_reason" : "missing_history",
+        "mutation_id" : "malformed_missing_history",
+        "row_count" : 170,
+        "surface_form_id" : "initial"
+      },
+      {
+        "abstention_reason" : "unknown_entity",
+        "mutation_id" : "malformed_unknown_entity",
+        "row_count" : 170,
+        "surface_form_id" : "opening"
+      },
+      {
+        "abstention_reason" : "unknown_operation",
+        "mutation_id" : "malformed_unknown_operation",
+        "row_count" : 171,
+        "surface_form_id" : "initial"
+      }
+    ],
+    "tuning_final_evaluation_mutation_contract_overlap_count" : 0,
+    "tuning_final_evaluation_prompt_overlap_count" : 0,
+    "tuning_final_evaluation_semantic_overlap_count" : 0,
+    "tuning_independent_regrade_sha256" : "4181e7fb1628a922bf3515afa49a4e95c41ac1db35ce85a1ad01749e7018572d",
+    "tuning_prompt_set_sha256" : "592269ca87c03531602a980937ee01b01bf6ad27792dd2c76cdf941f6d73c1a1",
+    "tuning_reason_counts" : [
+      {
+        "id" : "ambiguous_query",
+        "row_count" : 1026
+      },
+      {
+        "id" : "contradictory_relation",
+        "row_count" : 170
+      },
+      {
+        "id" : "duplicate_entity",
+        "row_count" : 170
+      },
+      {
+        "id" : "invalid_number",
+        "row_count" : 171
+      },
+      {
+        "id" : "missing_history",
+        "row_count" : 170
+      },
+      {
+        "id" : "unknown_entity",
+        "row_count" : 170
+      },
+      {
+        "id" : "unknown_operation",
+        "row_count" : 171
+      }
+    ],
+    "tuning_row_count" : 2048,
+    "tuning_semantic_set_sha256" : "a83a624c4cbad88665bb3363dc8d30019ab168c59be19ac850bcbca89a6aca5d",
+    "tuning_split" : "refusal_validation"
+  },
+  "schema_version" : "1",
+  "split_evidence" : [
+    {
+      "all_rows_independently_verified" : true,
+      "codebook_surface_pair_counts" : [
+        {
+          "codebook_id" : "coast",
+          "row_count" : 21652,
+          "surface_form_id" : "opening"
+        },
+        {
+          "codebook_id" : "coast",
+          "row_count" : 22060,
+          "surface_form_id" : "start"
+        },
+        {
+          "codebook_id" : "field",
+          "row_count" : 22030,
+          "surface_form_id" : "initial"
+        },
+        {
+          "codebook_id" : "field",
+          "row_count" : 21790,
+          "surface_form_id" : "start"
+        },
+        {
+          "codebook_id" : "light",
+          "row_count" : 21860,
+          "surface_form_id" : "initial"
+        },
+        {
+          "codebook_id" : "light",
+          "row_count" : 21680,
+          "surface_form_id" : "opening"
+        }
+      ],
+      "deduplicated_sequence_token_instances" : 31138522,
+      "family_counts" : [
+        {
+          "row_count" : 21846,
+          "semantic_family" : "arithmetic_composition"
+        },
+        {
+          "row_count" : 21845,
+          "semantic_family" : "conserved_transfer"
+        },
+        {
+          "row_count" : 21845,
+          "semantic_family" : "multi_step_relation"
+        },
+        {
+          "row_count" : 21846,
+          "semantic_family" : "negation_composition"
+        },
+        {
+          "row_count" : 21845,
+          "semantic_family" : "reversible_transform"
+        },
+        {
+          "row_count" : 21845,
+          "semantic_family" : "sequence_ordering"
+        }
+      ],
+      "independent_regrade_sha256" : "82da3e4164bbab0a01d931b015f1d3cff41ad95c861fefc1f3cccc48ccafd906",
+      "invariant_counts" : [
+        {
+          "id" : "conservation",
+          "row_count" : 21845
+        },
+        {
+          "id" : "deterministic_replay",
+          "row_count" : 21845
+        },
+        {
+          "id" : "multi_step_execution",
+          "row_count" : 109227
+        },
+        {
+          "id" : "multi_step_relations",
+          "row_count" : 21845
+        },
+        {
+          "id" : "negation",
+          "row_count" : 29160
+        },
+        {
+          "id" : "operation_order_sensitivity",
+          "row_count" : 65536
+        },
+        {
+          "id" : "ordering",
+          "row_count" : 21845
+        },
+        {
+          "id" : "relation_composition",
+          "row_count" : 21845
+        },
+        {
+          "id" : "reversal",
+          "row_count" : 41674
+        },
+        {
+          "id" : "variable_composition",
+          "row_count" : 87382
+        }
+      ],
+      "maximum_sequence_token_count" : 447,
+      "minimum_sequence_token_count" : 121,
+      "mutation_counts" : [
+
+      ],
+      "observed_token_type_count" : 56,
+      "ordered_evaluation_rows_sha256" : "248461a1bd27fd289df677ec98e0fe13bcf94df8be7affec72345752c8e02493",
+      "ordered_rows_sha256" : "c03b316f571f101ca45b75c440c83b6b0a264f9ced73ba96a61bbaf65a9e9813",
+      "prompt_set_sha256" : "7e9694c6b8d62c6e77630389c24ed984816d891730cf693bcbdd8e2f6e3650ef",
+      "raw_token_instances" : 31138522,
+      "row_count" : 131072,
+      "semantic_set_sha256" : "c1fa09804d89733aa818b51e9079d4fdea3002297d5e365c3541caf6304fb6a0",
+      "sequence_set_sha256" : "d7259ac8f558f574ecc75464f9f3678d3da2100abec5fc9404365dd9974f517f",
+      "split" : "train",
+      "unique_prompt_count" : 131072,
+      "unique_semantic_combination_count" : 131072,
+      "unique_sequence_count" : 131072
+    },
+    {
+      "all_rows_independently_verified" : true,
+      "codebook_surface_pair_counts" : [
+        {
+          "codebook_id" : "coast",
+          "row_count" : 511,
+          "surface_form_id" : "opening"
+        },
+        {
+          "codebook_id" : "coast",
+          "row_count" : 529,
+          "surface_form_id" : "start"
+        },
+        {
+          "codebook_id" : "field",
+          "row_count" : 1050,
+          "surface_form_id" : "initial"
+        },
+        {
+          "codebook_id" : "field",
+          "row_count" : 494,
+          "surface_form_id" : "start"
+        },
+        {
+          "codebook_id" : "light",
+          "row_count" : 1000,
+          "surface_form_id" : "initial"
+        },
+        {
+          "codebook_id" : "light",
+          "row_count" : 512,
+          "surface_form_id" : "opening"
+        }
+      ],
+      "deduplicated_sequence_token_instances" : 1008508,
+      "family_counts" : [
+        {
+          "row_count" : 683,
+          "semantic_family" : "arithmetic_composition"
+        },
+        {
+          "row_count" : 683,
+          "semantic_family" : "conserved_transfer"
+        },
+        {
+          "row_count" : 682,
+          "semantic_family" : "multi_step_relation"
+        },
+        {
+          "row_count" : 683,
+          "semantic_family" : "negation_composition"
+        },
+        {
+          "row_count" : 682,
+          "semantic_family" : "reversible_transform"
+        },
+        {
+          "row_count" : 683,
+          "semantic_family" : "sequence_ordering"
+        }
+      ],
+      "independent_regrade_sha256" : "d85f3c36e37faafdabacc9d322ce805412aa4a57654c14e414d6c0ac386e20be",
+      "invariant_counts" : [
+        {
+          "id" : "malformed_input_rejection",
+          "row_count" : 4096
+        },
+        {
+          "id" : "verify_abstain",
+          "row_count" : 4096
+        }
+      ],
+      "maximum_sequence_token_count" : 430,
+      "minimum_sequence_token_count" : 125,
+      "mutation_counts" : [
+        {
+          "id" : "malformed_ambiguous_query",
+          "row_count" : 2050
+        },
+        {
+          "id" : "malformed_contradictory_relation",
+          "row_count" : 341
+        },
+        {
+          "id" : "malformed_duplicate_entity",
+          "row_count" : 341
+        },
+        {
+          "id" : "malformed_invalid_number",
+          "row_count" : 341
+        },
+        {
+          "id" : "malformed_missing_history",
+          "row_count" : 341
+        },
+        {
+          "id" : "malformed_unknown_entity",
+          "row_count" : 341
+        },
+        {
+          "id" : "malformed_unknown_operation",
+          "row_count" : 341
+        }
+      ],
+      "observed_token_type_count" : 58,
+      "ordered_evaluation_rows_sha256" : "d37679915d36aa9fde3da88a737d988b59ef8326096a9ada46abb3bf537d3410",
+      "ordered_rows_sha256" : "699dfe19924f09d15e3e0cd6fac1c511813d1223592a86b7a577095327011359",
+      "prompt_set_sha256" : "f219ba49ede0247f16e58ce96800176ef664d5f35b93d81b77c492a7985d6c49",
+      "raw_token_instances" : 1008508,
+      "row_count" : 4096,
+      "semantic_set_sha256" : "40599a219f4ee69dd1ae1e28ff9c8b74952b2605c12f6c4a1db9d293c4612c3d",
+      "sequence_set_sha256" : "7ce0e2d87c0acf3192895bb297fdd1f2148fe56f23b0b5261152d2c4ca59ad3e",
+      "split" : "refusal_train",
+      "unique_prompt_count" : 4096,
+      "unique_semantic_combination_count" : 4096,
+      "unique_sequence_count" : 4096
+    },
+    {
+      "all_rows_independently_verified" : true,
+      "codebook_surface_pair_counts" : [
+        {
+          "codebook_id" : "coast",
+          "row_count" : 651,
+          "surface_form_id" : "opening"
+        },
+        {
+          "codebook_id" : "coast",
+          "row_count" : 657,
+          "surface_form_id" : "start"
+        },
+        {
+          "codebook_id" : "field",
+          "row_count" : 702,
+          "surface_form_id" : "initial"
+        },
+        {
+          "codebook_id" : "field",
+          "row_count" : 668,
+          "surface_form_id" : "start"
+        },
+        {
+          "codebook_id" : "light",
+          "row_count" : 697,
+          "surface_form_id" : "initial"
+        },
+        {
+          "codebook_id" : "light",
+          "row_count" : 721,
+          "surface_form_id" : "opening"
+        }
+      ],
+      "deduplicated_sequence_token_instances" : 1086090,
+      "family_counts" : [
+        {
+          "row_count" : 683,
+          "semantic_family" : "arithmetic_composition"
+        },
+        {
+          "row_count" : 683,
+          "semantic_family" : "conserved_transfer"
+        },
+        {
+          "row_count" : 682,
+          "semantic_family" : "multi_step_relation"
+        },
+        {
+          "row_count" : 683,
+          "semantic_family" : "negation_composition"
+        },
+        {
+          "row_count" : 682,
+          "semantic_family" : "reversible_transform"
+        },
+        {
+          "row_count" : 683,
+          "semantic_family" : "sequence_ordering"
+        }
+      ],
+      "independent_regrade_sha256" : "99c9eaec0aed1445a4193bf3511be75e1d20d491bf19af5332feb90d417d5a26",
+      "invariant_counts" : [
+        {
+          "id" : "conservation",
+          "row_count" : 683
+        },
+        {
+          "id" : "deterministic_replay",
+          "row_count" : 682
+        },
+        {
+          "id" : "multi_step_execution",
+          "row_count" : 3414
+        },
+        {
+          "id" : "multi_step_relations",
+          "row_count" : 682
+        },
+        {
+          "id" : "negation",
+          "row_count" : 919
+        },
+        {
+          "id" : "operation_order_sensitivity",
+          "row_count" : 2048
+        },
+        {
+          "id" : "ordering",
+          "row_count" : 683
+        },
+        {
+          "id" : "relation_composition",
+          "row_count" : 682
+        },
+        {
+          "id" : "reversal",
+          "row_count" : 1425
+        },
+        {
+          "id" : "variable_composition",
+          "row_count" : 2731
+        }
+      ],
+      "maximum_sequence_token_count" : 477,
+      "minimum_sequence_token_count" : 142,
+      "mutation_counts" : [
+
+      ],
+      "observed_token_type_count" : 56,
+      "ordered_evaluation_rows_sha256" : "8d1da3aa5923078f95cf4389364dba9e7554fd69afbf8807ffdb13f429a11f6b",
+      "ordered_rows_sha256" : "b113836b0f299acd60d9390948bb1cdc163478973a15953f05b7035e26ccf24b",
+      "prompt_set_sha256" : "7f15781c4fcb5d6c79a0b6c41d0c08ef73cfba6e74d22a5e4d946ebfc19d5043",
+      "raw_token_instances" : 1086090,
+      "row_count" : 4096,
+      "semantic_set_sha256" : "34d7925a5f51f692d9c3803faf72f8e44024d458379187ef66d8419c4b772eb3",
+      "sequence_set_sha256" : "1944ef76a5754a7995cfd9d5bc0db163c06ab09c0ed99a3a0b8c952654aecd22",
+      "split" : "validation",
+      "unique_prompt_count" : 4096,
+      "unique_semantic_combination_count" : 4096,
+      "unique_sequence_count" : 4096
+    },
+    {
+      "all_rows_independently_verified" : true,
+      "codebook_surface_pair_counts" : [
+        {
+          "codebook_id" : "coast",
+          "row_count" : 236,
+          "surface_form_id" : "opening"
+        },
+        {
+          "codebook_id" : "coast",
+          "row_count" : 498,
+          "surface_form_id" : "start"
+        },
+        {
+          "codebook_id" : "field",
+          "row_count" : 272,
+          "surface_form_id" : "initial"
+        },
+        {
+          "codebook_id" : "field",
+          "row_count" : 528,
+          "surface_form_id" : "start"
+        },
+        {
+          "codebook_id" : "light",
+          "row_count" : 239,
+          "surface_form_id" : "initial"
+        },
+        {
+          "codebook_id" : "light",
+          "row_count" : 275,
+          "surface_form_id" : "opening"
+        }
+      ],
+      "deduplicated_sequence_token_instances" : 594403,
+      "family_counts" : [
+        {
+          "row_count" : 342,
+          "semantic_family" : "arithmetic_composition"
+        },
+        {
+          "row_count" : 341,
+          "semantic_family" : "conserved_transfer"
+        },
+        {
+          "row_count" : 341,
+          "semantic_family" : "multi_step_relation"
+        },
+        {
+          "row_count" : 342,
+          "semantic_family" : "negation_composition"
+        },
+        {
+          "row_count" : 341,
+          "semantic_family" : "reversible_transform"
+        },
+        {
+          "row_count" : 341,
+          "semantic_family" : "sequence_ordering"
+        }
+      ],
+      "independent_regrade_sha256" : "4181e7fb1628a922bf3515afa49a4e95c41ac1db35ce85a1ad01749e7018572d",
+      "invariant_counts" : [
+        {
+          "id" : "malformed_input_rejection",
+          "row_count" : 2048
+        },
+        {
+          "id" : "verify_abstain",
+          "row_count" : 2048
+        }
+      ],
+      "maximum_sequence_token_count" : 510,
+      "minimum_sequence_token_count" : 144,
+      "mutation_counts" : [
+        {
+          "id" : "malformed_ambiguous_query",
+          "row_count" : 1026
+        },
+        {
+          "id" : "malformed_contradictory_relation",
+          "row_count" : 170
+        },
+        {
+          "id" : "malformed_duplicate_entity",
+          "row_count" : 170
+        },
+        {
+          "id" : "malformed_invalid_number",
+          "row_count" : 171
+        },
+        {
+          "id" : "malformed_missing_history",
+          "row_count" : 170
+        },
+        {
+          "id" : "malformed_unknown_entity",
+          "row_count" : 170
+        },
+        {
+          "id" : "malformed_unknown_operation",
+          "row_count" : 171
+        }
+      ],
+      "observed_token_type_count" : 58,
+      "ordered_evaluation_rows_sha256" : "05f476eb53486f45241a871bd35ea3467de8ea9c39e7e18b4eaec3a15986272b",
+      "ordered_rows_sha256" : "51482b1b7eb8bd0d4afeed7e153a7e866220778ba76d6521bcb59251a4cfc567",
+      "prompt_set_sha256" : "592269ca87c03531602a980937ee01b01bf6ad27792dd2c76cdf941f6d73c1a1",
+      "raw_token_instances" : 594403,
+      "row_count" : 2048,
+      "semantic_set_sha256" : "a83a624c4cbad88665bb3363dc8d30019ab168c59be19ac850bcbca89a6aca5d",
+      "sequence_set_sha256" : "7c63ccd5c8b717ed308e0547bac820123b891c476e79ad771eb8a6b6cefec675",
+      "split" : "refusal_validation",
+      "unique_prompt_count" : 2048,
+      "unique_semantic_combination_count" : 2048,
+      "unique_sequence_count" : 2048
+    },
+    {
+      "all_rows_independently_verified" : true,
+      "codebook_surface_pair_counts" : [
+        {
+          "codebook_id" : "coast",
+          "row_count" : 1331,
+          "surface_form_id" : "initial"
+        },
+        {
+          "codebook_id" : "field",
+          "row_count" : 1395,
+          "surface_form_id" : "opening"
+        },
+        {
+          "codebook_id" : "light",
+          "row_count" : 1370,
+          "surface_form_id" : "start"
+        }
+      ],
+      "deduplicated_sequence_token_instances" : 1205827,
+      "family_counts" : [
+        {
+          "row_count" : 683,
+          "semantic_family" : "arithmetic_composition"
+        },
+        {
+          "row_count" : 683,
+          "semantic_family" : "conserved_transfer"
+        },
+        {
+          "row_count" : 682,
+          "semantic_family" : "multi_step_relation"
+        },
+        {
+          "row_count" : 683,
+          "semantic_family" : "negation_composition"
+        },
+        {
+          "row_count" : 682,
+          "semantic_family" : "reversible_transform"
+        },
+        {
+          "row_count" : 683,
+          "semantic_family" : "sequence_ordering"
+        }
+      ],
+      "independent_regrade_sha256" : "92f008acb09e94b2d30a0dc1283d323261072c47a4e6c1e1dc7bd041978e2732",
+      "invariant_counts" : [
+        {
+          "id" : "conservation",
+          "row_count" : 683
+        },
+        {
+          "id" : "deterministic_replay",
+          "row_count" : 682
+        },
+        {
+          "id" : "multi_step_execution",
+          "row_count" : 3414
+        },
+        {
+          "id" : "multi_step_relations",
+          "row_count" : 682
+        },
+        {
+          "id" : "negation",
+          "row_count" : 914
+        },
+        {
+          "id" : "operation_order_sensitivity",
+          "row_count" : 2048
+        },
+        {
+          "id" : "ordering",
+          "row_count" : 683
+        },
+        {
+          "id" : "relation_composition",
+          "row_count" : 682
+        },
+        {
+          "id" : "reversal",
+          "row_count" : 1560
+        },
+        {
+          "id" : "variable_composition",
+          "row_count" : 2731
+        }
+      ],
+      "maximum_sequence_token_count" : 493,
+      "minimum_sequence_token_count" : 169,
+      "mutation_counts" : [
+
+      ],
+      "observed_token_type_count" : 56,
+      "ordered_evaluation_rows_sha256" : "f1cfbeccf8daacbee95689fb46ee00395cada3d6dee3eafe6e838fca69dd4d4a",
+      "ordered_rows_sha256" : "dc087b4ef26e7b43d86e3982a067f128abda150f456941509cca2ca60ccbe810",
+      "prompt_set_sha256" : "a10c3eb643d14f54f1c7a2a330fac3117bb0bf593fe2c6b34d6ff6b9a54cef44",
+      "raw_token_instances" : 1205827,
+      "row_count" : 4096,
+      "semantic_set_sha256" : "3bf449d7bd5131a91cd6445200642a0c9cc4ddc3970edcfaf13e53881e5a41ef",
+      "sequence_set_sha256" : "fb9463d8f782e833253386d2d78108a120ee9c691e2434757a1885bb2f9e7f19",
+      "split" : "combination_holdout",
+      "unique_prompt_count" : 4096,
+      "unique_semantic_combination_count" : 4096,
+      "unique_sequence_count" : 4096
+    },
+    {
+      "all_rows_independently_verified" : true,
+      "codebook_surface_pair_counts" : [
+        {
+          "codebook_id" : "native_ood_a",
+          "row_count" : 987,
+          "surface_form_id" : "begin"
+        },
+        {
+          "codebook_id" : "native_ood_a",
+          "row_count" : 1053,
+          "surface_form_id" : "record"
+        },
+        {
+          "codebook_id" : "native_ood_b",
+          "row_count" : 1015,
+          "surface_form_id" : "begin"
+        },
+        {
+          "codebook_id" : "native_ood_b",
+          "row_count" : 1041,
+          "surface_form_id" : "record"
+        }
+      ],
+      "deduplicated_sequence_token_instances" : 1553752,
+      "family_counts" : [
+        {
+          "row_count" : 683,
+          "semantic_family" : "arithmetic_composition"
+        },
+        {
+          "row_count" : 683,
+          "semantic_family" : "conserved_transfer"
+        },
+        {
+          "row_count" : 682,
+          "semantic_family" : "multi_step_relation"
+        },
+        {
+          "row_count" : 683,
+          "semantic_family" : "negation_composition"
+        },
+        {
+          "row_count" : 682,
+          "semantic_family" : "reversible_transform"
+        },
+        {
+          "row_count" : 683,
+          "semantic_family" : "sequence_ordering"
+        }
+      ],
+      "independent_regrade_sha256" : "0c8da4892e3cb7483886f2f48386680fa214f9c93da424057acd36df8e515f42",
+      "invariant_counts" : [
+        {
+          "id" : "conservation",
+          "row_count" : 683
+        },
+        {
+          "id" : "deterministic_replay",
+          "row_count" : 682
+        },
+        {
+          "id" : "multi_step_execution",
+          "row_count" : 3414
+        },
+        {
+          "id" : "multi_step_relations",
+          "row_count" : 682
+        },
+        {
+          "id" : "negation",
+          "row_count" : 906
+        },
+        {
+          "id" : "operation_order_sensitivity",
+          "row_count" : 2048
+        },
+        {
+          "id" : "ordering",
+          "row_count" : 683
+        },
+        {
+          "id" : "relation_composition",
+          "row_count" : 682
+        },
+        {
+          "id" : "reversal",
+          "row_count" : 1668
+        },
+        {
+          "id" : "variable_composition",
+          "row_count" : 2731
+        }
+      ],
+      "maximum_sequence_token_count" : 512,
+      "minimum_sequence_token_count" : 246,
+      "mutation_counts" : [
+
+      ],
+      "observed_token_type_count" : 53,
+      "ordered_evaluation_rows_sha256" : "82f5c29dc6cb50c23a661838adf45157840aef0cdefae6a1eb82f56862c100db",
+      "ordered_rows_sha256" : "5ec1b747579a985637c30ff6c880f50668eddd0203bec0f580f78f30fc3edeea",
+      "prompt_set_sha256" : "1a52f78d5262280c94ea6872e210a1b0d6a99d26aead85eac7bdcef7873e78ef",
+      "raw_token_instances" : 1553752,
+      "row_count" : 4096,
+      "semantic_set_sha256" : "58bff8b5be51d10d0004a5c5712472c1e5bcfdc635fb5c61757c3fdd1cda965c",
+      "sequence_set_sha256" : "d4f7c4a48dc9a0c4d7c1eccc0f448cca16d61844c71285783ef6f3697f3b0b92",
+      "split" : "ood",
+      "unique_prompt_count" : 4096,
+      "unique_semantic_combination_count" : 4096,
+      "unique_sequence_count" : 4096
+    },
+    {
+      "all_rows_independently_verified" : true,
+      "codebook_surface_pair_counts" : [
+        {
+          "codebook_id" : "coast",
+          "row_count" : 1331,
+          "surface_form_id" : "initial"
+        },
+        {
+          "codebook_id" : "field",
+          "row_count" : 1395,
+          "surface_form_id" : "opening"
+        },
+        {
+          "codebook_id" : "light",
+          "row_count" : 1370,
+          "surface_form_id" : "start"
+        }
+      ],
+      "deduplicated_sequence_token_instances" : 1275481,
+      "family_counts" : [
+        {
+          "row_count" : 683,
+          "semantic_family" : "arithmetic_composition"
+        },
+        {
+          "row_count" : 683,
+          "semantic_family" : "conserved_transfer"
+        },
+        {
+          "row_count" : 682,
+          "semantic_family" : "multi_step_relation"
+        },
+        {
+          "row_count" : 683,
+          "semantic_family" : "negation_composition"
+        },
+        {
+          "row_count" : 682,
+          "semantic_family" : "reversible_transform"
+        },
+        {
+          "row_count" : 683,
+          "semantic_family" : "sequence_ordering"
+        }
+      ],
+      "independent_regrade_sha256" : "150161a3c63194e1ad3807dd8692b51431aca59ce1be68da3a229e7d1bed2199",
+      "invariant_counts" : [
+        {
+          "id" : "conservation",
+          "row_count" : 683
+        },
+        {
+          "id" : "counterfactual_mutation",
+          "row_count" : 4096
+        },
+        {
+          "id" : "deterministic_replay",
+          "row_count" : 682
+        },
+        {
+          "id" : "multi_step_execution",
+          "row_count" : 3414
+        },
+        {
+          "id" : "multi_step_relations",
+          "row_count" : 682
+        },
+        {
+          "id" : "negation",
+          "row_count" : 914
+        },
+        {
+          "id" : "operation_order_sensitivity",
+          "row_count" : 2048
+        },
+        {
+          "id" : "ordering",
+          "row_count" : 683
+        },
+        {
+          "id" : "relation_composition",
+          "row_count" : 682
+        },
+        {
+          "id" : "reversal",
+          "row_count" : 1560
+        },
+        {
+          "id" : "variable_composition",
+          "row_count" : 2731
+        }
+      ],
+      "maximum_sequence_token_count" : 500,
+      "minimum_sequence_token_count" : 193,
+      "mutation_counts" : [
+        {
+          "id" : "counterfactual_order_query",
+          "row_count" : 683
+        },
+        {
+          "id" : "counterfactual_relation_query",
+          "row_count" : 682
+        },
+        {
+          "id" : "counterfactual_terminal_add",
+          "row_count" : 2048
+        },
+        {
+          "id" : "counterfactual_transfer_direction",
+          "row_count" : 683
+        }
+      ],
+      "observed_token_type_count" : 56,
+      "ordered_evaluation_rows_sha256" : "f2a043157e70725f91d9d1126f22ec2dbfc011c32650e778e41054b4b7e290b5",
+      "ordered_rows_sha256" : "5c7700ea8e52a61dcdb07b1b148c0993c2541b3e23c28801250ed08c2c6c9391",
+      "prompt_set_sha256" : "c8cbfc219371f30de7f05d6deca46ad91429942c38b6203a5962d04e7e1231ef",
+      "raw_token_instances" : 1275481,
+      "row_count" : 4096,
+      "semantic_set_sha256" : "40f2411445180c15c8dea0005aaa906746fd0974c1a5b60d8390eb59c059fa94",
+      "sequence_set_sha256" : "e02be8198569d23fb222a12ab229c8105edcee984fd41294b4ae4f63deb611c3",
+      "split" : "mutation",
+      "unique_prompt_count" : 4096,
+      "unique_semantic_combination_count" : 4096,
+      "unique_sequence_count" : 4096
+    },
+    {
+      "all_rows_independently_verified" : true,
+      "codebook_surface_pair_counts" : [
+        {
+          "codebook_id" : "coast",
+          "row_count" : 511,
+          "surface_form_id" : "initial"
+        },
+        {
+          "codebook_id" : "field",
+          "row_count" : 1026,
+          "surface_form_id" : "opening"
+        },
+        {
+          "codebook_id" : "light",
+          "row_count" : 511,
+          "surface_form_id" : "start"
+        }
+      ],
+      "deduplicated_sequence_token_instances" : 644174,
+      "family_counts" : [
+        {
+          "row_count" : 342,
+          "semantic_family" : "arithmetic_composition"
+        },
+        {
+          "row_count" : 341,
+          "semantic_family" : "conserved_transfer"
+        },
+        {
+          "row_count" : 341,
+          "semantic_family" : "multi_step_relation"
+        },
+        {
+          "row_count" : 342,
+          "semantic_family" : "negation_composition"
+        },
+        {
+          "row_count" : 341,
+          "semantic_family" : "reversible_transform"
+        },
+        {
+          "row_count" : 341,
+          "semantic_family" : "sequence_ordering"
+        }
+      ],
+      "independent_regrade_sha256" : "604fcb2aa939a3a8fb932a33f8c4e5398d9d087e179d60186932f39237a8cee8",
+      "invariant_counts" : [
+        {
+          "id" : "malformed_input_rejection",
+          "row_count" : 2048
+        },
+        {
+          "id" : "verify_abstain",
+          "row_count" : 2048
+        }
+      ],
+      "maximum_sequence_token_count" : 509,
+      "minimum_sequence_token_count" : 173,
+      "mutation_counts" : [
+        {
+          "id" : "malformed_ambiguous_query",
+          "row_count" : 1026
+        },
+        {
+          "id" : "malformed_contradictory_relation",
+          "row_count" : 170
+        },
+        {
+          "id" : "malformed_duplicate_entity",
+          "row_count" : 170
+        },
+        {
+          "id" : "malformed_invalid_number",
+          "row_count" : 171
+        },
+        {
+          "id" : "malformed_missing_history",
+          "row_count" : 170
+        },
+        {
+          "id" : "malformed_unknown_entity",
+          "row_count" : 170
+        },
+        {
+          "id" : "malformed_unknown_operation",
+          "row_count" : 171
+        }
+      ],
+      "observed_token_type_count" : 56,
+      "ordered_evaluation_rows_sha256" : "17e999ba61f0380e6ae1f91b944b75f48537d36d425e916372d18aeb4f24b684",
+      "ordered_rows_sha256" : "bd63a9592b03a5493de0b67036dce027031f239fa692f3d588272be807d7135f",
+      "prompt_set_sha256" : "9072066b3d6d85c771dcdc3ee8eb435e581e66957c033afce52c50a9e07122c9",
+      "raw_token_instances" : 644174,
+      "row_count" : 2048,
+      "semantic_set_sha256" : "12dd719ebada4e1691d86324d55fc46e956acd283bea6ad4480150de8363a35e",
+      "sequence_set_sha256" : "59dd9308b4c3d9d273db74e106ce3babdf0da4e2a5b28cafff641283dcbd2637",
+      "split" : "abstention",
+      "unique_prompt_count" : 2048,
+      "unique_semantic_combination_count" : 2048,
+      "unique_sequence_count" : 2048
+    }
+  ],
+  "surface_forms" : [
+    {
+      "admitted_splits" : [
+        "train",
+        "refusal_train",
+        "validation",
+        "refusal_validation",
+        "combination_holdout",
+        "mutation",
+        "abstention"
+      ],
+      "id" : "initial",
+      "opening_style" : "Initially, ...",
+      "question_style" : "What/Which/Is ...?",
+      "step_lead_style" : "First/Then, ..."
+    },
+    {
+      "admitted_splits" : [
+        "train",
+        "refusal_train",
+        "validation",
+        "refusal_validation",
+        "combination_holdout",
+        "mutation",
+        "abstention"
+      ],
+      "id" : "start",
+      "opening_style" : "At the start, ...",
+      "question_style" : "Return ...",
+      "step_lead_style" : "Apply/Continue, ..."
+    },
+    {
+      "admitted_splits" : [
+        "train",
+        "refusal_train",
+        "validation",
+        "refusal_validation",
+        "combination_holdout",
+        "mutation",
+        "abstention"
+      ],
+      "id" : "opening",
+      "opening_style" : "The opening ...",
+      "question_style" : "Report ...",
+      "step_lead_style" : "In order/Next, ..."
+    },
+    {
+      "admitted_splits" : [
+        "ood",
+        "abstention"
+      ],
+      "id" : "begin",
+      "opening_style" : "Begin with ...",
+      "question_style" : "Give ...",
+      "step_lead_style" : "Execute/Proceed, ..."
+    },
+    {
+      "admitted_splits" : [
+        "ood",
+        "abstention"
+      ],
+      "id" : "record",
+      "opening_style" : "The record opens ...",
+      "question_style" : "Determine ...",
+      "step_lead_style" : "Perform/Afterward, ..."
+    }
+  ],
+  "token_accounting" : {
+    "deduplicated_sequence_token_instances" : 38506757,
+    "observed_token_type_count" : 62,
+    "raw_token_instances" : 38506757,
+    "unique_semantic_combination_count" : 155648,
+    "unique_sequence_count" : 155648,
+    "vocabulary_token_type_count" : 512
+  },
+  "tokenizer_id" : "ergentics_prime_nfc_utf8_byte_v1",
+  "tokenizer_manifest_sha256" : "f9f768268edb488aaf7168453b703f2d2a78a1036572368c76f53f4f436434c7"
+}

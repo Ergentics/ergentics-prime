@@ -386,6 +386,19 @@ corpus generator and independent text verifier into Prime. This must be a
 source-pinned transplant, not a companion runtime dependency and not an
 execution of code from the PMHNP checkout.
 
+Implementation note: the two files below are the intended semantic boundary,
+but the corpus source also references
+`ErgenticsNativeLanguageCanary.frozenSeeds`. Pulling that authority's complete
+compile closure would import unrelated executor and scale-selection policy.
+The bounded Prime implementation therefore preserves both files byte-exact
+and supplies an explicit `[1618, 2718, 3141]` bridge that must equal the
+already resolved Prime evaluation contract. The embedded text parser shares
+the generator's evaluator structs, so its full-row replay is a
+same-implementation regrade, not an algorithmically independent scientific
+oracle. The corrected exact contract and frozen per-split goldens are recorded
+in
+[`PRIME-NATIVE-FULL-CORPUS-REPLAY-2026-07-30.md`](PRIME-NATIVE-FULL-CORPUS-REPLAY-2026-07-30.md).
+
 The starting source identities at the same companion revision are:
 
 | Source | Git blob | SHA-256 |
@@ -393,7 +406,7 @@ The starting source identities at the same companion revision are:
 | `prime-runtime/Sources/ErgenticsPrimeRuntime/PrimeNativeByteTokenizer.swift` | `27f5d4f61864499027d3e65516ae4c5cfe1ff5d1` | `9cee58d44cf3c80bfe53b7568753c4ad4a76d6e54f2e32e6020b795ef0973721` |
 | `prime-runtime/Sources/ErgenticsPrimeRuntime/ErgenticsPrimeNativeTextCorpus.swift` | `b2a087c9410a71f2bc99debade752ff779d7a8a8` | `4758ac2ffc8452614c7eee428333105ac63b0707cb890938d1e42966d3a14210` |
 
-That later slice must regenerate all eight splits and all 155,648 rows under
+That slice must regenerate all eight splits and all 155,648 rows under
 Prime authority, reproduce the exact row, sequence, semantic, prompt,
 falsifier, and manifest hashes, re-run leakage and refusal-holdout mutations,
 and independently regrade every row. Only that evidence can change

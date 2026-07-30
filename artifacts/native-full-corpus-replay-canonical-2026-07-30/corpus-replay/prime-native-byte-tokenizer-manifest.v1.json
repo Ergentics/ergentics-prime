@@ -1,0 +1,109 @@
+{
+  "algorithm" : "nfc_utf8_byte_offset",
+  "bound_model_vocabulary_size" : 512,
+  "byte_representation" : "Swift.String.UTF8View",
+  "byte_token_base" : 256,
+  "byte_token_count" : 256,
+  "byte_token_range" : {
+    "lower_bound" : 256,
+    "upper_bound" : 511
+  },
+  "external_corpus" : false,
+  "external_vocabulary" : false,
+  "implementation_language" : "swift",
+  "independent_byte_representation" : "Foundation.Data.UTF8",
+  "lowercase" : false,
+  "manifest_sha256" : "f9f768268edb488aaf7168453b703f2d2a78a1036572368c76f53f4f436434c7",
+  "ownership" : "ergentics_first_party",
+  "preserves_line_endings" : true,
+  "preserves_whitespace" : true,
+  "replay_probe_sha256" : "9ce743183b0aecaf4e976d912382ebc11f5f6b07a868f76470dd5a0a6061f5bb",
+  "replay_probes" : [
+    {
+      "canonical_utf8_sha256" : "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "foundation_data_token_ids_sha256" : "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "id" : "empty",
+      "independent_paths_agree" : true,
+      "source_utf8_sha256" : "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "token_count" : 0,
+      "token_ids_sha256" : "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "canonical_utf8_sha256" : "cb6dae2a499ebe91f5a8e5e260d7e95f06bdccc61bc5d43461136fbe1a0d7408",
+      "foundation_data_token_ids_sha256" : "c66bb8009cb73534b4c9e1a133b047b5f46a170fe4363658770ad280d3ef1069",
+      "id" : "ascii",
+      "independent_paths_agree" : true,
+      "source_utf8_sha256" : "cb6dae2a499ebe91f5a8e5e260d7e95f06bdccc61bc5d43461136fbe1a0d7408",
+      "token_count" : 39,
+      "token_ids_sha256" : "c66bb8009cb73534b4c9e1a133b047b5f46a170fe4363658770ad280d3ef1069"
+    },
+    {
+      "canonical_utf8_sha256" : "ce64bc32f98c5671c41b71b39836c2359b80cd682fb89d4b18e29d4eb239a4f7",
+      "foundation_data_token_ids_sha256" : "519f56f47504fe6f030d5d4ae633491878d7fe9f3276747136e680ceeb4f100a",
+      "id" : "nfc",
+      "independent_paths_agree" : true,
+      "source_utf8_sha256" : "18081088a1d8bb85aaeba1a6a66b44c49f26cfe7e3948d2d994f76418f34f45f",
+      "token_count" : 19,
+      "token_ids_sha256" : "519f56f47504fe6f030d5d4ae633491878d7fe9f3276747136e680ceeb4f100a"
+    },
+    {
+      "canonical_utf8_sha256" : "b22ef10bfcd12970c982661d85414b05d58c922d8d24b163642ddb740fad5e55",
+      "foundation_data_token_ids_sha256" : "caa471977b19f40a48c2f965727318424cd1cdb3ec18aadc60cd5ed3cc6a5f0f",
+      "id" : "multilingual",
+      "independent_paths_agree" : true,
+      "source_utf8_sha256" : "b22ef10bfcd12970c982661d85414b05d58c922d8d24b163642ddb740fad5e55",
+      "token_count" : 55,
+      "token_ids_sha256" : "caa471977b19f40a48c2f965727318424cd1cdb3ec18aadc60cd5ed3cc6a5f0f"
+    },
+    {
+      "canonical_utf8_sha256" : "f25e4b6f99f2d62cbdc07d5edadd9efa3a59cdd1a278686aa0a5c6a6f249ada5",
+      "foundation_data_token_ids_sha256" : "7889096beb0ada75b89d3bff1bcda4a516bd939ba5a09612014cba7524d1168c",
+      "id" : "emoji",
+      "independent_paths_agree" : true,
+      "source_utf8_sha256" : "f25e4b6f99f2d62cbdc07d5edadd9efa3a59cdd1a278686aa0a5c6a6f249ada5",
+      "token_count" : 14,
+      "token_ids_sha256" : "7889096beb0ada75b89d3bff1bcda4a516bd939ba5a09612014cba7524d1168c"
+    },
+    {
+      "canonical_utf8_sha256" : "ecc7611773ff47285744b82e0722b4bd946b9485ee8c916dead804bfb9425fc5",
+      "foundation_data_token_ids_sha256" : "e40d999776de646884a29ff565fba0d6055bd15368bf46ad6f1b7207db29b79d",
+      "id" : "whitespace",
+      "independent_paths_agree" : true,
+      "source_utf8_sha256" : "ecc7611773ff47285744b82e0722b4bd946b9485ee8c916dead804bfb9425fc5",
+      "token_count" : 22,
+      "token_ids_sha256" : "e40d999776de646884a29ff565fba0d6055bd15368bf46ad6f1b7207db29b79d"
+    },
+    {
+      "canonical_utf8_sha256" : "92e7bd379d664df834acaff3d7abcf375095bc5cafa5ebc76309307386deab95",
+      "foundation_data_token_ids_sha256" : "c8649e4ab72479b9a5d2ef9a4bcc77f491f46ff4c13d2c2998ffb050d6264c7f",
+      "id" : "nul",
+      "independent_paths_agree" : true,
+      "source_utf8_sha256" : "92e7bd379d664df834acaff3d7abcf375095bc5cafa5ebc76309307386deab95",
+      "token_count" : 12,
+      "token_ids_sha256" : "c8649e4ab72479b9a5d2ef9a4bcc77f491f46ff4c13d2c2998ffb050d6264c7f"
+    }
+  ],
+  "reserved_symbolic_token_range" : {
+    "lower_bound" : 0,
+    "upper_bound" : 255
+  },
+  "schema_version" : "1",
+  "special_tokens" : [
+    {
+      "name" : "pad",
+      "token_id" : 0
+    },
+    {
+      "name" : "beginning_of_sequence",
+      "token_id" : 1
+    },
+    {
+      "name" : "end_of_sequence",
+      "token_id" : 70
+    }
+  ],
+  "token_space_size" : 512,
+  "tokenizer_id" : "ergentics_prime_nfc_utf8_byte_v1",
+  "training_required" : false,
+  "unicode_normalization" : "NFC"
+}

@@ -160,6 +160,112 @@ final class PrimeDurableArtifactsTests: XCTestCase {
         try root.requirePrivateRootMode()
     }
 
+    func testArtifactRootRejectsIntermediateSymbolicLink()
+        throws
+    {
+        let actualParent =
+            temporaryURL.appendingPathComponent(
+                "actual-parent",
+                isDirectory: true
+            )
+        let actualRoot =
+            actualParent.appendingPathComponent(
+                "artifact-root",
+                isDirectory: true
+            )
+        try FileManager.default.createDirectory(
+            at: actualRoot,
+            withIntermediateDirectories: true
+        )
+        XCTAssertEqual(
+            chmod(actualRoot.path, 0o700),
+            0
+        )
+        let linkedParent =
+            temporaryURL.appendingPathComponent(
+                "linked-parent",
+                isDirectory: true
+            )
+        try FileManager.default.createSymbolicLink(
+            at: linkedParent,
+            withDestinationURL: actualParent
+        )
+        let redirectedRoot =
+            linkedParent.appendingPathComponent(
+                "artifact-root",
+                isDirectory: true
+            )
+
+        XCTAssertThrowsError(
+            try PrimeArtifactRoot(
+                directoryURL: redirectedRoot
+            )
+        ) { error in
+            guard case let .posix(
+                operation,
+                path,
+                code
+            ) = error as? PrimeDurableArtifactError else {
+                return XCTFail(
+                    "unexpected error: \(error)"
+                )
+            }
+            XCTAssertEqual(
+                operation,
+                "openat trusted artifact root component"
+            )
+            XCTAssertEqual(path, redirectedRoot.path)
+            XCTAssertTrue(
+                code == ELOOP || code == ENOTDIR
+            )
+        }
+    }
+
+    #if os(macOS)
+    func testArtifactRootAcceptsFixedMacOSTemporaryAlias()
+        throws
+    {
+        let name =
+            "ergentics-prime-root-alias-\(UUID().uuidString)"
+        let physicalRoot = URL(
+            fileURLWithPath: "/private/tmp/\(name)",
+            isDirectory: true
+        )
+        let aliasRoot = URL(
+            fileURLWithPath: "/tmp/\(name)",
+            isDirectory: true
+        )
+        try FileManager.default.createDirectory(
+            at: physicalRoot,
+            withIntermediateDirectories: false
+        )
+        defer {
+            try? FileManager.default.removeItem(
+                at: physicalRoot
+            )
+        }
+        XCTAssertEqual(
+            chmod(physicalRoot.path, 0o700),
+            0
+        )
+
+        let root = try PrimeArtifactRoot(
+            directoryURL: aliasRoot
+        )
+        try root.requirePrivateRootMode()
+        let payload = Data("fixed-root-alias".utf8)
+        let binding = try root.publish(
+            payload,
+            at: "artifact.bin",
+            purpose: .immutableData
+        )
+        XCTAssertEqual(
+            try root.readVerified(binding),
+            payload
+        )
+    }
+    #endif
+
     func testImmutablePublicationVerifiesExactAndRejectsOverwrite()
         throws
     {
@@ -198,6 +304,63 @@ final class PrimeDurableArtifactsTests: XCTestCase {
         XCTAssertEqual(
             try root.readVerified(first),
             original
+        )
+        XCTAssertTrue(
+            try partialArtifactNames().isEmpty
+        )
+    }
+
+    func testDataPublicationSourceUsesHeldDescriptorReclamation()
+        throws
+    {
+        let tests = URL(
+            fileURLWithPath: #filePath
+        ).deletingLastPathComponent()
+        let root = tests
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+        let source = try String(
+            contentsOf:
+                root.appendingPathComponent(
+                    "Sources/PrimeCore/PrimeDurableArtifacts.swift"
+                ),
+            encoding: .utf8
+        )
+        let start = try XCTUnwrap(
+            source.range(
+                of:
+                    "    public func publish(\n        _ data: Data,"
+            )
+        )
+        let end = try XCTUnwrap(
+            source.range(
+                of:
+                    "\n    /// Publishes a file produced by a synchronous descriptor generator",
+                range:
+                    start.upperBound
+                        ..< source.endIndex
+            )
+        )
+        let implementation =
+            source[
+                start.lowerBound ..< end.lowerBound
+            ]
+
+        XCTAssertTrue(
+            implementation.contains(
+                "try verifyExisting("
+            ),
+            "identical existing artifacts must remain idempotent"
+        )
+        XCTAssertTrue(
+            implementation.contains(
+                "return try publishGeneratedFile("
+            ),
+            "new Data publication must reuse held-descriptor publication"
+        )
+        XCTAssertFalse(
+            implementation.contains("unlinkat("),
+            "Data publication must never reclaim a temporary by name"
         )
     }
 

@@ -218,17 +218,9 @@ public final class PrimeArtifactRoot: @unchecked Sendable {
                 directoryURL.absoluteString
             )
         }
-        let flags =
-            O_RDONLY | O_DIRECTORY | O_NOFOLLOW | O_CLOEXEC
-        let opened = directoryURL.path.withCString {
-            open($0, flags)
-        }
-        guard opened >= 0 else {
-            throw Self.posix(
-                "open trusted artifact root",
-                directoryURL.path
-            )
-        }
+        let opened = try Self.openAbsoluteDirectory(
+            at: directoryURL.path
+        )
         do {
             try Self.requireTrustedDirectory(
                 opened,
@@ -485,156 +477,35 @@ public final class PrimeArtifactRoot: @unchecked Sendable {
         purpose: PrimeArtifactPurpose
     ) throws -> PrimeArtifactBinding {
         let parsed = try Self.components(of: relativePath)
-        return try withParentDescriptor(
+        let existing = try withParentDescriptor(
             components: parsed.parents,
             relativePath: relativePath
         ) { parent in
-            if try verifyExisting(
+            try verifyExisting(
                 data,
                 parent: parent,
                 leaf: parsed.leaf,
                 relativePath: relativePath,
                 purpose: purpose
-            ) {
-                return PrimeArtifactBinding(
-                    relativePath: relativePath,
-                    sha256: PrimeSHA256.hexDigest(of: data),
-                    byteCount: UInt64(data.count),
-                    purpose: purpose
-                )
-            }
-
-            let temporaryName =
-                ".prime-partial-\(UUID().uuidString)"
-            let descriptor = temporaryName.withCString {
-                openat(
-                    parent,
-                    $0,
-                    O_WRONLY | O_CREAT | O_EXCL
-                        | O_NOFOLLOW | O_CLOEXEC,
-                    mode_t(0o600)
-                )
-            }
-            guard descriptor >= 0 else {
-                throw Self.posix(
-                    "openat temporary artifact",
-                    temporaryName
-                )
-            }
-
-            var temporaryExists = true
-            defer {
-                _ = close(descriptor)
-                if temporaryExists {
-                    _ = temporaryName.withCString {
-                        unlinkat(parent, $0, 0)
-                    }
-                }
-            }
-
-            do {
-                try Self.writeAll(
-                    data,
-                    descriptor: descriptor,
-                    path: temporaryName
-                )
-                guard fchmod(descriptor, purpose.mode) == 0 else {
-                    throw Self.posix(
-                        "fchmod temporary artifact",
-                        temporaryName
-                    )
-                }
-                try Self.synchronize(
-                    descriptor,
-                    operation: "synchronize temporary artifact",
-                    path: temporaryName
-                )
-                try Self.requireTrustedArtifact(
-                    descriptor,
-                    parent: parent,
-                    leaf: temporaryName,
-                    path: temporaryName,
-                    purpose: purpose,
-                    expectedByteCount: UInt64(data.count)
-                )
-
-                let renamed = Self.renameNoReplace(
-                    parent: parent,
-                    source: temporaryName,
-                    destination: parsed.leaf
-                )
-                let renameError = errno
-                if renamed != 0 {
-                    if renameError == EEXIST,
-                       try verifyExisting(
-                           data,
-                           parent: parent,
-                           leaf: parsed.leaf,
-                           relativePath: relativePath,
-                           purpose: purpose
-                       ) {
-                        guard temporaryName.withCString({
-                            unlinkat(parent, $0, 0)
-                        }) == 0 else {
-                            throw Self.posix(
-                                "unlinkat racing temporary artifact",
-                                temporaryName
-                            )
-                        }
-                        temporaryExists = false
-                        try Self.synchronize(
-                            parent,
-                            operation:
-                                "synchronize racing publication cleanup",
-                            path: relativePath
-                        )
-                    } else {
-                        throw PrimeDurableArtifactError.posix(
-                            operation:
-                                "exclusive artifact publication",
-                            path: relativePath,
-                            code: renameError
-                        )
-                    }
-                } else {
-                    temporaryExists = false
-                    try Self.requireTrustedArtifact(
-                        descriptor,
-                        parent: parent,
-                        leaf: parsed.leaf,
-                        path: relativePath,
-                        purpose: purpose,
-                        expectedByteCount: UInt64(data.count)
-                    )
-                    try Self.synchronize(
-                        parent,
-                        operation: "synchronize publication parent",
-                        path: relativePath
-                    )
-                }
-            } catch {
-                if temporaryExists {
-                    let unlinked = temporaryName.withCString {
-                        unlinkat(parent, $0, 0)
-                    }
-                    if unlinked == 0 {
-                        temporaryExists = false
-                        try? Self.synchronize(
-                            parent,
-                            operation:
-                                "synchronize failed publication cleanup",
-                            path: relativePath
-                        )
-                    }
-                }
-                throw error
-            }
-
+            )
+        }
+        if existing {
             return PrimeArtifactBinding(
                 relativePath: relativePath,
                 sha256: PrimeSHA256.hexDigest(of: data),
                 byteCount: UInt64(data.count),
                 purpose: purpose
+            )
+        }
+        return try publishGeneratedFile(
+            at: relativePath,
+            purpose: purpose,
+            maximumByteCount: UInt64(data.count)
+        ) { descriptor in
+            try Self.writeAll(
+                data,
+                descriptor: descriptor,
+                path: relativePath
             )
         }
     }
@@ -1252,6 +1123,100 @@ public final class PrimeArtifactRoot: @unchecked Sendable {
                 "seed provenance field does not equal its declared UInt64 value: \(provenance.fieldPath)"
             )
         }
+    }
+
+    /// Opens an absolute directory path without ever following a pathname
+    /// component after the trusted filesystem root descriptor is acquired.
+    ///
+    /// `O_NOFOLLOW` on one absolute `open` protects only the final component.
+    /// Walking every component relative to the descriptor held from the
+    /// previous step prevents an intermediate symlink swap from redirecting
+    /// the artifact root between argument validation and descriptor capture.
+    private static func openAbsoluteDirectory(
+        at path: String
+    ) throws -> Int32 {
+        let walkedPath =
+            normalizedSystemRootAlias(path)
+        let components = walkedPath.split(
+            separator: "/",
+            omittingEmptySubsequences: true
+        ).map(String.init)
+        guard walkedPath.hasPrefix("/"),
+              !walkedPath.utf8.contains(0),
+              walkedPath == "/"
+                + components.joined(separator: "/"),
+              components.allSatisfy({
+                  $0 != "."
+                      && $0 != ".."
+                      && !$0.utf8.contains(0)
+                      && $0.utf8.count <= 255
+              }) else {
+            throw PrimeDurableArtifactError
+                .untrustedDirectory(path)
+        }
+
+        let flags =
+            O_RDONLY | O_DIRECTORY | O_NOFOLLOW | O_CLOEXEC
+        var current = "/".withCString {
+            open($0, flags)
+        }
+        guard current >= 0 else {
+            throw posix(
+                "open filesystem root",
+                path
+            )
+        }
+
+        for component in components {
+            let next = component.withCString {
+                openat(
+                    current,
+                    $0,
+                    flags
+                )
+            }
+            let openError = errno
+            guard next >= 0 else {
+                _ = close(current)
+                throw PrimeDurableArtifactError.posix(
+                    operation:
+                        "openat trusted artifact root component",
+                    path: path,
+                    code: openError
+                )
+            }
+            _ = close(current)
+            current = next
+        }
+        return current
+    }
+
+    /// macOS exposes three fixed root aliases as root-owned symbolic links.
+    /// Rewrite only those exact first components to their immutable system
+    /// targets before the no-follow walk. No user-controlled or nested
+    /// symbolic link is resolved by this compatibility rule.
+    private static func normalizedSystemRootAlias(
+        _ path: String
+    ) -> String {
+        #if os(macOS)
+        for name in [
+            "tmp",
+            "var",
+            "etc",
+        ] {
+            let alias = "/\(name)"
+            if path == alias {
+                return "/private/\(name)"
+            }
+            if path.hasPrefix(alias + "/") {
+                return "/private/\(name)"
+                    + String(
+                        path.dropFirst(alias.utf8.count)
+                    )
+            }
+        }
+        #endif
+        return path
     }
 
     fileprivate static func components(

@@ -65,6 +65,18 @@ let package = Package(
             ]
         ),
         .executable(
+            name: "PrimeNativeCorpusReplayProbe",
+            targets: [
+                "PrimeNativeCorpusReplayProbe",
+            ]
+        ),
+        .executable(
+            name: "PrimeNativeCorpusReplayVerifier",
+            targets: [
+                "PrimeNativeCorpusReplayVerifier",
+            ]
+        ),
+        .executable(
             name: "PrimeLeaseHolder",
             targets: ["PrimeLeaseHolder"]
         ),
@@ -119,6 +131,16 @@ let package = Package(
                     name: "MLXOptimizers",
                     package: "ergentics-mlx-swift"
                 ),
+            ]
+        ),
+        .target(
+            name: "PrimeNativeCorpusReplayMechanics"
+        ),
+        .target(
+            name: "PrimeNativeCorpusReplay",
+            dependencies: [
+                "PrimeCore",
+                "PrimeNativeCorpusReplayMechanics",
             ]
         ),
         .executableTarget(
@@ -190,6 +212,22 @@ let package = Package(
             dependencies: ["PrimeCore"]
         ),
         .executableTarget(
+            name: "PrimeNativeCorpusReplayProbe",
+            dependencies: [
+                "PrimeCore",
+                "PrimeNativeCorpusReplay",
+                "PrimeNativeCorpusReplayMechanics",
+            ]
+        ),
+        .executableTarget(
+            name: "PrimeNativeCorpusReplayVerifier",
+            dependencies: [
+                "PrimeCore",
+                "PrimeNativeCorpusReplay",
+                "PrimeNativeCorpusReplayMechanics",
+            ]
+        ),
+        .executableTarget(
             name: "PrimeLeaseHolder",
             dependencies: ["PrimeCore"]
         ),
@@ -236,7 +274,11 @@ let package = Package(
         ),
         .testTarget(
             name: "PrimeCoreTests",
-            dependencies: ["PrimeCore"]
+            dependencies: [
+                "PrimeCore",
+                "PrimeNativeCorpusReplay",
+                "PrimeNativeCorpusReplayMechanics",
+            ]
         ),
     ]
 )
