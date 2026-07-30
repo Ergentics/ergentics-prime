@@ -50,14 +50,17 @@ The receipt is repository- and off-device-durable; the complete approximately
 
 ## Current Phase 3 resolver admission
 
-`PrimeNativeContractMigrationPlan.frozenV1` defines the resolver-only
-transition now being implemented. It admits exactly eight existing companion
+`PrimeNativeContractMigrationPlan.frozenV1` defines the completed
+resolver-only transition. It admits exactly eight existing companion
 Git blobs, totalling 11,969,097 bytes, at commit
 `163fc100710ece48119bc25954452d10f6a84f7f` and tree
 `9009daa4f8a07fbd5897e00b9571cef44ec292db`.
 
 - `/usr/bin/git` is directly executed only for read-only revision, tree, and
   raw-object transport; no shell or Python is scientific authority.
+- Git receives the fixed, non-inherited
+  `prime_git_read_only_fixed_environment_v2` policy, including canonical
+  `TMPDIR=/private/tmp`; every admitted invocation must keep stderr empty.
 - Swift owns repository identity, revision, tree, path, mode, object type,
   object ID, byte-count, SHA-256, mutation, immutable publication, and receipt
   validation.
@@ -75,8 +78,9 @@ Git blobs, totalling 11,969,097 bytes, at commit
   revalidates the persisted receipt and descriptor bindings in a fresh
   process. It has no Git, donor-selection, or execution knobs and is a
   persistence validator, not an independent scientific oracle.
-- Implementation and gates are in progress. No canonical resolver execution
-  or compatibility replay is claimed yet.
+- The source-sealed Release resolver and separate fresh-process persistence
+  verifier pass. The repository-durable receipt and evidence note are under
+  `artifacts/native-contract-resolution-canonical-2026-07-29/`.
 
 This resolver does not implement an adapter, expand the archived profile
 screen, execute companion or NeuralKit code, execute a model, train, quantize,

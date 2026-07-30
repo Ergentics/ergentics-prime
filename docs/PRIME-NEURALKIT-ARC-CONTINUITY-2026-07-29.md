@@ -1,7 +1,7 @@
 # Prime and NeuralKit arc continuity
 
-Status: Phase 2 exact continuation `PASS`; Phase 3 resolver implementation and
-gates in progress
+Status: Phase 2 exact continuation `PASS`; Phase 3 resolver and fresh-process
+persistence validation `PASS`
 
 Snapshot date: 2026-07-29
 
@@ -49,8 +49,9 @@ not a dependency on the PMHNP application tree.
 boundary. Its `validate()` method detects in-process inventory drift; it does
 not resolve repositories or verify artifact bytes.
 `PrimeNativeContractMigrationPlan.frozenV1` is the new, non-overwriting
-resolver-only transition. Its implementation and gates are in progress; no
-canonical resolver receipt or compatibility replay is claimed yet.
+resolver-only transition. Its source-sealed Release resolver and separate
+fresh-process persistence verifier pass; compatibility replay remains
+explicitly unclaimed.
 
 ## Authority and migration boundaries
 
@@ -133,11 +134,13 @@ or broad-language evidence.
    Git, donor-selection, or execution knobs, and does not claim an independent
    scientific oracle.
 
-Implementation and gates are in progress; no canonical resolver run is
-claimed. This slice materializes opaque frozen blobs only. It does not perform
-compatibility replay, implement an adapter, expand the archived profile
-screen, execute companion or NeuralKit code, execute a model, train, quantize,
-change a PMHNP consumer, or authorize product use.
+The source-sealed Release resolver and separately invoked fresh-process
+verifier pass. The repository-durable receipt and evidence note are under
+`artifacts/native-contract-resolution-canonical-2026-07-29/`. This slice
+materializes opaque frozen blobs only. It does not perform compatibility
+replay, implement an adapter, expand the archived profile screen, execute
+companion or NeuralKit code, execute a model, train, quantize, change a PMHNP
+consumer, or authorize product use.
 
 ## Fresh CPU reissue diagnostics
 

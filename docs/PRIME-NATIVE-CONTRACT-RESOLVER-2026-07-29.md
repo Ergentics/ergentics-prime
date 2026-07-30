@@ -1,7 +1,6 @@
 # Prime native contract resolver
 
-Status: resolver implementation and gates in progress; no canonical resolver
-receipt claimed
+Status: resolver `PASS`; fresh-process persistence validation `PASS`
 
 Plan lineage date: 2026-07-29
 
@@ -27,7 +26,7 @@ status does not block this read-only migration slice. It does block any later
 action that requires the complete checkpoint/runtime root until that root is
 copied to separately controlled off-device storage.
 
-The next transition is not a model run or a compatibility claim. It is a
+The completed transition is not a model run or a compatibility claim. It is a
 resolver-only gate that materializes exactly eight opaque blobs already frozen
 in `PrimeNativeArcContinuityPlan.frozenV1`. The historical plan is not
 rewritten. `PrimeNativeContractMigrationPlan.frozenV1` adds the exact Git
@@ -62,8 +61,8 @@ read-only raw-object transport because Git object resolution is the maintained
 mechanism for reading a pinned repository. No shell is launched. No Python is
 used.
 
-The in-progress gate binds the exact Git executable observation and uses only
-read-only plumbing to:
+The gate binds the exact Git executable observation and uses only read-only
+plumbing to:
 
 1. verify the companion remote identity and object format;
 2. resolve the exact commit and tree;
@@ -72,11 +71,17 @@ read-only plumbing to:
 5. read each admitted blob by its object ID;
 6. recheck the revision and tree after all reads.
 
+Git receives a fixed, non-inherited environment under policy
+`prime_git_read_only_fixed_environment_v2`. The policy binds
+`TMPDIR=/private/tmp` explicitly so Apple Git does not consult per-user
+temporary-directory state or emit a fallback warning. Stderr must still be
+empty for every admitted Git process.
+
 Swift validates path, regular-file mode, object type, object ID, byte-count,
 and SHA-256 before immutable publication. The donor checkout is read-only and
 is never an output target. The resolver source snapshot, exact Release
-executable, process observations, and materialized blobs are intended to be
-receipt-bound, with the canonical receipt published last into a fresh, empty
+executable, process observations, and materialized blobs are receipt-bound,
+with the canonical receipt published last into a fresh, empty
 artifact root whose mode is exactly `0700`.
 
 Prime source state is observed twice. The pre-snapshot observation binds the
@@ -125,8 +130,8 @@ Repository and output roots must also be safely separated. The output root
 must be newly empty and exactly mode `0700`; Prime source must remain clean and
 identity-stable across its pre-snapshot and post-executable observations; and
 the captured executable file must match the loaded vnode and remain unchanged
-across the read. These are implementation gates, not evidence that a canonical
-run has already occurred.
+across the read. These gates were exercised by the source-sealed Release run
+and then revalidated by the separate verifier process.
 
 ## Explicit non-claims
 
@@ -149,12 +154,14 @@ compatible.
 
 ## Exit and next action
 
-This slice exits only after a clean, source-sealed Release execution publishes
-a canonical resolver receipt and a separately invoked
-`PrimeNativeContractResolutionVerifier` fresh process accepts that receipt and
-its complete local descriptor root. The verifier is not an independent
-scientific oracle. Until that persistence validation completes, resolver
-status remains in progress.
+This slice exited after a clean, source-sealed Release execution published a
+canonical resolver receipt and a separately invoked
+`PrimeNativeContractResolutionVerifier` fresh process accepted that receipt
+and its complete local descriptor root. The verifier is not an independent
+scientific oracle. The repository-durable receipt and evidence note are under
+`artifacts/native-contract-resolution-canonical-2026-07-29/`; the complete
+descriptor root remains local because the exact source blobs are already
+durable at the pinned companion commit.
 
 Only after that evidence exists may the next slice implement the narrow
 compatibility adapter for the resolved tokenizer, corpus, generation, and

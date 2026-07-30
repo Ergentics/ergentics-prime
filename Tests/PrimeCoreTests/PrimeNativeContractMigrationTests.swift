@@ -647,6 +647,20 @@ final class PrimeNativeContractMigrationTests:
             try substitutedOutput.validate()
         )
 
+        let legacyEnvironmentPolicy = try mutate(
+            receipt
+        ) { object in
+            var gitTool = object[
+                "gitTool"
+            ] as! [String: Any]
+            gitTool["environmentPolicyID"] =
+                "prime_git_read_only_empty_environment_v1"
+            object["gitTool"] = gitTool
+        }
+        XCTAssertThrowsError(
+            try legacyEnvironmentPolicy.validate()
+        )
+
         let substitutedSourceRevision = try mutate(
             receipt
         ) { object in

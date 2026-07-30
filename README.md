@@ -316,12 +316,14 @@ receipt and validates the complete persisted descriptor root twice. It has no
 Git, donor-selection, or execution knobs and claims no independent scientific
 oracle; it tests persistence and structural replay only.
 
-Implementation and gates are in progress. No canonical resolver receipt is
-claimed yet. This slice does not perform compatibility replay, implement an
+The source-sealed Release resolver and separately invoked fresh-process
+verifier both pass. The repository-durable receipt and evidence note are under
+`artifacts/native-contract-resolution-canonical-2026-07-29/`; the verifier
+claims persistence and structural replay, not an independent scientific
+oracle. This slice does not perform compatibility replay, implement an
 adapter, expand the archived profile screen, execute companion or NeuralKit
 code, execute a model, train, quantize, or authorize product use. The next
-admissible step is the compatibility adapter only after canonical resolver
-evidence validates.
+admissible step is the narrowly scoped compatibility adapter.
 
 ## Initial calibration
 
