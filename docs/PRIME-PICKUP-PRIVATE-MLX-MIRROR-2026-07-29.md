@@ -292,12 +292,19 @@ Do not:
 - reinterpret CPU typed-restore mechanics as Metal continuation, language
   learning, quantization, model quality, product, clinical, or scientific
   evidence;
-- begin a long, profile-ranking, 3B checkpoint, or functional training run.
+- begin a long, profile-ranking, retained functional-checkpoint, or functional
+  training run.
 
 ## Next authorized execution after merge
 
-The next bounded experiment is an interrupted small MLX Swift/Metal
-continuation canary:
+The private-mirror work originally left the model choice as a small
+MLX Swift/Metal continuation canary. The subsequent cross-repository audit in
+[`PRIME-NEURALKIT-ARC-CONTINUITY-2026-07-29.md`](PRIME-NEURALKIT-ARC-CONTINUITY-2026-07-29.md)
+supersedes only that model choice: the bounded gate now uses the existing exact
+3B profile so it does not create another model lineage or repeat the 10M
+mechanics canary.
+
+The next bounded experiment is therefore:
 
 ```text
 uninterrupted control N+1
@@ -310,3 +317,13 @@ initialization/training/evaluation seed domains, schedule position, RNG state,
 executable, dependency source, metallib, raw observations, and resource
 measurements. Passing that gate authorizes planning the next mechanics slice;
 it does not authorize functional or long training.
+
+The complete CPU typed-restore evidence root is now repository-durable at
+`3481ffc`. Before executing the Metal gate, resolve only the four Prime-owned
+exact-3B/CPU evidence bindings required by this task and run the narrowly
+scoped compatibility checks needed for the current Prime/private-MLX runtime.
+Tokenizer/corpus/evaluator migration, NeuralKit execution, and PMHNP consumer
+changes are outside this AdamW slice. PMHNP remains a read-only historical
+oracle and is not a write target. The exact 3B geometry is an operator-selected
+mechanics choice; it does not overturn the historical schema-6 `ABSTAIN` or
+authorize the scale.

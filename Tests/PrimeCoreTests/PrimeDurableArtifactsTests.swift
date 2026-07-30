@@ -4,6 +4,32 @@ import XCTest
 @testable import PrimeCore
 
 final class PrimeDurableArtifactsTests: XCTestCase {
+    private enum FixtureError: Error {
+        case generationFailed
+        case unexpectedPartialCount
+    }
+
+    private final class AsyncPOSIXStatus:
+        @unchecked Sendable
+    {
+        private let lock = NSLock()
+        private var storedError: Int32 = 0
+
+        func fail(_ error: Int32) {
+            lock.lock()
+            if storedError == 0 {
+                storedError = error
+            }
+            lock.unlock()
+        }
+
+        var error: Int32 {
+            lock.lock()
+            defer { lock.unlock() }
+            return storedError
+        }
+    }
+
     private struct SeedDocument: Codable {
         let initialization: UInt64
         let trainingSchedule: UInt64
@@ -156,6 +182,776 @@ final class PrimeDurableArtifactsTests: XCTestCase {
         XCTAssertEqual(
             try root.readVerified(first),
             original
+        )
+    }
+
+    func testGeneratedDescriptorPublicationAndVerifiedLazyMaterialization()
+        throws
+    {
+        let root = try PrimeArtifactRoot(
+            directoryURL: temporaryURL
+        )
+        let payload = Data(
+            (0 ..< (2 * 1024 * 1024 + 17)).map {
+                UInt8(truncatingIfNeeded: $0)
+            }
+        )
+        var generatedDescriptor: Int32 = -1
+        let binding = try root.publishGeneratedFile(
+            at: "checkpoint.safetensors",
+            purpose: .immutableData,
+            maximumByteCount: UInt64(payload.count)
+        ) { descriptor in
+            generatedDescriptor = descriptor
+            XCTAssertEqual(
+                fcntl(descriptor, F_GETFD) & FD_CLOEXEC,
+                FD_CLOEXEC
+            )
+            try writeAll(payload, to: descriptor)
+        }
+
+        errno = 0
+        let generatedDescriptorStatus =
+            fcntl(generatedDescriptor, F_GETFD)
+        let generatedDescriptorError = errno
+        XCTAssertEqual(generatedDescriptorStatus, -1)
+        XCTAssertEqual(generatedDescriptorError, EBADF)
+        XCTAssertEqual(
+            binding.sha256,
+            PrimeSHA256.hexDigest(of: payload)
+        )
+        XCTAssertEqual(
+            binding.byteCount,
+            UInt64(payload.count)
+        )
+        let artifactURL = temporaryURL
+            .appendingPathComponent(
+                binding.relativePath
+            )
+        var metadata = stat()
+        XCTAssertEqual(
+            lstat(artifactURL.path, &metadata),
+            0
+        )
+        XCTAssertEqual(
+            metadata.st_mode & mode_t(0o7777),
+            mode_t(0o444)
+        )
+        XCTAssertEqual(metadata.st_nlink, 1)
+
+        var sequence = [String]()
+        var loadedDescriptor: Int32 = -1
+        let loadedCount: Int =
+            try root.withVerifiedArtifactDescriptor(
+                binding
+            ) { descriptor in
+                loadedDescriptor = descriptor
+                sequence.append("load")
+                XCTAssertEqual(
+                    fcntl(descriptor, F_GETFD)
+                        & FD_CLOEXEC,
+                    FD_CLOEXEC
+                )
+                return {
+                    try self.readAll(
+                        from: descriptor
+                    )
+                }
+            } materialize: { lazyRead in
+                sequence.append("materialize")
+                return try lazyRead().count
+            }
+        errno = 0
+        let loadedDescriptorStatus =
+            fcntl(loadedDescriptor, F_GETFD)
+        let loadedDescriptorError = errno
+        XCTAssertEqual(loadedDescriptorStatus, -1)
+        XCTAssertEqual(loadedDescriptorError, EBADF)
+        XCTAssertEqual(loadedCount, payload.count)
+        XCTAssertEqual(
+            sequence,
+            ["load", "materialize"]
+        )
+        XCTAssertEqual(
+            try root.readVerified(
+                binding,
+                maximumByteCount:
+                    UInt64(payload.count)
+            ),
+            payload
+        )
+        XCTAssertTrue(
+            try partialArtifactNames().isEmpty
+        )
+    }
+
+    func testGeneratedDescriptorFailureReclaimsStorageWithoutUnlinkingPartials()
+        throws
+    {
+        let root = try PrimeArtifactRoot(
+            directoryURL: temporaryURL
+        )
+        var oversizedGenerationCompleted = false
+        XCTAssertThrowsError(
+            try root.publishGeneratedFile(
+                at: "over-cap.safetensors",
+                purpose: .immutableData,
+                maximumByteCount: 3
+            ) { descriptor in
+                try writeAll(
+                    Data("four".utf8),
+                    to: descriptor
+                )
+                oversizedGenerationCompleted = true
+            }
+        ) { error in
+            XCTAssertEqual(
+                error as? PrimeDurableArtifactError,
+                .artifactTooLarge(
+                    "over-cap.safetensors"
+                )
+            )
+        }
+        XCTAssertTrue(oversizedGenerationCompleted)
+        XCTAssertFalse(
+            FileManager.default.fileExists(
+                atPath: temporaryURL
+                    .appendingPathComponent(
+                        "over-cap.safetensors"
+                    ).path
+            )
+        )
+        try assertReclaimedPartialArtifacts(count: 1)
+
+        XCTAssertThrowsError(
+            try root.publishGeneratedFile(
+                at: "thrown.safetensors",
+                purpose: .immutableData,
+                maximumByteCount: 1024
+            ) { descriptor in
+                try writeAll(
+                    Data("partial".utf8),
+                    to: descriptor
+                )
+                throw FixtureError.generationFailed
+            }
+        ) { error in
+            XCTAssertTrue(error is FixtureError)
+        }
+        XCTAssertFalse(
+            FileManager.default.fileExists(
+                atPath: temporaryURL
+                    .appendingPathComponent(
+                        "thrown.safetensors"
+                    ).path
+            )
+        )
+        try assertReclaimedPartialArtifacts(count: 2)
+    }
+
+    func testGeneratedDescriptorPublicationIsNoReplace()
+        throws
+    {
+        let root = try PrimeArtifactRoot(
+            directoryURL: temporaryURL
+        )
+        let original = Data("original".utf8)
+        let first = try publishGenerated(
+            original,
+            at: "checkpoint.safetensors",
+            in: root
+        )
+        XCTAssertThrowsError(
+            try publishGenerated(
+                original,
+                at: "checkpoint.safetensors",
+                in: root
+            )
+        ) { error in
+            XCTAssertEqual(
+                error as? PrimeDurableArtifactError,
+                .conflictingArtifact(
+                    "checkpoint.safetensors"
+                )
+            )
+        }
+
+        XCTAssertThrowsError(
+            try publishGenerated(
+                Data("different".utf8),
+                at: "checkpoint.safetensors",
+                in: root
+            )
+        ) { error in
+            XCTAssertEqual(
+                error as? PrimeDurableArtifactError,
+                .conflictingArtifact(
+                    "checkpoint.safetensors"
+                )
+            )
+        }
+        XCTAssertEqual(
+            try root.readVerified(first),
+            original
+        )
+        XCTAssertTrue(
+            try partialArtifactNames().isEmpty
+        )
+    }
+
+    func testGeneratedDescriptorDestinationRaceFailsClosedAndPreservesNames()
+        throws
+    {
+        let root = try PrimeArtifactRoot(
+            directoryURL: temporaryURL
+        )
+        let generated = Data("generated".utf8)
+        let racing = Data("racing destination".utf8)
+        let destination = temporaryURL
+            .appendingPathComponent(
+                "raced.safetensors"
+            )
+
+        XCTAssertThrowsError(
+            try root.publishGeneratedFile(
+                at: "raced.safetensors",
+                purpose: .immutableData,
+                maximumByteCount:
+                    UInt64(generated.count)
+            ) { descriptor in
+                try writeAll(
+                    generated,
+                    to: descriptor
+                )
+                try overwriteGeneratedFile(
+                    at: destination,
+                    with: racing,
+                    create: true,
+                    mode: mode_t(0o444)
+                )
+            }
+        ) { error in
+            XCTAssertEqual(
+                error as? PrimeDurableArtifactError,
+                .conflictingArtifact(
+                    "raced.safetensors"
+                )
+            )
+        }
+        XCTAssertEqual(
+            try Data(contentsOf: destination),
+            racing
+        )
+        try assertReclaimedPartialArtifacts(count: 1)
+    }
+
+    func testGeneratedDescriptorRehashesAfterRename()
+        throws
+    {
+        let root = try PrimeArtifactRoot(
+            directoryURL: temporaryURL
+        )
+        let original = Data(
+            repeating: 0x41,
+            count: 2 * 1024 * 1024
+        )
+        let tampered = Data(
+            repeating: 0x42,
+            count: original.count
+        )
+        let finalURL = temporaryURL.appendingPathComponent(
+            "post-rename-race.safetensors"
+        )
+        let writerFinished = DispatchSemaphore(value: 0)
+        let writerStatus = AsyncPOSIXStatus()
+
+        XCTAssertThrowsError(
+            try root.publishGeneratedFile(
+                at: "post-rename-race.safetensors",
+                purpose: .immutableData,
+                maximumByteCount: UInt64(original.count)
+            ) { descriptor in
+                try writeAll(original, to: descriptor)
+                let partialURL =
+                    try onlyPartialArtifactURL()
+                let racingDescriptor = open(
+                    partialURL.path,
+                    O_RDWR | O_NOFOLLOW | O_CLOEXEC
+                )
+                guard racingDescriptor >= 0 else {
+                    throw POSIXError(
+                        POSIXErrorCode(rawValue: errno)!
+                    )
+                }
+                DispatchQueue.global(
+                    qos: .userInitiated
+                ).async {
+                    defer {
+                        _ = close(racingDescriptor)
+                        writerFinished.signal()
+                    }
+                    let deadline =
+                        Date().addingTimeInterval(5)
+                    var sealed = stat()
+                    while true {
+                        guard fstat(
+                            racingDescriptor,
+                            &sealed
+                        ) == 0 else {
+                            writerStatus.fail(errno)
+                            return
+                        }
+                        if sealed.st_mode
+                            & mode_t(0o7777)
+                            == mode_t(0o444) {
+                            break
+                        }
+                        guard Date() < deadline else {
+                            writerStatus.fail(ETIMEDOUT)
+                            return
+                        }
+                        usleep(100)
+                    }
+
+                    while true {
+                        var published = stat()
+                        if lstat(
+                            finalURL.path,
+                            &published
+                        ) == 0 {
+                            break
+                        }
+                        let statusError = errno
+                        guard statusError == ENOENT else {
+                            writerStatus.fail(statusError)
+                            return
+                        }
+                        guard Date() < deadline else {
+                            writerStatus.fail(ETIMEDOUT)
+                            return
+                        }
+                        usleep(100)
+                    }
+
+                    tampered.withUnsafeBytes { bytes in
+                        guard let base = bytes.baseAddress else {
+                            return
+                        }
+                        var offset = 0
+                        while offset < bytes.count {
+                            let count = pwrite(
+                                racingDescriptor,
+                                base.advanced(by: offset),
+                                bytes.count - offset,
+                                off_t(offset)
+                            )
+                            if count < 0, errno == EINTR {
+                                continue
+                            }
+                            guard count > 0 else {
+                                writerStatus.fail(
+                                    count < 0 ? errno : EIO
+                                )
+                                return
+                            }
+                            offset += count
+                        }
+                    }
+                    guard writerStatus.error == 0 else {
+                        return
+                    }
+                    var times = [
+                        sealed.st_atimespec,
+                        sealed.st_mtimespec,
+                    ]
+                    let restored =
+                        times.withUnsafeMutableBufferPointer {
+                            futimens(
+                                racingDescriptor,
+                                $0.baseAddress
+                            )
+                        }
+                    if restored != 0 {
+                        writerStatus.fail(errno)
+                    }
+                }
+            }
+        ) { error in
+            switch error as? PrimeDurableArtifactError {
+            case .hashMismatch, .unsafeArtifact:
+                break
+            default:
+                XCTFail("unexpected error: \(error)")
+            }
+        }
+        XCTAssertEqual(
+            writerFinished.wait(
+                timeout: .now() + 6
+            ),
+            .success
+        )
+        XCTAssertEqual(writerStatus.error, 0)
+        XCTAssertEqual(
+            try Data(contentsOf: finalURL),
+            tampered
+        )
+    }
+
+    func testGeneratedDescriptorRejectsHardLinkAndXattrAndPreservesReplacement()
+        throws
+    {
+        let root = try PrimeArtifactRoot(
+            directoryURL: temporaryURL
+        )
+        let hardLinkURL = temporaryURL
+            .appendingPathComponent(
+                "generated-hardlink"
+            )
+        XCTAssertThrowsError(
+            try root.publishGeneratedFile(
+                at: "hardlinked.safetensors",
+                purpose: .immutableData,
+                maximumByteCount: 1024
+            ) { descriptor in
+                try writeAll(
+                    Data("linked".utf8),
+                    to: descriptor
+                )
+                let partialURL =
+                    try onlyPartialArtifactURL()
+                XCTAssertEqual(
+                    link(
+                        partialURL.path,
+                        hardLinkURL.path
+                    ),
+                    0
+                )
+            }
+        )
+        var hardLinkMetadata = stat()
+        XCTAssertEqual(
+            lstat(
+                hardLinkURL.path,
+                &hardLinkMetadata
+            ),
+            0
+        )
+        XCTAssertEqual(hardLinkMetadata.st_nlink, 2)
+        XCTAssertEqual(hardLinkMetadata.st_size, 0)
+
+        XCTAssertThrowsError(
+            try root.publishGeneratedFile(
+                at: "xattr.safetensors",
+                purpose: .immutableData,
+                maximumByteCount: 1024
+            ) { descriptor in
+                try writeAll(
+                    Data("xattr".utf8),
+                    to: descriptor
+                )
+                try addUnapprovedExtendedAttribute(
+                    to: descriptor
+                )
+            }
+        )
+
+        let payload = Data("generated bytes".utf8)
+        let replacementPayload =
+            Data("unrelated replacement".utf8)
+        let priorPartialNames = Set(
+            try partialArtifactNames()
+        )
+        var reboundPartialURL: URL?
+        XCTAssertThrowsError(
+            try root.publishGeneratedFile(
+                at: "replaced.safetensors",
+                purpose: .immutableData,
+                maximumByteCount: 1024
+            ) { descriptor in
+                try writeAll(payload, to: descriptor)
+                let partialURL =
+                    try onlyNewPartialArtifactURL(
+                        excluding: priorPartialNames
+                    )
+                reboundPartialURL = partialURL
+                XCTAssertEqual(
+                    unlink(partialURL.path),
+                    0
+                )
+                let replacement = open(
+                    partialURL.path,
+                    O_WRONLY | O_CREAT | O_EXCL
+                        | O_NOFOLLOW | O_CLOEXEC,
+                    mode_t(0o600)
+                )
+                XCTAssertGreaterThanOrEqual(
+                    replacement,
+                    0
+                )
+                guard replacement >= 0 else {
+                    throw POSIXError(
+                        POSIXErrorCode(
+                            rawValue: errno
+                        )!
+                    )
+                }
+                defer { _ = close(replacement) }
+                try writeAll(
+                    replacementPayload,
+                    to: replacement
+                )
+            }
+        ) { error in
+            guard case let .unsafeArtifact(path) =
+                    error as? PrimeDurableArtifactError else {
+                return XCTFail(
+                    "unexpected error: \(error)"
+                )
+            }
+            XCTAssertTrue(
+                path.hasPrefix(".prime-partial-")
+            )
+        }
+        XCTAssertFalse(
+            FileManager.default.fileExists(
+                atPath: temporaryURL
+                    .appendingPathComponent(
+                        "replaced.safetensors"
+                    ).path
+            )
+        )
+        let preservedURL = try XCTUnwrap(
+            reboundPartialURL
+        )
+        XCTAssertEqual(
+            try Data(contentsOf: preservedURL),
+            replacementPayload
+        )
+        XCTAssertTrue(
+            try partialArtifactNames().contains(
+                preservedURL.lastPathComponent
+            )
+        )
+    }
+
+    func testDescriptorCallbacksResistArtifactRootPathABA()
+        throws
+    {
+        let root = try PrimeArtifactRoot(
+            directoryURL: temporaryURL
+        )
+        let original = Data("descriptor-bound".utf8)
+        let malicious = Data("path-substitute".utf8)
+        let binding = try root.publishGeneratedFile(
+            at: "aba.safetensors",
+            purpose: .immutableData,
+            maximumByteCount: UInt64(original.count)
+        ) { descriptor in
+            try withArtifactRootPathReplaced { _ in
+                try writeAll(
+                    original,
+                    to: descriptor
+                )
+            }
+        }
+        XCTAssertEqual(
+            try root.readVerified(binding),
+            original
+        )
+
+        let loaded: Data =
+            try root.withVerifiedArtifactDescriptor(
+                binding
+            ) { descriptor in
+                {
+                    try self
+                        .withArtifactRootPathReplaced {
+                            replacementRoot in
+                            let substitute =
+                                replacementRoot
+                                .appendingPathComponent(
+                                    binding.relativePath
+                                )
+                            try self.overwriteGeneratedFile(
+                                at: substitute,
+                                with: malicious,
+                                create: true,
+                                mode: mode_t(0o444)
+                            )
+                            return try self.readAll(
+                                from: descriptor
+                            )
+                        }
+                }
+            } materialize: { lazyRead in
+                try lazyRead()
+            }
+        XCTAssertEqual(loaded, original)
+    }
+
+    func testVerifiedDescriptorRejectsPostMaterializationTamper()
+        throws
+    {
+        let root = try PrimeArtifactRoot(
+            directoryURL: temporaryURL
+        )
+        let binding = try publishGenerated(
+            Data("original".utf8),
+            at: "load-tamper.safetensors",
+            in: root
+        )
+        let artifactURL = temporaryURL
+            .appendingPathComponent(
+                binding.relativePath
+            )
+        var sequence = [String]()
+        XCTAssertThrowsError(
+            try root.withVerifiedArtifactDescriptor(
+                binding
+            ) { descriptor in
+                sequence.append("load")
+                return {
+                    try self.readAll(
+                        from: descriptor
+                    )
+                }
+            } materialize: { lazyRead in
+                sequence.append("materialize")
+                let loaded = try lazyRead()
+                XCTAssertEqual(chmod(artifactURL.path, 0o600), 0)
+                try overwriteGeneratedFile(
+                    at: artifactURL,
+                    with: Data("tampered".utf8)
+                )
+                XCTAssertEqual(chmod(artifactURL.path, 0o444), 0)
+                return loaded.count
+            }
+        )
+        XCTAssertEqual(
+            sequence,
+            ["load", "materialize"]
+        )
+    }
+
+    func testFIFOArtifactsAreRejectedWithoutBlocking()
+        throws
+    {
+        let root = try PrimeArtifactRoot(
+            directoryURL: temporaryURL
+        )
+        let relativePath = "occupied.safetensors"
+        let fifoURL = temporaryURL
+            .appendingPathComponent(relativePath)
+        XCTAssertEqual(
+            mkfifo(fifoURL.path, mode_t(0o444)),
+            0
+        )
+        XCTAssertEqual(chmod(fifoURL.path, 0o444), 0)
+        let binding = PrimeArtifactBinding(
+            relativePath: relativePath,
+            sha256: String(repeating: "0", count: 64),
+            byteCount: 0,
+            purpose: .immutableData
+        )
+
+        XCTAssertThrowsError(
+            try root.withVerifiedArtifactDescriptor(
+                binding
+            ) { _ in
+                XCTFail("FIFO reached loader")
+            } materialize: { _ in
+                ()
+            }
+        ) { error in
+            XCTAssertEqual(
+                error as? PrimeDurableArtifactError,
+                .unsafeArtifact(relativePath)
+            )
+        }
+        XCTAssertThrowsError(
+            try root.publishGeneratedFile(
+                at: relativePath,
+                purpose: .immutableData,
+                maximumByteCount: 0
+            ) { _ in }
+        ) { error in
+            XCTAssertEqual(
+                error as? PrimeDurableArtifactError,
+                .unsafeArtifact(relativePath)
+            )
+        }
+        XCTAssertTrue(
+            try partialArtifactNames().isEmpty
+        )
+    }
+
+    func testGeneratedDescriptorPublishesSparseMultiGigabyteSafetensors()
+        throws
+    {
+        guard ProcessInfo.processInfo.environment[
+            "PRIME_RUN_LARGE_ARTIFACT_TESTS"
+        ] == "1" else {
+            throw XCTSkip(
+                "set PRIME_RUN_LARGE_ARTIFACT_TESTS=1"
+            )
+        }
+        let root = try PrimeArtifactRoot(
+            directoryURL: temporaryURL
+        )
+        let tensorByteCount =
+            UInt64(UInt32.max) + 1
+        var header = Data(
+            #"{"tensor":{"data_offsets":[0,4294967296],"dtype":"U8","shape":[4294967296]}}"#
+                .utf8
+        )
+        while header.count.isMultiple(of: 8) == false {
+            header.append(0x20)
+        }
+        let artifactByteCount =
+            UInt64(8 + header.count)
+                + tensorByteCount
+        let binding = try root.publishGeneratedFile(
+            at: "large.safetensors",
+            purpose: .immutableData,
+            maximumByteCount: artifactByteCount
+        ) { descriptor in
+            var headerByteCount =
+                UInt64(header.count).littleEndian
+            let length = withUnsafeBytes(
+                of: &headerByteCount
+            ) {
+                Data($0)
+            }
+            try writeAll(length, to: descriptor)
+            try writeAll(header, to: descriptor)
+            guard ftruncate(
+                descriptor,
+                off_t(artifactByteCount)
+            ) == 0 else {
+                throw POSIXError(
+                    POSIXErrorCode(rawValue: errno)!
+                )
+            }
+        }
+        XCTAssertEqual(
+            binding.byteCount,
+            artifactByteCount
+        )
+        XCTAssertEqual(binding.sha256.utf8.count, 64)
+        var metadata = stat()
+        XCTAssertEqual(
+            lstat(
+                temporaryURL
+                    .appendingPathComponent(
+                        binding.relativePath
+                    ).path,
+                &metadata
+            ),
+            0
+        )
+        XCTAssertLessThan(
+            UInt64(metadata.st_blocks) * 512,
+            64 * 1024 * 1024
         )
     }
 
@@ -707,6 +1503,221 @@ final class PrimeDurableArtifactsTests: XCTestCase {
         )
     }
 
+    private func publishGenerated(
+        _ data: Data,
+        at relativePath: String,
+        in root: PrimeArtifactRoot
+    ) throws -> PrimeArtifactBinding {
+        try root.publishGeneratedFile(
+            at: relativePath,
+            purpose: .immutableData,
+            maximumByteCount: UInt64(data.count)
+        ) { descriptor in
+            try writeAll(data, to: descriptor)
+        }
+    }
+
+    private func overwriteGeneratedFile(
+        at url: URL,
+        with data: Data,
+        create: Bool = false,
+        mode: mode_t = mode_t(0o600)
+    ) throws {
+        var flags =
+            O_WRONLY | O_TRUNC | O_NOFOLLOW | O_CLOEXEC
+        if create {
+            flags |= O_CREAT | O_EXCL
+        }
+        let descriptor = open(
+            url.path,
+            flags,
+            mode
+        )
+        guard descriptor >= 0 else {
+            throw POSIXError(
+                POSIXErrorCode(rawValue: errno)!
+            )
+        }
+        defer { _ = close(descriptor) }
+        try writeAll(data, to: descriptor)
+    }
+
+    private func readAll(
+        from descriptor: Int32
+    ) throws -> Data {
+        guard lseek(descriptor, 0, SEEK_SET) >= 0 else {
+            throw POSIXError(
+                POSIXErrorCode(rawValue: errno)!
+            )
+        }
+        var data = Data()
+        var buffer = [UInt8](
+            repeating: 0,
+            count: 64 * 1024
+        )
+        while true {
+            let count = buffer.withUnsafeMutableBytes {
+                read(
+                    descriptor,
+                    $0.baseAddress,
+                    $0.count
+                )
+            }
+            if count < 0, errno == EINTR {
+                continue
+            }
+            guard count >= 0 else {
+                throw POSIXError(
+                    POSIXErrorCode(rawValue: errno)!
+                )
+            }
+            if count == 0 {
+                return data
+            }
+            data.append(contentsOf: buffer[0 ..< count])
+        }
+    }
+
+    private func writeAll(
+        _ data: Data,
+        to descriptor: Int32
+    ) throws {
+        try data.withUnsafeBytes { bytes in
+            guard let base = bytes.baseAddress else {
+                return
+            }
+            var offset = 0
+            while offset < bytes.count {
+                let count = write(
+                    descriptor,
+                    base.advanced(by: offset),
+                    bytes.count - offset
+                )
+                if count < 0, errno == EINTR {
+                    continue
+                }
+                guard count > 0 else {
+                    throw POSIXError(
+                        POSIXErrorCode(
+                            rawValue: errno
+                        )!
+                    )
+                }
+                offset += count
+            }
+        }
+    }
+
+    private func onlyPartialArtifactURL()
+        throws -> URL
+    {
+        let names = try partialArtifactNames()
+        guard names.count == 1,
+              let name = names.first else {
+            throw FixtureError.unexpectedPartialCount
+        }
+        return temporaryURL.appendingPathComponent(name)
+    }
+
+    private func onlyNewPartialArtifactURL(
+        excluding existingNames: Set<String>
+    ) throws -> URL {
+        let names = Set(
+            try partialArtifactNames()
+        ).subtracting(existingNames)
+        guard names.count == 1,
+              let name = names.first else {
+            throw FixtureError.unexpectedPartialCount
+        }
+        return temporaryURL.appendingPathComponent(name)
+    }
+
+    private func assertReclaimedPartialArtifacts(
+        count: Int
+    ) throws {
+        let names = try partialArtifactNames()
+        XCTAssertEqual(names.count, count)
+        for name in names {
+            var metadata = stat()
+            XCTAssertEqual(
+                lstat(
+                    temporaryURL
+                        .appendingPathComponent(name).path,
+                    &metadata
+                ),
+                0
+            )
+            XCTAssertEqual(
+                metadata.st_mode & mode_t(S_IFMT),
+                mode_t(S_IFREG)
+            )
+            XCTAssertEqual(metadata.st_size, 0)
+        }
+    }
+
+    private func partialArtifactNames()
+        throws -> [String]
+    {
+        try FileManager.default.contentsOfDirectory(
+            atPath: temporaryURL.path
+        ).filter {
+            $0.hasPrefix(".prime-partial-")
+        }
+    }
+
+    private func withArtifactRootPathReplaced<Result>(
+        _ body: (URL) throws -> Result
+    ) throws -> Result {
+        let movedURL = temporaryURL
+            .deletingLastPathComponent()
+            .appendingPathComponent(
+                "ergentics-prime-moved-\(UUID().uuidString)",
+                isDirectory: true
+            )
+        guard rename(
+            temporaryURL.path,
+            movedURL.path
+        ) == 0 else {
+            throw POSIXError(
+                POSIXErrorCode(rawValue: errno)!
+            )
+        }
+        var restored = false
+        defer {
+            if !restored {
+                try? FileManager.default.removeItem(
+                    at: temporaryURL
+                )
+                _ = rename(
+                    movedURL.path,
+                    temporaryURL.path
+                )
+            }
+        }
+        guard mkdir(
+            temporaryURL.path,
+            mode_t(0o700)
+        ) == 0 else {
+            throw POSIXError(
+                POSIXErrorCode(rawValue: errno)!
+            )
+        }
+        let result = try body(temporaryURL)
+        try FileManager.default.removeItem(
+            at: temporaryURL
+        )
+        guard rename(
+            movedURL.path,
+            temporaryURL.path
+        ) == 0 else {
+            throw POSIXError(
+                POSIXErrorCode(rawValue: errno)!
+            )
+        }
+        restored = true
+        return result
+    }
+
     private func addUnapprovedExtendedAttribute(
         at url: URL,
         isDirectory: Bool
@@ -723,7 +1734,14 @@ final class PrimeDurableArtifactsTests: XCTestCase {
         defer {
             close(descriptor)
         }
+        try addUnapprovedExtendedAttribute(
+            to: descriptor
+        )
+    }
 
+    private func addUnapprovedExtendedAttribute(
+        to descriptor: Int32
+    ) throws {
         let name =
             "com.ergentics.prime.unapproved-metadata"
         let value: [UInt8] = [1]

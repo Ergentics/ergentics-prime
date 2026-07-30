@@ -58,12 +58,16 @@ Before any resumable training, complete this sequence:
 3. prove exact `N -> checkpoint -> fresh process -> N+1` trajectory identity
    on tiny CPU FP32 flat and nested models — complete in a canonical Release
    run bound to the private revision across three fresh worker processes, with
-   all 19 declared structural mutations disposed; off-device receipt
-   durability remains pending;
-4. prove an interrupted small Metal canary with complete training-state
-   restoration;
-5. only then admit profile calibration, corpus migration, or 3B checkpoint
-   I/O.
+   all 19 declared structural mutations disposed; a fresh reissue and its
+   complete evidence root are repository-durable at `3481ffc`;
+4. resolve and byte-verify only the four Prime-owned exact-3B/CPU evidence
+   bindings required by this slice, then run the scoped
+   Prime/private-MLX source/dependency/runtime compatibility replay;
+5. prove an interrupted two-step Metal canary on the existing native 3B
+   geometry, operator-selected for bounded mechanics only, with complete
+   training-state restoration;
+6. only then consider separately scoped functional profile calibration,
+   corpus-schema migration, retained checkpoint I/O, or long training.
 
 Assess MPSGraph as a small Swift primitive-level numerical verifier where its
 Adam semantics can be aligned explicitly. Its graph/optimizer API is disjoint
@@ -73,11 +77,14 @@ deployment/inference lanes, not as the 3B trainer. Add a custom Metal kernel
 only after profiling identifies a material bottleneck and the kernel has
 independent forward and backward oracles.
 
-Prime does not currently depend on NeuralKit, MasteryKit, or AgentContractKit.
-That is the correct state for the training core:
+Prime does not currently import NeuralKit, MasteryKit, or AgentContractKit.
+That is the correct dependency direction for the tensor core, but those
+packages are not absent from the arc:
 
-- NeuralKit remains a PMHNP-local inference consumer and a donor of mature
-  Swift evaluation contracts;
+- NeuralKit remains the PMHNP-local load/propose inference consumer and
+  independent synthetic/research-artifact regrade for mature Swift evaluation,
+  SZ, triadic, mutation, and VerifyAbstain contracts; PMHNP retains
+  user-visible safety and clinical verification;
 - MasteryKit remains a downstream topic-agnostic product-learning consumer and
   bench/statistical-pattern donor; Prime/Workstation-specific EngineRecommend
   handles Prime evidence and bounded experiment proposals;
@@ -148,12 +155,13 @@ cannot yet import that optimizer state. Gradients, activations, allocator
 headroom, graph state, control state, and atomic checkpoint staging add to
 those floors.
 
-Prime does not yet contain an admitted:
+Prime does not yet contain a migrated/admitted copy or adapter for the
+companion arc's:
 
 - first-party tokenizer manifest;
 - compositional training/validation/holdout corpus;
-- full training executor;
-- independent evaluator;
+- full native-language training executor;
+- independent NeuralKit evaluator;
 - fixed-cap/EOS generation regrade;
 - functional statistical battery, triadic audit, or SZ fingerprint;
 - accepted functional checkpoint.
@@ -166,11 +174,16 @@ Release CPU `N+1` receipt bound to the private revision. These are
 optimizer-resume mechanics, not a functional model or learning-quality
 result, and the self-check is not an independent scientific oracle. The exact
 derivative revision is privately remote-resolvable and authenticated-clone
-resolution is observed. The canonical receipt remains locally preserved, so
-off-device artifact durability is still required.
+resolution is observed. The complete successful evidence root is repository
+durable at Prime revision `3481ffc24f3a81a26197fc8625510cab66e6e29b`;
+its canonical receipt has SHA-256
+`fafc7d236a8a9b8f857d4a5bd9f34a3ed12012dd061a8a4c984fe85876fb569d`.
 
-The historical companion has working versions of several of these parts. They
-are donors, not proof that the new Prime authority already contains them.
+The historical companion has working, checked-in versions of every listed
+foundation except an accepted functional checkpoint. They are frozen donors
+and downstream authorities, not work to recreate and not proof that Prime has
+already admitted their schemas. The exact boundary is frozen in
+[the Prime/NeuralKit continuity contract](PRIME-NEURALKIT-ARC-CONTINUITY-2026-07-29.md).
 
 PMHNP already links NeuralKit, and `StudyAskChatTurn` calls `PrimeAskBrain`.
 The local machine also has a gitignored Prime Core ML package of roughly
@@ -188,7 +201,7 @@ real accepted challenger to that seam later, not rebuild it.
 
 | Technology | Training/autodiff | Exact optimizer restore | Intended Prime role |
 | --- | --- | --- | --- |
-| MLX Swift | Yes; maintained Swift API over Apple silicon/Metal | Stock 0.31.3 lacks import; private Ergentics revision `68904d54b72871f26968261ae05d4fbb7c5e3142` adds a public typed transport seam without changing optimizer arithmetic | Candidate primary trainer; private-revision CPU restore is exact, while resumable Metal use still requires interrupted-Metal evidence and the generated receipt still needs off-device preservation |
+| MLX Swift | Yes; maintained Swift API over Apple silicon/Metal | Stock 0.31.3 lacks import; private Ergentics revision `68904d54b72871f26968261ae05d4fbb7c5e3142` adds a public typed transport seam without changing optimizer arithmetic | Candidate primary trainer; private-revision CPU restore evidence is exact and repository durable, while resumable Metal use still requires interrupted-Metal evidence |
 | MPSGraph | Yes; graph/autodiff APIs and Adam operations with explicit moment inputs and updated-moment outputs | Feasible for an app-owned Adam-state graph; AdamW trajectory parity with pinned MLX is unproved | Candidate primitive-level moment/Adam oracle after a semantics assay |
 | Core ML | Inference plus constrained on-device updates for eligible legacy neural-network models | No public exact Adam moment/step import/export contract found | Product inference; later audited Core ML Tools conversion/export; tightly bounded personalization experiments |
 | Core AI | Preliminary Swift inference runtime; authoring/conversion/optimization is described through Python/PyTorch tooling | No training optimizer contract | Future deployment comparator after final/supported toolchain admission |
@@ -456,8 +469,8 @@ small type.
 | Repository/module | Implemented value | Prime relationship | Explicit boundary |
 | --- | --- | --- | --- |
 | `ergentics-prime` | Swift/MLX/Metal mechanics, supervisor, lease, receipts, restore probe | Training and evidence authority | Owns model/training truth |
-| PMHNP `prime-runtime` | Swift tokenizer/corpus canaries, scale recommendations, quant/Schur/GPTQ research, historical executors | Selective donor after source/schema audit | Do not import Python/Core ML bridge or old shell authority |
-| PMHNP `neural-kit` | `PrimeAskBrain` inference façade, Verify/Abstain, SZ, product verification bridges | Current PMHNP consumer and evaluation-contract donor | Not a Prime training dependency |
+| PMHNP `prime-runtime` | Swift tokenizer/corpus canaries, scale recommendations, quant/Schur/GPTQ research, historical executors | Read-only migration oracle after source/schema audit | Never a Prime runtime/write target; do not import Python/Core ML bridge or old shell authority |
+| PMHNP `neural-kit` | `PrimeAskBrain` load/propose façade plus synthetic/research-artifact Verify/Abstain, SZ, triadic, and mutation regrade | Current PMHNP consumer and research-evaluation-contract donor | Not a Prime training dependency; PMHNP app owns user-visible verify |
 | `MasteryKit` | EngineV21, recency/coupled recall, tutoring selection and reusable bench methods | Later product-learning consumer and bench/statistical-pattern donor | Does not orchestrate Prime experiments or own tensors, tokenizer, optimizer, or checkpoint |
 | `AgentContractKit` | Triad, Verify/Abstain, mutation, audit and governed probe primitives | Independent verifier; candidate source for a future standalone evidence package | Do not make Prime depend on `agentcraft-app` |
 | `agentcraft-app` | Agent subject, governed probes, corpus harvest, optional inherited-model inference | Candidate second consumer, contingent on a real product use case and feasible adapter | Its MLX lane is inference, not first-party training |
@@ -469,12 +482,17 @@ small type.
 
 ### NeuralKit
 
-NeuralKit is not added to Prime. It should remain downstream until Prime has an
-accepted checkpoint contract. At that point:
+NeuralKit is not imported into Prime's tensor core. It already exists
+downstream as the PMHNP load/propose inference façade and independent
+synthetic/research-artifact regrade. PMHNP's app endpoint retains user-visible
+safety and clinical verification. As Prime begins emitting accepted checkpoint
+contracts:
 
 1. define a dependency-light `PrimeInferenceContract` with manifest,
    tokenizer, prompt/generation, runtime requirements, and provenance fields;
-2. adapt PMHNP NeuralKit to that contract;
+2. publish and version that artifact contract from Prime; any PMHNP NeuralKit
+   consumer adapter is separately authorized PMHNP-side work outside this
+   repository and never a Prime runtime dependency;
 3. keep abstention, independent regrade, and evidence semantics in
    `PrimeEvaluationContract` or a versioned response/evidence envelope;
 4. evaluate AgentCraft or another app only when a real second-consumer use
@@ -767,7 +785,7 @@ Deliver:
 Exit: exact model, `m`, and `v` identity at `N` and `N+1`, with the fork’s
 public downstream API only and unchanged upstream optimizer arithmetic.
 
-### Phase 2 — resumable small Metal canary
+### Phase 2 — exact-profile resumable Metal canary
 
 Deliver:
 
@@ -780,21 +798,23 @@ Deliver:
 - optional MPSGraph Adam semantics assay and primitive-level moment comparison,
   recording actual device placement and making no AdamW-equivalence claim.
 
-Exit for resumable authority: the small Metal trajectory is exact at `N` and
-`N+1`, and every state-loss mutation is rejected. A tolerance-only result is
-preserved as `ABSTAIN`; it may guide bounded non-resumable calibration but
-cannot admit convergence-capped or long training.
+Exit for resumable authority: the operator-selected existing exact 3B FP32
+geometry matches at step 1 and step 2 across uninterrupted and
+fresh-process-restored trajectories, and every state-loss mutation is
+rejected. This mechanics choice does not overturn the historical schema-6
+`ABSTAIN` or authorize the scale. A tolerance-only result is preserved as
+`ABSTAIN`; it cannot admit convergence-capped or long training.
 
-### Phase 3 — Prime evaluation contract and donor migration
+### Phase 3 — existing evaluation-contract migration
 
 Deliver:
 
-- dependency-light `PrimeEvaluationContract`;
-- native tokenizer manifest;
-- deterministic first-party compositional corpus;
-- fixed-cap/EOS raw generation;
-- independent regrade, Verify/Abstain, statistics, triad, SZ, and mutation
-  records;
+- dependency-light adapter for the frozen companion/NeuralKit schemas;
+- exact native tokenizer and deterministic first-party compositional-corpus
+  artifact bindings;
+- existing fixed-cap/EOS raw-generation contract;
+- existing independent regrade, Verify/Abstain, statistics, triad, SZ, and
+  mutation records;
 - revised Prime EngineRecommend that separates canary, broad-language,
   profile, and product claims.
 
@@ -859,13 +879,21 @@ Deliver:
   decision;
 - Core AI comparator once a final/supported toolchain is installed and an
   explicit conversion-only tooling decision is admitted;
-- NeuralKit adapter plus any demonstrated second-consumer adapter, with
-  AgentCraft only if a real use case and feasible contract exist;
-- bind an accepted Prime challenger to PMHNP’s existing shadow store and run
-  device/offline issuance-to-completion replay.
+- Prime-owned, versioned inference/evidence contract plus any demonstrated
+  second-consumer contract, with AgentCraft only if a real use case and
+  feasible boundary exist;
+- a separately authorized PMHNP-side change may adapt NeuralKit and bind an
+  accepted Prime challenger to PMHNP's existing shadow store for
+  device/offline issuance-to-completion replay; the Prime plan does not
+  authorize or perform that companion write.
 
 Exit: consumer-specific promotion only after measured behavioral gain. Prime
 research success does not silently change PMHNP release authority.
+
+Any use of the frozen NeuralKit research regrade from Prime must run from a
+read-only pinned source in an isolated work root. Inputs and outputs resolve
+only through Prime or separately controlled external artifact storage; the
+companion checkout is never an output target.
 
 ## First implementation slices
 
@@ -876,14 +904,21 @@ The non-training implementation slices now stand as follows:
    - typed named state export/import;
    - exact upstream/fork diff guards;
    - source/API tests inside the fork and an ordinary downstream import test.
-2. **PrimeEvaluationContract inventory and schema freeze — pending**
-   - select the companion byte tokenizer, controlled corpus, fixed-cap/EOS
+2. **Prime/NeuralKit continuity inventory — frozen; adapter pending**
+   - inventory the companion byte tokenizer, controlled corpus, fixed-cap/EOS
      evaluator, SZ, Verify/Abstain, and mutation fixtures;
-   - freeze licenses, provenance, wire schemas, and donor fixtures;
+   - freeze licenses, provenance, wire schemas, donor fixtures, and the
+     downstream NeuralKit authority direction;
+   - implement a revision/path/SHA resolver before claiming the inventory is
+     bound in Prime;
+   - materialize Prime-owned immutable fixtures/adapters without adding a
+     PMHNP runtime dependency or writing to the companion tree;
    - document exclusions, especially Python/Core ML bridge and shell-derived
      authority;
-   - do not yet start functional training.
-3. **Prime exact N+1 gate — private-revision canonical Release proof
+   - do not yet start functional training;
+   - this migration/adapter work is not part of the current AdamW continuation
+     slice.
+3. **Prime exact CPU N+1 gate — private-revision canonical Release proof
    complete**
    - one Swift supervisor plus three fresh role processes;
    - empty child environments, stdin bound to EOF, bounded output, and
@@ -891,11 +926,18 @@ The non-training implementation slices now stand as follows:
    - complete admitted MLX Swift manifest/source tree plus runtime closure;
    - exact CPU trajectory;
    - 19-case same-process structural self-check and immutable receipt;
+   - fresh full evidence root preserved by repository revision `3481ffc` with
+     receipt SHA-256
+     `fafc7d236a8a9b8f857d4a5bd9f34a3ed12012dd061a8a4c984fe85876fb569d`;
    - separate MLX mechanics/security-test processes with a compiled Swift
      resource stager.
 
-Do not start the 3B training loop, broad corpus ingestion, BF16 profile race,
-quantization, or custom kernels in these slices.
+The CPU evidence root is now off-device durable. Verify only the four
+Prime-owned exact-3B/CPU bindings required by this task; the next execution is
+the two-step exact 3B continuation gate. Tokenizer/corpus/evaluator migration
+and NeuralKit execution are outside this slice. Do not start a long 3B
+training loop, broad corpus ingestion, BF16 profile race, quantization, or
+custom kernels in these slices.
 
 ## Decision ledger
 
@@ -909,6 +951,7 @@ quantization, or custom kernels in these slices.
 | Core ML/Core AI as trainer | Rejected | Inference/constrained update roles do not satisfy resume contract |
 | Custom whole-model Metal trainer | Rejected | Rebuilds autodiff/optimizer/checkpoint stack without evidence |
 | NeuralKit dependency in Prime | Rejected for now | Consumer façade must remain downstream |
+| New Prime decoder/profile family | Rejected | The exact native 300M/1B/3B family and NeuralKit arc already exist; a new toy profile would split authority |
 | MasteryKit dependency in Prime tensor core | Rejected | Recommendation/pedagogy is an outer concern |
 | AgentContractKit dependency through AgentCraft | Rejected | Extract a neutral evidence package only after second-consumer proof |
 | Python scientific implementation/gate | Rejected under current policy | Swift-first authority remains explicit |

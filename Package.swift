@@ -23,6 +23,12 @@ let package = Package(
             targets: ["PrimeGPUCalibration"]
         ),
         .executable(
+            name: "PrimeNative3BMetalContinuationProbe",
+            targets: [
+                "PrimeNative3BMetalContinuationProbe",
+            ]
+        ),
+        .executable(
             name: "PrimeLeaseHolder",
             targets: ["PrimeLeaseHolder"]
         ),
@@ -49,7 +55,7 @@ let package = Package(
         .package(
             url: "https://github.com/Ergentics/ergentics-mlx-swift",
             revision:
-                "68904d54b72871f26968261ae05d4fbb7c5e3142"
+                "d37885a278f1c37484a94d0f401a418735e66519"
         ),
         .package(
             url: "https://github.com/ml-explore/mlx-swift-lm",
@@ -81,6 +87,28 @@ let package = Package(
         ),
         .executableTarget(
             name: "PrimeGPUCalibration",
+            dependencies: [
+                "PrimeCore",
+                .product(
+                    name: "MLX",
+                    package: "ergentics-mlx-swift"
+                ),
+                .product(
+                    name: "MLXNN",
+                    package: "ergentics-mlx-swift"
+                ),
+                .product(
+                    name: "MLXOptimizers",
+                    package: "ergentics-mlx-swift"
+                ),
+                .product(
+                    name: "MLXLLM",
+                    package: "mlx-swift-lm"
+                ),
+            ]
+        ),
+        .executableTarget(
+            name: "PrimeNative3BMetalContinuationProbe",
             dependencies: [
                 "PrimeCore",
                 .product(

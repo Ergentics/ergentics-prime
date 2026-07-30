@@ -11,6 +11,7 @@ final class PrimeMLXRuntimeImageLayoutTests:
                 .calibration,
                 .optimizerRestoreProbe,
                 .typedOptimizerRestoreProbe,
+                .native3BMetalContinuationProbe,
             ]
         )
         XCTAssertEqual(
@@ -22,6 +23,12 @@ final class PrimeMLXRuntimeImageLayoutTests:
             PrimeMLXRuntimeRole
                 .typedOptimizerRestoreProbe.rawValue,
             "typed_optimizer_restore_probe"
+        )
+        XCTAssertEqual(
+            PrimeMLXRuntimeRole
+                .native3BMetalContinuationProbe
+                .rawValue,
+            "native_3b_metal_continuation_probe"
         )
         XCTAssertNil(
             PrimeMLXRuntimeRole(
@@ -96,6 +103,30 @@ final class PrimeMLXRuntimeImageLayoutTests:
             PrimePinnedMLXMetallib
                 .bundleRelativePath
         )
+
+        let native3BMetalContinuationProbe =
+            PrimeMLXRuntimeImageLayout
+                .native3BMetalContinuationProbe
+        XCTAssertEqual(
+            native3BMetalContinuationProbe.layoutID,
+            "ergentics_prime_native_3b_metal_continuation_probe_mlx_sibling_bundle"
+        )
+        XCTAssertEqual(
+            native3BMetalContinuationProbe
+                .layoutVersion,
+            1
+        )
+        XCTAssertEqual(
+            native3BMetalContinuationProbe
+                .stagedExecutableRelativePath,
+            "PrimeNative3BMetalContinuationProbe.executable"
+        )
+        XCTAssertEqual(
+            native3BMetalContinuationProbe
+                .siblingBundleRelativePath,
+            PrimePinnedMLXMetallib
+                .bundleRelativePath
+        )
         XCTAssertEqual(
             PrimeMLXRuntimeImageLayout
                 .destinationHostExecutableName(
@@ -117,6 +148,14 @@ final class PrimeMLXRuntimeImageLayoutTests:
                         .typedOptimizerRestoreProbe
                 ),
             "PrimeTypedOptimizerRestoreProbe"
+        )
+        XCTAssertEqual(
+            PrimeMLXRuntimeImageLayout
+                .destinationHostExecutableName(
+                    for:
+                        .native3BMetalContinuationProbe
+                ),
+            "PrimeNative3BMetalContinuationProbe"
         )
 
         for role in PrimeMLXRuntimeRole.allCases {

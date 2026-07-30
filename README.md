@@ -21,6 +21,9 @@ scientific, clinical, security, regulatory, or federal compliance.
 The preserved companion/Lab Metal and quant history, its 55-commit resolution
 ledger, and the non-overwrite continuation rule are recorded in
 [`docs/PMHNP-METAL-QUANT-ARC-RESOLUTION-2026-07-29.md`](docs/PMHNP-METAL-QUANT-ARC-RESOLUTION-2026-07-29.md).
+The typed no-rebuild inventory between Prime, `prime-runtime`, NeuralKit, and
+the Lab is recorded in
+[`docs/PRIME-NEURALKIT-ARC-CONTINUITY-2026-07-29.md`](docs/PRIME-NEURALKIT-ARC-CONTINUITY-2026-07-29.md).
 The exact private-MLX migration sequence, narrow commit-identity rewrite
 boundary, recovery anchors, and post-migration evidence gates are recorded in
 [`docs/PRIME-PICKUP-PRIVATE-MLX-MIRROR-2026-07-29.md`](docs/PRIME-PICKUP-PRIVATE-MLX-MIRROR-2026-07-29.md).
@@ -34,11 +37,13 @@ boundary, recovery anchors, and post-migration evidence gates are recorded in
 - MLX/Metal execution through maintained model, differentiation, optimizer,
   and device primitives.
 
-The 512-entry profile vocabulary is only a tensor dimension today. A native
-tokenizer manifest, deterministic first-party compositional corpus, full
-training loop, independent evaluator, statistical battery, and SZ
-fingerprinting are planned but are not implemented or claimed by the initial
-mechanics slice.
+Prime's current mechanics target uses the same 512-entry model vocabulary as
+the existing companion arc. The Swift tokenizer manifest, deterministic
+first-party compositional corpus, native training executor, fixed-cap/EOS
+evaluation contract, NeuralKit SZ/triadic/mutation gate, and 15-trial profile
+screen already exist at the frozen companion revision. They are not yet
+migrated into Prime's training authority and do not imply an accepted
+checkpoint or functional-language result.
 
 The first GPU action is the frozen
 `exact_3b_fp32_allocation_update_probe_b1_s128_a1`: one optimizer step at
@@ -178,16 +183,100 @@ successful restore. If root emptiness cannot be established or a timed-out
 child's termination cannot be observed, normal failure-receipt publication is
 withheld to avoid mixing runs or claiming a completed process boundary.
 
-Even an exact CPU result authorizes only one bounded interrupted Metal
-continuation canary. It does not authorize a 3B checkpoint, functional
-training, quantization, product promotion, or a broad-language claim.
+Even an exact CPU result authorizes only one bounded two-step interrupted
+Metal continuation canary on the existing exact 3B profile. It authorizes the
+temporary full-state checkpoint required by that gate; it does not authorize
+a retained functional checkpoint, long training, quantization, product
+promotion, or a broad-language claim.
 
 The canonical Release gate bound to private revision
 `68904d54b72871f26968261ae05d4fbb7c5e3142` observed exact continuation
 across three fresh worker processes for both fixtures and disposed all 19
-declared structural mutations. The source revision is
-authenticated-clone-resolvable. This remains optimizer-resume mechanics, and
-the locally preserved receipt is not an off-device artifact backup.
+declared structural mutations. A fresh reissue from Prime source
+`6465beb184228f2e6ff03f08d5f5e523210e5d7e` is preserved in full at
+`artifacts/typed-optimizer-restore-6465beb-20260729T184600Z` by repository
+revision `3481ffc24f3a81a26197fc8625510cab66e6e29b`; its canonical receipt
+SHA-256 is
+`fafc7d236a8a9b8f857d4a5bd9f34a3ed12012dd061a8a4c984fe85876fb569d`.
+Both source revisions are remote-resolvable. This remains optimizer-resume
+mechanics, not Metal training or functional evidence.
+
+## Exact 3B interrupted Metal continuation
+
+`PrimeNative3BMetalContinuationProbe` is the single bounded follow-on to the
+typed CPU restore gate. It creates the exact 2,820,320,256-parameter Prime
+profile from deterministic random initialization with the maintained MLX Swift
+Llama implementation, runs AdamW step 1 and step 2 in one fresh Metal worker,
+then independently repeats step 1, saves model plus both typed Adam moment
+families through descriptor-backed safetensors, restores them into a poisoned
+fresh process, and runs step 2 again. It downloads or loads no pretrained
+weights, tokenizer, corpus, adapter, or external model artifact.
+
+The parent admits checkpoint publication only after the control and writer
+step-1 state match exactly. `PASS` requires exact tensor-byte catalogs and
+fixed-logit equality before save, immediately after restore, and after the
+continued step. Parent-observed worker role, PID, exit status, bounded output,
+and record identity are receipt-bound. A mismatch or incomplete process
+boundary produces `ABSTAIN`; it does not select a profile or authorize
+training, quantization, language claims, or product use.
+
+The first sealed run at commit `4507fe6` correctly produced `ABSTAIN`: its
+random generator sampled with replacement, exposing the tied embedding to
+repeated-ID contention, and the only control/writer divergence was
+`model.embed_tokens.weight`. MLX's maintained gather backward uses
+floating-point Metal scatter accumulation at that locus. The receipt localizes
+the first divergence but does not contain raw tokens or by itself prove kernel
+causality. Its canonical structural-replay receipt is archived under
+`artifacts/native-3b-metal-continuation-4507fe629a4f-20260730T040459Z/` with
+SHA-256
+`da888aea4eed5445efc1f5c75f4d209629922fee4b790790d36fe5c2503e75fc`.
+The receipt is not a complete artifact root and cannot satisfy descriptor
+replay without the intentionally omitted local executable and bound files.
+
+The mechanics gate now uses a seed-bound odd-stride modular schedule with 128
+distinct IDs from its 256-token synthetic domain. It fails closed unless every
+training input is collision-free. This removes the observed atomic contention
+without changing the exact 3B tied-Llama topology, AdamW, Metal execution,
+process interruption, or exact comparisons. A passing result would prove only
+the declared collision-free synthetic continuation mechanics; arbitrary
+repeated-token training determinism remains unresolved.
+
+The next sealed attempt at commit `5477d27` admitted the control and writer and
+published all three exact checkpoint components, then failed closed in the
+restorer. Two independent Swift diagnostics localized the causes. MLX 0.31.3
+does not implement descriptor-backed `Load` on Metal, so immutable checkpoint
+bytes are now materialized and verified through its maintained CPU load stream
+before the model and optimizer continue on Metal. The loaded moment trees also
+lose parameterless module containers during flat safetensor serialization.
+Ergentics MLX PR 2, merged as
+`d37885a278f1c37484a94d0f401a418735e66519`, keeps exact path, shape, and
+dtype admission and rebuilds optimizer storage in the target model topology.
+A retained-checkpoint replay passed model and moment loading, typed rebinding,
+and a real GPU forward/backward/AdamW step. That replay is feasibility
+diagnosis, not an authoritative continuation receipt.
+
+Run only from a source-sealed Release build. The artifact root and the parent
+directory of the Metal lease file must be separate, empty/private as
+applicable, precreated directories with mode `0700`:
+
+```sh
+swift build -c release
+xcodebuild -downloadComponent MetalToolchain
+xcodebuild -scheme PrimeGPUCalibration -configuration Release -destination 'platform=macOS,arch=arm64' -toolchain com.apple.dt.toolchain.Metal.32023.883 -derivedDataPath .build/apple build
+.build/arm64-apple-macosx/release/PrimeMLXBundleStage \
+  --source-host .build/apple/Build/Products/Release/PrimeGPUCalibration \
+  --destination-host .build/arm64-apple-macosx/release/PrimeNative3BMetalContinuationProbe \
+  --runtime-role native_3b_metal_continuation_probe
+.build/arm64-apple-macosx/release/PrimeNative3BMetalContinuationProbe \
+  --artifact-root /absolute/private/artifact-root \
+  --source-root "$PWD" \
+  --metal-lease-file /absolute/private/lease-parent/prime-metal.lock
+```
+
+Each checkpoint component is capped at 12 GiB before load. The expected raw
+model-plus-Adam floor is about 31.52 GiB, so the artifact root is local
+research evidence unless its exact bindings are separately copied to durable
+off-device storage.
 
 ## Initial calibration
 

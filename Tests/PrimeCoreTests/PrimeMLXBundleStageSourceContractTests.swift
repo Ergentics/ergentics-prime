@@ -26,6 +26,10 @@ final class PrimeMLXBundleStageSourceContractTests:
                 .typedOptimizerRestoreProbe,
                 "PrimeTypedOptimizerRestoreProbe"
             ),
+            (
+                .native3BMetalContinuationProbe,
+                "PrimeNative3BMetalContinuationProbe"
+            ),
         ]
 
         for testCase in cases {
