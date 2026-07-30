@@ -340,13 +340,24 @@ descriptor closure must be copied losslessly and independently revalidated;
 the 35 reachable parent bindings and separately pinned terminal receipt must
 remain distinct in the copy contract; and the current clean Prime source
 snapshot plus required compiled-source/process record schemas, independent
-direct SwiftPM authority-subgraph captures with external-child mapped-region
-vnode evidence joined to standardized no-symlink descriptor
-device/inode/bytes, overflow-free drains, typed clean termination, observed
-death/reap, a validated six-process topology, and distinct running Release
-probe/verifier executables must be bound. The launch-file declaration and
-`proc_pidpath` pathname are non-authoritative, and the native external-child
-mapped-region observation mechanism is not yet implemented. No
+direct `swift-package describe` authority-subgraph captures using the frozen
+Xcode 26.6 build 17F113 image whose full-file hash and descriptor metadata are
+contract-pinned. Typed evidence must order descriptor open, suspended spawn,
+the complete checked mapped-region query transcript and descriptor-vnode join,
+pre-resume descriptor revalidation, `SIGCONT`, the raw exact-PID wait/clean
+reap, and post-reap descriptor stability after native capability calibration.
+A PrimeCore-produced non-`Codable` capability must bind the role, exact
+launch/working-root policy, identity derived from descriptor-read bytes,
+paths, the transcript/wait result, stream limits/overflow/drain outcomes, and
+separately drained bytes before public validation accepts the decoded record.
+The future factory must read/hash bytes through the same held descriptor
+represented by its `fstat` snapshot and descriptor-validate the Prime working
+root. Overflow-free drains, typed
+clean termination, a validated six-process topology, and distinct running
+Release probe/verifier executables must also be bound. The direct executable
+launch path, `proc_pidpath` pathname, and code-sign fields are
+non-authoritative telemetry; no Apple trust claim is made. The native
+calibrated external-child factory is not yet implemented. No
 Stage-B record has been observed yet. A sealed Swift worker owns the complete
 trap-bearing historical arm under separate bounded probe and verifier
 invocations; death/reap, exact role-prefix inventory, terminal decoding and

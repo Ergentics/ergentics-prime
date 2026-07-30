@@ -23,7 +23,7 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
         XCTAssertFalse(plan.projectionReceiptAuthorized)
         XCTAssertEqual(
             try plan.contentSHA256(),
-            "17f19feb26869b77d88964855943c45ff91a65b8892b67e9926d5edb02366dda"
+            "d9af927fd7b6056aa0f1e61b7828b82e6bf7f1a630f2e9efa9df5bedc23019f6"
         )
 
         let first =
@@ -662,7 +662,7 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
         )
         XCTAssertEqual(
             plan.immediateImplementationPrerequisite,
-            "implement_stage_b_external_child_mapped_region_vnode_capture_swiftpm_fail_closed_lifecycle_historical_worker_typed_artifact_recomputation_corrected_fixed_cap_eos_probe_verifier_and_exact_path_metadata_inventory"
+            "implement_stage_b_primecore_trusted_external_child_factory_direct_swift_package_executable_suspended_full_region_query_transcript_mapped_vnode_descriptor_read_fstat_hash_capability_calibration_raw_exact_pid_wait_fail_closed_stream_lifecycle_historical_worker_typed_artifact_recomputation_corrected_fixed_cap_eos_probe_verifier_and_exact_path_metadata_inventory"
         )
         XCTAssertEqual(
             plan.postPassNextPrerequisite,
@@ -673,7 +673,7 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
             [
                 "output_root_path_type_owner_link_mode_and_relationship_safety",
                 "current_clean_prime_release_source_snapshot_and_probe_executable_binding",
-                "independent_direct_swift_package_describe_external_child_mapped_region_vnode_descriptor_bytes_no_overflow_termination_reap_and_authority_subgraph_reconciliation",
+                "independent_direct_swift_package_executable_describe_trusted_capture_capability_initial_suspended_full_region_query_transcript_mapped_vnode_preopened_descriptor_stable_bytes_capability_calibration_no_overflow_raw_exact_pid_wait_reap_and_authority_subgraph_reconciliation",
                 "six_process_topology_worker_death_reap_and_exact_role_prefix_inventory",
                 "closed_stage_a_parent_and_source_identity",
                 "lossless_stage_a_parent_evidence_copy_and_revalidation",
@@ -963,6 +963,53 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
             contract
                 .swiftPackageDescribeCaptureImplementationRequiredBeforeExecution
         )
+        XCTAssertEqual(
+            contract.swiftPackageDescribeCapturePolicy,
+            "direct_swift_package_executable_describe_type_json_empty_environment_start_suspended_full_region_transcript_descriptor_join_trusted_capture_bounded_output_raw_exact_pid_wait_no_shell_fail_closed_lifecycle_v3"
+        )
+        XCTAssertEqual(
+            contract
+                .swiftPackageDescribeExecutableIdentityAuthority,
+            "frozen_regular_file_full_file_sha256_byte_count_root_owner_mode_link_no_symlink_any_cloexec_and_live_mapped_vnode_descriptor_join_v2"
+        )
+        XCTAssertEqual(
+            contract
+                .swiftPackageDescribeExpectedExecutableSHA256,
+            "dc1a5f5bd4f05be81b8cc4a4bc6e0fd8846210e4cb829062d0fed3d03f79b753"
+        )
+        XCTAssertEqual(
+            contract
+                .swiftPackageDescribeExpectedExecutableByteCount,
+            23_293_616
+        )
+        XCTAssertEqual(
+            contract
+                .swiftPackageDescribeExpectedExecutableOwnerUserID,
+            0
+        )
+        XCTAssertEqual(
+            contract
+                .swiftPackageDescribeExpectedExecutableOwnerGroupID,
+            0
+        )
+        XCTAssertEqual(
+            contract
+                .swiftPackageDescribeExpectedExecutablePermissionMode,
+            0o755
+        )
+        XCTAssertEqual(
+            contract
+                .swiftPackageDescribeExpectedExecutableLinkCount,
+            1
+        )
+        XCTAssertEqual(
+            contract.swiftPackageDescribeExactArguments,
+            [
+                "describe",
+                "--type",
+                "json",
+            ]
+        )
         XCTAssertFalse(
             contract
                 .swiftPackageDescribeOutputAcceptedWithoutValidatedCapture
@@ -974,11 +1021,51 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
         XCTAssertEqual(
             contract
                 .swiftPackageDescribeMappedChildImageCaptureAuthority,
-            "external_child_mapped_region_vnode_then_descriptor_device_inode_and_bytes_join_v1"
+            "primecore_trusted_external_child_descriptor_open_start_suspended_full_region_query_transcript_mapped_vnode_join_pre_resume_stability_sigcont_raw_exact_pid_wait_reap_post_reap_stability_v3"
+        )
+        XCTAssertEqual(
+            contract
+                .swiftPackageDescribeMappedRegionEnumerationPolicy,
+            "proc_pidregionpathinfo_full_query_transcript_address_plus_size_progression_terminal_zero_errno_zero_nonprogress_overflow_error_fail_closed_v2"
+        )
+        XCTAssertTrue(
+            contract
+                .swiftPackageDescribeCaptureCapabilityCalibrationRequired
+        )
+        XCTAssertEqual(
+            contract
+                .swiftPackageDescribeCaptureCapabilityCalibrationPolicy,
+            "runtime_constants_struct_size_same_child_start_suspended_full_region_transcript_descriptor_join_sigcont_raw_exact_pid_wait_reap_no_escalation_v2"
+        )
+        XCTAssertTrue(
+            contract
+                .swiftPackageDescribeTrustedCaptureCapabilityRequired
+        )
+        XCTAssertEqual(
+            contract
+                .swiftPackageDescribeTrustedCaptureCapabilityAuthority,
+            "primecore_non_codable_factory_result_binding_role_launch_descriptor_read_bytes_fstat_region_transcript_waitpid_and_stream_lifecycle_v2"
+        )
+        XCTAssertTrue(
+            contract
+                .swiftPackageDescribeExactPIDWaitObservationRequired
         )
         XCTAssertFalse(
             contract
-                .swiftPackageDescribeLaunchFileIdentityAuthoritative
+                .swiftPackageDescribeProcPIDPathAuthoritative
+        )
+        XCTAssertFalse(
+            contract
+                .swiftPackageDescribeLaunchPathAloneAuthoritative
+        )
+        XCTAssertEqual(
+            contract
+                .swiftPackageDescribeDirectExecutableLeafName,
+            "swift-package"
+        )
+        XCTAssertTrue(
+            contract
+                .swiftPackageDescribeInitialMappedImageMustEqualLaunchDescriptor
         )
         XCTAssertEqual(
             contract
@@ -1560,11 +1647,6 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
         let probeData = Data("probe-image".utf8)
         let verifierData =
             Data("verifier-image".utf8)
-        let swiftDriverData =
-            Data("swift-driver-image".utf8)
-        let mappedSwiftDriverData =
-            Data("mapped-swift-driver-image".utf8)
-
         func process(
             _ role:
                 PrimeNativeNeuralGateReleaseProcessRole,
@@ -1573,7 +1655,8 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
         ) throws
             -> (
                 PrimeNativeNeuralGateReleaseProcessBindingRecord,
-                PrimeNativeNeuralGateSwiftPackageDescribeCaptureRecord
+                PrimeNativeNeuralGateSwiftPackageDescribeCaptureRecord,
+                PrimeNativeNeuralGateTrustedExternalChildCapture
             )
         {
             let rule = try XCTUnwrap(
@@ -1594,6 +1677,14 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
                         UInt64(executableData.count),
                     purpose: .executable
                 )
+            let captureEvidence =
+                externalChildCaptureEvidence(
+                    contract: contract,
+                    supervisorProcessIdentifier:
+                        pid,
+                    childProcessIdentifier:
+                        pid + 1_000
+                )
             let describeCapture =
                 PrimeNativeNeuralGateSwiftPackageDescribeCaptureRecord(
                     role: role,
@@ -1602,24 +1693,14 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
                         pid,
                     childProcessIdentifier:
                         pid + 1_000,
-                    swiftDriverLaunchFileAbsolutePath:
-                        "/usr/bin/swift",
-                    swiftDriverLaunchFileData:
-                        swiftDriverData,
+                    swiftPackageExecutableAbsolutePath:
+                        "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-package",
                     mappedChildMainImageAbsolutePath:
-                        "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-driver",
-                    mappedChildMainImageData:
-                        mappedSwiftDriverData,
-                    mappedChildMainImageObservedDeviceID:
-                        7,
-                    mappedChildMainImageObservedInode:
-                        11,
-                    mappedChildMainImageDescriptorDeviceID:
-                        7,
-                    mappedChildMainImageDescriptorInode:
-                        11,
-                    observedMonotonicWallNanoseconds:
-                        1_000,
+                        "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-package",
+                    workingDirectoryAbsolutePath:
+                        "/private/tmp/ergentics-prime",
+                    externalChildCaptureEvidence:
+                        captureEvidence,
                     standardOutput:
                         fixture
                         .swiftPackageDescribeBinding,
@@ -1633,6 +1714,14 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
                         fixture
                         .closure.packageManifest,
                     contract: contract
+                )
+            let trustedCapture =
+                try trustedExternalChildCapture(
+                    evidence: captureEvidence,
+                    role: role,
+                    standardOutputData:
+                        fixture
+                        .swiftPackageDescribeData
                 )
             let describeCaptureBinding =
                 try describeCapture
@@ -1677,6 +1766,8 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
                 )
             try value.validate(
                 against: contract,
+                trustedExternalChildCapture:
+                    trustedCapture,
                 expectedPlanSHA256: planSHA,
                 closure: fixture.closure,
                 closureBinding:
@@ -1689,10 +1780,6 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
                 swiftPackageDescribeData:
                     fixture
                     .swiftPackageDescribeData,
-                swiftDriverLaunchFileData:
-                    swiftDriverData,
-                mappedSwiftDriverMainImageData:
-                    mappedSwiftDriverData,
                 capturedRunningExecutableData:
                     executableData,
                 expectedEmbeddedSourceIdentitySHA256:
@@ -1700,10 +1787,18 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
                 expectedBuildConfiguration:
                     "release"
             )
-            return (value, describeCapture)
+            return (
+                value,
+                describeCapture,
+                trustedCapture
+            )
         }
 
-        let (probe, probeDescribeCapture) =
+        let (
+            probe,
+            probeDescribeCapture,
+            _
+        ) =
             try process(
                 .probe,
                 pid: 301,
@@ -1711,11 +1806,229 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
             )
         let (
             verifier,
-            verifierDescribeCapture
+            verifierDescribeCapture,
+            verifierTrustedCapture
         ) = try process(
             .verifier,
             pid: 302,
             executableData: verifierData
+        )
+        func launchObservation(
+            role:
+                PrimeNativeNeuralGateReleaseProcessRole =
+                    .verifier,
+            exactArguments: [String]? = nil
+        )
+            -> PrimeNativeNeuralGateTrustedExternalChildLaunchObservation
+        {
+            PrimeNativeNeuralGateTrustedExternalChildLaunchObservation(
+                role: role,
+                exactArguments:
+                    exactArguments
+                    ?? verifierDescribeCapture
+                    .exactArguments,
+                directProcessWithoutShell:
+                    verifierDescribeCapture
+                    .directProcessWithoutShell,
+                workingDirectoryAbsolutePath:
+                    verifierDescribeCapture
+                    .workingDirectoryAbsolutePath,
+                workingDirectoryIsValidatedPrimeRoot:
+                    verifierDescribeCapture
+                    .workingDirectoryIsValidatedPrimeRoot,
+                environmentKeyCount:
+                    verifierDescribeCapture
+                    .environmentKeyCount,
+                standardInputPolicy:
+                    verifierDescribeCapture
+                    .standardInputPolicy,
+                maximumWallSeconds:
+                    verifierDescribeCapture
+                    .maximumWallSeconds,
+                terminationControlPolicy:
+                    verifierDescribeCapture
+                    .terminationControlPolicy
+            )
+        }
+        func streamLifecycleObservation(
+            maximumStandardOutputBytes:
+                UInt64? = nil,
+            standardOutputDrainCompleted:
+                Bool? = nil
+        )
+            -> PrimeNativeNeuralGateTrustedExternalChildStreamLifecycleObservation
+        {
+            PrimeNativeNeuralGateTrustedExternalChildStreamLifecycleObservation(
+                maximumStandardOutputBytes:
+                    maximumStandardOutputBytes
+                    ?? verifierDescribeCapture
+                    .maximumStandardOutputBytes,
+                standardOutputOverflowed:
+                    verifierDescribeCapture
+                    .standardOutputOverflowed,
+                standardOutputDrainCompleted:
+                    standardOutputDrainCompleted
+                    ?? verifierDescribeCapture
+                    .standardOutputDrainCompleted,
+                maximumStandardErrorBytes:
+                    verifierDescribeCapture
+                    .maximumStandardErrorBytes,
+                standardErrorOverflowed:
+                    verifierDescribeCapture
+                    .standardErrorOverflowed,
+                standardErrorDrainCompleted:
+                    verifierDescribeCapture
+                    .standardErrorDrainCompleted
+            )
+        }
+        func validateTrustedCaptureOnly(
+            _ trustedCapture:
+                PrimeNativeNeuralGateTrustedExternalChildCapture
+        ) throws {
+            try trustedCapture.validate(
+                evidence:
+                    verifierDescribeCapture
+                    .externalChildCaptureEvidence,
+                contract: contract,
+                expectedSwiftPackageExecutableAbsolutePath:
+                    verifierDescribeCapture
+                    .swiftPackageExecutableAbsolutePath,
+                expectedMappedChildMainImageAbsolutePath:
+                    verifierDescribeCapture
+                    .mappedChildMainImageAbsolutePath,
+                standardOutputData:
+                    fixture
+                    .swiftPackageDescribeData,
+                captureLaunchObservation:
+                    launchObservation(),
+                captureStreamLifecycleObservation:
+                    streamLifecycleObservation()
+            )
+        }
+        XCTAssertNoThrow(
+            try validateTrustedCaptureOnly(
+                verifierTrustedCapture
+            )
+        )
+        var oneByteMutatedDescriptorData =
+            try frozenSwiftPackageExecutableData()
+        let mutatedDescriptorIndex =
+            oneByteMutatedDescriptorData.startIndex
+        oneByteMutatedDescriptorData[
+            mutatedDescriptorIndex
+        ] =
+            oneByteMutatedDescriptorData[
+                mutatedDescriptorIndex
+            ] ^ 0x01
+        let truncatedDescriptorData =
+            Data(
+                (try frozenSwiftPackageExecutableData())
+                    .dropLast()
+            )
+        for descriptorReadData in [
+            oneByteMutatedDescriptorData,
+            truncatedDescriptorData,
+        ] {
+            let mismatchedDescriptorCapture =
+                try trustedExternalChildCapture(
+                    evidence:
+                        verifierDescribeCapture
+                        .externalChildCaptureEvidence,
+                    role: .verifier,
+                    standardOutputData:
+                        fixture
+                        .swiftPackageDescribeData,
+                    descriptorReadDataOverride:
+                        descriptorReadData
+                )
+            XCTAssertThrowsError(
+                try validateTrustedCaptureOnly(
+                    mismatchedDescriptorCapture
+                )
+            )
+        }
+        let wrongRoleTrustedCapture =
+            try trustedExternalChildCapture(
+                evidence:
+                    verifierDescribeCapture
+                    .externalChildCaptureEvidence,
+                role: .verifier,
+                standardOutputData:
+                    fixture
+                    .swiftPackageDescribeData,
+                launchObservationOverride:
+                    launchObservation(role: .probe)
+            )
+        XCTAssertThrowsError(
+            try validateTrustedCaptureOnly(
+                wrongRoleTrustedCapture
+            )
+        )
+        let wrongArgumentsTrustedCapture =
+            try trustedExternalChildCapture(
+                evidence:
+                    verifierDescribeCapture
+                    .externalChildCaptureEvidence,
+                role: .verifier,
+                standardOutputData:
+                    fixture
+                    .swiftPackageDescribeData,
+                launchObservationOverride:
+                    launchObservation(
+                        exactArguments: [
+                            "package",
+                            "describe",
+                            "--type",
+                            "json",
+                        ]
+                    )
+            )
+        XCTAssertThrowsError(
+            try validateTrustedCaptureOnly(
+                wrongArgumentsTrustedCapture
+            )
+        )
+        let incompleteDrainTrustedCapture =
+            try trustedExternalChildCapture(
+                evidence:
+                    verifierDescribeCapture
+                    .externalChildCaptureEvidence,
+                role: .verifier,
+                standardOutputData:
+                    fixture
+                    .swiftPackageDescribeData,
+                streamLifecycleObservationOverride:
+                    streamLifecycleObservation(
+                        standardOutputDrainCompleted:
+                            false
+                    )
+            )
+        XCTAssertThrowsError(
+            try validateTrustedCaptureOnly(
+                incompleteDrainTrustedCapture
+            )
+        )
+        let alteredOutputBoundTrustedCapture =
+            try trustedExternalChildCapture(
+                evidence:
+                    verifierDescribeCapture
+                    .externalChildCaptureEvidence,
+                role: .verifier,
+                standardOutputData:
+                    fixture
+                    .swiftPackageDescribeData,
+                streamLifecycleObservationOverride:
+                    streamLifecycleObservation(
+                        maximumStandardOutputBytes:
+                            verifierDescribeCapture
+                            .maximumStandardOutputBytes
+                            + 1
+                    )
+            )
+        XCTAssertThrowsError(
+            try validateTrustedCaptureOnly(
+                alteredOutputBoundTrustedCapture
+            )
         )
         XCTAssertNoThrow(
             try PrimeNativeNeuralGateSwiftPackageDescribeCaptureRecord
@@ -1726,9 +2039,10 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
                         verifierDescribeCapture
                 )
         )
-        func mutatedVerifierCapture(
-            key: String,
-            value: Any
+        func mutatedVerifierCaptureObject(
+            _ mutate:
+                (inout [String: Any]) throws
+                    -> Void
         ) throws
             -> PrimeNativeNeuralGateSwiftPackageDescribeCaptureRecord
         {
@@ -1741,7 +2055,7 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
                     with: source
                 ) as? [String: Any]
             )
-            object[key] = value
+            try mutate(&object)
             let data = try JSONSerialization.data(
                 withJSONObject: object,
                 options: [
@@ -1755,12 +2069,66 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
                 from: data
             )
         }
+        func mutatedVerifierCapture(
+            key: String,
+            value: Any
+        ) throws
+            -> PrimeNativeNeuralGateSwiftPackageDescribeCaptureRecord
+        {
+            try mutatedVerifierCaptureObject {
+                $0[key] = value
+            }
+        }
+        func mutatedVerifierCaptureEvidence(
+            key: String,
+            value: Any
+        ) throws
+            -> PrimeNativeNeuralGateSwiftPackageDescribeCaptureRecord
+        {
+            try mutatedVerifierCaptureObject {
+                object in
+                var evidence = try XCTUnwrap(
+                    object[
+                        "external_child_capture_evidence"
+                    ] as? [String: Any]
+                )
+                evidence[key] = value
+                object[
+                    "external_child_capture_evidence"
+                ] = evidence
+            }
+        }
         func validateVerifierCapture(
             _ capture:
-                PrimeNativeNeuralGateSwiftPackageDescribeCaptureRecord
+                PrimeNativeNeuralGateSwiftPackageDescribeCaptureRecord,
+            useMatchingTrustedEvidence: Bool =
+                false
         ) throws {
+            let trustedCapture =
+                useMatchingTrustedEvidence
+                ? try trustedExternalChildCapture(
+                    evidence:
+                        capture
+                        .externalChildCaptureEvidence,
+                    role: capture.role,
+                    standardOutputData:
+                        fixture
+                        .swiftPackageDescribeData,
+                    swiftPackageExecutableAbsolutePath:
+                        capture
+                        .swiftPackageExecutableAbsolutePath,
+                    mappedChildMainImageAbsolutePath:
+                        capture
+                        .mappedChildMainImageAbsolutePath,
+                    workingDirectoryAbsolutePath:
+                        capture
+                        .workingDirectoryAbsolutePath
+                )
+                : verifierTrustedCapture
             try capture.validateForRunningRelease(
                 against: contract,
+                trustedExternalChildCapture:
+                    trustedCapture,
                 expectedPlanSHA256: planSHA,
                 expectedSupervisorProcessIdentifier:
                     302,
@@ -1774,10 +2142,6 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
                 expectedStandardOutput:
                     fixture
                     .swiftPackageDescribeBinding,
-                swiftDriverLaunchFileData:
-                    swiftDriverData,
-                mappedChildMainImageData:
-                    mappedSwiftDriverData,
                 standardOutputData:
                     fixture
                     .swiftPackageDescribeData
@@ -1786,19 +2150,57 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
         let rejectedCaptureMutations:
             [(String, Any)] = [
                 (
-                    "swift_driver_launch_file_absolute_path",
-                    "/usr/bin/../bin/swift"
+                    "swift_package_executable_absolute_path",
+                    "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../bin/swift-package"
+                ),
+                (
+                    "swift_package_executable_absolute_path",
+                    "/usr/bin/swift-package"
                 ),
                 (
                     "mapped_child_main_image_absolute_path",
-                    "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../bin/swift-driver"
+                    "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../bin/swift-package"
                 ),
                 (
-                    "mapped_child_main_image_descriptor_opened_without_following_symbolic_links",
+                    "mapped_child_main_image_absolute_path",
+                    "/usr/bin/swift-package"
+                ),
+                (
+                    "mapped_child_main_image_descriptor_opened_with_no_symbolic_links_in_path",
                     false
                 ),
+                (
+                    "capture_capability_calibration_passed",
+                    false
+                ),
+                (
+                    "proc_pidpath_used_only_as_telemetry",
+                    false
+                ),
+                (
+                    "exact_arguments",
+                    [
+                        "package",
+                        "describe",
+                        "--type",
+                        "json",
+                    ]
+                ),
+                ("direct_process_without_shell", false),
+                (
+                    "working_directory_absolute_path",
+                    "/private/tmp/not-ergentics-prime"
+                ),
+                (
+                    "working_directory_is_validated_prime_root",
+                    false
+                ),
+                ("environment_key_count", 1),
+                ("standard_input_policy", "inherit_v1"),
                 ("standard_output_overflowed", true),
+                ("standard_output_drain_completed", false),
                 ("standard_error_overflowed", true),
+                ("standard_error_drain_completed", false),
                 (
                     "termination_control_policy",
                     "unbounded_wait_v1"
@@ -1825,33 +2227,353 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
                         probe:
                             probeDescribeCapture,
                         verifier: mutated
-                    )
+                )
             )
         }
+        let inconsistentObservedWall =
+            try mutatedVerifierCapture(
+                key:
+                    "observed_monotonic_wall_nanoseconds",
+                value: 1
+            )
+        XCTAssertThrowsError(
+            try validateVerifierCapture(
+                inconsistentObservedWall
+            )
+        )
+        let rejectedEvidenceMutations:
+            [(String, Any)] = [
+                (
+                    "capability_calibration_passed",
+                    false
+                ),
+                (
+                    "mapped_region_enumeration_policy",
+                    "first_executable_region_only"
+                ),
+                (
+                    "applied_spawn_flags",
+                    0x4000
+                ),
+                (
+                    "posix_spawn_return_code",
+                    1
+                ),
+                (
+                    "proc_regionwithpathinfo_byte_count",
+                    0
+                ),
+                (
+                    "mapped_region_captured_monotonic_nanoseconds",
+                    6_000
+                ),
+                (
+                    "sigcont_return_code",
+                    1
+                ),
+                (
+                    "proc_pidpath_used_only_as_telemetry",
+                    false
+                ),
+                (
+                    "mapped_region_enumeration_completed",
+                    false
+                ),
+                (
+                    "terminal_mapped_region_query_return_byte_count",
+                    1_272
+                ),
+                (
+                    "terminal_mapped_region_query_errno",
+                    1
+                ),
+                ("deadline_expired", true),
+                ("sigterm_delivered", true),
+                ("sigkill_delivered", true),
+            ]
+        for (key, value) in
+            rejectedEvidenceMutations
+        {
+            XCTAssertThrowsError(
+                try validateVerifierCapture(
+                    try
+                        mutatedVerifierCaptureEvidence(
+                            key: key,
+                            value: value
+                        ),
+                    useMatchingTrustedEvidence:
+                        true
+                )
+            )
+        }
+        let nonprogressingEnumerationCapture =
+            try mutatedVerifierCaptureObject {
+                object in
+                var evidence = try XCTUnwrap(
+                    object[
+                        "external_child_capture_evidence"
+                    ] as? [String: Any]
+                )
+                var queries = try XCTUnwrap(
+                    evidence[
+                        "all_mapped_region_queries"
+                    ] as? [[String: Any]]
+                )
+                queries[1]["query_address"] =
+                    0x2_001
+                evidence[
+                    "all_mapped_region_queries"
+                ] = queries
+                object[
+                    "external_child_capture_evidence"
+                ] = evidence
+            }
+        XCTAssertThrowsError(
+            try validateVerifierCapture(
+                nonprogressingEnumerationCapture,
+                useMatchingTrustedEvidence: true
+            )
+        )
+        let mismatchedWaitPIDCapture =
+            try mutatedVerifierCaptureObject {
+                object in
+                var evidence = try XCTUnwrap(
+                    object[
+                        "external_child_capture_evidence"
+                    ] as? [String: Any]
+                )
+                var wait = try XCTUnwrap(
+                    evidence[
+                        "exact_pid_wait_observation"
+                    ] as? [String: Any]
+                )
+                wait[
+                    "returned_process_identifier"
+                ] = 9_999
+                evidence[
+                    "exact_pid_wait_observation"
+                ] = wait
+                object[
+                    "external_child_capture_evidence"
+                ] = evidence
+            }
+        XCTAssertThrowsError(
+            try validateVerifierCapture(
+                mismatchedWaitPIDCapture,
+                useMatchingTrustedEvidence: true
+            )
+        )
+        let nonzeroRawWaitStatusCapture =
+            try mutatedVerifierCaptureObject {
+                object in
+                var evidence = try XCTUnwrap(
+                    object[
+                        "external_child_capture_evidence"
+                    ] as? [String: Any]
+                )
+                var wait = try XCTUnwrap(
+                    evidence[
+                        "exact_pid_wait_observation"
+                    ] as? [String: Any]
+                )
+                wait["raw_wait_status"] = 256
+                evidence[
+                    "exact_pid_wait_observation"
+                ] = wait
+                object[
+                    "external_child_capture_evidence"
+                ] = evidence
+            }
+        XCTAssertThrowsError(
+            try validateVerifierCapture(
+                nonzeroRawWaitStatusCapture,
+                useMatchingTrustedEvidence: true
+            )
+        )
+        for unsafeDescriptorField in [
+            "regular_file",
+            "opened_with_no_symbolic_links_in_path",
+            "close_on_exec",
+        ] {
+            let unsafeDescriptorCapture =
+                try mutatedVerifierCaptureObject {
+                    object in
+                    var evidence =
+                        try XCTUnwrap(
+                            object[
+                                "external_child_capture_evidence"
+                            ] as? [String: Any]
+                        )
+                    for key in [
+                        "pre_spawn_descriptor",
+                        "pre_resume_descriptor",
+                        "post_reap_descriptor",
+                    ] {
+                        var descriptor =
+                            try XCTUnwrap(
+                                evidence[key]
+                                    as? [String: Any]
+                            )
+                        descriptor[
+                            unsafeDescriptorField
+                        ] = false
+                        evidence[key] = descriptor
+                    }
+                    object[
+                        "external_child_capture_evidence"
+                    ] = evidence
+                }
+            XCTAssertThrowsError(
+                try validateVerifierCapture(
+                    unsafeDescriptorCapture,
+                    useMatchingTrustedEvidence:
+                        true
+                )
+            )
+        }
+        let unstableDescriptorCapture =
+            try mutatedVerifierCaptureObject {
+                object in
+                var evidence = try XCTUnwrap(
+                    object[
+                        "external_child_capture_evidence"
+                    ] as? [String: Any]
+                )
+                var descriptor = try XCTUnwrap(
+                    evidence[
+                        "pre_resume_descriptor"
+                    ] as? [String: Any]
+                )
+                descriptor["sha256"] =
+                    String(repeating: "a", count: 64)
+                evidence[
+                    "pre_resume_descriptor"
+                ] = descriptor
+                object[
+                    "external_child_capture_evidence"
+                ] = evidence
+            }
+        XCTAssertThrowsError(
+            try validateVerifierCapture(
+                unstableDescriptorCapture,
+                useMatchingTrustedEvidence: true
+            )
+        )
+        let noHeaderRegionCapture =
+            try mutatedVerifierCaptureObject {
+                object in
+                var evidence = try XCTUnwrap(
+                    object[
+                        "external_child_capture_evidence"
+                    ] as? [String: Any]
+                )
+                var regions = try XCTUnwrap(
+                    evidence[
+                        "matching_mapped_regions"
+                    ] as? [[String: Any]]
+                )
+                for index in regions.indices {
+                    regions[index]["file_offset"] =
+                        4_096 * (index + 1)
+                }
+                evidence[
+                    "matching_mapped_regions"
+                ] = regions
+                object[
+                    "external_child_capture_evidence"
+                ] = evidence
+            }
+        XCTAssertThrowsError(
+            try validateVerifierCapture(
+                noHeaderRegionCapture,
+                useMatchingTrustedEvidence: true
+            )
+        )
+        let coordinatedExecutableSubstitution =
+            try mutatedVerifierCaptureObject {
+                object in
+                let replacementSHA =
+                    String(repeating: "b", count: 64)
+                object[
+                    "swift_package_executable_absolute_path"
+                ] = "/tmp/swift-package"
+                object[
+                    "mapped_child_main_image_absolute_path"
+                ] = "/tmp/swift-package"
+                object[
+                    "swift_package_executable_sha256"
+                ] = replacementSHA
+                object[
+                    "mapped_child_main_image_sha256"
+                ] = replacementSHA
+                var evidence = try XCTUnwrap(
+                    object[
+                        "external_child_capture_evidence"
+                    ] as? [String: Any]
+                )
+                for key in [
+                    "pre_spawn_descriptor",
+                    "pre_resume_descriptor",
+                    "post_reap_descriptor",
+                ] {
+                    var descriptor =
+                        try XCTUnwrap(
+                            evidence[key]
+                                as? [String: Any]
+                        )
+                    descriptor["sha256"] =
+                        replacementSHA
+                    evidence[key] = descriptor
+                }
+                object[
+                    "external_child_capture_evidence"
+                ] = evidence
+            }
+        XCTAssertThrowsError(
+            try validateVerifierCapture(
+                coordinatedExecutableSubstitution,
+                useMatchingTrustedEvidence: true
+            )
+        )
+        let pathOnlyExecutableSubstitution =
+            try mutatedVerifierCaptureObject {
+                object in
+                object[
+                    "swift_package_executable_absolute_path"
+                ] = "/tmp/swift-package"
+                object[
+                    "mapped_child_main_image_absolute_path"
+                ] = "/tmp/swift-package"
+            }
+        XCTAssertThrowsError(
+            try validateVerifierCapture(
+                pathOnlyExecutableSubstitution
+            )
+        )
         let mismatchedMappedVnodeCapture =
             PrimeNativeNeuralGateSwiftPackageDescribeCaptureRecord(
                 role: .verifier,
                 planSHA256: planSHA,
                 supervisorProcessIdentifier: 302,
                 childProcessIdentifier: 1_302,
-                swiftDriverLaunchFileAbsolutePath:
-                    "/usr/bin/swift",
-                swiftDriverLaunchFileData:
-                    swiftDriverData,
+                swiftPackageExecutableAbsolutePath:
+                    "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-package",
                 mappedChildMainImageAbsolutePath:
-                    "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-driver",
-                mappedChildMainImageData:
-                    mappedSwiftDriverData,
-                mappedChildMainImageObservedDeviceID:
-                    7,
-                mappedChildMainImageObservedInode:
-                    11,
-                mappedChildMainImageDescriptorDeviceID:
-                    8,
-                mappedChildMainImageDescriptorInode:
-                    11,
-                observedMonotonicWallNanoseconds:
-                    1_000,
+                    "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-package",
+                workingDirectoryAbsolutePath:
+                    "/private/tmp/ergentics-prime",
+                externalChildCaptureEvidence:
+                    externalChildCaptureEvidence(
+                        contract: contract,
+                        supervisorProcessIdentifier:
+                            302,
+                        childProcessIdentifier:
+                            1_302,
+                        descriptorDeviceID: 8,
+                        descriptorInode: 11,
+                        mappedDeviceID: 7,
+                        mappedInode: 11
+                    ),
                 standardOutput:
                     fixture
                     .swiftPackageDescribeBinding,
@@ -1867,6 +2589,16 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
             try mismatchedMappedVnodeCapture
                 .validateForRunningRelease(
                     against: contract,
+                    trustedExternalChildCapture:
+                        try trustedExternalChildCapture(
+                            evidence:
+                                mismatchedMappedVnodeCapture
+                                .externalChildCaptureEvidence,
+                            role: .verifier,
+                            standardOutputData:
+                                fixture
+                                .swiftPackageDescribeData
+                        ),
                     expectedPlanSHA256: planSHA,
                     expectedSupervisorProcessIdentifier:
                         302,
@@ -1880,10 +2612,6 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
                     expectedStandardOutput:
                         fixture
                         .swiftPackageDescribeBinding,
-                    swiftDriverLaunchFileData:
-                        swiftDriverData,
-                    mappedChildMainImageData:
-                        mappedSwiftDriverData,
                     standardOutputData:
                         fixture
                         .swiftPackageDescribeData
@@ -1896,6 +2624,105 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
                     verifier:
                         mismatchedMappedVnodeCapture
                 )
+        )
+        let relabeledVerifierCapture =
+            try mutatedVerifierCaptureObject {
+                object in
+                object["role"] =
+                    PrimeNativeNeuralGateReleaseProcessRole
+                    .probe.rawValue
+                object["record_relative_path"] =
+                    contract
+                    .swiftPackageDescribeCaptureRecordRelativePath(
+                        for: .probe
+                    )
+            }
+        let relabeledVerifierCaptureBinding =
+            try relabeledVerifierCapture
+            .artifactBinding()
+        let relabeledVerifierProcess =
+            PrimeNativeNeuralGateReleaseProcessBindingRecord(
+                recordRelativePath:
+                    verifier.recordRelativePath,
+                planSHA256:
+                    verifier.planSHA256,
+                role: verifier.role,
+                processIdentifier:
+                    verifier.processIdentifier,
+                executableTargetName:
+                    verifier.executableTargetName,
+                exactTransitiveLocalTargetNames:
+                    verifier
+                    .exactTransitiveLocalTargetNames,
+                prePrimeSourceState:
+                    verifier.prePrimeSourceState,
+                postPrimeSourceState:
+                    verifier.postPrimeSourceState,
+                preSourceSnapshotSHA256:
+                    verifier
+                    .preSourceSnapshotSHA256,
+                postSourceSnapshotSHA256:
+                    verifier
+                    .postSourceSnapshotSHA256,
+                primeSourceSnapshot:
+                    verifier.primeSourceSnapshot,
+                compiledSourceClosure:
+                    verifier.compiledSourceClosure,
+                swiftPackageDescribeCapture:
+                    relabeledVerifierCaptureBinding,
+                sourceIdentitySHA256:
+                    verifier.sourceIdentitySHA256,
+                embeddedSourceIdentitySHA256:
+                    verifier
+                    .embeddedSourceIdentitySHA256,
+                buildConfiguration:
+                    verifier.buildConfiguration,
+                runningExecutable:
+                    verifier.runningExecutable
+            )
+        let relabeledVerifierTrustedCapture =
+            try trustedExternalChildCapture(
+                evidence:
+                    relabeledVerifierCapture
+                    .externalChildCaptureEvidence,
+                role: .probe,
+                standardOutputData:
+                    fixture
+                    .swiftPackageDescribeData,
+                swiftPackageExecutableAbsolutePath:
+                    relabeledVerifierCapture
+                    .swiftPackageExecutableAbsolutePath,
+                mappedChildMainImageAbsolutePath:
+                    relabeledVerifierCapture
+                    .mappedChildMainImageAbsolutePath,
+                workingDirectoryAbsolutePath:
+                    relabeledVerifierCapture
+                    .workingDirectoryAbsolutePath
+            )
+        XCTAssertThrowsError(
+            try relabeledVerifierProcess.validate(
+                against: contract,
+                trustedExternalChildCapture:
+                    relabeledVerifierTrustedCapture,
+                expectedPlanSHA256: planSHA,
+                closure: fixture.closure,
+                closureBinding:
+                    fixture.closureBinding,
+                describeCapture:
+                    relabeledVerifierCapture,
+                describeCaptureBinding:
+                    relabeledVerifierCaptureBinding,
+                snapshot: fixture.snapshot,
+                swiftPackageDescribeData:
+                    fixture
+                    .swiftPackageDescribeData,
+                capturedRunningExecutableData:
+                    verifierData,
+                expectedEmbeddedSourceIdentitySHA256:
+                    fixture.sourceIdentity,
+                expectedBuildConfiguration:
+                    "release"
+            )
         )
         XCTAssertNoThrow(
             try PrimeNativeNeuralGateReleaseProcessBindingRecord
@@ -2759,10 +3586,6 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
                 .swiftPackageDescribeRelativePath,
             payload: "described-package"
         )
-        let swiftDriverData =
-            Data("swift-driver".utf8)
-        let mappedSwiftDriverData =
-            Data("mapped-swift-driver".utf8)
         let packageManifest =
             PrimeNativeNeuralGateSourceFileIdentity(
                 relativePath: "Package.swift",
@@ -2786,24 +3609,22 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
                     supervisorPID,
                 childProcessIdentifier:
                     childPID,
-                swiftDriverLaunchFileAbsolutePath:
-                    "/usr/bin/swift",
-                swiftDriverLaunchFileData:
-                    swiftDriverData,
+                swiftPackageExecutableAbsolutePath:
+                    "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-package",
                 mappedChildMainImageAbsolutePath:
-                    "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-driver",
-                mappedChildMainImageData:
-                    mappedSwiftDriverData,
-                mappedChildMainImageObservedDeviceID:
-                    7,
-                mappedChildMainImageObservedInode:
-                    11,
-                mappedChildMainImageDescriptorDeviceID:
-                    7,
-                mappedChildMainImageDescriptorInode:
-                    11,
-                observedMonotonicWallNanoseconds:
-                    1_000,
+                    "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-package",
+                workingDirectoryAbsolutePath:
+                    "/private/tmp/ergentics-prime",
+                externalChildCaptureEvidence:
+                    externalChildCaptureEvidence(
+                        contract:
+                            plan
+                            .sourceExecutionBinding,
+                        supervisorProcessIdentifier:
+                            supervisorPID,
+                        childProcessIdentifier:
+                            childPID
+                    ),
                 standardOutput:
                     describeOutput,
                 prePrimeSourceState:
@@ -3395,6 +4216,50 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
             ] = binding
         }
         try assertMutationRejected { object in
+            var binding = object[
+                "source_execution_binding"
+            ] as! [String: Any]
+            binding[
+                "swift_package_describe_expected_executable_sha256"
+            ] = String(repeating: "0", count: 64)
+            object[
+                "source_execution_binding"
+            ] = binding
+        }
+        try assertMutationRejected { object in
+            var binding = object[
+                "source_execution_binding"
+            ] as! [String: Any]
+            binding[
+                "swift_package_describe_capture_capability_calibration_policy"
+            ] = "caller_asserted_v1"
+            object[
+                "source_execution_binding"
+            ] = binding
+        }
+        try assertMutationRejected { object in
+            var binding = object[
+                "source_execution_binding"
+            ] as! [String: Any]
+            binding[
+                "swift_package_describe_proc_pidpath_authoritative"
+            ] = true
+            object[
+                "source_execution_binding"
+            ] = binding
+        }
+        try assertMutationRejected { object in
+            var binding = object[
+                "source_execution_binding"
+            ] as! [String: Any]
+            binding[
+                "swift_package_describe_trusted_capture_capability_required"
+            ] = false
+            object[
+                "source_execution_binding"
+            ] = binding
+        }
+        try assertMutationRejected { object in
             var output = object[
                 "output_contract"
             ] as! [String: Any]
@@ -3789,6 +4654,244 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
         )
         appendFramed(records, to: &data)
         return data
+    }
+
+    private func externalChildCaptureEvidence(
+        contract:
+            PrimeNativeNeuralGateSourceExecutionBindingContract,
+        supervisorProcessIdentifier: Int32,
+        childProcessIdentifier: Int32,
+        descriptorDeviceID: UInt64 = 7,
+        descriptorInode: UInt64 = 11,
+        mappedDeviceID: UInt64? = nil,
+        mappedInode: UInt64? = nil
+    ) -> PrimeNativeNeuralGateExternalChildCaptureEvidence {
+        let descriptor =
+            PrimeNativeNeuralGateExecutableDescriptorSnapshot(
+                deviceID: descriptorDeviceID,
+                inode: descriptorInode,
+                byteCount:
+                    contract
+                    .swiftPackageDescribeExpectedExecutableByteCount,
+                sha256:
+                    contract
+                    .swiftPackageDescribeExpectedExecutableSHA256,
+                ownerUserID:
+                    contract
+                    .swiftPackageDescribeExpectedExecutableOwnerUserID,
+                ownerGroupID:
+                    contract
+                    .swiftPackageDescribeExpectedExecutableOwnerGroupID,
+                permissionMode:
+                    contract
+                    .swiftPackageDescribeExpectedExecutablePermissionMode,
+                linkCount:
+                    contract
+                    .swiftPackageDescribeExpectedExecutableLinkCount,
+                modificationTimeSeconds: 100,
+                modificationTimeNanoseconds: 200,
+                statusChangeTimeSeconds: 300,
+                statusChangeTimeNanoseconds: 400,
+                regularFile: true,
+                openedWithNoSymbolicLinksInPath:
+                    true,
+                closeOnExec: true
+            )
+        let regionDeviceID =
+            mappedDeviceID ?? descriptorDeviceID
+        let regionInode =
+            mappedInode ?? descriptorInode
+        return PrimeNativeNeuralGateExternalChildCaptureEvidence(
+            supervisorProcessIdentifier:
+                supervisorProcessIdentifier,
+            childProcessIdentifier:
+                childProcessIdentifier,
+            capabilityCalibrationPassed: true,
+            posixSpawnStartSuspendedFlag:
+                0x0080,
+            posixSpawnCloseOnExecDefaultFlag:
+                0x4000,
+            appliedSpawnFlags: 0x4080,
+            posixSpawnReturnCode: 0,
+            procPIDRegionPathInfoFlavor: 8,
+            procRegionWithPathInfoByteCount:
+                1_272,
+            descriptorOpenedMonotonicNanoseconds:
+                1_000,
+            spawnReturnedMonotonicNanoseconds:
+                2_000,
+            mappedRegionCapturedMonotonicNanoseconds:
+                3_000,
+            descriptorRevalidatedBeforeResumeMonotonicNanoseconds:
+                4_000,
+            sigcontDeliveredMonotonicNanoseconds:
+                5_000,
+            sigcontReturnCode: 0,
+            childTerminationObservedMonotonicNanoseconds:
+                6_000,
+            childReapedMonotonicNanoseconds:
+                6_000,
+            descriptorRevalidatedAfterReapMonotonicNanoseconds:
+                7_000,
+            preSpawnDescriptor: descriptor,
+            preResumeDescriptor: descriptor,
+            postReapDescriptor: descriptor,
+            allMappedRegionQueries: [
+                PrimeNativeNeuralGateMappedRegionQueryObservation(
+                    queryAddress: 0,
+                    returnedByteCount: 1_272,
+                    region:
+                        PrimeNativeNeuralGateMappedExecutableRegionObservation(
+                            address: 0x1_000,
+                            byteCount: 0x1_000,
+                            fileOffset: 0,
+                            protection: 5,
+                            deviceID: regionDeviceID,
+                            inode: regionInode
+                        )
+                ),
+                PrimeNativeNeuralGateMappedRegionQueryObservation(
+                    queryAddress: 0x2_000,
+                    returnedByteCount: 1_272,
+                    region:
+                        PrimeNativeNeuralGateMappedExecutableRegionObservation(
+                            address: 0x2_000,
+                            byteCount: 0x1_000,
+                            fileOffset: 0x1_000,
+                            protection: 1,
+                            deviceID: regionDeviceID,
+                            inode: regionInode
+                        )
+                ),
+            ],
+            terminalMappedRegionQueryAddress:
+                0x3_000,
+            terminalMappedRegionQueryReturnByteCount:
+                0,
+            terminalMappedRegionQueryErrno:
+                0,
+            mappedRegionEnumerationCompleted:
+                true,
+            exactPIDWaitObservation:
+                PrimeNativeNeuralGateExactPIDWaitObservation(
+                    requestedProcessIdentifier:
+                        childProcessIdentifier,
+                    returnedProcessIdentifier:
+                        childProcessIdentifier,
+                    waitOptions: 0,
+                    rawWaitStatus: 0,
+                    returnedMonotonicNanoseconds:
+                        6_000
+                ),
+            deadlineExpired: false,
+            sigtermDelivered: false,
+            sigkillDelivered: false,
+            procPIDPathUsedOnlyAsTelemetry:
+                true,
+            contract: contract
+        )
+    }
+
+    private func trustedExternalChildCapture(
+        evidence:
+            PrimeNativeNeuralGateExternalChildCaptureEvidence,
+        role:
+            PrimeNativeNeuralGateReleaseProcessRole,
+        standardOutputData: Data,
+        swiftPackageExecutableAbsolutePath:
+            String =
+                "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-package",
+        mappedChildMainImageAbsolutePath:
+            String =
+                "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-package",
+        workingDirectoryAbsolutePath:
+            String =
+                "/private/tmp/ergentics-prime",
+        descriptorReadDataOverride: Data? = nil,
+        launchObservationOverride:
+            PrimeNativeNeuralGateTrustedExternalChildLaunchObservation?
+                = nil,
+        streamLifecycleObservationOverride:
+            PrimeNativeNeuralGateTrustedExternalChildStreamLifecycleObservation?
+                = nil
+    ) throws
+        -> PrimeNativeNeuralGateTrustedExternalChildCapture
+    {
+        let contract =
+            Plan.frozenV1.sourceExecutionBinding
+        let descriptorReadData: Data
+        if let descriptorReadDataOverride {
+            descriptorReadData =
+                descriptorReadDataOverride
+        } else {
+            descriptorReadData =
+                try frozenSwiftPackageExecutableData()
+        }
+        let launchObservation =
+            launchObservationOverride
+            ?? PrimeNativeNeuralGateTrustedExternalChildLaunchObservation(
+                role: role,
+                exactArguments:
+                    contract
+                    .swiftPackageDescribeExactArguments,
+                directProcessWithoutShell:
+                    true,
+                workingDirectoryAbsolutePath:
+                    workingDirectoryAbsolutePath,
+                workingDirectoryIsValidatedPrimeRoot:
+                    true,
+                environmentKeyCount: 0,
+                standardInputPolicy: "eof_v1",
+                maximumWallSeconds:
+                    contract
+                    .swiftPackageDescribeMaximumWallSeconds,
+                terminationControlPolicy:
+                    contract
+                    .swiftPackageDescribeTerminationEscalationPolicy
+            )
+        let streamLifecycleObservation =
+            streamLifecycleObservationOverride
+            ?? PrimeNativeNeuralGateTrustedExternalChildStreamLifecycleObservation(
+                maximumStandardOutputBytes:
+                    contract
+                    .swiftPackageDescribeMaximumStandardOutputBytes,
+                standardOutputOverflowed: false,
+                standardOutputDrainCompleted: true,
+                maximumStandardErrorBytes:
+                    contract
+                    .swiftPackageDescribeMaximumStandardErrorBytes,
+                standardErrorOverflowed: false,
+                standardErrorDrainCompleted: true
+            )
+        return try PrimeNativeNeuralGateTrustedExternalChildCapture(
+            evidence: evidence,
+            swiftPackageExecutableAbsolutePath:
+                swiftPackageExecutableAbsolutePath,
+            mappedChildMainImageAbsolutePath:
+                mappedChildMainImageAbsolutePath,
+            descriptorReadSnapshot:
+                evidence.preSpawnDescriptor,
+            descriptorReadData:
+                descriptorReadData,
+            standardOutputData:
+                standardOutputData,
+            standardErrorData: Data(),
+            launchObservation:
+                launchObservation,
+            streamLifecycleObservation:
+                streamLifecycleObservation
+        )
+    }
+
+    private func frozenSwiftPackageExecutableData()
+        throws -> Data
+    {
+        try Data(
+            contentsOf: URL(
+                fileURLWithPath:
+                    "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-package"
+            )
+        )
     }
 
     private func framedChunk(

@@ -23,11 +23,12 @@ This short slice freezes that boundary in
 `PrimeNativeNeuralGateFixtureReplayPlan.frozenV1`. It deliberately does not
 publish another projection receipt. The next slice must implement the frozen
 probe, verifier, dedicated historical worker, independent external-child
-mapped-region-vnode SwiftPM capture, fail-closed SwiftPM child lifecycle,
-typed worker-artifact recomputation, and exact realized path-and-metadata
-inventory gate. Its
+initial-suspended mapped-region-vnode capture of the direct `swift-package`
+executable, fail-closed capability calibration and child lifecycle, typed
+worker-artifact recomputation, and exact realized path-and-metadata inventory
+gate. Its
 canonical JSON content SHA-256 is
-`17f19feb26869b77d88964855943c45ff91a65b8892b67e9926d5edb02366dda`.
+`d9af927fd7b6056aa0f1e61b7828b82e6bf7f1a630f2e9efa9df5bedc23019f6`.
 
 ## Why the split is mandatory
 
@@ -191,29 +192,110 @@ IDs, or verdicts can never become expectations.
 
 Before executing either arm, the future probe must capture a complete current
 clean Prime Swift source snapshot including every compiled adaptation,
-supervisor, and worker path. Probe and verifier must each directly run
-`swift package describe --type json` as a bounded no-shell child with an empty
-environment, stdin at EOF, asynchronously drained bounded output, explicit
-no-overflow observations, typed clean exit, deadline/`SIGTERM`/two-second
-wait/`SIGKILL` escalation, observed death, `waitpid` reap, and unchanged Prime
-Git/source state. A parseable JSON prefix is never accepted after an output
-cap is crossed. Both absolute executable paths must be standardized before
-capture.
+supervisor, and worker path. Probe and verifier must each directly run the
+frozen Xcode 26.6 build 17F113 `swift-package` byte image as
+`swift-package describe --type json`, not the `/usr/bin/swift` tool shim, as a
+bounded no-shell child with an empty environment, stdin at EOF,
+asynchronously drained bounded output, explicit no-overflow observations,
+typed clean exit, deadline/`SIGTERM`/two-second wait/`SIGKILL` escalation,
+observed death, exact-PID `waitpid` reap, and unchanged Prime Git/source state.
+A parseable JSON prefix is never accepted after an output cap is crossed.
 
-The launch-file path/hash declaration and a `proc_pidpath` pathname are
-explicitly non-authoritative. Each role-specific record must instead observe
-the live external child's mapped-region vnode while the child is running,
-then join that observed device/inode identity to a no-symlink descriptor of
-the standardized path and to the descriptor-read bytes:
-`external_child_mapped_region_vnode_then_descriptor_device_inode_and_bytes_join_v1`.
-The trusted native external-child observation mechanism is required before
-execution; it is not implemented and has no observed evidence in this
-contract-only slice. The two records must bind one byte-identical JSON output
-and the same mapped-region vnode/descriptor/byte identity. That evaluated
-output must reconcile the exact selected ten-target authority subgraph,
+The exact `swift-package` descriptor is opened before spawn as a regular file,
+with no symlinks allowed anywhere in the path and `FD_CLOEXEC` observed on the
+held descriptor. Spawn applies both `POSIX_SPAWN_START_SUSPENDED` (`0x0080`)
+and `POSIX_SPAWN_CLOEXEC_DEFAULT` (`0x4000`), exactly `0x4080`. The typed
+evidence sequence is descriptor open, successful spawn return, complete
+mapped-region enumeration while the child is suspended, descriptor
+revalidation before resume, successful `SIGCONT`, observed child termination,
+exact-PID reap, and descriptor revalidation after reap. Before
+`SIGCONT`, the supervisor enumerates all regions with
+`PROC_PIDREGIONPATHINFO`, advancing only by checked
+`pri_address + pri_size`, and requires at least one file-offset-zero mapped
+executable region whose vnode equals the held descriptor device/inode. The
+record carries every query address, returned struct byte count, returned
+region, the checked next address, and a terminal zero-byte/no-error query.
+Missing, duplicated, non-progressing, overflowing, truncated, or
+non-terminal transcripts abstain. The exact-PID reap carries the requested
+PID, returned PID, wait options, raw wait status, derived exit/signal/core
+facts, and monotonic return time; clean exit zero is derived rather than
+asserted. Successful records also carry zero `posix_spawn`/`SIGCONT` return
+codes and prove that the deadline did not expire and neither escalation signal
+was delivered. The
+pre-spawn, pre-resume, and post-reap descriptor snapshots must agree exactly
+on identity, metadata, bytes, and SHA-256. The launch path, `proc_pidpath`
+pathname, and locally observed code-sign fields remain telemetry, not identity
+authority. No Apple trust claim is made. The capture authority is:
+`primecore_trusted_external_child_descriptor_open_start_suspended_full_region_query_transcript_mapped_vnode_join_pre_resume_stability_sigcont_raw_exact_pid_wait_reap_post_reap_stability_v3`.
+
+Decoded record fields cannot validate themselves. Public validation also
+requires a non-`Codable` trusted-capture capability that callers cannot
+construct. It binds the role, exact arguments and shell-free launch, exact
+working directory plus validated-Prime-root result, empty environment, stdin
+EOF, deadline/termination policy, descriptor-read-byte-derived identity,
+full region transcript, exact wait result, launch and mapped-image telemetry
+paths, stream limits/overflow/drain outcomes, and separately drained
+stdout/stderr bytes. The future PrimeCore factory must read/hash those bytes
+through the same held descriptor represented by its `fstat` snapshot and
+descriptor-validate the Prime working root; path-loaded bytes or a caller
+Boolean cannot establish live capture authority. The capability is transient
+and is not an artifact substitute.
+
+This path uses Apple's version-sensitive libproc ABI, so a native startup
+capability calibration is mandatory. A denied query, ABI mismatch, incomplete
+or non-progressing enumeration, identity/byte instability, output overflow,
+or lifecycle failure is internal `ABSTAIN`; no accepted record is emitted.
+The trusted adapter is required before execution and is not implemented in
+this contract-only slice. The two role records must bind one byte-identical
+JSON output and the same direct `swift-package` mapped-vnode/descriptor/byte
+identity. That evaluated output must reconcile the exact selected ten-target
+authority subgraph,
 including target type, path, direct local dependencies, empty product
 dependencies, and complete Swift source lists. This is not a claim that the
 whole package contains only ten targets.
+
+The feasibility correction was measured on the M5 host before implementation.
+Suspending `/usr/bin/swift` bound only its 118,928-byte tool shim. Suspending
+the direct 23,293,616-byte arm64 `swift-package` image produced four mapped
+regions matching its exact descriptor device/inode, then exited zero after
+`SIGCONT` with 20,959 stdout bytes and empty stderr. The image's full-file
+SHA-256 is
+`dc1a5f5bd4f05be81b8cc4a4bc6e0fd8846210e4cb829062d0fed3d03f79b753`;
+the contract also pins regular-file type, owner UID/GID `0`/`0`, mode `0755`,
+and link count `1`; live capture additionally requires no-symlink-any open and
+`FD_CLOEXEC`.
+The direct and shim routes produced byte-identical graph output with SHA-256
+`59ceb088e1d5d1d15f7762b5049ccf7b410ff8002e549044cb7a221f537fe939`.
+This is feasibility evidence only, not a Stage-B execution record.
+
+The measured platform was macOS 26.5.2 build 25F84, Darwin 25.5.0
+`xnu-12377.121.10~1`, Xcode 26.6 build 17F113, and macOS SDK 26.5 build 25F70.
+The local SDK headers are byte-pinned as follows:
+
+| Header | SHA-256 |
+|---|---|
+| `usr/include/sys/spawn.h` | `8e73a88c3f63dae77ebf831737942e82ee7c78a7af1446fdbb1ee7ac6804a7e4` |
+| `usr/include/sys/proc_info.h` | `e427fa96b348537b21552b9de71e01039410bcad2cedee5584c5e5fddafd70fc` |
+| `usr/include/libproc.h` | `246d87709fc6b9157ce5cf3c475656ac48e0e1ae8bbdc46cf45acd34294448cd` |
+| `usr/include/sys/fcntl.h` | `805fd8c695f8e5e1c327b6852382cc5533738bbfd8f18bc11f850531166e4fe8` |
+
+Primary implementation anchors are the Apple OSS XNU files at source commit
+`f6217f891ac0bb64f3d375211650a4c1ff8ca1ea`:
+[`spawn.h`](https://github.com/apple-oss-distributions/xnu/blob/f6217f891ac0bb64f3d375211650a4c1ff8ca1ea/bsd/sys/spawn.h)
+and
+[`kern_exec.c`](https://github.com/apple-oss-distributions/xnu/blob/f6217f891ac0bb64f3d375211650a4c1ff8ca1ea/bsd/kern/kern_exec.c)
+for start-suspended semantics,
+[`proc_info.h`](https://github.com/apple-oss-distributions/xnu/blob/f6217f891ac0bb64f3d375211650a4c1ff8ca1ea/bsd/sys/proc_info.h)
+and
+[`proc_info.c`](https://github.com/apple-oss-distributions/xnu/blob/f6217f891ac0bb64f3d375211650a4c1ff8ca1ea/bsd/kern/proc_info.c)
+for mapped-region vnode observations, and
+[`fcntl.h`](https://github.com/apple-oss-distributions/xnu/blob/f6217f891ac0bb64f3d375211650a4c1ff8ca1ea/bsd/sys/fcntl.h)
+for `O_NOFOLLOW_ANY`. The same source snapshot's
+[`libproc.h`](https://github.com/apple-oss-distributions/xnu/blob/f6217f891ac0bb64f3d375211650a4c1ff8ca1ea/libsyscall/wrappers/libproc/libproc.h)
+labels that interface private and changeable. That published XNU snapshot is a
+source reference, not a claim that it exactly equals the newer running kernel;
+the pinned local headers, startup capability calibration, and fail-closed
+`ABSTAIN` are therefore mandatory.
 
 The probe then descriptor-captures its running Release executable. It also copies
 the Stage-A terminal receipt and every descriptor-bound parent artifact,
@@ -254,12 +336,16 @@ same-process PID and the same sealed worker image. The verifier must validate
 each record before applying the explicit prevalidated-record topology join.
 The supervisor and worker records bind descriptor-captured same-process
 running images to a shared source identity and declared target closure. The
-SwiftPM records separately require standardized-path, external-child
-mapped-region-vnode, descriptor device/inode/bytes, no-overflow, clean
-termination, observed-death, and reap evidence. Target names remain declared
-rather than target-specifically embedded, so this does not prove that a
-particular binary was reproducibly built from the named target or claim
-independently reproducible-build provenance.
+SwiftPM records separately bind the frozen full-file SHA-256, byte count,
+root ownership, `0755` mode, and single link to stable pre-spawn, pre-resume,
+and post-reap descriptor snapshots. They also require the typed
+start-suspended full mapped-region query transcript and descriptor-vnode join
+before `SIGCONT`, then raw exact-PID wait/clean reap, bounded no-overflow
+output, and the matching non-`Codable` trusted-capture capability. Target names
+remain declared rather than
+target-specifically embedded, so this does not prove that a particular binary
+was reproducibly built from the named target or claim independently
+reproducible-build provenance.
 
 All four roots must be absolute, standardized, non-root, NUL-free, and
 unchanged by symlink resolution. The Stage-A and output roots must be distinct
@@ -454,12 +540,14 @@ A future terminal Stage-B pass requires:
 - all eleven source inputs resolved and copied;
 - all eleven typed donor-to-Prime adaptation proofs recomputed, with the
   compiled target source closure and adapted-output hashes bound;
-- independent direct `swift package describe --type json` captures from probe
-  and verifier, with live child PIDs bound through external-child
-  mapped-region-vnode observation to the same standardized no-symlink
-  descriptor device/inode/bytes identity, overflow-free stream drains, clean
-  termination, observed death/reap, and one byte-identical evaluated authority
-  subgraph bound to the unchanged source snapshot and `Package.swift`;
+- independent direct `swift-package describe --type json` captures from probe
+  and verifier, with mandatory libproc capability calibration and each
+  suspended child PID bound from its initial mapped executable vnode to the
+  same preopened no-symlink-any descriptor device/inode/stable-byte identity,
+  a complete checked query/terminal transcript, raw exact-PID wait/clean reap,
+  a PrimeCore-produced non-`Codable` live-capture capability, overflow-free
+  stream drains, and one byte-identical evaluated authority subgraph bound to
+  the unchanged source snapshot and `Package.swift`;
 - a clean current Prime source snapshot that remains unchanged, plus exact
   running Release executable bindings and a validated six-process topology for
   probe, verifier, their two SwiftPM children, and two historical workers;
@@ -530,7 +618,7 @@ never repair a mismatch, and never touch the Prime source, companion, or
 
 Immediate implementation prerequisite:
 
-`implement_stage_b_external_child_mapped_region_vnode_capture_swiftpm_fail_closed_lifecycle_historical_worker_typed_artifact_recomputation_corrected_fixed_cap_eos_probe_verifier_and_exact_path_metadata_inventory`
+`implement_stage_b_primecore_trusted_external_child_factory_direct_swift_package_executable_suspended_full_region_query_transcript_mapped_vnode_descriptor_read_fstat_hash_capability_calibration_raw_exact_pid_wait_fail_closed_stream_lifecycle_historical_worker_typed_artifact_recomputation_corrected_fixed_cap_eos_probe_verifier_and_exact_path_metadata_inventory`
 
 After a real dual-arm Stage-B pass:
 

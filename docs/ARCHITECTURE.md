@@ -112,14 +112,24 @@ terminal Stage-B mechanics pass. Root containment/disjointness, unchanged
 companion pre/post identity, exact copied-donor paths, lossless copied Stage-A
 descriptor closure, typed donor-to-Prime adaptation proofs, the current clean
 Prime source closure, required compiled-source/process record schemas,
-independent direct SwiftPM graph captures with external-child mapped-region
-vnode evidence joined to standardized no-symlink descriptor
-device/inode/bytes, overflow-free drains, typed clean termination, observed
-death/reap, and distinct descriptor-captured Release executables are part of
-the same contract. The SwiftPM launch-file declaration and `proc_pidpath`
-pathname are non-authoritative; the required native external-child
-mapped-region observation mechanism is not implemented. No Stage-B process
-record has been observed yet. Because the
+independent direct `swift-package describe` captures of the frozen Xcode 26.6
+build 17F113 byte image, its exact contract-pinned full-file hash and
+descriptor metadata, and the typed descriptor-open → complete checked
+suspended region-query transcript/mapped-vnode join → pre-resume stability →
+`SIGCONT` → raw exact-PID wait/clean reap → post-reap stability sequence are
+part of the same contract. A PrimeCore-only non-`Codable` trusted-capture
+capability must bind the role, exact launch/working-root policy, identity
+derived from descriptor-read bytes, the transcript/wait result, paths, stream
+limits/overflow/drain outcomes, and separately drained bytes before public
+validation accepts a record. The future factory must read/hash bytes through
+the same held descriptor represented by its `fstat` snapshot and
+descriptor-validate the Prime working root. Native capability calibration,
+overflow-free drains, typed clean termination,
+observed death/reap, and distinct descriptor-captured Release executables are
+also required. The direct executable launch path, `proc_pidpath` pathname, and
+code-sign fields are non-authoritative telemetry; no Apple trust claim is
+made. The native calibrated external-child factory is not implemented. No
+Stage-B process record has been observed yet. Because the
 source-faithful historical fixture inherits traps, a sealed Swift worker owns
 the full historical arm. Probe and verifier supervise separate bounded worker
 invocations; successful stdout/stderr are empty, worker death/reap and exact
@@ -142,12 +152,13 @@ blocks a correctly scoped mechanics pass.
 
 - first bind the donor-to-Prime adaptation proof, copied/revalidated Stage-A
   descriptor closure, current clean Prime source closure, independently
-  captured SwiftPM authority subgraph and external-child mapped-region
-  vnode/descriptor/byte identity with overflow-free termination/reap evidence,
-  validated six-process records, distinct descriptor-captured Release
-  probe/verifier images, sealed historical worker, exact pre-receipt realized
-  path-and-metadata inventory, and separate typed artifact-content validation
-  required by the frozen Stage-B wrapper;
+  captured SwiftPM authority subgraph, complete external-child region-query
+  transcript, vnode/descriptor/byte identity, raw exact-PID wait/clean reap,
+  non-`Codable` trusted-capture capability, and overflow-free stream evidence.
+  Also bind validated six-process records, distinct descriptor-captured Release
+  probe/verifier images, the sealed historical worker, exact pre-receipt
+  realized path-and-metadata inventory, and separate typed artifact-content
+  validation required by the frozen Stage-B wrapper;
 - reconstruct the source-pinned historical fixture in a Prime-owned Swift
   forensic replay target without treating its target-derived construction as
   eligible semantics;

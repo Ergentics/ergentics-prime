@@ -14,6 +14,8 @@ final class PrimeNativeNeuralGateFixtureReplayPublicAPITests:
             PrimeNativeNeuralGateSwiftPackageDescribeCaptureRecord,
         contract:
             PrimeNativeNeuralGateSourceExecutionBindingContract,
+        trustedExternalChildCapture:
+            PrimeNativeNeuralGateTrustedExternalChildCapture,
         planSHA256: String,
         supervisorProcessIdentifier: Int32,
         primeSourceState:
@@ -24,12 +26,12 @@ final class PrimeNativeNeuralGateFixtureReplayPublicAPITests:
             PrimeNativeNeuralGateSourceFileIdentity,
         standardOutput:
             PrimeArtifactBinding,
-        swiftDriverLaunchFileData: Data,
-        mappedChildMainImageData: Data,
         standardOutputData: Data
     ) throws {
         try record.validateForRunningRelease(
             against: contract,
+            trustedExternalChildCapture:
+                trustedExternalChildCapture,
             expectedPlanSHA256: planSHA256,
             expectedSupervisorProcessIdentifier:
                 supervisorProcessIdentifier,
@@ -41,10 +43,6 @@ final class PrimeNativeNeuralGateFixtureReplayPublicAPITests:
                 packageManifest,
             expectedStandardOutput:
                 standardOutput,
-            swiftDriverLaunchFileData:
-                swiftDriverLaunchFileData,
-            mappedChildMainImageData:
-                mappedChildMainImageData,
             standardOutputData:
                 standardOutputData
         )

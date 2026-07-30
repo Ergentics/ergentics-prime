@@ -437,15 +437,26 @@ mechanics evidence only.
 The frozen Stage-B plan also requires a typed source proof for every
 donor-to-Prime adaptation, a lossless independently revalidated copy of the
 Stage-A descriptor closure, a complete current clean Prime Swift source
-snapshot, required compiled-source/process record schemas, independent direct
-SwiftPM authority-subgraph captures with external-child mapped-region vnode
-evidence joined to standardized no-symlink descriptor device/inode/bytes,
-overflow-free drains, typed clean termination, observed death/reap,
-descriptor-bound running Release probe/verifier executables, two SwiftPM
-children, two historical workers, and one sealed Swift worker image. The
-launch-file declaration and `proc_pidpath` pathname are non-authoritative, and
-the native external-child mapped-region observation mechanism is not yet
-implemented. None of those Stage-B records has been observed yet. The Stage-A
+snapshot, required compiled-source/process record schemas, and independent
+direct `swift-package describe` authority-subgraph captures of the frozen
+Xcode 26.6 build 17F113 byte image. Its full-file hash and descriptor metadata
+are pinned, and typed evidence orders descriptor open, a complete checked
+suspended region-query transcript/mapped-vnode join, pre-resume stability,
+`SIGCONT`, raw exact-PID wait/clean reap, and post-reap stability after native
+capability calibration. A PrimeCore-produced non-`Codable` capability must
+bind the role, exact launch/working-root policy, identity derived from
+descriptor-read bytes, paths, the transcript/wait result, stream
+limits/overflow/drain outcomes, and separately drained bytes before public
+validation accepts the decoded record. The future factory must read/hash bytes
+through the same held descriptor represented by its `fstat` snapshot and
+descriptor-validate the Prime working root. Overflow-free drains, typed clean
+termination, descriptor-bound running
+Release probe/verifier executables, two SwiftPM children, two historical
+workers, and one sealed Swift worker image are also required. The direct
+executable launch path, `proc_pidpath` pathname, and code-sign fields are
+non-authoritative telemetry; no Apple trust claim is made. The native
+calibrated external-child factory is not yet implemented. None of those
+Stage-B records has been observed yet. The Stage-A
 copy is 35 reachable typed bindings plus its separately pinned terminal
 receipt, or 36 copied artifacts total. Separate bounded probe/verifier worker
 invocations own the complete
@@ -869,11 +880,15 @@ Deliver:
   observations;
 - typed donor-to-Prime adaptation proof, copied and revalidated Stage-A
   descriptor evidence, complete Prime source closure, independent SwiftPM
-  captures with external-child mapped-region vnode/descriptor/byte and
-  overflow-free termination/reap evidence, required six-process/image records,
-  distinct bound Release probe/verifier executables, exact pre-receipt
-  path-and-metadata inventory, separate typed artifact-content validation, and
-  a sealed bounded historical worker;
+  captures of the frozen Xcode 26.6 `swift-package` image with exact full-file
+  hash/metadata, typed descriptor-open → complete checked suspended
+  region-query transcript/mapped-vnode join → pre-resume stability →
+  `SIGCONT` → raw exact-PID wait/clean reap → post-reap stability evidence, a
+  PrimeCore-only non-`Codable` live-capture capability, overflow-free bounded
+  streams, required
+  six-process/image records, distinct bound Release probe/verifier
+  executables, exact pre-receipt path-and-metadata inventory, separate typed
+  artifact-content validation, and a sealed bounded historical worker;
 - revised Prime EngineRecommend that separates canary, broad-language,
   profile, and product claims.
 
@@ -977,11 +992,11 @@ The non-training implementation slices now stand as follows:
    - the revision/path/SHA resolver and bounded Stage-A source projection are
      implemented with a canonical Release receipt;
    - the dual-arm Stage-B adapter/execution contract is frozen, but its
-     Prime-owned immutable fixtures, native external-child mapped-region
-     SwiftPM capture mechanics, fail-closed SwiftPM lifecycle, typed
-     worker-artifact recomputation, sealed historical worker, probe, verifier,
-     exact path-and-metadata inventory evidence, separately typed
-     artifact-content validation, and receipt do not yet exist;
+     Prime-owned immutable fixtures, native full-region-transcript SwiftPM
+     capture factory and non-`Codable` trust capability, raw exact-PID wait
+     lifecycle, typed worker-artifact recomputation, sealed historical worker,
+     probe, verifier, exact path-and-metadata inventory evidence, separately
+     typed artifact-content validation, and receipt do not yet exist;
    - Stage B must add no PMHNP runtime dependency and must not write to the
      companion tree;
    - document exclusions, especially Python/Core ML bridge and shell-derived
