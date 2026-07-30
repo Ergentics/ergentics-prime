@@ -178,16 +178,28 @@ the 2026-07-26 pickup.
    canonical private-revision receipt answers only local public-API
    state-transport feasibility and is not Metal training or functional
    authority.
-2. Run one bounded interrupted MLX
-   Swift/Metal continuation canary with complete model, optimizer, schedule,
-   RNG/domain, cursor, executable, dependency, metallib, and device evidence.
-3. Compare the resumed Metal trajectory against a preregistered uninterrupted
+2. Preserve the complete local CPU evidence root in separately controlled
+   off-device storage and verify it there.
+3. Resolve and byte-verify only the four Prime-owned exact-3B/CPU evidence
+   bindings required by this AdamW slice, then run only the
+   Prime/private-MLX source/dependency/runtime compatibility checks.
+4. Run one bounded two-step interrupted MLX Swift/Metal continuation canary on
+   the existing exact `ergentics_prime_native_3b_gqa_v1` geometry,
+   operator-selected for bounded mechanics only, with complete model,
+   optimizer, schedule, RNG/domain, cursor, executable, dependency, metallib,
+   and device evidence. This does not overturn the schema-6 `ABSTAIN` or
+   authorize the scale. Do not create a new model family or rerun the 10M
+   mechanics and 15-trial profile screens wholesale.
+5. Compare the resumed Metal trajectory against a preregistered uninterrupted
    control. Record exactness where observed; otherwise use a declared
    numerical/behavioral tolerance and keep resumable authority `ABSTAIN`.
-4. Reconcile the new receipt into this map without deleting or relabeling the
+6. Reconcile the new receipt into this map without deleting or relabeling the
    companion reports.
-5. Only after the Metal resume gate may EngineRecommend reassess executor
+7. Only after the Metal resume gate may EngineRecommend reassess executor
    feasibility, profile calibration, or a first-party functional canary.
+
+Tokenizer/corpus/evaluator migration, NeuralKit execution, and PMHNP consumer
+changes are not part of this AdamW slice.
 
 ## Typed restore resolution
 

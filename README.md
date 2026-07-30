@@ -21,6 +21,9 @@ scientific, clinical, security, regulatory, or federal compliance.
 The preserved companion/Lab Metal and quant history, its 55-commit resolution
 ledger, and the non-overwrite continuation rule are recorded in
 [`docs/PMHNP-METAL-QUANT-ARC-RESOLUTION-2026-07-29.md`](docs/PMHNP-METAL-QUANT-ARC-RESOLUTION-2026-07-29.md).
+The typed no-rebuild inventory between Prime, `prime-runtime`, NeuralKit, and
+the Lab is recorded in
+[`docs/PRIME-NEURALKIT-ARC-CONTINUITY-2026-07-29.md`](docs/PRIME-NEURALKIT-ARC-CONTINUITY-2026-07-29.md).
 The exact private-MLX migration sequence, narrow commit-identity rewrite
 boundary, recovery anchors, and post-migration evidence gates are recorded in
 [`docs/PRIME-PICKUP-PRIVATE-MLX-MIRROR-2026-07-29.md`](docs/PRIME-PICKUP-PRIVATE-MLX-MIRROR-2026-07-29.md).
@@ -34,11 +37,13 @@ boundary, recovery anchors, and post-migration evidence gates are recorded in
 - MLX/Metal execution through maintained model, differentiation, optimizer,
   and device primitives.
 
-The 512-entry profile vocabulary is only a tensor dimension today. A native
-tokenizer manifest, deterministic first-party compositional corpus, full
-training loop, independent evaluator, statistical battery, and SZ
-fingerprinting are planned but are not implemented or claimed by the initial
-mechanics slice.
+Prime's current mechanics target uses the same 512-entry model vocabulary as
+the existing companion arc. The Swift tokenizer manifest, deterministic
+first-party compositional corpus, native training executor, fixed-cap/EOS
+evaluation contract, NeuralKit SZ/triadic/mutation gate, and 15-trial profile
+screen already exist at the frozen companion revision. They are not yet
+migrated into Prime's training authority and do not imply an accepted
+checkpoint or functional-language result.
 
 The first GPU action is the frozen
 `exact_3b_fp32_allocation_update_probe_b1_s128_a1`: one optimizer step at
@@ -178,9 +183,11 @@ successful restore. If root emptiness cannot be established or a timed-out
 child's termination cannot be observed, normal failure-receipt publication is
 withheld to avoid mixing runs or claiming a completed process boundary.
 
-Even an exact CPU result authorizes only one bounded interrupted Metal
-continuation canary. It does not authorize a 3B checkpoint, functional
-training, quantization, product promotion, or a broad-language claim.
+Even an exact CPU result authorizes only one bounded two-step interrupted
+Metal continuation canary on the existing exact 3B profile. It authorizes the
+temporary full-state checkpoint required by that gate; it does not authorize
+a retained functional checkpoint, long training, quantization, product
+promotion, or a broad-language claim.
 
 The canonical Release gate bound to private revision
 `68904d54b72871f26968261ae05d4fbb7c5e3142` observed exact continuation

@@ -24,22 +24,44 @@ The implemented authority chain is intentionally narrow:
    records, device observations, and optimizer state observations. Missing
    observations remain `nil`; they are never rewritten as `false`.
 
-The first-party tokenizer/corpus, training receipts, independent Swift
-evaluator, raw fixed-cap/EOS generation artifacts, statistical battery,
-triadic audit, SZ fingerprint, and mutation-sweep receipts are subsequent
-admission stages. They do not exist yet and are not implied by a successful
-allocation probe. The Engine can recommend a later arm only after those
-corresponding artifacts exist and resolve.
+The first-party tokenizer/corpus, historical training receipts, independent
+Swift evaluator, fixed-cap/EOS generation contract, triadic audit, SZ
+fingerprint, and mutation-sweep contract already exist in the frozen
+companion/NeuralKit arc. They are upstream evidence and migration inputs, not
+outputs of Prime's allocation probe. PMHNP is a read-only migration oracle,
+not Prime's runtime or write target. Prime must verify and materialize its own
+immutable fixtures/adapters without rebuilding the scientific contracts or
+adding a PMHNP runtime dependency. No accepted trained checkpoint or real
+full-pool NeuralKit regrade exists yet.
 
-## Admission sequence
+`PrimeNativeArcContinuityPlan.frozenV1` inventories that no-rebuild boundary
+and requires Prime-produced research evidence to flow downstream into
+NeuralKit. It does not resolve or hash-check the external repositories by
+itself; a Swift compatibility resolver remains pending. The Prime tensor core
+does not import its consumer/regrader.
 
-- mechanics/allocation calibration;
-- factorized-seed isolation;
-- fixed-token short-horizon calibration;
-- calibration-bound matched-active-wall comparison;
-- convergence-capped execution only after exact optimizer resume exists;
-- exhaustive 18,432-row evaluation of a preregistered candidate;
-- independent Swift regrade, statistics, SZ fingerprint, and mutation sweep.
+## Current AdamW admission sequence
+
+- preserve the local CPU typed-restore evidence off-device;
+- resolve and hash-check only the four Prime-owned exact-3B/CPU evidence
+  bindings required by the current AdamW slice;
+- run only the required Prime/private-MLX source, dependency, and runtime
+  compatibility checks;
+- prove exact typed AdamW interrupted Metal continuation on the existing exact
+  3B geometry, operator-selected for bounded mechanics only.
+
+## Separately scoped future admission
+
+- reuse archived mechanics, factorized-seed, profile-screen, and synthetic
+  NeuralKit evidence without wholesale reruns;
+- durably bind the resulting checkpoint and evaluation shards;
+- execute the frozen 18,432-row fixed-cap/EOS evaluation on a preregistered
+  trained checkpoint;
+- run the existing independent NeuralKit regrade, statistics, SZ fingerprint,
+  triadic audit, and mutation sweep over real artifacts.
+
+This future list is not authorized by the AdamW slice. The current task does
+not migrate tokenizer/corpus/evaluator contracts or execute NeuralKit.
 
 The three fidelity arms are mechanisms, not arbitrary budgets. Wall and
 convergence bounds are derived from a completed fixed-token calibration and
