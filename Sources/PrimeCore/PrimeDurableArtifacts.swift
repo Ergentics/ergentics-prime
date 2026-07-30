@@ -246,6 +246,22 @@ public final class PrimeArtifactRoot: @unchecked Sendable {
         _ = close(descriptor)
     }
 
+    /// Requires an owner-only resolver root, not merely a root that is safe
+    /// from group/world writes. Source snapshots and receipts can contain
+    /// private research material, so this gate requires exact mode `0700`.
+    public func requirePrivateRootMode() throws {
+        var metadata = stat()
+        guard fstat(descriptor, &metadata) == 0,
+              metadata.st_mode & mode_t(S_IFMT)
+                == mode_t(S_IFDIR),
+              metadata.st_uid == geteuid(),
+              metadata.st_mode & mode_t(0o777)
+                == mode_t(0o700) else {
+            throw PrimeDurableArtifactError
+                .untrustedDirectory(directoryURL.path)
+        }
+    }
+
     /// Requires a new run to begin in an empty descriptor-bound root.
     ///
     /// This prevents prior-run success or failure artifacts from being

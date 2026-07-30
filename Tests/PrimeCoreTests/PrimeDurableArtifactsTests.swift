@@ -144,6 +144,22 @@ final class PrimeDurableArtifactsTests: XCTestCase {
         )
     }
 
+    func testPrivateRootModeRequiresExactOwnerOnlyAccess()
+        throws
+    {
+        let root = try PrimeArtifactRoot(
+            directoryURL: temporaryURL
+        )
+        try root.requirePrivateRootMode()
+
+        XCTAssertEqual(chmod(temporaryURL.path, 0o755), 0)
+        XCTAssertThrowsError(
+            try root.requirePrivateRootMode()
+        )
+        XCTAssertEqual(chmod(temporaryURL.path, 0o700), 0)
+        try root.requirePrivateRootMode()
+    }
+
     func testImmutablePublicationVerifiesExactAndRejectsOverwrite()
         throws
     {
