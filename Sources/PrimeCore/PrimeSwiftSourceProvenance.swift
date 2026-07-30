@@ -147,6 +147,7 @@ public enum PrimePinnedHistoricalReleaseSource:
 {
     case nativeGenerationContractProjection20260730
     case nativeFullCorpusReplay20260730
+    case nativeNeuralGateContractProjection20260730
 
     public var sourceIdentitySHA256:
         String
@@ -157,6 +158,9 @@ public enum PrimePinnedHistoricalReleaseSource:
             "a634994a9aedb2803b61353ffd30f0fcd0f1bad4356ce738f7d150f3cd08d2fb"
         case .nativeFullCorpusReplay20260730:
             "d13a817e2918e94972174b78eb1372dd0d4395161fca08b63850e7c2bfbbb08f"
+        case
+            .nativeNeuralGateContractProjection20260730:
+            "c2a144054544b9db68a3765ed3068430cb2ccd284e6477cd6ece26220a8a6091"
         }
     }
 }

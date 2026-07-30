@@ -310,15 +310,52 @@ source snapshot, and executables remain required for live receipt validation.
 
 ## Next boundary
 
-The receipt's exact next prerequisite is:
+The receipt recorded the then-current prerequisite name:
 
 `source_pinned_synthetic_fixture_materialization_and_gate_replay`
 
-That Stage-B gate must reconstruct the source-pinned fixture under Prime-owned
-Swift mechanics, materialize the complete invariant-record set, recompute the
-direct and accelerated fingerprints, execute every historical semantic
-mutation, require exact restoration, and repeat the whole observation in a
-distinct Release verifier.
+The forward audit below refines that historical name into two mandatory arms.
+The historical arm reconstructs the source-pinned fixture, materializes its
+complete invariant-record set, recomputes direct and accelerated fingerprints,
+executes every historical semantic mutation, requires exact restoration, and
+repeats in a distinct Release verifier. The corrected arm separately executes
+prompt-only fixed-cap/EOS construction, its complete records/fingerprints, and
+its leakage-mutation catalog. Neither arm may be silently substituted for the
+other.
+
+The forward source audit found that the pinned historical regression fixture
+constructs zero-shot output length from `target.count`, copies
+`row.expectedCompletion` into the trained prediction, and derives executed
+decision counts from the prediction or target while declaring the decision
+budget target-independent. The historical sweep mutates the declaration; it
+does not independently observe that construction. Stage B is therefore frozen
+as two arms: an exact historical forensic replay that remains `ABSTAIN` on
+target independence, plus a separately named Prime-owned prompt-only
+fixed-cap/EOS fixture. The complete boundary is in
+`PRIME-NATIVE-NEURAL-GATE-FIXTURE-REPLAY-PLAN-2026-07-30.md`.
+
+That boundary additionally freezes source continuity: every donor-to-Prime
+adaptation needs a typed recomputed source proof; the closed Stage-A
+descriptor closure must be copied losslessly and independently revalidated;
+the 35 reachable parent bindings and separately pinned terminal receipt must
+remain distinct in the copy contract; and the current clean Prime source
+snapshot plus required compiled-source/process record schemas, independent
+direct SwiftPM authority-subgraph captures with external-child mapped-region
+vnode evidence joined to standardized no-symlink descriptor
+device/inode/bytes, overflow-free drains, typed clean termination, observed
+death/reap, a validated six-process topology, and distinct running Release
+probe/verifier executables must be bound. The launch-file declaration and
+`proc_pidpath` pathname are non-authoritative, and the native external-child
+mapped-region observation mechanism is not yet implemented. No
+Stage-B record has been observed yet. A sealed Swift worker owns the complete
+trap-bearing historical arm under separate bounded probe and verifier
+invocations; death/reap, exact role-prefix inventory, terminal decoding and
+semantic recomputation, exact pre-receipt realized path-and-metadata inventory,
+and separate typed artifact-content validation are mandatory. Abnormal worker
+outcomes poison the root, accept no result as evidence, and publish no
+successful-execution record or terminal receipt. The fixture never crosses
+that process boundary. A successful
+behavioral replay alone cannot establish adapter equivalence.
 
 Even Stage B remains a synthetic same-implementation mechanics replay. Real
 profile admission is a later Stage C and requires physical three-seed reports,
