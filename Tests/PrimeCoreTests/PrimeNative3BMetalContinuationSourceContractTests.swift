@@ -575,6 +575,39 @@ final class PrimeNative3BMetalContinuationSourceContractTests:
         }
     }
 
+    func testTrainingInputsFailClosedOnEmbeddingRowCollisions()
+        throws
+    {
+        let source = try probeSource()
+        let inputs = try function(
+            containingAll: [
+                "private func workerInputs(",
+                ".collisionFreeTrainingTokens(",
+                "Set(tokens).count",
+                "training input contains repeated token IDs",
+            ],
+            in: source
+        )
+        XCTAssertTrue(
+            inputs.contains(
+                "seeds.trainingSchedule.value"
+            )
+        )
+        XCTAssertTrue(
+            inputs.contains(
+                ".fixedEvaluationSequenceLength"
+            )
+        )
+        XCTAssertFalse(
+            inputs.contains("MLXRandom.randInt")
+        )
+        XCTAssertTrue(
+            source.contains(
+                "private func deterministicRandomInputs("
+            )
+        )
+    }
+
     func testNoExternalModelOrScientificExecutionRoute()
         throws
     {

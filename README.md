@@ -220,6 +220,27 @@ and record identity are receipt-bound. A mismatch or incomplete process
 boundary produces `ABSTAIN`; it does not select a profile or authorize
 training, quantization, language claims, or product use.
 
+The first sealed run at commit `4507fe6` correctly produced `ABSTAIN`: its
+random generator sampled with replacement, exposing the tied embedding to
+repeated-ID contention, and the only control/writer divergence was
+`model.embed_tokens.weight`. MLX's maintained gather backward uses
+floating-point Metal scatter accumulation at that locus. The receipt localizes
+the first divergence but does not contain raw tokens or by itself prove kernel
+causality. Its canonical structural-replay receipt is archived under
+`artifacts/native-3b-metal-continuation-4507fe629a4f-20260730T040459Z/` with
+SHA-256
+`da888aea4eed5445efc1f5c75f4d209629922fee4b790790d36fe5c2503e75fc`.
+The receipt is not a complete artifact root and cannot satisfy descriptor
+replay without the intentionally omitted local executable and bound files.
+
+The mechanics gate now uses a seed-bound odd-stride modular schedule with 128
+distinct IDs from its 256-token synthetic domain. It fails closed unless every
+training input is collision-free. This removes the observed atomic contention
+without changing the exact 3B tied-Llama topology, AdamW, Metal execution,
+process interruption, or exact comparisons. A passing result would prove only
+the declared collision-free synthetic continuation mechanics; arbitrary
+repeated-token training determinism remains unresolved.
+
 Run only from a source-sealed Release build. The artifact root and the parent
 directory of the Metal lease file must be separate, empty/private as
 applicable, precreated directories with mode `0700`:

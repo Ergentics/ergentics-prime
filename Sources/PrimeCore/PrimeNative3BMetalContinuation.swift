@@ -196,6 +196,11 @@ public enum PrimeNative3BMetalContinuationContract {
     public static let artifactKind =
         "prime_native_3b_metal_continuation"
     public static let fixedEvaluationSequenceLength = 128
+    public static let trainingInputContract =
+        "seed_bound_collision_free_128_of_256_odd_stride_modular_schedule"
+    public static let trainingTokenLowerBound = 256
+    public static let trainingTokenDomainSize = 256
+    public static let trainingStepOffsetStride = 73
     public static let requiredPrimeSourceRelativePaths:
         Set<String> = [
             "Sources/PrimeCore/PrimeDurableArtifacts.swift",
@@ -216,6 +221,80 @@ public enum PrimeNative3BMetalContinuationContract {
     /// Successful worker output must remain fully captured within this bound.
     public static let childOutputMaximumByteCount:
         UInt64 = 64 * 1024
+
+    /// Returns one seed-bound synthetic mechanics input without repeated token
+    /// IDs. MLX's maintained gather VJP accumulates repeated embedding rows
+    /// through floating-point Metal atomics, whose arrival order is not a
+    /// byte-exact replay contract. This schedule removes that contention path;
+    /// it does not claim arbitrary repeated-token training determinism.
+    public static func collisionFreeTrainingTokens(
+        seed: UInt64,
+        ordinal: Int
+    ) throws -> [Int32] {
+        let tokenCount =
+            fixedEvaluationSequenceLength
+        let domain = trainingTokenDomainSize
+        guard ordinal >= 0,
+              ordinal < 3,
+              tokenCount > 0,
+              tokenCount <= domain,
+              trainingTokenLowerBound >= 0,
+              trainingTokenLowerBound + domain
+                <= PrimeNativeProfiles.exact3B
+                    .vocabularySize,
+              trainingStepOffsetStride > 0,
+              trainingStepOffsetStride < domain,
+              trainingStepOffsetStride % 2 == 1
+        else {
+            throw PrimeDurableArtifactError
+                .invalidSemantics(
+                    "native 3B collision-free training schedule contract is invalid"
+                )
+        }
+        let baseOffset =
+            Int(seed % UInt64(domain))
+        let positionStride =
+            2
+            * Int(
+                (seed >> 8)
+                    % UInt64(domain / 2)
+            )
+            + 1
+        let stepOffset =
+            (
+                baseOffset
+                    + ordinal
+                    * trainingStepOffsetStride
+            ) % domain
+        let tokens = (0 ..< tokenCount).map {
+            Int32(
+                trainingTokenLowerBound
+                    + (
+                        stepOffset
+                            + $0
+                            * positionStride
+                    ) % domain
+            )
+        }
+        guard tokens.count == tokenCount,
+              Set(tokens).count == tokenCount,
+              tokens.allSatisfy({
+                  $0 >= Int32(
+                      trainingTokenLowerBound
+                  )
+                      && $0
+                          < Int32(
+                              trainingTokenLowerBound
+                                  + domain
+                          )
+              }) else {
+            throw PrimeDurableArtifactError
+                .invalidSemantics(
+                    "native 3B training schedule contains a repeated or out-of-domain token"
+                )
+        }
+        return tokens
+    }
 
     /// Exact flattened topology of the maintained tied-embedding Llama model.
     ///

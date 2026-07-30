@@ -387,6 +387,86 @@ final class PrimeNative3BMetalContinuationContractTests:
         )
     }
 
+    func testTrainingScheduleIsSeedBoundAndCollisionFree()
+        throws
+    {
+        XCTAssertEqual(
+            PrimeNative3BMetalContinuationContract
+                .trainingInputContract,
+            "seed_bound_collision_free_128_of_256_odd_stride_modular_schedule"
+        )
+        let seeds =
+            try PrimeNative3BMetalContinuationContract
+            .frozenSeeds()
+        let schedules = try (0 ..< 3).map {
+            try PrimeNative3BMetalContinuationContract
+                .collisionFreeTrainingTokens(
+                    seed:
+                        seeds.trainingSchedule.value,
+                    ordinal: $0
+                )
+        }
+        for tokens in schedules {
+            XCTAssertEqual(
+                tokens.count,
+                PrimeNative3BMetalContinuationContract
+                    .fixedEvaluationSequenceLength
+            )
+            XCTAssertEqual(
+                Set(tokens).count,
+                tokens.count
+            )
+            XCTAssertTrue(
+                tokens.allSatisfy {
+                    $0 >= 256 && $0 < 512
+                }
+            )
+        }
+        XCTAssertEqual(
+            schedules,
+            try (0 ..< 3).map {
+                try PrimeNative3BMetalContinuationContract
+                    .collisionFreeTrainingTokens(
+                        seed:
+                            seeds.trainingSchedule.value,
+                        ordinal: $0
+                    )
+            }
+        )
+        XCTAssertEqual(
+            Set(schedules).count,
+            3
+        )
+        XCTAssertNotEqual(
+            schedules,
+            try (0 ..< 3).map {
+                try PrimeNative3BMetalContinuationContract
+                    .collisionFreeTrainingTokens(
+                        seed:
+                            seeds.trainingSchedule.value
+                                + 1,
+                        ordinal: $0
+                    )
+            }
+        )
+        XCTAssertThrowsError(
+            try PrimeNative3BMetalContinuationContract
+                .collisionFreeTrainingTokens(
+                    seed:
+                        seeds.trainingSchedule.value,
+                    ordinal: -1
+                )
+        )
+        XCTAssertThrowsError(
+            try PrimeNative3BMetalContinuationContract
+                .collisionFreeTrainingTokens(
+                    seed:
+                        seeds.trainingSchedule.value,
+                    ordinal: 3
+                )
+        )
+    }
+
     func testStepWitnessRejectsSyntheticFullStateTopology()
         throws
     {

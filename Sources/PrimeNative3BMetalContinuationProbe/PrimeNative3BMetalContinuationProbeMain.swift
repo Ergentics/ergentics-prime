@@ -1555,7 +1555,7 @@ private func causalLoss(
     )
 }
 
-private func deterministicInputs(
+private func deterministicRandomInputs(
     seed: UInt64,
     count: Int
 ) -> [MLXArray] {
@@ -2181,17 +2181,37 @@ private func publishWorkerRecord(
 
 private func workerInputs(
     seeds: PrimeExecutionSeeds
-) -> (
+) throws -> (
     training: [MLXArray],
     evaluation: MLXArray
 ) {
-    (
-        deterministicInputs(
-            seed:
-                seeds.trainingSchedule.value,
-            count: 3
-        ),
-        deterministicInputs(
+    let training = try (0 ..< 3).map {
+        let tokens =
+            try PrimeNative3BMetalContinuationContract
+            .collisionFreeTrainingTokens(
+                seed:
+                    seeds.trainingSchedule.value,
+                ordinal: $0
+            )
+        guard Set(tokens).count
+                == PrimeNative3BMetalContinuationContract
+                    .fixedEvaluationSequenceLength else {
+            throw ProbeError.mechanics(
+                "training input contains repeated token IDs"
+            )
+        }
+        return MLXArray(
+            tokens,
+            [
+                1,
+                PrimeNative3BMetalContinuationContract
+                    .fixedEvaluationSequenceLength,
+            ]
+        )
+    }
+    return (
+        training,
+        deterministicRandomInputs(
             seed: seeds.evaluation.value,
             count: 1
         )[0]
@@ -2220,7 +2240,7 @@ private func runControl(
         let initial = try initialModelCatalog(
             model: model
         )
-        let inputs = workerInputs(seeds: seeds)
+        let inputs = try workerInputs(seeds: seeds)
         let optimizer = makeOptimizer()
         let stepOne = try runOptimizerStep(
             step: 1,
@@ -2329,7 +2349,7 @@ private func runWriter(
         let initial = try initialModelCatalog(
             model: model
         )
-        let inputs = workerInputs(seeds: seeds)
+        let inputs = try workerInputs(seeds: seeds)
         let optimizer = makeOptimizer()
         let stepOne = try runOptimizerStep(
             step: 1,
@@ -2495,7 +2515,7 @@ private func runRestorer(
         let initial = try initialModelCatalog(
             model: model
         )
-        let inputs = workerInputs(seeds: seeds)
+        let inputs = try workerInputs(seeds: seeds)
         let poisonOptimizer = makeOptimizer()
         try advanceWithoutWitness(
             model: model,
