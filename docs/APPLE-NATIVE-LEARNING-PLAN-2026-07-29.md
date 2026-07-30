@@ -414,9 +414,20 @@ The current mechanics receipt executes these fail-closed structural cases:
 Prime's source, dependency-tree, executable, runtime, output, termination, and
 checkpoint live validators provide additional fail-closed boundaries, with
 their own unit/source-contract tests. They are not miscounted as independent
-scientific mutation families. Phase 3 still requires a disjoint evaluator for
-functional mutations, leakage tests, statistical disposal, triadic audit, and
-SZ fingerprinting.
+scientific mutation families. Phase 3 now source-projects the NeuralKit gate's
+functional mutation catalog, guarded loss-statistics formulas, fixed-prompt
+runner-up-margin predicate, count-derived triadic label, all-critical rule,
+finite-field mechanics, and selected capability thresholds. It still requires
+a source-pinned synthetic replay, an evaluator disjoint enough for the
+intended functional claim, leakage execution, per-family confidence/margin
+statistics, explicit dependency-family audit, and real-artifact
+fingerprinting.
+
+The Stage-A parent chain is historical by construction. Exact generation and
+corpus receipt hashes bind their own clean Release Git/snapshot tuples and
+closed source-identity tokens; those parents are not required to equal a later
+Stage-A binary's current source seal, and artifact-provided expected digests
+are never admitted as authority.
 
 Passage authorizes only an interrupted small canary. A same-device Metal
 trajectory gate follows. Immediate imported state at `N` remains exact because
@@ -470,7 +481,7 @@ small type.
 | --- | --- | --- | --- |
 | `ergentics-prime` | Swift/MLX/Metal mechanics, supervisor, lease, receipts, restore probe | Training and evidence authority | Owns model/training truth |
 | PMHNP `prime-runtime` | Swift tokenizer/corpus canaries, scale recommendations, quant/Schur/GPTQ research, historical executors | Read-only migration oracle after source/schema audit | Never a Prime runtime/write target; do not import Python/Core ML bridge or old shell authority |
-| PMHNP `neural-kit` | `PrimeAskBrain` load/propose façade plus synthetic/research-artifact Verify/Abstain, SZ, triadic, and mutation regrade | Current PMHNP consumer and research-evaluation-contract donor | Not a Prime training dependency; PMHNP app owns user-visible verify |
+| PMHNP `neural-kit` | `PrimeAskBrain` load/propose façade plus consumer-side synthetic/research-artifact Verify/Abstain, finite-field/count-label, and mutation regrade | Current PMHNP consumer and research-evaluation-contract donor | Not a Prime training dependency; PMHNP app owns user-visible verify |
 | `MasteryKit` | EngineV21, recency/coupled recall, tutoring selection and reusable bench methods | Later product-learning consumer and bench/statistical-pattern donor | Does not orchestrate Prime experiments or own tensors, tokenizer, optimizer, or checkpoint |
 | `AgentContractKit` | Triad, Verify/Abstain, mutation, audit and governed probe primitives | Independent verifier; candidate source for a future standalone evidence package | Do not make Prime depend on `agentcraft-app` |
 | `agentcraft-app` | Agent subject, governed probes, corpus harvest, optional inherited-model inference | Candidate second consumer, contingent on a real product use case and feasible adapter | Its MLX lane is inference, not first-party training |

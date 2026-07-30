@@ -890,6 +890,32 @@ public final class PrimeArtifactRoot: @unchecked Sendable {
         )
     }
 
+    /// Publishes canonical JSON only if the destination does not already
+    /// exist.
+    ///
+    /// Use this for terminal receipts whose exclusive creation is itself part
+    /// of the temporal evidence. Unlike `publishCanonical`, a byte-identical
+    /// pre-existing artifact is a conflict rather than an idempotent success.
+    public func publishCanonicalExclusively<
+        Value: Encodable
+    >(
+        _ value: Value,
+        at relativePath: String
+    ) throws -> PrimeArtifactBinding {
+        let data = try PrimeCanonicalJSON.encode(value)
+        return try publishGeneratedFile(
+            at: relativePath,
+            purpose: .immutableData,
+            maximumByteCount: UInt64(data.count)
+        ) { descriptor in
+            try Self.writeAll(
+                data,
+                descriptor: descriptor,
+                path: relativePath
+            )
+        }
+    }
+
     public func verify(
         _ binding: PrimeArtifactBinding
     ) throws -> PrimeVerifiedArtifact {

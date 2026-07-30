@@ -48,59 +48,74 @@ receipt SHA-256 is
 The receipt is repository- and off-device-durable; the complete approximately
 32 GiB descriptor-backed checkpoint/runtime root remains local-only.
 
-## Current Phase 3 resolver admission
+## Current Phase 3 contract chain
 
-`PrimeNativeContractMigrationPlan.frozenV1` defines the completed
-resolver-only transition. It admits exactly eight existing companion
-Git blobs, totalling 11,969,097 bytes, at commit
-`163fc100710ece48119bc25954452d10f6a84f7f` and tree
-`9009daa4f8a07fbd5897e00b9571cef44ec292db`.
+Phase 3 now has five separately receipt-bound boundaries:
 
-- `/usr/bin/git` is directly executed only for read-only revision, tree, and
-  raw-object transport; no shell or Python is scientific authority.
-- Git receives the fixed, non-inherited
-  `prime_git_read_only_fixed_environment_v2` policy, including canonical
-  `TMPDIR=/private/tmp`; every admitted invocation must keep stderr empty.
-- Swift owns repository identity, revision, tree, path, mode, object type,
-  object ID, byte-count, SHA-256, mutation, immutable publication, and receipt
-  validation.
-- Publication requires a fresh, empty artifact root with exact mode `0700`.
-  Prime remote, revision, tree, and tracked/untracked cleanliness are observed
-  before the source snapshot and after running-executable capture; both states
-  must remain identical and clean.
-- Running-executable capture opens the no-follow descriptor and requires its
-  device and inode to match the executable vnode loaded in the current
-  process, with stable size and timestamps across the read.
-- Wrong revision, wrong path, missing artifact, changed bytes, and authority
-  expansion must fail before a canonical receipt can validate.
-- A separately invoked Swift-only
-  `PrimeNativeContractResolutionVerifier` accepts only the artifact root and
-  revalidates the persisted receipt and descriptor bindings in a fresh
-  process. It has no Git, donor-selection, or execution knobs and is a
-  persistence validator, not an independent scientific oracle.
-- The source-sealed Release resolver and separate fresh-process persistence
-  verifier pass. The repository-durable receipt and evidence note are under
-  `artifacts/native-contract-resolution-canonical-2026-07-29/`.
+1. `PrimeNativeContractMigrationPlan.frozenV1` resolves the exact eight
+   companion blobs at commit
+   `163fc100710ece48119bc25954452d10f6a84f7f` and tree
+   `9009daa4f8a07fbd5897e00b9571cef44ec292db`.
+2. `PrimeNativeResolvedContractAdapter` projects the frozen tokenizer,
+   corpus/evaluation, and historical synthetic receipt envelopes.
+3. `PrimeNativeGenerationContractProjection` freezes prompt-only,
+   target-independent fixed-cap/EOS generation and raw-output/KV-cache
+   semantics.
+4. `PrimeNativeCorpusReplay` compiles the exact tokenizer/corpus source in an
+   isolated target, regenerates and embedded-regrades all 155,648 rows, and
+   requires exact replay across distinct Release processes.
+5. `PrimeNativeNeuralGateContract` source-pins the selected eight-file
+   native-gate pre-carrier compile closure plus the generic verdict-carrier
+   and regression-fixture identities. It projects the bounded ten-leg
+   identifiers and meanings, guarded statistics, fixed-prompt margin,
+   finite-field, selected capability-threshold, count-label/all-critical, and
+   46-mutation contracts into a dependency-light Prime target.
 
-This resolver does not implement an adapter, expand the archived profile
-screen, execute companion or NeuralKit code, execute a model, train, quantize,
-or authorize product use.
+Stage-A artifact publication is descriptor-rooted, and its terminal receipt
+uses exclusive no-replace publication after replay and source closure.
+The generation and corpus receipt hashes are paired with closed historical
+source tokens plus exact clean Git and snapshot tuples. Historical parents
+are never reinterpreted under the current binary's source seal, and no public
+raw-digest API permits a snapshot to declare its own authority.
+`/usr/bin/git` is directly executed only for fixed read-only source identity
+or raw-object transport; it is not scientific authority. Python, shell,
+NeuralKit, PMHNP, and model execution remain outside the new adapter.
+
+The NeuralKit historical `independentThreePlus(k)` value is a count-derived
+label over witnesses from one gate implementation. It is not
+AgentContractKit's four-tier TriadAudit, does not prove ten separate
+implementations, and is not a guarded statistical-entanglement result. The
+Prime projection records each limit explicitly.
+
+The Stage-A adapter executes a five-record raw-UTF-8 finite-field contract
+vector and twelve structural projection falsifiers. It does not reconstruct
+the unpublished 59,497 historical invariant records, execute the historical
+46 semantic mutations, recompute their residues, or claim full Phase-3
+compatibility. A canonical Stage-A result is recorded only by the evidence
+note under
+`artifacts/native-neural-gate-contract-projection-canonical-2026-07-30/`.
 
 ## Separately scoped future admission
 
-- implement the compatibility adapter only after canonical resolver evidence
-  validates;
-- reuse archived mechanics, factorized-seed, profile-screen, and synthetic
-  NeuralKit evidence without wholesale reruns;
-- durably bind the resulting checkpoint and evaluation shards;
-- execute the frozen 18,432-row fixed-cap/EOS evaluation on a preregistered
-  trained checkpoint;
-- run the existing independent NeuralKit regrade, statistics, SZ fingerprint,
-  triadic audit, and mutation sweep over real artifacts.
+- reconstruct the source-pinned synthetic fixture in a Prime-owned Swift
+  replay target;
+- publish and bind the complete invariant-record set and per-mutation
+  observations;
+- recompute direct and accelerated finite-field fingerprints and require
+  exact equality;
+- execute all 46 semantic mutations with expected-leg failure, fingerprint
+  divergence, and exact restoration in distinct Release processes;
+- add the missing per-family confidence-interval, rank-margin,
+  decision-margin, and dependency-family audit before a broad functional
+  claim;
+- durably bind a real checkpoint and three-seed fixed-cap/EOS evaluation
+  shards; and
+- run the real-artifact gate before any RecommendationProvider or product
+  promotion.
 
-This future list is not authorized by the resolver slice. The current task
-materializes opaque frozen blobs but does not interpret tokenizer, corpus, or
-evaluator contracts and does not execute NeuralKit.
+The first four items are synthetic gate mechanics. They still do not prove
+model capability, checkpoint causality, broad-language function learning, or
+product benefit.
 
 The three fidelity arms are mechanisms, not arbitrary budgets. Wall and
 convergence bounds are derived from a completed fixed-token calibration and

@@ -77,6 +77,18 @@ let package = Package(
             ]
         ),
         .executable(
+            name: "PrimeNativeNeuralGateContractProjectionProbe",
+            targets: [
+                "PrimeNativeNeuralGateContractProjectionProbe",
+            ]
+        ),
+        .executable(
+            name: "PrimeNativeNeuralGateContractProjectionVerifier",
+            targets: [
+                "PrimeNativeNeuralGateContractProjectionVerifier",
+            ]
+        ),
+        .executable(
             name: "PrimeLeaseHolder",
             targets: ["PrimeLeaseHolder"]
         ),
@@ -141,6 +153,13 @@ let package = Package(
             dependencies: [
                 "PrimeCore",
                 "PrimeNativeCorpusReplayMechanics",
+            ]
+        ),
+        .target(
+            name: "PrimeNativeNeuralGateContract",
+            dependencies: [
+                "PrimeCore",
+                "PrimeNativeCorpusReplay",
             ]
         ),
         .executableTarget(
@@ -228,6 +247,20 @@ let package = Package(
             ]
         ),
         .executableTarget(
+            name: "PrimeNativeNeuralGateContractProjectionProbe",
+            dependencies: [
+                "PrimeCore",
+                "PrimeNativeNeuralGateContract",
+            ]
+        ),
+        .executableTarget(
+            name: "PrimeNativeNeuralGateContractProjectionVerifier",
+            dependencies: [
+                "PrimeCore",
+                "PrimeNativeNeuralGateContract",
+            ]
+        ),
+        .executableTarget(
             name: "PrimeLeaseHolder",
             dependencies: ["PrimeCore"]
         ),
@@ -278,6 +311,7 @@ let package = Package(
                 "PrimeCore",
                 "PrimeNativeCorpusReplay",
                 "PrimeNativeCorpusReplayMechanics",
+                "PrimeNativeNeuralGateContract",
             ]
         ),
     ]
