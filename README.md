@@ -29,6 +29,10 @@ The narrow post-Phase-2 companion-blob resolver boundary is recorded in
 The bounded Swift compatibility adapter over that frozen resolver output is
 recorded in
 [`docs/PRIME-NATIVE-CONTRACT-COMPATIBILITY-2026-07-30.md`](docs/PRIME-NATIVE-CONTRACT-COMPATIBILITY-2026-07-30.md).
+The corrected source-pinned tokenizer/corpus transplant, exact eight-split
+goldens, same-implementation regrade limitation, and receipt-last
+fresh-process replay protocol are recorded in
+[`docs/PRIME-NATIVE-FULL-CORPUS-REPLAY-2026-07-30.md`](docs/PRIME-NATIVE-FULL-CORPUS-REPLAY-2026-07-30.md).
 The exact private-MLX migration sequence, narrow commit-identity rewrite
 boundary, recovery anchors, and post-migration evidence gates are recorded in
 [`docs/PRIME-PICKUP-PRIVATE-MLX-MIRROR-2026-07-29.md`](docs/PRIME-PICKUP-PRIVATE-MLX-MIRROR-2026-07-29.md).
