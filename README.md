@@ -33,6 +33,10 @@ The corrected source-pinned tokenizer/corpus transplant, exact eight-split
 goldens, same-implementation regrade limitation, and receipt-last
 fresh-process replay protocol are recorded in
 [`docs/PRIME-NATIVE-FULL-CORPUS-REPLAY-2026-07-30.md`](docs/PRIME-NATIVE-FULL-CORPUS-REPLAY-2026-07-30.md).
+The bounded NeuralKit gate source projection, exact ten-leg and 46-mutation
+catalog, count-label correction, and Stage-A/Stage-B truth boundary are
+recorded in
+[`docs/PRIME-NATIVE-NEURAL-GATE-CONTRACT-PROJECTION-2026-07-30.md`](docs/PRIME-NATIVE-NEURAL-GATE-CONTRACT-PROJECTION-2026-07-30.md).
 The exact private-MLX migration sequence, narrow commit-identity rewrite
 boundary, recovery anchors, and post-migration evidence gates are recorded in
 [`docs/PRIME-PICKUP-PRIVATE-MLX-MIRROR-2026-07-29.md`](docs/PRIME-PICKUP-PRIVATE-MLX-MIRROR-2026-07-29.md).
@@ -47,11 +51,16 @@ boundary, recovery anchors, and post-migration evidence gates are recorded in
   and device primitives.
 
 Prime's current mechanics target uses the same 512-entry model vocabulary as
-the existing companion arc. The Swift tokenizer manifest, deterministic
-first-party compositional corpus, native training executor, fixed-cap/EOS
-evaluation contract, NeuralKit SZ/triadic/mutation gate, and 15-trial profile
-screen already exist at the frozen companion revision. They are not yet
-migrated into Prime's training authority and do not imply an accepted
+the existing companion arc. Prime now contains an exact isolated Swift
+tokenizer/corpus transplant that regenerated and embedded-regraded all
+155,648 rows, plus standalone source-pinned projections of the fixed-cap/EOS
+generation boundary and NeuralKit's native-language gate contract. The gate
+projection preserves its ten ordered critical-leg identifiers, 46 mutation
+contracts, guarded target-token-weighted statistics, fixed-prompt
+runner-up-margin predicate, finite-field mechanics, selected capability
+thresholds, and stronger all-critical rule. It does not yet reconstruct the
+unpublished 59,497 historical invariant records or execute those 46 semantic
+mutations. None of these contract/mechanics results implies an accepted
 checkpoint or functional-language result.
 
 The first GPU action was the frozen
@@ -350,6 +359,36 @@ canonical Release status, receipt identity, and fresh-process verifier result
 are recorded only in
 `artifacts/native-resolved-contract-adapter-canonical-2026-07-30/README.md`
 when that evidence exists; absence of that note means the result is pending.
+
+## Native generation, corpus, and NeuralKit gate contracts
+
+The next source boundaries no longer depend on opaque prose:
+
+- `PrimeNativeGenerationContractProjection` freezes the target-independent
+  prompt-only, fixed-cap/EOS, raw-output, full-vocabulary, and KV-cache
+  contract;
+- `PrimeNativeCorpusReplay` compiles the exact tokenizer and corpus blobs in
+  an isolated target, regenerates all eight splits and all 155,648 rows, and
+  reruns the embedded regrader in distinct Release processes; and
+- `PrimeNativeNeuralGateContract` binds those canonical parents and projects
+  the selected eight-file native-gate pre-carrier compile closure, the generic
+  verdict-carrier slice, guarded loss statistics, fixed-prompt runner-up
+  margins, finite-field mechanics, selected capability thresholds,
+  count-label/all-critical rules, and the complete mutation catalog without
+  importing NeuralKit or PMHNP.
+
+The NeuralKit projection executes a fixed raw-UTF-8 finite-field vector and
+twelve structural projection falsifiers. Those are adapter-integrity checks,
+not the historical 46 semantic mutations. NeuralKit's
+`independentThreePlus(k)` is a count-derived label produced inside one gate;
+it is not AgentContractKit's four-tier TriadAudit and is not evidence of ten
+separately implemented authorities.
+
+The Stage-A source contract is implemented. A canonical result exists only
+when a repository-durable evidence note is present under
+`artifacts/native-neural-gate-contract-projection-canonical-2026-07-30/`.
+The exact next prerequisite remains
+`source_pinned_synthetic_fixture_materialization_and_gate_replay`.
 
 ## Initial calibration
 

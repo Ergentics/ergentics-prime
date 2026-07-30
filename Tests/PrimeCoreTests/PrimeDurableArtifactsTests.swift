@@ -464,6 +464,45 @@ final class PrimeDurableArtifactsTests: XCTestCase {
         )
     }
 
+    func testExclusiveCanonicalPublicationRejectsIdenticalPreexistingReceipt()
+        throws
+    {
+        let root = try PrimeArtifactRoot(
+            directoryURL: temporaryURL
+        )
+        let receipt = SeedDocument(
+            initialization: 11,
+            trainingSchedule: 22,
+            evaluation: 33
+        )
+        let path = "terminal-receipt.json"
+        let binding =
+            try root.publishCanonicalExclusively(
+                receipt,
+                at: path
+            )
+
+        XCTAssertEqual(
+            binding,
+            try root.bindExisting(
+                at: path,
+                purpose: .immutableData,
+                maximumByteCount: 4_096
+            )
+        )
+        XCTAssertThrowsError(
+            try root.publishCanonicalExclusively(
+                receipt,
+                at: path
+            )
+        ) { error in
+            XCTAssertEqual(
+                error as? PrimeDurableArtifactError,
+                .conflictingArtifact(path)
+            )
+        }
+    }
+
     func testGeneratedDescriptorFailureReclaimsStorageWithoutUnlinkingPartials()
         throws
     {
