@@ -28,6 +28,20 @@ let package = Package(
         ),
         .library(
             name:
+                "PrimeNativeNeuralGateReplaySourceBinding",
+            targets: [
+                "PrimeNativeNeuralGateReplaySourceBinding",
+            ]
+        ),
+        .library(
+            name:
+                "PrimeNativeNeuralGateReplaySourceComposition",
+            targets: [
+                "PrimeNativeNeuralGateReplaySourceComposition",
+            ]
+        ),
+        .library(
+            name:
                 "PrimeNativeNeuralGateMLXValidationMechanics",
             targets: [
                 "PrimeNativeCorpusReplayMechanics",
@@ -201,6 +215,26 @@ let package = Package(
                 "PrimeNativeNeuralGateReplayMechanics",
                 "PrimeNativeNeuralGateCorrectedMechanics",
                 "PrimeNativeNeuralGateLogitSidecarMechanics",
+            ]
+        ),
+        .target(
+            name:
+                "PrimeNativeNeuralGateReplaySourceBinding",
+            dependencies: [
+                "PrimeCore",
+                "PrimeNativeNeuralGateReplayArtifactContracts",
+                "PrimeNativeNeuralGateReplayTransport",
+                "PrimeNativeNeuralGateReplayMechanics",
+                "PrimeNativeNeuralGateCorrectedMechanics",
+                "PrimeNativeNeuralGateLogitSidecarMechanics",
+            ]
+        ),
+        .target(
+            name:
+                "PrimeNativeNeuralGateReplaySourceComposition",
+            dependencies: [
+                "PrimeNativeNeuralGateReplaySourceBinding",
+                "PrimeNativeNeuralGateReplayComposition",
             ]
         ),
         .target(
@@ -424,6 +458,8 @@ let package = Package(
                 "PrimeNativeNeuralGateReplayArtifactContracts",
                 "PrimeNativeNeuralGateReplayTransport",
                 "PrimeNativeNeuralGateReplayComposition",
+                "PrimeNativeNeuralGateReplaySourceBinding",
+                "PrimeNativeNeuralGateReplaySourceComposition",
                 "PrimeNativeNeuralGateCorrectedMechanics",
                 "PrimeNativeNeuralGateCorrectedEvaluationMechanics",
                 "PrimeNativeNeuralGateCorrectedFixtureAuthority",

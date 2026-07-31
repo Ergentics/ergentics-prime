@@ -6,11 +6,15 @@ Date: 2026-07-30; updated 2026-07-31
 
 Stage B now has an implemented trap-disjoint mechanics boundary, pure typed
 artifact contracts, bounded in-memory transport with a shared codec, and an
-exact in-memory replay-composition target. It still does not have a Stage-B
-executor, worker, probe, verifier, process record, or terminal receipt.
+exact replay-composition target. It also has descriptor-rooted invariant and
+logit source binding plus an outer source-composition adapter. It still does
+not have a Stage-B executor, worker, probe, verifier, process record, or
+terminal receipt.
 
-`PrimeNativeNeuralGateTrapDisjointTopologyContract.frozenV3` is the current
+`PrimeNativeNeuralGateTrapDisjointTopologyContract.frozenV4` is the current
 topology correction. Its canonical SHA-256 is
+`8339bbd42b0e4052888db880aacbb067770c08dd2106bf4a7820c853c4b715af`.
+Topology V3 remains byte-exact at SHA-256
 `b475e29347a31d27be8dc1aa54648fec84c4f1b47d673a1f111ccffb794985fd`.
 Historical topology V1 remains byte-exact at SHA-256
 `48e0f64fcb14193d74bf9c3d98a8aeef7ca366033cea6d8f00bc345ff0ad86b5`.
@@ -54,6 +58,24 @@ PrimeNativeNeuralGateReplayComposition
       - PrimeNativeNeuralGateLogitSidecarMechanics
     authority: strict prompt schedule and exact outer/raw/validated-sidecar
                join with corrected trace recomputation
+
+PrimeNativeNeuralGateReplaySourceBinding
+    dependencies:
+      - PrimeCore
+      - PrimeNativeNeuralGateReplayArtifactContracts
+      - PrimeNativeNeuralGateReplayTransport
+      - PrimeNativeNeuralGateReplayMechanics
+      - PrimeNativeNeuralGateCorrectedMechanics
+      - PrimeNativeNeuralGateLogitSidecarMechanics
+    authority: descriptor-rooted read-only invariant and lossless-sidecar
+               validation plus sealed non-authorizing source capabilities
+
+PrimeNativeNeuralGateReplaySourceComposition
+    dependencies:
+      - PrimeNativeNeuralGateReplaySourceBinding
+      - PrimeNativeNeuralGateReplayComposition
+    authority: incremental source-bound prompt schedule, asymmetric target-free
+               role projections, and exact four-source join
 
 PrimeNativeNeuralGateCorrectedMechanics
     dependencies:
@@ -100,6 +122,8 @@ The artifact namespace V4 and transport boundary are specified in
 The schedule and join are specified in
 `PRIME-NATIVE-NEURAL-GATE-REPLAY-COMPOSITION-2026-07-31.md`. No production or
 execution target imports transport or composition.
+Descriptor source behavior is specified in
+`PRIME-NATIVE-NEURAL-GATE-DESCRIPTOR-SOURCE-BINDING-2026-07-31.md`.
 
 ## Remaining planned execution topology
 
@@ -197,12 +221,25 @@ After the complete topology-V3 source reseal, the same Release canary passed
 with byte-identical probe/verifier package-description output: 29,905 bytes,
 SHA-256
 `ad4a66338d7348cb44419a115e062a30da129dea9a6355eec81f6b98932b6e11`.
-This is the current accepted topology-V3 actual-package secure-capture reseal.
+This is the last accepted historical topology-V3 actual-package secure-capture
+reseal.
 It validates only the secure-capture substrate on the pinned host. It is not
 V6/V7 selected-source execution-graph proof; it does not issue source binding
 V7 or establish worker or model execution, fixture identity,
 evaluation or mechanics `PASS`, Stage-B publication or a terminal receipt,
 reproducible-build identity, or network denial.
+It predates the two topology-V4 targets and is not V4 package-capture evidence.
+
+After the complete topology-V4 source reseal, the same Release canary passed
+with byte-identical probe/verifier package-description output: 32,735 bytes,
+SHA-256
+`f7d873db2b91ecc61d356136b37bf7bc8017db962f40637998de914eeaa8d894`.
+This is the current accepted topology-V4 actual-package secure-capture reseal.
+It validates only the secure-capture substrate on the pinned host. It does not
+reconcile V6/V7 selected-source execution graphs or establish source binding
+V7, worker/model execution, fixture identity, evaluation, mechanics `PASS`,
+Stage-B publication, a terminal receipt, reproducible-build identity, network
+denial, Metal authority, scientific authority, or product authority.
 
 Source binding V7 is reserved until every planned and deferred evidence role
 is frozen and materialized, including the independent corrected mutation
@@ -221,27 +258,30 @@ raw material for a terminal verifier to recompute every mutation. Its private
 mutators and detectors require a hash-bound source-derived seam rather than a
 hand-port.
 
-Bounded canonical JSON schemas now exist only for the prompt-only,
+Bounded canonical JSON schemas exist only for the prompt-only,
 outer-evaluation, and seed-scoped raw-execution manifests and their three row
 shapes. Mutation deltas, historical observations, MLX observations,
 statistics/verdict observations, worker/process/result records, and the
-receipt remain `schema_deferred` and reject bytes before parsing. The
-implemented decoders and composition do not prove prompt-content target
-independence, read descriptor-rooted files, stream invariant payloads, decode
-a durable logit artifact, lawfully deliver the schedule/correlation capability
-to disjoint producers, independently bind expected completion to prompt,
-execute mutations, or authorize a verdict.
+receipt remain `schema_deferred` and reject bytes before parsing. Descriptor
+source binding now streams invariant payloads, source-binds the complete
+lossless sidecar, and produces sealed prompt/outer/raw/logit capabilities. The
+outer adapter creates exact target-free raw and outer role projections and a
+common-root keyed join. Because each source is bound separately, it does not
+prove one capture epoch or durable origin. It also does not prove
+prompt-content target independence, observe process delivery, independently
+bind expected completion to prompt, execute mutations, or authorize a verdict.
 
 The three record streams are independently canonicalized ordered multisets.
 Prompt rows have no execution index, while outer and raw rows do; therefore no
 implementation may zip the sorted streams. Composition V1 now derives indexes
 only as strict prompt-record ordinals and performs an exact keyed
-outer/raw/validated-sidecar join with trace recomputation. The remaining
-transport gap begins with descriptor-rooted invariant streaming and durable
-source-artifact binding, lawful schedule-capability delivery, and the
-independent prompt/target crosswalk, then the deferred semantic schemas,
-corrected process/evaluation ownership, replacement process/result/receipt
-schemas, and receipt-last publication.
+outer/raw/validated-sidecar join with trace recomputation. Topology V4 now
+binds the descriptor sources and role projections without materializing a
+worker. The remaining semantic gap begins with one held-root four-source
+capture/inventory session, followed by the independent prompt/target crosswalk,
+actual process delivery, the deferred semantic schemas, corrected
+process/evaluation ownership, replacement process/result/receipt schemas, and
+receipt-last publication.
 
 Mutation identity must be `(arm, ordinal, mutation_id)` because
 `target_dependent_prompt_grouping` has different meanings in the two arms.
@@ -250,23 +290,23 @@ containing one expected failed leg is insufficient.
 
 ## Ordered continuation
 
-1. Implement descriptor-rooted bounded invariant streaming and bind validated
-   stream capabilities to composition V1 without materializing workers.
-2. Bind durable logit artifact origin to the existing validated sidecar codec
-   without widening the trap-free composition closure.
-3. Freeze lawful schedule/correlation capability delivery to the disjoint
-   producers and the independent source-derived prompt/target crosswalk.
-4. Freeze the deferred mutation, historical, MLX, and statistics/verdict
+1. Freeze one held-root four-source capture/inventory session and require its
+   sealed capability before any durable-origin promotion.
+2. Freeze the independent source-derived prompt/target crosswalk in a separate
+   trap-bearing authority target and bind it to source composition without
+   making it reachable from the corrected raw closure.
+3. Freeze the deferred mutation, historical, MLX, and statistics/verdict
    schemas.
-5. Freeze corrected process/evaluation ownership, replacement process count,
+4. Freeze corrected process/evaluation ownership, replacement process count,
    result records, receipt ownership, and receipt-last publication.
-6. Implement the corrected 15-case producer and an independently implemented
+5. Implement the corrected 15-case producer and an independently implemented
    detector. They may not share mutation implementation code.
-7. Derive the historical gate/carrier seam and 46-case raw mutation material
+6. Derive the historical gate/carrier seam and 46-case raw mutation material
    from the pinned donor source.
-8. Materialize role-scoped workers, probe, verifier, exact inventory, process
+7. Materialize role-scoped workers, deliver the typed target-free schedule
+   projections, and implement probe, verifier, exact inventory, process
    records, and receipt-last composition.
-9. Run the durable full-vocabulary sidecar and maintained MLX Float32
+8. Run the durable full-vocabulary sidecar and maintained MLX Float32
    recomputation as Stage-B evidence.
 
 Every step remains Swift-first and Prime-owned. Python, shell scientific

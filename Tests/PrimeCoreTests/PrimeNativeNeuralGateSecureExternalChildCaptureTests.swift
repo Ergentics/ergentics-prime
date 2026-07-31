@@ -790,17 +790,18 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
             verifier.standardOutputData
         )
         // Intentionally resealed only from the live Release canary after the
-        // topology-V3 replay-composition addition. This is actual-package
-        // secure-capture evidence, not V6/V7 graph reconciliation.
+        // topology-V4 descriptor-source-binding addition. This is
+        // actual-package secure-capture evidence, not V6/V7 graph
+        // reconciliation.
         XCTAssertEqual(
             probe.standardOutputData.count,
-            29_905
+            32_735
         )
         XCTAssertEqual(
             PrimeSHA256.hexDigest(
                 of: probe.standardOutputData
             ),
-            "ad4a66338d7348cb44419a115e062a30da129dea9a6355eec81f6b98932b6e11"
+            "f7d873db2b91ecc61d356136b37bf7bc8017db962f40637998de914eeaa8d894"
         )
         XCTAssertEqual(
             probe.validatedPrimeSourceSnapshot,

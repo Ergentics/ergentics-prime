@@ -10,12 +10,14 @@ Swift authority; an isolated prompt-only symbolic solver derivation is
 implemented; corrected admission V3, source binding V6, and plan V5 source-bind
 the lossless sidecar codec and maintained MLX Float32 operation; durable
 Stage-B replay, workers, process records, and receipt are not implemented;
-the package-level raw/evaluation split, trap-disjoint topology V3, pure typed
-artifact contracts, shared bounded transport codec, strict prompt schedule,
-and exact in-memory replay composition are implemented, while every execution
-target remains planned. The exact current boundary is recorded in
+the package-level raw/evaluation split, trap-disjoint topology V4, pure typed
+artifact contracts, shared bounded transport codec, descriptor-rooted
+invariant/logit source binding, strict incremental prompt schedule, role
+projections, and exact four-source replay composition are implemented, while
+every execution target remains planned. The exact current boundary is recorded in
 `PRIME-NATIVE-NEURAL-GATE-TYPED-ARTIFACT-TRANSPORT-2026-07-31.md` and
-`PRIME-NATIVE-NEURAL-GATE-REPLAY-COMPOSITION-2026-07-31.md`.
+`PRIME-NATIVE-NEURAL-GATE-REPLAY-COMPOSITION-2026-07-31.md` and
+`PRIME-NATIVE-NEURAL-GATE-DESCRIPTOR-SOURCE-BINDING-2026-07-31.md`.
 
 ## Decision
 
@@ -89,24 +91,32 @@ After the complete topology-V3 source reseal, the same Release canary passed
 with byte-identical probe/verifier package-description output: 29,905 bytes,
 SHA-256
 `ad4a66338d7348cb44419a115e062a30da129dea9a6355eec81f6b98932b6e11`.
-This is the current accepted topology-V3 actual-package secure-capture reseal.
+This is the last accepted topology-V3 actual-package secure-capture reseal.
 It validates only the secure-capture substrate on the pinned host. It is not
 V6/V7 selected-source execution-graph proof; it does not issue source binding
 V7 or establish worker or model execution, fixture identity,
 evaluation or mechanics `PASS`, Stage-B publication or a terminal receipt,
-reproducible-build identity, or network denial. `executionImplemented` remains
-false, and no replay, historical worker, Metal, or product use is implemented
-or authorized.
-
-The current post-canary topology correction is
-`PrimeNativeNeuralGateTrapDisjointTopologyContract.frozenV3`, canonical
+reproducible-build identity, or network denial.
+After the complete topology-V4 source reseal, the same Release canary passed
+with byte-identical probe/verifier package-description output: 32,735 bytes,
 SHA-256
-`b475e29347a31d27be8dc1aa54648fec84c4f1b47d673a1f111ccffb794985fd`.
+`f7d873db2b91ecc61d356136b37bf7bc8017db962f40637998de914eeaa8d894`.
+This is the current accepted topology-V4 actual-package secure-capture reseal,
+with the same secure-capture-only scope. `executionImplemented` remains false,
+and no replay, historical worker, Metal, or product use is implemented or
+authorized.
+
+The current topology is
+`PrimeNativeNeuralGateTrapDisjointTopologyContract.frozenV4`, canonical
+SHA-256
+`8339bbd42b0e4052888db880aacbb067770c08dd2106bf4a7820c853c4b715af`.
 Topology V1 remains exact at SHA-256
 `48e0f64fcb14193d74bf9c3d98a8aeef7ca366033cea6d8f00bc345ff0ad86b5`.
 Topology V2 remains exact at SHA-256
 `abc8f1ada303ecb95b7c9a44e72293ed314537b93e27354aebbb7763e1487415`.
-It preserves plan V5 and source binding V6 as historical identities,
+Topology V3 remains exact at SHA-256
+`b475e29347a31d27be8dc1aa54648fec84c4f1b47d673a1f111ccffb794985fd`.
+Topology V4 preserves plan V5 and source binding V6 as historical identities,
 supersedes only their future donor-routing assumption, and explicitly leaves
 source binding V7 unissued. The complete implemented and planned closures are
 recorded in
@@ -617,7 +627,8 @@ The last accepted topology-V2 actual-package secure-capture reseal is
 byte-identical across probe and verifier at 28,589 bytes with SHA-256
 `3a4ae506f5ed2eae16e9f46d099c5d53681ec1d1a02aa9c20549b0fbeb230d7c`.
 It predates topology V3 and remains secure-capture evidence, not V6/V7 graph
-proof. The current accepted topology-V3 actual-package secure-capture reseal is
+proof. The last accepted historical topology-V3 actual-package secure-capture
+reseal is
 byte-identical across probe and verifier at 29,905 bytes with SHA-256
 `ad4a66338d7348cb44419a115e062a30da129dea9a6355eec81f6b98932b6e11`.
 The V3 pass validates only the secure-capture substrate on the pinned host. It
@@ -625,6 +636,11 @@ is not V6/V7 selected-source execution-graph proof; it does not issue source
 binding V7 or establish worker or model execution, fixture identity,
 evaluation or mechanics `PASS`, Stage-B publication or a terminal receipt,
 reproducible-build identity, or network denial.
+The current accepted topology-V4 actual-package secure-capture reseal is
+byte-identical across probe and verifier at 32,735 bytes with SHA-256
+`f7d873db2b91ecc61d356136b37bf7bc8017db962f40637998de914eeaa8d894`.
+It has the same secure-capture-only scope and is not V6/V7 selected-source
+execution-graph reconciliation.
 Source binding V7 remains reserved until the planned execution targets exist
 and a live compiled-source closure validates those exact captured bytes.
 
@@ -1141,29 +1157,32 @@ ambiguity.
 
 ## Next actions
 
-The corrected aggregate implementation prerequisite is now:
+Descriptor-rooted invariant validation, source-bound lossless-sidecar
+validation, incremental schedule reconstruction, and the exact four-source
+join are now implemented under topology V4. Because the sources are bound in
+separate calls, equal root identity does not yet prove one capture epoch or
+durable origin. The corrected aggregate implementation prerequisite is now:
 
-`implement_descriptor_rooted_bounded_invariant_stream_decoders_bind_validated_stream_capabilities_and_lawful_schedule_delivery_to_frozen_composition_then_freeze_independent_prompt_target_crosswalk_without_materializing_workers`
+`freeze_single_held_root_four_source_capture_inventory_session_then_freeze_independent_source_derived_prompt_target_crosswalk_in_trap_bearing_authority_target_without_materializing_workers`
 
 Its implementation order is now:
 
-1. implement descriptor-rooted bounded invariant streaming and bind validated
-   stream capabilities to composition V1 without materializing workers;
-2. bind durable source origin for the integrated lossless sidecar codec
-   without widening the trap-free composition closure;
-3. freeze lawful delivery of the target-free schedule/correlation capability
-   to disjoint producers and the independent source-derived prompt/target
-   crosswalk;
-4. freeze the deferred mutation, historical, MLX, and statistics/verdict
+1. freeze one held-root four-source capture/inventory session and require its
+   sealed capability before any durable-origin promotion;
+2. freeze the independent source-derived prompt/target crosswalk in a separate
+   trap-bearing authority target without making it reachable from the raw
+   corrected closure;
+3. freeze the deferred mutation, historical, MLX, and statistics/verdict
    record schemas;
-5. freeze corrected process/evaluation ownership, replacement process count,
+4. freeze corrected process/evaluation ownership, replacement process count,
    result records, receipt ownership, and receipt-last publication;
-6. implement a source-bound corrected mutation producer and an independently
+5. implement a source-bound corrected mutation producer and an independently
    implemented detector;
    the current fifteen mutation-observation validators do not execute defects;
-7. implement the isolated historical worker using the completed secure
+6. implement the isolated historical worker using the completed secure
    capture and live role-prefix inventory capabilities; and
-8. implement the paired probe/verifier with exact path/metadata/content
+7. implement the paired probe/verifier, actual typed schedule delivery, and
+   exact path/metadata/content
    inventory, durable sidecar publication, full-fixture MLX recomputation,
    full-root pre-receipt recapture, and receipt-last publication.
 

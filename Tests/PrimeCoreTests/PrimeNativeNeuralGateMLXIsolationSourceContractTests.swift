@@ -17,11 +17,62 @@ final class
                 #".library(name:"PrimeNativeNeuralGateMLXValidationMechanics",targets:["PrimeNativeCorpusReplayMechanics","PrimeNativeNeuralGateCorrectedMechanics","PrimeNativeNeuralGateCorrectedEvaluationMechanics","PrimeNativeNeuralGateCorrectedFixtureAuthority","PrimeNativeNeuralGatePromptSolver","PrimeNativeNeuralGateLogitSidecarMechanics","PrimeNativeNeuralGateMLXLogSoftmaxRecomputation",])"#
             )
         )
-        XCTAssertTrue(
-            package.contains(
-                #".testTarget(name:"PrimeCoreTests",dependencies:["PrimeCore","PrimeNativeCorpusReplay","PrimeNativeCorpusReplayMechanics","PrimeNativeNeuralGateContract","PrimeNativeNeuralGateReplayMechanics","PrimeNativeNeuralGateReplayArtifactContracts","PrimeNativeNeuralGateReplayTransport","PrimeNativeNeuralGateReplayComposition","PrimeNativeNeuralGateCorrectedMechanics","PrimeNativeNeuralGateCorrectedEvaluationMechanics","PrimeNativeNeuralGateCorrectedFixtureAuthority","PrimeNativeNeuralGatePromptSolver","PrimeNativeNeuralGateLogitSidecarMechanics",])"#
-            )
+        let mainTestTarget = try targetDeclaration(
+            kind: "testTarget",
+            name: "PrimeCoreTests",
+            in: package
         )
+        XCTAssertFalse(
+            mainTestTarget.contains(".product("),
+            "main XCTest target must not link an external package product"
+        )
+        XCTAssertEqual(
+            try directTargetDependencies(
+                in: mainTestTarget
+            ),
+            Set([
+                "PrimeCore",
+                "PrimeNativeCorpusReplay",
+                "PrimeNativeCorpusReplayMechanics",
+                "PrimeNativeNeuralGateContract",
+                "PrimeNativeNeuralGateReplayMechanics",
+                "PrimeNativeNeuralGateReplayArtifactContracts",
+                "PrimeNativeNeuralGateReplayTransport",
+                "PrimeNativeNeuralGateReplayComposition",
+                "PrimeNativeNeuralGateReplaySourceBinding",
+                "PrimeNativeNeuralGateReplaySourceComposition",
+                "PrimeNativeNeuralGateCorrectedMechanics",
+                "PrimeNativeNeuralGateCorrectedEvaluationMechanics",
+                "PrimeNativeNeuralGateCorrectedFixtureAuthority",
+                "PrimeNativeNeuralGatePromptSolver",
+                "PrimeNativeNeuralGateLogitSidecarMechanics",
+            ]),
+            "main XCTest target dependency closure changed without an MLX-isolation audit"
+        )
+        for mlxLinkedTarget in [
+            "PrimeNativeNeuralGateMLXLogSoftmaxRecomputation",
+            "PrimeTypedOptimizerRestoreMechanics",
+        ] {
+            XCTAssertFalse(
+                mainTestTarget.contains(
+                    #""\#(mlxLinkedTarget)""#
+                ),
+                "main XCTest target links MLX authority: \(mlxLinkedTarget)"
+            )
+        }
+        for auditedSwiftOnlyTarget in [
+            "PrimeNativeNeuralGateReplaySourceBinding",
+            "PrimeNativeNeuralGateReplaySourceComposition",
+        ] {
+            XCTAssertEqual(
+                occurrences(
+                    of: #""\#(auditedSwiftOnlyTarget)""#,
+                    in: mainTestTarget
+                ),
+                1,
+                "audited Swift-only test dependency is missing: \(auditedSwiftOnlyTarget)"
+            )
+        }
 
         let validationPackage =
             withoutWhitespace(
@@ -223,5 +274,68 @@ final class
         value.components(
             separatedBy: needle
         ).count - 1
+    }
+
+    private func targetDeclaration(
+        kind: String,
+        name: String,
+        in compactPackage: String
+    ) throws -> String {
+        let prefix = #".\#(kind)(name:"\#(name)",dependencies:["#
+        let start = try XCTUnwrap(
+            compactPackage.range(of: prefix)
+        )
+        let suffix = compactPackage[start.lowerBound...]
+        let end = try XCTUnwrap(
+            suffix.range(of: "])")
+        )
+        return String(
+            compactPackage[
+                start.lowerBound ..< end.upperBound
+            ]
+        )
+    }
+
+    private func directTargetDependencies(
+        in targetDeclaration: String
+    ) throws -> Set<String> {
+        let prefix = "dependencies:["
+        let start = try XCTUnwrap(
+            targetDeclaration.range(of: prefix)
+        )
+        let end = try XCTUnwrap(
+            targetDeclaration.range(
+                of: "])",
+                options: .backwards
+            )
+        )
+        let list = targetDeclaration[
+            start.upperBound ..< end.lowerBound
+        ]
+        var dependencies = Set<String>()
+        for token in list.split(
+            separator: ",",
+            omittingEmptySubsequences: true
+        ) {
+            guard token.count >= 2,
+                  token.hasPrefix("\""),
+                  token.hasSuffix("\"")
+            else {
+                throw CocoaError(
+                    .fileReadCorruptFile
+                )
+            }
+            let name = String(
+                token.dropFirst().dropLast()
+            )
+            guard !name.isEmpty,
+                  dependencies.insert(name).inserted
+            else {
+                throw CocoaError(
+                    .fileReadCorruptFile
+                )
+            }
+        }
+        return dependencies
     }
 }

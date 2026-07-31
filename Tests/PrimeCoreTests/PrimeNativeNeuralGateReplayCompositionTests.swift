@@ -187,6 +187,69 @@ final class PrimeNativeNeuralGateReplayCompositionTests:
         }
     }
 
+    func testTypedPromptObservationsReconstructExactScheduleWithoutDigestDomainSubstitution()
+        throws
+    {
+        let fixture = try Self.fixtureResult.get()
+        let observations = try fixture
+            .canonicalPromptRecords.map {
+                PrimeNativeNeuralGateCanonicalPromptRecordObservation(
+                    promptRow:
+                        try Decoder.decodePromptOnlyRow(
+                            from: $0
+                        ),
+                    canonicalRecordSHA256:
+                        PrimeNativeNeuralGateInvariantCodec
+                        .sha256($0)
+                )
+            }
+        let reconstructed = try Composition
+            .makePromptSchedule(
+                canonicalPromptRecordObservations:
+                    observations,
+                expectedPromptGlobalStreamSHA256:
+                    fixture.schedule
+                    .promptGlobalStreamSHA256
+            )
+        XCTAssertEqual(reconstructed, fixture.schedule)
+        XCTAssertFalse(
+            reconstructed.sourceStreamBindingEstablished
+        )
+        XCTAssertFalse(
+            reconstructed.correctedFixtureIdentityEstablished
+        )
+        XCTAssertFalse(reconstructed.mechanicsPassAuthorized)
+
+        var digestDomainSubstitution = observations
+        digestDomainSubstitution[0] =
+            PrimeNativeNeuralGateCanonicalPromptRecordObservation(
+                promptRow: observations[0].promptRow,
+                canonicalRecordSHA256:
+                    fixture.schedule.orderedPrompts[0]
+                    .primeCPI2PromptBindingSHA256
+            )
+        assertThrows(
+            .promptRecordDigestMismatch(index: 0)
+        ) {
+            _ = try Composition.makePromptSchedule(
+                canonicalPromptRecordObservations:
+                    digestDomainSubstitution,
+                expectedPromptGlobalStreamSHA256:
+                    fixture.schedule
+                    .promptGlobalStreamSHA256
+            )
+        }
+
+        assertThrows(.promptGlobalStreamDigestMismatch) {
+            _ = try Composition.makePromptSchedule(
+                canonicalPromptRecordObservations:
+                    observations,
+                expectedPromptGlobalStreamSHA256:
+                    Self.digest("0")
+            )
+        }
+    }
+
     func testExactKeyedJoinRecomputesPromptAndTraceBindings()
         throws
     {

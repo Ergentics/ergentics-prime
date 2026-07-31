@@ -179,6 +179,25 @@ public struct PrimeVerifiedArtifact:
     public let actualMode: UInt16
 }
 
+/// Stable identity of the already-admitted descriptor root. The URL remains
+/// display-only; consumers that must prove two observations share one source
+/// root compare this value instead of reopening or normalizing a path.
+public struct PrimeArtifactRootIdentity:
+    Equatable,
+    Sendable
+{
+    public let deviceID: UInt64
+    public let inode: UInt64
+    public let ownerUserID: UInt32
+    public let ownerGroupID: UInt32
+    public let actualMode: UInt16
+    public let linkCount: UInt64
+    public let modificationSeconds: Int64
+    public let modificationNanoseconds: Int64
+    public let statusChangeSeconds: Int64
+    public let statusChangeNanoseconds: Int64
+}
+
 /// A trusted directory descriptor used as the root for every artifact lookup.
 ///
 /// Relative components are opened one at a time with `openat` and
@@ -236,6 +255,62 @@ public final class PrimeArtifactRoot: @unchecked Sendable {
 
     deinit {
         _ = close(descriptor)
+    }
+
+    /// Returns the stable identity of the held root descriptor without
+    /// reopening `directoryURL` or exposing the descriptor itself.
+    public func verifiedRootIdentity() throws
+        -> PrimeArtifactRootIdentity
+    {
+        var before = stat()
+        guard fstat(descriptor, &before) == 0 else {
+            throw Self.posix(
+                "fstat trusted artifact root identity",
+                directoryURL.path
+            )
+        }
+        try Self.requireTrustedDirectory(
+            descriptor,
+            path: directoryURL.path
+        )
+        var after = stat()
+        guard fstat(descriptor, &after) == 0,
+              before.st_dev == after.st_dev,
+              before.st_ino == after.st_ino,
+              before.st_uid == after.st_uid,
+              before.st_gid == after.st_gid,
+              before.st_mode == after.st_mode,
+              before.st_nlink == after.st_nlink,
+              before.st_mtimespec.tv_sec
+                == after.st_mtimespec.tv_sec,
+              before.st_mtimespec.tv_nsec
+                == after.st_mtimespec.tv_nsec,
+              before.st_ctimespec.tv_sec
+                == after.st_ctimespec.tv_sec,
+              before.st_ctimespec.tv_nsec
+                == after.st_ctimespec.tv_nsec
+        else {
+            throw PrimeDurableArtifactError
+                .untrustedDirectory(directoryURL.path)
+        }
+        return PrimeArtifactRootIdentity(
+            deviceID:
+                UInt64(bitPattern: Int64(after.st_dev)),
+            inode: UInt64(after.st_ino),
+            ownerUserID: after.st_uid,
+            ownerGroupID: after.st_gid,
+            actualMode:
+                UInt16(after.st_mode & mode_t(0o777)),
+            linkCount: UInt64(after.st_nlink),
+            modificationSeconds:
+                Int64(after.st_mtimespec.tv_sec),
+            modificationNanoseconds:
+                Int64(after.st_mtimespec.tv_nsec),
+            statusChangeSeconds:
+                Int64(after.st_ctimespec.tv_sec),
+            statusChangeNanoseconds:
+                Int64(after.st_ctimespec.tv_nsec)
+        )
     }
 
     /// Duplicates the already-admitted artifact-root capability.

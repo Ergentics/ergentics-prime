@@ -235,6 +235,39 @@ public enum PrimeNativeNeuralGateReplayDecodedArtifact:
     )
 }
 
+/// Shared per-record limits for the bounded canonical row schemas.
+///
+/// Descriptor readers must select a known schema here and reject an encoded
+/// frame length before allocating storage for that record. Returning `nil` for
+/// an unknown or deferred schema prevents the broad Stage-B mechanics limit
+/// from silently becoming a row-decoder policy.
+public enum PrimeNativeNeuralGateReplayRecordTransportPolicy {
+    public static let maximumPromptOnlyRowByteCount =
+        65_536
+    public static let maximumOuterEvaluationRowByteCount =
+        8_192
+    public static let maximumRawExecutionReferenceRowByteCount =
+        8_192
+
+    public static func maximumCanonicalRecordByteCount(
+        for recordSchemaID: String
+    ) -> Int? {
+        switch recordSchemaID {
+        case PrimeNativeNeuralGateReplayRecordSchema
+            .promptOnlyRowV1:
+            maximumPromptOnlyRowByteCount
+        case PrimeNativeNeuralGateReplayRecordSchema
+            .outerEvaluationRowV1:
+            maximumOuterEvaluationRowByteCount
+        case PrimeNativeNeuralGateReplayRecordSchema
+            .rawExecutionReferenceV1:
+            maximumRawExecutionReferenceRowByteCount
+        default:
+            nil
+        }
+    }
+}
+
 private enum TransportLimits {
     private static let contract =
         PrimeNativeNeuralGateReplayArtifactOutputContract
@@ -252,12 +285,20 @@ private enum TransportLimits {
         contract.maximumPromptTokenCount
     static let maximumGenerationDecisions =
         contract.maximumGenerationDecisions
-    static let maximumPromptRowBytes: UInt64 =
-        65_536
+    static let maximumPromptRowBytes = UInt64(
+        PrimeNativeNeuralGateReplayRecordTransportPolicy
+            .maximumPromptOnlyRowByteCount
+    )
     static let maximumOuterEvaluationRowBytes:
-        UInt64 = 8_192
+        UInt64 = UInt64(
+            PrimeNativeNeuralGateReplayRecordTransportPolicy
+                .maximumOuterEvaluationRowByteCount
+        )
     static let maximumRawExecutionRowBytes:
-        UInt64 = 8_192
+        UInt64 = UInt64(
+            PrimeNativeNeuralGateReplayRecordTransportPolicy
+                .maximumRawExecutionReferenceRowByteCount
+        )
     static let correctedFixtureRowCount: UInt32 = {
         guard let count = UInt32(
             exactly:

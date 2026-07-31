@@ -545,14 +545,21 @@ After the complete topology-V3 source reseal, the same Release canary passed
 with byte-identical probe/verifier package-description output: 29,905 bytes,
 SHA-256
 `ad4a66338d7348cb44419a115e062a30da129dea9a6355eec81f6b98932b6e11`.
-This is the current accepted topology-V3 actual-package secure-capture reseal.
+This is the last accepted historical topology-V3 actual-package secure-capture
+reseal.
 It validates only the secure-capture substrate on the pinned host. It is not
 V6/V7 selected-source execution-graph proof; it does not issue source binding
 V7 or establish worker or model execution, fixture identity,
 evaluation or mechanics `PASS`, Stage-B publication or a terminal receipt,
-reproducible-build identity, or network denial. `executionImplemented` remains
-false, and no Stage-B replay, historical worker, Metal execution, or product
-use is implemented or authorized. Descriptor-bound running Release
+reproducible-build identity, or network denial.
+After the complete topology-V4 source reseal, the same Release canary passed
+with byte-identical probe/verifier package-description output: 32,735 bytes,
+SHA-256
+`f7d873db2b91ecc61d356136b37bf7bc8017db962f40637998de914eeaa8d894`.
+This is the current accepted topology-V4 actual-package secure-capture reseal,
+with the same secure-capture-only scope. `executionImplemented` remains false,
+and no Stage-B replay, historical worker, Metal execution, or product use is
+implemented or authorized. Descriptor-bound running Release
 probe/verifier executables, two
 SwiftPM children, two historical workers, and one sealed Swift worker image
 remain required Stage-B work. The direct
@@ -995,18 +1002,18 @@ Deliver:
 - revised Prime EngineRecommend that separates canary, broad-language,
   profile, and product claims.
 
-Current checkpoint: topology V3 preserves topology V1/V2 while materializing
-dependency-free Stage-B artifact contracts, bounded in-memory transport with a
-shared producer/decoder codec, and exact non-authorizing replay composition.
-Composition V1 assigns strict prompt-record ordinals across 18,432
-caller-provided canonical records and requires exact
-outer/raw/validated-sidecar trace joins. Semantic namespace V4 remains an
-incomplete, non-authorizing overlay on historical output classification V3.
-The slice does not establish descriptor or durable source origin, execute a
-worker or mutation, close process/receipt ownership, issue source binding V7,
-or authorize a receipt. See
+Current checkpoint: topology V4 preserves topology V1/V2/V3 while
+materializing descriptor-rooted invariant and lossless-sidecar source binding
+plus outer source composition. Composition V1 remains pure and non-authorizing;
+its source wrapper incrementally reconstructs strict prompt ordinals across
+18,432 records and requires exact common-root outer/raw/sidecar trace joins.
+Semantic namespace V4 remains an incomplete, non-authorizing overlay on
+historical output classification V3. The slice does not execute a worker or
+mutation, observe process delivery, independently bind prompt to target, close
+process/receipt ownership, issue source binding V7, or authorize a receipt. See
 `PRIME-NATIVE-NEURAL-GATE-TYPED-ARTIFACT-TRANSPORT-2026-07-31.md` and
-`PRIME-NATIVE-NEURAL-GATE-REPLAY-COMPOSITION-2026-07-31.md`.
+`PRIME-NATIVE-NEURAL-GATE-REPLAY-COMPOSITION-2026-07-31.md`, and
+`PRIME-NATIVE-NEURAL-GATE-DESCRIPTOR-SOURCE-BINDING-2026-07-31.md`.
 
 Exit: both replay arms reconcile under distinct Release probe/verifier
 supervisors; the historical arm additionally reconciles two separate bounded
@@ -1054,12 +1061,22 @@ After the complete topology-V3 source reseal, the same Release canary passed
 with byte-identical probe/verifier package-description output: 29,905 bytes,
 SHA-256
 `ad4a66338d7348cb44419a115e062a30da129dea9a6355eec81f6b98932b6e11`.
-This is the current accepted topology-V3 actual-package secure-capture reseal.
+This is the last accepted historical topology-V3 actual-package secure-capture
+reseal.
 It validates only the secure-capture substrate on the pinned host. It is not
 V6/V7 selected-source execution-graph proof; it does not issue source binding
 V7 or establish worker or model execution, fixture identity,
 evaluation or mechanics `PASS`, Stage-B publication or a terminal receipt,
 reproducible-build identity, or network denial.
+
+After the complete topology-V4 source reseal, the same Release canary passed
+with byte-identical probe/verifier package-description output: 32,735 bytes,
+SHA-256
+`f7d873db2b91ecc61d356136b37bf7bc8017db962f40637998de914eeaa8d894`.
+This is the current accepted topology-V4 actual-package secure-capture reseal.
+It has the same secure-capture-only scope and establishes no execution,
+evaluation, publication, receipt, reproducibility, network-denial, Metal,
+scientific, or product authority.
 
 The repository-test checkpoint passed pure sidecar mechanics 6/6. The
 source-pinned MLX validation package remains outside the MLX-free
@@ -1119,8 +1136,9 @@ scientific oracle, durable solver receipt, Metal authority, or product
 authority follows.
 Corrected admission V3, source binding V6, and fixture plan V5/schema 5 now
 bind the bounded lossless logit-sidecar codec and maintained MLX Float32
-log-softmax operation as source contracts only. `executionImplemented` remains
-false: no durable sidecar, full-fixture process observation or recomputation,
+log-softmax operation as source contracts. Topology V4 now implements the
+descriptor-bound sidecar adapter, but `executionImplemented` remains false: no
+canonical Stage-B sidecar set, full-fixture process observation or recomputation,
 model execution, Stage-B Metal authority, worker/process record, terminal
 receipt, independent scientific oracle, or product authority has been
 established.
@@ -1130,18 +1148,18 @@ that the planned shared donor topology would expose trap-bearing historical
 code to corrected supervisors. Row identity remains outer correlation only;
 seed is replicate-scoped; and fresh per-row state plus row-permutation trace
 identity are mandatory. The package now splits raw corrected execution from
-evaluation/regrade authority. Trap-disjoint topology V3 preserves V1/V2,
-materializes typed contracts, shared transport codec, and composition, and
-supersedes the unsafe future routing while source binding V7 remains unissued.
-Corrected execution remains blocked until descriptor-rooted validation binds
-durable stream and sidecar origin to the frozen composition schedule, lawfully
-delivers the target-free schedule/correlation capability to disjoint producers,
-and freezes the independent prompt/target crosswalk, followed by
-process/receipt ownership and independent mutation
+evaluation/regrade authority. Trap-disjoint topology V4 preserves V1/V2/V3,
+materializes descriptor-rooted invariant and lossless-sidecar source binding
+outside pure composition, and supersedes the unsafe future routing while
+source binding V7 remains unissued. Corrected execution remains blocked until
+a single held-root four-source capture/inventory session is frozen, a separate
+trap-bearing target freezes the independent prompt/target crosswalk, the typed
+target-free raw/outer projections are delivered to actual
+disjoint processes, and process/receipt ownership plus independent mutation
 producer/detector mechanics, then the role-scoped worker, paired
 probe/verifier, exact inventory, and durable observations. The exact next
 prerequisite is
-`implement_descriptor_rooted_bounded_invariant_stream_decoders_bind_validated_stream_capabilities_and_lawful_schedule_delivery_to_frozen_composition_then_freeze_independent_prompt_target_crosswalk_without_materializing_workers`.
+`freeze_single_held_root_four_source_capture_inventory_session_then_freeze_independent_source_derived_prompt_target_crosswalk_in_trap_bearing_authority_target_without_materializing_workers`.
 Per-decision bit-pattern digests keep the pure trace inside Stage-B decode
 limits; local
 Foundation/Double probability diagnostics are excluded from canonical
@@ -1275,7 +1293,7 @@ The non-training implementation slices now stand as follows:
      `3a4ae506f5ed2eae16e9f46d099c5d53681ec1d1a02aa9c20549b0fbeb230d7c`;
      it predates topology V3/composition, remains secure-capture evidence only,
      and source binding V7 is unissued;
-   - after the complete topology-V3 source reseal, the current accepted V3
+   - after the complete topology-V3 source reseal, the last accepted V3
      actual-package secure-capture output is byte-identical across probe and
      verifier at 29,905 bytes, SHA-256
      `ad4a66338d7348cb44419a115e062a30da129dea9a6355eec81f6b98932b6e11`;
@@ -1284,6 +1302,14 @@ The non-training implementation slices now stand as follows:
      V7, and establishes no worker/model execution, fixture identity,
      evaluation or mechanics `PASS`, Stage-B publication or terminal receipt,
      reproducible-build identity, or network denial;
+   - topology V4, canonical SHA-256
+     `8339bbd42b0e4052888db880aacbb067770c08dd2106bf4a7820c853c4b715af`,
+     preserves V1/V2/V3 and adds descriptor-rooted invariant and lossless-
+     sidecar source binding plus an outer source-composition adapter; its
+     actual-package secure-capture output is byte-identical across probe and
+     verifier at 32,735 bytes, SHA-256
+     `f7d873db2b91ecc61d356136b37bf7bc8017db962f40637998de914eeaa8d894`,
+     with secure-capture-only authority;
    - the bounded pure-library layer implements raw-UTF-8
      global-stream/chunk mechanics, independent direct/affine fingerprints,
      the raw-byte cache guard, typed invariant/fingerprint payload validation,
@@ -1311,12 +1337,13 @@ The non-training implementation slices now stand as follows:
      the three admitted replicate contexts and seed-keyed permutations, but
      this remains symbolic/synthetic mechanics without model,
      independent-oracle, receipt, Metal, or product authority;
-   - topology V3, its pure artifact-contract/transport/composition targets, and
-     the raw/evaluation package split are complete; the shared codec, strict
-     prompt schedule, and exact in-memory join are frozen, but no durable
-     full-vocabulary sidecar or full-fixture MLX recomputation process
-     observation yet exists; descriptor streaming and durable source-codec binding,
-     process/receipt ownership, source-bound mutators, isolated historical
+   - topology V4, its pure artifact-contract/transport/composition targets,
+     descriptor source binding, outer source composition, and the
+     raw/evaluation package split are complete; the shared codec, incremental
+     strict prompt schedule, exact four-source join, and target-free role
+     projections are frozen, but no full-fixture MLX recomputation process or
+     schedule-delivery observation yet exists; the independent prompt/target
+     crosswalk, process/receipt ownership, source-bound mutators, isolated historical
      worker, role-scoped probe/verifier
      execution, exact path-and-content inventory evidence, replacement
      process-count schema, Stage-B process records, and receipt remain pending;
@@ -1470,10 +1497,11 @@ repository was built locally in this audit.
 
 The next investment is not another seed, profile, precision, quantization, or
 3B run. The exact CPU and bounded interrupted-Metal continuation gates are
-historical completed mechanics. Phase 3 should now implement descriptor-rooted
-Stage-B invariant streaming and bind its validated stream/sidecar capabilities
-to composition V1, freeze lawful schedule/correlation delivery, and freeze the
-independent source-derived prompt/target crosswalk. After that, freeze corrected
-process/evaluation/receipt ownership before materializing disjoint mutation
-producer/detector targets. Training authority remains unchanged and Stage-B
-execution remains `ABSTAIN`.
+historical completed mechanics. Phase 3 should now freeze one held-root
+four-source capture/inventory session before any durable-origin promotion,
+then freeze the independent source-derived prompt/target crosswalk in a
+separate trap-bearing target without exposing it to the raw closure. After
+that, freeze corrected process/evaluation/receipt ownership and actual typed
+role delivery before materializing disjoint mutation producer/detector
+targets. Training authority remains unchanged and Stage-B execution remains
+`ABSTAIN`.
