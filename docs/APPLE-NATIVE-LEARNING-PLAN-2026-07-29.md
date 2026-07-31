@@ -485,14 +485,18 @@ network-denial, or hostile same-UID-process isolation claim.
 
 External-child evidence and the enclosing describe-capture record are schema
 4 at the role-specific capture-V4 paths. The adaptation-proof and
-historical-worker aggregate contracts remain V2. The source/execution-binding
-contract is V5; V4 remains the historical twelve-target fixture-authority
-binding. The replay-output contract remains V3, the
+historical-worker aggregate contracts remain V2. Corrected execution admission
+is V3. The source/execution-binding contract is V6; V5 remains the historical
+thirteen-target prompt-solver source contract and V4 the earlier twelve-target
+fixture-authority binding. The replay-output contract remains V3, the
 output-path-classification contract ID is
 `prime_stage_b_output_path_namespace_classification_v3`, and the fixture plan
-is V4/schema 4; V3/schema 3 remains the historical pre-solver plan. The
-unchanged V3 replay-output namespace still reserves
-`neural-gate-replay/plan.v3.json`, and no V4 execution artifact is claimed.
+is V5/schema 5 with canonical content SHA-256
+`c811555bc3a04f053378519ca9c33d18de075d0eb7b347587a9789f4aff3466b`.
+V4/schema 4 remains the historical pre-sidecar plan and V3/schema 3 the
+pre-solver plan. The unchanged V3 replay-output namespace still
+reserves `neural-gate-replay/plan.v3.json`, and no V4 or V5 execution artifact
+is claimed.
 The adaptation proof remains
 `neural-gate-replay/source/adaptation-proof.v2.json`. The nested held-source
 mutation-guard observation stays schema 1, the scratch observation is schema
@@ -513,10 +517,15 @@ isolated thirteenth prompt-solver target was added, the same Release canary was
 rerun on the pinned host and passed with byte-identical probe/verifier output:
 23,791 bytes with SHA-256
 `9d56ad223c9d980272583dc752e0ff05bb815ce504cd3c82fc7e186627c02aa7`.
-This is the current V5 source-binding reseal. It includes the PrimeCore trusted
-descriptor-inventory substrate, pure Stage-B replay mechanics, corrected value
-mechanics, the offline source-attested fixture target, and the isolated
-prompt-solver target; it does not widen canary authority.
+This remains valid historical secure-capture evidence for the complete
+thirteen-target package description and source snapshot. The live factory
+still used the typed V4 selected-subgraph contract, so it was not a typed V5
+source-binding reseal and does not widen canary authority. After the
+fifteen-target V6 source graph and isolated MLX validation topology were
+frozen, the same Release canary passed with byte-identical probe/verifier
+output: 26,090 bytes with SHA-256
+`53ace0b68b1f8f2cf6534be886cb93241b08a36e0ddf0e9da7f8eee33f37cb40`.
+That is the current typed V6 selected-source-graph reseal.
 That pass validates only the secure capture substrate on the pinned host. It
 published no durable Stage-B process record or receipt,
 `executionImplemented` remains false, and no Stage-B replay, historical
@@ -978,9 +987,35 @@ discovery failures described above, the live Release two-role canary was rerun
 after the fixture-authority twelve-target source freeze and passed with the
 exact 23,207-byte output binding. That is the preceding twelve-target
 fixture-authority reseal. After the prompt-solver thirteenth target was added,
-the current V5 source-binding canary passed with byte-identical 23,791-byte
-output and SHA-256
+the canary passed with byte-identical 23,791-byte output and SHA-256
 `9d56ad223c9d980272583dc752e0ff05bb815ce504cd3c82fc7e186627c02aa7`.
+That remains valid historical secure-capture evidence for the complete
+thirteen-target package description and source snapshot, but the live factory
+used the typed V4 selected-subgraph contract; it was not a typed V5
+source-binding reseal. After the fifteen-target V6 source graph and isolated
+MLX validation topology were frozen, the same Release canary passed with
+byte-identical probe/verifier output: 26,090 bytes with SHA-256
+`53ace0b68b1f8f2cf6534be886cb93241b08a36e0ddf0e9da7f8eee33f37cb40`.
+That is the current typed V6 selected-source-graph reseal.
+
+The repository-test checkpoint passed pure sidecar mechanics 6/6. The
+source-pinned MLX validation package remains outside the MLX-free
+`PrimeCoreTests` bundle and passed 9/9 in 193.005 seconds against the exact
+3,817,916-byte metallib, SHA-256
+`24d4cfcd3ca8b15ead691e46219f35adabbea64c9f8de4eae9bf293fd8d5eb7b`,
+with structural three-vector digest
+`8dca965dbb3057c79d268435b23e58ecab8e77ecfe745b6a434cc1b2a852d98a`.
+Those nine cases comprise seven focused MLX mechanics cases and two exhaustive
+integration cases; the main exhaustive case took 192.889 seconds and covered
+18,432 rows and 232,638 decisions per seed for `1618`, `2718`, and `3141`. It
+reconstructed every decision bit-exactly from 44 unique complete 512-value
+vectors, a 90,136-byte dictionary, and a 2,070,912-byte aggregate, with stable
+MLX digest
+`db6906710bffd6a81653ca01df91f913f8a5430da8c8e9c8e620b3c88f7b2f02`.
+The codec caps candidates at 1,179,648 and unique vectors at 65,536. This is
+repository mechanics only, not a durable Stage-B artifact, full-fixture
+process observation, model or Stage-B Metal authority, process record, receipt,
+or product evidence.
 The pure-library layer now also contains a corrected value-mechanics target
 for prompt-token row inputs, replicate-scoped admitted seed context,
 fixed-cap/EOS full-512-logit decision trace validation, allowed-support
@@ -1019,19 +1054,27 @@ contexts and seed-keyed row permutations, including exact structural
 symbolic/synthetic mechanics coverage only: no model execution, independent
 scientific oracle, durable solver receipt, Metal authority, or product
 authority follows.
-`executionImplemented`, the bounded logit-sidecar binding, and the
-source-pinned Float32 log-softmax binding remain false; workers, process
-records, and the terminal receipt remain absent.
+Corrected admission V3, source binding V6, and fixture plan V5/schema 5 now
+bind the bounded lossless logit-sidecar codec and maintained MLX Float32
+log-softmax operation as source contracts only. `executionImplemented` remains
+false: no durable sidecar, full-fixture process observation or recomputation,
+model execution, Stage-B Metal authority, worker/process record, terminal
+receipt, independent scientific oracle, or product authority has been
+established.
 
 A forward audit also proved that `row_id` encodes split/family metadata and
 that the planned shared donor topology would expose trap-bearing historical
 code to corrected supervisors. Corrected execution remains blocked: row
 identity is outer correlation only; seed is replicate-scoped; and fresh
-per-row state plus row-permutation trace identity are mandatory. The solver
-derivation is now bound, but a bounded full-logit sidecar with source-pinned
-Float32 log-softmax recomputation and a trap-disjoint topology must still be
-bound before any corrected replay. Per-decision bit-pattern digests keep the
-pure trace inside Stage-B decode limits; local
+per-row state plus row-permutation trace identity are mandatory. The solver,
+sidecar codec, and MLX Float32 operation are now source-plan-bound, but
+corrected execution remains blocked until the topology is trap-disjoint,
+mutators and typed artifact decoders are source-bound, and the role-scoped
+worker, paired probe/verifier, exact inventory, and durable observations are
+implemented. The exact next prerequisite is
+`amend_trap_disjoint_target_topology_then_implement_source_bound_mutators_and_typed_artifact_decoders_then_implement_role_scoped_stage_b_historical_worker_probe_verifier_with_exact_path_metadata_content_inventory`.
+Per-decision bit-pattern digests keep the pure trace inside Stage-B decode
+limits; local
 Foundation/Double probability diagnostics are excluded from canonical
 fingerprints. Runtime donor transplantation, the historical worker,
 role-scoped probe/verifier execution, Stage-B records, and the receipt remain
@@ -1142,9 +1185,15 @@ The non-training implementation slices now stand as follows:
    - after the isolated thirteenth prompt-solver target was added, the same
      canary passed with byte-identical 23,791-byte output, SHA-256
      `9d56ad223c9d980272583dc752e0ff05bb815ce504cd3c82fc7e186627c02aa7`;
-     this is the current V5 source-binding reseal, it published no durable
-     Stage-B process record or receipt, and it authorizes no replay, worker,
-     model, Metal, or product claim;
+     this is historical complete-package/source-snapshot capture evidence under
+     the typed V4 selected-subgraph contract, not a typed V5 reseal; it
+     published no durable Stage-B process record or receipt and authorizes no
+     replay, worker, model, Metal, or product claim;
+   - corrected admission V3, source binding V6, and fixture plan V5/schema 5
+     source-bind the bounded lossless sidecar codec and maintained MLX Float32
+     operation; the current typed V6 live canary passed with byte-identical
+     26,090-byte probe/verifier output, SHA-256
+     `53ace0b68b1f8f2cf6534be886cb93241b08a36e0ddf0e9da7f8eee33f37cb40`;
    - the bounded pure-library layer implements raw-UTF-8
      global-stream/chunk mechanics, independent direct/affine fingerprints,
      the raw-byte cache guard, typed invariant/fingerprint payload validation,
@@ -1174,12 +1223,11 @@ The non-training implementation slices now stand as follows:
      the three admitted replicate contexts and seed-keyed permutations, but
      this remains symbolic/synthetic mechanics without model,
      independent-oracle, receipt, Metal, or product authority;
-   - a bounded full-vocabulary logit sidecar with source-pinned Float32
-     log-softmax recomputation, a trap-disjoint topology, the isolated donor
-     transplantation and historical worker, role-scoped probe/verifier
-     execution, exact path-and-content inventory evidence, remaining typed
-     artifact-content validation, Stage-B process records, and receipt do not
-     yet exist;
+   - no durable full-vocabulary sidecar or full-fixture MLX recomputation
+     process observation yet exists; the trap-disjoint topology, source-bound
+     mutators and typed artifact decoders, isolated historical worker,
+     role-scoped probe/verifier execution, exact path-and-content inventory
+     evidence, Stage-B process records, and receipt remain pending;
    - `executionImplemented` remains false;
    - Stage B must add no PMHNP runtime dependency and must not write to the
      companion tree;

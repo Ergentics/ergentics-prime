@@ -156,9 +156,13 @@ seed-keyed permutations, with exact structural logit and strict malformed
 grammar gates. The solver remains symbolic/synthetic mechanics, not model
 execution, an independent scientific oracle, a durable receipt, Metal
 authority, or product authority.
-It leaves `executionImplemented`, the bounded logit-sidecar binding, and the
-source-pinned Float32 log-softmax binding false; workers, process records, and
-the terminal receipt remain absent.
+The current source-only slice advances corrected admission to V3, the
+source/execution binding to V6, and the fixture plan to V5/schema 5. It binds
+the bounded lossless logit-sidecar codec and maintained MLX Float32
+log-softmax operation as source contracts only. `executionImplemented` remains
+false: no durable sidecar, full-fixture process observation or recomputation,
+model execution, Stage-B Metal authority, process record, terminal receipt,
+independent scientific oracle, or product authority has been established.
 
 This split is security-significant. The previously planned `row_id` input
 encodes split and semantic family, including the abstention class, so row
@@ -167,15 +171,33 @@ would have exposed trap-bearing historical code to corrected supervisors.
 Row-selected seeds, retained solver state, and invocation order are additional
 metadata channels, so one seed per replicate, fresh per-row state, and
 row-permutation trace identity are mandatory. The exact source-derived
-fixture identity/count and the concrete prompt-only solver derivation are now
-source-plan-bound. Corrected execution remains blocked until a bounded
-full-logit sidecar with source-pinned Float32 log-softmax recomputation and a
-trap-disjoint topology are bound. The pure trace uses per-decision
-bit-pattern digests because
+fixture identity/count, the concrete prompt-only solver derivation, the
+sidecar codec, and the MLX Float32 operation are now source-plan-bound.
+Corrected execution remains blocked until the topology is trap-disjoint,
+mutators and typed artifact decoders are source-bound, and the role-scoped
+worker, paired probe/verifier, exact inventory, and durable observations are
+implemented. The pure trace uses per-decision bit-pattern digests because
 hex-expanding all 512 logits would exceed the frozen Stage-B decode limits;
 the local Foundation/Double probability diagnostic is excluded from canonical
 fingerprints. The historical worker, paired probe/verifier, execution records,
 and receipt remain pending; `executionImplemented` remains false.
+
+The repository-test checkpoint passed pure sidecar mechanics 6/6. The
+source-pinned MLX validation package remains outside the MLX-free
+`PrimeCoreTests` bundle and passed 9/9 in 193.005 seconds against the exact
+3,817,916-byte metallib, SHA-256
+`24d4cfcd3ca8b15ead691e46219f35adabbea64c9f8de4eae9bf293fd8d5eb7b`,
+with structural three-vector digest
+`8dca965dbb3057c79d268435b23e58ecab8e77ecfe745b6a434cc1b2a852d98a`.
+Those nine cases comprise seven focused MLX mechanics cases and two exhaustive
+integration cases; the main exhaustive case took 192.889 seconds and covered
+18,432 rows and 232,638 decisions per seed for `1618`, `2718`, and `3141`. It
+reconstructed every decision bit-exactly from 44 unique complete 512-value
+vectors, a 90,136-byte dictionary, and a 2,070,912-byte aggregate, with stable
+MLX digest
+`db6906710bffd6a81653ca01df91f913f8a5430da8c8e9c8e620b3c88f7b2f02`.
+The codec caps candidates at 1,179,648 and unique vectors at 65,536. This is
+repository mechanics only, not durable Stage-B evidence.
 
 The closed PrimeCore external-child capture substrate is implemented. Its
 fixed direct `swift-package` launch uses stdin at EOF and the exact
@@ -226,14 +248,18 @@ UID; the Darwin user-temporary parent remains a trusted prerequisite.
 
 External-child evidence and its enclosing describe-capture record are schema
 4 at the role-specific capture-V4 paths. The adaptation-proof and
-historical-worker aggregate contracts remain V2. The
-source/execution-binding contract is V5; V4 remains the historical
-twelve-target fixture-authority binding. The replay-output contract remains
-V3, the output-path-classification contract ID is
+historical-worker aggregate contracts remain V2. Corrected execution admission
+is V3. The source/execution-binding contract is V6; V5 remains the historical
+thirteen-target prompt-solver source contract and V4 the earlier twelve-target
+fixture-authority binding. The replay-output contract remains V3, the
+output-path-classification contract ID is
 `prime_stage_b_output_path_namespace_classification_v3`, and the fixture plan
-is V4/schema 4; V3/schema 3 remains the historical pre-solver plan. The
-unchanged V3 replay-output namespace still reserves
-`neural-gate-replay/plan.v3.json`, and no V4 execution artifact is claimed.
+is V5/schema 5 with canonical content SHA-256
+`c811555bc3a04f053378519ca9c33d18de075d0eb7b347587a9789f4aff3466b`.
+V4/schema 4 remains the historical pre-sidecar plan and V3/schema 3 the
+pre-solver plan. The unchanged V3 replay-output namespace still
+reserves `neural-gate-replay/plan.v3.json`, and no V4 or V5 execution artifact
+is claimed.
 The adaptation proof remains at
 `neural-gate-replay/source/adaptation-proof.v2.json`. The nested held-source
 mutation-guard observation remains schema 1; the scratch-namespace observation
@@ -254,10 +280,15 @@ isolated thirteenth prompt-solver target was added, the same Release canary was
 rerun on the pinned host and passed with byte-identical probe/verifier output:
 23,791 bytes, SHA-256
 `9d56ad223c9d980272583dc752e0ff05bb815ce504cd3c82fc7e186627c02aa7`.
-This is the current V5 source-binding reseal. It includes the PrimeCore trusted
-descriptor-inventory substrate, pure Stage-B replay mechanics, corrected value
-mechanics, the offline source-attested fixture target, and the isolated
-prompt-solver target; it does not widen canary authority.
+This remains valid historical secure-capture evidence for the complete
+thirteen-target package description and source snapshot. The live factory
+still used the typed V4 selected-subgraph contract, so it was not a typed V5
+source-binding reseal and does not widen canary authority. After the
+fifteen-target V6 source graph and isolated MLX validation topology were
+frozen, the same Release canary passed with byte-identical probe/verifier
+output: 26,090 bytes with SHA-256
+`53ace0b68b1f8f2cf6534be886cb93241b08a36e0ddf0e9da7f8eee33f37cb40`.
+That is the current typed V6 selected-source-graph reseal.
 The pass validates only the secure capture substrate on that pinned host. It
 published no durable Stage-B process record or receipt,
 `executionImplemented` remains false, and no Stage-B replay, historical
@@ -294,14 +325,16 @@ blocks a correctly scoped mechanics pass.
 
 The exact 18,432-row corrected fixture identity, ordering, and count are now
 source-plan-bound by the offline fixture authority. The separate prompt-only
-solver derivation is also source-plan-bound, without an independent solver
-receipt.
+solver derivation, bounded sidecar codec, and maintained MLX Float32 operation
+are also source-plan-bound, without an independent solver or execution receipt.
+The exact next prerequisite is
+`amend_trap_disjoint_target_topology_then_implement_source_bound_mutators_and_typed_artifact_decoders_then_implement_role_scoped_stage_b_historical_worker_probe_verifier_with_exact_path_metadata_content_inventory`.
 
-- bind a bounded full-vocabulary logit sidecar and independently recompute the
-  frozen source-pinned Float32 log-softmax; the local Foundation/Double
-  diagnostic is not evidence;
 - amend the draft topology so trap-bearing historical donor/runtime code
   cannot enter corrected supervisors;
+- implement source-bound mutators and typed artifact decoders; repository
+  mechanics tests and the local Foundation/Double diagnostic are not durable
+  evidence;
 - use the completed PrimeCore secure-capture substrate from role-scoped
   Stage-B probe and verifier supervisors, then bind the donor-to-Prime
   adaptation proof, copied/revalidated Stage-A descriptor closure, validated

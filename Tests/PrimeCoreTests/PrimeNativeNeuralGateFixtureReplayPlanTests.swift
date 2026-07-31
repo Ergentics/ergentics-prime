@@ -235,6 +235,361 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
         )
     }
 
+    func testLogitSidecarFloat32SourcePlanAdvancesNarrowlyAndPreservesHistory()
+        throws
+    {
+        let historicalV3 = Plan.frozenV3
+        let historicalV4 = Plan.frozenV4
+        let plan = Plan.frozenV5
+        let admission =
+            plan.correctedExecutionAdmission
+        let binding =
+            try XCTUnwrap(
+                admission
+                    .logitSidecarFloat32SourceBinding
+            )
+
+        XCTAssertNoThrow(try historicalV3.validate())
+        XCTAssertNoThrow(try historicalV4.validate())
+        XCTAssertNoThrow(try plan.validate())
+        XCTAssertEqual(
+            try historicalV3.contentSHA256(),
+            "9e8e9c4820fcea592f79cb4cbdc9abdd217a0ca6e00e2b715a215d8a1d315ee6"
+        )
+        XCTAssertEqual(
+            try historicalV4.contentSHA256(),
+            "a458a2caf801d01fa98b403b21514d2ea18ddbe284ea4d893c101fc5ca7663be"
+        )
+        XCTAssertEqual(plan.schemaVersion, 5)
+        XCTAssertEqual(
+            plan.planID,
+            "ergentics_prime_native_neural_gate_dual_fixture_replay_v5"
+        )
+        XCTAssertEqual(
+            admission,
+            .frozenV3
+        )
+        XCTAssertEqual(
+            plan.sourceExecutionBinding,
+            .frozenV6
+        )
+        XCTAssertEqual(
+            binding.contractID,
+            "prime_stage_b_logit_sidecar_float32_logsoftmax_source_binding_v1"
+        )
+        XCTAssertEqual(
+            binding.sidecarTargetName,
+            "PrimeNativeNeuralGateLogitSidecarMechanics"
+        )
+        XCTAssertEqual(
+            binding
+                .sidecarDirectLocalDependencyNames,
+            [
+                "PrimeNativeNeuralGateCorrectedMechanics",
+            ]
+        )
+        XCTAssertEqual(
+            binding.mlxRecomputationTargetName,
+            "PrimeNativeNeuralGateMLXLogSoftmaxRecomputation"
+        )
+        XCTAssertEqual(
+            binding
+                .mlxRecomputationDirectLocalDependencyNames,
+            [
+                "PrimeNativeNeuralGateLogitSidecarMechanics",
+            ]
+        )
+        XCTAssertEqual(
+            binding.sidecarCodecID,
+            "prime_stage_b_full_vocabulary_logit_sidecar_dictionary_deduplicated_row_index_chunks_big_endian_v1"
+        )
+        XCTAssertEqual(
+            binding.dictionaryMagicUTF8,
+            "PRMLGD01"
+        )
+        XCTAssertEqual(
+            binding.chunkMagicUTF8,
+            "PRMLGC01"
+        )
+        XCTAssertEqual(
+            binding.manifestMagicUTF8,
+            "PRMLGM01"
+        )
+        XCTAssertEqual(
+            binding.aggregateDigestDomainUTF8,
+            "PRMLGA01"
+        )
+        XCTAssertEqual(
+            binding.dictionaryLayout,
+            "magic8_seed_u64be_vocabulary_u32be_entry_count_u32be_then_lexicographic_unique_entries_each_512_float32_bit_patterns_u32be_v1"
+        )
+        XCTAssertEqual(
+            binding.chunkLayout,
+            "magic8_seed_u64be_chunk_ordinal_u32be_row_count_u32be_then_rows_with_row_ordinal_u32be_correlation_length_u16be_printable_ascii_decision_count_u8_then_strict_ordinal_u8_dictionary_index_u32be_v1"
+        )
+        XCTAssertEqual(
+            binding.aggregateDigestID,
+            "sha256_prmlga01_then_for_dictionary_and_chunks_in_order_uint64_big_endian_length_then_exact_file_bytes_v1"
+        )
+        XCTAssertEqual(
+            binding.fullVocabularyLogitCount,
+            512
+        )
+        XCTAssertEqual(
+            binding.maximumDictionaryEntryCount,
+            65_536
+        )
+        XCTAssertEqual(
+            binding.maximumDictionaryCandidateCount,
+            18_432 * 64
+        )
+        XCTAssertEqual(
+            binding.dictionaryConstructionPolicy,
+            "bounded_streaming_one_vector_at_a_time_exact_float32_bit_pattern_deduplication_fail_on_1179649th_candidate_or_65537th_unique_entry_then_lexicographic_sort_v1"
+        )
+        XCTAssertEqual(
+            binding.maximumGenerationDecisionsPerRow,
+            64
+        )
+        XCTAssertEqual(
+            binding.exactCorrectedFixtureRowsPerReplicate,
+            18_432
+        )
+        XCTAssertEqual(
+            binding.admittedReplicateCount,
+            3
+        )
+        XCTAssertEqual(
+            binding.canonicalRowsPerChunk,
+            1_024
+        )
+        XCTAssertEqual(
+            binding.maximumChunkCount,
+            18
+        )
+        XCTAssertEqual(
+            binding.maximumDictionaryFileBytes,
+            256 * 1_024 * 1_024
+        )
+        XCTAssertEqual(
+            binding.maximumChunkFileBytes,
+            1 * 1_024 * 1_024
+        )
+        XCTAssertEqual(
+            binding.maximumManifestFileBytes,
+            64 * 1_024
+        )
+        XCTAssertEqual(
+            binding.maximumAggregateBytes,
+            512 * 1_024 * 1_024
+        )
+        XCTAssertEqual(binding.mlxAxis, -1)
+        XCTAssertEqual(
+            binding.maximumMLXBatchVectorCount,
+            256
+        )
+        XCTAssertEqual(
+            binding.exactLogSoftmaxFunctionSHA256,
+            "8d576115e1be7648d4a4da72c025893d23e67b1d30a53646d09e74bfe58fc639"
+        )
+        XCTAssertEqual(
+            binding.sourceContinuityPins.map(\.role),
+            [
+                "companion_executor",
+                "companion_package_resolved",
+                "upstream_mlx_swift_activations",
+                "ergentics_mlx_swift_activations",
+            ]
+        )
+        XCTAssertEqual(
+            binding.sourceContinuityPins.map(
+                \.gitBlobOID
+            ),
+            [
+                "94227842cdff73434c926527a6081aaf20f37155",
+                "18aef69512c82c3e6cdff192f3aa0a6ee13c702e",
+                "f5ee9205eac15b537f6a9552371c30255c88e69e",
+                "a40618fac9f7c2226599c0219eccc11fcfcb0df5",
+            ]
+        )
+        XCTAssertEqual(
+            binding.sourceContinuityPins.map(
+                \.revision
+            ),
+            [
+                "163fc100710ece48119bc25954452d10f6a84f7f",
+                "163fc100710ece48119bc25954452d10f6a84f7f",
+                "072b684acaae80b6a463abab3a103732f33774bf",
+                "d37885a278f1c37484a94d0f401a418735e66519",
+            ]
+        )
+        XCTAssertEqual(
+            binding.sourceContinuityPins.map(
+                \.treeOID
+            ),
+            [
+                "9009daa4f8a07fbd5897e00b9571cef44ec292db",
+                "9009daa4f8a07fbd5897e00b9571cef44ec292db",
+                "aecc4c90c4720b0624def30913f139eb1e878ea5",
+                "5310749549cca107fc1bb07d82dacf043bc02b9e",
+            ]
+        )
+        XCTAssertEqual(
+            binding.sourceContinuityPins.map(
+                \.byteCount
+            ),
+            [
+                174_006,
+                1_949,
+                19_101,
+                23_918,
+            ]
+        )
+        XCTAssertEqual(
+            binding.sourceContinuityPins.map(
+                \.sha256
+            ),
+            [
+                "7a3ba9477a7ac82dccfe6dcc7ec09af738b40298cdab6b259ddf1e9d36ec15b4",
+                "cf1ba313dcb0c959e80ba09d6cbe0c56bcd921523bda5cec2c682c8ae7696ab3",
+                "c6e82121f1a7efceca0de234b5ef0058162f70bcccc4cef63b6d85d524ef1beb",
+                "5145539a33687bb4e9ce5ac00b821fef9f5e18652818c278c1807443b5e552f1",
+            ]
+        )
+        XCTAssertTrue(
+            admission
+                .boundedFullVocabularyLogitArtifactBound
+        )
+        XCTAssertTrue(
+            admission
+                .sourcePinnedFloat32LogSoftmaxRecomputationBound
+        )
+        XCTAssertEqual(
+            admission
+                .durableFullVocabularyLogitSidecarObserved,
+            false
+        )
+        XCTAssertEqual(
+            admission
+                .fullFixtureSourcePinnedFloat32LogSoftmaxRecomputationObserved,
+            false
+        )
+        XCTAssertEqual(
+            admission.modelExecutionObserved,
+            false
+        )
+        XCTAssertEqual(
+            admission.metalExecutionObserved,
+            false
+        )
+        XCTAssertEqual(
+            admission
+                .sidecarRecomputationProcessRecordPublished,
+            false
+        )
+        XCTAssertEqual(
+            admission
+                .sidecarRecomputationReceiptPublished,
+            false
+        )
+        XCTAssertFalse(
+            admission.correctedFixtureExecutionAuthorized
+        )
+        XCTAssertFalse(
+            admission.terminalReceiptAuthorized
+        )
+        XCTAssertFalse(plan.executionImplemented)
+        XCTAssertFalse(plan.projectionReceiptAuthorized)
+        XCTAssertEqual(
+            plan.targetGraph,
+            historicalV4.targetGraph
+        )
+        XCTAssertEqual(
+            plan.outputContract,
+            historicalV4.outputContract
+        )
+        XCTAssertEqual(
+            plan.fixedOutputRelativePaths,
+            historicalV4.fixedOutputRelativePaths
+        )
+        XCTAssertTrue(
+            plan.fixedOutputRelativePaths
+                .contains(
+                    "neural-gate-replay/plan.v3.json"
+                )
+        )
+        XCTAssertFalse(
+            plan.fixedOutputRelativePaths
+                .contains(
+                    "neural-gate-replay/plan.v4.json"
+                )
+        )
+        XCTAssertEqual(
+            plan.requiredTrueClaims,
+            historicalV4.requiredTrueClaims
+        )
+        XCTAssertEqual(
+            plan.requiredFalseClaims,
+            historicalV4.requiredFalseClaims
+        )
+        XCTAssertEqual(
+            plan.immediateImplementationPrerequisite,
+            "amend_trap_disjoint_target_topology_then_implement_source_bound_mutators_and_typed_artifact_decoders_then_implement_role_scoped_stage_b_historical_worker_probe_verifier_with_exact_path_metadata_content_inventory"
+        )
+
+        let first =
+            try PrimeCanonicalJSON.encode(plan)
+        let second =
+            try PrimeCanonicalJSON.encode(plan)
+        XCTAssertEqual(first, second)
+        XCTAssertEqual(
+            try plan.contentSHA256(),
+            "c811555bc3a04f053378519ca9c33d18de075d0eb7b347587a9789f4aff3466b"
+        )
+
+        let historicalAdmissionObject =
+            try XCTUnwrap(
+                try JSONSerialization.jsonObject(
+                    with:
+                        PrimeCanonicalJSON.encode(
+                            PrimeNativeNeuralGateCorrectedExecutionAdmission
+                                .frozenV2
+                        )
+                ) as? [String: Any]
+            )
+        XCTAssertNil(
+            historicalAdmissionObject[
+                "logit_sidecar_float32_source_binding"
+            ]
+        )
+        XCTAssertNil(
+            historicalAdmissionObject[
+                "durable_full_vocabulary_logit_sidecar_observed"
+            ]
+        )
+        let currentAdmissionObject =
+            try XCTUnwrap(
+                try JSONSerialization.jsonObject(
+                    with:
+                        PrimeCanonicalJSON.encode(
+                            admission
+                        )
+                ) as? [String: Any]
+            )
+        XCTAssertEqual(
+            currentAdmissionObject[
+                "durable_full_vocabulary_logit_sidecar_observed"
+            ] as? Bool,
+            false
+        )
+        XCTAssertEqual(
+            currentAdmissionObject[
+                "full_fixture_source_pinned_float32_logsoftmax_recomputation_observed"
+            ] as? Bool,
+            false
+        )
+    }
+
     func testSourceBindingV5AddsOnlyIsolatedPromptSolver()
         throws
     {
@@ -291,6 +646,275 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
         )
     }
 
+    func testSourceBindingV6AddsOnlyIsolatedSidecarAndMLXRecomputation()
+        throws
+    {
+        let legacy =
+            PrimeNativeNeuralGateSourceExecutionBindingContract
+            .frozenV5
+        let bound =
+            PrimeNativeNeuralGateSourceExecutionBindingContract
+            .frozenV6
+
+        XCTAssertNoThrow(try legacy.validate())
+        XCTAssertNoThrow(try bound.validate())
+        XCTAssertEqual(
+            legacy.contractID,
+            "prime_stage_b_release_source_executable_join_v5"
+        )
+        XCTAssertEqual(
+            bound.contractID,
+            "prime_stage_b_release_source_executable_join_v6"
+        )
+        XCTAssertEqual(
+            Array(
+                bound.targetClosureRules
+                    .dropLast(2)
+            ),
+            legacy.targetClosureRules
+        )
+        XCTAssertEqual(
+            bound.targetClosureRules.count,
+            15
+        )
+        let sidecarRule =
+            try XCTUnwrap(
+                bound.targetClosureRules
+                    .first {
+                        $0.targetName
+                            == "PrimeNativeNeuralGateLogitSidecarMechanics"
+                    }
+            )
+        XCTAssertEqual(
+            sidecarRule.directLocalDependencyNames,
+            [
+                "PrimeNativeNeuralGateCorrectedMechanics",
+            ]
+        )
+        XCTAssertTrue(
+            sidecarRule
+                .directProductDependencyNames
+                .isEmpty
+        )
+        let recomputationRule =
+            try XCTUnwrap(
+                bound.targetClosureRules
+                    .first {
+                        $0.targetName
+                            == "PrimeNativeNeuralGateMLXLogSoftmaxRecomputation"
+                    }
+            )
+        XCTAssertEqual(
+            recomputationRule
+                .directLocalDependencyNames,
+            [
+                "PrimeNativeNeuralGateLogitSidecarMechanics",
+            ]
+        )
+        XCTAssertEqual(
+            recomputationRule
+                .directProductDependencyNames,
+            [
+                "MLX",
+                "MLXNN",
+            ]
+        )
+        XCTAssertTrue(
+            bound.targetClosureRules
+                .filter {
+                    $0.targetName
+                        != recomputationRule
+                        .targetName
+                }
+                .allSatisfy {
+                    $0
+                    .directProductDependencyNames
+                    .isEmpty
+                }
+        )
+        XCTAssertEqual(
+            bound.processBindingRules,
+            legacy.processBindingRules
+        )
+        for forbiddenTarget in [
+            "PrimeNativeNeuralGateLogitSidecarMechanics",
+            "PrimeNativeNeuralGateMLXLogSoftmaxRecomputation",
+        ] {
+            XCTAssertTrue(
+                bound.processBindingRules
+                    .allSatisfy {
+                        !$0
+                            .exactTransitiveLocalTargetNames
+                            .contains(forbiddenTarget)
+                    }
+            )
+        }
+
+        let fixture =
+            try observedSourceClosureFixture(
+                contract: bound
+            )
+        XCTAssertNoThrow(
+            try fixture.closure.validate(
+                against: bound,
+                expectedPlanSHA256:
+                    fixture.closure.planSHA256,
+                snapshot: fixture.snapshot,
+                swiftPackageDescribeData:
+                    fixture
+                    .swiftPackageDescribeData,
+                expectedEmbeddedSourceIdentitySHA256:
+                    fixture.sourceIdentity
+            )
+        )
+        let liveObject =
+            try XCTUnwrap(
+                try JSONSerialization.jsonObject(
+                    with:
+                        fixture
+                        .swiftPackageDescribeData
+                ) as? [String: Any]
+            )
+        let liveTargets =
+            try XCTUnwrap(
+                liveObject["targets"]
+                    as? [[String: Any]]
+            )
+        let liveRecomputationTarget =
+            try XCTUnwrap(
+                liveTargets.first {
+                    $0["name"] as? String
+                        == recomputationRule
+                        .targetName
+                }
+            )
+        XCTAssertEqual(
+            liveRecomputationTarget[
+                "product_dependencies"
+            ] as? [String],
+            [
+                "MLX",
+                "MLXNN",
+            ]
+        )
+
+        func mutatedDescribe(
+            productDependencies: [String]?
+        ) throws -> Data {
+            var object = liveObject
+            var targets = liveTargets
+            let index = try XCTUnwrap(
+                targets.firstIndex {
+                    $0["name"] as? String
+                        == recomputationRule
+                        .targetName
+                }
+            )
+            if let productDependencies {
+                targets[index][
+                    "product_dependencies"
+                ] = productDependencies
+            } else {
+                targets[index].removeValue(
+                    forKey:
+                        "product_dependencies"
+                )
+            }
+            object["targets"] = targets
+            return try JSONSerialization.data(
+                withJSONObject: object,
+                options: [.sortedKeys]
+            )
+        }
+
+        func reboundClosure(
+            describeData: Data
+        ) -> PrimeNativeNeuralGateCompiledSourceClosureRecord {
+            let binding =
+                PrimeArtifactBinding(
+                    relativePath:
+                        bound
+                        .swiftPackageDescribeRelativePath,
+                    sha256:
+                        PrimeSHA256.hexDigest(
+                            of: describeData
+                        ),
+                    byteCount:
+                        UInt64(
+                            describeData.count
+                        ),
+                    purpose: .immutableData
+                )
+            return PrimeNativeNeuralGateCompiledSourceClosureRecord(
+                planSHA256:
+                    fixture.closure.planSHA256,
+                primeSourceSnapshot:
+                    fixture
+                    .snapshotBinding,
+                swiftPackageDescribe:
+                    binding,
+                packageManifest:
+                    fixture.closure
+                    .packageManifest,
+                sourceIdentitySHA256:
+                    fixture.sourceIdentity,
+                embeddedSourceIdentitySHA256:
+                    fixture.sourceIdentity,
+                buildConfiguration:
+                    "release",
+                targets:
+                    fixture.closure.targets
+            )
+        }
+
+        let missingProducts =
+            try mutatedDescribe(
+                productDependencies: nil
+            )
+        XCTAssertThrowsError(
+            try reboundClosure(
+                describeData:
+                    missingProducts
+            ).validate(
+                against: bound,
+                expectedPlanSHA256:
+                    fixture.closure.planSHA256,
+                snapshot: fixture.snapshot,
+                swiftPackageDescribeData:
+                    missingProducts,
+                expectedEmbeddedSourceIdentitySHA256:
+                    fixture.sourceIdentity
+            )
+        )
+        for mutation in [
+            [],
+            ["MLX"],
+            ["MLXNN", "MLX"],
+            ["MLX", "MLXNN", "MLXOptimizers"],
+        ] {
+            let mutated =
+                try mutatedDescribe(
+                    productDependencies:
+                        mutation
+                )
+            XCTAssertThrowsError(
+                try reboundClosure(
+                    describeData: mutated
+                ).validate(
+                    against: bound,
+                    expectedPlanSHA256:
+                        fixture.closure.planSHA256,
+                    snapshot:
+                        fixture.snapshot,
+                    swiftPackageDescribeData:
+                        mutated,
+                    expectedEmbeddedSourceIdentitySHA256:
+                        fixture.sourceIdentity
+                )
+            )
+        }
+    }
+
     func testPromptOnlySolverBoundPlanMutationsFailClosed()
         throws
     {
@@ -343,6 +967,176 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
             }
             binding["target_closure_rules"] =
                 targets
+            object["source_execution_binding"] =
+                binding
+        }
+    }
+
+    func testLogitSidecarFloat32SourcePlanMutationsFailClosed()
+        throws
+    {
+        try assertMutationRejected(
+            Plan.frozenV5
+        ) { object in
+            object["schema_version"] = 4
+        }
+        try assertMutationRejected(
+            Plan.frozenV5
+        ) { object in
+            var admission = object[
+                "corrected_execution_admission"
+            ] as! [String: Any]
+            admission[
+                "bounded_full_vocabulary_logit_artifact_bound"
+            ] = false
+            object["corrected_execution_admission"] =
+                admission
+        }
+        try assertMutationRejected(
+            Plan.frozenV5
+        ) { object in
+            var admission = object[
+                "corrected_execution_admission"
+            ] as! [String: Any]
+            var evidence = admission[
+                "logit_sidecar_float32_source_binding"
+            ] as! [String: Any]
+            evidence[
+                "maximum_dictionary_candidate_count"
+            ] = 1_179_649
+            admission[
+                "logit_sidecar_float32_source_binding"
+            ] = evidence
+            object["corrected_execution_admission"] =
+                admission
+        }
+        try assertMutationRejected(
+            Plan.frozenV5
+        ) { object in
+            var admission = object[
+                "corrected_execution_admission"
+            ] as! [String: Any]
+            admission[
+                "durable_full_vocabulary_logit_sidecar_observed"
+            ] = true
+            object["corrected_execution_admission"] =
+                admission
+        }
+        try assertMutationRejected(
+            Plan.frozenV5
+        ) { object in
+            var admission = object[
+                "corrected_execution_admission"
+            ] as! [String: Any]
+            var evidence = admission[
+                "logit_sidecar_float32_source_binding"
+            ] as! [String: Any]
+            evidence["sidecar_codec_id"] =
+                "caller_selected"
+            admission[
+                "logit_sidecar_float32_source_binding"
+            ] = evidence
+            object["corrected_execution_admission"] =
+                admission
+        }
+        try assertMutationRejected(
+            Plan.frozenV5
+        ) { object in
+            var admission = object[
+                "corrected_execution_admission"
+            ] as! [String: Any]
+            var evidence = admission[
+                "logit_sidecar_float32_source_binding"
+            ] as! [String: Any]
+            evidence[
+                "maximum_dictionary_entry_count"
+            ] = 65_537
+            admission[
+                "logit_sidecar_float32_source_binding"
+            ] = evidence
+            object["corrected_execution_admission"] =
+                admission
+        }
+        try assertMutationRejected(
+            Plan.frozenV5
+        ) { object in
+            var admission = object[
+                "corrected_execution_admission"
+            ] as! [String: Any]
+            var evidence = admission[
+                "logit_sidecar_float32_source_binding"
+            ] as! [String: Any]
+            evidence[
+                "exact_logsoftmax_function_sha256"
+            ] = String(repeating: "0", count: 64)
+            admission[
+                "logit_sidecar_float32_source_binding"
+            ] = evidence
+            object["corrected_execution_admission"] =
+                admission
+        }
+        try assertMutationRejected(
+            Plan.frozenV5
+        ) { object in
+            var admission = object[
+                "corrected_execution_admission"
+            ] as! [String: Any]
+            var evidence = admission[
+                "logit_sidecar_float32_source_binding"
+            ] as! [String: Any]
+            var pins = evidence[
+                "source_continuity_pins"
+            ] as! [[String: Any]]
+            pins[3]["revision"] =
+                String(repeating: "0", count: 40)
+            evidence["source_continuity_pins"] =
+                pins
+            admission[
+                "logit_sidecar_float32_source_binding"
+            ] = evidence
+            object["corrected_execution_admission"] =
+                admission
+        }
+        try assertMutationRejected(
+            Plan.frozenV5
+        ) { object in
+            var binding = object[
+                "source_execution_binding"
+            ] as! [String: Any]
+            var targets = binding[
+                "target_closure_rules"
+            ] as! [[String: Any]]
+            targets.removeAll {
+                $0["target_name"] as? String
+                    == "PrimeNativeNeuralGateLogitSidecarMechanics"
+            }
+            binding["target_closure_rules"] =
+                targets
+            object["source_execution_binding"] =
+                binding
+        }
+        try assertMutationRejected(
+            Plan.frozenV5
+        ) { object in
+            var binding = object[
+                "source_execution_binding"
+            ] as! [String: Any]
+            var processes = binding[
+                "process_binding_rules"
+            ] as! [[String: Any]]
+            var probe = processes[0]
+            var closure = probe[
+                "exact_transitive_local_target_names"
+            ] as! [String]
+            closure.append(
+                "PrimeNativeNeuralGateMLXLogSoftmaxRecomputation"
+            )
+            probe[
+                "exact_transitive_local_target_names"
+            ] = closure
+            processes[0] = probe
+            binding["process_binding_rules"] =
+                processes
             object["source_execution_binding"] =
                 binding
         }
@@ -5721,16 +6515,21 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
         let sourceIdentity: String
     }
 
-    private func observedSourceClosureFixture()
+    private func observedSourceClosureFixture(
+        contract:
+            PrimeNativeNeuralGateSourceExecutionBindingContract =
+                Plan.frozenV3
+                .sourceExecutionBinding
+    )
         throws -> ObservedSourceClosureFixture
     {
-        let contract =
-            Plan.frozenV3.sourceExecutionBinding
         var dataByPath: [String: Data] = [
             ".gitignore": Data("build\n".utf8),
             ".swiftpm/configuration/mirrors.json":
                 Data("{}".utf8),
             "Tests/PrimeTypedOptimizerRestoreMechanicsValidation/.swiftpm/configuration/mirrors.json":
+                Data("{}".utf8),
+            "Tests/PrimeNativeNeuralGateMLXValidation/.swiftpm/configuration/mirrors.json":
                 Data("{}".utf8),
             "LICENSE": Data("license\n".utf8),
             "Package.swift":
@@ -5854,7 +6653,8 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
                                     rule
                                     .sourceDirectoryRelativePath,
                                 "product_dependencies":
-                                    [],
+                                    rule
+                                    .directProductDependencyNames,
                                 "sources":
                                     snapshot.files
                                     .filter {

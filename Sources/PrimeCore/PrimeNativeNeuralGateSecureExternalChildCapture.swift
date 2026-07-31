@@ -170,7 +170,7 @@ public enum PrimeNativeNeuralGateSecureExternalChildCapture {
             monotonicNanoseconds()
         let contract =
             PrimeNativeNeuralGateSourceExecutionBindingContract
-            .frozenV4
+            .frozenV6
         try contract.validate()
         try requireCalibratedDarwinConstants()
 
