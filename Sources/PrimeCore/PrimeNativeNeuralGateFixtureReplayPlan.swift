@@ -1635,11 +1635,22 @@ public struct PrimeNativeNeuralGateCorrectedExecutorContract:
             generationContractID:
                 generation.generationContractID,
             predictionConstructionPolicy:
-                "deterministic_prompt_only_fixture_executor_using_only_frozen_prediction_input_fields_v1",
+                "deterministic_prompt_token_ids_only_row_input_with_one_shard_envelope_evaluation_seed_fresh_state_per_row_and_correlation_envelope_excluded_v3",
             predictionInputFields:
-                fields.primeRequestFields,
+                [
+                    "prompt_token_ids",
+                ],
             forbiddenPredictionInputFields:
-                fields
+                [
+                    "seed",
+                    "row_id",
+                    "split",
+                    "semantic_family",
+                    "generator_index",
+                    "prompt_text",
+                    "prompt_grouping_key",
+                ]
+                + fields
                 .forbiddenTargetAndRegradeFields,
             promptGroupingKeyID:
                 generation.promptGroupingKeyID,
@@ -1680,9 +1691,9 @@ public struct PrimeNativeNeuralGateCorrectedExecutorContract:
                 generation
                 .fullVocabularySupportAuditRequired,
             targetMutationReplayPolicy:
-                "hold_row_id_seed_prompt_text_prompt_token_ids_and_prompt_grouping_key_exact_then_substitute_distinct_valid_same_length_and_different_length_targets_and_require_byte_exact_raw_execution_identity_v1",
+                "hold_one_replicate_seed_and_prompt_token_ids_exact_then_vary_outer_correlation_row_id_split_family_index_row_order_and_substitute_distinct_valid_same_length_and_different_length_targets_and_require_per_input_byte_exact_raw_execution_identity_v3",
             targetFeasibilityAdmissionPolicy:
-                "validate_complete_frozen_fixture_before_execution_then_forbid_per_row_target_dependent_skip_batch_group_or_termination_v1"
+                "bind_exact_source_derived_fixture_identity_and_row_count_validate_all_canonical_completion_support_before_execution_then_forbid_per_row_target_dependent_seed_skip_batch_group_or_termination_v2"
         )
     }()
 
@@ -1710,6 +1721,10 @@ public struct PrimeNativeNeuralGateCorrectedExecutorContract:
               !targetDependentRowInclusionPermitted,
               !completionSupportMayNarrow,
               fullVocabularySupportAuditRequired,
+              predictionInputFields
+                == [
+                    "prompt_token_ids",
+                ],
               Set(predictionInputFields)
                 .isDisjoint(
                     with:
@@ -1717,6 +1732,16 @@ public struct PrimeNativeNeuralGateCorrectedExecutorContract:
                         forbiddenPredictionInputFields
                     )
                 ),
+              forbiddenPredictionInputFields
+                .contains("seed"),
+              forbiddenPredictionInputFields
+                .contains("row_id"),
+              forbiddenPredictionInputFields
+                .contains("split"),
+              forbiddenPredictionInputFields
+                .contains("semantic_family"),
+              forbiddenPredictionInputFields
+                .contains("generator_index"),
               forbiddenPredictionInputFields
                 .contains("target"),
               forbiddenPredictionInputFields
@@ -1804,6 +1829,16 @@ public enum PrimeNativeNeuralGateCorrectedFixtureMutation:
         "target_dependent_termination"
     case targetDependentRowInclusion =
         "target_dependent_row_inclusion"
+    case correlationRowIDInjectedIntoPrediction =
+        "correlation_row_id_injected_into_prediction"
+    case correlationSplitInjectedIntoPrediction =
+        "correlation_split_injected_into_prediction"
+    case correlationSemanticFamilyInjectedIntoPrediction =
+        "correlation_semantic_family_injected_into_prediction"
+    case rowDependentEvaluationSeed =
+        "row_dependent_evaluation_seed"
+    case retainedStateChangesPermutedRowTrace =
+        "retained_state_changes_permuted_row_trace"
 
     public var detectorID: String {
         switch self {
@@ -1827,6 +1862,16 @@ public enum PrimeNativeNeuralGateCorrectedFixtureMutation:
             "target_independent_termination_gate_v1"
         case .targetDependentRowInclusion:
             "target_independent_row_inclusion_gate_v1"
+        case .correlationRowIDInjectedIntoPrediction:
+            "correlation_row_id_prediction_exclusion_gate_v1"
+        case .correlationSplitInjectedIntoPrediction:
+            "correlation_split_prediction_exclusion_gate_v1"
+        case .correlationSemanticFamilyInjectedIntoPrediction:
+            "correlation_semantic_family_prediction_exclusion_gate_v1"
+        case .rowDependentEvaluationSeed:
+            "one_replicate_seed_scope_gate_v1"
+        case .retainedStateChangesPermutedRowTrace:
+            "fresh_state_row_permutation_identity_gate_v1"
         }
     }
 
@@ -1836,7 +1881,10 @@ public enum PrimeNativeNeuralGateCorrectedFixtureMutation:
             "corrected_target_value_independence"
         case .targetLengthChangesRawExecution:
             "corrected_target_length_independence"
-        case .expectedCompletionInjectedIntoPrediction:
+        case .expectedCompletionInjectedIntoPrediction,
+             .correlationRowIDInjectedIntoPrediction,
+             .correlationSplitInjectedIntoPrediction,
+             .correlationSemanticFamilyInjectedIntoPrediction:
             "corrected_prediction_input_exclusion"
         case .targetDependentPromptGrouping:
             "corrected_prompt_grouping"
@@ -1852,6 +1900,10 @@ public enum PrimeNativeNeuralGateCorrectedFixtureMutation:
             "corrected_termination_independence"
         case .targetDependentRowInclusion:
             "corrected_row_inclusion_independence"
+        case .rowDependentEvaluationSeed:
+            "corrected_replicate_seed_scope"
+        case .retainedStateChangesPermutedRowTrace:
+            "corrected_row_order_state_independence"
         }
     }
 
@@ -1877,6 +1929,16 @@ public enum PrimeNativeNeuralGateCorrectedFixtureMutation:
             "terminate_when_executed_decisions_equal_target_token_count"
         case .targetDependentRowInclusion:
             "skip_row_when_target_token_count_differs_from_prediction_token_count"
+        case .correlationRowIDInjectedIntoPrediction:
+            "inject_correlation_row_id_into_prediction_construction"
+        case .correlationSplitInjectedIntoPrediction:
+            "inject_correlation_split_into_prediction_construction"
+        case .correlationSemanticFamilyInjectedIntoPrediction:
+            "inject_correlation_semantic_family_into_prediction_construction"
+        case .rowDependentEvaluationSeed:
+            "select_evaluation_seed_from_row_target_or_correlation_metadata"
+        case .retainedStateChangesPermutedRowTrace:
+            "retain_cross_row_state_then_permute_row_invocation_order"
         }
     }
 }
@@ -1997,6 +2059,282 @@ public struct PrimeNativeNeuralGateMutationOutcomeContract:
             "record_exact_restoration_required"
         case fingerprintExactRestorationRequired =
             "fingerprint_exact_restoration_required"
+    }
+}
+
+/// Execution-blocking correction discovered before Stage-B GPU or worker
+/// spend. The older five-field request exposed row identity even though
+/// corpus row IDs encode split and semantic family. This contract narrows the
+/// executor-visible value and keeps corrected execution closed until a
+/// concrete source-derived prompt solver is bound.
+public struct PrimeNativeNeuralGateCorrectedExecutionAdmission:
+    Codable,
+    Equatable,
+    Sendable
+{
+    public let admissionID: String
+    public let findingIDs: [String]
+    public let executorVisibleFields: [String]
+    public let replicateScopedFields: [String]
+    public let outerCorrelationFields: [String]
+    public let forbiddenExecutorFields: [String]
+    public let admittedEvaluationSeeds: [Int]
+    public let oneEvaluationSeedPerReplicateRequired:
+        Bool
+    public let freshSolverStatePerRowRequired:
+        Bool
+    public let rowPermutationTraceIdentityRequired:
+        Bool
+    public let wholeFixtureTargetFeasibilityPreflightRequired:
+        Bool
+    public let sourceBoundFixtureIdentityAndExactRowCountRequired:
+        Bool
+    public let sourceBoundFixtureIdentityAndExactRowCountBound:
+        Bool
+    public let pureCompletionFeasibilityObservationAuthoritative:
+        Bool
+    public let perRowTargetFeasibilityDecisionPermitted:
+        Bool
+    public let promptOnlySolverSourceDerivationRequired:
+        Bool
+    public let promptOnlySolverSourceDerivationBound:
+        Bool
+    public let solverMayReceiveCorpusRow: Bool
+    public let solverMayReceiveTargetOrRegradeMaterial:
+        Bool
+    public let capturingClosureOrExistentialMayEstablishTargetIndependence:
+        Bool
+    public let pureCorrectedMechanicsTarget: String
+    public let pureCorrectedMechanicsDependencies:
+        [String]
+    public let trapBearingDonorDependencyPermitted:
+        Bool
+    public let donorTransplantDeferredToHistoricalWorkerSlice:
+        Bool
+    public let fullVocabularyLogitsRequired:
+        Bool
+    public let boundedFullVocabularyLogitArtifactBound:
+        Bool
+    public let sourcePinnedFloat32LogSoftmaxRecomputationRequired:
+        Bool
+    public let sourcePinnedFloat32LogSoftmaxRecomputationBound:
+        Bool
+    public let foundationDoubleProbabilityDiagnosticAuthoritative:
+        Bool
+    public let requiredMetadataIsolationMutationIDs:
+        [String]
+    public let correctedFixtureExecutionAuthorized:
+        Bool
+    public let terminalReceiptAuthorized: Bool
+    public let unblockPrerequisite: String
+
+    public static let frozenV1 = Self(
+        admissionID:
+            "prime_stage_b_corrected_execution_metadata_isolation_and_solver_admission_v1",
+        findingIDs: [
+            "corpus_row_id_encodes_split_index_and_semantic_family",
+            "abstention_row_id_exposes_abstention_class",
+            "row_selected_evaluation_seed_is_three_way_metadata_channel",
+            "retained_solver_state_or_invocation_order_can_expose_row_identity",
+            "shared_donor_dependency_exposes_traps_to_corrected_supervisor",
+        ],
+        executorVisibleFields: [
+            "prompt_token_ids",
+        ],
+        replicateScopedFields: [
+            "evaluation_seed",
+        ],
+        outerCorrelationFields: [
+            "correlation_id",
+        ],
+        forbiddenExecutorFields: [
+            "seed",
+            "row_id",
+            "split",
+            "semantic_family",
+            "generator_index",
+            "prompt_text",
+            "prompt_grouping_key",
+            "target",
+            "target_token_ids",
+            "expected_completion",
+            "expected_completion_token_ids",
+            "exact_match",
+            "semantic_verifier_pass",
+            "abstention_decision",
+            "generation_decision_budget",
+        ],
+        admittedEvaluationSeeds: [
+            1_618,
+            2_718,
+            3_141,
+        ],
+        oneEvaluationSeedPerReplicateRequired:
+            true,
+        freshSolverStatePerRowRequired: true,
+        rowPermutationTraceIdentityRequired:
+            true,
+        wholeFixtureTargetFeasibilityPreflightRequired:
+            true,
+        sourceBoundFixtureIdentityAndExactRowCountRequired:
+            true,
+        sourceBoundFixtureIdentityAndExactRowCountBound:
+            false,
+        pureCompletionFeasibilityObservationAuthoritative:
+            false,
+        perRowTargetFeasibilityDecisionPermitted:
+            false,
+        promptOnlySolverSourceDerivationRequired:
+            true,
+        promptOnlySolverSourceDerivationBound:
+            false,
+        solverMayReceiveCorpusRow: false,
+        solverMayReceiveTargetOrRegradeMaterial:
+            false,
+        capturingClosureOrExistentialMayEstablishTargetIndependence:
+            false,
+        pureCorrectedMechanicsTarget:
+            "PrimeNativeNeuralGateCorrectedMechanics",
+        pureCorrectedMechanicsDependencies: [
+            "PrimeNativeNeuralGateReplayMechanics",
+        ],
+        trapBearingDonorDependencyPermitted:
+            false,
+        donorTransplantDeferredToHistoricalWorkerSlice:
+            true,
+        fullVocabularyLogitsRequired: true,
+        boundedFullVocabularyLogitArtifactBound:
+            false,
+        sourcePinnedFloat32LogSoftmaxRecomputationRequired:
+            true,
+        sourcePinnedFloat32LogSoftmaxRecomputationBound:
+            false,
+        foundationDoubleProbabilityDiagnosticAuthoritative:
+            false,
+        requiredMetadataIsolationMutationIDs: [
+            "correlation_row_id_injected_into_prediction",
+            "correlation_split_injected_into_prediction",
+            "correlation_semantic_family_injected_into_prediction",
+            "row_dependent_evaluation_seed",
+            "retained_state_changes_permuted_row_trace",
+        ],
+        correctedFixtureExecutionAuthorized:
+            false,
+        terminalReceiptAuthorized: false,
+        unblockPrerequisite:
+            "bind_exact_source_derived_fixture_identity_and_row_count_then_bind_concrete_prime_owned_replicate_scoped_seed_prompt_solver_with_fresh_per_row_state_no_row_target_regrade_closure_or_existential_input_then_bind_bounded_full_vocabulary_logit_sidecar_and_source_pinned_float32_logsoftmax_recomputation_then_pass_correlation_seed_row_permutation_same_length_and_different_length_substitution_raw_identity_gates"
+    )
+
+    public func validate() throws {
+        guard self == .frozenV1,
+              Set(executorVisibleFields).count
+                == executorVisibleFields.count,
+              Set(forbiddenExecutorFields).count
+                == forbiddenExecutorFields.count,
+              Set(executorVisibleFields)
+                .isDisjoint(
+                    with:
+                    Set(forbiddenExecutorFields)
+                ),
+              replicateScopedFields
+                == [
+                    "evaluation_seed",
+                ],
+              oneEvaluationSeedPerReplicateRequired,
+              freshSolverStatePerRowRequired,
+              rowPermutationTraceIdentityRequired,
+              wholeFixtureTargetFeasibilityPreflightRequired,
+              sourceBoundFixtureIdentityAndExactRowCountRequired,
+              !sourceBoundFixtureIdentityAndExactRowCountBound,
+              !pureCompletionFeasibilityObservationAuthoritative,
+              !perRowTargetFeasibilityDecisionPermitted,
+              promptOnlySolverSourceDerivationRequired,
+              !promptOnlySolverSourceDerivationBound,
+              !solverMayReceiveCorpusRow,
+              !solverMayReceiveTargetOrRegradeMaterial,
+              !capturingClosureOrExistentialMayEstablishTargetIndependence,
+              !trapBearingDonorDependencyPermitted,
+              donorTransplantDeferredToHistoricalWorkerSlice,
+              fullVocabularyLogitsRequired,
+              !boundedFullVocabularyLogitArtifactBound,
+              sourcePinnedFloat32LogSoftmaxRecomputationRequired,
+              !sourcePinnedFloat32LogSoftmaxRecomputationBound,
+              !foundationDoubleProbabilityDiagnosticAuthoritative,
+              !correctedFixtureExecutionAuthorized,
+              !terminalReceiptAuthorized
+        else {
+            throw PrimeNativeNeuralGateFixtureReplayPlanError
+                .invalidPlan(
+                    "corrected_execution_admission"
+                )
+        }
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case admissionID = "admission_id"
+        case findingIDs = "finding_ids"
+        case executorVisibleFields =
+            "executor_visible_fields"
+        case replicateScopedFields =
+            "replicate_scoped_fields"
+        case outerCorrelationFields =
+            "outer_correlation_fields"
+        case forbiddenExecutorFields =
+            "forbidden_executor_fields"
+        case admittedEvaluationSeeds =
+            "admitted_evaluation_seeds"
+        case oneEvaluationSeedPerReplicateRequired =
+            "one_evaluation_seed_per_replicate_required"
+        case freshSolverStatePerRowRequired =
+            "fresh_solver_state_per_row_required"
+        case rowPermutationTraceIdentityRequired =
+            "row_permutation_trace_identity_required"
+        case wholeFixtureTargetFeasibilityPreflightRequired =
+            "whole_fixture_target_feasibility_preflight_required"
+        case sourceBoundFixtureIdentityAndExactRowCountRequired =
+            "source_bound_fixture_identity_and_exact_row_count_required"
+        case sourceBoundFixtureIdentityAndExactRowCountBound =
+            "source_bound_fixture_identity_and_exact_row_count_bound"
+        case pureCompletionFeasibilityObservationAuthoritative =
+            "pure_completion_feasibility_observation_authoritative"
+        case perRowTargetFeasibilityDecisionPermitted =
+            "per_row_target_feasibility_decision_permitted"
+        case promptOnlySolverSourceDerivationRequired =
+            "prompt_only_solver_source_derivation_required"
+        case promptOnlySolverSourceDerivationBound =
+            "prompt_only_solver_source_derivation_bound"
+        case solverMayReceiveCorpusRow =
+            "solver_may_receive_corpus_row"
+        case solverMayReceiveTargetOrRegradeMaterial =
+            "solver_may_receive_target_or_regrade_material"
+        case capturingClosureOrExistentialMayEstablishTargetIndependence =
+            "capturing_closure_or_existential_may_establish_target_independence"
+        case pureCorrectedMechanicsTarget =
+            "pure_corrected_mechanics_target"
+        case pureCorrectedMechanicsDependencies =
+            "pure_corrected_mechanics_dependencies"
+        case trapBearingDonorDependencyPermitted =
+            "trap_bearing_donor_dependency_permitted"
+        case donorTransplantDeferredToHistoricalWorkerSlice =
+            "donor_transplant_deferred_to_historical_worker_slice"
+        case fullVocabularyLogitsRequired =
+            "full_vocabulary_logits_required"
+        case boundedFullVocabularyLogitArtifactBound =
+            "bounded_full_vocabulary_logit_artifact_bound"
+        case sourcePinnedFloat32LogSoftmaxRecomputationRequired =
+            "source_pinned_float32_logsoftmax_recomputation_required"
+        case sourcePinnedFloat32LogSoftmaxRecomputationBound =
+            "source_pinned_float32_logsoftmax_recomputation_bound"
+        case foundationDoubleProbabilityDiagnosticAuthoritative =
+            "foundation_double_probability_diagnostic_authoritative"
+        case requiredMetadataIsolationMutationIDs =
+            "required_metadata_isolation_mutation_ids"
+        case correctedFixtureExecutionAuthorized =
+            "corrected_fixture_execution_authorized"
+        case terminalReceiptAuthorized =
+            "terminal_receipt_authorized"
+        case unblockPrerequisite =
+            "unblock_prerequisite"
     }
 }
 
@@ -12424,6 +12762,8 @@ public struct PrimeNativeNeuralGateFixtureReplayPlan:
         String
     public let correctedExecutor:
         PrimeNativeNeuralGateCorrectedExecutorContract
+    public let correctedExecutionAdmission:
+        PrimeNativeNeuralGateCorrectedExecutionAdmission
     public let correctedMutationCatalog:
         [PrimeNativeNeuralGateCorrectedFixtureMutationContract]
     public let mutationOutcome:
@@ -12504,9 +12844,9 @@ public struct PrimeNativeNeuralGateFixtureReplayPlan:
             planID:
                 "ergentics_prime_native_neural_gate_dual_fixture_replay_v3",
             claimScope:
-                "source_pinned_synthetic_fixture_materialization_and_gate_replay_contract_with_implemented_secure_capture_substrate",
+                "source_pinned_synthetic_fixture_materialization_and_gate_replay_contract_with_implemented_secure_capture_replay_bytes_and_non_evidentiary_corrected_value_observation_mechanics",
             status:
-                "secure_capture_substrate_implemented_stage_b_replay_not_implemented",
+                "secure_capture_replay_bytes_and_corrected_value_observation_mechanics_implemented_exact_fixture_solver_historical_worker_and_stage_b_replay_not_implemented",
             executionImplemented: false,
             projectionReceiptAuthorized: false,
             stageAParent: .frozenV1,
@@ -12740,6 +13080,8 @@ public struct PrimeNativeNeuralGateFixtureReplayPlan:
             historicalMutationCatalogSHA256:
                 "8a1f70ae9f20f60e63cc53df6841d8a160bcbee61621c6f80a4f0272a186100f",
             correctedExecutor: .frozenV1,
+            correctedExecutionAdmission:
+                .frozenV1,
             correctedMutationCatalog:
                 PrimeNativeNeuralGateCorrectedFixtureMutation
                 .allCases.enumerated().map {
@@ -12999,11 +13341,16 @@ public struct PrimeNativeNeuralGateFixtureReplayPlan:
             modeNormalizationPolicy:
                 "verify_current_user_single_link_regular_file_exact_bytes_and_sha256_then_chmod_only_listed_files_to_0444_never_recursive",
             immediateImplementationPrerequisite:
-                "implement_role_scoped_stage_b_historical_worker_probe_verifier_with_typed_artifact_recomputation_corrected_fixed_cap_eos_arm_and_exact_path_metadata_content_inventory_using_completed_secure_capture_factory",
+                "bind_exact_source_derived_fixture_identity_and_row_count_then_bind_concrete_prime_owned_replicate_scoped_seed_prompt_solver_with_fresh_per_row_state_no_row_target_regrade_closure_or_existential_input_then_bind_bounded_full_vocabulary_logit_sidecar_and_source_pinned_float32_logsoftmax_recomputation_then_amend_trap_disjoint_target_topology_and_implement_role_scoped_stage_b_historical_worker_probe_verifier_with_typed_artifact_recomputation_and_exact_path_metadata_content_inventory",
             postPassNextPrerequisite:
                 "physical_native_checkpoint_and_evaluation_shard_binding",
             authorityStatement:
-                "This contract freezes required schemas for a Swift-first Stage-B dual replay. PrimeCore now implements the closed secure capture substrate, but Stage-B replay execution, process records, workers, and terminal receipt are not implemented or observed and executionImplemented remains false. The factory admits a bounded current-owner local-APFS Prime source tree, holds authoritative root, directory, and file descriptors, arms receipt-checked EVFILT_VNODE guards, and requires exact inventories, bytes, metadata, path joins, and zero mutation events at initial, pre-resume, and post-reap checkpoints. It directly launches the frozen Xcode 26.6 build 17F113 swift-package image with an exact four-key non-inherited scratch environment, stdin at EOF, and normalized start-suspended 0x448c flags. Scratch ACLs and unknown extended attributes are rejected; com.apple.TextEncoding is optional only on the single-link regular work/.lock file with the exact 15-byte utf-8;134217984 value read through its descriptor, while com.apple.provenance is bounded to 4096 bytes and remains opaque non-authoritative metadata. Child authority is the positive PID until getsid(pid) and getpgid(pid) both equal pid; only then may the dedicated process group receive termination signals. Successful capture binds the suspended cwd and complete mapped-region vnode transcript to held descriptors, drains bounded streams through EOF, observes death, reaps the exact PID once, proves the group empty, and permits no post-reap signal. Ordinary rejection may return only after proven containment and exact reap; a child or drain that remains uncontained after bounded WNOHANG cleanup is supervisor fail-stop and cannot be encoded as ABSTAIN. The schema-4 external evidence and schema-4 describe-capture envelope are prerequisite and canary mechanics, not a Stage-B record or receipt. The historical arm reconstructs the exact source-pinned synthetic fixture only as forensic mechanics because its output construction consumes target length and expected completion while declaring target independence. Its source-faithful materializer retains donor trap sites, is not claimed wholly fail-closed, and must run in two role-scoped bounded workers. A contained abnormal termination is internally ABSTAIN, poisons the root, accepts no worker result as evidence, publishes no successful-execution record or terminal receipt, and permits no retry; partial artifacts may remain but are non-authoritative. A successful worker result is transport evidence and cannot establish mechanics PASS; the terminal verifier must decode and recompute every semantic artifact. The corrected arm must independently construct prompt-only fixed-cap-64 generation with EOS available at every decision and may establish only corrected synthetic gate mechanics. A terminal Stage-B mechanics PASS requires both arms, complete raw-UTF8 invariant multiset publication, exact direct/accelerated fingerprints, all ten Verify/Abstain legs, projected statistics and fixed-prompt margin, count-derived verdict, every ordered mutation with exact restoration, a validated six-process topology, exact pre-receipt realized path-and-metadata inventory, and typed validation of every artifact. Historical target independence and model capability remain ABSTAIN. Donor bytes are resolved, copied, and rebound as immutable evidence while the companion is unchanged; donor blobs are never dynamically compiled or executed. Every donor-to-Prime adaptation has a plan-authoritative byte-exact or hash-bound derivation plus lexical and compiled-source proof; successful behavior and caller-supplied manifests cannot supply expectations. The closed Stage-A receipt and complete descriptor-bound parent closure must be copied losslessly and revalidated from the Stage-B root. The direct swift-package launch path, proc_pidpath pathname, and code-sign fields remain non-authoritative telemetry; no Apple trust claim is made. Namespace classification never authorizes publication; publication must pass exact path, node, type, owner, link, mode, purpose, digest, typed-content, and no-replace checks with the receipt exclusively last. No independently reproducible build, NeuralKit module execution, companion runtime dependency, model or Metal execution, physical checkpoint or shard, independent scientific oracle, four-tier AgentContractKit audit, guarded statistics, training, quantization, diagonal-Hessian evaluation, Phase-3 completion, product authority, Python authority, or shell authority is claimed."
+                "This contract freezes required schemas for a Swift-first Stage-B dual replay. " +
+                "PrimeCore implements the closed secure capture substrate. A separate pure corrected target now implements only non-evidentiary value and observation mechanics over caller-provided values: prompt-token row inputs, replicate-scoped admitted seeds, fixed-cap/EOS full-512-logit decision trace validation, allowed-support selection, exact structural raw-argmax/parity/count witnesses, canonical post-execution exact regrade, weighted statistics, exact 512-logit fixed-prompt margins, capability-threshold calculation, all-ten count-derived verdict composition, and fifteen ordered mutation-observation validators. Full logits are locally bound by exact bit-pattern digest; Foundation/Double probability diagnostics are non-evidentiary, excluded from canonical fingerprints, and cannot substitute for the frozen source-pinned Float32 log-softmax. It does not derive a semantic solver, inject or detect mutations, establish leg or capability truth, execute a source-bound fixture, or authorize a receipt. Semantic regrade and model capability remain unavailable. " +
+                "Forward audit proved that row_id exposes split and semantic family, including the abstention class; row identity is outer correlation only. Seed is shard/replicate scoped and cannot enter a row input. Fresh solver state is required for every row, and permuted row order must preserve each input trace, because retained state, invocation order, or a row-selected seed would create ambient metadata channels. Exact source-derived fixture identity and row count remain unbound, and the pure completion-feasibility calculator is not admission authority. Hex-expanding all 512 logits across the three complete replicates would exceed the frozen Stage-B decode bounds, so a bounded full-vocabulary logit sidecar and source-pinned Float32 log-softmax recomputation remain unbound. The existing planned donor topology also exposes trap-bearing runtime code to corrected supervisors, so donor transplant remains deferred and corrected execution is unauthorized until the exact fixture, a concrete Prime-owned solver derivation, the bounded logit artifact and recomputation, and a trap-disjoint topology are bound. " +
+                "Stage-B replay execution, process records, workers, and terminal receipt are not implemented or observed and executionImplemented remains false. The factory admits a bounded current-owner local-APFS Prime source tree, holds authoritative root, directory, and file descriptors, arms receipt-checked EVFILT_VNODE guards, and requires exact inventories, bytes, metadata, path joins, and zero mutation events at initial, pre-resume, and post-reap checkpoints. It directly launches the frozen Xcode 26.6 build 17F113 swift-package image with an exact four-key non-inherited scratch environment, stdin at EOF, and normalized start-suspended 0x448c flags. Scratch ACLs and unknown extended attributes are rejected; com.apple.TextEncoding is optional only on the single-link regular work/.lock file with the exact 15-byte utf-8;134217984 value read through its descriptor, while com.apple.provenance is bounded to 4096 bytes and remains opaque non-authoritative metadata. Child authority is the positive PID until getsid(pid) and getpgid(pid) both equal pid; only then may the dedicated process group receive termination signals. Successful capture binds the suspended cwd and complete mapped-region vnode transcript to held descriptors, drains bounded streams through EOF, observes death, reaps the exact PID once, proves the group empty, and permits no post-reap signal. Ordinary rejection may return only after proven containment and exact reap; a child or drain that remains uncontained after bounded WNOHANG cleanup is supervisor fail-stop and cannot be encoded as ABSTAIN. The schema-4 external evidence and schema-4 describe-capture envelope are prerequisite and canary mechanics, not a Stage-B record or receipt. " +
+                "The historical arm reconstructs the exact source-pinned synthetic fixture only as forensic mechanics because its output construction consumes target length and expected completion while declaring target independence. Its source-faithful materializer retains donor trap sites, is not claimed wholly fail-closed, and must run in two role-scoped bounded workers. A contained abnormal termination is internally ABSTAIN, poisons the root, accepts no worker result as evidence, publishes no successful-execution record or terminal receipt, and permits no retry; partial artifacts may remain but are non-authoritative. A successful worker result is transport evidence and cannot establish mechanics PASS; the terminal verifier must decode and recompute every semantic artifact. The corrected arm must independently construct prompt-only fixed-cap-64 generation with EOS available at every decision and may establish only corrected synthetic gate mechanics. A terminal Stage-B mechanics PASS requires both arms, complete raw-UTF8 invariant multiset publication, exact direct/accelerated fingerprints, all ten Verify/Abstain legs, projected statistics and fixed-prompt margin, count-derived verdict, every ordered mutation with exact restoration, a validated process topology, exact pre-receipt realized path-and-metadata inventory, and typed validation of every artifact. Historical target independence and model capability remain ABSTAIN. " +
+                "Donor bytes are resolved, copied, and rebound as immutable evidence while the companion is unchanged; donor blobs are never dynamically compiled or executed. Every donor-to-Prime adaptation has a plan-authoritative byte-exact or hash-bound derivation plus lexical and compiled-source proof; successful behavior and caller-supplied manifests cannot supply expectations. The closed Stage-A receipt and complete descriptor-bound parent closure must be copied losslessly and revalidated from the Stage-B root. The direct swift-package launch path, proc_pidpath pathname, and code-sign fields remain non-authoritative telemetry; no Apple trust claim is made. Namespace classification never authorizes publication; publication must pass exact path, node, type, owner, link, mode, purpose, digest, typed-content, and no-replace checks with the receipt exclusively last. No independently reproducible build, NeuralKit module execution, companion runtime dependency, model or Metal execution, physical checkpoint or shard, independent scientific oracle, four-tier AgentContractKit audit, guarded statistics, training, quantization, diagonal-Hessian evaluation, Phase-3 completion, product authority, Python authority, or shell authority is claimed."
         )
     }()
 
@@ -13013,6 +13360,7 @@ public struct PrimeNativeNeuralGateFixtureReplayPlan:
         try finiteField.validate()
         try fingerprintReplay.validate()
         try correctedExecutor.validate()
+        try correctedExecutionAdmission.validate()
         try mutationOutcome.validate()
         try gateObservation.validate()
         try sourceExecutionBinding.validate()
@@ -13174,6 +13522,25 @@ public struct PrimeNativeNeuralGateFixtureReplayPlan:
               )
                 == PrimeNativeNeuralGateCorrectedFixtureMutation
                 .allCases,
+              correctedExecutor.predictionInputFields
+                == correctedExecutionAdmission
+                .executorVisibleFields,
+              Set(
+                  correctedExecutionAdmission
+                      .requiredMetadataIsolationMutationIDs
+              ).isSubset(
+                  of:
+                    Set(
+                        correctedMutationCatalog
+                            .map {
+                                $0.mutation.rawValue
+                            }
+                    )
+              ),
+              !correctedExecutionAdmission
+                .correctedFixtureExecutionAuthorized,
+              !correctedExecutionAdmission
+                .terminalReceiptAuthorized,
               correctedMutationCatalog
                 .allSatisfy({
                     $0.arm == .correctedFixedCapEOS
@@ -13514,6 +13881,8 @@ public struct PrimeNativeNeuralGateFixtureReplayPlan:
             "historical_mutation_catalog_sha256"
         case correctedExecutor =
             "corrected_executor"
+        case correctedExecutionAdmission =
+            "corrected_execution_admission"
         case correctedMutationCatalog =
             "corrected_mutation_catalog"
         case mutationOutcome =

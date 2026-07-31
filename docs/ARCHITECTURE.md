@@ -110,14 +110,35 @@ statistics and fixed-prompt margin, count-derived verdict, ordered mutation
 detection/restoration, and fresh-process reconstruction are mandatory for a
 terminal Stage-B mechanics pass.
 
-The first bounded pure-library sub-slice now implements only the canonical
-raw-UTF-8 global-stream and chunk mechanics, independent direct and affine
-finite-field fingerprints, the raw-byte cache guard, and typed
-invariant/fingerprint payload validation. The pinned runtime donors,
-prompt-only corrected gate, statistics/verdict and mutation mechanics,
-historical worker, and paired probe/verifier remain pending. This is not a
-Stage-B replay result: `executionImplemented` remains false and the frozen plan
-hash is unchanged.
+The bounded pure-library layer now includes the canonical raw-UTF-8
+stream/chunk and independent direct/affine fingerprint mechanics plus a
+separate corrected value-mechanics target. The corrected row input admits only
+canonical prompt token IDs; one admitted seed is replicate-scoped. The target
+validates fixed-cap/EOS full-512-logit decision traces, allowed-support
+selection, exact structural raw-argmax/parity/count witnesses, canonical exact regrade,
+weighted statistics, exact 512-logit fixed-prompt margins, capability
+thresholds, the count-derived ten-leg verdict, and fifteen ordered mutation
+observations. Full logits are locally digest-bound; Foundation/Double
+probability values remain non-evidentiary and cannot stand in for the frozen
+source-pinned Float32 log-softmax. These are calculators over caller-provided
+values, not mutation execution or observed semantic/capability authority. It
+has no solver, process, I/O, donor-runtime, model, or receipt authority.
+
+This split is security-significant. The previously planned `row_id` input
+encodes split and semantic family, including the abstention class, so row
+identity is now outer correlation only. The planned shared donor target also
+would have exposed trap-bearing historical code to corrected supervisors.
+Row-selected seeds, retained solver state, and invocation order are additional
+metadata channels, so one seed per replicate, fresh per-row state, and
+row-permutation trace identity are mandatory. Corrected execution remains
+blocked until exact source-derived fixture identity/count, a concrete
+Prime-owned prompt-solver source derivation, a bounded full-logit sidecar with
+source-pinned Float32 log-softmax recomputation, and a trap-disjoint topology
+are bound. The pure trace uses per-decision bit-pattern digests because
+hex-expanding all 512 logits would exceed the frozen Stage-B decode limits;
+the local Foundation/Double probability diagnostic is excluded from canonical
+fingerprints. The historical worker, paired probe/verifier, execution records,
+and receipt remain pending; `executionImplemented` remains false.
 
 The closed PrimeCore external-child capture substrate is implemented. Its
 fixed direct `swift-package` launch uses stdin at EOF and the exact
@@ -183,13 +204,13 @@ factory observation. Two initial Release two-role canary attempts were
 contained and reaped failures: the first exposed terminal mapped-region
 zero-byte/`EINVAL` behavior, and the second exposed the exact optional
 `com.apple.TextEncoding` value on the regular file `work/.lock`. After those
-corrections, the resealed live Release two-role secure-capture canary passed end
-to end on the pinned host with byte-identical probe/verifier output: 22,022
-bytes, SHA-256
-`f5f2d2ebf4409da26164c1980bcece14c60db6937f664adb96e4e57693580b86`.
-This current reseal includes the PrimeCore trusted descriptor-inventory
-substrate and the pure Stage-B replay-mechanics foundation; it does not widen
-the canary's authority.
+corrections, the live Release two-role secure-capture canary was rerun after
+the corrected-mechanics source freeze and passed end to end on the pinned host
+with byte-identical probe/verifier output: 22,568 bytes, SHA-256
+`b0d8dbe25bddd054dedc56a3a5b6351d7d71a2db61d87686f2c1d11317ed3e93`.
+This is the current accepted corrected-target reseal. It includes the
+PrimeCore trusted descriptor-inventory substrate, pure Stage-B replay
+mechanics, and corrected value mechanics; it does not widen canary authority.
 The pass validates only the secure capture substrate on that pinned host. It
 published no durable Stage-B process record or receipt,
 `executionImplemented` remains false, and no Stage-B replay, historical
@@ -198,8 +219,9 @@ authorized. Root
 containment/disjointness, unchanged companion pre/post identity, exact
 copied-donor paths, lossless copied Stage-A descriptor closure, typed
 donor-to-Prime adaptation proofs, role-scoped workers and supervisors, and
-typed artifact recomputation beyond the implemented invariant/fingerprint
-payload validators remain future Stage-B work. The direct executable launch
+durable artifact decoding/recomputation beyond the implemented
+invariant/fingerprint validators and non-evidentiary corrected calculators
+remain future Stage-B work. The direct executable launch
 path, `proc_pidpath` pathname, and code-sign fields are
 non-authoritative telemetry; no Apple trust claim is made. Because the
 source-faithful historical fixture inherits traps, a sealed Swift worker owns
@@ -223,6 +245,16 @@ blocks a correctly scoped mechanics pass.
 
 ## Separately scoped future admission
 
+- bind the exact source-derived corrected fixture identity, ordering, and row
+  count;
+- bind a concrete Prime-owned solver whose row input is prompt tokens only,
+  whose seed is fixed once per replicate, whose state is fresh per row, and
+  whose per-prompt trace is invariant to row permutation;
+- bind a bounded full-vocabulary logit sidecar and independently recompute the
+  frozen source-pinned Float32 log-softmax; the local Foundation/Double
+  diagnostic is not evidence;
+- amend the draft topology so trap-bearing historical donor/runtime code
+  cannot enter corrected supervisors;
 - use the completed PrimeCore secure-capture substrate from role-scoped
   Stage-B probe and verifier supervisors, then bind the donor-to-Prime
   adaptation proof, copied/revalidated Stage-A descriptor closure, validated

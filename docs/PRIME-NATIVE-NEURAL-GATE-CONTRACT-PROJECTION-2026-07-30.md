@@ -318,10 +318,11 @@ The forward audit below refines that historical name into two mandatory arms.
 The historical arm reconstructs the source-pinned fixture, materializes its
 complete invariant-record set, recomputes direct and accelerated fingerprints,
 executes every historical semantic mutation, requires exact restoration, and
-repeats in a distinct Release verifier. The corrected arm separately executes
-prompt-only fixed-cap/EOS construction, its complete records/fingerprints, and
-its leakage-mutation catalog. Neither arm may be silently substituted for the
-other.
+repeats in a distinct Release verifier. In a future source-bound Stage-B run,
+the corrected arm must separately execute prompt-only fixed-cap/EOS
+construction, its complete records/fingerprints, and its leakage-mutation
+catalog. The current pure corrected calculators are not that execution.
+Neither arm may be silently substituted for the other.
 
 The forward source audit found that the pinned historical regression fixture
 constructs zero-shot output length from `target.count`, copies
@@ -405,13 +406,35 @@ proof. Two initial Release two-role factory canary attempts were contained and
 reaped failures: the first exposed terminal mapped-region zero-byte/`EINVAL`
 behavior, and the second exposed the exact optional
 `com.apple.TextEncoding` value on the regular file `work/.lock`. After those
-corrections, the resealed live Release two-role secure-capture canary passed end
-to end on the pinned host with byte-identical probe/verifier output: 22,022
-bytes, SHA-256
-`f5f2d2ebf4409da26164c1980bcece14c60db6937f664adb96e4e57693580b86`.
-This current reseal includes the PrimeCore trusted descriptor-inventory
-substrate and the pure Stage-B replay-mechanics foundation; it does not widen
-the canary's authority.
+corrections, the live Release two-role secure-capture canary was rerun after
+the corrected-mechanics source freeze and passed end to end on the pinned host
+with byte-identical probe/verifier output: 22,568 bytes, SHA-256
+`b0d8dbe25bddd054dedc56a3a5b6351d7d71a2db61d87686f2c1d11317ed3e93`.
+This is the current accepted corrected-target reseal. It includes the
+PrimeCore trusted descriptor-inventory substrate, pure Stage-B replay
+mechanics, and corrected value mechanics; it does not widen canary authority.
+
+The later corrected-mechanics sub-slice remains pure value/observation
+mechanics. Row input is only canonical prompt token IDs; one admitted seed is
+replicate-scoped. It validates fixed-cap/EOS full-512-logit decision traces,
+allowed-support selection, exact structural raw-argmax/parity/count witnesses,
+canonical exact regrade, weighted statistics, exact 512-logit fixed-prompt
+margins, capability thresholds, count-derived verdict composition, and
+fifteen ordered mutation observations over caller-provided values. Full logits
+are locally digest-bound; Foundation/Double probability values remain
+non-evidentiary and cannot stand in for the frozen source-pinned Float32
+log-softmax. It does not execute or detect mutations, establish
+semantic/capability truth, derive a solver, or authorize execution/receipt.
+The earlier corrected request exposed `row_id`, whose corpus value encodes
+split and semantic family; that metadata is now outer correlation only.
+Row-selected seeds, retained state, and invocation order are also metadata
+channels, so one seed per replicate, fresh per-row state, and row-permutation
+trace identity are mandatory. The planned shared donor topology also exposed
+trap-bearing historical code to corrected supervisors. Corrected execution is
+blocked until exact source-derived fixture identity/count, a concrete
+Prime-owned solver derivation, a bounded full-logit sidecar with source-pinned
+Float32 recomputation, and a trap-disjoint topology are bound.
+
 That pass validates only the secure capture substrate on the pinned host. It
 published no durable Stage-B process record or receipt,
 `executionImplemented` remains false, and no Stage-B replay, historical

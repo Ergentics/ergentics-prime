@@ -499,12 +499,13 @@ Two initial Release two-role factory canary attempts were contained and reaped
 failures: the first exposed terminal mapped-region zero-byte/`EINVAL`
 behavior, and the second exposed the exact optional
 `com.apple.TextEncoding` value on the regular file `work/.lock`. After those
-corrections, the resealed live Release canary passed end to end on the pinned
-host. Probe and verifier output was byte-identical: 22,022 bytes with SHA-256
-`f5f2d2ebf4409da26164c1980bcece14c60db6937f664adb96e4e57693580b86`.
-This current reseal includes the PrimeCore trusted descriptor-inventory
-substrate and the pure Stage-B replay-mechanics foundation; it does not widen
-the canary's authority.
+corrections and the corrected-mechanics source freeze, the live Release canary
+was rerun and passed end to end on the pinned host. Probe and verifier output
+was byte-identical: 22,568 bytes with SHA-256
+`b0d8dbe25bddd054dedc56a3a5b6351d7d71a2db61d87686f2c1d11317ed3e93`.
+This is the current accepted corrected-target reseal. It includes the
+PrimeCore trusted descriptor-inventory substrate, pure Stage-B replay
+mechanics, and corrected value mechanics; it does not widen canary authority.
 That pass validates only the secure capture substrate on the pinned host. It
 published no durable Stage-B process record or receipt,
 `executionImplemented` remains false, and no Stage-B replay, historical
@@ -962,13 +963,35 @@ checkpoint causality, broad-language function learning, or product authority.
 Implementation checkpoint: the closed PrimeCore SwiftPM capture substrate,
 held local-APFS source and fresh scratch guards, schema-4 capture envelopes,
 and typed rejection lifecycle are unit-tested. After the two contained
-discovery failures described above, the resealed live Release two-role canary
-passed with the exact 22,022-byte output binding. A first bounded pure-library
-sub-slice now implements only raw-UTF-8 global-stream/chunk mechanics,
-independent direct/affine fingerprints, the raw-byte cache guard, and typed
-invariant/fingerprint payload validation. Runtime donors, the prompt-only
-corrected gate, statistics/verdict and mutation mechanics, the historical
-worker, and role-scoped probe/verifier execution remain pending.
+discovery failures described above, the live Release two-role canary was rerun
+after source freeze and passed with the exact 22,568-byte output binding. That
+is the current accepted corrected-target reseal.
+The pure-library layer now also contains a corrected value-mechanics target
+for prompt-token row inputs, replicate-scoped admitted seed context,
+fixed-cap/EOS full-512-logit decision trace validation, allowed-support
+selection, exact structural raw-argmax/parity/count witnesses, canonical exact
+regrade, weighted statistics, exact 512-logit fixed-prompt margins, capability
+thresholds, the count-derived verdict, and fifteen ordered mutation
+observations. Full logits are locally digest-bound; Foundation/Double
+probability values remain non-evidentiary and cannot replace the frozen
+source-pinned Float32 log-softmax. These calculators accept caller-provided
+values and do not establish observed semantics, capability, legs, or mutation
+detection.
+
+No prompt-only semantic solver has been source-derived. A forward audit also
+proved that `row_id` encodes split/family metadata and that the planned shared
+donor topology would expose trap-bearing historical code to corrected
+supervisors. Corrected execution remains blocked: row identity is outer
+correlation only; seed is replicate-scoped; and fresh per-row state plus
+row-permutation trace identity are mandatory. Exact source-derived fixture
+identity/count, a concrete Prime-owned solver, a bounded full-logit sidecar
+with source-pinned Float32 log-softmax recomputation, and a trap-disjoint
+topology must be bound before any corrected replay. Per-decision bit-pattern
+digests keep the pure trace inside Stage-B decode limits; local
+Foundation/Double probability diagnostics are excluded from canonical
+fingerprints. Runtime donor transplantation, the historical worker,
+role-scoped probe/verifier execution, Stage-B records, and the receipt remain
+pending.
 
 ### Phase 4 — calibrated M5 Max executor
 
@@ -1067,22 +1090,38 @@ The non-training implementation slices now stand as follows:
      namespaces and external-child/describe-capture envelopes at schema 4;
    - after two contained, reaped discovery failures for terminal
      zero-byte/`EINVAL` behavior and exact optional
-     `com.apple.TextEncoding`, the resealed live Release two-role
-     secure-capture canary passed with byte-identical 22,022-byte
+     `com.apple.TextEncoding`, the live Release two-role secure-capture canary
+     was rerun after source freeze and passed with byte-identical 22,568-byte
      probe/verifier output, SHA-256
-     `f5f2d2ebf4409da26164c1980bcece14c60db6937f664adb96e4e57693580b86`;
+     `b0d8dbe25bddd054dedc56a3a5b6351d7d71a2db61d87686f2c1d11317ed3e93`;
      it published no durable Stage-B process record or receipt and authorizes
-     no replay, worker, model, Metal, or product claim;
-   - a first bounded pure-library sub-slice implements only raw-UTF-8
+     no replay, worker, model, Metal, or product claim; this is the current
+     accepted corrected-target reseal;
+   - the bounded pure-library layer implements raw-UTF-8
      global-stream/chunk mechanics, independent direct/affine fingerprints,
-     the raw-byte cache guard, and typed invariant/fingerprint payload
-     validation;
-   - the pinned runtime donors, prompt-only corrected gate,
-     statistics/verdict and mutation mechanics, Prime-owned immutable
-     fixtures, remaining typed worker-artifact recomputation, sealed historical
-     worker, role-scoped probe/verifier execution, exact path-and-content
-     inventory evidence, remaining typed artifact-content validation, Stage-B
-     process records, and receipt do not yet exist;
+     the raw-byte cache guard, typed invariant/fingerprint payload validation,
+     and isolated corrected value/observation mechanics for prompt-token row
+     input, replicate-scoped admitted seed context, fixed-cap/EOS
+     full-512-logit decision traces, allowed-support selection, exact
+     structural raw-argmax/parity/count witnesses, canonical exact regrade, statistics,
+     exact 512-logit margin, thresholds, ten-leg verdict composition, and
+     fifteen ordered mutation observations;
+   - those calculators accept caller-provided values and do not establish
+     observed semantics, capability, legs, or mutation execution/detection;
+   - the corrected target contains no solver, process, I/O, donor-runtime,
+     model, or receipt authority;
+   - a forward audit removed executor-visible `row_id` because it encodes
+     split/family metadata, moved seed to replicate scope, required fresh
+     per-row state and row-permutation trace identity, and blocked the shared
+     donor topology because it would expose trap-bearing historical code to
+     corrected supervisors;
+   - exact source-derived fixture identity/count, a concrete Prime-owned
+     prompt-solver source derivation, a bounded full-vocabulary logit sidecar
+     with source-pinned Float32 log-softmax recomputation, a trap-disjoint
+     topology, the isolated donor transplantation and historical worker,
+     role-scoped probe/verifier execution, exact path-and-content inventory
+     evidence, remaining typed artifact-content validation, Stage-B process
+     records, and receipt do not yet exist;
    - `executionImplemented` remains false;
    - Stage B must add no PMHNP runtime dependency and must not write to the
      companion tree;

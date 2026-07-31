@@ -2,10 +2,11 @@
 
 Date: 2026-07-30
 
-Status: secure capture, live descriptor-inventory, and the first bounded
-raw-stream/fingerprint library substrate implemented; capture is
-lifecycle-tested and confirmed by a resealed live Release two-role canary
-after two contained discovery failures; Stage-B replay not implemented
+Status: secure capture, live descriptor-inventory, raw-stream/fingerprint
+mechanics, and isolated corrected value/observation mechanics implemented;
+capture is lifecycle-tested and has a last accepted Release two-role canary;
+exact corrected fixture identity, solver, Stage-B replay, workers, process
+records, and receipt are not implemented
 
 ## Decision
 
@@ -32,13 +33,13 @@ unit-tested. Two initial Release two-role canary attempts failed only after
 each child and drain remained contained and the child was reaped. The first
 exposed terminal mapped-region zero-byte/`EINVAL` behavior; the second exposed
 the exact optional `com.apple.TextEncoding` value on regular `work/.lock`.
-After those corrections, the resealed live Release two-role canary passed end
-to end on the pinned host with byte-identical 22,022-byte probe/verifier
-output, SHA-256
-`f5f2d2ebf4409da26164c1980bcece14c60db6937f664adb96e4e57693580b86`.
-This current reseal includes the PrimeCore trusted descriptor-inventory
-substrate and the pure Stage-B replay-mechanics foundation; it does not widen
-the canary's authority.
+After those corrections, the Release two-role canary was rerun after the
+corrected-mechanics source freeze and passed end to end on the pinned host.
+The current probe/verifier output is byte-identical at 22,568 bytes, SHA-256
+`b0d8dbe25bddd054dedc56a3a5b6351d7d71a2db61d87686f2c1d11317ed3e93`.
+That is the current accepted corrected-target reseal. It includes the
+PrimeCore trusted descriptor-inventory substrate, pure replay mechanics, and
+corrected value mechanics and does not widen the canary's authority.
 That pass validates only the secure capture substrate. It published no durable
 Stage-B process record or receipt, `executionImplemented` remains false, and
 no replay, historical worker, model, Metal, or product use is implemented or
@@ -58,21 +59,32 @@ rejects non-ASCII or control-byte components rather than relying on Swift
 declared paths, depth, node and byte limits, and a monotonic deadline. It
 creates no artifact or receipt.
 
-Implementation is intentionally split after those substrates. The first
-bounded pure-library sub-slice now implements only raw-UTF-8 global-stream and
-chunk mechanics, independent direct and affine finite-field fingerprints, the
-raw-byte cache guard, and typed invariant/fingerprint payload validation. It
-does not complete the replay-mechanics and typed-content library layer. The
-pinned runtime donors, prompt-only corrected gate, statistics/verdict and
-mutation mechanics remain pending within that layer. The dedicated historical
-worker follows the completed library layer; the paired probe and verifier
-remain one final slice because neither may independently publish a terminal
-receipt.
+Implementation is intentionally split after those substrates. The pure
+library layer implements raw-UTF-8 stream/chunk mechanics, independent direct
+and affine finite-field fingerprints, the raw-byte cache guard, and typed
+invariant/fingerprint payload validation. A separate
+`PrimeNativeNeuralGateCorrectedMechanics` target depends only on that layer and
+implements non-evidentiary calculators/validators for prompt-token row input,
+replicate-scoped admitted seeds, fixed-cap/EOS full-512-logit decision traces,
+allowed-support selection, exact structural raw-argmax/parity/count witnesses,
+canonical exact regrade, weighted statistics, exact 512-logit fixed-prompt
+margins, capability thresholds, ten-leg count verdicts, and fifteen ordered
+mutation-observation IDs. Full logits are locally digest-bound;
+Foundation/Double probability values remain non-evidentiary and cannot replace
+the frozen source-pinned Float32 log-softmax.
+
+Those APIs accept caller-provided values. They do not bind the exact source
+fixture, derive or run a semantic solver, inject or detect the named
+mutations, establish any leg/capability truth, decode durable Stage-B
+artifacts, or authorize a receipt. Semantic match and model capability remain
+unavailable. The dedicated historical worker follows a completed,
+trap-disjoint semantic layer; paired probe and verifier remain later work
+because neither may independently publish a terminal receipt.
 
 The pre-factory contract-only canonical JSON content SHA-256 was
 `149dfea0e90c56f012d1da748cf934a5a398d3829533c2826a480afbdb9ab77d`.
 That value is historical. The current V3 plan content SHA-256 is
-`4144b211af62149ab8c5155e3ab0737d503898d418a240c63913cb444d178dc2`.
+`24235423e3e21c13b2c307941eabc92de8e78f9c4321d4aaf8418c4fecc884ba`.
 
 ## Why the split is mandatory
 
@@ -190,9 +202,9 @@ publication, but they are non-authoritative. A failed root may not be repaired
 or retried.
 The corrected arm does not inherit the historical trap allowance.
 
-## Frozen target and CLI boundary
+## Blocked draft target graph and implemented pure boundary
 
-The implementation target graph is:
+The V3 aggregate target graph was frozen as:
 
 ```text
 ErgenticsPrimeRuntime (Prime-local; exact pinned sources 2–8)
@@ -204,6 +216,22 @@ PrimeNativeCorpusReplayMechanics
                                       ├── PrimeNativeNeuralGateReplayProbe
                                       └── PrimeNativeNeuralGateReplayVerifier
 ```
+
+Forward audit found that this shared graph would expose trap-bearing
+historical donor/runtime code to corrected supervisors. It is a blocked draft,
+not an execution-authorized topology. Before Stage-B execution it must be
+amended so corrected supervision has no trap-bearing donor dependency.
+
+The only implemented corrected dependency edge is:
+
+```text
+PrimeNativeNeuralGateReplayMechanics
+             └── PrimeNativeNeuralGateCorrectedMechanics
+```
+
+The corrected target contains pure value/observation mechanics only. It has no
+solver, process, filesystem, network, donor-runtime, model, artifact decoder,
+or receipt path.
 
 The worker's direct dependencies are `PrimeCore`, `ErgenticsPrimeRuntime`,
 `PrimeNativeNeuralGateReplayMechanics`, and
@@ -394,11 +422,12 @@ source mutation, or contained lifecycle failure is internal `ABSTAIN`; no
 accepted record is emitted. An uncontained child or drain fail-stops. The
 capture adapter is implemented and its typed lifecycle has ten focused tests.
 After the two contained, reaped discovery failures for terminal
-zero-byte/`EINVAL` and exact optional `com.apple.TextEncoding`, the resealed
-live Release two-role canary passed on the pinned host with the exact
-22,022-byte output binding above. The pass published no durable Stage-B process
-record or receipt, `executionImplemented` remains false, and no replay, worker,
-model, Metal, or product claim follows. Future probe and verifier records must
+zero-byte/`EINVAL` and exact optional `com.apple.TextEncoding`, the live Release
+two-role canary was rerun after source freeze and passed on the pinned host
+with the exact 22,568-byte output binding above. That corrected-target canary
+pass published no durable Stage-B process record or receipt,
+`executionImplemented` remains false, and no replay, worker, model, Metal, or
+product claim follows. Future probe and verifier records must
 bind one byte-identical JSON output and the same direct `swift-package`
 mapped-vnode/descriptor/byte identity. That evaluated output must reconcile
 the exact selected ten-target authority subgraph,
@@ -419,11 +448,12 @@ and link count `1`; live capture additionally requires no-symlink-any open and
 The historical direct and shim routes produced byte-identical graph output
 with SHA-256
 `59ceb088e1d5d1d15f7762b5049ccf7b410ff8002e549044cb7a221f537fe939`.
-Those 20,959 bytes and that output hash describe only the earlier graph and are
-not the current factory expectation. The accepted secure-capture canary
-expectation is 22,022 bytes with SHA-256
-`f5f2d2ebf4409da26164c1980bcece14c60db6937f664adb96e4e57693580b86`.
-Neither value is a Stage-B replay execution record.
+Those 20,959 bytes and that output hash describe only the earlier graph. The
+current accepted corrected-target secure-capture canary is 22,568 bytes with
+SHA-256
+`b0d8dbe25bddd054dedc56a3a5b6351d7d71a2db61d87686f2c1d11317ed3e93`.
+Neither the historical graph output nor the secure-capture canary is a Stage-B
+replay execution record.
 
 The measured platform was macOS 26.5.2 build 25F84, Darwin 25.5.0
 `xnu-12377.121.10~1`, Xcode 26.6 build 17F113, and macOS SDK 26.5 build 25F70.
@@ -674,12 +704,15 @@ its single chunk is 64 bytes with SHA-256
 and both fingerprint paths must produce
 `[1809436187, 238577571, 1233137383]`.
 
-## Arm-specific truth
+## Arm-specific terminal requirements and current truth
 
 | Claim | Historical forensic arm | Corrected fixed-cap/EOS arm |
 | --- | --- | --- |
 | Source-pinned fixture mechanics | yes | yes, as a named Prime adaptation |
-| Prediction provenance | `synthetic_oracle_forged` | prompt-only deterministic synthetic executor |
+| Required prediction provenance | `synthetic_oracle_forged` | prompt-only deterministic synthetic executor |
+| Current execution implementation | absent | absent; value calculators only |
+| Exact fixture identity/count bound | historical source pinned | no |
+| Concrete prompt-only solver bound | not applicable | no |
 | Fixed cap 64, independent of target | no | required |
 | EOS available at every decision | only report-declared | required by construction and mutation |
 | May pass mechanics replay | yes | yes |
@@ -689,16 +722,36 @@ and both fingerprint paths must produce
 The corrected arm uses the already frozen
 `greedy_native_bytes_eos_fixed_cap64_kv_v2` generation contract. It may not
 derive a negative output, output length, grouping key, decision budget, or
-termination condition from the target. Its prediction input set is exactly
-`row_id`, `seed`, `prompt_text`, `prompt_token_ids`, and
-`prompt_grouping_key`. Target, target tokens, expected completion, regrade
-fields, and abstention fields are forbidden. The support remains EOS plus all
-256 byte tokens, the decision cap is exactly 64, EOS is available at every
-decision, and no per-row target-dependent skip, grouping, batching, or
-termination is allowed.
+termination condition from the target. Its row-level prediction input is
+exactly `prompt_token_ids`. The one admitted evaluation seed is held once at
+the replicate/shard scope; it is not a row field. `correlation_id` remains
+outside the executor. `row_id`, split, semantic family, generator index,
+prompt text/grouping, seed, target, target tokens, expected completion,
+regrade fields, abstention fields, and budget controls are forbidden
+row-level inputs.
 
-The corrected catalog freezes ten ordered defect injections, not a prose
-promise:
+The complete source-derived fixture identity and exact row count must be bound
+and all canonical completion support checked before execution. The current
+completion-feasibility calculator is not that authority. A concrete solver
+must start from fresh state for every row, and permuting row invocation order
+must preserve each prompt's raw trace exactly. The support remains EOS plus all
+256 byte tokens, the decision cap is exactly 64, EOS is available at every
+decision, and no per-row target-dependent seed, skip, grouping, batching,
+state retention, or termination is allowed. Admitted replicate seeds are
+`1618`, `2718`, and `3141`, each run separately over the same complete
+fixture.
+
+The pure trace binds each full 512-logit decision by an exact bit-pattern
+SHA-256 rather than expanding every logit into the canonical invariant
+multiset. Hex expansion would exceed the Stage-B `1_000_000`-record and
+`1 GiB` aggregate decode limits at the required fixture size. This bounded
+binding is not a durable full-logit artifact: corrected execution remains
+closed until a chunked, bounded full-vocabulary logit sidecar and
+source-pinned Float32 log-softmax recomputation are defined and independently
+validated. The local Foundation/Double probability diagnostics are excluded
+from canonical fingerprints and are not evidence.
+
+The corrected catalog freezes fifteen ordered defect IDs:
 
 | Mutation | Injected defect | Expected failed leg |
 | --- | --- | --- |
@@ -712,9 +765,17 @@ promise:
 | `fixed_cap_drift` | cap 64 is replaced by 63 | `corrected_fixed_cap` |
 | `target_dependent_termination` | generation stops at target length | `corrected_termination_independence` |
 | `target_dependent_row_inclusion` | row inclusion depends on target/prediction length | `corrected_row_inclusion_independence` |
+| `correlation_row_id_injected_into_prediction` | outer row correlation enters row construction | `corrected_prediction_input_exclusion` |
+| `correlation_split_injected_into_prediction` | outer split correlation enters row construction | `corrected_prediction_input_exclusion` |
+| `correlation_semantic_family_injected_into_prediction` | outer family correlation enters row construction | `corrected_prediction_input_exclusion` |
+| `row_dependent_evaluation_seed` | seed is selected from row, target, or correlation metadata | `corrected_replicate_seed_scope` |
+| `retained_state_changes_permuted_row_trace` | cross-row state makes a prompt trace order-dependent | `corrected_row_order_state_independence` |
 
-Every historical and corrected mutation must be detected, fail its frozen leg,
-diverge in fingerprint, and restore both records and fingerprint exactly.
+Future source-bound mutation execution must detect every historical and
+corrected defect, fail its frozen leg, diverge in fingerprint, and restore
+both records and fingerprint exactly. The implemented pure target currently
+validates only caller-provided mutation observations, ordering, divergence,
+and restoration; it does not inject or independently detect these defects.
 
 ## Verify/Abstain and verdict scope
 
@@ -724,6 +785,15 @@ target-token-weighted statistics and fixed-prompt runner-up margin, apply the
 projected capability thresholds, and derive the count label and all-critical
 verdict from those recomputed observations. Candidate-declared aggregates are
 never authority.
+
+The current corrected target supplies arithmetic/value recomputation only.
+Loss rows, 512-logit bit patterns, capability rows, critical-leg booleans,
+mutated records, and failed-leg IDs are caller inputs. Positive calculator
+outputs therefore do not establish observed mechanics. Exact regrade is
+NFC-consistent and requires EOS, but semantic match remains `unavailable`;
+capability and verdict calculations leave model capability `unavailable`.
+No TriadAudit, independent implementation family, guarded statistic, or
+receipt is created.
 
 The label remains
 `count_derived_label_not_four_tier_independence_audit`. It does not become an
@@ -786,7 +856,8 @@ A future terminal Stage-B pass requires:
   direct/accelerated residues;
 - all ten corrected gate legs, projected statistics/margin, thresholds, and
   count-derived verdict recomputed;
-- all ten corrected construction-level leakage mutations detected,
+- all fifteen corrected construction, metadata, seed-scope, and row-state
+  mutations executed and detected,
   fingerprint-divergent, and record/fingerprint-exact after restoration;
 - corrected target independence established;
 - exact descriptor-rooted pre-receipt realized path-and-metadata inventory with
@@ -844,21 +915,27 @@ recursively changes source metadata.
 
 ## Next actions
 
-The frozen aggregate implementation prerequisite remains:
+The corrected aggregate implementation prerequisite is now:
 
-`implement_stage_b_role_scoped_historical_worker_probe_verifier_using_completed_primecore_secure_capture_typed_artifact_recomputation_corrected_fixed_cap_eos_fixture_and_exact_path_content_inventory`
+`bind_exact_source_derived_fixture_identity_and_row_count_then_bind_concrete_prime_owned_replicate_scoped_seed_prompt_solver_with_fresh_per_row_state_no_row_target_regrade_closure_or_existential_input_then_bind_bounded_full_vocabulary_logit_sidecar_and_source_pinned_float32_logsoftmax_recomputation_then_amend_trap_disjoint_target_topology_and_implement_role_scoped_stage_b_historical_worker_probe_verifier_with_typed_artifact_recomputation_and_exact_path_metadata_content_inventory`
 
 Its implementation order is now:
 
-1. complete the partially implemented pure replay-mechanics and typed semantic
-   payload layer; only raw-UTF-8 stream/chunk mechanics, independent
-   direct/affine fingerprints, the raw-byte cache guard, and typed
-   invariant/fingerprint payload validation exist now, while runtime donors,
-   the prompt-only corrected gate, statistics/verdict, and mutations remain
-   pending;
-2. the isolated historical worker using the completed secure capture and live
-   role-prefix inventory capabilities; and
-3. the paired probe/verifier with full-root pre-receipt recapture and
+1. bind the exact source-derived corrected fixture identity, ordering, and row
+   count; the current completion-feasibility calculator is not authority;
+2. bind a concrete Prime-owned solver derivation whose row input is prompt
+   tokens only, whose seed is fixed once per replicate, whose per-row state is
+   fresh, and whose per-prompt traces survive row-order permutation;
+3. bind a bounded full-vocabulary logit sidecar and independently recompute
+   the frozen source-pinned Float32 log-softmax; the local Foundation/Double
+   diagnostic cannot populate evidence;
+4. amend the draft target topology so trap-bearing historical donor/runtime
+   code cannot enter corrected supervisors;
+5. implement source-bound mutators/detectors and durable artifact decoding;
+   the current fifteen mutation-observation validators do not execute defects;
+6. implement the isolated historical worker using the completed secure
+   capture and live role-prefix inventory capabilities; and
+7. implement the paired probe/verifier with full-root pre-receipt recapture and
    receipt-last publication.
 
 After a real dual-arm Stage-B pass:
