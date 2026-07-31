@@ -238,6 +238,57 @@ public final class PrimeArtifactRoot: @unchecked Sendable {
         _ = close(descriptor)
     }
 
+    /// Duplicates the already-admitted artifact-root capability.
+    ///
+    /// Inventory code must start from this descriptor rather than reopening
+    /// `directoryURL`, which is telemetry after root admission.
+    func duplicateTrustedRootDescriptorForInventory()
+        throws -> Int32
+    {
+        let duplicated = fcntl(
+            descriptor,
+            F_DUPFD_CLOEXEC,
+            0
+        )
+        guard duplicated >= 0 else {
+            throw Self.posix(
+                "duplicate trusted artifact root for inventory",
+                directoryURL.path
+            )
+        }
+        do {
+            try Self.requireTrustedDirectory(
+                duplicated,
+                path: directoryURL.path
+            )
+        } catch {
+            _ = close(duplicated)
+            throw error
+        }
+        return duplicated
+    }
+
+    static func requireTrustedInventoryDirectoryDescriptor(
+        _ descriptor: Int32,
+        path: String
+    ) throws {
+        try requireTrustedDirectory(
+            descriptor,
+            path: path
+        )
+    }
+
+    static func requireTrustedInventoryArtifactDescriptor(
+        _ descriptor: Int32,
+        path: String
+    ) throws {
+        try requireTrustedDescriptorMetadata(
+            descriptor,
+            path: path,
+            kind: .artifact
+        )
+    }
+
     /// Requires an owner-only resolver root, not merely a root that is safe
     /// from group/world writes. Source snapshots and receipts can contain
     /// private research material, so this gate requires exact mode `0700`.

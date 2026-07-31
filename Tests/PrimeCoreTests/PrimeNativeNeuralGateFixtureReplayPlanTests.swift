@@ -1300,7 +1300,7 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
             inventory(entries)
         XCTAssertNoThrow(
             try output
-                .validatePreReceiptRealizedPathAndMetadataInventory(
+                .validateDeclaredPreReceiptRealizedPathAndMetadataInventory(
                     baselineInventory,
                     authenticatedStageACopiedArtifacts:
                         stageAArtifacts,
@@ -1320,7 +1320,7 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
         ) {
             XCTAssertThrowsError(
                 try output
-                    .validatePreReceiptRealizedPathAndMetadataInventory(
+                    .validateDeclaredPreReceiptRealizedPathAndMetadataInventory(
                         candidate,
                         authenticatedStageACopiedArtifacts:
                             stageAArtifacts,
@@ -1548,7 +1548,7 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
         )
         XCTAssertThrowsError(
             try output
-                .validatePreReceiptRealizedPathAndMetadataInventory(
+                .validateDeclaredPreReceiptRealizedPathAndMetadataInventory(
                     inventory(
                         (
                             entries
@@ -1583,7 +1583,7 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
         )
         XCTAssertThrowsError(
             try output
-                .validatePreReceiptRealizedPathAndMetadataInventory(
+                .validateDeclaredPreReceiptRealizedPathAndMetadataInventory(
                     inventory(entries),
                     authenticatedStageACopiedArtifacts:
                         stageAArtifacts,
@@ -1600,7 +1600,7 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
         )
         XCTAssertThrowsError(
             try output
-                .validatePreReceiptRealizedPathAndMetadataInventory(
+                .validateDeclaredPreReceiptRealizedPathAndMetadataInventory(
                     inventory(
                         entries,
                         unsupportedNodeRelativePaths: [

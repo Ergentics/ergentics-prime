@@ -2,9 +2,9 @@
 
 Date: 2026-07-30
 
-Status: secure capture substrate implemented, lifecycle-tested, and confirmed
-by a resealed live Release two-role canary after two contained discovery
-failures; Stage-B replay not implemented
+Status: secure capture and live descriptor-inventory substrates implemented;
+capture is lifecycle-tested and confirmed by a resealed live Release two-role
+canary after two contained discovery failures; Stage-B replay not implemented
 
 ## Decision
 
@@ -32,16 +32,35 @@ each child and drain remained contained and the child was reaped. The first
 exposed terminal mapped-region zero-byte/`EINVAL` behavior; the second exposed
 the exact optional `com.apple.TextEncoding` value on regular `work/.lock`.
 After those corrections, the resealed live Release two-role canary passed end
-to end on the pinned host with byte-identical 21,461-byte probe/verifier
+to end on the pinned host with byte-identical 21,582-byte probe/verifier
 output, SHA-256
-`7544a104eb4593eaf0aaba548b27ff1ca8ebac7f9166de85ddf12143425007a5`.
+`8a352013c632aa39f2d082bb5ae366f061f48e0572c70a5baea813d4560a4c12`.
+This later reseal includes the PrimeCore trusted descriptor-inventory source
+and tests; it does not widen the canary's authority.
 That pass validates only the secure capture substrate. It published no durable
 Stage-B process record or receipt, `executionImplemented` remains false, and
 no replay, historical worker, model, Metal, or product use is implemented or
-authorized. The next slice must use the completed factory from the role-scoped
-probe and verifier while implementing the dedicated historical worker, typed
-worker-artifact recomputation, corrected fixed-cap/EOS arm, and exact realized
-path/content inventory gate.
+authorized.
+
+PrimeCore now also has the prerequisite live filesystem-inventory authority.
+It starts only from the already-held `PrimeArtifactRoot` descriptor, admits
+either the complete root or a descriptor-relative role prefix, requires one
+local-APFS filesystem identity, enumerates every node without following
+symbolic links, binds exact owner/type/link/mode/byte-count/SHA-256 facts, and
+returns a closed non-`Codable` capability. The public pre-receipt output gate
+requires that capability and a fresh unchanged recapture; a decoded inventory
+DTO or caller-supplied `captured_from_descriptor` Boolean cannot establish
+authority. The frozen Stage-B namespace is printable ASCII; the live capture
+rejects non-ASCII or control-byte components rather than relying on Swift
+`String` canonical equivalence for path identity. Capture is bounded by
+declared paths, depth, node and byte limits, and a monotonic deadline. It
+creates no artifact or receipt.
+
+Implementation is intentionally split after those substrates. The next slice
+is the pure Stage-B replay-mechanics and typed-content library layer. The
+dedicated historical worker follows that layer; the paired probe and verifier
+remain one final slice because neither may independently publish a terminal
+receipt.
 
 The pre-factory contract-only canonical JSON content SHA-256 was
 `149dfea0e90c56f012d1da748cf934a5a398d3829533c2826a480afbdb9ab77d`.
@@ -370,7 +389,7 @@ capture adapter is implemented and its typed lifecycle has ten focused tests.
 After the two contained, reaped discovery failures for terminal
 zero-byte/`EINVAL` and exact optional `com.apple.TextEncoding`, the resealed
 live Release two-role canary passed on the pinned host with the exact
-21,461-byte output binding above. The pass published no durable Stage-B process
+21,582-byte output binding above. The pass published no durable Stage-B process
 record or receipt, `executionImplemented` remains false, and no replay, worker,
 model, Metal, or product claim follows. Future probe and verifier records must
 bind one byte-identical JSON output and the same direct `swift-package`
@@ -395,8 +414,8 @@ with SHA-256
 `59ceb088e1d5d1d15f7762b5049ccf7b410ff8002e549044cb7a221f537fe939`.
 Those 20,959 bytes and that output hash describe only the earlier graph and are
 not the current factory expectation. The accepted secure-capture canary
-expectation is 21,461 bytes with SHA-256
-`7544a104eb4593eaf0aaba548b27ff1ca8ebac7f9166de85ddf12143425007a5`.
+expectation is 21,582 bytes with SHA-256
+`8a352013c632aa39f2d082bb5ae366f061f48e0572c70a5baea813d4560a4c12`.
 Neither value is a Stage-B replay execution record.
 
 The measured platform was macOS 26.5.2 build 25F84, Darwin 25.5.0
@@ -818,10 +837,17 @@ recursively changes source metadata.
 
 ## Next actions
 
-Immediate implementation prerequisite, using the completed secure-capture
-factory:
+The frozen aggregate implementation prerequisite remains:
 
 `implement_stage_b_role_scoped_historical_worker_probe_verifier_using_completed_primecore_secure_capture_typed_artifact_recomputation_corrected_fixed_cap_eos_fixture_and_exact_path_content_inventory`
+
+Its implementation order is now:
+
+1. pure replay mechanics and typed semantic payloads;
+2. the isolated historical worker using the completed secure capture and live
+   role-prefix inventory capabilities; and
+3. the paired probe/verifier with full-root pre-receipt recapture and
+   receipt-last publication.
 
 After a real dual-arm Stage-B pass:
 
