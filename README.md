@@ -38,8 +38,9 @@ catalog, count-label correction, and Stage-A/Stage-B truth boundary are
 recorded in
 [`docs/PRIME-NATIVE-NEURAL-GATE-CONTRACT-PROJECTION-2026-07-30.md`](docs/PRIME-NATIVE-NEURAL-GATE-CONTRACT-PROJECTION-2026-07-30.md).
 The forward-audited Stage-B execution contract, historical target-data leak,
-dual replay arms, exact invariant serialization, and direct/accelerated
-fingerprint boundary are recorded in
+corrected row-identity metadata leak, trap-disjoint execution admission, dual
+replay arms, exact invariant serialization, and direct/accelerated fingerprint
+boundary are recorded in
 [`docs/PRIME-NATIVE-NEURAL-GATE-FIXTURE-REPLAY-PLAN-2026-07-30.md`](docs/PRIME-NATIVE-NEURAL-GATE-FIXTURE-REPLAY-PLAN-2026-07-30.md).
 The exact private-MLX migration sequence, narrow commit-identity rewrite
 boundary, recovery anchors, and post-migration evidence gates are recorded in
@@ -97,13 +98,17 @@ descriptor-anchored lease while the supervisor integration path is tested. It
 does not execute MLX, select scientific parameters, or emit model evidence.
 
 The reason no Python mutation waiver exists is concrete: every currently
-admitted mutation operator is implemented and executed in Swift. The typed
-optimizer gate's structural sweep is deliberately recorded as a same-process
-self-check, not as an independent scientific oracle. Later functional claims
-still require a disjoint Swift regrader. If a future mutation truly requires
-an unavailable Swift primitive, the run remains `ABSTAIN` until that primitive
-is implemented or a separately reviewed, mutation-specific exception is
-added. There is no general Python fallback.
+executable optimizer mutation operator is implemented and executed in Swift.
+The corrected Stage-B catalog is narrower in authority: its fifteen Swift
+values currently validate ordered caller-supplied divergence, named-leg, and
+exact-restoration observations; they do not yet inject mutations or establish
+independent detection. The typed optimizer gate's structural sweep is
+deliberately recorded as a same-process self-check, not as an independent
+scientific oracle. Later functional claims still require a disjoint Swift
+regrader. If a future mutation truly requires an unavailable Swift primitive,
+the run remains `ABSTAIN` until that primitive is implemented or a separately
+reviewed, mutation-specific exception is added. There is no general Python
+fallback.
 
 ## AdamW
 
@@ -407,14 +412,42 @@ all ten Verify/Abstain legs plus the projected statistics/margin and
 count-derived verdict, and detect/diverge/restore its complete frozen mutation
 catalog in a distinct Release verifier.
 
-The first bounded pure-library Stage-B sub-slice implements only the canonical
-raw-UTF-8 global-stream and chunk mechanics, independent direct and affine
-finite-field fingerprints, the raw-byte cache guard, and typed
-invariant/fingerprint payload validation. It does not complete the replay
-library layer. The pinned runtime donors, prompt-only corrected gate,
-statistics/verdict and mutation mechanics, historical worker, and paired
-probe/verifier remain pending; `executionImplemented` remains false and the
-frozen plan hash is unchanged.
+The bounded pure-library Stage-B foundation now also includes a separate
+corrected-mechanics target. It implements only value mechanics: a
+non-`Codable` prompt-token row input, replicate-scoped admitted seed context,
+fixed-cap-64/EOS full-512-logit decision trace validation, allowed-support
+selection, exact structural raw-argmax/parity/count witnesses, canonical post-execution
+exact regrade, weighted statistics, exact 512-logit fixed-prompt margin,
+capability-threshold calculation, the ten-leg count-derived verdict, and
+fifteen mutation IDs plus observation validation. Full logits are locally
+bound by digest; the Foundation/Double probability calculations are explicitly
+non-evidentiary and do not substitute for the frozen source-pinned Float32
+log-softmax. These calculators accept caller-provided values; they do not
+inject/detect defects or establish observed leg, capability, semantic, or
+model truth. It contains no prompt solver, process, filesystem, network,
+donor-runtime, model, or receipt authority.
+
+The pure trace binds every 512-logit decision by an exact bit-pattern digest
+instead of hex-expanding logits into the invariant multiset; the expanded
+three-replicate fixture would violate Stage-B decode bounds. This is not a
+durable full-logit artifact. A bounded sidecar and source-pinned Float32
+log-softmax recomputation remain mandatory, while the local Foundation/Double
+probability diagnostic is excluded from canonical fingerprints.
+
+A forward audit found that the earlier five-field corrected request exposed
+`row_id`; corpus row IDs encode split and semantic family, including the
+abstention class. Corrected row execution therefore sees exactly
+`prompt_token_ids`; one seed is fixed at replicate/shard scope and correlation
+identity stays outside the execution value. Fresh per-row solver state and
+row-order permutation identity are mandatory because retained state, order, or
+row-selected seeds are also metadata channels. The audit also found that the
+planned shared donor topology would expose trap-bearing historical code to
+corrected supervisors. Corrected execution is explicitly blocked until exact
+source-derived fixture identity/count, a concrete Prime-owned prompt-solver
+derivation, a bounded full-logit sidecar with source-pinned Float32
+recomputation, and a trap-disjoint target topology are bound. The historical
+worker, paired probe/verifier, Stage-B execution records, and receipt remain
+pending; `executionImplemented` remains false.
 
 The closed PrimeCore external-child capture substrate is implemented. It
 accepts only the role and source root, directly launches the frozen Xcode 26.6
@@ -492,13 +525,14 @@ after each child and drain remained contained and the child was reaped: the
 first exposed the terminal mapped-region zero-byte/`EINVAL` behavior, and the
 second progressed past that point and exposed the exact optional
 `com.apple.TextEncoding` value on the regular file `work/.lock`. After those
-corrections, the resealed live Release two-role secure-capture canary passed end
-to end on the pinned host. Probe and verifier output was byte-identical:
-22,022 bytes with SHA-256
-`f5f2d2ebf4409da26164c1980bcece14c60db6937f664adb96e4e57693580b86`.
-This current reseal includes the trusted descriptor-inventory substrate and
-the pure Stage-B replay-mechanics foundation; it does not widen the canary's
-authority.
+corrections, the then-current live Release two-role secure-capture canary
+was rerun after the corrected-mechanics source freeze and passed end to end on
+the pinned host. Probe and verifier output was byte-identical: 22,568 bytes
+with SHA-256
+`b0d8dbe25bddd054dedc56a3a5b6351d7d71a2db61d87686f2c1d11317ed3e93`.
+This is the current accepted corrected-target reseal. It includes the trusted
+descriptor-inventory substrate, pure Stage-B replay mechanics, and corrected
+value mechanics; it does not widen canary authority.
 That pass validates only the secure capture substrate on the pinned host. It
 published no durable Stage-B process record or receipt,
 `executionImplemented` remains false, and no Stage-B replay, historical
@@ -522,7 +556,7 @@ or drain must fail-stop. Worker result transport cannot authorize mechanics
 `PASS`; the verifier must decode and recompute the semantic artifacts. Stage A
 is copied as 35 reachable typed bindings plus its separately pinned receipt,
 or 36 artifacts total. The exact next prerequisite is
-`implement_stage_b_role_scoped_historical_worker_probe_verifier_using_completed_primecore_secure_capture_typed_artifact_recomputation_corrected_fixed_cap_eos_fixture_and_exact_path_content_inventory`.
+`bind_exact_source_derived_fixture_identity_and_row_count_then_bind_concrete_prime_owned_replicate_scoped_seed_prompt_solver_with_fresh_per_row_state_no_row_target_regrade_closure_or_existential_input_then_bind_bounded_full_vocabulary_logit_sidecar_and_source_pinned_float32_logsoftmax_recomputation_then_amend_trap_disjoint_target_topology_and_implement_role_scoped_stage_b_historical_worker_probe_verifier_with_typed_artifact_recomputation_and_exact_path_metadata_content_inventory`.
 
 ## Initial calibration
 

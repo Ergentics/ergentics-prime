@@ -48,13 +48,13 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
         )
         XCTAssertEqual(
             plan.status,
-            "secure_capture_substrate_implemented_stage_b_replay_not_implemented"
+            "secure_capture_replay_bytes_and_corrected_value_observation_mechanics_implemented_exact_fixture_solver_historical_worker_and_stage_b_replay_not_implemented"
         )
         XCTAssertFalse(plan.executionImplemented)
         XCTAssertFalse(plan.projectionReceiptAuthorized)
         XCTAssertEqual(
             try plan.contentSHA256(),
-            "4144b211af62149ab8c5155e3ab0737d503898d418a240c63913cb444d178dc2"
+            "24235423e3e21c13b2c307941eabc92de8e78f9c4321d4aaf8418c4fecc884ba"
         )
 
         let first =
@@ -439,8 +439,11 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
     {
         let plan = Plan.frozenV3
         let executor = plan.correctedExecutor
+        let admission =
+            plan.correctedExecutionAdmission
 
         XCTAssertNoThrow(try executor.validate())
+        XCTAssertNoThrow(try admission.validate())
         XCTAssertEqual(
             executor.generationContractID,
             "greedy_native_bytes_eos_fixed_cap64_kv_v2"
@@ -462,11 +465,110 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
             executor.completionSupportMayNarrow
         )
         XCTAssertEqual(
+            executor.predictionInputFields,
+            [
+                "prompt_token_ids",
+            ]
+        )
+        XCTAssertEqual(
+            admission.executorVisibleFields,
+            executor.predictionInputFields
+        )
+        XCTAssertEqual(
+            admission.replicateScopedFields,
+            [
+                "evaluation_seed",
+            ]
+        )
+        XCTAssertTrue(
+            admission
+                .oneEvaluationSeedPerReplicateRequired
+        )
+        XCTAssertTrue(
+            admission.freshSolverStatePerRowRequired
+        )
+        XCTAssertTrue(
+            admission
+                .rowPermutationTraceIdentityRequired
+        )
+        XCTAssertTrue(
+            admission
+                .sourceBoundFixtureIdentityAndExactRowCountRequired
+        )
+        XCTAssertFalse(
+            admission
+                .sourceBoundFixtureIdentityAndExactRowCountBound
+        )
+        XCTAssertFalse(
+            admission
+                .pureCompletionFeasibilityObservationAuthoritative
+        )
+        XCTAssertEqual(
+            admission.outerCorrelationFields,
+            [
+                "correlation_id",
+            ]
+        )
+        XCTAssertFalse(
+            admission
+                .promptOnlySolverSourceDerivationBound
+        )
+        XCTAssertTrue(
+            admission.fullVocabularyLogitsRequired
+        )
+        XCTAssertFalse(
+            admission
+                .boundedFullVocabularyLogitArtifactBound
+        )
+        XCTAssertTrue(
+            admission
+                .sourcePinnedFloat32LogSoftmaxRecomputationRequired
+        )
+        XCTAssertFalse(
+            admission
+                .sourcePinnedFloat32LogSoftmaxRecomputationBound
+        )
+        XCTAssertFalse(
+            admission
+                .foundationDoubleProbabilityDiagnosticAuthoritative
+        )
+        XCTAssertFalse(
+            admission.correctedFixtureExecutionAuthorized
+        )
+        XCTAssertFalse(
+            admission.terminalReceiptAuthorized
+        )
+        XCTAssertEqual(
+            admission.requiredMetadataIsolationMutationIDs,
+            [
+                "correlation_row_id_injected_into_prediction",
+                "correlation_split_injected_into_prediction",
+                "correlation_semantic_family_injected_into_prediction",
+                "row_dependent_evaluation_seed",
+                "retained_state_changes_permuted_row_trace",
+            ]
+        )
+        XCTAssertEqual(
             plan.correctedMutationCatalog.map(
-                \.mutation
+                \.mutation.rawValue
             ),
-            PrimeNativeNeuralGateCorrectedFixtureMutation
-                .allCases
+            [
+                "target_value_changes_raw_execution",
+                "target_length_changes_raw_execution",
+                "expected_completion_injected_into_prediction",
+                "target_dependent_prompt_grouping",
+                "target_dependent_decision_budget",
+                "eos_unavailable_at_decision",
+                "completion_support_narrowed",
+                "fixed_cap_drift",
+                "target_dependent_termination",
+                "target_dependent_row_inclusion",
+                "correlation_row_id_injected_into_prediction",
+                "correlation_split_injected_into_prediction",
+                "correlation_semantic_family_injected_into_prediction",
+                "row_dependent_evaluation_seed",
+                "retained_state_changes_permuted_row_trace",
+            ]
         )
         XCTAssertTrue(
             plan.correctedMutationCatalog
@@ -659,7 +761,7 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
         )
     }
 
-    func testCLITargetAndNextPrerequisiteAreFrozen()
+    func testBlockedDraftTargetGraphAndNextPrerequisiteAreFrozen()
         throws
     {
         let plan = Plan.frozenV3
@@ -693,7 +795,19 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
         )
         XCTAssertEqual(
             plan.immediateImplementationPrerequisite,
-            "implement_role_scoped_stage_b_historical_worker_probe_verifier_with_typed_artifact_recomputation_corrected_fixed_cap_eos_arm_and_exact_path_metadata_content_inventory_using_completed_secure_capture_factory"
+            "bind_exact_source_derived_fixture_identity_and_row_count_then_bind_concrete_prime_owned_replicate_scoped_seed_prompt_solver_with_fresh_per_row_state_no_row_target_regrade_closure_or_existential_input_then_bind_bounded_full_vocabulary_logit_sidecar_and_source_pinned_float32_logsoftmax_recomputation_then_amend_trap_disjoint_target_topology_and_implement_role_scoped_stage_b_historical_worker_probe_verifier_with_typed_artifact_recomputation_and_exact_path_metadata_content_inventory"
+        )
+        XCTAssertTrue(
+            plan.correctedExecutionAdmission
+                .donorTransplantDeferredToHistoricalWorkerSlice
+        )
+        XCTAssertFalse(
+            plan.correctedExecutionAdmission
+                .trapBearingDonorDependencyPermitted
+        )
+        XCTAssertFalse(
+            plan.correctedExecutionAdmission
+                .correctedFixtureExecutionAuthorized
         )
         XCTAssertEqual(
             plan.postPassNextPrerequisite,
@@ -4578,7 +4692,7 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
         )
     }
 
-    func testFoundationSliceAddsOnlyPureMechanicsTarget()
+    func testBoundedSliceAddsOnlyTwoPureMechanicsTargets()
         throws
     {
         let package = try String(
@@ -4590,6 +4704,8 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
         }
         let mechanicsTarget =
             "PrimeNativeNeuralGateReplayMechanics"
+        let correctedTarget =
+            "PrimeNativeNeuralGateCorrectedMechanics"
         XCTAssertTrue(
             compactPackage.contains(
                 #".target(name:"\#(mechanicsTarget)")"#
@@ -4601,9 +4717,23 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
                     "Sources/\(mechanicsTarget)"
             )
         )
+        XCTAssertTrue(
+            compactPackage.contains(
+                #".target(name:"\#(correctedTarget)",dependencies:["\#(mechanicsTarget)",])"#
+            )
+        )
+        XCTAssertTrue(
+            FileManager.default.fileExists(
+                atPath:
+                    "Sources/\(correctedTarget)"
+            )
+        )
         for forbiddenTarget in Plan.frozenV3
             .targetGraph.map(\.target)
-            .filter({ $0 != mechanicsTarget })
+            .filter({
+                $0 != mechanicsTarget
+                    && $0 != correctedTarget
+            })
         {
             XCTAssertFalse(
                 compactPackage.contains(
@@ -4746,6 +4876,163 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
                 "maximum_generation_token_decisions"
             ] = 63
             object["corrected_executor"] = executor
+        }
+        try assertMutationRejected { object in
+            var admission = object[
+                "corrected_execution_admission"
+            ] as! [String: Any]
+            var fields = admission[
+                "executor_visible_fields"
+            ] as! [String]
+            fields.append("row_id")
+            admission["executor_visible_fields"] =
+                fields
+            object["corrected_execution_admission"] =
+                admission
+        }
+        try assertMutationRejected { object in
+            var admission = object[
+                "corrected_execution_admission"
+            ] as! [String: Any]
+            admission[
+                "one_evaluation_seed_per_replicate_required"
+            ] = false
+            object["corrected_execution_admission"] =
+                admission
+        }
+        try assertMutationRejected { object in
+            var admission = object[
+                "corrected_execution_admission"
+            ] as! [String: Any]
+            admission[
+                "fresh_solver_state_per_row_required"
+            ] = false
+            object["corrected_execution_admission"] =
+                admission
+        }
+        try assertMutationRejected { object in
+            var admission = object[
+                "corrected_execution_admission"
+            ] as! [String: Any]
+            admission[
+                "row_permutation_trace_identity_required"
+            ] = false
+            object["corrected_execution_admission"] =
+                admission
+        }
+        try assertMutationRejected { object in
+            var admission = object[
+                "corrected_execution_admission"
+            ] as! [String: Any]
+            admission[
+                "source_bound_fixture_identity_and_exact_row_count_bound"
+            ] = true
+            object["corrected_execution_admission"] =
+                admission
+        }
+        try assertMutationRejected { object in
+            var admission = object[
+                "corrected_execution_admission"
+            ] as! [String: Any]
+            admission[
+                "prompt_only_solver_source_derivation_bound"
+            ] = true
+            object["corrected_execution_admission"] =
+                admission
+        }
+        try assertMutationRejected { object in
+            var admission = object[
+                "corrected_execution_admission"
+            ] as! [String: Any]
+            admission[
+                "solver_may_receive_corpus_row"
+            ] = true
+            object["corrected_execution_admission"] =
+                admission
+        }
+        try assertMutationRejected { object in
+            var admission = object[
+                "corrected_execution_admission"
+            ] as! [String: Any]
+            admission[
+                "capturing_closure_or_existential_may_establish_target_independence"
+            ] = true
+            object["corrected_execution_admission"] =
+                admission
+        }
+        try assertMutationRejected { object in
+            var admission = object[
+                "corrected_execution_admission"
+            ] as! [String: Any]
+            admission[
+                "trap_bearing_donor_dependency_permitted"
+            ] = true
+            object["corrected_execution_admission"] =
+                admission
+        }
+        try assertMutationRejected { object in
+            var admission = object[
+                "corrected_execution_admission"
+            ] as! [String: Any]
+            admission[
+                "bounded_full_vocabulary_logit_artifact_bound"
+            ] = true
+            object["corrected_execution_admission"] =
+                admission
+        }
+        try assertMutationRejected { object in
+            var admission = object[
+                "corrected_execution_admission"
+            ] as! [String: Any]
+            admission[
+                "source_pinned_float32_logsoftmax_recomputation_bound"
+            ] = true
+            object["corrected_execution_admission"] =
+                admission
+        }
+        try assertMutationRejected { object in
+            var admission = object[
+                "corrected_execution_admission"
+            ] as! [String: Any]
+            admission[
+                "foundation_double_probability_diagnostic_authoritative"
+            ] = true
+            object["corrected_execution_admission"] =
+                admission
+        }
+        try assertMutationRejected { object in
+            var admission = object[
+                "corrected_execution_admission"
+            ] as! [String: Any]
+            admission[
+                "corrected_fixture_execution_authorized"
+            ] = true
+            object["corrected_execution_admission"] =
+                admission
+        }
+        try assertMutationRejected { object in
+            var admission = object[
+                "corrected_execution_admission"
+            ] as! [String: Any]
+            admission[
+                "terminal_receipt_authorized"
+            ] = true
+            object["corrected_execution_admission"] =
+                admission
+        }
+        try assertMutationRejected { object in
+            var admission = object[
+                "corrected_execution_admission"
+            ] as! [String: Any]
+            var mutations = admission[
+                "required_metadata_isolation_mutation_ids"
+            ] as! [String]
+            mutations.removeLast()
+            admission[
+                "required_metadata_isolation_mutation_ids"
+            ] = mutations
+            object["corrected_execution_admission"] =
+                admission
         }
         try assertMutationRejected { object in
             var root = object["root_policy"]

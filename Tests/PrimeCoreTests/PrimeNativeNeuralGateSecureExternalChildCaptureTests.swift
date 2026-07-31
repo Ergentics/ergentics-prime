@@ -793,13 +793,13 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
         // final compiled source-file set is frozen.
         XCTAssertEqual(
             probe.standardOutputData.count,
-            22_022
+            22_568
         )
         XCTAssertEqual(
             PrimeSHA256.hexDigest(
                 of: probe.standardOutputData
             ),
-            "f5f2d2ebf4409da26164c1980bcece14c60db6937f664adb96e4e57693580b86"
+            "b0d8dbe25bddd054dedc56a3a5b6351d7d71a2db61d87686f2c1d11317ed3e93"
         )
         XCTAssertEqual(
             probe.validatedPrimeSourceSnapshot,
