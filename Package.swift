@@ -168,6 +168,13 @@ let package = Package(
             ]
         ),
         .target(
+            name:
+                "PrimeNativeNeuralGatePromptSolver",
+            dependencies: [
+                "PrimeNativeNeuralGateCorrectedMechanics",
+            ]
+        ),
+        .target(
             name: "PrimeNativeCorpusReplay",
             dependencies: [
                 "PrimeCore",
@@ -334,6 +341,7 @@ let package = Package(
                 "PrimeNativeNeuralGateReplayMechanics",
                 "PrimeNativeNeuralGateCorrectedMechanics",
                 "PrimeNativeNeuralGateCorrectedFixtureAuthority",
+                "PrimeNativeNeuralGatePromptSolver",
             ]
         ),
     ]

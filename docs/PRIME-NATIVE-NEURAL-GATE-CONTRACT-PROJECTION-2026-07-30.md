@@ -321,7 +321,8 @@ executes every historical semantic mutation, requires exact restoration, and
 repeats in a distinct Release verifier. In a future source-bound Stage-B run,
 the corrected arm must separately execute prompt-only fixed-cap/EOS
 construction, its complete records/fingerprints, and its leakage-mutation
-catalog. The current pure corrected calculators are not that execution.
+catalog. The current pure corrected calculators and source-plan-bound
+symbolic solver are not that execution.
 Neither arm may be silently substituted for the other.
 
 The forward source audit found that the pinned historical regression fixture
@@ -393,13 +394,17 @@ is an explicit trust prerequisite.
 External-child evidence and the enclosing describe-capture record are schema
 4 at the role-specific capture-V4 paths. The adaptation-proof and
 historical-worker aggregate contracts remain V2. The source/execution-binding
-contract is V4, the replay-output contract remains V3, the
+contract is V5; V4 remains the historical twelve-target fixture-authority
+binding. The replay-output contract remains V3, the
 output-path-classification contract ID is
 `prime_stage_b_output_path_namespace_classification_v3`, and the fixture plan
-is V3/schema 3 at `neural-gate-replay/plan.v3.json`; the adaptation proof
-remains at `neural-gate-replay/source/adaptation-proof.v2.json`. The nested
-held-source mutation-guard observation stays schema 1, the scratch observation
-is schema 2, and the raw describe artifact, compiled closure, Release bindings,
+is V4/schema 4; V3/schema 3 remains the historical pre-solver plan. The
+unchanged V3 replay-output namespace still reserves
+`neural-gate-replay/plan.v3.json`, and no V4 execution artifact is claimed.
+The adaptation proof remains at
+`neural-gate-replay/source/adaptation-proof.v2.json`. The nested held-source
+mutation-guard observation stays schema 1, the scratch observation is schema
+2, and the raw describe artifact, compiled closure, Release bindings,
 historical-worker request/process/result/success records, and terminal receipt
 stay V1. Focused
 Swift tests establish lifecycle and scratch mechanics, not a live factory
@@ -411,10 +416,15 @@ corrections, the live Release two-role secure-capture canary was rerun after
 the fixture-authority twelve-target source freeze and passed end to end on the
 pinned host with byte-identical probe/verifier output: 23,207 bytes, SHA-256
 `f2204bbae8623c35fdf7357c6b0aa2a585e9071f22556edbe6ce6e7cfccf04d5`.
-This is the current accepted fixture-authority reseal. It includes the
-PrimeCore trusted descriptor-inventory substrate, pure Stage-B replay
-mechanics, corrected value mechanics, and the offline source-attested fixture
-target; it does not widen canary authority.
+That is the preceding twelve-target fixture-authority reseal. After the
+isolated thirteenth prompt-solver target was added, the same Release canary was
+rerun on the pinned host and passed with byte-identical probe/verifier output:
+23,791 bytes, SHA-256
+`9d56ad223c9d980272583dc752e0ff05bb815ce504cd3c82fc7e186627c02aa7`.
+This is the current V5 source-binding reseal. It includes the PrimeCore trusted
+descriptor-inventory substrate, pure Stage-B replay mechanics, corrected value
+mechanics, the offline source-attested fixture target, and the isolated
+prompt-solver target; it does not widen canary authority.
 
 The later corrected-mechanics sub-slice remains pure value/observation
 mechanics. Row input is only canonical prompt token IDs; one admitted seed is
@@ -437,15 +447,38 @@ the canonical observation is
 The historical regression fixture is lineage-only in this derivation. Parent
 receipt identities are complete and type-decoded in tests, but the derivation
 reads no receipt bytes and publishes no independent fixture receipt.
+
+The current source-plan slice also adds the isolated
+`PrimeNativeNeuralGatePromptSolver` target. Its sole local dependency is
+`PrimeNativeNeuralGateCorrectedMechanics`; its concrete replicate-scoped type
+receives prompt tokens only and creates fresh local state per row. It is a
+trap-free Swift adaptation, not a byte-exact transplant, of the Ergentics,
+LLC-owned corpus solver pinned above at revision
+`163fc100710ece48119bc25954452d10f6a84f7f`, tree
+`9009daa4f8a07fbd5897e00b9571cef44ec292db`, path
+`prime-runtime/Sources/ErgenticsPrimeRuntime/ErgenticsPrimeNativeTextCorpus.swift`,
+blob `b2a087c9410a71f2bc99debade752ff779d7a8a8`, 177,032 bytes,
+SHA-256
+`4758ac2ffc8452614c7eee428333105ac63b0707cb890938d1e42966d3a14210`,
+under `LicenseRef-Ergentics-Proprietary`. Its repository test contract is
+observed across all 18,432 selected rows, the three admitted replicate
+contexts, and their seed-keyed permutations, with exact structural-logit and
+strict malformed-grammar gates. That remains symbolic/synthetic mechanics—not
+model execution, an independent scientific oracle, a durable solver receipt,
+Metal authority, or product authority.
+`executionImplemented`, the bounded logit-sidecar binding, and the
+source-pinned Float32 log-softmax binding remain false; workers, process
+records, and the terminal receipt remain absent.
+
 The earlier corrected request exposed `row_id`, whose corpus value encodes
 split and semantic family; that metadata is now outer correlation only.
 Row-selected seeds, retained state, and invocation order are also metadata
 channels, so one seed per replicate, fresh per-row state, and row-permutation
 trace identity are mandatory. The planned shared donor topology also exposed
-trap-bearing historical code to corrected supervisors. Corrected execution is
-blocked until a concrete Prime-owned solver derivation, a bounded full-logit
-sidecar with source-pinned Float32 recomputation, and a trap-disjoint topology
-are bound.
+trap-bearing historical code to corrected supervisors. The solver derivation
+is now source-plan-bound, but corrected execution remains blocked until a
+bounded full-logit sidecar with source-pinned Float32 recomputation and a
+trap-disjoint topology are bound.
 
 That pass validates only the secure capture substrate on the pinned host. It
 published no durable Stage-B process record or receipt,

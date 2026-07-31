@@ -2062,11 +2062,124 @@ public struct PrimeNativeNeuralGateMutationOutcomeContract:
     }
 }
 
+/// Source-plan binding for the concrete Prime-owned prompt-only solver.
+/// This binds a trap-free Swift adaptation and its exact donor provenance;
+/// it is not an execution observation, solver receipt, or scientific oracle.
+public struct PrimeNativeNeuralGatePromptOnlySolverSourceDerivationContract:
+    Codable,
+    Equatable,
+    Sendable
+{
+    public let contractID: String
+    public let targetName: String
+    public let directLocalDependencyNames: [String]
+    public let concreteSolverTypeName: String
+    public let sourceRemoteURL: String
+    public let sourceRevision: String
+    public let sourceTreeOID: String
+    public let donorRelativePath: String
+    public let donorGitBlobOID: String
+    public let donorByteCount: UInt64
+    public let donorSHA256: String
+    public let rightsHolder: String
+    public let licenseIdentifier: String
+    public let adaptationByteExact: Bool
+    public let trapBearingDependencyPermitted: Bool
+    public let independentScientificOracleClaimed: Bool
+    public let independentSolverReceiptPublished: Bool
+    public let authorityLevel: String
+
+    public static let frozenV1 = Self(
+        contractID:
+            "prime_stage_b_prompt_only_solver_source_derivation_v1",
+        targetName:
+            "PrimeNativeNeuralGatePromptSolver",
+        directLocalDependencyNames: [
+            "PrimeNativeNeuralGateCorrectedMechanics",
+        ],
+        concreteSolverTypeName:
+            "PrimeNativeNeuralGatePromptOnlyReplicateSolver",
+        sourceRemoteURL:
+            "https://github.com/Ergentics/pmhnp-companion-ergentics.git",
+        sourceRevision:
+            "163fc100710ece48119bc25954452d10f6a84f7f",
+        sourceTreeOID:
+            "9009daa4f8a07fbd5897e00b9571cef44ec292db",
+        donorRelativePath:
+            "prime-runtime/Sources/ErgenticsPrimeRuntime/ErgenticsPrimeNativeTextCorpus.swift",
+        donorGitBlobOID:
+            "b2a087c9410a71f2bc99debade752ff779d7a8a8",
+        donorByteCount: 177_032,
+        donorSHA256:
+            "4758ac2ffc8452614c7eee428333105ac63b0707cb890938d1e42966d3a14210",
+        rightsHolder: "Ergentics, LLC",
+        licenseIdentifier:
+            "LicenseRef-Ergentics-Proprietary",
+        adaptationByteExact: false,
+        trapBearingDependencyPermitted: false,
+        independentScientificOracleClaimed: false,
+        independentSolverReceiptPublished: false,
+        authorityLevel:
+            "source_plan_bound_trap_free_adaptation_exhaustive_repository_test_observation_no_independent_solver_receipt_v1"
+    )
+
+    public func validate() throws {
+        guard self == .frozenV1,
+              Set(directLocalDependencyNames).count
+                == directLocalDependencyNames.count,
+              directLocalDependencyNames
+                == [
+                    "PrimeNativeNeuralGateCorrectedMechanics",
+                ],
+              !adaptationByteExact,
+              !trapBearingDependencyPermitted,
+              !independentScientificOracleClaimed,
+              !independentSolverReceiptPublished
+        else {
+            throw PrimeNativeNeuralGateFixtureReplayPlanError
+                .invalidPlan(
+                    "prompt_only_solver_source_derivation"
+                )
+        }
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case contractID = "contract_id"
+        case targetName = "target_name"
+        case directLocalDependencyNames =
+            "direct_local_dependency_names"
+        case concreteSolverTypeName =
+            "concrete_solver_type_name"
+        case sourceRemoteURL = "source_remote_url"
+        case sourceRevision = "source_revision"
+        case sourceTreeOID = "source_tree_oid"
+        case donorRelativePath =
+            "donor_relative_path"
+        case donorGitBlobOID =
+            "donor_git_blob_oid"
+        case donorByteCount = "donor_byte_count"
+        case donorSHA256 = "donor_sha256"
+        case rightsHolder = "rights_holder"
+        case licenseIdentifier =
+            "license_identifier"
+        case adaptationByteExact =
+            "adaptation_byte_exact"
+        case trapBearingDependencyPermitted =
+            "trap_bearing_dependency_permitted"
+        case independentScientificOracleClaimed =
+            "independent_scientific_oracle_claimed"
+        case independentSolverReceiptPublished =
+            "independent_solver_receipt_published"
+        case authorityLevel = "authority_level"
+    }
+}
+
 /// Execution-blocking correction discovered before Stage-B GPU or worker
 /// spend. The older five-field request exposed row identity even though
 /// corpus row IDs encode split and semantic family. This contract narrows the
-/// executor-visible value and keeps corrected execution closed until a
-/// concrete source-derived prompt solver is bound.
+/// executor-visible value. V1 keeps corrected execution closed until a
+/// concrete source-derived prompt solver is bound; V2 binds that derivation
+/// while leaving logit, execution, and receipt authority closed.
 public struct PrimeNativeNeuralGateCorrectedExecutionAdmission:
     Codable,
     Equatable,
@@ -2131,6 +2244,8 @@ public struct PrimeNativeNeuralGateCorrectedExecutionAdmission:
         Bool
     public let promptOnlySolverSourceDerivationBound:
         Bool
+    public let promptOnlySolverSourceDerivation:
+        PrimeNativeNeuralGatePromptOnlySolverSourceDerivationContract?
     public let solverMayReceiveCorpusRow: Bool
     public let solverMayReceiveTargetOrRegradeMaterial:
         Bool
@@ -2160,9 +2275,29 @@ public struct PrimeNativeNeuralGateCorrectedExecutionAdmission:
     public let terminalReceiptAuthorized: Bool
     public let unblockPrerequisite: String
 
-    public static let frozenV1 = Self(
+    public static let frozenV1 =
+        makeFrozen(
+            promptOnlySolverSourceDerivation:
+                nil
+        )
+
+    public static let frozenV2 =
+        makeFrozen(
+            promptOnlySolverSourceDerivation:
+                .frozenV1
+        )
+
+    private static func makeFrozen(
+        promptOnlySolverSourceDerivation:
+            PrimeNativeNeuralGatePromptOnlySolverSourceDerivationContract?
+    ) -> Self {
+        let promptOnlySolverBound =
+            promptOnlySolverSourceDerivation != nil
+        return Self(
         admissionID:
-            "prime_stage_b_corrected_execution_metadata_isolation_and_solver_admission_v1",
+            promptOnlySolverBound
+            ? "prime_stage_b_corrected_execution_metadata_isolation_and_solver_admission_v2"
+            : "prime_stage_b_corrected_execution_metadata_isolation_and_solver_admission_v1",
         findingIDs: [
             "corpus_row_id_encodes_split_index_and_semantic_family",
             "abstention_row_id_exposes_abstention_class",
@@ -2253,7 +2388,9 @@ public struct PrimeNativeNeuralGateCorrectedExecutionAdmission:
         promptOnlySolverSourceDerivationRequired:
             true,
         promptOnlySolverSourceDerivationBound:
-            false,
+            promptOnlySolverBound,
+        promptOnlySolverSourceDerivation:
+            promptOnlySolverSourceDerivation,
         solverMayReceiveCorpusRow: false,
         solverMayReceiveTargetOrRegradeMaterial:
             false,
@@ -2288,11 +2425,17 @@ public struct PrimeNativeNeuralGateCorrectedExecutionAdmission:
             false,
         terminalReceiptAuthorized: false,
         unblockPrerequisite:
-            "bind_concrete_prime_owned_replicate_scoped_seed_prompt_solver_with_fresh_per_row_state_no_row_target_regrade_closure_or_existential_input_then_bind_bounded_full_vocabulary_logit_sidecar_and_source_pinned_float32_logsoftmax_recomputation_then_pass_correlation_seed_row_permutation_same_length_and_different_length_substitution_raw_identity_gates"
-    )
+            promptOnlySolverBound
+            ? "bind_bounded_full_vocabulary_logit_sidecar_and_source_pinned_float32_logsoftmax_recomputation_then_pass_correlation_seed_row_permutation_same_length_and_different_length_substitution_raw_identity_gates"
+            : "bind_concrete_prime_owned_replicate_scoped_seed_prompt_solver_with_fresh_per_row_state_no_row_target_regrade_closure_or_existential_input_then_bind_bounded_full_vocabulary_logit_sidecar_and_source_pinned_float32_logsoftmax_recomputation_then_pass_correlation_seed_row_permutation_same_length_and_different_length_substitution_raw_identity_gates"
+        )
+    }
 
     public func validate() throws {
-        guard self == .frozenV1,
+        try promptOnlySolverSourceDerivation?
+            .validate()
+        let isBoundV2 = self == .frozenV2
+        guard (self == .frozenV1 || isBoundV2),
               Set(executorVisibleFields).count
                 == executorVisibleFields.count,
               Set(forbiddenExecutorFields).count
@@ -2347,7 +2490,14 @@ public struct PrimeNativeNeuralGateCorrectedExecutionAdmission:
               !pureCompletionFeasibilityObservationAuthoritative,
               !perRowTargetFeasibilityDecisionPermitted,
               promptOnlySolverSourceDerivationRequired,
-              !promptOnlySolverSourceDerivationBound,
+              promptOnlySolverSourceDerivationBound
+                == isBoundV2,
+              promptOnlySolverSourceDerivation
+                == (
+                    isBoundV2
+                    ? .frozenV1
+                    : nil
+                ),
               !solverMayReceiveCorpusRow,
               !solverMayReceiveTargetOrRegradeMaterial,
               !capturingClosureOrExistentialMayEstablishTargetIndependence,
@@ -2433,6 +2583,8 @@ public struct PrimeNativeNeuralGateCorrectedExecutionAdmission:
             "prompt_only_solver_source_derivation_required"
         case promptOnlySolverSourceDerivationBound =
             "prompt_only_solver_source_derivation_bound"
+        case promptOnlySolverSourceDerivation =
+            "prompt_only_solver_source_derivation"
         case solverMayReceiveCorpusRow =
             "solver_may_receive_corpus_row"
         case solverMayReceiveTargetOrRegradeMaterial =
@@ -3393,17 +3545,29 @@ public struct PrimeNativeNeuralGateSourceExecutionBindingContract:
     public static let frozenV3 =
         makeFrozen(
             includingCorrectedFixtureAuthority:
+                false,
+            includingPromptOnlySolver:
                 false
         )
     public static let frozenV4 =
         makeFrozen(
             includingCorrectedFixtureAuthority:
+                true,
+            includingPromptOnlySolver:
+                false
+        )
+    public static let frozenV5 =
+        makeFrozen(
+            includingCorrectedFixtureAuthority:
+                true,
+            includingPromptOnlySolver:
                 true
         )
 
     private static func makeFrozen(
         includingCorrectedFixtureAuthority:
-            Bool
+            Bool,
+        includingPromptOnlySolver: Bool
     ) -> Self {
         let core = "PrimeCore"
         let corpusMechanics =
@@ -3420,6 +3584,8 @@ public struct PrimeNativeNeuralGateSourceExecutionBindingContract:
             "PrimeNativeNeuralGateCorrectedMechanics"
         let correctedFixtureAuthority =
             "PrimeNativeNeuralGateCorrectedFixtureAuthority"
+        let promptOnlySolver =
+            "PrimeNativeNeuralGatePromptSolver"
         let replay = "PrimeNativeNeuralGateReplay"
         let historicalWorker =
             "PrimeNativeNeuralGateHistoricalFixtureWorker"
@@ -3438,9 +3604,13 @@ public struct PrimeNativeNeuralGateSourceExecutionBindingContract:
         ]
         return Self(
             contractID:
-                includingCorrectedFixtureAuthority
-                ? "prime_stage_b_release_source_executable_join_v4"
-                : "prime_stage_b_release_source_executable_join_v3",
+                includingPromptOnlySolver
+                ? "prime_stage_b_release_source_executable_join_v5"
+                : (
+                    includingCorrectedFixtureAuthority
+                    ? "prime_stage_b_release_source_executable_join_v4"
+                    : "prime_stage_b_release_source_executable_join_v3"
+                ),
             packageManifestRelativePath:
                 "Package.swift",
             sourceSnapshotRelativePath:
@@ -3529,6 +3699,18 @@ public struct PrimeNativeNeuralGateSourceExecutionBindingContract:
                                 correctedFixtureAuthority,
                             directLocalDependencyNames: [
                                 corpusMechanics,
+                                correctedMechanics,
+                            ]
+                        ),
+                    ]
+                    : []
+            ) + (
+                includingPromptOnlySolver
+                    ? [
+                        .init(
+                            targetName:
+                                promptOnlySolver,
+                            directLocalDependencyNames: [
                                 correctedMechanics,
                             ]
                         ),
@@ -3906,9 +4088,19 @@ public struct PrimeNativeNeuralGateSourceExecutionBindingContract:
                     .filter(reachable.contains)
             }
         let frozenTargetCount =
-            self == .frozenV4 ? 12 : 10
+            self == .frozenV3
+            ? 10
+            : (
+                self == .frozenV4
+                ? 12
+                : (
+                    self == .frozenV5
+                    ? 13
+                    : -1
+                )
+            )
         let version4FixtureAuthorityBoundaryExact =
-            self != .frozenV4
+            self == .frozenV3
             || (
                 dependencies[
                     "PrimeNativeNeuralGateCorrectedMechanics"
@@ -3933,8 +4125,24 @@ public struct PrimeNativeNeuralGateSourceExecutionBindingContract:
                         )
                 }
             )
+        let version5PromptOnlySolverBoundaryExact =
+            self != .frozenV5
+            || (
+                dependencies[
+                    "PrimeNativeNeuralGatePromptSolver"
+                ] == [
+                    "PrimeNativeNeuralGateCorrectedMechanics",
+                ]
+                && processBindingRules.allSatisfy {
+                    !$0.exactTransitiveLocalTargetNames
+                        .contains(
+                            "PrimeNativeNeuralGatePromptSolver"
+                        )
+                }
+            )
         guard (self == .frozenV3
-                || self == .frozenV4),
+                || self == .frozenV4
+                || self == .frozenV5),
               Self.isSafeRelativePath(
                   packageManifestRelativePath
               ),
@@ -3997,6 +4205,7 @@ public struct PrimeNativeNeuralGateSourceExecutionBindingContract:
               }),
               processClosuresExact,
               version4FixtureAuthorityBoundaryExact,
+              version5PromptOnlySolverBoundaryExact,
               requiredBuildConfiguration == "release",
               swiftPackageDescribeCapturePolicy
                 == "direct_swift_package_executable_describe_type_json_exact_noninherited_scratch_environment_normalized_signals_start_suspended_direct_pid_until_sid_pgid_join_isolated_session_dedicated_process_group_descriptor_rooted_cwd_local_apfs_bounded_source_admission_held_source_closure_kqueue_guard_fresh_scratch_namespace_exact_optional_text_encoding_work_lock_bounded_opaque_provenance_bounded_post_audit_full_region_transcript_descriptor_join_trusted_capture_bounded_output_exact_once_wait_bounded_wnohang_no_post_reap_signal_uncontained_fail_stop_no_shell_v9",
@@ -13004,7 +13213,19 @@ public struct PrimeNativeNeuralGateFixtureReplayPlan:
     public let postPassNextPrerequisite: String
     public let authorityStatement: String
 
-    public static let frozenV3: Self = {
+    public static let frozenV3 =
+        makeFrozen(
+            promptOnlySolverBound: false
+        )
+
+    public static let frozenV4 =
+        makeFrozen(
+            promptOnlySolverBound: true
+        )
+
+    private static func makeFrozen(
+        promptOnlySolverBound: Bool
+    ) -> Self {
         let projection =
             PrimeNativeNeuralGateContractProjection
             .frozenV1
@@ -13039,14 +13260,31 @@ public struct PrimeNativeNeuralGateFixtureReplayPlan:
         let historicalWorker =
             PrimeNativeNeuralGateHistoricalWorkerContract
             .frozenV2
+        let correctedMechanicsAuthorityBoundary =
+            promptOnlySolverBound
+            ? "It does not inject or detect mutations, establish leg or capability truth, execute a source-bound fixture or solver, or authorize a receipt. A separate Prime-owned prompt-only solver target binds a concrete fresh-per-row deterministic source derivation over prompt token IDs plus a replicate-scoped evaluation seed; its source-plan binding is not a model execution, capability observation, independent oracle, or receipt. "
+            : "It does not derive a semantic solver, inject or detect mutations, establish leg or capability truth, execute a source-bound fixture, or authorize a receipt. "
+        let sourceBindingAuthorityBoundary =
+            promptOnlySolverBound
+            ? "Source-binding contract V5 attests the fixture, corrected-mechanics, and prompt-only-solver source targets while keeping all three unreachable from every current probe/verifier executable closure; the trap-bearing corpus dependency is forbidden from the corrected executor closure. "
+            : "Source-binding contract V4 attests the fixture and corrected-mechanics source targets while keeping both unreachable from every current probe/verifier executable closure; the trap-bearing corpus dependency is forbidden from the corrected executor closure. "
+        let correctedExecutionUnblockBoundary =
+            promptOnlySolverBound
+            ? "The existing planned donor topology also exposes trap-bearing runtime code to corrected supervisors, so donor transplant remains deferred and corrected execution is unauthorized until the bounded logit artifact and recomputation and a trap-disjoint topology are bound. "
+            : "The existing planned donor topology also exposes trap-bearing runtime code to corrected supervisors, so donor transplant remains deferred and corrected execution is unauthorized until a concrete Prime-owned solver derivation, the bounded logit artifact and recomputation, and a trap-disjoint topology are bound. "
         return Self(
-            schemaVersion: 3,
+            schemaVersion:
+                promptOnlySolverBound ? 4 : 3,
             planID:
-                "ergentics_prime_native_neural_gate_dual_fixture_replay_v3",
+                promptOnlySolverBound
+                ? "ergentics_prime_native_neural_gate_dual_fixture_replay_v4"
+                : "ergentics_prime_native_neural_gate_dual_fixture_replay_v3",
             claimScope:
                 "source_pinned_synthetic_fixture_materialization_and_gate_replay_contract_with_implemented_secure_capture_replay_bytes_exact_source_derived_corrected_fixture_identity_and_non_evidentiary_corrected_value_observation_mechanics",
             status:
-                "secure_capture_replay_bytes_exact_source_derived_corrected_fixture_identity_and_corrected_value_observation_mechanics_implemented_solver_historical_worker_and_stage_b_replay_not_implemented",
+                promptOnlySolverBound
+                ? "secure_capture_replay_bytes_exact_source_derived_corrected_fixture_identity_corrected_value_observation_mechanics_and_prompt_only_solver_derivation_implemented_historical_worker_and_stage_b_replay_not_implemented"
+                : "secure_capture_replay_bytes_exact_source_derived_corrected_fixture_identity_and_corrected_value_observation_mechanics_implemented_solver_historical_worker_and_stage_b_replay_not_implemented",
             executionImplemented: false,
             projectionReceiptAuthorized: false,
             stageAParent: .frozenV1,
@@ -13281,7 +13519,9 @@ public struct PrimeNativeNeuralGateFixtureReplayPlan:
                 "8a1f70ae9f20f60e63cc53df6841d8a160bcbee61621c6f80a4f0272a186100f",
             correctedExecutor: .frozenV1,
             correctedExecutionAdmission:
-                .frozenV1,
+                promptOnlySolverBound
+                ? .frozenV2
+                : .frozenV1,
             correctedMutationCatalog:
                 PrimeNativeNeuralGateCorrectedFixtureMutation
                 .allCases.enumerated().map {
@@ -13357,7 +13597,10 @@ public struct PrimeNativeNeuralGateFixtureReplayPlan:
                         "distinct Release reconstruction and exclusive terminal receipt publisher"
                 ),
             ],
-            sourceExecutionBinding: .frozenV4,
+            sourceExecutionBinding:
+                promptOnlySolverBound
+                ? .frozenV5
+                : .frozenV4,
             historicalWorker: .frozenV2,
             probeArguments: [
                 "--stage-a-root",
@@ -13541,18 +13784,24 @@ public struct PrimeNativeNeuralGateFixtureReplayPlan:
             modeNormalizationPolicy:
                 "verify_current_user_single_link_regular_file_exact_bytes_and_sha256_then_chmod_only_listed_files_to_0444_never_recursive",
             immediateImplementationPrerequisite:
-                "bind_concrete_prime_owned_replicate_scoped_seed_prompt_solver_with_fresh_per_row_state_no_row_target_regrade_closure_or_existential_input_then_bind_bounded_full_vocabulary_logit_sidecar_and_source_pinned_float32_logsoftmax_recomputation_then_amend_trap_disjoint_target_topology_and_implement_role_scoped_stage_b_historical_worker_probe_verifier_with_typed_artifact_recomputation_and_exact_path_metadata_content_inventory",
+                promptOnlySolverBound
+                ? "bind_bounded_full_vocabulary_logit_sidecar_and_source_pinned_float32_logsoftmax_recomputation_then_amend_trap_disjoint_target_topology_and_implement_role_scoped_stage_b_historical_worker_probe_verifier_with_typed_artifact_recomputation_and_exact_path_metadata_content_inventory"
+                : "bind_concrete_prime_owned_replicate_scoped_seed_prompt_solver_with_fresh_per_row_state_no_row_target_regrade_closure_or_existential_input_then_bind_bounded_full_vocabulary_logit_sidecar_and_source_pinned_float32_logsoftmax_recomputation_then_amend_trap_disjoint_target_topology_and_implement_role_scoped_stage_b_historical_worker_probe_verifier_with_typed_artifact_recomputation_and_exact_path_metadata_content_inventory",
             postPassNextPrerequisite:
                 "physical_native_checkpoint_and_evaluation_shard_binding",
             authorityStatement:
                 "This contract freezes required schemas for a Swift-first Stage-B dual replay. " +
-                "PrimeCore implements the closed secure capture substrate. A separate pure corrected target now implements only non-evidentiary value and observation mechanics over caller-provided values: prompt-token row inputs, replicate-scoped admitted seeds, fixed-cap/EOS full-512-logit decision trace validation, allowed-support selection, exact structural raw-argmax/parity/count witnesses, canonical post-execution exact regrade, weighted statistics, exact 512-logit fixed-prompt margins, capability-threshold calculation, all-ten count-derived verdict composition, and fifteen ordered mutation-observation validators. Full logits are locally bound by exact bit-pattern digest; Foundation/Double probability diagnostics are non-evidentiary, excluded from canonical fingerprints, and cannot substitute for the frozen source-pinned Float32 log-softmax. It does not derive a semantic solver, inject or detect mutations, establish leg or capability truth, execute a source-bound fixture, or authorize a receipt. Semantic regrade and model capability remain unavailable. A separate offline fixture-authority target now recomputes the exact globally UTF-8-row-ID-ordered 18,432-row corrected fixture from the byte-exact source-pinned tokenizer/corpus transplant. The historical regression-fixture source is lineage-only and is not read or executed in this derivation. Closed Stage-A and full-corpus receipt identities are bound by complete records and type-decoded in repository tests, but receipt bytes are not read during derivation and no independent fixture probe/verifier receipt is published. The canonical observation and complete source-row/outer-regrade, prompt-only, and domain-separated target-feasibility bindings are frozen. Source-binding contract V4 attests the fixture and corrected-mechanics source targets while keeping both unreachable from every current probe/verifier executable closure; the trap-bearing corpus dependency is forbidden from the corrected executor closure. " +
-                "Forward audit proved that row_id exposes split and semantic family, including the abstention class; row identity is outer correlation only. Seed is shard/replicate scoped and cannot enter a row input. Fresh solver state is required for every row, and permuted row order must preserve each input trace, because retained state, invocation order, or a row-selected seed would create ambient metadata channels. Exact source-derived fixture identity and row count are now bound; the earlier caller-value-only completion-feasibility calculator remains non-authoritative by itself. Hex-expanding all 512 logits across the three complete replicates would exceed the frozen Stage-B decode bounds, so a bounded full-vocabulary logit sidecar and source-pinned Float32 log-softmax recomputation remain unbound. The existing planned donor topology also exposes trap-bearing runtime code to corrected supervisors, so donor transplant remains deferred and corrected execution is unauthorized until a concrete Prime-owned solver derivation, the bounded logit artifact and recomputation, and a trap-disjoint topology are bound. " +
+                "PrimeCore implements the closed secure capture substrate. A separate pure corrected target now implements only non-evidentiary value and observation mechanics over caller-provided values: prompt-token row inputs, replicate-scoped admitted seeds, fixed-cap/EOS full-512-logit decision trace validation, allowed-support selection, exact structural raw-argmax/parity/count witnesses, canonical post-execution exact regrade, weighted statistics, exact 512-logit fixed-prompt margins, capability-threshold calculation, all-ten count-derived verdict composition, and fifteen ordered mutation-observation validators. Full logits are locally bound by exact bit-pattern digest; Foundation/Double probability diagnostics are non-evidentiary, excluded from canonical fingerprints, and cannot substitute for the frozen source-pinned Float32 log-softmax. " +
+                correctedMechanicsAuthorityBoundary +
+                "Semantic regrade and model capability remain unavailable. A separate offline fixture-authority target now recomputes the exact globally UTF-8-row-ID-ordered 18,432-row corrected fixture from the byte-exact source-pinned tokenizer/corpus transplant. The historical regression-fixture source is lineage-only and is not read or executed in this derivation. Closed Stage-A and full-corpus receipt identities are bound by complete records and type-decoded in repository tests, but receipt bytes are not read during derivation and no independent fixture probe/verifier receipt is published. The canonical observation and complete source-row/outer-regrade, prompt-only, and domain-separated target-feasibility bindings are frozen. " +
+                sourceBindingAuthorityBoundary +
+                "Forward audit proved that row_id exposes split and semantic family, including the abstention class; row identity is outer correlation only. Seed is shard/replicate scoped and cannot enter a row input. Fresh solver state is required for every row, and permuted row order must preserve each input trace, because retained state, invocation order, or a row-selected seed would create ambient metadata channels. Exact source-derived fixture identity and row count are now bound; the earlier caller-value-only completion-feasibility calculator remains non-authoritative by itself. Hex-expanding all 512 logits across the three complete replicates would exceed the frozen Stage-B decode bounds, so a bounded full-vocabulary logit sidecar and source-pinned Float32 log-softmax recomputation remain unbound. " +
+                correctedExecutionUnblockBoundary +
                 "Stage-B replay execution, process records, workers, and terminal receipt are not implemented or observed and executionImplemented remains false. The factory admits a bounded current-owner local-APFS Prime source tree, holds authoritative root, directory, and file descriptors, arms receipt-checked EVFILT_VNODE guards, and requires exact inventories, bytes, metadata, path joins, and zero mutation events at initial, pre-resume, and post-reap checkpoints. It directly launches the frozen Xcode 26.6 build 17F113 swift-package image with an exact four-key non-inherited scratch environment, stdin at EOF, and normalized start-suspended 0x448c flags. Scratch ACLs and unknown extended attributes are rejected; com.apple.TextEncoding is optional only on the single-link regular work/.lock file with the exact 15-byte utf-8;134217984 value read through its descriptor, while com.apple.provenance is bounded to 4096 bytes and remains opaque non-authoritative metadata. Child authority is the positive PID until getsid(pid) and getpgid(pid) both equal pid; only then may the dedicated process group receive termination signals. Successful capture binds the suspended cwd and complete mapped-region vnode transcript to held descriptors, drains bounded streams through EOF, observes death, reaps the exact PID once, proves the group empty, and permits no post-reap signal. Ordinary rejection may return only after proven containment and exact reap; a child or drain that remains uncontained after bounded WNOHANG cleanup is supervisor fail-stop and cannot be encoded as ABSTAIN. The schema-4 external evidence and schema-4 describe-capture envelope are prerequisite and canary mechanics, not a Stage-B record or receipt. " +
                 "The historical arm reconstructs the exact source-pinned synthetic fixture only as forensic mechanics because its output construction consumes target length and expected completion while declaring target independence. Its source-faithful materializer retains donor trap sites, is not claimed wholly fail-closed, and must run in two role-scoped bounded workers. A contained abnormal termination is internally ABSTAIN, poisons the root, accepts no worker result as evidence, publishes no successful-execution record or terminal receipt, and permits no retry; partial artifacts may remain but are non-authoritative. A successful worker result is transport evidence and cannot establish mechanics PASS; the terminal verifier must decode and recompute every semantic artifact. The corrected arm must independently construct prompt-only fixed-cap-64 generation with EOS available at every decision and may establish only corrected synthetic gate mechanics. A terminal Stage-B mechanics PASS requires both arms, complete raw-UTF8 invariant multiset publication, exact direct/accelerated fingerprints, all ten Verify/Abstain legs, projected statistics and fixed-prompt margin, count-derived verdict, every ordered mutation with exact restoration, a validated process topology, exact pre-receipt realized path-and-metadata inventory, and typed validation of every artifact. Historical target independence and model capability remain ABSTAIN. " +
                 "Donor bytes are resolved, copied, and rebound as immutable evidence while the companion is unchanged; donor blobs are never dynamically compiled or executed. Every donor-to-Prime adaptation has a plan-authoritative byte-exact or hash-bound derivation plus lexical and compiled-source proof; successful behavior and caller-supplied manifests cannot supply expectations. The closed Stage-A receipt and complete descriptor-bound parent closure must be copied losslessly and revalidated from the Stage-B root. The direct swift-package launch path, proc_pidpath pathname, and code-sign fields remain non-authoritative telemetry; no Apple trust claim is made. Namespace classification never authorizes publication; publication must pass exact path, node, type, owner, link, mode, purpose, digest, typed-content, and no-replace checks with the receipt exclusively last. No independently reproducible build, NeuralKit module execution, companion runtime dependency, model or Metal execution, physical checkpoint or shard, independent scientific oracle, four-tier AgentContractKit audit, guarded statistics, training, quantization, diagonal-Hessian evaluation, Phase-3 completion, product authority, Python authority, or shell authority is claimed."
         )
-    }()
+    }
 
     public func validate() throws {
         try stageAParent.validate()
@@ -13636,6 +13885,14 @@ public struct PrimeNativeNeuralGateFixtureReplayPlan:
                     == correctedExecutionAdmission
                     .sourceBoundFixtureAuthorityTarget
             }
+        let promptOnlySolverSourceRules =
+            sourceExecutionBinding
+            .targetClosureRules.filter {
+                $0.targetName
+                    == correctedExecutionAdmission
+                    .promptOnlySolverSourceDerivation?
+                    .targetName
+            }
         let correctedFixtureAuthorityBoundaryMatches =
             correctedMechanicsSourceRules.count == 1
             && correctedMechanicsSourceRules[0]
@@ -13661,6 +13918,38 @@ public struct PrimeNativeNeuralGateFixtureReplayPlan:
                                 .sourceBoundFixtureAuthorityTarget
                         )
                 }
+        let promptOnlySolverBoundaryMatches =
+            self == .frozenV3
+            ? (
+                correctedExecutionAdmission
+                    .promptOnlySolverSourceDerivation
+                    == nil
+                && promptOnlySolverSourceRules.isEmpty
+            )
+            : (
+                correctedExecutionAdmission
+                    .promptOnlySolverSourceDerivation
+                    == .frozenV1
+                && promptOnlySolverSourceRules.count
+                    == 1
+                && promptOnlySolverSourceRules[0]
+                    .directLocalDependencyNames
+                    == correctedExecutionAdmission
+                    .promptOnlySolverSourceDerivation?
+                    .directLocalDependencyNames
+                && sourceExecutionBinding
+                    .processBindingRules
+                    .allSatisfy {
+                        !$0
+                        .exactTransitiveLocalTargetNames
+                        .contains(
+                            correctedExecutionAdmission
+                                .promptOnlySolverSourceDerivation?
+                                .targetName
+                                ?? ""
+                        )
+                    }
+            )
         let runningExecutablePaths = Set(
             outputContract.pathClassification
                 .runningExecutableRelativePaths
@@ -13673,10 +13962,22 @@ public struct PrimeNativeNeuralGateFixtureReplayPlan:
                         .receiptRelativePath
             }
         )
-        guard self == .frozenV3,
-              schemaVersion == 3,
+        let isPromptOnlySolverBoundV4 =
+            self == .frozenV4
+        guard (self == .frozenV3
+                || isPromptOnlySolverBoundV4),
+              schemaVersion
+                == (
+                    isPromptOnlySolverBoundV4
+                    ? 4
+                    : 3
+                ),
               planID
-                == "ergentics_prime_native_neural_gate_dual_fixture_replay_v3",
+                == (
+                    isPromptOnlySolverBoundV4
+                    ? "ergentics_prime_native_neural_gate_dual_fixture_replay_v4"
+                    : "ergentics_prime_native_neural_gate_dual_fixture_replay_v3"
+                ),
               !executionImplemented,
               !projectionReceiptAuthorized,
               companionRemoteURL
@@ -13698,6 +13999,19 @@ public struct PrimeNativeNeuralGateFixtureReplayPlan:
                 .allCases,
               sourceMatchesProjection,
               correctedFixtureAuthorityBoundaryMatches,
+              promptOnlySolverBoundaryMatches,
+              correctedExecutionAdmission
+                == (
+                    isPromptOnlySolverBoundV4
+                    ? .frozenV2
+                    : .frozenV1
+                ),
+              sourceExecutionBinding
+                == (
+                    isPromptOnlySolverBoundV4
+                    ? .frozenV5
+                    : .frozenV4
+                ),
               inputPins.map(\.byteCount).reduce(0, +)
                 == totalPinnedInputByteCount,
               totalPinnedInputByteCount == 1_232_537,

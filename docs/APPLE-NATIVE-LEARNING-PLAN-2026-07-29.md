@@ -486,13 +486,17 @@ network-denial, or hostile same-UID-process isolation claim.
 External-child evidence and the enclosing describe-capture record are schema
 4 at the role-specific capture-V4 paths. The adaptation-proof and
 historical-worker aggregate contracts remain V2. The source/execution-binding
-contract is V4, the replay-output contract remains V3, the
+contract is V5; V4 remains the historical twelve-target fixture-authority
+binding. The replay-output contract remains V3, the
 output-path-classification contract ID is
 `prime_stage_b_output_path_namespace_classification_v3`, and the fixture plan
-is V3/schema 3 at `neural-gate-replay/plan.v3.json`. The adaptation proof
-remains `neural-gate-replay/source/adaptation-proof.v2.json`. The nested
-held-source mutation-guard observation stays schema 1, the scratch observation
-is schema 2, and the raw describe artifact, compiled closure, Release bindings,
+is V4/schema 4; V3/schema 3 remains the historical pre-solver plan. The
+unchanged V3 replay-output namespace still reserves
+`neural-gate-replay/plan.v3.json`, and no V4 execution artifact is claimed.
+The adaptation proof remains
+`neural-gate-replay/source/adaptation-proof.v2.json`. The nested held-source
+mutation-guard observation stays schema 1, the scratch observation is schema
+2, and the raw describe artifact, compiled closure, Release bindings,
 historical-worker request/process/result/success records, and terminal receipt
 stay V1.
 
@@ -504,10 +508,15 @@ corrections and the fixture-authority twelve-target source freeze, the live
 Release canary was rerun and passed end to end on the pinned host. Probe and
 verifier output was byte-identical: 23,207 bytes with SHA-256
 `f2204bbae8623c35fdf7357c6b0aa2a585e9071f22556edbe6ce6e7cfccf04d5`.
-This is the current accepted fixture-authority reseal. It includes the
-PrimeCore trusted descriptor-inventory substrate, pure Stage-B replay
-mechanics, corrected value mechanics, and the offline source-attested fixture
-target; it does not widen canary authority.
+That is the preceding twelve-target fixture-authority reseal. After the
+isolated thirteenth prompt-solver target was added, the same Release canary was
+rerun on the pinned host and passed with byte-identical probe/verifier output:
+23,791 bytes with SHA-256
+`9d56ad223c9d980272583dc752e0ff05bb815ce504cd3c82fc7e186627c02aa7`.
+This is the current V5 source-binding reseal. It includes the PrimeCore trusted
+descriptor-inventory substrate, pure Stage-B replay mechanics, corrected value
+mechanics, the offline source-attested fixture target, and the isolated
+prompt-solver target; it does not widen canary authority.
 That pass validates only the secure capture substrate on the pinned host. It
 published no durable Stage-B process record or receipt,
 `executionImplemented` remains false, and no Stage-B replay, historical
@@ -967,8 +976,11 @@ held local-APFS source and fresh scratch guards, schema-4 capture envelopes,
 and typed rejection lifecycle are unit-tested. After the two contained
 discovery failures described above, the live Release two-role canary was rerun
 after the fixture-authority twelve-target source freeze and passed with the
-exact 23,207-byte output binding. That is the current accepted
-fixture-authority reseal.
+exact 23,207-byte output binding. That is the preceding twelve-target
+fixture-authority reseal. After the prompt-solver thirteenth target was added,
+the current V5 source-binding canary passed with byte-identical 23,791-byte
+output and SHA-256
+`9d56ad223c9d980272583dc752e0ff05bb815ce504cd3c82fc7e186627c02aa7`.
 The pure-library layer now also contains a corrected value-mechanics target
 for prompt-token row inputs, replicate-scoped admitted seed context,
 fixed-cap/EOS full-512-logit decision trace validation, allowed-support
@@ -991,16 +1003,35 @@ The historical fixture pin is lineage-only; parent receipt identities are
 type-decoded in tests, but the derivation reads no receipt bytes and publishes
 no independent fixture receipt.
 
-No prompt-only semantic solver has been source-derived. A forward audit also
-proved that `row_id` encodes split/family metadata and that the planned shared
-donor topology would expose trap-bearing historical code to corrected
-supervisors. Corrected execution remains blocked: row identity is outer
-correlation only; seed is replicate-scoped; and fresh per-row state plus
-row-permutation trace identity are mandatory. A concrete Prime-owned solver,
-a bounded full-logit sidecar with source-pinned Float32 log-softmax
-recomputation, and a trap-disjoint topology must be bound before any corrected
-replay. Per-decision bit-pattern digests keep the pure trace inside Stage-B
-decode limits; local
+An isolated `PrimeNativeNeuralGatePromptSolver` target now supplies the
+concrete prompt-only symbolic solver with
+`PrimeNativeNeuralGateCorrectedMechanics` as its sole local dependency. It is
+a trap-free, non-byte-exact Swift adaptation of the Ergentics, LLC-owned
+corpus solver at companion revision
+`163fc100710ece48119bc25954452d10f6a84f7f`, tree
+`9009daa4f8a07fbd5897e00b9571cef44ec292db`, donor blob
+`b2a087c9410a71f2bc99debade752ff779d7a8a8`, SHA-256
+`4758ac2ffc8452614c7eee428333105ac63b0707cb890938d1e42966d3a14210`,
+under `LicenseRef-Ergentics-Proprietary`. Its repository test contract is
+observed across the 18,432-row fixture under all three admitted replicate
+contexts and seed-keyed row permutations, including exact structural
+512-Float witnesses and strict malformed-grammar abstention. That is
+symbolic/synthetic mechanics coverage only: no model execution, independent
+scientific oracle, durable solver receipt, Metal authority, or product
+authority follows.
+`executionImplemented`, the bounded logit-sidecar binding, and the
+source-pinned Float32 log-softmax binding remain false; workers, process
+records, and the terminal receipt remain absent.
+
+A forward audit also proved that `row_id` encodes split/family metadata and
+that the planned shared donor topology would expose trap-bearing historical
+code to corrected supervisors. Corrected execution remains blocked: row
+identity is outer correlation only; seed is replicate-scoped; and fresh
+per-row state plus row-permutation trace identity are mandatory. The solver
+derivation is now bound, but a bounded full-logit sidecar with source-pinned
+Float32 log-softmax recomputation and a trap-disjoint topology must still be
+bound before any corrected replay. Per-decision bit-pattern digests keep the
+pure trace inside Stage-B decode limits; local
 Foundation/Double probability diagnostics are excluded from canonical
 fingerprints. Runtime donor transplantation, the historical worker,
 role-scoped probe/verifier execution, Stage-B records, and the receipt remain
@@ -1107,9 +1138,13 @@ The non-training implementation slices now stand as follows:
      was rerun after the fixture-authority twelve-target source freeze and
      passed with byte-identical 23,207-byte probe/verifier output, SHA-256
      `f2204bbae8623c35fdf7357c6b0aa2a585e9071f22556edbe6ce6e7cfccf04d5`;
-     it published no durable Stage-B process record or receipt and authorizes
-     no replay, worker, model, Metal, or product claim; this is the current
-     accepted fixture-authority reseal;
+     this is the preceding twelve-target fixture-authority reseal;
+   - after the isolated thirteenth prompt-solver target was added, the same
+     canary passed with byte-identical 23,791-byte output, SHA-256
+     `9d56ad223c9d980272583dc752e0ff05bb815ce504cd3c82fc7e186627c02aa7`;
+     this is the current V5 source-binding reseal, it published no durable
+     Stage-B process record or receipt, and it authorizes no replay, worker,
+     model, Metal, or product claim;
    - the bounded pure-library layer implements raw-UTF-8
      global-stream/chunk mechanics, independent direct/affine fingerprints,
      the raw-byte cache guard, typed invariant/fingerprint payload validation,
@@ -1133,9 +1168,14 @@ The non-training implementation slices now stand as follows:
      historical fixture pin is lineage-only, receipt bytes are type-decoded in
      tests rather than read during derivation, and no independent fixture
      receipt is claimed;
-   - a concrete Prime-owned prompt-solver source derivation, a bounded
-     full-vocabulary logit sidecar with source-pinned Float32 log-softmax
-     recomputation, a trap-disjoint topology, the isolated donor
+   - an isolated Prime-owned prompt-only solver now adapts the exact
+     Ergentics-owned donor grammar trap-free with corrected mechanics as its
+     sole local dependency; the repository suite passed 18,432 rows across
+     the three admitted replicate contexts and seed-keyed permutations, but
+     this remains symbolic/synthetic mechanics without model,
+     independent-oracle, receipt, Metal, or product authority;
+   - a bounded full-vocabulary logit sidecar with source-pinned Float32
+     log-softmax recomputation, a trap-disjoint topology, the isolated donor
      transplantation and historical worker, role-scoped probe/verifier
      execution, exact path-and-content inventory evidence, remaining typed
      artifact-content validation, Stage-B process records, and receipt do not
