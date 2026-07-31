@@ -108,6 +108,56 @@ final class PrimeNativeNeuralGateReplayTransportTests:
         }
     }
 
+    func testSharedRecordTransportPolicyExposesOnlyImplementedSchemaBounds()
+    {
+        let policy =
+            PrimeNativeNeuralGateReplayRecordTransportPolicy
+            .self
+        XCTAssertEqual(
+            policy.maximumPromptOnlyRowByteCount,
+            65_536
+        )
+        XCTAssertEqual(
+            policy.maximumOuterEvaluationRowByteCount,
+            8_192
+        )
+        XCTAssertEqual(
+            policy
+                .maximumRawExecutionReferenceRowByteCount,
+            8_192
+        )
+        XCTAssertEqual(
+            policy.maximumCanonicalRecordByteCount(
+                for:
+                    PrimeNativeNeuralGateReplayRecordSchema
+                    .promptOnlyRowV1
+            ),
+            policy.maximumPromptOnlyRowByteCount
+        )
+        XCTAssertEqual(
+            policy.maximumCanonicalRecordByteCount(
+                for:
+                    PrimeNativeNeuralGateReplayRecordSchema
+                    .outerEvaluationRowV1
+            ),
+            policy.maximumOuterEvaluationRowByteCount
+        )
+        XCTAssertEqual(
+            policy.maximumCanonicalRecordByteCount(
+                for:
+                    PrimeNativeNeuralGateReplayRecordSchema
+                    .rawExecutionReferenceV1
+            ),
+            policy
+                .maximumRawExecutionReferenceRowByteCount
+        )
+        XCTAssertNil(
+            policy.maximumCanonicalRecordByteCount(
+                for: "deferred_or_untrusted_schema"
+            )
+        )
+    }
+
     func testPromptManifestBindsExactPartitionAndPaths()
         throws
     {

@@ -669,6 +669,134 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
         )
     }()
 
+    /// Materializes descriptor-rooted artifact source binding and typed,
+    /// target-free schedule delivery without admitting fixture/target
+    /// authority into the raw execution closure. V1 through V3 remain exact
+    /// historical contracts.
+    public static let frozenV4: Self = {
+        let previous = frozenV3
+        let sourceBindingTargetName =
+            "PrimeNativeNeuralGateReplaySourceBinding"
+        let compositionTargetName =
+            "PrimeNativeNeuralGateReplayComposition"
+        let sourceCompositionTargetName =
+            "PrimeNativeNeuralGateReplaySourceComposition"
+        var targets:
+            [PrimeNativeNeuralGateTopologyTarget] =
+            []
+        for target in previous.targetGraph {
+            if target.targetName == compositionTargetName {
+                targets.append(
+                    Self.target(
+                        sourceBindingTargetName,
+                        .implemented,
+                        [
+                            "PrimeCore",
+                            "PrimeNativeNeuralGateReplayArtifactContracts",
+                            "PrimeNativeNeuralGateReplayTransport",
+                            "PrimeNativeNeuralGateReplayMechanics",
+                            "PrimeNativeNeuralGateCorrectedMechanics",
+                            "PrimeNativeNeuralGateLogitSidecarMechanics",
+                        ],
+                        "descriptor-rooted read-only artifact opening, bounded invariant global/chunk streaming, source-bound logit sidecar validation, and sealed non-authorizing source capabilities"
+                    )
+                )
+                targets.append(
+                    Self.target(
+                        target.targetName,
+                        target.materialization,
+                        target.directLocalDependencyNames,
+                        target.authority,
+                        externalProducts:
+                            target.externalProductDependencyNames
+                    )
+                )
+                targets.append(
+                    Self.target(
+                        sourceCompositionTargetName,
+                        .implemented,
+                        [
+                            sourceBindingTargetName,
+                            compositionTargetName,
+                        ],
+                        "outer adapter for source-bound prompt schedule construction, asymmetric target-free raw/outer schedule delivery, and exact source-capability composition"
+                    )
+                )
+            } else {
+                targets.append(target)
+            }
+        }
+
+        var reachability = previous.forbiddenReachability
+        reachability.append(
+            Self.forbidden(
+                sourceBindingTargetName,
+                [
+                    "PrimeNativeCorpusReplayMechanics",
+                    "PrimeNativeNeuralGateCorrectedEvaluationMechanics",
+                    "PrimeNativeNeuralGateCorrectedFixtureAuthority",
+                    "PrimeNativeNeuralGatePromptSolver",
+                    "PrimeNativeNeuralGateMLXLogSoftmaxRecomputation",
+                    "ErgenticsPrimeRuntime",
+                    "PrimeNativeNeuralGateHistoricalReplayMechanics",
+                ]
+            )
+        )
+        reachability.append(
+            Self.forbidden(
+                sourceCompositionTargetName,
+                [
+                    "PrimeNativeCorpusReplayMechanics",
+                    "PrimeNativeNeuralGateCorrectedEvaluationMechanics",
+                    "PrimeNativeNeuralGateCorrectedFixtureAuthority",
+                    "PrimeNativeNeuralGatePromptSolver",
+                    "PrimeNativeNeuralGateMLXLogSoftmaxRecomputation",
+                    "ErgenticsPrimeRuntime",
+                    "PrimeNativeNeuralGateHistoricalReplayMechanics",
+                ]
+            )
+        )
+
+        return Self(
+            schemaVersion: 4,
+            contractID:
+                "prime_stage_b_descriptor_source_binding_topology_v4",
+            status: previous.status,
+            executionImplemented: false,
+            historicalReplayPlanID:
+                previous.historicalReplayPlanID,
+            historicalSourceBindingContractID:
+                previous.historicalSourceBindingContractID,
+            historicalContractsPreserved: true,
+            historicalFutureTargetGraphSuperseded: true,
+            targetGraph: targets,
+            forbiddenReachability: reachability,
+            historicalContainmentRootTargetName:
+                previous.historicalContainmentRootTargetName,
+            historicalRuntimeTargetName:
+                previous.historicalRuntimeTargetName,
+            historicalReplayTargetName:
+                previous.historicalReplayTargetName,
+            pureReplayTargetName:
+                previous.pureReplayTargetName,
+            donorAdaptationV2PreservedAsHistory: true,
+            donorAdaptationV3Required: true,
+            donorAdaptationV3RequiredDestination:
+                previous.donorAdaptationV3RequiredDestination,
+            sourceBindingV7Issued: false,
+            sourceBindingV7Prerequisite:
+                previous.sourceBindingV7Prerequisite,
+            packageCaptureAuthority:
+                "actual_package_secure_capture_only_not_v6_or_v7_execution_graph_reconciliation",
+            mutationProducerDetectorTargetAssignmentDeferred: true,
+            mutationProducerDetectorMustBeDisjoint: true,
+            nextImplementationPrerequisite:
+                "freeze_single_held_root_four_source_capture_inventory_session_then_freeze_independent_source_derived_prompt_target_crosswalk_in_trap_bearing_authority_target_without_materializing_workers",
+            authorityStatement:
+                "This V4 contract preserves V1, V2, V3, and the historical V5/V6 identities while materializing only descriptor-rooted read-only source binding and an outer typed source-composition adapter. Source binding reuses PrimeCore's hardened artifact-root descriptor API, rejects symlinks and writable files, detects instability during each descriptor read, validates invariant global/chunk partitions without materializing complete streams, and source-binds the existing lossless logit codec. The pure V1 composition target remains free of PrimeCore; the outer adapter alone bridges sealed source capabilities into asymmetric target-free schedule views and the exact join. Equal root identity across separate binds does not establish a single descendant-tree capture epoch or durable origin. A single held-root four-source capture/inventory session is the immediate next boundary; the separate trap-bearing independent crosswalk follows it. Neither target establishes independent prompt/target binding, prompt-content target independence, model execution, evaluation, verdict, publication, scientific authority, product authority, or a receipt. Historical runtime, all workers, probe, verifier, mutation producer, and mutation detector remain planned_not_materialized. executionImplemented is false and source binding V7 is not issued."
+        )
+    }()
+
     public func target(
         named name: String
     ) throws -> PrimeNativeNeuralGateTopologyTarget {
@@ -722,6 +850,8 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
             expected = .frozenV2
         case 3:
             expected = .frozenV3
+        case 4:
+            expected = .frozenV4
         default:
             throw PrimeNativeNeuralGateTopologyError
                 .invalidFrozenContract

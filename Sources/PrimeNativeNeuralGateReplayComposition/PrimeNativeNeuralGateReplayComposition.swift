@@ -18,6 +18,8 @@ public enum PrimeNativeNeuralGateReplayCompositionError:
     case duplicatePromptRecord(index: Int)
     case noncanonicalPromptRecordOrder(index: Int)
     case promptRecordRoundTripMismatch(index: Int)
+    case promptRecordDigestMismatch(index: Int)
+    case promptGlobalStreamDigestMismatch
     case promptBindingMismatch(index: Int)
     case duplicatePromptBinding(index: Int)
     case invalidOuterRowCount(
@@ -337,6 +339,29 @@ public struct PrimeNativeNeuralGateScheduledPrompt:
     }
 }
 
+/// Non-authorizing observation used to reconstruct the pure V1 schedule from
+/// records that another target has already decoded and source-bound. Public
+/// construction is safe because the returned V1 schedule retains every false
+/// source/authority flag and independently re-encodes each row.
+public struct PrimeNativeNeuralGateCanonicalPromptRecordObservation:
+    Equatable,
+    Sendable
+{
+    public let promptRow:
+        PrimeNativeNeuralGateReplayPromptRow
+    public let canonicalRecordSHA256: String
+
+    public init(
+        promptRow:
+            PrimeNativeNeuralGateReplayPromptRow,
+        canonicalRecordSHA256: String
+    ) {
+        self.promptRow = promptRow
+        self.canonicalRecordSHA256 =
+            canonicalRecordSHA256
+    }
+}
+
 /// Non-Codable capability representing the exact prompt-derived schedule.
 public struct PrimeNativeNeuralGatePromptSchedule:
     Equatable,
@@ -569,6 +594,179 @@ public enum PrimeNativeNeuralGateReplayComposition {
                         globalSHA256,
                     recordCount:
                         canonicalPromptRecords.count
+                )
+        )
+    }
+
+    /// Reconstructs the same pure V1 schedule from typed prompt observations
+    /// without allocating a second complete invariant stream. The incremental
+    /// accumulator re-creates the exact PRIMEIRM1 digest while every record is
+    /// re-encoded, digest-checked, ordered, and bound to PRIMECPI2.
+    public static func makePromptSchedule(
+        canonicalPromptRecordObservations:
+            [PrimeNativeNeuralGateCanonicalPromptRecordObservation],
+        expectedPromptGlobalStreamSHA256: String
+    ) throws -> PrimeNativeNeuralGatePromptSchedule {
+        let contract =
+            PrimeNativeNeuralGateReplayCompositionContract
+            .frozenV1
+        try contract.validate()
+        guard canonicalPromptRecordObservations.count
+                == contract.exactRowCount
+        else {
+            throw Error.invalidPromptRecordCount(
+                expected: contract.exactRowCount,
+                observed:
+                    canonicalPromptRecordObservations.count
+            )
+        }
+        let streamSpec = try
+            PrimeNativeNeuralGateReplayArtifactOutputContract
+            .frozenV4.spec(
+                for: .promptOnlyFixtureGlobal
+            )
+        guard let maximumAggregateRecordBytes = Int(
+            exactly: streamSpec.maximumByteCount
+        ) else {
+            throw Error.invalidPromptRecordCount(
+                expected: contract.exactRowCount,
+                observed:
+                    canonicalPromptRecordObservations.count
+            )
+        }
+        let limits = try
+            PrimeNativeNeuralGateReplayDecodeLimits
+            .bounded(
+                maximumRecordCount:
+                    contract.exactRowCount,
+                maximumRecordByteCount:
+                    PrimeNativeNeuralGateReplayRecordTransportPolicy
+                    .maximumPromptOnlyRowByteCount,
+                maximumAggregateRecordBytes:
+                    maximumAggregateRecordBytes
+            )
+        var accumulator = try
+            PrimeNativeNeuralGateInvariantGlobalStreamSHA256Accumulator(
+                declaredRecordCount:
+                    UInt64(contract.exactRowCount),
+                limits: limits,
+                requireCanonicalOrder: true
+            )
+        var scheduled =
+            [PrimeNativeNeuralGateScheduledPrompt]()
+        scheduled.reserveCapacity(
+            canonicalPromptRecordObservations.count
+        )
+        var previous: Data?
+        var promptBindings = Set<String>()
+        for (index, observation) in
+            canonicalPromptRecordObservations.enumerated()
+        {
+            let record = try Codec.encodePromptOnlyRow(
+                observation.promptRow
+            )
+            guard PrimeNativeNeuralGateInvariantCodec
+                    .sha256(record)
+                    == observation
+                    .canonicalRecordSHA256
+            else {
+                throw Error.promptRecordDigestMismatch(
+                    index: index
+                )
+            }
+            if let previous {
+                if previous == record {
+                    throw Error.duplicatePromptRecord(
+                        index: index
+                    )
+                }
+                guard previous.lexicographicallyPrecedes(
+                    record
+                ) else {
+                    throw Error
+                        .noncanonicalPromptRecordOrder(
+                            index: index
+                        )
+                }
+            }
+            guard try Decoder.decodePromptOnlyRow(
+                from: record
+            ) == observation.promptRow else {
+                throw Error.promptRecordRoundTripMismatch(
+                    index: index
+                )
+            }
+            let input = try
+                PrimeNativeNeuralGatePromptOnlyExecutionInput
+                .derive(
+                    promptText:
+                        observation
+                        .promptRow.canonicalPrompt
+                )
+            guard input.promptTokenIDs
+                    == observation.promptRow
+                    .promptTokenIDs.map(Int.init)
+            else {
+                throw Error.promptBindingMismatch(
+                    index: index
+                )
+            }
+            guard promptBindings.insert(
+                input.bindingSHA256
+            ).inserted else {
+                throw Error.duplicatePromptBinding(
+                    index: index
+                )
+            }
+            guard let executionIndex = UInt32(
+                exactly: index
+            ) else {
+                throw Error.promptBindingMismatch(
+                    index: index
+                )
+            }
+            try accumulator.append(
+                canonicalRecord: record
+            )
+            scheduled.append(
+                PrimeNativeNeuralGateScheduledPrompt(
+                    executionIndex: executionIndex,
+                    promptRow: observation.promptRow,
+                    canonicalPromptRecordSHA256:
+                        observation
+                        .canonicalRecordSHA256,
+                    primeCPI2PromptBindingSHA256:
+                        input.bindingSHA256,
+                    correlationID:
+                        try PrimeNativeNeuralGateReplayCorrelationIdentity
+                        .derive(
+                            executionIndex:
+                                executionIndex,
+                            primeCPI2PromptBindingSHA256:
+                                input.bindingSHA256
+                        ),
+                    executionInput: input
+                )
+            )
+            previous = record
+        }
+        let summary = try accumulator.finish()
+        guard summary.streamSHA256
+                == expectedPromptGlobalStreamSHA256
+        else {
+            throw Error.promptGlobalStreamDigestMismatch
+        }
+        return PrimeNativeNeuralGatePromptSchedule(
+            orderedPrompts: scheduled,
+            promptGlobalStreamSHA256:
+                summary.streamSHA256,
+            scheduleIdentitySHA256:
+                try scheduleIdentitySHA256(
+                    promptGlobalStreamSHA256:
+                        summary.streamSHA256,
+                    recordCount:
+                        canonicalPromptRecordObservations
+                        .count
                 )
         )
     }

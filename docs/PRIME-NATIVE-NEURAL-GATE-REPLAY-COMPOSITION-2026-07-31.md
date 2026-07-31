@@ -4,16 +4,22 @@ Date: 2026-07-31
 
 ## Outcome
 
-Stage B now has a pure Swift composition boundary for the three independently
+Stage B has a pure Swift composition boundary for the three independently
 canonicalized V4 corrected-replay record streams plus a separately validated
-in-memory logit sidecar. It implements:
+in-memory logit sidecar. It now also has a descriptor-rooted source adapter
+outside that pure target. Together they implement:
 
 - one producer/decoder-shared bounded canonical JSON codec in
   `PrimeNativeNeuralGateReplayTransport`;
 - one strict prompt-derived execution schedule over exactly 18,432 canonical
   prompt records; and
 - one exact, keyed outer/raw/validated-logit-sidecar join that reconstructs
-  every decision and requires the corrected `PRIMECRT4` trace to match.
+  every decision and requires the corrected `PRIMECRT4` trace to match;
+- one incremental prompt-schedule reconstruction that binds each canonical row
+  and the exact `PRIMEIRM1` global digest without allocating a second complete
+  stream; and
+- one sealed four-source wrapper over descriptor-bound prompt, outer, raw, and
+  logit artifacts.
 
 The new package target is:
 
@@ -31,11 +37,21 @@ It has no dependency on `PrimeCore`, corpus/fixture authority, evaluation or
 regrade mechanics, the prompt solver, MLX, a historical runtime, PMHNP, a
 worker, a process supervisor, or a receipt writer.
 
-This is repository mechanics, not Stage-B execution. No descriptor-rooted
-record stream or durable logit artifact is read by this target. Its validated
-values are deliberately non-`Codable` capabilities and keep durable origin,
-prompt-content target independence, model execution, mechanics `PASS`,
-publication, science, receipt, and product authority false.
+Descriptor admission and the outer wrapper are isolated in
+`PrimeNativeNeuralGateReplaySourceBinding` and
+`PrimeNativeNeuralGateReplaySourceComposition`. The latter depends only on
+source binding plus this unchanged pure composition target. See
+`PRIME-NATIVE-NEURAL-GATE-DESCRIPTOR-SOURCE-BINDING-2026-07-31.md`.
+
+This remains repository mechanics, not Stage-B execution. The pure target
+reads no descriptor-rooted record stream or durable logit artifact. Its
+validated values remain non-`Codable` and keep durable origin false. The outer
+source wrapper proves one exact four-capability keyed join, but separate binds
+under an equal root identity do not prove a common capture epoch or descendant
+inventory. It therefore also keeps durable origin false. Prompt/target binding,
+prompt-content target independence, process delivery, model execution,
+mechanics `PASS`, publication, science, receipt, and product authority remain
+false.
 
 ## Frozen identities
 
@@ -45,6 +61,13 @@ publication, science, receipt, and product authority false.
   `prime_stage_b_strict_prompt_schedule_exact_cross_artifact_join_v1`,
   canonical SHA-256
   `75e6941913b561b6bdbd63d2e67f50962276942416bfea8a0443906d6d8ffb3e`;
+- source composition V1 is
+  `prime_stage_b_descriptor_source_bound_schedule_delivery_v1`, canonical
+  SHA-256
+  `f3d0a58905065836caaae8c9d03c1b2840b07bcd1a4f0bf35f1ce638c6ac29b5`;
+- topology V4 is `prime_stage_b_descriptor_source_binding_topology_v4`,
+  canonical SHA-256
+  `8339bbd42b0e4052888db880aacbb067770c08dd2106bf4a7820c853c4b715af`;
 - topology V3 is `prime_stage_b_trap_disjoint_topology_v3`, canonical SHA-256
   `b475e29347a31d27be8dc1aa54648fec84c4f1b47d673a1f111ccffb794985fd`;
 - topology V1 remains exact at
@@ -53,17 +76,18 @@ publication, science, receipt, and product authority false.
 - topology V2 remains exact at
   `abc8f1ada303ecb95b7c9a44e72293ed314537b93e27354aebbb7763e1487415`.
 
-Topology V3 remains globally `planned_not_materialized`, with
+Topology V4 remains globally `planned_not_materialized`, with
 `executionImplemented == false` and source binding V7 unissued. It adds only
-the already implemented shared codec and replay-composition target to the
-package truth; it does not promote any planned worker or supervisor.
+the descriptor source and outer source-composition targets to the V3 package
+truth; it does not promote any planned worker or supervisor.
 
 ## V3 package-capture checkpoint
 
 After the complete topology-V3 source reseal, the Release canary passed with
 byte-identical probe/verifier package-description output: 29,905 bytes, SHA-256
 `ad4a66338d7348cb44419a115e062a30da129dea9a6355eec81f6b98932b6e11`.
-This is the current accepted topology-V3 actual-package secure-capture reseal.
+This is the last accepted historical topology-V3 actual-package secure-capture
+reseal.
 Topology V1 and V2 capture values remain historical checkpoints.
 
 The V3 pass validates only the secure-capture substrate on the pinned host. It
@@ -71,6 +95,20 @@ is not V6/V7 selected-source execution-graph proof; it does not issue source
 binding V7 or establish worker or model execution, fixture identity,
 evaluation or mechanics `PASS`, Stage-B publication or a terminal receipt,
 reproducible-build identity, or network denial.
+It predates topology V4 and is not reused as V4 package-capture evidence.
+
+## V4 package-capture checkpoint
+
+After the complete topology-V4 source reseal, the Release canary passed with
+byte-identical probe/verifier package-description output: 32,735 bytes,
+SHA-256
+`f7d873db2b91ecc61d356136b37bf7bc8017db962f40637998de914eeaa8d894`.
+This is the current accepted topology-V4 actual-package secure-capture reseal.
+It validates only the secure-capture substrate on the pinned host. It does not
+establish V6/V7 selected-source execution-graph reconciliation, source binding
+V7, worker/model execution, fixture identity, evaluation or mechanics `PASS`,
+Stage-B publication, a terminal receipt, reproducible-build identity, network
+denial, Metal authority, scientific authority, or product authority.
 
 ## Shared canonical codec
 
@@ -97,9 +135,9 @@ hand-authored JSON is outside the contract.
 ## Strict prompt schedule
 
 The schedule is not a row-ID order and is not inferred from outer, raw, or
-sidecar records. It is the strict zero-based ordinal of each caller-provided
-canonical prompt-row JSON record. A future descriptor decoder must prove that
-this exact sequence is the durable prompt global stream:
+sidecar records. It is the strict zero-based ordinal of each canonical
+prompt-row JSON record. The source adapter now proves that this exact sequence
+reconstructs the descriptor-bound prompt global-stream digest:
 
 ```text
 execution_index = ordinal(canonical_prompt_row_bytes)
@@ -113,8 +151,11 @@ invariant global-stream SHA-256, and derives a schedule identity from
 `PRIMESCH1`, the big-endian record count, and the raw global-stream digest. The
 magic and exact serialization are part of composition V1 and the schedule has
 full known-answer SHA-256 coverage.
-It does not validate a descriptor, filesystem object, manifest binding, or
-durable source origin.
+The historical whole-array API still does not validate a descriptor,
+filesystem object, manifest binding, or durable source origin. The additive
+typed-observation API re-encodes and digest-checks one row at a time and uses
+the incremental `PRIMEIRM1` accumulator. The separate source wrapper, not the
+pure V1 schedule, carries descriptor origin.
 
 The schedule does not silently sort input. Sorting would conceal whether the
 caller had actually validated the source stream. The resulting capability
@@ -144,11 +185,11 @@ For one admitted replicate seed, the composition join requires:
 
 `PRIMECOR1` hashes the big-endian execution index plus the raw `PRIMECPI2`
 prompt-binding digest. It is target-free: neither producer chooses a free-form
-coordination string. The pure derivation is available from replay mechanics,
-but V4 does not yet lawfully deliver the prompt schedule capability to every
-disjoint future producer. Composition V1 therefore records schedule-capability
-delivery as false; this slice defines and verifies the identity without
-claiming that a worker topology can produce it yet.
+coordination string. The outer adapter now constructs a raw role projection
+containing index, prompt, prompt binding, and correlation, plus an outer role
+projection containing only index and correlation. No process receives either
+projection yet, so `processDeliveryObserved` remains false and no worker
+topology is claimed.
 
 The join indexes each stream independently; input array order is irrelevant
 and positional zipping is never used. It resolves every sidecar dictionary
@@ -173,22 +214,27 @@ completions while preserving their indexes is outside the raw trace and cannot
 be detected from these in-memory values alone. The result therefore records
 corrected-fixture identity and outer expected-completion binding as false. A
 separately derived prompt/target crosswalk is mandatory before grading or any
-promotion.
+promotion. The source wrapper additionally requires one held-root identity
+across prompt, outer, raw, and logit capabilities. That check rejects
+cross-root substitution, but it does not detect nested replacement between
+separate bind calls and does not mark durable origin true.
 
 ## Remaining truth gap
 
-The next implementation prerequisite is:
+Descriptor-rooted invariant validation, source-bound logit validation,
+incremental schedule reconstruction, typed role projections, and the exact
+four-source join are now implemented. The next implementation prerequisite is:
 
-`implement_descriptor_rooted_bounded_invariant_stream_decoders_bind_validated_stream_capabilities_and_lawful_schedule_delivery_to_frozen_composition_then_freeze_independent_prompt_target_crosswalk_without_materializing_workers`
+`freeze_single_held_root_four_source_capture_inventory_session_then_freeze_independent_source_derived_prompt_target_crosswalk_in_trap_bearing_authority_target_without_materializing_workers`
 
-That slice must validate the descriptor-rooted global and chunk files, their
-canonical record order, exact byte/count/digest partitions, and the durable
-origin of the prompt, outer, raw, and sidecar inputs before handing non-writable
-validated capabilities to composition. It must also freeze lawful delivery of
-the target-free schedule/correlation capability to disjoint producers and an
-independently source-derived prompt/target crosswalk. It must not turn decoder
-success into prompt independence, model execution, an evaluation verdict, or a
-receipt.
+The first boundary must produce one sealed capture/inventory capability over
+all four sources before durable origin can be promoted. The subsequent
+trap-bearing target must independently derive prompt/expected-
+completion pairing and reject target swaps, EOS omission, prompt-order versus
+row-ID-order confusion, positional zipping, and digest-domain substitution. It
+must remain unreachable from the corrected raw-worker closure and must not turn
+source success into prompt independence, model execution, an evaluation
+verdict, or a receipt.
 
 Only after that boundary is source-bound should Stage B freeze the remaining
 deferred observation/result schemas, process/evaluation/receipt ownership, and

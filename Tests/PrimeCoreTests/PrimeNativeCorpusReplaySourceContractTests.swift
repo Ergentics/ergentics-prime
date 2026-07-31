@@ -93,11 +93,25 @@ final class PrimeNativeCorpusReplaySourceContractTests:
                 2
             )
         }
-        XCTAssertTrue(
-            package.contains(
-                #".testTarget(name:"PrimeCoreTests",dependencies:["PrimeCore","PrimeNativeCorpusReplay","PrimeNativeCorpusReplayMechanics","PrimeNativeNeuralGateContract","PrimeNativeNeuralGateReplayMechanics","PrimeNativeNeuralGateReplayArtifactContracts","PrimeNativeNeuralGateReplayTransport","PrimeNativeNeuralGateReplayComposition","PrimeNativeNeuralGateCorrectedMechanics","PrimeNativeNeuralGateCorrectedEvaluationMechanics","PrimeNativeNeuralGateCorrectedFixtureAuthority","PrimeNativeNeuralGatePromptSolver","PrimeNativeNeuralGateLogitSidecarMechanics",])"#
-            )
+        let mainTestTarget = try targetDeclaration(
+            kind: "testTarget",
+            name: "PrimeCoreTests",
+            in: package
         )
+        for dependency in [
+            "PrimeCore",
+            "PrimeNativeCorpusReplay",
+            "PrimeNativeCorpusReplayMechanics",
+        ] {
+            XCTAssertEqual(
+                occurrences(
+                    of: #""\#(dependency)""#,
+                    in: mainTestTarget
+                ),
+                1,
+                "main test target lost corpus replay dependency: \(dependency)"
+            )
+        }
     }
 
     func testEveryNewReplaySourceUsesOnlySwiftNativeAuthority()
@@ -484,6 +498,26 @@ final class PrimeNativeCorpusReplaySourceContractTests:
             cursor = match.upperBound
         }
         return count
+    }
+
+    private func targetDeclaration(
+        kind: String,
+        name: String,
+        in compactPackage: String
+    ) throws -> String {
+        let prefix = #".\#(kind)(name:"\#(name)",dependencies:["#
+        let start = try XCTUnwrap(
+            compactPackage.range(of: prefix)
+        )
+        let suffix = compactPackage[start.lowerBound...]
+        let end = try XCTUnwrap(
+            suffix.range(of: "])")
+        )
+        return String(
+            compactPackage[
+                start.lowerBound ..< end.upperBound
+            ]
+        )
     }
 
     private func withoutWhitespace(

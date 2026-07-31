@@ -30,6 +30,7 @@ public enum PrimeNativeNeuralGateReplayMechanicsError:
     case invalidManifest
     case invalidFingerprintObservation
     case invalidPromptBindingSHA256
+    case incrementalReaderNotReusable
 }
 
 /// Target-free correlation identity derived only from the public schedule
@@ -363,15 +364,635 @@ public struct PrimeNativeNeuralGateInvariantBundle:
     }
 }
 
+/// Selects one of the two frozen raw UTF-8 invariant stream envelopes.
+public enum PrimeNativeNeuralGateInvariantFramedStreamKind:
+    Equatable,
+    Sendable
+{
+    case global
+    case chunk
+}
+
+/// Bounded result from an incrementally validated invariant stream.
+///
+/// This value records mechanics only. It does not establish where bytes came
+/// from or authorize a descriptor, artifact, evaluation, or receipt.
+public struct PrimeNativeNeuralGateInvariantFramedStreamSummary:
+    Equatable,
+    Sendable
+{
+    public let kind:
+        PrimeNativeNeuralGateInvariantFramedStreamKind
+    public let declaredRecordCount: UInt64
+    public let observedRecordCount: Int
+    public let chunkOrdinal: UInt32?
+    public let streamSHA256: String
+    public let byteCount: UInt64
+    public let aggregateRecordByteCount: UInt64
+
+    fileprivate init(
+        kind:
+            PrimeNativeNeuralGateInvariantFramedStreamKind,
+        declaredRecordCount: UInt64,
+        observedRecordCount: Int,
+        chunkOrdinal: UInt32?,
+        streamSHA256: String,
+        byteCount: UInt64,
+        aggregateRecordByteCount: UInt64
+    ) {
+        self.kind = kind
+        self.declaredRecordCount = declaredRecordCount
+        self.observedRecordCount = observedRecordCount
+        self.chunkOrdinal = chunkOrdinal
+        self.streamSHA256 = streamSHA256
+        self.byteCount = byteCount
+        self.aggregateRecordByteCount =
+            aggregateRecordByteCount
+    }
+}
+
+/// Incremental PRIMEIRM1/PRIMEIRC1 reader for bounded descriptor-fed bytes.
+///
+/// Only one complete record is retained at a time. The declared record length
+/// and aggregate payload bounds are checked before record storage is reserved.
+/// Every consumed byte contributes to the exact stream SHA-256. A thrown parse
+/// or consumer error poisons the reader so partially admitted state cannot be
+/// resumed accidentally.
+public final class PrimeNativeNeuralGateInvariantFramedRecordReader {
+    public let kind:
+        PrimeNativeNeuralGateInvariantFramedStreamKind
+    public let limits:
+        PrimeNativeNeuralGateReplayDecodeLimits
+    public let requireCanonicalOrder: Bool
+
+    private let expectedMagic: Data
+    private var magic = Data()
+    private var metadata = Data()
+    private var length = Data()
+    private var record = Data()
+    private var expectedRecordByteCount: Int?
+    private var declaredCount: UInt64?
+    private var expectedCount: Int?
+    private var ordinal: UInt32?
+    private var observedCount = 0
+    private var aggregateBytes: UInt64 = 0
+    private var previousRecord: Data?
+    private var hasher = SHA256()
+    private var consumedByteCount: UInt64 = 0
+    private var failed = false
+    private var isConsuming = false
+    private var completedSummary:
+        PrimeNativeNeuralGateInvariantFramedStreamSummary?
+
+    public init(
+        kind:
+            PrimeNativeNeuralGateInvariantFramedStreamKind,
+        limits:
+            PrimeNativeNeuralGateReplayDecodeLimits = .stageB,
+        requireCanonicalOrder: Bool = true
+    ) {
+        self.kind = kind
+        self.limits = limits
+        self.requireCanonicalOrder =
+            requireCanonicalOrder
+        switch kind {
+        case .global:
+            expectedMagic =
+                PrimeNativeNeuralGateInvariantCodec
+                .globalMagic
+        case .chunk:
+            expectedMagic =
+                PrimeNativeNeuralGateInvariantCodec
+                .chunkMagic
+        }
+    }
+
+    public func consume(
+        _ bytes: Data,
+        onRecord: (Data) throws -> Void
+    ) throws {
+        guard !failed,
+              !isConsuming
+        else {
+            throw PrimeNativeNeuralGateReplayMechanicsError
+                .incrementalReaderNotReusable
+        }
+        if completedSummary != nil {
+            guard bytes.isEmpty else {
+                throw PrimeNativeNeuralGateReplayMechanicsError
+                    .trailingInput
+            }
+            return
+        }
+        guard !bytes.isEmpty else {
+            return
+        }
+        isConsuming = true
+        defer {
+            isConsuming = false
+        }
+        do {
+            let addition = consumedByteCount
+                .addingReportingOverflow(
+                    UInt64(bytes.count)
+                )
+            guard !addition.overflow else {
+                throw PrimeNativeNeuralGateReplayMechanicsError
+                    .integerOverflow
+            }
+            consumedByteCount = addition.partialValue
+            hasher.update(data: bytes)
+
+            var cursor = bytes.startIndex
+            while cursor < bytes.endIndex {
+                if magic.count < expectedMagic.count {
+                    Self.appendAvailable(
+                        from: bytes,
+                        cursor: &cursor,
+                        to: &magic,
+                        requiredCount:
+                            expectedMagic.count
+                    )
+                    if magic.count == expectedMagic.count,
+                       magic != expectedMagic
+                    {
+                        switch kind {
+                        case .global:
+                            throw PrimeNativeNeuralGateReplayMechanicsError
+                                .invalidGlobalMagic
+                        case .chunk:
+                            throw PrimeNativeNeuralGateReplayMechanicsError
+                                .invalidChunkMagic
+                        }
+                    }
+                    continue
+                }
+
+                if declaredCount == nil {
+                    Self.appendAvailable(
+                        from: bytes,
+                        cursor: &cursor,
+                        to: &metadata,
+                        requiredCount: 8
+                    )
+                    if metadata.count == 8 {
+                        try decodeMetadata()
+                    }
+                    continue
+                }
+
+                guard let expectedCount else {
+                    throw PrimeNativeNeuralGateReplayMechanicsError
+                        .incrementalReaderNotReusable
+                }
+                guard observedCount < expectedCount else {
+                    throw PrimeNativeNeuralGateReplayMechanicsError
+                        .trailingInput
+                }
+
+                if expectedRecordByteCount == nil {
+                    Self.appendAvailable(
+                        from: bytes,
+                        cursor: &cursor,
+                        to: &length,
+                        requiredCount: 8
+                    )
+                    if length.count == 8 {
+                        try decodeRecordLength()
+                        if expectedRecordByteCount == 0 {
+                            try admitRecord(onRecord)
+                        }
+                    }
+                    continue
+                }
+
+                guard let required = expectedRecordByteCount
+                else {
+                    throw PrimeNativeNeuralGateReplayMechanicsError
+                        .incrementalReaderNotReusable
+                }
+                Self.appendAvailable(
+                    from: bytes,
+                    cursor: &cursor,
+                    to: &record,
+                    requiredCount: required
+                )
+                if record.count == required {
+                    try admitRecord(onRecord)
+                }
+            }
+        } catch {
+            failed = true
+            throw error
+        }
+    }
+
+    public func finish() throws
+        -> PrimeNativeNeuralGateInvariantFramedStreamSummary
+    {
+        guard !failed,
+              !isConsuming
+        else {
+            throw PrimeNativeNeuralGateReplayMechanicsError
+                .incrementalReaderNotReusable
+        }
+        if let completedSummary {
+            return completedSummary
+        }
+        guard magic.count == expectedMagic.count,
+              declaredCount != nil,
+              metadata.count == 8,
+              length.isEmpty,
+              expectedRecordByteCount == nil,
+              record.isEmpty,
+              let declaredCount,
+              let expectedCount,
+              observedCount == expectedCount
+        else {
+            failed = true
+            throw PrimeNativeNeuralGateReplayMechanicsError
+                .truncatedInput
+        }
+        let summary =
+            PrimeNativeNeuralGateInvariantFramedStreamSummary(
+                kind: kind,
+                declaredRecordCount: declaredCount,
+                observedRecordCount: observedCount,
+                chunkOrdinal: ordinal,
+                streamSHA256:
+                    Self.hexadecimal(
+                        hasher.finalize()
+                    ),
+                byteCount: consumedByteCount,
+                aggregateRecordByteCount:
+                    aggregateBytes
+            )
+        completedSummary = summary
+        return summary
+    }
+
+    private func decodeMetadata() throws {
+        switch kind {
+        case .global:
+            let count = Self.decodeUInt64(metadata)
+            guard let intCount = Int(exactly: count)
+            else {
+                throw PrimeNativeNeuralGateReplayMechanicsError
+                    .integerOverflow
+            }
+            guard intCount > 0 else {
+                throw PrimeNativeNeuralGateReplayMechanicsError
+                    .emptyRecordSet
+            }
+            guard intCount <= limits.maximumRecordCount
+            else {
+                throw PrimeNativeNeuralGateReplayMechanicsError
+                    .recordCountLimitExceeded
+            }
+            declaredCount = count
+            expectedCount = intCount
+        case .chunk:
+            ordinal = Self.decodeUInt32(
+                Data(metadata.prefix(4))
+            )
+            let count = Self.decodeUInt32(
+                Data(metadata.suffix(4))
+            )
+            guard count > 0 else {
+                throw PrimeNativeNeuralGateReplayMechanicsError
+                    .emptyChunk
+            }
+            guard count <= UInt32(
+                PrimeNativeNeuralGateInvariantCodec
+                    .maximumRecordsPerChunk
+            ) else {
+                throw PrimeNativeNeuralGateReplayMechanicsError
+                    .chunkRecordCountLimitExceeded
+            }
+            let intCount = Int(count)
+            guard intCount <= limits.maximumRecordCount
+            else {
+                throw PrimeNativeNeuralGateReplayMechanicsError
+                    .recordCountLimitExceeded
+            }
+            declaredCount = UInt64(count)
+            expectedCount = intCount
+        }
+    }
+
+    private func decodeRecordLength() throws {
+        let encoded = Self.decodeUInt64(length)
+        guard let intLength = Int(exactly: encoded)
+        else {
+            throw PrimeNativeNeuralGateReplayMechanicsError
+                .integerOverflow
+        }
+        guard intLength <= limits.maximumRecordByteCount
+        else {
+            throw PrimeNativeNeuralGateReplayMechanicsError
+                .recordByteLimitExceeded(
+                    index: observedCount
+                )
+        }
+        let aggregate = aggregateBytes
+            .addingReportingOverflow(encoded)
+        guard !aggregate.overflow else {
+            throw PrimeNativeNeuralGateReplayMechanicsError
+                .integerOverflow
+        }
+        guard aggregate.partialValue
+                <= UInt64(
+                    limits.maximumAggregateRecordBytes
+                )
+        else {
+            throw PrimeNativeNeuralGateReplayMechanicsError
+                .aggregateByteLimitExceeded
+        }
+        aggregateBytes = aggregate.partialValue
+        expectedRecordByteCount = intLength
+        length.removeAll(keepingCapacity: true)
+        record.removeAll(keepingCapacity: false)
+        if intLength > 0 {
+            record.reserveCapacity(intLength)
+        }
+    }
+
+    private func admitRecord(
+        _ consumer: (Data) throws -> Void
+    ) throws {
+        guard String(data: record, encoding: .utf8) != nil
+        else {
+            throw PrimeNativeNeuralGateReplayMechanicsError
+                .invalidUTF8Record(index: observedCount)
+        }
+        if requireCanonicalOrder,
+           let previousRecord,
+           record.lexicographicallyPrecedes(previousRecord)
+        {
+            throw PrimeNativeNeuralGateReplayMechanicsError
+                .noncanonicalRecordOrder
+        }
+        try consumer(record)
+        if requireCanonicalOrder {
+            previousRecord = record
+        }
+        let next = observedCount
+            .addingReportingOverflow(1)
+        guard !next.overflow else {
+            throw PrimeNativeNeuralGateReplayMechanicsError
+                .integerOverflow
+        }
+        observedCount = next.partialValue
+        expectedRecordByteCount = nil
+        record = Data()
+    }
+
+    private static func appendAvailable(
+        from source: Data,
+        cursor: inout Data.Index,
+        to destination: inout Data,
+        requiredCount: Int
+    ) {
+        let remaining = requiredCount
+            - destination.count
+        let available = source.distance(
+            from: cursor,
+            to: source.endIndex
+        )
+        let count = min(remaining, available)
+        let end = source.index(
+            cursor,
+            offsetBy: count
+        )
+        destination.append(
+            contentsOf: source[cursor..<end]
+        )
+        cursor = end
+    }
+
+    private static func decodeUInt32(
+        _ data: Data
+    ) -> UInt32 {
+        data.reduce(0) {
+            ($0 << 8) | UInt32($1)
+        }
+    }
+
+    private static func decodeUInt64(
+        _ data: Data
+    ) -> UInt64 {
+        data.reduce(0) {
+            ($0 << 8) | UInt64($1)
+        }
+    }
+
+    fileprivate static func hexadecimal<Bytes: Sequence>(
+        _ bytes: Bytes
+    ) -> String where Bytes.Element == UInt8 {
+        bytes.map {
+            String(format: "%02x", $0)
+        }.joined()
+    }
+}
+
+/// Computes the exact PRIMEIRM1 SHA-256 from bounded canonical records without
+/// materializing the framed global stream.
+public struct
+    PrimeNativeNeuralGateInvariantGlobalStreamSHA256Accumulator
+{
+    public let declaredRecordCount: UInt64
+    public let limits:
+        PrimeNativeNeuralGateReplayDecodeLimits
+    public let requireCanonicalOrder: Bool
+
+    private let expectedRecordCount: Int
+    private var observedRecordCount = 0
+    private var aggregateRecordByteCount: UInt64 = 0
+    private var byteCount: UInt64
+    private var previousRecord: Data?
+    private var hasher: SHA256
+    private var failed = false
+    private var completedSummary:
+        PrimeNativeNeuralGateInvariantFramedStreamSummary?
+
+    public init(
+        declaredRecordCount: UInt64,
+        limits:
+            PrimeNativeNeuralGateReplayDecodeLimits = .stageB,
+        requireCanonicalOrder: Bool = true
+    ) throws {
+        guard let count = Int(
+            exactly: declaredRecordCount
+        ) else {
+            throw PrimeNativeNeuralGateReplayMechanicsError
+                .integerOverflow
+        }
+        guard count > 0 else {
+            throw PrimeNativeNeuralGateReplayMechanicsError
+                .emptyRecordSet
+        }
+        guard count <= limits.maximumRecordCount else {
+            throw PrimeNativeNeuralGateReplayMechanicsError
+                .recordCountLimitExceeded
+        }
+        self.declaredRecordCount = declaredRecordCount
+        self.limits = limits
+        self.requireCanonicalOrder =
+            requireCanonicalOrder
+        expectedRecordCount = count
+        byteCount = 17
+        var hasher = SHA256()
+        hasher.update(
+            data:
+                PrimeNativeNeuralGateInvariantCodec
+                .globalMagic
+        )
+        var encoded = declaredRecordCount.bigEndian
+        withUnsafeBytes(of: &encoded) {
+            hasher.update(data: Data($0))
+        }
+        self.hasher = hasher
+    }
+
+    public mutating func append(
+        canonicalRecord: Data
+    ) throws {
+        guard !failed else {
+            throw PrimeNativeNeuralGateReplayMechanicsError
+                .incrementalReaderNotReusable
+        }
+        guard completedSummary == nil else {
+            throw PrimeNativeNeuralGateReplayMechanicsError
+                .trailingInput
+        }
+        var admitted = false
+        defer {
+            if !admitted {
+                failed = true
+            }
+        }
+        guard observedRecordCount < expectedRecordCount
+        else {
+            throw PrimeNativeNeuralGateReplayMechanicsError
+                .trailingInput
+        }
+        guard canonicalRecord.count
+                <= limits.maximumRecordByteCount
+        else {
+            throw PrimeNativeNeuralGateReplayMechanicsError
+                .recordByteLimitExceeded(
+                    index: observedRecordCount
+                )
+        }
+        let recordByteCount = UInt64(
+            canonicalRecord.count
+        )
+        let aggregate = aggregateRecordByteCount
+            .addingReportingOverflow(recordByteCount)
+        guard !aggregate.overflow else {
+            throw PrimeNativeNeuralGateReplayMechanicsError
+                .integerOverflow
+        }
+        guard aggregate.partialValue
+                <= UInt64(
+                    limits.maximumAggregateRecordBytes
+                )
+        else {
+            throw PrimeNativeNeuralGateReplayMechanicsError
+                .aggregateByteLimitExceeded
+        }
+        guard String(
+            data: canonicalRecord,
+            encoding: .utf8
+        ) != nil else {
+            throw PrimeNativeNeuralGateReplayMechanicsError
+                .invalidUTF8Record(
+                    index: observedRecordCount
+                )
+        }
+        if requireCanonicalOrder,
+           let previousRecord,
+           canonicalRecord.lexicographicallyPrecedes(
+               previousRecord
+           )
+        {
+            throw PrimeNativeNeuralGateReplayMechanicsError
+                .noncanonicalRecordOrder
+        }
+        let framedAddition = UInt64(8)
+            .addingReportingOverflow(recordByteCount)
+        guard !framedAddition.overflow else {
+            throw PrimeNativeNeuralGateReplayMechanicsError
+                .integerOverflow
+        }
+        let nextByteCount = byteCount
+            .addingReportingOverflow(
+                framedAddition.partialValue
+            )
+        guard !nextByteCount.overflow else {
+            throw PrimeNativeNeuralGateReplayMechanicsError
+                .integerOverflow
+        }
+        var encodedLength = recordByteCount.bigEndian
+        withUnsafeBytes(of: &encodedLength) {
+            hasher.update(data: Data($0))
+        }
+        hasher.update(data: canonicalRecord)
+        aggregateRecordByteCount =
+            aggregate.partialValue
+        byteCount = nextByteCount.partialValue
+        if requireCanonicalOrder {
+            previousRecord = canonicalRecord
+        }
+        observedRecordCount += 1
+        admitted = true
+    }
+
+    public mutating func finish() throws
+        -> PrimeNativeNeuralGateInvariantFramedStreamSummary
+    {
+        guard !failed else {
+            throw PrimeNativeNeuralGateReplayMechanicsError
+                .incrementalReaderNotReusable
+        }
+        if let completedSummary {
+            return completedSummary
+        }
+        guard observedRecordCount == expectedRecordCount
+        else {
+            failed = true
+            throw PrimeNativeNeuralGateReplayMechanicsError
+                .truncatedInput
+        }
+        let summary =
+            PrimeNativeNeuralGateInvariantFramedStreamSummary(
+                kind: .global,
+                declaredRecordCount:
+                    declaredRecordCount,
+                observedRecordCount:
+                    observedRecordCount,
+                chunkOrdinal: nil,
+                streamSHA256:
+                    PrimeNativeNeuralGateInvariantFramedRecordReader
+                    .hexadecimal(hasher.finalize()),
+                byteCount: byteCount,
+                aggregateRecordByteCount:
+                    aggregateRecordByteCount
+            )
+        completedSummary = summary
+        return summary
+    }
+}
+
 public enum PrimeNativeNeuralGateInvariantCodec {
     public static let serializationContractID =
         "prime_raw_utf8_length_framed_ordered_multiset_v1"
     public static let maximumRecordsPerChunk =
         4_096
 
-    private static let globalMagic =
+    fileprivate static let globalMagic =
         Data("PRIMEIRM1".utf8)
-    private static let chunkMagic =
+    fileprivate static let chunkMagic =
         Data("PRIMEIRC1".utf8)
 
     public static func makeBundle(

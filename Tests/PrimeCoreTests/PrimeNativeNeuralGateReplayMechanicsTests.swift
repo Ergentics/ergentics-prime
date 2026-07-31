@@ -179,6 +179,385 @@ final class PrimeNativeNeuralGateReplayMechanicsTests:
         )
     }
 
+    func testIncrementalReadersAndGlobalAccumulatorMatchFrozenBytesAtEverySplit()
+        throws
+    {
+        let records = try [
+            "c3a9",
+            "41",
+            "",
+            "65cc81",
+            "41",
+        ].map(dataFromHex)
+        let bundle = try
+            PrimeNativeNeuralGateInvariantCodec
+            .makeBundle(records: records)
+
+        for split in 0 ... bundle.globalStream.count {
+            let reader =
+                PrimeNativeNeuralGateInvariantFramedRecordReader(
+                    kind: .global
+                )
+            var observed = [Data]()
+            try reader.consume(
+                bundle.globalStream.prefix(split)
+            ) {
+                observed.append($0)
+            }
+            try reader.consume(
+                bundle.globalStream.dropFirst(split)
+            ) {
+                observed.append($0)
+            }
+            let summary = try reader.finish()
+            XCTAssertEqual(
+                observed,
+                bundle.canonicalRecords,
+                "global split \(split)"
+            )
+            XCTAssertEqual(summary.kind, .global)
+            XCTAssertEqual(
+                summary.declaredRecordCount,
+                UInt64(bundle.canonicalRecords.count)
+            )
+            XCTAssertEqual(
+                summary.observedRecordCount,
+                bundle.canonicalRecords.count
+            )
+            XCTAssertNil(summary.chunkOrdinal)
+            XCTAssertEqual(
+                summary.streamSHA256,
+                bundle.manifest.globalStreamSHA256
+            )
+            XCTAssertEqual(
+                summary.byteCount,
+                UInt64(bundle.globalStream.count)
+            )
+            XCTAssertEqual(
+                summary.aggregateRecordByteCount,
+                UInt64(
+                    bundle.canonicalRecords.reduce(0) {
+                        $0 + $1.count
+                    }
+                )
+            )
+        }
+
+        let chunk = try XCTUnwrap(
+            bundle.chunkStreams.first
+        )
+        for split in 0 ... chunk.count {
+            let reader =
+                PrimeNativeNeuralGateInvariantFramedRecordReader(
+                    kind: .chunk
+                )
+            var observed = [Data]()
+            try reader.consume(chunk.prefix(split)) {
+                observed.append($0)
+            }
+            try reader.consume(chunk.dropFirst(split)) {
+                observed.append($0)
+            }
+            let summary = try reader.finish()
+            XCTAssertEqual(
+                observed,
+                bundle.canonicalRecords,
+                "chunk split \(split)"
+            )
+            XCTAssertEqual(summary.kind, .chunk)
+            XCTAssertEqual(summary.chunkOrdinal, 0)
+            XCTAssertEqual(
+                summary.streamSHA256,
+                bundle.manifest.chunks[0].sha256
+            )
+            XCTAssertEqual(
+                summary.byteCount,
+                UInt64(chunk.count)
+            )
+        }
+
+        var accumulator = try
+            PrimeNativeNeuralGateInvariantGlobalStreamSHA256Accumulator(
+                declaredRecordCount:
+                    UInt64(bundle.canonicalRecords.count)
+            )
+        for record in bundle.canonicalRecords {
+            try accumulator.append(
+                canonicalRecord: record
+            )
+        }
+        let accumulated = try accumulator.finish()
+        XCTAssertEqual(
+            accumulated.streamSHA256,
+            bundle.manifest.globalStreamSHA256
+        )
+        XCTAssertEqual(
+            accumulated.byteCount,
+            UInt64(bundle.globalStream.count)
+        )
+        XCTAssertEqual(
+            accumulated.observedRecordCount,
+            bundle.canonicalRecords.count
+        )
+    }
+
+    func testIncrementalReaderRejectsMalformedBoundsOrderingAndEOF()
+        throws
+    {
+        let valid = global(
+            records: [
+                Data("a".utf8),
+                Data("b".utf8),
+            ]
+        )
+        for end in 0 ..< valid.count {
+            assertIncrementalFailure(
+                .truncatedInput,
+                kind: .global,
+                data: valid.prefix(end),
+                "truncation at byte \(end)"
+            )
+        }
+
+        var wrongGlobalMagic = valid
+        wrongGlobalMagic[0] = UInt8(ascii: "X")
+        assertIncrementalFailure(
+            .invalidGlobalMagic,
+            kind: .global,
+            data: wrongGlobalMagic
+        )
+        let validChunk = try chunk(
+            ordinal: 7,
+            records: [Data("a".utf8)]
+        )
+        var wrongChunkMagic = validChunk
+        wrongChunkMagic[0] = UInt8(ascii: "X")
+        assertIncrementalFailure(
+            .invalidChunkMagic,
+            kind: .chunk,
+            data: wrongChunkMagic
+        )
+
+        var trailing = valid
+        trailing.append(0)
+        assertIncrementalFailure(
+            .trailingInput,
+            kind: .global,
+            data: trailing
+        )
+        let laterTrailing =
+            PrimeNativeNeuralGateInvariantFramedRecordReader(
+                kind: .global
+            )
+        try laterTrailing.consume(valid) { _ in }
+        XCTAssertThrowsError(
+            try laterTrailing.consume(Data([0])) { _ in }
+        ) {
+            XCTAssertEqual(
+                $0 as?
+                    PrimeNativeNeuralGateReplayMechanicsError,
+                .trailingInput
+            )
+        }
+
+        var countOverflow = Data("PRIMEIRM1".utf8)
+        append(UInt64.max, to: &countOverflow)
+        assertIncrementalFailure(
+            .integerOverflow,
+            kind: .global,
+            data: countOverflow
+        )
+        var lengthOverflow = Data("PRIMEIRM1".utf8)
+        append(UInt64(1), to: &lengthOverflow)
+        append(UInt64.max, to: &lengthOverflow)
+        assertIncrementalFailure(
+            .integerOverflow,
+            kind: .global,
+            data: lengthOverflow
+        )
+        assertIncrementalFailure(
+            .chunkRecordCountLimitExceeded,
+            kind: .chunk,
+            data: chunkHeader(
+                ordinal: 0,
+                count: 4_097
+            )
+        )
+
+        let tight = try limits(
+            records: 2,
+            recordBytes: 1,
+            aggregateBytes: 1
+        )
+        assertIncrementalFailure(
+            .recordByteLimitExceeded(index: 0),
+            kind: .global,
+            data: global(
+                records: [Data("aa".utf8)]
+            ),
+            limits: tight
+        )
+        assertIncrementalFailure(
+            .aggregateByteLimitExceeded,
+            kind: .global,
+            data: global(
+                records: [
+                    Data("a".utf8),
+                    Data("b".utf8),
+                ]
+            ),
+            limits: tight
+        )
+
+        var invalidUTF8 = Data("PRIMEIRM1".utf8)
+        append(UInt64(1), to: &invalidUTF8)
+        append(UInt64(2), to: &invalidUTF8)
+        invalidUTF8.append(contentsOf: [0xC0, 0xAF])
+        assertIncrementalFailure(
+            .invalidUTF8Record(index: 0),
+            kind: .global,
+            data: invalidUTF8
+        )
+        assertIncrementalFailure(
+            .noncanonicalRecordOrder,
+            kind: .global,
+            data: global(
+                records: [
+                    Data("b".utf8),
+                    Data("a".utf8),
+                ]
+            )
+        )
+
+        let callbackFailure =
+            PrimeNativeNeuralGateInvariantFramedRecordReader(
+                kind: .global
+            )
+        XCTAssertThrowsError(
+            try callbackFailure.consume(valid) { _ in
+                throw CocoaError(.fileReadCorruptFile)
+            }
+        )
+        XCTAssertThrowsError(try callbackFailure.finish()) {
+            XCTAssertEqual(
+                $0 as?
+                    PrimeNativeNeuralGateReplayMechanicsError,
+                .incrementalReaderNotReusable
+            )
+        }
+
+        let reentrant =
+            PrimeNativeNeuralGateInvariantFramedRecordReader(
+                kind: .global
+            )
+        XCTAssertThrowsError(
+            try reentrant.consume(valid) { _ in
+                _ = try reentrant.finish()
+            }
+        ) {
+            XCTAssertEqual(
+                $0 as?
+                    PrimeNativeNeuralGateReplayMechanicsError,
+                .incrementalReaderNotReusable
+            )
+        }
+    }
+
+    func testGlobalAccumulatorFailsClosedOnCountBoundsUTF8AndOrder()
+        throws
+    {
+        var incomplete = try
+            PrimeNativeNeuralGateInvariantGlobalStreamSHA256Accumulator(
+                declaredRecordCount: 2
+            )
+        try incomplete.append(
+            canonicalRecord: Data("a".utf8)
+        )
+        XCTAssertThrowsError(try incomplete.finish()) {
+            XCTAssertEqual(
+                $0 as?
+                    PrimeNativeNeuralGateReplayMechanicsError,
+                .truncatedInput
+            )
+        }
+
+        var complete = try
+            PrimeNativeNeuralGateInvariantGlobalStreamSHA256Accumulator(
+                declaredRecordCount: 1
+            )
+        try complete.append(
+            canonicalRecord: Data("a".utf8)
+        )
+        XCTAssertThrowsError(
+            try complete.append(
+                canonicalRecord: Data("b".utf8)
+            )
+        ) {
+            XCTAssertEqual(
+                $0 as?
+                    PrimeNativeNeuralGateReplayMechanicsError,
+                .trailingInput
+            )
+        }
+
+        var invalidUTF8 = try
+            PrimeNativeNeuralGateInvariantGlobalStreamSHA256Accumulator(
+                declaredRecordCount: 1
+            )
+        XCTAssertThrowsError(
+            try invalidUTF8.append(
+                canonicalRecord: Data([0xC0, 0xAF])
+            )
+        ) {
+            XCTAssertEqual(
+                $0 as?
+                    PrimeNativeNeuralGateReplayMechanicsError,
+                .invalidUTF8Record(index: 0)
+            )
+        }
+
+        var noncanonical = try
+            PrimeNativeNeuralGateInvariantGlobalStreamSHA256Accumulator(
+                declaredRecordCount: 2
+            )
+        try noncanonical.append(
+            canonicalRecord: Data("b".utf8)
+        )
+        XCTAssertThrowsError(
+            try noncanonical.append(
+                canonicalRecord: Data("a".utf8)
+            )
+        ) {
+            XCTAssertEqual(
+                $0 as?
+                    PrimeNativeNeuralGateReplayMechanicsError,
+                .noncanonicalRecordOrder
+            )
+        }
+
+        let tight = try limits(
+            records: 1,
+            recordBytes: 1,
+            aggregateBytes: 1
+        )
+        var oversized = try
+            PrimeNativeNeuralGateInvariantGlobalStreamSHA256Accumulator(
+                declaredRecordCount: 1,
+                limits: tight
+            )
+        XCTAssertThrowsError(
+            try oversized.append(
+                canonicalRecord: Data("aa".utf8)
+            )
+        ) {
+            XCTAssertEqual(
+                $0 as?
+                    PrimeNativeNeuralGateReplayMechanicsError,
+                .recordByteLimitExceeded(index: 0)
+            )
+        }
+    }
+
     func testCanonicalChunkPartitionUses4096AndExactOrdinals()
         throws
     {
@@ -1147,6 +1526,43 @@ final class PrimeNativeNeuralGateReplayMechanicsTests:
             maximumAggregateRecordBytes:
                 aggregateBytes
         )
+    }
+
+    private func assertIncrementalFailure(
+        _ expected:
+            PrimeNativeNeuralGateReplayMechanicsError,
+        kind:
+            PrimeNativeNeuralGateInvariantFramedStreamKind,
+        data: Data,
+        limits:
+            PrimeNativeNeuralGateReplayDecodeLimits = .stageB,
+        _ message: String = "",
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        XCTAssertThrowsError(
+            try {
+                let reader =
+                    PrimeNativeNeuralGateInvariantFramedRecordReader(
+                        kind: kind,
+                        limits: limits
+                    )
+                try reader.consume(data) { _ in }
+                _ = try reader.finish()
+            }(),
+            message,
+            file: file,
+            line: line
+        ) {
+            XCTAssertEqual(
+                $0 as?
+                    PrimeNativeNeuralGateReplayMechanicsError,
+                expected,
+                message,
+                file: file,
+                line: line
+            )
+        }
     }
 
     private func global(
