@@ -451,7 +451,7 @@ final class PrimeNativeNeuralGateSecureScratchNamespace {
             }
             let contract =
                 PrimeNativeNeuralGateSourceExecutionBindingContract
-                .frozenV3
+                .frozenV4
             let arguments =
                 try contract
                 .expandedSwiftPackageDescribeArguments(

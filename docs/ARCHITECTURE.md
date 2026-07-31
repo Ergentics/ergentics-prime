@@ -124,17 +124,34 @@ source-pinned Float32 log-softmax. These are calculators over caller-provided
 values, not mutation execution or observed semantic/capability authority. It
 has no solver, process, I/O, donor-runtime, model, or receipt authority.
 
+An isolated `PrimeNativeNeuralGateCorrectedFixtureAuthority` target now
+exhaustively derives the exact 18,432-row corrected fixture from the
+byte-exact source-pinned tokenizer/corpus transplant while binding the
+identities of the closed Stage-A and full-corpus replay receipts. The five
+selected split counts are 4,096/4,096/4,096/4,096/2,048 and the final order is
+global row-ID UTF-8 lexicographic ascending. Fixture identity
+`c1f29a0d1067a4bce5541ee5100044276ccc16c63e57501b509fb3126fcd29a4`
+and observation
+`a30c7fe39157ce6e0de2e0783a8af8807c4a1b02b309a144ba3272a6cc6d931d`
+bind separate prompt-only and domain-separated target-token/EOS values. The
+trap-bearing corpus dependency is derivation-only and cannot enter a
+corrected execution closure. The historical fixture source is lineage-only;
+the derivation reads neither it nor the two bound parent receipt files and
+publishes no independent fixture receipt. Repository tests separately
+type-decode the exact receipt bytes.
+
 This split is security-significant. The previously planned `row_id` input
 encodes split and semantic family, including the abstention class, so row
 identity is now outer correlation only. The planned shared donor target also
 would have exposed trap-bearing historical code to corrected supervisors.
 Row-selected seeds, retained solver state, and invocation order are additional
 metadata channels, so one seed per replicate, fresh per-row state, and
-row-permutation trace identity are mandatory. Corrected execution remains
-blocked until exact source-derived fixture identity/count, a concrete
-Prime-owned prompt-solver source derivation, a bounded full-logit sidecar with
-source-pinned Float32 log-softmax recomputation, and a trap-disjoint topology
-are bound. The pure trace uses per-decision bit-pattern digests because
+row-permutation trace identity are mandatory. The exact source-derived
+fixture identity/count is now source-plan-bound. Corrected execution remains blocked
+until a concrete Prime-owned prompt-solver source derivation, a bounded
+full-logit sidecar with source-pinned Float32 log-softmax recomputation, and a
+trap-disjoint topology are bound. The pure trace uses per-decision
+bit-pattern digests because
 hex-expanding all 512 logits would exceed the frozen Stage-B decode limits;
 the local Foundation/Double probability diagnostic is excluded from canonical
 fingerprints. The historical worker, paired probe/verifier, execution records,
@@ -190,8 +207,8 @@ UID; the Darwin user-temporary parent remains a trusted prerequisite.
 External-child evidence and its enclosing describe-capture record are schema
 4 at the role-specific capture-V4 paths. The adaptation-proof and
 historical-worker aggregate contracts remain V2. The
-source/execution-binding and replay-output contracts are V3, the
-output-path-classification contract ID is
+source/execution-binding contract is V4, the replay-output contract remains
+V3, the output-path-classification contract ID is
 `prime_stage_b_output_path_namespace_classification_v3`, and the fixture plan
 is V3/schema 3 at `neural-gate-replay/plan.v3.json`. The adaptation proof
 remains at `neural-gate-replay/source/adaptation-proof.v2.json`. The nested
@@ -205,12 +222,13 @@ contained and reaped failures: the first exposed terminal mapped-region
 zero-byte/`EINVAL` behavior, and the second exposed the exact optional
 `com.apple.TextEncoding` value on the regular file `work/.lock`. After those
 corrections, the live Release two-role secure-capture canary was rerun after
-the corrected-mechanics source freeze and passed end to end on the pinned host
-with byte-identical probe/verifier output: 22,568 bytes, SHA-256
-`b0d8dbe25bddd054dedc56a3a5b6351d7d71a2db61d87686f2c1d11317ed3e93`.
-This is the current accepted corrected-target reseal. It includes the
+the fixture-authority twelve-target source freeze and passed end to end on the
+pinned host with byte-identical probe/verifier output: 23,207 bytes, SHA-256
+`f2204bbae8623c35fdf7357c6b0aa2a585e9071f22556edbe6ce6e7cfccf04d5`.
+This is the current accepted fixture-authority reseal. It includes the
 PrimeCore trusted descriptor-inventory substrate, pure Stage-B replay
-mechanics, and corrected value mechanics; it does not widen canary authority.
+mechanics, corrected value mechanics, and the offline source-attested fixture
+target; it does not widen canary authority.
 The pass validates only the secure capture substrate on that pinned host. It
 published no durable Stage-B process record or receipt,
 `executionImplemented` remains false, and no Stage-B replay, historical
@@ -245,8 +263,10 @@ blocks a correctly scoped mechanics pass.
 
 ## Separately scoped future admission
 
-- bind the exact source-derived corrected fixture identity, ordering, and row
-  count;
+The exact 18,432-row corrected fixture identity, ordering, and count are now
+source-plan-bound by the offline fixture authority. No independent fixture
+probe/verifier receipt is claimed.
+
 - bind a concrete Prime-owned solver whose row input is prompt tokens only,
   whose seed is fixed once per replicate, whose state is fresh per row, and
   whose per-prompt trace is invariant to row permutation;

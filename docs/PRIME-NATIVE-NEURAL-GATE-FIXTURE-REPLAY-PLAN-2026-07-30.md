@@ -5,8 +5,9 @@ Date: 2026-07-30
 Status: secure capture, live descriptor-inventory, raw-stream/fingerprint
 mechanics, and isolated corrected value/observation mechanics implemented;
 capture is lifecycle-tested and has a last accepted Release two-role canary;
-exact corrected fixture identity, solver, Stage-B replay, workers, process
-records, and receipt are not implemented
+the exact corrected fixture identity/count is source-plan-bound by an offline
+Swift authority; solver, Stage-B replay, workers, process records, and receipt
+are not implemented
 
 ## Decision
 
@@ -34,12 +35,14 @@ each child and drain remained contained and the child was reaped. The first
 exposed terminal mapped-region zero-byte/`EINVAL` behavior; the second exposed
 the exact optional `com.apple.TextEncoding` value on regular `work/.lock`.
 After those corrections, the Release two-role canary was rerun after the
-corrected-mechanics source freeze and passed end to end on the pinned host.
-The current probe/verifier output is byte-identical at 22,568 bytes, SHA-256
-`b0d8dbe25bddd054dedc56a3a5b6351d7d71a2db61d87686f2c1d11317ed3e93`.
-That is the current accepted corrected-target reseal. It includes the
-PrimeCore trusted descriptor-inventory substrate, pure replay mechanics, and
-corrected value mechanics and does not widen the canary's authority.
+fixture-authority twelve-target source freeze and passed end to end on the
+pinned host. The current probe/verifier output is byte-identical at 23,207
+bytes, SHA-256
+`f2204bbae8623c35fdf7357c6b0aa2a585e9071f22556edbe6ce6e7cfccf04d5`.
+That is the current accepted fixture-authority reseal. It includes the
+PrimeCore trusted descriptor-inventory substrate, pure replay mechanics,
+corrected value mechanics, and the offline source-attested fixture target and
+does not widen the canary's authority.
 That pass validates only the secure capture substrate. It published no durable
 Stage-B process record or receipt, `executionImplemented` remains false, and
 no replay, historical worker, model, Metal, or product use is implemented or
@@ -73,18 +76,34 @@ mutation-observation IDs. Full logits are locally digest-bound;
 Foundation/Double probability values remain non-evidentiary and cannot replace
 the frozen source-pinned Float32 log-softmax.
 
-Those APIs accept caller-provided values. They do not bind the exact source
-fixture, derive or run a semantic solver, inject or detect the named
-mutations, establish any leg/capability truth, decode durable Stage-B
-artifacts, or authorize a receipt. Semantic match and model capability remain
-unavailable. The dedicated historical worker follows a completed,
-trap-disjoint semantic layer; paired probe and verifier remain later work
-because neither may independently publish a terminal receipt.
+Those APIs accept caller-provided values. They do not derive or run a semantic
+solver, inject or detect the named mutations, establish any leg/capability
+truth, decode durable Stage-B artifacts, or authorize a receipt. Semantic
+match and model capability remain unavailable.
+
+An isolated `PrimeNativeNeuralGateCorrectedFixtureAuthority` target now
+exhaustively recomputes the five selected splits and globally sorts all 18,432
+rows by raw UTF-8 row ID. It cross-binds the donor and corrected tokenizer
+contracts, regrades every selected fixture row, and separately binds complete
+source-row and outer-regrade records, prompt-only inputs, and
+domain-separated target-token/EOS feasibility. The fixture identity is
+`c1f29a0d1067a4bce5541ee5100044276ccc16c63e57501b509fb3126fcd29a4`;
+the canonical observation is
+`a30c7fe39157ce6e0de2e0783a8af8807c4a1b02b309a144ba3272a6cc6d931d`.
+The historical regression fixture is lineage-only here and is neither read
+nor executed. Complete Stage-A and full-corpus parent receipt identities are
+source-bound and type-decoded in repository tests, but receipt bytes are not
+read during derivation and no independent fixture probe/verifier receipt is
+published.
+
+The dedicated historical worker follows a completed, trap-disjoint semantic
+layer; paired probe and verifier remain later work because neither may
+independently publish a terminal receipt.
 
 The pre-factory contract-only canonical JSON content SHA-256 was
 `149dfea0e90c56f012d1da748cf934a5a398d3829533c2826a480afbdb9ab77d`.
 That value is historical. The current V3 plan content SHA-256 is
-`24235423e3e21c13b2c307941eabc92de8e78f9c4321d4aaf8418c4fecc884ba`.
+`9e8e9c4820fcea592f79cb4cbdc9abdd217a0ca6e00e2b715a215d8a1d315ee6`.
 
 ## Why the split is mandatory
 
@@ -227,11 +246,16 @@ The only implemented corrected dependency edge is:
 ```text
 PrimeNativeNeuralGateReplayMechanics
              └── PrimeNativeNeuralGateCorrectedMechanics
+                         └── PrimeNativeNeuralGateCorrectedFixtureAuthority
+PrimeNativeCorpusReplayMechanics ────────┘
 ```
 
-The corrected target contains pure value/observation mechanics only. It has no
-solver, process, filesystem, network, donor-runtime, model, artifact decoder,
-or receipt path.
+The corrected mechanics target contains pure value/observation mechanics
+only. The fixture-authority leaf is offline and trap-bearing through its
+corpus dependency. Source-binding V4 attests both new targets but leaves both
+unreachable from every current probe/verifier executable closure. Neither
+target has a solver, process, network, model, artifact decoder, or receipt
+publication path.
 
 The worker's direct dependencies are `PrimeCore`, `ErgenticsPrimeRuntime`,
 `PrimeNativeNeuralGateReplayMechanics`, and
@@ -423,17 +447,19 @@ accepted record is emitted. An uncontained child or drain fail-stops. The
 capture adapter is implemented and its typed lifecycle has ten focused tests.
 After the two contained, reaped discovery failures for terminal
 zero-byte/`EINVAL` and exact optional `com.apple.TextEncoding`, the live Release
-two-role canary was rerun after source freeze and passed on the pinned host
-with the exact 22,568-byte output binding above. That corrected-target canary
+two-role canary was rerun after the fixture-authority twelve-target source
+freeze and passed on the pinned host with the exact 23,207-byte output binding
+above. That fixture-authority canary
 pass published no durable Stage-B process record or receipt,
 `executionImplemented` remains false, and no replay, worker, model, Metal, or
 product claim follows. Future probe and verifier records must
 bind one byte-identical JSON output and the same direct `swift-package`
 mapped-vnode/descriptor/byte identity. That evaluated output must reconcile
-the exact selected ten-target authority subgraph,
-including target type, path, direct local dependencies, empty product
-dependencies, and complete Swift source lists. This is not a claim that the
-whole package contains only ten targets.
+the exact selected twelve-target source-authority graph, including target
+type, path, direct local dependencies, empty product dependencies, and
+complete Swift source lists. The two offline corrected targets remain absent
+from every current process closure. This is not a claim that the whole package
+contains only twelve targets.
 
 The historical feasibility correction was measured on the M5 host before the
 closed factory was implemented. Suspending `/usr/bin/swift` bound only its
@@ -449,9 +475,9 @@ The historical direct and shim routes produced byte-identical graph output
 with SHA-256
 `59ceb088e1d5d1d15f7762b5049ccf7b410ff8002e549044cb7a221f537fe939`.
 Those 20,959 bytes and that output hash describe only the earlier graph. The
-current accepted corrected-target secure-capture canary is 22,568 bytes with
+current accepted fixture-authority secure-capture canary is 23,207 bytes with
 SHA-256
-`b0d8dbe25bddd054dedc56a3a5b6351d7d71a2db61d87686f2c1d11317ed3e93`.
+`f2204bbae8623c35fdf7357c6b0aa2a585e9071f22556edbe6ce6e7cfccf04d5`.
 Neither the historical graph output nor the secure-capture canary is a Stage-B
 replay execution record.
 
@@ -536,8 +562,9 @@ The aggregate wire contracts are:
 - `PrimeNativeNeuralGateAdaptationProofContract.frozenV2`, contract ID
   `prime_source_pinned_neural_gate_adaptation_proof_v2`, at
   `neural-gate-replay/source/adaptation-proof.v2.json`;
-- `PrimeNativeNeuralGateSourceExecutionBindingContract.frozenV3`, contract ID
-  `prime_stage_b_release_source_executable_join_v3`;
+- `PrimeNativeNeuralGateSourceExecutionBindingContract.frozenV4`, contract ID
+  `prime_stage_b_release_source_executable_join_v4`; V3 remains frozen as the
+  earlier ten-target source contract;
 - `PrimeNativeNeuralGateHistoricalWorkerContract.frozenV2`, contract ID
   `prime_stage_b_historical_fixture_worker_v2`;
 - `PrimeNativeNeuralGateOutputPathClassificationContract`, contract ID
@@ -711,7 +738,7 @@ and both fingerprint paths must produce
 | Source-pinned fixture mechanics | yes | yes, as a named Prime adaptation |
 | Required prediction provenance | `synthetic_oracle_forged` | prompt-only deterministic synthetic executor |
 | Current execution implementation | absent | absent; value calculators only |
-| Exact fixture identity/count bound | historical source pinned | no |
+| Exact fixture identity/count bound | historical source pinned | yes; offline source-plan binding over 18,432 rows, no independent fixture receipt |
 | Concrete prompt-only solver bound | not applicable | no |
 | Fixed cap 64, independent of target | no | required |
 | EOS available at every decision | only report-declared | required by construction and mutation |
@@ -730,16 +757,16 @@ prompt text/grouping, seed, target, target tokens, expected completion,
 regrade fields, abstention fields, and budget controls are forbidden
 row-level inputs.
 
-The complete source-derived fixture identity and exact row count must be bound
-and all canonical completion support checked before execution. The current
-completion-feasibility calculator is not that authority. A concrete solver
-must start from fresh state for every row, and permuting row invocation order
-must preserve each prompt's raw trace exactly. The support remains EOS plus all
-256 byte tokens, the decision cap is exactly 64, EOS is available at every
-decision, and no per-row target-dependent seed, skip, grouping, batching,
-state retention, or termination is allowed. Admitted replicate seeds are
-`1618`, `2718`, and `3141`, each run separately over the same complete
-fixture.
+The complete source-derived fixture identity and exact row count are now
+source-plan-bound, and all canonical completion support fits the frozen cap
+with EOS. That binding is not an independent fixture receipt and does not
+authorize execution. A concrete solver must start from fresh state for every
+row, and permuting row invocation order must preserve each prompt's raw trace
+exactly. The support remains EOS plus all 256 byte tokens, the decision cap is
+exactly 64, EOS is available at every decision, and no per-row
+target-dependent seed, skip, grouping, batching, state retention, or
+termination is allowed. Admitted replicate seeds are `1618`, `2718`, and
+`3141`, each run separately over the same complete fixture.
 
 The pure trace binds each full 512-logit decision by an exact bit-pattern
 SHA-256 rather than expanding every logit into the canonical invariant
@@ -913,29 +940,39 @@ tree. All SwiftPM work is redirected to the held per-role scratch namespace,
 and repository `.build` contents have no authority. The factory never
 recursively changes source metadata.
 
+## Development workflow follow-up
+
+A local Swift workflow preflight is a separate future slice, not part of
+Stage-B execution. Its useful boundary is read-only and credential-free: emit
+canonical JSON for repository root, branch/upstream, clean or exact diff
+state, commit author identity, embedded source-seal agreement, and named test
+evidence. It must not hold GitHub credentials or perform push, PR, review, or
+merge operations. The signed-in GitHub app remains the authenticated
+publication authority and the final human-visible confirmation point. This
+keeps desirable publication friction while removing repeated local-state
+ambiguity.
+
 ## Next actions
 
 The corrected aggregate implementation prerequisite is now:
 
-`bind_exact_source_derived_fixture_identity_and_row_count_then_bind_concrete_prime_owned_replicate_scoped_seed_prompt_solver_with_fresh_per_row_state_no_row_target_regrade_closure_or_existential_input_then_bind_bounded_full_vocabulary_logit_sidecar_and_source_pinned_float32_logsoftmax_recomputation_then_amend_trap_disjoint_target_topology_and_implement_role_scoped_stage_b_historical_worker_probe_verifier_with_typed_artifact_recomputation_and_exact_path_metadata_content_inventory`
+`bind_concrete_prime_owned_replicate_scoped_seed_prompt_solver_with_fresh_per_row_state_no_row_target_regrade_closure_or_existential_input_then_bind_bounded_full_vocabulary_logit_sidecar_and_source_pinned_float32_logsoftmax_recomputation_then_amend_trap_disjoint_target_topology_and_implement_role_scoped_stage_b_historical_worker_probe_verifier_with_typed_artifact_recomputation_and_exact_path_metadata_content_inventory`
 
 Its implementation order is now:
 
-1. bind the exact source-derived corrected fixture identity, ordering, and row
-   count; the current completion-feasibility calculator is not authority;
-2. bind a concrete Prime-owned solver derivation whose row input is prompt
+1. bind a concrete Prime-owned solver derivation whose row input is prompt
    tokens only, whose seed is fixed once per replicate, whose per-row state is
    fresh, and whose per-prompt traces survive row-order permutation;
-3. bind a bounded full-vocabulary logit sidecar and independently recompute
+2. bind a bounded full-vocabulary logit sidecar and independently recompute
    the frozen source-pinned Float32 log-softmax; the local Foundation/Double
    diagnostic cannot populate evidence;
-4. amend the draft target topology so trap-bearing historical donor/runtime
+3. amend the draft target topology so trap-bearing historical donor/runtime
    code cannot enter corrected supervisors;
-5. implement source-bound mutators/detectors and durable artifact decoding;
+4. implement source-bound mutators/detectors and durable artifact decoding;
    the current fifteen mutation-observation validators do not execute defects;
-6. implement the isolated historical worker using the completed secure
+5. implement the isolated historical worker using the completed secure
    capture and live role-prefix inventory capabilities; and
-7. implement the paired probe/verifier with full-root pre-receipt recapture and
+6. implement the paired probe/verifier with full-root pre-receipt recapture and
    receipt-last publication.
 
 After a real dual-arm Stage-B pass:

@@ -2091,6 +2091,38 @@ public struct PrimeNativeNeuralGateCorrectedExecutionAdmission:
         Bool
     public let sourceBoundFixtureIdentityAndExactRowCountBound:
         Bool
+    public let sourceBoundFixtureAuthorityTarget:
+        String
+    public let sourceBoundFixtureAuthorityDependencies:
+        [String]
+    public let sourceBoundFixtureAuthorityPermittedInCorrectedExecutorClosure:
+        Bool
+    public let sourceBoundFixtureAuthorityLevel:
+        String
+    public let sourceBoundFixtureIndependentProbeVerifierReceiptPublished:
+        Bool
+    public let sourceBoundFixtureReceiptBytesReadDuringDerivation:
+        Bool
+    public let historicalFixtureSourceAuthorityStatus:
+        String
+    public let sourceBoundFixtureFullCorpusReplayReceiptSHA256:
+        String
+    public let sourceBoundFixtureObservationSHA256:
+        String
+    public let sourceBoundFixtureIdentitySHA256:
+        String
+    public let sourceBoundFixtureExactRowCount:
+        Int
+    public let sourceBoundFixtureOrderedRowIDsSHA256:
+        String
+    public let sourceBoundFixtureOrderedEvaluationRowsSHA256:
+        String
+    public let sourceBoundFixtureOrderedPromptOnlyInputBindingsSHA256:
+        String
+    public let sourceBoundFixtureOrderedTargetTokenBindingsSHA256:
+        String
+    public let sourceBoundFixtureOrderedCompleteRowBindingsSHA256:
+        String
     public let pureCompletionFeasibilityObservationAuthoritative:
         Bool
     public let perRowTargetFeasibilityDecisionPermitted:
@@ -2179,7 +2211,41 @@ public struct PrimeNativeNeuralGateCorrectedExecutionAdmission:
         sourceBoundFixtureIdentityAndExactRowCountRequired:
             true,
         sourceBoundFixtureIdentityAndExactRowCountBound:
+            true,
+        sourceBoundFixtureAuthorityTarget:
+            "PrimeNativeNeuralGateCorrectedFixtureAuthority",
+        sourceBoundFixtureAuthorityDependencies: [
+            "PrimeNativeCorpusReplayMechanics",
+            "PrimeNativeNeuralGateCorrectedMechanics",
+        ],
+        sourceBoundFixtureAuthorityPermittedInCorrectedExecutorClosure:
             false,
+        sourceBoundFixtureAuthorityLevel:
+            "source_plan_bound_recomputable_offline_observation_no_independent_fixture_receipt_v1",
+        sourceBoundFixtureIndependentProbeVerifierReceiptPublished:
+            false,
+        sourceBoundFixtureReceiptBytesReadDuringDerivation:
+            false,
+        historicalFixtureSourceAuthorityStatus:
+            "lineage_only_not_read_or_executed_corrected_selection_is_explicit_and_recomputed_from_pinned_corpus_v1",
+        sourceBoundFixtureFullCorpusReplayReceiptSHA256:
+            "88d243827c1aff0ce8125402f84c4ffe4012d058dedaf88f614099e975dafdc2",
+        sourceBoundFixtureObservationSHA256:
+            "a30c7fe39157ce6e0de2e0783a8af8807c4a1b02b309a144ba3272a6cc6d931d",
+        sourceBoundFixtureIdentitySHA256:
+            "c1f29a0d1067a4bce5541ee5100044276ccc16c63e57501b509fb3126fcd29a4",
+        sourceBoundFixtureExactRowCount:
+            18_432,
+        sourceBoundFixtureOrderedRowIDsSHA256:
+            "10f9c9ef4e60ceead116dd434823de9319544da2784b1958503a8c874915701e",
+        sourceBoundFixtureOrderedEvaluationRowsSHA256:
+            "f9b192173a6880e0efbb6a9631e6b1d0532f7e3b25f016fe31f001a4c5ecc063",
+        sourceBoundFixtureOrderedPromptOnlyInputBindingsSHA256:
+            "cc24455111a54a7f7b75806c24d9891e15ad543f403ea5354e68487e4f25dd7f",
+        sourceBoundFixtureOrderedTargetTokenBindingsSHA256:
+            "0f55a644281ed11cbe73eb09c285234227e2f741c576cbc00a23747c2a22a370",
+        sourceBoundFixtureOrderedCompleteRowBindingsSHA256:
+            "4c4917bd54e625fd8c1441eb19129c2be0cb7ad9762e16607e9212d8faac27b4",
         pureCompletionFeasibilityObservationAuthoritative:
             false,
         perRowTargetFeasibilityDecisionPermitted:
@@ -2222,7 +2288,7 @@ public struct PrimeNativeNeuralGateCorrectedExecutionAdmission:
             false,
         terminalReceiptAuthorized: false,
         unblockPrerequisite:
-            "bind_exact_source_derived_fixture_identity_and_row_count_then_bind_concrete_prime_owned_replicate_scoped_seed_prompt_solver_with_fresh_per_row_state_no_row_target_regrade_closure_or_existential_input_then_bind_bounded_full_vocabulary_logit_sidecar_and_source_pinned_float32_logsoftmax_recomputation_then_pass_correlation_seed_row_permutation_same_length_and_different_length_substitution_raw_identity_gates"
+            "bind_concrete_prime_owned_replicate_scoped_seed_prompt_solver_with_fresh_per_row_state_no_row_target_regrade_closure_or_existential_input_then_bind_bounded_full_vocabulary_logit_sidecar_and_source_pinned_float32_logsoftmax_recomputation_then_pass_correlation_seed_row_permutation_same_length_and_different_length_substitution_raw_identity_gates"
     )
 
     public func validate() throws {
@@ -2245,7 +2311,39 @@ public struct PrimeNativeNeuralGateCorrectedExecutionAdmission:
               rowPermutationTraceIdentityRequired,
               wholeFixtureTargetFeasibilityPreflightRequired,
               sourceBoundFixtureIdentityAndExactRowCountRequired,
-              !sourceBoundFixtureIdentityAndExactRowCountBound,
+              sourceBoundFixtureIdentityAndExactRowCountBound,
+              sourceBoundFixtureAuthorityTarget
+                == "PrimeNativeNeuralGateCorrectedFixtureAuthority",
+              sourceBoundFixtureAuthorityDependencies
+                == [
+                    "PrimeNativeCorpusReplayMechanics",
+                    "PrimeNativeNeuralGateCorrectedMechanics",
+                ],
+              !sourceBoundFixtureAuthorityPermittedInCorrectedExecutorClosure,
+              sourceBoundFixtureAuthorityLevel
+                == "source_plan_bound_recomputable_offline_observation_no_independent_fixture_receipt_v1",
+              !sourceBoundFixtureIndependentProbeVerifierReceiptPublished,
+              !sourceBoundFixtureReceiptBytesReadDuringDerivation,
+              historicalFixtureSourceAuthorityStatus
+                == "lineage_only_not_read_or_executed_corrected_selection_is_explicit_and_recomputed_from_pinned_corpus_v1",
+              sourceBoundFixtureFullCorpusReplayReceiptSHA256
+                == "88d243827c1aff0ce8125402f84c4ffe4012d058dedaf88f614099e975dafdc2",
+              sourceBoundFixtureObservationSHA256
+                == "a30c7fe39157ce6e0de2e0783a8af8807c4a1b02b309a144ba3272a6cc6d931d",
+              sourceBoundFixtureIdentitySHA256
+                == "c1f29a0d1067a4bce5541ee5100044276ccc16c63e57501b509fb3126fcd29a4",
+              sourceBoundFixtureExactRowCount
+                == 18_432,
+              sourceBoundFixtureOrderedRowIDsSHA256
+                == "10f9c9ef4e60ceead116dd434823de9319544da2784b1958503a8c874915701e",
+              sourceBoundFixtureOrderedEvaluationRowsSHA256
+                == "f9b192173a6880e0efbb6a9631e6b1d0532f7e3b25f016fe31f001a4c5ecc063",
+              sourceBoundFixtureOrderedPromptOnlyInputBindingsSHA256
+                == "cc24455111a54a7f7b75806c24d9891e15ad543f403ea5354e68487e4f25dd7f",
+              sourceBoundFixtureOrderedTargetTokenBindingsSHA256
+                == "0f55a644281ed11cbe73eb09c285234227e2f741c576cbc00a23747c2a22a370",
+              sourceBoundFixtureOrderedCompleteRowBindingsSHA256
+                == "4c4917bd54e625fd8c1441eb19129c2be0cb7ad9762e16607e9212d8faac27b4",
               !pureCompletionFeasibilityObservationAuthoritative,
               !perRowTargetFeasibilityDecisionPermitted,
               promptOnlySolverSourceDerivationRequired,
@@ -2295,6 +2393,38 @@ public struct PrimeNativeNeuralGateCorrectedExecutionAdmission:
             "source_bound_fixture_identity_and_exact_row_count_required"
         case sourceBoundFixtureIdentityAndExactRowCountBound =
             "source_bound_fixture_identity_and_exact_row_count_bound"
+        case sourceBoundFixtureAuthorityTarget =
+            "source_bound_fixture_authority_target"
+        case sourceBoundFixtureAuthorityDependencies =
+            "source_bound_fixture_authority_dependencies"
+        case sourceBoundFixtureAuthorityPermittedInCorrectedExecutorClosure =
+            "source_bound_fixture_authority_permitted_in_corrected_executor_closure"
+        case sourceBoundFixtureAuthorityLevel =
+            "source_bound_fixture_authority_level"
+        case sourceBoundFixtureIndependentProbeVerifierReceiptPublished =
+            "source_bound_fixture_independent_probe_verifier_receipt_published"
+        case sourceBoundFixtureReceiptBytesReadDuringDerivation =
+            "source_bound_fixture_receipt_bytes_read_during_derivation"
+        case historicalFixtureSourceAuthorityStatus =
+            "historical_fixture_source_authority_status"
+        case sourceBoundFixtureFullCorpusReplayReceiptSHA256 =
+            "source_bound_fixture_full_corpus_replay_receipt_sha256"
+        case sourceBoundFixtureObservationSHA256 =
+            "source_bound_fixture_observation_sha256"
+        case sourceBoundFixtureIdentitySHA256 =
+            "source_bound_fixture_identity_sha256"
+        case sourceBoundFixtureExactRowCount =
+            "source_bound_fixture_exact_row_count"
+        case sourceBoundFixtureOrderedRowIDsSHA256 =
+            "source_bound_fixture_ordered_row_ids_sha256"
+        case sourceBoundFixtureOrderedEvaluationRowsSHA256 =
+            "source_bound_fixture_ordered_evaluation_rows_sha256"
+        case sourceBoundFixtureOrderedPromptOnlyInputBindingsSHA256 =
+            "source_bound_fixture_ordered_prompt_only_input_bindings_sha256"
+        case sourceBoundFixtureOrderedTargetTokenBindingsSHA256 =
+            "source_bound_fixture_ordered_target_token_bindings_sha256"
+        case sourceBoundFixtureOrderedCompleteRowBindingsSHA256 =
+            "source_bound_fixture_ordered_complete_row_bindings_sha256"
         case pureCompletionFeasibilityObservationAuthoritative =
             "pure_completion_feasibility_observation_authoritative"
         case perRowTargetFeasibilityDecisionPermitted =
@@ -3260,7 +3390,21 @@ public struct PrimeNativeNeuralGateSourceExecutionBindingContract:
     public let reproducibleBuildProvenanceClaimed:
         Bool
 
-    public static let frozenV3: Self = {
+    public static let frozenV3 =
+        makeFrozen(
+            includingCorrectedFixtureAuthority:
+                false
+        )
+    public static let frozenV4 =
+        makeFrozen(
+            includingCorrectedFixtureAuthority:
+                true
+        )
+
+    private static func makeFrozen(
+        includingCorrectedFixtureAuthority:
+            Bool
+    ) -> Self {
         let core = "PrimeCore"
         let corpusMechanics =
             "PrimeNativeCorpusReplayMechanics"
@@ -3272,6 +3416,10 @@ public struct PrimeNativeNeuralGateSourceExecutionBindingContract:
             "ErgenticsPrimeRuntime"
         let replayMechanics =
             "PrimeNativeNeuralGateReplayMechanics"
+        let correctedMechanics =
+            "PrimeNativeNeuralGateCorrectedMechanics"
+        let correctedFixtureAuthority =
+            "PrimeNativeNeuralGateCorrectedFixtureAuthority"
         let replay = "PrimeNativeNeuralGateReplay"
         let historicalWorker =
             "PrimeNativeNeuralGateHistoricalFixtureWorker"
@@ -3290,7 +3438,9 @@ public struct PrimeNativeNeuralGateSourceExecutionBindingContract:
         ]
         return Self(
             contractID:
-                "prime_stage_b_release_source_executable_join_v3",
+                includingCorrectedFixtureAuthority
+                ? "prime_stage_b_release_source_executable_join_v4"
+                : "prime_stage_b_release_source_executable_join_v3",
             packageManifestRelativePath:
                 "Package.swift",
             sourceSnapshotRelativePath:
@@ -3364,7 +3514,27 @@ public struct PrimeNativeNeuralGateSourceExecutionBindingContract:
                         replay,
                     ]
                 ),
-            ],
+            ] + (
+                includingCorrectedFixtureAuthority
+                    ? [
+                        .init(
+                            targetName:
+                                correctedMechanics,
+                            directLocalDependencyNames: [
+                                replayMechanics,
+                            ]
+                        ),
+                        .init(
+                            targetName:
+                                correctedFixtureAuthority,
+                            directLocalDependencyNames: [
+                                corpusMechanics,
+                                correctedMechanics,
+                            ]
+                        ),
+                    ]
+                    : []
+            ),
             processBindingRules: [
                 .init(
                     role: .probe,
@@ -3544,7 +3714,7 @@ public struct PrimeNativeNeuralGateSourceExecutionBindingContract:
             reproducibleBuildProvenanceClaimed:
                 false
         )
-    }()
+    }
 
     func expandedSwiftPackageDescribeArguments(
         scratchRootAbsolutePath: String
@@ -3735,7 +3905,36 @@ public struct PrimeNativeNeuralGateSourceExecutionBindingContract:
                     .map(\.targetName)
                     .filter(reachable.contains)
             }
-        guard self == .frozenV3,
+        let frozenTargetCount =
+            self == .frozenV4 ? 12 : 10
+        let version4FixtureAuthorityBoundaryExact =
+            self != .frozenV4
+            || (
+                dependencies[
+                    "PrimeNativeNeuralGateCorrectedMechanics"
+                ] == [
+                    "PrimeNativeNeuralGateReplayMechanics",
+                ]
+                && dependencies[
+                    "PrimeNativeNeuralGateCorrectedFixtureAuthority"
+                ] == [
+                    "PrimeNativeCorpusReplayMechanics",
+                    "PrimeNativeNeuralGateCorrectedMechanics",
+                ]
+                && processBindingRules.allSatisfy {
+                    !$0.exactTransitiveLocalTargetNames
+                        .contains(
+                            "PrimeNativeNeuralGateCorrectedMechanics"
+                        )
+                        && !$0
+                        .exactTransitiveLocalTargetNames
+                        .contains(
+                            "PrimeNativeNeuralGateCorrectedFixtureAuthority"
+                        )
+                }
+            )
+        guard (self == .frozenV3
+                || self == .frozenV4),
               Self.isSafeRelativePath(
                   packageManifestRelativePath
               ),
@@ -3748,7 +3947,7 @@ public struct PrimeNativeNeuralGateSourceExecutionBindingContract:
               Self.isSafeRelativePath(
                   compiledSourceClosureRelativePath
               ),
-              targets.count == 10,
+              targets.count == frozenTargetCount,
               targetSet.count == targets.count,
               roles
                 == PrimeNativeNeuralGateReleaseProcessRole
@@ -3797,6 +3996,7 @@ public struct PrimeNativeNeuralGateSourceExecutionBindingContract:
                       .recomputeSourceSnapshotAndClosure
               }),
               processClosuresExact,
+              version4FixtureAuthorityBoundaryExact,
               requiredBuildConfiguration == "release",
               swiftPackageDescribeCapturePolicy
                 == "direct_swift_package_executable_describe_type_json_exact_noninherited_scratch_environment_normalized_signals_start_suspended_direct_pid_until_sid_pgid_join_isolated_session_dedicated_process_group_descriptor_rooted_cwd_local_apfs_bounded_source_admission_held_source_closure_kqueue_guard_fresh_scratch_namespace_exact_optional_text_encoding_work_lock_bounded_opaque_provenance_bounded_post_audit_full_region_transcript_descriptor_join_trusted_capture_bounded_output_exact_once_wait_bounded_wnohang_no_post_reap_signal_uncontained_fail_stop_no_shell_v9",
@@ -12844,9 +13044,9 @@ public struct PrimeNativeNeuralGateFixtureReplayPlan:
             planID:
                 "ergentics_prime_native_neural_gate_dual_fixture_replay_v3",
             claimScope:
-                "source_pinned_synthetic_fixture_materialization_and_gate_replay_contract_with_implemented_secure_capture_replay_bytes_and_non_evidentiary_corrected_value_observation_mechanics",
+                "source_pinned_synthetic_fixture_materialization_and_gate_replay_contract_with_implemented_secure_capture_replay_bytes_exact_source_derived_corrected_fixture_identity_and_non_evidentiary_corrected_value_observation_mechanics",
             status:
-                "secure_capture_replay_bytes_and_corrected_value_observation_mechanics_implemented_exact_fixture_solver_historical_worker_and_stage_b_replay_not_implemented",
+                "secure_capture_replay_bytes_exact_source_derived_corrected_fixture_identity_and_corrected_value_observation_mechanics_implemented_solver_historical_worker_and_stage_b_replay_not_implemented",
             executionImplemented: false,
             projectionReceiptAuthorized: false,
             stageAParent: .frozenV1,
@@ -13157,7 +13357,7 @@ public struct PrimeNativeNeuralGateFixtureReplayPlan:
                         "distinct Release reconstruction and exclusive terminal receipt publisher"
                 ),
             ],
-            sourceExecutionBinding: .frozenV3,
+            sourceExecutionBinding: .frozenV4,
             historicalWorker: .frozenV2,
             probeArguments: [
                 "--stage-a-root",
@@ -13341,13 +13541,13 @@ public struct PrimeNativeNeuralGateFixtureReplayPlan:
             modeNormalizationPolicy:
                 "verify_current_user_single_link_regular_file_exact_bytes_and_sha256_then_chmod_only_listed_files_to_0444_never_recursive",
             immediateImplementationPrerequisite:
-                "bind_exact_source_derived_fixture_identity_and_row_count_then_bind_concrete_prime_owned_replicate_scoped_seed_prompt_solver_with_fresh_per_row_state_no_row_target_regrade_closure_or_existential_input_then_bind_bounded_full_vocabulary_logit_sidecar_and_source_pinned_float32_logsoftmax_recomputation_then_amend_trap_disjoint_target_topology_and_implement_role_scoped_stage_b_historical_worker_probe_verifier_with_typed_artifact_recomputation_and_exact_path_metadata_content_inventory",
+                "bind_concrete_prime_owned_replicate_scoped_seed_prompt_solver_with_fresh_per_row_state_no_row_target_regrade_closure_or_existential_input_then_bind_bounded_full_vocabulary_logit_sidecar_and_source_pinned_float32_logsoftmax_recomputation_then_amend_trap_disjoint_target_topology_and_implement_role_scoped_stage_b_historical_worker_probe_verifier_with_typed_artifact_recomputation_and_exact_path_metadata_content_inventory",
             postPassNextPrerequisite:
                 "physical_native_checkpoint_and_evaluation_shard_binding",
             authorityStatement:
                 "This contract freezes required schemas for a Swift-first Stage-B dual replay. " +
-                "PrimeCore implements the closed secure capture substrate. A separate pure corrected target now implements only non-evidentiary value and observation mechanics over caller-provided values: prompt-token row inputs, replicate-scoped admitted seeds, fixed-cap/EOS full-512-logit decision trace validation, allowed-support selection, exact structural raw-argmax/parity/count witnesses, canonical post-execution exact regrade, weighted statistics, exact 512-logit fixed-prompt margins, capability-threshold calculation, all-ten count-derived verdict composition, and fifteen ordered mutation-observation validators. Full logits are locally bound by exact bit-pattern digest; Foundation/Double probability diagnostics are non-evidentiary, excluded from canonical fingerprints, and cannot substitute for the frozen source-pinned Float32 log-softmax. It does not derive a semantic solver, inject or detect mutations, establish leg or capability truth, execute a source-bound fixture, or authorize a receipt. Semantic regrade and model capability remain unavailable. " +
-                "Forward audit proved that row_id exposes split and semantic family, including the abstention class; row identity is outer correlation only. Seed is shard/replicate scoped and cannot enter a row input. Fresh solver state is required for every row, and permuted row order must preserve each input trace, because retained state, invocation order, or a row-selected seed would create ambient metadata channels. Exact source-derived fixture identity and row count remain unbound, and the pure completion-feasibility calculator is not admission authority. Hex-expanding all 512 logits across the three complete replicates would exceed the frozen Stage-B decode bounds, so a bounded full-vocabulary logit sidecar and source-pinned Float32 log-softmax recomputation remain unbound. The existing planned donor topology also exposes trap-bearing runtime code to corrected supervisors, so donor transplant remains deferred and corrected execution is unauthorized until the exact fixture, a concrete Prime-owned solver derivation, the bounded logit artifact and recomputation, and a trap-disjoint topology are bound. " +
+                "PrimeCore implements the closed secure capture substrate. A separate pure corrected target now implements only non-evidentiary value and observation mechanics over caller-provided values: prompt-token row inputs, replicate-scoped admitted seeds, fixed-cap/EOS full-512-logit decision trace validation, allowed-support selection, exact structural raw-argmax/parity/count witnesses, canonical post-execution exact regrade, weighted statistics, exact 512-logit fixed-prompt margins, capability-threshold calculation, all-ten count-derived verdict composition, and fifteen ordered mutation-observation validators. Full logits are locally bound by exact bit-pattern digest; Foundation/Double probability diagnostics are non-evidentiary, excluded from canonical fingerprints, and cannot substitute for the frozen source-pinned Float32 log-softmax. It does not derive a semantic solver, inject or detect mutations, establish leg or capability truth, execute a source-bound fixture, or authorize a receipt. Semantic regrade and model capability remain unavailable. A separate offline fixture-authority target now recomputes the exact globally UTF-8-row-ID-ordered 18,432-row corrected fixture from the byte-exact source-pinned tokenizer/corpus transplant. The historical regression-fixture source is lineage-only and is not read or executed in this derivation. Closed Stage-A and full-corpus receipt identities are bound by complete records and type-decoded in repository tests, but receipt bytes are not read during derivation and no independent fixture probe/verifier receipt is published. The canonical observation and complete source-row/outer-regrade, prompt-only, and domain-separated target-feasibility bindings are frozen. Source-binding contract V4 attests the fixture and corrected-mechanics source targets while keeping both unreachable from every current probe/verifier executable closure; the trap-bearing corpus dependency is forbidden from the corrected executor closure. " +
+                "Forward audit proved that row_id exposes split and semantic family, including the abstention class; row identity is outer correlation only. Seed is shard/replicate scoped and cannot enter a row input. Fresh solver state is required for every row, and permuted row order must preserve each input trace, because retained state, invocation order, or a row-selected seed would create ambient metadata channels. Exact source-derived fixture identity and row count are now bound; the earlier caller-value-only completion-feasibility calculator remains non-authoritative by itself. Hex-expanding all 512 logits across the three complete replicates would exceed the frozen Stage-B decode bounds, so a bounded full-vocabulary logit sidecar and source-pinned Float32 log-softmax recomputation remain unbound. The existing planned donor topology also exposes trap-bearing runtime code to corrected supervisors, so donor transplant remains deferred and corrected execution is unauthorized until a concrete Prime-owned solver derivation, the bounded logit artifact and recomputation, and a trap-disjoint topology are bound. " +
                 "Stage-B replay execution, process records, workers, and terminal receipt are not implemented or observed and executionImplemented remains false. The factory admits a bounded current-owner local-APFS Prime source tree, holds authoritative root, directory, and file descriptors, arms receipt-checked EVFILT_VNODE guards, and requires exact inventories, bytes, metadata, path joins, and zero mutation events at initial, pre-resume, and post-reap checkpoints. It directly launches the frozen Xcode 26.6 build 17F113 swift-package image with an exact four-key non-inherited scratch environment, stdin at EOF, and normalized start-suspended 0x448c flags. Scratch ACLs and unknown extended attributes are rejected; com.apple.TextEncoding is optional only on the single-link regular work/.lock file with the exact 15-byte utf-8;134217984 value read through its descriptor, while com.apple.provenance is bounded to 4096 bytes and remains opaque non-authoritative metadata. Child authority is the positive PID until getsid(pid) and getpgid(pid) both equal pid; only then may the dedicated process group receive termination signals. Successful capture binds the suspended cwd and complete mapped-region vnode transcript to held descriptors, drains bounded streams through EOF, observes death, reaps the exact PID once, proves the group empty, and permits no post-reap signal. Ordinary rejection may return only after proven containment and exact reap; a child or drain that remains uncontained after bounded WNOHANG cleanup is supervisor fail-stop and cannot be encoded as ABSTAIN. The schema-4 external evidence and schema-4 describe-capture envelope are prerequisite and canary mechanics, not a Stage-B record or receipt. " +
                 "The historical arm reconstructs the exact source-pinned synthetic fixture only as forensic mechanics because its output construction consumes target length and expected completion while declaring target independence. Its source-faithful materializer retains donor trap sites, is not claimed wholly fail-closed, and must run in two role-scoped bounded workers. A contained abnormal termination is internally ABSTAIN, poisons the root, accepts no worker result as evidence, publishes no successful-execution record or terminal receipt, and permits no retry; partial artifacts may remain but are non-authoritative. A successful worker result is transport evidence and cannot establish mechanics PASS; the terminal verifier must decode and recompute every semantic artifact. The corrected arm must independently construct prompt-only fixed-cap-64 generation with EOS available at every decision and may establish only corrected synthetic gate mechanics. A terminal Stage-B mechanics PASS requires both arms, complete raw-UTF8 invariant multiset publication, exact direct/accelerated fingerprints, all ten Verify/Abstain legs, projected statistics and fixed-prompt margin, count-derived verdict, every ordered mutation with exact restoration, a validated process topology, exact pre-receipt realized path-and-metadata inventory, and typed validation of every artifact. Historical target independence and model capability remain ABSTAIN. " +
                 "Donor bytes are resolved, copied, and rebound as immutable evidence while the companion is unchanged; donor blobs are never dynamically compiled or executed. Every donor-to-Prime adaptation has a plan-authoritative byte-exact or hash-bound derivation plus lexical and compiled-source proof; successful behavior and caller-supplied manifests cannot supply expectations. The closed Stage-A receipt and complete descriptor-bound parent closure must be copied losslessly and revalidated from the Stage-B root. The direct swift-package launch path, proc_pidpath pathname, and code-sign fields remain non-authoritative telemetry; no Apple trust claim is made. Namespace classification never authorizes publication; publication must pass exact path, node, type, owner, link, mode, purpose, digest, typed-content, and no-replace checks with the receipt exclusively last. No independently reproducible build, NeuralKit module execution, companion runtime dependency, model or Metal execution, physical checkpoint or shard, independent scientific oracle, four-tier AgentContractKit audit, guarded statistics, training, quantization, diagonal-Hessian evaluation, Phase-3 completion, product authority, Python authority, or shell authority is claimed."
@@ -13422,6 +13622,45 @@ public struct PrimeNativeNeuralGateFixtureReplayPlan:
                     .directLocalDependencyNames
                         == target.dependencies
             }
+        let correctedMechanicsSourceRules =
+            sourceExecutionBinding
+            .targetClosureRules.filter {
+                $0.targetName
+                    == correctedExecutionAdmission
+                    .pureCorrectedMechanicsTarget
+            }
+        let fixtureAuthoritySourceRules =
+            sourceExecutionBinding
+            .targetClosureRules.filter {
+                $0.targetName
+                    == correctedExecutionAdmission
+                    .sourceBoundFixtureAuthorityTarget
+            }
+        let correctedFixtureAuthorityBoundaryMatches =
+            correctedMechanicsSourceRules.count == 1
+            && correctedMechanicsSourceRules[0]
+                .directLocalDependencyNames
+                == correctedExecutionAdmission
+                .pureCorrectedMechanicsDependencies
+            && fixtureAuthoritySourceRules.count == 1
+            && fixtureAuthoritySourceRules[0]
+                .directLocalDependencyNames
+                == correctedExecutionAdmission
+                .sourceBoundFixtureAuthorityDependencies
+            && sourceExecutionBinding
+                .processBindingRules.allSatisfy {
+                    !$0.exactTransitiveLocalTargetNames
+                        .contains(
+                            correctedExecutionAdmission
+                                .pureCorrectedMechanicsTarget
+                        )
+                        && !$0
+                        .exactTransitiveLocalTargetNames
+                        .contains(
+                            correctedExecutionAdmission
+                                .sourceBoundFixtureAuthorityTarget
+                        )
+                }
         let runningExecutablePaths = Set(
             outputContract.pathClassification
                 .runningExecutableRelativePaths
@@ -13458,6 +13697,7 @@ public struct PrimeNativeNeuralGateFixtureReplayPlan:
                 == PrimeNativeNeuralGateFixtureInputRole
                 .allCases,
               sourceMatchesProjection,
+              correctedFixtureAuthorityBoundaryMatches,
               inputPins.map(\.byteCount).reduce(0, +)
                 == totalPinnedInputByteCount,
               totalPinnedInputByteCount == 1_232_537,
