@@ -1,6 +1,7 @@
 import Foundation
 import XCTest
 @testable import PrimeCore
+@testable import PrimeNativeNeuralGateCorrectedFixtureAuthority
 
 final class PrimeNativeNeuralGateFixtureReplayPlanTests:
     XCTestCase
@@ -25,7 +26,7 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
         )
         XCTAssertEqual(
             plan.sourceExecutionBinding.contractID,
-            "prime_stage_b_release_source_executable_join_v3"
+            "prime_stage_b_release_source_executable_join_v4"
         )
         XCTAssertEqual(
             plan.historicalWorker.contractID,
@@ -48,13 +49,13 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
         )
         XCTAssertEqual(
             plan.status,
-            "secure_capture_replay_bytes_and_corrected_value_observation_mechanics_implemented_exact_fixture_solver_historical_worker_and_stage_b_replay_not_implemented"
+            "secure_capture_replay_bytes_exact_source_derived_corrected_fixture_identity_and_corrected_value_observation_mechanics_implemented_solver_historical_worker_and_stage_b_replay_not_implemented"
         )
         XCTAssertFalse(plan.executionImplemented)
         XCTAssertFalse(plan.projectionReceiptAuthorized)
         XCTAssertEqual(
             try plan.contentSHA256(),
-            "24235423e3e21c13b2c307941eabc92de8e78f9c4321d4aaf8418c4fecc884ba"
+            "9e8e9c4820fcea592f79cb4cbdc9abdd217a0ca6e00e2b715a215d8a1d315ee6"
         )
 
         let first =
@@ -495,9 +496,94 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
             admission
                 .sourceBoundFixtureIdentityAndExactRowCountRequired
         )
-        XCTAssertFalse(
+        XCTAssertTrue(
             admission
                 .sourceBoundFixtureIdentityAndExactRowCountBound
+        )
+        XCTAssertEqual(
+            admission.sourceBoundFixtureAuthorityTarget,
+            "PrimeNativeNeuralGateCorrectedFixtureAuthority"
+        )
+        XCTAssertEqual(
+            admission
+                .sourceBoundFixtureAuthorityDependencies,
+            [
+                "PrimeNativeCorpusReplayMechanics",
+                "PrimeNativeNeuralGateCorrectedMechanics",
+            ]
+        )
+        XCTAssertFalse(
+            admission
+                .sourceBoundFixtureAuthorityPermittedInCorrectedExecutorClosure
+        )
+        XCTAssertEqual(
+            admission.sourceBoundFixtureAuthorityLevel,
+            "source_plan_bound_recomputable_offline_observation_no_independent_fixture_receipt_v1"
+        )
+        XCTAssertFalse(
+            admission
+                .sourceBoundFixtureIndependentProbeVerifierReceiptPublished
+        )
+        XCTAssertFalse(
+            admission
+                .sourceBoundFixtureReceiptBytesReadDuringDerivation
+        )
+        XCTAssertEqual(
+            admission
+                .historicalFixtureSourceAuthorityStatus,
+            PrimeNativeNeuralGateCorrectedFixtureObservation
+                .historicalFixtureSourceAuthorityStatus
+        )
+        XCTAssertEqual(
+            admission
+                .sourceBoundFixtureFullCorpusReplayReceiptSHA256,
+            PrimeNativeNeuralGateCorrectedFixtureObservation
+                .fullCorpusReplayReceiptSHA256
+        )
+        XCTAssertEqual(
+            admission.sourceBoundFixtureObservationSHA256,
+            PrimeNativeNeuralGateCorrectedFixtureObservation
+                .frozenObservationSHA256
+        )
+        XCTAssertEqual(
+            admission.sourceBoundFixtureIdentitySHA256,
+            PrimeNativeNeuralGateCorrectedFixtureObservation
+                .frozenFixtureIdentitySHA256
+        )
+        XCTAssertEqual(
+            admission.sourceBoundFixtureExactRowCount,
+            PrimeNativeNeuralGateCorrectedFixtureObservation
+                .exactRowCount
+        )
+        XCTAssertEqual(
+            admission
+                .sourceBoundFixtureOrderedRowIDsSHA256,
+            PrimeNativeNeuralGateCorrectedFixtureObservation
+                .frozenOrderedRowIDsSHA256
+        )
+        XCTAssertEqual(
+            admission
+                .sourceBoundFixtureOrderedEvaluationRowsSHA256,
+            PrimeNativeNeuralGateCorrectedFixtureObservation
+                .frozenOrderedEvaluationRowsSHA256
+        )
+        XCTAssertEqual(
+            admission
+                .sourceBoundFixtureOrderedPromptOnlyInputBindingsSHA256,
+            PrimeNativeNeuralGateCorrectedFixtureObservation
+                .frozenOrderedPromptOnlyInputBindingsSHA256
+        )
+        XCTAssertEqual(
+            admission
+                .sourceBoundFixtureOrderedTargetTokenBindingsSHA256,
+            PrimeNativeNeuralGateCorrectedFixtureObservation
+                .frozenOrderedTargetTokenBindingsSHA256
+        )
+        XCTAssertEqual(
+            admission
+                .sourceBoundFixtureOrderedCompleteRowBindingsSHA256,
+            PrimeNativeNeuralGateCorrectedFixtureObservation
+                .frozenOrderedCompleteRowBindingsSHA256
         )
         XCTAssertFalse(
             admission
@@ -795,7 +881,7 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
         )
         XCTAssertEqual(
             plan.immediateImplementationPrerequisite,
-            "bind_exact_source_derived_fixture_identity_and_row_count_then_bind_concrete_prime_owned_replicate_scoped_seed_prompt_solver_with_fresh_per_row_state_no_row_target_regrade_closure_or_existential_input_then_bind_bounded_full_vocabulary_logit_sidecar_and_source_pinned_float32_logsoftmax_recomputation_then_amend_trap_disjoint_target_topology_and_implement_role_scoped_stage_b_historical_worker_probe_verifier_with_typed_artifact_recomputation_and_exact_path_metadata_content_inventory"
+            "bind_concrete_prime_owned_replicate_scoped_seed_prompt_solver_with_fresh_per_row_state_no_row_target_regrade_closure_or_existential_input_then_bind_bounded_full_vocabulary_logit_sidecar_and_source_pinned_float32_logsoftmax_recomputation_then_amend_trap_disjoint_target_topology_and_implement_role_scoped_stage_b_historical_worker_probe_verifier_with_typed_artifact_recomputation_and_exact_path_metadata_content_inventory"
         )
         XCTAssertTrue(
             plan.correctedExecutionAdmission
@@ -1041,6 +1127,24 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
             Plan.frozenV3.sourceExecutionBinding
 
         XCTAssertNoThrow(try contract.validate())
+        XCTAssertNoThrow(
+            try PrimeNativeNeuralGateSourceExecutionBindingContract
+                .frozenV3.validate()
+        )
+        XCTAssertEqual(
+            PrimeNativeNeuralGateSourceExecutionBindingContract
+                .frozenV3.contractID,
+            "prime_stage_b_release_source_executable_join_v3"
+        )
+        XCTAssertEqual(
+            PrimeNativeNeuralGateSourceExecutionBindingContract
+                .frozenV3.targetClosureRules.count,
+            10
+        )
+        XCTAssertEqual(
+            contract.contractID,
+            "prime_stage_b_release_source_executable_join_v4"
+        )
         XCTAssertEqual(
             contract.requiredBuildConfiguration,
             "release"
@@ -1060,6 +1164,8 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
                 "PrimeNativeNeuralGateHistoricalFixtureWorker",
                 "PrimeNativeNeuralGateReplayProbe",
                 "PrimeNativeNeuralGateReplayVerifier",
+                "PrimeNativeNeuralGateCorrectedMechanics",
+                "PrimeNativeNeuralGateCorrectedFixtureAuthority",
             ]
         )
         XCTAssertEqual(
@@ -1774,7 +1880,7 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
         )
         XCTAssertEqual(
             fixture.closure.targets.count,
-            10
+            12
         )
         XCTAssertEqual(
             try fixture.closure
@@ -4692,7 +4798,7 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
         )
     }
 
-    func testBoundedSliceAddsOnlyTwoPureMechanicsTargets()
+    func testBoundedSlicesAddOnlyApprovedMechanicsAndFixtureAuthorityTargets()
         throws
     {
         let package = try String(
@@ -4706,6 +4812,8 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
             "PrimeNativeNeuralGateReplayMechanics"
         let correctedTarget =
             "PrimeNativeNeuralGateCorrectedMechanics"
+        let fixtureAuthorityTarget =
+            "PrimeNativeNeuralGateCorrectedFixtureAuthority"
         XCTAssertTrue(
             compactPackage.contains(
                 #".target(name:"\#(mechanicsTarget)")"#
@@ -4727,6 +4835,45 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
                 atPath:
                     "Sources/\(correctedTarget)"
             )
+        )
+        XCTAssertTrue(
+            compactPackage.contains(
+                #".target(name:"\#(fixtureAuthorityTarget)",dependencies:["PrimeNativeCorpusReplayMechanics","\#(correctedTarget)",])"#
+            )
+        )
+        XCTAssertTrue(
+            FileManager.default.fileExists(
+                atPath:
+                    "Sources/\(fixtureAuthorityTarget)"
+            )
+        )
+        let sourceBinding =
+            Plan.frozenV3.sourceExecutionBinding
+        let fixtureAuthorityRule =
+            try XCTUnwrap(
+                sourceBinding.targetClosureRules
+                    .first {
+                        $0.targetName
+                            == fixtureAuthorityTarget
+                    }
+            )
+        XCTAssertEqual(
+            fixtureAuthorityRule
+                .directLocalDependencyNames,
+            [
+                "PrimeNativeCorpusReplayMechanics",
+                correctedTarget,
+            ]
+        )
+        XCTAssertTrue(
+            sourceBinding.processBindingRules
+                .allSatisfy {
+                    !$0.exactTransitiveLocalTargetNames
+                        .contains(correctedTarget)
+                        && !$0
+                        .exactTransitiveLocalTargetNames
+                        .contains(fixtureAuthorityTarget)
+                }
         )
         for forbiddenTarget in Plan.frozenV3
             .targetGraph.map(\.target)
@@ -4926,7 +5073,37 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
             ] as! [String: Any]
             admission[
                 "source_bound_fixture_identity_and_exact_row_count_bound"
+            ] = false
+            object["corrected_execution_admission"] =
+                admission
+        }
+        try assertMutationRejected { object in
+            var admission = object[
+                "corrected_execution_admission"
+            ] as! [String: Any]
+            admission[
+                "source_bound_fixture_authority_permitted_in_corrected_executor_closure"
             ] = true
+            object["corrected_execution_admission"] =
+                admission
+        }
+        try assertMutationRejected { object in
+            var admission = object[
+                "corrected_execution_admission"
+            ] as! [String: Any]
+            admission[
+                "source_bound_fixture_observation_sha256"
+            ] = String(repeating: "0", count: 64)
+            object["corrected_execution_admission"] =
+                admission
+        }
+        try assertMutationRejected { object in
+            var admission = object[
+                "corrected_execution_admission"
+            ] as! [String: Any]
+            admission[
+                "source_bound_fixture_exact_row_count"
+            ] = 18_431
             object["corrected_execution_admission"] =
                 admission
         }

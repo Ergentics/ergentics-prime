@@ -160,6 +160,14 @@ let package = Package(
             ]
         ),
         .target(
+            name:
+                "PrimeNativeNeuralGateCorrectedFixtureAuthority",
+            dependencies: [
+                "PrimeNativeCorpusReplayMechanics",
+                "PrimeNativeNeuralGateCorrectedMechanics",
+            ]
+        ),
+        .target(
             name: "PrimeNativeCorpusReplay",
             dependencies: [
                 "PrimeCore",
@@ -325,6 +333,7 @@ let package = Package(
                 "PrimeNativeNeuralGateContract",
                 "PrimeNativeNeuralGateReplayMechanics",
                 "PrimeNativeNeuralGateCorrectedMechanics",
+                "PrimeNativeNeuralGateCorrectedFixtureAuthority",
             ]
         ),
     ]

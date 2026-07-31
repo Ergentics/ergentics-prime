@@ -263,7 +263,7 @@ final class PrimeNativeNeuralGateCorrectedMechanicsTests:
                 "PrimeNativeNeuralGateReplayMechanics",
             ]
         )
-        XCTAssertFalse(
+        XCTAssertTrue(
             admission
                 .sourceBoundFixtureIdentityAndExactRowCountBound
         )

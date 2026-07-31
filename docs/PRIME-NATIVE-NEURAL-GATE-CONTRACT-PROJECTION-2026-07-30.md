@@ -393,9 +393,10 @@ is an explicit trust prerequisite.
 External-child evidence and the enclosing describe-capture record are schema
 4 at the role-specific capture-V4 paths. The adaptation-proof and
 historical-worker aggregate contracts remain V2. The source/execution-binding
-and replay-output contracts are V3, the output-path-classification contract ID
-is `prime_stage_b_output_path_namespace_classification_v3`, and the fixture
-plan is V3/schema 3 at `neural-gate-replay/plan.v3.json`; the adaptation proof
+contract is V4, the replay-output contract remains V3, the
+output-path-classification contract ID is
+`prime_stage_b_output_path_namespace_classification_v3`, and the fixture plan
+is V3/schema 3 at `neural-gate-replay/plan.v3.json`; the adaptation proof
 remains at `neural-gate-replay/source/adaptation-proof.v2.json`. The nested
 held-source mutation-guard observation stays schema 1, the scratch observation
 is schema 2, and the raw describe artifact, compiled closure, Release bindings,
@@ -407,12 +408,13 @@ reaped failures: the first exposed terminal mapped-region zero-byte/`EINVAL`
 behavior, and the second exposed the exact optional
 `com.apple.TextEncoding` value on the regular file `work/.lock`. After those
 corrections, the live Release two-role secure-capture canary was rerun after
-the corrected-mechanics source freeze and passed end to end on the pinned host
-with byte-identical probe/verifier output: 22,568 bytes, SHA-256
-`b0d8dbe25bddd054dedc56a3a5b6351d7d71a2db61d87686f2c1d11317ed3e93`.
-This is the current accepted corrected-target reseal. It includes the
+the fixture-authority twelve-target source freeze and passed end to end on the
+pinned host with byte-identical probe/verifier output: 23,207 bytes, SHA-256
+`f2204bbae8623c35fdf7357c6b0aa2a585e9071f22556edbe6ce6e7cfccf04d5`.
+This is the current accepted fixture-authority reseal. It includes the
 PrimeCore trusted descriptor-inventory substrate, pure Stage-B replay
-mechanics, and corrected value mechanics; it does not widen canary authority.
+mechanics, corrected value mechanics, and the offline source-attested fixture
+target; it does not widen canary authority.
 
 The later corrected-mechanics sub-slice remains pure value/observation
 mechanics. Row input is only canonical prompt token IDs; one admitted seed is
@@ -425,15 +427,25 @@ are locally digest-bound; Foundation/Double probability values remain
 non-evidentiary and cannot stand in for the frozen source-pinned Float32
 log-softmax. It does not execute or detect mutations, establish
 semantic/capability truth, derive a solver, or authorize execution/receipt.
+An isolated offline Swift fixture-authority target now exhaustively
+recomputes the globally UTF-8-row-ID-ordered 18,432-row corrected fixture from
+the byte-exact source-pinned tokenizer/corpus transplant. Its source-plan
+fixture identity is
+`c1f29a0d1067a4bce5541ee5100044276ccc16c63e57501b509fb3126fcd29a4`;
+the canonical observation is
+`a30c7fe39157ce6e0de2e0783a8af8807c4a1b02b309a144ba3272a6cc6d931d`.
+The historical regression fixture is lineage-only in this derivation. Parent
+receipt identities are complete and type-decoded in tests, but the derivation
+reads no receipt bytes and publishes no independent fixture receipt.
 The earlier corrected request exposed `row_id`, whose corpus value encodes
 split and semantic family; that metadata is now outer correlation only.
 Row-selected seeds, retained state, and invocation order are also metadata
 channels, so one seed per replicate, fresh per-row state, and row-permutation
 trace identity are mandatory. The planned shared donor topology also exposed
 trap-bearing historical code to corrected supervisors. Corrected execution is
-blocked until exact source-derived fixture identity/count, a concrete
-Prime-owned solver derivation, a bounded full-logit sidecar with source-pinned
-Float32 recomputation, and a trap-disjoint topology are bound.
+blocked until a concrete Prime-owned solver derivation, a bounded full-logit
+sidecar with source-pinned Float32 recomputation, and a trap-disjoint topology
+are bound.
 
 That pass validates only the secure capture substrate on the pinned host. It
 published no durable Stage-B process record or receipt,

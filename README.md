@@ -427,6 +427,26 @@ inject/detect defects or establish observed leg, capability, semantic, or
 model truth. It contains no prompt solver, process, filesystem, network,
 donor-runtime, model, or receipt authority.
 
+An isolated
+`PrimeNativeNeuralGateCorrectedFixtureAuthority` target now derives the exact
+corrected fixture from Prime's byte-exact source-pinned tokenizer/corpus
+transplant while binding the identities of the closed Stage-A and full-corpus
+replay receipts. It selects 4,096 validation, 4,096 combination-holdout, 4,096
+OOD, 4,096 mutation, and 2,048 abstention rows, then globally orders all
+18,432 rows by row ID. The
+domain-separated fixture identity is
+`c1f29a0d1067a4bce5541ee5100044276ccc16c63e57501b509fb3126fcd29a4`;
+the canonical observation SHA-256 is
+`a30c7fe39157ce6e0de2e0783a8af8807c4a1b02b309a144ba3272a6cc6d931d`.
+This derivation exhaustively regrades every selected fixture row and binds
+prompt-only inputs separately from target-token/EOS feasibility. Its corpus
+dependency is trap-bearing derivation authority and is forbidden from the
+corrected executor closure. The historical regression fixture is lineage-only here; it
+is neither read nor executed. Closed parent receipt identities are
+source-bound and type-decoded in tests, but the derivation itself reads no
+receipt bytes and publishes no independent fixture receipt. It performs no
+solver or model execution and authorizes no Stage-B receipt.
+
 The pure trace binds every 512-logit decision by an exact bit-pattern digest
 instead of hex-expanding logits into the invariant multiset; the expanded
 three-replicate fixture would violate Stage-B decode bounds. This is not a
@@ -442,12 +462,12 @@ identity stays outside the execution value. Fresh per-row solver state and
 row-order permutation identity are mandatory because retained state, order, or
 row-selected seeds are also metadata channels. The audit also found that the
 planned shared donor topology would expose trap-bearing historical code to
-corrected supervisors. Corrected execution is explicitly blocked until exact
-source-derived fixture identity/count, a concrete Prime-owned prompt-solver
-derivation, a bounded full-logit sidecar with source-pinned Float32
-recomputation, and a trap-disjoint target topology are bound. The historical
-worker, paired probe/verifier, Stage-B execution records, and receipt remain
-pending; `executionImplemented` remains false.
+corrected supervisors. The exact source-derived fixture identity/count leg is
+now source-plan-bound. Corrected execution remains blocked until a concrete
+Prime-owned prompt-solver derivation, a bounded full-logit sidecar with
+source-pinned Float32 recomputation, and a trap-disjoint target topology are
+bound. The historical worker, paired probe/verifier, Stage-B execution
+records, and receipt remain pending; `executionImplemented` remains false.
 
 The closed PrimeCore external-child capture substrate is implemented. It
 accepts only the role and source root, directly launches the frozen Xcode 26.6
@@ -508,8 +528,8 @@ schema 4 at
 `neural-gate-replay/source/probe-swift-package-describe-capture.v4.json` and
 `neural-gate-replay/source/verifier-swift-package-describe-capture.v4.json`.
 The adaptation-proof and historical-worker aggregate contracts remain V2. The
-source/execution-binding and replay-output contracts are frozen at V3, the
-output-path-classification contract ID is
+source/execution-binding contract is frozen at V4, the replay-output contract
+remains V3, the output-path-classification contract ID is
 `prime_stage_b_output_path_namespace_classification_v3`, and the fixture plan
 is V3/schema 3 at `neural-gate-replay/plan.v3.json`. The adaptation proof
 remains at `neural-gate-replay/source/adaptation-proof.v2.json`. The nested
@@ -526,13 +546,14 @@ first exposed the terminal mapped-region zero-byte/`EINVAL` behavior, and the
 second progressed past that point and exposed the exact optional
 `com.apple.TextEncoding` value on the regular file `work/.lock`. After those
 corrections, the then-current live Release two-role secure-capture canary
-was rerun after the corrected-mechanics source freeze and passed end to end on
-the pinned host. Probe and verifier output was byte-identical: 22,568 bytes
-with SHA-256
-`b0d8dbe25bddd054dedc56a3a5b6351d7d71a2db61d87686f2c1d11317ed3e93`.
-This is the current accepted corrected-target reseal. It includes the trusted
-descriptor-inventory substrate, pure Stage-B replay mechanics, and corrected
-value mechanics; it does not widen canary authority.
+was rerun after the fixture-authority twelve-target source freeze and passed
+end to end on the pinned host. Probe and verifier output was byte-identical:
+23,207 bytes with SHA-256
+`f2204bbae8623c35fdf7357c6b0aa2a585e9071f22556edbe6ce6e7cfccf04d5`.
+This is the current accepted fixture-authority reseal. It includes the trusted
+descriptor-inventory substrate, pure Stage-B replay mechanics, corrected value
+mechanics, and the offline source-attested fixture target; it does not widen
+canary authority.
 That pass validates only the secure capture substrate on the pinned host. It
 published no durable Stage-B process record or receipt,
 `executionImplemented` remains false, and no Stage-B replay, historical
@@ -556,7 +577,7 @@ or drain must fail-stop. Worker result transport cannot authorize mechanics
 `PASS`; the verifier must decode and recompute the semantic artifacts. Stage A
 is copied as 35 reachable typed bindings plus its separately pinned receipt,
 or 36 artifacts total. The exact next prerequisite is
-`bind_exact_source_derived_fixture_identity_and_row_count_then_bind_concrete_prime_owned_replicate_scoped_seed_prompt_solver_with_fresh_per_row_state_no_row_target_regrade_closure_or_existential_input_then_bind_bounded_full_vocabulary_logit_sidecar_and_source_pinned_float32_logsoftmax_recomputation_then_amend_trap_disjoint_target_topology_and_implement_role_scoped_stage_b_historical_worker_probe_verifier_with_typed_artifact_recomputation_and_exact_path_metadata_content_inventory`.
+`bind_concrete_prime_owned_replicate_scoped_seed_prompt_solver_with_fresh_per_row_state_no_row_target_regrade_closure_or_existential_input_then_bind_bounded_full_vocabulary_logit_sidecar_and_source_pinned_float32_logsoftmax_recomputation_then_amend_trap_disjoint_target_topology_and_implement_role_scoped_stage_b_historical_worker_probe_verifier_with_typed_artifact_recomputation_and_exact_path_metadata_content_inventory`.
 
 ## Initial calibration
 

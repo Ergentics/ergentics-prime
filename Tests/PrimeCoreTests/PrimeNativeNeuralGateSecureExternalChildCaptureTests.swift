@@ -357,7 +357,7 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
             .evaluateMappedRegionTranscript(
                 executableSnapshot:
                     snapshot,
-                contract: .frozenV3,
+                contract: .frozenV4,
                 queryLimit: 8
             ) {
                 queryAddress in
@@ -671,7 +671,7 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
                     .evaluateMappedRegionTranscript(
                         executableSnapshot:
                             mappedExecutableSnapshot(),
-                        contract: .frozenV3,
+                        contract: .frozenV4,
                         queryLimit: 8
                     ) {
                         queryAddress in
@@ -710,7 +710,7 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
                 .evaluateMappedRegionTranscript(
                     executableSnapshot:
                         mappedExecutableSnapshot(),
-                    contract: .frozenV3,
+                    contract: .frozenV4,
                     queryLimit: 1
                 ) {
                     queryAddress in
@@ -793,13 +793,13 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
         // final compiled source-file set is frozen.
         XCTAssertEqual(
             probe.standardOutputData.count,
-            22_568
+            23_207
         )
         XCTAssertEqual(
             PrimeSHA256.hexDigest(
                 of: probe.standardOutputData
             ),
-            "b0d8dbe25bddd054dedc56a3a5b6351d7d71a2db61d87686f2c1d11317ed3e93"
+            "f2204bbae8623c35fdf7357c6b0aa2a585e9071f22556edbe6ce6e7cfccf04d5"
         )
         XCTAssertEqual(
             probe.validatedPrimeSourceSnapshot,
@@ -863,7 +863,7 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
     ) throws {
         let contract =
             PrimeNativeNeuralGateSourceExecutionBindingContract
-            .frozenV3
+            .frozenV4
         let evidence = capture.evidence
         let wait = evidence.exactPIDWaitObservation
         let workingDirectory =
@@ -1193,7 +1193,7 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
     {
         let contract =
             PrimeNativeNeuralGateSourceExecutionBindingContract
-            .frozenV3
+            .frozenV4
         return
             PrimeNativeNeuralGateExecutableDescriptorSnapshot(
                 deviceID: deviceID,
@@ -1316,7 +1316,7 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
                 .evaluateMappedRegionTranscript(
                     executableSnapshot:
                         mappedExecutableSnapshot(),
-                    contract: .frozenV3,
+                    contract: .frozenV4,
                     queryLimit: 8
                 ) {
                     queryAddress in
