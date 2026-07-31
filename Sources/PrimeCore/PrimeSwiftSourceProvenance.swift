@@ -190,6 +190,12 @@ public enum PrimeSwiftSourceProvenance {
     ]
     private static let maximumSourceFileBytes:
         Int64 = 8 * 1024 * 1024
+    static let maximumSnapshotFileCount = 4_096
+    static let maximumSnapshotDirectoryCount =
+        4_096
+    static let maximumSnapshotAggregateBytes:
+        UInt64 = 512 * 1024 * 1024
+    static let maximumSnapshotRelativeDepth = 32
 
     public static func capture(
         at sourceRoot: URL,
@@ -275,6 +281,53 @@ public enum PrimeSwiftSourceProvenance {
         var urls = fixedRelativePaths.map {
             root.appendingPathComponent($0)
         }
+        var aggregateBytes: UInt64 = 0
+        var directoryCount =
+            recursiveDirectoryRelativePaths.count
+        guard urls.count
+                <= maximumSnapshotFileCount
+        else {
+            throw PrimeSwiftSourceProvenanceError
+                .incompleteSourceSnapshot
+        }
+        for (relativePath, url) in zip(
+            fixedRelativePaths,
+            urls
+        ) {
+            var metadata = stat()
+            guard relativePath.split(
+                separator: "/"
+            ).count
+                <= maximumSnapshotRelativeDepth,
+            lstat(
+                url.path,
+                &metadata
+            ) == 0,
+            metadata.st_mode & S_IFMT
+                == S_IFREG,
+            metadata.st_size >= 0,
+            metadata.st_size
+                <= maximumSourceFileBytes
+            else {
+                throw PrimeSwiftSourceProvenanceError
+                    .unsafeSourceFile(
+                        relativePath
+                    )
+            }
+            let next =
+                aggregateBytes
+                .addingReportingOverflow(
+                    UInt64(metadata.st_size)
+                )
+            guard !next.overflow,
+                  next.partialValue
+                    <= maximumSnapshotAggregateBytes
+            else {
+                throw PrimeSwiftSourceProvenanceError
+                    .incompleteSourceSnapshot
+            }
+            aggregateBytes = next.partialValue
+        }
         for directory in
             recursiveDirectoryRelativePaths
         {
@@ -304,20 +357,65 @@ public enum PrimeSwiftSourceProvenance {
                 if metadata.st_mode & S_IFMT
                     == S_IFDIR
                 {
+                    directoryCount += 1
+                    guard directoryCount
+                            <= maximumSnapshotDirectoryCount,
+                          fileURL.path
+                            .dropFirst(
+                                rootPrefix.count
+                            )
+                            .split(
+                                separator: "/"
+                            ).count
+                            <= maximumSnapshotRelativeDepth
+                    else {
+                        throw PrimeSwiftSourceProvenanceError
+                            .incompleteSourceSnapshot
+                    }
                     continue
                 }
                 guard metadata.st_mode & S_IFMT
-                    == S_IFREG
+                    == S_IFREG,
+                    metadata.st_size >= 0,
+                    metadata.st_size
+                        <= maximumSourceFileBytes,
+                    urls.count + 1
+                        <= maximumSnapshotFileCount,
+                    fileURL.path
+                        .dropFirst(
+                            rootPrefix.count
+                        )
+                        .split(
+                            separator: "/"
+                        ).count
+                        <= maximumSnapshotRelativeDepth
                 else {
                     throw PrimeSwiftSourceProvenanceError
                         .unsafeSourceFile(fileURL.path)
                 }
+                let next =
+                    aggregateBytes
+                    .addingReportingOverflow(
+                        UInt64(
+                            metadata.st_size
+                        )
+                    )
+                guard !next.overflow,
+                      next.partialValue
+                        <= maximumSnapshotAggregateBytes
+                else {
+                    throw PrimeSwiftSourceProvenanceError
+                        .incompleteSourceSnapshot
+                }
+                aggregateBytes =
+                    next.partialValue
                 urls.append(fileURL)
             }
         }
 
         var files = [PrimeSwiftSourceFileSnapshot]()
         var observedPaths = Set<String>()
+        var actualReadAggregateBytes: UInt64 = 0
         for url in urls {
             let standardized =
                 url.standardizedFileURL
@@ -343,6 +441,23 @@ public enum PrimeSwiftSourceProvenance {
             let data = try regularFileData(
                 at: standardized
             )
+            let nextActualReadAggregate =
+                actualReadAggregateBytes
+                .addingReportingOverflow(
+                    UInt64(data.count)
+                )
+            guard !nextActualReadAggregate
+                    .overflow,
+                  nextActualReadAggregate
+                    .partialValue
+                    <= maximumSnapshotAggregateBytes
+            else {
+                throw PrimeSwiftSourceProvenanceError
+                    .incompleteSourceSnapshot
+            }
+            actualReadAggregateBytes =
+                nextActualReadAggregate
+                .partialValue
             files.append(
                 PrimeSwiftSourceFileSnapshot(
                     relativePath: relativePath,
