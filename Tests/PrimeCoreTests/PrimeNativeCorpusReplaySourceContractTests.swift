@@ -95,7 +95,7 @@ final class PrimeNativeCorpusReplaySourceContractTests:
         }
         XCTAssertTrue(
             package.contains(
-                #".testTarget(name:"PrimeCoreTests",dependencies:["PrimeCore","PrimeNativeCorpusReplay","PrimeNativeCorpusReplayMechanics","PrimeNativeNeuralGateContract","PrimeNativeNeuralGateReplayMechanics","PrimeNativeNeuralGateCorrectedMechanics","PrimeNativeNeuralGateCorrectedFixtureAuthority","PrimeNativeNeuralGatePromptSolver","PrimeNativeNeuralGateLogitSidecarMechanics",])"#
+                #".testTarget(name:"PrimeCoreTests",dependencies:["PrimeCore","PrimeNativeCorpusReplay","PrimeNativeCorpusReplayMechanics","PrimeNativeNeuralGateContract","PrimeNativeNeuralGateReplayMechanics","PrimeNativeNeuralGateCorrectedMechanics","PrimeNativeNeuralGateCorrectedEvaluationMechanics","PrimeNativeNeuralGateCorrectedFixtureAuthority","PrimeNativeNeuralGatePromptSolver","PrimeNativeNeuralGateLogitSidecarMechanics",])"#
             )
         )
     }

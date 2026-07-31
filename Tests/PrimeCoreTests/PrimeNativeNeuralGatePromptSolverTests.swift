@@ -4,6 +4,7 @@ import PrimeCore
 import PrimeNativeCorpusReplayMechanics
 import PrimeNativeNeuralGateCorrectedFixtureAuthority
 import PrimeNativeNeuralGateCorrectedMechanics
+import PrimeNativeNeuralGateCorrectedEvaluationMechanics
 import PrimeNativeNeuralGatePromptSolver
 import XCTest
 

@@ -110,20 +110,20 @@ statistics and fixed-prompt margin, count-derived verdict, ordered mutation
 detection/restoration, and fresh-process reconstruction are mandatory for a
 terminal Stage-B mechanics pass.
 
-The bounded pure-library layer now includes the canonical raw-UTF-8
-stream/chunk and independent direct/affine fingerprint mechanics plus a
-separate corrected value-mechanics target. The corrected row input admits only
-canonical prompt token IDs; one admitted seed is replicate-scoped. The target
-validates fixed-cap/EOS full-512-logit decision traces, allowed-support
-selection, exact structural raw-argmax/parity/count witnesses, canonical exact regrade,
-weighted statistics, exact 512-logit fixed-prompt margins, capability
-thresholds, the count-derived ten-leg verdict, and fifteen ordered mutation
-observations. Full logits are locally digest-bound; Foundation/Double
-probability values remain non-evidentiary and cannot stand in for the frozen
-source-pinned Float32 log-softmax. These are calculators over caller-provided
-values, not mutation execution or observed semantic/capability authority. The
-corrected-mechanics target itself has no solver, process, I/O, donor-runtime,
-model, or receipt authority.
+The bounded pure-library layer now includes canonical raw-UTF-8 stream/chunk
+mechanics and independent direct/affine fingerprints. The raw corrected target
+admits only canonical prompt token IDs plus one replicate-scoped seed and owns
+fixed-cap/EOS full-512-logit decisions and structural execution traces. A
+one-way evaluation target owns correlation, completion feasibility, exact
+regrade, weighted statistics, fixed-prompt margins, capability thresholds,
+the count-derived ten-leg verdict, and fifteen ordered mutation-observation
+validators. Prompt solver and logit sidecar depend only on raw mechanics.
+Full logits are locally digest-bound; Foundation/Double probability values
+remain non-evidentiary and cannot stand in for the frozen source-pinned
+Float32 log-softmax. Evaluation APIs remain calculators over caller-provided
+values, not mutation execution or observed semantic/capability authority.
+Neither mechanics target has process, I/O, donor-runtime, model, or receipt
+authority.
 
 An isolated `PrimeNativeNeuralGateCorrectedFixtureAuthority` target now
 exhaustively derives the exact 18,432-row corrected fixture from the
@@ -164,6 +164,15 @@ false: no durable sidecar, full-fixture process observation or recomputation,
 model execution, Stage-B Metal authority, process record, terminal receipt,
 independent scientific oracle, or product authority has been established.
 
+The current package boundary is frozen separately by
+`PrimeNativeNeuralGateTrapDisjointTopologyContract.frozenV1`, canonical
+SHA-256
+`48e0f64fcb14193d74bf9c3d98a8aeef7ca366033cea6d8f00bc345ff0ad86b5`.
+It records the implemented raw/evaluation split and the exact
+`planned_not_materialized` execution topology. Plan V5 and source binding V6
+remain historical; source binding V7 is reserved until a live compiled-source
+closure is reconciled against physically present targets.
+
 This split is security-significant. The previously planned `row_id` input
 encodes split and semantic family, including the abstention class, so row
 identity is now outer correlation only. The planned shared donor target also
@@ -172,11 +181,14 @@ Row-selected seeds, retained solver state, and invocation order are additional
 metadata channels, so one seed per replicate, fresh per-row state, and
 row-permutation trace identity are mandatory. The exact source-derived
 fixture identity/count, the concrete prompt-only solver derivation, the
-sidecar codec, and the MLX Float32 operation are now source-plan-bound.
-Corrected execution remains blocked until the topology is trap-disjoint,
-mutators and typed artifact decoders are source-bound, and the role-scoped
-worker, paired probe/verifier, exact inventory, and durable observations are
-implemented. The pure trace uses per-decision bit-pattern digests because
+sidecar codec, and the MLX Float32 operation are now source-plan-bound. The
+package now splits raw corrected execution from evaluation/regrade authority;
+trap-disjoint topology V1 supersedes the unsafe future routing and keeps
+source binding V7 unissued. Corrected execution remains blocked until typed
+artifact decoders and disjoint mutation producer/detector mechanics are
+source-bound, followed by the role-scoped worker, paired probe/verifier, exact
+inventory, and durable observations. The pure trace uses per-decision
+bit-pattern digests because
 hex-expanding all 512 logits would exceed the frozen Stage-B decode limits;
 the local Foundation/Double probability diagnostic is excluded from canonical
 fingerprints. The historical worker, paired probe/verifier, execution records,
@@ -288,7 +300,16 @@ fifteen-target V6 source graph and isolated MLX validation topology were
 frozen, the same Release canary passed with byte-identical probe/verifier
 output: 26,090 bytes with SHA-256
 `53ace0b68b1f8f2cf6534be886cb93241b08a36e0ddf0e9da7f8eee33f37cb40`.
-That is the current typed V6 selected-source-graph reseal.
+The later topology audit established that this is an actual-package
+secure-capture reseal only. The captured package description was not
+reconciled against V6's planned closure, whose future execution targets were
+not materialized, so it is not V6 selected-source execution-graph proof.
+After the raw/evaluation package split and topology V1 correction, the same
+Release canary passed with byte-identical probe/verifier output: 27,015 bytes,
+SHA-256
+`00dc419e101367d1f4a1d39f63bd35649b4de45417d74e4197f2376d729cdadf`.
+This is the current actual-package secure-capture reseal; source binding V7
+remains unissued.
 The pass validates only the secure capture substrate on that pinned host. It
 published no durable Stage-B process record or receipt,
 `executionImplemented` remains false, and no Stage-B replay, historical
@@ -328,18 +349,20 @@ source-plan-bound by the offline fixture authority. The separate prompt-only
 solver derivation, bounded sidecar codec, and maintained MLX Float32 operation
 are also source-plan-bound, without an independent solver or execution receipt.
 The exact next prerequisite is
-`amend_trap_disjoint_target_topology_then_implement_source_bound_mutators_and_typed_artifact_decoders_then_implement_role_scoped_stage_b_historical_worker_probe_verifier_with_exact_path_metadata_content_inventory`.
+`implement_pure_typed_artifact_schemas_bounded_canonical_decoders_and_source_bound_corrected_mutation_producer_detector_without_materializing_historical_runtime`.
 
-- amend the draft topology so trap-bearing historical donor/runtime code
-  cannot enter corrected supervisors;
+- retain completed topology V1 and do not route historical donor/runtime code
+  into corrected supervisors;
 - implement source-bound mutators and typed artifact decoders; repository
   mechanics tests and the local Foundation/Double diagnostic are not durable
   evidence;
 - use the completed PrimeCore secure-capture substrate from role-scoped
   Stage-B probe and verifier supervisors, then bind the donor-to-Prime
-  adaptation proof, copied/revalidated Stage-A descriptor closure, validated
-  six-process records, distinct descriptor-captured Release probe/verifier
-  images, the sealed historical worker, exact pre-receipt realized
+  adaptation proof and copied/revalidated Stage-A descriptor closure; the
+  historical V5 six-process count is superseded by the added corrected raw
+  worker, so freeze a replacement process-count/receipt schema before
+  execution; bind distinct descriptor-captured Release probe/verifier images,
+  the sealed historical worker, exact pre-receipt realized
   path-and-metadata inventory, and separate typed artifact-content validation
   required by the frozen Stage-B wrapper;
 - reconstruct the source-pinned historical fixture in a Prime-owned Swift

@@ -433,19 +433,29 @@ fifteen-target V6 source graph and isolated MLX validation topology were
 frozen, the same Release canary passed with byte-identical probe/verifier
 output: 26,090 bytes with SHA-256
 `53ace0b68b1f8f2cf6534be886cb93241b08a36e0ddf0e9da7f8eee33f37cb40`.
-That is the current typed V6 selected-source-graph reseal.
+The later topology audit established that this is an actual-package
+secure-capture reseal only. The captured package description was not
+reconciled against V6's planned closure, whose future execution targets were
+not materialized, so it is not V6 selected-source execution-graph proof.
+After the raw/evaluation package split and topology V1 correction, the same
+Release canary passed with byte-identical probe/verifier output: 27,015 bytes,
+SHA-256
+`00dc419e101367d1f4a1d39f63bd35649b4de45417d74e4197f2376d729cdadf`.
+This is the current actual-package secure-capture reseal; source binding V7
+remains unissued.
 
-The later corrected-mechanics sub-slice remains pure value/observation
-mechanics. Row input is only canonical prompt token IDs; one admitted seed is
-replicate-scoped. It validates fixed-cap/EOS full-512-logit decision traces,
-allowed-support selection, exact structural raw-argmax/parity/count witnesses,
-canonical exact regrade, weighted statistics, exact 512-logit fixed-prompt
+The corrected mechanics are now split. The raw target owns prompt-only input,
+replicate-scoped seed context, fixed-cap/EOS full-512-logit decisions, and
+structural raw execution. The one-way evaluation target owns correlation,
+completion feasibility, exact regrade, weighted statistics, fixed-prompt
 margins, capability thresholds, count-derived verdict composition, and
-fifteen ordered mutation observations over caller-provided values. Full logits
-are locally digest-bound; Foundation/Double probability values remain
+fifteen ordered mutation observations over caller-provided values. Prompt
+solver and logit sidecar depend only on raw mechanics. Full logits remain
+locally digest-bound; Foundation/Double probability values are
 non-evidentiary and cannot stand in for the frozen source-pinned Float32
-log-softmax. It does not execute or detect mutations, establish
-semantic/capability truth, derive a solver, or authorize execution/receipt.
+log-softmax. The evaluation target does not execute or detect mutations,
+establish semantic/capability truth, derive a solver, or authorize
+execution/receipt.
 An isolated offline Swift fixture-authority target now exhaustively
 recomputes the globally UTF-8-row-ID-ordered 18,432-row corrected fixture from
 the byte-exact source-pinned tokenizer/corpus transplant. Its source-plan
@@ -488,13 +498,16 @@ split and semantic family; that metadata is now outer correlation only.
 Row-selected seeds, retained state, and invocation order are also metadata
 channels, so one seed per replicate, fresh per-row state, and row-permutation
 trace identity are mandatory. The planned shared donor topology also exposed
-trap-bearing historical code to corrected supervisors. The solver derivation,
-sidecar codec, and MLX Float32 operation are now source-plan-bound, but
-corrected execution remains blocked until the topology is trap-disjoint,
-mutators and typed artifact decoders are source-bound, and the role-scoped
-worker, paired probe/verifier, exact inventory, and durable observations are
-implemented. The exact next prerequisite is
-`amend_trap_disjoint_target_topology_then_implement_source_bound_mutators_and_typed_artifact_decoders_then_implement_role_scoped_stage_b_historical_worker_probe_verifier_with_exact_path_metadata_content_inventory`.
+trap-bearing historical code to corrected supervisors. The implemented
+package now splits raw execution from evaluation/regrade authority, while
+trap-disjoint topology V1, SHA-256
+`48e0f64fcb14193d74bf9c3d98a8aeef7ca366033cea6d8f00bc345ff0ad86b5`,
+supersedes the unsafe future routing without issuing source binding V7.
+Corrected execution remains blocked until typed artifact decoders and
+independent mutation producer/detector mechanics are source-bound, followed
+by the role-scoped workers, paired probe/verifier, exact inventory, and
+durable observations. The exact next prerequisite is
+`implement_pure_typed_artifact_schemas_bounded_canonical_decoders_and_source_bound_corrected_mutation_producer_detector_without_materializing_historical_runtime`.
 
 The repository-test checkpoint passed pure sidecar mechanics 6/6. The
 source-pinned MLX validation package remains outside the MLX-free
@@ -516,9 +529,11 @@ That pass validates only the secure capture substrate on the pinned host. It
 published no durable Stage-B process record or receipt,
 `executionImplemented` remains false, and no Stage-B replay, historical
 worker, model execution, Metal execution, or product use is implemented or
-authorized. A validated six-process topology,
-distinct running Release probe/verifier executables, and every semantic
-Stage-B artifact remain future work. The direct executable launch path,
+authorized. The historical V5 six-process count remains historical and is
+insufficient once the corrected raw worker is added; a replacement
+process-count and receipt schema must be frozen before execution. Distinct
+running Release probe/verifier executables and every semantic Stage-B
+artifact remain future work. The direct executable launch path,
 `proc_pidpath` pathname, and code-sign fields are non-authoritative telemetry;
 no Apple trust claim is made. A sealed Swift worker owns the complete
 trap-bearing historical arm under separate bounded probe and verifier

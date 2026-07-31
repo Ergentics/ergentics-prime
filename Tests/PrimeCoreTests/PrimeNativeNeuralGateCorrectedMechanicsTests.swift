@@ -1,6 +1,7 @@
 import Foundation
 import PrimeCore
 import PrimeNativeNeuralGateCorrectedMechanics
+import PrimeNativeNeuralGateCorrectedEvaluationMechanics
 import PrimeNativeNeuralGateReplayMechanics
 import XCTest
 

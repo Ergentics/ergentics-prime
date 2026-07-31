@@ -5875,7 +5875,7 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
         )
     }
 
-    func testBoundedSlicesAddOnlyApprovedMechanicsAndFixtureAuthorityTargets()
+    func testBoundedSlicesAddOnlyApprovedTrapDisjointMechanicsAndFixtureAuthorityTargets()
         throws
     {
         let package = try String(
@@ -5889,6 +5889,8 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
             "PrimeNativeNeuralGateReplayMechanics"
         let correctedTarget =
             "PrimeNativeNeuralGateCorrectedMechanics"
+        let correctedEvaluationTarget =
+            "PrimeNativeNeuralGateCorrectedEvaluationMechanics"
         let fixtureAuthorityTarget =
             "PrimeNativeNeuralGateCorrectedFixtureAuthority"
         XCTAssertTrue(
@@ -5915,7 +5917,18 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
         )
         XCTAssertTrue(
             compactPackage.contains(
-                #".target(name:"\#(fixtureAuthorityTarget)",dependencies:["PrimeNativeCorpusReplayMechanics","\#(correctedTarget)",])"#
+                #".target(name:"\#(correctedEvaluationTarget)",dependencies:["\#(mechanicsTarget)","\#(correctedTarget)",])"#
+            )
+        )
+        XCTAssertTrue(
+            FileManager.default.fileExists(
+                atPath:
+                    "Sources/\(correctedEvaluationTarget)"
+            )
+        )
+        XCTAssertTrue(
+            compactPackage.contains(
+                #".target(name:"\#(fixtureAuthorityTarget)",dependencies:["PrimeNativeCorpusReplayMechanics","\#(correctedTarget)","\#(correctedEvaluationTarget)",])"#
             )
         )
         XCTAssertTrue(

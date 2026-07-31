@@ -433,7 +433,7 @@ final class PrimeNativeNeuralGateCorrectedFixtureObservationTests:
         )
         XCTAssertTrue(
             package.contains(
-                #".target(name:"PrimeNativeNeuralGateCorrectedFixtureAuthority",dependencies:["PrimeNativeCorpusReplayMechanics","PrimeNativeNeuralGateCorrectedMechanics",])"#
+                #".target(name:"PrimeNativeNeuralGateCorrectedFixtureAuthority",dependencies:["PrimeNativeCorpusReplayMechanics","PrimeNativeNeuralGateCorrectedMechanics","PrimeNativeNeuralGateCorrectedEvaluationMechanics",])"#
             )
         )
         XCTAssertTrue(

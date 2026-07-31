@@ -1,6 +1,7 @@
 import Foundation
 import PrimeNativeCorpusReplayMechanics
 import PrimeNativeNeuralGateCorrectedMechanics
+import PrimeNativeNeuralGateCorrectedEvaluationMechanics
 
 public enum PrimeNativeNeuralGateCorrectedFixtureObservationError:
     Error,
