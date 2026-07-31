@@ -500,8 +500,10 @@ failures: the first exposed terminal mapped-region zero-byte/`EINVAL`
 behavior, and the second exposed the exact optional
 `com.apple.TextEncoding` value on the regular file `work/.lock`. After those
 corrections, the resealed live Release canary passed end to end on the pinned
-host. Probe and verifier output was byte-identical: 21,461 bytes with SHA-256
-`7544a104eb4593eaf0aaba548b27ff1ca8ebac7f9166de85ddf12143425007a5`.
+host. Probe and verifier output was byte-identical: 21,582 bytes with SHA-256
+`8a352013c632aa39f2d082bb5ae366f061f48e0572c70a5baea813d4560a4c12`.
+This later reseal includes the PrimeCore trusted descriptor-inventory source
+and tests; it does not widen the canary's authority.
 That pass validates only the secure capture substrate on the pinned host. It
 published no durable Stage-B process record or receipt,
 `executionImplemented` remains false, and no Stage-B replay, historical
@@ -960,7 +962,7 @@ Implementation checkpoint: the closed PrimeCore SwiftPM capture substrate,
 held local-APFS source and fresh scratch guards, schema-4 capture envelopes,
 and typed rejection lifecycle are unit-tested. After the two contained
 discovery failures described above, the resealed live Release two-role canary
-passed with the exact 21,461-byte output binding. All role-scoped Stage-B
+passed with the exact 21,582-byte output binding. All role-scoped Stage-B
 replay/process/artifact work in this phase remains pending.
 
 ### Phase 4 — calibrated M5 Max executor
@@ -1061,9 +1063,9 @@ The non-training implementation slices now stand as follows:
    - after two contained, reaped discovery failures for terminal
      zero-byte/`EINVAL` behavior and exact optional
      `com.apple.TextEncoding`, the resealed live Release two-role
-     secure-capture canary passed with byte-identical 21,461-byte
+     secure-capture canary passed with byte-identical 21,582-byte
      probe/verifier output, SHA-256
-     `7544a104eb4593eaf0aaba548b27ff1ca8ebac7f9166de85ddf12143425007a5`;
+     `8a352013c632aa39f2d082bb5ae366f061f48e0572c70a5baea813d4560a4c12`;
      it published no durable Stage-B process record or receipt and authorizes
      no replay, worker, model, Metal, or product claim;
    - the Prime-owned immutable fixtures, typed worker-artifact recomputation,

@@ -11552,6 +11552,36 @@ public struct PrimeNativeNeuralGateReplayOutputContract:
     }
 
     public func validatePreReceiptRealizedPathAndMetadataInventory(
+        _ trustedCapture:
+            PrimeTrustedArtifactInventoryCapture,
+        authenticatedStageACopiedArtifacts:
+            [PrimeArtifactBinding],
+        historicalProbeChunks:
+            [PrimeArtifactBinding],
+        historicalVerifierChunks:
+            [PrimeArtifactBinding],
+        correctedChunks:
+            [PrimeArtifactBinding]
+    ) throws {
+        try trustedCapture
+            .validateCurrentInventory(
+                equals:
+                    trustedCapture.inventory
+            )
+        try validateDeclaredPreReceiptRealizedPathAndMetadataInventory(
+            trustedCapture.inventory,
+            authenticatedStageACopiedArtifacts:
+                authenticatedStageACopiedArtifacts,
+            historicalProbeChunks:
+                historicalProbeChunks,
+            historicalVerifierChunks:
+                historicalVerifierChunks,
+            correctedChunks:
+                correctedChunks
+        )
+    }
+
+    func validateDeclaredPreReceiptRealizedPathAndMetadataInventory(
         _ inventory:
             PrimeNativeNeuralGateRealizedFilesystemInventory,
         authenticatedStageACopiedArtifacts:
