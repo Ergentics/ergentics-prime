@@ -13,6 +13,14 @@ let package = Package(
         ),
         .library(
             name:
+                "PrimeNativeNeuralGateReplayTransport",
+            targets: [
+                "PrimeNativeNeuralGateReplayArtifactContracts",
+                "PrimeNativeNeuralGateReplayTransport",
+            ]
+        ),
+        .library(
+            name:
                 "PrimeNativeNeuralGateMLXValidationMechanics",
             targets: [
                 "PrimeNativeCorpusReplayMechanics",
@@ -164,6 +172,18 @@ let package = Package(
         .target(
             name:
                 "PrimeNativeNeuralGateReplayMechanics"
+        ),
+        .target(
+            name:
+                "PrimeNativeNeuralGateReplayArtifactContracts"
+        ),
+        .target(
+            name:
+                "PrimeNativeNeuralGateReplayTransport",
+            dependencies: [
+                "PrimeNativeNeuralGateReplayArtifactContracts",
+                "PrimeNativeNeuralGateReplayMechanics",
+            ]
         ),
         .target(
             name:
@@ -383,6 +403,8 @@ let package = Package(
                 "PrimeNativeCorpusReplayMechanics",
                 "PrimeNativeNeuralGateContract",
                 "PrimeNativeNeuralGateReplayMechanics",
+                "PrimeNativeNeuralGateReplayArtifactContracts",
+                "PrimeNativeNeuralGateReplayTransport",
                 "PrimeNativeNeuralGateCorrectedMechanics",
                 "PrimeNativeNeuralGateCorrectedEvaluationMechanics",
                 "PrimeNativeNeuralGateCorrectedFixtureAuthority",

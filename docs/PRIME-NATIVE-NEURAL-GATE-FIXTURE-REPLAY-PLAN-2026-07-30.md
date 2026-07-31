@@ -10,8 +10,10 @@ Swift authority; an isolated prompt-only symbolic solver derivation is
 implemented; corrected admission V3, source binding V6, and plan V5 source-bind
 the lossless sidecar codec and maintained MLX Float32 operation; durable
 Stage-B replay, workers, process records, and receipt are not implemented;
-the package-level raw/evaluation split and trap-disjoint topology V1 are
-implemented, while every execution target remains planned
+the package-level raw/evaluation split, trap-disjoint topology V2, pure typed
+artifact contracts, and bounded in-memory transport are implemented, while
+every execution target remains planned. The exact current boundary is
+`PRIME-NATIVE-NEURAL-GATE-TYPED-ARTIFACT-TRANSPORT-2026-07-31.md`.
 
 ## Decision
 
@@ -73,16 +75,23 @@ After the raw/evaluation package split and topology V1 correction, the same
 Release canary passed with byte-identical probe/verifier output: 27,015 bytes,
 SHA-256
 `00dc419e101367d1f4a1d39f63bd35649b4de45417d74e4197f2376d729cdadf`.
-This is the current actual-package secure-capture reseal; source binding V7
-remains unissued.
+This is the last accepted topology-V1 actual-package secure-capture reseal.
+It predates topology V2's two new targets and is not current V2 evidence.
+After the complete topology-V2 source reseal, the same Release canary passed
+with byte-identical probe/verifier output: 28,589 bytes, SHA-256
+`3a4ae506f5ed2eae16e9f46d099c5d53681ec1d1a02aa9c20549b0fbeb230d7c`.
+This is the current actual-package secure-capture reseal only; source binding
+V7 remains unissued.
 That pass validates only the secure capture substrate. It published no durable
 Stage-B process record or receipt, `executionImplemented` remains false, and
 no replay, historical worker, model, Metal, or product use is implemented or
 authorized.
 
-The post-canary topology correction is
-`PrimeNativeNeuralGateTrapDisjointTopologyContract.frozenV1`, canonical
+The current post-canary topology correction is
+`PrimeNativeNeuralGateTrapDisjointTopologyContract.frozenV2`, canonical
 SHA-256
+`abc8f1ada303ecb95b7c9a44e72293ed314537b93e27354aebbb7763e1487415`.
+Topology V1 remains exact at SHA-256
 `48e0f64fcb14193d74bf9c3d98a8aeef7ca366033cea6d8f00bc345ff0ad86b5`.
 It preserves plan V5 and source binding V6 as historical identities,
 supersedes only their future donor-routing assumption, and explicitly leaves
@@ -587,9 +596,14 @@ the same materialized target/source contract, including target type, path,
 direct local and product dependencies, and complete Swift source lists. V6
 does not satisfy that condition because it names non-materialized execution
 targets and its live 26,090-byte capture was never reconciled against its
-planned closure. After the raw/evaluation split, the current actual-package
-capture is 27,015 bytes with SHA-256
+planned closure. After the raw/evaluation split, the last accepted
+topology-V1 actual-package capture is 27,015 bytes with SHA-256
 `00dc419e101367d1f4a1d39f63bd35649b4de45417d74e4197f2376d729cdadf`.
+It predates the two topology-V2 targets and cannot be reused as V2 evidence.
+The current topology-V2 actual-package secure-capture reseal is byte-identical
+across probe and verifier at 28,589 bytes with SHA-256
+`3a4ae506f5ed2eae16e9f46d099c5d53681ec1d1a02aa9c20549b0fbeb230d7c`.
+It remains secure-capture evidence, not V6/V7 graph proof.
 Source binding V7 remains reserved until the planned execution targets exist
 and a live compiled-source closure validates those exact captured bytes.
 
@@ -1108,18 +1122,26 @@ ambiguity.
 
 The corrected aggregate implementation prerequisite is now:
 
-`implement_pure_typed_artifact_schemas_bounded_canonical_decoders_and_source_bound_corrected_mutation_producer_detector_without_materializing_historical_runtime`
+`complete_descriptor_rooted_streaming_artifact_decoders_freeze_corrected_process_and_receipt_ownership_then_materialize_disjoint_corrected_mutation_producer_detector`
 
 Its implementation order is now:
 
-1. implement pure typed artifact schemas, bounded canonical decoders, and the
-   missing output-namespace paths;
-2. implement a source-bound corrected mutation producer and an independently
+1. freeze the canonical prompt-order-to-execution-index schedule and exact
+   outer/raw/sidecar join rules;
+2. freeze a pure producer/decoder-shared canonical row-and-manifest codec
+   seam, so no future worker hand-rolls a divergent JSON wire format;
+3. implement descriptor-rooted invariant streaming and integrate the
+   source-bound logit codec without widening the transport closure;
+4. freeze the deferred mutation, historical, MLX, and statistics/verdict
+   record schemas;
+5. freeze corrected process/evaluation ownership, replacement process count,
+   result records, receipt ownership, and receipt-last publication;
+6. implement a source-bound corrected mutation producer and an independently
    implemented detector;
    the current fifteen mutation-observation validators do not execute defects;
-3. implement the isolated historical worker using the completed secure
+7. implement the isolated historical worker using the completed secure
    capture and live role-prefix inventory capabilities; and
-4. implement the paired probe/verifier with exact path/metadata/content
+8. implement the paired probe/verifier with exact path/metadata/content
    inventory, durable sidecar publication, full-fixture MLX recomputation,
    full-root pre-receipt recapture, and receipt-last publication.
 

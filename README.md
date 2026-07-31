@@ -402,8 +402,17 @@ an arbitrary expected digest.
 The Stage-A source contract is implemented. A canonical result exists only
 when a repository-durable evidence note is present under
 `artifacts/native-neural-gate-contract-projection-canonical-2026-07-30/`.
-The dual-arm Stage-B replay is frozen but not implemented and authorizes no
-receipt. It requires two separately fingerprinted arms: exact historical
+The dual-arm Stage-B execution remains unimplemented and authorizes no
+receipt. Topology V2 now materializes only two additional trap-free,
+non-authorizing libraries: dependency-free
+`PrimeNativeNeuralGateReplayArtifactContracts` and
+`PrimeNativeNeuralGateReplayTransport`, which depends only on the contracts
+target and pure replay mechanics. V4 freezes the current 116-spec
+non-authorizing overlay, catalogs, and leg domains; bounded canonical decoding is
+implemented only for the prompt/outer/raw manifests and their three pathless
+row/reference shapes. All other semantic observation schemas remain deferred,
+and no production target imports the transport. The replay still requires two
+separately fingerprinted arms: exact historical
 forensic replay, which remains `ABSTAIN` on target independence because the
 pinned fixture consumes target length and expected completion, and a corrected
 Prime-owned prompt-only fixed-cap-64/EOS replay. Each arm must publish the full
@@ -411,6 +420,10 @@ raw invariant multiset, match direct and accelerated fingerprints, recompute
 all ten Verify/Abstain legs plus the projected statistics/margin and
 count-derived verdict, and detect/diverge/restore its complete frozen mutation
 catalog in a distinct Release verifier.
+
+The exact implemented boundary, digest locks, decoder semantics, nonclaims,
+and remaining gaps are recorded in
+`docs/PRIME-NATIVE-NEURAL-GATE-TYPED-ARTIFACT-TRANSPORT-2026-07-31.md`.
 
 The bounded pure-library Stage-B foundation now also includes a separate
 corrected-mechanics target. It implements only value mechanics: a
@@ -514,12 +527,15 @@ row-selected seeds are also metadata channels. The audit also found that the
 planned shared donor topology would expose trap-bearing historical code to
 corrected supervisors. The package now splits raw execution mechanics from
 evaluation/regrade mechanics, and
-`PrimeNativeNeuralGateTrapDisjointTopologyContract.frozenV1`, SHA-256
-`48e0f64fcb14193d74bf9c3d98a8aeef7ca366033cea6d8f00bc345ff0ad86b5`,
-supersedes the unsafe future routing while preserving plan V5 and source
-binding V6 as history. The historical runtime, workers, transport, probe, and
-verifier are still `planned_not_materialized`; source binding V7 is not
-issued. Corrected execution remains blocked until typed artifact decoders and
+`PrimeNativeNeuralGateTrapDisjointTopologyContract.frozenV2`, SHA-256
+`abc8f1ada303ecb95b7c9a44e72293ed314537b93e27354aebbb7763e1487415`,
+preserves topology V1 and supersedes the unsafe future routing while
+preserving plan V5 and source binding V6 as history. The historical runtime,
+workers, probe, and verifier are still `planned_not_materialized`; only pure
+artifact contracts plus three bounded manifests and three pathless record
+shapes are newly materialized. Source binding V7 is not issued. Corrected
+execution remains blocked until the cross-stream schedule/join contract,
+descriptor streaming, logit-codec integration, process/receipt ownership, and
 disjoint mutation producer/detector mechanics are source-bound, followed by
 the role-scoped historical worker, paired probe/verifier, exact inventory,
 durable recomputation observations, Stage-B execution records, and receipt.
@@ -636,8 +652,13 @@ After the raw/evaluation package split and topology V1 correction, the same
 Release canary passed with byte-identical probe/verifier output: 27,015 bytes,
 SHA-256
 `00dc419e101367d1f4a1d39f63bd35649b4de45417d74e4197f2376d729cdadf`.
-This is the current actual-package secure-capture reseal; source binding V7
-remains unissued.
+This is the last accepted topology-V1 actual-package secure-capture reseal.
+It predates the two topology-V2 targets and is not current V2 evidence. After
+the complete topology-V2 source reseal, the same Release canary passed with
+byte-identical probe/verifier output: 28,589 bytes, SHA-256
+`3a4ae506f5ed2eae16e9f46d099c5d53681ec1d1a02aa9c20549b0fbeb230d7c`.
+This is the current actual-package secure-capture reseal only; it is not V6/V7
+execution-graph proof, and source binding V7 remains unissued.
 That pass validates only the secure capture substrate on the pinned host. It
 published no durable Stage-B process record or receipt,
 `executionImplemented` remains false, and no Stage-B replay, historical
@@ -663,7 +684,7 @@ or drain must fail-stop. Worker result transport cannot authorize mechanics
 `PASS`; the verifier must decode and recompute the semantic artifacts. Stage A
 is copied as 35 reachable typed bindings plus its separately pinned receipt,
 or 36 artifacts total. The exact next prerequisite is
-`implement_pure_typed_artifact_schemas_bounded_canonical_decoders_and_source_bound_corrected_mutation_producer_detector_without_materializing_historical_runtime`.
+`complete_descriptor_rooted_streaming_artifact_decoders_freeze_corrected_process_and_receipt_ownership_then_materialize_disjoint_corrected_mutation_producer_detector`.
 
 ## Initial calibration
 
