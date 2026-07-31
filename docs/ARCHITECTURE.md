@@ -52,7 +52,7 @@ The receipt is repository- and off-device-durable; the complete approximately
 
 ## Current Phase 3 contract chain
 
-Phase 3 now has five historical contract/receipt boundaries plus two
+Phase 3 now has five historical contract/receipt boundaries plus three
 non-authorizing preparatory libraries:
 
 1. `PrimeNativeContractMigrationPlan.frozenV1` resolves the exact eight
@@ -76,9 +76,14 @@ non-authorizing preparatory libraries:
 6. `PrimeNativeNeuralGateReplayArtifactContracts` freezes the non-authorizing
    Stage-B semantic namespace with no local dependencies.
 7. `PrimeNativeNeuralGateReplayTransport` depends only on those contracts and
-   pure replay mechanics. It validates only three bounded record manifests and
-   their three pathless row/reference shapes; all other semantic schemas remain
-   deferred. No production target imports it.
+   pure replay mechanics. It validates and canonically produces only three
+   bounded record manifests and their three pathless row/reference shapes; all
+   other semantic schemas remain deferred.
+8. `PrimeNativeNeuralGateReplayComposition` depends only on artifact contracts,
+   transport, pure replay/raw corrected mechanics, and lossless sidecar
+   mechanics. It assigns strict prompt-record ordinals and requires exact
+   outer/raw/validated-sidecar joins with corrected trace recomputation. No
+   production or execution target imports transport or composition.
 
 Stage-A artifact publication is descriptor-rooted, and its terminal receipt
 uses exclusive no-replace publication after replay and source closure.
@@ -104,10 +109,11 @@ compatibility. A canonical Stage-A result is recorded only by the evidence
 note under
 `artifacts/native-neural-gate-contract-projection-canonical-2026-07-30/`.
 
-The Stage-B execution contract is frozen separately and still has no replay
-implementation or receipt authority. Topology V2 and semantic namespace V4
-now materialize only pure typed contracts and bounded in-memory transport; the
-descriptor-streaming, source-codec, worker, process, mutation-authority, and
+The Stage-B execution contract is frozen separately and still has no durable
+replay implementation or receipt authority. Topology V3 and semantic namespace
+V4 now materialize pure typed contracts, bounded in-memory transport with a
+shared codec, and exact non-authorizing replay composition; the
+descriptor-streaming/durable-origin, worker, process, mutation-authority, and
 receipt layers remain absent. A forward source audit found that the
 pinned historical fixture sizes output and decision counts from target data
 and copies expected completions into predictions while declaring a
@@ -175,11 +181,13 @@ model execution, Stage-B Metal authority, process record, terminal receipt,
 independent scientific oracle, or product authority has been established.
 
 The current package boundary is frozen separately by
-`PrimeNativeNeuralGateTrapDisjointTopologyContract.frozenV2`, canonical
+`PrimeNativeNeuralGateTrapDisjointTopologyContract.frozenV3`, canonical
 SHA-256
-`abc8f1ada303ecb95b7c9a44e72293ed314537b93e27354aebbb7763e1487415`.
+`b475e29347a31d27be8dc1aa54648fec84c4f1b47d673a1f111ccffb794985fd`.
 Topology V1 remains exact at SHA-256
 `48e0f64fcb14193d74bf9c3d98a8aeef7ca366033cea6d8f00bc345ff0ad86b5`.
+Topology V2 remains exact at SHA-256
+`abc8f1ada303ecb95b7c9a44e72293ed314537b93e27354aebbb7763e1487415`.
 It records the implemented raw/evaluation split and the exact
 partially materialized, globally `planned_not_materialized` execution
 topology. Plan V5 and source binding V6 remain historical; source binding V7
@@ -196,11 +204,15 @@ row-permutation trace identity are mandatory. The exact source-derived
 fixture identity/count, the concrete prompt-only solver derivation, the
 sidecar codec, and the MLX Float32 operation are now source-plan-bound. The
 package now splits raw corrected execution from evaluation/regrade authority;
-trap-disjoint topology V2 preserves V1, supersedes the unsafe future routing,
-materializes only contracts/transport, and keeps
-source binding V7 unissued. Corrected execution remains blocked until typed
-descriptor-streaming validation, logit-codec integration, process/receipt
-ownership, and disjoint mutation producer/detector mechanics are source-bound,
+trap-disjoint topology V3 preserves V1/V2, supersedes the unsafe future
+routing, materializes contracts/transport/shared codec/composition, and keeps
+source binding V7 unissued. Composition V1 has canonical SHA-256
+`75e6941913b561b6bdbd63d2e67f50962276942416bfea8a0443906d6d8ffb3e`.
+Corrected execution remains blocked until descriptor-rooted validation binds
+durable stream and sidecar origin to composition, lawful schedule/correlation
+capabilities reach disjoint producers, the independent prompt/target crosswalk
+is frozen, and process/receipt ownership plus disjoint mutation
+producer/detector mechanics are source-bound,
 followed by the role-scoped worker, paired probe/verifier, exact inventory,
 and durable observations. The pure trace uses per-decision
 bit-pattern digests because
@@ -328,13 +340,21 @@ It predates the two topology-V2 targets and is not current V2 evidence. After
 the complete topology-V2 source reseal, the same Release canary passed with
 byte-identical probe/verifier output: 28,589 bytes, SHA-256
 `3a4ae506f5ed2eae16e9f46d099c5d53681ec1d1a02aa9c20549b0fbeb230d7c`.
-This is the current actual-package secure-capture reseal only; source binding
-V7 remains unissued.
-The pass validates only the secure capture substrate on that pinned host. It
-published no durable Stage-B process record or receipt,
-`executionImplemented` remains false, and no Stage-B replay, historical
-worker, model execution, Metal execution, or product use is implemented or
-authorized. Root
+This is the last accepted topology-V2 actual-package secure-capture reseal. It
+predates topology V3 and replay composition; source binding V7 remains
+unissued.
+After the complete topology-V3 source reseal, the same Release canary passed
+with byte-identical probe/verifier package-description output: 29,905 bytes,
+SHA-256
+`ad4a66338d7348cb44419a115e062a30da129dea9a6355eec81f6b98932b6e11`.
+This is the current accepted topology-V3 actual-package secure-capture reseal.
+It validates only the secure-capture substrate on that pinned host. It is not
+V6/V7 selected-source execution-graph proof; it does not issue source binding
+V7 or establish worker or model execution, fixture identity,
+evaluation or mechanics `PASS`, Stage-B publication or a terminal receipt,
+reproducible-build identity, or network denial. `executionImplemented` remains
+false, and no Stage-B replay, historical worker, Metal execution, or product
+use is implemented or authorized. Root
 containment/disjointness, unchanged companion pre/post identity, exact
 copied-donor paths, lossless copied Stage-A descriptor closure, typed
 donor-to-Prime adaptation proofs, role-scoped workers and supervisors, and
@@ -369,15 +389,19 @@ source-plan-bound by the offline fixture authority. The separate prompt-only
 solver derivation, bounded sidecar codec, and maintained MLX Float32 operation
 are also source-plan-bound, without an independent solver or execution receipt.
 Because prompt, outer-evaluation, and per-seed raw records are independently
-ordered streams, their prompt-order-to-execution-index schedule and exact join
-contract must be frozen before descriptor streaming can compose them.
+ordered streams, composition V1 now assigns strict prompt-record ordinals and
+performs exact keyed joins rather than positional zips. It validates in-memory
+shape and mechanics only; descriptor/durable source origin, lawful schedule
+delivery to disjoint producers, corrected-fixture identity, and independent
+prompt/target crosswalk authority remain false.
 The exact next prerequisite is
-`complete_descriptor_rooted_streaming_artifact_decoders_freeze_corrected_process_and_receipt_ownership_then_materialize_disjoint_corrected_mutation_producer_detector`.
+`implement_descriptor_rooted_bounded_invariant_stream_decoders_bind_validated_stream_capabilities_and_lawful_schedule_delivery_to_frozen_composition_then_freeze_independent_prompt_target_crosswalk_without_materializing_workers`.
 
-- retain topology V1 as history and topology V2 as the current boundary; do
+- retain topology V1/V2 as history and topology V3 as the current boundary; do
   not route historical donor/runtime code
   into corrected supervisors;
-- implement descriptor-rooted streaming, source-codec integration,
+- implement descriptor-rooted streaming, durable source-codec binding, lawful
+  schedule delivery, the independent prompt/target crosswalk,
   process/receipt ownership, and disjoint source-bound mutators; bounded
   transport tests and the local Foundation/Double diagnostic are not durable
   execution evidence;

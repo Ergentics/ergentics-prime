@@ -560,6 +560,115 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
         )
     }()
 
+    /// Materializes the trap-free replay-composition layer without changing
+    /// the authority or materialization status of any worker, supervisor, or
+    /// historical target. V1 and V2 remain exact historical contracts.
+    public static let frozenV3: Self = {
+        let previous = frozenV2
+        let compositionTargetName =
+            "PrimeNativeNeuralGateReplayComposition"
+        var targets:
+            [PrimeNativeNeuralGateTopologyTarget] =
+            []
+        for target in previous.targetGraph {
+            if target.targetName
+                == "PrimeNativeNeuralGateReplayTransport"
+            {
+                targets.append(
+                    Self.target(
+                        target.targetName,
+                        target.materialization,
+                        target.directLocalDependencyNames,
+                        "bounded canonical in-memory decoding plus the shared non-authorizing canonical producer codec for three manifests and three pathless record shapes",
+                        externalProducts:
+                            target
+                            .externalProductDependencyNames
+                    )
+                )
+                targets.append(
+                    Self.target(
+                        compositionTargetName,
+                        .implemented,
+                        [
+                            "PrimeNativeNeuralGateReplayArtifactContracts",
+                            "PrimeNativeNeuralGateReplayTransport",
+                            "PrimeNativeNeuralGateReplayMechanics",
+                            "PrimeNativeNeuralGateCorrectedMechanics",
+                            "PrimeNativeNeuralGateLogitSidecarMechanics",
+                        ],
+                        "strict canonical prompt scheduling, target-free correlation identity, and exact outer/raw/validated-sidecar joins under prime_stage_b_strict_prompt_schedule_exact_cross_artifact_join_v1 SHA-256 75e6941913b561b6bdbd63d2e67f50962276942416bfea8a0443906d6d8ffb3e"
+                    )
+                )
+            } else {
+                targets.append(target)
+            }
+        }
+
+        var reachability = previous.forbiddenReachability
+        reachability.append(
+            Self.forbidden(
+                compositionTargetName,
+                [
+                    "PrimeCore",
+                    "PrimeNativeCorpusReplayMechanics",
+                    "PrimeNativeNeuralGateCorrectedEvaluationMechanics",
+                    "PrimeNativeNeuralGateCorrectedFixtureAuthority",
+                    "PrimeNativeNeuralGatePromptSolver",
+                    "PrimeNativeNeuralGateMLXLogSoftmaxRecomputation",
+                    "ErgenticsPrimeRuntime",
+                    "PrimeNativeNeuralGateHistoricalReplayMechanics",
+                ]
+            )
+        )
+
+        return Self(
+            schemaVersion: 3,
+            contractID:
+                "prime_stage_b_trap_disjoint_topology_v3",
+            status: previous.status,
+            executionImplemented: false,
+            historicalReplayPlanID:
+                previous.historicalReplayPlanID,
+            historicalSourceBindingContractID:
+                previous
+                .historicalSourceBindingContractID,
+            historicalContractsPreserved: true,
+            historicalFutureTargetGraphSuperseded:
+                true,
+            targetGraph: targets,
+            forbiddenReachability:
+                reachability,
+            historicalContainmentRootTargetName:
+                previous
+                .historicalContainmentRootTargetName,
+            historicalRuntimeTargetName:
+                previous.historicalRuntimeTargetName,
+            historicalReplayTargetName:
+                previous.historicalReplayTargetName,
+            pureReplayTargetName:
+                previous.pureReplayTargetName,
+            donorAdaptationV2PreservedAsHistory:
+                true,
+            donorAdaptationV3Required: true,
+            donorAdaptationV3RequiredDestination:
+                previous
+                .donorAdaptationV3RequiredDestination,
+            sourceBindingV7Issued: false,
+            sourceBindingV7Prerequisite:
+                previous.sourceBindingV7Prerequisite,
+            packageCaptureAuthority:
+                "actual_package_secure_capture_only_not_v6_or_v7_execution_graph_reconciliation",
+            mutationProducerDetectorTargetAssignmentDeferred:
+                true,
+            mutationProducerDetectorMustBeDisjoint:
+                true,
+            nextImplementationPrerequisite:
+                "implement_descriptor_rooted_bounded_invariant_stream_decoders_bind_validated_stream_capabilities_and_lawful_schedule_delivery_to_frozen_composition_then_freeze_independent_prompt_target_crosswalk_without_materializing_workers",
+            authorityStatement:
+                "This V3 contract preserves V1, V2, and the historical V5/V6 identities while materializing only two additional trap-free capabilities already present in the package: the shared bounded canonical producer/decoder codec in PrimeNativeNeuralGateReplayTransport and PrimeNativeNeuralGateReplayComposition under prime_stage_b_strict_prompt_schedule_exact_cross_artifact_join_v1 SHA-256 75e6941913b561b6bdbd63d2e67f50962276942416bfea8a0443906d6d8ffb3e. Composition derives a strict exact prompt schedule and target-free correlation identity, and rejects outer/raw/validated-sidecar joins unless reconstructed decisions reproduce the raw PRIMECRT4 trace. It does not establish descriptor-rooted or durable artifact origin, lawful schedule-capability delivery to disjoint producers, independent prompt/target crosswalk authority, prompt independence, model execution, evaluation, verdict, publication, scientific authority, product authority, or a receipt. Historical runtime, historical replay, all workers, probe, verifier, mutation producer, and mutation detector remain planned_not_materialized. executionImplemented is false and source binding V7 is not issued."
+        )
+    }()
+
     public func target(
         named name: String
     ) throws -> PrimeNativeNeuralGateTopologyTarget {
@@ -611,6 +720,8 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
             expected = .frozenV1
         case 2:
             expected = .frozenV2
+        case 3:
+            expected = .frozenV3
         default:
             throw PrimeNativeNeuralGateTopologyError
                 .invalidFrozenContract

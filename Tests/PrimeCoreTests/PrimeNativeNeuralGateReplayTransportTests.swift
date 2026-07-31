@@ -1,5 +1,6 @@
 import Foundation
 import PrimeNativeNeuralGateReplayArtifactContracts
+import PrimeNativeNeuralGateReplayMechanics
 @testable import PrimeNativeNeuralGateReplayTransport
 import XCTest
 
@@ -218,7 +219,7 @@ final class PrimeNativeNeuralGateReplayTransportTests:
         upperGlobal["sha256"] = digest("A")
         uppercaseDigest["global_stream"] =
             upperGlobal
-        assertThrows(.invalidSHA256(digest("A"))) {
+        assertThrows(.invalidSHA256) {
             _ = try Decoder.decodeArtifact(
                 key: .promptOnlyFixtureManifest,
                 from: try canonicalData(
@@ -267,7 +268,7 @@ final class PrimeNativeNeuralGateReplayTransportTests:
             var leaked = row
             leaked[forbidden] = "forbidden"
             assertThrows(
-                .forbiddenPromptOnlyField(forbidden)
+                .forbiddenPromptOnlyField
             ) {
                 _ = try Decoder.decodePromptOnlyRow(
                     from: try canonicalData(leaked)
@@ -707,6 +708,259 @@ final class PrimeNativeNeuralGateReplayTransportTests:
                 expectedSeed: .seed2718,
                 from: try canonicalData(shortFixedCap)
             )
+        }
+    }
+
+    func testSharedCanonicalCodecProducesExactKnownAnswerRows()
+        throws
+    {
+        let prompt = try
+            PrimeNativeNeuralGateReplayTransportCodec
+            .encodePromptOnlyRow(
+                promptTokenIDs: [1, 321]
+            )
+        XCTAssertEqual(
+            String(decoding: prompt, as: UTF8.self),
+            #"{"prompt_token_ids":[1,321],"record_kind":"prime_stage_b_prompt_only_row_v1","schema_version":1}"#
+        )
+        let decodedPrompt = try Decoder
+            .decodePromptOnlyRow(from: prompt)
+        XCTAssertEqual(
+            try PrimeNativeNeuralGateReplayTransportCodec
+                .encodePromptOnlyRow(decodedPrompt),
+            prompt
+        )
+
+        let outer = try
+            PrimeNativeNeuralGateReplayTransportCodec
+            .encodeOuterEvaluationRow(
+                executionIndex: 7,
+                correlationID: "fixture_00000007",
+                expectedCompletionUTF8:
+                    Data("A".utf8)
+            )
+        XCTAssertEqual(
+            String(decoding: outer, as: UTF8.self),
+            #"{"correlation_id":"fixture_00000007","execution_index":7,"expected_completion_utf8":[65],"record_kind":"prime_stage_b_outer_evaluation_row_v1","schema_version":1}"#
+        )
+        let decodedOuter = try Decoder
+            .decodeOuterEvaluationRow(from: outer)
+        XCTAssertEqual(
+            try PrimeNativeNeuralGateReplayTransportCodec
+                .encodeOuterEvaluationRow(decodedOuter),
+            outer
+        )
+
+        let raw = try
+            PrimeNativeNeuralGateReplayTransportCodec
+            .encodeRawExecutionReference(
+                replicateSeed: .seed2718,
+                executionIndex: 7,
+                primeCPI2PromptBindingSHA256:
+                    digest("a"),
+                traceSHA256: digest("b"),
+                generatedTokenIDs: [321],
+                termination: .eos
+            )
+        XCTAssertEqual(
+            String(decoding: raw, as: UTF8.self),
+            #"{"decision_count":2,"execution_authorized":false,"execution_index":7,"generated_token_ids":[321],"logits_materialized":false,"prompt_sha256":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","record_kind":"prime_stage_b_raw_execution_reference_v1","replicate_seed":2718,"schema_version":1,"termination":"eos","trace_sha256":"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"}"#
+        )
+        let decodedRaw = try Decoder
+            .decodeRawExecutionReference(
+                expectedSeed: .seed2718,
+                from: raw
+            )
+        XCTAssertEqual(decodedRaw.decisionCount, 2)
+        XCTAssertEqual(
+            try PrimeNativeNeuralGateReplayTransportCodec
+                .encodeRawExecutionReference(decodedRaw),
+            raw
+        )
+
+        assertThrows(.invalidTermination) {
+            _ = try
+                PrimeNativeNeuralGateReplayTransportCodec
+                .encodeRawExecutionReference(
+                    replicateSeed: .seed2718,
+                    executionIndex: 7,
+                    primeCPI2PromptBindingSHA256:
+                        digest("a"),
+                    traceSHA256: digest("b"),
+                    generatedTokenIDs: [321],
+                    termination: .fixedCap
+                )
+        }
+        assertThrows(.invalidGeneratedTokens) {
+            _ = try
+                PrimeNativeNeuralGateReplayTransportCodec
+                .encodeRawExecutionReference(
+                    replicateSeed: .seed2718,
+                    executionIndex: 7,
+                    primeCPI2PromptBindingSHA256:
+                        digest("a"),
+                    traceSHA256: digest("b"),
+                    generatedTokenIDs: [255],
+                    termination: .eos
+                )
+        }
+        assertThrows(.invalidPromptTokens) {
+            _ = try
+                PrimeNativeNeuralGateReplayTransportCodec
+                .encodePromptOnlyRow(
+                    promptTokenIDs: Array(
+                        repeating: UInt16(321),
+                        count: 4_098
+                    )
+                )
+        }
+        assertThrows(.invalidCorrelationID) {
+            _ = try
+                PrimeNativeNeuralGateReplayTransportCodec
+                .encodeOuterEvaluationRow(
+                    executionIndex: 7,
+                    correlationID: String(
+                        repeating: "a",
+                        count: 513
+                    ),
+                    expectedCompletionUTF8:
+                        Data("A".utf8)
+                )
+        }
+        assertThrows(.invalidSHA256) {
+            _ = try
+                PrimeNativeNeuralGateReplayTransportCodec
+                .encodeRawExecutionReference(
+                    replicateSeed: .seed2718,
+                    executionIndex: 7,
+                    primeCPI2PromptBindingSHA256: String(
+                        repeating: "a",
+                        count: 65
+                    ),
+                    traceSHA256: digest("b"),
+                    generatedTokenIDs: [321],
+                    termination: .eos
+                )
+        }
+    }
+
+    func testSharedCanonicalCodecDerivesManifestEnvelope()
+        throws
+    {
+        let chunkCounts = [
+            4_096,
+            4_096,
+            4_096,
+            4_096,
+            2_048,
+        ]
+        let invariant =
+            PrimeNativeNeuralGateInvariantManifest(
+                recordCount: 18_432,
+                globalStreamByteCount: 1_000,
+                globalStreamSHA256: digest("a"),
+                chunks:
+                    chunkCounts.enumerated().map {
+                        PrimeNativeNeuralGateInvariantChunk(
+                            ordinal: UInt32($0.offset),
+                            recordCount: $0.element,
+                            byteCount: 100 + $0.offset,
+                            sha256: digest("b")
+                        )
+                    }
+            )
+        let data = try
+            PrimeNativeNeuralGateReplayTransportCodec
+            .encodeRecordManifest(
+                key:
+                    .rawExecutionManifest(
+                        .seed3141
+                    ),
+                invariantManifest: invariant
+            )
+        XCTAssertEqual(data.count, 1_639)
+        XCTAssertEqual(
+            PrimeNativeNeuralGateInvariantCodec
+                .sha256(data),
+            "bed882153bd8831deb928bd6216be0f06863243a702c977c44923656ff6931a7"
+        )
+        guard case let .recordManifest(manifest) =
+            try Decoder.decodeArtifact(
+                key:
+                    .rawExecutionManifest(
+                        .seed3141
+                    ),
+                from: data
+            )
+        else {
+            return XCTFail("wrong manifest shape")
+        }
+        XCTAssertEqual(manifest.recordCount, 18_432)
+        XCTAssertEqual(
+            manifest.recordSchemaID,
+            PrimeNativeNeuralGateReplayRecordSchema
+                .rawExecutionReferenceV1
+        )
+        XCTAssertEqual(
+            manifest.orderedChunks.map(\.ordinal),
+            [0, 1, 2, 3, 4]
+        )
+        XCTAssertTrue(
+            manifest.globalStream.relativePath
+                .contains(
+                    PrimeNativeNeuralGateArtifactSeed
+                    .seed3141.pathComponent
+                )
+        )
+        XCTAssertTrue(
+            manifest.orderedChunks.allSatisfy {
+                $0.artifact.relativePath
+                    .contains(
+                        PrimeNativeNeuralGateArtifactSeed
+                        .seed3141.pathComponent
+                    )
+            }
+        )
+
+        let wrongCount =
+            PrimeNativeNeuralGateInvariantManifest(
+                recordCount: 18_431,
+                globalStreamByteCount: 1_000,
+                globalStreamSHA256: digest("a"),
+                chunks:
+                    invariant.chunks
+            )
+        assertThrows(.invalidManifest) {
+            _ = try
+                PrimeNativeNeuralGateReplayTransportCodec
+                .encodeRecordManifest(
+                    key: .promptOnlyFixtureManifest,
+                    invariantManifest: wrongCount
+                )
+        }
+
+        var wrongOrdinalChunks = invariant.chunks
+        wrongOrdinalChunks[0] =
+            PrimeNativeNeuralGateInvariantChunk(
+                ordinal: 1,
+                recordCount: 4_096,
+                byteCount: 100,
+                sha256: digest("b")
+            )
+        let wrongOrdinal =
+            PrimeNativeNeuralGateInvariantManifest(
+                recordCount: 18_432,
+                globalStreamByteCount: 1_000,
+                globalStreamSHA256: digest("a"),
+                chunks: wrongOrdinalChunks
+            )
+        assertThrows(.invalidManifest) {
+            _ = try
+                PrimeNativeNeuralGateReplayTransportCodec
+                .encodeRecordManifest(
+                    key: .promptOnlyFixtureManifest,
+                    invariantManifest: wrongOrdinal
+                )
         }
     }
 
