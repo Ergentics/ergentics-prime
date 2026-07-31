@@ -2,9 +2,10 @@
 
 Date: 2026-07-30
 
-Status: secure capture and live descriptor-inventory substrates implemented;
-capture is lifecycle-tested and confirmed by a resealed live Release two-role
-canary after two contained discovery failures; Stage-B replay not implemented
+Status: secure capture, live descriptor-inventory, and the first bounded
+raw-stream/fingerprint library substrate implemented; capture is
+lifecycle-tested and confirmed by a resealed live Release two-role canary
+after two contained discovery failures; Stage-B replay not implemented
 
 ## Decision
 
@@ -32,11 +33,12 @@ each child and drain remained contained and the child was reaped. The first
 exposed terminal mapped-region zero-byte/`EINVAL` behavior; the second exposed
 the exact optional `com.apple.TextEncoding` value on regular `work/.lock`.
 After those corrections, the resealed live Release two-role canary passed end
-to end on the pinned host with byte-identical 21,582-byte probe/verifier
+to end on the pinned host with byte-identical 22,022-byte probe/verifier
 output, SHA-256
-`8a352013c632aa39f2d082bb5ae366f061f48e0572c70a5baea813d4560a4c12`.
-This later reseal includes the PrimeCore trusted descriptor-inventory source
-and tests; it does not widen the canary's authority.
+`f5f2d2ebf4409da26164c1980bcece14c60db6937f664adb96e4e57693580b86`.
+This current reseal includes the PrimeCore trusted descriptor-inventory
+substrate and the pure Stage-B replay-mechanics foundation; it does not widen
+the canary's authority.
 That pass validates only the secure capture substrate. It published no durable
 Stage-B process record or receipt, `executionImplemented` remains false, and
 no replay, historical worker, model, Metal, or product use is implemented or
@@ -56,9 +58,14 @@ rejects non-ASCII or control-byte components rather than relying on Swift
 declared paths, depth, node and byte limits, and a monotonic deadline. It
 creates no artifact or receipt.
 
-Implementation is intentionally split after those substrates. The next slice
-is the pure Stage-B replay-mechanics and typed-content library layer. The
-dedicated historical worker follows that layer; the paired probe and verifier
+Implementation is intentionally split after those substrates. The first
+bounded pure-library sub-slice now implements only raw-UTF-8 global-stream and
+chunk mechanics, independent direct and affine finite-field fingerprints, the
+raw-byte cache guard, and typed invariant/fingerprint payload validation. It
+does not complete the replay-mechanics and typed-content library layer. The
+pinned runtime donors, prompt-only corrected gate, statistics/verdict and
+mutation mechanics remain pending within that layer. The dedicated historical
+worker follows the completed library layer; the paired probe and verifier
 remain one final slice because neither may independently publish a terminal
 receipt.
 
@@ -389,7 +396,7 @@ capture adapter is implemented and its typed lifecycle has ten focused tests.
 After the two contained, reaped discovery failures for terminal
 zero-byte/`EINVAL` and exact optional `com.apple.TextEncoding`, the resealed
 live Release two-role canary passed on the pinned host with the exact
-21,582-byte output binding above. The pass published no durable Stage-B process
+22,022-byte output binding above. The pass published no durable Stage-B process
 record or receipt, `executionImplemented` remains false, and no replay, worker,
 model, Metal, or product claim follows. Future probe and verifier records must
 bind one byte-identical JSON output and the same direct `swift-package`
@@ -414,8 +421,8 @@ with SHA-256
 `59ceb088e1d5d1d15f7762b5049ccf7b410ff8002e549044cb7a221f537fe939`.
 Those 20,959 bytes and that output hash describe only the earlier graph and are
 not the current factory expectation. The accepted secure-capture canary
-expectation is 21,582 bytes with SHA-256
-`8a352013c632aa39f2d082bb5ae366f061f48e0572c70a5baea813d4560a4c12`.
+expectation is 22,022 bytes with SHA-256
+`f5f2d2ebf4409da26164c1980bcece14c60db6937f664adb96e4e57693580b86`.
 Neither value is a Stage-B replay execution record.
 
 The measured platform was macOS 26.5.2 build 25F84, Darwin 25.5.0
@@ -843,7 +850,12 @@ The frozen aggregate implementation prerequisite remains:
 
 Its implementation order is now:
 
-1. pure replay mechanics and typed semantic payloads;
+1. complete the partially implemented pure replay-mechanics and typed semantic
+   payload layer; only raw-UTF-8 stream/chunk mechanics, independent
+   direct/affine fingerprints, the raw-byte cache guard, and typed
+   invariant/fingerprint payload validation exist now, while runtime donors,
+   the prompt-only corrected gate, statistics/verdict, and mutations remain
+   pending;
 2. the isolated historical worker using the completed secure capture and live
    role-prefix inventory capabilities; and
 3. the paired probe/verifier with full-root pre-receipt recapture and

@@ -110,6 +110,15 @@ statistics and fixed-prompt margin, count-derived verdict, ordered mutation
 detection/restoration, and fresh-process reconstruction are mandatory for a
 terminal Stage-B mechanics pass.
 
+The first bounded pure-library sub-slice now implements only the canonical
+raw-UTF-8 global-stream and chunk mechanics, independent direct and affine
+finite-field fingerprints, the raw-byte cache guard, and typed
+invariant/fingerprint payload validation. The pinned runtime donors,
+prompt-only corrected gate, statistics/verdict and mutation mechanics,
+historical worker, and paired probe/verifier remain pending. This is not a
+Stage-B replay result: `executionImplemented` remains false and the frozen plan
+hash is unchanged.
+
 The closed PrimeCore external-child capture substrate is implemented. Its
 fixed direct `swift-package` launch uses stdin at EOF and the exact
 non-inherited environment keys `HOME`, `TMPDIR`,
@@ -175,11 +184,12 @@ contained and reaped failures: the first exposed terminal mapped-region
 zero-byte/`EINVAL` behavior, and the second exposed the exact optional
 `com.apple.TextEncoding` value on the regular file `work/.lock`. After those
 corrections, the resealed live Release two-role secure-capture canary passed end
-to end on the pinned host with byte-identical probe/verifier output: 21,582
+to end on the pinned host with byte-identical probe/verifier output: 22,022
 bytes, SHA-256
-`8a352013c632aa39f2d082bb5ae366f061f48e0572c70a5baea813d4560a4c12`.
-This later reseal includes the PrimeCore trusted descriptor-inventory source
-and tests; it does not widen the canary's authority.
+`f5f2d2ebf4409da26164c1980bcece14c60db6937f664adb96e4e57693580b86`.
+This current reseal includes the PrimeCore trusted descriptor-inventory
+substrate and the pure Stage-B replay-mechanics foundation; it does not widen
+the canary's authority.
 The pass validates only the secure capture substrate on that pinned host. It
 published no durable Stage-B process record or receipt,
 `executionImplemented` remains false, and no Stage-B replay, historical
@@ -188,8 +198,9 @@ authorized. Root
 containment/disjointness, unchanged companion pre/post identity, exact
 copied-donor paths, lossless copied Stage-A descriptor closure, typed
 donor-to-Prime adaptation proofs, role-scoped workers and supervisors, and
-typed artifact recomputation remain future Stage-B work. The direct executable
-launch path, `proc_pidpath` pathname, and code-sign fields are
+typed artifact recomputation beyond the implemented invariant/fingerprint
+payload validators remain future Stage-B work. The direct executable launch
+path, `proc_pidpath` pathname, and code-sign fields are
 non-authoritative telemetry; no Apple trust claim is made. Because the
 source-faithful historical fixture inherits traps, a sealed Swift worker owns
 the full historical arm. Probe and verifier supervise separate bounded worker

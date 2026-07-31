@@ -407,6 +407,15 @@ all ten Verify/Abstain legs plus the projected statistics/margin and
 count-derived verdict, and detect/diverge/restore its complete frozen mutation
 catalog in a distinct Release verifier.
 
+The first bounded pure-library Stage-B sub-slice implements only the canonical
+raw-UTF-8 global-stream and chunk mechanics, independent direct and affine
+finite-field fingerprints, the raw-byte cache guard, and typed
+invariant/fingerprint payload validation. It does not complete the replay
+library layer. The pinned runtime donors, prompt-only corrected gate,
+statistics/verdict and mutation mechanics, historical worker, and paired
+probe/verifier remain pending; `executionImplemented` remains false and the
+frozen plan hash is unchanged.
+
 The closed PrimeCore external-child capture substrate is implemented. It
 accepts only the role and source root, directly launches the frozen Xcode 26.6
 build 17F113 `swift-package describe --type json` executable with no shell,
@@ -485,8 +494,11 @@ second progressed past that point and exposed the exact optional
 `com.apple.TextEncoding` value on the regular file `work/.lock`. After those
 corrections, the resealed live Release two-role secure-capture canary passed end
 to end on the pinned host. Probe and verifier output was byte-identical:
-21,461 bytes with SHA-256
-`7544a104eb4593eaf0aaba548b27ff1ca8ebac7f9166de85ddf12143425007a5`.
+22,022 bytes with SHA-256
+`f5f2d2ebf4409da26164c1980bcece14c60db6937f664adb96e4e57693580b86`.
+This current reseal includes the trusted descriptor-inventory substrate and
+the pure Stage-B replay-mechanics foundation; it does not widen the canary's
+authority.
 That pass validates only the secure capture substrate on the pinned host. It
 published no durable Stage-B process record or receipt,
 `executionImplemented` remains false, and no Stage-B replay, historical
