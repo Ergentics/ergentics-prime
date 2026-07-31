@@ -469,16 +469,40 @@ wire-shape mutations also fail closed to `ABSTAIN`. That is repository-only
 symbolic/synthetic mechanics coverage, not model execution, an independent
 scientific oracle, a durable observation or receipt, Metal authority, or
 product authority.
-It does not change `executionImplemented`: the bounded logit sidecar,
-source-pinned Float32 log-softmax, workers, process records, and terminal
-receipt remain false, unbound, or absent.
+The current source-only slice advances corrected admission to V3, the
+source/execution binding to V6, and the fixture plan to V5/schema 5. It binds
+the bounded lossless logit-sidecar codec and the maintained MLX Float32
+log-softmax operation as source contracts only. It does not change
+`executionImplemented`: no durable sidecar, full-fixture process observation
+or recomputation, model execution, Stage-B Metal authority, process record,
+terminal receipt, independent scientific oracle, or product authority has
+been established.
 
 The pure trace binds every 512-logit decision by an exact bit-pattern digest
 instead of hex-expanding logits into the invariant multiset; the expanded
 three-replicate fixture would violate Stage-B decode bounds. This is not a
-durable full-logit artifact. A bounded sidecar and source-pinned Float32
-log-softmax recomputation remain mandatory, while the local Foundation/Double
-probability diagnostic is excluded from canonical fingerprints.
+durable full-logit artifact. The source-bound codec admits at most 1,179,648
+candidate vectors and 65,536 unique vectors; exceeding either bound fails
+closed. Durable sidecar observation and complete-fixture MLX Float32
+recomputation remain mandatory, while the local Foundation/Double probability
+diagnostic is excluded from canonical fingerprints.
+
+The repository-test checkpoint passed pure sidecar mechanics 6/6. The
+source-pinned MLX validation package remains outside the MLX-free
+`PrimeCoreTests` bundle and passed 9/9 in 193.005 seconds against the exact
+3,817,916-byte metallib, SHA-256
+`24d4cfcd3ca8b15ead691e46219f35adabbea64c9f8de4eae9bf293fd8d5eb7b`;
+the structural three-vector output digest is
+`8dca965dbb3057c79d268435b23e58ecab8e77ecfe745b6a434cc1b2a852d98a`.
+Those nine cases comprise seven focused MLX mechanics cases and two exhaustive
+integration cases; the main exhaustive case took 192.889 seconds and covered
+18,432 rows and 232,638 decisions per seed for `1618`, `2718`, and `3141`,
+with 44 unique complete 512-value vectors, a 90,136-byte dictionary, a
+2,070,912-byte aggregate, bit-exact reconstruction, and stable MLX digest
+`db6906710bffd6a81653ca01df91f913f8a5430da8c8e9c8e620b3c88f7b2f02`.
+This is repository mechanics only, not a durable Stage-B
+artifact, full-fixture process observation, model or Stage-B Metal authority,
+process record, receipt, or product evidence.
 
 A forward audit found that the earlier five-field corrected request exposed
 `row_id`; corpus row IDs encode split and semantic family, including the
@@ -490,11 +514,12 @@ row-selected seeds are also metadata channels. The audit also found that the
 planned shared donor topology would expose trap-bearing historical code to
 corrected supervisors. The exact source-derived fixture identity/count leg is
 now source-plan-bound, and the concrete prompt-only solver derivation is bound
-separately. Corrected execution remains blocked until a bounded full-logit
-sidecar with source-pinned Float32 recomputation and a trap-disjoint target
-topology are bound. The historical worker, paired probe/verifier, Stage-B
-execution records, and receipt remain pending; `executionImplemented` remains
-false.
+separately. The sidecar and MLX Float32 operation are now source-plan-bound too,
+but corrected execution remains blocked until the topology is trap-disjoint,
+mutators and typed artifact decoders are source-bound, and the role-scoped
+historical worker, paired probe/verifier, exact inventory, durable
+recomputation observations, Stage-B execution records, and receipt are
+implemented. `executionImplemented` remains false.
 
 The closed PrimeCore external-child capture substrate is implemented. It
 accepts only the role and source root, directly launches the frozen Xcode 26.6
@@ -555,13 +580,17 @@ schema 4 at
 `neural-gate-replay/source/probe-swift-package-describe-capture.v4.json` and
 `neural-gate-replay/source/verifier-swift-package-describe-capture.v4.json`.
 The adaptation-proof and historical-worker aggregate contracts remain V2. The
-source/execution-binding contract is frozen at V5, while V4 remains the
-historical twelve-target fixture-authority binding. The replay-output contract
-remains V3, the output-path-classification contract ID is
+corrected execution-admission contract is V3. The source/execution-binding
+contract is frozen at V6; V5 remains the historical thirteen-target
+prompt-solver source contract and V4 the earlier twelve-target
+fixture-authority binding. The replay-output contract remains V3, the
+output-path-classification contract ID is
 `prime_stage_b_output_path_namespace_classification_v3`, and the fixture plan
-is V4/schema 4; V3/schema 3 remains independently reconstructable as the
-pre-solver historical plan. The frozen V3 replay-output namespace still
-reserves `neural-gate-replay/plan.v3.json`; no V4 execution artifact or
+is V5/schema 5 with canonical content SHA-256
+`c811555bc3a04f053378519ca9c33d18de075d0eb7b347587a9789f4aff3466b`.
+V4/schema 4 remains the historical pre-sidecar plan and V3/schema 3 the
+pre-solver plan. The frozen V3 replay-output namespace still
+reserves `neural-gate-replay/plan.v3.json`; no V4 or V5 execution artifact or
 receipt is claimed. The adaptation proof remains at
 `neural-gate-replay/source/adaptation-proof.v2.json`. The nested held-source
 mutation-guard observation remains schema 1, while the scratch-namespace
@@ -586,10 +615,15 @@ isolated thirteenth prompt-solver target was added, the same Release canary was
 rerun on the pinned host and passed with byte-identical probe/verifier output:
 23,791 bytes with SHA-256
 `9d56ad223c9d980272583dc752e0ff05bb815ce504cd3c82fc7e186627c02aa7`.
-This is the current V5 source-binding reseal. It includes the trusted
-descriptor-inventory substrate, pure Stage-B replay mechanics, corrected value
-mechanics, the offline source-attested fixture target, and the isolated
-prompt-solver target; it does not widen canary authority.
+This remains valid historical secure-capture evidence for the complete
+thirteen-target package description and source snapshot. The live factory
+still used the typed V4 selected-subgraph contract, so it was not a typed V5
+source-binding reseal and does not widen canary authority. After the
+fifteen-target V6 source graph and isolated MLX validation topology were
+frozen, the same Release canary passed with byte-identical probe/verifier
+output: 26,090 bytes with SHA-256
+`53ace0b68b1f8f2cf6534be886cb93241b08a36e0ddf0e9da7f8eee33f37cb40`.
+That is the current typed V6 selected-source-graph reseal.
 That pass validates only the secure capture substrate on the pinned host. It
 published no durable Stage-B process record or receipt,
 `executionImplemented` remains false, and no Stage-B replay, historical
@@ -613,7 +647,7 @@ or drain must fail-stop. Worker result transport cannot authorize mechanics
 `PASS`; the verifier must decode and recompute the semantic artifacts. Stage A
 is copied as 35 reachable typed bindings plus its separately pinned receipt,
 or 36 artifacts total. The exact next prerequisite is
-`bind_bounded_full_vocabulary_logit_sidecar_and_source_pinned_float32_logsoftmax_recomputation_then_amend_trap_disjoint_target_topology_and_implement_role_scoped_stage_b_historical_worker_probe_verifier_with_typed_artifact_recomputation_and_exact_path_metadata_content_inventory`.
+`amend_trap_disjoint_target_topology_then_implement_source_bound_mutators_and_typed_artifact_decoders_then_implement_role_scoped_stage_b_historical_worker_probe_verifier_with_exact_path_metadata_content_inventory`.
 
 ## Initial calibration
 
@@ -732,6 +766,25 @@ swift build \
   --destination-resources-root .build/arm64-apple-macosx/debug/PrimeTypedOptimizerRestoreMechanicsValidationPackageTests.xctest/Contents/Resources
 swift test \
   --package-path Tests/PrimeTypedOptimizerRestoreMechanicsValidation \
+  --scratch-path .build \
+  --skip-build
+```
+
+The neural-gate logit/recomputation mechanics use a second isolated package
+with its own source-pinned mirror and lock. It reuses the same compiled stager:
+
+```sh
+swift build --product PrimeTypedOptimizerRestoreProbe
+swift build --product PrimeMLXTestBundleStage
+swift build \
+  --package-path Tests/PrimeNativeNeuralGateMLXValidation \
+  --scratch-path .build \
+  --build-tests
+.build/arm64-apple-macosx/debug/PrimeMLXTestBundleStage \
+  --source-host .build/arm64-apple-macosx/debug/PrimeTypedOptimizerRestoreProbe \
+  --destination-resources-root .build/arm64-apple-macosx/debug/PrimeNativeNeuralGateMLXValidationPackageTests.xctest/Contents/Resources
+swift test \
+  --package-path Tests/PrimeNativeNeuralGateMLXValidation \
   --scratch-path .build \
   --skip-build
 ```

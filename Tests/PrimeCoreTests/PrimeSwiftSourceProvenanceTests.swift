@@ -92,6 +92,12 @@ final class PrimeSwiftSourceProvenanceTests:
                     == "Tests/PrimeTypedOptimizerRestoreMechanicsValidation/.swiftpm/configuration/mirrors.json"
             })
         )
+        XCTAssertTrue(
+            snapshot.files.contains(where: {
+                $0.relativePath
+                    == "Tests/PrimeNativeNeuralGateMLXValidation/.swiftpm/configuration/mirrors.json"
+            })
+        )
         XCTAssertNoThrow(
             try PrimeSwiftSourceProvenance.validate(
                 snapshot,
@@ -638,6 +644,7 @@ final class PrimeSwiftSourceProvenanceTests:
         for directory in [
             ".swiftpm/configuration",
             "Tests/PrimeTypedOptimizerRestoreMechanicsValidation/.swiftpm/configuration",
+            "Tests/PrimeNativeNeuralGateMLXValidation/.swiftpm/configuration",
             "Sources/PrimeCore",
             "Tests",
             "docs",
@@ -668,6 +675,21 @@ final class PrimeSwiftSourceProvenanceTests:
                     """.utf8
                 ),
             "Tests/PrimeTypedOptimizerRestoreMechanicsValidation/.swiftpm/configuration/mirrors.json":
+                Data(
+                    """
+                    {
+                      "object" : [
+                        {
+                          "mirror" : "https://github.com/Ergentics/ergentics-mlx-swift",
+                          "original" : "https://github.com/ml-explore/mlx-swift"
+                        }
+                      ],
+                      "version" : 1
+                    }
+
+                    """.utf8
+                ),
+            "Tests/PrimeNativeNeuralGateMLXValidation/.swiftpm/configuration/mirrors.json":
                 Data(
                     """
                     {

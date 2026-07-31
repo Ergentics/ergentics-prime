@@ -13,6 +13,18 @@ let package = Package(
         ),
         .library(
             name:
+                "PrimeNativeNeuralGateMLXValidationMechanics",
+            targets: [
+                "PrimeNativeCorpusReplayMechanics",
+                "PrimeNativeNeuralGateCorrectedMechanics",
+                "PrimeNativeNeuralGateCorrectedFixtureAuthority",
+                "PrimeNativeNeuralGatePromptSolver",
+                "PrimeNativeNeuralGateLogitSidecarMechanics",
+                "PrimeNativeNeuralGateMLXLogSoftmaxRecomputation",
+            ]
+        ),
+        .library(
+            name:
                 "PrimeTypedOptimizerRestoreMechanics",
             targets: [
                 "PrimeTypedOptimizerRestoreMechanics",
@@ -172,6 +184,28 @@ let package = Package(
                 "PrimeNativeNeuralGatePromptSolver",
             dependencies: [
                 "PrimeNativeNeuralGateCorrectedMechanics",
+            ]
+        ),
+        .target(
+            name:
+                "PrimeNativeNeuralGateLogitSidecarMechanics",
+            dependencies: [
+                "PrimeNativeNeuralGateCorrectedMechanics",
+            ]
+        ),
+        .target(
+            name:
+                "PrimeNativeNeuralGateMLXLogSoftmaxRecomputation",
+            dependencies: [
+                "PrimeNativeNeuralGateLogitSidecarMechanics",
+                .product(
+                    name: "MLX",
+                    package: "ergentics-mlx-swift"
+                ),
+                .product(
+                    name: "MLXNN",
+                    package: "ergentics-mlx-swift"
+                ),
             ]
         ),
         .target(
@@ -342,6 +376,7 @@ let package = Package(
                 "PrimeNativeNeuralGateCorrectedMechanics",
                 "PrimeNativeNeuralGateCorrectedFixtureAuthority",
                 "PrimeNativeNeuralGatePromptSolver",
+                "PrimeNativeNeuralGateLogitSidecarMechanics",
             ]
         ),
     ]

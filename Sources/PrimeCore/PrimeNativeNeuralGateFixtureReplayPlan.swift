@@ -2174,12 +2174,462 @@ public struct PrimeNativeNeuralGatePromptOnlySolverSourceDerivationContract:
     }
 }
 
+public struct PrimeNativeNeuralGateSourceContinuityFilePin:
+    Codable,
+    Equatable,
+    Sendable
+{
+    public let role: String
+    public let remoteURL: String
+    public let revision: String
+    public let treeOID: String
+    public let relativePath: String
+    public let gitBlobOID: String
+    public let byteCount: UInt64
+    public let sha256: String
+
+    public init(
+        role: String,
+        remoteURL: String,
+        revision: String,
+        treeOID: String,
+        relativePath: String,
+        gitBlobOID: String,
+        byteCount: UInt64,
+        sha256: String
+    ) {
+        self.role = role
+        self.remoteURL = remoteURL
+        self.revision = revision
+        self.treeOID = treeOID
+        self.relativePath = relativePath
+        self.gitBlobOID = gitBlobOID
+        self.byteCount = byteCount
+        self.sha256 = sha256
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case role
+        case remoteURL = "remote_url"
+        case revision
+        case treeOID = "tree_oid"
+        case relativePath = "relative_path"
+        case gitBlobOID = "git_blob_oid"
+        case byteCount = "byte_count"
+        case sha256
+    }
+}
+
+/// Source-plan binding for the bounded full-vocabulary logit sidecar and the
+/// maintained MLX Float32 log-softmax operation. This freezes source, codec,
+/// and allocation bounds only. It is not a durable artifact, full-fixture
+/// recomputation observation, model/Metal observation, process record, or
+/// receipt.
+public struct
+    PrimeNativeNeuralGateLogitSidecarFloat32SourceBindingContract:
+    Codable,
+    Equatable,
+    Sendable
+{
+    public let contractID: String
+    public let sidecarTargetName: String
+    public let sidecarDirectLocalDependencyNames:
+        [String]
+    public let mlxRecomputationTargetName: String
+    public let mlxRecomputationDirectLocalDependencyNames:
+        [String]
+    public let mlxPackageIdentity: String
+    public let mlxManifestRemoteURL: String
+    public let mlxResolvedLocation: String
+    public let mlxResolvedRevision: String
+    public let mlxProductNames: [String]
+
+    public let sidecarCodecID: String
+    public let dictionaryMagicUTF8: String
+    public let chunkMagicUTF8: String
+    public let manifestMagicUTF8: String
+    public let aggregateDigestDomainUTF8: String
+    public let byteOrder: String
+    public let replicateSeedSerialization: String
+    public let dictionaryConstructionPolicy:
+        String
+    public let dictionaryLayout: String
+    public let chunkLayout: String
+    public let fileDigestID: String
+    public let aggregateDigestID: String
+    public let fullVocabularyLogitCount: Int
+    public let maximumDictionaryEntryCount: Int
+    public let maximumDictionaryCandidateCount:
+        Int
+    public let maximumGenerationDecisionsPerRow:
+        Int
+    public let exactCorrectedFixtureRowsPerReplicate:
+        Int
+    public let admittedReplicateCount: Int
+    public let canonicalRowsPerChunk: Int
+    public let maximumChunkCount: Int
+    public let maximumDictionaryFileBytes:
+        UInt64
+    public let maximumChunkFileBytes: UInt64
+    public let maximumManifestFileBytes: UInt64
+    public let maximumAggregateBytes: UInt64
+
+    public let mlxOperationID: String
+    public let mlxInputDType: String
+    public let mlxOutputDType: String
+    public let mlxAxis: Int
+    public let maximumMLXBatchVectorCount: Int
+    public let mlxOutputBitPatternSerializationID:
+        String
+    public let exactLogSoftmaxFunctionSerializationID:
+        String
+    public let exactLogSoftmaxFunctionSHA256:
+        String
+    public let sourceContinuityPins:
+        [PrimeNativeNeuralGateSourceContinuityFilePin]
+
+    public let sidecarCodecSourcePlanBound: Bool
+    public let float32LogSoftmaxSourcePlanBound:
+        Bool
+    public let durableSidecarArtifactObserved:
+        Bool
+    public let fullFixtureFloat32RecomputationObserved:
+        Bool
+    public let modelExecutionObserved: Bool
+    public let metalExecutionObserved: Bool
+    public let independentScientificOracleClaimed:
+        Bool
+    public let processRecordPublished: Bool
+    public let terminalReceiptPublished: Bool
+    public let productAuthorityClaimed: Bool
+    public let authorityLevel: String
+
+    public static let frozenV1 = Self(
+        contractID:
+            "prime_stage_b_logit_sidecar_float32_logsoftmax_source_binding_v1",
+        sidecarTargetName:
+            "PrimeNativeNeuralGateLogitSidecarMechanics",
+        sidecarDirectLocalDependencyNames: [
+            "PrimeNativeNeuralGateCorrectedMechanics",
+        ],
+        mlxRecomputationTargetName:
+            "PrimeNativeNeuralGateMLXLogSoftmaxRecomputation",
+        mlxRecomputationDirectLocalDependencyNames: [
+            "PrimeNativeNeuralGateLogitSidecarMechanics",
+        ],
+        mlxPackageIdentity: "ergentics-mlx-swift",
+        mlxManifestRemoteURL:
+            "https://github.com/Ergentics/ergentics-mlx-swift",
+        mlxResolvedLocation:
+            "https://github.com/ml-explore/mlx-swift",
+        mlxResolvedRevision:
+            "d37885a278f1c37484a94d0f401a418735e66519",
+        mlxProductNames: [
+            "MLX",
+            "MLXNN",
+        ],
+        sidecarCodecID:
+            "prime_stage_b_full_vocabulary_logit_sidecar_dictionary_deduplicated_row_index_chunks_big_endian_v1",
+        dictionaryMagicUTF8: "PRMLGD01",
+        chunkMagicUTF8: "PRMLGC01",
+        manifestMagicUTF8: "PRMLGM01",
+        aggregateDigestDomainUTF8: "PRMLGA01",
+        byteOrder: "big_endian",
+        replicateSeedSerialization:
+            "uint64_big_endian_replicate_scoped_v1",
+        dictionaryConstructionPolicy:
+            "bounded_streaming_one_vector_at_a_time_exact_float32_bit_pattern_deduplication_fail_on_1179649th_candidate_or_65537th_unique_entry_then_lexicographic_sort_v1",
+        dictionaryLayout:
+            "magic8_seed_u64be_vocabulary_u32be_entry_count_u32be_then_lexicographic_unique_entries_each_512_float32_bit_patterns_u32be_v1",
+        chunkLayout:
+            "magic8_seed_u64be_chunk_ordinal_u32be_row_count_u32be_then_rows_with_row_ordinal_u32be_correlation_length_u16be_printable_ascii_decision_count_u8_then_strict_ordinal_u8_dictionary_index_u32be_v1",
+        fileDigestID:
+            "sha256_over_exact_file_bytes_v1",
+        aggregateDigestID:
+            "sha256_prmlga01_then_for_dictionary_and_chunks_in_order_uint64_big_endian_length_then_exact_file_bytes_v1",
+        fullVocabularyLogitCount: 512,
+        maximumDictionaryEntryCount: 65_536,
+        maximumDictionaryCandidateCount:
+            1_179_648,
+        maximumGenerationDecisionsPerRow:
+            64,
+        exactCorrectedFixtureRowsPerReplicate:
+            18_432,
+        admittedReplicateCount: 3,
+        canonicalRowsPerChunk: 1_024,
+        maximumChunkCount: 18,
+        maximumDictionaryFileBytes:
+            268_435_456,
+        maximumChunkFileBytes: 1_048_576,
+        maximumManifestFileBytes: 65_536,
+        maximumAggregateBytes: 536_870_912,
+        mlxOperationID:
+            "mlxnn_float32_logsoftmax_axis_minus_one_over_full_512_vocabulary_v1",
+        mlxInputDType: "float32",
+        mlxOutputDType: "float32",
+        mlxAxis: -1,
+        maximumMLXBatchVectorCount: 256,
+        mlxOutputBitPatternSerializationID:
+            "primelsm1_then_uint32_be_vector_count_uint32_be_vocabulary_count_then_float32_bit_patterns_uint32_be_row_major_v1",
+        exactLogSoftmaxFunctionSerializationID:
+            "utf8_exact_three_line_function_declaration_body_and_closing_brace_with_final_lf_v1",
+        exactLogSoftmaxFunctionSHA256:
+            "8d576115e1be7648d4a4da72c025893d23e67b1d30a53646d09e74bfe58fc639",
+        sourceContinuityPins: [
+            .init(
+                role: "companion_executor",
+                remoteURL:
+                    "https://github.com/Ergentics/pmhnp-companion-ergentics.git",
+                revision:
+                    "163fc100710ece48119bc25954452d10f6a84f7f",
+                treeOID:
+                    "9009daa4f8a07fbd5897e00b9571cef44ec292db",
+                relativePath:
+                    "prime-runtime/Sources/PrimeNativeLanguageSwiftCanary/main.swift",
+                gitBlobOID:
+                    "94227842cdff73434c926527a6081aaf20f37155",
+                byteCount: 174_006,
+                sha256:
+                    "7a3ba9477a7ac82dccfe6dcc7ec09af738b40298cdab6b259ddf1e9d36ec15b4"
+            ),
+            .init(
+                role: "companion_package_resolved",
+                remoteURL:
+                    "https://github.com/Ergentics/pmhnp-companion-ergentics.git",
+                revision:
+                    "163fc100710ece48119bc25954452d10f6a84f7f",
+                treeOID:
+                    "9009daa4f8a07fbd5897e00b9571cef44ec292db",
+                relativePath:
+                    "prime-runtime/Package.resolved",
+                gitBlobOID:
+                    "18aef69512c82c3e6cdff192f3aa0a6ee13c702e",
+                byteCount: 1_949,
+                sha256:
+                    "cf1ba313dcb0c959e80ba09d6cbe0c56bcd921523bda5cec2c682c8ae7696ab3"
+            ),
+            .init(
+                role: "upstream_mlx_swift_activations",
+                remoteURL:
+                    "https://github.com/ml-explore/mlx-swift.git",
+                revision:
+                    "072b684acaae80b6a463abab3a103732f33774bf",
+                treeOID:
+                    "aecc4c90c4720b0624def30913f139eb1e878ea5",
+                relativePath:
+                    "Source/MLXNN/Activations.swift",
+                gitBlobOID:
+                    "f5ee9205eac15b537f6a9552371c30255c88e69e",
+                byteCount: 19_101,
+                sha256:
+                    "c6e82121f1a7efceca0de234b5ef0058162f70bcccc4cef63b6d85d524ef1beb"
+            ),
+            .init(
+                role: "ergentics_mlx_swift_activations",
+                remoteURL:
+                    "https://github.com/Ergentics/ergentics-mlx-swift.git",
+                revision:
+                    "d37885a278f1c37484a94d0f401a418735e66519",
+                treeOID:
+                    "5310749549cca107fc1bb07d82dacf043bc02b9e",
+                relativePath:
+                    "Source/MLXNN/Activations.swift",
+                gitBlobOID:
+                    "a40618fac9f7c2226599c0219eccc11fcfcb0df5",
+                byteCount: 23_918,
+                sha256:
+                    "5145539a33687bb4e9ce5ac00b821fef9f5e18652818c278c1807443b5e552f1"
+            ),
+        ],
+        sidecarCodecSourcePlanBound: true,
+        float32LogSoftmaxSourcePlanBound:
+            true,
+        durableSidecarArtifactObserved: false,
+        fullFixtureFloat32RecomputationObserved:
+            false,
+        modelExecutionObserved: false,
+        metalExecutionObserved: false,
+        independentScientificOracleClaimed:
+            false,
+        processRecordPublished: false,
+        terminalReceiptPublished: false,
+        productAuthorityClaimed: false,
+        authorityLevel:
+            "source_plan_bound_codec_bounds_and_mlx_float32_operation_no_durable_sidecar_full_fixture_observation_model_metal_process_receipt_or_product_authority_v1"
+    )
+
+    public func validate() throws {
+        guard self == .frozenV1,
+              Set(
+                  sourceContinuityPins.map(\.role)
+              ).count == sourceContinuityPins.count,
+              sourceContinuityPins.map(\.role)
+                == [
+                    "companion_executor",
+                    "companion_package_resolved",
+                    "upstream_mlx_swift_activations",
+                    "ergentics_mlx_swift_activations",
+                ],
+              sidecarDirectLocalDependencyNames
+                == [
+                    "PrimeNativeNeuralGateCorrectedMechanics",
+                ],
+              mlxRecomputationDirectLocalDependencyNames
+                == [
+                    "PrimeNativeNeuralGateLogitSidecarMechanics",
+                ],
+              mlxProductNames == ["MLX", "MLXNN"],
+              dictionaryMagicUTF8.utf8.count == 8,
+              chunkMagicUTF8.utf8.count == 8,
+              manifestMagicUTF8.utf8.count == 8,
+              aggregateDigestDomainUTF8.utf8.count
+                == 8,
+              fullVocabularyLogitCount == 512,
+              maximumDictionaryEntryCount
+                == 65_536,
+              maximumDictionaryCandidateCount
+                == exactCorrectedFixtureRowsPerReplicate
+                    * maximumGenerationDecisionsPerRow,
+              maximumGenerationDecisionsPerRow
+                == 64,
+              exactCorrectedFixtureRowsPerReplicate
+                == 18_432,
+              admittedReplicateCount == 3,
+              canonicalRowsPerChunk == 1_024,
+              maximumChunkCount == 18,
+              maximumDictionaryFileBytes
+                == 268_435_456,
+              maximumChunkFileBytes == 1_048_576,
+              maximumManifestFileBytes == 65_536,
+              maximumAggregateBytes == 536_870_912,
+              maximumMLXBatchVectorCount == 256,
+              mlxAxis == -1,
+              sidecarCodecSourcePlanBound,
+              float32LogSoftmaxSourcePlanBound,
+              !durableSidecarArtifactObserved,
+              !fullFixtureFloat32RecomputationObserved,
+              !modelExecutionObserved,
+              !metalExecutionObserved,
+              !independentScientificOracleClaimed,
+              !processRecordPublished,
+              !terminalReceiptPublished,
+              !productAuthorityClaimed
+        else {
+            throw PrimeNativeNeuralGateFixtureReplayPlanError
+                .invalidPlan(
+                    "logit_sidecar_float32_source_binding"
+                )
+        }
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case contractID = "contract_id"
+        case sidecarTargetName =
+            "sidecar_target_name"
+        case sidecarDirectLocalDependencyNames =
+            "sidecar_direct_local_dependency_names"
+        case mlxRecomputationTargetName =
+            "mlx_recomputation_target_name"
+        case mlxRecomputationDirectLocalDependencyNames =
+            "mlx_recomputation_direct_local_dependency_names"
+        case mlxPackageIdentity =
+            "mlx_package_identity"
+        case mlxManifestRemoteURL =
+            "mlx_manifest_remote_url"
+        case mlxResolvedLocation =
+            "mlx_resolved_location"
+        case mlxResolvedRevision =
+            "mlx_resolved_revision"
+        case mlxProductNames = "mlx_product_names"
+        case sidecarCodecID = "sidecar_codec_id"
+        case dictionaryMagicUTF8 =
+            "dictionary_magic_utf8"
+        case chunkMagicUTF8 = "chunk_magic_utf8"
+        case manifestMagicUTF8 =
+            "manifest_magic_utf8"
+        case aggregateDigestDomainUTF8 =
+            "aggregate_digest_domain_utf8"
+        case byteOrder = "byte_order"
+        case replicateSeedSerialization =
+            "replicate_seed_serialization"
+        case dictionaryConstructionPolicy =
+            "dictionary_construction_policy"
+        case dictionaryLayout = "dictionary_layout"
+        case chunkLayout = "chunk_layout"
+        case fileDigestID = "file_digest_id"
+        case aggregateDigestID =
+            "aggregate_digest_id"
+        case fullVocabularyLogitCount =
+            "full_vocabulary_logit_count"
+        case maximumDictionaryEntryCount =
+            "maximum_dictionary_entry_count"
+        case maximumDictionaryCandidateCount =
+            "maximum_dictionary_candidate_count"
+        case maximumGenerationDecisionsPerRow =
+            "maximum_generation_decisions_per_row"
+        case exactCorrectedFixtureRowsPerReplicate =
+            "exact_corrected_fixture_rows_per_replicate"
+        case admittedReplicateCount =
+            "admitted_replicate_count"
+        case canonicalRowsPerChunk =
+            "canonical_rows_per_chunk"
+        case maximumChunkCount =
+            "maximum_chunk_count"
+        case maximumDictionaryFileBytes =
+            "maximum_dictionary_file_bytes"
+        case maximumChunkFileBytes =
+            "maximum_chunk_file_bytes"
+        case maximumManifestFileBytes =
+            "maximum_manifest_file_bytes"
+        case maximumAggregateBytes =
+            "maximum_aggregate_bytes"
+        case mlxOperationID = "mlx_operation_id"
+        case mlxInputDType = "mlx_input_dtype"
+        case mlxOutputDType = "mlx_output_dtype"
+        case mlxAxis = "mlx_axis"
+        case maximumMLXBatchVectorCount =
+            "maximum_mlx_batch_vector_count"
+        case mlxOutputBitPatternSerializationID =
+            "mlx_output_bit_pattern_serialization_id"
+        case exactLogSoftmaxFunctionSerializationID =
+            "exact_logsoftmax_function_serialization_id"
+        case exactLogSoftmaxFunctionSHA256 =
+            "exact_logsoftmax_function_sha256"
+        case sourceContinuityPins =
+            "source_continuity_pins"
+        case sidecarCodecSourcePlanBound =
+            "sidecar_codec_source_plan_bound"
+        case float32LogSoftmaxSourcePlanBound =
+            "float32_logsoftmax_source_plan_bound"
+        case durableSidecarArtifactObserved =
+            "durable_sidecar_artifact_observed"
+        case fullFixtureFloat32RecomputationObserved =
+            "full_fixture_float32_recomputation_observed"
+        case modelExecutionObserved =
+            "model_execution_observed"
+        case metalExecutionObserved =
+            "metal_execution_observed"
+        case independentScientificOracleClaimed =
+            "independent_scientific_oracle_claimed"
+        case processRecordPublished =
+            "process_record_published"
+        case terminalReceiptPublished =
+            "terminal_receipt_published"
+        case productAuthorityClaimed =
+            "product_authority_claimed"
+        case authorityLevel = "authority_level"
+    }
+}
+
 /// Execution-blocking correction discovered before Stage-B GPU or worker
 /// spend. The older five-field request exposed row identity even though
 /// corpus row IDs encode split and semantic family. This contract narrows the
 /// executor-visible value. V1 keeps corrected execution closed until a
 /// concrete source-derived prompt solver is bound; V2 binds that derivation
-/// while leaving logit, execution, and receipt authority closed.
+/// while leaving logit, execution, and receipt authority closed. V3 binds
+/// the bounded sidecar codec and MLX Float32 operation as source contracts
+/// only while every durable/full-fixture/model/Metal/process/receipt
+/// observation remains false.
 public struct PrimeNativeNeuralGateCorrectedExecutionAdmission:
     Codable,
     Equatable,
@@ -2246,6 +2696,8 @@ public struct PrimeNativeNeuralGateCorrectedExecutionAdmission:
         Bool
     public let promptOnlySolverSourceDerivation:
         PrimeNativeNeuralGatePromptOnlySolverSourceDerivationContract?
+    public let logitSidecarFloat32SourceBinding:
+        PrimeNativeNeuralGateLogitSidecarFloat32SourceBindingContract?
     public let solverMayReceiveCorpusRow: Bool
     public let solverMayReceiveTargetOrRegradeMaterial:
         Bool
@@ -2266,6 +2718,16 @@ public struct PrimeNativeNeuralGateCorrectedExecutionAdmission:
         Bool
     public let sourcePinnedFloat32LogSoftmaxRecomputationBound:
         Bool
+    public let durableFullVocabularyLogitSidecarObserved:
+        Bool?
+    public let fullFixtureSourcePinnedFloat32LogSoftmaxRecomputationObserved:
+        Bool?
+    public let modelExecutionObserved: Bool?
+    public let metalExecutionObserved: Bool?
+    public let sidecarRecomputationProcessRecordPublished:
+        Bool?
+    public let sidecarRecomputationReceiptPublished:
+        Bool?
     public let foundationDoubleProbabilityDiagnosticAuthoritative:
         Bool
     public let requiredMetadataIsolationMutationIDs:
@@ -2278,26 +2740,46 @@ public struct PrimeNativeNeuralGateCorrectedExecutionAdmission:
     public static let frozenV1 =
         makeFrozen(
             promptOnlySolverSourceDerivation:
+                nil,
+            logitSidecarFloat32SourceBinding:
                 nil
         )
 
     public static let frozenV2 =
         makeFrozen(
             promptOnlySolverSourceDerivation:
+                .frozenV1,
+            logitSidecarFloat32SourceBinding:
+                nil
+        )
+
+    public static let frozenV3 =
+        makeFrozen(
+            promptOnlySolverSourceDerivation:
+                .frozenV1,
+            logitSidecarFloat32SourceBinding:
                 .frozenV1
         )
 
     private static func makeFrozen(
         promptOnlySolverSourceDerivation:
-            PrimeNativeNeuralGatePromptOnlySolverSourceDerivationContract?
+            PrimeNativeNeuralGatePromptOnlySolverSourceDerivationContract?,
+        logitSidecarFloat32SourceBinding:
+            PrimeNativeNeuralGateLogitSidecarFloat32SourceBindingContract?
     ) -> Self {
         let promptOnlySolverBound =
             promptOnlySolverSourceDerivation != nil
+        let logitSidecarFloat32SourceBound =
+            logitSidecarFloat32SourceBinding != nil
         return Self(
         admissionID:
-            promptOnlySolverBound
+            logitSidecarFloat32SourceBound
+            ? "prime_stage_b_corrected_execution_metadata_isolation_solver_logit_sidecar_float32_source_admission_v3"
+            : (
+                promptOnlySolverBound
             ? "prime_stage_b_corrected_execution_metadata_isolation_and_solver_admission_v2"
-            : "prime_stage_b_corrected_execution_metadata_isolation_and_solver_admission_v1",
+            : "prime_stage_b_corrected_execution_metadata_isolation_and_solver_admission_v1"
+            ),
         findingIDs: [
             "corpus_row_id_encodes_split_index_and_semantic_family",
             "abstention_row_id_exposes_abstention_class",
@@ -2391,6 +2873,8 @@ public struct PrimeNativeNeuralGateCorrectedExecutionAdmission:
             promptOnlySolverBound,
         promptOnlySolverSourceDerivation:
             promptOnlySolverSourceDerivation,
+        logitSidecarFloat32SourceBinding:
+            logitSidecarFloat32SourceBinding,
         solverMayReceiveCorpusRow: false,
         solverMayReceiveTargetOrRegradeMaterial:
             false,
@@ -2407,11 +2891,35 @@ public struct PrimeNativeNeuralGateCorrectedExecutionAdmission:
             true,
         fullVocabularyLogitsRequired: true,
         boundedFullVocabularyLogitArtifactBound:
-            false,
+            logitSidecarFloat32SourceBound,
         sourcePinnedFloat32LogSoftmaxRecomputationRequired:
             true,
         sourcePinnedFloat32LogSoftmaxRecomputationBound:
-            false,
+            logitSidecarFloat32SourceBound,
+        durableFullVocabularyLogitSidecarObserved:
+            logitSidecarFloat32SourceBound
+            ? false
+            : nil,
+        fullFixtureSourcePinnedFloat32LogSoftmaxRecomputationObserved:
+            logitSidecarFloat32SourceBound
+            ? false
+            : nil,
+        modelExecutionObserved:
+            logitSidecarFloat32SourceBound
+            ? false
+            : nil,
+        metalExecutionObserved:
+            logitSidecarFloat32SourceBound
+            ? false
+            : nil,
+        sidecarRecomputationProcessRecordPublished:
+            logitSidecarFloat32SourceBound
+            ? false
+            : nil,
+        sidecarRecomputationReceiptPublished:
+            logitSidecarFloat32SourceBound
+            ? false
+            : nil,
         foundationDoubleProbabilityDiagnosticAuthoritative:
             false,
         requiredMetadataIsolationMutationIDs: [
@@ -2425,17 +2933,28 @@ public struct PrimeNativeNeuralGateCorrectedExecutionAdmission:
             false,
         terminalReceiptAuthorized: false,
         unblockPrerequisite:
-            promptOnlySolverBound
+            logitSidecarFloat32SourceBound
+            ? "amend_trap_disjoint_target_topology_then_implement_source_bound_mutators_typed_decoders_workers_probe_verifier_and_exact_inventory_then_observe_durable_sidecar_full_fixture_float32_recomputation_and_pass_correlation_seed_row_permutation_same_length_and_different_length_substitution_raw_identity_gates"
+            : (
+                promptOnlySolverBound
             ? "bind_bounded_full_vocabulary_logit_sidecar_and_source_pinned_float32_logsoftmax_recomputation_then_pass_correlation_seed_row_permutation_same_length_and_different_length_substitution_raw_identity_gates"
             : "bind_concrete_prime_owned_replicate_scoped_seed_prompt_solver_with_fresh_per_row_state_no_row_target_regrade_closure_or_existential_input_then_bind_bounded_full_vocabulary_logit_sidecar_and_source_pinned_float32_logsoftmax_recomputation_then_pass_correlation_seed_row_permutation_same_length_and_different_length_substitution_raw_identity_gates"
+            )
         )
     }
 
     public func validate() throws {
         try promptOnlySolverSourceDerivation?
             .validate()
+        try logitSidecarFloat32SourceBinding?
+            .validate()
         let isBoundV2 = self == .frozenV2
-        guard (self == .frozenV1 || isBoundV2),
+        let isBoundV3 = self == .frozenV3
+        let promptOnlySolverBound =
+            isBoundV2 || isBoundV3
+        guard (self == .frozenV1
+                || isBoundV2
+                || isBoundV3),
               Set(executorVisibleFields).count
                 == executorVisibleFields.count,
               Set(forbiddenExecutorFields).count
@@ -2491,10 +3010,16 @@ public struct PrimeNativeNeuralGateCorrectedExecutionAdmission:
               !perRowTargetFeasibilityDecisionPermitted,
               promptOnlySolverSourceDerivationRequired,
               promptOnlySolverSourceDerivationBound
-                == isBoundV2,
+                == promptOnlySolverBound,
               promptOnlySolverSourceDerivation
                 == (
-                    isBoundV2
+                    promptOnlySolverBound
+                    ? .frozenV1
+                    : nil
+                ),
+              logitSidecarFloat32SourceBinding
+                == (
+                    isBoundV3
                     ? .frozenV1
                     : nil
                 ),
@@ -2504,9 +3029,23 @@ public struct PrimeNativeNeuralGateCorrectedExecutionAdmission:
               !trapBearingDonorDependencyPermitted,
               donorTransplantDeferredToHistoricalWorkerSlice,
               fullVocabularyLogitsRequired,
-              !boundedFullVocabularyLogitArtifactBound,
+              boundedFullVocabularyLogitArtifactBound
+                == isBoundV3,
               sourcePinnedFloat32LogSoftmaxRecomputationRequired,
-              !sourcePinnedFloat32LogSoftmaxRecomputationBound,
+              sourcePinnedFloat32LogSoftmaxRecomputationBound
+                == isBoundV3,
+              durableFullVocabularyLogitSidecarObserved
+                == (isBoundV3 ? false : nil),
+              fullFixtureSourcePinnedFloat32LogSoftmaxRecomputationObserved
+                == (isBoundV3 ? false : nil),
+              modelExecutionObserved
+                == (isBoundV3 ? false : nil),
+              metalExecutionObserved
+                == (isBoundV3 ? false : nil),
+              sidecarRecomputationProcessRecordPublished
+                == (isBoundV3 ? false : nil),
+              sidecarRecomputationReceiptPublished
+                == (isBoundV3 ? false : nil),
               !foundationDoubleProbabilityDiagnosticAuthoritative,
               !correctedFixtureExecutionAuthorized,
               !terminalReceiptAuthorized
@@ -2585,6 +3124,8 @@ public struct PrimeNativeNeuralGateCorrectedExecutionAdmission:
             "prompt_only_solver_source_derivation_bound"
         case promptOnlySolverSourceDerivation =
             "prompt_only_solver_source_derivation"
+        case logitSidecarFloat32SourceBinding =
+            "logit_sidecar_float32_source_binding"
         case solverMayReceiveCorpusRow =
             "solver_may_receive_corpus_row"
         case solverMayReceiveTargetOrRegradeMaterial =
@@ -2607,6 +3148,18 @@ public struct PrimeNativeNeuralGateCorrectedExecutionAdmission:
             "source_pinned_float32_logsoftmax_recomputation_required"
         case sourcePinnedFloat32LogSoftmaxRecomputationBound =
             "source_pinned_float32_logsoftmax_recomputation_bound"
+        case durableFullVocabularyLogitSidecarObserved =
+            "durable_full_vocabulary_logit_sidecar_observed"
+        case fullFixtureSourcePinnedFloat32LogSoftmaxRecomputationObserved =
+            "full_fixture_source_pinned_float32_logsoftmax_recomputation_observed"
+        case modelExecutionObserved =
+            "model_execution_observed"
+        case metalExecutionObserved =
+            "metal_execution_observed"
+        case sidecarRecomputationProcessRecordPublished =
+            "sidecar_recomputation_process_record_published"
+        case sidecarRecomputationReceiptPublished =
+            "sidecar_recomputation_receipt_published"
         case foundationDoubleProbabilityDiagnosticAuthoritative =
             "foundation_double_probability_diagnostic_authoritative"
         case requiredMetadataIsolationMutationIDs =
@@ -3292,6 +3845,8 @@ public struct PrimeNativeNeuralGateTargetSourceClosureRule:
     public let sourceDirectoryRelativePath: String
     public let directLocalDependencyNames:
         [String]
+    public let directProductDependencyNames:
+        [String]
     public let completeSortedSwiftFileEnumerationRequired:
         Bool
     public let fileIdentitiesDerivedOnlyFromSourceSnapshot:
@@ -3299,17 +3854,105 @@ public struct PrimeNativeNeuralGateTargetSourceClosureRule:
 
     public init(
         targetName: String,
-        directLocalDependencyNames: [String]
+        directLocalDependencyNames: [String],
+        directProductDependencyNames:
+            [String] = []
     ) {
         self.targetName = targetName
         sourceDirectoryRelativePath =
             "Sources/\(targetName)"
         self.directLocalDependencyNames =
             directLocalDependencyNames
+        self.directProductDependencyNames =
+            directProductDependencyNames
         completeSortedSwiftFileEnumerationRequired =
             true
         fileIdentitiesDerivedOnlyFromSourceSnapshot =
             true
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container =
+            try decoder.container(
+                keyedBy: CodingKeys.self
+            )
+        targetName =
+            try container.decode(
+                String.self,
+                forKey: .targetName
+            )
+        sourceDirectoryRelativePath =
+            try container.decode(
+                String.self,
+                forKey:
+                    .sourceDirectoryRelativePath
+            )
+        directLocalDependencyNames =
+            try container.decode(
+                [String].self,
+                forKey:
+                    .directLocalDependencyNames
+            )
+        directProductDependencyNames =
+            try container.decodeIfPresent(
+                [String].self,
+                forKey:
+                    .directProductDependencyNames
+            ) ?? []
+        completeSortedSwiftFileEnumerationRequired =
+            try container.decode(
+                Bool.self,
+                forKey:
+                    .completeSortedSwiftFileEnumerationRequired
+            )
+        fileIdentitiesDerivedOnlyFromSourceSnapshot =
+            try container.decode(
+                Bool.self,
+                forKey:
+                    .fileIdentitiesDerivedOnlyFromSourceSnapshot
+            )
+    }
+
+    public func encode(
+        to encoder: Encoder
+    ) throws {
+        var container =
+            encoder.container(
+                keyedBy: CodingKeys.self
+            )
+        try container.encode(
+            targetName,
+            forKey: .targetName
+        )
+        try container.encode(
+            sourceDirectoryRelativePath,
+            forKey:
+                .sourceDirectoryRelativePath
+        )
+        try container.encode(
+            directLocalDependencyNames,
+            forKey:
+                .directLocalDependencyNames
+        )
+        if !directProductDependencyNames
+            .isEmpty
+        {
+            try container.encode(
+                directProductDependencyNames,
+                forKey:
+                    .directProductDependencyNames
+            )
+        }
+        try container.encode(
+            completeSortedSwiftFileEnumerationRequired,
+            forKey:
+                .completeSortedSwiftFileEnumerationRequired
+        )
+        try container.encode(
+            fileIdentitiesDerivedOnlyFromSourceSnapshot,
+            forKey:
+                .fileIdentitiesDerivedOnlyFromSourceSnapshot
+        )
     }
 
     private enum CodingKeys: String, CodingKey {
@@ -3318,6 +3961,8 @@ public struct PrimeNativeNeuralGateTargetSourceClosureRule:
             "source_directory_relative_path"
         case directLocalDependencyNames =
             "direct_local_dependency_names"
+        case directProductDependencyNames =
+            "direct_product_dependency_names"
         case completeSortedSwiftFileEnumerationRequired =
             "complete_sorted_swift_file_enumeration_required"
         case fileIdentitiesDerivedOnlyFromSourceSnapshot =
@@ -3547,6 +4192,8 @@ public struct PrimeNativeNeuralGateSourceExecutionBindingContract:
             includingCorrectedFixtureAuthority:
                 false,
             includingPromptOnlySolver:
+                false,
+            includingLogitSidecarAndMLXRecomputation:
                 false
         )
     public static let frozenV4 =
@@ -3554,6 +4201,8 @@ public struct PrimeNativeNeuralGateSourceExecutionBindingContract:
             includingCorrectedFixtureAuthority:
                 true,
             includingPromptOnlySolver:
+                false,
+            includingLogitSidecarAndMLXRecomputation:
                 false
         )
     public static let frozenV5 =
@@ -3561,13 +4210,26 @@ public struct PrimeNativeNeuralGateSourceExecutionBindingContract:
             includingCorrectedFixtureAuthority:
                 true,
             includingPromptOnlySolver:
+                true,
+            includingLogitSidecarAndMLXRecomputation:
+                false
+        )
+    public static let frozenV6 =
+        makeFrozen(
+            includingCorrectedFixtureAuthority:
+                true,
+            includingPromptOnlySolver:
+                true,
+            includingLogitSidecarAndMLXRecomputation:
                 true
         )
 
     private static func makeFrozen(
         includingCorrectedFixtureAuthority:
             Bool,
-        includingPromptOnlySolver: Bool
+        includingPromptOnlySolver: Bool,
+        includingLogitSidecarAndMLXRecomputation:
+            Bool
     ) -> Self {
         let core = "PrimeCore"
         let corpusMechanics =
@@ -3586,6 +4248,10 @@ public struct PrimeNativeNeuralGateSourceExecutionBindingContract:
             "PrimeNativeNeuralGateCorrectedFixtureAuthority"
         let promptOnlySolver =
             "PrimeNativeNeuralGatePromptSolver"
+        let logitSidecarMechanics =
+            "PrimeNativeNeuralGateLogitSidecarMechanics"
+        let mlxLogSoftmaxRecomputation =
+            "PrimeNativeNeuralGateMLXLogSoftmaxRecomputation"
         let replay = "PrimeNativeNeuralGateReplay"
         let historicalWorker =
             "PrimeNativeNeuralGateHistoricalFixtureWorker"
@@ -3604,13 +4270,16 @@ public struct PrimeNativeNeuralGateSourceExecutionBindingContract:
         ]
         return Self(
             contractID:
-                includingPromptOnlySolver
+                includingLogitSidecarAndMLXRecomputation
+                ? "prime_stage_b_release_source_executable_join_v6"
+                : (
+                    includingPromptOnlySolver
                 ? "prime_stage_b_release_source_executable_join_v5"
                 : (
                     includingCorrectedFixtureAuthority
                     ? "prime_stage_b_release_source_executable_join_v4"
                     : "prime_stage_b_release_source_executable_join_v3"
-                ),
+                )),
             packageManifestRelativePath:
                 "Package.swift",
             sourceSnapshotRelativePath:
@@ -3712,6 +4381,29 @@ public struct PrimeNativeNeuralGateSourceExecutionBindingContract:
                                 promptOnlySolver,
                             directLocalDependencyNames: [
                                 correctedMechanics,
+                            ]
+                        ),
+                    ]
+                    : []
+            ) + (
+                includingLogitSidecarAndMLXRecomputation
+                    ? [
+                        .init(
+                            targetName:
+                                logitSidecarMechanics,
+                            directLocalDependencyNames: [
+                                correctedMechanics,
+                            ]
+                        ),
+                        .init(
+                            targetName:
+                                mlxLogSoftmaxRecomputation,
+                            directLocalDependencyNames: [
+                                logitSidecarMechanics,
+                            ],
+                            directProductDependencyNames: [
+                                "MLX",
+                                "MLXNN",
                             ]
                         ),
                     ]
@@ -4043,6 +4735,15 @@ public struct PrimeNativeNeuralGateSourceExecutionBindingContract:
                     )
                 }
         )
+        let productDependencies = Dictionary(
+            uniqueKeysWithValues:
+                targetClosureRules.map {
+                    (
+                        $0.targetName,
+                        $0.directProductDependencyNames
+                    )
+                }
+        )
         func transitiveTargets(
             for target: String
         ) -> Set<String>? {
@@ -4096,7 +4797,11 @@ public struct PrimeNativeNeuralGateSourceExecutionBindingContract:
                 : (
                     self == .frozenV5
                     ? 13
-                    : -1
+                    : (
+                        self == .frozenV6
+                        ? 15
+                        : -1
+                    )
                 )
             )
         let version4FixtureAuthorityBoundaryExact =
@@ -4126,7 +4831,8 @@ public struct PrimeNativeNeuralGateSourceExecutionBindingContract:
                 }
             )
         let version5PromptOnlySolverBoundaryExact =
-            self != .frozenV5
+            !(self == .frozenV5
+                || self == .frozenV6)
             || (
                 dependencies[
                     "PrimeNativeNeuralGatePromptSolver"
@@ -4137,12 +4843,53 @@ public struct PrimeNativeNeuralGateSourceExecutionBindingContract:
                     !$0.exactTransitiveLocalTargetNames
                         .contains(
                             "PrimeNativeNeuralGatePromptSolver"
+                    )
+                }
+            )
+        let version6LogitSidecarBoundaryExact =
+            self != .frozenV6
+            || (
+                dependencies[
+                    "PrimeNativeNeuralGateLogitSidecarMechanics"
+                ] == [
+                    "PrimeNativeNeuralGateCorrectedMechanics",
+                ]
+                && dependencies[
+                    "PrimeNativeNeuralGateMLXLogSoftmaxRecomputation"
+                ] == [
+                    "PrimeNativeNeuralGateLogitSidecarMechanics",
+                ]
+                && productDependencies[
+                    "PrimeNativeNeuralGateMLXLogSoftmaxRecomputation"
+                ] == [
+                    "MLX",
+                    "MLXNN",
+                ]
+                && targetClosureRules
+                    .filter {
+                        $0.targetName
+                            != "PrimeNativeNeuralGateMLXLogSoftmaxRecomputation"
+                    }
+                    .allSatisfy {
+                        $0.directProductDependencyNames
+                            .isEmpty
+                    }
+                && processBindingRules.allSatisfy {
+                    !$0.exactTransitiveLocalTargetNames
+                        .contains(
+                            "PrimeNativeNeuralGateLogitSidecarMechanics"
+                        )
+                        && !$0
+                        .exactTransitiveLocalTargetNames
+                        .contains(
+                            "PrimeNativeNeuralGateMLXLogSoftmaxRecomputation"
                         )
                 }
             )
         guard (self == .frozenV3
                 || self == .frozenV4
-                || self == .frozenV5),
+                || self == .frozenV5
+                || self == .frozenV6),
               Self.isSafeRelativePath(
                   packageManifestRelativePath
               ),
@@ -4177,6 +4924,16 @@ public struct PrimeNativeNeuralGateSourceExecutionBindingContract:
                           .directLocalDependencyNames.count
                       && $0.directLocalDependencyNames
                           .allSatisfy(targetSet.contains)
+                      && Set(
+                          $0.directProductDependencyNames
+                      ).count
+                          == $0
+                          .directProductDependencyNames
+                          .count
+                      && $0.directProductDependencyNames
+                          .allSatisfy {
+                              !$0.isEmpty
+                          }
               }),
               processBindingRules.allSatisfy({
                   targetSet.contains(
@@ -4206,6 +4963,7 @@ public struct PrimeNativeNeuralGateSourceExecutionBindingContract:
               processClosuresExact,
               version4FixtureAuthorityBoundaryExact,
               version5PromptOnlySolverBoundaryExact,
+              version6LogitSidecarBoundaryExact,
               requiredBuildConfiguration == "release",
               swiftPackageDescribeCapturePolicy
                 == "direct_swift_package_executable_describe_type_json_exact_noninherited_scratch_environment_normalized_signals_start_suspended_direct_pid_until_sid_pgid_join_isolated_session_dedicated_process_group_descriptor_rooted_cwd_local_apfs_bounded_source_admission_held_source_closure_kqueue_guard_fresh_scratch_namespace_exact_optional_text_encoding_work_lock_bounded_opaque_provenance_bounded_post_audit_full_region_transcript_descriptor_join_trusted_capture_bounded_output_exact_once_wait_bounded_wnohang_no_post_reap_signal_uncontained_fail_stop_no_shell_v9",
@@ -5023,7 +5781,9 @@ public struct PrimeNativeNeuralGateCompiledSourceClosureRecord:
                     == expectedSources.count,
                   Set(sources)
                     == Set(expectedSources),
-                  productDependencies.isEmpty,
+                  productDependencies
+                    == rule
+                    .directProductDependencyNames,
                   targetType == expectedType
             else {
                 throw PrimeNativeNeuralGateFixtureReplayPlanError
@@ -13215,16 +13975,29 @@ public struct PrimeNativeNeuralGateFixtureReplayPlan:
 
     public static let frozenV3 =
         makeFrozen(
-            promptOnlySolverBound: false
+            promptOnlySolverBound: false,
+            logitSidecarAndFloat32SourceBindingBound:
+                false
         )
 
     public static let frozenV4 =
         makeFrozen(
-            promptOnlySolverBound: true
+            promptOnlySolverBound: true,
+            logitSidecarAndFloat32SourceBindingBound:
+                false
+        )
+
+    public static let frozenV5 =
+        makeFrozen(
+            promptOnlySolverBound: true,
+            logitSidecarAndFloat32SourceBindingBound:
+                true
         )
 
     private static func makeFrozen(
-        promptOnlySolverBound: Bool
+        promptOnlySolverBound: Bool,
+        logitSidecarAndFloat32SourceBindingBound:
+            Bool
     ) -> Self {
         let projection =
             PrimeNativeNeuralGateContractProjection
@@ -13265,26 +14038,50 @@ public struct PrimeNativeNeuralGateFixtureReplayPlan:
             ? "It does not inject or detect mutations, establish leg or capability truth, execute a source-bound fixture or solver, or authorize a receipt. A separate Prime-owned prompt-only solver target binds a concrete fresh-per-row deterministic source derivation over prompt token IDs plus a replicate-scoped evaluation seed; its source-plan binding is not a model execution, capability observation, independent oracle, or receipt. "
             : "It does not derive a semantic solver, inject or detect mutations, establish leg or capability truth, execute a source-bound fixture, or authorize a receipt. "
         let sourceBindingAuthorityBoundary =
-            promptOnlySolverBound
+            logitSidecarAndFloat32SourceBindingBound
+            ? "Source-binding contract V6 attests the fixture, corrected-mechanics, prompt-only-solver, bounded-logit-sidecar-mechanics, and MLX Float32 log-softmax-recomputation source targets while keeping all five unreachable from every current probe/verifier executable closure; the trap-bearing corpus dependency is forbidden from the corrected executor closure. "
+            : (
+                promptOnlySolverBound
             ? "Source-binding contract V5 attests the fixture, corrected-mechanics, and prompt-only-solver source targets while keeping all three unreachable from every current probe/verifier executable closure; the trap-bearing corpus dependency is forbidden from the corrected executor closure. "
             : "Source-binding contract V4 attests the fixture and corrected-mechanics source targets while keeping both unreachable from every current probe/verifier executable closure; the trap-bearing corpus dependency is forbidden from the corrected executor closure. "
+            )
         let correctedExecutionUnblockBoundary =
-            promptOnlySolverBound
+            logitSidecarAndFloat32SourceBindingBound
+            ? "The bounded sidecar codec and source-pinned MLX Float32 log-softmax operation are source-plan-bound only; no durable sidecar, complete-fixture recomputation, model execution, Metal authority, process record, or receipt has been observed. The existing planned donor topology still exposes trap-bearing runtime code to corrected supervisors, so corrected execution remains unauthorized until a trap-disjoint topology, source-bound mutators and artifact decoders, role-scoped workers/probe/verifier, and exact inventory authority are implemented. "
+            : (
+                promptOnlySolverBound
             ? "The existing planned donor topology also exposes trap-bearing runtime code to corrected supervisors, so donor transplant remains deferred and corrected execution is unauthorized until the bounded logit artifact and recomputation and a trap-disjoint topology are bound. "
             : "The existing planned donor topology also exposes trap-bearing runtime code to corrected supervisors, so donor transplant remains deferred and corrected execution is unauthorized until a concrete Prime-owned solver derivation, the bounded logit artifact and recomputation, and a trap-disjoint topology are bound. "
+            )
+        let logitBindingAuthorityBoundary =
+            logitSidecarAndFloat32SourceBindingBound
+            ? "Hex-expanding all 512 logits across the three complete replicates would exceed the frozen Stage-B decode bounds. A bounded dictionary/chunk/manifest sidecar codec and source-pinned MLX Float32 log-softmax recomputation are now bound as source contracts only; durable sidecar and full-fixture recomputation observations remain false. "
+            : "Hex-expanding all 512 logits across the three complete replicates would exceed the frozen Stage-B decode bounds, so a bounded full-vocabulary logit sidecar and source-pinned Float32 log-softmax recomputation remain unbound. "
         return Self(
             schemaVersion:
-                promptOnlySolverBound ? 4 : 3,
+                logitSidecarAndFloat32SourceBindingBound
+                ? 5
+                : (
+                    promptOnlySolverBound ? 4 : 3
+                ),
             planID:
-                promptOnlySolverBound
+                logitSidecarAndFloat32SourceBindingBound
+                ? "ergentics_prime_native_neural_gate_dual_fixture_replay_v5"
+                : (
+                    promptOnlySolverBound
                 ? "ergentics_prime_native_neural_gate_dual_fixture_replay_v4"
-                : "ergentics_prime_native_neural_gate_dual_fixture_replay_v3",
+                : "ergentics_prime_native_neural_gate_dual_fixture_replay_v3"
+                ),
             claimScope:
                 "source_pinned_synthetic_fixture_materialization_and_gate_replay_contract_with_implemented_secure_capture_replay_bytes_exact_source_derived_corrected_fixture_identity_and_non_evidentiary_corrected_value_observation_mechanics",
             status:
-                promptOnlySolverBound
+                logitSidecarAndFloat32SourceBindingBound
+                ? "secure_capture_replay_bytes_exact_source_derived_corrected_fixture_identity_corrected_value_observation_mechanics_prompt_only_solver_derivation_and_logit_sidecar_float32_recomputation_source_contracts_implemented_historical_worker_and_stage_b_replay_not_implemented"
+                : (
+                    promptOnlySolverBound
                 ? "secure_capture_replay_bytes_exact_source_derived_corrected_fixture_identity_corrected_value_observation_mechanics_and_prompt_only_solver_derivation_implemented_historical_worker_and_stage_b_replay_not_implemented"
-                : "secure_capture_replay_bytes_exact_source_derived_corrected_fixture_identity_and_corrected_value_observation_mechanics_implemented_solver_historical_worker_and_stage_b_replay_not_implemented",
+                : "secure_capture_replay_bytes_exact_source_derived_corrected_fixture_identity_and_corrected_value_observation_mechanics_implemented_solver_historical_worker_and_stage_b_replay_not_implemented"
+                ),
             executionImplemented: false,
             projectionReceiptAuthorized: false,
             stageAParent: .frozenV1,
@@ -13519,9 +14316,13 @@ public struct PrimeNativeNeuralGateFixtureReplayPlan:
                 "8a1f70ae9f20f60e63cc53df6841d8a160bcbee61621c6f80a4f0272a186100f",
             correctedExecutor: .frozenV1,
             correctedExecutionAdmission:
-                promptOnlySolverBound
+                logitSidecarAndFloat32SourceBindingBound
+                ? .frozenV3
+                : (
+                    promptOnlySolverBound
                 ? .frozenV2
-                : .frozenV1,
+                : .frozenV1
+                ),
             correctedMutationCatalog:
                 PrimeNativeNeuralGateCorrectedFixtureMutation
                 .allCases.enumerated().map {
@@ -13598,9 +14399,13 @@ public struct PrimeNativeNeuralGateFixtureReplayPlan:
                 ),
             ],
             sourceExecutionBinding:
-                promptOnlySolverBound
+                logitSidecarAndFloat32SourceBindingBound
+                ? .frozenV6
+                : (
+                    promptOnlySolverBound
                 ? .frozenV5
-                : .frozenV4,
+                : .frozenV4
+                ),
             historicalWorker: .frozenV2,
             probeArguments: [
                 "--stage-a-root",
@@ -13784,9 +14589,13 @@ public struct PrimeNativeNeuralGateFixtureReplayPlan:
             modeNormalizationPolicy:
                 "verify_current_user_single_link_regular_file_exact_bytes_and_sha256_then_chmod_only_listed_files_to_0444_never_recursive",
             immediateImplementationPrerequisite:
-                promptOnlySolverBound
+                logitSidecarAndFloat32SourceBindingBound
+                ? "amend_trap_disjoint_target_topology_then_implement_source_bound_mutators_and_typed_artifact_decoders_then_implement_role_scoped_stage_b_historical_worker_probe_verifier_with_exact_path_metadata_content_inventory"
+                : (
+                    promptOnlySolverBound
                 ? "bind_bounded_full_vocabulary_logit_sidecar_and_source_pinned_float32_logsoftmax_recomputation_then_amend_trap_disjoint_target_topology_and_implement_role_scoped_stage_b_historical_worker_probe_verifier_with_typed_artifact_recomputation_and_exact_path_metadata_content_inventory"
-                : "bind_concrete_prime_owned_replicate_scoped_seed_prompt_solver_with_fresh_per_row_state_no_row_target_regrade_closure_or_existential_input_then_bind_bounded_full_vocabulary_logit_sidecar_and_source_pinned_float32_logsoftmax_recomputation_then_amend_trap_disjoint_target_topology_and_implement_role_scoped_stage_b_historical_worker_probe_verifier_with_typed_artifact_recomputation_and_exact_path_metadata_content_inventory",
+                : "bind_concrete_prime_owned_replicate_scoped_seed_prompt_solver_with_fresh_per_row_state_no_row_target_regrade_closure_or_existential_input_then_bind_bounded_full_vocabulary_logit_sidecar_and_source_pinned_float32_logsoftmax_recomputation_then_amend_trap_disjoint_target_topology_and_implement_role_scoped_stage_b_historical_worker_probe_verifier_with_typed_artifact_recomputation_and_exact_path_metadata_content_inventory"
+                ),
             postPassNextPrerequisite:
                 "physical_native_checkpoint_and_evaluation_shard_binding",
             authorityStatement:
@@ -13795,7 +14604,8 @@ public struct PrimeNativeNeuralGateFixtureReplayPlan:
                 correctedMechanicsAuthorityBoundary +
                 "Semantic regrade and model capability remain unavailable. A separate offline fixture-authority target now recomputes the exact globally UTF-8-row-ID-ordered 18,432-row corrected fixture from the byte-exact source-pinned tokenizer/corpus transplant. The historical regression-fixture source is lineage-only and is not read or executed in this derivation. Closed Stage-A and full-corpus receipt identities are bound by complete records and type-decoded in repository tests, but receipt bytes are not read during derivation and no independent fixture probe/verifier receipt is published. The canonical observation and complete source-row/outer-regrade, prompt-only, and domain-separated target-feasibility bindings are frozen. " +
                 sourceBindingAuthorityBoundary +
-                "Forward audit proved that row_id exposes split and semantic family, including the abstention class; row identity is outer correlation only. Seed is shard/replicate scoped and cannot enter a row input. Fresh solver state is required for every row, and permuted row order must preserve each input trace, because retained state, invocation order, or a row-selected seed would create ambient metadata channels. Exact source-derived fixture identity and row count are now bound; the earlier caller-value-only completion-feasibility calculator remains non-authoritative by itself. Hex-expanding all 512 logits across the three complete replicates would exceed the frozen Stage-B decode bounds, so a bounded full-vocabulary logit sidecar and source-pinned Float32 log-softmax recomputation remain unbound. " +
+                "Forward audit proved that row_id exposes split and semantic family, including the abstention class; row identity is outer correlation only. Seed is shard/replicate scoped and cannot enter a row input. Fresh solver state is required for every row, and permuted row order must preserve each input trace, because retained state, invocation order, or a row-selected seed would create ambient metadata channels. Exact source-derived fixture identity and row count are now bound; the earlier caller-value-only completion-feasibility calculator remains non-authoritative by itself. " +
+                logitBindingAuthorityBoundary +
                 correctedExecutionUnblockBoundary +
                 "Stage-B replay execution, process records, workers, and terminal receipt are not implemented or observed and executionImplemented remains false. The factory admits a bounded current-owner local-APFS Prime source tree, holds authoritative root, directory, and file descriptors, arms receipt-checked EVFILT_VNODE guards, and requires exact inventories, bytes, metadata, path joins, and zero mutation events at initial, pre-resume, and post-reap checkpoints. It directly launches the frozen Xcode 26.6 build 17F113 swift-package image with an exact four-key non-inherited scratch environment, stdin at EOF, and normalized start-suspended 0x448c flags. Scratch ACLs and unknown extended attributes are rejected; com.apple.TextEncoding is optional only on the single-link regular work/.lock file with the exact 15-byte utf-8;134217984 value read through its descriptor, while com.apple.provenance is bounded to 4096 bytes and remains opaque non-authoritative metadata. Child authority is the positive PID until getsid(pid) and getpgid(pid) both equal pid; only then may the dedicated process group receive termination signals. Successful capture binds the suspended cwd and complete mapped-region vnode transcript to held descriptors, drains bounded streams through EOF, observes death, reaps the exact PID once, proves the group empty, and permits no post-reap signal. Ordinary rejection may return only after proven containment and exact reap; a child or drain that remains uncontained after bounded WNOHANG cleanup is supervisor fail-stop and cannot be encoded as ABSTAIN. The schema-4 external evidence and schema-4 describe-capture envelope are prerequisite and canary mechanics, not a Stage-B record or receipt. " +
                 "The historical arm reconstructs the exact source-pinned synthetic fixture only as forensic mechanics because its output construction consumes target length and expected completion while declaring target independence. Its source-faithful materializer retains donor trap sites, is not claimed wholly fail-closed, and must run in two role-scoped bounded workers. A contained abnormal termination is internally ABSTAIN, poisons the root, accepts no worker result as evidence, publishes no successful-execution record or terminal receipt, and permits no retry; partial artifacts may remain but are non-authoritative. A successful worker result is transport evidence and cannot establish mechanics PASS; the terminal verifier must decode and recompute every semantic artifact. The corrected arm must independently construct prompt-only fixed-cap-64 generation with EOS available at every decision and may establish only corrected synthetic gate mechanics. A terminal Stage-B mechanics PASS requires both arms, complete raw-UTF8 invariant multiset publication, exact direct/accelerated fingerprints, all ten Verify/Abstain legs, projected statistics and fixed-prompt margin, count-derived verdict, every ordered mutation with exact restoration, a validated process topology, exact pre-receipt realized path-and-metadata inventory, and typed validation of every artifact. Historical target independence and model capability remain ABSTAIN. " +
@@ -13893,6 +14703,22 @@ public struct PrimeNativeNeuralGateFixtureReplayPlan:
                     .promptOnlySolverSourceDerivation?
                     .targetName
             }
+        let logitSidecarSourceRules =
+            sourceExecutionBinding
+            .targetClosureRules.filter {
+                $0.targetName
+                    == correctedExecutionAdmission
+                    .logitSidecarFloat32SourceBinding?
+                    .sidecarTargetName
+            }
+        let mlxLogSoftmaxSourceRules =
+            sourceExecutionBinding
+            .targetClosureRules.filter {
+                $0.targetName
+                    == correctedExecutionAdmission
+                    .logitSidecarFloat32SourceBinding?
+                    .mlxRecomputationTargetName
+            }
         let correctedFixtureAuthorityBoundaryMatches =
             correctedMechanicsSourceRules.count == 1
             && correctedMechanicsSourceRules[0]
@@ -13950,6 +14776,60 @@ public struct PrimeNativeNeuralGateFixtureReplayPlan:
                         )
                     }
             )
+        let logitSidecarFloat32BoundaryMatches =
+            self == .frozenV5
+            ? (
+                correctedExecutionAdmission
+                    .logitSidecarFloat32SourceBinding
+                    == .frozenV1
+                && logitSidecarSourceRules.count == 1
+                && logitSidecarSourceRules[0]
+                    .directLocalDependencyNames
+                    == correctedExecutionAdmission
+                    .logitSidecarFloat32SourceBinding?
+                    .sidecarDirectLocalDependencyNames
+                && logitSidecarSourceRules[0]
+                    .directProductDependencyNames
+                    .isEmpty
+                && mlxLogSoftmaxSourceRules.count == 1
+                && mlxLogSoftmaxSourceRules[0]
+                    .directLocalDependencyNames
+                    == correctedExecutionAdmission
+                    .logitSidecarFloat32SourceBinding?
+                    .mlxRecomputationDirectLocalDependencyNames
+                && mlxLogSoftmaxSourceRules[0]
+                    .directProductDependencyNames
+                    == correctedExecutionAdmission
+                    .logitSidecarFloat32SourceBinding?
+                    .mlxProductNames
+                && sourceExecutionBinding
+                    .processBindingRules
+                    .allSatisfy {
+                        let sidecarTarget =
+                            correctedExecutionAdmission
+                            .logitSidecarFloat32SourceBinding?
+                            .sidecarTargetName
+                            ?? ""
+                        let mlxTarget =
+                            correctedExecutionAdmission
+                            .logitSidecarFloat32SourceBinding?
+                            .mlxRecomputationTargetName
+                            ?? ""
+                        return !$0
+                            .exactTransitiveLocalTargetNames
+                            .contains(sidecarTarget)
+                            && !$0
+                            .exactTransitiveLocalTargetNames
+                            .contains(mlxTarget)
+                    }
+            )
+            : (
+                correctedExecutionAdmission
+                    .logitSidecarFloat32SourceBinding
+                    == nil
+                && logitSidecarSourceRules.isEmpty
+                && mlxLogSoftmaxSourceRules.isEmpty
+            )
         let runningExecutablePaths = Set(
             outputContract.pathClassification
                 .runningExecutableRelativePaths
@@ -13962,21 +14842,33 @@ public struct PrimeNativeNeuralGateFixtureReplayPlan:
                         .receiptRelativePath
             }
         )
-        let isPromptOnlySolverBoundV4 =
+        let isPromptOnlySolverBound =
             self == .frozenV4
+            || self == .frozenV5
+        let isLogitSidecarAndFloat32SourceBound =
+            self == .frozenV5
         guard (self == .frozenV3
-                || isPromptOnlySolverBoundV4),
+                || self == .frozenV4
+                || self == .frozenV5),
               schemaVersion
                 == (
-                    isPromptOnlySolverBoundV4
-                    ? 4
-                    : 3
+                    isLogitSidecarAndFloat32SourceBound
+                    ? 5
+                    : (
+                        isPromptOnlySolverBound
+                        ? 4
+                        : 3
+                    )
                 ),
               planID
                 == (
-                    isPromptOnlySolverBoundV4
-                    ? "ergentics_prime_native_neural_gate_dual_fixture_replay_v4"
-                    : "ergentics_prime_native_neural_gate_dual_fixture_replay_v3"
+                    isLogitSidecarAndFloat32SourceBound
+                    ? "ergentics_prime_native_neural_gate_dual_fixture_replay_v5"
+                    : (
+                        isPromptOnlySolverBound
+                        ? "ergentics_prime_native_neural_gate_dual_fixture_replay_v4"
+                        : "ergentics_prime_native_neural_gate_dual_fixture_replay_v3"
+                    )
                 ),
               !executionImplemented,
               !projectionReceiptAuthorized,
@@ -14000,17 +14892,26 @@ public struct PrimeNativeNeuralGateFixtureReplayPlan:
               sourceMatchesProjection,
               correctedFixtureAuthorityBoundaryMatches,
               promptOnlySolverBoundaryMatches,
+              logitSidecarFloat32BoundaryMatches,
               correctedExecutionAdmission
                 == (
-                    isPromptOnlySolverBoundV4
-                    ? .frozenV2
-                    : .frozenV1
+                    isLogitSidecarAndFloat32SourceBound
+                    ? .frozenV3
+                    : (
+                        isPromptOnlySolverBound
+                        ? .frozenV2
+                        : .frozenV1
+                    )
                 ),
               sourceExecutionBinding
                 == (
-                    isPromptOnlySolverBoundV4
-                    ? .frozenV5
-                    : .frozenV4
+                    isLogitSidecarAndFloat32SourceBound
+                    ? .frozenV6
+                    : (
+                        isPromptOnlySolverBound
+                        ? .frozenV5
+                        : .frozenV4
+                    )
                 ),
               inputPins.map(\.byteCount).reduce(0, +)
                 == totalPinnedInputByteCount,
