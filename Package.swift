@@ -17,6 +17,7 @@ let package = Package(
             targets: [
                 "PrimeNativeCorpusReplayMechanics",
                 "PrimeNativeNeuralGateCorrectedMechanics",
+                "PrimeNativeNeuralGateCorrectedEvaluationMechanics",
                 "PrimeNativeNeuralGateCorrectedFixtureAuthority",
                 "PrimeNativeNeuralGatePromptSolver",
                 "PrimeNativeNeuralGateLogitSidecarMechanics",
@@ -173,10 +174,19 @@ let package = Package(
         ),
         .target(
             name:
+                "PrimeNativeNeuralGateCorrectedEvaluationMechanics",
+            dependencies: [
+                "PrimeNativeNeuralGateReplayMechanics",
+                "PrimeNativeNeuralGateCorrectedMechanics",
+            ]
+        ),
+        .target(
+            name:
                 "PrimeNativeNeuralGateCorrectedFixtureAuthority",
             dependencies: [
                 "PrimeNativeCorpusReplayMechanics",
                 "PrimeNativeNeuralGateCorrectedMechanics",
+                "PrimeNativeNeuralGateCorrectedEvaluationMechanics",
             ]
         ),
         .target(
@@ -374,6 +384,7 @@ let package = Package(
                 "PrimeNativeNeuralGateContract",
                 "PrimeNativeNeuralGateReplayMechanics",
                 "PrimeNativeNeuralGateCorrectedMechanics",
+                "PrimeNativeNeuralGateCorrectedEvaluationMechanics",
                 "PrimeNativeNeuralGateCorrectedFixtureAuthority",
                 "PrimeNativeNeuralGatePromptSolver",
                 "PrimeNativeNeuralGateLogitSidecarMechanics",

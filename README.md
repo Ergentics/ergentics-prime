@@ -512,14 +512,19 @@ identity stays outside the execution value. Fresh per-row solver state and
 row-order permutation identity are mandatory because retained state, order, or
 row-selected seeds are also metadata channels. The audit also found that the
 planned shared donor topology would expose trap-bearing historical code to
-corrected supervisors. The exact source-derived fixture identity/count leg is
-now source-plan-bound, and the concrete prompt-only solver derivation is bound
-separately. The sidecar and MLX Float32 operation are now source-plan-bound too,
-but corrected execution remains blocked until the topology is trap-disjoint,
-mutators and typed artifact decoders are source-bound, and the role-scoped
-historical worker, paired probe/verifier, exact inventory, durable
-recomputation observations, Stage-B execution records, and receipt are
-implemented. `executionImplemented` remains false.
+corrected supervisors. The package now splits raw execution mechanics from
+evaluation/regrade mechanics, and
+`PrimeNativeNeuralGateTrapDisjointTopologyContract.frozenV1`, SHA-256
+`48e0f64fcb14193d74bf9c3d98a8aeef7ca366033cea6d8f00bc345ff0ad86b5`,
+supersedes the unsafe future routing while preserving plan V5 and source
+binding V6 as history. The historical runtime, workers, transport, probe, and
+verifier are still `planned_not_materialized`; source binding V7 is not
+issued. Corrected execution remains blocked until typed artifact decoders and
+disjoint mutation producer/detector mechanics are source-bound, followed by
+the role-scoped historical worker, paired probe/verifier, exact inventory,
+durable recomputation observations, Stage-B execution records, and receipt.
+`executionImplemented` remains false. The exact topology and nonclaims are in
+`docs/PRIME-NATIVE-NEURAL-GATE-TRAP-DISJOINT-TOPOLOGY-2026-07-30.md`.
 
 The closed PrimeCore external-child capture substrate is implemented. It
 accepts only the role and source root, directly launches the frozen Xcode 26.6
@@ -623,13 +628,24 @@ fifteen-target V6 source graph and isolated MLX validation topology were
 frozen, the same Release canary passed with byte-identical probe/verifier
 output: 26,090 bytes with SHA-256
 `53ace0b68b1f8f2cf6534be886cb93241b08a36e0ddf0e9da7f8eee33f37cb40`.
-That is the current typed V6 selected-source-graph reseal.
+The later topology audit established that this is an actual-package
+secure-capture reseal only. The captured package description was not
+reconciled against V6's planned closure, whose future execution targets were
+not materialized, so it is not V6 selected-source execution-graph proof.
+After the raw/evaluation package split and topology V1 correction, the same
+Release canary passed with byte-identical probe/verifier output: 27,015 bytes,
+SHA-256
+`00dc419e101367d1f4a1d39f63bd35649b4de45417d74e4197f2376d729cdadf`.
+This is the current actual-package secure-capture reseal; source binding V7
+remains unissued.
 That pass validates only the secure capture substrate on the pinned host. It
 published no durable Stage-B process record or receipt,
 `executionImplemented` remains false, and no Stage-B replay, historical
 worker, model execution, Metal execution, or product use is implemented or
-authorized. A validated six-process topology,
-distinct running Release executable bindings, exact pre-receipt realized
+authorized. The historical V5 six-process count is preserved as history but
+is insufficient for future execution because the corrected raw worker adds a
+role. The replacement process-count and receipt schema remain deferred.
+Distinct running Release executable bindings, exact pre-receipt realized
 path-and-metadata inventory, separate typed artifact-content validation,
 purpose-correct `0444` data / `0555` executable publication, and scoped
 `PASS`/`ABSTAIN` composition remain required future Stage-B work. The direct
@@ -647,7 +663,7 @@ or drain must fail-stop. Worker result transport cannot authorize mechanics
 `PASS`; the verifier must decode and recompute the semantic artifacts. Stage A
 is copied as 35 reachable typed bindings plus its separately pinned receipt,
 or 36 artifacts total. The exact next prerequisite is
-`amend_trap_disjoint_target_topology_then_implement_source_bound_mutators_and_typed_artifact_decoders_then_implement_role_scoped_stage_b_historical_worker_probe_verifier_with_exact_path_metadata_content_inventory`.
+`implement_pure_typed_artifact_schemas_bounded_canonical_decoders_and_source_bound_corrected_mutation_producer_detector_without_materializing_historical_runtime`.
 
 ## Initial calibration
 

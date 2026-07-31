@@ -790,16 +790,17 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
             verifier.standardOutputData
         )
         // Intentionally resealed only from the live Release canary after the
-        // final compiled source-file set is frozen.
+        // trap-disjoint raw/evaluation package split. This is actual-package
+        // secure-capture evidence, not V6/V7 graph reconciliation.
         XCTAssertEqual(
             probe.standardOutputData.count,
-            26_090
+            27_015
         )
         XCTAssertEqual(
             PrimeSHA256.hexDigest(
                 of: probe.standardOutputData
             ),
-            "53ace0b68b1f8f2cf6534be886cb93241b08a36e0ddf0e9da7f8eee33f37cb40"
+            "00dc419e101367d1f4a1d39f63bd35649b4de45417d74e4197f2376d729cdadf"
         )
         XCTAssertEqual(
             probe.validatedPrimeSourceSnapshot,

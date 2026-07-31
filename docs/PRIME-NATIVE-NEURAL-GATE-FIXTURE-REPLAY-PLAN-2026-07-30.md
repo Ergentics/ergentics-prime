@@ -9,7 +9,9 @@ the exact corrected fixture identity/count is source-plan-bound by an offline
 Swift authority; an isolated prompt-only symbolic solver derivation is
 implemented; corrected admission V3, source binding V6, and plan V5 source-bind
 the lossless sidecar codec and maintained MLX Float32 operation; durable
-Stage-B replay, workers, process records, and receipt are not implemented
+Stage-B replay, workers, process records, and receipt are not implemented;
+the package-level raw/evaluation split and trap-disjoint topology V1 are
+implemented, while every execution target remains planned
 
 ## Decision
 
@@ -63,11 +65,30 @@ fifteen-target V6 source graph and isolated MLX validation topology were
 frozen, the same Release canary passed with byte-identical probe/verifier
 output: 26,090 bytes with SHA-256
 `53ace0b68b1f8f2cf6534be886cb93241b08a36e0ddf0e9da7f8eee33f37cb40`.
-That is the current typed V6 selected-source-graph reseal.
+The later topology audit established that this is an actual-package
+secure-capture reseal only. The captured package description was not
+reconciled against V6's planned closure, whose future execution targets were
+not materialized, so it is not V6 selected-source execution-graph proof.
+After the raw/evaluation package split and topology V1 correction, the same
+Release canary passed with byte-identical probe/verifier output: 27,015 bytes,
+SHA-256
+`00dc419e101367d1f4a1d39f63bd35649b4de45417d74e4197f2376d729cdadf`.
+This is the current actual-package secure-capture reseal; source binding V7
+remains unissued.
 That pass validates only the secure capture substrate. It published no durable
 Stage-B process record or receipt, `executionImplemented` remains false, and
 no replay, historical worker, model, Metal, or product use is implemented or
 authorized.
+
+The post-canary topology correction is
+`PrimeNativeNeuralGateTrapDisjointTopologyContract.frozenV1`, canonical
+SHA-256
+`48e0f64fcb14193d74bf9c3d98a8aeef7ca366033cea6d8f00bc345ff0ad86b5`.
+It preserves plan V5 and source binding V6 as historical identities,
+supersedes only their future donor-routing assumption, and explicitly leaves
+source binding V7 unissued. The complete implemented and planned closures are
+recorded in
+`PRIME-NATIVE-NEURAL-GATE-TRAP-DISJOINT-TOPOLOGY-2026-07-30.md`.
 
 PrimeCore now also has the prerequisite live filesystem-inventory authority.
 It starts only from the already-held `PrimeArtifactRoot` descriptor, admits
@@ -86,16 +107,20 @@ creates no artifact or receipt.
 Implementation is intentionally split after those substrates. The pure
 library layer implements raw-UTF-8 stream/chunk mechanics, independent direct
 and affine finite-field fingerprints, the raw-byte cache guard, and typed
-invariant/fingerprint payload validation. A separate
-`PrimeNativeNeuralGateCorrectedMechanics` target depends only on that layer and
-implements non-evidentiary calculators/validators for prompt-token row input,
-replicate-scoped admitted seeds, fixed-cap/EOS full-512-logit decision traces,
-allowed-support selection, exact structural raw-argmax/parity/count witnesses,
-canonical exact regrade, weighted statistics, exact 512-logit fixed-prompt
-margins, capability thresholds, ten-leg count verdicts, and fifteen ordered
-mutation-observation IDs. Full logits are locally digest-bound;
-Foundation/Double probability values remain non-evidentiary and cannot replace
-the frozen source-pinned Float32 log-softmax.
+invariant/fingerprint payload validation.
+`PrimeNativeNeuralGateCorrectedMechanics` depends only on that layer and now
+contains prompt-only input, replicate-scoped admitted seed context,
+fixed-cap/EOS full-512-logit decisions, and raw structural execution traces.
+The new one-way
+`PrimeNativeNeuralGateCorrectedEvaluationMechanics` target depends on the raw
+target and owns correlation, completion feasibility, canonical regrade,
+weighted statistics, fixed-prompt margins, capability thresholds, ten-leg
+count verdicts, and fifteen ordered mutation-observation validators. Prompt
+solver and logit sidecar depend only on the raw target. Fixture authority
+depends on both plus the trap-bearing corpus derivation target. Full logits
+are locally digest-bound; Foundation/Double probability values remain
+non-evidentiary and cannot replace the frozen source-pinned Float32
+log-softmax.
 
 Those APIs accept caller-provided values. They do not derive or run a semantic
 solver, inject or detect the named mutations, establish any leg/capability
@@ -558,14 +583,15 @@ canary pass published a durable Stage-B process record or receipt,
 product claim follows. Future probe and verifier records must
 bind one byte-identical JSON output and the same direct `swift-package`
 mapped-vnode/descriptor/byte identity. That evaluated output must reconcile
-the exact selected fifteen-target V6 source-authority graph, including target
-type, path, direct local and product dependencies, and complete Swift source
-lists. The five isolated source targets remain absent from every current
-process closure: corrected mechanics, corrected fixture authority, prompt
-solver, logit-sidecar mechanics, and MLX Float32 recomputation. The current V6
-live reseal passed with byte-identical 26,090-byte probe/verifier output,
-SHA-256
-`53ace0b68b1f8f2cf6534be886cb93241b08a36e0ddf0e9da7f8eee33f37cb40`.
+the same materialized target/source contract, including target type, path,
+direct local and product dependencies, and complete Swift source lists. V6
+does not satisfy that condition because it names non-materialized execution
+targets and its live 26,090-byte capture was never reconciled against its
+planned closure. After the raw/evaluation split, the current actual-package
+capture is 27,015 bytes with SHA-256
+`00dc419e101367d1f4a1d39f63bd35649b4de45417d74e4197f2376d729cdadf`.
+Source binding V7 remains reserved until the planned execution targets exist
+and a live compiled-source closure validates those exact captured bytes.
 
 The historical feasibility correction was measured on the M5 host before the
 closed factory was implemented. Suspending `/usr/bin/swift` bound only its
@@ -715,9 +741,13 @@ must agree; all build configurations must be `release`.
 vnode from the same positive process that publishes its binding. Probe and
 verifier roles, targets, paths, PIDs, and executable hashes must be distinct.
 Their SwiftPM child PIDs and the two historical-worker PIDs must also be
-distinct, producing a six-process topology. Each worker result must bind its
-same-process PID and the same sealed worker image. The verifier must validate
-each record before applying the explicit prevalidated-record topology join.
+distinct, producing the historical V5 six-process topology. Topology V1 adds
+a separately launched corrected raw worker, so that count is no longer a
+sufficient future execution contract. The replacement process-count and
+receipt schema must be frozen before execution. Each worker result must bind
+its same-process PID and the same sealed worker image. The verifier must
+validate each record before applying the explicit prevalidated-record
+topology join.
 The supervisor and worker records bind descriptor-captured same-process
 running images to a shared source identity and declared target closure. The
 SwiftPM records separately bind the frozen full-file SHA-256, byte count,
@@ -983,8 +1013,10 @@ A future terminal Stage-B pass requires:
   stream drains, and one byte-identical evaluated authority subgraph bound to
   the unchanged source snapshot and `Package.swift`;
 - a clean current Prime source snapshot that remains unchanged, plus exact
-  running Release executable bindings and a validated six-process topology for
-  probe, verifier, their two SwiftPM children, and two historical workers;
+  running Release executable bindings; the historical probe, verifier, their
+  two SwiftPM children, and two historical workers form V5's six-process
+  topology, but the corrected raw worker requires a replacement
+  process-count/receipt schema before execution;
 - two distinct, bounded historical-worker invocations with typed request,
   same-process result, stream-drain/termination, observed death/reap, exact
   pre/post role-prefix inventory, and successful supervisor execution records;
@@ -1076,13 +1108,14 @@ ambiguity.
 
 The corrected aggregate implementation prerequisite is now:
 
-`amend_trap_disjoint_target_topology_then_implement_source_bound_mutators_and_typed_artifact_decoders_then_implement_role_scoped_stage_b_historical_worker_probe_verifier_with_exact_path_metadata_content_inventory`
+`implement_pure_typed_artifact_schemas_bounded_canonical_decoders_and_source_bound_corrected_mutation_producer_detector_without_materializing_historical_runtime`
 
 Its implementation order is now:
 
-1. amend the draft target topology so trap-bearing historical donor/runtime
-   code cannot enter corrected supervisors;
-2. implement source-bound mutators/detectors and typed artifact decoding;
+1. implement pure typed artifact schemas, bounded canonical decoders, and the
+   missing output-namespace paths;
+2. implement a source-bound corrected mutation producer and an independently
+   implemented detector;
    the current fifteen mutation-observation validators do not execute defects;
 3. implement the isolated historical worker using the completed secure
    capture and live role-prefix inventory capabilities; and
