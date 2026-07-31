@@ -431,6 +431,181 @@ final class PrimeSwiftSourceProvenanceTests:
         }
     }
 
+    func testCaptureRejectsRelativeDepthAboveMaximum()
+        throws
+    {
+        let fixture = try makeFixture()
+        defer {
+            try? FileManager.default.removeItem(
+                at: fixture.root
+            )
+        }
+        let relativeComponents =
+            ["Sources"] +
+            Array(
+                repeating: "nested",
+                count:
+                    PrimeSwiftSourceProvenance
+                    .maximumSnapshotRelativeDepth
+            )
+        XCTAssertEqual(
+            relativeComponents.count,
+            PrimeSwiftSourceProvenance
+                .maximumSnapshotRelativeDepth + 1
+        )
+        try FileManager.default.createDirectory(
+            at: fixture.root.appendingPathComponent(
+                relativeComponents.joined(
+                    separator: "/"
+                ),
+                isDirectory: true
+            ),
+            withIntermediateDirectories: true
+        )
+
+        XCTAssertThrowsError(
+            try PrimeSwiftSourceProvenance.capture(
+                at: fixture.root,
+                requiredRelativePaths: [],
+                expectation:
+                    fixture.expectation
+            )
+        ) { error in
+            XCTAssertEqual(
+                error as?
+                    PrimeSwiftSourceProvenanceError,
+                .incompleteSourceSnapshot
+            )
+        }
+    }
+
+    func testCaptureRejectsFileCountAboveMaximum()
+        throws
+    {
+        let fixture = try makeFixture()
+        defer {
+            try? FileManager.default.removeItem(
+                at: fixture.root
+            )
+        }
+        let baseline =
+            try PrimeSwiftSourceProvenance.capture(
+                at: fixture.root,
+                requiredRelativePaths: [],
+                expectation:
+                    fixture.expectation
+            )
+        let addedFileCount =
+            PrimeSwiftSourceProvenance
+            .maximumSnapshotFileCount + 1
+            - baseline.files.count
+        XCTAssertGreaterThan(addedFileCount, 0)
+        XCTAssertEqual(
+            baseline.files.count + addedFileCount,
+            PrimeSwiftSourceProvenance
+                .maximumSnapshotFileCount + 1
+        )
+        let docs = fixture.root.appendingPathComponent(
+            "docs",
+            isDirectory: true
+        )
+        for index in 0 ..< addedFileCount {
+            try Data().write(
+                to: docs.appendingPathComponent(
+                    String(
+                        format:
+                            "limit-%04d.md",
+                        index
+                    )
+                )
+            )
+        }
+
+        XCTAssertThrowsError(
+            try PrimeSwiftSourceProvenance.capture(
+                at: fixture.root,
+                requiredRelativePaths: [],
+                expectation:
+                    fixture.expectation
+            )
+        ) { error in
+            guard case let .unsafeSourceFile(path) =
+                    error as?
+                    PrimeSwiftSourceProvenanceError
+            else {
+                return XCTFail(
+                    "unexpected error: \(error)"
+                )
+            }
+            XCTAssertTrue(
+                path.contains("/docs/limit-")
+                    && path.hasSuffix(".md")
+            )
+        }
+    }
+
+    func testCaptureRejectsSparseFileAbovePerFileLimit()
+        throws
+    {
+        let fixture = try makeFixture()
+        defer {
+            try? FileManager.default.removeItem(
+                at: fixture.root
+            )
+        }
+        let oversizedByteCount:
+            UInt64 = 8 * 1024 * 1024 + 1
+        let oversized = fixture.root
+            .appendingPathComponent(
+                "Sources/Oversized.swift"
+            )
+        XCTAssertTrue(
+            FileManager.default.createFile(
+                atPath: oversized.path,
+                contents: Data()
+            )
+        )
+        let handle = try FileHandle(
+            forWritingTo: oversized
+        )
+        try handle.truncate(
+            atOffset: oversizedByteCount
+        )
+        try handle.close()
+        let attributes =
+            try FileManager.default.attributesOfItem(
+                atPath: oversized.path
+            )
+        XCTAssertEqual(
+            (attributes[.size] as? NSNumber)?
+                .uint64Value,
+            oversizedByteCount
+        )
+
+        XCTAssertThrowsError(
+            try PrimeSwiftSourceProvenance.capture(
+                at: fixture.root,
+                requiredRelativePaths: [],
+                expectation:
+                    fixture.expectation
+            )
+        ) { error in
+            guard case let .unsafeSourceFile(path) =
+                    error as?
+                    PrimeSwiftSourceProvenanceError
+            else {
+                return XCTFail(
+                    "unexpected error: \(error)"
+                )
+            }
+            XCTAssertTrue(
+                path.hasSuffix(
+                    "/Sources/Oversized.swift"
+                )
+            )
+        }
+    }
+
     private struct Fixture {
         let root: URL
         let expectation:

@@ -97,7 +97,7 @@ compatibility. A canonical Stage-A result is recorded only by the evidence
 note under
 `artifacts/native-neural-gate-contract-projection-canonical-2026-07-30/`.
 
-The Stage-B execution contract is now frozen separately and still has no
+The Stage-B dual replay contract is frozen separately and still has no replay
 implementation or receipt authority. A forward source audit found that the
 pinned historical fixture sizes output and decision counts from target data
 and copies expected completions into predictions while declaring a
@@ -108,36 +108,96 @@ fixed-cap-64/EOS replay. Both arms, all raw invariant records, direct and
 accelerated fingerprint equality, all ten Verify/Abstain legs, projected
 statistics and fixed-prompt margin, count-derived verdict, ordered mutation
 detection/restoration, and fresh-process reconstruction are mandatory for a
-terminal Stage-B mechanics pass. Root containment/disjointness, unchanged
-companion pre/post identity, exact copied-donor paths, lossless copied Stage-A
-descriptor closure, typed donor-to-Prime adaptation proofs, the current clean
-Prime source closure, required compiled-source/process record schemas,
-independent direct `swift-package describe` captures of the frozen Xcode 26.6
-build 17F113 byte image, its exact contract-pinned full-file hash and
-descriptor metadata, and the typed descriptor-open → complete checked
-suspended region-query transcript/mapped-vnode join → pre-resume stability →
-`SIGCONT` → raw exact-PID wait/clean reap → post-reap stability sequence are
-part of the same contract. A PrimeCore-only non-`Codable` trusted-capture
-capability must bind the role, exact launch/working-root policy, identity
-derived from descriptor-read bytes, the transcript/wait result, paths, stream
-limits/overflow/drain outcomes, and separately drained bytes before public
-validation accepts a record. The future factory must read/hash bytes through
-the same held descriptor represented by its `fstat` snapshot and
-descriptor-validate the Prime working root. Native capability calibration,
-overflow-free drains, typed clean termination,
-observed death/reap, and distinct descriptor-captured Release executables are
-also required. The direct executable launch path, `proc_pidpath` pathname, and
-code-sign fields are non-authoritative telemetry; no Apple trust claim is
-made. The native calibrated external-child factory is not implemented. No
-Stage-B process record has been observed yet. Because the
+terminal Stage-B mechanics pass.
+
+The closed PrimeCore external-child capture substrate is implemented. Its
+fixed direct `swift-package` launch uses stdin at EOF and the exact
+non-inherited environment keys `HOME`, `TMPDIR`,
+`CLANG_MODULE_CACHE_PATH`, and `SWIFT_MODULECACHE_PATH`, with every value
+inside a fresh per-role scratch namespace. Its exact arguments route scratch,
+cache, configuration, and security into that namespace, disable dependency
+cache/prefetch/automatic resolution/netrc/keychain, select no manifest cache,
+and run `describe --type json`. Neither `--skip-update` nor
+`--disable-sandbox` is present; the manifest sandbox remains enabled. The
+repository `.build` tree has no role or authority.
+
+The run root is atomically created at mode `0700` beneath the trusted Darwin
+user-temporary parent and contains seven held directories: `work`, `cache`,
+`config`, `security`, `home`, `tmp`, and `module-cache`. Scratch and source
+must have the exact same local-APFS filesystem identity. Held no-follow,
+close-on-exec descriptors, absent ACLs, and rejection of unknown extended
+attributes protect the namespace. `com.apple.provenance` is permitted only as
+opaque, non-authoritative bytes bounded to 4,096 bytes. Optional
+`com.apple.TextEncoding` is permitted only on the regular file `work/.lock`
+with the exact 15-byte value `utf-8;134217984`; absence is allowed. Prime
+closes those descriptors and leaves cleanup to the system temporary directory;
+it never derives recursive deletion authority from the path.
+
+The child uses exact `0x448c` spawn flags. It holds positive direct-PID
+authority until the suspended child proves
+`SID == PGID == PID`, after which the isolated session and dedicated process
+group become lifecycle authority. The factory binds the executable's held
+descriptor bytes and metadata to its suspended mapped vnode and binds the
+suspended child cwd to the held Prime root.
+
+The source root must be current-owner local APFS and pass bounded admission:
+4,096 files, 4,096 directories, 512 MiB aggregate, 8 MiB per file, depth 32,
+and 30 seconds. PrimeCore holds every authoritative file and directory
+descriptor, registers receipt-checked `EVFILT_VNODE` guards, and requires
+stable inventories, bytes, `fstat` state, path/vnode rejoins, and zero source
+events at initial, pre-resume, and post-reap checkpoints. The ten-case typed
+rejection-lifecycle suite covers direct-PID and proven-group cleanup, bounded
+`WNOHANG`, exact-once reap, overflow-through-EOF, drain failure, and forbids
+post-reap signals. Contained and reaped rejection may abstain; an uncontained
+child or drain must fail-stop. The bounded post-reap scratch audit covers all
+seven subtrees, requires `cache`, `config`, and `security` to remain empty, and
+rejects dependency-resolution residue anywhere. The contract records
+`dependencyResolutionPermitted = false` and
+`networkDenialEstablished = false`. It claims neither hermeticity, OS-level
+network denial, nor protection from a hostile process running under the same
+UID; the Darwin user-temporary parent remains a trusted prerequisite.
+
+External-child evidence and its enclosing describe-capture record are schema
+4 at the role-specific capture-V4 paths. The adaptation-proof and
+historical-worker aggregate contracts remain V2. The
+source/execution-binding and replay-output contracts are V3, the
+output-path-classification contract ID is
+`prime_stage_b_output_path_namespace_classification_v3`, and the fixture plan
+is V3/schema 3 at `neural-gate-replay/plan.v3.json`. The adaptation proof
+remains at `neural-gate-replay/source/adaptation-proof.v2.json`. The nested
+held-source mutation-guard observation remains schema 1; the scratch-namespace
+observation is schema 2; and the raw describe artifact, compiled closure,
+Release bindings, historical-worker request/process/result/success records,
+and terminal receipt remain V1.
+Focused Swift tests establish lifecycle and scratch mechanics, not a live
+factory observation. Two initial Release two-role canary attempts were
+contained and reaped failures: the first exposed terminal mapped-region
+zero-byte/`EINVAL` behavior, and the second exposed the exact optional
+`com.apple.TextEncoding` value on the regular file `work/.lock`. After those
+corrections, the resealed live Release two-role secure-capture canary passed end
+to end on the pinned host with byte-identical probe/verifier output: 21,461
+bytes, SHA-256
+`7544a104eb4593eaf0aaba548b27ff1ca8ebac7f9166de85ddf12143425007a5`.
+The pass validates only the secure capture substrate on that pinned host. It
+published no durable Stage-B process record or receipt,
+`executionImplemented` remains false, and no Stage-B replay, historical
+worker, model execution, Metal execution, or product use is implemented or
+authorized. Root
+containment/disjointness, unchanged companion pre/post identity, exact
+copied-donor paths, lossless copied Stage-A descriptor closure, typed
+donor-to-Prime adaptation proofs, role-scoped workers and supervisors, and
+typed artifact recomputation remain future Stage-B work. The direct executable
+launch path, `proc_pidpath` pathname, and code-sign fields are
+non-authoritative telemetry; no Apple trust claim is made. Because the
 source-faithful historical fixture inherits traps, a sealed Swift worker owns
 the full historical arm. Probe and verifier supervise separate bounded worker
 invocations; successful stdout/stderr are empty, worker death/reap and exact
 role-prefix inventory are mandatory, and a worker result cannot authorize
 mechanics `PASS` until the verifier decodes and recomputes every semantic
-artifact. An abnormal outcome internally abstains, poisons the root, accepts no
-result as evidence, publishes no successful-execution record or terminal
-receipt, and permits no retry.
+artifact. A contained and reaped abnormal outcome internally abstains, poisons
+the root, accepts no result as evidence, publishes no successful-execution
+record or terminal receipt, and permits no retry. An uncontained child or
+drain must fail-stop.
 The verifier revalidates those copied inputs from the artifact root rather
 than receiving the live Stage-A or companion roots.
 Ordinary evidence is immutable data at `0444`; captured executable evidence is
@@ -150,15 +210,13 @@ blocks a correctly scoped mechanics pass.
 
 ## Separately scoped future admission
 
-- first bind the donor-to-Prime adaptation proof, copied/revalidated Stage-A
-  descriptor closure, current clean Prime source closure, independently
-  captured SwiftPM authority subgraph, complete external-child region-query
-  transcript, vnode/descriptor/byte identity, raw exact-PID wait/clean reap,
-  non-`Codable` trusted-capture capability, and overflow-free stream evidence.
-  Also bind validated six-process records, distinct descriptor-captured Release
-  probe/verifier images, the sealed historical worker, exact pre-receipt
-  realized path-and-metadata inventory, and separate typed artifact-content
-  validation required by the frozen Stage-B wrapper;
+- use the completed PrimeCore secure-capture substrate from role-scoped
+  Stage-B probe and verifier supervisors, then bind the donor-to-Prime
+  adaptation proof, copied/revalidated Stage-A descriptor closure, validated
+  six-process records, distinct descriptor-captured Release probe/verifier
+  images, the sealed historical worker, exact pre-receipt realized
+  path-and-metadata inventory, and separate typed artifact-content validation
+  required by the frozen Stage-B wrapper;
 - reconstruct the source-pinned historical fixture in a Prime-owned Swift
   forensic replay target without treating its target-derived construction as
   eligible semantics;

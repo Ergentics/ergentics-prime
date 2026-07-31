@@ -660,7 +660,7 @@ public struct PrimeNativeNeuralGateAdaptationProofContract:
     public let historicalFixtureAbnormalTerminationPolicy:
         String
 
-    public static let frozenV1: Self = {
+    public static let frozenV2: Self = {
         let mechanics =
             "Sources/PrimeNativeNeuralGateReplayMechanics/"
         let runtime =
@@ -946,7 +946,7 @@ public struct PrimeNativeNeuralGateAdaptationProofContract:
             )
         return Self(
             contractID:
-                "prime_source_pinned_neural_gate_adaptation_proof_v1",
+                "prime_source_pinned_neural_gate_adaptation_proof_v2",
             entries: [
                 entry(
                     1,
@@ -1061,7 +1061,7 @@ public struct PrimeNativeNeuralGateAdaptationProofContract:
                 ),
             ],
             proofManifestRelativePath:
-                "neural-gate-replay/source/adaptation-proof.v1.json",
+                "neural-gate-replay/source/adaptation-proof.v2.json",
             lexicalSourceDiffManifestRequired:
                 true,
             compiledTargetSourceClosureRequired:
@@ -1093,7 +1093,7 @@ public struct PrimeNativeNeuralGateAdaptationProofContract:
             historicalFixtureChildStandardInputPolicy:
                 "eof_v1",
             historicalFixtureAbnormalTerminationPolicy:
-                "timeout_output_overflow_signal_or_nonzero_exit_forces_stage_b_abstain_and_no_terminal_pass_receipt_v1"
+                "timeout_output_overflow_signal_or_nonzero_exit_after_proven_containment_and_exact_reap_forces_stage_b_abstain_uncontained_child_or_drain_fail_stops_and_no_terminal_pass_receipt_v2"
         )
     }()
 
@@ -1112,7 +1112,7 @@ public struct PrimeNativeNeuralGateAdaptationProofContract:
                 donorSHA256: input.sha256
             )
         }
-        guard self == .frozenV1,
+        guard self == .frozenV2,
               entries.map(\.ordinal)
                 == Array(1 ... 11),
               entries.map(\.role)
@@ -2806,8 +2806,20 @@ public struct PrimeNativeNeuralGateSourceExecutionBindingContract:
         UInt64
     public let swiftPackageDescribeCaptureRecordRelativePaths:
         [String]
-    public let swiftPackageDescribeExactArguments:
+    public let swiftPackageDescribeArgumentTemplate:
         [String]
+    public let swiftPackageDescribeExactEnvironmentKeys:
+        [String]
+    public let swiftPackageDescribeEnvironmentPolicy:
+        String
+    public let swiftPackageDescribeScratchNamespacePolicy:
+        String
+    public let swiftPackageDescribeNetworkDenialEstablished:
+        Bool
+    public let swiftPackageDescribeDependencyResolutionPermitted:
+        Bool
+    public let swiftPackageDescribeResolutionResiduesForbidden:
+        Bool
     public let swiftPackageDescribeMaximumWallSeconds:
         UInt64
     public let swiftPackageDescribeMaximumStandardOutputBytes:
@@ -2815,6 +2827,32 @@ public struct PrimeNativeNeuralGateSourceExecutionBindingContract:
     public let swiftPackageDescribeMaximumStandardErrorBytes:
         UInt64
     public let swiftPackageDescribeTerminationEscalationPolicy:
+        String
+    public let swiftPackageDescribeIsolatedSessionRequired:
+        Bool
+    public let swiftPackageDescribeDedicatedProcessGroupRequired:
+        Bool
+    public let swiftPackageDescribeGroupDirectedTerminationSignalsRequired:
+        Bool
+    public let swiftPackageDescribeNormalizedSignalMaskRequired:
+        Bool
+    public let swiftPackageDescribeNormalizedSignalDispositionsRequired:
+        Bool
+    public let swiftPackageDescribeProcessGroupEmptyAfterReapRequired:
+        Bool
+    public let swiftPackageDescribeDescriptorRootedWorkingDirectoryRequired:
+        Bool
+    public let swiftPackageDescribeSuspendedChildWorkingDirectoryVnodeJoinRequired:
+        Bool
+    public let swiftPackageDescribeSourceMutationGuardRequired:
+        Bool
+    public let swiftPackageDescribeSourceMutationGuardAuthority:
+        String
+    public let swiftPackageDescribeSourceAdmissionMaximumSeconds:
+        UInt64
+    public let swiftPackageDescribeSourceLocalFilesystemRequired:
+        Bool
+    public let swiftPackageDescribeSourceFilesystemType:
         String
     public let swiftPackageDescribeOutputOverflowRejected:
         Bool
@@ -2832,6 +2870,8 @@ public struct PrimeNativeNeuralGateSourceExecutionBindingContract:
         String
     public let swiftPackageDescribeMappedRegionEnumerationPolicy:
         String
+    public let swiftPackageDescribeMappedRegionTerminalErrno:
+        Int32
     public let swiftPackageDescribeCaptureCapabilityCalibrationRequired:
         Bool
     public let swiftPackageDescribeCaptureCapabilityCalibrationPolicy:
@@ -2882,7 +2922,7 @@ public struct PrimeNativeNeuralGateSourceExecutionBindingContract:
     public let reproducibleBuildProvenanceClaimed:
         Bool
 
-    public static let frozenV1: Self = {
+    public static let frozenV3: Self = {
         let core = "PrimeCore"
         let corpusMechanics =
             "PrimeNativeCorpusReplayMechanics"
@@ -2912,7 +2952,7 @@ public struct PrimeNativeNeuralGateSourceExecutionBindingContract:
         ]
         return Self(
             contractID:
-                "prime_stage_b_release_source_executable_join_v1",
+                "prime_stage_b_release_source_executable_join_v3",
             packageManifestRelativePath:
                 "Package.swift",
             sourceSnapshotRelativePath:
@@ -3015,7 +3055,7 @@ public struct PrimeNativeNeuralGateSourceExecutionBindingContract:
             runningExecutableCaptureAuthority:
                 "PrimeSecureRunningExecutableCapture.data",
             swiftPackageDescribeCapturePolicy:
-                "direct_swift_package_executable_describe_type_json_empty_environment_start_suspended_full_region_transcript_descriptor_join_trusted_capture_bounded_output_raw_exact_pid_wait_no_shell_fail_closed_lifecycle_v3",
+                "direct_swift_package_executable_describe_type_json_exact_noninherited_scratch_environment_normalized_signals_start_suspended_direct_pid_until_sid_pgid_join_isolated_session_dedicated_process_group_descriptor_rooted_cwd_local_apfs_bounded_source_admission_held_source_closure_kqueue_guard_fresh_scratch_namespace_exact_optional_text_encoding_work_lock_bounded_opaque_provenance_bounded_post_audit_full_region_transcript_descriptor_join_trusted_capture_bounded_output_exact_once_wait_bounded_wnohang_no_post_reap_signal_uncontained_fail_stop_no_shell_v9",
             swiftPackageDescribeExecutableIdentityAuthority:
                 "frozen_regular_file_full_file_sha256_byte_count_root_owner_mode_link_no_symlink_any_cloexec_and_live_mapped_vnode_descriptor_join_v2",
             swiftPackageDescribeExpectedExecutableSHA256:
@@ -3031,14 +3071,45 @@ public struct PrimeNativeNeuralGateSourceExecutionBindingContract:
             swiftPackageDescribeExpectedExecutableLinkCount:
                 1,
             swiftPackageDescribeCaptureRecordRelativePaths: [
-                "neural-gate-replay/source/probe-swift-package-describe-capture.v1.json",
-                "neural-gate-replay/source/verifier-swift-package-describe-capture.v1.json",
+                "neural-gate-replay/source/probe-swift-package-describe-capture.v4.json",
+                "neural-gate-replay/source/verifier-swift-package-describe-capture.v4.json",
             ],
-            swiftPackageDescribeExactArguments: [
+            swiftPackageDescribeArgumentTemplate: [
+                "--scratch-path",
+                "{scratch_root}/work",
+                "--cache-path",
+                "{scratch_root}/cache",
+                "--config-path",
+                "{scratch_root}/config",
+                "--security-path",
+                "{scratch_root}/security",
+                "--disable-dependency-cache",
+                "--manifest-cache",
+                "none",
+                "--disable-prefetching",
+                "--disable-automatic-resolution",
+                "--disable-netrc",
+                "--disable-keychain",
                 "describe",
                 "--type",
                 "json",
             ],
+            swiftPackageDescribeExactEnvironmentKeys: [
+                "HOME",
+                "TMPDIR",
+                "CLANG_MODULE_CACHE_PATH",
+                "SWIFT_MODULECACHE_PATH",
+            ],
+            swiftPackageDescribeEnvironmentPolicy:
+                "exact_noninherited_home_tmpdir_clang_module_cache_path_swift_modulecache_path_inside_fresh_run_root_v1",
+            swiftPackageDescribeScratchNamespacePolicy:
+                "darwin_confstr_user_temp_fresh_per_role_atomic_0700_held_nofollow_cloexec_exact_source_local_apfs_fsid_kqueue_destructive_notes_path_rejoin_acl_absent_optional_exact_text_encoding_work_lock_regular_file_utf8_134217984_15_bytes_fixed_16_byte_descriptor_read_provenance_opaque_descriptor_read_max_4096_unknown_xattr_reject_bounded_post_audit_no_recursive_cleanup_v2",
+            swiftPackageDescribeNetworkDenialEstablished:
+                false,
+            swiftPackageDescribeDependencyResolutionPermitted:
+                false,
+            swiftPackageDescribeResolutionResiduesForbidden:
+                true,
             swiftPackageDescribeMaximumWallSeconds:
                 60,
             swiftPackageDescribeMaximumStandardOutputBytes:
@@ -3046,7 +3117,33 @@ public struct PrimeNativeNeuralGateSourceExecutionBindingContract:
             swiftPackageDescribeMaximumStandardErrorBytes:
                 1_048_576,
             swiftPackageDescribeTerminationEscalationPolicy:
-                "deadline_then_sigterm_wait_2s_then_sigkill_then_waitpid_observe_death_and_reap_v1",
+                "direct_pid_sigkill_before_session_join_then_dedicated_group_sigterm_wait_2s_sigkill_once_observed_death_or_bounded_exact_pid_wnohang_exact_once_reap_no_post_reap_signal_uncontained_fail_stop_v4",
+            swiftPackageDescribeIsolatedSessionRequired:
+                true,
+            swiftPackageDescribeDedicatedProcessGroupRequired:
+                true,
+            swiftPackageDescribeGroupDirectedTerminationSignalsRequired:
+                true,
+            swiftPackageDescribeNormalizedSignalMaskRequired:
+                true,
+            swiftPackageDescribeNormalizedSignalDispositionsRequired:
+                true,
+            swiftPackageDescribeProcessGroupEmptyAfterReapRequired:
+                true,
+            swiftPackageDescribeDescriptorRootedWorkingDirectoryRequired:
+                true,
+            swiftPackageDescribeSuspendedChildWorkingDirectoryVnodeJoinRequired:
+                true,
+            swiftPackageDescribeSourceMutationGuardRequired:
+                true,
+            swiftPackageDescribeSourceMutationGuardAuthority:
+                "primecore_held_descriptor_source_closure_kqueue_vnode_receipts_exact_inventories_bytes_fstat_path_rejoin_zero_events_initial_pre_resume_post_reap_v1",
+            swiftPackageDescribeSourceAdmissionMaximumSeconds:
+                30,
+            swiftPackageDescribeSourceLocalFilesystemRequired:
+                true,
+            swiftPackageDescribeSourceFilesystemType:
+                "apfs",
             swiftPackageDescribeOutputOverflowRejected:
                 true,
             swiftPackageDescribeChildDeathObservedBeforeContinuationRequired:
@@ -3060,17 +3157,19 @@ public struct PrimeNativeNeuralGateSourceExecutionBindingContract:
             swiftPackageDescribeMappedChildImageCaptureRequired:
                 true,
             swiftPackageDescribeMappedChildImageCaptureAuthority:
-                "primecore_trusted_external_child_descriptor_open_start_suspended_full_region_query_transcript_mapped_vnode_join_pre_resume_stability_sigcont_raw_exact_pid_wait_reap_post_reap_stability_v3",
+                "primecore_trusted_external_child_descriptor_open_start_suspended_direct_pid_until_sid_pgid_join_isolated_session_dedicated_process_group_descriptor_rooted_cwd_vnode_join_full_region_query_transcript_mapped_vnode_join_pre_resume_stability_sigcont_pre_reap_exact_group_members_exact_once_pid_wait_reap_group_empty_post_reap_stability_v6",
             swiftPackageDescribeMappedRegionEnumerationPolicy:
-                "proc_pidregionpathinfo_full_query_transcript_address_plus_size_progression_terminal_zero_errno_zero_nonprogress_overflow_error_fail_closed_v2",
+                "proc_pidregionpathinfo_full_query_transcript_address_plus_size_progression_terminal_zero_errno_einval_nonprogress_overflow_other_error_fail_closed_v3",
+            swiftPackageDescribeMappedRegionTerminalErrno:
+                22,
             swiftPackageDescribeCaptureCapabilityCalibrationRequired:
                 true,
             swiftPackageDescribeCaptureCapabilityCalibrationPolicy:
-                "runtime_constants_struct_size_same_child_start_suspended_full_region_transcript_descriptor_join_sigcont_raw_exact_pid_wait_reap_no_escalation_v2",
+                "runtime_constants_struct_sizes_same_child_normalized_signals_start_suspended_direct_pid_until_sid_pgid_join_isolated_session_dedicated_process_group_descriptor_rooted_cwd_vnode_join_full_region_transcript_terminal_errno_einval_22_descriptor_join_sigcont_pre_reap_exact_group_members_exact_once_pid_wait_reap_group_empty_no_escalation_v6",
             swiftPackageDescribeTrustedCaptureCapabilityRequired:
                 true,
             swiftPackageDescribeTrustedCaptureCapabilityAuthority:
-                "primecore_non_codable_factory_result_binding_role_launch_descriptor_read_bytes_fstat_region_transcript_waitpid_and_stream_lifecycle_v2",
+                "primecore_non_codable_factory_result_binding_role_exact_launch_arguments_and_environment_fresh_scratch_namespace_exact_optional_text_encoding_work_lock_bounded_opaque_provenance_bounded_post_audit_three_descriptor_read_checkpoints_fstat_source_snapshot_held_source_closure_mutation_guard_direct_pid_to_isolated_session_process_group_authority_working_root_region_transcript_pre_reap_group_members_exact_once_waitpid_and_eof_stream_lifecycle_v8",
             swiftPackageDescribeExactPIDWaitObservationRequired:
                 true,
             swiftPackageDescribeProcPIDPathAuthoritative:
@@ -3108,6 +3207,137 @@ public struct PrimeNativeNeuralGateSourceExecutionBindingContract:
                 false
         )
     }()
+
+    func expandedSwiftPackageDescribeArguments(
+        scratchRootAbsolutePath: String
+    ) throws -> [String] {
+        try validateScratchRootTemplateInput(
+            scratchRootAbsolutePath
+        )
+        let expanded =
+            swiftPackageDescribeArgumentTemplate
+            .map {
+                $0.replacingOccurrences(
+                    of: "{scratch_root}",
+                    with:
+                        scratchRootAbsolutePath
+                )
+            }
+        guard expanded
+                == [
+                    "--scratch-path",
+                    scratchRootAbsolutePath
+                        + "/work",
+                    "--cache-path",
+                    scratchRootAbsolutePath
+                        + "/cache",
+                    "--config-path",
+                    scratchRootAbsolutePath
+                        + "/config",
+                    "--security-path",
+                    scratchRootAbsolutePath
+                        + "/security",
+                    "--disable-dependency-cache",
+                    "--manifest-cache",
+                    "none",
+                    "--disable-prefetching",
+                    "--disable-automatic-resolution",
+                    "--disable-netrc",
+                    "--disable-keychain",
+                    "describe",
+                    "--type",
+                    "json",
+                ],
+              !expanded.contains(where: {
+                  $0.contains("{")
+                      || $0.contains("}")
+                      || $0.contains("\0")
+              }),
+              !expanded.contains(
+                  "--skip-update"
+              ),
+              !expanded.contains(
+                  "--disable-sandbox"
+              )
+        else {
+            throw PrimeNativeNeuralGateFixtureReplayPlanError
+                .invalidPlan(
+                    "swift_package_describe_argument_expansion"
+                )
+        }
+        return expanded
+    }
+
+    func expandedSwiftPackageDescribeEnvironment(
+        scratchRootAbsolutePath: String
+    ) throws -> [String: String] {
+        try validateScratchRootTemplateInput(
+            scratchRootAbsolutePath
+        )
+        let environment = [
+            "HOME":
+                scratchRootAbsolutePath
+                + "/home",
+            "TMPDIR":
+                scratchRootAbsolutePath
+                + "/tmp",
+            "CLANG_MODULE_CACHE_PATH":
+                scratchRootAbsolutePath
+                + "/module-cache",
+            "SWIFT_MODULECACHE_PATH":
+                scratchRootAbsolutePath
+                + "/module-cache",
+        ]
+        guard swiftPackageDescribeExactEnvironmentKeys
+                == [
+                    "HOME",
+                    "TMPDIR",
+                    "CLANG_MODULE_CACHE_PATH",
+                    "SWIFT_MODULECACHE_PATH",
+                ],
+              Set(environment.keys)
+                == Set(
+                    swiftPackageDescribeExactEnvironmentKeys
+                ),
+              environment.values
+                .allSatisfy({
+                    $0.hasPrefix(
+                        scratchRootAbsolutePath
+                        + "/"
+                    )
+                        && !$0.contains("\0")
+                })
+        else {
+            throw PrimeNativeNeuralGateFixtureReplayPlanError
+                .invalidPlan(
+                    "swift_package_describe_environment_expansion"
+                )
+        }
+        return environment
+    }
+
+    private func validateScratchRootTemplateInput(
+        _ path: String
+    ) throws {
+        guard path.hasPrefix("/"),
+              path != "/",
+              !path.contains("\0"),
+              !path.hasSuffix("/"),
+              path.split(
+                  separator: "/",
+                  omittingEmptySubsequences:
+                    true
+              ).allSatisfy({
+                  $0 != "."
+                      && $0 != ".."
+              })
+        else {
+            throw PrimeNativeNeuralGateFixtureReplayPlanError
+                .invalidPlan(
+                    "swift_package_describe_scratch_root"
+                )
+        }
+    }
 
     public func validate() throws {
         let targets =
@@ -3167,7 +3397,7 @@ public struct PrimeNativeNeuralGateSourceExecutionBindingContract:
                     .map(\.targetName)
                     .filter(reachable.contains)
             }
-        guard self == .frozenV1,
+        guard self == .frozenV3,
               Self.isSafeRelativePath(
                   packageManifestRelativePath
               ),
@@ -3231,7 +3461,7 @@ public struct PrimeNativeNeuralGateSourceExecutionBindingContract:
               processClosuresExact,
               requiredBuildConfiguration == "release",
               swiftPackageDescribeCapturePolicy
-                == "direct_swift_package_executable_describe_type_json_empty_environment_start_suspended_full_region_transcript_descriptor_join_trusted_capture_bounded_output_raw_exact_pid_wait_no_shell_fail_closed_lifecycle_v3",
+                == "direct_swift_package_executable_describe_type_json_exact_noninherited_scratch_environment_normalized_signals_start_suspended_direct_pid_until_sid_pgid_join_isolated_session_dedicated_process_group_descriptor_rooted_cwd_local_apfs_bounded_source_admission_held_source_closure_kqueue_guard_fresh_scratch_namespace_exact_optional_text_encoding_work_lock_bounded_opaque_provenance_bounded_post_audit_full_region_transcript_descriptor_join_trusted_capture_bounded_output_exact_once_wait_bounded_wnohang_no_post_reap_signal_uncontained_fail_stop_no_shell_v9",
               swiftPackageDescribeExecutableIdentityAuthority
                 == "frozen_regular_file_full_file_sha256_byte_count_root_owner_mode_link_no_symlink_any_cloexec_and_live_mapped_vnode_descriptor_join_v2",
               swiftPackageDescribeExpectedExecutableSHA256
@@ -3262,12 +3492,45 @@ public struct PrimeNativeNeuralGateSourceExecutionBindingContract:
                 .count,
               swiftPackageDescribeCaptureRecordRelativePaths
                 .allSatisfy(Self.isSafeRelativePath),
-              swiftPackageDescribeExactArguments
+              swiftPackageDescribeArgumentTemplate
                 == [
+                    "--scratch-path",
+                    "{scratch_root}/work",
+                    "--cache-path",
+                    "{scratch_root}/cache",
+                    "--config-path",
+                    "{scratch_root}/config",
+                    "--security-path",
+                    "{scratch_root}/security",
+                    "--disable-dependency-cache",
+                    "--manifest-cache",
+                    "none",
+                    "--disable-prefetching",
+                    "--disable-automatic-resolution",
+                    "--disable-netrc",
+                    "--disable-keychain",
                     "describe",
                     "--type",
                     "json",
                 ],
+              swiftPackageDescribeExactEnvironmentKeys
+                == [
+                    "HOME",
+                    "TMPDIR",
+                    "CLANG_MODULE_CACHE_PATH",
+                    "SWIFT_MODULECACHE_PATH",
+                ],
+              swiftPackageDescribeEnvironmentPolicy
+                == "exact_noninherited_home_tmpdir_clang_module_cache_path_swift_modulecache_path_inside_fresh_run_root_v1",
+              swiftPackageDescribeScratchNamespacePolicy
+                == "darwin_confstr_user_temp_fresh_per_role_atomic_0700_held_nofollow_cloexec_exact_source_local_apfs_fsid_kqueue_destructive_notes_path_rejoin_acl_absent_optional_exact_text_encoding_work_lock_regular_file_utf8_134217984_15_bytes_fixed_16_byte_descriptor_read_provenance_opaque_descriptor_read_max_4096_unknown_xattr_reject_bounded_post_audit_no_recursive_cleanup_v2",
+              !swiftPackageDescribeNetworkDenialEstablished,
+              !swiftPackageDescribeDependencyResolutionPermitted,
+              swiftPackageDescribeResolutionResiduesForbidden,
+              !swiftPackageDescribeArgumentTemplate
+                .contains("--skip-update"),
+              !swiftPackageDescribeArgumentTemplate
+                .contains("--disable-sandbox"),
               swiftPackageDescribeMaximumWallSeconds
                 == 60,
               swiftPackageDescribeMaximumStandardOutputBytes
@@ -3275,7 +3538,23 @@ public struct PrimeNativeNeuralGateSourceExecutionBindingContract:
               swiftPackageDescribeMaximumStandardErrorBytes
                 == 1_048_576,
               swiftPackageDescribeTerminationEscalationPolicy
-                == "deadline_then_sigterm_wait_2s_then_sigkill_then_waitpid_observe_death_and_reap_v1",
+                == "direct_pid_sigkill_before_session_join_then_dedicated_group_sigterm_wait_2s_sigkill_once_observed_death_or_bounded_exact_pid_wnohang_exact_once_reap_no_post_reap_signal_uncontained_fail_stop_v4",
+              swiftPackageDescribeIsolatedSessionRequired,
+              swiftPackageDescribeDedicatedProcessGroupRequired,
+              swiftPackageDescribeGroupDirectedTerminationSignalsRequired,
+              swiftPackageDescribeNormalizedSignalMaskRequired,
+              swiftPackageDescribeNormalizedSignalDispositionsRequired,
+              swiftPackageDescribeProcessGroupEmptyAfterReapRequired,
+              swiftPackageDescribeDescriptorRootedWorkingDirectoryRequired,
+              swiftPackageDescribeSuspendedChildWorkingDirectoryVnodeJoinRequired,
+              swiftPackageDescribeSourceMutationGuardRequired,
+              swiftPackageDescribeSourceMutationGuardAuthority
+                == "primecore_held_descriptor_source_closure_kqueue_vnode_receipts_exact_inventories_bytes_fstat_path_rejoin_zero_events_initial_pre_resume_post_reap_v1",
+              swiftPackageDescribeSourceAdmissionMaximumSeconds
+                == 30,
+              swiftPackageDescribeSourceLocalFilesystemRequired,
+              swiftPackageDescribeSourceFilesystemType
+                == "apfs",
               swiftPackageDescribeOutputOverflowRejected,
               swiftPackageDescribeChildDeathObservedBeforeContinuationRequired,
               swiftPackageDescribeChildReapBeforeContinuationRequired,
@@ -3283,15 +3562,17 @@ public struct PrimeNativeNeuralGateSourceExecutionBindingContract:
               !swiftPackageDescribeOutputAcceptedWithoutValidatedCapture,
               swiftPackageDescribeMappedChildImageCaptureRequired,
               swiftPackageDescribeMappedChildImageCaptureAuthority
-                == "primecore_trusted_external_child_descriptor_open_start_suspended_full_region_query_transcript_mapped_vnode_join_pre_resume_stability_sigcont_raw_exact_pid_wait_reap_post_reap_stability_v3",
+                == "primecore_trusted_external_child_descriptor_open_start_suspended_direct_pid_until_sid_pgid_join_isolated_session_dedicated_process_group_descriptor_rooted_cwd_vnode_join_full_region_query_transcript_mapped_vnode_join_pre_resume_stability_sigcont_pre_reap_exact_group_members_exact_once_pid_wait_reap_group_empty_post_reap_stability_v6",
               swiftPackageDescribeMappedRegionEnumerationPolicy
-                == "proc_pidregionpathinfo_full_query_transcript_address_plus_size_progression_terminal_zero_errno_zero_nonprogress_overflow_error_fail_closed_v2",
+                == "proc_pidregionpathinfo_full_query_transcript_address_plus_size_progression_terminal_zero_errno_einval_nonprogress_overflow_other_error_fail_closed_v3",
+              swiftPackageDescribeMappedRegionTerminalErrno
+                == 22,
               swiftPackageDescribeCaptureCapabilityCalibrationRequired,
               swiftPackageDescribeCaptureCapabilityCalibrationPolicy
-                == "runtime_constants_struct_size_same_child_start_suspended_full_region_transcript_descriptor_join_sigcont_raw_exact_pid_wait_reap_no_escalation_v2",
+                == "runtime_constants_struct_sizes_same_child_normalized_signals_start_suspended_direct_pid_until_sid_pgid_join_isolated_session_dedicated_process_group_descriptor_rooted_cwd_vnode_join_full_region_transcript_terminal_errno_einval_22_descriptor_join_sigcont_pre_reap_exact_group_members_exact_once_pid_wait_reap_group_empty_no_escalation_v6",
               swiftPackageDescribeTrustedCaptureCapabilityRequired,
               swiftPackageDescribeTrustedCaptureCapabilityAuthority
-                == "primecore_non_codable_factory_result_binding_role_launch_descriptor_read_bytes_fstat_region_transcript_waitpid_and_stream_lifecycle_v2",
+                == "primecore_non_codable_factory_result_binding_role_exact_launch_arguments_and_environment_fresh_scratch_namespace_exact_optional_text_encoding_work_lock_bounded_opaque_provenance_bounded_post_audit_three_descriptor_read_checkpoints_fstat_source_snapshot_held_source_closure_mutation_guard_direct_pid_to_isolated_session_process_group_authority_working_root_region_transcript_pre_reap_group_members_exact_once_waitpid_and_eof_stream_lifecycle_v8",
               swiftPackageDescribeExactPIDWaitObservationRequired,
               !swiftPackageDescribeProcPIDPathAuthoritative,
               swiftPackageDescribeDirectExecutableLeafName
@@ -3387,8 +3668,20 @@ public struct PrimeNativeNeuralGateSourceExecutionBindingContract:
             "swift_package_describe_expected_executable_link_count"
         case swiftPackageDescribeCaptureRecordRelativePaths =
             "swift_package_describe_capture_record_relative_paths"
-        case swiftPackageDescribeExactArguments =
-            "swift_package_describe_exact_arguments"
+        case swiftPackageDescribeArgumentTemplate =
+            "swift_package_describe_argument_template"
+        case swiftPackageDescribeExactEnvironmentKeys =
+            "swift_package_describe_exact_environment_keys"
+        case swiftPackageDescribeEnvironmentPolicy =
+            "swift_package_describe_environment_policy"
+        case swiftPackageDescribeScratchNamespacePolicy =
+            "swift_package_describe_scratch_namespace_policy"
+        case swiftPackageDescribeNetworkDenialEstablished =
+            "swift_package_describe_network_denial_established"
+        case swiftPackageDescribeDependencyResolutionPermitted =
+            "swift_package_describe_dependency_resolution_permitted"
+        case swiftPackageDescribeResolutionResiduesForbidden =
+            "swift_package_describe_resolution_residues_forbidden"
         case swiftPackageDescribeMaximumWallSeconds =
             "swift_package_describe_maximum_wall_seconds"
         case swiftPackageDescribeMaximumStandardOutputBytes =
@@ -3397,6 +3690,32 @@ public struct PrimeNativeNeuralGateSourceExecutionBindingContract:
             "swift_package_describe_maximum_standard_error_bytes"
         case swiftPackageDescribeTerminationEscalationPolicy =
             "swift_package_describe_termination_escalation_policy"
+        case swiftPackageDescribeIsolatedSessionRequired =
+            "swift_package_describe_isolated_session_required"
+        case swiftPackageDescribeDedicatedProcessGroupRequired =
+            "swift_package_describe_dedicated_process_group_required"
+        case swiftPackageDescribeGroupDirectedTerminationSignalsRequired =
+            "swift_package_describe_group_directed_termination_signals_required"
+        case swiftPackageDescribeNormalizedSignalMaskRequired =
+            "swift_package_describe_normalized_signal_mask_required"
+        case swiftPackageDescribeNormalizedSignalDispositionsRequired =
+            "swift_package_describe_normalized_signal_dispositions_required"
+        case swiftPackageDescribeProcessGroupEmptyAfterReapRequired =
+            "swift_package_describe_process_group_empty_after_reap_required"
+        case swiftPackageDescribeDescriptorRootedWorkingDirectoryRequired =
+            "swift_package_describe_descriptor_rooted_working_directory_required"
+        case swiftPackageDescribeSuspendedChildWorkingDirectoryVnodeJoinRequired =
+            "swift_package_describe_suspended_child_working_directory_vnode_join_required"
+        case swiftPackageDescribeSourceMutationGuardRequired =
+            "swift_package_describe_source_mutation_guard_required"
+        case swiftPackageDescribeSourceMutationGuardAuthority =
+            "swift_package_describe_source_mutation_guard_authority"
+        case swiftPackageDescribeSourceAdmissionMaximumSeconds =
+            "swift_package_describe_source_admission_maximum_seconds"
+        case swiftPackageDescribeSourceLocalFilesystemRequired =
+            "swift_package_describe_source_local_filesystem_required"
+        case swiftPackageDescribeSourceFilesystemType =
+            "swift_package_describe_source_filesystem_type"
         case swiftPackageDescribeOutputOverflowRejected =
             "swift_package_describe_output_overflow_rejected"
         case swiftPackageDescribeChildDeathObservedBeforeContinuationRequired =
@@ -3413,6 +3732,8 @@ public struct PrimeNativeNeuralGateSourceExecutionBindingContract:
             "swift_package_describe_mapped_child_image_capture_authority"
         case swiftPackageDescribeMappedRegionEnumerationPolicy =
             "swift_package_describe_mapped_region_enumeration_policy"
+        case swiftPackageDescribeMappedRegionTerminalErrno =
+            "swift_package_describe_mapped_region_terminal_errno"
         case swiftPackageDescribeCaptureCapabilityCalibrationRequired =
             "swift_package_describe_capture_capability_calibration_required"
         case swiftPackageDescribeCaptureCapabilityCalibrationPolicy =
@@ -4408,6 +4729,1132 @@ public struct PrimeNativeNeuralGateExactPIDWaitObservation:
     }
 }
 
+public struct PrimeNativeNeuralGateWorkingDirectoryObservation:
+    Codable,
+    Equatable,
+    Sendable
+{
+    public let descriptorDeviceID: UInt64
+    public let descriptorInode: UInt64
+    public let descriptorOwnerUserID: UInt32
+    public let descriptorOwnerGroupID: UInt32
+    public let descriptorPermissionMode: UInt16
+    public let descriptorLinkCount: UInt64
+    public let descriptorIsDirectory: Bool
+    public let descriptorOpenedWithNoSymbolicLinksInPath:
+        Bool
+    public let descriptorCloseOnExec: Bool
+    public let procPIDVnodePathInfoFlavor: Int32
+    public let procVnodePathInfoByteCount: Int
+    public let suspendedChildCurrentDirectoryDeviceID:
+        UInt64
+    public let suspendedChildCurrentDirectoryInode:
+        UInt64
+    public let descriptorJoinedToSuspendedChildCurrentDirectory:
+        Bool
+
+    init(
+        descriptorDeviceID: UInt64,
+        descriptorInode: UInt64,
+        descriptorOwnerUserID: UInt32,
+        descriptorOwnerGroupID: UInt32,
+        descriptorPermissionMode: UInt16,
+        descriptorLinkCount: UInt64,
+        descriptorIsDirectory: Bool,
+        descriptorOpenedWithNoSymbolicLinksInPath:
+            Bool,
+        descriptorCloseOnExec: Bool,
+        procPIDVnodePathInfoFlavor: Int32,
+        procVnodePathInfoByteCount: Int,
+        suspendedChildCurrentDirectoryDeviceID:
+            UInt64,
+        suspendedChildCurrentDirectoryInode:
+            UInt64,
+        descriptorJoinedToSuspendedChildCurrentDirectory:
+            Bool
+    ) {
+        self.descriptorDeviceID =
+            descriptorDeviceID
+        self.descriptorInode = descriptorInode
+        self.descriptorOwnerUserID =
+            descriptorOwnerUserID
+        self.descriptorOwnerGroupID =
+            descriptorOwnerGroupID
+        self.descriptorPermissionMode =
+            descriptorPermissionMode
+        self.descriptorLinkCount =
+            descriptorLinkCount
+        self.descriptorIsDirectory =
+            descriptorIsDirectory
+        self.descriptorOpenedWithNoSymbolicLinksInPath =
+            descriptorOpenedWithNoSymbolicLinksInPath
+        self.descriptorCloseOnExec =
+            descriptorCloseOnExec
+        self.procPIDVnodePathInfoFlavor =
+            procPIDVnodePathInfoFlavor
+        self.procVnodePathInfoByteCount =
+            procVnodePathInfoByteCount
+        self.suspendedChildCurrentDirectoryDeviceID =
+            suspendedChildCurrentDirectoryDeviceID
+        self.suspendedChildCurrentDirectoryInode =
+            suspendedChildCurrentDirectoryInode
+        self.descriptorJoinedToSuspendedChildCurrentDirectory =
+            descriptorJoinedToSuspendedChildCurrentDirectory
+    }
+
+    func validate() throws {
+        guard descriptorDeviceID > 0,
+              descriptorInode > 0,
+              descriptorLinkCount > 0,
+              descriptorPermissionMode & 0o700
+                == 0o700,
+              descriptorPermissionMode & 0o022
+                == 0,
+              descriptorIsDirectory,
+              descriptorOpenedWithNoSymbolicLinksInPath,
+              descriptorCloseOnExec,
+              procPIDVnodePathInfoFlavor == 9,
+              procVnodePathInfoByteCount == 2_352,
+              suspendedChildCurrentDirectoryDeviceID
+                == descriptorDeviceID,
+              suspendedChildCurrentDirectoryInode
+                == descriptorInode,
+              descriptorJoinedToSuspendedChildCurrentDirectory
+        else {
+            throw PrimeNativeNeuralGateFixtureReplayPlanError
+                .invalidPlan(
+                    "swift_package_working_directory_observation"
+                )
+        }
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case descriptorDeviceID =
+            "descriptor_device_id"
+        case descriptorInode = "descriptor_inode"
+        case descriptorOwnerUserID =
+            "descriptor_owner_user_id"
+        case descriptorOwnerGroupID =
+            "descriptor_owner_group_id"
+        case descriptorPermissionMode =
+            "descriptor_permission_mode"
+        case descriptorLinkCount =
+            "descriptor_link_count"
+        case descriptorIsDirectory =
+            "descriptor_is_directory"
+        case descriptorOpenedWithNoSymbolicLinksInPath =
+            "descriptor_opened_with_no_symbolic_links_in_path"
+        case descriptorCloseOnExec =
+            "descriptor_close_on_exec"
+        case procPIDVnodePathInfoFlavor =
+            "proc_pidvnodepathinfo_flavor"
+        case procVnodePathInfoByteCount =
+            "proc_vnodepathinfo_byte_count"
+        case suspendedChildCurrentDirectoryDeviceID =
+            "suspended_child_current_directory_device_id"
+        case suspendedChildCurrentDirectoryInode =
+            "suspended_child_current_directory_inode"
+        case descriptorJoinedToSuspendedChildCurrentDirectory =
+            "descriptor_joined_to_suspended_child_current_directory"
+    }
+}
+
+public struct PrimeNativeNeuralGateSourceClosureDirectoryInventoryObservation:
+    Codable,
+    Equatable,
+    Sendable
+{
+    public let relativePath: String
+    public let entryCount: Int
+    public let inventorySHA256: String
+
+    init(
+        relativePath: String,
+        entryCount: Int,
+        inventorySHA256: String
+    ) {
+        self.relativePath = relativePath
+        self.entryCount = entryCount
+        self.inventorySHA256 =
+            inventorySHA256
+    }
+
+    fileprivate func validate() -> Bool {
+        let components = relativePath.split(
+            separator: "/",
+            omittingEmptySubsequences: false
+        )
+        return (relativePath.isEmpty
+            || (
+                !relativePath.hasPrefix("/")
+                && !relativePath.contains("\0")
+                && components.allSatisfy {
+                    !$0.isEmpty
+                        && $0 != "."
+                        && $0 != ".."
+                }
+            ))
+            && entryCount >= 0
+            && inventorySHA256.utf8.count == 64
+            && inventorySHA256.utf8.allSatisfy {
+                ($0 >= 48 && $0 <= 57)
+                    || ($0 >= 97 && $0 <= 102)
+            }
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case relativePath = "relative_path"
+        case entryCount = "entry_count"
+        case inventorySHA256 =
+            "inventory_sha256"
+    }
+}
+
+public struct PrimeNativeNeuralGateSourceClosureMutationGuardObservation:
+    Codable,
+    Equatable,
+    Sendable
+{
+    public let schemaVersion: Int
+    public let artifactKind: String
+    public let authority: String
+    public let maximumFileCount: Int
+    public let maximumDirectoryCount: Int
+    public let maximumAggregateByteCount:
+        UInt64
+    public let maximumRelativeDepth: Int
+    public let sourceAdmissionMaximumSeconds:
+        UInt64
+    public let sourceAdmissionStartedMonotonicNanoseconds:
+        UInt64
+    public let sourceAdmissionCompletedMonotonicNanoseconds:
+        UInt64
+    public let localFilesystemObserved: Bool
+    public let filesystemType: String
+    public let heldFileDescriptorCount: Int
+    public let heldDirectoryDescriptorCount: Int
+    public let aggregateFileByteCount:
+        UInt64
+    public let sourceSnapshotSHA256: String
+    public let directoryInventories:
+        [PrimeNativeNeuralGateSourceClosureDirectoryInventoryObservation]
+    public let kqueueVnodeFilter: Int16
+    public let fileVnodeNoteMask: UInt32
+    public let directoryVnodeNoteMask: UInt32
+    public let watcherCount: Int
+    public let registrationReceiptCount: Int
+    public let registrationReceiptErrorCount:
+        Int
+    public let watchersArmedMonotonicNanoseconds:
+        UInt64
+    public let initialValidationMonotonicNanoseconds:
+        UInt64
+    public let preResumeValidationMonotonicNanoseconds:
+        UInt64
+    public let postReapValidationMonotonicNanoseconds:
+        UInt64
+    public let initialPendingEventCount: Int
+    public let preResumePendingEventCount: Int
+    public let postReapPendingEventCount: Int
+    public let repositoryBuildDirectoryUnused:
+        Bool
+    public let allDescriptorsHeld: Bool
+    public let allFileBytesMatchedSnapshot:
+        Bool
+    public let allFileMetadataStable: Bool
+    public let allDirectoryInventoriesStable:
+        Bool
+    public let allPathsRejoinedHeldVnodes:
+        Bool
+
+    init(
+        maximumFileCount: Int,
+        maximumDirectoryCount: Int,
+        maximumAggregateByteCount: UInt64,
+        maximumRelativeDepth: Int,
+        sourceAdmissionMaximumSeconds:
+            UInt64,
+        sourceAdmissionStartedMonotonicNanoseconds:
+            UInt64,
+        sourceAdmissionCompletedMonotonicNanoseconds:
+            UInt64,
+        localFilesystemObserved: Bool,
+        filesystemType: String,
+        heldFileDescriptorCount: Int,
+        heldDirectoryDescriptorCount: Int,
+        aggregateFileByteCount: UInt64,
+        sourceSnapshotSHA256: String,
+        directoryInventories:
+            [PrimeNativeNeuralGateSourceClosureDirectoryInventoryObservation],
+        kqueueVnodeFilter: Int16,
+        fileVnodeNoteMask: UInt32,
+        directoryVnodeNoteMask: UInt32,
+        watcherCount: Int,
+        registrationReceiptCount: Int,
+        registrationReceiptErrorCount: Int,
+        watchersArmedMonotonicNanoseconds:
+            UInt64,
+        initialValidationMonotonicNanoseconds:
+            UInt64,
+        preResumeValidationMonotonicNanoseconds:
+            UInt64,
+        postReapValidationMonotonicNanoseconds:
+            UInt64,
+        initialPendingEventCount: Int,
+        preResumePendingEventCount: Int,
+        postReapPendingEventCount: Int,
+        repositoryBuildDirectoryUnused:
+            Bool,
+        allDescriptorsHeld: Bool,
+        allFileBytesMatchedSnapshot: Bool,
+        allFileMetadataStable: Bool,
+        allDirectoryInventoriesStable:
+            Bool,
+        allPathsRejoinedHeldVnodes:
+            Bool,
+        contract:
+            PrimeNativeNeuralGateSourceExecutionBindingContract
+    ) {
+        schemaVersion = 1
+        artifactKind =
+            "ergentics_prime_native_neural_gate_source_closure_mutation_guard"
+        authority =
+            contract
+            .swiftPackageDescribeSourceMutationGuardAuthority
+        self.maximumFileCount =
+            maximumFileCount
+        self.maximumDirectoryCount =
+            maximumDirectoryCount
+        self.maximumAggregateByteCount =
+            maximumAggregateByteCount
+        self.maximumRelativeDepth =
+            maximumRelativeDepth
+        self.sourceAdmissionMaximumSeconds =
+            sourceAdmissionMaximumSeconds
+        self.sourceAdmissionStartedMonotonicNanoseconds =
+            sourceAdmissionStartedMonotonicNanoseconds
+        self.sourceAdmissionCompletedMonotonicNanoseconds =
+            sourceAdmissionCompletedMonotonicNanoseconds
+        self.localFilesystemObserved =
+            localFilesystemObserved
+        self.filesystemType =
+            filesystemType
+        self.heldFileDescriptorCount =
+            heldFileDescriptorCount
+        self.heldDirectoryDescriptorCount =
+            heldDirectoryDescriptorCount
+        self.aggregateFileByteCount =
+            aggregateFileByteCount
+        self.sourceSnapshotSHA256 =
+            sourceSnapshotSHA256
+        self.directoryInventories =
+            directoryInventories
+        self.kqueueVnodeFilter =
+            kqueueVnodeFilter
+        self.fileVnodeNoteMask =
+            fileVnodeNoteMask
+        self.directoryVnodeNoteMask =
+            directoryVnodeNoteMask
+        self.watcherCount = watcherCount
+        self.registrationReceiptCount =
+            registrationReceiptCount
+        self.registrationReceiptErrorCount =
+            registrationReceiptErrorCount
+        self.watchersArmedMonotonicNanoseconds =
+            watchersArmedMonotonicNanoseconds
+        self.initialValidationMonotonicNanoseconds =
+            initialValidationMonotonicNanoseconds
+        self.preResumeValidationMonotonicNanoseconds =
+            preResumeValidationMonotonicNanoseconds
+        self.postReapValidationMonotonicNanoseconds =
+            postReapValidationMonotonicNanoseconds
+        self.initialPendingEventCount =
+            initialPendingEventCount
+        self.preResumePendingEventCount =
+            preResumePendingEventCount
+        self.postReapPendingEventCount =
+            postReapPendingEventCount
+        self.repositoryBuildDirectoryUnused =
+            repositoryBuildDirectoryUnused
+        self.allDescriptorsHeld =
+            allDescriptorsHeld
+        self.allFileBytesMatchedSnapshot =
+            allFileBytesMatchedSnapshot
+        self.allFileMetadataStable =
+            allFileMetadataStable
+        self.allDirectoryInventoriesStable =
+            allDirectoryInventoriesStable
+        self.allPathsRejoinedHeldVnodes =
+            allPathsRejoinedHeldVnodes
+    }
+
+    func validate(
+        against contract:
+            PrimeNativeNeuralGateSourceExecutionBindingContract
+    ) throws {
+        let paths =
+            directoryInventories
+            .map(\.relativePath)
+        let admissionDuration =
+            sourceAdmissionMaximumSeconds
+            .multipliedReportingOverflow(
+                by: 1_000_000_000
+            )
+        let admissionDeadline =
+            sourceAdmissionStartedMonotonicNanoseconds
+            .addingReportingOverflow(
+                admissionDuration.partialValue
+            )
+        guard schemaVersion == 1,
+              artifactKind
+                == "ergentics_prime_native_neural_gate_source_closure_mutation_guard",
+              contract
+                .swiftPackageDescribeSourceMutationGuardRequired,
+              authority
+                == contract
+                .swiftPackageDescribeSourceMutationGuardAuthority,
+              maximumFileCount == 4_096,
+              maximumDirectoryCount == 4_096,
+              maximumAggregateByteCount
+                == 512 * 1024 * 1024,
+              maximumRelativeDepth == 32,
+              sourceAdmissionMaximumSeconds
+                == contract
+                .swiftPackageDescribeSourceAdmissionMaximumSeconds,
+              sourceAdmissionStartedMonotonicNanoseconds
+                > 0,
+              sourceAdmissionStartedMonotonicNanoseconds
+                < sourceAdmissionCompletedMonotonicNanoseconds,
+              !admissionDuration.overflow,
+              !admissionDeadline.overflow,
+              sourceAdmissionCompletedMonotonicNanoseconds
+                <= admissionDeadline.partialValue,
+              sourceAdmissionCompletedMonotonicNanoseconds
+                == initialValidationMonotonicNanoseconds,
+              contract
+                .swiftPackageDescribeSourceLocalFilesystemRequired,
+              localFilesystemObserved,
+              filesystemType
+                == contract
+                .swiftPackageDescribeSourceFilesystemType,
+              heldFileDescriptorCount > 0,
+              heldFileDescriptorCount
+                <= maximumFileCount,
+              heldDirectoryDescriptorCount > 0,
+              heldDirectoryDescriptorCount
+                <= maximumDirectoryCount,
+              aggregateFileByteCount > 0,
+              aggregateFileByteCount
+                <= maximumAggregateByteCount,
+              sourceSnapshotSHA256.utf8.count
+                == 64,
+              sourceSnapshotSHA256.utf8
+                .allSatisfy({
+                    byte in
+                    (byte >= 48 && byte <= 57)
+                        || (
+                            byte >= 97
+                            && byte <= 102
+                        )
+                }),
+              directoryInventories.count
+                == heldDirectoryDescriptorCount,
+              paths == paths.sorted(),
+              Set(paths).count == paths.count,
+              directoryInventories
+                .allSatisfy({
+                    $0.validate()
+                }),
+              kqueueVnodeFilter == -4,
+              fileVnodeNoteMask == 0x7f,
+              directoryVnodeNoteMask == 0x7f,
+              watcherCount
+                == heldFileDescriptorCount
+                    + heldDirectoryDescriptorCount,
+              registrationReceiptCount
+                == watcherCount,
+              registrationReceiptErrorCount == 0,
+              watchersArmedMonotonicNanoseconds
+                > 0,
+              sourceAdmissionStartedMonotonicNanoseconds
+                <= watchersArmedMonotonicNanoseconds,
+              watchersArmedMonotonicNanoseconds
+                <= initialValidationMonotonicNanoseconds,
+              initialValidationMonotonicNanoseconds
+                <= preResumeValidationMonotonicNanoseconds,
+              preResumeValidationMonotonicNanoseconds
+                <= postReapValidationMonotonicNanoseconds,
+              initialPendingEventCount == 0,
+              preResumePendingEventCount == 0,
+              postReapPendingEventCount == 0,
+              repositoryBuildDirectoryUnused,
+              allDescriptorsHeld,
+              allFileBytesMatchedSnapshot,
+              allFileMetadataStable,
+              allDirectoryInventoriesStable,
+              allPathsRejoinedHeldVnodes
+        else {
+            throw PrimeNativeNeuralGateFixtureReplayPlanError
+                .invalidPlan(
+                    "swift_package_source_closure_mutation_guard"
+                )
+        }
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case schemaVersion = "schema_version"
+        case artifactKind = "artifact_kind"
+        case authority
+        case maximumFileCount =
+            "maximum_file_count"
+        case maximumDirectoryCount =
+            "maximum_directory_count"
+        case maximumAggregateByteCount =
+            "maximum_aggregate_byte_count"
+        case maximumRelativeDepth =
+            "maximum_relative_depth"
+        case sourceAdmissionMaximumSeconds =
+            "source_admission_maximum_seconds"
+        case sourceAdmissionStartedMonotonicNanoseconds =
+            "source_admission_started_monotonic_nanoseconds"
+        case sourceAdmissionCompletedMonotonicNanoseconds =
+            "source_admission_completed_monotonic_nanoseconds"
+        case localFilesystemObserved =
+            "local_filesystem_observed"
+        case filesystemType =
+            "filesystem_type"
+        case heldFileDescriptorCount =
+            "held_file_descriptor_count"
+        case heldDirectoryDescriptorCount =
+            "held_directory_descriptor_count"
+        case aggregateFileByteCount =
+            "aggregate_file_byte_count"
+        case sourceSnapshotSHA256 =
+            "source_snapshot_sha256"
+        case directoryInventories =
+            "directory_inventories"
+        case kqueueVnodeFilter =
+            "kqueue_vnode_filter"
+        case fileVnodeNoteMask =
+            "file_vnode_note_mask"
+        case directoryVnodeNoteMask =
+            "directory_vnode_note_mask"
+        case watcherCount =
+            "watcher_count"
+        case registrationReceiptCount =
+            "registration_receipt_count"
+        case registrationReceiptErrorCount =
+            "registration_receipt_error_count"
+        case watchersArmedMonotonicNanoseconds =
+            "watchers_armed_monotonic_nanoseconds"
+        case initialValidationMonotonicNanoseconds =
+            "initial_validation_monotonic_nanoseconds"
+        case preResumeValidationMonotonicNanoseconds =
+            "pre_resume_validation_monotonic_nanoseconds"
+        case postReapValidationMonotonicNanoseconds =
+            "post_reap_validation_monotonic_nanoseconds"
+        case initialPendingEventCount =
+            "initial_pending_event_count"
+        case preResumePendingEventCount =
+            "pre_resume_pending_event_count"
+        case postReapPendingEventCount =
+            "post_reap_pending_event_count"
+        case repositoryBuildDirectoryUnused =
+            "repository_build_directory_unused"
+        case allDescriptorsHeld =
+            "all_descriptors_held"
+        case allFileBytesMatchedSnapshot =
+            "all_file_bytes_matched_snapshot"
+        case allFileMetadataStable =
+            "all_file_metadata_stable"
+        case allDirectoryInventoriesStable =
+            "all_directory_inventories_stable"
+        case allPathsRejoinedHeldVnodes =
+            "all_paths_rejoined_held_vnodes"
+    }
+}
+
+public struct PrimeNativeNeuralGateScratchNamespaceObservation:
+    Codable,
+    Equatable,
+    Sendable
+{
+    public let schemaVersion: Int
+    public let artifactKind: String
+    public let role:
+        PrimeNativeNeuralGateReleaseProcessRole
+    public let runRootAbsolutePath: String
+    public let sourceFilesystemType: String
+    public let sourceFilesystemIDWord0: Int32
+    public let sourceFilesystemIDWord1: Int32
+    public let scratchFilesystemType: String
+    public let scratchFilesystemIDWord0: Int32
+    public let scratchFilesystemIDWord1: Int32
+    public let runRootDeviceID: UInt64
+    public let runRootInode: UInt64
+    public let runRootOwnerUserID: UInt32
+    public let runRootOwnerGroupID: UInt32
+    public let runRootPermissionMode: UInt16
+    public let exactDirectoryNames: [String]
+    public let heldDirectoryDescriptorCount:
+        Int
+    public let allDescriptorsOpenedWithNoSymbolicLinksInPath:
+        Bool
+    public let allDescriptorsCloseOnExec: Bool
+    public let allDescriptorsOnExactSourceFilesystem:
+        Bool
+    public let allACLsAbsentAndExtendedAttributesAllowlisted:
+        Bool
+    public let permittedExtendedAttributeNames:
+        [String]
+    public let extendedAttributePolicyID: String
+    public let textEncodingRelativePath: String
+    public let textEncodingAttributeName: String
+    public let textEncodingRequiredNodeType:
+        String
+    public let textEncodingExactValue: String
+    public let textEncodingExactByteCount: Int
+    public let textEncodingAbsencePermitted:
+        Bool
+    public let textEncodingObservedCount: Int
+    public let allObservedTextEncodingAttributesMatchedPolicy:
+        Bool
+    public let provenanceAttributeName: String
+    public let provenanceValueOpaqueAndNonAuthoritative:
+        Bool
+    public let maximumProvenanceValueByteCount:
+        Int
+    public let rootCreatedAtomicallyAndInitiallyEmpty:
+        Bool
+    public let kqueueVnodeFilter: Int16
+    public let destructiveVnodeNoteMask: UInt32
+    public let watcherCount: Int
+    public let registrationReceiptCount: Int
+    public let registrationReceiptErrorCount:
+        Int
+    public let watchersArmedMonotonicNanoseconds:
+        UInt64
+    public let preResumeValidationMonotonicNanoseconds:
+        UInt64
+    public let postReapValidationMonotonicNanoseconds:
+        UInt64
+    public let preResumeDestructiveEventCount:
+        Int
+    public let postReapDestructiveEventCount:
+        Int
+    public let allPathsRejoinedHeldVnodes:
+        Bool
+    public let maximumPostAuditFileCount: Int
+    public let maximumPostAuditDirectoryCount:
+        Int
+    public let maximumPostAuditAggregateByteCount:
+        UInt64
+    public let maximumPostAuditRelativeDepth: Int
+    public let maximumPostAuditSeconds: UInt64
+    public let postAuditStartedMonotonicNanoseconds:
+        UInt64
+    public let postAuditCompletedMonotonicNanoseconds:
+        UInt64
+    public let postAuditFileCount: Int
+    public let postAuditDirectoryCount: Int
+    public let postAuditAggregateByteCount:
+        UInt64
+    public let cacheDirectoryEmpty: Bool
+    public let configDirectoryEmpty: Bool
+    public let securityDirectoryEmpty: Bool
+    public let networkDenialEstablished: Bool
+    public let dependencyResolutionPermitted:
+        Bool
+    public let resolutionResiduePathCount: Int
+    public let resolutionResiduesAbsent: Bool
+    public let namespaceLeftForSystemTemporaryDirectoryCleanup:
+        Bool
+
+    init(
+        role:
+            PrimeNativeNeuralGateReleaseProcessRole,
+        runRootAbsolutePath: String,
+        sourceFilesystemType: String,
+        sourceFilesystemIDWord0: Int32,
+        sourceFilesystemIDWord1: Int32,
+        scratchFilesystemType: String,
+        scratchFilesystemIDWord0: Int32,
+        scratchFilesystemIDWord1: Int32,
+        runRootDeviceID: UInt64,
+        runRootInode: UInt64,
+        runRootOwnerUserID: UInt32,
+        runRootOwnerGroupID: UInt32,
+        runRootPermissionMode: UInt16,
+        exactDirectoryNames: [String],
+        heldDirectoryDescriptorCount: Int,
+        allDescriptorsOpenedWithNoSymbolicLinksInPath:
+            Bool,
+        allDescriptorsCloseOnExec: Bool,
+        allDescriptorsOnExactSourceFilesystem:
+            Bool,
+        allACLsAbsentAndExtendedAttributesAllowlisted:
+            Bool,
+        permittedExtendedAttributeNames:
+            [String],
+        extendedAttributePolicyID: String,
+        textEncodingRelativePath: String,
+        textEncodingAttributeName: String,
+        textEncodingRequiredNodeType:
+            String,
+        textEncodingExactValue: String,
+        textEncodingExactByteCount: Int,
+        textEncodingAbsencePermitted:
+            Bool,
+        textEncodingObservedCount: Int,
+        allObservedTextEncodingAttributesMatchedPolicy:
+            Bool,
+        provenanceAttributeName: String,
+        provenanceValueOpaqueAndNonAuthoritative:
+            Bool,
+        maximumProvenanceValueByteCount:
+            Int,
+        rootCreatedAtomicallyAndInitiallyEmpty:
+            Bool,
+        kqueueVnodeFilter: Int16,
+        destructiveVnodeNoteMask: UInt32,
+        watcherCount: Int,
+        registrationReceiptCount: Int,
+        registrationReceiptErrorCount: Int,
+        watchersArmedMonotonicNanoseconds:
+            UInt64,
+        preResumeValidationMonotonicNanoseconds:
+            UInt64,
+        postReapValidationMonotonicNanoseconds:
+            UInt64,
+        preResumeDestructiveEventCount: Int,
+        postReapDestructiveEventCount: Int,
+        allPathsRejoinedHeldVnodes: Bool,
+        maximumPostAuditFileCount: Int,
+        maximumPostAuditDirectoryCount:
+            Int,
+        maximumPostAuditAggregateByteCount:
+            UInt64,
+        maximumPostAuditRelativeDepth: Int,
+        maximumPostAuditSeconds: UInt64,
+        postAuditStartedMonotonicNanoseconds:
+            UInt64,
+        postAuditCompletedMonotonicNanoseconds:
+            UInt64,
+        postAuditFileCount: Int,
+        postAuditDirectoryCount: Int,
+        postAuditAggregateByteCount:
+            UInt64,
+        cacheDirectoryEmpty: Bool,
+        configDirectoryEmpty: Bool,
+        securityDirectoryEmpty: Bool,
+        networkDenialEstablished: Bool,
+        dependencyResolutionPermitted: Bool,
+        resolutionResiduePathCount: Int,
+        resolutionResiduesAbsent: Bool,
+        namespaceLeftForSystemTemporaryDirectoryCleanup:
+            Bool
+    ) {
+        schemaVersion = 2
+        artifactKind =
+            "ergentics_prime_native_neural_gate_scratch_namespace_observation"
+        self.role = role
+        self.runRootAbsolutePath =
+            runRootAbsolutePath
+        self.sourceFilesystemType =
+            sourceFilesystemType
+        self.sourceFilesystemIDWord0 =
+            sourceFilesystemIDWord0
+        self.sourceFilesystemIDWord1 =
+            sourceFilesystemIDWord1
+        self.scratchFilesystemType =
+            scratchFilesystemType
+        self.scratchFilesystemIDWord0 =
+            scratchFilesystemIDWord0
+        self.scratchFilesystemIDWord1 =
+            scratchFilesystemIDWord1
+        self.runRootDeviceID =
+            runRootDeviceID
+        self.runRootInode = runRootInode
+        self.runRootOwnerUserID =
+            runRootOwnerUserID
+        self.runRootOwnerGroupID =
+            runRootOwnerGroupID
+        self.runRootPermissionMode =
+            runRootPermissionMode
+        self.exactDirectoryNames =
+            exactDirectoryNames
+        self.heldDirectoryDescriptorCount =
+            heldDirectoryDescriptorCount
+        self.allDescriptorsOpenedWithNoSymbolicLinksInPath =
+            allDescriptorsOpenedWithNoSymbolicLinksInPath
+        self.allDescriptorsCloseOnExec =
+            allDescriptorsCloseOnExec
+        self.allDescriptorsOnExactSourceFilesystem =
+            allDescriptorsOnExactSourceFilesystem
+        self.allACLsAbsentAndExtendedAttributesAllowlisted =
+            allACLsAbsentAndExtendedAttributesAllowlisted
+        self.permittedExtendedAttributeNames =
+            permittedExtendedAttributeNames
+        self.extendedAttributePolicyID =
+            extendedAttributePolicyID
+        self.textEncodingRelativePath =
+            textEncodingRelativePath
+        self.textEncodingAttributeName =
+            textEncodingAttributeName
+        self.textEncodingRequiredNodeType =
+            textEncodingRequiredNodeType
+        self.textEncodingExactValue =
+            textEncodingExactValue
+        self.textEncodingExactByteCount =
+            textEncodingExactByteCount
+        self.textEncodingAbsencePermitted =
+            textEncodingAbsencePermitted
+        self.textEncodingObservedCount =
+            textEncodingObservedCount
+        self.allObservedTextEncodingAttributesMatchedPolicy =
+            allObservedTextEncodingAttributesMatchedPolicy
+        self.provenanceAttributeName =
+            provenanceAttributeName
+        self.provenanceValueOpaqueAndNonAuthoritative =
+            provenanceValueOpaqueAndNonAuthoritative
+        self.maximumProvenanceValueByteCount =
+            maximumProvenanceValueByteCount
+        self.rootCreatedAtomicallyAndInitiallyEmpty =
+            rootCreatedAtomicallyAndInitiallyEmpty
+        self.kqueueVnodeFilter =
+            kqueueVnodeFilter
+        self.destructiveVnodeNoteMask =
+            destructiveVnodeNoteMask
+        self.watcherCount = watcherCount
+        self.registrationReceiptCount =
+            registrationReceiptCount
+        self.registrationReceiptErrorCount =
+            registrationReceiptErrorCount
+        self.watchersArmedMonotonicNanoseconds =
+            watchersArmedMonotonicNanoseconds
+        self.preResumeValidationMonotonicNanoseconds =
+            preResumeValidationMonotonicNanoseconds
+        self.postReapValidationMonotonicNanoseconds =
+            postReapValidationMonotonicNanoseconds
+        self.preResumeDestructiveEventCount =
+            preResumeDestructiveEventCount
+        self.postReapDestructiveEventCount =
+            postReapDestructiveEventCount
+        self.allPathsRejoinedHeldVnodes =
+            allPathsRejoinedHeldVnodes
+        self.maximumPostAuditFileCount =
+            maximumPostAuditFileCount
+        self.maximumPostAuditDirectoryCount =
+            maximumPostAuditDirectoryCount
+        self.maximumPostAuditAggregateByteCount =
+            maximumPostAuditAggregateByteCount
+        self.maximumPostAuditRelativeDepth =
+            maximumPostAuditRelativeDepth
+        self.maximumPostAuditSeconds =
+            maximumPostAuditSeconds
+        self.postAuditStartedMonotonicNanoseconds =
+            postAuditStartedMonotonicNanoseconds
+        self.postAuditCompletedMonotonicNanoseconds =
+            postAuditCompletedMonotonicNanoseconds
+        self.postAuditFileCount =
+            postAuditFileCount
+        self.postAuditDirectoryCount =
+            postAuditDirectoryCount
+        self.postAuditAggregateByteCount =
+            postAuditAggregateByteCount
+        self.cacheDirectoryEmpty =
+            cacheDirectoryEmpty
+        self.configDirectoryEmpty =
+            configDirectoryEmpty
+        self.securityDirectoryEmpty =
+            securityDirectoryEmpty
+        self.networkDenialEstablished =
+            networkDenialEstablished
+        self.dependencyResolutionPermitted =
+            dependencyResolutionPermitted
+        self.resolutionResiduePathCount =
+            resolutionResiduePathCount
+        self.resolutionResiduesAbsent =
+            resolutionResiduesAbsent
+        self.namespaceLeftForSystemTemporaryDirectoryCleanup =
+            namespaceLeftForSystemTemporaryDirectoryCleanup
+    }
+
+    func validate(
+        role expectedRole:
+            PrimeNativeNeuralGateReleaseProcessRole
+    ) throws {
+        let components =
+            runRootAbsolutePath.split(
+                separator: "/",
+                omittingEmptySubsequences:
+                    true
+            )
+        guard schemaVersion == 2,
+              artifactKind
+                == "ergentics_prime_native_neural_gate_scratch_namespace_observation",
+              role == expectedRole,
+              runRootAbsolutePath.hasPrefix("/"),
+              runRootAbsolutePath != "/",
+              !runRootAbsolutePath.contains("\0"),
+              !runRootAbsolutePath
+                .hasSuffix("/"),
+              components.allSatisfy({
+                  $0 != "."
+                      && $0 != ".."
+              }),
+              components.last?
+                .hasPrefix(
+                    "ergentics-prime-neural-gate-\(role.rawValue)-"
+                ) == true,
+              sourceFilesystemType == "apfs",
+              scratchFilesystemType
+                == sourceFilesystemType,
+              scratchFilesystemIDWord0
+                == sourceFilesystemIDWord0,
+              scratchFilesystemIDWord1
+                == sourceFilesystemIDWord1,
+              runRootDeviceID > 0,
+              runRootInode > 0,
+              runRootOwnerUserID
+                == UInt32(geteuid()),
+              runRootOwnerGroupID
+                == UInt32(getegid()),
+              runRootPermissionMode == 0o700,
+              exactDirectoryNames
+                == [
+                    "work",
+                    "cache",
+                    "config",
+                    "security",
+                    "home",
+                    "tmp",
+                    "module-cache",
+                ],
+              heldDirectoryDescriptorCount
+                == exactDirectoryNames.count + 1,
+              allDescriptorsOpenedWithNoSymbolicLinksInPath,
+              allDescriptorsCloseOnExec,
+              allDescriptorsOnExactSourceFilesystem,
+              allACLsAbsentAndExtendedAttributesAllowlisted,
+              permittedExtendedAttributeNames
+                == [
+                    "com.apple.TextEncoding",
+                    "com.apple.provenance",
+                ],
+              extendedAttributePolicyID
+                == "optional_exact_text_encoding_work_lock_bounded_opaque_provenance_v1",
+              textEncodingRelativePath
+                == "work/.lock",
+              textEncodingAttributeName
+                == "com.apple.TextEncoding",
+              textEncodingRequiredNodeType
+                == "regular_file",
+              textEncodingExactValue
+                == "utf-8;134217984",
+              textEncodingExactByteCount == 15,
+              textEncodingAbsencePermitted,
+              textEncodingObservedCount
+                >= 0,
+              textEncodingObservedCount
+                <= 1,
+              allObservedTextEncodingAttributesMatchedPolicy,
+              provenanceAttributeName
+                == "com.apple.provenance",
+              provenanceValueOpaqueAndNonAuthoritative,
+              maximumProvenanceValueByteCount
+                == 4_096,
+              rootCreatedAtomicallyAndInitiallyEmpty,
+              kqueueVnodeFilter == -4,
+              destructiveVnodeNoteMask == 0x69,
+              watcherCount
+                == heldDirectoryDescriptorCount,
+              registrationReceiptCount
+                == watcherCount,
+              registrationReceiptErrorCount == 0,
+              watchersArmedMonotonicNanoseconds
+                > 0,
+              watchersArmedMonotonicNanoseconds
+                < preResumeValidationMonotonicNanoseconds,
+              preResumeValidationMonotonicNanoseconds
+                < postReapValidationMonotonicNanoseconds,
+              preResumeDestructiveEventCount
+                == 0,
+              postReapDestructiveEventCount
+                == 0,
+              allPathsRejoinedHeldVnodes,
+              maximumPostAuditFileCount
+                == 65_536,
+              maximumPostAuditDirectoryCount
+                == 8_192,
+              maximumPostAuditAggregateByteCount
+                == 1_073_741_824,
+              maximumPostAuditRelativeDepth
+                == 32,
+              maximumPostAuditSeconds == 2,
+              postAuditStartedMonotonicNanoseconds
+                >= preResumeValidationMonotonicNanoseconds,
+              postAuditStartedMonotonicNanoseconds
+                < postAuditCompletedMonotonicNanoseconds,
+              postAuditCompletedMonotonicNanoseconds
+                <= postReapValidationMonotonicNanoseconds,
+              postAuditCompletedMonotonicNanoseconds
+                    - postAuditStartedMonotonicNanoseconds
+                <= maximumPostAuditSeconds
+                    * 1_000_000_000,
+              postAuditFileCount >= 0,
+              postAuditFileCount
+                <= maximumPostAuditFileCount,
+              postAuditDirectoryCount
+                >= exactDirectoryNames.count
+                    + 1,
+              postAuditDirectoryCount
+                <= maximumPostAuditDirectoryCount,
+              postAuditAggregateByteCount
+                <= maximumPostAuditAggregateByteCount,
+              cacheDirectoryEmpty,
+              configDirectoryEmpty,
+              securityDirectoryEmpty,
+              !networkDenialEstablished,
+              !dependencyResolutionPermitted,
+              resolutionResiduePathCount == 0,
+              resolutionResiduesAbsent,
+              namespaceLeftForSystemTemporaryDirectoryCleanup
+        else {
+            throw PrimeNativeNeuralGateFixtureReplayPlanError
+                .invalidPlan(
+                    "scratch_namespace_observation"
+                )
+        }
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case schemaVersion = "schema_version"
+        case artifactKind = "artifact_kind"
+        case role
+        case runRootAbsolutePath =
+            "run_root_absolute_path"
+        case sourceFilesystemType =
+            "source_filesystem_type"
+        case sourceFilesystemIDWord0 =
+            "source_filesystem_id_word_0"
+        case sourceFilesystemIDWord1 =
+            "source_filesystem_id_word_1"
+        case scratchFilesystemType =
+            "scratch_filesystem_type"
+        case scratchFilesystemIDWord0 =
+            "scratch_filesystem_id_word_0"
+        case scratchFilesystemIDWord1 =
+            "scratch_filesystem_id_word_1"
+        case runRootDeviceID =
+            "run_root_device_id"
+        case runRootInode = "run_root_inode"
+        case runRootOwnerUserID =
+            "run_root_owner_user_id"
+        case runRootOwnerGroupID =
+            "run_root_owner_group_id"
+        case runRootPermissionMode =
+            "run_root_permission_mode"
+        case exactDirectoryNames =
+            "exact_directory_names"
+        case heldDirectoryDescriptorCount =
+            "held_directory_descriptor_count"
+        case allDescriptorsOpenedWithNoSymbolicLinksInPath =
+            "all_descriptors_opened_with_no_symbolic_links_in_path"
+        case allDescriptorsCloseOnExec =
+            "all_descriptors_close_on_exec"
+        case allDescriptorsOnExactSourceFilesystem =
+            "all_descriptors_on_exact_source_filesystem"
+        case allACLsAbsentAndExtendedAttributesAllowlisted =
+            "all_acls_absent_and_extended_attributes_allowlisted"
+        case permittedExtendedAttributeNames =
+            "permitted_extended_attribute_names"
+        case extendedAttributePolicyID =
+            "extended_attribute_policy_id"
+        case textEncodingRelativePath =
+            "text_encoding_relative_path"
+        case textEncodingAttributeName =
+            "text_encoding_attribute_name"
+        case textEncodingRequiredNodeType =
+            "text_encoding_required_node_type"
+        case textEncodingExactValue =
+            "text_encoding_exact_value"
+        case textEncodingExactByteCount =
+            "text_encoding_exact_byte_count"
+        case textEncodingAbsencePermitted =
+            "text_encoding_absence_permitted"
+        case textEncodingObservedCount =
+            "text_encoding_observed_count"
+        case allObservedTextEncodingAttributesMatchedPolicy =
+            "all_observed_text_encoding_attributes_matched_policy"
+        case provenanceAttributeName =
+            "provenance_attribute_name"
+        case provenanceValueOpaqueAndNonAuthoritative =
+            "provenance_value_opaque_and_non_authoritative"
+        case maximumProvenanceValueByteCount =
+            "maximum_provenance_value_byte_count"
+        case rootCreatedAtomicallyAndInitiallyEmpty =
+            "root_created_atomically_and_initially_empty"
+        case kqueueVnodeFilter =
+            "kqueue_vnode_filter"
+        case destructiveVnodeNoteMask =
+            "destructive_vnode_note_mask"
+        case watcherCount = "watcher_count"
+        case registrationReceiptCount =
+            "registration_receipt_count"
+        case registrationReceiptErrorCount =
+            "registration_receipt_error_count"
+        case watchersArmedMonotonicNanoseconds =
+            "watchers_armed_monotonic_nanoseconds"
+        case preResumeValidationMonotonicNanoseconds =
+            "pre_resume_validation_monotonic_nanoseconds"
+        case postReapValidationMonotonicNanoseconds =
+            "post_reap_validation_monotonic_nanoseconds"
+        case preResumeDestructiveEventCount =
+            "pre_resume_destructive_event_count"
+        case postReapDestructiveEventCount =
+            "post_reap_destructive_event_count"
+        case allPathsRejoinedHeldVnodes =
+            "all_paths_rejoined_held_vnodes"
+        case maximumPostAuditFileCount =
+            "maximum_post_audit_file_count"
+        case maximumPostAuditDirectoryCount =
+            "maximum_post_audit_directory_count"
+        case maximumPostAuditAggregateByteCount =
+            "maximum_post_audit_aggregate_byte_count"
+        case maximumPostAuditRelativeDepth =
+            "maximum_post_audit_relative_depth"
+        case maximumPostAuditSeconds =
+            "maximum_post_audit_seconds"
+        case postAuditStartedMonotonicNanoseconds =
+            "post_audit_started_monotonic_nanoseconds"
+        case postAuditCompletedMonotonicNanoseconds =
+            "post_audit_completed_monotonic_nanoseconds"
+        case postAuditFileCount =
+            "post_audit_file_count"
+        case postAuditDirectoryCount =
+            "post_audit_directory_count"
+        case postAuditAggregateByteCount =
+            "post_audit_aggregate_byte_count"
+        case cacheDirectoryEmpty =
+            "cache_directory_empty"
+        case configDirectoryEmpty =
+            "config_directory_empty"
+        case securityDirectoryEmpty =
+            "security_directory_empty"
+        case networkDenialEstablished =
+            "network_denial_established"
+        case dependencyResolutionPermitted =
+            "dependency_resolution_permitted"
+        case resolutionResiduePathCount =
+            "resolution_residue_path_count"
+        case resolutionResiduesAbsent =
+            "resolution_residues_absent"
+        case namespaceLeftForSystemTemporaryDirectoryCleanup =
+            "namespace_left_for_system_temporary_directory_cleanup"
+    }
+}
+
 public struct PrimeNativeNeuralGateExternalChildCaptureEvidence:
     Codable,
     Equatable,
@@ -4418,6 +5865,8 @@ public struct PrimeNativeNeuralGateExternalChildCaptureEvidence:
     public let supervisorProcessIdentifier:
         Int32
     public let childProcessIdentifier: Int32
+    public let role:
+        PrimeNativeNeuralGateReleaseProcessRole
     public let captureAuthority: String
     public let mappedRegionEnumerationPolicy:
         String
@@ -4429,7 +5878,22 @@ public struct PrimeNativeNeuralGateExternalChildCaptureEvidence:
         UInt16
     public let posixSpawnCloseOnExecDefaultFlag:
         UInt16
+    public let posixSpawnSetSessionFlag:
+        UInt16
+    public let posixSpawnSetSignalDefaultsFlag:
+        UInt16
+    public let posixSpawnSetSignalMaskFlag:
+        UInt16
     public let appliedSpawnFlags: UInt16
+    public let observedChildSessionIdentifier:
+        Int32
+    public let observedChildProcessGroupIdentifier:
+        Int32
+    public let emptySignalMaskConfigured: Bool
+    public let defaultSignalDispositionsConfigured:
+        Bool
+    public let terminationSignalsTargetProcessGroup:
+        Bool
     public let posixSpawnReturnCode: Int32
     public let procPIDRegionPathInfoFlavor:
         Int32
@@ -4438,6 +5902,10 @@ public struct PrimeNativeNeuralGateExternalChildCaptureEvidence:
     public let descriptorOpenedMonotonicNanoseconds:
         UInt64
     public let spawnReturnedMonotonicNanoseconds:
+        UInt64
+    public let childSessionAndProcessGroupObservedMonotonicNanoseconds:
+        UInt64
+    public let workingDirectoryCapturedMonotonicNanoseconds:
         UInt64
     public let mappedRegionCapturedMonotonicNanoseconds:
         UInt64
@@ -4448,10 +5916,22 @@ public struct PrimeNativeNeuralGateExternalChildCaptureEvidence:
     public let sigcontReturnCode: Int32
     public let childTerminationObservedMonotonicNanoseconds:
         UInt64
+    public let preReapProcessGroupMemberIdentifiers:
+        [Int32]
+    public let preReapProcessGroupMembersObservedMonotonicNanoseconds:
+        UInt64
     public let childReapedMonotonicNanoseconds:
+        UInt64
+    public let processGroupEmptyObservedMonotonicNanoseconds:
         UInt64
     public let descriptorRevalidatedAfterReapMonotonicNanoseconds:
         UInt64
+    public let sourceClosureMutationGuard:
+        PrimeNativeNeuralGateSourceClosureMutationGuardObservation
+    public let scratchNamespace:
+        PrimeNativeNeuralGateScratchNamespaceObservation
+    public let workingDirectory:
+        PrimeNativeNeuralGateWorkingDirectoryObservation
     public let preSpawnDescriptor:
         PrimeNativeNeuralGateExecutableDescriptorSnapshot
     public let preResumeDescriptor:
@@ -4475,18 +5955,36 @@ public struct PrimeNativeNeuralGateExternalChildCaptureEvidence:
     public let deadlineExpired: Bool
     public let sigtermDelivered: Bool
     public let sigkillDelivered: Bool
+    public let processGroupEmptyAfterReap: Bool
     public let procPIDPathUsedOnlyAsTelemetry:
         Bool
 
     init(
         supervisorProcessIdentifier: Int32,
         childProcessIdentifier: Int32,
+        role:
+            PrimeNativeNeuralGateReleaseProcessRole,
         capabilityCalibrationPassed: Bool,
         posixSpawnStartSuspendedFlag:
             UInt16,
         posixSpawnCloseOnExecDefaultFlag:
             UInt16,
+        posixSpawnSetSessionFlag:
+            UInt16,
+        posixSpawnSetSignalDefaultsFlag:
+            UInt16,
+        posixSpawnSetSignalMaskFlag:
+            UInt16,
         appliedSpawnFlags: UInt16,
+        observedChildSessionIdentifier:
+            Int32,
+        observedChildProcessGroupIdentifier:
+            Int32,
+        emptySignalMaskConfigured: Bool,
+        defaultSignalDispositionsConfigured:
+            Bool,
+        terminationSignalsTargetProcessGroup:
+            Bool,
         posixSpawnReturnCode: Int32,
         procPIDRegionPathInfoFlavor:
             Int32,
@@ -4495,6 +5993,10 @@ public struct PrimeNativeNeuralGateExternalChildCaptureEvidence:
         descriptorOpenedMonotonicNanoseconds:
             UInt64,
         spawnReturnedMonotonicNanoseconds:
+            UInt64,
+        childSessionAndProcessGroupObservedMonotonicNanoseconds:
+            UInt64,
+        workingDirectoryCapturedMonotonicNanoseconds:
             UInt64,
         mappedRegionCapturedMonotonicNanoseconds:
             UInt64,
@@ -4505,10 +6007,22 @@ public struct PrimeNativeNeuralGateExternalChildCaptureEvidence:
         sigcontReturnCode: Int32,
         childTerminationObservedMonotonicNanoseconds:
             UInt64,
+        preReapProcessGroupMemberIdentifiers:
+            [Int32],
+        preReapProcessGroupMembersObservedMonotonicNanoseconds:
+            UInt64,
         childReapedMonotonicNanoseconds:
+            UInt64,
+        processGroupEmptyObservedMonotonicNanoseconds:
             UInt64,
         descriptorRevalidatedAfterReapMonotonicNanoseconds:
             UInt64,
+        sourceClosureMutationGuard:
+            PrimeNativeNeuralGateSourceClosureMutationGuardObservation,
+        scratchNamespace:
+            PrimeNativeNeuralGateScratchNamespaceObservation,
+        workingDirectory:
+            PrimeNativeNeuralGateWorkingDirectoryObservation,
         preSpawnDescriptor:
             PrimeNativeNeuralGateExecutableDescriptorSnapshot,
         preResumeDescriptor:
@@ -4530,18 +6044,20 @@ public struct PrimeNativeNeuralGateExternalChildCaptureEvidence:
         deadlineExpired: Bool,
         sigtermDelivered: Bool,
         sigkillDelivered: Bool,
+        processGroupEmptyAfterReap: Bool,
         procPIDPathUsedOnlyAsTelemetry:
             Bool,
         contract:
             PrimeNativeNeuralGateSourceExecutionBindingContract
     ) {
-        schemaVersion = 1
+        schemaVersion = 4
         artifactKind =
             "ergentics_prime_native_neural_gate_external_child_capture_evidence"
         self.supervisorProcessIdentifier =
             supervisorProcessIdentifier
         self.childProcessIdentifier =
             childProcessIdentifier
+        self.role = role
         captureAuthority =
             contract
             .swiftPackageDescribeMappedChildImageCaptureAuthority
@@ -4557,8 +6073,24 @@ public struct PrimeNativeNeuralGateExternalChildCaptureEvidence:
             posixSpawnStartSuspendedFlag
         self.posixSpawnCloseOnExecDefaultFlag =
             posixSpawnCloseOnExecDefaultFlag
+        self.posixSpawnSetSessionFlag =
+            posixSpawnSetSessionFlag
+        self.posixSpawnSetSignalDefaultsFlag =
+            posixSpawnSetSignalDefaultsFlag
+        self.posixSpawnSetSignalMaskFlag =
+            posixSpawnSetSignalMaskFlag
         self.appliedSpawnFlags =
             appliedSpawnFlags
+        self.observedChildSessionIdentifier =
+            observedChildSessionIdentifier
+        self.observedChildProcessGroupIdentifier =
+            observedChildProcessGroupIdentifier
+        self.emptySignalMaskConfigured =
+            emptySignalMaskConfigured
+        self.defaultSignalDispositionsConfigured =
+            defaultSignalDispositionsConfigured
+        self.terminationSignalsTargetProcessGroup =
+            terminationSignalsTargetProcessGroup
         self.posixSpawnReturnCode =
             posixSpawnReturnCode
         self.procPIDRegionPathInfoFlavor =
@@ -4569,6 +6101,10 @@ public struct PrimeNativeNeuralGateExternalChildCaptureEvidence:
             descriptorOpenedMonotonicNanoseconds
         self.spawnReturnedMonotonicNanoseconds =
             spawnReturnedMonotonicNanoseconds
+        self.childSessionAndProcessGroupObservedMonotonicNanoseconds =
+            childSessionAndProcessGroupObservedMonotonicNanoseconds
+        self.workingDirectoryCapturedMonotonicNanoseconds =
+            workingDirectoryCapturedMonotonicNanoseconds
         self.mappedRegionCapturedMonotonicNanoseconds =
             mappedRegionCapturedMonotonicNanoseconds
         self.descriptorRevalidatedBeforeResumeMonotonicNanoseconds =
@@ -4579,10 +6115,21 @@ public struct PrimeNativeNeuralGateExternalChildCaptureEvidence:
             sigcontReturnCode
         self.childTerminationObservedMonotonicNanoseconds =
             childTerminationObservedMonotonicNanoseconds
+        self.preReapProcessGroupMemberIdentifiers =
+            preReapProcessGroupMemberIdentifiers
+        self.preReapProcessGroupMembersObservedMonotonicNanoseconds =
+            preReapProcessGroupMembersObservedMonotonicNanoseconds
         self.childReapedMonotonicNanoseconds =
             childReapedMonotonicNanoseconds
+        self.processGroupEmptyObservedMonotonicNanoseconds =
+            processGroupEmptyObservedMonotonicNanoseconds
         self.descriptorRevalidatedAfterReapMonotonicNanoseconds =
             descriptorRevalidatedAfterReapMonotonicNanoseconds
+        self.sourceClosureMutationGuard =
+            sourceClosureMutationGuard
+        self.scratchNamespace =
+            scratchNamespace
+        self.workingDirectory = workingDirectory
         self.preSpawnDescriptor =
             preSpawnDescriptor
         self.preResumeDescriptor =
@@ -4613,6 +6160,8 @@ public struct PrimeNativeNeuralGateExternalChildCaptureEvidence:
         self.deadlineExpired = deadlineExpired
         self.sigtermDelivered = sigtermDelivered
         self.sigkillDelivered = sigkillDelivered
+        self.processGroupEmptyAfterReap =
+            processGroupEmptyAfterReap
         self.procPIDPathUsedOnlyAsTelemetry =
             procPIDPathUsedOnlyAsTelemetry
     }
@@ -4633,6 +6182,14 @@ public struct PrimeNativeNeuralGateExternalChildCaptureEvidence:
         )
         try postReapDescriptor.validate(
             against: contract
+        )
+        try workingDirectory.validate()
+        try sourceClosureMutationGuard
+            .validate(
+                against: contract
+            )
+        try scratchNamespace.validate(
+            role: role
         )
         try exactPIDWaitObservation.validate(
             expectedChildProcessIdentifier:
@@ -4672,7 +6229,9 @@ public struct PrimeNativeNeuralGateExternalChildCaptureEvidence:
                 == nextQueryAddress
             && terminalMappedRegionQueryReturnByteCount
                 == 0
-            && terminalMappedRegionQueryErrno == 0
+            && terminalMappedRegionQueryErrno
+                == contract
+                .swiftPackageDescribeMappedRegionTerminalErrno
             && mappedRegionEnumerationCompleted
         let expectedMatchingRegions =
             allMappedRegionQueries
@@ -4701,6 +6260,7 @@ public struct PrimeNativeNeuralGateExternalChildCaptureEvidence:
                     && end.partialValue
                         > $0.address
                     && $0.protection > 0
+                    && ($0.protection & 0x6) != 0x6
                     && $0.deviceID
                         == preSpawnDescriptor
                         .deviceID
@@ -4708,12 +6268,20 @@ public struct PrimeNativeNeuralGateExternalChildCaptureEvidence:
                         == preSpawnDescriptor.inode
             }
             && matchingMappedRegions.contains {
+                // `VM_PROT_EXECUTE` is the calibrated Darwin bit 0x4.
+                // The offset-zero mapping itself must carry executable code;
+                // a split header/data mapping plus unrelated executable
+                // mapping cannot jointly satisfy this identity predicate.
                 $0.fileOffset == 0
+                    && ($0.protection & 0x4) != 0
             }
         let expectedSpawnFlags =
             posixSpawnStartSuspendedFlag
             | posixSpawnCloseOnExecDefaultFlag
-        guard schemaVersion == 1,
+            | posixSpawnSetSessionFlag
+            | posixSpawnSetSignalDefaultsFlag
+            | posixSpawnSetSignalMaskFlag
+        guard schemaVersion == 4,
               artifactKind
                 == "ergentics_prime_native_neural_gate_external_child_capture_evidence",
               supervisorProcessIdentifier
@@ -4724,6 +6292,7 @@ public struct PrimeNativeNeuralGateExternalChildCaptureEvidence:
               childProcessIdentifier > 0,
               supervisorProcessIdentifier
                 != childProcessIdentifier,
+              scratchNamespace.role == role,
               captureAuthority
                 == contract
                 .swiftPackageDescribeMappedChildImageCaptureAuthority,
@@ -4740,8 +6309,32 @@ public struct PrimeNativeNeuralGateExternalChildCaptureEvidence:
                 == 0x0080,
               posixSpawnCloseOnExecDefaultFlag
                 == 0x4000,
+              posixSpawnSetSessionFlag
+                == 0x0400,
+              posixSpawnSetSignalDefaultsFlag
+                == 0x0004,
+              posixSpawnSetSignalMaskFlag
+                == 0x0008,
               appliedSpawnFlags
                 == expectedSpawnFlags,
+              appliedSpawnFlags == 0x448c,
+              observedChildSessionIdentifier
+                == childProcessIdentifier,
+              observedChildProcessGroupIdentifier
+                == childProcessIdentifier,
+              emptySignalMaskConfigured,
+              defaultSignalDispositionsConfigured,
+              terminationSignalsTargetProcessGroup,
+              contract
+                .swiftPackageDescribeIsolatedSessionRequired,
+              contract
+                .swiftPackageDescribeDedicatedProcessGroupRequired,
+              contract
+                .swiftPackageDescribeGroupDirectedTerminationSignalsRequired,
+              contract
+                .swiftPackageDescribeNormalizedSignalMaskRequired,
+              contract
+                .swiftPackageDescribeNormalizedSignalDispositionsRequired,
               posixSpawnReturnCode == 0,
               procPIDRegionPathInfoFlavor
                 == 8,
@@ -4749,21 +6342,51 @@ public struct PrimeNativeNeuralGateExternalChildCaptureEvidence:
                 == 1_272,
               descriptorOpenedMonotonicNanoseconds
                 > 0,
+              sourceClosureMutationGuard
+                .initialValidationMonotonicNanoseconds
+                <= descriptorOpenedMonotonicNanoseconds,
               descriptorOpenedMonotonicNanoseconds
                 < spawnReturnedMonotonicNanoseconds,
               spawnReturnedMonotonicNanoseconds
+                <= childSessionAndProcessGroupObservedMonotonicNanoseconds,
+              childSessionAndProcessGroupObservedMonotonicNanoseconds
+                <= workingDirectoryCapturedMonotonicNanoseconds,
+              workingDirectoryCapturedMonotonicNanoseconds
                 <= mappedRegionCapturedMonotonicNanoseconds,
               mappedRegionCapturedMonotonicNanoseconds
                 <= descriptorRevalidatedBeforeResumeMonotonicNanoseconds,
               descriptorRevalidatedBeforeResumeMonotonicNanoseconds
+                <= sourceClosureMutationGuard
+                    .preResumeValidationMonotonicNanoseconds,
+              sourceClosureMutationGuard
+                .preResumeValidationMonotonicNanoseconds
+                <= scratchNamespace
+                    .preResumeValidationMonotonicNanoseconds,
+              scratchNamespace
+                .preResumeValidationMonotonicNanoseconds
                 < sigcontDeliveredMonotonicNanoseconds,
               sigcontReturnCode == 0,
               sigcontDeliveredMonotonicNanoseconds
                 < childTerminationObservedMonotonicNanoseconds,
               childTerminationObservedMonotonicNanoseconds
+                <= preReapProcessGroupMembersObservedMonotonicNanoseconds,
+              preReapProcessGroupMemberIdentifiers
+                == [
+                    childProcessIdentifier,
+                ],
+              preReapProcessGroupMembersObservedMonotonicNanoseconds
                 <= childReapedMonotonicNanoseconds,
               childReapedMonotonicNanoseconds
+                <= processGroupEmptyObservedMonotonicNanoseconds,
+              processGroupEmptyObservedMonotonicNanoseconds
                 <= descriptorRevalidatedAfterReapMonotonicNanoseconds,
+              descriptorRevalidatedAfterReapMonotonicNanoseconds
+                <= sourceClosureMutationGuard
+                    .postReapValidationMonotonicNanoseconds,
+              sourceClosureMutationGuard
+                .postReapValidationMonotonicNanoseconds
+                <= scratchNamespace
+                    .postReapValidationMonotonicNanoseconds,
               preSpawnDescriptor
                 == preResumeDescriptor,
               preSpawnDescriptor
@@ -4774,8 +6397,8 @@ public struct PrimeNativeNeuralGateExternalChildCaptureEvidence:
               regionsValid,
               contract
                 .swiftPackageDescribeExactPIDWaitObservationRequired,
-              childTerminationObservedMonotonicNanoseconds
-                == exactPIDWaitObservation
+              preReapProcessGroupMembersObservedMonotonicNanoseconds
+                <= exactPIDWaitObservation
                 .returnedMonotonicNanoseconds,
               childReapedMonotonicNanoseconds
                 == exactPIDWaitObservation
@@ -4783,6 +6406,13 @@ public struct PrimeNativeNeuralGateExternalChildCaptureEvidence:
               !deadlineExpired,
               !sigtermDelivered,
               !sigkillDelivered,
+              processGroupEmptyAfterReap,
+              contract
+                .swiftPackageDescribeProcessGroupEmptyAfterReapRequired,
+              contract
+                .swiftPackageDescribeDescriptorRootedWorkingDirectoryRequired,
+              contract
+                .swiftPackageDescribeSuspendedChildWorkingDirectoryVnodeJoinRequired,
               procPIDPathUsedOnlyAsTelemetry,
               !contract
                 .swiftPackageDescribeProcPIDPathAuthoritative
@@ -4801,6 +6431,7 @@ public struct PrimeNativeNeuralGateExternalChildCaptureEvidence:
             "supervisor_process_identifier"
         case childProcessIdentifier =
             "child_process_identifier"
+        case role
         case captureAuthority =
             "capture_authority"
         case mappedRegionEnumerationPolicy =
@@ -4813,8 +6444,24 @@ public struct PrimeNativeNeuralGateExternalChildCaptureEvidence:
             "posix_spawn_start_suspended_flag"
         case posixSpawnCloseOnExecDefaultFlag =
             "posix_spawn_close_on_exec_default_flag"
+        case posixSpawnSetSessionFlag =
+            "posix_spawn_set_session_flag"
+        case posixSpawnSetSignalDefaultsFlag =
+            "posix_spawn_set_signal_defaults_flag"
+        case posixSpawnSetSignalMaskFlag =
+            "posix_spawn_set_signal_mask_flag"
         case appliedSpawnFlags =
             "applied_spawn_flags"
+        case observedChildSessionIdentifier =
+            "observed_child_session_identifier"
+        case observedChildProcessGroupIdentifier =
+            "observed_child_process_group_identifier"
+        case emptySignalMaskConfigured =
+            "empty_signal_mask_configured"
+        case defaultSignalDispositionsConfigured =
+            "default_signal_dispositions_configured"
+        case terminationSignalsTargetProcessGroup =
+            "termination_signals_target_process_group"
         case posixSpawnReturnCode =
             "posix_spawn_return_code"
         case procPIDRegionPathInfoFlavor =
@@ -4825,6 +6472,10 @@ public struct PrimeNativeNeuralGateExternalChildCaptureEvidence:
             "descriptor_opened_monotonic_nanoseconds"
         case spawnReturnedMonotonicNanoseconds =
             "spawn_returned_monotonic_nanoseconds"
+        case childSessionAndProcessGroupObservedMonotonicNanoseconds =
+            "child_session_and_process_group_observed_monotonic_nanoseconds"
+        case workingDirectoryCapturedMonotonicNanoseconds =
+            "working_directory_captured_monotonic_nanoseconds"
         case mappedRegionCapturedMonotonicNanoseconds =
             "mapped_region_captured_monotonic_nanoseconds"
         case descriptorRevalidatedBeforeResumeMonotonicNanoseconds =
@@ -4835,10 +6486,22 @@ public struct PrimeNativeNeuralGateExternalChildCaptureEvidence:
             "sigcont_return_code"
         case childTerminationObservedMonotonicNanoseconds =
             "child_termination_observed_monotonic_nanoseconds"
+        case preReapProcessGroupMemberIdentifiers =
+            "pre_reap_process_group_member_identifiers"
+        case preReapProcessGroupMembersObservedMonotonicNanoseconds =
+            "pre_reap_process_group_members_observed_monotonic_nanoseconds"
         case childReapedMonotonicNanoseconds =
             "child_reaped_monotonic_nanoseconds"
+        case processGroupEmptyObservedMonotonicNanoseconds =
+            "process_group_empty_observed_monotonic_nanoseconds"
         case descriptorRevalidatedAfterReapMonotonicNanoseconds =
             "descriptor_revalidated_after_reap_monotonic_nanoseconds"
+        case sourceClosureMutationGuard =
+            "source_closure_mutation_guard"
+        case scratchNamespace =
+            "scratch_namespace"
+        case workingDirectory =
+            "working_directory"
         case preSpawnDescriptor =
             "pre_spawn_descriptor"
         case preResumeDescriptor =
@@ -4862,6 +6525,8 @@ public struct PrimeNativeNeuralGateExternalChildCaptureEvidence:
         case deadlineExpired = "deadline_expired"
         case sigtermDelivered = "sigterm_delivered"
         case sigkillDelivered = "sigkill_delivered"
+        case processGroupEmptyAfterReap =
+            "process_group_empty_after_reap"
         case procPIDPathUsedOnlyAsTelemetry =
             "proc_pidpath_used_only_as_telemetry"
     }
@@ -4873,6 +6538,11 @@ struct PrimeNativeNeuralGateTrustedExternalChildLaunchObservation:
 {
     let role: PrimeNativeNeuralGateReleaseProcessRole
     let exactArguments: [String]
+    let exactEnvironmentKeys: [String]
+    let exactEnvironment: [String]
+    let environmentPolicy: String
+    let scratchNamespace:
+        PrimeNativeNeuralGateScratchNamespaceObservation
     let directProcessWithoutShell: Bool
     let workingDirectoryAbsolutePath: String
     let workingDirectoryIsValidatedPrimeRoot: Bool
@@ -4902,10 +6572,29 @@ public struct PrimeNativeNeuralGateTrustedExternalChildCapture:
         String
     private let mappedChildMainImageAbsolutePath:
         String
-    private let descriptorReadSnapshot:
+    private let preSpawnDescriptorReadSnapshot:
         PrimeNativeNeuralGateExecutableDescriptorSnapshot
-    private let descriptorReadSHA256: String
-    private let descriptorReadByteCount: UInt64
+    private let preSpawnDescriptorReadSHA256: String
+    private let preSpawnDescriptorReadByteCount: UInt64
+    private let preResumeDescriptorReadSnapshot:
+        PrimeNativeNeuralGateExecutableDescriptorSnapshot
+    private let preResumeDescriptorReadSHA256: String
+    private let preResumeDescriptorReadByteCount: UInt64
+    private let postReapDescriptorReadSnapshot:
+        PrimeNativeNeuralGateExecutableDescriptorSnapshot
+    private let postReapDescriptorReadSHA256: String
+    private let postReapDescriptorReadByteCount: UInt64
+    private let workingDirectoryObservation:
+        PrimeNativeNeuralGateWorkingDirectoryObservation
+    private let scratchNamespaceObservation:
+        PrimeNativeNeuralGateScratchNamespaceObservation
+    private let primeSourceSnapshotSHA256: String
+    private let primeSourceSnapshotByteCount: UInt64
+    private let primeSourceIdentitySHA256: String
+    private let primeSourceFileCount: Int
+    private let primeSourceDirectoryCount: Int
+    private let primeSourceAggregateByteCount:
+        UInt64
     private let standardOutputSHA256: String
     private let standardOutputByteCount: UInt64
     private let standardErrorSHA256: String
@@ -4922,9 +6611,17 @@ public struct PrimeNativeNeuralGateTrustedExternalChildCapture:
             String,
         mappedChildMainImageAbsolutePath:
             String,
-        descriptorReadSnapshot:
+        preSpawnDescriptorReadSnapshot:
             PrimeNativeNeuralGateExecutableDescriptorSnapshot,
-        descriptorReadData: Data,
+        preSpawnDescriptorReadData: Data,
+        preResumeDescriptorReadSnapshot:
+            PrimeNativeNeuralGateExecutableDescriptorSnapshot,
+        preResumeDescriptorReadData: Data,
+        postReapDescriptorReadSnapshot:
+            PrimeNativeNeuralGateExecutableDescriptorSnapshot,
+        postReapDescriptorReadData: Data,
+        validatedPrimeSourceSnapshot:
+            PrimeSwiftSourceSnapshot,
         standardOutputData: Data,
         standardErrorData: Data,
         launchObservation:
@@ -4940,14 +6637,93 @@ public struct PrimeNativeNeuralGateTrustedExternalChildCapture:
             swiftPackageExecutableAbsolutePath
         self.mappedChildMainImageAbsolutePath =
             mappedChildMainImageAbsolutePath
-        self.descriptorReadSnapshot =
-            descriptorReadSnapshot
-        descriptorReadSHA256 =
+        self.preSpawnDescriptorReadSnapshot =
+            preSpawnDescriptorReadSnapshot
+        preSpawnDescriptorReadSHA256 =
             PrimeSHA256.hexDigest(
-                of: descriptorReadData
+                of: preSpawnDescriptorReadData
             )
-        descriptorReadByteCount =
-            UInt64(descriptorReadData.count)
+        preSpawnDescriptorReadByteCount =
+            UInt64(preSpawnDescriptorReadData.count)
+        self.preResumeDescriptorReadSnapshot =
+            preResumeDescriptorReadSnapshot
+        preResumeDescriptorReadSHA256 =
+            PrimeSHA256.hexDigest(
+                of: preResumeDescriptorReadData
+            )
+        preResumeDescriptorReadByteCount =
+            UInt64(preResumeDescriptorReadData.count)
+        self.postReapDescriptorReadSnapshot =
+            postReapDescriptorReadSnapshot
+        postReapDescriptorReadSHA256 =
+            PrimeSHA256.hexDigest(
+                of: postReapDescriptorReadData
+            )
+        postReapDescriptorReadByteCount =
+            UInt64(postReapDescriptorReadData.count)
+        workingDirectoryObservation =
+            evidence.workingDirectory
+        scratchNamespaceObservation =
+            evidence.scratchNamespace
+        let sourceSnapshotData =
+            try PrimeCanonicalJSON.encode(
+                validatedPrimeSourceSnapshot
+            )
+        primeSourceSnapshotSHA256 =
+            PrimeSHA256.hexDigest(
+                of: sourceSnapshotData
+            )
+        primeSourceSnapshotByteCount =
+            UInt64(sourceSnapshotData.count)
+        primeSourceIdentitySHA256 =
+            validatedPrimeSourceSnapshot
+            .sourceIdentitySHA256
+        primeSourceFileCount =
+            validatedPrimeSourceSnapshot
+            .files.count
+        var sourceDirectories:
+            Set<String> = [""]
+        var sourceAggregate: UInt64 = 0
+        for file in
+            validatedPrimeSourceSnapshot.files
+        {
+            let next =
+                sourceAggregate
+                .addingReportingOverflow(
+                    file.byteCount
+                )
+            guard !next.overflow else {
+                throw PrimeNativeNeuralGateFixtureReplayPlanError
+                    .invalidPlan(
+                        "trusted_source_snapshot_aggregate"
+                    )
+            }
+            sourceAggregate =
+                next.partialValue
+            let components =
+                file.relativePath.split(
+                    separator: "/"
+                )
+            if components.count > 1 {
+                for count in
+                    1 ..< components.count
+                {
+                    sourceDirectories
+                        .insert(
+                            components
+                            .prefix(count)
+                            .joined(
+                                separator:
+                                    "/"
+                            )
+                        )
+                }
+            }
+        }
+        primeSourceDirectoryCount =
+            sourceDirectories.count
+        primeSourceAggregateByteCount =
+            sourceAggregate
         standardOutputSHA256 =
             PrimeSHA256.hexDigest(
                 of: standardOutputData
@@ -4975,6 +6751,8 @@ public struct PrimeNativeNeuralGateTrustedExternalChildCapture:
             String,
         expectedMappedChildMainImageAbsolutePath:
             String,
+        expectedPrimeSourceSnapshot:
+            PrimeArtifactBinding,
         standardOutputData: Data,
         captureLaunchObservation:
             PrimeNativeNeuralGateTrustedExternalChildLaunchObservation,
@@ -4991,25 +6769,77 @@ public struct PrimeNativeNeuralGateTrustedExternalChildCapture:
                 .swiftPackageDescribeTrustedCaptureCapabilityRequired,
               contract
                 .swiftPackageDescribeTrustedCaptureCapabilityAuthority
-                == "primecore_non_codable_factory_result_binding_role_launch_descriptor_read_bytes_fstat_region_transcript_waitpid_and_stream_lifecycle_v2",
-              descriptorReadSnapshot
+                == "primecore_non_codable_factory_result_binding_role_exact_launch_arguments_and_environment_fresh_scratch_namespace_exact_optional_text_encoding_work_lock_bounded_opaque_provenance_bounded_post_audit_three_descriptor_read_checkpoints_fstat_source_snapshot_held_source_closure_mutation_guard_direct_pid_to_isolated_session_process_group_authority_working_root_region_transcript_pre_reap_group_members_exact_once_waitpid_and_eof_stream_lifecycle_v8",
+              preSpawnDescriptorReadSnapshot
                 == evidence.preSpawnDescriptor,
+              preResumeDescriptorReadSnapshot
+                == evidence.preResumeDescriptor,
+              postReapDescriptorReadSnapshot
+                == evidence.postReapDescriptor,
+              workingDirectoryObservation
+                == evidence.workingDirectory,
+              scratchNamespaceObservation
+                == evidence.scratchNamespace,
+              launchObservation
+                .scratchNamespace
+                == evidence.scratchNamespace,
               swiftPackageExecutableAbsolutePath
                 == expectedSwiftPackageExecutableAbsolutePath,
               mappedChildMainImageAbsolutePath
                 == expectedMappedChildMainImageAbsolutePath,
-              descriptorReadSHA256
+              preSpawnDescriptorReadSHA256
                 == evidence
                 .preSpawnDescriptor.sha256,
-              descriptorReadSHA256
+              preResumeDescriptorReadSHA256
+                == evidence
+                .preResumeDescriptor.sha256,
+              postReapDescriptorReadSHA256
+                == evidence
+                .postReapDescriptor.sha256,
+              preSpawnDescriptorReadSHA256
                 == contract
                 .swiftPackageDescribeExpectedExecutableSHA256,
-              descriptorReadByteCount
+              preResumeDescriptorReadSHA256
+                == preSpawnDescriptorReadSHA256,
+              postReapDescriptorReadSHA256
+                == preSpawnDescriptorReadSHA256,
+              preSpawnDescriptorReadByteCount
                 == evidence
                 .preSpawnDescriptor.byteCount,
-              descriptorReadByteCount
+              preResumeDescriptorReadByteCount
+                == evidence
+                .preResumeDescriptor.byteCount,
+              postReapDescriptorReadByteCount
+                == evidence
+                .postReapDescriptor.byteCount,
+              preSpawnDescriptorReadByteCount
                 == contract
                 .swiftPackageDescribeExpectedExecutableByteCount,
+              preResumeDescriptorReadByteCount
+                == preSpawnDescriptorReadByteCount,
+              postReapDescriptorReadByteCount
+                == preSpawnDescriptorReadByteCount,
+              primeSourceSnapshotSHA256
+                == expectedPrimeSourceSnapshot.sha256,
+              evidence
+                .sourceClosureMutationGuard
+                .sourceSnapshotSHA256
+                == primeSourceSnapshotSHA256,
+              primeSourceSnapshotByteCount
+                == expectedPrimeSourceSnapshot.byteCount,
+              evidence
+                .sourceClosureMutationGuard
+                .heldFileDescriptorCount
+                == primeSourceFileCount,
+              evidence
+                .sourceClosureMutationGuard
+                .heldDirectoryDescriptorCount
+                == primeSourceDirectoryCount,
+              evidence
+                .sourceClosureMutationGuard
+                .aggregateFileByteCount
+                == primeSourceAggregateByteCount,
+              primeSourceIdentitySHA256.count == 64,
               standardOutputSHA256
                 == PrimeSHA256.hexDigest(
                     of: standardOutputData
@@ -5093,7 +6923,12 @@ public struct PrimeNativeNeuralGateSwiftPackageDescribeCaptureRecord:
         Bool
     public let externalChildCaptureEvidence:
         PrimeNativeNeuralGateExternalChildCaptureEvidence
+    public let scratchNamespace:
+        PrimeNativeNeuralGateScratchNamespaceObservation
     public let exactArguments: [String]
+    public let exactEnvironmentKeys: [String]
+    public let exactEnvironment: [String]
+    public let environmentPolicy: String
     public let directProcessWithoutShell: Bool
     public let workingDirectoryAbsolutePath:
         String
@@ -5166,8 +7001,8 @@ public struct PrimeNativeNeuralGateSwiftPackageDescribeCaptureRecord:
             PrimeNativeNeuralGateSourceFileIdentity,
         contract:
             PrimeNativeNeuralGateSourceExecutionBindingContract
-    ) {
-        schemaVersion = 1
+    ) throws {
+        schemaVersion = 4
         artifactKind =
             "ergentics_prime_native_neural_gate_swift_package_describe_capture"
         self.role = role
@@ -5199,6 +7034,9 @@ public struct PrimeNativeNeuralGateSwiftPackageDescribeCaptureRecord:
             .preSpawnDescriptor.byteCount
         self.externalChildCaptureEvidence =
             externalChildCaptureEvidence
+        scratchNamespace =
+            externalChildCaptureEvidence
+            .scratchNamespace
         self.mappedChildMainImageObservedDeviceID =
             externalChildCaptureEvidence
             .matchingMappedRegions.first?
@@ -5242,20 +7080,44 @@ public struct PrimeNativeNeuralGateSwiftPackageDescribeCaptureRecord:
             < externalChildCaptureEvidence
             .sigcontDeliveredMonotonicNanoseconds
         exactArguments =
-            contract.swiftPackageDescribeExactArguments
+            try contract
+            .expandedSwiftPackageDescribeArguments(
+                scratchRootAbsolutePath:
+                    scratchNamespace
+                    .runRootAbsolutePath
+            )
+        exactEnvironmentKeys =
+            contract
+            .swiftPackageDescribeExactEnvironmentKeys
+        let expandedEnvironment =
+            try contract
+            .expandedSwiftPackageDescribeEnvironment(
+                scratchRootAbsolutePath:
+                    scratchNamespace
+                    .runRootAbsolutePath
+            )
+        exactEnvironment =
+            exactEnvironmentKeys.map {
+                "\($0)=\(expandedEnvironment[$0]!)"
+            }
+        environmentPolicy =
+            contract
+            .swiftPackageDescribeEnvironmentPolicy
         directProcessWithoutShell = true
         self.workingDirectoryAbsolutePath =
             workingDirectoryAbsolutePath
         workingDirectoryIsValidatedPrimeRoot =
             true
-        environmentKeyCount = 0
+        environmentKeyCount =
+            exactEnvironmentKeys.count
         standardInputPolicy = "eof_v1"
         maximumWallSeconds =
             contract
             .swiftPackageDescribeMaximumWallSeconds
         let observedWall =
             externalChildCaptureEvidence
-            .descriptorRevalidatedAfterReapMonotonicNanoseconds
+            .scratchNamespace
+            .postReapValidationMonotonicNanoseconds
             .subtractingReportingOverflow(
                 externalChildCaptureEvidence
                     .descriptorOpenedMonotonicNanoseconds
@@ -5377,6 +7239,29 @@ public struct PrimeNativeNeuralGateSwiftPackageDescribeCaptureRecord:
             .validateDeclaration()
         try packageManifest.validate()
         try standardOutput.validateDeclaration()
+        try scratchNamespace.validate(
+            role: role
+        )
+        let expectedArguments =
+            try contract
+            .expandedSwiftPackageDescribeArguments(
+                scratchRootAbsolutePath:
+                    scratchNamespace
+                    .runRootAbsolutePath
+            )
+        let expectedEnvironment =
+            try contract
+            .expandedSwiftPackageDescribeEnvironment(
+                scratchRootAbsolutePath:
+                    scratchNamespace
+                    .runRootAbsolutePath
+            )
+        let expectedEnvironmentEntries =
+            contract
+            .swiftPackageDescribeExactEnvironmentKeys
+            .map {
+                "\($0)=\(expectedEnvironment[$0]!)"
+            }
         try trustedExternalChildCapture.validate(
             evidence:
                 externalChildCaptureEvidence,
@@ -5385,6 +7270,8 @@ public struct PrimeNativeNeuralGateSwiftPackageDescribeCaptureRecord:
                 swiftPackageExecutableAbsolutePath,
             expectedMappedChildMainImageAbsolutePath:
                 mappedChildMainImageAbsolutePath,
+            expectedPrimeSourceSnapshot:
+                expectedPrimeSourceSnapshot,
             standardOutputData:
                 standardOutputData,
             captureLaunchObservation:
@@ -5392,6 +7279,14 @@ public struct PrimeNativeNeuralGateSwiftPackageDescribeCaptureRecord:
                     role: role,
                     exactArguments:
                         exactArguments,
+                    exactEnvironmentKeys:
+                        exactEnvironmentKeys,
+                    exactEnvironment:
+                        exactEnvironment,
+                    environmentPolicy:
+                        environmentPolicy,
+                    scratchNamespace:
+                        scratchNamespace,
                     directProcessWithoutShell:
                         directProcessWithoutShell,
                     workingDirectoryAbsolutePath:
@@ -5430,7 +7325,20 @@ public struct PrimeNativeNeuralGateSwiftPackageDescribeCaptureRecord:
             expectedChildProcessIdentifier:
                 childProcessIdentifier
         )
-        guard schemaVersion == 1,
+        let recomputedObservedWall =
+            externalChildCaptureEvidence
+            .scratchNamespace
+            .postReapValidationMonotonicNanoseconds
+            .subtractingReportingOverflow(
+                externalChildCaptureEvidence
+                .descriptorOpenedMonotonicNanoseconds
+            )
+        let maximumWallNanoseconds =
+            maximumWallSeconds
+            .multipliedReportingOverflow(
+                by: 1_000_000_000
+            )
+        guard schemaVersion == 4,
               artifactKind
                 == "ergentics_prime_native_neural_gate_swift_package_describe_capture",
               recordRelativePath
@@ -5529,9 +7437,19 @@ public struct PrimeNativeNeuralGateSwiftPackageDescribeCaptureRecord:
                 .swiftPackageDescribeMappedChildImageCaptureRequired,
               !contract
                 .swiftPackageDescribeLaunchPathAloneAuthoritative,
+              scratchNamespace
+                == externalChildCaptureEvidence
+                .scratchNamespace,
               exactArguments
+                == expectedArguments,
+              exactEnvironmentKeys
                 == contract
-                .swiftPackageDescribeExactArguments,
+                .swiftPackageDescribeExactEnvironmentKeys,
+              exactEnvironment
+                == expectedEnvironmentEntries,
+              environmentPolicy
+                == contract
+                .swiftPackageDescribeEnvironmentPolicy,
               directProcessWithoutShell,
               workingDirectoryAbsolutePath
                 .hasPrefix("/"),
@@ -5545,21 +7463,23 @@ public struct PrimeNativeNeuralGateSwiftPackageDescribeCaptureRecord:
               ).standardizedFileURL.path
                 == workingDirectoryAbsolutePath,
               workingDirectoryIsValidatedPrimeRoot,
-              environmentKeyCount == 0,
+              environmentKeyCount
+                == exactEnvironmentKeys.count,
+              environmentKeyCount == 4,
               standardInputPolicy == "eof_v1",
               maximumWallSeconds
                 == contract
                 .swiftPackageDescribeMaximumWallSeconds,
               observedMonotonicWallNanoseconds
                 > 0,
+              !recomputedObservedWall.overflow,
               observedMonotonicWallNanoseconds
-                == externalChildCaptureEvidence
-                .descriptorRevalidatedAfterReapMonotonicNanoseconds
-                - externalChildCaptureEvidence
-                .descriptorOpenedMonotonicNanoseconds,
+                == recomputedObservedWall
+                .partialValue,
+              !maximumWallNanoseconds.overflow,
               observedMonotonicWallNanoseconds
-                <= maximumWallSeconds
-                    * 1_000_000_000,
+                <= maximumWallNanoseconds
+                    .partialValue,
               maximumStandardOutputBytes
                 == contract
                 .swiftPackageDescribeMaximumStandardOutputBytes,
@@ -5652,6 +7572,44 @@ public struct PrimeNativeNeuralGateSwiftPackageDescribeCaptureRecord:
             verifier.supervisorProcessIdentifier,
             verifier.childProcessIdentifier,
         ]
+        let probeArgumentTemplate =
+            probe.exactArguments.map {
+                $0.replacingOccurrences(
+                    of:
+                        probe.scratchNamespace
+                        .runRootAbsolutePath,
+                    with: "{scratch_root}"
+                )
+            }
+        let verifierArgumentTemplate =
+            verifier.exactArguments.map {
+                $0.replacingOccurrences(
+                    of:
+                        verifier
+                        .scratchNamespace
+                        .runRootAbsolutePath,
+                    with: "{scratch_root}"
+                )
+            }
+        let probeEnvironmentTemplate =
+            probe.exactEnvironment.map {
+                $0.replacingOccurrences(
+                    of:
+                        probe.scratchNamespace
+                        .runRootAbsolutePath,
+                    with: "{scratch_root}"
+                )
+            }
+        let verifierEnvironmentTemplate =
+            verifier.exactEnvironment.map {
+                $0.replacingOccurrences(
+                    of:
+                        verifier
+                        .scratchNamespace
+                        .runRootAbsolutePath,
+                    with: "{scratch_root}"
+                )
+            }
         guard probe.role == .probe,
               verifier.role == .verifier,
               processIdentifiers.count == 4,
@@ -5713,8 +7671,24 @@ public struct PrimeNativeNeuralGateSwiftPackageDescribeCaptureRecord:
                 .mappedChildMainImageCapturedWhileSuspendedBeforeResume,
               verifier
                 .mappedChildMainImageCapturedWhileSuspendedBeforeResume,
-              probe.exactArguments
-                == verifier.exactArguments,
+              probe.scratchNamespace.role
+                == .probe,
+              verifier.scratchNamespace.role
+                == .verifier,
+              probe.scratchNamespace
+                .runRootAbsolutePath
+                != verifier.scratchNamespace
+                .runRootAbsolutePath,
+              probeArgumentTemplate
+                == verifierArgumentTemplate,
+              probe.exactEnvironmentKeys
+                == verifier
+                .exactEnvironmentKeys,
+              probeEnvironmentTemplate
+                == verifierEnvironmentTemplate,
+              probe.environmentPolicy
+                == verifier
+                .environmentPolicy,
               probe.directProcessWithoutShell,
               verifier.directProcessWithoutShell,
               probe.workingDirectoryAbsolutePath
@@ -5722,8 +7696,8 @@ public struct PrimeNativeNeuralGateSwiftPackageDescribeCaptureRecord:
                 .workingDirectoryAbsolutePath,
               probe.workingDirectoryIsValidatedPrimeRoot,
               verifier.workingDirectoryIsValidatedPrimeRoot,
-              probe.environmentKeyCount == 0,
-              verifier.environmentKeyCount == 0,
+              probe.environmentKeyCount == 4,
+              verifier.environmentKeyCount == 4,
               probe.standardInputPolicy
                 == verifier.standardInputPolicy,
               probe.standardInputPolicy == "eof_v1",
@@ -5819,7 +7793,15 @@ public struct PrimeNativeNeuralGateSwiftPackageDescribeCaptureRecord:
             "mapped_child_main_image_captured_while_suspended_before_resume"
         case externalChildCaptureEvidence =
             "external_child_capture_evidence"
+        case scratchNamespace =
+            "scratch_namespace"
         case exactArguments = "exact_arguments"
+        case exactEnvironmentKeys =
+            "exact_environment_keys"
+        case exactEnvironment =
+            "exact_environment"
+        case environmentPolicy =
+            "environment_policy"
         case directProcessWithoutShell =
             "direct_process_without_shell"
         case workingDirectoryAbsolutePath =
@@ -6488,6 +8470,16 @@ public struct PrimeNativeNeuralGateHistoricalWorkerContract:
         Bool
     public let terminationEscalationPolicy:
         String
+    public let directPIDAuthorityBeforeSessionJoinRequired:
+        Bool
+    public let processGroupAuthorityRequiresExactSessionJoin:
+        Bool
+    public let boundedNonblockingExactPIDWaitFallbackRequired:
+        Bool
+    public let exactOnceReapAndNoPostReapSignalRequired:
+        Bool
+    public let uncontainedChildOrDrainFailStopPolicy:
+        String
     public let workerDeathObservedBeforeContinuationRequired:
         Bool
     public let workerReapBeforeContinuationRequired:
@@ -6498,12 +8490,14 @@ public struct PrimeNativeNeuralGateHistoricalWorkerContract:
         Bool
     public let abnormalTerminationInternalDisposition:
         PrimeNativeNeuralGateScopedOutcome
+    public let abnormalTerminationAbstainRequiresProvenContainmentAndReap:
+        Bool
     public let abnormalTerminationPublicationPolicy:
         String
 
-    public static let frozenV1 = Self(
+    public static let frozenV2 = Self(
         contractID:
-            "prime_stage_b_historical_fixture_worker_v1",
+            "prime_stage_b_historical_fixture_worker_v2",
         executableTargetName:
             "PrimeNativeNeuralGateHistoricalFixtureWorker",
         executableRelativePath:
@@ -6573,7 +8567,17 @@ public struct PrimeNativeNeuralGateHistoricalWorkerContract:
             true,
         poisonedRootRetryPermitted: false,
         terminationEscalationPolicy:
-            "deadline_then_sigterm_wait_2s_then_sigkill_then_waitpid_observe_death_and_reap_v1",
+            "direct_pid_before_sid_pgid_join_then_dedicated_group_deadline_sigterm_wait_2s_sigkill_once_observed_death_or_bounded_exact_pid_wnohang_exact_once_reap_no_post_reap_signal_v2",
+        directPIDAuthorityBeforeSessionJoinRequired:
+            true,
+        processGroupAuthorityRequiresExactSessionJoin:
+            true,
+        boundedNonblockingExactPIDWaitFallbackRequired:
+            true,
+        exactOnceReapAndNoPostReapSignalRequired:
+            true,
+        uncontainedChildOrDrainFailStopPolicy:
+            "uncontained_child_or_drain_is_supervisor_fail_stop_and_cannot_return_as_abstain_v1",
         workerDeathObservedBeforeContinuationRequired:
             true,
         workerReapBeforeContinuationRequired:
@@ -6584,6 +8588,8 @@ public struct PrimeNativeNeuralGateHistoricalWorkerContract:
             true,
         abnormalTerminationInternalDisposition:
             .abstain,
+        abnormalTerminationAbstainRequiresProvenContainmentAndReap:
+            true,
         abnormalTerminationPublicationPolicy:
             "poison_root_accept_no_worker_result_as_evidence_publish_no_successful_execution_record_publish_no_terminal_receipt_no_retry_v1"
     )
@@ -6591,7 +8597,7 @@ public struct PrimeNativeNeuralGateHistoricalWorkerContract:
     fileprivate func validateFrozenIdentity()
         throws
     {
-        guard self == .frozenV1 else {
+        guard self == .frozenV2 else {
             throw PrimeNativeNeuralGateFixtureReplayPlanError
                 .invalidPlan(
                     "historical_worker_contract_identity"
@@ -6757,13 +8763,20 @@ public struct PrimeNativeNeuralGateHistoricalWorkerContract:
               terminalVerifierMustDecodeAndRecomputeEveryWorkerArtifact,
               !poisonedRootRetryPermitted,
               terminationEscalationPolicy
-                == "deadline_then_sigterm_wait_2s_then_sigkill_then_waitpid_observe_death_and_reap_v1",
+                == "direct_pid_before_sid_pgid_join_then_dedicated_group_deadline_sigterm_wait_2s_sigkill_once_observed_death_or_bounded_exact_pid_wnohang_exact_once_reap_no_post_reap_signal_v2",
+              directPIDAuthorityBeforeSessionJoinRequired,
+              processGroupAuthorityRequiresExactSessionJoin,
+              boundedNonblockingExactPIDWaitFallbackRequired,
+              exactOnceReapAndNoPostReapSignalRequired,
+              uncontainedChildOrDrainFailStopPolicy
+                == "uncontained_child_or_drain_is_supervisor_fail_stop_and_cannot_return_as_abstain_v1",
               workerDeathObservedBeforeContinuationRequired,
               workerReapBeforeContinuationRequired,
               preLaunchAndPostExitDescriptorEnumerationRequired,
               exactRolePrefixInventoryDifferenceRequired,
               abnormalTerminationInternalDisposition
                 == .abstain,
+              abnormalTerminationAbstainRequiresProvenContainmentAndReap,
               abnormalTerminationPublicationPolicy
                 == "poison_root_accept_no_worker_result_as_evidence_publish_no_successful_execution_record_publish_no_terminal_receipt_no_retry_v1"
         else {
@@ -6836,6 +8849,16 @@ public struct PrimeNativeNeuralGateHistoricalWorkerContract:
             "poisoned_root_retry_permitted"
         case terminationEscalationPolicy =
             "termination_escalation_policy"
+        case directPIDAuthorityBeforeSessionJoinRequired =
+            "direct_pid_authority_before_session_join_required"
+        case processGroupAuthorityRequiresExactSessionJoin =
+            "process_group_authority_requires_exact_session_join"
+        case boundedNonblockingExactPIDWaitFallbackRequired =
+            "bounded_nonblocking_exact_pid_wait_fallback_required"
+        case exactOnceReapAndNoPostReapSignalRequired =
+            "exact_once_reap_and_no_post_reap_signal_required"
+        case uncontainedChildOrDrainFailStopPolicy =
+            "uncontained_child_or_drain_fail_stop_policy"
         case workerDeathObservedBeforeContinuationRequired =
             "worker_death_observed_before_continuation_required"
         case workerReapBeforeContinuationRequired =
@@ -6846,6 +8869,8 @@ public struct PrimeNativeNeuralGateHistoricalWorkerContract:
             "exact_role_prefix_inventory_difference_required"
         case abnormalTerminationInternalDisposition =
             "abnormal_termination_internal_disposition"
+        case abnormalTerminationAbstainRequiresProvenContainmentAndReap =
+            "abnormal_termination_abstain_requires_proven_containment_and_reap"
         case abnormalTerminationPublicationPolicy =
             "abnormal_termination_publication_policy"
     }
@@ -7332,7 +9357,7 @@ public struct PrimeNativeNeuralGateHistoricalWorkerProcessBindingRecord:
         }
         try workerContract.validate(
             adaptationProof:
-                .frozenV1,
+                .frozenV2,
             sourceExecutionBinding:
                 sourceExecutionBinding
         )
@@ -8748,7 +10773,7 @@ public struct PrimeNativeNeuralGateOutputPathClassificationContract:
             String
     ) {
         contractID =
-            "prime_stage_b_output_path_namespace_classification_v1"
+            "prime_stage_b_output_path_namespace_classification_v3"
         self.ordinaryFixedRelativePaths =
             ordinaryFixedRelativePaths
         self.ordinaryDynamicRelativePathPatterns =
@@ -8850,7 +10875,7 @@ public struct PrimeNativeNeuralGateOutputPathClassificationContract:
                 terminalReceiptRelativePath,
             ]
         guard contractID
-                == "prime_stage_b_output_path_namespace_classification_v1",
+                == "prime_stage_b_output_path_namespace_classification_v3",
               !ordinaryFixedRelativePaths.isEmpty,
               Set(ordinaryFixedRelativePaths)
                 .count
@@ -9216,10 +11241,10 @@ public struct PrimeNativeNeuralGateReplayOutputContract:
     public let terminalReceiptMode: String
     public let receiptRelativePath: String
 
-    public static let frozenV1: Self = {
+    public static let frozenV3: Self = {
         let historicalWorker =
             PrimeNativeNeuralGateHistoricalWorkerContract
-            .frozenV1
+            .frozenV2
         let copiedSourceBlobRelativePaths =
             (1 ... 11).map {
                 String(
@@ -9243,13 +11268,13 @@ public struct PrimeNativeNeuralGateReplayOutputContract:
         let ordinaryFixedRelativePaths =
             copiedSourceBlobRelativePaths
             + [
-                "neural-gate-replay/plan.v1.json",
+                "neural-gate-replay/plan.v3.json",
                 "neural-gate-replay/source/companion-source-inventory.v1.json",
-                "neural-gate-replay/source/adaptation-proof.v1.json",
+                "neural-gate-replay/source/adaptation-proof.v2.json",
                 "neural-gate-replay/source/prime-swift-source-snapshot.v1.json",
                 "neural-gate-replay/source/swift-package-describe.v1.json",
-                "neural-gate-replay/source/probe-swift-package-describe-capture.v1.json",
-                "neural-gate-replay/source/verifier-swift-package-describe-capture.v1.json",
+                "neural-gate-replay/source/probe-swift-package-describe-capture.v4.json",
+                "neural-gate-replay/source/verifier-swift-package-describe-capture.v4.json",
                 "neural-gate-replay/source/compiled-target-source-closure.v1.json",
                 "neural-gate-replay/parent/stage-a-copy-manifest.v1.json",
                 "neural-gate-replay/bin/probe-binding.v1.json",
@@ -9328,7 +11353,7 @@ public struct PrimeNativeNeuralGateReplayOutputContract:
             .executable,
         ],
         adaptationProofManifestRelativePath:
-            "neural-gate-replay/source/adaptation-proof.v1.json",
+            "neural-gate-replay/source/adaptation-proof.v2.json",
         primeSourceSnapshotRelativePath:
             "neural-gate-replay/source/prime-swift-source-snapshot.v1.json",
         primeSourceClosurePolicy:
@@ -9411,7 +11436,7 @@ public struct PrimeNativeNeuralGateReplayOutputContract:
 
     public func validate() throws {
         try pathClassification.validate()
-        guard self == .frozenV1,
+        guard self == .frozenV3,
               copiedSourceBlobRelativePaths.count
                 == 11,
               Set(copiedSourceBlobRelativePaths)
@@ -10409,7 +12434,7 @@ public struct PrimeNativeNeuralGateFixtureReplayPlan:
     public let postPassNextPrerequisite: String
     public let authorityStatement: String
 
-    public static let frozenV1: Self = {
+    public static let frozenV3: Self = {
         let projection =
             PrimeNativeNeuralGateContractProjection
             .frozenV1
@@ -10443,15 +12468,15 @@ public struct PrimeNativeNeuralGateFixtureReplayPlan:
             "EngineProposesNativeLanguageVerifyAbstainTests.swift"
         let historicalWorker =
             PrimeNativeNeuralGateHistoricalWorkerContract
-            .frozenV1
+            .frozenV2
         return Self(
-            schemaVersion: 1,
+            schemaVersion: 3,
             planID:
-                "ergentics_prime_native_neural_gate_dual_fixture_replay_v1",
+                "ergentics_prime_native_neural_gate_dual_fixture_replay_v3",
             claimScope:
-                "source_pinned_synthetic_fixture_materialization_and_gate_replay_contract_only",
+                "source_pinned_synthetic_fixture_materialization_and_gate_replay_contract_with_implemented_secure_capture_substrate",
             status:
-                "contract_frozen_execution_not_implemented",
+                "secure_capture_substrate_implemented_stage_b_replay_not_implemented",
             executionImplemented: false,
             projectionReceiptAuthorized: false,
             stageAParent: .frozenV1,
@@ -10572,7 +12597,7 @@ public struct PrimeNativeNeuralGateFixtureReplayPlan:
             totalPinnedInputByteCount: 1_232_537,
             inputCatalogSHA256:
                 "e9ac9a697dd24cbe6583c713e96840c810cda1771497a6a69ace1e190963bca4",
-            adaptationProof: .frozenV1,
+            adaptationProof: .frozenV2,
             historicalLeakFindings: [
                 PrimeNativeNeuralGateHistoricalLeakFinding(
                     findingID:
@@ -10760,8 +12785,8 @@ public struct PrimeNativeNeuralGateFixtureReplayPlan:
                         "distinct Release reconstruction and exclusive terminal receipt publisher"
                 ),
             ],
-            sourceExecutionBinding: .frozenV1,
-            historicalWorker: .frozenV1,
+            sourceExecutionBinding: .frozenV3,
+            historicalWorker: .frozenV2,
             probeArguments: [
                 "--stage-a-root",
                 "--companion-root",
@@ -10773,19 +12798,19 @@ public struct PrimeNativeNeuralGateFixtureReplayPlan:
                 "--artifact-root",
             ],
             rootPolicy: .frozenV1,
-            outputContract: .frozenV1,
+            outputContract: .frozenV3,
             fixedOutputRelativePaths:
                 PrimeNativeNeuralGateReplayOutputContract
-                .frozenV1
+                .frozenV3
                 .copiedSourceBlobRelativePaths
                 + [
-                    "neural-gate-replay/plan.v1.json",
+                    "neural-gate-replay/plan.v3.json",
                     "neural-gate-replay/source/companion-source-inventory.v1.json",
-                    "neural-gate-replay/source/adaptation-proof.v1.json",
+                    "neural-gate-replay/source/adaptation-proof.v2.json",
                     "neural-gate-replay/source/prime-swift-source-snapshot.v1.json",
                     "neural-gate-replay/source/swift-package-describe.v1.json",
-                    "neural-gate-replay/source/probe-swift-package-describe-capture.v1.json",
-                    "neural-gate-replay/source/verifier-swift-package-describe-capture.v1.json",
+                    "neural-gate-replay/source/probe-swift-package-describe-capture.v4.json",
+                    "neural-gate-replay/source/verifier-swift-package-describe-capture.v4.json",
                     "neural-gate-replay/source/compiled-target-source-closure.v1.json",
                     "neural-gate-replay/parent/stage-a-copy-manifest.v1.json",
                     "neural-gate-replay/bin/probe",
@@ -10889,7 +12914,7 @@ public struct PrimeNativeNeuralGateFixtureReplayPlan:
             failurePrecedence: [
                 "output_root_path_type_owner_link_mode_and_relationship_safety",
                 "current_clean_prime_release_source_snapshot_and_probe_executable_binding",
-                "independent_direct_swift_package_executable_describe_trusted_capture_capability_initial_suspended_full_region_query_transcript_mapped_vnode_preopened_descriptor_stable_bytes_capability_calibration_no_overflow_raw_exact_pid_wait_reap_and_authority_subgraph_reconciliation",
+                "independent_direct_swift_package_executable_describe_trusted_capture_local_apfs_bounded_admission_held_source_descriptors_kqueue_receipts_zero_event_checkpoints_initial_suspended_full_region_query_transcript_mapped_vnode_preopened_descriptor_stable_bytes_capability_calibration_direct_pid_to_session_group_authority_no_overflow_contained_exact_once_reap_or_fail_stop_and_authority_subgraph_reconciliation",
                 "six_process_topology_worker_death_reap_and_exact_role_prefix_inventory",
                 "closed_stage_a_parent_and_source_identity",
                 "lossless_stage_a_parent_evidence_copy_and_revalidation",
@@ -10944,11 +12969,11 @@ public struct PrimeNativeNeuralGateFixtureReplayPlan:
             modeNormalizationPolicy:
                 "verify_current_user_single_link_regular_file_exact_bytes_and_sha256_then_chmod_only_listed_files_to_0444_never_recursive",
             immediateImplementationPrerequisite:
-                "implement_stage_b_primecore_trusted_external_child_factory_direct_swift_package_executable_suspended_full_region_query_transcript_mapped_vnode_descriptor_read_fstat_hash_capability_calibration_raw_exact_pid_wait_fail_closed_stream_lifecycle_historical_worker_typed_artifact_recomputation_corrected_fixed_cap_eos_probe_verifier_and_exact_path_metadata_inventory",
+                "implement_role_scoped_stage_b_historical_worker_probe_verifier_with_typed_artifact_recomputation_corrected_fixed_cap_eos_arm_and_exact_path_metadata_content_inventory_using_completed_secure_capture_factory",
             postPassNextPrerequisite:
                 "physical_native_checkpoint_and_evaluation_shard_binding",
             authorityStatement:
-                "This contract freezes required schemas for a Swift-first Stage-B dual replay; execution is not implemented and no Stage-B process or receipt is observed. The historical arm reconstructs the exact source-pinned synthetic fixture only as forensic mechanics because its output construction consumes target length and expected completion while declaring target independence. Its source-faithful materializer retains donor trap sites, is not claimed wholly fail-closed, and must run in two role-scoped bounded workers. Abnormal termination is internally ABSTAIN, poisons the root, accepts no worker result as evidence, publishes no successful-execution record or terminal receipt, and permits no retry; partial artifacts may remain but are non-authoritative. Worker death and reap must be observed before continuation, and exact descriptor-rooted role-prefix inventories must be reconciled. A successful worker result is transport evidence and cannot establish mechanics PASS; the terminal verifier must decode and recompute every semantic artifact. The corrected arm must independently construct prompt-only fixed-cap-64 generation with EOS available at every decision and may establish only corrected synthetic gate mechanics. A terminal Stage-B mechanics PASS requires both arms, complete raw-UTF8 invariant multiset publication, exact direct/accelerated fingerprints, all ten Verify/Abstain legs, projected statistics and fixed-prompt margin, count-derived verdict, every ordered mutation with exact restoration, independent direct SwiftPM authority-subgraph captures made by the frozen Xcode 26.6 build 17F113 swift-package byte image, whose exact full-file SHA-256, byte count, root ownership, mode, and link count are contract-pinned. Each capture must prove the typed pre-spawn descriptor-open, suspended child, complete checked mapped-region query transcript with terminal zero/no-error result, mapped-vnode join, pre-resume descriptor revalidation, SIGCONT, raw exact-requested-and-returned-PID wait status, clean exit/reap, and post-reap descriptor-stability sequence after native capability calibration. A PrimeCore-produced non-Codable trusted-capture capability must bind role, exact launch and descriptor-validated working-root policy, identity derived from bytes read through the same held descriptor represented by its fstat snapshot, launch and mapped-image telemetry paths, complete region/wait evidence, stream limits/overflow/drain outcomes, and exact drained stream bytes to the decoded record; caller-decoded fields alone are never capture authority. Overflow-free stream drains, typed clean termination, a validated six-process topology, exact pre-receipt realized path-and-metadata inventory, and separate typed validation of every artifact's content are also required. Historical target independence and model capability remain ABSTAIN. Donor bytes are resolved, copied, and rebound as immutable evidence while the companion is unchanged before and after execution; donor blobs are never dynamically compiled or executed. Every donor-to-Prime adaptation has a plan-authoritative byte-exact or hash-bound executable derivation plus required lexical and compiled-source proof; successful behavior and caller-supplied manifests cannot supply expectations or substitute for source equivalence. The closed Stage-A terminal receipt and complete descriptor-bound parent closure must be copied losslessly and independently revalidated from the Stage-B artifact root. A complete clean Prime source snapshot must remain unchanged while distinct Release supervisor and worker images are descriptor-captured, SHA-256-bound, and tied to that source closure. The direct swift-package launch path, proc_pidpath pathname, and locally observed code-sign fields remain telemetry and are non-authoritative by themselves; no Apple trust claim is made. Execution remains blocked until the native trusted external-child factory can produce that capability from live observations, bind the initial suspended mapped vnode to the held descriptor identity, revalidate stable descriptor bytes, and enforce bounded overflow-free output plus observed termination/reap. Namespace classification never authorizes publication; every future publication must also pass exact path/node/type, owner, link, mode, purpose, digest, typed-content, and no-replace checks, with the receipt published exclusively last. No independently reproducible build, NeuralKit module, companion runtime dependency, model, Metal execution, physical checkpoint or generation shard, independent scientific oracle, four-tier AgentContractKit audit, guarded statistics, training, quantization, diagonal-Hessian evaluation, Phase-3 completion, product authority, Python authority, or shell authority is claimed."
+                "This contract freezes required schemas for a Swift-first Stage-B dual replay. PrimeCore now implements the closed secure capture substrate, but Stage-B replay execution, process records, workers, and terminal receipt are not implemented or observed and executionImplemented remains false. The factory admits a bounded current-owner local-APFS Prime source tree, holds authoritative root, directory, and file descriptors, arms receipt-checked EVFILT_VNODE guards, and requires exact inventories, bytes, metadata, path joins, and zero mutation events at initial, pre-resume, and post-reap checkpoints. It directly launches the frozen Xcode 26.6 build 17F113 swift-package image with an exact four-key non-inherited scratch environment, stdin at EOF, and normalized start-suspended 0x448c flags. Scratch ACLs and unknown extended attributes are rejected; com.apple.TextEncoding is optional only on the single-link regular work/.lock file with the exact 15-byte utf-8;134217984 value read through its descriptor, while com.apple.provenance is bounded to 4096 bytes and remains opaque non-authoritative metadata. Child authority is the positive PID until getsid(pid) and getpgid(pid) both equal pid; only then may the dedicated process group receive termination signals. Successful capture binds the suspended cwd and complete mapped-region vnode transcript to held descriptors, drains bounded streams through EOF, observes death, reaps the exact PID once, proves the group empty, and permits no post-reap signal. Ordinary rejection may return only after proven containment and exact reap; a child or drain that remains uncontained after bounded WNOHANG cleanup is supervisor fail-stop and cannot be encoded as ABSTAIN. The schema-4 external evidence and schema-4 describe-capture envelope are prerequisite and canary mechanics, not a Stage-B record or receipt. The historical arm reconstructs the exact source-pinned synthetic fixture only as forensic mechanics because its output construction consumes target length and expected completion while declaring target independence. Its source-faithful materializer retains donor trap sites, is not claimed wholly fail-closed, and must run in two role-scoped bounded workers. A contained abnormal termination is internally ABSTAIN, poisons the root, accepts no worker result as evidence, publishes no successful-execution record or terminal receipt, and permits no retry; partial artifacts may remain but are non-authoritative. A successful worker result is transport evidence and cannot establish mechanics PASS; the terminal verifier must decode and recompute every semantic artifact. The corrected arm must independently construct prompt-only fixed-cap-64 generation with EOS available at every decision and may establish only corrected synthetic gate mechanics. A terminal Stage-B mechanics PASS requires both arms, complete raw-UTF8 invariant multiset publication, exact direct/accelerated fingerprints, all ten Verify/Abstain legs, projected statistics and fixed-prompt margin, count-derived verdict, every ordered mutation with exact restoration, a validated six-process topology, exact pre-receipt realized path-and-metadata inventory, and typed validation of every artifact. Historical target independence and model capability remain ABSTAIN. Donor bytes are resolved, copied, and rebound as immutable evidence while the companion is unchanged; donor blobs are never dynamically compiled or executed. Every donor-to-Prime adaptation has a plan-authoritative byte-exact or hash-bound derivation plus lexical and compiled-source proof; successful behavior and caller-supplied manifests cannot supply expectations. The closed Stage-A receipt and complete descriptor-bound parent closure must be copied losslessly and revalidated from the Stage-B root. The direct swift-package launch path, proc_pidpath pathname, and code-sign fields remain non-authoritative telemetry; no Apple trust claim is made. Namespace classification never authorizes publication; publication must pass exact path, node, type, owner, link, mode, purpose, digest, typed-content, and no-replace checks with the receipt exclusively last. No independently reproducible build, NeuralKit module execution, companion runtime dependency, model or Metal execution, physical checkpoint or shard, independent scientific oracle, four-tier AgentContractKit audit, guarded statistics, training, quantization, diagonal-Hessian evaluation, Phase-3 completion, product authority, Python authority, or shell authority is claimed."
         )
     }()
 
@@ -11031,8 +13056,10 @@ public struct PrimeNativeNeuralGateFixtureReplayPlan:
                         .receiptRelativePath
             }
         )
-        guard self == .frozenV1,
-              schemaVersion == 1,
+        guard self == .frozenV3,
+              schemaVersion == 3,
+              planID
+                == "ergentics_prime_native_neural_gate_dual_fixture_replay_v3",
               !executionImplemented,
               !projectionReceiptAuthorized,
               companionRemoteURL

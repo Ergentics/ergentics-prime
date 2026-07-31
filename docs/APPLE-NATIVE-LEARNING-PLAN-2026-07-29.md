@@ -439,33 +439,88 @@ donor-to-Prime adaptation, a lossless independently revalidated copy of the
 Stage-A descriptor closure, a complete current clean Prime Swift source
 snapshot, required compiled-source/process record schemas, and independent
 direct `swift-package describe` authority-subgraph captures of the frozen
-Xcode 26.6 build 17F113 byte image. Its full-file hash and descriptor metadata
-are pinned, and typed evidence orders descriptor open, a complete checked
-suspended region-query transcript/mapped-vnode join, pre-resume stability,
-`SIGCONT`, raw exact-PID wait/clean reap, and post-reap stability after native
-capability calibration. A PrimeCore-produced non-`Codable` capability must
-bind the role, exact launch/working-root policy, identity derived from
-descriptor-read bytes, paths, the transcript/wait result, stream
-limits/overflow/drain outcomes, and separately drained bytes before public
-validation accepts the decoded record. The future factory must read/hash bytes
-through the same held descriptor represented by its `fstat` snapshot and
-descriptor-validate the Prime working root. Overflow-free drains, typed clean
-termination, descriptor-bound running
-Release probe/verifier executables, two SwiftPM children, two historical
-workers, and one sealed Swift worker image are also required. The direct
+Xcode 26.6 build 17F113 byte image.
+
+The closed PrimeCore capture substrate for that SwiftPM observation is
+implemented. It launches the fixed executable directly with stdin at EOF and
+exactly four non-inherited environment keys: `HOME`, `TMPDIR`,
+`CLANG_MODULE_CACHE_PATH`, and `SWIFT_MODULECACHE_PATH`, each rooted in a
+fresh per-role scratch namespace. The exact arguments bind scratch, cache,
+configuration, and security paths there; disable dependency
+cache/prefetch/automatic resolution/netrc/keychain; select
+`--manifest-cache none`; and invoke `describe --type json`. They include
+neither `--skip-update` nor `--disable-sandbox`, so the manifest sandbox stays
+enabled. The repository `.build` tree is unused and non-authoritative.
+
+Each run root is atomically created at `0700` below the trusted Darwin
+user-temporary parent. PrimeCore holds the exact `work`, `cache`, `config`,
+`security`, `home`, `tmp`, and `module-cache` directories through no-follow,
+close-on-exec descriptors on the same local-APFS filesystem as the source.
+ACLs and unknown extended attributes are forbidden. `com.apple.provenance` is
+permitted only as opaque, non-authoritative bytes bounded to 4,096 bytes.
+Optional `com.apple.TextEncoding` is permitted only on the regular file
+`work/.lock`, with the exact 15-byte value `utf-8;134217984`; absence is
+allowed. Prime performs no recursive path deletion; the namespace remains for
+system temporary-directory cleanup.
+
+Exact `0x448c` spawn flags retain direct-PID authority until
+`SID == PGID == PID`; the isolated session and dedicated process group then
+become lifecycle authority. Three stable executable-descriptor reads bind to
+the suspended mapped vnode, and the child cwd binds to the held Prime root.
+Bounded local-APFS source admission holds all authoritative file and directory
+descriptors, arms receipt-checked `EVFILT_VNODE` guards, and requires exact
+inventory/byte/metadata/path stability plus zero events at initial, pre-resume,
+and post-reap checkpoints.
+
+The ten-case typed rejection lifecycle covers pre-join direct-PID cleanup,
+proven-group cleanup, TERM/KILL escalation, bounded exact-PID `WNOHANG`,
+exact-once reap, overflow-through-EOF, drain failure, and no post-reap signal.
+Contained and reaped rejection may become internal `ABSTAIN`; an uncontained
+child or drain must fail-stop. The post-reap audit scans all seven scratch
+subtrees, requires `cache`, `config`, and `security` to remain empty, and
+rejects dependency-resolution residue anywhere. It records
+`dependencyResolutionPermitted = false` but
+`networkDenialEstablished = false`; there is no hermetic, kernel
+network-denial, or hostile same-UID-process isolation claim.
+
+External-child evidence and the enclosing describe-capture record are schema
+4 at the role-specific capture-V4 paths. The adaptation-proof and
+historical-worker aggregate contracts remain V2. The source/execution-binding
+and replay-output contracts are V3, the output-path-classification contract ID
+is `prime_stage_b_output_path_namespace_classification_v3`, and the fixture
+plan is V3/schema 3 at `neural-gate-replay/plan.v3.json`. The adaptation proof
+remains `neural-gate-replay/source/adaptation-proof.v2.json`. The nested
+held-source mutation-guard observation stays schema 1, the scratch observation
+is schema 2, and the raw describe artifact, compiled closure, Release bindings,
+historical-worker request/process/result/success records, and terminal receipt
+stay V1.
+
+Two initial Release two-role factory canary attempts were contained and reaped
+failures: the first exposed terminal mapped-region zero-byte/`EINVAL`
+behavior, and the second exposed the exact optional
+`com.apple.TextEncoding` value on the regular file `work/.lock`. After those
+corrections, the resealed live Release canary passed end to end on the pinned
+host. Probe and verifier output was byte-identical: 21,461 bytes with SHA-256
+`7544a104eb4593eaf0aaba548b27ff1ca8ebac7f9166de85ddf12143425007a5`.
+That pass validates only the secure capture substrate on the pinned host. It
+published no durable Stage-B process record or receipt,
+`executionImplemented` remains false, and no Stage-B replay, historical
+worker, model execution, Metal execution, or product use is implemented or
+authorized. Descriptor-bound running Release probe/verifier executables, two
+SwiftPM children, two historical workers, and one sealed Swift worker image
+remain required Stage-B work. The direct
 executable launch path, `proc_pidpath` pathname, and code-sign fields are
-non-authoritative telemetry; no Apple trust claim is made. The native
-calibrated external-child factory is not yet implemented. None of those
-Stage-B records has been observed yet. The Stage-A
+non-authoritative telemetry; no Apple trust claim is made. The Stage-A
 copy is 35 reachable typed bindings plus its separately pinned terminal
 receipt, or 36 copied artifacts total. Separate bounded probe/verifier worker
 invocations own the complete
 trap-bearing historical arm and publish role-separated evidence; death/reap,
 exact role-prefix inventory, terminal semantic recomputation, exact
 pre-receipt realized path-and-metadata inventory, and separate typed
-artifact-content validation are mandatory. An abnormal worker outcome poisons
-the root, accepts no result as evidence, and publishes no successful-execution
-record or terminal receipt. The
+artifact-content validation are mandatory. A contained and reaped abnormal
+worker outcome poisons the root, accepts no result as evidence, and publishes
+no successful-execution record or terminal receipt. An uncontained child or
+drain must fail-stop. The
 non-`Codable` fixture and inherited traps never enter the authoritative
 supervisor processes. Behavior-only reconciliation cannot substitute for
 source equivalence.
@@ -901,6 +956,13 @@ graded in Swift. Historical target independence and model capability remain
 explicit `ABSTAIN` outcomes. This synthetic mechanics exit still does not prove
 checkpoint causality, broad-language function learning, or product authority.
 
+Implementation checkpoint: the closed PrimeCore SwiftPM capture substrate,
+held local-APFS source and fresh scratch guards, schema-4 capture envelopes,
+and typed rejection lifecycle are unit-tested. After the two contained
+discovery failures described above, the resealed live Release two-role canary
+passed with the exact 21,461-byte output binding. All role-scoped Stage-B
+replay/process/artifact work in this phase remains pending.
+
 ### Phase 4 — calibrated M5 Max executor
 
 Deliver:
@@ -991,12 +1053,24 @@ The non-training implementation slices now stand as follows:
      NeuralKit authority direction are frozen;
    - the revision/path/SHA resolver and bounded Stage-A source projection are
      implemented with a canonical Release receipt;
-   - the dual-arm Stage-B adapter/execution contract is frozen, but its
-     Prime-owned immutable fixtures, native full-region-transcript SwiftPM
-     capture factory and non-`Codable` trust capability, raw exact-PID wait
-     lifecycle, typed worker-artifact recomputation, sealed historical worker,
-     probe, verifier, exact path-and-metadata inventory evidence, separately
-     typed artifact-content validation, and receipt do not yet exist;
+   - the dual-arm Stage-B adapter/execution contract is frozen;
+   - its closed PrimeCore full-region-transcript SwiftPM capture factory,
+     non-`Codable` trust capability, held local-APFS kqueue source guard, and
+     typed rejection lifecycle are implemented, with fresh per-role scratch
+     namespaces and external-child/describe-capture envelopes at schema 4;
+   - after two contained, reaped discovery failures for terminal
+     zero-byte/`EINVAL` behavior and exact optional
+     `com.apple.TextEncoding`, the resealed live Release two-role
+     secure-capture canary passed with byte-identical 21,461-byte
+     probe/verifier output, SHA-256
+     `7544a104eb4593eaf0aaba548b27ff1ca8ebac7f9166de85ddf12143425007a5`;
+     it published no durable Stage-B process record or receipt and authorizes
+     no replay, worker, model, Metal, or product claim;
+   - the Prime-owned immutable fixtures, typed worker-artifact recomputation,
+     sealed historical worker, role-scoped probe/verifier execution, exact
+     path-and-content inventory evidence, separately typed artifact-content
+     validation, Stage-B process records, and receipt do not yet exist;
+   - `executionImplemented` remains false;
    - Stage B must add no PMHNP runtime dependency and must not write to the
      companion tree;
    - document exclusions, especially Python/Core ML bridge and shell-derived
