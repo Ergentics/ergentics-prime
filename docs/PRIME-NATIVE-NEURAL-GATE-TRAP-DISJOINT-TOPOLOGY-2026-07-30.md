@@ -1,19 +1,21 @@
 # Prime Native Neural Gate Trap-Disjoint Topology
 
-Date: 2026-07-30
+Date: 2026-07-30; updated 2026-07-31
 
 ## Outcome
 
-Stage B now has an implemented trap-disjoint mechanics boundary plus pure
-typed artifact contracts and bounded in-memory transport. It still does not
-have a Stage-B executor, worker, probe, verifier, process record, or terminal
-receipt.
+Stage B now has an implemented trap-disjoint mechanics boundary, pure typed
+artifact contracts, bounded in-memory transport with a shared codec, and an
+exact in-memory replay-composition target. It still does not have a Stage-B
+executor, worker, probe, verifier, process record, or terminal receipt.
 
-`PrimeNativeNeuralGateTrapDisjointTopologyContract.frozenV2` is the current
+`PrimeNativeNeuralGateTrapDisjointTopologyContract.frozenV3` is the current
 topology correction. Its canonical SHA-256 is
-`abc8f1ada303ecb95b7c9a44e72293ed314537b93e27354aebbb7763e1487415`.
+`b475e29347a31d27be8dc1aa54648fec84c4f1b47d673a1f111ccffb794985fd`.
 Historical topology V1 remains byte-exact at SHA-256
 `48e0f64fcb14193d74bf9c3d98a8aeef7ca366033cea6d8f00bc345ff0ad86b5`.
+Topology V2 also remains byte-exact at SHA-256
+`abc8f1ada303ecb95b7c9a44e72293ed314537b93e27354aebbb7763e1487415`.
 Its status is `planned_not_materialized`, `executionImplemented` is false, and
 source binding V7 is explicitly not issued.
 
@@ -41,7 +43,17 @@ PrimeNativeNeuralGateReplayTransport
       - PrimeNativeNeuralGateReplayArtifactContracts
       - PrimeNativeNeuralGateReplayMechanics
     authority: three bounded record manifests, three pathless record shapes,
-               and typed bindings only
+               typed bindings, and the shared canonical producer/decoder codec
+
+PrimeNativeNeuralGateReplayComposition
+    dependencies:
+      - PrimeNativeNeuralGateReplayArtifactContracts
+      - PrimeNativeNeuralGateReplayTransport
+      - PrimeNativeNeuralGateReplayMechanics
+      - PrimeNativeNeuralGateCorrectedMechanics
+      - PrimeNativeNeuralGateLogitSidecarMechanics
+    authority: strict prompt schedule and exact outer/raw/validated-sidecar
+               join with corrected trace recomputation
 
 PrimeNativeNeuralGateCorrectedMechanics
     dependencies:
@@ -85,7 +97,9 @@ executor cannot reach the fixture authority or corpus mechanics.
 
 The artifact namespace V4 and transport boundary are specified in
 `PRIME-NATIVE-NEURAL-GATE-TYPED-ARTIFACT-TRANSPORT-2026-07-31.md`.
-No production target imports transport.
+The schedule and join are specified in
+`PRIME-NATIVE-NEURAL-GATE-REPLAY-COMPOSITION-2026-07-31.md`. No production or
+execution target imports transport or composition.
 
 ## Remaining planned execution topology
 
@@ -175,8 +189,20 @@ topology-V2 targets. After the complete topology-V2 source reseal, the same
 Release canary passed with byte-identical probe/verifier output: 28,589 bytes,
 SHA-256
 `3a4ae506f5ed2eae16e9f46d099c5d53681ec1d1a02aa9c20549b0fbeb230d7c`.
-This is the current actual-package secure-capture reseal only and still is not
-V6/V7 execution-graph proof.
+This is the last topology-V2 actual-package secure-capture reseal. It predates
+topology V3 and the composition target, and still is not V6/V7 execution-graph
+proof.
+
+After the complete topology-V3 source reseal, the same Release canary passed
+with byte-identical probe/verifier package-description output: 29,905 bytes,
+SHA-256
+`ad4a66338d7348cb44419a115e062a30da129dea9a6355eec81f6b98932b6e11`.
+This is the current accepted topology-V3 actual-package secure-capture reseal.
+It validates only the secure-capture substrate on the pinned host. It is not
+V6/V7 selected-source execution-graph proof; it does not issue source binding
+V7 or establish worker or model execution, fixture identity,
+evaluation or mechanics `PASS`, Stage-B publication or a terminal receipt,
+reproducible-build identity, or network denial.
 
 Source binding V7 is reserved until every planned and deferred evidence role
 is frozen and materialized, including the independent corrected mutation
@@ -200,18 +226,22 @@ outer-evaluation, and seed-scoped raw-execution manifests and their three row
 shapes. Mutation deltas, historical observations, MLX observations,
 statistics/verdict observations, worker/process/result records, and the
 receipt remain `schema_deferred` and reject bytes before parsing. The
-implemented decoders do not prove prompt-content target independence, read
-descriptor-rooted files, stream invariant payloads, decode logit payloads,
+implemented decoders and composition do not prove prompt-content target
+independence, read descriptor-rooted files, stream invariant payloads, decode
+a durable logit artifact, lawfully deliver the schedule/correlation capability
+to disjoint producers, independently bind expected completion to prompt,
 execute mutations, or authorize a verdict.
 
-The three future record streams are independently canonicalized ordered
-multisets. Prompt rows have no execution index, while outer and raw rows do;
-therefore no implementation may zip the sorted streams. The remaining
-transport gaps begin with a frozen prompt-order-to-execution-index schedule
-and exact join validation plus a pure producer/decoder-shared canonical codec
-seam, then descriptor-rooted invariant streaming, source-codec integration for
-logits, the deferred semantic schemas, corrected process/evaluation ownership,
-replacement process/result/receipt schemas, and receipt-last publication.
+The three record streams are independently canonicalized ordered multisets.
+Prompt rows have no execution index, while outer and raw rows do; therefore no
+implementation may zip the sorted streams. Composition V1 now derives indexes
+only as strict prompt-record ordinals and performs an exact keyed
+outer/raw/validated-sidecar join with trace recomputation. The remaining
+transport gap begins with descriptor-rooted invariant streaming and durable
+source-artifact binding, lawful schedule-capability delivery, and the
+independent prompt/target crosswalk, then the deferred semantic schemas,
+corrected process/evaluation ownership, replacement process/result/receipt
+schemas, and receipt-last publication.
 
 Mutation identity must be `(arm, ordinal, mutation_id)` because
 `target_dependent_prompt_grouping` has different meanings in the two arms.
@@ -220,12 +250,12 @@ containing one expected failed leg is insufficient.
 
 ## Ordered continuation
 
-1. Freeze the prompt-order-to-execution-index schedule and exact
-   outer/raw/sidecar join contract.
-2. Freeze a pure producer/decoder-shared canonical row-and-manifest codec seam;
-   no future worker may hand-roll its own JSON wire format.
-3. Implement descriptor-rooted invariant streaming and integrate the
-   source-bound logit codec without widening the transport closure.
+1. Implement descriptor-rooted bounded invariant streaming and bind validated
+   stream capabilities to composition V1 without materializing workers.
+2. Bind durable logit artifact origin to the existing validated sidecar codec
+   without widening the trap-free composition closure.
+3. Freeze lawful schedule/correlation capability delivery to the disjoint
+   producers and the independent source-derived prompt/target crosswalk.
 4. Freeze the deferred mutation, historical, MLX, and statistics/verdict
    schemas.
 5. Freeze corrected process/evaluation ownership, replacement process count,

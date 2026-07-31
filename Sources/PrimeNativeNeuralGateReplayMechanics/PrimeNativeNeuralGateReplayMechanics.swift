@@ -29,6 +29,72 @@ public enum PrimeNativeNeuralGateReplayMechanicsError:
     case staleFingerprintCache
     case invalidManifest
     case invalidFingerprintObservation
+    case invalidPromptBindingSHA256
+}
+
+/// Target-free correlation identity derived only from the public schedule
+/// index and the prompt-only PRIMECPI2 binding.
+///
+/// This value defines how a future supervisor-provided schedule capability can
+/// let disjoint raw/sidecar and outer-evaluation producers agree on row
+/// identity without sharing row IDs, split/family metadata, expected
+/// completions, or another producer-controlled correlation channel. This
+/// primitive does not authorize either producer to read a prompt artifact.
+public enum PrimeNativeNeuralGateReplayCorrelationIdentity {
+    public static let magic = "PRIMECOR1"
+    public static let serializationContractID =
+        "primecor1_then_uint32_big_endian_execution_index_then_raw_primecpi2_prompt_binding_sha256_v1"
+
+    public static func derive(
+        executionIndex: UInt32,
+        primeCPI2PromptBindingSHA256: String
+    ) throws -> String {
+        guard primeCPI2PromptBindingSHA256.utf8.count == 64
+        else {
+            throw PrimeNativeNeuralGateReplayMechanicsError
+                .invalidPromptBindingSHA256
+        }
+        let hexadecimal = Array(
+            primeCPI2PromptBindingSHA256.utf8
+        )
+        var input = Data(magic.utf8)
+        var bigEndianIndex = executionIndex.bigEndian
+        withUnsafeBytes(of: &bigEndianIndex) {
+            input.append(contentsOf: $0)
+        }
+        for index in stride(
+            from: 0,
+            to: hexadecimal.count,
+            by: 2
+        ) {
+            guard let high = hexadecimalValue(
+                hexadecimal[index]
+            ),
+                  let low = hexadecimalValue(
+                      hexadecimal[index + 1]
+                  )
+            else {
+                throw PrimeNativeNeuralGateReplayMechanicsError
+                    .invalidPromptBindingSHA256
+            }
+            input.append(high << 4 | low)
+        }
+        return PrimeNativeNeuralGateInvariantCodec
+            .sha256(input)
+    }
+
+    private static func hexadecimalValue(
+        _ value: UInt8
+    ) -> UInt8? {
+        switch value {
+        case 48 ... 57:
+            return value - 48
+        case 97 ... 102:
+            return value - 87
+        default:
+            return nil
+        }
+    }
 }
 
 /// Resource bounds for decoding untrusted Stage-B semantic payloads.

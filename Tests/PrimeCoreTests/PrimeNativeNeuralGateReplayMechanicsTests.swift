@@ -41,6 +41,50 @@ final class PrimeNativeNeuralGateReplayMechanicsTests:
         }
     }
 
+    func testTargetFreeCorrelationIdentityKnownAnswer()
+        throws
+    {
+        XCTAssertEqual(
+            PrimeNativeNeuralGateReplayCorrelationIdentity
+                .magic,
+            "PRIMECOR1"
+        )
+        XCTAssertEqual(
+            PrimeNativeNeuralGateReplayCorrelationIdentity
+                .serializationContractID,
+            "primecor1_then_uint32_big_endian_execution_index_then_raw_primecpi2_prompt_binding_sha256_v1"
+        )
+        XCTAssertEqual(
+            try PrimeNativeNeuralGateReplayCorrelationIdentity
+                .derive(
+                    executionIndex: 7,
+                    primeCPI2PromptBindingSHA256:
+                        String(repeating: "a", count: 64)
+                ),
+            "c2016a2c2031328ac2b73bb8d5d05f54969133ffca0600548712fef0c742cc7a"
+        )
+        for invalid in [
+            String(repeating: "a", count: 63),
+            String(repeating: "A", count: 64),
+            String(repeating: "g", count: 64),
+        ] {
+            XCTAssertThrowsError(
+                try PrimeNativeNeuralGateReplayCorrelationIdentity
+                    .derive(
+                        executionIndex: 7,
+                        primeCPI2PromptBindingSHA256:
+                            invalid
+                    )
+            ) {
+                XCTAssertEqual(
+                    $0 as?
+                        PrimeNativeNeuralGateReplayMechanicsError,
+                    .invalidPromptBindingSHA256
+                )
+            }
+        }
+    }
+
     func testKnownAnswerPreservesRawUTF8Identity()
         throws
     {

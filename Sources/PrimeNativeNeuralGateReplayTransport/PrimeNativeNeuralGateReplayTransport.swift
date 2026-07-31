@@ -30,12 +30,12 @@ public enum PrimeNativeNeuralGateReplayTransportError:
     case invalidBinding
     case invalidManifest
     case invalidReplicateSeed
-    case forbiddenPromptOnlyField(String)
+    case forbiddenPromptOnlyField
     case invalidPromptTokens
     case invalidExecutionIndex
     case invalidCorrelationID
     case invalidExpectedCompletion
-    case invalidSHA256(String)
+    case invalidSHA256
     case invalidTermination
     case invalidGeneratedTokens
     case authorizingClaimForbidden(String)
@@ -252,6 +252,12 @@ private enum TransportLimits {
         contract.maximumPromptTokenCount
     static let maximumGenerationDecisions =
         contract.maximumGenerationDecisions
+    static let maximumPromptRowBytes: UInt64 =
+        65_536
+    static let maximumOuterEvaluationRowBytes:
+        UInt64 = 8_192
+    static let maximumRawExecutionRowBytes:
+        UInt64 = 8_192
     static let correctedFixtureRowCount: UInt32 = {
         guard let count = UInt32(
             exactly:
@@ -374,6 +380,29 @@ private struct RawExecutionReferenceWire: Codable {
 }
 
 private enum BoundedCanonicalJSON {
+    static func encode<Value: Codable>(
+        _ value: Value,
+        maximumByteCount: UInt64
+    ) throws -> Data {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [
+            .sortedKeys,
+            .withoutEscapingSlashes,
+        ]
+        let data: Data
+        do {
+            data = try encoder.encode(value)
+        } catch {
+            throw PrimeNativeNeuralGateReplayTransportError
+                .invalidJSON
+        }
+        try lexicalPreflight(
+            data,
+            maximumByteCount: maximumByteCount
+        )
+        return data
+    }
+
     static func decode<Value: Codable>(
         _ type: Value.Type,
         from data: Data,
@@ -411,18 +440,10 @@ private enum BoundedCanonicalJSON {
             throw PrimeNativeNeuralGateReplayTransportError
                 .invalidJSON
         }
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = [
-            .sortedKeys,
-            .withoutEscapingSlashes,
-        ]
-        let canonical: Data
-        do {
-            canonical = try encoder.encode(value)
-        } catch {
-            throw PrimeNativeNeuralGateReplayTransportError
-                .invalidJSON
-        }
+        let canonical = try encode(
+            value,
+            maximumByteCount: maximumByteCount
+        )
         guard canonical == data else {
             throw PrimeNativeNeuralGateReplayTransportError
                 .noncanonicalJSON
@@ -586,7 +607,7 @@ private enum BoundedCanonicalJSON {
                     lower.contains($0)
                 }) {
                     throw PrimeNativeNeuralGateReplayTransportError
-                        .forbiddenPromptOnlyField(key)
+                        .forbiddenPromptOnlyField
                 }
                 try rejectForbiddenPromptFields(child)
             }
@@ -763,7 +784,7 @@ public enum PrimeNativeNeuralGateReplayTransportDecoder {
         )
     }
 
-    private struct ManifestRequirement {
+    fileprivate struct ManifestRequirement {
         let recordSchemaID: String
         let recordCount: UInt32
         let globalKey:
@@ -773,7 +794,7 @@ public enum PrimeNativeNeuralGateReplayTransportDecoder {
         let chunkRecordCounts: [UInt32]
     }
 
-    private static func manifestRequirement(
+    fileprivate static func manifestRequirement(
         for key: PrimeNativeNeuralGateArtifactKey,
         recordCount: UInt32,
         contract:
@@ -883,7 +904,8 @@ public enum PrimeNativeNeuralGateReplayTransportDecoder {
         let wire = try BoundedCanonicalJSON.decode(
             PromptRowWire.self,
             from: data,
-            maximumByteCount: 65_536,
+            maximumByteCount:
+                TransportLimits.maximumPromptRowBytes,
             rejectPromptOnlyFields: true
         )
         try requireRecordEnvelope(
@@ -928,7 +950,9 @@ public enum PrimeNativeNeuralGateReplayTransportDecoder {
         let wire = try BoundedCanonicalJSON.decode(
             OuterEvaluationRowWire.self,
             from: data,
-            maximumByteCount: 8_192
+            maximumByteCount:
+                TransportLimits
+                .maximumOuterEvaluationRowBytes
         )
         try requireRecordEnvelope(
             schemaVersion: wire.schemaVersion,
@@ -979,7 +1003,9 @@ public enum PrimeNativeNeuralGateReplayTransportDecoder {
         let wire = try BoundedCanonicalJSON.decode(
             RawExecutionReferenceWire.self,
             from: data,
-            maximumByteCount: 8_192
+            maximumByteCount:
+                TransportLimits
+                .maximumRawExecutionRowBytes
         )
         try requireRecordEnvelope(
             schemaVersion: wire.schemaVersion,
@@ -1071,7 +1097,7 @@ public enum PrimeNativeNeuralGateReplayTransportDecoder {
         }
     }
 
-    private static func requireSHA256(
+    fileprivate static func requireSHA256(
         _ value: String
     ) throws {
         guard value.utf8.count == 64,
@@ -1081,8 +1107,301 @@ public enum PrimeNativeNeuralGateReplayTransportDecoder {
               })
         else {
             throw PrimeNativeNeuralGateReplayTransportError
-                .invalidSHA256(value)
+                .invalidSHA256
         }
     }
 
+}
+
+/// Producer/decoder-shared canonical wire codec for the bounded Stage-B
+/// transport shapes.
+///
+/// Callers provide semantic values or a manifest emitted by the existing
+/// invariant codec. This codec derives every schema identity, path, ordinal,
+/// record count, and non-authorizing flag from the frozen V4 contract. It does
+/// not accept a caller-authored JSON envelope and does not publish bytes.
+public enum PrimeNativeNeuralGateReplayTransportCodec {
+    public static let serializationContractID =
+        "prime_stage_b_bounded_canonical_json_shared_transport_codec_v1"
+
+    private typealias Decoder =
+        PrimeNativeNeuralGateReplayTransportDecoder
+
+    public static func encodeRecordManifest(
+        key: PrimeNativeNeuralGateArtifactKey,
+        invariantManifest:
+            PrimeNativeNeuralGateInvariantManifest
+    ) throws -> Data {
+        let contract =
+            PrimeNativeNeuralGateReplayArtifactOutputContract
+            .frozenV4
+        let spec = try Decoder.requireBoundedArtifactSpec(
+            for: key
+        )
+        guard invariantManifest.schemaVersion == 1,
+              invariantManifest.artifactKind
+                == "ergentics_prime_native_neural_gate_invariant_manifest",
+              invariantManifest.serializationContractID
+                == PrimeNativeNeuralGateInvariantCodec
+                .serializationContractID,
+              let recordCount = UInt32(
+                  exactly: invariantManifest.recordCount
+              )
+        else {
+            throw PrimeNativeNeuralGateReplayTransportError
+                .invalidManifest
+        }
+        try Decoder.requireSHA256(
+            invariantManifest.globalStreamSHA256
+        )
+        let requirement = try Decoder.manifestRequirement(
+            for: key,
+            recordCount: recordCount,
+            contract: contract
+        )
+        guard recordCount == requirement.recordCount,
+              invariantManifest.chunks.count
+                == requirement.chunkKeys.count,
+              invariantManifest.globalStreamByteCount > 0,
+              let globalByteCount = UInt64(
+                  exactly:
+                    invariantManifest
+                    .globalStreamByteCount
+              )
+        else {
+            throw PrimeNativeNeuralGateReplayTransportError
+                .invalidManifest
+        }
+        let globalSpec = try contract.spec(
+            for: requirement.globalKey
+        )
+        var chunks = [ChunkBindingWire]()
+        chunks.reserveCapacity(
+            invariantManifest.chunks.count
+        )
+        for (index, source) in
+            invariantManifest.chunks.enumerated()
+        {
+            guard source.ordinal == UInt32(index),
+                  let sourceRecordCount = UInt32(
+                      exactly: source.recordCount
+                  ),
+                  sourceRecordCount
+                    == requirement.chunkRecordCounts[index],
+                  source.byteCount > 0,
+                  let sourceByteCount = UInt64(
+                      exactly: source.byteCount
+                  )
+            else {
+                throw PrimeNativeNeuralGateReplayTransportError
+                    .invalidManifest
+            }
+            try Decoder.requireSHA256(source.sha256)
+            let chunkSpec = try contract.spec(
+                for: requirement.chunkKeys[index]
+            )
+            chunks.append(
+                ChunkBindingWire(
+                    ordinal: source.ordinal,
+                    recordCount: sourceRecordCount,
+                    relativePath: chunkSpec.relativePath,
+                    sha256: source.sha256,
+                    byteCount: sourceByteCount
+                )
+            )
+        }
+        let wire = RecordManifestWire(
+            schemaVersion: spec.schemaVersion,
+            artifactKind: spec.schemaID,
+            recordSchemaID:
+                requirement.recordSchemaID,
+            recordCount: requirement.recordCount,
+            globalStream: BindingWire(
+                relativePath: globalSpec.relativePath,
+                sha256:
+                    invariantManifest
+                    .globalStreamSHA256,
+                byteCount: globalByteCount
+            ),
+            chunks: chunks,
+            recordsMaterialized: false,
+            mechanicsPassAuthorized: false
+        )
+        let data = try BoundedCanonicalJSON.encode(
+            wire,
+            maximumByteCount: spec.maximumByteCount
+        )
+        _ = try Decoder.decodeArtifact(
+            key: key,
+            from: data
+        )
+        return data
+    }
+
+    public static func encodePromptOnlyRow(
+        promptTokenIDs: [UInt16]
+    ) throws -> Data {
+        guard promptTokenIDs.count
+                <= TransportLimits.maximumPromptTokenCount
+        else {
+            throw PrimeNativeNeuralGateReplayTransportError
+                .invalidPromptTokens
+        }
+        let data = try BoundedCanonicalJSON.encode(
+            PromptRowWire(
+                schemaVersion: 1,
+                recordKind:
+                    PrimeNativeNeuralGateReplayRecordSchema
+                    .promptOnlyRowV1,
+                promptTokenIDs: promptTokenIDs
+            ),
+            maximumByteCount:
+                TransportLimits.maximumPromptRowBytes
+        )
+        _ = try Decoder.decodePromptOnlyRow(
+            from: data
+        )
+        return data
+    }
+
+    public static func encodePromptOnlyRow(
+        _ row: PrimeNativeNeuralGateReplayPromptRow
+    ) throws -> Data {
+        try encodePromptOnlyRow(
+            promptTokenIDs: row.promptTokenIDs
+        )
+    }
+
+    public static func encodeOuterEvaluationRow(
+        executionIndex: UInt32,
+        correlationID: String,
+        expectedCompletionUTF8: Data
+    ) throws -> Data {
+        guard correlationID.utf8.count <= 512 else {
+            throw PrimeNativeNeuralGateReplayTransportError
+                .invalidCorrelationID
+        }
+        guard expectedCompletionUTF8.count <= 63 else {
+            throw PrimeNativeNeuralGateReplayTransportError
+                .invalidExpectedCompletion
+        }
+        let data = try BoundedCanonicalJSON.encode(
+            OuterEvaluationRowWire(
+                schemaVersion: 1,
+                recordKind:
+                    PrimeNativeNeuralGateReplayRecordSchema
+                    .outerEvaluationRowV1,
+                executionIndex: executionIndex,
+                correlationID: correlationID,
+                expectedCompletionUTF8:
+                    Array(expectedCompletionUTF8)
+            ),
+            maximumByteCount:
+                TransportLimits
+                .maximumOuterEvaluationRowBytes
+        )
+        _ = try Decoder.decodeOuterEvaluationRow(
+            from: data
+        )
+        return data
+    }
+
+    public static func encodeOuterEvaluationRow(
+        _ row:
+            PrimeNativeNeuralGateReplayOuterEvaluationRow
+    ) throws -> Data {
+        try encodeOuterEvaluationRow(
+            executionIndex: row.executionIndex,
+            correlationID: row.correlationID,
+            expectedCompletionUTF8:
+                row.expectedCompletionUTF8
+        )
+    }
+
+    public static func encodeRawExecutionReference(
+        replicateSeed:
+            PrimeNativeNeuralGateArtifactSeed,
+        executionIndex: UInt32,
+        primeCPI2PromptBindingSHA256: String,
+        traceSHA256: String,
+        generatedTokenIDs: [UInt16],
+        termination:
+            PrimeNativeNeuralGateReplayTermination
+    ) throws -> Data {
+        try Decoder.requireSHA256(
+            primeCPI2PromptBindingSHA256
+        )
+        try Decoder.requireSHA256(traceSHA256)
+        let decisionCount: UInt8
+        switch termination {
+        case .eos:
+            guard generatedTokenIDs.count <
+                    TransportLimits
+                    .maximumGenerationDecisions,
+                  let count = UInt8(
+                      exactly:
+                        generatedTokenIDs.count + 1
+                  )
+            else {
+                throw PrimeNativeNeuralGateReplayTransportError
+                    .invalidTermination
+            }
+            decisionCount = count
+        case .fixedCap:
+            guard generatedTokenIDs.count
+                    == TransportLimits
+                    .maximumGenerationDecisions,
+                  let count = UInt8(
+                      exactly:
+                        TransportLimits
+                        .maximumGenerationDecisions
+                  )
+            else {
+                throw PrimeNativeNeuralGateReplayTransportError
+                    .invalidTermination
+            }
+            decisionCount = count
+        }
+        let data = try BoundedCanonicalJSON.encode(
+            RawExecutionReferenceWire(
+                schemaVersion: 1,
+                recordKind:
+                    PrimeNativeNeuralGateReplayRecordSchema
+                    .rawExecutionReferenceV1,
+                replicateSeed: replicateSeed.rawValue,
+                executionIndex: executionIndex,
+                promptSHA256:
+                    primeCPI2PromptBindingSHA256,
+                traceSHA256: traceSHA256,
+                decisionCount: decisionCount,
+                generatedTokenIDs: generatedTokenIDs,
+                termination: termination.rawValue,
+                logitsMaterialized: false,
+                executionAuthorized: false
+            ),
+            maximumByteCount:
+                TransportLimits
+                .maximumRawExecutionRowBytes
+        )
+        _ = try Decoder.decodeRawExecutionReference(
+            expectedSeed: replicateSeed,
+            from: data
+        )
+        return data
+    }
+
+    public static func encodeRawExecutionReference(
+        _ row:
+            PrimeNativeNeuralGateReplayRawExecutionReference
+    ) throws -> Data {
+        try encodeRawExecutionReference(
+            replicateSeed: row.replicateSeed,
+            executionIndex: row.executionIndex,
+            primeCPI2PromptBindingSHA256:
+                row.promptSHA256,
+            traceSHA256: row.traceSHA256,
+            generatedTokenIDs: row.generatedTokenIDs,
+            termination: row.termination
+        )
+    }
 }

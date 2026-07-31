@@ -446,18 +446,32 @@ It predates topology V2's two new targets and is not current V2 evidence.
 After the complete topology-V2 source reseal, the same Release canary passed
 with byte-identical probe/verifier output: 28,589 bytes, SHA-256
 `3a4ae506f5ed2eae16e9f46d099c5d53681ec1d1a02aa9c20549b0fbeb230d7c`.
-This is the current actual-package secure-capture reseal only; source binding
-V7 remains unissued.
+This is the last accepted topology-V2 actual-package secure-capture reseal. It
+predates topology V3 and replay composition; source binding V7 remains
+unissued.
 
-The current Stage-B boundary is topology V2, canonical SHA-256
-`abc8f1ada303ecb95b7c9a44e72293ed314537b93e27354aebbb7763e1487415`.
-It materializes only dependency-free artifact contracts and bounded
-in-memory transport over pure replay mechanics. Semantic namespace V4,
+After the complete topology-V3 source reseal, the same Release canary passed
+with byte-identical probe/verifier package-description output: 29,905 bytes,
+SHA-256
+`ad4a66338d7348cb44419a115e062a30da129dea9a6355eec81f6b98932b6e11`.
+This is the current accepted topology-V3 actual-package secure-capture reseal.
+It validates only the secure-capture substrate on the pinned host. It is not
+V6/V7 selected-source execution-graph proof; it does not issue source binding
+V7 or establish worker or model execution, fixture identity,
+evaluation or mechanics `PASS`, Stage-B publication or a terminal receipt,
+reproducible-build identity, or network denial.
+
+The current Stage-B boundary is topology V3, canonical SHA-256
+`b475e29347a31d27be8dc1aa54648fec84c4f1b47d673a1f111ccffb794985fd`.
+It preserves topology V1/V2 and materializes dependency-free artifact
+contracts, bounded in-memory transport with a shared codec, and exact
+non-authorizing replay composition. Semantic namespace V4,
 canonical SHA-256
 `60e10e6c10f9ec1f30102f5b6d27be123434a163c01d82c0cc5d4520824532d1`,
 is an incomplete non-authorizing overlay on historical output classification
 V3, not an execution artifact or receipt. See
-`PRIME-NATIVE-NEURAL-GATE-TYPED-ARTIFACT-TRANSPORT-2026-07-31.md`.
+`PRIME-NATIVE-NEURAL-GATE-TYPED-ARTIFACT-TRANSPORT-2026-07-31.md` and
+`PRIME-NATIVE-NEURAL-GATE-REPLAY-COMPOSITION-2026-07-31.md`.
 
 The corrected mechanics are now split. The raw target owns prompt-only input,
 replicate-scoped seed context, fixed-cap/EOS full-512-logit decisions, and
@@ -515,14 +529,17 @@ channels, so one seed per replicate, fresh per-row state, and row-permutation
 trace identity are mandatory. The planned shared donor topology also exposed
 trap-bearing historical code to corrected supervisors. The implemented
 package now splits raw execution from evaluation/regrade authority, while
-trap-disjoint topology V2 preserves V1 and supersedes the unsafe future
-routing without issuing source binding V7. Corrected execution remains blocked
-until the independently ordered prompt/outer/raw stream schedule and join are
-frozen, followed by descriptor-streaming validation, logit-codec integration,
-process/receipt ownership, and independent mutation producer/detector
+trap-disjoint topology V3 preserves V1/V2 and supersedes the unsafe future
+routing without issuing source binding V7. Composition V1 freezes the strict
+prompt-record schedule, shared codec, and exact in-memory join. Corrected
+execution remains blocked until descriptor-rooted validation binds durable
+stream and sidecar origin to composition, lawfully delivers the
+schedule/correlation capability to disjoint producers, and freezes the
+independent prompt/target crosswalk, followed by process/receipt ownership and
+independent mutation producer/detector
 mechanics, then the role-scoped workers, paired probe/verifier, exact
 inventory, and durable observations. The exact next prerequisite is
-`complete_descriptor_rooted_streaming_artifact_decoders_freeze_corrected_process_and_receipt_ownership_then_materialize_disjoint_corrected_mutation_producer_detector`.
+`implement_descriptor_rooted_bounded_invariant_stream_decoders_bind_validated_stream_capabilities_and_lawful_schedule_delivery_to_frozen_composition_then_freeze_independent_prompt_target_crosswalk_without_materializing_workers`.
 
 The repository-test checkpoint passed pure sidecar mechanics 6/6. The
 source-pinned MLX validation package remains outside the MLX-free

@@ -4,7 +4,8 @@ Date: 2026-07-31
 
 ## Outcome
 
-Stage B now has two additional pure Swift library targets:
+Stage B now has two pure Swift transport-foundation targets plus one
+trap-free composition consumer:
 
 ```text
 PrimeNativeNeuralGateReplayArtifactContracts
@@ -14,6 +15,14 @@ PrimeNativeNeuralGateReplayTransport
     dependencies:
       - PrimeNativeNeuralGateReplayArtifactContracts
       - PrimeNativeNeuralGateReplayMechanics
+
+PrimeNativeNeuralGateReplayComposition
+    dependencies:
+      - PrimeNativeNeuralGateReplayArtifactContracts
+      - PrimeNativeNeuralGateReplayTransport
+      - PrimeNativeNeuralGateReplayMechanics
+      - PrimeNativeNeuralGateCorrectedMechanics
+      - PrimeNativeNeuralGateLogitSidecarMechanics
 ```
 
 No production or execution target imports the transport. The contract target
@@ -21,12 +30,16 @@ contains typed artifact identities, paths, roles, ownership, reader sets,
 bounds, and non-authorizing namespace policy. The transport target validates
 exactly three bounded canonical manifest envelopes and exactly three pathless
 record shapes: prompt-only row, outer-evaluation row, and raw-execution
-reference. Neither target executes a worker, reads a file, streams a large
-payload, invokes MLX, imports PMHNP, publishes an artifact, or creates a
-receipt.
+reference. The transport also owns the shared producer/decoder canonical
+codec; the composition target owns the strict prompt schedule and exact
+outer/raw/validated-sidecar join. None executes a worker, reads a file,
+streams a large payload, invokes MLX, imports PMHNP, publishes an artifact, or
+creates a receipt.
 
-This closes only that manifest/record-shape slice of the prior Stage-B
-prerequisite. It does not implement Stage-B execution.
+This closes the manifest/record-shape, shared-codec, strict-schedule, and
+in-memory exact-join slices of the prior Stage-B prerequisite. It does not
+implement Stage-B execution. Exact composition mechanics are recorded in
+`PRIME-NATIVE-NEURAL-GATE-REPLAY-COMPOSITION-2026-07-31.md`.
 
 ## Frozen identities
 
@@ -34,15 +47,19 @@ prerequisite. It does not implement Stage-B execution.
   `48e0f64fcb14193d74bf9c3d98a8aeef7ca366033cea6d8f00bc345ff0ad86b5`;
 - topology V2 has canonical SHA-256
   `abc8f1ada303ecb95b7c9a44e72293ed314537b93e27354aebbb7763e1487415`;
+- topology V3 has canonical SHA-256
+  `b475e29347a31d27be8dc1aa54648fec84c4f1b47d673a1f111ccffb794985fd`;
+- composition V1 has canonical SHA-256
+  `75e6941913b561b6bdbd63d2e67f50962276942416bfea8a0443906d6d8ffb3e`;
 - historical replay plan V5 and source-binding V6 remain unchanged;
 - historical replay-output and path-classification V3 remain unchanged;
 - the non-authorizing semantic-namespace overlay V4 has canonical SHA-256
   `60e10e6c10f9ec1f30102f5b6d27be123434a163c01d82c0cc5d4520824532d1`.
 
-Topology V2 remains globally `planned_not_materialized` because the execution
-graph is incomplete. It marks exactly the contracts and bounded transport
-targets implemented. `executionImplemented` is false and source binding V7 is
-unissued.
+Topology V3 remains globally `planned_not_materialized` because the execution
+graph is incomplete. It preserves V1 and V2 exactly and marks the contracts,
+bounded transport, shared codec, and replay composition implemented.
+`executionImplemented` is false and source binding V7 is unissued.
 
 Semantic namespace V4 is an incomplete overlay, not an execution artifact,
 source-binding version, or receipt. Its identity embeds the complete 116-spec
@@ -112,15 +129,17 @@ than permissive placeholder records.
 Prompt-only, outer-evaluation, and each per-seed raw-execution payload are
 separate `prime_raw_utf8_length_framed_ordered_multiset_v1` streams. Each
 stream is independently sorted by its own raw record bytes; cross-stream
-positional zipping is forbidden. The future descriptor-streaming and
-cross-artifact verifier must validate the complete unique prompt domain,
-derive and freeze `execution_index` from canonical prompt-record order,
-require outer and raw indexes to cover `0..<18_432` exactly once, join
-outer/raw by index, verify each raw prompt digest against the prompt at that
-index, and join the logit sidecar by row ordinal plus outer correlation
-identity. Duplicate, missing, or conflicting indexes must fail closed. The
-fixture authority already proves 18,432 unique prompt bindings, but this
-transport slice does not.
+positional zipping is forbidden. Composition V1 now defines
+`execution_index` as the strict ordinal of canonical prompt-row JSON bytes in
+the caller-provided in-memory sequence, requires exact `0..<18_432` coverage,
+derives target-free `PRIMECOR1` identity from index plus prompt binding, and
+joins outer/raw/sidecar records against that identity. It reconstructs every
+full-logit decision and requires the exact corrected trace. Duplicate, missing,
+or conflicting indexes fail closed. Descriptor-rooted streaming validation
+must still prove that the supplied record arrays came from the bound durable
+streams; composition itself does not establish artifact origin, lawful
+schedule-capability delivery to disjoint producers, independent
+prompt/expected-completion binding, or prompt-content independence.
 
 ## Package-capture status
 
@@ -133,21 +152,33 @@ After the complete topology-V2 source was resealed, the Release canary passed
 with byte-identical probe/verifier package-description output: 28,589 bytes,
 SHA-256
 `3a4ae506f5ed2eae16e9f46d099c5d53681ec1d1a02aa9c20549b0fbeb230d7c`.
-This is the current actual-package secure-capture reseal. It remains
+This is the last topology-V2 actual-package secure-capture reseal and predates
+the composition target and topology V3. It remains
 secure-capture evidence only, not V6/V7 selected-source execution-graph proof;
 source binding V7 is unissued.
 
+After the complete topology-V3 source reseal, the same Release canary passed
+with byte-identical probe/verifier package-description output: 29,905 bytes,
+SHA-256
+`ad4a66338d7348cb44419a115e062a30da129dea9a6355eec81f6b98932b6e11`.
+This is the current accepted topology-V3 actual-package secure-capture reseal.
+It validates only the secure-capture substrate on the pinned host. It is not
+V6/V7 selected-source execution-graph proof; it does not issue source binding
+V7 or establish worker or model execution, fixture identity,
+evaluation or mechanics `PASS`, Stage-B publication or a terminal receipt,
+reproducible-build identity, or network denial.
+
 ## Remaining evidence gaps
 
-- freeze the prompt-order-to-execution-index schedule and the exact
-  cross-artifact join rules before any stream is treated as a composite row;
-- freeze a pure producer/decoder-shared canonical row-and-manifest codec seam,
-  or an explicit encoder target, before any worker is materialized; workers
-  must not hand-roll JSON that only a separate decoder understands;
 - implement descriptor-rooted, bounded streaming validation for the global and
-  chunked raw-UTF8 invariant formats;
-- integrate the already source-bound lossless logit dictionary/chunk/manifest
-  codec without widening the pure transport closure;
+  chunked raw-UTF8 invariant formats and bind the resulting validated
+  capabilities to composition V1;
+- bind durable source-artifact origin for the already integrated in-memory
+  lossless logit dictionary/chunk/manifest codec without widening the pure
+  composition closure;
+- freeze lawful delivery of the target-free schedule/correlation capability to
+  the disjoint producers and an independently source-derived prompt/target
+  crosswalk before any evaluation promotion;
 - freeze and implement mutation-delta, historical-observation, MLX-observation,
   and corrected statistics/verdict schemas before any of those keys can admit
   bytes;
@@ -164,11 +195,13 @@ source binding V7 is unissued.
 
 The next implementation prerequisite is therefore:
 
-`complete_descriptor_rooted_streaming_artifact_decoders_freeze_corrected_process_and_receipt_ownership_then_materialize_disjoint_corrected_mutation_producer_detector`
+`implement_descriptor_rooted_bounded_invariant_stream_decoders_bind_validated_stream_capabilities_and_lawful_schedule_delivery_to_frozen_composition_then_freeze_independent_prompt_target_crosswalk_without_materializing_workers`
 
-Its first substep is the cross-artifact schedule and join freeze described
-above; descriptor decoding cannot safely compose the independently ordered
-streams before that contract exists.
+The shared codec, schedule, target-free correlation derivation, and join are
+now frozen. The next slice must prove the durable origin and exact global/chunk
+partition of the independently ordered streams, lawful schedule-capability
+delivery, and the independent prompt/target crosswalk before those in-memory
+capabilities can be treated as artifact or evaluation evidence.
 
 ## Workflow boundary
 
