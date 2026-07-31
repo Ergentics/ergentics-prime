@@ -406,11 +406,12 @@ reaped failures: the first exposed terminal mapped-region zero-byte/`EINVAL`
 behavior, and the second exposed the exact optional
 `com.apple.TextEncoding` value on the regular file `work/.lock`. After those
 corrections, the resealed live Release two-role secure-capture canary passed end
-to end on the pinned host with byte-identical probe/verifier output: 21,582
+to end on the pinned host with byte-identical probe/verifier output: 22,022
 bytes, SHA-256
-`8a352013c632aa39f2d082bb5ae366f061f48e0572c70a5baea813d4560a4c12`.
-This later reseal includes the PrimeCore trusted descriptor-inventory source
-and tests; it does not widen the canary's authority.
+`f5f2d2ebf4409da26164c1980bcece14c60db6937f664adb96e4e57693580b86`.
+This current reseal includes the PrimeCore trusted descriptor-inventory
+substrate and the pure Stage-B replay-mechanics foundation; it does not widen
+the canary's authority.
 That pass validates only the secure capture substrate on the pinned host. It
 published no durable Stage-B process record or receipt,
 `executionImplemented` remains false, and no Stage-B replay, historical

@@ -500,10 +500,11 @@ failures: the first exposed terminal mapped-region zero-byte/`EINVAL`
 behavior, and the second exposed the exact optional
 `com.apple.TextEncoding` value on the regular file `work/.lock`. After those
 corrections, the resealed live Release canary passed end to end on the pinned
-host. Probe and verifier output was byte-identical: 21,582 bytes with SHA-256
-`8a352013c632aa39f2d082bb5ae366f061f48e0572c70a5baea813d4560a4c12`.
-This later reseal includes the PrimeCore trusted descriptor-inventory source
-and tests; it does not widen the canary's authority.
+host. Probe and verifier output was byte-identical: 22,022 bytes with SHA-256
+`f5f2d2ebf4409da26164c1980bcece14c60db6937f664adb96e4e57693580b86`.
+This current reseal includes the PrimeCore trusted descriptor-inventory
+substrate and the pure Stage-B replay-mechanics foundation; it does not widen
+the canary's authority.
 That pass validates only the secure capture substrate on the pinned host. It
 published no durable Stage-B process record or receipt,
 `executionImplemented` remains false, and no Stage-B replay, historical
@@ -962,8 +963,12 @@ Implementation checkpoint: the closed PrimeCore SwiftPM capture substrate,
 held local-APFS source and fresh scratch guards, schema-4 capture envelopes,
 and typed rejection lifecycle are unit-tested. After the two contained
 discovery failures described above, the resealed live Release two-role canary
-passed with the exact 21,582-byte output binding. All role-scoped Stage-B
-replay/process/artifact work in this phase remains pending.
+passed with the exact 22,022-byte output binding. A first bounded pure-library
+sub-slice now implements only raw-UTF-8 global-stream/chunk mechanics,
+independent direct/affine fingerprints, the raw-byte cache guard, and typed
+invariant/fingerprint payload validation. Runtime donors, the prompt-only
+corrected gate, statistics/verdict and mutation mechanics, the historical
+worker, and role-scoped probe/verifier execution remain pending.
 
 ### Phase 4 — calibrated M5 Max executor
 
@@ -1063,15 +1068,21 @@ The non-training implementation slices now stand as follows:
    - after two contained, reaped discovery failures for terminal
      zero-byte/`EINVAL` behavior and exact optional
      `com.apple.TextEncoding`, the resealed live Release two-role
-     secure-capture canary passed with byte-identical 21,582-byte
+     secure-capture canary passed with byte-identical 22,022-byte
      probe/verifier output, SHA-256
-     `8a352013c632aa39f2d082bb5ae366f061f48e0572c70a5baea813d4560a4c12`;
+     `f5f2d2ebf4409da26164c1980bcece14c60db6937f664adb96e4e57693580b86`;
      it published no durable Stage-B process record or receipt and authorizes
      no replay, worker, model, Metal, or product claim;
-   - the Prime-owned immutable fixtures, typed worker-artifact recomputation,
-     sealed historical worker, role-scoped probe/verifier execution, exact
-     path-and-content inventory evidence, separately typed artifact-content
-     validation, Stage-B process records, and receipt do not yet exist;
+   - a first bounded pure-library sub-slice implements only raw-UTF-8
+     global-stream/chunk mechanics, independent direct/affine fingerprints,
+     the raw-byte cache guard, and typed invariant/fingerprint payload
+     validation;
+   - the pinned runtime donors, prompt-only corrected gate,
+     statistics/verdict and mutation mechanics, Prime-owned immutable
+     fixtures, remaining typed worker-artifact recomputation, sealed historical
+     worker, role-scoped probe/verifier execution, exact path-and-content
+     inventory evidence, remaining typed artifact-content validation, Stage-B
+     process records, and receipt do not yet exist;
    - `executionImplemented` remains false;
    - Stage B must add no PMHNP runtime dependency and must not write to the
      companion tree;

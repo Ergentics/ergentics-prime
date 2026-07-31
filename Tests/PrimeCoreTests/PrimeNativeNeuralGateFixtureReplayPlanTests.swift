@@ -4578,21 +4578,38 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
         )
     }
 
-    func testContractOnlySliceAddsNoReplayTargetOrReceipt()
+    func testFoundationSliceAddsOnlyPureMechanicsTarget()
         throws
     {
         let package = try String(
             contentsOfFile: "Package.swift",
             encoding: .utf8
         )
-        for forbiddenTarget in
-            Plan.frozenV3.targetGraph.map(\.target)
+        let compactPackage = package.filter {
+            !$0.isWhitespace
+        }
+        let mechanicsTarget =
+            "PrimeNativeNeuralGateReplayMechanics"
+        XCTAssertTrue(
+            compactPackage.contains(
+                #".target(name:"\#(mechanicsTarget)")"#
+            )
+        )
+        XCTAssertTrue(
+            FileManager.default.fileExists(
+                atPath:
+                    "Sources/\(mechanicsTarget)"
+            )
+        )
+        for forbiddenTarget in Plan.frozenV3
+            .targetGraph.map(\.target)
+            .filter({ $0 != mechanicsTarget })
         {
             XCTAssertFalse(
-                package.contains(
-                    #"name: "\#(forbiddenTarget)""#
+                compactPackage.contains(
+                    #"name:"\#(forbiddenTarget)""#
                 ),
-                "contract-only slice implemented target: \(forbiddenTarget)"
+                "foundation slice implemented later target: \(forbiddenTarget)"
             )
             XCTAssertFalse(
                 FileManager.default.fileExists(

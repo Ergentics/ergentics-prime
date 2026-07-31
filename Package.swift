@@ -149,6 +149,10 @@ let package = Package(
             name: "PrimeNativeCorpusReplayMechanics"
         ),
         .target(
+            name:
+                "PrimeNativeNeuralGateReplayMechanics"
+        ),
+        .target(
             name: "PrimeNativeCorpusReplay",
             dependencies: [
                 "PrimeCore",
@@ -312,6 +316,7 @@ let package = Package(
                 "PrimeNativeCorpusReplay",
                 "PrimeNativeCorpusReplayMechanics",
                 "PrimeNativeNeuralGateContract",
+                "PrimeNativeNeuralGateReplayMechanics",
             ]
         ),
     ]
