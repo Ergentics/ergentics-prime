@@ -533,8 +533,13 @@ After the raw/evaluation package split and topology V1 correction, the same
 Release canary passed with byte-identical probe/verifier output: 27,015 bytes,
 SHA-256
 `00dc419e101367d1f4a1d39f63bd35649b4de45417d74e4197f2376d729cdadf`.
-This is the current actual-package secure-capture reseal; source binding V7
-remains unissued.
+This is the last accepted topology-V1 actual-package secure-capture reseal.
+It predates topology V2's two targets and is not current V2 evidence. After
+the complete topology-V2 source reseal, the same Release canary passed with
+byte-identical probe/verifier output: 28,589 bytes, SHA-256
+`3a4ae506f5ed2eae16e9f46d099c5d53681ec1d1a02aa9c20549b0fbeb230d7c`.
+This is the current actual-package secure-capture reseal only; source binding
+V7 remains unissued.
 That pass validates only the secure capture substrate on the pinned host. It
 published no durable Stage-B process record or receipt,
 `executionImplemented` remains false, and no Stage-B replay, historical
@@ -981,6 +986,15 @@ Deliver:
 - revised Prime EngineRecommend that separates canary, broad-language,
   profile, and product claims.
 
+Current checkpoint: topology V2 now preserves topology V1 while materializing
+only dependency-free Stage-B artifact contracts and bounded in-memory
+transport over pure replay mechanics. Semantic namespace V4 is an incomplete,
+non-authorizing overlay on historical output classification V3. It does not
+stream descriptor-rooted invariants, decode logit payloads, execute a worker
+or mutation, close process/receipt ownership, issue source binding V7, or
+authorize a receipt. See
+`PRIME-NATIVE-NEURAL-GATE-TYPED-ARTIFACT-TRANSPORT-2026-07-31.md`.
+
 Exit: both replay arms reconcile under distinct Release probe/verifier
 supervisors; the historical arm additionally reconciles two separate bounded
 worker invocations. Every arm recomputes all ten gate legs, projected
@@ -1014,8 +1028,13 @@ After the raw/evaluation package split and topology V1 correction, the same
 Release canary passed with byte-identical probe/verifier output: 27,015 bytes,
 SHA-256
 `00dc419e101367d1f4a1d39f63bd35649b4de45417d74e4197f2376d729cdadf`.
-This is the current actual-package secure-capture reseal; source binding V7
-remains unissued.
+This is the last accepted topology-V1 actual-package secure-capture reseal.
+It predates topology V2's two targets and is not current V2 evidence. After
+the complete topology-V2 source reseal, the same Release canary passed with
+byte-identical probe/verifier output: 28,589 bytes, SHA-256
+`3a4ae506f5ed2eae16e9f46d099c5d53681ec1d1a02aa9c20549b0fbeb230d7c`.
+This is the current actual-package secure-capture reseal only; source binding
+V7 remains unissued.
 
 The repository-test checkpoint passed pure sidecar mechanics 6/6. The
 source-pinned MLX validation package remains outside the MLX-free
@@ -1086,13 +1105,16 @@ that the planned shared donor topology would expose trap-bearing historical
 code to corrected supervisors. Row identity remains outer correlation only;
 seed is replicate-scoped; and fresh per-row state plus row-permutation trace
 identity are mandatory. The package now splits raw corrected execution from
-evaluation/regrade authority. Trap-disjoint topology V1 supersedes the unsafe
-future routing, while source binding V7 remains unissued. Corrected execution
-remains blocked until typed artifact decoders and independent mutation
-producer/detector mechanics are source-bound, followed by the role-scoped
-worker, paired probe/verifier, exact inventory, and durable observations. The
-exact next prerequisite is
-`implement_pure_typed_artifact_schemas_bounded_canonical_decoders_and_source_bound_corrected_mutation_producer_detector_without_materializing_historical_runtime`.
+evaluation/regrade authority. Trap-disjoint topology V2 preserves V1,
+materializes only typed contracts/transport, and supersedes the unsafe future
+routing while source binding V7 remains unissued. Corrected execution remains
+blocked until the independently ordered prompt/outer/raw stream schedule and
+join are frozen, followed by descriptor-streaming validation, logit-codec
+integration, process/receipt ownership, and independent mutation
+producer/detector mechanics, then the role-scoped worker, paired
+probe/verifier, exact inventory, and durable observations. The exact next
+prerequisite is
+`complete_descriptor_rooted_streaming_artifact_decoders_freeze_corrected_process_and_receipt_ownership_then_materialize_disjoint_corrected_mutation_producer_detector`.
 Per-decision bit-pattern digests keep the pure trace inside Stage-B decode
 limits; local
 Foundation/Double probability diagnostics are excluded from canonical
@@ -1215,11 +1237,16 @@ The non-training implementation slices now stand as follows:
      SHA-256
      `53ace0b68b1f8f2cf6534be886cb93241b08a36e0ddf0e9da7f8eee33f37cb40`,
      but was not reconciled against V6's non-materialized future target graph;
-   - after the raw/evaluation split and topology V1 correction, the current
-     actual-package secure-capture reseal is byte-identical across probe and
-     verifier at 27,015 bytes, SHA-256
+   - after the raw/evaluation split and topology V1 correction, the last
+     accepted topology-V1 actual-package secure-capture reseal is
+     byte-identical across probe and verifier at 27,015 bytes, SHA-256
      `00dc419e101367d1f4a1d39f63bd35649b4de45417d74e4197f2376d729cdadf`;
-     source binding V7 remains unissued;
+     it predates topology V2 and cannot be reused as V2 evidence;
+   - after the complete topology-V2 source reseal, the current actual-package
+     secure-capture output is byte-identical across probe and verifier at
+     28,589 bytes, SHA-256
+     `3a4ae506f5ed2eae16e9f46d099c5d53681ec1d1a02aa9c20549b0fbeb230d7c`;
+     it remains secure-capture evidence only and source binding V7 is unissued;
    - the bounded pure-library layer implements raw-UTF-8
      global-stream/chunk mechanics, independent direct/affine fingerprints,
      the raw-byte cache guard, typed invariant/fingerprint payload validation,
@@ -1247,10 +1274,12 @@ The non-training implementation slices now stand as follows:
      the three admitted replicate contexts and seed-keyed permutations, but
      this remains symbolic/synthetic mechanics without model,
      independent-oracle, receipt, Metal, or product authority;
-   - topology V1 and the raw/evaluation package split are complete; no durable
+   - topology V2, its pure artifact-contract/transport targets, and the
+     raw/evaluation package split are complete; no durable
      full-vocabulary sidecar or full-fixture MLX recomputation process
-     observation yet exists; source-bound mutators and typed artifact
-     decoders, isolated historical worker, role-scoped probe/verifier
+     observation yet exists; descriptor streaming, source-codec integration,
+     process/receipt ownership, source-bound mutators, isolated historical
+     worker, role-scoped probe/verifier
      execution, exact path-and-content inventory evidence, replacement
      process-count schema, Stage-B process records, and receipt remain pending;
    - `executionImplemented` remains false;
@@ -1402,10 +1431,9 @@ repository was built locally in this audit.
 ## Immediate next decision
 
 The next investment is not another seed, profile, precision, quantization, or
-3B run. The exact CPU gate is complete against an authenticated-clone-
-resolvable private MLX revision. Preserve the generated receipt in separately
-controlled off-device storage, then run one bounded interrupted Metal
-continuation canary.
-
-Until the Metal interruption gate passes, Prime’s verdict on resumable
-training beyond the tiny CPU mechanics fixtures remains `ABSTAIN`.
+3B run. The exact CPU and bounded interrupted-Metal continuation gates are
+historical completed mechanics. Phase 3 should now implement descriptor-rooted
+Stage-B invariant streaming, integrate the source-bound logit codec, and freeze
+corrected process/evaluation/receipt ownership before materializing disjoint
+mutation producer/detector targets. Training authority remains unchanged and
+Stage-B execution remains `ABSTAIN`.

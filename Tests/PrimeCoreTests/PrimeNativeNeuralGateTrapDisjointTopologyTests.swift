@@ -117,6 +117,101 @@ final class PrimeNativeNeuralGateTrapDisjointTopologyTests:
         }
     }
 
+    func testTopologyV2MaterializesOnlyPureArtifactContractsAndTransport()
+        throws
+    {
+        let historical = Contract.frozenV1
+        let contract = Contract.frozenV2
+
+        XCTAssertNoThrow(try historical.validate())
+        XCTAssertNoThrow(try contract.validate())
+        XCTAssertEqual(contract.schemaVersion, 2)
+        XCTAssertEqual(
+            contract.contractID,
+            "prime_stage_b_trap_disjoint_topology_v2"
+        )
+        XCTAssertFalse(contract.executionImplemented)
+        XCTAssertFalse(contract.sourceBindingV7Issued)
+        XCTAssertTrue(
+            contract
+                .mutationProducerDetectorTargetAssignmentDeferred
+        )
+        XCTAssertEqual(
+            try historical.contentSHA256(),
+            "48e0f64fcb14193d74bf9c3d98a8aeef7ca366033cea6d8f00bc345ff0ad86b5"
+        )
+        XCTAssertEqual(
+            try contract.contentSHA256(),
+            "abc8f1ada303ecb95b7c9a44e72293ed314537b93e27354aebbb7763e1487415"
+        )
+        XCTAssertEqual(
+            try contract
+                .transitiveLocalTargetNames(
+                    reachableFrom:
+                        "PrimeNativeNeuralGateReplayArtifactContracts"
+                ),
+            []
+        )
+        XCTAssertEqual(
+            try contract
+                .transitiveLocalTargetNames(
+                    reachableFrom:
+                        "PrimeNativeNeuralGateReplayTransport"
+                ),
+            [
+                "PrimeNativeNeuralGateReplayArtifactContracts",
+                "PrimeNativeNeuralGateReplayMechanics",
+            ]
+        )
+        XCTAssertEqual(
+            try contract
+                .transitiveLocalTargetNames(
+                    reachableFrom:
+                        "PrimeNativeNeuralGateCorrectedRawWorker"
+                ),
+            [
+                "PrimeCore",
+                "PrimeNativeNeuralGateCorrectedMechanics",
+                "PrimeNativeNeuralGateLogitSidecarMechanics",
+                "PrimeNativeNeuralGatePromptSolver",
+                "PrimeNativeNeuralGateReplayArtifactContracts",
+                "PrimeNativeNeuralGateReplayMechanics",
+            ]
+        )
+        let implemented =
+            contract.targetGraph
+            .filter {
+                $0.materialization == .implemented
+            }
+            .map(\.targetName)
+        XCTAssertTrue(
+            implemented.contains(
+                "PrimeNativeNeuralGateReplayArtifactContracts"
+            )
+        )
+        XCTAssertTrue(
+            implemented.contains(
+                "PrimeNativeNeuralGateReplayTransport"
+            )
+        )
+        for target in [
+            "ErgenticsPrimeRuntime",
+            "PrimeNativeNeuralGateHistoricalReplayMechanics",
+            "PrimeNativeNeuralGateHistoricalFixtureWorker",
+            "PrimeNativeNeuralGateReplayProbe",
+            "PrimeNativeNeuralGateReplayVerifier",
+            "PrimeNativeNeuralGateCorrectedRawWorker",
+        ] {
+            XCTAssertEqual(
+                try contract.target(
+                    named: target
+                ).materialization,
+                .plannedNotMaterialized,
+                target
+            )
+        }
+    }
+
     func testPlannedSupervisorAndWorkerClosuresStayDisjoint()
         throws
     {
@@ -190,6 +285,8 @@ final class PrimeNativeNeuralGateTrapDisjointTopologyTests:
             #".target(name:"PrimeCore")"#,
             #".target(name:"PrimeNativeCorpusReplayMechanics")"#,
             #".target(name:"PrimeNativeNeuralGateReplayMechanics")"#,
+            #".target(name:"PrimeNativeNeuralGateReplayArtifactContracts")"#,
+            #".target(name:"PrimeNativeNeuralGateReplayTransport",dependencies:["PrimeNativeNeuralGateReplayArtifactContracts","PrimeNativeNeuralGateReplayMechanics",])"#,
             #".target(name:"PrimeNativeNeuralGateCorrectedMechanics",dependencies:["PrimeNativeNeuralGateReplayMechanics",])"#,
             #".target(name:"PrimeNativeNeuralGateCorrectedEvaluationMechanics",dependencies:["PrimeNativeNeuralGateReplayMechanics","PrimeNativeNeuralGateCorrectedMechanics",])"#,
             #".target(name:"PrimeNativeNeuralGateCorrectedFixtureAuthority",dependencies:["PrimeNativeCorpusReplayMechanics","PrimeNativeNeuralGateCorrectedMechanics","PrimeNativeNeuralGateCorrectedEvaluationMechanics",])"#,
@@ -208,7 +305,15 @@ final class PrimeNativeNeuralGateTrapDisjointTopologyTests:
             )
         )
 
-        for target in Contract.frozenV1.targetGraph
+        XCTAssertEqual(
+            try Contract.frozenV1.target(
+                named:
+                    "PrimeNativeNeuralGateReplayTransport"
+            ).materialization,
+            .plannedNotMaterialized
+        )
+
+        for target in Contract.frozenV2.targetGraph
         where target.materialization
             == .plannedNotMaterialized
         {

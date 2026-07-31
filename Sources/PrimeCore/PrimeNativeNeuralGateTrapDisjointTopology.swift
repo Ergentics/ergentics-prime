@@ -415,6 +415,151 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
             "This V1 contract corrects future Stage-B target routing while preserving the historical V5 replay-plan and V6 source-binding bytes. The implemented raw/evaluation split is package-observable. Historical runtime, historical replay, replay transport, workers, probe, and verifier remain planned_not_materialized; executionImplemented is false. A package-description capture proves only the captured package and secure-capture mechanics unless the live compiled-source closure is reconciled against the same contract. Source binding V7 is not issued and cannot issue until every planned and deferred evidence role, including independent corrected mutation producer/detector and process-scoped evaluation ownership, is frozen and materialized. Donor adaptation V2 remains historical only; V3 must route donor gate and carrier material to the historical replay target, never the pure replay substrate. Mutation production and independent detection must be disjoint, but their target assignment remains deferred until typed raw-material contracts exist."
     )
 
+    /// Materializes only the non-authorizing artifact-contract and bounded
+    /// in-memory transport layers. V1 remains the exact historical topology
+    /// that preceded this split.
+    public static let frozenV2: Self = {
+        let previous = frozenV1
+        let contractsTargetName =
+            "PrimeNativeNeuralGateReplayArtifactContracts"
+        var targets:
+            [PrimeNativeNeuralGateTopologyTarget] =
+            []
+        for target in previous.targetGraph {
+            switch target.targetName {
+            case "PrimeNativeNeuralGateReplayTransport":
+                targets.append(
+                    Self.target(
+                        contractsTargetName,
+                        .implemented,
+                        [],
+                        "pure non-authorizing Stage-B wire identities, bounded semantic artifact keys, and reserved output namespace"
+                    )
+                )
+                targets.append(
+                    Self.target(
+                        target.targetName,
+                        .implemented,
+                        [
+                            contractsTargetName,
+                            "PrimeNativeNeuralGateReplayMechanics",
+                        ],
+                        "bounded canonical in-memory decoding into non-authorizing validated transport values"
+                    )
+                )
+            case "PrimeNativeNeuralGateCorrectedRawWorker":
+                targets.append(
+                    Self.target(
+                        target.targetName,
+                        target.materialization,
+                        target
+                            .directLocalDependencyNames
+                            + [contractsTargetName],
+                        target.authority,
+                        externalProducts:
+                            target
+                            .externalProductDependencyNames
+                    )
+                )
+            default:
+                targets.append(target)
+            }
+        }
+
+        var reachability:
+            [PrimeNativeNeuralGateForbiddenReachability] =
+            []
+        for rule in previous.forbiddenReachability {
+            if rule.targetName
+                == "PrimeNativeNeuralGateReplayTransport"
+            {
+                reachability.append(
+                    Self.forbidden(
+                        contractsTargetName,
+                        [
+                            "PrimeCore",
+                            "PrimeNativeCorpusReplayMechanics",
+                            "PrimeNativeNeuralGateCorrectedMechanics",
+                            "PrimeNativeNeuralGateCorrectedEvaluationMechanics",
+                            "PrimeNativeNeuralGateCorrectedFixtureAuthority",
+                            "PrimeNativeNeuralGatePromptSolver",
+                            "PrimeNativeNeuralGateLogitSidecarMechanics",
+                            "PrimeNativeNeuralGateMLXLogSoftmaxRecomputation",
+                            "ErgenticsPrimeRuntime",
+                            "PrimeNativeNeuralGateHistoricalReplayMechanics",
+                        ]
+                    )
+                )
+                reachability.append(
+                    Self.forbidden(
+                        rule.targetName,
+                        [
+                            "PrimeCore",
+                            "PrimeNativeCorpusReplayMechanics",
+                            "PrimeNativeNeuralGateCorrectedMechanics",
+                            "PrimeNativeNeuralGateCorrectedEvaluationMechanics",
+                            "PrimeNativeNeuralGateCorrectedFixtureAuthority",
+                            "PrimeNativeNeuralGatePromptSolver",
+                            "PrimeNativeNeuralGateLogitSidecarMechanics",
+                            "PrimeNativeNeuralGateMLXLogSoftmaxRecomputation",
+                            "ErgenticsPrimeRuntime",
+                            "PrimeNativeNeuralGateHistoricalReplayMechanics",
+                        ]
+                    )
+                )
+            } else {
+                reachability.append(rule)
+            }
+        }
+
+        return Self(
+            schemaVersion: 2,
+            contractID:
+                "prime_stage_b_trap_disjoint_topology_v2",
+            status: .plannedNotMaterialized,
+            executionImplemented: false,
+            historicalReplayPlanID:
+                previous.historicalReplayPlanID,
+            historicalSourceBindingContractID:
+                previous
+                .historicalSourceBindingContractID,
+            historicalContractsPreserved: true,
+            historicalFutureTargetGraphSuperseded:
+                true,
+            targetGraph: targets,
+            forbiddenReachability:
+                reachability,
+            historicalContainmentRootTargetName:
+                previous
+                .historicalContainmentRootTargetName,
+            historicalRuntimeTargetName:
+                previous.historicalRuntimeTargetName,
+            historicalReplayTargetName:
+                previous.historicalReplayTargetName,
+            pureReplayTargetName:
+                previous.pureReplayTargetName,
+            donorAdaptationV2PreservedAsHistory:
+                true,
+            donorAdaptationV3Required: true,
+            donorAdaptationV3RequiredDestination:
+                previous
+                .donorAdaptationV3RequiredDestination,
+            sourceBindingV7Issued: false,
+            sourceBindingV7Prerequisite:
+                previous.sourceBindingV7Prerequisite,
+            packageCaptureAuthority:
+                "actual_package_secure_capture_only_not_v6_or_v7_execution_graph_reconciliation",
+            mutationProducerDetectorTargetAssignmentDeferred:
+                true,
+            mutationProducerDetectorMustBeDisjoint:
+                true,
+            nextImplementationPrerequisite:
+                "complete_descriptor_rooted_streaming_artifact_decoders_freeze_corrected_process_and_receipt_ownership_then_materialize_disjoint_corrected_mutation_producer_detector",
+            authorityStatement:
+                "This V2 contract preserves V1 and the historical V5/V6 identities while materializing only two trap-free, non-authorizing layers: a dependency-free artifact-contract target and a bounded in-memory transport target that depends only on those contracts and pure replay mechanics. No production target imports transport in this slice. Large invariant and logit payloads still require descriptor-rooted streaming validation; corrected process ownership and replacement receipt count remain deferred. Workers, probe, verifier, historical runtime, historical replay, mutation producer, and mutation detector remain planned_not_materialized. executionImplemented is false, source binding V7 is not issued, and decoder success cannot create mechanics PASS, model capability, scientific authority, product authority, or a terminal receipt."
+        )
+    }()
+
     public func target(
         named name: String
     ) throws -> PrimeNativeNeuralGateTopologyTarget {
@@ -460,8 +605,17 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
     }
 
     public func validate() throws {
-        guard self == .frozenV1,
-              schemaVersion == 1,
+        let expected: Self
+        switch schemaVersion {
+        case 1:
+            expected = .frozenV1
+        case 2:
+            expected = .frozenV2
+        default:
+            throw PrimeNativeNeuralGateTopologyError
+                .invalidFrozenContract
+        }
+        guard self == expected,
               status == .plannedNotMaterialized,
               !executionImplemented,
               historicalContractsPreserved,

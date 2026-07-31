@@ -441,8 +441,23 @@ After the raw/evaluation package split and topology V1 correction, the same
 Release canary passed with byte-identical probe/verifier output: 27,015 bytes,
 SHA-256
 `00dc419e101367d1f4a1d39f63bd35649b4de45417d74e4197f2376d729cdadf`.
-This is the current actual-package secure-capture reseal; source binding V7
-remains unissued.
+This is the last accepted topology-V1 actual-package secure-capture reseal.
+It predates topology V2's two new targets and is not current V2 evidence.
+After the complete topology-V2 source reseal, the same Release canary passed
+with byte-identical probe/verifier output: 28,589 bytes, SHA-256
+`3a4ae506f5ed2eae16e9f46d099c5d53681ec1d1a02aa9c20549b0fbeb230d7c`.
+This is the current actual-package secure-capture reseal only; source binding
+V7 remains unissued.
+
+The current Stage-B boundary is topology V2, canonical SHA-256
+`abc8f1ada303ecb95b7c9a44e72293ed314537b93e27354aebbb7763e1487415`.
+It materializes only dependency-free artifact contracts and bounded
+in-memory transport over pure replay mechanics. Semantic namespace V4,
+canonical SHA-256
+`60e10e6c10f9ec1f30102f5b6d27be123434a163c01d82c0cc5d4520824532d1`,
+is an incomplete non-authorizing overlay on historical output classification
+V3, not an execution artifact or receipt. See
+`PRIME-NATIVE-NEURAL-GATE-TYPED-ARTIFACT-TRANSPORT-2026-07-31.md`.
 
 The corrected mechanics are now split. The raw target owns prompt-only input,
 replicate-scoped seed context, fixed-cap/EOS full-512-logit decisions, and
@@ -500,14 +515,14 @@ channels, so one seed per replicate, fresh per-row state, and row-permutation
 trace identity are mandatory. The planned shared donor topology also exposed
 trap-bearing historical code to corrected supervisors. The implemented
 package now splits raw execution from evaluation/regrade authority, while
-trap-disjoint topology V1, SHA-256
-`48e0f64fcb14193d74bf9c3d98a8aeef7ca366033cea6d8f00bc345ff0ad86b5`,
-supersedes the unsafe future routing without issuing source binding V7.
-Corrected execution remains blocked until typed artifact decoders and
-independent mutation producer/detector mechanics are source-bound, followed
-by the role-scoped workers, paired probe/verifier, exact inventory, and
-durable observations. The exact next prerequisite is
-`implement_pure_typed_artifact_schemas_bounded_canonical_decoders_and_source_bound_corrected_mutation_producer_detector_without_materializing_historical_runtime`.
+trap-disjoint topology V2 preserves V1 and supersedes the unsafe future
+routing without issuing source binding V7. Corrected execution remains blocked
+until the independently ordered prompt/outer/raw stream schedule and join are
+frozen, followed by descriptor-streaming validation, logit-codec integration,
+process/receipt ownership, and independent mutation producer/detector
+mechanics, then the role-scoped workers, paired probe/verifier, exact
+inventory, and durable observations. The exact next prerequisite is
+`complete_descriptor_rooted_streaming_artifact_decoders_freeze_corrected_process_and_receipt_ownership_then_materialize_disjoint_corrected_mutation_producer_detector`.
 
 The repository-test checkpoint passed pure sidecar mechanics 6/6. The
 source-pinned MLX validation package remains outside the MLX-free

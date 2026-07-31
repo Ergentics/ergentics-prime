@@ -4,12 +4,15 @@ Date: 2026-07-30
 
 ## Outcome
 
-Stage B now has an implemented trap-disjoint mechanics boundary, but it still
-does not have a Stage-B executor, worker, probe, verifier, process record, or
-terminal receipt.
+Stage B now has an implemented trap-disjoint mechanics boundary plus pure
+typed artifact contracts and bounded in-memory transport. It still does not
+have a Stage-B executor, worker, probe, verifier, process record, or terminal
+receipt.
 
-`PrimeNativeNeuralGateTrapDisjointTopologyContract.frozenV1` is the current
+`PrimeNativeNeuralGateTrapDisjointTopologyContract.frozenV2` is the current
 topology correction. Its canonical SHA-256 is
+`abc8f1ada303ecb95b7c9a44e72293ed314537b93e27354aebbb7763e1487415`.
+Historical topology V1 remains byte-exact at SHA-256
 `48e0f64fcb14193d74bf9c3d98a8aeef7ca366033cea6d8f00bc345ff0ad86b5`.
 Its status is `planned_not_materialized`, `executionImplemented` is false, and
 source binding V7 is explicitly not issued.
@@ -27,6 +30,18 @@ The package now has these exact local closures:
 PrimeNativeNeuralGateReplayMechanics
     dependencies: []
     authority: pure raw-UTF8 stream, chunk, invariant, and fingerprint mechanics
+
+PrimeNativeNeuralGateReplayArtifactContracts
+    dependencies: []
+    authority: typed paths, identities, bounds, roles, readers, and
+               non-authorizing semantic namespace
+
+PrimeNativeNeuralGateReplayTransport
+    dependencies:
+      - PrimeNativeNeuralGateReplayArtifactContracts
+      - PrimeNativeNeuralGateReplayMechanics
+    authority: three bounded record manifests, three pathless record shapes,
+               and typed bindings only
 
 PrimeNativeNeuralGateCorrectedMechanics
     dependencies:
@@ -68,7 +83,11 @@ expected completion, regrade, capability, verdict, or mutation-observation
 types. The fixture authority can reach those types, but the corrected raw
 executor cannot reach the fixture authority or corpus mechanics.
 
-## Planned execution topology
+The artifact namespace V4 and transport boundary are specified in
+`PRIME-NATIVE-NEURAL-GATE-TYPED-ARTIFACT-TRANSPORT-2026-07-31.md`.
+No production target imports transport.
+
+## Remaining planned execution topology
 
 The following targets are names and dependency constraints only. None exists
 in `Package.swift` yet:
@@ -80,11 +99,6 @@ ErgenticsPrimeRuntime
 PrimeNativeNeuralGateHistoricalReplayMechanics
     dependencies:
       - ErgenticsPrimeRuntime
-      - PrimeNativeNeuralGateReplayMechanics
-
-PrimeNativeNeuralGateReplayTransport
-    dependencies:
-      - PrimeCore
       - PrimeNativeNeuralGateReplayMechanics
 
 PrimeNativeNeuralGateHistoricalFixtureWorker
@@ -107,6 +121,7 @@ PrimeNativeNeuralGateReplayVerifier
 PrimeNativeNeuralGateCorrectedRawWorker
     dependencies:
       - PrimeCore
+      - PrimeNativeNeuralGateReplayArtifactContracts
       - PrimeNativeNeuralGateCorrectedMechanics
       - PrimeNativeNeuralGatePromptSolver
       - PrimeNativeNeuralGateLogitSidecarMechanics
@@ -154,8 +169,14 @@ that checkpoint, not a V6 selected-source execution-graph proof. After the
 raw/evaluation split and topology V1 correction, the same Release canary
 passed with byte-identical probe/verifier output: 27,015 bytes, SHA-256
 `00dc419e101367d1f4a1d39f63bd35649b4de45417d74e4197f2376d729cdadf`.
-That is the current actual-package secure-capture reseal and still is not a
-V6 or V7 execution-graph proof.
+That is the last accepted topology-V1 actual-package secure-capture reseal
+and still is not a V6 or V7 execution-graph proof. It predates the two
+topology-V2 targets. After the complete topology-V2 source reseal, the same
+Release canary passed with byte-identical probe/verifier output: 28,589 bytes,
+SHA-256
+`3a4ae506f5ed2eae16e9f46d099c5d53681ec1d1a02aa9c20549b0fbeb230d7c`.
+This is the current actual-package secure-capture reseal only and still is not
+V6/V7 execution-graph proof.
 
 Source binding V7 is reserved until every planned and deferred evidence role
 is frozen and materialized, including the independent corrected mutation
@@ -174,15 +195,23 @@ raw material for a terminal verifier to recompute every mutation. Its private
 mutators and detectors require a hash-bound source-derived seam rather than a
 hand-port.
 
-The durable output namespace also lacks typed schemas and bounded canonical
-decoders for:
+Bounded canonical JSON schemas now exist only for the prompt-only,
+outer-evaluation, and seed-scoped raw-execution manifests and their three row
+shapes. Mutation deltas, historical observations, MLX observations,
+statistics/verdict observations, worker/process/result records, and the
+receipt remain `schema_deferred` and reject bytes before parsing. The
+implemented decoders do not prove prompt-content target independence, read
+descriptor-rooted files, stream invariant payloads, decode logit payloads,
+execute mutations, or authorize a verdict.
 
-- source-derived prompt-only fixture rows;
-- outer correlation, target, and regrade material;
-- raw executions and full mutation deltas;
-- historical gate materials and observations;
-- logit dictionary, chunks, manifest, and MLX recomputation observations;
-- statistics, verdict, process records, and terminal receipt.
+The three future record streams are independently canonicalized ordered
+multisets. Prompt rows have no execution index, while outer and raw rows do;
+therefore no implementation may zip the sorted streams. The remaining
+transport gaps begin with a frozen prompt-order-to-execution-index schedule
+and exact join validation plus a pure producer/decoder-shared canonical codec
+seam, then descriptor-rooted invariant streaming, source-codec integration for
+logits, the deferred semantic schemas, corrected process/evaluation ownership,
+replacement process/result/receipt schemas, and receipt-last publication.
 
 Mutation identity must be `(arm, ordinal, mutation_id)` because
 `target_dependent_prompt_grouping` has different meanings in the two arms.
@@ -191,15 +220,23 @@ containing one expected failed leg is insufficient.
 
 ## Ordered continuation
 
-1. Implement pure typed artifact schemas, bounded canonical decoders, and
-   output-namespace paths.
-2. Implement the corrected 15-case producer and an independently implemented
+1. Freeze the prompt-order-to-execution-index schedule and exact
+   outer/raw/sidecar join contract.
+2. Freeze a pure producer/decoder-shared canonical row-and-manifest codec seam;
+   no future worker may hand-roll its own JSON wire format.
+3. Implement descriptor-rooted invariant streaming and integrate the
+   source-bound logit codec without widening the transport closure.
+4. Freeze the deferred mutation, historical, MLX, and statistics/verdict
+   schemas.
+5. Freeze corrected process/evaluation ownership, replacement process count,
+   result records, receipt ownership, and receipt-last publication.
+6. Implement the corrected 15-case producer and an independently implemented
    detector. They may not share mutation implementation code.
-3. Derive the historical gate/carrier seam and 46-case raw mutation material
+7. Derive the historical gate/carrier seam and 46-case raw mutation material
    from the pinned donor source.
-4. Materialize role-scoped workers, probe, verifier, exact inventory, process
+8. Materialize role-scoped workers, probe, verifier, exact inventory, process
    records, and receipt-last composition.
-5. Run the durable full-vocabulary sidecar and maintained MLX Float32
+9. Run the durable full-vocabulary sidecar and maintained MLX Float32
    recomputation as Stage-B evidence.
 
 Every step remains Swift-first and Prime-owned. Python, shell scientific
