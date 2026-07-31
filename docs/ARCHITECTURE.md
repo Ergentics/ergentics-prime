@@ -121,8 +121,9 @@ thresholds, the count-derived ten-leg verdict, and fifteen ordered mutation
 observations. Full logits are locally digest-bound; Foundation/Double
 probability values remain non-evidentiary and cannot stand in for the frozen
 source-pinned Float32 log-softmax. These are calculators over caller-provided
-values, not mutation execution or observed semantic/capability authority. It
-has no solver, process, I/O, donor-runtime, model, or receipt authority.
+values, not mutation execution or observed semantic/capability authority. The
+corrected-mechanics target itself has no solver, process, I/O, donor-runtime,
+model, or receipt authority.
 
 An isolated `PrimeNativeNeuralGateCorrectedFixtureAuthority` target now
 exhaustively derives the exact 18,432-row corrected fixture from the
@@ -140,6 +141,25 @@ the derivation reads neither it nor the two bound parent receipt files and
 publishes no independent fixture receipt. Repository tests separately
 type-decode the exact receipt bytes.
 
+An isolated `PrimeNativeNeuralGatePromptSolver` target now implements
+`PrimeNativeNeuralGatePromptOnlyReplicateSolver` with
+`PrimeNativeNeuralGateCorrectedMechanics` as its sole local dependency. It
+adapts the Ergentics, LLC-owned corpus solver at companion revision
+`163fc100710ece48119bc25954452d10f6a84f7f`, tree
+`9009daa4f8a07fbd5897e00b9571cef44ec292db`, donor blob
+`b2a087c9410a71f2bc99debade752ff779d7a8a8`, SHA-256
+`4758ac2ffc8452614c7eee428333105ac63b0707cb890938d1e42966d3a14210`,
+under `LicenseRef-Ergentics-Proprietary`. This is a trap-free Swift semantic
+adaptation, not a byte-exact transplant. Its repository test contract is
+observed across 18,432 rows, all three admitted replicate contexts, and their
+seed-keyed permutations, with exact structural logit and strict malformed
+grammar gates. The solver remains symbolic/synthetic mechanics, not model
+execution, an independent scientific oracle, a durable receipt, Metal
+authority, or product authority.
+It leaves `executionImplemented`, the bounded logit-sidecar binding, and the
+source-pinned Float32 log-softmax binding false; workers, process records, and
+the terminal receipt remain absent.
+
 This split is security-significant. The previously planned `row_id` input
 encodes split and semantic family, including the abstention class, so row
 identity is now outer correlation only. The planned shared donor target also
@@ -147,9 +167,9 @@ would have exposed trap-bearing historical code to corrected supervisors.
 Row-selected seeds, retained solver state, and invocation order are additional
 metadata channels, so one seed per replicate, fresh per-row state, and
 row-permutation trace identity are mandatory. The exact source-derived
-fixture identity/count is now source-plan-bound. Corrected execution remains blocked
-until a concrete Prime-owned prompt-solver source derivation, a bounded
-full-logit sidecar with source-pinned Float32 log-softmax recomputation, and a
+fixture identity/count and the concrete prompt-only solver derivation are now
+source-plan-bound. Corrected execution remains blocked until a bounded
+full-logit sidecar with source-pinned Float32 log-softmax recomputation and a
 trap-disjoint topology are bound. The pure trace uses per-decision
 bit-pattern digests because
 hex-expanding all 512 logits would exceed the frozen Stage-B decode limits;
@@ -207,13 +227,17 @@ UID; the Darwin user-temporary parent remains a trusted prerequisite.
 External-child evidence and its enclosing describe-capture record are schema
 4 at the role-specific capture-V4 paths. The adaptation-proof and
 historical-worker aggregate contracts remain V2. The
-source/execution-binding contract is V4, the replay-output contract remains
+source/execution-binding contract is V5; V4 remains the historical
+twelve-target fixture-authority binding. The replay-output contract remains
 V3, the output-path-classification contract ID is
 `prime_stage_b_output_path_namespace_classification_v3`, and the fixture plan
-is V3/schema 3 at `neural-gate-replay/plan.v3.json`. The adaptation proof
-remains at `neural-gate-replay/source/adaptation-proof.v2.json`. The nested
-held-source mutation-guard observation remains schema 1; the scratch-namespace
-observation is schema 2; and the raw describe artifact, compiled closure,
+is V4/schema 4; V3/schema 3 remains the historical pre-solver plan. The
+unchanged V3 replay-output namespace still reserves
+`neural-gate-replay/plan.v3.json`, and no V4 execution artifact is claimed.
+The adaptation proof remains at
+`neural-gate-replay/source/adaptation-proof.v2.json`. The nested held-source
+mutation-guard observation remains schema 1; the scratch-namespace observation
+is schema 2; and the raw describe artifact, compiled closure,
 Release bindings, historical-worker request/process/result/success records,
 and terminal receipt remain V1.
 Focused Swift tests establish lifecycle and scratch mechanics, not a live
@@ -225,10 +249,15 @@ corrections, the live Release two-role secure-capture canary was rerun after
 the fixture-authority twelve-target source freeze and passed end to end on the
 pinned host with byte-identical probe/verifier output: 23,207 bytes, SHA-256
 `f2204bbae8623c35fdf7357c6b0aa2a585e9071f22556edbe6ce6e7cfccf04d5`.
-This is the current accepted fixture-authority reseal. It includes the
-PrimeCore trusted descriptor-inventory substrate, pure Stage-B replay
-mechanics, corrected value mechanics, and the offline source-attested fixture
-target; it does not widen canary authority.
+That is the preceding twelve-target fixture-authority reseal. After the
+isolated thirteenth prompt-solver target was added, the same Release canary was
+rerun on the pinned host and passed with byte-identical probe/verifier output:
+23,791 bytes, SHA-256
+`9d56ad223c9d980272583dc752e0ff05bb815ce504cd3c82fc7e186627c02aa7`.
+This is the current V5 source-binding reseal. It includes the PrimeCore trusted
+descriptor-inventory substrate, pure Stage-B replay mechanics, corrected value
+mechanics, the offline source-attested fixture target, and the isolated
+prompt-solver target; it does not widen canary authority.
 The pass validates only the secure capture substrate on that pinned host. It
 published no durable Stage-B process record or receipt,
 `executionImplemented` remains false, and no Stage-B replay, historical
@@ -264,12 +293,10 @@ blocks a correctly scoped mechanics pass.
 ## Separately scoped future admission
 
 The exact 18,432-row corrected fixture identity, ordering, and count are now
-source-plan-bound by the offline fixture authority. No independent fixture
-probe/verifier receipt is claimed.
+source-plan-bound by the offline fixture authority. The separate prompt-only
+solver derivation is also source-plan-bound, without an independent solver
+receipt.
 
-- bind a concrete Prime-owned solver whose row input is prompt tokens only,
-  whose seed is fixed once per replicate, whose state is fresh per row, and
-  whose per-prompt trace is invariant to row permutation;
 - bind a bounded full-vocabulary logit sidecar and independently recompute the
   frozen source-pinned Float32 log-softmax; the local Foundation/Double
   diagnostic is not evidence;

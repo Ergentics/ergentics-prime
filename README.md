@@ -424,8 +424,8 @@ bound by digest; the Foundation/Double probability calculations are explicitly
 non-evidentiary and do not substitute for the frozen source-pinned Float32
 log-softmax. These calculators accept caller-provided values; they do not
 inject/detect defects or establish observed leg, capability, semantic, or
-model truth. It contains no prompt solver, process, filesystem, network,
-donor-runtime, model, or receipt authority.
+model truth. The corrected-mechanics target itself contains no prompt solver,
+process, filesystem, network, donor-runtime, model, or receipt authority.
 
 An isolated
 `PrimeNativeNeuralGateCorrectedFixtureAuthority` target now derives the exact
@@ -447,6 +447,32 @@ source-bound and type-decoded in tests, but the derivation itself reads no
 receipt bytes and publishes no independent fixture receipt. It performs no
 solver or model execution and authorizes no Stage-B receipt.
 
+An isolated `PrimeNativeNeuralGatePromptSolver` target now supplies the
+concrete `PrimeNativeNeuralGatePromptOnlyReplicateSolver`. Its sole local
+dependency is `PrimeNativeNeuralGateCorrectedMechanics`; it receives only
+prompt token IDs plus a replicate-scoped admitted evaluation seed and creates
+fresh local parse/evaluation state for each call. The implementation is a
+trap-free Swift adaptation, not a byte-exact transplant, of the Ergentics,
+LLC-owned corpus solver at companion revision
+`163fc100710ece48119bc25954452d10f6a84f7f`, tree
+`9009daa4f8a07fbd5897e00b9571cef44ec292db`, path
+`prime-runtime/Sources/ErgenticsPrimeRuntime/ErgenticsPrimeNativeTextCorpus.swift`,
+blob `b2a087c9410a71f2bc99debade752ff779d7a8a8`, 177,032 bytes,
+SHA-256
+`4758ac2ffc8452614c7eee428333105ac63b0707cb890938d1e42966d3a14210`,
+under `LicenseRef-Ergentics-Proprietary`. The repository test contract is
+observed across all 18,432 selected rows in each of the three admitted
+replicate contexts and again under seed-keyed row permutations. It passed
+with exact output/EOS, 512-Float bit-pattern and digest, cross-seed logit
+manifest, and seed-bound trace checks. Malformed surface, action-lead, and LF
+wire-shape mutations also fail closed to `ABSTAIN`. That is repository-only
+symbolic/synthetic mechanics coverage, not model execution, an independent
+scientific oracle, a durable observation or receipt, Metal authority, or
+product authority.
+It does not change `executionImplemented`: the bounded logit sidecar,
+source-pinned Float32 log-softmax, workers, process records, and terminal
+receipt remain false, unbound, or absent.
+
 The pure trace binds every 512-logit decision by an exact bit-pattern digest
 instead of hex-expanding logits into the invariant multiset; the expanded
 three-replicate fixture would violate Stage-B decode bounds. This is not a
@@ -463,11 +489,12 @@ row-order permutation identity are mandatory because retained state, order, or
 row-selected seeds are also metadata channels. The audit also found that the
 planned shared donor topology would expose trap-bearing historical code to
 corrected supervisors. The exact source-derived fixture identity/count leg is
-now source-plan-bound. Corrected execution remains blocked until a concrete
-Prime-owned prompt-solver derivation, a bounded full-logit sidecar with
-source-pinned Float32 recomputation, and a trap-disjoint target topology are
-bound. The historical worker, paired probe/verifier, Stage-B execution
-records, and receipt remain pending; `executionImplemented` remains false.
+now source-plan-bound, and the concrete prompt-only solver derivation is bound
+separately. Corrected execution remains blocked until a bounded full-logit
+sidecar with source-pinned Float32 recomputation and a trap-disjoint target
+topology are bound. The historical worker, paired probe/verifier, Stage-B
+execution records, and receipt remain pending; `executionImplemented` remains
+false.
 
 The closed PrimeCore external-child capture substrate is implemented. It
 accepts only the role and source root, directly launches the frozen Xcode 26.6
@@ -528,13 +555,17 @@ schema 4 at
 `neural-gate-replay/source/probe-swift-package-describe-capture.v4.json` and
 `neural-gate-replay/source/verifier-swift-package-describe-capture.v4.json`.
 The adaptation-proof and historical-worker aggregate contracts remain V2. The
-source/execution-binding contract is frozen at V4, the replay-output contract
+source/execution-binding contract is frozen at V5, while V4 remains the
+historical twelve-target fixture-authority binding. The replay-output contract
 remains V3, the output-path-classification contract ID is
 `prime_stage_b_output_path_namespace_classification_v3`, and the fixture plan
-is V3/schema 3 at `neural-gate-replay/plan.v3.json`. The adaptation proof
-remains at `neural-gate-replay/source/adaptation-proof.v2.json`. The nested
-held-source mutation-guard observation remains schema 1, while the
-scratch-namespace observation is schema 2. The raw evaluated
+is V4/schema 4; V3/schema 3 remains independently reconstructable as the
+pre-solver historical plan. The frozen V3 replay-output namespace still
+reserves `neural-gate-replay/plan.v3.json`; no V4 execution artifact or
+receipt is claimed. The adaptation proof remains at
+`neural-gate-replay/source/adaptation-proof.v2.json`. The nested held-source
+mutation-guard observation remains schema 1, while the scratch-namespace
+observation is schema 2. The raw evaluated
 `swift-package-describe.v1.json`, compiled-source closure, Release bindings,
 historical-worker request/process/result/success records, and terminal receipt
 remain V1 records.
@@ -550,10 +581,15 @@ was rerun after the fixture-authority twelve-target source freeze and passed
 end to end on the pinned host. Probe and verifier output was byte-identical:
 23,207 bytes with SHA-256
 `f2204bbae8623c35fdf7357c6b0aa2a585e9071f22556edbe6ce6e7cfccf04d5`.
-This is the current accepted fixture-authority reseal. It includes the trusted
+That is the preceding twelve-target fixture-authority reseal. After the
+isolated thirteenth prompt-solver target was added, the same Release canary was
+rerun on the pinned host and passed with byte-identical probe/verifier output:
+23,791 bytes with SHA-256
+`9d56ad223c9d980272583dc752e0ff05bb815ce504cd3c82fc7e186627c02aa7`.
+This is the current V5 source-binding reseal. It includes the trusted
 descriptor-inventory substrate, pure Stage-B replay mechanics, corrected value
-mechanics, and the offline source-attested fixture target; it does not widen
-canary authority.
+mechanics, the offline source-attested fixture target, and the isolated
+prompt-solver target; it does not widen canary authority.
 That pass validates only the secure capture substrate on the pinned host. It
 published no durable Stage-B process record or receipt,
 `executionImplemented` remains false, and no Stage-B replay, historical
@@ -577,7 +613,7 @@ or drain must fail-stop. Worker result transport cannot authorize mechanics
 `PASS`; the verifier must decode and recompute the semantic artifacts. Stage A
 is copied as 35 reachable typed bindings plus its separately pinned receipt,
 or 36 artifacts total. The exact next prerequisite is
-`bind_concrete_prime_owned_replicate_scoped_seed_prompt_solver_with_fresh_per_row_state_no_row_target_regrade_closure_or_existential_input_then_bind_bounded_full_vocabulary_logit_sidecar_and_source_pinned_float32_logsoftmax_recomputation_then_amend_trap_disjoint_target_topology_and_implement_role_scoped_stage_b_historical_worker_probe_verifier_with_typed_artifact_recomputation_and_exact_path_metadata_content_inventory`.
+`bind_bounded_full_vocabulary_logit_sidecar_and_source_pinned_float32_logsoftmax_recomputation_then_amend_trap_disjoint_target_topology_and_implement_role_scoped_stage_b_historical_worker_probe_verifier_with_typed_artifact_recomputation_and_exact_path_metadata_content_inventory`.
 
 ## Initial calibration
 

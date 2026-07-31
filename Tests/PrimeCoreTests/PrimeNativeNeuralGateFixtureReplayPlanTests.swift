@@ -65,6 +65,289 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
         XCTAssertEqual(first, second)
     }
 
+    func testPromptOnlySolverBoundPlanAdvancesNarrowlyAndPreservesLegacy()
+        throws
+    {
+        let legacy = Plan.frozenV3
+        let bound = Plan.frozenV4
+        let solver =
+            try XCTUnwrap(
+                bound.correctedExecutionAdmission
+                    .promptOnlySolverSourceDerivation
+            )
+
+        XCTAssertNoThrow(try legacy.validate())
+        XCTAssertNoThrow(try bound.validate())
+        XCTAssertEqual(
+            try legacy.contentSHA256(),
+            "9e8e9c4820fcea592f79cb4cbdc9abdd217a0ca6e00e2b715a215d8a1d315ee6"
+        )
+        XCTAssertEqual(
+            try bound.contentSHA256(),
+            "a458a2caf801d01fa98b403b21514d2ea18ddbe284ea4d893c101fc5ca7663be"
+        )
+        XCTAssertEqual(legacy.schemaVersion, 3)
+        XCTAssertEqual(bound.schemaVersion, 4)
+        XCTAssertEqual(
+            bound.planID,
+            "ergentics_prime_native_neural_gate_dual_fixture_replay_v4"
+        )
+        XCTAssertEqual(
+            bound.status,
+            "secure_capture_replay_bytes_exact_source_derived_corrected_fixture_identity_corrected_value_observation_mechanics_and_prompt_only_solver_derivation_implemented_historical_worker_and_stage_b_replay_not_implemented"
+        )
+        XCTAssertEqual(
+            legacy.correctedExecutionAdmission,
+            .frozenV1
+        )
+        XCTAssertNil(
+            legacy.correctedExecutionAdmission
+                .promptOnlySolverSourceDerivation
+        )
+        XCTAssertEqual(
+            bound.correctedExecutionAdmission,
+            .frozenV2
+        )
+        XCTAssertTrue(
+            bound.correctedExecutionAdmission
+                .promptOnlySolverSourceDerivationBound
+        )
+        XCTAssertEqual(
+            solver.contractID,
+            "prime_stage_b_prompt_only_solver_source_derivation_v1"
+        )
+        XCTAssertEqual(
+            solver.targetName,
+            "PrimeNativeNeuralGatePromptSolver"
+        )
+        XCTAssertEqual(
+            solver.directLocalDependencyNames,
+            [
+                "PrimeNativeNeuralGateCorrectedMechanics",
+            ]
+        )
+        XCTAssertEqual(
+            solver.concreteSolverTypeName,
+            "PrimeNativeNeuralGatePromptOnlyReplicateSolver"
+        )
+        XCTAssertEqual(
+            solver.sourceRemoteURL,
+            "https://github.com/Ergentics/pmhnp-companion-ergentics.git"
+        )
+        XCTAssertEqual(
+            solver.sourceRevision,
+            "163fc100710ece48119bc25954452d10f6a84f7f"
+        )
+        XCTAssertEqual(
+            solver.sourceTreeOID,
+            "9009daa4f8a07fbd5897e00b9571cef44ec292db"
+        )
+        XCTAssertEqual(
+            solver.donorRelativePath,
+            "prime-runtime/Sources/ErgenticsPrimeRuntime/ErgenticsPrimeNativeTextCorpus.swift"
+        )
+        XCTAssertEqual(
+            solver.donorGitBlobOID,
+            "b2a087c9410a71f2bc99debade752ff779d7a8a8"
+        )
+        XCTAssertEqual(solver.donorByteCount, 177_032)
+        XCTAssertEqual(
+            solver.donorSHA256,
+            "4758ac2ffc8452614c7eee428333105ac63b0707cb890938d1e42966d3a14210"
+        )
+        XCTAssertEqual(solver.rightsHolder, "Ergentics, LLC")
+        XCTAssertEqual(
+            solver.licenseIdentifier,
+            "LicenseRef-Ergentics-Proprietary"
+        )
+        XCTAssertFalse(solver.adaptationByteExact)
+        XCTAssertFalse(
+            solver.trapBearingDependencyPermitted
+        )
+        XCTAssertFalse(
+            solver.independentScientificOracleClaimed
+        )
+        XCTAssertFalse(
+            solver.independentSolverReceiptPublished
+        )
+        XCTAssertEqual(
+            solver.authorityLevel,
+            "source_plan_bound_trap_free_adaptation_exhaustive_repository_test_observation_no_independent_solver_receipt_v1"
+        )
+        XCTAssertFalse(bound.executionImplemented)
+        XCTAssertFalse(bound.projectionReceiptAuthorized)
+        XCTAssertFalse(
+            bound.correctedExecutionAdmission
+                .correctedFixtureExecutionAuthorized
+        )
+        XCTAssertFalse(
+            bound.correctedExecutionAdmission
+                .boundedFullVocabularyLogitArtifactBound
+        )
+        XCTAssertFalse(
+            bound.correctedExecutionAdmission
+                .sourcePinnedFloat32LogSoftmaxRecomputationBound
+        )
+        XCTAssertFalse(
+            bound.correctedExecutionAdmission
+                .terminalReceiptAuthorized
+        )
+        XCTAssertEqual(
+            bound.targetGraph,
+            legacy.targetGraph
+        )
+        XCTAssertEqual(
+            bound.outputContract,
+            legacy.outputContract
+        )
+        XCTAssertEqual(
+            bound.requiredTrueClaims,
+            legacy.requiredTrueClaims
+        )
+        XCTAssertEqual(
+            bound.requiredFalseClaims,
+            legacy.requiredFalseClaims
+        )
+        XCTAssertEqual(
+            bound.immediateImplementationPrerequisite,
+            "bind_bounded_full_vocabulary_logit_sidecar_and_source_pinned_float32_logsoftmax_recomputation_then_amend_trap_disjoint_target_topology_and_implement_role_scoped_stage_b_historical_worker_probe_verifier_with_typed_artifact_recomputation_and_exact_path_metadata_content_inventory"
+        )
+        XCTAssertEqual(
+            bound.correctedExecutionAdmission
+                .unblockPrerequisite,
+            "bind_bounded_full_vocabulary_logit_sidecar_and_source_pinned_float32_logsoftmax_recomputation_then_pass_correlation_seed_row_permutation_same_length_and_different_length_substitution_raw_identity_gates"
+        )
+
+        let legacyAdmissionObject =
+            try XCTUnwrap(
+                try JSONSerialization.jsonObject(
+                    with:
+                        PrimeCanonicalJSON.encode(
+                            PrimeNativeNeuralGateCorrectedExecutionAdmission
+                                .frozenV1
+                        )
+                ) as? [String: Any]
+            )
+        XCTAssertNil(
+            legacyAdmissionObject[
+                "prompt_only_solver_source_derivation"
+            ]
+        )
+    }
+
+    func testSourceBindingV5AddsOnlyIsolatedPromptSolver()
+        throws
+    {
+        let legacy =
+            PrimeNativeNeuralGateSourceExecutionBindingContract
+            .frozenV4
+        let bound =
+            PrimeNativeNeuralGateSourceExecutionBindingContract
+            .frozenV5
+
+        XCTAssertNoThrow(try legacy.validate())
+        XCTAssertNoThrow(try bound.validate())
+        XCTAssertEqual(
+            legacy.contractID,
+            "prime_stage_b_release_source_executable_join_v4"
+        )
+        XCTAssertEqual(
+            bound.contractID,
+            "prime_stage_b_release_source_executable_join_v5"
+        )
+        XCTAssertEqual(
+            Array(bound.targetClosureRules.dropLast()),
+            legacy.targetClosureRules
+        )
+        let solverRule =
+            try XCTUnwrap(
+                bound.targetClosureRules.last
+            )
+        XCTAssertEqual(
+            solverRule.targetName,
+            "PrimeNativeNeuralGatePromptSolver"
+        )
+        XCTAssertEqual(
+            solverRule.directLocalDependencyNames,
+            [
+                "PrimeNativeNeuralGateCorrectedMechanics",
+            ]
+        )
+        XCTAssertEqual(
+            bound.processBindingRules,
+            legacy.processBindingRules
+        )
+        XCTAssertTrue(
+            bound.processBindingRules.allSatisfy {
+                !$0.exactTransitiveLocalTargetNames
+                    .contains(
+                        "PrimeNativeNeuralGatePromptSolver"
+                    )
+            }
+        )
+        XCTAssertEqual(
+            Plan.frozenV4.sourceExecutionBinding,
+            bound
+        )
+    }
+
+    func testPromptOnlySolverBoundPlanMutationsFailClosed()
+        throws
+    {
+        try assertMutationRejected(
+            Plan.frozenV4
+        ) { object in
+            object["schema_version"] = 3
+        }
+        try assertMutationRejected(
+            Plan.frozenV4
+        ) { object in
+            var admission = object[
+                "corrected_execution_admission"
+            ] as! [String: Any]
+            admission[
+                "prompt_only_solver_source_derivation_bound"
+            ] = false
+            object["corrected_execution_admission"] =
+                admission
+        }
+        try assertMutationRejected(
+            Plan.frozenV4
+        ) { object in
+            var admission = object[
+                "corrected_execution_admission"
+            ] as! [String: Any]
+            var solver = admission[
+                "prompt_only_solver_source_derivation"
+            ] as! [String: Any]
+            solver["authority_level"] =
+                "caller_asserted"
+            admission[
+                "prompt_only_solver_source_derivation"
+            ] = solver
+            object["corrected_execution_admission"] =
+                admission
+        }
+        try assertMutationRejected(
+            Plan.frozenV4
+        ) { object in
+            var binding = object[
+                "source_execution_binding"
+            ] as! [String: Any]
+            var targets = binding[
+                "target_closure_rules"
+            ] as! [[String: Any]]
+            targets.removeAll {
+                $0["target_name"] as? String
+                    == "PrimeNativeNeuralGatePromptSolver"
+            }
+            binding["target_closure_rules"] =
+                targets
+            object["source_execution_binding"] =
+                binding
+        }
+    }
+
     func testStageAParentUsesClosedHistoricalAuthority()
         throws
     {
@@ -6464,12 +6747,13 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
     }
 
     private func assertMutationRejected(
+        _ plan: Plan = .frozenV3,
         _ mutate:
             (inout [String: Any]) -> Void
     ) throws {
         let source =
             try PrimeCanonicalJSON.encode(
-                Plan.frozenV3
+                plan
             )
         var object = try XCTUnwrap(
             try JSONSerialization.jsonObject(
