@@ -204,7 +204,7 @@ historical runtime, workers, probe, verifier, mutation producer, and mutation
 detector remain `planned_not_materialized`. Mutation producer/detector
 assignment remains deferred and their implementation must be disjoint.
 
-## V6 continuation and next prerequisite
+## Historical V6 continuation and current V7 status
 
 The V5 prerequisite originally recorded below was satisfied additively by
 topology V6; V5 remains unchanged history. V6 freezes the exact ten-role
@@ -212,16 +212,30 @@ process roster, branch-scoped process/evaluation ownership, verifier-only
 receipt-last ownership, strict byte-bounded slot decoding, and construct-only
 target-free candidate types. Its supervisor-only retained-capture wrapper is a
 real capability-bound projection and ownership adapter, but no schedule has
-crossed a process boundary. The exact current implementation prerequisite is:
+crossed a process boundary.
 
-`freeze_typed_source_pinned_worker_and_role_artifact_references_with_common_capture_schedule_binding_and_bounded_candidate_stream_decoder_then_freeze_deferred_mutation_historical_mlx_statistics_verdict_schemas_and_assign_disjoint_source_bound_mutation_producer_detector_without_materializing_workers`
+Topology V7,
+`prime_stage_b_typed_worker_artifact_reference_and_bounded_schedule_stream_topology_v7`
+(canonical SHA-256
+`88fd8b2da5590576a3c9868e1ede55efb228e82d853d5db67a1d17d58834c156`),
+satisfies the declaration-and-decoder prerequisite that followed V6. It adds
+exact-count bounded `PRIMEIRM1` stream admission and typed common/branch,
+twenty-path artifact, and four-part Release worker-source declarations. Real
+common/branch scalar references are supervisor-derived and non-authorizing;
+realized worker-source and role-artifact content references remain absent, no
+worker is materialized, and
+source/execution-binding V7 remains separately unissued. The exact current
+implementation prerequisite is:
 
-That slice must freeze typed source-pinned worker and role-artifact references
-with a common capture/schedule binding, add a bounded aggregate candidate
-stream decoder, and freeze the deferred semantic record schemas before Prime
-assigns separate source-bound mutation producer and detector targets. Aggregate candidates are currently
-`Encodable`-only; only individual slot decoding is bounded. Worker
+`freeze_deferred_mutation_historical_mlx_statistics_verdict_schemas_and_assign_disjoint_source_bound_mutation_producer_detector_without_materializing_workers`
+
+That slice must freeze the deferred semantic record schemas before Prime
+assigns separate source-bound mutation producer and detector targets. Aggregate
+candidates remain non-`Decodable`; exact-count bounded stream admission is now
+implemented. Worker
 materialization, Stage-B execution, verdict publication, and receipt issuance
 remain later work. See
 `PRIME-NATIVE-NEURAL-GATE-PROCESS-OWNERSHIP-TARGET-FREE-DELIVERY-2026-07-31.md`
-for the exact V6 identities and focused evidence.
+for the exact V6 identities and focused evidence, and
+`PRIME-NATIVE-NEURAL-GATE-TYPED-REFERENCE-STREAM-BINDING-2026-07-31.md`
+for the V7 boundary.

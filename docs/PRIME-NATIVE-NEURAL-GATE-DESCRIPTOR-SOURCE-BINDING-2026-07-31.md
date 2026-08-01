@@ -76,12 +76,21 @@ establish prompt-content target independence, and cannot authorize mechanics
   `60e10e6c10f9ec1f30102f5b6d27be123434a163c01d82c0cc5d4520824532d1`.
 
 Topology V4 remains exact history. Topology V5 is now the exact historical
-held-root/crosswalk boundary. Current topology V6, SHA-256
+held-root/crosswalk boundary. Historical topology V6, SHA-256
 `6a25a3d674a7ef3eda4475ed5532fff2366103b641736b410b37fabbc805bcd1`,
 adds the non-authorizing target-free schedule, process/evaluation/receipt
 ownership, and retained-capture binding boundaries. It remains globally
 `planned_not_materialized` and keeps `executionImplemented == false` and
 `sourceBindingV7Issued == false`.
+Current topology V7,
+`prime_stage_b_typed_worker_artifact_reference_and_bounded_schedule_stream_topology_v7`,
+SHA-256
+`88fd8b2da5590576a3c9868e1ede55efb228e82d853d5db67a1d17d58834c156`,
+adds exact-count bounded stream admission and typed copied-reference
+declarations without widening that authority ceiling. Real common/branch
+scalar references are supervisor-derived and non-authorizing; worker-source
+and role-artifact content references remain absent.
+Topology V7 is distinct from the still-unissued source/execution-binding V7.
 
 ## Descriptor admission
 
@@ -257,23 +266,27 @@ probe/verifier package-description output: 36,047 bytes, SHA-256
 It carries the same secure-capture-only authority ceiling. The historical V4
 canary is not relabeled as V5 evidence.
 
-## V6 continuation and remaining truth gap
+## Historical V6 continuation and current V7 truth gap
 
 The held-root inventory and independent source-derived crosswalk prerequisite
-remains implemented and verified. Topology V6 has since frozen the replacement
+remains implemented and verified. Topology V6 froze the replacement
 ten-role process/evaluation/receipt ownership declarations, target-free
 schedule candidate shapes, and a supervisor-only retained-capture binding
 wrapper. That wrapper is real, but delivery remains false. Individual slot
-decoding is strict and byte-bounded; aggregate candidates remain
-`Encodable`-only. The immediate implementation prerequisite is:
+decoding is strict and byte-bounded. Topology V7 now adds exact-count bounded
+`PRIMEIRM1` raw/outer stream admission while keeping aggregate candidates
+non-`Decodable`, plus typed common/branch/artifact and worker-source reference
+declarations under the retained capture/schedule identity. Real common/branch
+scalar references are supervisor-derived and non-authorizing; realized worker-
+source and role-artifact content references remain absent. The immediate
+implementation prerequisite is:
 
-`freeze_typed_source_pinned_worker_and_role_artifact_references_with_common_capture_schedule_binding_and_bounded_candidate_stream_decoder_then_freeze_deferred_mutation_historical_mlx_statistics_verdict_schemas_and_assign_disjoint_source_bound_mutation_producer_detector_without_materializing_workers`
+`freeze_deferred_mutation_historical_mlx_statistics_verdict_schemas_and_assign_disjoint_source_bound_mutation_producer_detector_without_materializing_workers`
 
-Stage B must next freeze typed source-pinned worker and role-artifact references
-with a common capture/schedule binding, bounded aggregate candidate decoding,
-and the deferred mutation, historical, MLX, and statistics/verdict schemas, then assign a
-disjoint source-bound mutation producer/detector pair. Mutation assignment
-remains deferred and must not share implementation authority with the detector.
+Stage B must next freeze the deferred mutation, historical, MLX, and
+statistics/verdict schemas, then assign a disjoint source-bound mutation
+producer/detector pair. Mutation assignment remains deferred and must not share
+implementation authority with the detector.
 Historical runtime, all supervisors/workers, probe, verifier, mutation producer,
 and mutation detector remain
 `planned_not_materialized`.
@@ -290,3 +303,5 @@ See
 for the exact V5 authority boundary and observed focused result.
 The additive V6 identities and evidence are recorded in
 [Prime Native Neural Gate Process Ownership and Target-Free Delivery](PRIME-NATIVE-NEURAL-GATE-PROCESS-OWNERSHIP-TARGET-FREE-DELIVERY-2026-07-31.md).
+The additive V7 declaration and decoder boundary is recorded in
+[Prime Native Neural Gate Typed Reference and Stream Binding](PRIME-NATIVE-NEURAL-GATE-TYPED-REFERENCE-STREAM-BINDING-2026-07-31.md).

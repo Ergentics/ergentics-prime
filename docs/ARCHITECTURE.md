@@ -52,8 +52,8 @@ The receipt is repository- and off-device-durable; the complete approximately
 
 ## Current Phase 3 contract chain
 
-Phase 3 now has five historical contract/receipt boundaries plus three
-non-authorizing preparatory libraries:
+Phase 3 preserves its historical contract and receipt boundaries while
+layering additive, non-authorizing preparation targets:
 
 1. `PrimeNativeContractMigrationPlan.frozenV1` resolves the exact eight
    companion blobs at commit
@@ -95,6 +95,14 @@ non-authorizing preparatory libraries:
     one root identity for the exact four-source join.
     Separate binds do not yet establish one descendant-tree capture epoch, so
     the joined capability keeps durable origin false.
+
+Topology V5 then adds the retained capture inventory and independent
+prompt/target crosswalk. Topology V6 adds the target-free schedule,
+process/evaluation/receipt ownership, and retained delivery-preparation
+contracts. Current topology V7 adds the exact-count bounded stream contract,
+the pure role/artifact and worker-source reference contract, and the
+supervisor-only retained reference authority. None is a process or receipt
+writer, and none materializes a worker or artifact.
 
 Stage-A artifact publication is descriptor-rooted, and its terminal receipt
 uses exclusive no-replace publication after replay and source closure.
@@ -207,7 +215,7 @@ Topology V1 remains exact at SHA-256
 `48e0f64fcb14193d74bf9c3d98a8aeef7ca366033cea6d8f00bc345ff0ad86b5`.
 Topology V2 remains exact at SHA-256
 `abc8f1ada303ecb95b7c9a44e72293ed314537b93e27354aebbb7763e1487415`.
-Current topology V6 is
+Historical topology V6 is
 `prime_stage_b_process_evaluation_receipt_ownership_target_free_delivery_topology_v6`,
 canonical SHA-256
 `6a25a3d674a7ef3eda4475ed5532fff2366103b641736b410b37fabbc805bcd1`.
@@ -218,6 +226,15 @@ source binding V7 is reserved until a live compiled-source closure is
 reconciled against physically present targets. The V6 authority ceiling is
 recorded in
 `PRIME-NATIVE-NEURAL-GATE-PROCESS-OWNERSHIP-TARGET-FREE-DELIVERY-2026-07-31.md`.
+Current topology V7 is
+`prime_stage_b_typed_worker_artifact_reference_and_bounded_schedule_stream_topology_v7`,
+canonical SHA-256
+`88fd8b2da5590576a3c9868e1ede55efb228e82d853d5db67a1d17d58834c156`.
+It preserves V1 through V6 and adds exact-count `PRIMEIRM1` raw/outer stream
+admission, typed common/branch/twenty-path artifact-reference declarations,
+six four-part Release worker-source declarations, and a supervisor-only
+retained-capture reference adapter. Topology V7 is not source/execution-binding
+V7; the latter remains unissued.
 
 This split is security-significant. The previously planned `row_id` input
 encodes split and semantic family, including the abstention class, so row
@@ -245,14 +262,16 @@ only for its captured four-source bytes, corrected fixture identity, exact
 source-capability join, independent prompt/target association, and outer
 expected-completion binding. Topology V6's real supervisor-only wrapper retains
 that capture across pre/post projection recapture and binds content-derived
-candidates to exact branch owners. Individual target-free slots have bounded,
-strict decoding; aggregate candidates remain `Encodable`-only. Neither boundary
+candidates to exact branch owners. Topology V7 adds exact-count bounded stream
+admission without making aggregate candidates `Decodable`, plus pure typed
+reference declarations. Real common/branch scalar references are supervisor-
+derived and non-authorizing; worker-source and role-artifact content reference
+values remain absent. Neither boundary
 establishes prompt-content target independence, process delivery, model
 execution, evaluation/verdict authority, mechanics `PASS`, a receipt, science,
-or product authority. Corrected execution remains blocked until the bounded
-candidate stream decoder and deferred semantic schemas are frozen, followed by
-disjoint source-bound mutation producer/detector assignment and later worker
-materialization. The
+or product authority. Corrected execution remains blocked until the deferred
+semantic schemas and disjoint source-bound mutation producer/detector
+assignment are frozen, followed by later worker materialization. The
 pure trace uses per-decision
 bit-pattern digests because
 hex-expanding all 512 logits would exceed the frozen Stage-B decode limits;
@@ -433,7 +452,7 @@ artifacts total.
 Historical target independence and model capability remain `ABSTAIN`; neither
 blocks a correctly scoped mechanics pass.
 
-## Current V6 boundary and separately scoped future admission
+## Historical V6 boundary and current V7 continuation
 
 The exact 18,432-row corrected fixture identity, ordering, and count are now
 source-plan-bound by the offline fixture authority. The separate prompt-only
@@ -449,29 +468,31 @@ V4 four-source wrapper remains historical and non-durable. Topology V5
 retains a complete exact 41-file inventory, authoritatively rebinds all four
 sources, requires unchanged recapture, and binds the resulting replay to the
 independently source-derived 18,432-row prompt/target crosswalk. Actual process
-delivery and prompt-content target independence remain false. Topology V6 now
+delivery and prompt-content target independence remain false. Topology V6
 freezes the exact ten-role process roster, branch-scoped raw/evaluation record
 ownership, verifier-only receipt-last ownership, target-free slot/candidate
 construction, and the retained-capture delivery-preparation wrapper. The
 wrapper is real; delivery is not. All supervisors/workers remain absent.
 The terminal declaration inventories exactly 20 role-scoped pre-receipt paths,
-not a complete root. Typed role-to-path-to-content binding, common
-capture/schedule references, and source-pinned worker closure/executable
-references remain forward blockers.
+not a complete root. Topology V7 freezes typed role-to-path-to-content and
+worker-source reference declarations under one common capture/schedule identity
+and implements the exact-count bounded stream decoder. All realized artifact,
+source snapshot, package-description, compiled-closure, and sealed-executable
+values remain absent; the declarations do not establish source pinning.
 
 The focused V6 contract/topology checkpoint passed 48/48, and the real retained
 41-file-root projection/binding test passed 1/1 over all 18,432 rows in 363.326
 seconds. These are focused results, not a complete-suite claim. The exact next
 prerequisite is
-`freeze_typed_source_pinned_worker_and_role_artifact_references_with_common_capture_schedule_binding_and_bounded_candidate_stream_decoder_then_freeze_deferred_mutation_historical_mlx_statistics_verdict_schemas_and_assign_disjoint_source_bound_mutation_producer_detector_without_materializing_workers`.
+`freeze_deferred_mutation_historical_mlx_statistics_verdict_schemas_and_assign_disjoint_source_bound_mutation_producer_detector_without_materializing_workers`.
 
-- retain topology V1 through V5 as exact history and topology V6 as the current
+- retain topology V1 through V6 as exact history and topology V7 as the current
   additive boundary; do
   not route historical donor/runtime code
   into corrected supervisors;
-- freeze typed source-pinned worker and role-artifact references with common
-  capture/schedule binding, then implement the bounded aggregate candidate
-  stream decoder, actual process delivery, and disjoint source-bound mutators;
+- freeze the deferred mutation, historical, MLX, and statistics/verdict schemas,
+  then assign disjoint source-bound mutation producer/detector targets without
+  materializing workers; actual process delivery remains later work;
   bounded
   transport tests and the local Foundation/Double diagnostic are not durable
   execution evidence;

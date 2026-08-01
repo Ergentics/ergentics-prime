@@ -1016,19 +1016,30 @@ materializing the retained exact 41-file held-root capture and the downstream
 trap-bearing 18,432-row source-derived keyed crosswalk. Its focused integration
 passed in 300.125 seconds. Composition V1 remains pure and non-authorizing;
 the V5 wrappers carry the bounded durable-origin and crosswalk promotion.
-Current topology V6, canonical SHA-256
+Historical topology V6, canonical SHA-256
 `6a25a3d674a7ef3eda4475ed5532fff2366103b641736b410b37fabbc805bcd1`,
 adds the ten-role ownership and retained-capture schedule-preparation boundary.
 Semantic namespace V4 remains an incomplete, non-authorizing overlay on
 historical output classification V3. Topology V6 freezes declarative process,
-evaluation, and receipt ownership for ten roles, but does not materialize a
-worker or mutation, bind typed role/path/content references to one common
-capture and schedule, observe process delivery, issue source binding V7, or
-authorize a receipt. See
+evaluation, and receipt ownership for ten roles, but materializes no worker or
+mutation. Current topology V7,
+`prime_stage_b_typed_worker_artifact_reference_and_bounded_schedule_stream_topology_v7`,
+canonical SHA-256
+`88fd8b2da5590576a3c9868e1ede55efb228e82d853d5db67a1d17d58834c156`,
+adds exact-count bounded `PRIMEIRM1` admission, typed role/path/content and
+four-part Release worker-source declarations under one common capture/schedule
+identity, and a retained-capture reference adapter. Real common/branch scalar
+references are supervisor-derived and non-authorizing; realized worker-source
+and role-artifact content references remain absent. V7 does not observe process
+delivery or authorize a receipt.
+Topology V7 is distinct from the still-unissued source/execution-binding V7.
+See
 `PRIME-NATIVE-NEURAL-GATE-TYPED-ARTIFACT-TRANSPORT-2026-07-31.md` and
 `PRIME-NATIVE-NEURAL-GATE-REPLAY-COMPOSITION-2026-07-31.md`, and
 `PRIME-NATIVE-NEURAL-GATE-DESCRIPTOR-SOURCE-BINDING-2026-07-31.md`. The exact
 current authority ceiling is in
+`PRIME-NATIVE-NEURAL-GATE-TYPED-REFERENCE-STREAM-BINDING-2026-07-31.md`;
+the V6 authority ceiling is in
 `PRIME-NATIVE-NEURAL-GATE-PROCESS-OWNERSHIP-TARGET-FREE-DELIVERY-2026-07-31.md`;
 the V5 historical authority ceiling is in
 `PRIME-NATIVE-NEURAL-GATE-HELD-ROOT-CROSSWALK-AUTHORITY-2026-07-31.md`.
@@ -1177,16 +1188,20 @@ seed is replicate-scoped; and fresh per-row state plus row-permutation trace
 identity are mandatory. The package now splits raw corrected execution from
 evaluation/regrade authority. Historical trap-disjoint topology V5 preserves
 V1/V2/V3/V4 and adds held-root capture plus the downstream crosswalk without
-exposing target authority to the raw closure. Current topology V6 freezes the
-ten-role process/evaluation/receipt ownership declarations, target-free
+exposing target authority to the raw closure. Historical topology V6 freezes
+the ten-role process/evaluation/receipt ownership declarations, target-free
 schedule construction, and a real supervisor-only retained-capture binding
-wrapper while keeping source binding V7 unissued. Slot decoding is strict and
-byte-bounded; aggregate candidates remain `Encodable`-only and no process
-delivery is observed. Prompt-
+wrapper. Current topology V7 preserves that boundary and adds exact-count
+bounded raw/outer stream admission, pure typed common/branch/artifact and
+worker-source declarations, and a retained-capture reference adapter. Aggregate
+candidates remain non-`Decodable`; real common/branch scalar references are
+supervisor-derived and non-authorizing, while realized worker-source and role-
+artifact content references remain absent. Source/execution-binding V7 remains
+unissued, and no process delivery is observed. Prompt-
 content target independence, process delivery, model execution,
 evaluation/verdict publication, mechanics `PASS`, receipt, science, and
 product authority remain false. The exact next prerequisite is
-`freeze_typed_source_pinned_worker_and_role_artifact_references_with_common_capture_schedule_binding_and_bounded_candidate_stream_decoder_then_freeze_deferred_mutation_historical_mlx_statistics_verdict_schemas_and_assign_disjoint_source_bound_mutation_producer_detector_without_materializing_workers`.
+`freeze_deferred_mutation_historical_mlx_statistics_verdict_schemas_and_assign_disjoint_source_bound_mutation_producer_detector_without_materializing_workers`.
 Per-decision bit-pattern digests keep the pure trace inside Stage-B decode
 limits; local
 Foundation/Double probability diagnostics are excluded from canonical
@@ -1372,10 +1387,12 @@ The non-training implementation slices now stand as follows:
      prompt/target crosswalk are also complete, but no full-fixture MLX
      recomputation process or schedule-delivery observation yet exists;
      the ten-role process/evaluation/receipt ownership declarations are now
-     frozen, while typed role-to-path-to-content references with common
-     capture/schedule binding, source-pinned worker closure/executable
-     references, bounded aggregate candidate decoding, source-bound mutators,
-     isolated historical worker, role-scoped probe/verifier execution,
+     frozen; topology V7 also freezes exact-count bounded stream admission and
+     typed role-to-path-to-content and worker-source declarations under a
+     common capture/schedule identity, while every realized artifact,
+     source-snapshot, compiled-closure, and sealed-executable reference remains
+     absent; deferred semantic schemas, source-bound mutators, the isolated
+     historical worker, role-scoped probe/verifier execution,
      Stage-B process records, and receipt materialization remain pending;
    - `executionImplemented` remains false;
    - Stage B must add no PMHNP runtime dependency and must not write to the
@@ -1530,9 +1547,15 @@ The next investment is not another seed, profile, precision, quantization, or
 historical completed mechanics. Phase 3 has now completed the held-root
 four-source capture and independent source-derived prompt/target crosswalk,
 then frozen V6's ten-role ownership, target-free construction,
-retained-capture binding, and receipt-last declarations. It should next freeze
-typed source-pinned worker and role-artifact references with common
-capture/schedule binding, bounded aggregate candidate stream decoding, and the
-deferred mutation/historical/MLX/statistics/verdict schemas, then assign disjoint
-source-bound mutation producer/detector targets without materializing workers.
+retained-capture binding, and receipt-last declarations. Topology V7 then froze
+the exact-count stream decoder and typed role/artifact and worker-source
+reference declarations. Real common/branch scalar references are supervisor-
+derived and non-authorizing; worker-source and role-artifact content references
+remain absent, and no worker is materialized. The exact next step is to freeze
+the deferred
+mutation/historical/MLX/statistics/verdict schemas, then assign disjoint
+source-bound mutation producer/detector targets without materializing workers:
+
+`freeze_deferred_mutation_historical_mlx_statistics_verdict_schemas_and_assign_disjoint_source_bound_mutation_producer_detector_without_materializing_workers`
+
 Training authority remains unchanged and Stage-B execution remains `ABSTAIN`.

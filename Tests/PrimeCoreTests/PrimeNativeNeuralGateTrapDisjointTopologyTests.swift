@@ -1,5 +1,7 @@
 import Foundation
 @testable import PrimeCore
+import PrimeNativeNeuralGateReplayCaptureInventory
+import PrimeNativeNeuralGateRoleArtifactReferenceContracts
 import XCTest
 
 final class PrimeNativeNeuralGateTrapDisjointTopologyTests:
@@ -1221,6 +1223,196 @@ final class PrimeNativeNeuralGateTrapDisjointTopologyTests:
         }
     }
 
+    func testTopologyV7FreezesTypedReferencesAndBoundedStreamsWithoutWorkers()
+        throws
+    {
+        let historical = Contract.frozenV6
+        let contract = Contract.frozenV7
+        let scheduleTargetName =
+            "PrimeNativeNeuralGateTargetFreeScheduleDeliveryContracts"
+        let referenceContractsTargetName =
+            "PrimeNativeNeuralGateRoleArtifactReferenceContracts"
+        let referenceAuthorityTargetName =
+            "PrimeNativeNeuralGateRoleArtifactReferenceAuthority"
+
+        XCTAssertNoThrow(try historical.validate())
+        XCTAssertNoThrow(try contract.validate())
+        XCTAssertEqual(contract.schemaVersion, 7)
+        XCTAssertEqual(
+            contract.contractID,
+            "prime_stage_b_typed_worker_artifact_reference_and_bounded_schedule_stream_topology_v7"
+        )
+        XCTAssertEqual(contract.status, .plannedNotMaterialized)
+        XCTAssertFalse(contract.executionImplemented)
+        XCTAssertFalse(contract.sourceBindingV7Issued)
+        XCTAssertTrue(contract.historicalContractsPreserved)
+        XCTAssertTrue(
+            contract.historicalFutureTargetGraphSuperseded
+        )
+        XCTAssertTrue(
+            contract.mutationProducerDetectorTargetAssignmentDeferred
+        )
+        XCTAssertEqual(
+            contract.nextImplementationPrerequisite,
+            "freeze_deferred_mutation_historical_mlx_statistics_verdict_schemas_and_assign_disjoint_source_bound_mutation_producer_detector_without_materializing_workers"
+        )
+        XCTAssertTrue(
+            contract.authorityStatement.contains(
+                "no missing target is treated as a compiled closure"
+            )
+        )
+        XCTAssertTrue(
+            contract.authorityStatement.contains(
+                "No process delivery"
+            )
+        )
+        XCTAssertEqual(
+            try historical.contentSHA256(),
+            "6a25a3d674a7ef3eda4475ed5532fff2366103b641736b410b37fabbc805bcd1"
+        )
+        XCTAssertEqual(
+            PrimeNativeNeuralGateCommonCaptureScheduleReference
+                .captureInventoryContractID,
+            PrimeNativeNeuralGateReplayCaptureInventoryContract
+                .frozenV1.contractID
+        )
+        XCTAssertEqual(
+            try contract.contentSHA256(),
+            "88fd8b2da5590576a3c9868e1ede55efb228e82d853d5db67a1d17d58834c156"
+        )
+
+        let schedule = try contract.target(
+            named: scheduleTargetName
+        )
+        XCTAssertEqual(schedule.materialization, .implemented)
+        XCTAssertEqual(
+            schedule.directLocalDependencyNames,
+            try historical.target(
+                named: scheduleTargetName
+            ).directLocalDependencyNames
+        )
+        XCTAssertTrue(
+            schedule.authority.contains(
+                "exact-18432-record incremental PRIMEIRM1"
+            )
+        )
+        XCTAssertTrue(
+            schedule.authority.contains(
+                "aggregate candidates remain non-Decodable"
+            )
+        )
+
+        let references = try contract.target(
+            named: referenceContractsTargetName
+        )
+        XCTAssertEqual(references.materialization, .implemented)
+        XCTAssertEqual(
+            references.directLocalDependencyNames,
+            [
+                "PrimeNativeNeuralGateReplayArtifactContracts",
+                "PrimeNativeNeuralGateReplayMechanics",
+                scheduleTargetName,
+                "PrimeNativeNeuralGateCorrectedProcessOwnershipContracts",
+                "PrimeNativeNeuralGateCorrectedEvaluationOwnershipContracts",
+                "PrimeNativeNeuralGateTerminalReceiptOwnershipContracts",
+            ]
+        )
+        XCTAssertTrue(
+            references.authority.contains(
+                "six-worker typed Release source-reference schema"
+            )
+        )
+        XCTAssertTrue(
+            references.authority.contains(
+                "actual worker closures, executables, and artifact content remain unobserved"
+            )
+        )
+
+        let authority = try contract.target(
+            named: referenceAuthorityTargetName
+        )
+        XCTAssertEqual(authority.materialization, .implemented)
+        XCTAssertEqual(
+            authority.directLocalDependencyNames,
+            [
+                referenceContractsTargetName,
+                "PrimeNativeNeuralGateTargetFreeScheduleDeliveryAuthority",
+                "PrimeNativeNeuralGateCorrectedProcessOwnershipContracts",
+                scheduleTargetName,
+            ]
+        )
+        XCTAssertTrue(
+            authority.authority.contains(
+                "pre/post recapture"
+            )
+        )
+        XCTAssertTrue(
+            authority.authority.contains(
+                "no artifact or process delivery is observed"
+            )
+        )
+
+        let pureClosure = Set(
+            try contract.transitiveLocalTargetNames(
+                reachableFrom:
+                    referenceContractsTargetName
+            )
+        )
+        for forbidden in [
+            "PrimeCore",
+            "PrimeNativeNeuralGateReplayTransport",
+            "PrimeNativeNeuralGateReplaySourceBinding",
+            "PrimeNativeNeuralGateReplayCaptureInventory",
+            "PrimeNativeNeuralGatePromptTargetCrosswalkAuthority",
+            "PrimeNativeNeuralGateCorrectedEvaluationMechanics",
+            "PrimeNativeNeuralGateCorrectedFixtureAuthority",
+            "PrimeNativeNeuralGateMLXLogSoftmaxRecomputation",
+            "ErgenticsPrimeRuntime",
+        ] {
+            XCTAssertFalse(
+                pureClosure.contains(forbidden),
+                forbidden
+            )
+        }
+
+        for rule in historical.forbiddenReachability {
+            let updated = try XCTUnwrap(
+                contract.forbiddenReachability.first {
+                    $0.targetName == rule.targetName
+                }
+            )
+            XCTAssertTrue(
+                updated.forbiddenReachableTargetNames
+                    .contains(referenceContractsTargetName),
+                rule.targetName
+            )
+            XCTAssertTrue(
+                updated.forbiddenReachableTargetNames
+                    .contains(referenceAuthorityTargetName),
+                rule.targetName
+            )
+        }
+
+        for targetName in [
+            "ErgenticsPrimeRuntime",
+            "PrimeNativeNeuralGateHistoricalReplayMechanics",
+            "PrimeNativeNeuralGateHistoricalFixtureWorker",
+            "PrimeNativeNeuralGateReplayProbe",
+            "PrimeNativeNeuralGateReplayVerifier",
+            "PrimeNativeNeuralGateCorrectedRawWorker",
+            "PrimeNativeNeuralGateCorrectedProbeEvaluationWorker",
+            "PrimeNativeNeuralGateCorrectedVerifierEvaluationWorker",
+        ] {
+            XCTAssertEqual(
+                try contract.target(
+                    named: targetName
+                ).materialization,
+                .plannedNotMaterialized,
+                targetName
+            )
+        }
+    }
+
     func testPlannedSupervisorAndWorkerClosuresStayDisjoint()
         throws
     {
@@ -1300,6 +1492,8 @@ final class PrimeNativeNeuralGateTrapDisjointTopologyTests:
             #".target(name:"PrimeNativeNeuralGateCorrectedProcessOwnershipContracts",dependencies:["PrimeNativeNeuralGateReplayArtifactContracts","PrimeNativeNeuralGateTargetFreeScheduleDeliveryContracts",])"#,
             #".target(name:"PrimeNativeNeuralGateCorrectedEvaluationOwnershipContracts",dependencies:["PrimeNativeNeuralGateReplayArtifactContracts","PrimeNativeNeuralGateCorrectedProcessOwnershipContracts",])"#,
             #".target(name:"PrimeNativeNeuralGateTerminalReceiptOwnershipContracts",dependencies:["PrimeNativeNeuralGateReplayArtifactContracts","PrimeNativeNeuralGateCorrectedProcessOwnershipContracts","PrimeNativeNeuralGateCorrectedEvaluationOwnershipContracts",])"#,
+            #".target(name:"PrimeNativeNeuralGateRoleArtifactReferenceContracts",dependencies:["PrimeNativeNeuralGateReplayArtifactContracts","PrimeNativeNeuralGateReplayMechanics","PrimeNativeNeuralGateTargetFreeScheduleDeliveryContracts","PrimeNativeNeuralGateCorrectedProcessOwnershipContracts","PrimeNativeNeuralGateCorrectedEvaluationOwnershipContracts","PrimeNativeNeuralGateTerminalReceiptOwnershipContracts",])"#,
+            #".target(name:"PrimeNativeNeuralGateRoleArtifactReferenceAuthority",dependencies:["PrimeNativeNeuralGateRoleArtifactReferenceContracts","PrimeNativeNeuralGateTargetFreeScheduleDeliveryAuthority","PrimeNativeNeuralGateCorrectedProcessOwnershipContracts","PrimeNativeNeuralGateTargetFreeScheduleDeliveryContracts",])"#,
             #".target(name:"PrimeNativeNeuralGateReplayTransport",dependencies:["PrimeNativeNeuralGateReplayArtifactContracts","PrimeNativeNeuralGateReplayMechanics",])"#,
             #".target(name:"PrimeNativeNeuralGateReplayComposition",dependencies:["PrimeNativeNeuralGateReplayArtifactContracts","PrimeNativeNeuralGateReplayTransport","PrimeNativeNeuralGateReplayMechanics","PrimeNativeNeuralGateCorrectedMechanics","PrimeNativeNeuralGateLogitSidecarMechanics",])"#,
             #".target(name:"PrimeNativeNeuralGateReplaySourceBinding",dependencies:["PrimeCore","PrimeNativeNeuralGateReplayArtifactContracts","PrimeNativeNeuralGateReplayTransport","PrimeNativeNeuralGateReplayMechanics","PrimeNativeNeuralGateCorrectedMechanics","PrimeNativeNeuralGateLogitSidecarMechanics",])"#,
@@ -1337,6 +1531,8 @@ final class PrimeNativeNeuralGateTrapDisjointTopologyTests:
             "PrimeNativeNeuralGateCorrectedProcessOwnershipContracts",
             "PrimeNativeNeuralGateCorrectedEvaluationOwnershipContracts",
             "PrimeNativeNeuralGateTerminalReceiptOwnershipContracts",
+            "PrimeNativeNeuralGateRoleArtifactReferenceContracts",
+            "PrimeNativeNeuralGateRoleArtifactReferenceAuthority",
         ] {
             XCTAssertFalse(
                 productDeclarations.contains(
@@ -1364,7 +1560,7 @@ final class PrimeNativeNeuralGateTrapDisjointTopologyTests:
             .plannedNotMaterialized
         )
 
-        for target in Contract.frozenV6.targetGraph
+        for target in Contract.frozenV7.targetGraph
         where target.materialization
             == .plannedNotMaterialized
         {
@@ -1404,11 +1600,31 @@ final class PrimeNativeNeuralGateTrapDisjointTopologyTests:
             file:
                 "PrimeNativeNeuralGateTargetFreeScheduleDeliveryContracts.swift"
         )
+        let targetFreeStreamSource = try source(
+            target:
+                "PrimeNativeNeuralGateTargetFreeScheduleDeliveryContracts",
+            file:
+                "PrimeNativeNeuralGateTargetFreeScheduleStreamDecoder.swift"
+        )
+        let allTargetFreeSource =
+            targetFreeSource + "\n" + targetFreeStreamSource
         let deliveryAuthoritySource = try source(
             target:
                 "PrimeNativeNeuralGateTargetFreeScheduleDeliveryAuthority",
             file:
                 "PrimeNativeNeuralGateTargetFreeScheduleDeliveryAuthority.swift"
+        )
+        let referenceContractsSource = try source(
+            target:
+                "PrimeNativeNeuralGateRoleArtifactReferenceContracts",
+            file:
+                "PrimeNativeNeuralGateRoleArtifactReferenceContracts.swift"
+        )
+        let referenceAuthoritySource = try source(
+            target:
+                "PrimeNativeNeuralGateRoleArtifactReferenceAuthority",
+            file:
+                "PrimeNativeNeuralGateRoleArtifactReferenceAuthority.swift"
         )
         let movedSymbols = [
             "PrimeNativeNeuralGateCorrectedCompletionFeasibility",
@@ -1452,22 +1668,22 @@ final class PrimeNativeNeuralGateTrapDisjointTopologyTests:
             "import PrimeNativeNeuralGatePromptTargetCrosswalkAuthority",
         ] {
             XCTAssertFalse(
-                targetFreeSource.contains(forbiddenImport),
+                allTargetFreeSource.contains(forbiddenImport),
                 forbiddenImport
             )
         }
         for forbiddenSymbol in movedSymbols {
             XCTAssertFalse(
-                targetFreeSource.contains(forbiddenSymbol),
+                allTargetFreeSource.contains(forbiddenSymbol),
                 forbiddenSymbol
             )
         }
         XCTAssertFalse(
-            targetFreeSource.contains(
+            allTargetFreeSource.contains(
                 "PrimeNativeNeuralGateReplayOuterEvaluationRow"
             )
         )
-        let compactTargetFree = compact(targetFreeSource)
+        let compactTargetFree = compact(allTargetFreeSource)
         for forbiddenConformance in [
             "PrimeNativeNeuralGateTargetFreeRawScheduleCandidate:Codable",
             "PrimeNativeNeuralGateTargetFreeRawScheduleCandidate:Decodable",
@@ -1475,6 +1691,10 @@ final class PrimeNativeNeuralGateTrapDisjointTopologyTests:
             "PrimeNativeNeuralGateTargetFreeOuterScheduleCandidate:Decodable",
             "PrimeNativeNeuralGateTargetFreeScheduleCandidatePair:Codable",
             "PrimeNativeNeuralGateTargetFreeScheduleCandidatePair:Decodable",
+            "PrimeNativeNeuralGateTargetFreeSchedulePairStreamHeader:Codable",
+            "PrimeNativeNeuralGateTargetFreeSchedulePairStreamHeader:Decodable",
+            "PrimeNativeNeuralGateTargetFreeSchedulePairStreamAdmission:Codable",
+            "PrimeNativeNeuralGateTargetFreeSchedulePairStreamAdmission:Decodable",
         ] {
             XCTAssertFalse(
                 compactTargetFree.contains(
@@ -1483,6 +1703,16 @@ final class PrimeNativeNeuralGateTrapDisjointTopologyTests:
                 forbiddenConformance
             )
         }
+        XCTAssertTrue(
+            compactTargetFree.contains(
+                "privatestructPairStreamHeaderWire:Decodable"
+            )
+        )
+        XCTAssertTrue(
+            compactTargetFree.contains(
+                "PrimeNativeNeuralGateTargetFreeSchedulePairStreamAdmission:Equatable,Sendable"
+            )
+        )
         let compactAuthority = compact(
             deliveryAuthoritySource
         )
@@ -1504,6 +1734,103 @@ final class PrimeNativeNeuralGateTrapDisjointTopologyTests:
         XCTAssertTrue(
             compactAuthority.contains("fileprivateinit(")
         )
+
+        for forbiddenImport in [
+            "import PrimeCore",
+            "import PrimeNativeCorpusReplayMechanics",
+            "import PrimeNativeNeuralGateReplayTransport",
+            "import PrimeNativeNeuralGateReplayComposition",
+            "import PrimeNativeNeuralGateReplaySourceBinding",
+            "import PrimeNativeNeuralGateReplaySourceComposition",
+            "import PrimeNativeNeuralGateReplayCaptureInventory",
+            "import PrimeNativeNeuralGatePromptTargetCrosswalkAuthority",
+            "import PrimeNativeNeuralGateCorrectedEvaluationMechanics",
+            "import PrimeNativeNeuralGateCorrectedFixtureAuthority",
+            "import PrimeNativeNeuralGateMLXLogSoftmaxRecomputation",
+            "import ErgenticsPrimeRuntime",
+        ] {
+            XCTAssertFalse(
+                referenceContractsSource.contains(forbiddenImport),
+                forbiddenImport
+            )
+        }
+        for forbiddenImport in [
+            "import PrimeNativeCorpusReplayMechanics",
+            "import PrimeNativeNeuralGatePromptTargetCrosswalkAuthority",
+            "import PrimeNativeNeuralGateCorrectedEvaluationMechanics",
+            "import PrimeNativeNeuralGateCorrectedFixtureAuthority",
+            "import PrimeNativeNeuralGateMLXLogSoftmaxRecomputation",
+            "import ErgenticsPrimeRuntime",
+        ] {
+            XCTAssertFalse(
+                referenceAuthoritySource.contains(forbiddenImport),
+                forbiddenImport
+            )
+        }
+        let compactReferences = compact(referenceContractsSource)
+        for forbiddenConformance in [
+            "PrimeNativeNeuralGateCommonCaptureScheduleReference:Codable",
+            "PrimeNativeNeuralGateCommonCaptureScheduleReference:Decodable",
+            "PrimeNativeNeuralGateBranchScheduleReference:Codable",
+            "PrimeNativeNeuralGateBranchScheduleReference:Decodable",
+            "PrimeNativeNeuralGateWorkerSourceReference:Codable",
+            "PrimeNativeNeuralGateWorkerSourceReference:Decodable",
+            "PrimeNativeNeuralGateRoleArtifactContentReference:Codable",
+            "PrimeNativeNeuralGateRoleArtifactContentReference:Decodable",
+            "PrimeNativeNeuralGateRoleArtifactReferenceContract:Codable",
+            "PrimeNativeNeuralGateRoleArtifactReferenceContract:Decodable",
+        ] {
+            XCTAssertFalse(
+                compactReferences.contains(forbiddenConformance),
+                forbiddenConformance
+            )
+        }
+        let compactReferenceAuthority = compact(referenceAuthoritySource)
+        for forbiddenConformance in [
+            "PrimeNativeNeuralGateCaptureBoundRoleArtifactReferenceBundle:Codable",
+            "PrimeNativeNeuralGateCaptureBoundRoleArtifactReferenceBundle:Decodable",
+            "PrimeNativeNeuralGateCaptureBoundScheduleStreamAdmission:Codable",
+            "PrimeNativeNeuralGateCaptureBoundScheduleStreamAdmission:Decodable",
+            "PrimeNativeNeuralGateCaptureBoundScheduleStreamDecoder:Codable",
+            "PrimeNativeNeuralGateCaptureBoundScheduleStreamDecoder:Decodable",
+        ] {
+            XCTAssertFalse(
+                compactReferenceAuthority.contains(forbiddenConformance),
+                forbiddenConformance
+            )
+        }
+        XCTAssertTrue(
+            compactReferenceAuthority.contains(
+                "PrimeNativeNeuralGateCaptureBoundRoleArtifactReferenceBundle:@uncheckedSendable"
+            )
+        )
+        XCTAssertTrue(
+            compactReferenceAuthority.contains(
+                "PrimeNativeNeuralGateCaptureBoundScheduleStreamAdmission:@uncheckedSendable"
+            )
+        )
+        XCTAssertTrue(
+            compactReferenceAuthority.contains("fileprivateinit(")
+        )
+        let streamFactoryStart = try XCTUnwrap(
+            compactReferenceAuthority.range(
+                of: "publicstaticfuncmakeCaptureBoundStreamDecoder("
+            )
+        ).lowerBound
+        let streamFactorySource = compactReferenceAuthority[
+            streamFactoryStart...
+        ]
+        let cheapHeaderGate = try XCTUnwrap(
+            streamFactorySource.range(
+                of: "decodeUntrustedHeaderBeforeRetainedBinding(headerJSON)"
+            )
+        ).lowerBound
+        let retainedBind = try XCTUnwrap(
+            streamFactorySource.range(
+                of: "letreferenceBundle=trybind("
+            )
+        ).lowerBound
+        XCTAssertLessThan(cheapHeaderGate, retainedBind)
     }
 
     func testHistoricalAdaptationIsPreservedButCannotDriveFutureRouting()

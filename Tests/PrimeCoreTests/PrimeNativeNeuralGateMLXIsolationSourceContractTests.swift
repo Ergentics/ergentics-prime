@@ -51,6 +51,8 @@ final class
                 "PrimeNativeNeuralGateCorrectedProcessOwnershipContracts",
                 "PrimeNativeNeuralGateCorrectedEvaluationOwnershipContracts",
                 "PrimeNativeNeuralGateTerminalReceiptOwnershipContracts",
+                "PrimeNativeNeuralGateRoleArtifactReferenceContracts",
+                "PrimeNativeNeuralGateRoleArtifactReferenceAuthority",
                 "PrimeNativeNeuralGatePromptSolver",
                 "PrimeNativeNeuralGateLogitSidecarMechanics",
             ]),
@@ -77,6 +79,8 @@ final class
             "PrimeNativeNeuralGateCorrectedProcessOwnershipContracts",
             "PrimeNativeNeuralGateCorrectedEvaluationOwnershipContracts",
             "PrimeNativeNeuralGateTerminalReceiptOwnershipContracts",
+            "PrimeNativeNeuralGateRoleArtifactReferenceContracts",
+            "PrimeNativeNeuralGateRoleArtifactReferenceAuthority",
         ] {
             XCTAssertEqual(
                 occurrences(

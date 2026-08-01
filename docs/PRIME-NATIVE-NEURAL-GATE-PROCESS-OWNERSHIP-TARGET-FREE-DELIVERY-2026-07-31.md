@@ -131,8 +131,11 @@ pre-receipt paths to be inventoried. Publication must be exclusive/no-replace
 and last, with no post-receipt artifact creation. Abnormal containment, a
 missing result, or an inventory mismatch permits no successful execution
 record, no receipt, and no retry. This is not yet an exact full-root inventory:
-typed role-to-path-to-content binding, common capture/schedule references, and
-source-pinned worker closure/executable references remain forward blockers.
+at the V6 checkpoint, typed role-to-path-to-content binding, common
+capture/schedule references, and source-pinned worker closure/executable
+references were forward blockers. Topology V7 now freezes those declaration
+schemas and their retained-capture adapter, but all realized artifact,
+source-snapshot, compiled-closure, and sealed-executable values remain absent.
 
 The receipt's final semantic body remains deferred until the mutation,
 historical, MLX, and statistics/verdict record schemas are frozen. Freezing an
@@ -185,16 +188,26 @@ that the complete Debug or Release package suites passed in this slice. The
 embedded source identity and Release actual-package canary remain separate
 final reseal gates.
 
-## Next prerequisite
+## Historical V6 prerequisite and V7 continuation
 
-The next bounded implementation step is:
+Topology V7 satisfies the declaration-and-decoder prerequisite that followed
+this V6 checkpoint. Current topology V7 is
+`prime_stage_b_typed_worker_artifact_reference_and_bounded_schedule_stream_topology_v7`,
+canonical SHA-256
+`88fd8b2da5590576a3c9868e1ede55efb228e82d853d5db67a1d17d58834c156`.
+It adds exact-count bounded `PRIMEIRM1` stream admission, typed reference
+declarations, and a retained-capture reference adapter without materializing a
+worker. Real common/branch scalar references are supervisor-derived and non-
+authorizing; realized worker-source and role-artifact content references remain
+absent. Topology V7 is distinct from the still-unissued source/execution-binding
+V7.
 
-`freeze_typed_source_pinned_worker_and_role_artifact_references_with_common_capture_schedule_binding_and_bounded_candidate_stream_decoder_then_freeze_deferred_mutation_historical_mlx_statistics_verdict_schemas_and_assign_disjoint_source_bound_mutation_producer_detector_without_materializing_workers`
+The current bounded implementation step is:
 
-The next slice must first freeze typed source-pinned worker and role-artifact
-references plus their common capture/schedule binding. Its decoder must
-preserve the slot byte limits and aggregate row/byte bounds and must not promote
-copied source references into capture authority. Only after those references,
-the decoder, the deferred schemas, and the disjoint producer/detector boundary
-are frozen should Prime materialize the historical worker and paired Stage-B
-supervisors/workers.
+`freeze_deferred_mutation_historical_mlx_statistics_verdict_schemas_and_assign_disjoint_source_bound_mutation_producer_detector_without_materializing_workers`
+
+The next slice must freeze the deferred schemas and the disjoint
+producer/detector boundary. Only after that boundary is frozen should Prime
+consider materializing the historical worker and paired Stage-B
+supervisors/workers. The V7 details are recorded in
+`PRIME-NATIVE-NEURAL-GATE-TYPED-REFERENCE-STREAM-BINDING-2026-07-31.md`.

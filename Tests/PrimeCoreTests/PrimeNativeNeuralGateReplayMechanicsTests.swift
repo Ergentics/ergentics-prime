@@ -463,6 +463,65 @@ final class PrimeNativeNeuralGateReplayMechanicsTests:
         }
     }
 
+    func testIncrementalReaderRejectsWrongRequiredDeclaredCountBeforeRecords()
+        throws
+    {
+        var handFramedHeader = Data("PRIMEIRM1".utf8)
+        append(UInt64(18_431), to: &handFramedHeader)
+        let limits = try self.limits(
+            records: 18_432,
+            recordBytes: 16_384,
+            aggregateBytes: 301_989_888
+        )
+        let reader =
+            PrimeNativeNeuralGateInvariantFramedRecordReader(
+                kind: .global,
+                limits: limits,
+                requireCanonicalOrder: false,
+                requiredDeclaredRecordCount: 18_432
+            )
+        var callbackCount = 0
+        XCTAssertThrowsError(
+            try reader.consume(handFramedHeader) { _ in
+                callbackCount += 1
+            }
+        ) {
+            XCTAssertEqual(
+                $0 as? PrimeNativeNeuralGateReplayMechanicsError,
+                .declaredRecordCountMismatch(
+                    expected: 18_432,
+                    observed: 18_431
+                )
+            )
+        }
+        XCTAssertEqual(callbackCount, 0)
+        XCTAssertThrowsError(try reader.finish()) {
+            XCTAssertEqual(
+                $0 as? PrimeNativeNeuralGateReplayMechanicsError,
+                .incrementalReaderNotReusable
+            )
+        }
+
+        var matching = Data("PRIMEIRM1".utf8)
+        append(UInt64(1), to: &matching)
+        append(UInt64(1), to: &matching)
+        matching.append(UInt8(ascii: "x"))
+        let matchingReader =
+            PrimeNativeNeuralGateInvariantFramedRecordReader(
+                kind: .global,
+                requiredDeclaredRecordCount: 1
+            )
+        var observed = [Data]()
+        try matchingReader.consume(matching) {
+            observed.append($0)
+        }
+        XCTAssertEqual(observed, [Data("x".utf8)])
+        XCTAssertEqual(
+            try matchingReader.finish().declaredRecordCount,
+            1
+        )
+    }
+
     func testGlobalAccumulatorFailsClosedOnCountBoundsUTF8AndOrder()
         throws
     {

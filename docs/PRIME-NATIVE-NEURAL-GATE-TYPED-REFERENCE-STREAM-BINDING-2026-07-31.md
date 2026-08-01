@@ -1,0 +1,176 @@
+# Prime Native Neural Gate Typed Reference and Stream Binding
+
+Date: 2026-07-31
+
+## Outcome
+
+This additive Stage-B slice closes the next declaration and transport gap
+without materializing a supervisor, worker, executable, output artifact, or
+receipt. It adds:
+
+- an exact-count incremental decoder for the two target-free schedule slot
+  streams;
+- a pure typed schema for the common replay capture/schedule reference;
+- typed branch, role/path/content, and Release worker-source references;
+- the exact ten-role, twenty-path corrected pre-receipt declaration matrix;
+  and
+- a supervisor-only sealed adapter that retains the existing held replay
+  capture while joining the copied references and decoded stream identities.
+
+Every aggregate candidate remains non-`Decodable`. Every copied reference is
+non-authoritative. Source/execution-binding V7 remains unissued, and every
+process in the future ten-role topology remains absent.
+
+Topology V7 and source/execution-binding V7 are separate version domains.
+Topology V7 is implemented as the additive declaration/decoder boundary in
+this document; it does not issue source/execution-binding V7.
+
+## Frozen identities
+
+- topology V7,
+  `prime_stage_b_typed_worker_artifact_reference_and_bounded_schedule_stream_topology_v7`:
+  `88fd8b2da5590576a3c9868e1ede55efb228e82d853d5db67a1d17d58834c156`;
+- target-free schedule stream contract V2,
+  `prime_stage_b_target_free_schedule_bounded_stream_transport_v2`:
+  `ed897cba2313f25bfcf610a6eb1abcdc4c45eaee2524c758f49d515c0ca49331`;
+- role/artifact source-reference contract V1,
+  `prime_stage_b_role_artifact_source_reference_contract_v1`:
+  `c6948fb552c78f16911f4846a5f6971ed6e69486aba5afbc2d40fe4c5f342cf8`;
+  and
+- retained reference authority V1,
+  `prime_stage_b_retained_delivery_role_artifact_reference_authority_v1`:
+  `ca0d27932e76d1b8b75cac65d9ff32413762bc377ed408ad16b065941facc830`.
+
+Topology V1 through V6 and target-free schedule contract V1 remain exact
+history. Validation, provenance-reseal, and Release-canary results are recorded
+only after their final runs; no result is claimed here yet.
+
+## Bounded target-free stream transport
+
+The V1 schedule contract and its canonical identity remain exact history. The
+additive V2 transport does not decode the large aggregate candidate JSON
+arrays. It admits two independent `PRIMEIRM1` streams:
+
+| Stream | Exact rows | Record cap | Aggregate record-byte cap | Framed-file cap |
+| --- | ---: | ---: | ---: | ---: |
+| raw prompt-only | 18,432 | 16,384 | 301,989,888 | 302,137,361 |
+| outer correlation-only | 18,432 | 1,024 | 18,874,368 | 19,021,841 |
+
+The combined framed-byte cap is 321,159,202 bytes. Descriptor drivers must
+feed no more than 65,536 bytes at a time. The maintained framed reader rejects
+a declared count other than 18,432 before any record callback. It bounds each
+record and the aggregate before reserving record storage, hashes every framed
+byte incrementally, retains only one decoded slot at a time, and poisons the
+reader after any failure.
+
+Raw decoding rederives the canonical prompt tokens, `PRIMECPI2` binding, and
+`PRIMECOR1` correlation. Both streams require contiguous execution indexes and
+unique correlations; raw additionally requires unique prompt bindings. Outer
+decoding joins every correlation to the already admitted raw correlation at
+the same index. The decoder then recomputes the raw candidate, outer candidate,
+and delivery identities.
+
+The scalar header is canonical JSON capped at 4,096 bytes. A trusted expected
+header derived from the retained candidate pair is compared during decoder
+initialization, before reader construction or slot work. This prevents an
+internally consistent but unexpected header from forcing a full bounded parse
+before rejection. The supervisor factory separately performs the bounded
+canonical scalar-header preflight before retained-capture and full-pair work;
+that cheap untrusted-input gate does not claim the trusted expected header was
+already derived.
+
+Successful stream admission is mechanics only. It does not establish source
+origin, process delivery, target independence, execution, evaluation, `PASS`,
+receipt authority, science, or product use.
+
+## Typed reference boundary
+
+`PrimeNativeNeuralGateRoleArtifactReferenceContracts` is an internal pure
+target. It imports no `PrimeCore`, descriptor capture, source composition,
+crosswalk, evaluator implementation, MLX, historical runtime, or product
+authority.
+
+Its common reference binds copied observations of:
+
+- the V5 capture contract and capture identity;
+- the complete replay-root scalar identity;
+- the prompt-source binding;
+- the `PRIMESCH1` schedule identity; and
+- a self-derived canonical reference identity.
+
+Each branch reference additionally binds the exact probe/verifier role and
+raw, outer, and pair identities. Each realized role-artifact content reference
+must bind the exact frozen schema, branch, path, owner, reader set, content
+digest and count, immutable purpose, mode, and the common and branch reference
+identities. Constructing such a value does not prove that the bytes exist.
+
+The frozen declaration matrix contains exactly ten corrected process roles and
+the exact twenty role-scoped paths independently declared by the raw,
+evaluation, and terminal-receipt ownership contracts. Package-description and
+historical-worker roles have explicit empty corrected-path arrays; this slice
+does not invent replacement paths for their separately deferred evidence.
+
+## Worker source references
+
+The six future worker roles require four typed Release reference kinds:
+
+1. Prime source snapshot;
+2. `swift package describe` output;
+3. compiled source closure; and
+4. sealed worker executable.
+
+The value schemas bind safe paths, content SHA-256 and byte count, purpose and
+mode, Release configuration, source and embedded-source identities, the worker
+role/target, exact ordered local dependency names, and the common
+capture/schedule identity. The frozen declarations preserve package/topology
+dependency order rather than treating dependencies as an unordered set.
+
+No actual worker target exists, so the frozen inventory contains no realized
+source reference, closure, or executable value. A whole-repository snapshot is
+not substituted for a compiled worker closure, and a staged executable is not
+called a running mapped image. Executable vnode, PID, same-process capture,
+delivery, death/reap, and result evidence remain future runtime work.
+
+## Retained authority and intentional terminal reachability
+
+The supervisor-only authority target depends on the existing retained
+target-free delivery authority. It recaptures the replay source before and
+after projection, derives the common and branch references, validates the
+exact raw/outer ownership paths, and privately retains the live capture
+capability. Its capture-bound stream wrapper derives the trusted scalar stream
+header from that retained candidate pair after the bounded scalar preflight,
+then compares it before reader construction or framed-record callbacks. It
+reconciles the finished admission to the common/branch identities, recaptures
+again, and returns only a sealed non-`Codable` admission.
+
+The pure reference target intentionally reaches the terminal-receipt
+*declaration* target so the twenty paths can be checked against a third,
+independently frozen list. This grants no publication function or receipt
+authority. All terminal flags remain false, and neither reference target is a
+package product.
+
+## Authority ceiling
+
+The following remain false:
+
+- actual worker source pinning or executable binding observed;
+- process or schedule delivery observed;
+- worker, model, mutation, or evaluator execution;
+- prompt-content target independence;
+- accepted verdict or mechanics `PASS`;
+- terminal receipt authorization or publication;
+- source binding V7;
+- scientific authority; and
+- product authority.
+
+## Next prerequisite
+
+The next bounded slice is:
+
+`freeze_deferred_mutation_historical_mlx_statistics_verdict_schemas_and_assign_disjoint_source_bound_mutation_producer_detector_without_materializing_workers`
+
+Only after those semantic schemas and disjoint producer/detector ownership are
+frozen should Prime consider materializing the historical worker and paired
+Stage-B supervisors/workers. Live Release closure, executable, process, and
+artifact evidence must then fill the typed references; the declarations in
+this slice cannot stand in for that evidence.

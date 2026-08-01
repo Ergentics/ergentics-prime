@@ -17,6 +17,7 @@ import PrimeNativeNeuralGateReplayMechanics
 import PrimeNativeNeuralGateReplaySourceBinding
 import PrimeNativeNeuralGateReplaySourceComposition
 import PrimeNativeNeuralGateReplayTransport
+import PrimeNativeNeuralGateRoleArtifactReferenceAuthority
 import PrimeNativeNeuralGateTargetFreeScheduleDeliveryContracts
 import PrimeNativeNeuralGateTargetFreeScheduleDeliveryAuthority
 import XCTest
@@ -44,6 +45,10 @@ final class PrimeNativeNeuralGateReplaySourceCompositionTests:
         PrimeNativeNeuralGateTargetFreeScheduleDeliveryAuthority
     private typealias DeliveryAuthorityError =
         PrimeNativeNeuralGateTargetFreeScheduleDeliveryAuthorityError
+    private typealias RoleArtifactReferenceAuthority =
+        PrimeNativeNeuralGateRoleArtifactReferenceAuthority
+    private typealias RoleArtifactReferenceAuthorityError =
+        PrimeNativeNeuralGateRoleArtifactReferenceAuthorityError
 
     private static let sourceDerivedCrosswalk =
         Result<PrimeNativeNeuralGateSourceDerivedPromptTargetCrosswalk, Error> {
@@ -746,6 +751,158 @@ final class PrimeNativeNeuralGateReplaySourceCompositionTests:
         }
     }
 
+    func testRoleArtifactReferenceAuthorityFactorySealsExactStreamAndRejectsDrift()
+        throws
+    {
+        let crosswalk = try Self.sourceDerivedCrosswalk.get()
+        let material = try makeAuthorityMaterial(
+            crosswalk: crosswalk
+        )
+        let exact = try makeRoot()
+        defer {
+            try? FileManager.default.removeItem(at: exact.url)
+        }
+
+        try publishAuthorityMaterial(
+            material,
+            outerBundle: material.outerBundle,
+            to: exact.root
+        )
+        let captured = try Capture.capture(
+            artifactRoot: exact.root,
+            replicateSeed: material.seed
+        )
+        let retainedDelivery = try DeliveryAuthority.bind(
+            capturedSource: captured,
+            branch: .probe
+        )
+        let pair = retainedDelivery.candidatePair
+        let contract =
+            PrimeNativeNeuralGateTargetFreeScheduleStreamContract
+            .frozenV2
+        XCTAssertEqual(
+            pair.rawSchedule.orderedSlots.count,
+            contract.exactScheduleRowCount
+        )
+        XCTAssertEqual(
+            pair.outerSchedule.orderedSlots.count,
+            contract.exactScheduleRowCount
+        )
+
+        let header = try
+            PrimeNativeNeuralGateTargetFreeSchedulePairStreamHeader(
+                expectedCandidatePair: pair
+            )
+        let headerJSON = try header.canonicalJSON()
+        let rawStream = try roleArtifactFramedGlobal(
+            pair.rawSchedule.orderedSlots
+        )
+        let outerStream = try roleArtifactFramedGlobal(
+            pair.outerSchedule.orderedSlots
+        )
+
+        let successful = try RoleArtifactReferenceAuthority
+            .makeCaptureBoundStreamDecoder(
+                retainedDelivery: retainedDelivery,
+                headerJSON: headerJSON
+            )
+        try feedRoleArtifactStream(rawStream) {
+            try successful.consumeRaw($0)
+        }
+        try successful.finishRawAtEOF()
+        try feedRoleArtifactStream(outerStream) {
+            try successful.consumeOuter($0)
+        }
+        let admission = try successful.finishAtEOF()
+        XCTAssertEqual(
+            admission.commonReference.captureIdentitySHA256,
+            retainedDelivery.captureIdentitySHA256
+        )
+        XCTAssertEqual(
+            admission.commonReference.sourceRootIdentity,
+            retainedDelivery.sourceRootIdentity
+        )
+        XCTAssertEqual(
+            admission.branchReference.rawCandidateIdentitySHA256,
+            pair.rawSchedule.candidateIdentitySHA256
+        )
+        XCTAssertEqual(
+            admission.branchReference.outerCandidateIdentitySHA256,
+            pair.outerSchedule.candidateIdentitySHA256
+        )
+        XCTAssertEqual(
+            admission.branchReference.deliveryIdentitySHA256,
+            pair.deliveryIdentitySHA256
+        )
+        XCTAssertEqual(
+            admission.streamAdmission.orderedSlotCount,
+            contract.exactScheduleRowCount
+        )
+        XCTAssertTrue(admission.retainedCaptureBindingEstablished)
+        XCTAssertTrue(admission.boundedStreamAdmissionEstablished)
+        XCTAssertFalse(admission.descriptorReadAuthorityEstablished)
+        XCTAssertFalse(admission.sourcePinningObserved)
+        XCTAssertFalse(
+            admission.promptContentTargetIndependenceEstablished
+        )
+        XCTAssertFalse(admission.processDeliveryObserved)
+        XCTAssertFalse(admission.workerMaterialized)
+        XCTAssertFalse(admission.modelExecutionEstablished)
+        XCTAssertFalse(admission.evaluationPerformed)
+        XCTAssertFalse(admission.verdictPublicationAuthorized)
+        XCTAssertFalse(admission.publicationAuthorized)
+        XCTAssertFalse(admission.mechanicsPassAuthorized)
+        XCTAssertFalse(admission.terminalReceiptAuthorized)
+        XCTAssertFalse(admission.sourceBindingV7Issued)
+        XCTAssertFalse(admission.scientificAuthorityAuthorized)
+        XCTAssertFalse(admission.productAuthorityAuthorized)
+        XCTAssertNoThrow(
+            try admission.validateSourceStillUnchanged()
+        )
+
+        let drifted = try RoleArtifactReferenceAuthority
+            .makeCaptureBoundStreamDecoder(
+                retainedDelivery: retainedDelivery,
+                headerJSON: headerJSON
+            )
+        try feedRoleArtifactStream(rawStream) {
+            try drifted.consumeRaw($0)
+        }
+        try drifted.finishRawAtEOF()
+        try feedRoleArtifactStream(outerStream) {
+            try drifted.consumeOuter($0)
+        }
+
+        _ = try exact.root.publish(
+            Data("unexpected".utf8),
+            at: "unexpected.v1.bin",
+            purpose: .immutableData
+        )
+        XCTAssertThrowsError(try drifted.finishAtEOF()) {
+            XCTAssertEqual(
+                $0 as? RoleArtifactReferenceAuthorityError,
+                .retainedSourceChanged
+            )
+        }
+
+        let oversizedHeader = Data(
+            repeating: 0x20,
+            count: contract.maximumHeaderJSONByteCount + 1
+        )
+        XCTAssertThrowsError(
+            try RoleArtifactReferenceAuthority
+                .makeCaptureBoundStreamDecoder(
+                    retainedDelivery: retainedDelivery,
+                    headerJSON: oversizedHeader
+                )
+        ) {
+            XCTAssertEqual(
+                $0 as? RoleArtifactReferenceAuthorityError,
+                .captureBoundStreamProjectionRejected
+            )
+        }
+    }
+
     func testFrozenCaptureAndCrosswalkContractsRemainNonAuthorizing()
         throws
     {
@@ -1394,6 +1551,53 @@ final class PrimeNativeNeuralGateReplaySourceCompositionTests:
             seed: material.seed,
             to: root
         )
+    }
+
+    private func roleArtifactFramedGlobal<Slot: Encodable>(
+        _ slots: [Slot]
+    ) throws -> Data {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [
+            .sortedKeys,
+            .withoutEscapingSlashes,
+        ]
+        var stream = Data("PRIMEIRM1".utf8)
+        appendRoleArtifactUInt64(
+            UInt64(slots.count),
+            to: &stream
+        )
+        for slot in slots {
+            let record = try encoder.encode(slot)
+            appendRoleArtifactUInt64(
+                UInt64(record.count),
+                to: &stream
+            )
+            stream.append(record)
+        }
+        return stream
+    }
+
+    private func feedRoleArtifactStream(
+        _ data: Data,
+        blockByteCount: Int = 64 * 1_024,
+        consume: (Data) throws -> Void
+    ) throws {
+        var offset = 0
+        while offset < data.count {
+            let end = min(data.count, offset + blockByteCount)
+            try consume(Data(data[offset ..< end]))
+            offset = end
+        }
+    }
+
+    private func appendRoleArtifactUInt64(
+        _ value: UInt64,
+        to data: inout Data
+    ) {
+        var bigEndian = value.bigEndian
+        withUnsafeBytes(of: &bigEndian) {
+            data.append(contentsOf: $0)
+        }
     }
 
     private func publishPromptMaterial(

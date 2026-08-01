@@ -22,6 +22,14 @@ final class PrimeNativeNeuralGateTargetFreeScheduleDeliveryContractsTests:
         PrimeNativeNeuralGateTargetFreeOuterScheduleCandidate
     private typealias Pair =
         PrimeNativeNeuralGateTargetFreeScheduleCandidatePair
+    private typealias StreamContract =
+        PrimeNativeNeuralGateTargetFreeScheduleStreamContract
+    private typealias StreamHeader =
+        PrimeNativeNeuralGateTargetFreeSchedulePairStreamHeader
+    private typealias StreamDecoder =
+        PrimeNativeNeuralGateTargetFreeScheduleCandidatePairStreamDecoder
+    private typealias StreamError =
+        PrimeNativeNeuralGateTargetFreeScheduleStreamError
 
     func testFrozenContractIsExactAndNonauthorizing()
         throws
@@ -114,6 +122,147 @@ final class PrimeNativeNeuralGateTargetFreeScheduleDeliveryContractsTests:
             ),
             "2418856c22891798954b43ef956ee1bc7b91a7b3959b7c572ad07c4e1e1d377d"
         )
+    }
+
+    func testV2StreamContractAndScalarHeaderAreStrictAndNonauthorizing()
+        throws
+    {
+        let contract = StreamContract.frozenV2
+        XCTAssertNoThrow(try contract.validate())
+        XCTAssertEqual(contract.schemaVersion, 2)
+        XCTAssertEqual(contract.exactScheduleRowCount, 18_432)
+        XCTAssertEqual(
+            contract.maximumRawAggregateRecordBytes,
+            301_989_888
+        )
+        XCTAssertEqual(
+            contract.maximumOuterAggregateRecordBytes,
+            18_874_368
+        )
+        XCTAssertEqual(
+            contract.maximumRawFramedStreamBytes,
+            302_137_361
+        )
+        XCTAssertEqual(
+            contract.maximumOuterFramedStreamBytes,
+            19_021_841
+        )
+        XCTAssertEqual(
+            contract.maximumCombinedFramedStreamBytes,
+            321_159_202
+        )
+        XCTAssertTrue(contract.exactDeclaredCountFailEarlyImplemented)
+        XCTAssertTrue(contract.oneRecordAtATimeDecodingImplemented)
+        XCTAssertTrue(
+            contract.boundedCandidateStreamDecodingImplemented
+        )
+        XCTAssertTrue(contract.aggregateJSONCandidateDecodingForbidden)
+        XCTAssertTrue(contract.candidateTypesRemainEncodableOnly)
+        XCTAssertFalse(contract.sourceBindingEstablished)
+        XCTAssertFalse(contract.durableArtifactOriginEstablished)
+        XCTAssertFalse(
+            contract.promptContentTargetIndependenceEstablished
+        )
+        XCTAssertFalse(contract.processOwnershipEstablished)
+        XCTAssertFalse(contract.processDeliveryObserved)
+        XCTAssertFalse(contract.workerMaterialized)
+        XCTAssertFalse(contract.modelExecutionEstablished)
+        XCTAssertFalse(contract.evaluationPerformed)
+        XCTAssertFalse(contract.verdictPublicationAuthorized)
+        XCTAssertFalse(contract.publicationAuthorized)
+        XCTAssertFalse(contract.mechanicsPassAuthorized)
+        XCTAssertFalse(contract.terminalReceiptAuthorized)
+        XCTAssertFalse(contract.scientificAuthorityAuthorized)
+        XCTAssertFalse(contract.productAuthorityAuthorized)
+        XCTAssertFalse(RawCandidate.self is any Decodable.Type)
+        XCTAssertFalse(OuterCandidate.self is any Decodable.Type)
+        XCTAssertFalse(Pair.self is any Decodable.Type)
+        XCTAssertFalse(StreamHeader.self is any Decodable.Type)
+        XCTAssertFalse(
+            PrimeNativeNeuralGateTargetFreeSchedulePairStreamAdmission
+                .self is any Encodable.Type
+        )
+        XCTAssertFalse(
+            PrimeNativeNeuralGateTargetFreeSchedulePairStreamAdmission
+                .self is any Decodable.Type
+        )
+        XCTAssertFalse(StreamDecoder.self is any Encodable.Type)
+        XCTAssertFalse(StreamDecoder.self is any Decodable.Type)
+        XCTAssertEqual(
+            PrimeSHA256.hexDigest(
+                of: try PrimeCanonicalJSON.encode(contract)
+            ),
+            "ed897cba2313f25bfcf610a6eb1abcdc4c45eaee2524c758f49d515c0ca49331"
+        )
+
+        let header = try StreamHeader(
+            invocationRole: .verifier,
+            promptSourceBindingSHA256: Self.digest("2"),
+            scheduleIdentitySHA256: Self.digest("3"),
+            rawOrderedSlotsSHA256:
+                "c1b7f30e70492343be15b75bfad31bb99cc1bb3112b3059c6d453e9287d7d423",
+            outerOrderedSlotsSHA256:
+                "91612f6be7cce4c6566063c9087f25ebd532f25c2f5fbf3df68fa8fdab6a619d"
+        )
+        XCTAssertEqual(
+            header.rawCandidateIdentitySHA256,
+            "5016b1ce11be8eb4e88b38b1b2664d24b46b8efd4dca5570a35f6ade5a78ebfa"
+        )
+        XCTAssertEqual(
+            header.outerCandidateIdentitySHA256,
+            "75e01ac9937c14c4dd0a6193e58523878fba7079c19cb7898e4e4cb8832bf015"
+        )
+        XCTAssertEqual(
+            header.deliveryIdentitySHA256,
+            "5fe3096fe56d32a4bf818bcdb36dfab5b72367eff982965556738d83c55ec014"
+        )
+        let canonical = try header.canonicalJSON()
+        XCTAssertLessThanOrEqual(
+            canonical.count,
+            contract.maximumHeaderJSONByteCount
+        )
+        XCTAssertEqual(
+            try StreamHeader.decodeBounded(from: canonical),
+            header
+        )
+
+        var noncanonical = canonical
+        noncanonical.append(0x0A)
+        XCTAssertThrowsError(
+            try StreamHeader.decodeBounded(from: noncanonical)
+        ) {
+            XCTAssertEqual(
+                $0 as? StreamError,
+                .noncanonicalHeaderEncoding
+            )
+        }
+        let injected = try Self.inject(
+            key: "target",
+            into: canonical
+        )
+        XCTAssertThrowsError(
+            try StreamHeader.decodeBounded(from: injected)
+        ) {
+            XCTAssertEqual(
+                $0 as? StreamError,
+                .unexpectedHeaderKeys(["target"])
+            )
+        }
+        let oversized = Data(
+            repeating: 0x20,
+            count: contract.maximumHeaderJSONByteCount + 1
+        )
+        XCTAssertThrowsError(
+            try StreamHeader.decodeBounded(from: oversized)
+        ) {
+            XCTAssertEqual(
+                $0 as? StreamError,
+                .headerByteLimitExceeded(
+                    maximum: 4_096,
+                    observed: 4_097
+                )
+            )
+        }
     }
 
     func testRawAndOuterSlotsRoundTripOnlyTheirAllowlists()
@@ -610,6 +759,137 @@ final class PrimeNativeNeuralGateTargetFreeScheduleDeliveryContractsTests:
         XCTAssertFalse(pair.scientificAuthorityAuthorized)
         XCTAssertFalse(pair.productAuthorityAuthorized)
 
+        let streamHeader = try StreamHeader(
+            expectedCandidatePair: pair
+        )
+        let rawStream = try Self.handFramedGlobal(rawSlots)
+        let outerStream = try Self.handFramedGlobal(outerSlots)
+        XCTAssertEqual(
+            PrimeSHA256.hexDigest(of: rawStream),
+            raw.orderedSlotsSHA256
+        )
+        XCTAssertEqual(
+            PrimeSHA256.hexDigest(of: outerStream),
+            outer.orderedSlotsSHA256
+        )
+
+        let mismatchedHeader = try StreamHeader(
+            invocationRole: .probe,
+            promptSourceBindingSHA256:
+                streamHeader.promptSourceBindingSHA256,
+            scheduleIdentitySHA256:
+                streamHeader.scheduleIdentitySHA256,
+            rawOrderedSlotsSHA256:
+                streamHeader.rawOrderedSlotsSHA256,
+            outerOrderedSlotsSHA256:
+                streamHeader.outerOrderedSlotsSHA256
+        )
+        XCTAssertThrowsError(
+            try StreamDecoder(
+                headerJSON: mismatchedHeader.canonicalJSON(),
+                expectedHeader: streamHeader
+            )
+        ) {
+            XCTAssertEqual(
+                $0 as? StreamError,
+                .expectedCandidatePairMismatch
+            )
+        }
+
+        let streamDecoder = try StreamDecoder(
+            headerJSON: streamHeader.canonicalJSON(),
+            expectedHeader: streamHeader
+        )
+        try Self.feed(rawStream) {
+            try streamDecoder.consumeRaw($0)
+        }
+        try streamDecoder.finishRawAtEOF()
+        try Self.feed(outerStream) {
+            try streamDecoder.consumeOuter($0)
+        }
+        let admission = try streamDecoder.finishAtEOF()
+        XCTAssertEqual(
+            admission.deliveryIdentitySHA256,
+            pair.deliveryIdentitySHA256
+        )
+        XCTAssertEqual(admission.orderedSlotCount, exact)
+        XCTAssertEqual(
+            admission.rawFramedStreamByteCount,
+            UInt64(rawStream.count)
+        )
+        XCTAssertEqual(
+            admission.outerFramedStreamByteCount,
+            UInt64(outerStream.count)
+        )
+        XCTAssertFalse(admission.sourceBindingEstablished)
+        XCTAssertFalse(admission.durableArtifactOriginEstablished)
+        XCTAssertFalse(
+            admission.promptContentTargetIndependenceEstablished
+        )
+        XCTAssertFalse(admission.processOwnershipEstablished)
+        XCTAssertFalse(admission.processDeliveryObserved)
+        XCTAssertFalse(admission.workerMaterialized)
+        XCTAssertFalse(admission.modelExecutionEstablished)
+        XCTAssertFalse(admission.evaluationPerformed)
+        XCTAssertFalse(admission.verdictPublicationAuthorized)
+        XCTAssertFalse(admission.publicationAuthorized)
+        XCTAssertFalse(admission.mechanicsPassAuthorized)
+        XCTAssertFalse(admission.terminalReceiptAuthorized)
+        XCTAssertFalse(admission.scientificAuthorityAuthorized)
+        XCTAssertFalse(admission.productAuthorityAuthorized)
+
+        var wrongDeclaredCount = Data("PRIMEIRM1".utf8)
+        Self.append(UInt64(18_431), to: &wrongDeclaredCount)
+        let wrongCountDecoder = try StreamDecoder(
+            headerJSON: streamHeader.canonicalJSON(),
+            expectedHeader: streamHeader
+        )
+        XCTAssertThrowsError(
+            try wrongCountDecoder.consumeRaw(wrongDeclaredCount)
+        ) {
+            XCTAssertEqual(
+                $0 as? PrimeNativeNeuralGateReplayMechanicsError,
+                .declaredRecordCountMismatch(
+                    expected: 18_432,
+                    observed: 18_431
+                )
+            )
+        }
+
+        let oversizedFeedDecoder = try StreamDecoder(
+            headerJSON: streamHeader.canonicalJSON(),
+            expectedHeader: streamHeader
+        )
+        XCTAssertThrowsError(
+            try oversizedFeedDecoder.consumeRaw(
+                Data(repeating: 0, count: 65_537)
+            )
+        ) {
+            XCTAssertEqual(
+                $0 as? StreamError,
+                .feedByteLimitExceeded(
+                    maximum: 65_536,
+                    observed: 65_537
+                )
+            )
+        }
+
+        let trailingDecoder = try StreamDecoder(
+            headerJSON: streamHeader.canonicalJSON(),
+            expectedHeader: streamHeader
+        )
+        try Self.feed(rawStream) {
+            try trailingDecoder.consumeRaw($0)
+        }
+        XCTAssertThrowsError(
+            try trailingDecoder.consumeRaw(Data([0]))
+        ) {
+            XCTAssertEqual(
+                $0 as? PrimeNativeNeuralGateReplayMechanicsError,
+                .trailingInput
+            )
+        }
+
         var substitutedOuterSlots = outerSlots
         substitutedOuterSlots[exact - 1] = try OuterSlot(
             executionIndex: UInt32(exact - 1),
@@ -621,6 +901,29 @@ final class PrimeNativeNeuralGateTargetFreeScheduleDeliveryContractsTests:
             scheduleIdentitySHA256: schedule,
             orderedSlots: substitutedOuterSlots
         )
+        let substitutedOuterStream = try Self.handFramedGlobal(
+            substitutedOuterSlots
+        )
+        let correlationMutationDecoder = try StreamDecoder(
+            headerJSON: streamHeader.canonicalJSON(),
+            expectedHeader: streamHeader
+        )
+        try Self.feed(rawStream) {
+            try correlationMutationDecoder.consumeRaw($0)
+        }
+        try correlationMutationDecoder.finishRawAtEOF()
+        XCTAssertThrowsError(
+            try Self.feed(substitutedOuterStream) {
+                try correlationMutationDecoder.consumeOuter($0)
+            }
+        ) {
+            XCTAssertEqual(
+                $0 as? Error,
+                .pairedScheduleCorrelationMismatch(
+                    executionIndex: UInt32(exact - 1)
+                )
+            )
+        }
         XCTAssertNotEqual(
             substitutedOuter.orderedSlotsSHA256,
             outer.orderedSlotsSHA256
@@ -710,6 +1013,47 @@ final class PrimeNativeNeuralGateTargetFreeScheduleDeliveryContractsTests:
                 input.bindingSHA256,
             correlationID: correlationID
         )
+    }
+
+    private static func handFramedGlobal<Slot: Encodable>(
+        _ slots: [Slot]
+    ) throws -> Data {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [
+            .sortedKeys,
+            .withoutEscapingSlashes,
+        ]
+        var stream = Data("PRIMEIRM1".utf8)
+        append(UInt64(slots.count), to: &stream)
+        for slot in slots {
+            let record = try encoder.encode(slot)
+            append(UInt64(record.count), to: &stream)
+            stream.append(record)
+        }
+        return stream
+    }
+
+    private static func feed(
+        _ data: Data,
+        blockByteCount: Int = 64 * 1_024,
+        consume: (Data) throws -> Void
+    ) throws {
+        var offset = 0
+        while offset < data.count {
+            let end = min(data.count, offset + blockByteCount)
+            try consume(Data(data[offset ..< end]))
+            offset = end
+        }
+    }
+
+    private static func append(
+        _ value: UInt64,
+        to data: inout Data
+    ) {
+        var bigEndian = value.bigEndian
+        withUnsafeBytes(of: &bigEndian) {
+            data.append(contentsOf: $0)
+        }
     }
 
     private static func keys(in data: Data) throws

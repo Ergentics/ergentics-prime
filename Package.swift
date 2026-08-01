@@ -259,6 +259,28 @@ let package = Package(
         ),
         .target(
             name:
+                "PrimeNativeNeuralGateRoleArtifactReferenceContracts",
+            dependencies: [
+                "PrimeNativeNeuralGateReplayArtifactContracts",
+                "PrimeNativeNeuralGateReplayMechanics",
+                "PrimeNativeNeuralGateTargetFreeScheduleDeliveryContracts",
+                "PrimeNativeNeuralGateCorrectedProcessOwnershipContracts",
+                "PrimeNativeNeuralGateCorrectedEvaluationOwnershipContracts",
+                "PrimeNativeNeuralGateTerminalReceiptOwnershipContracts",
+            ]
+        ),
+        .target(
+            name:
+                "PrimeNativeNeuralGateRoleArtifactReferenceAuthority",
+            dependencies: [
+                "PrimeNativeNeuralGateRoleArtifactReferenceContracts",
+                "PrimeNativeNeuralGateTargetFreeScheduleDeliveryAuthority",
+                "PrimeNativeNeuralGateCorrectedProcessOwnershipContracts",
+                "PrimeNativeNeuralGateTargetFreeScheduleDeliveryContracts",
+            ]
+        ),
+        .target(
+            name:
                 "PrimeNativeNeuralGateReplayTransport",
             dependencies: [
                 "PrimeNativeNeuralGateReplayArtifactContracts",
@@ -549,6 +571,8 @@ let package = Package(
                 "PrimeNativeNeuralGateCorrectedProcessOwnershipContracts",
                 "PrimeNativeNeuralGateCorrectedEvaluationOwnershipContracts",
                 "PrimeNativeNeuralGateTerminalReceiptOwnershipContracts",
+                "PrimeNativeNeuralGateRoleArtifactReferenceContracts",
+                "PrimeNativeNeuralGateRoleArtifactReferenceAuthority",
                 "PrimeNativeNeuralGateCorrectedMechanics",
                 "PrimeNativeNeuralGateCorrectedEvaluationMechanics",
                 "PrimeNativeNeuralGateCorrectedFixtureAuthority",
