@@ -2,6 +2,15 @@
 
 Date: 2026-08-01
 
+Current continuation: V15 satisfied this checkpoint's design/source-binding
+prerequisite only. It materialized no projector and found three implementation
+blockers: the deferred three-key namespace does not cover 22 worker artifacts,
+the singular statistics schema cannot retain all three keyed seed families,
+and the existing semantic-record target violates historical-worker dependency
+isolation. The V14 prerequisite and nonauthorization statements below remain
+frozen history. See
+[Prime Native Neural Gate Historical Evidence Semantic-Artifact Projection Design](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-SEMANTIC-ARTIFACT-PROJECTION-DESIGN-2026-08-01.md).
+
 ## Decision
 
 V14 source- and compile-binds one private, cross-file historical
