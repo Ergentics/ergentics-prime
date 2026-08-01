@@ -96,13 +96,19 @@ historical boundary:
 `prime_stage_b_held_root_capture_crosswalk_authority_topology_v5`; its canonical
 SHA-256 is
 `252e027fc0f547e96b8c74b2e45cd1c316f1080d639a94619e9c03c87c480930`.
-Current topology V6 is
+Historical topology V6 is
 `prime_stage_b_process_evaluation_receipt_ownership_target_free_delivery_topology_v6`,
 SHA-256
 `6a25a3d674a7ef3eda4475ed5532fff2366103b641736b410b37fabbc805bcd1`.
 The global status remains `planned_not_materialized`, with
 `executionImplemented == false` and source binding V7 unissued. Neither V5 nor
 V6 promotes any planned worker or supervisor.
+Current topology V7 is
+`prime_stage_b_typed_worker_artifact_reference_and_bounded_schedule_stream_topology_v7`,
+SHA-256
+`88fd8b2da5590576a3c9868e1ede55efb228e82d853d5db67a1d17d58834c156`.
+It preserves that global status and is distinct from the unissued
+source/execution-binding V7.
 
 ## V3 package-capture checkpoint
 
@@ -256,21 +262,28 @@ keyed crosswalk. It still does not grade or execute a model.
 Descriptor-rooted invariant validation, source-bound logit validation,
 incremental schedule reconstruction, typed role projections, the exact
 four-source join, one held-root capture epoch, and the independently
-source-derived crosswalk remain implemented. Topology V6 now additionally
+source-derived crosswalk remain implemented. Topology V6 additionally
 freezes the exact ten-role ownership model, branch-scoped raw/evaluation
 records, verifier-only receipt-last ownership, byte-bounded strict slot
 decoding, and `Encodable`-only aggregate target-free candidates. Its real
 supervisor-only wrapper retains the capture across projection and binds the
 candidate content to exact branch owners, but it does not deliver a schedule.
+Topology V7 adds exact-count bounded `PRIMEIRM1` raw/outer stream admission,
+typed common/branch/twenty-path artifact-reference declarations, six four-part
+Release worker-source declarations, and a retained-capture reference adapter.
+Aggregate candidates remain non-`Decodable`. Real common/branch scalar
+references are supervisor-derived and non-authorizing; realized worker-source
+and role-artifact content references remain absent.
 The next implementation prerequisite is:
 
-`freeze_typed_source_pinned_worker_and_role_artifact_references_with_common_capture_schedule_binding_and_bounded_candidate_stream_decoder_then_freeze_deferred_mutation_historical_mlx_statistics_verdict_schemas_and_assign_disjoint_source_bound_mutation_producer_detector_without_materializing_workers`
+`freeze_deferred_mutation_historical_mlx_statistics_verdict_schemas_and_assign_disjoint_source_bound_mutation_producer_detector_without_materializing_workers`
 
-The next slice must freeze typed source-pinned worker and role-artifact
-references with a common capture/schedule binding, bounded aggregate candidate
-decoding, and the deferred mutation, historical, MLX, and statistics/verdict
-schemas, then assign disjoint source-bound mutation producer/detector targets. Prompt-content target
+The next slice must freeze the deferred mutation, historical, MLX, and
+statistics/verdict schemas, then assign disjoint source-bound mutation
+producer/detector targets. Prompt-content target
 independence, process delivery, model execution, evaluation/verdict authority,
 mechanics `PASS`, receipt, science, and product authority remain false. The
 historical runtime and all supervisors/workers remain planned. See
-`PRIME-NATIVE-NEURAL-GATE-PROCESS-OWNERSHIP-TARGET-FREE-DELIVERY-2026-07-31.md`.
+`PRIME-NATIVE-NEURAL-GATE-PROCESS-OWNERSHIP-TARGET-FREE-DELIVERY-2026-07-31.md`
+and
+`PRIME-NATIVE-NEURAL-GATE-TYPED-REFERENCE-STREAM-BINDING-2026-07-31.md`.

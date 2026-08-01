@@ -1215,7 +1215,7 @@ private func targetFreeSlotStreamSHA256<Slot>(
     return try accumulator.finish().streamSHA256
 }
 
-private func targetFreeCandidateIdentitySHA256(
+func targetFreeCandidateIdentitySHA256(
     role: PrimeNativeNeuralGateTargetFreeScheduleInvocationRole,
     promptSourceBindingSHA256: String,
     scheduleIdentitySHA256: String,
@@ -1249,17 +1249,40 @@ private func targetFreeDeliveryIdentitySHA256(
     raw: PrimeNativeNeuralGateTargetFreeRawScheduleCandidate,
     outer: PrimeNativeNeuralGateTargetFreeOuterScheduleCandidate
 ) throws -> String {
+    try targetFreeDeliveryIdentitySHA256(
+        role: raw.invocationRole,
+        promptSourceBindingSHA256:
+            raw.promptSourceBindingSHA256,
+        scheduleIdentitySHA256:
+            raw.scheduleIdentitySHA256,
+        rawCandidateIdentitySHA256:
+            raw.candidateIdentitySHA256,
+        outerCandidateIdentitySHA256:
+            outer.candidateIdentitySHA256,
+        rowCount: raw.orderedSlots.count
+    )
+}
+
+func targetFreeDeliveryIdentitySHA256(
+    role: PrimeNativeNeuralGateTargetFreeScheduleInvocationRole,
+    promptSourceBindingSHA256: String,
+    scheduleIdentitySHA256: String,
+    rawCandidateIdentitySHA256: String,
+    outerCandidateIdentitySHA256: String,
+    rowCount: Int
+) throws -> String {
     let contract =
         PrimeNativeNeuralGateTargetFreeScheduleDeliveryContract.frozenV1
     let payload = PrimeNativeNeuralGateTargetFreeDeliveryIdentityPayload(
         magic: contract.deliveryIdentityMagic,
         contractID: contract.contractID,
-        invocationRole: raw.invocationRole,
-        promptSourceBindingSHA256: raw.promptSourceBindingSHA256,
-        scheduleIdentitySHA256: raw.scheduleIdentitySHA256,
-        rawCandidateIdentitySHA256: raw.candidateIdentitySHA256,
-        outerCandidateIdentitySHA256: outer.candidateIdentitySHA256,
-        rowCount: raw.orderedSlots.count
+        invocationRole: role,
+        promptSourceBindingSHA256: promptSourceBindingSHA256,
+        scheduleIdentitySHA256: scheduleIdentitySHA256,
+        rawCandidateIdentitySHA256: rawCandidateIdentitySHA256,
+        outerCandidateIdentitySHA256:
+            outerCandidateIdentitySHA256,
+        rowCount: rowCount
     )
     return PrimeNativeNeuralGateInvariantCodec.sha256(
         try canonicalTargetFreeScheduleJSON(payload)

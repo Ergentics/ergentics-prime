@@ -495,11 +495,17 @@ is an incomplete non-authorizing overlay on historical output classification
 V3, not an execution artifact or receipt. See
 `PRIME-NATIVE-NEURAL-GATE-TYPED-ARTIFACT-TRANSPORT-2026-07-31.md` and
 `PRIME-NATIVE-NEURAL-GATE-REPLAY-COMPOSITION-2026-07-31.md`, and
-`PRIME-NATIVE-NEURAL-GATE-DESCRIPTOR-SOURCE-BINDING-2026-07-31.md`. Current
+`PRIME-NATIVE-NEURAL-GATE-DESCRIPTOR-SOURCE-BINDING-2026-07-31.md`. Historical
 topology V6 has canonical SHA-256
 `6a25a3d674a7ef3eda4475ed5532fff2366103b641736b410b37fabbc805bcd1`;
 its exact authority ceiling is recorded in
 `PRIME-NATIVE-NEURAL-GATE-PROCESS-OWNERSHIP-TARGET-FREE-DELIVERY-2026-07-31.md`.
+Current topology V7,
+`prime_stage_b_typed_worker_artifact_reference_and_bounded_schedule_stream_topology_v7`,
+has canonical SHA-256
+`88fd8b2da5590576a3c9868e1ede55efb228e82d853d5db67a1d17d58834c156`;
+its exact authority ceiling is recorded in
+`PRIME-NATIVE-NEURAL-GATE-TYPED-REFERENCE-STREAM-BINDING-2026-07-31.md`.
 The V5 historical authority ceiling remains in
 `PRIME-NATIVE-NEURAL-GATE-HELD-ROOT-CROSSWALK-AUTHORITY-2026-07-31.md`.
 
@@ -526,7 +532,7 @@ The historical regression fixture is lineage-only in this derivation. Parent
 receipt identities are complete and type-decoded in tests, but the derivation
 reads no receipt bytes and publishes no independent fixture receipt.
 
-The current source-plan slice also adds the isolated
+The historical source-plan slice also added the isolated
 `PrimeNativeNeuralGatePromptSolver` target. Its sole local dependency is
 `PrimeNativeNeuralGateCorrectedMechanics`; its concrete replicate-scoped type
 receives prompt tokens only and creates fresh local state per row. It is a
@@ -567,13 +573,19 @@ captured bytes, corrected fixture identity, exact source join, independent
 prompt/target association, and outer expected-completion binding. It does not
 establish prompt-content target independence, process delivery, model
 execution, evaluation/verdict publication, mechanics `PASS`, receipt, science,
-or product authority. Topology V6 now adds the exact ten-role
+or product authority. Historical topology V6 adds the exact ten-role
 process/evaluation/receipt ownership declarations, target-free schedule
 construction, and a real supervisor-only retained-capture binding wrapper.
-Only individual slot decoding is strict and byte-bounded; aggregate candidates
-remain `Encodable`-only, and the wrapper observes no delivery. The exact next
-prerequisite is
-`freeze_typed_source_pinned_worker_and_role_artifact_references_with_common_capture_schedule_binding_and_bounded_candidate_stream_decoder_then_freeze_deferred_mutation_historical_mlx_statistics_verdict_schemas_and_assign_disjoint_source_bound_mutation_producer_detector_without_materializing_workers`.
+Current topology V7 adds exact-count bounded `PRIMEIRM1` raw/outer stream
+admission, typed common/branch/twenty-path artifact-reference declarations,
+six four-part Release worker-source declarations, and a retained-capture
+reference adapter. Aggregate candidates remain non-`Decodable`; real common/
+branch scalar references are supervisor-derived and non-authorizing, while
+realized worker-source and role-artifact content references remain absent. The
+wrapper observes no delivery. Topology
+V7 is distinct from source/execution-binding V7, which remains unissued. The
+exact next prerequisite is
+`freeze_deferred_mutation_historical_mlx_statistics_verdict_schemas_and_assign_disjoint_source_bound_mutation_producer_detector_without_materializing_workers`.
 
 The repository-test checkpoint passed pure sidecar mechanics 6/6. The
 source-pinned MLX validation package remains outside the MLX-free

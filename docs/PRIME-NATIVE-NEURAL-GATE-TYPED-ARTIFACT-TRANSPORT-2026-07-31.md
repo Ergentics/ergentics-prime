@@ -104,12 +104,19 @@ execution. Exact source behavior is recorded in
   `60e10e6c10f9ec1f30102f5b6d27be123434a163c01d82c0cc5d4520824532d1`.
 
 Topology V4 remains exact history. Topology V5 is now the exact historical
-held-root/crosswalk boundary. Current topology V6, SHA-256
+held-root/crosswalk boundary. Historical topology V6, SHA-256
 `6a25a3d674a7ef3eda4475ed5532fff2366103b641736b410b37fabbc805bcd1`,
 preserves V1 through V5 and adds the non-authorizing target-free schedule,
 process/evaluation/receipt ownership, and retained-capture binding boundaries.
 The execution graph remains globally `planned_not_materialized`;
 `executionImplemented` is false and source binding V7 is unissued.
+Current topology V7,
+`prime_stage_b_typed_worker_artifact_reference_and_bounded_schedule_stream_topology_v7`,
+SHA-256
+`88fd8b2da5590576a3c9868e1ede55efb228e82d853d5db67a1d17d58834c156`,
+adds exact-count bounded stream admission and typed copied-reference
+declarations without changing that authority ceiling. Topology V7 is distinct
+from the unissued source/execution-binding V7.
 
 Semantic namespace V4 is an incomplete overlay, not an execution artifact,
 source-binding version, or receipt. Its identity embeds the complete 116-spec
@@ -244,16 +251,19 @@ establish V6/V7 selected-source graph reconciliation, source binding V7,
 execution, evaluation, publication, receipt, reproducible-build,
 network-denial, Metal, scientific, or product authority.
 
-## Historical V5 result, current V6 boundary, and remaining evidence gaps
+## Historical V5/V6 results, current V7 boundary, and remaining evidence gaps
 
 - the focused 18,432-row, exact 41-file held-root/crosswalk integration passed
   in 300.125 seconds;
-- topology V6 now freezes the exact ten-role process roster, branch-scoped
+- topology V6 freezes the exact ten-role process roster, branch-scoped
   raw/evaluation ownership, verifier-only receipt-last ownership, and the
   target-free schedule candidate contract;
-- individual raw/outer slot decoding is strict and byte-bounded, while
-  aggregate candidates remain `Encodable`-only pending a bounded stream
-  decoder;
+- topology V7 adds exact-count bounded `PRIMEIRM1` raw/outer stream admission
+  while aggregate candidates remain non-`Decodable`;
+- topology V7 freezes typed common/branch/twenty-path artifact-reference and
+  six four-part Release worker-source declarations; real common/branch scalar
+  references are supervisor-derived and non-authorizing, while realized
+  worker-source and role-artifact content references remain absent;
 - the retained-capture-bound supervisor wrapper is implemented and keeps the
   V5 capture live across projection, but actual process delivery remains
   unobserved;
@@ -270,21 +280,22 @@ network-denial, Metal, scientific, or product authority.
 
 The next implementation prerequisite is therefore:
 
-`freeze_typed_source_pinned_worker_and_role_artifact_references_with_common_capture_schedule_binding_and_bounded_candidate_stream_decoder_then_freeze_deferred_mutation_historical_mlx_statistics_verdict_schemas_and_assign_disjoint_source_bound_mutation_producer_detector_without_materializing_workers`
+`freeze_deferred_mutation_historical_mlx_statistics_verdict_schemas_and_assign_disjoint_source_bound_mutation_producer_detector_without_materializing_workers`
 
 The shared codec, exact global/chunk source binding, source-bound lossless
 sidecar, incremental schedule, target-free role projections, and keyed join are
 now joined by the retained capture epoch, independent source-derived crosswalk,
 and V6's ownership/delivery-preparation declarations without giving
-trap-bearing authority to the corrected raw closure. The next slice must
-freeze typed source-pinned worker and role-artifact references with a common
-capture/schedule binding, bounded aggregate candidate decoding, and the
-deferred semantic schemas before assigning disjoint source-bound mutation
-producers and detectors.
+trap-bearing authority to the corrected raw closure. V7 adds the bounded stream
+and typed reference-declaration boundary without realizing a source or
+artifact. The next slice must freeze the deferred semantic schemas before
+assigning disjoint source-bound mutation producers and detectors.
 Prompt-content target independence, process delivery, model
 execution, evaluation/verdict authority, mechanics `PASS`, receipt, science,
 and product authority remain false. See
-`PRIME-NATIVE-NEURAL-GATE-PROCESS-OWNERSHIP-TARGET-FREE-DELIVERY-2026-07-31.md`.
+`PRIME-NATIVE-NEURAL-GATE-PROCESS-OWNERSHIP-TARGET-FREE-DELIVERY-2026-07-31.md`
+and
+`PRIME-NATIVE-NEURAL-GATE-TYPED-REFERENCE-STREAM-BINDING-2026-07-31.md`.
 
 ## Workflow boundary
 

@@ -14,10 +14,15 @@ the package-level raw/evaluation split, trap-disjoint topology V4, pure typed
 artifact contracts, shared bounded transport codec, descriptor-rooted
 invariant/logit source binding, strict incremental prompt schedule, role
 projections, and exact four-source replay composition are implemented, while
-every execution target remains planned. The exact current boundary is recorded in
+topology V7 additionally freezes exact-count bounded stream admission and typed
+artifact/worker-source reference declarations. Real common/branch scalar
+references are supervisor-derived and non-authorizing; every execution target
+and every worker-source or role-artifact content reference remains planned or
+absent. The exact current boundary is recorded in
 `PRIME-NATIVE-NEURAL-GATE-TYPED-ARTIFACT-TRANSPORT-2026-07-31.md` and
 `PRIME-NATIVE-NEURAL-GATE-REPLAY-COMPOSITION-2026-07-31.md` and
-`PRIME-NATIVE-NEURAL-GATE-DESCRIPTOR-SOURCE-BINDING-2026-07-31.md`.
+`PRIME-NATIVE-NEURAL-GATE-DESCRIPTOR-SOURCE-BINDING-2026-07-31.md` and
+`PRIME-NATIVE-NEURAL-GATE-TYPED-REFERENCE-STREAM-BINDING-2026-07-31.md`.
 
 ## Decision
 
@@ -131,11 +136,19 @@ supersedes only their future donor-routing assumption, and explicitly leaves
 source binding V7 unissued. The complete implemented and planned closures are
 recorded in
 `PRIME-NATIVE-NEURAL-GATE-TRAP-DISJOINT-TOPOLOGY-2026-07-30.md`.
-Current topology V6 has canonical SHA-256
+Historical topology V6 has canonical SHA-256
 `6a25a3d674a7ef3eda4475ed5532fff2366103b641736b410b37fabbc805bcd1`.
 Its process/evaluation/receipt ownership and target-free delivery-preparation
 claim ceiling is recorded in
 `PRIME-NATIVE-NEURAL-GATE-PROCESS-OWNERSHIP-TARGET-FREE-DELIVERY-2026-07-31.md`.
+Current topology V7,
+`prime_stage_b_typed_worker_artifact_reference_and_bounded_schedule_stream_topology_v7`,
+has canonical SHA-256
+`88fd8b2da5590576a3c9868e1ede55efb228e82d853d5db67a1d17d58834c156`.
+Its declaration/decoder claim ceiling is recorded in
+`PRIME-NATIVE-NEURAL-GATE-TYPED-REFERENCE-STREAM-BINDING-2026-07-31.md`.
+Topology V7 is distinct from source/execution-binding V7, which remains
+unissued.
 The historical held-root/crosswalk claim ceiling remains recorded in
 `PRIME-NATIVE-NEURAL-GATE-HELD-ROOT-CROSSWALK-AUTHORITY-2026-07-31.md`.
 
@@ -809,12 +822,15 @@ must agree; all build configurations must be `release`.
 vnode from the same positive process that publishes its binding. Probe and
 verifier roles, targets, paths, PIDs, and executable hashes must be distinct.
 Their SwiftPM child PIDs and the two historical-worker PIDs must also be
-distinct, producing the historical V5 six-process topology. Current topology
-V6 freezes the replacement symmetric ten-role process/evaluation/receipt
+distinct, producing the historical V5 six-process topology. Historical
+topology V6 freezes the replacement symmetric ten-role
+process/evaluation/receipt
 ownership declarations, including two corrected raw and two corrected
-evaluation workers, but materializes none of them. Typed role/path/content
-references, common capture/schedule binding, and source-pinned worker closure/
-executable references remain prerequisites. Each future worker result must bind
+evaluation workers, but materializes none of them. Topology V7 freezes typed
+role/path/content and four-part worker-source declarations under a common
+capture/schedule identity, but realizes none of them. Actual source snapshots,
+compiled closures, sealed executables, and artifact-content references remain
+prerequisites. Each future worker result must bind
 its same-process PID and the same sealed worker image. The verifier must
 validate each record before applying the explicit prevalidated-record
 topology join.
@@ -1086,8 +1102,10 @@ A future terminal Stage-B pass requires:
   running Release executable bindings; the historical probe, verifier, their
   two SwiftPM children, and two historical workers form V5's six-process
   topology; V6 freezes a non-authorizing ten-role replacement ownership model,
-  but typed common-capture artifact references and all worker/supervisor
-  materialization remain prerequisites;
+  and V7 freezes typed common-capture artifact and worker-source declaration
+  schemas. Real common/branch scalar references are supervisor-derived and non-
+  authorizing, but realized worker-source and role-artifact content references
+  plus all worker/supervisor materialization remain prerequisites;
 - two distinct, bounded historical-worker invocations with typed request,
   same-process result, stream-drain/termination, observed death/reap, exact
   pre/post role-prefix inventory, and successful supervisor execution records;
@@ -1187,30 +1205,31 @@ origin for captured bytes, corrected fixture identity, exact source join,
 independent crosswalk, and outer completion binding. Prompt-content target
 independence, process delivery, model execution, evaluation/verdict authority,
 mechanics `PASS`, receipt, science, and product authority remain false.
-Topology V6 now freezes the symmetric ten-role process roster, branch-scoped
+Topology V6 freezes the symmetric ten-role process roster, branch-scoped
 raw/evaluation ownership, verifier-only receipt-last ownership, target-free
 schedule construction, and a real retained-capture-bound supervisor adapter.
-Only slot decoding is strict and byte-bounded; aggregate candidates remain
-`Encodable`-only. The adapter prepares source- and owner-bound candidates but
-does not observe delivery. The corrected aggregate implementation prerequisite
-is now:
+Topology V7 adds exact-count bounded `PRIMEIRM1` raw/outer stream admission
+while aggregate candidates remain non-`Decodable`, and freezes typed
+common/branch/artifact and four-part Release worker-source declarations. Real
+common/branch scalar references are supervisor-derived and non-authorizing;
+realized worker-source and role-artifact content references remain absent. The
+adapter prepares source- and owner-bound candidates but does not observe
+delivery. Topology V7 is distinct from the
+still-unissued source/execution-binding V7. The corrected implementation
+prerequisite is now:
 
-`freeze_typed_source_pinned_worker_and_role_artifact_references_with_common_capture_schedule_binding_and_bounded_candidate_stream_decoder_then_freeze_deferred_mutation_historical_mlx_statistics_verdict_schemas_and_assign_disjoint_source_bound_mutation_producer_detector_without_materializing_workers`
+`freeze_deferred_mutation_historical_mlx_statistics_verdict_schemas_and_assign_disjoint_source_bound_mutation_producer_detector_without_materializing_workers`
 
 Its implementation order is now:
 
-1. freeze typed source-pinned worker and role-artifact references with their
-   common capture/schedule binding;
-2. freeze a bounded aggregate candidate stream decoder while preserving the
-   target-free field allowlists and per-slot byte caps;
-3. freeze the deferred mutation, historical, MLX, and statistics/verdict
+1. freeze the deferred mutation, historical, MLX, and statistics/verdict
    record schemas;
-4. assign a source-bound corrected mutation producer and an independently
+2. assign a source-bound corrected mutation producer and an independently
    implemented detector;
    the current fifteen mutation-observation validators do not execute defects;
-5. implement the isolated historical worker using the completed secure
+3. implement the isolated historical worker using the completed secure
    capture and live role-prefix inventory capabilities; and
-6. implement the paired probe/verifier and exact path/metadata/content
+4. implement the paired probe/verifier and exact path/metadata/content
    inventory, durable sidecar publication, full-fixture MLX recomputation,
    full-root pre-receipt recapture, and receipt-last publication.
 

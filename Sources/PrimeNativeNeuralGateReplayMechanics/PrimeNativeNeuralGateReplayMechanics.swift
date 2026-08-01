@@ -31,6 +31,10 @@ public enum PrimeNativeNeuralGateReplayMechanicsError:
     case invalidFingerprintObservation
     case invalidPromptBindingSHA256
     case incrementalReaderNotReusable
+    case declaredRecordCountMismatch(
+        expected: UInt64,
+        observed: UInt64
+    )
 }
 
 /// Target-free correlation identity derived only from the public schedule
@@ -424,6 +428,7 @@ public final class PrimeNativeNeuralGateInvariantFramedRecordReader {
     public let limits:
         PrimeNativeNeuralGateReplayDecodeLimits
     public let requireCanonicalOrder: Bool
+    public let requiredDeclaredRecordCount: UInt64?
 
     private let expectedMagic: Data
     private var magic = Data()
@@ -449,12 +454,15 @@ public final class PrimeNativeNeuralGateInvariantFramedRecordReader {
             PrimeNativeNeuralGateInvariantFramedStreamKind,
         limits:
             PrimeNativeNeuralGateReplayDecodeLimits = .stageB,
-        requireCanonicalOrder: Bool = true
+        requireCanonicalOrder: Bool = true,
+        requiredDeclaredRecordCount: UInt64? = nil
     ) {
         self.kind = kind
         self.limits = limits
         self.requireCanonicalOrder =
             requireCanonicalOrder
+        self.requiredDeclaredRecordCount =
+            requiredDeclaredRecordCount
         switch kind {
         case .global:
             expectedMagic =
@@ -649,6 +657,15 @@ public final class PrimeNativeNeuralGateInvariantFramedRecordReader {
                 throw PrimeNativeNeuralGateReplayMechanicsError
                     .recordCountLimitExceeded
             }
+            if let requiredDeclaredRecordCount,
+               count != requiredDeclaredRecordCount
+            {
+                throw PrimeNativeNeuralGateReplayMechanicsError
+                    .declaredRecordCountMismatch(
+                        expected: requiredDeclaredRecordCount,
+                        observed: count
+                    )
+            }
             declaredCount = count
             expectedCount = intCount
         case .chunk:
@@ -674,6 +691,15 @@ public final class PrimeNativeNeuralGateInvariantFramedRecordReader {
             else {
                 throw PrimeNativeNeuralGateReplayMechanicsError
                     .recordCountLimitExceeded
+            }
+            if let requiredDeclaredRecordCount,
+               UInt64(count) != requiredDeclaredRecordCount
+            {
+                throw PrimeNativeNeuralGateReplayMechanicsError
+                    .declaredRecordCountMismatch(
+                        expected: requiredDeclaredRecordCount,
+                        observed: UInt64(count)
+                    )
             }
             declaredCount = UInt64(count)
             expectedCount = intCount

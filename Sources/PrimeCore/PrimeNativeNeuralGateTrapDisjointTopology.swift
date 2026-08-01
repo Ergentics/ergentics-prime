@@ -1385,6 +1385,171 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
         )
     }()
 
+    /// Adds exact-count framed target-free stream admission plus typed,
+    /// non-authorizing worker and role-artifact references. Every referenced
+    /// worker, executable, process, and artifact remains absent. V1 through
+    /// V6 remain exact historical contracts.
+    public static let frozenV7: Self = {
+        let previous = frozenV6
+        let scheduleTargetName =
+            "PrimeNativeNeuralGateTargetFreeScheduleDeliveryContracts"
+        let referenceContractsTargetName =
+            "PrimeNativeNeuralGateRoleArtifactReferenceContracts"
+        let referenceAuthorityTargetName =
+            "PrimeNativeNeuralGateRoleArtifactReferenceAuthority"
+
+        var targets = previous.targetGraph.map { target in
+            guard target.targetName == scheduleTargetName
+            else {
+                return target
+            }
+            return Self.target(
+                target.targetName,
+                target.materialization,
+                target.directLocalDependencyNames,
+                "pure bounded non-authorizing raw and outer target-free schedule contracts with strict slot decoding and exact-18432-record incremental PRIMEIRM1 stream admission; aggregate candidates remain non-Decodable",
+                externalProducts:
+                    target.externalProductDependencyNames
+            )
+        }
+        targets.append(
+            Self.target(
+                referenceContractsTargetName,
+                .implemented,
+                [
+                    "PrimeNativeNeuralGateReplayArtifactContracts",
+                    "PrimeNativeNeuralGateReplayMechanics",
+                    scheduleTargetName,
+                    "PrimeNativeNeuralGateCorrectedProcessOwnershipContracts",
+                    "PrimeNativeNeuralGateCorrectedEvaluationOwnershipContracts",
+                    "PrimeNativeNeuralGateTerminalReceiptOwnershipContracts",
+                ],
+                "pure Encodable-only common capture/schedule, six-worker typed Release source-reference schema, and exact ten-role/twenty-path content-reference contracts; actual worker closures, executables, and artifact content remain unobserved"
+            )
+        )
+        targets.append(
+            Self.target(
+                referenceAuthorityTargetName,
+                .implemented,
+                [
+                    referenceContractsTargetName,
+                    "PrimeNativeNeuralGateTargetFreeScheduleDeliveryAuthority",
+                    "PrimeNativeNeuralGateCorrectedProcessOwnershipContracts",
+                    scheduleTargetName,
+                ],
+                "supervisor-only non-Codable adapter retaining the held replay capture across pre/post recapture while deriving copied common and branch schedule references; no artifact or process delivery is observed"
+            )
+        )
+
+        func appendingUnique(
+            _ base: [String],
+            _ additions: [String]
+        ) -> [String] {
+            var result = base
+            for addition in additions
+            where !result.contains(addition) {
+                result.append(addition)
+            }
+            return result
+        }
+
+        let newTargetNames = [
+            referenceContractsTargetName,
+            referenceAuthorityTargetName,
+        ]
+        var reachability = previous.forbiddenReachability.map {
+            rule in
+            Self.forbidden(
+                rule.targetName,
+                appendingUnique(
+                    rule.forbiddenReachableTargetNames,
+                    newTargetNames
+                )
+            )
+        }
+        reachability.append(
+            Self.forbidden(
+                referenceContractsTargetName,
+                [
+                    "PrimeCore",
+                    "PrimeNativeCorpusReplayMechanics",
+                    "PrimeNativeNeuralGateReplayTransport",
+                    "PrimeNativeNeuralGateReplayComposition",
+                    "PrimeNativeNeuralGateReplaySourceBinding",
+                    "PrimeNativeNeuralGateReplaySourceComposition",
+                    "PrimeNativeNeuralGateReplayCaptureInventory",
+                    "PrimeNativeNeuralGatePromptTargetCrosswalkAuthority",
+                    "PrimeNativeNeuralGateCorrectedEvaluationMechanics",
+                    "PrimeNativeNeuralGateCorrectedFixtureAuthority",
+                    "PrimeNativeNeuralGateMLXLogSoftmaxRecomputation",
+                    "PrimeNativeNeuralGateTargetFreeScheduleDeliveryAuthority",
+                    referenceAuthorityTargetName,
+                    "PrimeNativeNeuralGateCorrectedMutationProducer",
+                    "PrimeNativeNeuralGateCorrectedMutationDetector",
+                    "ErgenticsPrimeRuntime",
+                    "PrimeNativeNeuralGateHistoricalReplayMechanics",
+                    "PrimeNativeNeuralGateHistoricalFixtureWorker",
+                ]
+            )
+        )
+        reachability.append(
+            Self.forbidden(
+                referenceAuthorityTargetName,
+                [
+                    "PrimeNativeCorpusReplayMechanics",
+                    "PrimeNativeNeuralGatePromptTargetCrosswalkAuthority",
+                    "PrimeNativeNeuralGateCorrectedEvaluationMechanics",
+                    "PrimeNativeNeuralGateCorrectedFixtureAuthority",
+                    "PrimeNativeNeuralGateMLXLogSoftmaxRecomputation",
+                    "PrimeNativeNeuralGateCorrectedMutationProducer",
+                    "PrimeNativeNeuralGateCorrectedMutationDetector",
+                    "ErgenticsPrimeRuntime",
+                    "PrimeNativeNeuralGateHistoricalReplayMechanics",
+                    "PrimeNativeNeuralGateHistoricalFixtureWorker",
+                ]
+            )
+        )
+
+        return Self(
+            schemaVersion: 7,
+            contractID:
+                "prime_stage_b_typed_worker_artifact_reference_and_bounded_schedule_stream_topology_v7",
+            status: previous.status,
+            executionImplemented: false,
+            historicalReplayPlanID:
+                previous.historicalReplayPlanID,
+            historicalSourceBindingContractID:
+                previous.historicalSourceBindingContractID,
+            historicalContractsPreserved: true,
+            historicalFutureTargetGraphSuperseded: true,
+            targetGraph: targets,
+            forbiddenReachability: reachability,
+            historicalContainmentRootTargetName:
+                previous.historicalContainmentRootTargetName,
+            historicalRuntimeTargetName:
+                previous.historicalRuntimeTargetName,
+            historicalReplayTargetName:
+                previous.historicalReplayTargetName,
+            pureReplayTargetName:
+                previous.pureReplayTargetName,
+            donorAdaptationV2PreservedAsHistory: true,
+            donorAdaptationV3Required: true,
+            donorAdaptationV3RequiredDestination:
+                previous.donorAdaptationV3RequiredDestination,
+            sourceBindingV7Issued: false,
+            sourceBindingV7Prerequisite:
+                previous.sourceBindingV7Prerequisite,
+            packageCaptureAuthority:
+                "actual_package_secure_capture_only_not_v6_or_v7_execution_graph_reconciliation",
+            mutationProducerDetectorTargetAssignmentDeferred: true,
+            mutationProducerDetectorMustBeDisjoint: true,
+            nextImplementationPrerequisite:
+                "freeze_deferred_mutation_historical_mlx_statistics_verdict_schemas_and_assign_disjoint_source_bound_mutation_producer_detector_without_materializing_workers",
+            authorityStatement:
+                "This V7 topology preserves V1 through V6 and adds only exact-count bounded PRIMEIRM1 target-free stream admission, pure typed copied-reference contracts, and a supervisor-only retained-capture reference adapter. The six worker declarations require typed Release source snapshot, package-description, compiled-closure, and sealed-executable references bound to the common capture/schedule identity, but all actual values remain absent: no missing target is treated as a compiled closure, and no executable digest, vnode, PID, or same-process observation is fabricated. The exact twenty corrected pre-receipt paths can be bound by role, path, content, and one common capture/schedule identity, but no artifact is materialized and copied identities never become capture authority. Every supervisor and worker remains planned_not_materialized. No process delivery, model execution, evaluation, mutation execution or detection, verdict, mechanics PASS, receipt publication, source binding V7, scientific authority, or product authority is observed or authorized."
+        )
+    }()
+
     public func target(
         named name: String
     ) throws -> PrimeNativeNeuralGateTopologyTarget {
@@ -1444,6 +1609,8 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
             expected = .frozenV5
         case 6:
             expected = .frozenV6
+        case 7:
+            expected = .frozenV7
         default:
             throw PrimeNativeNeuralGateTopologyError
                 .invalidFrozenContract
