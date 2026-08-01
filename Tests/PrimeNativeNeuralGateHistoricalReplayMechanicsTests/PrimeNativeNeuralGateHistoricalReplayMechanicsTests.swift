@@ -224,9 +224,25 @@ final class PrimeNativeNeuralGateHistoricalReplayMechanicsTests:
             let directory = repositoryRoot
                 .appendingPathComponent("Sources")
                 .appendingPathComponent(target.targetName)
-            let actual = try recursiveSwiftSourcePaths(
+            let completeActual = try recursiveSwiftSourcePaths(
                 in: directory
             )
+            let v11Fixture =
+                "Sources/PrimeNativeNeuralGateHistoricalReplayMechanics/EngineProposesNativeLanguageVerifyAbstainFixture.swift"
+            let actual: [String]
+            if target.targetName
+                == "PrimeNativeNeuralGateHistoricalReplayMechanics"
+            {
+                XCTAssertEqual(
+                    completeActual.filter { $0 == v11Fixture },
+                    [v11Fixture]
+                )
+                actual = completeActual.filter {
+                    $0 != v11Fixture
+                }
+            } else {
+                actual = completeActual
+            }
             XCTAssertEqual(
                 actual,
                 target.orderedSourceRelativePaths.sorted(),
@@ -575,7 +591,7 @@ final class PrimeNativeNeuralGateHistoricalReplayMechanicsTests:
         XCTAssertThrowsError(try mutated.validate())
     }
 
-    func testPackageKeepsHistoricalClosureInternalAndUnconsumed()
+    func testPackageKeepsHistoricalClosureInternalAndV11WorkerOnly()
         throws
     {
         let package = compact(
@@ -610,8 +626,14 @@ final class PrimeNativeNeuralGateHistoricalReplayMechanicsTests:
         for target in [
             "ErgenticsPrimeRuntime",
             "PrimeNativeNeuralGateHistoricalReplayMechanics",
+            "PrimeNativeNeuralGateHistoricalFixtureWorker",
         ] {
             XCTAssertFalse(products.contains(target), target)
+        }
+        for target in [
+            "ErgenticsPrimeRuntime",
+            "PrimeNativeNeuralGateHistoricalReplayMechanics",
+        ] {
             XCTAssertFalse(
                 package.contains(
                     #".executableTarget(name:"\#(target)""#
@@ -625,18 +647,23 @@ final class PrimeNativeNeuralGateHistoricalReplayMechanicsTests:
         let productionTargets = String(
             package[..<firstTestTarget]
         )
+        XCTAssertTrue(
+            productionTargets.contains(
+                #".executableTarget(name:"PrimeNativeNeuralGateHistoricalFixtureWorker",dependencies:["PrimeCore","ErgenticsPrimeRuntime","PrimeNativeNeuralGateHistoricalReplayMechanics","PrimeNativeNeuralGateReplayTransport",],resources:[.copy("HistoricalFixtureEvidence"),])"#
+            )
+        )
         XCTAssertEqual(
             productionTargets.components(
                 separatedBy: "ErgenticsPrimeRuntime"
             ).count - 1,
-            2
+            3
         )
         XCTAssertEqual(
             productionTargets.components(
                 separatedBy:
                     "PrimeNativeNeuralGateHistoricalReplayMechanics"
             ).count - 1,
-            1
+            2
         )
         XCTAssertFalse(
             package.lowercased().contains(

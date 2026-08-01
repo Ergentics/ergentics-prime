@@ -647,11 +647,16 @@ The V8 next prerequisite was
 `derive_source_pinned_historical_gate_carrier_and_forty_six_mutation_material_without_materializing_workers_or_issuing_source_binding_v7`.
 Topology V9 now satisfies it with exact in-memory source derivation and
 additive adaptation proof V3. Topology V10 then materializes only the exact
-internal historical source closure and non-authorizing observation seam. The
-current next prerequisite is
+internal historical source closure and non-authorizing observation seam. Its
+next prerequisite was
 `derive_and_source_bind_source_faithful_historical_fixture_then_materialize_only_the_sealed_historical_worker_without_materializing_probe_verifier_or_issuing_source_binding_v7`.
+Topology V11 now source-binds the fixture and adds only an unavailable
+executable target; no worker is sealed or executed. The current next
+prerequisite is
+`derive_and_source_bind_historical_worker_evidence_export_adapter_without_mutating_the_byte_exact_gate_executing_the_worker_or_issuing_source_binding_v7`.
 See [Prime Native Neural Gate Historical Source Material](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-SOURCE-MATERIAL-2026-08-01.md).
 See [Prime Native Neural Gate Historical Replay Mechanics](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-REPLAY-MECHANICS-2026-08-01.md).
+See [Prime Native Neural Gate Historical Fixture and Worker Boundary](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-FIXTURE-WORKER-BOUNDARY-2026-08-01.md).
 
 The repository-test checkpoint passed pure sidecar mechanics 6/6. The
 source-pinned MLX validation package remains outside the MLX-free
@@ -675,13 +680,14 @@ are focused results, not a complete-suite claim.
 That pass validates only the secure capture substrate on the pinned host. It
 published no durable Stage-B process record or receipt,
 `executionImplemented` remains false, and no Stage-B replay, historical
-worker, model execution, Metal execution, or product use is implemented or
-authorized. The historical V5 six-process count remains historical and is
+worker execution, model execution, Metal execution, or product use is
+implemented or authorized. The historical V5 six-process count remains
+historical and is
 superseded by V6's exact symmetric ten-role roster. Distinct
 running Release probe/verifier executables and every semantic Stage-B
 artifact remain future work. The direct executable launch path,
 `proc_pidpath` pathname, and code-sign fields are non-authoritative telemetry;
-no Apple trust claim is made. A sealed Swift worker owns the complete
+no Apple trust claim is made. A later sealed Swift worker must own the complete
 trap-bearing historical arm under separate bounded probe and verifier
 invocations; death/reap, exact role-prefix inventory, terminal decoding and
 semantic recomputation, exact pre-receipt realized path-and-metadata inventory,

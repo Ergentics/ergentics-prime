@@ -200,6 +200,15 @@ observation seam without creating a worker, historical admission evaluation,
 durable observation, verdict authority, receipt, or source/execution-binding
 V7. See [Prime Native Neural Gate Historical Replay Mechanics](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-REPLAY-MECHANICS-2026-08-01.md).
 
-The current next exact prerequisite is:
+The V10 next exact prerequisite was:
 
 `derive_and_source_bind_source_faithful_historical_fixture_then_materialize_only_the_sealed_historical_worker_without_materializing_probe_verifier_or_issuing_source_binding_v7`
+
+V11 now source-binds the exact 88,141-byte fixture and materializes only an
+unavailable executable target. Its `main` exits `78`; no worker image is
+sealed or launched and no historical evaluation occurs. The current next
+exact prerequisite is:
+
+`derive_and_source_bind_historical_worker_evidence_export_adapter_without_mutating_the_byte_exact_gate_executing_the_worker_or_issuing_source_binding_v7`
+
+See [Prime Native Neural Gate Historical Fixture and Worker Boundary](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-FIXTURE-WORKER-BOUNDARY-2026-08-01.md).

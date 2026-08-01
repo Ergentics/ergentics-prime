@@ -23,9 +23,9 @@ and separate evaluation executables. The verifier supervisor alone owns the
 future terminal-receipt publication lease; neither evaluation worker may
 publish it.
 
-This is a contract, projection, and retained-capability-binding change. No
-supervisor or worker target is materialized, no schedule has crossed a process
-boundary, no model has run, and no receipt has been created.
+This V6 slice was a contract, projection, and retained-capability-binding
+change. It materialized no supervisor or worker target, no schedule crossed a
+process boundary, no model ran, and no receipt was created.
 
 ## Compile-time boundary
 
@@ -265,8 +265,13 @@ The V8 next prerequisite was
 `derive_source_pinned_historical_gate_carrier_and_forty_six_mutation_material_without_materializing_workers_or_issuing_source_binding_v7`.
 Topology V9 now satisfies it without process delivery or worker
 materialization. Topology V10 then materializes only the internal historical
-source closure; process delivery and workers remain absent. The current next
-prerequisite is
+source closure; process delivery and worker targets remained absent at V10.
+Its next prerequisite was
 `derive_and_source_bind_source_faithful_historical_fixture_then_materialize_only_the_sealed_historical_worker_without_materializing_probe_verifier_or_issuing_source_binding_v7`.
+Topology V11 now adds only the unavailable historical worker target; process
+delivery, worker execution, and supervision remain absent. The current next
+prerequisite is
+`derive_and_source_bind_historical_worker_evidence_export_adapter_without_mutating_the_byte_exact_gate_executing_the_worker_or_issuing_source_binding_v7`.
 See [Prime Native Neural Gate Historical Source Material](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-SOURCE-MATERIAL-2026-08-01.md).
 See [Prime Native Neural Gate Historical Replay Mechanics](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-REPLAY-MECHANICS-2026-08-01.md).
+See [Prime Native Neural Gate Historical Fixture and Worker Boundary](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-FIXTURE-WORKER-BOUNDARY-2026-08-01.md).

@@ -125,11 +125,14 @@ role/target, exact ordered local dependency names, and the common
 capture/schedule identity. The frozen declarations preserve package/topology
 dependency order rather than treating dependencies as an unordered set.
 
-No actual worker target exists, so the frozen inventory contains no realized
-source reference, closure, or executable value. A whole-repository snapshot is
-not substituted for a compiled worker closure, and a staged executable is not
-called a running mapped image. Executable vnode, PID, same-process capture,
-delivery, death/reap, and result evidence remain future runtime work.
+At topology V7 no actual worker target existed, so the frozen inventory
+contained no realized source reference, closure, or executable value. V11 now
+adds the historical fixture worker target only as an unavailable compile
+boundary; it still creates no realized source/execution reference or sealed
+image. A whole-repository snapshot is not substituted for a compiled worker
+closure, and a staged executable is not called a running mapped image.
+Executable vnode, PID, same-process capture, delivery, death/reap, and result
+evidence remain future runtime work.
 
 ## Retained authority and intentional terminal reachability
 
@@ -235,8 +238,13 @@ The V8 next prerequisite was
 `derive_source_pinned_historical_gate_carrier_and_forty_six_mutation_material_without_materializing_workers_or_issuing_source_binding_v7`.
 Topology V9 now satisfies it while actual Release source references and source
 binding V7 remain absent. Topology V10 then materializes only the isolated
-historical source closure; those Release bindings remain absent. The current
-next prerequisite is
+historical source closure; those Release bindings remain absent. Its next
+prerequisite was
 `derive_and_source_bind_source_faithful_historical_fixture_then_materialize_only_the_sealed_historical_worker_without_materializing_probe_verifier_or_issuing_source_binding_v7`.
+Topology V11 now source-binds the fixture and adds only an unavailable target;
+the V7 realized-reference fields remain absent. The current next prerequisite
+is
+`derive_and_source_bind_historical_worker_evidence_export_adapter_without_mutating_the_byte_exact_gate_executing_the_worker_or_issuing_source_binding_v7`.
 See [Prime Native Neural Gate Historical Source Material](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-SOURCE-MATERIAL-2026-08-01.md).
 See [Prime Native Neural Gate Historical Replay Mechanics](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-REPLAY-MECHANICS-2026-08-01.md).
+See [Prime Native Neural Gate Historical Fixture and Worker Boundary](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-FIXTURE-WORKER-BOUNDARY-2026-08-01.md).

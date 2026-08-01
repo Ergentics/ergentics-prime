@@ -219,6 +219,19 @@ let package = Package(
                 "PrimeNativeNeuralGateReplayMechanics",
             ]
         ),
+        .executableTarget(
+            name:
+                "PrimeNativeNeuralGateHistoricalFixtureWorker",
+            dependencies: [
+                "PrimeCore",
+                "ErgenticsPrimeRuntime",
+                "PrimeNativeNeuralGateHistoricalReplayMechanics",
+                "PrimeNativeNeuralGateReplayTransport",
+            ],
+            resources: [
+                .copy("HistoricalFixtureEvidence"),
+            ]
+        ),
         .target(
             name:
                 "PrimeNativeNeuralGateReplayArtifactContracts"

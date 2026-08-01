@@ -396,6 +396,217 @@ extension PrimeNativeNeuralGateHistoricalSourceDerivation {
                 "7f5ee1ee5579d13cec0ea4802994e6f07c4117c8202714f40fe1e3a0de21a42c"
         )
 
+    static let frozenHistoricalFixtureSourcePin =
+        PrimeNativeNeuralGateHistoricalSourcePin(
+            ordinal: 10,
+            byteCount: 165_692,
+            sha256:
+                "266475d337fb49ba9c84e03a53871269a73812c3200a830a799ef90f4901968c"
+        )
+
+    static let frozenHistoricalPackageResolvedPin =
+        PrimeNativeNeuralGateHistoricalSourcePin(
+            ordinal: 11,
+            byteCount: 1_949,
+            sha256:
+                "cf1ba313dcb0c959e80ba09d6cbe0c56bcd921523bda5cec2c682c8ae7696ab3"
+        )
+
+    /// Exact V2 fixture derivation, retained byte-for-byte for additive V11
+    /// placement beside the historical gate. V11 changes routing, not the
+    /// proven source material or any of its four frozen rewrites.
+    static let frozenHistoricalFixtureDerivation:
+        PrimeNativeNeuralGateHistoricalSourceDerivationContract =
+        {
+            let prefix =
+                "import CryptoKit\n"
+                + "import ErgenticsPrimeRuntime\n"
+                + "import PrimeNativeNeuralGateReplayMechanics\n"
+                + "import Foundation\n\n"
+                + "public enum EngineProposesNativeLanguageVerifyAbstainFixture {\n"
+                + "    public enum MaterializationError: Error, Equatable {\n"
+                + "        case invalidPackageResolvedArtifact\n"
+                + "    }\n\n"
+            return PrimeNativeNeuralGateHistoricalSourceDerivationContract(
+                derivationID:
+                    "exact_lf_forensic_fixture_five_group_four_rewrite_v1",
+                kind: .frozenLineGroupsAndRewrites,
+                requiredInputOrdinals: [10, 11],
+                lineGroups: [
+                    .init(
+                        ordinal: 1,
+                        firstLine: 9,
+                        lastLine: 341,
+                        terminalLFPolicy:
+                            .stripOneTerminalLF,
+                        expectedByteCount: 12_955,
+                        expectedSHA256:
+                            "dd1f5deda2694ac74c282c7b8a5ec9963709a2aadbdc9cabe91f5664ad5a33fc"
+                    ),
+                    .init(
+                        ordinal: 2,
+                        firstLine: 346,
+                        lastLine: 587,
+                        terminalLFPolicy:
+                            .stripOneTerminalLF,
+                        expectedByteCount: 8_696,
+                        expectedSHA256:
+                            "b3ad39ad1e02e7fb44aed6cda1dd18f4230c2cc49d05c584166ffe9b806d1538"
+                    ),
+                    .init(
+                        ordinal: 3,
+                        firstLine: 2_651,
+                        lastLine: 3_529,
+                        terminalLFPolicy:
+                            .stripOneTerminalLF,
+                        expectedByteCount: 39_497,
+                        expectedSHA256:
+                            "dfde0892c44dfb97f1850675b24d1096cd7149c8f3f3856642d1fac191f57d77"
+                    ),
+                    .init(
+                        ordinal: 4,
+                        firstLine: 3_540,
+                        lastLine: 4_193,
+                        terminalLFPolicy:
+                            .stripOneTerminalLF,
+                        expectedByteCount: 25_949,
+                        expectedSHA256:
+                            "2eb9890d91da04ac05d6f70da1ea9776ec4826723160d2dca122adec966a5cde"
+                    ),
+                    .init(
+                        ordinal: 5,
+                        firstLine: 4_334,
+                        lastLine: 4_357,
+                        terminalLFPolicy:
+                            .stripOneTerminalLF,
+                        expectedByteCount: 658,
+                        expectedSHA256:
+                            "c184fb53f7e6d9c8dd14e4531e4e082f69cc1500e08889e32ae26e74f21475e1"
+                    ),
+                ],
+                betweenGroupUTF8Hex:
+                    Array(repeating: "0a0a", count: 4),
+                joinedGroupByteCount: 87_763,
+                joinedGroupSHA256:
+                    "524864949a47434c14ac990c03e90a6eb6054e56bcdc58c2ab018aab1e8e59a7",
+                prefixUTF8: prefix,
+                prefixByteCount: 280,
+                prefixSHA256:
+                    "1690de7194caa62ab8d012d3b5de14e067e0d6c090dd5b2cef1543b0dc3d9b85",
+                suffixUTF8: "\n}\n",
+                suffixByteCount: 3,
+                suffixSHA256:
+                    "804f89fc0ec98c9824183e795d3edd19e930f7bc471f9012aa3d503be2f8974b",
+                rewrites: [
+                    .init(
+                        ordinal: 1,
+                        rewriteID:
+                            "fixture_visibility_and_public_types",
+                        sourceUTF8:
+                            "    private struct Fixture {\n"
+                            + "        let materials: Gate.Materials\n"
+                            + "        let reports: [Authority.Report]\n"
+                            + "        let constructionDurationsSeconds: [String: Double]\n"
+                            + "    }",
+                        sourceByteCount: 171,
+                        sourceSHA256:
+                            "ab4a7961812ded31681e23120aad7c34162fd5d1c4f7651574e2fe42ffade861",
+                        replacementUTF8:
+                            "    public struct Fixture {\n"
+                            + "        public let materials:\n"
+                            + "            PrimeNeuralNativeLanguageVerifyAbstainGate.Materials\n"
+                            + "        public let reports:\n"
+                            + "            [ErgenticsNativeLanguageCanary.Report]\n"
+                            + "        public let constructionDurationsSeconds: [String: Double]\n"
+                            + "    }",
+                        replacementByteCount: 273,
+                        replacementSHA256:
+                            "ed550504d0a9a576ebb404170eb680670ed824bee7163dc195d7acec1ba418eb"
+                    ),
+                    .init(
+                        ordinal: 2,
+                        rewriteID:
+                            "materializer_throwing_package_url_signature",
+                        sourceUTF8:
+                            "    private static func makeFixture() -> Fixture {",
+                        sourceByteCount: 50,
+                        sourceSHA256:
+                            "89ad58011564557481fde9263eccbbf62f8a26912a8df864bb0a5fe748ccf6bf",
+                        replacementUTF8:
+                            "    public static func materialize(\n"
+                            + "        packageResolvedURL: URL\n"
+                            + "    ) throws -> Fixture {",
+                        replacementByteCount: 93,
+                        replacementSHA256:
+                            "3586d9bf9c8e231b5dbfa783bfd5c397b634a331dc85d44ff2452e3b77a21d9a"
+                    ),
+                    .init(
+                        ordinal: 3,
+                        rewriteID:
+                            "remove_file_path_and_accept_explicit_package_url",
+                        sourceUTF8:
+                            "        let packageResolvedURL = URL(\n"
+                            + "            fileURLWithPath: "
+                            + "#" + "filePath\n"
+                            + "        ).deletingLastPathComponent()\n"
+                            + "            .deletingLastPathComponent()\n"
+                            + "            .deletingLastPathComponent()\n"
+                            + "            .appendingPathComponent(\n"
+                            + "                Gate.packageResolvedArtifactFileName\n"
+                            + "            )\n"
+                            + "        let packageResolvedData =\n"
+                            + "            try! "
+                            + "Data" + "(contentsOf: packageResolvedURL)\n",
+                        sourceByteCount: 389,
+                        sourceSHA256:
+                            "27283601f132f38d05db2e1f5f32a9179da2253290204807d9a509f38a2c70df",
+                        replacementUTF8:
+                            "        let packageResolvedData =\n"
+                            + "            try "
+                            + "Data" + "(contentsOf: packageResolvedURL)\n",
+                        replacementByteCount: 87,
+                        replacementSHA256:
+                            "4ddef6e0fa189b084d27503857e101353b94dde6530309842157de41b8f48782"
+                    ),
+                    .init(
+                        ordinal: 4,
+                        rewriteID:
+                            "require_pinned_package_lock_or_throw",
+                        sourceUTF8:
+                            "        let packageResolvedBinding =\n"
+                            + "            Gate.observePackageResolvedArtifact(\n"
+                            + "                packageResolvedURL,\n"
+                            + "                expectedSHA256: packageResolvedSHA256\n"
+                            + "            )!\n",
+                        sourceByteCount: 191,
+                        sourceSHA256:
+                            "6b6171cb20f5e4885e5825aa81a5b1a26928565ac093cefa8a5b5b6d9af6c505",
+                        replacementUTF8:
+                            "        guard packageResolvedSHA256\n"
+                            + "            == \"cf1ba313dcb0c959e80ba09d6cbe0c56bcd921523bda5cec2c682c8ae7696ab3\",\n"
+                            + "              let packageResolvedBinding =\n"
+                            + "                Gate.observePackageResolvedArtifact(\n"
+                            + "                    packageResolvedURL,\n"
+                            + "                    expectedSHA256: packageResolvedSHA256\n"
+                            + "                )\n"
+                            + "        else {\n"
+                            + "            throw MaterializationError\n"
+                            + "                .invalidPackageResolvedArtifact\n"
+                            + "        }\n",
+                        replacementByteCount: 443,
+                        replacementSHA256:
+                            "3212cbda67da14efd499bfa898a7d268c1fb71680b4b6e0363549cbf4e708e9d"
+                    ),
+                ],
+                transformedBodyByteCount: 87_858,
+                transformedBodySHA256:
+                    "11a335d766a4078c4ddcce78e67685c4a2da86b5f85859fcf59431342966f070",
+                expectedOutputByteCount: 88_141,
+                expectedOutputSHA256:
+                    "e04daaf783f0cb79958daea9a70579fc959b47ceea4ae913bcb69cdc458fcf99"
+            )
+        }()
+
     static let frozenCarrierDerivation =
         PrimeNativeNeuralGateHistoricalSourceDerivationContract(
             derivationID:

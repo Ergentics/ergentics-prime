@@ -5897,6 +5897,8 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
             "ErgenticsPrimeRuntime"
         let historicalReplayTarget =
             "PrimeNativeNeuralGateHistoricalReplayMechanics"
+        let historicalWorkerTarget =
+            "PrimeNativeNeuralGateHistoricalFixtureWorker"
         XCTAssertTrue(
             compactPackage.contains(
                 #".target(name:"\#(mechanicsTarget)")"#
@@ -5963,6 +5965,17 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
                     "Sources/\(historicalReplayTarget)"
             )
         )
+        XCTAssertTrue(
+            compactPackage.contains(
+                #".executableTarget(name:"\#(historicalWorkerTarget)","#
+            )
+        )
+        XCTAssertTrue(
+            FileManager.default.fileExists(
+                atPath:
+                    "Sources/\(historicalWorkerTarget)"
+            )
+        )
         let sourceBinding =
             Plan.frozenV3.sourceExecutionBinding
         let fixtureAuthorityRule =
@@ -5998,6 +6011,7 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
                     && $0 != correctedTarget
                     && $0 != historicalRuntimeTarget
                     && $0 != historicalReplayTarget
+                    && $0 != historicalWorkerTarget
             })
         {
             XCTAssertFalse(

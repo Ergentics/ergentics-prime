@@ -1215,12 +1215,12 @@ common/branch scalar references are supervisor-derived and non-authorizing;
 realized worker-source and role-artifact content references remain absent. The
 adapter prepares source- and owner-bound candidates but does not observe
 delivery. Topology V7 is distinct from the
-still-unissued source/execution-binding V7. The corrected implementation
-prerequisite is now:
+still-unissued source/execution-binding V7. At the V7 checkpoint, the corrected
+implementation prerequisite was:
 
 `freeze_deferred_mutation_historical_mlx_statistics_verdict_schemas_and_assign_disjoint_source_bound_mutation_producer_detector_without_materializing_workers`
 
-Its implementation order is now:
+Its then-planned implementation order was:
 
 1. freeze the deferred mutation, historical, MLX, and statistics/verdict
    record schemas;
@@ -1232,6 +1232,21 @@ Its implementation order is now:
 4. implement the paired probe/verifier and exact path/metadata/content
    inventory, durable sidecar publication, full-fixture MLX recomputation,
    full-root pre-receipt recapture, and receipt-last publication.
+
+That order is now refined by observed source reality. V8 completed the schema
+and disjoint corrected-target step, V9 derived the historical source material,
+and V10 compiled the internal historical closure. V11 source-binds the exact
+historical fixture and creates only an executable target whose `main` exits
+unavailable with status `78`; it does not implement item 3's evidence-producing
+worker. The current next prerequisite is:
+
+`derive_and_source_bind_historical_worker_evidence_export_adapter_without_mutating_the_byte_exact_gate_executing_the_worker_or_issuing_source_binding_v7`
+
+Only after that adapter is exact may a later slice implement worker request
+handling, sealing, launch/supervision, semantic artifact publication, and the
+paired probe/verifier. The V10 public seam's summary projection cannot replace
+the missing raw invariant records, per-mutation fingerprints, or observed
+failed-leg sets.
 
 After a real dual-arm Stage-B pass:
 
@@ -1307,7 +1322,11 @@ bounded derivation and introduces additive adaptation proof V3, which corrects
 the future gate/carrier destination to the historical replay target while
 preserving V2 as history. Topology V10 now compiles that exact closure behind
 an internal, unreachable historical library and binds the Prime observation
-seam without executing it. The current next prerequisite is
+seam without executing it. Its next prerequisite was
 `derive_and_source_bind_source_faithful_historical_fixture_then_materialize_only_the_sealed_historical_worker_without_materializing_probe_verifier_or_issuing_source_binding_v7`.
+V11 now completes its fixture-source and unavailable-target portions only.
+The current next prerequisite is
+`derive_and_source_bind_historical_worker_evidence_export_adapter_without_mutating_the_byte_exact_gate_executing_the_worker_or_issuing_source_binding_v7`.
 See [Prime Native Neural Gate Historical Source Material](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-SOURCE-MATERIAL-2026-08-01.md).
 See [Prime Native Neural Gate Historical Replay Mechanics](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-REPLAY-MECHANICS-2026-08-01.md).
+See [Prime Native Neural Gate Historical Fixture and Worker Boundary](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-FIXTURE-WORKER-BOUNDARY-2026-08-01.md).
