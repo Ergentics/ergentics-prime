@@ -219,6 +219,15 @@ let package = Package(
                 "PrimeNativeNeuralGateReplayMechanics",
             ]
         ),
+        .target(
+            name:
+                "PrimeNativeNeuralGateHistoricalEvidenceExportMechanics",
+            dependencies: [
+                "ErgenticsPrimeRuntime",
+                "PrimeNativeNeuralGateReplayMechanics",
+                "PrimeNativeNeuralGateHistoricalReplayMechanics",
+            ]
+        ),
         .executableTarget(
             name:
                 "PrimeNativeNeuralGateHistoricalFixtureWorker",
@@ -272,6 +281,9 @@ let package = Package(
                 "PrimeNativeNeuralGateHistoricalSourceDerivation",
             dependencies: [
                 "PrimeNativeNeuralGateReplayMechanics",
+            ],
+            resources: [
+                .copy("HistoricalEvidenceExportSource"),
             ]
         ),
         .target(
@@ -626,6 +638,7 @@ let package = Package(
                 "PrimeNativeNeuralGateSemanticRecordContracts",
                 "PrimeNativeNeuralGateCorrectedMutationProducer",
                 "PrimeNativeNeuralGateCorrectedMutationDetector",
+                "PrimeNativeNeuralGateHistoricalSourceDerivation",
                 "PrimeNativeNeuralGateReplayTransport",
                 "PrimeNativeNeuralGateReplayComposition",
                 "PrimeNativeNeuralGateReplaySourceBinding",
@@ -693,6 +706,7 @@ let package = Package(
                 "PrimeCore",
                 "PrimeNativeNeuralGateHistoricalSourceDerivation",
                 "PrimeNativeNeuralGateHistoricalReplayMechanics",
+                "PrimeNativeNeuralGateHistoricalEvidenceExportMechanics",
             ]
         ),
     ]

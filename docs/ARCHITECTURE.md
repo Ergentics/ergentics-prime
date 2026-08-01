@@ -613,13 +613,18 @@ changing any V11 target, dependency, materialization, or reachability state.
 The pinned gate's lexical-private and discarded evidence makes a thin wrapper
 impossible, so V12 binds only the exact 368,953-byte whole-gate namespace basis
 and freezes the future export semantics. No derived exporter, target,
-`Materials` bridge, worker call edge, or historical evidence is present. The
-current next prerequisite is
-`materialize_the_exact_source_bound_historical_evidence_export_variant_in_the_isolated_historical_replay_boundary_without_executing_the_gate_or_worker_sealing_or_launching_a_worker_or_issuing_source_binding_v7`.
+`Materials` bridge, worker call edge, or historical evidence is present in
+that historical checkpoint. Topology V13 now materializes the exact 412,226-byte
+derived exporter as one package-internal library with no product, production
+consumer, or worker call edge. The source is reproducible from the unchanged
+gate and an independently checked-in 43,273-byte suffix. It is compile-checked
+but not invoked. The current next prerequisite is
+`source_bind_the_historical_worker_evidence_export_call_edge_without_sealing_launching_or_executing_the_worker_or_issuing_source_binding_v7`.
 See [Prime Native Neural Gate Historical Source Material](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-SOURCE-MATERIAL-2026-08-01.md).
 See [Prime Native Neural Gate Historical Replay Mechanics](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-REPLAY-MECHANICS-2026-08-01.md).
 See [Prime Native Neural Gate Historical Fixture and Worker Boundary](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-FIXTURE-WORKER-BOUNDARY-2026-08-01.md).
 See [Prime Native Neural Gate Historical Evidence Export Adapter Design](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-EXPORT-ADAPTER-DESIGN-2026-08-01.md).
+See [Prime Native Neural Gate Historical Evidence Export Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-EXPORT-SOURCE-2026-08-01.md).
 
 ## Optimizer checkpoint admission
 

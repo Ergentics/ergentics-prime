@@ -10,6 +10,8 @@ public enum PrimeNativeNeuralGateHistoricalSourceDerivationError:
     case inputOrdinalMismatch
     case donorByteCountMismatch
     case donorSHA256Mismatch
+    case suffixByteCountMismatch
+    case suffixSHA256Mismatch
     case nonCanonicalUTF8Source
     case invalidLineRange(Int)
     case lineGroupByteCountMismatch(Int)
@@ -27,15 +29,22 @@ public struct PrimeNativeNeuralGateDerivedSourceMaterial:
     Sendable
 {
     public let materialID: String
+    public let governingContractID: String?
+    public let governingContractSHA256: String?
     public let byteCount: UInt64
     public let sha256: String
     public let bytes: Data
 
     init(
         materialID: String,
+        governingContractID: String? = nil,
+        governingContractSHA256: String? = nil,
         bytes: Data
     ) {
         self.materialID = materialID
+        self.governingContractID = governingContractID
+        self.governingContractSHA256 =
+            governingContractSHA256
         byteCount = UInt64(bytes.count)
         sha256 = PrimeNativeNeuralGateInvariantCodec
             .sha256(bytes)
@@ -277,6 +286,69 @@ public enum PrimeNativeNeuralGateHistoricalSourceDerivation {
             expectedDonorByteCount: fixturePin.byteCount,
             expectedDonorSHA256: fixturePin.sha256,
             contract: frozenHistoricalFixtureDerivation
+        )
+    }
+
+    /// Materializes the exact V13 historical evidence-export source from the
+    /// pinned byte-exact gate and the separately pinned append-only suffix.
+    ///
+    /// Both inputs are caller-supplied bytes. This operation performs no
+    /// repository lookup and does not compile or execute the derived source.
+    public static func deriveHistoricalEvidenceExportAdapter(
+        nativeLanguageGateSource: Data,
+        exporterSuffix: Data
+    ) throws -> PrimeNativeNeuralGateDerivedSourceMaterial {
+        let gatePin = frozenNativeLanguageGatePin
+        let suffixPin =
+            frozenHistoricalEvidenceExportSuffixPin
+
+        try validatePinnedInput(
+            nativeLanguageGateSource,
+            expectedByteCount: gatePin.byteCount,
+            expectedSHA256: gatePin.sha256
+        )
+        guard UInt64(exporterSuffix.count)
+                == suffixPin.byteCount
+        else {
+            throw PrimeNativeNeuralGateHistoricalSourceDerivationError
+                .suffixByteCountMismatch
+        }
+        guard PrimeNativeNeuralGateInvariantCodec
+                .sha256(exporterSuffix)
+                == suffixPin.sha256
+        else {
+            throw PrimeNativeNeuralGateHistoricalSourceDerivationError
+                .suffixSHA256Mismatch
+        }
+        try validateCanonicalSource(exporterSuffix)
+
+        let namespace = try derive(
+            donorBytes: nativeLanguageGateSource,
+            inputOrdinal: gatePin.ordinal,
+            expectedDonorByteCount: gatePin.byteCount,
+            expectedDonorSHA256: gatePin.sha256,
+            contract:
+                frozenHistoricalEvidenceExportNamespaceDerivation
+        )
+        var output = namespace.bytes
+        output.append(exporterSuffix)
+        guard UInt64(output.count)
+                == frozenHistoricalEvidenceExportFinalByteCount,
+              PrimeNativeNeuralGateInvariantCodec
+                .sha256(output)
+                == frozenHistoricalEvidenceExportFinalSHA256
+        else {
+            throw PrimeNativeNeuralGateHistoricalSourceDerivationError
+                .outputMismatch
+        }
+        return PrimeNativeNeuralGateDerivedSourceMaterial(
+            materialID:
+                frozenHistoricalEvidenceExportDerivationID,
+            governingContractID:
+                frozenHistoricalEvidenceExportSourceContractID,
+            governingContractSHA256:
+                frozenHistoricalEvidenceExportSourceContractSHA256,
+            bytes: output
         )
     }
 
