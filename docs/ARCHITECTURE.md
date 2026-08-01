@@ -595,10 +595,15 @@ The V8 next prerequisite was
 Topology V9 now satisfies it through a single offline Swift target that
 validates the exact donor gate/carrier bytes and derives inert carrier-use and
 six-group mutation source material. Per-case executable binding, independent
-detection, workers, source binding V7, and authority remain absent. The
-current next prerequisite is
-`author_and_source_bind_prime_historical_observation_seam_and_materialize_historical_replay_mechanics_without_materializing_workers_or_issuing_source_binding_v7`.
+detection, workers, source binding V7, and authority remain absent. Topology
+V10 now materializes only the source-pinned seven-file runtime and isolated
+historical replay libraries. The Prime-authored seam validates the public
+assessment surface and always keeps Prime admission at `ABSTAIN`; no worker,
+historical admission evaluation, durable observation, or authority exists.
+The current next prerequisite is
+`derive_and_source_bind_source_faithful_historical_fixture_then_materialize_only_the_sealed_historical_worker_without_materializing_probe_verifier_or_issuing_source_binding_v7`.
 See [Prime Native Neural Gate Historical Source Material](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-SOURCE-MATERIAL-2026-08-01.md).
+See [Prime Native Neural Gate Historical Replay Mechanics](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-REPLAY-MECHANICS-2026-08-01.md).
 
 ## Optimizer checkpoint admission
 

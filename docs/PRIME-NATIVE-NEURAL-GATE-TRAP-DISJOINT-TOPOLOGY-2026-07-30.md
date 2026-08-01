@@ -510,9 +510,12 @@ The V8 next prerequisite was
 `derive_source_pinned_historical_gate_carrier_and_forty_six_mutation_material_without_materializing_workers_or_issuing_source_binding_v7`.
 Topology V9 now satisfies it with one internal source-derivation target and
 additive adaptation proof V3; every historical runtime, worker, process, and
-source-binding authority remains absent. The current next prerequisite is
-`author_and_source_bind_prime_historical_observation_seam_and_materialize_historical_replay_mechanics_without_materializing_workers_or_issuing_source_binding_v7`.
+source-binding authority remains absent. Topology V10 then materializes only
+the exact runtime and isolated historical replay library targets; all current
+production targets still cannot reach them. The current next prerequisite is
+`derive_and_source_bind_source_faithful_historical_fixture_then_materialize_only_the_sealed_historical_worker_without_materializing_probe_verifier_or_issuing_source_binding_v7`.
 See [Prime Native Neural Gate Historical Source Material](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-SOURCE-MATERIAL-2026-08-01.md).
+See [Prime Native Neural Gate Historical Replay Mechanics](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-REPLAY-MECHANICS-2026-08-01.md).
 
 The separate read-only Swift Git workflow preflight remains a later workflow
 slice. It does not belong in the Stage-B evidence graph, and the signed-in

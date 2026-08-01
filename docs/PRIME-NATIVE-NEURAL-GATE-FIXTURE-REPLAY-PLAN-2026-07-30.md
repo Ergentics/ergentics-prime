@@ -1305,6 +1305,9 @@ The historical gate/carrier seam and raw 46-case material must be derived from
 the pinned donor source rather than hand-ported. Topology V9 now performs that
 bounded derivation and introduces additive adaptation proof V3, which corrects
 the future gate/carrier destination to the historical replay target while
-preserving V2 as history. The current next prerequisite is
-`author_and_source_bind_prime_historical_observation_seam_and_materialize_historical_replay_mechanics_without_materializing_workers_or_issuing_source_binding_v7`.
+preserving V2 as history. Topology V10 now compiles that exact closure behind
+an internal, unreachable historical library and binds the Prime observation
+seam without executing it. The current next prerequisite is
+`derive_and_source_bind_source_faithful_historical_fixture_then_materialize_only_the_sealed_historical_worker_without_materializing_probe_verifier_or_issuing_source_binding_v7`.
 See [Prime Native Neural Gate Historical Source Material](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-SOURCE-MATERIAL-2026-08-01.md).
+See [Prime Native Neural Gate Historical Replay Mechanics](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-REPLAY-MECHANICS-2026-08-01.md).

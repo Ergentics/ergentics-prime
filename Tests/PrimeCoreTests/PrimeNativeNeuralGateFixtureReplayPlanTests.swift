@@ -5875,7 +5875,7 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
         )
     }
 
-    func testBoundedSlicesAddOnlyApprovedTrapDisjointMechanicsAndFixtureAuthorityTargets()
+    func testBoundedSlicesAddOnlyApprovedTrapDisjointMechanicsFixtureAuthorityAndHistoricalReplayTargets()
         throws
     {
         let package = try String(
@@ -5893,6 +5893,10 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
             "PrimeNativeNeuralGateCorrectedEvaluationMechanics"
         let fixtureAuthorityTarget =
             "PrimeNativeNeuralGateCorrectedFixtureAuthority"
+        let historicalRuntimeTarget =
+            "ErgenticsPrimeRuntime"
+        let historicalReplayTarget =
+            "PrimeNativeNeuralGateHistoricalReplayMechanics"
         XCTAssertTrue(
             compactPackage.contains(
                 #".target(name:"\#(mechanicsTarget)")"#
@@ -5937,6 +5941,28 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
                     "Sources/\(fixtureAuthorityTarget)"
             )
         )
+        XCTAssertTrue(
+            compactPackage.contains(
+                #".target(name:"\#(historicalRuntimeTarget)")"#
+            )
+        )
+        XCTAssertTrue(
+            FileManager.default.fileExists(
+                atPath:
+                    "Sources/\(historicalRuntimeTarget)"
+            )
+        )
+        XCTAssertTrue(
+            compactPackage.contains(
+                #".target(name:"\#(historicalReplayTarget)",dependencies:["\#(historicalRuntimeTarget)","\#(mechanicsTarget)",])"#
+            )
+        )
+        XCTAssertTrue(
+            FileManager.default.fileExists(
+                atPath:
+                    "Sources/\(historicalReplayTarget)"
+            )
+        )
         let sourceBinding =
             Plan.frozenV3.sourceExecutionBinding
         let fixtureAuthorityRule =
@@ -5970,6 +5996,8 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
             .filter({
                 $0 != mechanicsTarget
                     && $0 != correctedTarget
+                    && $0 != historicalRuntimeTarget
+                    && $0 != historicalReplayTarget
             })
         {
             XCTAssertFalse(

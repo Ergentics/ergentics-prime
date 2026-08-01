@@ -1848,6 +1848,142 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
         )
     }()
 
+    /// Materializes only the exact source-pinned historical runtime and
+    /// historical replay-mechanics libraries. The gate, carrier, and
+    /// Prime-owned observation seam compile, but no worker, executable, or
+    /// process is materialized and no gate invocation, model execution, or
+    /// durable evidence has been executed or observed.
+    public static let frozenV10: Self = {
+        let previous = frozenV9
+        let runtimeTargetName =
+            previous.historicalRuntimeTargetName
+        let historicalTargetName =
+            previous.historicalReplayTargetName
+        let pureReplayTargetName =
+            previous.pureReplayTargetName
+
+        let targets = previous.targetGraph.map { target in
+            switch target.targetName {
+            case runtimeTargetName:
+                Self.target(
+                    runtimeTargetName,
+                    .implemented,
+                    [],
+                    "exact seven-file source-pinned Ergentics historical runtime authority; contains historical filesystem-capable and trap-bearing APIs, has no product or executable, and is reachable only from the isolated historical replay and still-planned historical worker closures"
+                )
+            case historicalTargetName:
+                Self.target(
+                    historicalTargetName,
+                    .implemented,
+                    [
+                        runtimeTargetName,
+                        pureReplayTargetName,
+                    ],
+                    "exact byte-pinned native gate, V9-derived bounded verdict carrier, and Prime-authored in-memory assessment observation seam; compile-only source closure with Prime admission forced to ABSTAIN and no worker, process, execution observation, durable publication, PASS, receipt, source binding V7, science, or product authority"
+                )
+            default:
+                target
+            }
+        }
+
+        func appendingUnique(
+            _ base: [String],
+            _ additions: [String]
+        ) -> [String] {
+            additions.reduce(base) { result, name in
+                result.contains(name)
+                    ? result
+                    : result + [name]
+            }
+        }
+
+        var reachability = previous.forbiddenReachability
+            .filter {
+                $0.targetName != runtimeTargetName
+                    && $0.targetName != historicalTargetName
+            }
+            .map { rule in
+                guard rule.targetName
+                        != previous
+                        .historicalContainmentRootTargetName
+                else {
+                    return rule
+                }
+                return Self.forbidden(
+                    rule.targetName,
+                    appendingUnique(
+                        rule.forbiddenReachableTargetNames,
+                        [
+                            runtimeTargetName,
+                            historicalTargetName,
+                        ]
+                    )
+                )
+            }
+        let allTargetNames = targets.map(\.targetName)
+        reachability.append(
+            Self.forbidden(
+                runtimeTargetName,
+                allTargetNames.filter {
+                    $0 != runtimeTargetName
+                }
+            )
+        )
+        let historicalPermitted = Set([
+            runtimeTargetName,
+            pureReplayTargetName,
+        ])
+        reachability.append(
+            Self.forbidden(
+                historicalTargetName,
+                allTargetNames.filter {
+                    $0 != historicalTargetName
+                        && !historicalPermitted.contains($0)
+                }
+            )
+        )
+
+        return Self(
+            schemaVersion: 10,
+            contractID:
+                "prime_stage_b_source_bound_historical_replay_mechanics_topology_v10",
+            status: previous.status,
+            executionImplemented: false,
+            historicalReplayPlanID:
+                previous.historicalReplayPlanID,
+            historicalSourceBindingContractID:
+                previous.historicalSourceBindingContractID,
+            historicalContractsPreserved: true,
+            historicalFutureTargetGraphSuperseded: true,
+            targetGraph: targets,
+            forbiddenReachability: reachability,
+            historicalContainmentRootTargetName:
+                previous.historicalContainmentRootTargetName,
+            historicalRuntimeTargetName:
+                runtimeTargetName,
+            historicalReplayTargetName:
+                historicalTargetName,
+            pureReplayTargetName:
+                pureReplayTargetName,
+            donorAdaptationV2PreservedAsHistory: true,
+            donorAdaptationV3Required: true,
+            donorAdaptationV3RequiredDestination:
+                previous.donorAdaptationV3RequiredDestination,
+            sourceBindingV7Issued: false,
+            sourceBindingV7Prerequisite:
+                previous.sourceBindingV7Prerequisite,
+            packageCaptureAuthority:
+                "actual_package_secure_capture_only_not_v10_historical_execution_or_source_execution_binding_v7_evidence",
+            mutationProducerDetectorTargetAssignmentDeferred:
+                false,
+            mutationProducerDetectorMustBeDisjoint: true,
+            nextImplementationPrerequisite:
+                "derive_and_source_bind_source_faithful_historical_fixture_then_materialize_only_the_sealed_historical_worker_without_materializing_probe_verifier_or_issuing_source_binding_v7",
+            authorityStatement:
+                "This V10 topology preserves V1 through V9 and materializes only two previously planned internal library targets: the exact seven-file Ergentics historical runtime authority and the isolated historical replay mechanics target containing the byte-exact native gate, V9-derived bounded carrier, and Prime-authored observation seam. The historical replay target depends only on that runtime and the pure replay codec; no current product, executable, supervisor, corrected path, source-binding path, or worker can reach either historical target. The observation seam accepts in-memory Materials only, excludes filesystem URLs and nondeterministic phase timing, explicitly marks private invariant/per-mutation details unavailable, and forces the Prime admission disposition to ABSTAIN. The compiled historical code retains known trap and filesystem-capable APIs, so package materialization is not execution evidence. No historical fixture or worker, gate or model execution, process, durable observation, independent detector, distinct-family/four-tier audit, mechanics PASS, receipt, source/execution-binding V7, scientific authority, or product authority is observed or authorized."
+        )
+    }()
+
     public func target(
         named name: String
     ) throws -> PrimeNativeNeuralGateTopologyTarget {
@@ -1913,6 +2049,8 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
             expected = .frozenV8
         case 9:
             expected = .frozenV9
+        case 10:
+            expected = .frozenV10
         default:
             throw PrimeNativeNeuralGateTopologyError
                 .invalidFrozenContract
