@@ -58,6 +58,10 @@ The V14 private cross-file worker/exporter call edge, exact preserved worker
 entry point, single appended dependency, and unchanged non-execution and
 authority ceiling are recorded in
 [`docs/PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-EXPORT-CALL-EDGE-SOURCE-2026-08-01.md`](docs/PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-EXPORT-CALL-EDGE-SOURCE-2026-08-01.md).
+The V15 carrier-to-semantic-artifact projection design, exact three-versus-22
+namespace gap, lossless keyed three-seed requirement, historical-only
+dependency boundary, and unchanged package/execution ceiling are recorded in
+[`docs/PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-SEMANTIC-ARTIFACT-PROJECTION-DESIGN-2026-08-01.md`](docs/PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-SEMANTIC-ARTIFACT-PROJECTION-DESIGN-2026-08-01.md).
 The additive topology-V7 exact-count stream decoder, typed worker/artifact
 reference declarations, retained-capture binding, and unchanged authority
 ceiling are recorded in
@@ -883,16 +887,24 @@ appending that exporter to the worker's exact four-dependency prefix and
 adding one separately pinned private cross-file call edge. The exact V11
 primary source remains unchanged: `main` still exits unconditionally with
 status `78` and cannot name the private member. The edge is source- and
-compile-bound only; it is not invoked. The current next exact prerequisite is
+compile-bound only; it is not invoked. V14's next exact prerequisite was
 `design_and_source_bind_the_historical_evidence_carrier_to_frozen_worker_semantic_artifact_projection_without_enabling_worker_request_handling_sealing_launch_execution_or_issuing_source_binding_v7`.
+V15 now source-binds that exact design without changing the V14 graph. It
+records that the three deferred V4 historical specifications do not cover the
+worker's 22 semantic artifacts per role, that the singular statistics schema
+cannot retain all three keyed seed families, and that the current
+semantic-record target would violate historical-worker isolation. No projector
+is materialized. The current next exact prerequisite is
+`freeze_the_complete_non_authorizing_historical_semantic_artifact_namespace_and_additive_keyed_three_seed_statistics_envelope_then_source_bind_a_historical_only_projection_codec_without_enabling_worker_request_handling_sealing_launch_execution_publication_or_issuing_source_binding_v7`.
 See [Prime Native Neural Gate Historical Source Material](docs/PRIME-NATIVE-NEURAL-GATE-HISTORICAL-SOURCE-MATERIAL-2026-08-01.md).
 See [Prime Native Neural Gate Historical Replay Mechanics](docs/PRIME-NATIVE-NEURAL-GATE-HISTORICAL-REPLAY-MECHANICS-2026-08-01.md).
 See [Prime Native Neural Gate Historical Fixture and Worker Boundary](docs/PRIME-NATIVE-NEURAL-GATE-HISTORICAL-FIXTURE-WORKER-BOUNDARY-2026-08-01.md).
 See [Prime Native Neural Gate Historical Evidence Export Adapter Design](docs/PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-EXPORT-ADAPTER-DESIGN-2026-08-01.md).
 See [Prime Native Neural Gate Historical Evidence Export Source](docs/PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-EXPORT-SOURCE-2026-08-01.md).
 See [Prime Native Neural Gate Historical Worker/Export Call-Edge Source](docs/PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-EXPORT-CALL-EDGE-SOURCE-2026-08-01.md).
+See [Prime Native Neural Gate Historical Evidence Semantic-Artifact Projection Design](docs/PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-SEMANTIC-ARTIFACT-PROJECTION-DESIGN-2026-08-01.md).
 
-V9 through V14 keep the exact donor files in the first-party companion
+V9 through V15 keep the exact donor files in the first-party companion
 repository. Their cross-repository source proof is therefore an explicit
 manual pre-merge gate.
 The requirement marker makes a missing donor root or mistyped policy fail
@@ -902,7 +914,7 @@ rather than skip:
 env PRIME_REQUIRE_V9_PINNED_DONOR_GATE=1 PRIME_REQUIRE_V10_HISTORICAL_REPLAY_SOURCE_GATE=1 PRIME_REQUIRE_V11_HISTORICAL_FIXTURE_SOURCE_GATE=1 PRIME_REQUIRE_V12_HISTORICAL_EVIDENCE_EXPORT_SOURCE_GATE=1 PRIME_PMHNP_COMPANION_ROOT=/path/to/pinned/pmhnp-companion-ergentics swift test
 ```
 
-This command is mandatory process evidence for V9 through V14; V14 adds no new
+This command is mandatory process evidence for V9 through V15; V15 adds no new
 donor source or environment marker. Prime has no repository CI or branch-rule
 status check yet, so this record does not claim GitHub enforces the invocation
 automatically.

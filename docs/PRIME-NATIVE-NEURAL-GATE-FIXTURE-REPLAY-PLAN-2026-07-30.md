@@ -1247,11 +1247,23 @@ materialized the exact source-only exporter. V14 now appends that exporter to
 the worker's exact four-dependency prefix and source- and compile-binds one
 private cross-file call edge. The V11 primary source is unchanged; `main`
 still exits `78` and cannot name that member. No worker request handling,
-sealing, launch, execution, encoding, or publication is enabled. The current
-prerequisite is recorded in [Prime Native Neural Gate Historical Worker/Export
+sealing, launch, execution, encoding, or publication is enabled. The V14
+historical prerequisite is recorded in
+[Prime Native Neural Gate Historical Worker/Export
 Call-Edge Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-EXPORT-CALL-EDGE-SOURCE-2026-08-01.md).
 
-Only after the evidence carrier-to-artifact projection is separately exact
+V15 completed only the carrier-to-artifact projection design audit. Its exact
+nine-field mapping cannot yet become a codec: the namespace has three deferred
+historical specifications versus 22 worker artifacts per role; the singular
+statistics schema cannot losslessly retain all three keyed seed families; and
+the current semantic-record target violates historical-worker dependency
+isolation. External context and observation-state policies are frozen. The
+complete namespace, additive keyed three-seed envelope, and historical-only
+projection boundary must become exact before projector materialization. See
+[Prime Native Neural Gate Historical Evidence Semantic-Artifact Projection Design](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-SEMANTIC-ARTIFACT-PROJECTION-DESIGN-2026-08-01.md).
+
+Only after that namespace, envelope, historical-only codec, and resulting
+evidence carrier-to-artifact projection are separately exact
 may a later slice consider worker request handling, sealing,
 launch/supervision, semantic artifact publication, and the paired
 probe/verifier. The V10 public seam's summary projection cannot replace the
@@ -1344,7 +1356,14 @@ V13 resolved the bounded historical-evidence exporter source and topology
 materialization prerequisite while preserving the V13 worker call graph. V14
 now adds one separately pinned private cross-file call edge while preserving
 the byte-exact V11 primary source and status-`78` main. That edge remains
-unreachable from `main` and is source- and compile-bound only. The current next exact prerequisite is
+unreachable from `main` and is source- and compile-bound only. V14's next exact prerequisite was
 `design_and_source_bind_the_historical_evidence_carrier_to_frozen_worker_semantic_artifact_projection_without_enabling_worker_request_handling_sealing_launch_execution_or_issuing_source_binding_v7`.
+V15 source-binds that design only. It freezes the exact nine-field mapping,
+mandatory external context, and fail-closed join/observation policies while
+recording the incomplete namespace, missing keyed three-seed envelope, and
+historical-only dependency-isolation blockers. No projector exists. The
+current next exact prerequisite is
+`freeze_the_complete_non_authorizing_historical_semantic_artifact_namespace_and_additive_keyed_three_seed_statistics_envelope_then_source_bind_a_historical_only_projection_codec_without_enabling_worker_request_handling_sealing_launch_execution_publication_or_issuing_source_binding_v7`.
 See [Prime Native Neural Gate Historical Evidence Export Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-EXPORT-SOURCE-2026-08-01.md).
 See [Prime Native Neural Gate Historical Worker/Export Call-Edge Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-EXPORT-CALL-EDGE-SOURCE-2026-08-01.md).
+See [Prime Native Neural Gate Historical Evidence Semantic-Artifact Projection Design](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-SEMANTIC-ARTIFACT-PROJECTION-DESIGN-2026-08-01.md).

@@ -143,8 +143,10 @@ V12 resolved only that design/source-contract boundary. Topology V13
 materialized the exact source-only exporter. V14 now source- and compile-binds
 one private cross-file worker/exporter call edge. That edge remains unreachable
 from the exact V11 `main`, which exits `78`. No historical replay is executed.
-The current prerequisite is recorded in [Prime Native Neural Gate Historical
+The V14 prerequisite is recorded in [Prime Native Neural Gate Historical
 Worker/Export Call-Edge Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-EXPORT-CALL-EDGE-SOURCE-2026-08-01.md).
+V15 source-binds only the projection design; its current prerequisite is
+recorded in [Prime Native Neural Gate Historical Evidence Semantic-Artifact Projection Design](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-SEMANTIC-ARTIFACT-PROJECTION-DESIGN-2026-08-01.md).
 
 The later materialization must source-derive the missing raw-record export
 without modifying the byte-exact gate or reinterpreting the donor's
