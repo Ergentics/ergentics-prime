@@ -21,6 +21,7 @@ PrimeNativeNeuralGateReplaySourceComposition
     dependencies:
       - PrimeNativeNeuralGateReplaySourceBinding
       - PrimeNativeNeuralGateReplayComposition
+      - PrimeNativeNeuralGateTargetFreeScheduleDeliveryContracts
 
 PrimeNativeNeuralGateReplayCaptureInventory
     dependencies:
@@ -74,9 +75,13 @@ establish prompt-content target independence, and cannot authorize mechanics
 - semantic artifact namespace V4 remains exact at SHA-256
   `60e10e6c10f9ec1f30102f5b6d27be123434a163c01d82c0cc5d4520824532d1`.
 
-Topology V4 remains exact history. Topology V5 is the current additive boundary
-and remains globally `planned_not_materialized`; it keeps
-`executionImplemented == false` and `sourceBindingV7Issued == false`.
+Topology V4 remains exact history. Topology V5 is now the exact historical
+held-root/crosswalk boundary. Current topology V6, SHA-256
+`6a25a3d674a7ef3eda4475ed5532fff2366103b641736b410b37fabbc805bcd1`,
+adds the non-authorizing target-free schedule, process/evaluation/receipt
+ownership, and retained-capture binding boundaries. It remains globally
+`planned_not_materialized` and keeps `executionImplemented == false` and
+`sourceBindingV7Issued == false`.
 
 ## Descriptor admission
 
@@ -252,27 +257,36 @@ probe/verifier package-description output: 36,047 bytes, SHA-256
 It carries the same secure-capture-only authority ceiling. The historical V4
 canary is not relabeled as V5 evidence.
 
-## Remaining truth gap
+## V6 continuation and remaining truth gap
 
 The held-root inventory and independent source-derived crosswalk prerequisite
-is now implemented and verified. The immediate implementation prerequisite is:
+remains implemented and verified. Topology V6 has since frozen the replacement
+ten-role process/evaluation/receipt ownership declarations, target-free
+schedule candidate shapes, and a supervisor-only retained-capture binding
+wrapper. That wrapper is real, but delivery remains false. Individual slot
+decoding is strict and byte-bounded; aggregate candidates remain
+`Encodable`-only. The immediate implementation prerequisite is:
 
-`freeze_corrected_process_evaluation_receipt_ownership_and_lawful_target_free_schedule_delivery_then_assign_disjoint_source_bound_mutation_producer_detector_without_materializing_workers`
+`freeze_typed_source_pinned_worker_and_role_artifact_references_with_common_capture_schedule_binding_and_bounded_candidate_stream_decoder_then_freeze_deferred_mutation_historical_mlx_statistics_verdict_schemas_and_assign_disjoint_source_bound_mutation_producer_detector_without_materializing_workers`
 
-Stage B must next freeze corrected process, evaluation, and receipt ownership;
-lawful target-free schedule delivery; and a disjoint source-bound mutation
-producer/detector assignment. Mutation assignment remains deferred and must not
-share implementation authority with the detector. Historical runtime, workers,
-probe, verifier, mutation producer, and mutation detector remain
+Stage B must next freeze typed source-pinned worker and role-artifact references
+with a common capture/schedule binding, bounded aggregate candidate decoding,
+and the deferred mutation, historical, MLX, and statistics/verdict schemas, then assign a
+disjoint source-bound mutation producer/detector pair. Mutation assignment
+remains deferred and must not share implementation authority with the detector.
+Historical runtime, all supervisors/workers, probe, verifier, mutation producer,
+and mutation detector remain
 `planned_not_materialized`.
 
 That next slice must keep `executionImplemented == false` and
-`sourceBindingV7Issued == false` until its own evidence says otherwise. This V5
-slice does not establish prompt-content target independence, observed process or
-schedule delivery, model execution, evaluation or verdict publication,
+`sourceBindingV7Issued == false` until its own evidence says otherwise. Neither
+the historical V5 slice nor V6 establishes prompt-content target independence,
+observed process or schedule delivery, model execution, evaluation or verdict publication,
 mechanics `PASS`, a terminal receipt, scientific authority, or product
 authority.
 
 See
 [Prime Native Neural Gate Held-Root Crosswalk Authority](PRIME-NATIVE-NEURAL-GATE-HELD-ROOT-CROSSWALK-AUTHORITY-2026-07-31.md)
 for the exact V5 authority boundary and observed focused result.
+The additive V6 identities and evidence are recorded in
+[Prime Native Neural Gate Process Ownership and Target-Free Delivery](PRIME-NATIVE-NEURAL-GATE-PROCESS-OWNERSHIP-TARGET-FREE-DELIVERY-2026-07-31.md).

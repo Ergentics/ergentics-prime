@@ -546,27 +546,37 @@ Source composition V1, SHA-256
 `f3d0a58905065836caaae8c9d03c1b2840b07bcd1a4f0bf35f1ce638c6ac29b5`,
 adds descriptor-rooted prompt/outer/raw/logit source capabilities,
 incremental prompt reconstruction, target-free role projections, and an exact
-four-source keyed join. Additive topology V5,
+four-source keyed join. Historical additive topology V5,
 `prime_stage_b_held_root_capture_crosswalk_authority_topology_v5` (canonical
 SHA-256
 `252e027fc0f547e96b8c74b2e45cd1c316f1080d639a94619e9c03c87c480930`),
-now adds a retained exact 41-file
+added a retained exact 41-file
 held-root capture and a separate trap-bearing 18,432-row source-derived keyed
 prompt/target crosswalk. The focused integration passed in 300.125 seconds.
 That sealed boundary establishes one capture epoch, durable origin for only the
 captured four-source bytes, corrected fixture identity, exact source-capability
 join, independent prompt/target association, and outer expected-completion
-binding.
-The historical runtime, workers, probe, and verifier are still
-`planned_not_materialized`. Source binding V7 is not issued. Corrected
-execution remains blocked: prompt-content target independence, process/schedule
+binding. Current topology V6,
+`prime_stage_b_process_evaluation_receipt_ownership_target_free_delivery_topology_v6`
+(canonical SHA-256
+`6a25a3d674a7ef3eda4475ed5532fff2366103b641736b410b37fabbc805bcd1`),
+freezes the symmetric ten-process role/ownership model, separate corrected
+evaluation roles, verifier-supervisor receipt-last ownership, byte-bounded
+target-free slot decoding, `Encodable`-only aggregate candidates, and a real
+supervisor-only retained-capture binding wrapper. The wrapper prepares and
+source-binds candidates; `processDeliveryObserved` remains false.
+
+The historical runtime, every supervisor and worker, probe, verifier, mutation
+producer, and mutation detector are still `planned_not_materialized`. Source
+binding V7 is not issued. Corrected execution remains blocked: the aggregate
+candidate stream decoder, prompt-content target independence, process/schedule
 delivery, model execution, evaluation/verdict publication, mechanics `PASS`, a
 terminal receipt, science, and product authority all remain false. The exact
 next prerequisite is
-`freeze_corrected_process_evaluation_receipt_ownership_and_lawful_target_free_schedule_delivery_then_assign_disjoint_source_bound_mutation_producer_detector_without_materializing_workers`.
+`freeze_typed_source_pinned_worker_and_role_artifact_references_with_common_capture_schedule_binding_and_bounded_candidate_stream_decoder_then_freeze_deferred_mutation_historical_mlx_statistics_verdict_schemas_and_assign_disjoint_source_bound_mutation_producer_detector_without_materializing_workers`.
 `executionImplemented` remains false. The exact topology and nonclaims are in
 `docs/PRIME-NATIVE-NEURAL-GATE-TRAP-DISJOINT-TOPOLOGY-2026-07-30.md` and
-`docs/PRIME-NATIVE-NEURAL-GATE-HELD-ROOT-CROSSWALK-AUTHORITY-2026-07-31.md`.
+`docs/PRIME-NATIVE-NEURAL-GATE-PROCESS-OWNERSHIP-TARGET-FREE-DELIVERY-2026-07-31.md`.
 
 The closed PrimeCore external-child capture substrate is implemented. It
 accepts only the role and source root, directly launches the frozen Xcode 26.6
@@ -712,16 +722,20 @@ It has the same secure-capture-only scope and does not widen any execution,
 evaluation, receipt, reproducibility, network-denial, Metal, or product claim.
 `executionImplemented` remains false, and no Stage-B replay, historical worker,
 Metal execution, or product use is implemented or authorized. The historical
-V5 six-process count is
-preserved as history but
-is insufficient for future execution because the corrected raw worker adds a
-role. The replacement process-count and receipt schema remain deferred.
+V5 six-process count is preserved as history. Topology V6 replaces it for
+future execution with an exact symmetric ten-process roster and freezes the
+process, evaluation, and receipt ownership declarations; none of those ten
+processes is implemented.
 Distinct running Release executable bindings, exact pre-receipt realized
 path-and-metadata inventory, separate typed artifact-content validation,
 purpose-correct `0444` data / `0555` executable publication, and scoped
 `PASS`/`ABSTAIN` composition remain required future Stage-B work. The direct
 launch path, `proc_pidpath` pathname, and code-sign fields are
 non-authoritative telemetry; no Apple trust claim is made.
+V6's receipt declaration inventories exactly 20 role-scoped pre-receipt paths;
+it is not an exact full-root inventory. Typed role-to-path-to-content binding,
+common capture/schedule references, and source-pinned worker
+closure/executable references remain forward blockers.
 Because the source-faithful fixture inherits traps, a sealed Swift worker owns
 the entire historical arm; probe and verifier supervise separate bounded
 invocations with
@@ -733,8 +747,11 @@ permits no retry; partial files remain non-authoritative. An uncontained child
 or drain must fail-stop. Worker result transport cannot authorize mechanics
 `PASS`; the verifier must decode and recompute the semantic artifacts. Stage A
 is copied as 35 reachable typed bindings plus its separately pinned receipt,
-or 36 artifacts total. The exact next prerequisite is
-`freeze_corrected_process_evaluation_receipt_ownership_and_lawful_target_free_schedule_delivery_then_assign_disjoint_source_bound_mutation_producer_detector_without_materializing_workers`.
+or 36 artifacts total. The V6 contract/topology checkpoint passed 48/48
+focused tests, and the real retained 41-file-root projection/binding test
+passed 1/1 over 18,432 rows in 363.326 seconds. These are focused results, not
+a full-suite claim. The exact next prerequisite is
+`freeze_typed_source_pinned_worker_and_role_artifact_references_with_common_capture_schedule_binding_and_bounded_candidate_stream_decoder_then_freeze_deferred_mutation_historical_mlx_statistics_verdict_schemas_and_assign_disjoint_source_bound_mutation_producer_detector_without_materializing_workers`.
 
 ## Initial calibration
 

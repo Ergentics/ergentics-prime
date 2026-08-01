@@ -1,5 +1,6 @@
 import PrimeNativeNeuralGateReplayComposition
 import PrimeNativeNeuralGateReplaySourceBinding
+import PrimeNativeNeuralGateTargetFreeScheduleDeliveryContracts
 
 public enum PrimeNativeNeuralGateReplaySourceCompositionError:
     Error,
@@ -11,6 +12,7 @@ public enum PrimeNativeNeuralGateReplaySourceCompositionError:
     case rootIdentityMismatch
     case replicateSeedMismatch
     case scheduleBindingMismatch
+    case targetFreeScheduleDeliveryRejected
     case joinedReplayRejected
 }
 
@@ -466,6 +468,107 @@ public enum PrimeNativeNeuralGateReplaySourceComposition {
             rawDelivery: raw,
             outerDelivery: outer
         )
+    }
+
+    /// Projects one sealed source-bound schedule into the narrow construct-
+    /// only Encodable contract visible to future corrected process owners.
+    /// The projection remains a candidate value: no bytes cross a process
+    /// boundary and no execution, evaluation, PASS, or receipt authority is
+    /// created.
+    public static func makeTargetFreeScheduleCandidatePair(
+        schedule:
+            PrimeNativeNeuralGateSourceBoundPromptSchedule,
+        invocationRole:
+            PrimeNativeNeuralGateTargetFreeScheduleInvocationRole
+    ) throws
+        -> PrimeNativeNeuralGateTargetFreeScheduleCandidatePair
+    {
+        let deliveryContract =
+            PrimeNativeNeuralGateTargetFreeScheduleDeliveryContract
+            .frozenV1
+        try deliveryContract.validate()
+        guard schedule.sourceStreamBindingEstablished,
+              !schedule.durableArtifactOriginEstablished,
+              !schedule.processDeliveryObserved,
+              schedule.rawDelivery.sourceStreamBindingEstablished,
+              schedule.rawDelivery.roleProjectionImplemented,
+              !schedule.rawDelivery.processDeliveryObserved,
+              schedule.outerDelivery.sourceStreamBindingEstablished,
+              schedule.outerDelivery.roleProjectionImplemented,
+              !schedule.outerDelivery.processDeliveryObserved,
+              schedule.rawDelivery.promptSourceBindingSHA256
+                == schedule.promptSourceBindingSHA256,
+              schedule.outerDelivery.promptSourceBindingSHA256
+                == schedule.promptSourceBindingSHA256,
+              schedule.rawDelivery.scheduleIdentitySHA256
+                == schedule.schedule.scheduleIdentitySHA256,
+              schedule.outerDelivery.scheduleIdentitySHA256
+                == schedule.schedule.scheduleIdentitySHA256
+        else {
+            throw Error.scheduleBindingMismatch
+        }
+
+        do {
+            let rawSlots = try schedule.rawDelivery
+                .orderedSlots.map { slot in
+                    try PrimeNativeNeuralGateTargetFreeRawScheduleSlot(
+                        executionIndex: slot.executionIndex,
+                        promptTokenIDs: slot.promptTokenIDs,
+                        canonicalPrompt: slot.canonicalPrompt,
+                        primeCPI2PromptBindingSHA256:
+                            slot.primeCPI2PromptBindingSHA256,
+                        correlationID: slot.correlationID
+                    )
+                }
+            let outerSlots = try schedule.outerDelivery
+                .orderedSlots.map { slot in
+                    try PrimeNativeNeuralGateTargetFreeOuterScheduleSlot(
+                        executionIndex: slot.executionIndex,
+                        correlationID: slot.correlationID
+                    )
+                }
+            let raw = try
+                PrimeNativeNeuralGateTargetFreeRawScheduleCandidate(
+                    invocationRole: invocationRole,
+                    promptSourceBindingSHA256:
+                        schedule.promptSourceBindingSHA256,
+                    scheduleIdentitySHA256:
+                        schedule.schedule.scheduleIdentitySHA256,
+                    orderedSlots: rawSlots
+                )
+            let outer = try
+                PrimeNativeNeuralGateTargetFreeOuterScheduleCandidate(
+                    invocationRole: invocationRole,
+                    promptSourceBindingSHA256:
+                        schedule.promptSourceBindingSHA256,
+                    scheduleIdentitySHA256:
+                        schedule.schedule.scheduleIdentitySHA256,
+                    orderedSlots: outerSlots
+                )
+            let pair = try
+                PrimeNativeNeuralGateTargetFreeScheduleCandidatePair(
+                    rawSchedule: raw,
+                    outerSchedule: outer
+                )
+            guard !pair.processOwnershipEstablished,
+                  !pair.processDeliveryObserved,
+                  !pair.workerMaterialized,
+                  !pair.modelExecutionEstablished,
+                  !pair.evaluationPerformed,
+                  !pair.verdictPublicationAuthorized,
+                  !pair.mechanicsPassAuthorized,
+                  !pair.terminalReceiptAuthorized,
+                  !pair.scientificAuthorityAuthorized,
+                  !pair.productAuthorityAuthorized
+            else {
+                throw Error.targetFreeScheduleDeliveryRejected
+            }
+            return pair
+        } catch let error as Error {
+            throw error
+        } catch {
+            throw Error.targetFreeScheduleDeliveryRejected
+        }
     }
 
     public static func join(

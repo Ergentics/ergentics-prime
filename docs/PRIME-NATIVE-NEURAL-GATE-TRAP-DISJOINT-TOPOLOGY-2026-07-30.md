@@ -7,16 +7,25 @@ Date: 2026-07-30; updated 2026-07-31
 Stage B now has an implemented trap-disjoint mechanics boundary, pure typed
 artifact contracts, bounded in-memory transport with a shared codec, and an
 exact replay-composition target. It also has descriptor-rooted invariant and
-logit source binding plus an outer source-composition adapter. Additive topology
-V5 now adds a retained exact 41-file held-root capture and a downstream
+logit source binding plus an outer source-composition adapter. Historical
+topology V5 added a retained exact 41-file held-root capture and a downstream
 trap-bearing source-derived 18,432-row keyed prompt/target crosswalk. It still
 does not have a Stage-B executor, worker, probe, verifier, process record, or
 terminal receipt.
 
 Topology V5,
-`prime_stage_b_held_root_capture_crosswalk_authority_topology_v5`, is the
-current additive topology correction. Its canonical SHA-256 is
+`prime_stage_b_held_root_capture_crosswalk_authority_topology_v5`, remains
+exact history. Its canonical SHA-256 is
 `252e027fc0f547e96b8c74b2e45cd1c316f1080d639a94619e9c03c87c480930`.
+Current topology V6,
+`prime_stage_b_process_evaluation_receipt_ownership_target_free_delivery_topology_v6`,
+has canonical SHA-256
+`6a25a3d674a7ef3eda4475ed5532fff2366103b641736b410b37fabbc805bcd1`.
+It freezes an exact symmetric ten-role future topology, target-free schedule
+candidate declarations, branch-scoped process/evaluation ownership,
+verifier-supervisor receipt-last ownership, and a supervisor-only retained
+capture binding wrapper. No process is materialized and no delivery is
+observed.
 Historical `PrimeNativeNeuralGateTrapDisjointTopologyContract.frozenV4`
 remains exact at SHA-256
 `8339bbd42b0e4052888db880aacbb067770c08dd2106bf4a7820c853c4b715af`.
@@ -33,8 +42,8 @@ The historical fixture replay plan V5 and source binding V6 remain
 byte-for-byte history. The topology contract supersedes only their unsafe
 future target-routing assumption. It does not relabel them as an observed
 execution graph.
-The exact V5 claim boundary is recorded in
-`PRIME-NATIVE-NEURAL-GATE-HELD-ROOT-CROSSWALK-AUTHORITY-2026-07-31.md`.
+The exact current claim boundary is recorded in
+`PRIME-NATIVE-NEURAL-GATE-PROCESS-OWNERSHIP-TARGET-FREE-DELIVERY-2026-07-31.md`.
 
 ## Implemented package boundary
 
@@ -82,8 +91,46 @@ PrimeNativeNeuralGateReplaySourceComposition
     dependencies:
       - PrimeNativeNeuralGateReplaySourceBinding
       - PrimeNativeNeuralGateReplayComposition
+      - PrimeNativeNeuralGateTargetFreeScheduleDeliveryContracts
     authority: incremental source-bound prompt schedule, asymmetric target-free
                role projections, and exact four-source join
+
+PrimeNativeNeuralGateTargetFreeScheduleDeliveryContracts
+    dependencies:
+      - PrimeNativeNeuralGateReplayArtifactContracts
+      - PrimeNativeNeuralGateReplayMechanics
+      - PrimeNativeNeuralGateCorrectedMechanics
+    authority: bounded non-authorizing raw/outer slot decoding and
+               construct-only aggregate candidate identities
+
+PrimeNativeNeuralGateCorrectedProcessOwnershipContracts
+    dependencies:
+      - PrimeNativeNeuralGateReplayArtifactContracts
+      - PrimeNativeNeuralGateTargetFreeScheduleDeliveryContracts
+    authority: non-authorizing symmetric ten-process ownership declarations
+
+PrimeNativeNeuralGateCorrectedEvaluationOwnershipContracts
+    dependencies:
+      - PrimeNativeNeuralGateReplayArtifactContracts
+      - PrimeNativeNeuralGateCorrectedProcessOwnershipContracts
+    authority: non-authorizing branch-scoped evaluation ownership declarations
+
+PrimeNativeNeuralGateTerminalReceiptOwnershipContracts
+    dependencies:
+      - PrimeNativeNeuralGateReplayArtifactContracts
+      - PrimeNativeNeuralGateCorrectedProcessOwnershipContracts
+      - PrimeNativeNeuralGateCorrectedEvaluationOwnershipContracts
+    authority: non-authorizing receipt-last ownership and ordering declaration
+
+PrimeNativeNeuralGateTargetFreeScheduleDeliveryAuthority
+    dependencies:
+      - PrimeNativeNeuralGateReplayCaptureInventory
+      - PrimeNativeNeuralGateReplaySourceComposition
+      - PrimeNativeNeuralGateTargetFreeScheduleDeliveryContracts
+      - PrimeNativeNeuralGateCorrectedProcessOwnershipContracts
+      - PrimeNativeNeuralGateCorrectedEvaluationOwnershipContracts
+    authority: supervisor-only retained-capture candidate preparation with
+               pre/post recapture; no process delivery is observed
 
 PrimeNativeNeuralGateReplayCaptureInventory
     dependencies:
@@ -180,19 +227,38 @@ PrimeNativeNeuralGateReplayProbe
     dependencies:
       - PrimeCore
       - PrimeNativeNeuralGateReplayTransport
+      - PrimeNativeNeuralGateCorrectedProcessOwnershipContracts
 
 PrimeNativeNeuralGateReplayVerifier
     dependencies:
       - PrimeCore
       - PrimeNativeNeuralGateReplayTransport
+      - PrimeNativeNeuralGateCorrectedProcessOwnershipContracts
+      - PrimeNativeNeuralGateCorrectedEvaluationOwnershipContracts
+      - PrimeNativeNeuralGateTerminalReceiptOwnershipContracts
 
 PrimeNativeNeuralGateCorrectedRawWorker
     dependencies:
-      - PrimeCore
       - PrimeNativeNeuralGateReplayArtifactContracts
       - PrimeNativeNeuralGateCorrectedMechanics
       - PrimeNativeNeuralGatePromptSolver
       - PrimeNativeNeuralGateLogitSidecarMechanics
+      - PrimeNativeNeuralGateTargetFreeScheduleDeliveryContracts
+      - PrimeNativeNeuralGateCorrectedProcessOwnershipContracts
+
+PrimeNativeNeuralGateCorrectedProbeEvaluationWorker
+    dependencies:
+      - PrimeCore
+      - PrimeNativeNeuralGateCorrectedEvaluationMechanics
+      - PrimeNativeNeuralGatePromptTargetCrosswalkAuthority
+      - PrimeNativeNeuralGateCorrectedEvaluationOwnershipContracts
+
+PrimeNativeNeuralGateCorrectedVerifierEvaluationWorker
+    dependencies:
+      - PrimeCore
+      - PrimeNativeNeuralGateCorrectedEvaluationMechanics
+      - PrimeNativeNeuralGatePromptTargetCrosswalkAuthority
+      - PrimeNativeNeuralGateCorrectedEvaluationOwnershipContracts
 ```
 
 No target outside the historical runtime module, its historical replay
@@ -203,9 +269,12 @@ trap-free supervisors. The corrected raw worker is a separately launched
 prompt-only executor and cannot compile against evaluation/regrade mechanics,
 fixture authority, the historical runtime, or MLX recomputation.
 
-The planned corrected worker adds a process role beyond the historical
-six-process plan. The process-count and receipt contract must be revised
-before corrected execution; it cannot be silently fit into the old topology.
+Topology V6 freezes a replacement symmetric ten-role process/evaluation/
+receipt ownership declaration; it does not materialize any of these targets.
+Typed role-to-path-to-content references, common capture/schedule binding,
+source-pinned worker closure/executable references, bounded aggregate candidate
+decoding, deferred semantic schemas, and actual process execution remain
+prerequisites.
 
 ## Donor routing
 
@@ -316,14 +385,21 @@ The three record streams are independently canonicalized ordered multisets.
 Prompt rows have no execution index, while outer and raw rows do; therefore no
 implementation may zip the sorted streams. Composition V1 now derives indexes
 only as strict prompt-record ordinals and performs an exact keyed
-outer/raw/validated-sidecar join with trace recomputation. Topology V5 now
+outer/raw/validated-sidecar join with trace recomputation. Topology V5
 binds that replay through one held-root four-source capture epoch and the
 independent keyed crosswalk without materializing a worker. The focused
-18,432-row, 41-file integration passed in 300.125 seconds. The remaining
-semantic gap begins with corrected process/evaluation/receipt ownership and
-lawful target-free schedule delivery, followed by disjoint source-bound
-mutation producer/detector assignment, deferred semantic schemas, workers, and
-receipt-last publication.
+18,432-row, 41-file integration passed in 300.125 seconds. Topology V6 now
+freezes the corrected process/evaluation/receipt ownership and target-free
+delivery-preparation declarations. Its aggregate candidates are
+`Encodable`-only; only individual slot decoding is byte-bounded. The remaining
+semantic gap begins with typed source-pinned worker and role-artifact
+references under a common capture/schedule binding, the bounded candidate
+stream decoder, and deferred mutation/historical/MLX/statistics/verdict schemas, followed by disjoint
+source-bound mutation producer/detector assignment, workers, and receipt-last
+publication. The receipt declaration covers exactly 20 role-scoped
+pre-receipt paths, not a full-root inventory; typed
+role-to-path-to-content/common capture-and-schedule references and source-pinned
+worker closure/executable references remain forward blockers.
 
 Mutation identity must be `(arm, ordinal, mutation_id)` because
 `target_dependent_prompt_grouping` has different meanings in the two arms.
@@ -331,14 +407,14 @@ Each mutation must bind an exact or explicitly allowed failure set; merely
 containing one expected failed leg is insufficient.
 
 The exact next prerequisite is
-`freeze_corrected_process_evaluation_receipt_ownership_and_lawful_target_free_schedule_delivery_then_assign_disjoint_source_bound_mutation_producer_detector_without_materializing_workers`.
+`freeze_typed_source_pinned_worker_and_role_artifact_references_with_common_capture_schedule_binding_and_bounded_candidate_stream_decoder_then_freeze_deferred_mutation_historical_mlx_statistics_verdict_schemas_and_assign_disjoint_source_bound_mutation_producer_detector_without_materializing_workers`.
 
 ## Ordered continuation
 
-1. Freeze corrected process/evaluation ownership, replacement process count,
-   result records, receipt ownership, and receipt-last publication.
-2. Freeze lawful delivery of the already typed target-free schedule
-   capabilities to their eventual disjoint process owners.
+1. Freeze typed source-pinned worker and role-artifact references with their
+   common capture/schedule binding.
+2. Freeze a bounded aggregate candidate stream decoder while retaining strict,
+   byte-capped slot decoding and target-free field allowlists.
 3. Freeze the deferred mutation, historical, MLX, and statistics/verdict
    schemas.
 4. Assign the corrected 15-case source-bound producer and an independently

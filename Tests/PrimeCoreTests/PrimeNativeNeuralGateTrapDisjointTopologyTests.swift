@@ -686,6 +686,541 @@ final class PrimeNativeNeuralGateTrapDisjointTopologyTests:
         }
     }
 
+    func testTopologyV6FreezesOwnershipAndTargetFreeDeliveryWithoutProcesses()
+        throws
+    {
+        let historicalV1 = Contract.frozenV1
+        let historicalV2 = Contract.frozenV2
+        let historicalV3 = Contract.frozenV3
+        let historicalV4 = Contract.frozenV4
+        let historicalV5 = Contract.frozenV5
+        let contract = Contract.frozenV6
+        let sourceCompositionTargetName =
+            "PrimeNativeNeuralGateReplaySourceComposition"
+        let rawWorkerTargetName =
+            "PrimeNativeNeuralGateCorrectedRawWorker"
+        let probeTargetName =
+            "PrimeNativeNeuralGateReplayProbe"
+        let verifierTargetName =
+            "PrimeNativeNeuralGateReplayVerifier"
+        let scheduleTargetName =
+            "PrimeNativeNeuralGateTargetFreeScheduleDeliveryContracts"
+        let processTargetName =
+            "PrimeNativeNeuralGateCorrectedProcessOwnershipContracts"
+        let evaluationTargetName =
+            "PrimeNativeNeuralGateCorrectedEvaluationOwnershipContracts"
+        let terminalTargetName =
+            "PrimeNativeNeuralGateTerminalReceiptOwnershipContracts"
+        let deliveryAuthorityTargetName =
+            "PrimeNativeNeuralGateTargetFreeScheduleDeliveryAuthority"
+        let probeEvaluationTargetName =
+            "PrimeNativeNeuralGateCorrectedProbeEvaluationWorker"
+        let verifierEvaluationTargetName =
+            "PrimeNativeNeuralGateCorrectedVerifierEvaluationWorker"
+
+        for historical in [
+            historicalV1,
+            historicalV2,
+            historicalV3,
+            historicalV4,
+            historicalV5,
+        ] {
+            XCTAssertNoThrow(try historical.validate())
+        }
+        XCTAssertNoThrow(try contract.validate())
+        XCTAssertEqual(contract.schemaVersion, 6)
+        XCTAssertEqual(
+            contract.contractID,
+            "prime_stage_b_process_evaluation_receipt_ownership_target_free_delivery_topology_v6"
+        )
+        XCTAssertEqual(contract.status, .plannedNotMaterialized)
+        XCTAssertFalse(contract.executionImplemented)
+        XCTAssertFalse(contract.sourceBindingV7Issued)
+        XCTAssertTrue(contract.historicalContractsPreserved)
+        XCTAssertTrue(
+            contract.historicalFutureTargetGraphSuperseded
+        )
+        XCTAssertTrue(
+            contract.donorAdaptationV2PreservedAsHistory
+        )
+        XCTAssertTrue(contract.donorAdaptationV3Required)
+        XCTAssertTrue(
+            contract
+                .mutationProducerDetectorTargetAssignmentDeferred
+        )
+        XCTAssertTrue(
+            contract.mutationProducerDetectorMustBeDisjoint
+        )
+        XCTAssertEqual(
+            contract.packageCaptureAuthority,
+            "actual_package_secure_capture_only_not_v6_or_v7_execution_graph_reconciliation"
+        )
+        XCTAssertEqual(
+            contract.nextImplementationPrerequisite,
+            "freeze_typed_source_pinned_worker_and_role_artifact_references_with_common_capture_schedule_binding_and_bounded_candidate_stream_decoder_then_freeze_deferred_mutation_historical_mlx_statistics_verdict_schemas_and_assign_disjoint_source_bound_mutation_producer_detector_without_materializing_workers"
+        )
+        XCTAssertTrue(
+            contract.authorityStatement.contains(
+                "exact symmetric 10-process future topology"
+            )
+        )
+        XCTAssertTrue(
+            contract.authorityStatement.contains(
+                "No process delivery"
+            )
+        )
+
+        XCTAssertEqual(
+            try historicalV1.contentSHA256(),
+            "48e0f64fcb14193d74bf9c3d98a8aeef7ca366033cea6d8f00bc345ff0ad86b5"
+        )
+        XCTAssertEqual(
+            try historicalV2.contentSHA256(),
+            "abc8f1ada303ecb95b7c9a44e72293ed314537b93e27354aebbb7763e1487415"
+        )
+        XCTAssertEqual(
+            try historicalV3.contentSHA256(),
+            "b475e29347a31d27be8dc1aa54648fec84c4f1b47d673a1f111ccffb794985fd"
+        )
+        XCTAssertEqual(
+            try historicalV4.contentSHA256(),
+            "8339bbd42b0e4052888db880aacbb067770c08dd2106bf4a7820c853c4b715af"
+        )
+        XCTAssertEqual(
+            try historicalV5.contentSHA256(),
+            "252e027fc0f547e96b8c74b2e45cd1c316f1080d639a94619e9c03c87c480930"
+        )
+        XCTAssertEqual(
+            try contract.contentSHA256(),
+            "6a25a3d674a7ef3eda4475ed5532fff2366103b641736b410b37fabbc805bcd1"
+        )
+
+        let changedHistoricalTargetNames: Set<String> = [
+            sourceCompositionTargetName,
+            rawWorkerTargetName,
+            probeTargetName,
+            verifierTargetName,
+        ]
+        let newTargetNames: Set<String> = [
+            scheduleTargetName,
+            processTargetName,
+            evaluationTargetName,
+            terminalTargetName,
+            deliveryAuthorityTargetName,
+            probeEvaluationTargetName,
+            verifierEvaluationTargetName,
+        ]
+        XCTAssertEqual(
+            contract.targetGraph.filter {
+                !changedHistoricalTargetNames.contains(
+                    $0.targetName
+                )
+                    && !newTargetNames.contains(
+                        $0.targetName
+                    )
+            },
+            historicalV5.targetGraph.filter {
+                !changedHistoricalTargetNames.contains(
+                    $0.targetName
+                )
+            }
+        )
+
+        let schedule = try contract.target(
+            named: scheduleTargetName
+        )
+        XCTAssertEqual(schedule.materialization, .implemented)
+        XCTAssertEqual(
+            schedule.directLocalDependencyNames,
+            [
+                "PrimeNativeNeuralGateReplayArtifactContracts",
+                "PrimeNativeNeuralGateReplayMechanics",
+                "PrimeNativeNeuralGateCorrectedMechanics",
+            ]
+        )
+        XCTAssertTrue(
+            schedule.externalProductDependencyNames.isEmpty
+        )
+        XCTAssertTrue(
+            schedule.authority.contains(
+                "raw slots admit only"
+            )
+        )
+        let process = try contract.target(
+            named: processTargetName
+        )
+        XCTAssertEqual(process.materialization, .implemented)
+        XCTAssertEqual(
+            process.directLocalDependencyNames,
+            [
+                "PrimeNativeNeuralGateReplayArtifactContracts",
+                scheduleTargetName,
+            ]
+        )
+        XCTAssertTrue(
+            process.authority.contains(
+                "exact symmetric 10-process topology"
+            )
+        )
+        let evaluation = try contract.target(
+            named: evaluationTargetName
+        )
+        XCTAssertEqual(evaluation.materialization, .implemented)
+        XCTAssertEqual(
+            evaluation.directLocalDependencyNames,
+            [
+                "PrimeNativeNeuralGateReplayArtifactContracts",
+                processTargetName,
+            ]
+        )
+        XCTAssertTrue(
+            evaluation.authority.contains(
+                "no fixture, crosswalk, evaluator implementation, or receipt authority"
+            )
+        )
+        let terminal = try contract.target(
+            named: terminalTargetName
+        )
+        XCTAssertEqual(terminal.materialization, .implemented)
+        XCTAssertEqual(
+            terminal.directLocalDependencyNames,
+            [
+                "PrimeNativeNeuralGateReplayArtifactContracts",
+                processTargetName,
+                evaluationTargetName,
+            ]
+        )
+        XCTAssertTrue(
+            terminal.authority.contains(
+                "exclusive no-replace receipt-last ordering"
+            )
+        )
+        XCTAssertTrue(
+            terminal.authority.contains(
+                "publication remains unimplemented and unauthorized"
+            )
+        )
+        let deliveryAuthority = try contract.target(
+            named: deliveryAuthorityTargetName
+        )
+        XCTAssertEqual(
+            deliveryAuthority.materialization,
+            .implemented
+        )
+        XCTAssertEqual(
+            deliveryAuthority.directLocalDependencyNames,
+            [
+                "PrimeNativeNeuralGateReplayCaptureInventory",
+                sourceCompositionTargetName,
+                scheduleTargetName,
+                processTargetName,
+                evaluationTargetName,
+            ]
+        )
+        XCTAssertTrue(
+            deliveryAuthority.authority.contains(
+                "pre/post recapture"
+            )
+        )
+        XCTAssertTrue(
+            deliveryAuthority.authority.contains(
+                "no delivery is observed"
+            )
+        )
+
+        XCTAssertEqual(
+            try contract.target(
+                named: sourceCompositionTargetName
+            ).directLocalDependencyNames,
+            [
+                "PrimeNativeNeuralGateReplaySourceBinding",
+                "PrimeNativeNeuralGateReplayComposition",
+                scheduleTargetName,
+            ]
+        )
+        XCTAssertEqual(
+            try contract.target(
+                named: rawWorkerTargetName
+            ).directLocalDependencyNames,
+            [
+                "PrimeNativeNeuralGateCorrectedMechanics",
+                "PrimeNativeNeuralGatePromptSolver",
+                "PrimeNativeNeuralGateLogitSidecarMechanics",
+                "PrimeNativeNeuralGateReplayArtifactContracts",
+                scheduleTargetName,
+                processTargetName,
+            ]
+        )
+        XCTAssertEqual(
+            try contract.target(
+                named: probeTargetName
+            ).directLocalDependencyNames,
+            [
+                "PrimeCore",
+                "PrimeNativeNeuralGateReplayTransport",
+                processTargetName,
+            ]
+        )
+        XCTAssertEqual(
+            try contract.target(
+                named: verifierTargetName
+            ).directLocalDependencyNames,
+            [
+                "PrimeCore",
+                "PrimeNativeNeuralGateReplayTransport",
+                processTargetName,
+                evaluationTargetName,
+                terminalTargetName,
+            ]
+        )
+
+        for evaluationWorkerName in [
+            probeEvaluationTargetName,
+            verifierEvaluationTargetName,
+        ] {
+            let worker = try contract.target(
+                named: evaluationWorkerName
+            )
+            XCTAssertEqual(
+                worker.materialization,
+                .plannedNotMaterialized
+            )
+            XCTAssertEqual(
+                worker.directLocalDependencyNames,
+                [
+                    "PrimeCore",
+                    "PrimeNativeNeuralGateCorrectedEvaluationMechanics",
+                    "PrimeNativeNeuralGatePromptTargetCrosswalkAuthority",
+                    evaluationTargetName,
+                ]
+            )
+            XCTAssertTrue(
+                worker.externalProductDependencyNames.isEmpty
+            )
+            XCTAssertTrue(
+                worker.authority.contains(
+                    "cannot publish a terminal receipt"
+                )
+            )
+        }
+
+        XCTAssertEqual(
+            try contract.transitiveLocalTargetNames(
+                reachableFrom: scheduleTargetName
+            ),
+            [
+                "PrimeNativeNeuralGateCorrectedMechanics",
+                "PrimeNativeNeuralGateReplayArtifactContracts",
+                "PrimeNativeNeuralGateReplayMechanics",
+            ]
+        )
+        XCTAssertEqual(
+            try contract.transitiveLocalTargetNames(
+                reachableFrom: processTargetName
+            ),
+            [
+                "PrimeNativeNeuralGateCorrectedMechanics",
+                "PrimeNativeNeuralGateReplayArtifactContracts",
+                "PrimeNativeNeuralGateReplayMechanics",
+                scheduleTargetName,
+            ]
+        )
+        XCTAssertEqual(
+            try contract.transitiveLocalTargetNames(
+                reachableFrom: evaluationTargetName
+            ),
+            [
+                processTargetName,
+                "PrimeNativeNeuralGateCorrectedMechanics",
+                "PrimeNativeNeuralGateReplayArtifactContracts",
+                "PrimeNativeNeuralGateReplayMechanics",
+                scheduleTargetName,
+            ].sorted()
+        )
+        XCTAssertEqual(
+            try contract.transitiveLocalTargetNames(
+                reachableFrom: terminalTargetName
+            ),
+            [
+                evaluationTargetName,
+                processTargetName,
+                "PrimeNativeNeuralGateCorrectedMechanics",
+                "PrimeNativeNeuralGateReplayArtifactContracts",
+                "PrimeNativeNeuralGateReplayMechanics",
+                scheduleTargetName,
+            ].sorted()
+        )
+        XCTAssertEqual(
+            try contract.transitiveLocalTargetNames(
+                reachableFrom: rawWorkerTargetName
+            ),
+            [
+                processTargetName,
+                "PrimeNativeNeuralGateCorrectedMechanics",
+                "PrimeNativeNeuralGateLogitSidecarMechanics",
+                "PrimeNativeNeuralGatePromptSolver",
+                "PrimeNativeNeuralGateReplayArtifactContracts",
+                "PrimeNativeNeuralGateReplayMechanics",
+                scheduleTargetName,
+            ].sorted()
+        )
+        XCTAssertEqual(
+            try contract.transitiveLocalTargetNames(
+                reachableFrom: probeTargetName
+            ),
+            [
+                processTargetName,
+                "PrimeCore",
+                "PrimeNativeNeuralGateCorrectedMechanics",
+                "PrimeNativeNeuralGateReplayArtifactContracts",
+                "PrimeNativeNeuralGateReplayMechanics",
+                "PrimeNativeNeuralGateReplayTransport",
+                scheduleTargetName,
+            ].sorted()
+        )
+        XCTAssertEqual(
+            try contract.transitiveLocalTargetNames(
+                reachableFrom: verifierTargetName
+            ),
+            [
+                evaluationTargetName,
+                processTargetName,
+                "PrimeCore",
+                "PrimeNativeNeuralGateCorrectedMechanics",
+                "PrimeNativeNeuralGateReplayArtifactContracts",
+                "PrimeNativeNeuralGateReplayMechanics",
+                "PrimeNativeNeuralGateReplayTransport",
+                scheduleTargetName,
+                terminalTargetName,
+            ].sorted()
+        )
+
+        let rawClosure = Set(
+            try contract.transitiveLocalTargetNames(
+                reachableFrom: rawWorkerTargetName
+            )
+        )
+        for forbidden in [
+            "PrimeCore",
+            "PrimeNativeCorpusReplayMechanics",
+            "PrimeNativeNeuralGateReplayTransport",
+            "PrimeNativeNeuralGateReplayComposition",
+            "PrimeNativeNeuralGateReplaySourceBinding",
+            sourceCompositionTargetName,
+            "PrimeNativeNeuralGateReplayCaptureInventory",
+            "PrimeNativeNeuralGatePromptTargetCrosswalkAuthority",
+            "PrimeNativeNeuralGateCorrectedEvaluationMechanics",
+            "PrimeNativeNeuralGateCorrectedFixtureAuthority",
+            evaluationTargetName,
+            terminalTargetName,
+            deliveryAuthorityTargetName,
+            probeEvaluationTargetName,
+            verifierEvaluationTargetName,
+        ] {
+            XCTAssertFalse(
+                rawClosure.contains(forbidden),
+                forbidden
+            )
+        }
+        let rawRule = try XCTUnwrap(
+            contract.forbiddenReachability.first {
+                $0.targetName == rawWorkerTargetName
+            }
+        )
+        for forbidden in [
+            "PrimeCore",
+            "PrimeNativeNeuralGateReplayTransport",
+            "PrimeNativeNeuralGateReplayComposition",
+            "PrimeNativeNeuralGateReplaySourceBinding",
+            sourceCompositionTargetName,
+            "PrimeNativeNeuralGateReplayCaptureInventory",
+            "PrimeNativeNeuralGatePromptTargetCrosswalkAuthority",
+            "PrimeNativeNeuralGateCorrectedEvaluationMechanics",
+            "PrimeNativeNeuralGateCorrectedFixtureAuthority",
+            evaluationTargetName,
+            terminalTargetName,
+            deliveryAuthorityTargetName,
+            "PrimeNativeNeuralGateCorrectedMutationDetector",
+        ] {
+            XCTAssertTrue(
+                rawRule.forbiddenReachableTargetNames
+                    .contains(forbidden),
+                forbidden
+            )
+        }
+
+        for contractTargetName in [
+            scheduleTargetName,
+            processTargetName,
+            evaluationTargetName,
+            terminalTargetName,
+        ] {
+            let rule = try XCTUnwrap(
+                contract.forbiddenReachability.first {
+                    $0.targetName == contractTargetName
+                }
+            )
+            for forbidden in [
+                "PrimeNativeNeuralGateReplayCaptureInventory",
+                "PrimeNativeNeuralGatePromptTargetCrosswalkAuthority",
+                "PrimeNativeNeuralGateCorrectedEvaluationMechanics",
+                "PrimeNativeNeuralGateCorrectedFixtureAuthority",
+                probeEvaluationTargetName,
+                verifierEvaluationTargetName,
+                "PrimeNativeNeuralGateCorrectedMutationDetector",
+                "ErgenticsPrimeRuntime",
+                "PrimeNativeNeuralGateHistoricalReplayMechanics",
+            ] {
+                XCTAssertTrue(
+                    rule.forbiddenReachableTargetNames
+                        .contains(forbidden),
+                    "\(contractTargetName): \(forbidden)"
+                )
+            }
+        }
+        let deliveryAuthorityRule = try XCTUnwrap(
+            contract.forbiddenReachability.first {
+                $0.targetName == deliveryAuthorityTargetName
+            }
+        )
+        for forbidden in [
+            "PrimeNativeNeuralGatePromptTargetCrosswalkAuthority",
+            "PrimeNativeNeuralGateCorrectedEvaluationMechanics",
+            "PrimeNativeNeuralGateCorrectedFixtureAuthority",
+            terminalTargetName,
+            probeEvaluationTargetName,
+            verifierEvaluationTargetName,
+            "PrimeNativeNeuralGateCorrectedMutationDetector",
+            "ErgenticsPrimeRuntime",
+            "PrimeNativeNeuralGateHistoricalReplayMechanics",
+        ] {
+            XCTAssertTrue(
+                deliveryAuthorityRule.forbiddenReachableTargetNames
+                    .contains(forbidden),
+                forbidden
+            )
+        }
+
+        for targetName in [
+            "ErgenticsPrimeRuntime",
+            "PrimeNativeNeuralGateHistoricalReplayMechanics",
+            "PrimeNativeNeuralGateHistoricalFixtureWorker",
+            probeTargetName,
+            verifierTargetName,
+            rawWorkerTargetName,
+            probeEvaluationTargetName,
+            verifierEvaluationTargetName,
+        ] {
+            XCTAssertEqual(
+                try contract.target(
+                    named: targetName
+                ).materialization,
+                .plannedNotMaterialized,
+                targetName
+            )
+        }
+    }
+
     func testPlannedSupervisorAndWorkerClosuresStayDisjoint()
         throws
     {
@@ -760,10 +1295,15 @@ final class PrimeNativeNeuralGateTrapDisjointTopologyTests:
             #".target(name:"PrimeNativeCorpusReplayMechanics")"#,
             #".target(name:"PrimeNativeNeuralGateReplayMechanics")"#,
             #".target(name:"PrimeNativeNeuralGateReplayArtifactContracts")"#,
+            #".target(name:"PrimeNativeNeuralGateTargetFreeScheduleDeliveryContracts",dependencies:["PrimeNativeNeuralGateReplayArtifactContracts","PrimeNativeNeuralGateReplayMechanics","PrimeNativeNeuralGateCorrectedMechanics",])"#,
+            #".target(name:"PrimeNativeNeuralGateTargetFreeScheduleDeliveryAuthority",dependencies:["PrimeNativeNeuralGateReplayCaptureInventory","PrimeNativeNeuralGateReplaySourceComposition","PrimeNativeNeuralGateTargetFreeScheduleDeliveryContracts","PrimeNativeNeuralGateCorrectedProcessOwnershipContracts","PrimeNativeNeuralGateCorrectedEvaluationOwnershipContracts",])"#,
+            #".target(name:"PrimeNativeNeuralGateCorrectedProcessOwnershipContracts",dependencies:["PrimeNativeNeuralGateReplayArtifactContracts","PrimeNativeNeuralGateTargetFreeScheduleDeliveryContracts",])"#,
+            #".target(name:"PrimeNativeNeuralGateCorrectedEvaluationOwnershipContracts",dependencies:["PrimeNativeNeuralGateReplayArtifactContracts","PrimeNativeNeuralGateCorrectedProcessOwnershipContracts",])"#,
+            #".target(name:"PrimeNativeNeuralGateTerminalReceiptOwnershipContracts",dependencies:["PrimeNativeNeuralGateReplayArtifactContracts","PrimeNativeNeuralGateCorrectedProcessOwnershipContracts","PrimeNativeNeuralGateCorrectedEvaluationOwnershipContracts",])"#,
             #".target(name:"PrimeNativeNeuralGateReplayTransport",dependencies:["PrimeNativeNeuralGateReplayArtifactContracts","PrimeNativeNeuralGateReplayMechanics",])"#,
             #".target(name:"PrimeNativeNeuralGateReplayComposition",dependencies:["PrimeNativeNeuralGateReplayArtifactContracts","PrimeNativeNeuralGateReplayTransport","PrimeNativeNeuralGateReplayMechanics","PrimeNativeNeuralGateCorrectedMechanics","PrimeNativeNeuralGateLogitSidecarMechanics",])"#,
             #".target(name:"PrimeNativeNeuralGateReplaySourceBinding",dependencies:["PrimeCore","PrimeNativeNeuralGateReplayArtifactContracts","PrimeNativeNeuralGateReplayTransport","PrimeNativeNeuralGateReplayMechanics","PrimeNativeNeuralGateCorrectedMechanics","PrimeNativeNeuralGateLogitSidecarMechanics",])"#,
-            #".target(name:"PrimeNativeNeuralGateReplaySourceComposition",dependencies:["PrimeNativeNeuralGateReplaySourceBinding","PrimeNativeNeuralGateReplayComposition",])"#,
+            #".target(name:"PrimeNativeNeuralGateReplaySourceComposition",dependencies:["PrimeNativeNeuralGateReplaySourceBinding","PrimeNativeNeuralGateReplayComposition","PrimeNativeNeuralGateTargetFreeScheduleDeliveryContracts",])"#,
             #".target(name:"PrimeNativeNeuralGateReplayCaptureInventory",dependencies:["PrimeCore","PrimeNativeNeuralGateReplayArtifactContracts","PrimeNativeNeuralGateReplaySourceBinding",])"#,
             #".target(name:"PrimeNativeNeuralGatePromptTargetCrosswalkAuthority",dependencies:["PrimeCore","PrimeNativeNeuralGateCorrectedFixtureAuthority","PrimeNativeNeuralGateCorrectedMechanics","PrimeNativeNeuralGateReplayCaptureInventory","PrimeNativeNeuralGateReplayComposition","PrimeNativeNeuralGateReplaySourceComposition","PrimeNativeNeuralGateReplayTransport",])"#,
             #".target(name:"PrimeNativeNeuralGateCorrectedMechanics",dependencies:["PrimeNativeNeuralGateReplayMechanics",])"#,
@@ -778,6 +1318,38 @@ final class PrimeNativeNeuralGateTrapDisjointTopologyTests:
                 declaration
             )
         }
+
+        let productsStart = try XCTUnwrap(
+            package.range(of: "products:[")
+        ).upperBound
+        let productsEnd = try XCTUnwrap(
+            package.range(
+                of: "],dependencies:[",
+                range: productsStart..<package.endIndex
+            )
+        ).lowerBound
+        let productDeclarations = package[
+            productsStart..<productsEnd
+        ]
+        for packageInternalContractTarget in [
+            "PrimeNativeNeuralGateTargetFreeScheduleDeliveryContracts",
+            "PrimeNativeNeuralGateTargetFreeScheduleDeliveryAuthority",
+            "PrimeNativeNeuralGateCorrectedProcessOwnershipContracts",
+            "PrimeNativeNeuralGateCorrectedEvaluationOwnershipContracts",
+            "PrimeNativeNeuralGateTerminalReceiptOwnershipContracts",
+        ] {
+            XCTAssertFalse(
+                productDeclarations.contains(
+                    packageInternalContractTarget
+                ),
+                packageInternalContractTarget
+            )
+        }
+        XCTAssertFalse(
+            productDeclarations.contains(
+                "PrimeNativeNeuralGateCorrectedProcessContracts"
+            )
+        )
         XCTAssertTrue(
             package.contains(
                 #".target(name:"PrimeNativeNeuralGateMLXLogSoftmaxRecomputation",dependencies:["PrimeNativeNeuralGateLogitSidecarMechanics",.product(name:"MLX",package:"ergentics-mlx-swift"),.product(name:"MLXNN",package:"ergentics-mlx-swift"),])"#
@@ -792,7 +1364,7 @@ final class PrimeNativeNeuralGateTrapDisjointTopologyTests:
             .plannedNotMaterialized
         )
 
-        for target in Contract.frozenV5.targetGraph
+        for target in Contract.frozenV6.targetGraph
         where target.materialization
             == .plannedNotMaterialized
         {
@@ -826,6 +1398,18 @@ final class PrimeNativeNeuralGateTrapDisjointTopologyTests:
             file:
                 "PrimeNativeNeuralGateCorrectedEvaluationMechanics.swift"
         )
+        let targetFreeSource = try source(
+            target:
+                "PrimeNativeNeuralGateTargetFreeScheduleDeliveryContracts",
+            file:
+                "PrimeNativeNeuralGateTargetFreeScheduleDeliveryContracts.swift"
+        )
+        let deliveryAuthoritySource = try source(
+            target:
+                "PrimeNativeNeuralGateTargetFreeScheduleDeliveryAuthority",
+            file:
+                "PrimeNativeNeuralGateTargetFreeScheduleDeliveryAuthority.swift"
+        )
         let movedSymbols = [
             "PrimeNativeNeuralGateCorrectedCompletionFeasibility",
             "PrimeNativeNeuralGateCorrectedCorrelationEnvelope",
@@ -856,6 +1440,69 @@ final class PrimeNativeNeuralGateTrapDisjointTopologyTests:
             rawSource.contains(
                 "import PrimeNativeNeuralGateCorrectedEvaluationMechanics"
             )
+        )
+        for forbiddenImport in [
+            "import PrimeCore",
+            "import PrimeNativeNeuralGateReplayTransport",
+            "import PrimeNativeNeuralGateReplayComposition",
+            "import PrimeNativeNeuralGateReplaySourceBinding",
+            "import PrimeNativeNeuralGateReplayCaptureInventory",
+            "import PrimeNativeNeuralGateCorrectedEvaluationMechanics",
+            "import PrimeNativeNeuralGateCorrectedFixtureAuthority",
+            "import PrimeNativeNeuralGatePromptTargetCrosswalkAuthority",
+        ] {
+            XCTAssertFalse(
+                targetFreeSource.contains(forbiddenImport),
+                forbiddenImport
+            )
+        }
+        for forbiddenSymbol in movedSymbols {
+            XCTAssertFalse(
+                targetFreeSource.contains(forbiddenSymbol),
+                forbiddenSymbol
+            )
+        }
+        XCTAssertFalse(
+            targetFreeSource.contains(
+                "PrimeNativeNeuralGateReplayOuterEvaluationRow"
+            )
+        )
+        let compactTargetFree = compact(targetFreeSource)
+        for forbiddenConformance in [
+            "PrimeNativeNeuralGateTargetFreeRawScheduleCandidate:Codable",
+            "PrimeNativeNeuralGateTargetFreeRawScheduleCandidate:Decodable",
+            "PrimeNativeNeuralGateTargetFreeOuterScheduleCandidate:Codable",
+            "PrimeNativeNeuralGateTargetFreeOuterScheduleCandidate:Decodable",
+            "PrimeNativeNeuralGateTargetFreeScheduleCandidatePair:Codable",
+            "PrimeNativeNeuralGateTargetFreeScheduleCandidatePair:Decodable",
+        ] {
+            XCTAssertFalse(
+                compactTargetFree.contains(
+                    forbiddenConformance
+                ),
+                forbiddenConformance
+            )
+        }
+        let compactAuthority = compact(
+            deliveryAuthoritySource
+        )
+        XCTAssertTrue(
+            compactAuthority.contains(
+                "PrimeNativeNeuralGateCaptureBoundTargetFreeScheduleDelivery:@uncheckedSendable"
+            )
+        )
+        XCTAssertFalse(
+            compactAuthority.contains(
+                "PrimeNativeNeuralGateCaptureBoundTargetFreeScheduleDelivery:Codable"
+            )
+        )
+        XCTAssertFalse(
+            compactAuthority.contains(
+                "PrimeNativeNeuralGateCaptureBoundTargetFreeScheduleDelivery:Decodable"
+            )
+        )
+        XCTAssertTrue(
+            compactAuthority.contains("fileprivateinit(")
         )
     }
 

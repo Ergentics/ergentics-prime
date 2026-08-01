@@ -790,18 +790,18 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
             verifier.standardOutputData
         )
         // Intentionally resealed only from the live Release canary after the
-        // topology-V5 held-root/crosswalk-authority addition. This is
-        // actual-package secure-capture evidence, not V6/V7 graph
-        // reconciliation.
+        // topology-V6 retained-capture, target-free delivery, and corrected
+        // ownership additions. This is actual-package secure-capture
+        // evidence, not V7 graph reconciliation or worker execution.
         XCTAssertEqual(
             probe.standardOutputData.count,
-            36_047
+            40_100
         )
         XCTAssertEqual(
             PrimeSHA256.hexDigest(
                 of: probe.standardOutputData
             ),
-            "88571dc5cc4d15f11395430ab9ea410aba6cafa295edebe54acff816585a3fbb"
+            "99431ac9477a6546225721027319fc460ff8b10c8e55ef68f07b5cb8c73c8cd9"
         )
         XCTAssertEqual(
             probe.validatedPrimeSourceSnapshot,

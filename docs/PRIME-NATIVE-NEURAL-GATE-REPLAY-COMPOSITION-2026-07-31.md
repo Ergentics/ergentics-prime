@@ -40,7 +40,8 @@ worker, a process supervisor, or a receipt writer.
 Descriptor admission and the outer wrapper are isolated in
 `PrimeNativeNeuralGateReplaySourceBinding` and
 `PrimeNativeNeuralGateReplaySourceComposition`. The latter depends only on
-source binding plus this unchanged pure composition target. See
+source binding, this unchanged pure composition target, and the target-free
+schedule-delivery contracts. See
 `PRIME-NATIVE-NEURAL-GATE-DESCRIPTOR-SOURCE-BINDING-2026-07-31.md`.
 
 This remains repository mechanics, not Stage-B execution. The pure target
@@ -90,13 +91,18 @@ non-authorizing.
 - topology V2 remains exact at
   `abc8f1ada303ecb95b7c9a44e72293ed314537b93e27354aebbb7763e1487415`.
 
-Topology V4 remains exact history. The current additive topology V5 is
+Topology V4 remains exact history. The additive topology V5 is now an exact
+historical boundary:
 `prime_stage_b_held_root_capture_crosswalk_authority_topology_v5`; its canonical
 SHA-256 is
 `252e027fc0f547e96b8c74b2e45cd1c316f1080d639a94619e9c03c87c480930`.
-V5 remains globally
-`planned_not_materialized`, with `executionImplemented == false` and source
-binding V7 unissued. It does not promote any planned worker or supervisor.
+Current topology V6 is
+`prime_stage_b_process_evaluation_receipt_ownership_target_free_delivery_topology_v6`,
+SHA-256
+`6a25a3d674a7ef3eda4475ed5532fff2366103b641736b410b37fabbc805bcd1`.
+The global status remains `planned_not_materialized`, with
+`executionImplemented == false` and source binding V7 unissued. Neither V5 nor
+V6 promotes any planned worker or supervisor.
 
 ## V3 package-capture checkpoint
 
@@ -250,15 +256,21 @@ keyed crosswalk. It still does not grade or execute a model.
 Descriptor-rooted invariant validation, source-bound logit validation,
 incremental schedule reconstruction, typed role projections, the exact
 four-source join, one held-root capture epoch, and the independently
-source-derived crosswalk are now implemented. The next implementation
-prerequisite is:
+source-derived crosswalk remain implemented. Topology V6 now additionally
+freezes the exact ten-role ownership model, branch-scoped raw/evaluation
+records, verifier-only receipt-last ownership, byte-bounded strict slot
+decoding, and `Encodable`-only aggregate target-free candidates. Its real
+supervisor-only wrapper retains the capture across projection and binds the
+candidate content to exact branch owners, but it does not deliver a schedule.
+The next implementation prerequisite is:
 
-`freeze_corrected_process_evaluation_receipt_ownership_and_lawful_target_free_schedule_delivery_then_assign_disjoint_source_bound_mutation_producer_detector_without_materializing_workers`
+`freeze_typed_source_pinned_worker_and_role_artifact_references_with_common_capture_schedule_binding_and_bounded_candidate_stream_decoder_then_freeze_deferred_mutation_historical_mlx_statistics_verdict_schemas_and_assign_disjoint_source_bound_mutation_producer_detector_without_materializing_workers`
 
-The next slice must freeze corrected process/evaluation/receipt ownership and
-lawful delivery of the already typed target-free schedule capabilities, then
-assign disjoint source-bound mutation producer/detector targets. Prompt-content
-target independence, process delivery, model execution, evaluation/verdict
-authority, mechanics `PASS`, receipt, science, and product authority remain
-false. The historical runtime and all workers remain planned. See
-`PRIME-NATIVE-NEURAL-GATE-HELD-ROOT-CROSSWALK-AUTHORITY-2026-07-31.md`.
+The next slice must freeze typed source-pinned worker and role-artifact
+references with a common capture/schedule binding, bounded aggregate candidate
+decoding, and the deferred mutation, historical, MLX, and statistics/verdict
+schemas, then assign disjoint source-bound mutation producer/detector targets. Prompt-content target
+independence, process delivery, model execution, evaluation/verdict authority,
+mechanics `PASS`, receipt, science, and product authority remain false. The
+historical runtime and all supervisors/workers remain planned. See
+`PRIME-NATIVE-NEURAL-GATE-PROCESS-OWNERSHIP-TARGET-FREE-DELIVERY-2026-07-31.md`.

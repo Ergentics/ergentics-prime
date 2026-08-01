@@ -43,9 +43,14 @@ final class
                 "PrimeNativeNeuralGateReplaySourceComposition",
                 "PrimeNativeNeuralGateReplayCaptureInventory",
                 "PrimeNativeNeuralGatePromptTargetCrosswalkAuthority",
+                "PrimeNativeNeuralGateTargetFreeScheduleDeliveryContracts",
+                "PrimeNativeNeuralGateTargetFreeScheduleDeliveryAuthority",
                 "PrimeNativeNeuralGateCorrectedMechanics",
                 "PrimeNativeNeuralGateCorrectedEvaluationMechanics",
                 "PrimeNativeNeuralGateCorrectedFixtureAuthority",
+                "PrimeNativeNeuralGateCorrectedProcessOwnershipContracts",
+                "PrimeNativeNeuralGateCorrectedEvaluationOwnershipContracts",
+                "PrimeNativeNeuralGateTerminalReceiptOwnershipContracts",
                 "PrimeNativeNeuralGatePromptSolver",
                 "PrimeNativeNeuralGateLogitSidecarMechanics",
             ]),
@@ -67,6 +72,11 @@ final class
             "PrimeNativeNeuralGateReplaySourceComposition",
             "PrimeNativeNeuralGateReplayCaptureInventory",
             "PrimeNativeNeuralGatePromptTargetCrosswalkAuthority",
+            "PrimeNativeNeuralGateTargetFreeScheduleDeliveryContracts",
+            "PrimeNativeNeuralGateTargetFreeScheduleDeliveryAuthority",
+            "PrimeNativeNeuralGateCorrectedProcessOwnershipContracts",
+            "PrimeNativeNeuralGateCorrectedEvaluationOwnershipContracts",
+            "PrimeNativeNeuralGateTerminalReceiptOwnershipContracts",
         ] {
             XCTAssertEqual(
                 occurrences(
