@@ -643,9 +643,12 @@ These do not widen canary authority and preserve the prevalidation state.
 Completed final V8 validation is recorded canonically in the
 [V8 semantic-schema and mutation-target record](PRIME-NATIVE-NEURAL-GATE-SEMANTIC-SCHEMA-MUTATION-TARGETS-2026-08-01.md).
 
-The next exact prerequisite is
+The V8 next prerequisite was
 `derive_source_pinned_historical_gate_carrier_and_forty_six_mutation_material_without_materializing_workers_or_issuing_source_binding_v7`.
-See [Prime Native Neural Gate Semantic Schema and Mutation Targets](PRIME-NATIVE-NEURAL-GATE-SEMANTIC-SCHEMA-MUTATION-TARGETS-2026-08-01.md).
+Topology V9 now satisfies it with exact in-memory source derivation and
+additive adaptation proof V3. The current next prerequisite is
+`author_and_source_bind_prime_historical_observation_seam_and_materialize_historical_replay_mechanics_without_materializing_workers_or_issuing_source_binding_v7`.
+See [Prime Native Neural Gate Historical Source Material](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-SOURCE-MATERIAL-2026-08-01.md).
 
 The repository-test checkpoint passed pure sidecar mechanics 6/6. The
 source-pinned MLX validation package remains outside the MLX-free

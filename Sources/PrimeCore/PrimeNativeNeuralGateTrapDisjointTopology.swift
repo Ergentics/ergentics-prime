@@ -1744,6 +1744,110 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
         )
     }()
 
+    /// Adds only an offline, in-memory historical source-derivation target.
+    /// It consumes caller-supplied bytes, validates the frozen donor pins,
+    /// and derives inert carrier/seam/mutation source material. No historical
+    /// replay target, worker, process, executable, or artifact publication is
+    /// materialized.
+    public static let frozenV9: Self = {
+        let previous = frozenV8
+        let derivationTargetName =
+            "PrimeNativeNeuralGateHistoricalSourceDerivation"
+        var targets = previous.targetGraph
+        targets.append(
+            Self.target(
+                derivationTargetName,
+                .implemented,
+                [
+                    "PrimeNativeNeuralGateReplayMechanics",
+                ],
+                "offline caller-byte-only LF source derivation for the exact pinned historical gate/carrier seam and direct forty-six-mutation source material; no filesystem or Git transport, per-case parser, executable transform binding, detector, worker, process, execution observation, durable publication, PASS, receipt, source binding V7, science, or product authority"
+            )
+        )
+
+        func appendingUnique(
+            _ base: [String],
+            _ addition: String
+        ) -> [String] {
+            base.contains(addition)
+                ? base
+                : base + [addition]
+        }
+
+        var reachability =
+            previous.forbiddenReachability.map { rule in
+                Self.forbidden(
+                    rule.targetName,
+                    appendingUnique(
+                        rule.forbiddenReachableTargetNames,
+                        derivationTargetName
+                    )
+                )
+            }
+        let priorRuleTargets = Set(
+            reachability.map(\.targetName)
+        )
+        for target in previous.targetGraph
+        where !priorRuleTargets.contains(target.targetName) {
+            reachability.append(
+                Self.forbidden(
+                    target.targetName,
+                    [derivationTargetName]
+                )
+            )
+        }
+        let permitted = Set([
+            "PrimeNativeNeuralGateReplayMechanics",
+        ])
+        reachability.append(
+            Self.forbidden(
+                derivationTargetName,
+                previous.targetGraph.map(\.targetName)
+                    .filter { !permitted.contains($0) }
+            )
+        )
+
+        return Self(
+            schemaVersion: 9,
+            contractID:
+                "prime_stage_b_source_pinned_historical_gate_carrier_mutation_material_topology_v9",
+            status: previous.status,
+            executionImplemented: false,
+            historicalReplayPlanID:
+                previous.historicalReplayPlanID,
+            historicalSourceBindingContractID:
+                previous.historicalSourceBindingContractID,
+            historicalContractsPreserved: true,
+            historicalFutureTargetGraphSuperseded: true,
+            targetGraph: targets,
+            forbiddenReachability: reachability,
+            historicalContainmentRootTargetName:
+                previous.historicalContainmentRootTargetName,
+            historicalRuntimeTargetName:
+                previous.historicalRuntimeTargetName,
+            historicalReplayTargetName:
+                previous.historicalReplayTargetName,
+            pureReplayTargetName:
+                previous.pureReplayTargetName,
+            donorAdaptationV2PreservedAsHistory: true,
+            donorAdaptationV3Required: true,
+            donorAdaptationV3RequiredDestination:
+                previous.donorAdaptationV3RequiredDestination,
+            sourceBindingV7Issued: false,
+            sourceBindingV7Prerequisite:
+                previous.sourceBindingV7Prerequisite,
+            packageCaptureAuthority:
+                "actual_package_secure_capture_only_not_v9_source_material_or_source_execution_binding_v7_evidence",
+            mutationProducerDetectorTargetAssignmentDeferred:
+                false,
+            mutationProducerDetectorMustBeDisjoint: true,
+            nextImplementationPrerequisite:
+                "author_and_source_bind_prime_historical_observation_seam_and_materialize_historical_replay_mechanics_without_materializing_workers_or_issuing_source_binding_v7",
+            authorityStatement:
+                "This V9 topology preserves V1 through V8 and adaptation proof V2 while adding only one offline internal Swift source-derivation target and additive adaptation proof V3. V3 corrects the future gate and carrier destinations from the pure replay substrate to the still-unmaterialized historical replay target. The derivation target depends only on the pure replay codec, accepts only caller-supplied bytes, validates the exact pinned gate and carrier identities, and derives the bounded carrier declaration, native gate/carrier construction use, and exact six-group direct source material containing the historical forty-six-mutation declarations and transforms. The source includes the donor's same-family named-leg dispatch; it is not independent detection. No PrimeCore, per-case parser, executable transform binding, exact failure-set derivation, historical invariant reconstruction, SZ/statistics/triad verdict, filesystem or Git transport, historical runtime/replay target, supervisor, worker, executable, process, model/Metal execution, durable observation, mechanics PASS, receipt, source/execution-binding V7, scientific authority, or product authority is present or authorized."
+        )
+    }()
+
     public func target(
         named name: String
     ) throws -> PrimeNativeNeuralGateTopologyTarget {
@@ -1807,6 +1911,8 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
             expected = .frozenV7
         case 8:
             expected = .frozenV8
+        case 9:
+            expected = .frozenV9
         default:
             throw PrimeNativeNeuralGateTopologyError
                 .invalidFrozenContract

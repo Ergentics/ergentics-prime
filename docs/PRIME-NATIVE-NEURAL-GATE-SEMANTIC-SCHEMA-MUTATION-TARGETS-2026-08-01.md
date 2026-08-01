@@ -247,10 +247,15 @@ The completed V7 prerequisite was:
 
 `freeze_deferred_mutation_historical_mlx_statistics_verdict_schemas_and_assign_disjoint_source_bound_mutation_producer_detector_without_materializing_workers`
 
-The next exact prerequisite is:
+The V8 next exact prerequisite was:
 
 `derive_source_pinned_historical_gate_carrier_and_forty_six_mutation_material_without_materializing_workers_or_issuing_source_binding_v7`
 
-That next slice must derive the historical gate/carrier seam and raw 46-case
-material from the pinned donor source. It must not hand-port the historical
-summary, invent records from the 59,497 count, or materialize workers.
+Topology V9 now satisfies that bounded prerequisite from exact pinned caller
+bytes without hand-porting the historical summary, inventing records from the
+59,497 count, or materializing a worker. The current next exact prerequisite
+is:
+
+`author_and_source_bind_prime_historical_observation_seam_and_materialize_historical_replay_mechanics_without_materializing_workers_or_issuing_source_binding_v7`
+
+See [Prime Native Neural Gate Historical Source Material](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-SOURCE-MATERIAL-2026-08-01.md).

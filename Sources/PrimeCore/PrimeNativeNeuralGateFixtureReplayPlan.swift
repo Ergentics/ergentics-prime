@@ -324,8 +324,11 @@ public struct PrimeNativeNeuralGateSourceDerivationContract:
             ).allSatisfy {
                 $0.lastLine < $1.firstLine
             }
+        let rewriteIDs = rewrites.map(\.rewriteID)
         let rewritesValid =
-            rewrites.enumerated().allSatisfy {
+            Set(rewriteIDs).count
+                == rewriteIDs.count
+            && rewrites.enumerated().allSatisfy {
                 index, rewrite in
                 let source =
                     Data(rewrite.sourceUTF8.utf8)
@@ -333,12 +336,14 @@ public struct PrimeNativeNeuralGateSourceDerivationContract:
                     Data(
                         rewrite
                             .replacementUTF8.utf8
-                    )
+                )
                 return rewrite.ordinal
                         == index + 1
+                    && !rewrite.rewriteID.isEmpty
                     && rewrite
                         .expectedOccurrenceCount
                         == 1
+                    && !source.isEmpty
                     && source.count
                         == rewrite.sourceByteCount
                     && PrimeSHA256.hexDigest(
@@ -353,16 +358,9 @@ public struct PrimeNativeNeuralGateSourceDerivationContract:
                         .replacementSHA256
             }
         let separatorsValid =
-            betweenGroupUTF8Hex.allSatisfy {
-                $0.utf8.count.isMultiple(of: 2)
-                    && $0.utf8.allSatisfy {
-                        ($0 >= 48 && $0 <= 57)
-                            || (
-                                $0 >= 97
-                                    && $0 <= 102
-                            )
-                    }
-            }
+            betweenGroupUTF8Hex.allSatisfy(
+                Self.isCanonicalUTF8SeparatorHex
+            )
         var computedJoinedGroupByteCount:
             UInt64? = 0
         for group in lineGroups {
@@ -526,6 +524,48 @@ public struct PrimeNativeNeuralGateSourceDerivationContract:
                 ($0 >= 48 && $0 <= 57)
                     || ($0 >= 97 && $0 <= 102)
             }
+    }
+
+    private static func isCanonicalUTF8SeparatorHex(
+        _ value: String
+    ) -> Bool {
+        let encoded = Array(value.utf8)
+        guard encoded.count.isMultiple(of: 2) else {
+            return false
+        }
+        var decoded: [UInt8] = []
+        decoded.reserveCapacity(encoded.count / 2)
+        var index = 0
+        while index < encoded.count {
+            guard let high = lowercaseHexNibble(
+                encoded[index]
+            ),
+                  let low = lowercaseHexNibble(
+                    encoded[index + 1]
+                  )
+            else {
+                return false
+            }
+            decoded.append(high << 4 | low)
+            index += 2
+        }
+        let data = Data(decoded)
+        return !data.contains(0x0d)
+            && !data.starts(with: [0xef, 0xbb, 0xbf])
+            && String(data: data, encoding: .utf8) != nil
+    }
+
+    private static func lowercaseHexNibble(
+        _ byte: UInt8
+    ) -> UInt8? {
+        switch byte {
+        case 48 ... 57:
+            byte - 48
+        case 97 ... 102:
+            byte - 97 + 10
+        default:
+            nil
+        }
     }
 
     private enum CodingKeys: String, CodingKey {
@@ -1101,6 +1141,16 @@ public struct PrimeNativeNeuralGateAdaptationProofContract:
         against inputs:
             [PrimeNativeNeuralGateFixtureInputPin]
     ) throws {
+        let expected: Self
+        switch contractID {
+        case Self.frozenV2.contractID:
+            expected = .frozenV2
+        case Self.frozenV3.contractID:
+            expected = .frozenV3
+        default:
+            throw PrimeNativeNeuralGateFixtureReplayPlanError
+                .invalidPlan("adaptation_proof")
+        }
         guard entries.count == inputs.count else {
             throw PrimeNativeNeuralGateFixtureReplayPlanError
                 .invalidPlan("adaptation_proof")
@@ -1112,7 +1162,7 @@ public struct PrimeNativeNeuralGateAdaptationProofContract:
                 donorSHA256: input.sha256
             )
         }
-        guard self == .frozenV2,
+        guard self == expected,
               entries.map(\.ordinal)
                 == Array(1 ... 11),
               entries.map(\.role)

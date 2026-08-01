@@ -245,6 +245,13 @@ let package = Package(
         ),
         .target(
             name:
+                "PrimeNativeNeuralGateHistoricalSourceDerivation",
+            dependencies: [
+                "PrimeNativeNeuralGateReplayMechanics",
+            ]
+        ),
+        .target(
+            name:
                 "PrimeNativeNeuralGateTargetFreeScheduleDeliveryContracts",
             dependencies: [
                 "PrimeNativeNeuralGateReplayArtifactContracts",
@@ -644,6 +651,15 @@ let package = Package(
             dependencies: [
                 "PrimeNativeNeuralGateCorrectedMutationSurfaceContracts",
                 "PrimeNativeNeuralGateCorrectedMutationDetector",
+            ]
+        ),
+        .testTarget(
+            name:
+                "PrimeNativeNeuralGateHistoricalSourceDerivationTests",
+            dependencies: [
+                "PrimeCore",
+                "PrimeNativeNeuralGateReplayMechanics",
+                "PrimeNativeNeuralGateHistoricalSourceDerivation",
             ]
         ),
     ]
