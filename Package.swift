@@ -214,6 +214,37 @@ let package = Package(
         ),
         .target(
             name:
+                "PrimeNativeNeuralGateCorrectedMutationSurfaceContracts",
+            dependencies: [
+                "PrimeNativeNeuralGateReplayMechanics",
+            ]
+        ),
+        .target(
+            name:
+                "PrimeNativeNeuralGateSemanticRecordContracts",
+            dependencies: [
+                "PrimeNativeNeuralGateReplayArtifactContracts",
+                "PrimeNativeNeuralGateReplayMechanics",
+                "PrimeNativeNeuralGateCorrectedMutationSurfaceContracts",
+            ]
+        ),
+        .target(
+            name:
+                "PrimeNativeNeuralGateCorrectedMutationProducer",
+            dependencies: [
+                "PrimeNativeNeuralGateSemanticRecordContracts",
+                "PrimeNativeNeuralGateCorrectedMutationSurfaceContracts",
+            ]
+        ),
+        .target(
+            name:
+                "PrimeNativeNeuralGateCorrectedMutationDetector",
+            dependencies: [
+                "PrimeNativeNeuralGateCorrectedMutationSurfaceContracts",
+            ]
+        ),
+        .target(
+            name:
                 "PrimeNativeNeuralGateTargetFreeScheduleDeliveryContracts",
             dependencies: [
                 "PrimeNativeNeuralGateReplayArtifactContracts",
@@ -560,6 +591,10 @@ let package = Package(
                 "PrimeNativeNeuralGateContract",
                 "PrimeNativeNeuralGateReplayMechanics",
                 "PrimeNativeNeuralGateReplayArtifactContracts",
+                "PrimeNativeNeuralGateCorrectedMutationSurfaceContracts",
+                "PrimeNativeNeuralGateSemanticRecordContracts",
+                "PrimeNativeNeuralGateCorrectedMutationProducer",
+                "PrimeNativeNeuralGateCorrectedMutationDetector",
                 "PrimeNativeNeuralGateReplayTransport",
                 "PrimeNativeNeuralGateReplayComposition",
                 "PrimeNativeNeuralGateReplaySourceBinding",
@@ -578,6 +613,37 @@ let package = Package(
                 "PrimeNativeNeuralGateCorrectedFixtureAuthority",
                 "PrimeNativeNeuralGatePromptSolver",
                 "PrimeNativeNeuralGateLogitSidecarMechanics",
+            ]
+        ),
+        .testTarget(
+            name:
+                "PrimeNativeNeuralGateSemanticRecordContractsTests",
+            dependencies: [
+                "PrimeNativeNeuralGateSemanticRecordContracts",
+            ]
+        ),
+        .testTarget(
+            name:
+                "PrimeNativeNeuralGateCorrectedMutationSurfaceContractsTests",
+            dependencies: [
+                "PrimeNativeNeuralGateCorrectedMutationSurfaceContracts",
+            ]
+        ),
+        .testTarget(
+            name:
+                "PrimeNativeNeuralGateCorrectedMutationProducerTests",
+            dependencies: [
+                "PrimeNativeNeuralGateSemanticRecordContracts",
+                "PrimeNativeNeuralGateCorrectedMutationSurfaceContracts",
+                "PrimeNativeNeuralGateCorrectedMutationProducer",
+            ]
+        ),
+        .testTarget(
+            name:
+                "PrimeNativeNeuralGateCorrectedMutationDetectorTests",
+            dependencies: [
+                "PrimeNativeNeuralGateCorrectedMutationSurfaceContracts",
+                "PrimeNativeNeuralGateCorrectedMutationDetector",
             ]
         ),
     ]

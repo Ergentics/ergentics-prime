@@ -1417,7 +1417,11 @@ final class PrimeNativeNeuralGateCorrectedMechanicsTests:
         XCTAssertEqual(all.passingCount, 10)
         XCTAssertEqual(
             all.mechanicsOutcome,
-            .grounded
+            .abstain
+        )
+        XCTAssertEqual(
+            all.countDerivedLabelScope,
+            "provisional_count_only_non_authorizing"
         )
         XCTAssertEqual(
             all.modelCapability,

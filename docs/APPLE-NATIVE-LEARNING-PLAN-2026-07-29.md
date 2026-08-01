@@ -1559,3 +1559,61 @@ source-bound mutation producer/detector targets without materializing workers:
 `freeze_deferred_mutation_historical_mlx_statistics_verdict_schemas_and_assign_disjoint_source_bound_mutation_producer_detector_without_materializing_workers`
 
 Training authority remains unchanged and Stage-B execution remains `ABSTAIN`.
+
+### Additive V8 disposition
+
+That V7 prerequisite is now satisfied by topology V8,
+`prime_stage_b_semantic_record_schema_and_disjoint_corrected_mutation_targets_topology_v8`,
+SHA-256
+`8f49c8322951249568915cb5b6a9971e251127ff865709292f0c7a7bd0f1db5b`.
+V8 freezes the missing semantic record schemas and adds four internal Swift
+targets: the narrow label-free, presence-only surface contract; the semantic
+catalog/identity contract; the corrected 15-case producer; and the independent
+detector. The corrected mutation catalog/control contract has SHA-256
+`9b40258ed7ba07dc62ff6bda96df03b2233575a039b5598b487d738d036a78bd`;
+the role-specific assignment contract has SHA-256
+`020fa5275a4ab7941b935271ad26b094b35b96c9fb85be765db1dd9130de36e2`.
+The producer directly depends on semantic plus surface contracts. The detector
+directly depends only on the surface contracts and has a complete local closure
+of surface plus replay mechanics, structurally excluding the catalog,
+identity, expected-leg mapping, replay-artifact contracts, and producer.
+Its only public entry is exact 15-case batch detection; the single-triplet path
+is private. All full bound baseline/restored values must share identical bytes
+and bindings, while mutated surfaces must be pairwise distinct. Wrong counts,
+duplicate cases, and per-case reference-hash or seed drift fail closed. The
+fixed-cap mutation is exactly 63 against baseline 64, and permutation
+invariance is verified. `Label-free` means no explicit mutation IDs/labels,
+arbitrary prediction strings, or per-case caller-controlled context.
+This is local in-memory mechanics only: no worker, process, durable semantic
+artifact, accepted verdict, or receipt exists, and actual Release source
+references remain absent and non-authorizing. Training authority remains
+unchanged, `executionImplemented` remains false, and source/execution-binding
+V7 remains unissued.
+
+The generic verdict path is also fail-closed. `countDerivedLabel` is a
+provisional count-only, non-authorizing diagnostic; ten bare true legs remain
+`ABSTAIN`. `GROUNDED` additionally requires verified/durably published
+per-leg evidence, statistics recomputation, stable-greedy and behavioral
+fixed-prompt predicates, model capability including exact abstention decisions,
+the mutation sweep, source-bound leg evidence, distinct implementation
+families, and four-tier audit state. The live exported
+`PrimeNativeNeuralGateCountDerivedVerdict.recompute(legs:)` call remains
+API-compatible but always returns `ABSTAIN`, publishes only the provisional
+scope, and cannot issue a generic `GROUNDED`. Historical `GROUNDED` further
+requires all five aggregate references to be verified/durably published and
+model execution observed. V8 has no such evidence, so training, mechanics
+`PASS`, science, and product authority remain false.
+
+For historical continuity, the topology-V6 actual-package canary was 40,100
+bytes with SHA-256
+`99431ac9477a6546225721027319fc460ff8b10c8e55ef68f07b5cb8c73c8cd9`.
+Topology V7 used source identity
+`9cdfe7bfcbbedebce59b7abb45b614778e6674391b570a679ea40728be4c514f`
+and passed at 41,951 bytes with SHA-256
+`770b719a7e594f95e422f40dc5d4acd0fd93241928416a6bb3f27a448791f928`.
+These are secure-capture-only checkpoints. Final V8 test, source-reseal, and
+Release-canary results are pending.
+
+The next exact prerequisite is
+`derive_source_pinned_historical_gate_carrier_and_forty_six_mutation_material_without_materializing_workers_or_issuing_source_binding_v7`.
+See [Prime Native Neural Gate Semantic Schema and Mutation Targets](PRIME-NATIVE-NEURAL-GATE-SEMANTIC-SCHEMA-MUTATION-TARGETS-2026-08-01.md).
