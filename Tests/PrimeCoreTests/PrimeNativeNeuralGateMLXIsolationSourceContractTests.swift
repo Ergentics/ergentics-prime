@@ -41,6 +41,8 @@ final class
                 "PrimeNativeNeuralGateReplayComposition",
                 "PrimeNativeNeuralGateReplaySourceBinding",
                 "PrimeNativeNeuralGateReplaySourceComposition",
+                "PrimeNativeNeuralGateReplayCaptureInventory",
+                "PrimeNativeNeuralGatePromptTargetCrosswalkAuthority",
                 "PrimeNativeNeuralGateCorrectedMechanics",
                 "PrimeNativeNeuralGateCorrectedEvaluationMechanics",
                 "PrimeNativeNeuralGateCorrectedFixtureAuthority",
@@ -63,6 +65,8 @@ final class
         for auditedSwiftOnlyTarget in [
             "PrimeNativeNeuralGateReplaySourceBinding",
             "PrimeNativeNeuralGateReplaySourceComposition",
+            "PrimeNativeNeuralGateReplayCaptureInventory",
+            "PrimeNativeNeuralGatePromptTargetCrosswalkAuthority",
         ] {
             XCTAssertEqual(
                 occurrences(

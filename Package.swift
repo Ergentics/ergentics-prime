@@ -42,6 +42,20 @@ let package = Package(
         ),
         .library(
             name:
+                "PrimeNativeNeuralGateReplayCaptureInventory",
+            targets: [
+                "PrimeNativeNeuralGateReplayCaptureInventory",
+            ]
+        ),
+        .library(
+            name:
+                "PrimeNativeNeuralGatePromptTargetCrosswalkAuthority",
+            targets: [
+                "PrimeNativeNeuralGatePromptTargetCrosswalkAuthority",
+            ]
+        ),
+        .library(
+            name:
                 "PrimeNativeNeuralGateMLXValidationMechanics",
             targets: [
                 "PrimeNativeCorpusReplayMechanics",
@@ -235,6 +249,28 @@ let package = Package(
             dependencies: [
                 "PrimeNativeNeuralGateReplaySourceBinding",
                 "PrimeNativeNeuralGateReplayComposition",
+            ]
+        ),
+        .target(
+            name:
+                "PrimeNativeNeuralGateReplayCaptureInventory",
+            dependencies: [
+                "PrimeCore",
+                "PrimeNativeNeuralGateReplayArtifactContracts",
+                "PrimeNativeNeuralGateReplaySourceBinding",
+            ]
+        ),
+        .target(
+            name:
+                "PrimeNativeNeuralGatePromptTargetCrosswalkAuthority",
+            dependencies: [
+                "PrimeCore",
+                "PrimeNativeNeuralGateCorrectedFixtureAuthority",
+                "PrimeNativeNeuralGateCorrectedMechanics",
+                "PrimeNativeNeuralGateReplayCaptureInventory",
+                "PrimeNativeNeuralGateReplayComposition",
+                "PrimeNativeNeuralGateReplaySourceComposition",
+                "PrimeNativeNeuralGateReplayTransport",
             ]
         ),
         .target(
@@ -460,6 +496,8 @@ let package = Package(
                 "PrimeNativeNeuralGateReplayComposition",
                 "PrimeNativeNeuralGateReplaySourceBinding",
                 "PrimeNativeNeuralGateReplaySourceComposition",
+                "PrimeNativeNeuralGateReplayCaptureInventory",
+                "PrimeNativeNeuralGatePromptTargetCrosswalkAuthority",
                 "PrimeNativeNeuralGateCorrectedMechanics",
                 "PrimeNativeNeuralGateCorrectedEvaluationMechanics",
                 "PrimeNativeNeuralGateCorrectedFixtureAuthority",

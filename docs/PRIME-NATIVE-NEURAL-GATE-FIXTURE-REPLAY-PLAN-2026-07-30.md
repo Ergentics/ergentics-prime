@@ -101,13 +101,22 @@ After the complete topology-V4 source reseal, the same Release canary passed
 with byte-identical probe/verifier package-description output: 32,735 bytes,
 SHA-256
 `f7d873db2b91ecc61d356136b37bf7bc8017db962f40637998de914eeaa8d894`.
-This is the current accepted topology-V4 actual-package secure-capture reseal,
-with the same secure-capture-only scope. `executionImplemented` remains false,
+This is the last accepted historical topology-V4 actual-package secure-capture
+reseal, with the same secure-capture-only scope.
+After the additive topology-V5 source reseal, the same Release canary passed
+with byte-identical probe/verifier package-description output: 36,047 bytes,
+SHA-256
+`88571dc5cc4d15f11395430ab9ea410aba6cafa295edebe54acff816585a3fbb`.
+`executionImplemented` remains false,
 and no replay, historical worker, Metal, or product use is implemented or
 authorized.
 
-The current topology is
-`PrimeNativeNeuralGateTrapDisjointTopologyContract.frozenV4`, canonical
+The current topology is additive V5,
+`prime_stage_b_held_root_capture_crosswalk_authority_topology_v5`; its canonical
+SHA-256 is
+`252e027fc0f547e96b8c74b2e45cd1c316f1080d639a94619e9c03c87c480930`.
+Historical
+`PrimeNativeNeuralGateTrapDisjointTopologyContract.frozenV4` remains exact at
 SHA-256
 `8339bbd42b0e4052888db880aacbb067770c08dd2106bf4a7820c853c4b715af`.
 Topology V1 remains exact at SHA-256
@@ -116,11 +125,14 @@ Topology V2 remains exact at SHA-256
 `abc8f1ada303ecb95b7c9a44e72293ed314537b93e27354aebbb7763e1487415`.
 Topology V3 remains exact at SHA-256
 `b475e29347a31d27be8dc1aa54648fec84c4f1b47d673a1f111ccffb794985fd`.
-Topology V4 preserves plan V5 and source binding V6 as historical identities,
+Topology V5 preserves V1 through V4 plus plan V5 and source binding V6 as
+historical identities,
 supersedes only their future donor-routing assumption, and explicitly leaves
 source binding V7 unissued. The complete implemented and planned closures are
 recorded in
 `PRIME-NATIVE-NEURAL-GATE-TRAP-DISJOINT-TOPOLOGY-2026-07-30.md`.
+The held-root/crosswalk claim ceiling is recorded in
+`PRIME-NATIVE-NEURAL-GATE-HELD-ROOT-CROSSWALK-AUTHORITY-2026-07-31.md`.
 
 PrimeCore now also has the prerequisite live filesystem-inventory authority.
 It starts only from the already-held `PrimeArtifactRoot` descriptor, admits
@@ -636,7 +648,7 @@ is not V6/V7 selected-source execution-graph proof; it does not issue source
 binding V7 or establish worker or model execution, fixture identity,
 evaluation or mechanics `PASS`, Stage-B publication or a terminal receipt,
 reproducible-build identity, or network denial.
-The current accepted topology-V4 actual-package secure-capture reseal is
+The last accepted historical topology-V4 actual-package secure-capture reseal is
 byte-identical across probe and verifier at 32,735 bytes with SHA-256
 `f7d873db2b91ecc61d356136b37bf7bc8017db962f40637998de914eeaa8d894`.
 It has the same secure-capture-only scope and is not V6/V7 selected-source
@@ -1159,30 +1171,32 @@ ambiguity.
 
 Descriptor-rooted invariant validation, source-bound lossless-sidecar
 validation, incremental schedule reconstruction, and the exact four-source
-join are now implemented under topology V4. Because the sources are bound in
-separate calls, equal root identity does not yet prove one capture epoch or
-durable origin. The corrected aggregate implementation prerequisite is now:
+join remain frozen under topology V4. Additive topology V5 now also implements
+the retained exact 41-file held-root capture and the independent source-derived
+18,432-row keyed prompt/target crosswalk. The focused integration passed in
+300.125 seconds. V5 establishes only the exact capture epoch, bounded durable
+origin for captured bytes, corrected fixture identity, exact source join,
+independent crosswalk, and outer completion binding. Prompt-content target
+independence, process delivery, model execution, evaluation/verdict authority,
+mechanics `PASS`, receipt, science, and product authority remain false. The
+corrected aggregate implementation prerequisite is now:
 
-`freeze_single_held_root_four_source_capture_inventory_session_then_freeze_independent_source_derived_prompt_target_crosswalk_in_trap_bearing_authority_target_without_materializing_workers`
+`freeze_corrected_process_evaluation_receipt_ownership_and_lawful_target_free_schedule_delivery_then_assign_disjoint_source_bound_mutation_producer_detector_without_materializing_workers`
 
 Its implementation order is now:
 
-1. freeze one held-root four-source capture/inventory session and require its
-   sealed capability before any durable-origin promotion;
-2. freeze the independent source-derived prompt/target crosswalk in a separate
-   trap-bearing authority target without making it reachable from the raw
-   corrected closure;
+1. freeze corrected process/evaluation ownership, replacement process count,
+   result records, receipt ownership, and receipt-last publication;
+2. freeze lawful delivery of the already typed target-free raw/outer schedule
+   capabilities to their eventual disjoint process owners;
 3. freeze the deferred mutation, historical, MLX, and statistics/verdict
    record schemas;
-4. freeze corrected process/evaluation ownership, replacement process count,
-   result records, receipt ownership, and receipt-last publication;
-5. implement a source-bound corrected mutation producer and an independently
+4. assign a source-bound corrected mutation producer and an independently
    implemented detector;
    the current fifteen mutation-observation validators do not execute defects;
-6. implement the isolated historical worker using the completed secure
+5. implement the isolated historical worker using the completed secure
    capture and live role-prefix inventory capabilities; and
-7. implement the paired probe/verifier, actual typed schedule delivery, and
-   exact path/metadata/content
+6. implement the paired probe/verifier and exact path/metadata/content
    inventory, durable sidecar publication, full-fixture MLX recomputation,
    full-root pre-receipt recapture, and receipt-last publication.
 

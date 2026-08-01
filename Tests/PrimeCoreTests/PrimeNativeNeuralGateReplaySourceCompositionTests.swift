@@ -6,8 +6,11 @@ import Glibc
 import Foundation
 @testable import PrimeCore
 import PrimeNativeNeuralGateCorrectedMechanics
+import PrimeNativeNeuralGateCorrectedFixtureAuthority
 import PrimeNativeNeuralGateLogitSidecarMechanics
+import PrimeNativeNeuralGatePromptTargetCrosswalkAuthority
 import PrimeNativeNeuralGateReplayArtifactContracts
+import PrimeNativeNeuralGateReplayCaptureInventory
 import PrimeNativeNeuralGateReplayComposition
 import PrimeNativeNeuralGateReplayMechanics
 import PrimeNativeNeuralGateReplaySourceBinding
@@ -26,6 +29,20 @@ final class PrimeNativeNeuralGateReplaySourceCompositionTests:
         PrimeNativeNeuralGateReplayTransportCodec
     private typealias Decoder =
         PrimeNativeNeuralGateReplayTransportDecoder
+    private typealias Capture =
+        PrimeNativeNeuralGateReplayCaptureInventory
+    private typealias CaptureError =
+        PrimeNativeNeuralGateReplayCaptureInventoryError
+    private typealias CrosswalkAuthority =
+        PrimeNativeNeuralGatePromptTargetCrosswalkAuthority
+    private typealias CrosswalkError =
+        PrimeNativeNeuralGatePromptTargetCrosswalkAuthorityError
+
+    private static let sourceDerivedCrosswalk =
+        Result<PrimeNativeNeuralGateSourceDerivedPromptTargetCrosswalk, Error> {
+            try PrimeNativeNeuralGateCorrectedFixtureObservation
+                .derivePromptTargetCrosswalk()
+        }
 
     func testFrozenSourceCompositionContractIsConditionalAndNonAuthorizing()
         throws
@@ -324,6 +341,8 @@ final class PrimeNativeNeuralGateReplaySourceCompositionTests:
             "PrimeNativeCorpusReplayMechanics",
             "PrimeNativeNeuralGateCorrectedEvaluationMechanics",
             "PrimeNativeNeuralGateCorrectedFixtureAuthority",
+            "PrimeNativeNeuralGateReplayCaptureInventory",
+            "PrimeNativeNeuralGatePromptTargetCrosswalkAuthority",
             "PrimeNativeNeuralGatePromptSolver",
             "PrimeNativeNeuralGateMLXLogSoftmaxRecomputation",
             "URLSession",
@@ -365,6 +384,318 @@ final class PrimeNativeNeuralGateReplaySourceCompositionTests:
         }
     }
 
+    func testCaptureAndCrosswalkTargetsPreserveOneWayAuthorityBoundary()
+        throws
+    {
+        let captureSource = try completeSwiftSource(
+            target:
+                "PrimeNativeNeuralGateReplayCaptureInventory"
+        )
+        for required in [
+            "import PrimeCore",
+            "import PrimeNativeNeuralGateReplayArtifactContracts",
+            "import PrimeNativeNeuralGateReplaySourceBinding",
+        ] {
+            XCTAssertTrue(
+                captureSource.contains(required),
+                required
+            )
+        }
+        for forbidden in [
+            "import PrimeNativeCorpusReplayMechanics",
+            "import PrimeNativeNeuralGateCorrectedEvaluationMechanics",
+            "import PrimeNativeNeuralGateCorrectedFixtureAuthority",
+            "import PrimeNativeNeuralGatePromptTargetCrosswalkAuthority",
+            "import PrimeNativeNeuralGatePromptSolver",
+            "import PrimeNativeNeuralGateMLXLogSoftmaxRecomputation",
+            "import ErgenticsPrimeRuntime",
+            "import PrimeNativeNeuralGateHistoricalReplayMechanics",
+            "Process(",
+            "URLSession",
+        ] {
+            XCTAssertFalse(
+                captureSource.contains(forbidden),
+                forbidden
+            )
+        }
+        XCTAssertTrue(
+            captureSource.contains(
+                "public struct PrimeNativeNeuralGateFourSourceCaptureInventory:\n    @unchecked Sendable"
+            )
+        )
+        XCTAssertFalse(
+            captureSource.contains(
+                "public struct PrimeNativeNeuralGateFourSourceCaptureInventory: Codable"
+            )
+        )
+        XCTAssertTrue(
+            captureSource.contains(
+                "fileprivate init(\n        rootIdentity:"
+            )
+        )
+
+        let crosswalkSource = try completeSwiftSource(
+            target:
+                "PrimeNativeNeuralGatePromptTargetCrosswalkAuthority"
+        )
+        for required in [
+            "import PrimeNativeNeuralGateCorrectedFixtureAuthority",
+            "import PrimeNativeNeuralGateReplayCaptureInventory",
+            "import PrimeNativeNeuralGateReplaySourceComposition",
+        ] {
+            XCTAssertTrue(
+                crosswalkSource.contains(required),
+                required
+            )
+        }
+        for forbidden in [
+            "import PrimeNativeNeuralGatePromptSolver",
+            "import PrimeNativeNeuralGateMLXLogSoftmaxRecomputation",
+            "import ErgenticsPrimeRuntime",
+            "import PrimeNativeNeuralGateHistoricalReplayMechanics",
+            "import PrimeNativeNeuralGateHistoricalFixtureWorker",
+            "import PrimeNativeNeuralGateReplayProbe",
+            "import PrimeNativeNeuralGateReplayVerifier",
+            "import PrimeNativeNeuralGateCorrectedRawWorker",
+            "Process(",
+            "URLSession",
+        ] {
+            XCTAssertFalse(
+                crosswalkSource.contains(forbidden),
+                forbidden
+            )
+        }
+        XCTAssertTrue(
+            crosswalkSource.contains(
+                "public struct PrimeNativeNeuralGateCrosswalkBoundReplay:\n    @unchecked Sendable"
+            )
+        )
+        XCTAssertFalse(
+            crosswalkSource.contains(
+                "public struct PrimeNativeNeuralGateCrosswalkBoundReplay: Codable"
+            )
+        )
+
+        let defaultBind = try XCTUnwrap(
+            crosswalkSource.range(
+                of: "public static func bind(\n        capturedSource:"
+            )
+        )
+        let prederivedComment = try XCTUnwrap(
+            crosswalkSource.range(
+                of: "/// Accepts only the sealed, non-Codable capability",
+                range:
+                    defaultBind.upperBound
+                        ..< crosswalkSource.endIndex
+            )
+        )
+        let defaultBody = crosswalkSource[
+            defaultBind.lowerBound
+                ..< prederivedComment.lowerBound
+        ]
+        let initialRecapture = try XCTUnwrap(
+            defaultBody.range(
+                of: "validateStillUnchanged()"
+            )
+        )
+        let derivation = try XCTUnwrap(
+            defaultBody.range(
+                of: "derivePromptTargetCrosswalk()"
+            )
+        )
+        XCTAssertLessThan(
+            initialRecapture.lowerBound,
+            derivation.lowerBound
+        )
+    }
+
+    func testHeldRootCaptureAndIndependentCrosswalkRejectTargetMutations()
+        throws
+    {
+        let crosswalk = try Self.sourceDerivedCrosswalk.get()
+        let material = try makeAuthorityMaterial(
+            crosswalk: crosswalk
+        )
+        let exact = try makeRoot()
+        let swapped = try makeRoot()
+        let omitted = try makeRoot()
+        defer {
+            for root in [exact, swapped, omitted] {
+                try? FileManager.default.removeItem(
+                    at: root.url
+                )
+            }
+        }
+
+        try publishAuthorityMaterial(
+            material,
+            outerBundle: material.outerBundle,
+            to: exact.root
+        )
+        let captured = try Capture.capture(
+            artifactRoot: exact.root,
+            replicateSeed: material.seed
+        )
+        XCTAssertEqual(captured.inventory.fileEntries.count, 41)
+        XCTAssertTrue(
+            captured.exactWholeRootNodeClosureEstablished
+        )
+        XCTAssertTrue(
+            captured.singleSourceCaptureEpochEstablished
+        )
+        XCTAssertTrue(
+            captured.durableArtifactOriginEstablished
+        )
+        XCTAssertFalse(
+            captured
+                .independentPromptTargetCrosswalkEstablished
+        )
+        XCTAssertEqual(
+            try captured.validateStillUnchanged(),
+            captured.inventory
+        )
+
+        let bound = try CrosswalkAuthority.bind(
+            capturedSource: captured,
+            sourceDerivedCrosswalk: crosswalk
+        )
+        XCTAssertEqual(
+            bound.sourceBoundReplay.joinedReplay
+                .orderedRows.count,
+            18_432
+        )
+        XCTAssertTrue(bound.durableArtifactOriginEstablished)
+        XCTAssertTrue(
+            bound.correctedFixtureIdentityEstablished
+        )
+        XCTAssertTrue(
+            bound.independentPromptTargetCrosswalkEstablished
+        )
+        XCTAssertTrue(
+            bound.outerExpectedCompletionBindingEstablished
+        )
+        XCTAssertFalse(
+            bound.promptContentTargetIndependenceEstablished
+        )
+        XCTAssertFalse(bound.processDeliveryObserved)
+        XCTAssertFalse(bound.modelExecutionEstablished)
+        XCTAssertFalse(bound.mechanicsPassAuthorized)
+        XCTAssertFalse(bound.terminalReceiptAuthorized)
+        XCTAssertFalse(bound.scientificAuthorityAuthorized)
+        XCTAssertFalse(bound.productAuthorityAuthorized)
+        XCTAssertEqual(
+            try bound.validateSourceStillUnchanged(),
+            captured.inventory
+        )
+
+        _ = try exact.root.publish(
+            Data("unexpected".utf8),
+            at: "unexpected.v1.bin",
+            purpose: .immutableData
+        )
+        assertCaptureThrows(.finalRecaptureRejected) {
+            _ = try captured.validateStillUnchanged()
+        }
+        assertCaptureThrows(.liveInventoryRejected) {
+            _ = try Capture.capture(
+                artifactRoot: exact.root,
+                replicateSeed: material.seed
+            )
+        }
+
+        try publishAuthorityMaterial(
+            material,
+            outerBundle: material.swappedOuterBundle,
+            to: swapped.root
+        )
+        let swappedCapture = try Capture.capture(
+            artifactRoot: swapped.root,
+            replicateSeed: material.seed
+        )
+        assertCrosswalkThrows(.expectedCompletionMismatch) {
+            _ = try CrosswalkAuthority.bind(
+                capturedSource: swappedCapture,
+                sourceDerivedCrosswalk: crosswalk
+            )
+        }
+
+        try publishAuthorityMaterial(
+            material,
+            outerBundle:
+                material.terminalByteOmittedOuterBundle,
+            to: omitted.root
+        )
+        let omittedCapture = try Capture.capture(
+            artifactRoot: omitted.root,
+            replicateSeed: material.seed
+        )
+        assertCrosswalkThrows(.expectedCompletionMismatch) {
+            _ = try CrosswalkAuthority.bind(
+                capturedSource: omittedCapture,
+                sourceDerivedCrosswalk: crosswalk
+            )
+        }
+    }
+
+    func testFrozenCaptureAndCrosswalkContractsRemainNonAuthorizing()
+        throws
+    {
+        let captureContract =
+            PrimeNativeNeuralGateReplayCaptureInventoryContract
+            .frozenV1
+        XCTAssertNoThrow(try captureContract.validate())
+        XCTAssertEqual(
+            PrimeSHA256.hexDigest(
+                of: try PrimeCanonicalJSON.encode(
+                    captureContract
+                )
+            ),
+            "ae3477c44af1f36a111a6312a88a6b86995ddad231c9225a069173860ed29878"
+        )
+        XCTAssertTrue(
+            captureContract.singleSourceCaptureEpochEstablished
+        )
+        XCTAssertTrue(
+            captureContract.durableArtifactOriginEstablished
+        )
+        XCTAssertFalse(
+            captureContract
+                .independentPromptTargetCrosswalkEstablished
+        )
+        XCTAssertFalse(captureContract.modelExecutionEstablished)
+        XCTAssertFalse(captureContract.mechanicsPassAuthorized)
+        XCTAssertFalse(captureContract.productAuthorityAuthorized)
+
+        let crosswalkContract =
+            PrimeNativeNeuralGatePromptTargetCrosswalkAuthorityContract
+            .frozenV1
+        XCTAssertNoThrow(try crosswalkContract.validate())
+        XCTAssertEqual(
+            PrimeSHA256.hexDigest(
+                of: try PrimeCanonicalJSON.encode(
+                    crosswalkContract
+                )
+            ),
+            "b4a994635c2d7fafe8f9d47587122beee149533013b69592242bcba33b60ea67"
+        )
+        XCTAssertTrue(
+            crosswalkContract
+                .independentPromptTargetCrosswalkEstablished
+        )
+        XCTAssertTrue(
+            crosswalkContract
+                .outerExpectedCompletionBindingEstablished
+        )
+        XCTAssertFalse(
+            crosswalkContract
+                .promptContentTargetIndependenceEstablished
+        )
+        XCTAssertFalse(crosswalkContract.processDeliveryObserved)
+        XCTAssertFalse(crosswalkContract.modelExecutionEstablished)
+        XCTAssertFalse(crosswalkContract.mechanicsPassAuthorized)
+        XCTAssertFalse(crosswalkContract.productAuthorityAuthorized)
+    }
+
     private struct Root {
         let url: URL
         let root: PrimeArtifactRoot
@@ -392,6 +723,28 @@ final class PrimeNativeNeuralGateReplaySourceCompositionTests:
             PrimeNativeNeuralGateInvariantBundle
         let logit: LogitMaterial
         let alternateLogit: LogitMaterial
+    }
+
+    private struct AuthorityMaterial {
+        let seed: PrimeNativeNeuralGateArtifactSeed
+        let promptBundle:
+            PrimeNativeNeuralGateInvariantBundle
+        let outerBundle:
+            PrimeNativeNeuralGateInvariantBundle
+        let swappedOuterBundle:
+            PrimeNativeNeuralGateInvariantBundle
+        let terminalByteOmittedOuterBundle:
+            PrimeNativeNeuralGateInvariantBundle
+        let rawBundle:
+            PrimeNativeNeuralGateInvariantBundle
+        let logit: LogitMaterial
+    }
+
+    private enum AuthorityMaterialError: Error {
+        case duplicatePromptBinding
+        case missingPromptBinding
+        case noSameLengthDistinctTargets
+        case noTerminalByteMutation
     }
 
     private func makeRoot() throws -> Root {
@@ -543,6 +896,213 @@ final class PrimeNativeNeuralGateReplaySourceCompositionTests:
         )
     }
 
+    private func makeAuthorityMaterial(
+        crosswalk:
+            PrimeNativeNeuralGateSourceDerivedPromptTargetCrosswalk
+    ) throws -> AuthorityMaterial {
+        let seed:
+            PrimeNativeNeuralGateArtifactSeed = .seed1618
+        let promptRecords = try crosswalk.entries.map {
+            try Codec.encodePromptOnlyRow(
+                promptTokenIDs: $0.promptTokenIDs
+            )
+        }
+        let promptBundle = try
+            PrimeNativeNeuralGateInvariantCodec
+            .makeBundle(records: promptRecords)
+        let schedule = try
+            PrimeNativeNeuralGateReplayComposition
+            .makePromptSchedule(
+                canonicalPromptRecords:
+                    promptBundle.canonicalRecords
+            )
+
+        var entryByPromptBinding = [
+            String:
+                PrimeNativeNeuralGateSourceDerivedPromptTargetEntry
+        ]()
+        entryByPromptBinding.reserveCapacity(
+            crosswalk.entries.count
+        )
+        for entry in crosswalk.entries {
+            guard entryByPromptBinding.updateValue(
+                    entry,
+                    forKey: entry.promptBinding.sha256
+                  ) == nil
+            else {
+                throw AuthorityMaterialError
+                    .duplicatePromptBinding
+            }
+        }
+        let scheduledEntries = try
+            schedule.orderedPrompts.map { scheduled in
+                guard let entry = entryByPromptBinding[
+                        scheduled
+                            .primeCPI2PromptBindingSHA256
+                      ]
+                else {
+                    throw AuthorityMaterialError
+                        .missingPromptBinding
+                }
+                return entry
+            }
+
+        let outerRecords = try zip(
+            schedule.orderedPrompts,
+            scheduledEntries
+        ).map { pair in
+            try Codec.encodeOuterEvaluationRow(
+                executionIndex:
+                    pair.0.executionIndex,
+                correlationID: pair.0.correlationID,
+                expectedCompletionUTF8:
+                    pair.1.expectedCompletionUTF8
+            )
+        }
+
+        var firstByByteCount = [Int: (Int, Data)]()
+        var swapPair: (Int, Int)?
+        for (index, entry) in scheduledEntries.enumerated() {
+            let target = entry.expectedCompletionUTF8
+            if let first = firstByByteCount[target.count],
+               first.1 != target
+            {
+                swapPair = (first.0, index)
+                break
+            }
+            firstByByteCount[target.count] = (index, target)
+        }
+        guard let swapPair else {
+            throw AuthorityMaterialError
+                .noSameLengthDistinctTargets
+        }
+        var swappedTargets = scheduledEntries.map(
+            \.expectedCompletionUTF8
+        )
+        swappedTargets.swapAt(swapPair.0, swapPair.1)
+        let swappedOuterRecords = try zip(
+            schedule.orderedPrompts,
+            swappedTargets
+        ).map { pair in
+            try Codec.encodeOuterEvaluationRow(
+                executionIndex:
+                    pair.0.executionIndex,
+                correlationID: pair.0.correlationID,
+                expectedCompletionUTF8: pair.1
+            )
+        }
+
+        guard let terminalMutationIndex =
+                scheduledEntries.firstIndex(where: {
+                    !$0.canonicalExpectedCompletion.isEmpty
+                })
+        else {
+            throw AuthorityMaterialError
+                .noTerminalByteMutation
+        }
+        var terminalByteOmittedTargets =
+            scheduledEntries.map(\.expectedCompletionUTF8)
+        terminalByteOmittedTargets[terminalMutationIndex] =
+            Data(
+                scheduledEntries[terminalMutationIndex]
+                    .canonicalExpectedCompletion
+                    .dropLast().utf8
+            )
+        let terminalByteOmittedOuterRecords = try zip(
+            schedule.orderedPrompts,
+            terminalByteOmittedTargets
+        ).map { pair in
+            try Codec.encodeOuterEvaluationRow(
+                executionIndex:
+                    pair.0.executionIndex,
+                correlationID: pair.0.correlationID,
+                expectedCompletionUTF8: pair.1
+            )
+        }
+
+        let byteLogits = Self.logits(selecting: 321)
+        let eosLogits = Self.logits(
+            selecting:
+                PrimeNativeNeuralGateCorrectedExecutionPolicy
+                .endOfSequenceTokenID
+        )
+        let decisions = [
+            try PrimeNativeNeuralGateCompletionDecision
+                .make(
+                    ordinal: 1,
+                    fullVocabularyLogits: byteLogits
+                ),
+            try PrimeNativeNeuralGateCompletionDecision
+                .make(
+                    ordinal: 2,
+                    fullVocabularyLogits: eosLogits
+                ),
+        ]
+        let context = try
+            PrimeNativeNeuralGateCorrectedReplicateContext(
+                evaluationSeed: seed.rawValue
+            )
+        var rawRecords = [Data]()
+        rawRecords.reserveCapacity(
+            schedule.orderedPrompts.count
+        )
+        for scheduled in schedule.orderedPrompts {
+            let input = try
+                PrimeNativeNeuralGatePromptOnlyExecutionInput
+                .derive(
+                    promptText:
+                        scheduled.promptRow.canonicalPrompt
+                )
+            let execution = try
+                PrimeNativeNeuralGateRawExecution.validate(
+                    replicateContext: context,
+                    input: input,
+                    decisions: decisions
+                )
+            rawRecords.append(
+                try Codec.encodeRawExecutionReference(
+                    replicateSeed: seed,
+                    executionIndex:
+                        scheduled.executionIndex,
+                    primeCPI2PromptBindingSHA256:
+                        input.bindingSHA256,
+                    traceSHA256:
+                        execution.traceSHA256,
+                    generatedTokenIDs: [321],
+                    termination: .eos
+                )
+            )
+        }
+        let correlations = schedule.orderedPrompts.map(
+            \.correlationID
+        )
+        return AuthorityMaterial(
+            seed: seed,
+            promptBundle: promptBundle,
+            outerBundle:
+                try PrimeNativeNeuralGateInvariantCodec
+                .makeBundle(records: outerRecords),
+            swappedOuterBundle:
+                try PrimeNativeNeuralGateInvariantCodec
+                .makeBundle(records: swappedOuterRecords),
+            terminalByteOmittedOuterBundle:
+                try PrimeNativeNeuralGateInvariantCodec
+                .makeBundle(
+                    records:
+                        terminalByteOmittedOuterRecords
+                ),
+            rawBundle:
+                try PrimeNativeNeuralGateInvariantCodec
+                .makeBundle(records: rawRecords),
+            logit: try makeLogitMaterial(
+                seed: seed,
+                correlations: correlations,
+                byteLogits: byteLogits,
+                eosLogits: eosLogits
+            )
+        )
+    }
+
     private func makeLogitMaterial(
         seed: PrimeNativeNeuralGateArtifactSeed,
         correlations: [String],
@@ -655,6 +1215,43 @@ final class PrimeNativeNeuralGateReplaySourceCompositionTests:
         try publishLogitMaterial(
             material.alternateLogit,
             seed: material.alternateSeed,
+            to: root
+        )
+    }
+
+    private func publishAuthorityMaterial(
+        _ material: AuthorityMaterial,
+        outerBundle:
+            PrimeNativeNeuralGateInvariantBundle,
+        to root: PrimeArtifactRoot
+    ) throws {
+        try publishPromptMaterial(
+            material.promptBundle,
+            to: root
+        )
+        try publishRecordBundle(
+            outerBundle,
+            manifestKey: .outerEvaluationManifest,
+            globalKey: .outerEvaluationGlobal,
+            chunkKey: {
+                .outerEvaluationChunk($0)
+            },
+            to: root
+        )
+        try publishRecordBundle(
+            material.rawBundle,
+            manifestKey:
+                .rawExecutionManifest(material.seed),
+            globalKey:
+                .rawExecutionGlobal(material.seed),
+            chunkKey: {
+                .rawExecutionChunk(material.seed, $0)
+            },
+            to: root
+        )
+        try publishLogitMaterial(
+            material.logit,
+            seed: material.seed,
             to: root
         )
     }
@@ -832,6 +1429,46 @@ final class PrimeNativeNeuralGateReplaySourceCompositionTests:
         ) {
             XCTAssertEqual(
                 $0 as? SourceCompositionError,
+                expected,
+                file: file,
+                line: line
+            )
+        }
+    }
+
+    private func assertCaptureThrows(
+        _ expected: CaptureError,
+        file: StaticString = #filePath,
+        line: UInt = #line,
+        _ operation: () throws -> Void
+    ) {
+        XCTAssertThrowsError(
+            try operation(),
+            file: file,
+            line: line
+        ) {
+            XCTAssertEqual(
+                $0 as? CaptureError,
+                expected,
+                file: file,
+                line: line
+            )
+        }
+    }
+
+    private func assertCrosswalkThrows(
+        _ expected: CrosswalkError,
+        file: StaticString = #filePath,
+        line: UInt = #line,
+        _ operation: () throws -> Void
+    ) {
+        XCTAssertThrowsError(
+            try operation(),
+            file: file,
+            line: line
+        ) {
+            XCTAssertEqual(
+                $0 as? CrosswalkError,
                 expected,
                 file: file,
                 line: line

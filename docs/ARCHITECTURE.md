@@ -120,11 +120,12 @@ note under
 `artifacts/native-neural-gate-contract-projection-canonical-2026-07-30/`.
 
 The Stage-B execution contract is frozen separately and still has no replay
-process or receipt authority. Topology V4 and semantic namespace V4 now
+process or receipt authority. Historical topology V4 and semantic namespace V4
 materialize pure typed contracts, bounded transport, exact non-authorizing
 replay composition, descriptor-rooted invariant/logit source binding, and an
-outer source join. The independent prompt/target crosswalk, actual process
-delivery, worker, mutation-authority, and receipt layers remain absent. A
+outer source join. Additive topology V5 materializes the held-root capture and
+independent prompt/target crosswalk; actual process delivery, worker,
+mutation-authority, and receipt layers remain absent. A
 forward source audit found that the
 pinned historical fixture sizes output and decision counts from target data
 and copies expected completions into predictions while declaring a
@@ -183,18 +184,23 @@ seed-keyed permutations, with exact structural logit and strict malformed
 grammar gates. The solver remains symbolic/synthetic mechanics, not model
 execution, an independent scientific oracle, a durable receipt, Metal
 authority, or product authority.
-The current source-only slice advances corrected admission to V3, the
+The source-only lineage advances corrected admission to V3, the
 source/execution binding to V6, and the fixture plan to V5/schema 5. It binds
 the bounded lossless logit-sidecar codec and maintained MLX Float32
-log-softmax operation as source contracts. Topology V4 now implements the
-descriptor-bound sidecar adapter, but `executionImplemented` remains false: no
-canonical Stage-B sidecar set, full-fixture process observation or recomputation,
-model execution, Stage-B Metal authority, process record, terminal receipt,
-independent scientific oracle, or product authority has been established.
+log-softmax operation as source contracts. Historical topology V4 implements
+the descriptor-bound sidecar adapter. Additive topology V5 now implements one
+retained exact 41-file held-root four-source capture and a separate
+trap-bearing source-derived 18,432-row prompt/target crosswalk. Its focused
+integration passed in 300.125 seconds. `executionImplemented` remains false:
+no process/schedule delivery, model execution, evaluation verdict, Stage-B
+Metal authority, process record, terminal receipt, independent scientific
+oracle, or product authority has been established.
 
-The current package boundary is frozen separately by
-`PrimeNativeNeuralGateTrapDisjointTopologyContract.frozenV4`, canonical
-SHA-256
+The current package boundary is topology V5,
+`prime_stage_b_held_root_capture_crosswalk_authority_topology_v5`; its canonical
+SHA-256 is
+`252e027fc0f547e96b8c74b2e45cd1c316f1080d639a94619e9c03c87c480930`.
+Historical topology V4 remains exact at SHA-256
 `8339bbd42b0e4052888db880aacbb067770c08dd2106bf4a7820c853c4b715af`.
 Topology V1 remains exact at SHA-256
 `48e0f64fcb14193d74bf9c3d98a8aeef7ca366033cea6d8f00bc345ff0ad86b5`.
@@ -205,6 +211,8 @@ partially materialized, globally `planned_not_materialized` execution
 topology. Plan V5 and source binding V6 remain historical; source binding V7
 is reserved until a live compiled-source closure is reconciled against
 physically present targets.
+The V5 authority ceiling is recorded in
+`PRIME-NATIVE-NEURAL-GATE-HELD-ROOT-CROSSWALK-AUTHORITY-2026-07-31.md`.
 
 This split is security-significant. The previously planned `row_id` input
 encodes split and semantic family, including the abstention class, so row
@@ -217,19 +225,23 @@ fixture identity/count, the concrete prompt-only solver derivation, the
 sidecar codec, and the MLX Float32 operation are now source-plan-bound. The
 package now splits raw corrected execution from evaluation/regrade authority;
 trap-disjoint topology V4 preserves V1/V2/V3, supersedes the unsafe future
-routing, materializes descriptor source binding outside pure composition, and
-keeps source binding V7 unissued. Composition V1 has canonical SHA-256
+routing, and materializes descriptor source binding outside pure composition.
+Additive topology V5 preserves V1 through V4 while adding the held-root capture
+and downstream keyed crosswalk; source binding V7 remains unissued.
+Composition V1 has canonical SHA-256
 `75e6941913b561b6bdbd63d2e67f50962276942416bfea8a0443906d6d8ffb3e`.
 Source composition V1 has canonical SHA-256
 `f3d0a58905065836caaae8c9d03c1b2840b07bcd1a4f0bf35f1ce638c6ac29b5`.
-Corrected execution remains blocked until one held-root four-source
-capture/inventory session is frozen, the independent source-derived
-prompt/target crosswalk is frozen in a separate trap-bearing target, the typed
-schedule projections are delivered to actual disjoint processes, and
-process/receipt ownership plus disjoint mutation
-producer/detector mechanics are source-bound,
-followed by the role-scoped worker, paired probe/verifier, exact inventory,
-and durable observations. The pure trace uses per-decision
+The capture/crosswalk boundary establishes one source epoch, durable origin
+only for its captured four-source bytes, corrected fixture identity, exact
+source-capability join, independent prompt/target association, and outer
+expected-completion binding. It does not establish prompt-content target
+independence, process delivery, model execution, evaluation/verdict authority,
+mechanics `PASS`, a receipt, science, or product authority. Corrected execution
+remains blocked until process/evaluation/receipt ownership and lawful
+target-free schedule delivery are frozen, followed by disjoint source-bound
+mutation producer/detector assignment and later worker materialization. The
+pure trace uses per-decision
 bit-pattern digests because
 hex-expanding all 512 logits would exceed the frozen Stage-B decode limits;
 the local Foundation/Double probability diagnostic is excluded from canonical
@@ -373,8 +385,13 @@ After the complete topology-V4 source reseal, the same Release canary passed
 with byte-identical probe/verifier package-description output: 32,735 bytes,
 SHA-256
 `f7d873db2b91ecc61d356136b37bf7bc8017db962f40637998de914eeaa8d894`.
-This is the current accepted topology-V4 actual-package secure-capture reseal,
-with the same secure-capture-only scope. `executionImplemented` remains false,
+This is the last accepted historical topology-V4 actual-package secure-capture
+reseal, with the same secure-capture-only scope.
+After the additive topology-V5 source reseal, the same Release canary passed
+with byte-identical probe/verifier package-description output: 36,047 bytes,
+SHA-256
+`88571dc5cc4d15f11395430ab9ea410aba6cafa295edebe54acff816585a3fbb`.
+The V4 bytes were not reused as V5 evidence. `executionImplemented` remains false,
 and no Stage-B replay, historical worker, Metal execution, or product use is
 implemented or authorized. Root
 containment/disjointness, unchanged companion pre/post identity, exact
@@ -404,7 +421,7 @@ artifacts total.
 Historical target independence and model capability remain `ABSTAIN`; neither
 blocks a correctly scoped mechanics pass.
 
-## Separately scoped future admission
+## Current V5 boundary and separately scoped future admission
 
 The exact 18,432-row corrected fixture identity, ordering, and count are now
 source-plan-bound by the offline fixture authority. The separate prompt-only
@@ -416,18 +433,20 @@ performs exact keyed joins rather than positional zips. Topology V4 now
 descriptor-binds source files and the lossless sidecar, rejecting writable
 inputs and instability observed during each read. It reconstructs the exact
 prompt global digest incrementally and exposes raw/outer role projections. The
-complete four-source wrapper records an exact keyed join but not a common
-capture epoch or durable origin. Actual process delivery, corrected-fixture
-identity, and independent prompt/target crosswalk authority remain false.
+V4 four-source wrapper remains historical and non-durable. Topology V5 now
+retains a complete exact 41-file inventory, authoritatively rebinds all four
+sources, requires unchanged recapture, and binds the resulting replay to the
+independently source-derived 18,432-row prompt/target crosswalk. Actual process
+delivery and prompt-content target independence remain false.
 The exact next prerequisite is
-`freeze_single_held_root_four_source_capture_inventory_session_then_freeze_independent_source_derived_prompt_target_crosswalk_in_trap_bearing_authority_target_without_materializing_workers`.
+`freeze_corrected_process_evaluation_receipt_ownership_and_lawful_target_free_schedule_delivery_then_assign_disjoint_source_bound_mutation_producer_detector_without_materializing_workers`.
 
-- retain topology V1/V2/V3 as history and topology V4 as the current boundary; do
+- retain topology V1/V2/V3/V4 as history and topology V5 as the current
+  additive boundary; do
   not route historical donor/runtime code
   into corrected supervisors;
-- implement the single-capture four-source inventory, independent
-  prompt/target crosswalk, actual process delivery,
-  process/receipt ownership, and disjoint source-bound mutators; bounded
+- implement actual process delivery, process/evaluation/receipt ownership, and
+  disjoint source-bound mutators; bounded
   transport tests and the local Foundation/Double diagnostic are not durable
   execution evidence;
 - use the completed PrimeCore secure-capture substrate from role-scoped
