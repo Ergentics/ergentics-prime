@@ -45,13 +45,23 @@ source binding plus this unchanged pure composition target. See
 
 This remains repository mechanics, not Stage-B execution. The pure target
 reads no descriptor-rooted record stream or durable logit artifact. Its
-validated values remain non-`Codable` and keep durable origin false. The outer
+validated values remain non-`Codable` and keep durable origin false. The V4 outer
 source wrapper proves one exact four-capability keyed join, but separate binds
 under an equal root identity do not prove a common capture epoch or descendant
 inventory. It therefore also keeps durable origin false. Prompt/target binding,
 prompt-content target independence, process delivery, model execution,
 mechanics `PASS`, publication, science, receipt, and product authority remain
 false.
+
+Additive topology V5 wraps that unchanged composition with
+`PrimeNativeNeuralGateReplayCaptureInventory` and
+`PrimeNativeNeuralGatePromptTargetCrosswalkAuthority`. The first retains the
+exact 41-file held-root inventory and authoritatively rebinds all four sources;
+the second binds the resulting schedule/join to the independently
+source-derived 18,432-row keyed prompt/target crosswalk. The focused integration
+passed in 300.125 seconds. Durable origin is promoted only for the captured
+four-source bytes; the pure composition values remain unchanged and
+non-authorizing.
 
 ## Frozen identities
 
@@ -65,6 +75,10 @@ false.
   `prime_stage_b_descriptor_source_bound_schedule_delivery_v1`, canonical
   SHA-256
   `f3d0a58905065836caaae8c9d03c1b2840b07bcd1a4f0bf35f1ce638c6ac29b5`;
+- capture inventory V1 has canonical SHA-256
+  `ae3477c44af1f36a111a6312a88a6b86995ddad231c9225a069173860ed29878`;
+- crosswalk authority V1 has canonical SHA-256
+  `b4a994635c2d7fafe8f9d47587122beee149533013b69592242bcba33b60ea67`;
 - topology V4 is `prime_stage_b_descriptor_source_binding_topology_v4`,
   canonical SHA-256
   `8339bbd42b0e4052888db880aacbb067770c08dd2106bf4a7820c853c4b715af`;
@@ -76,10 +90,13 @@ false.
 - topology V2 remains exact at
   `abc8f1ada303ecb95b7c9a44e72293ed314537b93e27354aebbb7763e1487415`.
 
-Topology V4 remains globally `planned_not_materialized`, with
-`executionImplemented == false` and source binding V7 unissued. It adds only
-the descriptor source and outer source-composition targets to the V3 package
-truth; it does not promote any planned worker or supervisor.
+Topology V4 remains exact history. The current additive topology V5 is
+`prime_stage_b_held_root_capture_crosswalk_authority_topology_v5`; its canonical
+SHA-256 is
+`252e027fc0f547e96b8c74b2e45cd1c316f1080d639a94619e9c03c87c480930`.
+V5 remains globally
+`planned_not_materialized`, with `executionImplemented == false` and source
+binding V7 unissued. It does not promote any planned worker or supervisor.
 
 ## V3 package-capture checkpoint
 
@@ -103,7 +120,13 @@ After the complete topology-V4 source reseal, the Release canary passed with
 byte-identical probe/verifier package-description output: 32,735 bytes,
 SHA-256
 `f7d873db2b91ecc61d356136b37bf7bc8017db962f40637998de914eeaa8d894`.
-This is the current accepted topology-V4 actual-package secure-capture reseal.
+This is the last accepted historical topology-V4 actual-package secure-capture
+reseal.
+After the additive topology-V5 source reseal, the same Release canary passed
+with byte-identical probe/verifier package-description output: 36,047 bytes,
+SHA-256
+`88571dc5cc4d15f11395430ab9ea410aba6cafa295edebe54acff816585a3fbb`.
+The V4 bytes were not reused as V5 evidence.
 It validates only the secure-capture substrate on the pinned host. It does not
 establish V6/V7 selected-source execution-graph reconciliation, source binding
 V7, worker/model execution, fixture identity, evaluation or mechanics `PASS`,
@@ -208,35 +231,34 @@ Float bit-pattern change. The full 18,432-row join is exercised with outer and
 raw inputs independently reversed to prove that the implementation is keyed,
 not positional.
 
-The join deliberately does not establish that an outer expected completion is
+The unchanged pure V1 join deliberately does not establish that an outer expected completion is
 the source-authoritative target for the scheduled prompt. Swapping two expected
 completions while preserving their indexes is outside the raw trace and cannot
 be detected from these in-memory values alone. The result therefore records
 corrected-fixture identity and outer expected-completion binding as false. A
 separately derived prompt/target crosswalk is mandatory before grading or any
-promotion. The source wrapper additionally requires one held-root identity
+promotion. The V4 source wrapper additionally requires one held-root identity
 across prompt, outer, raw, and logit capabilities. That check rejects
 cross-root substitution, but it does not detect nested replacement between
-separate bind calls and does not mark durable origin true.
+separate bind calls and does not mark durable origin true. Topology V5 closes
+that specific gap with a retained exact inventory plus authoritative rebind and
+then requires exact outer expected-completion bytes through the source-derived
+keyed crosswalk. It still does not grade or execute a model.
 
 ## Remaining truth gap
 
 Descriptor-rooted invariant validation, source-bound logit validation,
-incremental schedule reconstruction, typed role projections, and the exact
-four-source join are now implemented. The next implementation prerequisite is:
+incremental schedule reconstruction, typed role projections, the exact
+four-source join, one held-root capture epoch, and the independently
+source-derived crosswalk are now implemented. The next implementation
+prerequisite is:
 
-`freeze_single_held_root_four_source_capture_inventory_session_then_freeze_independent_source_derived_prompt_target_crosswalk_in_trap_bearing_authority_target_without_materializing_workers`
+`freeze_corrected_process_evaluation_receipt_ownership_and_lawful_target_free_schedule_delivery_then_assign_disjoint_source_bound_mutation_producer_detector_without_materializing_workers`
 
-The first boundary must produce one sealed capture/inventory capability over
-all four sources before durable origin can be promoted. The subsequent
-trap-bearing target must independently derive prompt/expected-
-completion pairing and reject target swaps, EOS omission, prompt-order versus
-row-ID-order confusion, positional zipping, and digest-domain substitution. It
-must remain unreachable from the corrected raw-worker closure and must not turn
-source success into prompt independence, model execution, an evaluation
-verdict, or a receipt.
-
-Only after that boundary is source-bound should Stage B freeze the remaining
-deferred observation/result schemas, process/evaluation/receipt ownership, and
-disjoint mutation producer/detector targets. The historical runtime and all
-workers remain planned.
+The next slice must freeze corrected process/evaluation/receipt ownership and
+lawful delivery of the already typed target-free schedule capabilities, then
+assign disjoint source-bound mutation producer/detector targets. Prompt-content
+target independence, process delivery, model execution, evaluation/verdict
+authority, mechanics `PASS`, receipt, science, and product authority remain
+false. The historical runtime and all workers remain planned. See
+`PRIME-NATIVE-NEURAL-GATE-HELD-ROOT-CROSSWALK-AUTHORITY-2026-07-31.md`.

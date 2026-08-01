@@ -7,12 +7,18 @@ Date: 2026-07-30; updated 2026-07-31
 Stage B now has an implemented trap-disjoint mechanics boundary, pure typed
 artifact contracts, bounded in-memory transport with a shared codec, and an
 exact replay-composition target. It also has descriptor-rooted invariant and
-logit source binding plus an outer source-composition adapter. It still does
-not have a Stage-B executor, worker, probe, verifier, process record, or
+logit source binding plus an outer source-composition adapter. Additive topology
+V5 now adds a retained exact 41-file held-root capture and a downstream
+trap-bearing source-derived 18,432-row keyed prompt/target crosswalk. It still
+does not have a Stage-B executor, worker, probe, verifier, process record, or
 terminal receipt.
 
-`PrimeNativeNeuralGateTrapDisjointTopologyContract.frozenV4` is the current
-topology correction. Its canonical SHA-256 is
+Topology V5,
+`prime_stage_b_held_root_capture_crosswalk_authority_topology_v5`, is the
+current additive topology correction. Its canonical SHA-256 is
+`252e027fc0f547e96b8c74b2e45cd1c316f1080d639a94619e9c03c87c480930`.
+Historical `PrimeNativeNeuralGateTrapDisjointTopologyContract.frozenV4`
+remains exact at SHA-256
 `8339bbd42b0e4052888db880aacbb067770c08dd2106bf4a7820c853c4b715af`.
 Topology V3 remains byte-exact at SHA-256
 `b475e29347a31d27be8dc1aa54648fec84c4f1b47d673a1f111ccffb794985fd`.
@@ -27,6 +33,8 @@ The historical fixture replay plan V5 and source binding V6 remain
 byte-for-byte history. The topology contract supersedes only their unsafe
 future target-routing assumption. It does not relabel them as an observed
 execution graph.
+The exact V5 claim boundary is recorded in
+`PRIME-NATIVE-NEURAL-GATE-HELD-ROOT-CROSSWALK-AUTHORITY-2026-07-31.md`.
 
 ## Implemented package boundary
 
@@ -76,6 +84,28 @@ PrimeNativeNeuralGateReplaySourceComposition
       - PrimeNativeNeuralGateReplayComposition
     authority: incremental source-bound prompt schedule, asymmetric target-free
                role projections, and exact four-source join
+
+PrimeNativeNeuralGateReplayCaptureInventory
+    dependencies:
+      - PrimeCore
+      - PrimeNativeNeuralGateReplayArtifactContracts
+      - PrimeNativeNeuralGateReplaySourceBinding
+    authority: retained exact 41-file held-root inventory, authoritative
+               four-source rebind, final unchanged recapture, and bounded
+               durable origin for the captured bytes
+
+PrimeNativeNeuralGatePromptTargetCrosswalkAuthority
+    dependencies:
+      - PrimeCore
+      - PrimeNativeNeuralGateCorrectedFixtureAuthority
+      - PrimeNativeNeuralGateCorrectedMechanics
+      - PrimeNativeNeuralGateReplayCaptureInventory
+      - PrimeNativeNeuralGateReplayComposition
+      - PrimeNativeNeuralGateReplaySourceComposition
+      - PrimeNativeNeuralGateReplayTransport
+    authority: downstream trap-bearing source-derived PRIMECPI2-to-PRIMECOR1-
+               to-PRIMECFT1 keyed prompt/target association and exact outer
+               expected-completion binding
 
 PrimeNativeNeuralGateCorrectedMechanics
     dependencies:
@@ -234,7 +264,13 @@ After the complete topology-V4 source reseal, the same Release canary passed
 with byte-identical probe/verifier package-description output: 32,735 bytes,
 SHA-256
 `f7d873db2b91ecc61d356136b37bf7bc8017db962f40637998de914eeaa8d894`.
-This is the current accepted topology-V4 actual-package secure-capture reseal.
+This is the last accepted historical topology-V4 actual-package secure-capture
+reseal.
+After the additive topology-V5 source reseal, the same Release canary passed
+with byte-identical probe/verifier package-description output: 36,047 bytes,
+SHA-256
+`88571dc5cc4d15f11395430ab9ea410aba6cafa295edebe54acff816585a3fbb`.
+The V4 bytes were not reused as V5 evidence.
 It validates only the secure-capture substrate on the pinned host. It does not
 reconcile V6/V7 selected-source execution graphs or establish source binding
 V7, worker/model execution, fixture identity, evaluation, mechanics `PASS`,
@@ -263,24 +299,30 @@ outer-evaluation, and seed-scoped raw-execution manifests and their three row
 shapes. Mutation deltas, historical observations, MLX observations,
 statistics/verdict observations, worker/process/result records, and the
 receipt remain `schema_deferred` and reject bytes before parsing. Descriptor
-source binding now streams invariant payloads, source-binds the complete
+source binding streams invariant payloads, source-binds the complete
 lossless sidecar, and produces sealed prompt/outer/raw/logit capabilities. The
 outer adapter creates exact target-free raw and outer role projections and a
-common-root keyed join. Because each source is bound separately, it does not
-prove one capture epoch or durable origin. It also does not prove
-prompt-content target independence, observe process delivery, independently
-bind expected completion to prompt, execute mutations, or authorize a verdict.
+common-root keyed join. The V4 wrapper remains non-durable because each source
+is bound separately. Topology V5 now retains the exact whole-root inventory,
+authoritatively rebinds all four sources, requires unchanged recapture, and
+binds the joined replay to the independent source-derived crosswalk. It proves
+one bounded capture epoch and durable origin for those captured bytes,
+corrected fixture identity, independent prompt/target association, and outer
+expected-completion binding. It does not prove prompt-content target
+independence, observe process delivery, execute mutations, or authorize a
+verdict.
 
 The three record streams are independently canonicalized ordered multisets.
 Prompt rows have no execution index, while outer and raw rows do; therefore no
 implementation may zip the sorted streams. Composition V1 now derives indexes
 only as strict prompt-record ordinals and performs an exact keyed
-outer/raw/validated-sidecar join with trace recomputation. Topology V4 now
-binds the descriptor sources and role projections without materializing a
-worker. The remaining semantic gap begins with one held-root four-source
-capture/inventory session, followed by the independent prompt/target crosswalk,
-actual process delivery, the deferred semantic schemas, corrected
-process/evaluation ownership, replacement process/result/receipt schemas, and
+outer/raw/validated-sidecar join with trace recomputation. Topology V5 now
+binds that replay through one held-root four-source capture epoch and the
+independent keyed crosswalk without materializing a worker. The focused
+18,432-row, 41-file integration passed in 300.125 seconds. The remaining
+semantic gap begins with corrected process/evaluation/receipt ownership and
+lawful target-free schedule delivery, followed by disjoint source-bound
+mutation producer/detector assignment, deferred semantic schemas, workers, and
 receipt-last publication.
 
 Mutation identity must be `(arm, ordinal, mutation_id)` because
@@ -288,25 +330,26 @@ Mutation identity must be `(arm, ordinal, mutation_id)` because
 Each mutation must bind an exact or explicitly allowed failure set; merely
 containing one expected failed leg is insufficient.
 
+The exact next prerequisite is
+`freeze_corrected_process_evaluation_receipt_ownership_and_lawful_target_free_schedule_delivery_then_assign_disjoint_source_bound_mutation_producer_detector_without_materializing_workers`.
+
 ## Ordered continuation
 
-1. Freeze one held-root four-source capture/inventory session and require its
-   sealed capability before any durable-origin promotion.
-2. Freeze the independent source-derived prompt/target crosswalk in a separate
-   trap-bearing authority target and bind it to source composition without
-   making it reachable from the corrected raw closure.
+1. Freeze corrected process/evaluation ownership, replacement process count,
+   result records, receipt ownership, and receipt-last publication.
+2. Freeze lawful delivery of the already typed target-free schedule
+   capabilities to their eventual disjoint process owners.
 3. Freeze the deferred mutation, historical, MLX, and statistics/verdict
    schemas.
-4. Freeze corrected process/evaluation ownership, replacement process count,
-   result records, receipt ownership, and receipt-last publication.
-5. Implement the corrected 15-case producer and an independently implemented
+4. Assign the corrected 15-case source-bound producer and an independently
+   implemented
    detector. They may not share mutation implementation code.
-6. Derive the historical gate/carrier seam and 46-case raw mutation material
+5. Derive the historical gate/carrier seam and 46-case raw mutation material
    from the pinned donor source.
-7. Materialize role-scoped workers, deliver the typed target-free schedule
-   projections, and implement probe, verifier, exact inventory, process
+6. Materialize role-scoped workers and implement probe, verifier, exact
+   inventory, process
    records, and receipt-last composition.
-8. Run the durable full-vocabulary sidecar and maintained MLX Float32
+7. Run the durable full-vocabulary sidecar and maintained MLX Float32
    recomputation as Stage-B evidence.
 
 Every step remains Swift-first and Prime-owned. Python, shell scientific

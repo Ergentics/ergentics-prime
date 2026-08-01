@@ -797,6 +797,137 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
         )
     }()
 
+    /// Materializes one exact held-root four-source capture capability and a
+    /// separate trap-bearing source-derived prompt/target crosswalk authority.
+    /// It does not materialize a worker, supervisor, execution process, or
+    /// receipt. V1 through V4 remain exact historical contracts.
+    public static let frozenV5: Self = {
+        let previous = frozenV4
+        let sourceCompositionTargetName =
+            "PrimeNativeNeuralGateReplaySourceComposition"
+        let captureTargetName =
+            "PrimeNativeNeuralGateReplayCaptureInventory"
+        let crosswalkTargetName =
+            "PrimeNativeNeuralGatePromptTargetCrosswalkAuthority"
+        var targets:
+            [PrimeNativeNeuralGateTopologyTarget] =
+            []
+        for target in previous.targetGraph {
+            targets.append(target)
+            if target.targetName == sourceCompositionTargetName {
+                targets.append(
+                    Self.target(
+                        captureTargetName,
+                        .implemented,
+                        [
+                            "PrimeCore",
+                            "PrimeNativeNeuralGateReplayArtifactContracts",
+                            "PrimeNativeNeuralGateReplaySourceBinding",
+                        ],
+                        "sealed exact 41-file held-root four-source capture inventory with retained descriptor-rooted unchanged recapture; establishes one capture epoch and durable origin only for the captured source bytes"
+                    )
+                )
+                targets.append(
+                    Self.target(
+                        crosswalkTargetName,
+                        .implemented,
+                        [
+                            "PrimeCore",
+                            "PrimeNativeNeuralGateCorrectedFixtureAuthority",
+                            "PrimeNativeNeuralGateCorrectedMechanics",
+                            captureTargetName,
+                            "PrimeNativeNeuralGateReplayComposition",
+                            sourceCompositionTargetName,
+                            "PrimeNativeNeuralGateReplayTransport",
+                        ],
+                        "trap-bearing source-derived 18,432-row PRIMECPI2-to-PRIMECOR1-to-PRIMECFT1 keyed prompt/target authority over a sealed capture; establishes outer expected-completion binding without prompt-blind execution or mechanics PASS authority"
+                    )
+                )
+            }
+        }
+
+        var reachability =
+            previous.forbiddenReachability.map { rule in
+                Self.forbidden(
+                    rule.targetName,
+                    rule.forbiddenReachableTargetNames
+                        + [
+                            captureTargetName,
+                            crosswalkTargetName,
+                        ]
+                )
+            }
+        reachability.append(
+            Self.forbidden(
+                captureTargetName,
+                [
+                    "PrimeNativeCorpusReplayMechanics",
+                    "PrimeNativeNeuralGateCorrectedEvaluationMechanics",
+                    "PrimeNativeNeuralGateCorrectedFixtureAuthority",
+                    "PrimeNativeNeuralGatePromptSolver",
+                    "PrimeNativeNeuralGateMLXLogSoftmaxRecomputation",
+                    crosswalkTargetName,
+                    "ErgenticsPrimeRuntime",
+                    "PrimeNativeNeuralGateHistoricalReplayMechanics",
+                ]
+            )
+        )
+        reachability.append(
+            Self.forbidden(
+                crosswalkTargetName,
+                [
+                    "PrimeNativeNeuralGatePromptSolver",
+                    "PrimeNativeNeuralGateMLXLogSoftmaxRecomputation",
+                    "ErgenticsPrimeRuntime",
+                    "PrimeNativeNeuralGateHistoricalReplayMechanics",
+                    "PrimeNativeNeuralGateHistoricalFixtureWorker",
+                    "PrimeNativeNeuralGateReplayProbe",
+                    "PrimeNativeNeuralGateReplayVerifier",
+                    "PrimeNativeNeuralGateCorrectedRawWorker",
+                ]
+            )
+        )
+
+        return Self(
+            schemaVersion: 5,
+            contractID:
+                "prime_stage_b_held_root_capture_crosswalk_authority_topology_v5",
+            status: previous.status,
+            executionImplemented: false,
+            historicalReplayPlanID:
+                previous.historicalReplayPlanID,
+            historicalSourceBindingContractID:
+                previous.historicalSourceBindingContractID,
+            historicalContractsPreserved: true,
+            historicalFutureTargetGraphSuperseded: true,
+            targetGraph: targets,
+            forbiddenReachability: reachability,
+            historicalContainmentRootTargetName:
+                previous.historicalContainmentRootTargetName,
+            historicalRuntimeTargetName:
+                previous.historicalRuntimeTargetName,
+            historicalReplayTargetName:
+                previous.historicalReplayTargetName,
+            pureReplayTargetName:
+                previous.pureReplayTargetName,
+            donorAdaptationV2PreservedAsHistory: true,
+            donorAdaptationV3Required: true,
+            donorAdaptationV3RequiredDestination:
+                previous.donorAdaptationV3RequiredDestination,
+            sourceBindingV7Issued: false,
+            sourceBindingV7Prerequisite:
+                previous.sourceBindingV7Prerequisite,
+            packageCaptureAuthority:
+                "actual_package_secure_capture_only_not_v6_or_v7_execution_graph_reconciliation",
+            mutationProducerDetectorTargetAssignmentDeferred: true,
+            mutationProducerDetectorMustBeDisjoint: true,
+            nextImplementationPrerequisite:
+                "freeze_corrected_process_evaluation_receipt_ownership_and_lawful_target_free_schedule_delivery_then_assign_disjoint_source_bound_mutation_producer_detector_without_materializing_workers",
+            authorityStatement:
+                "This V5 contract preserves V1, V2, V3, V4, and the historical V5/V6 replay identities while materializing only two additional boundaries. The retained exact 41-file held-root four-source capture establishes one descendant-tree capture epoch and durable origin for the captured prompt, outer-evaluation, one-seed raw-execution, and one-seed lossless-logit bytes. The separate trap-bearing source-derived crosswalk establishes corrected fixture identity, exact PRIMECPI2-to-PRIMECOR1-to-PRIMECFT1 keyed association, and outer expected-completion binding across all 18,432 rows. It does not prove prompt-content target independence, observe process delivery or model execution, perform evaluation or verdict publication, authorize mechanics PASS, issue a receipt, establish scientific authority, or authorize product use. Historical runtime, all workers, probe, verifier, mutation producer, and mutation detector remain planned_not_materialized. executionImplemented is false and source binding V7 is not issued."
+        )
+    }()
+
     public func target(
         named name: String
     ) throws -> PrimeNativeNeuralGateTopologyTarget {
@@ -852,6 +983,8 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
             expected = .frozenV3
         case 4:
             expected = .frozenV4
+        case 5:
+            expected = .frozenV5
         default:
             throw PrimeNativeNeuralGateTopologyError
                 .invalidFrozenContract

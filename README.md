@@ -429,7 +429,9 @@ catalog in a distinct Release verifier.
 The exact implemented boundary, digest locks, decoder semantics, nonclaims,
 and remaining gaps are recorded in
 `docs/PRIME-NATIVE-NEURAL-GATE-TYPED-ARTIFACT-TRANSPORT-2026-07-31.md` and
-`docs/PRIME-NATIVE-NEURAL-GATE-REPLAY-COMPOSITION-2026-07-31.md`.
+`docs/PRIME-NATIVE-NEURAL-GATE-REPLAY-COMPOSITION-2026-07-31.md`. The additive
+held-root/crosswalk boundary is recorded in
+`docs/PRIME-NATIVE-NEURAL-GATE-HELD-ROOT-CROSSWALK-AUTHORITY-2026-07-31.md`.
 
 The bounded pure-library Stage-B foundation now also includes a separate
 corrected-mechanics target. It implements only value mechanics: a
@@ -533,7 +535,8 @@ row-selected seeds are also metadata channels. The audit also found that the
 planned shared donor topology would expose trap-bearing historical code to
 corrected supervisors. The package now splits raw execution mechanics from
 evaluation/regrade mechanics, and
-`PrimeNativeNeuralGateTrapDisjointTopologyContract.frozenV4`, SHA-256
+historical `PrimeNativeNeuralGateTrapDisjointTopologyContract.frozenV4`,
+SHA-256
 `8339bbd42b0e4052888db880aacbb067770c08dd2106bf4a7820c853c4b715af`,
 preserves topology V1/V2/V3 and supersedes the unsafe future routing while
 preserving plan V5 and source binding V6 as history. Composition V1, SHA-256
@@ -543,19 +546,27 @@ Source composition V1, SHA-256
 `f3d0a58905065836caaae8c9d03c1b2840b07bcd1a4f0bf35f1ce638c6ac29b5`,
 adds descriptor-rooted prompt/outer/raw/logit source capabilities,
 incremental prompt reconstruction, target-free role projections, and an exact
-four-source keyed join. Separate binds under one root identity do not prove a
-common descendant-tree capture epoch, so durable origin remains false.
+four-source keyed join. Additive topology V5,
+`prime_stage_b_held_root_capture_crosswalk_authority_topology_v5` (canonical
+SHA-256
+`252e027fc0f547e96b8c74b2e45cd1c316f1080d639a94619e9c03c87c480930`),
+now adds a retained exact 41-file
+held-root capture and a separate trap-bearing 18,432-row source-derived keyed
+prompt/target crosswalk. The focused integration passed in 300.125 seconds.
+That sealed boundary establishes one capture epoch, durable origin for only the
+captured four-source bytes, corrected fixture identity, exact source-capability
+join, independent prompt/target association, and outer expected-completion
+binding.
 The historical runtime, workers, probe, and verifier are still
 `planned_not_materialized`. Source binding V7 is not issued. Corrected
-execution remains blocked until a single held-root four-source
-capture/inventory session is frozen, followed by an independent trap-bearing
-prompt/target crosswalk, lawful delivery of the target-free
-schedule/correlation capability to disjoint producers, deferred schemas,
-process/receipt ownership, and disjoint mutation producer/detector mechanics,
-then the role-scoped historical worker, paired probe/verifier, exact inventory,
-durable recomputation observations, Stage-B execution records, and receipt.
+execution remains blocked: prompt-content target independence, process/schedule
+delivery, model execution, evaluation/verdict publication, mechanics `PASS`, a
+terminal receipt, science, and product authority all remain false. The exact
+next prerequisite is
+`freeze_corrected_process_evaluation_receipt_ownership_and_lawful_target_free_schedule_delivery_then_assign_disjoint_source_bound_mutation_producer_detector_without_materializing_workers`.
 `executionImplemented` remains false. The exact topology and nonclaims are in
-`docs/PRIME-NATIVE-NEURAL-GATE-TRAP-DISJOINT-TOPOLOGY-2026-07-30.md`.
+`docs/PRIME-NATIVE-NEURAL-GATE-TRAP-DISJOINT-TOPOLOGY-2026-07-30.md` and
+`docs/PRIME-NATIVE-NEURAL-GATE-HELD-ROOT-CROSSWALK-AUTHORITY-2026-07-31.md`.
 
 The closed PrimeCore external-child capture substrate is implemented. It
 accepts only the role and source root, directly launches the frozen Xcode 26.6
@@ -690,7 +701,13 @@ After the complete topology-V4 source reseal, the same Release canary passed
 with byte-identical probe/verifier package-description output: 32,735 bytes,
 SHA-256
 `f7d873db2b91ecc61d356136b37bf7bc8017db962f40637998de914eeaa8d894`.
-This is the current accepted topology-V4 actual-package secure-capture reseal.
+This is the last accepted historical topology-V4 actual-package secure-capture
+reseal.
+After the additive topology-V5 source reseal, the same Release canary passed
+with byte-identical probe/verifier package-description output: 36,047 bytes,
+SHA-256
+`88571dc5cc4d15f11395430ab9ea410aba6cafa295edebe54acff816585a3fbb`.
+The V4 bytes were not reused as V5 evidence.
 It has the same secure-capture-only scope and does not widen any execution,
 evaluation, receipt, reproducibility, network-denial, Metal, or product claim.
 `executionImplemented` remains false, and no Stage-B replay, historical worker,
@@ -717,7 +734,7 @@ or drain must fail-stop. Worker result transport cannot authorize mechanics
 `PASS`; the verifier must decode and recompute the semantic artifacts. Stage A
 is copied as 35 reachable typed bindings plus its separately pinned receipt,
 or 36 artifacts total. The exact next prerequisite is
-`freeze_single_held_root_four_source_capture_inventory_session_then_freeze_independent_source_derived_prompt_target_crosswalk_in_trap_bearing_authority_target_without_materializing_workers`.
+`freeze_corrected_process_evaluation_receipt_ownership_and_lawful_target_free_schedule_delivery_then_assign_disjoint_source_bound_mutation_producer_detector_without_materializing_workers`.
 
 ## Initial calibration
 

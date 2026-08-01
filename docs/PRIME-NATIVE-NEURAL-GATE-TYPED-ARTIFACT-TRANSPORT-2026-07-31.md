@@ -37,6 +37,22 @@ PrimeNativeNeuralGateReplaySourceComposition
     dependencies:
       - PrimeNativeNeuralGateReplaySourceBinding
       - PrimeNativeNeuralGateReplayComposition
+
+PrimeNativeNeuralGateReplayCaptureInventory
+    dependencies:
+      - PrimeCore
+      - PrimeNativeNeuralGateReplayArtifactContracts
+      - PrimeNativeNeuralGateReplaySourceBinding
+
+PrimeNativeNeuralGatePromptTargetCrosswalkAuthority
+    dependencies:
+      - PrimeCore
+      - PrimeNativeNeuralGateCorrectedFixtureAuthority
+      - PrimeNativeNeuralGateCorrectedMechanics
+      - PrimeNativeNeuralGateReplayCaptureInventory
+      - PrimeNativeNeuralGateReplayComposition
+      - PrimeNativeNeuralGateReplaySourceComposition
+      - PrimeNativeNeuralGateReplayTransport
 ```
 
 No production or execution target imports the transport. The contract target
@@ -49,8 +65,11 @@ codec; the composition target owns the strict prompt schedule and exact
 outer/raw/validated-sidecar join. Source binding delegates hardened file
 admission to `PrimeCore` and incrementally streams the large invariant files;
 source composition bridges only sealed capabilities into the unchanged pure
-join. None executes a worker, invokes MLX, imports PMHNP, publishes an
-artifact, or creates a receipt.
+join. The V5 capture target retains the exact 41-file source inventory; the
+downstream trap-bearing crosswalk target binds the joined replay to the
+independently source-derived 18,432-row prompt/target association. None
+executes a worker, invokes MLX, imports PMHNP, publishes an artifact, or creates
+a receipt.
 
 This closes the manifest/record-shape, shared-codec, strict-schedule,
 descriptor-stream, source-bound sidecar, role-projection, and exact-source-join
@@ -68,19 +87,25 @@ execution. Exact source behavior is recorded in
   `b475e29347a31d27be8dc1aa54648fec84c4f1b47d673a1f111ccffb794985fd`;
 - topology V4 has canonical SHA-256
   `8339bbd42b0e4052888db880aacbb067770c08dd2106bf4a7820c853c4b715af`;
+- topology V5 has canonical SHA-256
+  `252e027fc0f547e96b8c74b2e45cd1c316f1080d639a94619e9c03c87c480930`;
 - composition V1 has canonical SHA-256
   `75e6941913b561b6bdbd63d2e67f50962276942416bfea8a0443906d6d8ffb3e`;
 - source composition V1 has canonical SHA-256
   `f3d0a58905065836caaae8c9d03c1b2840b07bcd1a4f0bf35f1ce638c6ac29b5`;
+- capture inventory V1 has canonical SHA-256
+  `ae3477c44af1f36a111a6312a88a6b86995ddad231c9225a069173860ed29878`;
+- crosswalk authority V1 has canonical SHA-256
+  `b4a994635c2d7fafe8f9d47587122beee149533013b69592242bcba33b60ea67`;
 - historical replay plan V5 and source-binding V6 remain unchanged;
 - historical replay-output and path-classification V3 remain unchanged;
 - the non-authorizing semantic-namespace overlay V4 has canonical SHA-256
   `60e10e6c10f9ec1f30102f5b6d27be123434a163c01d82c0cc5d4520824532d1`.
 
-Topology V4 remains globally `planned_not_materialized` because the execution
-graph is incomplete. It preserves V1 through V3 exactly and marks only the
-descriptor source and outer source-composition adapters additionally
-implemented.
+Topology V4 remains exact history. Topology V5 is the current additive boundary
+and remains globally `planned_not_materialized` because the execution graph is
+incomplete. It preserves V1 through V4 exactly and additionally marks the
+held-root capture and downstream crosswalk targets implemented.
 `executionImplemented` is false and source binding V7 is unissued.
 
 Semantic namespace V4 is an incomplete overlay, not an execution artifact,
@@ -158,12 +183,18 @@ derives target-free `PRIMECOR1` identity from index plus prompt binding, and
 joins outer/raw/sidecar records against that identity. It reconstructs every
 full-logit decision and requires the exact corrected trace. Duplicate, missing,
 or conflicting indexes fail closed. Descriptor-rooted streaming now proves
-the exact global/chunk bytes and produces sealed source capabilities. The
+the exact global/chunk bytes and produces sealed source capabilities. The V4
 outer adapter reconstructs the schedule incrementally and requires a common
 held-root identity for the complete prompt/outer/raw/logit join. The pure
 composition result itself remains non-authorizing, process delivery is not
 observed, and independent prompt/expected-completion binding plus
 prompt-content independence remain false.
+
+Topology V5 retains the exact root closure, rebinds all four sources while that
+capability is live, and requires final unchanged recapture. Its downstream
+crosswalk then establishes corrected fixture identity, independent keyed
+prompt/target association, and exact outer expected-completion binding. It
+does not establish prompt-content target independence or process delivery.
 
 ## Package-capture status
 
@@ -198,19 +229,22 @@ After the complete topology-V4 source reseal, the same Release canary passed
 with byte-identical probe/verifier package-description output: 32,735 bytes,
 SHA-256
 `f7d873db2b91ecc61d356136b37bf7bc8017db962f40637998de914eeaa8d894`.
-This is the current accepted topology-V4 actual-package secure-capture reseal.
+This is the last accepted historical topology-V4 actual-package secure-capture
+reseal.
+After the additive topology-V5 source reseal, the same Release canary passed
+with byte-identical probe/verifier package-description output: 36,047 bytes,
+SHA-256
+`88571dc5cc4d15f11395430ab9ea410aba6cafa295edebe54acff816585a3fbb`.
+The V4 bytes were not reused as V5 evidence.
 It validates only the secure-capture substrate on the pinned host and does not
 establish V6/V7 selected-source graph reconciliation, source binding V7,
 execution, evaluation, publication, receipt, reproducible-build,
 network-denial, Metal, scientific, or product authority.
 
-## Remaining evidence gaps
+## Current V5 result and remaining evidence gaps
 
-- freeze one held-root four-source capture/inventory session before any
-  durable-origin promotion; equal root identity across separate binds is not a
-  capture epoch;
-- freeze an independently source-derived prompt/target crosswalk in a separate
-  trap-bearing target before any evaluation promotion;
+- the focused 18,432-row, exact 41-file held-root/crosswalk integration passed
+  in 300.125 seconds;
 - implement actual process delivery of the already typed target-free raw and
   outer schedule projections when the disjoint worker topology is materialized;
 - freeze and implement mutation-delta, historical-observation, MLX-observation,
@@ -229,14 +263,18 @@ network-denial, Metal, scientific, or product authority.
 
 The next implementation prerequisite is therefore:
 
-`freeze_single_held_root_four_source_capture_inventory_session_then_freeze_independent_source_derived_prompt_target_crosswalk_in_trap_bearing_authority_target_without_materializing_workers`
+`freeze_corrected_process_evaluation_receipt_ownership_and_lawful_target_free_schedule_delivery_then_assign_disjoint_source_bound_mutation_producer_detector_without_materializing_workers`
 
 The shared codec, exact global/chunk source binding, source-bound lossless
 sidecar, incremental schedule, target-free role projections, and keyed join are
-now frozen. The next slice must first bind one complete capture epoch, then
-independently bind prompt to expected completion without giving that
-trap-bearing authority to the corrected raw closure. Process delivery and all
-evaluation authority remain future work.
+now joined by the retained capture epoch and independent source-derived
+crosswalk without giving trap-bearing authority to the corrected raw closure.
+The next slice must freeze process/evaluation/receipt ownership and lawful
+schedule delivery before assigning disjoint source-bound mutation producers
+and detectors. Prompt-content target independence, process delivery, model
+execution, evaluation/verdict authority, mechanics `PASS`, receipt, science,
+and product authority remain false. See
+`PRIME-NATIVE-NEURAL-GATE-HELD-ROOT-CROSSWALK-AUTHORITY-2026-07-31.md`.
 
 ## Workflow boundary
 

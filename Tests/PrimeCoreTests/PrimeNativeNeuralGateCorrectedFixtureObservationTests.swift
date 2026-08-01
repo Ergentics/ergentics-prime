@@ -2,7 +2,9 @@ import CryptoKit
 import Foundation
 import PrimeCore
 import PrimeNativeCorpusReplay
+import PrimeNativeCorpusReplayMechanics
 import PrimeNativeNeuralGateContract
+import PrimeNativeNeuralGateCorrectedMechanics
 import XCTest
 @testable import PrimeNativeNeuralGateCorrectedFixtureAuthority
 
@@ -15,6 +17,10 @@ final class PrimeNativeNeuralGateCorrectedFixtureObservationTests:
     private static let frozenObservation =
         Result<Observation, Error> {
             try Observation.runAndValidate()
+        }
+    private static let frozenCrosswalk =
+        Result<PrimeNativeNeuralGateSourceDerivedPromptTargetCrosswalk, Error> {
+            try Observation.derivePromptTargetCrosswalk()
         }
 
     func testSourceDerivedFixtureMatchesEveryFrozenGolden()
@@ -92,6 +98,89 @@ final class PrimeNativeNeuralGateCorrectedFixtureObservationTests:
         XCTAssertNoThrow(
             try observation.validateFrozen()
         )
+    }
+
+    func testSourceDerivedCrosswalkReusesFrozenTypedRowAuthority()
+        throws
+    {
+        let crosswalk = try Self.frozenCrosswalk.get()
+        XCTAssertEqual(crosswalk.entries.count, 18_432)
+        XCTAssertEqual(
+            crosswalk.fixtureIdentitySHA256,
+            Observation.frozenFixtureIdentitySHA256
+        )
+        XCTAssertEqual(
+            crosswalk.orderedPromptBindingsSHA256,
+            Observation
+                .frozenOrderedPromptOnlyInputBindingsSHA256
+        )
+        XCTAssertEqual(
+            crosswalk.orderedTargetBindingsSHA256,
+            Observation
+                .frozenOrderedTargetTokenBindingsSHA256
+        )
+        XCTAssertEqual(
+            crosswalk.entries.first?.sourceRowOrdinal,
+            0
+        )
+        XCTAssertEqual(
+            crosswalk.entries.last?.sourceRowOrdinal,
+            18_431
+        )
+        XCTAssertEqual(
+            crosswalk.entries.first?.rowID,
+            Observation.frozenFirstRowID
+        )
+        XCTAssertEqual(
+            crosswalk.entries.last?.rowID,
+            Observation.frozenLastRowID
+        )
+        XCTAssertEqual(
+            Set(
+                crosswalk.entries.map {
+                    $0.promptBinding.sha256
+                }
+            ).count,
+            crosswalk.entries.count
+        )
+        let eos = UInt16(
+            PrimeNativeNeuralGateCorrectedExecutionPolicy
+                .endOfSequenceTokenID
+        )
+        XCTAssertTrue(
+            crosswalk.entries.allSatisfy { entry in
+                guard entry.targetTokenIDsWithEOS.last == eos,
+                      entry.targetTokenIDsWithEOS.count > 1
+                else {
+                    return false
+                }
+                return entry.targetTokenIDsWithEOS[
+                    0 ..< (entry.targetTokenIDsWithEOS.count - 1)
+                ].allSatisfy { tokenID in
+                    tokenID != eos
+                }
+            }
+        )
+        XCTAssertEqual(
+            crosswalk.crosswalkIdentitySHA256,
+            Observation.frozenCrosswalkIdentitySHA256
+        )
+        XCTAssertTrue(
+            crosswalk.sourceDerivedFixtureIdentityEstablished
+        )
+        XCTAssertTrue(
+            crosswalk.independentPromptTargetMaterialDerived
+        )
+        XCTAssertFalse(
+            crosswalk
+                .promptContentTargetIndependenceEstablished
+        )
+        XCTAssertFalse(crosswalk.processDeliveryObserved)
+        XCTAssertFalse(crosswalk.modelExecutionEstablished)
+        XCTAssertFalse(crosswalk.mechanicsPassAuthorized)
+        XCTAssertFalse(crosswalk.terminalReceiptAuthorized)
+        XCTAssertFalse(crosswalk.scientificAuthorityAuthorized)
+        XCTAssertFalse(crosswalk.productAuthorityAuthorized)
     }
 
     func testCompletionAdmissionIsCompleteAndNotExecutionAuthority()

@@ -398,6 +398,294 @@ final class PrimeNativeNeuralGateTrapDisjointTopologyTests:
         }
     }
 
+    func testTopologyV5MaterializesHeldRootCaptureAndCrosswalkWithoutWorkers()
+        throws
+    {
+        let historicalV1 = Contract.frozenV1
+        let historicalV2 = Contract.frozenV2
+        let historicalV3 = Contract.frozenV3
+        let historicalV4 = Contract.frozenV4
+        let contract = Contract.frozenV5
+        let captureTargetName =
+            "PrimeNativeNeuralGateReplayCaptureInventory"
+        let crosswalkTargetName =
+            "PrimeNativeNeuralGatePromptTargetCrosswalkAuthority"
+
+        XCTAssertNoThrow(try historicalV1.validate())
+        XCTAssertNoThrow(try historicalV2.validate())
+        XCTAssertNoThrow(try historicalV3.validate())
+        XCTAssertNoThrow(try historicalV4.validate())
+        XCTAssertNoThrow(try contract.validate())
+        XCTAssertEqual(contract.schemaVersion, 5)
+        XCTAssertEqual(
+            contract.contractID,
+            "prime_stage_b_held_root_capture_crosswalk_authority_topology_v5"
+        )
+        XCTAssertEqual(contract.status, .plannedNotMaterialized)
+        XCTAssertFalse(contract.executionImplemented)
+        XCTAssertFalse(contract.sourceBindingV7Issued)
+        XCTAssertTrue(contract.historicalContractsPreserved)
+        XCTAssertTrue(
+            contract.historicalFutureTargetGraphSuperseded
+        )
+        XCTAssertTrue(
+            contract.donorAdaptationV2PreservedAsHistory
+        )
+        XCTAssertTrue(contract.donorAdaptationV3Required)
+        XCTAssertTrue(
+            contract
+                .mutationProducerDetectorTargetAssignmentDeferred
+        )
+        XCTAssertTrue(
+            contract.mutationProducerDetectorMustBeDisjoint
+        )
+        XCTAssertEqual(
+            contract.packageCaptureAuthority,
+            "actual_package_secure_capture_only_not_v6_or_v7_execution_graph_reconciliation"
+        )
+        XCTAssertEqual(
+            contract.nextImplementationPrerequisite,
+            "freeze_corrected_process_evaluation_receipt_ownership_and_lawful_target_free_schedule_delivery_then_assign_disjoint_source_bound_mutation_producer_detector_without_materializing_workers"
+        )
+
+        XCTAssertEqual(
+            try historicalV1.contentSHA256(),
+            "48e0f64fcb14193d74bf9c3d98a8aeef7ca366033cea6d8f00bc345ff0ad86b5"
+        )
+        XCTAssertEqual(
+            try historicalV2.contentSHA256(),
+            "abc8f1ada303ecb95b7c9a44e72293ed314537b93e27354aebbb7763e1487415"
+        )
+        XCTAssertEqual(
+            try historicalV3.contentSHA256(),
+            "b475e29347a31d27be8dc1aa54648fec84c4f1b47d673a1f111ccffb794985fd"
+        )
+        XCTAssertEqual(
+            try historicalV4.contentSHA256(),
+            "8339bbd42b0e4052888db880aacbb067770c08dd2106bf4a7820c853c4b715af"
+        )
+        XCTAssertEqual(
+            try contract.contentSHA256(),
+            "252e027fc0f547e96b8c74b2e45cd1c316f1080d639a94619e9c03c87c480930"
+        )
+
+        let additiveTargetNames: Set<String> = [
+            captureTargetName,
+            crosswalkTargetName,
+        ]
+        XCTAssertEqual(
+            contract.targetGraph.filter {
+                !additiveTargetNames.contains($0.targetName)
+            },
+            historicalV4.targetGraph
+        )
+        let capture = try contract.target(
+            named: captureTargetName
+        )
+        XCTAssertEqual(capture.materialization, .implemented)
+        XCTAssertEqual(
+            capture.directLocalDependencyNames,
+            [
+                "PrimeCore",
+                "PrimeNativeNeuralGateReplayArtifactContracts",
+                "PrimeNativeNeuralGateReplaySourceBinding",
+            ]
+        )
+        XCTAssertTrue(
+            capture.externalProductDependencyNames.isEmpty
+        )
+        let crosswalk = try contract.target(
+            named: crosswalkTargetName
+        )
+        XCTAssertEqual(crosswalk.materialization, .implemented)
+        XCTAssertEqual(
+            crosswalk.directLocalDependencyNames,
+            [
+                "PrimeCore",
+                "PrimeNativeNeuralGateCorrectedFixtureAuthority",
+                "PrimeNativeNeuralGateCorrectedMechanics",
+                captureTargetName,
+                "PrimeNativeNeuralGateReplayComposition",
+                "PrimeNativeNeuralGateReplaySourceComposition",
+                "PrimeNativeNeuralGateReplayTransport",
+            ]
+        )
+        XCTAssertTrue(
+            crosswalk.externalProductDependencyNames.isEmpty
+        )
+
+        XCTAssertEqual(
+            try contract.transitiveLocalTargetNames(
+                reachableFrom: captureTargetName
+            ),
+            [
+                "PrimeCore",
+                "PrimeNativeNeuralGateCorrectedMechanics",
+                "PrimeNativeNeuralGateLogitSidecarMechanics",
+                "PrimeNativeNeuralGateReplayArtifactContracts",
+                "PrimeNativeNeuralGateReplayMechanics",
+                "PrimeNativeNeuralGateReplaySourceBinding",
+                "PrimeNativeNeuralGateReplayTransport",
+            ]
+        )
+        XCTAssertEqual(
+            try contract.transitiveLocalTargetNames(
+                reachableFrom: crosswalkTargetName
+            ),
+            [
+                "PrimeCore",
+                "PrimeNativeCorpusReplayMechanics",
+                "PrimeNativeNeuralGateCorrectedEvaluationMechanics",
+                "PrimeNativeNeuralGateCorrectedFixtureAuthority",
+                "PrimeNativeNeuralGateCorrectedMechanics",
+                "PrimeNativeNeuralGateLogitSidecarMechanics",
+                "PrimeNativeNeuralGateReplayArtifactContracts",
+                "PrimeNativeNeuralGateReplayCaptureInventory",
+                "PrimeNativeNeuralGateReplayComposition",
+                "PrimeNativeNeuralGateReplayMechanics",
+                "PrimeNativeNeuralGateReplaySourceBinding",
+                "PrimeNativeNeuralGateReplaySourceComposition",
+                "PrimeNativeNeuralGateReplayTransport",
+            ]
+        )
+
+        let reverseProtectedTargets = [
+            "PrimeNativeNeuralGateCorrectedMechanics",
+            "PrimeNativeNeuralGatePromptSolver",
+            "PrimeNativeNeuralGateLogitSidecarMechanics",
+            "PrimeNativeNeuralGateMLXLogSoftmaxRecomputation",
+            "PrimeNativeNeuralGateReplayArtifactContracts",
+            "PrimeNativeNeuralGateReplayTransport",
+            "PrimeNativeNeuralGateReplayProbe",
+            "PrimeNativeNeuralGateReplayVerifier",
+            "PrimeNativeNeuralGateCorrectedRawWorker",
+            "PrimeNativeNeuralGateReplayComposition",
+            "PrimeNativeNeuralGateReplaySourceBinding",
+            "PrimeNativeNeuralGateReplaySourceComposition",
+        ]
+        for targetName in reverseProtectedTargets {
+            let rule = try XCTUnwrap(
+                contract.forbiddenReachability.first {
+                    $0.targetName == targetName
+                }
+            )
+            XCTAssertTrue(
+                rule.forbiddenReachableTargetNames.contains(
+                    captureTargetName
+                ),
+                targetName
+            )
+            XCTAssertTrue(
+                rule.forbiddenReachableTargetNames.contains(
+                    crosswalkTargetName
+                ),
+                targetName
+            )
+        }
+        XCTAssertEqual(
+            try XCTUnwrap(
+                contract.forbiddenReachability.first {
+                    $0.targetName == captureTargetName
+                }
+            ).forbiddenReachableTargetNames,
+            [
+                "PrimeNativeCorpusReplayMechanics",
+                "PrimeNativeNeuralGateCorrectedEvaluationMechanics",
+                "PrimeNativeNeuralGateCorrectedFixtureAuthority",
+                "PrimeNativeNeuralGatePromptSolver",
+                "PrimeNativeNeuralGateMLXLogSoftmaxRecomputation",
+                crosswalkTargetName,
+                "ErgenticsPrimeRuntime",
+                "PrimeNativeNeuralGateHistoricalReplayMechanics",
+            ]
+        )
+        XCTAssertEqual(
+            try XCTUnwrap(
+                contract.forbiddenReachability.first {
+                    $0.targetName == crosswalkTargetName
+                }
+            ).forbiddenReachableTargetNames,
+            [
+                "PrimeNativeNeuralGatePromptSolver",
+                "PrimeNativeNeuralGateMLXLogSoftmaxRecomputation",
+                "ErgenticsPrimeRuntime",
+                "PrimeNativeNeuralGateHistoricalReplayMechanics",
+                "PrimeNativeNeuralGateHistoricalFixtureWorker",
+                "PrimeNativeNeuralGateReplayProbe",
+                "PrimeNativeNeuralGateReplayVerifier",
+                "PrimeNativeNeuralGateCorrectedRawWorker",
+            ]
+        )
+
+        let supervisorClosure = [
+            "PrimeCore",
+            "PrimeNativeNeuralGateReplayArtifactContracts",
+            "PrimeNativeNeuralGateReplayMechanics",
+            "PrimeNativeNeuralGateReplayTransport",
+        ]
+        XCTAssertEqual(
+            try contract.transitiveLocalTargetNames(
+                reachableFrom:
+                    "PrimeNativeNeuralGateReplayProbe"
+            ),
+            supervisorClosure
+        )
+        XCTAssertEqual(
+            try contract.transitiveLocalTargetNames(
+                reachableFrom:
+                    "PrimeNativeNeuralGateReplayVerifier"
+            ),
+            supervisorClosure
+        )
+        XCTAssertEqual(
+            try contract.transitiveLocalTargetNames(
+                reachableFrom:
+                    "PrimeNativeNeuralGateCorrectedRawWorker"
+            ),
+            [
+                "PrimeCore",
+                "PrimeNativeNeuralGateCorrectedMechanics",
+                "PrimeNativeNeuralGateLogitSidecarMechanics",
+                "PrimeNativeNeuralGatePromptSolver",
+                "PrimeNativeNeuralGateReplayArtifactContracts",
+                "PrimeNativeNeuralGateReplayMechanics",
+            ]
+        )
+        for targetName in [
+            "PrimeNativeNeuralGateReplayProbe",
+            "PrimeNativeNeuralGateReplayVerifier",
+            "PrimeNativeNeuralGateCorrectedRawWorker",
+        ] {
+            let closure = try contract.transitiveLocalTargetNames(
+                reachableFrom: targetName
+            )
+            XCTAssertFalse(
+                closure.contains(captureTargetName),
+                targetName
+            )
+            XCTAssertFalse(
+                closure.contains(crosswalkTargetName),
+                targetName
+            )
+        }
+        for targetName in [
+            "ErgenticsPrimeRuntime",
+            "PrimeNativeNeuralGateHistoricalReplayMechanics",
+            "PrimeNativeNeuralGateHistoricalFixtureWorker",
+            "PrimeNativeNeuralGateReplayProbe",
+            "PrimeNativeNeuralGateReplayVerifier",
+            "PrimeNativeNeuralGateCorrectedRawWorker",
+        ] {
+            XCTAssertEqual(
+                try contract.target(
+                    named: targetName
+                ).materialization,
+                .plannedNotMaterialized,
+                targetName
+            )
+        }
+    }
+
     func testPlannedSupervisorAndWorkerClosuresStayDisjoint()
         throws
     {
@@ -476,6 +764,8 @@ final class PrimeNativeNeuralGateTrapDisjointTopologyTests:
             #".target(name:"PrimeNativeNeuralGateReplayComposition",dependencies:["PrimeNativeNeuralGateReplayArtifactContracts","PrimeNativeNeuralGateReplayTransport","PrimeNativeNeuralGateReplayMechanics","PrimeNativeNeuralGateCorrectedMechanics","PrimeNativeNeuralGateLogitSidecarMechanics",])"#,
             #".target(name:"PrimeNativeNeuralGateReplaySourceBinding",dependencies:["PrimeCore","PrimeNativeNeuralGateReplayArtifactContracts","PrimeNativeNeuralGateReplayTransport","PrimeNativeNeuralGateReplayMechanics","PrimeNativeNeuralGateCorrectedMechanics","PrimeNativeNeuralGateLogitSidecarMechanics",])"#,
             #".target(name:"PrimeNativeNeuralGateReplaySourceComposition",dependencies:["PrimeNativeNeuralGateReplaySourceBinding","PrimeNativeNeuralGateReplayComposition",])"#,
+            #".target(name:"PrimeNativeNeuralGateReplayCaptureInventory",dependencies:["PrimeCore","PrimeNativeNeuralGateReplayArtifactContracts","PrimeNativeNeuralGateReplaySourceBinding",])"#,
+            #".target(name:"PrimeNativeNeuralGatePromptTargetCrosswalkAuthority",dependencies:["PrimeCore","PrimeNativeNeuralGateCorrectedFixtureAuthority","PrimeNativeNeuralGateCorrectedMechanics","PrimeNativeNeuralGateReplayCaptureInventory","PrimeNativeNeuralGateReplayComposition","PrimeNativeNeuralGateReplaySourceComposition","PrimeNativeNeuralGateReplayTransport",])"#,
             #".target(name:"PrimeNativeNeuralGateCorrectedMechanics",dependencies:["PrimeNativeNeuralGateReplayMechanics",])"#,
             #".target(name:"PrimeNativeNeuralGateCorrectedEvaluationMechanics",dependencies:["PrimeNativeNeuralGateReplayMechanics","PrimeNativeNeuralGateCorrectedMechanics",])"#,
             #".target(name:"PrimeNativeNeuralGateCorrectedFixtureAuthority",dependencies:["PrimeNativeCorpusReplayMechanics","PrimeNativeNeuralGateCorrectedMechanics","PrimeNativeNeuralGateCorrectedEvaluationMechanics",])"#,
@@ -502,7 +792,7 @@ final class PrimeNativeNeuralGateTrapDisjointTopologyTests:
             .plannedNotMaterialized
         )
 
-        for target in Contract.frozenV4.targetGraph
+        for target in Contract.frozenV5.targetGraph
         where target.materialization
             == .plannedNotMaterialized
         {

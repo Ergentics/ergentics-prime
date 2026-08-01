@@ -328,6 +328,8 @@ public struct PrimeNativeNeuralGateCorrectedFixtureObservation:
         "4c4917bd54e625fd8c1441eb19129c2be0cb7ad9762e16607e9212d8faac27b4"
     public static let frozenFixtureIdentitySHA256 =
         "c1f29a0d1067a4bce5541ee5100044276ccc16c63e57501b509fb3126fcd29a4"
+    public static let frozenCrosswalkIdentitySHA256 =
+        "cbf0d5af0581cc6141b34e641cd739cbe0bbf4c858cbec51a6219032273b743d"
     public static let frozenObservationSHA256 =
         "a30c7fe39157ce6e0de2e0783a8af8807c4a1b02b309a144ba3272a6cc6d931d"
     public static let frozenFirstRowID =
@@ -532,6 +534,160 @@ public struct PrimeNativeNeuralGateCorrectedFixtureObservation:
     }
 }
 
+/// Typed PRIMECPI2 digest derived from the independently verified source row.
+/// It cannot be constructed outside this trap-bearing authority target.
+public struct PrimeNativeNeuralGateSourceDerivedPromptBinding:
+    Equatable,
+    Hashable,
+    Sendable
+{
+    public let sha256: String
+
+    fileprivate init(sha256: String) {
+        self.sha256 = sha256
+    }
+}
+
+/// Typed PRIMECFT1 digest over exact completion tokens plus one terminal EOS.
+/// It is deliberately distinct from prompt, correlation, and record digests.
+public struct PrimeNativeNeuralGateSourceDerivedTargetBinding:
+    Equatable,
+    Hashable,
+    Sendable
+{
+    public let sha256: String
+
+    fileprivate init(sha256: String) {
+        self.sha256 = sha256
+    }
+}
+
+/// One source-derived prompt/target association in frozen row-ID order.
+///
+/// This value is not Codable and has no public initializer. Row identity is
+/// authority metadata; a corrected raw worker must never receive it.
+public struct PrimeNativeNeuralGateSourceDerivedPromptTargetEntry:
+    Equatable,
+    Sendable
+{
+    public let sourceRowOrdinal: UInt32
+    public let rowID: String
+    public let sourceRowSHA256: String
+    public let evaluationRowSHA256: String
+    public let canonicalPrompt: String
+    public let promptTokenIDs: [UInt16]
+    public let promptBinding:
+        PrimeNativeNeuralGateSourceDerivedPromptBinding
+    public let canonicalExpectedCompletion: String
+    public let expectedCompletionUTF8: Data
+    public let targetTokenIDsWithEOS: [UInt16]
+    public let targetBinding:
+        PrimeNativeNeuralGateSourceDerivedTargetBinding
+
+    fileprivate init(
+        sourceRowOrdinal: UInt32,
+        row:
+            ErgenticsPrimeNativeTextCorpus.Row,
+        prompt:
+            PrimeNativeNeuralGatePromptOnlyExecutionInput,
+        targetTokenIDs: [Int],
+        targetBindingSHA256: String
+    ) throws {
+        guard let promptTokenIDs = Self.exactUInt16(
+                  prompt.promptTokenIDs
+              ),
+              let targetTokens = Self.exactUInt16(
+                  targetTokenIDs
+              ),
+              let eos = UInt16(
+                  exactly:
+                    PrimeNativeByteTokenizer
+                    .endOfSequenceTokenID
+              )
+        else {
+            throw PrimeNativeNeuralGateCorrectedFixtureObservationError
+                .tokenizerContractDrift
+        }
+        self.sourceRowOrdinal = sourceRowOrdinal
+        rowID = row.rowID
+        sourceRowSHA256 = row.rowSHA256
+        evaluationRowSHA256 =
+            row.evaluationRowSHA256
+        canonicalPrompt = row.promptText
+        self.promptTokenIDs = promptTokenIDs
+        promptBinding = .init(
+            sha256: prompt.bindingSHA256
+        )
+        canonicalExpectedCompletion =
+            row.expectedCompletion
+        expectedCompletionUTF8 =
+            Data(row.expectedCompletion.utf8)
+        targetTokenIDsWithEOS =
+            targetTokens + [eos]
+        targetBinding = .init(
+            sha256: targetBindingSHA256
+        )
+    }
+
+    private static func exactUInt16(
+        _ values: [Int]
+    ) -> [UInt16]? {
+        var result = [UInt16]()
+        result.reserveCapacity(values.count)
+        for value in values {
+            guard let exact = UInt16(exactly: value)
+            else {
+                return nil
+            }
+            result.append(exact)
+        }
+        return result
+    }
+}
+
+/// Sealed source-derived crosswalk material. It is evaluation authority only;
+/// it is not evidence that a raw process was target-blind or executed.
+public struct PrimeNativeNeuralGateSourceDerivedPromptTargetCrosswalk:
+    Equatable,
+    Sendable
+{
+    public let fixtureIdentitySHA256: String
+    public let orderedPromptBindingsSHA256: String
+    public let orderedTargetBindingsSHA256: String
+    public let crosswalkIdentitySHA256: String
+    public let entries:
+        [PrimeNativeNeuralGateSourceDerivedPromptTargetEntry]
+
+    public let sourceDerivedFixtureIdentityEstablished = true
+    public let independentPromptTargetMaterialDerived = true
+    public let promptContentTargetIndependenceEstablished = false
+    public let processDeliveryObserved = false
+    public let modelExecutionEstablished = false
+    public let mechanicsPassAuthorized = false
+    public let terminalReceiptAuthorized = false
+    public let scientificAuthorityAuthorized = false
+    public let productAuthorityAuthorized = false
+
+    fileprivate init(
+        fixtureIdentitySHA256: String,
+        orderedPromptBindingsSHA256: String,
+        orderedTargetBindingsSHA256: String,
+        crosswalkIdentitySHA256: String,
+        entries:
+            [PrimeNativeNeuralGateSourceDerivedPromptTargetEntry]
+    ) {
+        self.fixtureIdentitySHA256 =
+            fixtureIdentitySHA256
+        self.orderedPromptBindingsSHA256 =
+            orderedPromptBindingsSHA256
+        self.orderedTargetBindingsSHA256 =
+            orderedTargetBindingsSHA256
+        self.crosswalkIdentitySHA256 =
+            crosswalkIdentitySHA256
+        self.entries = entries
+    }
+}
+
 extension PrimeNativeNeuralGateCorrectedFixtureObservation {
     private typealias Corpus =
         ErgenticsPrimeNativeTextCorpus
@@ -593,111 +749,11 @@ extension PrimeNativeNeuralGateCorrectedFixtureObservation {
             throw PrimeNativeNeuralGateCorrectedFixtureObservationError
                 .invalidReceiptBinding
         }
-        let splitMap: [String: Corpus.Split] = [
-            "validation": .validation,
-            "combination_holdout": .combinationHoldout,
-            "ood": .ood,
-            "mutation": .mutation,
-            "abstention": .abstention,
-        ]
-        guard selectedSplitOrder.compactMap({
-            splitMap[$0]
-        }).map(\.rawValue) == selectedSplitOrder
-        else {
-            throw PrimeNativeNeuralGateCorrectedFixtureObservationError
-                .splitOrderDrift
-        }
-
-        var splitRows: [String: [Row]] = [:]
-        var splitIdentities: [SplitIdentity] = []
-        for splitName in selectedSplitOrder {
-            guard let split = splitMap[splitName],
-                  let expected =
-                    expectedSplitRowCounts[splitName],
-                  let expectedEvaluationSHA256 =
-                    expectedSplitOrderedEvaluationSHA256[
-                        splitName
-                    ]
-            else {
-                throw PrimeNativeNeuralGateCorrectedFixtureObservationError
-                    .splitOrderDrift
-            }
-            let rows = Corpus.rows(for: split)
-                .sorted(by: rowIDUTF8Precedes)
-            guard rows.count == expected else {
-                throw PrimeNativeNeuralGateCorrectedFixtureObservationError
-                    .splitCountDrift(
-                        split: splitName,
-                        expected: expected,
-                        actual: rows.count
-                    )
-            }
-            guard let first = rows.first,
-                  let last = rows.last else {
-                throw PrimeNativeNeuralGateCorrectedFixtureObservationError
-                    .splitCountDrift(
-                        split: splitName,
-                        expected: expected,
-                        actual: rows.count
-                    )
-            }
-            let orderedEvaluationRowsSHA256 =
-                try canonicalSHA256(
-                    rows.map(\.evaluationRowSHA256)
-                )
-            guard orderedEvaluationRowsSHA256
-                    == expectedEvaluationSHA256
-            else {
-                throw PrimeNativeNeuralGateCorrectedFixtureObservationError
-                    .invalidSourceRow(splitName)
-            }
-            splitRows[splitName] = rows
-            splitIdentities.append(
-                SplitIdentity(
-                    split: splitName,
-                    rowCount: rows.count,
-                    orderedEvaluationRowsSHA256:
-                        orderedEvaluationRowsSHA256,
-                    firstRowID: first.rowID,
-                    lastRowID: last.rowID
-                )
-            )
-        }
-
-        var selectedRows: [Row] = []
-        for splitName in selectedSplitOrder {
-            guard let rows = splitRows[splitName]
-            else {
-                throw PrimeNativeNeuralGateCorrectedFixtureObservationError
-                    .splitOrderDrift
-            }
-            selectedRows.append(contentsOf: rows)
-        }
-        let rows = selectedRows.sorted(
-            by: rowIDUTF8Precedes
-        )
-        guard rows.count == exactRowCount else {
-            throw PrimeNativeNeuralGateCorrectedFixtureObservationError
-                .rowCountDrift(
-                    expected: exactRowCount,
-                    actual: rows.count
-                )
-        }
-        guard Set(
-            rows.map {
-                Data($0.rowID.utf8)
-            }
-        ).count == rows.count,
-              zip(rows, rows.dropFirst())
-                .allSatisfy({ pair in
-                    rowIDUTF8Precedes(
-                        pair.0,
-                        pair.1
-                    )
-                }),
-              let firstRow = rows.first,
-              let lastRow = rows.last
-        else {
+        let selected = try selectedSourceMaterial()
+        let rows = selected.rows
+        let splitIdentities = selected.splitIdentities
+        guard let firstRow = rows.first,
+              let lastRow = rows.last else {
             throw PrimeNativeNeuralGateCorrectedFixtureObservationError
                 .duplicateRowIdentity
         }
@@ -711,70 +767,14 @@ extension PrimeNativeNeuralGateCorrectedFixtureObservation {
         var allCompletionsCanonical = true
 
         for row in rows {
-            guard Corpus.verify(row: row).accepted,
-                  row.evaluationRowSHA256
-                    == Corpus.evaluationRowSHA256(row)
-            else {
-                throw PrimeNativeNeuralGateCorrectedFixtureObservationError
-                    .invalidSourceRow(row.rowID)
-            }
-            let prompt =
-                try PrimeNativeNeuralGatePromptOnlyExecutionInput
-                    .derive(promptText: row.promptText)
-            let donorPromptTokenIDs =
-                [
-                    PrimeNativeByteTokenizer
-                        .beginningOfSequenceTokenID,
-                ]
-                + PrimeNativeByteTokenizer.encode(
-                    row.promptText
-                )
-            guard prompt.promptTokenIDs
-                    == donorPromptTokenIDs,
-                  try prompt.decodedCanonicalPrompt()
-                    == row.promptText
-            else {
-                throw PrimeNativeNeuralGateCorrectedFixtureObservationError
-                    .promptBindingDrift(row.rowID)
-            }
+            let derived = try deriveRowMaterial(row)
+            let prompt = derived.prompt
             let promptSHA = prompt.bindingSHA256
-            let targetTokenIDs =
-                PrimeNativeByteTokenizer.encode(
-                    row.expectedCompletion
-                )
-            guard try PrimeNativeByteTokenizer.decode(
-                targetTokenIDs
-            ) == row.expectedCompletion
-            else {
-                throw PrimeNativeNeuralGateCorrectedFixtureObservationError
-                    .tokenizerContractDrift
-            }
-            let targetSHA =
-                try targetTokenBindingSHA256(
-                    tokenIDs: targetTokenIDs
-                )
+            let targetTokenIDs = derived.targetTokenIDs
+            let targetSHA = derived.targetBindingSHA256
             promptBindings.append(promptSHA)
             targetBindings.append(targetSHA)
-            rowBindings.append(
-                RowBinding(
-                    rowID: row.rowID,
-                    split: row.split,
-                    semanticFamily:
-                        row.semanticFamily,
-                    generatorIndex:
-                        row.generatorIndex,
-                    sourceRowSHA256:
-                        row.rowSHA256,
-                    evaluationRowSHA256:
-                        row.evaluationRowSHA256,
-                    mutationID:
-                        row.mutationID,
-                    promptOnlyInputSHA256:
-                        promptSHA,
-                    targetTokenIDsWithEOSSHA256:
-                        targetSHA
-                )
-            )
+            rowBindings.append(derived.rowBinding)
             maximumPromptTokenCount = max(
                 maximumPromptTokenCount,
                 prompt.promptTokenIDs.count
@@ -1012,6 +1012,119 @@ extension PrimeNativeNeuralGateCorrectedFixtureObservation {
         return observation
     }
 
+    /// Derives the exact per-row prompt/target authority from the same source
+    /// traversal and typed PRIMECPI2/PRIMECFT1 implementation used by the
+    /// frozen fixture observation.
+    public static func derivePromptTargetCrosswalk()
+        throws
+        -> PrimeNativeNeuralGateSourceDerivedPromptTargetCrosswalk
+    {
+        let observation = try runAndValidate()
+        let selected = try selectedSourceMaterial()
+        var entries =
+            [PrimeNativeNeuralGateSourceDerivedPromptTargetEntry]()
+        entries.reserveCapacity(selected.rows.count)
+        var identityRecords = [CrosswalkIdentityRecord]()
+        identityRecords.reserveCapacity(selected.rows.count)
+
+        for (ordinal, row) in selected.rows.enumerated() {
+            guard let sourceRowOrdinal = UInt32(
+                    exactly: ordinal
+                  )
+            else {
+                throw PrimeNativeNeuralGateCorrectedFixtureObservationError
+                    .rowCountDrift(
+                        expected: exactRowCount,
+                        actual: selected.rows.count
+                    )
+            }
+            let derived = try deriveRowMaterial(row)
+            let entry = try
+                PrimeNativeNeuralGateSourceDerivedPromptTargetEntry(
+                    sourceRowOrdinal: sourceRowOrdinal,
+                    row: row,
+                    prompt: derived.prompt,
+                    targetTokenIDs:
+                        derived.targetTokenIDs,
+                    targetBindingSHA256:
+                        derived.targetBindingSHA256
+                )
+            guard entry.targetTokenIDsWithEOS.last
+                    == UInt16(
+                        PrimeNativeByteTokenizer
+                        .endOfSequenceTokenID
+                    ),
+                  !entry.targetTokenIDsWithEOS
+                    .dropLast().contains(
+                        UInt16(
+                            PrimeNativeByteTokenizer
+                            .endOfSequenceTokenID
+                        )
+                    )
+            else {
+                throw PrimeNativeNeuralGateCorrectedFixtureObservationError
+                    .tokenizerContractDrift
+            }
+            entries.append(entry)
+            identityRecords.append(
+                CrosswalkIdentityRecord(entry)
+            )
+        }
+
+        let promptBindings = entries.map {
+            $0.promptBinding.sha256
+        }
+        let targetBindings = entries.map {
+            $0.targetBinding.sha256
+        }
+        let orderedPromptBindingsSHA256 =
+            try canonicalSHA256(promptBindings)
+        let orderedTargetBindingsSHA256 =
+            try canonicalSHA256(targetBindings)
+        guard entries.count == exactRowCount,
+              Set(promptBindings).count == entries.count,
+              orderedPromptBindingsSHA256
+                == observation
+                .orderedPromptOnlyInputBindingsSHA256,
+              orderedPromptBindingsSHA256
+                == frozenOrderedPromptOnlyInputBindingsSHA256,
+              orderedTargetBindingsSHA256
+                == observation
+                .orderedTargetTokenBindingsSHA256,
+              orderedTargetBindingsSHA256
+                == frozenOrderedTargetTokenBindingsSHA256
+        else {
+            throw PrimeNativeNeuralGateCorrectedFixtureObservationError
+                .frozenGoldenDrift
+        }
+        let crosswalkIdentitySHA256 = try canonicalSHA256(
+            CrosswalkIdentityPayload(
+                serializationContractID:
+                    "prime_stage_b_source_derived_prompt_target_crosswalk_rows_v1",
+                fixtureIdentitySHA256:
+                    observation.fixtureIdentitySHA256,
+                entries: identityRecords
+            )
+        )
+        guard crosswalkIdentitySHA256
+                == frozenCrosswalkIdentitySHA256
+        else {
+            throw PrimeNativeNeuralGateCorrectedFixtureObservationError
+                .frozenGoldenDrift
+        }
+        return PrimeNativeNeuralGateSourceDerivedPromptTargetCrosswalk(
+            fixtureIdentitySHA256:
+                observation.fixtureIdentitySHA256,
+            orderedPromptBindingsSHA256:
+                orderedPromptBindingsSHA256,
+            orderedTargetBindingsSHA256:
+                orderedTargetBindingsSHA256,
+            crosswalkIdentitySHA256:
+                crosswalkIdentitySHA256,
+            entries: entries
+        )
+    }
+
     public func validateFrozen() throws {
         guard schemaVersion == 1,
               artifactKind
@@ -1209,6 +1322,224 @@ extension PrimeNativeNeuralGateCorrectedFixtureObservation {
                 fullCorpusReplayReceiptPlanSHA256
         ),
     ]
+
+    private struct SelectedSourceMaterial {
+        let rows: [Row]
+        let splitIdentities: [SplitIdentity]
+    }
+
+    private struct DerivedRowMaterial {
+        let prompt:
+            PrimeNativeNeuralGatePromptOnlyExecutionInput
+        let targetTokenIDs: [Int]
+        let targetBindingSHA256: String
+        let rowBinding: RowBinding
+    }
+
+    private struct CrosswalkIdentityRecord: Codable {
+        let sourceRowOrdinal: UInt32
+        let rowID: String
+        let sourceRowSHA256: String
+        let evaluationRowSHA256: String
+        let promptBindingSHA256: String
+        let targetBindingSHA256: String
+
+        init(
+            _ entry:
+                PrimeNativeNeuralGateSourceDerivedPromptTargetEntry
+        ) {
+            sourceRowOrdinal = entry.sourceRowOrdinal
+            rowID = entry.rowID
+            sourceRowSHA256 = entry.sourceRowSHA256
+            evaluationRowSHA256 =
+                entry.evaluationRowSHA256
+            promptBindingSHA256 =
+                entry.promptBinding.sha256
+            targetBindingSHA256 =
+                entry.targetBinding.sha256
+        }
+
+        private enum CodingKeys: String, CodingKey {
+            case sourceRowOrdinal = "source_row_ordinal"
+            case rowID = "row_id"
+            case sourceRowSHA256 = "source_row_sha256"
+            case evaluationRowSHA256 =
+                "evaluation_row_sha256"
+            case promptBindingSHA256 =
+                "prompt_binding_sha256"
+            case targetBindingSHA256 =
+                "target_binding_sha256"
+        }
+    }
+
+    private struct CrosswalkIdentityPayload: Codable {
+        let serializationContractID: String
+        let fixtureIdentitySHA256: String
+        let entries: [CrosswalkIdentityRecord]
+
+        private enum CodingKeys: String, CodingKey {
+            case serializationContractID =
+                "serialization_contract_id"
+            case fixtureIdentitySHA256 =
+                "fixture_identity_sha256"
+            case entries
+        }
+    }
+
+    private static func selectedSourceMaterial()
+        throws -> SelectedSourceMaterial
+    {
+        let splitMap: [String: Corpus.Split] = [
+            "validation": .validation,
+            "combination_holdout": .combinationHoldout,
+            "ood": .ood,
+            "mutation": .mutation,
+            "abstention": .abstention,
+        ]
+        guard selectedSplitOrder.compactMap({
+            splitMap[$0]
+        }).map(\.rawValue) == selectedSplitOrder
+        else {
+            throw PrimeNativeNeuralGateCorrectedFixtureObservationError
+                .splitOrderDrift
+        }
+        var splitRows = [String: [Row]]()
+        var splitIdentities = [SplitIdentity]()
+        for splitName in selectedSplitOrder {
+            guard let split = splitMap[splitName],
+                  let expected =
+                    expectedSplitRowCounts[splitName],
+                  let expectedEvaluationSHA256 =
+                    expectedSplitOrderedEvaluationSHA256[
+                        splitName
+                    ]
+            else {
+                throw PrimeNativeNeuralGateCorrectedFixtureObservationError
+                    .splitOrderDrift
+            }
+            let rows = Corpus.rows(for: split)
+                .sorted(by: rowIDUTF8Precedes)
+            guard rows.count == expected,
+                  let first = rows.first,
+                  let last = rows.last
+            else {
+                throw PrimeNativeNeuralGateCorrectedFixtureObservationError
+                    .splitCountDrift(
+                        split: splitName,
+                        expected: expected,
+                        actual: rows.count
+                    )
+            }
+            let orderedEvaluationRowsSHA256 =
+                try canonicalSHA256(
+                    rows.map(\.evaluationRowSHA256)
+                )
+            guard orderedEvaluationRowsSHA256
+                    == expectedEvaluationSHA256
+            else {
+                throw PrimeNativeNeuralGateCorrectedFixtureObservationError
+                    .invalidSourceRow(splitName)
+            }
+            splitRows[splitName] = rows
+            splitIdentities.append(
+                SplitIdentity(
+                    split: splitName,
+                    rowCount: rows.count,
+                    orderedEvaluationRowsSHA256:
+                        orderedEvaluationRowsSHA256,
+                    firstRowID: first.rowID,
+                    lastRowID: last.rowID
+                )
+            )
+        }
+        var rows = [Row]()
+        for splitName in selectedSplitOrder {
+            guard let split = splitRows[splitName]
+            else {
+                throw PrimeNativeNeuralGateCorrectedFixtureObservationError
+                    .splitOrderDrift
+            }
+            rows.append(contentsOf: split)
+        }
+        rows.sort(by: rowIDUTF8Precedes)
+        guard rows.count == exactRowCount,
+              Set(rows.map { Data($0.rowID.utf8) }).count
+                == rows.count,
+              zip(rows, rows.dropFirst()).allSatisfy({
+                  rowIDUTF8Precedes($0.0, $0.1)
+              })
+        else {
+            throw PrimeNativeNeuralGateCorrectedFixtureObservationError
+                .duplicateRowIdentity
+        }
+        return SelectedSourceMaterial(
+            rows: rows,
+            splitIdentities: splitIdentities
+        )
+    }
+
+    private static func deriveRowMaterial(
+        _ row: Row
+    ) throws -> DerivedRowMaterial {
+        guard Corpus.verify(row: row).accepted,
+              row.evaluationRowSHA256
+                == Corpus.evaluationRowSHA256(row)
+        else {
+            throw PrimeNativeNeuralGateCorrectedFixtureObservationError
+                .invalidSourceRow(row.rowID)
+        }
+        let prompt = try
+            PrimeNativeNeuralGatePromptOnlyExecutionInput
+            .derive(promptText: row.promptText)
+        let donorPromptTokenIDs =
+            [
+                PrimeNativeByteTokenizer
+                    .beginningOfSequenceTokenID,
+            ]
+            + PrimeNativeByteTokenizer.encode(
+                row.promptText
+            )
+        guard prompt.promptTokenIDs == donorPromptTokenIDs,
+              try prompt.decodedCanonicalPrompt()
+                == row.promptText
+        else {
+            throw PrimeNativeNeuralGateCorrectedFixtureObservationError
+                .promptBindingDrift(row.rowID)
+        }
+        let targetTokenIDs =
+            PrimeNativeByteTokenizer.encode(
+                row.expectedCompletion
+            )
+        guard try PrimeNativeByteTokenizer.decode(
+            targetTokenIDs
+        ) == row.expectedCompletion
+        else {
+            throw PrimeNativeNeuralGateCorrectedFixtureObservationError
+                .tokenizerContractDrift
+        }
+        let targetSHA256 = try targetTokenBindingSHA256(
+            tokenIDs: targetTokenIDs
+        )
+        return DerivedRowMaterial(
+            prompt: prompt,
+            targetTokenIDs: targetTokenIDs,
+            targetBindingSHA256: targetSHA256,
+            rowBinding: RowBinding(
+                rowID: row.rowID,
+                split: row.split,
+                semanticFamily: row.semanticFamily,
+                generatorIndex: row.generatorIndex,
+                sourceRowSHA256: row.rowSHA256,
+                evaluationRowSHA256:
+                    row.evaluationRowSHA256,
+                mutationID: row.mutationID,
+                promptOnlyInputSHA256:
+                    prompt.bindingSHA256,
+                targetTokenIDsWithEOSSHA256:
+                    targetSHA256
+            )
+        )
+    }
 
     private static func rowIDUTF8Precedes(
         _ lhs: Row,
