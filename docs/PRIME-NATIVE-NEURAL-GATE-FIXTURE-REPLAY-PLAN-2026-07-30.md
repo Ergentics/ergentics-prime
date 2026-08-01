@@ -111,7 +111,7 @@ SHA-256
 and no replay, historical worker, Metal, or product use is implemented or
 authorized.
 
-The current topology is additive V5,
+The historical held-root/crosswalk topology is additive V5,
 `prime_stage_b_held_root_capture_crosswalk_authority_topology_v5`; its canonical
 SHA-256 is
 `252e027fc0f547e96b8c74b2e45cd1c316f1080d639a94619e9c03c87c480930`.
@@ -131,7 +131,12 @@ supersedes only their future donor-routing assumption, and explicitly leaves
 source binding V7 unissued. The complete implemented and planned closures are
 recorded in
 `PRIME-NATIVE-NEURAL-GATE-TRAP-DISJOINT-TOPOLOGY-2026-07-30.md`.
-The held-root/crosswalk claim ceiling is recorded in
+Current topology V6 has canonical SHA-256
+`6a25a3d674a7ef3eda4475ed5532fff2366103b641736b410b37fabbc805bcd1`.
+Its process/evaluation/receipt ownership and target-free delivery-preparation
+claim ceiling is recorded in
+`PRIME-NATIVE-NEURAL-GATE-PROCESS-OWNERSHIP-TARGET-FREE-DELIVERY-2026-07-31.md`.
+The historical held-root/crosswalk claim ceiling remains recorded in
 `PRIME-NATIVE-NEURAL-GATE-HELD-ROOT-CROSSWALK-AUTHORITY-2026-07-31.md`.
 
 PrimeCore now also has the prerequisite live filesystem-inventory authority.
@@ -804,10 +809,12 @@ must agree; all build configurations must be `release`.
 vnode from the same positive process that publishes its binding. Probe and
 verifier roles, targets, paths, PIDs, and executable hashes must be distinct.
 Their SwiftPM child PIDs and the two historical-worker PIDs must also be
-distinct, producing the historical V5 six-process topology. Topology V1 adds
-a separately launched corrected raw worker, so that count is no longer a
-sufficient future execution contract. The replacement process-count and
-receipt schema must be frozen before execution. Each worker result must bind
+distinct, producing the historical V5 six-process topology. Current topology
+V6 freezes the replacement symmetric ten-role process/evaluation/receipt
+ownership declarations, including two corrected raw and two corrected
+evaluation workers, but materializes none of them. Typed role/path/content
+references, common capture/schedule binding, and source-pinned worker closure/
+executable references remain prerequisites. Each future worker result must bind
 its same-process PID and the same sealed worker image. The verifier must
 validate each record before applying the explicit prevalidated-record
 topology join.
@@ -1078,8 +1085,9 @@ A future terminal Stage-B pass requires:
 - a clean current Prime source snapshot that remains unchanged, plus exact
   running Release executable bindings; the historical probe, verifier, their
   two SwiftPM children, and two historical workers form V5's six-process
-  topology, but the corrected raw worker requires a replacement
-  process-count/receipt schema before execution;
+  topology; V6 freezes a non-authorizing ten-role replacement ownership model,
+  but typed common-capture artifact references and all worker/supervisor
+  materialization remain prerequisites;
 - two distinct, bounded historical-worker invocations with typed request,
   same-process result, stream-drain/termination, observed death/reap, exact
   pre/post role-prefix inventory, and successful supervisor execution records;
@@ -1171,24 +1179,30 @@ ambiguity.
 
 Descriptor-rooted invariant validation, source-bound lossless-sidecar
 validation, incremental schedule reconstruction, and the exact four-source
-join remain frozen under topology V4. Additive topology V5 now also implements
+join remain frozen under topology V4. Historical additive topology V5 also implements
 the retained exact 41-file held-root capture and the independent source-derived
 18,432-row keyed prompt/target crosswalk. The focused integration passed in
 300.125 seconds. V5 establishes only the exact capture epoch, bounded durable
 origin for captured bytes, corrected fixture identity, exact source join,
 independent crosswalk, and outer completion binding. Prompt-content target
 independence, process delivery, model execution, evaluation/verdict authority,
-mechanics `PASS`, receipt, science, and product authority remain false. The
-corrected aggregate implementation prerequisite is now:
+mechanics `PASS`, receipt, science, and product authority remain false.
+Topology V6 now freezes the symmetric ten-role process roster, branch-scoped
+raw/evaluation ownership, verifier-only receipt-last ownership, target-free
+schedule construction, and a real retained-capture-bound supervisor adapter.
+Only slot decoding is strict and byte-bounded; aggregate candidates remain
+`Encodable`-only. The adapter prepares source- and owner-bound candidates but
+does not observe delivery. The corrected aggregate implementation prerequisite
+is now:
 
-`freeze_corrected_process_evaluation_receipt_ownership_and_lawful_target_free_schedule_delivery_then_assign_disjoint_source_bound_mutation_producer_detector_without_materializing_workers`
+`freeze_typed_source_pinned_worker_and_role_artifact_references_with_common_capture_schedule_binding_and_bounded_candidate_stream_decoder_then_freeze_deferred_mutation_historical_mlx_statistics_verdict_schemas_and_assign_disjoint_source_bound_mutation_producer_detector_without_materializing_workers`
 
 Its implementation order is now:
 
-1. freeze corrected process/evaluation ownership, replacement process count,
-   result records, receipt ownership, and receipt-last publication;
-2. freeze lawful delivery of the already typed target-free raw/outer schedule
-   capabilities to their eventual disjoint process owners;
+1. freeze typed source-pinned worker and role-artifact references with their
+   common capture/schedule binding;
+2. freeze a bounded aggregate candidate stream decoder while preserving the
+   target-free field allowlists and per-slot byte caps;
 3. freeze the deferred mutation, historical, MLX, and statistics/verdict
    record schemas;
 4. assign a source-bound corrected mutation producer and an independently

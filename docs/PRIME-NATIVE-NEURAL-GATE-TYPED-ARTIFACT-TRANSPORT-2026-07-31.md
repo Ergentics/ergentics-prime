@@ -37,6 +37,7 @@ PrimeNativeNeuralGateReplaySourceComposition
     dependencies:
       - PrimeNativeNeuralGateReplaySourceBinding
       - PrimeNativeNeuralGateReplayComposition
+      - PrimeNativeNeuralGateTargetFreeScheduleDeliveryContracts
 
 PrimeNativeNeuralGateReplayCaptureInventory
     dependencies:
@@ -102,10 +103,12 @@ execution. Exact source behavior is recorded in
 - the non-authorizing semantic-namespace overlay V4 has canonical SHA-256
   `60e10e6c10f9ec1f30102f5b6d27be123434a163c01d82c0cc5d4520824532d1`.
 
-Topology V4 remains exact history. Topology V5 is the current additive boundary
-and remains globally `planned_not_materialized` because the execution graph is
-incomplete. It preserves V1 through V4 exactly and additionally marks the
-held-root capture and downstream crosswalk targets implemented.
+Topology V4 remains exact history. Topology V5 is now the exact historical
+held-root/crosswalk boundary. Current topology V6, SHA-256
+`6a25a3d674a7ef3eda4475ed5532fff2366103b641736b410b37fabbc805bcd1`,
+preserves V1 through V5 and adds the non-authorizing target-free schedule,
+process/evaluation/receipt ownership, and retained-capture binding boundaries.
+The execution graph remains globally `planned_not_materialized`;
 `executionImplemented` is false and source binding V7 is unissued.
 
 Semantic namespace V4 is an incomplete overlay, not an execution artifact,
@@ -241,18 +244,22 @@ establish V6/V7 selected-source graph reconciliation, source binding V7,
 execution, evaluation, publication, receipt, reproducible-build,
 network-denial, Metal, scientific, or product authority.
 
-## Current V5 result and remaining evidence gaps
+## Historical V5 result, current V6 boundary, and remaining evidence gaps
 
 - the focused 18,432-row, exact 41-file held-root/crosswalk integration passed
   in 300.125 seconds;
-- implement actual process delivery of the already typed target-free raw and
-  outer schedule projections when the disjoint worker topology is materialized;
+- topology V6 now freezes the exact ten-role process roster, branch-scoped
+  raw/evaluation ownership, verifier-only receipt-last ownership, and the
+  target-free schedule candidate contract;
+- individual raw/outer slot decoding is strict and byte-bounded, while
+  aggregate candidates remain `Encodable`-only pending a bounded stream
+  decoder;
+- the retained-capture-bound supervisor wrapper is implemented and keeps the
+  V5 capture live across projection, but actual process delivery remains
+  unobserved;
 - freeze and implement mutation-delta, historical-observation, MLX-observation,
   and corrected statistics/verdict schemas before any of those keys can admit
   bytes;
-- freeze corrected process ownership, evaluation ownership, replacement
-  process count, result records, receipt ownership, and receipt-last
-  publication;
 - implement the corrected 15-case mutation producer and an independently
   implemented detector in disjoint targets;
 - derive the historical gate/carrier seam and 46-case raw mutation material
@@ -263,18 +270,21 @@ network-denial, Metal, scientific, or product authority.
 
 The next implementation prerequisite is therefore:
 
-`freeze_corrected_process_evaluation_receipt_ownership_and_lawful_target_free_schedule_delivery_then_assign_disjoint_source_bound_mutation_producer_detector_without_materializing_workers`
+`freeze_typed_source_pinned_worker_and_role_artifact_references_with_common_capture_schedule_binding_and_bounded_candidate_stream_decoder_then_freeze_deferred_mutation_historical_mlx_statistics_verdict_schemas_and_assign_disjoint_source_bound_mutation_producer_detector_without_materializing_workers`
 
 The shared codec, exact global/chunk source binding, source-bound lossless
 sidecar, incremental schedule, target-free role projections, and keyed join are
-now joined by the retained capture epoch and independent source-derived
-crosswalk without giving trap-bearing authority to the corrected raw closure.
-The next slice must freeze process/evaluation/receipt ownership and lawful
-schedule delivery before assigning disjoint source-bound mutation producers
-and detectors. Prompt-content target independence, process delivery, model
+now joined by the retained capture epoch, independent source-derived crosswalk,
+and V6's ownership/delivery-preparation declarations without giving
+trap-bearing authority to the corrected raw closure. The next slice must
+freeze typed source-pinned worker and role-artifact references with a common
+capture/schedule binding, bounded aggregate candidate decoding, and the
+deferred semantic schemas before assigning disjoint source-bound mutation
+producers and detectors.
+Prompt-content target independence, process delivery, model
 execution, evaluation/verdict authority, mechanics `PASS`, receipt, science,
 and product authority remain false. See
-`PRIME-NATIVE-NEURAL-GATE-HELD-ROOT-CROSSWALK-AUTHORITY-2026-07-31.md`.
+`PRIME-NATIVE-NEURAL-GATE-PROCESS-OWNERSHIP-TARGET-FREE-DELIVERY-2026-07-31.md`.
 
 ## Workflow boundary
 

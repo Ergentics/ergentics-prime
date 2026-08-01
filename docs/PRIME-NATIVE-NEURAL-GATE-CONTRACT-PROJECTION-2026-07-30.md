@@ -479,7 +479,7 @@ establish V6/V7 selected-source graph reconciliation, source binding V7,
 execution, evaluation, publication, receipt, reproducible-build,
 network-denial, Metal, scientific, or product authority.
 
-The current Stage-B boundary is additive topology V5,
+The historical held-root/crosswalk boundary is additive topology V5,
 `prime_stage_b_held_root_capture_crosswalk_authority_topology_v5`; its canonical
 SHA-256 is
 `252e027fc0f547e96b8c74b2e45cd1c316f1080d639a94619e9c03c87c480930`.
@@ -495,8 +495,12 @@ is an incomplete non-authorizing overlay on historical output classification
 V3, not an execution artifact or receipt. See
 `PRIME-NATIVE-NEURAL-GATE-TYPED-ARTIFACT-TRANSPORT-2026-07-31.md` and
 `PRIME-NATIVE-NEURAL-GATE-REPLAY-COMPOSITION-2026-07-31.md`, and
-`PRIME-NATIVE-NEURAL-GATE-DESCRIPTOR-SOURCE-BINDING-2026-07-31.md`. The V5
-authority ceiling is recorded in
+`PRIME-NATIVE-NEURAL-GATE-DESCRIPTOR-SOURCE-BINDING-2026-07-31.md`. Current
+topology V6 has canonical SHA-256
+`6a25a3d674a7ef3eda4475ed5532fff2366103b641736b410b37fabbc805bcd1`;
+its exact authority ceiling is recorded in
+`PRIME-NATIVE-NEURAL-GATE-PROCESS-OWNERSHIP-TARGET-FREE-DELIVERY-2026-07-31.md`.
+The V5 historical authority ceiling remains in
 `PRIME-NATIVE-NEURAL-GATE-HELD-ROOT-CROSSWALK-AUTHORITY-2026-07-31.md`.
 
 The corrected mechanics are now split. The raw target owns prompt-only input,
@@ -556,15 +560,20 @@ channels, so one seed per replicate, fresh per-row state, and row-permutation
 trace identity are mandatory. The planned shared donor topology also exposed
 trap-bearing historical code to corrected supervisors. The implemented
 package now splits raw execution from evaluation/regrade authority, while
-trap-disjoint topology V5 preserves V1/V2/V3/V4 and supersedes the unsafe future
-routing without issuing source binding V7. The capture/crosswalk result
+historical trap-disjoint topology V5 preserves V1/V2/V3/V4 and supersedes the
+unsafe future routing without issuing source binding V7. The capture/crosswalk result
 establishes one exact 41-file capture epoch, durable origin only for those
 captured bytes, corrected fixture identity, exact source join, independent
 prompt/target association, and outer expected-completion binding. It does not
 establish prompt-content target independence, process delivery, model
 execution, evaluation/verdict publication, mechanics `PASS`, receipt, science,
-or product authority. The exact next prerequisite is
-`freeze_corrected_process_evaluation_receipt_ownership_and_lawful_target_free_schedule_delivery_then_assign_disjoint_source_bound_mutation_producer_detector_without_materializing_workers`.
+or product authority. Topology V6 now adds the exact ten-role
+process/evaluation/receipt ownership declarations, target-free schedule
+construction, and a real supervisor-only retained-capture binding wrapper.
+Only individual slot decoding is strict and byte-bounded; aggregate candidates
+remain `Encodable`-only, and the wrapper observes no delivery. The exact next
+prerequisite is
+`freeze_typed_source_pinned_worker_and_role_artifact_references_with_common_capture_schedule_binding_and_bounded_candidate_stream_decoder_then_freeze_deferred_mutation_historical_mlx_statistics_verdict_schemas_and_assign_disjoint_source_bound_mutation_producer_detector_without_materializing_workers`.
 
 The repository-test checkpoint passed pure sidecar mechanics 6/6. The
 source-pinned MLX validation package remains outside the MLX-free
@@ -580,15 +589,17 @@ with 44 unique complete 512-value vectors, a 90,136-byte dictionary, a
 2,070,912-byte aggregate, bit-exact reconstruction, and stable MLX digest
 `db6906710bffd6a81653ca01df91f913f8a5430da8c8e9c8e620b3c88f7b2f02`.
 Candidate vectors are capped at 1,179,648 and unique vectors at 65,536. This is
-repository mechanics only, not durable Stage-B evidence.
+repository mechanics only, not durable Stage-B evidence. The separate V6
+focused contract/topology checkpoint passed 48/48, and the real retained-root
+projection/binding test passed 1/1 across 18,432 rows in 363.326 seconds. These
+are focused results, not a complete-suite claim.
 
 That pass validates only the secure capture substrate on the pinned host. It
 published no durable Stage-B process record or receipt,
 `executionImplemented` remains false, and no Stage-B replay, historical
 worker, model execution, Metal execution, or product use is implemented or
 authorized. The historical V5 six-process count remains historical and is
-insufficient once the corrected raw worker is added; a replacement
-process-count and receipt schema must be frozen before execution. Distinct
+superseded by V6's exact symmetric ten-role roster. Distinct
 running Release probe/verifier executables and every semantic Stage-B
 artifact remain future work. The direct executable launch path,
 `proc_pidpath` pathname, and code-sign fields are non-authoritative telemetry;

@@ -7,6 +7,7 @@ import Foundation
 @testable import PrimeCore
 import PrimeNativeNeuralGateCorrectedMechanics
 import PrimeNativeNeuralGateCorrectedFixtureAuthority
+import PrimeNativeNeuralGateCorrectedProcessOwnershipContracts
 import PrimeNativeNeuralGateLogitSidecarMechanics
 import PrimeNativeNeuralGatePromptTargetCrosswalkAuthority
 import PrimeNativeNeuralGateReplayArtifactContracts
@@ -16,6 +17,8 @@ import PrimeNativeNeuralGateReplayMechanics
 import PrimeNativeNeuralGateReplaySourceBinding
 import PrimeNativeNeuralGateReplaySourceComposition
 import PrimeNativeNeuralGateReplayTransport
+import PrimeNativeNeuralGateTargetFreeScheduleDeliveryContracts
+import PrimeNativeNeuralGateTargetFreeScheduleDeliveryAuthority
 import XCTest
 
 final class PrimeNativeNeuralGateReplaySourceCompositionTests:
@@ -37,6 +40,10 @@ final class PrimeNativeNeuralGateReplaySourceCompositionTests:
         PrimeNativeNeuralGatePromptTargetCrosswalkAuthority
     private typealias CrosswalkError =
         PrimeNativeNeuralGatePromptTargetCrosswalkAuthorityError
+    private typealias DeliveryAuthority =
+        PrimeNativeNeuralGateTargetFreeScheduleDeliveryAuthority
+    private typealias DeliveryAuthorityError =
+        PrimeNativeNeuralGateTargetFreeScheduleDeliveryAuthorityError
 
     private static let sourceDerivedCrosswalk =
         Result<PrimeNativeNeuralGateSourceDerivedPromptTargetCrosswalk, Error> {
@@ -214,6 +221,51 @@ final class PrimeNativeNeuralGateReplaySourceCompositionTests:
         )
         XCTAssertFalse(
             schedule.outerDelivery.processDeliveryObserved
+        )
+        let targetFreePair = try SourceComposition
+            .makeTargetFreeScheduleCandidatePair(
+                schedule: schedule,
+                invocationRole: .probe
+            )
+        XCTAssertEqual(
+            targetFreePair.rawSchedule.orderedSlots.count,
+            18_432
+        )
+        XCTAssertEqual(
+            targetFreePair.outerSchedule.orderedSlots.count,
+            18_432
+        )
+        XCTAssertEqual(
+            targetFreePair.rawSchedule
+                .promptSourceBindingSHA256,
+            schedule.promptSourceBindingSHA256
+        )
+        XCTAssertEqual(
+            targetFreePair.outerSchedule
+                .promptSourceBindingSHA256,
+            schedule.promptSourceBindingSHA256
+        )
+        XCTAssertEqual(
+            targetFreePair.rawSchedule
+                .scheduleIdentitySHA256,
+            schedule.schedule.scheduleIdentitySHA256
+        )
+        XCTAssertEqual(
+            targetFreePair.outerSchedule
+                .scheduleIdentitySHA256,
+            schedule.schedule.scheduleIdentitySHA256
+        )
+        XCTAssertFalse(
+            targetFreePair.processDeliveryObserved
+        )
+        XCTAssertFalse(
+            targetFreePair.modelExecutionEstablished
+        )
+        XCTAssertFalse(
+            targetFreePair.mechanicsPassAuthorized
+        )
+        XCTAssertFalse(
+            targetFreePair.terminalReceiptAuthorized
         )
         XCTAssertEqual(
             Set(
@@ -555,6 +607,55 @@ final class PrimeNativeNeuralGateReplaySourceCompositionTests:
             captured.inventory
         )
 
+        let probeDelivery = try DeliveryAuthority.bind(
+            capturedSource: captured,
+            branch: .probe
+        )
+        let verifierDelivery = try DeliveryAuthority.bind(
+            capturedSource: captured,
+            branch: .verifier
+        )
+        XCTAssertEqual(probeDelivery.invocationRole, .probe)
+        XCTAssertEqual(
+            probeDelivery.rawScheduleOwnerRole,
+            .probeSupervisor
+        )
+        XCTAssertEqual(
+            probeDelivery.rawWorkerRole,
+            .probeCorrectedRawWorker
+        )
+        XCTAssertEqual(
+            probeDelivery.evaluationWorkerRole,
+            .probeCorrectedEvaluationWorker
+        )
+        XCTAssertEqual(
+            verifierDelivery.invocationRole,
+            .verifier
+        )
+        XCTAssertNotEqual(
+            probeDelivery.candidatePair.deliveryIdentitySHA256,
+            verifierDelivery.candidatePair.deliveryIdentitySHA256
+        )
+        XCTAssertTrue(
+            probeDelivery.retainedCaptureBindingEstablished
+        )
+        XCTAssertTrue(
+            probeDelivery
+                .targetFreeScheduleContentBindingEstablished
+        )
+        XCTAssertTrue(
+            probeDelivery.declarativeBranchOwnershipBound
+        )
+        XCTAssertFalse(probeDelivery.processDeliveryObserved)
+        XCTAssertFalse(probeDelivery.workerMaterialized)
+        XCTAssertFalse(probeDelivery.modelExecutionEstablished)
+        XCTAssertFalse(probeDelivery.evaluationPerformed)
+        XCTAssertFalse(probeDelivery.mechanicsPassAuthorized)
+        XCTAssertFalse(probeDelivery.terminalReceiptAuthorized)
+        XCTAssertNoThrow(
+            try probeDelivery.validateSourceStillUnchanged()
+        )
+
         let bound = try CrosswalkAuthority.bind(
             capturedSource: captured,
             sourceDerivedCrosswalk: crosswalk
@@ -595,6 +696,14 @@ final class PrimeNativeNeuralGateReplaySourceCompositionTests:
         )
         assertCaptureThrows(.finalRecaptureRejected) {
             _ = try captured.validateStillUnchanged()
+        }
+        XCTAssertThrowsError(
+            try probeDelivery.validateSourceStillUnchanged()
+        ) { error in
+            XCTAssertEqual(
+                error as? DeliveryAuthorityError,
+                .retainedSourceChanged
+            )
         }
         assertCaptureThrows(.liveInventoryRejected) {
             _ = try Capture.capture(
@@ -665,6 +774,37 @@ final class PrimeNativeNeuralGateReplaySourceCompositionTests:
         XCTAssertFalse(captureContract.modelExecutionEstablished)
         XCTAssertFalse(captureContract.mechanicsPassAuthorized)
         XCTAssertFalse(captureContract.productAuthorityAuthorized)
+
+        let deliveryContract =
+            PrimeNativeNeuralGateTargetFreeScheduleDeliveryAuthorityContract
+            .frozenV1
+        XCTAssertNoThrow(try deliveryContract.validate())
+        XCTAssertEqual(
+            PrimeSHA256.hexDigest(
+                of: try PrimeCanonicalJSON.encode(
+                    deliveryContract
+                )
+            ),
+            "b638564791715dcd250c86d3c0faaac7b79b2a26b7dd7a0334ad4772d9afaf88"
+        )
+        XCTAssertTrue(
+            deliveryContract.retainedCaptureBindingImplemented
+        )
+        XCTAssertTrue(
+            deliveryContract
+                .targetFreeScheduleContentBindingImplemented
+        )
+        XCTAssertTrue(
+            deliveryContract
+                .declarativeBranchOwnershipBindingImplemented
+        )
+        XCTAssertFalse(deliveryContract.processDeliveryObserved)
+        XCTAssertFalse(deliveryContract.workerMaterialized)
+        XCTAssertFalse(deliveryContract.modelExecutionEstablished)
+        XCTAssertFalse(deliveryContract.evaluationPerformed)
+        XCTAssertFalse(deliveryContract.mechanicsPassAuthorized)
+        XCTAssertFalse(deliveryContract.terminalReceiptAuthorized)
+        XCTAssertFalse(deliveryContract.productAuthorityAuthorized)
 
         let crosswalkContract =
             PrimeNativeNeuralGatePromptTargetCrosswalkAuthorityContract

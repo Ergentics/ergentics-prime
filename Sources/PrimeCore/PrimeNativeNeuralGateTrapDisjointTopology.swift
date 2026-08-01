@@ -928,6 +928,463 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
         )
     }()
 
+    /// Freezes the non-authorizing process, evaluation, and receipt ownership
+    /// records plus a narrow target-free schedule-delivery wire boundary.
+    /// Every supervisor and worker remains planned and absent. V1 through V5
+    /// remain exact historical contracts.
+    public static let frozenV6: Self = {
+        let previous = frozenV5
+        let sourceCompositionTargetName =
+            "PrimeNativeNeuralGateReplaySourceComposition"
+        let rawWorkerTargetName =
+            "PrimeNativeNeuralGateCorrectedRawWorker"
+        let probeTargetName =
+            "PrimeNativeNeuralGateReplayProbe"
+        let verifierTargetName =
+            "PrimeNativeNeuralGateReplayVerifier"
+        let scheduleTargetName =
+            "PrimeNativeNeuralGateTargetFreeScheduleDeliveryContracts"
+        let processTargetName =
+            "PrimeNativeNeuralGateCorrectedProcessOwnershipContracts"
+        let evaluationTargetName =
+            "PrimeNativeNeuralGateCorrectedEvaluationOwnershipContracts"
+        let terminalTargetName =
+            "PrimeNativeNeuralGateTerminalReceiptOwnershipContracts"
+        let deliveryAuthorityTargetName =
+            "PrimeNativeNeuralGateTargetFreeScheduleDeliveryAuthority"
+        let probeEvaluationTargetName =
+            "PrimeNativeNeuralGateCorrectedProbeEvaluationWorker"
+        let verifierEvaluationTargetName =
+            "PrimeNativeNeuralGateCorrectedVerifierEvaluationWorker"
+
+        var targets:
+            [PrimeNativeNeuralGateTopologyTarget] =
+            []
+        for target in previous.targetGraph {
+            switch target.targetName {
+            case sourceCompositionTargetName:
+                targets.append(
+                    Self.target(
+                        target.targetName,
+                        target.materialization,
+                        target.directLocalDependencyNames
+                            + [scheduleTargetName],
+                        target.authority,
+                        externalProducts:
+                            target.externalProductDependencyNames
+                    )
+                )
+                targets.append(
+                    Self.target(
+                        scheduleTargetName,
+                        .implemented,
+                        [
+                            "PrimeNativeNeuralGateReplayArtifactContracts",
+                            "PrimeNativeNeuralGateReplayMechanics",
+                            "PrimeNativeNeuralGateCorrectedMechanics",
+                        ],
+                        "pure bounded non-authorizing raw and outer target-free schedule wire contracts; raw slots admit only execution index, prompt bytes/tokens, PRIMECPI2 binding, and PRIMECOR1 while outer slots admit only execution index and PRIMECOR1"
+                    )
+                )
+                targets.append(
+                    Self.target(
+                        processTargetName,
+                        .implemented,
+                        [
+                            "PrimeNativeNeuralGateReplayArtifactContracts",
+                            scheduleTargetName,
+                        ],
+                        "non-authorizing ownership and record contracts for an exact symmetric 10-process topology: two supervisors, two swift-package describe children, two historical workers, two corrected raw workers, and two corrected evaluation workers"
+                    )
+                )
+                targets.append(
+                    Self.target(
+                        evaluationTargetName,
+                        .implemented,
+                        [
+                            "PrimeNativeNeuralGateReplayArtifactContracts",
+                            processTargetName,
+                        ],
+                        "non-authorizing probe/verifier corrected-evaluation ownership and result-binding contracts with no fixture, crosswalk, evaluator implementation, or receipt authority"
+                    )
+                )
+                targets.append(
+                    Self.target(
+                        terminalTargetName,
+                        .implemented,
+                        [
+                            "PrimeNativeNeuralGateReplayArtifactContracts",
+                            processTargetName,
+                            evaluationTargetName,
+                        ],
+                        "non-authorizing verifier-supervisor terminal-receipt ownership and exclusive no-replace receipt-last ordering contract; publication remains unimplemented and unauthorized"
+                    )
+                )
+                targets.append(
+                    Self.target(
+                        deliveryAuthorityTargetName,
+                        .implemented,
+                        [
+                            "PrimeNativeNeuralGateReplayCaptureInventory",
+                            sourceCompositionTargetName,
+                            scheduleTargetName,
+                            processTargetName,
+                            evaluationTargetName,
+                        ],
+                        "supervisor-only non-Codable adapter retaining the V5 exact-tree capture across pre/post recapture while binding content-derived target-free candidates to exact probe/verifier schedule owners; no delivery is observed"
+                    )
+                )
+            case rawWorkerTargetName:
+                targets.append(
+                    Self.target(
+                        target.targetName,
+                        target.materialization,
+                        target.directLocalDependencyNames
+                            .filter { $0 != "PrimeCore" }
+                            + [
+                                scheduleTargetName,
+                                processTargetName,
+                            ],
+                        "separately launched prompt-only corrected raw executor consuming only the narrow target-free schedule and raw-process ownership contracts",
+                        externalProducts:
+                            target.externalProductDependencyNames
+                    )
+                )
+                targets.append(
+                    Self.target(
+                        probeEvaluationTargetName,
+                        .plannedNotMaterialized,
+                        [
+                            "PrimeCore",
+                            "PrimeNativeNeuralGateCorrectedEvaluationMechanics",
+                            "PrimeNativeNeuralGatePromptTargetCrosswalkAuthority",
+                            evaluationTargetName,
+                        ],
+                        "distinct trap-bearing probe corrected-evaluation worker; may bind expected targets and emit an evaluation result but cannot publish a terminal receipt"
+                    )
+                )
+                targets.append(
+                    Self.target(
+                        verifierEvaluationTargetName,
+                        .plannedNotMaterialized,
+                        [
+                            "PrimeCore",
+                            "PrimeNativeNeuralGateCorrectedEvaluationMechanics",
+                            "PrimeNativeNeuralGatePromptTargetCrosswalkAuthority",
+                            evaluationTargetName,
+                        ],
+                        "distinct trap-bearing verifier corrected-evaluation worker; may independently bind expected targets and emit an evaluation result but cannot publish a terminal receipt"
+                    )
+                )
+            case probeTargetName:
+                targets.append(
+                    Self.target(
+                        target.targetName,
+                        target.materialization,
+                        target.directLocalDependencyNames
+                            + [processTargetName],
+                        "trap-free Stage-B probe supervisor bound only to target-free process ownership and transport records",
+                        externalProducts:
+                            target.externalProductDependencyNames
+                    )
+                )
+            case verifierTargetName:
+                targets.append(
+                    Self.target(
+                        target.targetName,
+                        target.materialization,
+                        target.directLocalDependencyNames
+                            + [
+                                processTargetName,
+                                evaluationTargetName,
+                                terminalTargetName,
+                            ],
+                        "target-blind Stage-B verifier supervisor and designated receipt-last owner; it consumes only typed process/evaluation records and cannot reach target-bearing evaluation implementation",
+                        externalProducts:
+                            target.externalProductDependencyNames
+                    )
+                )
+            default:
+                targets.append(target)
+            }
+        }
+
+        func appendingUnique(
+            _ base: [String],
+            _ additions: [String]
+        ) -> [String] {
+            var result = base
+            for addition in additions
+            where !result.contains(addition) {
+                result.append(addition)
+            }
+            return result
+        }
+
+        let allNewTargetNames = [
+            scheduleTargetName,
+            processTargetName,
+            evaluationTargetName,
+            terminalTargetName,
+            deliveryAuthorityTargetName,
+            probeEvaluationTargetName,
+            verifierEvaluationTargetName,
+        ]
+        var reachability =
+            previous.forbiddenReachability.map { rule in
+                let additions: [String]
+                switch rule.targetName {
+                case sourceCompositionTargetName,
+                     "PrimeNativeNeuralGatePromptTargetCrosswalkAuthority":
+                    additions = [
+                        processTargetName,
+                        evaluationTargetName,
+                        terminalTargetName,
+                        deliveryAuthorityTargetName,
+                        probeEvaluationTargetName,
+                        verifierEvaluationTargetName,
+                    ]
+                case probeTargetName:
+                    additions = [
+                        evaluationTargetName,
+                        terminalTargetName,
+                        deliveryAuthorityTargetName,
+                        probeEvaluationTargetName,
+                        verifierEvaluationTargetName,
+                    ]
+                case verifierTargetName:
+                    additions = [
+                        deliveryAuthorityTargetName,
+                        probeEvaluationTargetName,
+                        verifierEvaluationTargetName,
+                    ]
+                case rawWorkerTargetName:
+                    additions = [
+                        "PrimeCore",
+                        "PrimeNativeNeuralGateReplayTransport",
+                        "PrimeNativeNeuralGateReplayComposition",
+                        "PrimeNativeNeuralGateReplaySourceBinding",
+                        sourceCompositionTargetName,
+                        evaluationTargetName,
+                        terminalTargetName,
+                        deliveryAuthorityTargetName,
+                        probeEvaluationTargetName,
+                        verifierEvaluationTargetName,
+                        "PrimeNativeNeuralGateCorrectedMutationProducer",
+                        "PrimeNativeNeuralGateCorrectedMutationDetector",
+                    ]
+                default:
+                    additions = allNewTargetNames
+                }
+                return Self.forbidden(
+                    rule.targetName,
+                    appendingUnique(
+                        rule.forbiddenReachableTargetNames,
+                        additions
+                    )
+                )
+            }
+
+        for reverseProtectedTargetName in [
+            "PrimeCore",
+            "PrimeNativeCorpusReplayMechanics",
+            "PrimeNativeNeuralGateReplayMechanics",
+            "PrimeNativeNeuralGateCorrectedEvaluationMechanics",
+            "PrimeNativeNeuralGateCorrectedFixtureAuthority",
+            "ErgenticsPrimeRuntime",
+            "PrimeNativeNeuralGateHistoricalReplayMechanics",
+            "PrimeNativeNeuralGateHistoricalFixtureWorker",
+        ] {
+            reachability.append(
+                Self.forbidden(
+                    reverseProtectedTargetName,
+                    allNewTargetNames
+                )
+            )
+        }
+        let rawProcessForbidden = [
+            "PrimeCore",
+            "PrimeNativeCorpusReplayMechanics",
+            "PrimeNativeNeuralGateReplayTransport",
+            "PrimeNativeNeuralGateReplayComposition",
+            "PrimeNativeNeuralGateReplaySourceBinding",
+            sourceCompositionTargetName,
+            "PrimeNativeNeuralGateReplayCaptureInventory",
+            "PrimeNativeNeuralGatePromptTargetCrosswalkAuthority",
+            "PrimeNativeNeuralGateCorrectedEvaluationMechanics",
+            "PrimeNativeNeuralGateCorrectedFixtureAuthority",
+            "PrimeNativeNeuralGateMLXLogSoftmaxRecomputation",
+            evaluationTargetName,
+            terminalTargetName,
+            deliveryAuthorityTargetName,
+            probeEvaluationTargetName,
+            verifierEvaluationTargetName,
+            "PrimeNativeNeuralGateCorrectedMutationProducer",
+            "PrimeNativeNeuralGateCorrectedMutationDetector",
+            "ErgenticsPrimeRuntime",
+            "PrimeNativeNeuralGateHistoricalReplayMechanics",
+            "PrimeNativeNeuralGateHistoricalFixtureWorker",
+        ]
+        reachability.append(
+            Self.forbidden(
+                scheduleTargetName,
+                appendingUnique(
+                    rawProcessForbidden,
+                    [
+                        processTargetName,
+                        evaluationTargetName,
+                        terminalTargetName,
+                        deliveryAuthorityTargetName,
+                    ]
+                )
+            )
+        )
+        reachability.append(
+            Self.forbidden(
+                processTargetName,
+                rawProcessForbidden
+            )
+        )
+        reachability.append(
+            Self.forbidden(
+                evaluationTargetName,
+                [
+                    "PrimeNativeCorpusReplayMechanics",
+                    "PrimeNativeNeuralGateReplayTransport",
+                    "PrimeNativeNeuralGateReplayComposition",
+                    "PrimeNativeNeuralGateReplaySourceBinding",
+                    sourceCompositionTargetName,
+                    deliveryAuthorityTargetName,
+                    "PrimeNativeNeuralGateReplayCaptureInventory",
+                    "PrimeNativeNeuralGatePromptTargetCrosswalkAuthority",
+                    "PrimeNativeNeuralGateCorrectedEvaluationMechanics",
+                    "PrimeNativeNeuralGateCorrectedFixtureAuthority",
+                    "PrimeNativeNeuralGateMLXLogSoftmaxRecomputation",
+                    terminalTargetName,
+                    probeEvaluationTargetName,
+                    verifierEvaluationTargetName,
+                    "PrimeNativeNeuralGateCorrectedMutationProducer",
+                    "PrimeNativeNeuralGateCorrectedMutationDetector",
+                    "ErgenticsPrimeRuntime",
+                    "PrimeNativeNeuralGateHistoricalReplayMechanics",
+                    "PrimeNativeNeuralGateHistoricalFixtureWorker",
+                ]
+            )
+        )
+        reachability.append(
+            Self.forbidden(
+                terminalTargetName,
+                [
+                    "PrimeNativeCorpusReplayMechanics",
+                    "PrimeNativeNeuralGateReplayTransport",
+                    "PrimeNativeNeuralGateReplayComposition",
+                    "PrimeNativeNeuralGateReplaySourceBinding",
+                    sourceCompositionTargetName,
+                    deliveryAuthorityTargetName,
+                    "PrimeNativeNeuralGateReplayCaptureInventory",
+                    "PrimeNativeNeuralGatePromptTargetCrosswalkAuthority",
+                    "PrimeNativeNeuralGateCorrectedEvaluationMechanics",
+                    "PrimeNativeNeuralGateCorrectedFixtureAuthority",
+                    "PrimeNativeNeuralGateMLXLogSoftmaxRecomputation",
+                    probeEvaluationTargetName,
+                    verifierEvaluationTargetName,
+                    "PrimeNativeNeuralGateCorrectedMutationProducer",
+                    "PrimeNativeNeuralGateCorrectedMutationDetector",
+                    "ErgenticsPrimeRuntime",
+                    "PrimeNativeNeuralGateHistoricalReplayMechanics",
+                    "PrimeNativeNeuralGateHistoricalFixtureWorker",
+                ]
+            )
+        )
+        reachability.append(
+            Self.forbidden(
+                deliveryAuthorityTargetName,
+                [
+                    "PrimeNativeCorpusReplayMechanics",
+                    "PrimeNativeNeuralGatePromptTargetCrosswalkAuthority",
+                    "PrimeNativeNeuralGateCorrectedEvaluationMechanics",
+                    "PrimeNativeNeuralGateCorrectedFixtureAuthority",
+                    "PrimeNativeNeuralGateMLXLogSoftmaxRecomputation",
+                    terminalTargetName,
+                    probeEvaluationTargetName,
+                    verifierEvaluationTargetName,
+                    "PrimeNativeNeuralGateCorrectedMutationProducer",
+                    "PrimeNativeNeuralGateCorrectedMutationDetector",
+                    "ErgenticsPrimeRuntime",
+                    "PrimeNativeNeuralGateHistoricalReplayMechanics",
+                    "PrimeNativeNeuralGateHistoricalFixtureWorker",
+                ]
+            )
+        )
+        let evaluationWorkerForbidden = [
+            terminalTargetName,
+            deliveryAuthorityTargetName,
+            "PrimeNativeNeuralGateCorrectedMutationProducer",
+            "PrimeNativeNeuralGateCorrectedMutationDetector",
+            "PrimeNativeNeuralGateMLXLogSoftmaxRecomputation",
+            "ErgenticsPrimeRuntime",
+            "PrimeNativeNeuralGateHistoricalReplayMechanics",
+            "PrimeNativeNeuralGateHistoricalFixtureWorker",
+        ]
+        reachability.append(
+            Self.forbidden(
+                probeEvaluationTargetName,
+                appendingUnique(
+                    evaluationWorkerForbidden,
+                    [verifierEvaluationTargetName]
+                )
+            )
+        )
+        reachability.append(
+            Self.forbidden(
+                verifierEvaluationTargetName,
+                appendingUnique(
+                    evaluationWorkerForbidden,
+                    [probeEvaluationTargetName]
+                )
+            )
+        )
+
+        return Self(
+            schemaVersion: 6,
+            contractID:
+                "prime_stage_b_process_evaluation_receipt_ownership_target_free_delivery_topology_v6",
+            status: previous.status,
+            executionImplemented: false,
+            historicalReplayPlanID:
+                previous.historicalReplayPlanID,
+            historicalSourceBindingContractID:
+                previous.historicalSourceBindingContractID,
+            historicalContractsPreserved: true,
+            historicalFutureTargetGraphSuperseded: true,
+            targetGraph: targets,
+            forbiddenReachability: reachability,
+            historicalContainmentRootTargetName:
+                previous.historicalContainmentRootTargetName,
+            historicalRuntimeTargetName:
+                previous.historicalRuntimeTargetName,
+            historicalReplayTargetName:
+                previous.historicalReplayTargetName,
+            pureReplayTargetName:
+                previous.pureReplayTargetName,
+            donorAdaptationV2PreservedAsHistory: true,
+            donorAdaptationV3Required: true,
+            donorAdaptationV3RequiredDestination:
+                previous.donorAdaptationV3RequiredDestination,
+            sourceBindingV7Issued: false,
+            sourceBindingV7Prerequisite:
+                previous.sourceBindingV7Prerequisite,
+            packageCaptureAuthority:
+                "actual_package_secure_capture_only_not_v6_or_v7_execution_graph_reconciliation",
+            mutationProducerDetectorTargetAssignmentDeferred: true,
+            mutationProducerDetectorMustBeDisjoint: true,
+            nextImplementationPrerequisite:
+                "freeze_typed_source_pinned_worker_and_role_artifact_references_with_common_capture_schedule_binding_and_bounded_candidate_stream_decoder_then_freeze_deferred_mutation_historical_mlx_statistics_verdict_schemas_and_assign_disjoint_source_bound_mutation_producer_detector_without_materializing_workers",
+            authorityStatement:
+                "This V6 contract preserves V1 through V5 and the historical V5/V6 replay identities while materializing four non-authorizing declaration targets plus one isolated supervisor-only retained-capture delivery authority. The raw-safe schedule target uses byte-capped slot decoding and content-derived candidate identities but intentionally exposes no aggregate candidate decoder. The isolated authority retains the V5 exact-tree capability across pre/post recapture and binds the source-derived schedule to exact probe/verifier ownership without entering the raw-worker closure. Separate process, evaluation, and receipt declarations freeze an exact symmetric 10-process future topology and designate the verifier supervisor as receipt-last owner without materializing any process. The corrected raw worker drops PrimeCore and may reach only raw mechanics plus target-free schedule/process contracts. Distinct probe and verifier corrected-evaluation workers remain planned and trap-bearing; neither may publish the terminal receipt. No process delivery, model execution, evaluation, verdict, mechanics PASS, receipt publication, mutation execution/detection, scientific authority, or product authority is observed or authorized. Historical runtime, every supervisor and worker, mutation producer, and mutation detector remain planned_not_materialized. executionImplemented is false and source binding V7 is not issued."
+        )
+    }()
+
     public func target(
         named name: String
     ) throws -> PrimeNativeNeuralGateTopologyTarget {
@@ -985,6 +1442,8 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
             expected = .frozenV4
         case 5:
             expected = .frozenV5
+        case 6:
+            expected = .frozenV6
         default:
             throw PrimeNativeNeuralGateTopologyError
                 .invalidFrozenContract

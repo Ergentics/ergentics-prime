@@ -204,15 +204,24 @@ historical runtime, workers, probe, verifier, mutation producer, and mutation
 detector remain `planned_not_materialized`. Mutation producer/detector
 assignment remains deferred and their implementation must be disjoint.
 
-## Next prerequisite
+## V6 continuation and next prerequisite
 
-The exact next implementation prerequisite is:
+The V5 prerequisite originally recorded below was satisfied additively by
+topology V6; V5 remains unchanged history. V6 freezes the exact ten-role
+process roster, branch-scoped process/evaluation ownership, verifier-only
+receipt-last ownership, strict byte-bounded slot decoding, and construct-only
+target-free candidate types. Its supervisor-only retained-capture wrapper is a
+real capability-bound projection and ownership adapter, but no schedule has
+crossed a process boundary. The exact current implementation prerequisite is:
 
-`freeze_corrected_process_evaluation_receipt_ownership_and_lawful_target_free_schedule_delivery_then_assign_disjoint_source_bound_mutation_producer_detector_without_materializing_workers`
+`freeze_typed_source_pinned_worker_and_role_artifact_references_with_common_capture_schedule_binding_and_bounded_candidate_stream_decoder_then_freeze_deferred_mutation_historical_mlx_statistics_verdict_schemas_and_assign_disjoint_source_bound_mutation_producer_detector_without_materializing_workers`
 
-That slice must freeze corrected process/evaluation/receipt ownership and
-replacement process/result records, then define lawful delivery of the already
-typed target-free schedule capabilities. Only after that boundary is frozen may
-Prime assign separate source-bound mutation producer and detector targets.
-Worker materialization, Stage-B execution, verdict publication, and receipt
-issuance remain later work.
+That slice must freeze typed source-pinned worker and role-artifact references
+with a common capture/schedule binding, add a bounded aggregate candidate
+stream decoder, and freeze the deferred semantic record schemas before Prime
+assigns separate source-bound mutation producer and detector targets. Aggregate candidates are currently
+`Encodable`-only; only individual slot decoding is bounded. Worker
+materialization, Stage-B execution, verdict publication, and receipt issuance
+remain later work. See
+`PRIME-NATIVE-NEURAL-GATE-PROCESS-OWNERSHIP-TARGET-FREE-DELIVERY-2026-07-31.md`
+for the exact V6 identities and focused evidence.
