@@ -1984,6 +1984,81 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
         )
     }()
 
+    /// Adds the exact source-derived historical fixture to the already
+    /// isolated historical replay module and materializes only the future
+    /// fresh-process worker executable target. The target exists so its
+    /// source closure can be compiled and inspected; no worker image is
+    /// sealed, launched, or accepted as evidence at this boundary.
+    public static let frozenV11: Self = {
+        let previous = frozenV10
+        let historicalTargetName =
+            previous.historicalReplayTargetName
+        let workerTargetName =
+            previous.historicalContainmentRootTargetName
+
+        let targets = previous.targetGraph.map { target in
+            switch target.targetName {
+            case historicalTargetName:
+                Self.target(
+                    target.targetName,
+                    target.materialization,
+                    target.directLocalDependencyNames,
+                    "V10 exact historical gate, bounded verdict carrier, and Prime observation seam plus the exact 88,141-byte source-derived historical fixture routed into the same module for lawful access to internal donor declarations; compile-only historical source closure with Prime admission forced to ABSTAIN and no process, durable publication, PASS, receipt, source binding V7, science, or product authority"
+                )
+            case workerTargetName:
+                Self.target(
+                    target.targetName,
+                    .implemented,
+                    target.directLocalDependencyNames,
+                    "internal executable target for a future sealed fresh-process historical fixture worker; binds the exact source-derived fixture and V10 observation seam but has no product, sealed image, invocation, process observation, artifact publication, mechanics PASS, receipt, source binding V7, science, or product authority"
+                )
+            default:
+                target
+            }
+        }
+
+        return Self(
+            schemaVersion: 11,
+            contractID:
+                "prime_stage_b_source_bound_historical_fixture_worker_topology_v11",
+            status: previous.status,
+            executionImplemented: false,
+            historicalReplayPlanID:
+                previous.historicalReplayPlanID,
+            historicalSourceBindingContractID:
+                previous.historicalSourceBindingContractID,
+            historicalContractsPreserved: true,
+            historicalFutureTargetGraphSuperseded: true,
+            targetGraph: targets,
+            forbiddenReachability:
+                previous.forbiddenReachability,
+            historicalContainmentRootTargetName:
+                workerTargetName,
+            historicalRuntimeTargetName:
+                previous.historicalRuntimeTargetName,
+            historicalReplayTargetName:
+                historicalTargetName,
+            pureReplayTargetName:
+                previous.pureReplayTargetName,
+            donorAdaptationV2PreservedAsHistory: true,
+            donorAdaptationV3Required: true,
+            donorAdaptationV3RequiredDestination:
+                previous.donorAdaptationV3RequiredDestination,
+            sourceBindingV7Issued: false,
+            sourceBindingV7Prerequisite:
+                previous.sourceBindingV7Prerequisite,
+            packageCaptureAuthority:
+                "actual_package_secure_capture_only_not_v11_worker_execution_or_source_execution_binding_v7_evidence",
+            mutationProducerDetectorTargetAssignmentDeferred:
+                false,
+            mutationProducerDetectorMustBeDisjoint: true,
+            nextImplementationPrerequisite:
+                "derive_and_source_bind_historical_worker_evidence_export_adapter_without_mutating_the_byte_exact_gate_executing_the_worker_or_issuing_source_binding_v7",
+            authorityStatement:
+                "This V11 topology preserves V1 through V10, retains the exact V10 runtime, gate, carrier, observation seam, and pure replay sources, and adds only the exact source-derived 88,141-byte historical fixture to the existing isolated historical replay module. Same-module placement is required because the source-faithful fixture accesses internal declarations of the byte-exact gate; no donor access level is changed. V11 also materializes only the package-internal historical worker executable target with its previously frozen four direct dependencies. Compilation and a future invocation call edge are not a sealed executable observation or execution evidence. The gate still does not publicly expose invariant records, per-mutation fingerprints, or observed failed-leg sets, so this worker target cannot yet satisfy the complete frozen historical-worker artifact protocol. Every probe, verifier, corrected worker, and remaining execution role stays absent. No worker image sealing or launch, process, gate or model execution, durable observation, independent detector, distinct-family/four-tier audit, mechanics PASS, terminal receipt, source/execution-binding V7, scientific authority, or product authority is observed or authorized."
+        )
+    }()
+
     public func target(
         named name: String
     ) throws -> PrimeNativeNeuralGateTopologyTarget {
@@ -2051,6 +2126,8 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
             expected = .frozenV9
         case 10:
             expected = .frozenV10
+        case 11:
+            expected = .frozenV11
         default:
             throw PrimeNativeNeuralGateTopologyError
                 .invalidFrozenContract

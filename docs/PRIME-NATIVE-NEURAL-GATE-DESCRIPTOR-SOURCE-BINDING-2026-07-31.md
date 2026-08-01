@@ -361,10 +361,14 @@ mechanics/science/product authority stays false.
 The V8 next prerequisite was
 `derive_source_pinned_historical_gate_carrier_and_forty_six_mutation_material_without_materializing_workers_or_issuing_source_binding_v7`.
 Topology V9 now satisfies it as offline source material; descriptor and
-source/execution-binding authority are unchanged. The current next
-prerequisite is
+source/execution-binding authority are unchanged. Topology V10 materializes
+only the internal historical source closure and does not change descriptor or
+source/execution-binding authority. Its next prerequisite was
 `derive_and_source_bind_source_faithful_historical_fixture_then_materialize_only_the_sealed_historical_worker_without_materializing_probe_verifier_or_issuing_source_binding_v7`.
+Topology V11 now source-binds the fixture and adds only an unavailable target;
+descriptor and source/execution-binding authority remain unchanged. The
+current next prerequisite is
+`derive_and_source_bind_historical_worker_evidence_export_adapter_without_mutating_the_byte_exact_gate_executing_the_worker_or_issuing_source_binding_v7`.
 See [Prime Native Neural Gate Historical Source Material](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-SOURCE-MATERIAL-2026-08-01.md).
-Topology V10 materializes only the internal historical source closure and
-does not change descriptor or source/execution-binding authority. See
 [Prime Native Neural Gate Historical Replay Mechanics](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-REPLAY-MECHANICS-2026-08-01.md).
+See [Prime Native Neural Gate Historical Fixture and Worker Boundary](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-FIXTURE-WORKER-BOUNDARY-2026-08-01.md).

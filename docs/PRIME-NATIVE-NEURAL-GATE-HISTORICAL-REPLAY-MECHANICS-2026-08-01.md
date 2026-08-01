@@ -15,10 +15,10 @@ internal Swift library targets and no product, executable, worker, or process:
 - the historical target depends only on `ErgenticsPrimeRuntime` and the
   existing pure `PrimeNativeNeuralGateReplayMechanics` codec.
 
-Neither target is reachable from a current production product or executable.
-The planned historical fixture worker remains the only future closure allowed
-to reach them. PMHNP remains a read-only source oracle and is not a Prime
-package or runtime dependency.
+At the V10 checkpoint, neither target was reachable from a production product
+or executable. The then-planned historical fixture worker was the only future
+closure allowed to reach them. PMHNP remains a read-only source oracle and is
+not a Prime package or runtime dependency.
 
 This is source-closure and compile evidence only. The seam contains a direct
 call edge from `observe(_:)` to the donor `dispose(_:)` for a later isolated
@@ -123,12 +123,23 @@ probe/verifier output at 49,923 bytes, SHA-256
 That captures the actual package/source topology only. It is not historical
 gate execution, worker evidence, or source/execution-binding V7.
 
-## Next exact prerequisite
+## V10 next prerequisite and V11 boundary
+
+The V10 next exact prerequisite was:
 
 `derive_and_source_bind_source_faithful_historical_fixture_then_materialize_only_the_sealed_historical_worker_without_materializing_probe_verifier_or_issuing_source_binding_v7`
 
-That later slice must preserve the V10 closure and create a fresh-process
-execution boundary before historical evaluation can become evidence. It must
-not materialize the supervisor probe/verifier, issue source/execution-binding
-V7, or reinterpret the donor's same-family mutation dispatch as independent
-detection.
+V11 preserves the V10 closure, source-binds the exact fixture, and adds only a
+package-internal executable target whose `main` exits unavailable with status
+`78`. The fixture-to-observation call edge is private and unreachable. No
+sealed image, request handling, worker execution, historical evaluation,
+supervisor probe/verifier, or source/execution-binding V7 is created.
+
+The current next exact prerequisite is:
+
+`derive_and_source_bind_historical_worker_evidence_export_adapter_without_mutating_the_byte_exact_gate_executing_the_worker_or_issuing_source_binding_v7`
+
+It must source-derive the missing raw-record export without modifying the
+byte-exact gate or reinterpreting the donor's same-family mutation dispatch as
+independent detection. See
+[Prime Native Neural Gate Historical Fixture and Worker Boundary](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-FIXTURE-WORKER-BOUNDARY-2026-08-01.md).

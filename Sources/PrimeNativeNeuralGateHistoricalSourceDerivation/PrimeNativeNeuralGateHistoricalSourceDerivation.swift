@@ -244,6 +244,42 @@ public enum PrimeNativeNeuralGateHistoricalSourceDerivation {
     public static let frozenAggregateMaterialSHA256 =
         "9184d0a2feab238a81728aa62c05710121dd77c0b9371761ec5d6d065d9702af"
 
+    /// Derives the frozen historical fixture from its two exact donor inputs.
+    ///
+    /// The package lock is an input pin even though the emitted Swift bytes
+    /// come from the fixture source. Its exact digest is embedded by the
+    /// frozen fixture rewrite, so accepting any other lock would break the
+    /// source-to-output evidence chain.
+    public static func deriveHistoricalFixture(
+        fixtureSource: Data,
+        packageResolvedArtifact: Data
+    ) throws -> PrimeNativeNeuralGateDerivedSourceMaterial {
+        let fixturePin = frozenHistoricalFixtureSourcePin
+        let packagePin = frozenHistoricalPackageResolvedPin
+
+        try validatePinnedInput(
+            fixtureSource,
+            expectedByteCount: fixturePin.byteCount,
+            expectedSHA256: fixturePin.sha256
+        )
+        try validatePinnedInput(
+            packageResolvedArtifact,
+            expectedByteCount: packagePin.byteCount,
+            expectedSHA256: packagePin.sha256
+        )
+
+        return try derive(
+            donorBytes: fixtureSource,
+            requiredInputOrdinals: [
+                fixturePin.ordinal,
+                packagePin.ordinal,
+            ],
+            expectedDonorByteCount: fixturePin.byteCount,
+            expectedDonorSHA256: fixturePin.sha256,
+            contract: frozenHistoricalFixtureDerivation
+        )
+    }
+
     public static func derive(
         nativeLanguageGateSource: Data,
         verdictCarrierSource: Data
@@ -355,6 +391,23 @@ public enum PrimeNativeNeuralGateHistoricalSourceDerivation {
         contract:
             PrimeNativeNeuralGateHistoricalSourceDerivationContract
     ) throws -> PrimeNativeNeuralGateDerivedSourceMaterial {
+        try derive(
+            donorBytes: donorBytes,
+            requiredInputOrdinals: [inputOrdinal],
+            expectedDonorByteCount: expectedDonorByteCount,
+            expectedDonorSHA256: expectedDonorSHA256,
+            contract: contract
+        )
+    }
+
+    private static func derive(
+        donorBytes: Data,
+        requiredInputOrdinals: [Int],
+        expectedDonorByteCount: UInt64,
+        expectedDonorSHA256: String,
+        contract:
+            PrimeNativeNeuralGateHistoricalSourceDerivationContract
+    ) throws -> PrimeNativeNeuralGateDerivedSourceMaterial {
         guard contract.validate(
             donorByteCount: expectedDonorByteCount,
             donorSHA256: expectedDonorSHA256
@@ -363,7 +416,7 @@ public enum PrimeNativeNeuralGateHistoricalSourceDerivation {
                 .contractDrift
         }
         guard contract.requiredInputOrdinals
-                == [inputOrdinal]
+                == requiredInputOrdinals
         else {
             throw PrimeNativeNeuralGateHistoricalSourceDerivationError
                 .inputOrdinalMismatch

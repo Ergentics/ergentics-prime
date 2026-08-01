@@ -422,9 +422,9 @@ After the additive topology-V5 source reseal, the same Release canary passed
 with byte-identical probe/verifier package-description output: 36,047 bytes,
 SHA-256
 `88571dc5cc4d15f11395430ab9ea410aba6cafa295edebe54acff816585a3fbb`.
-The V4 bytes were not reused as V5 evidence. `executionImplemented` remains false,
-and no Stage-B replay, historical worker, Metal execution, or product use is
-implemented or authorized. Root
+The V4 bytes were not reused as V5 evidence. `executionImplemented` remains
+false, and no Stage-B replay, historical-worker execution, Metal execution, or
+product use is implemented or authorized. Root
 containment/disjointness, unchanged companion pre/post identity, exact
 copied-donor paths, lossless copied Stage-A descriptor closure, typed
 donor-to-Prime adaptation proofs, role-scoped workers and supervisors, and
@@ -433,9 +433,10 @@ invariant/fingerprint validators and non-evidentiary corrected calculators
 remain future Stage-B work. The direct executable launch
 path, `proc_pidpath` pathname, and code-sign fields are
 non-authoritative telemetry; no Apple trust claim is made. Because the
-source-faithful historical fixture inherits traps, a sealed Swift worker owns
-the full historical arm. Probe and verifier supervise separate bounded worker
-invocations; successful stdout/stderr are empty, worker death/reap and exact
+source-faithful historical fixture inherits traps, a later sealed Swift worker
+must own the full historical arm. Probe and verifier must supervise separate
+bounded worker invocations; successful stdout/stderr are empty, worker
+death/reap and exact
 role-prefix inventory are mandatory, and a worker result cannot authorize
 mechanics `PASS` until the verifier decodes and recomputes every semantic
 artifact. A contained and reaped abnormal outcome internally abstains, poisons
@@ -472,7 +473,8 @@ delivery and prompt-content target independence remain false. Topology V6
 freezes the exact ten-role process roster, branch-scoped raw/evaluation record
 ownership, verifier-only receipt-last ownership, target-free slot/candidate
 construction, and the retained-capture delivery-preparation wrapper. The
-wrapper is real; delivery is not. All supervisors/workers remain absent.
+wrapper is real; delivery is not. At the V6/V7 checkpoint, all supervisors and
+workers remained absent.
 The terminal declaration inventories exactly 20 role-scoped pre-receipt paths,
 not a complete root. Topology V7 freezes typed role-to-path-to-content and
 worker-source reference declarations under one common capture/schedule identity
@@ -600,10 +602,16 @@ V10 now materializes only the source-pinned seven-file runtime and isolated
 historical replay libraries. The Prime-authored seam validates the public
 assessment surface and always keeps Prime admission at `ABSTAIN`; no worker,
 historical admission evaluation, durable observation, or authority exists.
-The current next prerequisite is
+The V10 next prerequisite was
 `derive_and_source_bind_source_faithful_historical_fixture_then_materialize_only_the_sealed_historical_worker_without_materializing_probe_verifier_or_issuing_source_binding_v7`.
+Topology V11 now source-binds the exact fixture and adds the historical worker
+target only as an unavailable executable boundary. Its `main` exits `78`; no
+sealed image, worker process, historical evaluation, or durable artifact
+exists. The current next prerequisite is
+`derive_and_source_bind_historical_worker_evidence_export_adapter_without_mutating_the_byte_exact_gate_executing_the_worker_or_issuing_source_binding_v7`.
 See [Prime Native Neural Gate Historical Source Material](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-SOURCE-MATERIAL-2026-08-01.md).
 See [Prime Native Neural Gate Historical Replay Mechanics](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-REPLAY-MECHANICS-2026-08-01.md).
+See [Prime Native Neural Gate Historical Fixture and Worker Boundary](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-FIXTURE-WORKER-BOUNDARY-2026-08-01.md).
 
 ## Optimizer checkpoint admission
 

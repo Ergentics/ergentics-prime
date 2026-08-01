@@ -216,10 +216,10 @@ execution target imports transport or composition.
 Descriptor source behavior is specified in
 `PRIME-NATIVE-NEURAL-GATE-DESCRIPTOR-SOURCE-BINDING-2026-07-31.md`.
 
-## Remaining planned execution topology
+## Historical V1 planned execution topology
 
-The following targets are names and dependency constraints only. None exists
-in `Package.swift` yet:
+At topology V1, the following targets were names and dependency constraints
+only; none existed in `Package.swift` at that checkpoint:
 
 ```text
 ErgenticsPrimeRuntime
@@ -275,6 +275,12 @@ PrimeNativeNeuralGateCorrectedVerifierEvaluationWorker
       - PrimeNativeNeuralGateCorrectedEvaluationOwnershipContracts
 ```
 
+Topology V10 subsequently materialized the internal runtime and historical
+replay libraries. V11 subsequently added the historical fixture worker target
+as a deliberately unavailable executable boundary. Every other executable
+role in this historical plan remains absent, and no worker process or Stage-B
+execution has been observed.
+
 No target outside the historical runtime module, its historical replay
 adapter, and the historical fixture worker closure may reach
 `ErgenticsPrimeRuntime` or
@@ -299,15 +305,16 @@ Adaptation proof V2 is preserved as historical evidence. Its donor gate and
 verdict-carrier destinations point into the pure replay target, which is the
 unsafe routing discovered by this audit.
 
-A future adaptation proof V3 must route both into:
+The then-future adaptation proof V3 was required to route both into:
 
 ```text
 Sources/PrimeNativeNeuralGateHistoricalReplayMechanics/
 ```
 
-The fixture prefix, transformed byte count, and SHA-256 must then be
-recomputed from the pinned Swift donor bytes. No donor source is copied or
-compiled by this topology slice.
+V3 now performs that gate/carrier routing. V11 separately reproduces the
+frozen fixture prefix, transformed byte count, and SHA-256 from the pinned
+Swift donor bytes and places the exact result beside the historical gate.
+No donor source was copied or compiled by the original topology slice.
 
 ## Package-capture truth
 
@@ -512,10 +519,17 @@ Topology V9 now satisfies it with one internal source-derivation target and
 additive adaptation proof V3; every historical runtime, worker, process, and
 source-binding authority remains absent. Topology V10 then materializes only
 the exact runtime and isolated historical replay library targets; all current
-production targets still cannot reach them. The current next prerequisite is
+production targets still cannot reach them. Its next prerequisite was
 `derive_and_source_bind_source_faithful_historical_fixture_then_materialize_only_the_sealed_historical_worker_without_materializing_probe_verifier_or_issuing_source_binding_v7`.
+Topology V11 now source-binds the exact historical fixture and adds only the
+unavailable historical executable target. Target presence is not a sealed
+worker or execution result. The current next prerequisite is
+`derive_and_source_bind_historical_worker_evidence_export_adapter_without_mutating_the_byte_exact_gate_executing_the_worker_or_issuing_source_binding_v7`.
+The topology remains `planned_not_materialized`, `executionImplemented`
+remains false, and source/execution-binding V7 remains unissued.
 See [Prime Native Neural Gate Historical Source Material](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-SOURCE-MATERIAL-2026-08-01.md).
 See [Prime Native Neural Gate Historical Replay Mechanics](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-REPLAY-MECHANICS-2026-08-01.md).
+See [Prime Native Neural Gate Historical Fixture and Worker Boundary](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-FIXTURE-WORKER-BOUNDARY-2026-08-01.md).
 
 The separate read-only Swift Git workflow preflight remains a later workflow
 slice. It does not belong in the Stage-B evidence graph, and the signed-in

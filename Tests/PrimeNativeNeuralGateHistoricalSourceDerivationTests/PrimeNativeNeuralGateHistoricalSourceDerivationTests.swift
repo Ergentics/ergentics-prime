@@ -19,6 +19,8 @@ final class PrimeNativeNeuralGateHistoricalSourceDerivationTests:
         "PRIME_PMHNP_COMPANION_ROOT"
     private static let donorRequirementEnvironmentKey =
         "PRIME_REQUIRE_V9_PINNED_DONOR_GATE"
+    private static let fixtureRequirementEnvironmentKey =
+        "PRIME_REQUIRE_V11_HISTORICAL_FIXTURE_SOURCE_GATE"
 
     func testFrozenContractIdentitiesRemainExact() throws {
         let v2 =
@@ -73,6 +75,16 @@ final class PrimeNativeNeuralGateHistoricalSourceDerivationTests:
             ),
             "/pinned/companion"
         )
+        XCTAssertEqual(
+            try pinnedCompanionRoot(
+                from: [
+                    Self.fixtureRequirementEnvironmentKey: "1",
+                    Self.donorRootEnvironmentKey:
+                        "/pinned/companion",
+                ]
+            ),
+            "/pinned/companion"
+        )
         XCTAssertThrowsError(
             try pinnedCompanionRoot(
                 from: [
@@ -86,10 +98,28 @@ final class PrimeNativeNeuralGateHistoricalSourceDerivationTests:
                 .invalidRequirementValue("true")
             )
         }
-        for environment in [
+        XCTAssertThrowsError(
+            try pinnedCompanionRoot(
+                from: [
+                    Self.fixtureRequirementEnvironmentKey:
+                        "true",
+                ]
+            )
+        ) { error in
+            XCTAssertEqual(
+                error as? DonorGatePolicyError,
+                .invalidRequirementValue("true")
+            )
+        }
+        for environment: [String: String] in [
             [Self.donorRequirementEnvironmentKey: "1"],
+            [Self.fixtureRequirementEnvironmentKey: "1"],
             [
                 Self.donorRequirementEnvironmentKey: "1",
+                Self.donorRootEnvironmentKey: "",
+            ],
+            [
+                Self.fixtureRequirementEnvironmentKey: "1",
                 Self.donorRootEnvironmentKey: "",
             ],
         ] {
@@ -177,6 +207,54 @@ final class PrimeNativeNeuralGateHistoricalSourceDerivationTests:
             PrimeNativeNeuralGateHistoricalSourceDerivation
                 .frozenMutationMaterialDerivation,
             contract.mutationMaterialDerivation
+        )
+        XCTAssertEqual(
+            PrimeNativeNeuralGateHistoricalSourceDerivation
+                .frozenHistoricalFixtureSourcePin,
+            .init(
+                ordinal: 10,
+                byteCount: 165_692,
+                sha256:
+                    "266475d337fb49ba9c84e03a53871269a73812c3200a830a799ef90f4901968c"
+            )
+        )
+        XCTAssertEqual(
+            PrimeNativeNeuralGateHistoricalSourceDerivation
+                .frozenHistoricalPackageResolvedPin,
+            .init(
+                ordinal: 11,
+                byteCount: 1_949,
+                sha256:
+                    "cf1ba313dcb0c959e80ba09d6cbe0c56bcd921523bda5cec2c682c8ae7696ab3"
+            )
+        )
+        let frozenV2Fixture = v2.entries[9].derivation
+        assertExactContractMatch(
+            PrimeNativeNeuralGateHistoricalSourceDerivation
+                .frozenHistoricalFixtureDerivation,
+            frozenV2Fixture
+        )
+        XCTAssertEqual(
+            frozenV2Fixture.requiredInputOrdinals,
+            [10, 11]
+        )
+        XCTAssertEqual(
+            frozenV2Fixture.expectedOutputByteCount,
+            88_141
+        )
+        XCTAssertEqual(
+            frozenV2Fixture.expectedOutputSHA256,
+            "e04daaf783f0cb79958daea9a70579fc959b47ceea4ae913bcb69cdc458fcf99"
+        )
+        XCTAssertTrue(
+            frozenV2Fixture.prefixUTF8.contains(
+                "import PrimeNativeNeuralGateReplayMechanics\n"
+            )
+        )
+        XCTAssertFalse(
+            frozenV2Fixture.prefixUTF8.contains(
+                "import PrimeNativeNeuralGateHistoricalReplayMechanics\n"
+            )
         )
         XCTAssertNotEqual(v2.contractID, v3.contractID)
         XCTAssertEqual(
@@ -1002,6 +1080,155 @@ final class PrimeNativeNeuralGateHistoricalSourceDerivationTests:
         XCTAssertFalse(first.productAuthorityAuthorized)
     }
 
+    func testPinnedHistoricalFixtureDerivationWhenCompanionRootIsProvided()
+        throws
+    {
+        guard let root = try pinnedCompanionRoot(
+            from: ProcessInfo.processInfo.environment
+        ) else {
+            throw XCTSkip(
+                "standalone mode: set PRIME_PMHNP_COMPANION_ROOT to run the pinned fixture derivation"
+            )
+        }
+        let rootURL = URL(
+            fileURLWithPath: root,
+            isDirectory: true
+        )
+        let fixtureSource = try Data(
+            contentsOf: rootURL.appendingPathComponent(
+                "neural-kit/Tests/NeuralKitTests/EngineProposesNativeLanguageVerifyAbstainTests.swift"
+            )
+        )
+        let packageResolvedArtifact = try Data(
+            contentsOf: rootURL.appendingPathComponent(
+                "neural-kit/Package.resolved"
+            )
+        )
+
+        let first = try
+            PrimeNativeNeuralGateHistoricalSourceDerivation
+            .deriveHistoricalFixture(
+                fixtureSource: fixtureSource,
+                packageResolvedArtifact:
+                    packageResolvedArtifact
+            )
+        let second = try
+            PrimeNativeNeuralGateHistoricalSourceDerivation
+            .deriveHistoricalFixture(
+                fixtureSource: fixtureSource,
+                packageResolvedArtifact:
+                    packageResolvedArtifact
+            )
+
+        XCTAssertEqual(first, second)
+        XCTAssertEqual(
+            first.materialID,
+            "exact_lf_forensic_fixture_five_group_four_rewrite_v1"
+        )
+        XCTAssertEqual(first.byteCount, 88_141)
+        XCTAssertEqual(
+            first.sha256,
+            "e04daaf783f0cb79958daea9a70579fc959b47ceea4ae913bcb69cdc458fcf99"
+        )
+        let checkedInFixture = try Data(
+            contentsOf: URL(
+                fileURLWithPath:
+                    FileManager.default.currentDirectoryPath,
+                isDirectory: true
+            ).appendingPathComponent(
+                "Sources/PrimeNativeNeuralGateHistoricalReplayMechanics/EngineProposesNativeLanguageVerifyAbstainFixture.swift"
+            )
+        )
+        XCTAssertEqual(first.bytes, checkedInFixture)
+        let derivedSource = try XCTUnwrap(
+            String(data: first.bytes, encoding: .utf8)
+        )
+        XCTAssertTrue(
+            derivedSource.hasPrefix(
+                "import CryptoKit\n"
+                    + "import ErgenticsPrimeRuntime\n"
+                    + "import PrimeNativeNeuralGateReplayMechanics\n"
+                    + "import Foundation\n\n"
+            )
+        )
+        XCTAssertFalse(
+            derivedSource.contains(
+                "import PrimeNativeNeuralGateHistoricalReplayMechanics"
+            )
+        )
+        XCTAssertTrue(
+            derivedSource.contains(
+                "== \"cf1ba313dcb0c959e80ba09d6cbe0c56bcd921523bda5cec2c682c8ae7696ab3\""
+            )
+        )
+
+        var mutatedFixture = fixtureSource
+        mutatedFixture[mutatedFixture.startIndex] ^= 0x01
+        XCTAssertThrowsError(
+            try PrimeNativeNeuralGateHistoricalSourceDerivation
+                .deriveHistoricalFixture(
+                    fixtureSource: mutatedFixture,
+                    packageResolvedArtifact:
+                        packageResolvedArtifact
+                )
+        ) { error in
+            XCTAssertEqual(
+                error as?
+                    PrimeNativeNeuralGateHistoricalSourceDerivationError,
+                .donorSHA256Mismatch
+            )
+        }
+
+        var mutatedPackage = packageResolvedArtifact
+        mutatedPackage[mutatedPackage.startIndex] ^= 0x01
+        XCTAssertThrowsError(
+            try PrimeNativeNeuralGateHistoricalSourceDerivation
+                .deriveHistoricalFixture(
+                    fixtureSource: fixtureSource,
+                    packageResolvedArtifact: mutatedPackage
+                )
+        ) { error in
+            XCTAssertEqual(
+                error as?
+                    PrimeNativeNeuralGateHistoricalSourceDerivationError,
+                .donorSHA256Mismatch
+            )
+        }
+
+        var truncatedFixture = fixtureSource
+        truncatedFixture.removeLast()
+        XCTAssertThrowsError(
+            try PrimeNativeNeuralGateHistoricalSourceDerivation
+                .deriveHistoricalFixture(
+                    fixtureSource: truncatedFixture,
+                    packageResolvedArtifact:
+                        packageResolvedArtifact
+                )
+        ) { error in
+            XCTAssertEqual(
+                error as?
+                    PrimeNativeNeuralGateHistoricalSourceDerivationError,
+                .donorByteCountMismatch
+            )
+        }
+
+        var appendedPackage = packageResolvedArtifact
+        appendedPackage.append(0x0a)
+        XCTAssertThrowsError(
+            try PrimeNativeNeuralGateHistoricalSourceDerivation
+                .deriveHistoricalFixture(
+                    fixtureSource: fixtureSource,
+                    packageResolvedArtifact: appendedPackage
+                )
+        ) { error in
+            XCTAssertEqual(
+                error as?
+                    PrimeNativeNeuralGateHistoricalSourceDerivationError,
+                .donorByteCountMismatch
+            )
+        }
+    }
+
     func testTargetSourceHasNoFilesystemProcessOrWorkerMechanics()
         throws
     {
@@ -1083,6 +1310,11 @@ final class PrimeNativeNeuralGateHistoricalSourceDerivationTests:
                 "public static func derive("
             )
         )
+        XCTAssertTrue(
+            source.contains(
+                "public static func deriveHistoricalFixture("
+            )
+        )
         XCTAssertEqual(
             source.components(
                 separatedBy: "public static func derive("
@@ -1095,10 +1327,12 @@ final class PrimeNativeNeuralGateHistoricalSourceDerivationTests:
     private func pinnedCompanionRoot(
         from environment: [String: String]
     ) throws -> String? {
-        let requirement = environment[
-            Self.donorRequirementEnvironmentKey
-        ]
-        if let requirement, requirement != "1" {
+        let requirements = [
+            Self.donorRequirementEnvironmentKey,
+            Self.fixtureRequirementEnvironmentKey,
+        ].compactMap { environment[$0] }
+        for requirement in requirements
+        where requirement != "1" {
             throw DonorGatePolicyError
                 .invalidRequirementValue(requirement)
         }
@@ -1107,7 +1341,7 @@ final class PrimeNativeNeuralGateHistoricalSourceDerivationTests:
         ].flatMap {
             $0.isEmpty ? nil : $0
         }
-        if requirement == "1", root == nil {
+        if requirements.contains("1"), root == nil {
             throw DonorGatePolicyError
                 .requiredRootMissing
         }

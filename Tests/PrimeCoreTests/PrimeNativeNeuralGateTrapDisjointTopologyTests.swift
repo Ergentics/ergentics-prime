@@ -2159,6 +2159,7 @@ final class PrimeNativeNeuralGateTrapDisjointTopologyTests:
             #".target(name:"PrimeNativeNeuralGateHistoricalSourceDerivation",dependencies:["PrimeNativeNeuralGateReplayMechanics",])"#,
             #".target(name:"ErgenticsPrimeRuntime")"#,
             #".target(name:"PrimeNativeNeuralGateHistoricalReplayMechanics",dependencies:["ErgenticsPrimeRuntime","PrimeNativeNeuralGateReplayMechanics",])"#,
+            #".executableTarget(name:"PrimeNativeNeuralGateHistoricalFixtureWorker",dependencies:["PrimeCore","ErgenticsPrimeRuntime","PrimeNativeNeuralGateHistoricalReplayMechanics","PrimeNativeNeuralGateReplayTransport",],resources:[.copy("HistoricalFixtureEvidence"),])"#,
         ]
         for declaration in exactDeclarations {
             XCTAssertTrue(
@@ -2194,6 +2195,7 @@ final class PrimeNativeNeuralGateTrapDisjointTopologyTests:
             "PrimeNativeNeuralGateHistoricalSourceDerivation",
             "ErgenticsPrimeRuntime",
             "PrimeNativeNeuralGateHistoricalReplayMechanics",
+            "PrimeNativeNeuralGateHistoricalFixtureWorker",
         ] {
             XCTAssertFalse(
                 productDeclarations.contains(
@@ -2237,7 +2239,7 @@ final class PrimeNativeNeuralGateTrapDisjointTopologyTests:
             .plannedNotMaterialized
         )
 
-        for target in Contract.frozenV10.targetGraph
+        for target in Contract.frozenV11.targetGraph
         where target.materialization
             == .plannedNotMaterialized
         {

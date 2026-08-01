@@ -563,8 +563,8 @@ with byte-identical probe/verifier package-description output: 36,047 bytes,
 SHA-256
 `88571dc5cc4d15f11395430ab9ea410aba6cafa295edebe54acff816585a3fbb`.
 `executionImplemented` remains false,
-and no Stage-B replay, historical worker, Metal execution, or product use is
-implemented or authorized. Descriptor-bound running Release
+and no Stage-B replay, historical-worker execution, Metal execution, or
+product use is implemented or authorized. Descriptor-bound running Release
 probe/verifier executables, two
 SwiftPM children, two historical workers, and one sealed Swift worker image
 remain required Stage-B work. The direct
@@ -1551,7 +1551,8 @@ retained-capture binding, and receipt-last declarations. Topology V7 then froze
 the exact-count stream decoder and typed role/artifact and worker-source
 reference declarations. Real common/branch scalar references are supervisor-
 derived and non-authorizing; worker-source and role-artifact content references
-remain absent, and no worker is materialized. The exact next step is to freeze
+remained absent and no worker was materialized at the V7 checkpoint. The exact
+next step at that checkpoint was to freeze
 the deferred
 mutation/historical/MLX/statistics/verdict schemas, then assign disjoint
 source-bound mutation producer/detector targets without materializing workers:
@@ -1622,7 +1623,13 @@ derivation. No historical target, worker, model execution, or authority was
 created. Topology V10 now materializes only the exact internal runtime and
 historical replay source closure plus a non-authorizing Prime observation
 seam. No worker, historical admission evaluation, model execution, or
-authority was created. The current next prerequisite is
+authority was created. Its next prerequisite was
 `derive_and_source_bind_source_faithful_historical_fixture_then_materialize_only_the_sealed_historical_worker_without_materializing_probe_verifier_or_issuing_source_binding_v7`.
+Topology V11 now source-binds the exact historical fixture and adds only a
+package-internal executable target that exits unavailable with status `78`.
+It does not seal or execute a worker and creates no historical evaluation or
+durable evidence. The current next prerequisite is
+`derive_and_source_bind_historical_worker_evidence_export_adapter_without_mutating_the_byte_exact_gate_executing_the_worker_or_issuing_source_binding_v7`.
 See [Prime Native Neural Gate Historical Source Material](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-SOURCE-MATERIAL-2026-08-01.md).
 See [Prime Native Neural Gate Historical Replay Mechanics](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-REPLAY-MECHANICS-2026-08-01.md).
+See [Prime Native Neural Gate Historical Fixture and Worker Boundary](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-FIXTURE-WORKER-BOUNDARY-2026-08-01.md).

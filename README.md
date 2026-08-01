@@ -42,6 +42,10 @@ corrected row-identity metadata leak, trap-disjoint execution admission, dual
 replay arms, exact invariant serialization, and direct/accelerated fingerprint
 boundary are recorded in
 [`docs/PRIME-NATIVE-NEURAL-GATE-FIXTURE-REPLAY-PLAN-2026-07-30.md`](docs/PRIME-NATIVE-NEURAL-GATE-FIXTURE-REPLAY-PLAN-2026-07-30.md).
+The V11 exact historical-fixture derivation, same-module routing, deliberately
+unavailable executable target, and unchanged execution/authority ceiling are
+recorded in
+[`docs/PRIME-NATIVE-NEURAL-GATE-HISTORICAL-FIXTURE-WORKER-BOUNDARY-2026-08-01.md`](docs/PRIME-NATIVE-NEURAL-GATE-HISTORICAL-FIXTURE-WORKER-BOUNDARY-2026-08-01.md).
 The additive topology-V7 exact-count stream decoder, typed worker/artifact
 reference declarations, retained-capture binding, and unchanged authority
 ceiling are recorded in
@@ -740,8 +744,9 @@ SHA-256
 The V4 bytes were not reused as V5 evidence.
 It has the same secure-capture-only scope and does not widen any execution,
 evaluation, receipt, reproducibility, network-denial, Metal, or product claim.
-`executionImplemented` remains false, and no Stage-B replay, historical worker,
-Metal execution, or product use is implemented or authorized. The historical
+`executionImplemented` remains false, and no Stage-B replay,
+historical-worker execution, Metal execution, or product use is implemented
+or authorized. The historical
 V5 six-process count is preserved as history. Topology V6 replaces it for
 future execution with an exact symmetric ten-process roster and freezes the
 process, evaluation, and receipt ownership declarations; none of those ten
@@ -759,9 +764,9 @@ source-pinned worker closure/executable references were forward blockers.
 Topology V7 now freezes those typed declaration schemas and their retained
 capture/schedule adapter, but no realized artifact content, source snapshot,
 compiled closure, sealed executable, or process observation exists.
-Because the source-faithful fixture inherits traps, a sealed Swift worker owns
-the entire historical arm; probe and verifier supervise separate bounded
-invocations with
+Because the source-faithful fixture inherits traps, a later sealed Swift
+worker must own the entire historical arm; probe and verifier must supervise
+separate bounded invocations with
 empty successful stdout/stderr, mandatory death/reap, exact role-prefix
 inventory, and role-separated artifact evidence. An abnormal worker outcome
 that is successfully contained and reaped poisons the root, accepts no result
@@ -844,24 +849,30 @@ detector, materialize the historical target or workers, or issue source
 binding V7. Topology V10 now completes that next bounded prerequisite by
 materializing the exact seven-file runtime and isolated historical replay
 libraries plus a Prime-authored observation seam. They remain internal and
-unreachable from production executables. The current next exact prerequisite
-is
+unreachable from production executables. That V10 next prerequisite was
 `derive_and_source_bind_source_faithful_historical_fixture_then_materialize_only_the_sealed_historical_worker_without_materializing_probe_verifier_or_issuing_source_binding_v7`.
+Topology V11 now source-binds the exact 88,141-byte historical fixture and
+adds only a package-internal executable target whose `main` exits unavailable
+with status `78`. It does not seal, launch, or execute a historical worker.
+The current next exact prerequisite is
+`derive_and_source_bind_historical_worker_evidence_export_adapter_without_mutating_the_byte_exact_gate_executing_the_worker_or_issuing_source_binding_v7`.
 See [Prime Native Neural Gate Historical Source Material](docs/PRIME-NATIVE-NEURAL-GATE-HISTORICAL-SOURCE-MATERIAL-2026-08-01.md).
 See [Prime Native Neural Gate Historical Replay Mechanics](docs/PRIME-NATIVE-NEURAL-GATE-HISTORICAL-REPLAY-MECHANICS-2026-08-01.md).
+See [Prime Native Neural Gate Historical Fixture and Worker Boundary](docs/PRIME-NATIVE-NEURAL-GATE-HISTORICAL-FIXTURE-WORKER-BOUNDARY-2026-08-01.md).
 
-V9 and V10 keep the exact donor files in the first-party companion repository. Their
-cross-repository source proof is therefore an explicit manual pre-merge gate.
+V9 through V11 keep the exact donor files in the first-party companion
+repository. Their cross-repository source proof is therefore an explicit
+manual pre-merge gate.
 The requirement marker makes a missing donor root or mistyped policy fail
 rather than skip:
 
 ```sh
-env PRIME_REQUIRE_V9_PINNED_DONOR_GATE=1 PRIME_REQUIRE_V10_HISTORICAL_REPLAY_SOURCE_GATE=1 PRIME_PMHNP_COMPANION_ROOT=/path/to/pinned/pmhnp-companion-ergentics swift test
+env PRIME_REQUIRE_V9_PINNED_DONOR_GATE=1 PRIME_REQUIRE_V10_HISTORICAL_REPLAY_SOURCE_GATE=1 PRIME_REQUIRE_V11_HISTORICAL_FIXTURE_SOURCE_GATE=1 PRIME_PMHNP_COMPANION_ROOT=/path/to/pinned/pmhnp-companion-ergentics swift test
 ```
 
-This command is mandatory process evidence for V9 and V10. Prime has no repository CI
-or branch-rule status check yet, so this record does not claim GitHub enforces
-the invocation automatically.
+This command is mandatory process evidence for V9 through V11. Prime has no
+repository CI or branch-rule status check yet, so this record does not claim
+GitHub enforces the invocation automatically.
 
 ## Initial calibration
 
