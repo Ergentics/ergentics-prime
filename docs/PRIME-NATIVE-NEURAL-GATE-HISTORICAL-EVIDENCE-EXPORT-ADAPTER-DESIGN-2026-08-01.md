@@ -2,6 +2,12 @@
 
 Date: 2026-08-01
 
+Current continuation: V13 has now satisfied this document's materialization
+prerequisite without executing the exporter or worker. Treat the V12 absence
+statements below as frozen historical checkpoint facts, not the current
+package state. Continue from [Prime Native Neural Gate Historical Evidence
+Export Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-EXPORT-SOURCE-2026-08-01.md).
+
 ## Decision
 
 V12 is a design and source checkpoint only. It preserves V11 byte-for-byte,
@@ -327,7 +333,7 @@ carrier requirements are frozen, and `workerMainUnavailable` remains true.
 No historical observation or product checkpoint exists. Prime admission
 remains `ABSTAIN`.
 
-## Next exact prerequisite
+## V12 next exact prerequisite — satisfied by V13
 
 `materialize_the_exact_source_bound_historical_evidence_export_variant_in_the_isolated_historical_replay_boundary_without_executing_the_gate_or_worker_sealing_or_launching_a_worker_or_issuing_source_binding_v7`
 
@@ -337,3 +343,7 @@ while keeping the byte-exact gate, worker source, and worker call graph
 unchanged. Worker integration, sealing, launch, execution, durable
 publication, probe/verifier evidence, mechanics admission, and
 source/execution-binding V7 remain later boundaries.
+
+V13 satisfies this bounded prerequisite. Its current continuation and exact
+source identities are recorded in [Prime Native Neural Gate Historical
+Evidence Export Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-EXPORT-SOURCE-2026-08-01.md).

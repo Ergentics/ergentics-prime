@@ -412,6 +412,92 @@ extension PrimeNativeNeuralGateHistoricalSourceDerivation {
                 "cf1ba313dcb0c959e80ba09d6cbe0c56bcd921523bda5cec2c682c8ae7696ab3"
         )
 
+    static let frozenHistoricalEvidenceExportSuffixPin =
+        PrimeNativeNeuralGateHistoricalSourcePin(
+            ordinal: 12,
+            byteCount: 43_273,
+            sha256:
+                "5eb1481f71b6071b56306e5bc20bd6ed2805cf7cad8441b5e9deb5929f026b67"
+        )
+
+    static let frozenHistoricalEvidenceExportSourceContractID =
+        "prime_source_bound_historical_evidence_export_source_v13"
+
+    static let frozenHistoricalEvidenceExportSourceContractSHA256 =
+        "ecc329a7e56d843b53f9d894af4e335c9d00ac05d56efe308d61860835278d5e"
+
+    static let frozenHistoricalEvidenceExportDerivationID =
+        "exact_whole_gate_namespace_clone_two_rewrite_append_only_evidence_export_suffix_v1"
+
+    static let frozenHistoricalEvidenceExportFinalByteCount:
+        UInt64 = 412_226
+
+    static let frozenHistoricalEvidenceExportFinalSHA256 =
+        "a20bb86529988f75a46340b9a62924ebda151744a4028ad7726a2d712a385eae"
+
+    static let frozenHistoricalEvidenceExportNamespaceDerivation =
+        PrimeNativeNeuralGateHistoricalSourceDerivationContract(
+            derivationID:
+                "exact_whole_gate_namespace_clone_two_rewrite_v1",
+            kind: .frozenLineGroupsAndRewrites,
+            requiredInputOrdinals: [1],
+            lineGroups: [
+                .init(
+                    ordinal: 1,
+                    firstLine: 1,
+                    lastLine: 9_242,
+                    terminalLFPolicy:
+                        .preserveTerminalLF,
+                    expectedByteCount: 368_918,
+                    expectedSHA256:
+                        "c3c93c637cb15f3a6944e78d8d44c0045f873f7df54f6121ee2d25e4f166b0f6"
+                ),
+            ],
+            joinedGroupByteCount: 368_918,
+            joinedGroupSHA256:
+                "c3c93c637cb15f3a6944e78d8d44c0045f873f7df54f6121ee2d25e4f166b0f6",
+            rewrites: [
+                .init(
+                    ordinal: 1,
+                    rewriteID:
+                        "internal_isolated_gate_namespace_declaration",
+                    sourceUTF8:
+                        "public enum PrimeNeuralNativeLanguageVerifyAbstainGate {",
+                    sourceByteCount: 56,
+                    sourceSHA256:
+                        "4f9077034b6bff78ff926d17cecf12641ef3fc5859eb29fca577526f3e898b7b",
+                    replacementUTF8:
+                        "enum PrimeNeuralNativeLanguageVerifyAbstainGateEvidenceExportAdapter {",
+                    replacementByteCount: 70,
+                    replacementSHA256:
+                        "8133fb6157154d866541f1d379ad9d478caaf09d2eb79dc970dc2b2a7d05a0fb"
+                ),
+                .init(
+                    ordinal: 2,
+                    rewriteID:
+                        "internal_isolated_gate_namespace_self_reference",
+                    sourceUTF8:
+                        "PrimeNeuralNativeLanguageVerifyAbstainGate\n"
+                        + "                .exactMaterialsCacheKey",
+                    sourceByteCount: 82,
+                    sourceSHA256:
+                        "51b33089416e7bac694073d8a5c1136e0847ab57142a636210cfc35948e32a70",
+                    replacementUTF8:
+                        "PrimeNeuralNativeLanguageVerifyAbstainGateEvidenceExportAdapter\n"
+                        + "                .exactMaterialsCacheKey",
+                    replacementByteCount: 103,
+                    replacementSHA256:
+                        "cd864c2d2a1e4508580029a0cc1ee34ac12f3057f387bd0b6a94b7eebf650e4e"
+                ),
+            ],
+            transformedBodyByteCount: 368_953,
+            transformedBodySHA256:
+                "c323aab1b3f01c78552ee30e5d50c2c7974a1d846121d887dc5f005f6a89cd31",
+            expectedOutputByteCount: 368_953,
+            expectedOutputSHA256:
+                "c323aab1b3f01c78552ee30e5d50c2c7974a1d846121d887dc5f005f6a89cd31"
+        )
+
     /// Exact V2 fixture derivation, retained byte-for-byte for additive V11
     /// placement beside the historical gate. V11 changes routing, not the
     /// proven source material or any of its four frozen rewrites.

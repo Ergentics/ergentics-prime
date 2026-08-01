@@ -1242,8 +1242,9 @@ worker. The V11 next prerequisite was:
 
 `derive_and_source_bind_historical_worker_evidence_export_adapter_without_mutating_the_byte_exact_gate_executing_the_worker_or_issuing_source_binding_v7`
 
-V12 resolves only that design/source-contract boundary; the live prerequisite
-is recorded in [Prime Native Neural Gate Historical Evidence Export Adapter Design](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-EXPORT-ADAPTER-DESIGN-2026-08-01.md).
+V12 resolved only that design/source-contract boundary. Topology V13 now
+materializes the exact source-only exporter, and the current prerequisite is
+recorded in [Prime Native Neural Gate Historical Evidence Export Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-EXPORT-SOURCE-2026-08-01.md).
 
 Only after that adapter is exact may a later slice implement worker request
 handling, sealing, launch/supervision, semantic artifact publication, and the
@@ -1333,7 +1334,9 @@ Its next prerequisite was
 See [Prime Native Neural Gate Historical Source Material](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-SOURCE-MATERIAL-2026-08-01.md).
 See [Prime Native Neural Gate Historical Replay Mechanics](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-REPLAY-MECHANICS-2026-08-01.md).
 See [Prime Native Neural Gate Historical Fixture and Worker Boundary](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-FIXTURE-WORKER-BOUNDARY-2026-08-01.md).
-V12 now resolves only the historical-evidence exporter design/source-contract
-boundary. The live materialization prerequisite, exact private-evidence
-limitations, and unchanged worker call graph are recorded in
-[Prime Native Neural Gate Historical Evidence Export Adapter Design](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-EXPORT-ADAPTER-DESIGN-2026-08-01.md).
+V13 now resolves the bounded historical-evidence exporter source and topology
+materialization prerequisite while preserving the unchanged worker call graph.
+The current next exact prerequisite is
+`source_bind_the_historical_worker_evidence_export_call_edge_without_sealing_launching_or_executing_the_worker_or_issuing_source_binding_v7`.
+See
+[Prime Native Neural Gate Historical Evidence Export Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-EXPORT-SOURCE-2026-08-01.md).

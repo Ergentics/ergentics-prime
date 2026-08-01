@@ -139,8 +139,9 @@ The V11 next exact prerequisite was:
 
 `derive_and_source_bind_historical_worker_evidence_export_adapter_without_mutating_the_byte_exact_gate_executing_the_worker_or_issuing_source_binding_v7`
 
-V12 resolves only that design/source-contract boundary; the live prerequisite
-is recorded in [Prime Native Neural Gate Historical Evidence Export Adapter Design](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-EXPORT-ADAPTER-DESIGN-2026-08-01.md).
+V12 resolved only that design/source-contract boundary. Topology V13 now
+materializes the exact source-only exporter, and the current prerequisite is
+recorded in [Prime Native Neural Gate Historical Evidence Export Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-EXPORT-SOURCE-2026-08-01.md).
 
 The later materialization must source-derive the missing raw-record export
 without modifying the byte-exact gate or reinterpreting the donor's

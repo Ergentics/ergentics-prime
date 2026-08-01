@@ -510,23 +510,8 @@ final class
             ).contains("exactArtifactCacheKey")
         )
 
-        let package = try String(
-            contentsOf:
-                repositoryRoot.appendingPathComponent(
-                    "Package.swift"
-                ),
-            encoding: .utf8
-        )
-        XCTAssertFalse(
-            package.contains(contract.futureIsolatedTargetName)
-        )
-        XCTAssertFalse(
-            FileManager.default.fileExists(
-                atPath: repositoryRoot.appendingPathComponent(
-                    contract.futureDerivedSourceRelativePath
-                ).path
-            )
-        )
+        XCTAssertFalse(contract.futureTargetMaterialized)
+        XCTAssertFalse(contract.packageGraphChanged)
 
         let workerPath =
             PrimeNativeNeuralGateHistoricalFixtureWorkerSourceContract

@@ -1,0 +1,1136 @@
+// SPDX-FileCopyrightText: 2026 Ergentics, LLC
+// SPDX-License-Identifier: LicenseRef-Ergentics-Proprietary
+
+import PrimeNativeNeuralGateHistoricalReplayMechanics
+import PrimeNativeNeuralGateReplayMechanics
+
+public enum PrimeNativeNeuralGateHistoricalEvidenceExportError:
+    Error,
+    Equatable,
+    Sendable
+{
+    case invalidBaselineInvariantRecordCount(Int)
+    case invalidBaselineInvariantASCIIFlagCount(Int)
+    case invalidBaselineInvariantBundle
+    case invalidBaselineFingerprint
+    case invalidBaselineSeedCatalog
+    case invalidMutationCatalog
+    case invalidMutationInvariantRecordCount(
+        mutationID: String,
+        observed: Int
+    )
+    case invalidMutationInvariantASCIIFlagCount(
+        mutationID: String,
+        observed: Int
+    )
+    case invalidMutationFingerprint(String)
+    case invalidRestoredInvariantRecords
+    case invalidRestoredInvariantASCIIFlags
+    case invalidRestoredInvariantBundle
+    case invalidHistoricalAssessment
+}
+
+/// The sole cross-module entry point into the source-derived historical gate.
+///
+/// This facade accepts only in-memory historical materials and returns an
+/// authority-free value. It performs no path lookup, process launch,
+/// publication, receipt issuance, or product admission.
+public enum PrimeNativeNeuralGateHistoricalEvidenceExporter {
+    public struct NamedBoolean: Equatable, Sendable {
+        public let name: String
+        public let value: Bool
+
+        init(name: String, value: Bool) {
+            self.name = name
+            self.value = value
+        }
+    }
+
+    public struct CriticalLegValue: Equatable, Sendable {
+        public let ordinal: Int
+        public let legID: String
+        public let passed: Bool
+
+        init(
+            ordinal: Int,
+            legID: String,
+            passed: Bool
+        ) {
+            self.ordinal = ordinal
+            self.legID = legID
+            self.passed = passed
+        }
+    }
+
+    public struct MutationStreamIdentity:
+        Equatable,
+        Sendable
+    {
+        public let ordinal: Int
+        public let mutationID: String
+        public let baselineStreamSHA256: String
+        public let mutatedStreamSHA256: String
+        public let restoredStreamSHA256: String
+
+        init(
+            ordinal: Int,
+            mutationID: String,
+            baselineStreamSHA256: String,
+            mutatedStreamSHA256: String,
+            restoredStreamSHA256: String
+        ) {
+            self.ordinal = ordinal
+            self.mutationID = mutationID
+            self.baselineStreamSHA256 =
+                baselineStreamSHA256
+            self.mutatedStreamSHA256 =
+                mutatedStreamSHA256
+            self.restoredStreamSHA256 =
+                restoredStreamSHA256
+        }
+    }
+
+    public struct MutationFingerprintSet:
+        Equatable,
+        Sendable
+    {
+        public let ordinal: Int
+        public let mutationID: String
+        public let baseline:
+            PrimeNativeNeuralGateFingerprintObservation
+        public let mutated:
+            PrimeNativeNeuralGateFingerprintObservation
+        public let restored:
+            PrimeNativeNeuralGateFingerprintObservation
+
+        init(
+            ordinal: Int,
+            mutationID: String,
+            baseline:
+                PrimeNativeNeuralGateFingerprintObservation,
+            mutated:
+                PrimeNativeNeuralGateFingerprintObservation,
+            restored:
+                PrimeNativeNeuralGateFingerprintObservation
+        ) {
+            self.ordinal = ordinal
+            self.mutationID = mutationID
+            self.baseline = baseline
+            self.mutated = mutated
+            self.restored = restored
+        }
+    }
+
+    public struct MutationObservedFailureSet:
+        Equatable,
+        Sendable
+    {
+        public let ordinal: Int
+        public let mutationID: String
+        public let orderedObservedFailedLegIDs:
+            [String]
+
+        init(
+            ordinal: Int,
+            mutationID: String,
+            orderedObservedFailedLegIDs: [String]
+        ) {
+            self.ordinal = ordinal
+            self.mutationID = mutationID
+            self.orderedObservedFailedLegIDs =
+                orderedObservedFailedLegIDs
+        }
+    }
+
+    public struct HistoricalMutationVerdictValue:
+        Equatable,
+        Sendable
+    {
+        public let ordinal: Int
+        public let mutationID: String
+        public let expectedFailedLegID: String
+        public let detected: Bool
+        public let fingerprintDiverged: Bool
+        public let restored: Bool
+        public let restoredFingerprintExact: Bool
+
+        init(
+            ordinal: Int,
+            mutationID: String,
+            expectedFailedLegID: String,
+            detected: Bool,
+            fingerprintDiverged: Bool,
+            restored: Bool,
+            restoredFingerprintExact: Bool
+        ) {
+            self.ordinal = ordinal
+            self.mutationID = mutationID
+            self.expectedFailedLegID =
+                expectedFailedLegID
+            self.detected = detected
+            self.fingerprintDiverged =
+                fingerprintDiverged
+            self.restored = restored
+            self.restoredFingerprintExact =
+                restoredFingerprintExact
+        }
+    }
+
+    public struct HeldoutLossRowValue:
+        Equatable,
+        Sendable
+    {
+        public let rowID: String
+        public let rowSHA256: String
+        public let selectionSplitID: String
+        public let targetClass: String
+        public let semanticFamily: String
+        public let targetTokenCount: Int
+        public let nonPaddingTokenCount: Int
+        public let crossEntropyBefore: Double
+        public let crossEntropyAfter: Double
+
+        init(
+            _ row:
+                ErgenticsNativeLanguageCanary.HeldoutLossRow
+        ) {
+            rowID = row.rowID
+            rowSHA256 = row.rowSHA256
+            selectionSplitID = row.selectionSplitID
+            targetClass = row.targetClass
+            semanticFamily = row.semanticFamily
+            targetTokenCount = row.targetTokenCount
+            nonPaddingTokenCount =
+                row.nonPaddingTokenCount
+            crossEntropyBefore = row.crossEntropyBefore
+            crossEntropyAfter = row.crossEntropyAfter
+        }
+    }
+
+    public struct HeldoutStatisticsValue:
+        Equatable,
+        Sendable
+    {
+        public let seed: Int
+        public let heldoutRowCount: Int
+        public let heldoutValidRowCount: Int
+        public let heldoutRefusalRowCount: Int
+        public let heldoutTargetTokenCount: Int
+        public let heldoutValidTargetTokenCount: Int
+        public let heldoutRefusalTargetTokenCount: Int
+        public let heldoutEvaluationNonPaddingTokenCount: Int
+        public let heldoutCrossEntropyBefore: Double
+        public let heldoutCrossEntropyAfter: Double
+        public let heldoutValidCrossEntropyBefore: Double
+        public let heldoutValidCrossEntropyAfter: Double
+        public let heldoutRefusalCrossEntropyBefore: Double
+        public let heldoutRefusalCrossEntropyAfter: Double
+        public let heldoutCrossEntropyStandardError: Double
+        public let heldoutCrossEntropyStandardErrorMethodID:
+            String
+        public let heldoutFamilyCrossEntropyBefore:
+            [String: Double]
+        public let heldoutFamilyCrossEntropyAfter:
+            [String: Double]
+        public let initialLoss: Double
+        public let finalLoss: Double
+        public let heldoutLossRows: [HeldoutLossRowValue]
+
+        init(
+            report: ErgenticsNativeLanguageCanary.Report
+        ) {
+            let training = report.training
+            seed = report.seed
+            heldoutRowCount = training.heldoutRowCount
+            heldoutValidRowCount =
+                training.heldoutValidRowCount
+            heldoutRefusalRowCount =
+                training.heldoutRefusalRowCount
+            heldoutTargetTokenCount =
+                training.heldoutTargetTokenCount
+            heldoutValidTargetTokenCount =
+                training.heldoutValidTargetTokenCount
+            heldoutRefusalTargetTokenCount =
+                training.heldoutRefusalTargetTokenCount
+            heldoutEvaluationNonPaddingTokenCount =
+                training
+                .heldoutEvaluationNonPaddingTokenCount
+            heldoutCrossEntropyBefore =
+                training.heldoutCrossEntropyBefore
+            heldoutCrossEntropyAfter =
+                training.heldoutCrossEntropyAfter
+            heldoutValidCrossEntropyBefore =
+                training.heldoutValidCrossEntropyBefore
+            heldoutValidCrossEntropyAfter =
+                training.heldoutValidCrossEntropyAfter
+            heldoutRefusalCrossEntropyBefore =
+                training.heldoutRefusalCrossEntropyBefore
+            heldoutRefusalCrossEntropyAfter =
+                training.heldoutRefusalCrossEntropyAfter
+            heldoutCrossEntropyStandardError =
+                training.heldoutCrossEntropyStandardError
+            heldoutCrossEntropyStandardErrorMethodID =
+                training
+                .heldoutCrossEntropyStandardErrorMethodID
+            heldoutFamilyCrossEntropyBefore =
+                training.heldoutFamilyCrossEntropyBefore
+            heldoutFamilyCrossEntropyAfter =
+                training.heldoutFamilyCrossEntropyAfter
+            initialLoss = training.initialLoss
+            finalLoss = training.finalLoss
+            heldoutLossRows = training.heldoutLossRows.map(
+                HeldoutLossRowValue.init
+            )
+        }
+    }
+
+    public struct FixedPromptReplayValue:
+        Equatable,
+        Sendable
+    {
+        public let seed: Int
+        public let firstLogitFloatBitPatterns: [UInt32]
+        public let replayLogitFloatBitPatterns: [UInt32]
+        public let maximumLogitDelta: Double
+        public let firstGreedyTokenID: Int
+        public let replayGreedyTokenID: Int
+        public let firstGreedyRunnerUpMargin: Double
+        public let replayGreedyRunnerUpMargin: Double
+        public let greedyTokenExact: Bool
+        public let behavioralReplayExact: Bool
+        public let firstResultSHA256: String
+        public let replayResultSHA256: String
+        public let resultExact: Bool
+
+        init(
+            report: ErgenticsNativeLanguageCanary.Report
+        ) {
+            let replay = report.sameSeedReplay
+            seed = report.seed
+            firstLogitFloatBitPatterns =
+                replay.fixedPromptLogitFloatBitPatterns
+            replayLogitFloatBitPatterns =
+                replay.replayFixedPromptLogitFloatBitPatterns
+            maximumLogitDelta =
+                replay.fixedPromptMaximumLogitDelta
+            firstGreedyTokenID =
+                replay.fixedPromptGreedyTokenID
+            replayGreedyTokenID =
+                replay.replayFixedPromptGreedyTokenID
+            firstGreedyRunnerUpMargin =
+                replay.fixedPromptGreedyRunnerUpMargin
+            replayGreedyRunnerUpMargin =
+                replay.replayFixedPromptGreedyRunnerUpMargin
+            greedyTokenExact =
+                replay.fixedPromptGreedyTokenExact
+            behavioralReplayExact =
+                replay.fixedPromptBehavioralReplayExact
+            firstResultSHA256 =
+                replay.fixedPromptResultSHA256
+            replayResultSHA256 =
+                replay.replayFixedPromptResultSHA256
+            resultExact = replay.fixedPromptResultExact
+        }
+    }
+
+    public struct CapabilitySplitValue:
+        Equatable,
+        Sendable
+    {
+        public let splitID: String
+        public let rowCount: Int
+        public let zeroShotExactAccuracy: Double
+        public let trainedExactAccuracy: Double
+        public let trainedMeanLogProbability: Double
+
+        init(
+            metric:
+                ErgenticsNativeLanguageCanary.SplitMetric
+        ) {
+            splitID = metric.split.rawValue
+            rowCount = metric.count
+            zeroShotExactAccuracy =
+                metric.zeroShotExactAccuracy
+            trainedExactAccuracy =
+                metric.trainedExactAccuracy
+            trainedMeanLogProbability =
+                metric.trainedMeanLogProbability
+        }
+    }
+
+    public struct AbstentionDecisionRowValue:
+        Equatable,
+        Sendable
+    {
+        public let rowID: String
+        public let corpusRowSHA256: String
+        public let evaluationRowSHA256: String
+        public let splitID: String
+        public let target: String
+        public let trainedPrediction: String?
+        public let trainedTerminatedByEOS: Bool
+        public let trainedTerminationReason: String
+        public let trainedUTF8Valid: Bool
+        public let trainedExactMatch: Bool
+        public let trainedSemanticVerifierPass: Bool
+        public let trainedAbstentionDecision: Bool
+
+        init(
+            row: ErgenticsNativeLanguageCanary.RawPrediction
+        ) {
+            rowID = row.rowID
+            corpusRowSHA256 = row.corpusRowSHA256
+            evaluationRowSHA256 =
+                row.evaluationRowSHA256
+            splitID = row.split.rawValue
+            target = row.target
+            trainedPrediction = row.trainedPrediction
+            trainedTerminatedByEOS =
+                row.trainedTerminatedByEOS
+            trainedTerminationReason =
+                row.trainedTerminationReason
+            trainedUTF8Valid = row.trainedUTF8Valid
+            trainedExactMatch = row.trainedExactMatch
+            trainedSemanticVerifierPass =
+                row.trainedSemanticVerifierPass
+            trainedAbstentionDecision =
+                row.trainedAbstentionDecision
+        }
+    }
+
+    public struct CapabilityValue: Equatable, Sendable {
+        public let seed: Int
+        public let orderedSplitValues:
+            [CapabilitySplitValue]
+        public let requiredAbstentionRowCount: Int
+        public let orderedAbstentionDecisionRows:
+            [AbstentionDecisionRowValue]
+        public let exactAbstentionDecisionsObserved: Bool
+
+        init(
+            report: ErgenticsNativeLanguageCanary.Report
+        ) {
+            seed = report.seed
+            orderedSplitValues =
+                ErgenticsNativeLanguageCanary
+                .recommend(report)
+                .splitMetrics.map {
+                    CapabilitySplitValue(metric: $0)
+                }
+            requiredAbstentionRowCount = 2_048
+            let abstentionRows = report.rawPredictions.filter {
+                $0.split == .abstention
+            }
+            orderedAbstentionDecisionRows =
+                abstentionRows.map {
+                    AbstentionDecisionRowValue(row: $0)
+                }
+            exactAbstentionDecisionsObserved =
+                abstentionRows.count
+                    == requiredAbstentionRowCount
+                && abstentionRows.allSatisfy { row in
+                    row.target == "ABSTAIN\n"
+                        && row.trainedPrediction
+                            == "ABSTAIN\n"
+                        && row.trainedTerminatedByEOS
+                        && row.trainedTerminationReason == "eos"
+                        && row.trainedUTF8Valid
+                        && row.trainedExactMatch
+                        && row.trainedSemanticVerifierPass
+                        && row.trainedAbstentionDecision
+                }
+        }
+    }
+
+    public struct SourceDerivedSingletonRegradeDisposition:
+        Equatable,
+        Sendable
+    {
+        public let exactSingletonFailureSetsSatisfied: Bool
+        public let outcome: String
+
+        init(exactSingletonFailureSetsSatisfied: Bool) {
+            self.exactSingletonFailureSetsSatisfied =
+                exactSingletonFailureSetsSatisfied
+            outcome = exactSingletonFailureSetsSatisfied
+                ? "GROUNDED" : "ABSTAIN"
+        }
+    }
+
+    public struct HistoricalStatisticsAndVerdictValues:
+        Equatable,
+        Sendable
+    {
+        public let heldoutStatistics:
+            [HeldoutStatisticsValue]
+        public let fixedPromptReplayValues:
+            [FixedPromptReplayValue]
+        public let capabilityValues:
+            [CapabilityValue]
+        public let historicalAgreeCount: Int
+        public let historicalIndependentPassCount: Int
+        public let historicalOutcome: String
+        public let historicalTriadicLabel: String
+        public let historicalNextAction: String
+        public let materialReloadComponents:
+            [NamedBoolean]
+        public let historicalMutationOutcome: String
+        public let historicalMutationTriadicLabel: String
+        public let historicalMutationValues:
+            [HistoricalMutationVerdictValue]
+        public let sourceDerivedSingletonRegradeDisposition:
+            SourceDerivedSingletonRegradeDisposition
+
+        init(
+            heldoutStatistics:
+                [HeldoutStatisticsValue],
+            fixedPromptReplayValues:
+                [FixedPromptReplayValue],
+            capabilityValues: [CapabilityValue],
+            historicalAgreeCount: Int,
+            historicalIndependentPassCount: Int,
+            historicalOutcome: String,
+            historicalTriadicLabel: String,
+            historicalNextAction: String,
+            materialReloadComponents: [NamedBoolean],
+            historicalMutationOutcome: String,
+            historicalMutationTriadicLabel: String,
+            historicalMutationValues:
+                [HistoricalMutationVerdictValue],
+            sourceDerivedSingletonRegradeDisposition:
+                SourceDerivedSingletonRegradeDisposition
+        ) {
+            self.heldoutStatistics = heldoutStatistics
+            self.fixedPromptReplayValues =
+                fixedPromptReplayValues
+            self.capabilityValues = capabilityValues
+            self.historicalAgreeCount =
+                historicalAgreeCount
+            self.historicalIndependentPassCount =
+                historicalIndependentPassCount
+            self.historicalOutcome = historicalOutcome
+            self.historicalTriadicLabel =
+                historicalTriadicLabel
+            self.historicalNextAction =
+                historicalNextAction
+            self.materialReloadComponents =
+                materialReloadComponents
+            self.historicalMutationOutcome =
+                historicalMutationOutcome
+            self.historicalMutationTriadicLabel =
+                historicalMutationTriadicLabel
+            self.historicalMutationValues =
+                historicalMutationValues
+            self.sourceDerivedSingletonRegradeDisposition =
+                sourceDerivedSingletonRegradeDisposition
+        }
+    }
+
+    /// In-memory source-derived evidence. Deliberately not `Codable`:
+    /// durable authority belongs to later descriptor-fed publication and
+    /// independent terminal recomputation, not this carrier.
+    public struct Evidence: Equatable, Sendable {
+        public let orderedInvariantRecords: [Data]
+        public let orderedInvariantRecordASCIIFlags: [Bool]
+        public let baselineInvariantBundle:
+            PrimeNativeNeuralGateInvariantBundle
+        public let orderedMutationIdentities: [String]
+        public let perMutationStreamIdentities:
+            [MutationStreamIdentity]
+        public let perMutationFingerprints:
+            [MutationFingerprintSet]
+        public let perMutationObservedFailedLegIDs:
+            [MutationObservedFailureSet]
+        public let historicalCriticalLegValues:
+            [CriticalLegValue]
+        public let historicalStatisticsAndVerdictValues:
+            HistoricalStatisticsAndVerdictValues
+
+        init(
+            orderedInvariantRecords: [Data],
+            orderedInvariantRecordASCIIFlags: [Bool],
+            baselineInvariantBundle:
+                PrimeNativeNeuralGateInvariantBundle,
+            orderedMutationIdentities: [String],
+            perMutationStreamIdentities:
+                [MutationStreamIdentity],
+            perMutationFingerprints:
+                [MutationFingerprintSet],
+            perMutationObservedFailedLegIDs:
+                [MutationObservedFailureSet],
+            historicalCriticalLegValues:
+                [CriticalLegValue],
+            historicalStatisticsAndVerdictValues:
+                HistoricalStatisticsAndVerdictValues
+        ) {
+            self.orderedInvariantRecords =
+                orderedInvariantRecords
+            self.orderedInvariantRecordASCIIFlags =
+                orderedInvariantRecordASCIIFlags
+            self.baselineInvariantBundle =
+                baselineInvariantBundle
+            self.orderedMutationIdentities =
+                orderedMutationIdentities
+            self.perMutationStreamIdentities =
+                perMutationStreamIdentities
+            self.perMutationFingerprints =
+                perMutationFingerprints
+            self.perMutationObservedFailedLegIDs =
+                perMutationObservedFailedLegIDs
+            self.historicalCriticalLegValues =
+                historicalCriticalLegValues
+            self.historicalStatisticsAndVerdictValues =
+                historicalStatisticsAndVerdictValues
+        }
+    }
+
+    public static func export(
+        _ source:
+            PrimeNativeNeuralGateHistoricalReplayMechanics
+            .PrimeNeuralNativeLanguageVerifyAbstainGate
+            .Materials
+    ) throws -> Evidence {
+        let packageResolvedArtifactBinding =
+            source.packageResolvedArtifactBinding.map {
+                binding in
+                PrimeNeuralNativeLanguageVerifyAbstainGateEvidenceExportAdapter
+                .ObservedPackageResolvedBinding(
+                    fileName: binding.fileName,
+                    sha256: binding.sha256,
+                    byteCount: binding.byteCount,
+                    mlxSwiftRevision:
+                        binding.mlxSwiftRevision,
+                    mlxSwiftExamplesVersion:
+                        binding.mlxSwiftExamplesVersion
+                )
+            }
+        let checkpointArtifactBindingBySeed =
+            Dictionary(
+                uniqueKeysWithValues:
+                    source.checkpointArtifactBindingBySeed
+                    .map { seed, binding in
+                        (
+                            seed,
+                            PrimeNeuralNativeLanguageVerifyAbstainGateEvidenceExportAdapter
+                            .ObservedCheckpointBinding(
+                                fileName: binding.fileName,
+                                sha256: binding.sha256,
+                                byteCount: binding.byteCount
+                            )
+                        )
+                    }
+            )
+        let metalLibraryArtifactBindingBySeed =
+            Dictionary(
+                uniqueKeysWithValues:
+                    source.metalLibraryArtifactBindingBySeed
+                    .map { seed, binding in
+                        (
+                            seed,
+                            PrimeNeuralNativeLanguageVerifyAbstainGateEvidenceExportAdapter
+                            .ObservedMetalLibraryBinding(
+                                primaryFileName:
+                                    binding.primaryFileName,
+                                fallbackFileName:
+                                    binding.fallbackFileName,
+                                sha256: binding.sha256,
+                                byteCount: binding.byteCount
+                            )
+                        )
+                    }
+            )
+        let bridged =
+            PrimeNeuralNativeLanguageVerifyAbstainGateEvidenceExportAdapter
+            .Materials(
+                reportData: source.reportData,
+                tokenizerManifestData:
+                    source.tokenizerManifestData,
+                corpusManifestData:
+                    source.corpusManifestData,
+                packageResolvedArtifactBinding:
+                    packageResolvedArtifactBinding,
+                probeTokenManifestDataBySeed:
+                    source.probeTokenManifestDataBySeed,
+                evaluationShardDataBySeed:
+                    source.evaluationShardDataBySeed,
+                executorArtifactDataByFileName:
+                    source.executorArtifactDataByFileName,
+                recommenderArtifactDataByFileName:
+                    source.recommenderArtifactDataByFileName,
+                checkpointArtifactBindingBySeed:
+                    checkpointArtifactBindingBySeed,
+                metalLibraryArtifactBindingBySeed:
+                    metalLibraryArtifactBindingBySeed,
+                trainingStageArtifactDataBySeed:
+                    source.trainingStageArtifactDataBySeed,
+                configurationArtifactDataBySeed:
+                    source.configurationArtifactDataBySeed
+            )
+        return try PrimeNeuralNativeLanguageVerifyAbstainGateEvidenceExportAdapter
+            .exportHistoricalEvidence(bridged)
+    }
+}
+
+extension
+    PrimeNeuralNativeLanguageVerifyAbstainGateEvidenceExportAdapter
+{
+    fileprivate static func exportHistoricalEvidence(
+        _ materials: Materials
+    ) throws
+        -> PrimeNativeNeuralGateHistoricalEvidenceExporter
+        .Evidence
+    {
+        typealias Exporter =
+            PrimeNativeNeuralGateHistoricalEvidenceExporter
+        let exactInvariantRecordCount = 59_497
+        let exactMutationCount = 46
+        let baseline = evaluate(materials)
+        let baselineRecords = baseline.invariantRecords.map {
+            Data($0.utf8)
+        }
+        guard baselineRecords.count
+                == exactInvariantRecordCount
+        else {
+            throw PrimeNativeNeuralGateHistoricalEvidenceExportError
+                .invalidBaselineInvariantRecordCount(
+                    baselineRecords.count
+                )
+        }
+        guard baseline.invariantRecordIsASCII.count
+                == exactInvariantRecordCount
+        else {
+            throw PrimeNativeNeuralGateHistoricalEvidenceExportError
+                .invalidBaselineInvariantASCIIFlagCount(
+                    baseline.invariantRecordIsASCII.count
+                )
+        }
+        let baselineBundle =
+            try PrimeNativeNeuralGateInvariantCodec
+            .makeBundle(records: baselineRecords)
+        guard baselineBundle.manifest.recordCount
+                == exactInvariantRecordCount,
+              baselineBundle.chunkStreams.count == 15,
+              baselineBundle.manifest.chunks.count == 15,
+              baselineBundle.manifest.chunks.dropLast()
+                .allSatisfy({ $0.recordCount == 4_096 }),
+              baselineBundle.manifest.chunks.last?
+                .recordCount == 2_153,
+              baselineBundle.fingerprintObservation
+                .exactEqualityObserved
+        else {
+            throw PrimeNativeNeuralGateHistoricalEvidenceExportError
+                .invalidBaselineInvariantBundle
+        }
+        guard fingerprint(
+            baseline.fingerprint,
+            equals:
+                baselineBundle.fingerprintObservation.direct
+        ) else {
+            throw PrimeNativeNeuralGateHistoricalEvidenceExportError
+                .invalidBaselineFingerprint
+        }
+
+        let mutations = Mutation.allCases
+        guard mutations.count == exactMutationCount,
+              Set(mutations.map(\.rawValue)).count
+                == exactMutationCount
+        else {
+            throw PrimeNativeNeuralGateHistoricalEvidenceExportError
+                .invalidMutationCatalog
+        }
+        let primitiveLegIDs = Array(
+            criticalLegIDs.prefix(9)
+        )
+        var streamIdentities:
+            [Exporter.MutationStreamIdentity] = []
+        var fingerprintSets:
+            [Exporter.MutationFingerprintSet] = []
+        var observedFailureSets:
+            [Exporter.MutationObservedFailureSet] = []
+        streamIdentities.reserveCapacity(exactMutationCount)
+        fingerprintSets.reserveCapacity(exactMutationCount)
+        observedFailureSets.reserveCapacity(
+            exactMutationCount
+        )
+        let mutationBaselinePlan = finiteFieldBaselinePlan(
+            cacheKey: baseline.exactArtifactCacheKey,
+            records: baseline.invariantRecords,
+            recordIsASCII:
+                baseline.invariantRecordIsASCII
+        )
+        let baselineSeeds = baseline.reports.map(\.seed)
+        guard baselineSeeds.sorted()
+                == ErgenticsNativeLanguageCanary
+                    .frozenSeeds.sorted(),
+              Set(baselineSeeds).count
+                == ErgenticsNativeLanguageCanary
+                    .frozenSeeds.count
+        else {
+            throw PrimeNativeNeuralGateHistoricalEvidenceExportError
+                .invalidBaselineSeedCatalog
+        }
+        var cachedRowsBySeed =
+            [Int: InvariantRecordCollection]()
+        cachedRowsBySeed.reserveCapacity(
+            baseline.reports.count
+        )
+        for report in baseline.reports {
+            guard cachedRowsBySeed[report.seed] == nil else {
+                throw PrimeNativeNeuralGateHistoricalEvidenceExportError
+                    .invalidBaselineSeedCatalog
+            }
+            let prefix = "row|\(report.seed)|"
+            let indices = baseline.invariantRecords.indices
+                .filter {
+                    baseline.invariantRecords[$0]
+                        .hasPrefix(prefix)
+                }
+            cachedRowsBySeed[report.seed] =
+                InvariantRecordCollection(
+                    records: indices.map {
+                        baseline.invariantRecords[$0]
+                    },
+                    isASCII: indices.map {
+                        baseline.invariantRecordIsASCII[$0]
+                    }
+                )
+        }
+
+        for (offset, mutation) in mutations.enumerated() {
+            let mutatedReports = mutatedReports(
+                baseline.reports,
+                mutation: mutation
+            )
+            var reusableRows = cachedRowsBySeed
+            if mutation.mutatesRawPredictions,
+               let mutatedSeed = baseline.reports.first?.seed
+            {
+                reusableRows.removeValue(forKey: mutatedSeed)
+            }
+            let mutatedRecordCollection = invariantRecords(
+                reports: mutatedReports,
+                tokenizer: baseline.tokenizer,
+                corpus: baseline.corpus,
+                rowHashRegrade:
+                    mutation != .executorRowHash,
+                cachedRowRecordsBySeed: reusableRows
+            )
+            let mutatedRecords =
+                mutatedRecordCollection.records.map {
+                    Data($0.utf8)
+                }
+            guard mutatedRecords.count
+                    == exactInvariantRecordCount
+            else {
+                throw PrimeNativeNeuralGateHistoricalEvidenceExportError
+                    .invalidMutationInvariantRecordCount(
+                        mutationID: mutation.rawValue,
+                        observed: mutatedRecords.count
+                    )
+            }
+            guard mutatedRecordCollection.isASCII.count
+                    == exactInvariantRecordCount
+            else {
+                throw PrimeNativeNeuralGateHistoricalEvidenceExportError
+                    .invalidMutationInvariantASCIIFlagCount(
+                        mutationID: mutation.rawValue,
+                        observed:
+                            mutatedRecordCollection
+                            .isASCII.count
+                    )
+            }
+            let donorMutatedFingerprint =
+                finiteFieldFingerprint(
+                    mutatedRecordCollection.records,
+                    recordIsASCII:
+                        mutatedRecordCollection.isASCII,
+                    using: mutationBaselinePlan
+                )
+            let mutatedBundle =
+                try PrimeNativeNeuralGateInvariantCodec
+                .makeBundle(records: mutatedRecords)
+            guard mutatedBundle
+                    .fingerprintObservation
+                    .exactEqualityObserved,
+                  fingerprint(
+                      donorMutatedFingerprint,
+                      equals:
+                          mutatedBundle
+                          .fingerprintObservation.direct
+                  )
+            else {
+                throw PrimeNativeNeuralGateHistoricalEvidenceExportError
+                    .invalidMutationFingerprint(
+                        mutation.rawValue
+                    )
+            }
+
+            let mutatedReportData = try mutatedReports.map {
+                try canonicalEncoder().encode($0)
+            }
+            let mutatedMaterials = Materials(
+                reportData: mutatedReportData,
+                tokenizerManifestData:
+                    materials.tokenizerManifestData,
+                corpusManifestData:
+                    materials.corpusManifestData,
+                packageResolvedArtifactBinding:
+                    materials.packageResolvedArtifactBinding,
+                probeTokenManifestDataBySeed:
+                    materials.probeTokenManifestDataBySeed,
+                evaluationShardDataBySeed:
+                    materials.evaluationShardDataBySeed,
+                executorArtifactDataByFileName:
+                    materials.executorArtifactDataByFileName,
+                recommenderArtifactDataByFileName:
+                    materials.recommenderArtifactDataByFileName,
+                checkpointArtifactBindingBySeed:
+                    materials.checkpointArtifactBindingBySeed,
+                metalLibraryArtifactBindingBySeed:
+                    materials.metalLibraryArtifactBindingBySeed,
+                trainingStageArtifactDataBySeed:
+                    materials.trainingStageArtifactDataBySeed,
+                configurationArtifactDataBySeed:
+                    materials.configurationArtifactDataBySeed
+            )
+            let mutated = evaluate(mutatedMaterials)
+            let primitiveValues = [
+                mutated.materialReload,
+                mutated.sz,
+                mutated.foundationCorpus,
+                mutated.rawExecutor,
+                mutated.causalMechanics,
+                mutated.durability,
+                mutated.sameSeedReplay,
+                mutated.seedConsensus,
+                mutated.capability,
+            ]
+            let observed = zip(
+                primitiveLegIDs,
+                primitiveValues
+            ).compactMap { legID, passed in
+                passed ? nil : legID
+            }
+            let ordinal = offset + 1
+            streamIdentities.append(
+                Exporter.MutationStreamIdentity(
+                    ordinal: ordinal,
+                    mutationID: mutation.rawValue,
+                    baselineStreamSHA256:
+                        baselineBundle.manifest
+                        .globalStreamSHA256,
+                    mutatedStreamSHA256:
+                        mutatedBundle.manifest
+                        .globalStreamSHA256,
+                    restoredStreamSHA256: ""
+                )
+            )
+            fingerprintSets.append(
+                Exporter.MutationFingerprintSet(
+                    ordinal: ordinal,
+                    mutationID: mutation.rawValue,
+                    baseline:
+                        baselineBundle
+                        .fingerprintObservation,
+                    mutated:
+                        mutatedBundle
+                        .fingerprintObservation,
+                    restored:
+                        baselineBundle
+                        .fingerprintObservation
+                )
+            )
+            observedFailureSets.append(
+                Exporter.MutationObservedFailureSet(
+                    ordinal: ordinal,
+                    mutationID: mutation.rawValue,
+                    orderedObservedFailedLegIDs:
+                        observed
+                )
+            )
+        }
+
+        let restored = evaluate(materials)
+        let restoredRecords = restored.invariantRecords.map {
+            Data($0.utf8)
+        }
+        guard restoredRecords == baselineRecords else {
+            throw PrimeNativeNeuralGateHistoricalEvidenceExportError
+                .invalidRestoredInvariantRecords
+        }
+        guard restored.invariantRecordIsASCII
+                == baseline.invariantRecordIsASCII
+        else {
+            throw PrimeNativeNeuralGateHistoricalEvidenceExportError
+                .invalidRestoredInvariantASCIIFlags
+        }
+        let restoredBundle =
+            try PrimeNativeNeuralGateInvariantCodec
+            .makeBundle(records: restoredRecords)
+        guard restoredBundle == baselineBundle,
+              fingerprint(
+                  restored.fingerprint,
+                  equals:
+                      restoredBundle
+                      .fingerprintObservation.direct
+              )
+        else {
+            throw PrimeNativeNeuralGateHistoricalEvidenceExportError
+                .invalidRestoredInvariantBundle
+        }
+        streamIdentities = streamIdentities.map {
+            Exporter.MutationStreamIdentity(
+                ordinal: $0.ordinal,
+                mutationID: $0.mutationID,
+                baselineStreamSHA256:
+                    $0.baselineStreamSHA256,
+                mutatedStreamSHA256:
+                    $0.mutatedStreamSHA256,
+                restoredStreamSHA256:
+                    restoredBundle.manifest
+                    .globalStreamSHA256
+            )
+        }
+        fingerprintSets = fingerprintSets.map {
+            Exporter.MutationFingerprintSet(
+                ordinal: $0.ordinal,
+                mutationID: $0.mutationID,
+                baseline: $0.baseline,
+                mutated: $0.mutated,
+                restored:
+                    restoredBundle
+                    .fingerprintObservation
+            )
+        }
+
+        let assessment = dispose(materials)
+        guard assessment.verdict.witnesses.count == 10,
+              assessment.verdict.witnesses.map(\.leg)
+                == criticalLegIDs,
+              let sweep = assessment.mutationSweep,
+              sweep.results.count == exactMutationCount,
+              sweep.results.map({ $0.mutation.rawValue })
+                == mutations.map(\.rawValue)
+        else {
+            throw PrimeNativeNeuralGateHistoricalEvidenceExportError
+                .invalidHistoricalAssessment
+        }
+        let criticalLegValues =
+            assessment.verdict.witnesses.enumerated().map {
+                Exporter.CriticalLegValue(
+                    ordinal: $0.offset + 1,
+                    legID: $0.element.leg,
+                    passed: $0.element.pass
+                )
+            }
+        let historicalMutationValues =
+            sweep.results.enumerated().map {
+                Exporter.HistoricalMutationVerdictValue(
+                    ordinal: $0.offset + 1,
+                    mutationID:
+                        $0.element.mutation.rawValue,
+                    expectedFailedLegID:
+                        $0.element.expectedFailedLeg,
+                    detected: $0.element.detected,
+                    fingerprintDiverged:
+                        $0.element.fingerprintDiverged,
+                    restored: $0.element.restored,
+                    restoredFingerprintExact:
+                        $0.element
+                        .restoredFingerprintExact
+                )
+            }
+        let exactSingletonFailureSetsSatisfied =
+            zip(mutations, observedFailureSets)
+            .allSatisfy { mutation, observed in
+                observed.orderedObservedFailedLegIDs
+                    == [mutation.expectedFailedLeg]
+            }
+        let sourceDerivedSingletonRegradeDisposition =
+            Exporter.SourceDerivedSingletonRegradeDisposition(
+                exactSingletonFailureSetsSatisfied:
+                    exactSingletonFailureSetsSatisfied
+            )
+        let statisticsAndVerdict =
+            Exporter.HistoricalStatisticsAndVerdictValues(
+                heldoutStatistics:
+                    baseline.reports.map {
+                        Exporter.HeldoutStatisticsValue(
+                            report: $0
+                        )
+                    },
+                fixedPromptReplayValues:
+                    baseline.reports.map {
+                        Exporter.FixedPromptReplayValue(
+                            report: $0
+                        )
+                    },
+                capabilityValues:
+                    baseline.reports.map {
+                        Exporter.CapabilityValue(
+                            report: $0
+                        )
+                    },
+                historicalAgreeCount:
+                    assessment.verdict.agreeCount,
+                historicalIndependentPassCount:
+                    assessment.verdict
+                    .independentPassCount,
+                historicalOutcome: assessment.outcome,
+                historicalTriadicLabel:
+                    assessment.triadicVerdict,
+                historicalNextAction:
+                    assessment.nextAction,
+                materialReloadComponents:
+                    assessment
+                    .materialReloadComponentPasses
+                    .map {
+                        Exporter.NamedBoolean(
+                            name: $0.key,
+                            value: $0.value
+                        )
+                    }
+                    .sorted { $0.name < $1.name },
+                historicalMutationOutcome:
+                    sweep.outcome,
+                historicalMutationTriadicLabel:
+                    sweep.triadicVerdict,
+                historicalMutationValues:
+                    historicalMutationValues,
+                sourceDerivedSingletonRegradeDisposition:
+                    sourceDerivedSingletonRegradeDisposition
+            )
+        return Exporter.Evidence(
+            orderedInvariantRecords: baselineRecords,
+            orderedInvariantRecordASCIIFlags:
+                baseline.invariantRecordIsASCII,
+            baselineInvariantBundle: baselineBundle,
+            orderedMutationIdentities:
+                mutations.map(\.rawValue),
+            perMutationStreamIdentities:
+                streamIdentities,
+            perMutationFingerprints: fingerprintSets,
+            perMutationObservedFailedLegIDs:
+                observedFailureSets,
+            historicalCriticalLegValues:
+                criticalLegValues,
+            historicalStatisticsAndVerdictValues:
+                statisticsAndVerdict
+        )
+    }
+
+    private static func fingerprint(
+        _ historical: FiniteFieldFingerprint?,
+        equals replay: PrimeNativeNeuralGateFingerprint
+    ) -> Bool {
+        guard let historical else {
+            return false
+        }
+        return historical.prime == replay.prime
+            && historical.evaluationPoints
+                == replay.evaluationPoints
+            && historical.residues == replay.residues
+            && historical.recordCount
+                == replay.recordCount
+    }
+}

@@ -161,6 +161,12 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
     public private(set) var
         historicalEvidenceExportDesignContractBinding:
         PrimeNativeNeuralGateTopologyContractBinding? = nil
+    public private(set) var
+        historicalEvidenceExportSourceContractBinding:
+        PrimeNativeNeuralGateTopologyContractBinding? = nil
+    public private(set) var
+        historicalEvidenceExportTargetName:
+        String? = nil
     public let historicalContractsPreserved: Bool
     public let historicalFutureTargetGraphSuperseded:
         Bool
@@ -2155,6 +2161,103 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
         )
     }()
 
+    /// Materializes only the source-bound historical evidence exporter as a
+    /// package-internal library. The exporter remains unreachable from every
+    /// current product and executable, and neither it nor the historical gate
+    /// or worker is invoked at this boundary.
+    public static let frozenV13: Self = {
+        let previous = frozenV12
+        let exporterTargetName =
+            "PrimeNativeNeuralGateHistoricalEvidenceExportMechanics"
+        let allowedExporterClosure = Set([
+            previous.historicalRuntimeTargetName,
+            previous.pureReplayTargetName,
+            previous.historicalReplayTargetName,
+        ])
+        var targets = previous.targetGraph
+        targets.append(
+            target(
+                exporterTargetName,
+                .implemented,
+                [
+                    previous.historicalRuntimeTargetName,
+                    previous.pureReplayTargetName,
+                    previous.historicalReplayTargetName,
+                ],
+                "source-bound append-only historical evidence-export variant with an exact twelve-field in-memory Materials bridge and nine-field non-Codable authority-free carrier; compile-only package-internal library with no product, worker call edge, process, gate invocation, evidence publication, PASS, receipt, source binding V7, science, or product authority"
+            )
+        )
+        var reachability =
+            previous.forbiddenReachability.map { rule in
+                forbidden(
+                    rule.targetName,
+                    rule.forbiddenReachableTargetNames
+                        + [exporterTargetName]
+                )
+            }
+        reachability.append(
+            forbidden(
+                exporterTargetName,
+                previous.targetGraph.map(\.targetName)
+                    .filter {
+                        !allowedExporterClosure.contains($0)
+                    }
+            )
+        )
+
+        return Self(
+            schemaVersion: 13,
+            contractID:
+                "prime_stage_b_source_bound_historical_evidence_export_source_topology_v13",
+            status: previous.status,
+            executionImplemented: false,
+            historicalReplayPlanID:
+                previous.historicalReplayPlanID,
+            historicalSourceBindingContractID:
+                previous.historicalSourceBindingContractID,
+            historicalEvidenceExportDesignContractBinding:
+                previous
+                .historicalEvidenceExportDesignContractBinding,
+            historicalEvidenceExportSourceContractBinding:
+                PrimeNativeNeuralGateTopologyContractBinding(
+                    contractID:
+                        "prime_source_bound_historical_evidence_export_source_v13",
+                    contentSHA256:
+                        "ecc329a7e56d843b53f9d894af4e335c9d00ac05d56efe308d61860835278d5e"
+                ),
+            historicalEvidenceExportTargetName:
+                exporterTargetName,
+            historicalContractsPreserved: true,
+            historicalFutureTargetGraphSuperseded: true,
+            targetGraph: targets,
+            forbiddenReachability: reachability,
+            historicalContainmentRootTargetName:
+                previous.historicalContainmentRootTargetName,
+            historicalRuntimeTargetName:
+                previous.historicalRuntimeTargetName,
+            historicalReplayTargetName:
+                previous.historicalReplayTargetName,
+            pureReplayTargetName:
+                previous.pureReplayTargetName,
+            donorAdaptationV2PreservedAsHistory: true,
+            donorAdaptationV3Required: true,
+            donorAdaptationV3RequiredDestination:
+                previous.donorAdaptationV3RequiredDestination,
+            sourceBindingV7Issued: false,
+            sourceBindingV7Prerequisite:
+                previous.sourceBindingV7Prerequisite,
+            packageCaptureAuthority:
+                "actual_package_secure_capture_only_bound_source_prime_source_bound_historical_evidence_export_source_v13_sha256_ecc329a7e56d843b53f9d894af4e335c9d00ac05d56efe308d61860835278d5e_not_exporter_or_worker_execution_or_source_execution_binding_v7_evidence",
+            mutationProducerDetectorTargetAssignmentDeferred:
+                false,
+            mutationProducerDetectorMustBeDisjoint: true,
+            nextImplementationPrerequisite:
+                "source_bind_the_historical_worker_evidence_export_call_edge_without_sealing_launching_or_executing_the_worker_or_issuing_source_binding_v7",
+            authorityStatement:
+                "This V13 topology preserves V1 through V12 and materializes exactly one package-internal library target for source-bound historical evidence export. The target contains the exact 412,226-byte whole-gate namespace variant, depends only on ErgenticsPrimeRuntime, the pure replay codec, and the already isolated historical replay mechanics, and is not declared as a product. Every pre-existing target is forbidden from reaching the exporter, while the exporter may reach only its exact three-target dependency closure. The historical worker source, dependencies, call graph, unavailable main, and copied resource remain unchanged and the worker does not depend on or invoke the exporter. The exporter facade accepts only in-memory historical Materials, validates the exact seed catalog before non-trapping row-cache construction, and returns a non-Codable, role-neutral, path-free, timing-free, authority-free carrier. Package compilation is source evidence only. No exporter, worker, fixture, mutation, gate, model, process, or Metal workload executes; no historical evidence, durable publication, independent detector, distinct-family or four-tier audit, mechanics PASS, terminal receipt, source or execution binding V7, scientific authority, or product authority is observed or authorized."
+        )
+    }()
+
     public var historicalEvidenceExportDesignContractID:
         String?
     {
@@ -2166,6 +2269,20 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
         String?
     {
         historicalEvidenceExportDesignContractBinding?
+            .contentSHA256
+    }
+
+    public var historicalEvidenceExportSourceContractID:
+        String?
+    {
+        historicalEvidenceExportSourceContractBinding?
+            .contractID
+    }
+
+    public var historicalEvidenceExportSourceContractSHA256:
+        String?
+    {
+        historicalEvidenceExportSourceContractBinding?
             .contentSHA256
     }
 
@@ -2240,12 +2357,14 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
             expected = .frozenV11
         case 12:
             expected = .frozenV12
+        case 13:
+            expected = .frozenV13
         default:
             throw PrimeNativeNeuralGateTopologyError
                 .invalidFrozenContract
         }
         let designBindingValid: Bool
-        if schemaVersion == 12 {
+        if schemaVersion >= 12 {
             let design =
                 PrimeNativeNeuralGateHistoricalEvidenceExportAdapterDesignContract
                 .frozenV1
@@ -2264,6 +2383,28 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
                 historicalEvidenceExportDesignContractBinding
                     == nil
         }
+        let sourceBindingValid: Bool
+        if schemaVersion >= 13 {
+            let source =
+                PrimeNativeNeuralGateHistoricalEvidenceExportSourceContract
+                .frozenV1
+            try source.validate()
+            let sourceSHA256 = try source.contentSHA256()
+            sourceBindingValid =
+                historicalEvidenceExportSourceContractBinding?
+                .validate() == true
+                && historicalEvidenceExportSourceContractID
+                    == source.contractID
+                && historicalEvidenceExportSourceContractSHA256
+                    == sourceSHA256
+                && historicalEvidenceExportTargetName
+                    == source.targetBinding.targetName
+        } else {
+            sourceBindingValid =
+                historicalEvidenceExportSourceContractBinding
+                    == nil
+                && historicalEvidenceExportTargetName == nil
+        }
         guard self == expected,
               status == .plannedNotMaterialized,
               !executionImplemented,
@@ -2275,7 +2416,8 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
               mutationProducerDetectorTargetAssignmentDeferred
                 == (schemaVersion < 8),
               mutationProducerDetectorMustBeDisjoint,
-              designBindingValid
+              designBindingValid,
+              sourceBindingValid
         else {
             throw PrimeNativeNeuralGateTopologyError
                 .invalidFrozenContract
@@ -2315,11 +2457,18 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
             }
         }
         for target in targetGraph {
-            guard ![
+            var historicalContainedTargetNames = [
                 historicalRuntimeTargetName,
                 historicalReplayTargetName,
                 historicalContainmentRootTargetName,
-            ].contains(target.targetName)
+            ]
+            if let historicalEvidenceExportTargetName {
+                historicalContainedTargetNames.append(
+                    historicalEvidenceExportTargetName
+                )
+            }
+            guard !historicalContainedTargetNames
+                .contains(target.targetName)
             else {
                 continue
             }
@@ -2433,6 +2582,10 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
             "historical_source_binding_contract_id"
         case historicalEvidenceExportDesignContractBinding =
             "historical_evidence_export_design_contract_binding"
+        case historicalEvidenceExportSourceContractBinding =
+            "historical_evidence_export_source_contract_binding"
+        case historicalEvidenceExportTargetName =
+            "historical_evidence_export_target_name"
         case historicalContractsPreserved =
             "historical_contracts_preserved"
         case historicalFutureTargetGraphSuperseded =

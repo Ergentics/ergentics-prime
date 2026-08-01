@@ -591,7 +591,7 @@ final class PrimeNativeNeuralGateHistoricalReplayMechanicsTests:
         XCTAssertThrowsError(try mutated.validate())
     }
 
-    func testPackageKeepsHistoricalClosureInternalAndV11WorkerOnly()
+    func testPackageKeepsHistoricalClosureInternalAndV11DeclarationsExact()
         throws
     {
         let package = compact(
@@ -651,19 +651,6 @@ final class PrimeNativeNeuralGateHistoricalReplayMechanicsTests:
             productionTargets.contains(
                 #".executableTarget(name:"PrimeNativeNeuralGateHistoricalFixtureWorker",dependencies:["PrimeCore","ErgenticsPrimeRuntime","PrimeNativeNeuralGateHistoricalReplayMechanics","PrimeNativeNeuralGateReplayTransport",],resources:[.copy("HistoricalFixtureEvidence"),])"#
             )
-        )
-        XCTAssertEqual(
-            productionTargets.components(
-                separatedBy: "ErgenticsPrimeRuntime"
-            ).count - 1,
-            3
-        )
-        XCTAssertEqual(
-            productionTargets.components(
-                separatedBy:
-                    "PrimeNativeNeuralGateHistoricalReplayMechanics"
-            ).count - 1,
-            2
         )
         XCTAssertFalse(
             package.lowercased().contains(

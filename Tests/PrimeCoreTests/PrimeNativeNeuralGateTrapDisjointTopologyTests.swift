@@ -2156,9 +2156,10 @@ final class PrimeNativeNeuralGateTrapDisjointTopologyTests:
             #".target(name:"PrimeNativeNeuralGateSemanticRecordContracts",dependencies:["PrimeNativeNeuralGateReplayArtifactContracts","PrimeNativeNeuralGateReplayMechanics","PrimeNativeNeuralGateCorrectedMutationSurfaceContracts",])"#,
             #".target(name:"PrimeNativeNeuralGateCorrectedMutationProducer",dependencies:["PrimeNativeNeuralGateSemanticRecordContracts","PrimeNativeNeuralGateCorrectedMutationSurfaceContracts",])"#,
             #".target(name:"PrimeNativeNeuralGateCorrectedMutationDetector",dependencies:["PrimeNativeNeuralGateCorrectedMutationSurfaceContracts",])"#,
-            #".target(name:"PrimeNativeNeuralGateHistoricalSourceDerivation",dependencies:["PrimeNativeNeuralGateReplayMechanics",])"#,
+            #".target(name:"PrimeNativeNeuralGateHistoricalSourceDerivation",dependencies:["PrimeNativeNeuralGateReplayMechanics",],resources:[.copy("HistoricalEvidenceExportSource"),])"#,
             #".target(name:"ErgenticsPrimeRuntime")"#,
             #".target(name:"PrimeNativeNeuralGateHistoricalReplayMechanics",dependencies:["ErgenticsPrimeRuntime","PrimeNativeNeuralGateReplayMechanics",])"#,
+            #".target(name:"PrimeNativeNeuralGateHistoricalEvidenceExportMechanics",dependencies:["ErgenticsPrimeRuntime","PrimeNativeNeuralGateReplayMechanics","PrimeNativeNeuralGateHistoricalReplayMechanics",])"#,
             #".executableTarget(name:"PrimeNativeNeuralGateHistoricalFixtureWorker",dependencies:["PrimeCore","ErgenticsPrimeRuntime","PrimeNativeNeuralGateHistoricalReplayMechanics","PrimeNativeNeuralGateReplayTransport",],resources:[.copy("HistoricalFixtureEvidence"),])"#,
         ]
         for declaration in exactDeclarations {
@@ -2195,6 +2196,7 @@ final class PrimeNativeNeuralGateTrapDisjointTopologyTests:
             "PrimeNativeNeuralGateHistoricalSourceDerivation",
             "ErgenticsPrimeRuntime",
             "PrimeNativeNeuralGateHistoricalReplayMechanics",
+            "PrimeNativeNeuralGateHistoricalEvidenceExportMechanics",
             "PrimeNativeNeuralGateHistoricalFixtureWorker",
         ] {
             XCTAssertFalse(
@@ -2222,6 +2224,7 @@ final class PrimeNativeNeuralGateTrapDisjointTopologyTests:
             "PrimeNativeNeuralGateHistoricalSourceDerivation",
             "ErgenticsPrimeRuntime",
             "PrimeNativeNeuralGateHistoricalReplayMechanics",
+            "PrimeNativeNeuralGateHistoricalEvidenceExportMechanics",
         ] {
             XCTAssertFalse(
                 package.contains(
@@ -2239,7 +2242,7 @@ final class PrimeNativeNeuralGateTrapDisjointTopologyTests:
             .plannedNotMaterialized
         )
 
-        for target in Contract.frozenV12.targetGraph
+        for target in Contract.frozenV13.targetGraph
         where target.materialization
             == .plannedNotMaterialized
         {

@@ -50,6 +50,10 @@ The V12 historical-evidence export design checkpoint, exact source-derived
 namespace basis, private-evidence boundary, and unchanged package/authority
 ceiling are recorded in
 [`docs/PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-EXPORT-ADAPTER-DESIGN-2026-08-01.md`](docs/PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-EXPORT-ADAPTER-DESIGN-2026-08-01.md).
+The V13 independently reproducible exporter suffix, exact derived Swift
+source, isolated package target, historical-stream/full-regrade separation,
+and unchanged execution/authority ceiling are recorded in
+[`docs/PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-EXPORT-SOURCE-2026-08-01.md`](docs/PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-EXPORT-SOURCE-2026-08-01.md).
 The additive topology-V7 exact-count stream decoder, typed worker/artifact
 reference declarations, retained-capture binding, and unchanged authority
 ceiling are recorded in
@@ -863,14 +867,23 @@ graph: a thin wrapper cannot access or reconstruct the gate's lexical-private
 and discarded evidence. V12 source-binds only the exact 368,953-byte
 whole-gate namespace basis and freezes the future export semantics. It does
 not materialize the derived exporter, bridge `Materials`, call the worker, or
-observe historical evidence. The current next exact prerequisite is
-`materialize_the_exact_source_bound_historical_evidence_export_variant_in_the_isolated_historical_replay_boundary_without_executing_the_gate_or_worker_sealing_or_launching_a_worker_or_issuing_source_binding_v7`.
+observe historical evidence. Topology V13 now satisfies that exact bounded
+materialization prerequisite: it independently source-binds the 43,273-byte
+append-only suffix, derives the exact 412,226-byte exporter, and adds one
+package-internal library with exactly three historical/pure dependencies. The
+exporter has no product, production consumer, or worker call edge. It is
+compile-checked but never invoked. Historical mutation-stream construction is
+kept distinct from the complete NL1 through NL9 full regrade, whose
+source-derived singleton disposition fails closed to `ABSTAIN` without altering the
+donor's historical verdict. The current next exact prerequisite is
+`source_bind_the_historical_worker_evidence_export_call_edge_without_sealing_launching_or_executing_the_worker_or_issuing_source_binding_v7`.
 See [Prime Native Neural Gate Historical Source Material](docs/PRIME-NATIVE-NEURAL-GATE-HISTORICAL-SOURCE-MATERIAL-2026-08-01.md).
 See [Prime Native Neural Gate Historical Replay Mechanics](docs/PRIME-NATIVE-NEURAL-GATE-HISTORICAL-REPLAY-MECHANICS-2026-08-01.md).
 See [Prime Native Neural Gate Historical Fixture and Worker Boundary](docs/PRIME-NATIVE-NEURAL-GATE-HISTORICAL-FIXTURE-WORKER-BOUNDARY-2026-08-01.md).
 See [Prime Native Neural Gate Historical Evidence Export Adapter Design](docs/PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-EXPORT-ADAPTER-DESIGN-2026-08-01.md).
+See [Prime Native Neural Gate Historical Evidence Export Source](docs/PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-EXPORT-SOURCE-2026-08-01.md).
 
-V9 through V12 keep the exact donor files in the first-party companion
+V9 through V13 keep the exact donor files in the first-party companion
 repository. Their cross-repository source proof is therefore an explicit
 manual pre-merge gate.
 The requirement marker makes a missing donor root or mistyped policy fail
@@ -880,7 +893,7 @@ rather than skip:
 env PRIME_REQUIRE_V9_PINNED_DONOR_GATE=1 PRIME_REQUIRE_V10_HISTORICAL_REPLAY_SOURCE_GATE=1 PRIME_REQUIRE_V11_HISTORICAL_FIXTURE_SOURCE_GATE=1 PRIME_REQUIRE_V12_HISTORICAL_EVIDENCE_EXPORT_SOURCE_GATE=1 PRIME_PMHNP_COMPANION_ROOT=/path/to/pinned/pmhnp-companion-ergentics swift test
 ```
 
-This command is mandatory process evidence for V9 through V12. Prime has no
+This command is mandatory process evidence for V9 through V13. Prime has no
 repository CI or branch-rule status check yet, so this record does not claim
 GitHub enforces the invocation automatically.
 
