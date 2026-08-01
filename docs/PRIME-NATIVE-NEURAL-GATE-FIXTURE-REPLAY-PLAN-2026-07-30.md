@@ -1242,14 +1242,20 @@ worker. The V11 next prerequisite was:
 
 `derive_and_source_bind_historical_worker_evidence_export_adapter_without_mutating_the_byte_exact_gate_executing_the_worker_or_issuing_source_binding_v7`
 
-V12 resolved only that design/source-contract boundary. Topology V13 now
-materializes the exact source-only exporter, and the current prerequisite is
-recorded in [Prime Native Neural Gate Historical Evidence Export Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-EXPORT-SOURCE-2026-08-01.md).
+V12 resolved only that design/source-contract boundary. Topology V13
+materialized the exact source-only exporter. V14 now appends that exporter to
+the worker's exact four-dependency prefix and source- and compile-binds one
+private cross-file call edge. The V11 primary source is unchanged; `main`
+still exits `78` and cannot name that member. No worker request handling,
+sealing, launch, execution, encoding, or publication is enabled. The current
+prerequisite is recorded in [Prime Native Neural Gate Historical Worker/Export
+Call-Edge Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-EXPORT-CALL-EDGE-SOURCE-2026-08-01.md).
 
-Only after that adapter is exact may a later slice implement worker request
-handling, sealing, launch/supervision, semantic artifact publication, and the
-paired probe/verifier. The V10 public seam's summary projection cannot replace
-the missing raw invariant records, per-mutation fingerprints, or observed
+Only after the evidence carrier-to-artifact projection is separately exact
+may a later slice consider worker request handling, sealing,
+launch/supervision, semantic artifact publication, and the paired
+probe/verifier. The V10 public seam's summary projection cannot replace the
+missing raw invariant records, per-mutation fingerprints, or observed
 failed-leg sets.
 
 After a real dual-arm Stage-B pass:
@@ -1334,9 +1340,11 @@ Its next prerequisite was
 See [Prime Native Neural Gate Historical Source Material](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-SOURCE-MATERIAL-2026-08-01.md).
 See [Prime Native Neural Gate Historical Replay Mechanics](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-REPLAY-MECHANICS-2026-08-01.md).
 See [Prime Native Neural Gate Historical Fixture and Worker Boundary](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-FIXTURE-WORKER-BOUNDARY-2026-08-01.md).
-V13 now resolves the bounded historical-evidence exporter source and topology
-materialization prerequisite while preserving the unchanged worker call graph.
-The current next exact prerequisite is
-`source_bind_the_historical_worker_evidence_export_call_edge_without_sealing_launching_or_executing_the_worker_or_issuing_source_binding_v7`.
-See
-[Prime Native Neural Gate Historical Evidence Export Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-EXPORT-SOURCE-2026-08-01.md).
+V13 resolved the bounded historical-evidence exporter source and topology
+materialization prerequisite while preserving the V13 worker call graph. V14
+now adds one separately pinned private cross-file call edge while preserving
+the byte-exact V11 primary source and status-`78` main. That edge remains
+unreachable from `main` and is source- and compile-bound only. The current next exact prerequisite is
+`design_and_source_bind_the_historical_evidence_carrier_to_frozen_worker_semantic_artifact_projection_without_enabling_worker_request_handling_sealing_launch_execution_or_issuing_source_binding_v7`.
+See [Prime Native Neural Gate Historical Evidence Export Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-EXPORT-SOURCE-2026-08-01.md).
+See [Prime Native Neural Gate Historical Worker/Export Call-Edge Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-EXPORT-CALL-EDGE-SOURCE-2026-08-01.md).

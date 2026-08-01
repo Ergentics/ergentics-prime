@@ -11,6 +11,8 @@ final class PrimeNativeNeuralGateHistoricalReplayMechanicsTests:
         PrimeNativeNeuralGateHistoricalReplayMechanicsContract
     private typealias Gate =
         PrimeNeuralNativeLanguageVerifyAbstainGate
+    private typealias Topology =
+        PrimeNativeNeuralGateTrapDisjointTopologyContract
 
     private enum DonorGatePolicyError:
         Error,
@@ -591,7 +593,7 @@ final class PrimeNativeNeuralGateHistoricalReplayMechanicsTests:
         XCTAssertThrowsError(try mutated.validate())
     }
 
-    func testPackageKeepsHistoricalClosureInternalAndV11DeclarationsExact()
+    func testPackageKeepsHistoricalClosureInternalAndFrozenV11DependenciesExact()
         throws
     {
         let package = compact(
@@ -649,8 +651,20 @@ final class PrimeNativeNeuralGateHistoricalReplayMechanicsTests:
         )
         XCTAssertTrue(
             productionTargets.contains(
-                #".executableTarget(name:"PrimeNativeNeuralGateHistoricalFixtureWorker",dependencies:["PrimeCore","ErgenticsPrimeRuntime","PrimeNativeNeuralGateHistoricalReplayMechanics","PrimeNativeNeuralGateReplayTransport",],resources:[.copy("HistoricalFixtureEvidence"),])"#
+                #".executableTarget(name:"PrimeNativeNeuralGateHistoricalFixtureWorker",dependencies:"#
             )
+        )
+        XCTAssertEqual(
+            try Topology.frozenV11.target(
+                named:
+                    "PrimeNativeNeuralGateHistoricalFixtureWorker"
+            ).directLocalDependencyNames,
+            [
+                "PrimeCore",
+                "ErgenticsPrimeRuntime",
+                "PrimeNativeNeuralGateHistoricalReplayMechanics",
+                "PrimeNativeNeuralGateReplayTransport",
+            ]
         )
         XCTAssertFalse(
             package.lowercased().contains(

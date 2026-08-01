@@ -165,6 +165,9 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
         historicalEvidenceExportSourceContractBinding:
         PrimeNativeNeuralGateTopologyContractBinding? = nil
     public private(set) var
+        historicalWorkerEvidenceExportCallEdgeSourceContractBinding:
+        PrimeNativeNeuralGateTopologyContractBinding? = nil
+    public private(set) var
         historicalEvidenceExportTargetName:
         String? = nil
     public let historicalContractsPreserved: Bool
@@ -2258,6 +2261,98 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
         )
     }()
 
+    /// Source- and compile-binds one private historical worker-to-exporter
+    /// call edge while preserving the unavailable worker entry point. No
+    /// request handling, worker execution, encoding, or publication is
+    /// reachable or observed at this boundary.
+    public static let frozenV14: Self = {
+        let previous = frozenV13
+        let workerTargetName =
+            previous.historicalContainmentRootTargetName
+        let exporterTargetName =
+            "PrimeNativeNeuralGateHistoricalEvidenceExportMechanics"
+        let targets = previous.targetGraph.map { target in
+            guard target.targetName == workerTargetName else {
+                return target
+            }
+            return Self.target(
+                target.targetName,
+                target.materialization,
+                target.directLocalDependencyNames
+                    + [exporterTargetName],
+                "internal executable target whose unchanged V11 main remains unavailable with status 78; V14 appends only the source-bound historical evidence exporter dependency and a separately pinned private cross-file materialize-to-export call edge that main cannot name; compile-only with no request handling, sealing, launch, execution, encoding, publication, PASS, receipt, source binding V7, science, or product authority",
+                externalProducts:
+                    target.externalProductDependencyNames
+            )
+        }
+        let reachability =
+            previous.forbiddenReachability.map { rule in
+                guard rule.targetName == workerTargetName else {
+                    return rule
+                }
+                return Self.forbidden(
+                    rule.targetName,
+                    rule.forbiddenReachableTargetNames
+                        .filter { $0 != exporterTargetName }
+                )
+            }
+
+        return Self(
+            schemaVersion: 14,
+            contractID:
+                "prime_stage_b_historical_worker_evidence_export_call_edge_source_topology_v14",
+            status: previous.status,
+            executionImplemented: false,
+            historicalReplayPlanID:
+                previous.historicalReplayPlanID,
+            historicalSourceBindingContractID:
+                previous.historicalSourceBindingContractID,
+            historicalEvidenceExportDesignContractBinding:
+                previous
+                .historicalEvidenceExportDesignContractBinding,
+            historicalEvidenceExportSourceContractBinding:
+                previous
+                .historicalEvidenceExportSourceContractBinding,
+            historicalWorkerEvidenceExportCallEdgeSourceContractBinding:
+                PrimeNativeNeuralGateTopologyContractBinding(
+                    contractID:
+                        "prime_source_bound_historical_worker_evidence_export_call_edge_v14",
+                    contentSHA256:
+                        "8112cf3e6190fcd6385614322be11f391bccc1ca411b6af85c7bd8cf57c4a4e8"
+                ),
+            historicalEvidenceExportTargetName:
+                previous.historicalEvidenceExportTargetName,
+            historicalContractsPreserved: true,
+            historicalFutureTargetGraphSuperseded: true,
+            targetGraph: targets,
+            forbiddenReachability: reachability,
+            historicalContainmentRootTargetName:
+                workerTargetName,
+            historicalRuntimeTargetName:
+                previous.historicalRuntimeTargetName,
+            historicalReplayTargetName:
+                previous.historicalReplayTargetName,
+            pureReplayTargetName:
+                previous.pureReplayTargetName,
+            donorAdaptationV2PreservedAsHistory: true,
+            donorAdaptationV3Required: true,
+            donorAdaptationV3RequiredDestination:
+                previous.donorAdaptationV3RequiredDestination,
+            sourceBindingV7Issued: false,
+            sourceBindingV7Prerequisite:
+                previous.sourceBindingV7Prerequisite,
+            packageCaptureAuthority:
+                "actual_package_secure_capture_only_bound_source_prime_source_bound_historical_worker_evidence_export_call_edge_v14_sha256_8112cf3e6190fcd6385614322be11f391bccc1ca411b6af85c7bd8cf57c4a4e8_not_worker_request_handling_sealing_launch_execution_evidence_projection_publication_or_source_execution_binding_v7_evidence",
+            mutationProducerDetectorTargetAssignmentDeferred:
+                false,
+            mutationProducerDetectorMustBeDisjoint: true,
+            nextImplementationPrerequisite:
+                "design_and_source_bind_the_historical_evidence_carrier_to_frozen_worker_semantic_artifact_projection_without_enabling_worker_request_handling_sealing_launch_execution_or_issuing_source_binding_v7",
+            authorityStatement:
+                "This V14 topology preserves V1 through V13 and changes only the existing product-free historical worker target. Its exact four V11 direct dependencies remain an ordered prefix and the existing V13 historical evidence exporter is appended once. One separately pinned Swift extension contains a private Bundle.module Package.resolved lookup, source-faithful historical fixture materialization, and typed exporter call. The exact V11 primary worker source remains unchanged; main exits unconditionally with status 78 and cannot name that private cross-file member. Every other target, dependency, materialization state, and forbidden-reachability rule remains exact; only the worker's V13 prohibition against reaching the exporter is removed, while the exporter still cannot reach the worker. Compilation proves only the typed call edge. No request handling, sealing, launch, worker/fixture/exporter/gate/model execution, evidence observation, encoding, durable publication, independent detection, distinct implementation family, AgentContractKit four-tier audit, mechanics PASS, terminal receipt, source or execution binding V7, scientific authority, or product authority is observed or authorized."
+        )
+    }()
+
     public var historicalEvidenceExportDesignContractID:
         String?
     {
@@ -2283,6 +2378,22 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
         String?
     {
         historicalEvidenceExportSourceContractBinding?
+            .contentSHA256
+    }
+
+    public var
+        historicalWorkerEvidenceExportCallEdgeSourceContractID:
+        String?
+    {
+        historicalWorkerEvidenceExportCallEdgeSourceContractBinding?
+            .contractID
+    }
+
+    public var
+        historicalWorkerEvidenceExportCallEdgeSourceContractSHA256:
+        String?
+    {
+        historicalWorkerEvidenceExportCallEdgeSourceContractBinding?
             .contentSHA256
     }
 
@@ -2359,6 +2470,8 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
             expected = .frozenV12
         case 13:
             expected = .frozenV13
+        case 14:
+            expected = .frozenV14
         default:
             throw PrimeNativeNeuralGateTopologyError
                 .invalidFrozenContract
@@ -2405,6 +2518,25 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
                     == nil
                 && historicalEvidenceExportTargetName == nil
         }
+        let callEdgeSourceBindingValid: Bool
+        if schemaVersion >= 14 {
+            let source =
+                PrimeNativeNeuralGateHistoricalWorkerEvidenceExportCallEdgeSourceContract
+                .frozenV1
+            try source.validate()
+            let sourceSHA256 = try source.contentSHA256()
+            callEdgeSourceBindingValid =
+                historicalWorkerEvidenceExportCallEdgeSourceContractBinding?
+                .validate() == true
+                && historicalWorkerEvidenceExportCallEdgeSourceContractID
+                    == source.contractID
+                && historicalWorkerEvidenceExportCallEdgeSourceContractSHA256
+                    == sourceSHA256
+        } else {
+            callEdgeSourceBindingValid =
+                historicalWorkerEvidenceExportCallEdgeSourceContractBinding
+                    == nil
+        }
         guard self == expected,
               status == .plannedNotMaterialized,
               !executionImplemented,
@@ -2417,7 +2549,8 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
                 == (schemaVersion < 8),
               mutationProducerDetectorMustBeDisjoint,
               designBindingValid,
-              sourceBindingValid
+              sourceBindingValid,
+              callEdgeSourceBindingValid
         else {
             throw PrimeNativeNeuralGateTopologyError
                 .invalidFrozenContract
@@ -2584,6 +2717,8 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
             "historical_evidence_export_design_contract_binding"
         case historicalEvidenceExportSourceContractBinding =
             "historical_evidence_export_source_contract_binding"
+        case historicalWorkerEvidenceExportCallEdgeSourceContractBinding =
+            "historical_worker_evidence_export_call_edge_source_contract_binding"
         case historicalEvidenceExportTargetName =
             "historical_evidence_export_target_name"
         case historicalContractsPreserved =
