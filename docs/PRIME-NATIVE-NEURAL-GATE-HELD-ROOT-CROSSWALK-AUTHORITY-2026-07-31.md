@@ -292,6 +292,9 @@ but always emits `ABSTAIN` with the provisional scope and cannot emit generic
 references to be verified/durably published plus observed model execution.
 These are absent in V8, and all authority booleans remain false.
 
-The next exact prerequisite is
+The V8 next prerequisite was
 `derive_source_pinned_historical_gate_carrier_and_forty_six_mutation_material_without_materializing_workers_or_issuing_source_binding_v7`.
-See [Prime Native Neural Gate Semantic Schema and Mutation Targets](PRIME-NATIVE-NEURAL-GATE-SEMANTIC-SCHEMA-MUTATION-TARGETS-2026-08-01.md).
+Topology V9 now satisfies it without changing held-root or crosswalk
+authority. The current next prerequisite is
+`author_and_source_bind_prime_historical_observation_seam_and_materialize_historical_replay_mechanics_without_materializing_workers_or_issuing_source_binding_v7`.
+See [Prime Native Neural Gate Historical Source Material](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-SOURCE-MATERIAL-2026-08-01.md).

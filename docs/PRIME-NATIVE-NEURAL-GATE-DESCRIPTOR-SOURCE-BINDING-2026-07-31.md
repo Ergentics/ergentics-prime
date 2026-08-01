@@ -358,6 +358,10 @@ references to be verified/durably published and model execution observed. None
 of those absent references is inferred from a descriptor, and all
 mechanics/science/product authority stays false.
 
-The next exact prerequisite is
+The V8 next prerequisite was
 `derive_source_pinned_historical_gate_carrier_and_forty_six_mutation_material_without_materializing_workers_or_issuing_source_binding_v7`.
-See [Prime Native Neural Gate Semantic Schema and Mutation Targets](PRIME-NATIVE-NEURAL-GATE-SEMANTIC-SCHEMA-MUTATION-TARGETS-2026-08-01.md).
+Topology V9 now satisfies it as offline source material; descriptor and
+source/execution-binding authority are unchanged. The current next
+prerequisite is
+`author_and_source_bind_prime_historical_observation_seam_and_materialize_historical_replay_mechanics_without_materializing_workers_or_issuing_source_binding_v7`.
+See [Prime Native Neural Gate Historical Source Material](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-SOURCE-MATERIAL-2026-08-01.md).
