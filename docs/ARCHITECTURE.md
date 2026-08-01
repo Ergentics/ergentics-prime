@@ -607,11 +607,19 @@ The V10 next prerequisite was
 Topology V11 now source-binds the exact fixture and adds the historical worker
 target only as an unavailable executable boundary. Its `main` exits `78`; no
 sealed image, worker process, historical evaluation, or durable artifact
-exists. The current next prerequisite is
-`derive_and_source_bind_historical_worker_evidence_export_adapter_without_mutating_the_byte_exact_gate_executing_the_worker_or_issuing_source_binding_v7`.
+exists. Its next prerequisite was the exact historical-evidence exporter
+design boundary. Topology V12 now resolves that design boundary without
+changing any V11 target, dependency, materialization, or reachability state.
+The pinned gate's lexical-private and discarded evidence makes a thin wrapper
+impossible, so V12 binds only the exact 368,953-byte whole-gate namespace basis
+and freezes the future export semantics. No derived exporter, target,
+`Materials` bridge, worker call edge, or historical evidence is present. The
+current next prerequisite is
+`materialize_the_exact_source_bound_historical_evidence_export_variant_in_the_isolated_historical_replay_boundary_without_executing_the_gate_or_worker_sealing_or_launching_a_worker_or_issuing_source_binding_v7`.
 See [Prime Native Neural Gate Historical Source Material](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-SOURCE-MATERIAL-2026-08-01.md).
 See [Prime Native Neural Gate Historical Replay Mechanics](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-REPLAY-MECHANICS-2026-08-01.md).
 See [Prime Native Neural Gate Historical Fixture and Worker Boundary](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-FIXTURE-WORKER-BOUNDARY-2026-08-01.md).
+See [Prime Native Neural Gate Historical Evidence Export Adapter Design](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-EXPORT-ADAPTER-DESIGN-2026-08-01.md).
 
 ## Optimizer checkpoint admission
 

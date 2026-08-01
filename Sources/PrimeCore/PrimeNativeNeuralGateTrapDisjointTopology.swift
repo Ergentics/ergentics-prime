@@ -100,6 +100,44 @@ public struct PrimeNativeNeuralGateForbiddenReachability:
     }
 }
 
+public struct PrimeNativeNeuralGateTopologyContractBinding:
+    Codable,
+    Equatable,
+    Sendable
+{
+    public let contractID: String
+    public let contentSHA256: String
+
+    fileprivate init(
+        contractID: String,
+        contentSHA256: String
+    ) {
+        self.contractID = contractID
+        self.contentSHA256 = contentSHA256
+    }
+
+    fileprivate func validate() -> Bool {
+        !contractID.isEmpty
+            && contractID.utf8.count <= 256
+            && contractID.utf8.allSatisfy {
+                ($0 >= 65 && $0 <= 90)
+                    || ($0 >= 97 && $0 <= 122)
+                    || ($0 >= 48 && $0 <= 57)
+                    || $0 == 95
+            }
+            && contentSHA256.utf8.count == 64
+            && contentSHA256.utf8.allSatisfy {
+                ($0 >= 48 && $0 <= 57)
+                    || ($0 >= 97 && $0 <= 102)
+            }
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case contractID = "contract_id"
+        case contentSHA256 = "content_sha256"
+    }
+}
+
 /// The post-audit Stage-B topology correction.
 ///
 /// This contract deliberately does not revise the historical V5 replay plan
@@ -120,6 +158,9 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
     public let historicalReplayPlanID: String
     public let historicalSourceBindingContractID:
         String
+    public private(set) var
+        historicalEvidenceExportDesignContractBinding:
+        PrimeNativeNeuralGateTopologyContractBinding? = nil
     public let historicalContractsPreserved: Bool
     public let historicalFutureTargetGraphSuperseded:
         Bool
@@ -2059,6 +2100,75 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
         )
     }()
 
+    /// Preserves the complete V11 package graph while source-binding only the
+    /// exact namespace basis and semantic requirements for a future isolated
+    /// historical evidence-export variant. The derived source, target,
+    /// exporter suffix, Materials bridge, and worker call edge remain absent.
+    public static let frozenV12: Self = {
+        let previous = frozenV11
+        return Self(
+            schemaVersion: 12,
+            contractID:
+                "prime_stage_b_source_bound_historical_evidence_export_adapter_topology_v12",
+            status: previous.status,
+            executionImplemented: false,
+            historicalReplayPlanID:
+                previous.historicalReplayPlanID,
+            historicalSourceBindingContractID:
+                previous.historicalSourceBindingContractID,
+            historicalEvidenceExportDesignContractBinding:
+                PrimeNativeNeuralGateTopologyContractBinding(
+                    contractID:
+                        "prime_source_bound_historical_evidence_export_adapter_design_v12",
+                    contentSHA256:
+                        "e3305d5ee4054c977a7cb006dc2f1b38c169f5b1e2d905f568cf31166f803e8d"
+                ),
+            historicalContractsPreserved: true,
+            historicalFutureTargetGraphSuperseded: true,
+            targetGraph: previous.targetGraph,
+            forbiddenReachability:
+                previous.forbiddenReachability,
+            historicalContainmentRootTargetName:
+                previous.historicalContainmentRootTargetName,
+            historicalRuntimeTargetName:
+                previous.historicalRuntimeTargetName,
+            historicalReplayTargetName:
+                previous.historicalReplayTargetName,
+            pureReplayTargetName:
+                previous.pureReplayTargetName,
+            donorAdaptationV2PreservedAsHistory: true,
+            donorAdaptationV3Required: true,
+            donorAdaptationV3RequiredDestination:
+                previous.donorAdaptationV3RequiredDestination,
+            sourceBindingV7Issued: false,
+            sourceBindingV7Prerequisite:
+                previous.sourceBindingV7Prerequisite,
+            packageCaptureAuthority:
+                "actual_package_secure_capture_only_bound_design_prime_source_bound_historical_evidence_export_adapter_design_v12_sha256_e3305d5ee4054c977a7cb006dc2f1b38c169f5b1e2d905f568cf31166f803e8d_not_derived_export_variant_worker_execution_or_source_execution_binding_v7_evidence",
+            mutationProducerDetectorTargetAssignmentDeferred:
+                false,
+            mutationProducerDetectorMustBeDisjoint: true,
+            nextImplementationPrerequisite:
+                "materialize_the_exact_source_bound_historical_evidence_export_variant_in_the_isolated_historical_replay_boundary_without_executing_the_gate_or_worker_sealing_or_launching_a_worker_or_issuing_source_binding_v7",
+            authorityStatement:
+                "This V12 topology preserves V1 through V11 and leaves the complete V11 target graph, materialization states, dependencies, and forbidden reachability unchanged. It binds PrimeCore design contract prime_source_bound_historical_evidence_export_adapter_design_v12 at canonical SHA-256 e3305d5ee4054c977a7cb006dc2f1b38c169f5b1e2d905f568cf31166f803e8d. That design contract records why a thin wrapper cannot recover the pinned gate's lexically private and discarded invariant, fingerprint, and failed-leg intermediates; rejects reflection, access relaxation, expected-leg substitution, and a compact hand-reconstruction kernel; source-binds the exact 368,953-byte two-rewrite whole-gate internal namespace basis; freezes exact singleton allowed-failure policy separately from complete observed regrade sets; identity-binds all twelve Materials initializer inputs; and freezes role-neutral, path-free, timing-free, non-Codable semantics for a later same-file instrumented variant. The exporter suffix and final derived source identity remain deliberately unbound, so no derived source, target, Materials bridge implementation, worker call edge, process, mutation, gate/model execution, or historical evidence is present. The existing worker main remains unavailable with status 78. No durable publication, independent detector, distinct-family/four-tier audit, mechanics PASS, terminal receipt, source/execution-binding V7, scientific authority, or product authority is observed or authorized."
+        )
+    }()
+
+    public var historicalEvidenceExportDesignContractID:
+        String?
+    {
+        historicalEvidenceExportDesignContractBinding?
+            .contractID
+    }
+
+    public var historicalEvidenceExportDesignContractSHA256:
+        String?
+    {
+        historicalEvidenceExportDesignContractBinding?
+            .contentSHA256
+    }
+
     public func target(
         named name: String
     ) throws -> PrimeNativeNeuralGateTopologyTarget {
@@ -2128,9 +2238,31 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
             expected = .frozenV10
         case 11:
             expected = .frozenV11
+        case 12:
+            expected = .frozenV12
         default:
             throw PrimeNativeNeuralGateTopologyError
                 .invalidFrozenContract
+        }
+        let designBindingValid: Bool
+        if schemaVersion == 12 {
+            let design =
+                PrimeNativeNeuralGateHistoricalEvidenceExportAdapterDesignContract
+                .frozenV1
+            try design.validate()
+            let designSHA256 =
+                try design.contentSHA256()
+            designBindingValid =
+                historicalEvidenceExportDesignContractBinding?
+                .validate() == true
+                && historicalEvidenceExportDesignContractID
+                    == design.contractID
+                && historicalEvidenceExportDesignContractSHA256
+                    == designSHA256
+        } else {
+            designBindingValid =
+                historicalEvidenceExportDesignContractBinding
+                    == nil
         }
         guard self == expected,
               status == .plannedNotMaterialized,
@@ -2142,7 +2274,8 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
               !sourceBindingV7Issued,
               mutationProducerDetectorTargetAssignmentDeferred
                 == (schemaVersion < 8),
-              mutationProducerDetectorMustBeDisjoint
+              mutationProducerDetectorMustBeDisjoint,
+              designBindingValid
         else {
             throw PrimeNativeNeuralGateTopologyError
                 .invalidFrozenContract
@@ -2298,6 +2431,8 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
             "historical_replay_plan_id"
         case historicalSourceBindingContractID =
             "historical_source_binding_contract_id"
+        case historicalEvidenceExportDesignContractBinding =
+            "historical_evidence_export_design_contract_binding"
         case historicalContractsPreserved =
             "historical_contracts_preserved"
         case historicalFutureTargetGraphSuperseded =

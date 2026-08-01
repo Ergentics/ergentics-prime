@@ -206,9 +206,12 @@ The V10 next exact prerequisite was:
 
 V11 now source-binds the exact 88,141-byte fixture and materializes only an
 unavailable executable target. Its `main` exits `78`; no worker image is
-sealed or launched and no historical evaluation occurs. The current next
-exact prerequisite is:
+sealed or launched and no historical evaluation occurs. The V11 next exact
+prerequisite was:
 
 `derive_and_source_bind_historical_worker_evidence_export_adapter_without_mutating_the_byte_exact_gate_executing_the_worker_or_issuing_source_binding_v7`
+
+V12 resolves only that design/source-contract boundary; the live prerequisite
+is recorded in [Prime Native Neural Gate Historical Evidence Export Adapter Design](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-EXPORT-ADAPTER-DESIGN-2026-08-01.md).
 
 See [Prime Native Neural Gate Historical Fixture and Worker Boundary](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-FIXTURE-WORKER-BOUNDARY-2026-08-01.md).
