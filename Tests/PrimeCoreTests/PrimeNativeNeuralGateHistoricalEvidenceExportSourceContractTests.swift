@@ -9,6 +9,8 @@ final class
 {
     private typealias SourceContract =
         PrimeNativeNeuralGateHistoricalEvidenceExportSourceContract
+    private typealias Topology =
+        PrimeNativeNeuralGateTrapDisjointTopologyContract
 
     private static let namespaceByteCount = 368_953
     private static let namespaceSHA256 =
@@ -1034,7 +1036,7 @@ final class
         )
     }
 
-    func testPackageTargetHasOnlyTheFrozenDependenciesAndNoRuntimeConsumer()
+    func testPackageTargetRetainsFrozenDependenciesAndCurrentConsumerIsBounded()
         throws
     {
         let package = try checkedInSource("Package.swift")
@@ -1136,9 +1138,36 @@ final class
                 marker: ".executableTarget(",
                 in: package
             ).filter { $0.contains(targetName) }
-        XCTAssertTrue(
-            productionConsumers.isEmpty,
-            "the exporter must have no production or executable reverse dependency"
+        let workerTarget = try XCTUnwrap(
+            try callRegions(
+                marker: ".executableTarget(",
+                in: package
+            ).only {
+                $0.contains(
+                    "PrimeNativeNeuralGateHistoricalFixtureWorker"
+                )
+            }
+        )
+        XCTAssertEqual(productionConsumers, [workerTarget])
+        XCTAssertEqual(
+            compact(workerTarget),
+            #".executableTarget(name:"PrimeNativeNeuralGateHistoricalFixtureWorker",dependencies:["PrimeCore","ErgenticsPrimeRuntime","PrimeNativeNeuralGateHistoricalReplayMechanics","PrimeNativeNeuralGateReplayTransport","PrimeNativeNeuralGateHistoricalEvidenceExportMechanics",],resources:[.copy("HistoricalFixtureEvidence"),])"#
+        )
+
+        let frozenV13Worker = try Topology.frozenV13.target(
+            named:
+                "PrimeNativeNeuralGateHistoricalFixtureWorker"
+        )
+        XCTAssertFalse(
+            frozenV13Worker.directLocalDependencyNames
+                .contains(targetName)
+        )
+        XCTAssertFalse(
+            try Topology.frozenV13
+                .transitiveLocalTargetNames(
+                    reachableFrom:
+                        "PrimeNativeNeuralGateHistoricalFixtureWorker"
+                ).contains(targetName)
         )
 
         let testConsumers = try callRegions(
@@ -1153,24 +1182,13 @@ final class
         )
         XCTAssertEqual(
             occurrences(of: targetName, in: package),
-            2,
-            "only the target declaration and its compile-only test edge are allowed"
+            3,
+            "only the target declaration, private worker call edge, and compile-only test edge are allowed"
         )
-
-        let workerTarget = try XCTUnwrap(
-            try callRegions(
-                marker: ".executableTarget(",
-                in: package
-            ).only {
-                $0.contains(
-                    "PrimeNativeNeuralGateHistoricalFixtureWorker"
-                )
-            }
-        )
-        XCTAssertFalse(workerTarget.contains(targetName))
+        XCTAssertTrue(workerTarget.contains(targetName))
     }
 
-    func testWorkerRemainsByteExactAndUnavailable()
+    func testPrimaryWorkerSourceRemainsByteExactAndUnavailable()
         throws
     {
         let worker = try checkedInData(

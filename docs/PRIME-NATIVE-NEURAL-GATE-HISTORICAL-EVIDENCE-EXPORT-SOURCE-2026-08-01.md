@@ -2,15 +2,22 @@
 
 Date: 2026-08-01
 
+Current continuation: V14 has now satisfied this document's call-edge
+prerequisite without enabling or executing the worker. Treat the V13
+no-consumer and unchanged-worker-dependency statements below as frozen
+historical checkpoint facts, not the current package graph. Continue from
+[Prime Native Neural Gate Historical Worker/Export Call-Edge Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-EXPORT-CALL-EDGE-SOURCE-2026-08-01.md).
+
 ## Decision
 
 V13 materializes the V12-designed historical evidence exporter as one isolated,
 package-internal Swift library. It is a source and compilation checkpoint, not
 an execution checkpoint.
 
-The new target has no product declaration and no production or executable
-consumer. The existing historical worker does not depend on it, its `main`
-still exits unavailable with status `78`, and its source remains exactly 2,298
+At the V13 checkpoint, the new target had no product declaration and no
+production or executable consumer. The existing historical worker did not
+depend on it, and its `main` still exited unavailable with status `78`. Its
+source remains exactly 2,298
 bytes with SHA-256
 `9f62827d4c35e98fb01f9984b1c227cb681dd42ac4c26147a86e9429958545df`.
 No exporter, worker, gate, fixture, mutation, model, MLX, or Metal workload is
@@ -159,11 +166,14 @@ distinct implementation family, perform a four-tier audit, authorize mechanics
 `PASS`, issue a terminal receipt or source/execution binding V7, or establish
 scientific or product authority. Prime admission remains `ABSTAIN`.
 
-The next exact prerequisite is:
+The V13 next exact prerequisite was:
 
 `source_bind_the_historical_worker_evidence_export_call_edge_without_sealing_launching_or_executing_the_worker_or_issuing_source_binding_v7`
 
-That later slice must remain separately reviewable. This V13 source checkpoint
-does not authorize the worker edit, image sealing, launch, execution, durable
-publication, probe/verifier acceptance, or any model-training or quantization
-workload.
+V14 now satisfies that prerequisite with one private, cross-file call edge and
+one appended worker dependency. The exact V11 primary source and unavailable
+exit remain unchanged, so compilation cannot make the private member reachable
+from `main`. No request handling, sealing, launch, worker/fixture/exporter/gate
+execution, encoding, publication, terminal receipt, source/execution binding
+V7, scientific authority, or product authority is observed or authorized.
+See [Prime Native Neural Gate Historical Worker/Export Call-Edge Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-EXPORT-CALL-EDGE-SOURCE-2026-08-01.md).

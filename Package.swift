@@ -236,6 +236,7 @@ let package = Package(
                 "ErgenticsPrimeRuntime",
                 "PrimeNativeNeuralGateHistoricalReplayMechanics",
                 "PrimeNativeNeuralGateReplayTransport",
+                "PrimeNativeNeuralGateHistoricalEvidenceExportMechanics",
             ],
             resources: [
                 .copy("HistoricalFixtureEvidence"),

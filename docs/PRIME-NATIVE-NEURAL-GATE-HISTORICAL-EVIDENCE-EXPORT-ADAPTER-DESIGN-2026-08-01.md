@@ -2,11 +2,12 @@
 
 Date: 2026-08-01
 
-Current continuation: V13 has now satisfied this document's materialization
-prerequisite without executing the exporter or worker. Treat the V12 absence
-statements below as frozen historical checkpoint facts, not the current
-package state. Continue from [Prime Native Neural Gate Historical Evidence
-Export Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-EXPORT-SOURCE-2026-08-01.md).
+Current continuation: V13 satisfied this document's exporter-materialization
+prerequisite, and V14 has now source- and compile-bound the private cross-file
+worker/exporter call edge without enabling or executing the worker. Treat the
+V12 absence statements below as frozen historical checkpoint facts, not the
+current package state. Continue from [Prime Native Neural Gate Historical
+Worker/Export Call-Edge Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-EXPORT-CALL-EDGE-SOURCE-2026-08-01.md).
 
 ## Decision
 

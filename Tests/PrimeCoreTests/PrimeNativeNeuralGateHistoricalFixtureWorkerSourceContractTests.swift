@@ -131,7 +131,7 @@ final class PrimeNativeNeuralGateHistoricalFixtureWorkerSourceContractTests:
         )
     }
 
-    func testCheckedInMaterialAndCompleteTargetInventoriesAreExact()
+    func testCheckedInMaterialAndFrozenTargetSourcesRemainExact()
         throws
     {
         let contract = Contract.frozenV1
@@ -158,8 +158,19 @@ final class PrimeNativeNeuralGateHistoricalFixtureWorkerSourceContractTests:
             let directory = repositoryRoot
                 .appendingPathComponent("Sources")
                 .appendingPathComponent(binding.targetName)
+            let completeActual = try recursiveSwiftSourcePaths(
+                in: directory
+            )
+            let frozenActual: [String]
+            if binding.targetKind == .internalExecutable {
+                frozenActual = completeActual.filter {
+                    binding.orderedSourceRelativePaths.contains($0)
+                }
+            } else {
+                frozenActual = completeActual
+            }
             XCTAssertEqual(
-                try recursiveSwiftSourcePaths(in: directory),
+                frozenActual,
                 binding.orderedSourceRelativePaths.sorted(),
                 binding.targetName
             )
@@ -299,10 +310,17 @@ final class PrimeNativeNeuralGateHistoricalFixtureWorkerSourceContractTests:
                 encoding: .utf8
             )
         )
-        XCTAssertTrue(
-            package.contains(
-                #".executableTarget(name:"PrimeNativeNeuralGateHistoricalFixtureWorker",dependencies:["PrimeCore","ErgenticsPrimeRuntime","PrimeNativeNeuralGateHistoricalReplayMechanics","PrimeNativeNeuralGateReplayTransport",],resources:[.copy("HistoricalFixtureEvidence"),])"#
-            )
+        XCTAssertEqual(
+            try Topology.frozenV11.target(
+                named:
+                    "PrimeNativeNeuralGateHistoricalFixtureWorker"
+            ).directLocalDependencyNames,
+            [
+                "PrimeCore",
+                "ErgenticsPrimeRuntime",
+                "PrimeNativeNeuralGateHistoricalReplayMechanics",
+                "PrimeNativeNeuralGateReplayTransport",
+            ]
         )
         let targetsStart = try XCTUnwrap(
             package.range(of: "targets:[")
