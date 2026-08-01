@@ -174,3 +174,61 @@ frozen should Prime consider materializing the historical worker and paired
 Stage-B supervisors/workers. Live Release closure, executable, process, and
 artifact evidence must then fill the typed references; the declarations in
 this slice cannot stand in for that evidence.
+
+## Recorded V7 closeout and additive V8 continuation
+
+The pre-run statement in the frozen-identities section records this document's
+authoring point. The completed V7 closeout subsequently used embedded source
+identity
+`9cdfe7bfcbbedebce59b7abb45b614778e6674391b570a679ea40728be4c514f`
+and passed the actual-package Release canary at 41,951 bytes, SHA-256
+`770b719a7e594f95e422f40dc5d4acd0fd93241928416a6bb3f27a448791f928`.
+The preceding V6 checkpoint was 40,100 bytes, SHA-256
+`99431ac9477a6546225721027319fc460ff8b10c8e55ef68f07b5cb8c73c8cd9`.
+Both retain secure-capture-only authority.
+
+The prerequisite quoted above is now satisfied by topology V8,
+`prime_stage_b_semantic_record_schema_and_disjoint_corrected_mutation_targets_topology_v8`,
+SHA-256
+`8f49c8322951249568915cb5b6a9971e251127ff865709292f0c7a7bd0f1db5b`.
+V8 preserves this document's exact ten-role/twenty-path reference declarations,
+freezes the deferred semantic schemas, and adds four internal Swift targets:
+the narrow label-free, presence-only surface contract; the semantic
+catalog/identity contract; the corrected producer; and the independent
+detector. The corrected mutation catalog/control contract has SHA-256
+`9b40258ed7ba07dc62ff6bda96df03b2233575a039b5598b487d738d036a78bd`;
+the role-specific assignment contract has SHA-256
+`020fa5275a4ab7941b935271ad26b094b35b96c9fb85be765db1dd9130de36e2`.
+The producer directly depends on semantic plus surface contracts. The
+detector directly depends only on surface contracts and transitively only on
+surface plus replay mechanics. It cannot reach catalog/identity, expected-leg
+mapping, replay-artifact contracts, or producer.
+Its only public entry is exact 15-case batch detection; the single-triplet path
+is private. Every full bound baseline/restored context must be identical in
+bytes and binding throughout the batch, and mutated surfaces must be pairwise
+distinct. Wrong counts, duplicate cases, per-case reference-hash or seed drift,
+and cap drift other than exact 63 against baseline 64 fail closed. Permutation
+invariance is verified. `Label-free` excludes explicit mutation IDs/labels,
+arbitrary prediction strings, and per-case caller-controlled context.
+Actual Release source references are still absent and non-authorizing. Local
+in-memory mutation mechanics are not worker/process delivery, durable artifact
+evidence, a verdict, or receipt; source/execution-binding V7 remains unissued.
+Final V8 tests, source reseal, and Release canary are not claimed yet.
+
+The typed reference declarations cannot promote a count-only result.
+`countDerivedLabel` has exact scope `provisional_count_only_non_authorizing`,
+and ten bare true legs remain `ABSTAIN`. `GROUNDED` requires verified/durably
+published per-leg evidence, weighted-statistics recomputation, stable-greedy
+and behavioral fixed-prompt predicates, model capability including exact
+abstention decisions, mutation-sweep and source-bound-leg evidence, distinct
+implementation families, and four-tier audit state. The historical gate
+additionally requires all five aggregate references verified/durably
+published and model execution observed. The live exported
+`PrimeNativeNeuralGateCountDerivedVerdict.recompute(legs:)` API stays
+compatible but always returns `ABSTAIN` with only the provisional scope and
+cannot return generic `GROUNDED`. Those bindings remain absent, so mechanics
+`PASS`, scientific authority, and product authority remain false.
+
+The next exact prerequisite is
+`derive_source_pinned_historical_gate_carrier_and_forty_six_mutation_material_without_materializing_workers_or_issuing_source_binding_v7`.
+See [Prime Native Neural Gate Semantic Schema and Mutation Targets](PRIME-NATIVE-NEURAL-GATE-SEMANTIC-SCHEMA-MUTATION-TARGETS-2026-08-01.md).

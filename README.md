@@ -776,6 +776,68 @@ passed 1/1 over 18,432 rows in 363.326 seconds. These are focused results, not
 a full-suite claim. The exact next prerequisite is
 `freeze_deferred_mutation_historical_mlx_statistics_verdict_schemas_and_assign_disjoint_source_bound_mutation_producer_detector_without_materializing_workers`.
 
+## Additive topology V8 continuation
+
+The V7 prerequisite quoted above is now satisfied additively. Current topology
+V8 is
+`prime_stage_b_semantic_record_schema_and_disjoint_corrected_mutation_targets_topology_v8`,
+canonical SHA-256
+`8f49c8322951249568915cb5b6a9971e251127ff865709292f0c7a7bd0f1db5b`.
+It preserves semantic namespace V4 and V7's exact twenty corrected
+pre-receipt paths and freezes the deferred semantic record schemas. It adds
+four internal Swift targets: a narrow label-free, presence-only corrected
+mutation surface; the semantic catalog/identity boundary; the producer; and
+the detector. The corrected mutation catalog/control contract has SHA-256
+`9b40258ed7ba07dc62ff6bda96df03b2233575a039b5598b487d738d036a78bd`,
+and the role-specific assignment contract has SHA-256
+`020fa5275a4ab7941b935271ad26b094b35b96c9fb85be765db1dd9130de36e2`.
+The producer directly depends on the semantic and surface targets. The
+detector directly depends only on the surface target; its complete local
+closure is the surface plus replay mechanics, so it cannot reach mutation
+catalog/identity, expected-leg mapping, replay-artifact contracts, or producer
+implementation. The surface carries presence controls rather than arbitrary
+prediction strings. The detector's only public entry is exact 15-case batch
+detection; the single-triplet path is private. Every full bound baseline and
+restored surface must equal the batch-common baseline in both bytes and
+binding, and all mutated surfaces must be pairwise distinct. Wrong counts,
+duplicates, per-case reference-hash or seed drift, and any nonexact cap change
+are rejected; the fixed-cap defect is exactly 63 against baseline 64, and
+permutation invariance is verified. Here `label-free` means no explicit
+mutation ID or label, no arbitrary prediction string, and no admitted per-case
+caller-controlled context. These are local in-memory mechanics, not worker,
+process, durable artifact, verdict, or receipt evidence. Actual Release source
+references for both role libraries remain absent, `executionImplemented`
+remains false, and source/execution-binding V7 remains unissued.
+
+Verdict derivation is independently fail-closed. `countDerivedLabel` is retained
+only with scope `provisional_count_only_non_authorizing`; ten bare true leg
+states still produce `ABSTAIN`. `GROUNDED` requires verified and durably
+published evidence for every true critical leg, weighted-statistics
+recomputation, stable-greedy and behavioral fixed-prompt predicates, model
+capability including exact abstention decisions, mutation-sweep evidence,
+source-bound critical-leg evidence, distinct implementation families, and the
+four-tier audit state. The live exported
+`PrimeNativeNeuralGateCountDerivedVerdict.recompute(legs:)` API remains
+compatible but now always returns `ABSTAIN`, exposes only the same provisional
+scope, and cannot produce a generic `GROUNDED`. The historical gate additionally
+requires all five aggregate references to be verified and durably published
+plus observed model execution. Those inputs remain absent in V8, so mechanics
+`PASS`, scientific, and product authority remain false.
+
+For historical package-capture continuity, topology V6 passed at 40,100 bytes,
+SHA-256
+`99431ac9477a6546225721027319fc460ff8b10c8e55ef68f07b5cb8c73c8cd9`.
+Topology V7 was source-sealed at
+`9cdfe7bfcbbedebce59b7abb45b614778e6674391b570a679ea40728be4c514f`
+and passed at 41,951 bytes, SHA-256
+`770b719a7e594f95e422f40dc5d4acd0fd93241928416a6bb3f27a448791f928`.
+Both are actual-package secure-capture checkpoints only. Final V8 test,
+source-reseal, and Release-canary results are not claimed yet.
+
+The next exact prerequisite is
+`derive_source_pinned_historical_gate_carrier_and_forty_six_mutation_material_without_materializing_workers_or_issuing_source_binding_v7`.
+See [Prime Native Neural Gate Semantic Schema and Mutation Targets](docs/PRIME-NATIVE-NEURAL-GATE-SEMANTIC-SCHEMA-MUTATION-TARGETS-2026-08-01.md).
+
 ## Initial calibration
 
 The executable accepts paths and the explicit human allocation authorization;

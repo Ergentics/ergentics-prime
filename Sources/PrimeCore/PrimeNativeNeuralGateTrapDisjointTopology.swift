@@ -1550,6 +1550,200 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
         )
     }()
 
+    /// Freezes the previously deferred semantic-record boundary and a
+    /// label-free surface boundary, then materializes two mutually disjoint
+    /// corrected-mutation mechanics targets. These are internal library
+    /// targets, not worker executables or processes. Every role-scoped worker
+    /// and supervisor remains absent, and V1 through V7 remain exact history.
+    public static let frozenV8: Self = {
+        let previous = frozenV7
+        let surfaceTargetName =
+            "PrimeNativeNeuralGateCorrectedMutationSurfaceContracts"
+        let semanticTargetName =
+            "PrimeNativeNeuralGateSemanticRecordContracts"
+        let producerTargetName =
+            "PrimeNativeNeuralGateCorrectedMutationProducer"
+        let detectorTargetName =
+            "PrimeNativeNeuralGateCorrectedMutationDetector"
+
+        var targets = previous.targetGraph
+        targets.append(
+            Self.target(
+                surfaceTargetName,
+                .implemented,
+                [
+                    "PrimeNativeNeuralGateReplayMechanics",
+                ],
+                "pure label-free presence-only corrected-control surface contracts plus canonical bounded bytes and SHA/SZ binding; no mutation catalog, mutation identity, expected-leg mapping, implementation, process, execution, PASS, receipt, science, or product authority"
+            )
+        )
+        targets.append(
+            Self.target(
+                semanticTargetName,
+                .implemented,
+                [
+                    "PrimeNativeNeuralGateReplayArtifactContracts",
+                    "PrimeNativeNeuralGateReplayMechanics",
+                    surfaceTargetName,
+                ],
+                "pure non-authorizing semantic records, including mutation catalog and identity mapping over the label-free surface contract, historical observation, MLX digest observation, corrected statistics, and count-derived verdict values; no mutation implementation, process, execution, PASS, receipt, science, or product authority"
+            )
+        )
+        targets.append(
+            Self.target(
+                producerTargetName,
+                .implemented,
+                [semanticTargetName, surfaceTargetName],
+                "internal corrected fifteen-case mutation-production mechanics over the frozen semantic catalog and label-free control surface; no detector, worker, process, delivery, execution-evidence, evaluation, verdict, PASS, receipt, science, or product authority"
+            )
+        )
+        targets.append(
+            Self.target(
+                detectorTargetName,
+                .implemented,
+                [surfaceTargetName],
+                "independently implemented structurally label-blind corrected-control detector over only the presence-only surface contract; it cannot reach semantic catalog or identity mapping, artifact catalogs, mutation production, evaluation, PASS, receipt, science, or product use"
+            )
+        )
+
+        func appendingUnique(
+            _ base: [String],
+            _ additions: [String]
+        ) -> [String] {
+            var result = base
+            for addition in additions
+            where !result.contains(addition) {
+                result.append(addition)
+            }
+            return result
+        }
+
+        let newTargetNames = [
+            surfaceTargetName,
+            semanticTargetName,
+            producerTargetName,
+            detectorTargetName,
+        ]
+
+        // At this boundary no pre-existing target may acquire any new
+        // semantic/surface contract or mutation implementation through a
+        // transitive dependency. A later worker-materialization topology must
+        // replace this rule explicitly.
+        var reachability = previous.forbiddenReachability.map {
+            rule in
+            Self.forbidden(
+                rule.targetName,
+                appendingUnique(
+                    rule.forbiddenReachableTargetNames,
+                    newTargetNames
+                )
+            )
+        }
+        let existingRuleTargetNames = Set(
+            reachability.map(\.targetName)
+        )
+        for target in previous.targetGraph
+        where !existingRuleTargetNames.contains(
+            target.targetName
+        ) {
+            reachability.append(
+                Self.forbidden(
+                    target.targetName,
+                    newTargetNames
+                )
+            )
+        }
+
+        let previousTargetNames = previous.targetGraph.map(
+            \.targetName
+        )
+        let replayMechanicsTargetName =
+            "PrimeNativeNeuralGateReplayMechanics"
+        let replayArtifactTargetName =
+            "PrimeNativeNeuralGateReplayArtifactContracts"
+        reachability.append(
+            Self.forbidden(
+                surfaceTargetName,
+                previousTargetNames.filter {
+                    $0 != replayMechanicsTargetName
+                } + [
+                    semanticTargetName,
+                    producerTargetName,
+                    detectorTargetName,
+                ]
+            )
+        )
+        reachability.append(
+            Self.forbidden(
+                semanticTargetName,
+                previousTargetNames.filter {
+                    $0 != replayMechanicsTargetName
+                        && $0 != replayArtifactTargetName
+                } + [producerTargetName, detectorTargetName]
+            )
+        )
+        reachability.append(
+            Self.forbidden(
+                producerTargetName,
+                previousTargetNames.filter {
+                    $0 != replayMechanicsTargetName
+                        && $0 != replayArtifactTargetName
+                } + [detectorTargetName]
+            )
+        )
+        reachability.append(
+            Self.forbidden(
+                detectorTargetName,
+                previousTargetNames.filter {
+                    $0 != replayMechanicsTargetName
+                } + [
+                    semanticTargetName,
+                    producerTargetName,
+                ]
+            )
+        )
+
+        return Self(
+            schemaVersion: 8,
+            contractID:
+                "prime_stage_b_semantic_record_schema_and_disjoint_corrected_mutation_targets_topology_v8",
+            status: previous.status,
+            executionImplemented: false,
+            historicalReplayPlanID:
+                previous.historicalReplayPlanID,
+            historicalSourceBindingContractID:
+                previous.historicalSourceBindingContractID,
+            historicalContractsPreserved: true,
+            historicalFutureTargetGraphSuperseded: true,
+            targetGraph: targets,
+            forbiddenReachability: reachability,
+            historicalContainmentRootTargetName:
+                previous.historicalContainmentRootTargetName,
+            historicalRuntimeTargetName:
+                previous.historicalRuntimeTargetName,
+            historicalReplayTargetName:
+                previous.historicalReplayTargetName,
+            pureReplayTargetName:
+                previous.pureReplayTargetName,
+            donorAdaptationV2PreservedAsHistory: true,
+            donorAdaptationV3Required: true,
+            donorAdaptationV3RequiredDestination:
+                previous.donorAdaptationV3RequiredDestination,
+            sourceBindingV7Issued: false,
+            sourceBindingV7Prerequisite:
+                previous.sourceBindingV7Prerequisite,
+            packageCaptureAuthority:
+                "actual_package_secure_capture_only_not_v8_or_source_execution_binding_v7_evidence",
+            mutationProducerDetectorTargetAssignmentDeferred:
+                false,
+            mutationProducerDetectorMustBeDisjoint: true,
+            nextImplementationPrerequisite:
+                "derive_source_pinned_historical_gate_carrier_and_forty_six_mutation_material_without_materializing_workers_or_issuing_source_binding_v7",
+            authorityStatement:
+                "This V8 topology preserves V1 through V7 and adds only one pure label-free corrected-control surface target, one semantic-record target, and two internal mutually unreachable corrected-mutation mechanics targets. The producer may reach the semantic catalog/identity mapping and label-free surface. The independently implemented detector may reach only the label-free surface and replay mechanics: it is structurally unable to reach semantic catalog or identity mapping, artifact catalogs, expected-leg mappings, or mutation production. Neither implementation may reach evaluation or fixture authority, the prompt-target crosswalk, MLX, retained delivery/reference authority, terminal receipt ownership, historical runtime, or any supervisor or worker. Their package materialization is not Stage-B execution evidence: every supervisor, worker, executable, process, delivery, artifact observation, durable or process-scoped mutation execution/detection observation, evaluation, verdict, mechanics PASS, receipt publication, source/execution-binding V7, scientific authority, and product authority remains absent or unauthorized. The next bounded prerequisite is the source-derived historical gate/carrier seam and exact forty-six-mutation raw material; it must not hand-port donor behavior or materialize workers."
+        )
+    }()
+
     public func target(
         named name: String
     ) throws -> PrimeNativeNeuralGateTopologyTarget {
@@ -1611,6 +1805,8 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
             expected = .frozenV6
         case 7:
             expected = .frozenV7
+        case 8:
+            expected = .frozenV8
         default:
             throw PrimeNativeNeuralGateTopologyError
                 .invalidFrozenContract
@@ -1623,7 +1819,8 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
               donorAdaptationV2PreservedAsHistory,
               donorAdaptationV3Required,
               !sourceBindingV7Issued,
-              mutationProducerDetectorTargetAssignmentDeferred,
+              mutationProducerDetectorTargetAssignmentDeferred
+                == (schemaVersion < 8),
               mutationProducerDetectorMustBeDisjoint
         else {
             throw PrimeNativeNeuralGateTopologyError

@@ -667,6 +667,7 @@ public struct PrimeNativeNeuralGateCountDerivedVerdict:
         [PrimeNativeNeuralGateCriticalLegObservation]
     public let passingCount: Int
     public let countDerivedLabel: String
+    public let countDerivedLabelScope: String
     public let mechanicsOutcome:
         PrimeNativeNeuralGateMechanicsOutcome
     public let modelCapability:
@@ -699,9 +700,9 @@ public struct PrimeNativeNeuralGateCountDerivedVerdict:
             legs: legs,
             passingCount: count,
             countDerivedLabel: label,
-            mechanicsOutcome:
-                count == orderedCriticalLegIDs.count
-                ? .grounded : .abstain,
+            countDerivedLabelScope:
+                "provisional_count_only_non_authorizing",
+            mechanicsOutcome: .abstain,
             modelCapability: .unavailable,
             sourceBoundCriticalLegEvidenceEstablished:
                 false,

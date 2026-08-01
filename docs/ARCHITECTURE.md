@@ -532,6 +532,67 @@ The three fidelity arms are mechanisms, not arbitrary budgets. Wall and
 convergence bounds are derived from a completed fixed-token calibration and
 must align to optimizer-step and curriculum-block boundaries.
 
+## Additive V8 semantic-schema and mutation-target boundary
+
+The V7 prerequisite above is now satisfied by topology V8,
+`prime_stage_b_semantic_record_schema_and_disjoint_corrected_mutation_targets_topology_v8`,
+SHA-256
+`8f49c8322951249568915cb5b6a9971e251127ff865709292f0c7a7bd0f1db5b`.
+V8 leaves topology V1 through V7 and semantic namespace V4 byte-exact, and it
+does not extend V7's twenty corrected pre-receipt path declarations. The new
+semantic overlay freezes the mutation, historical, MLX-digest, statistics,
+and verdict record schemas. Four internal Swift targets now separate the
+label-free, presence-only surface contract, the semantic catalog/identity
+contract, the corrected producer, and the independent detector. The corrected
+mutation catalog/control contract is pinned at
+`9b40258ed7ba07dc62ff6bda96df03b2233575a039b5598b487d738d036a78bd`;
+the role-specific assignment contract is pinned at
+`020fa5275a4ab7941b935271ad26b094b35b96c9fb85be765db1dd9130de36e2`.
+The producer directly depends on semantic plus surface contracts. The
+detector directly depends only on the surface contracts, and its complete
+local closure is surface plus replay mechanics. The graph therefore prevents
+the detector from reaching the catalog, mutation identity, expected-leg
+mapping, replay-artifact contracts, or producer. Their in-memory mechanics are
+batch-only: the sole public detector entry requires exactly 15 triplets, a
+byte-and-binding-identical common baseline/restoration context, and pairwise-
+distinct mutated surfaces. It rejects count or duplicate-case defects and
+per-case reference-hash or seed drift. The sole fixed-cap defect is 63 against
+baseline 64, and permutation invariance is verified. `Label-free` excludes
+explicit mutation IDs/labels, arbitrary prediction strings, and per-case
+caller-controlled context. Actual Release source references remain absent and
+non-authorizing; workers, processes, delivery,
+durable observations, verdict publication, and receipt evidence remain
+absent. `executionImplemented` is false and source/execution-binding V7
+remains unissued.
+
+The verdict schema does not promote a leg count. `countDerivedLabel` has exact
+scope `provisional_count_only_non_authorizing`, and even ten bare true critical
+legs yield `ABSTAIN`. `GROUNDED` requires verified/durably published per-leg
+evidence, weighted-statistics recomputation, stable-greedy and behavioral
+fixed-prompt predicates, model capability including exact abstention decisions,
+the mutation sweep, source-bound leg evidence, distinct implementation
+families, and four-tier audit state. The live exported
+`PrimeNativeNeuralGateCountDerivedVerdict.recompute(legs:)` entry retains its
+API but always emits `ABSTAIN` with the provisional scope and cannot emit a
+generic `GROUNDED`. The historical gate additionally requires
+all five aggregate references to be verified/durably published and model
+execution observed. V8 supplies none of that authority; mechanics `PASS`,
+science, and product authorization remain false.
+
+The intervening historical actual-package canaries were topology V6 at 40,100
+bytes, SHA-256
+`99431ac9477a6546225721027319fc460ff8b10c8e55ef68f07b5cb8c73c8cd9`,
+and topology V7 at 41,951 bytes, SHA-256
+`770b719a7e594f95e422f40dc5d4acd0fd93241928416a6bb3f27a448791f928`.
+V7's embedded source identity was
+`9cdfe7bfcbbedebce59b7abb45b614778e6674391b570a679ea40728be4c514f`.
+Those are secure-capture-only history. Final V8 test, source, and Release
+canary results remain pending.
+
+The next exact prerequisite is
+`derive_source_pinned_historical_gate_carrier_and_forty_six_mutation_material_without_materializing_workers_or_issuing_source_binding_v7`.
+See [Prime Native Neural Gate Semantic Schema and Mutation Targets](PRIME-NATIVE-NEURAL-GATE-SEMANTIC-SCHEMA-MUTATION-TARGETS-2026-08-01.md).
+
 ## Optimizer checkpoint admission
 
 Optimizer checkpoint admission is separate from the Metal allocation result.

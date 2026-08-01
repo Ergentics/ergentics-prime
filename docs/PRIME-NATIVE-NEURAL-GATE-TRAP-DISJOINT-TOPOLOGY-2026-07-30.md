@@ -446,6 +446,69 @@ Every step remains Swift-first and Prime-owned. Python, shell scientific
 authority, PMHNP runtime dependencies, new model execution, Metal authority,
 and product authorization are outside this topology claim.
 
+## Additive topology V8 continuation
+
+Steps 1 and 2 above are now satisfied by topology V8,
+`prime_stage_b_semantic_record_schema_and_disjoint_corrected_mutation_targets_topology_v8`,
+SHA-256
+`8f49c8322951249568915cb5b6a9971e251127ff865709292f0c7a7bd0f1db5b`.
+V8 preserves topology V1 through V7, semantic namespace V4, and V7's exact
+twenty corrected pre-receipt paths. It freezes the deferred semantic record
+schemas and adds four internal Swift targets: the narrow label-free,
+presence-only surface contract; the semantic catalog/identity contract; the
+corrected 15-case producer; and the independent detector. The corrected
+mutation catalog/control contract has SHA-256
+`9b40258ed7ba07dc62ff6bda96df03b2233575a039b5598b487d738d036a78bd`;
+the role-specific assignment contract has SHA-256
+`020fa5275a4ab7941b935271ad26b094b35b96c9fb85be765db1dd9130de36e2`.
+The producer directly depends on semantic plus surface contracts. The
+detector directly depends only on surface contracts, with a complete local
+closure of surface plus replay mechanics. Its graph excludes catalog/identity,
+expected-leg mapping, replay-artifact contracts, and producer reachability.
+The detector's only public route requires an exact 15-case batch; the
+single-triplet classifier is private. Every full bound baseline/restored
+context must be byte-and-binding identical throughout that batch, and mutated
+surfaces must be pairwise distinct. Wrong counts, duplicate cases, per-case
+reference-hash or seed drift, and cap drift other than exact 63 against
+baseline 64 fail closed. Permutation invariance is verified. `Label-free`
+excludes explicit mutation IDs/labels, arbitrary prediction strings, and
+per-case caller-controlled context.
+The producer/detector assignment is no longer deferred, but actual Release
+source-reference values remain absent and non-authorizing. No worker,
+executable, process,
+delivery, durable semantic artifact, verdict publication, or receipt is
+materialized. `executionImplemented` remains false and source/execution-
+binding V7 remains unissued.
+
+The semantic boundary separately rejects count-only verdict promotion.
+`countDerivedLabel` has scope `provisional_count_only_non_authorizing`; ten
+bare true critical legs remain `ABSTAIN`. `GROUNDED` requires verified and
+durably published per-leg evidence, weighted-statistics recomputation,
+stable-greedy and behavioral fixed-prompt predicates, model capability
+including exact abstention decisions, the mutation sweep, source-bound leg
+evidence, distinct implementation families, and four-tier audit state.
+The live exported
+`PrimeNativeNeuralGateCountDerivedVerdict.recompute(legs:)` API remains
+compatible but always returns `ABSTAIN`, exposes only the provisional scope,
+and cannot return generic `GROUNDED`. Historical `GROUNDED` additionally
+requires all five aggregate references to be verified/durably published and
+model execution observed. These conditions remain absent, with mechanics
+`PASS`, science, and product authority false.
+
+Historical actual-package secure-capture checkpoints after topology V5 were
+V6 at 40,100 bytes, SHA-256
+`99431ac9477a6546225721027319fc460ff8b10c8e55ef68f07b5cb8c73c8cd9`,
+and V7 at 41,951 bytes, SHA-256
+`770b719a7e594f95e422f40dc5d4acd0fd93241928416a6bb3f27a448791f928`.
+V7's embedded source identity was
+`9cdfe7bfcbbedebce59b7abb45b614778e6674391b570a679ea40728be4c514f`.
+These are secure-capture substrate history only. Final V8 tests, source reseal,
+and Release canary remain pending.
+
+The next exact prerequisite is
+`derive_source_pinned_historical_gate_carrier_and_forty_six_mutation_material_without_materializing_workers_or_issuing_source_binding_v7`.
+See [Prime Native Neural Gate Semantic Schema and Mutation Targets](PRIME-NATIVE-NEURAL-GATE-SEMANTIC-SCHEMA-MUTATION-TARGETS-2026-08-01.md).
+
 The separate read-only Swift Git workflow preflight remains a later workflow
 slice. It does not belong in the Stage-B evidence graph, and the signed-in
 GitHub app remains the PR/check/merge publication boundary.
