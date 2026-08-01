@@ -191,10 +191,15 @@ The completed V8 prerequisite was:
 
 `derive_source_pinned_historical_gate_carrier_and_forty_six_mutation_material_without_materializing_workers_or_issuing_source_binding_v7`
 
-The current next exact prerequisite is:
+Topology V10 now satisfies the next bounded prerequisite that V9 left open:
 
 `author_and_source_bind_prime_historical_observation_seam_and_materialize_historical_replay_mechanics_without_materializing_workers_or_issuing_source_binding_v7`
 
-That next slice must author and bind the Prime-owned observation seam and make
-the historical replay mechanics target compile without yet creating a worker,
-process, durable observation, verdict, receipt, or source/execution-binding V7.
+It binds the exact runtime/gate/carrier source closure and Prime-owned
+observation seam without creating a worker, historical admission evaluation,
+durable observation, verdict authority, receipt, or source/execution-binding
+V7. See [Prime Native Neural Gate Historical Replay Mechanics](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-REPLAY-MECHANICS-2026-08-01.md).
+
+The current next exact prerequisite is:
+
+`derive_and_source_bind_source_faithful_historical_fixture_then_materialize_only_the_sealed_historical_worker_without_materializing_probe_verifier_or_issuing_source_binding_v7`

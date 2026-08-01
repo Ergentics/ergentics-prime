@@ -253,9 +253,11 @@ The V8 next exact prerequisite was:
 
 Topology V9 now satisfies that bounded prerequisite from exact pinned caller
 bytes without hand-porting the historical summary, inventing records from the
-59,497 count, or materializing a worker. The current next exact prerequisite
-is:
+59,497 count, or materializing a worker. Topology V10 then compiles the exact
+internal historical source closure and binds a non-authorizing observation
+seam. The current next exact prerequisite is:
 
-`author_and_source_bind_prime_historical_observation_seam_and_materialize_historical_replay_mechanics_without_materializing_workers_or_issuing_source_binding_v7`
+`derive_and_source_bind_source_faithful_historical_fixture_then_materialize_only_the_sealed_historical_worker_without_materializing_probe_verifier_or_issuing_source_binding_v7`
 
 See [Prime Native Neural Gate Historical Source Material](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-SOURCE-MATERIAL-2026-08-01.md).
+See [Prime Native Neural Gate Historical Replay Mechanics](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-REPLAY-MECHANICS-2026-08-01.md).

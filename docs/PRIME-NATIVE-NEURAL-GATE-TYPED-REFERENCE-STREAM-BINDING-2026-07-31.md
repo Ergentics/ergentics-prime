@@ -234,6 +234,9 @@ cannot return generic `GROUNDED`. Those bindings remain absent, so mechanics
 The V8 next prerequisite was
 `derive_source_pinned_historical_gate_carrier_and_forty_six_mutation_material_without_materializing_workers_or_issuing_source_binding_v7`.
 Topology V9 now satisfies it while actual Release source references and source
-binding V7 remain absent. The current next prerequisite is
-`author_and_source_bind_prime_historical_observation_seam_and_materialize_historical_replay_mechanics_without_materializing_workers_or_issuing_source_binding_v7`.
+binding V7 remain absent. Topology V10 then materializes only the isolated
+historical source closure; those Release bindings remain absent. The current
+next prerequisite is
+`derive_and_source_bind_source_faithful_historical_fixture_then_materialize_only_the_sealed_historical_worker_without_materializing_probe_verifier_or_issuing_source_binding_v7`.
 See [Prime Native Neural Gate Historical Source Material](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-SOURCE-MATERIAL-2026-08-01.md).
+See [Prime Native Neural Gate Historical Replay Mechanics](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-REPLAY-MECHANICS-2026-08-01.md).

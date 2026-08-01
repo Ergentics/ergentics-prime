@@ -209,6 +209,17 @@ let package = Package(
                 "PrimeNativeNeuralGateReplayMechanics"
         ),
         .target(
+            name: "ErgenticsPrimeRuntime"
+        ),
+        .target(
+            name:
+                "PrimeNativeNeuralGateHistoricalReplayMechanics",
+            dependencies: [
+                "ErgenticsPrimeRuntime",
+                "PrimeNativeNeuralGateReplayMechanics",
+            ]
+        ),
+        .target(
             name:
                 "PrimeNativeNeuralGateReplayArtifactContracts"
         ),
@@ -660,6 +671,15 @@ let package = Package(
                 "PrimeCore",
                 "PrimeNativeNeuralGateReplayMechanics",
                 "PrimeNativeNeuralGateHistoricalSourceDerivation",
+            ]
+        ),
+        .testTarget(
+            name:
+                "PrimeNativeNeuralGateHistoricalReplayMechanicsTests",
+            dependencies: [
+                "PrimeCore",
+                "PrimeNativeNeuralGateHistoricalSourceDerivation",
+                "PrimeNativeNeuralGateHistoricalReplayMechanics",
             ]
         ),
     ]

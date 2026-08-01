@@ -841,20 +841,25 @@ Topology V9 now satisfies it with caller-byte-only Swift derivation of the
 exact pinned carrier seam and 45,090-byte direct mutation source material. It
 does not parse per-case executable transforms, establish an independent
 detector, materialize the historical target or workers, or issue source
-binding V7. The current next exact prerequisite is
-`author_and_source_bind_prime_historical_observation_seam_and_materialize_historical_replay_mechanics_without_materializing_workers_or_issuing_source_binding_v7`.
+binding V7. Topology V10 now completes that next bounded prerequisite by
+materializing the exact seven-file runtime and isolated historical replay
+libraries plus a Prime-authored observation seam. They remain internal and
+unreachable from production executables. The current next exact prerequisite
+is
+`derive_and_source_bind_source_faithful_historical_fixture_then_materialize_only_the_sealed_historical_worker_without_materializing_probe_verifier_or_issuing_source_binding_v7`.
 See [Prime Native Neural Gate Historical Source Material](docs/PRIME-NATIVE-NEURAL-GATE-HISTORICAL-SOURCE-MATERIAL-2026-08-01.md).
+See [Prime Native Neural Gate Historical Replay Mechanics](docs/PRIME-NATIVE-NEURAL-GATE-HISTORICAL-REPLAY-MECHANICS-2026-08-01.md).
 
-V9 keeps the exact donor files in the first-party companion repository. Its
+V9 and V10 keep the exact donor files in the first-party companion repository. Their
 cross-repository source proof is therefore an explicit manual pre-merge gate.
 The requirement marker makes a missing donor root or mistyped policy fail
 rather than skip:
 
 ```sh
-env PRIME_REQUIRE_V9_PINNED_DONOR_GATE=1 PRIME_PMHNP_COMPANION_ROOT=/path/to/pinned/pmhnp-companion-ergentics swift test --filter 'PrimeNativeNeuralGateHistoricalSourceDerivationTests|PrimeNativeNeuralGateTrapDisjointTopologyTests'
+env PRIME_REQUIRE_V9_PINNED_DONOR_GATE=1 PRIME_REQUIRE_V10_HISTORICAL_REPLAY_SOURCE_GATE=1 PRIME_PMHNP_COMPANION_ROOT=/path/to/pinned/pmhnp-companion-ergentics swift test
 ```
 
-This command is mandatory process evidence for V9. Prime has no repository CI
+This command is mandatory process evidence for V9 and V10. Prime has no repository CI
 or branch-rule status check yet, so this record does not claim GitHub enforces
 the invocation automatically.
 
