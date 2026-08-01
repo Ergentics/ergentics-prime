@@ -213,7 +213,9 @@ arbitrary prediction strings, and per-case caller-controlled context.
 Actual Release source references are still absent and non-authorizing. Local
 in-memory mutation mechanics are not worker/process delivery, durable artifact
 evidence, a verdict, or receipt; source/execution-binding V7 remains unissued.
-Final V8 tests, source reseal, and Release canary are not claimed yet.
+That final-validation absence was the V8 prevalidation authoring state.
+Completed final V8 validation is recorded canonically in the
+[V8 semantic-schema and mutation-target record](PRIME-NATIVE-NEURAL-GATE-SEMANTIC-SCHEMA-MUTATION-TARGETS-2026-08-01.md).
 
 The typed reference declarations cannot promote a count-only result.
 `countDerivedLabel` has exact scope `provisional_count_only_non_authorizing`,

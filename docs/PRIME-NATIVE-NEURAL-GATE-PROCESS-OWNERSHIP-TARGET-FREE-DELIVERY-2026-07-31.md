@@ -243,8 +243,9 @@ delivery: actual Release source references, all workers/processes, durable
 artifacts, verdict publication, and receipt issuance remain absent and
 non-authorizing.
 `executionImplemented` remains false and source/execution-binding V7 remains
-unissued. Final V8 test, source-reseal, and Release-canary results remain
-pending.
+unissued. The final-validation absence was the V8 prevalidation authoring
+state. Completed final V8 validation is recorded canonically in the
+[V8 semantic-schema and mutation-target record](PRIME-NATIVE-NEURAL-GATE-SEMANTIC-SCHEMA-MUTATION-TARGETS-2026-08-01.md).
 
 Verdict state cannot manufacture the missing ownership or delivery evidence.
 `countDerivedLabel` is scoped `provisional_count_only_non_authorizing`; ten

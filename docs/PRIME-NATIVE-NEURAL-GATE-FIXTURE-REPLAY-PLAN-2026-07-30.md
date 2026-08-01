@@ -1295,8 +1295,9 @@ and V7 at 41,951 bytes, SHA-256
 `770b719a7e594f95e422f40dc5d4acd0fd93241928416a6bb3f27a448791f928`,
 under source identity
 `9cdfe7bfcbbedebce59b7abb45b614778e6674391b570a679ea40728be4c514f`.
-Those are secure-capture-only checkpoints. No final V8 validation, source
-reseal, or Release canary is claimed here.
+Those are secure-capture-only prevalidation checkpoints. Completed final V8
+validation is recorded canonically in the
+[V8 semantic-schema and mutation-target record](PRIME-NATIVE-NEURAL-GATE-SEMANTIC-SCHEMA-MUTATION-TARGETS-2026-08-01.md).
 
 The next exact prerequisite is
 `derive_source_pinned_historical_gate_carrier_and_forty_six_mutation_material_without_materializing_workers_or_issuing_source_binding_v7`.
