@@ -2239,7 +2239,7 @@ final class PrimeNativeNeuralGateTrapDisjointTopologyTests:
             .plannedNotMaterialized
         )
 
-        for target in Contract.frozenV11.targetGraph
+        for target in Contract.frozenV12.targetGraph
         where target.materialization
             == .plannedNotMaterialized
         {

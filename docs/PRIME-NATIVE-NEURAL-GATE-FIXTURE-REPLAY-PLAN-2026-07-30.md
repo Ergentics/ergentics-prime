@@ -1238,9 +1238,12 @@ and disjoint corrected-target step, V9 derived the historical source material,
 and V10 compiled the internal historical closure. V11 source-binds the exact
 historical fixture and creates only an executable target whose `main` exits
 unavailable with status `78`; it does not implement item 3's evidence-producing
-worker. The current next prerequisite is:
+worker. The V11 next prerequisite was:
 
 `derive_and_source_bind_historical_worker_evidence_export_adapter_without_mutating_the_byte_exact_gate_executing_the_worker_or_issuing_source_binding_v7`
+
+V12 resolves only that design/source-contract boundary; the live prerequisite
+is recorded in [Prime Native Neural Gate Historical Evidence Export Adapter Design](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-EXPORT-ADAPTER-DESIGN-2026-08-01.md).
 
 Only after that adapter is exact may a later slice implement worker request
 handling, sealing, launch/supervision, semantic artifact publication, and the
@@ -1325,8 +1328,12 @@ an internal, unreachable historical library and binds the Prime observation
 seam without executing it. Its next prerequisite was
 `derive_and_source_bind_source_faithful_historical_fixture_then_materialize_only_the_sealed_historical_worker_without_materializing_probe_verifier_or_issuing_source_binding_v7`.
 V11 now completes its fixture-source and unavailable-target portions only.
-The current next prerequisite is
+Its next prerequisite was
 `derive_and_source_bind_historical_worker_evidence_export_adapter_without_mutating_the_byte_exact_gate_executing_the_worker_or_issuing_source_binding_v7`.
 See [Prime Native Neural Gate Historical Source Material](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-SOURCE-MATERIAL-2026-08-01.md).
 See [Prime Native Neural Gate Historical Replay Mechanics](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-REPLAY-MECHANICS-2026-08-01.md).
 See [Prime Native Neural Gate Historical Fixture and Worker Boundary](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-FIXTURE-WORKER-BOUNDARY-2026-08-01.md).
+V12 now resolves only the historical-evidence exporter design/source-contract
+boundary. The live materialization prerequisite, exact private-evidence
+limitations, and unchanged worker call graph are recorded in
+[Prime Native Neural Gate Historical Evidence Export Adapter Design](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-EXPORT-ADAPTER-DESIGN-2026-08-01.md).

@@ -261,9 +261,12 @@ seam. Its next exact prerequisite was:
 
 Topology V11 now source-binds the exact fixture and adds only an unavailable
 executable target. It supplies no durable semantic record and does not change
-the V8 authority ceiling. The current next exact prerequisite is:
+the V8 authority ceiling. The V11 next exact prerequisite was:
 
 `derive_and_source_bind_historical_worker_evidence_export_adapter_without_mutating_the_byte_exact_gate_executing_the_worker_or_issuing_source_binding_v7`
+
+V12 resolves only that design/source-contract boundary; the live prerequisite
+is recorded in [Prime Native Neural Gate Historical Evidence Export Adapter Design](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-EXPORT-ADAPTER-DESIGN-2026-08-01.md).
 
 See [Prime Native Neural Gate Historical Source Material](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-SOURCE-MATERIAL-2026-08-01.md).
 See [Prime Native Neural Gate Historical Replay Mechanics](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-REPLAY-MECHANICS-2026-08-01.md).

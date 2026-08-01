@@ -168,9 +168,12 @@ V11 establishes no:
 Prime admission remains `ABSTAIN`. A donor payload string such as `GROUNDED`
 does not alter that disposition.
 
-## Next exact prerequisite
+## V11 next exact prerequisite
 
 `derive_and_source_bind_historical_worker_evidence_export_adapter_without_mutating_the_byte_exact_gate_executing_the_worker_or_issuing_source_binding_v7`
+
+V12 resolves only that design/source-contract boundary; the live prerequisite
+is recorded in [Prime Native Neural Gate Historical Evidence Export Adapter Design](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-EXPORT-ADAPTER-DESIGN-2026-08-01.md).
 
 That adapter must be derived and source-bound without editing the byte-exact
 gate or hand-porting missing records. Worker request handling, process
