@@ -1293,6 +1293,38 @@ After a real dual-arm Stage-B pass:
 That next step begins real-artifact admission. It is not authorized by this
 contract-only change.
 
+## V18 historical semantic-artifact decoder continuation
+
+V18 fulfills the V17 decoder-design prerequisite as a pure consumer boundary.
+It adds a product-free keyed-three-seed statistics wire target and a
+product-free semantic-artifact decoder target, but does not connect either one
+to the historical worker, V16 projector, `ReplayTransport`, a descriptor, or
+an artifact root. The decoder receives caller-owned bytes only.
+
+For each historical role, exact keyed coverage remains 22 artifacts: six
+bounded canonical JSON leaves, one invariant global stream, and fifteen
+ordered invariant chunks. Foundation `Codable` plus canonical re-encoding
+owns JSON admission, while the statistics envelope remains non-`Decodable` to
+generic callers. The existing maintained framed reader owns exact-keyed
+incremental fragments capped at 65,536 bytes. No all-binary materialization
+convenience or pre-verification record callback is exposed. The decoder
+requires byte-exact global/chunk record equality for all 59,497 records across
+the exact 15-chunk geometry and derives the complete 22-binding set only after
+terminal acceptance. It fails closed on missing, duplicate, wrong-role,
+wrong-ordinal, unexpected, non-canonical, mismatched, oversized, truncated, or
+trailing input.
+
+This closes only compatibility mechanics. It does not show that a descriptor
+captured producer bytes, that the V17 worker or private projection edge ran,
+that the historical gate/model or mutation workload executed, or that an
+artifact was written or published. Request handling, sealing, launch,
+supervision, `ReplayTransport`, I/O, mechanics `PASS`, terminal receipt,
+source/execution binding V7, scientific authority, and product authority all
+remain absent. The exact next prerequisite is
+`source_bind_the_unavailable_historical_worker_already_formed_v16_projected_artifact_set_to_the_complete_v18_historical_semantic_artifact_decoder_call_edge_without_enabling_replay_transport_integration_request_handling_sealing_launch_execution_io_publication_or_issuing_source_binding_v7`.
+See [Prime Native Neural Gate Historical Semantic-Artifact Decoder
+Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-SEMANTIC-ARTIFACT-DECODER-SOURCE-2026-08-02.md).
+
 ## Additive V8 continuation
 
 The V7 schema/assignment prerequisite above is now satisfied by topology V8,

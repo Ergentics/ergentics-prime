@@ -227,3 +227,42 @@ nor the public `project(evidence:context:)` entry point is invoked. See [Prime N
 Semantic-Artifact Projection Call-Edge
 Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-SEMANTIC-ARTIFACT-PROJECTION-CALL-EDGE-SOURCE-2026-08-01.md)
 for the V17 authority ceiling and decoder prerequisite.
+
+## Additive V18 historical-decoder continuation
+
+V18 satisfies the V17 decoder prerequisite while preserving this V16 source
+checkpoint and the V17 fulfillment above. The V16 projector remains unchanged
+and unreachable from the new consumer targets. V18 adds a product-free
+statistics-artifact target whose public envelope is `Encodable` only and whose
+private `Decodable` wire is reachable solely through bounded, validated,
+canonical admission. A separate product-free decoder admits the six exact
+keyed canonical-JSON leaves and reconstructs the existing validating semantic
+contracts without importing this projector.
+
+The remaining global stream and fifteen chunks cross the decoder only as
+exact-keyed fragments of at most 65,536 bytes. V18 provides no all-stream
+`Data` convenience and no callback for records that have not passed terminal
+validation. It derives sixteen stream bindings only after all 59,497 records
+match byte-for-byte between the canonical global stream and fifteen ordered
+chunk streams and every framing, count, byte-count, SHA-256, ordinal, coverage,
+and pending-state check succeeds. Only then can the six leaf bindings and
+sixteen stream bindings form the exact ordered 22-key artifact set.
+
+This decoder establishes caller-byte schema and equality mechanics only. It
+does not observe a descriptor, invoke the unavailable worker or V17 edge,
+integrate `ReplayTransport`, perform filesystem/process I/O, execute the gate
+or model, write or publish an artifact, authorize mechanics `PASS`, seal a
+receipt, issue source/execution binding V7, or confer scientific or product
+authority. See [Prime Native Neural Gate Historical Semantic-Artifact Decoder
+Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-SEMANTIC-ARTIFACT-DECODER-SOURCE-2026-08-02.md).
+The V16 synthetic assembly seam remains compatibility mechanics only and does
+not become historical evidence through V18 decoding.
+
+The exact next prerequisite is:
+
+`source_bind_the_unavailable_historical_worker_already_formed_v16_projected_artifact_set_to_the_complete_v18_historical_semantic_artifact_decoder_call_edge_without_enabling_replay_transport_integration_request_handling_sealing_launch_execution_io_publication_or_issuing_source_binding_v7`
+
+That later private call edge may pass only the already-formed V16 artifact set
+to the complete V18 decoder. It may not reconstruct identities, default
+observations, make transport reachable, perform I/O, execute the worker, or
+widen authority.

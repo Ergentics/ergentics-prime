@@ -120,3 +120,41 @@ That decoder boundary must preserve exact keyed identity and complete artifact
 coverage. ReplayTransport integration, worker request handling, sealing,
 launch, execution, I/O, publication, and source/execution binding V7 remain
 later, separately audited work.
+
+## V18 decoder fulfillment and next boundary
+
+V18 satisfies the decoder-design prerequisite above without changing this V17
+worker target, its exact six-dependency graph, its private projector member, or
+its status-`78` unavailable main. Two product-free consumer targets are added
+outside the worker closure. The statistics target exposes a public
+`Encodable` envelope and keeps its `Decodable` wire private behind bounded,
+validated canonical decoding. The semantic decoder admits exactly six keyed
+canonical-JSON leaves for one role and does not import or call the V16
+projector.
+
+The stream API accepts exact-keyed fragments no larger than 65,536 bytes for
+the global stream or current chunk. It exposes neither an all-stream `Data`
+convenience nor an unverified record callback. Sixteen stream bindings become
+available only after terminal verification of exact FIFO equality for 59,497
+records across one global stream and fifteen ordered chunks, including all
+framing, count, byte-count, SHA-256, ordinal, coverage, and pending-queue
+checks. The complete result then joins those sixteen bindings with the six
+canonical-leaf bindings into the namespace's exact ordered 22-key set.
+
+Package reachability still does not establish invocation. V18 adds no edge
+from the unavailable worker to either decoder target and performs no
+descriptor capture, `ReplayTransport` integration, request handling, sealing,
+launch, filesystem/process I/O, worker/gate/model execution, artifact write,
+publication, mechanics `PASS`, terminal receipt, source/execution binding V7,
+scientific authorization, or product authorization. See [Prime Native Neural
+Gate Historical Semantic-Artifact Decoder
+Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-SEMANTIC-ARTIFACT-DECODER-SOURCE-2026-08-02.md).
+
+The exact next prerequisite is:
+
+`source_bind_the_unavailable_historical_worker_already_formed_v16_projected_artifact_set_to_the_complete_v18_historical_semantic_artifact_decoder_call_edge_without_enabling_replay_transport_integration_request_handling_sealing_launch_execution_io_publication_or_issuing_source_binding_v7`
+
+That future call edge must remain private and unavailable from the status-`78`
+main. It may delegate only an already-formed V16 artifact set and may not
+reconstruct identity, default observations, enable transport or request
+handling, perform I/O or execution, publish, seal, or widen authority.

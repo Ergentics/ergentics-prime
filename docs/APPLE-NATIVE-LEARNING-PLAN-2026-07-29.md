@@ -1653,3 +1653,43 @@ Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-SEMANTIC-ARTIFACT-PROJECTION-
 See [Prime Native Neural Gate Historical Source Material](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-SOURCE-MATERIAL-2026-08-01.md).
 See [Prime Native Neural Gate Historical Replay Mechanics](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-REPLAY-MECHANICS-2026-08-01.md).
 See [Prime Native Neural Gate Historical Fixture and Worker Boundary](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-FIXTURE-WORKER-BOUNDARY-2026-08-01.md).
+
+## Additive V18 historical-decoder continuation
+
+V18 satisfies the V17 decoder-design prerequisite without rewriting the V16
+projector or V17 worker/projector boundary. It adds two product-free internal
+Swift targets: a statistics-artifact contract and a pure historical semantic-
+artifact decoder. The public statistics envelope is `Encodable` only; a
+private `Decodable` wire value is admitted solely through the bounded,
+validated, canonical decoder. The semantic decoder admits the six exact keyed
+canonical-JSON leaves and preserves `unavailable` separately from
+`observed_false`.
+
+The binary boundary accepts only exact-keyed caller fragments of at most
+65,536 bytes for the role's global stream or currently expected chunk. It has
+no all-stream `Data` convenience and exposes no unverified record callback.
+Only terminal success produces the sixteen stream bindings, after exact FIFO
+global/chunk equality across 59,497 records and fifteen chunks, declared and
+observed geometry, byte counts, SHA-256 values, canonical order, and empty
+pending queues all agree. The completed semantic artifact set then joins those
+sixteen bindings with the six canonical-leaf bindings into the exact ordered
+22-key namespace.
+
+This remains historical evidence plumbing, not a learning or training
+authorization. V18 binds no descriptor, worker request, `ReplayTransport`
+operation, filesystem or process I/O, gate/model/Metal execution, artifact
+write, publication, mechanics `PASS`, receipt, source/execution binding V7,
+scientific authority, or product authority. See [Prime Native Neural Gate
+Historical Semantic-Artifact Decoder
+Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-SEMANTIC-ARTIFACT-DECODER-SOURCE-2026-08-02.md).
+The MLX/Metal training plan, functional-learning authority, and every existing
+Phase 0 through Phase 7 investment gate remain unchanged.
+
+The exact next prerequisite is:
+
+`source_bind_the_unavailable_historical_worker_already_formed_v16_projected_artifact_set_to_the_complete_v18_historical_semantic_artifact_decoder_call_edge_without_enabling_replay_transport_integration_request_handling_sealing_launch_execution_io_publication_or_issuing_source_binding_v7`
+
+That later edge may pass only the already-formed V16 artifact set into the
+complete V18 decoder. It must not reconstruct identity, default observation
+state, make `ReplayTransport` reachable, perform I/O, execute the worker, or
+widen the authority ceiling.
