@@ -854,7 +854,7 @@ next exact prerequisite is:
 V22 changes no worker/runtime architecture edge or package graph. It adds only
 PrimeCore governance contract/topology source for one future append to the V21
 same-file private composition: a nested internal wrapper with exactly
-one private V21 result payload, a private initializer, no accessor or
+one private V21 result payload, a private initializer, no declared accessor or
 conformance, and one internal static method on that wrapper. The method passes
 the exact already-formed Evidence and explicit context to the private V21 call
 edge exactly once and wraps its sole return. Errors propagate unchanged.
@@ -877,3 +877,34 @@ product claim remains false; Prime remains `ABSTAIN`. The next exact
 prerequisite is:
 
 `source_bind_the_bounded_unavailable_historical_worker_invocation_seam_as_an_append_only_same_file_v21_composition_continuation_preserving_all_v21_private_members_and_delegating_exactly_once_from_one_new_internal_nonpublic_typed_bridge_without_adding_a_main_call_edge_replay_transport_integration_request_handling_sealing_launch_execution_artifact_io_publication_or_issuing_source_binding_v7`
+
+## V23 internal seam source boundary
+
+V23 appends one exact source continuation to the V21 composition file. The
+full file is 13,227 bytes at
+`62c0c413e25b95576a023f9b93f67b55a6c38f0cadbdfa4330dba31aea41ae54`:
+the 11,354-byte V21 prefix remains exact, and the sole 1,873-byte suffix at
+`64a0db36f309d92dbd8737f9a6401bb7b9adf58b0193dd4c6d3e46d906017811`
+contains only the nested internal wrapper, private payload/initializer, and
+one-call seam.
+
+The internal seam is module-nameable, including from `main`, but the exact
+status-`78` main and every other worker source contain no reference or call.
+No target-graph edge or runtime reachability is inferred from module
+nameability. An ordinary external import cannot name the seam; a separately
+built test/privileged module using `@testable import` could, but V23 adds no
+such dependency, import, or caller. Private storage is not confidential: the value may be implicitly
+`Sendable`, is ordinarily `Copyable`, and remains reflectable through generic
+`Mirror` or unsafe same-module code.
+
+The source/topology hashes are `6ae4cd1fadf95f3b18c38d7e4ec2d732f6e0b614399fb76334043bf9851bb656` and
+`48f5f1359af1eb3151196ef1e9cb417a6189d8c6461b0c3e595edee39aaee3d9`. Package, dependency, resource, target, and
+forbidden-reachability graphs remain exact. No caller, consumer, runtime event,
+I/O, transport, publication, receipt, V7, scientific, or product authority is
+added; Prime remains `ABSTAIN`. See [Prime Native Neural Gate Historical
+Worker Invocation Seam
+Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-INVOCATION-SEAM-SOURCE-2026-08-02.md).
+
+The next exact prerequisite is design-only:
+
+`design_the_security_and_leakage_audited_historical_worker_invocation_seam_caller_and_result_consumer_boundary_for_the_source_bound_v23_internal_bridge_before_any_cross_file_or_main_call_edge_payload_observation_replay_transport_integration_request_handling_sealing_launch_execution_artifact_io_publication_or_issuing_source_binding_v7`

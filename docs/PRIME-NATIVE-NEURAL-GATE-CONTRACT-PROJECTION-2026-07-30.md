@@ -851,8 +851,9 @@ The next exact prerequisite is design-only:
 V22 is design-only and leaves the V21 projection/decode contract and source
 exact. Its future same-file continuation may add one internal wrapper nested
 inside the worker. The wrapper retains only the private V21 composition result
-behind a private initializer, exposes no payload/accessor and adopts no
-conformance. Its sole internal static method accepts the exact V14 Evidence and
+behind a private initializer, exposes no declared payload accessor, and
+declares no conformance. Swift may still infer `Sendable`, and the value remains
+ordinarily copyable; neither property creates a security boundary. Its sole internal static method accepts the exact V14 Evidence and
 V16 context types, calls the private V21 edge exactly once with those unchanged
 values, and returns only the nonpublic wrapper. The wrapper declares no payload
 accessor, but Swift private storage is API hiding rather than confidentiality:
@@ -877,3 +878,32 @@ No evidence is projected, decoded, consumed, or published. Prime remains
 `ABSTAIN`. The next exact prerequisite is:
 
 `source_bind_the_bounded_unavailable_historical_worker_invocation_seam_as_an_append_only_same_file_v21_composition_continuation_preserving_all_v21_private_members_and_delegating_exactly_once_from_one_new_internal_nonpublic_typed_bridge_without_adding_a_main_call_edge_replay_transport_integration_request_handling_sealing_launch_execution_artifact_io_publication_or_issuing_source_binding_v7`
+
+## V23 invocation-seam source projection
+
+V23 fulfills the V22 source prerequisite with the exact 13,227-byte worker
+file at
+`62c0c413e25b95576a023f9b93f67b55a6c38f0cadbdfa4330dba31aea41ae54`.
+Its 11,354-byte V21 prefix remains exact; the 1,873-byte suffix at
+`64a0db36f309d92dbd8737f9a6401bb7b9adf58b0193dd4c6d3e46d906017811`
+adds only the nested wrapper and direct one-call seam. Evidence and context are
+passed unchanged, V21 still owns both `.unavailable` guards, and every
+transitive error propagates without catch, mapping, retry, or fallback.
+
+The wrapper declares no payload accessor or conformance. That does not create
+secrecy: Swift may infer `Sendable`, the value is ordinarily `Copyable`, and
+generic reflection or unsafe same-module code may expose its private payload.
+The internal method is module-nameable, but no worker source or `main`
+reference, caller, result consumer, or runtime invocation exists. Ordinary
+external imports cannot name it; a separately built test/privileged module
+using `@testable import` could, but no such dependency or import exists.
+
+The source/topology hashes are `6ae4cd1fadf95f3b18c38d7e4ec2d732f6e0b614399fb76334043bf9851bb656` and
+`48f5f1359af1eb3151196ef1e9cb417a6189d8c6461b0c3e595edee39aaee3d9`. No projection, decoding, observation, publication,
+receipt, V7, science, or product authority follows; Prime remains `ABSTAIN`.
+See [Prime Native Neural Gate Historical Worker Invocation Seam
+Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-INVOCATION-SEAM-SOURCE-2026-08-02.md).
+
+The next exact prerequisite is design-only:
+
+`design_the_security_and_leakage_audited_historical_worker_invocation_seam_caller_and_result_consumer_boundary_for_the_source_bound_v23_internal_bridge_before_any_cross_file_or_main_call_edge_payload_observation_replay_transport_integration_request_handling_sealing_launch_execution_artifact_io_publication_or_issuing_source_binding_v7`

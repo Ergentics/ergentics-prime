@@ -1787,7 +1787,7 @@ Apple-native learning, Swift/Metal/MLX, training, quantization, model, package,
 worker, or runtime source. The future append remains in the exact V21
 composition file. It nests one internal nonpublic wrapper in the worker; that
 wrapper has only the private V21 result payload, a private initializer, no
-accessor or conformance, and one internal static seam that calls the private
+declared accessor or conformance, and one internal static seam that calls the private
 V21 composition edge exactly once with unchanged Evidence/context inputs.
 
 The method must live on the nested wrapper so it can both construct the
@@ -1808,3 +1808,36 @@ transport, request, I/O, publication, receipt, V7, science, or product
 authority is added. Prime remains `ABSTAIN`. The next exact prerequisite is:
 
 `source_bind_the_bounded_unavailable_historical_worker_invocation_seam_as_an_append_only_same_file_v21_composition_continuation_preserving_all_v21_private_members_and_delegating_exactly_once_from_one_new_internal_nonpublic_typed_bridge_without_adding_a_main_call_edge_replay_transport_integration_request_handling_sealing_launch_execution_artifact_io_publication_or_issuing_source_binding_v7`
+
+## V23 source-bound invocation seam
+
+V23 materializes only the bounded Swift source designed at V22. The exact
+13,227-byte worker file at
+`62c0c413e25b95576a023f9b93f67b55a6c38f0cadbdfa4330dba31aea41ae54`
+preserves the complete 11,354-byte V21 prefix at
+`39cd879a54d6a1198f0a863f606751b1bb9d07f1ba6eb334dd74e9a079c40e1d`
+and adds a 1,873-byte suffix at
+`64a0db36f309d92dbd8737f9a6401bb7b9adf58b0193dd4c6d3e46d906017811`.
+The nested internal wrapper has one private payload/private initializer and one
+internal static throwing method that delegates to the private V21 edge exactly
+once with unchanged Evidence/context values.
+
+Internal access makes the seam nameable within the worker module; it does not
+create a caller. The exact status-`78` main and other worker sources contain no
+reference. Ordinary external imports cannot name it, while a separately built
+test/privileged module using `@testable import` could; V23 adds no such
+dependency, import, or caller. The wrapper declares no accessor or conformance, but Swift may
+infer `Sendable`, the value remains ordinarily `Copyable`, and generic `Mirror`
+or unsafe same-module code may expose its payload. It is not a confidentiality
+or authority boundary.
+
+Source-contract/topology hashes are `6ae4cd1fadf95f3b18c38d7e4ec2d732f6e0b614399fb76334043bf9851bb656` and
+`48f5f1359af1eb3151196ef1e9cb417a6189d8c6461b0c3e595edee39aaee3d9`. No caller, result consumer, runtime execution,
+artifact I/O, transport, publication, receipt, V7, science, or product
+authority is added; Prime remains `ABSTAIN`. See [Prime Native Neural Gate
+Historical Worker Invocation Seam
+Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-INVOCATION-SEAM-SOURCE-2026-08-02.md).
+
+The next exact prerequisite is design-only:
+
+`design_the_security_and_leakage_audited_historical_worker_invocation_seam_caller_and_result_consumer_boundary_for_the_source_bound_v23_internal_bridge_before_any_cross_file_or_main_call_edge_payload_observation_replay_transport_integration_request_handling_sealing_launch_execution_artifact_io_publication_or_issuing_source_binding_v7`

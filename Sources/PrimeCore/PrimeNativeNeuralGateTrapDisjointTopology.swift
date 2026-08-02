@@ -192,6 +192,9 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
         historicalWorkerInvocationSeamDesignContractBinding:
         PrimeNativeNeuralGateTopologyContractBinding? = nil
     public private(set) var
+        historicalWorkerInvocationSeamSourceContractBinding:
+        PrimeNativeNeuralGateTopologyContractBinding? = nil
+    public private(set) var
         historicalEvidenceExportTargetName:
         String? = nil
     public private(set) var
@@ -3469,6 +3472,127 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
         )
     }()
 
+    /// Source-binds only the bounded unavailable historical-worker
+    /// invocation seam. The complete V22 package graph, forbidden
+    /// reachability, prior bindings, status-78 process boundary, and
+    /// authority ceiling remain exact.
+    public static let frozenV23: Self = {
+        let previous = frozenV22
+        let source =
+            PrimeNativeNeuralGateHistoricalWorkerInvocationSeamSourceContract
+            .frozenV1
+        // Literal-pinned after the source contract's canonical encoding was
+        // finalized. Do not re-enter source or topology validation while
+        // frozenV23 itself is being initialized.
+        let sourceSHA256 =
+            "6ae4cd1fadf95f3b18c38d7e4ec2d732f6e0b614399fb76334043bf9851bb656"
+
+        return Self(
+            schemaVersion: 23,
+            contractID:
+                "prime_stage_b_historical_worker_bounded_unavailable_composition_invocation_seam_source_topology_v23",
+            status: previous.status,
+            executionImplemented:
+                previous.executionImplemented,
+            historicalReplayPlanID:
+                previous.historicalReplayPlanID,
+            historicalSourceBindingContractID:
+                previous.historicalSourceBindingContractID,
+            historicalEvidenceExportDesignContractBinding:
+                previous
+                .historicalEvidenceExportDesignContractBinding,
+            historicalEvidenceExportSourceContractBinding:
+                previous
+                .historicalEvidenceExportSourceContractBinding,
+            historicalWorkerEvidenceExportCallEdgeSourceContractBinding:
+                previous
+                .historicalWorkerEvidenceExportCallEdgeSourceContractBinding,
+            historicalEvidenceSemanticArtifactProjectionDesignContractBinding:
+                previous
+                .historicalEvidenceSemanticArtifactProjectionDesignContractBinding,
+            historicalEvidenceSemanticArtifactProjectionSourceContractBinding:
+                previous
+                .historicalEvidenceSemanticArtifactProjectionSourceContractBinding,
+            historicalWorkerSemanticArtifactProjectionCallEdgeSourceContractBinding:
+                previous
+                .historicalWorkerSemanticArtifactProjectionCallEdgeSourceContractBinding,
+            historicalSemanticArtifactDecoderSourceContractBinding:
+                previous
+                .historicalSemanticArtifactDecoderSourceContractBinding,
+            historicalWorkerSemanticArtifactDecoderCallEdgeSourceContractBinding:
+                previous
+                .historicalWorkerSemanticArtifactDecoderCallEdgeSourceContractBinding,
+            historicalWorkerExportedEvidenceProjectionDecodeCompositionDesignContractBinding:
+                previous
+                .historicalWorkerExportedEvidenceProjectionDecodeCompositionDesignContractBinding,
+            historicalWorkerExportedEvidenceProjectionDecodeCompositionCallEdgeSourceContractBinding:
+                previous
+                .historicalWorkerExportedEvidenceProjectionDecodeCompositionCallEdgeSourceContractBinding,
+            historicalWorkerInvocationSeamDesignContractBinding:
+                previous
+                .historicalWorkerInvocationSeamDesignContractBinding,
+            historicalWorkerInvocationSeamSourceContractBinding:
+                PrimeNativeNeuralGateTopologyContractBinding(
+                    contractID: source.contractID,
+                    contentSHA256: sourceSHA256
+                ),
+            historicalEvidenceExportTargetName:
+                previous.historicalEvidenceExportTargetName,
+            historicalEvidenceSemanticArtifactProjectionTargetName:
+                previous
+                .historicalEvidenceSemanticArtifactProjectionTargetName,
+            historicalStatisticsArtifactContractTargetName:
+                previous.historicalStatisticsArtifactContractTargetName,
+            historicalSemanticArtifactDecoderTargetName:
+                previous.historicalSemanticArtifactDecoderTargetName,
+            historicalContractsPreserved:
+                previous.historicalContractsPreserved,
+            historicalFutureTargetGraphSuperseded:
+                previous.historicalFutureTargetGraphSuperseded,
+            targetGraph: previous.targetGraph,
+            forbiddenReachability:
+                previous.forbiddenReachability,
+            historicalContainmentRootTargetName:
+                previous.historicalContainmentRootTargetName,
+            historicalRuntimeTargetName:
+                previous.historicalRuntimeTargetName,
+            historicalReplayTargetName:
+                previous.historicalReplayTargetName,
+            pureReplayTargetName:
+                previous.pureReplayTargetName,
+            donorAdaptationV2PreservedAsHistory:
+                previous.donorAdaptationV2PreservedAsHistory,
+            donorAdaptationV3Required:
+                previous.donorAdaptationV3Required,
+            donorAdaptationV3RequiredDestination:
+                previous.donorAdaptationV3RequiredDestination,
+            sourceBindingV7Issued:
+                previous.sourceBindingV7Issued,
+            sourceBindingV7Prerequisite:
+                previous.sourceBindingV7Prerequisite,
+            packageCaptureAuthority:
+                "actual_package_secure_capture_only_bound_source_\(source.contractID)_sha256_\(sourceSHA256)_not_caller_result_consumer_runtime_invocation_replay_transport_integration_request_handling_sealing_launch_execution_artifact_io_publication_or_source_execution_binding_v7_evidence",
+            mutationProducerDetectorTargetAssignmentDeferred:
+                previous
+                .mutationProducerDetectorTargetAssignmentDeferred,
+            mutationProducerDetectorMustBeDisjoint:
+                previous
+                .mutationProducerDetectorMustBeDisjoint,
+            nextImplementationPrerequisite:
+                source.nextImplementationPrerequisite,
+            authorityStatement:
+                [
+                    "This V23 topology preserves every V1 through V22 canonical identity and source-binds only the bounded unavailable historical-worker composition invocation seam.",
+                    "The complete V22 target graph, dependency order, target materialization, product and resource state, forbidden reachability, prior contract bindings, historical target names, status, execution flags, and source-binding authority remain exact.",
+                    "The worker retains the exact 11,354-byte V21 composition prefix and appends only the compiler-checked V23 internal wrapper and one-call method in the existing fourth Swift source; Package.swift does not change.",
+                    "Internal access expands the same-module callable surface and may be visible to testable or otherwise privileged imports; ordinary non-testable imports cannot name the seam. Private storage is API hiding, not confidentiality, and inferred Sendable or Copyable behavior creates no security boundary.",
+                    "No cross-file caller or main reference exists. The status-78 main remains unconditional, so there is no checked-in call path from main and no wrapper value, composition result, error, or invocation is observed. Compiled binary symbol or type-metadata absence and resistance to dynamic lookup, injection, or external invocation are not established.",
+                    "No request handling, result consumer, replay transport integration, sealing, launch, worker/exporter/projector/decoder/gate/model execution, artifact I/O, historical evidence publication, durability, mechanics PASS, terminal receipt, source or execution binding V7, scientific authority, or product authority is observed or authorized; Prime remains ABSTAIN.",
+                    source.authorityStatement,
+                ].joined(separator: " ")
+        )
+    }()
+
     public var historicalEvidenceExportDesignContractID:
         String?
     {
@@ -3637,6 +3761,20 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
             .contentSHA256
     }
 
+    public var historicalWorkerInvocationSeamSourceContractID:
+        String?
+    {
+        historicalWorkerInvocationSeamSourceContractBinding?
+            .contractID
+    }
+
+    public var historicalWorkerInvocationSeamSourceContractSHA256:
+        String?
+    {
+        historicalWorkerInvocationSeamSourceContractBinding?
+            .contentSHA256
+    }
+
     public func target(
         named name: String
     ) throws -> PrimeNativeNeuralGateTopologyTarget {
@@ -3728,6 +3866,8 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
             expected = .frozenV21
         case 22:
             expected = .frozenV22
+        case 23:
+            expected = .frozenV23
         default:
             throw PrimeNativeNeuralGateTopologyError
                 .invalidFrozenContract
@@ -4112,13 +4252,16 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
             let frozenDesign =
                 PrimeNativeNeuralGateHistoricalWorkerInvocationSeamDesignContract
                 .frozenV1
-            try frozenDesign.validate()
             let frozenDesignSHA256 = PrimeSHA256.hexDigest(
                 of: try PrimeCanonicalJSON.encode(frozenDesign)
             )
             invocationSeamDesignBindingValid =
                 historicalWorkerInvocationSeamDesignContractBinding?
                 .validate() == true
+                && historicalWorkerInvocationSeamDesignContractID
+                    == "prime_source_bound_historical_worker_bounded_unavailable_composition_invocation_seam_design_v22"
+                && historicalWorkerInvocationSeamDesignContractSHA256
+                    == "3954a98474cdaf79a62c65a20cf612f3a1ddaf6b8305aa941e94d3863791e757"
                 && frozenDesign.contractID
                     == historicalWorkerInvocationSeamDesignContractID
                 && frozenDesignSHA256
@@ -4126,6 +4269,47 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
         } else {
             invocationSeamDesignBindingValid =
                 historicalWorkerInvocationSeamDesignContractBinding
+                    == nil
+        }
+        let invocationSeamSourceBindingValid: Bool
+        if schemaVersion == 23 {
+            let source =
+                PrimeNativeNeuralGateHistoricalWorkerInvocationSeamSourceContract
+                .frozenV1
+            try source.validate()
+            let sourceSHA256 = PrimeSHA256.hexDigest(
+                of: try PrimeCanonicalJSON.encode(source)
+            )
+            invocationSeamSourceBindingValid =
+                historicalWorkerInvocationSeamSourceContractBinding?
+                .validate() == true
+                && historicalWorkerInvocationSeamSourceContractID
+                    == source.contractID
+                && historicalWorkerInvocationSeamSourceContractSHA256
+                    == sourceSHA256
+                && historicalWorkerInvocationSeamSourceContractSHA256
+                    == "6ae4cd1fadf95f3b18c38d7e4ec2d732f6e0b614399fb76334043bf9851bb656"
+        } else if schemaVersion > 23 {
+            let frozenSource =
+                PrimeNativeNeuralGateHistoricalWorkerInvocationSeamSourceContract
+                .frozenV1
+            let frozenSourceSHA256 = PrimeSHA256.hexDigest(
+                of: try PrimeCanonicalJSON.encode(frozenSource)
+            )
+            invocationSeamSourceBindingValid =
+                historicalWorkerInvocationSeamSourceContractBinding?
+                .validate() == true
+                && historicalWorkerInvocationSeamSourceContractID
+                    == "prime_source_bound_historical_worker_bounded_unavailable_composition_invocation_seam_v23"
+                && historicalWorkerInvocationSeamSourceContractSHA256
+                    == "6ae4cd1fadf95f3b18c38d7e4ec2d732f6e0b614399fb76334043bf9851bb656"
+                && frozenSource.contractID
+                    == historicalWorkerInvocationSeamSourceContractID
+                && frozenSourceSHA256
+                    == historicalWorkerInvocationSeamSourceContractSHA256
+        } else {
+            invocationSeamSourceBindingValid =
+                historicalWorkerInvocationSeamSourceContractBinding
                     == nil
         }
         guard status == .plannedNotMaterialized,
@@ -4148,7 +4332,8 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
               workerDecoderCallEdgeSourceBindingValid,
               compositionDesignBindingValid,
               compositionSourceBindingValid,
-              invocationSeamDesignBindingValid
+              invocationSeamDesignBindingValid,
+              invocationSeamSourceBindingValid
         else {
             throw PrimeNativeNeuralGateTopologyError
                 .invalidFrozenContract
@@ -4340,6 +4525,8 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
             "historical_worker_exported_evidence_projection_decode_composition_call_edge_source_contract_binding"
         case historicalWorkerInvocationSeamDesignContractBinding =
             "historical_worker_invocation_seam_design_contract_binding"
+        case historicalWorkerInvocationSeamSourceContractBinding =
+            "historical_worker_invocation_seam_source_contract_binding"
         case historicalEvidenceExportTargetName =
             "historical_evidence_export_target_name"
         case historicalEvidenceSemanticArtifactProjectionTargetName =

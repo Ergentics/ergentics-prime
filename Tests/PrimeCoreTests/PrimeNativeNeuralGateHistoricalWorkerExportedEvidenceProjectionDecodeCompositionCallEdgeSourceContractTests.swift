@@ -104,20 +104,31 @@ final class
         let live = try checkedInData(
             contract.compositionSource.primeRelativePath
         )
-
-        XCTAssertEqual(
+        XCTAssertGreaterThanOrEqual(
             UInt64(live.count),
             contract.compositionSource.byteCount
         )
+        let historicalV21Source = Data(
+            live.prefix(Int(contract.compositionSource.byteCount))
+        )
+
         XCTAssertEqual(
-            PrimeSHA256.hexDigest(of: live),
+            UInt64(historicalV21Source.count),
+            contract.compositionSource.byteCount
+        )
+        XCTAssertEqual(
+            PrimeSHA256.hexDigest(of: historicalV21Source),
             contract.compositionSource.sha256
         )
         let prefix = Data(
-            live.prefix(Int(contract.preservedV19SourcePrefixByteCount))
+            historicalV21Source.prefix(
+                Int(contract.preservedV19SourcePrefixByteCount)
+            )
         )
         let suffix = Data(
-            live.dropFirst(Int(contract.preservedV19SourcePrefixByteCount))
+            historicalV21Source.dropFirst(
+                Int(contract.preservedV19SourcePrefixByteCount)
+            )
         )
         XCTAssertEqual(
             PrimeSHA256.hexDigest(of: prefix),
@@ -166,8 +177,16 @@ final class
         throws
     {
         let contract = Contract.frozenV1
-        let source = try checkedInString(
+        let liveSource = try checkedInData(
             contract.compositionSource.primeRelativePath
+        )
+        let source = try XCTUnwrap(
+            String(
+                data: liveSource.prefix(
+                    Int(contract.compositionSource.byteCount)
+                ),
+                encoding: .utf8
+            )
         )
         let suffix = String(
             source.dropFirst(Int(contract.preservedV19SourcePrefixByteCount))
