@@ -233,3 +233,30 @@ Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-EXPORTED-EVIDENCE-PROJECTION-
 Prime remains `ABSTAIN`. The next exact prerequisite is design-only:
 
 `design_the_bounded_unavailable_historical_worker_invocation_seam_for_the_source_bound_v21_composition_before_any_private_access_change_replay_transport_integration_request_handling_sealing_launch_execution_artifact_io_publication_or_issuing_source_binding_v7`
+
+## V22 access-seam design continuation
+
+V22 does not revise this frozen V20 composition design or the V21 source that
+fulfilled it. It freezes the next access-minimal Swift shape: one internal
+wrapper nested in `PrimeNativeNeuralGateHistoricalFixtureWorker`, whose sole
+stored value is the private V21 composition result behind a private
+initializer. The wrapper exposes no accessor and adopts no conformance. Its
+one internal static seam calls the enclosing worker's private V21 composition
+call edge exactly once with the original Evidence and context and returns
+`Self`; all V21 errors propagate unchanged.
+
+The nested method shape avoids widening any V21 private declaration. Its
+private payload is API-hidden but not confidential against generic reflection
+or unsafe same-module code. V22 adds PrimeCore governance contract/topology
+source only; it adds no worker, invocation-seam, runtime, or consumer source,
+and no `main` call, transport, request, process, I/O, or publication path. It
+preserves the exact V21 source/main/`Package.swift` and
+graph. Its design/topology hashes are `3954a98474cdaf79a62c65a20cf612f3a1ddaf6b8305aa941e94d3863791e757` and
+`af914f70b10917e95b895fbf1fc24c6e52764893972d6616bdbb409ba712f4f5`. See [Prime Native Neural Gate Historical Worker
+Invocation Seam
+Design](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-INVOCATION-SEAM-DESIGN-2026-08-02.md).
+
+No composition or worker invocation occurs; Prime remains `ABSTAIN`. The next
+exact prerequisite is:
+
+`source_bind_the_bounded_unavailable_historical_worker_invocation_seam_as_an_append_only_same_file_v21_composition_continuation_preserving_all_v21_private_members_and_delegating_exactly_once_from_one_new_internal_nonpublic_typed_bridge_without_adding_a_main_call_edge_replay_transport_integration_request_handling_sealing_launch_execution_artifact_io_publication_or_issuing_source_binding_v7`

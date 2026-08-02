@@ -1779,3 +1779,32 @@ Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-EXPORTED-EVIDENCE-PROJECTION-
 Prime remains `ABSTAIN`. The next exact prerequisite is design-only:
 
 `design_the_bounded_unavailable_historical_worker_invocation_seam_for_the_source_bound_v21_composition_before_any_private_access_change_replay_transport_integration_request_handling_sealing_launch_execution_artifact_io_publication_or_issuing_source_binding_v7`
+
+## V22 design-only bounded invocation seam
+
+V22 freezes the smallest viable future access seam without changing any
+Apple-native learning, Swift/Metal/MLX, training, quantization, model, package,
+worker, or runtime source. The future append remains in the exact V21
+composition file. It nests one internal nonpublic wrapper in the worker; that
+wrapper has only the private V21 result payload, a private initializer, no
+accessor or conformance, and one internal static seam that calls the private
+V21 composition edge exactly once with unchanged Evidence/context inputs.
+
+The method must live on the nested wrapper so it can both construct the
+private payload and name the enclosing worker's private V21 edge without
+widening access. It adds no error or failure handling. The wrapper would
+declare no payload accessor, but private storage would not provide
+confidentiality against generic reflection or unsafe same-module code. V22
+adds PrimeCore governance contract/topology source only, not worker,
+invocation-seam, or runtime source; the exact V21 composition file, status-78 main,
+`Package.swift`, worker inventory, and target/forbidden-reachability graphs
+remain unchanged. Design/topology SHA-256 values are
+`3954a98474cdaf79a62c65a20cf612f3a1ddaf6b8305aa941e94d3863791e757` and `af914f70b10917e95b895fbf1fc24c6e52764893972d6616bdbb409ba712f4f5`. See [Prime
+Native Neural Gate Historical Worker Invocation Seam
+Design](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-INVOCATION-SEAM-DESIGN-2026-08-02.md).
+
+No worker or process is invoked, no composition runs, and no replay,
+transport, request, I/O, publication, receipt, V7, science, or product
+authority is added. Prime remains `ABSTAIN`. The next exact prerequisite is:
+
+`source_bind_the_bounded_unavailable_historical_worker_invocation_seam_as_an_append_only_same_file_v21_composition_continuation_preserving_all_v21_private_members_and_delegating_exactly_once_from_one_new_internal_nonpublic_typed_bridge_without_adding_a_main_call_edge_replay_transport_integration_request_handling_sealing_launch_execution_artifact_io_publication_or_issuing_source_binding_v7`

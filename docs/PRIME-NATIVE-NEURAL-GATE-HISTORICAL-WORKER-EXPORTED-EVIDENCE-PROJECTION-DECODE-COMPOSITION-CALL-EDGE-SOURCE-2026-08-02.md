@@ -161,3 +161,34 @@ before any source change can make V21 callable from another worker file. It is
 design-only: it may not enable transport, request handling, sealing, launch,
 execution, artifact I/O, publication, receipt issuance, or source/execution
 authority.
+
+## V22 design-only bounded invocation seam
+
+V22 resolves that design question without changing this source. The exact
+11,354-byte V21 file remains the only admitted future source path and must be
+the byte-exact prefix of any successor. The viable bridge is one internal
+wrapper nested in the worker. It stores only this file's private V21 result
+behind a private initializer, exposes no accessor, adopts no conformance, and
+owns one internal static method that calls this file's private V21 call edge
+exactly once with unchanged Evidence and context. Errors propagate unchanged.
+The private field is API-hidden but is not a confidentiality boundary against
+generic reflection or unsafe same-module code; any later consumer therefore
+requires a separate leakage and security audit.
+The seam preserves V21's two pre-projection `.unavailable` guards exactly:
+`.observed_false` remains a distinct observation and `nil` is not representable
+or accepted as a substitute. No guard is duplicated, defaulted, inferred, or
+normalized.
+
+The method belongs to the nested wrapper so no initializer or V21 member must
+be widened. V22 materializes neither wrapper nor method and adds no caller,
+`main` edge, package/graph delta, request, transport, execution, I/O, or
+publication. The exact status-78 main and `Package.swift` are preserved.
+Design/topology hashes are `3954a98474cdaf79a62c65a20cf612f3a1ddaf6b8305aa941e94d3863791e757` and
+`af914f70b10917e95b895fbf1fc24c6e52764893972d6616bdbb409ba712f4f5`. See [Prime Native Neural Gate Historical Worker
+Invocation Seam
+Design](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-INVOCATION-SEAM-DESIGN-2026-08-02.md).
+
+All execution and authority claims remain false; Prime remains `ABSTAIN`. The
+next exact prerequisite is:
+
+`source_bind_the_bounded_unavailable_historical_worker_invocation_seam_as_an_append_only_same_file_v21_composition_continuation_preserving_all_v21_private_members_and_delegating_exactly_once_from_one_new_internal_nonpublic_typed_bridge_without_adding_a_main_call_edge_replay_transport_integration_request_handling_sealing_launch_execution_artifact_io_publication_or_issuing_source_binding_v7`

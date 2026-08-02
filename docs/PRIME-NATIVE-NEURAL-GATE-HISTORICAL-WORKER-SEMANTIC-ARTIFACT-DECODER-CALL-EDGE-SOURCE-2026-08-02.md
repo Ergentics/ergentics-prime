@@ -236,3 +236,26 @@ Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-EXPORTED-EVIDENCE-PROJECTION-
 The next exact prerequisite is design-only:
 
 `design_the_bounded_unavailable_historical_worker_invocation_seam_for_the_source_bound_v21_composition_before_any_private_access_change_replay_transport_integration_request_handling_sealing_launch_execution_artifact_io_publication_or_issuing_source_binding_v7`
+
+## V22 design continuity without decoder-edge change
+
+V22 preserves this complete V19 prefix, the V21 suffix, and every private
+member/access level. It designs one later same-file continuation only: a
+nested internal wrapper whose sole private payload is the V21 composition
+result, with a private initializer, no accessor or conformance, and one
+internal static method on the wrapper. That method calls the private V21
+composition edge exactly once with unchanged inputs and propagates its errors.
+
+The future bridge may not call or duplicate this V19 decoder edge, zipper, V18
+decoder, or V16 projector. V22 adds PrimeCore governance contract/topology
+source only; it adds no worker, invocation-seam, runtime, or caller source and
+no main edge, package/graph change, replay, transport, execution, I/O, or publication.
+Design/topology SHA-256 values are `3954a98474cdaf79a62c65a20cf612f3a1ddaf6b8305aa941e94d3863791e757` and
+`af914f70b10917e95b895fbf1fc24c6e52764893972d6616bdbb409ba712f4f5`. See [Prime Native Neural Gate Historical Worker
+Invocation Seam
+Design](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-INVOCATION-SEAM-DESIGN-2026-08-02.md).
+
+Compilation, invocation, and authority remain unobserved; Prime remains
+`ABSTAIN`. The next exact prerequisite is:
+
+`source_bind_the_bounded_unavailable_historical_worker_invocation_seam_as_an_append_only_same_file_v21_composition_continuation_preserving_all_v21_private_members_and_delegating_exactly_once_from_one_new_internal_nonpublic_typed_bridge_without_adding_a_main_call_edge_replay_transport_integration_request_handling_sealing_launch_execution_artifact_io_publication_or_issuing_source_binding_v7`

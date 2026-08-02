@@ -848,3 +848,32 @@ All execution and authority claims remain false; Prime remains `ABSTAIN`. The
 next exact prerequisite is:
 
 `design_the_bounded_unavailable_historical_worker_invocation_seam_for_the_source_bound_v21_composition_before_any_private_access_change_replay_transport_integration_request_handling_sealing_launch_execution_artifact_io_publication_or_issuing_source_binding_v7`
+
+## V22 internal invocation-seam design boundary
+
+V22 changes no worker/runtime architecture edge or package graph. It adds only
+PrimeCore governance contract/topology source for one future append to the V21
+same-file private composition: a nested internal wrapper with exactly
+one private V21 result payload, a private initializer, no accessor or
+conformance, and one internal static method on that wrapper. The method passes
+the exact already-formed Evidence and explicit context to the private V21 call
+edge exactly once and wraps its sole return. Errors propagate unchanged.
+
+Placing the method on the nested wrapper is the access-minimal Swift shape: it
+can construct its private state and name its enclosing worker's private member
+without changing any V21 access level. Private storage provides API hiding,
+not confidentiality against generic reflection or unsafe same-module code.
+V22 adds no worker, invocation-seam, runtime, call-site, or consumer source and
+no `main` edge, target, dependency, product, or resource. The exact V21 source,
+status-78 main, `Package.swift`, target graph, and forbidden reachability are
+preserved. Design/topology hashes are `3954a98474cdaf79a62c65a20cf612f3a1ddaf6b8305aa941e94d3863791e757` and
+`af914f70b10917e95b895fbf1fc24c6e52764893972d6616bdbb409ba712f4f5`. See [Prime Native Neural Gate Historical Worker
+Invocation Seam
+Design](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-INVOCATION-SEAM-DESIGN-2026-08-02.md).
+
+The design is not invocation or reachability evidence. Every runtime,
+transport, request, execution, I/O, publication, receipt, V7, scientific, and
+product claim remains false; Prime remains `ABSTAIN`. The next exact
+prerequisite is:
+
+`source_bind_the_bounded_unavailable_historical_worker_invocation_seam_as_an_append_only_same_file_v21_composition_continuation_preserving_all_v21_private_members_and_delegating_exactly_once_from_one_new_internal_nonpublic_typed_bridge_without_adding_a_main_call_edge_replay_transport_integration_request_handling_sealing_launch_execution_artifact_io_publication_or_issuing_source_binding_v7`

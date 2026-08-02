@@ -1513,3 +1513,31 @@ Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-EXPORTED-EVIDENCE-PROJECTION-
 Prime remains `ABSTAIN`. The next exact prerequisite is:
 
 `design_the_bounded_unavailable_historical_worker_invocation_seam_for_the_source_bound_v21_composition_before_any_private_access_change_replay_transport_integration_request_handling_sealing_launch_execution_artifact_io_publication_or_issuing_source_binding_v7`
+
+## V22 design-only seam before any replay caller
+
+V22 does not replay the fixture or add a caller. It freezes one future
+append-only, same-file access bridge: an internal wrapper nested in the worker
+with only the private V21 composition result, a private initializer, no
+accessor/conformance, and one internal static method on the wrapper. That
+method calls the private V21 composition edge exactly once with unchanged
+already-formed Evidence and explicit context and lets every error propagate.
+Both context observations remain nonoptional and exactly `.unavailable`
+before V21 projection; `.observed_false` is not absence and `nil` is not an
+admitted substitute. The bridge adds no duplicate/default/inference path.
+
+No `main` edge, request decoder, `ReplayTransport` integration, process owner,
+worker launch, artifact reader/writer, or wrapper consumer is designed or
+implemented. V22 adds PrimeCore governance contract/topology source only; it
+adds no worker, invocation-seam, runtime, replay, or caller source and preserves
+the exact V21 source, status-78 main, `Package.swift`, worker inventory, target graph, and forbidden
+reachability. Design/topology hashes are `3954a98474cdaf79a62c65a20cf612f3a1ddaf6b8305aa941e94d3863791e757` and
+`af914f70b10917e95b895fbf1fc24c6e52764893972d6616bdbb409ba712f4f5`. See [Prime Native Neural Gate Historical Worker
+Invocation Seam
+Design](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-INVOCATION-SEAM-DESIGN-2026-08-02.md).
+
+Replay, execution, publication, durability, receipt, V7, science, and product
+authority remain false; Prime remains `ABSTAIN`. The next exact prerequisite
+is:
+
+`source_bind_the_bounded_unavailable_historical_worker_invocation_seam_as_an_append_only_same_file_v21_composition_continuation_preserving_all_v21_private_members_and_delegating_exactly_once_from_one_new_internal_nonpublic_typed_bridge_without_adding_a_main_call_edge_replay_transport_integration_request_handling_sealing_launch_execution_artifact_io_publication_or_issuing_source_binding_v7`
