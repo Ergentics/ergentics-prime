@@ -250,6 +250,33 @@ public extension PrimeNativeNeuralGateMutationTargetRole {
             ]
         }
     }
+
+    /// V16 assignment after the corrected mutation-record schema moved out
+    /// of the historical-safe semantic-record target. The V1 accessors above
+    /// remain exact history and must not be rewritten.
+    var correctedV2DirectLocalTargetDependencyNames: [String] {
+        switch self {
+        case .producer:
+            [
+                "PrimeNativeNeuralGateCorrectedMutationRecordContracts",
+                "PrimeNativeNeuralGateCorrectedMutationSurfaceContracts",
+            ]
+        case .detector:
+            directLocalTargetDependencyNames
+        }
+    }
+
+    var correctedV2OrderedContractIDs: [String] {
+        switch self {
+        case .producer:
+            [
+                "prime_stage_b_corrected_mutation_control_surface_contract_v1",
+                "prime_stage_b_corrected_mutation_label_free_surface_contract_v1",
+            ]
+        case .detector:
+            orderedContractIDs
+        }
+    }
 }
 
 public struct PrimeNativeNeuralGateMutationTargetSourceReferenceDeclaration:
@@ -303,16 +330,58 @@ public struct PrimeNativeNeuralGateMutationTargetSourceReferenceDeclaration:
         try validate()
     }
 
+    fileprivate static func correctedV2(
+        role: PrimeNativeNeuralGateMutationTargetRole
+    ) throws -> Self {
+        try Self(
+            role: role,
+            directLocalTargetDependencyNames:
+                role.correctedV2DirectLocalTargetDependencyNames,
+            orderedContractIDs:
+                role.correctedV2OrderedContractIDs
+        )
+    }
+
+    private init(
+        role: PrimeNativeNeuralGateMutationTargetRole,
+        directLocalTargetDependencyNames: [String],
+        orderedContractIDs: [String]
+    ) throws {
+        self.role = role
+        targetName = role.targetName
+        targetKind = "internal_swift_library"
+        sourceDirectoryPath = role.sourceDirectoryPath
+        self.directLocalTargetDependencyNames =
+            directLocalTargetDependencyNames
+        self.orderedContractIDs = orderedContractIDs
+        requiredBuildConfiguration = "release"
+        requiredSourceReferenceKinds = [
+            "swift_package_description",
+            "prime_source_snapshot",
+            "compiled_source_closure",
+        ]
+        actualSourceReference = nil
+        sourceReferenceObserved = false
+        try validate()
+    }
+
     public func validate() throws {
         if let actualSourceReference {
             try actualSourceReference.validate()
         }
+        let assignmentIsFrozenV1 =
+            directLocalTargetDependencyNames
+                == role.directLocalTargetDependencyNames
+            && orderedContractIDs == role.orderedContractIDs
+        let assignmentIsCorrectedV2 =
+            directLocalTargetDependencyNames
+                == role.correctedV2DirectLocalTargetDependencyNames
+            && orderedContractIDs
+                == role.correctedV2OrderedContractIDs
         guard targetName == role.targetName,
               targetKind == "internal_swift_library",
               sourceDirectoryPath == role.sourceDirectoryPath,
-              directLocalTargetDependencyNames
-                == role.directLocalTargetDependencyNames,
-              orderedContractIDs == role.orderedContractIDs,
+              assignmentIsFrozenV1 || assignmentIsCorrectedV2,
               requiredBuildConfiguration == "release",
               requiredSourceReferenceKinds == [
                   "swift_package_description",
@@ -403,6 +472,36 @@ public struct PrimeNativeNeuralGateMutationTargetOwnershipContract:
         }
     }()
 
+    public static let frozenV2: Self = {
+        do {
+            return try Self(
+                schemaVersion: 2,
+                contractID:
+                    "prime_stage_b_corrected_mutation_producer_detector_source_assignment_v2",
+                orderedContractIDs: [
+                    "prime_stage_b_corrected_mutation_control_surface_contract_v1",
+                    "prime_stage_b_corrected_mutation_label_free_surface_contract_v1",
+                ],
+                declarations:
+                    PrimeNativeNeuralGateMutationTargetRole.allCases.map {
+                        try PrimeNativeNeuralGateMutationTargetSourceReferenceDeclaration
+                            .correctedV2(role: $0)
+                    },
+                mutationProducerDetectorMustBeDisjoint: true,
+                sharedMutationImplementationSourceForbidden: true,
+                internalLibraryTargetsRequired: true,
+                productOrExecutableTargetsForbidden: true,
+                sourceReferencesDeferred: true,
+                nextPrerequisite:
+                    "capture_release_source_references_for_the_v16_corrected_mutation_record_split_without_materializing_workers_or_issuing_source_binding_v7"
+            )
+        } catch {
+            preconditionFailure(
+                "invalid corrected V2 mutation target ownership contract: \(error)"
+            )
+        }
+    }()
+
     public let schemaVersion: Int
     public let contractID: String
     public let orderedContractIDs: [String]
@@ -456,27 +555,56 @@ public struct PrimeNativeNeuralGateMutationTargetOwnershipContract:
 
     public func validate() throws {
         try declarations.forEach { try $0.validate() }
-        let expected = try PrimeNativeNeuralGateMutationTargetRole
-            .allCases.map {
-                try PrimeNativeNeuralGateMutationTargetSourceReferenceDeclaration(
-                    role: $0
-                )
-            }
-        guard schemaVersion == 1,
-              contractID
-                == "prime_stage_b_corrected_mutation_producer_detector_source_assignment_v1",
-              orderedContractIDs == [
-                  "prime_stage_b_semantic_record_schema_contract_v1",
-                  "prime_stage_b_corrected_mutation_label_free_surface_contract_v1",
-              ],
-              declarations == expected,
+        let expectedContractID: String
+        let expectedOrderedContractIDs: [String]
+        let expectedDeclarations:
+            [PrimeNativeNeuralGateMutationTargetSourceReferenceDeclaration]
+        let expectedNextPrerequisite: String
+        switch schemaVersion {
+        case 1:
+            expectedContractID =
+                "prime_stage_b_corrected_mutation_producer_detector_source_assignment_v1"
+            expectedOrderedContractIDs = [
+                "prime_stage_b_semantic_record_schema_contract_v1",
+                "prime_stage_b_corrected_mutation_label_free_surface_contract_v1",
+            ]
+            expectedDeclarations = try
+                PrimeNativeNeuralGateMutationTargetRole.allCases.map {
+                    try PrimeNativeNeuralGateMutationTargetSourceReferenceDeclaration(
+                        role: $0
+                    )
+                }
+            expectedNextPrerequisite =
+                "derive_source_pinned_historical_gate_carrier_and_forty_six_mutation_material_without_materializing_workers_or_issuing_source_binding_v7"
+        case 2:
+            expectedContractID =
+                "prime_stage_b_corrected_mutation_producer_detector_source_assignment_v2"
+            expectedOrderedContractIDs = [
+                "prime_stage_b_corrected_mutation_control_surface_contract_v1",
+                "prime_stage_b_corrected_mutation_label_free_surface_contract_v1",
+            ]
+            expectedDeclarations = try
+                PrimeNativeNeuralGateMutationTargetRole.allCases.map {
+                    try PrimeNativeNeuralGateMutationTargetSourceReferenceDeclaration
+                        .correctedV2(role: $0)
+                }
+            expectedNextPrerequisite =
+                "capture_release_source_references_for_the_v16_corrected_mutation_record_split_without_materializing_workers_or_issuing_source_binding_v7"
+        default:
+            throw PrimeNativeNeuralGateMutationTargetReferenceError
+                .invalidFrozenContract
+        }
+        guard contractID == expectedContractID,
+              orderedContractIDs
+                == expectedOrderedContractIDs,
+              declarations == expectedDeclarations,
               mutationProducerDetectorMustBeDisjoint,
               sharedMutationImplementationSourceForbidden,
               internalLibraryTargetsRequired,
               productOrExecutableTargetsForbidden,
               sourceReferencesDeferred,
               nextPrerequisite
-                == "derive_source_pinned_historical_gate_carrier_and_forty_six_mutation_material_without_materializing_workers_or_issuing_source_binding_v7",
+                == expectedNextPrerequisite,
               !executionImplemented,
               !sourceBindingV7Issued,
               !processDeliveryObserved,

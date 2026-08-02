@@ -529,6 +529,8 @@ final class
         throws
     {
         let contract = Contract.frozenV1
+        let projectionTestRelativePath =
+            "Tests/PrimeNativeNeuralGateHistoricalEvidenceSemanticArtifactProjectionTests/PrimeNativeNeuralGateHistoricalEvidenceSemanticArtifactProjectionTests.swift"
         let testsDirectory = repositoryRoot
             .appendingPathComponent("Tests")
         let swiftTestPaths = try recursiveRegularFilePaths(
@@ -538,10 +540,7 @@ final class
         let thisTestRelativePath = repositoryRelativePath(
             URL(fileURLWithPath: #filePath)
         )
-        let forbiddenModules = [
-            contract.workerTargetName,
-            contract.addedWorkerDependencyTargetName,
-        ]
+        var projectionExporterImportCount = 0
 
         for path in swiftTestPaths {
             let source = try checkedInString(path)
@@ -552,17 +551,28 @@ final class
                 let trimmed = line.trimmingCharacters(
                     in: .whitespaces
                 )
-                for module in forbiddenModules {
-                    XCTAssertNotEqual(
+                XCTAssertNotEqual(
+                    trimmed,
+                    "import \(contract.workerTargetName)",
+                    path
+                )
+                XCTAssertNotEqual(
+                    trimmed,
+                    "@testable import \(contract.workerTargetName)",
+                    path
+                )
+                if trimmed
+                    == "import \(contract.addedWorkerDependencyTargetName)"
+                    || trimmed
+                        == "@testable import \(contract.addedWorkerDependencyTargetName)"
+                {
+                    XCTAssertEqual(path, projectionTestRelativePath)
+                    XCTAssertEqual(
                         trimmed,
-                        "import \(module)",
+                        "@testable import \(contract.addedWorkerDependencyTargetName)",
                         path
                     )
-                    XCTAssertNotEqual(
-                        trimmed,
-                        "@testable import \(module)",
-                        path
-                    )
+                    projectionExporterImportCount += 1
                 }
             }
             guard path != thisTestRelativePath
@@ -580,6 +590,7 @@ final class
                 path
             )
         }
+        XCTAssertEqual(projectionExporterImportCount, 1)
     }
 
     func testDecodedMutationsFailClosed()

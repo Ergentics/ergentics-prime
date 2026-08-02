@@ -351,11 +351,12 @@ final class
         )
     }
 
-    func testPackageWorkerAndReservedProjectionAbsenceRemainExact()
+    func testPackageWorkerRemainsExactAndV16ProjectionIsIsolated()
         throws
     {
         let contract = Contract.frozenV1
         let package = try checkedInString("Package.swift")
+        let compactPackage = package.filter { !$0.isWhitespace }
         let primaryPath =
             "Sources/PrimeNativeNeuralGateHistoricalFixtureWorker/PrimeNativeNeuralGateHistoricalFixtureWorker.swift"
         let callEdgePath =
@@ -373,10 +374,14 @@ final class
             PrimeSHA256.hexDigest(of: callEdge),
             "d3ac7fcddd43844e92b61764c458dfce6291471fd465b1bb52f5186814e10319"
         )
-        XCTAssertFalse(
-            package.contains(contract.reservedProjectionTargetName)
+        XCTAssertTrue(
+            compactPackage.contains(
+                #".target(name:"#
+                    + "\"\(contract.reservedProjectionTargetName)\""
+                    + #",dependencies:["PrimeNativeNeuralGateHistoricalEvidenceExportMechanics","PrimeNativeNeuralGateReplayArtifactContracts","PrimeNativeNeuralGateReplayMechanics","PrimeNativeNeuralGateSemanticRecordContracts",])"#
+            )
         )
-        XCTAssertFalse(
+        XCTAssertTrue(
             FileManager.default.fileExists(
                 atPath:
                     repositoryRoot.appendingPathComponent(

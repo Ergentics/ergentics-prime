@@ -228,6 +228,16 @@ let package = Package(
                 "PrimeNativeNeuralGateHistoricalReplayMechanics",
             ]
         ),
+        .target(
+            name:
+                "PrimeNativeNeuralGateHistoricalEvidenceSemanticArtifactProjection",
+            dependencies: [
+                "PrimeNativeNeuralGateHistoricalEvidenceExportMechanics",
+                "PrimeNativeNeuralGateReplayArtifactContracts",
+                "PrimeNativeNeuralGateReplayMechanics",
+                "PrimeNativeNeuralGateSemanticRecordContracts",
+            ]
+        ),
         .executableTarget(
             name:
                 "PrimeNativeNeuralGateHistoricalFixtureWorker",
@@ -255,7 +265,7 @@ let package = Package(
         ),
         .target(
             name:
-                "PrimeNativeNeuralGateSemanticRecordContracts",
+                "PrimeNativeNeuralGateCorrectedMutationRecordContracts",
             dependencies: [
                 "PrimeNativeNeuralGateReplayArtifactContracts",
                 "PrimeNativeNeuralGateReplayMechanics",
@@ -264,9 +274,17 @@ let package = Package(
         ),
         .target(
             name:
+                "PrimeNativeNeuralGateSemanticRecordContracts",
+            dependencies: [
+                "PrimeNativeNeuralGateReplayArtifactContracts",
+                "PrimeNativeNeuralGateReplayMechanics",
+            ]
+        ),
+        .target(
+            name:
                 "PrimeNativeNeuralGateCorrectedMutationProducer",
             dependencies: [
-                "PrimeNativeNeuralGateSemanticRecordContracts",
+                "PrimeNativeNeuralGateCorrectedMutationRecordContracts",
                 "PrimeNativeNeuralGateCorrectedMutationSurfaceContracts",
             ]
         ),
@@ -636,10 +654,12 @@ let package = Package(
                 "PrimeNativeNeuralGateReplayMechanics",
                 "PrimeNativeNeuralGateReplayArtifactContracts",
                 "PrimeNativeNeuralGateCorrectedMutationSurfaceContracts",
+                "PrimeNativeNeuralGateCorrectedMutationRecordContracts",
                 "PrimeNativeNeuralGateSemanticRecordContracts",
                 "PrimeNativeNeuralGateCorrectedMutationProducer",
                 "PrimeNativeNeuralGateCorrectedMutationDetector",
                 "PrimeNativeNeuralGateHistoricalSourceDerivation",
+                "PrimeNativeNeuralGateHistoricalEvidenceSemanticArtifactProjection",
                 "PrimeNativeNeuralGateReplayTransport",
                 "PrimeNativeNeuralGateReplayComposition",
                 "PrimeNativeNeuralGateReplaySourceBinding",
@@ -664,6 +684,8 @@ let package = Package(
             name:
                 "PrimeNativeNeuralGateSemanticRecordContractsTests",
             dependencies: [
+                "PrimeNativeNeuralGateReplayArtifactContracts",
+                "PrimeNativeNeuralGateReplayMechanics",
                 "PrimeNativeNeuralGateSemanticRecordContracts",
             ]
         ),
@@ -678,7 +700,7 @@ let package = Package(
             name:
                 "PrimeNativeNeuralGateCorrectedMutationProducerTests",
             dependencies: [
-                "PrimeNativeNeuralGateSemanticRecordContracts",
+                "PrimeNativeNeuralGateCorrectedMutationRecordContracts",
                 "PrimeNativeNeuralGateCorrectedMutationSurfaceContracts",
                 "PrimeNativeNeuralGateCorrectedMutationProducer",
             ]
@@ -708,6 +730,15 @@ let package = Package(
                 "PrimeNativeNeuralGateHistoricalSourceDerivation",
                 "PrimeNativeNeuralGateHistoricalReplayMechanics",
                 "PrimeNativeNeuralGateHistoricalEvidenceExportMechanics",
+            ]
+        ),
+        .testTarget(
+            name:
+                "PrimeNativeNeuralGateHistoricalEvidenceSemanticArtifactProjectionTests",
+            dependencies: [
+                "PrimeNativeNeuralGateHistoricalEvidenceExportMechanics",
+                "PrimeNativeNeuralGateHistoricalEvidenceSemanticArtifactProjection",
+                "PrimeNativeNeuralGateReplayArtifactContracts",
             ]
         ),
     ]

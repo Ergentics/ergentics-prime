@@ -375,8 +375,12 @@ one private cross-file worker/exporter call edge. That edge remains unreachable
 from the exact V11 `main`, which exits `78`. Descriptor and source/execution-binding
 authority remain unchanged. The V14 prerequisite is recorded in [Prime
 Native Neural Gate Historical Worker/Export Call-Edge Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-EXPORT-CALL-EDGE-SOURCE-2026-08-01.md).
-V15 source-binds only the projection design; its current prerequisite is
+V15 source-binds only the projection design; its prerequisite was
 recorded in [Prime Native Neural Gate Historical Evidence Semantic-Artifact Projection Design](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-SEMANTIC-ARTIFACT-PROJECTION-DESIGN-2026-08-01.md).
+V16 satisfies it additively, but creates no descriptor-rooted observation,
+ReplayTransport integration, artifact write/publication, worker execution, or
+source/execution binding V7. See [Prime Native Neural Gate Historical Evidence
+Semantic-Artifact Projection Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-SEMANTIC-ARTIFACT-PROJECTION-SOURCE-2026-08-01.md).
 See [Prime Native Neural Gate Historical Source Material](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-SOURCE-MATERIAL-2026-08-01.md).
 See [Prime Native Neural Gate Historical Replay Mechanics](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-REPLAY-MECHANICS-2026-08-01.md).
 See [Prime Native Neural Gate Historical Fixture and Worker Boundary](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-FIXTURE-WORKER-BOUNDARY-2026-08-01.md).

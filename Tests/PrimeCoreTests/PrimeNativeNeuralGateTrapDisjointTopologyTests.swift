@@ -2153,13 +2153,15 @@ final class PrimeNativeNeuralGateTrapDisjointTopologyTests:
             #".target(name:"PrimeNativeNeuralGatePromptSolver",dependencies:["PrimeNativeNeuralGateCorrectedMechanics",])"#,
             #".target(name:"PrimeNativeNeuralGateLogitSidecarMechanics",dependencies:["PrimeNativeNeuralGateCorrectedMechanics",])"#,
             #".target(name:"PrimeNativeNeuralGateCorrectedMutationSurfaceContracts",dependencies:["PrimeNativeNeuralGateReplayMechanics",])"#,
-            #".target(name:"PrimeNativeNeuralGateSemanticRecordContracts",dependencies:["PrimeNativeNeuralGateReplayArtifactContracts","PrimeNativeNeuralGateReplayMechanics","PrimeNativeNeuralGateCorrectedMutationSurfaceContracts",])"#,
-            #".target(name:"PrimeNativeNeuralGateCorrectedMutationProducer",dependencies:["PrimeNativeNeuralGateSemanticRecordContracts","PrimeNativeNeuralGateCorrectedMutationSurfaceContracts",])"#,
+            #".target(name:"PrimeNativeNeuralGateCorrectedMutationRecordContracts",dependencies:["PrimeNativeNeuralGateReplayArtifactContracts","PrimeNativeNeuralGateReplayMechanics","PrimeNativeNeuralGateCorrectedMutationSurfaceContracts",])"#,
+            #".target(name:"PrimeNativeNeuralGateSemanticRecordContracts",dependencies:["PrimeNativeNeuralGateReplayArtifactContracts","PrimeNativeNeuralGateReplayMechanics",])"#,
+            #".target(name:"PrimeNativeNeuralGateCorrectedMutationProducer",dependencies:["PrimeNativeNeuralGateCorrectedMutationRecordContracts","PrimeNativeNeuralGateCorrectedMutationSurfaceContracts",])"#,
             #".target(name:"PrimeNativeNeuralGateCorrectedMutationDetector",dependencies:["PrimeNativeNeuralGateCorrectedMutationSurfaceContracts",])"#,
             #".target(name:"PrimeNativeNeuralGateHistoricalSourceDerivation",dependencies:["PrimeNativeNeuralGateReplayMechanics",],resources:[.copy("HistoricalEvidenceExportSource"),])"#,
             #".target(name:"ErgenticsPrimeRuntime")"#,
             #".target(name:"PrimeNativeNeuralGateHistoricalReplayMechanics",dependencies:["ErgenticsPrimeRuntime","PrimeNativeNeuralGateReplayMechanics",])"#,
             #".target(name:"PrimeNativeNeuralGateHistoricalEvidenceExportMechanics",dependencies:["ErgenticsPrimeRuntime","PrimeNativeNeuralGateReplayMechanics","PrimeNativeNeuralGateHistoricalReplayMechanics",])"#,
+            #".target(name:"PrimeNativeNeuralGateHistoricalEvidenceSemanticArtifactProjection",dependencies:["PrimeNativeNeuralGateHistoricalEvidenceExportMechanics","PrimeNativeNeuralGateReplayArtifactContracts","PrimeNativeNeuralGateReplayMechanics","PrimeNativeNeuralGateSemanticRecordContracts",])"#,
             #".executableTarget(name:"PrimeNativeNeuralGateHistoricalFixtureWorker",dependencies:["PrimeCore","ErgenticsPrimeRuntime","PrimeNativeNeuralGateHistoricalReplayMechanics","PrimeNativeNeuralGateReplayTransport","PrimeNativeNeuralGateHistoricalEvidenceExportMechanics",],resources:[.copy("HistoricalFixtureEvidence"),])"#,
         ]
         for declaration in exactDeclarations {
@@ -2190,6 +2192,7 @@ final class PrimeNativeNeuralGateTrapDisjointTopologyTests:
             "PrimeNativeNeuralGateRoleArtifactReferenceContracts",
             "PrimeNativeNeuralGateRoleArtifactReferenceAuthority",
             "PrimeNativeNeuralGateCorrectedMutationSurfaceContracts",
+            "PrimeNativeNeuralGateCorrectedMutationRecordContracts",
             "PrimeNativeNeuralGateSemanticRecordContracts",
             "PrimeNativeNeuralGateCorrectedMutationProducer",
             "PrimeNativeNeuralGateCorrectedMutationDetector",
@@ -2197,6 +2200,7 @@ final class PrimeNativeNeuralGateTrapDisjointTopologyTests:
             "ErgenticsPrimeRuntime",
             "PrimeNativeNeuralGateHistoricalReplayMechanics",
             "PrimeNativeNeuralGateHistoricalEvidenceExportMechanics",
+            "PrimeNativeNeuralGateHistoricalEvidenceSemanticArtifactProjection",
             "PrimeNativeNeuralGateHistoricalFixtureWorker",
         ] {
             XCTAssertFalse(
@@ -2218,6 +2222,7 @@ final class PrimeNativeNeuralGateTrapDisjointTopologyTests:
         )
         for internalLibraryTarget in [
             "PrimeNativeNeuralGateCorrectedMutationSurfaceContracts",
+            "PrimeNativeNeuralGateCorrectedMutationRecordContracts",
             "PrimeNativeNeuralGateSemanticRecordContracts",
             "PrimeNativeNeuralGateCorrectedMutationProducer",
             "PrimeNativeNeuralGateCorrectedMutationDetector",
@@ -2225,6 +2230,7 @@ final class PrimeNativeNeuralGateTrapDisjointTopologyTests:
             "ErgenticsPrimeRuntime",
             "PrimeNativeNeuralGateHistoricalReplayMechanics",
             "PrimeNativeNeuralGateHistoricalEvidenceExportMechanics",
+            "PrimeNativeNeuralGateHistoricalEvidenceSemanticArtifactProjection",
         ] {
             XCTAssertFalse(
                 package.contains(

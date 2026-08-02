@@ -145,8 +145,13 @@ one private cross-file worker/exporter call edge. That edge remains unreachable
 from the exact V11 `main`, which exits `78`. No historical replay is executed.
 The V14 prerequisite is recorded in [Prime Native Neural Gate Historical
 Worker/Export Call-Edge Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-EXPORT-CALL-EDGE-SOURCE-2026-08-01.md).
-V15 source-binds only the projection design; its current prerequisite is
+V15 source-binds only the projection design; its prerequisite was
 recorded in [Prime Native Neural Gate Historical Evidence Semantic-Artifact Projection Design](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-SEMANTIC-ARTIFACT-PROJECTION-DESIGN-2026-08-01.md).
+V16 satisfies it with an isolated non-writing in-memory projector. The
+historical replay/exporter/worker path is not invoked, the status-`78` worker
+cannot reach the projector, and ReplayTransport is not integrated. See [Prime
+Native Neural Gate Historical Evidence Semantic-Artifact Projection
+Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-SEMANTIC-ARTIFACT-PROJECTION-SOURCE-2026-08-01.md).
 
 The later materialization must source-derive the missing raw-record export
 without modifying the byte-exact gate or reinterpreting the donor's

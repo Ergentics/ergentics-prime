@@ -2,6 +2,36 @@
 
 Date: 2026-08-01
 
+## V16 continuity
+
+The V8 decision and target assignment below remain frozen history. V16 does
+not rewrite topology V8, semantic-record contract V1, or mutation ownership
+V1. It moves the corrected mutation-record implementation into the new
+`PrimeNativeNeuralGateCorrectedMutationRecordContracts` target so
+`PrimeNativeNeuralGateSemanticRecordContracts` can retain only its
+`ReplayArtifactContracts` and `ReplayMechanics` dependencies. The producer now
+depends on the corrected record target plus the label-free surface; the
+detector remains surface-only.
+
+Pure-core projection testing also found that the historical mutation-record
+validator applied a lowercase generic identifier rule to the frozen uppercase
+`NL*` observed-failure IDs. V16 now preserves those exact values and accepts
+only members of the frozen historical critical-leg domain. Unknown IDs still
+fail closed; semantic-record contract V1 and its canonical SHA-256 remain
+unchanged.
+
+The corrected current assignment is frozen additively as
+`prime_stage_b_corrected_mutation_producer_detector_source_assignment_v2`,
+SHA-256
+`488c02cb82c787228c64c6c10588b0bfcc6ac25f85d13c678ac24ec6af246540`.
+Ownership V1 remains exact at
+`020fa5275a4ab7941b935271ad26b094b35b96c9fb85be765db1dd9130de36e2`.
+This target split creates no producer/detector release-source reference,
+worker/process execution, artifact write/publication, ReplayTransport
+integration, receipt, or source/execution binding V7. See [Prime Native Neural
+Gate Historical Evidence Semantic-Artifact Projection
+Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-SEMANTIC-ARTIFACT-PROJECTION-SOURCE-2026-08-01.md).
+
 ## Decision
 
 Topology V8 completes the declaration and local-mechanics prerequisite left by
@@ -265,13 +295,10 @@ the V8 authority ceiling. The V11 next exact prerequisite was:
 
 `derive_and_source_bind_historical_worker_evidence_export_adapter_without_mutating_the_byte_exact_gate_executing_the_worker_or_issuing_source_binding_v7`
 
-V12 resolved only that design/source-contract boundary. Topology V13
-materialized the exact source-only exporter. V14 now source- and compile-binds
-one private cross-file worker/exporter call edge. That edge remains unreachable
-from the exact V11 `main`, which exits `78`. It executes no mutation or
-semantic evidence workload and does not change the V8 authority ceiling. The current
-prerequisite is recorded in [Prime Native Neural Gate Historical Worker/Export
-Call-Edge Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-EXPORT-CALL-EDGE-SOURCE-2026-08-01.md).
+V12 through V16 do not change the V8 authority ceiling. The topology-wide
+current next exact prerequisite is recorded in [Prime Native Neural Gate
+Historical Evidence Semantic-Artifact Projection
+Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-SEMANTIC-ARTIFACT-PROJECTION-SOURCE-2026-08-01.md).
 
 See [Prime Native Neural Gate Historical Source Material](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-SOURCE-MATERIAL-2026-08-01.md).
 See [Prime Native Neural Gate Historical Replay Mechanics](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-REPLAY-MECHANICS-2026-08-01.md).

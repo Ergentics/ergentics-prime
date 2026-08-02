@@ -173,4 +173,66 @@ final class PrimeNativeNeuralGateMutationTargetReferenceContractsTests:
             "020fa5275a4ab7941b935271ad26b094b35b96c9fb85be765db1dd9130de36e2"
         )
     }
+
+    func testCorrectedV2AssignmentMovesOnlyProducerRecordDependency()
+        throws
+    {
+        let historical =
+            PrimeNativeNeuralGateMutationTargetOwnershipContract
+            .frozenV1
+        let corrected =
+            PrimeNativeNeuralGateMutationTargetOwnershipContract
+            .frozenV2
+
+        XCTAssertNoThrow(try historical.validate())
+        XCTAssertNoThrow(try corrected.validate())
+        XCTAssertEqual(corrected.schemaVersion, 2)
+        XCTAssertEqual(
+            corrected.contractID,
+            "prime_stage_b_corrected_mutation_producer_detector_source_assignment_v2"
+        )
+        let producer = try XCTUnwrap(
+            corrected.declarations.first { $0.role == .producer }
+        )
+        XCTAssertEqual(
+            producer.directLocalTargetDependencyNames,
+            [
+                "PrimeNativeNeuralGateCorrectedMutationRecordContracts",
+                "PrimeNativeNeuralGateCorrectedMutationSurfaceContracts",
+            ]
+        )
+        XCTAssertEqual(
+            producer.orderedContractIDs,
+            [
+                "prime_stage_b_corrected_mutation_control_surface_contract_v1",
+                "prime_stage_b_corrected_mutation_label_free_surface_contract_v1",
+            ]
+        )
+        XCTAssertFalse(
+            producer.directLocalTargetDependencyNames.contains(
+                "PrimeNativeNeuralGateSemanticRecordContracts"
+            )
+        )
+        let oldDetector = try XCTUnwrap(
+            historical.declarations.first { $0.role == .detector }
+        )
+        let newDetector = try XCTUnwrap(
+            corrected.declarations.first { $0.role == .detector }
+        )
+        XCTAssertEqual(newDetector, oldDetector)
+        XCTAssertTrue(corrected.sourceReferencesDeferred)
+        XCTAssertFalse(corrected.executionImplemented)
+        XCTAssertFalse(corrected.sourceBindingV7Issued)
+        XCTAssertFalse(corrected.mechanicsPassAuthorized)
+    }
+
+    func testCorrectedV2AssignmentContentIdentityIsPinned()
+        throws
+    {
+        XCTAssertEqual(
+            try PrimeNativeNeuralGateMutationTargetOwnershipContract
+                .frozenV2.contentSHA256(),
+            "488c02cb82c787228c64c6c10588b0bfcc6ac25f85d13c678ac24ec6af246540"
+        )
+    }
 }

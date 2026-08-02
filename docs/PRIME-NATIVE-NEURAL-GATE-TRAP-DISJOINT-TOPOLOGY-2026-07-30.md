@@ -531,8 +531,13 @@ exporter to the worker's exact four-dependency prefix and source- and
 compile-binds one private cross-file call edge. That edge remains unreachable
 from the exact V11 `main`, which exits `78`. The V14 prerequisite is
 recorded in [Prime Native Neural Gate Historical Worker/Export Call-Edge Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-EXPORT-CALL-EDGE-SOURCE-2026-08-01.md).
-V15 source-binds only the projection design; its current prerequisite is
+V15 source-binds only the projection design; its prerequisite was
 recorded in [Prime Native Neural Gate Historical Evidence Semantic-Artifact Projection Design](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-SEMANTIC-ARTIFACT-PROJECTION-DESIGN-2026-08-01.md).
+V16 satisfies it additively with a product-free isolated projector. The worker
+remains unavailable, ReplayTransport is not in the projector closure, no
+artifact is written or published, and source/execution binding V7 is unissued.
+See [Prime Native Neural Gate Historical Evidence Semantic-Artifact Projection
+Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-SEMANTIC-ARTIFACT-PROJECTION-SOURCE-2026-08-01.md).
 The topology remains `planned_not_materialized`, `executionImplemented`
 remains false, and source/execution-binding V7 remains unissued.
 See [Prime Native Neural Gate Historical Source Material](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-SOURCE-MATERIAL-2026-08-01.md).

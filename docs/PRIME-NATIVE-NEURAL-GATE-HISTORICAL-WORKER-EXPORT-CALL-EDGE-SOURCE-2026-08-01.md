@@ -2,14 +2,18 @@
 
 Date: 2026-08-01
 
-Current continuation: V15 satisfied this checkpoint's design/source-binding
-prerequisite only. It materialized no projector and found three implementation
-blockers: the deferred three-key namespace does not cover 22 worker artifacts,
-the singular statistics schema cannot retain all three keyed seed families,
-and the existing semantic-record target violates historical-worker dependency
-isolation. The V14 prerequisite and nonauthorization statements below remain
-frozen history. See
-[Prime Native Neural Gate Historical Evidence Semantic-Artifact Projection Design](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-SEMANTIC-ARTIFACT-PROJECTION-DESIGN-2026-08-01.md).
+Current continuation: V16 additively resolves the three V15 design blockers
+with a complete 44-spec namespace, lossless keyed three-seed envelope,
+corrected mutation-record target split, and package-internal in-memory
+projector. It does not change this V14 call edge or the status-`78` worker's
+dependency list. The projector has no ReplayTransport dependency and is not
+reachable from the worker; no request handling, artifact write/publication,
+historical execution observation, or source/execution binding V7 exists. The
+V14 and V15 prerequisite and nonauthorization statements below remain frozen
+history. See [Prime Native Neural Gate Historical Evidence Semantic-Artifact
+Projection Design](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-SEMANTIC-ARTIFACT-PROJECTION-DESIGN-2026-08-01.md)
+and [Prime Native Neural Gate Historical Evidence Semantic-Artifact Projection
+Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-SEMANTIC-ARTIFACT-PROJECTION-SOURCE-2026-08-01.md).
 
 ## Decision
 

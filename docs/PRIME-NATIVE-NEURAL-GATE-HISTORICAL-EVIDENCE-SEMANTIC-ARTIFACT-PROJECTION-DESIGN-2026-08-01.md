@@ -192,3 +192,20 @@ evidence. V15 adds no donor source or environment marker.
 That next slice must remain separately reviewable. It must not collapse the
 three seeds, weaken exact joins, broaden historical reachability, or make the
 unavailable worker executable.
+
+## V16 fulfillment
+
+V16 satisfies the prerequisite above without rewriting this V15 checkpoint.
+It adds the complete 44-spec historical namespace overlay, preserves all three
+statistics families by explicit seed, moves corrected mutation records into a
+separate target, and materializes a package-internal, non-writing historical
+projector. The frozen V4 namespace, V8 semantic contract, V15 design contract,
+and V15 topology identities remain exact.
+
+ReplayTransport already exists, but the V16 projector neither depends on nor
+integrates with it. The status-`78` worker retains its V14 dependency list and
+cannot name or invoke the projector. No request handling, artifact write or
+publication, worker/exporter/gate/model execution observation, mechanics
+`PASS`, receipt, or source/execution binding V7 is created. See [Prime Native
+Neural Gate Historical Evidence Semantic-Artifact Projection
+Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-SEMANTIC-ARTIFACT-PROJECTION-SOURCE-2026-08-01.md).

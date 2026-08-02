@@ -603,9 +603,10 @@ public struct PrimeNativeNeuralGateHistoricalMutationRecordObservation:
                 == allowedFailedLegIDs.count,
               Set(observedFailedLegIDs).count
                 == observedFailedLegIDs.count,
-              observedFailedLegIDs.allSatisfy(
-                  semanticIsSafeIdentifier
-              ),
+              observedFailedLegIDs.allSatisfy({
+                  PrimeNativeNeuralGateReplayLegDomain
+                    .historicalCriticalLegIDs.contains($0)
+              }),
               [
                   baselineStreamSHA256,
                   mutatedStreamSHA256,
