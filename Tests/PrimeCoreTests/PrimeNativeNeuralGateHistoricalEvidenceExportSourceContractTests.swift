@@ -1047,7 +1047,11 @@ final class
             in: package
         )
         let target = try XCTUnwrap(
-            targetCalls.only { $0.contains(targetName) }
+            targetCalls.only {
+                compact($0).hasPrefix(
+                    #".target(name:"PrimeNativeNeuralGateHistoricalEvidenceExportMechanics","#
+                )
+            }
         )
         XCTAssertEqual(
             compact(target),
@@ -1138,6 +1142,13 @@ final class
                 marker: ".executableTarget(",
                 in: package
             ).filter { $0.contains(targetName) }
+        let projectionTarget = try XCTUnwrap(
+            targetCalls.only {
+                $0.contains(
+                    "PrimeNativeNeuralGateHistoricalEvidenceSemanticArtifactProjection"
+                )
+            }
+        )
         let workerTarget = try XCTUnwrap(
             try callRegions(
                 marker: ".executableTarget(",
@@ -1148,7 +1159,14 @@ final class
                 )
             }
         )
-        XCTAssertEqual(productionConsumers, [workerTarget])
+        XCTAssertEqual(
+            compact(projectionTarget),
+            #".target(name:"PrimeNativeNeuralGateHistoricalEvidenceSemanticArtifactProjection",dependencies:["PrimeNativeNeuralGateHistoricalEvidenceExportMechanics","PrimeNativeNeuralGateReplayArtifactContracts","PrimeNativeNeuralGateReplayMechanics","PrimeNativeNeuralGateSemanticRecordContracts",])"#
+        )
+        XCTAssertEqual(
+            productionConsumers,
+            [projectionTarget, workerTarget]
+        )
         XCTAssertEqual(
             compact(workerTarget),
             #".executableTarget(name:"PrimeNativeNeuralGateHistoricalFixtureWorker",dependencies:["PrimeCore","ErgenticsPrimeRuntime","PrimeNativeNeuralGateHistoricalReplayMechanics","PrimeNativeNeuralGateReplayTransport","PrimeNativeNeuralGateHistoricalEvidenceExportMechanics",],resources:[.copy("HistoricalFixtureEvidence"),])"#
@@ -1174,17 +1192,19 @@ final class
             marker: ".testTarget(",
             in: package
         ).filter { $0.contains(targetName) }
-        XCTAssertEqual(testConsumers.count, 1)
-        XCTAssertTrue(
-            testConsumers[0].contains(
-                "PrimeNativeNeuralGateHistoricalReplayMechanicsTests"
-            )
+        XCTAssertEqual(
+            testConsumers.map(compact),
+            [
+                #".testTarget(name:"PrimeNativeNeuralGateHistoricalReplayMechanicsTests",dependencies:["PrimeCore","PrimeNativeNeuralGateHistoricalSourceDerivation","PrimeNativeNeuralGateHistoricalReplayMechanics","PrimeNativeNeuralGateHistoricalEvidenceExportMechanics",])"#,
+                #".testTarget(name:"PrimeNativeNeuralGateHistoricalEvidenceSemanticArtifactProjectionTests",dependencies:["PrimeNativeNeuralGateHistoricalEvidenceExportMechanics","PrimeNativeNeuralGateHistoricalEvidenceSemanticArtifactProjection","PrimeNativeNeuralGateReplayArtifactContracts",])"#,
+            ]
         )
         XCTAssertEqual(
             occurrences(of: targetName, in: package),
-            3,
-            "only the target declaration, private worker call edge, and compile-only test edge are allowed"
+            5,
+            "only the declaration, bounded projection, unavailable worker, and two exact test edges are allowed"
         )
+        XCTAssertTrue(projectionTarget.contains(targetName))
         XCTAssertTrue(workerTarget.contains(targetName))
     }
 

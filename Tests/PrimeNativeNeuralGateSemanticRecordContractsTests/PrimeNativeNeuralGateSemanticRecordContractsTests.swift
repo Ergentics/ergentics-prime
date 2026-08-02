@@ -1,5 +1,7 @@
 import Foundation
 import XCTest
+import PrimeNativeNeuralGateReplayArtifactContracts
+import PrimeNativeNeuralGateReplayMechanics
 @testable import PrimeNativeNeuralGateSemanticRecordContracts
 
 final class PrimeNativeNeuralGateSemanticRecordContractsTests:
@@ -43,6 +45,56 @@ final class PrimeNativeNeuralGateSemanticRecordContractsTests:
             try PrimeNativeNeuralGateSemanticRecordContract
                 .frozenV1.contentSHA256(),
             "67451098c4c486cd6a2d1701190c7ba3129d48f47956dc5c674295053f47cf9a"
+        )
+    }
+
+    func testHistoricalMutationFailureIDsUseFrozenUppercaseLegDomain()
+        throws
+    {
+        let entry = try XCTUnwrap(
+            PrimeNativeNeuralGateMutationCatalog
+                .historicalEntries.first
+        )
+        let fingerprint = PrimeNativeNeuralGateFingerprint(
+            prime: PrimeNativeNeuralGateFingerprintMechanics.prime,
+            evaluationPoints:
+                PrimeNativeNeuralGateFingerprintMechanics
+                .evaluationPoints,
+            residues: [1, 2, 3],
+            recordCount: 1
+        )
+        func observation(
+            observedFailedLegIDs: [String]
+        ) throws -> PrimeNativeNeuralGateHistoricalMutationRecordObservation {
+            try PrimeNativeNeuralGateHistoricalMutationRecordObservation(
+                ordinal: entry.ordinal,
+                mutationID: entry.mutationID,
+                allowedFailedLegIDs: [entry.expectedFailedLegID],
+                observedFailedLegIDs: observedFailedLegIDs,
+                baselineStreamSHA256: sha("a"),
+                mutatedStreamSHA256: sha("b"),
+                restoredStreamSHA256: sha("a"),
+                baselineFingerprint: fingerprint,
+                mutatedFingerprint: fingerprint,
+                restoredFingerprint: fingerprint,
+                mutationExecutionObserved: .unavailable,
+                independentDetectionObserved: .unavailable
+            )
+        }
+
+        XCTAssertNoThrow(
+            try observation(
+                observedFailedLegIDs: [
+                    entry.expectedFailedLegID,
+                ]
+            )
+        )
+        XCTAssertThrowsError(
+            try observation(
+                observedFailedLegIDs: [
+                    "NL999_not_a_frozen_historical_leg",
+                ]
+            )
         )
     }
 

@@ -1256,11 +1256,19 @@ V15 completed only the carrier-to-artifact projection design audit. Its exact
 nine-field mapping cannot yet become a codec: the namespace has three deferred
 historical specifications versus 22 worker artifacts per role; the singular
 statistics schema cannot losslessly retain all three keyed seed families; and
-the current semantic-record target violates historical-worker dependency
+the V15 semantic-record target violates historical-worker dependency
 isolation. External context and observation-state policies are frozen. The
 complete namespace, additive keyed three-seed envelope, and historical-only
 projection boundary must become exact before projector materialization. See
 [Prime Native Neural Gate Historical Evidence Semantic-Artifact Projection Design](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-SEMANTIC-ARTIFACT-PROJECTION-DESIGN-2026-08-01.md).
+
+V16 now satisfies that bounded prerequisite with an additive 44-spec
+namespace, exact seed-keyed envelope, corrected mutation-record split, and
+package-internal in-memory projector. ReplayTransport is unchanged and not in
+the projector closure; the status-`78` worker is unchanged and cannot invoke
+the projector. This is source/package/test evidence only. See [Prime Native
+Neural Gate Historical Evidence Semantic-Artifact Projection
+Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-SEMANTIC-ARTIFACT-PROJECTION-SOURCE-2026-08-01.md).
 
 Only after that namespace, envelope, historical-only codec, and resulting
 evidence carrier-to-artifact projection are separately exact
@@ -1361,9 +1369,14 @@ unreachable from `main` and is source- and compile-bound only. V14's next exact 
 V15 source-binds that design only. It freezes the exact nine-field mapping,
 mandatory external context, and fail-closed join/observation policies while
 recording the incomplete namespace, missing keyed three-seed envelope, and
-historical-only dependency-isolation blockers. No projector exists. The
-current next exact prerequisite is
+historical-only dependency-isolation blockers. No projector existed at V15.
+Its next exact prerequisite was
 `freeze_the_complete_non_authorizing_historical_semantic_artifact_namespace_and_additive_keyed_three_seed_statistics_envelope_then_source_bind_a_historical_only_projection_codec_without_enabling_worker_request_handling_sealing_launch_execution_publication_or_issuing_source_binding_v7`.
+V16 satisfies that prerequisite additively without changing the unavailable
+worker, integrating ReplayTransport, writing or publishing artifacts, or
+issuing source/execution binding V7. The projector is a package-internal pure
+in-memory boundary; Swift tests are not historical execution evidence.
 See [Prime Native Neural Gate Historical Evidence Export Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-EXPORT-SOURCE-2026-08-01.md).
 See [Prime Native Neural Gate Historical Worker/Export Call-Edge Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-EXPORT-CALL-EDGE-SOURCE-2026-08-01.md).
 See [Prime Native Neural Gate Historical Evidence Semantic-Artifact Projection Design](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-SEMANTIC-ARTIFACT-PROJECTION-DESIGN-2026-08-01.md).
+See [Prime Native Neural Gate Historical Evidence Semantic-Artifact Projection Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-SEMANTIC-ARTIFACT-PROJECTION-SOURCE-2026-08-01.md).

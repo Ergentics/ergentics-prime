@@ -1,7 +1,7 @@
 import XCTest
 import PrimeNativeNeuralGateCorrectedMutationProducer
+import PrimeNativeNeuralGateCorrectedMutationRecordContracts
 import PrimeNativeNeuralGateCorrectedMutationSurfaceContracts
-import PrimeNativeNeuralGateSemanticRecordContracts
 
 final class PrimeNativeNeuralGateCorrectedMutationProducerTests:
     XCTestCase

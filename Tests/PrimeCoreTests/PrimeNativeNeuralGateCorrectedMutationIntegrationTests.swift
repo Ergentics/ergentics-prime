@@ -2,8 +2,8 @@ import Foundation
 import XCTest
 import PrimeNativeNeuralGateCorrectedMutationDetector
 import PrimeNativeNeuralGateCorrectedMutationProducer
+import PrimeNativeNeuralGateCorrectedMutationRecordContracts
 import PrimeNativeNeuralGateCorrectedMutationSurfaceContracts
-import PrimeNativeNeuralGateSemanticRecordContracts
 
 final class PrimeNativeNeuralGateCorrectedMutationIntegrationTests:
     XCTestCase
@@ -141,11 +141,16 @@ final class PrimeNativeNeuralGateCorrectedMutationIntegrationTests:
         XCTAssertFalse(detector.contains("mutationID"))
         XCTAssertTrue(
             producer.contains(
-                "import PrimeNativeNeuralGateSemanticRecordContracts"
+                "import PrimeNativeNeuralGateCorrectedMutationRecordContracts"
             )
         )
         XCTAssertFalse(
             detector.contains(
+                "import PrimeNativeNeuralGateCorrectedMutationRecordContracts"
+            )
+        )
+        XCTAssertFalse(
+            producer.contains(
                 "import PrimeNativeNeuralGateSemanticRecordContracts"
             )
         )

@@ -171,7 +171,13 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
         historicalEvidenceSemanticArtifactProjectionDesignContractBinding:
         PrimeNativeNeuralGateTopologyContractBinding? = nil
     public private(set) var
+        historicalEvidenceSemanticArtifactProjectionSourceContractBinding:
+        PrimeNativeNeuralGateTopologyContractBinding? = nil
+    public private(set) var
         historicalEvidenceExportTargetName:
+        String? = nil
+    public private(set) var
+        historicalEvidenceSemanticArtifactProjectionTargetName:
         String? = nil
     public let historicalContractsPreserved: Bool
     public let historicalFutureTargetGraphSuperseded:
@@ -2423,6 +2429,242 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
         )
     }()
 
+    /// Materializes the complete non-authorizing historical namespace, the
+    /// lossless keyed three-seed statistics envelope, the corrected mutation-
+    /// record split, and one pure historical projection codec. The worker
+    /// remains unchanged and unavailable; it cannot reach the projector.
+    public static let frozenV16: Self = {
+        let previous = frozenV15
+        let source =
+            PrimeNativeNeuralGateHistoricalEvidenceSemanticArtifactProjectionSourceContract
+            .frozenV1
+        let sourceSHA256 = try! source.contentSHA256()
+        let semanticTargetName =
+            "PrimeNativeNeuralGateSemanticRecordContracts"
+        let mutationRecordTargetName =
+            "PrimeNativeNeuralGateCorrectedMutationRecordContracts"
+        let producerTargetName =
+            "PrimeNativeNeuralGateCorrectedMutationProducer"
+        let surfaceTargetName =
+            "PrimeNativeNeuralGateCorrectedMutationSurfaceContracts"
+        let projectorTargetName =
+            "PrimeNativeNeuralGateHistoricalEvidenceSemanticArtifactProjection"
+        let replayArtifactTargetName =
+            "PrimeNativeNeuralGateReplayArtifactContracts"
+        let replayMechanicsTargetName =
+            "PrimeNativeNeuralGateReplayMechanics"
+        let exporterTargetName =
+            "PrimeNativeNeuralGateHistoricalEvidenceExportMechanics"
+
+        var targets = previous.targetGraph.map { target in
+            switch target.targetName {
+            case semanticTargetName:
+                Self.target(
+                    target.targetName,
+                    target.materialization,
+                    [
+                        replayArtifactTargetName,
+                        replayMechanicsTargetName,
+                    ],
+                    "pure historical-safe and corrected non-authorizing semantic records after the byte-exact corrected mutation-record source moved to its own target; live historical observed-failure validation uses frozen historical critical-leg-domain membership so uppercase NL identifiers are preserved and unknown identifiers rejected without changing V8 canonical bytes; no corrected mutation surface, implementation, worker, process, execution, evidence, PASS, receipt, science, or product authority",
+                    externalProducts:
+                        target.externalProductDependencyNames
+                )
+            case producerTargetName:
+                Self.target(
+                    target.targetName,
+                    target.materialization,
+                    [
+                        mutationRecordTargetName,
+                        surfaceTargetName,
+                    ],
+                    "internal corrected fifteen-case mutation-production mechanics over the byte-exact corrected mutation-record target and label-free control surface; no historical semantic projector, detector, worker, process, execution-evidence, evaluation, verdict, PASS, receipt, science, or product authority",
+                    externalProducts:
+                        target.externalProductDependencyNames
+                )
+            default:
+                target
+            }
+        }
+        targets.append(
+            Self.target(
+                mutationRecordTargetName,
+                .implemented,
+                [
+                    replayArtifactTargetName,
+                    replayMechanicsTargetName,
+                    surfaceTargetName,
+                ],
+                "byte-exact relocated corrected mutation catalog and identity records; no historical projector, mutation implementation, detector, worker, process, execution, evidence, PASS, receipt, science, or product authority"
+            )
+        )
+        targets.append(
+            Self.target(
+                projectorTargetName,
+                .implemented,
+                [
+                    exporterTargetName,
+                    replayArtifactTargetName,
+                    replayMechanicsTargetName,
+                    semanticTargetName,
+                ],
+                "package-internal pure in-memory historical carrier-to-semantic-artifact projection codec with complete non-authorizing namespace, lossless keyed three-seed statistics, and exact reconstruction before omission of only deterministically redundant fingerprint fields; synthetic tests exercise component mechanics only while the public project entry point remains runtime-unexercised, and no worker, ReplayTransport, filesystem, publication, execution, PASS, receipt, source binding V7, science, or product authority is integrated or authorized"
+            )
+        )
+
+        func appendingUnique(
+            _ base: [String],
+            _ additions: [String]
+        ) -> [String] {
+            var result = base
+            for addition in additions
+            where !result.contains(addition) {
+                result.append(addition)
+            }
+            return result
+        }
+
+        var reachability = previous.forbiddenReachability.map {
+            rule in
+            Self.forbidden(
+                rule.targetName,
+                appendingUnique(
+                    rule.forbiddenReachableTargetNames,
+                    rule.targetName == producerTargetName
+                        ? [projectorTargetName]
+                        : [
+                            mutationRecordTargetName,
+                            projectorTargetName,
+                        ]
+                )
+            )
+        }
+        let priorRuleTargetNames = Set(
+            reachability.map(\.targetName)
+        )
+        for target in previous.targetGraph
+        where !priorRuleTargetNames.contains(target.targetName) {
+            reachability.append(
+                Self.forbidden(
+                    target.targetName,
+                    target.targetName == producerTargetName
+                        ? [projectorTargetName]
+                        : [
+                            mutationRecordTargetName,
+                            projectorTargetName,
+                        ]
+                )
+            )
+        }
+
+        let allTargetNames = targets.map(\.targetName)
+        let mutationRecordAllowed = Set([
+            mutationRecordTargetName,
+            replayArtifactTargetName,
+            replayMechanicsTargetName,
+            surfaceTargetName,
+        ])
+        reachability.append(
+            Self.forbidden(
+                mutationRecordTargetName,
+                allTargetNames.filter {
+                    !mutationRecordAllowed.contains($0)
+                }
+            )
+        )
+        let projectorAllowed = Set([
+            projectorTargetName,
+            exporterTargetName,
+            replayArtifactTargetName,
+            replayMechanicsTargetName,
+            semanticTargetName,
+            previous.historicalRuntimeTargetName,
+            previous.historicalReplayTargetName,
+        ])
+        reachability.append(
+            Self.forbidden(
+                projectorTargetName,
+                allTargetNames.filter {
+                    !projectorAllowed.contains($0)
+                }
+            )
+        )
+
+        return Self(
+            schemaVersion: 16,
+            contractID:
+                "prime_stage_b_source_bound_historical_evidence_semantic_artifact_projection_topology_v16",
+            status: previous.status,
+            executionImplemented: false,
+            historicalReplayPlanID:
+                previous.historicalReplayPlanID,
+            historicalSourceBindingContractID:
+                previous.historicalSourceBindingContractID,
+            historicalEvidenceExportDesignContractBinding:
+                previous
+                .historicalEvidenceExportDesignContractBinding,
+            historicalEvidenceExportSourceContractBinding:
+                previous
+                .historicalEvidenceExportSourceContractBinding,
+            historicalWorkerEvidenceExportCallEdgeSourceContractBinding:
+                previous
+                .historicalWorkerEvidenceExportCallEdgeSourceContractBinding,
+            historicalEvidenceSemanticArtifactProjectionDesignContractBinding:
+                previous
+                .historicalEvidenceSemanticArtifactProjectionDesignContractBinding,
+            historicalEvidenceSemanticArtifactProjectionSourceContractBinding:
+                PrimeNativeNeuralGateTopologyContractBinding(
+                    contractID: source.contractID,
+                    contentSHA256: sourceSHA256
+                ),
+            historicalEvidenceExportTargetName:
+                previous.historicalEvidenceExportTargetName,
+            historicalEvidenceSemanticArtifactProjectionTargetName:
+                projectorTargetName,
+            historicalContractsPreserved: true,
+            historicalFutureTargetGraphSuperseded: true,
+            targetGraph: targets,
+            forbiddenReachability: reachability,
+            historicalContainmentRootTargetName:
+                previous.historicalContainmentRootTargetName,
+            historicalRuntimeTargetName:
+                previous.historicalRuntimeTargetName,
+            historicalReplayTargetName:
+                previous.historicalReplayTargetName,
+            pureReplayTargetName:
+                previous.pureReplayTargetName,
+            donorAdaptationV2PreservedAsHistory: true,
+            donorAdaptationV3Required: true,
+            donorAdaptationV3RequiredDestination:
+                previous.donorAdaptationV3RequiredDestination,
+            sourceBindingV7Issued: false,
+            sourceBindingV7Prerequisite:
+                previous.sourceBindingV7Prerequisite,
+            packageCaptureAuthority:
+                "actual_package_secure_capture_only_bound_source_\(source.contractID)_sha256_\(sourceSHA256)_not_worker_request_handling_sealing_launch_execution_io_publication_or_source_execution_binding_v7_evidence",
+            mutationProducerDetectorTargetAssignmentDeferred:
+                false,
+            mutationProducerDetectorMustBeDisjoint: true,
+            nextImplementationPrerequisite:
+                source.nextImplementationPrerequisite,
+            authorityStatement:
+                [
+                    "This V16 topology preserves every V1 through V15 canonical identity and changes only the package-internal source boundaries required by the frozen V15 prerequisite.",
+                    "The byte-exact corrected mutation-record source moves into its own target; the semantic target drops its corrected-surface edge; and the corrected producer names the new record target while retaining its surface dependency.",
+                    "The corrected-mutation ownership V2 release-source-reference prerequisite remains deferred and component-local; because every corrected-mutation target is outside the historical projector's transitive closure, it does not supersede this topology-wide next implementation prerequisite or gate the disjoint worker-carrier-to-projector call edge.",
+                    "V16 appends the corrected record target and a historical-contained pure in-memory projector whose exact direct dependencies are the V13 exporter, artifact contracts, pure replay mechanics, and historical-safe semantic records.",
+                    "The complete namespace has forty-four non-authorizing specifications, twenty-two per role, and the additive envelope retains all three admitted seed families by explicit key without positional joins or reduction.",
+                    "The live historical observed-failure validator now admits only frozen historical critical-leg-domain members, preserving uppercase NL identifiers and rejecting unknown identifiers without changing V8 canonical contract bytes.",
+                    "Deterministically redundant fingerprint fields are omitted only after exact canonical reconstruction; no non-derivable carrier information is dropped or defaulted.",
+                    "The projector cannot reach corrected mutation surface, record, producer, detector, PrimeCore, ReplayTransport, or the worker.",
+                    "The worker target, five direct dependencies, status-78 unavailable main, and V14 call edge remain unchanged and cannot reach the projector.",
+                    "ReplayTransport remains materialized but has no V16 projector integration.",
+                    "Focused synthetic tests exercise component mechanics only; the public project entry point remains runtime-unexercised, and no synthetic result is historical evidence.",
+                    "No request handling, sealing, launch, worker/exporter/projector/gate/model execution, artifact I/O, publication, durable evidence, independent detection, distinct-family or four-tier audit, mechanics PASS, terminal receipt, source or execution binding V7, scientific authority, or product authority is observed or authorized.",
+                ].joined(separator: " ")
+        )
+    }()
+
     public var historicalEvidenceExportDesignContractID:
         String?
     {
@@ -2480,6 +2722,22 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
         String?
     {
         historicalEvidenceSemanticArtifactProjectionDesignContractBinding?
+            .contentSHA256
+    }
+
+    public var
+        historicalEvidenceSemanticArtifactProjectionSourceContractID:
+        String?
+    {
+        historicalEvidenceSemanticArtifactProjectionSourceContractBinding?
+            .contractID
+    }
+
+    public var
+        historicalEvidenceSemanticArtifactProjectionSourceContractSHA256:
+        String?
+    {
+        historicalEvidenceSemanticArtifactProjectionSourceContractBinding?
             .contentSHA256
     }
 
@@ -2560,6 +2818,8 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
             expected = .frozenV14
         case 15:
             expected = .frozenV15
+        case 16:
+            expected = .frozenV16
         default:
             throw PrimeNativeNeuralGateTopologyError
                 .invalidFrozenContract
@@ -2644,6 +2904,29 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
                 historicalEvidenceSemanticArtifactProjectionDesignContractBinding
                     == nil
         }
+        let projectionSourceBindingValid: Bool
+        if schemaVersion >= 16 {
+            let source =
+                PrimeNativeNeuralGateHistoricalEvidenceSemanticArtifactProjectionSourceContract
+                .frozenV1
+            try source.validate()
+            let sourceSHA256 = try source.contentSHA256()
+            projectionSourceBindingValid =
+                historicalEvidenceSemanticArtifactProjectionSourceContractBinding?
+                .validate() == true
+                && historicalEvidenceSemanticArtifactProjectionSourceContractID
+                    == source.contractID
+                && historicalEvidenceSemanticArtifactProjectionSourceContractSHA256
+                    == sourceSHA256
+                && historicalEvidenceSemanticArtifactProjectionTargetName
+                    == source.projectionTargetBinding.targetName
+        } else {
+            projectionSourceBindingValid =
+                historicalEvidenceSemanticArtifactProjectionSourceContractBinding
+                    == nil
+                && historicalEvidenceSemanticArtifactProjectionTargetName
+                    == nil
+        }
         guard self == expected,
               status == .plannedNotMaterialized,
               !executionImplemented,
@@ -2658,7 +2941,8 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
               designBindingValid,
               sourceBindingValid,
               callEdgeSourceBindingValid,
-              projectionDesignBindingValid
+              projectionDesignBindingValid,
+              projectionSourceBindingValid
         else {
             throw PrimeNativeNeuralGateTopologyError
                 .invalidFrozenContract
@@ -2706,6 +2990,13 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
             if let historicalEvidenceExportTargetName {
                 historicalContainedTargetNames.append(
                     historicalEvidenceExportTargetName
+                )
+            }
+            if let
+                historicalEvidenceSemanticArtifactProjectionTargetName
+            {
+                historicalContainedTargetNames.append(
+                    historicalEvidenceSemanticArtifactProjectionTargetName
                 )
             }
             guard !historicalContainedTargetNames
@@ -2829,8 +3120,12 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
             "historical_worker_evidence_export_call_edge_source_contract_binding"
         case historicalEvidenceSemanticArtifactProjectionDesignContractBinding =
             "historical_evidence_semantic_artifact_projection_design_contract_binding"
+        case historicalEvidenceSemanticArtifactProjectionSourceContractBinding =
+            "historical_evidence_semantic_artifact_projection_source_contract_binding"
         case historicalEvidenceExportTargetName =
             "historical_evidence_export_target_name"
+        case historicalEvidenceSemanticArtifactProjectionTargetName =
+            "historical_evidence_semantic_artifact_projection_target_name"
         case historicalContractsPreserved =
             "historical_contracts_preserved"
         case historicalFutureTargetGraphSuperseded =

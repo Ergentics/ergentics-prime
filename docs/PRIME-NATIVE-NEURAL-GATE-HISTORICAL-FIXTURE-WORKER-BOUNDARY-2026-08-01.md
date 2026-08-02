@@ -172,12 +172,10 @@ does not alter that disposition.
 
 `derive_and_source_bind_historical_worker_evidence_export_adapter_without_mutating_the_byte_exact_gate_executing_the_worker_or_issuing_source_binding_v7`
 
-V12 resolved only that design/source-contract boundary. Topology V13
-materialized the exact source-only exporter. V14 now source- and compile-binds
-one private cross-file worker/exporter call edge while preserving this
-document's exact primary source and status-`78` entry point. The current
-prerequisite is recorded in [Prime Native Neural Gate Historical Worker/Export
-Call-Edge Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-EXPORT-CALL-EDGE-SOURCE-2026-08-01.md).
+V12 through V16 preserve this document's exact primary source and status-`78`
+entry point. The topology-wide current next exact prerequisite is recorded in
+[Prime Native Neural Gate Historical Evidence Semantic-Artifact Projection
+Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-SEMANTIC-ARTIFACT-PROJECTION-SOURCE-2026-08-01.md).
 
 That adapter must be derived and source-bound without editing the byte-exact
 gate or hand-porting missing records. Worker request handling, process

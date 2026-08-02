@@ -628,11 +628,18 @@ Topology V15 preserves the V14 graph byte-for-byte and source-binds only the
 nine-field projection design. The frozen V4 namespace has three
 schema-deferred historical keys per role versus 22 worker semantic artifacts;
 the carrier has three keyed seed families versus a singular statistics schema;
-and the current semantic-record target reaches a dependency forbidden to the
+and the V15 semantic-record target reaches a dependency forbidden to the
 historical worker. Mandatory external context and fail-closed observation
 policies are frozen, but no projection source or target is materialized. The
-current next prerequisite is
+V15 next prerequisite was
 `freeze_the_complete_non_authorizing_historical_semantic_artifact_namespace_and_additive_keyed_three_seed_statistics_envelope_then_source_bind_a_historical_only_projection_codec_without_enabling_worker_request_handling_sealing_launch_execution_publication_or_issuing_source_binding_v7`.
+Topology V16 satisfies that prerequisite additively. It preserves V4 and V15,
+freezes a complete 44-spec namespace and lossless keyed three-seed envelope,
+splits corrected mutation records out of the historical-safe semantic target,
+and materializes a package-internal, non-writing in-memory projector. The
+projector does not depend on ReplayTransport and is not reachable from the
+unchanged status-`78` worker. Package compilation and Swift tests are not
+historical execution, artifact publication, or source/execution binding V7.
 See [Prime Native Neural Gate Historical Source Material](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-SOURCE-MATERIAL-2026-08-01.md).
 See [Prime Native Neural Gate Historical Replay Mechanics](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-REPLAY-MECHANICS-2026-08-01.md).
 See [Prime Native Neural Gate Historical Fixture and Worker Boundary](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-FIXTURE-WORKER-BOUNDARY-2026-08-01.md).
@@ -640,6 +647,7 @@ See [Prime Native Neural Gate Historical Evidence Export Adapter Design](PRIME-N
 See [Prime Native Neural Gate Historical Evidence Export Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-EXPORT-SOURCE-2026-08-01.md).
 See [Prime Native Neural Gate Historical Worker/Export Call-Edge Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-EXPORT-CALL-EDGE-SOURCE-2026-08-01.md).
 See [Prime Native Neural Gate Historical Evidence Semantic-Artifact Projection Design](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-SEMANTIC-ARTIFACT-PROJECTION-DESIGN-2026-08-01.md).
+See [Prime Native Neural Gate Historical Evidence Semantic-Artifact Projection Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-SEMANTIC-ARTIFACT-PROJECTION-SOURCE-2026-08-01.md).
 
 ## Optimizer checkpoint admission
 

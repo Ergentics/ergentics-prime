@@ -1637,8 +1637,13 @@ from the exact V11 `main`, which exits `78`. It enables no request handling,
 execution, encoding, publication, receipt, or authority. The V14 prerequisite is
 recorded in [Prime Native Neural Gate Historical Worker/Export Call-Edge
 Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-EXPORT-CALL-EDGE-SOURCE-2026-08-01.md).
-V15 source-binds only the projection design; its current prerequisite is
+V15 source-binds only the projection design; its prerequisite was
 recorded in [Prime Native Neural Gate Historical Evidence Semantic-Artifact Projection Design](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-SEMANTIC-ARTIFACT-PROJECTION-DESIGN-2026-08-01.md).
+V16 satisfies it with an additive complete namespace, lossless keyed
+three-seed envelope, isolated semantic target, and non-writing in-memory
+projector. The unchanged status-`78` worker cannot reach it and ReplayTransport
+is not integrated. See [Prime Native Neural Gate Historical Evidence
+Semantic-Artifact Projection Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-SEMANTIC-ARTIFACT-PROJECTION-SOURCE-2026-08-01.md).
 See [Prime Native Neural Gate Historical Source Material](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-SOURCE-MATERIAL-2026-08-01.md).
 See [Prime Native Neural Gate Historical Replay Mechanics](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-REPLAY-MECHANICS-2026-08-01.md).
 See [Prime Native Neural Gate Historical Fixture and Worker Boundary](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-FIXTURE-WORKER-BOUNDARY-2026-08-01.md).

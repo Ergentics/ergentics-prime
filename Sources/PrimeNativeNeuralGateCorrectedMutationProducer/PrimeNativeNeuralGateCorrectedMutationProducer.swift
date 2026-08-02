@@ -1,5 +1,5 @@
 import PrimeNativeNeuralGateCorrectedMutationSurfaceContracts
-import PrimeNativeNeuralGateSemanticRecordContracts
+import PrimeNativeNeuralGateCorrectedMutationRecordContracts
 
 public enum PrimeNativeNeuralGateCorrectedMutationProducerError:
     Error,

@@ -586,20 +586,11 @@ final class PrimeNativeNeuralGateReplayArtifactContractTests:
     func testPureContractSourceHasNoRuntimeOrAuthorityImports()
         throws
     {
-        let source = try completeSwiftSource(
+        let sources = try completeSwiftSources(
             target:
                 "PrimeNativeNeuralGateReplayArtifactContracts"
         )
-        XCTAssertEqual(
-            source
-                .split(separator: "\n")
-                .filter {
-                    $0.hasPrefix("import ")
-                }
-                .map(String.init),
-            ["import Foundation"]
-        )
-        for forbidden in [
+        let forbiddenFragments = [
             "import PrimeCore",
             "import PrimeNativeNeuralGateCorrectedMechanics",
             "import PrimeNativeNeuralGateCorrectedEvaluationMechanics",
@@ -655,17 +646,30 @@ final class PrimeNativeNeuralGateReplayArtifactContractTests:
             "readdir(",
             "rename(",
             "unlink(",
-        ] {
-            XCTAssertFalse(
-                source.contains(forbidden),
-                forbidden
+        ]
+        for (fileName, source) in sources {
+            XCTAssertEqual(
+                source
+                    .split(separator: "\n")
+                    .filter {
+                        $0.hasPrefix("import ")
+                    }
+                    .map(String.init),
+                ["import Foundation"],
+                "\(fileName) must import Foundation only"
             )
+            for forbidden in forbiddenFragments {
+                XCTAssertFalse(
+                    source.contains(forbidden),
+                    "\(fileName): \(forbidden)"
+                )
+            }
         }
     }
 
-    private func completeSwiftSource(
+    private func completeSwiftSources(
         target: String
-    ) throws -> String {
+    ) throws -> [(fileName: String, source: String)] {
         let directory =
             repositoryRoot
             .appendingPathComponent("Sources")
@@ -692,12 +696,15 @@ final class PrimeNativeNeuralGateReplayArtifactContractTests:
             swiftFiles.map(\.lastPathComponent),
             "pure target contains a non-Swift entry"
         )
-        return try swiftFiles.map {
-            try String(
-                contentsOf: $0,
-                encoding: .utf8
+        return try swiftFiles.map { file in
+            (
+                file.lastPathComponent,
+                try String(
+                    contentsOf: file,
+                    encoding: .utf8
+                )
             )
-        }.joined(separator: "\n")
+        }
     }
 
     private func orderedUnique(
