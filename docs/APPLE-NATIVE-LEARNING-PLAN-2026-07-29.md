@@ -1723,3 +1723,34 @@ Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-SEMANTIC-ARTIFACT-DECODER-CAL
 The next exact prerequisite is deliberately design-only:
 
 `design_the_unavailable_historical_worker_in_memory_exported_evidence_projection_decode_composition_boundary_accepting_only_already_formed_v14_evidence_and_explicit_v16_context_without_enabling_replay_transport_integration_request_handling_sealing_launch_execution_artifact_io_publication_or_issuing_source_binding_v7`
+
+## V20 design-only projection/decode composition boundary
+
+V20 satisfies that design prerequisite without changing `Package.swift`, the
+worker, the V16 projector, the V18 decoder, the V19 bounded zipper, or any
+learning, Metal, training, quantization, runtime, or publication source. The
+design accepts exactly already-formed V14 Evidence plus one explicit V16
+context. Both context observation states must remain `unavailable`; neither
+role nor state may be inferred or defaulted.
+
+Evidence remains opaque, non-`Codable`, target-bearing, and without canonical
+instance or source identity. Its equality is not a digest or provenance proof:
+signed zero can compare equal while V16 emits different `Double.bitPattern`
+bytes. The reserved non-`Codable` result retains only the exact projected set
+and its decoded set, linked across the same role and all 22 typed keys by exact
+order, byte count, and SHA-256. It is not durable or publication-ready.
+
+A future source slice may append the reserved composition method only to the
+existing V19 decoder-edge file, where it can reuse the private V19 decoder edge
+and V16 projector without duplicating the zipper or widening access. V20
+implements and invokes none of this. All I/O, transport, execution, evidence,
+`PASS`, receipt, V7, scientific, and product authority remain false. See
+[Prime Native Neural Gate Historical Worker Exported-Evidence Projection/
+Decode Composition
+Design](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-EXPORTED-EVIDENCE-PROJECTION-DECODE-COMPOSITION-DESIGN-2026-08-02.md).
+
+The V20 design contract has canonical SHA-256
+`b1fc91f4026cb1c513be53f9cf6f5d53834489eab215e1343aa6b00f05a51f4c`; topology V20 has canonical SHA-256
+`b8045480883016fd49e7a63b02437f54835c1e7de6e61a4c2dea7f439a052a57`. The next exact prerequisite is:
+
+`source_bind_the_unavailable_historical_worker_exported_evidence_projection_decode_composition_call_edge_as_an_append_only_same_file_v19_decoder_edge_continuation_accepting_only_already_formed_v14_evidence_and_explicit_v16_context_without_changing_package_topology_or_enabling_replay_transport_integration_request_handling_sealing_launch_execution_artifact_io_publication_or_issuing_source_binding_v7`

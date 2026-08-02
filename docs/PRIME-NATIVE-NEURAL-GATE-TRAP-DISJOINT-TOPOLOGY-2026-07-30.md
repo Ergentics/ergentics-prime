@@ -626,3 +626,37 @@ Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-SEMANTIC-ARTIFACT-DECODER-CAL
 The next exact prerequisite is design-only:
 
 `design_the_unavailable_historical_worker_in_memory_exported_evidence_projection_decode_composition_boundary_accepting_only_already_formed_v14_evidence_and_explicit_v16_context_without_enabling_replay_transport_integration_request_handling_sealing_launch_execution_artifact_io_publication_or_issuing_source_binding_v7`
+
+## V20 design-only composition topology
+
+Topology V20 binds only
+`prime_source_bound_historical_worker_exported_evidence_projection_decode_composition_design_v20`.
+It preserves the exact V19 target graph, forbidden-reachability graph, target
+count, package dependencies, products, resources, worker inventory, and
+status-`78` entry point. No composition target or source edge is materialized.
+The design and topology SHA-256 values are `b1fc91f4026cb1c513be53f9cf6f5d53834489eab215e1343aa6b00f05a51f4c` and
+`b8045480883016fd49e7a63b02437f54835c1e7de6e61a4c2dea7f439a052a57`.
+
+The future boundary has exactly two inputs: already-formed V14 Evidence and
+explicit V16 context with both observation states fixed to `unavailable`.
+Evidence equality or any invented digest cannot supply instance/source
+identity; signed zero demonstrates the mismatch between value equality and
+projected bit-pattern bytes. Its target-bearing fields remain opaque.
+
+The reserved non-`Codable` projected+decoded pair must link one role and the
+exact 22 typed keys by canonical order, byte count, and SHA-256. Future source
+ownership is append-only in the V19 decoder edge's same file, allowing reuse
+of the private decoder edge and V16 projector without duplicating the zipper
+or widening access. V20 implements no such edge and makes no transport,
+request, process, publication, receipt, or model path newly reachable.
+
+Topology remains `planned_not_materialized` with
+`executionImplemented == false`. No I/O, execution, durable evidence,
+`PASS`, receipt, source/execution binding V7, scientific authority, or
+product authority is observed or authorized. See [Prime Native Neural Gate
+Historical Worker Exported-Evidence Projection/Decode Composition
+Design](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-EXPORTED-EVIDENCE-PROJECTION-DECODE-COMPOSITION-DESIGN-2026-08-02.md).
+
+The next exact prerequisite is:
+
+`source_bind_the_unavailable_historical_worker_exported_evidence_projection_decode_composition_call_edge_as_an_append_only_same_file_v19_decoder_edge_continuation_accepting_only_already_formed_v14_evidence_and_explicit_v16_context_without_changing_package_topology_or_enabling_replay_transport_integration_request_handling_sealing_launch_execution_artifact_io_publication_or_issuing_source_binding_v7`

@@ -167,3 +167,45 @@ already-formed V14 evidence carrier plus explicit V16 context, but it must not
 invoke the exporter, enable the worker, integrate transport, perform artifact
 I/O, publish evidence, or claim any source/execution authority. Source binding
 and implementation require separate later checkpoints.
+
+## V20 composition design continuation
+
+V20 freezes the continuation design but does not alter this V19 file or any
+other worker, projector, decoder, runtime, package, or executable source. Its
+future `compose` operation accepts exactly already-formed V14 Evidence and
+explicit V16 context. Both context observation states must be `unavailable`;
+the operation may not call the exporter, reconstruct Evidence, infer or
+default role/state, or retry after substitution.
+
+Evidence equality is explicitly non-authoritative. The signed-zero case proves
+why: equal `Double` values can retain different V16 bit-pattern bytes.
+Evidence also contains target-bearing evaluation fields, which the future edge
+must pass opaquely to V16 and never inspect, log, rank, train on, generate from,
+or use for recommendation.
+
+The reserved
+`PrimeNativeNeuralGateHistoricalEvidenceProjectionDecodeCompositionResult`
+is a non-`Codable` pair of the exact V16 projected set and exact V18 decoded
+set. The members must share one role and the exact ordered 22-key byte-count
+and SHA-256 inventory. Keeping the projected bytes avoids later rerun or hand
+reconstruction; it does not make the pair published, durable, admitted, or
+receipt-bearing.
+
+The later source slice must append both private static `compose` and
+`sourceBoundHistoricalEvidenceProjectionDecodeCompositionCallEdge` members to
+this same file. The worker call edge delegates only to `compose`; `compose`
+invokes the V16 projector once, reuses the existing private V19 decoder edge
+once, validates exact 22-key linkage, and constructs the result. Neither may
+duplicate the zipper, widen private access, or introduce another decoder. V20
+performs none of those actions.
+
+Design SHA-256 is `b1fc91f4026cb1c513be53f9cf6f5d53834489eab215e1343aa6b00f05a51f4c`; topology SHA-256 is
+`b8045480883016fd49e7a63b02437f54835c1e7de6e61a4c2dea7f439a052a57`. All runtime, transport, I/O, publication,
+`PASS`, receipt, V7, scientific, and product claims remain false. See [Prime
+Native Neural Gate Historical Worker Exported-Evidence Projection/Decode
+Composition
+Design](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-EXPORTED-EVIDENCE-PROJECTION-DECODE-COMPOSITION-DESIGN-2026-08-02.md).
+
+The next exact prerequisite is:
+
+`source_bind_the_unavailable_historical_worker_exported_evidence_projection_decode_composition_call_edge_as_an_append_only_same_file_v19_decoder_edge_continuation_accepting_only_already_formed_v14_evidence_and_explicit_v16_context_without_changing_package_topology_or_enabling_replay_transport_integration_request_handling_sealing_launch_execution_artifact_io_publication_or_issuing_source_binding_v7`

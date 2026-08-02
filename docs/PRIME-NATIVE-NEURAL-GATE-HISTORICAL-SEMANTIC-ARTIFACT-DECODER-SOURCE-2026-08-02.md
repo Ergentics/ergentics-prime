@@ -224,3 +224,38 @@ It may design composition from an already-formed V14 evidence carrier and
 explicit V16 context. It does not authorize exporter invocation, source
 binding, implementation, request handling, transport, launch, artifact I/O,
 publication, or execution.
+
+## V20 design fulfillment
+
+V20 fulfills that design prerequisite without changing this V18 decoder, the
+V16 projector, the V19 bounded decoder edge, the unavailable worker, or the
+package graph. The future operation accepts exactly an already-formed V14
+Evidence value plus explicit V16 context. Both context observation states are
+restricted to `unavailable`; no role or state may be inferred, defaulted, or
+retried.
+
+Evidence remains opaque and without canonical or source identity. In
+particular, its equality cannot bind projected bytes because signed zeros
+compare equal while the projection preserves distinct `Double.bitPattern`
+values. Its target-bearing evaluation fields are not inspected, logged, or
+used for model, evaluation, selection, or recommendation behavior.
+
+The reserved non-`Codable` result retains both the exact projected artifact
+set and this decoder's semantic artifact set. A future constructor must require
+one role and exact linkage across all 22 ordered typed keys, byte counts, and
+SHA-256 values. The pair retains bytes to avoid projection rerun, but creates
+no origin, publication, durability, receipt, or admission authority.
+
+Future source binding must be an append-only continuation in the V19 decoder
+edge's same file and reuse the existing private edge; it may not copy this
+decoder schedule, widen access, or add a parser. V20 implements or invokes no
+such operation. Design SHA-256 is `b1fc91f4026cb1c513be53f9cf6f5d53834489eab215e1343aa6b00f05a51f4c`; topology SHA-256
+is `b8045480883016fd49e7a63b02437f54835c1e7de6e61a4c2dea7f439a052a57`. See [Prime Native Neural Gate Historical
+Worker Exported-Evidence Projection/Decode Composition
+Design](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-EXPORTED-EVIDENCE-PROJECTION-DECODE-COMPOSITION-DESIGN-2026-08-02.md).
+
+All transport, request handling, worker execution, artifact I/O, publication,
+`PASS`, receipt, source/execution binding V7, scientific authority, and
+product authority remain false. The next exact prerequisite is:
+
+`source_bind_the_unavailable_historical_worker_exported_evidence_projection_decode_composition_call_edge_as_an_append_only_same_file_v19_decoder_edge_continuation_accepting_only_already_formed_v14_evidence_and_explicit_v16_context_without_changing_package_topology_or_enabling_replay_transport_integration_request_handling_sealing_launch_execution_artifact_io_publication_or_issuing_source_binding_v7`
