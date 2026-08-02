@@ -756,3 +756,31 @@ Even Stage B remains a synthetic same-implementation mechanics replay. Real
 profile admission is a later Stage C and requires physical three-seed reports,
 fixed-cap/EOS output shards, checkpoint, executor, recommender, configuration,
 Metal-library, training-stage, tokenizer, corpus, and package-lock bindings.
+
+## Additive V19 worker-to-decoder projection continuation
+
+V19 source- and compile-binds the direct private edge from one already-formed
+V16 projected artifact set into the unchanged V18 decoder. It changes only the
+unavailable historical worker: one fourth Swift source and the decoder as
+dependency seven are appended after the exact V17 source/dependency boundary.
+The exact `main` still exits `78`; neither it nor the private V14/V17 members
+can name the new cross-file private member. The edge is not invoked.
+
+The implementation admits six canonical leaves by exact key and drives the
+maintained invariant decoder with a global-first equal-byte zipper capped at
+65,536 bytes. Foundation `Data` slicing partitions bytes; V18 retains JSON and
+frame parsing, record equality, poison-on-failure, and terminal binding. V19
+adds no parser, header constant, record-boundary inference, I/O, transport,
+execution, or publication behavior.
+
+The former V17 guard identity remains explicit history while the live guard
+evolves additively to admit only the actual fourth source and seventh
+dependency. This is compiler evidence, not replay or model evidence. No
+mechanics `PASS`, receipt, source/execution binding V7, scientific authority,
+or product authority is observed or authorized. See [Prime Native Neural Gate
+Historical Worker Semantic-Artifact Decoder Call-Edge
+Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-SEMANTIC-ARTIFACT-DECODER-CALL-EDGE-SOURCE-2026-08-02.md).
+
+The next exact prerequisite remains design-only:
+
+`design_the_unavailable_historical_worker_in_memory_exported_evidence_projection_decode_composition_boundary_accepting_only_already_formed_v14_evidence_and_explicit_v16_context_without_enabling_replay_transport_integration_request_handling_sealing_launch_execution_artifact_io_publication_or_issuing_source_binding_v7`

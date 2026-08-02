@@ -187,3 +187,40 @@ defaulting observations, performing I/O, or making `ReplayTransport`
 reachable from the decoder. Transport integration, descriptor capture,
 request handling, sealing, launch, execution, publication, and authority
 remain separate future audits.
+
+## V19 fulfillment and next design boundary
+
+V19 satisfies the call-edge prerequisite above without changing either V18
+target or any V16 producer source. The unavailable historical worker appends
+the unchanged decoder as dependency seven after the exact V17 six-dependency
+prefix and adds one fourth Swift source. Its private member accepts only an
+already-formed V16 projected artifact set. The exact status-`78` main and
+private V14/V17 members remain in other files and cannot name it.
+
+The member validates the set, constructs the six canonical inputs by exact
+key, and drives this V18 decoder with a bounded global-first equal-byte zipper.
+Each paired global/chunk feed has the same byte count and is capped at 65,536
+bytes. Current-chunk remainders are drained before chunk finish and any global
+remainder is drained before the one terminal semantic-artifact-set finish.
+V18 continues to own JSON/frame parsing, record equality, poisoning, and
+terminal bindings; V19 adds no parser, frame-header math, record inspection,
+I/O, transport, execution, or publication mechanism.
+
+The V17 focused guard evolves transparently: its frozen historical identity
+remains recorded while its current identity admits only the fourth worker
+source and seventh dependency and retains the old exact source assertions.
+Compilation is not invocation. No descriptor is captured, no worker or decoder
+edge runs, and no historical evidence, mechanics `PASS`, receipt,
+source/execution binding V7, scientific authority, or product authority is
+created. See [Prime Native Neural Gate Historical Worker Semantic-Artifact
+Decoder Call-Edge
+Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-SEMANTIC-ARTIFACT-DECODER-CALL-EDGE-SOURCE-2026-08-02.md).
+
+The next exact prerequisite is deliberately design-only:
+
+`design_the_unavailable_historical_worker_in_memory_exported_evidence_projection_decode_composition_boundary_accepting_only_already_formed_v14_evidence_and_explicit_v16_context_without_enabling_replay_transport_integration_request_handling_sealing_launch_execution_artifact_io_publication_or_issuing_source_binding_v7`
+
+It may design composition from an already-formed V14 evidence carrier and
+explicit V16 context. It does not authorize exporter invocation, source
+binding, implementation, request handling, transport, launch, artifact I/O,
+publication, or execution.

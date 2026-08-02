@@ -15,6 +15,8 @@ final class
         "Sources/PrimeNativeNeuralGateHistoricalFixtureWorker/PrimeNativeNeuralGateHistoricalEvidenceExportCallEdge.swift"
     private static let projectionCallEdgeRelativePath =
         "Sources/PrimeNativeNeuralGateHistoricalFixtureWorker/PrimeNativeNeuralGateHistoricalWorkerSemanticArtifactProjectionCallEdge.swift"
+    private static let decoderCallEdgeRelativePath =
+        "Sources/PrimeNativeNeuralGateHistoricalFixtureWorker/PrimeNativeNeuralGateHistoricalWorkerSemanticArtifactDecoderCallEdge.swift"
     private static let fixtureResourceRelativePath =
         "Sources/PrimeNativeNeuralGateHistoricalFixtureWorker/HistoricalFixtureEvidence/Package.resolved"
     private static let sourceContractSHA256 =
@@ -242,7 +244,7 @@ final class
         )
     }
 
-    func testCheckedInWorkerPreservesV14InventoryInsideExactV17Continuation()
+    func testCheckedInWorkerPreservesV14InventoryInsideV19Continuation()
         throws
     {
         let contract = Contract.frozenV1
@@ -259,6 +261,7 @@ final class
                 Self.fixtureResourceRelativePath,
                 Self.callEdgeRelativePath,
                 Self.primaryWorkerRelativePath,
+                Self.decoderCallEdgeRelativePath,
                 Self.projectionCallEdgeRelativePath,
             ]
         )
@@ -300,7 +303,7 @@ final class
         }
     }
 
-    func testPackagePreservesTheExactV14PrefixInsideTheV17WorkerDeclaration()
+    func testPackagePreservesTheExactV14PrefixInsideTheV19WorkerDeclaration()
         throws
     {
         let contract = Contract.frozenV1
@@ -310,7 +313,7 @@ final class
 
         XCTAssertTrue(
             package.contains(
-                #".executableTarget(name:"PrimeNativeNeuralGateHistoricalFixtureWorker",dependencies:["PrimeCore","ErgenticsPrimeRuntime","PrimeNativeNeuralGateHistoricalReplayMechanics","PrimeNativeNeuralGateReplayTransport","PrimeNativeNeuralGateHistoricalEvidenceExportMechanics","PrimeNativeNeuralGateHistoricalEvidenceSemanticArtifactProjection",],resources:[.copy("HistoricalFixtureEvidence"),])"#
+                #".executableTarget(name:"PrimeNativeNeuralGateHistoricalFixtureWorker",dependencies:["PrimeCore","ErgenticsPrimeRuntime","PrimeNativeNeuralGateHistoricalReplayMechanics","PrimeNativeNeuralGateReplayTransport","PrimeNativeNeuralGateHistoricalEvidenceExportMechanics","PrimeNativeNeuralGateHistoricalEvidenceSemanticArtifactProjection","PrimeNativeNeuralGateHistoricalSemanticArtifactDecoder",],resources:[.copy("HistoricalFixtureEvidence"),])"#
             )
         )
         XCTAssertTrue(

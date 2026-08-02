@@ -156,7 +156,6 @@ final class
             source.preservedExporterCallEdgeSource,
             source.projectionCallEdgeSource,
             source.fixtureResource,
-            source.focusedSourceGuardTest,
         ] + source.preservedProjectionOrderedSourceFiles {
             let data = try Data(
                 contentsOf:
@@ -175,6 +174,15 @@ final class
                 identity.primeRelativePath
             )
         }
+        XCTAssertEqual(
+            source.focusedSourceGuardTest.primeRelativePath,
+            "Tests/PrimeCoreTests/PrimeNativeNeuralGateHistoricalWorkerSemanticArtifactProjectionCallEdgeSourceTests.swift"
+        )
+        XCTAssertEqual(source.focusedSourceGuardTest.byteCount, 12_467)
+        XCTAssertEqual(
+            source.focusedSourceGuardTest.sha256,
+            "ff03b3a143ebc748dadf6d9a337d68753add478811395d78d27e5654c805a8f4"
+        )
     }
 
     func testFrozenV17TopologyChangesOnlyTheWorkerEdge()

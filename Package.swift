@@ -265,6 +265,7 @@ let package = Package(
                 "PrimeNativeNeuralGateReplayTransport",
                 "PrimeNativeNeuralGateHistoricalEvidenceExportMechanics",
                 "PrimeNativeNeuralGateHistoricalEvidenceSemanticArtifactProjection",
+                "PrimeNativeNeuralGateHistoricalSemanticArtifactDecoder",
             ],
             resources: [
                 .copy("HistoricalFixtureEvidence"),

@@ -1425,3 +1425,32 @@ sixth dependency. It does not enable request handling, ReplayTransport/decoder
 integration, execution, I/O, publication, or V7. See [Prime Native Neural Gate
 Historical Worker Semantic-Artifact Projection Call-Edge
 Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-SEMANTIC-ARTIFACT-PROJECTION-CALL-EDGE-SOURCE-2026-08-01.md).
+
+## Additive V19 projected-set decoder call edge
+
+V19 adds only the compile-bound edge that the completed V18 decoder required.
+The unavailable worker retains its exact status-`78` `main` and private V14/
+V17 edges, then appends one private source accepting an already-formed V16
+projected artifact set and the V18 decoder as the seventh dependency after the
+exact V17 prefix. None of the earlier files can name the new private member,
+and no test imports or invokes the worker.
+
+The edge obtains the six canonical leaves by exact key and feeds the global
+and fifteen manifest-declared chunk streams through the maintained V18 decoder.
+Paired fragments are global-first, equal in byte count, and no larger than
+65,536 bytes; remaining chunk and global bytes are drained only through the
+bounded finish sequence. No JSON or frame parser, frame-header math, record
+inspection, transport, filesystem/process I/O, publication, or execution path
+is added.
+
+The evolved live V17 guard preserves its former exact source assertions and
+adds only the V19 source/dependency continuation; the old V17 guard identity
+remains recorded as history. V19 is not fixture replay, historical evaluation,
+durable evidence, `PASS`, receipt, source/execution binding V7, science, or
+product authority. See [Prime Native Neural Gate Historical Worker
+Semantic-Artifact Decoder Call-Edge
+Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-SEMANTIC-ARTIFACT-DECODER-CALL-EDGE-SOURCE-2026-08-02.md).
+
+The next exact prerequisite is a design checkpoint only:
+
+`design_the_unavailable_historical_worker_in_memory_exported_evidence_projection_decode_composition_boundary_accepting_only_already_formed_v14_evidence_and_explicit_v16_context_without_enabling_replay_transport_integration_request_handling_sealing_launch_execution_artifact_io_publication_or_issuing_source_binding_v7`

@@ -473,7 +473,7 @@ final class
         XCTAssertFalse(workerClosure.contains(projector))
     }
 
-    func testActualPackagePreservesExactV16TargetsWithV17WorkerContinuation()
+    func testActualPackagePreservesExactV16TargetsWithV19WorkerContinuation()
         throws
     {
         let package = try String(
@@ -509,7 +509,7 @@ final class
         )
         XCTAssertTrue(
             package.contains(
-                #".executableTarget(name:"PrimeNativeNeuralGateHistoricalFixtureWorker",dependencies:["PrimeCore","ErgenticsPrimeRuntime","PrimeNativeNeuralGateHistoricalReplayMechanics","PrimeNativeNeuralGateReplayTransport","PrimeNativeNeuralGateHistoricalEvidenceExportMechanics","PrimeNativeNeuralGateHistoricalEvidenceSemanticArtifactProjection",],resources:[.copy("HistoricalFixtureEvidence"),])"#
+                #".executableTarget(name:"PrimeNativeNeuralGateHistoricalFixtureWorker",dependencies:["PrimeCore","ErgenticsPrimeRuntime","PrimeNativeNeuralGateHistoricalReplayMechanics","PrimeNativeNeuralGateReplayTransport","PrimeNativeNeuralGateHistoricalEvidenceExportMechanics","PrimeNativeNeuralGateHistoricalEvidenceSemanticArtifactProjection","PrimeNativeNeuralGateHistoricalSemanticArtifactDecoder",],resources:[.copy("HistoricalFixtureEvidence"),])"#
             )
         )
         let worker = try Topology.frozenV16.target(
