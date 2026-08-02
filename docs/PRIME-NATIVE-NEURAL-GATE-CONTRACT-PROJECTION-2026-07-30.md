@@ -784,3 +784,39 @@ Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-SEMANTIC-ARTIFACT-DECODER-CAL
 The next exact prerequisite remains design-only:
 
 `design_the_unavailable_historical_worker_in_memory_exported_evidence_projection_decode_composition_boundary_accepting_only_already_formed_v14_evidence_and_explicit_v16_context_without_enabling_replay_transport_integration_request_handling_sealing_launch_execution_artifact_io_publication_or_issuing_source_binding_v7`
+
+## V20 exported-evidence projection/decode composition design
+
+V20 is design-only. It preserves the V19 package graph and every worker,
+projector, decoder, runtime, and zipper source. The future `compose` operation
+accepts exactly one already-formed V14 Evidence value and one explicit V16
+context. It may neither invoke the exporter nor reconstruct Evidence, and it
+admits both `sourceBytesResolved` and `adaptationProofRecomputed` only as
+`unavailable`.
+
+Evidence has no canonical instance digest or source identity. Equality must not
+be used as either: signed zeros compare equal while their projected
+`Double.bitPattern` bytes differ. Target-bearing Evidence fields remain
+opaque and may not drive evaluation, model, logging, selection, or
+recommendation behavior.
+
+The reserved non-`Codable`
+`PrimeNativeNeuralGateHistoricalEvidenceProjectionDecodeCompositionResult`
+contains only the projected and decoded sets. They must share one role and
+match across the exact ordered 22 typed keys, byte counts, and SHA-256 values.
+The pair retains exact projected bytes for a later separately authorized
+publication design; it does not itself establish origin, durability, receipt,
+or admission.
+
+Future implementation is constrained to an append-only same-file V19
+decoder-edge continuation so the existing private decoder edge and V16
+projector can be reused without a second zipper or access widening. V20
+implements no call edge, I/O, transport, request, execution, or publication.
+Its design and topology SHA-256 values are `b1fc91f4026cb1c513be53f9cf6f5d53834489eab215e1343aa6b00f05a51f4c` and
+`b8045480883016fd49e7a63b02437f54835c1e7de6e61a4c2dea7f439a052a57`. See [Prime Native Neural Gate Historical Worker
+Exported-Evidence Projection/Decode Composition
+Design](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-EXPORTED-EVIDENCE-PROJECTION-DECODE-COMPOSITION-DESIGN-2026-08-02.md).
+
+The next exact prerequisite is:
+
+`source_bind_the_unavailable_historical_worker_exported_evidence_projection_decode_composition_call_edge_as_an_append_only_same_file_v19_decoder_edge_continuation_accepting_only_already_formed_v14_evidence_and_explicit_v16_context_without_changing_package_topology_or_enabling_replay_transport_integration_request_handling_sealing_launch_execution_artifact_io_publication_or_issuing_source_binding_v7`
