@@ -686,3 +686,30 @@ Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-EXPORTED-EVIDENCE-PROJECTION-
 Prime remains `ABSTAIN`. The next exact prerequisite is:
 
 `design_the_bounded_unavailable_historical_worker_invocation_seam_for_the_source_bound_v21_composition_before_any_private_access_change_replay_transport_integration_request_handling_sealing_launch_execution_artifact_io_publication_or_issuing_source_binding_v7`
+
+## V22 design-only invocation-seam topology
+
+Topology V22 binds only
+`prime_source_bound_historical_worker_bounded_unavailable_composition_invocation_seam_design_v22`
+at `3954a98474cdaf79a62c65a20cf612f3a1ddaf6b8305aa941e94d3863791e757`; its own canonical SHA-256 is
+`af914f70b10917e95b895fbf1fc24c6e52764893972d6616bdbb409ba712f4f5`. The exact V21 target/forbidden-reachability
+graphs, target count, materialization states, dependency order, products,
+resources, worker inventory, status, source, and prior bindings remain exact.
+
+The design reserves one future append-only nested internal wrapper with a sole
+private V21 payload/private initializer and no accessor or conformance. Its
+one internal static method may call the private V21 composition edge exactly
+once with unchanged inputs and propagate all errors. V22 adds PrimeCore
+governance contract/topology source only; it adds no worker, invocation-seam,
+or runtime source and no reachability. The exact status-78 main cannot call the
+nonexistent seam. See
+[Prime Native Neural Gate Historical Worker Invocation Seam
+Design](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-INVOCATION-SEAM-DESIGN-2026-08-02.md).
+
+Topology remains `planned_not_materialized` with
+`executionImplemented == false`. No invocation, replay, transport, request,
+process, I/O, publication, receipt, V7, scientific, or product authority is
+observed or authorized. Prime remains `ABSTAIN`. The next exact prerequisite
+is:
+
+`source_bind_the_bounded_unavailable_historical_worker_invocation_seam_as_an_append_only_same_file_v21_composition_continuation_preserving_all_v21_private_members_and_delegating_exactly_once_from_one_new_internal_nonpublic_typed_bridge_without_adding_a_main_call_edge_replay_transport_integration_request_handling_sealing_launch_execution_artifact_io_publication_or_issuing_source_binding_v7`

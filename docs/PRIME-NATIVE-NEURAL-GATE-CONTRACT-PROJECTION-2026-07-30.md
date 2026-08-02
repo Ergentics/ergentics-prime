@@ -845,3 +845,35 @@ Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-EXPORTED-EVIDENCE-PROJECTION-
 The next exact prerequisite is design-only:
 
 `design_the_bounded_unavailable_historical_worker_invocation_seam_for_the_source_bound_v21_composition_before_any_private_access_change_replay_transport_integration_request_handling_sealing_launch_execution_artifact_io_publication_or_issuing_source_binding_v7`
+
+## V22 bounded invocation-seam contract design
+
+V22 is design-only and leaves the V21 projection/decode contract and source
+exact. Its future same-file continuation may add one internal wrapper nested
+inside the worker. The wrapper retains only the private V21 composition result
+behind a private initializer, exposes no payload/accessor and adopts no
+conformance. Its sole internal static method accepts the exact V14 Evidence and
+V16 context types, calls the private V21 edge exactly once with those unchanged
+values, and returns only the nonpublic wrapper. The wrapper declares no payload
+accessor, but Swift private storage is API hiding rather than confidentiality:
+generic reflection or unsafe same-module code may expose its payload.
+
+The seam adds no validation, normalization, inference, comparison, encoding,
+hashing, catch, retry, fallback, or new error. V21 remains solely responsible
+for unavailable-state admission, projection, decoding, linkage, and failure.
+Its two context fields remain nonoptional: `.unavailable` is required before
+projection, `.observed_false` is a distinct negative observation, and `nil`
+cannot substitute for either. The seam may not duplicate, default, infer, or
+normalize those states.
+V22 adds PrimeCore governance contract/topology source only; it adds no worker,
+invocation-seam, runtime, or caller source and preserves the exact V21 file,
+status-78 main, `Package.swift`, and package graph. Design/topology SHA-256
+values are `3954a98474cdaf79a62c65a20cf612f3a1ddaf6b8305aa941e94d3863791e757` and
+`af914f70b10917e95b895fbf1fc24c6e52764893972d6616bdbb409ba712f4f5`. See [Prime Native Neural Gate Historical Worker
+Invocation Seam
+Design](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-INVOCATION-SEAM-DESIGN-2026-08-02.md).
+
+No evidence is projected, decoded, consumed, or published. Prime remains
+`ABSTAIN`. The next exact prerequisite is:
+
+`source_bind_the_bounded_unavailable_historical_worker_invocation_seam_as_an_append_only_same_file_v21_composition_continuation_preserving_all_v21_private_members_and_delegating_exactly_once_from_one_new_internal_nonpublic_typed_bridge_without_adding_a_main_call_edge_replay_transport_integration_request_handling_sealing_launch_execution_artifact_io_publication_or_issuing_source_binding_v7`

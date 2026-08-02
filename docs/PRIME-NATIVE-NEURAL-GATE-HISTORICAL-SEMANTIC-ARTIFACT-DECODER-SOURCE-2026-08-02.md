@@ -281,3 +281,27 @@ Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-EXPORTED-EVIDENCE-PROJECTION-
 The next exact prerequisite is design-only:
 
 `design_the_bounded_unavailable_historical_worker_invocation_seam_for_the_source_bound_v21_composition_before_any_private_access_change_replay_transport_integration_request_handling_sealing_launch_execution_artifact_io_publication_or_issuing_source_binding_v7`
+
+## V22 invocation-seam design continuity
+
+V22 leaves this decoder, its stream mechanics, and the V19/V21 worker source
+exact. It designs only a later append to the existing V21 same-file
+composition source: one internal wrapper nested in the worker, containing only
+the private V21 result behind a private initializer, plus one internal static
+method on that wrapper. The method may call only the private V21 composition
+edge, exactly once, with unchanged Evidence/context inputs; all errors remain
+the V21 errors and propagate without handling.
+
+The future bridge may not call this decoder, the V19 decoder edge, or the V16
+projector directly. V22 adds PrimeCore governance contract/topology source
+only; it adds no worker, invocation-seam, runtime, decoder-consumer, or caller
+source, and no `main` edge, package or graph delta, replay, transport, I/O, or publication.
+Design/topology SHA-256 values are `3954a98474cdaf79a62c65a20cf612f3a1ddaf6b8305aa941e94d3863791e757` and
+`af914f70b10917e95b895fbf1fc24c6e52764893972d6616bdbb409ba712f4f5`. See [Prime Native Neural Gate Historical Worker
+Invocation Seam
+Design](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-INVOCATION-SEAM-DESIGN-2026-08-02.md).
+
+No decoder or worker runs; Prime remains `ABSTAIN`. The next exact
+prerequisite is:
+
+`source_bind_the_bounded_unavailable_historical_worker_invocation_seam_as_an_append_only_same_file_v21_composition_continuation_preserving_all_v21_private_members_and_delegating_exactly_once_from_one_new_internal_nonpublic_typed_bridge_without_adding_a_main_call_edge_replay_transport_integration_request_handling_sealing_launch_execution_artifact_io_publication_or_issuing_source_binding_v7`
