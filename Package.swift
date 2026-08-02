@@ -238,6 +238,23 @@ let package = Package(
                 "PrimeNativeNeuralGateSemanticRecordContracts",
             ]
         ),
+        .target(
+            name:
+                "PrimeNativeNeuralGateHistoricalStatisticsArtifactContracts",
+            dependencies: [
+                "PrimeNativeNeuralGateReplayArtifactContracts",
+            ]
+        ),
+        .target(
+            name:
+                "PrimeNativeNeuralGateHistoricalSemanticArtifactDecoder",
+            dependencies: [
+                "PrimeNativeNeuralGateHistoricalStatisticsArtifactContracts",
+                "PrimeNativeNeuralGateReplayArtifactContracts",
+                "PrimeNativeNeuralGateReplayMechanics",
+                "PrimeNativeNeuralGateSemanticRecordContracts",
+            ]
+        ),
         .executableTarget(
             name:
                 "PrimeNativeNeuralGateHistoricalFixtureWorker",
@@ -740,6 +757,19 @@ let package = Package(
                 "PrimeNativeNeuralGateHistoricalEvidenceExportMechanics",
                 "PrimeNativeNeuralGateHistoricalEvidenceSemanticArtifactProjection",
                 "PrimeNativeNeuralGateReplayArtifactContracts",
+            ]
+        ),
+        .testTarget(
+            name:
+                "PrimeNativeNeuralGateHistoricalSemanticArtifactDecoderTests",
+            dependencies: [
+                "PrimeNativeNeuralGateHistoricalEvidenceExportMechanics",
+                "PrimeNativeNeuralGateHistoricalEvidenceSemanticArtifactProjection",
+                "PrimeNativeNeuralGateHistoricalSemanticArtifactDecoder",
+                "PrimeNativeNeuralGateHistoricalStatisticsArtifactContracts",
+                "PrimeNativeNeuralGateReplayArtifactContracts",
+                "PrimeNativeNeuralGateReplayMechanics",
+                "PrimeNativeNeuralGateSemanticRecordContracts",
             ]
         ),
     ]

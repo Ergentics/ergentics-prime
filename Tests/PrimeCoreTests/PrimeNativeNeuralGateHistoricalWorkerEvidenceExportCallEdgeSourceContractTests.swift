@@ -534,8 +534,10 @@ final class
         throws
     {
         let contract = Contract.frozenV1
-        let projectionTestRelativePath =
-            "Tests/PrimeNativeNeuralGateHistoricalEvidenceSemanticArtifactProjectionTests/PrimeNativeNeuralGateHistoricalEvidenceSemanticArtifactProjectionTests.swift"
+        let permittedExporterImportRelativePaths: Set<String> = [
+            "Tests/PrimeNativeNeuralGateHistoricalEvidenceSemanticArtifactProjectionTests/PrimeNativeNeuralGateHistoricalEvidenceSemanticArtifactProjectionTests.swift",
+            "Tests/PrimeNativeNeuralGateHistoricalSemanticArtifactDecoderTests/PrimeNativeNeuralGateHistoricalSemanticArtifactDecoderTests.swift",
+        ]
         let testsDirectory = repositoryRoot
             .appendingPathComponent("Tests")
         let swiftTestPaths = try recursiveRegularFilePaths(
@@ -571,7 +573,10 @@ final class
                     || trimmed
                         == "@testable import \(contract.addedWorkerDependencyTargetName)"
                 {
-                    XCTAssertEqual(path, projectionTestRelativePath)
+                    XCTAssertTrue(
+                        permittedExporterImportRelativePaths.contains(path),
+                        path
+                    )
                     XCTAssertEqual(
                         trimmed,
                         "@testable import \(contract.addedWorkerDependencyTargetName)",
@@ -595,7 +600,10 @@ final class
                 path
             )
         }
-        XCTAssertEqual(projectionExporterImportCount, 1)
+        XCTAssertEqual(
+            projectionExporterImportCount,
+            permittedExporterImportRelativePaths.count
+        )
     }
 
     func testDecodedMutationsFailClosed()

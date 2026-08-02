@@ -389,6 +389,41 @@ See [Prime Native Neural Gate Historical Source Material](PRIME-NATIVE-NEURAL-GA
 See [Prime Native Neural Gate Historical Replay Mechanics](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-REPLAY-MECHANICS-2026-08-01.md).
 See [Prime Native Neural Gate Historical Fixture and Worker Boundary](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-FIXTURE-WORKER-BOUNDARY-2026-08-01.md).
 
+## Additive V18 historical-decoder continuation
+
+V18 adds a pure caller-byte consumer after the unchanged V16 projection and
+V17 private worker/projector edge. Its public statistics envelope is
+`Encodable`; only a private `Decodable` wire may enter the bounded, validated,
+canonical statistics decoder. The semantic decoder accepts six exact keyed
+canonical-JSON leaves and exact-keyed invariant-stream fragments no larger than
+65,536 bytes. It intentionally has no API that materializes all binary
+artifacts together and no callback that could expose a record before terminal
+admission.
+
+The sixteen binary identities are derived only when all 59,497 global records
+equal the records in fifteen ordered chunks and framing, canonical order,
+declared and observed counts, byte counts, SHA-256 values, ordinals, complete
+coverage, and pending queues all validate. Terminal construction then joins
+the sixteen stream bindings and six leaf bindings into the namespace's exact
+ordered 22-key set.
+
+This does not modify or integrate `PrimeNativeNeuralGateReplayTransport`.
+Keyed caller fragments are not a descriptor, transport delivery, durable
+artifact, or worker-execution observation. No descriptor is acquired, no
+request is handled, no worker is sealed, launched, or executed, no I/O occurs,
+and no evidence, mechanics `PASS`, receipt, source/execution binding V7,
+scientific authority, or product authority is created. See [Prime Native
+Neural Gate Historical Semantic-Artifact Decoder
+Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-SEMANTIC-ARTIFACT-DECODER-SOURCE-2026-08-02.md).
+
+The exact next prerequisite is:
+
+`source_bind_the_unavailable_historical_worker_already_formed_v16_projected_artifact_set_to_the_complete_v18_historical_semantic_artifact_decoder_call_edge_without_enabling_replay_transport_integration_request_handling_sealing_launch_execution_io_publication_or_issuing_source_binding_v7`
+
+That future edge must pass the already-formed set without reconstructing
+identity, defaulting observation state, making transport reachable, performing
+I/O or execution, publishing, or widening authority.
+
 ## Workflow boundary
 
 Publication remains explicit: local Git for intentional commit/push and the

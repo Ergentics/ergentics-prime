@@ -550,6 +550,43 @@ See [Prime Native Neural Gate Historical Source Material](PRIME-NATIVE-NEURAL-GA
 See [Prime Native Neural Gate Historical Replay Mechanics](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-REPLAY-MECHANICS-2026-08-01.md).
 See [Prime Native Neural Gate Historical Fixture and Worker Boundary](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-FIXTURE-WORKER-BOUNDARY-2026-08-01.md).
 
+## V18 pure historical semantic-artifact decoder continuation
+
+V18 appends exactly two implemented internal targets to the V17 graph and
+changes no V17 target. The statistics wire target reaches only replay artifact
+contracts. The decoder reaches only that statistics target, replay artifact
+contracts, replay mechanics, and semantic record contracts. Both have empty
+external-product and resource inventories. The exact V17 worker retains its
+six dependencies and cannot reach either new target.
+
+The V18 forbidden-reachability delta is symmetric and fail-closed: every V17
+target is forbidden from reaching both new targets, while the statistics and
+decoder targets are forbidden from reaching every target outside their exact
+pure closures. The decoder therefore cannot reach the V16 projector, V13
+exporter, historical runtime or worker, `PrimeCore`, `ReplayTransport`, any
+corrected target, process ownership, or receipt ownership.
+
+The consumer mechanics admit the six canonical JSON leaves and complete
+22-key artifact set for each historical role, then pair exact-keyed fragments
+of the 59,497-record global invariant stream against fifteen exact ordinal
+chunks. Foundation `Codable` and canonical re-encoding own JSON admission,
+while the statistics envelope is not publicly `Decodable`; the maintained
+framed record reader owns stream parsing. Stream fragments are capped at
+65,536 bytes, no all-binary materialization convenience or unverified record
+callback exists, and the sixteen stream bindings plus complete 22-binding set
+are derived only after terminal acceptance. No custom JSON/frame parser,
+descriptor, filesystem or network API, worker edge, transport edge,
+execution, or publication API is admitted.
+
+Topology remains `planned_not_materialized`; this describes the wider
+execution topology, not absence of the two source targets. Worker execution,
+artifact I/O, durable evidence, mechanics `PASS`, receipt, source/execution
+binding V7, scientific authority, and product authority remain false. The
+next exact prerequisite is
+`source_bind_the_unavailable_historical_worker_already_formed_v16_projected_artifact_set_to_the_complete_v18_historical_semantic_artifact_decoder_call_edge_without_enabling_replay_transport_integration_request_handling_sealing_launch_execution_io_publication_or_issuing_source_binding_v7`.
+See [Prime Native Neural Gate Historical Semantic-Artifact Decoder
+Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-SEMANTIC-ARTIFACT-DECODER-SOURCE-2026-08-02.md).
+
 The separate read-only Swift Git workflow preflight remains a later workflow
 slice. It does not belong in the Stage-B evidence graph, and the signed-in
 GitHub app remains the PR/check/merge publication boundary.

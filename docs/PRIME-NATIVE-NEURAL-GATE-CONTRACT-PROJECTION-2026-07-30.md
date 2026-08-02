@@ -675,6 +675,43 @@ See [Prime Native Neural Gate Historical Source Material](PRIME-NATIVE-NEURAL-GA
 See [Prime Native Neural Gate Historical Replay Mechanics](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-REPLAY-MECHANICS-2026-08-01.md).
 See [Prime Native Neural Gate Historical Fixture and Worker Boundary](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-FIXTURE-WORKER-BOUNDARY-2026-08-01.md).
 
+## Additive V18 historical-decoder continuation
+
+V18 is an additive consumer boundary after V16 projection and the V17 private
+worker/projector call edge. It changes neither checkpoint. The new statistics
+contract exposes a public `Encodable` envelope but keeps its `Decodable` wire
+private behind bounded canonical admission. The companion semantic decoder
+admits exactly six keyed canonical-JSON leaves for one historical role; exact
+role, reference, manifest, fingerprint, mutation, statistics, critical-leg,
+and observation-state joins are required.
+
+Invariant bytes are not accepted as a materialized all-stream array. The
+caller must supply exact-keyed fragments no larger than 65,536 bytes for the
+global stream or current ordered chunk. There is no unverified record callback
+or other pre-terminal evidence surface. The decoder derives the sixteen
+stream bindings only after exact equality of the 59,497 global records and
+fifteen chunk partitions, including canonical framing/order, count, byte-count,
+SHA-256, ordinal, coverage, and empty-queue checks. It then combines those
+bindings with the six leaf bindings to form the exact ordered 22-artifact set.
+
+These values remain identities of caller-supplied bytes, not descriptor or
+historical-execution observations. V18 changes no donor contract, gate
+semantics, projection mapping, or adapter-equivalence claim. It performs no
+`ReplayTransport` integration, worker request handling, sealing, launch,
+filesystem/process I/O, gate/model execution, artifact write, publication,
+mechanics `PASS`, receipt, source/execution binding V7, scientific
+authorization, or product authorization. See [Prime Native Neural Gate
+Historical Semantic-Artifact Decoder
+Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-SEMANTIC-ARTIFACT-DECODER-SOURCE-2026-08-02.md).
+
+The exact next prerequisite is:
+
+`source_bind_the_unavailable_historical_worker_already_formed_v16_projected_artifact_set_to_the_complete_v18_historical_semantic_artifact_decoder_call_edge_without_enabling_replay_transport_integration_request_handling_sealing_launch_execution_io_publication_or_issuing_source_binding_v7`
+
+That future edge must delegate the already-formed V16 artifact set without
+reconstruction, defaulting, transport reachability, I/O, execution,
+publication, or authority expansion.
+
 The repository-test checkpoint passed pure sidecar mechanics 6/6. The
 source-pinned MLX validation package remains outside the MLX-free
 `PrimeCoreTests` bundle and passed 9/9 in 193.005 seconds against the exact

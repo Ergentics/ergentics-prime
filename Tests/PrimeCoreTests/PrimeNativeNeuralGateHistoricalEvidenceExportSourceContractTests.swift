@@ -1197,12 +1197,13 @@ final class
             [
                 #".testTarget(name:"PrimeNativeNeuralGateHistoricalReplayMechanicsTests",dependencies:["PrimeCore","PrimeNativeNeuralGateHistoricalSourceDerivation","PrimeNativeNeuralGateHistoricalReplayMechanics","PrimeNativeNeuralGateHistoricalEvidenceExportMechanics",])"#,
                 #".testTarget(name:"PrimeNativeNeuralGateHistoricalEvidenceSemanticArtifactProjectionTests",dependencies:["PrimeNativeNeuralGateHistoricalEvidenceExportMechanics","PrimeNativeNeuralGateHistoricalEvidenceSemanticArtifactProjection","PrimeNativeNeuralGateReplayArtifactContracts",])"#,
+                #".testTarget(name:"PrimeNativeNeuralGateHistoricalSemanticArtifactDecoderTests",dependencies:["PrimeNativeNeuralGateHistoricalEvidenceExportMechanics","PrimeNativeNeuralGateHistoricalEvidenceSemanticArtifactProjection","PrimeNativeNeuralGateHistoricalSemanticArtifactDecoder","PrimeNativeNeuralGateHistoricalStatisticsArtifactContracts","PrimeNativeNeuralGateReplayArtifactContracts","PrimeNativeNeuralGateReplayMechanics","PrimeNativeNeuralGateSemanticRecordContracts",])"#,
             ]
         )
         XCTAssertEqual(
             occurrences(of: targetName, in: package),
-            5,
-            "only the declaration, bounded projection, unavailable worker, and two exact test edges are allowed"
+            6,
+            "only the declaration, bounded projection, unavailable worker, and three exact test edges are allowed"
         )
         XCTAssertTrue(projectionTarget.contains(targetName))
         XCTAssertTrue(workerTarget.contains(targetName))

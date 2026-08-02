@@ -655,6 +655,39 @@ and all execution or publication authority remain absent. See [Prime Native
 Neural Gate Historical Worker Semantic-Artifact Projection Call-Edge
 Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-SEMANTIC-ARTIFACT-PROJECTION-CALL-EDGE-SOURCE-2026-08-01.md).
 
+## Additive V18 historical semantic-artifact decoder boundary
+
+Topology V18 preserves the exact V16 projector and V17 worker graph while
+adding two isolated pure-consumer targets. The statistics target depends only
+on replay artifact contracts. The decoder depends only on that statistics
+target, replay artifact contracts, pure replay mechanics, and semantic record
+contracts. Neither target is a product or executable, owns a resource, or can
+reach the projector, exporter, historical runtime, worker, `PrimeCore`,
+`ReplayTransport`, corrected targets, process ownership, or receipt ownership.
+Every pre-V18 target is forbidden from reaching either new target, so the
+status-`78` worker remains byte-for-byte V17 and has no decoder edge.
+
+For each `probe` or `verifier` role, the decoder admits six canonical JSON
+leaves by exact typed key from the 22-artifact namespace and incrementally
+compares the global invariant stream with fifteen ordered chunk streams.
+Foundation `Codable` owns JSON parsing, canonical re-encoding rejects ignored
+or normalized structure, and the statistics envelope is not publicly
+`Decodable`. The maintained
+`PrimeNativeNeuralGateInvariantFramedRecordReader` owns frame parsing. Exact
+geometry is 59,497 records: fourteen chunks of 4,096 plus a final chunk of
+2,153. Exact-keyed fragments are capped at 65,536 bytes; no API accepts all
+binary artifacts as materialized `Data` and no unverified record callback is
+exposed. The sixteen stream bindings and complete 22-binding set exist only
+after byte-exact global/chunk pairing and terminal acceptance; any parse, key,
+join, framing, or finish defect poisons the decoder.
+
+This is caller-byte compatibility mechanics, not descriptor, I/O, worker,
+gate/model, mutation, MLX/Metal, publication, receipt, scientific, or product
+evidence. The next exact prerequisite is
+`source_bind_the_unavailable_historical_worker_already_formed_v16_projected_artifact_set_to_the_complete_v18_historical_semantic_artifact_decoder_call_edge_without_enabling_replay_transport_integration_request_handling_sealing_launch_execution_io_publication_or_issuing_source_binding_v7`.
+See [Prime Native Neural Gate Historical Semantic-Artifact Decoder
+Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-SEMANTIC-ARTIFACT-DECODER-SOURCE-2026-08-02.md).
+
 ## Optimizer checkpoint admission
 
 Optimizer checkpoint admission is separate from the Metal allocation result.

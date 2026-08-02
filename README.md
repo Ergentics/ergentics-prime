@@ -924,6 +924,31 @@ V17's next exact prerequisite is the complete V16 historical semantic-artifact
 decoder boundary for the six canonical JSON leaves and descriptor-streamed
 global/chunk artifacts per role. Transport integration, I/O, request handling,
 and execution remain separate later boundaries.
+
+### V18 historical semantic-artifact decoder continuation
+
+V18 now satisfies that decoder prerequisite without rewriting V16 or V17. It
+adds only a typed keyed-three-seed statistics wire target and a pure
+consumer-side decoder target. For each historical role, Foundation `Codable`
+admits the exact six canonical JSON leaves from the complete 22-key namespace;
+the statistics envelope is not publicly `Decodable`. The maintained framed
+reader admits exact-keyed fragments no larger than 65,536 bytes for the global
+stream plus fifteen chunks, with no all-binary materialization convenience or
+pre-verification record callback. The decoder requires exact global/chunk
+equality across all 59,497 records and derives the sixteen stream bindings and
+ordered 22-binding set only after terminal acceptance. It poisons on the first
+failure and implements neither a custom JSON parser nor a second frame parser.
+
+Both targets are product-free, resource-free, and unreachable from the exact
+V17 status-`78` worker. Their closures exclude the V16 projector, historical
+exporter/runtime, `PrimeCore`, `ReplayTransport`, corrected targets, process
+ownership, and receipt ownership. Caller-supplied bytes establish no
+descriptor, filesystem, execution, publication, receipt, scientific, or
+product fact. V18's exact next prerequisite is
+`source_bind_the_unavailable_historical_worker_already_formed_v16_projected_artifact_set_to_the_complete_v18_historical_semantic_artifact_decoder_call_edge_without_enabling_replay_transport_integration_request_handling_sealing_launch_execution_io_publication_or_issuing_source_binding_v7`.
+See [Prime Native Neural Gate Historical Semantic-Artifact Decoder
+Source](docs/PRIME-NATIVE-NEURAL-GATE-HISTORICAL-SEMANTIC-ARTIFACT-DECODER-SOURCE-2026-08-02.md).
+
 See [Prime Native Neural Gate Historical Source Material](docs/PRIME-NATIVE-NEURAL-GATE-HISTORICAL-SOURCE-MATERIAL-2026-08-01.md).
 See [Prime Native Neural Gate Historical Replay Mechanics](docs/PRIME-NATIVE-NEURAL-GATE-HISTORICAL-REPLAY-MECHANICS-2026-08-01.md).
 See [Prime Native Neural Gate Historical Fixture and Worker Boundary](docs/PRIME-NATIVE-NEURAL-GATE-HISTORICAL-FIXTURE-WORKER-BOUNDARY-2026-08-01.md).

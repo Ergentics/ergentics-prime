@@ -389,3 +389,40 @@ Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-SEMANTIC-ARTIFACT-PROJECTION-
 See [Prime Native Neural Gate Historical Source Material](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-SOURCE-MATERIAL-2026-08-01.md).
 See [Prime Native Neural Gate Historical Replay Mechanics](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-REPLAY-MECHANICS-2026-08-01.md).
 See [Prime Native Neural Gate Historical Fixture and Worker Boundary](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-FIXTURE-WORKER-BOUNDARY-2026-08-01.md).
+
+## Additive V18 historical-decoder continuation
+
+V18 preserves the descriptor-source contracts above and adds no descriptor-
+rooted observation. It is a pure caller-byte consumer after the unchanged V16
+projector and V17 private worker/projector edge. Its statistics envelope is
+publicly `Encodable`, while a private `Decodable` wire is admitted only through
+bounded, validated canonical decoding. The semantic decoder admits the six
+exact keyed canonical-JSON leaves and keeps every unavailable observation
+distinct from an observed false value.
+
+Binary input is supplied only as exact-keyed fragments of at most 65,536 bytes
+for the role's global stream or current ordered chunk. There is no all-stream
+`Data` convenience and no unverified record callback. Only terminal success
+derives the sixteen binary bindings, after byte-for-byte equality of all
+59,497 global/chunk records across fifteen chunks and complete framing, order,
+count, byte-count, SHA-256, ordinal, coverage, and queue checks. Those sixteen
+bindings are then joined with the six leaf bindings to form the exact ordered
+22-key namespace.
+
+The resulting bindings identify validated caller bytes only; they do not prove
+descriptor origin, descriptor-content observation, process delivery, durable
+publication, or historical execution. V18 does not integrate
+`ReplayTransport`, handle a worker request, seal or launch a process, perform
+I/O, execute the gate/model, publish evidence, authorize mechanics `PASS`,
+seal a receipt, issue source/execution binding V7, or confer scientific or
+product authority. See [Prime Native Neural Gate Historical Semantic-Artifact
+Decoder Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-SEMANTIC-ARTIFACT-DECODER-SOURCE-2026-08-02.md).
+
+The exact next prerequisite is:
+
+`source_bind_the_unavailable_historical_worker_already_formed_v16_projected_artifact_set_to_the_complete_v18_historical_semantic_artifact_decoder_call_edge_without_enabling_replay_transport_integration_request_handling_sealing_launch_execution_io_publication_or_issuing_source_binding_v7`
+
+That later edge may delegate only the already-formed V16 artifact set. It may
+not reinterpret caller bindings as descriptor evidence, reconstruct identity,
+default observations, enable transport, perform I/O or execution, publish, or
+widen authority.
