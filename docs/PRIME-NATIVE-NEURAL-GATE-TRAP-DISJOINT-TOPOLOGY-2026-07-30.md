@@ -538,6 +538,12 @@ remains unavailable, ReplayTransport is not in the projector closure, no
 artifact is written or published, and source/execution binding V7 is unissued.
 See [Prime Native Neural Gate Historical Evidence Semantic-Artifact Projection
 Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-SEMANTIC-ARTIFACT-PROJECTION-SOURCE-2026-08-01.md).
+V17 changes only worker reachability: the worker may reach the projector and
+historical-safe semantic records through one private compiler-bound edge. The
+reverse projector closure, corrected-target prohibitions, unavailable status,
+and non-execution/V7 ceiling remain intact. See [Prime Native Neural Gate
+Historical Worker Semantic-Artifact Projection Call-Edge
+Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-SEMANTIC-ARTIFACT-PROJECTION-CALL-EDGE-SOURCE-2026-08-01.md).
 The topology remains `planned_not_materialized`, `executionImplemented`
 remains false, and source/execution-binding V7 remains unissued.
 See [Prime Native Neural Gate Historical Source Material](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-SOURCE-MATERIAL-2026-08-01.md).

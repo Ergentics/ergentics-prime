@@ -256,6 +256,11 @@ V16 satisfies it additively, but creates no descriptor/stream source binding,
 ReplayTransport integration, worker execution, artifact publication, or
 source/execution binding V7. See [Prime Native Neural Gate Historical Evidence
 Semantic-Artifact Projection Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-SEMANTIC-ARTIFACT-PROJECTION-SOURCE-2026-08-01.md).
+V17 adds only the private compiler-bound worker/projector edge and sixth
+dependency. It creates no descriptor/stream source binding,
+decoder/ReplayTransport integration, execution, publication, or V7. See [Prime
+Native Neural Gate Historical Worker Semantic-Artifact Projection Call-Edge
+Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-SEMANTIC-ARTIFACT-PROJECTION-CALL-EDGE-SOURCE-2026-08-01.md).
 See [Prime Native Neural Gate Historical Source Material](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-SOURCE-MATERIAL-2026-08-01.md).
 See [Prime Native Neural Gate Historical Replay Mechanics](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-REPLAY-MECHANICS-2026-08-01.md).
 See [Prime Native Neural Gate Historical Fixture and Worker Boundary](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-FIXTURE-WORKER-BOUNDARY-2026-08-01.md).

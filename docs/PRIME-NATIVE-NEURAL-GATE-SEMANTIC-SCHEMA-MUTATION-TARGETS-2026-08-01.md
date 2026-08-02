@@ -32,6 +32,17 @@ integration, receipt, or source/execution binding V7. See [Prime Native Neural
 Gate Historical Evidence Semantic-Artifact Projection
 Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-SEMANTIC-ARTIFACT-PROJECTION-SOURCE-2026-08-01.md).
 
+## V17 continuation
+
+V17 does not change topology V8, either mutation-ownership contract, the
+historical semantic-record implementation, or the corrected-mutation target
+split. It appends only a private worker-to-V16-projector call edge. The worker
+can consequently reach the historical-safe semantic-record target through the
+projector, but every corrected-mutation target remains outside that closure.
+The component-local release-source-reference prerequisite remains deferred.
+See [Prime Native Neural Gate Historical Worker Semantic-Artifact Projection
+Call-Edge Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-SEMANTIC-ARTIFACT-PROJECTION-CALL-EDGE-SOURCE-2026-08-01.md).
+
 ## Decision
 
 Topology V8 completes the declaration and local-mechanics prerequisite left by
@@ -295,10 +306,11 @@ the V8 authority ceiling. The V11 next exact prerequisite was:
 
 `derive_and_source_bind_historical_worker_evidence_export_adapter_without_mutating_the_byte_exact_gate_executing_the_worker_or_issuing_source_binding_v7`
 
-V12 through V16 do not change the V8 authority ceiling. The topology-wide
-current next exact prerequisite is recorded in [Prime Native Neural Gate
-Historical Evidence Semantic-Artifact Projection
-Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-SEMANTIC-ARTIFACT-PROJECTION-SOURCE-2026-08-01.md).
+V12 through V16 did not change the V8 authority ceiling. V17 also leaves it
+unchanged while adding only the private compiler-bound worker/projector edge.
+The topology-wide current next exact prerequisite is recorded in [Prime Native
+Neural Gate Historical Worker Semantic-Artifact Projection Call-Edge
+Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-SEMANTIC-ARTIFACT-PROJECTION-CALL-EDGE-SOURCE-2026-08-01.md).
 
 See [Prime Native Neural Gate Historical Source Material](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-SOURCE-MATERIAL-2026-08-01.md).
 See [Prime Native Neural Gate Historical Replay Mechanics](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-REPLAY-MECHANICS-2026-08-01.md).

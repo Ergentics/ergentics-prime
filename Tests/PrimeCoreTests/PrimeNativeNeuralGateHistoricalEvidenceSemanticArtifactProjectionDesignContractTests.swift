@@ -351,7 +351,7 @@ final class
         )
     }
 
-    func testPackageWorkerRemainsExactAndV16ProjectionIsIsolated()
+    func testPackagePreservesV15WorkerSourcesAndAddsOnlyTheV17CallEdge()
         throws
     {
         let contract = Contract.frozenV1
@@ -361,6 +361,8 @@ final class
             "Sources/PrimeNativeNeuralGateHistoricalFixtureWorker/PrimeNativeNeuralGateHistoricalFixtureWorker.swift"
         let callEdgePath =
             "Sources/PrimeNativeNeuralGateHistoricalFixtureWorker/PrimeNativeNeuralGateHistoricalEvidenceExportCallEdge.swift"
+        let projectionCallEdgePath =
+            "Sources/PrimeNativeNeuralGateHistoricalFixtureWorker/PrimeNativeNeuralGateHistoricalWorkerSemanticArtifactProjectionCallEdge.swift"
         let primary = try checkedInData(primaryPath)
         let callEdge = try checkedInData(callEdgePath)
 
@@ -400,6 +402,7 @@ final class
                 "Sources/PrimeNativeNeuralGateHistoricalFixtureWorker/HistoricalFixtureEvidence/Package.resolved",
                 callEdgePath,
                 primaryPath,
+                projectionCallEdgePath,
             ]
         )
     }

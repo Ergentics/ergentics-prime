@@ -1639,11 +1639,17 @@ recorded in [Prime Native Neural Gate Historical Worker/Export Call-Edge
 Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-EXPORT-CALL-EDGE-SOURCE-2026-08-01.md).
 V15 source-binds only the projection design; its prerequisite was
 recorded in [Prime Native Neural Gate Historical Evidence Semantic-Artifact Projection Design](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-SEMANTIC-ARTIFACT-PROJECTION-DESIGN-2026-08-01.md).
-V16 satisfies it with an additive complete namespace, lossless keyed
+At the V16 checkpoint, V16 satisfied it with an additive complete namespace, lossless keyed
 three-seed envelope, isolated semantic target, and non-writing in-memory
-projector. The unchanged status-`78` worker cannot reach it and ReplayTransport
-is not integrated. See [Prime Native Neural Gate Historical Evidence
+projector. The unchanged status-`78` worker could not reach it and ReplayTransport
+was not integrated. See [Prime Native Neural Gate Historical Evidence
 Semantic-Artifact Projection Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-SEMANTIC-ARTIFACT-PROJECTION-SOURCE-2026-08-01.md).
+V17 appends only a private, compiler-bound already-formed-carrier plus
+explicit-context projector edge and the projector as the worker's sixth
+dependency. The exact status-`78` main remains unable to name the member;
+ReplayTransport/decoder integration and execution remain absent. See [Prime
+Native Neural Gate Historical Worker Semantic-Artifact Projection Call-Edge
+Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-SEMANTIC-ARTIFACT-PROJECTION-CALL-EDGE-SOURCE-2026-08-01.md).
 See [Prime Native Neural Gate Historical Source Material](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-SOURCE-MATERIAL-2026-08-01.md).
 See [Prime Native Neural Gate Historical Replay Mechanics](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-REPLAY-MECHANICS-2026-08-01.md).
 See [Prime Native Neural Gate Historical Fixture and Worker Boundary](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-FIXTURE-WORKER-BOUNDARY-2026-08-01.md).

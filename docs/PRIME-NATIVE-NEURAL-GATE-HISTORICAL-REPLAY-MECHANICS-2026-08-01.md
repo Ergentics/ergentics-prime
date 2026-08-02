@@ -148,12 +148,19 @@ Worker/Export Call-Edge Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-EXPOR
 V15 source-binds only the projection design; its prerequisite was
 recorded in [Prime Native Neural Gate Historical Evidence Semantic-Artifact Projection Design](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-SEMANTIC-ARTIFACT-PROJECTION-DESIGN-2026-08-01.md).
 V16 satisfies it with an isolated non-writing in-memory projector. The
-historical replay/exporter/worker path is not invoked, the status-`78` worker
-cannot reach the projector, and ReplayTransport is not integrated. See [Prime
+historical replay/exporter/worker path was not invoked, the status-`78` worker
+could not reach the projector, and ReplayTransport was not integrated. See [Prime
 Native Neural Gate Historical Evidence Semantic-Artifact Projection
 Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-SEMANTIC-ARTIFACT-PROJECTION-SOURCE-2026-08-01.md).
+V17 now adds only a private typed carrier/context call edge and the projector
+as a sixth worker dependency. The exact main remains unavailable and cannot
+name that member; no historical path is invoked and ReplayTransport remains
+unintegrated. See [Prime Native Neural Gate Historical Worker
+Semantic-Artifact Projection Call-Edge
+Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-SEMANTIC-ARTIFACT-PROJECTION-CALL-EDGE-SOURCE-2026-08-01.md).
 
-The later materialization must source-derive the missing raw-record export
-without modifying the byte-exact gate or reinterpreting the donor's
-same-family mutation dispatch as independent detection. See
+The next materialization must source-bind the complete V16 historical
+semantic-artifact decoder without modifying the byte-exact gate, losing keyed
+artifact identity, or reinterpreting the donor's same-family mutation dispatch
+as independent detection. The exact source-only exporter already exists. See
 [Prime Native Neural Gate Historical Fixture and Worker Boundary](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-FIXTURE-WORKER-BOUNDARY-2026-08-01.md).

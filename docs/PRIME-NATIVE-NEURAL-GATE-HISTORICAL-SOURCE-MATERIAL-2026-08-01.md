@@ -224,5 +224,10 @@ material, changing the unavailable worker, integrating ReplayTransport,
 writing/publishing artifacts, or issuing source/execution binding V7. See
 [Prime Native Neural Gate Historical Evidence Semantic-Artifact Projection
 Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-SEMANTIC-ARTIFACT-PROJECTION-SOURCE-2026-08-01.md).
+V17 derives no new historical material. It adds only a private typed
+already-formed-carrier plus explicit-context call edge and the projector as a
+sixth worker dependency; no path is invoked. See [Prime Native Neural Gate
+Historical Worker Semantic-Artifact Projection Call-Edge
+Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-SEMANTIC-ARTIFACT-PROJECTION-CALL-EDGE-SOURCE-2026-08-01.md).
 
 See [Prime Native Neural Gate Historical Fixture and Worker Boundary](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-FIXTURE-WORKER-BOUNDARY-2026-08-01.md).

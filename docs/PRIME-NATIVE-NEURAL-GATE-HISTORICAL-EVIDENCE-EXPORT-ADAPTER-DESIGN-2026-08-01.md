@@ -2,12 +2,16 @@
 
 Date: 2026-08-01
 
-Current continuation: V13 satisfied this document's exporter-materialization
-prerequisite, and V14 has now source- and compile-bound the private cross-file
+Historical continuation: V13 satisfied this document's exporter-materialization
+prerequisite, and V14 source- and compile-bound the private cross-file
 worker/exporter call edge without enabling or executing the worker. Treat the
 V12 absence statements below as frozen historical checkpoint facts, not the
-current package state. Continue from [Prime Native Neural Gate Historical
-Worker/Export Call-Edge Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-EXPORT-CALL-EDGE-SOURCE-2026-08-01.md).
+current package state.
+
+Current continuation: V17 preserves V12 through V16 and adds only the private
+already-formed-carrier plus explicit-context worker/projector call edge.
+Continue from [Prime Native Neural Gate Historical Worker Semantic-Artifact
+Projection Call-Edge Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-SEMANTIC-ARTIFACT-PROJECTION-CALL-EDGE-SOURCE-2026-08-01.md).
 
 ## Decision
 
@@ -348,3 +352,6 @@ source/execution-binding V7 remain later boundaries.
 V13 satisfies this bounded prerequisite. Its current continuation and exact
 source identities are recorded in [Prime Native Neural Gate Historical
 Evidence Export Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-EXPORT-SOURCE-2026-08-01.md).
+V17's current worker/projector continuation is recorded in [Prime Native
+Neural Gate Historical Worker Semantic-Artifact Projection Call-Edge
+Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-SEMANTIC-ARTIFACT-PROJECTION-CALL-EDGE-SOURCE-2026-08-01.md).

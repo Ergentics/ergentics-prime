@@ -67,6 +67,10 @@ envelope, corrected mutation-record split and historical `NL*` leg-domain
 validation, isolated in-memory projector, and unchanged
 worker/publication/authority ceiling are recorded in
 [`docs/PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-SEMANTIC-ARTIFACT-PROJECTION-SOURCE-2026-08-01.md`](docs/PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-SEMANTIC-ARTIFACT-PROJECTION-SOURCE-2026-08-01.md).
+The V17 third worker source, sixth dependency, private already-formed-carrier
+plus explicit-context projector edge, exact reachability delta, and unchanged
+runtime/publication/authority ceiling are recorded in
+[`docs/PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-SEMANTIC-ARTIFACT-PROJECTION-CALL-EDGE-SOURCE-2026-08-01.md`](docs/PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-SEMANTIC-ARTIFACT-PROJECTION-CALL-EDGE-SOURCE-2026-08-01.md).
 The additive topology-V7 exact-count stream decoder, typed worker/artifact
 reference declarations, retained-capture binding, and unchanged authority
 ceiling are recorded in
@@ -905,13 +909,21 @@ V16 satisfies that prerequisite additively: V4 and V15 remain exact, the
 complete 44-spec namespace and keyed three-seed envelope are frozen, corrected
 mutation records are split from the historical-safe semantic target, and a
 package-internal projector constructs only non-writing in-memory artifacts.
-The projector has no ReplayTransport edge and is not reachable from the
-unchanged status-`78` worker. This is package/source/test evidence, not
-historical execution or publication.
-V16's topology-wide next exact prerequisite is the private, still-unreachable
-worker-carrier-to-projector call edge recorded in the V16 source document;
-decoder/transport integration, I/O, request handling, and execution remain
-separate later boundaries.
+At the V16 checkpoint, the projector had no ReplayTransport edge and was not
+reachable from the unchanged status-`78` worker. That was package/source/test
+evidence, not historical execution or publication. V16's topology-wide next
+exact prerequisite was the private, then-unreachable
+worker-carrier-to-projector call edge recorded in the V16 source document.
+V17 satisfies that prerequisite by appending one third worker Swift source and
+the projector as a sixth dependency after the exact V14 five-dependency
+prefix. The private member accepts only an already-formed V13 carrier and
+explicit V16 context. The exact main and V14 edge cannot name it, so this is
+still compiler evidence rather than invocation. ReplayTransport remains an
+independent worker dependency with no decoder/projector integration.
+V17's next exact prerequisite is the complete V16 historical semantic-artifact
+decoder boundary for the six canonical JSON leaves and descriptor-streamed
+global/chunk artifacts per role. Transport integration, I/O, request handling,
+and execution remain separate later boundaries.
 See [Prime Native Neural Gate Historical Source Material](docs/PRIME-NATIVE-NEURAL-GATE-HISTORICAL-SOURCE-MATERIAL-2026-08-01.md).
 See [Prime Native Neural Gate Historical Replay Mechanics](docs/PRIME-NATIVE-NEURAL-GATE-HISTORICAL-REPLAY-MECHANICS-2026-08-01.md).
 See [Prime Native Neural Gate Historical Fixture and Worker Boundary](docs/PRIME-NATIVE-NEURAL-GATE-HISTORICAL-FIXTURE-WORKER-BOUNDARY-2026-08-01.md).
@@ -920,8 +932,9 @@ See [Prime Native Neural Gate Historical Evidence Export Source](docs/PRIME-NATI
 See [Prime Native Neural Gate Historical Worker/Export Call-Edge Source](docs/PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-EXPORT-CALL-EDGE-SOURCE-2026-08-01.md).
 See [Prime Native Neural Gate Historical Evidence Semantic-Artifact Projection Design](docs/PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-SEMANTIC-ARTIFACT-PROJECTION-DESIGN-2026-08-01.md).
 See [Prime Native Neural Gate Historical Evidence Semantic-Artifact Projection Source](docs/PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-SEMANTIC-ARTIFACT-PROJECTION-SOURCE-2026-08-01.md).
+See [Prime Native Neural Gate Historical Worker Semantic-Artifact Projection Call-Edge Source](docs/PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-SEMANTIC-ARTIFACT-PROJECTION-CALL-EDGE-SOURCE-2026-08-01.md).
 
-V9 through V16 keep the exact donor files in the first-party companion
+V9 through V17 keep the exact donor files in the first-party companion
 repository. Their cross-repository source proof is therefore an explicit
 manual pre-merge gate.
 The requirement marker makes a missing donor root or mistyped policy fail
@@ -931,7 +944,7 @@ rather than skip:
 env PRIME_REQUIRE_V9_PINNED_DONOR_GATE=1 PRIME_REQUIRE_V10_HISTORICAL_REPLAY_SOURCE_GATE=1 PRIME_REQUIRE_V11_HISTORICAL_FIXTURE_SOURCE_GATE=1 PRIME_REQUIRE_V12_HISTORICAL_EVIDENCE_EXPORT_SOURCE_GATE=1 PRIME_PMHNP_COMPANION_ROOT=/path/to/pinned/pmhnp-companion-ergentics swift test
 ```
 
-This command is mandatory process evidence for V9 through V16; V16 adds no new
+This command is mandatory process evidence for V9 through V17; V17 adds no new
 donor source or environment marker. Prime has no repository CI or branch-rule
 status check yet, so this record does not claim GitHub enforces the invocation
 automatically.

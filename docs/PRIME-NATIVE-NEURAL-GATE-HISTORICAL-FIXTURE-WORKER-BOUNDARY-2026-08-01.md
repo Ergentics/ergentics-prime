@@ -172,12 +172,18 @@ does not alter that disposition.
 
 `derive_and_source_bind_historical_worker_evidence_export_adapter_without_mutating_the_byte_exact_gate_executing_the_worker_or_issuing_source_binding_v7`
 
-V12 through V16 preserve this document's exact primary source and status-`78`
-entry point. The topology-wide current next exact prerequisite is recorded in
-[Prime Native Neural Gate Historical Evidence Semantic-Artifact Projection
-Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-SEMANTIC-ARTIFACT-PROJECTION-SOURCE-2026-08-01.md).
+V12 through V16 preserved this document's exact primary source and status-`78`
+entry point. V17 preserves those exact bytes too, while adding one third worker
+Swift source and the V16 projector as a sixth dependency. The new private
+member remains unreachable from `main`; the worker still exits with status
+`78`. The topology-wide current next exact prerequisite is recorded in [Prime
+Native Neural Gate Historical Worker Semantic-Artifact Projection Call-Edge
+Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-SEMANTIC-ARTIFACT-PROJECTION-CALL-EDGE-SOURCE-2026-08-01.md).
 
-That adapter must be derived and source-bound without editing the byte-exact
-gate or hand-porting missing records. Worker request handling, process
-supervision, image sealing, execution, durable publication, probe/verifier,
-and source/execution-binding V7 remain later boundaries.
+That adapter had to be derived and source-bound without editing the byte-exact
+gate or hand-porting missing records; V13/V14 satisfied that historical
+requirement, and V16/V17 supplied the isolated projector and private typed call
+edge. The complete V16 historical semantic-artifact decoder remains the current
+prerequisite. Worker request handling, process supervision, image sealing,
+execution, durable publication, probe/verifier, and source/execution-binding
+V7 remain later boundaries.

@@ -209,3 +209,21 @@ those actions.
 That call edge must remain private and unreachable from the status-`78` main.
 Bounded decoder/ReplayTransport integration and every I/O or execution edge
 remain later, separately audited work.
+
+## V17 fulfillment
+
+V17 satisfies the exact prerequisite above without rewriting this V16
+checkpoint. It appends a third worker Swift source containing one private
+already-formed-carrier plus explicit-context projector call, and appends the
+unchanged V16 projector as the worker's sixth dependency after the exact V14
+five-dependency prefix. The exact status-`78` main and V14 exporter edge remain
+byte-exact and cannot name the new private member.
+
+Worker target reachability now includes the projector and historical-safe
+semantic records. The projector still cannot reach the worker,
+ReplayTransport, PrimeCore, or corrected-mutation targets. The V14 edge is not
+chained, ReplayTransport is not integrated, and neither the V17 worker edge
+nor the public `project(evidence:context:)` entry point is invoked. See [Prime Native Neural Gate Historical Worker
+Semantic-Artifact Projection Call-Edge
+Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-SEMANTIC-ARTIFACT-PROJECTION-CALL-EDGE-SOURCE-2026-08-01.md)
+for the V17 authority ceiling and decoder prerequisite.

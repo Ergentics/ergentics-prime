@@ -2,11 +2,16 @@
 
 Date: 2026-08-01
 
-Current continuation: V14 has now satisfied this document's call-edge
+Historical continuation: V14 satisfied this document's exporter call-edge
 prerequisite without enabling or executing the worker. Treat the V13
 no-consumer and unchanged-worker-dependency statements below as frozen
-historical checkpoint facts, not the current package graph. Continue from
-[Prime Native Neural Gate Historical Worker/Export Call-Edge Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-EXPORT-CALL-EDGE-SOURCE-2026-08-01.md).
+historical checkpoint facts, not the current package graph.
+
+Current continuation: V17 preserves the exact V13 exporter and V14 private
+edge, then source-binds a separate private already-formed-carrier plus
+explicit-context call into the V16 projector. Continue from [Prime Native
+Neural Gate Historical Worker Semantic-Artifact Projection Call-Edge
+Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-SEMANTIC-ARTIFACT-PROJECTION-CALL-EDGE-SOURCE-2026-08-01.md).
 
 ## Decision
 
