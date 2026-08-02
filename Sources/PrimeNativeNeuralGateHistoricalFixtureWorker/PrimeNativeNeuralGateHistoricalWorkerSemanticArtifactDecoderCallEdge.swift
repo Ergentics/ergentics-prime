@@ -287,3 +287,47 @@ extension PrimeNativeNeuralGateHistoricalFixtureWorker {
         )
     }
 }
+
+/// A compiler-bound, nonpublic access seam around the V21 composition edge.
+///
+/// This wrapper intentionally exposes no declared payload accessor. Swift
+/// private storage is API hiding rather than a confidentiality boundary, so a
+/// later caller still requires a separate reflection/leakage review. The value
+/// remains ordinarily copyable and Swift may infer `Sendable` from its payload;
+/// neither property creates a confidentiality or concurrency-security boundary.
+/// No checked-in caller, `main` call path, request/transport path, or observed
+/// invocation is added; no execution, I/O, publication, receipt, source-binding
+/// V7, or authority action is observed or authorized here.
+extension PrimeNativeNeuralGateHistoricalFixtureWorker {
+    internal struct
+        PrimeNativeNeuralGateHistoricalWorkerInvocationSeamResult
+    {
+        private let compositionResult:
+            PrimeNativeNeuralGateHistoricalEvidenceProjectionDecodeCompositionResult
+
+        private init(
+            compositionResult:
+                PrimeNativeNeuralGateHistoricalEvidenceProjectionDecodeCompositionResult
+        ) {
+            self.compositionResult = compositionResult
+        }
+
+        internal static func
+            sourceBoundUnavailableHistoricalWorkerInvocationSeam(
+                evidence:
+                    PrimeNativeNeuralGateHistoricalEvidenceExporter.Evidence,
+                context:
+                    PrimeNativeNeuralGateHistoricalProjectionContext
+            ) throws -> Self
+        {
+            Self(
+                compositionResult: try
+                    PrimeNativeNeuralGateHistoricalFixtureWorker
+                    .sourceBoundHistoricalEvidenceProjectionDecodeCompositionCallEdge(
+                        evidence: evidence,
+                        context: context
+                    )
+            )
+        }
+    }
+}

@@ -57,9 +57,11 @@ explicit private initializer accepting only that payload. It may not declare
 an accessor, property, method, subscript, closure, reflection/description
 helper, custom mirror, encoding, or callback that exposes the payload or
 either projected/decoded member. It has no additional stored or computed
-properties and no
-`Codable`, `Equatable`, `Hashable`, `Identifiable`, `Sendable`,
-`CustomStringConvertible`, error, collection, iterator, or other conformance.
+properties and no declared `Codable`, `Equatable`, `Hashable`, `Identifiable`,
+`Sendable`, `CustomStringConvertible`, error, collection, iterator, or other
+conformance. As an internal value type with a `Sendable` payload, Swift may
+infer `Sendable`, and the value remains ordinarily copyable; neither property
+creates confidentiality, concurrency security, provenance, or authority.
 Its internal name makes the wrapper type nameable within the worker module
 without declaring a payload accessor. Swift `private` is API hiding, not a
 confidentiality boundary: generic `Mirror` or unsafe same-module code may
@@ -193,3 +195,46 @@ one-call seam. A caller, `main` call edge, worker/process invocation, replay or
 transport integration, request handling, execution, artifact I/O,
 publication, receipt issuance, and source/execution authority remain later,
 separately audited checkpoints.
+
+## V23 source fulfillment
+
+V23 fulfills this design with an exact append-only source continuation. The
+full worker file is 13,227 bytes at
+`62c0c413e25b95576a023f9b93f67b55a6c38f0cadbdfa4330dba31aea41ae54`.
+It preserves the complete 11,354-byte V21 prefix at
+`39cd879a54d6a1198f0a863f606751b1bb9d07f1ba6eb334dd74e9a079c40e1d`
+and adds only a 1,873-byte suffix at
+`64a0db36f309d92dbd8737f9a6401bb7b9adf58b0193dd4c6d3e46d906017811`.
+The exact worker source now compiler-binds the nested internal wrapper and one
+direct throwing call to the private V21 edge.
+
+The V22 nonclaims evolve narrowly: wrapper/method source and compiler
+feasibility are now observed, but invocation is not. Internal access makes the
+seam nameable across the worker module, including from `main`; exact source
+identity proves that `main` and every other worker file contain no reference or
+call. No actual wrapper value, caller, or result consumer exists.
+
+Ordinary external imports cannot name the internal seam. A separately compiled
+test or privileged module using `@testable import` could name internals when the
+worker is built for testing, but no such dependency, import, or caller exists.
+
+The wrapper declares no accessor or conformance. Swift may infer `Sendable`,
+the value remains ordinarily `Copyable`, and generic `Mirror` or unsafe
+same-module code may expose the private payload. The value is not a
+confidentiality, concurrency-security, provenance, receipt, or authority
+boundary, and any future caller requires a separate leakage audit.
+
+The V23 source-contract/topology hashes are
+`6ae4cd1fadf95f3b18c38d7e4ec2d732f6e0b614399fb76334043bf9851bb656` and `48f5f1359af1eb3151196ef1e9cb417a6189d8c6461b0c3e595edee39aaee3d9`. No runtime
+execution, I/O, transport, publication, receipt, V7, scientific, or product
+authority is observed; Prime remains `ABSTAIN`. See [Prime Native Neural Gate
+Historical Worker Invocation Seam
+Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-INVOCATION-SEAM-SOURCE-2026-08-02.md).
+
+## V23 next exact prerequisite
+
+`design_the_security_and_leakage_audited_historical_worker_invocation_seam_caller_and_result_consumer_boundary_for_the_source_bound_v23_internal_bridge_before_any_cross_file_or_main_call_edge_payload_observation_replay_transport_integration_request_handling_sealing_launch_execution_artifact_io_publication_or_issuing_source_binding_v7`
+
+That successor remains design-only. A cross-file or `main` call edge, payload
+or error observation, replay/transport integration, execution, I/O, and
+publication remain outside V23.

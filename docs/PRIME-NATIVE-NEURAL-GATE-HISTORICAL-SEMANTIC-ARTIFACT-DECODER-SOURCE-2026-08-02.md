@@ -305,3 +305,32 @@ No decoder or worker runs; Prime remains `ABSTAIN`. The next exact
 prerequisite is:
 
 `source_bind_the_bounded_unavailable_historical_worker_invocation_seam_as_an_append_only_same_file_v21_composition_continuation_preserving_all_v21_private_members_and_delegating_exactly_once_from_one_new_internal_nonpublic_typed_bridge_without_adding_a_main_call_edge_replay_transport_integration_request_handling_sealing_launch_execution_artifact_io_publication_or_issuing_source_binding_v7`
+
+## V23 invocation-seam source continuity
+
+V23 preserves this V18 decoder and the complete V19/V21 worker prefix while
+appending only the V22-designed internal wrapper and one-call seam. The evolved
+worker file is 13,227 bytes at
+`62c0c413e25b95576a023f9b93f67b55a6c38f0cadbdfa4330dba31aea41ae54`;
+the exact 11,354-byte V21 prefix is followed by a 1,873-byte suffix at
+`64a0db36f309d92dbd8737f9a6401bb7b9adf58b0193dd4c6d3e46d906017811`.
+The seam calls only the private V21 composition edge, never this decoder or the
+V19 decoder edge directly.
+
+The internal seam is module-nameable, but no `main` or cross-file reference,
+caller, consumer, or runtime invocation exists. Its wrapper declares no
+accessor or conformance. Ordinary external imports cannot name it, while a
+separately built test/privileged module using `@testable import` could; no such
+dependency or import exists. The wrapper remains ordinarily `Copyable`, may be inferred
+`Sendable`, and can expose its private payload through generic reflection or
+unsafe same-module code.
+
+Source/topology hashes are `6ae4cd1fadf95f3b18c38d7e4ec2d732f6e0b614399fb76334043bf9851bb656` and
+`48f5f1359af1eb3151196ef1e9cb417a6189d8c6461b0c3e595edee39aaee3d9`. No decoder execution, artifact I/O, transport,
+publication, receipt, V7, scientific, or product authority is observed; Prime
+remains `ABSTAIN`. See [Prime Native Neural Gate Historical Worker Invocation
+Seam Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-INVOCATION-SEAM-SOURCE-2026-08-02.md).
+
+The next exact prerequisite is design-only:
+
+`design_the_security_and_leakage_audited_historical_worker_invocation_seam_caller_and_result_consumer_boundary_for_the_source_bound_v23_internal_bridge_before_any_cross_file_or_main_call_edge_payload_observation_replay_transport_integration_request_handling_sealing_launch_execution_artifact_io_publication_or_issuing_source_binding_v7`

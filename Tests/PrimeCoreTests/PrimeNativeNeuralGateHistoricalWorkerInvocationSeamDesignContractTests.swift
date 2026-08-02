@@ -40,12 +40,24 @@ final class
             "6d9e2787b54b6ab20f449497e6ac2b91c9945567211badfd4383f37b417f14a4"
         )
 
+        let liveFutureSource = try checkedInData(
+            contract.futureSourceRelativePath
+        )
+        XCTAssertGreaterThanOrEqual(
+            UInt64(liveFutureSource.count),
+            contract.preservedV21SourcePrefixByteCount
+        )
+        let preservedV21Source = Data(
+            liveFutureSource.prefix(
+                Int(contract.preservedV21SourcePrefixByteCount)
+            )
+        )
+        XCTAssertEqual(
+            PrimeSHA256.hexDigest(of: preservedV21Source),
+            contract.preservedV21SourcePrefixSHA256
+        )
+
         let identities: [(String, UInt64, String)] = [
-            (
-                contract.futureSourceRelativePath,
-                contract.preservedV21SourcePrefixByteCount,
-                contract.preservedV21SourcePrefixSHA256
-            ),
             (
                 contract.packageSwiftRelativePath,
                 contract.packageSwiftByteCount,
@@ -307,19 +319,27 @@ final class
         )
     }
 
-    func testV22IsDesignOnlyAndPrimeRemainsAbstain()
+    func testFrozenV22DesignWasUnmaterializedInThePreservedV21Prefix()
         throws
     {
         let contract = Contract.frozenV1
-        let workerSource = try checkedInString(
+        let liveSource = try checkedInData(
             contract.futureSourceRelativePath
+        )
+        let preservedV21Source = try XCTUnwrap(
+            String(
+                data: liveSource.prefix(
+                    Int(contract.preservedV21SourcePrefixByteCount)
+                ),
+                encoding: .utf8
+            )
         )
 
         XCTAssertFalse(
-            workerSource.contains(contract.futureWrapperTypeName)
+            preservedV21Source.contains(contract.futureWrapperTypeName)
         )
         XCTAssertFalse(
-            workerSource.contains(contract.futureInvocationMethodName)
+            preservedV21Source.contains(contract.futureInvocationMethodName)
         )
         XCTAssertFalse(contract.futureWrapperSourceMaterialized)
         XCTAssertFalse(contract.futureInvocationMethodSourceMaterialized)

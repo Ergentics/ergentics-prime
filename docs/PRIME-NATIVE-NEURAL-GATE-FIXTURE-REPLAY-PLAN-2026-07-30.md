@@ -1519,7 +1519,7 @@ Prime remains `ABSTAIN`. The next exact prerequisite is:
 V22 does not replay the fixture or add a caller. It freezes one future
 append-only, same-file access bridge: an internal wrapper nested in the worker
 with only the private V21 composition result, a private initializer, no
-accessor/conformance, and one internal static method on the wrapper. That
+declared accessor/conformance, and one internal static method on the wrapper. That
 method calls the private V21 composition edge exactly once with unchanged
 already-formed Evidence and explicit context and lets every error propagate.
 Both context observations remain nonoptional and exactly `.unavailable`
@@ -1541,3 +1541,30 @@ authority remain false; Prime remains `ABSTAIN`. The next exact prerequisite
 is:
 
 `source_bind_the_bounded_unavailable_historical_worker_invocation_seam_as_an_append_only_same_file_v21_composition_continuation_preserving_all_v21_private_members_and_delegating_exactly_once_from_one_new_internal_nonpublic_typed_bridge_without_adding_a_main_call_edge_replay_transport_integration_request_handling_sealing_launch_execution_artifact_io_publication_or_issuing_source_binding_v7`
+
+## V23 source seam without replay caller
+
+V23 appends the exact V22-designed wrapper and one-call method to the V21
+composition file. The full source is 13,227 bytes at
+`62c0c413e25b95576a023f9b93f67b55a6c38f0cadbdfa4330dba31aea41ae54`;
+its exact V21 prefix is 11,354 bytes and its sole V23 suffix is 1,873 bytes at
+`64a0db36f309d92dbd8737f9a6401bb7b9adf58b0193dd4c6d3e46d906017811`.
+
+The internal method is nameable inside the worker module, but the unchanged
+status-`78` main and other worker sources contain no reference. No fixture,
+request decoder, `ReplayTransport` handler, process owner, caller, result
+consumer, or runtime invocation is added. An ordinary external import cannot
+name it; a separately built test/privileged module using `@testable import`
+could, but no such dependency or import exists. The private payload is reflectable,
+potentially inferred `Sendable`, and ordinarily `Copyable`; no secrecy or
+authority claim is attached to it.
+
+Source/topology hashes are `6ae4cd1fadf95f3b18c38d7e4ec2d732f6e0b614399fb76334043bf9851bb656` and
+`48f5f1359af1eb3151196ef1e9cb417a6189d8c6461b0c3e595edee39aaee3d9`. Replay, execution, artifact I/O, publication,
+durability, receipt, V7, scientific, and product authority remain false; Prime
+remains `ABSTAIN`. See [Prime Native Neural Gate Historical Worker Invocation
+Seam Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-INVOCATION-SEAM-SOURCE-2026-08-02.md).
+
+The next exact prerequisite is design-only:
+
+`design_the_security_and_leakage_audited_historical_worker_invocation_seam_caller_and_result_consumer_boundary_for_the_source_bound_v23_internal_bridge_before_any_cross_file_or_main_call_edge_payload_observation_replay_transport_integration_request_handling_sealing_launch_execution_artifact_io_publication_or_issuing_source_binding_v7`

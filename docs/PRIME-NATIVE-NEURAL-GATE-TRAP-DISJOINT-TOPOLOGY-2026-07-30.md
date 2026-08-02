@@ -697,7 +697,7 @@ graphs, target count, materialization states, dependency order, products,
 resources, worker inventory, status, source, and prior bindings remain exact.
 
 The design reserves one future append-only nested internal wrapper with a sole
-private V21 payload/private initializer and no accessor or conformance. Its
+private V21 payload/private initializer and no declared accessor or conformance. Its
 one internal static method may call the private V21 composition edge exactly
 once with unchanged inputs and propagate all errors. V22 adds PrimeCore
 governance contract/topology source only; it adds no worker, invocation-seam,
@@ -713,3 +713,37 @@ observed or authorized. Prime remains `ABSTAIN`. The next exact prerequisite
 is:
 
 `source_bind_the_bounded_unavailable_historical_worker_invocation_seam_as_an_append_only_same_file_v21_composition_continuation_preserving_all_v21_private_members_and_delegating_exactly_once_from_one_new_internal_nonpublic_typed_bridge_without_adding_a_main_call_edge_replay_transport_integration_request_handling_sealing_launch_execution_artifact_io_publication_or_issuing_source_binding_v7`
+
+## V23 source-bound invocation-seam topology
+
+Topology V23 binds the source contract at
+`6ae4cd1fadf95f3b18c38d7e4ec2d732f6e0b614399fb76334043bf9851bb656`; its own canonical SHA-256 is
+`48f5f1359af1eb3151196ef1e9cb417a6189d8c6461b0c3e595edee39aaee3d9`. The exact evolved worker source is 13,227 bytes at
+`62c0c413e25b95576a023f9b93f67b55a6c38f0cadbdfa4330dba31aea41ae54`,
+comprising the complete 11,354-byte V21 prefix and the sole 1,873-byte V23
+suffix at
+`64a0db36f309d92dbd8737f9a6401bb7b9adf58b0193dd4c6d3e46d906017811`.
+
+V23 preserves every V1-through-V22 canonical topology identity, package
+declaration, four-file worker inventory, seven-dependency order, resource,
+target graph, and forbidden-reachability rule. The new internal seam is
+module-nameable, but module nameability is not represented as a target-graph
+edge and is not a runtime-call claim. Exact identities of the status-`78` main
+and other worker files prove that no caller or reference exists.
+
+Ordinary external imports cannot name the internal seam. A separately compiled
+test or privileged module using `@testable import` could name internals when the
+worker is built for testing, but no such dependency, import, or caller exists.
+
+The wrapper declares no accessor or conformance; inferred `Sendable`, ordinary
+`Copyable`, and generic reflection exposure remain possible and create no
+security or authority boundary. Topology remains `planned_not_materialized`
+with `executionImplemented == false`: no wrapper instance, caller, consumer,
+runtime invocation, replay, transport, request, I/O, publication, receipt, V7,
+scientific, or product authority is observed. Prime remains `ABSTAIN`. See
+[Prime Native Neural Gate Historical Worker Invocation Seam
+Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-INVOCATION-SEAM-SOURCE-2026-08-02.md).
+
+The next exact prerequisite is design-only:
+
+`design_the_security_and_leakage_audited_historical_worker_invocation_seam_caller_and_result_consumer_boundary_for_the_source_bound_v23_internal_bridge_before_any_cross_file_or_main_call_edge_payload_observation_replay_transport_integration_request_handling_sealing_launch_execution_artifact_io_publication_or_issuing_source_binding_v7`

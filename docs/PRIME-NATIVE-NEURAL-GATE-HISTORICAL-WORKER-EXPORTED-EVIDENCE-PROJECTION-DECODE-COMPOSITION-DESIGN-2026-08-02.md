@@ -240,7 +240,9 @@ V22 does not revise this frozen V20 composition design or the V21 source that
 fulfilled it. It freezes the next access-minimal Swift shape: one internal
 wrapper nested in `PrimeNativeNeuralGateHistoricalFixtureWorker`, whose sole
 stored value is the private V21 composition result behind a private
-initializer. The wrapper exposes no accessor and adopts no conformance. Its
+initializer. The wrapper exposes no declared accessor and declares no
+conformance; Swift may infer `Sendable`, and the value remains ordinarily
+copyable. Its
 one internal static seam calls the enclosing worker's private V21 composition
 call edge exactly once with the original Evidence and context and returns
 `Self`; all V21 errors propagate unchanged.
@@ -260,3 +262,34 @@ No composition or worker invocation occurs; Prime remains `ABSTAIN`. The next
 exact prerequisite is:
 
 `source_bind_the_bounded_unavailable_historical_worker_invocation_seam_as_an_append_only_same_file_v21_composition_continuation_preserving_all_v21_private_members_and_delegating_exactly_once_from_one_new_internal_nonpublic_typed_bridge_without_adding_a_main_call_edge_replay_transport_integration_request_handling_sealing_launch_execution_artifact_io_publication_or_issuing_source_binding_v7`
+
+## V23 source fulfillment of the bounded seam design
+
+V23 source-binds the exact V22-designed wrapper and method without revising
+this V20 composition design or the V21 implementation. The evolved file is
+13,227 bytes at
+`62c0c413e25b95576a023f9b93f67b55a6c38f0cadbdfa4330dba31aea41ae54`:
+the 11,354-byte V21 prefix remains exact, and the 1,873-byte suffix at
+`64a0db36f309d92dbd8737f9a6401bb7b9adf58b0193dd4c6d3e46d906017811`
+contains only the internal wrapper, its private payload/initializer, and the
+one-call throwing seam.
+
+No V21 private access widens. The seam is module-nameable but has no caller,
+`main` reference, or consumer. Its no-declared-accessor/no-declared-conformance
+shape does not imply confidentiality: Swift may infer `Sendable`, the value is
+ordinarily `Copyable`, and generic reflection or unsafe same-module code may
+expose the payload.
+
+Ordinary external imports cannot name the internal seam. A separately compiled
+test or privileged module using `@testable import` could name internals when the
+worker is built for testing, but no such dependency, import, or caller exists.
+
+Source/topology hashes are `6ae4cd1fadf95f3b18c38d7e4ec2d732f6e0b614399fb76334043bf9851bb656` and
+`48f5f1359af1eb3151196ef1e9cb417a6189d8c6461b0c3e595edee39aaee3d9`. No composition invocation, I/O, transport,
+publication, receipt, V7, scientific, or product authority is observed; Prime
+remains `ABSTAIN`. See [Prime Native Neural Gate Historical Worker Invocation
+Seam Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-INVOCATION-SEAM-SOURCE-2026-08-02.md).
+
+The next exact prerequisite is design-only:
+
+`design_the_security_and_leakage_audited_historical_worker_invocation_seam_caller_and_result_consumer_boundary_for_the_source_bound_v23_internal_bridge_before_any_cross_file_or_main_call_edge_payload_observation_replay_transport_integration_request_handling_sealing_launch_execution_artifact_io_publication_or_issuing_source_binding_v7`
