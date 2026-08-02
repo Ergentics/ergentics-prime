@@ -2,18 +2,25 @@
 
 Date: 2026-08-01
 
-Current continuation: V16 additively resolves the three V15 design blockers
+V16 continuation: V16 additively resolved the three V15 design blockers
 with a complete 44-spec namespace, lossless keyed three-seed envelope,
 corrected mutation-record target split, and package-internal in-memory
-projector. It does not change this V14 call edge or the status-`78` worker's
-dependency list. The projector has no ReplayTransport dependency and is not
-reachable from the worker; no request handling, artifact write/publication,
-historical execution observation, or source/execution binding V7 exists. The
+projector. At that checkpoint it did not change this V14 call edge or the
+status-`78` worker's dependency list. The projector had no ReplayTransport
+dependency and was not reachable from the worker. The
 V14 and V15 prerequisite and nonauthorization statements below remain frozen
 history. See [Prime Native Neural Gate Historical Evidence Semantic-Artifact
 Projection Design](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-SEMANTIC-ARTIFACT-PROJECTION-DESIGN-2026-08-01.md)
 and [Prime Native Neural Gate Historical Evidence Semantic-Artifact Projection
 Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-SEMANTIC-ARTIFACT-PROJECTION-SOURCE-2026-08-01.md).
+
+Current continuation: V17 preserves this exact V14 source and the exact V11
+status-`78` main, then appends a third worker Swift source and the V16 projector
+as the sixth dependency after the exact V14 five-dependency prefix. The new
+private member accepts an already-formed carrier plus explicit context; it does
+not chain this private V14 edge, obtain evidence, or enable request handling.
+See [Prime Native Neural Gate Historical Worker Semantic-Artifact Projection
+Call-Edge Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-SEMANTIC-ARTIFACT-PROJECTION-CALL-EDGE-SOURCE-2026-08-01.md).
 
 ## Decision
 

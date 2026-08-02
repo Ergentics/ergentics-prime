@@ -202,10 +202,21 @@ separate target, and materializes a package-internal, non-writing historical
 projector. The frozen V4 namespace, V8 semantic contract, V15 design contract,
 and V15 topology identities remain exact.
 
-ReplayTransport already exists, but the V16 projector neither depends on nor
-integrates with it. The status-`78` worker retains its V14 dependency list and
-cannot name or invoke the projector. No request handling, artifact write or
+At the V16 checkpoint ReplayTransport already existed, but the V16 projector
+neither depended on nor integrated with it. The status-`78` worker retained its
+V14 dependency list and could not name or invoke the projector. No request handling, artifact write or
 publication, worker/exporter/gate/model execution observation, mechanics
 `PASS`, receipt, or source/execution binding V7 is created. See [Prime Native
 Neural Gate Historical Evidence Semantic-Artifact Projection
 Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-SEMANTIC-ARTIFACT-PROJECTION-SOURCE-2026-08-01.md).
+
+## V17 continuation
+
+V17 preserves this design and the complete V16 projector, then appends one
+private typed worker call accepting an already-formed V13 carrier and explicit
+V16 context. The worker gains target-level reachability to the projector and
+historical-safe semantic records, but the status-`78` main and V14 private edge
+cannot name the new member. ReplayTransport remains unintegrated and neither
+the V17 worker edge nor public `project(evidence:context:)` entry point executes. See [Prime Native Neural Gate Historical Worker
+Semantic-Artifact Projection Call-Edge
+Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-SEMANTIC-ARTIFACT-PROJECTION-CALL-EDGE-SOURCE-2026-08-01.md).

@@ -13,6 +13,8 @@ final class
         "Sources/PrimeNativeNeuralGateHistoricalFixtureWorker/PrimeNativeNeuralGateHistoricalFixtureWorker.swift"
     private static let callEdgeRelativePath =
         "Sources/PrimeNativeNeuralGateHistoricalFixtureWorker/PrimeNativeNeuralGateHistoricalEvidenceExportCallEdge.swift"
+    private static let projectionCallEdgeRelativePath =
+        "Sources/PrimeNativeNeuralGateHistoricalFixtureWorker/PrimeNativeNeuralGateHistoricalWorkerSemanticArtifactProjectionCallEdge.swift"
     private static let fixtureResourceRelativePath =
         "Sources/PrimeNativeNeuralGateHistoricalFixtureWorker/HistoricalFixtureEvidence/Package.resolved"
     private static let sourceContractSHA256 =
@@ -240,7 +242,7 @@ final class
         )
     }
 
-    func testCheckedInWorkerInventoryAndAllPinnedMaterialsAreExact()
+    func testCheckedInWorkerPreservesV14InventoryInsideExactV17Continuation()
         throws
     {
         let contract = Contract.frozenV1
@@ -257,14 +259,17 @@ final class
                 Self.fixtureResourceRelativePath,
                 Self.callEdgeRelativePath,
                 Self.primaryWorkerRelativePath,
+                Self.projectionCallEdgeRelativePath,
             ]
         )
         XCTAssertEqual(
-            allWorkerFiles.filter { $0.hasSuffix(".swift") },
+            allWorkerFiles.filter {
+                contract.orderedWorkerSwiftSourceRelativePaths.contains($0)
+            },
             contract.orderedWorkerSwiftSourceRelativePaths
         )
         XCTAssertEqual(
-            allWorkerFiles.filter { $0.hasSuffix(".swift") }.count,
+            contract.orderedWorkerSwiftSourceRelativePaths.count,
             contract.exactWorkerSwiftSourceFileCount
         )
 
@@ -295,7 +300,7 @@ final class
         }
     }
 
-    func testPackageDeclaresOnlyTheExactFiveDependencyWorkerDelta()
+    func testPackagePreservesTheExactV14PrefixInsideTheV17WorkerDeclaration()
         throws
     {
         let contract = Contract.frozenV1
@@ -305,7 +310,7 @@ final class
 
         XCTAssertTrue(
             package.contains(
-                #".executableTarget(name:"PrimeNativeNeuralGateHistoricalFixtureWorker",dependencies:["PrimeCore","ErgenticsPrimeRuntime","PrimeNativeNeuralGateHistoricalReplayMechanics","PrimeNativeNeuralGateReplayTransport","PrimeNativeNeuralGateHistoricalEvidenceExportMechanics",],resources:[.copy("HistoricalFixtureEvidence"),])"#
+                #".executableTarget(name:"PrimeNativeNeuralGateHistoricalFixtureWorker",dependencies:["PrimeCore","ErgenticsPrimeRuntime","PrimeNativeNeuralGateHistoricalReplayMechanics","PrimeNativeNeuralGateReplayTransport","PrimeNativeNeuralGateHistoricalEvidenceExportMechanics","PrimeNativeNeuralGateHistoricalEvidenceSemanticArtifactProjection",],resources:[.copy("HistoricalFixtureEvidence"),])"#
             )
         )
         XCTAssertTrue(

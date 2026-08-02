@@ -1262,21 +1262,29 @@ complete namespace, additive keyed three-seed envelope, and historical-only
 projection boundary must become exact before projector materialization. See
 [Prime Native Neural Gate Historical Evidence Semantic-Artifact Projection Design](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-SEMANTIC-ARTIFACT-PROJECTION-DESIGN-2026-08-01.md).
 
-V16 now satisfies that bounded prerequisite with an additive 44-spec
+At the V16 checkpoint, V16 satisfied that bounded prerequisite with an additive 44-spec
 namespace, exact seed-keyed envelope, corrected mutation-record split, and
 package-internal in-memory projector. ReplayTransport is unchanged and not in
-the projector closure; the status-`78` worker is unchanged and cannot invoke
+the projector closure; the status-`78` worker was unchanged and could not invoke
 the projector. This is source/package/test evidence only. See [Prime Native
 Neural Gate Historical Evidence Semantic-Artifact Projection
 Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-SEMANTIC-ARTIFACT-PROJECTION-SOURCE-2026-08-01.md).
 
-Only after that namespace, envelope, historical-only codec, and resulting
-evidence carrier-to-artifact projection are separately exact
-may a later slice consider worker request handling, sealing,
-launch/supervision, semantic artifact publication, and the paired
-probe/verifier. The V10 public seam's summary projection cannot replace the
-missing raw invariant records, per-mutation fingerprints, or observed
-failed-leg sets.
+V17 now satisfies the private call-edge prerequisite with a third worker
+source accepting an already-formed carrier plus explicit context. The exact
+status-`78` main and V14 edge cannot name it; ReplayTransport/decoder
+integration, invocation, I/O, and publication remain later boundaries. See
+[Prime Native Neural Gate Historical Worker Semantic-Artifact Projection
+Call-Edge Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-SEMANTIC-ARTIFACT-PROJECTION-CALL-EDGE-SOURCE-2026-08-01.md).
+
+Those namespace, envelope, codec, and compiler-bound call-edge boundaries are
+now exact through V17. The next slice must design and source-bind the complete
+V16 historical semantic-artifact decoder for the six canonical JSON leaves and
+descriptor-streamed global/chunk artifacts per role. Only after that separate
+boundary may a later slice consider ReplayTransport integration, worker
+request handling, sealing, launch/supervision, semantic artifact publication,
+or the paired probe/verifier. The V10 public seam's summary projection cannot
+replace the complete V16 artifact namespace.
 
 After a real dual-arm Stage-B pass:
 
@@ -1380,3 +1388,8 @@ See [Prime Native Neural Gate Historical Evidence Export Source](PRIME-NATIVE-NE
 See [Prime Native Neural Gate Historical Worker/Export Call-Edge Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-EXPORT-CALL-EDGE-SOURCE-2026-08-01.md).
 See [Prime Native Neural Gate Historical Evidence Semantic-Artifact Projection Design](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-SEMANTIC-ARTIFACT-PROJECTION-DESIGN-2026-08-01.md).
 See [Prime Native Neural Gate Historical Evidence Semantic-Artifact Projection Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-EVIDENCE-SEMANTIC-ARTIFACT-PROJECTION-SOURCE-2026-08-01.md).
+V17 appends only the private compiler-bound worker/projector call edge and the
+sixth dependency. It does not enable request handling, ReplayTransport/decoder
+integration, execution, I/O, publication, or V7. See [Prime Native Neural Gate
+Historical Worker Semantic-Artifact Projection Call-Edge
+Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-SEMANTIC-ARTIFACT-PROJECTION-CALL-EDGE-SOURCE-2026-08-01.md).

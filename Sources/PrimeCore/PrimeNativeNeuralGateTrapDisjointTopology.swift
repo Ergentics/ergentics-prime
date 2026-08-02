@@ -174,6 +174,9 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
         historicalEvidenceSemanticArtifactProjectionSourceContractBinding:
         PrimeNativeNeuralGateTopologyContractBinding? = nil
     public private(set) var
+        historicalWorkerSemanticArtifactProjectionCallEdgeSourceContractBinding:
+        PrimeNativeNeuralGateTopologyContractBinding? = nil
+    public private(set) var
         historicalEvidenceExportTargetName:
         String? = nil
     public private(set) var
@@ -2665,6 +2668,126 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
         )
     }()
 
+    /// Appends one compiler-bound private carrier-to-projector call edge to
+    /// the unavailable historical worker. The exact main and V14 exporter
+    /// edge remain byte-exact and cannot name the new cross-file member.
+    public static let frozenV17: Self = {
+        let previous = frozenV16
+        let source =
+            PrimeNativeNeuralGateHistoricalWorkerSemanticArtifactProjectionCallEdgeSourceContract
+            .frozenV1
+        let sourceSHA256 =
+            "ccf2e46ffc9e980d96357980e128ecb411a5ac5f55b8e783bf611582ec32d6d3"
+        let workerTargetName =
+            "PrimeNativeNeuralGateHistoricalFixtureWorker"
+        let projectorTargetName =
+            "PrimeNativeNeuralGateHistoricalEvidenceSemanticArtifactProjection"
+        let semanticTargetName =
+            "PrimeNativeNeuralGateSemanticRecordContracts"
+
+        let targets = previous.targetGraph.map { target in
+            guard target.targetName == workerTargetName
+            else {
+                return target
+            }
+            return Self.target(
+                target.targetName,
+                target.materialization,
+                target.directLocalDependencyNames
+                    + [projectorTargetName],
+                "internal unavailable historical worker executable target whose exact status-78 main and V14 exporter edge remain byte-exact; V17 appends only one third Swift source containing a private typed already-formed-carrier plus explicit-context call into the product-free pure V16 projector and one sixth direct dependency, with no request handling, worker call-edge or public projector-entry-point invocation, ReplayTransport integration, worker-derived historical artifact I/O, publication, PASS, receipt, source binding V7, science, or product authority",
+                externalProducts:
+                    target.externalProductDependencyNames
+            )
+        }
+        let reachability = previous.forbiddenReachability.map {
+            rule in
+            guard rule.targetName == workerTargetName
+            else {
+                return rule
+            }
+            return Self.forbidden(
+                rule.targetName,
+                rule.forbiddenReachableTargetNames.filter {
+                    $0 != projectorTargetName
+                        && $0 != semanticTargetName
+                }
+            )
+        }
+
+        return Self(
+            schemaVersion: 17,
+            contractID:
+                "prime_stage_b_historical_worker_semantic_artifact_projection_call_edge_source_topology_v17",
+            status: previous.status,
+            executionImplemented: false,
+            historicalReplayPlanID:
+                previous.historicalReplayPlanID,
+            historicalSourceBindingContractID:
+                previous.historicalSourceBindingContractID,
+            historicalEvidenceExportDesignContractBinding:
+                previous
+                .historicalEvidenceExportDesignContractBinding,
+            historicalEvidenceExportSourceContractBinding:
+                previous
+                .historicalEvidenceExportSourceContractBinding,
+            historicalWorkerEvidenceExportCallEdgeSourceContractBinding:
+                previous
+                .historicalWorkerEvidenceExportCallEdgeSourceContractBinding,
+            historicalEvidenceSemanticArtifactProjectionDesignContractBinding:
+                previous
+                .historicalEvidenceSemanticArtifactProjectionDesignContractBinding,
+            historicalEvidenceSemanticArtifactProjectionSourceContractBinding:
+                previous
+                .historicalEvidenceSemanticArtifactProjectionSourceContractBinding,
+            historicalWorkerSemanticArtifactProjectionCallEdgeSourceContractBinding:
+                PrimeNativeNeuralGateTopologyContractBinding(
+                    contractID: source.contractID,
+                    contentSHA256: sourceSHA256
+                ),
+            historicalEvidenceExportTargetName:
+                previous.historicalEvidenceExportTargetName,
+            historicalEvidenceSemanticArtifactProjectionTargetName:
+                previous
+                .historicalEvidenceSemanticArtifactProjectionTargetName,
+            historicalContractsPreserved: true,
+            historicalFutureTargetGraphSuperseded: true,
+            targetGraph: targets,
+            forbiddenReachability: reachability,
+            historicalContainmentRootTargetName:
+                previous.historicalContainmentRootTargetName,
+            historicalRuntimeTargetName:
+                previous.historicalRuntimeTargetName,
+            historicalReplayTargetName:
+                previous.historicalReplayTargetName,
+            pureReplayTargetName:
+                previous.pureReplayTargetName,
+            donorAdaptationV2PreservedAsHistory: true,
+            donorAdaptationV3Required: true,
+            donorAdaptationV3RequiredDestination:
+                previous.donorAdaptationV3RequiredDestination,
+            sourceBindingV7Issued: false,
+            sourceBindingV7Prerequisite:
+                previous.sourceBindingV7Prerequisite,
+            packageCaptureAuthority:
+                "actual_package_secure_capture_only_bound_source_\(source.contractID)_sha256_\(sourceSHA256)_not_worker_request_handling_sealing_launch_execution_io_publication_or_source_execution_binding_v7_evidence",
+            mutationProducerDetectorTargetAssignmentDeferred:
+                false,
+            mutationProducerDetectorMustBeDisjoint: true,
+            nextImplementationPrerequisite:
+                source.nextImplementationPrerequisite,
+            authorityStatement:
+                [
+                    "This V17 topology preserves every V1 through V16 canonical identity, the exact V11 status-78 main, the exact V14 worker/exporter call edge, and the complete V16 projector source and dependency closure.",
+                    "It changes only the existing product-free historical worker target by appending one third Swift source and the V16 projector as a sixth direct dependency after the exact five-dependency V14 prefix.",
+                    "The new private cross-file member accepts an already-formed V13 Evidence carrier plus explicit V16 context and contains one typed projector call; neither the main nor the private V14 edge can name it.",
+                    "Worker target reachability now includes the projector and historical-safe semantic records, so exactly those two V16 worker prohibitions are removed while every corrected mutation, probe, verifier, corrected worker, evaluation, receipt, and source-binding path remains forbidden.",
+                    "The projector still cannot reach the worker, ReplayTransport, PrimeCore, or corrected mutation targets; ReplayTransport remains an independent worker dependency with no projector call or decoder integration.",
+                    "Compilation proves only the typed call edge. V16 synthetic projector-component tests remain non-historical mechanics evidence. No test launches the worker, and no request handling, sealing, launch, worker call-edge or public project(evidence:context:) entry-point invocation, worker-derived historical artifact construction or I/O, gate/model execution, historical evidence observation or publication, durable evidence, independent detection, distinct-family or four-tier audit, mechanics PASS, terminal receipt, source or execution binding V7, scientific authority, or product authority is observed or authorized.",
+                ].joined(separator: " ")
+        )
+    }()
+
     public var historicalEvidenceExportDesignContractID:
         String?
     {
@@ -2738,6 +2861,22 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
         String?
     {
         historicalEvidenceSemanticArtifactProjectionSourceContractBinding?
+            .contentSHA256
+    }
+
+    public var
+        historicalWorkerSemanticArtifactProjectionCallEdgeSourceContractID:
+        String?
+    {
+        historicalWorkerSemanticArtifactProjectionCallEdgeSourceContractBinding?
+            .contractID
+    }
+
+    public var
+        historicalWorkerSemanticArtifactProjectionCallEdgeSourceContractSHA256:
+        String?
+    {
+        historicalWorkerSemanticArtifactProjectionCallEdgeSourceContractBinding?
             .contentSHA256
     }
 
@@ -2820,18 +2959,26 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
             expected = .frozenV15
         case 16:
             expected = .frozenV16
+        case 17:
+            expected = .frozenV17
         default:
             throw PrimeNativeNeuralGateTopologyError
                 .invalidFrozenContract
         }
+        // Validate a bound contract directly at its introduction version.
+        // Later topology versions retain that already-frozen canonical ID and
+        // digest literally. Replaying every predecessor's recursive validator
+        // here creates combinatorial validation without adding a new binding
+        // check; dedicated contract tests remain the source-validation gate.
         let designBindingValid: Bool
-        if schemaVersion >= 12 {
+        if schemaVersion == 12 {
             let design =
                 PrimeNativeNeuralGateHistoricalEvidenceExportAdapterDesignContract
                 .frozenV1
             try design.validate()
-            let designSHA256 =
-                try design.contentSHA256()
+            let designSHA256 = PrimeSHA256.hexDigest(
+                of: try PrimeCanonicalJSON.encode(design)
+            )
             designBindingValid =
                 historicalEvidenceExportDesignContractBinding?
                 .validate() == true
@@ -2839,18 +2986,38 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
                     == design.contractID
                 && historicalEvidenceExportDesignContractSHA256
                     == designSHA256
+        } else if schemaVersion > 12 {
+            let frozenDesign =
+                PrimeNativeNeuralGateHistoricalEvidenceExportAdapterDesignContract
+                .frozenV1
+            let frozenDesignSHA256 = PrimeSHA256.hexDigest(
+                of: try PrimeCanonicalJSON.encode(frozenDesign)
+            )
+            designBindingValid =
+                historicalEvidenceExportDesignContractBinding?
+                .validate() == true
+                && historicalEvidenceExportDesignContractID
+                    == "prime_source_bound_historical_evidence_export_adapter_design_v12"
+                && historicalEvidenceExportDesignContractSHA256
+                    == "e3305d5ee4054c977a7cb006dc2f1b38c169f5b1e2d905f568cf31166f803e8d"
+                && frozenDesign.contractID
+                    == historicalEvidenceExportDesignContractID
+                && frozenDesignSHA256
+                    == historicalEvidenceExportDesignContractSHA256
         } else {
             designBindingValid =
                 historicalEvidenceExportDesignContractBinding
                     == nil
         }
         let sourceBindingValid: Bool
-        if schemaVersion >= 13 {
+        if schemaVersion == 13 {
             let source =
                 PrimeNativeNeuralGateHistoricalEvidenceExportSourceContract
                 .frozenV1
             try source.validate()
-            let sourceSHA256 = try source.contentSHA256()
+            let sourceSHA256 = PrimeSHA256.hexDigest(
+                of: try PrimeCanonicalJSON.encode(source)
+            )
             sourceBindingValid =
                 historicalEvidenceExportSourceContractBinding?
                 .validate() == true
@@ -2860,6 +3027,28 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
                     == sourceSHA256
                 && historicalEvidenceExportTargetName
                     == source.targetBinding.targetName
+        } else if schemaVersion > 13 {
+            let frozenSource =
+                PrimeNativeNeuralGateHistoricalEvidenceExportSourceContract
+                .frozenV1
+            let frozenSourceSHA256 = PrimeSHA256.hexDigest(
+                of: try PrimeCanonicalJSON.encode(frozenSource)
+            )
+            sourceBindingValid =
+                historicalEvidenceExportSourceContractBinding?
+                .validate() == true
+                && historicalEvidenceExportSourceContractID
+                    == "prime_source_bound_historical_evidence_export_source_v13"
+                && historicalEvidenceExportSourceContractSHA256
+                    == "ecc329a7e56d843b53f9d894af4e335c9d00ac05d56efe308d61860835278d5e"
+                && historicalEvidenceExportTargetName
+                    == "PrimeNativeNeuralGateHistoricalEvidenceExportMechanics"
+                && frozenSource.contractID
+                    == historicalEvidenceExportSourceContractID
+                && frozenSourceSHA256
+                    == historicalEvidenceExportSourceContractSHA256
+                && frozenSource.targetBinding.targetName
+                    == historicalEvidenceExportTargetName
         } else {
             sourceBindingValid =
                 historicalEvidenceExportSourceContractBinding
@@ -2867,12 +3056,14 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
                 && historicalEvidenceExportTargetName == nil
         }
         let callEdgeSourceBindingValid: Bool
-        if schemaVersion >= 14 {
+        if schemaVersion == 14 {
             let source =
                 PrimeNativeNeuralGateHistoricalWorkerEvidenceExportCallEdgeSourceContract
                 .frozenV1
             try source.validate()
-            let sourceSHA256 = try source.contentSHA256()
+            let sourceSHA256 = PrimeSHA256.hexDigest(
+                of: try PrimeCanonicalJSON.encode(source)
+            )
             callEdgeSourceBindingValid =
                 historicalWorkerEvidenceExportCallEdgeSourceContractBinding?
                 .validate() == true
@@ -2880,18 +3071,38 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
                     == source.contractID
                 && historicalWorkerEvidenceExportCallEdgeSourceContractSHA256
                     == sourceSHA256
+        } else if schemaVersion > 14 {
+            let frozenSource =
+                PrimeNativeNeuralGateHistoricalWorkerEvidenceExportCallEdgeSourceContract
+                .frozenV1
+            let frozenSourceSHA256 = PrimeSHA256.hexDigest(
+                of: try PrimeCanonicalJSON.encode(frozenSource)
+            )
+            callEdgeSourceBindingValid =
+                historicalWorkerEvidenceExportCallEdgeSourceContractBinding?
+                .validate() == true
+                && historicalWorkerEvidenceExportCallEdgeSourceContractID
+                    == "prime_source_bound_historical_worker_evidence_export_call_edge_v14"
+                && historicalWorkerEvidenceExportCallEdgeSourceContractSHA256
+                    == "8112cf3e6190fcd6385614322be11f391bccc1ca411b6af85c7bd8cf57c4a4e8"
+                && frozenSource.contractID
+                    == historicalWorkerEvidenceExportCallEdgeSourceContractID
+                && frozenSourceSHA256
+                    == historicalWorkerEvidenceExportCallEdgeSourceContractSHA256
         } else {
             callEdgeSourceBindingValid =
                 historicalWorkerEvidenceExportCallEdgeSourceContractBinding
                     == nil
         }
         let projectionDesignBindingValid: Bool
-        if schemaVersion >= 15 {
+        if schemaVersion == 15 {
             let design =
                 PrimeNativeNeuralGateHistoricalEvidenceSemanticArtifactProjectionDesignContract
                 .frozenV1
             try design.validate()
-            let designSHA256 = try design.contentSHA256()
+            let designSHA256 = PrimeSHA256.hexDigest(
+                of: try PrimeCanonicalJSON.encode(design)
+            )
             projectionDesignBindingValid =
                 historicalEvidenceSemanticArtifactProjectionDesignContractBinding?
                 .validate() == true
@@ -2899,18 +3110,38 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
                     == design.contractID
                 && historicalEvidenceSemanticArtifactProjectionDesignContractSHA256
                     == designSHA256
+        } else if schemaVersion > 15 {
+            let frozenDesign =
+                PrimeNativeNeuralGateHistoricalEvidenceSemanticArtifactProjectionDesignContract
+                .frozenV1
+            let frozenDesignSHA256 = PrimeSHA256.hexDigest(
+                of: try PrimeCanonicalJSON.encode(frozenDesign)
+            )
+            projectionDesignBindingValid =
+                historicalEvidenceSemanticArtifactProjectionDesignContractBinding?
+                .validate() == true
+                && historicalEvidenceSemanticArtifactProjectionDesignContractID
+                    == "prime_source_bound_historical_evidence_semantic_artifact_projection_design_v15"
+                && historicalEvidenceSemanticArtifactProjectionDesignContractSHA256
+                    == "2d7da9703cf710f6f795900d91872780297a0e8d18f345cca302711d7fd0ec27"
+                && frozenDesign.contractID
+                    == historicalEvidenceSemanticArtifactProjectionDesignContractID
+                && frozenDesignSHA256
+                    == historicalEvidenceSemanticArtifactProjectionDesignContractSHA256
         } else {
             projectionDesignBindingValid =
                 historicalEvidenceSemanticArtifactProjectionDesignContractBinding
                     == nil
         }
         let projectionSourceBindingValid: Bool
-        if schemaVersion >= 16 {
+        if schemaVersion == 16 {
             let source =
                 PrimeNativeNeuralGateHistoricalEvidenceSemanticArtifactProjectionSourceContract
                 .frozenV1
             try source.validate()
-            let sourceSHA256 = try source.contentSHA256()
+            let sourceSHA256 = PrimeSHA256.hexDigest(
+                of: try PrimeCanonicalJSON.encode(source)
+            )
             projectionSourceBindingValid =
                 historicalEvidenceSemanticArtifactProjectionSourceContractBinding?
                 .validate() == true
@@ -2920,11 +3151,54 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
                     == sourceSHA256
                 && historicalEvidenceSemanticArtifactProjectionTargetName
                     == source.projectionTargetBinding.targetName
+        } else if schemaVersion > 16 {
+            let frozenSource =
+                PrimeNativeNeuralGateHistoricalEvidenceSemanticArtifactProjectionSourceContract
+                .frozenV1
+            let frozenSourceSHA256 = PrimeSHA256.hexDigest(
+                of: try PrimeCanonicalJSON.encode(frozenSource)
+            )
+            projectionSourceBindingValid =
+                historicalEvidenceSemanticArtifactProjectionSourceContractBinding?
+                .validate() == true
+                && historicalEvidenceSemanticArtifactProjectionSourceContractID
+                    == "prime_source_bound_historical_evidence_semantic_artifact_projection_source_v16"
+                && historicalEvidenceSemanticArtifactProjectionSourceContractSHA256
+                    == "2b9c1565f103622eb82e53e4a83820b98d6dd0d3dfd5487353dde06c5a4fd4dd"
+                && historicalEvidenceSemanticArtifactProjectionTargetName
+                    == "PrimeNativeNeuralGateHistoricalEvidenceSemanticArtifactProjection"
+                && frozenSource.contractID
+                    == historicalEvidenceSemanticArtifactProjectionSourceContractID
+                && frozenSourceSHA256
+                    == historicalEvidenceSemanticArtifactProjectionSourceContractSHA256
+                && frozenSource.projectionTargetBinding.targetName
+                    == historicalEvidenceSemanticArtifactProjectionTargetName
         } else {
             projectionSourceBindingValid =
                 historicalEvidenceSemanticArtifactProjectionSourceContractBinding
                     == nil
                 && historicalEvidenceSemanticArtifactProjectionTargetName
+                    == nil
+        }
+        let workerProjectionCallEdgeSourceBindingValid: Bool
+        if schemaVersion >= 17 {
+            let source =
+                PrimeNativeNeuralGateHistoricalWorkerSemanticArtifactProjectionCallEdgeSourceContract
+                .frozenV1
+            try source.validate()
+            let sourceSHA256 = PrimeSHA256.hexDigest(
+                of: try PrimeCanonicalJSON.encode(source)
+            )
+            workerProjectionCallEdgeSourceBindingValid =
+                historicalWorkerSemanticArtifactProjectionCallEdgeSourceContractBinding?
+                .validate() == true
+                && historicalWorkerSemanticArtifactProjectionCallEdgeSourceContractID
+                    == source.contractID
+                && historicalWorkerSemanticArtifactProjectionCallEdgeSourceContractSHA256
+                    == sourceSHA256
+        } else {
+            workerProjectionCallEdgeSourceBindingValid =
+                historicalWorkerSemanticArtifactProjectionCallEdgeSourceContractBinding
                     == nil
         }
         guard self == expected,
@@ -2942,7 +3216,8 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
               sourceBindingValid,
               callEdgeSourceBindingValid,
               projectionDesignBindingValid,
-              projectionSourceBindingValid
+              projectionSourceBindingValid,
+              workerProjectionCallEdgeSourceBindingValid
         else {
             throw PrimeNativeNeuralGateTopologyError
                 .invalidFrozenContract
@@ -3122,6 +3397,8 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
             "historical_evidence_semantic_artifact_projection_design_contract_binding"
         case historicalEvidenceSemanticArtifactProjectionSourceContractBinding =
             "historical_evidence_semantic_artifact_projection_source_contract_binding"
+        case historicalWorkerSemanticArtifactProjectionCallEdgeSourceContractBinding =
+            "historical_worker_semantic_artifact_projection_call_edge_source_contract_binding"
         case historicalEvidenceExportTargetName =
             "historical_evidence_export_target_name"
         case historicalEvidenceSemanticArtifactProjectionTargetName =
