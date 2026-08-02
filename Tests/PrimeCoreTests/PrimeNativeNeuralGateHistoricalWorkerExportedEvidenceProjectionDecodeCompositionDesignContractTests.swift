@@ -384,7 +384,7 @@ final class
         XCTAssertTrue(contract.exactTypedFailurePropagationRequired)
     }
 
-    func testV20IsDesignOnlyAndActualPackageAndWorkerRemainV19()
+    func testV20DesignOnlyStateAndPreservedV19WorkerPrefixRemainExact()
         throws
     {
         let contract = Contract.frozenV1
@@ -454,7 +454,14 @@ final class
             contract.preservedV19SourcePrefixSHA256,
             Self.v19WorkerSHA256
         )
-        let worker = try checkedInData(Self.v19WorkerRelativePath)
+        let liveWorker = try checkedInData(Self.v19WorkerRelativePath)
+        XCTAssertGreaterThan(
+            UInt64(liveWorker.count),
+            Self.v19WorkerByteCount
+        )
+        let worker = Data(
+            liveWorker.prefix(Int(Self.v19WorkerByteCount))
+        )
         XCTAssertEqual(UInt64(worker.count), Self.v19WorkerByteCount)
         XCTAssertEqual(
             PrimeSHA256.hexDigest(of: worker),
@@ -476,6 +483,21 @@ final class
         )
         XCTAssertFalse(
             workerSource.contains(contract.futureResultSwiftTypeName)
+        )
+        let continuation = try XCTUnwrap(
+            String(
+                data: liveWorker.dropFirst(Int(Self.v19WorkerByteCount)),
+                encoding: .utf8
+            )
+        )
+        XCTAssertTrue(
+            continuation.contains(contract.futureCompositionMethodName)
+        )
+        XCTAssertTrue(
+            continuation.contains(contract.futureWorkerCallEdgeMethodName)
+        )
+        XCTAssertTrue(
+            continuation.contains(contract.futureResultSwiftTypeName)
         )
 
         let package = try checkedInString("Package.swift")

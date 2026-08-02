@@ -220,7 +220,6 @@ final class
             source.primaryWorkerSource,
             source.preservedExporterCallEdgeSource,
             source.preservedProjectionCallEdgeSource,
-            source.decoderCallEdgeSource,
             source.fixtureResource,
             source.currentAdditivelyEvolvedHistoricalGuardSource,
         ] {
@@ -236,6 +235,23 @@ final class
                 identity.primeRelativePath
             )
         }
+
+        let decoderCallEdgeBytes = try checkedInData(
+            source.decoderCallEdgeSource.primeRelativePath
+        )
+        XCTAssertGreaterThan(
+            UInt64(decoderCallEdgeBytes.count),
+            source.decoderCallEdgeSource.byteCount
+        )
+        let decoderCallEdgeV19Prefix = Data(
+            decoderCallEdgeBytes.prefix(
+                Int(source.decoderCallEdgeSource.byteCount)
+            )
+        )
+        XCTAssertEqual(
+            PrimeSHA256.hexDigest(of: decoderCallEdgeV19Prefix),
+            source.decoderCallEdgeSource.sha256
+        )
 
         XCTAssertEqual(
             source.historicalV17GuardSource.primeRelativePath,
@@ -289,12 +305,28 @@ final class
         )
     }
 
-    func testWorkerDecoderEdgeIsExactBoundedZipperWithNoForbiddenAPIs()
+    func testPreservedV19WorkerDecoderPrefixIsExactBoundedZipperWithNoForbiddenAPIs()
         throws
     {
         let sourceContract = Source.frozenV1
-        let source = try checkedInString(
+        let liveSource = try checkedInData(
             Self.decoderCallEdgeRelativePath
+        )
+        XCTAssertGreaterThan(
+            UInt64(liveSource.count),
+            sourceContract.decoderCallEdgeSource.byteCount
+        )
+        let historicalPrefix = Data(
+            liveSource.prefix(
+                Int(sourceContract.decoderCallEdgeSource.byteCount)
+            )
+        )
+        XCTAssertEqual(
+            PrimeSHA256.hexDigest(of: historicalPrefix),
+            sourceContract.decoderCallEdgeSource.sha256
+        )
+        let source = try XCTUnwrap(
+            String(data: historicalPrefix, encoding: .utf8)
         )
         let importLines = source.split(
             separator: "\n",

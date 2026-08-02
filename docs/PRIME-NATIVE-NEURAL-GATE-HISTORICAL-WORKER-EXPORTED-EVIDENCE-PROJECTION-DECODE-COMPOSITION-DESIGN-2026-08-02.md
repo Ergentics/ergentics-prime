@@ -200,3 +200,36 @@ composition edge and reserved non-Codable result above. Runtime invocation,
 transport, request handling, worker enablement, I/O, publication, durability,
 receipt issuance, and source/execution authority remain later, separately
 audited checkpoints.
+
+## V21 source fulfillment
+
+V21 fulfills this design without revising the frozen V20 contract. The exact
+V19 file is preserved as a 7,050-byte prefix; a 4,304-byte suffix adds the
+private typed error, `Sendable`-only two-field result, `compose`, and
+delegate-only worker call edge. The complete live file is 11,354 bytes with
+SHA-256
+`39cd879a54d6a1198f0a863f606751b1bb9d07f1ba6eb334dd74e9a079c40e1d`.
+
+The source enforces the design order directly: unavailable-only context guard,
+one unchanged V14 Evidence/V16 context call into the maintained projector, one
+same-file private V19 decoder call, then context/projected/decoded role equality
+and exact keyed 22-item maintained-order/specification/byte-count/SHA linkage.
+The new V21 layer contains no direct Evidence field access, equality-derived
+identity, positional join, catch, retry, optional try, parser, zipper
+duplication, I/O, or transport surface. It adds no dedicated authority field
+or accessor and cannot promote the fail-closed authority metadata transitively
+retained on the maintained sets. It delegates unchanged Evidence to the
+maintained V16 projector, whose already-bound projection behavior is not
+denied or duplicated by this narrower claim.
+
+The V21 source contract and topology have canonical SHA-256 values
+`843b686a63245bffcf210441e1e98b94113b5c02b8f47b80371d3f041a205494`
+and `6d9e2787b54b6ab20f449497e6ac2b91c9945567211badfd4383f37b417f14a4`.
+The separate status-78 main cannot name the private members; compilation is
+not execution or publication. See [Prime Native Neural Gate Historical Worker
+Exported-Evidence Projection/Decode Composition Call-Edge
+Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-EXPORTED-EVIDENCE-PROJECTION-DECODE-COMPOSITION-CALL-EDGE-SOURCE-2026-08-02.md).
+
+Prime remains `ABSTAIN`. The next exact prerequisite is design-only:
+
+`design_the_bounded_unavailable_historical_worker_invocation_seam_for_the_source_bound_v21_composition_before_any_private_access_change_replay_transport_integration_request_handling_sealing_launch_execution_artifact_io_publication_or_issuing_source_binding_v7`

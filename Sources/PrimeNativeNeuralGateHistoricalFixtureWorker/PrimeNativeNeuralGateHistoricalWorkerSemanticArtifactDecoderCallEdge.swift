@@ -173,3 +173,117 @@ extension PrimeNativeNeuralGateHistoricalFixtureWorker {
         return try streamDecoder.finishSemanticArtifactSet()
     }
 }
+
+import PrimeNativeNeuralGateHistoricalEvidenceExportMechanics
+
+private enum
+    PrimeNativeNeuralGateHistoricalEvidenceProjectionDecodeCompositionError:
+    Error,
+    Equatable,
+    Sendable
+{
+    case contextMustRemainUnavailable
+    case invalidArtifactLinkage
+}
+
+private struct
+    PrimeNativeNeuralGateHistoricalEvidenceProjectionDecodeCompositionResult:
+    Sendable
+{
+    let projectedArtifacts:
+        PrimeNativeNeuralGateHistoricalProjectedArtifactSet
+    let decodedArtifacts:
+        PrimeNativeNeuralGateHistoricalDecodedSemanticArtifactSet
+}
+
+/// A compiler-checked but lexically unreachable exported-evidence composition.
+///
+/// The exact V19 decoder edge above remains the byte-for-byte source prefix.
+/// This continuation accepts only an already-formed evidence carrier and an
+/// explicit unavailable-only projection context, then reuses the maintained
+/// projector and private decoder edge. No runtime-reachable entry point or
+/// invocation wiring is added; the composition itself performs no I/O,
+/// transport, publication, receipt, source-binding, or authority action.
+extension PrimeNativeNeuralGateHistoricalFixtureWorker {
+    private static func compose(
+        evidence:
+            PrimeNativeNeuralGateHistoricalEvidenceExporter.Evidence,
+        context:
+            PrimeNativeNeuralGateHistoricalProjectionContext
+    ) throws
+        -> PrimeNativeNeuralGateHistoricalEvidenceProjectionDecodeCompositionResult
+    {
+        guard context.sourceBytesResolved == .unavailable,
+              context.adaptationProofRecomputed == .unavailable
+        else {
+            throw PrimeNativeNeuralGateHistoricalEvidenceProjectionDecodeCompositionError
+                .contextMustRemainUnavailable
+        }
+
+        let projectedArtifacts = try
+            PrimeNativeNeuralGateHistoricalEvidenceSemanticArtifactProjection
+            .project(
+                evidence: evidence,
+                context: context
+            )
+        let decodedArtifacts = try
+            sourceBoundHistoricalSemanticArtifactDecoderCallEdge(
+                projectedArtifacts: projectedArtifacts
+            )
+
+        let orderedBindings =
+            decodedArtifacts.orderedArtifactBindings
+        let projectedSpecifications =
+            projectedArtifacts.orderedArtifacts.map(\.specification)
+        let decodedSpecifications = try orderedBindings.map {
+            try $0.specification
+        }
+        guard projectedArtifacts.invocationRole
+                == context.invocationRole,
+              projectedArtifacts.invocationRole
+                == decodedArtifacts.canonicalLeaves.invocationRole,
+              projectedArtifacts.orderedArtifacts.count == 22,
+              orderedBindings.count == 22,
+              Set(orderedBindings.map(\.key)).count == 22,
+              projectedSpecifications == decodedSpecifications
+        else {
+            throw PrimeNativeNeuralGateHistoricalEvidenceProjectionDecodeCompositionError
+                .invalidArtifactLinkage
+        }
+
+        for binding in orderedBindings {
+            let projectedArtifact = try projectedArtifacts.artifact(
+                for: binding.key
+            )
+            guard projectedArtifact.specification
+                    == (try binding.specification),
+                  projectedArtifact.byteCount == binding.byteCount,
+                  projectedArtifact.sha256 == binding.sha256
+            else {
+                throw PrimeNativeNeuralGateHistoricalEvidenceProjectionDecodeCompositionError
+                    .invalidArtifactLinkage
+            }
+        }
+
+        return
+            PrimeNativeNeuralGateHistoricalEvidenceProjectionDecodeCompositionResult(
+                projectedArtifacts: projectedArtifacts,
+                decodedArtifacts: decodedArtifacts
+            )
+    }
+
+    private static func
+        sourceBoundHistoricalEvidenceProjectionDecodeCompositionCallEdge(
+            evidence:
+                PrimeNativeNeuralGateHistoricalEvidenceExporter.Evidence,
+            context:
+                PrimeNativeNeuralGateHistoricalProjectionContext
+        ) throws
+        -> PrimeNativeNeuralGateHistoricalEvidenceProjectionDecodeCompositionResult
+    {
+        try compose(
+            evidence: evidence,
+            context: context
+        )
+    }
+}
