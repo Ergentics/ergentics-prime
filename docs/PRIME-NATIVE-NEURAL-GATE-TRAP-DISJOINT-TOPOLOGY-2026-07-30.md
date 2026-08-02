@@ -590,3 +590,39 @@ Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-SEMANTIC-ARTIFACT-DECODER-SOURCE-202
 The separate read-only Swift Git workflow preflight remains a later workflow
 slice. It does not belong in the Stage-B evidence graph, and the signed-in
 GitHub app remains the PR/check/merge publication boundary.
+
+## V19 private worker/decoder call-edge topology continuation
+
+V19 preserves the V18 target count and changes only the existing unavailable
+historical worker. Its exact six V17 dependencies remain the prefix, the V18
+decoder is appended as dependency seven, and one fourth worker Swift source
+contains the direct private already-formed-V16-set-to-V18-decoder edge. The
+status-`78` main and V14/V17 private members remain byte-exact and cannot name
+the new member.
+
+Worker reachability now includes the decoder and its statistics-contract
+dependency, so exactly those two V18 worker prohibitions are removed. Every
+other prohibition remains. The decoder/statistics reverse closures are
+unchanged and still cannot reach the worker, projector, exporter, historical
+runtime, `ReplayTransport`, corrected targets, process ownership, or receipt
+ownership.
+
+The edge's global-first equal-byte zipper caps every paired or remainder feed
+at 65,536 bytes and delegates parsing and equality to the maintained V18
+decoder. It adds no parser, frame-header arithmetic, record inspection,
+filesystem/process I/O, transport, execution, or publication surface. The
+live V17 guard evolves explicitly and additively to cover the V19 source and
+dependency; its original identity remains historical rather than being
+silently overwritten.
+
+Topology stays `planned_not_materialized` and `executionImplemented` remains
+false. Package reachability is not call-edge invocation. No worker, decoder,
+gate, or model execution, durable evidence, `PASS`, receipt, source/execution
+binding V7, scientific authority, or product authority is observed or
+authorized. See [Prime Native Neural Gate Historical Worker Semantic-Artifact
+Decoder Call-Edge
+Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-SEMANTIC-ARTIFACT-DECODER-CALL-EDGE-SOURCE-2026-08-02.md).
+
+The next exact prerequisite is design-only:
+
+`design_the_unavailable_historical_worker_in_memory_exported_evidence_projection_decode_composition_boundary_accepting_only_already_formed_v14_evidence_and_explicit_v16_context_without_enabling_replay_transport_integration_request_handling_sealing_launch_execution_artifact_io_publication_or_issuing_source_binding_v7`

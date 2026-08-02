@@ -180,6 +180,9 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
         historicalSemanticArtifactDecoderSourceContractBinding:
         PrimeNativeNeuralGateTopologyContractBinding? = nil
     public private(set) var
+        historicalWorkerSemanticArtifactDecoderCallEdgeSourceContractBinding:
+        PrimeNativeNeuralGateTopologyContractBinding? = nil
+    public private(set) var
         historicalEvidenceExportTargetName:
         String? = nil
     public private(set) var
@@ -2986,6 +2989,138 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
         )
     }()
 
+    /// Appends one compiler-bound private projected-artifact-set-to-decoder
+    /// call edge to the unavailable historical worker. Every V16 producer and
+    /// V18 decoder source remains byte-exact, and no execution path is opened.
+    public static let frozenV19: Self = {
+        let previous = frozenV18
+        let source =
+            PrimeNativeNeuralGateHistoricalWorkerSemanticArtifactDecoderCallEdgeSourceContract
+            .frozenV1
+        let sourceSHA256 = try! source.contentSHA256()
+        let workerTargetName =
+            "PrimeNativeNeuralGateHistoricalFixtureWorker"
+        let statisticsTargetName =
+            "PrimeNativeNeuralGateHistoricalStatisticsArtifactContracts"
+        let decoderTargetName =
+            "PrimeNativeNeuralGateHistoricalSemanticArtifactDecoder"
+
+        let targets = previous.targetGraph.map { target in
+            guard target.targetName == workerTargetName
+            else {
+                return target
+            }
+            return Self.target(
+                target.targetName,
+                target.materialization,
+                target.directLocalDependencyNames
+                    + [decoderTargetName],
+                "internal unavailable historical worker executable target whose exact status-78 main and V14/V17 call edges remain byte-exact; V19 appends only one fourth Swift source containing a private typed already-formed V16 projected-artifact-set call into the complete product-free V18 decoder and one seventh direct dependency, with no replay transport integration, request handling, worker call-edge or public decoder-entry-point invocation, artifact I/O, publication, PASS, receipt, source binding V7, science, or product authority",
+                externalProducts:
+                    target.externalProductDependencyNames
+            )
+        }
+        let reachability = previous.forbiddenReachability.map {
+            rule in
+            guard rule.targetName == workerTargetName
+            else {
+                return rule
+            }
+            return Self.forbidden(
+                rule.targetName,
+                rule.forbiddenReachableTargetNames.filter {
+                    $0 != decoderTargetName
+                        && $0 != statisticsTargetName
+                }
+            )
+        }
+
+        return Self(
+            schemaVersion: 19,
+            contractID:
+                "prime_stage_b_historical_worker_semantic_artifact_decoder_call_edge_source_topology_v19",
+            status: previous.status,
+            executionImplemented: false,
+            historicalReplayPlanID:
+                previous.historicalReplayPlanID,
+            historicalSourceBindingContractID:
+                previous.historicalSourceBindingContractID,
+            historicalEvidenceExportDesignContractBinding:
+                previous
+                .historicalEvidenceExportDesignContractBinding,
+            historicalEvidenceExportSourceContractBinding:
+                previous
+                .historicalEvidenceExportSourceContractBinding,
+            historicalWorkerEvidenceExportCallEdgeSourceContractBinding:
+                previous
+                .historicalWorkerEvidenceExportCallEdgeSourceContractBinding,
+            historicalEvidenceSemanticArtifactProjectionDesignContractBinding:
+                previous
+                .historicalEvidenceSemanticArtifactProjectionDesignContractBinding,
+            historicalEvidenceSemanticArtifactProjectionSourceContractBinding:
+                previous
+                .historicalEvidenceSemanticArtifactProjectionSourceContractBinding,
+            historicalWorkerSemanticArtifactProjectionCallEdgeSourceContractBinding:
+                previous
+                .historicalWorkerSemanticArtifactProjectionCallEdgeSourceContractBinding,
+            historicalSemanticArtifactDecoderSourceContractBinding:
+                previous
+                .historicalSemanticArtifactDecoderSourceContractBinding,
+            historicalWorkerSemanticArtifactDecoderCallEdgeSourceContractBinding:
+                PrimeNativeNeuralGateTopologyContractBinding(
+                    contractID: source.contractID,
+                    contentSHA256: sourceSHA256
+                ),
+            historicalEvidenceExportTargetName:
+                previous.historicalEvidenceExportTargetName,
+            historicalEvidenceSemanticArtifactProjectionTargetName:
+                previous
+                .historicalEvidenceSemanticArtifactProjectionTargetName,
+            historicalStatisticsArtifactContractTargetName:
+                previous
+                .historicalStatisticsArtifactContractTargetName,
+            historicalSemanticArtifactDecoderTargetName:
+                previous
+                .historicalSemanticArtifactDecoderTargetName,
+            historicalContractsPreserved: true,
+            historicalFutureTargetGraphSuperseded: true,
+            targetGraph: targets,
+            forbiddenReachability: reachability,
+            historicalContainmentRootTargetName:
+                previous.historicalContainmentRootTargetName,
+            historicalRuntimeTargetName:
+                previous.historicalRuntimeTargetName,
+            historicalReplayTargetName:
+                previous.historicalReplayTargetName,
+            pureReplayTargetName:
+                previous.pureReplayTargetName,
+            donorAdaptationV2PreservedAsHistory: true,
+            donorAdaptationV3Required: true,
+            donorAdaptationV3RequiredDestination:
+                previous.donorAdaptationV3RequiredDestination,
+            sourceBindingV7Issued: false,
+            sourceBindingV7Prerequisite:
+                previous.sourceBindingV7Prerequisite,
+            packageCaptureAuthority:
+                "actual_package_secure_capture_only_bound_source_\(source.contractID)_sha256_\(sourceSHA256)_not_replay_transport_integration_request_handling_sealing_launch_execution_io_publication_or_source_execution_binding_v7_evidence",
+            mutationProducerDetectorTargetAssignmentDeferred:
+                false,
+            mutationProducerDetectorMustBeDisjoint: true,
+            nextImplementationPrerequisite:
+                source.nextImplementationPrerequisite,
+            authorityStatement:
+                [
+                    "This V19 topology preserves every V1 through V18 canonical identity, every frozen V16 producer source byte, and the complete frozen V18 decoder source and dependency closure.",
+                    "It changes only the existing product-free historical worker target by appending one fourth Swift source and the V18 decoder as a seventh direct dependency after the exact six-dependency V17 prefix; the target count and every other target remain exact.",
+                    "The new private cross-file member accepts only an already-formed V16 projected artifact set and contains one typed call into the complete V18 decoder; the status-78 main and private V14/V17 edges cannot name it.",
+                    "Worker target reachability now includes the decoder and its statistics-contract dependency, so exactly those two V18 worker prohibitions are removed while every remaining prohibition is preserved.",
+                    "The V18 decoder and statistics targets retain their prior forbidden-reachability rules and cannot reach the worker, projector, exporter, historical runtime, ReplayTransport, corrected targets, process ownership, or receipt targets.",
+                    "Compilation proves only the typed call edge. No test launches the worker or invokes the worker call edge, and no replay transport integration, request handling, sealing, launch, worker/projector/decoder/model execution, artifact I/O, historical evidence observation or publication, durable evidence, mechanics PASS, terminal receipt, source or execution binding V7, scientific authority, or product authority is observed or authorized.",
+                    source.authorityStatement,
+                ].joined(separator: " ")
+        )
+    }()
+
     public var historicalEvidenceExportDesignContractID:
         String?
     {
@@ -3092,6 +3227,22 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
             .contentSHA256
     }
 
+    public var
+        historicalWorkerSemanticArtifactDecoderCallEdgeSourceContractID:
+        String?
+    {
+        historicalWorkerSemanticArtifactDecoderCallEdgeSourceContractBinding?
+            .contractID
+    }
+
+    public var
+        historicalWorkerSemanticArtifactDecoderCallEdgeSourceContractSHA256:
+        String?
+    {
+        historicalWorkerSemanticArtifactDecoderCallEdgeSourceContractBinding?
+            .contentSHA256
+    }
+
     public func target(
         named name: String
     ) throws -> PrimeNativeNeuralGateTopologyTarget {
@@ -3175,6 +3326,8 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
             expected = .frozenV17
         case 18:
             expected = .frozenV18
+        case 19:
+            expected = .frozenV19
         default:
             throw PrimeNativeNeuralGateTopologyError
                 .invalidFrozenContract
@@ -3442,6 +3595,25 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
                 && historicalStatisticsArtifactContractTargetName == nil
                 && historicalSemanticArtifactDecoderTargetName == nil
         }
+        let workerDecoderCallEdgeSourceBindingValid: Bool
+        if schemaVersion >= 19 {
+            let source =
+                PrimeNativeNeuralGateHistoricalWorkerSemanticArtifactDecoderCallEdgeSourceContract
+                .frozenV1
+            try source.validate()
+            let sourceSHA256 = try source.contentSHA256()
+            workerDecoderCallEdgeSourceBindingValid =
+                historicalWorkerSemanticArtifactDecoderCallEdgeSourceContractBinding?
+                .validate() == true
+                && historicalWorkerSemanticArtifactDecoderCallEdgeSourceContractID
+                    == source.contractID
+                && historicalWorkerSemanticArtifactDecoderCallEdgeSourceContractSHA256
+                    == sourceSHA256
+        } else {
+            workerDecoderCallEdgeSourceBindingValid =
+                historicalWorkerSemanticArtifactDecoderCallEdgeSourceContractBinding
+                    == nil
+        }
         guard self == expected,
               status == .plannedNotMaterialized,
               !executionImplemented,
@@ -3459,7 +3631,8 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
               projectionDesignBindingValid,
               projectionSourceBindingValid,
               workerProjectionCallEdgeSourceBindingValid,
-              historicalDecoderSourceBindingValid
+              historicalDecoderSourceBindingValid,
+              workerDecoderCallEdgeSourceBindingValid
         else {
             throw PrimeNativeNeuralGateTopologyError
                 .invalidFrozenContract
@@ -3643,6 +3816,8 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
             "historical_worker_semantic_artifact_projection_call_edge_source_contract_binding"
         case historicalSemanticArtifactDecoderSourceContractBinding =
             "historical_semantic_artifact_decoder_source_contract_binding"
+        case historicalWorkerSemanticArtifactDecoderCallEdgeSourceContractBinding =
+            "historical_worker_semantic_artifact_decoder_call_edge_source_contract_binding"
         case historicalEvidenceExportTargetName =
             "historical_evidence_export_target_name"
         case historicalEvidenceSemanticArtifactProjectionTargetName =

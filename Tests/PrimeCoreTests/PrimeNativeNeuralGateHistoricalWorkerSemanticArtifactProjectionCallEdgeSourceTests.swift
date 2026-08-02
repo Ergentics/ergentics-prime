@@ -17,6 +17,8 @@ final class
         "Sources/PrimeNativeNeuralGateHistoricalFixtureWorker/PrimeNativeNeuralGateHistoricalEvidenceExportCallEdge.swift"
     private static let projectionCallEdgeRelativePath =
         "Sources/PrimeNativeNeuralGateHistoricalFixtureWorker/PrimeNativeNeuralGateHistoricalWorkerSemanticArtifactProjectionCallEdge.swift"
+    private static let decoderCallEdgeRelativePath =
+        "Sources/PrimeNativeNeuralGateHistoricalFixtureWorker/PrimeNativeNeuralGateHistoricalWorkerSemanticArtifactDecoderCallEdge.swift"
     private static let fixtureRelativePath =
         "Sources/PrimeNativeNeuralGateHistoricalFixtureWorker/HistoricalFixtureEvidence/Package.resolved"
     private static let projectionCallEdgeByteCount: UInt64 = 1_227
@@ -151,7 +153,7 @@ final class
         }
     }
 
-    func testWorkerInventoryPreservesFrozenInputsAndAddsOnlyTheThirdSource()
+    func testWorkerInventoryPreservesFrozenV17InputsAndAddsOnlyTheV19Source()
         throws
     {
         let expected: [(String, UInt64, String)] = [
@@ -195,12 +197,13 @@ final class
                 Self.fixtureRelativePath,
                 Self.exporterCallEdgeRelativePath,
                 Self.primaryWorkerRelativePath,
+                Self.decoderCallEdgeRelativePath,
                 Self.projectionCallEdgeRelativePath,
             ]
         )
     }
 
-    func testMainAndV14EdgeCannotNameTheNewPrivateMember()
+    func testPriorWorkerSourcesCannotNameLaterPrivateMembers()
         throws
     {
         let main = try checkedInString(
@@ -209,15 +212,23 @@ final class
         let exporterEdge = try checkedInString(
             Self.exporterCallEdgeRelativePath
         )
+        let projectionEdge = try checkedInString(
+            Self.projectionCallEdgeRelativePath
+        )
         let methodName =
             "sourceBoundHistoricalEvidenceSemanticArtifactProjectionCallEdge"
         let projectorType =
             "PrimeNativeNeuralGateHistoricalEvidenceSemanticArtifactProjection"
+        let decoderMethodName =
+            "sourceBoundHistoricalSemanticArtifactDecoderCallEdge"
 
         XCTAssertFalse(main.contains(methodName))
         XCTAssertFalse(main.contains(projectorType))
         XCTAssertFalse(exporterEdge.contains(methodName))
         XCTAssertFalse(exporterEdge.contains(projectorType))
+        XCTAssertFalse(main.contains(decoderMethodName))
+        XCTAssertFalse(exporterEdge.contains(decoderMethodName))
+        XCTAssertFalse(projectionEdge.contains(decoderMethodName))
         XCTAssertFalse(main.contains("CommandLine.arguments"))
         let compactMain = main.filter { !$0.isWhitespace }
         XCTAssertTrue(
@@ -231,14 +242,14 @@ final class
         )
     }
 
-    func testPackageAppendsOnlyTheSixthWorkerDependency()
+    func testPackagePreservesTheV17PrefixAndAppendsOnlyTheV19Dependency()
         throws
     {
         let package = try checkedInString("Package.swift")
             .filter { !$0.isWhitespace }
         XCTAssertTrue(
             package.contains(
-                #".executableTarget(name:"PrimeNativeNeuralGateHistoricalFixtureWorker",dependencies:["PrimeCore","ErgenticsPrimeRuntime","PrimeNativeNeuralGateHistoricalReplayMechanics","PrimeNativeNeuralGateReplayTransport","PrimeNativeNeuralGateHistoricalEvidenceExportMechanics","PrimeNativeNeuralGateHistoricalEvidenceSemanticArtifactProjection",],resources:[.copy("HistoricalFixtureEvidence"),])"#
+                #".executableTarget(name:"PrimeNativeNeuralGateHistoricalFixtureWorker",dependencies:["PrimeCore","ErgenticsPrimeRuntime","PrimeNativeNeuralGateHistoricalReplayMechanics","PrimeNativeNeuralGateReplayTransport","PrimeNativeNeuralGateHistoricalEvidenceExportMechanics","PrimeNativeNeuralGateHistoricalEvidenceSemanticArtifactProjection","PrimeNativeNeuralGateHistoricalSemanticArtifactDecoder",],resources:[.copy("HistoricalFixtureEvidence"),])"#
             )
         )
         XCTAssertTrue(

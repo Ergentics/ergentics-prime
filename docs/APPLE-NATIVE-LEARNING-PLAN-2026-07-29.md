@@ -1693,3 +1693,33 @@ That later edge may pass only the already-formed V16 artifact set into the
 complete V18 decoder. It must not reconstruct identity, default observation
 state, make `ReplayTransport` reachable, perform I/O, execute the worker, or
 widen the authority ceiling.
+
+## Additive V19 worker/decoder call-edge continuation
+
+V19 now satisfies that V18 prerequisite directly in Swift. The unavailable
+historical worker preserves the byte-exact V11 `main`, V14 exporter edge, and
+V17 projector edge, appends one fourth private cross-file source, and appends
+the unchanged product-free V18 decoder as dependency seven after the exact V17
+six-dependency prefix. The new member accepts only an already-formed V16
+projected artifact set. Status `78` remains unconditional, and no prior source
+can name the private member.
+
+The edge performs exact keyed admission of the six canonical leaves and uses
+the maintained V18 stream decoder. Its global-first equal-byte zipper caps
+every fragment at 65,536 bytes, drains bounded remainders, and delegates frame
+parsing and exact global/chunk equality to V18. It adds no custom parser,
+header arithmetic, record inspection, filesystem/process I/O, transport,
+publication, or execution behavior. The evolved live V17 guard is recorded as
+an additive continuation while its old byte identity remains explicit
+history; it does not pretend the guard file stayed unchanged.
+
+This changes no learning, training, Metal, quantization, science, or product
+gate. The worker and decoder edge were compiled but not invoked. No historical
+artifact observation, mechanics `PASS`, receipt, source/execution binding V7,
+scientific authority, or product authority exists. See [Prime Native Neural
+Gate Historical Worker Semantic-Artifact Decoder Call-Edge
+Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-SEMANTIC-ARTIFACT-DECODER-CALL-EDGE-SOURCE-2026-08-02.md).
+
+The next exact prerequisite is deliberately design-only:
+
+`design_the_unavailable_historical_worker_in_memory_exported_evidence_projection_decode_composition_boundary_accepting_only_already_formed_v14_evidence_and_explicit_v16_context_without_enabling_replay_transport_integration_request_handling_sealing_launch_execution_artifact_io_publication_or_issuing_source_binding_v7`

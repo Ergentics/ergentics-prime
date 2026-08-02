@@ -756,3 +756,35 @@ that same user could attempt a transient swap/load/restore attack; resistance
 to that actor is not claimed. Closing that boundary requires a separately
 isolated runtime identity or exact loader-return attestation from the
 maintained MLX runtime.
+
+## Additive V19 historical worker/decoder call edge
+
+V19 satisfies the V18 call-edge prerequisite without rewriting the V16
+projector, V18 decoder, or prior worker sources. The unavailable historical
+worker appends one fourth Swift source and the product-free V18 decoder as its
+seventh direct dependency after the exact six-dependency V17 prefix. The new
+cross-file `private` member accepts only an already-formed V16 projected
+artifact set; the exact `main` remains an unconditional status-`78` exit and
+cannot name the member. The private V14 and V17 edges cannot name it either.
+
+The edge validates the set, forms the six canonical inputs by exact typed key,
+and drives the maintained V18 decoder with a global-first equal-byte zipper.
+Every paired global/chunk feed has the same byte count and is capped at 65,536
+bytes; bounded chunk and global remainders are drained through the maintained
+decoder finish protocol. V19 adds no JSON/frame parser, frame-header arithmetic,
+record inspection, positional join, filesystem/process I/O, or transport API.
+
+The live V17 guard evolves transparently from its frozen historical identity
+only to admit the actual fourth source and seventh dependency while retaining
+the exact V11/V14/V17 source assertions. Package reachability is not
+invocation: no worker, exporter, projector, decoder, gate, or model ran, and no
+artifact was read from or written to a filesystem, published, or authorized.
+`ReplayTransport` integration, request handling, sealing, launch, mechanics
+`PASS`, receipt, source/execution binding V7, scientific authority, and product
+authority remain false. See [Prime Native Neural Gate Historical Worker
+Semantic-Artifact Decoder Call-Edge
+Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-SEMANTIC-ARTIFACT-DECODER-CALL-EDGE-SOURCE-2026-08-02.md).
+
+The next exact prerequisite is design-only:
+
+`design_the_unavailable_historical_worker_in_memory_exported_evidence_projection_decode_composition_boundary_accepting_only_already_formed_v14_evidence_and_explicit_v16_context_without_enabling_replay_transport_integration_request_handling_sealing_launch_execution_artifact_io_publication_or_issuing_source_binding_v7`
