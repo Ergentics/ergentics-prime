@@ -259,3 +259,25 @@ All transport, request handling, worker execution, artifact I/O, publication,
 product authority remain false. The next exact prerequisite is:
 
 `source_bind_the_unavailable_historical_worker_exported_evidence_projection_decode_composition_call_edge_as_an_append_only_same_file_v19_decoder_edge_continuation_accepting_only_already_formed_v14_evidence_and_explicit_v16_context_without_changing_package_topology_or_enabling_replay_transport_integration_request_handling_sealing_launch_execution_artifact_io_publication_or_issuing_source_binding_v7`
+
+## V21 same-file decoder-edge reuse
+
+V21 appends the designed composition after the exact V19 decoder-edge bytes.
+It invokes that private edge once with the exact projected set; it does not call
+this target's public decoder APIs directly, duplicate the global/chunk zipper,
+add a parser, or widen access. The returned decoded set is linked to the
+retained projected set across one role and all 22 typed keys by maintained
+order and exact keyed specification, byte count, and SHA-256.
+
+The append is compiler-bound but unreachable from the separate status-78
+`main`. No decoder runtime observation, artifact I/O, transport, publication,
+receipt, V7, science, or product authority follows. Source/topology SHA-256
+values are `843b686a63245bffcf210441e1e98b94113b5c02b8f47b80371d3f041a205494`
+and `6d9e2787b54b6ab20f449497e6ac2b91c9945567211badfd4383f37b417f14a4`.
+See [Prime Native Neural Gate Historical Worker Exported-Evidence Projection/
+Decode Composition Call-Edge
+Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-EXPORTED-EVIDENCE-PROJECTION-DECODE-COMPOSITION-CALL-EDGE-SOURCE-2026-08-02.md).
+
+The next exact prerequisite is design-only:
+
+`design_the_bounded_unavailable_historical_worker_invocation_seam_for_the_source_bound_v21_composition_before_any_private_access_change_replay_transport_integration_request_handling_sealing_launch_execution_artifact_io_publication_or_issuing_source_binding_v7`

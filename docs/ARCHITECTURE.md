@@ -821,3 +821,30 @@ Design](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-EXPORTED-EVIDENCE-PROJECTION-
 The next exact prerequisite is:
 
 `source_bind_the_unavailable_historical_worker_exported_evidence_projection_decode_composition_call_edge_as_an_append_only_same_file_v19_decoder_edge_continuation_accepting_only_already_formed_v14_evidence_and_explicit_v16_context_without_changing_package_topology_or_enabling_replay_transport_integration_request_handling_sealing_launch_execution_artifact_io_publication_or_issuing_source_binding_v7`
+
+## V21 private composition source boundary
+
+V21 preserves the exact V20 graph and appends only the designed private source
+to the existing V19 decoder-edge file. The maintained V19 bytes remain the
+first 7,050 bytes. The suffix admits explicit unavailable-only context, calls
+V16 projection once and same-file V19 decoding once, and performs a keyed
+22-artifact role/order/specification/byte-count/SHA linkage before constructing
+the private `Sendable` result.
+
+No package edge, result serialization, positional join, direct Evidence
+inspection in the new V21 layer, access widening, runtime entry point, I/O,
+transport, or publication surface is added. V21 delegates unchanged Evidence
+to the maintained V16 projector, whose existing derived-artifact encoding and
+hashing behavior remains bound. The separate main remains an unconditional
+status-78 exit and cannot name the private edge. Canonical source/topology
+SHA-256 values are
+`843b686a63245bffcf210441e1e98b94113b5c02b8f47b80371d3f041a205494` and
+`6d9e2787b54b6ab20f449497e6ac2b91c9945567211badfd4383f37b417f14a4`.
+See [Prime Native Neural Gate Historical Worker Exported-Evidence Projection/
+Decode Composition Call-Edge
+Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-EXPORTED-EVIDENCE-PROJECTION-DECODE-COMPOSITION-CALL-EDGE-SOURCE-2026-08-02.md).
+
+All execution and authority claims remain false; Prime remains `ABSTAIN`. The
+next exact prerequisite is:
+
+`design_the_bounded_unavailable_historical_worker_invocation_seam_for_the_source_bound_v21_composition_before_any_private_access_change_replay_transport_integration_request_handling_sealing_launch_execution_artifact_io_publication_or_issuing_source_binding_v7`

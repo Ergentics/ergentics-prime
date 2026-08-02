@@ -660,3 +660,29 @@ Design](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-EXPORTED-EVIDENCE-PROJECTION-
 The next exact prerequisite is:
 
 `source_bind_the_unavailable_historical_worker_exported_evidence_projection_decode_composition_call_edge_as_an_append_only_same_file_v19_decoder_edge_continuation_accepting_only_already_formed_v14_evidence_and_explicit_v16_context_without_changing_package_topology_or_enabling_replay_transport_integration_request_handling_sealing_launch_execution_artifact_io_publication_or_issuing_source_binding_v7`
+
+## V21 composition source topology
+
+Topology V21 adds only the source-contract binding for
+`prime_source_bound_historical_worker_exported_evidence_projection_decode_composition_call_edge_v21`.
+Its canonical SHA-256 is
+`6d9e2787b54b6ab20f449497e6ac2b91c9945567211badfd4383f37b417f14a4`;
+the bound source-contract SHA-256 is
+`843b686a63245bffcf210441e1e98b94113b5c02b8f47b80371d3f041a205494`.
+
+The V20 graph, forbidden reachability, target count, materialization states,
+dependency order, products, resources, historical bindings, and status remain
+exact. The existing fourth worker file evolves append-only, so neither the
+worker inventory nor `Package.swift` changes. The separate status-78 main
+cannot name the private composition edge, and no target gains reachability.
+
+The new source guard/projects/decodes/links in memory only. No transport,
+request, process, I/O, publication, receipt, model, mechanics `PASS`, V7,
+scientific, or product authority is observed or authorized. See [Prime Native
+Neural Gate Historical Worker Exported-Evidence Projection/Decode Composition
+Call-Edge
+Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-EXPORTED-EVIDENCE-PROJECTION-DECODE-COMPOSITION-CALL-EDGE-SOURCE-2026-08-02.md).
+
+Prime remains `ABSTAIN`. The next exact prerequisite is:
+
+`design_the_bounded_unavailable_historical_worker_invocation_seam_for_the_source_bound_v21_composition_before_any_private_access_change_replay_transport_integration_request_handling_sealing_launch_execution_artifact_io_publication_or_issuing_source_binding_v7`
