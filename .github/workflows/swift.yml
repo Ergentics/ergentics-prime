@@ -34,7 +34,7 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
         with:
           ref: ${{ github.sha }}
-          path: prime
+          path: ergentics-prime
           fetch-depth: 1
           persist-credentials: false
           show-progress: false
@@ -63,7 +63,7 @@ jobs:
           token: ${{ secrets.ERGENTICS_PAT }}
 
       - name: Run the exact root Release gates
-        working-directory: prime
+        working-directory: ergentics-prime
         run: bash .github/scripts/prime-driver-v2-ci.sh root-release
 
   nested-driver:
@@ -86,7 +86,7 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
         with:
           ref: ${{ github.sha }}
-          path: prime
+          path: ergentics-prime
           fetch-depth: 1
           persist-credentials: false
           show-progress: false
@@ -115,7 +115,7 @@ jobs:
           token: ${{ secrets.ERGENTICS_PAT }}
 
       - name: Run the exact nested Driver gate
-        working-directory: prime
+        working-directory: ergentics-prime
         run: >-
           bash .github/scripts/prime-driver-v2-ci.sh nested
           ${{ matrix.configuration }}
