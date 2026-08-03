@@ -133,3 +133,10 @@ The plan, strict parsers, raw-byte bindings, three-lane reconciliation, and
 mutation tests now exist; lease acquisition, process launch, scratch-root
 orchestration, staging, and durable receipt publication do not. See
 `PRIME-SWIFT-VALIDATION-EVIDENCE-CONTRACT-2026-08-02.md` for that exact line.
+
+The additive V2 foundation now also fixes the deterministic shard/invocation
+plan, phase and shard receipt chains, paired comparison, and a closed
+secure-child fixture capability. It still does not launch the root suite or
+publish a complete run. See
+`PRIME-SWIFT-VALIDATION-DRIVER-V2-FOUNDATION-2026-08-02.md` for the implemented
+boundary and remaining executor work.

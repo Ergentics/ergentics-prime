@@ -161,6 +161,8 @@ final class PrimeNativeNeuralGateSecureChildLifecycle:
         .directPIDOnly
     private(set) var resumed = false
     private(set) var hasReaped = false
+    private(set) var exactPIDWaitObservation:
+        PrimeNativeNeuralGateExactPIDWaitObservation?
     private var deathObservedAt: UInt64?
     private var deathObservationStarted =
         false
@@ -527,7 +529,7 @@ final class PrimeNativeNeuralGateSecureChildLifecycle:
                         .processGroupNotEmptyAfterReap
                     )
                 }
-                return .reaped(
+                let observation =
                     PrimeNativeNeuralGateExactPIDWaitObservation(
                         requestedProcessIdentifier:
                             processIdentifier,
@@ -540,7 +542,8 @@ final class PrimeNativeNeuralGateSecureChildLifecycle:
                         returnedMonotonicNanoseconds:
                             operations.now()
                     )
-                )
+                exactPIDWaitObservation = observation
+                return .reaped(observation)
             case .interrupted:
                 interruptedCount += 1
                 guard interruptedCount

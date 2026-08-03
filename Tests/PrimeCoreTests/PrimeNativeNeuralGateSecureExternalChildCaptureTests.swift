@@ -1,4 +1,5 @@
 import Darwin
+import Dispatch
 import Foundation
 import XCTest
 @testable import PrimeCore
@@ -311,6 +312,11 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
             source.contains("Darwin._exit(70)"),
             "an uncontained child or drain must not fall through as an ordinary thrown rejection"
         )
+
+        try assertSecureChildKernelFacadeRemainsClosedAndSwiftNative()
+        try assertSecureChildFileBackedBoundedDrainPersistsPrefixAndDrainsThroughEOF()
+        try assertSecureChildCaptureBindingRejectsSameNameReplacement()
+        try assertSecureChildFixtureResultBindingRejectsSameNameReplacement()
     }
 
     func testMappedRegionEnumeratorAcceptsTerminalEINVALAfterExactMatch()
@@ -790,19 +796,20 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
             verifier.standardOutputData
         )
         // Intentionally resealed from two matching live Release canary
-        // observations after package-graph changes through V19 and source-
-        // inventory changes through V27 exposed the stale V11-era receipt.
+        // observations after package-graph changes through V19, source-
+        // inventory changes through V27, and the V2 validation-driver source
+        // addition exposed the stale V11-era receipt.
         // This is actual-package secure-capture evidence, not source/execution-
         // binding V7 reconciliation or worker execution.
         XCTAssertEqual(
             probe.standardOutputData.count,
-            62_855
+            62_895
         )
         XCTAssertEqual(
             PrimeSHA256.hexDigest(
                 of: probe.standardOutputData
             ),
-            "29c85c6fc6362f7ed035cfc4c9a02714e2841072f26e4f5ef5f47fcd3aee6f8e"
+            "04ff83a02c32bb900b0735b63aa724bd334b6dc3116f29dc572a3f48d1e9e3af"
         )
         XCTAssertEqual(
             probe.validatedPrimeSourceSnapshot,
@@ -842,6 +849,353 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
             probe.evidence.supervisorProcessIdentifier,
             getpid()
         )
+    }
+
+    private func assertSecureChildFileBackedBoundedDrainPersistsPrefixAndDrainsThroughEOF()
+        throws
+    {
+        let directory = FileManager.default.temporaryDirectory
+            .appendingPathComponent(
+                "prime-secure-child-drain-\(UUID().uuidString)",
+                isDirectory: true
+            )
+        try FileManager.default.createDirectory(
+            at: directory,
+            withIntermediateDirectories: false,
+            attributes: [.posixPermissions: 0o700]
+        )
+        defer { try? FileManager.default.removeItem(at: directory) }
+
+        let outputURL = directory.appendingPathComponent("prefix.bin")
+        let output = Darwin.open(
+            outputURL.path,
+            O_RDWR | O_CREAT | O_EXCL | O_CLOEXEC,
+            mode_t(0o600)
+        )
+        XCTAssertGreaterThanOrEqual(output, 0)
+        var pipeDescriptors: [Int32] = [-1, -1]
+        XCTAssertEqual(pipe(&pipeDescriptors), 0)
+        let readFlags = fcntl(pipeDescriptors[0], F_GETFL)
+        XCTAssertGreaterThanOrEqual(readFlags, 0)
+        XCTAssertEqual(
+            fcntl(
+                pipeDescriptors[0],
+                F_SETFL,
+                readFlags | O_NONBLOCK
+            ),
+            0
+        )
+
+        let drain = PrimeSecureChildFileBackedBoundedDrain(
+            inputDescriptor: pipeDescriptors[0],
+            outputDescriptor: output,
+            maximumByteCount: 32
+        )
+        let group = DispatchGroup()
+        drain.start(group: group)
+
+        let bytes = [UInt8](0 ..< 128)
+        try writeSecureChildBytes(
+            bytes,
+            descriptor: pipeDescriptors[1]
+        )
+        XCTAssertEqual(Darwin.close(pipeDescriptors[1]), 0)
+        XCTAssertEqual(
+            group.wait(timeout: .now() + .seconds(3)),
+            .success
+        )
+
+        let snapshot = drain.snapshot()
+        XCTAssertEqual(snapshot.totalByteCount, 128)
+        XCTAssertEqual(snapshot.capturedByteCount, 32)
+        XCTAssertTrue(snapshot.overflowed)
+        XCTAssertTrue(snapshot.workerFinished)
+        XCTAssertTrue(snapshot.reachedEOF)
+        XCTAssertEqual(snapshot.readErrorNumber, 0)
+        XCTAssertEqual(snapshot.writeErrorNumber, 0)
+        XCTAssertTrue(snapshot.outputMetadataObserved)
+        XCTAssertGreaterThan(snapshot.outputDeviceID, 0)
+        XCTAssertGreaterThan(snapshot.outputInode, 0)
+        XCTAssertEqual(snapshot.outputByteCount, 32)
+        XCTAssertEqual(snapshot.outputPermissionMode, 0o444)
+        XCTAssertEqual(
+            snapshot.outputSHA256,
+            PrimeSHA256.hexDigest(of: Data(bytes.prefix(32)))
+        )
+        XCTAssertEqual(
+            try Data(contentsOf: outputURL),
+            Data(bytes.prefix(32))
+        )
+        let attributes = try FileManager.default.attributesOfItem(
+            atPath: outputURL.path
+        )
+        XCTAssertEqual(
+            (attributes[.posixPermissions] as? NSNumber)?.intValue,
+            0o444
+        )
+    }
+
+    private func assertSecureChildCaptureBindingRejectsSameNameReplacement()
+        throws
+    {
+        let created = FileManager.default.temporaryDirectory
+            .appendingPathComponent(
+                "prime-secure-child-replacement-\(UUID().uuidString)",
+                isDirectory: true
+            )
+        try FileManager.default.createDirectory(
+            at: created,
+            withIntermediateDirectories: false,
+            attributes: [.posixPermissions: 0o700]
+        )
+        var canonicalBuffer = [CChar](
+            repeating: 0,
+            count: Int(PATH_MAX)
+        )
+        XCTAssertNotNil(
+            created.path.withCString { input in
+                canonicalBuffer.withUnsafeMutableBufferPointer {
+                    realpath(input, $0.baseAddress)
+                }
+            }
+        )
+        let directory = URL(
+            fileURLWithPath: String(cString: canonicalBuffer),
+            isDirectory: true
+        )
+        XCTAssertEqual(chmod(directory.path, mode_t(0o700)), 0)
+        defer { try? FileManager.default.removeItem(at: directory) }
+
+        let held = try PrimeSecureChildHeldDirectory(
+            url: directory,
+            label: "replacement_test",
+            permitsControlledEntryMutations: true
+        )
+        let leaf = "captured.bin"
+        let output = try held.createEmptyCaptureFile(leaf: leaf)
+        var pipeDescriptors: [Int32] = [-1, -1]
+        XCTAssertEqual(pipe(&pipeDescriptors), 0)
+        let drain = PrimeSecureChildFileBackedBoundedDrain(
+            inputDescriptor: pipeDescriptors[0],
+            outputDescriptor: output,
+            maximumByteCount: 32
+        )
+        let group = DispatchGroup()
+        drain.start(group: group)
+        let bytes = [UInt8](0 ..< 64)
+        try writeSecureChildBytes(
+            bytes,
+            descriptor: pipeDescriptors[1]
+        )
+        XCTAssertEqual(Darwin.close(pipeDescriptors[1]), 0)
+        XCTAssertEqual(
+            group.wait(timeout: .now() + .seconds(3)),
+            .success
+        )
+        let snapshot = drain.snapshot()
+        try held.requireImmutableCapture(
+            leaf: leaf,
+            snapshot: snapshot
+        )
+
+        let path = directory.appendingPathComponent(leaf).path
+        XCTAssertEqual(Darwin.unlink(path), 0)
+        let replacement = Darwin.open(
+            path,
+            O_RDWR | O_CREAT | O_EXCL | O_NOFOLLOW | O_CLOEXEC,
+            mode_t(0o600)
+        )
+        XCTAssertGreaterThanOrEqual(replacement, 0)
+        try writeSecureChildBytes(
+            Array(bytes.prefix(32)),
+            descriptor: replacement
+        )
+        XCTAssertEqual(fchmod(replacement, mode_t(0o444)), 0)
+        XCTAssertEqual(fsync(replacement), 0)
+        XCTAssertEqual(fcntl(replacement, F_FULLFSYNC), 0)
+        XCTAssertEqual(Darwin.close(replacement), 0)
+
+        XCTAssertThrowsError(
+            try held.requireImmutableCapture(
+                leaf: leaf,
+                snapshot: snapshot
+            )
+        )
+    }
+
+    private func assertSecureChildFixtureResultBindingRejectsSameNameReplacement()
+        throws
+    {
+        let directory = try makeCanonicalPrivateSecureChildDirectory(
+            prefix: "prime-secure-child-result-replacement"
+        )
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let held = try PrimeSecureChildHeldDirectory(
+            url: directory,
+            label: "result_replacement_test",
+            permitsControlledEntryMutations: true
+        )
+        let resultPath = directory.appendingPathComponent(
+            PrimeSecureChildFixtureInvocation.resultLeaf
+        ).path
+        let invocation = try PrimeSecureChildFixtureInvocation(
+            mode: .pass,
+            resultAbsolutePath: resultPath
+        )
+        let expected = try XCTUnwrap(invocation.expectedResultData)
+        let original = Darwin.open(
+            resultPath,
+            O_WRONLY | O_CREAT | O_EXCL | O_NOFOLLOW | O_CLOEXEC,
+            mode_t(0o600)
+        )
+        XCTAssertGreaterThanOrEqual(original, 0)
+        try writeSecureChildBytes(Array(expected), descriptor: original)
+        XCTAssertEqual(fsync(original), 0)
+        XCTAssertEqual(fcntl(original, F_FULLFSYNC), 0)
+        XCTAssertEqual(Darwin.close(original), 0)
+        try held.admitExpectedFixtureResult(expectsResult: true)
+
+        XCTAssertEqual(Darwin.unlink(resultPath), 0)
+        let replacement = Darwin.open(
+            resultPath,
+            O_WRONLY | O_CREAT | O_EXCL | O_NOFOLLOW | O_CLOEXEC,
+            mode_t(0o600)
+        )
+        XCTAssertGreaterThanOrEqual(replacement, 0)
+        try writeSecureChildBytes(Array(expected), descriptor: replacement)
+        XCTAssertEqual(fsync(replacement), 0)
+        XCTAssertEqual(fcntl(replacement, F_FULLFSYNC), 0)
+        XCTAssertEqual(Darwin.close(replacement), 0)
+
+        XCTAssertThrowsError(
+            try held.readAndFreezeFixtureResult(
+                invocation: invocation
+            )
+        )
+    }
+
+    private func assertSecureChildKernelFacadeRemainsClosedAndSwiftNative()
+        throws
+    {
+        let root = packageRoot()
+        let source = try String(
+            contentsOf: root.appendingPathComponent(
+                "Sources/PrimeCore/PrimeSecureChildKernel.swift"
+            ),
+            encoding: .utf8
+        )
+        let spawnAdapterSource = try String(
+            contentsOf: root.appendingPathComponent(
+                "Sources/PrimeCore/PrimeNativeNeuralGateSecureExternalChildCapture.swift"
+            ),
+            encoding: .utf8
+        )
+
+        XCTAssertEqual(
+            PrimeValidationWorkflowFixtureChildMode.allCases.count,
+            8
+        )
+        XCTAssertEqual(
+            PrimeSecureChildFixtureBinaryPin.byteCount,
+            88_976
+        )
+        XCTAssertEqual(
+            PrimeSecureChildFixtureBinaryPin.sha256,
+            "470a32c4387b838e6f4a6540c2729cec03963767ad7d418912121b4d01e5267e"
+        )
+        XCTAssertTrue(
+            source.contains(
+                "private init(\n        prepared: PrimeSecureChildPreparedFixture"
+            )
+        )
+        XCTAssertFalse(source.contains("public init("))
+        XCTAssertFalse(source.contains("Foundation.Process"))
+        XCTAssertFalse(source.contains("/bin/sh"))
+        XCTAssertFalse(source.lowercased().contains("python"))
+        XCTAssertTrue(spawnAdapterSource.contains("POSIX_SPAWN"))
+        XCTAssertTrue(source.contains("O_NOFOLLOW_ANY"))
+        XCTAssertTrue(source.contains("static let expectedByteCount"))
+        XCTAssertTrue(source.contains("static let expectedSHA256"))
+        XCTAssertTrue(source.contains("digest == expectedSHA256"))
+        XCTAssertTrue(
+            source.contains("fixture_binary_pin_unconfigured_abstain")
+        )
+        XCTAssertTrue(
+            source.contains("captureMappedExecutableForSecureChild")
+        )
+        XCTAssertTrue(source.contains("cleanupRejectedCapture()"))
+        XCTAssertTrue(source.contains("exactPIDWaitObservation"))
+        XCTAssertTrue(
+            spawnAdapterSource.contains(
+                "PrimeSecureChildPath\n                          .canonicalPath(mappedPath)"
+            )
+        )
+        XCTAssertFalse(
+            spawnAdapterSource.contains(
+                "mappedPath\n                      ).standardizedFileURL"
+            )
+        )
+    }
+
+    private func writeSecureChildBytes(
+        _ bytes: [UInt8],
+        descriptor: Int32
+    ) throws {
+        var offset = 0
+        while offset < bytes.count {
+            let count = bytes.withUnsafeBytes {
+                Darwin.write(
+                    descriptor,
+                    $0.baseAddress!.advanced(by: offset),
+                    $0.count - offset
+                )
+            }
+            if count < 0, errno == EINTR { continue }
+            guard count > 0 else {
+                throw POSIXError(
+                    POSIXErrorCode(rawValue: errno) ?? .EIO
+                )
+            }
+            offset += count
+        }
+    }
+
+    private func makeCanonicalPrivateSecureChildDirectory(
+        prefix: String
+    ) throws -> URL {
+        let created = FileManager.default.temporaryDirectory
+            .appendingPathComponent(
+                "\(prefix)-\(UUID().uuidString)",
+                isDirectory: true
+            )
+        try FileManager.default.createDirectory(
+            at: created,
+            withIntermediateDirectories: false,
+            attributes: [.posixPermissions: 0o700]
+        )
+        var canonicalBuffer = [CChar](
+            repeating: 0,
+            count: Int(PATH_MAX)
+        )
+        guard created.path.withCString({ input in
+            canonicalBuffer.withUnsafeMutableBufferPointer {
+                realpath(input, $0.baseAddress)
+            }
+        }) != nil else {
+            throw POSIXError(
+                POSIXErrorCode(rawValue: errno) ?? .EIO
+            )
+        }
+        let result = URL(
+            fileURLWithPath: String(cString: canonicalBuffer),
+            isDirectory: true
+        )
+        guard chmod(result.path, mode_t(0o700)) == 0 else {
+            throw POSIXError(
+                POSIXErrorCode(rawValue: errno) ?? .EIO
+            )
+        }
+        return result
     }
 
     private func packageRoot() -> URL {
