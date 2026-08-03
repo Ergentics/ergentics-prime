@@ -295,6 +295,8 @@ final class PrimeSecureChildSupervisionCapability {
         else {
             return false
         }
+        spawn
+            .recordIsolatedSessionAndDedicatedGroupAuthority()
         return lifecycle
             .establishIsolatedSessionAndDedicatedGroup()
     }

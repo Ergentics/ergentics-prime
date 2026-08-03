@@ -32,12 +32,18 @@ The substrate binds one non-restorable live-child obligation to:
 - descriptor-rooted suspended-child cwd proof;
 - full mapped-region transcript joined to a held executable identity;
 - independent memory and file EOF drains; and
-- process-group-empty proof before the spawn obligation can be discharged.
+- process-group-empty proof before a post-proof spawn obligation can be
+  discharged, with exact-PID reap sufficient while the pre-proof child remains
+  suspended.
 
-Abandoning an owned live child kills its dedicated process group and exact PID,
-reaps the exact PID, proves the group absent, and terminates the abandoning
-supervisor with exit status 70. The retained test executes that path with a
-real child and proves both the hard exit and post-reap `ESRCH` state.
+Abandonment is proof-aware. Before isolated-session and dedicated-process-group
+proof, the suspended child cannot have executed and emergency containment may
+signal only its exact PID. After that proof is recorded, abandonment signals
+the dedicated process group and exact PID and proves the group absent after the
+exact reap. Both paths terminate the abandoning supervisor with exit status 70.
+The retained pre-proof test launches a fresh XCTest role with `posix_spawn`,
+abandons an actual suspended substrate handle, and uses bounded parent-side
+observation to prove both the hard exit and post-reap `ESRCH` state.
 
 `HeldExecutableSnapshot` construction is restricted to its validating factory.
 Both mapped-image consumers now pass through that factory, so a contextual
@@ -46,13 +52,15 @@ validation.
 
 ## Validation boundary
 
-The frozen Driver V2 inventory resources remain unchanged. The focused Debug
-checkpoint is a root build plus the lifecycle and secure external-capture
-suites. Release validation additionally requires the focused suites, live
-source-provenance proof, the two-role package-description canary, nested Driver
-V2 Debug and Release checks, and the nine-mode Release integration. None of
-those checks alone constitutes a fresh execution of the frozen 903-test root
-inventory.
+The retained fail-stop test adds one required XCTest identifier, so this scope
+explicitly replaces the stale 891-entry Driver V2 resource with the live
+892-entry anchor while preserving all 12 Swift Testing identifiers byte for
+byte. The focused Debug checkpoint is a root build plus the lifecycle and
+secure external-capture suites. Release validation additionally requires the
+focused suites, live source-provenance proof, the two-role package-description
+canary, nested Driver V2 Debug and Release checks, the nine-mode Release
+integration, the isolated Ergentics-MLX numerical lane, and one complete
+904-test root aggregate.
 
 The expected final integration line remains:
 

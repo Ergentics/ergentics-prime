@@ -183,7 +183,7 @@ shell, or Python surfaces. The public Release arm also prepares and revalidates
 the Prime source guard against the actual embedded source identity; its Apple
 test-host image remains explicitly non-authoritative.
 
-These focused checks do not constitute a current 891/12 or 903-test execution
+These focused checks do not constitute a current 892/12 or 904-test execution
 receipt. No repository-wide suite is counted as passing in this slice.
 
 ## Next boundary
@@ -219,7 +219,7 @@ must close in these groups:
    probes;
 2. descriptor-relative staging together with build execution and exact
    generated metallib/test-bundle binding; and
-3. the two list roles together with exact parsing and the frozen 891 XCTest / 12
+3. the two list roles together with exact parsing and the frozen 892 XCTest / 12
    Swift Testing byte, hash, and count anchors.
 
 Before any positive repository receipt, the currently declarative
@@ -232,4 +232,4 @@ toolchain, executable, workspace, and every phase-available staged artifact
 before each spawn and after reap. It must bind the suspended child's
 working-directory vnode and mapped main image, enforce bounded output and
 deadline escalation, reap the exact PID, and prove the process group empty.
-Shard execution and the 903-test spend remain later boundaries.
+Shard execution and the 904-test spend remain later boundaries.

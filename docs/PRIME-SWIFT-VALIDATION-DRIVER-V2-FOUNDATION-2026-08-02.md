@@ -42,11 +42,11 @@ is execution orchestration: inventory-first planning, bounded shards, exact
 observed-set reconciliation, resumable immutable receipts, and truthful
 incomplete outcomes.
 
-V2 preserves the accepted 891/12 inventory anchors. New secure-child assertions
-are folded into existing root test cases rather than creating new root test
-identifiers. Live process behavior is exercised by the nested integration
-executable, so the planned root inventory is not silently made stale by the
-workflow implementation itself.
+V2 originally preserved the accepted 891/12 inventory anchors. The later
+secure-child supervision scope retained one new root fail-stop test identifier.
+A complete Release aggregate exposed that the original resource had become
+stale, so that separately audited scope replaces only the XCTest anchor with
+892 entries; the 12-entry Swift Testing anchor remains byte-identical.
 
 ## V2 planning and receipt truth
 
@@ -141,8 +141,8 @@ sequential reuse and a barriered two-caller race.
 
 The V2 DriverCore focused suite covers the public planning and conservative
 receipt-admission paths plus an internal generated production-cardinality
-kernel with 891 XCTest and 12 Swift Testing identities through aggregation,
-paired comparison, and final disposition. The exact captured 114,060-byte
+kernel with 892 XCTest and 12 Swift Testing identities through aggregation,
+paired comparison, and final disposition. The exact captured 114,186-byte
 XCTest list and 1,287-byte Swift Testing list are package test resources; a
 public-path test admits them through run intent, build receipt, inventory
 receipt, execution-plan construction, validation, and identity. Partition,
@@ -158,9 +158,10 @@ wall-clock and retained-stream cleanup, exact descendant membership, missing
 result behavior, and exact pre-spawn executable replacement rejection.
 
 The foundation slice's recorded focused DriverCore run completed 33 tests with
-zero failures. The current build-backed inventory replay remained
-byte-identical to the frozen resources: 891 lines and 114,060 bytes for
-XCTest, plus 12 lines and 1,287 bytes for Swift Testing. The focused root
+zero failures. The later secure-child inventory reseal is 892 lines and
+114,186 bytes for XCTest, SHA-256
+`93ccc091a0343ac4fed35b208447d7460eae27668ddec3e931f54b9a7769212b`,
+plus the unchanged 12 lines and 1,287 bytes for Swift Testing. The focused root
 lifecycle and capture run completed 20 tests with zero failures and one
 expected Debug-only skip of the separate Release canary.
 
@@ -173,7 +174,7 @@ for `PrimeValidationSwiftPMBuildInventoryAdmission.swift` and
 `PrimeSecureHeldSourceWatch.swift`, introduced by executor admission and
 guarded source handling before this logical-argv0 canary.
 
-These focused results do not constitute a current 891/12 repository-wide
+These focused results do not constitute a current 892/12 repository-wide
 execution receipt. The full suite was intentionally not rerun in this slice.
 
 ## Longer executor arc
@@ -193,7 +194,7 @@ planned SwiftPM invocations. It must:
 6. execute the two inventory commands through the same mechanics, then parse
    and bind their actual output while reverifying every phase-available source,
    lock, metallib, bundle, and companion identity before and after use;
-7. refuse to create an execution plan unless the accepted 891/12 list anchors
+7. refuse to create an execution plan unless the accepted 892/12 list anchors
    match exactly;
 8. execute reference and candidate shards within per-child and aggregate phase
    budgets, enforce the declared concurrency maximum, and publish immutable

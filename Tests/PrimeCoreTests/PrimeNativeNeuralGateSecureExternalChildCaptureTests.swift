@@ -4,12 +4,17 @@ import Foundation
 import XCTest
 @testable import PrimeCore
 
-@_silgen_name("fork")
-private func primeSecureChildTestFork() -> pid_t
-
 final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
     XCTestCase
 {
+    private static let failStopRoleEnvironmentKey =
+        "PRIME_SECURE_CHILD_FAIL_STOP_TEST_ROLE"
+    private static let failStopReportDescriptorEnvironmentKey =
+        "PRIME_SECURE_CHILD_FAIL_STOP_REPORT_DESCRIPTOR"
+    private static let failStopReportDescriptor: Int32 = 198
+    private static let failStopTestSelector =
+        "PrimeNativeNeuralGateSecureExternalChildCaptureTests/" +
+        "testAbandonedLiveChildObligationFailStopsAfterContainment"
     private static let authorityRelativePath =
         "Sources/PrimeCore/" +
         "PrimeNativeNeuralGateSecureExternalChildCapture.swift"
@@ -1549,104 +1554,463 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
     func testAbandonedLiveChildObligationFailStopsAfterContainment()
         throws
     {
-        var childIdentifierPipe = [Int32](repeating: -1, count: 2)
-        var outputPipe = [Int32](repeating: -1, count: 2)
-        var errorPipe = [Int32](repeating: -1, count: 2)
-        XCTAssertEqual(Darwin.pipe(&childIdentifierPipe), 0)
-        XCTAssertEqual(Darwin.pipe(&outputPipe), 0)
-        XCTAssertEqual(Darwin.pipe(&errorPipe), 0)
-
-        let supervisorIdentifier = primeSecureChildTestFork()
-        if supervisorIdentifier == 0 {
-            _ = Darwin.close(childIdentifierPipe[0])
-
-            let childIdentifier = primeSecureChildTestFork()
-            if childIdentifier == 0 {
-                _ = Darwin.setpgid(0, 0)
-                while true {
-                    _ = Darwin.pause()
-                }
-            }
-            guard childIdentifier > 0,
-                  Darwin.setpgid(
-                      childIdentifier,
-                      childIdentifier
-                  ) == 0
-            else {
+        let environment =
+            ProcessInfo.processInfo.environment
+        if environment[
+            Self.failStopRoleEnvironmentKey
+        ] == "1" {
+            guard environment[
+                Self.failStopReportDescriptorEnvironmentKey
+            ] == String(
+                Self.failStopReportDescriptor
+            ) else {
                 Darwin._exit(71)
             }
-
-            var reportedChildIdentifier = childIdentifier
-            let written = withUnsafeBytes(
-                of: &reportedChildIdentifier
-            ) {
-                Darwin.write(
-                    childIdentifierPipe[1],
-                    $0.baseAddress,
-                    $0.count
-                )
+            if #available(macOS 26.0, *) {
+                try runFailStopRole()
             }
-            guard written == MemoryLayout<Int32>.size
-            else {
-                _ = Darwin.kill(childIdentifier, SIGKILL)
-                var status: Int32 = 0
-                _ = Darwin.waitpid(childIdentifier, &status, 0)
-                Darwin._exit(72)
-            }
-
-            var owner: PrimeSecureChildSpawnHandle? =
-                PrimeSecureChildSpawnHandle(
-                    processIdentifier: childIdentifier,
-                    appliedFlags: 0x448c,
-                    spawnReturnCode: 0,
-                    spawnReturnedMonotonicNanoseconds: 1,
-                    standardOutputReadDescriptor: outputPipe[0],
-                    standardErrorReadDescriptor: errorPipe[0],
-                    ownsLiveChildObligation: true
-                )
-            withExtendedLifetime(owner) {}
-            owner = nil
-            Darwin._exit(73)
+            Darwin._exit(72)
         }
 
-        XCTAssertGreaterThan(supervisorIdentifier, 0)
-        guard supervisorIdentifier > 0 else {
-            return
-        }
-        _ = Darwin.close(childIdentifierPipe[1])
-        _ = Darwin.close(outputPipe[0])
-        _ = Darwin.close(outputPipe[1])
-        _ = Darwin.close(errorPipe[0])
-        _ = Darwin.close(errorPipe[1])
-
-        var childIdentifier: Int32 = -1
-        let readCount = withUnsafeMutableBytes(
-            of: &childIdentifier
-        ) {
-            Darwin.read(
-                childIdentifierPipe[0],
-                $0.baseAddress,
-                $0.count
+        guard #available(macOS 26.0, *) else {
+            throw XCTSkip(
+                "secure-child Darwin substrate requires macOS 26"
             )
         }
-        _ = Darwin.close(childIdentifierPipe[0])
-
-        var supervisorStatus: Int32 = 0
+        errno = 0
         XCTAssertEqual(
-            Darwin.waitpid(
-                supervisorIdentifier,
-                &supervisorStatus,
-                0
+            fcntl(
+                Self.failStopReportDescriptor,
+                F_GETFD
             ),
-            supervisorIdentifier
+            -1
         )
-        XCTAssertEqual(readCount, MemoryLayout<Int32>.size)
+        XCTAssertEqual(errno, EBADF)
+
+        var reportPipe = [Int32](repeating: -1, count: 2)
+        guard Darwin.pipe(&reportPipe) == 0 else {
+            throw currentPOSIXError()
+        }
+        var reportReadDescriptorOpen = true
+        var reportWriteDescriptorOpen = true
+        defer {
+            if reportReadDescriptorOpen {
+                _ = Darwin.close(reportPipe[0])
+            }
+            if reportWriteDescriptorOpen {
+                _ = Darwin.close(reportPipe[1])
+            }
+        }
+
+        let supervisorIdentifier = try spawnFailStopRole(
+            reportReadDescriptor: reportPipe[0],
+            reportWriteDescriptor: reportPipe[1]
+        )
+        XCTAssertGreaterThan(supervisorIdentifier, 0)
+        _ = Darwin.close(reportPipe[1])
+        reportWriteDescriptorOpen = false
+
+        var supervisorWasReaped = false
+        var childIdentifier: Int32 = -1
+        defer {
+            if !supervisorWasReaped {
+                _ = Darwin.kill(
+                    -supervisorIdentifier,
+                    SIGKILL
+                )
+                _ = Darwin.kill(
+                    supervisorIdentifier,
+                    SIGKILL
+                )
+                _ = waitForExactProcessExit(
+                    supervisorIdentifier,
+                    timeoutNanoseconds:
+                        2_000_000_000
+                )
+            }
+            if childIdentifier > 0 {
+                _ = Darwin.kill(
+                    -childIdentifier,
+                    SIGKILL
+                )
+                _ = Darwin.kill(
+                    childIdentifier,
+                    SIGKILL
+                )
+            }
+        }
+
+        childIdentifier = try XCTUnwrap(
+            readReportedProcessIdentifier(
+                from: reportPipe[0],
+                timeoutNanoseconds:
+                    10_000_000_000
+            ),
+            "fail-stop role did not report its suspended child"
+        )
+        _ = Darwin.close(reportPipe[0])
+        reportReadDescriptorOpen = false
         XCTAssertGreaterThan(childIdentifier, 0)
+
+        let supervisorStatus = try XCTUnwrap(
+            waitForExactProcessExit(
+                supervisorIdentifier,
+                timeoutNanoseconds:
+                    10_000_000_000
+            ),
+            "fail-stop role did not exit within its retained deadline"
+        )
+        supervisorWasReaped = true
         XCTAssertEqual(supervisorStatus & 0x7f, 0)
         XCTAssertEqual((supervisorStatus >> 8) & 0xff, 70)
         errno = 0
         XCTAssertEqual(Darwin.kill(childIdentifier, 0), -1)
         XCTAssertEqual(errno, ESRCH)
+    }
+
+    @available(macOS 26.0, *)
+    private func runFailStopRole() throws {
+        let rootDescriptor = Darwin.open(
+            "/",
+            O_RDONLY | O_DIRECTORY | O_CLOEXEC
+        )
+        guard rootDescriptor >= 0 else {
+            throw currentPOSIXError()
+        }
+        defer {
+            _ = Darwin.close(rootDescriptor)
+        }
+
+        var owner: PrimeSecureChildSpawnHandle? =
+            try PrimeSecureChildDarwinSubstrate
+            .spawnSuspended(
+                executableAbsolutePath:
+                    "/usr/bin/true",
+                argumentZero:
+                    "prime-secure-child-fail-stop",
+                workingDirectoryDescriptor:
+                    rootDescriptor,
+                exactArguments: [],
+                orderedEnvironment: [
+                    ("PATH", "/usr/bin:/bin"),
+                ]
+            )
+        var childIdentifier = try XCTUnwrap(owner)
+            .processIdentifier
+        let written = withUnsafeBytes(
+            of: &childIdentifier
+        ) {
+            Darwin.write(
+                Self.failStopReportDescriptor,
+                $0.baseAddress,
+                $0.count
+            )
+        }
+        guard written == MemoryLayout<Int32>.size
+        else {
+            Darwin._exit(73)
+        }
+        _ = Darwin.close(
+            Self.failStopReportDescriptor
+        )
+
+        withExtendedLifetime(owner) {}
+        owner = nil
+        Darwin._exit(74)
+    }
+
+    private func spawnFailStopRole(
+        reportReadDescriptor: Int32,
+        reportWriteDescriptor: Int32
+    ) throws -> pid_t {
+        var actions:
+            posix_spawn_file_actions_t?
+        var attributes:
+            posix_spawnattr_t?
+        try requireSpawnSuccess(
+            posix_spawn_file_actions_init(
+                &actions
+            )
+        )
+        defer {
+            _ = posix_spawn_file_actions_destroy(
+                &actions
+            )
+        }
+        try requireSpawnSuccess(
+            posix_spawnattr_init(&attributes)
+        )
+        defer {
+            _ = posix_spawnattr_destroy(
+                &attributes
+            )
+        }
+        try requireSpawnSuccess(
+            posix_spawn_file_actions_addclose(
+                &actions,
+                reportReadDescriptor
+            )
+        )
+        try requireSpawnSuccess(
+            posix_spawn_file_actions_adddup2(
+                &actions,
+                reportWriteDescriptor,
+                Self.failStopReportDescriptor
+            )
+        )
+        try requireSpawnSuccess(
+            posix_spawn_file_actions_addclose(
+                &actions,
+                reportWriteDescriptor
+            )
+        )
+        let flags =
+            UInt16(POSIX_SPAWN_CLOEXEC_DEFAULT)
+            | UInt16(POSIX_SPAWN_SETSID)
+        try requireSpawnSuccess(
+            posix_spawnattr_setflags(
+                &attributes,
+                Int16(bitPattern: flags)
+            )
+        )
+
+        let executableAbsolutePath =
+            CommandLine.arguments[0]
+        guard executableAbsolutePath
+                .hasSuffix("/xctest")
+        else {
+            throw POSIXError(.ENOEXEC)
+        }
+        let arguments = [
+            executableAbsolutePath,
+            "-XCTest",
+            Self.failStopTestSelector,
+            Bundle(
+                for:
+                    PrimeNativeNeuralGateSecureExternalChildCaptureTests
+                    .self
+            ).bundlePath,
+        ]
+        var environment =
+            ProcessInfo.processInfo.environment
+        environment[
+            Self.failStopRoleEnvironmentKey
+        ] = "1"
+        environment[
+            Self.failStopReportDescriptorEnvironmentKey
+        ] = String(
+            Self.failStopReportDescriptor
+        )
+        let environmentStrings =
+            environment.keys.sorted().map {
+                "\($0)=\(environment[$0]!)"
+            }
+        let duplicatedArguments =
+            try duplicateCStringArray(arguments)
+        defer {
+            freeCStringArray(duplicatedArguments)
+        }
+        let duplicatedEnvironment =
+            try duplicateCStringArray(
+                environmentStrings
+            )
+        defer {
+            freeCStringArray(duplicatedEnvironment)
+        }
+        var argv = duplicatedArguments.map {
+            Optional($0)
+        }
+        argv.append(nil)
+        var environmentPointers =
+            duplicatedEnvironment.map {
+                Optional($0)
+            }
+        environmentPointers.append(nil)
+
+        var processIdentifier: pid_t = 0
+        let returnCode =
+            argv.withUnsafeMutableBufferPointer {
+                argumentsBuffer in
+                environmentPointers
+                    .withUnsafeMutableBufferPointer {
+                        environmentBuffer in
+                        posix_spawn(
+                            &processIdentifier,
+                            executableAbsolutePath,
+                            &actions,
+                            &attributes,
+                            argumentsBuffer.baseAddress,
+                            environmentBuffer.baseAddress
+                        )
+                    }
+            }
+        try requireSpawnSuccess(returnCode)
+        guard processIdentifier > 0 else {
+            throw POSIXError(.ECHILD)
+        }
+        return processIdentifier
+    }
+
+    private func readReportedProcessIdentifier(
+        from descriptor: Int32,
+        timeoutNanoseconds: UInt64
+    ) -> Int32? {
+        guard let deadline = monotonicDeadline(
+            after: timeoutNanoseconds
+        ) else {
+            return nil
+        }
+        var pollDescriptor = pollfd(
+            fd: descriptor,
+            events: Int16(POLLIN | POLLHUP),
+            revents: 0
+        )
+        while true {
+            guard let timeoutMilliseconds =
+                    remainingPollMilliseconds(
+                        until: deadline
+                    )
+            else {
+                return nil
+            }
+            errno = 0
+            let ready = Darwin.poll(
+                &pollDescriptor,
+                1,
+                timeoutMilliseconds
+            )
+            if ready < 0, errno == EINTR {
+                continue
+            }
+            guard ready == 1,
+                  pollDescriptor.revents
+                    & Int16(POLLIN | POLLHUP)
+                    != 0
+            else {
+                return nil
+            }
+            var processIdentifier: Int32 = -1
+            errno = 0
+            let count = withUnsafeMutableBytes(
+                of: &processIdentifier
+            ) {
+                Darwin.read(
+                    descriptor,
+                    $0.baseAddress,
+                    $0.count
+                )
+            }
+            if count < 0, errno == EINTR {
+                continue
+            }
+            return count == MemoryLayout<Int32>.size
+                ? processIdentifier
+                : nil
+        }
+    }
+
+    private func waitForExactProcessExit(
+        _ processIdentifier: pid_t,
+        timeoutNanoseconds: UInt64
+    ) -> Int32? {
+        guard let deadline = monotonicDeadline(
+            after: timeoutNanoseconds
+        ) else {
+            return nil
+        }
+        while DispatchTime.now().uptimeNanoseconds
+            <= deadline
+        {
+            var status: Int32 = 0
+            errno = 0
+            let returned = Darwin.waitpid(
+                processIdentifier,
+                &status,
+                WNOHANG
+            )
+            if returned == processIdentifier {
+                return status
+            }
+            if returned < 0, errno == EINTR {
+                continue
+            }
+            guard returned == 0 else {
+                return nil
+            }
+            _ = Darwin.poll(nil, 0, 10)
+        }
+        return nil
+    }
+
+    private func monotonicDeadline(
+        after nanoseconds: UInt64
+    ) -> UInt64? {
+        let (deadline, overflow) =
+            DispatchTime.now()
+            .uptimeNanoseconds
+            .addingReportingOverflow(nanoseconds)
+        return overflow ? nil : deadline
+    }
+
+    private func remainingPollMilliseconds(
+        until deadline: UInt64
+    ) -> Int32? {
+        let now =
+            DispatchTime.now().uptimeNanoseconds
+        guard now < deadline else {
+            return nil
+        }
+        let remaining = deadline - now
+        let rounded =
+            (remaining / 1_000_000)
+            + (remaining % 1_000_000 == 0 ? 0 : 1)
+        return Int32(
+            min(rounded, UInt64(Int32.max))
+        )
+    }
+
+    private func duplicateCStringArray(
+        _ strings: [String]
+    ) throws -> [UnsafeMutablePointer<CChar>] {
+        var result:
+            [UnsafeMutablePointer<CChar>] = []
+        result.reserveCapacity(strings.count)
+        for string in strings {
+            guard !string.contains("\0"),
+                  let duplicated = strdup(string)
+            else {
+                freeCStringArray(result)
+                throw POSIXError(.EINVAL)
+            }
+            result.append(duplicated)
+        }
+        return result
+    }
+
+    private func freeCStringArray(
+        _ strings: [UnsafeMutablePointer<CChar>]
+    ) {
+        for string in strings {
+            free(string)
+        }
+    }
+
+    private func requireSpawnSuccess(
+        _ returnCode: Int32
+    ) throws {
+        guard returnCode == 0 else {
+            throw POSIXError(
+                POSIXErrorCode(rawValue: returnCode)
+                    ?? .EIO
+            )
+        }
+    }
+
+    private func currentPOSIXError() -> POSIXError {
+        POSIXError(
+            POSIXErrorCode(rawValue: errno)
+                ?? .EIO
+        )
     }
 
     private func writeSecureChildBytes(

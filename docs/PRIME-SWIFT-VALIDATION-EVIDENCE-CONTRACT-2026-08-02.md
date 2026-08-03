@@ -23,7 +23,7 @@ scientific or product claim. Its frozen authority ceiling says exactly that.
 The maintained Apple Swift 6.3.3 / Xcode 26.6 toolchain exposes different
 evidence for the two test frameworks:
 
-- the root compiled inventory contains 903 tests: 891 XCTest and 12 Swift
+- the current root compiled inventory contains 904 tests: 892 XCTest and 12 Swift
   Testing
 - a parallel XCTest run can emit an XCTest xUnit file that proves case names
   and failures
@@ -147,7 +147,7 @@ The next slice may implement the Swift execution driver against this contract:
 6. durable plan, evidence, and outcome receipts
 7. resumable phase evidence without treating an unfinished phase as passing
 
-That driver must remain Swift-first. It must prove the existing 903-test root
+That driver must remain Swift-first. It must prove the existing 904-test root
 acceptance target and preserve the root package-description canary before it
 is allowed to govern optimizer or neural training gates.
 
@@ -159,9 +159,10 @@ comparison mechanics, shared secure-child mechanics kernel, deterministic
 closed fixture, and Swift-only live fixture integration now exist. Public
 complete shard, aggregate, comparison, and final-receipt admission remains
 closed until raw runner output is parser-derived. The accepted root inventory
-remains 891 XCTest plus 12 Swift Testing cases because the new kernel
-assertions were folded into existing root test cases and live behavior was kept
-in the isolated package.
+is replaced by 892 XCTest plus the unchanged 12 Swift Testing cases because the
+later secure-child scope retained one new required root fail-stop regression
+identifier. The prior 891/12 aggregate remains historical evidence and is not
+rewritten.
 
 This update does not implement the root-suite executor, parse child output into
 V2 shard receipts, publish a durable complete run, or change the no-executor

@@ -1,13 +1,14 @@
 # Prime durable pickup — decoder authority and secure-child supervision
 
-Status: two isolated feature branches; no pull request is open
+Status: two isolated feature branches; no pull request is open; exact-head
+independent audit remains mandatory for secure-child PR candidacy
 
 Snapshot date: 2026-08-03
 
 Repository: `Ergentics/ergentics-prime`
 
 This document is the restart boundary. It separates the first-party decoder
-authority correction from the unfinished secure-child supervision work. Do not
+authority correction from the secure-child supervision candidate. Do not
 combine their implementation diffs or infer validation across the branches.
 
 ## Durable branch map
@@ -15,7 +16,7 @@ combine their implementation diffs or infer validation across the branches.
 | Scope | Branch | Durable checkpoint | Disposition |
 | --- | --- | --- | --- |
 | First-party decoder authority | `feat/native-decoder-authority-correction` | remote commit `25f6906fa69ed6ecf6e196e319c02d7f82f74d9a`; exact tree `e557c95d59ae1bac2f436914b8b7adc4183390e0` | Focused authority tests pass; reviewable as its own slice |
-| Neutral secure-child supervision | `feat/neutral-secure-child-supervision` | local WIP commit `463d5a08b327d42d31ffa044efe4d278c9818a2b`; remote WIP parent `87dc5210e76c606bc6a63ecffbba05d27880e844`; exact tree `f19bc4aa6267daff710e4f35dc385dc908267f03` | Explicitly unverified WIP; resume and validate before any pull request |
+| Neutral secure-child supervision | `feat/neutral-secure-child-supervision` | remote branch ref is authoritative; rejected first-audit commit `7180526e9ab4dc851faa3c4b3bbd9740a6046443`, exact tree `da3319cd3ee7399f974df8571d4a74e88dbee7c9`, is retained as history | First-audit findings remediated on the later branch head; require an independent audit of that exact head before any pull request |
 
 The decoder correction also exists locally as commit
 `a3fdb645a3ea688dbb9c2eb07e30aa7042925f59`. The local and remote commit IDs
@@ -23,9 +24,11 @@ differ because GitHub created the durable remote commit, but their tree ID is
 identical. The tree identity, not an implied metadata equivalence, proves that
 the source bytes are the same.
 
-The secure-child branch head includes this handoff as a documentation-only
-commit above the pinned WIP parent. Use the branch ref for the current head;
-the final head is intentionally not embedded in its own source tree.
+The secure-child branch includes this handoff and later validation/remediation
+commits above the pinned WIP parent. Use the remote branch ref for the current
+head; a final head cannot be embedded in its own source tree. Commit `7180526`
+is the preserved first-audit target, not authority that its findings were
+resolved.
 
 ## Corrected decoder authority
 
@@ -77,9 +80,9 @@ the nested package sandbox in the managed Codex environment; it was not a
 code failure. No repository-wide pass is claimed for this authority-only
 slice.
 
-## Secure-child WIP truth
+## Secure-child supervision truth
 
-The WIP checkpoint extracts neutral child-process mechanics shared by the
+The supervision slice extracts neutral child-process mechanics shared by the
 native neural gate paths:
 
 - exact-PID wait observation and Darwin process proof;
@@ -88,61 +91,77 @@ native neural gate paths:
 - non-restorable supervision capability;
 - neutral lifecycle and supervision types;
 - both existing consumers integrated with the neutral substrate;
-- live-child obligation fail-stop handling.
+- proof-aware live-child obligation fail-stop handling.
 
-The exact WIP tree has passed only structural checkpoint checks, including
-`git diff --check`. It has not earned a current Debug build, focused test
-pass, Release build, Release source-provenance proof, live two-role canary,
-nested Driver V2 validation, nine-mode live integration, or final independent
-audit. Earlier lifecycle and capture test results predate the final WIP tree
-and must not be carried forward as current evidence.
+The first independent audit rejected exact remote commit `7180526` on four
+findings: pre-proof abandonment used process-group authority, its retained test
+performed unsafe post-`fork` Swift work and waited without a deadline, the
+managed-workspace instructions disabled SwiftPM's frozen sandbox, and this
+restart boundary still reported obsolete pre-validation state.
 
-Known gaps at pickup:
+The later branch head remediates those findings without adding a product,
+target, dependency, public API, or Driver V2 authority. The spawn handle now
+records process-group authority only after the suspended child's SID/PGID proof.
+Pre-proof abandonment signals and reaps only the exact PID. The retained test
+runs an actual raw-handle abandonment in a separately spawned XCTest role and
+bounds both PID reporting and exact-process observation. The commands below
+retain SwiftPM's sandbox.
 
-- add direct retained test evidence for the
-  `ownsLiveChildObligation: true` fail-stop path;
-- reassess direct `HeldExecutableSnapshot` initialization by mapped-image
-  consumers;
-- refresh the source seal and package-description canary only after code and
-  tests freeze;
-- update README/disposition prose after behavior is verified;
-- run an independent final audit before opening a pull request.
+Validation recorded for the remediated exact tree:
 
-Frozen test inventories must remain unchanged unless a separately reviewed
-scope explicitly replaces them:
+- root Debug and Release builds passed;
+- Debug lifecycle: 10/10; Debug capture: 10 passes plus the one expected
+  Release-only canary skip;
+- Release lifecycle: 10/10; Release capture: 11/11, including the live
+  two-role canary;
+- Release source provenance: 1/1;
+- nested Driver V2 Debug: 86 passes plus the one expected Release-only skip;
+  nested Driver V2 Release: 87/87; and
+- nine-mode Release integration reached
+  `PASS modes=9 logical_argv0=PASS one_shot=PASS executable_replacement=REJECTED`;
+- the complete root Release aggregate executed 892 XCTest cases with the two
+  declared opt-in skips and zero failures, then passed all 12 Swift Testing
+  cases; and
+- after exact metallib staging, the isolated Ergentics-MLX Release package
+  passed 9/9, including the exhaustive corrected-fixture/three-seed lane.
 
-- XCTest: 891 lines, 114,060 bytes, SHA-256
-  `583056975d443cb9195ab8af6944625833b78b848b0afa2640275811aec3f829`;
+An independent audit must still name and approve the exact final branch head
+before it becomes a pull request candidate. That external result is not inferred
+from this self-describing tree.
+
+The retained fail-stop regression test is one new required root XCTest case.
+The first complete Release aggregate exposed that the earlier 891-entry Driver
+V2 resource was therefore stale. This audited secure-child scope explicitly
+replaces only that XCTest inventory anchor; the Swift Testing inventory remains
+byte-identical:
+
+- XCTest: 892 lines, 114,186 bytes, SHA-256
+  `93ccc091a0343ac4fed35b208447d7460eae27668ddec3e931f54b9a7769212b`;
 - Swift Testing: 12 lines, 1,287 bytes, SHA-256
   `487c601e9693d6a0fbc31d1b683ffd342ba0d10007c780f315af1113d825e8a3`.
 
 ## Resume order
 
-Start from the secure-child branch and preserve the WIP checkpoint:
+Start from the secure-child audit-candidate branch in this durable workspace
+and preserve both historical checkpoints:
 
 ```sh
 git fetch origin
-git switch feat/neutral-secure-child-supervision
+git switch wip/neutral-secure-child-supervision-audit-candidate
 git status --short --branch
 git log --oneline --decorate -3
 ```
 
 Then proceed in this order:
 
-1. Audit the exact WIP diff against the neutral transport contract and add the
-   missing live-child-obligation test.
-2. Run the root Debug build and the two focused secure-child suites.
-3. Resolve findings without broadening public evidence, products, targets,
-   dependencies, or Driver V2 authority.
-4. Freeze implementation and tests; then update disposition, README, source
-   provenance, source seal, and package-description canary.
-5. Run Release build/test and source-provenance proof.
-6. Run the live two-role canary, nested Driver V2 Debug/Release checks, and the
-   nine-mode Release integration. The expected final line is
-   `PASS modes=9 logical_argv0=PASS one_shot=PASS executable_replacement=REJECTED`.
-7. Obtain an independent final audit. Only then may this WIP become a pull
-   request candidate.
-8. After the secure-child and Driver V2 boundary is resolved, return to the
+1. Verify the local and remote candidate refs identify the same exact commit
+   and the working tree is clean.
+2. Verify the recorded source seal, package-description canary, frozen
+   inventories, focused Debug/Release suites, nested Driver V2 checks, and
+   nine-mode integration on that exact tree.
+3. Obtain an independent final audit naming the exact commit. Only then may
+   this branch become a pull request candidate.
+4. After the secure-child and Driver V2 boundary is resolved, return to the
    decoder branch. The next model-boundary slice is complete root
    `MLXLLM`/`mlx-swift-lm` quarantine before any `PrimeNativeDecoder` target
    appears. It is not decoder implementation or a training run.
@@ -150,10 +169,15 @@ Then proceed in this order:
 Managed-workspace focused commands:
 
 ```sh
-env CLANG_MODULE_CACHE_PATH="$PWD/.build/ModuleCache" SWIFTPM_MODULECACHE_OVERRIDE="$PWD/.build/ModuleCache" swift build --disable-sandbox --scratch-path .build
-env CLANG_MODULE_CACHE_PATH="$PWD/.build/ModuleCache" SWIFTPM_MODULECACHE_OVERRIDE="$PWD/.build/ModuleCache" swift test --disable-sandbox --scratch-path .build --filter PrimeNativeNeuralGateSecureChildLifecycleTests
-env CLANG_MODULE_CACHE_PATH="$PWD/.build/ModuleCache" SWIFTPM_MODULECACHE_OVERRIDE="$PWD/.build/ModuleCache" swift test --disable-sandbox --scratch-path .build --filter PrimeNativeNeuralGateSecureExternalChildCaptureTests
+env CLANG_MODULE_CACHE_PATH="$PWD/.build/ModuleCache" SWIFTPM_MODULECACHE_OVERRIDE="$PWD/.build/ModuleCache" swift build --scratch-path .build
+env CLANG_MODULE_CACHE_PATH="$PWD/.build/ModuleCache" SWIFTPM_MODULECACHE_OVERRIDE="$PWD/.build/ModuleCache" swift test --scratch-path .build --filter PrimeNativeNeuralGateSecureChildLifecycleTests
+env CLANG_MODULE_CACHE_PATH="$PWD/.build/ModuleCache" SWIFTPM_MODULECACHE_OVERRIDE="$PWD/.build/ModuleCache" swift test --scratch-path .build --filter PrimeNativeNeuralGateSecureExternalChildCaptureTests
 ```
+
+If an outer managed executor reports
+`sandbox-exec: sandbox_apply: Operation not permitted`, obtain authorization to
+run the same CLI command outside that outer sandbox. Do not weaken SwiftPM's
+inner sandbox with `--disable-sandbox`.
 
 ## Do not
 
@@ -162,7 +186,7 @@ env CLANG_MODULE_CACHE_PATH="$PWD/.build/ModuleCache" SWIFTPM_MODULECACHE_OVERRI
 - Do not open a secure-child pull request while its checkpoint is unverified.
 - Do not treat the WIP label, prior test output, or `.build` timestamps as
   validation of the current tree.
-- Do not change historical receipt hashes, the frozen 891/12 inventories, or
+- Do not change historical receipt hashes, the replacement 892/12 inventories, or
   the historical Llama experiment to manufacture native-decoder continuity.
 - Do not collapse `nil`, `false`, absent evidence, and observed failure into
   one state.

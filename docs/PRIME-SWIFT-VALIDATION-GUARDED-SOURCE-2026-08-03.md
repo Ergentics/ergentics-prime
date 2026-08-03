@@ -93,7 +93,7 @@ The focused Debug live suite covers:
 
 The public Release arm additionally prepares and revalidates the source guard
 against the actual embedded Prime source identity. These focused results are
-not a 891/12 inventory receipt or a 903-test execution.
+not a 892/12 inventory receipt or a 904-test execution.
 
 ## Next boundary
 
@@ -108,4 +108,4 @@ Before any process observation:
 
 Only then may fixed Git/Swift probes run. Staging plus build/artifact binding
 is the following group; both inventories are the group after that. Shards,
-the 903-test spend, semantic completion, and durable resume remain later.
+the 904-test spend, semantic completion, and durable resume remain later.

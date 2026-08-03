@@ -544,6 +544,7 @@ final class PrimeSecureChildSpawnHandle {
         PrimeSecureChildStreamReadDescriptorOwner
     private let childObligationLock = NSLock()
     private var ownsLiveChildObligation: Bool
+    private var dedicatedProcessGroupAuthorityEstablished = false
 
     init(
         processIdentifier: Int32,
@@ -587,27 +588,47 @@ final class PrimeSecureChildSpawnHandle {
     }
 
     /// Discharges the non-restorable live-child obligation only after the
-    /// supervising lifecycle has exact-waited the original PID and proven its
-    /// dedicated process group empty.
+    /// supervising lifecycle has exact-waited the original PID. Once group
+    /// authority was established, that lifecycle also proves the dedicated
+    /// process group empty; before proof, the child remained suspended and
+    /// containment was exact-PID-only.
     func dischargeChildObligationAfterExactReap() {
         childObligationLock.lock()
         ownsLiveChildObligation = false
+        dedicatedProcessGroupAuthorityEstablished = false
+        childObligationLock.unlock()
+    }
+
+    /// Records that descriptor-rooted supervision has independently proven the
+    /// suspended child is both its own session leader and process-group leader.
+    /// Before this transition, emergency abandonment may signal only the exact
+    /// PID because process-group authority has not yet been established.
+    func recordIsolatedSessionAndDedicatedGroupAuthority() {
+        childObligationLock.lock()
+        if ownsLiveChildObligation {
+            dedicatedProcessGroupAuthorityEstablished = true
+        }
         childObligationLock.unlock()
     }
 
     private func failStopOwnedChildIfNeeded() {
         childObligationLock.lock()
         let mustContain = ownsLiveChildObligation
+        let maySignalDedicatedProcessGroup =
+            dedicatedProcessGroupAuthorityEstablished
         ownsLiveChildObligation = false
+        dedicatedProcessGroupAuthorityEstablished = false
         childObligationLock.unlock()
         guard mustContain else {
             return
         }
 
-        _ = Darwin.kill(
-            -processIdentifier,
-            SIGKILL
-        )
+        if maySignalDedicatedProcessGroup {
+            _ = Darwin.kill(
+                -processIdentifier,
+                SIGKILL
+            )
+        }
         _ = Darwin.kill(
             processIdentifier,
             SIGKILL
@@ -625,6 +646,10 @@ final class PrimeSecureChildSpawnHandle {
         guard returned == processIdentifier
         else {
             Darwin._exit(70)
+        }
+        guard maySignalDedicatedProcessGroup
+        else {
+            return
         }
         errno = 0
         guard Darwin.kill(
