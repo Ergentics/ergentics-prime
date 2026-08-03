@@ -263,6 +263,8 @@ public enum PrimeNativeNeuralGateSecureExternalChildCapture {
                     root.descriptor,
                 stdoutPipe: stdoutPipe,
                 stderrPipe: stderrPipe,
+                argumentZero:
+                    executableAbsolutePath,
                 exactArguments:
                     scratchLaunch
                     .arguments,
@@ -994,12 +996,16 @@ public enum PrimeNativeNeuralGateSecureExternalChildCapture {
         rootDescriptor: Int32,
         stdoutPipe: RawPipe,
         stderrPipe: RawPipe,
+        argumentZero: String,
         exactArguments: [String],
         orderedEnvironment:
             [(String, String)],
         exactExecutableAbsolutePath:
             String = executableAbsolutePath
     ) throws -> SpawnResult {
+        try requireSecureChildArgumentZero(
+            argumentZero
+        )
         var actions:
             posix_spawn_file_actions_t?
         var attributes: posix_spawnattr_t?
@@ -1156,8 +1162,7 @@ public enum PrimeNativeNeuralGateSecureExternalChildCapture {
         }
 
         let arguments =
-            [exactExecutableAbsolutePath]
-            + exactArguments
+            [argumentZero] + exactArguments
         let duplicatedArguments =
             try duplicateCStringArray(
                 arguments
@@ -1232,10 +1237,14 @@ public enum PrimeNativeNeuralGateSecureExternalChildCapture {
     @available(macOS 26.0, *)
     static func spawnSuspendedSecureChild(
         executableAbsolutePath: String,
+        argumentZero: String,
         workingDirectoryDescriptor: Int32,
         exactArguments: [String],
         orderedEnvironment: [(String, String)]
     ) throws -> PrimeSecureChildSpawnHandle {
+        try requireSecureChildArgumentZero(
+            argumentZero
+        )
         let stdoutPipe = try RawPipe()
         let stderrPipe: RawPipe
         do {
@@ -1251,6 +1260,7 @@ public enum PrimeNativeNeuralGateSecureExternalChildCapture {
                     workingDirectoryDescriptor,
                 stdoutPipe: stdoutPipe,
                 stderrPipe: stderrPipe,
+                argumentZero: argumentZero,
                 exactArguments: exactArguments,
                 orderedEnvironment:
                     orderedEnvironment,
@@ -1276,6 +1286,22 @@ public enum PrimeNativeNeuralGateSecureExternalChildCapture {
             stdoutPipe.closeAll()
             stderrPipe.closeAll()
             throw error
+        }
+    }
+
+    /// Validates only the C `argv[0]` transport invariant. Closed callers
+    /// remain responsible for selecting the exact logical personality; this
+    /// primitive cannot turn an arbitrary string into execution authority.
+    static func requireSecureChildArgumentZero(
+        _ argumentZero: String
+    ) throws {
+        guard !argumentZero.isEmpty,
+              argumentZero.utf8.count <= 4_096,
+              !argumentZero.utf8.contains(0)
+        else {
+            throw rejected(
+                "spawn_argument_zero"
+            )
         }
     }
 
