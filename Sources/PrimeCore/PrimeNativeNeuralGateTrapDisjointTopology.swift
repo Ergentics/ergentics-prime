@@ -3021,7 +3021,8 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
         let source =
             PrimeNativeNeuralGateHistoricalWorkerSemanticArtifactDecoderCallEdgeSourceContract
             .frozenV1
-        let sourceSHA256 = try! source.contentSHA256()
+        let sourceSHA256 =
+            "f8739c0d162e026522dbdc2e6902403d935ebcfd2c9d13b07704b05ea3f9dac8"
         let workerTargetName =
             "PrimeNativeNeuralGateHistoricalFixtureWorker"
         let statisticsTargetName =
@@ -4652,7 +4653,7 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
                     == nil
         }
         let workerProjectionCallEdgeSourceBindingValid: Bool
-        if schemaVersion >= 17 {
+        if schemaVersion == 17 {
             let source =
                 PrimeNativeNeuralGateHistoricalWorkerSemanticArtifactProjectionCallEdgeSourceContract
                 .frozenV1
@@ -4667,13 +4668,31 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
                     == source.contractID
                 && historicalWorkerSemanticArtifactProjectionCallEdgeSourceContractSHA256
                     == sourceSHA256
+        } else if schemaVersion > 17 {
+            let frozenSource =
+                PrimeNativeNeuralGateHistoricalWorkerSemanticArtifactProjectionCallEdgeSourceContract
+                .frozenV1
+            let frozenSourceSHA256 = PrimeSHA256.hexDigest(
+                of: try PrimeCanonicalJSON.encode(frozenSource)
+            )
+            workerProjectionCallEdgeSourceBindingValid =
+                historicalWorkerSemanticArtifactProjectionCallEdgeSourceContractBinding?
+                .validate() == true
+                && historicalWorkerSemanticArtifactProjectionCallEdgeSourceContractID
+                    == "prime_source_bound_historical_worker_semantic_artifact_projection_call_edge_v17"
+                && historicalWorkerSemanticArtifactProjectionCallEdgeSourceContractSHA256
+                    == "ccf2e46ffc9e980d96357980e128ecb411a5ac5f55b8e783bf611582ec32d6d3"
+                && frozenSource.contractID
+                    == historicalWorkerSemanticArtifactProjectionCallEdgeSourceContractID
+                && frozenSourceSHA256
+                    == historicalWorkerSemanticArtifactProjectionCallEdgeSourceContractSHA256
         } else {
             workerProjectionCallEdgeSourceBindingValid =
                 historicalWorkerSemanticArtifactProjectionCallEdgeSourceContractBinding
                     == nil
         }
         let historicalDecoderSourceBindingValid: Bool
-        if schemaVersion >= 18 {
+        if schemaVersion == 18 {
             let source =
                 PrimeNativeNeuralGateHistoricalSemanticArtifactDecoderSourceContract
                 .frozenV1
@@ -4692,6 +4711,32 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
                     == source.statisticsTargetBinding.targetName
                 && historicalSemanticArtifactDecoderTargetName
                     == source.decoderTargetBinding.targetName
+        } else if schemaVersion > 18 {
+            let frozenSource =
+                PrimeNativeNeuralGateHistoricalSemanticArtifactDecoderSourceContract
+                .frozenV1
+            let frozenSourceSHA256 = PrimeSHA256.hexDigest(
+                of: try PrimeCanonicalJSON.encode(frozenSource)
+            )
+            historicalDecoderSourceBindingValid =
+                historicalSemanticArtifactDecoderSourceContractBinding?
+                .validate() == true
+                && historicalSemanticArtifactDecoderSourceContractID
+                    == "prime_source_bound_historical_semantic_artifact_decoder_v18"
+                && historicalSemanticArtifactDecoderSourceContractSHA256
+                    == "18b747001331df62115ba502a15f3bb8379a12f484176811860b191738235ae3"
+                && historicalStatisticsArtifactContractTargetName
+                    == "PrimeNativeNeuralGateHistoricalStatisticsArtifactContracts"
+                && historicalSemanticArtifactDecoderTargetName
+                    == "PrimeNativeNeuralGateHistoricalSemanticArtifactDecoder"
+                && frozenSource.contractID
+                    == historicalSemanticArtifactDecoderSourceContractID
+                && frozenSourceSHA256
+                    == historicalSemanticArtifactDecoderSourceContractSHA256
+                && frozenSource.statisticsTargetBinding.targetName
+                    == historicalStatisticsArtifactContractTargetName
+                && frozenSource.decoderTargetBinding.targetName
+                    == historicalSemanticArtifactDecoderTargetName
         } else {
             historicalDecoderSourceBindingValid =
                 historicalSemanticArtifactDecoderSourceContractBinding
@@ -4700,12 +4745,14 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
                 && historicalSemanticArtifactDecoderTargetName == nil
         }
         let workerDecoderCallEdgeSourceBindingValid: Bool
-        if schemaVersion >= 19 {
+        if schemaVersion == 19 {
             let source =
                 PrimeNativeNeuralGateHistoricalWorkerSemanticArtifactDecoderCallEdgeSourceContract
                 .frozenV1
             try source.validate()
-            let sourceSHA256 = try source.contentSHA256()
+            let sourceSHA256 = PrimeSHA256.hexDigest(
+                of: try PrimeCanonicalJSON.encode(source)
+            )
             workerDecoderCallEdgeSourceBindingValid =
                 historicalWorkerSemanticArtifactDecoderCallEdgeSourceContractBinding?
                 .validate() == true
@@ -4713,6 +4760,24 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
                     == source.contractID
                 && historicalWorkerSemanticArtifactDecoderCallEdgeSourceContractSHA256
                     == sourceSHA256
+        } else if schemaVersion > 19 {
+            let frozenSource =
+                PrimeNativeNeuralGateHistoricalWorkerSemanticArtifactDecoderCallEdgeSourceContract
+                .frozenV1
+            let frozenSourceSHA256 = PrimeSHA256.hexDigest(
+                of: try PrimeCanonicalJSON.encode(frozenSource)
+            )
+            workerDecoderCallEdgeSourceBindingValid =
+                historicalWorkerSemanticArtifactDecoderCallEdgeSourceContractBinding?
+                .validate() == true
+                && historicalWorkerSemanticArtifactDecoderCallEdgeSourceContractID
+                    == "prime_source_bound_historical_worker_semantic_artifact_decoder_call_edge_v19"
+                && historicalWorkerSemanticArtifactDecoderCallEdgeSourceContractSHA256
+                    == "f8739c0d162e026522dbdc2e6902403d935ebcfd2c9d13b07704b05ea3f9dac8"
+                && frozenSource.contractID
+                    == historicalWorkerSemanticArtifactDecoderCallEdgeSourceContractID
+                && frozenSourceSHA256
+                    == historicalWorkerSemanticArtifactDecoderCallEdgeSourceContractSHA256
         } else {
             workerDecoderCallEdgeSourceBindingValid =
                 historicalWorkerSemanticArtifactDecoderCallEdgeSourceContractBinding
@@ -4724,7 +4789,9 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
                 PrimeNativeNeuralGateHistoricalWorkerExportedEvidenceProjectionDecodeCompositionDesignContract
                 .frozenV1
             try design.validate()
-            let designSHA256 = try design.contentSHA256()
+            let designSHA256 = PrimeSHA256.hexDigest(
+                of: try PrimeCanonicalJSON.encode(design)
+            )
             compositionDesignBindingValid =
                 historicalWorkerExportedEvidenceProjectionDecodeCompositionDesignContractBinding?
                 .validate() == true
@@ -4736,7 +4803,9 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
             let frozenDesign =
                 PrimeNativeNeuralGateHistoricalWorkerExportedEvidenceProjectionDecodeCompositionDesignContract
                 .frozenV1
-            let frozenDesignSHA256 = try frozenDesign.contentSHA256()
+            let frozenDesignSHA256 = PrimeSHA256.hexDigest(
+                of: try PrimeCanonicalJSON.encode(frozenDesign)
+            )
             compositionDesignBindingValid =
                 historicalWorkerExportedEvidenceProjectionDecodeCompositionDesignContractBinding?
                 .validate() == true
