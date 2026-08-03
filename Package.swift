@@ -157,6 +157,10 @@ let package = Package(
             targets: ["PrimeMLXBundleStage"]
         ),
         .executable(
+            name: "PrimeMLXRuntimeScaffold",
+            targets: ["PrimeMLXRuntimeScaffold"]
+        ),
+        .executable(
             name: "PrimeMLXTestBundleStage",
             targets: ["PrimeMLXTestBundleStage"]
         ),
@@ -657,6 +661,11 @@ let package = Package(
         .executableTarget(
             name: "PrimeMLXBundleStage",
             dependencies: ["PrimeCore"]
+        ),
+        .executableTarget(
+            name: "PrimeMLXRuntimeScaffold",
+            dependencies: ["PrimeCore"],
+            exclude: ["Templates"]
         ),
         .executableTarget(
             name: "PrimeMLXTestBundleStage",

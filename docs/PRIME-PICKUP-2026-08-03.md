@@ -1,8 +1,9 @@
 # Prime durable pickup — Driver V2, decoder authority, and secure-child history
 
 Status: secure-child supervision is independently audited and merged through
-PR 52; Driver V2 supervisor-image work is isolated on a new branch; decoder
-authority remains isolated and unchanged
+PR 52; Driver V2 supervisor-image and fresh-checkout runtime-scaffold work are
+isolated, unverified WIP on the Driver branch; decoder authority remains
+isolated and unchanged
 
 Snapshot date: 2026-08-03
 
@@ -143,6 +144,47 @@ byte-identical:
   `93ccc091a0343ac4fed35b208447d7460eae27668ddec3e931f54b9a7769212b`;
 - Swift Testing: 12 lines, 1,287 bytes, SHA-256
   `487c601e9693d6a0fbc31d1b683ffd342ba0d10007c780f315af1113d825e8a3`.
+
+## Fresh-checkout runtime scaffold — unverified continuation
+
+The hosted root Release workflow later exposed a bootstrap gap before the
+existing metallib-only stager. A persisted local `.build` tree had supplied
+the canonical SwiftPM `Info.plist`; a fresh checkout did not, because the
+pinned Cmlx package declares neither the corresponding SwiftPM resource nor a
+build plugin. This was an executor-environment gap, not evidence that the
+frozen donor/runtime role split or metallib-only stager was wrong.
+
+The current worktree adds a separate PrimeCore-only
+`PrimeMLXRuntimeScaffold` utility. It source-binds the one tracked 1,120-byte
+canonical manifest, creates the absent owner-private runtime bundle with
+exclusive no-replace semantics, and leaves the metallib absent for the
+existing stager. The stager remains donor-validating and metallib-only; the
+1,130-byte Xcode manifest is never substituted. Historical receipts, evidence
+roots, and checkpoint artifacts are neither runtime inputs nor overwrite
+targets.
+
+The resulting working `Package.swift` is 29,043 bytes with SHA-256
+`5df810b3796bc3b254e58148ddcc9e4014c92c504845084743c1d3a580c2c895`.
+The earlier 27,650-byte historical-worker anchor, 28,758-byte Driver-only
+anchor, 65,306-byte checkout-specific Driver-only package description, and
+65,060-byte path-neutral Driver-only package description remain historical
+accounting at SHA-256
+`6a4221c36d6e1b013b5e8bd7ad1c7730ebb8847a257305d7c550b14e1543a7e6` and
+`47d0df8b252bbc5b51b4ca70319cd88ce16f6bca2a55989c6c00a26e49cb6b93`,
+respectively. The additive scaffold topology has a new path-neutral two-role
+checkpoint of 65,740 bytes with SHA-256
+`a9b8935742e67c2ea5cf8cb19727a4dcc24adb46553f7a74d4a243f713cb51f5`.
+Final source identity, full hosted validation, exact commit, and independent
+audit are still pending; no durable completion or publication is claimed
+here.
+
+The MLX-free statement remains scoped to the Driver V2 supervisor target and
+binary closure. The scaffold is a separate utility, not a Driver dependency,
+and other repository targets remain MLX-linked. The heavy root Release suite,
+Xcode donor, scaffold, and stage sequence is promotion-only: it is mandatory
+when selected, with no missing-fixture skip, while ordinary Xcode/SwiftPM and
+normal macOS/Mac App Store development remain usable without running it on
+every build.
 
 ## Resume order
 

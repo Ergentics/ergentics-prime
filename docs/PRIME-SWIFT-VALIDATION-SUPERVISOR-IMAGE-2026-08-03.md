@@ -85,7 +85,7 @@ continuation of the root manifest, not a rewrite of the historical-worker
 V21 through V27 checkpoint. The historical `Package.swift` receipt remains
 27,650 bytes with SHA-256
 `190b1d2dbeb2597830b1765fa80d6776a0044a34d5e2c6db8b14ace013654e7d`.
-The current Driver manifest is 28,758 bytes with SHA-256
+The Driver-only manifest at that checkpoint is 28,758 bytes with SHA-256
 `52a0078a3dd6b5cf68aa75e63c12ea739e2238cdb7c8f5b0380cbbff4cb66fa6`.
 Its delta is exactly 1,108 bytes and 32 inserted lines in two regions: the
 Driver product declaration and the root contracts, DriverCore, and executable
@@ -102,6 +102,24 @@ identities. Unknown paths, identities, replacement counts, or residual drift
 fail closed. This is source-accounting authority only; it grants no Driver
 process, build, inventory, staging, completion, decoder, MLX, or training
 authority.
+
+## Runtime scaffold continuation
+
+The later source-bound MLX runtime scaffold is additive accounting after the
+Driver-only checkpoint above. Its working `Package.swift` is 29,043 bytes with
+SHA-256
+`5df810b3796bc3b254e58148ddcc9e4014c92c504845084743c1d3a580c2c895`.
+The 285-byte delta adds only the `PrimeMLXRuntimeScaffold` executable product
+and its PrimeCore-only executable target; the tracked template is excluded
+from compilation. The historical 27,650-byte and Driver-only 28,758-byte
+anchors remain exact records of their respective source topologies.
+
+This continuation does not yet have final source-identity or package-
+description evidence. Those values must be regenerated from the frozen final
+source tree and independently audited; they must not be inferred from the
+working tree or fabricated by replacing an earlier anchor. Until that occurs,
+the scaffold and its workflow integration are unverified WIP rather than a
+durable Driver V2 completion claim.
 
 ## Hosted Xcode selector
 
@@ -148,11 +166,16 @@ authorities, and `unobserved` execution states. It writes no evidence file.
 The stdout bytes are admissible only when the process subsequently exits zero;
 write failure or the final live checkpoint forces a nonzero exit.
 
-The rolling two-role actual-package description anchor for this root topology
-is 65,306 bytes with SHA-256
+The pre-scaffold rolling two-role actual-package description anchor for the
+Driver-only root topology remains 65,306 bytes with SHA-256
 `6a4221c36d6e1b013b5e8bd7ad1c7730ebb8847a257305d7c550b14e1543a7e6`.
-Earlier package-description anchors remain historical and are not rewritten;
-this canary proves matching package capture only, not Driver execution.
+Its path-neutral normalized checkpoint is 65,060 bytes with SHA-256
+`47d0df8b252bbc5b51b4ca70319cd88ce16f6bca2a55989c6c00a26e49cb6b93`.
+Both remain historical and are not rewritten. The additive scaffold topology
+has a new path-neutral two-role checkpoint of 65,740 bytes with SHA-256
+`a9b8935742e67c2ea5cf8cb19727a4dcc24adb46553f7a74d4a243f713cb51f5`.
+This canary proves matching package capture only, not Driver execution; final
+source freeze and full validation remain pending.
 
 ## Authority boundary
 
@@ -173,6 +196,18 @@ manifests, companion descriptor closure, and a gapless source-watch sequence
 must be implemented before the first fixed Git or Swift probe. Staging plus
 build follows that pre-observation slice; inventories and parser-derived shard
 semantics remain later independently audited boundaries.
+
+The scaffold does not weaken the supervisor's MLX-free boundary. It is a
+separate PrimeCore-only command-line utility and is neither linked into nor
+reachable from `PrimeValidationWorkflowDriverV2`. “MLX-free” applies only to
+the Driver supervisor target and binary closure; the repository still resolves
+MLX for other targets.
+
+The hosted root Release suite, Xcode donor build, exact scaffold, and
+metallib-only stage are promotion-only checks. Selecting that workflow makes
+each check mandatory and fail-closed, but it does not turn the heavy suite into
+a prerequisite for ordinary Xcode or SwiftPM iteration or normal macOS/Mac App
+Store development.
 
 ## Release and security boundaries
 

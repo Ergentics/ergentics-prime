@@ -71,6 +71,9 @@ enum PrimeRootPackageManifestCheckpointTestSupport {
     private static let currentPackageByteCount: UInt64 = 28_758
     private static let currentPackageSHA256 =
         "52a0078a3dd6b5cf68aa75e63c12ea739e2238cdb7c8f5b0380cbbff4cb66fa6"
+    private static let scaffoldPackageByteCount: UInt64 = 29_043
+    private static let scaffoldPackageSHA256 =
+        "5df810b3796bc3b254e58148ddcc9e4014c92c504845084743c1d3a580c2c895"
 
     private static let productAnchor =
         "        .library(\n"
@@ -114,6 +117,27 @@ enum PrimeRootPackageManifestCheckpointTestSupport {
         + "                    \"-Xlinker\", \"-S\",\n"
         + "                ]),\n"
         + "            ]\n"
+        + "        ),\n"
+    private static let scaffoldProductAnchor =
+        "        .executable(\n"
+        + "            name: \"PrimeMLXBundleStage\",\n"
+        + "            targets: [\"PrimeMLXBundleStage\"]\n"
+        + "        ),\n"
+    private static let scaffoldProductInsertion =
+        "        .executable(\n"
+        + "            name: \"PrimeMLXRuntimeScaffold\",\n"
+        + "            targets: [\"PrimeMLXRuntimeScaffold\"]\n"
+        + "        ),\n"
+    private static let scaffoldTargetAnchor =
+        "        .executableTarget(\n"
+        + "            name: \"PrimeMLXBundleStage\",\n"
+        + "            dependencies: [\"PrimeCore\"]\n"
+        + "        ),\n"
+    private static let scaffoldTargetInsertion =
+        "        .executableTarget(\n"
+        + "            name: \"PrimeMLXRuntimeScaffold\",\n"
+        + "            dependencies: [\"PrimeCore\"],\n"
+        + "            exclude: [\"Templates\"]\n"
         + "        ),\n"
 
     private static let identityLoopHistoricalLine =
@@ -218,8 +242,8 @@ enum PrimeRootPackageManifestCheckpointTestSupport {
         let liveByteCount = UInt64(live.count)
         let liveSHA256 = PrimeSHA256.hexDigest(of: live)
         guard
-            liveByteCount == currentPackageByteCount,
-            liveSHA256 == currentPackageSHA256
+            liveByteCount == scaffoldPackageByteCount,
+            liveSHA256 == scaffoldPackageSHA256
         else {
             throw ContinuationError.unexpectedLiveIdentity(
                 packageRelativePath,
@@ -231,10 +255,35 @@ enum PrimeRootPackageManifestCheckpointTestSupport {
             throw ContinuationError.nonUTF8(packageRelativePath)
         }
 
+        var priorDriverSource = try replacingExactlyOnce(
+            scaffoldProductInsertion,
+            with: "",
+            in: liveSource,
+            label: "scaffold_product_reverse"
+        )
+        priorDriverSource = try replacingExactlyOnce(
+            scaffoldTargetInsertion,
+            with: "",
+            in: priorDriverSource,
+            label: "scaffold_target_reverse"
+        )
+        let priorDriver = Data(priorDriverSource.utf8)
+        guard
+            UInt64(priorDriver.count) == currentPackageByteCount,
+            PrimeSHA256.hexDigest(of: priorDriver)
+                == currentPackageSHA256
+        else {
+            throw ContinuationError.reverseReconstructionMismatch(
+                packageRelativePath,
+                UInt64(priorDriver.count),
+                PrimeSHA256.hexDigest(of: priorDriver)
+            )
+        }
+
         var historicalSource = try replacingExactlyOnce(
             productInsertion,
             with: "",
-            in: liveSource,
+            in: priorDriverSource,
             label: "driver_product_reverse"
         )
         historicalSource = try replacingExactlyOnce(
@@ -256,19 +305,35 @@ enum PrimeRootPackageManifestCheckpointTestSupport {
             )
         }
 
-        var reconstructedSource = try replacingExactlyOnce(
+        var reconstructedPriorDriverSource = try replacingExactlyOnce(
             productAnchor,
             with: productAnchor + productInsertion,
             in: historicalSource,
             label: "driver_product_forward"
         )
-        reconstructedSource = try replacingExactlyOnce(
+        reconstructedPriorDriverSource = try replacingExactlyOnce(
             targetAnchor,
             with: targetAnchor + targetInsertion,
-            in: reconstructedSource,
+            in: reconstructedPriorDriverSource,
             label: "driver_targets_forward"
         )
-        guard Data(reconstructedSource.utf8) == live else {
+        guard Data(reconstructedPriorDriverSource.utf8) == priorDriver else {
+            throw ContinuationError.forwardReconstructionMismatch
+        }
+
+        var reconstructedLiveSource = try replacingExactlyOnce(
+            scaffoldProductAnchor,
+            with: scaffoldProductAnchor + scaffoldProductInsertion,
+            in: reconstructedPriorDriverSource,
+            label: "scaffold_product_forward"
+        )
+        reconstructedLiveSource = try replacingExactlyOnce(
+            scaffoldTargetAnchor,
+            with: scaffoldTargetAnchor + scaffoldTargetInsertion,
+            in: reconstructedLiveSource,
+            label: "scaffold_target_forward"
+        )
+        guard Data(reconstructedLiveSource.utf8) == live else {
             throw ContinuationError.forwardReconstructionMismatch
         }
         return historical

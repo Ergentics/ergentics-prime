@@ -12,8 +12,8 @@ readonly expected_mlx_head="d37885a278f1c37484a94d0f401a418735e66519"
 readonly expected_mlx_tree="5310749549cca107fc1bb07d82dacf043bc02b9e"
 readonly expected_mlx_submodule_head="ce45c52505c8158ea48d2a54e8caae05efd86bfe"
 readonly expected_mlx_c_submodule_head="0726ca922fc902c4c61ef9c27d94132be418e945"
-readonly expected_source_identity="dbc00cc23ebd635c154daaf19dd88f39c2774a30c9c393b3c213978155cb261d"
-readonly expected_package_sha="52a0078a3dd6b5cf68aa75e63c12ea739e2238cdb7c8f5b0380cbbff4cb66fa6"
+readonly expected_source_identity="b900bdd2d9225a2bad3c11b1a15bc639b649a54cf3951a5ca86cb882e8b385c0"
+readonly expected_package_sha="5df810b3796bc3b254e58148ddcc9e4014c92c504845084743c1d3a580c2c895"
 readonly expected_resolved_sha="da7f7baa10f6da34b01ad69dc116f8a2d31140eca6770cb562ac05a7c50b356c"
 readonly expected_mirrors_sha="6124788421eab5803c52b508338ec085a95753b871582951acbb3005b1dc2cc6"
 readonly expected_xctest_sha="93ccc091a0343ac4fed35b208447d7460eae27668ddec3e931f54b9a7769212b"
@@ -27,6 +27,7 @@ readonly expected_donor_info_sha="124c82bbfd7fe1ea93aa05b5a50d1e5828759fb268556e
 readonly expected_donor_info_bytes="1130"
 readonly expected_runtime_info_sha="62486b35d9253522fe58dba1487d910b3d00d892954558145c553051bd61684d"
 readonly expected_runtime_info_bytes="1120"
+readonly canonical_runtime_info_template_relative_path="Sources/PrimeMLXRuntimeScaffold/Templates/canonical-swiftpm-runtime/mlx-swift_Cmlx.bundle/Contents/Info.plist"
 
 readonly runner_temp="${RUNNER_TEMP:?RUNNER_TEMP is required}"
 readonly expected_prime_head="${GITHUB_SHA:?GITHUB_SHA is required}"
@@ -101,6 +102,86 @@ assert_file_bytes() {
     observed="$(stat -f '%z' "$path")"
     [[ "$observed" == "$expected" ]] ||
         die "$label byte count differs"
+}
+
+assert_file_mode() {
+    local path="$1"
+    local expected="$2"
+    local label="$3"
+    local observed
+
+    [[ -f "$path" && ! -L "$path" ]] ||
+        die "$label is not a regular non-symlink file"
+    observed="$(stat -f '%Lp' "$path")"
+    [[ "$observed" == "$expected" ]] || die "$label mode differs"
+}
+
+assert_directory_mode() {
+    local path="$1"
+    local expected="$2"
+    local label="$3"
+    local observed
+
+    [[ -d "$path" && ! -L "$path" ]] ||
+        die "$label is not a non-symlink directory"
+    observed="$(stat -f '%Lp' "$path")"
+    [[ "$observed" == "$expected" ]] || die "$label mode differs"
+}
+
+assert_runtime_bundle_tree() {
+    local release_bin="$1"
+    local metallib_state="$2"
+    local label="$3"
+    local actual="$runner_temp/$label.actual"
+    local expected="$runner_temp/$label.expected"
+    local bundle="$release_bin/mlx-swift_Cmlx.bundle"
+
+    [[ -d "$bundle" && ! -L "$bundle" ]] ||
+        die "$label root is not a non-symlink directory"
+    (
+        cd "$release_bin"
+        find mlx-swift_Cmlx.bundle -mindepth 0 -print | LC_ALL=C sort
+    ) > "$actual"
+    case "$metallib_state" in
+        absent)
+            printf '%s\n' \
+                'mlx-swift_Cmlx.bundle' \
+                'mlx-swift_Cmlx.bundle/Contents' \
+                'mlx-swift_Cmlx.bundle/Contents/Info.plist' \
+                'mlx-swift_Cmlx.bundle/Contents/Resources' \
+                > "$expected"
+            ;;
+        present)
+            printf '%s\n' \
+                'mlx-swift_Cmlx.bundle' \
+                'mlx-swift_Cmlx.bundle/Contents' \
+                'mlx-swift_Cmlx.bundle/Contents/Info.plist' \
+                'mlx-swift_Cmlx.bundle/Contents/Resources' \
+                'mlx-swift_Cmlx.bundle/Contents/Resources/default.metallib' \
+                > "$expected"
+            ;;
+        *)
+            die "$label requested an invalid metallib state"
+            ;;
+    esac
+    cmp -s "$actual" "$expected" || die "$label tree differs"
+
+    assert_directory_mode "$bundle" 700 "$label-bundle"
+    assert_directory_mode "$bundle/Contents" 700 "$label-contents"
+    assert_directory_mode \
+        "$bundle/Contents/Resources" \
+        700 \
+        "$label-resources"
+    assert_file_mode \
+        "$bundle/Contents/Info.plist" \
+        444 \
+        "$label-info"
+    if [[ "$metallib_state" == present ]]; then
+        assert_file_mode \
+            "$bundle/Contents/Resources/default.metallib" \
+            444 \
+            "$label-metallib"
+    fi
 }
 
 assert_empty_directory() {
@@ -580,6 +661,14 @@ assert_static_inputs() {
     assert_mlx_submodules
 
     assert_file_sha "$prime_root/Package.swift" "$expected_package_sha" package
+    assert_file_sha \
+        "$prime_root/$canonical_runtime_info_template_relative_path" \
+        "$expected_runtime_info_sha" \
+        canonical-runtime-info-template
+    assert_file_bytes \
+        "$prime_root/$canonical_runtime_info_template_relative_path" \
+        "$expected_runtime_info_bytes" \
+        canonical-runtime-info-template
     assert_file_sha \
         "$prime_root/Package.resolved" \
         "$expected_resolved_sha" \
@@ -1163,6 +1252,8 @@ stage_root_pinned_metallib() {
     local runtime_bundle="$release_bin/mlx-swift_Cmlx.bundle"
     local runtime_info="$runtime_bundle/Contents/Info.plist"
     local runtime_metallib="$runtime_bundle/Contents/Resources/default.metallib"
+    local scaffold_log="$test_root/runtime-scaffold.log"
+    local scaffold_expected="$test_root/runtime-scaffold.expected"
     local stage_log="$test_root/metallib-stage.log"
     local stage_expected="$test_root/metallib-stage.expected"
 
@@ -1197,9 +1288,33 @@ stage_root_pinned_metallib() {
         donor-metallib
 
     build_root_release_product "$test_root" PrimeTypedOptimizerRestoreProbe
+    build_root_release_product "$test_root" PrimeMLXRuntimeScaffold
     build_root_release_product "$test_root" PrimeMLXBundleStage
     [[ -x "$destination_host" && ! -L "$destination_host" ]] ||
         die "SwiftPM metallib destination host is absent"
+    [[ -x "$release_bin/PrimeMLXRuntimeScaffold" && \
+        ! -L "$release_bin/PrimeMLXRuntimeScaffold" ]] ||
+        die "SwiftPM runtime scaffold executable is absent"
+    [[ -x "$release_bin/PrimeMLXBundleStage" && \
+        ! -L "$release_bin/PrimeMLXBundleStage" ]] ||
+        die "SwiftPM metallib stage executable is absent"
+    [[ ! -e "$runtime_bundle" && ! -L "$runtime_bundle" ]] ||
+        die "SwiftPM destination runtime bundle was not initially absent"
+
+    "$release_bin/PrimeMLXRuntimeScaffold" \
+        --source-root "$prime_root" \
+        --destination-host "$destination_host" \
+        --runtime-role typed_optimizer_restore_probe \
+        > "$scaffold_log" 2>&1
+    printf '%s\n' \
+        "Prime MLX runtime scaffold complete: runtime_role=typed_optimizer_restore_probe mlx_swift=0.31.3 destination_bundle_initially_absent=true runtime_info_plist_sha256=$expected_runtime_info_sha metallib_absent=true" \
+        > "$scaffold_expected"
+    cmp -s "$scaffold_log" "$scaffold_expected" ||
+        die "exact runtime scaffold result differs"
+    assert_runtime_bundle_tree \
+        "$release_bin" \
+        absent \
+        runtime-scaffold
     assert_file_sha \
         "$runtime_info" \
         "$expected_runtime_info_sha" \
@@ -1229,6 +1344,10 @@ stage_root_pinned_metallib() {
         "$runtime_info" \
         "$expected_runtime_info_bytes" \
         runtime-info-after-stage
+    assert_runtime_bundle_tree \
+        "$release_bin" \
+        present \
+        staged-runtime
     assert_file_sha \
         "$runtime_metallib" \
         "$expected_metallib_sha" \

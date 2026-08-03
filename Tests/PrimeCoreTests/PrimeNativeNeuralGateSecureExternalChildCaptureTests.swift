@@ -988,16 +988,20 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
         // probe/verifier equality above remains the live capture check; this
         // normalized pin removes only host topology. It is not Driver
         // execution, source/execution-binding V7, or worker execution
-        // authority.
+        // authority. The Driver-only topology normalized to 65,060 bytes with
+        // SHA-256
+        // 47d0df8b252bbc5b51b4ca70319cd88ce16f6bca2a55989c6c00a26e49cb6b93;
+        // that checkpoint remains historical rather than being rewritten by
+        // the additive runtime-scaffold package topology below.
         XCTAssertEqual(
             normalizedPackageDescription.count,
-            65_060
+            65_740
         )
         XCTAssertEqual(
             PrimeSHA256.hexDigest(
                 of: normalizedPackageDescription
             ),
-            "47d0df8b252bbc5b51b4ca70319cd88ce16f6bca2a55989c6c00a26e49cb6b93"
+            "a9b8935742e67c2ea5cf8cb19727a4dcc24adb46553f7a74d4a243f713cb51f5"
         )
         XCTAssertEqual(
             probe.validatedPrimeSourceSnapshot,
