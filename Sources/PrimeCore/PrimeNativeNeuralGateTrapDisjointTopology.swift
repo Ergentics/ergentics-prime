@@ -201,6 +201,9 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
         historicalWorkerInvocationSeamCallerAndResultConsumerSourceContractBinding:
         PrimeNativeNeuralGateTopologyContractBinding? = nil
     public private(set) var
+        historicalWorkerInvocationSeamPrivateAccessRebindingDesignContractBinding:
+        PrimeNativeNeuralGateTopologyContractBinding? = nil
+    public private(set) var
         historicalEvidenceExportTargetName:
         String? = nil
     public private(set) var
@@ -3839,6 +3842,123 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
         )
     }()
 
+    /// Frozen V26 design binding for the exact one-token raw-seam private
+    /// access rebinding reserved for V27. V26 changes no worker source,
+    /// package graph, target graph, runtime path, execution or authority.
+    public static let frozenV26: Self = {
+        let previous = frozenV25
+        let design =
+            PrimeNativeNeuralGateHistoricalWorkerInvocationSeamPrivateAccessRebindingDesignContract
+            .frozenV1
+        // Literal-pinned after the design contract's canonical encoding was
+        // finalized. Avoid recursive topology validation while frozenV26 is
+        // being initialized.
+        let designSHA256 =
+            "58bd67d365c38337b1eda6d2ca8e28422125f424ff7eccec72ca151a91dd4f8e"
+
+        return Self(
+            schemaVersion: 26,
+            contractID:
+                "prime_stage_b_historical_worker_bounded_unavailable_composition_invocation_seam_private_access_rebinding_security_design_topology_v26",
+            status: previous.status,
+            executionImplemented: previous.executionImplemented,
+            historicalReplayPlanID: previous.historicalReplayPlanID,
+            historicalSourceBindingContractID:
+                previous.historicalSourceBindingContractID,
+            historicalEvidenceExportDesignContractBinding:
+                previous.historicalEvidenceExportDesignContractBinding,
+            historicalEvidenceExportSourceContractBinding:
+                previous.historicalEvidenceExportSourceContractBinding,
+            historicalWorkerEvidenceExportCallEdgeSourceContractBinding:
+                previous
+                .historicalWorkerEvidenceExportCallEdgeSourceContractBinding,
+            historicalEvidenceSemanticArtifactProjectionDesignContractBinding:
+                previous
+                .historicalEvidenceSemanticArtifactProjectionDesignContractBinding,
+            historicalEvidenceSemanticArtifactProjectionSourceContractBinding:
+                previous
+                .historicalEvidenceSemanticArtifactProjectionSourceContractBinding,
+            historicalWorkerSemanticArtifactProjectionCallEdgeSourceContractBinding:
+                previous
+                .historicalWorkerSemanticArtifactProjectionCallEdgeSourceContractBinding,
+            historicalSemanticArtifactDecoderSourceContractBinding:
+                previous.historicalSemanticArtifactDecoderSourceContractBinding,
+            historicalWorkerSemanticArtifactDecoderCallEdgeSourceContractBinding:
+                previous
+                .historicalWorkerSemanticArtifactDecoderCallEdgeSourceContractBinding,
+            historicalWorkerExportedEvidenceProjectionDecodeCompositionDesignContractBinding:
+                previous
+                .historicalWorkerExportedEvidenceProjectionDecodeCompositionDesignContractBinding,
+            historicalWorkerExportedEvidenceProjectionDecodeCompositionCallEdgeSourceContractBinding:
+                previous
+                .historicalWorkerExportedEvidenceProjectionDecodeCompositionCallEdgeSourceContractBinding,
+            historicalWorkerInvocationSeamDesignContractBinding:
+                previous.historicalWorkerInvocationSeamDesignContractBinding,
+            historicalWorkerInvocationSeamSourceContractBinding:
+                previous.historicalWorkerInvocationSeamSourceContractBinding,
+            historicalWorkerInvocationSeamCallerAndResultConsumerDesignContractBinding:
+                previous
+                .historicalWorkerInvocationSeamCallerAndResultConsumerDesignContractBinding,
+            historicalWorkerInvocationSeamCallerAndResultConsumerSourceContractBinding:
+                previous
+                .historicalWorkerInvocationSeamCallerAndResultConsumerSourceContractBinding,
+            historicalWorkerInvocationSeamPrivateAccessRebindingDesignContractBinding:
+                PrimeNativeNeuralGateTopologyContractBinding(
+                    contractID: design.contractID,
+                    contentSHA256: designSHA256
+                ),
+            historicalEvidenceExportTargetName:
+                previous.historicalEvidenceExportTargetName,
+            historicalEvidenceSemanticArtifactProjectionTargetName:
+                previous
+                .historicalEvidenceSemanticArtifactProjectionTargetName,
+            historicalStatisticsArtifactContractTargetName:
+                previous.historicalStatisticsArtifactContractTargetName,
+            historicalSemanticArtifactDecoderTargetName:
+                previous.historicalSemanticArtifactDecoderTargetName,
+            historicalContractsPreserved:
+                previous.historicalContractsPreserved,
+            historicalFutureTargetGraphSuperseded:
+                previous.historicalFutureTargetGraphSuperseded,
+            targetGraph: previous.targetGraph,
+            forbiddenReachability: previous.forbiddenReachability,
+            historicalContainmentRootTargetName:
+                previous.historicalContainmentRootTargetName,
+            historicalRuntimeTargetName:
+                previous.historicalRuntimeTargetName,
+            historicalReplayTargetName:
+                previous.historicalReplayTargetName,
+            pureReplayTargetName: previous.pureReplayTargetName,
+            donorAdaptationV2PreservedAsHistory:
+                previous.donorAdaptationV2PreservedAsHistory,
+            donorAdaptationV3Required:
+                previous.donorAdaptationV3Required,
+            donorAdaptationV3RequiredDestination:
+                previous.donorAdaptationV3RequiredDestination,
+            sourceBindingV7Issued: previous.sourceBindingV7Issued,
+            sourceBindingV7Prerequisite:
+                previous.sourceBindingV7Prerequisite,
+            packageCaptureAuthority:
+                "actual_package_secure_capture_only_bound_design_\(design.contractID)_sha256_\(designSHA256)_and_exact_projected_frontend_typecheck_not_checked_in_private_rebinding_release_product_build_main_cross_file_boundary_caller_runtime_input_output_request_process_replay_transport_artifact_io_launch_execution_publication_confidentiality_authority_or_source_binding_v7_evidence",
+            mutationProducerDetectorTargetAssignmentDeferred:
+                previous.mutationProducerDetectorTargetAssignmentDeferred,
+            mutationProducerDetectorMustBeDisjoint:
+                previous.mutationProducerDetectorMustBeDisjoint,
+            nextImplementationPrerequisite:
+                design.nextImplementationPrerequisite,
+            authorityStatement: [
+                "This V26 topology preserves every V1 through V25 canonical identity and binds only the security design for the exact one-token raw invocation-seam private-access rebinding reserved for V27.",
+                "The complete V25 target graph, dependency order, target materialization, products, resources, four-file worker inventory, forbidden reachability, prior contract bindings, historical target names, status, execution flags, and source-binding authority remain exact.",
+                "V26 materializes only the PrimeCore design contract, focused tests, this additive topology binding, documentation, and provenance. The checked-in worker remains the exact 14,175-byte V25 source with an internal raw seam, internal nonpayload boundary, and one checked-in same-file raw-seam caller.",
+                "The reserved V27 mutation is only the half-open zero-based byte range 12,555..<12,563 changing internal to private. A derived projection passed worker-source frontend typechecking against existing Release-built modules and resource accessor, but no clean Release product build or checked-in source binding exists yet.",
+                "The future private modifier blocks ordinary direct Swift naming from other files, main, and testable imports; it does not block indirect invocation through the internal V25 boundary, future same-file extensions of the declaring nested type, underscored private-source/compiler privilege, debugger, injection, dynamic or unsafe access.",
+                "Any future boundary caller can supply Evidence and context and observe returned versus threw plus timing, resource, and crash behavior. Only Swift Errors caught through that boundary lose detail; caller, origin, role, source, and artifact lineage authentication, confidentiality, zeroization, constant-time/resource behavior, and trap, signal, or out-of-memory containment remain absent.",
+                "No worker-source change, source contract, main or cross-file boundary caller, request, transport, sealing, launch, execution, runtime input or output, artifact I/O, publication, mechanics PASS, receipt, source or execution binding V7, scientific authority, or product authority is materialized, observed, or authorized; Prime remains ABSTAIN.",
+                design.authorityStatement,
+            ].joined(separator: " ")
+        )
+    }()
+
     public var historicalEvidenceExportDesignContractID:
         String?
     {
@@ -4053,6 +4173,22 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
             .contentSHA256
     }
 
+    public var
+        historicalWorkerInvocationSeamPrivateAccessRebindingDesignContractID:
+        String?
+    {
+        historicalWorkerInvocationSeamPrivateAccessRebindingDesignContractBinding?
+            .contractID
+    }
+
+    public var
+        historicalWorkerInvocationSeamPrivateAccessRebindingDesignContractSHA256:
+        String?
+    {
+        historicalWorkerInvocationSeamPrivateAccessRebindingDesignContractBinding?
+            .contentSHA256
+    }
+
     public func target(
         named name: String
     ) throws -> PrimeNativeNeuralGateTopologyTarget {
@@ -4150,6 +4286,8 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
             expected = .frozenV24
         case 25:
             expected = .frozenV25
+        case 26:
+            expected = .frozenV26
         default:
             throw PrimeNativeNeuralGateTopologyError
                 .invalidFrozenContract
@@ -4676,6 +4814,47 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
                 historicalWorkerInvocationSeamCallerAndResultConsumerSourceContractBinding
                     == nil
         }
+        let invocationSeamPrivateAccessRebindingDesignBindingValid: Bool
+        if schemaVersion == 26 {
+            let design =
+                PrimeNativeNeuralGateHistoricalWorkerInvocationSeamPrivateAccessRebindingDesignContract
+                .frozenV1
+            try design.validate()
+            let designSHA256 = PrimeSHA256.hexDigest(
+                of: try PrimeCanonicalJSON.encode(design)
+            )
+            invocationSeamPrivateAccessRebindingDesignBindingValid =
+                historicalWorkerInvocationSeamPrivateAccessRebindingDesignContractBinding?
+                .validate() == true
+                && historicalWorkerInvocationSeamPrivateAccessRebindingDesignContractID
+                    == design.contractID
+                && historicalWorkerInvocationSeamPrivateAccessRebindingDesignContractSHA256
+                    == designSHA256
+                && historicalWorkerInvocationSeamPrivateAccessRebindingDesignContractSHA256
+                    == "58bd67d365c38337b1eda6d2ca8e28422125f424ff7eccec72ca151a91dd4f8e"
+        } else if schemaVersion > 26 {
+            let frozenDesign =
+                PrimeNativeNeuralGateHistoricalWorkerInvocationSeamPrivateAccessRebindingDesignContract
+                .frozenV1
+            let frozenDesignSHA256 = PrimeSHA256.hexDigest(
+                of: try PrimeCanonicalJSON.encode(frozenDesign)
+            )
+            invocationSeamPrivateAccessRebindingDesignBindingValid =
+                historicalWorkerInvocationSeamPrivateAccessRebindingDesignContractBinding?
+                .validate() == true
+                && historicalWorkerInvocationSeamPrivateAccessRebindingDesignContractID
+                    == "prime_source_bound_historical_worker_bounded_unavailable_composition_invocation_seam_private_access_rebinding_security_design_v26"
+                && historicalWorkerInvocationSeamPrivateAccessRebindingDesignContractSHA256
+                    == "58bd67d365c38337b1eda6d2ca8e28422125f424ff7eccec72ca151a91dd4f8e"
+                && frozenDesign.contractID
+                    == historicalWorkerInvocationSeamPrivateAccessRebindingDesignContractID
+                && frozenDesignSHA256
+                    == historicalWorkerInvocationSeamPrivateAccessRebindingDesignContractSHA256
+        } else {
+            invocationSeamPrivateAccessRebindingDesignBindingValid =
+                historicalWorkerInvocationSeamPrivateAccessRebindingDesignContractBinding
+                    == nil
+        }
         guard status == .plannedNotMaterialized,
               !executionImplemented,
               historicalContractsPreserved,
@@ -4699,7 +4878,8 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
               invocationSeamDesignBindingValid,
               invocationSeamSourceBindingValid,
               invocationSeamCallerAndResultConsumerDesignBindingValid,
-              invocationSeamCallerAndResultConsumerSourceBindingValid
+              invocationSeamCallerAndResultConsumerSourceBindingValid,
+              invocationSeamPrivateAccessRebindingDesignBindingValid
         else {
             throw PrimeNativeNeuralGateTopologyError
                 .invalidFrozenContract
@@ -4897,6 +5077,8 @@ public struct PrimeNativeNeuralGateTrapDisjointTopologyContract:
             "historical_worker_invocation_seam_caller_and_result_consumer_design_contract_binding"
         case historicalWorkerInvocationSeamCallerAndResultConsumerSourceContractBinding =
             "historical_worker_invocation_seam_caller_and_result_consumer_source_contract_binding"
+        case historicalWorkerInvocationSeamPrivateAccessRebindingDesignContractBinding =
+            "historical_worker_invocation_seam_private_access_rebinding_design_contract_binding"
         case historicalEvidenceExportTargetName =
             "historical_evidence_export_target_name"
         case historicalEvidenceSemanticArtifactProjectionTargetName =
