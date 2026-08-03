@@ -90,8 +90,20 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
                 .unobserved
             )
             XCTAssertFalse(prerequisite.completionAuthorized)
+            let guarded = try prerequisite.prepareGuardedPreExecutor(
+                allowRootOwnedCurrentProcessForTesting: true
+            )
+            try guarded.revalidateGuards()
+            XCTAssertEqual(guarded.guardState, .prepared)
+            XCTAssertTrue(guarded.sourceDescriptorClosureHeld)
+            XCTAssertTrue(guarded.sourceWatchWindowArmed)
+            XCTAssertTrue(
+                guarded.missingAuthorities.contains(
+                    .supervisorExecutableImage
+                )
+            )
             XCTAssertThrowsError(try capability.consumePrerequisites())
-            withExtendedLifetime(prerequisite) {}
+            withExtendedLifetime(guarded) {}
         #endif
     }
 
@@ -262,6 +274,195 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
         )
         XCTAssertTrue(reacquired.isHeld)
         reacquired.release()
+    }
+
+    func testGuardedPreExecutorClosesOnlyPrimeSourceAuthorities()
+        throws
+    {
+        let fixture = try Fixture()
+        defer { fixture.cleanup() }
+        let capability = try fixture.admit()
+        let prerequisite = try capability.consumePrerequisites()
+        let guarded = try prerequisite.prepareGuardedPreExecutor(
+            allowRootOwnedCurrentProcessForTesting: true
+        )
+
+        try guarded.revalidateGuards()
+        XCTAssertEqual(guarded.guardState, .prepared)
+        XCTAssertEqual(
+            guarded.authorityCeiling,
+            .sourceGuardsPreparedOnly
+        )
+        XCTAssertTrue(guarded.sourceDescriptorClosureHeld)
+        XCTAssertTrue(guarded.sourceWatchWindowArmed)
+        XCTAssertTrue(guarded.currentProcessExecutableImageHeld)
+        XCTAssertEqual(
+            guarded.missingAuthorities,
+            [
+                .supervisorExecutableImage,
+                .primeGitHEADAndCleanProcessObservation,
+                .companionGitHEADAndCleanProcessObservation,
+                .swiftVersionProcessObservation,
+                .swiftTargetInfoProcessObservation,
+                .swiftPMBuildExecution,
+                .xctestInventoryExecution,
+                .swiftTestingInventoryExecution,
+                .artifactStaging,
+            ]
+        )
+        XCTAssertEqual(guarded.processExecutionObservation, .unobserved)
+        XCTAssertEqual(guarded.buildExecutionObservation, .unobserved)
+        XCTAssertEqual(guarded.inventoryExecutionObservation, .unobserved)
+        XCTAssertEqual(guarded.artifactStagingObservation, .unobserved)
+        XCTAssertEqual(guarded.shardCompletionObservation, .unobserved)
+        XCTAssertFalse(guarded.completionAuthorized)
+        XCTAssertGreaterThan(
+            guarded.currentProcessExecutable.byteCount,
+            0
+        )
+        XCTAssertEqual(
+            guarded.currentProcessExecutable.sha256.count,
+            64
+        )
+        XCTAssertTrue(
+            guarded.currentProcessExecutable.canonicalAbsolutePath
+                .hasPrefix("/")
+        )
+        XCTAssertEqual(
+            try FileManager.default.contentsOfDirectory(
+                atPath: fixture.workspace.path
+            ),
+            []
+        )
+        XCTAssertEqual(
+            try FileManager.default.contentsOfDirectory(
+                atPath: fixture.evidence.path
+            ),
+            []
+        )
+        XCTAssertThrowsError(
+            try prerequisite.prepareGuardedPreExecutor(
+                allowRootOwnedCurrentProcessForTesting: true
+            )
+        ) {
+            XCTAssertEqual(
+                $0 as?
+                    PrimeValidationSwiftPMBuildInventoryAdmissionError,
+                .prerequisiteAlreadyConsumed
+            )
+        }
+        withExtendedLifetime(guarded) {}
+    }
+
+    func testConcurrentGuardPreparationHasExactlyOneWinner() throws {
+        let fixture = try Fixture()
+        defer { fixture.cleanup() }
+        let prerequisite = try fixture.admit().consumePrerequisites()
+        let race = GuardPreparationRace()
+        let ready = DispatchGroup()
+        let done = DispatchGroup()
+        let start = DispatchSemaphore(value: 0)
+        let queue = DispatchQueue(
+            label: "prime.validation.guard-preparation-race",
+            attributes: .concurrent
+        )
+
+        for _ in 0 ..< 2 {
+            ready.enter()
+            done.enter()
+            queue.async {
+                ready.leave()
+                start.wait()
+                race.record {
+                    try prerequisite.prepareGuardedPreExecutor(
+                        allowRootOwnedCurrentProcessForTesting: true
+                    )
+                }
+                done.leave()
+            }
+        }
+        XCTAssertEqual(ready.wait(timeout: .now() + 5), .success)
+        start.signal()
+        start.signal()
+        XCTAssertEqual(done.wait(timeout: .now() + 30), .success)
+
+        XCTAssertEqual(race.values.count, 1)
+        XCTAssertEqual(race.errors.count, 1)
+        XCTAssertEqual(
+            race.errors.first as?
+                PrimeValidationSwiftPMBuildInventoryAdmissionError,
+            .prerequisiteAlreadyConsumed
+        )
+        try race.values.first?.revalidateGuards()
+        race.releaseValues()
+    }
+
+    func testGuardPreparationFailurePoisonsOneShotTransition() throws {
+        let fixture = try Fixture()
+        defer { fixture.cleanup() }
+        let prerequisite = try fixture.admit().consumePrerequisites()
+        try Data("occupied".utf8).write(
+            to: fixture.workspace.appendingPathComponent("unexpected")
+        )
+
+        XCTAssertThrowsError(
+            try prerequisite.prepareGuardedPreExecutor(
+                allowRootOwnedCurrentProcessForTesting: true
+            )
+        )
+        XCTAssertThrowsError(
+            try prerequisite.prepareGuardedPreExecutor(
+                allowRootOwnedCurrentProcessForTesting: true
+            )
+        ) {
+            XCTAssertEqual(
+                $0 as?
+                    PrimeValidationSwiftPMBuildInventoryAdmissionError,
+                .prerequisiteAlreadyConsumed
+            )
+        }
+    }
+
+    func testPostGuardSourceMutationPermanentlyPoisonsGuard() throws {
+        let fixture = try Fixture()
+        defer { fixture.cleanup() }
+        let guarded = try fixture.admit()
+            .consumePrerequisites()
+            .prepareGuardedPreExecutor(
+                allowRootOwnedCurrentProcessForTesting: true
+            )
+        try guarded.revalidateGuards()
+
+        try Data("mutated\n".utf8).write(
+            to: fixture.prime.appendingPathComponent("README.md")
+        )
+        XCTAssertThrowsError(try guarded.revalidateGuards())
+        XCTAssertEqual(guarded.guardState, .poisoned)
+        XCTAssertEqual(guarded.authorityCeiling, .poisonedNoAuthority)
+        XCTAssertEqual(
+            guarded.missingAuthorities,
+            PrimeValidationSwiftPMMissingAuthority.allCases
+        )
+        XCTAssertFalse(guarded.sourceDescriptorClosureHeld)
+        XCTAssertFalse(guarded.sourceWatchWindowArmed)
+        XCTAssertFalse(guarded.currentProcessExecutableImageHeld)
+        XCTAssertThrowsError(try guarded.revalidateGuards()) {
+            XCTAssertEqual(
+                $0 as?
+                    PrimeValidationSwiftPMBuildInventoryAdmissionError,
+                .guardedPreExecutorPoisoned
+            )
+        }
+    }
+
+    func testRetainedRootOwnedXCTestImageIsExplicitlyTestOnly()
+        throws
+    {
+        let held = try PrimeSecureRunningExecutableCapture
+            .heldExecutableAllowingRootOwnerForTesting()
+        XCTAssertGreaterThan(held.byteCount, 0)
+        XCTAssertEqual(held.linkCount, 1)
+        try held.revalidate()
     }
 
     func testConcurrentConsumeHasExactlyOneWinner() throws {
@@ -442,6 +643,21 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
         )
         XCTAssertFalse(prerequisiteSource.contains("Codable"))
         XCTAssertFalse(prerequisiteSource.contains("public init("))
+
+        let guardedSource = try slice(
+            source,
+            from:
+                "public final class PrimeValidationSwiftPMBuildInventoryGuardedPreExecutor",
+            through:
+                "/// A single-use live capability for inputs needed by a future SwiftPM"
+        )
+        XCTAssertFalse(guardedSource.contains("Codable"))
+        XCTAssertFalse(guardedSource.contains("public init("))
+        XCTAssertFalse(guardedSource.contains("arguments:"))
+        XCTAssertFalse(guardedSource.contains("environment:"))
+        XCTAssertFalse(guardedSource.contains("posix_spawn"))
+        XCTAssertFalse(guardedSource.contains("Process("))
+        XCTAssertFalse(guardedSource.contains("createDirectory"))
     }
 
     private func assertLeaseBusy(
@@ -514,6 +730,35 @@ private final class ConsumeRace: @unchecked Sendable {
     func releasePrerequisites() {
         lock.lock()
         prerequisites.removeAll()
+        lock.unlock()
+    }
+}
+
+private final class GuardPreparationRace: @unchecked Sendable {
+    private let lock = NSLock()
+    private(set) var values:
+        [PrimeValidationSwiftPMBuildInventoryGuardedPreExecutor] = []
+    private(set) var errors: [Error] = []
+
+    func record(
+        _ operation: () throws
+            -> PrimeValidationSwiftPMBuildInventoryGuardedPreExecutor
+    ) {
+        do {
+            let value = try operation()
+            lock.lock()
+            values.append(value)
+            lock.unlock()
+        } catch {
+            lock.lock()
+            errors.append(error)
+            lock.unlock()
+        }
+    }
+
+    func releaseValues() {
+        lock.lock()
+        values.removeAll()
         lock.unlock()
     }
 }

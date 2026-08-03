@@ -13,6 +13,13 @@ PrimeCore-owned live prerequisite capability. It does not authorize process
 execution, durable resume, or complete arm/final receipts. Public completion
 remains fail-closed until an executor supplies all of the following.
 
+A later non-executing guard transition now holds the complete Prime source
+snapshot by descriptor and arms a repeatable prepared-state vnode watch. It
+also retains the current holder process's mapped image as non-authoritative
+prerequisite evidence. The supervisor image remains missing until a dedicated
+Driver V2 executable and non-restorable DriverCore bridge bind that image to
+the run intent. Poisoned guards dynamically restore the complete missing set.
+
 - Time and concurrency authority: monotonic active and wall-clock accounting,
   deadline escalation receipts, and enforced per-arm/global concurrency caps.
 - Staging TOCTOU controls: descriptor-relative no-follow traversal, identity
@@ -40,6 +47,12 @@ durable receipt contains staging declarations but no live staging capability;
 the live prerequisite still withholds Git/tool process observations, artifact
 staging, and all build/inventory/execution outcomes. A decoded declaration
 cannot restore the live capability.
+
+The next implementation prerequisite is a closed internal secure-child
+substrate with independent physical spawn path and logical `argv[0]`, plus a
+gapless multi-child source-watch sequence. The current maintained
+external-child factory and Foundation `Process` Git transport are not execution
+authority for the build/list plan.
 
 These are implementation prerequisites, not claims that the current schema
 already observes or enforces the remaining operating-system behavior. The

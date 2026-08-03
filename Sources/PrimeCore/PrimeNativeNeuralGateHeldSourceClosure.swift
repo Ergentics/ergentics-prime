@@ -469,6 +469,24 @@ final class PrimeNativeNeuralGateHeldSourceClosure {
             .monotonicNanoseconds
     }
 
+    /// Revalidates the held source tree while it is still in a prepared,
+    /// pre-child state. Unlike `validateBeforeResume`, this checkpoint is
+    /// repeatable and does not consume the single-child lifecycle transition.
+    /// It is used by non-executing guard capabilities that must keep the
+    /// mutation window live without claiming that a child was resumed.
+    func validateWhilePrepared() throws -> UInt64 {
+        guard preResumeValidationMonotonicNanoseconds == nil,
+              postReapValidationMonotonicNanoseconds == nil
+        else {
+            throw Self.rejected(
+                "source_prepared_after_child_transition"
+            )
+        }
+        return try validateCheckpoint(
+            context: "prepared"
+        ).monotonicNanoseconds
+    }
+
     func validateAfterReap() throws
         -> UInt64
     {

@@ -11,6 +11,8 @@ public enum PrimeValidationSwiftPMBuildInventoryAdmissionError:
 {
     case rejected(String)
     case capabilityAlreadyConsumed
+    case prerequisiteAlreadyConsumed
+    case guardedPreExecutorPoisoned
 }
 
 extension PrimeValidationSwiftPMBuildInventoryAdmissionError:
@@ -22,6 +24,10 @@ extension PrimeValidationSwiftPMBuildInventoryAdmissionError:
             "SwiftPM build/inventory prerequisite admission rejected: \(detail)"
         case .capabilityAlreadyConsumed:
             "SwiftPM build/inventory prerequisite capability was already consumed"
+        case .prerequisiteAlreadyConsumed:
+            "SwiftPM build/inventory prerequisite was already consumed"
+        case .guardedPreExecutorPoisoned:
+            "SwiftPM build/inventory guarded pre-executor is poisoned"
         }
     }
 }
@@ -143,6 +149,7 @@ public struct PrimeValidationSwiftPMToolchainObservation:
 public enum PrimeValidationSwiftPMMissingAuthority:
     String,
     CaseIterable,
+    Hashable,
     Sendable
 {
     case descriptorBackedSourceClosureAndMutationGuard =
@@ -170,6 +177,17 @@ public enum PrimeValidationSwiftPMAuthorityCeiling:
 {
     case retainedInputsOnlyNoPreparedExecutor =
         "retained_inputs_only_no_prepared_executor"
+    case sourceGuardsPreparedOnly = "source_guards_prepared_only"
+    case poisonedNoAuthority = "poisoned_no_authority"
+}
+
+public enum PrimeValidationSwiftPMGuardState:
+    String,
+    Equatable,
+    Sendable
+{
+    case prepared
+    case poisoned
 }
 
 /// Nonoptional evidence state for work owned by a later executor.
@@ -229,6 +247,8 @@ public final class PrimeValidationSwiftPMBuildInventoryPrerequisite:
     // Retention is the authority. A decoded or memberwise-reconstructed value
     // cannot create this state because there is no public initializer.
     let retainedState: PrimeValidationSwiftPMRetainedAdmissionState
+    private let preparationLock = NSLock()
+    private var preparationConsumed = false
 
     init(
         retainedState: PrimeValidationSwiftPMRetainedAdmissionState
@@ -245,6 +265,205 @@ public final class PrimeValidationSwiftPMBuildInventoryPrerequisite:
         toolchain = retainedState.toolchain.observation
         missingAuthorities =
             PrimeValidationSwiftPMMissingAuthority.allCases
+    }
+
+    /// Atomically transfers the retained admission state into a guarded,
+    /// still-non-executing pre-executor.
+    ///
+    /// The Prime source watch is armed before the current holder-process image
+    /// is retained. A complete guard checkpoint then revalidates all previously
+    /// admitted inputs while workspace and evidence roots are still empty.
+    /// Failure poisons this one-shot transition; callers cannot retry with a
+    /// changed source tree or current holder-process image.
+    public func prepareGuardedPreExecutor() throws
+        -> PrimeValidationSwiftPMBuildInventoryGuardedPreExecutor
+    {
+        try prepareGuardedPreExecutor(
+            allowRootOwnedCurrentProcessForTesting: false
+        )
+    }
+
+    /// Internal test seam for XCTest's root-owned Apple `xctest` host image.
+    /// The retained image remains a non-authoritative current-process
+    /// observation and never closes supervisor authority.
+    func prepareGuardedPreExecutor(
+        allowRootOwnedCurrentProcessForTesting: Bool
+    ) throws
+        -> PrimeValidationSwiftPMBuildInventoryGuardedPreExecutor
+    {
+        preparationLock.lock()
+        guard !preparationConsumed else {
+            preparationLock.unlock()
+            throw PrimeValidationSwiftPMBuildInventoryAdmissionError
+                .prerequisiteAlreadyConsumed
+        }
+        preparationConsumed = true
+        preparationLock.unlock()
+
+        try retainedState.revalidate()
+        let sourceRootDescriptor =
+            try retainedState.primeRepository.root
+            .duplicateTrustedRootDescriptorForInventory()
+        let sourceWatch: PrimeSecureHeldSourceWatch
+        do {
+            sourceWatch = try PrimeSecureHeldSourceWatch(
+                rootDescriptor: sourceRootDescriptor,
+                sourceSnapshot: retainedState.sourceSnapshot
+            )
+        } catch {
+            _ = Darwin.close(sourceRootDescriptor)
+            throw error
+        }
+        _ = Darwin.close(sourceRootDescriptor)
+
+        let currentProcessImage:
+            PrimeSecureHeldRunningExecutable
+        if allowRootOwnedCurrentProcessForTesting {
+            currentProcessImage =
+                try PrimeSecureRunningExecutableCapture
+                .heldExecutableAllowingRootOwnerForTesting()
+        } else {
+            currentProcessImage =
+                try PrimeSecureRunningExecutableCapture
+                .heldExecutable()
+        }
+        let guardedState =
+            PrimeValidationSwiftPMRetainedGuardedPreExecutorState(
+                admission: retainedState,
+                sourceWatch: sourceWatch,
+                currentProcessImage: currentProcessImage
+            )
+        try guardedState.revalidate()
+        return
+            PrimeValidationSwiftPMBuildInventoryGuardedPreExecutor(
+                retainedState: guardedState
+            )
+    }
+}
+
+/// Live input guards for a future fixed-role executor.
+///
+/// This type closes only the descriptor-backed Prime source closure, its
+/// continuous prepared-state watch window. It also retains the exact current
+/// holder-process image as prerequisite evidence, but does not claim that the
+/// image is the Driver V2 supervisor; that role requires the still-absent
+/// DriverCore intent bridge. This type deliberately exposes no process,
+/// staging, build, inventory, shard, receipt-publication, or completion
+/// operation.
+public final class PrimeValidationSwiftPMBuildInventoryGuardedPreExecutor:
+    @unchecked Sendable
+{
+    public let primeRepository:
+        PrimeValidationSwiftPMDirectoryObservation
+    public let workspaceRoot:
+        PrimeValidationSwiftPMDirectoryObservation
+    public let evidenceRoot:
+        PrimeValidationSwiftPMDirectoryObservation
+    public let companionRepository:
+        PrimeValidationSwiftPMDirectoryObservation
+    public let sourceIdentitySHA256: String
+    public let packageResolvedBinding: PrimeArtifactBinding
+    public let companionDeclaration:
+        PrimeValidationSwiftPMCompanionDeclaration
+    public let toolchain:
+        PrimeValidationSwiftPMToolchainObservation
+    public let currentProcessExecutable:
+        PrimeValidationSwiftPMFileObservation
+    public let processExecutionObservation:
+        PrimeValidationSwiftPMObservationState = .unobserved
+    public let buildExecutionObservation:
+        PrimeValidationSwiftPMObservationState = .unobserved
+    public let inventoryExecutionObservation:
+        PrimeValidationSwiftPMObservationState = .unobserved
+    public let artifactStagingObservation:
+        PrimeValidationSwiftPMObservationState = .unobserved
+    public let shardCompletionObservation:
+        PrimeValidationSwiftPMObservationState = .unobserved
+    public let completionAuthorized = false
+
+    private let retainedState:
+        PrimeValidationSwiftPMRetainedGuardedPreExecutorState
+    private let guardLock = NSLock()
+    private var poisoned = false
+
+    public var guardState: PrimeValidationSwiftPMGuardState {
+        guardLock.lock()
+        defer { guardLock.unlock() }
+        return poisoned ? .poisoned : .prepared
+    }
+
+    public var authorityCeiling:
+        PrimeValidationSwiftPMAuthorityCeiling
+    {
+        guardLock.lock()
+        defer { guardLock.unlock() }
+        return poisoned ? .poisonedNoAuthority : .sourceGuardsPreparedOnly
+    }
+
+    public var sourceDescriptorClosureHeld: Bool {
+        guardState == .prepared
+    }
+
+    public var sourceWatchWindowArmed: Bool {
+        guardState == .prepared
+    }
+
+    public var currentProcessExecutableImageHeld: Bool {
+        guardState == .prepared
+    }
+
+    public var missingAuthorities:
+        [PrimeValidationSwiftPMMissingAuthority]
+    {
+        guardLock.lock()
+        defer { guardLock.unlock() }
+        guard !poisoned else {
+            return PrimeValidationSwiftPMMissingAuthority.allCases
+        }
+        let closed: Set<PrimeValidationSwiftPMMissingAuthority> = [
+            .descriptorBackedSourceClosureAndMutationGuard,
+            .sourceWatchWindow,
+        ]
+        return PrimeValidationSwiftPMMissingAuthority.allCases.filter {
+            !closed.contains($0)
+        }
+    }
+
+    init(
+        retainedState:
+            PrimeValidationSwiftPMRetainedGuardedPreExecutorState
+    ) {
+        self.retainedState = retainedState
+        let admission = retainedState.admission
+        primeRepository = admission.primeRepository.observation
+        workspaceRoot = admission.workspaceRoot.observation
+        evidenceRoot = admission.evidenceRoot.observation
+        companionRepository = admission.companionRepository.observation
+        sourceIdentitySHA256 =
+            admission.sourceSnapshot.sourceIdentitySHA256
+        packageResolvedBinding = admission.packageResolvedBinding
+        companionDeclaration = admission.companionDeclaration
+        toolchain = admission.toolchain.observation
+        currentProcessExecutable =
+            retainedState.currentProcessObservation
+    }
+
+    /// Revalidates the still-live guard window without executing a process or
+    /// minting a durable receipt. Any failed checkpoint permanently poisons
+    /// this capability.
+    public func revalidateGuards() throws {
+        guardLock.lock()
+        defer { guardLock.unlock() }
+        guard !poisoned else {
+            throw PrimeValidationSwiftPMBuildInventoryAdmissionError
+                .guardedPreExecutorPoisoned
+        }
+        do {
+            try retainedState.revalidate()
+        } catch {
+            poisoned = true
+            throw error
+        }
     }
 }
 
@@ -567,6 +786,58 @@ final class PrimeValidationSwiftPMRetainedAdmissionState:
         else {
             throw rejected("prime_source_replay")
         }
+    }
+}
+
+final class PrimeValidationSwiftPMRetainedGuardedPreExecutorState:
+    @unchecked Sendable
+{
+    let admission: PrimeValidationSwiftPMRetainedAdmissionState
+    let sourceWatch: PrimeSecureHeldSourceWatch
+    let currentProcessImage: PrimeSecureHeldRunningExecutable
+    let currentProcessObservation:
+        PrimeValidationSwiftPMFileObservation
+
+    init(
+        admission: PrimeValidationSwiftPMRetainedAdmissionState,
+        sourceWatch: PrimeSecureHeldSourceWatch,
+        currentProcessImage: PrimeSecureHeldRunningExecutable
+    ) {
+        self.admission = admission
+        self.sourceWatch = sourceWatch
+        self.currentProcessImage = currentProcessImage
+        currentProcessObservation =
+            PrimeValidationSwiftPMFileObservation(
+                canonicalAbsolutePath:
+                    currentProcessImage.canonicalAbsolutePath,
+                deviceID: currentProcessImage.deviceID,
+                inode: currentProcessImage.inode,
+                ownerUserID: currentProcessImage.ownerUserID,
+                ownerGroupID: currentProcessImage.ownerGroupID,
+                permissionMode: currentProcessImage.permissionMode,
+                linkCount: currentProcessImage.linkCount,
+                byteCount: currentProcessImage.byteCount,
+                sha256: PrimeSHA256.hexDigest(
+                    of: currentProcessImage.data
+                ),
+                modificationSeconds:
+                    currentProcessImage.modificationSeconds,
+                modificationNanoseconds:
+                    currentProcessImage.modificationNanoseconds,
+                statusChangeSeconds:
+                    currentProcessImage.statusChangeSeconds,
+                statusChangeNanoseconds:
+                    currentProcessImage.statusChangeNanoseconds
+            )
+    }
+
+    func revalidate() throws {
+        try admission.revalidate()
+        _ = try sourceWatch.revalidateWhilePrepared()
+        try currentProcessImage.revalidate()
+        // Close the checkpoint window for roots and static toolchain inputs
+        // after the more expensive source and image reads complete.
+        try admission.revalidate()
     }
 }
 
