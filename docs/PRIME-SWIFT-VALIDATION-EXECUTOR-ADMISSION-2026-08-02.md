@@ -124,6 +124,38 @@ twelfth observation or a substitute for one of the eleven missing authorities.
 Caller-declared companion HEAD and empty porcelain bytes are checked for
 internal consistency only. They remain declarations, not Git observations.
 
+## Guarded source follow-on
+
+The 2026-08-03 follow-on can atomically consume the live prerequisite into a
+non-Codable `source_guards_prepared_only` capability. It closes exactly two of
+the eleven missing authorities:
+
+1. the complete Prime source snapshot is held by file and directory
+   descriptors and revalidated against its admitted bytes and metadata; and
+2. a kqueue vnode watch is armed before the transition completes and can be
+   checked repeatedly while no child has started.
+
+The guard reuses Prime's maintained source-closure implementation behind a
+domain-neutral wrapper; it does not copy or fork the security mechanics. A
+failed transition cannot be retried. A failed later checkpoint permanently
+changes the live state to `poisoned`, restores the complete missing-authority
+set, and reports the `poisoned_no_authority` ceiling.
+
+The current holder process's mapped main image is also retained by descriptor,
+joined to the loaded vnode, read exactly, and revalidated by named-path and
+held-descriptor bytes. This is prerequisite evidence only. It is deliberately
+named `currentProcessExecutable`, and it does **not** close supervisor-image
+authority: no dedicated Driver V2 executable or non-restorable DriverCore
+bridge yet proves equality with `PrimeValidationRunIntentV2.driverExecutable`.
+The root-owned Apple `xctest` image is accepted only through an internal test
+seam and cannot be admitted by the production capture path.
+
+The guarded capability therefore still reports nine missing authorities:
+supervisor image, both Git observations, both Swift observations, build,
+both inventories, and artifact staging. Process, build, inventory, staging,
+shard-completion, and completion observations remain `unobserved` or
+unauthorized. No durable receipt can restore the live guard.
+
 ## Evaluation boundary
 
 The nested DriverCore admission suite covers canonical encoding and decode,
@@ -142,29 +174,52 @@ exercises the public embedded-source authority against the actual Prime tree
 when a companion root and internally consistent pinned-commit declaration are
 supplied. Git observation remains explicitly missing.
 
+The guarded-source arm additionally covers atomic sequential and concurrent
+transition, empty-root enforcement before the transition, repeatable prepared
+checkpoints, post-guard source mutation poisoning, dynamic restoration of all
+missing authorities after poison, exact held current-image revalidation, and
+the absence of Codable, generic argv/environment, staging, `Process`, spawn,
+shell, or Python surfaces. The public Release arm also prepares and revalidates
+the Prime source guard against the actual embedded source identity; its Apple
+test-host image remains explicitly non-authoritative.
+
 These focused checks do not constitute a current 891/12 or 903-test execution
 receipt. No repository-wide suite is counted as passing in this slice.
 
 ## Next boundary
 
-The next slice may add fixed admission probes plus three closed SwiftPM roles;
-it may not add a shard role:
+The next security-sensitive slice is not build execution. It must first:
 
-1. retain a descriptor-backed Prime source closure, arm its watch window, and
-   admit the exact supervisor executable image;
-2. run fixed Git HEAD/clean-tree and Swift version/target-info probes through
-   the shared suspended-spawn, bounded-drain, exact-wait, and
-   empty-process-group mechanics;
-3. consume the still-live PrimeCore prerequisite, while workspace and evidence
-   are still empty, through an internal bridge that cannot be rebuilt from a
-   durable receipt;
-4. create descriptor-relative private staging;
-5. execute the admitted physical `swift-package` image only through the
-   `swift-build` role, then bind the generated metallib and test bundle into
-   exact build evidence;
-6. execute only the XCTest-list and Swift-Testing-list roles; and
-7. admit parser-derived inventory only when the frozen 891 XCTest and 12 Swift
-   Testing list byte/hash anchors match exactly.
+1. add a dedicated closed Swift Driver V2 supervisor executable and a
+   non-restorable DriverCore bridge that proves the retained mapped image's
+   exact path and content equal the run intent's `driverExecutable`;
+2. extract an internal secure-child substrate with separately admitted
+   physical spawn path and logical `argv[0]`, while exposing no public generic
+   command surface; and
+3. extend the source watcher from its current single-child transition to a
+   gapless build-plus-two-list sequence.
+
+That extraction is mandatory because the maintained external-child factory
+currently forces `argv[0]` to the physical image, while the admitted
+`swift-build` and `swift-test` personalities require distinct logical
+`argv[0]` values. The existing `PrimeNativeGitBlobTransport` is not a fallback:
+it uses Foundation `Process` and does not prove suspended cwd, mapped image,
+exact PID reap, or empty process group.
+
+After that substrate passes an independent audit, the remaining authorities
+must close in these groups:
+
+1. Prime and companion Git HEAD/clean plus Swift version/target-info fixed
+   probes;
+2. descriptor-relative staging together with build execution and exact
+   generated metallib/test-bundle binding; and
+3. the two list roles together with exact parsing and the frozen 891 XCTest / 12
+   Swift Testing byte, hash, and count anchors.
+
+Before any positive repository receipt, the currently declarative
+`repositoryTrackedTreeSHA256` and `companionTrackedTreeSHA256` fields must be
+defined as canonical tracked-tree manifests and bound to descriptor-held bytes;
+well-formed arbitrary digests are not evidence.
 
 The build/inventory executor must revalidate source, lock, companion,
 toolchain, executable, workspace, and every phase-available staged artifact
