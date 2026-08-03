@@ -1191,7 +1191,8 @@ public enum PrimeNativeNeuralGateSecureExternalChildCapture {
                     processIdentifier:
                         processIdentifier,
                     heldExecutable:
-                        .init(
+                        try PrimeSecureChildDarwinProcessProof
+                        .snapshotHeldExecutable(
                             deviceID:
                                 executableSnapshot
                                 .deviceID,

@@ -1566,7 +1566,10 @@ private enum PrimeSecureChildKernel {
         }
         let effectiveWallClockLimitReached =
             wallClockLimitReached
-            || !finalValidationCompletedWithinPhase
+            || (
+                !streamContainmentLimitReached
+                    && !finalValidationCompletedWithinPhase
+            )
         let completion = completion(
             wait: wait,
             wallClockLimitReached:
@@ -1743,7 +1746,8 @@ private enum PrimeSecureChildKernel {
                     processIdentifier:
                         processIdentifier,
                     heldExecutable:
-                        .init(
+                        try PrimeSecureChildDarwinProcessProof
+                        .snapshotHeldExecutable(
                             deviceID:
                                 executableSnapshot
                                 .deviceID,

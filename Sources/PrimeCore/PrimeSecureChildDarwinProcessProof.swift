@@ -83,6 +83,17 @@ enum PrimeSecureChildDarwinProcessProof {
         let deviceID: UInt64
         let inode: UInt64
         let expectedCanonicalAbsolutePath: String
+
+        fileprivate init(
+            deviceID: UInt64,
+            inode: UInt64,
+            expectedCanonicalAbsolutePath: String
+        ) {
+            self.deviceID = deviceID
+            self.inode = inode
+            self.expectedCanonicalAbsolutePath =
+                expectedCanonicalAbsolutePath
+        }
     }
 
     struct MappedRegion: Equatable, Sendable {

@@ -4,6 +4,9 @@ import Foundation
 import XCTest
 @testable import PrimeCore
 
+@_silgen_name("fork")
+private func primeSecureChildTestFork() -> pid_t
+
 final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
     XCTestCase
 {
@@ -965,21 +968,21 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
             verifier.standardOutputData
         )
         // Intentionally resealed from two matching live Release canary
-        // observations after the neutral Darwin spawn transport replaced the
-        // two embedded spawn/pipe implementations. Relative to the preceding
-        // seal, Package.swift is unchanged and the package description adds
-        // exactly PrimeSecureChildDarwinSubstrate.swift to PrimeCore's source
-        // list. This is actual-package secure-capture evidence, not Driver V2,
+        // observations after neutral secure-child supervision replaced the
+        // two embedded lifecycle implementations. Package.swift is unchanged;
+        // the package description now enumerates the neutral deadline, drains,
+        // lifecycle, process-proof, and supervision sources in PrimeCore. This
+        // is actual-package secure-capture evidence, not Driver V2,
         // source/execution-binding V7, or worker execution authority.
         XCTAssertEqual(
             probe.standardOutputData.count,
-            63_051
+            63_214
         )
         XCTAssertEqual(
             PrimeSHA256.hexDigest(
                 of: probe.standardOutputData
             ),
-            "eb116603c3407c0db01ff3b8182fe9a0e26b6c4c216e2aa8bfaf0389f1e915e7"
+            "9901d983ed76f6ffa26f3c59142c6a71ec4453be2d38156001d10f0beb5d9bb5"
         )
         XCTAssertEqual(
             probe.validatedPrimeSourceSnapshot,
@@ -1541,6 +1544,109 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
             Darwin.close(concurrentDescriptors.standardError),
             0
         )
+    }
+
+    func testAbandonedLiveChildObligationFailStopsAfterContainment()
+        throws
+    {
+        var childIdentifierPipe = [Int32](repeating: -1, count: 2)
+        var outputPipe = [Int32](repeating: -1, count: 2)
+        var errorPipe = [Int32](repeating: -1, count: 2)
+        XCTAssertEqual(Darwin.pipe(&childIdentifierPipe), 0)
+        XCTAssertEqual(Darwin.pipe(&outputPipe), 0)
+        XCTAssertEqual(Darwin.pipe(&errorPipe), 0)
+
+        let supervisorIdentifier = primeSecureChildTestFork()
+        if supervisorIdentifier == 0 {
+            _ = Darwin.close(childIdentifierPipe[0])
+
+            let childIdentifier = primeSecureChildTestFork()
+            if childIdentifier == 0 {
+                _ = Darwin.setpgid(0, 0)
+                while true {
+                    _ = Darwin.pause()
+                }
+            }
+            guard childIdentifier > 0,
+                  Darwin.setpgid(
+                      childIdentifier,
+                      childIdentifier
+                  ) == 0
+            else {
+                Darwin._exit(71)
+            }
+
+            var reportedChildIdentifier = childIdentifier
+            let written = withUnsafeBytes(
+                of: &reportedChildIdentifier
+            ) {
+                Darwin.write(
+                    childIdentifierPipe[1],
+                    $0.baseAddress,
+                    $0.count
+                )
+            }
+            guard written == MemoryLayout<Int32>.size
+            else {
+                _ = Darwin.kill(childIdentifier, SIGKILL)
+                var status: Int32 = 0
+                _ = Darwin.waitpid(childIdentifier, &status, 0)
+                Darwin._exit(72)
+            }
+
+            var owner: PrimeSecureChildSpawnHandle? =
+                PrimeSecureChildSpawnHandle(
+                    processIdentifier: childIdentifier,
+                    appliedFlags: 0x448c,
+                    spawnReturnCode: 0,
+                    spawnReturnedMonotonicNanoseconds: 1,
+                    standardOutputReadDescriptor: outputPipe[0],
+                    standardErrorReadDescriptor: errorPipe[0],
+                    ownsLiveChildObligation: true
+                )
+            withExtendedLifetime(owner) {}
+            owner = nil
+            Darwin._exit(73)
+        }
+
+        XCTAssertGreaterThan(supervisorIdentifier, 0)
+        guard supervisorIdentifier > 0 else {
+            return
+        }
+        _ = Darwin.close(childIdentifierPipe[1])
+        _ = Darwin.close(outputPipe[0])
+        _ = Darwin.close(outputPipe[1])
+        _ = Darwin.close(errorPipe[0])
+        _ = Darwin.close(errorPipe[1])
+
+        var childIdentifier: Int32 = -1
+        let readCount = withUnsafeMutableBytes(
+            of: &childIdentifier
+        ) {
+            Darwin.read(
+                childIdentifierPipe[0],
+                $0.baseAddress,
+                $0.count
+            )
+        }
+        _ = Darwin.close(childIdentifierPipe[0])
+
+        var supervisorStatus: Int32 = 0
+        XCTAssertEqual(
+            Darwin.waitpid(
+                supervisorIdentifier,
+                &supervisorStatus,
+                0
+            ),
+            supervisorIdentifier
+        )
+        XCTAssertEqual(readCount, MemoryLayout<Int32>.size)
+        XCTAssertGreaterThan(childIdentifier, 0)
+        XCTAssertEqual(supervisorStatus & 0x7f, 0)
+        XCTAssertEqual((supervisorStatus >> 8) & 0xff, 70)
+        errno = 0
+        XCTAssertEqual(Darwin.kill(childIdentifier, 0), -1)
+        XCTAssertEqual(errno, ESRCH)
     }
 
     private func writeSecureChildBytes(
