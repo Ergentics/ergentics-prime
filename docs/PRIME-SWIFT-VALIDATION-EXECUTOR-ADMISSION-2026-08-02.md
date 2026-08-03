@@ -54,8 +54,13 @@ The additive nested DriverCore contract binds:
 - the clean Prime and companion declarations, exact companion commit, source
   snapshot identity, retained source closures, and armed mutation watchers that
   a future live adapter must supply;
-- Xcode 26.6 build 17F113, SDK 26.5, Swift 6.3.3 target information, bounded raw
-  probe bytes, parsed/raw agreement, and an exact five-entry probe environment;
+- Xcode 26.6 build 17F113 at exactly the direct
+  `/Applications/Xcode.app/Contents/Developer` path or physical
+  `/Applications/Xcode_26.6.app/Contents/Developer` path, SDK 26.5, Swift
+  6.3.3 target information, bounded raw probe bytes, parsed/raw agreement, and
+  an exact five-entry probe environment; Xcode 26.5 is not admitted, and these
+  durable values alone do not prove selector resolution—the root Driver must
+  join the resolved selector to its descriptor-held observation;
 - the physical `swift-package` image plus the exact `swift-build` and
   `swift-test` symlink targets and role-derived `argv[0]` values;
 - exact equality with the merged V2 build and two inventory invocations. Each

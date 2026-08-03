@@ -12,12 +12,21 @@ readonly expected_mlx_head="d37885a278f1c37484a94d0f401a418735e66519"
 readonly expected_mlx_tree="5310749549cca107fc1bb07d82dacf043bc02b9e"
 readonly expected_mlx_submodule_head="ce45c52505c8158ea48d2a54e8caae05efd86bfe"
 readonly expected_mlx_c_submodule_head="0726ca922fc902c4c61ef9c27d94132be418e945"
-readonly expected_source_identity="d4e319ad77163c5185b6f24e1e639fba40a1097ab20dd631f41eef87c7d84e12"
+readonly expected_source_identity="dbc00cc23ebd635c154daaf19dd88f39c2774a30c9c393b3c213978155cb261d"
 readonly expected_package_sha="52a0078a3dd6b5cf68aa75e63c12ea739e2238cdb7c8f5b0380cbbff4cb66fa6"
 readonly expected_resolved_sha="da7f7baa10f6da34b01ad69dc116f8a2d31140eca6770cb562ac05a7c50b356c"
 readonly expected_mirrors_sha="6124788421eab5803c52b508338ec085a95753b871582951acbb3005b1dc2cc6"
 readonly expected_xctest_sha="93ccc091a0343ac4fed35b208447d7460eae27668ddec3e931f54b9a7769212b"
 readonly expected_swift_testing_sha="487c601e9693d6a0fbc31d1b683ffd342ba0d10007c780f315af1113d825e8a3"
+readonly checkout_companion_origin="https://github.com/Ergentics/pmhnp-companion-ergentics"
+readonly frozen_companion_origin="https://github.com/Ergentics/pmhnp-companion-ergentics.git"
+readonly metal_toolchain_id="com.apple.dt.toolchain.Metal.32023.883"
+readonly expected_metallib_sha="24d4cfcd3ca8b15ead691e46219f35adabbea64c9f8de4eae9bf293fd8d5eb7b"
+readonly expected_metallib_bytes="3817916"
+readonly expected_donor_info_sha="124c82bbfd7fe1ea93aa05b5a50d1e5828759fb268556ed119399212726e6a1e"
+readonly expected_donor_info_bytes="1130"
+readonly expected_runtime_info_sha="62486b35d9253522fe58dba1487d910b3d00d892954558145c553051bd61684d"
+readonly expected_runtime_info_bytes="1120"
 
 readonly runner_temp="${RUNNER_TEMP:?RUNNER_TEMP is required}"
 readonly expected_prime_head="${GITHUB_SHA:?GITHUB_SHA is required}"
@@ -31,6 +40,7 @@ readonly mirrors_file="$prime_root/.swiftpm/configuration/mirrors.json"
 prime_initial_tree=""
 mlx_rewrite_key=""
 last_xctest_events=""
+root_pinned_metallib=""
 
 die() {
     echo "prime-driver-v2-ci: $*" >&2
@@ -78,6 +88,19 @@ assert_file_sha() {
     [[ "$(wc -l < "$digest_file")" -eq 1 ]] ||
         die "$label digest output was not singular"
     [[ "$observed" == "$expected" ]] || die "$label digest mismatch"
+}
+
+assert_file_bytes() {
+    local path="$1"
+    local expected="$2"
+    local label="$3"
+    local observed
+
+    [[ -f "$path" && ! -L "$path" ]] ||
+        die "$label is not a regular non-symlink file"
+    observed="$(stat -f '%z' "$path")"
+    [[ "$observed" == "$expected" ]] ||
+        die "$label byte count differs"
 }
 
 assert_empty_directory() {
@@ -159,6 +182,73 @@ assert_origin() {
             die "$label origin is unexpected: $observed"
             ;;
     esac
+}
+
+assert_exact_origin() {
+    local repository="$1"
+    local expected="$2"
+    local label="$3"
+    local actual="$runner_temp/$label.origin.actual"
+    local expected_file="$runner_temp/$label.origin.expected"
+
+    git -C "$repository" config --local --get-all remote.origin.url \
+        > "$actual"
+    printf '%s\n' "$expected" > "$expected_file"
+    cmp -s "$actual" "$expected_file" ||
+        die "$label exact origin differs"
+}
+
+pin_companion_transport_origin() {
+    local before="$runner_temp/companion-origin.before"
+    local isolated="$runner_temp/companion-origin.isolated"
+    local expected="$runner_temp/companion-origin.expected"
+    local observed
+
+    assert_git_identity \
+        "$companion_root" \
+        "$expected_companion_head" \
+        "$expected_companion_tree" \
+        companion-origin-preflight
+    git -C "$companion_root" config --local --get-all remote.origin.url \
+        > "$before"
+    [[ "$(wc -l < "$before")" -eq 1 ]] ||
+        die "companion origin is not singular"
+    IFS= read -r observed < "$before"
+    case "$observed" in
+        "$checkout_companion_origin"|"$frozen_companion_origin")
+            ;;
+        *)
+            die "companion origin cannot be normalized: $observed"
+            ;;
+    esac
+
+    git -C "$companion_root" remote set-url \
+        origin "$frozen_companion_origin"
+    /usr/bin/env -i \
+        GIT_NO_REPLACE_OBJECTS=1 \
+        GIT_OPTIONAL_LOCKS=0 \
+        GIT_CONFIG_NOSYSTEM=1 \
+        GIT_CONFIG_GLOBAL=/dev/null \
+        GIT_CONFIG_SYSTEM=/dev/null \
+        GIT_TERMINAL_PROMPT=0 \
+        GIT_PAGER=cat \
+        GIT_FLUSH=1 \
+        LC_ALL=C \
+        LANG=C \
+        TMPDIR="$runner_temp" \
+        /usr/bin/git \
+        --no-replace-objects \
+        -c core.fsmonitor=false \
+        -C "$companion_root" \
+        remote get-url origin > "$isolated"
+    printf '%s\n' "$frozen_companion_origin" > "$expected"
+    cmp -s "$isolated" "$expected" ||
+        die "isolated companion origin differs"
+    assert_exact_origin \
+        "$companion_root" \
+        "$frozen_companion_origin" \
+        companion
+    assert_no_persisted_credentials "$companion_root" companion-origin
 }
 
 assert_git_identity() {
@@ -474,9 +564,9 @@ assert_static_inputs() {
         "$expected_companion_head" \
         "$expected_companion_tree" \
         companion
-    assert_origin \
+    assert_exact_origin \
         "$companion_root" \
-        "https://github.com/Ergentics/pmhnp-companion-ergentics" \
+        "$frozen_companion_origin" \
         companion
     assert_git_identity \
         "$mlx_root" \
@@ -970,6 +1060,186 @@ run_driver_canaries() {
     echo "Driver A/B SHA-256: $sha_a"
 }
 
+assert_metal_toolchain() {
+    local component="$runner_temp/metal-component.txt"
+    local status="$runner_temp/metal-component-status.txt"
+    local identifier="$runner_temp/metal-component-identifier.txt"
+    local metal_path="$runner_temp/metal-path.txt"
+    local metal_version="$runner_temp/metal-version.txt"
+    local first_line="$runner_temp/metal-version-first-line.txt"
+    local expected_first_line="$runner_temp/metal-version.expected.txt"
+    local metal_executable
+
+    xcodebuild -showComponent MetalToolchain > "$component"
+    grep -F -x 'Status: installed' "$component" > "$status"
+    [[ "$(wc -l < "$status")" -eq 1 ]] ||
+        die "Metal toolchain component is not installed"
+    grep -F -x \
+        "Toolchain Identifier: $metal_toolchain_id" \
+        "$component" > "$identifier"
+    [[ "$(wc -l < "$identifier")" -eq 1 ]] ||
+        die "Metal toolchain component identity differs"
+
+    xcrun --toolchain "$metal_toolchain_id" --find metal > "$metal_path"
+    [[ "$(wc -l < "$metal_path")" -eq 1 ]] ||
+        die "Metal compiler path output differs"
+    IFS= read -r metal_executable < "$metal_path"
+    [[ -x "$metal_executable" ]] ||
+        die "Metal compiler path is not executable"
+    xcrun --toolchain "$metal_toolchain_id" metal --version \
+        > "$metal_version" 2>&1
+    awk 'NR == 1 { print }' "$metal_version" > "$first_line"
+    printf '%s\n' \
+        'Apple metal version 32023.883 (metalfe-32023.883)' \
+        > "$expected_first_line"
+    cmp -s "$first_line" "$expected_first_line" ||
+        die "Metal compiler version differs"
+}
+
+build_root_release_product() {
+    local test_root="$1"
+    local product="$2"
+
+    env \
+        CLANG_MODULE_CACHE_PATH="$test_root/module-cache" \
+        SWIFTPM_MODULECACHE_OVERRIDE="$test_root/module-cache" \
+        swift build \
+        --package-path "$prime_root" \
+        --configuration release \
+        --cache-path "$test_root/cache" \
+        --config-path "$test_root/config" \
+        --security-path "$test_root/security" \
+        --scratch-path "$test_root/build" \
+        --disable-dependency-cache \
+        --manifest-cache local \
+        --disable-netrc \
+        --disable-keychain \
+        --force-resolved-versions \
+        --product "$product"
+}
+
+build_debug_compiler_canary_inputs() {
+    local test_root="$1"
+    local support_root="$test_root/debug-compiler-canary"
+    local module="$prime_root/.build/arm64-apple-macosx/debug/Modules/PrimeNativeNeuralGateHistoricalFixtureWorker.swiftmodule"
+    local accessor="$prime_root/.build/arm64-apple-macosx/debug/PrimeNativeNeuralGateHistoricalFixtureWorker.build/DerivedSources/resource_bundle_accessor.swift"
+
+    [[ ! -e "$prime_root/.build" && ! -L "$prime_root/.build" ]] ||
+        die "refusing to replace a pre-existing Prime .build directory"
+    mkdir -m 700 "$support_root"
+    prepare_swift_root "$support_root"
+    env \
+        CLANG_MODULE_CACHE_PATH="$support_root/module-cache" \
+        SWIFTPM_MODULECACHE_OVERRIDE="$support_root/module-cache" \
+        swift build \
+        --package-path "$prime_root" \
+        --configuration debug \
+        --cache-path "$support_root/cache" \
+        --config-path "$support_root/config" \
+        --security-path "$support_root/security" \
+        --disable-dependency-cache \
+        --manifest-cache local \
+        --disable-netrc \
+        --disable-keychain \
+        --force-resolved-versions \
+        --target PrimeNativeNeuralGateHistoricalFixtureWorker
+    [[ -f "$module" && ! -L "$module" ]] ||
+        die "Debug compiler-canary worker module is absent"
+    [[ -f "$accessor" && ! -L "$accessor" ]] ||
+        die "Debug compiler-canary resource accessor is absent"
+}
+
+stage_root_pinned_metallib() {
+    local test_root="$1"
+    local xcode_root="$test_root/xcode"
+    local xcode_packages="$test_root/xcode-source-packages"
+    local xcode_log="$test_root/xcode-donor.log"
+    local release_bin="$test_root/build/arm64-apple-macosx/release"
+    local donor_host="$xcode_root/Build/Products/Release/PrimeTypedOptimizerRestoreProbe"
+    local donor_bundle="$xcode_root/Build/Products/Release/mlx-swift_Cmlx.bundle"
+    local donor_info="$donor_bundle/Contents/Info.plist"
+    local donor_metallib="$donor_bundle/Contents/Resources/default.metallib"
+    local destination_host="$release_bin/PrimeTypedOptimizerRestoreProbe"
+    local runtime_bundle="$release_bin/mlx-swift_Cmlx.bundle"
+    local runtime_info="$runtime_bundle/Contents/Info.plist"
+    local runtime_metallib="$runtime_bundle/Contents/Resources/default.metallib"
+    local stage_log="$test_root/metallib-stage.log"
+    local stage_expected="$test_root/metallib-stage.expected"
+
+    assert_metal_toolchain
+    mkdir -m 700 "$xcode_root" "$xcode_packages"
+    (
+        cd "$prime_root"
+        xcodebuild build \
+            -scheme PrimeTypedOptimizerRestoreProbe \
+            -configuration Release \
+            -destination 'platform=macOS,arch=arm64' \
+            -derivedDataPath "$xcode_root" \
+            -clonedSourcePackagesDirPath "$xcode_packages" \
+            -scmProvider system \
+            -disableAutomaticPackageResolution \
+            -onlyUsePackageVersionsFromResolvedFile \
+            -skipPackageUpdates \
+            TOOLCHAINS="$metal_toolchain_id"
+    ) 2>&1 | tee "$xcode_log"
+
+    [[ -x "$donor_host" && ! -L "$donor_host" ]] ||
+        die "Xcode metallib donor host is absent"
+    assert_file_sha "$donor_info" "$expected_donor_info_sha" donor-info
+    assert_file_bytes "$donor_info" "$expected_donor_info_bytes" donor-info
+    assert_file_sha \
+        "$donor_metallib" \
+        "$expected_metallib_sha" \
+        donor-metallib
+    assert_file_bytes \
+        "$donor_metallib" \
+        "$expected_metallib_bytes" \
+        donor-metallib
+
+    build_root_release_product "$test_root" PrimeTypedOptimizerRestoreProbe
+    build_root_release_product "$test_root" PrimeMLXBundleStage
+    [[ -x "$destination_host" && ! -L "$destination_host" ]] ||
+        die "SwiftPM metallib destination host is absent"
+    assert_file_sha \
+        "$runtime_info" \
+        "$expected_runtime_info_sha" \
+        runtime-info-before-stage
+    assert_file_bytes \
+        "$runtime_info" \
+        "$expected_runtime_info_bytes" \
+        runtime-info-before-stage
+    [[ ! -e "$runtime_metallib" && ! -L "$runtime_metallib" ]] ||
+        die "SwiftPM destination metallib was not initially absent"
+
+    "$release_bin/PrimeMLXBundleStage" \
+        --source-host "$donor_host" \
+        --destination-host "$destination_host" \
+        --runtime-role typed_optimizer_restore_probe \
+        > "$stage_log" 2>&1
+    printf '%s\n' \
+        "Prime MLX bundle exact stage complete: runtime_role=typed_optimizer_restore_probe mlx_swift=0.31.3 destination_metallib_initially_absent=true xcode_donor_info_plist_sha256=$expected_donor_info_sha runtime_info_plist_sha256=$expected_runtime_info_sha metallib_sha256=$expected_metallib_sha" \
+        > "$stage_expected"
+    cmp -s "$stage_log" "$stage_expected" ||
+        die "exact metallib stage result differs"
+    assert_file_sha \
+        "$runtime_info" \
+        "$expected_runtime_info_sha" \
+        runtime-info-after-stage
+    assert_file_bytes \
+        "$runtime_info" \
+        "$expected_runtime_info_bytes" \
+        runtime-info-after-stage
+    assert_file_sha \
+        "$runtime_metallib" \
+        "$expected_metallib_sha" \
+        runtime-metallib
+    assert_file_bytes \
+        "$runtime_metallib" \
+        "$expected_metallib_bytes" \
+        runtime-metallib
+    root_pinned_metallib="$runtime_metallib"
+}
+
 run_root_tests() {
     local test_root focused_log full_log large_log swift_log
     local historical_expected large_expected xunit_request xunit_file
@@ -1021,9 +1291,15 @@ run_root_tests() {
     assert_xctest_execution "$focused_log" "$historical_expected" historical
     assert_no_skips "$focused_log" historical
 
+    stage_root_pinned_metallib "$test_root"
+    build_debug_compiler_canary_inputs "$test_root"
+    [[ -n "$root_pinned_metallib" ]] ||
+        die "root pinned metallib path is absent"
+
     full_log="$test_root/full.log"
     PRIME_PMHNP_COMPANION_ROOT="$companion_root" \
     PRIME_NATIVE_COMPANION_ROOT="$companion_root" \
+    PRIME_TEST_PINNED_MLX_METALLIB="$root_pinned_metallib" \
     CLANG_MODULE_CACHE_PATH="$test_root/module-cache" \
     SWIFTPM_MODULECACHE_OVERRIDE="$test_root/module-cache" \
         swift test \
@@ -1069,6 +1345,7 @@ run_root_tests() {
     swift_log="$test_root/swift-testing.log"
     PRIME_PMHNP_COMPANION_ROOT="$companion_root" \
     PRIME_NATIVE_COMPANION_ROOT="$companion_root" \
+    PRIME_TEST_PINNED_MLX_METALLIB="$root_pinned_metallib" \
     CLANG_MODULE_CACHE_PATH="$test_root/module-cache" \
     SWIFTPM_MODULECACHE_OVERRIDE="$test_root/module-cache" \
         swift test \
@@ -1135,6 +1412,7 @@ run_root_tests() {
     large_log="$test_root/large-artifact.log"
     PRIME_PMHNP_COMPANION_ROOT="$companion_root" \
     PRIME_NATIVE_COMPANION_ROOT="$companion_root" \
+    PRIME_TEST_PINNED_MLX_METALLIB="$root_pinned_metallib" \
     PRIME_RUN_LARGE_ARTIFACT_TESTS=1 \
     CLANG_MODULE_CACHE_PATH="$test_root/module-cache" \
     SWIFTPM_MODULECACHE_OVERRIDE="$test_root/module-cache" \
@@ -1164,6 +1442,7 @@ run_root_tests() {
     xctest_live="$test_root/xctest.list"
     PRIME_PMHNP_COMPANION_ROOT="$companion_root" \
     PRIME_NATIVE_COMPANION_ROOT="$companion_root" \
+    PRIME_TEST_PINNED_MLX_METALLIB="$root_pinned_metallib" \
     CLANG_MODULE_CACHE_PATH="$test_root/module-cache" \
     SWIFTPM_MODULECACHE_OVERRIDE="$test_root/module-cache" \
         swift test \
@@ -1185,6 +1464,7 @@ run_root_tests() {
     swift_live="$test_root/swift-testing.list"
     PRIME_PMHNP_COMPANION_ROOT="$companion_root" \
     PRIME_NATIVE_COMPANION_ROOT="$companion_root" \
+    PRIME_TEST_PINNED_MLX_METALLIB="$root_pinned_metallib" \
     CLANG_MODULE_CACHE_PATH="$test_root/module-cache" \
     SWIFTPM_MODULECACHE_OVERRIDE="$test_root/module-cache" \
         swift test \
@@ -1363,6 +1643,7 @@ main() {
     esac
 
     assert_runner
+    pin_companion_transport_origin
     assert_static_inputs
     configure_local_mlx_transport
 

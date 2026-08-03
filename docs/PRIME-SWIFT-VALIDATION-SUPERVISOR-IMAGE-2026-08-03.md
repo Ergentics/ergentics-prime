@@ -108,14 +108,20 @@ authority.
 The Driver keeps `/Applications/Xcode.app/Contents/Developer` as its fixed
 Xcode selector, but resolves that selector before admission because hosted
 macOS runners can publish `Xcode.app` as a symlink. The only admitted
-canonical targets are the direct selector path and the physical Xcode 26.5 or
-26.6 developer directories. The live test fixture uses the same resolution.
+canonical targets are the direct selector path and the physical Xcode 26.6
+developer directory. Xcode 26.5 is not admitted. The live test fixture uses
+the same resolution.
 
 This does not relax the generic toolchain boundary. PrimeCore still receives
 only the resolved, allowlisted path and opens every held system directory with
 `O_NOFOLLOW_ANY`, requires canonical path equality, and reopens and revalidates
-the same directory identity. No caller path, environment variable, alias
-rewrite, or process-derived toolchain selection is admitted.
+the same directory identity. Before preparing the guarded executor, the root
+Driver also requires the descriptor-held observation to equal the resolved
+selector and to report Xcode 26.6 build 17F113 with canonical SDK
+`macosx26.5`. No caller path, environment variable, alias rewrite, or
+process-derived toolchain selection is admitted. DriverCore's serializable
+path allowlist alone does not prove selector resolution; this live equality is
+the joining check.
 
 ## Canary interface
 

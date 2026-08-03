@@ -161,6 +161,23 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
                 .swiftTargetInfoProcessObservationMissing
         )
         XCTAssertEqual(
+            prerequisite.toolchain.developerDirectory
+                .canonicalAbsolutePath,
+            Fixture.developerPath
+        )
+        XCTAssertEqual(
+            prerequisite.toolchain.xcodeVersion,
+            "26.6"
+        )
+        XCTAssertEqual(
+            prerequisite.toolchain.xcodeBuildVersion,
+            "17F113"
+        )
+        XCTAssertEqual(
+            prerequisite.toolchain.sdkCanonicalName,
+            "macosx26.5"
+        )
+        XCTAssertEqual(
             prerequisite.toolchain.swiftPackageExecutable
                 .canonicalAbsolutePath,
             Fixture.swiftPackagePath
@@ -1297,11 +1314,9 @@ private final class Fixture {
             .resolvingSymlinksInPath()
             .standardizedFileURL.path
         precondition(
-            [
-                "/Applications/Xcode.app/Contents/Developer",
-                "/Applications/Xcode_26.5.app/Contents/Developer",
-                "/Applications/Xcode_26.6.app/Contents/Developer",
-            ].contains(canonical)
+            PrimeValidationToolchainAdmissionReceiptV2
+                .admittedCanonicalDeveloperDirectories
+                .contains(canonical)
         )
         return canonical
     }()

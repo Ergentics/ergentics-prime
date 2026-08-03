@@ -665,6 +665,11 @@ public struct PrimeValidationToolchainAdmissionReceiptV2:
     Equatable,
     Sendable
 {
+    package static let admittedCanonicalDeveloperDirectories: Set<String> = [
+        "/Applications/Xcode.app/Contents/Developer",
+        "/Applications/Xcode_26.6.app/Contents/Developer",
+    ]
+
     public let developerDirectory:
         PrimeValidationCanonicalDirectoryObservationV2
     public let sdkRoot: PrimeValidationCanonicalDirectoryObservationV2
@@ -788,7 +793,9 @@ public struct PrimeValidationToolchainAdmissionReceiptV2:
               xcodeBuildVersion == "17F113",
               sdkVersion == "26.5",
               swiftDriverVersion == "1.148.6",
-              developerPath == "/Applications/Xcode.app/Contents/Developer",
+              Self.admittedCanonicalDeveloperDirectories.contains(
+                  developerPath
+              ),
               developerDirectory.ownerUserID == 0,
               developerDirectory.ownerGroupID == 0,
               sdkRoot.canonicalAbsolutePath == expectedSDKPath,

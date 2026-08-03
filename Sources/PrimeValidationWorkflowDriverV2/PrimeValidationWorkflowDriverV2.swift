@@ -141,12 +141,6 @@ private struct PrimeValidationWorkflowDriverV2 {
     private static let developerDirectorySelector =
         "/Applications/Xcode.app/Contents/Developer"
 
-    private static let allowedCanonicalDeveloperDirectories: Set<String> = [
-        "/Applications/Xcode.app/Contents/Developer",
-        "/Applications/Xcode_26.5.app/Contents/Developer",
-        "/Applications/Xcode_26.6.app/Contents/Developer",
-    ]
-
     static func main() {
         do {
             try run()
@@ -189,6 +183,16 @@ private struct PrimeValidationWorkflowDriverV2 {
                 developerDirectoryURL: developerDirectory
             )
         let prerequisite = try capability.consumePrerequisites()
+        guard prerequisite.toolchain.developerDirectory
+                .canonicalAbsolutePath == developerDirectory.path,
+              prerequisite.toolchain.xcodeVersion == "26.6",
+              prerequisite.toolchain.xcodeBuildVersion == "17F113",
+              prerequisite.toolchain.sdkCanonicalName == "macosx26.5"
+        else {
+            throw SupervisorMainError.rejected(
+                "held_developer_directory_observation"
+            )
+        }
         let guarded = try prerequisite.prepareGuardedPreExecutor()
         let handoff = try guarded.consumeCurrentProcessImageHandoff()
 
@@ -255,9 +259,9 @@ private struct PrimeValidationWorkflowDriverV2 {
         let canonical = selector
             .resolvingSymlinksInPath()
             .standardizedFileURL
-        guard allowedCanonicalDeveloperDirectories.contains(
-            canonical.path
-        ) else {
+        guard PrimeValidationToolchainAdmissionReceiptV2
+                .admittedCanonicalDeveloperDirectories
+                .contains(canonical.path) else {
             throw SupervisorMainError.rejected(
                 "developer_directory_selector"
             )

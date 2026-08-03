@@ -186,6 +186,20 @@ final class PrimeValidationDriverV2AdmissionTests: XCTestCase {
             runtimeResourcePathOverride: "/private/tmp/shadow-swift-runtime"
         )
         XCTAssertThrowsError(try escapedRuntime.validate())
+
+        let hostedXcode26_6 = toolchain(
+            intent: fixture.intent,
+            developerPath:
+                "/Applications/Xcode_26.6.app/Contents/Developer"
+        )
+        XCTAssertNoThrow(try hostedXcode26_6.validate())
+
+        let legacyXcode26_5 = toolchain(
+            intent: fixture.intent,
+            developerPath:
+                "/Applications/Xcode_26.5.app/Contents/Developer"
+        )
+        XCTAssertThrowsError(try legacyXcode26_5.validate())
     }
 
     func testAdmissionChainAndIntentHashDriftAreRejected() throws {
@@ -551,10 +565,11 @@ final class PrimeValidationDriverV2AdmissionTests: XCTestCase {
         declaredXcodeVersion: String = "26.6",
         rawXcodeVersion: String = "26.6",
         runtimeResourcePathOverride: String? = nil,
-        extraEnvironment: [PrimeValidationEnvironmentEntry] = []
-    ) -> PrimeValidationToolchainAdmissionReceiptV2 {
-        let developer =
+        extraEnvironment: [PrimeValidationEnvironmentEntry] = [],
+        developerPath: String =
             "/Applications/Xcode.app/Contents/Developer"
+    ) -> PrimeValidationToolchainAdmissionReceiptV2 {
+        let developer = developerPath
         let sdk = developer
             + "/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk"
         let frontend = developer
@@ -591,7 +606,9 @@ final class PrimeValidationDriverV2AdmissionTests: XCTestCase {
         )
         let executableContent = intent.swiftExecutable.content
         let swift = heldExecutable(
-            requestedPath: intent.swiftExecutable.absolutePath,
+            requestedPath:
+                developer
+                + "/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift",
             canonicalPath: frontend,
             symlinkTarget: "swift-frontend",
             content: executableContent,
