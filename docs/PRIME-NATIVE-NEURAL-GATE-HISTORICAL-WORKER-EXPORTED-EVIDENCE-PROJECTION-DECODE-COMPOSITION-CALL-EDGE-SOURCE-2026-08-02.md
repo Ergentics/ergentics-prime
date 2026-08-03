@@ -290,3 +290,28 @@ See [the V26 design contract](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-INVOCAT
 The V27 exact prerequisite is:
 
 `source_bind_the_one_token_non_append_only_raw_v23_invocation_seam_access_rebinding_from_internal_to_private_while_preserving_every_other_v25_worker_source_byte_the_v25_internal_nonpayload_boundary_as_the_sole_checked_in_raw_seam_caller_and_the_four_file_worker_inventory_without_any_main_cross_file_caller_request_transport_launch_runtime_confidentiality_artifact_io_publication_authority_or_source_binding_v7`
+
+## V27 private-access source binding — 2026-08-02
+
+V27 realizes the V26 design with the sole checked-in worker mutation:
+internal to private at current bytes 12_555..<12_562. The live source is
+14,174 bytes / 767cc0101c52a311d40acc1dbba1747b7e3cdf7430f73d69a168ab62d1290e15;
+reverse reconstruction restores the exact V25 source.
+
+The V27 source contract is 92f6abf8417d7845d5425b973f7a45d13297bc5af736bd1a9248bc39fdc191ce
+and topology V27 is a572b5813e0410235f387222f6399c2984fcb52da69f4bd9393a5adf6869cd7c.
+The worker remains four Swift files, main remains status 78, the internal V25
+nonpayload boundary remains the sole checked-in raw-seam caller, and no caller,
+request, transport, launch, execution, artifact I/O, publication, mechanics
+PASS, source-binding V7, scientific authority, or product authority is added.
+
+Private narrows ordinary cross-file and testable direct naming only. It does
+not establish authentication, confidentiality, zeroization, constant-time or
+constant-resource behavior, or crash, trap, signal, out-of-memory, timing, or
+resource containment. Prime remains ABSTAIN.
+
+The repository-wide suite did not complete within the bounded 1,800-second
+observation and is not counted as passing. Repeated predecessor validation is
+separate workflow/performance debt, not a Git-configuration issue or a V27
+remediation. The next semantic boundary is design for hardened nonexporting
+isolation and an authenticated fixture-only caller/observation policy.

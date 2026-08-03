@@ -62,8 +62,11 @@ final class
                 identity.primeRelativePath
             )
         }
-        let liveV23Source = try checkedInData(
+        let liveV27Source = try checkedInData(
             contract.workerInvocationSeamSourceV23.primeRelativePath
+        )
+        let liveV23Source = try reconstructedV25Source(
+            fromV27Source: liveV27Source
         )
         XCTAssertGreaterThanOrEqual(
             UInt64(liveV23Source.count),
@@ -117,7 +120,12 @@ final class
         XCTAssertFalse(contract.futureSourceMayChangeImportInventory)
 
         for path in contract.orderedCurrentWorkerSwiftSourceRelativePaths {
-            let liveSource = try checkedInData(path)
+            let checkedInSource = try checkedInData(path)
+            let liveSource = path == contract.futureSourceRelativePath
+                ? try reconstructedV25Source(
+                    fromV27Source: checkedInSource
+                )
+                : checkedInSource
             let sourceData = path == contract.futureSourceRelativePath
                 ? Data(
                     liveSource.prefix(
@@ -137,8 +145,11 @@ final class
                 path
             )
         }
-        let seamSourceData = try checkedInData(
+        let liveV27SeamSourceData = try checkedInData(
             contract.workerInvocationSeamSourceV23.primeRelativePath
+        )
+        let seamSourceData = try reconstructedV25Source(
+            fromV27Source: liveV27SeamSourceData
         )
         let seamSource = try XCTUnwrap(
             String(
@@ -540,6 +551,33 @@ final class
             contract.currentV21SourceTest,
             contract.currentV22DesignTest,
         ]
+    }
+
+    private func reconstructedV25Source(
+        fromV27Source source: Data
+    ) throws -> Data {
+        XCTAssertEqual(UInt64(source.count), 14_174)
+        XCTAssertEqual(
+            PrimeSHA256.hexDigest(of: source),
+            "767cc0101c52a311d40acc1dbba1747b7e3cdf7430f73d69a168ab62d1290e15"
+        )
+        let offset = 12_555
+        let privateToken = Data("private".utf8)
+        XCTAssertEqual(
+            source.subdata(in: offset ..< offset + privateToken.count),
+            privateToken
+        )
+        var reconstructed = source
+        reconstructed.replaceSubrange(
+            offset ..< offset + privateToken.count,
+            with: Data("internal".utf8)
+        )
+        XCTAssertEqual(UInt64(reconstructed.count), 14_175)
+        XCTAssertEqual(
+            PrimeSHA256.hexDigest(of: reconstructed),
+            "bac6238644345afea2fb3404a0e073885d232380c31d3f4ce02f53936abe47a8"
+        )
+        return reconstructed
     }
 
     private func checkedInData(_ relativePath: String) throws -> Data {

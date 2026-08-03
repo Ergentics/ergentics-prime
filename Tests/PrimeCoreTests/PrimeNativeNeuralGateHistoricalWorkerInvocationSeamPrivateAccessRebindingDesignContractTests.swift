@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: LicenseRef-Ergentics-Proprietary
 
 import CoreFoundation
+import Darwin
 import Foundation
 @testable import PrimeCore
 import XCTest
@@ -112,6 +113,22 @@ final class
             )
         }
 
+        let liveV27Source = try checkedInData(
+            contract.mutation.sourceRelativePath
+        )
+        let reconstructedV25Source = try reconstructedV25Source(
+            fromV27Source: liveV27Source,
+            geometry: contract.mutation
+        )
+        XCTAssertEqual(
+            UInt64(reconstructedV25Source.count),
+            contract.workerInvocationSeamAndBoundarySourceV25.byteCount
+        )
+        XCTAssertEqual(
+            PrimeSHA256.hexDigest(of: reconstructedV25Source),
+            contract.workerInvocationSeamAndBoundarySourceV25.sha256
+        )
+
         XCTAssertEqual(
             contract.historicalTopologySourceBeforeV26.byteCount,
             261_012
@@ -135,20 +152,25 @@ final class
     func testExactOneTokenProjectionAndReverseReconstruction() throws {
         let contract = Contract.frozenV1
         let geometry = contract.mutation
-        let current = try checkedInData(geometry.sourceRelativePath)
+        let projected = try checkedInData(geometry.sourceRelativePath)
         let lower = Int(geometry.accessTokenUTF8Offset)
         let upper = Int(geometry.accessTokenRangeExclusiveUpperBound)
         let currentToken = Data(geometry.currentAccessToken.utf8)
         let projectedToken = Data(geometry.projectedAccessToken.utf8)
 
-        XCTAssertEqual(UInt64(current.count), geometry.currentSourceByteCount)
         XCTAssertEqual(
-            PrimeSHA256.hexDigest(of: current),
-            geometry.currentSourceSHA256
+            UInt64(projected.count),
+            geometry.projectedSourceByteCount
         )
         XCTAssertEqual(
-            current.subdata(in: lower ..< upper),
-            currentToken
+            PrimeSHA256.hexDigest(of: projected),
+            geometry.projectedSourceSHA256
+        )
+        XCTAssertEqual(
+            projected.subdata(
+                in: lower ..< lower + projectedToken.count
+            ),
+            projectedToken
         )
         XCTAssertEqual(
             PrimeSHA256.hexDigest(of: currentToken),
@@ -159,8 +181,10 @@ final class
             geometry.projectedAccessTokenSHA256
         )
 
-        let prefix = Data(current.prefix(lower))
-        let suffix = Data(current.suffix(from: upper))
+        let prefix = Data(projected.prefix(lower))
+        let suffix = Data(
+            projected.suffix(from: lower + projectedToken.count)
+        )
         XCTAssertEqual(
             UInt64(prefix.count),
             geometry.unchangedPrefixByteCount
@@ -178,19 +202,6 @@ final class
             geometry.unchangedSuffixSHA256
         )
 
-        var projected = current
-        projected.replaceSubrange(
-            lower ..< upper,
-            with: projectedToken
-        )
-        XCTAssertEqual(
-            UInt64(projected.count),
-            geometry.projectedSourceByteCount
-        )
-        XCTAssertEqual(
-            PrimeSHA256.hexDigest(of: projected),
-            geometry.projectedSourceSHA256
-        )
         XCTAssertEqual(
             Data(
                 projected.prefix(
@@ -220,15 +231,30 @@ final class
             geometry.unchangedV25SuffixSHA256
         )
 
-        var reversed = projected
-        reversed.replaceSubrange(
+        var current = projected
+        current.replaceSubrange(
             lower ..< lower + projectedToken.count,
             with: currentToken
         )
-        XCTAssertEqual(reversed, current)
+        XCTAssertEqual(UInt64(current.count), geometry.currentSourceByteCount)
+        XCTAssertEqual(
+            PrimeSHA256.hexDigest(of: current),
+            geometry.currentSourceSHA256
+        )
+        XCTAssertEqual(
+            current.subdata(in: lower ..< upper),
+            currentToken
+        )
+
+        var reversed = current
+        reversed.replaceSubrange(
+            lower ..< upper,
+            with: projectedToken
+        )
+        XCTAssertEqual(reversed, projected)
     }
 
-    func testDesignOnlySourceShapeInventoryAndSoleCaller() throws {
+    func testV27SourceRealizesV26ShapeInventoryAndSoleCaller() throws {
         let contract = Contract.frozenV1
         let workerDirectory = repositoryRoot
             .appendingPathComponent("Sources")
@@ -274,7 +300,7 @@ final class
                     "internalstaticfuncsourceBoundUnavailableHistoricalWorkerInvocationSeam(",
                 in: compact
             ),
-            1
+            0
         )
         XCTAssertEqual(
             occurrenceCount(
@@ -282,7 +308,7 @@ final class
                     "privatestaticfuncsourceBoundUnavailableHistoricalWorkerInvocationSeam(",
                 in: compact
             ),
-            0
+            1
         )
         XCTAssertEqual(
             occurrenceCount(
@@ -448,18 +474,45 @@ final class
             declaration.path,
             caller.path,
         ]
-        let standardOutput = Pipe()
-        let standardError = Pipe()
-        process.standardOutput = standardOutput
-        process.standardError = standardError
+        let outputURL = root.appendingPathComponent("compiler.log")
+        _ = FileManager.default.createFile(
+            atPath: outputURL.path,
+            contents: Data()
+        )
+        let outputHandle = try FileHandle(forWritingTo: outputURL)
+        defer { try? outputHandle.close() }
+        process.standardOutput = outputHandle
+        process.standardError = outputHandle
+        let completed = DispatchSemaphore(value: 0)
+        process.terminationHandler = { _ in completed.signal() }
         try process.run()
-        process.waitUntilExit()
-
-        let errorText = String(
-            data:
-                standardError.fileHandleForReading.readDataToEndOfFile(),
+        var timedOut =
+            completed.wait(timeout: .now() + 30) == .timedOut
+        if timedOut {
+            process.terminate()
+            if completed.wait(timeout: .now() + 3) == .timedOut {
+                kill(process.processIdentifier, SIGKILL)
+                _ = completed.wait(timeout: .now() + 3)
+            }
+        }
+        try outputHandle.synchronize()
+        let errorText = try String(
+            contentsOf: outputURL,
             encoding: .utf8
-        ) ?? ""
+        )
+        if process.isRunning {
+            timedOut = true
+        }
+
+        XCTAssertFalse(timedOut, errorText)
+        guard !process.isRunning else {
+            XCTFail(
+                "compiler canary remained alive after terminate and SIGKILL",
+                file: #filePath,
+                line: #line
+            )
+            return
+        }
         XCTAssertEqual(process.terminationReason, .exit)
         XCTAssertNotEqual(process.terminationStatus, 0)
         XCTAssertTrue(
@@ -640,15 +693,42 @@ final class
     ) -> [Identity] {
         [
             contract.callerAndResultConsumerSourceContractSource,
-            contract.callerAndResultConsumerSourceContractTest,
             contract.topologyV25Test,
             contract.packageSwift,
             contract.workerMain,
             contract.workerEvidenceExportCallEdgeSource,
             contract.workerProjectionCallEdgeSource,
-            contract.workerInvocationSeamAndBoundarySourceV25,
             contract.workerFixtureResource,
         ]
+    }
+
+    private func reconstructedV25Source(
+        fromV27Source source: Data,
+        geometry:
+            PrimeNativeNeuralGateHistoricalWorkerInvocationSeamPrivateAccessRebindingMutationGeometry
+    ) throws -> Data {
+        XCTAssertEqual(UInt64(source.count), geometry.projectedSourceByteCount)
+        XCTAssertEqual(
+            PrimeSHA256.hexDigest(of: source),
+            geometry.projectedSourceSHA256
+        )
+        let lower = Int(geometry.accessTokenUTF8Offset)
+        let projectedToken = Data(geometry.projectedAccessToken.utf8)
+        XCTAssertEqual(
+            source.subdata(in: lower ..< lower + projectedToken.count),
+            projectedToken
+        )
+        var reconstructed = source
+        reconstructed.replaceSubrange(
+            lower ..< lower + projectedToken.count,
+            with: Data(geometry.currentAccessToken.utf8)
+        )
+        XCTAssertEqual(UInt64(reconstructed.count), geometry.currentSourceByteCount)
+        XCTAssertEqual(
+            PrimeSHA256.hexDigest(of: reconstructed),
+            geometry.currentSourceSHA256
+        )
+        return reconstructed
     }
 
     private func checkedInData(_ relativePath: String) throws -> Data {
