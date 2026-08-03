@@ -1,0 +1,746 @@
+// SPDX-FileCopyrightText: 2026 Ergentics, LLC
+// SPDX-License-Identifier: LicenseRef-Ergentics-Proprietary
+
+import Darwin
+import Dispatch
+import Foundation
+@testable import PrimeCore
+import PrimeValidationWorkflowDriverCore
+import XCTest
+
+final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
+    XCTestCase
+{
+    func testPublicReleaseAdmissionUsesEmbeddedSourceAuthority()
+        throws
+    {
+        #if DEBUG
+            throw XCTSkip("public embedded-source admission is Release-only")
+        #else
+            guard let companionPath = ProcessInfo.processInfo.environment[
+                "PRIME_PMHNP_COMPANION_ROOT"
+            ], companionPath.hasPrefix("/") else {
+                throw XCTSkip(
+                    "set PRIME_PMHNP_COMPANION_ROOT for the public live gate"
+                )
+            }
+            var primeRepository = URL(fileURLWithPath: #filePath)
+            for _ in 0 ..< 5 {
+                primeRepository.deleteLastPathComponent()
+            }
+            let base = URL(
+                fileURLWithPath:
+                    "/private/tmp/prime-validation-public-admission-"
+                    + UUID().uuidString,
+                isDirectory: true
+            )
+            defer { try? FileManager.default.removeItem(at: base) }
+            let workspace = base.appendingPathComponent(
+                "workspace",
+                isDirectory: true
+            )
+            let evidence = base.appendingPathComponent(
+                "evidence",
+                isDirectory: true
+            )
+            let lease = base.appendingPathComponent(
+                "lease",
+                isDirectory: true
+            )
+            for directory in [base, workspace, evidence, lease] {
+                try makePrivateDirectory(directory)
+            }
+
+            let capability = try
+                PrimeValidationSwiftPMBuildInventoryAdmission
+                .admitPrerequisites(
+                    primeRepositoryURL: primeRepository,
+                    workspaceRootURL: workspace,
+                    evidenceRootURL: evidence,
+                    leaseDirectoryURL: lease,
+                    companionRepositoryURL: URL(
+                        fileURLWithPath: companionPath,
+                        isDirectory: true
+                    ),
+                    companionDeclaration: .init(
+                        expectedPinnedHEAD:
+                            PrimeValidationRunIntentV2
+                            .requiredCompanionCommit,
+                        declaredObservedHEAD:
+                            PrimeValidationRunIntentV2
+                            .requiredCompanionCommit,
+                        declaredPorcelainV2Status: Data()
+                    ),
+                    developerDirectoryURL: URL(
+                        fileURLWithPath: Fixture.developerPath,
+                        isDirectory: true
+                    )
+                )
+            let prerequisite = try capability.consumePrerequisites()
+            XCTAssertEqual(
+                prerequisite.sourceIdentitySHA256,
+                PrimeEmbeddedBuildProvenance.sourceIdentitySHA256
+            )
+            XCTAssertEqual(
+                prerequisite.missingAuthorities,
+                PrimeValidationSwiftPMMissingAuthority.allCases
+            )
+            XCTAssertEqual(
+                prerequisite.processExecutionObservation,
+                .unobserved
+            )
+            XCTAssertFalse(prerequisite.completionAuthorized)
+            XCTAssertThrowsError(try capability.consumePrerequisites())
+            withExtendedLifetime(prerequisite) {}
+        #endif
+    }
+
+    func testRealToolchainPrerequisiteIsExplicitlyNotPreparedExecutor()
+        throws
+    {
+        let fixture = try Fixture()
+        defer { fixture.cleanup() }
+        let capability = try fixture.admit()
+        try assertAdmissionOnly(
+            capability,
+            fixture: fixture
+        )
+        fixture.cleanup()
+    }
+
+    private func assertAdmissionOnly(
+        _ capability:
+            PrimeValidationSwiftPMBuildInventoryAdmissionCapability,
+        fixture: Fixture
+    ) throws {
+        let prerequisite = try capability.consumePrerequisites()
+
+        XCTAssertEqual(
+            prerequisite.authorityCeiling,
+            .retainedInputsOnlyNoPreparedExecutor
+        )
+        XCTAssertEqual(
+            prerequisite.missingAuthorities,
+            PrimeValidationSwiftPMMissingAuthority.allCases
+        )
+        XCTAssertEqual(
+            prerequisite.processExecutionObservation,
+            .unobserved
+        )
+        XCTAssertEqual(
+            prerequisite.buildExecutionObservation,
+            .unobserved
+        )
+        XCTAssertEqual(
+            prerequisite.inventoryExecutionObservation,
+            .unobserved
+        )
+        XCTAssertFalse(prerequisite.completionAuthorized)
+        XCTAssertTrue(
+            prerequisite.companionDeclaration
+                .processObservationMissing
+        )
+        XCTAssertTrue(
+            prerequisite.toolchain
+                .swiftVersionProcessObservationMissing
+        )
+        XCTAssertTrue(
+            prerequisite.toolchain
+                .swiftTargetInfoProcessObservationMissing
+        )
+        XCTAssertEqual(
+            prerequisite.toolchain.swiftPackageExecutable
+                .canonicalAbsolutePath,
+            Fixture.swiftPackagePath
+        )
+        XCTAssertGreaterThan(
+            prerequisite.toolchain.swiftPackageExecutable.byteCount,
+            0
+        )
+        XCTAssertEqual(
+            prerequisite.toolchain.swiftBuildPersonality
+                .symbolicLinkTarget,
+            "swift-package"
+        )
+        XCTAssertEqual(
+            prerequisite.toolchain.swiftTestPersonality
+                .symbolicLinkTarget,
+            "swift-package"
+        )
+        XCTAssertEqual(
+            prerequisite.toolchain.sdkRoot.canonicalAbsolutePath,
+            Fixture.sdkPath
+        )
+        XCTAssertEqual(
+            prerequisite.toolchain.sdkRoot.filesystemType,
+            "apfs"
+        )
+        XCTAssertTrue(
+            prerequisite.toolchain.sdkRoot.localFilesystemObserved
+        )
+        XCTAssertTrue(
+            prerequisite.toolchain.sdkRoot.filesystemIDWord0 != 0
+                || prerequisite.toolchain.sdkRoot.filesystemIDWord1 != 0
+        )
+        XCTAssertEqual(
+            prerequisite.packageResolvedBinding.relativePath,
+            "Package.resolved"
+        )
+        XCTAssertEqual(
+            prerequisite.sourceIdentitySHA256,
+            fixture.sourceExpectation.sourceIdentitySHA256
+        )
+
+        let keys = prerequisite.toolchain
+            .orderedDeterministicBaseEnvironment.map(\.key)
+        XCTAssertEqual(
+            keys,
+            [
+                "CFFIXED_USER_HOME",
+                "CLANG_MODULE_CACHE_PATH",
+                "DEVELOPER_DIR",
+                "HOME",
+                "LANG",
+                "LC_ALL",
+                "PATH",
+                "SDKROOT",
+                "SOURCE_DATE_EPOCH",
+                "SWIFTPM_MODULECACHE_OVERRIDE",
+                "TERM",
+                "TMPDIR",
+                "TZ",
+            ]
+        )
+        XCTAssertFalse(keys.contains(where: { $0.hasPrefix("DYLD_") }))
+        let environment = Dictionary(
+            uniqueKeysWithValues: prerequisite.toolchain
+                .orderedDeterministicBaseEnvironment.map {
+                    ($0.key, $0.value)
+                }
+        )
+        XCTAssertEqual(
+            environment["TMPDIR"],
+            fixture.workspace.path + "/temporary"
+        )
+        XCTAssertEqual(
+            environment["CFFIXED_USER_HOME"],
+            fixture.workspace.path + "/home"
+        )
+        XCTAssertEqual(
+            environment["PATH"],
+            Fixture.developerPath
+                + "/Toolchains/XcodeDefault.xctoolchain/usr/bin:"
+                + "/usr/bin:/bin"
+        )
+
+        XCTAssertThrowsError(try capability.consumePrerequisites()) {
+            XCTAssertEqual(
+                $0 as?
+                    PrimeValidationSwiftPMBuildInventoryAdmissionError,
+                .capabilityAlreadyConsumed
+            )
+        }
+        withExtendedLifetime(prerequisite) {}
+    }
+
+    func testConsumedPrerequisiteRetainsExclusiveLease() throws {
+        let fixture = try Fixture()
+        defer { fixture.cleanup() }
+        var capability:
+            PrimeValidationSwiftPMBuildInventoryAdmissionCapability? =
+                try fixture.admit()
+        assertLeaseBusy(fixture.lockURL)
+
+        var prerequisite = try capability?.consumePrerequisites()
+        XCTAssertNotNil(prerequisite)
+        capability = nil
+        assertLeaseBusy(fixture.lockURL)
+
+        prerequisite = nil
+        let reacquired = try PrimeMetalDeviceLease.acquire(
+            at: fixture.lockURL
+        )
+        XCTAssertTrue(reacquired.isHeld)
+        reacquired.release()
+    }
+
+    func testConcurrentConsumeHasExactlyOneWinner() throws {
+        let fixture = try Fixture()
+        defer { fixture.cleanup() }
+        let capability = try fixture.admit()
+        let race = ConsumeRace()
+        let ready = DispatchGroup()
+        let done = DispatchGroup()
+        let start = DispatchSemaphore(value: 0)
+        let queue = DispatchQueue(
+            label: "prime.validation.admission.consume-race",
+            attributes: .concurrent
+        )
+
+        for _ in 0 ..< 2 {
+            ready.enter()
+            done.enter()
+            queue.async {
+                ready.leave()
+                start.wait()
+                race.record {
+                    try capability.consumePrerequisites()
+                }
+                done.leave()
+            }
+        }
+        XCTAssertEqual(ready.wait(timeout: .now() + 5), .success)
+        start.signal()
+        start.signal()
+        XCTAssertEqual(done.wait(timeout: .now() + 30), .success)
+
+        XCTAssertEqual(race.prerequisites.count, 1)
+        XCTAssertEqual(race.errors.count, 1)
+        XCTAssertEqual(
+            race.errors.first as?
+                PrimeValidationSwiftPMBuildInventoryAdmissionError,
+            .capabilityAlreadyConsumed
+        )
+        assertLeaseBusy(fixture.lockURL)
+        race.releasePrerequisites()
+    }
+
+    func testCanonicalAliasAndAncestorOverlapAreRejected() throws {
+        let fixture = try Fixture()
+        defer { fixture.cleanup() }
+        let alias = URL(
+            fileURLWithPath:
+                fixture.workspace.path.replacingOccurrences(
+                    of: "/private/tmp/",
+                    with: "/tmp/"
+                ),
+            isDirectory: true
+        )
+        XCTAssertThrowsError(
+            try fixture.admit(workspace: alias)
+        )
+
+        let parent = try fixture.makeDirectory("overlap-parent")
+        let child = try fixture.makeDirectory(
+            "overlap-parent/workspace"
+        )
+        XCTAssertThrowsError(
+            try fixture.admit(
+                workspace: child,
+                companion: parent
+            )
+        ) { error in
+            XCTAssertEqual(
+                error as?
+                    PrimeValidationSwiftPMBuildInventoryAdmissionError,
+                .rejected("directory_path_overlap")
+            )
+        }
+    }
+
+    func testSymlinkLooseModeAndNonemptyRootsAreRejected() throws {
+        let fixture = try Fixture()
+        defer { fixture.cleanup() }
+
+        let target = try fixture.makeDirectory("symlink-target")
+        let linked = fixture.base.appendingPathComponent(
+            "linked-workspace"
+        )
+        try FileManager.default.createSymbolicLink(
+            at: linked,
+            withDestinationURL: target
+        )
+        XCTAssertThrowsError(try fixture.admit(workspace: linked))
+
+        let loose = try fixture.makeDirectory("loose-workspace")
+        XCTAssertEqual(chmod(loose.path, 0o755), 0)
+        XCTAssertThrowsError(try fixture.admit(workspace: loose))
+
+        let nonempty = try fixture.makeDirectory("nonempty-workspace")
+        try Data("prior-run".utf8).write(
+            to: nonempty.appendingPathComponent("prior")
+        )
+        XCTAssertThrowsError(try fixture.admit(workspace: nonempty))
+    }
+
+    func testPostAdmissionCompanionMutationPoisonsCapability()
+        throws
+    {
+        let fixture = try Fixture()
+        defer { fixture.cleanup() }
+        let capability = try fixture.admit()
+        try Data("mutation".utf8).write(
+            to: fixture.companion.appendingPathComponent("unexpected")
+        )
+
+        XCTAssertThrowsError(try capability.consumePrerequisites())
+        XCTAssertThrowsError(try capability.consumePrerequisites()) {
+            XCTAssertEqual(
+                $0 as?
+                    PrimeValidationSwiftPMBuildInventoryAdmissionError,
+                .capabilityAlreadyConsumed
+            )
+        }
+    }
+
+    func testCallerDeclaredGitMismatchIsRejectedBeforeAdmission()
+        throws
+    {
+        let fixture = try Fixture()
+        defer { fixture.cleanup() }
+        let mismatched = PrimeValidationSwiftPMCompanionDeclaration(
+            expectedPinnedHEAD: Fixture.commit,
+            declaredObservedHEAD: String(repeating: "b", count: 40),
+            declaredPorcelainV2Status: Data()
+        )
+        XCTAssertThrowsError(
+            try fixture.admit(declaration: mismatched)
+        ) { error in
+            XCTAssertEqual(
+                error as?
+                    PrimeValidationSwiftPMBuildInventoryAdmissionError,
+                .rejected("companion_declaration")
+            )
+        }
+    }
+
+    func testCapabilitySurfaceHasNoCodecPublicInitializerOrSpawn()
+        throws
+    {
+        let source = try String(
+            contentsOf: Fixture.admissionSourceURL,
+            encoding: .utf8
+        )
+        for forbidden in [
+            "posix_spawn",
+            "Process(",
+            "fork(",
+            "execve(",
+            "/usr/bin/swift",
+        ] {
+            XCTAssertFalse(source.contains(forbidden), forbidden)
+        }
+
+        let capabilitySource = try slice(
+            source,
+            from:
+                "public final class PrimeValidationSwiftPMBuildInventoryAdmissionCapability",
+            through:
+                "public enum PrimeValidationSwiftPMBuildInventoryAdmission"
+        )
+        XCTAssertFalse(capabilitySource.contains("Codable"))
+        XCTAssertFalse(capabilitySource.contains("public init("))
+        XCTAssertFalse(capabilitySource.contains("arguments:"))
+        XCTAssertFalse(capabilitySource.contains("environment:"))
+
+        let prerequisiteSource = try slice(
+            source,
+            from:
+                "public final class PrimeValidationSwiftPMBuildInventoryPrerequisite",
+            through:
+                "public final class PrimeValidationSwiftPMBuildInventoryAdmissionCapability"
+        )
+        XCTAssertFalse(prerequisiteSource.contains("Codable"))
+        XCTAssertFalse(prerequisiteSource.contains("public init("))
+    }
+
+    private func assertLeaseBusy(
+        _ url: URL,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        XCTAssertThrowsError(
+            try PrimeMetalDeviceLease.acquire(at: url),
+            file: file,
+            line: line
+        ) {
+            XCTAssertEqual(
+                $0 as? PrimeMetalDeviceLeaseError,
+                .busy,
+                file: file,
+                line: line
+            )
+        }
+    }
+
+    private func makePrivateDirectory(_ url: URL) throws {
+        try FileManager.default.createDirectory(
+            at: url,
+            withIntermediateDirectories: true
+        )
+        guard chmod(url.path, 0o700) == 0 else {
+            throw FixtureError.invalid("directory_mode")
+        }
+    }
+
+    private func slice(
+        _ source: String,
+        from start: String,
+        through end: String
+    ) throws -> String {
+        guard let lower = source.range(of: start)?.lowerBound,
+              let upper = source.range(
+                  of: end,
+                  range: lower ..< source.endIndex
+              )?.lowerBound else {
+            throw FixtureError.invalid("source_slice")
+        }
+        return String(source[lower ..< upper])
+    }
+}
+
+private final class ConsumeRace: @unchecked Sendable {
+    private let lock = NSLock()
+    private(set) var prerequisites:
+        [PrimeValidationSwiftPMBuildInventoryPrerequisite] = []
+    private(set) var errors: [Error] = []
+
+    func record(
+        _ operation: () throws
+            -> PrimeValidationSwiftPMBuildInventoryPrerequisite
+    ) {
+        do {
+            let value = try operation()
+            lock.lock()
+            prerequisites.append(value)
+            lock.unlock()
+        } catch {
+            lock.lock()
+            errors.append(error)
+            lock.unlock()
+        }
+    }
+
+    func releasePrerequisites() {
+        lock.lock()
+        prerequisites.removeAll()
+        lock.unlock()
+    }
+}
+
+private enum FixtureError: Error {
+    case invalid(String)
+}
+
+private final class Fixture {
+    static let commit = String(repeating: "a", count: 40)
+    static let developerPath =
+        "/Applications/Xcode.app/Contents/Developer"
+    static let sdkPath = developerPath
+        + "/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk"
+    static let swiftPackagePath = developerPath
+        + "/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-package"
+
+    static let admissionSourceURL: URL = {
+        var root = URL(fileURLWithPath: #filePath)
+        for _ in 0 ..< 5 {
+            root.deleteLastPathComponent()
+        }
+        return root.appendingPathComponent(
+            "Sources/PrimeCore/" +
+                "PrimeValidationSwiftPMBuildInventoryAdmission.swift"
+        )
+    }()
+
+    let base: URL
+    let prime: URL
+    let workspace: URL
+    let evidence: URL
+    let lease: URL
+    let companion: URL
+    let sourceExpectation: PrimeSwiftSourceProvenanceExpectation
+    private var cleaned = false
+
+    var lockURL: URL {
+        lease.appendingPathComponent(
+            "prime-validation-swiftpm-build-inventory.lock"
+        )
+    }
+
+    init() throws {
+        base = URL(
+            fileURLWithPath:
+                "/private/tmp/prime-validation-admission-tests-"
+                + UUID().uuidString,
+            isDirectory: true
+        )
+        prime = base.appendingPathComponent("prime", isDirectory: true)
+        workspace = base.appendingPathComponent(
+            "workspace",
+            isDirectory: true
+        )
+        evidence = base.appendingPathComponent(
+            "evidence",
+            isDirectory: true
+        )
+        lease = base.appendingPathComponent("lease", isDirectory: true)
+        companion = base.appendingPathComponent(
+            "companion",
+            isDirectory: true
+        )
+        for directory in [
+            base,
+            prime,
+            workspace,
+            evidence,
+            lease,
+            companion,
+        ] {
+            try Self.createDirectory(directory)
+        }
+        sourceExpectation = try Self.sealSyntheticSource(at: prime)
+    }
+
+    deinit {
+        cleanup()
+    }
+
+    func cleanup() {
+        guard !cleaned else { return }
+        cleaned = true
+        try? FileManager.default.removeItem(at: base)
+    }
+
+    func makeDirectory(_ relativePath: String) throws -> URL {
+        let url = base.appendingPathComponent(
+            relativePath,
+            isDirectory: true
+        )
+        try Self.createDirectory(url)
+        return url
+    }
+
+    func admit(
+        workspace: URL? = nil,
+        evidence: URL? = nil,
+        lease: URL? = nil,
+        companion: URL? = nil,
+        declaration:
+            PrimeValidationSwiftPMCompanionDeclaration? = nil
+    ) throws
+        -> PrimeValidationSwiftPMBuildInventoryAdmissionCapability
+    {
+        try PrimeValidationSwiftPMBuildInventoryAdmission
+            .admitPrerequisites(
+                primeRepositoryURL: prime,
+                workspaceRootURL: workspace ?? self.workspace,
+                evidenceRootURL: evidence ?? self.evidence,
+                leaseDirectoryURL: lease ?? self.lease,
+                companionRepositoryURL: companion ?? self.companion,
+                companionDeclaration: declaration ?? .init(
+                    expectedPinnedHEAD: Self.commit,
+                    declaredObservedHEAD: Self.commit,
+                    declaredPorcelainV2Status: Data()
+                ),
+                developerDirectoryURL: URL(
+                    fileURLWithPath: Self.developerPath,
+                    isDirectory: true
+                ),
+                sourceExpectation: sourceExpectation
+            )
+    }
+
+    private static func createDirectory(
+        _ url: URL
+    ) throws {
+        try FileManager.default.createDirectory(
+            at: url,
+            withIntermediateDirectories: true
+        )
+        guard chmod(url.path, 0o700) == 0 else {
+            throw FixtureError.invalid("directory_mode")
+        }
+    }
+
+    private static func sealSyntheticSource(
+        at root: URL
+    ) throws -> PrimeSwiftSourceProvenanceExpectation {
+        for relativePath in [
+            ".swiftpm/configuration",
+            "Tests/PrimeTypedOptimizerRestoreMechanicsValidation/" +
+                ".swiftpm/configuration",
+            "Tests/PrimeNativeNeuralGateMLXValidation/" +
+                ".swiftpm/configuration",
+            "Tests/PrimeValidationWorkflow/.swiftpm/configuration",
+            "Sources/PrimeCore",
+            "Tests",
+            "docs",
+        ] {
+            try createDirectory(
+                root.appendingPathComponent(relativePath)
+            )
+        }
+        let files: [String: Data] = [
+            ".gitignore": Data(".build/\n".utf8),
+            ".swiftpm/configuration/mirrors.json": Data("{}\n".utf8),
+            "Tests/PrimeTypedOptimizerRestoreMechanicsValidation/" +
+                ".swiftpm/configuration/mirrors.json":
+                Data("{}\n".utf8),
+            "Tests/PrimeNativeNeuralGateMLXValidation/" +
+                ".swiftpm/configuration/mirrors.json":
+                Data("{}\n".utf8),
+            "Tests/PrimeValidationWorkflow/.swiftpm/configuration/" +
+                "mirrors.json": Data("{}\n".utf8),
+            "LICENSE": Data("fixture\n".utf8),
+            "Package.swift": Data("// fixture\n".utf8),
+            "Package.resolved": Data("{}\n".utf8),
+            "README.md": Data("fixture\n".utf8),
+            "THIRD_PARTY_NOTICES.md": Data("fixture\n".utf8),
+            "Sources/PrimeCore/" +
+                "PrimeValidationSwiftPMBuildInventoryAdmission.swift":
+                Data("// fixture admission\n".utf8),
+        ]
+        for (relativePath, data) in files {
+            try data.write(
+                to: root.appendingPathComponent(relativePath)
+            )
+        }
+
+        let dummyDigest = String(repeating: "0", count: 64)
+        let embeddedURL = root.appendingPathComponent(
+            PrimeSwiftSourceProvenance.embeddedProvenanceRelativePath
+        )
+        try PrimeSwiftSourceProvenance
+            .canonicalEmbeddedProvenanceSource(
+                sourceIdentitySHA256: dummyDigest
+            ).write(to: embeddedURL)
+        let dummy = PrimeSwiftSourceProvenanceExpectation(
+            sourceIdentitySHA256: dummyDigest,
+            buildConfiguration: "release"
+        )
+        let observed: String
+        do {
+            _ = try PrimeSwiftSourceProvenance.capture(
+                at: root,
+                requiredRelativePaths: [
+                    "Sources/PrimeCore/" +
+                        "PrimeValidationSwiftPMBuildInventoryAdmission.swift",
+                    "Package.resolved",
+                ],
+                expectation: dummy
+            )
+            throw FixtureError.invalid("dummy_source_seal")
+        } catch let PrimeSwiftSourceProvenanceError
+            .sourceIdentityMismatch(_, actual) {
+            observed = actual
+        }
+        try PrimeSwiftSourceProvenance
+            .canonicalEmbeddedProvenanceSource(
+                sourceIdentitySHA256: observed
+            ).write(to: embeddedURL)
+        let expectation = PrimeSwiftSourceProvenanceExpectation(
+            sourceIdentitySHA256: observed,
+            buildConfiguration: "release"
+        )
+        _ = try PrimeSwiftSourceProvenance.capture(
+            at: root,
+            requiredRelativePaths: [
+                "Sources/PrimeCore/" +
+                    "PrimeValidationSwiftPMBuildInventoryAdmission.swift",
+                "Package.resolved",
+            ],
+            expectation: expectation
+        )
+        return expectation
+    }
+}

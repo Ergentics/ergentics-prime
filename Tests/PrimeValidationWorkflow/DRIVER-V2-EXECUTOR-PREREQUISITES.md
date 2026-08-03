@@ -7,10 +7,11 @@ SPDX-License-Identifier: LicenseRef-Ergentics-Proprietary
 
 Date: 2026-08-02
 
-The V2 package currently implements contracts, deterministic planning, and
-internal reconciliation kernels. It does not authorize process execution,
-durable resume, or complete arm/final receipts. Public completion remains
-fail-closed until an executor supplies all of the following.
+The V2 package now implements contracts, deterministic planning, internal
+reconciliation kernels, an admission-only durable declaration, and a
+PrimeCore-owned live prerequisite capability. It does not authorize process
+execution, durable resume, or complete arm/final receipts. Public completion
+remains fail-closed until an executor supplies all of the following.
 
 - Time and concurrency authority: monotonic active and wall-clock accounting,
   deadline escalation receipts, and enforced per-arm/global concurrency caps.
@@ -20,7 +21,8 @@ fail-closed until an executor supplies all of the following.
 - Per-arm isolation: distinct scratch, cache, configuration, security, home,
   temporary, output, and evidence trees with no shared mutable build state.
 - Companion admission: the exact pinned commit, a clean tracked and untracked
-  tree, and descriptor-bound package/metallib content before each invocation.
+  tree, descriptor-bound package content before each invocation, and the
+  generated metallib after build and before inventory or shard roles.
 - Toolchain admission: the resolved Xcode build, SDK path/version, target
   triple, Swift executable content, and linker/runtime configuration—not only
   an ambient `swift` path.
@@ -28,7 +30,19 @@ fail-closed until an executor supplies all of the following.
   terminals from the bound xUnit/transcript bytes. Caller-supplied semantic
   arrays are not completion authority.
 
+The admission-only slice now binds canonical roots, source and lock identity,
+an exclusive retained lease, static Xcode/SDK inputs, the physical
+`swift-package` image, its exact `swift-build`/`swift-test` personalities, the
+frozen root/budget policy, and three logical-to-physical pre-shard launch
+declarations. Each launch binds the physical image, `argv[0]`, arguments,
+exact 19-entry replacement environment, and repository-root cwd path. The
+durable receipt contains staging declarations but no live staging capability;
+the live prerequisite still withholds Git/tool process observations, artifact
+staging, and all build/inventory/execution outcomes. A decoded declaration
+cannot restore the live capability.
+
 These are implementation prerequisites, not claims that the current schema
-already observes or enforces the corresponding operating-system behavior.
-The repository-level disposition and evidence are recorded in
-`docs/PRIME-SWIFT-VALIDATION-DRIVER-V2-FOUNDATION-2026-08-02.md`.
+already observes or enforces the remaining operating-system behavior. The
+repository-level dispositions and evidence are recorded in
+`docs/PRIME-SWIFT-VALIDATION-DRIVER-V2-FOUNDATION-2026-08-02.md` and
+`docs/PRIME-SWIFT-VALIDATION-EXECUTOR-ADMISSION-2026-08-02.md`.

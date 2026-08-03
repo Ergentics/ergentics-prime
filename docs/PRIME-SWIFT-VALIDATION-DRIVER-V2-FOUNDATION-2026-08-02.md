@@ -53,9 +53,12 @@ workflow implementation itself.
 The V2 run intent binds the source snapshot, package lock, driver and Swift
 executables, companion commit, required MLX metallib, exact accepted inventory,
 phase budgets, optional-skip policy, and disjoint private workspace roots. Its
-child environment is a sorted allowlist with private HOME, TMPDIR, compiler and
-SwiftPM module caches, the exact companion root, the pinned metallib, and all
-four required historical source gates.
+13-entry intent environment overlay binds private HOME/CFFIXED_USER_HOME,
+TMPDIR, compiler and SwiftPM module caches, deterministic time settings, the
+exact companion root, the planned pinned-metallib path, and all four required
+historical source gates. The admission launch separately derives a 13-entry
+toolchain/workspace execution base and merges it with the overlay by exact
+duplicate equality to form a sorted 19-entry replacement environment.
 
 Planning uses the maintained SwiftPM command surface. Inventory uses terminal
 `swift test ... list` commands for XCTest and Swift Testing separately. XCTest
@@ -63,11 +66,11 @@ and Swift Testing filters retain the different Swift 6.3.3 regular-expression
 forms observed from live list/run probes; exact observed test sets remain the
 authority, so a zero-match or over-match cannot become a pass.
 
-The reference arm executes the complete inventory in the three evidence lanes.
-The candidate arm uses deterministic sorted-suite contiguous next-fit shards,
-with at most 32 tests and 16 KiB of filter text per shard. The known slow V20
-suite remains dedicated. Parallel and sequential XCTest use the same shard
-partition, and sequential XCTest remains skip authority.
+The plan assigns the complete reference inventory to the three evidence lanes.
+It assigns the candidate inventory to deterministic sorted-suite contiguous
+next-fit shards, with at most 32 tests and 16 KiB of filter text per shard. The
+known slow V20 suite remains dedicated. Parallel and sequential XCTest use the
+same shard partition, and sequential XCTest remains skip authority.
 
 The future-completion receipt kernel binds raw wait status, exact returned PID,
 session and process group, signal attempts, process-group membership and final
@@ -144,12 +147,12 @@ and concurrent one-shot enforcement, bounded and overflowing stream capture,
 wall-clock and retained-stream cleanup, exact descendant membership, missing
 result behavior, and exact pre-spawn executable replacement rejection.
 
-The final focused DriverCore run completed 33 tests with zero failures. The
-current build-backed inventory replay remained byte-identical to the frozen
-resources: 891 lines and 114,060 bytes for XCTest, plus 12 lines and 1,287
-bytes for Swift Testing. The focused root lifecycle and capture run completed
-20 tests with zero failures and one expected Debug-only skip of the separate
-Release canary.
+The foundation slice's recorded focused DriverCore run completed 33 tests with
+zero failures. The current build-backed inventory replay remained
+byte-identical to the frozen resources: 891 lines and 114,060 bytes for
+XCTest, plus 12 lines and 1,287 bytes for Swift Testing. The focused root
+lifecycle and capture run completed 20 tests with zero failures and one
+expected Debug-only skip of the separate Release canary.
 
 The actual Release-only two-role package-description capture then passed twice
 against the resealed 62,895-byte output with SHA-256
@@ -158,9 +161,9 @@ against the resealed 62,895-byte output with SHA-256
 These focused results do not constitute a current 891/12 repository-wide
 execution receipt. The full suite was intentionally not rerun in this slice.
 
-## Next boundary
+## Longer executor arc
 
-The next slice may add one closed Swift execution capability for the already
+The longer arc may add closed Swift execution capabilities for the already
 planned SwiftPM invocations. It must:
 
 1. acquire one exclusive workflow lease and materialize the frozen intent;
@@ -169,24 +172,47 @@ planned SwiftPM invocations. It must:
    compiler identity;
 3. create and verify canonical, descriptor-joined, disjoint private roots,
    including per-arm or per-shard mutable state isolation;
-4. execute the build and two inventory commands through the shared secure-child
-   mechanics, then parse and bind their actual output;
-5. bind the clean companion tree and stage an immutable test bundle; reverify
-   source, lock, metallib, bundle, and companion identities before and after
-   every execution arm;
-6. refuse to create an execution plan unless the accepted 891/12 list anchors
+4. execute the build through the shared secure-child mechanics;
+5. bind the clean companion tree, authenticate the build-generated metallib
+   and immutable test bundle, and publish the exact build receipt;
+6. execute the two inventory commands through the same mechanics, then parse
+   and bind their actual output while reverifying every phase-available source,
+   lock, metallib, bundle, and companion identity before and after use;
+7. refuse to create an execution plan unless the accepted 891/12 list anchors
    match exactly;
-7. execute reference and candidate shards within per-child and aggregate phase
+8. execute reference and candidate shards within per-child and aggregate phase
    budgets, enforce the declared concurrency maximum, and publish immutable
    start and terminal receipts;
-8. derive semantic results only from reparsed raw xUnit/transcript artifacts;
-9. validate the complete phase ledger and paired comparison before publishing
+9. derive semantic results only from reparsed raw xUnit/transcript artifacts;
+10. validate the complete phase ledger and paired comparison before publishing
    a final receipt; and
-10. publish through the separately bound evidence root and preserve incomplete
+11. publish through the separately bound evidence root and preserve incomplete
    or failed state durably so a later invocation can run
    only work that was provably never started.
 
 Only after that executor and its mutation gates pass should Prime spend another
-repository-wide run. EnginePropose/Derive/Dispose may propose cases and dispose
-unsupported conclusions, but it cannot certify its own output or turn missing
-execution evidence into a pass.
+repository-wide run. No generic EnginePropose/Derive/Dispose runtime currently
+exists in this repository. A future typed Prime critic may propose cases and
+dispose unsupported conclusions, but it cannot certify its own output or turn
+missing execution evidence into a pass.
+
+## Admission-only follow-on
+
+The next slice has now been narrowed and implemented as a non-executing
+admission boundary. DriverCore can bind the exact policy, static toolchain,
+supervisor, repository, staging declarations, and logical-to-physical
+pre-shard launch plan—including the physical image, `argv[0]`, arguments,
+19-entry replacement environment, and repository-root cwd path—while keeping
+every execution observation `unobserved`. PrimeCore can retain real root
+descriptors, a complete source-value snapshot, the exact `Package.resolved`
+value/hash binding, lease, Xcode/SDK files, the direct `swift-package` image,
+and its two personalities in a non-Codable one-shot prerequisite. It does not
+yet retain `Package.resolved` or every source file by descriptor, nor arm a
+source watch window. It cannot restore that capability from bytes, run a
+child, or mint a Driver V2 receipt.
+
+The descriptor-backed source closure/watch window, supervisor image, Git and
+Swift process probes, durable artifact staging, build, and the two inventories
+remain the immediate closed pre-shard boundary. The exact authority split and
+remaining eleven missing authorities are recorded in
+`PRIME-SWIFT-VALIDATION-EXECUTOR-ADMISSION-2026-08-02.md`.
