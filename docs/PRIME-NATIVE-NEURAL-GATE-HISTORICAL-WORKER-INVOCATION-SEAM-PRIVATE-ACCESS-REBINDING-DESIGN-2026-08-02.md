@@ -174,3 +174,31 @@ The earlier repository-wide suite did not finish in its 30-minute observation
 window and is not counted as passing. Recursive predecessor validation in
 historical V20/V21 contracts remains a separate workflow-performance issue;
 V26 does not cache verdicts or weaken canonical validation to hide that cost.
+
+## V27 source-binding result — 2026-08-02
+
+V27 realizes this design with the sole checked-in worker mutation: internal to
+private at current bytes 12_555..<12_562. The live source is 14,174 bytes /
+767cc0101c52a311d40acc1dbba1747b7e3cdf7430f73d69a168ab62d1290e15;
+reverse reconstruction restores the exact V25 source.
+
+The V27 source contract is
+92f6abf8417d7845d5425b973f7a45d13297bc5af736bd1a9248bc39fdc191ce
+and topology V27 is
+a572b5813e0410235f387222f6399c2984fcb52da69f4bd9393a5adf6869cd7c.
+An isolated fresh Release build compiled and linked the actual worker without
+launch. Same-file access compiled; actual fifth-file, minimal two-file, and
+testable direct-name probes were rejected for private protection.
+
+No caller, request, transport, launch, execution, artifact I/O, publication,
+mechanics PASS, source-binding V7, scientific authority, or product authority
+is added. Private narrows ordinary direct naming only and does not establish
+authentication, confidentiality, zeroization, constant-time/resource behavior,
+or crash, trap, signal, out-of-memory, timing, or resource containment. Prime
+remains ABSTAIN.
+
+The repository-wide suite remains not completed and not passing after the
+bounded 1,800-second observation. Its repeated predecessor-validation cost is
+separate workflow debt, not a Git-configuration issue or V27 remediation. The
+next semantic boundary is design for hardened nonexporting isolation and an
+authenticated fixture-only caller/observation policy.

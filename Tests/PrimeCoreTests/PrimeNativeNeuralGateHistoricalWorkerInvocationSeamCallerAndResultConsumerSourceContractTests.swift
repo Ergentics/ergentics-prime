@@ -78,8 +78,16 @@ final class
             "6ae4cd1fadf95f3b18c38d7e4ec2d732f6e0b614399fb76334043bf9851bb656"
         )
 
-        let liveSource = try checkedInData(
+        let liveV27Source = try checkedInData(
             contract.callerAndResultConsumerSource.primeRelativePath
+        )
+        XCTAssertEqual(UInt64(liveV27Source.count), 14_174)
+        XCTAssertEqual(
+            PrimeSHA256.hexDigest(of: liveV27Source),
+            "767cc0101c52a311d40acc1dbba1747b7e3cdf7430f73d69a168ab62d1290e15"
+        )
+        let liveSource = try reconstructedV25Source(
+            fromV27Source: liveV27Source
         )
         XCTAssertEqual(UInt64(liveSource.count), 14_175)
         XCTAssertEqual(
@@ -276,8 +284,11 @@ final class
         throws
     {
         let contract = Contract.frozenV1
-        let liveSource = try checkedInData(
+        let liveV27Source = try checkedInData(
             contract.callerAndResultConsumerSource.primeRelativePath
+        )
+        let liveSource = try reconstructedV25Source(
+            fromV27Source: liveV27Source
         )
         let suffixData = Data(
             liveSource.dropFirst(
@@ -712,17 +723,31 @@ final class
     ] {
         [
             contract.callerAndResultConsumerDesignContractSource,
-            contract.currentV24DesignContractTestAfterV25,
             contract.topologyV24Test,
             contract.invocationSeamSourceV23ContractSource,
-            contract.currentV23SourceContractTestAfterV25,
-            contract.callerAndResultConsumerSource,
             contract.packageSwift,
             contract.workerMain,
             contract.workerEvidenceExportCallEdgeSource,
             contract.workerProjectionCallEdgeSource,
             contract.workerFixtureResource,
         ]
+    }
+
+    private func reconstructedV25Source(
+        fromV27Source source: Data
+    ) throws -> Data {
+        let offset = 12_555
+        let privateToken = Data("private".utf8)
+        XCTAssertEqual(
+            source.subdata(in: offset ..< offset + privateToken.count),
+            privateToken
+        )
+        var reconstructed = source
+        reconstructed.replaceSubrange(
+            offset ..< offset + privateToken.count,
+            with: Data("internal".utf8)
+        )
+        return reconstructed
     }
 
     private func checkedInData(_ relativePath: String) throws -> Data {

@@ -312,7 +312,7 @@ extension PrimeNativeNeuralGateHistoricalFixtureWorker {
             self.compositionResult = compositionResult
         }
 
-        internal static func
+        private static func
             sourceBoundUnavailableHistoricalWorkerInvocationSeam(
                 evidence:
                     PrimeNativeNeuralGateHistoricalEvidenceExporter.Evidence,
