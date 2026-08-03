@@ -1608,3 +1608,26 @@ I/O, publication, receipt, and authority remain absent. Prime remains
 The next exact prerequisite is:
 
 `design_the_one_token_non_append_only_raw_v23_invocation_seam_access_rebinding_from_internal_to_private_while_preserving_the_v25_internal_nonpayload_boundary_as_the_sole_ordinary_source_level_callable_path_before_any_main_or_cross_file_call_edge_untrusted_request_transport_launch_runtime_confidentiality_artifact_io_publication_authority_or_source_binding_v7`
+
+## V26 private-access rebinding design update
+
+V26 now binds the design for the exact future half-open byte replacement
+12_555..<12_563 from internal to private. V26 does not edit the worker:
+the checked-in raw seam remains internal, the V25 internal nonpayload
+boundary remains its sole checked-in caller, main still exits 78, and Prime
+remains ABSTAIN.
+
+The projected source passed a bounded Swift frontend typecheck, but it is not
+checked in and no clean Release product build, launch, execution, input,
+output, I/O, publication, receipt, V7, scientific authority, or product
+authority is claimed. Private will block ordinary direct cross-file naming;
+it will not block indirect calls through the internal boundary, same-file
+extensions of the declaring nested type, compiler/debugger privilege,
+reflection after wrapper possession, unsafe access, or the conditional
+returned-versus-threw/timing/resource/crash oracle.
+
+See [the V26 design contract](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-INVOCATION-SEAM-PRIVATE-ACCESS-REBINDING-DESIGN-2026-08-02.md).
+
+The V27 exact prerequisite is:
+
+`source_bind_the_one_token_non_append_only_raw_v23_invocation_seam_access_rebinding_from_internal_to_private_while_preserving_every_other_v25_worker_source_byte_the_v25_internal_nonpayload_boundary_as_the_sole_checked_in_raw_seam_caller_and_the_four_file_worker_inventory_without_any_main_cross_file_caller_request_transport_launch_runtime_confidentiality_artifact_io_publication_authority_or_source_binding_v7`
