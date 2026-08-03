@@ -908,3 +908,34 @@ Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-INVOCATION-SEAM-SOURCE-2026-0
 The next exact prerequisite is design-only:
 
 `design_the_security_and_leakage_audited_historical_worker_invocation_seam_caller_and_result_consumer_boundary_for_the_source_bound_v23_internal_bridge_before_any_cross_file_or_main_call_edge_payload_observation_replay_transport_integration_request_handling_sealing_launch_execution_artifact_io_publication_or_issuing_source_binding_v7`
+
+## V24 caller/result-consumer security architecture
+
+V24 materializes design-only PrimeCore governance contracts/tests/topology,
+documentation, and provenance reseal at hashes
+`3c9f34cfae3e50012e40a4b59e38eb5a90bc47e3906a1df5c5111978dac3c902` and `711f57d47575f7f166bee5f2b32708d3a86631406a3a3b96f370e1de1da8ce91`. It materializes
+no worker caller/result-consumer or compiler edge. The only future worker
+architecture change admitted is an append to the existing V23 worker file that
+extends the existing wrapper with
+one internal, zero-payload two-case disposition and one synchronous
+nonthrowing caller/discard consumer. The consumer makes exactly one
+unchanged-argument call to
+`Self.sourceBoundUnavailableHistoricalWorkerInvocationSeam(...)`, discards the
+wrapper with `_ = try`, and maps every thrown Swift `Error` through one
+uninspected bare catch.
+
+The four-file worker inventory, status-`78` `main`, package/target graphs, and
+forbidden reachability remain exact. No fifth file, cross-file or `main` call,
+testable worker import, retention/reflection, error detail, output,
+serialization, log, timing measurement, I/O, request, transport, process,
+execution, or publication is authorized. This is checked-in source governance,
+not runtime isolation: same-module, privileged/`@testable`, debugger/injected,
+dynamic-symbol, `Mirror`, and unsafe paths can bypass or expose V23 state.
+Zeroization, constant-time behavior, crash confidentiality, and trap/signal/OOM
+containment are nonclaims. The raw seam must later be narrowed/removed or
+isolated before a hard-runtime boundary. Prime remains `ABSTAIN`. See [the V24
+design](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-INVOCATION-SEAM-CALLER-RESULT-CONSUMER-DESIGN-2026-08-02.md).
+
+The next exact prerequisite is:
+
+`source_bind_the_security_and_leakage_audited_historical_worker_invocation_seam_caller_and_discard_consumer_as_an_append_only_same_file_v23_continuation_with_exactly_one_unchanged_argument_v23_seam_call_exactly_two_nonpayload_dispositions_composition_completed_and_discarded_or_failed_closed_without_detail_and_total_swift_error_detail_suppression_without_returning_explicitly_copying_retaining_reflecting_encoding_serializing_logging_timing_measuring_or_publishing_evidence_context_wrapper_composition_or_error_values_and_without_adding_any_other_seam_caller_main_or_cross_file_call_edge_testable_worker_import_request_process_replay_transport_artifact_io_launch_execution_authority_or_source_binding_v7`

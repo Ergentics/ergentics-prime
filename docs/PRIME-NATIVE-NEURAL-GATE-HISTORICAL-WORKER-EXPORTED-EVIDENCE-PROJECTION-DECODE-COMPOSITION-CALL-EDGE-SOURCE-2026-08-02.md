@@ -225,3 +225,31 @@ Seam Source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-INVOCATION-SEAM-SOURCE-2
 The next exact prerequisite is design-only:
 
 `design_the_security_and_leakage_audited_historical_worker_invocation_seam_caller_and_result_consumer_boundary_for_the_source_bound_v23_internal_bridge_before_any_cross_file_or_main_call_edge_payload_observation_replay_transport_integration_request_handling_sealing_launch_execution_artifact_io_publication_or_issuing_source_binding_v7`
+
+## V24 composition-result discard design continuity
+
+V24 materializes design-only PrimeCore governance contracts/tests/topology,
+documentation, and provenance reseal at `3c9f34cfae3e50012e40a4b59e38eb5a90bc47e3906a1df5c5111978dac3c902` and
+`711f57d47575f7f166bee5f2b32708d3a86631406a3a3b96f370e1de1da8ce91`; it does not add or compile a worker caller. A
+future V25 may preserve this complete V23 file as its exact prefix and append only an
+extension of the existing wrapper. That extension has one internal disposition
+with exactly the zero-payload cases `compositionCompletedAndDiscarded` and
+`failedClosedWithoutDetail` and one synchronous nonthrowing consumer. The
+consumer makes one unchanged-argument call to
+`Self.sourceBoundUnavailableHistoricalWorkerInvocationSeam(...)`, discards the
+result with `_ = try`, and maps every thrown Swift `Error` through one bare,
+uninspected catch.
+
+No fifth worker source, second/raw alternate call, direct composition member
+access, cross-file or `main` caller, testable import, retention, reflection,
+encoding, output, logging, timing, I/O, request, transport, process, execution,
+or publication is admitted. Source inventory cannot prevent same-module,
+privileged/`@testable`, debugger/injected, dynamic-symbol, `Mirror`, or unsafe
+bypass. Zeroization, constant-time behavior, crash confidentiality, and
+trap/signal/OOM containment remain nonclaims. The raw seam must be narrowed,
+removed, or hardened by isolation before runtime exposure. Prime remains
+`ABSTAIN`. See [the V24 design](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-INVOCATION-SEAM-CALLER-RESULT-CONSUMER-DESIGN-2026-08-02.md).
+
+The next exact prerequisite is:
+
+`source_bind_the_security_and_leakage_audited_historical_worker_invocation_seam_caller_and_discard_consumer_as_an_append_only_same_file_v23_continuation_with_exactly_one_unchanged_argument_v23_seam_call_exactly_two_nonpayload_dispositions_composition_completed_and_discarded_or_failed_closed_without_detail_and_total_swift_error_detail_suppression_without_returning_explicitly_copying_retaining_reflecting_encoding_serializing_logging_timing_measuring_or_publishing_evidence_context_wrapper_composition_or_error_values_and_without_adding_any_other_seam_caller_main_or_cross_file_call_edge_testable_worker_import_request_process_replay_transport_artifact_io_launch_execution_authority_or_source_binding_v7`

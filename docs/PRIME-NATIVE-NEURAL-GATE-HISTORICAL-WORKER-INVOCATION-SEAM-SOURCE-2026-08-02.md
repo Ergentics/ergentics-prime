@@ -188,3 +188,34 @@ That successor is design-only. It must explicitly constrain who may call the
 internal seam, how the reflectable and copyable result may be consumed, and how
 transitive errors are handled before any caller or runtime path is
 materialized.
+
+## V24 caller/result-consumer design continuity
+
+V24 leaves this canonical V23 worker source exact while materializing its
+PrimeCore governance contract/tests/additive topology, documentation, and
+provenance reseal. The V24 design/topology hashes are
+`3c9f34cfae3e50012e40a4b59e38eb5a90bc47e3906a1df5c5111978dac3c902` and `711f57d47575f7f166bee5f2b32708d3a86631406a3a3b96f370e1de1da8ce91`; no new worker
+wrapper extension, caller, result consumer, or compiler feasibility is
+observed. V25 may use this complete 13,227-byte V23
+file only as an exact prefix and append a same-file extension of the existing
+wrapper. The extension reserves one internal two-case, zero-payload disposition
+and one synchronous nonthrowing method: exactly one unchanged-argument call to
+`Self.sourceBoundUnavailableHistoricalWorkerInvocationSeam(...)`, explicit
+`_ = try` wrapper discard, and one bare catch mapping every thrown Swift
+`Error` to `failedClosedWithoutDetail` without inspection.
+
+The future source may add no fifth worker file, cross-file or `main` caller,
+testable worker import, named/retained/reflected wrapper, error detail, encoded
+or serialized output, log, timing measurement, I/O, request, transport,
+process, execution, or publication. Exact source identity remains only a
+checked-in governance control. Same-module, privileged/`@testable`,
+debugger/injected, dynamic-symbol, generic `Mirror`, and unsafe code can bypass
+the safe consumer or expose V23 state. Zeroization, constant-time behavior,
+crash confidentiality, and trap/signal/OOM containment are not established.
+Before hard-runtime use, the raw V23 seam must be narrowed/removed or isolated
+behind a hardened boundary. Prime remains `ABSTAIN`. See [the canonical V24
+design](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-INVOCATION-SEAM-CALLER-RESULT-CONSUMER-DESIGN-2026-08-02.md).
+
+## V24 next exact prerequisite
+
+`source_bind_the_security_and_leakage_audited_historical_worker_invocation_seam_caller_and_discard_consumer_as_an_append_only_same_file_v23_continuation_with_exactly_one_unchanged_argument_v23_seam_call_exactly_two_nonpayload_dispositions_composition_completed_and_discarded_or_failed_closed_without_detail_and_total_swift_error_detail_suppression_without_returning_explicitly_copying_retaining_reflecting_encoding_serializing_logging_timing_measuring_or_publishing_evidence_context_wrapper_composition_or_error_values_and_without_adding_any_other_seam_caller_main_or_cross_file_call_edge_testable_worker_import_request_process_replay_transport_artifact_io_launch_execution_authority_or_source_binding_v7`
