@@ -115,6 +115,7 @@ final class PrimeValidationWorkflowDriverCoreTests: XCTestCase {
         XCTAssertEqual(
             intent.environmentPolicy.orderedEntries.map(\.key),
             [
+                "CFFIXED_USER_HOME",
                 "CLANG_MODULE_CACHE_PATH",
                 "HOME",
                 "PRIME_PMHNP_COMPANION_ROOT",
@@ -123,8 +124,10 @@ final class PrimeValidationWorkflowDriverCoreTests: XCTestCase {
                 "PRIME_REQUIRE_V12_HISTORICAL_EVIDENCE_EXPORT_SOURCE_GATE",
                 "PRIME_REQUIRE_V9_PINNED_DONOR_GATE",
                 "PRIME_TEST_PINNED_MLX_METALLIB",
+                "SOURCE_DATE_EPOCH",
                 "SWIFTPM_MODULECACHE_OVERRIDE",
                 "TMPDIR",
+                "TZ",
             ]
         )
         XCTAssertFalse(

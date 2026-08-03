@@ -225,7 +225,10 @@ public enum PrimeSwiftSourceProvenance {
         )
     }
 
-    static func validateReleaseEvidence(
+    /// Validates a current complete Release snapshot against the source
+    /// identity embedded in PrimeCore. Callers cannot supply the expectation
+    /// or promote an artifact-provided digest to authority.
+    public static func validateReleaseEvidence(
         _ snapshot: PrimeSwiftSourceSnapshot,
         requiredRelativePaths: Set<String> = []
     ) throws {

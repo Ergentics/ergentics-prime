@@ -527,6 +527,10 @@ public struct PrimeValidationEnvironmentPolicyV2:
         Self(
             orderedEntries: [
                 .init(
+                    key: "CFFIXED_USER_HOME",
+                    value: roots.homeAbsolutePath
+                ),
+                .init(
                     key: "CLANG_MODULE_CACHE_PATH",
                     value: roots.clangModuleCacheAbsolutePath
                 ),
@@ -562,12 +566,20 @@ public struct PrimeValidationEnvironmentPolicyV2:
                     )
                 ),
                 .init(
+                    key: "SOURCE_DATE_EPOCH",
+                    value: "0"
+                ),
+                .init(
                     key: "SWIFTPM_MODULECACHE_OVERRIDE",
                     value: roots.swiftPMModuleCacheAbsolutePath
                 ),
                 .init(
                     key: "TMPDIR",
                     value: roots.temporaryAbsolutePath
+                ),
+                .init(
+                    key: "TZ",
+                    value: "UTC"
                 ),
             ]
         )

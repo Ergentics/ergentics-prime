@@ -74,6 +74,10 @@ let package = Package(
             name: "PrimeValidationWorkflowDriverCoreTests",
             dependencies: [
                 "PrimeValidationWorkflowDriverCore",
+                .product(
+                    name: "PrimeCore",
+                    package: "ergentics-prime"
+                ),
             ],
             resources: [
                 .copy("Resources/xctest.list"),
