@@ -196,29 +196,69 @@ public struct PrimeValidationInventory: Codable, Equatable, Sendable {
         guard data.count <= maximumListBytes else {
             throw PrimeValidationContractError.inventoryByteLimitExceeded
         }
-        guard !data.contains(0),
-              !data.contains(13),
-              !data.contains(27),
-              let source = String(data: data, encoding: .utf8)
-        else {
-            throw PrimeValidationContractError.invalidUTF8
+
+        var lineByteCount = 0
+        var lineCount = 0
+        for byte in data {
+            guard byte != 0, byte != 13, byte != 27 else {
+                throw PrimeValidationContractError.invalidUTF8
+            }
+            if byte == 10 {
+                guard lineByteCount > 0 else {
+                    throw PrimeValidationContractError.invalidListFraming
+                }
+                lineCount += 1
+                guard lineCount <= maximumTestCount else {
+                    throw PrimeValidationContractError
+                        .inventoryTestCountLimitExceeded
+                }
+                lineByteCount = 0
+            } else {
+                lineByteCount += 1
+                guard lineByteCount <= maximumLineBytes else {
+                    throw PrimeValidationContractError
+                        .inventoryLineLimitExceeded
+                }
+            }
         }
-        var lines = source.components(separatedBy: "\n")
-        if lines.last == "" {
-            lines.removeLast()
+        if lineByteCount > 0 {
+            lineCount += 1
+            guard lineCount <= maximumTestCount else {
+                throw PrimeValidationContractError
+                    .inventoryTestCountLimitExceeded
+            }
         }
-        guard lines.count <= maximumTestCount else {
-            throw PrimeValidationContractError.inventoryTestCountLimitExceeded
-        }
-        guard lines.allSatisfy({ $0.utf8.count <= maximumLineBytes }) else {
-            throw PrimeValidationContractError.inventoryLineLimitExceeded
-        }
-        guard !lines.contains(where: \.isEmpty) else {
-            throw PrimeValidationContractError.invalidListFraming
-        }
+
         var observed = Set<String>()
         var result: [PrimeValidationTestID] = []
-        for line in lines {
+        result.reserveCapacity(lineCount)
+        var lineStart = data.startIndex
+        for index in data.indices where data[index] == 10 {
+            guard let line = String(
+                data: Data(data[lineStart..<index]),
+                encoding: .utf8
+            ) else {
+                throw PrimeValidationContractError.invalidUTF8
+            }
+            let identifier = try PrimeValidationTestID.parse(
+                line,
+                framework: framework
+            )
+            guard observed.insert(identifier.rawValue).inserted else {
+                throw PrimeValidationContractError.duplicateTestID(
+                    identifier.rawValue
+                )
+            }
+            result.append(identifier)
+            lineStart = data.index(after: index)
+        }
+        if lineStart != data.endIndex {
+            guard let line = String(
+                data: Data(data[lineStart..<data.endIndex]),
+                encoding: .utf8
+            ) else {
+                throw PrimeValidationContractError.invalidUTF8
+            }
             let identifier = try PrimeValidationTestID.parse(
                 line,
                 framework: framework

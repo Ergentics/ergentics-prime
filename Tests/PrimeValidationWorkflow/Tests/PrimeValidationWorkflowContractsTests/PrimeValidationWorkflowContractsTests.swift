@@ -203,6 +203,22 @@ final class PrimeValidationWorkflowContractsTests: XCTestCase {
                 .inventoryTestCountLimitExceeded
             )
         }
+
+        let newlineDense = Data(
+            repeating: 10,
+            count: PrimeValidationInventory.maximumListBytes
+        )
+        XCTAssertThrowsError(
+            try PrimeValidationInventory.parse(
+                xctestList: newlineDense,
+                swiftTestingList: validSwiftTestingList
+            )
+        ) { error in
+            XCTAssertEqual(
+                error as? PrimeValidationContractError,
+                .invalidListFraming
+            )
+        }
     }
 
     func testParallelXUnitNeverClaimsSkipAuthority() throws {
