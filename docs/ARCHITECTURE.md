@@ -936,6 +936,20 @@ containment are nonclaims. The raw seam must later be narrowed/removed or
 isolated before a hard-runtime boundary. Prime remains `ABSTAIN`. See [the V24
 design](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-INVOCATION-SEAM-CALLER-RESULT-CONSUMER-DESIGN-2026-08-02.md).
 
+## V25 caller/discard-consumer source architecture
+
+V25 materializes the V24-reserved boundary as a 948-byte append to the exact
+13,227-byte V23 worker source. The internal boundary calls the raw seam once
+with unchanged inputs, discards its opaque wrapper, and returns only completed-
+and-discarded or failed-closed-without-detail. The exact worker target builds
+in Release mode.
+
+No caller invokes the new boundary. `main` still exits `78`; package graph,
+four-file worker inventory, imports, dependencies, resources, and forbidden
+reachability remain exact. The raw seam remains internal, so V25 is not a
+confidentiality boundary and Prime remains `ABSTAIN`. See [the V25 source
+contract](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-INVOCATION-SEAM-CALLER-RESULT-CONSUMER-SOURCE-2026-08-02.md).
+
 The next exact prerequisite is:
 
-`source_bind_the_security_and_leakage_audited_historical_worker_invocation_seam_caller_and_discard_consumer_as_an_append_only_same_file_v23_continuation_with_exactly_one_unchanged_argument_v23_seam_call_exactly_two_nonpayload_dispositions_composition_completed_and_discarded_or_failed_closed_without_detail_and_total_swift_error_detail_suppression_without_returning_explicitly_copying_retaining_reflecting_encoding_serializing_logging_timing_measuring_or_publishing_evidence_context_wrapper_composition_or_error_values_and_without_adding_any_other_seam_caller_main_or_cross_file_call_edge_testable_worker_import_request_process_replay_transport_artifact_io_launch_execution_authority_or_source_binding_v7`
+`design_the_one_token_non_append_only_raw_v23_invocation_seam_access_rebinding_from_internal_to_private_while_preserving_the_v25_internal_nonpayload_boundary_as_the_sole_ordinary_source_level_callable_path_before_any_main_or_cross_file_call_edge_untrusted_request_transport_launch_runtime_confidentiality_artifact_io_publication_authority_or_source_binding_v7`

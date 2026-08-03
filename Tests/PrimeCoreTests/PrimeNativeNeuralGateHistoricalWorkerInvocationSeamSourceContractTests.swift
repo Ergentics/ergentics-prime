@@ -50,7 +50,16 @@ final class
             "843b686a63245bffcf210441e1e98b94113b5c02b8f47b80371d3f041a205494"
         )
 
-        let source = try checkedInData(contract.seamSource.primeRelativePath)
+        let liveSource = try checkedInData(
+            contract.seamSource.primeRelativePath
+        )
+        XCTAssertGreaterThanOrEqual(
+            UInt64(liveSource.count),
+            contract.seamSource.byteCount
+        )
+        let source = Data(
+            liveSource.prefix(Int(contract.seamSource.byteCount))
+        )
         XCTAssertEqual(UInt64(source.count), 13_227)
         XCTAssertEqual(
             PrimeSHA256.hexDigest(of: source),
@@ -210,8 +219,11 @@ final class
         throws
     {
         let contract = Contract.frozenV1
-        let sourceData = try checkedInData(
+        let liveSourceData = try checkedInData(
             contract.seamSource.primeRelativePath
+        )
+        let sourceData = Data(
+            liveSourceData.prefix(Int(contract.seamSource.byteCount))
         )
         let source = try XCTUnwrap(
             String(data: sourceData, encoding: .utf8)
