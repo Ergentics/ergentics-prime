@@ -25,7 +25,8 @@ private struct PrimeValidationWorkflowSecureChildIntegration {
             try run()
             writeMessage(
                 "prime-validation secure-child integration: "
-                    + "PASS modes=8 one_shot=PASS "
+                    + "PASS modes=9 logical_argv0=PASS "
+                    + "one_shot=PASS "
                     + "executable_replacement=REJECTED\n",
                 descriptor: STDOUT_FILENO
             )
@@ -195,6 +196,26 @@ private struct PrimeValidationWorkflowSecureChildIntegration {
                 result.completion == .exited(status: 0)
                     && result.fixtureResultData != nil,
                 "pass_completion"
+            )
+        case .logicalArgumentZero:
+            try require(
+                result.completion == .exited(status: 0)
+                    && result.fixtureResultData
+                        == Data(
+                            """
+                            schema=prime_validation_workflow_fixture_result_v1
+                            mode=logical-argument-zero
+                            configured_payload_stdout_bytes=0
+                            configured_payload_stderr_bytes=0
+                            configured_exit_code=0
+                            observed_argument_zero=swift-build
+
+                            """.utf8
+                        )
+                    && result.mappedExecutable
+                        .mappedExecutableAbsolutePath
+                        == result.executableAbsolutePath,
+                "logical_argument_zero_or_physical_image"
             )
         case .nonzeroExit:
             try require(

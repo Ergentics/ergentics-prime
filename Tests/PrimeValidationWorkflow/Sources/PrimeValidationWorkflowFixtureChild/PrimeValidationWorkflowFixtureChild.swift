@@ -12,6 +12,7 @@ private func primeNSGetEnviron()
 
 private enum FixtureMode: String, CaseIterable {
     case pass
+    case logicalArgumentZero = "logical-argument-zero"
     case nonzeroExit = "nonzero-exit"
     case boundedStreams = "bounded-streams"
     case overflow
@@ -23,6 +24,7 @@ private enum FixtureMode: String, CaseIterable {
 
 private struct FixtureConfiguration {
     static let maximumStreamBytes = 1_048_576
+    static let logicalArgumentZero = "swift-build"
 
     let mode: FixtureMode
     let resultPath: String?
@@ -78,7 +80,8 @@ private struct FixtureConfiguration {
         )
 
         switch mode {
-        case .pass, .hang, .selfSignal, .descendantRetainsStreams:
+        case .pass, .logicalArgumentZero, .hang, .selfSignal,
+            .descendantRetainsStreams:
             guard resultPath != nil,
                   stdoutBytes == nil,
                   stderrBytes == nil,
@@ -136,18 +139,26 @@ private struct FixtureConfiguration {
     }
 
     func resultBytes(descendantPID: pid_t? = nil) -> [UInt8] {
-        let descendantLine = descendantPID.map {
-            "descendant_pid=\($0)\n"
-        } ?? ""
+        var lines = [
+            "schema=prime_validation_workflow_fixture_result_v1",
+            "mode=\(mode.rawValue)",
+            "configured_payload_stdout_bytes=\(stdoutBytes)",
+            "configured_payload_stderr_bytes=\(stderrBytes)",
+            "configured_exit_code=\(exitCode)",
+        ]
+        if mode == .logicalArgumentZero {
+            lines.append(
+                "observed_argument_zero="
+                    + (CommandLine.arguments.first ?? "")
+            )
+        }
+        if let descendantPID {
+            lines.append(
+                "descendant_pid=\(descendantPID)"
+            )
+        }
         return Array(
-            """
-            schema=prime_validation_workflow_fixture_result_v1
-            mode=\(mode.rawValue)
-            configured_payload_stdout_bytes=\(stdoutBytes)
-            configured_payload_stderr_bytes=\(stderrBytes)
-            configured_exit_code=\(exitCode)
-            \(descendantLine)
-            """.utf8
+            (lines.joined(separator: "\n") + "\n").utf8
         )
     }
 
@@ -223,6 +234,19 @@ private struct PrimeValidationWorkflowFixtureChild {
             Darwin._exit(FixtureExit.usage)
         }
 
+        guard let physicalExecutable = currentExecutablePath(),
+              let observedArgumentZero = CommandLine.arguments.first,
+              observedArgumentZero
+                == (configuration.mode == .logicalArgumentZero
+                    ? FixtureConfiguration.logicalArgumentZero
+                    : physicalExecutable)
+        else {
+            writeDiagnostic(
+                "fixture-child: argv0 contract rejected\n"
+            )
+            Darwin._exit(FixtureExit.usage)
+        }
+
         if configuration.mode == .exitWithoutResult {
             Darwin._exit(0)
         }
@@ -247,7 +271,7 @@ private struct PrimeValidationWorkflowFixtureChild {
         }
 
         switch configuration.mode {
-        case .pass:
+        case .pass, .logicalArgumentZero:
             Darwin._exit(0)
         case .nonzeroExit:
             Darwin._exit(configuration.exitCode)

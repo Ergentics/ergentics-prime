@@ -96,24 +96,34 @@ orphan terminal hash from synthesizing a pass.
 PrimeCore reuses the existing Darwin suspended-spawn, mapped-executable join,
 session/process-group containment, exact wait, and cleanup mechanics. The new
 public facade cannot accept an arbitrary command, argument, environment,
-timeout, result name, or stream cap. It accepts only eight closed fixture
+timeout, result name, or stream cap. It accepts only nine closed fixture
 modes:
 
 1. pass;
-2. nonzero exit;
-3. bounded stdout/stderr;
-4. stream overflow;
-5. wall-clock hang;
-6. self-signal;
-7. a descendant retaining inherited streams; and
-8. exit without a result.
+2. a logical-argv0 canary;
+3. nonzero exit;
+4. bounded stdout/stderr;
+5. stream overflow;
+6. wall-clock hang;
+7. self-signal;
+8. a descendant retaining inherited streams; and
+9. exit without a result.
+
+The logical-argv0 canary is the only mode that does not place the held
+physical fixture path in `argv[0]`. It supplies the exact closed value
+`swift-build`, requires the child to observe that exact value, and still joins
+the suspended process's mapped main image to the descriptor-pinned physical
+fixture by path, device, and inode. Every other fixture mode also requires its
+observed `argv[0]` to equal its physical process image. This demonstrates the
+process-personality transport required by Driver V2 without exposing an
+arbitrary command or promoting the fixture kernel into execution authority.
 
 The first-party arm64 Release fixture is linked with the maintained linker
 `-S` option to remove timestamp-bearing debug symbols. Two builds at disjoint
-absolute paths and a forced recompilation were byte-identical. The launchable
+absolute paths were byte-identical. The launchable
 binary retains the content-derived Mach-O UUID
-`E84D1551-8A67-339F-846C-4A0EA37ABAFB`, is 88,976 bytes, and has SHA-256
-`470a32c4387b838e6f4a6540c2729cec03963767ad7d418912121b4d01e5267e`.
+`6ABE4B24-C019-3372-8144-C85CCEE5BA19`, is 89,632 bytes, and has SHA-256
+`eae9573027fe736cab0d4aa319ae43f22231eaef9c55af91d73fbe3d87bc9ebd`.
 Removing `LC_UUID` produced a byte-stable, codesign-valid binary that dyld
 rejected on macOS 26.5; that option and its earlier hash were rejected before
 publication. The exact fixture pin therefore binds reproducibility and actual
@@ -142,7 +152,7 @@ the public path: public inventory and execution-plan validation require the
 exact frozen list byte counts and SHA-256 anchors, while public completion
 validation remains closed.
 
-The separate Release integration passes all eight fixture modes, sequential
+The separate Release integration passes all nine fixture modes, sequential
 and concurrent one-shot enforcement, bounded and overflowing stream capture,
 wall-clock and retained-stream cleanup, exact descendant membership, missing
 result behavior, and exact pre-spawn executable replacement rejection.
@@ -155,8 +165,13 @@ lifecycle and capture run completed 20 tests with zero failures and one
 expected Debug-only skip of the separate Release canary.
 
 The actual Release-only two-role package-description capture then passed twice
-against the resealed 62,895-byte output with SHA-256
-`04ff83a02c32bb900b0735b63aa724bd334b6dc3116f29dc572a3f48d1e9e3af`.
+against the resealed 63,002-byte output with SHA-256
+`fb46215d048a832ced6ae532b631b1755c01dfe73b43b6e4955a94883b0c4a4b`.
+The preceding receipt was 62,895 bytes. `Package.swift` is unchanged; the
+107-byte description delta is the exact additive PrimeCore source-list change
+for `PrimeValidationSwiftPMBuildInventoryAdmission.swift` and
+`PrimeSecureHeldSourceWatch.swift`, introduced by executor admission and
+guarded source handling before this logical-argv0 canary.
 
 These focused results do not constitute a current 891/12 repository-wide
 execution receipt. The full suite was intentionally not rerun in this slice.

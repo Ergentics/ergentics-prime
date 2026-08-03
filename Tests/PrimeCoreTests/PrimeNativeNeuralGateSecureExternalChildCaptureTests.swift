@@ -797,19 +797,23 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
         )
         // Intentionally resealed from two matching live Release canary
         // observations after package-graph changes through V19, source-
-        // inventory changes through V27, and the V2 validation-driver source
-        // addition exposed the stale V11-era receipt.
+        // inventory changes through V27, the V2 validation-driver source,
+        // executor-admission source, guarded-source watch, and logical-argv0
+        // canary additions exposed the preceding stale receipt. Relative to
+        // the preceding seal, Package.swift is unchanged and the package
+        // description adds exactly PrimeValidationSwiftPMBuildInventoryAdmission.swift
+        // and PrimeSecureHeldSourceWatch.swift to PrimeCore's source list.
         // This is actual-package secure-capture evidence, not source/execution-
         // binding V7 reconciliation or worker execution.
         XCTAssertEqual(
             probe.standardOutputData.count,
-            62_895
+            63_002
         )
         XCTAssertEqual(
             PrimeSHA256.hexDigest(
                 of: probe.standardOutputData
             ),
-            "04ff83a02c32bb900b0735b63aa724bd334b6dc3116f29dc572a3f48d1e9e3af"
+            "fb46215d048a832ced6ae532b631b1755c01dfe73b43b6e4955a94883b0c4a4b"
         )
         XCTAssertEqual(
             probe.validatedPrimeSourceSnapshot,
@@ -1093,15 +1097,37 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
 
         XCTAssertEqual(
             PrimeValidationWorkflowFixtureChildMode.allCases.count,
-            8
+            9
         )
+        XCTAssertNoThrow(
+            try PrimeNativeNeuralGateSecureExternalChildCapture
+                .requireSecureChildArgumentZero("swift-build")
+        )
+        XCTAssertNoThrow(
+            try PrimeNativeNeuralGateSecureExternalChildCapture
+                .requireSecureChildArgumentZero(
+                    "/private/tmp/Prime Builds/Fixture-π"
+                )
+        )
+        for rejectedArgumentZero in [
+            "",
+            "swift\0build",
+            String(repeating: "a", count: 4_097),
+        ] {
+            XCTAssertThrowsError(
+                try PrimeNativeNeuralGateSecureExternalChildCapture
+                    .requireSecureChildArgumentZero(
+                        rejectedArgumentZero
+                    )
+            )
+        }
         XCTAssertEqual(
             PrimeSecureChildFixtureBinaryPin.byteCount,
-            88_976
+            89_632
         )
         XCTAssertEqual(
             PrimeSecureChildFixtureBinaryPin.sha256,
-            "470a32c4387b838e6f4a6540c2729cec03963767ad7d418912121b4d01e5267e"
+            "eae9573027fe736cab0d4aa319ae43f22231eaef9c55af91d73fbe3d87bc9ebd"
         )
         XCTAssertTrue(
             source.contains(
@@ -1113,6 +1139,36 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
         XCTAssertFalse(source.contains("/bin/sh"))
         XCTAssertFalse(source.lowercased().contains("python"))
         XCTAssertTrue(spawnAdapterSource.contains("POSIX_SPAWN"))
+        XCTAssertTrue(
+            spawnAdapterSource.contains(
+                "[argumentZero] + exactArguments"
+            )
+        )
+        XCTAssertFalse(
+            spawnAdapterSource.contains(
+                "[exactExecutableAbsolutePath]\n            + exactArguments"
+            )
+        )
+        XCTAssertTrue(
+            spawnAdapterSource.contains(
+                "posix_spawn(\n                            &childPID,\n                            exactExecutableAbsolutePath,"
+            )
+        )
+        XCTAssertTrue(
+            source.contains(
+                "case swiftBuildCanary"
+            )
+        )
+        XCTAssertTrue(
+            source.contains(
+                "static let swiftBuildCanaryValue =\n        \"swift-build\""
+            )
+        )
+        XCTAssertFalse(
+            source.contains(
+                "public enum PrimeSecureChildArgumentZeroPolicy"
+            )
+        )
         XCTAssertTrue(source.contains("O_NOFOLLOW_ANY"))
         XCTAssertTrue(source.contains("static let expectedByteCount"))
         XCTAssertTrue(source.contains("static let expectedSHA256"))

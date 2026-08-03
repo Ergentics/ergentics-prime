@@ -35,6 +35,7 @@ public enum PrimeValidationWorkflowFixtureChildMode:
     Sendable
 {
     case pass
+    case logicalArgumentZero = "logical-argument-zero"
     case nonzeroExit = "nonzero-exit"
     case boundedStreams = "bounded-streams"
     case overflow
@@ -206,11 +207,36 @@ struct PrimeSecureChildSpawnHandle {
     let standardErrorReadDescriptor: Int32
 }
 
+/// PrimeCore-internal, closed selection of the logical process personality.
+/// No case carries caller-provided bytes. The physical executable remains a
+/// separate held capability and is always the path supplied to `posix_spawn`.
+enum PrimeSecureChildArgumentZeroPolicy:
+    Equatable,
+    Sendable
+{
+    case physicalExecutablePath
+    case swiftBuildCanary
+
+    static let swiftBuildCanaryValue =
+        "swift-build"
+
+    func resolved(
+        physicalExecutableAbsolutePath: String
+    ) -> String {
+        switch self {
+        case .physicalExecutablePath:
+            physicalExecutableAbsolutePath
+        case .swiftBuildCanary:
+            Self.swiftBuildCanaryValue
+        }
+    }
+}
+
 enum PrimeSecureChildFixtureBinaryPin {
-    static let byteCount: UInt64 = 88_976
+    static let byteCount: UInt64 = 89_632
     static let sha256 =
-        "470a32c4387b838e6f4a6540c2729ce" +
-        "c03963767ad7d418912121b4d01e5267e"
+        "eae9573027fe736cab0d4aa319ae43f" +
+        "22231eaef9c55af91d73fbe3d87bc9ebd"
 }
 
 fileprivate struct PrimeSecureChildFileIdentity:
@@ -241,6 +267,8 @@ struct PrimeSecureChildFixtureInvocation {
     static let streamPrefixLimit: UInt64 = 65_536
 
     let mode: PrimeValidationWorkflowFixtureChildMode
+    let argumentZeroPolicy:
+        PrimeSecureChildArgumentZeroPolicy
     let arguments: [String]
     let orderedEnvironment: [(String, String)]
     let maximumWallNanoseconds: UInt64
@@ -255,10 +283,13 @@ struct PrimeSecureChildFixtureInvocation {
     ) throws {
         self.mode = mode
         orderedEnvironment = []
+        argumentZeroPolicy = mode == .logicalArgumentZero
+            ? .swiftBuildCanary
+            : .physicalExecutablePath
 
         let values: (Int, Int, Int32, Bool, UInt64)
         switch mode {
-        case .pass:
+        case .pass, .logicalArgumentZero:
             values = (0, 0, 0, true, 10)
         case .nonzeroExit:
             values = (0, 0, 23, true, 10)
@@ -312,15 +343,22 @@ struct PrimeSecureChildFixtureInvocation {
         guard expectsResult,
               mode != .descendantRetainsStreams
         else { return nil }
+        var lines = [
+            "schema=prime_validation_workflow_fixture_result_v1",
+            "mode=\(mode.rawValue)",
+            "configured_payload_stdout_bytes=\(configuredPayloadStandardOutputBytes)",
+            "configured_payload_stderr_bytes=\(configuredPayloadStandardErrorBytes)",
+            "configured_exit_code=\(configuredExitCode)",
+        ]
+        if mode == .logicalArgumentZero {
+            lines.append(
+                "observed_argument_zero="
+                    + PrimeSecureChildArgumentZeroPolicy
+                    .swiftBuildCanaryValue
+            )
+        }
         return Data(
-            """
-            schema=prime_validation_workflow_fixture_result_v1
-            mode=\(mode.rawValue)
-            configured_payload_stdout_bytes=\(configuredPayloadStandardOutputBytes)
-            configured_payload_stderr_bytes=\(configuredPayloadStandardErrorBytes)
-            configured_exit_code=\(configuredExitCode)
-
-            """.utf8
+            (lines.joined(separator: "\n") + "\n").utf8
         )
     }
 
@@ -892,7 +930,7 @@ private final class PrimeSecureChildHeldExecutable:
     // absolute paths. The linker's `-S` final-image audit is the authority
     // that removes path-bearing N_OSO symbols. The binaries compared
     // byte-for-byte, retained the identical
-    // content-derived LC_UUID E84D1551-8A67-339F-846C-4A0EA37ABAFB, and the
+    // content-derived LC_UUID 6ABE4B24-C019-3372-8144-C85CCEE5BA19, and the
     // launch canary reached the fixture parser before this authority froze.
     static let expectedByteCount =
         PrimeSecureChildFixtureBinaryPin.byteCount
@@ -1099,6 +1137,13 @@ private enum PrimeSecureChildKernel {
                 .spawnSuspendedSecureChild(
                     executableAbsolutePath:
                         prepared.executable.absolutePath,
+                    argumentZero:
+                        prepared.invocation
+                        .argumentZeroPolicy
+                        .resolved(
+                            physicalExecutableAbsolutePath:
+                                prepared.executable.absolutePath
+                        ),
                     workingDirectoryDescriptor:
                         prepared.workingDirectory.descriptor,
                     exactArguments:
@@ -1510,7 +1555,7 @@ private enum PrimeSecureChildKernel {
               stderr.prefixData.allSatisfy({ $0 == 0x45 })
         else { return false }
         switch invocation.mode {
-        case .pass, .boundedStreams:
+        case .pass, .logicalArgumentZero, .boundedStreams:
             return completion == .exited(status: 0)
                 && !stdout.overflowed && !stderr.overflowed
         case .overflow:
