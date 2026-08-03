@@ -16,6 +16,9 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
     private static let scratchRelativePath =
         "Sources/PrimeCore/" +
         "PrimeNativeNeuralGateSecureScratchNamespace.swift"
+    private static let darwinSubstrateRelativePath =
+        "Sources/PrimeCore/" +
+        "PrimeSecureChildDarwinSubstrate.swift"
     private static let swiftPackageExecutableAbsolutePath =
         "/Applications/Xcode.app/Contents/Developer/" +
         "Toolchains/XcodeDefault.xctoolchain/usr/bin/" +
@@ -52,6 +55,13 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
                 ).path,
             encoding: .utf8
         )
+        let darwinSubstrateSource = try String(
+            contentsOfFile:
+                root.appendingPathComponent(
+                    Self.darwinSubstrateRelativePath
+                ).path,
+            encoding: .utf8
+        )
         let package = try String(
             contentsOfFile:
                 root.appendingPathComponent(
@@ -65,6 +75,8 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
             + lifecycleSource
             + "\n"
             + scratchSource
+            + "\n"
+            + darwinSubstrateSource
 
         let processConstructor =
             try NSRegularExpression(
@@ -220,9 +232,16 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
             )
         )
         XCTAssertTrue(
-            source.contains(
+            darwinSubstrateSource.contains(
                 "posix_spawn("
             )
+        )
+        XCTAssertFalse(source.contains("posix_spawn("))
+        XCTAssertTrue(
+            source.contains(
+                "PrimeSecureChildDarwinSubstrate.swift"
+            ),
+            "the neutral spawn substrate must remain inside the held source closure"
         )
         XCTAssertFalse(
             package.contains(
@@ -240,7 +259,7 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
                 "let scratchLaunch =",
                 "let executable =",
                 "let preSpawnRead =",
-                "spawn = try spawnSuspendedChild(",
+                "spawn = try spawnSuspendedSecureChild(",
                 "child.startDeathObservation()",
                 ".establishIsolatedSessionAndDedicatedGroup()",
                 "let childSessionAndProcessGroupObservedMonotonicNanoseconds =",
@@ -280,7 +299,7 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
                 "posix_spawnattr_setflags(",
                 "posix_spawn(",
             ],
-            in: source
+            in: darwinSubstrateSource
         )
         for requiredCleanup in [
             "cleanupRejectedCapture()",
@@ -796,24 +815,21 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
             verifier.standardOutputData
         )
         // Intentionally resealed from two matching live Release canary
-        // observations after package-graph changes through V19, source-
-        // inventory changes through V27, the V2 validation-driver source,
-        // executor-admission source, guarded-source watch, and logical-argv0
-        // canary additions exposed the preceding stale receipt. Relative to
-        // the preceding seal, Package.swift is unchanged and the package
-        // description adds exactly PrimeValidationSwiftPMBuildInventoryAdmission.swift
-        // and PrimeSecureHeldSourceWatch.swift to PrimeCore's source list.
-        // This is actual-package secure-capture evidence, not source/execution-
-        // binding V7 reconciliation or worker execution.
+        // observations after the neutral Darwin spawn transport replaced the
+        // two embedded spawn/pipe implementations. Relative to the preceding
+        // seal, Package.swift is unchanged and the package description adds
+        // exactly PrimeSecureChildDarwinSubstrate.swift to PrimeCore's source
+        // list. This is actual-package secure-capture evidence, not Driver V2,
+        // source/execution-binding V7, or worker execution authority.
         XCTAssertEqual(
             probe.standardOutputData.count,
-            63_002
+            63_051
         )
         XCTAssertEqual(
             PrimeSHA256.hexDigest(
                 of: probe.standardOutputData
             ),
-            "fb46215d048a832ced6ae532b631b1755c01dfe73b43b6e4955a94883b0c4a4b"
+            "eb116603c3407c0db01ff3b8182fe9a0e26b6c4c216e2aa8bfaf0389f1e915e7"
         )
         XCTAssertEqual(
             probe.validatedPrimeSourceSnapshot,
@@ -1094,18 +1110,28 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
             ),
             encoding: .utf8
         )
+        let darwinSubstrateSource = try String(
+            contentsOf: root.appendingPathComponent(
+                Self.darwinSubstrateRelativePath
+            ),
+            encoding: .utf8
+        )
 
         XCTAssertEqual(
             PrimeValidationWorkflowFixtureChildMode.allCases.count,
             9
         )
         XCTAssertNoThrow(
+            try PrimeSecureChildDarwinSubstrate
+                .requireArgumentZero("swift-build")
+        )
+        XCTAssertNoThrow(
             try PrimeNativeNeuralGateSecureExternalChildCapture
                 .requireSecureChildArgumentZero("swift-build")
         )
         XCTAssertNoThrow(
-            try PrimeNativeNeuralGateSecureExternalChildCapture
-                .requireSecureChildArgumentZero(
+            try PrimeSecureChildDarwinSubstrate
+                .requireArgumentZero(
                     "/private/tmp/Prime Builds/Fixture-π"
                 )
         )
@@ -1114,6 +1140,12 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
             "swift\0build",
             String(repeating: "a", count: 4_097),
         ] {
+            XCTAssertThrowsError(
+                try PrimeSecureChildDarwinSubstrate
+                    .requireArgumentZero(
+                        rejectedArgumentZero
+                    )
+            )
             XCTAssertThrowsError(
                 try PrimeNativeNeuralGateSecureExternalChildCapture
                     .requireSecureChildArgumentZero(
@@ -1138,19 +1170,53 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
         XCTAssertFalse(source.contains("Foundation.Process"))
         XCTAssertFalse(source.contains("/bin/sh"))
         XCTAssertFalse(source.lowercased().contains("python"))
-        XCTAssertTrue(spawnAdapterSource.contains("POSIX_SPAWN"))
+        XCTAssertFalse(darwinSubstrateSource.contains("public "))
+        XCTAssertTrue(
+            darwinSubstrateSource.contains(
+                "final class PrimeSecureChildSpawnHandle"
+            )
+        )
+        XCTAssertFalse(
+            darwinSubstrateSource.contains(
+                "struct PrimeSecureChildSpawnHandle"
+            )
+        )
+        XCTAssertTrue(
+            darwinSubstrateSource.contains(
+                "func takeStreamReadDescriptors()"
+            )
+        )
+        XCTAssertTrue(
+            darwinSubstrateSource.contains(
+                "final class PrimeSecureChildStreamReadDescriptorOwner"
+            )
+        )
+        XCTAssertTrue(darwinSubstrateSource.contains("private let lock = NSLock()"))
+        XCTAssertTrue(darwinSubstrateSource.contains("func takeIfAvailable()"))
+        XCTAssertTrue(darwinSubstrateSource.contains("deinit {"))
+        XCTAssertTrue(darwinSubstrateSource.contains("POSIX_SPAWN"))
         XCTAssertTrue(
             spawnAdapterSource.contains(
+                "PrimeSecureChildDarwinSubstrate\n                .spawnSuspended("
+            )
+        )
+        XCTAssertTrue(
+            source.contains(
+                "PrimeSecureChildDarwinSubstrate\n                .spawnSuspended("
+            )
+        )
+        XCTAssertTrue(
+            darwinSubstrateSource.contains(
                 "[argumentZero] + exactArguments"
             )
         )
         XCTAssertFalse(
-            spawnAdapterSource.contains(
+            darwinSubstrateSource.contains(
                 "[exactExecutableAbsolutePath]\n            + exactArguments"
             )
         )
         XCTAssertTrue(
-            spawnAdapterSource.contains(
+            darwinSubstrateSource.contains(
                 "posix_spawn(\n                            &childPID,\n                            exactExecutableAbsolutePath,"
             )
         )
@@ -1190,6 +1256,105 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
             spawnAdapterSource.contains(
                 "mappedPath\n                      ).standardizedFileURL"
             )
+        )
+
+        try assertSpawnHandleTransfersOrClosesBothDescriptors()
+    }
+
+    private func assertSpawnHandleTransfersOrClosesBothDescriptors()
+        throws
+    {
+        func makePipe() throws -> (read: Int32, write: Int32) {
+            var descriptors = [Int32](repeating: -1, count: 2)
+            guard Darwin.pipe(&descriptors) == 0 else {
+                throw POSIXError(
+                    POSIXErrorCode(rawValue: errno) ?? .EIO
+                )
+            }
+            return (descriptors[0], descriptors[1])
+        }
+
+        let transferredOutput = try makePipe()
+        let transferredError = try makePipe()
+        XCTAssertEqual(Darwin.close(transferredOutput.write), 0)
+        XCTAssertEqual(Darwin.close(transferredError.write), 0)
+        let transferredOwner = PrimeSecureChildSpawnHandle(
+            processIdentifier: 1,
+            appliedFlags: 0x448c,
+            spawnReturnCode: 0,
+            spawnReturnedMonotonicNanoseconds: 1,
+            standardOutputReadDescriptor: transferredOutput.read,
+            standardErrorReadDescriptor: transferredError.read
+        )
+        let transferred = transferredOwner.takeStreamReadDescriptors()
+        XCTAssertEqual(transferred.standardOutput, transferredOutput.read)
+        XCTAssertEqual(transferred.standardError, transferredError.read)
+        XCTAssertEqual(Darwin.close(transferred.standardOutput), 0)
+        XCTAssertEqual(Darwin.close(transferred.standardError), 0)
+
+        let abandonedOutput = try makePipe()
+        let abandonedError = try makePipe()
+        XCTAssertEqual(Darwin.close(abandonedOutput.write), 0)
+        XCTAssertEqual(Darwin.close(abandonedError.write), 0)
+        var abandonedOwner: PrimeSecureChildSpawnHandle? =
+            PrimeSecureChildSpawnHandle(
+                processIdentifier: 1,
+                appliedFlags: 0x448c,
+                spawnReturnCode: 0,
+                spawnReturnedMonotonicNanoseconds: 1,
+                standardOutputReadDescriptor: abandonedOutput.read,
+                standardErrorReadDescriptor: abandonedError.read
+            )
+        XCTAssertNotNil(abandonedOwner)
+        abandonedOwner = nil
+        errno = 0
+        XCTAssertEqual(fcntl(abandonedOutput.read, F_GETFD), -1)
+        XCTAssertEqual(errno, EBADF)
+        errno = 0
+        XCTAssertEqual(fcntl(abandonedError.read, F_GETFD), -1)
+        XCTAssertEqual(errno, EBADF)
+
+        let concurrentOutput = try makePipe()
+        let concurrentError = try makePipe()
+        XCTAssertEqual(Darwin.close(concurrentOutput.write), 0)
+        XCTAssertEqual(Darwin.close(concurrentError.write), 0)
+        let concurrentOwner =
+            PrimeSecureChildStreamReadDescriptorOwner(
+                standardOutputReadDescriptor: concurrentOutput.read,
+                standardErrorReadDescriptor: concurrentError.read
+            )
+        let resultLock = NSLock()
+        var acquired:
+            [(standardOutput: Int32, standardError: Int32)] = []
+        var unavailableCount = 0
+        DispatchQueue.concurrentPerform(iterations: 2) { _ in
+            let candidate = concurrentOwner.takeIfAvailable()
+            resultLock.lock()
+            if let candidate {
+                acquired.append(candidate)
+            } else {
+                unavailableCount += 1
+            }
+            resultLock.unlock()
+        }
+        XCTAssertEqual(acquired.count, 1)
+        XCTAssertEqual(unavailableCount, 1)
+        let concurrentDescriptors = try XCTUnwrap(acquired.first)
+        XCTAssertEqual(
+            concurrentDescriptors.standardOutput,
+            concurrentOutput.read
+        )
+        XCTAssertEqual(
+            concurrentDescriptors.standardError,
+            concurrentError.read
+        )
+        XCTAssertEqual(
+            Darwin.close(concurrentDescriptors.standardOutput),
+            0
+        )
+        XCTAssertEqual(
+            Darwin.close(concurrentDescriptors.standardError),
+            0
         )
     }
 

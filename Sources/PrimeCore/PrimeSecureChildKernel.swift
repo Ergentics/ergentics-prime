@@ -198,15 +198,6 @@ public final class PrimeValidationWorkflowFixtureChildCapability:
     }
 }
 
-struct PrimeSecureChildSpawnHandle {
-    let processIdentifier: Int32
-    let appliedFlags: UInt16
-    let spawnReturnCode: Int32
-    let spawnReturnedMonotonicNanoseconds: UInt64
-    let standardOutputReadDescriptor: Int32
-    let standardErrorReadDescriptor: Int32
-}
-
 /// PrimeCore-internal, closed selection of the logical process personality.
 /// No case carries caller-provided bytes. The physical executable remains a
 /// separate held capability and is always the path supplied to `posix_spawn`.
@@ -1133,8 +1124,8 @@ private enum PrimeSecureChildKernel {
 
         let spawn: PrimeSecureChildSpawnHandle
         do {
-            spawn = try PrimeNativeNeuralGateSecureExternalChildCapture
-                .spawnSuspendedSecureChild(
+            spawn = try PrimeSecureChildDarwinSubstrate
+                .spawnSuspended(
                     executableAbsolutePath:
                         prepared.executable.absolutePath,
                     argumentZero:
@@ -1151,22 +1142,32 @@ private enum PrimeSecureChildKernel {
                     orderedEnvironment:
                         prepared.invocation.orderedEnvironment
                 )
+        } catch let error as
+            PrimeSecureChildDarwinSubstrate.Rejection
+        {
+            Darwin.close(stdoutFile)
+            Darwin.close(stderrFile)
+            throw rejected(error.detail)
         } catch {
             Darwin.close(stdoutFile)
             Darwin.close(stderrFile)
             throw error
         }
+        let streamReadDescriptors =
+            spawn.takeStreamReadDescriptors()
 
         let stdoutDrain = PrimeSecureChildFileBackedBoundedDrain(
             inputDescriptor:
-                spawn.standardOutputReadDescriptor,
+                streamReadDescriptors
+                .standardOutput,
             outputDescriptor: stdoutFile,
             maximumByteCount:
                 PrimeSecureChildFixtureInvocation.streamPrefixLimit
         )
         let stderrDrain = PrimeSecureChildFileBackedBoundedDrain(
             inputDescriptor:
-                spawn.standardErrorReadDescriptor,
+                streamReadDescriptors
+                .standardError,
             outputDescriptor: stderrFile,
             maximumByteCount:
                 PrimeSecureChildFixtureInvocation.streamPrefixLimit

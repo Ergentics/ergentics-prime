@@ -48,10 +48,13 @@ the live prerequisite still withholds Git/tool process observations, artifact
 staging, and all build/inventory/execution outcomes. A decoded declaration
 cannot restore the live capability.
 
-The next implementation prerequisite is a closed internal secure-child
-substrate with independent physical spawn path and logical `argv[0]`, plus a
-gapless multi-child source-watch sequence. The current maintained
-external-child factory and Foundation `Process` Git transport are not execution
+The independent physical spawn path, logical `argv[0]`, and pipe ownership now
+live in one internal transport shared by the two closed callers. The next
+implementation prerequisite is the remaining closed secure-child supervision
+substrate: neutral cwd/mapped-image proof, lifecycle, containment/reap, EOF
+drains, and one absolute deadline established before spawn. A gapless
+multi-child source-watch sequence remains required. The current maintained
+external-child facade and Foundation `Process` Git transport are not execution
 authority for the build/list plan.
 
 These are implementation prerequisites, not claims that the current schema

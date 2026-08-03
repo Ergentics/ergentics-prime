@@ -193,9 +193,9 @@ The next security-sensitive slice is not build execution. It must first:
 1. add a dedicated closed Swift Driver V2 supervisor executable and a
    non-restorable DriverCore bridge that proves the retained mapped image's
    exact path and content equal the run intent's `driverExecutable`;
-2. extract an internal secure-child substrate around the now-proven separate
-   physical spawn path and logical `argv[0]`, while exposing no public generic
-   command surface; and
+2. complete the internal secure-child supervision substrate around the now-
+   neutral physical spawn path, logical `argv[0]`, and pipe transport, while
+   exposing no public generic command surface; and
 3. extend the source watcher from its current single-child transition to a
    gapless build-plus-two-list sequence.
 
@@ -203,9 +203,11 @@ The transport defect is now closed by a Release fixture canary: the factory
 spawns a descriptor-pinned physical image with the exact logical
 `swift-build` value in `argv[0]`, while suspended cwd and mapped-image proof,
 bounded EOF drains, exact PID reap, and empty process-group checks continue to
-bind the physical executable. The neutral substrate extraction remains
-mandatory because those mechanics are still owned by the neural-named capture
-and fixture adapters, not a Driver V2 supervisor. The existing
+bind the physical executable. The spawn and pipe mechanics now live in the
+internal `PrimeSecureChildDarwinSubstrate` and both closed callers use it.
+That is only a transport layer: cwd/mapped-image evidence, lifecycle,
+containment/reap, EOF drains, and a pre-spawn absolute deadline must still be
+neutralized before a Driver V2 supervisor can depend on it. The existing
 `PrimeNativeGitBlobTransport` is not a fallback: it uses Foundation `Process`
 and does not prove suspended cwd, mapped image, exact PID reap, or empty
 process group.
