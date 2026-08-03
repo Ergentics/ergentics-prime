@@ -325,3 +325,24 @@ consumer. It must preserve the complete V23 source as an exact prefix and the
 four-file worker inventory. A `main` or cross-file caller, process/request or
 transport boundary, runtime launch, payload publication, and hard-runtime
 access narrowing/isolation remain later, separately audited prerequisites.
+
+## V25 source-binding resolution
+
+V25 materializes the reserved source shape exactly. It preserves all 13,227 V23
+bytes, appends the 948-byte reviewed suffix, retains the four-file worker
+inventory and unchanged imports, and compiler-checks the exact Release worker
+target. The new nonpayload boundary is the sole checked-in raw-seam caller and
+has no caller of its own.
+
+The source binding does not alter the V24 design's security ceiling. `_ =`
+avoids a named wrapper binding but does not establish destruction, zeroization,
+confidentiality, constant-time behavior, or trap/signal/out-of-memory
+containment. The raw seam remains internal and therefore bypassable by other
+same-module or privileged code. No runtime or authority edge exists and Prime
+remains `ABSTAIN`.
+
+See [the canonical V25 source contract](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-INVOCATION-SEAM-CALLER-RESULT-CONSUMER-SOURCE-2026-08-02.md).
+
+The V25 next exact prerequisite is:
+
+`design_the_one_token_non_append_only_raw_v23_invocation_seam_access_rebinding_from_internal_to_private_while_preserving_the_v25_internal_nonpayload_boundary_as_the_sole_ordinary_source_level_callable_path_before_any_main_or_cross_file_call_edge_untrusted_request_transport_launch_runtime_confidentiality_artifact_io_publication_authority_or_source_binding_v7`

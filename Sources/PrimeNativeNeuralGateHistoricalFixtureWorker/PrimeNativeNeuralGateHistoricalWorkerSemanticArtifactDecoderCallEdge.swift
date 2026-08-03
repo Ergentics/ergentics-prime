@@ -331,3 +331,32 @@ extension PrimeNativeNeuralGateHistoricalFixtureWorker {
         }
     }
 }
+
+extension PrimeNativeNeuralGateHistoricalFixtureWorker
+    .PrimeNativeNeuralGateHistoricalWorkerInvocationSeamResult
+{
+    internal enum CallerResultConsumerDisposition {
+        case compositionCompletedAndDiscarded
+        case failedClosedWithoutDetail
+    }
+
+    internal static func
+        sourceBoundUnavailableHistoricalWorkerInvocationSeamCallerAndDiscardConsumer(
+            evidence:
+                PrimeNativeNeuralGateHistoricalEvidenceExporter.Evidence,
+            context:
+                PrimeNativeNeuralGateHistoricalProjectionContext
+        ) -> CallerResultConsumerDisposition
+    {
+        do {
+            _ = try Self
+                .sourceBoundUnavailableHistoricalWorkerInvocationSeam(
+                    evidence: evidence,
+                    context: context
+                )
+            return .compositionCompletedAndDiscarded
+        } catch {
+            return .failedClosedWithoutDetail
+        }
+    }
+}

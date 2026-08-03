@@ -7,49 +7,118 @@ import Foundation
 import XCTest
 
 final class
-    PrimeNativeNeuralGateHistoricalWorkerInvocationSeamCallerAndResultConsumerDesignContractTests:
+    PrimeNativeNeuralGateHistoricalWorkerInvocationSeamCallerAndResultConsumerSourceContractTests:
     XCTestCase
 {
     private typealias Contract =
-        PrimeNativeNeuralGateHistoricalWorkerInvocationSeamCallerAndResultConsumerDesignContract
+        PrimeNativeNeuralGateHistoricalWorkerInvocationSeamCallerAndResultConsumerSourceContract
 
     private static let contractRelativePath =
-        "Sources/PrimeCore/PrimeNativeNeuralGateHistoricalWorkerInvocationSeamCallerAndResultConsumerDesignContract.swift"
-    private static let contractFileByteCount: UInt64 = 55_753
+        "Sources/PrimeCore/PrimeNativeNeuralGateHistoricalWorkerInvocationSeamCallerAndResultConsumerSourceContract.swift"
+    private static let contractFileByteCount: UInt64 = 55_872
     private static let contractFileSHA256 =
-        "08bf11deb2ceddabe6ffe321737e4f027f2ac526290fd3e37260106d2af38d9c"
+        "85d21774ddf080d80a68066628b248ed801d53e5d68dae7ce2f54b4a446abddb"
     private static let contractContentSHA256 =
-        "3c9f34cfae3e50012e40a4b59e38eb5a90bc47e3906a1df5c5111978dac3c902"
+        "21f5a3805c6a5404072caa79d4c6c3463556c4a780d215e03fe570cd26d5a9d5"
 
-    func testFrozenV24BindsExactV23AuthoritiesAndPhysicalSources()
+    func testFrozenV25BindsPriorAuthoritiesAndExactAdoptedSource()
         throws
     {
         let contract = Contract.frozenV1
+        let design =
+            PrimeNativeNeuralGateHistoricalWorkerInvocationSeamCallerAndResultConsumerDesignContract
+            .frozenV1
+        let topology =
+            PrimeNativeNeuralGateTrapDisjointTopologyContract.frozenV24
+        let sourceV23 =
+            PrimeNativeNeuralGateHistoricalWorkerInvocationSeamSourceContract
+            .frozenV1
 
         XCTAssertNoThrow(try contract.validate())
         XCTAssertEqual(contract.schemaVersion, 1)
         XCTAssertEqual(
             contract.contractID,
-            "prime_source_bound_historical_worker_bounded_unavailable_composition_invocation_seam_caller_result_consumer_security_design_v24"
+            "prime_source_bound_historical_worker_bounded_unavailable_composition_invocation_seam_caller_result_consumer_v25"
+        )
+        XCTAssertEqual(contract.rightsHolder, "Ergentics, LLC")
+        XCTAssertEqual(
+            contract.licenseExpression,
+            "LicenseRef-Ergentics-Proprietary"
+        )
+        XCTAssertEqual(
+            PrimeSHA256.hexDigest(
+                of: try PrimeCanonicalJSON.encode(design)
+            ),
+            contract
+                .preservedCallerAndResultConsumerDesignV24ContractSHA256
+        )
+        XCTAssertEqual(
+            contract
+                .preservedCallerAndResultConsumerDesignV24ContractSHA256,
+            "3c9f34cfae3e50012e40a4b59e38eb5a90bc47e3906a1df5c5111978dac3c902"
+        )
+        XCTAssertEqual(
+            PrimeSHA256.hexDigest(
+                of: try PrimeCanonicalJSON.encode(topology)
+            ),
+            contract.preservedTopologyV24SHA256
+        )
+        XCTAssertEqual(
+            contract.preservedTopologyV24SHA256,
+            "711f57d47575f7f166bee5f2b32708d3a86631406a3a3b96f370e1de1da8ce91"
+        )
+        XCTAssertEqual(
+            PrimeSHA256.hexDigest(
+                of: try PrimeCanonicalJSON.encode(sourceV23)
+            ),
+            contract.preservedInvocationSeamSourceV23ContractSHA256
         )
         XCTAssertEqual(
             contract.preservedInvocationSeamSourceV23ContractSHA256,
             "6ae4cd1fadf95f3b18c38d7e4ec2d732f6e0b614399fb76334043bf9851bb656"
         )
+
+        let liveSource = try checkedInData(
+            contract.callerAndResultConsumerSource.primeRelativePath
+        )
+        XCTAssertEqual(UInt64(liveSource.count), 14_175)
         XCTAssertEqual(
-            contract.preservedTopologyV23SHA256,
-            "48f5f1359af1eb3151196ef1e9cb417a6189d8c6461b0c3e595edee39aaee3d9"
+            PrimeSHA256.hexDigest(of: liveSource),
+            "bac6238644345afea2fb3404a0e073885d232380c31d3f4ce02f53936abe47a8"
         )
         XCTAssertEqual(
-            contract.historicalTopologySourceBeforeV24.byteCount,
-            236_939
+            UInt64(liveSource.count),
+            contract.callerAndResultConsumerSource.byteCount
         )
         XCTAssertEqual(
-            contract.historicalTopologySourceBeforeV24.sha256,
-            "b4983425a2d5a65bb620531eae57d329094d19b53a96750ee1505c13098372dc"
+            PrimeSHA256.hexDigest(of: liveSource),
+            contract.callerAndResultConsumerSource.sha256
         )
 
-        for identity in exactIdentities(contract) {
+        let prefix = Data(
+            liveSource.prefix(
+                Int(contract.preservedV23SourcePrefixByteCount)
+            )
+        )
+        let suffix = Data(
+            liveSource.dropFirst(
+                Int(contract.preservedV23SourcePrefixByteCount)
+            )
+        )
+        XCTAssertEqual(UInt64(prefix.count), 13_227)
+        XCTAssertEqual(
+            PrimeSHA256.hexDigest(of: prefix),
+            "62c0c413e25b95576a023f9b93f67b55a6c38f0cadbdfa4330dba31aea41ae54"
+        )
+        XCTAssertEqual(UInt64(suffix.count), 948)
+        XCTAssertEqual(
+            PrimeSHA256.hexDigest(of: suffix),
+            "ed9c1527b23190fb8c8e3d2ce2144929cf8e6d551d3b6a3c4dad6f4b9e08f626"
+        )
+        XCTAssertTrue(contract.exactV23PrefixPreserved)
+        XCTAssertTrue(contract.sourceEvolutionAppendOnly)
+
+        for identity in liveExactIdentities(contract) {
             let data = try checkedInData(identity.primeRelativePath)
             XCTAssertEqual(
                 UInt64(data.count),
@@ -62,22 +131,32 @@ final class
                 identity.primeRelativePath
             )
         }
-        let liveV23Source = try checkedInData(
-            contract.workerInvocationSeamSourceV23.primeRelativePath
-        )
-        XCTAssertGreaterThanOrEqual(
-            UInt64(liveV23Source.count),
-            contract.workerInvocationSeamSourceV23.byteCount
-        )
-        let preservedV23Source = Data(
-            liveV23Source.prefix(
-                Int(contract.workerInvocationSeamSourceV23.byteCount)
-            )
+
+        XCTAssertEqual(
+            contract.historicalV23SourceContractTestBeforeV25.byteCount,
+            32_205
         )
         XCTAssertEqual(
-            PrimeSHA256.hexDigest(of: preservedV23Source),
-            contract.workerInvocationSeamSourceV23.sha256
+            contract.historicalV23SourceContractTestBeforeV25.sha256,
+            "b4e9be3a7dfa8d04a32e3c072bb8dc57078884da2f8a4e4d8c74807f4e9c8de2"
         )
+        XCTAssertEqual(
+            contract.historicalV24DesignContractTestBeforeV25.byteCount,
+            27_806
+        )
+        XCTAssertEqual(
+            contract.historicalV24DesignContractTestBeforeV25.sha256,
+            "f1dabbded24243df79c4c367fd88795ad53131146a33516a58660279d4fe3096"
+        )
+        XCTAssertEqual(
+            contract.historicalTopologySourceBeforeV25.byteCount,
+            249_163
+        )
+        XCTAssertEqual(
+            contract.historicalTopologySourceBeforeV25.sha256,
+            "ee1464ca5e0579b41b2fd046f7fac1036f5b29efab99934412ee3dfc07b50280"
+        )
+        XCTAssertTrue(contract.historicalTestsEvolvedPrefixSafely)
 
         let contractSource = try checkedInData(Self.contractRelativePath)
         XCTAssertEqual(
@@ -90,7 +169,9 @@ final class
         )
     }
 
-    func testCurrentWorkerInventoryAndV23PrefixRemainExact() throws {
+    func testPhysicalInventoryPackageImportsMainAndCallerExclusivity()
+        throws
+    {
         let contract = Contract.frozenV1
         let workerDirectory = repositoryRoot
             .appendingPathComponent("Sources")
@@ -99,68 +180,71 @@ final class
         XCTAssertEqual(
             try recursiveRegularFilePaths(in: workerDirectory),
             (
-                contract.orderedCurrentWorkerSwiftSourceRelativePaths
+                contract.orderedWorkerSwiftSourceRelativePaths
                     + contract.workerResourceRelativePaths
             ).sorted()
         )
-        XCTAssertEqual(contract.exactCurrentWorkerSwiftSourceFileCount, 4)
-        XCTAssertEqual(contract.futureWorkerSwiftSourceFileCount, 4)
-        XCTAssertTrue(contract.currentPhysicalWorkerInventoryExact)
-        XCTAssertEqual(
-            contract.futureSourceRelativePath,
-            contract.workerInvocationSeamSourceV23.primeRelativePath
-        )
-        XCTAssertTrue(contract.futureSourceMustBeAppendOnlySameFileContinuation)
-        XCTAssertFalse(contract.futureSourceMayRewritePreservedPrefix)
-        XCTAssertFalse(contract.futureSourceMayUseSeparateFile)
-        XCTAssertFalse(contract.futureSourceMayAddWorkerSwiftFile)
-        XCTAssertFalse(contract.futureSourceMayChangeImportInventory)
+        XCTAssertEqual(contract.exactWorkerSwiftSourceFileCount, 4)
+        XCTAssertEqual(contract.exactWorkerDirectLocalDependencyCount, 7)
+        XCTAssertEqual(contract.exactWorkerResourceCount, 1)
+        XCTAssertTrue(contract.physicalWorkerInventoryExact)
 
-        for path in contract.orderedCurrentWorkerSwiftSourceRelativePaths {
-            let liveSource = try checkedInData(path)
-            let sourceData = path == contract.futureSourceRelativePath
-                ? Data(
-                    liveSource.prefix(
-                        Int(contract.preservedV23SourcePrefixByteCount)
-                    )
-                )
-                : liveSource
-            let source = try XCTUnwrap(
-                String(data: sourceData, encoding: .utf8)
+        let package = try checkedInString("Package.swift")
+            .filter { !$0.isWhitespace }
+        XCTAssertTrue(
+            package.contains(
+                #".executableTarget(name:"PrimeNativeNeuralGateHistoricalFixtureWorker",dependencies:["PrimeCore","ErgenticsPrimeRuntime","PrimeNativeNeuralGateHistoricalReplayMechanics","PrimeNativeNeuralGateReplayTransport","PrimeNativeNeuralGateHistoricalEvidenceExportMechanics","PrimeNativeNeuralGateHistoricalEvidenceSemanticArtifactProjection","PrimeNativeNeuralGateHistoricalSemanticArtifactDecoder",],resources:[.copy("HistoricalFixtureEvidence"),])"#
             )
+        )
+
+        let main = try checkedInString(contract.workerMain.primeRelativePath)
+        let compactMain = main.filter { !$0.isWhitespace }
+        XCTAssertTrue(
+            compactMain.contains(
+                "staticfuncmain(){Darwin.exit(unavailableExitStatus)}"
+            )
+        )
+        XCTAssertFalse(main.contains(contract.boundaryMethodName))
+        XCTAssertFalse(main.contains(contract.dispositionTypeName))
+
+        let source = try checkedInString(
+            contract.callerAndResultConsumerSource.primeRelativePath
+        )
+        let imports = source.split(separator: "\n").map {
+            $0.trimmingCharacters(in: .whitespaces)
+        }.filter { $0.hasPrefix("import ") }
+        XCTAssertEqual(
+            imports,
+            contract.exactImportNames.map { "import \($0)" }
+        )
+
+        for path in contract.orderedWorkerSwiftSourceRelativePaths
+            where path
+                != contract.callerAndResultConsumerSource.primeRelativePath
+        {
+            let otherSource = try checkedInString(path)
             XCTAssertFalse(
-                source.contains(contract.futureDispositionTypeName),
+                otherSource.contains(contract.boundaryMethodName),
                 path
             )
             XCTAssertFalse(
-                source.contains(contract.futureBoundaryMethodName),
+                otherSource.contains(contract.dispositionTypeName),
+                path
+            )
+            XCTAssertFalse(
+                otherSource.contains(
+                    "Self.\(contract.maintainedV23SeamMethodName)("
+                ),
+                path
+            )
+            XCTAssertFalse(
+                otherSource.contains(
+                    contract.maintainedV23SeamMethodName + "("
+                ),
                 path
             )
         }
-        let seamSourceData = try checkedInData(
-            contract.workerInvocationSeamSourceV23.primeRelativePath
-        )
-        let seamSource = try XCTUnwrap(
-            String(
-                data: seamSourceData.prefix(
-                    Int(contract.preservedV23SourcePrefixByteCount)
-                ),
-                encoding: .utf8
-            )
-        )
-        XCTAssertEqual(
-            occurrenceCount(
-                of: contract.maintainedV23SeamMethodName + "(",
-                in: seamSource
-            ),
-            1
-        )
 
-        let package = try checkedInString("Package.swift")
-        XCTAssertEqual(
-            occurrenceCount(of: contract.workerTargetName, in: package),
-            1
-        )
         let testsDirectory = repositoryRoot.appendingPathComponent("Tests")
         for path in try recursiveSwiftSourcePathsIgnoringHiddenBuilds(
             in: testsDirectory
@@ -174,112 +258,226 @@ final class
                 path
             )
         }
+
+        for changed in [
+            contract.packageGraphChanged,
+            contract.targetGraphChanged,
+            contract.forbiddenReachabilityChanged,
+            contract.workerSourceInventoryChanged,
+            contract.workerDependenciesChanged,
+            contract.workerResourcesChanged,
+            contract.importInventoryChanged,
+        ] {
+            XCTAssertFalse(changed)
+        }
     }
 
-    func testSecurityFinalFutureDeclarationAndBodyAreFrozen() {
+    func testAppendOnlySuffixHasExactDeclarationBodyAndNoLeakageSurface()
+        throws
+    {
         let contract = Contract.frozenV1
+        let liveSource = try checkedInData(
+            contract.callerAndResultConsumerSource.primeRelativePath
+        )
+        let suffixData = Data(
+            liveSource.dropFirst(
+                Int(contract.preservedV23SourcePrefixByteCount)
+            )
+        )
+        let suffix = try XCTUnwrap(
+            String(data: suffixData, encoding: .utf8)
+        )
+        let compact = suffix.filter { !$0.isWhitespace }
+        let compactData = Data(compact.utf8)
 
         XCTAssertEqual(
-            contract.futureExtensionTargetTypeName,
-            "PrimeNativeNeuralGateHistoricalFixtureWorker.PrimeNativeNeuralGateHistoricalWorkerInvocationSeamResult"
+            UInt64(compactData.count),
+            contract.appendedV25WhitespaceStrippedByteCount
         )
-        XCTAssertEqual(contract.exactFutureAppendedExtensionCount, 1)
-        XCTAssertEqual(contract.futureDispositionDeclarationKind, "enum")
-        XCTAssertEqual(contract.futureDispositionAccessLevel, "internal")
-        XCTAssertTrue(contract.futureDispositionNestedInWrapper)
         XCTAssertEqual(
-            contract.futureDispositionExactCaseNames,
-            [
-                "compositionCompletedAndDiscarded",
-                "failedClosedWithoutDetail",
-            ]
+            PrimeSHA256.hexDigest(of: compactData),
+            contract.appendedV25WhitespaceStrippedSHA256
         )
-        XCTAssertEqual(contract.futureDispositionExactCaseCount, 2)
-        XCTAssertEqual(contract.futureDispositionAssociatedValueCount, 0)
-        XCTAssertFalse(contract.futureDispositionHasRawType)
-        XCTAssertEqual(contract.futureDispositionRawSwiftTypeName, "none")
-        XCTAssertTrue(contract.futureDispositionDeclaredConformanceNames.isEmpty)
-        XCTAssertTrue(contract.futureDispositionAttributeNames.isEmpty)
-        XCTAssertEqual(contract.futureDispositionStoredFieldCount, 0)
-        XCTAssertEqual(contract.futureDispositionMethodCount, 0)
-        XCTAssertEqual(contract.futureDispositionGenericParameterCount, 0)
-        XCTAssertTrue(contract.futureDispositionImplicitSendable)
-        XCTAssertTrue(contract.futureDispositionOrdinarilyCopyable)
-        XCTAssertFalse(contract.futureDispositionProvidesConfidentialityBoundary)
-        XCTAssertFalse(contract.futureDispositionProvidesAuthorityBoundary)
+        XCTAssertEqual(
+            compact,
+            contract.appendedV25WhitespaceStrippedSource
+        )
+        XCTAssertEqual(
+            compact,
+            "extensionPrimeNativeNeuralGateHistoricalFixtureWorker.PrimeNativeNeuralGateHistoricalWorkerInvocationSeamResult{internalenumCallerResultConsumerDisposition{casecompositionCompletedAndDiscardedcasefailedClosedWithoutDetail}internalstaticfuncsourceBoundUnavailableHistoricalWorkerInvocationSeamCallerAndDiscardConsumer(evidence:PrimeNativeNeuralGateHistoricalEvidenceExporter.Evidence,context:PrimeNativeNeuralGateHistoricalProjectionContext)->CallerResultConsumerDisposition{do{_=trySelf.sourceBoundUnavailableHistoricalWorkerInvocationSeam(evidence:evidence,context:context)return.compositionCompletedAndDiscarded}catch{return.failedClosedWithoutDetail}}}"
+        )
+        XCTAssertEqual(
+            occurrenceCount(
+                of:
+                    "extensionPrimeNativeNeuralGateHistoricalFixtureWorker.PrimeNativeNeuralGateHistoricalWorkerInvocationSeamResult{",
+                in: compact
+            ),
+            contract.exactAppendedExtensionCount
+        )
+        XCTAssertEqual(
+            occurrenceCount(
+                of:
+                    "internalenumCallerResultConsumerDisposition{",
+                in: compact
+            ),
+            1
+        )
+        XCTAssertEqual(
+            occurrenceCount(
+                of: contract.boundaryMethodName + "(",
+                in: compact
+            ),
+            1
+        )
+        XCTAssertEqual(
+            occurrenceCount(
+                of:
+                    "Self.\(contract.maintainedV23SeamMethodName)(",
+                in: compact
+            ),
+            contract.exactV23SeamCallCount
+        )
+        XCTAssertEqual(
+            occurrenceCount(of: "do{", in: compact),
+            contract.exactDoCount
+        )
+        XCTAssertEqual(
+            occurrenceCount(of: "trySelf.", in: compact),
+            contract.exactTryCount
+        )
+        XCTAssertEqual(
+            occurrenceCount(of: "}catch{", in: compact),
+            contract.exactBareCatchCount
+        )
+        XCTAssertEqual(
+            occurrenceCount(
+                of: "return.compositionCompletedAndDiscarded",
+                in: compact
+            ),
+            contract.exactSuccessReturnCount
+        )
+        XCTAssertEqual(
+            occurrenceCount(
+                of: "return.failedClosedWithoutDetail",
+                in: compact
+            ),
+            contract.exactFailureReturnCount
+        )
 
+        let fullSource = try XCTUnwrap(
+            String(data: liveSource, encoding: .utf8)
+        ).filter { !$0.isWhitespace }
         XCTAssertEqual(
-            contract.futureBoundaryMethodNormalizedSignature,
-            "internal static func sourceBoundUnavailableHistoricalWorkerInvocationSeamCallerAndDiscardConsumer(evidence: PrimeNativeNeuralGateHistoricalEvidenceExporter.Evidence, context: PrimeNativeNeuralGateHistoricalProjectionContext) -> CallerResultConsumerDisposition"
+            occurrenceCount(
+                of: contract.maintainedV23SeamMethodName + "(",
+                in: fullSource
+            ),
+            2
         )
-        XCTAssertEqual(
-            contract.futureBoundaryMethodNormalizedBody,
-            "do{_=trySelf.sourceBoundUnavailableHistoricalWorkerInvocationSeam(evidence:evidence,context:context)return.compositionCompletedAndDiscarded}catch{return.failedClosedWithoutDetail}"
-        )
-        XCTAssertEqual(contract.futureBoundaryMethodAccessLevel, "internal")
-        XCTAssertTrue(contract.futureBoundaryMethodStatic)
-        XCTAssertFalse(contract.futureBoundaryMethodAsync)
-        XCTAssertFalse(contract.futureBoundaryMethodThrows)
-        XCTAssertEqual(
-            contract.futureBoundaryMethodReturnSwiftTypeName,
-            "CallerResultConsumerDisposition"
-        )
-        XCTAssertEqual(
-            contract.futureBoundaryExactInputLabels,
-            ["evidence", "context"]
-        )
-        XCTAssertEqual(contract.futureBoundaryExactInputCount, 2)
-        XCTAssertEqual(contract.exactDoCount, 1)
-        XCTAssertEqual(contract.exactV23SeamCallCount, 1)
-        XCTAssertEqual(contract.exactTryCount, 1)
-        XCTAssertEqual(contract.exactBareCatchCount, 1)
-        XCTAssertEqual(contract.exactSuccessReturnCount, 1)
-        XCTAssertEqual(contract.exactFailureReturnCount, 1)
-        XCTAssertTrue(contract.v23SeamUsesExplicitSelfQualification)
-        XCTAssertTrue(contract.successReturnOccursOnlyAfterSeamReturns)
-        XCTAssertTrue(
-            contract.everyCaughtSwiftErrorMapsToFailedClosedWithoutDetail
-        )
-    }
-
-    func testLeakageBypassRuntimeAndAuthorityRemainFailClosed() {
-        let contract = Contract.frozenV1
 
         for forbidden in [
-            contract.futureBoundaryInputMayBeOptional,
-            contract.futureBoundaryInputMayHaveDefault,
-            contract.futureBoundaryInputMayBeVariadicOrInout,
+            "Mirror(",
+            "String(describing:",
+            "String(reflecting:",
+            "print(",
+            "debugPrint(",
+            "dump(",
+            "JSONSerialization",
+            "JSONDecoder",
+            "JSONEncoder",
+            "FileManager",
+            "FileHandle",
+            "Process(",
+            "CommandLine",
+            "URLSession",
+            "write(to:",
+            "InputStream",
+            "OutputStream",
+            "Bundle.",
+            "Logger(",
+            "os_log",
+            "Task{",
+            "Task.detached",
+            "withCheckedContinuation",
+            "assert(",
+            "precondition(",
+            "fatalError(",
+            "try?",
+            "try!",
+            "as!",
+            "@_spi",
+            "@inlinable",
+            "@usableFromInline",
+            "@_cdecl",
+            "@objc",
+        ] {
+            XCTAssertFalse(
+                compact.contains(forbidden.filter { !$0.isWhitespace }),
+                forbidden
+            )
+        }
+    }
+
+    func testSourceTruthSecurityNonclaimsAndNextBoundaryRemainExact() {
+        let contract = Contract.frozenV1
+
+        for observed in [
+            contract.extensionSourceMaterialized,
+            contract.dispositionSourceMaterialized,
+            contract.boundaryMethodSourceMaterialized,
+            contract.rawSeamCallerMaterialized,
+            contract.discardConsumerMaterialized,
+            contract.exactWorkerSourceCompilerFeasibilityObserved,
+            contract.reducedSwiftCanaryCompilerFeasibilityObserved,
+            contract.rawV23SeamRemainsInternal,
+            contract.boundaryIsSoleCheckedInRawSeamCaller,
+            contract.sameModuleSourcesCanNameRawSeam,
+            contract.mainCanLexicallyNameRawSeam,
+            contract.mainCanLexicallyNameBoundary,
+            contract.testableOrPrivilegedImportMayNameInternalBoundary,
+            contract.genericReflectionMayExposePrivatePayload,
+            contract.hardRuntimeRequiresHardenedIsolation,
+            contract.mainRemainsUnconditionalUnavailableExit,
+            contract.sourceIntegrityTestFilesystemReadRequired,
+        ] {
+            XCTAssertTrue(observed)
+        }
+
+        for absentOrUnauthorized in [
+            contract.dispositionProvidesConfidentialityBoundary,
+            contract.dispositionProvidesAuthorityBoundary,
+            contract.boundaryInputMayBeOptional,
+            contract.boundaryInputMayHaveDefault,
+            contract.boundaryInputMayBeVariadicOrInout,
             contract.wrapperValueNamedOrBound,
             contract.wrapperOrCompositionReturned,
             contract.wrapperOrCompositionExplicitlyCopied,
             contract.wrapperOrCompositionRetainedOrCaptured,
             contract.payloadAccessed,
             contract.evidenceContextWrapperCompositionOrErrorReflected,
-            contract.evidenceContextWrapperCompositionOrErrorEncodedOrSerialized,
-            contract.evidenceContextWrapperCompositionOrErrorLoggedOrPublished,
+            contract
+                .evidenceContextWrapperCompositionOrErrorEncodedOrSerialized,
+            contract
+                .evidenceContextWrapperCompositionOrErrorLoggedOrPublished,
             contract.errorBoundInspectedOrReturned,
             contract.timingOrResourceMeasured,
             contract.retryFallbackOrSubstitutionPermitted,
             contract.directV21ComposeProjectorDecoderOrExporterCallPermitted,
             contract.dispositionEstablishesFixtureOriginOrAuthority,
+            contract.callerOfNonpayloadBoundaryMaterialized,
             contract.v23PrivatePayloadOrInitializerAccessWidened,
-            contract.otherRawSeamCallerPermitted,
-            contract.sameModuleBypassPrevented,
-            contract.testableBypassPrevented,
+            contract.otherRawSeamCallerMaterialized,
+            contract.ordinaryNonTestableOutsideModuleCanNameBoundary,
+            contract.sameModuleRawSeamBypassPrevented,
+            contract.testableRawSeamBypassPrevented,
             contract.dynamicOrUnsafeBypassPrevented,
             contract.confidentialityEstablished,
             contract.zeroizationEstablished,
             contract.constantTimeEstablished,
             contract.constantResourceUseEstablished,
             contract.trapsSignalsOrOutOfMemoryContained,
-            contract.futureExtensionSourceMaterialized,
-            contract.futureDispositionSourceMaterialized,
-            contract.futureBoundaryMethodSourceMaterialized,
-            contract.futureCallerMaterialized,
-            contract.futureDiscardConsumerMaterialized,
-            contract.exactFutureWorkerSourceCompilerFeasibilityObserved,
-            contract.mainReferencesOrCallsFutureBoundary,
-            contract.crossFileCallerMaterialized,
+            contract.mainReferencesOrCallsBoundary,
+            contract.crossFileBoundaryCallerMaterialized,
             contract.runtimeReachableFromMain,
             contract.runtimeInputAccepted,
             contract.runtimeOutputProduced,
@@ -301,41 +499,26 @@ final class
             contract.scientificAuthorityAuthorized,
             contract.productAuthorityAuthorized,
         ] {
-            XCTAssertFalse(forbidden)
+            XCTAssertFalse(absentOrUnauthorized)
         }
 
-        XCTAssertTrue(contract.rawV23SeamRemainsInternal)
-        XCTAssertTrue(
-            contract
-                .futureBoundaryMustBeSoleCheckedInRawSeamCallerIfMaterialized
-        )
-        XCTAssertTrue(contract.sameModuleSourcesCanNameRawSeam)
-        XCTAssertTrue(contract.mainCanLexicallyNameRawSeam)
-        XCTAssertTrue(
-            contract.mainCouldLexicallyNameFutureBoundaryIfMaterialized
-        )
-        XCTAssertFalse(
-            contract.ordinaryNonTestableOutsideModuleCanNameRawSeam
-        )
-        XCTAssertTrue(contract.testableOrPrivilegedImportMayNameInternalSeam)
-        XCTAssertTrue(contract.genericReflectionMayExposePrivatePayload)
-        XCTAssertTrue(
-            contract.hardRuntimeRequiresRawSeamNarrowingRemovalOrHardenedIsolation
-        )
-        XCTAssertTrue(contract.designOnly)
-        XCTAssertTrue(contract.reducedSwiftCanaryCompilerFeasibilityObserved)
-        XCTAssertTrue(contract.mainRemainsUnconditionalUnavailableExit)
         XCTAssertEqual(contract.unavailableExitStatus, 78)
-        XCTAssertTrue(contract.sourceIntegrityTestFilesystemReadRequired)
         XCTAssertEqual(contract.primeDisposition, "ABSTAIN")
         XCTAssertEqual(
             contract.nextImplementationPrerequisite,
-            "source_bind_the_security_and_leakage_audited_historical_worker_invocation_seam_caller_and_discard_consumer_as_an_append_only_same_file_v23_continuation_with_exactly_one_unchanged_argument_v23_seam_call_exactly_two_nonpayload_dispositions_composition_completed_and_discarded_or_failed_closed_without_detail_and_total_swift_error_detail_suppression_without_returning_explicitly_copying_retaining_reflecting_encoding_serializing_logging_timing_measuring_or_publishing_evidence_context_wrapper_composition_or_error_values_and_without_adding_any_other_seam_caller_main_or_cross_file_call_edge_testable_worker_import_request_process_replay_transport_artifact_io_launch_execution_authority_or_source_binding_v7"
+            "design_the_one_token_non_append_only_raw_v23_invocation_seam_access_rebinding_from_internal_to_private_while_preserving_the_v25_internal_nonpayload_boundary_as_the_sole_ordinary_source_level_callable_path_before_any_main_or_cross_file_call_edge_untrusted_request_transport_launch_runtime_confidentiality_artifact_io_publication_authority_or_source_binding_v7"
+        )
+        XCTAssertTrue(
+            contract.authorityStatement.contains(
+                "Hardened module or process isolation remains required"
+            )
+        )
+        XCTAssertTrue(
+            contract.authorityStatement.contains("Prime remains ABSTAIN")
         )
     }
 
-    func testReducedSwiftCanaryHasTwoNonpayloadCasesAndNonthrowingMapping()
-    {
+    func testReducedCanaryMapsSuccessAndEveryThrownErrorWithoutDetail() {
         let nonthrowing:
             (ReducedBoundaryFailure) ->
             ReducedCallerResultConsumerDisposition = Self.reducedBoundary
@@ -356,9 +539,7 @@ final class
         requireCopyable(ReducedCallerResultConsumerDisposition.self)
     }
 
-    func testCanonicalRoundTripExplicitCodingKeysAndFrozenHash()
-        throws
-    {
+    func testCanonicalRoundTripExplicitKeysAndFrozenHash() throws {
         let contract = Contract.frozenV1
         let canonical = try PrimeCanonicalJSON.encode(contract)
         let decoded = try PrimeCanonicalJSON.decode(
@@ -505,7 +686,7 @@ final class
     ) throws -> Int {
         switch failure {
         case .none:
-            return 24
+            return 25
         case .first:
             throw ReducedCanaryError.first
         case .second:
@@ -524,21 +705,23 @@ final class
         }
     }
 
-    private func exactIdentities(
+    private func liveExactIdentities(
         _ contract: Contract
     ) -> [
-        PrimeNativeNeuralGateHistoricalWorkerInvocationSeamCallerAndResultConsumerDesignSourceIdentity
+        PrimeNativeNeuralGateHistoricalWorkerInvocationSeamCallerAndResultConsumerSourceIdentity
     ] {
         [
-            contract.invocationSeamSourceContractSource,
-            contract.topologyV23Test,
+            contract.callerAndResultConsumerDesignContractSource,
+            contract.currentV24DesignContractTestAfterV25,
+            contract.topologyV24Test,
+            contract.invocationSeamSourceV23ContractSource,
+            contract.currentV23SourceContractTestAfterV25,
+            contract.callerAndResultConsumerSource,
             contract.packageSwift,
             contract.workerMain,
             contract.workerEvidenceExportCallEdgeSource,
             contract.workerProjectionCallEdgeSource,
             contract.workerFixtureResource,
-            contract.currentV21SourceTest,
-            contract.currentV22DesignTest,
         ]
     }
 

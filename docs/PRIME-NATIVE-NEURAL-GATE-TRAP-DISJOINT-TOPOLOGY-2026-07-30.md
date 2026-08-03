@@ -774,6 +774,18 @@ containment remain false. The raw seam must be narrowed/removed or isolated at
 a later hard-runtime checkpoint. Prime remains `ABSTAIN`. See [the V24
 design](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-INVOCATION-SEAM-CALLER-RESULT-CONSUMER-DESIGN-2026-08-02.md).
 
+## V25 caller/result-consumer source topology
+
+V25 adds one canonical source-contract binding to V24. Every V1-through-V24
+binding, target, dependency, resource, materialization state, and forbidden-
+reachability rule remains exact. The worker source evolves only by the audited
+same-file suffix; no target or package edge is added.
+
+The topology records exact compiler feasibility but no invocation of the new
+boundary, runtime input/output, request, transport, sealing, launch, execution,
+artifact I/O, publication, PASS, receipt, V7, scientific authority, or product
+authority. Prime remains `ABSTAIN`. See [the V25 source](PRIME-NATIVE-NEURAL-GATE-HISTORICAL-WORKER-INVOCATION-SEAM-CALLER-RESULT-CONSUMER-SOURCE-2026-08-02.md).
+
 The next exact prerequisite is:
 
-`source_bind_the_security_and_leakage_audited_historical_worker_invocation_seam_caller_and_discard_consumer_as_an_append_only_same_file_v23_continuation_with_exactly_one_unchanged_argument_v23_seam_call_exactly_two_nonpayload_dispositions_composition_completed_and_discarded_or_failed_closed_without_detail_and_total_swift_error_detail_suppression_without_returning_explicitly_copying_retaining_reflecting_encoding_serializing_logging_timing_measuring_or_publishing_evidence_context_wrapper_composition_or_error_values_and_without_adding_any_other_seam_caller_main_or_cross_file_call_edge_testable_worker_import_request_process_replay_transport_artifact_io_launch_execution_authority_or_source_binding_v7`
+`design_the_one_token_non_append_only_raw_v23_invocation_seam_access_rebinding_from_internal_to_private_while_preserving_the_v25_internal_nonpayload_boundary_as_the_sole_ordinary_source_level_callable_path_before_any_main_or_cross_file_call_edge_untrusted_request_transport_launch_runtime_confidentiality_artifact_io_publication_authority_or_source_binding_v7`
