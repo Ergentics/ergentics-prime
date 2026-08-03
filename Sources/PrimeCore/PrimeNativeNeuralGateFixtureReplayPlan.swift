@@ -6240,6 +6240,27 @@ public struct PrimeNativeNeuralGateExactPIDWaitObservation:
             returnedMonotonicNanoseconds
     }
 
+    init(
+        secureChildObservation observation:
+            PrimeSecureChildExactPIDWaitObservation
+    ) {
+        self.init(
+            requestedProcessIdentifier:
+                observation
+                .requestedProcessIdentifier,
+            returnedProcessIdentifier:
+                observation
+                .returnedProcessIdentifier,
+            waitOptions:
+                observation.waitOptions,
+            rawWaitStatus:
+                observation.rawWaitStatus,
+            returnedMonotonicNanoseconds:
+                observation
+                .returnedMonotonicNanoseconds
+        )
+    }
+
     func validate(
         expectedChildProcessIdentifier:
             Int32

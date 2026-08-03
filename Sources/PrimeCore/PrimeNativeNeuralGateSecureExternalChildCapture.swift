@@ -143,15 +143,22 @@ public enum PrimeNativeNeuralGateSecureExternalChildCapture {
             "Sources/PrimeCore/" +
                 "PrimeNativeNeuralGateHeldSourceClosure.swift",
             "Sources/PrimeCore/" +
-                "PrimeNativeNeuralGateSecureChildLifecycle.swift",
+                "PrimeSecureChildLifecycle.swift",
             "Sources/PrimeCore/" +
                 "PrimeNativeNeuralGateSecureScratchNamespace.swift",
             "Sources/PrimeCore/" +
                 "PrimeSecureChildDarwinSubstrate.swift",
+            "Sources/PrimeCore/" +
+                "PrimeSecureChildDarwinProcessProof.swift",
+            "Sources/PrimeCore/" +
+                "PrimeSecureChildDeadline.swift",
+            "Sources/PrimeCore/" +
+                "PrimeSecureChildDrains.swift",
+            "Sources/PrimeCore/" +
+                "PrimeSecureChildSupervision.swift",
         ]
     private static let regionQueryLimit = 65_536
     private static let ioChunkByteCount = 64 * 1024
-    private static let signalGraceSeconds: UInt64 = 2
     private static let processPathBufferByteCount =
         4 * Int(MAXPATHLEN)
 
@@ -175,12 +182,34 @@ public enum PrimeNativeNeuralGateSecureExternalChildCapture {
             .frozenV6
         try contract.validate()
         try requireCalibratedDarwinConstants()
+        guard ioChunkByteCount > 0 else {
+            throw rejected(
+                "stream_chunk_configuration"
+            )
+        }
 
         let root = try HeldPrimeSourceRoot(
             sourceRoot: sourceRoot
         )
         defer {
             root.close()
+        }
+        let heldWorkingDirectory:
+            PrimeSecureChildDarwinProcessProof
+            .HeldDirectorySnapshot
+        do {
+            heldWorkingDirectory =
+                try PrimeSecureChildDarwinProcessProof
+                .snapshotHeldDirectory(
+                    descriptor: root.descriptor,
+                    openedWithNoSymbolicLinksInPath:
+                        true,
+                    context: .neuralSourceRoot
+                )
+        } catch let error as
+            PrimeSecureChildDarwinProcessProof.Rejection
+        {
+            throw rejected(error.detail)
         }
 
         let preSourceSnapshot =
@@ -236,23 +265,33 @@ public enum PrimeNativeNeuralGateSecureExternalChildCapture {
         }
         let descriptorOpenedMonotonicNanoseconds =
             monotonicNanoseconds()
-        let preSpawnRead =
-            try executable.readStableCheckpoint(
-                contract: contract
-            )
-        let deadlineNanoseconds =
-            try deadline(
+        let phaseDeadline =
+            try phaseDeadline(
                 start:
                     descriptorOpenedMonotonicNanoseconds,
                 maximumSeconds:
                     contract
                     .swiftPackageDescribeMaximumWallSeconds
             )
+        let preSpawnRead =
+            try executable.readStableCheckpoint(
+                contract: contract
+            )
+        guard try phaseDeadline.authorizesNewWork(
+            observedAtUptimeNanoseconds:
+                monotonicNanoseconds(),
+            notBeforeUptimeNanoseconds:
+                descriptorOpenedMonotonicNanoseconds
+        ) else {
+            throw rejected(
+                "wall_deadline_before_spawn"
+            )
+        }
 
-        let spawn:
-            PrimeSecureChildSpawnHandle
+        let supervision:
+            PrimeSecureChildSupervisionCapability
         do {
-            spawn = try spawnSuspendedSecureChild(
+            let spawn = try spawnSuspendedSecureChild(
                 executableAbsolutePath:
                     executableAbsolutePath,
                 argumentZero:
@@ -266,50 +305,27 @@ public enum PrimeNativeNeuralGateSecureExternalChildCapture {
                     scratchLaunch
                     .orderedEnvironment
             )
+            supervision =
+                PrimeSecureChildSupervisionCapability
+                .adoptMemory(
+                    spawn: spawn,
+                    phaseDeadline:
+                        phaseDeadline,
+                    standardOutputMaximumByteCount:
+                        contract
+                        .swiftPackageDescribeMaximumStandardOutputBytes,
+                    standardErrorMaximumByteCount:
+                        contract
+                        .swiftPackageDescribeMaximumStandardErrorBytes,
+                    chunkByteCount:
+                        ioChunkByteCount
+                )
         } catch {
             throw error
         }
-        let streamReadDescriptors =
-            spawn.takeStreamReadDescriptors()
-
-        let stdoutDrain = RawBoundedDrain(
-            descriptor:
-                streamReadDescriptors
-                .standardOutput,
-            maximumByteCount:
-                contract
-                .swiftPackageDescribeMaximumStandardOutputBytes,
-            chunkByteCount: ioChunkByteCount
-        )
-        let stderrDrain = RawBoundedDrain(
-            descriptor:
-                streamReadDescriptors
-                .standardError,
-            maximumByteCount:
-                contract
-                .swiftPackageDescribeMaximumStandardErrorBytes,
-            chunkByteCount: ioChunkByteCount
-        )
-        let drainGroup = DispatchGroup()
-        stdoutDrain.start(group: drainGroup)
-        stderrDrain.start(group: drainGroup)
-
-        let child =
-            PrimeNativeNeuralGateSecureChildLifecycle
-            .liveDarwin(
-            processIdentifier:
-                spawn.processIdentifier
-        )
-        child.startDeathObservation()
 
         do {
-            guard getsid(
-                spawn.processIdentifier
-            ) == spawn.processIdentifier,
-            getpgid(
-                spawn.processIdentifier
-            ) == spawn.processIdentifier,
-            child
+            guard supervision
                 .establishIsolatedSessionAndDedicatedGroup()
             else {
                 throw rejected(
@@ -319,20 +335,25 @@ public enum PrimeNativeNeuralGateSecureExternalChildCapture {
             let childSessionAndProcessGroupObservedMonotonicNanoseconds =
                 monotonicNanoseconds()
             let workingDirectoryObservation =
-                try root.childCurrentDirectoryObservation(
+                try suspendedWorkingDirectoryObservation(
                     processIdentifier:
-                        spawn.processIdentifier
+                        supervision
+                        .processIdentifier,
+                    heldDirectory:
+                        heldWorkingDirectory
                 )
             let workingDirectoryCapturedMonotonicNanoseconds =
                 monotonicNanoseconds()
 
             let mappedTranscript =
-                try captureMappedRegionTranscript(
+                try mappedExecutableTranscript(
                     processIdentifier:
-                        spawn.processIdentifier,
+                        supervision
+                        .processIdentifier,
                     executableSnapshot:
                         preSpawnRead.snapshot,
-                    contract: contract
+                    expectedExecutableAbsolutePath:
+                        executableAbsolutePath
                 )
             let mappedRegionCapturedMonotonicNanoseconds =
                 monotonicNanoseconds()
@@ -340,7 +361,8 @@ public enum PrimeNativeNeuralGateSecureExternalChildCapture {
             let processPathTelemetry =
                 captureProcessPathTelemetry(
                     processIdentifier:
-                        spawn.processIdentifier
+                        supervision
+                        .processIdentifier
                 )
 
             let preResumeRead =
@@ -364,72 +386,123 @@ public enum PrimeNativeNeuralGateSecureExternalChildCapture {
             let scratchPreResumeValidationMonotonicNanoseconds =
                 try scratch
                 .validateBeforeResume()
-            guard monotonicNanoseconds()
-                    < deadlineNanoseconds
+            guard try phaseDeadline.authorizesNewWork(
+                observedAtUptimeNanoseconds:
+                    monotonicNanoseconds(),
+                notBeforeUptimeNanoseconds:
+                    descriptorRevalidatedBeforeResumeMonotonicNanoseconds
+            )
             else {
                 throw rejected(
                     "wall_deadline_before_resume"
                 )
             }
 
-            errno = 0
-            let sigcontResult =
-                Darwin.kill(
-                    spawn.processIdentifier,
-                    SIGCONT
-                )
-            guard sigcontResult == 0 else {
+            let resumeDisposition:
+                PrimeSecureChildResumeDisposition
+            do {
+                resumeDisposition =
+                    try supervision.resume(
+                        notBeforeUptimeNanoseconds:
+                            scratchPreResumeValidationMonotonicNanoseconds
+                    )
+            } catch {
                 throw rejected(
-                    "sigcont_\(errno)"
+                    "wall_deadline_before_resume"
                 )
             }
-            let sigcontDeliveredMonotonicNanoseconds =
-                monotonicNanoseconds(
-                    strictlyAfter:
-                        descriptorRevalidatedBeforeResumeMonotonicNanoseconds
+            let sigcontDeliveredMonotonicNanoseconds:
+                UInt64
+            switch resumeDisposition {
+            case let .resumed(deliveredAt):
+                sigcontDeliveredMonotonicNanoseconds =
+                    deliveredAt
+            case .deadlineExpired:
+                throw rejected(
+                    "wall_deadline_before_resume"
                 )
-            guard child.markResumed()
-            else {
+            case let .signalFailed(errorNumber):
+                throw rejected(
+                    "sigcont_\(errorNumber)"
+                )
+            case .stateRejected:
                 throw rejected(
                     "child_resume_state"
                 )
             }
+            let sigcontResult: Int32 = 0
 
-            guard child.observeDeath(
-                untilNanoseconds:
-                    deadlineNanoseconds
-            ) else {
+            let deathObservation:
+                PrimeSecureChildDeathObservationDisposition
+            do {
+                deathObservation =
+                    try supervision.observeDeath()
+            } catch {
+                throw rejected(
+                    "wall_deadline_authority"
+                )
+            }
+            switch deathObservation {
+            case .observed:
+                break
+            case .deadlineExpired:
                 throw rejected("wall_deadline")
+            case .stateRejected:
+                throw rejected(
+                    "child_death_observation_state"
+                )
             }
             guard let childTerminationObservedMonotonicNanoseconds =
-                    child
+                    supervision
                     .deathObservedMonotonicNanoseconds()
             else {
                 throw rejected(
                     "child_death_observation"
                 )
             }
-            guard childTerminationObservedMonotonicNanoseconds
-                    <= deadlineNanoseconds
+            guard try phaseDeadline.acceptsCompletion(
+                observedAtUptimeNanoseconds:
+                    childTerminationObservedMonotonicNanoseconds,
+                notBeforeUptimeNanoseconds:
+                    sigcontDeliveredMonotonicNanoseconds
+            )
             else {
                 throw rejected("wall_deadline")
             }
-            guard drainGroup.wait(
-                timeout:
-                    DispatchTime(
-                        uptimeNanoseconds:
-                            deadlineNanoseconds
+            let drainEvidence:
+                PrimeSecureChildDrainEvidence
+            let phaseDrainDisposition:
+                PrimeSecureChildPhaseDrainDisposition
+            do {
+                phaseDrainDisposition =
+                    try supervision
+                    .waitForPhaseDrainCompletion(
+                        notBeforeUptimeNanoseconds:
+                            childTerminationObservedMonotonicNanoseconds
                     )
-            ) == .success else {
+            } catch {
+                throw rejected(
+                    "stream_deadline_authority"
+                )
+            }
+            switch phaseDrainDisposition {
+            case let .completed(evidence):
+                drainEvidence = evidence
+            case .deadlineExpired:
                 throw rejected("stream_deadline")
+            case .stateRejected:
+                throw rejected(
+                    "stream_capture_state"
+                )
             }
 
             guard let preReapProcessGroupMemberIdentifiers =
-                    child
+                    supervision
                     .processGroupMemberIdentifiers(),
                   preReapProcessGroupMemberIdentifiers
                     == [
-                        spawn.processIdentifier,
+                        supervision
+                        .processIdentifier,
                     ]
             else {
                 throw rejected(
@@ -440,9 +513,15 @@ public enum PrimeNativeNeuralGateSecureExternalChildCapture {
                 monotonicNanoseconds()
             let wait:
                 PrimeNativeNeuralGateExactPIDWaitObservation
-            switch child.reapAfterObservedDeath() {
+            switch supervision
+                .reapAfterObservedDeath()
+            {
             case let .reaped(observation):
-                wait = observation
+                wait =
+                    PrimeNativeNeuralGateExactPIDWaitObservation(
+                        secureChildObservation:
+                            observation
+                    )
             case let .mustFailStop(reason):
                 failStop(reason)
             }
@@ -456,8 +535,20 @@ public enum PrimeNativeNeuralGateSecureExternalChildCapture {
                 )
             }
 
-            let stdout = stdoutDrain.snapshot()
-            let stderr = stderrDrain.snapshot()
+            let stdout: DrainSnapshot
+            let stderr: DrainSnapshot
+            switch drainEvidence {
+            case let .memory(
+                standardOutput,
+                standardError
+            ):
+                stdout = standardOutput
+                stderr = standardError
+            case .fileBacked:
+                failStop(
+                    .invalidLifecycleTransition
+                )
+            }
             guard stdout.workerFinished,
                   stdout.reachedEOF,
                   stdout.readErrorNumber == 0,
@@ -487,8 +578,12 @@ public enum PrimeNativeNeuralGateSecureExternalChildCapture {
                     "executable_changed_after_reap"
                 )
             }
-            guard descriptorRevalidatedAfterReapMonotonicNanoseconds
-                    <= deadlineNanoseconds
+            guard try phaseDeadline.acceptsCompletion(
+                observedAtUptimeNanoseconds:
+                    descriptorRevalidatedAfterReapMonotonicNanoseconds,
+                notBeforeUptimeNanoseconds:
+                    childReapedMonotonicNanoseconds
+            )
             else {
                 throw rejected("wall_deadline")
             }
@@ -526,8 +621,12 @@ public enum PrimeNativeNeuralGateSecureExternalChildCapture {
                     < sigcontDeliveredMonotonicNanoseconds,
                   descriptorRevalidatedAfterReapMonotonicNanoseconds
                     <= sourcePostReapValidationMonotonicNanoseconds,
-                  sourcePostReapValidationMonotonicNanoseconds
-                    <= deadlineNanoseconds
+                  try phaseDeadline.acceptsCompletion(
+                      observedAtUptimeNanoseconds:
+                          sourcePostReapValidationMonotonicNanoseconds,
+                      notBeforeUptimeNanoseconds:
+                          descriptorRevalidatedAfterReapMonotonicNanoseconds
+                  )
             else {
                 throw rejected(
                     "source_checkpoint_timing"
@@ -542,12 +641,17 @@ public enum PrimeNativeNeuralGateSecureExternalChildCapture {
                 try scratch
                 .validateAfterReap(
                     outerDeadlineMonotonicNanoseconds:
-                        deadlineNanoseconds
+                        phaseDeadline
+                        .expiresAtUptimeNanoseconds
                 )
             guard sourcePostReapValidationMonotonicNanoseconds
                     <= scratchPostReapValidationMonotonicNanoseconds,
-                  scratchPostReapValidationMonotonicNanoseconds
-                    <= deadlineNanoseconds
+                  try phaseDeadline.acceptsCompletion(
+                      observedAtUptimeNanoseconds:
+                          scratchPostReapValidationMonotonicNanoseconds,
+                      notBeforeUptimeNanoseconds:
+                          sourcePostReapValidationMonotonicNanoseconds
+                  )
             else {
                 throw rejected(
                     "scratch_checkpoint_timing"
@@ -638,7 +742,8 @@ public enum PrimeNativeNeuralGateSecureExternalChildCapture {
                     supervisorProcessIdentifier:
                         getpid(),
                     childProcessIdentifier:
-                        spawn.processIdentifier,
+                        supervision
+                        .processIdentifier,
                     role: role,
                     capabilityCalibrationPassed:
                         true,
@@ -663,11 +768,13 @@ public enum PrimeNativeNeuralGateSecureExternalChildCapture {
                             POSIX_SPAWN_SETSIGMASK
                         ),
                     appliedSpawnFlags:
-                        spawn.appliedFlags,
+                        supervision.appliedFlags,
                     observedChildSessionIdentifier:
-                        spawn.processIdentifier,
+                        supervision
+                        .processIdentifier,
                     observedChildProcessGroupIdentifier:
-                        spawn.processIdentifier,
+                        supervision
+                        .processIdentifier,
                     emptySignalMaskConfigured:
                         true,
                     defaultSignalDispositionsConfigured:
@@ -675,7 +782,7 @@ public enum PrimeNativeNeuralGateSecureExternalChildCapture {
                     terminationSignalsTargetProcessGroup:
                         true,
                     posixSpawnReturnCode:
-                        spawn.spawnReturnCode,
+                        supervision.spawnReturnCode,
                     procPIDRegionPathInfoFlavor:
                         Int32(
                             PROC_PIDREGIONPATHINFO
@@ -687,7 +794,7 @@ public enum PrimeNativeNeuralGateSecureExternalChildCapture {
                     descriptorOpenedMonotonicNanoseconds:
                         descriptorOpenedMonotonicNanoseconds,
                     spawnReturnedMonotonicNanoseconds:
-                        spawn
+                        supervision
                         .spawnReturnedMonotonicNanoseconds,
                     childSessionAndProcessGroupObservedMonotonicNanoseconds:
                         childSessionAndProcessGroupObservedMonotonicNanoseconds,
@@ -758,7 +865,8 @@ public enum PrimeNativeNeuralGateSecureExternalChildCapture {
                 expectedSupervisorProcessIdentifier:
                     getpid(),
                 expectedChildProcessIdentifier:
-                    spawn.processIdentifier
+                    supervision
+                    .processIdentifier
             )
 
             let trustedCapture =
@@ -846,26 +954,15 @@ public enum PrimeNativeNeuralGateSecureExternalChildCapture {
                     workingDirectoryInode:
                         root.inode,
                     childProcessGroupIdentifier:
-                        spawn.processIdentifier,
+                        supervision
+                        .processIdentifier,
                     scratchNamespace:
                         scratchNamespace
                 )
         } catch {
-            if !child.hasReaped {
-                switch child
-                    .cleanupRejectedCapture()
-                {
-                case .contained:
-                    break
-                case let .mustFailStop(reason):
-                    failStop(reason)
-                }
-            }
-            switch finishRejectedDrains(
-                group: drainGroup,
-                stdout: stdoutDrain,
-                stderr: stderrDrain
-            ) {
+            switch supervision
+                .cleanupRejectedCapture()
+            {
             case .contained:
                 break
             case let .mustFailStop(reason):
@@ -948,24 +1045,18 @@ public enum PrimeNativeNeuralGateSecureExternalChildCapture {
         }
     }
 
-    private static func deadline(
+    private static func phaseDeadline(
         start: UInt64,
         maximumSeconds: UInt64
-    ) throws -> UInt64 {
-        let product =
-            maximumSeconds
-            .multipliedReportingOverflow(
-                by: 1_000_000_000
+    ) throws -> PrimeSecureChildPhaseDeadline {
+        do {
+            return try PrimeSecureChildPhaseDeadline(
+                startUptimeNanoseconds: start,
+                durationSeconds: maximumSeconds
             )
-        let sum =
-            start.addingReportingOverflow(
-                product.partialValue
-            )
-        guard !product.overflow,
-              !sum.overflow else {
+        } catch {
             throw rejected("deadline_overflow")
         }
-        return sum.partialValue
     }
 
     private static func monotonicNanoseconds(
@@ -1031,112 +1122,125 @@ public enum PrimeNativeNeuralGateSecureExternalChildCapture {
         }
     }
 
-    private static func captureMappedRegionTranscript(
+    private static func suspendedWorkingDirectoryObservation(
         processIdentifier: Int32,
-        executableSnapshot:
-            PrimeNativeNeuralGateExecutableDescriptorSnapshot,
-        contract:
-            PrimeNativeNeuralGateSourceExecutionBindingContract,
-        expectedExecutableAbsolutePath:
-            String? = nil
-    ) throws -> MappedRegionTranscript {
-        let expectedSize =
-            MemoryLayout<
-                proc_regionwithpathinfo
-            >.size
-        return try evaluateMappedRegionTranscript(
-            executableSnapshot:
-                executableSnapshot,
-            contract: contract,
-            queryLimit: regionQueryLimit,
-            expectedExecutableAbsolutePath:
-                expectedExecutableAbsolutePath
-        ) {
-            queryAddress in
-            var raw =
-                proc_regionwithpathinfo()
-            errno = 0
-            let returned =
-                withUnsafeMutablePointer(
-                    to: &raw
-                ) {
-                    proc_pidinfo(
+        heldDirectory:
+            PrimeSecureChildDarwinProcessProof
+            .HeldDirectorySnapshot
+    ) throws
+        -> PrimeNativeNeuralGateWorkingDirectoryObservation
+    {
+        do {
+            let proof =
+                try PrimeSecureChildDarwinProcessProof
+                .captureSuspendedWorkingDirectory(
+                    processIdentifier:
                         processIdentifier,
-                        PROC_PIDREGIONPATHINFO,
-                        queryAddress,
-                        $0,
-                        Int32(expectedSize)
-                    )
-                }
-            let queryErrno = errno
-            guard returned
-                    == Int32(expectedSize)
-            else {
-                return MappedRegionQueryResult(
-                    returnedByteCount:
-                        returned,
-                    queryErrno:
-                        queryErrno,
-                    region: nil,
-                    mappedVnodePath: nil
+                    heldDirectory: heldDirectory
                 )
-            }
-            let status =
-                raw.prp_vip.vip_vi.vi_stat
-            return MappedRegionQueryResult(
-                returnedByteCount:
-                    returned,
-                queryErrno: queryErrno,
-                region:
-                    PrimeNativeNeuralGateMappedExecutableRegionObservation(
-                        address:
-                            raw.prp_prinfo
-                            .pri_address,
-                        byteCount:
-                            raw.prp_prinfo
-                            .pri_size,
-                        fileOffset:
-                            raw.prp_prinfo
-                            .pri_offset,
-                        protection:
-                            raw.prp_prinfo
-                            .pri_protection,
-                        deviceID:
-                            UInt64(
-                                bitPattern:
-                                    Int64(
-                                        status
-                                        .vst_dev
-                                    )
-                            ),
-                        inode:
-                            status.vst_ino
-                    ),
-                mappedVnodePath:
-                    boundedVnodePath(
-                        raw.prp_vip
-                        .vip_path
-                    )
+            return PrimeNativeNeuralGateWorkingDirectoryObservation(
+                descriptorDeviceID:
+                    proof.descriptorDeviceID,
+                descriptorInode:
+                    proof.descriptorInode,
+                descriptorOwnerUserID:
+                    proof.descriptorOwnerUserID,
+                descriptorOwnerGroupID:
+                    proof.descriptorOwnerGroupID,
+                descriptorPermissionMode:
+                    proof.descriptorPermissionMode,
+                descriptorLinkCount:
+                    proof.descriptorLinkCount,
+                descriptorIsDirectory:
+                    proof.descriptorIsDirectory,
+                descriptorOpenedWithNoSymbolicLinksInPath:
+                    proof
+                    .descriptorOpenedWithNoSymbolicLinksInPath,
+                descriptorCloseOnExec:
+                    proof.descriptorCloseOnExec,
+                procPIDVnodePathInfoFlavor:
+                    proof.procPIDVnodePathInfoFlavor,
+                procVnodePathInfoByteCount:
+                    proof.procVnodePathInfoByteCount,
+                suspendedChildCurrentDirectoryDeviceID:
+                    proof
+                    .suspendedChildCurrentDirectoryDeviceID,
+                suspendedChildCurrentDirectoryInode:
+                    proof
+                    .suspendedChildCurrentDirectoryInode,
+                descriptorJoinedToSuspendedChildCurrentDirectory:
+                    proof.exactDescriptorJoinObserved
             )
+        } catch let error as
+            PrimeSecureChildDarwinProcessProof.Rejection
+        {
+            throw rejected(error.detail)
         }
     }
 
-    @available(macOS 26.0, *)
-    static func captureMappedExecutableForSecureChild(
+    private static func mappedExecutableTranscript(
         processIdentifier: Int32,
         executableSnapshot:
             PrimeNativeNeuralGateExecutableDescriptorSnapshot,
         expectedExecutableAbsolutePath: String
     ) throws -> MappedRegionTranscript {
-        try captureMappedRegionTranscript(
-            processIdentifier:
-                processIdentifier,
-            executableSnapshot:
-                executableSnapshot,
-            contract: .frozenV6,
-            expectedExecutableAbsolutePath:
-                expectedExecutableAbsolutePath
-        )
+        do {
+            let proof =
+                try PrimeSecureChildDarwinProcessProof
+                .captureMappedExecutable(
+                    processIdentifier:
+                        processIdentifier,
+                    heldExecutable:
+                        try PrimeSecureChildDarwinProcessProof
+                        .snapshotHeldExecutable(
+                            deviceID:
+                                executableSnapshot
+                                .deviceID,
+                            inode:
+                                executableSnapshot.inode,
+                            expectedCanonicalAbsolutePath:
+                                expectedExecutableAbsolutePath
+                        )
+                )
+            return MappedRegionTranscript(
+                queries: proof.queries.map {
+                    PrimeNativeNeuralGateMappedRegionQueryObservation(
+                        queryAddress:
+                            $0.queryAddress,
+                        returnedByteCount:
+                            $0.returnedByteCount,
+                        region:
+                            PrimeNativeNeuralGateMappedExecutableRegionObservation(
+                                address:
+                                    $0.region.address,
+                                byteCount:
+                                    $0.region.byteCount,
+                                fileOffset:
+                                    $0.region.fileOffset,
+                                protection:
+                                    $0.region.protection,
+                                deviceID:
+                                    $0.region.deviceID,
+                                inode:
+                                    $0.region.inode
+                            )
+                    )
+                },
+                terminalQueryAddress:
+                    proof.terminalQueryAddress,
+                terminalReturnByteCount:
+                    proof.terminalReturnByteCount,
+                terminalErrno:
+                    proof.terminalErrno,
+                mappedExecutablePathTelemetry:
+                    proof
+                    .mappedExecutablePathTelemetry
+            )
+        } catch let error as
+            PrimeSecureChildDarwinProcessProof.Rejection
+        {
+            throw rejected(error.detail)
+        }
     }
 
     static func evaluateMappedRegionTranscript(
@@ -1344,78 +1448,15 @@ public enum PrimeNativeNeuralGateSecureExternalChildCapture {
         )
     }
 
-    private static func boundedVnodePath<Path>(
-        _ pathStorage: Path
-    ) -> String? {
-        var mutableStorage = pathStorage
-        return withUnsafeBytes(
-            of: &mutableStorage
-        ) {
-            bytes in
-            guard let terminator =
-                    bytes.firstIndex(of: 0),
-                  terminator > 0,
-                  terminator
-                    < bytes.count
-            else {
-                return nil
-            }
-            return String(
-                bytes:
-                    bytes[
-                        0 ..< terminator
-                    ],
-                encoding: .utf8
-            )
-        }
-    }
-
-    @discardableResult
-    private static func finishRejectedDrains(
-        group: DispatchGroup,
-        stdout: RawBoundedDrain,
-        stderr: RawBoundedDrain
-    ) -> PrimeSecureChildCleanupDisposition {
-        if group.wait(
-            timeout:
-                .now()
-                + .seconds(
-                    Int(signalGraceSeconds)
-                )
-        ) == .success {
-            return rejectedDrainDisposition(
-                stdout: stdout.snapshot(),
-                stderr: stderr.snapshot()
-            )
-        }
-        stdout.requestStop()
-        stderr.requestStop()
-        let stopped =
-            group.wait(
-            timeout: .now() + .seconds(1)
-        )
-        guard stopped == .success
-        else {
-            return .mustFailStop(
-                .streamDrainUncontained
-            )
-        }
-        return rejectedDrainDisposition(
-            stdout: stdout.snapshot(),
-            stderr: stderr.snapshot()
-        )
-    }
-
     static func rejectedDrainDisposition(
         stdout: DrainSnapshot,
         stderr: DrainSnapshot
     ) -> PrimeSecureChildCleanupDisposition {
-        stdout.workerFinished
-            && stderr.workerFinished
-        ? .contained
-        : .mustFailStop(
-            .streamDrainUncontained
-        )
+        PrimeSecureChildSupervisionCapability
+            .memoryDrainContainmentDisposition(
+                standardOutput: stdout,
+                standardError: stderr
+            )
     }
 
     struct MappedRegionQueryResult {
@@ -1601,103 +1642,6 @@ public enum PrimeNativeNeuralGateSecureExternalChildCapture {
                     "source_root_changed"
                 )
             }
-        }
-
-        func childCurrentDirectoryObservation(
-            processIdentifier: Int32
-        ) throws
-            -> PrimeNativeNeuralGateWorkingDirectoryObservation
-        {
-            var info =
-                proc_vnodepathinfo()
-            errno = 0
-            let returned =
-                withUnsafeMutablePointer(
-                    to: &info
-                ) {
-                    proc_pidinfo(
-                        processIdentifier,
-                        PROC_PIDVNODEPATHINFO,
-                        0,
-                        $0,
-                        Int32(
-                            MemoryLayout<
-                                proc_vnodepathinfo
-                            >.size
-                        )
-                    )
-                }
-            let status =
-                info.pvi_cdir
-                .vip_vi.vi_stat
-            guard returned
-                    == Int32(
-                        MemoryLayout<
-                            proc_vnodepathinfo
-                        >.size
-                    ),
-                  UInt64(
-                      bitPattern:
-                          Int64(status.vst_dev)
-                  ) == deviceID,
-                  status.vst_ino == inode,
-                  status.vst_mode
-                      & UInt16(S_IFMT)
-                      == UInt16(S_IFDIR)
-            else {
-                throw rejected(
-                    "child_cwd_descriptor_join_\(errno)"
-                )
-            }
-            return
-                PrimeNativeNeuralGateWorkingDirectoryObservation(
-                    descriptorDeviceID:
-                        deviceID,
-                    descriptorInode:
-                        inode,
-                    descriptorOwnerUserID:
-                        initialStatus.st_uid,
-                    descriptorOwnerGroupID:
-                        initialStatus.st_gid,
-                    descriptorPermissionMode:
-                        UInt16(
-                            initialStatus
-                            .st_mode
-                                & mode_t(
-                                    0o7777
-                                )
-                        ),
-                    descriptorLinkCount:
-                        UInt64(
-                            initialStatus
-                            .st_nlink
-                        ),
-                    descriptorIsDirectory:
-                        true,
-                    descriptorOpenedWithNoSymbolicLinksInPath:
-                        true,
-                    descriptorCloseOnExec:
-                        true,
-                    procPIDVnodePathInfoFlavor:
-                        Int32(
-                            PROC_PIDVNODEPATHINFO
-                        ),
-                    procVnodePathInfoByteCount:
-                        MemoryLayout<
-                            proc_vnodepathinfo
-                        >.size,
-                    suspendedChildCurrentDirectoryDeviceID:
-                        UInt64(
-                            bitPattern:
-                                Int64(
-                                    status.vst_dev
-                                )
-                        ),
-                    suspendedChildCurrentDirectoryInode:
-                        status.vst_ino,
-                    descriptorJoinedToSuspendedChildCurrentDirectory:
-                        true
-                )
         }
 
         func readRegularFile(
@@ -1956,226 +1900,10 @@ public enum PrimeNativeNeuralGateSecureExternalChildCapture {
         let data: Data
     }
 
-    final class RawBoundedDrain:
-        @unchecked Sendable
-    {
-        private let descriptor: Int32
-        private let maximumByteCount:
-            UInt64
-        private let chunkByteCount: Int
-        private let lock = NSLock()
-        private var data = Data()
-        private var totalByteCount: UInt64 = 0
-        private var overflowed = false
-        private var workerFinished = false
-        private var reachedEOF = false
-        private var readErrorNumber: Int32 = 0
-        private var stopRequested = false
-
-        init(
-            descriptor: Int32,
-            maximumByteCount: UInt64,
-            chunkByteCount: Int
-        ) {
-            self.descriptor = descriptor
-            self.maximumByteCount =
-                maximumByteCount
-            self.chunkByteCount =
-                chunkByteCount
-            data.reserveCapacity(
-                Int(
-                    min(
-                        maximumByteCount,
-                        UInt64(
-                            256 * 1024
-                        )
-                    )
-                )
-            )
-        }
-
-        func start(group: DispatchGroup) {
-            group.enter()
-            DispatchQueue.global(
-                qos: .utility
-            ).async {
-                self.drain()
-                group.leave()
-            }
-        }
-
-        func requestStop() {
-            lock.lock()
-            stopRequested = true
-            lock.unlock()
-        }
-
-        func snapshot() -> DrainSnapshot {
-            lock.lock()
-            defer {
-                lock.unlock()
-            }
-            return DrainSnapshot(
-                data: data,
-                totalByteCount:
-                    totalByteCount,
-                overflowed: overflowed,
-                workerFinished:
-                    workerFinished,
-                reachedEOF:
-                    reachedEOF,
-                readErrorNumber:
-                    readErrorNumber
-            )
-        }
-
-        private func drain() {
-            defer {
-                lock.lock()
-                workerFinished = true
-                lock.unlock()
-                _ = Darwin.close(
-                    descriptor
-                )
-            }
-            var buffer = [UInt8](
-                repeating: 0,
-                count: chunkByteCount
-            )
-            while true {
-                if shouldStop() {
-                    return
-                }
-                let count =
-                    buffer
-                    .withUnsafeMutableBytes {
-                        Darwin.read(
-                            descriptor,
-                            $0.baseAddress,
-                            $0.count
-                        )
-                    }
-                if count > 0 {
-                    consume(
-                        buffer[0 ..< count]
-                    )
-                    continue
-                }
-                if count == 0 {
-                    lock.lock()
-                    reachedEOF = true
-                    lock.unlock()
-                    return
-                }
-                let readErrno = errno
-                if readErrno == EINTR {
-                    continue
-                }
-                if readErrno == EAGAIN
-                    || readErrno == EWOULDBLOCK
-                {
-                    var event =
-                        pollfd(
-                            fd: descriptor,
-                            events:
-                                Int16(
-                                    POLLIN
-                                    | POLLHUP
-                                    | POLLERR
-                                ),
-                            revents: 0
-                        )
-                    let pollResult =
-                        Darwin.poll(
-                            &event,
-                            1,
-                            100
-                        )
-                    if pollResult < 0,
-                       errno != EINTR
-                    {
-                        recordReadError(
-                            errno
-                        )
-                        return
-                    }
-                    continue
-                }
-                recordReadError(
-                    readErrno
-                )
-                return
-            }
-        }
-
-        private func shouldStop() -> Bool {
-            lock.lock()
-            defer {
-                lock.unlock()
-            }
-            return stopRequested
-        }
-
-        private func consume(
-            _ bytes:
-                ArraySlice<UInt8>
-        ) {
-            lock.lock()
-            defer {
-                lock.unlock()
-            }
-            let next =
-                totalByteCount
-                .addingReportingOverflow(
-                    UInt64(bytes.count)
-                )
-            if next.overflow {
-                totalByteCount =
-                    UInt64.max
-                overflowed = true
-            } else {
-                totalByteCount =
-                    next.partialValue
-                if totalByteCount
-                    > maximumByteCount
-                {
-                    overflowed = true
-                }
-            }
-            let remaining =
-                maximumByteCount
-                    > UInt64(data.count)
-                ? maximumByteCount
-                    - UInt64(data.count)
-                : 0
-            if remaining > 0 {
-                data.append(
-                    contentsOf:
-                        bytes.prefix(
-                            Int(remaining)
-                        )
-                )
-            }
-        }
-
-        private func recordReadError(
-            _ errorNumber: Int32
-        ) {
-            lock.lock()
-            readErrorNumber =
-                errorNumber
-            lock.unlock()
-        }
-    }
-
-    struct DrainSnapshot {
-        let data: Data
-        let totalByteCount: UInt64
-        let overflowed: Bool
-        let workerFinished: Bool
-        let reachedEOF: Bool
-        let readErrorNumber: Int32
-    }
+    typealias RawBoundedDrain =
+        PrimeSecureChildMemoryBoundedDrain
+    typealias DrainSnapshot =
+        PrimeSecureChildMemoryDrainSnapshot
 
     private static func readExactDescriptor(
         _ descriptor: Int32,

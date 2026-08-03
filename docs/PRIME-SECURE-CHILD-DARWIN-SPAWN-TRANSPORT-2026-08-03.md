@@ -71,7 +71,7 @@ The focused source and mechanics checks require:
 
 The root Debug focused suite, root Release package-description canary, source
 seal, nested validation suite, and nine-mode Release integration are the
-relevant execution checks. They do not constitute a fresh 903-test run.
+relevant execution checks. They do not constitute a fresh 904-test run.
 
 The completed evaluation observed:
 
@@ -87,12 +87,12 @@ The completed evaluation observed:
 - live Release fixture integration:
   `PASS modes=9 logical_argv0=PASS one_shot=PASS executable_replacement=REJECTED`.
 
-The frozen inventory resources remain 891 XCTest entries / 114,060 bytes /
+The secure-child inventory replacement contains 892 XCTest entries / 114,186 bytes /
 SHA-256
-`583056975d443cb9195ab8af6944625833b78b848b0afa2640275811aec3f829`
+`93ccc091a0343ac4fed35b208447d7460eae27668ddec3e931f54b9a7769212b`
 and 12 Swift Testing entries / 1,287 bytes / SHA-256
 `487c601e9693d6a0fbc31d1b683ffd342ba0d10007c780f315af1113d825e8a3`.
-Those are preservation checks, not a fresh 903-test execution receipt.
+Those are preservation checks, not a fresh 904-test execution receipt.
 
 ## Authority ceiling and next boundary
 

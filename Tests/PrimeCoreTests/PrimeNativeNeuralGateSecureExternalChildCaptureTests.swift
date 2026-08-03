@@ -7,18 +7,38 @@ import XCTest
 final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
     XCTestCase
 {
+    private static let failStopRoleEnvironmentKey =
+        "PRIME_SECURE_CHILD_FAIL_STOP_TEST_ROLE"
+    private static let failStopReportDescriptorEnvironmentKey =
+        "PRIME_SECURE_CHILD_FAIL_STOP_REPORT_DESCRIPTOR"
+    private static let failStopReportDescriptor: Int32 = 198
+    private static let failStopTestSelector =
+        "PrimeNativeNeuralGateSecureExternalChildCaptureTests/" +
+        "testAbandonedLiveChildObligationFailStopsAfterContainment"
     private static let authorityRelativePath =
         "Sources/PrimeCore/" +
         "PrimeNativeNeuralGateSecureExternalChildCapture.swift"
     private static let lifecycleRelativePath =
         "Sources/PrimeCore/" +
-        "PrimeNativeNeuralGateSecureChildLifecycle.swift"
+        "PrimeSecureChildLifecycle.swift"
     private static let scratchRelativePath =
         "Sources/PrimeCore/" +
         "PrimeNativeNeuralGateSecureScratchNamespace.swift"
     private static let darwinSubstrateRelativePath =
         "Sources/PrimeCore/" +
         "PrimeSecureChildDarwinSubstrate.swift"
+    private static let processProofRelativePath =
+        "Sources/PrimeCore/" +
+        "PrimeSecureChildDarwinProcessProof.swift"
+    private static let deadlineRelativePath =
+        "Sources/PrimeCore/" +
+        "PrimeSecureChildDeadline.swift"
+    private static let drainsRelativePath =
+        "Sources/PrimeCore/" +
+        "PrimeSecureChildDrains.swift"
+    private static let supervisionRelativePath =
+        "Sources/PrimeCore/" +
+        "PrimeSecureChildSupervision.swift"
     private static let swiftPackageExecutableAbsolutePath =
         "/Applications/Xcode.app/Contents/Developer/" +
         "Toolchains/XcodeDefault.xctoolchain/usr/bin/" +
@@ -62,6 +82,34 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
                 ).path,
             encoding: .utf8
         )
+        let processProofSource = try String(
+            contentsOfFile:
+                root.appendingPathComponent(
+                    Self.processProofRelativePath
+                ).path,
+            encoding: .utf8
+        )
+        let deadlineSource = try String(
+            contentsOfFile:
+                root.appendingPathComponent(
+                    Self.deadlineRelativePath
+                ).path,
+            encoding: .utf8
+        )
+        let drainsSource = try String(
+            contentsOfFile:
+                root.appendingPathComponent(
+                    Self.drainsRelativePath
+                ).path,
+            encoding: .utf8
+        )
+        let supervisionSource = try String(
+            contentsOfFile:
+                root.appendingPathComponent(
+                    Self.supervisionRelativePath
+                ).path,
+            encoding: .utf8
+        )
         let package = try String(
             contentsOfFile:
                 root.appendingPathComponent(
@@ -77,6 +125,14 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
             + scratchSource
             + "\n"
             + darwinSubstrateSource
+            + "\n"
+            + processProofSource
+            + "\n"
+            + deadlineSource
+            + "\n"
+            + drainsSource
+            + "\n"
+            + supervisionSource
 
         let processConstructor =
             try NSRegularExpression(
@@ -182,6 +238,26 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
             0,
             "the lifecycle seam must remain PrimeCore-internal"
         )
+        XCTAssertFalse(
+            processProofSource.contains("public ")
+        )
+        XCTAssertFalse(
+            deadlineSource.contains("public ")
+        )
+        XCTAssertFalse(
+            supervisionSource.contains("public ")
+        )
+        for forbiddenSchemaMechanic in [
+            "Codable",
+            "CodingKeys",
+            "schemaVersion",
+        ] {
+            XCTAssertFalse(
+                supervisionSource.contains(
+                    forbiddenSchemaMechanic
+                )
+            )
+        }
         XCTAssertTrue(
             source.contains(
                 "private static let executableAbsolutePath"
@@ -243,11 +319,47 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
             ),
             "the neutral spawn substrate must remain inside the held source closure"
         )
+        XCTAssertTrue(
+            source.contains(
+                "PrimeSecureChildDarwinProcessProof.swift"
+            )
+        )
+        XCTAssertTrue(
+            source.contains(
+                "PrimeSecureChildDeadline.swift"
+            )
+        )
+        XCTAssertTrue(
+            source.contains(
+                "PrimeSecureChildSupervision.swift"
+            )
+        )
+        XCTAssertTrue(
+            processProofSource.contains(
+                "captureSuspendedWorkingDirectory("
+            )
+        )
+        XCTAssertTrue(
+            processProofSource.contains(
+                "captureMappedExecutable("
+            )
+        )
+        XCTAssertFalse(
+            source.contains(
+                "UInt64.max :"
+            ),
+            "the phase deadline must not saturate overflow"
+        )
         XCTAssertFalse(
             package.contains(
                 "PrimeNativeNeuralGateSecureExternalChildCapture"
             ),
             "the capture slice added a helper target or product"
+        )
+        XCTAssertFalse(
+            package.contains(
+                "PrimeSecureChildSupervision"
+            )
         )
 
         assertAppearsInOrder(
@@ -258,9 +370,12 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
                 "let scratch =",
                 "let scratchLaunch =",
                 "let executable =",
+                "let phaseDeadline =",
                 "let preSpawnRead =",
-                "spawn = try spawnSuspendedSecureChild(",
-                "child.startDeathObservation()",
+                "wall_deadline_before_spawn",
+                "let supervision:",
+                "let spawn = try spawnSuspendedSecureChild(",
+                ".adoptMemory(",
                 ".establishIsolatedSessionAndDedicatedGroup()",
                 "let childSessionAndProcessGroupObservedMonotonicNanoseconds =",
                 "let workingDirectoryObservation =",
@@ -269,10 +384,12 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
                 ".validateBeforeResume()",
                 "let scratchPreResumeValidationMonotonicNanoseconds =",
                 "wall_deadline_before_resume",
-                "let sigcontResult =",
-                "child.markResumed()",
-                "guard child.observeDeath(",
-                "switch child.reapAfterObservedDeath()",
+                "resumeDisposition =",
+                "try supervision.resume(",
+                "switch resumeDisposition",
+                "try supervision.observeDeath()",
+                ".waitForPhaseDrainCompletion(",
+                ".reapAfterObservedDeath()",
                 "let postReapRead =",
                 "let postSourceSnapshot =",
                 "guard preSourceSnapshot",
@@ -302,8 +419,7 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
             in: darwinSubstrateSource
         )
         for requiredCleanup in [
-            "cleanupRejectedCapture()",
-            "finishRejectedDrains(",
+            ".cleanupRejectedCapture()",
             "failStop(reason)",
         ] {
             XCTAssertTrue(
@@ -315,7 +431,7 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
             "case directPIDOnly",
             "case isolatedSessionAndDedicatedGroup",
             "case nonblockingContainmentProbe",
-            "boundedNonblockingReap()",
+            "boundedNonblockingReap(",
             "maximumContainmentPollCount",
             "guard !hasReaped",
         ] {
@@ -330,6 +446,48 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
         XCTAssertTrue(
             source.contains("Darwin._exit(70)"),
             "an uncontained child or drain must not fall through as an ordinary thrown rejection"
+        )
+        XCTAssertEqual(
+            occurrences(
+                of: "requestStop()",
+                in: supervisionSource
+            ),
+            2
+        )
+        XCTAssertEqual(
+            occurrences(
+                of: "cleanupTimeline()",
+                in: supervisionSource
+            ),
+            1
+        )
+        assertAppearsInOrder(
+            [
+                "func resume(",
+                ".authorizesNewWork(",
+                "return .deadlineExpired",
+                "SIGCONT",
+                "return .signalFailed(errno)",
+                "lifecycle.markResumed()",
+                "return .stateRejected",
+                ".authorizesNewWork(",
+                "return .resumed(",
+            ],
+            in: supervisionSource
+        )
+        assertAppearsInOrder(
+            [
+                "timeline = try lifecycle",
+                ".cleanupRejectedCapture(",
+                "case let .memory(",
+                ".containmentDeadline",
+                "standardOutput.requestStop()",
+                "standardError.requestStop()",
+                ".drainDeadline",
+                "case let .fileBacked(",
+                ".drainDeadline",
+            ],
+            in: supervisionSource
         )
 
         try assertSecureChildKernelFacadeRemainsClosedAndSwiftNative()
@@ -815,21 +973,21 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
             verifier.standardOutputData
         )
         // Intentionally resealed from two matching live Release canary
-        // observations after the neutral Darwin spawn transport replaced the
-        // two embedded spawn/pipe implementations. Relative to the preceding
-        // seal, Package.swift is unchanged and the package description adds
-        // exactly PrimeSecureChildDarwinSubstrate.swift to PrimeCore's source
-        // list. This is actual-package secure-capture evidence, not Driver V2,
+        // observations after neutral secure-child supervision replaced the
+        // two embedded lifecycle implementations. Package.swift is unchanged;
+        // the package description now enumerates the neutral deadline, drains,
+        // lifecycle, process-proof, and supervision sources in PrimeCore. This
+        // is actual-package secure-capture evidence, not Driver V2,
         // source/execution-binding V7, or worker execution authority.
         XCTAssertEqual(
             probe.standardOutputData.count,
-            63_051
+            63_214
         )
         XCTAssertEqual(
             PrimeSHA256.hexDigest(
                 of: probe.standardOutputData
             ),
-            "eb116603c3407c0db01ff3b8182fe9a0e26b6c4c216e2aa8bfaf0389f1e915e7"
+            "9901d983ed76f6ffa26f3c59142c6a71ec4453be2d38156001d10f0beb5d9bb5"
         )
         XCTAssertEqual(
             probe.validatedPrimeSourceSnapshot,
@@ -1116,6 +1274,12 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
             ),
             encoding: .utf8
         )
+        let processProofSource = try String(
+            contentsOf: root.appendingPathComponent(
+                Self.processProofRelativePath
+            ),
+            encoding: .utf8
+        )
 
         XCTAssertEqual(
             PrimeValidationWorkflowFixtureChildMode.allCases.count,
@@ -1206,6 +1370,26 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
             )
         )
         XCTAssertTrue(
+            spawnAdapterSource.contains(
+                ".adoptMemory("
+            )
+        )
+        XCTAssertTrue(
+            source.contains(
+                ".adoptFileBacked("
+            )
+        )
+        XCTAssertFalse(
+            spawnAdapterSource.contains(
+                "let stdoutDrain ="
+            )
+        )
+        XCTAssertFalse(
+            source.contains(
+                "let stdoutDrain ="
+            )
+        )
+        XCTAssertTrue(
             darwinSubstrateSource.contains(
                 "[argumentZero] + exactArguments"
             )
@@ -1243,18 +1427,25 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
             source.contains("fixture_binary_pin_unconfigured_abstain")
         )
         XCTAssertTrue(
-            source.contains("captureMappedExecutableForSecureChild")
+            source.contains("mappedExecutableJoin(")
         )
-        XCTAssertTrue(source.contains("cleanupRejectedCapture()"))
+        XCTAssertTrue(
+            processProofSource.contains(
+                "captureMappedExecutable("
+            )
+        )
+        XCTAssertTrue(
+            source.contains("cleanupRejectedCapture(")
+        )
         XCTAssertTrue(source.contains("exactPIDWaitObservation"))
         XCTAssertTrue(
-            spawnAdapterSource.contains(
-                "PrimeSecureChildPath\n                          .canonicalPath(mappedPath)"
+            processProofSource.contains(
+                "PrimeSecureChildPath.canonicalPath(path)"
             )
         )
         XCTAssertFalse(
-            spawnAdapterSource.contains(
-                "mappedPath\n                      ).standardizedFileURL"
+            processProofSource.contains(
+                "standardizedFileURL"
             )
         )
 
@@ -1284,7 +1475,8 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
             spawnReturnCode: 0,
             spawnReturnedMonotonicNanoseconds: 1,
             standardOutputReadDescriptor: transferredOutput.read,
-            standardErrorReadDescriptor: transferredError.read
+            standardErrorReadDescriptor: transferredError.read,
+            ownsLiveChildObligation: false
         )
         let transferred = transferredOwner.takeStreamReadDescriptors()
         XCTAssertEqual(transferred.standardOutput, transferredOutput.read)
@@ -1303,7 +1495,8 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
                 spawnReturnCode: 0,
                 spawnReturnedMonotonicNanoseconds: 1,
                 standardOutputReadDescriptor: abandonedOutput.read,
-                standardErrorReadDescriptor: abandonedError.read
+                standardErrorReadDescriptor: abandonedError.read,
+                ownsLiveChildObligation: false
             )
         XCTAssertNotNil(abandonedOwner)
         abandonedOwner = nil
@@ -1355,6 +1548,468 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
         XCTAssertEqual(
             Darwin.close(concurrentDescriptors.standardError),
             0
+        )
+    }
+
+    func testAbandonedLiveChildObligationFailStopsAfterContainment()
+        throws
+    {
+        let environment =
+            ProcessInfo.processInfo.environment
+        if environment[
+            Self.failStopRoleEnvironmentKey
+        ] == "1" {
+            guard environment[
+                Self.failStopReportDescriptorEnvironmentKey
+            ] == String(
+                Self.failStopReportDescriptor
+            ) else {
+                Darwin._exit(71)
+            }
+            if #available(macOS 26.0, *) {
+                try runFailStopRole()
+            }
+            Darwin._exit(72)
+        }
+
+        guard #available(macOS 26.0, *) else {
+            throw XCTSkip(
+                "secure-child Darwin substrate requires macOS 26"
+            )
+        }
+        errno = 0
+        XCTAssertEqual(
+            fcntl(
+                Self.failStopReportDescriptor,
+                F_GETFD
+            ),
+            -1
+        )
+        XCTAssertEqual(errno, EBADF)
+
+        var reportPipe = [Int32](repeating: -1, count: 2)
+        guard Darwin.pipe(&reportPipe) == 0 else {
+            throw currentPOSIXError()
+        }
+        var reportReadDescriptorOpen = true
+        var reportWriteDescriptorOpen = true
+        defer {
+            if reportReadDescriptorOpen {
+                _ = Darwin.close(reportPipe[0])
+            }
+            if reportWriteDescriptorOpen {
+                _ = Darwin.close(reportPipe[1])
+            }
+        }
+
+        let supervisorIdentifier = try spawnFailStopRole(
+            reportReadDescriptor: reportPipe[0],
+            reportWriteDescriptor: reportPipe[1]
+        )
+        XCTAssertGreaterThan(supervisorIdentifier, 0)
+        _ = Darwin.close(reportPipe[1])
+        reportWriteDescriptorOpen = false
+
+        var supervisorWasReaped = false
+        var childIdentifier: Int32 = -1
+        defer {
+            if !supervisorWasReaped {
+                _ = Darwin.kill(
+                    -supervisorIdentifier,
+                    SIGKILL
+                )
+                _ = Darwin.kill(
+                    supervisorIdentifier,
+                    SIGKILL
+                )
+                _ = waitForExactProcessExit(
+                    supervisorIdentifier,
+                    timeoutNanoseconds:
+                        2_000_000_000
+                )
+            }
+            if childIdentifier > 0 {
+                _ = Darwin.kill(
+                    -childIdentifier,
+                    SIGKILL
+                )
+                _ = Darwin.kill(
+                    childIdentifier,
+                    SIGKILL
+                )
+            }
+        }
+
+        childIdentifier = try XCTUnwrap(
+            readReportedProcessIdentifier(
+                from: reportPipe[0],
+                timeoutNanoseconds:
+                    10_000_000_000
+            ),
+            "fail-stop role did not report its suspended child"
+        )
+        _ = Darwin.close(reportPipe[0])
+        reportReadDescriptorOpen = false
+        XCTAssertGreaterThan(childIdentifier, 0)
+
+        let supervisorStatus = try XCTUnwrap(
+            waitForExactProcessExit(
+                supervisorIdentifier,
+                timeoutNanoseconds:
+                    10_000_000_000
+            ),
+            "fail-stop role did not exit within its retained deadline"
+        )
+        supervisorWasReaped = true
+        XCTAssertEqual(supervisorStatus & 0x7f, 0)
+        XCTAssertEqual((supervisorStatus >> 8) & 0xff, 70)
+        errno = 0
+        XCTAssertEqual(Darwin.kill(childIdentifier, 0), -1)
+        XCTAssertEqual(errno, ESRCH)
+    }
+
+    @available(macOS 26.0, *)
+    private func runFailStopRole() throws {
+        let rootDescriptor = Darwin.open(
+            "/",
+            O_RDONLY | O_DIRECTORY | O_CLOEXEC
+        )
+        guard rootDescriptor >= 0 else {
+            throw currentPOSIXError()
+        }
+        defer {
+            _ = Darwin.close(rootDescriptor)
+        }
+
+        var owner: PrimeSecureChildSpawnHandle? =
+            try PrimeSecureChildDarwinSubstrate
+            .spawnSuspended(
+                executableAbsolutePath:
+                    "/usr/bin/true",
+                argumentZero:
+                    "prime-secure-child-fail-stop",
+                workingDirectoryDescriptor:
+                    rootDescriptor,
+                exactArguments: [],
+                orderedEnvironment: [
+                    ("PATH", "/usr/bin:/bin"),
+                ]
+            )
+        var childIdentifier = try XCTUnwrap(owner)
+            .processIdentifier
+        let written = withUnsafeBytes(
+            of: &childIdentifier
+        ) {
+            Darwin.write(
+                Self.failStopReportDescriptor,
+                $0.baseAddress,
+                $0.count
+            )
+        }
+        guard written == MemoryLayout<Int32>.size
+        else {
+            Darwin._exit(73)
+        }
+        _ = Darwin.close(
+            Self.failStopReportDescriptor
+        )
+
+        withExtendedLifetime(owner) {}
+        owner = nil
+        Darwin._exit(74)
+    }
+
+    private func spawnFailStopRole(
+        reportReadDescriptor: Int32,
+        reportWriteDescriptor: Int32
+    ) throws -> pid_t {
+        var actions:
+            posix_spawn_file_actions_t?
+        var attributes:
+            posix_spawnattr_t?
+        try requireSpawnSuccess(
+            posix_spawn_file_actions_init(
+                &actions
+            )
+        )
+        defer {
+            _ = posix_spawn_file_actions_destroy(
+                &actions
+            )
+        }
+        try requireSpawnSuccess(
+            posix_spawnattr_init(&attributes)
+        )
+        defer {
+            _ = posix_spawnattr_destroy(
+                &attributes
+            )
+        }
+        try requireSpawnSuccess(
+            posix_spawn_file_actions_addclose(
+                &actions,
+                reportReadDescriptor
+            )
+        )
+        try requireSpawnSuccess(
+            posix_spawn_file_actions_adddup2(
+                &actions,
+                reportWriteDescriptor,
+                Self.failStopReportDescriptor
+            )
+        )
+        try requireSpawnSuccess(
+            posix_spawn_file_actions_addclose(
+                &actions,
+                reportWriteDescriptor
+            )
+        )
+        let flags =
+            UInt16(POSIX_SPAWN_CLOEXEC_DEFAULT)
+            | UInt16(POSIX_SPAWN_SETSID)
+        try requireSpawnSuccess(
+            posix_spawnattr_setflags(
+                &attributes,
+                Int16(bitPattern: flags)
+            )
+        )
+
+        let executableAbsolutePath =
+            CommandLine.arguments[0]
+        guard executableAbsolutePath
+                .hasSuffix("/xctest")
+        else {
+            throw POSIXError(.ENOEXEC)
+        }
+        let arguments = [
+            executableAbsolutePath,
+            "-XCTest",
+            Self.failStopTestSelector,
+            Bundle(
+                for:
+                    PrimeNativeNeuralGateSecureExternalChildCaptureTests
+                    .self
+            ).bundlePath,
+        ]
+        var environment =
+            ProcessInfo.processInfo.environment
+        environment[
+            Self.failStopRoleEnvironmentKey
+        ] = "1"
+        environment[
+            Self.failStopReportDescriptorEnvironmentKey
+        ] = String(
+            Self.failStopReportDescriptor
+        )
+        let environmentStrings =
+            environment.keys.sorted().map {
+                "\($0)=\(environment[$0]!)"
+            }
+        let duplicatedArguments =
+            try duplicateCStringArray(arguments)
+        defer {
+            freeCStringArray(duplicatedArguments)
+        }
+        let duplicatedEnvironment =
+            try duplicateCStringArray(
+                environmentStrings
+            )
+        defer {
+            freeCStringArray(duplicatedEnvironment)
+        }
+        var argv = duplicatedArguments.map {
+            Optional($0)
+        }
+        argv.append(nil)
+        var environmentPointers =
+            duplicatedEnvironment.map {
+                Optional($0)
+            }
+        environmentPointers.append(nil)
+
+        var processIdentifier: pid_t = 0
+        let returnCode =
+            argv.withUnsafeMutableBufferPointer {
+                argumentsBuffer in
+                environmentPointers
+                    .withUnsafeMutableBufferPointer {
+                        environmentBuffer in
+                        posix_spawn(
+                            &processIdentifier,
+                            executableAbsolutePath,
+                            &actions,
+                            &attributes,
+                            argumentsBuffer.baseAddress,
+                            environmentBuffer.baseAddress
+                        )
+                    }
+            }
+        try requireSpawnSuccess(returnCode)
+        guard processIdentifier > 0 else {
+            throw POSIXError(.ECHILD)
+        }
+        return processIdentifier
+    }
+
+    private func readReportedProcessIdentifier(
+        from descriptor: Int32,
+        timeoutNanoseconds: UInt64
+    ) -> Int32? {
+        guard let deadline = monotonicDeadline(
+            after: timeoutNanoseconds
+        ) else {
+            return nil
+        }
+        var pollDescriptor = pollfd(
+            fd: descriptor,
+            events: Int16(POLLIN | POLLHUP),
+            revents: 0
+        )
+        while true {
+            guard let timeoutMilliseconds =
+                    remainingPollMilliseconds(
+                        until: deadline
+                    )
+            else {
+                return nil
+            }
+            errno = 0
+            let ready = Darwin.poll(
+                &pollDescriptor,
+                1,
+                timeoutMilliseconds
+            )
+            if ready < 0, errno == EINTR {
+                continue
+            }
+            guard ready == 1,
+                  pollDescriptor.revents
+                    & Int16(POLLIN | POLLHUP)
+                    != 0
+            else {
+                return nil
+            }
+            var processIdentifier: Int32 = -1
+            errno = 0
+            let count = withUnsafeMutableBytes(
+                of: &processIdentifier
+            ) {
+                Darwin.read(
+                    descriptor,
+                    $0.baseAddress,
+                    $0.count
+                )
+            }
+            if count < 0, errno == EINTR {
+                continue
+            }
+            return count == MemoryLayout<Int32>.size
+                ? processIdentifier
+                : nil
+        }
+    }
+
+    private func waitForExactProcessExit(
+        _ processIdentifier: pid_t,
+        timeoutNanoseconds: UInt64
+    ) -> Int32? {
+        guard let deadline = monotonicDeadline(
+            after: timeoutNanoseconds
+        ) else {
+            return nil
+        }
+        while DispatchTime.now().uptimeNanoseconds
+            <= deadline
+        {
+            var status: Int32 = 0
+            errno = 0
+            let returned = Darwin.waitpid(
+                processIdentifier,
+                &status,
+                WNOHANG
+            )
+            if returned == processIdentifier {
+                return status
+            }
+            if returned < 0, errno == EINTR {
+                continue
+            }
+            guard returned == 0 else {
+                return nil
+            }
+            _ = Darwin.poll(nil, 0, 10)
+        }
+        return nil
+    }
+
+    private func monotonicDeadline(
+        after nanoseconds: UInt64
+    ) -> UInt64? {
+        let (deadline, overflow) =
+            DispatchTime.now()
+            .uptimeNanoseconds
+            .addingReportingOverflow(nanoseconds)
+        return overflow ? nil : deadline
+    }
+
+    private func remainingPollMilliseconds(
+        until deadline: UInt64
+    ) -> Int32? {
+        let now =
+            DispatchTime.now().uptimeNanoseconds
+        guard now < deadline else {
+            return nil
+        }
+        let remaining = deadline - now
+        let rounded =
+            (remaining / 1_000_000)
+            + (remaining % 1_000_000 == 0 ? 0 : 1)
+        return Int32(
+            min(rounded, UInt64(Int32.max))
+        )
+    }
+
+    private func duplicateCStringArray(
+        _ strings: [String]
+    ) throws -> [UnsafeMutablePointer<CChar>] {
+        var result:
+            [UnsafeMutablePointer<CChar>] = []
+        result.reserveCapacity(strings.count)
+        for string in strings {
+            guard !string.contains("\0"),
+                  let duplicated = strdup(string)
+            else {
+                freeCStringArray(result)
+                throw POSIXError(.EINVAL)
+            }
+            result.append(duplicated)
+        }
+        return result
+    }
+
+    private func freeCStringArray(
+        _ strings: [UnsafeMutablePointer<CChar>]
+    ) {
+        for string in strings {
+            free(string)
+        }
+    }
+
+    private func requireSpawnSuccess(
+        _ returnCode: Int32
+    ) throws {
+        guard returnCode == 0 else {
+            throw POSIXError(
+                POSIXErrorCode(rawValue: returnCode)
+                    ?? .EIO
+            )
+        }
+    }
+
+    private func currentPOSIXError() -> POSIXError {
+        POSIXError(
+            POSIXErrorCode(rawValue: errno)
+                ?? .EIO
         )
     }
 

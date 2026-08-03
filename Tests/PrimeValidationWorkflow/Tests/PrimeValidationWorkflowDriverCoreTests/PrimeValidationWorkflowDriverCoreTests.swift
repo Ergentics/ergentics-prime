@@ -27,12 +27,12 @@ final class PrimeValidationWorkflowDriverCoreTests: XCTestCase {
     func testObservedBaselineAnchorsAreExact() throws {
         let baseline = PrimeValidationBaselineAnchorV2()
         try baseline.validate()
-        XCTAssertEqual(baseline.expectedXCTestCount, 891)
+        XCTAssertEqual(baseline.expectedXCTestCount, 892)
         XCTAssertEqual(baseline.expectedSwiftTestingCount, 12)
-        XCTAssertEqual(baseline.expectedXCTestListByteCount, 114_060)
+        XCTAssertEqual(baseline.expectedXCTestListByteCount, 114_186)
         XCTAssertEqual(
             baseline.expectedXCTestListSHA256,
-            "583056975d443cb9195ab8af6944625833b78b848b0afa2640275811aec3f829"
+            "93ccc091a0343ac4fed35b208447d7460eae27668ddec3e931f54b9a7769212b"
         )
         XCTAssertEqual(baseline.expectedSwiftTestingListByteCount, 1_287)
         XCTAssertEqual(
@@ -519,7 +519,7 @@ final class PrimeValidationWorkflowDriverCoreTests: XCTestCase {
             buildReceipt: build,
             inventoryReceipt: inventoryReceipt
         )
-        XCTAssertEqual(plan.inventory.xctestIDs.count, 891)
+        XCTAssertEqual(plan.inventory.xctestIDs.count, 892)
         XCTAssertEqual(plan.inventory.swiftTestingIDs.count, 12)
         XCTAssertEqual(planSHA.utf8.count, 64)
         XCTAssertFalse(plan.shards.isEmpty)
@@ -561,7 +561,7 @@ final class PrimeValidationWorkflowDriverCoreTests: XCTestCase {
         )
         XCTAssertEqual(
             mutatedInventoryReceipt.inventory.xctestIDs.count,
-            891
+            892
         )
         XCTAssertThrowsError(
             try mutatedInventoryReceipt.validate(
@@ -1429,7 +1429,7 @@ final class PrimeValidationWorkflowDriverCoreTests: XCTestCase {
         throws
     {
         let fixture = try makeSyntheticAggregateFixture()
-        XCTAssertEqual(fixture.executionPlan.inventory.xctestIDs.count, 891)
+        XCTAssertEqual(fixture.executionPlan.inventory.xctestIDs.count, 892)
         XCTAssertEqual(
             fixture.executionPlan.inventory.swiftTestingIDs.count,
             12
@@ -1464,8 +1464,8 @@ final class PrimeValidationWorkflowDriverCoreTests: XCTestCase {
             )
         XCTAssertEqual(reference.disposition, .completePass)
         XCTAssertEqual(candidate.disposition, .completePass)
-        XCTAssertEqual(reference.semanticResults.count, 903)
-        XCTAssertEqual(candidate.semanticResults.count, 903)
+        XCTAssertEqual(reference.semanticResults.count, 904)
+        XCTAssertEqual(candidate.semanticResults.count, 904)
 
         let comparison = try PrimeValidationPairedSemanticComparatorV2
             .compareAssumingValidatedAggregates(

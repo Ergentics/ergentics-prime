@@ -765,11 +765,11 @@ public struct PrimeValidationBaselineAnchorV2:
     Equatable,
     Sendable
 {
-    public static let xctestCount = 891
+    public static let xctestCount = 892
     public static let swiftTestingCount = 12
-    public static let xctestListByteCount: UInt64 = 114_060
+    public static let xctestListByteCount: UInt64 = 114_186
     public static let xctestListSHA256 =
-        "583056975d443cb9195ab8af6944625833b78b848b0afa2640275811aec3f829"
+        "93ccc091a0343ac4fed35b208447d7460eae27668ddec3e931f54b9a7769212b"
     public static let swiftTestingListByteCount: UInt64 = 1_287
     public static let swiftTestingListSHA256 =
         "487c601e9693d6a0fbc31d1b683ffd342ba0d10007c780f315af1113d825e8a3"

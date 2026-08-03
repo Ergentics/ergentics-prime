@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2026 Ergentics, LLC
+// SPDX-License-Identifier: LicenseRef-Ergentics-Proprietary
+
 import Darwin
 import Dispatch
 import Foundation
@@ -112,11 +115,44 @@ enum PrimeSecureChildReapDisposition:
     Sendable
 {
     case reaped(
-        PrimeNativeNeuralGateExactPIDWaitObservation
+        PrimeSecureChildExactPIDWaitObservation
     )
     case mustFailStop(
         PrimeSecureChildContainmentFailureReason
     )
+}
+
+/// Exact wait result retained by the neutral secure-child lifecycle.
+///
+/// This type deliberately carries no public neural-gate schema. Closed
+/// consumers may project it one way into their existing evidence type.
+struct PrimeSecureChildExactPIDWaitObservation:
+    Equatable,
+    Sendable
+{
+    let requestedProcessIdentifier: Int32
+    let returnedProcessIdentifier: Int32
+    let waitOptions: Int32
+    let rawWaitStatus: Int32
+    let returnedMonotonicNanoseconds: UInt64
+
+    var exitedNormally: Bool {
+        rawWaitStatus & 0x7f == 0
+    }
+
+    var exitStatus: Int32 {
+        exitedNormally
+            ? (rawWaitStatus >> 8) & 0xff
+            : -1
+    }
+
+    var terminationSignal: Int32 {
+        rawWaitStatus & 0x7f
+    }
+
+    var coreDumped: Bool {
+        rawWaitStatus & 0x80 != 0
+    }
 }
 
 struct PrimeSecureChildLifecycleOperations {
@@ -143,11 +179,7 @@ struct PrimeSecureChildLifecycleOperations {
 ///
 /// No operation supplied here is reachable from the public factory surface.
 /// Production constructs only `liveDarwin(processIdentifier:)`.
-final class PrimeNativeNeuralGateSecureChildLifecycle:
-    @unchecked Sendable
-{
-    static let signalGraceNanoseconds:
-        UInt64 = 2_000_000_000
+final class PrimeSecureChildLifecycle {
     static let maximumContainmentPollCount =
         200
     static let maximumInterruptedBlockingWaitCount =
@@ -162,12 +194,23 @@ final class PrimeNativeNeuralGateSecureChildLifecycle:
     private(set) var resumed = false
     private(set) var hasReaped = false
     private(set) var exactPIDWaitObservation:
-        PrimeNativeNeuralGateExactPIDWaitObservation?
+        PrimeSecureChildExactPIDWaitObservation?
     private var deathObservedAt: UInt64?
     private var deathObservationStarted =
         false
     private var returnedPIDReapCount = 0
     private var sigkillWasAttempted = false
+    private enum CleanupClockState {
+        case notStarted
+        case tracking(
+            cleanupStartedAtUptimeNanoseconds:
+                UInt64,
+            lastObservedUptimeNanoseconds:
+                UInt64
+        )
+    }
+    private var cleanupClockState:
+        CleanupClockState = .notStarted
 
     init(
         processIdentifier: Int32,
@@ -182,14 +225,14 @@ final class PrimeNativeNeuralGateSecureChildLifecycle:
 
     static func liveDarwin(
         processIdentifier: Int32
-    ) -> PrimeNativeNeuralGateSecureChildLifecycle {
+    ) -> PrimeSecureChildLifecycle {
         let live =
             PrimeSecureChildLiveDarwinOperations(
                 processIdentifier:
                     processIdentifier
             )
         return
-            PrimeNativeNeuralGateSecureChildLifecycle(
+            PrimeSecureChildLifecycle(
                 processIdentifier:
                     processIdentifier,
                 operations:
@@ -236,7 +279,47 @@ final class PrimeNativeNeuralGateSecureChildLifecycle:
     }
 
     func observeDeath(
-        untilNanoseconds deadline: UInt64
+        until deadline: PrimeSecureChildPhaseDeadline
+    ) throws -> Bool {
+        try observePhaseDeath(
+            until: deadline.absolute
+        )
+    }
+
+    private func observePhaseDeath(
+        until deadline:
+            PrimeSecureChildAbsoluteDeadline
+    ) throws -> Bool {
+        if deathObservedAt != nil {
+            return true
+        }
+        guard deathObservationStarted,
+              let observed =
+                operations
+                .awaitDeathNotification(
+                    deadline
+                    .expiresAtUptimeNanoseconds
+                )
+        else {
+            return false
+        }
+        guard try deadline
+            .isAtOrBeforeExpiration(
+                observed
+            )
+        else {
+            return false
+        }
+        deathObservedAt = observed
+        return true
+    }
+
+    /// Cleanup accepts a death that predates cleanup start: it is evidence
+    /// that the child is already closer to containment, not a phase-success
+    /// claim. Only the cleanup endpoint remains authoritative here.
+    private func observeCleanupDeath(
+        until deadline:
+            PrimeSecureChildAbsoluteDeadline
     ) -> Bool {
         if deathObservedAt != nil {
             return true
@@ -244,7 +327,12 @@ final class PrimeNativeNeuralGateSecureChildLifecycle:
         guard deathObservationStarted,
               let observed =
                 operations
-                .awaitDeathNotification(deadline)
+                .awaitDeathNotification(
+                    deadline
+                    .expiresAtUptimeNanoseconds
+                ),
+              observed <= deadline
+                .expiresAtUptimeNanoseconds
         else {
             return false
         }
@@ -286,7 +374,33 @@ final class PrimeNativeNeuralGateSecureChildLifecycle:
         )
     }
 
-    func cleanupRejectedCapture()
+    func cleanupTimeline()
+        throws -> PrimeSecureChildCleanupTimeline
+    {
+        let start = operations.now()
+        return resumed
+            ? try .resumed(
+                cleanupStartedAtUptimeNanoseconds:
+                    start
+            )
+            : try .suspended(
+                cleanupStartedAtUptimeNanoseconds:
+                    start
+            )
+    }
+
+    /// Last-resort best-effort containment used only when checked cleanup
+    /// timeline construction itself is impossible after spawn. Callers must
+    /// fail-stop immediately after invoking it; this method never authorizes
+    /// an ordinary rejection or success.
+    func attemptEmergencySIGKILL() {
+        _ = send(.kill)
+    }
+
+    func cleanupRejectedCapture(
+        using timeline:
+            PrimeSecureChildCleanupTimeline
+    )
         -> PrimeSecureChildCleanupDisposition
     {
         if hasReaped {
@@ -299,38 +413,46 @@ final class PrimeNativeNeuralGateSecureChildLifecycle:
         }
 
         var signalFailure = false
-        if resumed {
+        switch (resumed, timeline.signalPlan) {
+        case let (
+            true,
+            .resumed(
+                terminationDeadline,
+                killDeadline
+            )
+        ):
             if deathObservedAt == nil {
                 signalFailure =
                     !send(
                         .terminate
                     )
-                let termDeadline =
-                    deadlineFromNow()
-                _ = observeDeath(
-                    untilNanoseconds:
-                        termDeadline
+                _ = observeCleanupDeath(
+                    until:
+                        terminationDeadline
                 )
             }
             if deathObservedAt == nil {
                 signalFailure =
                     !send(.kill)
                     || signalFailure
-                let killDeadline =
-                    deadlineFromNow()
-                _ = observeDeath(
-                    untilNanoseconds:
+                _ = observeCleanupDeath(
+                    until:
                         killDeadline
                 )
             }
-        } else {
+        case let (
+            false,
+            .suspended(killDeadline)
+        ):
             signalFailure =
                 !send(.kill)
-            let killDeadline =
-                deadlineFromNow()
-            _ = observeDeath(
-                untilNanoseconds:
+            _ = observeCleanupDeath(
+                until:
                     killDeadline
+            )
+        default:
+            return .mustFailStop(
+                .invalidLifecycleTransition
             )
         }
 
@@ -338,7 +460,9 @@ final class PrimeNativeNeuralGateSecureChildLifecycle:
             == .isolatedSessionAndDedicatedGroup
         {
             let members =
-                requireOnlyDirectChildBeforeReap()
+                requireOnlyDirectChildBeforeReap(
+                    using: timeline
+                )
             guard members else {
                 return .mustFailStop(
                     .processGroupMembershipUnproven
@@ -348,6 +472,13 @@ final class PrimeNativeNeuralGateSecureChildLifecycle:
 
         let reapDisposition:
             PrimeSecureChildReapDisposition
+        guard cleanupMayContinue(
+            using: timeline
+        ) else {
+            return .mustFailStop(
+                .childUncontainedAfterSIGKILL
+            )
+        }
         if deathObservedAt != nil {
             reapDisposition =
                 reap(
@@ -356,10 +487,19 @@ final class PrimeNativeNeuralGateSecureChildLifecycle:
                 )
         } else {
             reapDisposition =
-                boundedNonblockingReap()
+                boundedNonblockingReap(
+                    using: timeline
+                )
         }
         switch reapDisposition {
         case .reaped:
+            guard cleanupMayContinue(
+                using: timeline
+            ) else {
+                return .mustFailStop(
+                    .childUncontainedAfterSIGKILL
+                )
+            }
             if signalFailure {
                 // A failed delivery is contained only when the exact child was
                 // nevertheless reaped and its proven group is empty.
@@ -377,17 +517,6 @@ final class PrimeNativeNeuralGateSecureChildLifecycle:
             }
             return .mustFailStop(reason)
         }
-    }
-
-    private func deadlineFromNow() -> UInt64 {
-        let addition =
-            operations.now()
-            .addingReportingOverflow(
-                Self.signalGraceNanoseconds
-            )
-        return addition.overflow
-            ? UInt64.max
-            : addition.partialValue
     }
 
     private func send(
@@ -427,13 +556,21 @@ final class PrimeNativeNeuralGateSecureChildLifecycle:
         }
     }
 
-    private func requireOnlyDirectChildBeforeReap()
+    private func requireOnlyDirectChildBeforeReap(
+        using timeline:
+            PrimeSecureChildCleanupTimeline
+    )
         -> Bool
     {
         guard authority
                 == .isolatedSessionAndDedicatedGroup,
               !hasReaped
         else {
+            return false
+        }
+        guard cleanupMayContinue(
+            using: timeline
+        ) else {
             return false
         }
         if operations.processGroupMembers()
@@ -445,6 +582,11 @@ final class PrimeNativeNeuralGateSecureChildLifecycle:
         for _ in
             0 ..< Self.maximumContainmentPollCount
         {
+            guard cleanupMayContinue(
+                using: timeline
+            ) else {
+                return false
+            }
             operations.advanceContainmentPoll()
             if operations.processGroupMembers()
                 == [processIdentifier]
@@ -455,12 +597,22 @@ final class PrimeNativeNeuralGateSecureChildLifecycle:
         return false
     }
 
-    private func boundedNonblockingReap()
+    private func boundedNonblockingReap(
+        using timeline:
+            PrimeSecureChildCleanupTimeline
+    )
         -> PrimeSecureChildReapDisposition
     {
         for _ in
             0 ..< Self.maximumContainmentPollCount
         {
+            guard cleanupMayContinue(
+                using: timeline
+            ) else {
+                return .mustFailStop(
+                    .childUncontainedAfterSIGKILL
+                )
+            }
             let disposition =
                 reap(
                     mode:
@@ -481,6 +633,51 @@ final class PrimeNativeNeuralGateSecureChildLifecycle:
         return .mustFailStop(
             .childUncontainedAfterSIGKILL
         )
+    }
+
+    private func cleanupMayContinue(
+        using timeline:
+            PrimeSecureChildCleanupTimeline
+    ) -> Bool {
+        let observed = operations.now()
+        do {
+            switch cleanupClockState {
+            case .notStarted:
+                try timeline
+                    .requireNonregressingObservation(
+                        observed
+                    )
+            case let .tracking(
+                cleanupStartedAt,
+                lastObservedAt
+            ):
+                guard cleanupStartedAt
+                        == timeline
+                        .cleanupStartedAtUptimeNanoseconds
+                else {
+                    return false
+                }
+                try timeline
+                    .requireNonregressingObservation(
+                        observed,
+                        notBefore:
+                            lastObservedAt
+                    )
+            }
+        } catch {
+            return false
+        }
+        cleanupClockState = .tracking(
+            cleanupStartedAtUptimeNanoseconds:
+                timeline
+                .cleanupStartedAtUptimeNanoseconds,
+            lastObservedUptimeNanoseconds:
+                observed
+        )
+        return observed
+            <= timeline
+            .containmentDeadline
+            .expiresAtUptimeNanoseconds
     }
 
     private func reap(
@@ -530,7 +727,7 @@ final class PrimeNativeNeuralGateSecureChildLifecycle:
                     )
                 }
                 let observation =
-                    PrimeNativeNeuralGateExactPIDWaitObservation(
+                    PrimeSecureChildExactPIDWaitObservation(
                         requestedProcessIdentifier:
                             processIdentifier,
                         returnedProcessIdentifier:

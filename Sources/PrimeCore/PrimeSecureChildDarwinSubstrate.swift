@@ -83,7 +83,8 @@ enum PrimeSecureChildDarwinSubstrate {
                 standardOutputReadDescriptor:
                     stdoutPipe.takeReadEnd(),
                 standardErrorReadDescriptor:
-                    stderrPipe.takeReadEnd()
+                    stderrPipe.takeReadEnd(),
+                ownsLiveChildObligation: true
             )
         } catch {
             stdoutPipe.closeAll()
@@ -541,6 +542,9 @@ final class PrimeSecureChildSpawnHandle {
     let spawnReturnedMonotonicNanoseconds: UInt64
     private let streamReadDescriptorOwner:
         PrimeSecureChildStreamReadDescriptorOwner
+    private let childObligationLock = NSLock()
+    private var ownsLiveChildObligation: Bool
+    private var dedicatedProcessGroupAuthorityEstablished = false
 
     init(
         processIdentifier: Int32,
@@ -548,7 +552,8 @@ final class PrimeSecureChildSpawnHandle {
         spawnReturnCode: Int32,
         spawnReturnedMonotonicNanoseconds: UInt64,
         standardOutputReadDescriptor: Int32,
-        standardErrorReadDescriptor: Int32
+        standardErrorReadDescriptor: Int32,
+        ownsLiveChildObligation: Bool
     ) {
         self.processIdentifier = processIdentifier
         self.appliedFlags = appliedFlags
@@ -562,6 +567,8 @@ final class PrimeSecureChildSpawnHandle {
                 standardErrorReadDescriptor:
                     standardErrorReadDescriptor
             )
+        self.ownsLiveChildObligation =
+            ownsLiveChildObligation
     }
 
     /// Transfers both stream descriptors exactly once. The pair is atomic:
@@ -574,9 +581,95 @@ final class PrimeSecureChildSpawnHandle {
                 streamReadDescriptorOwner
                 .takeIfAvailable()
         else {
+            failStopOwnedChildIfNeeded()
             Darwin._exit(70)
         }
         return descriptors
+    }
+
+    /// Discharges the non-restorable live-child obligation only after the
+    /// supervising lifecycle has exact-waited the original PID. Once group
+    /// authority was established, that lifecycle also proves the dedicated
+    /// process group empty; before proof, the child remained suspended and
+    /// containment was exact-PID-only.
+    func dischargeChildObligationAfterExactReap() {
+        childObligationLock.lock()
+        ownsLiveChildObligation = false
+        dedicatedProcessGroupAuthorityEstablished = false
+        childObligationLock.unlock()
+    }
+
+    /// Records that descriptor-rooted supervision has independently proven the
+    /// suspended child is both its own session leader and process-group leader.
+    /// Before this transition, emergency abandonment may signal only the exact
+    /// PID because process-group authority has not yet been established.
+    func recordIsolatedSessionAndDedicatedGroupAuthority() {
+        childObligationLock.lock()
+        if ownsLiveChildObligation {
+            dedicatedProcessGroupAuthorityEstablished = true
+        }
+        childObligationLock.unlock()
+    }
+
+    private func failStopOwnedChildIfNeeded() {
+        childObligationLock.lock()
+        let mustContain = ownsLiveChildObligation
+        let maySignalDedicatedProcessGroup =
+            dedicatedProcessGroupAuthorityEstablished
+        ownsLiveChildObligation = false
+        dedicatedProcessGroupAuthorityEstablished = false
+        childObligationLock.unlock()
+        guard mustContain else {
+            return
+        }
+
+        if maySignalDedicatedProcessGroup {
+            _ = Darwin.kill(
+                -processIdentifier,
+                SIGKILL
+            )
+        }
+        _ = Darwin.kill(
+            processIdentifier,
+            SIGKILL
+        )
+        var status: Int32 = 0
+        var returned: Int32
+        repeat {
+            errno = 0
+            returned = Darwin.waitpid(
+                processIdentifier,
+                &status,
+                0
+            )
+        } while returned < 0 && errno == EINTR
+        guard returned == processIdentifier
+        else {
+            Darwin._exit(70)
+        }
+        guard maySignalDedicatedProcessGroup
+        else {
+            return
+        }
+        errno = 0
+        guard Darwin.kill(
+            -processIdentifier,
+            0
+        ) != 0,
+        errno == ESRCH
+        else {
+            Darwin._exit(70)
+        }
+    }
+
+    deinit {
+        childObligationLock.lock()
+        let abandoned = ownsLiveChildObligation
+        childObligationLock.unlock()
+        if abandoned {
+            failStopOwnedChildIfNeeded()
+            Darwin._exit(70)
+        }
     }
 }
 
