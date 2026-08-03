@@ -12,13 +12,25 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
         "PrimeNativeNeuralGateSecureExternalChildCapture.swift"
     private static let lifecycleRelativePath =
         "Sources/PrimeCore/" +
-        "PrimeNativeNeuralGateSecureChildLifecycle.swift"
+        "PrimeSecureChildLifecycle.swift"
     private static let scratchRelativePath =
         "Sources/PrimeCore/" +
         "PrimeNativeNeuralGateSecureScratchNamespace.swift"
     private static let darwinSubstrateRelativePath =
         "Sources/PrimeCore/" +
         "PrimeSecureChildDarwinSubstrate.swift"
+    private static let processProofRelativePath =
+        "Sources/PrimeCore/" +
+        "PrimeSecureChildDarwinProcessProof.swift"
+    private static let deadlineRelativePath =
+        "Sources/PrimeCore/" +
+        "PrimeSecureChildDeadline.swift"
+    private static let drainsRelativePath =
+        "Sources/PrimeCore/" +
+        "PrimeSecureChildDrains.swift"
+    private static let supervisionRelativePath =
+        "Sources/PrimeCore/" +
+        "PrimeSecureChildSupervision.swift"
     private static let swiftPackageExecutableAbsolutePath =
         "/Applications/Xcode.app/Contents/Developer/" +
         "Toolchains/XcodeDefault.xctoolchain/usr/bin/" +
@@ -62,6 +74,34 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
                 ).path,
             encoding: .utf8
         )
+        let processProofSource = try String(
+            contentsOfFile:
+                root.appendingPathComponent(
+                    Self.processProofRelativePath
+                ).path,
+            encoding: .utf8
+        )
+        let deadlineSource = try String(
+            contentsOfFile:
+                root.appendingPathComponent(
+                    Self.deadlineRelativePath
+                ).path,
+            encoding: .utf8
+        )
+        let drainsSource = try String(
+            contentsOfFile:
+                root.appendingPathComponent(
+                    Self.drainsRelativePath
+                ).path,
+            encoding: .utf8
+        )
+        let supervisionSource = try String(
+            contentsOfFile:
+                root.appendingPathComponent(
+                    Self.supervisionRelativePath
+                ).path,
+            encoding: .utf8
+        )
         let package = try String(
             contentsOfFile:
                 root.appendingPathComponent(
@@ -77,6 +117,14 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
             + scratchSource
             + "\n"
             + darwinSubstrateSource
+            + "\n"
+            + processProofSource
+            + "\n"
+            + deadlineSource
+            + "\n"
+            + drainsSource
+            + "\n"
+            + supervisionSource
 
         let processConstructor =
             try NSRegularExpression(
@@ -182,6 +230,26 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
             0,
             "the lifecycle seam must remain PrimeCore-internal"
         )
+        XCTAssertFalse(
+            processProofSource.contains("public ")
+        )
+        XCTAssertFalse(
+            deadlineSource.contains("public ")
+        )
+        XCTAssertFalse(
+            supervisionSource.contains("public ")
+        )
+        for forbiddenSchemaMechanic in [
+            "Codable",
+            "CodingKeys",
+            "schemaVersion",
+        ] {
+            XCTAssertFalse(
+                supervisionSource.contains(
+                    forbiddenSchemaMechanic
+                )
+            )
+        }
         XCTAssertTrue(
             source.contains(
                 "private static let executableAbsolutePath"
@@ -243,11 +311,47 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
             ),
             "the neutral spawn substrate must remain inside the held source closure"
         )
+        XCTAssertTrue(
+            source.contains(
+                "PrimeSecureChildDarwinProcessProof.swift"
+            )
+        )
+        XCTAssertTrue(
+            source.contains(
+                "PrimeSecureChildDeadline.swift"
+            )
+        )
+        XCTAssertTrue(
+            source.contains(
+                "PrimeSecureChildSupervision.swift"
+            )
+        )
+        XCTAssertTrue(
+            processProofSource.contains(
+                "captureSuspendedWorkingDirectory("
+            )
+        )
+        XCTAssertTrue(
+            processProofSource.contains(
+                "captureMappedExecutable("
+            )
+        )
+        XCTAssertFalse(
+            source.contains(
+                "UInt64.max :"
+            ),
+            "the phase deadline must not saturate overflow"
+        )
         XCTAssertFalse(
             package.contains(
                 "PrimeNativeNeuralGateSecureExternalChildCapture"
             ),
             "the capture slice added a helper target or product"
+        )
+        XCTAssertFalse(
+            package.contains(
+                "PrimeSecureChildSupervision"
+            )
         )
 
         assertAppearsInOrder(
@@ -258,9 +362,12 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
                 "let scratch =",
                 "let scratchLaunch =",
                 "let executable =",
+                "let phaseDeadline =",
                 "let preSpawnRead =",
-                "spawn = try spawnSuspendedSecureChild(",
-                "child.startDeathObservation()",
+                "wall_deadline_before_spawn",
+                "let supervision:",
+                "let spawn = try spawnSuspendedSecureChild(",
+                ".adoptMemory(",
                 ".establishIsolatedSessionAndDedicatedGroup()",
                 "let childSessionAndProcessGroupObservedMonotonicNanoseconds =",
                 "let workingDirectoryObservation =",
@@ -269,10 +376,12 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
                 ".validateBeforeResume()",
                 "let scratchPreResumeValidationMonotonicNanoseconds =",
                 "wall_deadline_before_resume",
-                "let sigcontResult =",
-                "child.markResumed()",
-                "guard child.observeDeath(",
-                "switch child.reapAfterObservedDeath()",
+                "resumeDisposition =",
+                "try supervision.resume(",
+                "switch resumeDisposition",
+                "try supervision.observeDeath()",
+                ".waitForPhaseDrainCompletion(",
+                ".reapAfterObservedDeath()",
                 "let postReapRead =",
                 "let postSourceSnapshot =",
                 "guard preSourceSnapshot",
@@ -302,8 +411,7 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
             in: darwinSubstrateSource
         )
         for requiredCleanup in [
-            "cleanupRejectedCapture()",
-            "finishRejectedDrains(",
+            ".cleanupRejectedCapture()",
             "failStop(reason)",
         ] {
             XCTAssertTrue(
@@ -315,7 +423,7 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
             "case directPIDOnly",
             "case isolatedSessionAndDedicatedGroup",
             "case nonblockingContainmentProbe",
-            "boundedNonblockingReap()",
+            "boundedNonblockingReap(",
             "maximumContainmentPollCount",
             "guard !hasReaped",
         ] {
@@ -330,6 +438,48 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
         XCTAssertTrue(
             source.contains("Darwin._exit(70)"),
             "an uncontained child or drain must not fall through as an ordinary thrown rejection"
+        )
+        XCTAssertEqual(
+            occurrences(
+                of: "requestStop()",
+                in: supervisionSource
+            ),
+            2
+        )
+        XCTAssertEqual(
+            occurrences(
+                of: "cleanupTimeline()",
+                in: supervisionSource
+            ),
+            1
+        )
+        assertAppearsInOrder(
+            [
+                "func resume(",
+                ".authorizesNewWork(",
+                "return .deadlineExpired",
+                "SIGCONT",
+                "return .signalFailed(errno)",
+                "lifecycle.markResumed()",
+                "return .stateRejected",
+                ".authorizesNewWork(",
+                "return .resumed(",
+            ],
+            in: supervisionSource
+        )
+        assertAppearsInOrder(
+            [
+                "timeline = try lifecycle",
+                ".cleanupRejectedCapture(",
+                "case let .memory(",
+                ".containmentDeadline",
+                "standardOutput.requestStop()",
+                "standardError.requestStop()",
+                ".drainDeadline",
+                "case let .fileBacked(",
+                ".drainDeadline",
+            ],
+            in: supervisionSource
         )
 
         try assertSecureChildKernelFacadeRemainsClosedAndSwiftNative()
@@ -1116,6 +1266,12 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
             ),
             encoding: .utf8
         )
+        let processProofSource = try String(
+            contentsOf: root.appendingPathComponent(
+                Self.processProofRelativePath
+            ),
+            encoding: .utf8
+        )
 
         XCTAssertEqual(
             PrimeValidationWorkflowFixtureChildMode.allCases.count,
@@ -1206,6 +1362,26 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
             )
         )
         XCTAssertTrue(
+            spawnAdapterSource.contains(
+                ".adoptMemory("
+            )
+        )
+        XCTAssertTrue(
+            source.contains(
+                ".adoptFileBacked("
+            )
+        )
+        XCTAssertFalse(
+            spawnAdapterSource.contains(
+                "let stdoutDrain ="
+            )
+        )
+        XCTAssertFalse(
+            source.contains(
+                "let stdoutDrain ="
+            )
+        )
+        XCTAssertTrue(
             darwinSubstrateSource.contains(
                 "[argumentZero] + exactArguments"
             )
@@ -1243,18 +1419,25 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
             source.contains("fixture_binary_pin_unconfigured_abstain")
         )
         XCTAssertTrue(
-            source.contains("captureMappedExecutableForSecureChild")
+            source.contains("mappedExecutableJoin(")
         )
-        XCTAssertTrue(source.contains("cleanupRejectedCapture()"))
+        XCTAssertTrue(
+            processProofSource.contains(
+                "captureMappedExecutable("
+            )
+        )
+        XCTAssertTrue(
+            source.contains("cleanupRejectedCapture(")
+        )
         XCTAssertTrue(source.contains("exactPIDWaitObservation"))
         XCTAssertTrue(
-            spawnAdapterSource.contains(
-                "PrimeSecureChildPath\n                          .canonicalPath(mappedPath)"
+            processProofSource.contains(
+                "PrimeSecureChildPath.canonicalPath(path)"
             )
         )
         XCTAssertFalse(
-            spawnAdapterSource.contains(
-                "mappedPath\n                      ).standardizedFileURL"
+            processProofSource.contains(
+                "standardizedFileURL"
             )
         )
 
@@ -1284,7 +1467,8 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
             spawnReturnCode: 0,
             spawnReturnedMonotonicNanoseconds: 1,
             standardOutputReadDescriptor: transferredOutput.read,
-            standardErrorReadDescriptor: transferredError.read
+            standardErrorReadDescriptor: transferredError.read,
+            ownsLiveChildObligation: false
         )
         let transferred = transferredOwner.takeStreamReadDescriptors()
         XCTAssertEqual(transferred.standardOutput, transferredOutput.read)
@@ -1303,7 +1487,8 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
                 spawnReturnCode: 0,
                 spawnReturnedMonotonicNanoseconds: 1,
                 standardOutputReadDescriptor: abandonedOutput.read,
-                standardErrorReadDescriptor: abandonedError.read
+                standardErrorReadDescriptor: abandonedError.read,
+                ownsLiveChildObligation: false
             )
         XCTAssertNotNil(abandonedOwner)
         abandonedOwner = nil

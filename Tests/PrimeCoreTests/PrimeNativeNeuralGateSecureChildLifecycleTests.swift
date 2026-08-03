@@ -10,7 +10,7 @@ final class PrimeNativeNeuralGateSecureChildLifecycleTests:
     private typealias Capture =
         PrimeNativeNeuralGateSecureExternalChildCapture
     private typealias Lifecycle =
-        PrimeNativeNeuralGateSecureChildLifecycle
+        PrimeSecureChildLifecycle
 
     func testPreJoinRejectionUsesPositivePIDSIGKILLOnly() {
         let processIdentifier: Int32 = 4_101
@@ -30,7 +30,7 @@ final class PrimeNativeNeuralGateSecureChildLifecycleTests:
         child.startDeathObservation()
 
         XCTAssertEqual(
-            child.cleanupRejectedCapture(),
+            cleanup(child),
             .contained
         )
         XCTAssertEqual(
@@ -95,8 +95,67 @@ final class PrimeNativeNeuralGateSecureChildLifecycleTests:
                 .establishIsolatedSessionAndDedicatedGroup()
         )
 
+        let phase = try! PrimeSecureChildPhaseDeadline(
+            startUptimeNanoseconds: 100,
+            durationNanoseconds: 10
+        )
+        XCTAssertTrue(
+            try! phase.authorizesNewWork(
+                observedAtUptimeNanoseconds: 109
+            )
+        )
+        XCTAssertFalse(
+            try! phase.authorizesNewWork(
+                observedAtUptimeNanoseconds: 110
+            )
+        )
+        XCTAssertThrowsError(
+            try phase.authorizesNewWork(
+                observedAtUptimeNanoseconds: 99
+            )
+        ) {
+            XCTAssertEqual(
+                $0 as? PrimeSecureChildDeadlineError,
+                .clockRegression(
+                    observedUptimeNanoseconds: 99,
+                    notBeforeUptimeNanoseconds: 100
+                )
+            )
+        }
+        let cleanupTimeline =
+            try! PrimeSecureChildCleanupTimeline
+            .suspended(
+                cleanupStartedAtUptimeNanoseconds:
+                    1_000
+            )
+        guard case let .suspended(killDeadline) =
+                cleanupTimeline.signalPlan
+        else {
+            return XCTFail(
+                "pre-resume cleanup gained a TERM stage"
+            )
+        }
         XCTAssertEqual(
-            child.cleanupRejectedCapture(),
+            killDeadline
+                .expiresAtUptimeNanoseconds,
+            1_000 + 2_000_000_000
+        )
+        XCTAssertEqual(
+            cleanupTimeline
+                .containmentDeadline
+                .expiresAtUptimeNanoseconds,
+            1_000 + 4_000_000_000
+        )
+        XCTAssertEqual(
+            cleanupTimeline
+                .drainDeadline
+                .expiresAtUptimeNanoseconds,
+            1_000 + 7_000_000_000
+        )
+        XCTAssertFalse(child.resumed)
+
+        XCTAssertEqual(
+            cleanup(child),
             .contained
         )
         XCTAssertFalse(child.resumed)
@@ -147,9 +206,25 @@ final class PrimeNativeNeuralGateSecureChildLifecycleTests:
             processIdentifier: processIdentifier
         )
         harness.nowValue = 50
+        let timeline =
+            try! PrimeSecureChildCleanupTimeline
+            .resumed(
+                cleanupStartedAtUptimeNanoseconds:
+                    harness.nowValue
+            )
+        guard case let .resumed(
+            terminationDeadline,
+            killDeadline
+        ) = timeline.signalPlan else {
+            return XCTFail(
+                "resumed cleanup lost its TERM stage"
+            )
+        }
         harness.deathNotifications = [
-            nil,
-            103,
+            terminationDeadline
+                .expiresAtUptimeNanoseconds + 1,
+            killDeadline
+                .expiresAtUptimeNanoseconds,
         ]
         harness.waitResults = [
             .reaped(
@@ -166,7 +241,9 @@ final class PrimeNativeNeuralGateSecureChildLifecycleTests:
         XCTAssertTrue(child.markResumed())
 
         XCTAssertEqual(
-            child.cleanupRejectedCapture(),
+            child.cleanupRejectedCapture(
+                using: timeline
+            ),
             .contained
         )
         XCTAssertEqual(
@@ -197,14 +274,88 @@ final class PrimeNativeNeuralGateSecureChildLifecycleTests:
         XCTAssertEqual(
             harness.awaitedDeathDeadlines,
             [
-                50
-                    + Lifecycle
-                    .signalGraceNanoseconds,
-                50
-                    + Lifecycle
-                    .signalGraceNanoseconds,
+                terminationDeadline
+                    .expiresAtUptimeNanoseconds,
+                killDeadline
+                    .expiresAtUptimeNanoseconds,
             ]
         )
+        XCTAssertEqual(
+            timeline
+                .containmentDeadline
+                .expiresAtUptimeNanoseconds,
+            50 + 6_000_000_000
+        )
+        XCTAssertEqual(
+            timeline
+                .drainDeadline
+                .expiresAtUptimeNanoseconds,
+            50 + 9_000_000_000
+        )
+        XCTAssertFalse(
+            harness.awaitedDeathDeadlines
+                .contains(UInt64.max)
+        )
+        XCTAssertEqual(
+            harness.operationLog,
+            [
+                "start_death_observation",
+                "signal_terminate",
+                "await_death",
+                "signal_kill",
+                "await_death",
+                "process_group_members",
+                "wait_exact_pid",
+                "cancel_death_observation",
+                "process_group_empty",
+            ]
+        )
+        XCTAssertThrowsError(
+            try PrimeSecureChildPhaseDeadline(
+                startUptimeNanoseconds: 0,
+                durationNanoseconds: 0
+            )
+        ) {
+            XCTAssertEqual(
+                $0 as? PrimeSecureChildDeadlineError,
+                .zeroDuration
+            )
+        }
+        XCTAssertThrowsError(
+            try PrimeSecureChildPhaseDeadline(
+                startUptimeNanoseconds: 0,
+                durationSeconds: UInt64.max
+            )
+        ) {
+            XCTAssertEqual(
+                $0 as? PrimeSecureChildDeadlineError,
+                .durationOverflow
+            )
+        }
+        XCTAssertThrowsError(
+            try PrimeSecureChildPhaseDeadline(
+                startUptimeNanoseconds:
+                    UInt64.max - 5,
+                durationNanoseconds: 6
+            )
+        ) {
+            XCTAssertEqual(
+                $0 as? PrimeSecureChildDeadlineError,
+                .endpointOverflow
+            )
+        }
+        XCTAssertThrowsError(
+            try PrimeSecureChildPhaseDeadline(
+                startUptimeNanoseconds:
+                    UInt64.max - 5,
+                durationNanoseconds: 5
+            )
+        ) {
+            XCTAssertEqual(
+                $0 as? PrimeSecureChildDeadlineError,
+                .reservedEndpoint
+            )
+        }
         XCTAssertEqual(
             harness.waitModes,
             [
@@ -222,8 +373,38 @@ final class PrimeNativeNeuralGateSecureChildLifecycleTests:
         let harness = Harness(
             processIdentifier: processIdentifier
         )
+        harness.nowValue = 100
+        let phase = try! PrimeSecureChildPhaseDeadline(
+            startUptimeNanoseconds: 100,
+            durationNanoseconds: 10
+        )
+        XCTAssertTrue(
+            try! phase.acceptsCompletion(
+                observedAtUptimeNanoseconds: 110
+            )
+        )
+        XCTAssertFalse(
+            try! phase.acceptsCompletion(
+                observedAtUptimeNanoseconds: 111
+            )
+        )
+        let timeline =
+            try! PrimeSecureChildCleanupTimeline
+            .resumed(
+                cleanupStartedAtUptimeNanoseconds:
+                    harness.nowValue
+            )
+        guard case let .resumed(
+            terminationDeadline,
+            _
+        ) = timeline.signalPlan else {
+            return XCTFail(
+                "resumed cleanup lost its TERM stage"
+            )
+        }
         harness.deathNotifications = [
-            104,
+            terminationDeadline
+                .expiresAtUptimeNanoseconds,
         ]
         harness.waitResults = [
             .reaped(
@@ -240,7 +421,9 @@ final class PrimeNativeNeuralGateSecureChildLifecycleTests:
         XCTAssertTrue(child.markResumed())
 
         XCTAssertEqual(
-            child.cleanupRejectedCapture(),
+            child.cleanupRejectedCapture(
+                using: timeline
+            ),
             .contained
         )
         XCTAssertEqual(
@@ -297,7 +480,7 @@ final class PrimeNativeNeuralGateSecureChildLifecycleTests:
         XCTAssertTrue(child.markResumed())
 
         XCTAssertEqual(
-            child.cleanupRejectedCapture(),
+            cleanup(child),
             .mustFailStop(
                 .childUncontainedAfterSIGKILL
             )
@@ -325,10 +508,11 @@ final class PrimeNativeNeuralGateSecureChildLifecycleTests:
             harness.awaitedDeathDeadlines,
             [
                 75
-                    + Lifecycle
+                    + PrimeSecureChildCleanupTimeline
                     .signalGraceNanoseconds,
                 75
-                    + Lifecycle
+                    + 2
+                    * PrimeSecureChildCleanupTimeline
                     .signalGraceNanoseconds,
             ]
         )
@@ -373,7 +557,7 @@ final class PrimeNativeNeuralGateSecureChildLifecycleTests:
         child.startDeathObservation()
 
         XCTAssertEqual(
-            child.cleanupRejectedCapture(),
+            cleanup(child),
             .contained
         )
         XCTAssertEqual(
@@ -458,14 +642,16 @@ final class PrimeNativeNeuralGateSecureChildLifecycleTests:
         let waitCount = harness.waitModes.count
 
         XCTAssertEqual(
-            Capture.rejectedDrainDisposition(
-                stdout: snapshot,
-                stderr: finishedEOFSnapshot()
+            PrimeSecureChildSupervisionCapability
+                .memoryDrainContainmentDisposition(
+                    standardOutput: snapshot,
+                    standardError:
+                        finishedEOFSnapshot()
             ),
             .contained
         )
         XCTAssertEqual(
-            child.cleanupRejectedCapture(),
+            cleanup(child),
             .contained
         )
         XCTAssertEqual(
@@ -520,14 +706,18 @@ final class PrimeNativeNeuralGateSecureChildLifecycleTests:
         let waitCount = harness.waitModes.count
 
         XCTAssertEqual(
-            Capture.rejectedDrainDisposition(
-                stdout: snapshot,
-                stderr: finishedEOFSnapshot()
+            PrimeSecureChildSupervisionCapability
+                .memoryDrainContainmentDisposition(
+                    standardOutput: snapshot,
+                    standardError:
+                        finishedEOFSnapshot()
             ),
-            .contained
+            .mustFailStop(
+                .streamDrainUncontained
+            )
         )
         XCTAssertEqual(
-            child.cleanupRejectedCapture(),
+            cleanup(child),
             .contained
         )
         XCTAssertEqual(
@@ -552,10 +742,23 @@ final class PrimeNativeNeuralGateSecureChildLifecycleTests:
             )
 
         XCTAssertEqual(
-            Capture.rejectedDrainDisposition(
-                stdout: active,
-                stderr: finishedEOFSnapshot()
+            PrimeSecureChildSupervisionCapability
+                .memoryDrainContainmentDisposition(
+                    standardOutput: active,
+                    standardError:
+                        finishedEOFSnapshot()
             ),
+            .mustFailStop(
+                .streamDrainUncontained
+            )
+        )
+        XCTAssertEqual(
+            PrimeSecureChildSupervisionCapability
+                .memoryDrainContainmentDisposition(
+                    standardOutput:
+                        finishedEOFSnapshot(),
+                    standardError: active
+                ),
             .mustFailStop(
                 .streamDrainUncontained
             )
@@ -573,7 +776,7 @@ final class PrimeNativeNeuralGateSecureChildLifecycleTests:
         let waitCount = harness.waitModes.count
 
         XCTAssertEqual(
-            child.cleanupRejectedCapture(),
+            cleanup(child),
             .contained
         )
         XCTAssertEqual(
@@ -603,7 +806,7 @@ final class PrimeNativeNeuralGateSecureChildLifecycleTests:
             .startDeathObservationCallCount
 
         XCTAssertEqual(
-            child.cleanupRejectedCapture(),
+            cleanup(child),
             .contained
         )
         XCTAssertEqual(
@@ -643,6 +846,27 @@ final class PrimeNativeNeuralGateSecureChildLifecycleTests:
         )
     }
 
+    private func cleanup(
+        _ child: Lifecycle,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) -> PrimeSecureChildCleanupDisposition {
+        do {
+            return child.cleanupRejectedCapture(
+                using: try child.cleanupTimeline()
+            )
+        } catch {
+            XCTFail(
+                "cleanup timeline construction failed: \(error)",
+                file: file,
+                line: line
+            )
+            return .mustFailStop(
+                .invalidLifecycleTransition
+            )
+        }
+    }
+
     private func makeAlreadyReapedLifecycle(
         harness: Harness,
         establishGroupAuthority: Bool = false,
@@ -670,8 +894,12 @@ final class PrimeNativeNeuralGateSecureChildLifecycleTests:
             )
         }
         XCTAssertTrue(
-            child.observeDeath(
-                untilNanoseconds: 2_000
+            try! child.observeDeath(
+                until:
+                    try! PrimeSecureChildPhaseDeadline(
+                        startUptimeNanoseconds: 0,
+                        durationNanoseconds: 2_000
+                    )
             ),
             file: file,
             line: line
@@ -905,6 +1133,8 @@ final class PrimeNativeNeuralGateSecureChildLifecycleTests:
         private(set) var cancelDeathObservationCallCount =
             0
         private(set) var returnedPIDReapCount = 0
+        private(set) var operationLog:
+            [String] = []
 
         init(processIdentifier: Int32) {
             self.processIdentifier =
@@ -918,6 +1148,9 @@ final class PrimeNativeNeuralGateSecureChildLifecycleTests:
                 operations:
                     PrimeSecureChildLifecycleOperations(
                         startDeathObservation: {
+                            self.operationLog.append(
+                                "start_death_observation"
+                            )
                             self
                                 .startDeathObservationCallCount
                                 += 1
@@ -927,6 +1160,9 @@ final class PrimeNativeNeuralGateSecureChildLifecycleTests:
                         },
                         awaitDeathNotification: {
                             deadline in
+                            self.operationLog.append(
+                                "await_death"
+                            )
                             self.awaitedDeathDeadlines
                                 .append(deadline)
                             guard !self
@@ -942,6 +1178,9 @@ final class PrimeNativeNeuralGateSecureChildLifecycleTests:
                         sendSignal: {
                             target,
                             signal in
+                            self.operationLog.append(
+                                "signal_\(signal == .terminate ? "terminate" : "kill")"
+                            )
                             self.signals.append(
                                 SignalObservation(
                                     target: target,
@@ -960,6 +1199,9 @@ final class PrimeNativeNeuralGateSecureChildLifecycleTests:
                         },
                         waitExactPID: {
                             mode in
+                            self.operationLog.append(
+                                "wait_exact_pid"
+                            )
                             self.waitModes
                                 .append(mode)
                             let result:
@@ -984,6 +1226,9 @@ final class PrimeNativeNeuralGateSecureChildLifecycleTests:
                             return result
                         },
                         processGroupMembers: {
+                            self.operationLog.append(
+                                "process_group_members"
+                            )
                             self
                                 .processGroupMembersCallCount
                                 += 1
@@ -1011,6 +1256,9 @@ final class PrimeNativeNeuralGateSecureChildLifecycleTests:
                             return observation
                         },
                         processGroupIsEmpty: {
+                            self.operationLog.append(
+                                "process_group_empty"
+                            )
                             self
                                 .processGroupEmptyCallCount
                                 += 1
@@ -1023,6 +1271,9 @@ final class PrimeNativeNeuralGateSecureChildLifecycleTests:
                                 += 1
                         },
                         cancelDeathObservation: {
+                            self.operationLog.append(
+                                "cancel_death_observation"
+                            )
                             self
                                 .cancelDeathObservationCallCount
                                 += 1

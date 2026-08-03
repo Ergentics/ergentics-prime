@@ -1103,9 +1103,28 @@ private enum PrimeSecureChildKernel {
     static func execute(
         _ prepared: PrimeSecureChildPreparedFixture
     ) throws -> PrimeValidationWorkflowFixtureChildResult {
+        let phaseDeadline:
+            PrimeSecureChildPhaseDeadline
+        do {
+            phaseDeadline =
+                try PrimeSecureChildPhaseDeadline(
+                    startUptimeNanoseconds:
+                        DispatchTime.now()
+                        .uptimeNanoseconds,
+                    durationNanoseconds:
+                        prepared.invocation
+                        .maximumWallNanoseconds
+                )
+        } catch {
+            throw rejected("deadline_overflow")
+        }
         try prepared.executable.requireUnchanged()
         try prepared.workingDirectory.requireStable()
         try prepared.resultDirectory.requireStable()
+        let heldWorkingDirectory =
+            try heldWorkingDirectorySnapshot(
+                prepared.workingDirectory
+            )
 
         let stdoutFile = try prepared.resultDirectory
             .createEmptyCaptureFile(
@@ -1121,10 +1140,30 @@ private enum PrimeSecureChildKernel {
             Darwin.close(stdoutFile)
             throw error
         }
+        guard stdoutFile >= 0,
+              stderrFile >= 0,
+              stdoutFile != stderrFile
+        else {
+            Darwin.close(stdoutFile)
+            Darwin.close(stderrFile)
+            throw rejected(
+                "stream_output_descriptor_pair"
+            )
+        }
 
-        let spawn: PrimeSecureChildSpawnHandle
+        let supervision:
+            PrimeSecureChildSupervisionCapability
         do {
-            spawn = try PrimeSecureChildDarwinSubstrate
+            guard try phaseDeadline.authorizesNewWork(
+                observedAtUptimeNanoseconds:
+                    DispatchTime.now()
+                    .uptimeNanoseconds
+            ) else {
+                throw rejected(
+                    "wall_deadline_before_spawn"
+                )
+            }
+            let spawn = try PrimeSecureChildDarwinSubstrate
                 .spawnSuspended(
                     executableAbsolutePath:
                         prepared.executable.absolutePath,
@@ -1142,6 +1181,20 @@ private enum PrimeSecureChildKernel {
                     orderedEnvironment:
                         prepared.invocation.orderedEnvironment
                 )
+            supervision =
+                PrimeSecureChildSupervisionCapability
+                .adoptFileBacked(
+                    spawn: spawn,
+                    phaseDeadline:
+                        phaseDeadline,
+                    standardOutputDescriptor:
+                        stdoutFile,
+                    standardErrorDescriptor:
+                        stderrFile,
+                    maximumByteCount:
+                        PrimeSecureChildFixtureInvocation
+                        .streamPrefixLimit
+                )
         } catch let error as
             PrimeSecureChildDarwinSubstrate.Rejection
         {
@@ -1153,33 +1206,6 @@ private enum PrimeSecureChildKernel {
             Darwin.close(stderrFile)
             throw error
         }
-        let streamReadDescriptors =
-            spawn.takeStreamReadDescriptors()
-
-        let stdoutDrain = PrimeSecureChildFileBackedBoundedDrain(
-            inputDescriptor:
-                streamReadDescriptors
-                .standardOutput,
-            outputDescriptor: stdoutFile,
-            maximumByteCount:
-                PrimeSecureChildFixtureInvocation.streamPrefixLimit
-        )
-        let stderrDrain = PrimeSecureChildFileBackedBoundedDrain(
-            inputDescriptor:
-                streamReadDescriptors
-                .standardError,
-            outputDescriptor: stderrFile,
-            maximumByteCount:
-                PrimeSecureChildFixtureInvocation.streamPrefixLimit
-        )
-        let drains = DispatchGroup()
-        stdoutDrain.start(group: drains)
-        stderrDrain.start(group: drains)
-
-        let child = PrimeNativeNeuralGateSecureChildLifecycle
-            .liveDarwin(processIdentifier: spawn.processIdentifier)
-        child.startDeathObservation()
-
         let sessionIdentifier: Int32
         let processGroupIdentifier: Int32
         let workingDirectoryJoin:
@@ -1187,21 +1213,24 @@ private enum PrimeSecureChildKernel {
         let mappedExecutable:
             PrimeSecureChildMappedExecutableObservation
         do {
-            sessionIdentifier = getsid(spawn.processIdentifier)
-            processGroupIdentifier = getpgid(spawn.processIdentifier)
-            guard sessionIdentifier == spawn.processIdentifier,
-                  processGroupIdentifier == spawn.processIdentifier,
-                  child.establishIsolatedSessionAndDedicatedGroup()
+            guard supervision
+                .establishIsolatedSessionAndDedicatedGroup()
             else {
                 throw rejected("child_session_or_process_group")
             }
+            sessionIdentifier =
+                supervision.processIdentifier
+            processGroupIdentifier =
+                supervision.processIdentifier
             workingDirectoryJoin = try childWorkingDirectoryJoin(
-                processIdentifier: spawn.processIdentifier,
-                directory: prepared.workingDirectory
+                processIdentifier:
+                    supervision.processIdentifier,
+                heldDirectory:
+                    heldWorkingDirectory
             )
-            let transcript = try PrimeNativeNeuralGateSecureExternalChildCapture
-                .captureMappedExecutableForSecureChild(
-                    processIdentifier: spawn.processIdentifier,
+            let transcript = try mappedExecutableJoin(
+                    processIdentifier:
+                        supervision.processIdentifier,
                     executableSnapshot:
                         prepared.executable.admittedSnapshot,
                     expectedExecutableAbsolutePath:
@@ -1218,53 +1247,142 @@ private enum PrimeSecureChildKernel {
             try prepared.workingDirectory.requireStable()
             try prepared.resultDirectory.requireStable()
         } catch {
-            containOrFailStop(child)
-            waitForDrainsOrFailStop(drains)
+            containAndDrainOrFailStop(
+                supervision
+            )
             throw error
         }
 
-        errno = 0
-        guard Darwin.kill(spawn.processIdentifier, SIGCONT) == 0,
-              child.markResumed()
-        else {
-            let failure = errno
-            containOrFailStop(child)
-            waitForDrainsOrFailStop(drains)
-            throw rejected("child_resume_\(failure)")
+        let resumeDisposition:
+            PrimeSecureChildResumeDisposition
+        do {
+            resumeDisposition =
+                try supervision.resume(
+                    notBeforeUptimeNanoseconds:
+                        DispatchTime.now()
+                        .uptimeNanoseconds
+                )
+        } catch {
+            containAndDrainOrFailStop(
+                supervision
+            )
+            throw rejected(
+                "wall_deadline_before_resume"
+            )
+        }
+        switch resumeDisposition {
+        case .resumed:
+            break
+        case .deadlineExpired:
+            containAndDrainOrFailStop(
+                supervision
+            )
+            throw rejected(
+                "wall_deadline_before_resume"
+            )
+        case let .signalFailed(errorNumber):
+            containAndDrainOrFailStop(
+                supervision
+            )
+            throw rejected(
+                "child_resume_\(errorNumber)"
+            )
+        case .stateRejected:
+            containAndDrainOrFailStop(
+                supervision
+            )
+            throw rejected(
+                "child_resume_state"
+            )
         }
 
-        let deadline = deadline(
-            after: prepared.invocation.maximumWallNanoseconds
-        )
         var wallClockLimitReached = false
         var streamContainmentLimitReached = false
         var preReapMembers: [Int32]?
         let wait: PrimeNativeNeuralGateExactPIDWaitObservation
+        let drainEvidence:
+            PrimeSecureChildDrainEvidence
 
-        if !child.observeDeath(untilNanoseconds: deadline) {
+        let deathObservation:
+            PrimeSecureChildDeathObservationDisposition
+        do {
+            deathObservation =
+                try supervision.observeDeath()
+        } catch {
+            containAndDrainOrFailStop(
+                supervision
+            )
+            throw rejected(
+                "wall_deadline_authority"
+            )
+        }
+        switch deathObservation {
+        case .stateRejected:
+            containAndDrainOrFailStop(
+                supervision
+            )
+            throw rejected(
+                "child_death_observation_state"
+            )
+        case .deadlineExpired:
             wallClockLimitReached = true
-            preReapMembers = child.processGroupMemberIdentifiers()
-            containOrFailStop(child)
-            waitForDrainsOrFailStop(drains)
-            wait = requireRetainedWait(child)
-        } else if drains.wait(
-            timeout: DispatchTime(uptimeNanoseconds: deadline)
-        ) != .success {
-            streamContainmentLimitReached = true
-            preReapMembers = child.processGroupMemberIdentifiers()
-            containOrFailStop(child)
-            waitForDrainsOrFailStop(drains)
-            wait = requireRetainedWait(child)
-        } else {
-            preReapMembers = child.processGroupMemberIdentifiers()
-            guard preReapMembers == [spawn.processIdentifier] else {
+            preReapMembers = supervision
+                .processGroupMemberIdentifiers()
+            containAndDrainOrFailStop(
+                supervision
+            )
+            wait = requireRetainedWait(
+                supervision
+            )
+            drainEvidence =
+                supervision.drainEvidence()
+        case .observed:
+            guard let deathObservedAt =
+                    supervision
+                    .deathObservedMonotonicNanoseconds()
+            else {
+                containAndDrainOrFailStop(
+                    supervision
+                )
+                failStop(
+                    .invalidLifecycleTransition
+                )
+            }
+            let phaseDrainDisposition:
+                PrimeSecureChildPhaseDrainDisposition
+            do {
+                phaseDrainDisposition =
+                    try supervision
+                    .waitForPhaseDrainCompletion(
+                        notBeforeUptimeNanoseconds:
+                            deathObservedAt
+                    )
+            } catch {
+                containAndDrainOrFailStop(
+                    supervision
+                )
+                throw rejected(
+                    "stream_deadline_authority"
+                )
+            }
+            switch phaseDrainDisposition {
+            case let .completed(evidence):
+                drainEvidence = evidence
+            case .deadlineExpired:
                 streamContainmentLimitReached = true
-                containOrFailStop(child)
-                waitForDrainsOrFailStop(drains)
-                wait = requireRetainedWait(child)
+                preReapMembers = supervision
+                    .processGroupMemberIdentifiers()
+                containAndDrainOrFailStop(
+                    supervision
+                )
+                wait = requireRetainedWait(
+                    supervision
+                )
+                drainEvidence =
+                    supervision.drainEvidence()
                 return try finish(
                     prepared: prepared,
-                    spawn: spawn,
+                    supervision: supervision,
                     sessionIdentifier: sessionIdentifier,
                     processGroupIdentifier: processGroupIdentifier,
                     workingDirectoryJoin: workingDirectoryJoin,
@@ -1274,21 +1392,83 @@ private enum PrimeSecureChildKernel {
                     streamContainmentLimitReached:
                         streamContainmentLimitReached,
                     preReapMembers: preReapMembers,
-                    stdoutDrain: stdoutDrain,
-                    stderrDrain: stderrDrain
+                    drainEvidence: drainEvidence,
+                    phaseDeadline:
+                        phaseDeadline
+                )
+            case .stateRejected:
+                containAndDrainOrFailStop(
+                    supervision
+                )
+                throw rejected(
+                    "stream_capture_state"
                 )
             }
-            switch child.reapAfterObservedDeath() {
+
+            preReapMembers = supervision
+                .processGroupMemberIdentifiers()
+            guard preReapMembers == [
+                supervision.processIdentifier,
+            ] else {
+                streamContainmentLimitReached = true
+                containAndDrainOrFailStop(
+                    supervision
+                )
+                wait = requireRetainedWait(
+                    supervision
+                )
+                return try finish(
+                    prepared: prepared,
+                    supervision: supervision,
+                    sessionIdentifier: sessionIdentifier,
+                    processGroupIdentifier: processGroupIdentifier,
+                    workingDirectoryJoin: workingDirectoryJoin,
+                    mappedExecutable: mappedExecutable,
+                    wait: wait,
+                    wallClockLimitReached: wallClockLimitReached,
+                    streamContainmentLimitReached:
+                        streamContainmentLimitReached,
+                    preReapMembers: preReapMembers,
+                    drainEvidence: drainEvidence,
+                    phaseDeadline:
+                        phaseDeadline
+                )
+            }
+            switch supervision
+                .reapAfterObservedDeath()
+            {
             case let .reaped(observation):
-                wait = observation
+                wait =
+                    PrimeNativeNeuralGateExactPIDWaitObservation(
+                        secureChildObservation:
+                            observation
+                    )
             case let .mustFailStop(reason):
                 failStop(reason)
+            }
+            let reapCompletedWithinPhase:
+                Bool
+            do {
+                reapCompletedWithinPhase =
+                    try phaseDeadline
+                    .acceptsCompletion(
+                        observedAtUptimeNanoseconds:
+                            wait
+                            .returnedMonotonicNanoseconds
+                    )
+            } catch {
+                throw rejected(
+                    "wall_deadline_authority_after_reap"
+                )
+            }
+            if !reapCompletedWithinPhase {
+                wallClockLimitReached = true
             }
         }
 
         return try finish(
             prepared: prepared,
-            spawn: spawn,
+            supervision: supervision,
             sessionIdentifier: sessionIdentifier,
             processGroupIdentifier: processGroupIdentifier,
             workingDirectoryJoin: workingDirectoryJoin,
@@ -1298,14 +1478,15 @@ private enum PrimeSecureChildKernel {
             streamContainmentLimitReached:
                 streamContainmentLimitReached,
             preReapMembers: preReapMembers,
-            stdoutDrain: stdoutDrain,
-            stderrDrain: stderrDrain
+            drainEvidence: drainEvidence,
+            phaseDeadline: phaseDeadline
         )
     }
 
     private static func finish(
         prepared: PrimeSecureChildPreparedFixture,
-        spawn: PrimeSecureChildSpawnHandle,
+        supervision:
+            PrimeSecureChildSupervisionCapability,
         sessionIdentifier: Int32,
         processGroupIdentifier: Int32,
         workingDirectoryJoin:
@@ -1316,9 +1497,26 @@ private enum PrimeSecureChildKernel {
         wallClockLimitReached: Bool,
         streamContainmentLimitReached: Bool,
         preReapMembers: [Int32]?,
-        stdoutDrain: PrimeSecureChildFileBackedBoundedDrain,
-        stderrDrain: PrimeSecureChildFileBackedBoundedDrain
+        drainEvidence:
+            PrimeSecureChildDrainEvidence,
+        phaseDeadline: PrimeSecureChildPhaseDeadline
     ) throws -> PrimeValidationWorkflowFixtureChildResult {
+        let stdoutSnapshot:
+            PrimeSecureChildFileBackedDrainSnapshot
+        let stderrSnapshot:
+            PrimeSecureChildFileBackedDrainSnapshot
+        switch drainEvidence {
+        case let .fileBacked(
+            standardOutput,
+            standardError
+        ):
+            stdoutSnapshot = standardOutput
+            stderrSnapshot = standardError
+        case .memory:
+            failStop(
+                .invalidLifecycleTransition
+            )
+        }
         try prepared.executable.requireUnchanged()
         try prepared.workingDirectory.requireStable()
         try prepared.resultDirectory.admitExpectedFixtureResult(
@@ -1326,12 +1524,12 @@ private enum PrimeSecureChildKernel {
         )
         try prepared.resultDirectory.requireStable()
         let stdout = try streamObservation(
-            drain: stdoutDrain,
+            snapshot: stdoutSnapshot,
             directory: prepared.resultDirectory,
             leaf: PrimeSecureChildFixtureInvocation.stdoutLeaf
         )
         let stderr = try streamObservation(
-            drain: stderrDrain,
+            snapshot: stderrSnapshot,
             directory: prepared.resultDirectory,
             leaf: PrimeSecureChildFixtureInvocation.stderrLeaf
         )
@@ -1346,9 +1544,33 @@ private enum PrimeSecureChildKernel {
                     invocation: prepared.invocation
                 )
         }
+        let finalExternalValidationObservedAt =
+            DispatchTime.now()
+            .uptimeNanoseconds
+        let finalValidationCompletedWithinPhase:
+            Bool
+        do {
+            finalValidationCompletedWithinPhase =
+                try phaseDeadline
+                .acceptsCompletion(
+                    observedAtUptimeNanoseconds:
+                        finalExternalValidationObservedAt,
+                    notBeforeUptimeNanoseconds:
+                        wait
+                        .returnedMonotonicNanoseconds
+                )
+        } catch {
+            throw rejected(
+                "wall_deadline_authority_after_reap"
+            )
+        }
+        let effectiveWallClockLimitReached =
+            wallClockLimitReached
+            || !finalValidationCompletedWithinPhase
         let completion = completion(
             wait: wait,
-            wallClockLimitReached: wallClockLimitReached,
+            wallClockLimitReached:
+                effectiveWallClockLimitReached,
             streamContainmentLimitReached:
                 streamContainmentLimitReached
         )
@@ -1361,13 +1583,16 @@ private enum PrimeSecureChildKernel {
             descendantProcessIdentifier:
                 descendantProcessIdentifier,
             parentProcessIdentifier:
-                spawn.processIdentifier,
+                supervision
+                .processIdentifier,
             preReapMembers: preReapMembers
         )
         return PrimeValidationWorkflowFixtureChildResult(
             mode: prepared.mode,
-            processIdentifier: spawn.processIdentifier,
-            appliedSpawnFlags: spawn.appliedFlags,
+            processIdentifier:
+                supervision.processIdentifier,
+            appliedSpawnFlags:
+                supervision.appliedFlags,
             sessionIdentifier: sessionIdentifier,
             processGroupIdentifier: processGroupIdentifier,
             executableAbsolutePath:
@@ -1394,11 +1619,11 @@ private enum PrimeSecureChildKernel {
     }
 
     private static func streamObservation(
-        drain: PrimeSecureChildFileBackedBoundedDrain,
+        snapshot:
+            PrimeSecureChildFileBackedDrainSnapshot,
         directory: PrimeSecureChildHeldDirectory,
         leaf: String
     ) throws -> PrimeSecureChildStreamObservation {
-        let snapshot = drain.snapshot()
         guard snapshot.workerFinished,
               snapshot.reachedEOF,
               snapshot.readErrorNumber == 0,
@@ -1446,38 +1671,93 @@ private enum PrimeSecureChildKernel {
         )
     }
 
+    private static func heldWorkingDirectorySnapshot(
+        _ directory: PrimeSecureChildHeldDirectory
+    ) throws
+        -> PrimeSecureChildDarwinProcessProof
+        .HeldDirectorySnapshot
+    {
+        do {
+            return try PrimeSecureChildDarwinProcessProof
+                .snapshotHeldDirectory(
+                    descriptor: directory.descriptor,
+                    openedWithNoSymbolicLinksInPath:
+                        true,
+                    context:
+                        .validationWorkingDirectory
+                )
+        } catch let error as
+            PrimeSecureChildDarwinProcessProof.Rejection
+        {
+            throw rejected(error.detail)
+        }
+    }
+
     private static func childWorkingDirectoryJoin(
         processIdentifier: Int32,
-        directory: PrimeSecureChildHeldDirectory
+        heldDirectory:
+            PrimeSecureChildDarwinProcessProof
+            .HeldDirectorySnapshot
     ) throws -> PrimeSecureChildDirectoryJoinObservation {
-        var info = proc_vnodepathinfo()
-        errno = 0
-        let returned = withUnsafeMutablePointer(to: &info) {
-            proc_pidinfo(
-                processIdentifier,
-                PROC_PIDVNODEPATHINFO,
-                0,
-                $0,
-                Int32(MemoryLayout<proc_vnodepathinfo>.size)
+        do {
+            let proof =
+                try PrimeSecureChildDarwinProcessProof
+                .captureSuspendedWorkingDirectory(
+                    processIdentifier:
+                        processIdentifier,
+                    heldDirectory: heldDirectory
+                )
+            return PrimeSecureChildDirectoryJoinObservation(
+                descriptorDeviceID:
+                    proof.descriptorDeviceID,
+                descriptorInode:
+                    proof.descriptorInode,
+                childCurrentDirectoryDeviceID:
+                    proof
+                    .suspendedChildCurrentDirectoryDeviceID,
+                childCurrentDirectoryInode:
+                    proof
+                    .suspendedChildCurrentDirectoryInode,
+                exactDescriptorJoinObserved:
+                    proof.exactDescriptorJoinObserved
             )
+        } catch let error as
+            PrimeSecureChildDarwinProcessProof.Rejection
+        {
+            throw rejected(error.detail)
         }
-        let status = info.pvi_cdir.vip_vi.vi_stat
-        let childDevice = UInt64(bitPattern: Int64(status.vst_dev))
-        let joined = returned
-                == Int32(MemoryLayout<proc_vnodepathinfo>.size)
-            && childDevice == directory.identity.deviceID
-            && status.vst_ino == directory.identity.inode
-            && status.vst_mode & UInt16(S_IFMT) == UInt16(S_IFDIR)
-        guard joined else {
-            throw rejected("child_cwd_descriptor_join_\(errno)")
+    }
+
+    private static func mappedExecutableJoin(
+        processIdentifier: Int32,
+        executableSnapshot:
+            PrimeNativeNeuralGateExecutableDescriptorSnapshot,
+        expectedExecutableAbsolutePath: String
+    ) throws
+        -> PrimeSecureChildDarwinProcessProof
+        .MappedExecutableProof
+    {
+        do {
+            return try PrimeSecureChildDarwinProcessProof
+                .captureMappedExecutable(
+                    processIdentifier:
+                        processIdentifier,
+                    heldExecutable:
+                        .init(
+                            deviceID:
+                                executableSnapshot
+                                .deviceID,
+                            inode:
+                                executableSnapshot.inode,
+                            expectedCanonicalAbsolutePath:
+                                expectedExecutableAbsolutePath
+                        )
+                )
+        } catch let error as
+            PrimeSecureChildDarwinProcessProof.Rejection
+        {
+            throw rejected(error.detail)
         }
-        return PrimeSecureChildDirectoryJoinObservation(
-            descriptorDeviceID: directory.identity.deviceID,
-            descriptorInode: directory.identity.inode,
-            childCurrentDirectoryDeviceID: childDevice,
-            childCurrentDirectoryInode: status.vst_ino,
-            exactDescriptorJoinObserved: true
-        )
     }
 
     private static func completion(
@@ -1581,38 +1861,33 @@ private enum PrimeSecureChildKernel {
         }
     }
 
-    private static func deadline(after delta: UInt64) -> UInt64 {
-        let value = DispatchTime.now().uptimeNanoseconds
-            .addingReportingOverflow(delta)
-        return value.overflow ? UInt64.max : value.partialValue
-    }
-
-    private static func containOrFailStop(
-        _ child: PrimeNativeNeuralGateSecureChildLifecycle
+    private static func containAndDrainOrFailStop(
+        _ supervision:
+            PrimeSecureChildSupervisionCapability
     ) {
-        switch child.cleanupRejectedCapture() {
+        switch supervision
+            .cleanupRejectedCapture()
+        {
         case .contained:
-            return
+            break
         case let .mustFailStop(reason):
             failStop(reason)
         }
     }
 
     private static func requireRetainedWait(
-        _ child: PrimeNativeNeuralGateSecureChildLifecycle
+        _ supervision:
+            PrimeSecureChildSupervisionCapability
     ) -> PrimeNativeNeuralGateExactPIDWaitObservation {
-        guard let observation = child.exactPIDWaitObservation else {
+        guard let observation =
+                supervision
+                .exactPIDWaitObservation
+        else {
             failStop(.exactPIDWaitFailed)
         }
-        return observation
-    }
-
-    private static func waitForDrainsOrFailStop(
-        _ drains: DispatchGroup
-    ) {
-        guard drains.wait(timeout: .now() + .seconds(3)) == .success else {
-            failStop(.streamDrainUncontained)
-        }
+        return PrimeNativeNeuralGateExactPIDWaitObservation(
+            secureChildObservation: observation
+        )
     }
 
     private static func failStop(
@@ -1629,238 +1904,6 @@ private enum PrimeSecureChildKernel {
         _ detail: String
     ) -> PrimeValidationWorkflowFixtureChildError {
         .rejected(detail)
-    }
-}
-
-struct PrimeSecureChildFileBackedDrainSnapshot:
-    Equatable,
-    Sendable
-{
-    let totalByteCount: UInt64
-    let capturedByteCount: UInt64
-    let overflowed: Bool
-    let workerFinished: Bool
-    let reachedEOF: Bool
-    let readErrorNumber: Int32
-    let writeErrorNumber: Int32
-    let outputDeviceID: UInt64
-    let outputInode: UInt64
-    let outputByteCount: UInt64
-    let outputPermissionMode: UInt16
-    let outputSHA256: String
-    let outputMetadataObserved: Bool
-}
-
-final class PrimeSecureChildFileBackedBoundedDrain:
-    @unchecked Sendable
-{
-    private let inputDescriptor: Int32
-    private let outputDescriptor: Int32
-    private let maximumByteCount: UInt64
-    private let lock = NSLock()
-    private var totalByteCount: UInt64 = 0
-    private var capturedByteCount: UInt64 = 0
-    private var overflowed = false
-    private var workerFinished = false
-    private var reachedEOF = false
-    private var readErrorNumber: Int32 = 0
-    private var writeErrorNumber: Int32 = 0
-    private var outputDeviceID: UInt64 = 0
-    private var outputInode: UInt64 = 0
-    private var outputByteCount: UInt64 = 0
-    private var outputPermissionMode: UInt16 = 0
-    private var outputSHA256 = ""
-    private var outputMetadataObserved = false
-
-    init(
-        inputDescriptor: Int32,
-        outputDescriptor: Int32,
-        maximumByteCount: UInt64
-    ) {
-        self.inputDescriptor = inputDescriptor
-        self.outputDescriptor = outputDescriptor
-        self.maximumByteCount = maximumByteCount
-    }
-
-    func start(group: DispatchGroup) {
-        group.enter()
-        DispatchQueue.global(qos: .utility).async {
-            self.drain()
-            group.leave()
-        }
-    }
-
-    func snapshot() -> PrimeSecureChildFileBackedDrainSnapshot {
-        lock.lock()
-        defer { lock.unlock() }
-        return PrimeSecureChildFileBackedDrainSnapshot(
-            totalByteCount: totalByteCount,
-            capturedByteCount: capturedByteCount,
-            overflowed: overflowed,
-            workerFinished: workerFinished,
-            reachedEOF: reachedEOF,
-            readErrorNumber: readErrorNumber,
-            writeErrorNumber: writeErrorNumber,
-            outputDeviceID: outputDeviceID,
-            outputInode: outputInode,
-            outputByteCount: outputByteCount,
-            outputPermissionMode: outputPermissionMode,
-            outputSHA256: outputSHA256,
-            outputMetadataObserved: outputMetadataObserved
-        )
-    }
-
-    private func drain() {
-        defer {
-            finalizeOutput()
-            Darwin.close(outputDescriptor)
-            Darwin.close(inputDescriptor)
-            lock.lock()
-            workerFinished = true
-            lock.unlock()
-        }
-        var buffer = [UInt8](repeating: 0, count: 64 * 1024)
-        while true {
-            let count = buffer.withUnsafeMutableBytes {
-                Darwin.read(inputDescriptor, $0.baseAddress, $0.count)
-            }
-            if count > 0 {
-                consume(buffer[0 ..< count])
-                continue
-            }
-            if count == 0 {
-                lock.lock()
-                reachedEOF = true
-                lock.unlock()
-                return
-            }
-            var failure = errno
-            if failure == EINTR { continue }
-            if failure == EAGAIN || failure == EWOULDBLOCK {
-                var event = pollfd(
-                    fd: inputDescriptor,
-                    events: Int16(POLLIN | POLLHUP | POLLERR),
-                    revents: 0
-                )
-                let polled = Darwin.poll(&event, 1, 100)
-                if polled >= 0 || errno == EINTR { continue }
-                failure = errno
-            }
-            lock.lock()
-            readErrorNumber = failure
-            lock.unlock()
-            return
-        }
-    }
-
-    private func consume(_ bytes: ArraySlice<UInt8>) {
-        lock.lock()
-        let addition = totalByteCount.addingReportingOverflow(
-            UInt64(bytes.count)
-        )
-        totalByteCount = addition.overflow
-            ? UInt64.max
-            : addition.partialValue
-        let remaining = maximumByteCount > capturedByteCount
-            ? maximumByteCount - capturedByteCount
-            : 0
-        let wanted = Int(min(remaining, UInt64(bytes.count)))
-        overflowed = addition.overflow
-            || totalByteCount > maximumByteCount
-        let mayWrite = writeErrorNumber == 0 && wanted > 0
-        lock.unlock()
-
-        guard mayWrite else { return }
-        let prefix = bytes.prefix(wanted)
-        var offset = 0
-        while offset < prefix.count {
-            let written = prefix.withUnsafeBytes {
-                Darwin.write(
-                    outputDescriptor,
-                    $0.baseAddress!.advanced(by: offset),
-                    $0.count - offset
-                )
-            }
-            if written > 0 {
-                offset += written
-                continue
-            }
-            if written < 0 && errno == EINTR { continue }
-            recordWriteError(errno)
-            return
-        }
-        lock.lock()
-        capturedByteCount += UInt64(offset)
-        lock.unlock()
-    }
-
-    private func recordWriteError(_ value: Int32) {
-        lock.lock()
-        if writeErrorNumber == 0 {
-            writeErrorNumber = value == 0 ? EIO : value
-        }
-        lock.unlock()
-    }
-
-    private func finalizeOutput() {
-        if fchmod(outputDescriptor, mode_t(0o444)) != 0 {
-            recordWriteError(errno)
-        }
-        if fsync(outputDescriptor) != 0 {
-            recordWriteError(errno)
-        }
-        if fcntl(outputDescriptor, F_FULLFSYNC) != 0 {
-            recordWriteError(errno)
-        }
-        var before = stat()
-        lock.lock()
-        let expectedByteCount = capturedByteCount
-        lock.unlock()
-        guard fstat(outputDescriptor, &before) == 0,
-              before.st_mode & mode_t(S_IFMT) == mode_t(S_IFREG),
-              before.st_uid == geteuid(),
-              before.st_nlink == 1,
-              before.st_mode & mode_t(0o7777) == mode_t(0o444),
-              before.st_size >= 0,
-              UInt64(before.st_size) == expectedByteCount
-        else {
-            recordWriteError(errno == 0 ? EIO : errno)
-            return
-        }
-        let data: Data
-        do {
-            data = try PrimeSecureChildPath.readExact(
-                descriptor: outputDescriptor,
-                byteCount: Int(before.st_size)
-            )
-        } catch {
-            recordWriteError(EIO)
-            return
-        }
-        var after = stat()
-        guard fstat(outputDescriptor, &after) == 0,
-              after.st_dev == before.st_dev,
-              after.st_ino == before.st_ino,
-              after.st_mode == before.st_mode,
-              after.st_nlink == before.st_nlink,
-              after.st_size == before.st_size,
-              after.st_mtimespec.tv_sec == before.st_mtimespec.tv_sec,
-              after.st_mtimespec.tv_nsec == before.st_mtimespec.tv_nsec,
-              after.st_ctimespec.tv_sec == before.st_ctimespec.tv_sec,
-              after.st_ctimespec.tv_nsec == before.st_ctimespec.tv_nsec
-        else {
-            recordWriteError(errno == 0 ? EIO : errno)
-            return
-        }
-        lock.lock()
-        outputDeviceID = UInt64(bitPattern: Int64(after.st_dev))
-        outputInode = UInt64(after.st_ino)
-        outputByteCount = UInt64(after.st_size)
-        outputPermissionMode =
-            UInt16(after.st_mode & mode_t(0o7777))
-        outputSHA256 = PrimeSHA256.hexDigest(of: data)
-        outputMetadataObserved = true
-        lock.unlock()
     }
 }
 
