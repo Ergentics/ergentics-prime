@@ -98,7 +98,10 @@ are separate workflow levers, not semantic proof.
 
 ## Fail-closed workflow requirements
 
-A later Swift-only validation driver must not trust process exit status alone.
+The isolated Swift evidence contract in
+`Tests/PrimeValidationWorkflow` now encodes the result semantics below. The
+cross-package process driver remains a later boundary and must not trust
+process exit status alone.
 The current SwiftPM/XCTest stack can exit zero when a filter matches no tests,
 and a skipped required test can still leave an overall passing suite label.
 The driver therefore must:
@@ -126,6 +129,7 @@ compiled inventory and actual completed count. An unfinished run, a zero-test
 match, a required skip, or process exit without that receipt is not passing.
 
 The remaining cross-package Swift validation driver is a separate boundary.
-This localized correction may be accepted only as removal of the demonstrated
-recursive topology defect; it cannot claim that the future aggregate workflow
-or isolated optimizer and neural-MLX suites already exist.
+The plan, strict parsers, raw-byte bindings, three-lane reconciliation, and
+mutation tests now exist; lease acquisition, process launch, scratch-root
+orchestration, staging, and durable receipt publication do not. See
+`PRIME-SWIFT-VALIDATION-EVIDENCE-CONTRACT-2026-08-02.md` for that exact line.

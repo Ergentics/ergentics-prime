@@ -1114,6 +1114,22 @@ swift test \
   --skip-build
 ```
 
+Repository-wide result semantics are implemented in a third isolated Swift
+package. It reparses bound inventory, xUnit, and sequential XCTest transcript
+bytes and classifies complete pass, complete fail, or incomplete; it does not
+launch the test processes:
+
+```sh
+swift test \
+  --package-path Tests/PrimeValidationWorkflow \
+  --scratch-path .build \
+  --force-resolved-versions
+```
+
+The evidence model, exact optional-skip policy, empirical XCTest/Swift Testing
+split, and remaining driver boundary are recorded in
+[`docs/PRIME-SWIFT-VALIDATION-EVIDENCE-CONTRACT-2026-08-02.md`](docs/PRIME-SWIFT-VALIDATION-EVIDENCE-CONTRACT-2026-08-02.md).
+
 The requested 96 GiB MLX memory setting is an MLX scheduler limit, not a claim
 that process RSS cannot exceed 96 GiB.
 `artifacts/` is intentionally gitignored; successful binary evidence must also

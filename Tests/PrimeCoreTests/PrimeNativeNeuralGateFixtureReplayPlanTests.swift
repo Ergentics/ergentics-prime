@@ -6586,6 +6586,8 @@ final class PrimeNativeNeuralGateFixtureReplayPlanTests:
                 Data("{}".utf8),
             "Tests/PrimeNativeNeuralGateMLXValidation/.swiftpm/configuration/mirrors.json":
                 Data("{}".utf8),
+            "Tests/PrimeValidationWorkflow/.swiftpm/configuration/mirrors.json":
+                Data("{}".utf8),
             "LICENSE": Data("license\n".utf8),
             "Package.swift":
                 Data("// swift-tools-version: 5.10\n".utf8),
