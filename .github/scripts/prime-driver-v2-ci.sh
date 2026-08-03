@@ -376,7 +376,7 @@ assert_runner() {
         'swift-driver version: 1.148.6 Apple Swift version 6.3.3 (swiftlang-6.3.3.1.3 clang-2100.1.1.101)' \
         'Target: arm64-apple-macosx26.0' \
         > "$expected_swift"
-    swift --version > "$actual_swift"
+    swift --version > "$actual_swift" 2>&1
     cmp -s "$actual_swift" "$expected_swift" ||
         die "Swift compiler identity differs from the pin"
     swift -print-target-info > "$target_info"
