@@ -973,21 +973,21 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
             verifier.standardOutputData
         )
         // Intentionally resealed from two matching live Release canary
-        // observations after neutral secure-child supervision replaced the
-        // two embedded lifecycle implementations. Package.swift is unchanged;
-        // the package description now enumerates the neutral deadline, drains,
-        // lifecycle, process-proof, and supervision sources in PrimeCore. This
-        // is actual-package secure-capture evidence, not Driver V2,
-        // source/execution-binding V7, or worker execution authority.
+        // observations after the root Driver V2 product and its three targets
+        // were added. The package description also enumerates the previously
+        // merged neutral deadline, drains, lifecycle, process-proof, and
+        // supervision sources in PrimeCore. This is actual-package
+        // secure-capture evidence, not Driver execution, source/execution-
+        // binding V7, or worker execution authority.
         XCTAssertEqual(
             probe.standardOutputData.count,
-            63_214
+            65_306
         )
         XCTAssertEqual(
             PrimeSHA256.hexDigest(
                 of: probe.standardOutputData
             ),
-            "9901d983ed76f6ffa26f3c59142c6a71ec4453be2d38156001d10f0beb5d9bb5"
+            "6a4221c36d6e1b013b5e8bd7ad1c7730ebb8847a257305d7c550b14e1543a7e6"
         )
         XCTAssertEqual(
             probe.validatedPrimeSourceSnapshot,

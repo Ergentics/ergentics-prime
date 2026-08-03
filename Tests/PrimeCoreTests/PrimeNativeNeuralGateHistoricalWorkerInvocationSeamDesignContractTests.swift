@@ -70,7 +70,13 @@ final class
             ),
         ]
         for (path, byteCount, sha256) in identities {
-            let data = try checkedInData(path)
+            let data = try PrimeRootPackageManifestCheckpointTestSupport
+                .frozenCheckpointData(
+                    relativePath: path,
+                    expectedByteCount: byteCount,
+                    expectedSHA256: sha256,
+                    repositoryRoot: repositoryRoot
+                )
             XCTAssertEqual(UInt64(data.count), byteCount, path)
             XCTAssertEqual(
                 PrimeSHA256.hexDigest(of: data),

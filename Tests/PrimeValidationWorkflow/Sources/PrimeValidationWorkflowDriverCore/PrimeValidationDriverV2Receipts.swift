@@ -3,7 +3,11 @@
 
 import Foundation
 import PrimeCore
+#if canImport(PrimeValidationWorkflowRootContracts)
+import PrimeValidationWorkflowRootContracts
+#else
 import PrimeValidationWorkflowContracts
+#endif
 
 public enum PrimeValidationPhaseTerminalDispositionV2:
     String,

@@ -397,6 +397,427 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
         race.releaseValues()
     }
 
+    func testCurrentProcessImageHandoffTransfersOldGuardAuthority()
+        throws
+    {
+        let fixture = try Fixture()
+        defer { fixture.cleanup() }
+        let guarded = try fixture.admit()
+            .consumePrerequisites()
+            .prepareGuardedPreExecutor(
+                allowRootOwnedCurrentProcessForTesting: true
+            )
+
+        let handoff = try guarded.consumeCurrentProcessImageHandoff()
+
+        XCTAssertEqual(guarded.guardState, .transferred)
+        XCTAssertEqual(guarded.authorityCeiling, .transferredNoAuthority)
+        XCTAssertFalse(guarded.sourceDescriptorClosureHeld)
+        XCTAssertFalse(guarded.sourceWatchWindowArmed)
+        XCTAssertFalse(guarded.currentProcessExecutableImageHeld)
+        XCTAssertEqual(
+            guarded.missingAuthorities,
+            PrimeValidationSwiftPMMissingAuthority.allCases
+        )
+        XCTAssertThrowsError(try guarded.revalidateGuards()) {
+            XCTAssertEqual(
+                $0 as?
+                    PrimeValidationSwiftPMBuildInventoryAdmissionError,
+                .guardedPreExecutorTransferred
+            )
+        }
+        XCTAssertThrowsError(
+            try guarded.consumeCurrentProcessImageHandoff()
+        ) {
+            XCTAssertEqual(
+                $0 as?
+                    PrimeValidationSwiftPMBuildInventoryAdmissionError,
+                .guardedPreExecutorTransferred
+            )
+        }
+
+        XCTAssertEqual(handoff.guardState, .prepared)
+        XCTAssertEqual(
+            handoff.authorityCeiling,
+            .sourceGuardsPreparedOnly
+        )
+        XCTAssertFalse(handoff.productionSupervisorImageEligible)
+        XCTAssertTrue(
+            handoff.missingAuthorities.contains(
+                .supervisorExecutableImage
+            )
+        )
+        XCTAssertEqual(handoff.processExecutionObservation, .unobserved)
+        XCTAssertFalse(handoff.completionAuthorized)
+        try handoff.revalidate()
+    }
+
+    func testConcurrentCurrentProcessImageHandoffHasOneWinner()
+        throws
+    {
+        let fixture = try Fixture()
+        defer { fixture.cleanup() }
+        let guarded = try fixture.admit()
+            .consumePrerequisites()
+            .prepareGuardedPreExecutor(
+                allowRootOwnedCurrentProcessForTesting: true
+            )
+        let race = CurrentProcessImageHandoffRace()
+        let ready = DispatchGroup()
+        let done = DispatchGroup()
+        let start = DispatchSemaphore(value: 0)
+        let queue = DispatchQueue(
+            label: "prime.validation.current-image-handoff-race",
+            attributes: .concurrent
+        )
+
+        for _ in 0 ..< 2 {
+            ready.enter()
+            done.enter()
+            queue.async {
+                ready.leave()
+                start.wait()
+                race.record {
+                    try guarded.consumeCurrentProcessImageHandoff()
+                }
+                done.leave()
+            }
+        }
+        XCTAssertEqual(ready.wait(timeout: .now() + 5), .success)
+        start.signal()
+        start.signal()
+        XCTAssertEqual(done.wait(timeout: .now() + 30), .success)
+
+        XCTAssertEqual(race.values.count, 1)
+        XCTAssertEqual(race.errors.count, 1)
+        XCTAssertEqual(
+            race.errors.first as?
+                PrimeValidationSwiftPMBuildInventoryAdmissionError,
+            .guardedPreExecutorTransferred
+        )
+        try race.values.first?.revalidate()
+        race.releaseValues()
+    }
+
+    func testCurrentProcessImageClaimIsExactAndOneShot() throws {
+        let fixture = try Fixture()
+        defer { fixture.cleanup() }
+        let handoff = try fixture.admit()
+            .consumePrerequisites()
+            .prepareGuardedPreExecutor(
+                allowRootOwnedCurrentProcessForTesting: true
+            )
+            .consumeCurrentProcessImageHandoff()
+        let image = handoff.currentProcessExecutable
+
+        let claimed = try handoff.consumeMatchingCurrentProcessImage(
+            expectedCanonicalAbsolutePath: image.canonicalAbsolutePath,
+            expectedSHA256: image.sha256,
+            expectedByteCount: image.byteCount,
+            expectedSourceIdentitySHA256:
+                handoff.sourceIdentitySHA256
+        )
+
+        XCTAssertEqual(handoff.guardState, .transferred)
+        XCTAssertEqual(handoff.authorityCeiling, .transferredNoAuthority)
+        XCTAssertEqual(
+            handoff.missingAuthorities,
+            PrimeValidationSwiftPMMissingAuthority.allCases
+        )
+        XCTAssertThrowsError(try handoff.revalidate()) {
+            XCTAssertEqual(
+                $0 as?
+                    PrimeValidationSwiftPMBuildInventoryAdmissionError,
+                .guardedPreExecutorTransferred
+            )
+        }
+        XCTAssertEqual(claimed.guardState, .prepared)
+        XCTAssertFalse(claimed.productionSupervisorImageEligible)
+        XCTAssertTrue(
+            claimed.missingAuthorities.contains(
+                .supervisorExecutableImage
+            )
+        )
+        XCTAssertEqual(claimed.processExecutionObservation, .unobserved)
+        XCTAssertFalse(claimed.completionAuthorized)
+        try claimed.revalidate()
+        XCTAssertThrowsError(
+            try handoff.consumeMatchingCurrentProcessImage(
+                expectedCanonicalAbsolutePath:
+                    image.canonicalAbsolutePath,
+                expectedSHA256: image.sha256,
+                expectedByteCount: image.byteCount,
+                expectedSourceIdentitySHA256:
+                    handoff.sourceIdentitySHA256
+            )
+        ) {
+            XCTAssertEqual(
+                $0 as?
+                    PrimeValidationSwiftPMBuildInventoryAdmissionError,
+                .guardedPreExecutorTransferred
+            )
+        }
+    }
+
+    func testTransferredAliasesDoNotRetainLeaseAfterClaimDrops()
+        throws
+    {
+        let fixture = try Fixture()
+        defer { fixture.cleanup() }
+        let capability = try fixture.admit()
+        let prerequisite = try capability.consumePrerequisites()
+        let guarded = try prerequisite.prepareGuardedPreExecutor(
+            allowRootOwnedCurrentProcessForTesting: true
+        )
+        let handoff = try guarded.consumeCurrentProcessImageHandoff()
+        let image = handoff.currentProcessExecutable
+        var claimed:
+            PrimeValidationSwiftPMClaimedCurrentProcessImage? =
+                try handoff.consumeMatchingCurrentProcessImage(
+                    expectedCanonicalAbsolutePath:
+                        image.canonicalAbsolutePath,
+                    expectedSHA256: image.sha256,
+                    expectedByteCount: image.byteCount,
+                    expectedSourceIdentitySHA256:
+                        handoff.sourceIdentitySHA256
+                )
+
+        try claimed?.revalidate()
+        assertLeaseBusy(fixture.lockURL)
+        XCTAssertEqual(
+            prerequisite.authorityCeiling,
+            .transferredNoAuthority
+        )
+        XCTAssertEqual(guarded.guardState, .transferred)
+        XCTAssertEqual(handoff.guardState, .transferred)
+        claimed = nil
+
+        let staleAliases = (
+            capability,
+            prerequisite,
+            guarded,
+            handoff
+        )
+        let reacquired = try withExtendedLifetime(staleAliases) {
+            try PrimeMetalDeviceLease.acquire(at: fixture.lockURL)
+        }
+        XCTAssertTrue(reacquired.isHeld)
+        reacquired.release()
+    }
+
+    func testConcurrentCurrentProcessImageClaimHasOneWinner()
+        throws
+    {
+        let fixture = try Fixture()
+        defer { fixture.cleanup() }
+        let handoff = try fixture.admit()
+            .consumePrerequisites()
+            .prepareGuardedPreExecutor(
+                allowRootOwnedCurrentProcessForTesting: true
+            )
+            .consumeCurrentProcessImageHandoff()
+        let image = handoff.currentProcessExecutable
+        let race = CurrentProcessImageClaimRace()
+        let ready = DispatchGroup()
+        let done = DispatchGroup()
+        let start = DispatchSemaphore(value: 0)
+        let queue = DispatchQueue(
+            label: "prime.validation.current-image-claim-race",
+            attributes: .concurrent
+        )
+
+        for _ in 0 ..< 2 {
+            ready.enter()
+            done.enter()
+            queue.async {
+                ready.leave()
+                start.wait()
+                race.record {
+                    try handoff.consumeMatchingCurrentProcessImage(
+                        expectedCanonicalAbsolutePath:
+                            image.canonicalAbsolutePath,
+                        expectedSHA256: image.sha256,
+                        expectedByteCount: image.byteCount,
+                        expectedSourceIdentitySHA256:
+                            handoff.sourceIdentitySHA256
+                    )
+                }
+                done.leave()
+            }
+        }
+        XCTAssertEqual(ready.wait(timeout: .now() + 5), .success)
+        start.signal()
+        start.signal()
+        XCTAssertEqual(done.wait(timeout: .now() + 30), .success)
+
+        XCTAssertEqual(race.values.count, 1)
+        XCTAssertEqual(race.errors.count, 1)
+        XCTAssertEqual(
+            race.errors.first as?
+                PrimeValidationSwiftPMBuildInventoryAdmissionError,
+            .guardedPreExecutorTransferred
+        )
+        try race.values.first?.revalidate()
+        race.releaseValues()
+    }
+
+    func testCurrentProcessImageClaimMismatchPoisonsHandoff()
+        throws
+    {
+        enum Mutation: Equatable {
+            case path
+            case hash
+            case size
+            case source
+        }
+        for mutation in [
+            Mutation.path,
+            .hash,
+            .size,
+            .source,
+        ] {
+            let fixture = try Fixture()
+            defer { fixture.cleanup() }
+            let handoff = try fixture.admit()
+                .consumePrerequisites()
+                .prepareGuardedPreExecutor(
+                    allowRootOwnedCurrentProcessForTesting: true
+                )
+                .consumeCurrentProcessImageHandoff()
+            let image = handoff.currentProcessExecutable
+            let path = mutation == .path
+                ? "/private/tmp/not-the-current-image"
+                : image.canonicalAbsolutePath
+            let hash = mutation == .hash
+                ? String(repeating: "0", count: 64)
+                : image.sha256
+            let size = mutation == .size
+                ? image.byteCount + 1
+                : image.byteCount
+            let source = mutation == .source
+                ? String(repeating: "0", count: 64)
+                : handoff.sourceIdentitySHA256
+
+            XCTAssertThrowsError(
+                try handoff.consumeMatchingCurrentProcessImage(
+                    expectedCanonicalAbsolutePath: path,
+                    expectedSHA256: hash,
+                    expectedByteCount: size,
+                    expectedSourceIdentitySHA256: source
+                )
+            ) {
+                XCTAssertEqual(
+                    $0 as?
+                        PrimeValidationSwiftPMBuildInventoryAdmissionError,
+                    .rejected("current_process_image_binding")
+                )
+            }
+            XCTAssertEqual(handoff.guardState, .poisoned)
+            XCTAssertEqual(
+                handoff.authorityCeiling,
+                .poisonedNoAuthority
+            )
+            XCTAssertEqual(
+                handoff.missingAuthorities,
+                PrimeValidationSwiftPMMissingAuthority.allCases
+            )
+            XCTAssertThrowsError(try handoff.revalidate())
+        }
+    }
+
+    func testClaimedCurrentProcessImagePoisonsAfterSourceMutation()
+        throws
+    {
+        let fixture = try Fixture()
+        defer { fixture.cleanup() }
+        let capability = try fixture.admit()
+        let prerequisite = try capability.consumePrerequisites()
+        let guarded = try prerequisite.prepareGuardedPreExecutor(
+            allowRootOwnedCurrentProcessForTesting: true
+        )
+        let handoff = try guarded.consumeCurrentProcessImageHandoff()
+        let image = handoff.currentProcessExecutable
+        let claimed = try handoff.consumeMatchingCurrentProcessImage(
+            expectedCanonicalAbsolutePath: image.canonicalAbsolutePath,
+            expectedSHA256: image.sha256,
+            expectedByteCount: image.byteCount,
+            expectedSourceIdentitySHA256:
+                handoff.sourceIdentitySHA256
+        )
+
+        try Data("mutated\n".utf8).write(
+            to: fixture.prime.appendingPathComponent("README.md")
+        )
+        XCTAssertThrowsError(try claimed.revalidate())
+        XCTAssertEqual(claimed.guardState, .poisoned)
+        XCTAssertEqual(
+            claimed.authorityCeiling,
+            .poisonedNoAuthority
+        )
+        XCTAssertEqual(
+            claimed.missingAuthorities,
+            PrimeValidationSwiftPMMissingAuthority.allCases
+        )
+
+        let staleAliases = (
+            capability,
+            prerequisite,
+            guarded,
+            handoff,
+            claimed
+        )
+        let reacquired = try withExtendedLifetime(staleAliases) {
+            try PrimeMetalDeviceLease.acquire(at: fixture.lockURL)
+        }
+        XCTAssertTrue(reacquired.isHeld)
+        reacquired.release()
+    }
+
+    func testRootOwnedXCTestImageCannotBecomeDriverSupervisor()
+        throws
+    {
+        let fixture = try Fixture()
+        defer { fixture.cleanup() }
+        let handoff = try fixture.admit()
+            .consumePrerequisites()
+            .prepareGuardedPreExecutor(
+                allowRootOwnedCurrentProcessForTesting: true
+            )
+            .consumeCurrentProcessImageHandoff()
+        let image = handoff.currentProcessExecutable
+        let bytes = try Data(
+            contentsOf: URL(
+                fileURLWithPath: image.canonicalAbsolutePath
+            )
+        )
+        XCTAssertEqual(UInt64(bytes.count), image.byteCount)
+        XCTAssertEqual(PrimeSHA256.hexDigest(of: bytes), image.sha256)
+        let declaration =
+            PrimeValidationDriverV2SupervisorImageDeclarationV1(
+                runID: "xctest-substitution",
+                sourceIdentitySHA256:
+                    handoff.sourceIdentitySHA256,
+                executable: .init(
+                    absolutePath: image.canonicalAbsolutePath,
+                    content: .init(data: bytes)
+                )
+            )
+
+        XCTAssertThrowsError(
+            try PrimeValidationDriverV2SupervisorImageBridge.bind(
+                handoff: handoff,
+                declaration: declaration
+            )
+        ) {
+            XCTAssertEqual(
+                $0 as? PrimeValidationDriverV2Error,
+                .authorityViolation
+            )
+        }
+        XCTAssertEqual(handoff.guardState, .prepared)
+        try handoff.revalidate()
+    }
+
     func testGuardPreparationFailurePoisonsOneShotTransition() throws {
         let fixture = try Fixture()
         defer { fixture.cleanup() }
@@ -639,7 +1060,7 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
             from:
                 "public final class PrimeValidationSwiftPMBuildInventoryPrerequisite",
             through:
-                "public final class PrimeValidationSwiftPMBuildInventoryAdmissionCapability"
+                "/// Live input guards for a future fixed-role executor."
         )
         XCTAssertFalse(prerequisiteSource.contains("Codable"))
         XCTAssertFalse(prerequisiteSource.contains("public init("))
@@ -649,7 +1070,7 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
             from:
                 "public final class PrimeValidationSwiftPMBuildInventoryGuardedPreExecutor",
             through:
-                "/// A single-use live capability for inputs needed by a future SwiftPM"
+                "/// A neutral, one-shot live handoff for exact current-image matching."
         )
         XCTAssertFalse(guardedSource.contains("Codable"))
         XCTAssertFalse(guardedSource.contains("public init("))
@@ -658,6 +1079,41 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
         XCTAssertFalse(guardedSource.contains("posix_spawn"))
         XCTAssertFalse(guardedSource.contains("Process("))
         XCTAssertFalse(guardedSource.contains("createDirectory"))
+
+        let handoffSource = try slice(
+            source,
+            from:
+                "public final class PrimeValidationSwiftPMCurrentProcessImageHandoff",
+            through:
+                "/// Unforgeable live proof that declared source/image values matched"
+        )
+        XCTAssertFalse(handoffSource.contains("Codable"))
+        XCTAssertFalse(handoffSource.contains("public init("))
+        XCTAssertFalse(handoffSource.contains("arguments:"))
+        XCTAssertFalse(handoffSource.contains("environment:"))
+        XCTAssertFalse(handoffSource.contains("posix_spawn"))
+        XCTAssertFalse(handoffSource.contains("Process("))
+        XCTAssertFalse(handoffSource.contains("execute("))
+
+        let bridgeSource = try String(
+            contentsOf: Fixture.supervisorBridgeSourceURL,
+            encoding: .utf8
+        )
+        XCTAssertTrue(
+            bridgeSource.contains(
+                "package enum PrimeValidationDriverV2SupervisorImageBridge"
+            )
+        )
+        XCTAssertFalse(
+            bridgeSource.contains(
+                "public enum PrimeValidationDriverV2SupervisorImageBridge"
+            )
+        )
+        XCTAssertFalse(bridgeSource.contains("Process("))
+        XCTAssertFalse(bridgeSource.contains("posix_spawn"))
+        XCTAssertFalse(bridgeSource.contains("arguments:"))
+        XCTAssertFalse(bridgeSource.contains("environment:"))
+        XCTAssertFalse(bridgeSource.contains("restore("))
     }
 
     private func assertLeaseBusy(
@@ -763,14 +1219,92 @@ private final class GuardPreparationRace: @unchecked Sendable {
     }
 }
 
+private final class CurrentProcessImageHandoffRace:
+    @unchecked Sendable
+{
+    private let lock = NSLock()
+    private(set) var values:
+        [PrimeValidationSwiftPMCurrentProcessImageHandoff] = []
+    private(set) var errors: [Error] = []
+
+    func record(
+        _ operation: () throws
+            -> PrimeValidationSwiftPMCurrentProcessImageHandoff
+    ) {
+        do {
+            let value = try operation()
+            lock.lock()
+            values.append(value)
+            lock.unlock()
+        } catch {
+            lock.lock()
+            errors.append(error)
+            lock.unlock()
+        }
+    }
+
+    func releaseValues() {
+        lock.lock()
+        values.removeAll()
+        lock.unlock()
+    }
+}
+
+private final class CurrentProcessImageClaimRace:
+    @unchecked Sendable
+{
+    private let lock = NSLock()
+    private(set) var values:
+        [PrimeValidationSwiftPMClaimedCurrentProcessImage] = []
+    private(set) var errors: [Error] = []
+
+    func record(
+        _ operation: () throws
+            -> PrimeValidationSwiftPMClaimedCurrentProcessImage
+    ) {
+        do {
+            let value = try operation()
+            lock.lock()
+            values.append(value)
+            lock.unlock()
+        } catch {
+            lock.lock()
+            errors.append(error)
+            lock.unlock()
+        }
+    }
+
+    func releaseValues() {
+        lock.lock()
+        values.removeAll()
+        lock.unlock()
+    }
+}
+
 private enum FixtureError: Error {
     case invalid(String)
 }
 
 private final class Fixture {
     static let commit = String(repeating: "a", count: 40)
-    static let developerPath =
-        "/Applications/Xcode.app/Contents/Developer"
+    static let developerPath: String = {
+        let selector = URL(
+            fileURLWithPath:
+                "/Applications/Xcode.app/Contents/Developer",
+            isDirectory: true
+        )
+        let canonical = selector
+            .resolvingSymlinksInPath()
+            .standardizedFileURL.path
+        precondition(
+            [
+                "/Applications/Xcode.app/Contents/Developer",
+                "/Applications/Xcode_26.5.app/Contents/Developer",
+                "/Applications/Xcode_26.6.app/Contents/Developer",
+            ].contains(canonical)
+        )
+        return canonical
+    }()
     static let sdkPath = developerPath
         + "/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk"
     static let swiftPackagePath = developerPath
@@ -784,6 +1318,17 @@ private final class Fixture {
         return root.appendingPathComponent(
             "Sources/PrimeCore/" +
                 "PrimeValidationSwiftPMBuildInventoryAdmission.swift"
+        )
+    }()
+
+    static let supervisorBridgeSourceURL: URL = {
+        var root = URL(fileURLWithPath: #filePath)
+        for _ in 0 ..< 3 {
+            root.deleteLastPathComponent()
+        }
+        return root.appendingPathComponent(
+            "Sources/PrimeValidationWorkflowDriverCore/" +
+                "PrimeValidationDriverV2SupervisorImageBridge.swift"
         )
     }()
 

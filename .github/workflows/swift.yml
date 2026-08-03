@@ -1,0 +1,121 @@
+name: Swift Driver V2 CI canaries
+
+on:
+  push:
+    branches:
+      - main
+      - wip/prime-validation-driver-v2-evidence-completion
+
+permissions:
+  contents: read
+
+# External credential boundary: workflow permissions cannot downscope a PAT.
+# ERGENTICS_PAT must be maintained read-only for the two pinned input repos.
+concurrency:
+  group: swift-driver-v2-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  root-release:
+    name: Root Release / Driver V2 canaries and full aggregate
+    if: >-
+      github.ref == 'refs/heads/main' ||
+      github.ref ==
+      'refs/heads/wip/prime-validation-driver-v2-evidence-completion'
+    runs-on: macos-26
+    timeout-minutes: 120
+
+    steps:
+      - name: Check out the exact Prime commit
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          ref: ${{ github.sha }}
+          path: prime
+          fetch-depth: 1
+          persist-credentials: false
+          show-progress: false
+
+      - name: Check out the exact companion
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          repository: Ergentics/pmhnp-companion-ergentics
+          ref: 163fc100710ece48119bc25954452d10f6a84f7f
+          path: companion
+          fetch-depth: 1
+          persist-credentials: false
+          show-progress: false
+          token: ${{ secrets.ERGENTICS_PAT }}
+
+      - name: Check out the exact first-party MLX fork
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          repository: Ergentics/ergentics-mlx-swift
+          ref: d37885a278f1c37484a94d0f401a418735e66519
+          path: mlx
+          fetch-depth: 1
+          persist-credentials: false
+          show-progress: false
+          submodules: recursive
+          token: ${{ secrets.ERGENTICS_PAT }}
+
+      - name: Run the exact root Release gates
+        working-directory: prime
+        run: bash .github/scripts/prime-driver-v2-ci.sh root-release
+
+  nested-driver:
+    name: Nested Driver / ${{ matrix.configuration }}
+    if: >-
+      github.ref == 'refs/heads/main' ||
+      github.ref ==
+      'refs/heads/wip/prime-validation-driver-v2-evidence-completion'
+    runs-on: macos-26
+    timeout-minutes: 75
+    strategy:
+      fail-fast: false
+      matrix:
+        configuration:
+          - debug
+          - release
+
+    steps:
+      - name: Check out the exact Prime commit
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          ref: ${{ github.sha }}
+          path: prime
+          fetch-depth: 1
+          persist-credentials: false
+          show-progress: false
+
+      - name: Check out the exact companion
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          repository: Ergentics/pmhnp-companion-ergentics
+          ref: 163fc100710ece48119bc25954452d10f6a84f7f
+          path: companion
+          fetch-depth: 1
+          persist-credentials: false
+          show-progress: false
+          token: ${{ secrets.ERGENTICS_PAT }}
+
+      - name: Check out the exact first-party MLX fork
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          repository: Ergentics/ergentics-mlx-swift
+          ref: d37885a278f1c37484a94d0f401a418735e66519
+          path: mlx
+          fetch-depth: 1
+          persist-credentials: false
+          show-progress: false
+          submodules: recursive
+          token: ${{ secrets.ERGENTICS_PAT }}
+
+      - name: Run the exact nested Driver gate
+        working-directory: prime
+        run: >-
+          bash .github/scripts/prime-driver-v2-ci.sh nested
+          ${{ matrix.configuration }}

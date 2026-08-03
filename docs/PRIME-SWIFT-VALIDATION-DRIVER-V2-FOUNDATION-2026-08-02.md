@@ -233,13 +233,13 @@ remain the immediate closed pre-shard boundary. The exact authority split and
 remaining eleven missing authorities are recorded in
 `PRIME-SWIFT-VALIDATION-EXECUTOR-ADMISSION-2026-08-02.md`.
 
-The next follow-on now closes only the Prime source-closure and watch-window
-parts of that boundary. It atomically consumes the live prerequisite into a
-non-Codable source-guard capability, retains the exact current holder-process
-image as non-authoritative evidence, and becomes `poisoned_no_authority` after
-any failed checkpoint. It does not bind that image to the declared Driver V2
-supervisor, observe Git or Swift, create staging, execute a child, or change
-the frozen planner ceiling. Nine operating-system authorities therefore remain
-missing. The dedicated supervisor/DriverCore bridge and internal secure-child
-extraction precede any build or list role; details are recorded in
-`PRIME-SWIFT-VALIDATION-GUARDED-SOURCE-2026-08-03.md`.
+The source guard now transfers once into a neutral current-image handoff, and
+a package-scoped DriverCore bridge binds the dedicated root Driver V2
+executable's exact mapped image. Stale aliases become
+`transferred_no_authority`; any failed live checkpoint becomes
+`poisoned_no_authority`. The bound token does not observe Git or Swift, create
+staging, execute a child, or change the frozen planner ceiling. Eight
+operating-system authorities therefore remain missing. Canonical held
+tracked-tree manifests plus a gapless source-watch sequence precede any fixed
+probe; details are recorded in
+`PRIME-SWIFT-VALIDATION-SUPERVISOR-IMAGE-2026-08-03.md`.

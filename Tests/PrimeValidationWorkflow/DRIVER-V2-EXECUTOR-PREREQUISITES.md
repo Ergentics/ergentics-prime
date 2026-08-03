@@ -14,11 +14,15 @@ execution, durable resume, or complete arm/final receipts. Public completion
 remains fail-closed until an executor supplies all of the following.
 
 A later non-executing guard transition now holds the complete Prime source
-snapshot by descriptor and arms a repeatable prepared-state vnode watch. It
-also retains the current holder process's mapped image as non-authoritative
-prerequisite evidence. The supervisor image remains missing until a dedicated
-Driver V2 executable and non-restorable DriverCore bridge bind that image to
-the run intent. Poisoned guards dynamically restore the complete missing set.
+snapshot by descriptor and arms a repeatable prepared-state vnode watch. The
+dedicated root-package Driver V2 executable consumes that guard through a
+neutral one-shot current-image handoff and a package-scoped, non-restorable
+DriverCore bridge. A caller-supplied precursor path, SHA-256, and byte count
+must equal the fresh secure capture and retained image, while source identity
+comes from the compiled first-party pin. The bridge closes only exact
+supervisor-image identity; this is not yet complete RunIntent admission,
+process execution remains unobserved, and poisoned live tokens dynamically
+restore the complete missing set.
 
 - Time and concurrency authority: monotonic active and wall-clock accounting,
   deadline escalation receipts, and enforced per-arm/global concurrency caps.
@@ -48,14 +52,15 @@ the live prerequisite still withholds Git/tool process observations, artifact
 staging, and all build/inventory/execution outcomes. A decoded declaration
 cannot restore the live capability.
 
-The independent physical spawn path, logical `argv[0]`, and pipe ownership now
-live in one internal transport shared by the two closed callers. The next
-implementation prerequisite is the remaining closed secure-child supervision
-substrate: neutral cwd/mapped-image proof, lifecycle, containment/reap, EOF
-drains, and one absolute deadline established before spawn. A gapless
-multi-child source-watch sequence remains required. The current maintained
-external-child facade and Foundation `Process` Git transport are not execution
-authority for the build/list plan.
+The independent physical spawn path, logical `argv[0]`, pipe ownership,
+cwd/mapped-image proof, lifecycle, containment/reap, EOF drains, and one
+absolute pre-spawn deadline now live in the audited internal neutral
+secure-child substrate. They remain intentionally unreachable from the public
+Driver surface in the supervisor-image slice. The next implementation
+prerequisite is a gapless multi-child source-watch sequence plus canonical
+descriptor-held Prime and companion tracked-tree manifests before any fixed
+Git or Swift probe. The current maintained external-child facade and Foundation
+`Process` Git transport are not execution authority for the build/list plan.
 
 These are implementation prerequisites, not claims that the current schema
 already observes or enforces the remaining operating-system behavior. The

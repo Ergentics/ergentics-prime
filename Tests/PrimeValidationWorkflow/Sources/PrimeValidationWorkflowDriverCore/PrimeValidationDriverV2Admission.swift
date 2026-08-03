@@ -3,7 +3,11 @@
 
 import Foundation
 import PrimeCore
+#if canImport(PrimeValidationWorkflowRootContracts)
+import PrimeValidationWorkflowRootContracts
+#else
 import PrimeValidationWorkflowContracts
+#endif
 
 /// Durable admission declarations are mechanics-only. They can bind what a
 /// later closed OS capability observed, but decoded bytes never become process

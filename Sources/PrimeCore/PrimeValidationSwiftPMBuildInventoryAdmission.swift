@@ -13,6 +13,7 @@ public enum PrimeValidationSwiftPMBuildInventoryAdmissionError:
     case capabilityAlreadyConsumed
     case prerequisiteAlreadyConsumed
     case guardedPreExecutorPoisoned
+    case guardedPreExecutorTransferred
 }
 
 extension PrimeValidationSwiftPMBuildInventoryAdmissionError:
@@ -28,6 +29,8 @@ extension PrimeValidationSwiftPMBuildInventoryAdmissionError:
             "SwiftPM build/inventory prerequisite was already consumed"
         case .guardedPreExecutorPoisoned:
             "SwiftPM build/inventory guarded pre-executor is poisoned"
+        case .guardedPreExecutorTransferred:
+            "SwiftPM build/inventory guarded pre-executor authority was transferred"
         }
     }
 }
@@ -178,6 +181,7 @@ public enum PrimeValidationSwiftPMAuthorityCeiling:
     case retainedInputsOnlyNoPreparedExecutor =
         "retained_inputs_only_no_prepared_executor"
     case sourceGuardsPreparedOnly = "source_guards_prepared_only"
+    case transferredNoAuthority = "transferred_no_authority"
     case poisonedNoAuthority = "poisoned_no_authority"
 }
 
@@ -187,6 +191,7 @@ public enum PrimeValidationSwiftPMGuardState:
     Sendable
 {
     case prepared
+    case transferred
     case poisoned
 }
 
@@ -215,6 +220,11 @@ public enum PrimeValidationSwiftPMObservationState:
 public final class PrimeValidationSwiftPMBuildInventoryPrerequisite:
     @unchecked Sendable
 {
+    private enum State {
+        case available(PrimeValidationSwiftPMRetainedAdmissionState)
+        case consumed
+    }
+
     public let primeRepository:
         PrimeValidationSwiftPMDirectoryObservation
     public let workspaceRoot:
@@ -231,9 +241,18 @@ public final class PrimeValidationSwiftPMBuildInventoryPrerequisite:
         PrimeValidationSwiftPMToolchainObservation
     public let missingAuthorities:
         [PrimeValidationSwiftPMMissingAuthority]
-    public let authorityCeiling:
-        PrimeValidationSwiftPMAuthorityCeiling =
-            .retainedInputsOnlyNoPreparedExecutor
+    public var authorityCeiling:
+        PrimeValidationSwiftPMAuthorityCeiling
+    {
+        preparationLock.lock()
+        defer { preparationLock.unlock() }
+        switch state {
+        case .available:
+            return .retainedInputsOnlyNoPreparedExecutor
+        case .consumed:
+            return .transferredNoAuthority
+        }
+    }
     public let processExecutionObservation:
         PrimeValidationSwiftPMObservationState = .unobserved
     public let buildExecutionObservation:
@@ -245,15 +264,16 @@ public final class PrimeValidationSwiftPMBuildInventoryPrerequisite:
     public let completionAuthorized = false
 
     // Retention is the authority. A decoded or memberwise-reconstructed value
-    // cannot create this state because there is no public initializer.
-    let retainedState: PrimeValidationSwiftPMRetainedAdmissionState
+    // cannot create this state because there is no public initializer. The
+    // enum-associated value is moved out atomically so stale aliases retain no
+    // descriptors or lease after transfer.
     private let preparationLock = NSLock()
-    private var preparationConsumed = false
+    private var state: State
 
     init(
         retainedState: PrimeValidationSwiftPMRetainedAdmissionState
     ) {
-        self.retainedState = retainedState
+        state = .available(retainedState)
         primeRepository = retainedState.primeRepository.observation
         workspaceRoot = retainedState.workspaceRoot.observation
         evidenceRoot = retainedState.evidenceRoot.observation
@@ -291,13 +311,17 @@ public final class PrimeValidationSwiftPMBuildInventoryPrerequisite:
     ) throws
         -> PrimeValidationSwiftPMBuildInventoryGuardedPreExecutor
     {
+        let retainedState: PrimeValidationSwiftPMRetainedAdmissionState
         preparationLock.lock()
-        guard !preparationConsumed else {
+        switch state {
+        case let .available(value):
+            retainedState = value
+            state = .consumed
+        case .consumed:
             preparationLock.unlock()
             throw PrimeValidationSwiftPMBuildInventoryAdmissionError
                 .prerequisiteAlreadyConsumed
         }
-        preparationConsumed = true
         preparationLock.unlock()
 
         try retainedState.revalidate()
@@ -331,7 +355,9 @@ public final class PrimeValidationSwiftPMBuildInventoryPrerequisite:
             PrimeValidationSwiftPMRetainedGuardedPreExecutorState(
                 admission: retainedState,
                 sourceWatch: sourceWatch,
-                currentProcessImage: currentProcessImage
+                currentProcessImage: currentProcessImage,
+                productionSupervisorImageEligible:
+                    !allowRootOwnedCurrentProcessForTesting
             )
         try guardedState.revalidate()
         return
@@ -353,6 +379,14 @@ public final class PrimeValidationSwiftPMBuildInventoryPrerequisite:
 public final class PrimeValidationSwiftPMBuildInventoryGuardedPreExecutor:
     @unchecked Sendable
 {
+    private enum State {
+        case prepared(
+            PrimeValidationSwiftPMRetainedGuardedPreExecutorState
+        )
+        case transferred
+        case poisoned
+    }
+
     public let primeRepository:
         PrimeValidationSwiftPMDirectoryObservation
     public let workspaceRoot:
@@ -381,15 +415,20 @@ public final class PrimeValidationSwiftPMBuildInventoryGuardedPreExecutor:
         PrimeValidationSwiftPMObservationState = .unobserved
     public let completionAuthorized = false
 
-    private let retainedState:
-        PrimeValidationSwiftPMRetainedGuardedPreExecutorState
     private let guardLock = NSLock()
-    private var poisoned = false
+    private var state: State
 
     public var guardState: PrimeValidationSwiftPMGuardState {
         guardLock.lock()
         defer { guardLock.unlock() }
-        return poisoned ? .poisoned : .prepared
+        switch state {
+        case .prepared:
+            return .prepared
+        case .transferred:
+            return .transferred
+        case .poisoned:
+            return .poisoned
+        }
     }
 
     public var authorityCeiling:
@@ -397,7 +436,14 @@ public final class PrimeValidationSwiftPMBuildInventoryGuardedPreExecutor:
     {
         guardLock.lock()
         defer { guardLock.unlock() }
-        return poisoned ? .poisonedNoAuthority : .sourceGuardsPreparedOnly
+        switch state {
+        case .prepared:
+            return .sourceGuardsPreparedOnly
+        case .transferred:
+            return .transferredNoAuthority
+        case .poisoned:
+            return .poisonedNoAuthority
+        }
     }
 
     public var sourceDescriptorClosureHeld: Bool {
@@ -417,7 +463,7 @@ public final class PrimeValidationSwiftPMBuildInventoryGuardedPreExecutor:
     {
         guardLock.lock()
         defer { guardLock.unlock() }
-        guard !poisoned else {
+        guard case .prepared = state else {
             return PrimeValidationSwiftPMMissingAuthority.allCases
         }
         let closed: Set<PrimeValidationSwiftPMMissingAuthority> = [
@@ -433,7 +479,7 @@ public final class PrimeValidationSwiftPMBuildInventoryGuardedPreExecutor:
         retainedState:
             PrimeValidationSwiftPMRetainedGuardedPreExecutorState
     ) {
-        self.retainedState = retainedState
+        state = .prepared(retainedState)
         let admission = retainedState.admission
         primeRepository = admission.primeRepository.observation
         workspaceRoot = admission.workspaceRoot.observation
@@ -454,14 +500,322 @@ public final class PrimeValidationSwiftPMBuildInventoryGuardedPreExecutor:
     public func revalidateGuards() throws {
         guardLock.lock()
         defer { guardLock.unlock() }
-        guard !poisoned else {
+        let retainedState:
+            PrimeValidationSwiftPMRetainedGuardedPreExecutorState
+        switch state {
+        case .transferred:
+            throw PrimeValidationSwiftPMBuildInventoryAdmissionError
+                .guardedPreExecutorTransferred
+        case .poisoned:
+            throw PrimeValidationSwiftPMBuildInventoryAdmissionError
+                .guardedPreExecutorPoisoned
+        case let .prepared(value):
+            retainedState = value
+        }
+        do {
+            try retainedState.revalidate()
+        } catch {
+            state = .poisoned
+            throw error
+        }
+    }
+
+    /// Atomically transfers the retained source guard and current mapped-image
+    /// prerequisite into a neutral live handoff. The returned object still
+    /// reports supervisor authority as missing and exposes no execution API.
+    public func consumeCurrentProcessImageHandoff() throws
+        -> PrimeValidationSwiftPMCurrentProcessImageHandoff
+    {
+        guardLock.lock()
+        defer { guardLock.unlock() }
+        let retainedState:
+            PrimeValidationSwiftPMRetainedGuardedPreExecutorState
+        switch state {
+        case .transferred:
+            throw PrimeValidationSwiftPMBuildInventoryAdmissionError
+                .guardedPreExecutorTransferred
+        case .poisoned:
+            throw PrimeValidationSwiftPMBuildInventoryAdmissionError
+                .guardedPreExecutorPoisoned
+        case let .prepared(value):
+            retainedState = value
+        }
+        do {
+            try retainedState.revalidate()
+        } catch {
+            state = .poisoned
+            throw error
+        }
+        state = .transferred
+        return PrimeValidationSwiftPMCurrentProcessImageHandoff(
+            retainedState: retainedState
+        )
+    }
+}
+
+/// A neutral, one-shot live handoff for exact current-image matching.
+///
+/// This object is intentionally non-Codable, has no public initializer, and
+/// cannot launch a process or restore authority from durable bytes. Until an
+/// exact declaration is consumed by the DriverCore bridge, supervisor image
+/// authority remains explicitly missing.
+public final class PrimeValidationSwiftPMCurrentProcessImageHandoff:
+    @unchecked Sendable
+{
+    private enum State {
+        case prepared(
+            PrimeValidationSwiftPMRetainedGuardedPreExecutorState
+        )
+        case transferred
+        case poisoned
+    }
+
+    public let sourceIdentitySHA256: String
+    public let packageResolvedBinding: PrimeArtifactBinding
+    public let currentProcessExecutable:
+        PrimeValidationSwiftPMFileObservation
+    public let productionSupervisorImageEligible: Bool
+    public let processExecutionObservation:
+        PrimeValidationSwiftPMObservationState = .unobserved
+    public let buildExecutionObservation:
+        PrimeValidationSwiftPMObservationState = .unobserved
+    public let inventoryExecutionObservation:
+        PrimeValidationSwiftPMObservationState = .unobserved
+    public let completionAuthorized = false
+
+    private let lock = NSLock()
+    private var state: State
+
+    init(
+        retainedState:
+            PrimeValidationSwiftPMRetainedGuardedPreExecutorState
+    ) {
+        state = .prepared(retainedState)
+        sourceIdentitySHA256 =
+            retainedState.admission.sourceSnapshot.sourceIdentitySHA256
+        packageResolvedBinding =
+            retainedState.admission.packageResolvedBinding
+        currentProcessExecutable =
+            retainedState.currentProcessObservation
+        productionSupervisorImageEligible =
+            retainedState.productionSupervisorImageEligible
+    }
+
+    public var guardState: PrimeValidationSwiftPMGuardState {
+        lock.lock()
+        defer { lock.unlock() }
+        switch state {
+        case .prepared:
+            return .prepared
+        case .transferred:
+            return .transferred
+        case .poisoned:
+            return .poisoned
+        }
+    }
+
+    public var authorityCeiling:
+        PrimeValidationSwiftPMAuthorityCeiling
+    {
+        lock.lock()
+        defer { lock.unlock() }
+        switch state {
+        case .prepared:
+            return .sourceGuardsPreparedOnly
+        case .transferred:
+            return .transferredNoAuthority
+        case .poisoned:
+            return .poisonedNoAuthority
+        }
+    }
+
+    public var missingAuthorities:
+        [PrimeValidationSwiftPMMissingAuthority]
+    {
+        lock.lock()
+        defer { lock.unlock() }
+        return Self.missingAuthorities(for: state)
+    }
+
+    public func revalidate() throws {
+        lock.lock()
+        defer { lock.unlock() }
+        let retainedState = try requirePrepared()
+        do {
+            try retainedState.revalidate()
+        } catch {
+            state = .poisoned
+            throw error
+        }
+    }
+
+    /// Consumes this handoff only when a caller's declaration exactly matches
+    /// the retained source identity and mapped executable observation. The
+    /// result remains neutral live evidence; Driver semantics are supplied by
+    /// a separate package-scoped bridge.
+    public func consumeMatchingCurrentProcessImage(
+        expectedCanonicalAbsolutePath: String,
+        expectedSHA256: String,
+        expectedByteCount: UInt64,
+        expectedSourceIdentitySHA256: String
+    ) throws -> PrimeValidationSwiftPMClaimedCurrentProcessImage {
+        lock.lock()
+        defer { lock.unlock() }
+        let retainedState = try requirePrepared()
+        do {
+            try retainedState.revalidate()
+            guard expectedCanonicalAbsolutePath
+                    == currentProcessExecutable.canonicalAbsolutePath,
+                  expectedSHA256 == currentProcessExecutable.sha256,
+                  expectedByteCount == currentProcessExecutable.byteCount,
+                  expectedSourceIdentitySHA256 == sourceIdentitySHA256
+            else {
+                throw PrimeValidationSwiftPMBuildInventoryAdmissionError
+                    .rejected("current_process_image_binding")
+            }
+            try retainedState.revalidate()
+        } catch {
+            state = .poisoned
+            throw error
+        }
+        state = .transferred
+        return PrimeValidationSwiftPMClaimedCurrentProcessImage(
+            retainedState: retainedState
+        )
+    }
+
+    private func requirePrepared() throws
+        -> PrimeValidationSwiftPMRetainedGuardedPreExecutorState
+    {
+        switch state {
+        case let .prepared(retainedState):
+            return retainedState
+        case .transferred:
+            throw PrimeValidationSwiftPMBuildInventoryAdmissionError
+                .guardedPreExecutorTransferred
+        case .poisoned:
+            throw PrimeValidationSwiftPMBuildInventoryAdmissionError
+                .guardedPreExecutorPoisoned
+        }
+    }
+
+    private static func missingAuthorities(
+        for state: State
+    ) -> [PrimeValidationSwiftPMMissingAuthority] {
+        guard case .prepared = state else {
+            return PrimeValidationSwiftPMMissingAuthority.allCases
+        }
+        let closed: Set<PrimeValidationSwiftPMMissingAuthority> = [
+            .descriptorBackedSourceClosureAndMutationGuard,
+            .sourceWatchWindow,
+        ]
+        return PrimeValidationSwiftPMMissingAuthority.allCases.filter {
+            !closed.contains($0)
+        }
+    }
+}
+
+/// Unforgeable live proof that declared source/image values matched the held
+/// descriptors at a fail-closed checkpoint. This is still not Driver role or
+/// process authority.
+public final class PrimeValidationSwiftPMClaimedCurrentProcessImage:
+    @unchecked Sendable
+{
+    private enum State {
+        case prepared(
+            PrimeValidationSwiftPMRetainedGuardedPreExecutorState
+        )
+        case poisoned
+    }
+
+    public let sourceIdentitySHA256: String
+    public let packageResolvedBinding: PrimeArtifactBinding
+    public let currentProcessExecutable:
+        PrimeValidationSwiftPMFileObservation
+    public let productionSupervisorImageEligible: Bool
+    public let processExecutionObservation:
+        PrimeValidationSwiftPMObservationState = .unobserved
+    public let buildExecutionObservation:
+        PrimeValidationSwiftPMObservationState = .unobserved
+    public let inventoryExecutionObservation:
+        PrimeValidationSwiftPMObservationState = .unobserved
+    public let completionAuthorized = false
+
+    private let lock = NSLock()
+    private var state: State
+
+    init(
+        retainedState:
+            PrimeValidationSwiftPMRetainedGuardedPreExecutorState
+    ) {
+        state = .prepared(retainedState)
+        sourceIdentitySHA256 =
+            retainedState.admission.sourceSnapshot.sourceIdentitySHA256
+        packageResolvedBinding =
+            retainedState.admission.packageResolvedBinding
+        currentProcessExecutable =
+            retainedState.currentProcessObservation
+        productionSupervisorImageEligible =
+            retainedState.productionSupervisorImageEligible
+    }
+
+    public var guardState: PrimeValidationSwiftPMGuardState {
+        lock.lock()
+        defer { lock.unlock() }
+        switch state {
+        case .prepared:
+            return .prepared
+        case .poisoned:
+            return .poisoned
+        }
+    }
+
+    public var authorityCeiling:
+        PrimeValidationSwiftPMAuthorityCeiling
+    {
+        lock.lock()
+        defer { lock.unlock() }
+        switch state {
+        case .prepared:
+            return .sourceGuardsPreparedOnly
+        case .poisoned:
+            return .poisonedNoAuthority
+        }
+    }
+
+    public var missingAuthorities:
+        [PrimeValidationSwiftPMMissingAuthority]
+    {
+        lock.lock()
+        defer { lock.unlock() }
+        guard case .prepared = state else {
+            return PrimeValidationSwiftPMMissingAuthority.allCases
+        }
+        let closed: Set<PrimeValidationSwiftPMMissingAuthority> = [
+            .descriptorBackedSourceClosureAndMutationGuard,
+            .sourceWatchWindow,
+        ]
+        return PrimeValidationSwiftPMMissingAuthority.allCases.filter {
+            !closed.contains($0)
+        }
+    }
+
+    public func revalidate() throws {
+        lock.lock()
+        defer { lock.unlock() }
+        let retainedState:
+            PrimeValidationSwiftPMRetainedGuardedPreExecutorState
+        switch state {
+        case let .prepared(value):
+            retainedState = value
+        case .poisoned:
             throw PrimeValidationSwiftPMBuildInventoryAdmissionError
                 .guardedPreExecutorPoisoned
         }
         do {
             try retainedState.revalidate()
         } catch {
-            poisoned = true
+            state = .poisoned
             throw error
         }
     }
@@ -797,15 +1151,19 @@ final class PrimeValidationSwiftPMRetainedGuardedPreExecutorState:
     let currentProcessImage: PrimeSecureHeldRunningExecutable
     let currentProcessObservation:
         PrimeValidationSwiftPMFileObservation
+    let productionSupervisorImageEligible: Bool
 
     init(
         admission: PrimeValidationSwiftPMRetainedAdmissionState,
         sourceWatch: PrimeSecureHeldSourceWatch,
-        currentProcessImage: PrimeSecureHeldRunningExecutable
+        currentProcessImage: PrimeSecureHeldRunningExecutable,
+        productionSupervisorImageEligible: Bool
     ) {
         self.admission = admission
         self.sourceWatch = sourceWatch
         self.currentProcessImage = currentProcessImage
+        self.productionSupervisorImageEligible =
+            productionSupervisorImageEligible
         currentProcessObservation =
             PrimeValidationSwiftPMFileObservation(
                 canonicalAbsolutePath:
