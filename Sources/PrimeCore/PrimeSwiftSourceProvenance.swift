@@ -178,6 +178,7 @@ public enum PrimeSwiftSourceProvenance {
         ".swiftpm/configuration/mirrors.json",
         "Tests/PrimeTypedOptimizerRestoreMechanicsValidation/.swiftpm/configuration/mirrors.json",
         "Tests/PrimeNativeNeuralGateMLXValidation/.swiftpm/configuration/mirrors.json",
+        "Tests/PrimeValidationWorkflow/.swiftpm/configuration/mirrors.json",
         "LICENSE",
         "Package.swift",
         "Package.resolved",
