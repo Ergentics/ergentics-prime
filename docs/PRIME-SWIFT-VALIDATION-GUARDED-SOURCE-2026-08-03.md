@@ -100,8 +100,8 @@ not a 891/12 inventory receipt or a 903-test execution.
 Before any process observation:
 
 1. add and bind the dedicated Driver V2 supervisor;
-2. extract a closed internal secure-child substrate with independent physical
-   spawn path and logical `argv[0]`;
+2. complete the closed internal secure-child supervision substrate above the
+   extracted physical-path/logical-`argv[0]` spawn transport;
 3. make the source watch gapless across build plus both list children; and
 4. define canonical tracked-tree manifests for the Prime and companion SHA
    fields and bind them to held bytes.

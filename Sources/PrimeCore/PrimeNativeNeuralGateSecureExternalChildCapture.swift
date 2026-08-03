@@ -146,6 +146,8 @@ public enum PrimeNativeNeuralGateSecureExternalChildCapture {
                 "PrimeNativeNeuralGateSecureChildLifecycle.swift",
             "Sources/PrimeCore/" +
                 "PrimeNativeNeuralGateSecureScratchNamespace.swift",
+            "Sources/PrimeCore/" +
+                "PrimeSecureChildDarwinSubstrate.swift",
         ]
     private static let regionQueryLimit = 65_536
     private static let ioChunkByteCount = 64 * 1024
@@ -247,24 +249,16 @@ public enum PrimeNativeNeuralGateSecureExternalChildCapture {
                     .swiftPackageDescribeMaximumWallSeconds
             )
 
-        let stdoutPipe = try RawPipe()
-        let stderrPipe: RawPipe
+        let spawn:
+            PrimeSecureChildSpawnHandle
         do {
-            stderrPipe = try RawPipe()
-        } catch {
-            stdoutPipe.closeAll()
-            throw error
-        }
-
-        let spawn: SpawnResult
-        do {
-            spawn = try spawnSuspendedChild(
-                rootDescriptor:
-                    root.descriptor,
-                stdoutPipe: stdoutPipe,
-                stderrPipe: stderrPipe,
+            spawn = try spawnSuspendedSecureChild(
+                executableAbsolutePath:
+                    executableAbsolutePath,
                 argumentZero:
                     executableAbsolutePath,
+                workingDirectoryDescriptor:
+                    root.descriptor,
                 exactArguments:
                     scratchLaunch
                     .arguments,
@@ -273,17 +267,15 @@ public enum PrimeNativeNeuralGateSecureExternalChildCapture {
                     .orderedEnvironment
             )
         } catch {
-            stdoutPipe.closeAll()
-            stderrPipe.closeAll()
             throw error
         }
-
-        stdoutPipe.closeWriteEnd()
-        stderrPipe.closeWriteEnd()
+        let streamReadDescriptors =
+            spawn.takeStreamReadDescriptors()
 
         let stdoutDrain = RawBoundedDrain(
             descriptor:
-                stdoutPipe.takeReadEnd(),
+                streamReadDescriptors
+                .standardOutput,
             maximumByteCount:
                 contract
                 .swiftPackageDescribeMaximumStandardOutputBytes,
@@ -291,7 +283,8 @@ public enum PrimeNativeNeuralGateSecureExternalChildCapture {
         )
         let stderrDrain = RawBoundedDrain(
             descriptor:
-                stderrPipe.takeReadEnd(),
+                streamReadDescriptors
+                .standardError,
             maximumByteCount:
                 contract
                 .swiftPackageDescribeMaximumStandardErrorBytes,
@@ -682,7 +675,7 @@ public enum PrimeNativeNeuralGateSecureExternalChildCapture {
                     terminationSignalsTargetProcessGroup:
                         true,
                     posixSpawnReturnCode:
-                        spawn.returnCode,
+                        spawn.spawnReturnCode,
                     procPIDRegionPathInfoFlavor:
                         Int32(
                             PROC_PIDREGIONPATHINFO
@@ -695,7 +688,7 @@ public enum PrimeNativeNeuralGateSecureExternalChildCapture {
                         descriptorOpenedMonotonicNanoseconds,
                     spawnReturnedMonotonicNanoseconds:
                         spawn
-                        .returnedMonotonicNanoseconds,
+                        .spawnReturnedMonotonicNanoseconds,
                     childSessionAndProcessGroupObservedMonotonicNanoseconds:
                         childSessionAndProcessGroupObservedMonotonicNanoseconds,
                     workingDirectoryCapturedMonotonicNanoseconds:
@@ -991,249 +984,10 @@ public enum PrimeNativeNeuralGateSecureExternalChildCapture {
         return observed
     }
 
-    @available(macOS 26.0, *)
-    private static func spawnSuspendedChild(
-        rootDescriptor: Int32,
-        stdoutPipe: RawPipe,
-        stderrPipe: RawPipe,
-        argumentZero: String,
-        exactArguments: [String],
-        orderedEnvironment:
-            [(String, String)],
-        exactExecutableAbsolutePath:
-            String = executableAbsolutePath
-    ) throws -> SpawnResult {
-        try requireSecureChildArgumentZero(
-            argumentZero
-        )
-        var actions:
-            posix_spawn_file_actions_t?
-        var attributes: posix_spawnattr_t?
-        guard posix_spawn_file_actions_init(
-            &actions
-        ) == 0 else {
-            throw rejected(
-                "spawn_file_actions_init"
-            )
-        }
-        defer {
-            _ = posix_spawn_file_actions_destroy(
-                &actions
-            )
-        }
-        guard posix_spawnattr_init(
-            &attributes
-        ) == 0 else {
-            throw rejected("spawn_attributes_init")
-        }
-        defer {
-            _ = posix_spawnattr_destroy(
-                &attributes
-            )
-        }
-
-        try requireSpawnAction(
-            posix_spawn_file_actions_addinherit_np(
-                &actions,
-                rootDescriptor
-            ),
-            "inherit_root"
-        )
-        try requireSpawnAction(
-            posix_spawn_file_actions_addfchdir(
-                &actions,
-                rootDescriptor
-            ),
-            "fchdir_root"
-        )
-        try requireSpawnAction(
-            posix_spawn_file_actions_addclose(
-                &actions,
-                rootDescriptor
-            ),
-            "close_root"
-        )
-        try requireSpawnAction(
-            posix_spawn_file_actions_addopen(
-                &actions,
-                STDIN_FILENO,
-                "/dev/null",
-                O_RDONLY,
-                0
-            ),
-            "stdin_eof"
-        )
-        try requireSpawnAction(
-            posix_spawn_file_actions_addclose(
-                &actions,
-                stdoutPipe.readDescriptor
-            ),
-            "close_stdout_read"
-        )
-        try requireSpawnAction(
-            posix_spawn_file_actions_adddup2(
-                &actions,
-                stdoutPipe.writeDescriptor,
-                STDOUT_FILENO
-            ),
-            "dup_stdout"
-        )
-        try requireSpawnAction(
-            posix_spawn_file_actions_addclose(
-                &actions,
-                stdoutPipe.writeDescriptor
-            ),
-            "close_stdout_write"
-        )
-        try requireSpawnAction(
-            posix_spawn_file_actions_addclose(
-                &actions,
-                stderrPipe.readDescriptor
-            ),
-            "close_stderr_read"
-        )
-        try requireSpawnAction(
-            posix_spawn_file_actions_adddup2(
-                &actions,
-                stderrPipe.writeDescriptor,
-                STDERR_FILENO
-            ),
-            "dup_stderr"
-        )
-        try requireSpawnAction(
-            posix_spawn_file_actions_addclose(
-                &actions,
-                stderrPipe.writeDescriptor
-            ),
-            "close_stderr_write"
-        )
-
-        var defaultSignals = sigset_t()
-        guard sigemptyset(&defaultSignals) == 0
-        else {
-            throw rejected(
-                "spawn_default_signals_empty"
-            )
-        }
-        for signal in 1 ..< NSIG
-        where signal != SIGKILL
-            && signal != SIGSTOP
-        {
-            guard sigaddset(
-                &defaultSignals,
-                signal
-            ) == 0 else {
-                throw rejected(
-                    "spawn_default_signal_\(signal)"
-                )
-            }
-        }
-        var emptyMask = sigset_t()
-        guard sigemptyset(&emptyMask) == 0,
-              posix_spawnattr_setsigdefault(
-                  &attributes,
-                  &defaultSignals
-              ) == 0,
-              posix_spawnattr_setsigmask(
-                  &attributes,
-                  &emptyMask
-              ) == 0
-        else {
-            throw rejected(
-                "spawn_signal_or_group_policy"
-            )
-        }
-
-        let flags =
-            UInt16(POSIX_SPAWN_START_SUSPENDED)
-            | UInt16(
-                POSIX_SPAWN_CLOEXEC_DEFAULT
-            )
-            | UInt16(POSIX_SPAWN_SETSID)
-            | UInt16(POSIX_SPAWN_SETSIGDEF)
-            | UInt16(POSIX_SPAWN_SETSIGMASK)
-        guard flags == 0x448c,
-              posix_spawnattr_setflags(
-                  &attributes,
-                  Int16(bitPattern: flags)
-              ) == 0
-        else {
-            throw rejected("spawn_flags")
-        }
-
-        let arguments =
-            [argumentZero] + exactArguments
-        let duplicatedArguments =
-            try duplicateCStringArray(
-                arguments
-            )
-        defer {
-            freeCStringArray(
-                duplicatedArguments
-            )
-        }
-        var argv =
-            duplicatedArguments.map {
-                Optional($0)
-            }
-        argv.append(nil)
-        let environmentStrings =
-            orderedEnvironment.map {
-                "\($0.0)=\($0.1)"
-            }
-        let duplicatedEnvironment =
-            try duplicateCStringArray(
-                environmentStrings
-            )
-        defer {
-            freeCStringArray(
-                duplicatedEnvironment
-            )
-        }
-        var environment =
-            duplicatedEnvironment.map {
-                Optional($0)
-            }
-        environment.append(nil)
-        var childPID: pid_t = 0
-        let returnCode =
-            argv.withUnsafeMutableBufferPointer {
-                argvBuffer in
-                environment
-                    .withUnsafeMutableBufferPointer {
-                        environmentBuffer in
-                        posix_spawn(
-                            &childPID,
-                            exactExecutableAbsolutePath,
-                            &actions,
-                            &attributes,
-                            argvBuffer.baseAddress,
-                            environmentBuffer
-                                .baseAddress
-                        )
-                    }
-            }
-        let returnedMonotonicNanoseconds =
-            monotonicNanoseconds()
-        guard returnCode == 0,
-              childPID > 0 else {
-            throw rejected(
-                "posix_spawn_\(returnCode)"
-            )
-        }
-        return SpawnResult(
-            processIdentifier: childPID,
-            appliedFlags: flags,
-            returnCode: returnCode,
-            returnedMonotonicNanoseconds:
-                returnedMonotonicNanoseconds
-        )
-    }
-
     /// Narrow PrimeCore-internal adapter over the frozen neural capture's
-    /// proven Darwin spawn primitive. The caller must already hold and admit
-    /// the executable and working-directory capabilities; this adapter adds
-    /// no public command surface.
+    /// closed authority and the neutral Darwin spawn substrate. The caller
+    /// must already hold and admit the executable and working-directory
+    /// capabilities; this adapter adds no public command surface.
     @available(macOS 26.0, *)
     static func spawnSuspendedSecureChild(
         executableAbsolutePath: String,
@@ -1242,50 +996,22 @@ public enum PrimeNativeNeuralGateSecureExternalChildCapture {
         exactArguments: [String],
         orderedEnvironment: [(String, String)]
     ) throws -> PrimeSecureChildSpawnHandle {
-        try requireSecureChildArgumentZero(
-            argumentZero
-        )
-        let stdoutPipe = try RawPipe()
-        let stderrPipe: RawPipe
         do {
-            stderrPipe = try RawPipe()
-        } catch {
-            stdoutPipe.closeAll()
-            throw error
-        }
-
-        do {
-            let spawn = try spawnSuspendedChild(
-                rootDescriptor:
-                    workingDirectoryDescriptor,
-                stdoutPipe: stdoutPipe,
-                stderrPipe: stderrPipe,
+            return try PrimeSecureChildDarwinSubstrate
+                .spawnSuspended(
+                executableAbsolutePath:
+                    executableAbsolutePath,
                 argumentZero: argumentZero,
+                workingDirectoryDescriptor:
+                    workingDirectoryDescriptor,
                 exactArguments: exactArguments,
                 orderedEnvironment:
-                    orderedEnvironment,
-                exactExecutableAbsolutePath:
-                    executableAbsolutePath
+                    orderedEnvironment
             )
-            stdoutPipe.closeWriteEnd()
-            stderrPipe.closeWriteEnd()
-            return PrimeSecureChildSpawnHandle(
-                processIdentifier:
-                    spawn.processIdentifier,
-                appliedFlags: spawn.appliedFlags,
-                spawnReturnCode:
-                    spawn.returnCode,
-                spawnReturnedMonotonicNanoseconds:
-                    spawn.returnedMonotonicNanoseconds,
-                standardOutputReadDescriptor:
-                    stdoutPipe.takeReadEnd(),
-                standardErrorReadDescriptor:
-                    stderrPipe.takeReadEnd()
-            )
-        } catch {
-            stdoutPipe.closeAll()
-            stderrPipe.closeAll()
-            throw error
+        } catch let error as
+            PrimeSecureChildDarwinSubstrate.Rejection
+        {
+            throw rejected(error.detail)
         }
     }
 
@@ -1295,53 +1021,13 @@ public enum PrimeNativeNeuralGateSecureExternalChildCapture {
     static func requireSecureChildArgumentZero(
         _ argumentZero: String
     ) throws {
-        guard !argumentZero.isEmpty,
-              argumentZero.utf8.count <= 4_096,
-              !argumentZero.utf8.contains(0)
-        else {
-            throw rejected(
-                "spawn_argument_zero"
-            )
-        }
-    }
-
-    private static func requireSpawnAction(
-        _ returnCode: Int32,
-        _ label: String
-    ) throws {
-        guard returnCode == 0 else {
-            throw rejected(
-                "\(label)_\(returnCode)"
-            )
-        }
-    }
-
-    private static func duplicateCStringArray(
-        _ strings: [String]
-    ) throws -> [UnsafeMutablePointer<CChar>] {
-        var result:
-            [UnsafeMutablePointer<CChar>] = []
-        result.reserveCapacity(strings.count)
-        for string in strings {
-            guard !string.contains("\0"),
-                  let duplicated =
-                    strdup(string) else {
-                freeCStringArray(result)
-                throw rejected(
-                    "argument_encoding"
-                )
-            }
-            result.append(duplicated)
-        }
-        return result
-    }
-
-    private static func freeCStringArray(
-        _ strings:
-            [UnsafeMutablePointer<CChar>]
-    ) {
-        for string in strings {
-            free(string)
+        do {
+            try PrimeSecureChildDarwinSubstrate
+                .requireArgumentZero(argumentZero)
+        } catch let error as
+            PrimeSecureChildDarwinSubstrate.Rejection
+        {
+            throw rejected(error.detail)
         }
     }
 
@@ -1730,14 +1416,6 @@ public enum PrimeNativeNeuralGateSecureExternalChildCapture {
         : .mustFailStop(
             .streamDrainUncontained
         )
-    }
-
-    private struct SpawnResult {
-        let processIdentifier: Int32
-        let appliedFlags: UInt16
-        let returnCode: Int32
-        let returnedMonotonicNanoseconds:
-            UInt64
     }
 
     struct MappedRegionQueryResult {
@@ -2276,158 +1954,6 @@ public enum PrimeNativeNeuralGateSecureExternalChildCapture {
         let snapshot:
             PrimeNativeNeuralGateExecutableDescriptorSnapshot
         let data: Data
-    }
-
-    private final class RawPipe {
-        private(set) var readDescriptor:
-            Int32
-        private(set) var writeDescriptor:
-            Int32
-
-        init() throws {
-            var descriptors: [Int32] = [
-                -1,
-                -1,
-            ]
-            guard pipe(&descriptors) == 0 else {
-                throw rejected(
-                    "pipe_\(errno)"
-                )
-            }
-            let normalizedRead =
-                fcntl(
-                    descriptors[0],
-                    F_DUPFD_CLOEXEC,
-                    3
-                )
-            guard normalizedRead >= 3 else {
-                let failure = errno
-                _ = Darwin.close(
-                    descriptors[0]
-                )
-                _ = Darwin.close(
-                    descriptors[1]
-                )
-                throw rejected(
-                    "pipe_read_normalization_\(failure)"
-                )
-            }
-            let normalizedWrite =
-                fcntl(
-                    descriptors[1],
-                    F_DUPFD_CLOEXEC,
-                    3
-                )
-            guard normalizedWrite >= 3,
-                  normalizedWrite
-                    != normalizedRead else {
-                let failure = errno
-                _ = Darwin.close(
-                    normalizedRead
-                )
-                _ = Darwin.close(
-                    descriptors[0]
-                )
-                _ = Darwin.close(
-                    descriptors[1]
-                )
-                throw rejected(
-                    "pipe_write_normalization_\(failure)"
-                )
-            }
-            _ = Darwin.close(
-                descriptors[0]
-            )
-            _ = Darwin.close(
-                descriptors[1]
-            )
-            readDescriptor =
-                normalizedRead
-            writeDescriptor =
-                normalizedWrite
-            do {
-                try setCloseOnExec(
-                    readDescriptor
-                )
-                try setCloseOnExec(
-                    writeDescriptor
-                )
-                try setNonBlocking(
-                    readDescriptor
-                )
-            } catch {
-                closeAll()
-                throw error
-            }
-        }
-
-        func takeReadEnd() -> Int32 {
-            let result = readDescriptor
-            readDescriptor = -1
-            return result
-        }
-
-        func closeWriteEnd() {
-            guard writeDescriptor >= 0 else {
-                return
-            }
-            _ = Darwin.close(
-                writeDescriptor
-            )
-            writeDescriptor = -1
-        }
-
-        func closeAll() {
-            if readDescriptor >= 0 {
-                _ = Darwin.close(
-                    readDescriptor
-                )
-                readDescriptor = -1
-            }
-            closeWriteEnd()
-        }
-
-        private func setCloseOnExec(
-            _ descriptor: Int32
-        ) throws {
-            let existing =
-                fcntl(
-                    descriptor,
-                    F_GETFD
-                )
-            guard existing >= 0,
-                  fcntl(
-                      descriptor,
-                      F_SETFD,
-                      existing | FD_CLOEXEC
-                  ) == 0
-            else {
-                throw rejected(
-                    "pipe_cloexec_\(errno)"
-                )
-            }
-        }
-
-        private func setNonBlocking(
-            _ descriptor: Int32
-        ) throws {
-            let existing =
-                fcntl(
-                    descriptor,
-                    F_GETFL
-                )
-            guard existing >= 0,
-                  fcntl(
-                      descriptor,
-                      F_SETFL,
-                      existing | O_NONBLOCK
-                  ) == 0
-            else {
-                throw rejected(
-                    "pipe_nonblocking_\(errno)"
-                )
-            }
-        }
     }
 
     final class RawBoundedDrain:

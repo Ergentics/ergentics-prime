@@ -1133,8 +1133,14 @@ swift test \
 The package also contains a closed first-party fixture and a separate Swift
 integration executable that proves the shared secure-child mechanics without
 adding identifiers to the accepted root inventory. It is not the root-suite
-driver. The evidence model, exact optional-skip policy, empirical XCTest/Swift
-Testing split, V2 foundation, and remaining execution boundary are recorded in
+driver. The physical `posix_spawn` path, logical `argv[0]`, and pipe ownership
+now live in one internal transport used by both closed callers. This is only a
+neutral spawn layer; lifecycle, mapped-image/cwd proof, deadline, drains, and
+Driver V2 execution authority remain absent. The transport boundary is
+recorded in
+[`docs/PRIME-SECURE-CHILD-DARWIN-SPAWN-TRANSPORT-2026-08-03.md`](docs/PRIME-SECURE-CHILD-DARWIN-SPAWN-TRANSPORT-2026-08-03.md).
+The evidence model, exact optional-skip policy, empirical XCTest/Swift Testing
+split, V2 foundation, and remaining execution boundary are recorded in
 [`docs/PRIME-SWIFT-VALIDATION-EVIDENCE-CONTRACT-2026-08-02.md`](docs/PRIME-SWIFT-VALIDATION-EVIDENCE-CONTRACT-2026-08-02.md)
 and
 [`docs/PRIME-SWIFT-VALIDATION-DRIVER-V2-FOUNDATION-2026-08-02.md`](docs/PRIME-SWIFT-VALIDATION-DRIVER-V2-FOUNDATION-2026-08-02.md).
