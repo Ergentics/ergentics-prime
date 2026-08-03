@@ -196,6 +196,9 @@ tool rather than normalizing hypothetical access.
 
 - Ergentics-authored Prime code and controlled corpus generators can be
   first-party.
+- Ergentics-owned architecture semantics and an Ergentics-owned decoder
+  implementation are separate claims. A first-party profile geometry over a
+  third-party decoder implementation does not satisfy the latter.
 - An Ergentics modification of `ml-explore/mlx-swift` is a derivative work
   under the upstream MIT license, not clean-room or wholly first-party code.
 - A model initialized from third-party weights inherits the base model's
@@ -203,6 +206,13 @@ tool rather than normalizing hypothetical access.
   evaluation.
 - A random-initialized Ergentics architecture does not become a functional
   language model without admitted data, learning, and held-out evaluation.
+
+For the current native lane, the exact Ergentics Logic source is a read-only
+architecture/reference donor and must not execute. The authoritative decoder
+candidate is a Prime-owned Swift mechanical port over maintained MLX
+primitives. The completed `MLXLLM.LlamaModel` receipts remain historical
+mechanics evidence only and cannot select the future decoder. See
+`PRIME-NATIVE-DECODER-AUTHORITY-CORRECTION-2026-08-03.md`.
 
 Every admitted corpus must record origin, ownership/license, redistribution
 rights, PII/PHI review, deterministic transforms, split construction,

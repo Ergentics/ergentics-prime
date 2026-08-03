@@ -16,6 +16,14 @@ The direct SwiftPM dependency inventory is:
 | `apple/swift-numerics` | 1.1.1 | Apache License 2.0 |
 | `swiftlang/swift-syntax` | 600.0.1 | Apache License 2.0 |
 
+`ml-explore/mlx-swift-lm` is retained only for the frozen historical
+`PrimeGPUCalibration` and `PrimeNative3BMetalContinuationProbe` comparator
+targets. It is not authorized in the future Prime-owned decoder target and
+does not select the future architecture or implementation. The pinned
+Ergentics Logic donor is first-party proprietary lineage, not a third-party
+dependency; its historical Python source is read-only reference material and
+must not execute in Prime.
+
 The pinned MLX Swift source tree also vendors or submodules build inputs with
 their own notices:
 

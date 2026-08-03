@@ -12,6 +12,12 @@ and product-integration roadmap is recorded in
 That plan does not authorize functional training or change PMHNP release
 authority.
 
+The superseding decoder-source ownership boundary is recorded in
+[`docs/PRIME-NATIVE-DECODER-AUTHORITY-CORRECTION-2026-08-03.md`](docs/PRIME-NATIVE-DECODER-AUTHORITY-CORRECTION-2026-08-03.md).
+Completed `MLXLLM.LlamaModel` mechanics receipts remain historical comparator
+evidence; future implementation authority is a Prime-owned Swift/MLXNN port
+of the pinned Ergentics Logic decoder semantics, with no Python execution.
+
 The implemented-versus-planned authority boundary, Swift-first policy,
 narrow audited Python exception criteria, supply-chain requirements, and
 open-source readiness conditions are recorded in
@@ -79,7 +85,11 @@ The exact private-MLX migration sequence, narrow commit-identity rewrite
 boundary, recovery anchors, and post-migration evidence gates are recorded in
 [`docs/PRIME-PICKUP-PRIVATE-MLX-MIRROR-2026-07-29.md`](docs/PRIME-PICKUP-PRIVATE-MLX-MIRROR-2026-07-29.md).
 
-## Implemented now
+## Historical mechanics implemented and preserved
+
+These items describe the completed Llama-based bounded mechanics lane. They
+remain reproducibility/comparator evidence and do not select the future
+decoder implementation.
 
 - exact maintained `ergentics_prime_native_3b_gqa_v1` geometry;
 - random initialization and full FP32 weights;

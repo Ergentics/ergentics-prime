@@ -3,6 +3,11 @@
 Status: Phase 2 exact continuation `PASS`; Phase 3 resolver and fresh-process
 persistence validation `PASS`
 
+Future decoder implementation authority: superseded on 2026-08-03 by
+[Prime native decoder authority correction](PRIME-NATIVE-DECODER-AUTHORITY-CORRECTION-2026-08-03.md).
+This document remains authoritative for its frozen historical inventory and
+completed mechanics receipts, not for selecting a future decoder.
+
 Snapshot date: 2026-07-29
 
 Companion authority: `163fc100710ece48119bc25954452d10f6a84f7f`
@@ -16,24 +21,33 @@ companion, `prime-runtime`, NeuralKit, the external Lab, and Ergentics Prime.
 PMHNP is not Prime: the pinned companion revision is a read-only migration
 oracle and evidence archive, never the runtime or write target for new Prime
 work. Prime owns the new native runtime and training evidence in this
-repository. A new decoder family, tokenizer, corpus, evaluator, or
-VerifyAbstain system would still duplicate proven work and split authority.
+repository. A new architecture family, tokenizer, corpus, evaluator, or
+VerifyAbstain system would still duplicate existing work and split authority.
+Mechanically porting the already-existing Ergentics Logic decoder semantics
+to Swift is not a new architecture family.
 
-The operator-selected bounded continuation uses the existing
+The completed operator-selected bounded continuation used the existing
 `ergentics_prime_native_3b_gqa_v1` geometry, maintained
 `MLXLLM.LlamaModel`, and Swift/MLX/Metal execution. The tokenizer and corpus
 remain historical inventory and possible future functional inputs; this slice
 does not import or execute them. The 3B selection is for two-step
 optimizer-restore mechanics only. It does not overturn the historical
 schema-6 `ABSTAIN`, authorize the 3B scale, promote a profile, or claim
-function learning.
+function learning. `MLXLLM.LlamaModel` is now quarantined as the exact
+historical mechanics implementation and cannot select the future functional
+decoder.
 
 The preserved 3B mechanics receipt binds its factorized seed records,
-configuration, executable, source snapshot, dependency source, and metallib.
+configuration, executable, selected Prime source snapshot, dependency
+identities, and metallib. It does not independently bind a complete
+`mlx-swift-lm` source-tree snapshot, so it is historical mechanics evidence,
+not a prospective decoder supply-chain admission record.
 The continuation contract prohibits pretrained-weight import and requires the
-same source-bound random initialization path. Learned weights would be
-Ergentics-produced artifacts; the maintained MLX/MLXLLM implementation remains
-permissively licensed execution infrastructure.
+same source-bound random initialization path. Learned weights from that
+experiment would have been Ergentics-produced artifacts; the maintained
+MLX/MLXLLM implementation remains permissively licensed historical execution
+infrastructure. Future decoder implementation authority is the Prime-owned
+Swift port defined by the superseding contract.
 
 NeuralKit is not absent. It owns the downstream synthetic/research-artifact
 regrade used by this arc: SZ, triadic, mutation, and VerifyAbstain mechanics.
@@ -59,6 +73,9 @@ explicitly unclaimed.
 | --- | --- |
 | Training, Metal execution, optimizer state, immutable training receipts | `ergentics-prime` |
 | New native runtime, Prime-owned contract adapters, and training evidence | `ergentics-prime` |
+| Decoder architecture semantics | pinned `Ergentics/ergentics-logic@97be84b2790b79ce79558d6bade846a532226540` source |
+| Future authoritative decoder implementation | Prime-owned Swift/MLXNN mechanical port; pending implementation |
+| Historical exact-3B mechanics implementation | `MLXLLM.LlamaModel`; comparator evidence only |
 | Historical model profiles, tokenizer, corpus, generation and evaluation schemas | read-only companion `prime-runtime` at the frozen revision |
 | Synthetic/research artifact SZ, triadic, mutation, and VerifyAbstain regrade | companion `neural-kit` |
 | Load/propose product façade | `NeuralKit.PrimeAskBrain` |

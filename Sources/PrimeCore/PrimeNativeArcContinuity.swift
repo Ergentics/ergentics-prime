@@ -90,6 +90,11 @@ public struct PrimeNativeArcContinuityPlan:
     public let historicalProfileComparisonVerdict: String
     public let historicalThreeBillionScaleAuthorized: Bool
     public let continuationScope: String
+    /// Exact implementation used by the completed bounded mechanics receipt.
+    ///
+    /// This historical field does not select the implementation for future
+    /// functional training. `PrimeNativeDecoderAuthorityPlan.frozenV1`
+    /// supersedes that interpretation without rewriting the receipt.
     public let continuationModelImplementation: String
     public let continuationInitializationContract: String
     public let initializationEvidenceArtifactID: String

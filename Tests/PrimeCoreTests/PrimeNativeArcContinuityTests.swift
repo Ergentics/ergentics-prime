@@ -35,6 +35,15 @@ final class PrimeNativeArcContinuityTests:
         XCTAssertFalse(
             plan.pretrainedWeightImportAuthorized
         )
+        XCTAssertEqual(
+            plan.continuationModelImplementation,
+            PrimeNativeDecoderAuthorityPlan.frozenV1
+                .historicalMechanicsImplementation
+        )
+        XCTAssertFalse(
+            PrimeNativeDecoderAuthorityPlan.frozenV1
+                .historicalMechanicsMaySelectFutureDecoder
+        )
     }
 
     func testNeuralKitResearchRoleDoesNotReplaceProductVerify()

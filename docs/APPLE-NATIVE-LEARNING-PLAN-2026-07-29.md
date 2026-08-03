@@ -4,6 +4,11 @@ Status: planning and admission authority
 Snapshot date: 2026-07-29
 Prime baseline: `5a8aa46c725b3f3c863ccfbfb5073549fcd18e33`
 
+Decoder implementation amendment: superseded on 2026-08-03 by
+[Prime native decoder authority correction](PRIME-NATIVE-DECODER-AUTHORITY-CORRECTION-2026-08-03.md).
+The historical inventory remains valid, but `MLXLLM.LlamaModel` is not the
+prospective first-party decoder implementation authority.
+
 ## Purpose
 
 This document turns the current Prime mechanics work into a reality-based
@@ -647,7 +652,7 @@ small type.
 | `AgentContractKit` | Triad, Verify/Abstain, mutation, audit and governed probe primitives | Independent verifier; candidate source for a future standalone evidence package | Do not make Prime depend on `agentcraft-app` |
 | `agentcraft-app` | Agent subject, governed probes, corpus harvest, optional inherited-model inference | Candidate second consumer, contingent on a real product use case and feasible adapter | Its MLX lane is inference, not first-party training |
 | `ergentics-workstation` | Fleet status/doctor/test orchestration and append-only ledgers | Outer observer and bounded command orchestrator | Never owns scientific result publication |
-| `ergentics-logic` | Real corpus registry/harvest work plus a Python MLX decoder/trainer/tokenizer | Corpus/schema donor only under the current Swift-first policy | JSONL presence is not oracle independence; Python training is not Prime authority |
+| `ergentics-logic` | Real corpus registry/harvest work plus an Ergentics-owned MLX decoder architecture and historical Python implementation | Source-pinned architecture/reference donor for a mechanical Prime Swift/MLXNN port; also a corpus/schema donor | Python must not execute or become a Prime runtime/scientific authority; Swift independently derives and validates the port |
 | `algebra-app` | Exact SymbolicKit, deterministic generators, harvest and falsifiers | First-party semantic curriculum/oracle donor | Exchange versioned rows/evidence; avoid app dependency |
 | `geometry-app` | Exact mechanics families, Metal field/render parity, generators and audits | Semantic donor and custom-kernel test-pattern donor | Geometry Metal is not an LLM/quant kernel |
 | `ur-app` PrimeProbe | Swift n=1200 derive/dispose fingerprint methodology | Probe/report-shape donor | Test-only/domain-specific code is not a neural evaluator |
@@ -1435,7 +1440,10 @@ custom kernels in these slices.
 | Core ML/Core AI as trainer | Rejected | Inference/constrained update roles do not satisfy resume contract |
 | Custom whole-model Metal trainer | Rejected | Rebuilds autodiff/optimizer/checkpoint stack without evidence |
 | NeuralKit dependency in Prime | Rejected for now | Consumer façade must remain downstream |
-| New Prime decoder/profile family | Rejected | The exact native 300M/1B/3B family and NeuralKit arc already exist; a new toy profile would split authority |
+| New decoder architecture family | Rejected | The pinned Ergentics Logic decoder family already exists; inventing a replacement would split authority |
+| Prime-owned Swift port of pinned Ergentics Logic decoder | Required before functional training | Corrects the former conflation of Ergentics-owned profile geometry with decoder-source ownership; this is a mechanical port, not a new family |
+| `MLXLLM.LlamaModel` as future trainer authority | Rejected; historical comparator only | It truthfully identifies completed bounded mechanics receipts but cannot select the future first-party decoder implementation |
+| Python execution for the Logic donor | Rejected | The pinned source is provenance/reference only; Prime implementation, evaluation, and evidence remain Swift-authoritative |
 | MasteryKit dependency in Prime tensor core | Rejected | Recommendation/pedagogy is an outer concern |
 | AgentContractKit dependency through AgentCraft | Rejected | Extract a neutral evidence package only after second-consumer proof |
 | Python scientific implementation/gate | Rejected under current policy | Swift-first authority remains explicit |

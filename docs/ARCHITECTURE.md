@@ -42,6 +42,14 @@ NeuralKit. It remains the frozen historical inventory; the post-Phase-2
 resolver adds a new typed gate instead of changing that record. The Prime
 tensor core does not import its consumer/regrader.
 
+`PrimeNativeDecoderAuthorityPlan.frozenV1` separately supersedes the former
+prospective interpretation of the historical Llama implementation bind. The
+completed `MLXLLM.LlamaModel` receipts remain immutable mechanics evidence,
+but cannot select a future decoder. The authoritative candidate is a
+Prime-owned Swift/MLXNN mechanical port of the source-pinned Ergentics Logic
+decoder; its Python source is lineage only and must not execute. See
+[`PRIME-NATIVE-DECODER-AUTHORITY-CORRECTION-2026-08-03.md`](PRIME-NATIVE-DECODER-AUTHORITY-CORRECTION-2026-08-03.md).
+
 Phase 2 is complete for its exact narrow mechanics claim. The source-sealed,
 random-initialized exact 3B FP32 run matched step 1 and step 2 across
 uninterrupted and fresh-process-restored Metal trajectories. Its canonical
