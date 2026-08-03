@@ -1114,10 +1114,14 @@ swift test \
   --skip-build
 ```
 
-Repository-wide result semantics are implemented in a third isolated Swift
-package. It reparses bound inventory, xUnit, and sequential XCTest transcript
-bytes and classifies complete pass, complete fail, or incomplete; it does not
-launch the test processes:
+Repository-wide result semantics and the V2 driver foundation are implemented
+in a third isolated Swift package. It reparses bound inventory, xUnit, and
+sequential XCTest transcript bytes; plans exact reference and sharded candidate
+invocations; and validates the public planning and conservative incomplete
+receipt boundary. Aggregate, comparison, and final-disposition mechanics are
+tested internally, but public completion remains fail-closed until raw child
+output is parser-derived by the future executor. V2 does not yet launch the
+root test processes:
 
 ```sh
 swift test \
@@ -1126,9 +1130,14 @@ swift test \
   --force-resolved-versions
 ```
 
-The evidence model, exact optional-skip policy, empirical XCTest/Swift Testing
-split, and remaining driver boundary are recorded in
-[`docs/PRIME-SWIFT-VALIDATION-EVIDENCE-CONTRACT-2026-08-02.md`](docs/PRIME-SWIFT-VALIDATION-EVIDENCE-CONTRACT-2026-08-02.md).
+The package also contains a closed first-party fixture and a separate Swift
+integration executable that proves the shared secure-child mechanics without
+adding identifiers to the accepted root inventory. It is not the root-suite
+driver. The evidence model, exact optional-skip policy, empirical XCTest/Swift
+Testing split, V2 foundation, and remaining execution boundary are recorded in
+[`docs/PRIME-SWIFT-VALIDATION-EVIDENCE-CONTRACT-2026-08-02.md`](docs/PRIME-SWIFT-VALIDATION-EVIDENCE-CONTRACT-2026-08-02.md)
+and
+[`docs/PRIME-SWIFT-VALIDATION-DRIVER-V2-FOUNDATION-2026-08-02.md`](docs/PRIME-SWIFT-VALIDATION-DRIVER-V2-FOUNDATION-2026-08-02.md).
 
 The requested 96 GiB MLX memory setting is an MLX scheduler limit, not a claim
 that process RSS cannot exceed 96 GiB.

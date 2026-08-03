@@ -11,6 +11,18 @@ let package = Package(
             name: "PrimeValidationWorkflowContracts",
             targets: ["PrimeValidationWorkflowContracts"]
         ),
+        .library(
+            name: "PrimeValidationWorkflowDriverCore",
+            targets: ["PrimeValidationWorkflowDriverCore"]
+        ),
+        .executable(
+            name: "PrimeValidationWorkflowFixtureChild",
+            targets: ["PrimeValidationWorkflowFixtureChild"]
+        ),
+        .executable(
+            name: "PrimeValidationWorkflowSecureChildIntegration",
+            targets: ["PrimeValidationWorkflowSecureChildIntegration"]
+        ),
     ],
     dependencies: [
         .package(path: "../.."),
@@ -25,10 +37,47 @@ let package = Package(
                 ),
             ]
         ),
+        .target(
+            name: "PrimeValidationWorkflowDriverCore",
+            dependencies: [
+                "PrimeValidationWorkflowContracts",
+                .product(
+                    name: "PrimeCore",
+                    package: "ergentics-prime"
+                ),
+            ]
+        ),
+        .executableTarget(
+            name: "PrimeValidationWorkflowFixtureChild",
+            linkerSettings: [
+                .unsafeFlags([
+                    "-Xlinker", "-S",
+                ]),
+            ]
+        ),
+        .executableTarget(
+            name: "PrimeValidationWorkflowSecureChildIntegration",
+            dependencies: [
+                .product(
+                    name: "PrimeCore",
+                    package: "ergentics-prime"
+                ),
+            ]
+        ),
         .testTarget(
             name: "PrimeValidationWorkflowContractsTests",
             dependencies: [
                 "PrimeValidationWorkflowContracts",
+            ]
+        ),
+        .testTarget(
+            name: "PrimeValidationWorkflowDriverCoreTests",
+            dependencies: [
+                "PrimeValidationWorkflowDriverCore",
+            ],
+            resources: [
+                .copy("Resources/xctest.list"),
+                .copy("Resources/swift-testing.list"),
             ]
         ),
     ]

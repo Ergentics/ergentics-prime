@@ -266,6 +266,16 @@ final class PrimeNativeNeuralGateSecureChildLifecycleTests:
                 .blockingAfterObservedDeath,
             ]
         )
+        XCTAssertEqual(
+            child.exactPIDWaitObservation?
+                .returnedProcessIdentifier,
+            processIdentifier
+        )
+        XCTAssertEqual(
+            child.exactPIDWaitObservation?
+                .terminationSignal,
+            SIGTERM
+        )
     }
 
     func testMissingDeathAfterSIGKILLUsesBoundedWNOHANGThenFailStops() {

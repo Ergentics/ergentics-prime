@@ -996,7 +996,9 @@ public enum PrimeNativeNeuralGateSecureExternalChildCapture {
         stderrPipe: RawPipe,
         exactArguments: [String],
         orderedEnvironment:
-            [(String, String)]
+            [(String, String)],
+        exactExecutableAbsolutePath:
+            String = executableAbsolutePath
     ) throws -> SpawnResult {
         var actions:
             posix_spawn_file_actions_t?
@@ -1154,7 +1156,7 @@ public enum PrimeNativeNeuralGateSecureExternalChildCapture {
         }
 
         let arguments =
-            [executableAbsolutePath]
+            [exactExecutableAbsolutePath]
             + exactArguments
         let duplicatedArguments =
             try duplicateCStringArray(
@@ -1197,7 +1199,7 @@ public enum PrimeNativeNeuralGateSecureExternalChildCapture {
                         environmentBuffer in
                         posix_spawn(
                             &childPID,
-                            executableAbsolutePath,
+                            exactExecutableAbsolutePath,
                             &actions,
                             &attributes,
                             argvBuffer.baseAddress,
@@ -1221,6 +1223,60 @@ public enum PrimeNativeNeuralGateSecureExternalChildCapture {
             returnedMonotonicNanoseconds:
                 returnedMonotonicNanoseconds
         )
+    }
+
+    /// Narrow PrimeCore-internal adapter over the frozen neural capture's
+    /// proven Darwin spawn primitive. The caller must already hold and admit
+    /// the executable and working-directory capabilities; this adapter adds
+    /// no public command surface.
+    @available(macOS 26.0, *)
+    static func spawnSuspendedSecureChild(
+        executableAbsolutePath: String,
+        workingDirectoryDescriptor: Int32,
+        exactArguments: [String],
+        orderedEnvironment: [(String, String)]
+    ) throws -> PrimeSecureChildSpawnHandle {
+        let stdoutPipe = try RawPipe()
+        let stderrPipe: RawPipe
+        do {
+            stderrPipe = try RawPipe()
+        } catch {
+            stdoutPipe.closeAll()
+            throw error
+        }
+
+        do {
+            let spawn = try spawnSuspendedChild(
+                rootDescriptor:
+                    workingDirectoryDescriptor,
+                stdoutPipe: stdoutPipe,
+                stderrPipe: stderrPipe,
+                exactArguments: exactArguments,
+                orderedEnvironment:
+                    orderedEnvironment,
+                exactExecutableAbsolutePath:
+                    executableAbsolutePath
+            )
+            stdoutPipe.closeWriteEnd()
+            stderrPipe.closeWriteEnd()
+            return PrimeSecureChildSpawnHandle(
+                processIdentifier:
+                    spawn.processIdentifier,
+                appliedFlags: spawn.appliedFlags,
+                spawnReturnCode:
+                    spawn.returnCode,
+                spawnReturnedMonotonicNanoseconds:
+                    spawn.returnedMonotonicNanoseconds,
+                standardOutputReadDescriptor:
+                    stdoutPipe.takeReadEnd(),
+                standardErrorReadDescriptor:
+                    stderrPipe.takeReadEnd()
+            )
+        } catch {
+            stdoutPipe.closeAll()
+            stderrPipe.closeAll()
+            throw error
+        }
     }
 
     private static func requireSpawnAction(
@@ -1268,7 +1324,9 @@ public enum PrimeNativeNeuralGateSecureExternalChildCapture {
         executableSnapshot:
             PrimeNativeNeuralGateExecutableDescriptorSnapshot,
         contract:
-            PrimeNativeNeuralGateSourceExecutionBindingContract
+            PrimeNativeNeuralGateSourceExecutionBindingContract,
+        expectedExecutableAbsolutePath:
+            String? = nil
     ) throws -> MappedRegionTranscript {
         let expectedSize =
             MemoryLayout<
@@ -1278,7 +1336,9 @@ public enum PrimeNativeNeuralGateSecureExternalChildCapture {
             executableSnapshot:
                 executableSnapshot,
             contract: contract,
-            queryLimit: regionQueryLimit
+            queryLimit: regionQueryLimit,
+            expectedExecutableAbsolutePath:
+                expectedExecutableAbsolutePath
         ) {
             queryAddress in
             var raw =
@@ -1349,12 +1409,32 @@ public enum PrimeNativeNeuralGateSecureExternalChildCapture {
         }
     }
 
+    @available(macOS 26.0, *)
+    static func captureMappedExecutableForSecureChild(
+        processIdentifier: Int32,
+        executableSnapshot:
+            PrimeNativeNeuralGateExecutableDescriptorSnapshot,
+        expectedExecutableAbsolutePath: String
+    ) throws -> MappedRegionTranscript {
+        try captureMappedRegionTranscript(
+            processIdentifier:
+                processIdentifier,
+            executableSnapshot:
+                executableSnapshot,
+            contract: .frozenV6,
+            expectedExecutableAbsolutePath:
+                expectedExecutableAbsolutePath
+        )
+    }
+
     static func evaluateMappedRegionTranscript(
         executableSnapshot:
             PrimeNativeNeuralGateExecutableDescriptorSnapshot,
         contract:
             PrimeNativeNeuralGateSourceExecutionBindingContract,
         queryLimit: Int,
+        expectedExecutableAbsolutePath:
+            String? = nil,
         query:
             (UInt64) -> MappedRegionQueryResult
     ) throws -> MappedRegionTranscript {
@@ -1433,11 +1513,10 @@ public enum PrimeNativeNeuralGateSecureExternalChildCapture {
                         matchingPathTelemetry
                         .first,
                       mappedPath
-                        == executableAbsolutePath,
-                      URL(
-                          fileURLWithPath:
-                            mappedPath
-                      ).standardizedFileURL.path
+                        == (expectedExecutableAbsolutePath
+                            ?? executableAbsolutePath),
+                      (try? PrimeSecureChildPath
+                          .canonicalPath(mappedPath))
                         == mappedPath
                 else {
                     throw rejected(

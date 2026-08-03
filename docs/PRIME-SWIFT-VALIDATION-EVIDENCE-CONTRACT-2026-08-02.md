@@ -150,3 +150,21 @@ The next slice may implement the Swift execution driver against this contract:
 That driver must remain Swift-first. It must prove the existing 903-test root
 acceptance target and preserve the root package-description canary before it
 is allowed to govern optimizer or neural training gates.
+
+## V2 foundation update
+
+The additive V2 schema, deterministic shard and invocation planner, exact
+phase-ledger and conservative resume contracts, caller-value semantic
+comparison mechanics, shared secure-child mechanics kernel, deterministic
+closed fixture, and Swift-only live fixture integration now exist. Public
+complete shard, aggregate, comparison, and final-receipt admission remains
+closed until raw runner output is parser-derived. The accepted root inventory
+remains 891 XCTest plus 12 Swift Testing cases because the new kernel
+assertions were folded into existing root test cases and live behavior was kept
+in the isolated package.
+
+This update does not implement the root-suite executor, parse child output into
+V2 shard receipts, publish a durable complete run, or change the no-executor
+authority ceiling. The exact implemented line and next boundary are recorded
+in
+`PRIME-SWIFT-VALIDATION-DRIVER-V2-FOUNDATION-2026-08-02.md`.
