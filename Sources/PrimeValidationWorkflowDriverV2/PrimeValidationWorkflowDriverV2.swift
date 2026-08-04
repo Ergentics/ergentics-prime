@@ -81,21 +81,25 @@ private struct SupervisorInputs {
         evidenceRoot = try Self.canonicalDirectory(evidence)
         leaseRoot = try Self.canonicalDirectory(lease)
         self.expectedDriverPath = try Self.canonicalPath(
-            expectedDriverPath
+            expectedDriverPath,
+            isDirectory: false
         )
         self.expectedDriverSHA256 = expectedDriverSHA256
         self.expectedDriverByteCount = expectedDriverByteCount
     }
 
     private static func canonicalDirectory(_ path: String) throws -> URL {
-        let path = try canonicalPath(path)
+        let path = try canonicalPath(path, isDirectory: true)
         return URL(
             fileURLWithPath: path,
             isDirectory: true
         )
     }
 
-    private static func canonicalPath(_ path: String) throws -> String {
+    private static func canonicalPath(
+        _ path: String,
+        isDirectory: Bool
+    ) throws -> String {
         guard path.hasPrefix("/"),
               path != "/",
               !path.hasSuffix("/"),
@@ -107,7 +111,7 @@ private struct SupervisorInputs {
         }
         let url = URL(
             fileURLWithPath: path,
-            isDirectory: true
+            isDirectory: isDirectory
         )
         let canonical = url.resolvingSymlinksInPath().standardizedFileURL
         guard canonical.path == path else {
