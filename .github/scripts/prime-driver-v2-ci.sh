@@ -574,6 +574,7 @@ assert_runner() {
     set +e
     grep -n -F -- "$forbidden" \
         "$prime_root/.github/workflows/swift.yml" \
+        "$prime_root/.github/workflows/swift-strict-promotion.yml" \
         "$prime_root/.github/scripts/prime-driver-v2-ci.sh" \
         > "$forbidden_matches"
     grep_status=$?
