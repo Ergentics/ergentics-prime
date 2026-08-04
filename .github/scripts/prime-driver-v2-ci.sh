@@ -12,7 +12,7 @@ readonly expected_mlx_head="d37885a278f1c37484a94d0f401a418735e66519"
 readonly expected_mlx_tree="5310749549cca107fc1bb07d82dacf043bc02b9e"
 readonly expected_mlx_submodule_head="ce45c52505c8158ea48d2a54e8caae05efd86bfe"
 readonly expected_mlx_c_submodule_head="0726ca922fc902c4c61ef9c27d94132be418e945"
-readonly expected_source_identity="1afad750a322960874acb8374f042bff3e275eecf4986d2173b6a7fcd824f903"
+readonly expected_source_identity="00e8f0d54845fc9800c505be49988e093a18ea8518fa4d6bf7a1906ea73b03f7"
 readonly expected_package_sha="5df810b3796bc3b254e58148ddcc9e4014c92c504845084743c1d3a580c2c895"
 readonly expected_resolved_sha="da7f7baa10f6da34b01ad69dc116f8a2d31140eca6770cb562ac05a7c50b356c"
 readonly expected_mirrors_sha="6124788421eab5803c52b508338ec085a95753b871582951acbb3005b1dc2cc6"
@@ -1755,6 +1755,9 @@ main() {
     local mode="${1:-}"
 
     case "$mode" in
+        hosted-image)
+            [[ "$#" -eq 1 ]] || die "hosted-image accepts no extra arguments"
+            ;;
         root-release)
             [[ "$#" -eq 1 ]] || die "root-release accepts no extra arguments"
             ;;
@@ -1762,7 +1765,7 @@ main() {
             [[ "$#" -eq 2 ]] || die "nested requires one configuration"
             ;;
         *)
-            die "usage: prime-driver-v2-ci.sh root-release | nested debug|release"
+            die "usage: prime-driver-v2-ci.sh hosted-image | root-release | nested debug|release"
             ;;
     esac
 
@@ -1771,13 +1774,20 @@ main() {
     assert_static_inputs
     configure_local_mlx_transport
 
-    if [[ "$mode" == "root-release" ]]; then
-        assert_driver_target_graph
-        run_driver_canaries
-        run_root_tests
-    else
-        run_nested_tests "$2"
-    fi
+    case "$mode" in
+        hosted-image)
+            assert_driver_target_graph
+            run_driver_canaries
+            ;;
+        root-release)
+            assert_driver_target_graph
+            run_driver_canaries
+            run_root_tests
+            ;;
+        nested)
+            run_nested_tests "$2"
+            ;;
+    esac
 
     remove_mlx_rewrite
     assert_final_inputs

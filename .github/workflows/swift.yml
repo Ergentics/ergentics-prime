@@ -1,18 +1,24 @@
-name: Swift Driver V2 CI canaries
+name: Swift Driver V2 hosted image canary
 
 on:
   push:
     branches:
       - main
       - wip/prime-validation-driver-v2-evidence-completion
+  workflow_dispatch:
 
 permissions:
   contents: read
 
+# This hosted lane proves only the reproducible, MLX-free Driver supervisor
+# image and its fail-closed pre-execution binding. GitHub-hosted Xcode is not a
+# strict execution authority because its system-directory metadata is not
+# root-owned. Strict promotion is a separate, manually dispatched workflow.
+#
 # External credential boundary: workflow permissions cannot downscope a PAT.
-# ERGENTICS_PAT must be maintained read-only for the two pinned input repos.
+# ERGENTICS_PAT must remain read-only for the two pinned input repositories.
 concurrency:
-  group: swift-driver-v2-${{ github.workflow }}-${{ github.ref }}
+  group: swift-driver-v2-hosted-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: false
 
 defaults:
@@ -20,14 +26,10 @@ defaults:
     shell: bash
 
 jobs:
-  root-release:
-    name: Root Release / Driver V2 canaries and full aggregate
-    if: >-
-      github.ref == 'refs/heads/main' ||
-      github.ref ==
-      'refs/heads/wip/prime-validation-driver-v2-evidence-completion'
+  supervisor-image:
+    name: Hosted supervisor image / non-authoritative
     runs-on: macos-26
-    timeout-minutes: 120
+    timeout-minutes: 45
 
     steps:
       - name: Check out the exact Prime commit
@@ -62,60 +64,13 @@ jobs:
           submodules: recursive
           token: ${{ secrets.ERGENTICS_PAT }}
 
-      - name: Run the exact root Release gates
+      - name: Build and bind two disjoint Driver images
         working-directory: ergentics-prime
-        run: bash .github/scripts/prime-driver-v2-ci.sh root-release
+        run: bash .github/scripts/prime-driver-v2-ci.sh hosted-image
 
-  nested-driver:
-    name: Nested Driver / ${{ matrix.configuration }}
-    if: >-
-      github.ref == 'refs/heads/main' ||
-      github.ref ==
-      'refs/heads/wip/prime-validation-driver-v2-evidence-completion'
-    runs-on: macos-26
-    timeout-minutes: 75
-    strategy:
-      fail-fast: false
-      matrix:
-        configuration:
-          - debug
-          - release
-
-    steps:
-      - name: Check out the exact Prime commit
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
-        with:
-          ref: ${{ github.sha }}
-          path: ergentics-prime
-          fetch-depth: 1
-          persist-credentials: false
-          show-progress: false
-
-      - name: Check out the exact companion
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
-        with:
-          repository: Ergentics/pmhnp-companion-ergentics
-          ref: 163fc100710ece48119bc25954452d10f6a84f7f
-          path: companion
-          fetch-depth: 1
-          persist-credentials: false
-          show-progress: false
-          token: ${{ secrets.ERGENTICS_PAT }}
-
-      - name: Check out the exact first-party MLX fork
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
-        with:
-          repository: Ergentics/ergentics-mlx-swift
-          ref: d37885a278f1c37484a94d0f401a418735e66519
-          path: mlx
-          fetch-depth: 1
-          persist-credentials: false
-          show-progress: false
-          submodules: recursive
-          token: ${{ secrets.ERGENTICS_PAT }}
-
-      - name: Run the exact nested Driver gate
-        working-directory: ergentics-prime
+      - name: Record the hosted authority ceiling
         run: >-
-          bash .github/scripts/prime-driver-v2-ci.sh nested
-          ${{ matrix.configuration }}
+          printf '%s\n'
+          'Hosted canary only: supervisor-image pre-execution binding passed;'
+          'strict build, test, staging, shard, and completion authority remain unobserved.'
+          >> "$GITHUB_STEP_SUMMARY"

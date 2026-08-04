@@ -1,0 +1,139 @@
+name: Swift Driver V2 strict promotion
+
+on:
+  workflow_dispatch:
+    inputs:
+      expected_sha:
+        description: Exact lowercase 40-character Prime commit to validate
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+# Manual dispatch prevents an inactive dedicated runner from blocking ordinary
+# pushes. Promotion is valid only when every job below completes at the same
+# exact commit on a root-owned Xcode 26.6 Apple-silicon host. This workflow does
+# not register, configure, start, or persist a self-hosted runner.
+concurrency:
+  group: swift-driver-v2-strict-promotion
+  cancel-in-progress: false
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  root-release:
+    name: Strict root Release / full aggregate
+    runs-on:
+      - self-hosted
+      - macOS
+      - ARM64
+      - ergentics-prime-promotion
+    timeout-minutes: 120
+
+    steps:
+      - name: Bind dispatch to the exact selected commit
+        env:
+          EXPECTED_SHA: ${{ inputs.expected_sha }}
+        run: |
+          [[ "$EXPECTED_SHA" =~ ^[0-9a-f]{40}$ ]]
+          [[ "$GITHUB_SHA" == "$EXPECTED_SHA" ]]
+
+      - name: Check out the exact Prime commit
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          ref: ${{ inputs.expected_sha }}
+          path: ergentics-prime
+          fetch-depth: 1
+          persist-credentials: false
+          show-progress: false
+
+      - name: Check out the exact companion
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          repository: Ergentics/pmhnp-companion-ergentics
+          ref: 163fc100710ece48119bc25954452d10f6a84f7f
+          path: companion
+          fetch-depth: 1
+          persist-credentials: false
+          show-progress: false
+          token: ${{ secrets.ERGENTICS_PAT }}
+
+      - name: Check out the exact first-party MLX fork
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          repository: Ergentics/ergentics-mlx-swift
+          ref: d37885a278f1c37484a94d0f401a418735e66519
+          path: mlx
+          fetch-depth: 1
+          persist-credentials: false
+          show-progress: false
+          submodules: recursive
+          token: ${{ secrets.ERGENTICS_PAT }}
+
+      - name: Run the exact root Release gate
+        working-directory: ergentics-prime
+        run: bash .github/scripts/prime-driver-v2-ci.sh root-release
+
+  nested-driver:
+    name: Strict nested Driver / ${{ matrix.configuration }}
+    runs-on:
+      - self-hosted
+      - macOS
+      - ARM64
+      - ergentics-prime-promotion
+    timeout-minutes: 75
+    strategy:
+      fail-fast: false
+      matrix:
+        configuration:
+          - debug
+          - release
+
+    steps:
+      - name: Bind dispatch to the exact selected commit
+        env:
+          EXPECTED_SHA: ${{ inputs.expected_sha }}
+        run: |
+          [[ "$EXPECTED_SHA" =~ ^[0-9a-f]{40}$ ]]
+          [[ "$GITHUB_SHA" == "$EXPECTED_SHA" ]]
+
+      - name: Check out the exact Prime commit
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          ref: ${{ inputs.expected_sha }}
+          path: ergentics-prime
+          fetch-depth: 1
+          persist-credentials: false
+          show-progress: false
+
+      - name: Check out the exact companion
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          repository: Ergentics/pmhnp-companion-ergentics
+          ref: 163fc100710ece48119bc25954452d10f6a84f7f
+          path: companion
+          fetch-depth: 1
+          persist-credentials: false
+          show-progress: false
+          token: ${{ secrets.ERGENTICS_PAT }}
+
+      - name: Check out the exact first-party MLX fork
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          repository: Ergentics/ergentics-mlx-swift
+          ref: d37885a278f1c37484a94d0f401a418735e66519
+          path: mlx
+          fetch-depth: 1
+          persist-credentials: false
+          show-progress: false
+          submodules: recursive
+          token: ${{ secrets.ERGENTICS_PAT }}
+
+      - name: Run the exact nested Driver gate
+        working-directory: ergentics-prime
+        run: >-
+          bash .github/scripts/prime-driver-v2-ci.sh nested
+          ${{ matrix.configuration }}
