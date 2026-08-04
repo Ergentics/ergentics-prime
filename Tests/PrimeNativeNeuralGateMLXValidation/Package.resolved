@@ -4,7 +4,7 @@
     {
       "identity" : "ergentics-mlx-swift",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/ml-explore/mlx-swift",
+      "location" : "https://github.com/Ergentics/ergentics-mlx-swift",
       "state" : {
         "revision" : "d37885a278f1c37484a94d0f401a418735e66519"
       }

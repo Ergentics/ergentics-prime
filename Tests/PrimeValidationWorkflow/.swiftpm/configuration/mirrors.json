@@ -1,9 +1,4 @@
 {
-  "object" : [
-    {
-      "mirror" : "https://github.com/Ergentics/ergentics-mlx-swift",
-      "original" : "https://github.com/ml-explore/mlx-swift"
-    }
-  ],
+  "object" : [],
   "version" : 1
 }

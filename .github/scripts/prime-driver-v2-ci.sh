@@ -9,13 +9,14 @@ IFS=$'\n\t'
 readonly expected_companion_head="163fc100710ece48119bc25954452d10f6a84f7f"
 readonly expected_companion_tree="9009daa4f8a07fbd5897e00b9571cef44ec292db"
 readonly expected_mlx_head="d37885a278f1c37484a94d0f401a418735e66519"
+readonly expected_mlx_origin="https://github.com/Ergentics/ergentics-mlx-swift"
 readonly expected_mlx_tree="5310749549cca107fc1bb07d82dacf043bc02b9e"
 readonly expected_mlx_submodule_head="ce45c52505c8158ea48d2a54e8caae05efd86bfe"
 readonly expected_mlx_c_submodule_head="0726ca922fc902c4c61ef9c27d94132be418e945"
-readonly expected_source_identity="00e8f0d54845fc9800c505be49988e093a18ea8518fa4d6bf7a1906ea73b03f7"
+readonly expected_source_identity="916ff6350bbce1ba735c088536a697586a2db916259d76d3c3621c9f5be7a505"
 readonly expected_package_sha="5df810b3796bc3b254e58148ddcc9e4014c92c504845084743c1d3a580c2c895"
-readonly expected_resolved_sha="da7f7baa10f6da34b01ad69dc116f8a2d31140eca6770cb562ac05a7c50b356c"
-readonly expected_mirrors_sha="6124788421eab5803c52b508338ec085a95753b871582951acbb3005b1dc2cc6"
+readonly expected_resolved_sha="fa1f4226dfec52f47041373e556e3c75e0c4c89700a4977b1652521fc5825b3c"
+readonly expected_mirrors_sha="b8476f18b4ee05b10e208cc37667d3c69e117bd5eda0162e77804570c5713a6b"
 readonly expected_xctest_sha="93ccc091a0343ac4fed35b208447d7460eae27668ddec3e931f54b9a7769212b"
 readonly expected_swift_testing_sha="487c601e9693d6a0fbc31d1b683ffd342ba0d10007c780f315af1113d825e8a3"
 readonly checkout_companion_origin="https://github.com/Ergentics/pmhnp-companion-ergentics"
@@ -662,7 +663,7 @@ assert_static_inputs() {
         mlx
     assert_origin \
         "$mlx_root" \
-        "https://github.com/Ergentics/ergentics-mlx-swift" \
+        "$expected_mlx_origin" \
         mlx
     assert_mlx_submodules
 
@@ -691,17 +692,19 @@ assert_static_inputs() {
 
     jq -e '
         .version == 1
-        and .object == [{
-            mirror: "https://github.com/Ergentics/ergentics-mlx-swift",
-            original: "https://github.com/ml-explore/mlx-swift"
-        }]
-    ' "$mirrors_file" >/dev/null || die "SwiftPM mirror contract differs"
+        and .object == []
+    ' "$mirrors_file" >/dev/null ||
+        die "SwiftPM no-remapping contract differs"
 
-    jq -e --arg revision "$expected_mlx_head" '
-        ([.pins[] | select(.identity == "ergentics-mlx-swift")] | length) == 1
+    jq -e \
+        --arg revision "$expected_mlx_head" \
+        --arg location "$expected_mlx_origin" \
+        --arg origin "$expected_package_sha" '
+        .originHash == $origin
+        and ([.pins[] | select(.identity == "ergentics-mlx-swift")] | length) == 1
         and ([.pins[] | select(.identity == "ergentics-mlx-swift")][0]
             | .kind == "remoteSourceControl"
-            and .location == "https://github.com/ml-explore/mlx-swift"
+            and .location == $location
             and .state == {revision: $revision})
     ' "$prime_root/Package.resolved" >/dev/null ||
         die "resolved first-party MLX pin differs"
@@ -742,19 +745,19 @@ configure_local_mlx_transport() {
     mlx_rewrite_key="$candidate_key"
     git config --global --add \
         "$mlx_rewrite_key" \
-        "https://github.com/Ergentics/ergentics-mlx-swift"
+        "$expected_mlx_origin"
     git config --global --add \
         "$mlx_rewrite_key" \
         "https://github.com/Ergentics/ergentics-mlx-swift.git"
     git config --global --get-all "$mlx_rewrite_key" > "$actual"
     printf '%s\n' \
-        "https://github.com/Ergentics/ergentics-mlx-swift" \
+        "$expected_mlx_origin" \
         "https://github.com/Ergentics/ergentics-mlx-swift.git" \
         > "$expected"
     cmp -s "$actual" "$expected" || die "local MLX rewrite differs"
 
     git ls-remote \
-        "https://github.com/Ergentics/ergentics-mlx-swift" \
+        "$expected_mlx_origin" \
         HEAD > "$probe"
     awk '$2 == "HEAD" { print }' "$probe" > "$exact_head"
     [[ "$(wc -l < "$exact_head")" -eq 1 ]] ||
