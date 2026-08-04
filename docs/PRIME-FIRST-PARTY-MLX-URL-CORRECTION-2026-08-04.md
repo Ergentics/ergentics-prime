@@ -18,7 +18,7 @@ The checked-in active `mirrors.json` files remain part of the source-provenance 
 
 ## Correction boundary
 
-Before this correction, the active manifests named the Ergentics repository while SwiftPM mirror configuration caused the lockfiles to record the upstream `ml-explore/mlx-swift` location with Ergentics-only revisions. That representation did not change the licensed source bytes, but it was operationally ambiguous and could send a clean resolver to a repository that does not contain the pinned revision.
+Before this correction, the root manifest named the Ergentics repository while SwiftPM mirror configuration caused the root lockfile to record the upstream `ml-explore/mlx-swift` location with an Ergentics-only revision. The typed-optimizer validation manifest still named the upstream repository directly and relied on the mirror for its Ergentics-only revision. Both forms were operationally ambiguous and could send a clean resolver to a repository that does not contain the pinned revision; neither changed the licensed source bytes.
 
 This correction updates only active manifests, active lockfiles, active no-remapping configuration, and their live validation gates. It does not rewrite retained evidence packages, archived artifact copies, historical receipts, or frozen historical contract values. Those files continue to describe the configuration under which their evidence was originally produced.
 
