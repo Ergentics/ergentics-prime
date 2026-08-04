@@ -11,9 +11,9 @@ let package = Package(
         .package(path: "../.."),
         .package(
             url:
-                "https://github.com/ml-explore/mlx-swift",
+                "https://github.com/Ergentics/ergentics-mlx-swift",
             revision:
-                "68904d54b72871f26968261ae05d4fbb7c5e3142"
+                "d37885a278f1c37484a94d0f401a418735e66519"
         ),
     ],
     targets: [

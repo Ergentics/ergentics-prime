@@ -39,12 +39,11 @@ final class PrimeNativeCorpusReplaySourceContractTests:
 
         XCTAssertEqual(
             occurrences(of: ".package(", in: package),
-            2,
+            1,
             "corpus replay must not add a package dependency"
         )
         for dependency in [
             #"url:"https://github.com/Ergentics/ergentics-mlx-swift""#,
-            #"url:"https://github.com/ml-explore/mlx-swift-lm""#,
         ] {
             XCTAssertTrue(package.contains(dependency))
         }
@@ -54,6 +53,8 @@ final class PrimeNativeCorpusReplaySourceContractTests:
             "PMHNPCompanion",
             "neural-kit",
             #"name:"NeuralKit""#,
+            "mlx-swift-lm",
+            "MLXLLM",
         ] {
             XCTAssertFalse(
                 package.contains(forbidden),

@@ -163,9 +163,7 @@ final class
             },
             [
                 "ergentics-mlx-swift",
-                "mlx-swift-lm",
                 "swift-numerics",
-                "swift-syntax",
             ]
         )
         let mlxPin =
