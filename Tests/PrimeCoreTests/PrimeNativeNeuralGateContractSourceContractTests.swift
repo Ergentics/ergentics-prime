@@ -21,10 +21,12 @@ final class PrimeNativeNeuralGateContractSourceContractTests:
         )
         XCTAssertEqual(
             occurrences(of: ".package(", in: package),
-            2
+            1
         )
         for forbidden in [
             ".package(path:",
+            "mlx-swift-lm",
+            "MLXLLM",
             "pmhnp-companion",
             "PMHNPCompanion",
             #"name:"NeuralKit""#,

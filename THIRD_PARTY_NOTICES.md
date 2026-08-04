@@ -6,14 +6,19 @@ data, model, corpus, and third-party manifests control where other rights are
 incorporated. Dependency licenses do not transfer ownership of independent
 Prime source or evidence.
 
-The resolved SwiftPM dependency and mirrored-lineage inventory is:
+The active resolved SwiftPM dependency and upstream-lineage inventory is:
 
 | Resolved package or lineage | Pinned version | License |
 | --- | --- | --- |
-| `ml-explore/mlx-swift` | 0.31.3, upstream base `61b9e011e09a62b489f6bd647958f1555bdf2896` | MIT, copyright 2023 ml-explore |
-| Ergentics `mlx-swift` typed-state, descriptor-I/O, and restore modifications | private revision `d37885a278f1c37484a94d0f401a418735e66519`, authenticated SwiftPM resolution observed | Derivative of the MIT-licensed upstream package; upstream notice retained, Ergentics modifications copyright 2026 Ergentics, LLC |
-| `ml-explore/mlx-swift-lm` | 3.31.3 | MIT, copyright 2024 ml-explore |
+| `Ergentics/ergentics-mlx-swift` typed-state, descriptor-I/O, and restore modifications | private revision `d37885a278f1c37484a94d0f401a418735e66519`; typed-optimizer validation preserves evidence-bound revision `68904d54b72871f26968261ae05d4fbb7c5e3142` | Derivative of the MIT-licensed `ml-explore/mlx-swift` 0.31.3 lineage; upstream notice retained, Ergentics modifications copyright 2026 Ergentics, LLC |
 | `apple/swift-numerics` | 1.1.1 | Apache License 2.0 |
+
+The following packages remain relevant to preserved historical R&D artifacts
+but are not pins in the active root or validation lockfiles:
+
+| Historical package | Frozen version | License |
+| --- | --- | --- |
+| `ml-explore/mlx-swift-lm` | 3.31.3 | MIT, copyright 2024 ml-explore |
 | `swiftlang/swift-syntax` | 600.0.1 | Apache License 2.0 |
 
 The pinned MLX Swift source tree also vendors or submodules build inputs with
@@ -29,7 +34,7 @@ their own notices:
 | PocketFFT | BSD 3-Clause-style notice; copyright Max-Planck-Society, Peter Bell, and the DCT-IV contributors named in the vendored header |
 | `gguf-tools` | MIT; copyright 2022 Georgi Gerganov |
 
-`Package.resolved` binds the exact resolved revisions. License files for the
+The active `Package.resolved` files bind the exact active revisions. License files for the
 vendored components are present in the pinned dependency tree. Those texts
 and all required notices must accompany any redistribution; this inventory is
 not yet an SBOM.
@@ -42,6 +47,10 @@ with 1,827 insertions and 74 deletions. It does not change the dependency's
 authorized private, license-preserving remote. This is a private R&D
 dependency, not an open-source release, upstream acceptance, CI credential
 proof, or public-availability claim.
+
+Historical `mlx-swift-lm` use, its notices, and its immutable evidence remain
+preserved for accounting. Preservation does not restore it to the dependency
+graph or grant it decoder, training, product, or release authority.
 
 The existing typed-gate source-tree receipt—1,667 files, SHA-256
 `ef4e3c57d3c24bdc5705be78bdf60b630d84ab7bbbd9affc1faa41137b4ead43`,

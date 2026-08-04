@@ -74,6 +74,80 @@ enum PrimeRootPackageManifestCheckpointTestSupport {
     private static let scaffoldPackageByteCount: UInt64 = 29_043
     private static let scaffoldPackageSHA256 =
         "5df810b3796bc3b254e58148ddcc9e4014c92c504845084743c1d3a580c2c895"
+    private static let quarantinedPackageByteCount: UInt64 = 27_260
+    private static let quarantinedPackageSHA256 =
+        "04a91e1d38a5aa3a4c3712f09b08665cc8fc8ed7193f1b674ca8f014734585d2"
+
+    private static let quarantinedProductAnchor =
+        "        .executable(\n"
+        + "            name: \"PrimeNativeContractResolutionProbe\",\n"
+    private static let quarantinedProductInsertion =
+        "        .executable(\n"
+        + "            name: \"PrimeGPUCalibration\",\n"
+        + "            targets: [\"PrimeGPUCalibration\"]\n"
+        + "        ),\n"
+        + "        .executable(\n"
+        + "            name: \"PrimeNative3BMetalContinuationProbe\",\n"
+        + "            targets: [\n"
+        + "                \"PrimeNative3BMetalContinuationProbe\",\n"
+        + "            ]\n"
+        + "        ),\n"
+    private static let quarantinedDependencyBoundary =
+        "    ],\n"
+        + "    targets: [\n"
+    private static let quarantinedDependencyInsertion =
+        "        .package(\n"
+        + "            url: \"https://github.com/ml-explore/mlx-swift-lm\",\n"
+        + "            exact: \"3.31.3\"\n"
+        + "        ),\n"
+    private static let quarantinedTargetAnchor =
+        "        .executableTarget(\n"
+        + "            name: \"PrimeNativeContractResolutionProbe\",\n"
+    private static let quarantinedTargetInsertion =
+        "        .executableTarget(\n"
+        + "            name: \"PrimeGPUCalibration\",\n"
+        + "            dependencies: [\n"
+        + "                \"PrimeCore\",\n"
+        + "                .product(\n"
+        + "                    name: \"MLX\",\n"
+        + "                    package: \"ergentics-mlx-swift\"\n"
+        + "                ),\n"
+        + "                .product(\n"
+        + "                    name: \"MLXNN\",\n"
+        + "                    package: \"ergentics-mlx-swift\"\n"
+        + "                ),\n"
+        + "                .product(\n"
+        + "                    name: \"MLXOptimizers\",\n"
+        + "                    package: \"ergentics-mlx-swift\"\n"
+        + "                ),\n"
+        + "                .product(\n"
+        + "                    name: \"MLXLLM\",\n"
+        + "                    package: \"mlx-swift-lm\"\n"
+        + "                ),\n"
+        + "            ]\n"
+        + "        ),\n"
+        + "        .executableTarget(\n"
+        + "            name: \"PrimeNative3BMetalContinuationProbe\",\n"
+        + "            dependencies: [\n"
+        + "                \"PrimeCore\",\n"
+        + "                .product(\n"
+        + "                    name: \"MLX\",\n"
+        + "                    package: \"ergentics-mlx-swift\"\n"
+        + "                ),\n"
+        + "                .product(\n"
+        + "                    name: \"MLXNN\",\n"
+        + "                    package: \"ergentics-mlx-swift\"\n"
+        + "                ),\n"
+        + "                .product(\n"
+        + "                    name: \"MLXOptimizers\",\n"
+        + "                    package: \"ergentics-mlx-swift\"\n"
+        + "                ),\n"
+        + "                .product(\n"
+        + "                    name: \"MLXLLM\",\n"
+        + "                    package: \"mlx-swift-lm\"\n"
+        + "                ),\n"
+        + "            ]\n"
+        + "        ),\n"
 
     private static let productAnchor =
         "        .library(\n"
@@ -242,8 +316,8 @@ enum PrimeRootPackageManifestCheckpointTestSupport {
         let liveByteCount = UInt64(live.count)
         let liveSHA256 = PrimeSHA256.hexDigest(of: live)
         guard
-            liveByteCount == scaffoldPackageByteCount,
-            liveSHA256 == scaffoldPackageSHA256
+            liveByteCount == quarantinedPackageByteCount,
+            liveSHA256 == quarantinedPackageSHA256
         else {
             throw ContinuationError.unexpectedLiveIdentity(
                 packageRelativePath,
@@ -255,10 +329,47 @@ enum PrimeRootPackageManifestCheckpointTestSupport {
             throw ContinuationError.nonUTF8(packageRelativePath)
         }
 
+        var scaffoldSource = try replacingExactlyOnce(
+            quarantinedProductAnchor,
+            with:
+                quarantinedProductInsertion
+                + quarantinedProductAnchor,
+            in: liveSource,
+            label: "llama_products_restore"
+        )
+        scaffoldSource = try replacingExactlyOnce(
+            quarantinedDependencyBoundary,
+            with:
+                quarantinedDependencyInsertion
+                + quarantinedDependencyBoundary,
+            in: scaffoldSource,
+            label: "llama_dependency_restore"
+        )
+        scaffoldSource = try replacingExactlyOnce(
+            quarantinedTargetAnchor,
+            with:
+                quarantinedTargetInsertion
+                + quarantinedTargetAnchor,
+            in: scaffoldSource,
+            label: "llama_targets_restore"
+        )
+        let scaffold = Data(scaffoldSource.utf8)
+        guard
+            UInt64(scaffold.count) == scaffoldPackageByteCount,
+            PrimeSHA256.hexDigest(of: scaffold)
+                == scaffoldPackageSHA256
+        else {
+            throw ContinuationError.reverseReconstructionMismatch(
+                packageRelativePath,
+                UInt64(scaffold.count),
+                PrimeSHA256.hexDigest(of: scaffold)
+            )
+        }
+
         var priorDriverSource = try replacingExactlyOnce(
             scaffoldProductInsertion,
             with: "",
-            in: liveSource,
+            in: scaffoldSource,
             label: "scaffold_product_reverse"
         )
         priorDriverSource = try replacingExactlyOnce(
@@ -333,7 +444,28 @@ enum PrimeRootPackageManifestCheckpointTestSupport {
             in: reconstructedLiveSource,
             label: "scaffold_target_forward"
         )
-        guard Data(reconstructedLiveSource.utf8) == live else {
+        var reconstructedQuarantinedSource =
+            try replacingExactlyOnce(
+                quarantinedProductInsertion,
+                with: "",
+                in: reconstructedLiveSource,
+                label: "llama_products_quarantine"
+            )
+        reconstructedQuarantinedSource =
+            try replacingExactlyOnce(
+                quarantinedDependencyInsertion,
+                with: "",
+                in: reconstructedQuarantinedSource,
+                label: "llama_dependency_quarantine"
+            )
+        reconstructedQuarantinedSource =
+            try replacingExactlyOnce(
+                quarantinedTargetInsertion,
+                with: "",
+                in: reconstructedQuarantinedSource,
+                label: "llama_targets_quarantine"
+            )
+        guard Data(reconstructedQuarantinedSource.utf8) == live else {
             throw ContinuationError.forwardReconstructionMismatch
         }
         return historical

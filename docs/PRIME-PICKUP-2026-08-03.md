@@ -1,5 +1,25 @@
 # Prime durable pickup — Driver V2, decoder authority, and secure-child history
 
+## 2026-08-04 continuation correction
+
+The 2026-08-03 model-boundary instructions below are retained as a historical
+restart snapshot, but they are no longer the current dependency boundary.
+The active root manifest now removes `mlx-swift-lm`, both `MLXLLM`-bound probe
+targets, and their products while preserving their source and immutable
+receipts as historical R&D accounting. The working manifest is 27,260 bytes,
+SHA-256
+`04a91e1d38a5aa3a4c3712f09b08665cc8fc8ed7193f1b674ca8f014734585d2`.
+Direct first-party `Ergentics/ergentics-mlx-swift` pins remain; no native
+decoder, Logic profile, training, quantization, or product authority is added.
+
+The exact Llama graph, live-PMHNP non-claim, preserved evidence rule, known
+development-time Python `print("skip")` exception, and Swift probe-console
+effects are recorded in
+`docs/PRIME-LLAMA-QUARANTINE-AND-PYTHON-TRACE-2026-08-04.md`. That continuation
+supersedes any reading below that treats a Llama-bound probe as current
+dependency authority or a pending PMHNP integration reference as live product
+use. Driver V2 implementation/evidence remains separate and incomplete.
+
 Status: secure-child supervision is independently audited and merged through
 PR 52; Driver V2 supervisor-image and fresh-checkout runtime-scaffold work are
 isolated, unverified WIP on the Driver branch; decoder authority remains

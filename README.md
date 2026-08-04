@@ -79,17 +79,28 @@ The exact private-MLX migration sequence, narrow commit-identity rewrite
 boundary, recovery anchors, and post-migration evidence gates are recorded in
 [`docs/PRIME-PICKUP-PRIVATE-MLX-MIRROR-2026-07-29.md`](docs/PRIME-PICKUP-PRIVATE-MLX-MIRROR-2026-07-29.md).
 
-## Implemented now
+## Current dependency quarantine boundary
 
-- exact maintained `ergentics_prime_native_3b_gqa_v1` geometry;
+The active Prime SwiftPM graph no longer includes `mlx-swift-lm`, `MLXLLM`,
+`PrimeGPUCalibration`, or `PrimeNative3BMetalContinuationProbe`. The
+first-party `Ergentics/ergentics-mlx-swift` dependency remains pinned directly.
+Llama-named contracts, source, tests, prose, and immutable receipts remain as
+quarantined historical R&D accounting; they are not current decoder authority
+and are not evidence about a released PMHNP application. The exact graph,
+Python-process, and Swift-console trace is recorded in
+[`docs/PRIME-LLAMA-QUARANTINE-AND-PYTHON-TRACE-2026-08-04.md`](docs/PRIME-LLAMA-QUARANTINE-AND-PYTHON-TRACE-2026-08-04.md).
+
+## Preserved R&D implementation history
+
+- exact historical `ergentics_prime_native_3b_gqa_v1` geometry;
 - random initialization and full FP32 weights;
 - explicit initialization, training-schedule, and evaluation controls;
 - Swift-native process supervision, mutation gates, and immutable receipts;
 - MLX/Metal execution through maintained model, differentiation, optimizer,
   and device primitives.
 
-Prime's current mechanics target uses the same 512-entry model vocabulary as
-the existing companion arc. Prime now contains an exact isolated Swift
+The preserved mechanics used the same 512-entry model vocabulary as the
+existing companion arc. Prime contains an exact isolated Swift
 tokenizer/corpus transplant that regenerated and embedded-regraded all
 155,648 rows, plus standalone source-pinned projections of the fixed-cap/EOS
 generation boundary and NeuralKit's native-language gate contract. The gate

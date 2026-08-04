@@ -13,9 +13,9 @@ readonly expected_mlx_origin="https://github.com/Ergentics/ergentics-mlx-swift"
 readonly expected_mlx_tree="5310749549cca107fc1bb07d82dacf043bc02b9e"
 readonly expected_mlx_submodule_head="ce45c52505c8158ea48d2a54e8caae05efd86bfe"
 readonly expected_mlx_c_submodule_head="0726ca922fc902c4c61ef9c27d94132be418e945"
-readonly expected_source_identity="10cadcb8152786cc0fa9ae2cc1746ffab1f0d9367ed38f7cabe3fd156bd7667f"
-readonly expected_package_sha="5df810b3796bc3b254e58148ddcc9e4014c92c504845084743c1d3a580c2c895"
-readonly expected_resolved_sha="fa1f4226dfec52f47041373e556e3c75e0c4c89700a4977b1652521fc5825b3c"
+readonly expected_source_identity="62029c608da674d03beb585f45851d63c15bb71ba334fcf820d51b7c9fd06a4b"
+readonly expected_package_sha="04a91e1d38a5aa3a4c3712f09b08665cc8fc8ed7193f1b674ca8f014734585d2"
+readonly expected_resolved_sha="59fec61eb25e2d5c464f5bf35434966dea3c8f64da72503d83eb48910c0eab16"
 readonly expected_mirrors_sha="b8476f18b4ee05b10e208cc37667d3c69e117bd5eda0162e77804570c5713a6b"
 readonly expected_xctest_sha="93ccc091a0343ac4fed35b208447d7460eae27668ddec3e931f54b9a7769212b"
 readonly expected_swift_testing_sha="487c601e9693d6a0fbc31d1b683ffd342ba0d10007c780f315af1113d825e8a3"
@@ -702,6 +702,7 @@ assert_static_inputs() {
         --arg origin "$expected_package_sha" '
         .originHash == $origin
         and ([.pins[] | select(.identity == "ergentics-mlx-swift")] | length) == 1
+        and ([.pins[] | select(.identity == "mlx-swift-lm")] | length) == 0
         and ([.pins[] | select(.identity == "ergentics-mlx-swift")][0]
             | .kind == "remoteSourceControl"
             and .location == $location

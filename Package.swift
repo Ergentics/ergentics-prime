@@ -79,16 +79,6 @@ let package = Package(
             ]
         ),
         .executable(
-            name: "PrimeGPUCalibration",
-            targets: ["PrimeGPUCalibration"]
-        ),
-        .executable(
-            name: "PrimeNative3BMetalContinuationProbe",
-            targets: [
-                "PrimeNative3BMetalContinuationProbe",
-            ]
-        ),
-        .executable(
             name: "PrimeNativeContractResolutionProbe",
             targets: [
                 "PrimeNativeContractResolutionProbe",
@@ -180,10 +170,6 @@ let package = Package(
             url: "https://github.com/Ergentics/ergentics-mlx-swift",
             revision:
                 "d37885a278f1c37484a94d0f401a418735e66519"
-        ),
-        .package(
-            url: "https://github.com/ml-explore/mlx-swift-lm",
-            exact: "3.31.3"
         ),
     ],
     targets: [
@@ -554,50 +540,6 @@ let package = Package(
             dependencies: [
                 "PrimeCore",
                 "PrimeNativeCorpusReplay",
-            ]
-        ),
-        .executableTarget(
-            name: "PrimeGPUCalibration",
-            dependencies: [
-                "PrimeCore",
-                .product(
-                    name: "MLX",
-                    package: "ergentics-mlx-swift"
-                ),
-                .product(
-                    name: "MLXNN",
-                    package: "ergentics-mlx-swift"
-                ),
-                .product(
-                    name: "MLXOptimizers",
-                    package: "ergentics-mlx-swift"
-                ),
-                .product(
-                    name: "MLXLLM",
-                    package: "mlx-swift-lm"
-                ),
-            ]
-        ),
-        .executableTarget(
-            name: "PrimeNative3BMetalContinuationProbe",
-            dependencies: [
-                "PrimeCore",
-                .product(
-                    name: "MLX",
-                    package: "ergentics-mlx-swift"
-                ),
-                .product(
-                    name: "MLXNN",
-                    package: "ergentics-mlx-swift"
-                ),
-                .product(
-                    name: "MLXOptimizers",
-                    package: "ergentics-mlx-swift"
-                ),
-                .product(
-                    name: "MLXLLM",
-                    package: "mlx-swift-lm"
-                ),
             ]
         ),
         .executableTarget(
