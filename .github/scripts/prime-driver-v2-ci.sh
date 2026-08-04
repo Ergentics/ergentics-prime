@@ -520,9 +520,14 @@ assert_runner() {
     selector_canonical="$(
         cd /Applications/Xcode.app/Contents/Developer && pwd -P
     )"
-    [[ "$selector_canonical" == \
-        "/Applications/Xcode_26.6.app/Contents/Developer" ]] ||
-        die "Xcode.app resolved to an unexpected developer directory"
+    case "$selector_canonical" in
+        /Applications/Xcode.app/Contents/Developer|\
+        /Applications/Xcode_26.6.app/Contents/Developer)
+            ;;
+        *)
+            die "Xcode.app resolved to an unexpected developer directory"
+            ;;
+    esac
 
     selected="$(xcode-select -p)"
     selected_canonical="$(cd "$selected" && pwd -P)"
@@ -532,7 +537,7 @@ assert_runner() {
     printf '%s\n' "Xcode 26.6" "Build version 17F113" > "$expected_xcode"
     xcodebuild -version > "$actual_xcode"
     cmp -s "$actual_xcode" "$expected_xcode" ||
-        die "hosted Xcode identity differs from the pinned CI image"
+        die "Xcode identity differs from the pinned CI image"
 
     [[ "$(command -v swift)" == "/usr/bin/swift" ]] ||
         die "swift does not resolve through the system Xcode selector"
