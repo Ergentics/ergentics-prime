@@ -14,6 +14,7 @@ on:
         type: choice
         options:
           - hosted-image
+          - latin-authority-foundation
           - root-quarantine
 
 permissions:
@@ -133,4 +134,43 @@ jobs:
           printf '%s\n'
           'Active root dependency quarantine passed; historical source and receipts remain context only.'
           'No decoder selection, training, promotion, PMHNP, or Driver V2 authority is granted.'
+          >> "$GITHUB_STEP_SUMMARY"
+
+  latin-authority-foundation:
+    name: Prime Latin authority foundation
+    if: github.event_name == 'workflow_dispatch' && inputs.lane == 'latin-authority-foundation'
+    runs-on: macos-26
+    timeout-minutes: 30
+
+    steps:
+      - name: Check out the exact Prime commit
+        env:
+          CHECKOUT_TOKEN: ${{ github.token }}
+          PRIME_REPOSITORY: ${{ github.repository }}
+          PRIME_REVISION: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          [[ ! -e ergentics-prime && ! -L ergentics-prime ]]
+          git init ergentics-prime
+          git -C ergentics-prime remote add origin "https://github.com/${PRIME_REPOSITORY}"
+          export GIT_CONFIG_COUNT=1
+          export GIT_CONFIG_KEY_0="url.https://x-access-token:${CHECKOUT_TOKEN}@github.com/.insteadOf"
+          export GIT_CONFIG_VALUE_0="https://github.com/"
+          git -C ergentics-prime fetch --depth=1 --no-tags --no-write-fetch-head origin "$PRIME_REVISION"
+          git -C ergentics-prime checkout --detach "$PRIME_REVISION"
+          unset GIT_CONFIG_COUNT GIT_CONFIG_KEY_0 GIT_CONFIG_VALUE_0
+          [[ "$(git -C ergentics-prime rev-parse HEAD)" == "$PRIME_REVISION" ]]
+          [[ "$(git -C ergentics-prime remote get-url origin)" == "https://github.com/${PRIME_REPOSITORY}" ]]
+          [[ -z "$(git -C ergentics-prime status --porcelain=v1 --untracked-files=all)" ]]
+          ! grep -Fq -- "$CHECKOUT_TOKEN" ergentics-prime/.git/config
+
+      - name: Validate the Prime Latin authority foundation
+        working-directory: ergentics-prime
+        run: bash .github/scripts/prime-ci-latin-authority-foundation.sh
+
+      - name: Record the foundation authority ceiling
+        run: >-
+          printf '%s\n'
+          'Prime Latin proposal structure and fail-closed abstention passed.'
+          'No trial execution, model selection, training, promotion, PMHNP, or product authority is granted.'
           >> "$GITHUB_STEP_SUMMARY"
