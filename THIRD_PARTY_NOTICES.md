@@ -6,14 +6,24 @@ data, model, corpus, and third-party manifests control where other rights are
 incorporated. Dependency licenses do not transfer ownership of independent
 Prime source or evidence.
 
-The direct SwiftPM dependency inventory is:
+The active SwiftPM roots resolve only the first-party Ergentics MLX fork and
+its `swift-numerics` dependency:
 
-| Direct package | Pinned version | License |
+| Active package | Pinned revision/version | License |
+| --- | --- | --- |
+| `Ergentics/ergentics-mlx-swift` | root revision `d37885a278f1c37484a94d0f401a418735e66519`; typed-optimizer validation revision `68904d54b72871f26968261ae05d4fbb7c5e3142` | Derivative of MIT-licensed MLX Swift; upstream notices retained, Ergentics modifications copyright 2026 Ergentics, LLC |
+| `apple/swift-numerics` | 1.1.1 | Apache License 2.0 |
+
+Historical source, receipts, and immutable artifact snapshots still contain
+or describe the following dependencies, and active historical
+comparator/accounting targets still compile some Llama-era schemas. The public
+`mlx-swift-lm` package and its `swift-syntax` transitive are absent from active
+resolution, while all historical attribution obligations remain:
+
+| Historical dependency | Preserved version | License |
 | --- | --- | --- |
 | `ml-explore/mlx-swift` | 0.31.3, upstream base `61b9e011e09a62b489f6bd647958f1555bdf2896` | MIT, copyright 2023 ml-explore |
-| Ergentics `mlx-swift` typed-state modification | private revision `68904d54b72871f26968261ae05d4fbb7c5e3142`, authenticated fresh-clone resolution observed | Derivative of the MIT-licensed upstream package; upstream notice retained, Ergentics modifications copyright 2026 Ergentics, LLC |
 | `ml-explore/mlx-swift-lm` | 3.31.3 | MIT, copyright 2024 ml-explore |
-| `apple/swift-numerics` | 1.1.1 | Apache License 2.0 |
 | `swiftlang/swift-syntax` | 600.0.1 | Apache License 2.0 |
 
 The pinned MLX Swift source tree also vendors or submodules build inputs with
@@ -27,7 +37,8 @@ their own notices:
 | Apple MLX core | MIT; copyright Apple Inc. |
 | `ml-explore/mlx-c` | MIT; copyright ml-explore |
 
-`Package.resolved` binds the exact direct revisions. License files for the
+The active `Package.resolved` files bind the exact Ergentics revisions and
+contain no `mlx-swift-lm` or `swift-syntax` pin. License files for the
 vendored components are present in the pinned dependency tree. Those texts
 and all required notices must accompany any redistribution; this inventory is
 not yet an SBOM.

@@ -12,6 +12,17 @@ final class
             withoutWhitespace(
                 try source("Package.swift")
             )
+        for forbiddenActiveDependency in [
+            "mlx-swift-lm",
+            "MLXLLM",
+            #"name:"PrimeGPUCalibration""#,
+            #"name:"PrimeNative3BMetalContinuationProbe""#,
+        ] {
+            XCTAssertFalse(
+                package.contains(forbiddenActiveDependency),
+                "active Prime package retains quarantined Llama authority: \(forbiddenActiveDependency)"
+            )
+        }
         XCTAssertTrue(
             package.contains(
                 #".library(name:"PrimeNativeNeuralGateMLXValidationMechanics",targets:["PrimeNativeCorpusReplayMechanics","PrimeNativeNeuralGateCorrectedMechanics","PrimeNativeNeuralGateCorrectedEvaluationMechanics","PrimeNativeNeuralGateCorrectedFixtureAuthority","PrimeNativeNeuralGatePromptSolver","PrimeNativeNeuralGateLogitSidecarMechanics","PrimeNativeNeuralGateMLXLogSoftmaxRecomputation",])"#
@@ -142,6 +153,55 @@ final class
             validationMirror,
             rootMirror
         )
+        let mirrorObject =
+            try XCTUnwrap(
+                try JSONSerialization.jsonObject(
+                    with: rootMirror
+                ) as? [String: Any]
+            )
+        XCTAssertEqual(
+            (mirrorObject["object"] as? [Any])?.count,
+            0,
+            "active SwiftPM configuration must not remap the first-party MLX URL"
+        )
+
+        let typedOptimizerPackage =
+            withoutWhitespace(
+                try source(
+                    "Tests/PrimeTypedOptimizerRestoreMechanicsValidation/Package.swift"
+                )
+            )
+        XCTAssertTrue(
+            typedOptimizerPackage.contains(
+                #"url:"https://github.com/Ergentics/ergentics-mlx-swift""#
+            )
+        )
+        XCTAssertFalse(
+            typedOptimizerPackage.contains(
+                #"url:"https://github.com/ml-explore/mlx-swift""#
+            )
+        )
+
+        try assertFirstPartyMLXPin(
+            "Package.resolved",
+            revision:
+                "d37885a278f1c37484a94d0f401a418735e66519"
+        )
+        try assertFirstPartyMLXPin(
+            "Tests/PrimeNativeNeuralGateMLXValidation/Package.resolved",
+            revision:
+                "d37885a278f1c37484a94d0f401a418735e66519"
+        )
+        try assertFirstPartyMLXPin(
+            "Tests/PrimeTypedOptimizerRestoreMechanicsValidation/Package.resolved",
+            revision:
+                "68904d54b72871f26968261ae05d4fbb7c5e3142"
+        )
+        try assertFirstPartyMLXPin(
+            "Tests/PrimeValidationWorkflow/Package.resolved",
+            revision:
+                "d37885a278f1c37484a94d0f401a418735e66519"
+        )
 
         let resolvedObject =
             try XCTUnwrap(
@@ -163,9 +223,7 @@ final class
             },
             [
                 "ergentics-mlx-swift",
-                "mlx-swift-lm",
                 "swift-numerics",
-                "swift-syntax",
             ]
         )
         let mlxPin =
@@ -183,6 +241,10 @@ final class
         XCTAssertEqual(
             state["revision"] as? String,
             "d37885a278f1c37484a94d0f401a418735e66519"
+        )
+        XCTAssertEqual(
+            mlxPin["location"] as? String,
+            "https://github.com/Ergentics/ergentics-mlx-swift"
         )
     }
 
@@ -268,6 +330,68 @@ final class
                 .appendingPathComponent(
                     relativePath
                 )
+        )
+    }
+
+    private func assertFirstPartyMLXPin(
+        _ relativePath: String,
+        revision: String,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) throws {
+        let object = try XCTUnwrap(
+            try JSONSerialization.jsonObject(
+                with: data(relativePath)
+            ) as? [String: Any],
+            file: file,
+            line: line
+        )
+        let pins = try XCTUnwrap(
+            object["pins"] as? [[String: Any]],
+            file: file,
+            line: line
+        )
+        let matches = pins.filter {
+            $0["identity"] as? String
+                == "ergentics-mlx-swift"
+        }
+        XCTAssertFalse(
+            pins.contains {
+                $0["identity"] as? String
+                    == "mlx-swift-lm"
+            },
+            "active lock retains quarantined Llama dependency",
+            file: file,
+            line: line
+        )
+        XCTAssertEqual(matches.count, 1, file: file, line: line)
+        let pin = try XCTUnwrap(
+            matches.first,
+            file: file,
+            line: line
+        )
+        XCTAssertEqual(
+            pin["kind"] as? String,
+            "remoteSourceControl",
+            file: file,
+            line: line
+        )
+        XCTAssertEqual(
+            pin["location"] as? String,
+            "https://github.com/Ergentics/ergentics-mlx-swift",
+            file: file,
+            line: line
+        )
+        let state = try XCTUnwrap(
+            pin["state"] as? [String: Any],
+            file: file,
+            line: line
+        )
+        XCTAssertEqual(
+            state["revision"] as? String,
+            revision,
+            file: file,
+            line: line
         )
     }
 

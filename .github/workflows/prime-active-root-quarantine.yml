@@ -1,0 +1,170 @@
+name: Prime active-root quarantine
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: prime-active-root-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: false
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  active-root:
+    name: First-party MLX / active-root quarantine
+    runs-on: macos-15
+    timeout-minutes: 45
+    env:
+      EXACT_REVISION: ${{ github.event.pull_request.head.sha || github.sha }}
+
+    steps:
+      - name: Check out the exact Prime revision
+        env:
+          CHECKOUT_TOKEN: ${{ github.token }}
+          PRIME_REPOSITORY: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          [[ "$EXACT_REVISION" =~ ^[0-9a-f]{40}$ ]]
+          [[ ! -e ergentics-prime && ! -L ergentics-prime ]]
+          git init ergentics-prime
+          git -C ergentics-prime remote add origin "https://github.com/${PRIME_REPOSITORY}"
+          export GIT_CONFIG_COUNT=1
+          export GIT_CONFIG_KEY_0="url.https://x-access-token:${CHECKOUT_TOKEN}@github.com/.insteadOf"
+          export GIT_CONFIG_VALUE_0="https://github.com/"
+          git -C ergentics-prime fetch --depth=1 --no-tags --no-write-fetch-head origin "$EXACT_REVISION"
+          git -C ergentics-prime checkout --detach "$EXACT_REVISION"
+          unset GIT_CONFIG_COUNT GIT_CONFIG_KEY_0 GIT_CONFIG_VALUE_0
+          [[ "$(git -C ergentics-prime rev-parse HEAD)" == "$EXACT_REVISION" ]]
+          [[ -z "$(git -C ergentics-prime status --porcelain=v1 --untracked-files=all)" ]]
+          ! grep -Fq -- "$CHECKOUT_TOKEN" ergentics-prime/.git/config
+
+      - name: Validate active metadata and preserved history
+        working-directory: ergentics-prime
+        env:
+          ERGENTICS_EXACT_REVISION: ${{ env.EXACT_REVISION }}
+        run: bash .github/scripts/prime-ci-active-root-quarantine.sh
+
+      - name: Parse the changed Swift contracts without dependencies
+        working-directory: ergentics-prime
+        run: |
+          set -euo pipefail
+          for source_file in \
+            Tests/PrimeCoreTests/PrimeNativeCorpusReplaySourceContractTests.swift \
+            Tests/PrimeCoreTests/PrimeNativeGenerationContractSourceContractTests.swift \
+            Tests/PrimeCoreTests/PrimeNativeNeuralGateContractSourceContractTests.swift \
+            Tests/PrimeCoreTests/PrimeNativeNeuralGateMLXIsolationSourceContractTests.swift \
+            Tests/PrimeCoreTests/PrimeNativeResolvedContractAdapterSourceContractTests.swift; do
+            xcrun swiftc -frontend -parse "$source_file"
+          done
+          [[ "$(git rev-parse HEAD)" == "$EXACT_REVISION" ]]
+          [[ -z "$(git status --porcelain=v1 --untracked-files=all)" ]]
+
+      - name: Record the authority ceiling
+        run: |
+          {
+            echo 'Exact-head active-root metadata and dependency-free Swift syntax checks passed.'
+            echo 'The public mlx-swift-lm package and its two MLXLLM execution products are disconnected.'
+            echo 'Historical comparator/accounting targets and receipts remain preserved.'
+            echo 'No decoder selection, model execution, training, promotion, Driver V2, or PMHNP authority is granted.'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  trusted-main-compile:
+    name: Reviewed main / focused source contracts
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: active-root
+    runs-on: macos-15
+    timeout-minutes: 45
+    env:
+      EXACT_REVISION: ${{ github.sha }}
+      MLX_REVISION: d37885a278f1c37484a94d0f401a418735e66519
+
+    steps:
+      - name: Check out reviewed main exactly
+        env:
+          CHECKOUT_TOKEN: ${{ github.token }}
+          PRIME_REPOSITORY: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          [[ "$EXACT_REVISION" =~ ^[0-9a-f]{40}$ ]]
+          [[ ! -e ergentics-prime && ! -L ergentics-prime ]]
+          git init ergentics-prime
+          git -C ergentics-prime remote add origin "https://github.com/${PRIME_REPOSITORY}"
+          export GIT_CONFIG_COUNT=1
+          export GIT_CONFIG_KEY_0="url.https://x-access-token:${CHECKOUT_TOKEN}@github.com/.insteadOf"
+          export GIT_CONFIG_VALUE_0="https://github.com/"
+          git -C ergentics-prime fetch --depth=1 --no-tags --no-write-fetch-head origin "$EXACT_REVISION"
+          git -C ergentics-prime checkout --detach "$EXACT_REVISION"
+          unset GIT_CONFIG_COUNT GIT_CONFIG_KEY_0 GIT_CONFIG_VALUE_0
+          [[ "$(git -C ergentics-prime rev-parse HEAD)" == "$EXACT_REVISION" ]]
+          [[ -z "$(git -C ergentics-prime status --porcelain=v1 --untracked-files=all)" ]]
+          ! grep -Fq -- "$CHECKOUT_TOKEN" ergentics-prime/.git/config
+
+      - name: Fetch the exact private dependency without evaluating Prime
+        env:
+          ERGENTICS_MLX_READ_TOKEN: ${{ secrets.ERGENTICS_PAT }}
+        run: |
+          set -euo pipefail
+          [[ -n "$ERGENTICS_MLX_READ_TOKEN" ]]
+          readonly mlx_bare="$RUNNER_TEMP/ergentics-mlx-swift.git"
+          [[ ! -e "$mlx_bare" && ! -L "$mlx_bare" ]]
+          git init --bare "$mlx_bare"
+          git --git-dir="$mlx_bare" remote add origin \
+            https://github.com/Ergentics/ergentics-mlx-swift
+          export GIT_CONFIG_COUNT=1
+          export GIT_CONFIG_KEY_0="url.https://x-access-token:${ERGENTICS_MLX_READ_TOKEN}@github.com/.insteadOf"
+          export GIT_CONFIG_VALUE_0="https://github.com/"
+          git --git-dir="$mlx_bare" fetch --depth=1 --no-tags origin "$MLX_REVISION"
+          unset GIT_CONFIG_COUNT GIT_CONFIG_KEY_0 GIT_CONFIG_VALUE_0
+          [[ "$(git --git-dir="$mlx_bare" rev-parse FETCH_HEAD)" == "$MLX_REVISION" ]]
+          git --git-dir="$mlx_bare" update-ref refs/heads/prime-pinned "$MLX_REVISION"
+          [[ "$(git --git-dir="$mlx_bare" remote get-url origin)" == \
+            'https://github.com/Ergentics/ergentics-mlx-swift' ]]
+          ! grep -R -Fq -- "$ERGENTICS_MLX_READ_TOKEN" "$mlx_bare"
+
+      - name: Compile and run the focused contracts without a credential
+        working-directory: ergentics-prime
+        run: |
+          set -euo pipefail
+          readonly mlx_bare="$RUNNER_TEMP/ergentics-mlx-swift.git"
+          readonly test_log="$RUNNER_TEMP/prime-active-root-tests.log"
+          [[ "$(git --git-dir="$mlx_bare" rev-parse refs/heads/prime-pinned)" == \
+            "$MLX_REVISION" ]]
+          mkdir -p \
+            "$RUNNER_TEMP/prime-active-root-build" \
+            "$RUNNER_TEMP/prime-active-root-cache" \
+            "$RUNNER_TEMP/prime-active-root-config" \
+            "$RUNNER_TEMP/prime-active-root-security"
+          export GIT_CONFIG_COUNT=2
+          export GIT_CONFIG_KEY_0="url.file://${mlx_bare}/.insteadOf"
+          export GIT_CONFIG_VALUE_0="https://github.com/Ergentics/ergentics-mlx-swift"
+          export GIT_CONFIG_KEY_1="protocol.file.allow"
+          export GIT_CONFIG_VALUE_1="always"
+          TMPDIR="$RUNNER_TEMP" swift test \
+            --scratch-path "$RUNNER_TEMP/prime-active-root-build" \
+            --cache-path "$RUNNER_TEMP/prime-active-root-cache" \
+            --config-path "$RUNNER_TEMP/prime-active-root-config" \
+            --security-path "$RUNNER_TEMP/prime-active-root-security" \
+            --disable-dependency-cache \
+            --manifest-cache local \
+            --disable-netrc \
+            --disable-keychain \
+            --force-resolved-versions \
+            --test-product ErgenticsPrimePackageTests \
+            --filter 'PrimeNativeNeuralGateMLXIsolationSourceContractTests|PrimeNativeCorpusReplaySourceContractTests|PrimeNativeGenerationContractSourceContractTests|PrimeNativeNeuralGateContractSourceContractTests|PrimeNativeResolvedContractAdapterSourceContractTests|PrimeSwiftSourceProvenanceTests/testLiveRepositoryMatchesEmbeddedSourceIdentity' \
+            2>&1 | tee "$test_log"
+          unset GIT_CONFIG_COUNT GIT_CONFIG_KEY_0 GIT_CONFIG_VALUE_0
+          unset GIT_CONFIG_KEY_1 GIT_CONFIG_VALUE_1
+          grep -Eq 'Executed [1-9][0-9]* tests?, with 0 failures' "$test_log"
+          [[ "$(git rev-parse HEAD)" == "$EXACT_REVISION" ]]
+          [[ -z "$(git status --porcelain=v1 --untracked-files=all)" ]]
