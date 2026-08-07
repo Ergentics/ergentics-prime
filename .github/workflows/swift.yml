@@ -33,36 +33,45 @@ jobs:
 
     steps:
       - name: Check out the exact Prime commit
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
-        with:
-          ref: ${{ github.sha }}
-          path: ergentics-prime
-          fetch-depth: 1
-          persist-credentials: false
-          show-progress: false
+        env:
+          CHECKOUT_TOKEN: ${{ github.token }}
+          PRIME_REPOSITORY: ${{ github.repository }}
+          PRIME_REVISION: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          [[ ! -e ergentics-prime && ! -L ergentics-prime ]]
+          git init ergentics-prime
+          git -C ergentics-prime remote add origin "https://github.com/${PRIME_REPOSITORY}"
+          export GIT_CONFIG_COUNT=1
+          export GIT_CONFIG_KEY_0="url.https://x-access-token:${CHECKOUT_TOKEN}@github.com/.insteadOf"
+          export GIT_CONFIG_VALUE_0="https://github.com/"
+          git -C ergentics-prime fetch --depth=1 --no-tags --no-write-fetch-head origin "$PRIME_REVISION"
+          git -C ergentics-prime checkout --detach "$PRIME_REVISION"
+          unset GIT_CONFIG_COUNT GIT_CONFIG_KEY_0 GIT_CONFIG_VALUE_0
+          [[ "$(git -C ergentics-prime rev-parse HEAD)" == "$PRIME_REVISION" ]]
+          [[ "$(git -C ergentics-prime remote get-url origin)" == "https://github.com/${PRIME_REPOSITORY}" ]]
+          [[ -z "$(git -C ergentics-prime status --porcelain=v1 --untracked-files=all)" ]]
+          ! grep -Fq -- "$CHECKOUT_TOKEN" ergentics-prime/.git/config
 
       - name: Check out the exact companion
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
-        with:
-          repository: Ergentics/pmhnp-companion-ergentics
-          ref: 163fc100710ece48119bc25954452d10f6a84f7f
-          path: companion
-          fetch-depth: 1
-          persist-credentials: false
-          show-progress: false
-          token: ${{ secrets.ERGENTICS_PAT }}
+        env:
+          CHECKOUT_TOKEN: ${{ secrets.ERGENTICS_PAT }}
+        run: >-
+          bash ergentics-prime/.github/scripts/prime-ci-checkout-pinned.sh
+          Ergentics/pmhnp-companion-ergentics
+          163fc100710ece48119bc25954452d10f6a84f7f
+          companion
+          recursive
 
       - name: Check out the exact first-party MLX fork
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
-        with:
-          repository: Ergentics/ergentics-mlx-swift
-          ref: d37885a278f1c37484a94d0f401a418735e66519
-          path: mlx
-          fetch-depth: 1
-          persist-credentials: false
-          show-progress: false
-          submodules: recursive
-          token: ${{ secrets.ERGENTICS_PAT }}
+        env:
+          CHECKOUT_TOKEN: ${{ secrets.ERGENTICS_PAT }}
+        run: >-
+          bash ergentics-prime/.github/scripts/prime-ci-checkout-pinned.sh
+          Ergentics/ergentics-mlx-swift
+          d37885a278f1c37484a94d0f401a418735e66519
+          mlx
+          recursive
 
       - name: Build and bind two disjoint Driver images
         working-directory: ergentics-prime
