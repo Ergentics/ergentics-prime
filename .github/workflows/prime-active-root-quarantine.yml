@@ -60,6 +60,10 @@ jobs:
         run: |
           set -euo pipefail
           for source_file in \
+            Sources/PrimeLatinProposalPairCapture/PrimeLatinProposalPairCapture.swift \
+            Sources/PrimeLatinProposalPairCaptureProbe/PrimeLatinProposalPairCaptureProbeMain.swift \
+            Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalPairCaptureSourceContractTests.swift \
+            Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalPairCaptureTests.swift \
             Tests/PrimeCoreTests/PrimeNativeCorpusReplaySourceContractTests.swift \
             Tests/PrimeCoreTests/PrimeNativeGenerationContractSourceContractTests.swift \
             Tests/PrimeCoreTests/PrimeNativeNeuralGateContractSourceContractTests.swift \
@@ -70,13 +74,20 @@ jobs:
           [[ "$(git rev-parse HEAD)" == "$EXACT_REVISION" ]]
           [[ -z "$(git status --porcelain=v1 --untracked-files=all)" ]]
 
+      - name: Validate the isolated Latin pair capture
+        working-directory: ergentics-prime
+        env:
+          ERGENTICS_EXACT_REVISION: ${{ env.EXACT_REVISION }}
+        run: bash .github/scripts/prime-ci-latin-proposal-pair-capture.sh
+
       - name: Record the authority ceiling
         run: |
           {
             echo 'Exact-head active-root metadata and dependency-free Swift syntax checks passed.'
             echo 'The public mlx-swift-lm package and its two MLXLLM execution products are disconnected.'
             echo 'Historical comparator/accounting targets and receipts remain preserved.'
-            echo 'No decoder selection, model execution, training, promotion, Driver V2, or PMHNP authority is granted.'
+            echo 'The Latin pair capture is read-only transport validation and remains abstaining.'
+            echo 'No Prime proposal, trial authorization, decoder selection, model execution, training, promotion, Driver V2, or PMHNP authority is granted.'
           } >> "$GITHUB_STEP_SUMMARY"
 
   trusted-main-compile:
