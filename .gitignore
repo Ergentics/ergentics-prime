@@ -1,4 +1,5 @@
 .build/
+.build-driver-v2-supervisor-*/
 .swiftpm/*
 !.swiftpm/configuration/
 .swiftpm/configuration/*

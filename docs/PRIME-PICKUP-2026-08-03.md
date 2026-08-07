@@ -1,22 +1,26 @@
-# Prime durable pickup — decoder authority and secure-child supervision
+# Prime durable pickup — Driver V2, decoder authority, and secure-child history
 
-Status: two isolated feature branches; no pull request is open; exact-head
-independent audit remains mandatory for secure-child PR candidacy
+Status: secure-child supervision is independently audited and merged through
+PR 52; Driver V2 supervisor-image and fresh-checkout runtime-scaffold work are
+isolated, unverified WIP on the Driver branch; decoder authority remains
+isolated and unchanged
 
 Snapshot date: 2026-08-03
 
 Repository: `Ergentics/ergentics-prime`
 
 This document is the restart boundary. It separates the first-party decoder
-authority correction from the secure-child supervision candidate. Do not
-combine their implementation diffs or infer validation across the branches.
+authority correction, merged secure-child supervision evidence, and current
+Driver V2 work. Do not combine their implementation diffs or infer validation
+across the branches.
 
 ## Durable branch map
 
 | Scope | Branch | Durable checkpoint | Disposition |
 | --- | --- | --- | --- |
 | First-party decoder authority | `feat/native-decoder-authority-correction` | remote commit `25f6906fa69ed6ecf6e196e319c02d7f82f74d9a`; exact tree `e557c95d59ae1bac2f436914b8b7adc4183390e0` | Focused authority tests pass; reviewable as its own slice |
-| Neutral secure-child supervision | `feat/neutral-secure-child-supervision` | remote branch ref is authoritative; rejected first-audit commit `7180526e9ab4dc851faa3c4b3bbd9740a6046443`, exact tree `da3319cd3ee7399f974df8571d4a74e88dbee7c9`, is retained as history | First-audit findings remediated on the later branch head; require an independent audit of that exact head before any pull request |
+| Neutral secure-child supervision | `feat/neutral-secure-child-supervision` | audited remote head `4be3bdb9eb768e0617851cf22c2d67f677025001`, tree `1421c77105240be361e36e2f52d9626ad8e9ca98`; merged to `main` by PR 52 as merge commit `7d5b2a7f0dbfb6bc7c5ae44aa8fb3c7b444dd6f6` | Complete and preserved; source branch remains retained |
+| Driver V2 supervisor image | `wip/prime-validation-driver-v2-evidence-completion` | branched from merged `main` commit `7d5b2a7`; final implementation head cannot be embedded in its own tree | Current isolated pre-execution work; exact-head validation and independent audit required before publication |
 
 The decoder correction also exists locally as commit
 `a3fdb645a3ea688dbb9c2eb07e30aa7042925f59`. The local and remote commit IDs
@@ -24,11 +28,10 @@ differ because GitHub created the durable remote commit, but their tree ID is
 identical. The tree identity, not an implied metadata equivalence, proves that
 the source bytes are the same.
 
-The secure-child branch includes this handoff and later validation/remediation
-commits above the pinned WIP parent. Use the remote branch ref for the current
-head; a final head cannot be embedded in its own source tree. Commit `7180526`
-is the preserved first-audit target, not authority that its findings were
-resolved.
+The rejected secure-child first-audit commit `7180526` remains preserved in
+history. Its findings were remediated at exact head `4be3bdb`, independently
+audited CLEAN, and merged without squash or source-branch deletion. The Driver
+branch starts from that merge and must not move either historical ref.
 
 ## Corrected decoder authority
 
@@ -68,17 +71,18 @@ runtime dependency was introduced or executed by this correction. The pinned
 architecture; any Swift implementation must be independently typed and
 tested.
 
-Focused validation completed on the exact correction tree:
+Historical evidence record only: the exact decoder-correction tree previously
+ran the `PrimeNative(DecoderAuthority|ArcContinuity)Tests` filter under an
+older managed-workspace sandbox bypass. That invocation predates the frozen
+no-weakening boundary and is not an authorized restart command. Do not repeat
+it with `--disable-sandbox`; current validation must retain SwiftPM's sandbox
+and use outer managed-workspace permission when required.
 
-```sh
-env CLANG_MODULE_CACHE_PATH="$PWD/.build/ModuleCache" SWIFTPM_MODULECACHE_OVERRIDE="$PWD/.build/ModuleCache" swift test --disable-sandbox --scratch-path .build --filter 'PrimeNative(DecoderAuthority|ArcContinuity)Tests'
-```
-
-Result: 19 tests, 0 failures. `git diff --check` also passed. The initial
-SwiftPM attempt without `--disable-sandbox` was blocked before compilation by
-the nested package sandbox in the managed Codex environment; it was not a
-code failure. No repository-wide pass is claimed for this authority-only
-slice.
+The recorded historical result was 19 tests, 0 failures, and
+`git diff --check` passed. The earlier managed nested-sandbox failure occurred
+before compilation and was not a code failure. No repository-wide pass is
+claimed for that authority-only slice, and no validation claim transfers from
+it to the current Driver branch.
 
 ## Secure-child supervision truth
 
@@ -125,9 +129,10 @@ Validation recorded for the remediated exact tree:
 - after exact metallib staging, the isolated Ergentics-MLX Release package
   passed 9/9, including the exhaustive corrected-fixture/three-seed lane.
 
-An independent audit must still name and approve the exact final branch head
-before it becomes a pull request candidate. That external result is not inferred
-from this self-describing tree.
+An independent final audit named exact secure-child head `4be3bdb` CLEAN before
+PR 52 was opened and merged. The merge commit has the exact audited tree and
+retains `4be3bdb` as its second parent; this document does not transfer that
+audit to later Driver or decoder changes.
 
 The retained fail-stop regression test is one new required root XCTest case.
 The first complete Release aggregate exposed that the earlier 891-entry Driver
@@ -140,31 +145,76 @@ byte-identical:
 - Swift Testing: 12 lines, 1,287 bytes, SHA-256
   `487c601e9693d6a0fbc31d1b683ffd342ba0d10007c780f315af1113d825e8a3`.
 
+## Fresh-checkout runtime scaffold — unverified continuation
+
+The hosted root Release workflow later exposed a bootstrap gap before the
+existing metallib-only stager. A persisted local `.build` tree had supplied
+the canonical SwiftPM `Info.plist`; a fresh checkout did not, because the
+pinned Cmlx package declares neither the corresponding SwiftPM resource nor a
+build plugin. This was an executor-environment gap, not evidence that the
+frozen donor/runtime role split or metallib-only stager was wrong.
+
+The current worktree adds a separate PrimeCore-only
+`PrimeMLXRuntimeScaffold` utility. It source-binds the one tracked 1,120-byte
+canonical manifest, creates the absent owner-private runtime bundle with
+exclusive no-replace semantics, and leaves the metallib absent for the
+existing stager. The stager remains donor-validating and metallib-only; the
+1,130-byte Xcode manifest is never substituted. Historical receipts, evidence
+roots, and checkpoint artifacts are neither runtime inputs nor overwrite
+targets.
+
+The resulting working `Package.swift` is 29,043 bytes with SHA-256
+`5df810b3796bc3b254e58148ddcc9e4014c92c504845084743c1d3a580c2c895`.
+The earlier 27,650-byte historical-worker anchor, 28,758-byte Driver-only
+anchor, 65,306-byte checkout-specific Driver-only package description, and
+65,060-byte path-neutral Driver-only package description remain historical
+accounting at SHA-256
+`6a4221c36d6e1b013b5e8bd7ad1c7730ebb8847a257305d7c550b14e1543a7e6` and
+`47d0df8b252bbc5b51b4ca70319cd88ce16f6bca2a55989c6c00a26e49cb6b93`,
+respectively. The additive scaffold topology has a new path-neutral two-role
+checkpoint of 65,740 bytes with SHA-256
+`a9b8935742e67c2ea5cf8cb19727a4dcc24adb46553f7a74d4a243f713cb51f5`.
+Final source identity, full hosted validation, exact commit, and independent
+audit are still pending; no durable completion or publication is claimed
+here.
+
+The MLX-free statement remains scoped to the Driver V2 supervisor target and
+binary closure. The scaffold is a separate utility, not a Driver dependency,
+and other repository targets remain MLX-linked. The heavy root Release suite,
+Xcode donor, scaffold, and stage sequence is promotion-only: it is mandatory
+when selected, with no missing-fixture skip, while ordinary Xcode/SwiftPM and
+normal macOS/Mac App Store development remain usable without running it on
+every build.
+
 ## Resume order
 
-Start from the secure-child audit-candidate branch in this durable workspace
-and preserve both historical checkpoints:
+Start from the isolated Driver branch in this durable workspace and preserve
+all historical checkpoints:
 
 ```sh
 git fetch origin
-git switch wip/neutral-secure-child-supervision-audit-candidate
+git switch wip/prime-validation-driver-v2-evidence-completion
 git status --short --branch
 git log --oneline --decorate -3
 ```
 
 Then proceed in this order:
 
-1. Verify the local and remote candidate refs identify the same exact commit
-   and the working tree is clean.
-2. Verify the recorded source seal, package-description canary, frozen
-   inventories, focused Debug/Release suites, nested Driver V2 checks, and
-   nine-mode integration on that exact tree.
-3. Obtain an independent final audit naming the exact commit. Only then may
-   this branch become a pull request candidate.
-4. After the secure-child and Driver V2 boundary is resolved, return to the
-   decoder branch. The next model-boundary slice is complete root
+1. Finish only the Driver V2 supervisor-image boundary: exact current-image
+   handoff, package-scoped bridge, and root executable canary. Do not run a
+   Git/Swift child or mint a positive repository receipt in this slice.
+2. Verify two disjoint Release builds are byte-identical, run both binaries
+   directly against fresh private roots, verify the MLX-free target and binary
+   linkage closure, and reseal source/package-description evidence.
+3. Verify the frozen 892/12 resources remain byte-identical, then obtain an
+   independent final audit naming the exact Driver commit before publication.
+4. The next Driver slice must add canonical held Prime/companion tracked-tree
+   manifests plus one gapless source window before any fixed Git/Swift probe.
+5. After the Driver V2 evidence boundary is resolved, return to the decoder
+   branch. The next model-boundary slice is complete root
    `MLXLLM`/`mlx-swift-lm` quarantine before any `PrimeNativeDecoder` target
-   appears. It is not decoder implementation or a training run.
+   appears. Logic 10M is the first native conformance boundary; it is not
+   authorization for 300M/3B/10B execution, quantization, training, or release.
 
 Managed-workspace focused commands:
 
@@ -182,8 +232,8 @@ inner sandbox with `--disable-sandbox`.
 ## Do not
 
 - Do not reset, clean, stash, rebase, squash, or rewrite either checkpoint.
-- Do not merge the decoder authority correction into the secure-child WIP.
-- Do not open a secure-child pull request while its checkpoint is unverified.
+- Do not merge the decoder authority correction into Driver V2 work.
+- Do not rewrite, squash, delete, or repoint the audited secure-child refs.
 - Do not treat the WIP label, prior test output, or `.build` timestamps as
   validation of the current tree.
 - Do not change historical receipt hashes, the replacement 892/12 inventories, or

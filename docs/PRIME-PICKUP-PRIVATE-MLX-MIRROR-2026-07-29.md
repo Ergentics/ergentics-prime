@@ -183,6 +183,27 @@ The staging source host remains the Xcode Release path under
 `.build/apple/Build/Products/Release`; changing the test fixture does not
 collapse the donor and runtime roles.
 
+### Fresh-checkout scaffold continuation — 2026-08-03
+
+The preceding role split and metallib-only stager contract remain historical
+accounting and are not rewritten. A later hosted fresh-checkout run exposed a
+missing producer immediately before that stager: persisted local `.build`
+state had supplied the canonical SwiftPM manifest, but the pinned Cmlx package
+declares neither a SwiftPM resource nor a build plugin that can create it.
+
+`PrimeMLXRuntimeScaffold` closes only that bootstrap gap. It validates the
+complete Prime source identity, reads the one fixed tracked 1,120-byte
+canonical template, requires the role-specific SwiftPM Release host, and uses
+exclusive no-replace publication to create an owner-private bundle containing
+only `Contents/Info.plist` plus an empty `Contents/Resources` directory. The
+metallib must remain absent. It does not read this document, an old receipt, a
+historical artifact, or the Xcode donor manifest as runtime input.
+
+The current promotion workflow therefore inserts the scaffold immediately
+before the historical metallib-only stage. The stager still validates both
+typed manifests and transfers only the shared exact metallib. No historical
+receipt or evidence root is overwritten or relabeled by this continuation.
+
 ## Ordered execution
 
 1. Create local-only recovery refs for both frozen starting tips.

@@ -151,6 +151,12 @@ That driver must remain Swift-first. It must prove the existing 904-test root
 acceptance target and preserve the root package-description canary before it
 is allowed to govern optimizer or neural training gates.
 
+The 904 value is inventory cardinality and one root acceptance execution, not
+the paired V2 terminal count. Each reference/candidate arm requires 892 XCTest
+terminals in the parallel lane, the same 892 in the sequential skip-authority
+lane, and 12 Swift Testing terminals: 1,796 per arm and 3,592 across both arms.
+No 904-case receipt may be relabeled as complete paired Driver V2 evidence.
+
 ## V2 foundation update
 
 The additive V2 schema, deterministic shard and invocation planner, exact
@@ -164,8 +170,9 @@ later secure-child scope retained one new required root fail-stop regression
 identifier. The prior 891/12 aggregate remains historical evidence and is not
 rewritten.
 
-This update does not implement the root-suite executor, parse child output into
-V2 shard receipts, publish a durable complete run, or change the no-executor
-authority ceiling. The exact implemented line and next boundary are recorded
-in
-`PRIME-SWIFT-VALIDATION-DRIVER-V2-FOUNDATION-2026-08-02.md`.
+The dedicated root Driver V2 binary now closes only exact supervisor-image
+identity through a non-restorable live bridge. This update still does not
+implement the root-suite executor, parse child output into V2 shard receipts,
+publish a durable complete run, or change the frozen planner authority ceiling.
+The exact implemented line and next boundary are recorded in
+`PRIME-SWIFT-VALIDATION-SUPERVISOR-IMAGE-2026-08-03.md`.

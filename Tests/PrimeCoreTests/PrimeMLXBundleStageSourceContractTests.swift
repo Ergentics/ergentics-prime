@@ -54,6 +54,31 @@ final class PrimeMLXBundleStageSourceContractTests:
                     .lastPathComponent,
                 testCase.destination
             )
+            let scaffold =
+                try PrimeMLXRuntimeScaffoldArguments
+                    .parse(
+                        [
+                            "--source-root",
+                            "/private/tmp/ergentics-prime-source",
+                            "--destination-host",
+                            "/private/tmp/\(testCase.destination)",
+                            "--runtime-role",
+                            testCase.role.rawValue,
+                        ]
+                    )
+            XCTAssertEqual(
+                scaffold.runtimeRole,
+                testCase.role
+            )
+            XCTAssertEqual(
+                scaffold.destinationHost
+                    .lastPathComponent,
+                testCase.destination
+            )
+            XCTAssertEqual(
+                scaffold.sourceRoot.lastPathComponent,
+                "ergentics-prime-source"
+            )
         }
     }
 
@@ -83,6 +108,33 @@ final class PrimeMLXBundleStageSourceContractTests:
                     XCTAssertEqual(
                         error as?
                             PrimeMLXBundleStageArgumentError,
+                        .invalidArgument(
+                            "--destination-host basename must be " +
+                                PrimeMLXRuntimeImageLayout
+                                .destinationHostExecutableName(
+                                    for: role
+                                ) +
+                                " for --runtime-role " +
+                                role.rawValue
+                        )
+                    )
+                }
+                XCTAssertThrowsError(
+                    try PrimeMLXRuntimeScaffoldArguments
+                        .parse(
+                            [
+                                "--source-root",
+                                "/private/tmp/ergentics-prime-source",
+                                "--destination-host",
+                                "/private/tmp/\(destination)",
+                                "--runtime-role",
+                                role.rawValue,
+                            ]
+                        )
+                ) { error in
+                    XCTAssertEqual(
+                        error as?
+                            PrimeMLXRuntimeScaffoldArgumentError,
                         .invalidArgument(
                             "--destination-host basename must be " +
                                 PrimeMLXRuntimeImageLayout
@@ -131,6 +183,43 @@ final class PrimeMLXBundleStageSourceContractTests:
         for mutation in mutations {
             XCTAssertThrowsError(
                 try PrimeMLXBundleStageArguments
+                    .parse(mutation)
+            )
+        }
+
+        let validScaffold = [
+            "--source-root",
+            "/private/tmp/ergentics-prime-source",
+            "--destination-host",
+            "/private/tmp/PrimeGPUCalibration",
+            "--runtime-role",
+            "calibration",
+        ]
+        let scaffoldMutations = [
+            Array(validScaffold.dropLast(2)),
+            Array(validScaffold.dropLast()) + [
+                "caller_defined",
+            ],
+            validScaffold + [
+                "--source-root",
+                "/private/tmp/second-source",
+            ],
+            validScaffold + [
+                "--destination-host",
+                "/private/tmp/PrimeGPUCalibration",
+            ],
+            validScaffold + [
+                "--runtime-role",
+                "optimizer_restore_probe",
+            ],
+            validScaffold + [
+                "--caller-defined",
+                "value",
+            ],
+        ]
+        for mutation in scaffoldMutations {
+            XCTAssertThrowsError(
+                try PrimeMLXRuntimeScaffoldArguments
                     .parse(mutation)
             )
         }
@@ -216,6 +305,27 @@ final class PrimeMLXBundleStageSourceContractTests:
                 )
             )
         }
+        XCTAssertThrowsError(
+            try PrimeMLXRuntimeScaffoldArguments
+                .parse(
+                    [
+                        "--source-root",
+                        sourceAlias.path,
+                        "--destination-host",
+                        destinationHost.path,
+                        "--runtime-role",
+                        "calibration",
+                    ]
+                )
+        ) { error in
+            XCTAssertEqual(
+                error as?
+                    PrimeMLXRuntimeScaffoldArgumentError,
+                .invalidArgument(
+                    "--source-root must not traverse symbolic links"
+                )
+            )
+        }
 
         let destinationAlias =
             root.appendingPathComponent(
@@ -247,6 +357,30 @@ final class PrimeMLXBundleStageSourceContractTests:
             XCTAssertEqual(
                 error as?
                     PrimeMLXBundleStageArgumentError,
+                .invalidArgument(
+                    "--destination-host must not traverse symbolic links"
+                )
+            )
+        }
+        XCTAssertThrowsError(
+            try PrimeMLXRuntimeScaffoldArguments
+                .parse(
+                    [
+                        "--source-root",
+                        sourceDirectory.path,
+                        "--destination-host",
+                        destinationAlias
+                            .appendingPathComponent(
+                                "PrimeGPUCalibration"
+                            ).path,
+                        "--runtime-role",
+                        "calibration",
+                    ]
+                )
+        ) { error in
+            XCTAssertEqual(
+                error as?
+                    PrimeMLXRuntimeScaffoldArgumentError,
                 .invalidArgument(
                     "--destination-host must not traverse symbolic links"
                 )
@@ -309,6 +443,108 @@ final class PrimeMLXBundleStageSourceContractTests:
                 "forbidden exact-stage route \(forbidden)"
             )
         }
+
+        let scaffoldSource = try String(
+            contentsOf: URL(
+                fileURLWithPath:
+                    FileManager.default
+                    .currentDirectoryPath,
+                isDirectory: true
+            ).appendingPathComponent(
+                "Sources/PrimeMLXRuntimeScaffold/" +
+                    "PrimeMLXRuntimeScaffoldMain.swift"
+            ),
+            encoding: .utf8
+        )
+        let scaffoldMain = try slice(
+            scaffoldSource,
+            from: "@main",
+            until:
+                "Foundation.exit(EXIT_FAILURE)"
+        )
+        XCTAssertEqual(
+            occurrences(
+                of: ".scaffoldCanonicalRuntimeBundle(",
+                in: scaffoldMain
+            ),
+            1
+        )
+        try assertOrdered(
+            [
+                "PrimeMLXRuntimeScaffoldArguments",
+                ".parse(",
+                "let runtimeRole =",
+                ".scaffoldCanonicalRuntimeBundle(",
+                "from: arguments.sourceRoot",
+                "beside: arguments.destinationHost",
+                "runtimeRole: runtimeRole",
+                "destination_bundle_initially_absent=",
+                "result.destinationBundleInitiallyAbsent",
+                "runtime_info_plist_sha256=",
+                "result.infoPlist.sha256",
+                "metallib_absent=true",
+            ],
+            in: scaffoldMain
+        )
+        for forbidden in [
+            "runtimeRole!",
+            "fileExists(",
+            "python",
+            "/bin/sh",
+            "/bin/zsh",
+            "Process(",
+            "copyItem(",
+            "moveItem(",
+            "removeItem(",
+            "Data(contentsOf:",
+            "Templates/",
+            "canonical-swiftpm-runtime",
+            "Info.plist",
+        ] {
+            XCTAssertFalse(
+                scaffoldMain.contains(forbidden),
+                "forbidden runtime-scaffold CLI route \(forbidden)"
+            )
+        }
+
+        let pinnedRuntimeSource = try String(
+            contentsOf: URL(
+                fileURLWithPath:
+                    FileManager.default
+                    .currentDirectoryPath,
+                isDirectory: true
+            ).appendingPathComponent(
+                "Sources/PrimeCore/" +
+                    "PrimePinnedMLXMetallib.swift"
+            ),
+            encoding: .utf8
+        )
+        let publicScaffold = try slice(
+            pinnedRuntimeSource,
+            from:
+                "public static func scaffoldCanonicalRuntimeBundle(",
+            until:
+                "\n    static func scaffoldCanonicalRuntimeBundle("
+        )
+        XCTAssertEqual(
+            occurrences(
+                of: ".validateReleaseEvidence(",
+                in: publicScaffold
+            ),
+            1
+        )
+        try assertOrdered(
+            [
+                "PrimeSwiftSourceProvenance.capture(",
+                ".validateReleaseEvidence(",
+                "withHeldCanonicalRuntimeInfoPlist(",
+                "guard heldTemplate",
+                "== template.contents",
+                "usingCanonicalRuntimeInfoPlist:",
+                "heldTemplate",
+            ],
+            in: publicScaffold
+        )
     }
 
     func testIsolatedMechanicsTestStagerIsSwiftOnlyAndPathBound()

@@ -11,6 +11,10 @@ let package = Package(
             name: "PrimeCore",
             targets: ["PrimeCore"]
         ),
+        .executable(
+            name: "PrimeValidationWorkflowDriverV2",
+            targets: ["PrimeValidationWorkflowDriverV2"]
+        ),
         .library(
             name:
                 "PrimeNativeNeuralGateReplayTransport",
@@ -153,6 +157,10 @@ let package = Package(
             targets: ["PrimeMLXBundleStage"]
         ),
         .executable(
+            name: "PrimeMLXRuntimeScaffold",
+            targets: ["PrimeMLXRuntimeScaffold"]
+        ),
+        .executable(
             name: "PrimeMLXTestBundleStage",
             targets: ["PrimeMLXTestBundleStage"]
         ),
@@ -181,6 +189,34 @@ let package = Package(
     targets: [
         .target(
             name: "PrimeCore"
+        ),
+        .target(
+            name: "PrimeValidationWorkflowRootContracts",
+            dependencies: ["PrimeCore"],
+            path:
+                "Tests/PrimeValidationWorkflow/Sources/PrimeValidationWorkflowContracts"
+        ),
+        .target(
+            name: "PrimeValidationWorkflowRootDriverCore",
+            dependencies: [
+                "PrimeCore",
+                "PrimeValidationWorkflowRootContracts",
+            ],
+            path:
+                "Tests/PrimeValidationWorkflow/Sources/PrimeValidationWorkflowDriverCore"
+        ),
+        .executableTarget(
+            name: "PrimeValidationWorkflowDriverV2",
+            dependencies: [
+                "PrimeCore",
+                "PrimeValidationWorkflowRootContracts",
+                "PrimeValidationWorkflowRootDriverCore",
+            ],
+            linkerSettings: [
+                .unsafeFlags([
+                    "-Xlinker", "-S",
+                ]),
+            ]
         ),
         .target(
             name:
@@ -625,6 +661,11 @@ let package = Package(
         .executableTarget(
             name: "PrimeMLXBundleStage",
             dependencies: ["PrimeCore"]
+        ),
+        .executableTarget(
+            name: "PrimeMLXRuntimeScaffold",
+            dependencies: ["PrimeCore"],
+            exclude: ["Templates"]
         ),
         .executableTarget(
             name: "PrimeMLXTestBundleStage",

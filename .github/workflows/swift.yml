@@ -1,0 +1,85 @@
+name: Swift Driver V2 hosted image canary
+
+on:
+  push:
+    branches:
+      - main
+      - wip/prime-validation-driver-v2-evidence-completion
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# This hosted lane proves only the reproducible, MLX-free Driver supervisor
+# image and its fail-closed pre-execution binding. GitHub-hosted Xcode is not a
+# strict execution authority because its system-directory metadata is not
+# root-owned. Strict promotion is a separate, manually dispatched workflow.
+#
+# External credential boundary: workflow permissions cannot downscope a PAT.
+# ERGENTICS_PAT must remain read-only for the two pinned input repositories.
+concurrency:
+  group: swift-driver-v2-hosted-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  supervisor-image:
+    name: Hosted supervisor image / non-authoritative
+    runs-on: macos-26
+    timeout-minutes: 45
+
+    steps:
+      - name: Check out the exact Prime commit
+        env:
+          CHECKOUT_TOKEN: ${{ github.token }}
+          PRIME_REPOSITORY: ${{ github.repository }}
+          PRIME_REVISION: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          [[ ! -e ergentics-prime && ! -L ergentics-prime ]]
+          git init ergentics-prime
+          git -C ergentics-prime remote add origin "https://github.com/${PRIME_REPOSITORY}"
+          export GIT_CONFIG_COUNT=1
+          export GIT_CONFIG_KEY_0="url.https://x-access-token:${CHECKOUT_TOKEN}@github.com/.insteadOf"
+          export GIT_CONFIG_VALUE_0="https://github.com/"
+          git -C ergentics-prime fetch --depth=1 --no-tags --no-write-fetch-head origin "$PRIME_REVISION"
+          git -C ergentics-prime checkout --detach "$PRIME_REVISION"
+          unset GIT_CONFIG_COUNT GIT_CONFIG_KEY_0 GIT_CONFIG_VALUE_0
+          [[ "$(git -C ergentics-prime rev-parse HEAD)" == "$PRIME_REVISION" ]]
+          [[ "$(git -C ergentics-prime remote get-url origin)" == "https://github.com/${PRIME_REPOSITORY}" ]]
+          [[ -z "$(git -C ergentics-prime status --porcelain=v1 --untracked-files=all)" ]]
+          ! grep -Fq -- "$CHECKOUT_TOKEN" ergentics-prime/.git/config
+
+      - name: Check out the exact companion
+        env:
+          CHECKOUT_TOKEN: ${{ secrets.ERGENTICS_PAT }}
+        run: >-
+          bash ergentics-prime/.github/scripts/prime-ci-checkout-pinned.sh
+          Ergentics/pmhnp-companion-ergentics
+          163fc100710ece48119bc25954452d10f6a84f7f
+          companion
+          recursive
+
+      - name: Check out the exact first-party MLX fork
+        env:
+          CHECKOUT_TOKEN: ${{ secrets.ERGENTICS_PAT }}
+        run: >-
+          bash ergentics-prime/.github/scripts/prime-ci-checkout-pinned.sh
+          Ergentics/ergentics-mlx-swift
+          d37885a278f1c37484a94d0f401a418735e66519
+          mlx
+          recursive
+
+      - name: Build and bind two disjoint Driver images
+        working-directory: ergentics-prime
+        run: bash .github/scripts/prime-driver-v2-ci.sh hosted-image
+
+      - name: Record the hosted authority ceiling
+        run: >-
+          printf '%s\n'
+          'Hosted canary only: supervisor-image pre-execution binding passed;'
+          'strict build, test, staging, shard, and completion authority remain unobserved.'
+          >> "$GITHUB_STEP_SUMMARY"

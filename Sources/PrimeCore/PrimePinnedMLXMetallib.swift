@@ -42,6 +42,10 @@ public enum PrimePinnedMLXMetallib {
         sourceBundleRelativePath
     public static let infoPlistArtifactRelativePath =
         infoPlistSourceRelativePath
+    public static let canonicalRuntimeInfoPlistTemplateRelativePath =
+        "Sources/PrimeMLXRuntimeScaffold/Templates/" +
+        "canonical-swiftpm-runtime/mlx-swift_Cmlx.bundle/" +
+        "Contents/Info.plist"
     public static let expectedByteCount: UInt64 =
         3_817_916
     public static let expectedSHA256 =
@@ -222,6 +226,258 @@ public enum PrimePinnedMLXMetallib {
             for: runtimeRole
         )
         return binding
+    }
+
+    /// Publishes Prime's source-bound frozen SwiftPM compatibility manifest
+    /// into an absent runtime bundle scaffold.
+    ///
+    /// SwiftPM does not produce this bundle for the pinned Cmlx target because
+    /// that package declares neither resources nor a build plugin. The
+    /// private-identity Xcode build is a separate metallib donor and its
+    /// manifest is not a runtime substitute. This phase therefore validates
+    /// the complete Release source identity, selects one fixed tracked
+    /// template, creates only owner-private directories, publishes only the
+    /// exact canonical manifest with exclusive no-replace semantics, and
+    /// leaves the metallib absent for `stageExactXcodeMetallib`.
+    public static func scaffoldCanonicalRuntimeBundle(
+        from sourceRootURL: URL,
+        beside destinationExecutableURL: URL,
+        runtimeRole: PrimeMLXRuntimeRole
+    ) throws -> (
+        infoPlist: PrimeArtifactBinding,
+        destinationBundleInitiallyAbsent: Bool
+    ) {
+        guard sourceRootURL.isFileURL else {
+            throw PrimeDurableArtifactError
+                .untrustedDirectory(
+                    sourceRootURL.absoluteString
+                )
+        }
+        let sourceRoot =
+            sourceRootURL.standardizedFileURL
+        guard sourceRoot
+                .resolvingSymlinksInPath()
+                .standardizedFileURL
+                == sourceRoot else {
+            throw PrimeDurableArtifactError
+                .untrustedDirectory(sourceRoot.path)
+        }
+        let sourceSnapshot =
+            try PrimeSwiftSourceProvenance.capture(
+                at: sourceRoot,
+                requiredRelativePaths: [
+                    canonicalRuntimeInfoPlistTemplateRelativePath,
+                ]
+            )
+        try PrimeSwiftSourceProvenance
+            .validateReleaseEvidence(
+                sourceSnapshot,
+                requiredRelativePaths: [
+                    canonicalRuntimeInfoPlistTemplateRelativePath,
+                ]
+            )
+        guard let template =
+                sourceSnapshot.files.first(where: {
+                    $0.relativePath
+                        == canonicalRuntimeInfoPlistTemplateRelativePath
+                }),
+              template.byteCount
+                == expectedInfoPlistByteCount,
+              template.sha256
+                == expectedInfoPlistSHA256,
+              UInt64(template.contents.count)
+                == expectedInfoPlistByteCount,
+              PrimeSHA256.hexDigest(
+                  of: template.contents
+              ) == expectedInfoPlistSHA256 else {
+            throw PrimeDurableArtifactError.hashMismatch(
+                path:
+                    canonicalRuntimeInfoPlistTemplateRelativePath,
+                expected: expectedInfoPlistSHA256,
+                actual: templateDigest(
+                    in: sourceSnapshot
+                )
+            )
+        }
+        return try withHeldCanonicalRuntimeInfoPlist(
+            at: sourceRoot
+        ) { heldTemplate in
+            guard heldTemplate
+                    == template.contents else {
+                throw PrimeDurableArtifactError
+                    .unsafeArtifact(
+                        canonicalRuntimeInfoPlistTemplateRelativePath
+                    )
+            }
+            return try scaffoldCanonicalRuntimeBundle(
+                usingCanonicalRuntimeInfoPlist:
+                    heldTemplate,
+                beside: destinationExecutableURL,
+                runtimeRole: runtimeRole
+            )
+        }
+    }
+
+    static func scaffoldCanonicalRuntimeBundle(
+        usingCanonicalRuntimeInfoPlist infoPlist: Data,
+        beside destinationExecutableURL: URL,
+        runtimeRole: PrimeMLXRuntimeRole
+    ) throws -> (
+        infoPlist: PrimeArtifactBinding,
+        destinationBundleInitiallyAbsent: Bool
+    ) {
+        let infoPlistSHA256 =
+            PrimeSHA256.hexDigest(of: infoPlist)
+        guard UInt64(infoPlist.count)
+                == expectedInfoPlistByteCount,
+              infoPlistSHA256
+                == expectedInfoPlistSHA256 else {
+            throw PrimeDurableArtifactError.hashMismatch(
+                path:
+                    canonicalRuntimeInfoPlistTemplateRelativePath,
+                expected: expectedInfoPlistSHA256,
+                actual: infoPlistSHA256
+            )
+        }
+        guard destinationExecutableURL.isFileURL else {
+            throw PrimeDurableArtifactError
+                .unsafeArtifact(
+                    destinationExecutableURL.absoluteString
+                )
+        }
+        let destinationExecutable =
+            destinationExecutableURL.standardizedFileURL
+        guard destinationExecutable
+                .resolvingSymlinksInPath()
+                .standardizedFileURL
+                == destinationExecutable else {
+            throw PrimeDurableArtifactError
+                .unsafeArtifact(
+                    "SwiftPM runtime host must not traverse symlinks"
+                )
+        }
+        let expectedDestinationName =
+            PrimeMLXRuntimeImageLayout
+            .destinationHostExecutableName(
+                for: runtimeRole
+            )
+        guard destinationExecutable
+                .lastPathComponent
+                == expectedDestinationName else {
+            throw PrimeDurableArtifactError
+                .invalidSemantics(
+                    "SwiftPM runtime host must be \(expectedDestinationName) for \(runtimeRole.rawValue)"
+                )
+        }
+
+        _ = try requireSanitizedDynamicLoaderEnvironment()
+        _ = try PrimeReleaseInstrumentationAdmissionPolicy
+            .validateCurrentProcess()
+
+        let destinationDirectory =
+            destinationExecutable
+            .deletingLastPathComponent()
+        let destinationRoot =
+            try PrimeArtifactRoot(
+                directoryURL: destinationDirectory
+            )
+        let destinationDescriptor =
+            try destinationRoot
+                .duplicateTrustedRootDescriptor()
+        defer {
+            _ = close(destinationDescriptor)
+        }
+        try requireTrustedDirectory(
+            destinationDescriptor,
+            path: destinationDirectory.path,
+            permittedExtendedAttributes:
+                permittedBuildRootExtendedAttributes
+        )
+        try requireTrustedExecutable(
+            named:
+                destinationExecutable.lastPathComponent,
+            in: destinationDescriptor,
+            displayedPath: destinationExecutable.path
+        )
+        try requireNoLoaderShadowPaths(
+            executableDirectory: destinationDirectory,
+            sourceURL:
+                destinationDirectory
+                .appendingPathComponent(
+                    sourceBundleRelativePath
+                )
+                .standardizedFileURL,
+            includeCurrentProcessContext: false
+        )
+
+        let existing =
+            try readCanonicalRuntimeScaffoldIfPresent(
+                from: destinationDescriptor
+            )
+        let binding: PrimeArtifactBinding
+        let destinationBundleInitiallyAbsent: Bool
+        if let existing {
+            guard existing == infoPlist else {
+                throw PrimeDurableArtifactError.hashMismatch(
+                    path: infoPlistSourceRelativePath,
+                    expected: expectedInfoPlistSHA256,
+                    actual:
+                        PrimeSHA256.hexDigest(of: existing)
+                )
+            }
+            binding = try destinationRoot.bindExisting(
+                at: infoPlistArtifactRelativePath,
+                purpose: .immutableData,
+                maximumByteCount:
+                    expectedInfoPlistByteCount
+            )
+            destinationBundleInitiallyAbsent = false
+        } else {
+            try destinationRoot
+                .createPrivateDirectoryExclusively(
+                    at: bundleRelativePath
+                )
+            try destinationRoot
+                .createPrivateDirectoryExclusively(
+                    at: "\(bundleRelativePath)/Contents"
+                )
+            try destinationRoot
+                .createPrivateDirectoryExclusively(
+                    at:
+                        "\(bundleRelativePath)/Contents/Resources"
+                )
+            binding = try destinationRoot
+                .publishExclusively(
+                    infoPlist,
+                    at: infoPlistArtifactRelativePath,
+                    purpose: .immutableData
+                )
+            destinationBundleInitiallyAbsent = true
+        }
+        guard binding.sha256
+                == expectedInfoPlistSHA256,
+              binding.byteCount
+                == expectedInfoPlistByteCount else {
+            throw PrimeDurableArtifactError
+                .invalidSemantics(
+                    "runtime scaffold manifest binding diverges from the frozen template"
+                )
+        }
+
+        guard let after =
+            try readCanonicalRuntimeScaffoldIfPresent(
+                from: destinationDescriptor
+            ),
+              after == infoPlist else {
+            throw PrimeDurableArtifactError
+                .unsafeArtifact(
+                    "canonical SwiftPM runtime scaffold changed during publication"
+                )
+        }
+        return (
+            binding,
+            destinationBundleInitiallyAbsent
+        )
     }
 
     /// Verifies the independently Xcode-built private-package resource and
@@ -834,8 +1090,297 @@ public enum PrimePinnedMLXMetallib {
         return (infoPlist, metallib)
     }
 
-    private static func readCanonicalRuntimeBundleForStaging(
+    private static func templateDigest(
+        in snapshot: PrimeSwiftSourceSnapshot
+    ) -> String {
+        snapshot.files.first(where: {
+            $0.relativePath
+                == canonicalRuntimeInfoPlistTemplateRelativePath
+        })?.sha256 ?? "<missing>"
+    }
+
+    private static func withHeldCanonicalRuntimeInfoPlist<
+        Result
+    >(
+        at sourceRoot: URL,
+        body: (Data) throws -> Result
+    ) throws -> Result {
+        let sourceArtifactRoot =
+            try PrimeArtifactRoot(directoryURL: sourceRoot)
+        let rootDescriptor =
+            try sourceArtifactRoot
+                .duplicateTrustedRootDescriptor()
+        defer {
+            _ = close(rootDescriptor)
+        }
+        try requireTrustedDirectory(
+            rootDescriptor,
+            path: sourceRoot.path,
+            permittedExtendedAttributes:
+                permittedExtendedAttributes
+        )
+
+        let components =
+            canonicalRuntimeInfoPlistTemplateRelativePath
+            .split(separator: "/")
+            .map(String.init)
+        guard components.count > 1,
+              let leaf = components.last else {
+            throw PrimeDurableArtifactError
+                .invalidRelativePath(
+                    canonicalRuntimeInfoPlistTemplateRelativePath
+                )
+        }
+        var parent = rootDescriptor
+        var ownedParent: Int32?
+        var displayedComponents = [String]()
+        for component in components.dropLast() {
+            displayedComponents.append(component)
+            let opened = try openTrustedDirectory(
+                named: component,
+                in: parent,
+                displayedPath:
+                    displayedComponents.joined(
+                        separator: "/"
+                    )
+            )
+            if let ownedParent {
+                _ = close(ownedParent)
+            }
+            ownedParent = opened
+            parent = opened
+        }
+        defer {
+            if let ownedParent {
+                _ = close(ownedParent)
+            }
+        }
+
+        let descriptor = leaf.withCString {
+            openat(
+                parent,
+                $0,
+                O_RDONLY | O_NOFOLLOW | O_CLOEXEC
+            )
+        }
+        guard descriptor >= 0 else {
+            throw posix(
+                operation:
+                    "open canonical runtime scaffold template",
+                path:
+                    canonicalRuntimeInfoPlistTemplateRelativePath
+            )
+        }
+        defer {
+            _ = close(descriptor)
+        }
+        let before = try requireTrustedImmutableFile(
+            descriptor,
+            parent: parent,
+            leaf: leaf,
+            displayedPath:
+                canonicalRuntimeInfoPlistTemplateRelativePath,
+            expectedByteCount:
+                expectedInfoPlistByteCount
+        )
+        let initial = try readHeldExactFile(
+            descriptor,
+            expectedByteCount:
+                expectedInfoPlistByteCount,
+            path:
+                canonicalRuntimeInfoPlistTemplateRelativePath
+        )
+        guard PrimeSHA256.hexDigest(of: initial)
+                == expectedInfoPlistSHA256 else {
+            throw PrimeDurableArtifactError.hashMismatch(
+                path:
+                    canonicalRuntimeInfoPlistTemplateRelativePath,
+                expected: expectedInfoPlistSHA256,
+                actual:
+                    PrimeSHA256.hexDigest(of: initial)
+            )
+        }
+
+        let result = try body(initial)
+
+        let rebound = try requireTrustedImmutableFile(
+            descriptor,
+            parent: parent,
+            leaf: leaf,
+            displayedPath:
+                canonicalRuntimeInfoPlistTemplateRelativePath,
+            expectedByteCount:
+                expectedInfoPlistByteCount
+        )
+        let final = try readHeldExactFile(
+            descriptor,
+            expectedByteCount:
+                expectedInfoPlistByteCount,
+            path:
+                canonicalRuntimeInfoPlistTemplateRelativePath
+        )
+        let after = try requireTrustedImmutableFile(
+            descriptor,
+            parent: parent,
+            leaf: leaf,
+            displayedPath:
+                canonicalRuntimeInfoPlistTemplateRelativePath,
+            expectedByteCount:
+                expectedInfoPlistByteCount
+        )
+        guard before.st_dev == rebound.st_dev,
+              before.st_ino == rebound.st_ino,
+              before.st_size == rebound.st_size,
+              before.st_uid == rebound.st_uid,
+              before.st_nlink == rebound.st_nlink,
+              before.st_mode == rebound.st_mode,
+              before.st_mtimespec.tv_sec
+                == rebound.st_mtimespec.tv_sec,
+              before.st_mtimespec.tv_nsec
+                == rebound.st_mtimespec.tv_nsec,
+              before.st_ctimespec.tv_sec
+                == rebound.st_ctimespec.tv_sec,
+              before.st_ctimespec.tv_nsec
+                == rebound.st_ctimespec.tv_nsec,
+              rebound.st_dev == after.st_dev,
+              rebound.st_ino == after.st_ino,
+              rebound.st_size == after.st_size,
+              rebound.st_uid == after.st_uid,
+              rebound.st_nlink == after.st_nlink,
+              rebound.st_mode == after.st_mode,
+              rebound.st_mtimespec.tv_sec
+                == after.st_mtimespec.tv_sec,
+              rebound.st_mtimespec.tv_nsec
+                == after.st_mtimespec.tv_nsec,
+              rebound.st_ctimespec.tv_sec
+                == after.st_ctimespec.tv_sec,
+              rebound.st_ctimespec.tv_nsec
+                == after.st_ctimespec.tv_nsec,
+              initial == final else {
+            throw PrimeDurableArtifactError
+                .unsafeArtifact(
+                    canonicalRuntimeInfoPlistTemplateRelativePath
+                )
+        }
+        return result
+    }
+
+    private static func readHeldExactFile(
+        _ descriptor: Int32,
+        expectedByteCount: UInt64,
+        path: String
+    ) throws -> Data {
+        guard lseek(descriptor, 0, SEEK_SET) >= 0 else {
+            throw posix(
+                operation:
+                    "seek held canonical runtime template",
+                path: path
+            )
+        }
+        var data = Data()
+        data.reserveCapacity(Int(expectedByteCount))
+        var buffer = [UInt8](
+            repeating: 0,
+            count: 4 * 1024
+        )
+        while true {
+            let count = buffer.withUnsafeMutableBytes {
+                read(
+                    descriptor,
+                    $0.baseAddress,
+                    $0.count
+                )
+            }
+            if count < 0, errno == EINTR {
+                continue
+            }
+            guard count >= 0 else {
+                throw posix(
+                    operation:
+                        "read held canonical runtime template",
+                    path: path
+                )
+            }
+            if count == 0 {
+                break
+            }
+            data.append(contentsOf: buffer[0 ..< count])
+            guard UInt64(data.count)
+                    <= expectedByteCount else {
+                throw PrimeDurableArtifactError
+                    .artifactTooLarge(path)
+            }
+        }
+        guard UInt64(data.count)
+                == expectedByteCount else {
+            throw PrimeDurableArtifactError
+                .byteCountMismatch(
+                    path: path,
+                    expected: expectedByteCount,
+                    actual: UInt64(data.count)
+                )
+        }
+        return data
+    }
+
+    private static func readCanonicalRuntimeScaffoldIfPresent(
         from buildProductRoot: Int32
+    ) throws -> Data? {
+        var metadata = stat()
+        let status = bundleRelativePath.withCString {
+            fstatat(
+                buildProductRoot,
+                $0,
+                &metadata,
+                AT_SYMLINK_NOFOLLOW
+            )
+        }
+        let statusError = errno
+        guard status == 0 else {
+            if statusError == ENOENT {
+                return nil
+            }
+            throw posix(
+                operation:
+                    "inspect canonical SwiftPM runtime scaffold",
+                path: bundleRelativePath
+            )
+        }
+        guard metadata.st_mode & mode_t(S_IFMT)
+                == mode_t(S_IFDIR) else {
+            throw PrimeDurableArtifactError
+                .unsafeArtifact(bundleRelativePath)
+        }
+        let bundle =
+            try readCanonicalRuntimeBundleForStaging(
+                from: buildProductRoot,
+                requireOwnerPrivateScaffold: true
+            )
+        guard bundle.metallib == nil else {
+            throw PrimeDurableArtifactError
+                .invalidSemantics(
+                    "runtime scaffold phase requires the destination metallib to remain absent"
+                )
+        }
+        let digest =
+            PrimeSHA256.hexDigest(
+                of: bundle.infoPlist
+            )
+        guard UInt64(bundle.infoPlist.count)
+                == expectedInfoPlistByteCount,
+              digest == expectedInfoPlistSHA256 else {
+            throw PrimeDurableArtifactError.hashMismatch(
+                path: infoPlistSourceRelativePath,
+                expected: expectedInfoPlistSHA256,
+                actual: digest
+            )
+        }
+        return bundle.infoPlist
+    }
+
+    private static func readCanonicalRuntimeBundleForStaging(
+        from buildProductRoot: Int32,
+        requireOwnerPrivateScaffold: Bool = false
     ) throws -> (
         infoPlist: Data,
         metallib: Data?
@@ -847,6 +1392,12 @@ public enum PrimePinnedMLXMetallib {
         )
         defer {
             _ = close(bundle)
+        }
+        if requireOwnerPrivateScaffold {
+            try requireExactOwnerPrivateDirectory(
+                bundle,
+                path: bundleRelativePath
+            )
         }
         try requireExactDirectoryEntries(
             bundle,
@@ -863,6 +1414,13 @@ public enum PrimePinnedMLXMetallib {
         defer {
             _ = close(contents)
         }
+        if requireOwnerPrivateScaffold {
+            try requireExactOwnerPrivateDirectory(
+                contents,
+                path:
+                    "\(bundleRelativePath)/Contents"
+            )
+        }
         try requireExactDirectoryEntries(
             contents,
             expected: ["Info.plist", "Resources"],
@@ -876,6 +1434,14 @@ public enum PrimePinnedMLXMetallib {
             expectedByteCount:
                 expectedInfoPlistByteCount
         )
+        if requireOwnerPrivateScaffold {
+            try requireExactImmutableFileMode(
+                named: "Info.plist",
+                in: contents,
+                displayedPath:
+                    infoPlistSourceRelativePath
+            )
+        }
 
         let resources = try openTrustedDirectory(
             named: "Resources",
@@ -885,6 +1451,13 @@ public enum PrimePinnedMLXMetallib {
         )
         defer {
             _ = close(resources)
+        }
+        if requireOwnerPrivateScaffold {
+            try requireExactOwnerPrivateDirectory(
+                resources,
+                path:
+                    "\(bundleRelativePath)/Contents/Resources"
+            )
         }
         var metadata = stat()
         let status = "default.metallib"
@@ -942,6 +1515,48 @@ public enum PrimePinnedMLXMetallib {
             path: bundleRelativePath
         )
         return (infoPlist, metallib)
+    }
+
+    private static func requireExactOwnerPrivateDirectory(
+        _ descriptor: Int32,
+        path: String
+    ) throws {
+        var metadata = stat()
+        guard fstat(descriptor, &metadata) == 0,
+              metadata.st_mode & mode_t(S_IFMT)
+                == mode_t(S_IFDIR),
+              metadata.st_uid == geteuid(),
+              metadata.st_mode & mode_t(0o7777)
+                == mode_t(0o700) else {
+            throw PrimeDurableArtifactError
+                .untrustedDirectory(path)
+        }
+    }
+
+    private static func requireExactImmutableFileMode(
+        named name: String,
+        in parent: Int32,
+        displayedPath: String
+    ) throws {
+        var metadata = stat()
+        let status = name.withCString {
+            fstatat(
+                parent,
+                $0,
+                &metadata,
+                AT_SYMLINK_NOFOLLOW
+            )
+        }
+        guard status == 0,
+              metadata.st_mode & mode_t(S_IFMT)
+                == mode_t(S_IFREG),
+              metadata.st_uid == geteuid(),
+              metadata.st_nlink == 1,
+              metadata.st_mode & mode_t(0o7777)
+                == mode_t(0o444) else {
+            throw PrimeDurableArtifactError
+                .unsafeArtifact(displayedPath)
+        }
     }
 
     private static func openTrustedDirectory(

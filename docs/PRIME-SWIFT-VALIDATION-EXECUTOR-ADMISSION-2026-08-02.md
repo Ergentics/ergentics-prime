@@ -54,8 +54,13 @@ The additive nested DriverCore contract binds:
 - the clean Prime and companion declarations, exact companion commit, source
   snapshot identity, retained source closures, and armed mutation watchers that
   a future live adapter must supply;
-- Xcode 26.6 build 17F113, SDK 26.5, Swift 6.3.3 target information, bounded raw
-  probe bytes, parsed/raw agreement, and an exact five-entry probe environment;
+- Xcode 26.6 build 17F113 at exactly the direct
+  `/Applications/Xcode.app/Contents/Developer` path or physical
+  `/Applications/Xcode_26.6.app/Contents/Developer` path, SDK 26.5, Swift
+  6.3.3 target information, bounded raw probe bytes, parsed/raw agreement, and
+  an exact five-entry probe environment; Xcode 26.5 is not admitted, and these
+  durable values alone do not prove selector resolution—the root Driver must
+  join the resolved selector to its descriptor-held observation;
 - the physical `swift-package` image plus the exact `swift-build` and
   `swift-test` symlink targets and role-derived `argv[0]` values;
 - exact equality with the merged V2 build and two inventory invocations. Each
@@ -144,17 +149,23 @@ set, and reports the `poisoned_no_authority` ceiling.
 The current holder process's mapped main image is also retained by descriptor,
 joined to the loaded vnode, read exactly, and revalidated by named-path and
 held-descriptor bytes. This is prerequisite evidence only. It is deliberately
-named `currentProcessExecutable`, and it does **not** close supervisor-image
-authority: no dedicated Driver V2 executable or non-restorable DriverCore
-bridge yet proves equality with `PrimeValidationRunIntentV2.driverExecutable`.
-The root-owned Apple `xctest` image is accepted only through an internal test
-seam and cannot be admitted by the production capture path.
+named `currentProcessExecutable`, and at this admission layer it does **not**
+close supervisor-image authority. The later root Driver slice now transfers
+it into a non-restorable DriverCore bridge only after caller-predeclared path,
+SHA-256, and byte count match a fresh secure capture and the retained image;
+the declaration's source identity is the compiled first-party pin. That
+precursor declaration is not a complete `PrimeValidationRunIntentV2`, and a
+future full intent must match the same `driverExecutable` exactly. The
+root-owned Apple `xctest` image is accepted only through an internal test seam
+and cannot be admitted by the production capture path.
 
-The guarded capability therefore still reports nine missing authorities:
+The prepared guarded capability therefore still reports nine missing
+authorities:
 supervisor image, both Git observations, both Swift observations, build,
 both inventories, and artifact staging. Process, build, inventory, staging,
 shard-completion, and completion observations remain `unobserved` or
-unauthorized. No durable receipt can restore the live guard.
+unauthorized. After exact-image transfer and DriverCore binding, eight remain;
+no durable receipt can restore either live token.
 
 ## Evaluation boundary
 
@@ -188,16 +199,16 @@ receipt. No repository-wide suite is counted as passing in this slice.
 
 ## Next boundary
 
-The next security-sensitive slice is not build execution. It must first:
+The next security-sensitive work is not build execution. The dedicated root
+Swift Driver V2 executable now consumes the retained current image through a
+one-shot, non-restorable DriverCore bridge, and the internal neutral
+secure-child supervision substrate is complete without a public generic
+command surface. The bound supervisor still runs no child and mints no durable
+positive repository receipt.
 
-1. add a dedicated closed Swift Driver V2 supervisor executable and a
-   non-restorable DriverCore bridge that proves the retained mapped image's
-   exact path and content equal the run intent's `driverExecutable`;
-2. complete the internal secure-child supervision substrate around the now-
-   neutral physical spawn path, logical `argv[0]`, and pipe transport, while
-   exposing no public generic command surface; and
-3. extend the source watcher from its current single-child transition to a
-   gapless build-plus-two-list sequence.
+Before the first fixed probe, one source-watch window must cover the complete
+probe/build/list sequence and canonical Prime/companion tracked-tree manifests
+must bind descriptor-held bytes.
 
 The transport defect is now closed by a Release fixture canary: the factory
 spawns a descriptor-pinned physical image with the exact logical
@@ -205,14 +216,14 @@ spawns a descriptor-pinned physical image with the exact logical
 bounded EOF drains, exact PID reap, and empty process-group checks continue to
 bind the physical executable. The spawn and pipe mechanics now live in the
 internal `PrimeSecureChildDarwinSubstrate` and both closed callers use it.
-That is only a transport layer: cwd/mapped-image evidence, lifecycle,
-containment/reap, EOF drains, and a pre-spawn absolute deadline must still be
-neutralized before a Driver V2 supervisor can depend on it. The existing
-`PrimeNativeGitBlobTransport` is not a fallback: it uses Foundation `Process`
+The neutral substrate now also owns cwd/mapped-image evidence, lifecycle,
+containment/reap, EOF drains, and one pre-spawn absolute deadline. The existing
+`PrimeNativeGitBlobTransport` remains ineligible: it uses Foundation `Process`
 and does not prove suspended cwd, mapped image, exact PID reap, or empty
 process group.
 
-After that substrate passes an independent audit, the remaining authorities
+After the tracked-tree/watch boundary passes an independent audit, the
+remaining authorities
 must close in these groups:
 
 1. Prime and companion Git HEAD/clean plus Swift version/target-info fixed

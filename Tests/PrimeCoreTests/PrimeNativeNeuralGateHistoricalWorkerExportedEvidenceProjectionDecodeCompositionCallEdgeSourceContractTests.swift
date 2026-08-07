@@ -150,7 +150,13 @@ final class
             contract.currentV19TopologyTest,
             contract.currentV20DesignTest,
         ] {
-            let data = try checkedInData(identity.primeRelativePath)
+            let data = try PrimeRootPackageManifestCheckpointTestSupport
+                .frozenCheckpointData(
+                    relativePath: identity.primeRelativePath,
+                    expectedByteCount: identity.byteCount,
+                    expectedSHA256: identity.sha256,
+                    repositoryRoot: repositoryRoot
+                )
             XCTAssertEqual(
                 UInt64(data.count),
                 identity.byteCount,

@@ -972,22 +972,36 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
             probe.standardOutputData,
             verifier.standardOutputData
         )
-        // Intentionally resealed from two matching live Release canary
-        // observations after neutral secure-child supervision replaced the
-        // two embedded lifecycle implementations. Package.swift is unchanged;
-        // the package description now enumerates the neutral deadline, drains,
-        // lifecycle, process-proof, and supervision sources in PrimeCore. This
-        // is actual-package secure-capture evidence, not Driver V2,
-        // source/execution-binding V7, or worker execution authority.
+        let normalizedPackageDescription =
+            try topologyNeutralPackageDescription(
+                probe.standardOutputData,
+                sourceRoot: sourceRoot
+            )
+        // The raw actual-package JSON includes the exact checkout root in
+        // three structurally validated fields. A 94-byte root produced
+        // 65,306 bytes with SHA-256
+        // 6a4221c36d6e1b013b5e8bd7ad1c7730ebb8847a257305d7c550b14e1543a7e6;
+        // a 120-byte disposable clone produced 65,384 bytes with SHA-256
+        // 56b5a353624a690cd3df0e2027f117cf789439d6296a5b3624c854dcfb6dfe4f.
+        // After replacing only those three exact root bytes with <prime-root>,
+        // both independent captures are byte-identical. The raw
+        // probe/verifier equality above remains the live capture check; this
+        // normalized pin removes only host topology. It is not Driver
+        // execution, source/execution-binding V7, or worker execution
+        // authority. The Driver-only topology normalized to 65,060 bytes with
+        // SHA-256
+        // 47d0df8b252bbc5b51b4ca70319cd88ce16f6bca2a55989c6c00a26e49cb6b93;
+        // that checkpoint remains historical rather than being rewritten by
+        // the additive runtime-scaffold package topology below.
         XCTAssertEqual(
-            probe.standardOutputData.count,
-            63_214
+            normalizedPackageDescription.count,
+            65_740
         )
         XCTAssertEqual(
             PrimeSHA256.hexDigest(
-                of: probe.standardOutputData
+                of: normalizedPackageDescription
             ),
-            "9901d983ed76f6ffa26f3c59142c6a71ec4453be2d38156001d10f0beb5d9bb5"
+            "a9b8935742e67c2ea5cf8cb19727a4dcc24adb46553f7a74d4a243f713cb51f5"
         )
         XCTAssertEqual(
             probe.validatedPrimeSourceSnapshot,
@@ -2083,6 +2097,68 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
         .deletingLastPathComponent()
         .deletingLastPathComponent()
         .standardizedFileURL
+    }
+
+    private func topologyNeutralPackageDescription(
+        _ data: Data,
+        sourceRoot: URL
+    ) throws -> Data {
+        let sourceRootPath = sourceRoot.standardizedFileURL.path
+        let placeholder = "<prime-root>"
+        let object = try XCTUnwrap(
+            try JSONSerialization.jsonObject(with: data)
+                as? [String: Any]
+        )
+        XCTAssertEqual(
+            object["path"] as? String,
+            sourceRootPath
+        )
+        let targets = try XCTUnwrap(
+            object["targets"] as? [[String: Any]]
+        )
+        let expectedResourceSuffixes = [
+            "PrimeNativeNeuralGateHistoricalSourceDerivation":
+                "/Sources/PrimeNativeNeuralGateHistoricalSourceDerivation/"
+                + "HistoricalEvidenceExportSource",
+            "PrimeNativeNeuralGateHistoricalFixtureWorker":
+                "/Sources/PrimeNativeNeuralGateHistoricalFixtureWorker/"
+                + "HistoricalFixtureEvidence",
+        ]
+        for (targetName, suffix) in expectedResourceSuffixes {
+            let matchingTargets = targets.filter {
+                $0["name"] as? String == targetName
+            }
+            XCTAssertEqual(matchingTargets.count, 1)
+            let target = try XCTUnwrap(matchingTargets.first)
+            let resources = try XCTUnwrap(
+                target["resources"] as? [[String: Any]]
+            )
+            XCTAssertEqual(resources.count, 1)
+            XCTAssertEqual(
+                resources.first?["path"] as? String,
+                sourceRootPath + suffix
+            )
+        }
+
+        let raw = try XCTUnwrap(
+            String(data: data, encoding: .utf8)
+        )
+        XCTAssertFalse(raw.contains(placeholder))
+        let rootSeparated = raw.components(
+            separatedBy: sourceRootPath
+        )
+        XCTAssertEqual(rootSeparated.count, 4)
+        let normalized = rootSeparated.joined(
+            separator: placeholder
+        )
+        XCTAssertFalse(normalized.contains(sourceRootPath))
+        XCTAssertEqual(
+            normalized.components(
+                separatedBy: placeholder
+            ).count,
+            4
+        )
+        return Data(normalized.utf8)
     }
 
     private func assertLiveCapture(

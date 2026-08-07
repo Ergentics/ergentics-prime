@@ -224,6 +224,10 @@ Run the gate from a Release build with a new, empty mode-0700 artifact root:
 swift build -c release
 xcodebuild -downloadComponent MetalToolchain
 xcodebuild -scheme PrimeGPUCalibration -configuration Release -destination 'platform=macOS,arch=arm64' -toolchain com.apple.dt.toolchain.Metal.32023.883 -derivedDataPath .build/apple build
+.build/arm64-apple-macosx/release/PrimeMLXRuntimeScaffold \
+  --source-root "$PWD" \
+  --destination-host .build/arm64-apple-macosx/release/PrimeTypedOptimizerRestoreProbe \
+  --runtime-role typed_optimizer_restore_probe
 .build/arm64-apple-macosx/release/PrimeMLXBundleStage \
   --source-host .build/apple/Build/Products/Release/PrimeGPUCalibration \
   --destination-host .build/arm64-apple-macosx/release/PrimeTypedOptimizerRestoreProbe \
@@ -334,6 +338,10 @@ applicable, precreated directories with mode `0700`:
 swift build -c release
 xcodebuild -downloadComponent MetalToolchain
 xcodebuild -scheme PrimeGPUCalibration -configuration Release -destination 'platform=macOS,arch=arm64' -toolchain com.apple.dt.toolchain.Metal.32023.883 -derivedDataPath .build/apple build
+.build/arm64-apple-macosx/release/PrimeMLXRuntimeScaffold \
+  --source-root "$PWD" \
+  --destination-host .build/arm64-apple-macosx/release/PrimeNative3BMetalContinuationProbe \
+  --runtime-role native_3b_metal_continuation_probe
 .build/arm64-apple-macosx/release/PrimeMLXBundleStage \
   --source-host .build/apple/Build/Products/Release/PrimeGPUCalibration \
   --destination-host .build/arm64-apple-macosx/release/PrimeNative3BMetalContinuationProbe \
@@ -983,6 +991,10 @@ scientific knobs are frozen in the canonical Swift configuration:
 swift build -c release
 xcodebuild -downloadComponent MetalToolchain
 xcodebuild -scheme PrimeGPUCalibration -configuration Release -destination 'platform=macOS,arch=arm64' -toolchain com.apple.dt.toolchain.Metal.32023.883 -derivedDataPath .build/apple build
+.build/arm64-apple-macosx/release/PrimeMLXRuntimeScaffold \
+  --source-root "$PWD" \
+  --destination-host .build/arm64-apple-macosx/release/PrimeGPUCalibration \
+  --runtime-role calibration
 .build/arm64-apple-macosx/release/PrimeMLXBundleStage \
   --source-host .build/apple/Build/Products/Release/PrimeGPUCalibration \
   --destination-host .build/arm64-apple-macosx/release/PrimeGPUCalibration \
@@ -1010,19 +1022,27 @@ exact donor bundle tree on every invocation, including when the destination
 already contains the exact metallib. The unexecuted anchor's executable bytes
 are not claimed as donor provenance.
 
-The destination host is the uninstrumented SwiftPM Release executable. Its
-resource bundle must already contain the canonical 1,120-byte `Info.plist`
-with SHA-256
+The destination host is the uninstrumented SwiftPM Release executable.
+`PrimeMLXRuntimeScaffold` validates the complete Prime source identity and the
+destination runtime role, then publishes Prime's one fixed tracked template
+into an absent canonical bundle with owner-private directories and exclusive
+no-replace semantics. The resulting `Info.plist` is exactly 1,120 bytes with
+SHA-256
 `62486b35d9253522fe58dba1487d910b3d00d892954558145c553051bd61684d`
-and bundle identifier `mlx-swift.Cmlx.resources`. Staging is one-way and
-metallib-only: if the destination metallib is absent, Swift publishes the
-exact donor metallib with no-replace semantics; if it is already exact, the
-operation is idempotent after donor validation; any other existing bytes fail.
-The donor `Info.plist` is never copied, normalized, synthesized, or allowed to
-overwrite the canonical SwiftPM manifest. Runtime and receipt evidence bind
-only the canonical SwiftPM manifest and the shared exact metallib. The
+and bundle identifier `mlx-swift.Cmlx.resources`; the scaffold leaves the
+metallib absent. It does not read historical receipts or evidence and does not
+derive bytes from the Xcode donor. Staging remains one-way and metallib-only:
+if the destination metallib is absent, Swift publishes the exact donor
+metallib with no-replace semantics; if it is already exact, the operation is
+idempotent after donor validation; any other existing bytes fail. The donor
+`Info.plist` is never copied, normalized, synthesized, or allowed to overwrite
+the canonical SwiftPM manifest. Runtime and receipt evidence bind only the
+canonical SwiftPM manifest and the shared exact metallib. The
 architecture-specific, non-symlink SwiftPM path is intentional:
 descriptor-root admission rejects `.build/release`, which is a symlink.
+The fresh-checkout failure, authority split, and exact scaffold contract are
+recorded in
+[`docs/PRIME-MLX-RUNTIME-SCAFFOLD-2026-08-03.md`](docs/PRIME-MLX-RUNTIME-SCAFFOLD-2026-08-03.md).
 Before staging or execution is admitted, Swift inspects the loaded main
 executable through Darwin dyld/Mach-O APIs and rejects LLVM
 coverage/profiling segments or sections and known sanitizer runtimes. That
@@ -1129,6 +1149,20 @@ swift test \
   --scratch-path .build \
   --force-resolved-versions
 ```
+
+The Driver V2 MLX-free claim is deliberately supervisor-only: its target and
+Mach-O linkage closure do not include MLX. `PrimeMLXRuntimeScaffold` is a
+separate PrimeCore-only staging utility and is not a Driver dependency or
+Driver-reachable execution path. Other root targets remain MLX-linked, so this
+is not a claim that the repository or its full dependency graph is MLX-free.
+
+The hosted root Release suite, exact Xcode donor build, runtime scaffold, and
+metallib stage form a promotion-only gate. When that gate is selected, a
+missing fixture is a failure rather than a skip. It is not imposed on ordinary
+Xcode or SwiftPM iteration, and normal macOS/Mac App Store development remains
+usable without running the heavy promotion suite on every build. The package
+currently declares macOS 14 only; an iOS App Store target is a separate
+platform/packaging task and is not blocked by these canaries or by SwiftPM.
 
 The package also contains a closed first-party fixture and a separate Swift
 integration executable that proves the shared secure-child mechanics without

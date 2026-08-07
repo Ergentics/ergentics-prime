@@ -1,0 +1,157 @@
+name: Swift Driver V2 strict promotion
+
+on:
+  workflow_dispatch:
+    inputs:
+      expected_sha:
+        description: Exact lowercase 40-character Prime commit to validate
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+# Manual dispatch prevents an inactive dedicated runner from blocking ordinary
+# pushes. Promotion is valid only when every job below completes at the same
+# exact commit on a root-owned Xcode 26.6 Apple-silicon host. This workflow does
+# not register, configure, start, or persist a self-hosted runner.
+concurrency:
+  group: swift-driver-v2-strict-promotion
+  cancel-in-progress: false
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  root-release:
+    name: Strict root Release / full aggregate
+    runs-on:
+      - self-hosted
+      - macOS
+      - ARM64
+      - ergentics-prime-promotion
+    timeout-minutes: 120
+
+    steps:
+      - name: Bind dispatch to the exact selected commit
+        env:
+          EXPECTED_SHA: ${{ inputs.expected_sha }}
+        run: |
+          [[ "$EXPECTED_SHA" =~ ^[0-9a-f]{40}$ ]]
+          [[ "$GITHUB_SHA" == "$EXPECTED_SHA" ]]
+
+      - name: Check out the exact Prime commit
+        env:
+          CHECKOUT_TOKEN: ${{ github.token }}
+          PRIME_REPOSITORY: ${{ github.repository }}
+          PRIME_REVISION: ${{ inputs.expected_sha }}
+        run: |
+          set -euo pipefail
+          [[ ! -e ergentics-prime && ! -L ergentics-prime ]]
+          git init ergentics-prime
+          git -C ergentics-prime remote add origin "https://github.com/${PRIME_REPOSITORY}"
+          export GIT_CONFIG_COUNT=1
+          export GIT_CONFIG_KEY_0="url.https://x-access-token:${CHECKOUT_TOKEN}@github.com/.insteadOf"
+          export GIT_CONFIG_VALUE_0="https://github.com/"
+          git -C ergentics-prime fetch --depth=1 --no-tags --no-write-fetch-head origin "$PRIME_REVISION"
+          git -C ergentics-prime checkout --detach "$PRIME_REVISION"
+          unset GIT_CONFIG_COUNT GIT_CONFIG_KEY_0 GIT_CONFIG_VALUE_0
+          [[ "$(git -C ergentics-prime rev-parse HEAD)" == "$PRIME_REVISION" ]]
+          [[ "$(git -C ergentics-prime remote get-url origin)" == "https://github.com/${PRIME_REPOSITORY}" ]]
+          [[ -z "$(git -C ergentics-prime status --porcelain=v1 --untracked-files=all)" ]]
+          ! grep -Fq -- "$CHECKOUT_TOKEN" ergentics-prime/.git/config
+
+      - name: Check out the exact companion
+        env:
+          CHECKOUT_TOKEN: ${{ secrets.ERGENTICS_PAT }}
+        run: >-
+          bash ergentics-prime/.github/scripts/prime-ci-checkout-pinned.sh
+          Ergentics/pmhnp-companion-ergentics
+          163fc100710ece48119bc25954452d10f6a84f7f
+          companion
+          recursive
+
+      - name: Check out the exact first-party MLX fork
+        env:
+          CHECKOUT_TOKEN: ${{ secrets.ERGENTICS_PAT }}
+        run: >-
+          bash ergentics-prime/.github/scripts/prime-ci-checkout-pinned.sh
+          Ergentics/ergentics-mlx-swift
+          d37885a278f1c37484a94d0f401a418735e66519
+          mlx
+          recursive
+
+      - name: Run the exact root Release gate
+        working-directory: ergentics-prime
+        run: bash .github/scripts/prime-driver-v2-ci.sh root-release
+
+  nested-driver:
+    name: Strict nested Driver / ${{ matrix.configuration }}
+    runs-on:
+      - self-hosted
+      - macOS
+      - ARM64
+      - ergentics-prime-promotion
+    timeout-minutes: 75
+    strategy:
+      fail-fast: false
+      matrix:
+        configuration:
+          - debug
+          - release
+
+    steps:
+      - name: Bind dispatch to the exact selected commit
+        env:
+          EXPECTED_SHA: ${{ inputs.expected_sha }}
+        run: |
+          [[ "$EXPECTED_SHA" =~ ^[0-9a-f]{40}$ ]]
+          [[ "$GITHUB_SHA" == "$EXPECTED_SHA" ]]
+
+      - name: Check out the exact Prime commit
+        env:
+          CHECKOUT_TOKEN: ${{ github.token }}
+          PRIME_REPOSITORY: ${{ github.repository }}
+          PRIME_REVISION: ${{ inputs.expected_sha }}
+        run: |
+          set -euo pipefail
+          [[ ! -e ergentics-prime && ! -L ergentics-prime ]]
+          git init ergentics-prime
+          git -C ergentics-prime remote add origin "https://github.com/${PRIME_REPOSITORY}"
+          export GIT_CONFIG_COUNT=1
+          export GIT_CONFIG_KEY_0="url.https://x-access-token:${CHECKOUT_TOKEN}@github.com/.insteadOf"
+          export GIT_CONFIG_VALUE_0="https://github.com/"
+          git -C ergentics-prime fetch --depth=1 --no-tags --no-write-fetch-head origin "$PRIME_REVISION"
+          git -C ergentics-prime checkout --detach "$PRIME_REVISION"
+          unset GIT_CONFIG_COUNT GIT_CONFIG_KEY_0 GIT_CONFIG_VALUE_0
+          [[ "$(git -C ergentics-prime rev-parse HEAD)" == "$PRIME_REVISION" ]]
+          [[ "$(git -C ergentics-prime remote get-url origin)" == "https://github.com/${PRIME_REPOSITORY}" ]]
+          [[ -z "$(git -C ergentics-prime status --porcelain=v1 --untracked-files=all)" ]]
+          ! grep -Fq -- "$CHECKOUT_TOKEN" ergentics-prime/.git/config
+
+      - name: Check out the exact companion
+        env:
+          CHECKOUT_TOKEN: ${{ secrets.ERGENTICS_PAT }}
+        run: >-
+          bash ergentics-prime/.github/scripts/prime-ci-checkout-pinned.sh
+          Ergentics/pmhnp-companion-ergentics
+          163fc100710ece48119bc25954452d10f6a84f7f
+          companion
+          recursive
+
+      - name: Check out the exact first-party MLX fork
+        env:
+          CHECKOUT_TOKEN: ${{ secrets.ERGENTICS_PAT }}
+        run: >-
+          bash ergentics-prime/.github/scripts/prime-ci-checkout-pinned.sh
+          Ergentics/ergentics-mlx-swift
+          d37885a278f1c37484a94d0f401a418735e66519
+          mlx
+          recursive
+
+      - name: Run the exact nested Driver gate
+        working-directory: ergentics-prime
+        run: >-
+          bash .github/scripts/prime-driver-v2-ci.sh nested
+          ${{ matrix.configuration }}

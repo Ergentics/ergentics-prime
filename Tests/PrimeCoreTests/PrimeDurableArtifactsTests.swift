@@ -501,6 +501,37 @@ final class PrimeDurableArtifactsTests: XCTestCase {
                 .conflictingArtifact(path)
             )
         }
+
+        let manifestPath = "runtime-info.plist"
+        let manifest = Data("frozen-runtime-manifest".utf8)
+        let manifestBinding = try root.publishExclusively(
+            manifest,
+            at: manifestPath,
+            purpose: .immutableData
+        )
+        XCTAssertEqual(
+            try root.readVerified(manifestBinding),
+            manifest
+        )
+        XCTAssertThrowsError(
+            try root.publishExclusively(
+                manifest,
+                at: manifestPath,
+                purpose: .immutableData
+            )
+        ) { error in
+            XCTAssertEqual(
+                error as? PrimeDurableArtifactError,
+                .conflictingArtifact(manifestPath)
+            )
+        }
+        XCTAssertEqual(
+            try root.readVerified(manifestBinding),
+            manifest
+        )
+        XCTAssertTrue(
+            try partialArtifactNames().isEmpty
+        )
     }
 
     func testGeneratedDescriptorFailureReclaimsStorageWithoutUnlinkingPartials()
@@ -1218,6 +1249,53 @@ final class PrimeDurableArtifactsTests: XCTestCase {
         )
         XCTAssertEqual(
             metadata.st_mode & mode_t(0o777),
+            mode_t(0o700)
+        )
+
+        let bundlePath = "mlx-swift_Cmlx.bundle"
+        try root.createPrivateDirectoryExclusively(
+            at: bundlePath
+        )
+        let bundleURL = temporaryURL
+            .appendingPathComponent(
+                bundlePath,
+                isDirectory: true
+            )
+        XCTAssertEqual(
+            lstat(bundleURL.path, &metadata),
+            0
+        )
+        XCTAssertEqual(
+            metadata.st_mode & mode_t(0o7777),
+            mode_t(0o700)
+        )
+        XCTAssertThrowsError(
+            try root.createPrivateDirectoryExclusively(
+                at: bundlePath
+            )
+        ) { error in
+            XCTAssertEqual(
+                error as? PrimeDurableArtifactError,
+                .conflictingArtifact(bundlePath)
+            )
+        }
+        let contentsPath =
+            "\(bundlePath)/Contents"
+        try root.createPrivateDirectoryExclusively(
+            at: contentsPath
+        )
+        XCTAssertEqual(
+            lstat(
+                bundleURL.appendingPathComponent(
+                    "Contents",
+                    isDirectory: true
+                ).path,
+                &metadata
+            ),
+            0
+        )
+        XCTAssertEqual(
+            metadata.st_mode & mode_t(0o7777),
             mode_t(0o700)
         )
 

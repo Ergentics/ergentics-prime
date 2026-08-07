@@ -142,10 +142,21 @@ SwiftPM Release host retains its canonical 1,120-byte `Info.plist`, SHA-256
 and bundle identifier `mlx-swift.Cmlx.resources`. Both roles contain the
 same 3,817,916-byte `default.metallib`, SHA-256
 `24d4cfcd3ca8b15ead691e46219f35adabbea64c9f8de4eae9bf293fd8d5eb7b`.
-Prime always validates the donor, stages only that exact metallib with
-no-replace semantics, and never copies or overwrites the canonical SwiftPM
-manifest. Runtime and receipt evidence bind only the canonical manifest and
-shared metallib.
+SwiftPM does not produce that canonical bundle for the pinned Cmlx target in a
+fresh checkout. Prime therefore source-binds the one tracked 1,120-byte
+template, exclusively creates an owner-private manifest-only runtime scaffold,
+and verifies that the metallib remains absent. Prime then validates the Xcode
+donor and stages only the exact metallib with no-replace semantics. The donor
+manifest is never copied, normalized, synthesized, or allowed to overwrite
+the canonical SwiftPM manifest. Historical evidence is not a scaffold input.
+Runtime and receipt evidence bind only the canonical manifest and shared
+metallib.
+
+The Xcode donor plus full Release validation suite is a promotion-only gate,
+not an every-build dependency. Ordinary Xcode and SwiftPM iteration and normal
+macOS/Mac App Store development remain usable without running the heavy suite.
+When the promotion gate is selected, however, missing scaffold or metallib
+state fails; it is not converted into a skip.
 
 The 3B FP32 one-step probe measured an active peak of 46,779,945,265 bytes
 (about 43.6 GiB). The raw model-plus-Adam-moment tensor floor for a resumable
@@ -1461,6 +1472,7 @@ custom kernels in these slices.
 - [Prime typed optimizer-restore contract](../Sources/PrimeCore/PrimeTypedOptimizerRestoreContract.swift)
 - [Prime typed dependency build-input tree](../Sources/PrimeCore/PrimeTypedOptimizerDependencyTree.swift)
 - [Prime pinned MLX runtime verifier](../Sources/PrimeCore/PrimePinnedMLXMetallib.swift)
+- [Prime source-bound MLX runtime scaffold](../Sources/PrimeMLXRuntimeScaffold/PrimeMLXRuntimeScaffoldMain.swift)
 - [Prime Xcode-donor-to-SwiftPM-runtime stager](../Sources/PrimeMLXBundleStage/PrimeMLXBundleStageMain.swift)
 - [Prime typed optimizer mechanics](../Sources/PrimeTypedOptimizerRestoreMechanics/PrimeTypedOptimizerRestoreMechanics.swift)
 - [Prime typed optimizer supervisor](../Sources/PrimeTypedOptimizerRestoreProbe/PrimeTypedOptimizerRestoreProbeMain.swift)

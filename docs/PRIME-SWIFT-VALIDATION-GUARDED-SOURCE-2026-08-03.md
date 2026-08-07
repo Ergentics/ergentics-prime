@@ -67,9 +67,11 @@ the future Driver V2 binary. Its non-writable mode plus descriptor, vnode,
 path, metadata, and exact-byte revalidation establish the local integrity
 observation; those checks do not establish the Driver V2 semantic role.
 Production capture remains current-user-owned; root-owner admission exists
-only in an internal test seam. A dedicated driver target and a live,
-non-restorable DriverCore bridge must later prove exact path/content equality
-against `PrimeValidationRunIntentV2.driverExecutable`.
+only in an internal test seam. The later dedicated Driver slice now proves
+exact path/content equality against a caller-supplied precursor declaration
+and the compiled source pin through a live, non-restorable DriverCore bridge.
+That additive declaration is not yet a complete `PrimeValidationRunIntentV2`;
+any future full intent must match its `driverExecutable` exactly.
 
 Process, build, inventory, staging, and shard-completion states remain
 `unobserved`. Completion, resume, CI, optimizer, neural, scientific, training,
@@ -97,15 +99,19 @@ not a 892/12 inventory receipt or a 904-test execution.
 
 ## Next boundary
 
-Before any process observation:
+The dedicated root Driver V2 supervisor-image bridge and the neutral
+secure-child supervision substrate are now implemented as separate closed
+boundaries. The supervisor token closes only exact image identity and launches
+no child.
 
-1. add and bind the dedicated Driver V2 supervisor;
-2. complete the closed internal secure-child supervision substrate above the
-   extracted physical-path/logical-`argv[0]` spawn transport;
-3. make the source watch gapless across build plus both list children; and
-4. define canonical tracked-tree manifests for the Prime and companion SHA
-   fields and bind them to held bytes.
+Before any process observation, the next slice must:
+
+1. make one source-watch window gapless across every pre-build probe and the
+   later build plus both list children; and
+2. define canonical tracked-tree manifests for the Prime and companion SHA
+   fields and bind them to descriptor-held bytes.
 
 Only then may fixed Git/Swift probes run. Staging plus build/artifact binding
 is the following group; both inventories are the group after that. Shards,
-the 904-test spend, semantic completion, and durable resume remain later.
+the paired execution spend, semantic completion, and durable resume remain
+later.

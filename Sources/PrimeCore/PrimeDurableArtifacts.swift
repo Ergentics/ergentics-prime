@@ -313,13 +313,9 @@ public final class PrimeArtifactRoot: @unchecked Sendable {
         )
     }
 
-    /// Duplicates the already-admitted artifact-root capability.
-    ///
-    /// Inventory code must start from this descriptor rather than reopening
-    /// `directoryURL`, which is telemetry after root admission.
-    func duplicateTrustedRootDescriptorForInventory()
-        throws -> Int32
-    {
+    /// Duplicates the already-admitted artifact-root capability without
+    /// reopening `directoryURL`, which is telemetry after root admission.
+    func duplicateTrustedRootDescriptor() throws -> Int32 {
         let duplicated = fcntl(
             descriptor,
             F_DUPFD_CLOEXEC,
@@ -341,6 +337,13 @@ public final class PrimeArtifactRoot: @unchecked Sendable {
             throw error
         }
         return duplicated
+    }
+
+    /// Inventory code starts from the same held descriptor authority.
+    func duplicateTrustedRootDescriptorForInventory()
+        throws -> Int32
+    {
+        try duplicateTrustedRootDescriptor()
     }
 
     static func requireTrustedInventoryDirectoryDescriptor(
@@ -475,7 +478,28 @@ public final class PrimeArtifactRoot: @unchecked Sendable {
                 path: relativePath
             )
             var metadata = stat()
+            var rebound = stat()
+            let reboundStatus =
+                parsed.leaf.withCString {
+                    fstatat(
+                        parent,
+                        $0,
+                        &rebound,
+                        AT_SYMLINK_NOFOLLOW
+                    )
+                }
             guard fstat(opened, &metadata) == 0,
+                  reboundStatus == 0,
+                  metadata.st_mode & mode_t(S_IFMT)
+                    == mode_t(S_IFDIR),
+                  rebound.st_mode & mode_t(S_IFMT)
+                    == mode_t(S_IFDIR),
+                  metadata.st_dev == rebound.st_dev,
+                  metadata.st_ino == rebound.st_ino,
+                  metadata.st_uid == rebound.st_uid,
+                  metadata.st_gid == rebound.st_gid,
+                  metadata.st_nlink == rebound.st_nlink,
+                  metadata.st_mode == rebound.st_mode,
                   metadata.st_mode & mode_t(0o7777)
                     == mode_t(0o700) else {
                 throw PrimeDurableArtifactError
@@ -489,6 +513,75 @@ public final class PrimeArtifactRoot: @unchecked Sendable {
                     path: relativePath
                 )
             }
+        }
+    }
+
+    /// Creates one descriptor-relative private directory and rejects every
+    /// pre-existing occupant, including an otherwise trusted directory.
+    ///
+    /// This is the directory analogue of exclusive immutable publication.
+    /// It is intended for bootstrap boundaries whose initial absence is part
+    /// of the evidence. A failed validation leaves the newly created
+    /// directory as explicit fail-closed debris rather than deleting a name
+    /// that another process could have rebound.
+    public func createPrivateDirectoryExclusively(
+        at relativePath: String
+    ) throws {
+        let parsed = try Self.components(of: relativePath)
+        try withParentDescriptor(
+            components: parsed.parents,
+            relativePath: relativePath
+        ) { parent in
+            let created = parsed.leaf.withCString {
+                mkdirat(parent, $0, mode_t(0o700))
+            }
+            let creationError = errno
+            guard created == 0 else {
+                if creationError == EEXIST {
+                    throw PrimeDurableArtifactError
+                        .conflictingArtifact(relativePath)
+                }
+                throw PrimeDurableArtifactError.posix(
+                    operation:
+                        "mkdirat exclusive private artifact directory",
+                    path: relativePath,
+                    code: creationError
+                )
+            }
+            let opened = parsed.leaf.withCString {
+                openat(
+                    parent,
+                    $0,
+                    O_RDONLY | O_DIRECTORY
+                        | O_NOFOLLOW | O_CLOEXEC
+                )
+            }
+            guard opened >= 0 else {
+                throw Self.posix(
+                    "openat exclusive private artifact directory",
+                    relativePath
+                )
+            }
+            defer {
+                _ = close(opened)
+            }
+            try Self.requireTrustedDirectory(
+                opened,
+                path: relativePath
+            )
+            var metadata = stat()
+            guard fstat(opened, &metadata) == 0,
+                  metadata.st_mode & mode_t(0o7777)
+                    == mode_t(0o700) else {
+                throw PrimeDurableArtifactError
+                    .untrustedDirectory(relativePath)
+            }
+            try Self.synchronize(
+                parent,
+                operation:
+                    "synchronize exclusive private directory parent",
+                path: relativePath
+            )
         }
     }
 
@@ -624,6 +717,27 @@ public final class PrimeArtifactRoot: @unchecked Sendable {
             )
         }
         return try publishGeneratedFile(
+            at: relativePath,
+            purpose: purpose,
+            maximumByteCount: UInt64(data.count)
+        ) { descriptor in
+            try Self.writeAll(
+                data,
+                descriptor: descriptor,
+                path: relativePath
+            )
+        }
+    }
+
+    /// Publishes immutable bytes only if the destination name is absent.
+    /// Byte-identical pre-existing data is still a conflict because initial
+    /// absence is part of this publication contract.
+    public func publishExclusively(
+        _ data: Data,
+        at relativePath: String,
+        purpose: PrimeArtifactPurpose
+    ) throws -> PrimeArtifactBinding {
+        try publishGeneratedFile(
             at: relativePath,
             purpose: purpose,
             maximumByteCount: UInt64(data.count)
@@ -1029,17 +1143,11 @@ public final class PrimeArtifactRoot: @unchecked Sendable {
         at relativePath: String
     ) throws -> PrimeArtifactBinding {
         let data = try PrimeCanonicalJSON.encode(value)
-        return try publishGeneratedFile(
+        return try publishExclusively(
+            data,
             at: relativePath,
-            purpose: .immutableData,
-            maximumByteCount: UInt64(data.count)
-        ) { descriptor in
-            try Self.writeAll(
-                data,
-                descriptor: descriptor,
-                path: relativePath
-            )
-        }
+            purpose: .immutableData
+        )
     }
 
     public func verify(

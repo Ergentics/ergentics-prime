@@ -165,8 +165,78 @@ final class PrimePinnedMLXMetallibTests: XCTestCase {
             PrimePinnedMLXMetallib
                 .expectedInfoPlistSHA256
         )
+        let destinationBundle =
+            destination.hostRoot.appendingPathComponent(
+                PrimePinnedMLXMetallib
+                    .bundleRelativePath,
+                isDirectory: true
+            )
         try FileManager.default.removeItem(
-            at: destination.metallib
+            at: destinationBundle
+        )
+        XCTAssertFalse(
+            FileManager.default.fileExists(
+                atPath: destinationBundle.path
+            )
+        )
+
+        let firstScaffold =
+            try PrimePinnedMLXMetallib
+                .scaffoldCanonicalRuntimeBundle(
+                    usingCanonicalRuntimeInfoPlist:
+                        canonicalInfoPlist,
+                    beside: destination.executable,
+                    runtimeRole:
+                        .typedOptimizerRestoreProbe
+                )
+        XCTAssertTrue(
+            firstScaffold
+                .destinationBundleInitiallyAbsent
+        )
+        XCTAssertEqual(
+            firstScaffold.infoPlist.sha256,
+            PrimePinnedMLXMetallib
+                .expectedInfoPlistSHA256
+        )
+        XCTAssertEqual(
+            try Data(
+                contentsOf: destinationInfoPlist
+            ),
+            canonicalInfoPlist
+        )
+        XCTAssertFalse(
+            FileManager.default.fileExists(
+                atPath: destination.metallib.path
+            )
+        )
+
+        let repeatedScaffold =
+            try PrimePinnedMLXMetallib
+                .scaffoldCanonicalRuntimeBundle(
+                    usingCanonicalRuntimeInfoPlist:
+                        canonicalInfoPlist,
+                    beside: destination.executable,
+                    runtimeRole:
+                        .typedOptimizerRestoreProbe
+                )
+        XCTAssertFalse(
+            repeatedScaffold
+                .destinationBundleInitiallyAbsent
+        )
+        XCTAssertEqual(
+            repeatedScaffold.infoPlist,
+            firstScaffold.infoPlist
+        )
+        XCTAssertEqual(
+            try Data(
+                contentsOf: destinationInfoPlist
+            ),
+            canonicalInfoPlist
+        )
+        XCTAssertFalse(
+            FileManager.default.fileExists(
+                atPath: destination.metallib.path
+            )
         )
 
         let first =
@@ -348,6 +418,11 @@ final class PrimePinnedMLXMetallibTests: XCTestCase {
             executableName:
                 "PrimeTypedOptimizerRestoreProbe"
         )
+        let canonicalRuntimeInfo = try Data(
+            contentsOf: infoPlistURL(
+                for: destination
+            )
+        )
         var wrongDestinationMetallib =
             try Data(
                 contentsOf: destination.metallib
@@ -378,6 +453,335 @@ final class PrimePinnedMLXMetallibTests: XCTestCase {
             ),
             wrongDestinationMetallib
         )
+
+        do {
+            let wrongTemplateDestination =
+                try makeFixture(
+                    executableName:
+                        "PrimeTypedOptimizerRestoreProbe"
+                )
+            let bundle =
+                wrongTemplateDestination.hostRoot
+                .appendingPathComponent(
+                    PrimePinnedMLXMetallib
+                        .bundleRelativePath,
+                    isDirectory: true
+                )
+            try FileManager.default.removeItem(
+                at: bundle
+            )
+            var wrongTemplate = canonicalRuntimeInfo
+            wrongTemplate[
+                wrongTemplate.count - 1
+            ] ^= 0xff
+            XCTAssertThrowsError(
+                try PrimePinnedMLXMetallib
+                    .scaffoldCanonicalRuntimeBundle(
+                        usingCanonicalRuntimeInfoPlist:
+                            wrongTemplate,
+                        beside:
+                            wrongTemplateDestination
+                            .executable,
+                        runtimeRole:
+                            .typedOptimizerRestoreProbe
+                    )
+            )
+            XCTAssertFalse(
+                FileManager.default.fileExists(
+                    atPath: bundle.path
+                )
+            )
+        }
+
+        do {
+            let wrongInfoDestination =
+                try makeFixture(
+                    executableName:
+                        "PrimeTypedOptimizerRestoreProbe"
+                )
+            let bundle =
+                wrongInfoDestination.hostRoot
+                .appendingPathComponent(
+                    PrimePinnedMLXMetallib
+                        .bundleRelativePath,
+                    isDirectory: true
+                )
+            try FileManager.default.removeItem(
+                at: bundle
+            )
+            _ = try PrimePinnedMLXMetallib
+                .scaffoldCanonicalRuntimeBundle(
+                    usingCanonicalRuntimeInfoPlist:
+                        canonicalRuntimeInfo,
+                    beside:
+                        wrongInfoDestination
+                        .executable,
+                    runtimeRole:
+                        .typedOptimizerRestoreProbe
+                )
+            let info = infoPlistURL(
+                for: wrongInfoDestination
+            )
+            var wrongInfo = canonicalRuntimeInfo
+            wrongInfo[wrongInfo.count - 1] ^= 0xff
+            try withOwnerWritableFile(at: info) {
+                try wrongInfo.write(to: info)
+            }
+            XCTAssertThrowsError(
+                try PrimePinnedMLXMetallib
+                    .scaffoldCanonicalRuntimeBundle(
+                        usingCanonicalRuntimeInfoPlist:
+                            canonicalRuntimeInfo,
+                        beside:
+                            wrongInfoDestination
+                            .executable,
+                        runtimeRole:
+                            .typedOptimizerRestoreProbe
+                    )
+            )
+            XCTAssertEqual(
+                try Data(contentsOf: info),
+                wrongInfo
+            )
+            XCTAssertFalse(
+                FileManager.default.fileExists(
+                    atPath:
+                        wrongInfoDestination
+                        .metallib.path
+                )
+            )
+        }
+
+        do {
+            let partialDestination =
+                try makeFixture(
+                    executableName:
+                        "PrimeTypedOptimizerRestoreProbe"
+                )
+            let bundle =
+                partialDestination.hostRoot
+                .appendingPathComponent(
+                    PrimePinnedMLXMetallib
+                        .bundleRelativePath,
+                    isDirectory: true
+                )
+            try FileManager.default.removeItem(
+                at: bundle
+            )
+            try FileManager.default.createDirectory(
+                at: bundle,
+                withIntermediateDirectories: false
+            )
+            XCTAssertEqual(
+                chmod(bundle.path, 0o700),
+                0
+            )
+            XCTAssertThrowsError(
+                try PrimePinnedMLXMetallib
+                    .scaffoldCanonicalRuntimeBundle(
+                        usingCanonicalRuntimeInfoPlist:
+                            canonicalRuntimeInfo,
+                        beside:
+                            partialDestination.executable,
+                        runtimeRole:
+                            .typedOptimizerRestoreProbe
+                    )
+            )
+            XCTAssertTrue(
+                FileManager.default.fileExists(
+                    atPath: bundle.path
+                )
+            )
+            XCTAssertFalse(
+                FileManager.default.fileExists(
+                    atPath:
+                        bundle.appendingPathComponent(
+                            "Contents",
+                            isDirectory: true
+                        ).path
+                )
+            )
+        }
+
+        do {
+            let symlinkDestination =
+                try makeFixture(
+                    executableName:
+                        "PrimeTypedOptimizerRestoreProbe"
+                )
+            let bundle =
+                symlinkDestination.hostRoot
+                .appendingPathComponent(
+                    PrimePinnedMLXMetallib
+                        .bundleRelativePath,
+                    isDirectory: true
+                )
+            try FileManager.default.removeItem(
+                at: bundle
+            )
+            let redirect = temporaryURL
+                .appendingPathComponent(
+                    "scaffold-redirect-" +
+                        UUID().uuidString,
+                    isDirectory: true
+                )
+            try FileManager.default.createDirectory(
+                at: redirect,
+                withIntermediateDirectories: false
+            )
+            try FileManager.default
+                .createSymbolicLink(
+                    at: bundle,
+                    withDestinationURL: redirect
+                )
+            XCTAssertThrowsError(
+                try PrimePinnedMLXMetallib
+                    .scaffoldCanonicalRuntimeBundle(
+                        usingCanonicalRuntimeInfoPlist:
+                            canonicalRuntimeInfo,
+                        beside:
+                            symlinkDestination.executable,
+                        runtimeRole:
+                            .typedOptimizerRestoreProbe
+                    )
+            )
+            var metadata = stat()
+            XCTAssertEqual(
+                lstat(bundle.path, &metadata),
+                0
+            )
+            XCTAssertEqual(
+                metadata.st_mode & mode_t(S_IFMT),
+                mode_t(S_IFLNK)
+            )
+            XCTAssertEqual(
+                try FileManager.default
+                    .contentsOfDirectory(
+                        atPath: redirect.path
+                    ),
+                []
+            )
+        }
+
+        do {
+            let extraDestination =
+                try makeFixture(
+                    executableName:
+                        "PrimeTypedOptimizerRestoreProbe"
+                )
+            let bundle =
+                extraDestination.hostRoot
+                .appendingPathComponent(
+                    PrimePinnedMLXMetallib
+                        .bundleRelativePath,
+                    isDirectory: true
+                )
+            try FileManager.default.removeItem(
+                at: bundle
+            )
+            _ = try PrimePinnedMLXMetallib
+                .scaffoldCanonicalRuntimeBundle(
+                    usingCanonicalRuntimeInfoPlist:
+                        canonicalRuntimeInfo,
+                    beside: extraDestination.executable,
+                    runtimeRole:
+                        .typedOptimizerRestoreProbe
+                )
+            let extra = bundle.appendingPathComponent(
+                "Contents/Resources/unadmitted.bin"
+            )
+            let extraBytes = Data("unadmitted".utf8)
+            try extraBytes.write(to: extra)
+            XCTAssertThrowsError(
+                try PrimePinnedMLXMetallib
+                    .scaffoldCanonicalRuntimeBundle(
+                        usingCanonicalRuntimeInfoPlist:
+                            canonicalRuntimeInfo,
+                        beside: extraDestination.executable,
+                        runtimeRole:
+                            .typedOptimizerRestoreProbe
+                    )
+            )
+            XCTAssertEqual(
+                try Data(contentsOf: extra),
+                extraBytes
+            )
+            XCTAssertEqual(
+                try Data(
+                    contentsOf: infoPlistURL(
+                        for: extraDestination
+                    )
+                ),
+                canonicalRuntimeInfo
+            )
+        }
+
+        do {
+            let metallibDestination =
+                try makeFixture(
+                    executableName:
+                        "PrimeTypedOptimizerRestoreProbe"
+                )
+            let bundle =
+                metallibDestination.hostRoot
+                .appendingPathComponent(
+                    PrimePinnedMLXMetallib
+                        .bundleRelativePath,
+                    isDirectory: true
+                )
+            try FileManager.default.removeItem(
+                at: bundle
+            )
+            _ = try PrimePinnedMLXMetallib
+                .scaffoldCanonicalRuntimeBundle(
+                    usingCanonicalRuntimeInfoPlist:
+                        canonicalRuntimeInfo,
+                    beside:
+                        metallibDestination.executable,
+                    runtimeRole:
+                        .typedOptimizerRestoreProbe
+                )
+            let admittedMetallib = try Data(
+                contentsOf: donor.metallib
+            )
+            let runtimeRoot = try PrimeArtifactRoot(
+                directoryURL:
+                    metallibDestination.hostRoot
+            )
+            _ = try runtimeRoot.publishExclusively(
+                admittedMetallib,
+                at:
+                    PrimePinnedMLXMetallib
+                    .artifactRelativePath,
+                purpose: .immutableData
+            )
+            XCTAssertThrowsError(
+                try PrimePinnedMLXMetallib
+                    .scaffoldCanonicalRuntimeBundle(
+                        usingCanonicalRuntimeInfoPlist:
+                            canonicalRuntimeInfo,
+                        beside:
+                            metallibDestination.executable,
+                        runtimeRole:
+                            .typedOptimizerRestoreProbe
+                    )
+            )
+            XCTAssertEqual(
+                try Data(
+                    contentsOf:
+                        metallibDestination.metallib
+                ),
+                admittedMetallib
+            )
+            XCTAssertEqual(
+                try Data(
+                    contentsOf: infoPlistURL(
+                        for: metallibDestination
+                    )
+                ),
+                canonicalRuntimeInfo
+            )
+        }
     }
 
     func testStageRejectsSourceAndDestinationManifestRoleSubstitution()
@@ -624,6 +1028,40 @@ final class PrimePinnedMLXMetallibTests: XCTestCase {
                     of: continuationFixture.executable,
                     matches: continuationBinding
                 )
+        )
+
+        let scaffoldFixture = try makeFixture(
+            executableName:
+                "PrimeTypedOptimizerRestoreProbe"
+        )
+        let scaffoldInfo = try Data(
+            contentsOf: infoPlistURL(
+                for: scaffoldFixture
+            )
+        )
+        let scaffoldBundle =
+            scaffoldFixture.hostRoot
+            .appendingPathComponent(
+                PrimePinnedMLXMetallib
+                    .bundleRelativePath,
+                isDirectory: true
+            )
+        try FileManager.default.removeItem(
+            at: scaffoldBundle
+        )
+        XCTAssertThrowsError(
+            try PrimePinnedMLXMetallib
+                .scaffoldCanonicalRuntimeBundle(
+                    usingCanonicalRuntimeInfoPlist:
+                        scaffoldInfo,
+                    beside: scaffoldFixture.executable,
+                    runtimeRole: .calibration
+                )
+        )
+        XCTAssertFalse(
+            FileManager.default.fileExists(
+                atPath: scaffoldBundle.path
+            )
         )
     }
 
