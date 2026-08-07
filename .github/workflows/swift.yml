@@ -166,8 +166,6 @@ jobs:
 
       - name: Validate the Prime Latin authority foundation
         working-directory: ergentics-prime
-        env:
-          ERGENTICS_MLX_READ_TOKEN: ${{ secrets.ERGENTICS_PAT }}
         run: bash .github/scripts/prime-ci-latin-authority-foundation.sh
 
       - name: Record the foundation authority ceiling

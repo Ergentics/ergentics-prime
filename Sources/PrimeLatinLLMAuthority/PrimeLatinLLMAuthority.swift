@@ -16,6 +16,7 @@ public enum PrimeLatinLLMAuthorityError: Error, Equatable, Sendable {
     case noncanonicalJSON
     case packetDigestMismatch
     case oversizedPacket
+    case invalidAuthorizationReceipt
 }
 
 public enum PrimeLatinAuthoritySchema {
@@ -264,7 +265,7 @@ public struct PrimeLatinTrialProposalMaterial:
 }
 
 public struct PrimeLatinTrialProposalPacket:
-    Codable,
+    Encodable,
     Equatable,
     Sendable
 {
@@ -281,19 +282,6 @@ public struct PrimeLatinTrialProposalPacket:
         self.materialSHA256 = materialSHA256
     }
 
-    public init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        let schema = try values.decode(String.self, forKey: .schema)
-        guard schema == PrimeLatinAuthoritySchema.proposalPacket else {
-            throw PrimeLatinLLMAuthorityError.invalidSchema(schema)
-        }
-        let material = try values.decode(
-            PrimeLatinTrialProposalMaterial.self,
-            forKey: .material)
-        let digest = try values.decode(String.self, forKey: .materialSHA256)
-        try PrimeLatinValidation.sha256(digest)
-        self.init(material: material, materialSHA256: digest)
-    }
 }
 
 public enum PrimeLatinTrialAuthorizationDisposition:
@@ -314,7 +302,7 @@ public enum PrimeLatinTrialAuthorizationReason:
 }
 
 public struct PrimeLatinTrialAuthorizationReceipt:
-    Codable,
+    Encodable,
     Equatable,
     Sendable
 {
@@ -341,6 +329,7 @@ public struct PrimeLatinTrialAuthorizationReceipt:
 
 public enum PrimeLatinLLMAuthority {
     public static let maximumCanonicalPacketBytes = 1_048_576
+    public static let maximumCanonicalAuthorizationReceiptBytes = 16_384
 
     public static func makeProposalPacket(
         material: PrimeLatinTrialProposalMaterial
@@ -368,9 +357,16 @@ public enum PrimeLatinLLMAuthority {
         guard data.count <= maximumCanonicalPacketBytes else {
             throw PrimeLatinLLMAuthorityError.oversizedPacket
         }
-        let packet = try JSONDecoder().decode(
-            PrimeLatinTrialProposalPacket.self,
+        let wire = try JSONDecoder().decode(
+            PrimeLatinTrialProposalPacketWire.self,
             from: data)
+        guard wire.schema == PrimeLatinAuthoritySchema.proposalPacket else {
+            throw PrimeLatinLLMAuthorityError.invalidSchema(wire.schema)
+        }
+        try PrimeLatinValidation.sha256(wire.materialSHA256)
+        let packet = PrimeLatinTrialProposalPacket(
+            material: wire.material,
+            materialSHA256: wire.materialSHA256)
         guard try canonicalData(packet) == data else {
             throw PrimeLatinLLMAuthorityError.noncanonicalJSON
         }
@@ -379,6 +375,34 @@ public enum PrimeLatinLLMAuthority {
             throw PrimeLatinLLMAuthorityError.packetDigestMismatch
         }
         return packet
+    }
+
+    public static func decodeCanonicalFoundationAuthorizationReceipt(
+        _ data: Data
+    ) throws -> PrimeLatinTrialAuthorizationReceipt {
+        guard data.count <= maximumCanonicalAuthorizationReceiptBytes else {
+            throw PrimeLatinLLMAuthorityError.oversizedPacket
+        }
+        let wire = try JSONDecoder().decode(
+            PrimeLatinTrialAuthorizationReceiptWire.self,
+            from: data)
+        try PrimeLatinValidation.sha256(wire.proposalMaterialSHA256)
+        guard wire.schema == PrimeLatinAuthoritySchema.trialAuthorization,
+              wire.disposition == .abstain,
+              wire.reasons == [.primeSelectionPolicyNotInstalled],
+              !wire.trialExecutionAuthorized,
+              !wire.furtherTrainingAuthorized,
+              !wire.promotionAuthorized,
+              !wire.productUseAuthorized
+        else {
+            throw PrimeLatinLLMAuthorityError.invalidAuthorizationReceipt
+        }
+        let receipt = PrimeLatinTrialAuthorizationReceipt(
+            proposalMaterialSHA256: wire.proposalMaterialSHA256)
+        guard try canonicalData(receipt) == data else {
+            throw PrimeLatinLLMAuthorityError.noncanonicalJSON
+        }
+        return receipt
     }
 
     public static func foundationAuthorization(
@@ -395,6 +419,23 @@ public enum PrimeLatinLLMAuthority {
     public static func sha256(_ data: Data) -> String {
         SHA256.hash(data: data).map { String(format: "%02x", $0) }.joined()
     }
+}
+
+private struct PrimeLatinTrialProposalPacketWire: Decodable {
+    let schema: String
+    let material: PrimeLatinTrialProposalMaterial
+    let materialSHA256: String
+}
+
+private struct PrimeLatinTrialAuthorizationReceiptWire: Decodable {
+    let schema: String
+    let proposalMaterialSHA256: String
+    let disposition: PrimeLatinTrialAuthorizationDisposition
+    let reasons: [PrimeLatinTrialAuthorizationReason]
+    let trialExecutionAuthorized: Bool
+    let furtherTrainingAuthorized: Bool
+    let promotionAuthorized: Bool
+    let productUseAuthorized: Bool
 }
 
 private enum PrimeLatinValidation {

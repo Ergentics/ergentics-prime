@@ -129,6 +129,69 @@ final class PrimeLatinLLMAuthorityTests: XCTestCase {
             packet.materialSHA256)
     }
 
+    func testAuthorizationReceiptRejectsForgedAuthorityAndAlternateBytes() throws {
+        let receipt = try PrimeLatinLLMAuthority.foundationAuthorization(
+            for: fixturePacket())
+        let canonical = try PrimeLatinLLMAuthority.canonicalData(receipt)
+        XCTAssertEqual(
+            try PrimeLatinLLMAuthority
+                .decodeCanonicalFoundationAuthorizationReceipt(canonical),
+            receipt)
+
+        var alternate = Data(" \n".utf8)
+        alternate.append(canonical)
+        XCTAssertThrowsError(
+            try PrimeLatinLLMAuthority
+                .decodeCanonicalFoundationAuthorizationReceipt(alternate)
+        ) { error in
+            XCTAssertEqual(
+                error as? PrimeLatinLLMAuthorityError,
+                .noncanonicalJSON)
+        }
+
+        let object = try XCTUnwrap(
+            JSONSerialization.jsonObject(with: canonical) as? [String: Any])
+        for key in [
+            "trialExecutionAuthorized",
+            "furtherTrainingAuthorized",
+            "promotionAuthorized",
+            "productUseAuthorized",
+        ] {
+            var forged = object
+            forged[key] = true
+            let data = try JSONSerialization.data(
+                withJSONObject: forged,
+                options: [.sortedKeys, .withoutEscapingSlashes])
+            XCTAssertThrowsError(
+                try PrimeLatinLLMAuthority
+                    .decodeCanonicalFoundationAuthorizationReceipt(data)
+            ) { error in
+                XCTAssertEqual(
+                    error as? PrimeLatinLLMAuthorityError,
+                    .invalidAuthorizationReceipt)
+            }
+        }
+    }
+
+    func testAuthorityRecordsDoNotExposeUncheckedDecodableConformance() throws {
+        let sourceURL = try packageRoot()
+            .appendingPathComponent(
+                "Sources/PrimeLatinLLMAuthority/PrimeLatinLLMAuthority.swift")
+        let source = try String(contentsOf: sourceURL, encoding: .utf8)
+        for declaration in [
+            "public struct PrimeLatinTrialProposalPacket:\n    Encodable,",
+            "public struct PrimeLatinTrialAuthorizationReceipt:\n    Encodable,",
+        ] {
+            XCTAssertTrue(source.contains(declaration))
+        }
+        XCTAssertFalse(
+            source.contains(
+                "public struct PrimeLatinTrialProposalPacket:\n    Codable,"))
+        XCTAssertFalse(
+            source.contains(
+                "public struct PrimeLatinTrialAuthorizationReceipt:\n    Codable,"))
+    }
+
     func testTargetHasNoPackageOrPrimeCoreDependency() throws {
         let packageURL = try packageRoot()
             .appendingPathComponent("Package.swift")
@@ -215,6 +278,12 @@ final class PrimeLatinLLMAuthorityTests: XCTestCase {
     }
 
     private func packageRoot() throws -> URL {
+        if let repositoryRoot = ProcessInfo.processInfo.environment[
+            "PRIME_REPOSITORY_ROOT"
+        ] {
+            return URL(fileURLWithPath: repositoryRoot, isDirectory: true)
+                .standardizedFileURL
+        }
         var url = URL(fileURLWithPath: #filePath)
         for _ in 0..<3 {
             url.deleteLastPathComponent()
