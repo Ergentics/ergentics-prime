@@ -133,9 +133,8 @@ final class PrimeLatinLLMAuthorityTests: XCTestCase {
         let packageURL = try packageRoot()
             .appendingPathComponent("Package.swift")
         let package = try String(contentsOf: packageURL, encoding: .utf8)
-        let marker = #".target(
-            name: "PrimeLatinLLMAuthority"
-        )"#
+        let marker =
+            ".target(\n            name: \"PrimeLatinLLMAuthority\"\n        )"
         XCTAssertTrue(package.contains(marker))
 
         let sourceURL = try packageRoot()
