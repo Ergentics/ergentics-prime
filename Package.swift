@@ -12,6 +12,18 @@ let package = Package(
             targets: ["PrimeCore"]
         ),
         .library(
+            name: "PrimeLatinProposalPairCapture",
+            targets: [
+                "PrimeLatinProposalPairCapture",
+            ]
+        ),
+        .executable(
+            name: "PrimeLatinProposalPairCaptureProbe",
+            targets: [
+                "PrimeLatinProposalPairCaptureProbe",
+            ]
+        ),
+        .library(
             name:
                 "PrimeNativeNeuralGateReplayTransport",
             targets: [
@@ -167,6 +179,9 @@ let package = Package(
     targets: [
         .target(
             name: "PrimeCore"
+        ),
+        .target(
+            name: "PrimeLatinProposalPairCapture"
         ),
         .target(
             name:
@@ -565,6 +580,12 @@ let package = Package(
             dependencies: ["PrimeCore"]
         ),
         .executableTarget(
+            name: "PrimeLatinProposalPairCaptureProbe",
+            dependencies: [
+                "PrimeLatinProposalPairCapture",
+            ]
+        ),
+        .executableTarget(
             name: "PrimeMLXBundleStage",
             dependencies: ["PrimeCore"]
         ),
@@ -603,6 +624,12 @@ let package = Package(
                     name: "MLXOptimizers",
                     package: "ergentics-mlx-swift"
                 ),
+            ]
+        ),
+        .testTarget(
+            name: "PrimeLatinProposalPairCaptureTests",
+            dependencies: [
+                "PrimeLatinProposalPairCapture",
             ]
         ),
         .testTarget(
