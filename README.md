@@ -6,6 +6,13 @@ split out from the PMHNP companion so model execution, evaluation, and
 evidence durability can evolve without making a product consumer the
 scientific authority.
 
+The active root package now resolves only the pinned first-party
+`Ergentics/ergentics-mlx-swift` dependency. `mlx-swift-lm`,
+`PrimeGPUCalibration`, and `PrimeNative3BMetalContinuationProbe` are absent
+from the active package graph. Their source, receipts, notices, and historical
+instructions remain preserved for accounting and are not current execution
+entry points.
+
 The current Apple-native training, optimizer-resume, M5 Max, cross-repository,
 and product-integration roadmap is recorded in
 [`docs/APPLE-NATIVE-LEARNING-PLAN-2026-07-29.md`](docs/APPLE-NATIVE-LEARNING-PLAN-2026-07-29.md).
@@ -218,7 +225,9 @@ reinterpret that loader dependency as GPU tensor execution. The exact 3B FP32
 raw checkpoint floor is about 31.52 GiB before manifests and safetensors
 headers: 10.51 GiB of model weights and 21.01 GiB of Adam moments.
 
-Run the gate from a Release build with a new, empty mode-0700 artifact root:
+The preserved historical invocation was the following. It is not runnable
+from the active root because `PrimeGPUCalibration` is intentionally no longer
+an active product:
 
 ```sh
 swift build -c release
@@ -261,7 +270,11 @@ SHA-256 is
 Both source revisions are remote-resolvable. This remains optimizer-resume
 mechanics, not Metal training or functional evidence.
 
-## Exact 3B interrupted Metal continuation
+## Historical exact 3B interrupted Metal continuation
+
+This section records the quarantined Llama-era mechanics and its preserved
+receipts. The named products and commands below are intentionally unavailable
+from the active root package graph.
 
 `PrimeNative3BMetalContinuationProbe` is the single bounded follow-on to the
 typed CPU restore gate. It creates the exact 2,820,320,256-parameter Prime
@@ -970,14 +983,16 @@ env PRIME_REQUIRE_V9_PINNED_DONOR_GATE=1 PRIME_REQUIRE_V10_HISTORICAL_REPLAY_SOU
 ```
 
 This command is mandatory process evidence for V9 through V17; V17 adds no new
-donor source or environment marker. Prime has no repository CI or branch-rule
-status check yet, so this record does not claim GitHub enforces the invocation
-automatically.
+donor source or environment marker. The active-root quarantine workflow does
+not execute or enforce this historical donor invocation, and this record does
+not claim a branch rule requires it.
 
-## Initial calibration
+## Historical initial calibration
 
-The executable accepts paths and the explicit human allocation authorization;
-scientific knobs are frozen in the canonical Swift configuration:
+The following quarantined executable accepted paths and explicit human
+allocation authorization; scientific knobs were frozen in its canonical
+Swift configuration. The command is preserved as accounting history and is
+not runnable from the active root package:
 
 ```sh
 swift build -c release
