@@ -12,6 +12,17 @@ final class
             withoutWhitespace(
                 try source("Package.swift")
             )
+        for forbiddenActiveDependency in [
+            "mlx-swift-lm",
+            "MLXLLM",
+            #"name:"PrimeGPUCalibration""#,
+            #"name:"PrimeNative3BMetalContinuationProbe""#,
+        ] {
+            XCTAssertFalse(
+                package.contains(forbiddenActiveDependency),
+                "active Prime package retains quarantined Llama authority: \(forbiddenActiveDependency)"
+            )
+        }
         XCTAssertTrue(
             package.contains(
                 #".library(name:"PrimeNativeNeuralGateMLXValidationMechanics",targets:["PrimeNativeCorpusReplayMechanics","PrimeNativeNeuralGateCorrectedMechanics","PrimeNativeNeuralGateCorrectedEvaluationMechanics","PrimeNativeNeuralGateCorrectedFixtureAuthority","PrimeNativeNeuralGatePromptSolver","PrimeNativeNeuralGateLogitSidecarMechanics","PrimeNativeNeuralGateMLXLogSoftmaxRecomputation",])"#
@@ -212,9 +223,7 @@ final class
             },
             [
                 "ergentics-mlx-swift",
-                "mlx-swift-lm",
                 "swift-numerics",
-                "swift-syntax",
             ]
         )
         let mlxPin =
@@ -346,6 +355,15 @@ final class
             $0["identity"] as? String
                 == "ergentics-mlx-swift"
         }
+        XCTAssertFalse(
+            pins.contains {
+                $0["identity"] as? String
+                    == "mlx-swift-lm"
+            },
+            "active lock retains quarantined Llama dependency",
+            file: file,
+            line: line
+        )
         XCTAssertEqual(matches.count, 1, file: file, line: line)
         let pin = try XCTUnwrap(
             matches.first,

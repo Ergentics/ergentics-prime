@@ -6,6 +6,15 @@ on:
       - main
       - wip/prime-validation-driver-v2-evidence-completion
   workflow_dispatch:
+    inputs:
+      lane:
+        description: Bounded validation lane
+        required: true
+        default: hosted-image
+        type: choice
+        options:
+          - hosted-image
+          - root-quarantine
 
 permissions:
   contents: read
@@ -28,6 +37,7 @@ defaults:
 jobs:
   supervisor-image:
     name: Hosted supervisor image / non-authoritative
+    if: github.event_name == 'push' || inputs.lane == 'hosted-image'
     runs-on: macos-26
     timeout-minutes: 45
 
@@ -82,4 +92,45 @@ jobs:
           printf '%s\n'
           'Hosted canary only: supervisor-image pre-execution binding passed;'
           'strict build, test, staging, shard, and completion authority remain unobserved.'
+          >> "$GITHUB_STEP_SUMMARY"
+
+  root-quarantine:
+    name: Active root MLXLLM quarantine
+    if: github.event_name == 'workflow_dispatch' && inputs.lane == 'root-quarantine'
+    runs-on: macos-26
+    timeout-minutes: 30
+
+    steps:
+      - name: Check out the exact Prime commit
+        env:
+          CHECKOUT_TOKEN: ${{ github.token }}
+          PRIME_REPOSITORY: ${{ github.repository }}
+          PRIME_REVISION: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          [[ ! -e ergentics-prime && ! -L ergentics-prime ]]
+          git init ergentics-prime
+          git -C ergentics-prime remote add origin "https://github.com/${PRIME_REPOSITORY}"
+          export GIT_CONFIG_COUNT=1
+          export GIT_CONFIG_KEY_0="url.https://x-access-token:${CHECKOUT_TOKEN}@github.com/.insteadOf"
+          export GIT_CONFIG_VALUE_0="https://github.com/"
+          git -C ergentics-prime fetch --depth=1 --no-tags --no-write-fetch-head origin "$PRIME_REVISION"
+          git -C ergentics-prime checkout --detach "$PRIME_REVISION"
+          unset GIT_CONFIG_COUNT GIT_CONFIG_KEY_0 GIT_CONFIG_VALUE_0
+          [[ "$(git -C ergentics-prime rev-parse HEAD)" == "$PRIME_REVISION" ]]
+          [[ "$(git -C ergentics-prime remote get-url origin)" == "https://github.com/${PRIME_REPOSITORY}" ]]
+          [[ -z "$(git -C ergentics-prime status --porcelain=v1 --untracked-files=all)" ]]
+          ! grep -Fq -- "$CHECKOUT_TOKEN" ergentics-prime/.git/config
+
+      - name: Validate the active first-party root
+        working-directory: ergentics-prime
+        env:
+          ERGENTICS_MLX_READ_TOKEN: ${{ secrets.ERGENTICS_PAT }}
+        run: bash .github/scripts/prime-ci-root-quarantine.sh
+
+      - name: Record the quarantine authority ceiling
+        run: >-
+          printf '%s\n'
+          'Active root dependency quarantine passed; historical source and receipts remain context only.'
+          'No decoder selection, training, promotion, PMHNP, or Driver V2 authority is granted.'
           >> "$GITHUB_STEP_SUMMARY"

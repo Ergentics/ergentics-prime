@@ -261,12 +261,11 @@ final class PrimeNativeGenerationContractSourceContractTests:
 
         XCTAssertEqual(
             occurrences(of: ".package(", in: package),
-            2,
+            1,
             "generation projection must not add a package dependency"
         )
         for existingDependency in [
             #"url:"https://github.com/Ergentics/ergentics-mlx-swift""#,
-            #"url:"https://github.com/ml-explore/mlx-swift-lm""#,
         ] {
             XCTAssertTrue(
                 package.contains(existingDependency),
@@ -279,6 +278,8 @@ final class PrimeNativeGenerationContractSourceContractTests:
             "PMHNPCompanion",
             "neural-kit",
             #"name:"NeuralKit""#,
+            "mlx-swift-lm",
+            "MLXLLM",
         ] {
             XCTAssertFalse(
                 package.contains(forbiddenDependency),

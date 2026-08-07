@@ -39,3 +39,11 @@ checkout actions and repository revisions exactly.
 Third-party license and attribution obligations are recorded in
 `THIRD_PARTY_NOTICES.md`. A dependency's license does not grant it runtime,
 decoder, training, quantization, release, or security authority.
+
+The active Prime package and validation locks must not contain
+`mlx-swift-lm` or an `MLXLLM` product binding. Historical Llama source and
+receipts remain immutable research accounting and must not be copied into a
+current dependency graph, a Driver authority claim, or a released PMHNP
+application claim. The current trace and the bounded Python-process exception
+are recorded in
+`docs/PRIME-LLAMA-QUARANTINE-AND-PYTHON-TRACE-2026-08-04.md`.
