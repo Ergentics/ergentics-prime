@@ -743,6 +743,16 @@ final class PrimeValidationWorkflowContractsTests: XCTestCase {
                 "d37885a278f1c37484a94d0f401a418735e66519"
             )
         )
+        XCTAssertTrue(
+            lock.contains(
+                #""location" : "https://github.com/Ergentics/ergentics-mlx-swift""#
+            )
+        )
+        XCTAssertFalse(
+            lock.contains(
+                #""location" : "https://github.com/ml-explore/mlx-swift""#
+            )
+        )
         XCTAssertFalse(
             lock.contains(
                 "68904d"
