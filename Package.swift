@@ -11,6 +11,10 @@ let package = Package(
             name: "PrimeCore",
             targets: ["PrimeCore"]
         ),
+        .library(
+            name: "PrimeLatinLLMAuthority",
+            targets: ["PrimeLatinLLMAuthority"]
+        ),
         .executable(
             name: "PrimeValidationWorkflowDriverV2",
             targets: ["PrimeValidationWorkflowDriverV2"]
@@ -175,6 +179,9 @@ let package = Package(
     targets: [
         .target(
             name: "PrimeCore"
+        ),
+        .target(
+            name: "PrimeLatinLLMAuthority"
         ),
         .target(
             name: "PrimeValidationWorkflowRootContracts",
@@ -680,6 +687,12 @@ let package = Package(
                 "PrimeNativeNeuralGateCorrectedFixtureAuthority",
                 "PrimeNativeNeuralGatePromptSolver",
                 "PrimeNativeNeuralGateLogitSidecarMechanics",
+            ]
+        ),
+        .testTarget(
+            name: "PrimeLatinLLMAuthorityTests",
+            dependencies: [
+                "PrimeLatinLLMAuthority",
             ]
         ),
         .testTarget(
