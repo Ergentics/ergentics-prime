@@ -510,7 +510,7 @@ assert_runner() {
     local actual_swift="$runner_temp/swift.actual"
     local target_info="$runner_temp/swift-target-info.json"
     local xcrun_swift expected_xcrun_swift
-    local forbidden forbidden_matches grep_status
+    local forbidden forbidden_matches external_actions_matches grep_status
 
     [[ "$(uname -m)" == "arm64" ]] || die "runner is not arm64"
     for command in awk cmp find git grep jq nm otool shasum sort stat \
@@ -591,6 +591,28 @@ assert_runner() {
             ;;
         *)
             die "sandbox-bypass scan failed with $grep_status"
+            ;;
+    esac
+
+    external_actions_matches="$runner_temp/external-actions.matches"
+    set +e
+    grep -n -E '^[[:space:]]*uses:' \
+        "$prime_root/.github/workflows/swift.yml" \
+        "$prime_root/.github/workflows/swift-strict-promotion.yml" \
+        > "$external_actions_matches"
+    grep_status=$?
+    set -e
+    case "$grep_status" in
+        0)
+            cat "$external_actions_matches" >&2
+            die "external Actions are forbidden by the repository local_only policy"
+            ;;
+        1)
+            [[ ! -s "$external_actions_matches" ]] ||
+                die "external-Action scan was inconsistent"
+            ;;
+        *)
+            die "external-Action scan failed with $grep_status"
             ;;
     esac
 }
