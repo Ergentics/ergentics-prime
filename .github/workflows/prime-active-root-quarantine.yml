@@ -83,13 +83,22 @@ jobs:
     name: Reviewed main / focused source contracts
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: active-root
-    runs-on: macos-15
+    runs-on: macos-26
     timeout-minutes: 45
     env:
       EXACT_REVISION: ${{ github.sha }}
       MLX_REVISION: d37885a278f1c37484a94d0f401a418735e66519
 
     steps:
+      - name: Record the hosted Apple toolchain
+        run: |
+          set -euo pipefail
+          uname -m
+          sw_vers
+          xcodebuild -version
+          swift --version
+          xcrun --sdk macosx --show-sdk-version
+
       - name: Check out reviewed main exactly
         env:
           CHECKOUT_TOKEN: ${{ github.token }}
