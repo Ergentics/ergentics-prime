@@ -61,9 +61,11 @@ jobs:
           set -euo pipefail
           for source_file in \
             Sources/PrimeLatinProposalPairCapture/PrimeLatinProposalPairCapture.swift \
+            Sources/PrimeLatinProposalPairCapture/PrimeLatinProposalInputsV3.swift \
             Sources/PrimeLatinProposalPairCaptureProbe/PrimeLatinProposalPairCaptureProbeMain.swift \
             Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalPairCaptureSourceContractTests.swift \
             Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalPairCaptureTests.swift \
+            Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalInputsV3Tests.swift \
             Tests/PrimeCoreTests/PrimeNativeCorpusReplaySourceContractTests.swift \
             Tests/PrimeCoreTests/PrimeNativeGenerationContractSourceContractTests.swift \
             Tests/PrimeCoreTests/PrimeNativeNeuralGateContractSourceContractTests.swift \
@@ -74,7 +76,7 @@ jobs:
           [[ "$(git rev-parse HEAD)" == "$EXACT_REVISION" ]]
           [[ -z "$(git status --porcelain=v1 --untracked-files=all)" ]]
 
-      - name: Validate the isolated Latin pair capture
+      - name: Validate the isolated Latin pair capture and V3 inputs
         working-directory: ergentics-prime
         env:
           ERGENTICS_EXACT_REVISION: ${{ env.EXACT_REVISION }}
@@ -87,7 +89,9 @@ jobs:
             echo 'The public mlx-swift-lm package and its two MLXLLM execution products are disconnected.'
             echo 'Historical comparator/accounting targets and receipts remain preserved.'
             echo 'The Latin pair capture is read-only transport validation and remains abstaining.'
-            echo 'No Prime proposal, trial authorization, decoder selection, model execution, training, promotion, Driver V2, or PMHNP authority is granted.'
+            echo 'The dependency-free V3 consumer verifies canonical wire bytes and the embedded hash chain only and remains abstaining.'
+            echo 'Referenced artifact bytes, the live producer workspace, and LLM Git provenance are not independently verified by this slice.'
+            echo 'No Prime proposal, candidate selection, trial authorization, decision receipt, decoder selection, model execution, training, publication, promotion, Driver V2, or PMHNP authority is granted.'
           } >> "$GITHUB_STEP_SUMMARY"
 
   trusted-main-compile:
