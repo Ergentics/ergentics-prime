@@ -751,6 +751,10 @@ private extension PrimeLatinProposalInputsV3 {
         "c0e4cb37cc0ac221925b3b5c67b8ec3f24034537"
     static let mergedTree =
         "81334b9f01391a80e16247d5a840692792ef2ea7"
+    static let mergedPublisherCommit =
+        "3f6097af42510237595acd84bc8b442f953eef72"
+    static let mergedPublisherTree =
+        "489e96d317179943effc781103edb0b8efeafaea"
     static let laneID = "latin_primary_prospective_v1"
     static let candidateID = "latin_structural_fixture_v1"
     static let sourceAttribution =
@@ -1692,10 +1696,11 @@ private extension PrimeLatinProposalInputsV3 {
             throw PrimeLatinProposalInputsV3Error.invalidSemantics(
                 "llm_source_oid")
         }
-        guard source.repository == repository,
-              source.commit == mergedCommit,
-              source.tree == mergedTree
-        else {
+        let isSupportedSource =
+            (source.commit == mergedCommit && source.tree == mergedTree)
+            || (source.commit == mergedPublisherCommit
+                && source.tree == mergedPublisherTree)
+        guard source.repository == repository, isSupportedSource else {
             throw PrimeLatinProposalInputsV3Error.unsupportedSource(
                 "llm_source")
         }

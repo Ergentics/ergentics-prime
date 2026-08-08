@@ -460,6 +460,395 @@ final class PrimeLatinProposalInputsV3Tests: XCTestCase {
             fixture: fixture)
     }
 
+    func testFinalPublisherSourceIsAcceptedAndArbitrarySourceIsRejected()
+        throws
+    {
+        let finalFixture = try PrimeLatinProposalInputsV3Fixture(
+            source: .finalPublisher)
+        let observation = try PrimeLatinProposalInputsV3.consume(
+            candidateCatalogData: finalFixture.catalogData,
+            experimentManifestData: finalFixture.experimentData)
+        XCTAssertEqual(
+            observation.llmSource.commit,
+            FixtureConstant.finalPublisherCommit)
+        XCTAssertEqual(
+            observation.llmSource.tree,
+            FixtureConstant.finalPublisherTree)
+
+        let arbitraryFixture = try PrimeLatinProposalInputsV3Fixture(
+            source: FixtureSource(
+                repository: FixtureConstant.repository,
+                commit: String(repeating: "0", count: 40),
+                tree: String(repeating: "1", count: 40)))
+        XCTAssertThrowsError(
+            try PrimeLatinProposalInputsV3.consume(
+                candidateCatalogData: arbitraryFixture.catalogData,
+                experimentManifestData: arbitraryFixture.experimentData))
+
+        for mixedSource in [
+            FixtureSource(
+                repository: FixtureConstant.repository,
+                commit: FixtureConstant.finalPublisherCommit,
+                tree: FixtureConstant.tree),
+            FixtureSource(
+                repository: FixtureConstant.repository,
+                commit: FixtureConstant.commit,
+                tree: FixtureConstant.finalPublisherTree),
+        ] {
+            let mixedFixture = try PrimeLatinProposalInputsV3Fixture(
+                source: mixedSource)
+            XCTAssertThrowsError(
+                try PrimeLatinProposalInputsV3.consume(
+                    candidateCatalogData: mixedFixture.catalogData,
+                    experimentManifestData: mixedFixture.experimentData))
+        }
+
+        let legacyFixture = try PrimeLatinProposalInputsV3Fixture()
+        var mixedExperiment = legacyFixture.experimentObject
+        mixedExperiment["candidateCatalogSHA256"] =
+            finalFixture.catalogSHA256
+        mixedExperiment["candidateCatalogByteCount"] =
+            UInt64(finalFixture.catalogData.count)
+        mixedExperiment["candidateDeclarationSetSHA256"] =
+            finalFixture.declarationSetSHA256
+        mixedExperiment["candidateDeclarationSetByteCount"] =
+            UInt64(finalFixture.declarationSetData.count)
+        XCTAssertThrowsError(
+            try PrimeLatinProposalInputsV3.consume(
+                candidateCatalogData: finalFixture.catalogData,
+                experimentManifestData:
+                    try FixtureJSON.canonical(mixedExperiment)))
+    }
+
+    func testV3PairLocatorUsesExactContentAddressedPublicationRoot() throws {
+        let fixture = try FinalPublisherPairCaptureFixture()
+        let locator = try PrimeLatinProposalPairLocatorV3(
+            sha256: fixture.pairSHA256)
+
+        XCTAssertEqual(locator.sha256, fixture.pairSHA256)
+        XCTAssertEqual(
+            locator.relativePath,
+            "evidence/latin-proposal-artifacts/v3/pairs/" +
+                "\(fixture.pairSHA256).json")
+        XCTAssertThrowsError(
+            try PrimeLatinProposalPairLocatorV3(
+                sha256: fixture.pairSHA256.uppercased()))
+        XCTAssertThrowsError(
+            try PrimeLatinProposalPairLocatorV3(
+                sha256: String(repeating: "a", count: 63)))
+
+        let alias = FileManager.default.temporaryDirectory
+            .appendingPathComponent(
+                "prime-latin-v3-root-alias-\(UUID().uuidString)")
+        try FileManager.default.createSymbolicLink(
+            at: alias,
+            withDestinationURL: fixture.labRoot)
+        defer { try? FileManager.default.removeItem(at: alias) }
+        XCTAssertThrowsError(
+            try PrimeLatinProposalPairCaptureV3.capture(
+                labRoot: alias,
+                pairSHA256: fixture.pairSHA256))
+    }
+
+    func testCapturesCanonicalFinalPublisherPairAndRemainsAbstaining()
+        throws
+    {
+        let fixture = try FinalPublisherPairCaptureFixture()
+        let capture = try PrimeLatinProposalPairCaptureV3.capture(
+            labRoot: fixture.labRoot,
+            pairSHA256: fixture.pairSHA256)
+        let observation = capture.observation
+
+        XCTAssertEqual(
+            fixture.inputs.catalogSHA256,
+            FixtureConstant.finalCatalogSHA256)
+        XCTAssertEqual(fixture.inputs.catalogData.count, 20_779)
+        XCTAssertEqual(
+            FixtureJSON.sha256(fixture.inputs.experimentData),
+            FixtureConstant.finalExperimentSHA256)
+        XCTAssertEqual(fixture.inputs.experimentData.count, 3_268)
+        XCTAssertEqual(
+            fixture.inputs.declarationSetSHA256,
+            FixtureConstant.finalDeclarationSetSHA256)
+        XCTAssertEqual(fixture.inputs.declarationSetData.count, 14_860)
+        XCTAssertEqual(
+            fixture.inputs.declarationBundleSHA256,
+            FixtureConstant.finalDeclarationBundleSHA256)
+        XCTAssertEqual(
+            fixture.inputs.candidateIdentitySHA256,
+            FixtureConstant.finalCandidateIdentitySHA256)
+        XCTAssertEqual(
+            fixture.pairSHA256,
+            FixtureConstant.finalReceiptSHA256)
+        XCTAssertEqual(fixture.receiptData.count, 1_833)
+
+        XCTAssertEqual(
+            observation.schema,
+            "ergentics_prime_latin_proposal_pair_capture_v3_observation")
+        XCTAssertEqual(observation.outcome, "abstain")
+        XCTAssertEqual(
+            observation.verificationScope,
+            "descriptor_safe_content_addressed_v3_pair_capture_and_" +
+                "embedded_hash_chain_only_non_authorizing")
+        XCTAssertEqual(observation.pairReceiptSHA256, fixture.pairSHA256)
+        XCTAssertEqual(
+            observation.pairReceiptByteCount,
+            UInt64(fixture.receiptData.count))
+        XCTAssertEqual(
+            observation.llmSource.repository,
+            FixtureConstant.repository)
+        XCTAssertEqual(
+            observation.llmSource.commit,
+            FixtureConstant.finalPublisherCommit)
+        XCTAssertEqual(
+            observation.llmSource.tree,
+            FixtureConstant.finalPublisherTree)
+        XCTAssertEqual(
+            observation.candidateCatalogSHA256,
+            fixture.inputs.catalogSHA256)
+        XCTAssertEqual(
+            observation.candidateCatalogByteCount,
+            UInt64(fixture.inputs.catalogData.count))
+        XCTAssertEqual(
+            observation.experimentManifestSHA256,
+            FixtureJSON.sha256(fixture.inputs.experimentData))
+        XCTAssertEqual(
+            observation.experimentManifestByteCount,
+            UInt64(fixture.inputs.experimentData.count))
+        XCTAssertEqual(
+            observation.candidateDeclarationSetSHA256,
+            fixture.inputs.declarationSetSHA256)
+        XCTAssertEqual(
+            observation.candidateDeclarationSetByteCount,
+            UInt64(fixture.inputs.declarationSetData.count))
+        XCTAssertEqual(
+            observation.tokenizerBundleSHA256,
+            FixtureConstant.tokenizerBundleSHA256)
+        XCTAssertEqual(observation.tokenizerBundleByteCount, 2_930)
+        XCTAssertEqual(
+            observation.candidateIDs,
+            [FixtureConstant.candidateID])
+        XCTAssertEqual(
+            observation.candidateIdentitySHA256s,
+            [fixture.inputs.candidateIdentitySHA256])
+        XCTAssertEqual(
+            observation.declarationBundleSHA256s,
+            [fixture.inputs.declarationBundleSHA256])
+        XCTAssertEqual(
+            observation.outputNamespace,
+            FixtureConstant.outputNamespace)
+
+        let authority = observation.authority
+        XCTAssertEqual(
+            authority.disposition,
+            "abstain_requires_original_bound_input_bytes_and_live_provenance")
+        XCTAssertTrue(authority.canonicalReceiptRedecodeComplete)
+        XCTAssertTrue(authority.receiptContentAddressBindingVerified)
+        XCTAssertTrue(authority.childContentAddressBindingsVerified)
+        XCTAssertTrue(authority.stableRootBoundCaptureComplete)
+        XCTAssertTrue(authority.pairChildDocumentBytesAvailable)
+        XCTAssertTrue(authority.embeddedHashChainRecomputationComplete)
+        XCTAssertTrue(authority.llmPairReceiptObserved)
+        XCTAssertFalse(authority.referencedInputSnapshotAvailable)
+        XCTAssertFalse(authority.referencedArtifactBytesAvailable)
+        XCTAssertFalse(authority.liveProducerWorkspaceRevalidationComplete)
+        XCTAssertFalse(authority.llmGitStateIndependentlyObserved)
+        XCTAssertFalse(authority.independentReplayComplete)
+        XCTAssertFalse(authority.runtimeDecoderImplementationAvailable)
+        XCTAssertFalse(authority.runtimeDependencyClosureEstablished)
+        XCTAssertFalse(authority.runtimeInitializationEstablished)
+        XCTAssertFalse(authority.primeProposalPacketProduced)
+        XCTAssertFalse(authority.primeTrialAuthorizationProduced)
+        XCTAssertFalse(authority.primeDecisionReceiptProduced)
+        XCTAssertFalse(authority.candidateSelectionAuthorized)
+        XCTAssertFalse(authority.trialExecutionAuthorized)
+        XCTAssertFalse(authority.furtherTrainingAuthorized)
+        XCTAssertFalse(authority.promotionAuthorized)
+        XCTAssertFalse(authority.productUseAuthorized)
+        XCTAssertFalse(authority.publicationAuthorized)
+        XCTAssertFalse(authority.primeDurableReceiptPublished)
+
+        XCTAssertEqual(
+            try capture.recaptureAndValidateUnchanged(),
+            observation)
+    }
+
+    func testV3CaptureRejectsReceiptWireStatusAuthorityAndSourceMutations()
+        throws
+    {
+        let legacySource = try FinalPublisherPairCaptureFixture(
+            source: .legacy)
+        assertV3CaptureFails(legacySource)
+
+        let noncanonical = try FinalPublisherPairCaptureFixture(
+            receiptDataMutation: { data in
+                var changed = data
+                changed.append(0x0A)
+                return changed
+            })
+        assertV3CaptureFails(noncanonical)
+
+        let duplicateSchema = try FinalPublisherPairCaptureFixture(
+            receiptDataMutation: { data in
+                var changed = Data(
+                    "{\"schema\":\"ergentics_latin_proposal_pair_receipt_v3\",".utf8)
+                changed.append(contentsOf: data.dropFirst())
+                return changed
+            })
+        assertV3CaptureFails(duplicateSchema)
+
+        let missingField = try FinalPublisherPairCaptureFixture(
+            receiptMutation: { receipt in
+                receipt.removeValue(forKey: "completionScope")
+            })
+        assertV3CaptureFails(missingField)
+
+        let unknownField = try FinalPublisherPairCaptureFixture(
+            receiptMutation: { receipt in
+                receipt["unexpectedAuthority"] = false
+            })
+        assertV3CaptureFails(unknownField)
+
+        for field in [
+            "publicationMechanicsStatus",
+            "authorityStatus",
+            "completionScope",
+            "referencedInputSnapshot",
+            "referencedArtifactBytes",
+            "independentReplayStatus",
+            "primeConsumerStatus",
+            "externalStateCommitAtomicity",
+            "publicationCoordination",
+        ] {
+            let fixture = try FinalPublisherPairCaptureFixture(
+                receiptMutation: { receipt in
+                    receipt[field] = "mutated"
+                })
+            assertV3CaptureFails(fixture)
+        }
+
+        for field in [
+            "primeProposalPacket",
+            "primeTrialAuthorization",
+            "primeDecisionReceipt",
+        ] {
+            let fixture = try FinalPublisherPairCaptureFixture(
+                receiptMutation: { receipt in
+                    var authority = receipt["authority"] as! JSONObject
+                    authority[field] = "present"
+                    receipt["authority"] = authority
+                })
+            assertV3CaptureFails(fixture)
+        }
+        for field in [
+            "candidateSelectionAuthorized",
+            "trialExecutionAuthorized",
+            "furtherTrainingAuthorized",
+            "promotionAuthorized",
+            "productUseAuthorized",
+            "publicationAuthorized",
+        ] {
+            let fixture = try FinalPublisherPairCaptureFixture(
+                receiptMutation: { receipt in
+                    var authority = receipt["authority"] as! JSONObject
+                    authority[field] = true
+                    receipt["authority"] = authority
+                })
+            assertV3CaptureFails(fixture)
+        }
+
+        let source = try FinalPublisherPairCaptureFixture(
+            receiptMutation: { receipt in
+                var llmSource = receipt["llmSource"] as! JSONObject
+                llmSource["tree"] = String(repeating: "0", count: 40)
+                receipt["llmSource"] = llmSource
+            })
+        assertV3CaptureFails(source)
+
+        let declarationHash = try FinalPublisherPairCaptureFixture(
+            receiptMutation: { receipt in
+                receipt["candidateDeclarationSetSHA256"] =
+                    String(repeating: "0", count: 64)
+            })
+        assertV3CaptureFails(declarationHash)
+
+        let declarationCount = try FinalPublisherPairCaptureFixture(
+            receiptMutation: { receipt in
+                receipt["candidateDeclarationSetByteCount"] = 1
+            })
+        assertV3CaptureFails(declarationCount)
+    }
+
+    func testV3CaptureRejectsChildKindPathHashAndCountMutations() throws {
+        let wrongKind = try FinalPublisherPairCaptureFixture(
+            receiptMutation: { receipt in
+                var document = receipt["candidateCatalog"] as! JSONObject
+                document["documentKind"] = "candidate_catalog"
+                receipt["candidateCatalog"] = document
+            })
+        assertV3CaptureFails(wrongKind)
+
+        let wrongPath = try FinalPublisherPairCaptureFixture(
+            receiptMutation: { receipt in
+                var document = receipt["experimentManifest"] as! JSONObject
+                document["relativePath"] = "../experiment.json"
+                receipt["experimentManifest"] = document
+            })
+        assertV3CaptureFails(wrongPath)
+
+        let wrongHash = try FinalPublisherPairCaptureFixture(
+            receiptMutation: { receipt in
+                var document = receipt["candidateCatalog"] as! JSONObject
+                document["sha256"] = String(repeating: "0", count: 64)
+                receipt["candidateCatalog"] = document
+            })
+        assertV3CaptureFails(wrongHash)
+
+        let wrongCount = try FinalPublisherPairCaptureFixture(
+            receiptMutation: { receipt in
+                var document = receipt["experimentManifest"] as! JSONObject
+                document["byteCount"] = 1
+                receipt["experimentManifest"] = document
+            })
+        assertV3CaptureFails(wrongCount)
+    }
+
+    func testV3CaptureRejectsUnsafeChildAndChangedChildRecapture() throws {
+        let unsafeMode = try FinalPublisherPairCaptureFixture()
+        try FileManager.default.setAttributes(
+            [.posixPermissions: 0o644],
+            ofItemAtPath: unsafeMode.catalogURL.path)
+        assertV3CaptureFails(unsafeMode)
+
+        let changed = try FinalPublisherPairCaptureFixture()
+        let capture = try PrimeLatinProposalPairCaptureV3.capture(
+            labRoot: changed.labRoot,
+            pairSHA256: changed.pairSHA256)
+        try FileManager.default.setAttributes(
+            [.posixPermissions: 0o644],
+            ofItemAtPath: changed.catalogURL.path)
+        var changedData = try Data(contentsOf: changed.catalogURL)
+        changedData.append(0x0A)
+        try changedData.write(to: changed.catalogURL)
+        try FileManager.default.setAttributes(
+            [.posixPermissions: 0o444],
+            ofItemAtPath: changed.catalogURL.path)
+        XCTAssertThrowsError(try capture.recaptureAndValidateUnchanged())
+    }
+
+    private func assertV3CaptureFails(
+        _ fixture: FinalPublisherPairCaptureFixture,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        XCTAssertThrowsError(
+            try PrimeLatinProposalPairCaptureV3.capture(
+                labRoot: fixture.labRoot,
+                pairSHA256: fixture.pairSHA256),
+            file: file,
+            line: line)
+    }
+
     private func assertOuterRepairedCatalogMutationFails(
         fixture: PrimeLatinProposalInputsV3Fixture,
         expectedContext: String,
@@ -538,10 +927,29 @@ final class PrimeLatinProposalInputsV3Tests: XCTestCase {
 
 private typealias JSONObject = [String: Any]
 
+private struct FixtureSource: Equatable {
+    let repository: String
+    let commit: String
+    let tree: String
+
+    static let legacy = FixtureSource(
+        repository: FixtureConstant.repository,
+        commit: FixtureConstant.commit,
+        tree: FixtureConstant.tree)
+    static let finalPublisher = FixtureSource(
+        repository: FixtureConstant.repository,
+        commit: FixtureConstant.finalPublisherCommit,
+        tree: FixtureConstant.finalPublisherTree)
+}
+
 private enum FixtureConstant {
     static let repository = "Ergentics/ergentics-llm"
     static let commit = "c0e4cb37cc0ac221925b3b5c67b8ec3f24034537"
     static let tree = "81334b9f01391a80e16247d5a840692792ef2ea7"
+    static let finalPublisherCommit =
+        "3f6097af42510237595acd84bc8b442f953eef72"
+    static let finalPublisherTree =
+        "489e96d317179943effc781103edb0b8efeafaea"
     static let laneID = "latin_primary_prospective_v1"
     static let candidateID = "latin_structural_fixture_v1"
     static let sourceAttribution =
@@ -568,6 +976,18 @@ private enum FixtureConstant {
         "eef5aa372e6b2ee10875d7b2283b6e37fabf9409697e650f784faecde8d8ccfb"
     static let goldenCandidateIdentitySHA256 =
         "ae4a66fc0ccb1592875126e0ddf400ee3e858ca1bfdb900fc23a3a0f43667e37"
+    static let finalCatalogSHA256 =
+        "1798f82f351fb98f97498652ab42ac52cdd995146e0a5a158c634a8a09ea16c6"
+    static let finalExperimentSHA256 =
+        "f98cdd48b99ea23cb5d1b5013b976f39e4a0fcad86bbfab1c7c5e152facae155"
+    static let finalDeclarationSetSHA256 =
+        "9393e091b98dc3c40de36f228b035213bb78f678133a97591a9438ba10329372"
+    static let finalDeclarationBundleSHA256 =
+        "29a5bb950b4e3c323ccdc4b2db0d5c12906dba88b4267cc26e9a9d8870667686"
+    static let finalCandidateIdentitySHA256 =
+        "ff17b87589766d3a43fd35974a20cd46070c247ec16ecef1943ad0c0e4f2aa57"
+    static let finalReceiptSHA256 =
+        "4e7b6326c6f8d1487dedc4e4400ca588dc38277585fbfc820762c1b0ce31e3fb"
 }
 
 private enum FixtureJSON {
@@ -581,6 +1001,14 @@ private enum FixtureJSON {
         var data = try canonical(object)
         data.append(0x0A)
         return data
+    }
+
+    static func canonicalEncodable<Value: Encodable>(
+        _ value: Value
+    ) throws -> Data {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [.sortedKeys, .withoutEscapingSlashes]
+        return try encoder.encode(value)
     }
 
     static func sha256(_ data: Data) -> String {
@@ -764,12 +1192,14 @@ private enum FixtureMutation {
 
 private enum FixtureObject {
     static func llmSource(
-        commit: String = FixtureConstant.commit
+        repository: String = FixtureConstant.repository,
+        commit: String = FixtureConstant.commit,
+        tree: String = FixtureConstant.tree
     ) -> JSONObject {
         [
-            "repository": FixtureConstant.repository,
+            "repository": repository,
             "commit": commit,
-            "tree": FixtureConstant.tree,
+            "tree": tree,
         ]
     }
 
@@ -1255,9 +1685,11 @@ private extension FixtureObject {
 
 private enum FixtureConstructionError: Error {
     case unexpectedFrozenArtifact(String)
+    case invalidReceipt
 }
 
 private struct PrimeLatinProposalInputsV3Fixture {
+    let source: FixtureSource
     let catalogObject: JSONObject
     let experimentObject: JSONObject
     let catalogData: Data
@@ -1271,7 +1703,7 @@ private struct PrimeLatinProposalInputsV3Fixture {
     let architectureLineData: Data
     let derivationLineData: Data
 
-    init() throws {
+    init(source: FixtureSource = .legacy) throws {
         let tokenizerBundle = FixtureObject.tokenizerBundle()
         let tokenizerBundleData = try FixtureJSON.canonical(tokenizerBundle)
         guard tokenizerBundleData.count == 2_930,
@@ -1304,7 +1736,10 @@ private struct PrimeLatinProposalInputsV3Fixture {
             "schema":
                 "ergentics_latin_candidate_identity_material_domain_v1",
             "laneID": FixtureConstant.laneID,
-            "llmSource": FixtureObject.llmSource(),
+            "llmSource": FixtureObject.llmSource(
+                repository: source.repository,
+                commit: source.commit,
+                tree: source.tree),
             "candidateSlug": FixtureConstant.candidateID,
             "sourceAttribution": FixtureConstant.sourceAttribution,
             "tokenizerID": "ergentics_latin_bpe_v2",
@@ -1326,7 +1761,10 @@ private struct PrimeLatinProposalInputsV3Fixture {
             "schema":
                 "ergentics_latin_candidate_declaration_input_bundle_v1",
             "laneID": FixtureConstant.laneID,
-            "llmSource": FixtureObject.llmSource(),
+            "llmSource": FixtureObject.llmSource(
+                repository: source.repository,
+                commit: source.commit,
+                tree: source.tree),
             "tokenizerProposalBinding": tokenizerProposal,
             "nestedPackageManifest": FixtureObject.nestedPackageManifest,
             "productionSources": [FixtureObject.declarationSource],
@@ -1381,7 +1819,10 @@ private struct PrimeLatinProposalInputsV3Fixture {
         let catalogObject: JSONObject = [
             "schema": "ergentics_latin_candidate_catalog_v3",
             "laneID": FixtureConstant.laneID,
-            "llmSource": FixtureObject.llmSource(),
+            "llmSource": FixtureObject.llmSource(
+                repository: source.repository,
+                commit: source.commit,
+                tree: source.tree),
             "packageManifest": FixtureObject.packageManifest,
             "dependencyLock": FixtureObject.dependencyLock,
             "tokenizerProposalBinding": tokenizerProposal,
@@ -1458,7 +1899,10 @@ private struct PrimeLatinProposalInputsV3Fixture {
         let experimentObject: JSONObject = [
             "schema": "ergentics_latin_experiment_manifest_v3",
             "laneID": FixtureConstant.laneID,
-            "llmSource": FixtureObject.llmSource(),
+            "llmSource": FixtureObject.llmSource(
+                repository: source.repository,
+                commit: source.commit,
+                tree: source.tree),
             "candidateCatalogSHA256": catalogSHA256,
             "candidateCatalogByteCount": UInt64(catalogData.count),
             "candidateDeclarationSetSHA256": declarationSetSHA256,
@@ -1489,6 +1933,7 @@ private struct PrimeLatinProposalInputsV3Fixture {
         ]
         let experimentData = try FixtureJSON.canonical(experimentObject)
 
+        self.source = source
         self.catalogObject = catalogObject
         self.experimentObject = experimentObject
         self.catalogData = catalogData
@@ -1501,6 +1946,172 @@ private struct PrimeLatinProposalInputsV3Fixture {
         self.tokenizerBundleData = tokenizerBundleData
         self.architectureLineData = architectureLineData
         self.derivationLineData = derivationLineData
+    }
+}
+
+private struct FinalPublisherReceiptSourceV3: Encodable {
+    let repository: String
+    let commit: String
+    let tree: String
+
+    init(_ source: FixtureSource) {
+        repository = source.repository
+        commit = source.commit
+        tree = source.tree
+    }
+}
+
+private struct FinalPublisherPublishedDocumentV3: Encodable {
+    let documentKind: String
+    let relativePath: String
+    let sha256: String
+    let byteCount: UInt64
+}
+
+private struct FinalPublisherReceiptAuthorityV3: Encodable {
+    let primeProposalPacket = "absent"
+    let primeTrialAuthorization = "absent"
+    let primeDecisionReceipt = "absent"
+    let candidateSelectionAuthorized = false
+    let trialExecutionAuthorized = false
+    let furtherTrainingAuthorized = false
+    let promotionAuthorized = false
+    let productUseAuthorized = false
+    let publicationAuthorized = false
+}
+
+private struct FinalPublisherReceiptV3: Encodable {
+    let schema = "ergentics_latin_proposal_pair_receipt_v3"
+    let llmSource: FinalPublisherReceiptSourceV3
+    let candidateCatalog: FinalPublisherPublishedDocumentV3
+    let experimentManifest: FinalPublisherPublishedDocumentV3
+    let candidateDeclarationSetSHA256: String
+    let candidateDeclarationSetByteCount: UInt64
+    let publicationMechanicsStatus =
+        "content_addressed_create_once_pair_complete"
+    let authorityStatus = "mechanics_only_non_authorizing"
+    let completionScope = "canonical_v3_catalog_experiment_pair_only"
+    let referencedInputSnapshot = "absent"
+    let referencedArtifactBytes =
+        "absent_from_pair_except_catalog_and_experiment_children"
+    let independentReplayStatus =
+        "requires_original_bound_input_bytes_and_live_provenance"
+    let primeConsumerStatus =
+        "prime_consumer_state_not_observed_by_producer"
+    let externalStateCommitAtomicity =
+        "absent_live_roots_revalidated_before_receipt_rename"
+    let publicationCoordination = "cooperative_process_lock_only"
+    let authority = FinalPublisherReceiptAuthorityV3()
+}
+
+private struct FinalPublisherPairCaptureFixture {
+    let labRoot: URL
+    let inputs: PrimeLatinProposalInputsV3Fixture
+    let receiptData: Data
+    let pairSHA256: String
+    let pairURL: URL
+    let catalogURL: URL
+    let experimentURL: URL
+    private let cleanup: FinalPublisherFixtureRoot
+
+    init(
+        source: FixtureSource = .finalPublisher,
+        receiptMutation: ((inout JSONObject) -> Void)? = nil,
+        receiptDataMutation: ((Data) -> Data)? = nil
+    ) throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent(
+            "prime-latin-v3-pair-capture-\(UUID().uuidString)",
+            isDirectory: true)
+        try FileManager.default.createDirectory(
+            at: root,
+            withIntermediateDirectories: true)
+        let canonicalRoot = root.resolvingSymlinksInPath().standardizedFileURL
+        let cleanup = FinalPublisherFixtureRoot(root)
+
+        let inputs = try PrimeLatinProposalInputsV3Fixture(source: source)
+        let experimentSHA256 = FixtureJSON.sha256(inputs.experimentData)
+        let publicationRoot = "evidence/latin-proposal-artifacts/v3"
+        let catalogPath = publicationRoot +
+            "/catalogs/\(inputs.catalogSHA256).json"
+        let experimentPath = publicationRoot +
+            "/experiments/\(experimentSHA256).json"
+        let receipt = FinalPublisherReceiptV3(
+            llmSource: FinalPublisherReceiptSourceV3(inputs.source),
+            candidateCatalog: FinalPublisherPublishedDocumentV3(
+                documentKind: "candidate_catalog_v3",
+                relativePath: catalogPath,
+                sha256: inputs.catalogSHA256,
+                byteCount: UInt64(inputs.catalogData.count)),
+            experimentManifest: FinalPublisherPublishedDocumentV3(
+                documentKind: "experiment_manifest_v3",
+                relativePath: experimentPath,
+                sha256: experimentSHA256,
+                byteCount: UInt64(inputs.experimentData.count)),
+            candidateDeclarationSetSHA256: inputs.declarationSetSHA256,
+            candidateDeclarationSetByteCount:
+                UInt64(inputs.declarationSetData.count))
+        var receiptData = try FixtureJSON.canonicalEncodable(receipt)
+        if let receiptMutation {
+            guard var receiptObject = try JSONSerialization.jsonObject(
+                with: receiptData) as? JSONObject else {
+                throw FixtureConstructionError.invalidReceipt
+            }
+            receiptMutation(&receiptObject)
+            receiptData = try FixtureJSON.canonical(receiptObject)
+        }
+        receiptData = receiptDataMutation?(receiptData) ?? receiptData
+        let pairSHA256 = FixtureJSON.sha256(receiptData)
+        let pairPath = publicationRoot + "/pairs/\(pairSHA256).json"
+
+        let catalogURL = try Self.writeFinal(
+            inputs.catalogData,
+            root: canonicalRoot,
+            relativePath: catalogPath)
+        let experimentURL = try Self.writeFinal(
+            inputs.experimentData,
+            root: canonicalRoot,
+            relativePath: experimentPath)
+        let pairURL = try Self.writeFinal(
+            receiptData,
+            root: canonicalRoot,
+            relativePath: pairPath)
+
+        self.labRoot = canonicalRoot
+        self.inputs = inputs
+        self.receiptData = receiptData
+        self.pairSHA256 = pairSHA256
+        self.pairURL = pairURL
+        self.catalogURL = catalogURL
+        self.experimentURL = experimentURL
+        self.cleanup = cleanup
+    }
+
+    private static func writeFinal(
+        _ data: Data,
+        root: URL,
+        relativePath: String
+    ) throws -> URL {
+        let url = root.appendingPathComponent(relativePath)
+        try FileManager.default.createDirectory(
+            at: url.deletingLastPathComponent(),
+            withIntermediateDirectories: true)
+        try data.write(to: url, options: .withoutOverwriting)
+        try FileManager.default.setAttributes(
+            [.posixPermissions: 0o444],
+            ofItemAtPath: url.path)
+        return url
+    }
+}
+
+private final class FinalPublisherFixtureRoot {
+    private let root: URL
+
+    init(_ root: URL) {
+        self.root = root
+    }
+
+    deinit {
+        try? FileManager.default.removeItem(at: root)
     }
 }
 

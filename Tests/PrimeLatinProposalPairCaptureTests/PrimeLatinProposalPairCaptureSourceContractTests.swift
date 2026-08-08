@@ -188,6 +188,147 @@ final class PrimeLatinProposalPairCaptureSourceContractTests: XCTestCase {
         }
     }
 
+    func testV3PairCaptureIsDescriptorBoundReadOnlyAndAbstaining() throws {
+        let source = try swiftSource(
+            relativePath:
+                "Sources/PrimeLatinProposalPairCapture/" +
+                    "PrimeLatinProposalPairCaptureV3.swift")
+        let compact = source.filter { !$0.isWhitespace }
+        let imports = source.split(separator: "\n")
+            .map(String.init)
+            .filter { $0.hasPrefix("import ") }
+        XCTAssertEqual(imports, ["import Foundation"])
+
+        for required in [
+            "public struct PrimeLatinProposalPairLocatorV3",
+            "public final class PrimeLatinProposalPairCaptureV3",
+            "public struct PrimeLatinProposalPairObservationV3",
+            "public struct PrimeLatinProposalPairAuthorityBoundaryV3",
+            "public static func capture(",
+            "recaptureAndValidateUnchanged",
+            "PrimeLatinArtifactRoot",
+            "bindExisting(",
+            "readVerifiedArtifact(",
+            "verifiedRootIdentity()",
+            ".immutableData",
+            "ergentics_prime_latin_proposal_pair_capture_v3_observation",
+            "descriptor_safe_content_addressed_v3_pair_capture_and_embedded_hash_chain_only_non_authorizing",
+            "ergentics_latin_proposal_pair_receipt_v3",
+            "evidence/latin-proposal-artifacts/v3",
+            "candidate_catalog_v3",
+            "experiment_manifest_v3",
+            "proposal_pair_receipt_v3",
+            "content_addressed_create_once_pair_complete",
+            "mechanics_only_non_authorizing",
+            "canonical_v3_catalog_experiment_pair_only",
+            "absent_from_pair_except_catalog_and_experiment_children",
+            "requires_original_bound_input_bytes_and_live_provenance",
+            "prime_consumer_state_not_observed_by_producer",
+            "absent_live_roots_revalidated_before_receipt_rename",
+            "cooperative_process_lock_only",
+        ] {
+            XCTAssertTrue(
+                source.contains(required),
+                "missing V3 pair-capture contract anchor: \(required)")
+        }
+
+        for required in [
+            "outcome=\"abstain\"",
+            "disposition=\"abstain_requires_original_bound_input_bytes_and_live_provenance\"",
+            "PrimeLatinProposalInputsV3.consume(",
+            "canonicalReceiptRedecodeComplete=true",
+            "receiptContentAddressBindingVerified=true",
+            "childContentAddressBindingsVerified=true",
+            "stableRootBoundCaptureComplete=true",
+            "pairChildDocumentBytesAvailable=true",
+            "embeddedHashChainRecomputationComplete=true",
+            "llmPairReceiptObserved=true",
+            "referencedInputSnapshotAvailable=false",
+            "referencedArtifactBytesAvailable=false",
+            "liveProducerWorkspaceRevalidationComplete=false",
+            "llmGitStateIndependentlyObserved=false",
+            "independentReplayComplete=false",
+            "runtimeDecoderImplementationAvailable=false",
+            "runtimeDependencyClosureEstablished=false",
+            "runtimeInitializationEstablished=false",
+            "primeProposalPacketProduced=false",
+            "primeTrialAuthorizationProduced=false",
+            "primeDecisionReceiptProduced=false",
+            "candidateSelectionAuthorized=false",
+            "trialExecutionAuthorized=false",
+            "furtherTrainingAuthorized=false",
+            "promotionAuthorized=false",
+            "productUseAuthorized=false",
+            "publicationAuthorized=false",
+            "primeDurableReceiptPublished=false",
+        ] {
+            XCTAssertTrue(
+                compact.contains(required),
+                "missing V3 pair-capture boundary anchor: \(required)")
+        }
+
+        for forbidden in [
+            "import PrimeCore",
+            "import ErgenticsLLM",
+            "import ErgenticsTokenizer",
+            "import MLX",
+            "import MLXNN",
+            "import MLXLLM",
+            "import Darwin",
+            "Process(",
+            "ProcessInfo.processInfo.environment",
+            "URLSession",
+            "Network.framework",
+            "FileManager",
+            "FileHandle",
+            "CommandLine",
+            "@main",
+            ".write(to:",
+            "createDirectory(",
+            "createFile(",
+            "O_CREAT",
+            "O_WRONLY",
+            "O_RDWR",
+            "mkdirat(",
+            "renameat",
+            "unlinkat(",
+            "removeItem(",
+            "func publish",
+            "PrimeLatinTrialProposal",
+            "PrimeLatinTrialAuthorization",
+            "--disable-sandbox",
+        ] {
+            XCTAssertFalse(
+                source.contains(forbidden),
+                "forbidden V3 pair-capture capability: \(forbidden)")
+        }
+
+        for forbidden in [
+            "referencedInputSnapshotAvailable=true",
+            "referencedArtifactBytesAvailable=true",
+            "liveProducerWorkspaceRevalidationComplete=true",
+            "llmGitStateIndependentlyObserved=true",
+            "independentReplayComplete=true",
+            "runtimeDecoderImplementationAvailable=true",
+            "runtimeDependencyClosureEstablished=true",
+            "runtimeInitializationEstablished=true",
+            "primeProposalPacketProduced=true",
+            "primeTrialAuthorizationProduced=true",
+            "primeDecisionReceiptProduced=true",
+            "candidateSelectionAuthorized=true",
+            "trialExecutionAuthorized=true",
+            "furtherTrainingAuthorized=true",
+            "promotionAuthorized=true",
+            "productUseAuthorized=true",
+            "publicationAuthorized=true",
+            "primeDurableReceiptPublished=true",
+        ] {
+            XCTAssertFalse(
+                compact.contains(forbidden),
+                "V3 pair capture manufactures authority: \(forbidden)")
+        }
+    }
+
     func testCaptureTargetHasNoTargetOrPackageDependency() throws {
         let root = URL(
             fileURLWithPath: FileManager.default.currentDirectoryPath,
