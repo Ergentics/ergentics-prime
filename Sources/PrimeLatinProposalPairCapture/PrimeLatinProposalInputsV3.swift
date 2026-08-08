@@ -755,6 +755,15 @@ private extension PrimeLatinProposalInputsV3 {
         "3f6097af42510237595acd84bc8b442f953eef72"
     static let mergedPublisherTree =
         "489e96d317179943effc781103edb0b8efeafaea"
+    static let finalHandoffCommit =
+        "776c412e3f10e8bf4e33cd0ae60787d9ca6b5831"
+    static let finalHandoffTree =
+        "c1f41758aea2860ab06039776f5ea0403dff1b61"
+    static let finalEvaluationContractPath =
+        "Research/Latin/evaluation_contract.json"
+    static let finalEvaluationContractSHA256 =
+        "4a0dd1bc973f7ce380df9775413c4e43033ba0cc409fb45a9368c2bef6835d52"
+    static let finalEvaluationContractByteCount: UInt64 = 164
     static let laneID = "latin_primary_prospective_v1"
     static let candidateID = "latin_structural_fixture_v1"
     static let sourceAttribution =
@@ -1549,6 +1558,15 @@ private extension PrimeLatinProposalInputsV3 {
             experiment.evaluationContract,
             scope: .ergenticsLLMRepository,
             context: "experiment_evaluation_contract")
+        if isFinalHandoffSource(experiment.llmSource) {
+            try requireExactBinding(
+                experiment.evaluationContract,
+                scope: .ergenticsLLMRepository,
+                path: finalEvaluationContractPath,
+                sha256: finalEvaluationContractSHA256,
+                byteCount: finalEvaluationContractByteCount,
+                context: "final_handoff_evaluation_contract")
+        }
         for (binding, context) in [
             (experiment.splits.trainingSplit, "training_split"),
             (experiment.splits.validationSplit, "validation_split"),
@@ -1700,10 +1718,17 @@ private extension PrimeLatinProposalInputsV3 {
             (source.commit == mergedCommit && source.tree == mergedTree)
             || (source.commit == mergedPublisherCommit
                 && source.tree == mergedPublisherTree)
+            || isFinalHandoffSource(source)
         guard source.repository == repository, isSupportedSource else {
             throw PrimeLatinProposalInputsV3Error.unsupportedSource(
                 "llm_source")
         }
+    }
+
+    static func isFinalHandoffSource(
+        _ source: PrimeLatinGitSourceWire
+    ) -> Bool {
+        source.commit == finalHandoffCommit && source.tree == finalHandoffTree
     }
 
     static func requireExactCommittedBinding(

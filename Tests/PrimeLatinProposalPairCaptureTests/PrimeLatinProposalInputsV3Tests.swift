@@ -460,20 +460,32 @@ final class PrimeLatinProposalInputsV3Tests: XCTestCase {
             fixture: fixture)
     }
 
-    func testFinalPublisherSourceIsAcceptedAndArbitrarySourceIsRejected()
+    func testSupportedSourcesAreAcceptedAndArbitraryOrHybridSourcesAreRejected()
         throws
     {
         let finalFixture = try PrimeLatinProposalInputsV3Fixture(
             source: .finalPublisher)
-        let observation = try PrimeLatinProposalInputsV3.consume(
+        let finalObservation = try PrimeLatinProposalInputsV3.consume(
             candidateCatalogData: finalFixture.catalogData,
             experimentManifestData: finalFixture.experimentData)
         XCTAssertEqual(
-            observation.llmSource.commit,
+            finalObservation.llmSource.commit,
             FixtureConstant.finalPublisherCommit)
         XCTAssertEqual(
-            observation.llmSource.tree,
+            finalObservation.llmSource.tree,
             FixtureConstant.finalPublisherTree)
+
+        let handoffFixture = try PrimeLatinProposalInputsV3Fixture(
+            source: .finalHandoff)
+        let handoffObservation = try PrimeLatinProposalInputsV3.consume(
+            candidateCatalogData: handoffFixture.catalogData,
+            experimentManifestData: handoffFixture.experimentData)
+        XCTAssertEqual(
+            handoffObservation.llmSource.commit,
+            FixtureConstant.finalHandoffCommit)
+        XCTAssertEqual(
+            handoffObservation.llmSource.tree,
+            FixtureConstant.finalHandoffTree)
 
         let arbitraryFixture = try PrimeLatinProposalInputsV3Fixture(
             source: FixtureSource(
@@ -485,22 +497,22 @@ final class PrimeLatinProposalInputsV3Tests: XCTestCase {
                 candidateCatalogData: arbitraryFixture.catalogData,
                 experimentManifestData: arbitraryFixture.experimentData))
 
-        for mixedSource in [
-            FixtureSource(
-                repository: FixtureConstant.repository,
-                commit: FixtureConstant.finalPublisherCommit,
-                tree: FixtureConstant.tree),
-            FixtureSource(
-                repository: FixtureConstant.repository,
-                commit: FixtureConstant.commit,
-                tree: FixtureConstant.finalPublisherTree),
-        ] {
-            let mixedFixture = try PrimeLatinProposalInputsV3Fixture(
-                source: mixedSource)
-            XCTAssertThrowsError(
-                try PrimeLatinProposalInputsV3.consume(
-                    candidateCatalogData: mixedFixture.catalogData,
-                    experimentManifestData: mixedFixture.experimentData))
+        let supportedSources: [FixtureSource] = [
+            .legacy, .finalPublisher, .finalHandoff,
+        ]
+        for commitSource in supportedSources {
+            for treeSource in supportedSources
+            where commitSource != treeSource {
+                let hybridFixture = try PrimeLatinProposalInputsV3Fixture(
+                    source: FixtureSource(
+                        repository: FixtureConstant.repository,
+                        commit: commitSource.commit,
+                        tree: treeSource.tree))
+                XCTAssertThrowsError(
+                    try PrimeLatinProposalInputsV3.consume(
+                        candidateCatalogData: hybridFixture.catalogData,
+                        experimentManifestData: hybridFixture.experimentData))
+            }
         }
 
         let legacyFixture = try PrimeLatinProposalInputsV3Fixture()
@@ -518,6 +530,42 @@ final class PrimeLatinProposalInputsV3Tests: XCTestCase {
                 candidateCatalogData: finalFixture.catalogData,
                 experimentManifestData:
                     try FixtureJSON.canonical(mixedExperiment)))
+    }
+
+    func testFinalHandoffRequiresExactTrackedEvaluationContractBinding()
+        throws
+    {
+        let fixture = try PrimeLatinProposalInputsV3Fixture(
+            source: .finalHandoff)
+        let binding = try XCTUnwrap(
+            fixture.experimentObject["evaluationContract"] as? JSONObject)
+        XCTAssertEqual(binding["scope"] as? String,
+                       "ergentics_llm_repository")
+        XCTAssertEqual(
+            binding["relativePath"] as? String,
+            FixtureConstant.finalEvaluationContractPath)
+        XCTAssertEqual(
+            binding["sha256"] as? String,
+            FixtureConstant.finalEvaluationContractSHA256)
+        XCTAssertEqual(
+            binding["byteCount"] as? UInt64,
+            FixtureConstant.finalEvaluationContractByteCount)
+
+        let mutations: [(String, Any)] = [
+            ("relativePath", "Research/Latin/evaluation/other.json"),
+            ("sha256", String(repeating: "0", count: 64)),
+            ("byteCount", UInt64(165)),
+            ("scope", "ergentics_mlx_lab"),
+        ]
+        for (key, value) in mutations {
+            var experiment = fixture.experimentObject
+            var changed = binding
+            changed[key] = value
+            experiment["evaluationContract"] = changed
+            assertConsumeFails(
+                experimentData: try FixtureJSON.canonical(experiment),
+                fixture: fixture)
+        }
     }
 
     func testV3PairLocatorUsesExactContentAddressedPublicationRoot() throws {
@@ -550,14 +598,14 @@ final class PrimeLatinProposalInputsV3Tests: XCTestCase {
                 pairSHA256: fixture.pairSHA256))
     }
 
-    func testCapturesCanonicalFinalPublisherPairAndRemainsAbstaining()
+    func testPriorPublisherGoldenRemainsDataVerifiableButIsNotLiveCapturable()
         throws
     {
-        let fixture = try FinalPublisherPairCaptureFixture()
-        let capture = try PrimeLatinProposalPairCaptureV3.capture(
-            labRoot: fixture.labRoot,
-            pairSHA256: fixture.pairSHA256)
-        let observation = capture.observation
+        let fixture = try FinalPublisherPairCaptureFixture(
+            source: .finalPublisher)
+        let observation = try PrimeLatinProposalInputsV3.consume(
+            candidateCatalogData: fixture.inputs.catalogData,
+            experimentManifestData: fixture.inputs.experimentData)
 
         XCTAssertEqual(
             fixture.inputs.catalogSHA256,
@@ -577,9 +625,67 @@ final class PrimeLatinProposalInputsV3Tests: XCTestCase {
         XCTAssertEqual(
             fixture.inputs.candidateIdentitySHA256,
             FixtureConstant.finalCandidateIdentitySHA256)
+        XCTAssertEqual(fixture.pairSHA256,
+                       FixtureConstant.finalReceiptSHA256)
+        XCTAssertEqual(fixture.receiptData.count, 1_833)
+        XCTAssertEqual(observation.outcome, "abstain")
+        XCTAssertEqual(observation.llmSource.commit,
+                       FixtureConstant.finalPublisherCommit)
+        XCTAssertEqual(observation.llmSource.tree,
+                       FixtureConstant.finalPublisherTree)
+        XCTAssertFalse(observation.authority.primeProposalPacketProduced)
+        XCTAssertFalse(observation.authority.primeTrialAuthorizationProduced)
+        XCTAssertFalse(observation.authority.primeDecisionReceiptProduced)
+        XCTAssertFalse(observation.authority.candidateSelectionAuthorized)
+        XCTAssertFalse(observation.authority.trialExecutionAuthorized)
+        XCTAssertFalse(observation.authority.furtherTrainingAuthorized)
+        XCTAssertFalse(observation.authority.promotionAuthorized)
+        XCTAssertFalse(observation.authority.productUseAuthorized)
+        XCTAssertFalse(observation.authority.publicationAuthorized)
+        XCTAssertFalse(observation.authority.durableReceiptPublished)
+
+        XCTAssertThrowsError(
+            try PrimeLatinProposalPairCaptureV3.capture(
+                labRoot: fixture.labRoot,
+                pairSHA256: fixture.pairSHA256)
+        ) { error in
+            XCTAssertEqual(
+                error as? PrimeLatinProposalPairCaptureError,
+                .invalidSemantics("unsupported_v3_publisher_source"))
+        }
+    }
+
+    func testCapturesCanonicalFinalHandoffPairAndRemainsAbstaining()
+        throws
+    {
+        let fixture = try FinalPublisherPairCaptureFixture(
+            source: .finalHandoff)
+        let capture = try PrimeLatinProposalPairCaptureV3.capture(
+            labRoot: fixture.labRoot,
+            pairSHA256: fixture.pairSHA256)
+        let observation = capture.observation
+
+        XCTAssertEqual(
+            fixture.inputs.catalogSHA256,
+            FixtureConstant.handoffCatalogSHA256)
+        XCTAssertEqual(fixture.inputs.catalogData.count, 20_779)
+        XCTAssertEqual(
+            FixtureJSON.sha256(fixture.inputs.experimentData),
+            FixtureConstant.handoffExperimentSHA256)
+        XCTAssertEqual(fixture.inputs.experimentData.count, 3_253)
+        XCTAssertEqual(
+            fixture.inputs.declarationSetSHA256,
+            FixtureConstant.handoffDeclarationSetSHA256)
+        XCTAssertEqual(fixture.inputs.declarationSetData.count, 14_860)
+        XCTAssertEqual(
+            fixture.inputs.declarationBundleSHA256,
+            FixtureConstant.handoffDeclarationBundleSHA256)
+        XCTAssertEqual(
+            fixture.inputs.candidateIdentitySHA256,
+            FixtureConstant.handoffCandidateIdentitySHA256)
         XCTAssertEqual(
             fixture.pairSHA256,
-            FixtureConstant.finalReceiptSHA256)
+            FixtureConstant.handoffReceiptSHA256)
         XCTAssertEqual(fixture.receiptData.count, 1_833)
 
         XCTAssertEqual(
@@ -594,15 +700,32 @@ final class PrimeLatinProposalInputsV3Tests: XCTestCase {
         XCTAssertEqual(
             observation.pairReceiptByteCount,
             UInt64(fixture.receiptData.count))
+        let receiptObject = try XCTUnwrap(
+            try JSONSerialization.jsonObject(
+                with: fixture.receiptData) as? JSONObject)
+        let receiptSource = try XCTUnwrap(
+            receiptObject["llmSource"] as? JSONObject)
+        let catalogSource = try XCTUnwrap(
+            fixture.inputs.catalogObject["llmSource"] as? JSONObject)
+        let experimentSource = try XCTUnwrap(
+            fixture.inputs.experimentObject["llmSource"] as? JSONObject)
+        for key in ["repository", "commit", "tree"] {
+            XCTAssertEqual(
+                receiptSource[key] as? String,
+                catalogSource[key] as? String)
+            XCTAssertEqual(
+                receiptSource[key] as? String,
+                experimentSource[key] as? String)
+        }
         XCTAssertEqual(
             observation.llmSource.repository,
             FixtureConstant.repository)
         XCTAssertEqual(
             observation.llmSource.commit,
-            FixtureConstant.finalPublisherCommit)
+            FixtureConstant.finalHandoffCommit)
         XCTAssertEqual(
             observation.llmSource.tree,
-            FixtureConstant.finalPublisherTree)
+            FixtureConstant.finalHandoffTree)
         XCTAssertEqual(
             observation.candidateCatalogSHA256,
             fixture.inputs.catalogSHA256)
@@ -940,6 +1063,10 @@ private struct FixtureSource: Equatable {
         repository: FixtureConstant.repository,
         commit: FixtureConstant.finalPublisherCommit,
         tree: FixtureConstant.finalPublisherTree)
+    static let finalHandoff = FixtureSource(
+        repository: FixtureConstant.repository,
+        commit: FixtureConstant.finalHandoffCommit,
+        tree: FixtureConstant.finalHandoffTree)
 }
 
 private enum FixtureConstant {
@@ -950,6 +1077,15 @@ private enum FixtureConstant {
         "3f6097af42510237595acd84bc8b442f953eef72"
     static let finalPublisherTree =
         "489e96d317179943effc781103edb0b8efeafaea"
+    static let finalHandoffCommit =
+        "776c412e3f10e8bf4e33cd0ae60787d9ca6b5831"
+    static let finalHandoffTree =
+        "c1f41758aea2860ab06039776f5ea0403dff1b61"
+    static let finalEvaluationContractPath =
+        "Research/Latin/evaluation_contract.json"
+    static let finalEvaluationContractSHA256 =
+        "4a0dd1bc973f7ce380df9775413c4e43033ba0cc409fb45a9368c2bef6835d52"
+    static let finalEvaluationContractByteCount: UInt64 = 164
     static let laneID = "latin_primary_prospective_v1"
     static let candidateID = "latin_structural_fixture_v1"
     static let sourceAttribution =
@@ -988,6 +1124,18 @@ private enum FixtureConstant {
         "ff17b87589766d3a43fd35974a20cd46070c247ec16ecef1943ad0c0e4f2aa57"
     static let finalReceiptSHA256 =
         "4e7b6326c6f8d1487dedc4e4400ca588dc38277585fbfc820762c1b0ce31e3fb"
+    static let handoffCatalogSHA256 =
+        "250bf7fb4d3e7286760ab54d4cb08b7be948227a41579f890106b35e351075b3"
+    static let handoffExperimentSHA256 =
+        "c2c92730aeb9ce1e979a336ceefba28d4e49a1edf9509e35167cfff9068de5c4"
+    static let handoffDeclarationSetSHA256 =
+        "45c787dba8c538794cbaf7cb90acb4528d2dedcaf666a1f0da151ca236138881"
+    static let handoffDeclarationBundleSHA256 =
+        "6f07896e50b2b530ea5f5924859d1e66bf9880366c16cf37832138a0e6c7f4bd"
+    static let handoffCandidateIdentitySHA256 =
+        "64a288b62cdef276923eb72e5cc4d209a7195526408414fc5167522151481265"
+    static let handoffReceiptSHA256 =
+        "00c06565879236e367689a8acf491de160cac0a6f18c3a0395a9b16c1c3464d2"
 }
 
 private enum FixtureJSON {
@@ -1861,11 +2009,18 @@ private struct PrimeLatinProposalInputsV3Fixture {
             path: "corpus/la/L1/prospective-manifest-v3.json",
             sha256: String(repeating: "2", count: 64),
             byteCount: 307)
-        let evaluationContract = FixtureObject.binding(
-            scope: "ergentics_llm_repository",
-            path: "Research/Latin/evaluation/prospective-contract-v3.json",
-            sha256: String(repeating: "3", count: 64),
-            byteCount: 401)
+        let evaluationContract = source == .finalHandoff
+            ? FixtureObject.binding(
+                scope: "ergentics_llm_repository",
+                path: FixtureConstant.finalEvaluationContractPath,
+                sha256: FixtureConstant.finalEvaluationContractSHA256,
+                byteCount: FixtureConstant.finalEvaluationContractByteCount)
+            : FixtureObject.binding(
+                scope: "ergentics_llm_repository",
+                path:
+                    "Research/Latin/evaluation/prospective-contract-v3.json",
+                sha256: String(repeating: "3", count: 64),
+                byteCount: 401)
         let trainingSplit = FixtureObject.binding(
             scope: "ergentics_mlx_lab",
             path: "corpus/la/L1/prospective-train-v3.txt",
@@ -2015,7 +2170,7 @@ private struct FinalPublisherPairCaptureFixture {
     private let cleanup: FinalPublisherFixtureRoot
 
     init(
-        source: FixtureSource = .finalPublisher,
+        source: FixtureSource = .finalHandoff,
         receiptMutation: ((inout JSONObject) -> Void)? = nil,
         receiptDataMutation: ((Data) -> Data)? = nil
     ) throws {

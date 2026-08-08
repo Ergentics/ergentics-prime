@@ -421,9 +421,9 @@ private enum PrimeLatinProposalPairContractV3 {
     static let experimentManifestKind = "experiment_manifest_v3"
     static let repository = "Ergentics/ergentics-llm"
     static let publisherCommit =
-        "3f6097af42510237595acd84bc8b442f953eef72"
+        "776c412e3f10e8bf4e33cd0ae60787d9ca6b5831"
     static let publisherTree =
-        "489e96d317179943effc781103edb0b8efeafaea"
+        "c1f41758aea2860ab06039776f5ea0403dff1b61"
     static let maximumDocumentBytes: UInt64 = 1_048_576
 
     static func isSHA256(_ value: String) -> Bool {
