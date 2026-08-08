@@ -10,6 +10,7 @@ enum PrimeLatinArtifactReadError: Error, Equatable, Sendable {
     case hashMismatch(String)
     case byteCountMismatch(String)
     case nonCanonicalJSON(String)
+    case pathPresent(String)
     case posix(operation: String, path: String, code: Int32)
 }
 
@@ -55,8 +56,16 @@ enum PrimeLatinSHA256 {
 
 enum PrimeLatinArtifactPurpose: String, Equatable, Sendable {
     case immutableData = "immutable_data"
+    case boundInput = "bound_input"
 
-    fileprivate var mode: mode_t { mode_t(0o444) }
+    fileprivate func permits(mode: mode_t) -> Bool {
+        switch self {
+        case .immutableData:
+            mode == mode_t(0o444)
+        case .boundInput:
+            mode == mode_t(0o444) || mode == mode_t(0o644)
+        }
+    }
 }
 
 struct PrimeLatinCapturedArtifactBinding: Equatable, Sendable {
@@ -173,6 +182,28 @@ final class PrimeLatinArtifactRoot: @unchecked Sendable {
               before.st_mtimespec.tv_nsec == after.st_mtimespec.tv_nsec,
               before.st_ctimespec.tv_sec == after.st_ctimespec.tv_sec,
               before.st_ctimespec.tv_nsec == after.st_ctimespec.tv_nsec else {
+            throw PrimeLatinArtifactReadError.untrustedDirectory(
+                directoryURL.path)
+        }
+        let rebound = try Self.openAbsoluteDirectory(at: directoryURL.path)
+        defer { _ = close(rebound) }
+        try Self.requireTrustedDirectory(rebound, path: directoryURL.path)
+        var reboundStatus = stat()
+        guard fstat(rebound, &reboundStatus) == 0,
+              reboundStatus.st_dev == after.st_dev,
+              reboundStatus.st_ino == after.st_ino,
+              reboundStatus.st_uid == after.st_uid,
+              reboundStatus.st_gid == after.st_gid,
+              reboundStatus.st_mode == after.st_mode,
+              reboundStatus.st_nlink == after.st_nlink,
+              reboundStatus.st_mtimespec.tv_sec
+                == after.st_mtimespec.tv_sec,
+              reboundStatus.st_mtimespec.tv_nsec
+                == after.st_mtimespec.tv_nsec,
+              reboundStatus.st_ctimespec.tv_sec
+                == after.st_ctimespec.tv_sec,
+              reboundStatus.st_ctimespec.tv_nsec
+                == after.st_ctimespec.tv_nsec else {
             throw PrimeLatinArtifactReadError.untrustedDirectory(
                 directoryURL.path)
         }
@@ -326,6 +357,59 @@ final class PrimeLatinArtifactRoot: @unchecked Sendable {
         }
     }
 
+    func requireAbsent(at relativePath: String) throws {
+        let parsed = try Self.components(of: relativePath)
+        let components = Array(parsed.parents) + [parsed.leaf]
+        let duplicated = fcntl(descriptor, F_DUPFD_CLOEXEC, 0)
+        guard duplicated >= 0 else {
+            throw Self.posix(
+                "duplicate Latin artifact root for absence check",
+                directoryURL.path)
+        }
+        var current = duplicated
+        defer { _ = close(current) }
+        try Self.requireTrustedDirectory(current, path: directoryURL.path)
+
+        for (index, component) in components.enumerated() {
+            var metadata = stat()
+            let status = component.withCString {
+                fstatat(current, $0, &metadata, AT_SYMLINK_NOFOLLOW)
+            }
+            if status != 0 {
+                if errno == ENOENT { return }
+                throw Self.posix(
+                    "inspect absent Latin artifact path",
+                    relativePath)
+            }
+            if index == components.count - 1 {
+                throw PrimeLatinArtifactReadError.pathPresent(relativePath)
+            }
+            guard metadata.st_mode & mode_t(S_IFMT) == mode_t(S_IFDIR)
+            else {
+                throw PrimeLatinArtifactReadError.unsafeArtifact(relativePath)
+            }
+            let next = component.withCString {
+                openat(
+                    current,
+                    $0,
+                    O_RDONLY | O_DIRECTORY | O_NOFOLLOW | O_CLOEXEC)
+            }
+            guard next >= 0 else {
+                throw Self.posix(
+                    "open absent Latin artifact parent",
+                    relativePath)
+            }
+            do {
+                try Self.requireTrustedDirectory(next, path: relativePath)
+            } catch {
+                _ = close(next)
+                throw error
+            }
+            _ = close(current)
+            current = next
+        }
+    }
+
     static func components(
         of relativePath: String
     ) throws -> (parents: ArraySlice<String>, leaf: String) {
@@ -475,8 +559,8 @@ final class PrimeLatinArtifactRoot: @unchecked Sendable {
               opened.st_ino == bound.st_ino,
               opened.st_size >= 0,
               UInt64(opened.st_size) == expectedByteCount,
-              opened.st_mode & mode_t(0o7777) == purpose.mode,
-              bound.st_mode & mode_t(0o7777) == purpose.mode else {
+              purpose.permits(mode: opened.st_mode & mode_t(0o7777)),
+              purpose.permits(mode: bound.st_mode & mode_t(0o7777)) else {
             if opened.st_size >= 0,
                UInt64(opened.st_size) != expectedByteCount {
                 throw PrimeLatinArtifactReadError.byteCountMismatch(path)

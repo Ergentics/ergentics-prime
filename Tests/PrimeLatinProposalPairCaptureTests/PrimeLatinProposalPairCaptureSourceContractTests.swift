@@ -329,6 +329,171 @@ final class PrimeLatinProposalPairCaptureSourceContractTests: XCTestCase {
         }
     }
 
+    func testV3InputSnapshotIsDescriptorBoundReadOnlyAndAbstaining() throws {
+        let source = try swiftSource(
+            relativePath:
+                "Sources/PrimeLatinProposalPairCapture/" +
+                    "PrimeLatinProposalInputSnapshotV3.swift")
+        let inputsSource = try swiftSource(
+            relativePath:
+                "Sources/PrimeLatinProposalPairCapture/" +
+                    "PrimeLatinProposalInputsV3.swift")
+        let compact = source.filter { !$0.isWhitespace }
+
+        for required in [
+            "public final class PrimeLatinProposalInputSnapshotCaptureV3",
+            "public static func capture(",
+            "labRoot: URL",
+            "llmRepositoryRoot: URL",
+            "pairSHA256: String",
+            "recaptureAndValidateUnchanged",
+            "ergentics_prime_latin_proposal_input_snapshot_v3_observation",
+            "descriptor_safe_exact_v3_original_bound_input_snapshot_only_non_authorizing",
+            "abstain_snapshot_mechanics_only_requires_live_producer_revalidation_git_observation_and_independent_replay",
+            "PrimeLatinProposalPairCaptureV3.capture(",
+            "static func captureForTesting(",
+            "maximumAggregateArtifactBytes: UInt64 = 67_108_864",
+            "addingReportingOverflow(",
+            "bound_input_aggregate_byte_count",
+        ] {
+            XCTAssertTrue(
+                source.contains(required),
+                "missing V3 input-snapshot contract anchor: \(required)")
+        }
+        XCTAssertEqual(
+            source.components(separatedBy: "public static func capture(")
+                .count,
+            2)
+
+        let orderedRoles = [
+            "root_package_manifest",
+            "root_dependency_lock",
+            "declaration_package_manifest",
+            "declaration_production_source",
+            "candidate_architecture",
+            "candidate_parameter_count_derivation",
+            "evaluation_contract",
+            "tokenizer_manifest",
+            "tokenizer_sentencepiece_model",
+            "tokenizer_vocabulary",
+            "tokenizer_recommendation",
+            "tokenizer_approval",
+            "tokenizer_staged_training_input",
+            "tokenizer_corpus_manifest",
+            "tokenizer_admitted_corpus_input",
+            "initialization_contract",
+            "prospective_corpus_manifest",
+            "training_split",
+            "validation_split",
+            "selection_split",
+            "selection_observation_declaration",
+        ]
+        let roleOffsets = try orderedRoles.map { role in
+            try XCTUnwrap(
+                inputsSource.range(of: "\"\(role)\"")?.lowerBound,
+                "missing ordered role literal: \(role)")
+        }
+        for (first, second) in zip(roleOffsets, roleOffsets.dropFirst()) {
+            XCTAssertLessThan(first, second)
+        }
+
+        for required in [
+            "outcome=\"abstain\"",
+            "disposition=\"abstain_snapshot_mechanics_only_requires_live_producer_revalidation_git_observation_and_independent_replay\"",
+            "stablePairRootBoundCaptureComplete=true",
+            "stableLLMRepositoryRootBoundCaptureComplete=true",
+            "stableLabRootBoundCaptureComplete=true",
+            "artifactPathRoleHashCountBindingsVerified=true",
+            "outputNamespaceAbsenceVerified=true",
+            "pairCaptureAndRecaptureComplete=true",
+            "referencedInputSnapshotAvailable=true",
+            "referencedArtifactBytesAvailable=true",
+            "durableInputSnapshotPublished=false",
+            "liveProducerWorkspaceRevalidationComplete=false",
+            "llmGitStateIndependentlyObserved=false",
+            "independentReplayComplete=false",
+            "runtimeDecoderImplementationAvailable=false",
+            "runtimeDependencyClosureEstablished=false",
+            "runtimeInitializationEstablished=false",
+            "primeProposalPacketProduced=false",
+            "primeTrialAuthorizationProduced=false",
+            "primeDecisionReceiptProduced=false",
+            "candidateSelectionAuthorized=false",
+            "trialExecutionAuthorized=false",
+            "furtherTrainingAuthorized=false",
+            "promotionAuthorized=false",
+            "productUseAuthorized=false",
+            "publicationAuthorized=false",
+            "primeDurableReceiptPublished=false",
+        ] {
+            XCTAssertTrue(
+                compact.contains(required),
+                "missing V3 input-snapshot authority anchor: \(required)")
+        }
+
+        for forbidden in [
+            "import PrimeCore",
+            "import ErgenticsLLM",
+            "import ErgenticsTokenizer",
+            "import MLX",
+            "import MLXNN",
+            "import MLXLLM",
+            "Process(",
+            "ProcessInfo.processInfo.environment",
+            "URLSession",
+            "Network.framework",
+            "CommandLine",
+            "@main",
+            ".write(to:",
+            "createDirectory(",
+            "createFile(",
+            "O_CREAT",
+            "O_WRONLY",
+            "O_RDWR",
+            "mkdirat(",
+            "renameat",
+            "unlinkat(",
+            "removeItem(",
+            "func publish",
+            "PrimeLatinTrialProposal",
+            "PrimeLatinTrialAuthorization",
+            "--disable-sandbox",
+        ] {
+            XCTAssertFalse(
+                source.contains(forbidden),
+                "forbidden V3 input-snapshot capability: \(forbidden)")
+        }
+
+        for forbidden in [
+            "publicstaticfunccaptureForTesting(",
+            "publicinit(expectation:",
+            "publicinit(pairObservation:",
+            "publicstructPrimeLatinProposalInputArtifactExpectationV3",
+            "Codable",
+            "durableInputSnapshotPublished=true",
+            "liveProducerWorkspaceRevalidationComplete=true",
+            "llmGitStateIndependentlyObserved=true",
+            "independentReplayComplete=true",
+            "runtimeDecoderImplementationAvailable=true",
+            "runtimeDependencyClosureEstablished=true",
+            "runtimeInitializationEstablished=true",
+            "primeProposalPacketProduced=true",
+            "primeTrialAuthorizationProduced=true",
+            "primeDecisionReceiptProduced=true",
+            "candidateSelectionAuthorized=true",
+            "trialExecutionAuthorized=true",
+            "furtherTrainingAuthorized=true",
+            "promotionAuthorized=true",
+            "productUseAuthorized=true",
+            "publicationAuthorized=true",
+            "primeDurableReceiptPublished=true",
+        ] {
+            XCTAssertFalse(
+                compact.contains(forbidden),
+                "V3 input snapshot manufactures authority: \(forbidden)")
+        }
+    }
+
     func testCaptureTargetHasNoTargetOrPackageDependency() throws {
         let root = URL(
             fileURLWithPath: FileManager.default.currentDirectoryPath,
