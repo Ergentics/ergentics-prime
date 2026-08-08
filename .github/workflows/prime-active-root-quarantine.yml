@@ -62,6 +62,7 @@ jobs:
           for source_file in \
             Sources/PrimeLatinProposalPairCapture/PrimeLatinProposalPairCapture.swift \
             Sources/PrimeLatinProposalPairCapture/PrimeLatinProposalInputsV3.swift \
+            Sources/PrimeLatinProposalPairCapture/PrimeLatinProposalPairCaptureV3.swift \
             Sources/PrimeLatinProposalPairCaptureProbe/PrimeLatinProposalPairCaptureProbeMain.swift \
             Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalPairCaptureSourceContractTests.swift \
             Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalPairCaptureTests.swift \
@@ -90,7 +91,8 @@ jobs:
             echo 'Historical comparator/accounting targets and receipts remain preserved.'
             echo 'The Latin pair capture is read-only transport validation and remains abstaining.'
             echo 'The dependency-free V3 consumer verifies canonical wire bytes and the embedded hash chain only and remains abstaining.'
-            echo 'Referenced artifact bytes, the live producer workspace, and LLM Git provenance are not independently verified by this slice.'
+            echo 'The V3 capture descriptor-safely observes an existing content-addressed receipt and its exact catalog and experiment children, then delegates those child bytes to the V3 consumer; it remains abstaining.'
+            echo 'The referenced input snapshot and artifact bytes beyond the pair children, the live producer workspace, LLM Git provenance, and independent replay are not verified by this slice.'
             echo 'No Prime proposal, candidate selection, trial authorization, decision receipt, decoder selection, model execution, training, publication, promotion, Driver V2, or PMHNP authority is granted.'
           } >> "$GITHUB_STEP_SUMMARY"
 

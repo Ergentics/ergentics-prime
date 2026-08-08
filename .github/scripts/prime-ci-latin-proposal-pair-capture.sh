@@ -46,6 +46,7 @@ readonly validation_manifest="$prime_root/Tests/PrimeLatinProposalPairCaptureVal
 readonly capture_source="$prime_root/Sources/PrimeLatinProposalPairCapture/PrimeLatinProposalPairCapture.swift"
 readonly capture_support="$prime_root/Sources/PrimeLatinProposalPairCapture/PrimeLatinArtifactReadSupport.swift"
 readonly v3_inputs_source="$prime_root/Sources/PrimeLatinProposalPairCapture/PrimeLatinProposalInputsV3.swift"
+readonly v3_capture_source="$prime_root/Sources/PrimeLatinProposalPairCapture/PrimeLatinProposalPairCaptureV3.swift"
 readonly probe_source="$prime_root/Sources/PrimeLatinProposalPairCaptureProbe/PrimeLatinProposalPairCaptureProbeMain.swift"
 readonly capture_tests="$prime_root/Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalPairCaptureTests.swift"
 readonly v3_inputs_tests="$prime_root/Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalInputsV3Tests.swift"
@@ -56,6 +57,7 @@ for required_file in \
     "$capture_source" \
     "$capture_support" \
     "$v3_inputs_source" \
+    "$v3_capture_source" \
     "$probe_source" \
     "$capture_tests" \
     "$v3_inputs_tests" \
@@ -67,7 +69,8 @@ require_exact_file_inventory \
     "$prime_root/Sources/PrimeLatinProposalPairCapture" \
     "PrimeLatinArtifactReadSupport.swift" \
     "PrimeLatinProposalInputsV3.swift" \
-    "PrimeLatinProposalPairCapture.swift"
+    "PrimeLatinProposalPairCapture.swift" \
+    "PrimeLatinProposalPairCaptureV3.swift"
 require_exact_file_inventory \
     "$prime_root/Sources/PrimeLatinProposalPairCaptureProbe" \
     "PrimeLatinProposalPairCaptureProbeMain.swift"
@@ -96,6 +99,7 @@ for forbidden_source_value in \
         "$capture_source" \
         "$capture_support" \
         "$v3_inputs_source" \
+        "$v3_capture_source" \
         "$probe_source" \
         "$validation_manifest"; then
         die "Latin capture surface contains forbidden value: $forbidden_source_value"
@@ -300,6 +304,7 @@ cp -R \
 xcrun swiftc -frontend -parse "$capture_source"
 xcrun swiftc -frontend -parse "$capture_support"
 xcrun swiftc -frontend -parse "$v3_inputs_source"
+xcrun swiftc -frontend -parse "$v3_capture_source"
 xcrun swiftc -frontend -parse "$probe_source"
 xcrun swiftc -frontend -parse "$capture_tests"
 xcrun swiftc -frontend -parse "$v3_inputs_tests"
@@ -344,4 +349,4 @@ TMPDIR="$stage_root" swift build \
 [[ -z "$(git -C "$prime_root" status --porcelain=v1 --untracked-files=all)" ]] ||
     die "Prime checkout changed during validation"
 
-echo "OK: exact-head Latin pair capture and canonical V3 wire/hash-chain verification are dependency-isolated, read-only, abstaining, and non-authorizing"
+echo "OK: exact-head Latin V1/V3 pair capture and canonical V3 wire/hash-chain verification are dependency-isolated, read-only, abstaining, and non-authorizing"
