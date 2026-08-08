@@ -532,6 +532,21 @@ final class PrimeLatinProposalInputsV3Tests: XCTestCase {
                     try FixtureJSON.canonical(mixedExperiment)))
     }
 
+    func testInputSnapshotMaterialRejectsHistoricalPublisherSource() throws {
+        let fixture = try PrimeLatinProposalInputsV3Fixture(
+            source: .finalPublisher)
+
+        XCTAssertThrowsError(
+            try PrimeLatinProposalInputsV3.inputSnapshotMaterial(
+                candidateCatalogData: fixture.catalogData,
+                experimentManifestData: fixture.experimentData)
+        ) { error in
+            XCTAssertEqual(
+                error as? PrimeLatinProposalInputsV3Error,
+                .unsupportedSource("input_snapshot_source"))
+        }
+    }
+
     func testFinalHandoffRequiresExactTrackedEvaluationContractBinding()
         throws
     {
@@ -2267,6 +2282,30 @@ private final class FinalPublisherFixtureRoot {
 
     deinit {
         try? FileManager.default.removeItem(at: root)
+    }
+}
+
+/// Narrow cross-file adapter for the V3 original-input snapshot tests. The
+/// canonical pair construction remains private to this file; only its stable
+/// root, locator, and child URLs cross the test-file boundary.
+struct PrimeLatinProposalSnapshotPublishedPairFixture {
+    let labRoot: URL
+    let pairSHA256: String
+    let pairURL: URL
+    let catalogURL: URL
+    let experimentURL: URL
+
+    private let fixture: FinalPublisherPairCaptureFixture
+
+    init() throws {
+        let fixture = try FinalPublisherPairCaptureFixture(
+            source: .finalHandoff)
+        labRoot = fixture.labRoot
+        pairSHA256 = fixture.pairSHA256
+        pairURL = fixture.pairURL
+        catalogURL = fixture.catalogURL
+        experimentURL = fixture.experimentURL
+        self.fixture = fixture
     }
 }
 

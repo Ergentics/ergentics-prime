@@ -47,9 +47,11 @@ readonly capture_source="$prime_root/Sources/PrimeLatinProposalPairCapture/Prime
 readonly capture_support="$prime_root/Sources/PrimeLatinProposalPairCapture/PrimeLatinArtifactReadSupport.swift"
 readonly v3_inputs_source="$prime_root/Sources/PrimeLatinProposalPairCapture/PrimeLatinProposalInputsV3.swift"
 readonly v3_capture_source="$prime_root/Sources/PrimeLatinProposalPairCapture/PrimeLatinProposalPairCaptureV3.swift"
+readonly v3_snapshot_source="$prime_root/Sources/PrimeLatinProposalPairCapture/PrimeLatinProposalInputSnapshotV3.swift"
 readonly probe_source="$prime_root/Sources/PrimeLatinProposalPairCaptureProbe/PrimeLatinProposalPairCaptureProbeMain.swift"
 readonly capture_tests="$prime_root/Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalPairCaptureTests.swift"
 readonly v3_inputs_tests="$prime_root/Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalInputsV3Tests.swift"
+readonly v3_snapshot_tests="$prime_root/Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalInputSnapshotV3Tests.swift"
 readonly source_contract_tests="$prime_root/Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalPairCaptureSourceContractTests.swift"
 
 for required_file in \
@@ -58,9 +60,11 @@ for required_file in \
     "$capture_support" \
     "$v3_inputs_source" \
     "$v3_capture_source" \
+    "$v3_snapshot_source" \
     "$probe_source" \
     "$capture_tests" \
     "$v3_inputs_tests" \
+    "$v3_snapshot_tests" \
     "$source_contract_tests"; do
     [[ -f "$required_file" && ! -L "$required_file" ]] ||
         die "required validation source is missing or linked: $required_file"
@@ -68,6 +72,7 @@ done
 require_exact_file_inventory \
     "$prime_root/Sources/PrimeLatinProposalPairCapture" \
     "PrimeLatinArtifactReadSupport.swift" \
+    "PrimeLatinProposalInputSnapshotV3.swift" \
     "PrimeLatinProposalInputsV3.swift" \
     "PrimeLatinProposalPairCapture.swift" \
     "PrimeLatinProposalPairCaptureV3.swift"
@@ -78,6 +83,7 @@ require_exact_file_inventory \
     "$prime_root/Tests/PrimeLatinProposalPairCaptureTests" \
     "PrimeLatinProposalPairCaptureSourceContractTests.swift" \
     "PrimeLatinProposalPairCaptureTests.swift" \
+    "PrimeLatinProposalInputSnapshotV3Tests.swift" \
     "PrimeLatinProposalInputsV3Tests.swift"
 
 for forbidden_source_value in \
@@ -100,6 +106,7 @@ for forbidden_source_value in \
         "$capture_support" \
         "$v3_inputs_source" \
         "$v3_capture_source" \
+        "$v3_snapshot_source" \
         "$probe_source" \
         "$validation_manifest"; then
         die "Latin capture surface contains forbidden value: $forbidden_source_value"
@@ -305,9 +312,11 @@ xcrun swiftc -frontend -parse "$capture_source"
 xcrun swiftc -frontend -parse "$capture_support"
 xcrun swiftc -frontend -parse "$v3_inputs_source"
 xcrun swiftc -frontend -parse "$v3_capture_source"
+xcrun swiftc -frontend -parse "$v3_snapshot_source"
 xcrun swiftc -frontend -parse "$probe_source"
 xcrun swiftc -frontend -parse "$capture_tests"
 xcrun swiftc -frontend -parse "$v3_inputs_tests"
+xcrun swiftc -frontend -parse "$v3_snapshot_tests"
 xcrun swiftc -frontend -parse "$source_contract_tests"
 
 TMPDIR="$stage_root" swift test \
@@ -320,13 +329,14 @@ TMPDIR="$stage_root" swift test \
     --manifest-cache local \
     --disable-netrc \
     --disable-keychain \
-    --filter 'PrimeLatinProposalPairCaptureTests|PrimeLatinProposalInputsV3Tests|PrimeLatinProposalPairCaptureSourceContractTests' \
+    --filter 'PrimeLatinProposalPairCaptureTests|PrimeLatinProposalInputsV3Tests|PrimeLatinProposalInputSnapshotV3Tests|PrimeLatinProposalPairCaptureSourceContractTests' \
     2>&1 | tee "$test_log"
 grep -Eq 'Executed [1-9][0-9]* tests?, with 0 failures' "$test_log" ||
     die "focused Latin capture and V3 test receipt is missing"
 for expected_test_suite in \
     "PrimeLatinProposalPairCaptureTests" \
     "PrimeLatinProposalInputsV3Tests" \
+    "PrimeLatinProposalInputSnapshotV3Tests" \
     "PrimeLatinProposalPairCaptureSourceContractTests"; do
     grep -Fq -- "$expected_test_suite" "$test_log" ||
         die "focused Latin test suite receipt is missing: $expected_test_suite"
@@ -349,4 +359,4 @@ TMPDIR="$stage_root" swift build \
 [[ -z "$(git -C "$prime_root" status --porcelain=v1 --untracked-files=all)" ]] ||
     die "Prime checkout changed during validation"
 
-echo "OK: exact-head Latin V1/V3 pair capture and canonical V3 wire/hash-chain verification are dependency-isolated, read-only, abstaining, and non-authorizing"
+echo "OK: exact-head Latin V1/V3 pair capture, canonical V3 wire/hash-chain verification, and original-input snapshot mechanics are dependency-isolated, read-only, abstaining, and non-authorizing"

@@ -155,9 +155,16 @@ public final class PrimeLatinProposalPairCaptureV3: @unchecked Sendable {
         pairSHA256: String
     ) throws -> PrimeLatinProposalPairCaptureV3 {
         try PrimeLatinProposalPairContractV3.requireCanonicalRoot(labRoot)
+        let root = try PrimeLatinArtifactRoot(directoryURL: labRoot)
+        return try capture(root: root, pairSHA256: pairSHA256)
+    }
+
+    static func capture(
+        root: PrimeLatinArtifactRoot,
+        pairSHA256: String
+    ) throws -> PrimeLatinProposalPairCaptureV3 {
         let locator = try PrimeLatinProposalPairLocatorV3(
             sha256: pairSHA256)
-        let root = try PrimeLatinArtifactRoot(directoryURL: labRoot)
         let first = try PrimeLatinProposalPairLoaderV3.load(
             root: root,
             locator: locator)
@@ -173,6 +180,16 @@ public final class PrimeLatinProposalPairCaptureV3: @unchecked Sendable {
             snapshot: second)
     }
 
+    func inputSnapshotMaterial()
+        -> PrimeLatinProposalPairInputMaterialV3
+    {
+        PrimeLatinProposalPairInputMaterialV3(
+            rootIdentity: snapshot.rootIdentity,
+            observation: snapshot.observation,
+            catalogData: snapshot.catalogData,
+            experimentData: snapshot.experimentData)
+    }
+
     @discardableResult
     public func recaptureAndValidateUnchanged() throws
         -> PrimeLatinProposalPairObservationV3
@@ -185,6 +202,13 @@ public final class PrimeLatinProposalPairCaptureV3: @unchecked Sendable {
         }
         return current.observation
     }
+}
+
+struct PrimeLatinProposalPairInputMaterialV3: Equatable, Sendable {
+    let rootIdentity: PrimeLatinArtifactRootIdentity
+    let observation: PrimeLatinProposalPairObservationV3
+    let catalogData: Data
+    let experimentData: Data
 }
 
 private struct PrimeLatinProposalPairSnapshotV3: Equatable {
@@ -413,7 +437,7 @@ private enum PrimeLatinProposalPairLoaderV3 {
     }
 }
 
-private enum PrimeLatinProposalPairContractV3 {
+enum PrimeLatinProposalPairContractV3 {
     static let publicationRoot = "evidence/latin-proposal-artifacts/v3"
     static let receiptSchema = "ergentics_latin_proposal_pair_receipt_v3"
     static let receiptKind = "proposal_pair_receipt_v3"
@@ -438,7 +462,7 @@ private enum PrimeLatinProposalPairContractV3 {
         }
     }
 
-    static func requireExactPublisherSource(
+    fileprivate static func requireExactPublisherSource(
         _ source: PrimeLatinGitSourceWireV3
     ) throws {
         guard isGitOID(source.commit),

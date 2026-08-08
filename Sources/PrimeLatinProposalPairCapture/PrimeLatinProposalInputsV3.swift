@@ -131,6 +131,46 @@ public enum PrimeLatinProposalInputsV3 {
         candidateCatalogData: Data,
         experimentManifestData: Data
     ) throws -> PrimeLatinProposalInputsV3Observation {
+        let documents = try validatedDocuments(
+            candidateCatalogData: candidateCatalogData,
+            experimentManifestData: experimentManifestData)
+        return PrimeLatinProposalInputsV3Observation(
+            catalogData: candidateCatalogData,
+            catalog: documents.catalog,
+            experiment: documents.experiment)
+    }
+
+    static func inputSnapshotMaterial(
+        candidateCatalogData: Data,
+        experimentManifestData: Data
+    ) throws -> PrimeLatinProposalInputsV3SnapshotMaterial {
+        let documents = try validatedDocuments(
+            candidateCatalogData: candidateCatalogData,
+            experimentManifestData: experimentManifestData)
+        guard isFinalHandoffSource(documents.catalog.llmSource),
+              isFinalHandoffSource(documents.experiment.llmSource) else {
+            throw PrimeLatinProposalInputsV3Error.unsupportedSource(
+                "input_snapshot_source")
+        }
+        let observation = PrimeLatinProposalInputsV3Observation(
+            catalogData: candidateCatalogData,
+            catalog: documents.catalog,
+            experiment: documents.experiment)
+        return PrimeLatinProposalInputsV3SnapshotMaterial(
+            inputsObservation: observation,
+            expectations: normalizedSnapshotExpectations(
+                catalog: documents.catalog,
+                experiment: documents.experiment),
+            outputNamespace: documents.experiment.outputNamespace)
+    }
+
+    private static func validatedDocuments(
+        candidateCatalogData: Data,
+        experimentManifestData: Data
+    ) throws -> (
+        catalog: PrimeLatinCandidateCatalogWireV3,
+        experiment: PrimeLatinExperimentManifestWireV3
+    ) {
         let catalog: PrimeLatinCandidateCatalogWireV3 = try decode(
             candidateCatalogData,
             document: "candidate_catalog_v3")
@@ -141,10 +181,82 @@ public enum PrimeLatinProposalInputsV3 {
             catalog: catalog,
             catalogData: candidateCatalogData,
             experiment: experiment)
-        return PrimeLatinProposalInputsV3Observation(
-            catalogData: candidateCatalogData,
-            catalog: catalog,
-            experiment: experiment)
+        return (catalog, experiment)
+    }
+
+    private static func normalizedSnapshotExpectations(
+        catalog: PrimeLatinCandidateCatalogWireV3,
+        experiment: PrimeLatinExperimentManifestWireV3
+    ) -> [PrimeLatinProposalInputArtifactExpectationV3] {
+        let tokenizer = catalog.tokenizerProposalBinding.tokenizerBundle
+        let candidate = catalog.candidateDeclarations.candidates[0]
+            .declarationBundle
+        return [
+            snapshotExpectation(
+                "root_package_manifest", catalog.packageManifest),
+            snapshotExpectation(
+                "root_dependency_lock", catalog.dependencyLock),
+            snapshotExpectation(
+                "declaration_package_manifest",
+                candidate.nestedPackageManifest.artifact),
+            snapshotExpectation(
+                "declaration_production_source",
+                candidate.productionSources[0].artifact),
+            snapshotExpectation(
+                "candidate_architecture",
+                candidate.architectureArtifact.artifact),
+            snapshotExpectation(
+                "candidate_parameter_count_derivation",
+                candidate.parameterCountDerivationArtifact.artifact),
+            snapshotExpectation(
+                "evaluation_contract", experiment.evaluationContract),
+            snapshotExpectation(
+                "tokenizer_manifest", tokenizer.tokenizerManifest.artifact),
+            snapshotExpectation(
+                "tokenizer_sentencepiece_model",
+                tokenizer.sentencePieceModel.artifact),
+            snapshotExpectation(
+                "tokenizer_vocabulary", tokenizer.vocabulary.artifact),
+            snapshotExpectation(
+                "tokenizer_recommendation", tokenizer.recommendation.artifact),
+            snapshotExpectation(
+                "tokenizer_approval", tokenizer.approval.artifact),
+            snapshotExpectation(
+                "tokenizer_staged_training_input",
+                tokenizer.stagedTrainingInput.artifact),
+            snapshotExpectation(
+                "tokenizer_corpus_manifest", tokenizer.corpusManifest.artifact),
+            snapshotExpectation(
+                "tokenizer_admitted_corpus_input",
+                tokenizer.manifestListedCorpusInputs[0].artifact),
+            snapshotExpectation(
+                "initialization_contract", catalog.initializationContract),
+            snapshotExpectation(
+                "prospective_corpus_manifest", experiment.corpusManifest),
+            snapshotExpectation(
+                "training_split", experiment.splits.trainingSplit),
+            snapshotExpectation(
+                "validation_split", experiment.splits.validationSplit),
+            snapshotExpectation(
+                "selection_split", experiment.splits.selectionSplit),
+            snapshotExpectation(
+                "selection_observation_declaration",
+                experiment.splits.selectionObservationDeclaration),
+        ]
+    }
+
+    private static func snapshotExpectation(
+        _ role: String,
+        _ binding: PrimeLatinArtifactBindingWire
+    ) -> PrimeLatinProposalInputArtifactExpectationV3 {
+        PrimeLatinProposalInputArtifactExpectationV3(
+            role: role,
+            scope: binding.scope == .ergenticsLLMRepository
+                ? .ergenticsLLMRepository
+                : .ergenticsMLXLab,
+            relativePath: binding.relativePath,
+            sha256: binding.sha256,
+            byteCount: binding.byteCount)
     }
 }
 
