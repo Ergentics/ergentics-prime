@@ -13,6 +13,22 @@ die() {
     exit 1
 }
 
+count_fixed_occurrences() {
+    local needle="$1"
+    local source_file="$2"
+    awk -v needle="$needle" '
+        BEGIN { count = 0 }
+        {
+            remainder = $0
+            while ((offset = index(remainder, needle)) > 0) {
+                count += 1
+                remainder = substr(remainder, offset + length(needle))
+            }
+        }
+        END { print count }
+    ' "$source_file"
+}
+
 for command_name in awk cp find git grep jq mkdir mktemp shasum sort stat swift tee tr unlink xcrun; do
     command -v "$command_name" >/dev/null 2>&1 ||
         die "missing command: $command_name"
@@ -49,9 +65,12 @@ readonly v3_inputs_source="$prime_root/Sources/PrimeLatinProposalPairCapture/Pri
 readonly v3_capture_source="$prime_root/Sources/PrimeLatinProposalPairCapture/PrimeLatinProposalPairCaptureV3.swift"
 readonly v3_snapshot_source="$prime_root/Sources/PrimeLatinProposalPairCapture/PrimeLatinProposalInputSnapshotV3.swift"
 readonly probe_source="$prime_root/Sources/PrimeLatinProposalPairCaptureProbe/PrimeLatinProposalPairCaptureProbeMain.swift"
+readonly git_observation_source="$prime_root/Sources/PrimeLatinProposalGitObservation/PrimeLatinProposalGitSourceV3.swift"
+readonly git_observation_probe_source="$prime_root/Sources/PrimeLatinProposalGitObservationProbe/PrimeLatinProposalGitObservationProbeMain.swift"
 readonly capture_tests="$prime_root/Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalPairCaptureTests.swift"
 readonly v3_inputs_tests="$prime_root/Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalInputsV3Tests.swift"
 readonly v3_snapshot_tests="$prime_root/Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalInputSnapshotV3Tests.swift"
+readonly git_observation_tests="$prime_root/Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalGitSourceV3Tests.swift"
 readonly source_contract_tests="$prime_root/Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalPairCaptureSourceContractTests.swift"
 
 for required_file in \
@@ -62,9 +81,12 @@ for required_file in \
     "$v3_capture_source" \
     "$v3_snapshot_source" \
     "$probe_source" \
+    "$git_observation_source" \
+    "$git_observation_probe_source" \
     "$capture_tests" \
     "$v3_inputs_tests" \
     "$v3_snapshot_tests" \
+    "$git_observation_tests" \
     "$source_contract_tests"; do
     [[ -f "$required_file" && ! -L "$required_file" ]] ||
         die "required validation source is missing or linked: $required_file"
@@ -80,7 +102,14 @@ require_exact_file_inventory \
     "$prime_root/Sources/PrimeLatinProposalPairCaptureProbe" \
     "PrimeLatinProposalPairCaptureProbeMain.swift"
 require_exact_file_inventory \
+    "$prime_root/Sources/PrimeLatinProposalGitObservation" \
+    "PrimeLatinProposalGitSourceV3.swift"
+require_exact_file_inventory \
+    "$prime_root/Sources/PrimeLatinProposalGitObservationProbe" \
+    "PrimeLatinProposalGitObservationProbeMain.swift"
+require_exact_file_inventory \
     "$prime_root/Tests/PrimeLatinProposalPairCaptureTests" \
+    "PrimeLatinProposalGitSourceV3Tests.swift" \
     "PrimeLatinProposalPairCaptureSourceContractTests.swift" \
     "PrimeLatinProposalPairCaptureTests.swift" \
     "PrimeLatinProposalInputSnapshotV3Tests.swift" \
@@ -113,6 +142,103 @@ for forbidden_source_value in \
     fi
 done
 
+for forbidden_git_observation_value in \
+    "import PrimeCore" \
+    "import ErgenticsLLM" \
+    "import ErgenticsTokenizer" \
+    "import MLX" \
+    "ErgenticsPrimeRuntime" \
+    "LlamaModel" \
+    "HuggingFace" \
+    "PMHNP" \
+    "pmhnp-companion-ergentics" \
+    "ProcessInfo.processInfo.environment" \
+    "URLSession" \
+    "Network.framework" \
+    "NWConnection" \
+    "socket(" \
+    "connect(" \
+    "curl" \
+    "python" \
+    "ssh" \
+    "scp" \
+    "shell" \
+    '"/bin/sh"' \
+    '"/bin/bash"' \
+    '"/usr/bin/env"' \
+    "O_CREAT" \
+    "O_WRONLY" \
+    "O_RDWR" \
+    "mkdirat(" \
+    "renameat" \
+    "unlinkat(" \
+    "removeItem(" \
+    "createDirectory(" \
+    "createFile(" \
+    "func publish" \
+    "PrimeLatinTrialProposal" \
+    "PrimeLatinTrialAuthorization" \
+    '"fetch"' \
+    '"push"' \
+    '"clone"' \
+    "--disable-sandbox"; do
+    if grep -Fq -- "$forbidden_git_observation_value" \
+        "$git_observation_source" \
+        "$git_observation_probe_source" \
+        "$validation_manifest"; then
+        die "Latin Git-observation surface contains forbidden value: $forbidden_git_observation_value"
+    fi
+done
+readonly git_observation_imports="$(grep -E '^import ' "$git_observation_source")"
+readonly expected_git_observation_imports=$'import Darwin\nimport Glibc\nimport CryptoKit\nimport Foundation\nimport PrimeLatinProposalPairCapture'
+[[ "$git_observation_imports" == "$expected_git_observation_imports" ]] ||
+    die "Latin Git-observation source import inventory is not exact"
+readonly git_observation_probe_imports="$(
+    grep -E '^import ' "$git_observation_probe_source"
+)"
+readonly expected_git_observation_probe_imports=$'import Foundation\nimport PrimeLatinProposalGitObservation'
+[[ "$git_observation_probe_imports" == \
+        "$expected_git_observation_probe_imports" ]] ||
+    die "Latin Git-observation probe import inventory is not exact"
+[[ "$(count_fixed_occurrences "Process()" "$git_observation_source")" \
+        == "1" ]] ||
+    die "Latin Git-observation source must contain exactly one process launcher"
+[[ "$(count_fixed_occurrences \
+        "process.executableURL" "$git_observation_source")" \
+        == "1" ]] ||
+    die "Latin Git-observation source must assign exactly one executable URL"
+[[ "$(count_fixed_occurrences '"/usr/bin/git"' \
+        "$git_observation_source")" == "1" ]] ||
+    die "Latin Git-observation source must bind exactly one Git executable"
+[[ "$(count_fixed_occurrences "Process(" \
+        "$git_observation_probe_source")" \
+        == "0" ]] ||
+    die "Latin Git-observation probe may not launch a process directly"
+grep -Fq -- 'mode_t(0o6000) == 0' "$git_observation_source" ||
+    die "Latin Git-observation source permits privileged Git mode bits"
+grep -Fq -- '"core.fileMode=true"' "$git_observation_source" ||
+    die "Latin Git-observation source does not force file-mode observation"
+grep -Fq -- '"GIT_NO_LAZY_FETCH": "1"' "$git_observation_source" ||
+    die "Latin Git-observation source does not prohibit promisor lazy fetches"
+grep -Fq -- '"GIT_ALLOW_PROTOCOL": "none"' "$git_observation_source" ||
+    die "Latin Git-observation source does not prohibit Git protocols"
+grep -Fq -- 'operation: "tracked_index_visibility"' \
+    "$git_observation_source" ||
+    die "Latin Git-observation source lacks tracked-index visibility binding"
+grep -Fq -- 'arguments: ["ls-files", "-v", "-z"]' \
+    "$git_observation_source" ||
+    die "Latin Git-observation source lacks its exact tracked-index command"
+grep -Fq -- 'noAssumeUnchangedOrSkipWorktreeIndexEntriesObserved = true' \
+    "$git_observation_source" ||
+    die "Latin Git-observation source lacks its tracked-index authority anchor"
+for tracked_index_anchor in \
+    "trackedIndexEntryCount" \
+    "trackedIndexInventoryByteCount" \
+    "trackedIndexInventorySHA256"; do
+    grep -Fq -- "$tracked_index_anchor" "$git_observation_source" ||
+        die "Latin Git-observation source lacks tracked-index evidence: $tracked_index_anchor"
+done
+
 [[ "$(grep -Fc -- '.package(' "$prime_root/Package.swift")" == "1" ]] ||
     die "Prime root gained an unexpected package dependency"
 ! grep -Fq -- '.package(' "$validation_manifest" ||
@@ -121,17 +247,23 @@ readonly root_manifest_compact="$(tr -d '[:space:]' < "$prime_root/Package.swift
 readonly validation_manifest_compact="$(tr -d '[:space:]' < "$validation_manifest")"
 for required_root_fragment in \
     '.library(name:"PrimeLatinProposalPairCapture",targets:["PrimeLatinProposalPairCapture",])' \
+    '.library(name:"PrimeLatinProposalGitObservation",targets:["PrimeLatinProposalGitObservation",])' \
     '.executable(name:"PrimeLatinProposalPairCaptureProbe",targets:["PrimeLatinProposalPairCaptureProbe",])' \
+    '.executable(name:"PrimeLatinProposalGitObservationProbe",targets:["PrimeLatinProposalGitObservationProbe",])' \
     '.target(name:"PrimeLatinProposalPairCapture")' \
+    '.target(name:"PrimeLatinProposalGitObservation",dependencies:["PrimeLatinProposalPairCapture",])' \
     '.executableTarget(name:"PrimeLatinProposalPairCaptureProbe",dependencies:["PrimeLatinProposalPairCapture",])' \
-    '.testTarget(name:"PrimeLatinProposalPairCaptureTests",dependencies:["PrimeLatinProposalPairCapture",])'; do
+    '.executableTarget(name:"PrimeLatinProposalGitObservationProbe",dependencies:["PrimeLatinProposalGitObservation",])' \
+    '.testTarget(name:"PrimeLatinProposalPairCaptureTests",dependencies:["PrimeLatinProposalPairCapture","PrimeLatinProposalGitObservation",])'; do
     [[ "$root_manifest_compact" == *"$required_root_fragment"* ]] ||
         die "Prime root Latin target graph is not exact"
 done
 for required_validation_fragment in \
     '.target(name:"PrimeLatinProposalPairCapture")' \
+    '.target(name:"PrimeLatinProposalGitObservation",dependencies:["PrimeLatinProposalPairCapture",])' \
     '.executableTarget(name:"PrimeLatinProposalPairCaptureProbe",dependencies:["PrimeLatinProposalPairCapture",])' \
-    '.testTarget(name:"PrimeLatinProposalPairCaptureTests",dependencies:["PrimeLatinProposalPairCapture",])'; do
+    '.executableTarget(name:"PrimeLatinProposalGitObservationProbe",dependencies:["PrimeLatinProposalGitObservation",])' \
+    '.testTarget(name:"PrimeLatinProposalPairCaptureTests",dependencies:["PrimeLatinProposalPairCapture","PrimeLatinProposalGitObservation",])'; do
     [[ "$validation_manifest_compact" == *"$required_validation_fragment"* ]] ||
         die "isolated Latin validation target graph is not exact"
 done
@@ -305,6 +437,12 @@ cp -R \
     "$prime_root/Sources/PrimeLatinProposalPairCaptureProbe" \
     "$stage_root/Sources/PrimeLatinProposalPairCaptureProbe"
 cp -R \
+    "$prime_root/Sources/PrimeLatinProposalGitObservation" \
+    "$stage_root/Sources/PrimeLatinProposalGitObservation"
+cp -R \
+    "$prime_root/Sources/PrimeLatinProposalGitObservationProbe" \
+    "$stage_root/Sources/PrimeLatinProposalGitObservationProbe"
+cp -R \
     "$prime_root/Tests/PrimeLatinProposalPairCaptureTests" \
     "$stage_root/Tests/PrimeLatinProposalPairCaptureTests"
 
@@ -314,9 +452,12 @@ xcrun swiftc -frontend -parse "$v3_inputs_source"
 xcrun swiftc -frontend -parse "$v3_capture_source"
 xcrun swiftc -frontend -parse "$v3_snapshot_source"
 xcrun swiftc -frontend -parse "$probe_source"
+xcrun swiftc -frontend -parse "$git_observation_source"
+xcrun swiftc -frontend -parse "$git_observation_probe_source"
 xcrun swiftc -frontend -parse "$capture_tests"
 xcrun swiftc -frontend -parse "$v3_inputs_tests"
 xcrun swiftc -frontend -parse "$v3_snapshot_tests"
+xcrun swiftc -frontend -parse "$git_observation_tests"
 xcrun swiftc -frontend -parse "$source_contract_tests"
 
 TMPDIR="$stage_root" swift test \
@@ -329,7 +470,7 @@ TMPDIR="$stage_root" swift test \
     --manifest-cache local \
     --disable-netrc \
     --disable-keychain \
-    --filter 'PrimeLatinProposalPairCaptureTests|PrimeLatinProposalInputsV3Tests|PrimeLatinProposalInputSnapshotV3Tests|PrimeLatinProposalPairCaptureSourceContractTests' \
+    --filter 'PrimeLatinProposalPairCaptureTests|PrimeLatinProposalInputsV3Tests|PrimeLatinProposalInputSnapshotV3Tests|PrimeLatinProposalGitSourceV3Tests|PrimeLatinProposalPairCaptureSourceContractTests' \
     2>&1 | tee "$test_log"
 grep -Eq 'Executed [1-9][0-9]* tests?, with 0 failures' "$test_log" ||
     die "focused Latin capture and V3 test receipt is missing"
@@ -337,6 +478,7 @@ for expected_test_suite in \
     "PrimeLatinProposalPairCaptureTests" \
     "PrimeLatinProposalInputsV3Tests" \
     "PrimeLatinProposalInputSnapshotV3Tests" \
+    "PrimeLatinProposalGitSourceV3Tests" \
     "PrimeLatinProposalPairCaptureSourceContractTests"; do
     grep -Fq -- "$expected_test_suite" "$test_log" ||
         die "focused Latin test suite receipt is missing: $expected_test_suite"
@@ -354,9 +496,21 @@ TMPDIR="$stage_root" swift build \
     --disable-keychain \
     --target PrimeLatinProposalPairCaptureProbe
 
+TMPDIR="$stage_root" swift build \
+    --package-path "$stage_root" \
+    --scratch-path "$scratch_path" \
+    --cache-path "$cache_path" \
+    --config-path "$config_path" \
+    --security-path "$security_path" \
+    --disable-dependency-cache \
+    --manifest-cache local \
+    --disable-netrc \
+    --disable-keychain \
+    --target PrimeLatinProposalGitObservationProbe
+
 [[ "$(git -C "$prime_root" rev-parse HEAD)" == "$expected_prime_head" ]] ||
     die "Prime checkout changed commits during validation"
 [[ -z "$(git -C "$prime_root" status --porcelain=v1 --untracked-files=all)" ]] ||
     die "Prime checkout changed during validation"
 
-echo "OK: exact-head Latin V1/V3 pair capture, canonical V3 wire/hash-chain verification, and original-input snapshot mechanics are dependency-isolated, read-only, abstaining, and non-authorizing"
+echo "OK: exact-head Latin V1/V3 pair capture, canonical V3 wire/hash-chain verification, original-input snapshot mechanics, and fixed local Git observation with tracked-index visibility are dependency-isolated, read-only, abstaining, and non-authorizing"

@@ -65,8 +65,11 @@ jobs:
             Sources/PrimeLatinProposalPairCapture/PrimeLatinProposalPairCaptureV3.swift \
             Sources/PrimeLatinProposalPairCapture/PrimeLatinProposalInputSnapshotV3.swift \
             Sources/PrimeLatinProposalPairCaptureProbe/PrimeLatinProposalPairCaptureProbeMain.swift \
+            Sources/PrimeLatinProposalGitObservation/PrimeLatinProposalGitSourceV3.swift \
+            Sources/PrimeLatinProposalGitObservationProbe/PrimeLatinProposalGitObservationProbeMain.swift \
             Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalPairCaptureSourceContractTests.swift \
             Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalPairCaptureTests.swift \
+            Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalGitSourceV3Tests.swift \
             Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalInputSnapshotV3Tests.swift \
             Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalInputsV3Tests.swift \
             Tests/PrimeCoreTests/PrimeNativeCorpusReplaySourceContractTests.swift \
@@ -79,7 +82,7 @@ jobs:
           [[ "$(git rev-parse HEAD)" == "$EXACT_REVISION" ]]
           [[ -z "$(git status --porcelain=v1 --untracked-files=all)" ]]
 
-      - name: Validate the isolated Latin pair capture and V3 inputs
+      - name: Validate the isolated Latin capture and local Git observation
         working-directory: ergentics-prime
         env:
           ERGENTICS_EXACT_REVISION: ${{ env.EXACT_REVISION }}
@@ -95,7 +98,8 @@ jobs:
             echo 'The dependency-free V3 consumer verifies canonical wire bytes and the embedded hash chain only and remains abstaining.'
             echo 'The V3 capture descriptor-safely observes an existing content-addressed receipt and its exact catalog and experiment children, then delegates those child bytes to the V3 consumer; it remains abstaining.'
             echo 'The V3 original-input snapshot descriptor-safely revalidates the exact bound repository and lab input bytes, role bindings, and output absence without publishing or authorizing anything.'
-            echo 'The live producer Git state and complete independent replay are not verified by this slice.'
+            echo 'The isolated Git-observation target uses only fixed local read-only /usr/bin/git commands to bind the exact HEAD, tree, clean staged/tracked/untracked status, bounded tracked-index inventory without assume-unchanged or skip-worktree entries, raw commit, and seven repository blobs to the recaptured input snapshot.'
+            echo 'The locally declared origin is not network-authenticated; ignored workspace bytes, live producer revalidation, and complete independent replay are not verified by this slice.'
             echo 'No Prime proposal, candidate selection, trial authorization, decision receipt, decoder selection, model execution, training, publication, promotion, Driver V2, or PMHNP authority is granted.'
           } >> "$GITHUB_STEP_SUMMARY"
 

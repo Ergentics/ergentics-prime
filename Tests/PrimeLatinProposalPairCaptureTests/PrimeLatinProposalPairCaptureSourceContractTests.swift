@@ -494,6 +494,356 @@ final class PrimeLatinProposalPairCaptureSourceContractTests: XCTestCase {
         }
     }
 
+    func testV3GitSourceObservationIsFixedReadOnlyAndAbstaining() throws {
+        let source = try swiftSource(
+            relativePath:
+                "Sources/PrimeLatinProposalGitObservation/" +
+                    "PrimeLatinProposalGitSourceV3.swift")
+        let compact = source.filter { !$0.isWhitespace }
+        let imports = source.split(separator: "\n")
+            .map(String.init)
+            .filter { $0.hasPrefix("import ") }
+        XCTAssertEqual(
+            imports,
+            [
+                "import Darwin",
+                "import Glibc",
+                "import CryptoKit",
+                "import Foundation",
+                "import PrimeLatinProposalPairCapture",
+            ])
+        XCTAssertEqual(source.components(separatedBy: "Process()").count, 2)
+        XCTAssertEqual(
+            source.components(separatedBy: "process.executableURL").count,
+            2)
+        XCTAssertEqual(
+            source.components(separatedBy: "\"/usr/bin/git\"").count,
+            2)
+
+        for required in [
+            "public struct PrimeLatinProposalGitToolObservationV3",
+            "public struct PrimeLatinProposalGitArtifactObservationV3",
+            "public struct PrimeLatinProposalGitSourceAuthorityBoundaryV3",
+            "public struct PrimeLatinProposalGitSourceObservationV3",
+            "public enum PrimeLatinProposalGitSourceError",
+            "public final class PrimeLatinProposalGitSourceCaptureV3",
+            "public static func capture(",
+            "labRoot: URL",
+            "llmRepositoryRoot: URL",
+            "pairSHA256: String",
+            "recaptureAndValidateUnchanged",
+            "PrimeLatinProposalInputSnapshotCaptureV3",
+            "ergentics_prime_latin_proposal_git_source_v3_observation",
+            "fixed_read_only_git_process_exact_head_tree_clean_status_and_seven_snapshot_repository_bindings_only_non_authorizing",
+            "abstain_git_observation_only_requires_live_producer_revalidation_and_independent_replay",
+            "locally_declared_origin_only_not_network_authenticated",
+            "prime_latin_git_read_only_fixed_environment_v1",
+            "https://github.com/Ergentics/ergentics-llm.git",
+            "/usr/bin/git",
+            "mode_t(0o6000) == 0",
+            "Process()",
+            "--no-replace-objects",
+            "--no-includes",
+            "remote.origin.url",
+            "--show-toplevel",
+            "repository_top_level",
+            "tracked_index_visibility",
+            "trackedIndexEntryCount",
+            "trackedIndexInventoryByteCount",
+            "trackedIndexInventorySHA256",
+            "noAssumeUnchangedOrSkipWorktreeIndexEntriesObserved",
+            "validateObservedTopLevel",
+            "resolvedRealPath",
+            "realpath(",
+            "core.fsmonitor=false",
+            "core.hooksPath=/dev/null",
+            "core.fileMode=true",
+            "\"GIT_NO_REPLACE_OBJECTS\": \"1\"",
+            "\"GIT_OPTIONAL_LOCKS\": \"0\"",
+            "\"GIT_CONFIG_NOSYSTEM\": \"1\"",
+            "\"GIT_CONFIG_GLOBAL\": \"/dev/null\"",
+            "\"GIT_CONFIG_SYSTEM\": \"/dev/null\"",
+            "\"GIT_TERMINAL_PROMPT\": \"0\"",
+            "\"GIT_NO_LAZY_FETCH\": \"1\"",
+            "\"GIT_ALLOW_PROTOCOL\": \"none\"",
+            "Insecure.SHA1.hash",
+            "776c412e3f10e8bf4e33cd0ae60787d9ca6b5831",
+            "c1f41758aea2860ab06039776f5ea0403dff1b61",
+            "0e4e7ea646db282de4f23064acad5884586d01cdcc89611deae3c01298b29fed",
+            "static let finalTrackedIndexEntryCount: UInt64 = 144",
+            "static let finalTrackedIndexInventoryByteCount: UInt64 = 6_933",
+            "101afd50470f669f8b4de14f9188e16854a4166b355bf8a4e9ec810a59a9e289",
+            "Package.swift",
+            "Package.resolved",
+            "Research/Latin/CandidateDeclarations/Package.swift",
+            "Research/Latin/CandidateDeclarations/Sources/" +
+                "ErgenticsLatinCandidateDeclarations/" +
+                "ErgenticsLatinCandidateDeclarations.swift",
+            "Research/Latin/candidates/latin_structural_fixture_v1/" +
+                "architecture.json",
+            "Research/Latin/candidates/latin_structural_fixture_v1/" +
+                "parameter-count-derivation.json",
+            "Research/Latin/evaluation_contract.json",
+        ] {
+            XCTAssertTrue(
+                source.contains(required),
+                "missing V3 Git-observation contract anchor: \(required)")
+        }
+
+        let exactFinalArtifacts: [(
+            role: String,
+            relativePath: String,
+            gitBlobOID: String,
+            sha256: String,
+            byteCountLiteral: String
+        )] = [
+            (
+                "root_package_manifest",
+                "Package.swift",
+                "dabd1cd7002ddbfa4d05d7c4f7660133892d0050",
+                "ab460122d5f364046224c6445a20f3beb34e2831de94db1271bbafb59726c902",
+                "6_109"
+            ),
+            (
+                "root_dependency_lock",
+                "Package.resolved",
+                "4e822bfadbe5f4dced15a277f4d5423a03d76890",
+                "2847fb936ec74eef250b8439d778f0a1ea8d0c630bf09438587764a4b99c6530",
+                "645"
+            ),
+            (
+                "declaration_package_manifest",
+                "Research/Latin/CandidateDeclarations/Package.swift",
+                "67907b47cf941c6e36154dd729b284f64c90ca9b",
+                "9d5242248391613382c9c42bb388b1ad1d1597956f272e5d5b410b7891b38b63",
+                "892"
+            ),
+            (
+                "declaration_production_source",
+                "Research/Latin/CandidateDeclarations/Sources/" +
+                    "ErgenticsLatinCandidateDeclarations/" +
+                    "ErgenticsLatinCandidateDeclarations.swift",
+                "a951d3710dba072aa7eb8554c60abafdd032cb7f",
+                "676443927b5024c6e58caa562777a27945dad384c6cc88b5d94d11e73c047bc4",
+                "35_119"
+            ),
+            (
+                "candidate_architecture",
+                "Research/Latin/candidates/latin_structural_fixture_v1/" +
+                    "architecture.json",
+                "a3a9582003bfdbce2c94707313c0e402955bca9b",
+                "4b31feeeba780bc39c064d4540f5701935f960e1e1d8c82c81d295a65e643a70",
+                "2_794"
+            ),
+            (
+                "candidate_parameter_count_derivation",
+                "Research/Latin/candidates/latin_structural_fixture_v1/" +
+                    "parameter-count-derivation.json",
+                "9957d0b17edd019ce760fdae9907a8ebadf408e3",
+                "45d15481883cf606e8e739aa71815bf9bd2fdd51494059328e3ba16a9ed5fb8f",
+                "2_702"
+            ),
+            (
+                "evaluation_contract",
+                "Research/Latin/evaluation_contract.json",
+                "0f052ee6724d4815b8c18eae968175631035f00d",
+                "4a0dd1bc973f7ce380df9775413c4e43033ba0cc409fb45a9368c2bef6835d52",
+                "164"
+            ),
+        ]
+        var orderedSearchStart = compact.startIndex
+        for artifact in exactFinalArtifacts {
+            let exactConstructor =
+                "PrimeLatinProposalGitExpectedArtifactV3(" +
+                "role:\"\(artifact.role)\"," +
+                "relativePath:\"\(artifact.relativePath)\"," +
+                "gitBlobOID:\"\(artifact.gitBlobOID)\"," +
+                "sha256:\"\(artifact.sha256)\"," +
+                "byteCount:\(artifact.byteCountLiteral))"
+            guard let range = compact.range(
+                of: exactConstructor,
+                range: orderedSearchStart..<compact.endIndex
+            ) else {
+                XCTFail(
+                    "missing or out-of-order exact final Git artifact: " +
+                        artifact.role
+                )
+                return
+            }
+            orderedSearchStart = range.upperBound
+        }
+        XCTAssertTrue(
+            compact.contains("rawCommitByteCount:1_222"),
+            "missing exact final raw-commit byte count")
+        XCTAssertTrue(
+            compact.contains("arguments:[\"ls-files\",\"-v\",\"-z\"]"),
+            "missing exact tracked-index visibility command")
+
+        for required in [
+            "outcome=\"abstain\"",
+            "snapshotCaptureAndRecaptureComplete=true",
+            "stableLLMRepositoryRootBoundObservationComplete=true",
+            "stableGitToolObservationComplete=true",
+            "exactHeadCommitObserved=true",
+            "exactHeadTreeObserved=true",
+            "cleanPorcelainV2StatusObserved=true",
+            "noAssumeUnchangedOrSkipWorktreeIndexEntriesObserved=true",
+            "exactRawCommitObjectObserved=true",
+            "exactSevenRepositoryTreeEntriesObserved=true",
+            "sevenRepositoryBlobHashCountBindingsMatchedSnapshot=true",
+            "localOriginDeclarationObserved=true",
+            "repeatedGitObservationUnchanged=true",
+            "referencedInputSnapshotAvailable=true",
+            "referencedArtifactBytesAvailable=true",
+            "llmGitStateIndependentlyObserved=true",
+            "originRemoteCryptographicallyAuthenticated=false",
+            "ignoredWorkspaceBytesObserved=false",
+            "durableInputSnapshotPublished=false",
+            "durableGitObservationPublished=false",
+            "liveProducerWorkspaceRevalidationComplete=false",
+            "independentReplayComplete=false",
+            "runtimeDecoderImplementationAvailable=false",
+            "runtimeDependencyClosureEstablished=false",
+            "runtimeInitializationEstablished=false",
+            "primeProposalPacketProduced=false",
+            "primeTrialAuthorizationProduced=false",
+            "primeDecisionReceiptProduced=false",
+            "candidateSelectionAuthorized=false",
+            "trialExecutionAuthorized=false",
+            "furtherTrainingAuthorized=false",
+            "promotionAuthorized=false",
+            "productUseAuthorized=false",
+            "publicationAuthorized=false",
+            "primeDurableReceiptPublished=false",
+        ] {
+            XCTAssertTrue(
+                compact.contains(required),
+                "missing V3 Git-observation authority anchor: \(required)")
+        }
+
+        for forbidden in [
+            "import PrimeCore",
+            "import ErgenticsLLM",
+            "import ErgenticsTokenizer",
+            "import MLX",
+            "import MLXNN",
+            "import MLXLLM",
+            "ErgenticsPrimeRuntime",
+            "LlamaModel",
+            "HuggingFace",
+            "PMHNP",
+            "pmhnp-companion-ergentics",
+            "ProcessInfo.processInfo.environment",
+            "URLSession",
+            "Network.framework",
+            "NWConnection",
+            "socket(",
+            "connect(",
+            "curl",
+            "python",
+            "ssh",
+            "scp",
+            "shell",
+            "\"/bin/sh\"",
+            "\"/bin/bash\"",
+            "\"/usr/bin/env\"",
+            "\"fetch\"",
+            "\"push\"",
+            "\"clone\"",
+            "\"checkout\"",
+            "\"reset\"",
+            "\"clean\"",
+            "\"add\"",
+            "\"update-ref\"",
+            ".write(to:",
+            "createDirectory(",
+            "createFile(",
+            "O_CREAT",
+            "O_WRONLY",
+            "O_RDWR",
+            "mkdirat(",
+            "renameat",
+            "unlinkat(",
+            "removeItem(",
+            "func publish",
+            "PrimeLatinTrialProposal",
+            "PrimeLatinTrialAuthorization",
+            "--disable-sandbox",
+        ] {
+            XCTAssertFalse(
+                source.contains(forbidden),
+                "forbidden V3 Git-observation capability: \(forbidden)")
+        }
+
+        for forbidden in [
+            "Codable",
+            "publicstaticfunccaptureForTesting(",
+            "publicinit(",
+            "publicinit(observation:",
+            "publicinit(snapshot:",
+            "publicinit(gitTool:",
+            "publicinit(disposition:",
+            "publicinit(schema:",
+            "noAssumeUnchangedOrSkipWorktreeIndexEntriesObserved=false",
+            "originRemoteCryptographicallyAuthenticated=true",
+            "ignoredWorkspaceBytesObserved=true",
+            "durableInputSnapshotPublished=true",
+            "durableGitObservationPublished=true",
+            "liveProducerWorkspaceRevalidationComplete=true",
+            "independentReplayComplete=true",
+            "runtimeDecoderImplementationAvailable=true",
+            "runtimeDependencyClosureEstablished=true",
+            "runtimeInitializationEstablished=true",
+            "primeProposalPacketProduced=true",
+            "primeTrialAuthorizationProduced=true",
+            "primeDecisionReceiptProduced=true",
+            "candidateSelectionAuthorized=true",
+            "trialExecutionAuthorized=true",
+            "furtherTrainingAuthorized=true",
+            "promotionAuthorized=true",
+            "productUseAuthorized=true",
+            "publicationAuthorized=true",
+            "primeDurableReceiptPublished=true",
+        ] {
+            XCTAssertFalse(
+                compact.contains(forbidden),
+                "V3 Git observation manufactures authority: \(forbidden)")
+        }
+    }
+
+    func testGitObservationTargetHasOnlyCaptureDependency() throws {
+        let root = URL(
+            fileURLWithPath: FileManager.default.currentDirectoryPath,
+            isDirectory: true)
+        let manifest = try String(
+            contentsOf: root.appendingPathComponent("Package.swift"),
+            encoding: .utf8)
+        let compact = manifest.filter { !$0.isWhitespace }
+        XCTAssertTrue(
+            compact.contains(
+                ".target(name:\"PrimeLatinProposalGitObservation\"," +
+                "dependencies:[\"PrimeLatinProposalPairCapture\",])"))
+        XCTAssertTrue(
+            compact.contains(
+                ".executableTarget(" +
+                "name:\"PrimeLatinProposalGitObservationProbe\"," +
+                "dependencies:[\"PrimeLatinProposalGitObservation\",])"))
+        for forbidden in [
+            "PrimeCore",
+            "ErgenticsPrimeRuntime",
+            "MLX",
+            "MLXNN",
+            "MLXLLM",
+        ] {
+            XCTAssertFalse(
+                compact.contains(
+                    ".target(" +
+                    "name:\"PrimeLatinProposalGitObservation\"," +
+                    "dependencies:[\"\(forbidden)"),
+                "forbidden Git-observation target dependency: \(forbidden)")
+        }
+    }
+
     func testCaptureTargetHasNoTargetOrPackageDependency() throws {
         let root = URL(
             fileURLWithPath: FileManager.default.currentDirectoryPath,
@@ -578,6 +928,83 @@ final class PrimeLatinProposalPairCaptureSourceContractTests: XCTestCase {
             XCTAssertFalse(
                 source.contains(forbidden),
                 "forbidden capture-probe token: \(forbidden)")
+        }
+    }
+
+    func testGitObservationProbeHasExactOnceOnlyReadOnlySurface() throws {
+        let source = try swiftSource(
+            relativePath:
+                "Sources/PrimeLatinProposalGitObservationProbe/" +
+                    "PrimeLatinProposalGitObservationProbeMain.swift")
+        let imports = source.split(separator: "\n")
+            .map(String.init)
+            .filter { $0.hasPrefix("import ") }
+        XCTAssertEqual(
+            imports,
+            [
+                "import Foundation",
+                "import PrimeLatinProposalGitObservation",
+            ])
+        for required in [
+            "PrimeLatinProposalGitObservationArguments",
+            "rawArguments.count == 8",
+            "action == \"observe\"",
+            "pairSHA256.utf8.allSatisfy",
+            "Array(CommandLine.arguments.dropFirst())",
+            "PrimeLatinProposalGitSourceCaptureV3.capture(",
+            "recaptureAndValidateUnchanged()",
+            "FileHandle.standardOutput",
+            "output.count <= 1_024",
+            "llm_git_state_independently_observed",
+            "no_assume_unchanged_or_skip_worktree_index_entries_observed",
+            "tracked_index_entry_count",
+            "tracked_index_inventory_byte_count",
+            "tracked_index_inventory_sha256",
+            "observation.outcome == \"abstain\"",
+            "observation.trackedIndexEntryCount == 144",
+            "observation.trackedIndexInventoryByteCount == 6_933",
+            "101afd50470f669f8b4de14f9188e16854a4166b355bf8a4e9ec810a59a9e289",
+            "observation.gitCommandCount == 17",
+            "authority.noAssumeUnchangedOrSkipWorktreeIndexEntriesObserved",
+            "!authority.originRemoteCryptographicallyAuthenticated",
+            "!authority.independentReplayComplete",
+            "!authority.runtimeInitializationEstablished",
+            "!authority.primeProposalPacketProduced",
+            "!authority.trialExecutionAuthorized",
+            "!authority.publicationAuthorized",
+        ] {
+            XCTAssertTrue(
+                source.contains(required),
+                "missing Git-observation probe anchor: \(required)")
+        }
+        for option in [
+            "--action",
+            "--lab-root",
+            "--llm-repository-root",
+            "--pair-sha256",
+        ] {
+            XCTAssertEqual(
+                source.components(separatedBy: "\"\(option)\"").count,
+                2,
+                "Git-observation option is not exact once: \(option)")
+        }
+        for forbidden in [
+            "Process(",
+            "ProcessInfo.processInfo.environment",
+            "URLSession",
+            "FileHandle.standardError",
+            "FileManager",
+            ".write(to:",
+            "createDirectory(",
+            "createFile(",
+            "MLX",
+            "ErgenticsLLM",
+            "PrimeCore",
+            "--disable-sandbox",
+        ] {
+            XCTAssertFalse(
+                source.contains(forbidden),
+                "forbidden Git-observation probe token: \(forbidden)")
         }
     }
 
