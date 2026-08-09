@@ -844,6 +844,332 @@ final class PrimeLatinProposalPairCaptureSourceContractTests: XCTestCase {
         }
     }
 
+    func testProducerRevalidationObserverFreezesExactSelfBuildAndToolSource()
+        throws
+    {
+        let source = try swiftSource(
+            relativePath:
+                "Sources/PrimeLatinProposalProducerRevalidationObservation/" +
+                    "PrimeLatinProposalProducerRevalidationObservationV1.swift")
+        let imports = source.split(separator: "\n")
+            .map(String.init)
+            .filter { $0.hasPrefix("import ") }
+        XCTAssertEqual(
+            imports,
+            [
+                "import Darwin",
+                "import Glibc",
+                "import CryptoKit",
+                "import Compression",
+                "import Foundation",
+                "import PrimeLatinProposalGitObservation",
+                "import PrimeLatinProposalPairCapture",
+            ])
+
+        for required in [
+            "public struct PrimeLatinProposalProducerRevalidationRequestV1",
+            "public struct PrimeLatinProposalProducerRevalidationObservationV1",
+            "public struct PrimeLatinProposalProducerRevalidationAuthorityBoundaryV1",
+            "public final class PrimeLatinProposalProducerRevalidationCaptureV1",
+            "public static func capture(",
+            "request: PrimeLatinProposalProducerRevalidationRequestV1",
+            "recaptureAndValidateUnchanged()",
+            "ergentics_prime_latin_proposal_v3_producer_revalidation_observation_v1",
+            "abstain_producer_revalidation_observation_complete_requires_independent_prime_replay",
+            "ergentics_latin_proposal_v3_live_revalidation_observation_v1",
+            "PrimeLatinProposalGitSourceCaptureV3.capture(",
+            "/usr/bin/xcrun",
+            "Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-driver",
+            "fixed_developer_directory_exact_swift_driver_binary_observed_not_cryptographically_authenticated",
+            "swiftc",
+            "-module-cache-path",
+            "-parse-as-library",
+            "-emit-module",
+            "-emit-object",
+            "-module-name",
+            "ErgenticsLatinProposalArtifacts",
+            "ErgenticsLatinProposalV3Revalidation",
+            "ErgenticsLatinProposalV3RevalidationProbe",
+            "ModuleCache",
+            "process.standardInput",
+            "process.standardOutput",
+            "process.standardError",
+            "process.environment",
+            "process.currentDirectoryURL",
+            "maximumStandardOutputByteCount",
+            "65_537",
+            "PrimeLatinProposalProducerRevalidationCaptureDependenciesV1",
+            "static func captureForTesting(",
+            "scratchParent",
+            "createScratch(in:",
+            "mkdtemp(",
+            "mkdir(",
+            "removeItem(",
+            "acl_get_fd_np",
+            "ACL_TYPE_EXTENDED",
+            "flistxattr",
+            "com.apple.provenance",
+            "O_NOFOLLOW",
+            "fstat(",
+            "lstat(",
+            "realpath(",
+            "decodeChildObservationForTesting",
+            "validateRepeatedOutputsForTesting",
+            "makeAuthorityForTesting",
+            "observeToolStateForTesting",
+            "validateRootForTesting",
+            "validateFileForTesting",
+        ] {
+            XCTAssertTrue(
+                source.contains(required),
+                "missing producer-revalidation source anchor: \(required)")
+        }
+
+        let frozenIdentities = [
+            "1ccfb6bf6718e2378f14ab87cacae1ada303cf48",
+            "6ee438bf1132d26767fbf447355b8165455b956f",
+            "776c412e3f10e8bf4e33cd0ae60787d9ca6b5831",
+            "380c13a3f9f3421db875d2ccc3c4547002374a9d74427a0573e0c59f6d3078ac",
+            "802f7505ad91869b27420e0beb152e6ba725eb82a801b4fd9289d999afac0c81",
+            "302ccde06959cc6ffb411d455ad656c9e50e4ce1",
+            "686ee51886ed5813db6a9883cc6e5e9fa86f1e3f918dafad865e06926824a6e3",
+            "828f18920113f77a849dec56997618ae6f1addc7",
+            "91aa0ca7ebeeb97e808493ad4f0cede9c54dbb08ecc7476619e52cada883a0ee",
+            "b050f965afab11b46bed9037b42c0a59d27e3f26",
+            "180ebeb889cd6d585c89384efa8b4b55984501b4e6be0dbb8928d92cffb2c52d",
+            "9617fac7d88afb2bf33df7324ab15efa1a5a94aa",
+            "136a65f9f574b6a1f3a6e25d4fed66e9b859e536c55b8f28f8a6dd4797d64bd6",
+            "Sources/ErgenticsLatinProposalArtifacts/ErgenticsLatinProposalArtifacts.swift",
+            "Sources/ErgenticsLatinProposalV3Revalidation/ErgenticsLatinProposalV3Revalidation.swift",
+            "Sources/ErgenticsLatinProposalV3RevalidationProbe/ErgenticsLatinProposalV3RevalidationProbeMain.swift",
+            ".github/scripts/latin-proposal-artifacts.Package.swift",
+        ]
+        for identity in frozenIdentities {
+            XCTAssertTrue(
+                source.contains(identity),
+                "missing exact revalidator-tool identity: \(identity)")
+        }
+
+        let childProbeOptions = [
+            "--producer-repository-root",
+            "--lab-root",
+            "--expected-pair-receipt-sha256",
+            "--dependency-lock-relative-path",
+            "--initialization-contract-relative-path",
+            "--corpus-manifest-relative-path",
+            "--evaluation-contract-relative-path",
+            "--training-split-id",
+            "--training-split-relative-path",
+            "--validation-split-id",
+            "--validation-split-relative-path",
+            "--selection-split-id",
+            "--selection-split-relative-path",
+            "--selection-observation-relative-path",
+            "--optimizer-steps",
+            "--training-tokens",
+            "--wall-clock-seconds",
+            "--output-namespace",
+        ]
+        XCTAssertEqual(childProbeOptions.count, 18)
+        for option in childProbeOptions {
+            XCTAssertEqual(
+                source.components(separatedBy: "\"\(option)\"").count,
+                2,
+                "child revalidation option is not exact once: \(option)")
+        }
+
+        XCTAssertEqual(
+            source.components(separatedBy: "Process()").count,
+            2,
+            "producer observer must have one closed Process construction")
+        XCTAssertEqual(
+            source.components(separatedBy: "process.executableURL").count,
+            2,
+            "producer observer must have one executable assignment")
+        for (needle, count) in [
+            ("/usr/bin/xcrun", 4),
+            ("\"swiftc\"", 1),
+            ("acl_get_fd_np", 1),
+            ("flistxattr", 2),
+            ("O_NOFOLLOW", 3),
+            ("fstat(", 3),
+            ("lstat(", 2),
+            ("realpath(", 1),
+            ("mkdtemp(", 1),
+            ("mkdir(", 1),
+            ("FileManager.default.removeItem", 2),
+        ] {
+            XCTAssertEqual(
+                source.components(separatedBy: needle).count,
+                count + 1,
+                "producer observer lexical receipt changed: \(needle)")
+        }
+        XCTAssertTrue(source.contains("processLaunchCount == 5"))
+        XCTAssertEqual(
+            source.components(separatedBy: "timeoutSeconds: 120").count,
+            3,
+            "three compiler launches and two probe launches use two fixed call sites")
+        XCTAssertTrue(source.contains("timeoutSeconds <= 300"))
+
+        let compact = source.filter { !$0.isWhitespace }
+        for byteCount in [
+            "toolRawCommitByteCount:UInt64=1_328",
+            "trackedIndexEntryCount:UInt64=147",
+            "trackedIndexInventoryByteCount:UInt64=14_281",
+            "byteCount:325_892",
+            "byteCount:55_905",
+            "byteCount:8_115",
+            "byteCount:1_463",
+        ] {
+            XCTAssertTrue(
+                compact.contains(byteCount),
+                "missing exact revalidator-tool byte count: \(byteCount)")
+        }
+        for exactCount in [
+            "compileCommandCount:3",
+            "processLaunchCount:5",
+            "governanceArtifactCount:4",
+            "compilerInputSourceCount:3",
+            "invocationCount:2",
+        ] {
+            XCTAssertTrue(
+                compact.contains(exactCount),
+                "missing exact build/process count: \(exactCount)")
+        }
+        for field in [
+            "pairCaptureAndRecaptureComplete",
+            "inputSnapshotCaptureAndRecaptureComplete",
+            "producerGitObservationComplete",
+            "exactMergedRevalidatorSourceObserved",
+            "exactRevalidatorSourceClosureObserved",
+            "compilerIdentityObserved",
+            "localExactSourceClosureBuildObserved",
+            "revalidatorExecutableBuiltFromObservedSourceClosure",
+            "revalidatorExecutableIdentityStable",
+            "boundedFreshProcessObservationComplete",
+            "canonicalRevalidationObservationDecoded",
+            "expectedPairReceiptCrossBindingValidated",
+            "exactTwentyOneInputBindingsCrossBound",
+            "canonicalHashChainCrossBindingsMatched",
+            "repeatedProducerProcessObservationUnchanged",
+            "outputNamespaceAbsenceVerified",
+            "llmGitStateIndependentlyObserved",
+            "revalidatorToolSourceIndependentlyObserved",
+            "liveProducerWorkspaceRevalidationComplete",
+        ] {
+            XCTAssertTrue(
+                compact.contains("\(field)=true"),
+                "missing positive producer-revalidation fact: \(field)")
+        }
+        for field in [
+            "compilerCryptographicallyAuthenticated",
+            "externalSourceToBinaryAttestationAvailable",
+            "independentPrimeReplayComplete",
+            "originRemoteCryptographicallyAuthenticated",
+            "ignoredWorkspaceBytesObserved",
+            "durableInputSnapshotPublished",
+            "durableGitObservationPublished",
+            "durableRevalidationObservationPublished",
+            "runtimeDecoderImplementationAvailable",
+            "runtimeDependencyClosureEstablished",
+            "runtimeInitializationEstablished",
+            "primeProposalPacketProduced",
+            "primeTrialAuthorizationProduced",
+            "primeDecisionReceiptProduced",
+            "candidateSelectionAuthorized",
+            "trialExecutionAuthorized",
+            "furtherTrainingAuthorized",
+            "promotionAuthorized",
+            "productUseAuthorized",
+            "publicationAuthorized",
+            "proposalPairPublicationPerformedByThisObservation",
+            "primeDurableReceiptPublished",
+        ] {
+            XCTAssertTrue(
+                compact.contains("\(field)=false"),
+                "missing producer-revalidation authority ceiling: \(field)")
+        }
+
+        for forbidden in [
+            "import PrimeCore",
+            "import ErgenticsLLM",
+            "import ErgenticsTokenizer",
+            "import MLX",
+            "import MLXNN",
+            "import MLXLLM",
+            "ErgenticsPrimeRuntime",
+            "LlamaModel",
+            "HuggingFace",
+            "PMHNP",
+            "ProcessInfo.processInfo.environment",
+            "URLSession",
+            "Network.framework",
+            "NWConnection",
+            "socket(",
+            "connect(",
+            "\"/bin/sh\"",
+            "\"/bin/bash\"",
+            "\"/usr/bin/env\"",
+            "swift build",
+            "swift package",
+            "publishProposalPairV3",
+            "func publish",
+            "--disable-sandbox",
+        ] {
+            XCTAssertFalse(
+                source.contains(forbidden),
+                "forbidden producer-revalidation capability: \(forbidden)")
+        }
+    }
+
+    func testProducerRevalidationTargetIsASeparateGitObservationLeaf()
+        throws
+    {
+        let root = URL(
+            fileURLWithPath: FileManager.default.currentDirectoryPath,
+            isDirectory: true)
+        let manifest = try String(
+            contentsOf: root.appendingPathComponent("Package.swift"),
+            encoding: .utf8)
+        let compact = manifest.filter { !$0.isWhitespace }
+        XCTAssertTrue(
+            compact.contains(
+                ".target(" +
+                    "name:\"PrimeLatinProposalProducerRevalidationObservation\"," +
+                    "dependencies:[\"PrimeLatinProposalPairCapture\"," +
+                    "\"PrimeLatinProposalGitObservation\",])"))
+        XCTAssertTrue(
+            compact.contains(
+                ".executableTarget(" +
+                    "name:\"PrimeLatinProposalProducerRevalidationObservationProbe\"," +
+                    "dependencies:[" +
+                    "\"PrimeLatinProposalProducerRevalidationObservation\",])"))
+        XCTAssertTrue(
+            compact.contains(
+                ".testTarget(" +
+                    "name:\"PrimeLatinProposalPairCaptureTests\"," +
+                    "dependencies:[\"PrimeLatinProposalPairCapture\"," +
+                    "\"PrimeLatinProposalGitObservation\"," +
+                    "\"PrimeLatinProposalProducerRevalidationObservation\",])"))
+        for forbidden in [
+            "PrimeCore",
+            "ErgenticsPrimeRuntime",
+            "ErgenticsLLM",
+            "ErgenticsTokenizer",
+            "MLX",
+            "MLXNN",
+            "MLXLLM",
+        ] {
+            XCTAssertFalse(
+                compact.contains(
+                    ".target(" +
+                        "name:" +
+                        "\"PrimeLatinProposalProducerRevalidationObservation\"," +
+                        "dependencies:[\"\(forbidden)"),
+                "forbidden producer-revalidation dependency: \(forbidden)")
+        }
+    }
+
     func testCaptureTargetHasNoTargetOrPackageDependency() throws {
         let root = URL(
             fileURLWithPath: FileManager.default.currentDirectoryPath,
@@ -1005,6 +1331,95 @@ final class PrimeLatinProposalPairCaptureSourceContractTests: XCTestCase {
             XCTAssertFalse(
                 source.contains(forbidden),
                 "forbidden Git-observation probe token: \(forbidden)")
+        }
+    }
+
+    func testProducerRevalidationProbeIsProcessFreeAndExactOnceOnly()
+        throws
+    {
+        let source = try swiftSource(
+            relativePath:
+                "Sources/PrimeLatinProposalProducerRevalidationObservationProbe/" +
+                    "PrimeLatinProposalProducerRevalidationObservationProbeMain.swift")
+        let imports = source.split(separator: "\n")
+            .map(String.init)
+            .filter { $0.hasPrefix("import ") }
+        XCTAssertEqual(
+            imports,
+            [
+                "import Foundation",
+                "import PrimeLatinProposalProducerRevalidationObservation",
+            ])
+        for required in [
+            "PrimeLatinProposalProducerRevalidationProbeArguments",
+            "rawArguments.count == 10",
+            "action == \"observe\"",
+            "Array(CommandLine.arguments.dropFirst())",
+            "PrimeLatinProposalProducerRevalidationRequestV1(",
+            "PrimeLatinProposalProducerRevalidationCaptureV1",
+            ".capture(request: request)",
+            "recaptureAndValidateUnchanged()",
+            "observation == capture.observation",
+            "ergentics_prime_latin_proposal_v3_producer_revalidation_observation_v1",
+            "1ccfb6bf6718e2378f14ab87cacae1ada303cf48",
+            "6ee438bf1132d26767fbf447355b8165455b956f",
+            "toolSource.trackedIndexEntryCount == 147",
+            "toolSource.trackedIndexInventoryByteCount == 14_281",
+            "802f7505ad91869b27420e0beb152e6ba725eb82a801b4fd9289d999afac0c81",
+            "build.compileCommandCount == 3",
+            "build.processLaunchCount == 5",
+            "build.governanceArtifactCount == 4",
+            "build.compilerInputSourceCount == 3",
+            "process.invocationCount == 2",
+            "authority.liveProducerWorkspaceRevalidationComplete",
+            "!authority.externalSourceToBinaryAttestationAvailable",
+            "!authority.independentPrimeReplayComplete",
+            "!authority.runtimeInitializationEstablished",
+            "!authority.primeProposalPacketProduced",
+            "!authority.trialExecutionAuthorized",
+            "!authority.publicationAuthorized",
+            "!authority.proposalPairPublicationPerformedByThisObservation",
+            "FileHandle.standardOutput",
+            "output.count <= 1_024",
+        ] {
+            XCTAssertTrue(
+                source.contains(required),
+                "missing producer-revalidation probe anchor: \(required)")
+        }
+        for option in [
+            "--action",
+            "--lab-root",
+            "--producer-repository-root",
+            "--tool-repository-root",
+            "--scratch-parent",
+        ] {
+            XCTAssertEqual(
+                source.components(separatedBy: "\"\(option)\"").count,
+                2,
+                "producer-revalidation option is not exact once: \(option)")
+        }
+        for forbidden in [
+            "Process(",
+            "ProcessInfo.processInfo.environment",
+            "URLSession",
+            "FileHandle.standardError",
+            "FileManager",
+            ".write(to:",
+            "createDirectory(",
+            "createFile(",
+            "removeItem(",
+            "import PrimeCore",
+            "import ErgenticsLLM",
+            "import ErgenticsTokenizer",
+            "import MLX",
+            "MLXLLM",
+            "LlamaModel",
+            "PMHNP",
+            "--disable-sandbox",
+        ] {
+            XCTAssertFalse(
+                source.contains(forbidden),
+                "forbidden producer-revalidation probe token: \(forbidden)")
         }
     }
 
