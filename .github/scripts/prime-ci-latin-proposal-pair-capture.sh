@@ -707,7 +707,6 @@ for forbidden_validation_composition_value in \
     '"/bin/sh"' \
     '"/bin/bash"' \
     '"/usr/bin/env"' \
-    '"/usr/bin/xcrun"' \
     '"/usr/bin/git"' \
     "O_CREAT" \
     "O_WRONLY" \
@@ -837,6 +836,12 @@ readonly validation_composition_replay_projection="$(
         "    private static func producerContractExact(" \
         "$validation_composition_source"
 )"
+readonly validation_composition_producer_contract="$(
+    source_section_between \
+        "    private static func producerContractExact(" \
+        "    private static func replayContractExact(" \
+        "$validation_composition_source"
+)"
 readonly validation_composition_engine="$(
     source_section_between \
         "enum PrimeLatinProposalValidationCompositionEngineV1 {" \
@@ -861,12 +866,21 @@ readonly validation_composition_producer_projection_compact="$(
 readonly validation_composition_replay_projection_compact="$(
     tr -d '[:space:]' <<< "$validation_composition_replay_projection"
 )"
+readonly validation_composition_producer_contract_compact="$(
+    tr -d '[:space:]' <<< "$validation_composition_producer_contract"
+)"
 readonly validation_composition_sequence_compact="$(
     tr -d '[:space:]' <<< "$validation_composition_sequence"
 )"
 readonly validation_composition_live_sequence_compact="$(
     tr -d '[:space:]' <<< "$validation_composition_live_sequence"
 )"
+[[ "$(count_fixed_occurrences '"/usr/bin/xcrun"' \
+        "$validation_composition_source")" == "1" ]] ||
+    die "Latin validation composition must bind exactly one xcrun child observation"
+[[ "$validation_composition_producer_contract_compact" == \
+        *'build.compilerLauncher.absolutePath=="/usr/bin/xcrun"'* ]] ||
+    die "Latin validation composition does not bind the producer compiler launcher"
 for validation_composition_raw_field in \
     "pairReceiptSHA256" \
     "producerRepository" \

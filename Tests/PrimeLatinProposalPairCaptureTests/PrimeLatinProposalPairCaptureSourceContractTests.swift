@@ -1988,6 +1988,9 @@ final class PrimeLatinProposalPairCaptureSourceContractTests: XCTestCase {
             to: "public final class PrimeLatinProposalValidationCompositionCaptureV1")
         let producerCompact = producerProjection.filter { !$0.isWhitespace }
         let replayCompact = replayProjection.filter { !$0.isWhitespace }
+        let producerContractCompact = producerContract.filter {
+            !$0.isWhitespace
+        }
 
         let sharedValueFields = [
             "pairReceiptSHA256",
@@ -2123,6 +2126,14 @@ final class PrimeLatinProposalPairCaptureSourceContractTests: XCTestCase {
                 producerContract.contains(required),
                 "producer child contract omits exact policy/count: \(required)")
         }
+        XCTAssertEqual(
+            fixedOccurrenceCount("\"/usr/bin/xcrun\"", in: source),
+            1,
+            "xcrun must appear only as the exact producer child observation")
+        XCTAssertTrue(
+            producerContractCompact.contains(
+                "build.compilerLauncher.absolutePath==\"/usr/bin/xcrun\""),
+            "producer child contract must bind the exact xcrun observation")
         let producerChildSource = try swiftSource(
             relativePath:
                 "Sources/PrimeLatinProposalProducerRevalidationObservation/" +
