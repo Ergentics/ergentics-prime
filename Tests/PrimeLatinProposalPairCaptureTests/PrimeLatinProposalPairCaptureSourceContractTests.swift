@@ -1155,7 +1155,8 @@ final class PrimeLatinProposalPairCaptureSourceContractTests: XCTestCase {
                     "\"PrimeLatinProposalIndependentReplay\"," +
                     "\"PrimeLatinProposalValidationComposition\"," +
                     "\"PrimeLatinProposalValidationCompositionReceipt\"," +
-                    "\"PrimeLatinProposalValidationCompositionReceiptPublisher\",])"))
+                    "\"PrimeLatinProposalValidationCompositionReceiptPublisher\"," +
+                    "\"PrimeLatinProposalAdmissionPolicy\",])"))
         for forbidden in [
             "PrimeCore",
             "ErgenticsPrimeRuntime",
@@ -1610,7 +1611,8 @@ final class PrimeLatinProposalPairCaptureSourceContractTests: XCTestCase {
                     "\"PrimeLatinProposalIndependentReplay\"," +
                     "\"PrimeLatinProposalValidationComposition\"," +
                     "\"PrimeLatinProposalValidationCompositionReceipt\"," +
-                    "\"PrimeLatinProposalValidationCompositionReceiptPublisher\",])"))
+                    "\"PrimeLatinProposalValidationCompositionReceiptPublisher\"," +
+                    "\"PrimeLatinProposalAdmissionPolicy\",])"))
         XCTAssertFalse(
             compact.contains(
                 "name:\"PrimeLatinProposalIndependentReplay\"," +
@@ -1951,6 +1953,13 @@ final class PrimeLatinProposalPairCaptureSourceContractTests: XCTestCase {
                 "missing exact receipt-publisher graph in \(relativePath)")
             XCTAssertTrue(
                 compact.contains(
+                    ".target(" +
+                        "name:\"PrimeLatinProposalAdmissionPolicy\"," +
+                        "dependencies:[" +
+                        "\"PrimeLatinProposalValidationCompositionReceipt\",])"),
+                "missing exact admission-policy graph in \(relativePath)")
+            XCTAssertTrue(
+                compact.contains(
                     ".testTarget(" +
                         "name:\"PrimeLatinProposalPairCaptureTests\"," +
                         "dependencies:[\"PrimeLatinProposalPairCapture\"," +
@@ -1959,7 +1968,8 @@ final class PrimeLatinProposalPairCaptureSourceContractTests: XCTestCase {
                         "\"PrimeLatinProposalIndependentReplay\"," +
                         "\"PrimeLatinProposalValidationComposition\"," +
                         "\"PrimeLatinProposalValidationCompositionReceipt\"," +
-                        "\"PrimeLatinProposalValidationCompositionReceiptPublisher\",])"),
+                        "\"PrimeLatinProposalValidationCompositionReceiptPublisher\"," +
+                        "\"PrimeLatinProposalAdmissionPolicy\",])"),
                 "composition is outside the existing test lane in \(relativePath)")
             for forbidden in [
                 ".library(name:\"PrimeLatinProposalValidationComposition\"",
@@ -1979,10 +1989,19 @@ final class PrimeLatinProposalPairCaptureSourceContractTests: XCTestCase {
                 ".executable(name:\"PrimeLatinProposalValidationCompositionReceiptPublisher\"",
                 ".executableTarget(name:\"PrimeLatinProposalValidationCompositionReceipt\"",
                 ".executableTarget(name:\"PrimeLatinProposalValidationCompositionReceiptPublisher\"",
-                ".target(name:\"PrimeLatinProposalAdmissionPolicy\"",
                 ".library(name:\"PrimeLatinProposalAdmissionPolicy\"",
                 ".executable(name:\"PrimeLatinProposalAdmissionPolicy\"",
                 ".executableTarget(name:\"PrimeLatinProposalAdmissionPolicy\"",
+                "name:\"PrimeLatinProposalAdmissionPolicy\"," +
+                    "dependencies:[\"PrimeCore\"",
+                "name:\"PrimeLatinProposalAdmissionPolicy\"," +
+                    "dependencies:[\"PrimeLatinProposalPairCapture\"",
+                "name:\"PrimeLatinProposalAdmissionPolicy\"," +
+                    "dependencies:[\"PrimeLatinProposalValidationComposition\"",
+                "name:\"PrimeLatinProposalAdmissionPolicy\"," +
+                    "dependencies:[\"PrimeLatinProposalValidationCompositionReceiptPublisher\"",
+                "name:\"PrimeLatinProposalAdmissionPolicy\"," +
+                    "dependencies:[\"MLX\"",
                 "name:\"PrimeLatinProposalValidationCompositionReceipt\"," +
                     "dependencies:[",
                 "name:\"PrimeLatinProposalValidationCompositionReceiptPublisher\"," +
@@ -1997,6 +2016,215 @@ final class PrimeLatinProposalPairCaptureSourceContractTests: XCTestCase {
                     "forbidden validation-composition package surface in " +
                         "\(relativePath): \(forbidden)")
             }
+        }
+    }
+
+    func testProposalAdmissionPolicyIsPureTypedAndNonAuthorizing() throws {
+        let source = try swiftSource(
+            relativePath:
+                "Sources/PrimeLatinProposalAdmissionPolicy/" +
+                    "PrimeLatinProposalAdmissionPolicyV1.swift")
+        let imports = source.split(separator: "\n")
+            .map(String.init)
+            .filter { $0.hasPrefix("import ") }
+        XCTAssertEqual(
+            imports,
+            ["import PrimeLatinProposalValidationCompositionReceipt"])
+
+        for required in [
+            "public enum PrimeLatinProposalAdmissionOutcomeV1",
+            "case abstain = \"ABSTAIN\"",
+            "public enum PrimeLatinProposalAdmissionReasonV1",
+            "decoded_receipt_does_not_restore_current_live_validation",
+            "exact_candidate_id_classified_as_structural_fixture_by_policy",
+            "runtime_decoder_implementation_not_established_by_receipt",
+            "runtime_dependency_closure_not_established_by_receipt",
+            "runtime_initialization_not_established_by_receipt",
+            "public struct PrimeLatinProposalAdmissionAuthorityBoundaryV1",
+            "public struct PrimeLatinProposalAdmissionEvaluationV1",
+            "public enum PrimeLatinProposalAdmissionPolicyV1",
+            "public static func evaluate(",
+            "try receipt.validateExactV1()",
+            "ergentics_prime_latin_proposal_v3_admission_observation_v1",
+            "exact_frozen_v3_typed_receipt_projection_only_no_artifact_",
+            "binding_or_current_liveness",
+            "prime_latin_v3_exact_typed_receipt_projection_admission_v1",
+            "abstain_exact_typed_validation_composition_receipt_projection_",
+            "admission_evaluated_current_live_validation_not_restored_",
+            "candidate_classified_structural_fixture_runtime_decoder_",
+            "dependency_closure_and_initialization_not_established_by_",
+        ] {
+            XCTAssertTrue(
+                source.contains(required),
+                "admission policy lacks exact anchor: \(required)")
+        }
+
+        let outcome = try sourceSection(
+            source,
+            from: "public enum PrimeLatinProposalAdmissionOutcomeV1:",
+            to: "public enum PrimeLatinProposalAdmissionReasonV1:")
+        let reasons = try sourceSection(
+            source,
+            from: "public enum PrimeLatinProposalAdmissionReasonV1:",
+            to:
+                "public struct " +
+                    "PrimeLatinProposalAdmissionAuthorityBoundaryV1:")
+        XCTAssertEqual(fixedOccurrenceCount("CaseIterable", in: outcome), 1)
+        XCTAssertEqual(fixedOccurrenceCount("case ", in: outcome), 1)
+        XCTAssertEqual(fixedOccurrenceCount("CaseIterable", in: reasons), 1)
+        XCTAssertEqual(fixedOccurrenceCount("case ", in: reasons), 5)
+
+        let authority = try sourceSection(
+            source,
+            from:
+                "public struct " +
+                    "PrimeLatinProposalAdmissionAuthorityBoundaryV1:",
+            to:
+                "public struct " +
+                    "PrimeLatinProposalAdmissionEvaluationV1:")
+        let evaluation = try sourceSection(
+            source,
+            from:
+                "public struct PrimeLatinProposalAdmissionEvaluationV1:",
+            to: "public enum PrimeLatinProposalAdmissionPolicyV1")
+        for (surface, section) in [
+            ("authority", authority),
+            ("evaluation", evaluation),
+        ] {
+            for forbidden in [
+                "Codable",
+                "Encodable",
+                "Decodable",
+                "public init",
+            ] {
+                XCTAssertFalse(
+                    section.contains(forbidden),
+                    "admission \(surface) exposes \(forbidden)")
+            }
+        }
+
+        let authorityCompact = authority.filter { !$0.isWhitespace }
+        let trueFields = [
+            "exactTypedReceiptProjectionValidated",
+            "sourceReceiptHistoricalAuthorityClaimsRetained",
+            "exactCandidateIDClassifiedAsStructuralFixtureByPolicy",
+            "primeProposalPolicyEstablished",
+            "proposalAdmissionEvaluationComplete",
+            "typedAbstainProduced",
+            "orderedAbstentionReasonsComplete",
+        ]
+        let falseFields = [
+            "atomicCrossProcessSnapshotEstablished",
+            "compilerCryptographicallyAuthenticated",
+            "externalSourceToBinaryAttestationAvailable",
+            "originRemoteCryptographicallyAuthenticated",
+            "ignoredWorkspaceBytesObserved",
+            "declarationSourceSemanticsIndependentlyVerified",
+            "tokenizerModelSemanticsIndependentlyValidated",
+            "tokenizerTrainingReplayComplete",
+            "evaluationExecutionComplete",
+            "selectionObservationComplete",
+            "currentLiveProducerWorkspaceRevalidationRestoredFromReceipt",
+            "currentIndependentPrimeReplayRestoredFromReceipt",
+            "runtimeDecoderImplementationAvailable",
+            "runtimeDependencyClosureEstablished",
+            "runtimeInitializationEstablished",
+            "receiptArtifactBindingVerified",
+            "canonicalReceiptBytesVerified",
+            "receiptContentAddressVerified",
+            "durableInputSnapshotPublished",
+            "durableGitObservationPublished",
+            "durableProducerRevalidationObservationPublished",
+            "durableIndependentReplayObservationPublished",
+            "durableValidationCompositionObservationPublished",
+            "rawProducerRevalidationObservationAvailableToPolicy",
+            "rawIndependentReplayObservationAvailableToPolicy",
+            "durableValidationCompositionReceiptPublished",
+            "primeDurableReceiptPublished",
+            "proposalAdmissionGranted",
+            "primeProposalPacketProduced",
+            "primeTrialAuthorizationProduced",
+            "primeDecisionReceiptProduced",
+            "candidateSelectionAuthorized",
+            "trialExecutionAuthorized",
+            "furtherTrainingAuthorized",
+            "promotionAuthorized",
+            "productUseAuthorized",
+            "publicationAuthorized",
+            "proposalPairPublicationPerformedByThisPolicy",
+            "admissionObservationPublished",
+            "publicNetworkPublicationPerformed",
+        ]
+        XCTAssertEqual(trueFields.count, 7)
+        XCTAssertEqual(falseFields.count, 40)
+        XCTAssertEqual(
+            fixedOccurrenceCount(":Bool", in: authorityCompact), 47)
+        for field in trueFields {
+            XCTAssertTrue(
+                authorityCompact.contains("publiclet\(field):Bool"),
+                "admission authority lacks true field: \(field)")
+            XCTAssertTrue(
+                authorityCompact.contains("\(field)=true"),
+                "admission completion is not true: \(field)")
+        }
+        for field in falseFields {
+            XCTAssertTrue(
+                authorityCompact.contains("publiclet\(field):Bool"),
+                "admission authority lacks false field: \(field)")
+            XCTAssertTrue(
+                authorityCompact.contains("\(field)=false"),
+                "admission ceiling is not false: \(field)")
+        }
+
+        XCTAssertEqual(
+            fixedOccurrenceCount("try receipt.validateExactV1()", in: source),
+            1)
+        XCTAssertEqual(
+            fixedOccurrenceCount("public static func evaluate(", in: source),
+            1)
+        XCTAssertEqual(
+            fixedOccurrenceCount("public static let ", in: source), 1)
+        for forbidden in [
+            "import Foundation",
+            "import PrimeCore",
+            "import PrimeLatinProposalPairCapture",
+            "import PrimeLatinProposalGitObservation",
+            "import PrimeLatinProposalProducerRevalidationObservation",
+            "import PrimeLatinProposalIndependentReplay",
+            "import PrimeLatinProposalValidationComposition\n",
+            "import PrimeLatinProposalValidationCompositionReceiptPublisher",
+            "import ErgenticsLLM",
+            "import ErgenticsTokenizer",
+            "import MLX",
+            "MLXLLM",
+            "LlamaModel",
+            "HuggingFace",
+            "PMHNP",
+            "ErgenticsPrimeRuntime",
+            "@main",
+            "CommandLine",
+            "Process(",
+            "ProcessInfo.processInfo.environment",
+            "FileManager",
+            "FileHandle",
+            "URLSession",
+            "NWConnection",
+            "socket(",
+            "connect(",
+            "O_CREAT",
+            "O_WRONLY",
+            "O_RDWR",
+            "createDirectory(",
+            "createFile(",
+            "removeItem(",
+            "func publish",
+            "PrimeLatinTrialProposal",
+            "PrimeLatinTrialAuthorization",
+            "--disable-sandbox",
+        ] {
+            XCTAssertFalse(
+                source.contains(forbidden),
+                "admission policy contains forbidden capability: \(forbidden)")
         }
     }
 

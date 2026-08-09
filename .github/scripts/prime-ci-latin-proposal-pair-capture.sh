@@ -98,6 +98,7 @@ readonly independent_replay_probe_source="$prime_root/Sources/PrimeLatinProposal
 readonly validation_composition_source="$prime_root/Sources/PrimeLatinProposalValidationComposition/PrimeLatinProposalValidationCompositionV1.swift"
 readonly validation_composition_receipt_source="$prime_root/Sources/PrimeLatinProposalValidationCompositionReceipt/PrimeLatinProposalValidationCompositionReceiptV1.swift"
 readonly validation_composition_receipt_publisher_source="$prime_root/Sources/PrimeLatinProposalValidationCompositionReceiptPublisher/PrimeLatinProposalValidationCompositionReceiptPublisherV1.swift"
+readonly admission_policy_source="$prime_root/Sources/PrimeLatinProposalAdmissionPolicy/PrimeLatinProposalAdmissionPolicyV1.swift"
 readonly capture_tests="$prime_root/Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalPairCaptureTests.swift"
 readonly v3_inputs_tests="$prime_root/Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalInputsV3Tests.swift"
 readonly v3_snapshot_tests="$prime_root/Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalInputSnapshotV3Tests.swift"
@@ -107,6 +108,7 @@ readonly independent_replay_tests="$prime_root/Tests/PrimeLatinProposalPairCaptu
 readonly validation_composition_tests="$prime_root/Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalValidationCompositionV1Tests.swift"
 readonly validation_composition_receipt_tests="$prime_root/Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalValidationCompositionReceiptV1Tests.swift"
 readonly validation_composition_receipt_publisher_tests="$prime_root/Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalValidationCompositionReceiptPublisherV1Tests.swift"
+readonly admission_policy_tests="$prime_root/Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalAdmissionPolicyV1Tests.swift"
 readonly source_contract_tests="$prime_root/Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalPairCaptureSourceContractTests.swift"
 
 for required_file in \
@@ -126,6 +128,7 @@ for required_file in \
     "$validation_composition_source" \
     "$validation_composition_receipt_source" \
     "$validation_composition_receipt_publisher_source" \
+    "$admission_policy_source" \
     "$capture_tests" \
     "$v3_inputs_tests" \
     "$v3_snapshot_tests" \
@@ -135,6 +138,7 @@ for required_file in \
     "$validation_composition_tests" \
     "$validation_composition_receipt_tests" \
     "$validation_composition_receipt_publisher_tests" \
+    "$admission_policy_tests" \
     "$source_contract_tests"; do
     [[ -f "$required_file" && ! -L "$required_file" ]] ||
         die "required validation source is missing or linked: $required_file"
@@ -186,6 +190,9 @@ require_exact_file_inventory \
     "$prime_root/Sources/PrimeLatinProposalValidationCompositionReceiptPublisher" \
     "PrimeLatinProposalValidationCompositionReceiptPublisherV1.swift"
 require_exact_file_inventory \
+    "$prime_root/Sources/PrimeLatinProposalAdmissionPolicy" \
+    "PrimeLatinProposalAdmissionPolicyV1.swift"
+require_exact_file_inventory \
     "$prime_root/Tests/PrimeLatinProposalPairCaptureTests" \
     "PrimeLatinProposalGitSourceV3Tests.swift" \
     "PrimeLatinProposalPairCaptureSourceContractTests.swift" \
@@ -196,6 +203,7 @@ require_exact_file_inventory \
     "PrimeLatinProposalValidationCompositionV1Tests.swift" \
     "PrimeLatinProposalValidationCompositionReceiptV1Tests.swift" \
     "PrimeLatinProposalValidationCompositionReceiptPublisherV1Tests.swift" \
+    "PrimeLatinProposalAdmissionPolicyV1Tests.swift" \
     "PrimeLatinProposalProducerRevalidationObservationTests.swift"
 
 for forbidden_source_value in \
@@ -1461,6 +1469,257 @@ for forbidden_validation_composition_receipt_publisher_test_value in \
     fi
 done
 
+readonly admission_policy_imports="$(
+    grep -E '^import ' "$admission_policy_source"
+)"
+[[ "$admission_policy_imports" == \
+        "import PrimeLatinProposalValidationCompositionReceipt" ]] ||
+    die "Latin admission-policy import inventory is not exact"
+for forbidden_admission_policy_value in \
+    "import Foundation" \
+    "import PrimeCore" \
+    "import PrimeLatinProposalPairCapture" \
+    "import PrimeLatinProposalGitObservation" \
+    "import PrimeLatinProposalProducerRevalidationObservation" \
+    "import PrimeLatinProposalIndependentReplay" \
+    "import PrimeLatinProposalValidationCompositionReceiptPublisher" \
+    "import ErgenticsLLM" \
+    "import ErgenticsTokenizer" \
+    "import MLX" \
+    "MLXLLM" \
+    "LlamaModel" \
+    "HuggingFace" \
+    "PMHNP" \
+    "ErgenticsPrimeRuntime" \
+    "@main" \
+    "CommandLine" \
+    "Process(" \
+    "ProcessInfo.processInfo.environment" \
+    "FileManager" \
+    "FileHandle" \
+    "URLSession" \
+    "NWConnection" \
+    "socket(" \
+    "connect(" \
+    "O_CREAT" \
+    "O_WRONLY" \
+    "O_RDWR" \
+    "createDirectory(" \
+    "createFile(" \
+    "removeItem(" \
+    "func publish" \
+    "PrimeLatinTrialProposal" \
+    "PrimeLatinTrialAuthorization" \
+    "--disable-sandbox"; do
+    if grep -Fq -- "$forbidden_admission_policy_value" \
+        "$admission_policy_source"; then
+        die "Latin admission policy contains forbidden capability: $forbidden_admission_policy_value"
+    fi
+done
+for required_admission_policy_anchor in \
+    "public enum PrimeLatinProposalAdmissionOutcomeV1" \
+    'case abstain = "ABSTAIN"' \
+    "public enum PrimeLatinProposalAdmissionReasonV1" \
+    "decoded_receipt_does_not_restore_current_live_validation" \
+    "exact_candidate_id_classified_as_structural_fixture_by_policy" \
+    "runtime_decoder_implementation_not_established_by_receipt" \
+    "runtime_dependency_closure_not_established_by_receipt" \
+    "runtime_initialization_not_established_by_receipt" \
+    "public struct PrimeLatinProposalAdmissionAuthorityBoundaryV1" \
+    "public struct PrimeLatinProposalAdmissionEvaluationV1" \
+    "public enum PrimeLatinProposalAdmissionPolicyV1" \
+    "public static func evaluate(" \
+    "try receipt.validateExactV1()" \
+    "ergentics_prime_latin_proposal_v3_admission_observation_v1" \
+    "exact_frozen_v3_typed_receipt_projection_only_no_artifact_" \
+    "binding_or_current_liveness" \
+    "prime_latin_v3_exact_typed_receipt_projection_admission_v1" \
+    "abstain_exact_typed_validation_composition_receipt_projection_" \
+    "admission_evaluated_current_live_validation_not_restored_" \
+    "candidate_classified_structural_fixture_runtime_decoder_" \
+    "dependency_closure_and_initialization_not_established_by_"; do
+    grep -Fq -- "$required_admission_policy_anchor" \
+        "$admission_policy_source" ||
+        die "Latin admission policy lacks frozen anchor: $required_admission_policy_anchor"
+done
+readonly admission_policy_outcome="$(
+    source_section_between \
+        "public enum PrimeLatinProposalAdmissionOutcomeV1:" \
+        "public enum PrimeLatinProposalAdmissionReasonV1:" \
+        "$admission_policy_source"
+)"
+readonly admission_policy_reasons="$(
+    source_section_between \
+        "public enum PrimeLatinProposalAdmissionReasonV1:" \
+        "public struct PrimeLatinProposalAdmissionAuthorityBoundaryV1:" \
+        "$admission_policy_source"
+)"
+[[ "$(grep -Ec '^[[:space:]]+case ' \
+        <<< "$admission_policy_outcome")" == "1" ]] ||
+    die "Latin admission outcome inventory is not exact"
+[[ "$(count_fixed_occurrences \
+        "CaseIterable" \
+        /dev/stdin <<< "$admission_policy_outcome")" == "1" ]] ||
+    die "Latin admission outcome is not exhaustively enumerable"
+[[ "$(grep -Ec '^[[:space:]]+case ' \
+        <<< "$admission_policy_reasons")" == "5" ]] ||
+    die "Latin admission reason inventory is not exact"
+[[ "$(count_fixed_occurrences \
+        "CaseIterable" \
+        /dev/stdin <<< "$admission_policy_reasons")" == "1" ]] ||
+    die "Latin admission reasons are not exhaustively enumerable"
+readonly admission_policy_authority="$(
+    source_section_between \
+        "public struct PrimeLatinProposalAdmissionAuthorityBoundaryV1:" \
+        "public struct PrimeLatinProposalAdmissionEvaluationV1:" \
+        "$admission_policy_source"
+)"
+readonly admission_policy_evaluation="$(
+    source_section_between \
+        "public struct PrimeLatinProposalAdmissionEvaluationV1:" \
+        "public enum PrimeLatinProposalAdmissionPolicyV1" \
+        "$admission_policy_source"
+)"
+for forbidden_admission_wire_surface in \
+    "Codable" \
+    "Encodable" \
+    "Decodable" \
+    "public init"; do
+    if grep -Fq -- "$forbidden_admission_wire_surface" \
+        <<< "$admission_policy_authority"; then
+        die "Latin admission authority exposes a forbidden wire surface: $forbidden_admission_wire_surface"
+    fi
+    if grep -Fq -- "$forbidden_admission_wire_surface" \
+        <<< "$admission_policy_evaluation"; then
+        die "Latin admission evaluation exposes a forbidden wire surface: $forbidden_admission_wire_surface"
+    fi
+done
+readonly admission_policy_authority_compact="$(
+    tr -d '[:space:]' <<< "$admission_policy_authority"
+)"
+[[ "$(count_fixed_occurrences \
+        ":Bool" \
+        /dev/stdin <<< "$admission_policy_authority_compact")" == "47" ]] ||
+    die "Latin admission authority inventory is not exact"
+for required_admission_true_field in \
+    "exactTypedReceiptProjectionValidated" \
+    "sourceReceiptHistoricalAuthorityClaimsRetained" \
+    "exactCandidateIDClassifiedAsStructuralFixtureByPolicy" \
+    "primeProposalPolicyEstablished" \
+    "proposalAdmissionEvaluationComplete" \
+    "typedAbstainProduced" \
+    "orderedAbstentionReasonsComplete"; do
+    [[ "$admission_policy_authority_compact" == \
+        *"publiclet$required_admission_true_field:Bool"* ]] ||
+        die "Latin admission authority lacks true field: $required_admission_true_field"
+    [[ "$admission_policy_authority_compact" == \
+        *"$required_admission_true_field=true"* ]] ||
+        die "Latin admission completion is not true: $required_admission_true_field"
+done
+for required_admission_false_field in \
+    "atomicCrossProcessSnapshotEstablished" \
+    "compilerCryptographicallyAuthenticated" \
+    "externalSourceToBinaryAttestationAvailable" \
+    "originRemoteCryptographicallyAuthenticated" \
+    "ignoredWorkspaceBytesObserved" \
+    "declarationSourceSemanticsIndependentlyVerified" \
+    "tokenizerModelSemanticsIndependentlyValidated" \
+    "tokenizerTrainingReplayComplete" \
+    "evaluationExecutionComplete" \
+    "selectionObservationComplete" \
+    "currentLiveProducerWorkspaceRevalidationRestoredFromReceipt" \
+    "currentIndependentPrimeReplayRestoredFromReceipt" \
+    "runtimeDecoderImplementationAvailable" \
+    "runtimeDependencyClosureEstablished" \
+    "runtimeInitializationEstablished" \
+    "receiptArtifactBindingVerified" \
+    "canonicalReceiptBytesVerified" \
+    "receiptContentAddressVerified" \
+    "durableInputSnapshotPublished" \
+    "durableGitObservationPublished" \
+    "durableProducerRevalidationObservationPublished" \
+    "durableIndependentReplayObservationPublished" \
+    "durableValidationCompositionObservationPublished" \
+    "rawProducerRevalidationObservationAvailableToPolicy" \
+    "rawIndependentReplayObservationAvailableToPolicy" \
+    "durableValidationCompositionReceiptPublished" \
+    "primeDurableReceiptPublished" \
+    "proposalAdmissionGranted" \
+    "primeProposalPacketProduced" \
+    "primeTrialAuthorizationProduced" \
+    "primeDecisionReceiptProduced" \
+    "candidateSelectionAuthorized" \
+    "trialExecutionAuthorized" \
+    "furtherTrainingAuthorized" \
+    "promotionAuthorized" \
+    "productUseAuthorized" \
+    "publicationAuthorized" \
+    "proposalPairPublicationPerformedByThisPolicy" \
+    "admissionObservationPublished" \
+    "publicNetworkPublicationPerformed"; do
+    [[ "$admission_policy_authority_compact" == \
+        *"publiclet$required_admission_false_field:Bool"* ]] ||
+        die "Latin admission authority lacks false field: $required_admission_false_field"
+    [[ "$admission_policy_authority_compact" == \
+        *"$required_admission_false_field=false"* ]] ||
+        die "Latin admission ceiling is not false: $required_admission_false_field"
+done
+[[ "$(count_fixed_occurrences \
+        "try receipt.validateExactV1()" \
+        "$admission_policy_source")" == "1" ]] ||
+    die "Latin admission policy bypasses exact receipt validation"
+[[ "$(count_fixed_occurrences \
+        "public static func evaluate(" \
+        "$admission_policy_source")" == "1" ]] ||
+    die "Latin admission policy exposes an alternate public evaluation"
+[[ "$(count_fixed_occurrences \
+        "public static let " \
+        "$admission_policy_source")" == "1" ]] ||
+    die "Latin admission policy declaration surface is not exact"
+readonly admission_policy_test_imports="$(
+    grep -E '^(@testable )?import ' "$admission_policy_tests"
+)"
+readonly expected_admission_policy_test_imports=$'import XCTest\n@testable import PrimeLatinProposalAdmissionPolicy\n@testable import PrimeLatinProposalValidationCompositionReceipt'
+[[ "$admission_policy_test_imports" == \
+        "$expected_admission_policy_test_imports" ]] ||
+    die "Latin admission-policy test imports are not exact"
+for required_admission_policy_test_anchor in \
+    "final class PrimeLatinProposalAdmissionPolicyV1Tests" \
+    "testExactReceiptProducesTypedFailClosedAbstention" \
+    "testAuthorityBoundaryEstablishesOnlyPolicyAndAbstention" \
+    "testMutatedProjectionCannotConstructPolicyInput" \
+    "PrimeLatinProposalAdmissionPolicyV1.evaluate(" \
+    "XCTAssertEqual(observation.outcome, .abstain)" \
+    'XCTAssertEqual(observation.outcome.rawValue, "ABSTAIN")' \
+    "PrimeLatinProposalAdmissionOutcomeV1.allCases" \
+    "PrimeLatinProposalAdmissionReasonV1.allCases" \
+    "XCTAssertEqual(observation.orderedReasons.count, 5)" \
+    "XCTAssertEqual(Set(observation.orderedReasons).count, 5)"; do
+    grep -Fq -- "$required_admission_policy_test_anchor" \
+        "$admission_policy_tests" ||
+        die "Latin admission-policy tests lack exact anchor: $required_admission_policy_test_anchor"
+done
+for forbidden_admission_policy_test_value in \
+    "PrimeLatinProposalValidationCompositionCaptureV1" \
+    ".publish(" \
+    "Process(" \
+    "ProcessInfo.processInfo.environment" \
+    "FileManager" \
+    "URLSession" \
+    "NWConnection" \
+    "socket(" \
+    "connect(" \
+    '"/usr/bin/git"' \
+    '"fetch"' \
+    '"push"' \
+    '"clone"' \
+    "--disable-sandbox"; do
+    if grep -Fq -- "$forbidden_admission_policy_test_value" \
+        "$admission_policy_tests"; then
+        die "Latin admission-policy tests contain a live or external path: $forbidden_admission_policy_test_value"
+    fi
+done
+
 [[ "$(grep -Fc -- '.package(' "$prime_root/Package.swift")" == "1" ]] ||
     die "Prime root gained an unexpected package dependency"
 ! grep -Fq -- '.package(' "$validation_manifest" ||
@@ -1484,11 +1743,12 @@ for required_root_fragment in \
     '.target(name:"PrimeLatinProposalValidationComposition",dependencies:["PrimeLatinProposalProducerRevalidationObservation","PrimeLatinProposalIndependentReplay",])' \
     '.target(name:"PrimeLatinProposalValidationCompositionReceipt")' \
     '.target(name:"PrimeLatinProposalValidationCompositionReceiptPublisher",dependencies:["PrimeCore","PrimeLatinProposalValidationComposition","PrimeLatinProposalValidationCompositionReceipt",])' \
+    '.target(name:"PrimeLatinProposalAdmissionPolicy",dependencies:["PrimeLatinProposalValidationCompositionReceipt",])' \
     '.executableTarget(name:"PrimeLatinProposalPairCaptureProbe",dependencies:["PrimeLatinProposalPairCapture",])' \
     '.executableTarget(name:"PrimeLatinProposalGitObservationProbe",dependencies:["PrimeLatinProposalGitObservation",])' \
     '.executableTarget(name:"PrimeLatinProposalProducerRevalidationObservationProbe",dependencies:["PrimeLatinProposalProducerRevalidationObservation",])' \
     '.executableTarget(name:"PrimeLatinProposalIndependentReplayProbe",dependencies:["PrimeLatinProposalIndependentReplay",])' \
-    '.testTarget(name:"PrimeLatinProposalPairCaptureTests",dependencies:["PrimeLatinProposalPairCapture","PrimeLatinProposalGitObservation","PrimeLatinProposalProducerRevalidationObservation","PrimeLatinProposalIndependentReplay","PrimeLatinProposalValidationComposition","PrimeLatinProposalValidationCompositionReceipt","PrimeLatinProposalValidationCompositionReceiptPublisher",])'; do
+    '.testTarget(name:"PrimeLatinProposalPairCaptureTests",dependencies:["PrimeLatinProposalPairCapture","PrimeLatinProposalGitObservation","PrimeLatinProposalProducerRevalidationObservation","PrimeLatinProposalIndependentReplay","PrimeLatinProposalValidationComposition","PrimeLatinProposalValidationCompositionReceipt","PrimeLatinProposalValidationCompositionReceiptPublisher","PrimeLatinProposalAdmissionPolicy",])'; do
     [[ "$root_manifest_compact" == *"$required_root_fragment"* ]] ||
         die "Prime root Latin target graph is not exact"
 done
@@ -1501,11 +1761,12 @@ for required_validation_fragment in \
     '.target(name:"PrimeLatinProposalValidationComposition",dependencies:["PrimeLatinProposalProducerRevalidationObservation","PrimeLatinProposalIndependentReplay",])' \
     '.target(name:"PrimeLatinProposalValidationCompositionReceipt")' \
     '.target(name:"PrimeLatinProposalValidationCompositionReceiptPublisher",dependencies:["PrimeCore","PrimeLatinProposalValidationComposition","PrimeLatinProposalValidationCompositionReceipt",])' \
+    '.target(name:"PrimeLatinProposalAdmissionPolicy",dependencies:["PrimeLatinProposalValidationCompositionReceipt",])' \
     '.executableTarget(name:"PrimeLatinProposalPairCaptureProbe",dependencies:["PrimeLatinProposalPairCapture",])' \
     '.executableTarget(name:"PrimeLatinProposalGitObservationProbe",dependencies:["PrimeLatinProposalGitObservation",])' \
     '.executableTarget(name:"PrimeLatinProposalProducerRevalidationObservationProbe",dependencies:["PrimeLatinProposalProducerRevalidationObservation",])' \
     '.executableTarget(name:"PrimeLatinProposalIndependentReplayProbe",dependencies:["PrimeLatinProposalIndependentReplay",])' \
-    '.testTarget(name:"PrimeLatinProposalPairCaptureTests",dependencies:["PrimeLatinProposalPairCapture","PrimeLatinProposalGitObservation","PrimeLatinProposalProducerRevalidationObservation","PrimeLatinProposalIndependentReplay","PrimeLatinProposalValidationComposition","PrimeLatinProposalValidationCompositionReceipt","PrimeLatinProposalValidationCompositionReceiptPublisher",])'; do
+    '.testTarget(name:"PrimeLatinProposalPairCaptureTests",dependencies:["PrimeLatinProposalPairCapture","PrimeLatinProposalGitObservation","PrimeLatinProposalProducerRevalidationObservation","PrimeLatinProposalIndependentReplay","PrimeLatinProposalValidationComposition","PrimeLatinProposalValidationCompositionReceipt","PrimeLatinProposalValidationCompositionReceiptPublisher","PrimeLatinProposalAdmissionPolicy",])'; do
     [[ "$validation_manifest_compact" == *"$required_validation_fragment"* ]] ||
         die "isolated Latin validation target graph is not exact"
 done
@@ -1516,7 +1777,6 @@ for forbidden_receipt_manifest_fragment in \
     '.executable(name:"PrimeLatinProposalValidationCompositionReceiptPublisher"' \
     '.executableTarget(name:"PrimeLatinProposalValidationCompositionReceipt"' \
     '.executableTarget(name:"PrimeLatinProposalValidationCompositionReceiptPublisher"' \
-    '.target(name:"PrimeLatinProposalAdmissionPolicy"' \
     '.library(name:"PrimeLatinProposalAdmissionPolicy"' \
     '.executable(name:"PrimeLatinProposalAdmissionPolicy"' \
     '.executableTarget(name:"PrimeLatinProposalAdmissionPolicy"'; do
@@ -1837,6 +2097,9 @@ cp -R \
     "$prime_root/Sources/PrimeLatinProposalValidationCompositionReceiptPublisher" \
     "$stage_root/Sources/PrimeLatinProposalValidationCompositionReceiptPublisher"
 cp -R \
+    "$prime_root/Sources/PrimeLatinProposalAdmissionPolicy" \
+    "$stage_root/Sources/PrimeLatinProposalAdmissionPolicy"
+cp -R \
     "$prime_root/Tests/PrimeLatinProposalPairCaptureTests" \
     "$stage_root/Tests/PrimeLatinProposalPairCaptureTests"
 
@@ -1860,6 +2123,7 @@ xcrun swiftc -frontend -parse "$independent_replay_probe_source"
 xcrun swiftc -frontend -parse "$validation_composition_source"
 xcrun swiftc -frontend -parse "$validation_composition_receipt_source"
 xcrun swiftc -frontend -parse "$validation_composition_receipt_publisher_source"
+xcrun swiftc -frontend -parse "$admission_policy_source"
 xcrun swiftc -frontend -parse "$capture_tests"
 xcrun swiftc -frontend -parse "$v3_inputs_tests"
 xcrun swiftc -frontend -parse "$v3_snapshot_tests"
@@ -1869,6 +2133,7 @@ xcrun swiftc -frontend -parse "$independent_replay_tests"
 xcrun swiftc -frontend -parse "$validation_composition_tests"
 xcrun swiftc -frontend -parse "$validation_composition_receipt_tests"
 xcrun swiftc -frontend -parse "$validation_composition_receipt_publisher_tests"
+xcrun swiftc -frontend -parse "$admission_policy_tests"
 xcrun swiftc -frontend -parse "$source_contract_tests"
 
 TMPDIR="$stage_root" swift test \
@@ -1881,7 +2146,7 @@ TMPDIR="$stage_root" swift test \
     --manifest-cache local \
     --disable-netrc \
     --disable-keychain \
-    --filter 'PrimeLatinProposalPairCaptureTests|PrimeLatinProposalInputsV3Tests|PrimeLatinProposalInputSnapshotV3Tests|PrimeLatinProposalGitSourceV3Tests|PrimeLatinProposalProducerRevalidationObservationTests|PrimeLatinProposalIndependentReplayV1Tests|PrimeLatinProposalValidationCompositionV1Tests|PrimeLatinProposalValidationCompositionReceiptV1Tests|PrimeLatinProposalValidationCompositionReceiptPublisherV1Tests|PrimeLatinProposalPairCaptureSourceContractTests' \
+    --filter 'PrimeLatinProposalPairCaptureTests|PrimeLatinProposalInputsV3Tests|PrimeLatinProposalInputSnapshotV3Tests|PrimeLatinProposalGitSourceV3Tests|PrimeLatinProposalProducerRevalidationObservationTests|PrimeLatinProposalIndependentReplayV1Tests|PrimeLatinProposalValidationCompositionV1Tests|PrimeLatinProposalValidationCompositionReceiptV1Tests|PrimeLatinProposalValidationCompositionReceiptPublisherV1Tests|PrimeLatinProposalAdmissionPolicyV1Tests|PrimeLatinProposalPairCaptureSourceContractTests' \
     2>&1 | tee "$test_log"
 grep -Eq 'Executed [1-9][0-9]* tests?, with 0 failures' "$test_log" ||
     die "focused Latin capture and V3 test receipt is missing"
@@ -1895,6 +2160,7 @@ for expected_test_suite in \
     "PrimeLatinProposalValidationCompositionV1Tests" \
     "PrimeLatinProposalValidationCompositionReceiptV1Tests" \
     "PrimeLatinProposalValidationCompositionReceiptPublisherV1Tests" \
+    "PrimeLatinProposalAdmissionPolicyV1Tests" \
     "PrimeLatinProposalPairCaptureSourceContractTests"; do
     grep -Fq -- "$expected_test_suite" "$test_log" ||
         die "focused Latin test suite receipt is missing: $expected_test_suite"

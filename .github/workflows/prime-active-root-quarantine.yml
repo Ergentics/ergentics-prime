@@ -74,6 +74,7 @@ jobs:
             Sources/PrimeLatinProposalValidationComposition/PrimeLatinProposalValidationCompositionV1.swift \
             Sources/PrimeLatinProposalValidationCompositionReceipt/PrimeLatinProposalValidationCompositionReceiptV1.swift \
             Sources/PrimeLatinProposalValidationCompositionReceiptPublisher/PrimeLatinProposalValidationCompositionReceiptPublisherV1.swift \
+            Sources/PrimeLatinProposalAdmissionPolicy/PrimeLatinProposalAdmissionPolicyV1.swift \
             Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalPairCaptureSourceContractTests.swift \
             Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalPairCaptureTests.swift \
             Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalGitSourceV3Tests.swift \
@@ -84,6 +85,7 @@ jobs:
             Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalValidationCompositionV1Tests.swift \
             Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalValidationCompositionReceiptV1Tests.swift \
             Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalValidationCompositionReceiptPublisherV1Tests.swift \
+            Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalAdmissionPolicyV1Tests.swift \
             Tests/PrimeCoreTests/PrimeNativeCorpusReplaySourceContractTests.swift \
             Tests/PrimeCoreTests/PrimeNativeGenerationContractSourceContractTests.swift \
             Tests/PrimeCoreTests/PrimeNativeNeuralGateContractSourceContractTests.swift \
@@ -117,6 +119,7 @@ jobs:
             echo 'The Prime-owned validation composition target cooperatively sequences both child captures for one request and cross-binds their observations, but hosted CI uses synthetic tests only and never live-runs that composition.'
             echo 'The pure validation-composition receipt target defines, encodes, and exactly validates only the composed receipt schema without filesystem, network, runtime, proposal-policy, or publication capability; byte-canonical encoding and durable publication remain in the PrimeCore-backed publisher.'
             echo 'The receipt publisher is compiled and exercised only against synthetic temporary artifact roots in the existing Latin test lane; hosted CI does not live-run validation capture or publish repository, lab, model, proposal, or public-network artifacts.'
+            echo 'The pure internal Latin admission policy validates only the exact frozen typed receipt projection and emits typed ABSTAIN reasons for absent current liveness, the policy-classified structural fixture, and runtime decoder, dependency-closure, and initialization state not established by that receipt; it proves no artifact binding and creates no proposal packet or trial authorization.'
             echo 'The locally declared origin is not network-authenticated, and ignored workspace bytes are not observed by this slice.'
             echo 'No Prime proposal, candidate selection, trial authorization, decision receipt, decoder selection, model execution, training, publication, promotion, Driver V2, or PMHNP authority is granted.'
           } >> "$GITHUB_STEP_SUMMARY"
