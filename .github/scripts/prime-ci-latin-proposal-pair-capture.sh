@@ -69,11 +69,14 @@ readonly git_observation_source="$prime_root/Sources/PrimeLatinProposalGitObserv
 readonly git_observation_probe_source="$prime_root/Sources/PrimeLatinProposalGitObservationProbe/PrimeLatinProposalGitObservationProbeMain.swift"
 readonly producer_revalidation_source="$prime_root/Sources/PrimeLatinProposalProducerRevalidationObservation/PrimeLatinProposalProducerRevalidationObservationV1.swift"
 readonly producer_revalidation_probe_source="$prime_root/Sources/PrimeLatinProposalProducerRevalidationObservationProbe/PrimeLatinProposalProducerRevalidationObservationProbeMain.swift"
+readonly independent_replay_source="$prime_root/Sources/PrimeLatinProposalIndependentReplay/PrimeLatinProposalIndependentReplayV1.swift"
+readonly independent_replay_probe_source="$prime_root/Sources/PrimeLatinProposalIndependentReplayProbe/PrimeLatinProposalIndependentReplayProbeMain.swift"
 readonly capture_tests="$prime_root/Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalPairCaptureTests.swift"
 readonly v3_inputs_tests="$prime_root/Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalInputsV3Tests.swift"
 readonly v3_snapshot_tests="$prime_root/Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalInputSnapshotV3Tests.swift"
 readonly git_observation_tests="$prime_root/Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalGitSourceV3Tests.swift"
 readonly producer_revalidation_tests="$prime_root/Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalProducerRevalidationObservationTests.swift"
+readonly independent_replay_tests="$prime_root/Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalIndependentReplayV1Tests.swift"
 readonly source_contract_tests="$prime_root/Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalPairCaptureSourceContractTests.swift"
 
 for required_file in \
@@ -88,11 +91,14 @@ for required_file in \
     "$git_observation_probe_source" \
     "$producer_revalidation_source" \
     "$producer_revalidation_probe_source" \
+    "$independent_replay_source" \
+    "$independent_replay_probe_source" \
     "$capture_tests" \
     "$v3_inputs_tests" \
     "$v3_snapshot_tests" \
     "$git_observation_tests" \
     "$producer_revalidation_tests" \
+    "$independent_replay_tests" \
     "$source_contract_tests"; do
     [[ -f "$required_file" && ! -L "$required_file" ]] ||
         die "required validation source is missing or linked: $required_file"
@@ -120,12 +126,19 @@ require_exact_file_inventory \
     "$prime_root/Sources/PrimeLatinProposalProducerRevalidationObservationProbe" \
     "PrimeLatinProposalProducerRevalidationObservationProbeMain.swift"
 require_exact_file_inventory \
+    "$prime_root/Sources/PrimeLatinProposalIndependentReplay" \
+    "PrimeLatinProposalIndependentReplayV1.swift"
+require_exact_file_inventory \
+    "$prime_root/Sources/PrimeLatinProposalIndependentReplayProbe" \
+    "PrimeLatinProposalIndependentReplayProbeMain.swift"
+require_exact_file_inventory \
     "$prime_root/Tests/PrimeLatinProposalPairCaptureTests" \
     "PrimeLatinProposalGitSourceV3Tests.swift" \
     "PrimeLatinProposalPairCaptureSourceContractTests.swift" \
     "PrimeLatinProposalPairCaptureTests.swift" \
     "PrimeLatinProposalInputSnapshotV3Tests.swift" \
     "PrimeLatinProposalInputsV3Tests.swift" \
+    "PrimeLatinProposalIndependentReplayV1Tests.swift" \
     "PrimeLatinProposalProducerRevalidationObservationTests.swift"
 
 for forbidden_source_value in \
@@ -419,6 +432,220 @@ for required_child_probe_option in \
         die "Latin producer-revalidation child option is not exact once: $required_child_probe_option"
 done
 
+readonly independent_replay_imports="$(
+    grep -E '^import ' "$independent_replay_source"
+)"
+readonly expected_independent_replay_imports=$'import CryptoKit\nimport Foundation\nimport PrimeLatinProposalGitObservation\nimport PrimeLatinProposalPairCapture'
+[[ "$independent_replay_imports" == \
+        "$expected_independent_replay_imports" ]] ||
+    die "Latin independent-replay source import inventory is not exact"
+readonly independent_replay_probe_imports="$(
+    grep -E '^import ' "$independent_replay_probe_source"
+)"
+readonly expected_independent_replay_probe_imports=$'import Foundation\nimport PrimeLatinProposalIndependentReplay'
+[[ "$independent_replay_probe_imports" == \
+        "$expected_independent_replay_probe_imports" ]] ||
+    die "Latin independent-replay probe import inventory is not exact"
+for forbidden_independent_replay_value in \
+    "import PrimeLatinProposalProducerRevalidationObservation" \
+    "PrimeLatinProposalProducerRevalidationCapture" \
+    "import PrimeCore" \
+    "import ErgenticsLLM" \
+    "import ErgenticsTokenizer" \
+    "import ErgenticsLatinProposalArtifacts" \
+    "import ErgenticsLatinCandidateDeclarations" \
+    "import MLX" \
+    "ErgenticsPrimeRuntime" \
+    "LlamaModel" \
+    "HuggingFace" \
+    "PMHNP" \
+    "pmhnp-companion-ergentics" \
+    "ProcessInfo.processInfo.environment" \
+    "URLSession" \
+    "Network.framework" \
+    "NWConnection" \
+    "socket(" \
+    "connect(" \
+    "curl" \
+    "python" \
+    "ssh" \
+    "scp" \
+    '"/bin/sh"' \
+    '"/bin/bash"' \
+    '"/usr/bin/env"' \
+    '"/usr/bin/xcrun"' \
+    '"/usr/bin/git"' \
+    "O_CREAT" \
+    "O_WRONLY" \
+    "O_RDWR" \
+    "mkdirat(" \
+    "renameat" \
+    "unlinkat(" \
+    "removeItem(" \
+    "createDirectory(" \
+    "createFile(" \
+    ".write(to:" \
+    '"swift build"' \
+    '"swift package"' \
+    "publishProposalPairV3" \
+    "func publish" \
+    "PrimeLatinTrialProposal" \
+    "PrimeLatinTrialAuthorization" \
+    '"fetch"' \
+    '"push"' \
+    '"clone"' \
+    "--disable-sandbox"; do
+    if grep -Fq -- "$forbidden_independent_replay_value" \
+        "$independent_replay_source" \
+        "$independent_replay_probe_source"; then
+        die "Latin independent-replay surface contains forbidden value: $forbidden_independent_replay_value"
+    fi
+done
+[[ "$(count_fixed_occurrences "Process(" \
+        "$independent_replay_source")" == "0" ]] ||
+    die "Latin independent replay may not launch a process"
+[[ "$(count_fixed_occurrences "Process(" \
+        "$independent_replay_probe_source")" == "0" ]] ||
+    die "Latin independent-replay probe may not launch a process"
+for required_independent_replay_identity in \
+    "ergentics_prime_latin_proposal_v3_independent_replay_observation_v1" \
+    "prime_owned_independent_typed_reconstruction_from_one_git_bound_retained_twenty_one_original_input_snapshot_and_byte_exact_catalog_experiment_cross_check_only_non_authorizing" \
+    "abstain_independent_prime_structural_replay_complete_live_producer_revalidation_not_composed_and_runtime_decoder_initialization_evaluation_trial_and_publication_authority_absent" \
+    "prime_latin_v3_retained_original_input_independent_reconstruction_v1" \
+    "6c47d6ff17d72e48873c9f4ae9ce0a0fe7e57dea8e25db144c5f1d8d42761ff7" \
+    "776c412e3f10e8bf4e33cd0ae60787d9ca6b5831" \
+    "c1f41758aea2860ab06039776f5ea0403dff1b61" \
+    "12387e11fdbf68ab5b76cad79c6c958e9b82ddeca1cb588b844918a2ab0dc6b4" \
+    "8436ab6d656b2393792c564d0bdb9a25d1ade9f5c457ad3b96cf99bacc708a76" \
+    "4b31feeeba780bc39c064d4540f5701935f960e1e1d8c82c81d295a65e643a70" \
+    "45d15481883cf606e8e739aa71815bf9bd2fdd51494059328e3ba16a9ed5fb8f" \
+    "815b3231fbb000968bbe2c19efe92013540d7241cba728c9b0ec1e89e9a4d193" \
+    "45c787dba8c538794cbaf7cb90acb4528d2dedcaf666a1f0da151ca236138881" \
+    "9fa3b6eea42a9c4c13ec1ecda2309ec4c35b3022638ae61a08dd2f0fcb9b074c" \
+    "64a288b62cdef276923eb72e5cc4d209a7195526408414fc5167522151481265" \
+    "6f07896e50b2b530ea5f5924859d1e66bf9880366c16cf37832138a0e6c7f4bd" \
+    "models/latin-prospective/structural-fixture-v3-776c412e"; do
+    grep -Fq -- "$required_independent_replay_identity" \
+        "$independent_replay_source" ||
+        die "Latin independent replay lacks frozen identity: $required_independent_replay_identity"
+done
+readonly independent_replay_compact="$(tr -d '[:space:]' < "$independent_replay_source")"
+readonly independent_replay_probe_compact="$(
+    tr -d '[:space:]' < "$independent_replay_probe_source"
+)"
+for required_independent_replay_plan_count in \
+    "pairReceiptByteCount:1_833" \
+    "candidateCatalogByteCount:20_803" \
+    "experimentManifestByteCount:3_364" \
+    "declarationTargetClosureByteCount:1_961" \
+    "declarationBundleByteCount:14_302" \
+    "candidateDeclarationSetByteCount:14_860" \
+    "tokenizerBundleByteCount:2_930"; do
+    [[ "$independent_replay_compact" == \
+        *"$required_independent_replay_plan_count"* ]] ||
+        die "Latin independent replay lacks frozen plan count: $required_independent_replay_plan_count"
+done
+for required_independent_replay_count in \
+    "observation.inputBindingCount==21" \
+    "observation.retainedOriginalInputByteCount==8_084_712" \
+    "observation.pairReceiptByteCount==1_833" \
+    "observation.candidateCatalogByteCount==20_803" \
+    "observation.experimentManifestByteCount==3_364" \
+    "observation.candidateDeclarationSetByteCount==14_860" \
+    "observation.tokenizerBundleByteCount==2_930" \
+    "observation.optimizerSteps==1" \
+    "observation.trainingTokens==128" \
+    "observation.wallClockSeconds==60" \
+    "observation.orderedTensorCount==12" \
+    "observation.uniqueParameterStorageCount==11" \
+    "observation.totalParameterCount==131_736"; do
+    [[ "$independent_replay_probe_compact" == \
+        *"$required_independent_replay_count"* ]] ||
+        die "Latin independent replay lacks frozen count: $required_independent_replay_count"
+done
+for required_true_authority_field in \
+    "pairCaptureAndRecaptureComplete" \
+    "inputSnapshotCaptureAndRecaptureComplete" \
+    "producerGitObservationComplete" \
+    "exactTwentyOneOriginalInputBindingsCrossBound" \
+    "exactTwentyOneOriginalInputBytesRetained" \
+    "retainedOriginalInputHashCountRecomputationComplete" \
+    "independentTokenizerBundleReconstructionComplete" \
+    "independentDeclarationTargetClosureReconstructionComplete" \
+    "independentCandidateIdentityReconstructionComplete" \
+    "independentCandidateDeclarationSetReconstructionComplete" \
+    "independentCandidateCatalogReconstructionComplete" \
+    "independentExperimentManifestReconstructionComplete" \
+    "canonicalCandidateCatalogBytesMatched" \
+    "canonicalExperimentManifestBytesMatched" \
+    "canonicalHashChainRecomputationComplete" \
+    "outputNamespaceAbsenceVerified" \
+    "referencedInputSnapshotAvailable" \
+    "referencedArtifactBytesAvailable" \
+    "llmGitStateIndependentlyObserved" \
+    "independentPrimeReplayComplete"; do
+    [[ "$independent_replay_compact" == \
+        *"$required_true_authority_field=true"* ]] ||
+        die "Latin independent replay lacks true authority receipt: $required_true_authority_field"
+done
+for required_false_authority_field in \
+    "ergenticsLatinProducerModuleImported" \
+    "ergenticsLatinProducerFunctionInvoked" \
+    "ergenticsLatinProducerSourceUsedAsReplayImplementation" \
+    "liveProducerWorkspaceRevalidationComplete" \
+    "revalidatorToolSourceIndependentlyObserved" \
+    "originRemoteCryptographicallyAuthenticated" \
+    "ignoredWorkspaceBytesObserved" \
+    "declarationSourceSemanticsIndependentlyVerified" \
+    "tokenizerModelSemanticsIndependentlyValidated" \
+    "tokenizerTrainingReplayComplete" \
+    "evaluationExecutionComplete" \
+    "selectionObservationComplete" \
+    "durableInputSnapshotPublished" \
+    "durableGitObservationPublished" \
+    "durableIndependentReplayObservationPublished" \
+    "runtimeDecoderImplementationAvailable" \
+    "runtimeDependencyClosureEstablished" \
+    "runtimeInitializationEstablished" \
+    "primeProposalPacketProduced" \
+    "primeTrialAuthorizationProduced" \
+    "primeDecisionReceiptProduced" \
+    "candidateSelectionAuthorized" \
+    "trialExecutionAuthorized" \
+    "furtherTrainingAuthorized" \
+    "promotionAuthorized" \
+    "productUseAuthorized" \
+    "publicationAuthorized" \
+    "proposalPairPublicationPerformedByThisObservation" \
+    "primeDurableReceiptPublished"; do
+    [[ "$independent_replay_compact" == \
+        *"$required_false_authority_field=false"* ]] ||
+        die "Latin independent replay lacks false authority ceiling: $required_false_authority_field"
+done
+[[ "$producer_revalidation_compact" == \
+    *"independentPrimeReplayComplete=false"* ]] ||
+    die "producer revalidation may not claim independent replay completion"
+readonly v3_capture_compact="$(tr -d '[:space:]' < "$v3_capture_source")"
+[[ "$v3_capture_compact" == *"independentReplayComplete=false"* \
+        && "$v3_capture_compact" == \
+            *"liveProducerWorkspaceRevalidationComplete=false"* ]] ||
+    die "pair capture may not absorb sibling completion claims"
+readonly git_observation_compact="$(
+    tr -d '[:space:]' < "$git_observation_source"
+)"
+[[ "$git_observation_compact" == *"independentReplayComplete=false"* \
+        && "$git_observation_compact" == \
+            *"liveProducerWorkspaceRevalidationComplete=false"* ]] ||
+    die "Git observation may not absorb sibling completion claims"
+for required_independent_replay_probe_option in \
+    "--action" \
+    "--lab-root" \
+    "--llm-repository-root"; do
+    [[ "$(count_fixed_occurrences "$required_independent_replay_probe_option" \
+            "$independent_replay_probe_source")" == "1" ]] ||
+        die "Latin independent-replay probe option is not exact once: $required_independent_replay_probe_option"
+done
+
 [[ "$(grep -Fc -- '.package(' "$prime_root/Package.swift")" == "1" ]] ||
     die "Prime root gained an unexpected package dependency"
 ! grep -Fq -- '.package(' "$validation_manifest" ||
@@ -429,16 +656,20 @@ for required_root_fragment in \
     '.library(name:"PrimeLatinProposalPairCapture",targets:["PrimeLatinProposalPairCapture",])' \
     '.library(name:"PrimeLatinProposalGitObservation",targets:["PrimeLatinProposalGitObservation",])' \
     '.library(name:"PrimeLatinProposalProducerRevalidationObservation",targets:["PrimeLatinProposalProducerRevalidationObservation",])' \
+    '.library(name:"PrimeLatinProposalIndependentReplay",targets:["PrimeLatinProposalIndependentReplay",])' \
     '.executable(name:"PrimeLatinProposalPairCaptureProbe",targets:["PrimeLatinProposalPairCaptureProbe",])' \
     '.executable(name:"PrimeLatinProposalGitObservationProbe",targets:["PrimeLatinProposalGitObservationProbe",])' \
     '.executable(name:"PrimeLatinProposalProducerRevalidationObservationProbe",targets:["PrimeLatinProposalProducerRevalidationObservationProbe",])' \
+    '.executable(name:"PrimeLatinProposalIndependentReplayProbe",targets:["PrimeLatinProposalIndependentReplayProbe",])' \
     '.target(name:"PrimeLatinProposalPairCapture")' \
     '.target(name:"PrimeLatinProposalGitObservation",dependencies:["PrimeLatinProposalPairCapture",])' \
     '.target(name:"PrimeLatinProposalProducerRevalidationObservation",dependencies:["PrimeLatinProposalPairCapture","PrimeLatinProposalGitObservation",])' \
+    '.target(name:"PrimeLatinProposalIndependentReplay",dependencies:["PrimeLatinProposalPairCapture","PrimeLatinProposalGitObservation",])' \
     '.executableTarget(name:"PrimeLatinProposalPairCaptureProbe",dependencies:["PrimeLatinProposalPairCapture",])' \
     '.executableTarget(name:"PrimeLatinProposalGitObservationProbe",dependencies:["PrimeLatinProposalGitObservation",])' \
     '.executableTarget(name:"PrimeLatinProposalProducerRevalidationObservationProbe",dependencies:["PrimeLatinProposalProducerRevalidationObservation",])' \
-    '.testTarget(name:"PrimeLatinProposalPairCaptureTests",dependencies:["PrimeLatinProposalPairCapture","PrimeLatinProposalGitObservation","PrimeLatinProposalProducerRevalidationObservation",])'; do
+    '.executableTarget(name:"PrimeLatinProposalIndependentReplayProbe",dependencies:["PrimeLatinProposalIndependentReplay",])' \
+    '.testTarget(name:"PrimeLatinProposalPairCaptureTests",dependencies:["PrimeLatinProposalPairCapture","PrimeLatinProposalGitObservation","PrimeLatinProposalProducerRevalidationObservation","PrimeLatinProposalIndependentReplay",])'; do
     [[ "$root_manifest_compact" == *"$required_root_fragment"* ]] ||
         die "Prime root Latin target graph is not exact"
 done
@@ -446,10 +677,12 @@ for required_validation_fragment in \
     '.target(name:"PrimeLatinProposalPairCapture")' \
     '.target(name:"PrimeLatinProposalGitObservation",dependencies:["PrimeLatinProposalPairCapture",])' \
     '.target(name:"PrimeLatinProposalProducerRevalidationObservation",dependencies:["PrimeLatinProposalPairCapture","PrimeLatinProposalGitObservation",])' \
+    '.target(name:"PrimeLatinProposalIndependentReplay",dependencies:["PrimeLatinProposalPairCapture","PrimeLatinProposalGitObservation",])' \
     '.executableTarget(name:"PrimeLatinProposalPairCaptureProbe",dependencies:["PrimeLatinProposalPairCapture",])' \
     '.executableTarget(name:"PrimeLatinProposalGitObservationProbe",dependencies:["PrimeLatinProposalGitObservation",])' \
     '.executableTarget(name:"PrimeLatinProposalProducerRevalidationObservationProbe",dependencies:["PrimeLatinProposalProducerRevalidationObservation",])' \
-    '.testTarget(name:"PrimeLatinProposalPairCaptureTests",dependencies:["PrimeLatinProposalPairCapture","PrimeLatinProposalGitObservation","PrimeLatinProposalProducerRevalidationObservation",])'; do
+    '.executableTarget(name:"PrimeLatinProposalIndependentReplayProbe",dependencies:["PrimeLatinProposalIndependentReplay",])' \
+    '.testTarget(name:"PrimeLatinProposalPairCaptureTests",dependencies:["PrimeLatinProposalPairCapture","PrimeLatinProposalGitObservation","PrimeLatinProposalProducerRevalidationObservation","PrimeLatinProposalIndependentReplay",])'; do
     [[ "$validation_manifest_compact" == *"$required_validation_fragment"* ]] ||
         die "isolated Latin validation target graph is not exact"
 done
@@ -635,6 +868,12 @@ cp -R \
     "$prime_root/Sources/PrimeLatinProposalProducerRevalidationObservationProbe" \
     "$stage_root/Sources/PrimeLatinProposalProducerRevalidationObservationProbe"
 cp -R \
+    "$prime_root/Sources/PrimeLatinProposalIndependentReplay" \
+    "$stage_root/Sources/PrimeLatinProposalIndependentReplay"
+cp -R \
+    "$prime_root/Sources/PrimeLatinProposalIndependentReplayProbe" \
+    "$stage_root/Sources/PrimeLatinProposalIndependentReplayProbe"
+cp -R \
     "$prime_root/Tests/PrimeLatinProposalPairCaptureTests" \
     "$stage_root/Tests/PrimeLatinProposalPairCaptureTests"
 
@@ -648,11 +887,14 @@ xcrun swiftc -frontend -parse "$git_observation_source"
 xcrun swiftc -frontend -parse "$git_observation_probe_source"
 xcrun swiftc -frontend -parse "$producer_revalidation_source"
 xcrun swiftc -frontend -parse "$producer_revalidation_probe_source"
+xcrun swiftc -frontend -parse "$independent_replay_source"
+xcrun swiftc -frontend -parse "$independent_replay_probe_source"
 xcrun swiftc -frontend -parse "$capture_tests"
 xcrun swiftc -frontend -parse "$v3_inputs_tests"
 xcrun swiftc -frontend -parse "$v3_snapshot_tests"
 xcrun swiftc -frontend -parse "$git_observation_tests"
 xcrun swiftc -frontend -parse "$producer_revalidation_tests"
+xcrun swiftc -frontend -parse "$independent_replay_tests"
 xcrun swiftc -frontend -parse "$source_contract_tests"
 
 TMPDIR="$stage_root" swift test \
@@ -665,7 +907,7 @@ TMPDIR="$stage_root" swift test \
     --manifest-cache local \
     --disable-netrc \
     --disable-keychain \
-    --filter 'PrimeLatinProposalPairCaptureTests|PrimeLatinProposalInputsV3Tests|PrimeLatinProposalInputSnapshotV3Tests|PrimeLatinProposalGitSourceV3Tests|PrimeLatinProposalProducerRevalidationObservationTests|PrimeLatinProposalPairCaptureSourceContractTests' \
+    --filter 'PrimeLatinProposalPairCaptureTests|PrimeLatinProposalInputsV3Tests|PrimeLatinProposalInputSnapshotV3Tests|PrimeLatinProposalGitSourceV3Tests|PrimeLatinProposalProducerRevalidationObservationTests|PrimeLatinProposalIndependentReplayV1Tests|PrimeLatinProposalPairCaptureSourceContractTests' \
     2>&1 | tee "$test_log"
 grep -Eq 'Executed [1-9][0-9]* tests?, with 0 failures' "$test_log" ||
     die "focused Latin capture and V3 test receipt is missing"
@@ -675,6 +917,7 @@ for expected_test_suite in \
     "PrimeLatinProposalInputSnapshotV3Tests" \
     "PrimeLatinProposalGitSourceV3Tests" \
     "PrimeLatinProposalProducerRevalidationObservationTests" \
+    "PrimeLatinProposalIndependentReplayV1Tests" \
     "PrimeLatinProposalPairCaptureSourceContractTests"; do
     grep -Fq -- "$expected_test_suite" "$test_log" ||
         die "focused Latin test suite receipt is missing: $expected_test_suite"
@@ -716,9 +959,21 @@ TMPDIR="$stage_root" swift build \
     --disable-keychain \
     --target PrimeLatinProposalProducerRevalidationObservationProbe
 
+TMPDIR="$stage_root" swift build \
+    --package-path "$stage_root" \
+    --scratch-path "$scratch_path" \
+    --cache-path "$cache_path" \
+    --config-path "$config_path" \
+    --security-path "$security_path" \
+    --disable-dependency-cache \
+    --manifest-cache local \
+    --disable-netrc \
+    --disable-keychain \
+    --target PrimeLatinProposalIndependentReplayProbe
+
 [[ "$(git -C "$prime_root" rev-parse HEAD)" == "$expected_prime_head" ]] ||
     die "Prime checkout changed commits during validation"
 [[ -z "$(git -C "$prime_root" status --porcelain=v1 --untracked-files=all)" ]] ||
     die "Prime checkout changed during validation"
 
-echo "OK: exact-head Latin V1/V3 pair capture, canonical V3 wire/hash-chain verification, original-input snapshot mechanics, fixed local Git observation, and the compiled-but-not-live-run producer-revalidation observer are dependency-isolated, abstaining, and non-authorizing"
+echo "OK: exact-head Latin V1/V3 pair capture, canonical V3 wire/hash-chain verification, original-input snapshot mechanics, fixed local Git observation, compiled-but-not-live-run producer revalidation, and compiled-and-synthetically-tested-but-not-live-run Prime-owned independent structural replay are dependency-isolated, abstaining, and non-authorizing"

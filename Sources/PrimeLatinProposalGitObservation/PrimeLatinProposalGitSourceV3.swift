@@ -405,6 +405,12 @@ public final class PrimeLatinProposalGitSourceCaptureV3:
         }
     }
 
+    package func retainedMaterialForIndependentReplayV1() throws
+        -> PrimeLatinProposalIndependentReplayRetainedMaterialV1
+    {
+        try snapshotCapture.retainedInputSnapshotForIndependentReplayV1()
+    }
+
     private static func capture(
         snapshotCapture: PrimeLatinProposalInputSnapshotCaptureV3,
         llmRepositoryRoot: URL,

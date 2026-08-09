@@ -1150,7 +1150,8 @@ final class PrimeLatinProposalPairCaptureSourceContractTests: XCTestCase {
                     "name:\"PrimeLatinProposalPairCaptureTests\"," +
                     "dependencies:[\"PrimeLatinProposalPairCapture\"," +
                     "\"PrimeLatinProposalGitObservation\"," +
-                    "\"PrimeLatinProposalProducerRevalidationObservation\",])"))
+                    "\"PrimeLatinProposalProducerRevalidationObservation\"," +
+                    "\"PrimeLatinProposalIndependentReplay\",])"))
         for forbidden in [
             "PrimeCore",
             "ErgenticsPrimeRuntime",
@@ -1420,6 +1421,342 @@ final class PrimeLatinProposalPairCaptureSourceContractTests: XCTestCase {
             XCTAssertFalse(
                 source.contains(forbidden),
                 "forbidden producer-revalidation probe token: \(forbidden)")
+        }
+    }
+
+    func testIndependentReplayIsPrimeOwnedAndCannotUseTheProducerAsAnOracle()
+        throws
+    {
+        let source = try swiftSource(
+            relativePath:
+                "Sources/PrimeLatinProposalIndependentReplay/" +
+                    "PrimeLatinProposalIndependentReplayV1.swift")
+        let imports = source.split(separator: "\n")
+            .map(String.init)
+            .filter { $0.hasPrefix("import ") }
+        XCTAssertEqual(
+            imports,
+            [
+                "import CryptoKit",
+                "import Foundation",
+                "import PrimeLatinProposalGitObservation",
+                "import PrimeLatinProposalPairCapture",
+            ])
+        for required in [
+            "public enum PrimeLatinProposalIndependentReplayError",
+            "public struct PrimeLatinProposalIndependentReplayAuthorityBoundaryV1",
+            "public struct PrimeLatinProposalIndependentReplayObservationV1",
+            "public final class PrimeLatinProposalIndependentReplayCaptureV1",
+            "public static func capture(",
+            "labRoot: URL",
+            "llmRepositoryRoot: URL",
+            "public let observation",
+            "public func recaptureAndValidateUnchanged()",
+            "public let producerRepository: String",
+            "public let producerCommit: String",
+            "public let producerTree: String",
+            "public let retainedOriginalInputByteCount: UInt64",
+            "ergentics_prime_latin_proposal_v3_independent_replay_observation_v1",
+            "prime_owned_independent_typed_reconstruction_from_one_git_bound_retained_twenty_one_original_input_snapshot_and_byte_exact_catalog_experiment_cross_check_only_non_authorizing",
+            "abstain_independent_prime_structural_replay_complete_live_producer_revalidation_not_composed_and_runtime_decoder_initialization_evaluation_trial_and_publication_authority_absent",
+            "prime_latin_v3_retained_original_input_independent_reconstruction_v1",
+            "6c47d6ff17d72e48873c9f4ae9ce0a0fe7e57dea8e25db144c5f1d8d42761ff7",
+            "776c412e3f10e8bf4e33cd0ae60787d9ca6b5831",
+            "c1f41758aea2860ab06039776f5ea0403dff1b61",
+            "12387e11fdbf68ab5b76cad79c6c958e9b82ddeca1cb588b844918a2ab0dc6b4",
+            "8436ab6d656b2393792c564d0bdb9a25d1ade9f5c457ad3b96cf99bacc708a76",
+            "4b31feeeba780bc39c064d4540f5701935f960e1e1d8c82c81d295a65e643a70",
+            "45d15481883cf606e8e739aa71815bf9bd2fdd51494059328e3ba16a9ed5fb8f",
+            "815b3231fbb000968bbe2c19efe92013540d7241cba728c9b0ec1e89e9a4d193",
+            "45c787dba8c538794cbaf7cb90acb4528d2dedcaf666a1f0da151ca236138881",
+            "9fa3b6eea42a9c4c13ec1ecda2309ec4c35b3022638ae61a08dd2f0fcb9b074c",
+            "64a288b62cdef276923eb72e5cc4d209a7195526408414fc5167522151481265",
+            "6f07896e50b2b530ea5f5924859d1e66bf9880366c16cf37832138a0e6c7f4bd",
+            "models/latin-prospective/structural-fixture-v3-776c412e",
+        ] {
+            XCTAssertTrue(
+                source.contains(required),
+                "missing independent-replay anchor: \(required)")
+        }
+        let compact = source.filter { !$0.isWhitespace }
+        for field in [
+            "pairCaptureAndRecaptureComplete",
+            "inputSnapshotCaptureAndRecaptureComplete",
+            "producerGitObservationComplete",
+            "exactTwentyOneOriginalInputBindingsCrossBound",
+            "exactTwentyOneOriginalInputBytesRetained",
+            "retainedOriginalInputHashCountRecomputationComplete",
+            "independentTokenizerBundleReconstructionComplete",
+            "independentDeclarationTargetClosureReconstructionComplete",
+            "independentCandidateIdentityReconstructionComplete",
+            "independentCandidateDeclarationSetReconstructionComplete",
+            "independentCandidateCatalogReconstructionComplete",
+            "independentExperimentManifestReconstructionComplete",
+            "canonicalCandidateCatalogBytesMatched",
+            "canonicalExperimentManifestBytesMatched",
+            "canonicalHashChainRecomputationComplete",
+            "outputNamespaceAbsenceVerified",
+            "referencedInputSnapshotAvailable",
+            "referencedArtifactBytesAvailable",
+            "llmGitStateIndependentlyObserved",
+            "independentPrimeReplayComplete",
+        ] {
+            XCTAssertTrue(
+                compact.contains("\(field)=true"),
+                "independent-replay completion receipt is not true: \(field)")
+        }
+        for field in [
+            "ergenticsLatinProducerModuleImported",
+            "ergenticsLatinProducerFunctionInvoked",
+            "ergenticsLatinProducerSourceUsedAsReplayImplementation",
+            "liveProducerWorkspaceRevalidationComplete",
+            "revalidatorToolSourceIndependentlyObserved",
+            "originRemoteCryptographicallyAuthenticated",
+            "ignoredWorkspaceBytesObserved",
+            "declarationSourceSemanticsIndependentlyVerified",
+            "tokenizerModelSemanticsIndependentlyValidated",
+            "tokenizerTrainingReplayComplete",
+            "evaluationExecutionComplete",
+            "selectionObservationComplete",
+            "durableInputSnapshotPublished",
+            "durableGitObservationPublished",
+            "durableIndependentReplayObservationPublished",
+            "runtimeDecoderImplementationAvailable",
+            "runtimeDependencyClosureEstablished",
+            "runtimeInitializationEstablished",
+            "primeProposalPacketProduced",
+            "primeTrialAuthorizationProduced",
+            "primeDecisionReceiptProduced",
+            "candidateSelectionAuthorized",
+            "trialExecutionAuthorized",
+            "furtherTrainingAuthorized",
+            "promotionAuthorized",
+            "productUseAuthorized",
+            "publicationAuthorized",
+            "proposalPairPublicationPerformedByThisObservation",
+            "primeDurableReceiptPublished",
+        ] {
+            XCTAssertTrue(
+                compact.contains("\(field)=false"),
+                "independent-replay authority ceiling is not false: \(field)")
+        }
+        for forbidden in [
+            "import PrimeLatinProposalProducerRevalidationObservation",
+            "PrimeLatinProposalProducerRevalidationCapture",
+            "import PrimeCore",
+            "import ErgenticsLLM",
+            "import ErgenticsTokenizer",
+            "import ErgenticsLatinProposalArtifacts",
+            "import ErgenticsLatinCandidateDeclarations",
+            "import MLX",
+            "MLXLLM",
+            "LlamaModel",
+            "ErgenticsPrimeRuntime",
+            "Process(",
+            "ProcessInfo.processInfo.environment",
+            "URLSession",
+            "NWConnection",
+            "socket(",
+            "connect(",
+            "FileHandle.standardOutput",
+            "FileHandle.standardError",
+            "O_CREAT",
+            "O_WRONLY",
+            "O_RDWR",
+            "createDirectory(",
+            "createFile(",
+            "removeItem(",
+            "publishProposalPairV3",
+            "func publish",
+            "--disable-sandbox",
+        ] {
+            XCTAssertFalse(
+                source.contains(forbidden),
+                "independent replay contains a forbidden oracle/capability: \(forbidden)")
+        }
+    }
+
+    func testIndependentReplayTargetIsADisjointSiblingLeaf() throws {
+        let root = URL(
+            fileURLWithPath: FileManager.default.currentDirectoryPath,
+            isDirectory: true)
+        let manifest = try String(
+            contentsOf: root.appendingPathComponent("Package.swift"),
+            encoding: .utf8)
+        let compact = manifest.filter { !$0.isWhitespace }
+        XCTAssertTrue(
+            compact.contains(
+                ".target(" +
+                    "name:\"PrimeLatinProposalIndependentReplay\"," +
+                    "dependencies:[\"PrimeLatinProposalPairCapture\"," +
+                    "\"PrimeLatinProposalGitObservation\",])"))
+        XCTAssertTrue(
+            compact.contains(
+                ".executableTarget(" +
+                    "name:\"PrimeLatinProposalIndependentReplayProbe\"," +
+                    "dependencies:[" +
+                    "\"PrimeLatinProposalIndependentReplay\",])"))
+        XCTAssertTrue(
+            compact.contains(
+                ".testTarget(" +
+                    "name:\"PrimeLatinProposalPairCaptureTests\"," +
+                    "dependencies:[\"PrimeLatinProposalPairCapture\"," +
+                    "\"PrimeLatinProposalGitObservation\"," +
+                    "\"PrimeLatinProposalProducerRevalidationObservation\"," +
+                    "\"PrimeLatinProposalIndependentReplay\",])"))
+        XCTAssertFalse(
+            compact.contains(
+                "name:\"PrimeLatinProposalIndependentReplay\"," +
+                    "dependencies:[" +
+                    "\"PrimeLatinProposalProducerRevalidationObservation\""))
+        for forbidden in [
+            "PrimeCore",
+            "ErgenticsPrimeRuntime",
+            "ErgenticsLLM",
+            "ErgenticsTokenizer",
+            "MLX",
+            "MLXNN",
+            "MLXLLM",
+        ] {
+            XCTAssertFalse(
+                compact.contains(
+                    ".target(" +
+                        "name:\"PrimeLatinProposalIndependentReplay\"," +
+                        "dependencies:[\"\(forbidden)"),
+                "forbidden independent-replay dependency: \(forbidden)")
+        }
+    }
+
+    func testIndependentReconstructorCannotConsultReferenceOrProducerOracles()
+        throws
+    {
+        let source = try swiftSource(
+            relativePath:
+                "Sources/PrimeLatinProposalIndependentReplay/" +
+                    "PrimeLatinProposalIndependentReplayV1.swift")
+        guard let reconstructorStart = source.range(
+                of: "enum PrimeLatinProposalIndependentReconstructorV1"),
+              let comparatorStart = source.range(
+                of: "enum PrimeLatinProposalIndependentReplayComparatorV1"),
+              reconstructorStart.lowerBound < comparatorStart.lowerBound else {
+            return XCTFail("independent replay source boundaries are missing")
+        }
+        let reconstructor = String(
+            source[
+                reconstructorStart.lowerBound..<comparatorStart.lowerBound])
+        guard let signatureStart = reconstructor.range(
+                of: "static func reconstruct("),
+              let signatureEnd = reconstructor.range(
+                of:
+                    ") throws -> " +
+                        "PrimeLatinProposalIndependentReplayReconstructionV1 {",
+                range: signatureStart.lowerBound..<reconstructor.endIndex) else {
+            return XCTFail("independent reconstructor signature is missing")
+        }
+        let signature = String(
+            reconstructor[
+                signatureStart.lowerBound..<signatureEnd.upperBound])
+            .filter { !$0.isWhitespace }
+        XCTAssertEqual(
+            signature,
+            "staticfuncreconstruct(" +
+                "originalInputs:" +
+                "PrimeLatinProposalIndependentReplayOriginalInputsV1," +
+                "expectedPlan:" +
+                "PrimeLatinProposalIndependentReplayExpectedPlanV1)" +
+                "throws->" +
+                "PrimeLatinProposalIndependentReplayReconstructionV1{")
+        for forbidden in [
+            "PrimeLatinProposalIndependentReplayReferenceV1",
+            "references:",
+            "reference.",
+            "PrimeLatinProposalProducerRevalidation",
+            "ProducerRevalidation",
+            "producerRevalidation",
+        ] {
+            XCTAssertFalse(
+                reconstructor.contains(forbidden),
+                "independent reconstructor contains an oracle: \(forbidden)")
+        }
+    }
+
+    func testIndependentReplayProbeIsProcessFreeAndExactOnceOnly() throws {
+        let source = try swiftSource(
+            relativePath:
+                "Sources/PrimeLatinProposalIndependentReplayProbe/" +
+                    "PrimeLatinProposalIndependentReplayProbeMain.swift")
+        let imports = source.split(separator: "\n")
+            .map(String.init)
+            .filter { $0.hasPrefix("import ") }
+        XCTAssertEqual(
+            imports,
+            [
+                "import Foundation",
+                "import PrimeLatinProposalIndependentReplay",
+            ])
+        for required in [
+            "PrimeLatinProposalIndependentReplayProbeArguments",
+            "rawArguments.count == 6",
+            "action == \"replay\"",
+            "Array(CommandLine.arguments.dropFirst())",
+            "PrimeLatinProposalIndependentReplayCaptureV1.capture(",
+            "labRoot: arguments.labRoot",
+            "llmRepositoryRoot: arguments.llmRepositoryRoot",
+            "recaptureAndValidateUnchanged()",
+            "recaptured == observation",
+            "observation.producerRepository == \"Ergentics/ergentics-llm\"",
+            "observation.producerCommit",
+            "observation.producerTree",
+            "observation.retainedOriginalInputByteCount == 8_084_712",
+            "ergentics_prime_latin_proposal_v3_independent_replay_observation_v1",
+            "authority.independentPrimeReplayComplete",
+            "!authority.liveProducerWorkspaceRevalidationComplete",
+            "!authority.ergenticsLatinProducerModuleImported",
+            "!authority.ergenticsLatinProducerFunctionInvoked",
+            "!authority.ergenticsLatinProducerSourceUsedAsReplayImplementation",
+            "!authority.runtimeInitializationEstablished",
+            "!authority.trialExecutionAuthorized",
+            "!authority.publicationAuthorized",
+            "FileHandle.standardOutput",
+            "output.count <= 1_024",
+        ] {
+            XCTAssertTrue(
+                source.contains(required),
+                "missing independent-replay probe anchor: \(required)")
+        }
+        for option in [
+            "--action",
+            "--lab-root",
+            "--llm-repository-root",
+        ] {
+            XCTAssertEqual(
+                source.components(separatedBy: "\"\(option)\"").count,
+                2,
+                "independent-replay option is not exact once: \(option)")
+        }
+        for forbidden in [
+            "Process(",
+            "ProcessInfo.processInfo.environment",
+            "URLSession",
+            "FileHandle.standardError",
+            "FileManager",
+            ".write(to:",
+            "createDirectory(",
+            "createFile(",
+            "removeItem(",
+            "import PrimeCore",
+            "import PrimeLatinProposalProducerRevalidationObservation",
+            "import ErgenticsLLM",
+            "import ErgenticsTokenizer",
+            "import MLX",
+            "MLXLLM",
+            "LlamaModel",
+            "PMHNP",
+            "--disable-sandbox",
+        ] {
+            XCTAssertFalse(
+                source.contains(forbidden),
+                "forbidden independent-replay probe token: \(forbidden)")
         }
     }
 
