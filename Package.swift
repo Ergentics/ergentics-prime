@@ -17,10 +17,22 @@ let package = Package(
                 "PrimeLatinProposalPairCapture",
             ]
         ),
+        .library(
+            name: "PrimeLatinProposalGitObservation",
+            targets: [
+                "PrimeLatinProposalGitObservation",
+            ]
+        ),
         .executable(
             name: "PrimeLatinProposalPairCaptureProbe",
             targets: [
                 "PrimeLatinProposalPairCaptureProbe",
+            ]
+        ),
+        .executable(
+            name: "PrimeLatinProposalGitObservationProbe",
+            targets: [
+                "PrimeLatinProposalGitObservationProbe",
             ]
         ),
         .library(
@@ -182,6 +194,12 @@ let package = Package(
         ),
         .target(
             name: "PrimeLatinProposalPairCapture"
+        ),
+        .target(
+            name: "PrimeLatinProposalGitObservation",
+            dependencies: [
+                "PrimeLatinProposalPairCapture",
+            ]
         ),
         .target(
             name:
@@ -586,6 +604,12 @@ let package = Package(
             ]
         ),
         .executableTarget(
+            name: "PrimeLatinProposalGitObservationProbe",
+            dependencies: [
+                "PrimeLatinProposalGitObservation",
+            ]
+        ),
+        .executableTarget(
             name: "PrimeMLXBundleStage",
             dependencies: ["PrimeCore"]
         ),
@@ -630,6 +654,7 @@ let package = Package(
             name: "PrimeLatinProposalPairCaptureTests",
             dependencies: [
                 "PrimeLatinProposalPairCapture",
+                "PrimeLatinProposalGitObservation",
             ]
         ),
         .testTarget(

@@ -464,7 +464,7 @@ final class PrimeLatinProposalInputSnapshotV3Tests: XCTestCase {
     ]
 }
 
-private struct InputSnapshotArtifactV3 {
+struct InputSnapshotArtifactV3 {
     let role: String
     let scope: PrimeLatinProposalInputArtifactScopeV3
     let relativePath: String
@@ -485,7 +485,7 @@ private struct InputSnapshotArtifactV3 {
     }
 }
 
-private final class InputSnapshotFixtureV3 {
+final class InputSnapshotFixtureV3 {
     let pair: PrimeLatinProposalSnapshotPublishedPairFixture
     let llmRepositoryRoot: URL
     let artifacts: [InputSnapshotArtifactV3]
