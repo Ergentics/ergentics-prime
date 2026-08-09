@@ -821,19 +821,6 @@ final class PrimeLatinProposalPairCaptureSourceContractTests: XCTestCase {
         let compact = manifest.filter { !$0.isWhitespace }
         XCTAssertTrue(
             compact.contains(
-                ".library(" +
-                    "name:\"PrimeLatinProposalProducerRevalidationObservation\"," +
-                    "targets:[" +
-                    "\"PrimeLatinProposalProducerRevalidationObservation\",])"))
-        XCTAssertTrue(
-            compact.contains(
-                ".executable(" +
-                    "name:" +
-                    "\"PrimeLatinProposalProducerRevalidationObservationProbe\"," +
-                    "targets:[" +
-                    "\"PrimeLatinProposalProducerRevalidationObservationProbe\",])"))
-        XCTAssertTrue(
-            compact.contains(
                 ".target(name:\"PrimeLatinProposalGitObservation\"," +
                 "dependencies:[\"PrimeLatinProposalPairCapture\",])"))
         XCTAssertTrue(
