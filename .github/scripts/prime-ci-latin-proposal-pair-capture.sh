@@ -41,7 +41,7 @@ source_section_between() {
     ' "$source_file"
 }
 
-for command_name in awk cp find git grep jq mkdir mktemp shasum sort stat swift tee tr unlink xcrun; do
+for command_name in awk cmp cp find git grep jq mkdir mktemp shasum sort stat swift tee tr unlink xcrun; do
     command -v "$command_name" >/dev/null 2>&1 ||
         die "missing command: $command_name"
 done
@@ -71,6 +71,18 @@ require_exact_file_inventory() {
     die "Prime checkout is dirty"
 
 readonly validation_manifest="$prime_root/Tests/PrimeLatinProposalPairCaptureValidation/Package.swift"
+readonly prime_core_validation_source_directory="$prime_root/Sources/PrimeCore"
+readonly -a prime_core_validation_source_names=(
+    "PrimeDurableArtifacts.swift"
+    "PrimeEmbeddedBuildProvenance.swift"
+    "PrimeFactorizedExecution.swift"
+    "PrimeMLXRuntimeEnvironmentPolicy.swift"
+    "PrimeMLXRuntimeImageLayout.swift"
+    "PrimeNative3BProfile.swift"
+    "PrimePinnedMLXMetallib.swift"
+    "PrimeReleaseInstrumentationAdmissionPolicy.swift"
+    "PrimeSwiftSourceProvenance.swift"
+)
 readonly capture_source="$prime_root/Sources/PrimeLatinProposalPairCapture/PrimeLatinProposalPairCapture.swift"
 readonly capture_support="$prime_root/Sources/PrimeLatinProposalPairCapture/PrimeLatinArtifactReadSupport.swift"
 readonly v3_inputs_source="$prime_root/Sources/PrimeLatinProposalPairCapture/PrimeLatinProposalInputsV3.swift"
@@ -126,6 +138,15 @@ for required_file in \
     "$source_contract_tests"; do
     [[ -f "$required_file" && ! -L "$required_file" ]] ||
         die "required validation source is missing or linked: $required_file"
+done
+for prime_core_validation_source_name in \
+    "${prime_core_validation_source_names[@]}"; do
+    prime_core_validation_source="$prime_core_validation_source_directory/$prime_core_validation_source_name"
+    [[ -f "$prime_core_validation_source" && \
+            ! -L "$prime_core_validation_source" ]] ||
+        die "required PrimeCore validation source is missing or linked: $prime_core_validation_source"
+    [[ "$(stat -f '%l' "$prime_core_validation_source")" == "1" ]] ||
+        die "required PrimeCore validation source is not single-link: $prime_core_validation_source"
 done
 require_exact_file_inventory \
     "$prime_root/Sources/PrimeLatinProposalPairCapture" \
@@ -1447,6 +1468,7 @@ done
 readonly root_manifest_compact="$(tr -d '[:space:]' < "$prime_root/Package.swift")"
 readonly validation_manifest_compact="$(tr -d '[:space:]' < "$validation_manifest")"
 for required_root_fragment in \
+    '.target(name:"PrimeCore")' \
     '.library(name:"PrimeLatinProposalPairCapture",targets:["PrimeLatinProposalPairCapture",])' \
     '.library(name:"PrimeLatinProposalGitObservation",targets:["PrimeLatinProposalGitObservation",])' \
     '.library(name:"PrimeLatinProposalProducerRevalidationObservation",targets:["PrimeLatinProposalProducerRevalidationObservation",])' \
@@ -1662,6 +1684,96 @@ readonly expected_embedded_provenance_sha="$(
         == "$expected_embedded_provenance_sha" ]] ||
     die "embedded Prime provenance does not match the canonical source template"
 
+readonly -a expected_prime_core_validation_sha256s=(
+    "faa8254ee6ecd97f064a6553efba8158fff6a33fc882607444ba117d56328430"
+    "$expected_embedded_provenance_sha"
+    "8b60e3937d5c8aee8a13a8a14a7dd1e579e6fa07bc95d06841bf9511275d9338"
+    "20fee288a85722d61eae63f10d38dbae226312ee31774b03712ff6cf1759b0f0"
+    "59ef17e619ef60d9445db624058ba9ebf133189461344e72d4b05c485ad1f623"
+    "a2e64e16dc6f172d468e56229ae52487a6443d2b630385742d5cfe67998d5dc1"
+    "a5f875c089613f82e2bc1044f35fa1a2bfe13d3498685db4c9f9e5fc1ec51d78"
+    "397d4ac8204c29ec84fdc1e88fa44ee9fef22a95261f76084ab132d42dcd95e6"
+    "c907444671a8c7c53d4400da8ebe832e588bbb398831aebb0b23778a85391565"
+)
+readonly -a expected_prime_core_validation_byte_counts=(
+    "144993"
+    "546"
+    "40428"
+    "2315"
+    "5342"
+    "1736"
+    "51777"
+    "12184"
+    "26105"
+)
+readonly -a expected_prime_core_validation_imports=(
+    $'import Darwin\nimport Glibc\nimport CryptoKit\nimport CoreFoundation\nimport Foundation'
+    ""
+    "import Foundation"
+    "import Foundation"
+    ""
+    "import Foundation"
+    $'import Darwin\nimport Glibc\nimport Foundation'
+    $'import Darwin\nimport Foundation\nimport MachO'
+    $'import Darwin\nimport Glibc\nimport Foundation'
+)
+[[ "${#prime_core_validation_source_names[@]}" == "9" &&
+        "${#expected_prime_core_validation_sha256s[@]}" == "9" &&
+        "${#expected_prime_core_validation_byte_counts[@]}" == "9" &&
+        "${#expected_prime_core_validation_imports[@]}" == "9" ]] ||
+    die "PrimeCore validation closure declaration is not exact"
+for prime_core_validation_index in \
+    "${!prime_core_validation_source_names[@]}"; do
+    prime_core_validation_source_name="${prime_core_validation_source_names[$prime_core_validation_index]}"
+    prime_core_validation_source="$prime_core_validation_source_directory/$prime_core_validation_source_name"
+    [[ "$(shasum -a 256 "$prime_core_validation_source" | awk '{print $1}')" \
+            == "${expected_prime_core_validation_sha256s[$prime_core_validation_index]}" ]] ||
+        die "PrimeCore validation source hash changed: $prime_core_validation_source_name"
+    [[ "$(stat -f '%z' "$prime_core_validation_source")" \
+            == "${expected_prime_core_validation_byte_counts[$prime_core_validation_index]}" ]] ||
+        die "PrimeCore validation source byte count changed: $prime_core_validation_source_name"
+    prime_core_validation_imports="$(
+        grep -E '^import ' "$prime_core_validation_source" || true
+    )"
+    [[ "$prime_core_validation_imports" \
+            == "${expected_prime_core_validation_imports[$prime_core_validation_index]}" ]] ||
+        die "PrimeCore validation source imports changed: $prime_core_validation_source_name"
+done
+
+readonly durable_artifacts_source="$prime_core_validation_source_directory/PrimeDurableArtifacts.swift"
+for required_durable_artifact_capability in \
+    "public enum PrimeCanonicalJSON" \
+    "public enum PrimeSHA256" \
+    "public enum PrimeArtifactPurpose" \
+    "public struct PrimeArtifactBinding" \
+    "public struct PrimeVerifiedArtifact" \
+    "public final class PrimeArtifactRoot" \
+    "public func requirePrivateRootMode() throws" \
+    "public func requireEmpty() throws" \
+    "public func ensurePrivateDirectory(" \
+    "public func requireAbsent(" \
+    "public func bindExisting(" \
+    "public func publishCanonicalExclusively<" \
+    "public func verify(" \
+    "public func decodeVerified<Value: Codable>("; do
+    grep -Fq -- "$required_durable_artifact_capability" \
+        "$durable_artifacts_source" ||
+        die "PrimeCore validation closure lacks capability: $required_durable_artifact_capability"
+done
+for forbidden_prime_core_validation_import in \
+    "import Ergentics" \
+    "import MLX" \
+    "import MLXNN" \
+    "import MLXLLM"; do
+    for prime_core_validation_source_name in \
+        "${prime_core_validation_source_names[@]}"; do
+        prime_core_validation_source="$prime_core_validation_source_directory/$prime_core_validation_source_name"
+        ! grep -Fq -- "$forbidden_prime_core_validation_import" \
+            "$prime_core_validation_source" ||
+            die "PrimeCore validation closure gained an external module import: $forbidden_prime_core_validation_import"
+    done
+done
+
 readonly stage_root="$(mktemp -d "$runner_temp/prime-latin-pair-capture.XXXXXX")"
 readonly scratch_path="$stage_root/.scratch"
 readonly cache_path="$stage_root/.cache"
@@ -1671,15 +1783,26 @@ readonly test_log="$stage_root/prime-latin-pair-capture-tests.log"
 
 mkdir -p \
     "$stage_root/Sources" \
+    "$stage_root/Sources/PrimeCore" \
     "$stage_root/Tests" \
     "$scratch_path" \
     "$cache_path" \
     "$config_path" \
     "$security_path"
 cp "$validation_manifest" "$stage_root/Package.swift"
-cp -R \
-    "$prime_root/Sources/PrimeCore" \
-    "$stage_root/Sources/PrimeCore"
+for prime_core_validation_source_name in \
+    "${prime_core_validation_source_names[@]}"; do
+    prime_core_validation_source="$prime_core_validation_source_directory/$prime_core_validation_source_name"
+    staged_prime_core_validation_source="$stage_root/Sources/PrimeCore/$prime_core_validation_source_name"
+    cp "$prime_core_validation_source" \
+        "$staged_prime_core_validation_source"
+    cmp -s "$prime_core_validation_source" \
+        "$staged_prime_core_validation_source" ||
+        die "staged PrimeCore validation source changed: $prime_core_validation_source_name"
+done
+require_exact_file_inventory \
+    "$stage_root/Sources/PrimeCore" \
+    "${prime_core_validation_source_names[@]}"
 cp -R \
     "$prime_root/Sources/PrimeLatinProposalPairCapture" \
     "$stage_root/Sources/PrimeLatinProposalPairCapture"
@@ -1717,6 +1840,11 @@ cp -R \
     "$prime_root/Tests/PrimeLatinProposalPairCaptureTests" \
     "$stage_root/Tests/PrimeLatinProposalPairCaptureTests"
 
+for prime_core_validation_source_name in \
+    "${prime_core_validation_source_names[@]}"; do
+    xcrun swiftc -frontend -parse \
+        "$prime_core_validation_source_directory/$prime_core_validation_source_name"
+done
 xcrun swiftc -frontend -parse "$capture_source"
 xcrun swiftc -frontend -parse "$capture_support"
 xcrun swiftc -frontend -parse "$v3_inputs_source"

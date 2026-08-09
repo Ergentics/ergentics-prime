@@ -1,3 +1,4 @@
+import CryptoKit
 import Foundation
 import XCTest
 
@@ -1152,7 +1153,9 @@ final class PrimeLatinProposalPairCaptureSourceContractTests: XCTestCase {
                     "\"PrimeLatinProposalGitObservation\"," +
                     "\"PrimeLatinProposalProducerRevalidationObservation\"," +
                     "\"PrimeLatinProposalIndependentReplay\"," +
-                    "\"PrimeLatinProposalValidationComposition\",])"))
+                    "\"PrimeLatinProposalValidationComposition\"," +
+                    "\"PrimeLatinProposalValidationCompositionReceipt\"," +
+                    "\"PrimeLatinProposalValidationCompositionReceiptPublisher\",])"))
         for forbidden in [
             "PrimeCore",
             "ErgenticsPrimeRuntime",
@@ -1605,7 +1608,9 @@ final class PrimeLatinProposalPairCaptureSourceContractTests: XCTestCase {
                     "\"PrimeLatinProposalGitObservation\"," +
                     "\"PrimeLatinProposalProducerRevalidationObservation\"," +
                     "\"PrimeLatinProposalIndependentReplay\"," +
-                    "\"PrimeLatinProposalValidationComposition\",])"))
+                    "\"PrimeLatinProposalValidationComposition\"," +
+                    "\"PrimeLatinProposalValidationCompositionReceipt\"," +
+                    "\"PrimeLatinProposalValidationCompositionReceiptPublisher\",])"))
         XCTAssertFalse(
             compact.contains(
                 "name:\"PrimeLatinProposalIndependentReplay\"," +
@@ -1992,6 +1997,226 @@ final class PrimeLatinProposalPairCaptureSourceContractTests: XCTestCase {
                     "forbidden validation-composition package surface in " +
                         "\(relativePath): \(forbidden)")
             }
+        }
+    }
+
+    func testValidationCompositionReceiptPublisherUsesExactPrimeCoreClosure()
+        throws
+    {
+        let root = URL(
+            fileURLWithPath: FileManager.default.currentDirectoryPath,
+            isDirectory: true)
+        let manifest = try String(
+            contentsOf: root.appendingPathComponent("Package.swift"),
+            encoding: .utf8)
+        let manifestCompact = manifest.filter { !$0.isWhitespace }
+        XCTAssertTrue(
+            manifestCompact.contains(".target(name:\"PrimeCore\")"),
+            "validation must compile the real PrimeCore target")
+        XCTAssertFalse(
+            manifestCompact.contains(".target(name:\"PrimeCore\",sources:"),
+            "PrimeCore target must use the exact staged default inventory")
+        XCTAssertTrue(
+            manifestCompact.contains(
+                ".target(" +
+                    "name:\"PrimeLatinProposalValidationCompositionReceiptPublisher\"," +
+                    "dependencies:[\"PrimeCore\"," +
+                    "\"PrimeLatinProposalValidationComposition\"," +
+                    "\"PrimeLatinProposalValidationCompositionReceipt\",])"),
+            "receipt publisher must depend on the real PrimeCore target")
+
+        let closure: [(
+            name: String,
+            sha256: String?,
+            byteCount: Int,
+            imports: [String]
+        )] = [
+            (
+                "PrimeDurableArtifacts.swift",
+                "faa8254ee6ecd97f064a6553efba8158fff6a33fc882607444ba117d56328430",
+                144_993,
+                [
+                    "import Darwin",
+                    "import Glibc",
+                    "import CryptoKit",
+                    "import CoreFoundation",
+                    "import Foundation",
+                ]
+            ),
+            (
+                "PrimeEmbeddedBuildProvenance.swift",
+                nil,
+                546,
+                []
+            ),
+            (
+                "PrimeFactorizedExecution.swift",
+                "8b60e3937d5c8aee8a13a8a14a7dd1e579e6fa07bc95d06841bf9511275d9338",
+                40_428,
+                ["import Foundation"]
+            ),
+            (
+                "PrimeMLXRuntimeEnvironmentPolicy.swift",
+                "20fee288a85722d61eae63f10d38dbae226312ee31774b03712ff6cf1759b0f0",
+                2_315,
+                ["import Foundation"]
+            ),
+            (
+                "PrimeMLXRuntimeImageLayout.swift",
+                "59ef17e619ef60d9445db624058ba9ebf133189461344e72d4b05c485ad1f623",
+                5_342,
+                []
+            ),
+            (
+                "PrimeNative3BProfile.swift",
+                "a2e64e16dc6f172d468e56229ae52487a6443d2b630385742d5cfe67998d5dc1",
+                1_736,
+                ["import Foundation"]
+            ),
+            (
+                "PrimePinnedMLXMetallib.swift",
+                "a5f875c089613f82e2bc1044f35fa1a2bfe13d3498685db4c9f9e5fc1ec51d78",
+                51_777,
+                [
+                    "import Darwin",
+                    "import Glibc",
+                    "import Foundation",
+                ]
+            ),
+            (
+                "PrimeReleaseInstrumentationAdmissionPolicy.swift",
+                "397d4ac8204c29ec84fdc1e88fa44ee9fef22a95261f76084ab132d42dcd95e6",
+                12_184,
+                [
+                    "import Darwin",
+                    "import Foundation",
+                    "import MachO",
+                ]
+            ),
+            (
+                "PrimeSwiftSourceProvenance.swift",
+                "c907444671a8c7c53d4400da8ebe832e588bbb398831aebb0b23778a85391565",
+                26_105,
+                [
+                    "import Darwin",
+                    "import Glibc",
+                    "import Foundation",
+                ]
+            ),
+        ]
+        XCTAssertEqual(closure.count, 9)
+        XCTAssertEqual(
+            closure.map { $0.name },
+            closure.map { $0.name }.sorted(),
+            "PrimeCore validation closure must remain sorted")
+        XCTAssertEqual(
+            closure.reduce(0) { $0 + $1.byteCount },
+            285_426)
+
+        let primeCore = root.appendingPathComponent(
+            "Sources/PrimeCore",
+            isDirectory: true)
+        var sources = [String: String]()
+        for record in closure {
+            let sourceURL = primeCore.appendingPathComponent(record.name)
+            let data = try Data(contentsOf: sourceURL)
+            XCTAssertEqual(
+                data.count,
+                record.byteCount,
+                "PrimeCore validation source byte count changed: \(record.name)")
+            if let expectedSHA256 = record.sha256 {
+                XCTAssertEqual(
+                    sha256Hex(data),
+                    expectedSHA256,
+                    "PrimeCore validation source hash changed: \(record.name)")
+            }
+            let source = String(decoding: data, as: UTF8.self)
+            sources[record.name] = source
+            let imports = source.split(separator: "\n")
+                .map(String.init)
+                .filter { $0.hasPrefix("import ") }
+            XCTAssertEqual(
+                imports,
+                record.imports,
+                "PrimeCore validation imports changed: \(record.name)")
+            XCTAssertFalse(imports.contains { $0.hasPrefix("import MLX") })
+            XCTAssertFalse(imports.contains { $0.hasPrefix("import Ergentics") })
+        }
+
+        let embedded = try XCTUnwrap(
+            sources["PrimeEmbeddedBuildProvenance.swift"])
+        let embeddedIdentities = embedded
+            .split(separator: "\"", omittingEmptySubsequences: false)
+            .map(String.init)
+            .filter {
+                $0.utf8.count == 64 && $0.utf8.allSatisfy {
+                    ($0 >= 48 && $0 <= 57) || ($0 >= 97 && $0 <= 102)
+                }
+            }
+        XCTAssertEqual(embeddedIdentities.count, 1)
+        let embeddedIdentity = try XCTUnwrap(embeddedIdentities.first)
+        let expectedEmbedded = [
+            "public enum PrimeEmbeddedBuildProvenance {",
+            "    #if DEBUG",
+            "        public static let buildConfiguration = \"debug\"",
+            "    #else",
+            "        public static let buildConfiguration = \"release\"",
+            "    #endif",
+            "",
+            "    // This file is excluded only to avoid a self-referential digest. Runtime",
+            "    // verification requires this exact canonical template and digest; every",
+            "    // other admitted package, source, test, and architecture file is hashed.",
+            "    public static let sourceIdentitySHA256 =",
+            "        \"\(embeddedIdentity)\"",
+            "}",
+        ].joined(separator: "\n") + "\n"
+        XCTAssertEqual(embedded, expectedEmbedded)
+
+        let durableArtifacts = try XCTUnwrap(
+            sources["PrimeDurableArtifacts.swift"])
+        for required in [
+            "public enum PrimeCanonicalJSON",
+            "public enum PrimeSHA256",
+            "public enum PrimeArtifactPurpose",
+            "public struct PrimeArtifactBinding",
+            "public struct PrimeVerifiedArtifact",
+            "public final class PrimeArtifactRoot",
+            "public func requirePrivateRootMode() throws",
+            "public func requireEmpty() throws",
+            "public func ensurePrivateDirectory(",
+            "public func requireAbsent(",
+            "public func bindExisting(",
+            "public func publishCanonicalExclusively<",
+            "public func verify(",
+            "public func decodeVerified<Value: Codable>(",
+        ] {
+            XCTAssertTrue(
+                durableArtifacts.contains(required),
+                "PrimeCore validation closure lacks capability: \(required)")
+        }
+
+        for (name, anchor) in [
+            ("PrimeEmbeddedBuildProvenance.swift", "public enum PrimeEmbeddedBuildProvenance"),
+            ("PrimeFactorizedExecution.swift", "public struct PrimeFactorizedExecutionContract"),
+            ("PrimeMLXRuntimeEnvironmentPolicy.swift", "public enum PrimeMLXRuntimeEnvironmentPolicy"),
+            ("PrimeMLXRuntimeImageLayout.swift", "public enum PrimeMLXRuntimeImageLayout"),
+            ("PrimeNative3BProfile.swift", "public enum PrimeNativeProfiles"),
+            ("PrimePinnedMLXMetallib.swift", "public enum PrimePinnedMLXMetallib"),
+            ("PrimeReleaseInstrumentationAdmissionPolicy.swift", "public enum PrimeReleaseInstrumentationAdmissionPolicy"),
+            ("PrimeSwiftSourceProvenance.swift", "public enum PrimeSwiftSourceProvenance"),
+        ] {
+            XCTAssertTrue(
+                try XCTUnwrap(sources[name]).contains(anchor),
+                "PrimeCore validation dependency closure lacks anchor: \(anchor)")
+        }
+
+        if !manifest.contains(".package(") {
+            let stagedInventory = try FileManager.default.contentsOfDirectory(
+                at: primeCore,
+                includingPropertiesForKeys: nil)
+                .map(\.lastPathComponent)
+                .sorted()
+            XCTAssertEqual(stagedInventory, closure.map { $0.name })
         }
     }
 
@@ -3219,6 +3444,12 @@ final class PrimeLatinProposalPairCaptureSourceContractTests: XCTestCase {
             }
             return String(compact.dropFirst(prefix.count).dropLast(suffix.count))
         }
+    }
+
+    private func sha256Hex(_ data: Data) -> String {
+        SHA256.hash(data: data).map {
+            String(format: "%02x", Int($0))
+        }.joined()
     }
 
     private func joinedSwiftSource(directory: String) throws -> String {
