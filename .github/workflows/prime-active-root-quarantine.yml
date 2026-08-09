@@ -71,6 +71,7 @@ jobs:
             Sources/PrimeLatinProposalProducerRevalidationObservationProbe/PrimeLatinProposalProducerRevalidationObservationProbeMain.swift \
             Sources/PrimeLatinProposalIndependentReplay/PrimeLatinProposalIndependentReplayV1.swift \
             Sources/PrimeLatinProposalIndependentReplayProbe/PrimeLatinProposalIndependentReplayProbeMain.swift \
+            Sources/PrimeLatinProposalValidationComposition/PrimeLatinProposalValidationCompositionV1.swift \
             Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalPairCaptureSourceContractTests.swift \
             Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalPairCaptureTests.swift \
             Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalGitSourceV3Tests.swift \
@@ -78,6 +79,7 @@ jobs:
             Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalInputsV3Tests.swift \
             Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalProducerRevalidationObservationTests.swift \
             Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalIndependentReplayV1Tests.swift \
+            Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalValidationCompositionV1Tests.swift \
             Tests/PrimeCoreTests/PrimeNativeCorpusReplaySourceContractTests.swift \
             Tests/PrimeCoreTests/PrimeNativeGenerationContractSourceContractTests.swift \
             Tests/PrimeCoreTests/PrimeNativeNeuralGateContractSourceContractTests.swift \
@@ -108,6 +110,7 @@ jobs:
             echo 'The isolated self-building producer-revalidation observer and probe compile, but hosted CI does not live-run the producer or claim revalidation completion.'
             echo 'The Prime-owned independent structural replay and process-free probe compile and run synthetic contracts without importing or invoking the producer implementation; hosted CI does not live-run external repository or lab roots.'
             echo 'The producer-revalidation and independent-replay observations remain disjoint siblings; neither observation composes the other observation’s completion claim.'
+            echo 'The Prime-owned validation composition target cooperatively sequences both child captures for one request and cross-binds their observations, but hosted CI uses synthetic tests only and never live-runs that composition.'
             echo 'The locally declared origin is not network-authenticated, and ignored workspace bytes are not observed by this slice.'
             echo 'No Prime proposal, candidate selection, trial authorization, decision receipt, decoder selection, model execution, training, publication, promotion, Driver V2, or PMHNP authority is granted.'
           } >> "$GITHUB_STEP_SUMMARY"
