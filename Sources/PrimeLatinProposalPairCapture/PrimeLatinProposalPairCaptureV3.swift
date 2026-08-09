@@ -190,6 +190,16 @@ public final class PrimeLatinProposalPairCaptureV3: @unchecked Sendable {
             experimentData: snapshot.experimentData)
     }
 
+    package func retainedByteViewForIndependentReplayV1()
+        -> PrimeLatinProposalPairRetainedByteViewV3
+    {
+        PrimeLatinProposalPairRetainedByteViewV3(
+            observation: snapshot.observation,
+            receiptData: snapshot.receiptData,
+            candidateCatalogData: snapshot.catalogData,
+            experimentManifestData: snapshot.experimentData)
+    }
+
     @discardableResult
     public func recaptureAndValidateUnchanged() throws
         -> PrimeLatinProposalPairObservationV3
@@ -201,6 +211,31 @@ public final class PrimeLatinProposalPairCaptureV3: @unchecked Sendable {
             throw PrimeLatinProposalPairCaptureError.captureChanged
         }
         return current.observation
+    }
+}
+
+/// Package-scoped immutable bytes retained by the descriptor-bound pair
+/// capture. This value exposes no root, descriptor, path capability, or
+/// publication operation and is unavailable outside this Swift package.
+package struct PrimeLatinProposalPairRetainedByteViewV3:
+    Equatable,
+    Sendable
+{
+    package let observation: PrimeLatinProposalPairObservationV3
+    package let receiptData: Data
+    package let candidateCatalogData: Data
+    package let experimentManifestData: Data
+
+    package init(
+        observation: PrimeLatinProposalPairObservationV3,
+        receiptData: Data,
+        candidateCatalogData: Data,
+        experimentManifestData: Data
+    ) {
+        self.observation = observation
+        self.receiptData = receiptData
+        self.candidateCatalogData = candidateCatalogData
+        self.experimentManifestData = experimentManifestData
     }
 }
 

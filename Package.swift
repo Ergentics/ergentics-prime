@@ -29,6 +29,12 @@ let package = Package(
                 "PrimeLatinProposalProducerRevalidationObservation",
             ]
         ),
+        .library(
+            name: "PrimeLatinProposalIndependentReplay",
+            targets: [
+                "PrimeLatinProposalIndependentReplay",
+            ]
+        ),
         .executable(
             name: "PrimeLatinProposalPairCaptureProbe",
             targets: [
@@ -46,6 +52,12 @@ let package = Package(
                 "PrimeLatinProposalProducerRevalidationObservationProbe",
             targets: [
                 "PrimeLatinProposalProducerRevalidationObservationProbe",
+            ]
+        ),
+        .executable(
+            name: "PrimeLatinProposalIndependentReplayProbe",
+            targets: [
+                "PrimeLatinProposalIndependentReplayProbe",
             ]
         ),
         .library(
@@ -216,6 +228,13 @@ let package = Package(
         ),
         .target(
             name: "PrimeLatinProposalProducerRevalidationObservation",
+            dependencies: [
+                "PrimeLatinProposalPairCapture",
+                "PrimeLatinProposalGitObservation",
+            ]
+        ),
+        .target(
+            name: "PrimeLatinProposalIndependentReplay",
             dependencies: [
                 "PrimeLatinProposalPairCapture",
                 "PrimeLatinProposalGitObservation",
@@ -637,6 +656,12 @@ let package = Package(
             ]
         ),
         .executableTarget(
+            name: "PrimeLatinProposalIndependentReplayProbe",
+            dependencies: [
+                "PrimeLatinProposalIndependentReplay",
+            ]
+        ),
+        .executableTarget(
             name: "PrimeMLXBundleStage",
             dependencies: ["PrimeCore"]
         ),
@@ -683,6 +708,7 @@ let package = Package(
                 "PrimeLatinProposalPairCapture",
                 "PrimeLatinProposalGitObservation",
                 "PrimeLatinProposalProducerRevalidationObservation",
+                "PrimeLatinProposalIndependentReplay",
             ]
         ),
         .testTarget(

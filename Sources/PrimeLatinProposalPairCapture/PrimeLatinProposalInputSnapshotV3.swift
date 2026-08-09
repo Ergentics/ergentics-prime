@@ -202,6 +202,55 @@ public final class PrimeLatinProposalInputSnapshotCaptureV3:
         }
     }
 
+    package func retainedInputSnapshotForIndependentReplayV1() throws
+        -> PrimeLatinProposalIndependentReplayRetainedMaterialV1
+    {
+        _ = try recaptureAndValidateUnchanged()
+        guard plan.expectations.count == snapshot.reads.count,
+              snapshot.observation.artifacts.count == snapshot.reads.count
+        else {
+            throw PrimeLatinProposalInputSnapshotError.invalidSnapshot(
+                "retained_independent_replay_inventory")
+        }
+        var originals = [PrimeLatinProposalIndependentReplayOriginalInputV1]()
+        originals.reserveCapacity(snapshot.reads.count)
+        for index in snapshot.reads.indices {
+            let expectation = plan.expectations[index]
+            let observation = snapshot.observation.artifacts[index]
+            let read = snapshot.reads[index]
+            guard observation.roles == [expectation.role],
+                  observation.scope == expectation.scope,
+                  observation.relativePath == expectation.relativePath,
+                  observation.sha256 == expectation.sha256,
+                  observation.byteCount == expectation.byteCount,
+                  read.artifact.binding.relativePath
+                    == expectation.relativePath,
+                  read.artifact.binding.sha256 == expectation.sha256,
+                  read.artifact.binding.byteCount == expectation.byteCount
+            else {
+                throw PrimeLatinProposalInputSnapshotError.invalidSnapshot(
+                    "retained_independent_replay_binding")
+            }
+            originals.append(
+                PrimeLatinProposalIndependentReplayOriginalInputV1(
+                    role: expectation.role,
+                    scope: expectation.scope,
+                    relativePath: expectation.relativePath,
+                    sha256: expectation.sha256,
+                    byteCount: expectation.byteCount,
+                    data: read.data))
+        }
+        return PrimeLatinProposalIndependentReplayRetainedMaterialV1(
+            originalInputs:
+                PrimeLatinProposalIndependentReplayOriginalInputsV1(
+                    artifacts: originals),
+            references:
+                PrimeLatinProposalIndependentReplayReferenceMaterialV1(
+                    pair: pairCapture
+                        .retainedByteViewForIndependentReplayV1(),
+                    snapshotObservation: snapshot.observation))
+    }
+
     static func captureForTesting(
         labRoot: URL,
         llmRepositoryRoot: URL,
@@ -288,6 +337,93 @@ public final class PrimeLatinProposalInputSnapshotCaptureV3:
             throw PrimeLatinProposalInputSnapshotError.invalidSnapshot(
                 "proposal_input_snapshot_v3")
         }
+    }
+}
+
+/// One exact original input retained by the descriptor-bound snapshot. This
+/// package-scoped value has no filesystem capability and is passed to the
+/// independent reconstructor without any catalog, experiment, or receipt
+/// reference bytes.
+package struct PrimeLatinProposalIndependentReplayOriginalInputV1:
+    Equatable,
+    Sendable
+{
+    package let role: String
+    package let scope: PrimeLatinProposalInputArtifactScopeV3
+    package let relativePath: String
+    package let sha256: String
+    package let byteCount: UInt64
+    package let data: Data
+
+    package init(
+        role: String,
+        scope: PrimeLatinProposalInputArtifactScopeV3,
+        relativePath: String,
+        sha256: String,
+        byteCount: UInt64,
+        data: Data
+    ) {
+        self.role = role
+        self.scope = scope
+        self.relativePath = relativePath
+        self.sha256 = sha256
+        self.byteCount = byteCount
+        self.data = data
+    }
+}
+
+package struct PrimeLatinProposalIndependentReplayOriginalInputsV1:
+    Equatable,
+    Sendable
+{
+    package let artifacts:
+        [PrimeLatinProposalIndependentReplayOriginalInputV1]
+
+    package init(
+        artifacts: [PrimeLatinProposalIndependentReplayOriginalInputV1]
+    ) {
+        self.artifacts = artifacts
+    }
+}
+
+/// Reference bytes are deliberately separate from `originalInputs` so the
+/// pure reconstruction function cannot consult producer catalog, experiment,
+/// or receipt output while rebuilding them.
+package struct PrimeLatinProposalIndependentReplayReferenceMaterialV1:
+    Equatable,
+    Sendable
+{
+    package let pair: PrimeLatinProposalPairRetainedByteViewV3
+    package let snapshotObservation:
+        PrimeLatinProposalInputSnapshotObservationV3
+
+    package init(
+        pair: PrimeLatinProposalPairRetainedByteViewV3,
+        snapshotObservation:
+            PrimeLatinProposalInputSnapshotObservationV3
+    ) {
+        self.pair = pair
+        self.snapshotObservation = snapshotObservation
+    }
+}
+
+package struct PrimeLatinProposalIndependentReplayRetainedMaterialV1:
+    Equatable,
+    Sendable
+{
+    package let originalInputs:
+        PrimeLatinProposalIndependentReplayOriginalInputsV1
+    package let references:
+        PrimeLatinProposalIndependentReplayReferenceMaterialV1
+
+    package init(
+        originalInputs:
+            PrimeLatinProposalIndependentReplayOriginalInputsV1,
+        references:
+            PrimeLatinProposalIndependentReplayReferenceMaterialV1
+    ) {
+        self.originalInputs = originalInputs
+        self.references = references
     }
 }
 
