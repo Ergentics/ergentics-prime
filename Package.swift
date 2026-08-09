@@ -241,6 +241,13 @@ let package = Package(
             ]
         ),
         .target(
+            name: "PrimeLatinProposalValidationComposition",
+            dependencies: [
+                "PrimeLatinProposalProducerRevalidationObservation",
+                "PrimeLatinProposalIndependentReplay",
+            ]
+        ),
+        .target(
             name:
                 "PrimeTypedOptimizerRestoreMechanics",
             dependencies: [
@@ -709,6 +716,7 @@ let package = Package(
                 "PrimeLatinProposalGitObservation",
                 "PrimeLatinProposalProducerRevalidationObservation",
                 "PrimeLatinProposalIndependentReplay",
+                "PrimeLatinProposalValidationComposition",
             ]
         ),
         .testTarget(

@@ -29,6 +29,18 @@ count_fixed_occurrences() {
     ' "$source_file"
 }
 
+source_section_between() {
+    local start_needle="$1"
+    local end_needle="$2"
+    local source_file="$3"
+    awk -v start_needle="$start_needle" -v end_needle="$end_needle" '
+        index($0, start_needle) > 0 { emitting = 1 }
+        emitting && index($0, end_needle) > 0 &&
+            index($0, start_needle) == 0 { exit }
+        emitting { print }
+    ' "$source_file"
+}
+
 for command_name in awk cp find git grep jq mkdir mktemp shasum sort stat swift tee tr unlink xcrun; do
     command -v "$command_name" >/dev/null 2>&1 ||
         die "missing command: $command_name"
@@ -71,12 +83,14 @@ readonly producer_revalidation_source="$prime_root/Sources/PrimeLatinProposalPro
 readonly producer_revalidation_probe_source="$prime_root/Sources/PrimeLatinProposalProducerRevalidationObservationProbe/PrimeLatinProposalProducerRevalidationObservationProbeMain.swift"
 readonly independent_replay_source="$prime_root/Sources/PrimeLatinProposalIndependentReplay/PrimeLatinProposalIndependentReplayV1.swift"
 readonly independent_replay_probe_source="$prime_root/Sources/PrimeLatinProposalIndependentReplayProbe/PrimeLatinProposalIndependentReplayProbeMain.swift"
+readonly validation_composition_source="$prime_root/Sources/PrimeLatinProposalValidationComposition/PrimeLatinProposalValidationCompositionV1.swift"
 readonly capture_tests="$prime_root/Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalPairCaptureTests.swift"
 readonly v3_inputs_tests="$prime_root/Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalInputsV3Tests.swift"
 readonly v3_snapshot_tests="$prime_root/Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalInputSnapshotV3Tests.swift"
 readonly git_observation_tests="$prime_root/Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalGitSourceV3Tests.swift"
 readonly producer_revalidation_tests="$prime_root/Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalProducerRevalidationObservationTests.swift"
 readonly independent_replay_tests="$prime_root/Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalIndependentReplayV1Tests.swift"
+readonly validation_composition_tests="$prime_root/Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalValidationCompositionV1Tests.swift"
 readonly source_contract_tests="$prime_root/Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalPairCaptureSourceContractTests.swift"
 
 for required_file in \
@@ -93,12 +107,14 @@ for required_file in \
     "$producer_revalidation_probe_source" \
     "$independent_replay_source" \
     "$independent_replay_probe_source" \
+    "$validation_composition_source" \
     "$capture_tests" \
     "$v3_inputs_tests" \
     "$v3_snapshot_tests" \
     "$git_observation_tests" \
     "$producer_revalidation_tests" \
     "$independent_replay_tests" \
+    "$validation_composition_tests" \
     "$source_contract_tests"; do
     [[ -f "$required_file" && ! -L "$required_file" ]] ||
         die "required validation source is missing or linked: $required_file"
@@ -132,6 +148,9 @@ require_exact_file_inventory \
     "$prime_root/Sources/PrimeLatinProposalIndependentReplayProbe" \
     "PrimeLatinProposalIndependentReplayProbeMain.swift"
 require_exact_file_inventory \
+    "$prime_root/Sources/PrimeLatinProposalValidationComposition" \
+    "PrimeLatinProposalValidationCompositionV1.swift"
+require_exact_file_inventory \
     "$prime_root/Tests/PrimeLatinProposalPairCaptureTests" \
     "PrimeLatinProposalGitSourceV3Tests.swift" \
     "PrimeLatinProposalPairCaptureSourceContractTests.swift" \
@@ -139,6 +158,7 @@ require_exact_file_inventory \
     "PrimeLatinProposalInputSnapshotV3Tests.swift" \
     "PrimeLatinProposalInputsV3Tests.swift" \
     "PrimeLatinProposalIndependentReplayV1Tests.swift" \
+    "PrimeLatinProposalValidationCompositionV1Tests.swift" \
     "PrimeLatinProposalProducerRevalidationObservationTests.swift"
 
 for forbidden_source_value in \
@@ -646,6 +666,303 @@ for required_independent_replay_probe_option in \
         die "Latin independent-replay probe option is not exact once: $required_independent_replay_probe_option"
 done
 
+readonly validation_composition_imports="$(
+    grep -E '^import ' "$validation_composition_source"
+)"
+readonly expected_validation_composition_imports=$'import Foundation\nimport PrimeLatinProposalIndependentReplay\nimport PrimeLatinProposalProducerRevalidationObservation'
+[[ "$validation_composition_imports" == \
+        "$expected_validation_composition_imports" ]] ||
+    die "Latin validation-composition source import inventory is not exact"
+for forbidden_validation_composition_value in \
+    "import PrimeLatinProposalPairCapture" \
+    "import PrimeLatinProposalGitObservation" \
+    "PrimeLatinProposalPairCaptureV3" \
+    "PrimeLatinProposalGitSourceCaptureV3" \
+    "PrimeLatinProposalInputSnapshotCaptureV3" \
+    "import PrimeCore" \
+    "import ErgenticsLLM" \
+    "import ErgenticsTokenizer" \
+    "import ErgenticsLatinProposalArtifacts" \
+    "import ErgenticsLatinCandidateDeclarations" \
+    "import MLX" \
+    "ErgenticsPrimeRuntime" \
+    "LlamaModel" \
+    "HuggingFace" \
+    "PMHNP" \
+    "pmhnp-companion-ergentics" \
+    "@main" \
+    "CommandLine" \
+    "Process(" \
+    "ProcessInfo.processInfo.environment" \
+    "FileManager" \
+    "URLSession" \
+    "Network.framework" \
+    "NWConnection" \
+    "socket(" \
+    "connect(" \
+    "curl" \
+    "python" \
+    "ssh" \
+    "scp" \
+    '"/bin/sh"' \
+    '"/bin/bash"' \
+    '"/usr/bin/env"' \
+    '"/usr/bin/xcrun"' \
+    '"/usr/bin/git"' \
+    "O_CREAT" \
+    "O_WRONLY" \
+    "O_RDWR" \
+    "mkdirat(" \
+    "renameat" \
+    "unlinkat(" \
+    "removeItem(" \
+    "createDirectory(" \
+    "createFile(" \
+    ".write(to:" \
+    "FileHandle.standardOutput" \
+    "FileHandle.standardError" \
+    "publishProposalPairV3" \
+    "func publish" \
+    "PrimeLatinTrialProposal" \
+    "PrimeLatinTrialAuthorization" \
+    '"fetch"' \
+    '"push"' \
+    '"clone"' \
+    "--disable-sandbox"; do
+    if grep -Fq -- "$forbidden_validation_composition_value" \
+        "$validation_composition_source"; then
+        die "Latin validation-composition surface contains forbidden value: $forbidden_validation_composition_value"
+    fi
+done
+for required_validation_composition_anchor in \
+    "public enum PrimeLatinProposalValidationCompositionErrorV1" \
+    "public struct PrimeLatinProposalValidationCompositionAuthorityBoundaryV1" \
+    "public struct PrimeLatinProposalValidationCompositionObservationV1" \
+    "public final class PrimeLatinProposalValidationCompositionCaptureV1" \
+    "public static func capture(" \
+    "request: PrimeLatinProposalProducerRevalidationRequestV1" \
+    "public let observation" \
+    "public func recaptureAndValidateUnchanged()" \
+    "compositionPolicyID" \
+    "producerRevalidationObservation" \
+    "independentReplayObservation" \
+    "invalidChildObservation" \
+    "crossBindingMismatch" \
+    "captureChanged" \
+    "ergentics_prime_latin_proposal_v3_validation_composition_observation_v1" \
+    "abstain" \
+    "prime_latin_v3_producer_revalidation_independent_replay_composition_v1" \
+    "prime_owned_cooperative_same_request_root_sequence_composing_one_live_producer_revalidation_observation_and_one_independent_replay_observation_with_exact_shared_identity_hash_count_budget_and_output_namespace_cross_bindings_only_non_authorizing" \
+    "abstain_live_producer_revalidation_and_independent_prime_replay_composed_proposal_policy_runtime_decoder_initialization_evaluation_trial_decision_and_publication_authority_absent"; do
+    grep -Fq -- "$required_validation_composition_anchor" \
+        "$validation_composition_source" ||
+        die "Latin validation composition lacks frozen anchor: $required_validation_composition_anchor"
+done
+readonly validation_composition_compact="$(
+    tr -d '[:space:]' < "$validation_composition_source"
+)"
+for required_validation_composition_true_field in \
+    "producerRevalidationCaptureAndRecaptureComplete" \
+    "independentReplayCaptureAndRecaptureComplete" \
+    "cooperativeSameRequestRootSequenceComplete" \
+    "producerRevalidationAuthorityBoundaryExact" \
+    "independentReplayAuthorityBoundaryExact" \
+    "exactPairReceiptCrossBindingMatched" \
+    "exactProducerSourceCrossBindingMatched" \
+    "exactCandidateCatalogCrossBindingMatched" \
+    "exactExperimentManifestCrossBindingMatched" \
+    "exactCandidateDeclarationSetCrossBindingMatched" \
+    "exactTokenizerBundleCrossBindingMatched" \
+    "exactCandidateIdentityInventoryCrossBindingMatched" \
+    "exactTwentyOneInputBindingCountCrossBindingMatched" \
+    "exactTwentyOneOriginalInputBytesRetained" \
+    "exactTrialBudgetCrossBindingMatched" \
+    "exactOutputNamespaceCrossBindingMatched" \
+    "outputNamespaceAbsenceVerified" \
+    "referencedInputSnapshotAvailable" \
+    "referencedArtifactBytesAvailable" \
+    "llmGitStateIndependentlyObserved" \
+    "revalidatorToolSourceIndependentlyObserved" \
+    "liveProducerWorkspaceRevalidationComplete" \
+    "independentPrimeReplayComplete" \
+    "validationCompositionComplete"; do
+    [[ "$validation_composition_compact" == \
+        *"$required_validation_composition_true_field=true"* ]] ||
+        die "Latin validation composition lacks true authority receipt: $required_validation_composition_true_field"
+done
+for required_validation_composition_false_field in \
+    "atomicCrossProcessSnapshotEstablished" \
+    "compilerCryptographicallyAuthenticated" \
+    "externalSourceToBinaryAttestationAvailable" \
+    "originRemoteCryptographicallyAuthenticated" \
+    "ignoredWorkspaceBytesObserved" \
+    "declarationSourceSemanticsIndependentlyVerified" \
+    "tokenizerModelSemanticsIndependentlyValidated" \
+    "tokenizerTrainingReplayComplete" \
+    "evaluationExecutionComplete" \
+    "selectionObservationComplete" \
+    "durableInputSnapshotPublished" \
+    "durableGitObservationPublished" \
+    "durableProducerRevalidationObservationPublished" \
+    "durableIndependentReplayObservationPublished" \
+    "durableValidationCompositionObservationPublished" \
+    "runtimeDecoderImplementationAvailable" \
+    "runtimeDependencyClosureEstablished" \
+    "runtimeInitializationEstablished" \
+    "primeProposalPolicyEstablished" \
+    "primeProposalPacketProduced" \
+    "primeTrialAuthorizationProduced" \
+    "primeDecisionReceiptProduced" \
+    "candidateSelectionAuthorized" \
+    "trialExecutionAuthorized" \
+    "furtherTrainingAuthorized" \
+    "promotionAuthorized" \
+    "productUseAuthorized" \
+    "publicationAuthorized" \
+    "proposalPairPublicationPerformedByThisComposition" \
+    "primeDurableReceiptPublished"; do
+    [[ "$validation_composition_compact" == \
+        *"$required_validation_composition_false_field=false"* ]] ||
+        die "Latin validation composition lacks false authority ceiling: $required_validation_composition_false_field"
+done
+readonly validation_composition_producer_projection="$(
+    source_section_between \
+        "    private static func projectProducer(" \
+        "    private static func projectReplay(" \
+        "$validation_composition_source"
+)"
+readonly validation_composition_replay_projection="$(
+    source_section_between \
+        "    private static func projectReplay(" \
+        "    private static func producerContractExact(" \
+        "$validation_composition_source"
+)"
+readonly validation_composition_engine="$(
+    source_section_between \
+        "enum PrimeLatinProposalValidationCompositionEngineV1 {" \
+        "public final class PrimeLatinProposalValidationCompositionCaptureV1" \
+        "$validation_composition_source"
+)"
+readonly validation_composition_sequence="$(
+    source_section_between \
+        "    static func validateSequenceForTesting(" \
+        "    private static func validateLiveSequence(" \
+        "$validation_composition_source"
+)"
+readonly validation_composition_live_sequence="$(
+    source_section_between \
+        "    private static func validateLiveSequence(" \
+        "    private static func exactProjectionForTesting(" \
+        "$validation_composition_source"
+)"
+readonly validation_composition_producer_projection_compact="$(
+    tr -d '[:space:]' <<< "$validation_composition_producer_projection"
+)"
+readonly validation_composition_replay_projection_compact="$(
+    tr -d '[:space:]' <<< "$validation_composition_replay_projection"
+)"
+readonly validation_composition_sequence_compact="$(
+    tr -d '[:space:]' <<< "$validation_composition_sequence"
+)"
+readonly validation_composition_live_sequence_compact="$(
+    tr -d '[:space:]' <<< "$validation_composition_live_sequence"
+)"
+for validation_composition_raw_field in \
+    "pairReceiptSHA256" \
+    "producerRepository" \
+    "producerCommit" \
+    "producerTree" \
+    "candidateCatalogSHA256" \
+    "candidateCatalogByteCount" \
+    "experimentManifestSHA256" \
+    "experimentManifestByteCount" \
+    "candidateDeclarationSetSHA256" \
+    "candidateDeclarationSetByteCount" \
+    "tokenizerBundleSHA256" \
+    "tokenizerBundleByteCount" \
+    "candidateIDs" \
+    "candidateIdentitySHA256s" \
+    "declarationBundleSHA256s" \
+    "inputBindingCount" \
+    "optimizerSteps" \
+    "trainingTokens" \
+    "wallClockSeconds" \
+    "outputNamespace"; do
+    [[ "$validation_composition_producer_projection_compact" == \
+        *"$validation_composition_raw_field:value.$validation_composition_raw_field"* ]] ||
+        die "Latin validation composition does not raw-project producer field: $validation_composition_raw_field"
+    [[ "$validation_composition_replay_projection_compact" == \
+        *"$validation_composition_raw_field:value.$validation_composition_raw_field"* ]] ||
+        die "Latin validation composition does not raw-project replay field: $validation_composition_raw_field"
+done
+for validation_composition_producer_mapping in \
+    "kind:.producer" \
+    "requestLabRoot:request.labRoot.path" \
+    "requestProducerRepositoryRoot:request.producerRepositoryRoot.path" \
+    "childContractExact:producerContractExact(value)" \
+    "pairReceiptByteCount:expected.pairReceiptByteCount" \
+    "retainedOriginalInputByteCount:expected.retainedOriginalInputByteCount" \
+    "orderedTensorCount:expected.orderedTensorCount" \
+    "uniqueParameterStorageCount:expected.uniqueParameterStorageCount" \
+    "totalParameterCount:expected.totalParameterCount"; do
+    [[ "$validation_composition_producer_projection_compact" == \
+        *"$validation_composition_producer_mapping"* ]] ||
+        die "Latin validation composition lacks producer projection mapping: $validation_composition_producer_mapping"
+done
+for validation_composition_replay_mapping in \
+    "kind:.replay" \
+    "requestLabRoot:request.labRoot.path" \
+    "requestProducerRepositoryRoot:request.producerRepositoryRoot.path" \
+    "childContractExact:replayContractExact(value)" \
+    "pairReceiptByteCount:value.pairReceiptByteCount" \
+    "retainedOriginalInputByteCount:value.retainedOriginalInputByteCount" \
+    "orderedTensorCount:value.orderedTensorCount" \
+    "uniqueParameterStorageCount:value.uniqueParameterStorageCount" \
+    "totalParameterCount:value.totalParameterCount"; do
+    [[ "$validation_composition_replay_projection_compact" == \
+        *"$validation_composition_replay_mapping"* ]] ||
+        die "Latin validation composition lacks replay projection mapping: $validation_composition_replay_mapping"
+done
+[[ "$validation_composition_engine" != \
+    *"PrimeLatinProposalProducerRevalidationObservationV1"* ]] ||
+    die "Latin validation composition engine directly consumes the producer child"
+[[ "$validation_composition_engine" != \
+    *"PrimeLatinProposalIndependentReplayObservationV1"* ]] ||
+    die "Latin validation composition engine directly consumes the replay child"
+[[ "$(count_fixed_occurrences \
+        "static func validate(" \
+        "$validation_composition_source")" == "1" ]] ||
+    die "Latin validation composition has an alternate validation engine"
+[[ "$(count_fixed_occurrences \
+        "PrimeLatinProposalValidationCompositionEngineV1.validate(" \
+        "$validation_composition_source")" == "2" ]] ||
+    die "Latin validation composition engine routing is not exact"
+[[ "$(count_fixed_occurrences \
+        "PrimeLatinProposalValidationCompositionBindingV1(" \
+        "$validation_composition_source")" == "1" ]] ||
+    die "Latin validation composition binding has an alternate constructor path"
+[[ "$validation_composition_sequence_compact" == \
+    *"letreplayBefore=tryrecaptureReplay()letproducerCurrent=tryrecaptureProducer()letreplayAfter=tryrecaptureReplay()"* ]] ||
+    die "Latin validation composition sequence is not replay-producer-replay"
+[[ "$validation_composition_sequence_compact" == \
+    *"PrimeLatinProposalValidationCompositionEngineV1.validate(producer:producerCurrent,replay:replayAfter)"* ]] ||
+    die "Latin validation composition sequence bypasses the single engine"
+[[ "$validation_composition_live_sequence_compact" == \
+    *"returntryvalidateSequenceForTesting("* ]] ||
+    die "Latin validation composition live path bypasses the tested sequence"
+[[ "$(count_fixed_occurrences \
+        "validateSequenceForTesting(" \
+        "$validation_composition_source")" == "2" ]] ||
+    die "Latin validation composition sequence routing is not exact"
+[[ "$(count_fixed_occurrences \
+        "projectProducer(" \
+        "$validation_composition_source")" == "3" ]] ||
+    die "Latin validation composition producer projection routing is not exact"
+[[ "$(count_fixed_occurrences \
+        "projectReplay(" \
+        "$validation_composition_source")" == "3" ]] ||
+    die "Latin validation composition replay projection routing is not exact"
+
 [[ "$(grep -Fc -- '.package(' "$prime_root/Package.swift")" == "1" ]] ||
     die "Prime root gained an unexpected package dependency"
 ! grep -Fq -- '.package(' "$validation_manifest" ||
@@ -665,11 +982,12 @@ for required_root_fragment in \
     '.target(name:"PrimeLatinProposalGitObservation",dependencies:["PrimeLatinProposalPairCapture",])' \
     '.target(name:"PrimeLatinProposalProducerRevalidationObservation",dependencies:["PrimeLatinProposalPairCapture","PrimeLatinProposalGitObservation",])' \
     '.target(name:"PrimeLatinProposalIndependentReplay",dependencies:["PrimeLatinProposalPairCapture","PrimeLatinProposalGitObservation",])' \
+    '.target(name:"PrimeLatinProposalValidationComposition",dependencies:["PrimeLatinProposalProducerRevalidationObservation","PrimeLatinProposalIndependentReplay",])' \
     '.executableTarget(name:"PrimeLatinProposalPairCaptureProbe",dependencies:["PrimeLatinProposalPairCapture",])' \
     '.executableTarget(name:"PrimeLatinProposalGitObservationProbe",dependencies:["PrimeLatinProposalGitObservation",])' \
     '.executableTarget(name:"PrimeLatinProposalProducerRevalidationObservationProbe",dependencies:["PrimeLatinProposalProducerRevalidationObservation",])' \
     '.executableTarget(name:"PrimeLatinProposalIndependentReplayProbe",dependencies:["PrimeLatinProposalIndependentReplay",])' \
-    '.testTarget(name:"PrimeLatinProposalPairCaptureTests",dependencies:["PrimeLatinProposalPairCapture","PrimeLatinProposalGitObservation","PrimeLatinProposalProducerRevalidationObservation","PrimeLatinProposalIndependentReplay",])'; do
+    '.testTarget(name:"PrimeLatinProposalPairCaptureTests",dependencies:["PrimeLatinProposalPairCapture","PrimeLatinProposalGitObservation","PrimeLatinProposalProducerRevalidationObservation","PrimeLatinProposalIndependentReplay","PrimeLatinProposalValidationComposition",])'; do
     [[ "$root_manifest_compact" == *"$required_root_fragment"* ]] ||
         die "Prime root Latin target graph is not exact"
 done
@@ -678,13 +996,25 @@ for required_validation_fragment in \
     '.target(name:"PrimeLatinProposalGitObservation",dependencies:["PrimeLatinProposalPairCapture",])' \
     '.target(name:"PrimeLatinProposalProducerRevalidationObservation",dependencies:["PrimeLatinProposalPairCapture","PrimeLatinProposalGitObservation",])' \
     '.target(name:"PrimeLatinProposalIndependentReplay",dependencies:["PrimeLatinProposalPairCapture","PrimeLatinProposalGitObservation",])' \
+    '.target(name:"PrimeLatinProposalValidationComposition",dependencies:["PrimeLatinProposalProducerRevalidationObservation","PrimeLatinProposalIndependentReplay",])' \
     '.executableTarget(name:"PrimeLatinProposalPairCaptureProbe",dependencies:["PrimeLatinProposalPairCapture",])' \
     '.executableTarget(name:"PrimeLatinProposalGitObservationProbe",dependencies:["PrimeLatinProposalGitObservation",])' \
     '.executableTarget(name:"PrimeLatinProposalProducerRevalidationObservationProbe",dependencies:["PrimeLatinProposalProducerRevalidationObservation",])' \
     '.executableTarget(name:"PrimeLatinProposalIndependentReplayProbe",dependencies:["PrimeLatinProposalIndependentReplay",])' \
-    '.testTarget(name:"PrimeLatinProposalPairCaptureTests",dependencies:["PrimeLatinProposalPairCapture","PrimeLatinProposalGitObservation","PrimeLatinProposalProducerRevalidationObservation","PrimeLatinProposalIndependentReplay",])'; do
+    '.testTarget(name:"PrimeLatinProposalPairCaptureTests",dependencies:["PrimeLatinProposalPairCapture","PrimeLatinProposalGitObservation","PrimeLatinProposalProducerRevalidationObservation","PrimeLatinProposalIndependentReplay","PrimeLatinProposalValidationComposition",])'; do
     [[ "$validation_manifest_compact" == *"$required_validation_fragment"* ]] ||
         die "isolated Latin validation target graph is not exact"
+done
+for forbidden_validation_composition_manifest_fragment in \
+    '.library(name:"PrimeLatinProposalValidationComposition"' \
+    '.executable(name:"PrimeLatinProposalValidationComposition"' \
+    '.executableTarget(name:"PrimeLatinProposalValidationComposition"'; do
+    [[ "$root_manifest_compact" != \
+        *"$forbidden_validation_composition_manifest_fragment"* ]] ||
+        die "Prime root exposes a forbidden validation-composition product or executable"
+    [[ "$validation_manifest_compact" != \
+        *"$forbidden_validation_composition_manifest_fragment"* ]] ||
+        die "isolated package exposes a forbidden validation-composition product or executable"
 done
 
 readonly embedded_provenance="$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift"
@@ -874,6 +1204,9 @@ cp -R \
     "$prime_root/Sources/PrimeLatinProposalIndependentReplayProbe" \
     "$stage_root/Sources/PrimeLatinProposalIndependentReplayProbe"
 cp -R \
+    "$prime_root/Sources/PrimeLatinProposalValidationComposition" \
+    "$stage_root/Sources/PrimeLatinProposalValidationComposition"
+cp -R \
     "$prime_root/Tests/PrimeLatinProposalPairCaptureTests" \
     "$stage_root/Tests/PrimeLatinProposalPairCaptureTests"
 
@@ -889,12 +1222,14 @@ xcrun swiftc -frontend -parse "$producer_revalidation_source"
 xcrun swiftc -frontend -parse "$producer_revalidation_probe_source"
 xcrun swiftc -frontend -parse "$independent_replay_source"
 xcrun swiftc -frontend -parse "$independent_replay_probe_source"
+xcrun swiftc -frontend -parse "$validation_composition_source"
 xcrun swiftc -frontend -parse "$capture_tests"
 xcrun swiftc -frontend -parse "$v3_inputs_tests"
 xcrun swiftc -frontend -parse "$v3_snapshot_tests"
 xcrun swiftc -frontend -parse "$git_observation_tests"
 xcrun swiftc -frontend -parse "$producer_revalidation_tests"
 xcrun swiftc -frontend -parse "$independent_replay_tests"
+xcrun swiftc -frontend -parse "$validation_composition_tests"
 xcrun swiftc -frontend -parse "$source_contract_tests"
 
 TMPDIR="$stage_root" swift test \
@@ -907,7 +1242,7 @@ TMPDIR="$stage_root" swift test \
     --manifest-cache local \
     --disable-netrc \
     --disable-keychain \
-    --filter 'PrimeLatinProposalPairCaptureTests|PrimeLatinProposalInputsV3Tests|PrimeLatinProposalInputSnapshotV3Tests|PrimeLatinProposalGitSourceV3Tests|PrimeLatinProposalProducerRevalidationObservationTests|PrimeLatinProposalIndependentReplayV1Tests|PrimeLatinProposalPairCaptureSourceContractTests' \
+    --filter 'PrimeLatinProposalPairCaptureTests|PrimeLatinProposalInputsV3Tests|PrimeLatinProposalInputSnapshotV3Tests|PrimeLatinProposalGitSourceV3Tests|PrimeLatinProposalProducerRevalidationObservationTests|PrimeLatinProposalIndependentReplayV1Tests|PrimeLatinProposalValidationCompositionV1Tests|PrimeLatinProposalPairCaptureSourceContractTests' \
     2>&1 | tee "$test_log"
 grep -Eq 'Executed [1-9][0-9]* tests?, with 0 failures' "$test_log" ||
     die "focused Latin capture and V3 test receipt is missing"
@@ -918,6 +1253,7 @@ for expected_test_suite in \
     "PrimeLatinProposalGitSourceV3Tests" \
     "PrimeLatinProposalProducerRevalidationObservationTests" \
     "PrimeLatinProposalIndependentReplayV1Tests" \
+    "PrimeLatinProposalValidationCompositionV1Tests" \
     "PrimeLatinProposalPairCaptureSourceContractTests"; do
     grep -Fq -- "$expected_test_suite" "$test_log" ||
         die "focused Latin test suite receipt is missing: $expected_test_suite"
@@ -976,4 +1312,4 @@ TMPDIR="$stage_root" swift build \
 [[ -z "$(git -C "$prime_root" status --porcelain=v1 --untracked-files=all)" ]] ||
     die "Prime checkout changed during validation"
 
-echo "OK: exact-head Latin V1/V3 pair capture, canonical V3 wire/hash-chain verification, original-input snapshot mechanics, fixed local Git observation, compiled-but-not-live-run producer revalidation, and compiled-and-synthetically-tested-but-not-live-run Prime-owned independent structural replay are dependency-isolated, abstaining, and non-authorizing"
+echo "OK: exact-head Latin V1/V3 pair capture, canonical V3 wire/hash-chain verification, original-input snapshot mechanics, fixed local Git observation, compiled-but-not-live-run producer revalidation, compiled-and-synthetically-tested-but-not-live-run Prime-owned independent structural replay, and synthetically tested but never live-run validation composition are dependency-isolated, abstaining, and non-authorizing"

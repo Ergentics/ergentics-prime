@@ -1151,7 +1151,8 @@ final class PrimeLatinProposalPairCaptureSourceContractTests: XCTestCase {
                     "dependencies:[\"PrimeLatinProposalPairCapture\"," +
                     "\"PrimeLatinProposalGitObservation\"," +
                     "\"PrimeLatinProposalProducerRevalidationObservation\"," +
-                    "\"PrimeLatinProposalIndependentReplay\",])"))
+                    "\"PrimeLatinProposalIndependentReplay\"," +
+                    "\"PrimeLatinProposalValidationComposition\",])"))
         for forbidden in [
             "PrimeCore",
             "ErgenticsPrimeRuntime",
@@ -1603,7 +1604,8 @@ final class PrimeLatinProposalPairCaptureSourceContractTests: XCTestCase {
                     "dependencies:[\"PrimeLatinProposalPairCapture\"," +
                     "\"PrimeLatinProposalGitObservation\"," +
                     "\"PrimeLatinProposalProducerRevalidationObservation\"," +
-                    "\"PrimeLatinProposalIndependentReplay\",])"))
+                    "\"PrimeLatinProposalIndependentReplay\"," +
+                    "\"PrimeLatinProposalValidationComposition\",])"))
         XCTAssertFalse(
             compact.contains(
                 "name:\"PrimeLatinProposalIndependentReplay\"," +
@@ -1757,6 +1759,595 @@ final class PrimeLatinProposalPairCaptureSourceContractTests: XCTestCase {
             XCTAssertFalse(
                 source.contains(forbidden),
                 "forbidden independent-replay probe token: \(forbidden)")
+        }
+    }
+
+    func testValidationCompositionIsExactAndNonAuthorizing() throws {
+        let source = try swiftSource(
+            relativePath:
+                "Sources/PrimeLatinProposalValidationComposition/" +
+                    "PrimeLatinProposalValidationCompositionV1.swift")
+        let imports = source.split(separator: "\n")
+            .map(String.init)
+            .filter { $0.hasPrefix("import ") }
+        XCTAssertEqual(
+            imports,
+            [
+                "import Foundation",
+                "import PrimeLatinProposalIndependentReplay",
+                "import PrimeLatinProposalProducerRevalidationObservation",
+            ])
+        for required in [
+            "public enum PrimeLatinProposalValidationCompositionErrorV1",
+            "public struct PrimeLatinProposalValidationCompositionAuthorityBoundaryV1",
+            "public struct PrimeLatinProposalValidationCompositionObservationV1",
+            "public final class PrimeLatinProposalValidationCompositionCaptureV1",
+            "public static func capture(",
+            "request: PrimeLatinProposalProducerRevalidationRequestV1",
+            "public let observation",
+            "public func recaptureAndValidateUnchanged()",
+            "PrimeLatinProposalProducerRevalidationCaptureV1",
+            "PrimeLatinProposalIndependentReplayCaptureV1",
+            "compositionPolicyID",
+            "producerRevalidationObservation",
+            "independentReplayObservation",
+            "invalidChildObservation",
+            "crossBindingMismatch",
+            "captureChanged",
+            "ergentics_prime_latin_proposal_v3_validation_composition_observation_v1",
+            "prime_latin_v3_producer_revalidation_independent_replay_composition_v1",
+            "prime_owned_cooperative_same_request_root_sequence_composing_one_live_producer_revalidation_observation_and_one_independent_replay_observation_with_exact_shared_identity_hash_count_budget_and_output_namespace_cross_bindings_only_non_authorizing",
+            "abstain_live_producer_revalidation_and_independent_prime_replay_composed_proposal_policy_runtime_decoder_initialization_evaluation_trial_decision_and_publication_authority_absent",
+        ] {
+            XCTAssertTrue(
+                source.contains(required),
+                "missing validation-composition anchor: \(required)")
+        }
+        let compact = source.filter { !$0.isWhitespace }
+        for field in [
+            "producerRevalidationCaptureAndRecaptureComplete",
+            "independentReplayCaptureAndRecaptureComplete",
+            "cooperativeSameRequestRootSequenceComplete",
+            "producerRevalidationAuthorityBoundaryExact",
+            "independentReplayAuthorityBoundaryExact",
+            "exactPairReceiptCrossBindingMatched",
+            "exactProducerSourceCrossBindingMatched",
+            "exactCandidateCatalogCrossBindingMatched",
+            "exactExperimentManifestCrossBindingMatched",
+            "exactCandidateDeclarationSetCrossBindingMatched",
+            "exactTokenizerBundleCrossBindingMatched",
+            "exactCandidateIdentityInventoryCrossBindingMatched",
+            "exactTwentyOneInputBindingCountCrossBindingMatched",
+            "exactTwentyOneOriginalInputBytesRetained",
+            "exactTrialBudgetCrossBindingMatched",
+            "exactOutputNamespaceCrossBindingMatched",
+            "outputNamespaceAbsenceVerified",
+            "referencedInputSnapshotAvailable",
+            "referencedArtifactBytesAvailable",
+            "llmGitStateIndependentlyObserved",
+            "revalidatorToolSourceIndependentlyObserved",
+            "liveProducerWorkspaceRevalidationComplete",
+            "independentPrimeReplayComplete",
+            "validationCompositionComplete",
+        ] {
+            XCTAssertTrue(
+                compact.contains("\(field)=true"),
+                "validation-composition completion is not true: \(field)")
+        }
+        for field in [
+            "atomicCrossProcessSnapshotEstablished",
+            "compilerCryptographicallyAuthenticated",
+            "externalSourceToBinaryAttestationAvailable",
+            "originRemoteCryptographicallyAuthenticated",
+            "ignoredWorkspaceBytesObserved",
+            "declarationSourceSemanticsIndependentlyVerified",
+            "tokenizerModelSemanticsIndependentlyValidated",
+            "tokenizerTrainingReplayComplete",
+            "evaluationExecutionComplete",
+            "selectionObservationComplete",
+            "durableInputSnapshotPublished",
+            "durableGitObservationPublished",
+            "durableProducerRevalidationObservationPublished",
+            "durableIndependentReplayObservationPublished",
+            "durableValidationCompositionObservationPublished",
+            "runtimeDecoderImplementationAvailable",
+            "runtimeDependencyClosureEstablished",
+            "runtimeInitializationEstablished",
+            "primeProposalPolicyEstablished",
+            "primeProposalPacketProduced",
+            "primeTrialAuthorizationProduced",
+            "primeDecisionReceiptProduced",
+            "candidateSelectionAuthorized",
+            "trialExecutionAuthorized",
+            "furtherTrainingAuthorized",
+            "promotionAuthorized",
+            "productUseAuthorized",
+            "publicationAuthorized",
+            "proposalPairPublicationPerformedByThisComposition",
+            "primeDurableReceiptPublished",
+        ] {
+            XCTAssertTrue(
+                compact.contains("\(field)=false"),
+                "validation-composition authority ceiling is not false: \(field)")
+        }
+        for forbidden in [
+            "import PrimeLatinProposalPairCapture",
+            "import PrimeLatinProposalGitObservation",
+            "PrimeLatinProposalPairCaptureV3",
+            "PrimeLatinProposalGitSourceCaptureV3",
+            "PrimeLatinProposalInputSnapshotCaptureV3",
+            "import PrimeCore",
+            "import ErgenticsLLM",
+            "import ErgenticsTokenizer",
+            "import MLX",
+            "MLXLLM",
+            "LlamaModel",
+            "ErgenticsPrimeRuntime",
+            "@main",
+            "CommandLine",
+            "Process(",
+            "ProcessInfo.processInfo.environment",
+            "FileManager",
+            "URLSession",
+            "NWConnection",
+            "socket(",
+            "connect(",
+            "FileHandle.standardOutput",
+            "FileHandle.standardError",
+            "O_CREAT",
+            "O_WRONLY",
+            "O_RDWR",
+            "createDirectory(",
+            "createFile(",
+            "removeItem(",
+            "publishProposalPairV3",
+            "func publish",
+            "--disable-sandbox",
+        ] {
+            XCTAssertFalse(
+                source.contains(forbidden),
+                "validation composition contains a forbidden capability: \(forbidden)")
+        }
+    }
+
+    func testValidationCompositionIsInternalAndUsesTheExistingTestLane()
+        throws
+    {
+        let root = URL(
+            fileURLWithPath: FileManager.default.currentDirectoryPath,
+            isDirectory: true)
+        for relativePath in [
+            "Package.swift",
+            "Tests/PrimeLatinProposalPairCaptureValidation/Package.swift",
+        ] {
+            let manifest = try String(
+                contentsOf: root.appendingPathComponent(relativePath),
+                encoding: .utf8)
+            let compact = manifest.filter { !$0.isWhitespace }
+            XCTAssertTrue(
+                compact.contains(
+                    ".target(" +
+                        "name:\"PrimeLatinProposalValidationComposition\"," +
+                        "dependencies:[" +
+                        "\"PrimeLatinProposalProducerRevalidationObservation\"," +
+                        "\"PrimeLatinProposalIndependentReplay\",])"),
+                "missing exact composition graph in \(relativePath)")
+            XCTAssertTrue(
+                compact.contains(
+                    ".testTarget(" +
+                        "name:\"PrimeLatinProposalPairCaptureTests\"," +
+                        "dependencies:[\"PrimeLatinProposalPairCapture\"," +
+                        "\"PrimeLatinProposalGitObservation\"," +
+                        "\"PrimeLatinProposalProducerRevalidationObservation\"," +
+                        "\"PrimeLatinProposalIndependentReplay\"," +
+                        "\"PrimeLatinProposalValidationComposition\",])"),
+                "composition is outside the existing test lane in \(relativePath)")
+            for forbidden in [
+                ".library(name:\"PrimeLatinProposalValidationComposition\"",
+                ".executable(name:\"PrimeLatinProposalValidationComposition\"",
+                ".executableTarget(name:\"PrimeLatinProposalValidationComposition\"",
+                "name:\"PrimeLatinProposalValidationComposition\"," +
+                    "dependencies:[\"PrimeLatinProposalPairCapture\"",
+                "name:\"PrimeLatinProposalValidationComposition\"," +
+                    "dependencies:[\"PrimeLatinProposalGitObservation\"",
+                "name:\"PrimeLatinProposalValidationComposition\"," +
+                    "dependencies:[\"PrimeCore\"",
+                "name:\"PrimeLatinProposalValidationComposition\"," +
+                    "dependencies:[\"MLX\"",
+            ] {
+                XCTAssertFalse(
+                    compact.contains(forbidden),
+                    "forbidden validation-composition package surface in " +
+                        "\(relativePath): \(forbidden)")
+            }
+        }
+    }
+
+    func testValidationCompositionRawProjectionAndSingleEngineAreExact()
+        throws
+    {
+        let source = try swiftSource(
+            relativePath:
+                "Sources/PrimeLatinProposalValidationComposition/" +
+                    "PrimeLatinProposalValidationCompositionV1.swift")
+        let producerProjection = try sourceSection(
+            source,
+            from: "    private static func projectProducer(",
+            to: "    private static func projectReplay(")
+        let replayProjection = try sourceSection(
+            source,
+            from: "    private static func projectReplay(",
+            to: "    private static func producerContractExact(")
+        let producerContract = try sourceSection(
+            source,
+            from: "    private static func producerContractExact(",
+            to: "    private static func replayContractExact(")
+        let engine = try sourceSection(
+            source,
+            from: "enum PrimeLatinProposalValidationCompositionEngineV1 {",
+            to: "public final class PrimeLatinProposalValidationCompositionCaptureV1")
+        let producerCompact = producerProjection.filter { !$0.isWhitespace }
+        let replayCompact = replayProjection.filter { !$0.isWhitespace }
+
+        let sharedValueFields = [
+            "pairReceiptSHA256",
+            "producerRepository",
+            "producerCommit",
+            "producerTree",
+            "candidateCatalogSHA256",
+            "candidateCatalogByteCount",
+            "experimentManifestSHA256",
+            "experimentManifestByteCount",
+            "candidateDeclarationSetSHA256",
+            "candidateDeclarationSetByteCount",
+            "tokenizerBundleSHA256",
+            "tokenizerBundleByteCount",
+            "candidateIDs",
+            "candidateIdentitySHA256s",
+            "declarationBundleSHA256s",
+            "inputBindingCount",
+            "optimizerSteps",
+            "trainingTokens",
+            "wallClockSeconds",
+            "outputNamespace",
+        ]
+        XCTAssertEqual(sharedValueFields.count, 20)
+        for field in sharedValueFields {
+            XCTAssertTrue(
+                producerCompact.contains("\(field):value.\(field)"),
+                "producer projection does not raw-project \(field)")
+            XCTAssertTrue(
+                replayCompact.contains("\(field):value.\(field)"),
+                "replay projection does not raw-project \(field)")
+        }
+        for mapping in [
+            "kind:.producer",
+            "requestLabRoot:request.labRoot.path",
+            "requestProducerRepositoryRoot:request.producerRepositoryRoot.path",
+            "childContractExact:producerContractExact(value)",
+            "pairReceiptByteCount:expected.pairReceiptByteCount",
+            "retainedOriginalInputByteCount:expected.retainedOriginalInputByteCount",
+            "orderedTensorCount:expected.orderedTensorCount",
+            "uniqueParameterStorageCount:expected.uniqueParameterStorageCount",
+            "totalParameterCount:expected.totalParameterCount",
+        ] {
+            XCTAssertTrue(
+                producerCompact.contains(mapping),
+                "producer projection lacks exact mapping: \(mapping)")
+        }
+        for mapping in [
+            "kind:.replay",
+            "requestLabRoot:request.labRoot.path",
+            "requestProducerRepositoryRoot:request.producerRepositoryRoot.path",
+            "childContractExact:replayContractExact(value)",
+            "pairReceiptByteCount:value.pairReceiptByteCount",
+            "retainedOriginalInputByteCount:value.retainedOriginalInputByteCount",
+            "orderedTensorCount:value.orderedTensorCount",
+            "uniqueParameterStorageCount:value.uniqueParameterStorageCount",
+            "totalParameterCount:value.totalParameterCount",
+        ] {
+            XCTAssertTrue(
+                replayCompact.contains(mapping),
+                "replay projection lacks exact mapping: \(mapping)")
+        }
+
+        for field in [
+            "pairCaptureAndRecaptureComplete",
+            "inputSnapshotCaptureAndRecaptureComplete",
+            "producerGitObservationComplete",
+            "exactMergedRevalidatorSourceObserved",
+            "exactRevalidatorSourceClosureObserved",
+            "compilerIdentityObserved",
+            "localExactSourceClosureBuildObserved",
+            "revalidatorExecutableBuiltFromObservedSourceClosure",
+            "revalidatorExecutableIdentityStable",
+            "boundedFreshProcessObservationComplete",
+            "canonicalRevalidationObservationDecoded",
+            "expectedPairReceiptCrossBindingValidated",
+            "exactTwentyOneInputBindingsCrossBound",
+            "canonicalHashChainCrossBindingsMatched",
+            "repeatedProducerProcessObservationUnchanged",
+            "outputNamespaceAbsenceVerified",
+            "llmGitStateIndependentlyObserved",
+            "revalidatorToolSourceIndependentlyObserved",
+            "liveProducerWorkspaceRevalidationComplete",
+        ] {
+            XCTAssertTrue(
+                producerContract.contains("&& authority.\(field)"),
+                "producer child contract omits true field: \(field)")
+        }
+        for field in [
+            "compilerCryptographicallyAuthenticated",
+            "externalSourceToBinaryAttestationAvailable",
+            "originRemoteCryptographicallyAuthenticated",
+            "ignoredWorkspaceBytesObserved",
+            "durableInputSnapshotPublished",
+            "durableGitObservationPublished",
+            "durableRevalidationObservationPublished",
+            "independentPrimeReplayComplete",
+            "runtimeDecoderImplementationAvailable",
+            "runtimeDependencyClosureEstablished",
+            "runtimeInitializationEstablished",
+            "primeProposalPacketProduced",
+            "primeTrialAuthorizationProduced",
+            "primeDecisionReceiptProduced",
+            "candidateSelectionAuthorized",
+            "trialExecutionAuthorized",
+            "furtherTrainingAuthorized",
+            "promotionAuthorized",
+            "productUseAuthorized",
+            "publicationAuthorized",
+            "proposalPairPublicationPerformedByThisObservation",
+            "primeDurableReceiptPublished",
+        ] {
+            XCTAssertTrue(
+                producerContract.contains("&& !authority.\(field)"),
+                "producer child contract omits false field: \(field)")
+        }
+        for required in [
+            "ergentics_prime_latin_proposal_v3_producer_revalidation_observation_v1",
+            "prime_built_exact_merged_revalidator_source_closure_and_observed_two_cross_bound_live_producer_processes_only_non_authorizing",
+            "prime_latin_exact_source_direct_swiftc_build_v1",
+            "prime_latin_producer_revalidation_fixed_fresh_process_v1",
+            "abstain_producer_revalidation_observation_complete_requires_independent_prime_replay",
+            "source.artifacts.count == 4",
+            "build.compileCommandCount == 3",
+            "build.processLaunchCount == 5",
+            "build.governanceArtifactCount == 4",
+            "build.compilerInputSourceCount == 3",
+            "process.invocationCount == 2",
+            "process.standardOutputByteCount == 8_434",
+            "process.standardErrorByteCount == 0",
+        ] {
+            XCTAssertTrue(
+                producerContract.contains(required),
+                "producer child contract omits exact policy/count: \(required)")
+        }
+        let producerChildSource = try swiftSource(
+            relativePath:
+                "Sources/PrimeLatinProposalProducerRevalidationObservation/" +
+                    "PrimeLatinProposalProducerRevalidationObservationV1.swift")
+        let producerAuthority = try sourceSection(
+            producerChildSource,
+            from:
+                "public struct " +
+                    "PrimeLatinProposalProducerRevalidationAuthorityBoundaryV1:",
+            to:
+                "public struct " +
+                    "PrimeLatinProposalProducerRevalidationObservationV1:")
+        let producerAuthorityFields = boolPropertyNames(in: producerAuthority)
+        XCTAssertEqual(producerAuthorityFields.count, 41)
+        for field in producerAuthorityFields {
+            XCTAssertEqual(
+                fixedOccurrenceCount("authority.\(field)", in: producerContract),
+                1,
+                "producer child authority is not projected exactly once: \(field)")
+        }
+
+        XCTAssertFalse(
+            engine.contains("PrimeLatinProposalProducerRevalidationObservationV1"))
+        XCTAssertFalse(
+            engine.contains("PrimeLatinProposalIndependentReplayObservationV1"))
+        XCTAssertEqual(
+            fixedOccurrenceCount(
+                "static func validate(",
+                in: source),
+            1)
+        XCTAssertEqual(
+            fixedOccurrenceCount(
+                "PrimeLatinProposalValidationCompositionEngineV1.validate(",
+                in: source),
+            2)
+        XCTAssertEqual(
+            fixedOccurrenceCount(
+                "PrimeLatinProposalValidationCompositionBindingV1(",
+                in: source),
+            1)
+        XCTAssertTrue(
+            engine.contains("PrimeLatinProposalValidationCompositionBindingV1("))
+    }
+
+    func testValidationCompositionReplayContractAndSequenceAreExact()
+        throws
+    {
+        let source = try swiftSource(
+            relativePath:
+                "Sources/PrimeLatinProposalValidationComposition/" +
+                    "PrimeLatinProposalValidationCompositionV1.swift")
+        let replayContract = try sourceSection(
+            source,
+            from: "    private static func replayContractExact(",
+            to: "\n    }\n}")
+        for field in [
+            "pairCaptureAndRecaptureComplete",
+            "inputSnapshotCaptureAndRecaptureComplete",
+            "producerGitObservationComplete",
+            "exactTwentyOneOriginalInputBindingsCrossBound",
+            "exactTwentyOneOriginalInputBytesRetained",
+            "retainedOriginalInputHashCountRecomputationComplete",
+            "independentTokenizerBundleReconstructionComplete",
+            "independentDeclarationTargetClosureReconstructionComplete",
+            "independentCandidateIdentityReconstructionComplete",
+            "independentCandidateDeclarationSetReconstructionComplete",
+            "independentCandidateCatalogReconstructionComplete",
+            "independentExperimentManifestReconstructionComplete",
+            "canonicalCandidateCatalogBytesMatched",
+            "canonicalExperimentManifestBytesMatched",
+            "canonicalHashChainRecomputationComplete",
+            "outputNamespaceAbsenceVerified",
+            "referencedInputSnapshotAvailable",
+            "referencedArtifactBytesAvailable",
+            "llmGitStateIndependentlyObserved",
+            "independentPrimeReplayComplete",
+        ] {
+            XCTAssertTrue(
+                replayContract.contains("&& authority.\(field)"),
+                "replay child contract omits true field: \(field)")
+        }
+        for field in [
+            "ergenticsLatinProducerModuleImported",
+            "ergenticsLatinProducerFunctionInvoked",
+            "ergenticsLatinProducerSourceUsedAsReplayImplementation",
+            "liveProducerWorkspaceRevalidationComplete",
+            "revalidatorToolSourceIndependentlyObserved",
+            "originRemoteCryptographicallyAuthenticated",
+            "ignoredWorkspaceBytesObserved",
+            "declarationSourceSemanticsIndependentlyVerified",
+            "tokenizerModelSemanticsIndependentlyValidated",
+            "tokenizerTrainingReplayComplete",
+            "evaluationExecutionComplete",
+            "selectionObservationComplete",
+            "durableInputSnapshotPublished",
+            "durableGitObservationPublished",
+            "durableIndependentReplayObservationPublished",
+            "runtimeDecoderImplementationAvailable",
+            "runtimeDependencyClosureEstablished",
+            "runtimeInitializationEstablished",
+            "primeProposalPacketProduced",
+            "primeTrialAuthorizationProduced",
+            "primeDecisionReceiptProduced",
+            "candidateSelectionAuthorized",
+            "trialExecutionAuthorized",
+            "furtherTrainingAuthorized",
+            "promotionAuthorized",
+            "productUseAuthorized",
+            "publicationAuthorized",
+            "proposalPairPublicationPerformedByThisObservation",
+            "primeDurableReceiptPublished",
+        ] {
+            XCTAssertTrue(
+                replayContract.contains("&& !authority.\(field)"),
+                "replay child contract omits false field: \(field)")
+        }
+        for required in [
+            "ergentics_prime_latin_proposal_v3_independent_replay_observation_v1",
+            "prime_owned_independent_typed_reconstruction_from_one_git_bound_retained_twenty_one_original_input_snapshot_and_byte_exact_catalog_experiment_cross_check_only_non_authorizing",
+            "prime_latin_v3_retained_original_input_independent_reconstruction_v1",
+            "abstain_independent_prime_structural_replay_complete_live_producer_revalidation_not_composed_and_runtime_decoder_initialization_evaluation_trial_and_publication_authority_absent",
+        ] {
+            XCTAssertTrue(
+                replayContract.contains(required),
+                "replay child contract omits exact policy: \(required)")
+        }
+        let replayChildSource = try swiftSource(
+            relativePath:
+                "Sources/PrimeLatinProposalIndependentReplay/" +
+                    "PrimeLatinProposalIndependentReplayV1.swift")
+        let replayAuthority = try sourceSection(
+            replayChildSource,
+            from:
+                "public struct " +
+                    "PrimeLatinProposalIndependentReplayAuthorityBoundaryV1:",
+            to:
+                "public struct " +
+                    "PrimeLatinProposalIndependentReplayObservationV1:")
+        let replayAuthorityFields = boolPropertyNames(in: replayAuthority)
+        XCTAssertEqual(replayAuthorityFields.count, 49)
+        for field in replayAuthorityFields {
+            XCTAssertEqual(
+                fixedOccurrenceCount("authority.\(field)", in: replayContract),
+                1,
+                "replay child authority is not projected exactly once: \(field)")
+        }
+
+        let sequence = try sourceSection(
+            source,
+            from: "    static func validateSequenceForTesting(",
+            to: "    private static func validateLiveSequence(")
+            .filter { !$0.isWhitespace }
+        XCTAssertTrue(
+            sequence.contains(
+                "letreplayBefore=tryrecaptureReplay()" +
+                    "letproducerCurrent=tryrecaptureProducer()" +
+                    "letreplayAfter=tryrecaptureReplay()"))
+        XCTAssertTrue(
+            sequence.contains(
+                "replayBefore==initialReplay," +
+                    "producerCurrent==initialProducer," +
+                    "replayAfter==initialReplay," +
+                    "replayBefore==replayAfter"))
+        XCTAssertTrue(
+            sequence.contains(
+                "PrimeLatinProposalValidationCompositionEngineV1.validate(" +
+                    "producer:producerCurrent,replay:replayAfter)"))
+
+        let liveSequence = try sourceSection(
+            source,
+            from: "    private static func validateLiveSequence(",
+            to: "    private static func exactProjectionForTesting(")
+            .filter { !$0.isWhitespace }
+        XCTAssertTrue(liveSequence.contains("returntryvalidateSequenceForTesting("))
+        XCTAssertTrue(
+            liveSequence.contains(
+                "initialProducer:projectProducer(initialProducer,request:request)"))
+        XCTAssertTrue(
+            liveSequence.contains(
+                "initialReplay:projectReplay(initialReplay,request:request)"))
+        XCTAssertTrue(
+            liveSequence.contains(
+                "recaptureReplay:{letcurrent=tryreplayCapture" +
+                    ".recaptureAndValidateUnchanged()" +
+                    "returnprojectReplay(current,request:request)}"))
+        XCTAssertTrue(
+            liveSequence.contains(
+                "recaptureProducer:{letcurrent=tryproducerCapture" +
+                    ".recaptureAndValidateUnchanged()" +
+                    "returnprojectProducer(current,request:request)}"))
+        XCTAssertEqual(
+            fixedOccurrenceCount("validateSequenceForTesting(", in: source),
+            2)
+        XCTAssertEqual(fixedOccurrenceCount("projectProducer(", in: source), 3)
+        XCTAssertEqual(fixedOccurrenceCount("projectReplay(", in: source), 3)
+    }
+
+    private func sourceSection(
+        _ source: String,
+        from start: String,
+        to end: String
+    ) throws -> String {
+        let startRange = try XCTUnwrap(source.range(of: start))
+        let endRange = try XCTUnwrap(
+            source.range(
+                of: end,
+                range: startRange.upperBound..<source.endIndex))
+        return String(source[startRange.lowerBound..<endRange.lowerBound])
+    }
+
+    private func fixedOccurrenceCount(_ needle: String, in source: String)
+        -> Int
+    {
+        source.components(separatedBy: needle).count - 1
+    }
+
+    private func boolPropertyNames(in source: String) -> [String] {
+        source.split(separator: "\n").compactMap { line in
+            let compact = String(line.filter { !$0.isWhitespace })
+            let prefix = "publiclet"
+            let suffix = ":Bool"
+            guard compact.hasPrefix(prefix), compact.hasSuffix(suffix) else {
+                return nil
+            }
+            return String(compact.dropFirst(prefix.count).dropLast(suffix.count))
         }
     }
 
