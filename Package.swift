@@ -23,6 +23,12 @@ let package = Package(
                 "PrimeLatinProposalGitObservation",
             ]
         ),
+        .library(
+            name: "PrimeLatinProposalProducerRevalidationObservation",
+            targets: [
+                "PrimeLatinProposalProducerRevalidationObservation",
+            ]
+        ),
         .executable(
             name: "PrimeLatinProposalPairCaptureProbe",
             targets: [
@@ -33,6 +39,13 @@ let package = Package(
             name: "PrimeLatinProposalGitObservationProbe",
             targets: [
                 "PrimeLatinProposalGitObservationProbe",
+            ]
+        ),
+        .executable(
+            name:
+                "PrimeLatinProposalProducerRevalidationObservationProbe",
+            targets: [
+                "PrimeLatinProposalProducerRevalidationObservationProbe",
             ]
         ),
         .library(
@@ -199,6 +212,13 @@ let package = Package(
             name: "PrimeLatinProposalGitObservation",
             dependencies: [
                 "PrimeLatinProposalPairCapture",
+            ]
+        ),
+        .target(
+            name: "PrimeLatinProposalProducerRevalidationObservation",
+            dependencies: [
+                "PrimeLatinProposalPairCapture",
+                "PrimeLatinProposalGitObservation",
             ]
         ),
         .target(
@@ -610,6 +630,13 @@ let package = Package(
             ]
         ),
         .executableTarget(
+            name:
+                "PrimeLatinProposalProducerRevalidationObservationProbe",
+            dependencies: [
+                "PrimeLatinProposalProducerRevalidationObservation",
+            ]
+        ),
+        .executableTarget(
             name: "PrimeMLXBundleStage",
             dependencies: ["PrimeCore"]
         ),
@@ -655,6 +682,7 @@ let package = Package(
             dependencies: [
                 "PrimeLatinProposalPairCapture",
                 "PrimeLatinProposalGitObservation",
+                "PrimeLatinProposalProducerRevalidationObservation",
             ]
         ),
         .testTarget(

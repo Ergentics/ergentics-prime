@@ -16,6 +16,13 @@ let package = Package(
                 "PrimeLatinProposalPairCapture",
             ]
         ),
+        .target(
+            name: "PrimeLatinProposalProducerRevalidationObservation",
+            dependencies: [
+                "PrimeLatinProposalPairCapture",
+                "PrimeLatinProposalGitObservation",
+            ]
+        ),
         .executableTarget(
             name: "PrimeLatinProposalPairCaptureProbe",
             dependencies: [
@@ -28,11 +35,19 @@ let package = Package(
                 "PrimeLatinProposalGitObservation",
             ]
         ),
+        .executableTarget(
+            name:
+                "PrimeLatinProposalProducerRevalidationObservationProbe",
+            dependencies: [
+                "PrimeLatinProposalProducerRevalidationObservation",
+            ]
+        ),
         .testTarget(
             name: "PrimeLatinProposalPairCaptureTests",
             dependencies: [
                 "PrimeLatinProposalPairCapture",
                 "PrimeLatinProposalGitObservation",
+                "PrimeLatinProposalProducerRevalidationObservation",
             ]
         ),
     ]

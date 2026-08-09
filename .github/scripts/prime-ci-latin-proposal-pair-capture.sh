@@ -67,10 +67,13 @@ readonly v3_snapshot_source="$prime_root/Sources/PrimeLatinProposalPairCapture/P
 readonly probe_source="$prime_root/Sources/PrimeLatinProposalPairCaptureProbe/PrimeLatinProposalPairCaptureProbeMain.swift"
 readonly git_observation_source="$prime_root/Sources/PrimeLatinProposalGitObservation/PrimeLatinProposalGitSourceV3.swift"
 readonly git_observation_probe_source="$prime_root/Sources/PrimeLatinProposalGitObservationProbe/PrimeLatinProposalGitObservationProbeMain.swift"
+readonly producer_revalidation_source="$prime_root/Sources/PrimeLatinProposalProducerRevalidationObservation/PrimeLatinProposalProducerRevalidationObservationV1.swift"
+readonly producer_revalidation_probe_source="$prime_root/Sources/PrimeLatinProposalProducerRevalidationObservationProbe/PrimeLatinProposalProducerRevalidationObservationProbeMain.swift"
 readonly capture_tests="$prime_root/Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalPairCaptureTests.swift"
 readonly v3_inputs_tests="$prime_root/Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalInputsV3Tests.swift"
 readonly v3_snapshot_tests="$prime_root/Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalInputSnapshotV3Tests.swift"
 readonly git_observation_tests="$prime_root/Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalGitSourceV3Tests.swift"
+readonly producer_revalidation_tests="$prime_root/Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalProducerRevalidationObservationTests.swift"
 readonly source_contract_tests="$prime_root/Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalPairCaptureSourceContractTests.swift"
 
 for required_file in \
@@ -83,10 +86,13 @@ for required_file in \
     "$probe_source" \
     "$git_observation_source" \
     "$git_observation_probe_source" \
+    "$producer_revalidation_source" \
+    "$producer_revalidation_probe_source" \
     "$capture_tests" \
     "$v3_inputs_tests" \
     "$v3_snapshot_tests" \
     "$git_observation_tests" \
+    "$producer_revalidation_tests" \
     "$source_contract_tests"; do
     [[ -f "$required_file" && ! -L "$required_file" ]] ||
         die "required validation source is missing or linked: $required_file"
@@ -108,12 +114,19 @@ require_exact_file_inventory \
     "$prime_root/Sources/PrimeLatinProposalGitObservationProbe" \
     "PrimeLatinProposalGitObservationProbeMain.swift"
 require_exact_file_inventory \
+    "$prime_root/Sources/PrimeLatinProposalProducerRevalidationObservation" \
+    "PrimeLatinProposalProducerRevalidationObservationV1.swift"
+require_exact_file_inventory \
+    "$prime_root/Sources/PrimeLatinProposalProducerRevalidationObservationProbe" \
+    "PrimeLatinProposalProducerRevalidationObservationProbeMain.swift"
+require_exact_file_inventory \
     "$prime_root/Tests/PrimeLatinProposalPairCaptureTests" \
     "PrimeLatinProposalGitSourceV3Tests.swift" \
     "PrimeLatinProposalPairCaptureSourceContractTests.swift" \
     "PrimeLatinProposalPairCaptureTests.swift" \
     "PrimeLatinProposalInputSnapshotV3Tests.swift" \
-    "PrimeLatinProposalInputsV3Tests.swift"
+    "PrimeLatinProposalInputsV3Tests.swift" \
+    "PrimeLatinProposalProducerRevalidationObservationTests.swift"
 
 for forbidden_source_value in \
     "MLXLLM" \
@@ -239,6 +252,173 @@ for tracked_index_anchor in \
         die "Latin Git-observation source lacks tracked-index evidence: $tracked_index_anchor"
 done
 
+readonly producer_revalidation_imports="$(
+    grep -E '^import ' "$producer_revalidation_source"
+)"
+readonly expected_producer_revalidation_imports=$'import Darwin\nimport Glibc\nimport CryptoKit\nimport Compression\nimport Foundation\nimport PrimeLatinProposalGitObservation\nimport PrimeLatinProposalPairCapture'
+[[ "$producer_revalidation_imports" == \
+        "$expected_producer_revalidation_imports" ]] ||
+    die "Latin producer-revalidation source import inventory is not exact"
+readonly producer_revalidation_probe_imports="$(
+    grep -E '^import ' "$producer_revalidation_probe_source"
+)"
+readonly expected_producer_revalidation_probe_imports=$'import Foundation\nimport PrimeLatinProposalProducerRevalidationObservation'
+[[ "$producer_revalidation_probe_imports" == \
+        "$expected_producer_revalidation_probe_imports" ]] ||
+    die "Latin producer-revalidation probe import inventory is not exact"
+for forbidden_producer_revalidation_value in \
+    "import PrimeCore" \
+    "import ErgenticsLLM" \
+    "import ErgenticsTokenizer" \
+    "import MLX" \
+    "ErgenticsPrimeRuntime" \
+    "LlamaModel" \
+    "HuggingFace" \
+    "PMHNP" \
+    "pmhnp-companion-ergentics" \
+    "ProcessInfo.processInfo.environment" \
+    "URLSession" \
+    "Network.framework" \
+    "NWConnection" \
+    "socket(" \
+    "connect(" \
+    "curl" \
+    "python" \
+    "ssh" \
+    "scp" \
+    '"/bin/sh"' \
+    '"/bin/bash"' \
+    '"/usr/bin/env"' \
+    '"swift build"' \
+    '"swift package"' \
+    "publishProposalPairV3" \
+    "func publish" \
+    "PrimeLatinTrialProposal" \
+    "PrimeLatinTrialAuthorization" \
+    '"fetch"' \
+    '"push"' \
+    '"clone"' \
+    "--disable-sandbox"; do
+    if grep -Fq -- "$forbidden_producer_revalidation_value" \
+        "$producer_revalidation_source" \
+        "$producer_revalidation_probe_source" \
+        "$validation_manifest"; then
+        die "Latin producer-revalidation surface contains forbidden value: $forbidden_producer_revalidation_value"
+    fi
+done
+[[ "$(count_fixed_occurrences "Process(" \
+        "$producer_revalidation_probe_source")" == "0" ]] ||
+    die "Latin producer-revalidation probe may not launch a process directly"
+[[ "$(count_fixed_occurrences "Process()" \
+        "$producer_revalidation_source")" == "1" ]] ||
+    die "Latin producer-revalidation source must have one closed process launcher"
+[[ "$(count_fixed_occurrences "process.executableURL" \
+        "$producer_revalidation_source")" == "1" ]] ||
+    die "Latin producer-revalidation source must assign one executable URL"
+[[ "$(count_fixed_occurrences "/usr/bin/xcrun" \
+        "$producer_revalidation_source")" == "4" ]] ||
+    die "Latin producer-revalidation source must pin the exact xcrun route"
+[[ "$(count_fixed_occurrences '"swiftc"' \
+        "$producer_revalidation_source")" == "1" ]] ||
+    die "Latin producer-revalidation source must use one fixed swiftc argv literal"
+grep -Fq -- "processLaunchCount == 5" "$producer_revalidation_source" ||
+    die "Latin producer-revalidation observation lacks its exact five-launch receipt"
+[[ "$(count_fixed_occurrences "timeoutSeconds: 120" \
+        "$producer_revalidation_source")" == "2" ]] ||
+    die "Latin producer-revalidation source lacks its exact child timeouts"
+grep -Fq -- "timeoutSeconds <= 300" "$producer_revalidation_source" ||
+    die "Latin producer-revalidation runner lacks its absolute timeout ceiling"
+grep -Fq -- \
+    'Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-driver' \
+    "$producer_revalidation_source" ||
+    die "Latin producer-revalidation source lacks its fixed Swift driver path"
+grep -Fq -- \
+    'fixed_developer_directory_exact_swift_driver_binary_observed_not_cryptographically_authenticated' \
+    "$producer_revalidation_source" ||
+    die "Latin producer-revalidation source lacks its compiler identity scope"
+for lexical_receipt in \
+    "acl_get_fd_np:1" \
+    "flistxattr:2" \
+    "O_NOFOLLOW:3" \
+    "fstat(:3" \
+    "lstat(:2" \
+    "realpath(:1" \
+    "mkdtemp(:1" \
+    "mkdir(:1" \
+    "FileManager.default.removeItem:2"; do
+    lexical_needle="${lexical_receipt%:*}"
+    lexical_count="${lexical_receipt##*:}"
+    [[ "$(count_fixed_occurrences "$lexical_needle" \
+            "$producer_revalidation_source")" == "$lexical_count" ]] ||
+        die "Latin producer-revalidation lexical receipt changed: $lexical_needle"
+done
+for required_producer_revalidation_identity in \
+    "1ccfb6bf6718e2378f14ab87cacae1ada303cf48" \
+    "6ee438bf1132d26767fbf447355b8165455b956f" \
+    "776c412e3f10e8bf4e33cd0ae60787d9ca6b5831" \
+    "380c13a3f9f3421db875d2ccc3c4547002374a9d74427a0573e0c59f6d3078ac" \
+    "802f7505ad91869b27420e0beb152e6ba725eb82a801b4fd9289d999afac0c81" \
+    "302ccde06959cc6ffb411d455ad656c9e50e4ce1" \
+    "686ee51886ed5813db6a9883cc6e5e9fa86f1e3f918dafad865e06926824a6e3" \
+    "828f18920113f77a849dec56997618ae6f1addc7" \
+    "91aa0ca7ebeeb97e808493ad4f0cede9c54dbb08ecc7476619e52cada883a0ee" \
+    "b050f965afab11b46bed9037b42c0a59d27e3f26" \
+    "180ebeb889cd6d585c89384efa8b4b55984501b4e6be0dbb8928d92cffb2c52d" \
+    "9617fac7d88afb2bf33df7324ab15efa1a5a94aa" \
+    "136a65f9f574b6a1f3a6e25d4fed66e9b859e536c55b8f28f8a6dd4797d64bd6" \
+    "Sources/ErgenticsLatinProposalArtifacts/ErgenticsLatinProposalArtifacts.swift" \
+    "Sources/ErgenticsLatinProposalV3Revalidation/ErgenticsLatinProposalV3Revalidation.swift" \
+    "Sources/ErgenticsLatinProposalV3RevalidationProbe/ErgenticsLatinProposalV3RevalidationProbeMain.swift" \
+    ".github/scripts/latin-proposal-artifacts.Package.swift"; do
+    grep -Fq -- "$required_producer_revalidation_identity" \
+        "$producer_revalidation_source" ||
+        die "Latin producer-revalidation source lacks frozen tool identity: $required_producer_revalidation_identity"
+done
+readonly producer_revalidation_compact="$(tr -d '[:space:]' < "$producer_revalidation_source")"
+for required_tool_byte_count in \
+    "toolRawCommitByteCount:UInt64=1_328" \
+    "trackedIndexEntryCount:UInt64=147" \
+    "trackedIndexInventoryByteCount:UInt64=14_281" \
+    "byteCount:325_892" \
+    "byteCount:55_905" \
+    "byteCount:8_115" \
+    "byteCount:1_463"; do
+    [[ "$producer_revalidation_compact" == *"$required_tool_byte_count"* ]] ||
+        die "Latin producer-revalidation source lacks frozen byte count: $required_tool_byte_count"
+done
+for required_build_count in \
+    "compileCommandCount:3" \
+    "processLaunchCount:5" \
+    "governanceArtifactCount:4" \
+    "compilerInputSourceCount:3" \
+    "invocationCount:2"; do
+    [[ "$producer_revalidation_compact" == *"$required_build_count"* ]] ||
+        die "Latin producer-revalidation source lacks exact build/process count: $required_build_count"
+done
+for required_child_probe_option in \
+    "--producer-repository-root" \
+    "--lab-root" \
+    "--expected-pair-receipt-sha256" \
+    "--dependency-lock-relative-path" \
+    "--initialization-contract-relative-path" \
+    "--corpus-manifest-relative-path" \
+    "--evaluation-contract-relative-path" \
+    "--training-split-id" \
+    "--training-split-relative-path" \
+    "--validation-split-id" \
+    "--validation-split-relative-path" \
+    "--selection-split-id" \
+    "--selection-split-relative-path" \
+    "--selection-observation-relative-path" \
+    "--optimizer-steps" \
+    "--training-tokens" \
+    "--wall-clock-seconds" \
+    "--output-namespace"; do
+    [[ "$(count_fixed_occurrences "$required_child_probe_option" \
+            "$producer_revalidation_source")" == "1" ]] ||
+        die "Latin producer-revalidation child option is not exact once: $required_child_probe_option"
+done
+
 [[ "$(grep -Fc -- '.package(' "$prime_root/Package.swift")" == "1" ]] ||
     die "Prime root gained an unexpected package dependency"
 ! grep -Fq -- '.package(' "$validation_manifest" ||
@@ -248,22 +428,28 @@ readonly validation_manifest_compact="$(tr -d '[:space:]' < "$validation_manifes
 for required_root_fragment in \
     '.library(name:"PrimeLatinProposalPairCapture",targets:["PrimeLatinProposalPairCapture",])' \
     '.library(name:"PrimeLatinProposalGitObservation",targets:["PrimeLatinProposalGitObservation",])' \
+    '.library(name:"PrimeLatinProposalProducerRevalidationObservation",targets:["PrimeLatinProposalProducerRevalidationObservation",])' \
     '.executable(name:"PrimeLatinProposalPairCaptureProbe",targets:["PrimeLatinProposalPairCaptureProbe",])' \
     '.executable(name:"PrimeLatinProposalGitObservationProbe",targets:["PrimeLatinProposalGitObservationProbe",])' \
+    '.executable(name:"PrimeLatinProposalProducerRevalidationObservationProbe",targets:["PrimeLatinProposalProducerRevalidationObservationProbe",])' \
     '.target(name:"PrimeLatinProposalPairCapture")' \
     '.target(name:"PrimeLatinProposalGitObservation",dependencies:["PrimeLatinProposalPairCapture",])' \
+    '.target(name:"PrimeLatinProposalProducerRevalidationObservation",dependencies:["PrimeLatinProposalPairCapture","PrimeLatinProposalGitObservation",])' \
     '.executableTarget(name:"PrimeLatinProposalPairCaptureProbe",dependencies:["PrimeLatinProposalPairCapture",])' \
     '.executableTarget(name:"PrimeLatinProposalGitObservationProbe",dependencies:["PrimeLatinProposalGitObservation",])' \
-    '.testTarget(name:"PrimeLatinProposalPairCaptureTests",dependencies:["PrimeLatinProposalPairCapture","PrimeLatinProposalGitObservation",])'; do
+    '.executableTarget(name:"PrimeLatinProposalProducerRevalidationObservationProbe",dependencies:["PrimeLatinProposalProducerRevalidationObservation",])' \
+    '.testTarget(name:"PrimeLatinProposalPairCaptureTests",dependencies:["PrimeLatinProposalPairCapture","PrimeLatinProposalGitObservation","PrimeLatinProposalProducerRevalidationObservation",])'; do
     [[ "$root_manifest_compact" == *"$required_root_fragment"* ]] ||
         die "Prime root Latin target graph is not exact"
 done
 for required_validation_fragment in \
     '.target(name:"PrimeLatinProposalPairCapture")' \
     '.target(name:"PrimeLatinProposalGitObservation",dependencies:["PrimeLatinProposalPairCapture",])' \
+    '.target(name:"PrimeLatinProposalProducerRevalidationObservation",dependencies:["PrimeLatinProposalPairCapture","PrimeLatinProposalGitObservation",])' \
     '.executableTarget(name:"PrimeLatinProposalPairCaptureProbe",dependencies:["PrimeLatinProposalPairCapture",])' \
     '.executableTarget(name:"PrimeLatinProposalGitObservationProbe",dependencies:["PrimeLatinProposalGitObservation",])' \
-    '.testTarget(name:"PrimeLatinProposalPairCaptureTests",dependencies:["PrimeLatinProposalPairCapture","PrimeLatinProposalGitObservation",])'; do
+    '.executableTarget(name:"PrimeLatinProposalProducerRevalidationObservationProbe",dependencies:["PrimeLatinProposalProducerRevalidationObservation",])' \
+    '.testTarget(name:"PrimeLatinProposalPairCaptureTests",dependencies:["PrimeLatinProposalPairCapture","PrimeLatinProposalGitObservation","PrimeLatinProposalProducerRevalidationObservation",])'; do
     [[ "$validation_manifest_compact" == *"$required_validation_fragment"* ]] ||
         die "isolated Latin validation target graph is not exact"
 done
@@ -443,6 +629,12 @@ cp -R \
     "$prime_root/Sources/PrimeLatinProposalGitObservationProbe" \
     "$stage_root/Sources/PrimeLatinProposalGitObservationProbe"
 cp -R \
+    "$prime_root/Sources/PrimeLatinProposalProducerRevalidationObservation" \
+    "$stage_root/Sources/PrimeLatinProposalProducerRevalidationObservation"
+cp -R \
+    "$prime_root/Sources/PrimeLatinProposalProducerRevalidationObservationProbe" \
+    "$stage_root/Sources/PrimeLatinProposalProducerRevalidationObservationProbe"
+cp -R \
     "$prime_root/Tests/PrimeLatinProposalPairCaptureTests" \
     "$stage_root/Tests/PrimeLatinProposalPairCaptureTests"
 
@@ -454,10 +646,13 @@ xcrun swiftc -frontend -parse "$v3_snapshot_source"
 xcrun swiftc -frontend -parse "$probe_source"
 xcrun swiftc -frontend -parse "$git_observation_source"
 xcrun swiftc -frontend -parse "$git_observation_probe_source"
+xcrun swiftc -frontend -parse "$producer_revalidation_source"
+xcrun swiftc -frontend -parse "$producer_revalidation_probe_source"
 xcrun swiftc -frontend -parse "$capture_tests"
 xcrun swiftc -frontend -parse "$v3_inputs_tests"
 xcrun swiftc -frontend -parse "$v3_snapshot_tests"
 xcrun swiftc -frontend -parse "$git_observation_tests"
+xcrun swiftc -frontend -parse "$producer_revalidation_tests"
 xcrun swiftc -frontend -parse "$source_contract_tests"
 
 TMPDIR="$stage_root" swift test \
@@ -470,7 +665,7 @@ TMPDIR="$stage_root" swift test \
     --manifest-cache local \
     --disable-netrc \
     --disable-keychain \
-    --filter 'PrimeLatinProposalPairCaptureTests|PrimeLatinProposalInputsV3Tests|PrimeLatinProposalInputSnapshotV3Tests|PrimeLatinProposalGitSourceV3Tests|PrimeLatinProposalPairCaptureSourceContractTests' \
+    --filter 'PrimeLatinProposalPairCaptureTests|PrimeLatinProposalInputsV3Tests|PrimeLatinProposalInputSnapshotV3Tests|PrimeLatinProposalGitSourceV3Tests|PrimeLatinProposalProducerRevalidationObservationTests|PrimeLatinProposalPairCaptureSourceContractTests' \
     2>&1 | tee "$test_log"
 grep -Eq 'Executed [1-9][0-9]* tests?, with 0 failures' "$test_log" ||
     die "focused Latin capture and V3 test receipt is missing"
@@ -479,6 +674,7 @@ for expected_test_suite in \
     "PrimeLatinProposalInputsV3Tests" \
     "PrimeLatinProposalInputSnapshotV3Tests" \
     "PrimeLatinProposalGitSourceV3Tests" \
+    "PrimeLatinProposalProducerRevalidationObservationTests" \
     "PrimeLatinProposalPairCaptureSourceContractTests"; do
     grep -Fq -- "$expected_test_suite" "$test_log" ||
         die "focused Latin test suite receipt is missing: $expected_test_suite"
@@ -508,9 +704,21 @@ TMPDIR="$stage_root" swift build \
     --disable-keychain \
     --target PrimeLatinProposalGitObservationProbe
 
+TMPDIR="$stage_root" swift build \
+    --package-path "$stage_root" \
+    --scratch-path "$scratch_path" \
+    --cache-path "$cache_path" \
+    --config-path "$config_path" \
+    --security-path "$security_path" \
+    --disable-dependency-cache \
+    --manifest-cache local \
+    --disable-netrc \
+    --disable-keychain \
+    --target PrimeLatinProposalProducerRevalidationObservationProbe
+
 [[ "$(git -C "$prime_root" rev-parse HEAD)" == "$expected_prime_head" ]] ||
     die "Prime checkout changed commits during validation"
 [[ -z "$(git -C "$prime_root" status --porcelain=v1 --untracked-files=all)" ]] ||
     die "Prime checkout changed during validation"
 
-echo "OK: exact-head Latin V1/V3 pair capture, canonical V3 wire/hash-chain verification, original-input snapshot mechanics, and fixed local Git observation with tracked-index visibility are dependency-isolated, read-only, abstaining, and non-authorizing"
+echo "OK: exact-head Latin V1/V3 pair capture, canonical V3 wire/hash-chain verification, original-input snapshot mechanics, fixed local Git observation, and the compiled-but-not-live-run producer-revalidation observer are dependency-isolated, abstaining, and non-authorizing"
