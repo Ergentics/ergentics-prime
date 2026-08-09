@@ -8,6 +8,9 @@ let package = Package(
     ],
     targets: [
         .target(
+            name: "PrimeCore"
+        ),
+        .target(
             name: "PrimeLatinProposalPairCapture"
         ),
         .target(
@@ -35,6 +38,17 @@ let package = Package(
             dependencies: [
                 "PrimeLatinProposalProducerRevalidationObservation",
                 "PrimeLatinProposalIndependentReplay",
+            ]
+        ),
+        .target(
+            name: "PrimeLatinProposalValidationCompositionReceipt"
+        ),
+        .target(
+            name: "PrimeLatinProposalValidationCompositionReceiptPublisher",
+            dependencies: [
+                "PrimeCore",
+                "PrimeLatinProposalValidationComposition",
+                "PrimeLatinProposalValidationCompositionReceipt",
             ]
         ),
         .executableTarget(
@@ -70,6 +84,8 @@ let package = Package(
                 "PrimeLatinProposalProducerRevalidationObservation",
                 "PrimeLatinProposalIndependentReplay",
                 "PrimeLatinProposalValidationComposition",
+                "PrimeLatinProposalValidationCompositionReceipt",
+                "PrimeLatinProposalValidationCompositionReceiptPublisher",
             ]
         ),
     ]

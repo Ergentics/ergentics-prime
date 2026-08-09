@@ -41,7 +41,7 @@ source_section_between() {
     ' "$source_file"
 }
 
-for command_name in awk cp find git grep jq mkdir mktemp shasum sort stat swift tee tr unlink xcrun; do
+for command_name in awk cmp cp find git grep jq mkdir mktemp shasum sort stat swift tee tr unlink xcrun; do
     command -v "$command_name" >/dev/null 2>&1 ||
         die "missing command: $command_name"
 done
@@ -71,6 +71,18 @@ require_exact_file_inventory() {
     die "Prime checkout is dirty"
 
 readonly validation_manifest="$prime_root/Tests/PrimeLatinProposalPairCaptureValidation/Package.swift"
+readonly prime_core_validation_source_directory="$prime_root/Sources/PrimeCore"
+readonly -a prime_core_validation_source_names=(
+    "PrimeDurableArtifacts.swift"
+    "PrimeEmbeddedBuildProvenance.swift"
+    "PrimeFactorizedExecution.swift"
+    "PrimeMLXRuntimeEnvironmentPolicy.swift"
+    "PrimeMLXRuntimeImageLayout.swift"
+    "PrimeNative3BProfile.swift"
+    "PrimePinnedMLXMetallib.swift"
+    "PrimeReleaseInstrumentationAdmissionPolicy.swift"
+    "PrimeSwiftSourceProvenance.swift"
+)
 readonly capture_source="$prime_root/Sources/PrimeLatinProposalPairCapture/PrimeLatinProposalPairCapture.swift"
 readonly capture_support="$prime_root/Sources/PrimeLatinProposalPairCapture/PrimeLatinArtifactReadSupport.swift"
 readonly v3_inputs_source="$prime_root/Sources/PrimeLatinProposalPairCapture/PrimeLatinProposalInputsV3.swift"
@@ -84,6 +96,8 @@ readonly producer_revalidation_probe_source="$prime_root/Sources/PrimeLatinPropo
 readonly independent_replay_source="$prime_root/Sources/PrimeLatinProposalIndependentReplay/PrimeLatinProposalIndependentReplayV1.swift"
 readonly independent_replay_probe_source="$prime_root/Sources/PrimeLatinProposalIndependentReplayProbe/PrimeLatinProposalIndependentReplayProbeMain.swift"
 readonly validation_composition_source="$prime_root/Sources/PrimeLatinProposalValidationComposition/PrimeLatinProposalValidationCompositionV1.swift"
+readonly validation_composition_receipt_source="$prime_root/Sources/PrimeLatinProposalValidationCompositionReceipt/PrimeLatinProposalValidationCompositionReceiptV1.swift"
+readonly validation_composition_receipt_publisher_source="$prime_root/Sources/PrimeLatinProposalValidationCompositionReceiptPublisher/PrimeLatinProposalValidationCompositionReceiptPublisherV1.swift"
 readonly capture_tests="$prime_root/Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalPairCaptureTests.swift"
 readonly v3_inputs_tests="$prime_root/Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalInputsV3Tests.swift"
 readonly v3_snapshot_tests="$prime_root/Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalInputSnapshotV3Tests.swift"
@@ -91,6 +105,8 @@ readonly git_observation_tests="$prime_root/Tests/PrimeLatinProposalPairCaptureT
 readonly producer_revalidation_tests="$prime_root/Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalProducerRevalidationObservationTests.swift"
 readonly independent_replay_tests="$prime_root/Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalIndependentReplayV1Tests.swift"
 readonly validation_composition_tests="$prime_root/Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalValidationCompositionV1Tests.swift"
+readonly validation_composition_receipt_tests="$prime_root/Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalValidationCompositionReceiptV1Tests.swift"
+readonly validation_composition_receipt_publisher_tests="$prime_root/Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalValidationCompositionReceiptPublisherV1Tests.swift"
 readonly source_contract_tests="$prime_root/Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalPairCaptureSourceContractTests.swift"
 
 for required_file in \
@@ -108,6 +124,8 @@ for required_file in \
     "$independent_replay_source" \
     "$independent_replay_probe_source" \
     "$validation_composition_source" \
+    "$validation_composition_receipt_source" \
+    "$validation_composition_receipt_publisher_source" \
     "$capture_tests" \
     "$v3_inputs_tests" \
     "$v3_snapshot_tests" \
@@ -115,9 +133,20 @@ for required_file in \
     "$producer_revalidation_tests" \
     "$independent_replay_tests" \
     "$validation_composition_tests" \
+    "$validation_composition_receipt_tests" \
+    "$validation_composition_receipt_publisher_tests" \
     "$source_contract_tests"; do
     [[ -f "$required_file" && ! -L "$required_file" ]] ||
         die "required validation source is missing or linked: $required_file"
+done
+for prime_core_validation_source_name in \
+    "${prime_core_validation_source_names[@]}"; do
+    prime_core_validation_source="$prime_core_validation_source_directory/$prime_core_validation_source_name"
+    [[ -f "$prime_core_validation_source" && \
+            ! -L "$prime_core_validation_source" ]] ||
+        die "required PrimeCore validation source is missing or linked: $prime_core_validation_source"
+    [[ "$(stat -f '%l' "$prime_core_validation_source")" == "1" ]] ||
+        die "required PrimeCore validation source is not single-link: $prime_core_validation_source"
 done
 require_exact_file_inventory \
     "$prime_root/Sources/PrimeLatinProposalPairCapture" \
@@ -151,6 +180,12 @@ require_exact_file_inventory \
     "$prime_root/Sources/PrimeLatinProposalValidationComposition" \
     "PrimeLatinProposalValidationCompositionV1.swift"
 require_exact_file_inventory \
+    "$prime_root/Sources/PrimeLatinProposalValidationCompositionReceipt" \
+    "PrimeLatinProposalValidationCompositionReceiptV1.swift"
+require_exact_file_inventory \
+    "$prime_root/Sources/PrimeLatinProposalValidationCompositionReceiptPublisher" \
+    "PrimeLatinProposalValidationCompositionReceiptPublisherV1.swift"
+require_exact_file_inventory \
     "$prime_root/Tests/PrimeLatinProposalPairCaptureTests" \
     "PrimeLatinProposalGitSourceV3Tests.swift" \
     "PrimeLatinProposalPairCaptureSourceContractTests.swift" \
@@ -159,6 +194,8 @@ require_exact_file_inventory \
     "PrimeLatinProposalInputsV3Tests.swift" \
     "PrimeLatinProposalIndependentReplayV1Tests.swift" \
     "PrimeLatinProposalValidationCompositionV1Tests.swift" \
+    "PrimeLatinProposalValidationCompositionReceiptV1Tests.swift" \
+    "PrimeLatinProposalValidationCompositionReceiptPublisherV1Tests.swift" \
     "PrimeLatinProposalProducerRevalidationObservationTests.swift"
 
 for forbidden_source_value in \
@@ -977,6 +1014,453 @@ done
         "$validation_composition_source")" == "3" ]] ||
     die "Latin validation composition replay projection routing is not exact"
 
+readonly validation_composition_receipt_imports="$(
+    grep -E '^import ' "$validation_composition_receipt_source"
+)"
+[[ "$validation_composition_receipt_imports" == "import Foundation" ]] ||
+    die "Latin validation-composition receipt import inventory is not exact"
+for forbidden_validation_composition_receipt_value in \
+    "import PrimeCore" \
+    "import PrimeLatinProposalValidationComposition" \
+    "import PrimeLatinProposalValidationCompositionReceiptPublisher" \
+    "import Darwin" \
+    "import Glibc" \
+    "import CryptoKit" \
+    "import MLX" \
+    "MLXLLM" \
+    "LlamaModel" \
+    "ErgenticsPrimeRuntime" \
+    "PrimeArtifactRoot" \
+    "PrimeCanonicalJSON" \
+    "PrimeSHA256" \
+    "PrimeLatinProposalValidationCompositionCaptureV1" \
+    "PrimeLatinProposalAdmissionPolicy" \
+    "@main" \
+    "CommandLine" \
+    "Process(" \
+    "ProcessInfo.processInfo.environment" \
+    "FileManager" \
+    "FileHandle" \
+    "URLSession" \
+    "NWConnection" \
+    "socket(" \
+    "connect(" \
+    "O_CREAT" \
+    "O_WRONLY" \
+    "O_RDWR" \
+    "mkdirat(" \
+    "renameat" \
+    "unlinkat(" \
+    "removeItem(" \
+    "createDirectory(" \
+    "createFile(" \
+    ".write(to:" \
+    "func publish" \
+    '"fetch"' \
+    '"push"' \
+    '"clone"' \
+    "--disable-sandbox"; do
+    if grep -Fq -- "$forbidden_validation_composition_receipt_value" \
+        "$validation_composition_receipt_source"; then
+        die "Latin validation-composition receipt contains forbidden capability: $forbidden_validation_composition_receipt_value"
+    fi
+done
+for required_validation_composition_receipt_anchor in \
+    "public enum PrimeLatinProposalValidationCompositionReceiptErrorV1" \
+    "case invalidReceipt(String)" \
+    "package enum PrimeLatinProposalValidationCompositionReceiptContractV1" \
+    "package struct PrimeLatinProposalValidationCompositionReceiptProjectionV1" \
+    "public struct PrimeLatinProposalValidationCompositionReceiptV1" \
+    "Codable" \
+    "Equatable" \
+    "Sendable" \
+    "public static let maximumByteCount: UInt64 = 65_536" \
+    "package static var exactFinal: Self" \
+    "package init(" \
+    "projecting projection:" \
+    "public init(from decoder: Decoder) throws" \
+    "public func validateExactV1() throws" \
+    "package var projection:" \
+    "package static func relativePath(" \
+    "forSHA256 sha256: String" \
+    "ergentics_prime_latin_proposal_v3_validation_composition_receipt_v1" \
+    'package static let outcome = "abstain"' \
+    "durable_content_addressed_canonical_projection_of_one_exact_prime_" \
+    "current_liveness_proposal_admission_runtime_trial_selection_" \
+    "promotion_product_and_model_publication_authority_absent" \
+    "prime_latin_v3_validation_composition_content_addressed_receipt_v1" \
+    '"latin-validation-composition-receipts"' \
+    'return receiptDirectory + "/" + sha256 + ".json"'; do
+    grep -Fq -- "$required_validation_composition_receipt_anchor" \
+        "$validation_composition_receipt_source" ||
+        die "Latin validation-composition receipt lacks frozen anchor: $required_validation_composition_receipt_anchor"
+done
+readonly validation_composition_receipt_true_claims="$(
+    source_section_between \
+        "    package static let sourceAuthorityTrueClaims = [" \
+        "    package static let sourceAuthorityFalseClaims = [" \
+        "$validation_composition_receipt_source"
+)"
+readonly validation_composition_receipt_false_claims="$(
+    source_section_between \
+        "    package static let sourceAuthorityFalseClaims = [" \
+        "    package static let receiptDirectory =" \
+        "$validation_composition_receipt_source"
+)"
+[[ "$(grep -Ec '^[[:space:]]+"[A-Za-z0-9]+",$' \
+        <<< "$validation_composition_receipt_true_claims")" == "24" ]] ||
+    die "Latin validation-composition receipt true-claim inventory is not exact"
+[[ "$(grep -Ec '^[[:space:]]+"[A-Za-z0-9]+",$' \
+        <<< "$validation_composition_receipt_false_claims")" == "30" ]] ||
+    die "Latin validation-composition receipt false-claim inventory is not exact"
+for validation_composition_receipt_true_claim in \
+    "producerRevalidationCaptureAndRecaptureComplete" \
+    "independentReplayCaptureAndRecaptureComplete" \
+    "cooperativeSameRequestRootSequenceComplete" \
+    "producerRevalidationAuthorityBoundaryExact" \
+    "independentReplayAuthorityBoundaryExact" \
+    "exactPairReceiptCrossBindingMatched" \
+    "exactProducerSourceCrossBindingMatched" \
+    "exactCandidateCatalogCrossBindingMatched" \
+    "exactExperimentManifestCrossBindingMatched" \
+    "exactCandidateDeclarationSetCrossBindingMatched" \
+    "exactTokenizerBundleCrossBindingMatched" \
+    "exactCandidateIdentityInventoryCrossBindingMatched" \
+    "exactTwentyOneInputBindingCountCrossBindingMatched" \
+    "exactTwentyOneOriginalInputBytesRetained" \
+    "exactTrialBudgetCrossBindingMatched" \
+    "exactOutputNamespaceCrossBindingMatched" \
+    "outputNamespaceAbsenceVerified" \
+    "referencedInputSnapshotAvailable" \
+    "referencedArtifactBytesAvailable" \
+    "llmGitStateIndependentlyObserved" \
+    "revalidatorToolSourceIndependentlyObserved" \
+    "liveProducerWorkspaceRevalidationComplete" \
+    "independentPrimeReplayComplete" \
+    "validationCompositionComplete"; do
+    [[ "$(count_fixed_occurrences \
+            "\"$validation_composition_receipt_true_claim\"" \
+            /dev/stdin <<< "$validation_composition_receipt_true_claims")" == "1" ]] ||
+        die "Latin validation-composition receipt true claim is not exact: $validation_composition_receipt_true_claim"
+done
+for validation_composition_receipt_false_claim in \
+    "atomicCrossProcessSnapshotEstablished" \
+    "compilerCryptographicallyAuthenticated" \
+    "externalSourceToBinaryAttestationAvailable" \
+    "originRemoteCryptographicallyAuthenticated" \
+    "ignoredWorkspaceBytesObserved" \
+    "declarationSourceSemanticsIndependentlyVerified" \
+    "tokenizerModelSemanticsIndependentlyValidated" \
+    "tokenizerTrainingReplayComplete" \
+    "evaluationExecutionComplete" \
+    "selectionObservationComplete" \
+    "durableInputSnapshotPublished" \
+    "durableGitObservationPublished" \
+    "durableProducerRevalidationObservationPublished" \
+    "durableIndependentReplayObservationPublished" \
+    "durableValidationCompositionObservationPublished" \
+    "runtimeDecoderImplementationAvailable" \
+    "runtimeDependencyClosureEstablished" \
+    "runtimeInitializationEstablished" \
+    "primeProposalPolicyEstablished" \
+    "primeProposalPacketProduced" \
+    "primeTrialAuthorizationProduced" \
+    "primeDecisionReceiptProduced" \
+    "candidateSelectionAuthorized" \
+    "trialExecutionAuthorized" \
+    "furtherTrainingAuthorized" \
+    "promotionAuthorized" \
+    "productUseAuthorized" \
+    "publicationAuthorized" \
+    "proposalPairPublicationPerformedByThisComposition" \
+    "primeDurableReceiptPublished"; do
+    [[ "$(count_fixed_occurrences \
+            "\"$validation_composition_receipt_false_claim\"" \
+            /dev/stdin <<< "$validation_composition_receipt_false_claims")" == "1" ]] ||
+        die "Latin validation-composition receipt false claim is not exact: $validation_composition_receipt_false_claim"
+done
+[[ "$(count_fixed_occurrences \
+        "try validateExactV1()" \
+        "$validation_composition_receipt_source")" == "1" ]] ||
+    die "Latin validation-composition receipt has an alternate validation path"
+[[ "$(count_fixed_occurrences \
+        "try self.init(projecting: projection)" \
+        "$validation_composition_receipt_source")" == "1" ]] ||
+    die "Latin validation-composition receipt decode bypasses its package initializer"
+[[ "$(count_fixed_occurrences \
+        "PrimeLatinProposalValidationCompositionReceiptProjectionV1(" \
+        "$validation_composition_receipt_source")" == "2" ]] ||
+    die "Latin validation-composition receipt projection routing is not exact"
+
+readonly validation_composition_receipt_publisher_imports="$(
+    grep -E '^import ' "$validation_composition_receipt_publisher_source"
+)"
+readonly expected_validation_composition_receipt_publisher_imports=$'import Foundation\nimport PrimeCore\nimport PrimeLatinProposalValidationComposition\nimport PrimeLatinProposalValidationCompositionReceipt'
+[[ "$validation_composition_receipt_publisher_imports" == \
+        "$expected_validation_composition_receipt_publisher_imports" ]] ||
+    die "Latin validation-composition receipt-publisher imports are not exact"
+for forbidden_validation_composition_receipt_publisher_value in \
+    "import PrimeLatinProposalPairCapture" \
+    "import PrimeLatinProposalGitObservation" \
+    "import PrimeLatinProposalProducerRevalidationObservation" \
+    "import PrimeLatinProposalIndependentReplay" \
+    "import Darwin" \
+    "import Glibc" \
+    "import CryptoKit" \
+    "import ErgenticsLLM" \
+    "import ErgenticsTokenizer" \
+    "import MLX" \
+    "MLXLLM" \
+    "LlamaModel" \
+    "ErgenticsPrimeRuntime" \
+    "PrimeLatinProposalAdmissionPolicy" \
+    "@main" \
+    "CommandLine" \
+    "Process(" \
+    "ProcessInfo.processInfo.environment" \
+    "FileManager" \
+    "FileHandle" \
+    "URLSession" \
+    "NWConnection" \
+    "socket(" \
+    "connect(" \
+    "O_CREAT" \
+    "O_WRONLY" \
+    "O_RDWR" \
+    "open(" \
+    "mkdirat(" \
+    "renameat" \
+    "unlinkat(" \
+    "removeItem(" \
+    "createDirectory(" \
+    "createFile(" \
+    ".write(to:" \
+    '"/bin/sh"' \
+    '"/bin/bash"' \
+    '"/usr/bin/env"' \
+    '"/usr/bin/git"' \
+    '"fetch"' \
+    '"push"' \
+    '"clone"' \
+    "PrimeLatinProposalValidationCompositionCaptureV1.capture(" \
+    "PrimeLatinTrialProposal" \
+    "PrimeLatinTrialAuthorization" \
+    "--disable-sandbox"; do
+    if grep -Fq -- "$forbidden_validation_composition_receipt_publisher_value" \
+        "$validation_composition_receipt_publisher_source"; then
+        die "Latin validation-composition receipt publisher contains forbidden capability: $forbidden_validation_composition_receipt_publisher_value"
+    fi
+done
+for required_validation_composition_receipt_publisher_anchor in \
+    "public enum PrimeLatinProposalValidationCompositionReceiptPublisherErrorV1" \
+    "case invalidSourceObservation(String)" \
+    "case captureChanged" \
+    "case receiptTooLarge" \
+    "case publicationFailed" \
+    "case verificationFailed" \
+    "public struct PrimeLatinProposalValidationCompositionReceiptPublicationAuthorityBoundaryV1" \
+    "public struct PrimeLatinProposalValidationCompositionReceiptPublicationObservationV1" \
+    "public enum PrimeLatinProposalValidationCompositionReceiptPublisherV1" \
+    "public static func publish(" \
+    "capture: PrimeLatinProposalValidationCompositionCaptureV1" \
+    "artifactRoot: PrimeArtifactRoot" \
+    "PrimeLatinProposalValidationCompositionReceiptPublicationObservationV1" \
+    "static func publishForTesting(" \
+    "private static func publishUsingSingleEngine(" \
+    "ergentics_prime_latin_proposal_v3_validation_composition_" \
+    "receipt_publication_observation_v1" \
+    'outcome = "abstain"' \
+    "prime_owned_descriptor_safe_exclusive_content_addressed_" \
+    "publication_of_one_canonical_validation_composition_" \
+    "receipt_only_non_authorizing" \
+    "prime_latin_v3_validation_composition_receipt_publication_v1" \
+    "abstain_durable_validation_composition_receipt_published_" \
+    "decoded_receipt_does_not_restore_live_validation_or_" \
+    "establish_proposal_admission_packet_trial_runtime_selection_" \
+    "promotion_product_or_publication_authority"; do
+    grep -Fq -- "$required_validation_composition_receipt_publisher_anchor" \
+        "$validation_composition_receipt_publisher_source" ||
+        die "Latin validation-composition receipt publisher lacks frozen anchor: $required_validation_composition_receipt_publisher_anchor"
+done
+readonly validation_composition_receipt_publication_authority="$(
+    source_section_between \
+        "public struct PrimeLatinProposalValidationCompositionReceiptPublicationAuthorityBoundaryV1:" \
+        "public struct PrimeLatinProposalValidationCompositionReceiptPublicationObservationV1:" \
+        "$validation_composition_receipt_publisher_source"
+)"
+readonly validation_composition_receipt_publication_observation="$(
+    source_section_between \
+        "public struct PrimeLatinProposalValidationCompositionReceiptPublicationObservationV1:" \
+        "public enum PrimeLatinProposalValidationCompositionReceiptPublisherV1" \
+        "$validation_composition_receipt_publisher_source"
+)"
+for forbidden_receipt_publication_wire_surface in \
+    "Codable" \
+    "Encodable" \
+    "Decodable" \
+    "public init"; do
+    if grep -Fq -- "$forbidden_receipt_publication_wire_surface" \
+        <<< "$validation_composition_receipt_publication_authority"; then
+        die "Latin receipt-publication authority exposes a forbidden wire surface: $forbidden_receipt_publication_wire_surface"
+    fi
+    if grep -Fq -- "$forbidden_receipt_publication_wire_surface" \
+        <<< "$validation_composition_receipt_publication_observation"; then
+        die "Latin receipt-publication observation exposes a forbidden wire surface: $forbidden_receipt_publication_wire_surface"
+    fi
+done
+readonly validation_composition_receipt_publication_authority_compact="$(
+    tr -d '[:space:]' <<< \
+        "$validation_composition_receipt_publication_authority"
+)"
+[[ "$(count_fixed_occurrences \
+        ":Bool" \
+        /dev/stdin <<< \
+            "$validation_composition_receipt_publication_authority_compact")" \
+        == "55" ]] ||
+    die "Latin receipt-publication authority inventory is not exact"
+for required_validation_composition_receipt_publication_true_field in \
+    "validationCompositionCaptureAndRecaptureComplete" \
+    "validationCompositionAuthorityBoundaryExact" \
+    "exactReceiptProjectionComplete" \
+    "canonicalReceiptEncodingComplete" \
+    "canonicalReceiptRedecodeComplete" \
+    "receiptContentAddressBindingVerified" \
+    "privateArtifactRootModeVerified" \
+    "artifactRootEmptyAtAdmission" \
+    "artifactRootEmptyAtFinalPrepublicationMutationCheck" \
+    "exclusiveNoReplacePublicationComplete" \
+    "immutableSingleLinkReceiptArtifactVerified" \
+    "receiptFileDurabilitySyncComplete" \
+    "receiptDirectoryDurabilitySyncComplete" \
+    "durableValidationCompositionReceiptPublished" \
+    "primeDurableReceiptPublished"; do
+    [[ "$validation_composition_receipt_publication_authority_compact" == \
+        *"publiclet$required_validation_composition_receipt_publication_true_field:Bool"* ]] ||
+        die "Latin receipt-publication authority lacks true field: $required_validation_composition_receipt_publication_true_field"
+    [[ "$validation_composition_receipt_publication_authority_compact" == \
+        *"$required_validation_composition_receipt_publication_true_field=true"* ]] ||
+        die "Latin receipt-publication completion is not true: $required_validation_composition_receipt_publication_true_field"
+done
+for required_validation_composition_receipt_publication_false_field in \
+    "atomicCrossProcessSnapshotEstablished" \
+    "exclusiveArtifactRootOwnershipEstablished" \
+    "postPublicationSourceRecaptureComplete" \
+    "compilerCryptographicallyAuthenticated" \
+    "externalSourceToBinaryAttestationAvailable" \
+    "publisherIdentityCryptographicallyAuthenticated" \
+    "receiptCryptographicallySigned" \
+    "originRemoteCryptographicallyAuthenticated" \
+    "ignoredWorkspaceBytesObserved" \
+    "declarationSourceSemanticsIndependentlyVerified" \
+    "tokenizerModelSemanticsIndependentlyValidated" \
+    "tokenizerTrainingReplayComplete" \
+    "evaluationExecutionComplete" \
+    "selectionObservationComplete" \
+    "durableInputSnapshotPublished" \
+    "durableGitObservationPublished" \
+    "durableProducerRevalidationObservationPublished" \
+    "durableIndependentReplayObservationPublished" \
+    "durableValidationCompositionObservationPublished" \
+    "rawProducerRevalidationObservationPublished" \
+    "rawIndependentReplayObservationPublished" \
+    "currentLiveProducerWorkspaceRevalidationRestoredFromReceipt" \
+    "currentIndependentPrimeReplayRestoredFromReceipt" \
+    "runtimeDecoderImplementationAvailable" \
+    "runtimeDependencyClosureEstablished" \
+    "runtimeInitializationEstablished" \
+    "primeProposalPolicyEstablished" \
+    "proposalAdmissionEvaluationComplete" \
+    "proposalAdmissionGranted" \
+    "primeProposalPacketProduced" \
+    "primeTrialAuthorizationProduced" \
+    "primeDecisionReceiptProduced" \
+    "candidateSelectionAuthorized" \
+    "trialExecutionAuthorized" \
+    "furtherTrainingAuthorized" \
+    "promotionAuthorized" \
+    "productUseAuthorized" \
+    "publicationAuthorized" \
+    "proposalPairPublicationPerformedByThisPublisher" \
+    "publicNetworkPublicationPerformed"; do
+    [[ "$validation_composition_receipt_publication_authority_compact" == \
+        *"publiclet$required_validation_composition_receipt_publication_false_field:Bool"* ]] ||
+        die "Latin receipt-publication authority lacks false field: $required_validation_composition_receipt_publication_false_field"
+    [[ "$validation_composition_receipt_publication_authority_compact" == \
+        *"$required_validation_composition_receipt_publication_false_field=false"* ]] ||
+        die "Latin receipt-publication authority ceiling is not false: $required_validation_composition_receipt_publication_false_field"
+done
+[[ "$(count_fixed_occurrences \
+        "public static func " \
+        "$validation_composition_receipt_publisher_source")" == "1" ]] ||
+    die "Latin receipt publisher has an alternate public mutation API"
+[[ "$(count_fixed_occurrences \
+        "public func " \
+        "$validation_composition_receipt_publisher_source")" == "0" ]] ||
+    die "Latin receipt publisher exposes a public instance mutation API"
+[[ "$(count_fixed_occurrences \
+        "publishUsingSingleEngine(" \
+        "$validation_composition_receipt_publisher_source")" == "3" ]] ||
+    die "Latin receipt publisher does not route both paths through one engine"
+[[ "$(count_fixed_occurrences \
+        "capture.recaptureAndValidateUnchanged()" \
+        "$validation_composition_receipt_publisher_source")" == "1" ]] ||
+    die "Latin receipt publisher capture recapture routing is not exact"
+for exact_receipt_publication_call in \
+    "artifactRoot.requirePrivateRootMode():2" \
+    "artifactRoot.requireEmpty():2" \
+    "artifactRoot.ensurePrivateDirectory(:1" \
+    "artifactRoot.requireAbsent(:1" \
+    "artifactRoot.publishCanonicalExclusively(:1" \
+    "artifactRoot.bindExisting(:1" \
+    "artifactRoot.verify(:1" \
+    "artifactRoot.decodeVerified(:1" \
+    "PrimeCanonicalJSON.encode(:2" \
+    "PrimeSHA256.hexDigest(:1"; do
+    receipt_publication_needle="${exact_receipt_publication_call%:*}"
+    receipt_publication_count="${exact_receipt_publication_call##*:}"
+    [[ "$(count_fixed_occurrences \
+            "$receipt_publication_needle" \
+            "$validation_composition_receipt_publisher_source")" == \
+            "$receipt_publication_count" ]] ||
+        die "Latin receipt publisher capability count is not exact: $receipt_publication_needle"
+done
+readonly validation_composition_receipt_publisher_test_imports="$(
+    grep -E '^(@testable )?import ' \
+        "$validation_composition_receipt_publisher_tests"
+)"
+readonly expected_validation_composition_receipt_publisher_test_imports=$'import Darwin\nimport Foundation\nimport XCTest\n@testable import PrimeCore\n@testable import PrimeLatinProposalValidationCompositionReceipt\n@testable import PrimeLatinProposalValidationCompositionReceiptPublisher'
+[[ "$validation_composition_receipt_publisher_test_imports" == \
+        "$expected_validation_composition_receipt_publisher_test_imports" ]] ||
+    die "Latin receipt-publisher test imports are not exact"
+[[ "$(count_fixed_occurrences \
+        "publishForTesting(" \
+        "$validation_composition_receipt_publisher_tests")" == "2" ]] ||
+    die "Latin receipt-publisher tests bypass the synthetic engine seam"
+[[ "$(count_fixed_occurrences \
+        "FileManager.default.temporaryDirectory" \
+        "$validation_composition_receipt_publisher_tests")" == "1" ]] ||
+    die "Latin receipt-publisher tests lack one temporary-root owner"
+for forbidden_validation_composition_receipt_publisher_test_value in \
+    "PrimeLatinProposalValidationCompositionCaptureV1" \
+    ".publish(" \
+    "Process(" \
+    "ProcessInfo.processInfo.environment" \
+    "URLSession" \
+    "NWConnection" \
+    "socket(" \
+    "connect(" \
+    '"/usr/bin/git"' \
+    '"fetch"' \
+    '"push"' \
+    '"clone"' \
+    "--disable-sandbox"; do
+    if grep -Fq -- \
+        "$forbidden_validation_composition_receipt_publisher_test_value" \
+        "$validation_composition_receipt_publisher_tests"; then
+        die "Latin receipt-publisher tests contain a live or external path: $forbidden_validation_composition_receipt_publisher_test_value"
+    fi
+done
+
 [[ "$(grep -Fc -- '.package(' "$prime_root/Package.swift")" == "1" ]] ||
     die "Prime root gained an unexpected package dependency"
 ! grep -Fq -- '.package(' "$validation_manifest" ||
@@ -984,6 +1468,7 @@ done
 readonly root_manifest_compact="$(tr -d '[:space:]' < "$prime_root/Package.swift")"
 readonly validation_manifest_compact="$(tr -d '[:space:]' < "$validation_manifest")"
 for required_root_fragment in \
+    '.target(name:"PrimeCore")' \
     '.library(name:"PrimeLatinProposalPairCapture",targets:["PrimeLatinProposalPairCapture",])' \
     '.library(name:"PrimeLatinProposalGitObservation",targets:["PrimeLatinProposalGitObservation",])' \
     '.library(name:"PrimeLatinProposalProducerRevalidationObservation",targets:["PrimeLatinProposalProducerRevalidationObservation",])' \
@@ -997,27 +1482,48 @@ for required_root_fragment in \
     '.target(name:"PrimeLatinProposalProducerRevalidationObservation",dependencies:["PrimeLatinProposalPairCapture","PrimeLatinProposalGitObservation",])' \
     '.target(name:"PrimeLatinProposalIndependentReplay",dependencies:["PrimeLatinProposalPairCapture","PrimeLatinProposalGitObservation",])' \
     '.target(name:"PrimeLatinProposalValidationComposition",dependencies:["PrimeLatinProposalProducerRevalidationObservation","PrimeLatinProposalIndependentReplay",])' \
+    '.target(name:"PrimeLatinProposalValidationCompositionReceipt")' \
+    '.target(name:"PrimeLatinProposalValidationCompositionReceiptPublisher",dependencies:["PrimeCore","PrimeLatinProposalValidationComposition","PrimeLatinProposalValidationCompositionReceipt",])' \
     '.executableTarget(name:"PrimeLatinProposalPairCaptureProbe",dependencies:["PrimeLatinProposalPairCapture",])' \
     '.executableTarget(name:"PrimeLatinProposalGitObservationProbe",dependencies:["PrimeLatinProposalGitObservation",])' \
     '.executableTarget(name:"PrimeLatinProposalProducerRevalidationObservationProbe",dependencies:["PrimeLatinProposalProducerRevalidationObservation",])' \
     '.executableTarget(name:"PrimeLatinProposalIndependentReplayProbe",dependencies:["PrimeLatinProposalIndependentReplay",])' \
-    '.testTarget(name:"PrimeLatinProposalPairCaptureTests",dependencies:["PrimeLatinProposalPairCapture","PrimeLatinProposalGitObservation","PrimeLatinProposalProducerRevalidationObservation","PrimeLatinProposalIndependentReplay","PrimeLatinProposalValidationComposition",])'; do
+    '.testTarget(name:"PrimeLatinProposalPairCaptureTests",dependencies:["PrimeLatinProposalPairCapture","PrimeLatinProposalGitObservation","PrimeLatinProposalProducerRevalidationObservation","PrimeLatinProposalIndependentReplay","PrimeLatinProposalValidationComposition","PrimeLatinProposalValidationCompositionReceipt","PrimeLatinProposalValidationCompositionReceiptPublisher",])'; do
     [[ "$root_manifest_compact" == *"$required_root_fragment"* ]] ||
         die "Prime root Latin target graph is not exact"
 done
 for required_validation_fragment in \
+    '.target(name:"PrimeCore")' \
     '.target(name:"PrimeLatinProposalPairCapture")' \
     '.target(name:"PrimeLatinProposalGitObservation",dependencies:["PrimeLatinProposalPairCapture",])' \
     '.target(name:"PrimeLatinProposalProducerRevalidationObservation",dependencies:["PrimeLatinProposalPairCapture","PrimeLatinProposalGitObservation",])' \
     '.target(name:"PrimeLatinProposalIndependentReplay",dependencies:["PrimeLatinProposalPairCapture","PrimeLatinProposalGitObservation",])' \
     '.target(name:"PrimeLatinProposalValidationComposition",dependencies:["PrimeLatinProposalProducerRevalidationObservation","PrimeLatinProposalIndependentReplay",])' \
+    '.target(name:"PrimeLatinProposalValidationCompositionReceipt")' \
+    '.target(name:"PrimeLatinProposalValidationCompositionReceiptPublisher",dependencies:["PrimeCore","PrimeLatinProposalValidationComposition","PrimeLatinProposalValidationCompositionReceipt",])' \
     '.executableTarget(name:"PrimeLatinProposalPairCaptureProbe",dependencies:["PrimeLatinProposalPairCapture",])' \
     '.executableTarget(name:"PrimeLatinProposalGitObservationProbe",dependencies:["PrimeLatinProposalGitObservation",])' \
     '.executableTarget(name:"PrimeLatinProposalProducerRevalidationObservationProbe",dependencies:["PrimeLatinProposalProducerRevalidationObservation",])' \
     '.executableTarget(name:"PrimeLatinProposalIndependentReplayProbe",dependencies:["PrimeLatinProposalIndependentReplay",])' \
-    '.testTarget(name:"PrimeLatinProposalPairCaptureTests",dependencies:["PrimeLatinProposalPairCapture","PrimeLatinProposalGitObservation","PrimeLatinProposalProducerRevalidationObservation","PrimeLatinProposalIndependentReplay","PrimeLatinProposalValidationComposition",])'; do
+    '.testTarget(name:"PrimeLatinProposalPairCaptureTests",dependencies:["PrimeLatinProposalPairCapture","PrimeLatinProposalGitObservation","PrimeLatinProposalProducerRevalidationObservation","PrimeLatinProposalIndependentReplay","PrimeLatinProposalValidationComposition","PrimeLatinProposalValidationCompositionReceipt","PrimeLatinProposalValidationCompositionReceiptPublisher",])'; do
     [[ "$validation_manifest_compact" == *"$required_validation_fragment"* ]] ||
         die "isolated Latin validation target graph is not exact"
+done
+for forbidden_receipt_manifest_fragment in \
+    '.library(name:"PrimeLatinProposalValidationCompositionReceipt"' \
+    '.library(name:"PrimeLatinProposalValidationCompositionReceiptPublisher"' \
+    '.executable(name:"PrimeLatinProposalValidationCompositionReceipt"' \
+    '.executable(name:"PrimeLatinProposalValidationCompositionReceiptPublisher"' \
+    '.executableTarget(name:"PrimeLatinProposalValidationCompositionReceipt"' \
+    '.executableTarget(name:"PrimeLatinProposalValidationCompositionReceiptPublisher"' \
+    '.target(name:"PrimeLatinProposalAdmissionPolicy"' \
+    '.library(name:"PrimeLatinProposalAdmissionPolicy"' \
+    '.executable(name:"PrimeLatinProposalAdmissionPolicy"' \
+    '.executableTarget(name:"PrimeLatinProposalAdmissionPolicy"'; do
+    [[ "$root_manifest_compact" != *"$forbidden_receipt_manifest_fragment"* ]] ||
+        die "Prime root exposes a forbidden receipt product or executable"
+    [[ "$validation_manifest_compact" != *"$forbidden_receipt_manifest_fragment"* ]] ||
+        die "isolated package exposes a forbidden receipt product or executable"
 done
 for forbidden_validation_composition_manifest_fragment in \
     '.library(name:"PrimeLatinProposalValidationComposition"' \
@@ -1178,6 +1684,96 @@ readonly expected_embedded_provenance_sha="$(
         == "$expected_embedded_provenance_sha" ]] ||
     die "embedded Prime provenance does not match the canonical source template"
 
+readonly -a expected_prime_core_validation_sha256s=(
+    "faa8254ee6ecd97f064a6553efba8158fff6a33fc882607444ba117d56328430"
+    "$expected_embedded_provenance_sha"
+    "8b60e3937d5c8aee8a13a8a14a7dd1e579e6fa07bc95d06841bf9511275d9338"
+    "20fee288a85722d61eae63f10d38dbae226312ee31774b03712ff6cf1759b0f0"
+    "59ef17e619ef60d9445db624058ba9ebf133189461344e72d4b05c485ad1f623"
+    "a2e64e16dc6f172d468e56229ae52487a6443d2b630385742d5cfe67998d5dc1"
+    "a5f875c089613f82e2bc1044f35fa1a2bfe13d3498685db4c9f9e5fc1ec51d78"
+    "397d4ac8204c29ec84fdc1e88fa44ee9fef22a95261f76084ab132d42dcd95e6"
+    "c907444671a8c7c53d4400da8ebe832e588bbb398831aebb0b23778a85391565"
+)
+readonly -a expected_prime_core_validation_byte_counts=(
+    "144993"
+    "546"
+    "40428"
+    "2315"
+    "5342"
+    "1736"
+    "51777"
+    "12184"
+    "26105"
+)
+readonly -a expected_prime_core_validation_imports=(
+    $'import Darwin\nimport Glibc\nimport CryptoKit\nimport CoreFoundation\nimport Foundation'
+    ""
+    "import Foundation"
+    "import Foundation"
+    ""
+    "import Foundation"
+    $'import Darwin\nimport Glibc\nimport Foundation'
+    $'import Darwin\nimport Foundation\nimport MachO'
+    $'import Darwin\nimport Glibc\nimport Foundation'
+)
+[[ "${#prime_core_validation_source_names[@]}" == "9" &&
+        "${#expected_prime_core_validation_sha256s[@]}" == "9" &&
+        "${#expected_prime_core_validation_byte_counts[@]}" == "9" &&
+        "${#expected_prime_core_validation_imports[@]}" == "9" ]] ||
+    die "PrimeCore validation closure declaration is not exact"
+for prime_core_validation_index in \
+    "${!prime_core_validation_source_names[@]}"; do
+    prime_core_validation_source_name="${prime_core_validation_source_names[$prime_core_validation_index]}"
+    prime_core_validation_source="$prime_core_validation_source_directory/$prime_core_validation_source_name"
+    [[ "$(shasum -a 256 "$prime_core_validation_source" | awk '{print $1}')" \
+            == "${expected_prime_core_validation_sha256s[$prime_core_validation_index]}" ]] ||
+        die "PrimeCore validation source hash changed: $prime_core_validation_source_name"
+    [[ "$(stat -f '%z' "$prime_core_validation_source")" \
+            == "${expected_prime_core_validation_byte_counts[$prime_core_validation_index]}" ]] ||
+        die "PrimeCore validation source byte count changed: $prime_core_validation_source_name"
+    prime_core_validation_imports="$(
+        grep -E '^import ' "$prime_core_validation_source" || true
+    )"
+    [[ "$prime_core_validation_imports" \
+            == "${expected_prime_core_validation_imports[$prime_core_validation_index]}" ]] ||
+        die "PrimeCore validation source imports changed: $prime_core_validation_source_name"
+done
+
+readonly durable_artifacts_source="$prime_core_validation_source_directory/PrimeDurableArtifacts.swift"
+for required_durable_artifact_capability in \
+    "public enum PrimeCanonicalJSON" \
+    "public enum PrimeSHA256" \
+    "public enum PrimeArtifactPurpose" \
+    "public struct PrimeArtifactBinding" \
+    "public struct PrimeVerifiedArtifact" \
+    "public final class PrimeArtifactRoot" \
+    "public func requirePrivateRootMode() throws" \
+    "public func requireEmpty() throws" \
+    "public func ensurePrivateDirectory(" \
+    "public func requireAbsent(" \
+    "public func bindExisting(" \
+    "public func publishCanonicalExclusively<" \
+    "public func verify(" \
+    "public func decodeVerified<Value: Codable>("; do
+    grep -Fq -- "$required_durable_artifact_capability" \
+        "$durable_artifacts_source" ||
+        die "PrimeCore validation closure lacks capability: $required_durable_artifact_capability"
+done
+for forbidden_prime_core_validation_import in \
+    "import Ergentics" \
+    "import MLX" \
+    "import MLXNN" \
+    "import MLXLLM"; do
+    for prime_core_validation_source_name in \
+        "${prime_core_validation_source_names[@]}"; do
+        prime_core_validation_source="$prime_core_validation_source_directory/$prime_core_validation_source_name"
+        ! grep -Fq -- "$forbidden_prime_core_validation_import" \
+            "$prime_core_validation_source" ||
+            die "PrimeCore validation closure gained an external module import: $forbidden_prime_core_validation_import"
+    done
+done
+
 readonly stage_root="$(mktemp -d "$runner_temp/prime-latin-pair-capture.XXXXXX")"
 readonly scratch_path="$stage_root/.scratch"
 readonly cache_path="$stage_root/.cache"
@@ -1187,12 +1783,26 @@ readonly test_log="$stage_root/prime-latin-pair-capture-tests.log"
 
 mkdir -p \
     "$stage_root/Sources" \
+    "$stage_root/Sources/PrimeCore" \
     "$stage_root/Tests" \
     "$scratch_path" \
     "$cache_path" \
     "$config_path" \
     "$security_path"
 cp "$validation_manifest" "$stage_root/Package.swift"
+for prime_core_validation_source_name in \
+    "${prime_core_validation_source_names[@]}"; do
+    prime_core_validation_source="$prime_core_validation_source_directory/$prime_core_validation_source_name"
+    staged_prime_core_validation_source="$stage_root/Sources/PrimeCore/$prime_core_validation_source_name"
+    cp "$prime_core_validation_source" \
+        "$staged_prime_core_validation_source"
+    cmp -s "$prime_core_validation_source" \
+        "$staged_prime_core_validation_source" ||
+        die "staged PrimeCore validation source changed: $prime_core_validation_source_name"
+done
+require_exact_file_inventory \
+    "$stage_root/Sources/PrimeCore" \
+    "${prime_core_validation_source_names[@]}"
 cp -R \
     "$prime_root/Sources/PrimeLatinProposalPairCapture" \
     "$stage_root/Sources/PrimeLatinProposalPairCapture"
@@ -1221,9 +1831,20 @@ cp -R \
     "$prime_root/Sources/PrimeLatinProposalValidationComposition" \
     "$stage_root/Sources/PrimeLatinProposalValidationComposition"
 cp -R \
+    "$prime_root/Sources/PrimeLatinProposalValidationCompositionReceipt" \
+    "$stage_root/Sources/PrimeLatinProposalValidationCompositionReceipt"
+cp -R \
+    "$prime_root/Sources/PrimeLatinProposalValidationCompositionReceiptPublisher" \
+    "$stage_root/Sources/PrimeLatinProposalValidationCompositionReceiptPublisher"
+cp -R \
     "$prime_root/Tests/PrimeLatinProposalPairCaptureTests" \
     "$stage_root/Tests/PrimeLatinProposalPairCaptureTests"
 
+for prime_core_validation_source_name in \
+    "${prime_core_validation_source_names[@]}"; do
+    xcrun swiftc -frontend -parse \
+        "$prime_core_validation_source_directory/$prime_core_validation_source_name"
+done
 xcrun swiftc -frontend -parse "$capture_source"
 xcrun swiftc -frontend -parse "$capture_support"
 xcrun swiftc -frontend -parse "$v3_inputs_source"
@@ -1237,6 +1858,8 @@ xcrun swiftc -frontend -parse "$producer_revalidation_probe_source"
 xcrun swiftc -frontend -parse "$independent_replay_source"
 xcrun swiftc -frontend -parse "$independent_replay_probe_source"
 xcrun swiftc -frontend -parse "$validation_composition_source"
+xcrun swiftc -frontend -parse "$validation_composition_receipt_source"
+xcrun swiftc -frontend -parse "$validation_composition_receipt_publisher_source"
 xcrun swiftc -frontend -parse "$capture_tests"
 xcrun swiftc -frontend -parse "$v3_inputs_tests"
 xcrun swiftc -frontend -parse "$v3_snapshot_tests"
@@ -1244,6 +1867,8 @@ xcrun swiftc -frontend -parse "$git_observation_tests"
 xcrun swiftc -frontend -parse "$producer_revalidation_tests"
 xcrun swiftc -frontend -parse "$independent_replay_tests"
 xcrun swiftc -frontend -parse "$validation_composition_tests"
+xcrun swiftc -frontend -parse "$validation_composition_receipt_tests"
+xcrun swiftc -frontend -parse "$validation_composition_receipt_publisher_tests"
 xcrun swiftc -frontend -parse "$source_contract_tests"
 
 TMPDIR="$stage_root" swift test \
@@ -1256,7 +1881,7 @@ TMPDIR="$stage_root" swift test \
     --manifest-cache local \
     --disable-netrc \
     --disable-keychain \
-    --filter 'PrimeLatinProposalPairCaptureTests|PrimeLatinProposalInputsV3Tests|PrimeLatinProposalInputSnapshotV3Tests|PrimeLatinProposalGitSourceV3Tests|PrimeLatinProposalProducerRevalidationObservationTests|PrimeLatinProposalIndependentReplayV1Tests|PrimeLatinProposalValidationCompositionV1Tests|PrimeLatinProposalPairCaptureSourceContractTests' \
+    --filter 'PrimeLatinProposalPairCaptureTests|PrimeLatinProposalInputsV3Tests|PrimeLatinProposalInputSnapshotV3Tests|PrimeLatinProposalGitSourceV3Tests|PrimeLatinProposalProducerRevalidationObservationTests|PrimeLatinProposalIndependentReplayV1Tests|PrimeLatinProposalValidationCompositionV1Tests|PrimeLatinProposalValidationCompositionReceiptV1Tests|PrimeLatinProposalValidationCompositionReceiptPublisherV1Tests|PrimeLatinProposalPairCaptureSourceContractTests' \
     2>&1 | tee "$test_log"
 grep -Eq 'Executed [1-9][0-9]* tests?, with 0 failures' "$test_log" ||
     die "focused Latin capture and V3 test receipt is missing"
@@ -1268,6 +1893,8 @@ for expected_test_suite in \
     "PrimeLatinProposalProducerRevalidationObservationTests" \
     "PrimeLatinProposalIndependentReplayV1Tests" \
     "PrimeLatinProposalValidationCompositionV1Tests" \
+    "PrimeLatinProposalValidationCompositionReceiptV1Tests" \
+    "PrimeLatinProposalValidationCompositionReceiptPublisherV1Tests" \
     "PrimeLatinProposalPairCaptureSourceContractTests"; do
     grep -Fq -- "$expected_test_suite" "$test_log" ||
         die "focused Latin test suite receipt is missing: $expected_test_suite"
@@ -1326,4 +1953,4 @@ TMPDIR="$stage_root" swift build \
 [[ -z "$(git -C "$prime_root" status --porcelain=v1 --untracked-files=all)" ]] ||
     die "Prime checkout changed during validation"
 
-echo "OK: exact-head Latin V1/V3 pair capture, canonical V3 wire/hash-chain verification, original-input snapshot mechanics, fixed local Git observation, compiled-but-not-live-run producer revalidation, compiled-and-synthetically-tested-but-not-live-run Prime-owned independent structural replay, and synthetically tested but never live-run validation composition are dependency-isolated, abstaining, and non-authorizing"
+echo "OK: exact-head Latin V1/V3 pair capture, canonical V3 wire/hash-chain verification, original-input snapshot mechanics, fixed local Git observation, compiled-but-not-live-run producer revalidation, compiled-and-synthetically-tested-but-not-live-run Prime-owned independent structural replay, synthetically tested but never live-run validation composition, pure validation-composition receipt encoding, and synthetic-only durable receipt publication are dependency-isolated, bounded, and non-authorizing"
