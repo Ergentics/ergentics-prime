@@ -1933,13 +1933,28 @@ final class PrimeLatinProposalPairCaptureSourceContractTests: XCTestCase {
                 "missing exact composition graph in \(relativePath)")
             XCTAssertTrue(
                 compact.contains(
+                    ".target(" +
+                        "name:\"PrimeLatinProposalValidationCompositionReceipt\")"),
+                "missing pure receipt target in \(relativePath)")
+            XCTAssertTrue(
+                compact.contains(
+                    ".target(" +
+                        "name:\"PrimeLatinProposalValidationCompositionReceiptPublisher\"," +
+                        "dependencies:[\"PrimeCore\"," +
+                        "\"PrimeLatinProposalValidationComposition\"," +
+                        "\"PrimeLatinProposalValidationCompositionReceipt\",])"),
+                "missing exact receipt-publisher graph in \(relativePath)")
+            XCTAssertTrue(
+                compact.contains(
                     ".testTarget(" +
                         "name:\"PrimeLatinProposalPairCaptureTests\"," +
                         "dependencies:[\"PrimeLatinProposalPairCapture\"," +
                         "\"PrimeLatinProposalGitObservation\"," +
                         "\"PrimeLatinProposalProducerRevalidationObservation\"," +
                         "\"PrimeLatinProposalIndependentReplay\"," +
-                        "\"PrimeLatinProposalValidationComposition\",])"),
+                        "\"PrimeLatinProposalValidationComposition\"," +
+                        "\"PrimeLatinProposalValidationCompositionReceipt\"," +
+                        "\"PrimeLatinProposalValidationCompositionReceiptPublisher\",])"),
                 "composition is outside the existing test lane in \(relativePath)")
             for forbidden in [
                 ".library(name:\"PrimeLatinProposalValidationComposition\"",
@@ -1953,12 +1968,857 @@ final class PrimeLatinProposalPairCaptureSourceContractTests: XCTestCase {
                     "dependencies:[\"PrimeCore\"",
                 "name:\"PrimeLatinProposalValidationComposition\"," +
                     "dependencies:[\"MLX\"",
+                ".library(name:\"PrimeLatinProposalValidationCompositionReceipt\"",
+                ".library(name:\"PrimeLatinProposalValidationCompositionReceiptPublisher\"",
+                ".executable(name:\"PrimeLatinProposalValidationCompositionReceipt\"",
+                ".executable(name:\"PrimeLatinProposalValidationCompositionReceiptPublisher\"",
+                ".executableTarget(name:\"PrimeLatinProposalValidationCompositionReceipt\"",
+                ".executableTarget(name:\"PrimeLatinProposalValidationCompositionReceiptPublisher\"",
+                ".target(name:\"PrimeLatinProposalAdmissionPolicy\"",
+                ".library(name:\"PrimeLatinProposalAdmissionPolicy\"",
+                ".executable(name:\"PrimeLatinProposalAdmissionPolicy\"",
+                ".executableTarget(name:\"PrimeLatinProposalAdmissionPolicy\"",
+                "name:\"PrimeLatinProposalValidationCompositionReceipt\"," +
+                    "dependencies:[",
+                "name:\"PrimeLatinProposalValidationCompositionReceiptPublisher\"," +
+                    "dependencies:[\"PrimeLatinProposalPairCapture\"",
+                "name:\"PrimeLatinProposalValidationCompositionReceiptPublisher\"," +
+                    "dependencies:[\"PrimeLatinProposalGitObservation\"",
+                "name:\"PrimeLatinProposalValidationCompositionReceiptPublisher\"," +
+                    "dependencies:[\"MLX\"",
             ] {
                 XCTAssertFalse(
                     compact.contains(forbidden),
                     "forbidden validation-composition package surface in " +
                         "\(relativePath): \(forbidden)")
             }
+        }
+    }
+
+    func testValidationCompositionReceiptIsPureExactAndNonAuthorizing()
+        throws
+    {
+        let source = try swiftSource(
+            relativePath:
+                "Sources/PrimeLatinProposalValidationCompositionReceipt/" +
+                    "PrimeLatinProposalValidationCompositionReceiptV1.swift")
+        let imports = source.split(separator: "\n")
+            .map(String.init)
+            .filter { $0.hasPrefix("import ") }
+        XCTAssertEqual(imports, ["import Foundation"])
+
+        for required in [
+            "public enum " +
+                "PrimeLatinProposalValidationCompositionReceiptErrorV1",
+            "case invalidReceipt(String)",
+            "package enum " +
+                "PrimeLatinProposalValidationCompositionReceiptContractV1",
+            "package struct " +
+                "PrimeLatinProposalValidationCompositionReceiptProjectionV1",
+            "public struct " +
+                "PrimeLatinProposalValidationCompositionReceiptV1",
+            "public static let maximumByteCount: UInt64 = 65_536",
+            "package static var exactFinal: Self",
+            "projecting projection:",
+            "public init(from decoder: Decoder) throws",
+            "public func validateExactV1() throws",
+            "package var projection:",
+            "package static func relativePath(",
+            "forSHA256 sha256: String",
+            "ergentics_prime_latin_proposal_v3_validation_composition_" +
+                "receipt_v1",
+            "durable_content_addressed_canonical_projection_of_one_exact_" +
+                "prime_",
+            "current_liveness_proposal_admission_runtime_trial_selection_",
+            "promotion_product_and_model_publication_authority_absent",
+            "prime_latin_v3_validation_composition_content_addressed_" +
+                "receipt_v1",
+            "latin-validation-composition-receipts",
+            "return receiptDirectory + \"/\" + sha256 + \".json\"",
+        ] {
+            XCTAssertTrue(
+                source.contains(required),
+                "missing pure receipt anchor: \(required)")
+        }
+
+        let trueClaims = try sourceSection(
+            source,
+            from: "    package static let sourceAuthorityTrueClaims = [",
+            to: "    package static let sourceAuthorityFalseClaims = [")
+        let falseClaims = try sourceSection(
+            source,
+            from: "    package static let sourceAuthorityFalseClaims = [",
+            to: "    package static let receiptDirectory =")
+        let expectedTrueClaims = [
+            "producerRevalidationCaptureAndRecaptureComplete",
+            "independentReplayCaptureAndRecaptureComplete",
+            "cooperativeSameRequestRootSequenceComplete",
+            "producerRevalidationAuthorityBoundaryExact",
+            "independentReplayAuthorityBoundaryExact",
+            "exactPairReceiptCrossBindingMatched",
+            "exactProducerSourceCrossBindingMatched",
+            "exactCandidateCatalogCrossBindingMatched",
+            "exactExperimentManifestCrossBindingMatched",
+            "exactCandidateDeclarationSetCrossBindingMatched",
+            "exactTokenizerBundleCrossBindingMatched",
+            "exactCandidateIdentityInventoryCrossBindingMatched",
+            "exactTwentyOneInputBindingCountCrossBindingMatched",
+            "exactTwentyOneOriginalInputBytesRetained",
+            "exactTrialBudgetCrossBindingMatched",
+            "exactOutputNamespaceCrossBindingMatched",
+            "outputNamespaceAbsenceVerified",
+            "referencedInputSnapshotAvailable",
+            "referencedArtifactBytesAvailable",
+            "llmGitStateIndependentlyObserved",
+            "revalidatorToolSourceIndependentlyObserved",
+            "liveProducerWorkspaceRevalidationComplete",
+            "independentPrimeReplayComplete",
+            "validationCompositionComplete",
+        ]
+        let expectedFalseClaims = [
+            "atomicCrossProcessSnapshotEstablished",
+            "compilerCryptographicallyAuthenticated",
+            "externalSourceToBinaryAttestationAvailable",
+            "originRemoteCryptographicallyAuthenticated",
+            "ignoredWorkspaceBytesObserved",
+            "declarationSourceSemanticsIndependentlyVerified",
+            "tokenizerModelSemanticsIndependentlyValidated",
+            "tokenizerTrainingReplayComplete",
+            "evaluationExecutionComplete",
+            "selectionObservationComplete",
+            "durableInputSnapshotPublished",
+            "durableGitObservationPublished",
+            "durableProducerRevalidationObservationPublished",
+            "durableIndependentReplayObservationPublished",
+            "durableValidationCompositionObservationPublished",
+            "runtimeDecoderImplementationAvailable",
+            "runtimeDependencyClosureEstablished",
+            "runtimeInitializationEstablished",
+            "primeProposalPolicyEstablished",
+            "primeProposalPacketProduced",
+            "primeTrialAuthorizationProduced",
+            "primeDecisionReceiptProduced",
+            "candidateSelectionAuthorized",
+            "trialExecutionAuthorized",
+            "furtherTrainingAuthorized",
+            "promotionAuthorized",
+            "productUseAuthorized",
+            "publicationAuthorized",
+            "proposalPairPublicationPerformedByThisComposition",
+            "primeDurableReceiptPublished",
+        ]
+        XCTAssertEqual(expectedTrueClaims.count, 24)
+        XCTAssertEqual(expectedFalseClaims.count, 30)
+        XCTAssertEqual(
+            trueClaims.split(separator: "\n").filter {
+                String($0).trimmingCharacters(in: .whitespaces)
+                    .hasPrefix("\"")
+            }.count,
+            expectedTrueClaims.count)
+        XCTAssertEqual(
+            falseClaims.split(separator: "\n").filter {
+                String($0).trimmingCharacters(in: .whitespaces)
+                    .hasPrefix("\"")
+            }.count,
+            expectedFalseClaims.count)
+        for claim in expectedTrueClaims {
+            XCTAssertEqual(
+                fixedOccurrenceCount("\"\(claim)\"", in: trueClaims),
+                1,
+                "receipt true claim is not exact: \(claim)")
+        }
+        for claim in expectedFalseClaims {
+            XCTAssertEqual(
+                fixedOccurrenceCount("\"\(claim)\"", in: falseClaims),
+                1,
+                "receipt false claim is not exact: \(claim)")
+        }
+
+        XCTAssertEqual(
+            fixedOccurrenceCount("try validateExactV1()", in: source), 1)
+        XCTAssertEqual(
+            fixedOccurrenceCount(
+                "try self.init(projecting: projection)", in: source),
+            1)
+        XCTAssertEqual(
+            fixedOccurrenceCount(
+                "PrimeLatinProposalValidationCompositionReceiptProjectionV1(",
+                in: source),
+            2)
+        for forbidden in [
+            "import PrimeCore",
+            "import PrimeLatinProposalValidationComposition",
+            "import PrimeLatinProposalValidationCompositionReceiptPublisher",
+            "import Darwin",
+            "import Glibc",
+            "import CryptoKit",
+            "import MLX",
+            "MLXLLM",
+            "LlamaModel",
+            "PrimeArtifactRoot",
+            "PrimeCanonicalJSON",
+            "PrimeSHA256",
+            "PrimeLatinProposalValidationCompositionCaptureV1",
+            "PrimeLatinProposalAdmissionPolicy",
+            "@main",
+            "CommandLine",
+            "Process(",
+            "ProcessInfo.processInfo.environment",
+            "FileManager",
+            "FileHandle",
+            "URLSession",
+            "NWConnection",
+            "socket(",
+            "connect(",
+            "O_CREAT",
+            "O_WRONLY",
+            "O_RDWR",
+            "mkdirat(",
+            "renameat",
+            "unlinkat(",
+            "removeItem(",
+            "createDirectory(",
+            "createFile(",
+            ".write(to:",
+            "func publish",
+            "--disable-sandbox",
+        ] {
+            XCTAssertFalse(
+                source.contains(forbidden),
+                "pure receipt contains forbidden capability: \(forbidden)")
+        }
+    }
+
+    func testValidationCompositionReceiptPublisherIsExactAndQuarantined()
+        throws
+    {
+        let source = try swiftSource(
+            relativePath:
+                "Sources/" +
+                    "PrimeLatinProposalValidationCompositionReceiptPublisher/" +
+                    "PrimeLatinProposalValidationCompositionReceiptPublisherV1.swift")
+        let imports = source.split(separator: "\n")
+            .map(String.init)
+            .filter { $0.hasPrefix("import ") }
+        XCTAssertEqual(
+            imports,
+            [
+                "import Foundation",
+                "import PrimeCore",
+                "import PrimeLatinProposalValidationComposition",
+                "import PrimeLatinProposalValidationCompositionReceipt",
+            ])
+
+        for required in [
+            "public enum " +
+                "PrimeLatinProposalValidationCompositionReceiptPublisherErrorV1",
+            "case invalidSourceObservation(String)",
+            "case captureChanged",
+            "case receiptTooLarge",
+            "case publicationFailed",
+            "case verificationFailed",
+            "public struct " +
+                "PrimeLatinProposalValidationCompositionReceiptPublication" +
+                "AuthorityBoundaryV1",
+            "public struct " +
+                "PrimeLatinProposalValidationCompositionReceiptPublication" +
+                "ObservationV1",
+            "public enum " +
+                "PrimeLatinProposalValidationCompositionReceiptPublisherV1",
+            "public static func publish(",
+            "capture: PrimeLatinProposalValidationCompositionCaptureV1",
+            "artifactRoot: PrimeArtifactRoot",
+            "static func publishForTesting(",
+            "private static func publishUsingSingleEngine(",
+            "ergentics_prime_latin_proposal_v3_validation_composition_",
+            "receipt_publication_observation_v1",
+            "prime_owned_descriptor_safe_exclusive_content_addressed_",
+            "publication_of_one_canonical_validation_composition_",
+            "receipt_only_non_authorizing",
+            "prime_latin_v3_validation_composition_receipt_publication_v1",
+            "abstain_durable_validation_composition_receipt_published_",
+            "decoded_receipt_does_not_restore_live_validation_or_",
+            "establish_proposal_admission_packet_trial_runtime_selection_",
+            "promotion_product_or_publication_authority",
+        ] {
+            XCTAssertTrue(
+                source.contains(required),
+                "missing receipt-publisher anchor: \(required)")
+        }
+
+        let authority = try sourceSection(
+            source,
+            from: "public struct " +
+                "PrimeLatinProposalValidationCompositionReceiptPublication" +
+                "AuthorityBoundaryV1:",
+            to: "public struct " +
+                "PrimeLatinProposalValidationCompositionReceiptPublication" +
+                "ObservationV1:")
+        let publicationObservation = try sourceSection(
+            source,
+            from: "public struct " +
+                "PrimeLatinProposalValidationCompositionReceiptPublication" +
+                "ObservationV1:",
+            to: "public enum " +
+                "PrimeLatinProposalValidationCompositionReceiptPublisherV1")
+        for (surface, section) in [
+            ("authority", authority),
+            ("observation", publicationObservation),
+        ] {
+            for forbidden in [
+                "Codable",
+                "Encodable",
+                "Decodable",
+                "public init",
+            ] {
+                XCTAssertFalse(
+                    section.contains(forbidden),
+                    "receipt-publication \(surface) exposes \(forbidden)")
+            }
+        }
+        let authorityCompact = authority.filter { !$0.isWhitespace }
+        let trueFields = [
+            "validationCompositionCaptureAndRecaptureComplete",
+            "validationCompositionAuthorityBoundaryExact",
+            "exactReceiptProjectionComplete",
+            "canonicalReceiptEncodingComplete",
+            "canonicalReceiptRedecodeComplete",
+            "receiptContentAddressBindingVerified",
+            "privateArtifactRootModeVerified",
+            "artifactRootEmptyAtAdmission",
+            "artifactRootEmptyAtFinalPrepublicationMutationCheck",
+            "exclusiveNoReplacePublicationComplete",
+            "immutableSingleLinkReceiptArtifactVerified",
+            "receiptFileDurabilitySyncComplete",
+            "receiptDirectoryDurabilitySyncComplete",
+            "durableValidationCompositionReceiptPublished",
+            "primeDurableReceiptPublished",
+        ]
+        let falseFields = [
+            "atomicCrossProcessSnapshotEstablished",
+            "exclusiveArtifactRootOwnershipEstablished",
+            "postPublicationSourceRecaptureComplete",
+            "compilerCryptographicallyAuthenticated",
+            "externalSourceToBinaryAttestationAvailable",
+            "publisherIdentityCryptographicallyAuthenticated",
+            "receiptCryptographicallySigned",
+            "originRemoteCryptographicallyAuthenticated",
+            "ignoredWorkspaceBytesObserved",
+            "declarationSourceSemanticsIndependentlyVerified",
+            "tokenizerModelSemanticsIndependentlyValidated",
+            "tokenizerTrainingReplayComplete",
+            "evaluationExecutionComplete",
+            "selectionObservationComplete",
+            "durableInputSnapshotPublished",
+            "durableGitObservationPublished",
+            "durableProducerRevalidationObservationPublished",
+            "durableIndependentReplayObservationPublished",
+            "durableValidationCompositionObservationPublished",
+            "rawProducerRevalidationObservationPublished",
+            "rawIndependentReplayObservationPublished",
+            "currentLiveProducerWorkspaceRevalidationRestoredFromReceipt",
+            "currentIndependentPrimeReplayRestoredFromReceipt",
+            "runtimeDecoderImplementationAvailable",
+            "runtimeDependencyClosureEstablished",
+            "runtimeInitializationEstablished",
+            "primeProposalPolicyEstablished",
+            "proposalAdmissionEvaluationComplete",
+            "proposalAdmissionGranted",
+            "primeProposalPacketProduced",
+            "primeTrialAuthorizationProduced",
+            "primeDecisionReceiptProduced",
+            "candidateSelectionAuthorized",
+            "trialExecutionAuthorized",
+            "furtherTrainingAuthorized",
+            "promotionAuthorized",
+            "productUseAuthorized",
+            "publicationAuthorized",
+            "proposalPairPublicationPerformedByThisPublisher",
+            "publicNetworkPublicationPerformed",
+        ]
+        XCTAssertEqual(trueFields.count, 15)
+        XCTAssertEqual(falseFields.count, 40)
+        XCTAssertEqual(
+            fixedOccurrenceCount(":Bool", in: authorityCompact), 55)
+        for field in trueFields {
+            XCTAssertTrue(
+                authorityCompact.contains("publiclet\(field):Bool"),
+                "receipt-publication authority lacks true field: \(field)")
+            XCTAssertTrue(
+                authorityCompact.contains("\(field)=true"),
+                "receipt-publication completion is not true: \(field)")
+        }
+        for field in falseFields {
+            XCTAssertTrue(
+                authorityCompact.contains("publiclet\(field):Bool"),
+                "receipt-publication authority lacks false field: \(field)")
+            XCTAssertTrue(
+                authorityCompact.contains("\(field)=false"),
+                "receipt-publication ceiling is not false: \(field)")
+        }
+
+        XCTAssertEqual(
+            fixedOccurrenceCount("public static func ", in: source), 1)
+        XCTAssertEqual(fixedOccurrenceCount("public func ", in: source), 0)
+        XCTAssertEqual(
+            fixedOccurrenceCount("publishUsingSingleEngine(", in: source),
+            3)
+        XCTAssertEqual(
+            fixedOccurrenceCount(
+                "capture.recaptureAndValidateUnchanged()", in: source),
+            1)
+        for (capability, count) in [
+            ("artifactRoot.requirePrivateRootMode()", 2),
+            ("artifactRoot.requireEmpty()", 2),
+            ("artifactRoot.ensurePrivateDirectory(", 1),
+            ("artifactRoot.requireAbsent(", 1),
+            ("artifactRoot.publishCanonicalExclusively(", 1),
+            ("artifactRoot.bindExisting(", 1),
+            ("artifactRoot.verify(", 1),
+            ("artifactRoot.decodeVerified(", 1),
+            ("PrimeCanonicalJSON.encode(", 2),
+            ("PrimeSHA256.hexDigest(", 1),
+        ] {
+            XCTAssertEqual(
+                fixedOccurrenceCount(capability, in: source),
+                count,
+                "receipt-publisher capability count changed: \(capability)")
+        }
+        for required in [
+            "try .init(projecting: initialProjection)",
+            "currentProjection == initialProjection",
+            "persisted.projection == currentProjection",
+            "persistedData == canonicalData",
+            "verified.actualMode == 0o444",
+        ] {
+            XCTAssertTrue(
+                source.contains(required),
+                "receipt publisher lacks exact rebound: \(required)")
+        }
+        for forbidden in [
+            "import PrimeLatinProposalPairCapture",
+            "import PrimeLatinProposalGitObservation",
+            "import PrimeLatinProposalProducerRevalidationObservation",
+            "import PrimeLatinProposalIndependentReplay",
+            "import Darwin",
+            "import Glibc",
+            "import CryptoKit",
+            "import ErgenticsLLM",
+            "import ErgenticsTokenizer",
+            "import MLX",
+            "MLXLLM",
+            "LlamaModel",
+            "PrimeLatinProposalAdmissionPolicy",
+            "@main",
+            "CommandLine",
+            "Process(",
+            "ProcessInfo.processInfo.environment",
+            "FileManager",
+            "FileHandle",
+            "URLSession",
+            "NWConnection",
+            "socket(",
+            "connect(",
+            "O_CREAT",
+            "O_WRONLY",
+            "O_RDWR",
+            "open(",
+            "mkdirat(",
+            "renameat",
+            "unlinkat(",
+            "removeItem(",
+            "createDirectory(",
+            "createFile(",
+            ".write(to:",
+            "PrimeLatinProposalValidationCompositionCaptureV1.capture(",
+            "PrimeLatinTrialProposal",
+            "PrimeLatinTrialAuthorization",
+            "--disable-sandbox",
+        ] {
+            XCTAssertFalse(
+                source.contains(forbidden),
+                "receipt publisher contains forbidden capability: \(forbidden)")
+        }
+
+        let tests = try swiftSource(
+            relativePath:
+                "Tests/PrimeLatinProposalPairCaptureTests/" +
+                    "PrimeLatinProposalValidationCompositionReceipt" +
+                    "PublisherV1Tests.swift")
+        let testImports = tests.split(separator: "\n")
+            .map(String.init)
+            .filter {
+                $0.hasPrefix("import ") || $0.hasPrefix("@testable import ")
+            }
+        XCTAssertEqual(
+            testImports,
+            [
+                "import Darwin",
+                "import Foundation",
+                "import XCTest",
+                "@testable import PrimeCore",
+                "@testable import " +
+                    "PrimeLatinProposalValidationCompositionReceipt",
+                "@testable import " +
+                    "PrimeLatinProposalValidationCompositionReceiptPublisher",
+            ])
+        XCTAssertEqual(
+            fixedOccurrenceCount("publishForTesting(", in: tests), 2)
+        XCTAssertEqual(
+            fixedOccurrenceCount(
+                "FileManager.default.temporaryDirectory", in: tests),
+            1)
+        for forbidden in [
+            "PrimeLatinProposalValidationCompositionCaptureV1",
+            ".publish(",
+            "Process(",
+            "ProcessInfo.processInfo.environment",
+            "URLSession",
+            "NWConnection",
+            "socket(",
+            "connect(",
+            "\"/usr/bin/git\"",
+            "\"fetch\"",
+            "\"push\"",
+            "\"clone\"",
+            "--disable-sandbox",
+        ] {
+            XCTAssertFalse(
+                tests.contains(forbidden),
+                "receipt-publisher tests contain live path: \(forbidden)")
+        }
+    }
+
+    func testValidationCompositionReceiptPublisherProjectionIsExhaustiveAndNonOracle()
+        throws
+    {
+        let publisherSource = try swiftSource(
+            relativePath:
+                "Sources/" +
+                    "PrimeLatinProposalValidationCompositionReceiptPublisher/" +
+                    "PrimeLatinProposalValidationCompositionReceiptPublisherV1.swift")
+        let projection = try sourceSection(
+            publisherSource,
+            from: "    private static func projection(",
+            to: "    private static func trueClaims(")
+        let trueClaims = try sourceSection(
+            publisherSource,
+            from: "    private static func trueClaims(",
+            to: "    private static func falseClaims(")
+        let falseClaims = try sourceSection(
+            publisherSource,
+            from: "    private static func falseClaims(",
+            to: "    private static func append(")
+        let projectionCompact = projection.filter { !$0.isWhitespace }
+        let trueClaimsCompact = trueClaims.filter { !$0.isWhitespace }
+        let falseClaimsCompact = falseClaims.filter { !$0.isWhitespace }
+
+        let receiptOwnedMappings = [
+            "schema:" +
+                "PrimeLatinProposalValidationCompositionReceiptContractV1" +
+                ".schema",
+            "outcome:" +
+                "PrimeLatinProposalValidationCompositionReceiptContractV1" +
+                ".outcome",
+            "verificationScope:" +
+                "PrimeLatinProposalValidationCompositionReceiptContractV1" +
+                ".verificationScope",
+            "receiptPolicyID:" +
+                "PrimeLatinProposalValidationCompositionReceiptContractV1" +
+                ".receiptPolicyID",
+        ]
+        XCTAssertEqual(receiptOwnedMappings.count, 4)
+        for mapping in receiptOwnedMappings {
+            XCTAssertEqual(
+                fixedOccurrenceCount(mapping, in: projectionCompact),
+                1,
+                "receipt-owned projection mapping is not exact: \(mapping)")
+        }
+
+        let sourceEnvelopeMappings = [
+            ("sourceObservationSchema", "observation.schema"),
+            ("sourceObservationOutcome", "observation.outcome"),
+            (
+                "sourceObservationVerificationScope",
+                "observation.verificationScope"
+            ),
+            (
+                "sourceCompositionPolicyID",
+                "observation.compositionPolicyID"
+            ),
+            ("sourceAuthorityDisposition", "authority.disposition"),
+        ]
+        XCTAssertEqual(sourceEnvelopeMappings.count, 5)
+        for (receiptField, rawValue) in sourceEnvelopeMappings {
+            let mapping = "\(receiptField):\(rawValue)"
+            XCTAssertEqual(
+                fixedOccurrenceCount(mapping, in: projectionCompact),
+                1,
+                "source-envelope projection mapping is not exact: \(mapping)")
+            XCTAssertEqual(
+                fixedOccurrenceCount(rawValue, in: projectionCompact),
+                1,
+                "source-envelope value is not consumed exactly once: \(rawValue)")
+        }
+
+        let rawMappings = [
+            ("pairReceiptSHA256", "observation.pairReceiptSHA256"),
+            ("pairReceiptByteCount", "observation.pairReceiptByteCount"),
+            ("producerRepository", "observation.producerRepository"),
+            ("producerCommit", "observation.producerCommit"),
+            ("producerTree", "observation.producerTree"),
+            (
+                "candidateCatalogSHA256",
+                "observation.candidateCatalogSHA256"
+            ),
+            (
+                "candidateCatalogByteCount",
+                "observation.candidateCatalogByteCount"
+            ),
+            (
+                "experimentManifestSHA256",
+                "observation.experimentManifestSHA256"
+            ),
+            (
+                "experimentManifestByteCount",
+                "observation.experimentManifestByteCount"
+            ),
+            (
+                "candidateDeclarationSetSHA256",
+                "observation.candidateDeclarationSetSHA256"
+            ),
+            (
+                "candidateDeclarationSetByteCount",
+                "observation.candidateDeclarationSetByteCount"
+            ),
+            ("tokenizerBundleSHA256", "observation.tokenizerBundleSHA256"),
+            (
+                "tokenizerBundleByteCount",
+                "observation.tokenizerBundleByteCount"
+            ),
+            ("candidateIDs", "observation.candidateIDs"),
+            (
+                "candidateIdentitySHA256s",
+                "observation.candidateIdentitySHA256s"
+            ),
+            (
+                "declarationBundleSHA256s",
+                "observation.declarationBundleSHA256s"
+            ),
+            ("inputBindingCount", "observation.inputBindingCount"),
+            (
+                "retainedOriginalInputByteCount",
+                "observation.retainedOriginalInputByteCount"
+            ),
+            ("optimizerSteps", "observation.optimizerSteps"),
+            ("trainingTokens", "observation.trainingTokens"),
+            ("wallClockSeconds", "observation.wallClockSeconds"),
+            ("outputNamespace", "observation.outputNamespace"),
+            ("orderedTensorCount", "observation.orderedTensorCount"),
+            (
+                "uniqueParameterStorageCount",
+                "observation.uniqueParameterStorageCount"
+            ),
+            ("totalParameterCount", "observation.totalParameterCount"),
+        ]
+        XCTAssertEqual(rawMappings.count, 25)
+        for (receiptField, rawValue) in rawMappings {
+            let mapping = "\(receiptField):\(rawValue)"
+            XCTAssertEqual(
+                fixedOccurrenceCount(mapping, in: projectionCompact),
+                1,
+                "raw receipt projection mapping is not exact: \(mapping)")
+            XCTAssertEqual(
+                fixedOccurrenceCount(rawValue, in: projectionCompact),
+                1,
+                "raw observation value is not consumed exactly once: \(rawValue)")
+        }
+        XCTAssertEqual(
+            fixedOccurrenceCount("observation.", in: projectionCompact),
+            30,
+            "projection must consume authority plus 29 raw observation fields")
+        XCTAssertEqual(
+            fixedOccurrenceCount("authority.", in: projectionCompact), 1)
+        XCTAssertEqual(
+            fixedOccurrenceCount(
+                "sourceAuthorityTrueClaims:trueClaims(from:authority)",
+                in: projectionCompact),
+            1)
+        XCTAssertEqual(
+            fixedOccurrenceCount(
+                "sourceAuthorityFalseClaims:falseClaims(from:authority)",
+                in: projectionCompact),
+            1)
+        XCTAssertEqual(
+            fixedOccurrenceCount(
+                "letauthority=observation.authority", in: projectionCompact),
+            1)
+        XCTAssertEqual(
+            fixedOccurrenceCount(
+                "PrimeLatinProposalValidationCompositionReceiptProjectionV1(",
+                in: projectionCompact),
+            1)
+
+        XCTAssertFalse(projection.contains("\""))
+        XCTAssertNil(
+            projection.range(
+                of:
+                    #"(?<![A-Za-z0-9_])(?:0|[1-9][0-9_]*)(?![A-Za-z0-9_])"#,
+                options: .regularExpression),
+            "raw projection may not substitute a numeric golden constant")
+        for forbidden in [
+            ".exactFinal",
+            "producerRevalidationObservation",
+            "independentReplayObservation",
+            "PrimeSHA256",
+            "Ergentics/ergentics-llm",
+            "models/latin-prospective",
+        ] {
+            XCTAssertFalse(
+                projection.contains(forbidden),
+                "raw projection contains an oracle/substitution: \(forbidden)")
+        }
+
+        let expectedTrueClaims = [
+            "producerRevalidationCaptureAndRecaptureComplete",
+            "independentReplayCaptureAndRecaptureComplete",
+            "cooperativeSameRequestRootSequenceComplete",
+            "producerRevalidationAuthorityBoundaryExact",
+            "independentReplayAuthorityBoundaryExact",
+            "exactPairReceiptCrossBindingMatched",
+            "exactProducerSourceCrossBindingMatched",
+            "exactCandidateCatalogCrossBindingMatched",
+            "exactExperimentManifestCrossBindingMatched",
+            "exactCandidateDeclarationSetCrossBindingMatched",
+            "exactTokenizerBundleCrossBindingMatched",
+            "exactCandidateIdentityInventoryCrossBindingMatched",
+            "exactTwentyOneInputBindingCountCrossBindingMatched",
+            "exactTwentyOneOriginalInputBytesRetained",
+            "exactTrialBudgetCrossBindingMatched",
+            "exactOutputNamespaceCrossBindingMatched",
+            "outputNamespaceAbsenceVerified",
+            "referencedInputSnapshotAvailable",
+            "referencedArtifactBytesAvailable",
+            "llmGitStateIndependentlyObserved",
+            "revalidatorToolSourceIndependentlyObserved",
+            "liveProducerWorkspaceRevalidationComplete",
+            "independentPrimeReplayComplete",
+            "validationCompositionComplete",
+        ]
+        let expectedFalseClaims = [
+            "atomicCrossProcessSnapshotEstablished",
+            "compilerCryptographicallyAuthenticated",
+            "externalSourceToBinaryAttestationAvailable",
+            "originRemoteCryptographicallyAuthenticated",
+            "ignoredWorkspaceBytesObserved",
+            "declarationSourceSemanticsIndependentlyVerified",
+            "tokenizerModelSemanticsIndependentlyValidated",
+            "tokenizerTrainingReplayComplete",
+            "evaluationExecutionComplete",
+            "selectionObservationComplete",
+            "durableInputSnapshotPublished",
+            "durableGitObservationPublished",
+            "durableProducerRevalidationObservationPublished",
+            "durableIndependentReplayObservationPublished",
+            "durableValidationCompositionObservationPublished",
+            "runtimeDecoderImplementationAvailable",
+            "runtimeDependencyClosureEstablished",
+            "runtimeInitializationEstablished",
+            "primeProposalPolicyEstablished",
+            "primeProposalPacketProduced",
+            "primeTrialAuthorizationProduced",
+            "primeDecisionReceiptProduced",
+            "candidateSelectionAuthorized",
+            "trialExecutionAuthorized",
+            "furtherTrainingAuthorized",
+            "promotionAuthorized",
+            "productUseAuthorized",
+            "publicationAuthorized",
+            "proposalPairPublicationPerformedByThisComposition",
+            "primeDurableReceiptPublished",
+        ]
+        XCTAssertEqual(expectedTrueClaims.count, 24)
+        XCTAssertEqual(expectedFalseClaims.count, 30)
+        XCTAssertEqual(Set(expectedTrueClaims).count, 24)
+        XCTAssertEqual(Set(expectedFalseClaims).count, 30)
+
+        let compositionSource = try swiftSource(
+            relativePath:
+                "Sources/PrimeLatinProposalValidationComposition/" +
+                    "PrimeLatinProposalValidationCompositionV1.swift")
+        let compositionAuthority = try sourceSection(
+            compositionSource,
+            from: "public struct " +
+                "PrimeLatinProposalValidationCompositionAuthorityBoundaryV1:",
+            to: "public struct " +
+                "PrimeLatinProposalValidationCompositionObservationV1:")
+        let compositionAuthorityCompact = compositionAuthority.filter {
+            !$0.isWhitespace
+        }
+        XCTAssertEqual(
+            fixedOccurrenceCount(":Bool", in: compositionAuthorityCompact),
+            54)
+
+        XCTAssertEqual(
+            fixedOccurrenceCount("append(", in: trueClaimsCompact), 24)
+        XCTAssertEqual(
+            fixedOccurrenceCount("authority.", in: trueClaimsCompact), 24)
+        XCTAssertEqual(
+            fixedOccurrenceCount("to:&claims)", in: trueClaimsCompact), 24)
+        XCTAssertEqual(fixedOccurrenceCount("\"", in: trueClaimsCompact), 48)
+        XCTAssertEqual(
+            fixedOccurrenceCount("returnclaims", in: trueClaimsCompact), 1)
+        XCTAssertFalse(trueClaimsCompact.contains("!authority."))
+        XCTAssertFalse(trueClaimsCompact.contains(".exactFinal"))
+        XCTAssertFalse(trueClaimsCompact.contains("when:true"))
+        XCTAssertFalse(trueClaimsCompact.contains("when:false"))
+        for claim in expectedTrueClaims {
+            let mapping =
+                "append(\"\(claim)\",when:authority.\(claim),to:&claims)"
+            XCTAssertEqual(
+                fixedOccurrenceCount(mapping, in: trueClaimsCompact),
+                1,
+                "true authority-to-name mapping is not exact: \(claim)")
+            XCTAssertEqual(
+                fixedOccurrenceCount("\"\(claim)\"", in: trueClaimsCompact),
+                1)
+            XCTAssertEqual(
+                fixedOccurrenceCount("authority.\(claim)", in: trueClaimsCompact),
+                1)
+            XCTAssertTrue(
+                compositionAuthorityCompact.contains("publiclet\(claim):Bool"),
+                "true mapped claim is not a composition authority field")
+        }
+
+        XCTAssertEqual(
+            fixedOccurrenceCount("append(", in: falseClaimsCompact), 30)
+        XCTAssertEqual(
+            fixedOccurrenceCount("!authority.", in: falseClaimsCompact), 30)
+        XCTAssertEqual(
+            fixedOccurrenceCount("to:&claims)", in: falseClaimsCompact), 30)
+        XCTAssertEqual(fixedOccurrenceCount("\"", in: falseClaimsCompact), 60)
+        XCTAssertEqual(
+            fixedOccurrenceCount("returnclaims", in: falseClaimsCompact), 1)
+        XCTAssertFalse(falseClaimsCompact.contains("when:authority."))
+        XCTAssertFalse(falseClaimsCompact.contains(".exactFinal"))
+        XCTAssertFalse(falseClaimsCompact.contains("when:true"))
+        XCTAssertFalse(falseClaimsCompact.contains("when:false"))
+        for claim in expectedFalseClaims {
+            let mapping =
+                "append(\"\(claim)\",when:!authority.\(claim),to:&claims)"
+            XCTAssertEqual(
+                fixedOccurrenceCount(mapping, in: falseClaimsCompact),
+                1,
+                "false authority-to-name mapping is not exact: \(claim)")
+            XCTAssertEqual(
+                fixedOccurrenceCount("\"\(claim)\"", in: falseClaimsCompact),
+                1)
+            XCTAssertEqual(
+                fixedOccurrenceCount("authority.\(claim)", in: falseClaimsCompact),
+                1)
+            XCTAssertTrue(
+                compositionAuthorityCompact.contains("publiclet\(claim):Bool"),
+                "false mapped claim is not a composition authority field")
         }
     }
 
