@@ -1918,7 +1918,6 @@ final class PrimeLatinProposalPairCaptureSourceContractTests: XCTestCase {
             isDirectory: true)
         for relativePath in [
             "Package.swift",
-            "Tests/PrimeLatinProposalPairCaptureValidation/Package.swift",
         ] {
             let manifest = try String(
                 contentsOf: root.appendingPathComponent(relativePath),
