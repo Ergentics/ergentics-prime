@@ -28,6 +28,26 @@ final class
                 #".library(name:"PrimeNativeNeuralGateMLXValidationMechanics",targets:["PrimeNativeCorpusReplayMechanics","PrimeNativeNeuralGateCorrectedMechanics","PrimeNativeNeuralGateCorrectedEvaluationMechanics","PrimeNativeNeuralGateCorrectedFixtureAuthority","PrimeNativeNeuralGatePromptSolver","PrimeNativeNeuralGateLogitSidecarMechanics","PrimeNativeNeuralGateMLXLogSoftmaxRecomputation",])"#
             )
         )
+        XCTAssertTrue(
+            package.contains(
+                #".library(name:"PrimeNativeDecoder",targets:["PrimeNativeDecoder"])"#
+            )
+        )
+        XCTAssertTrue(
+            package.contains(
+                #".library(name:"PrimeNativeDecoderCheckpoint",targets:["PrimeNativeDecoderCheckpoint"])"#
+            )
+        )
+        XCTAssertTrue(
+            package.contains(
+                #".target(name:"PrimeNativeDecoder",dependencies:["PrimeCore",.product(name:"MLX",package:"ergentics-mlx-swift"),.product(name:"MLXNN",package:"ergentics-mlx-swift"),])"#
+            )
+        )
+        XCTAssertTrue(
+            package.contains(
+                #".target(name:"PrimeNativeDecoderCheckpoint",dependencies:["PrimeCore","PrimeNativeDecoder",.product(name:"MLX",package:"ergentics-mlx-swift"),.product(name:"MLXNN",package:"ergentics-mlx-swift"),])"#
+            )
+        )
         let mainTestTarget = try targetDeclaration(
             kind: "testTarget",
             name: "PrimeCoreTests",
@@ -77,6 +97,8 @@ final class
             "main XCTest target dependency closure changed without an MLX-isolation audit"
         )
         for mlxLinkedTarget in [
+            "PrimeNativeDecoder",
+            "PrimeNativeDecoderCheckpoint",
             "PrimeNativeNeuralGateMLXLogSoftmaxRecomputation",
             "PrimeTypedOptimizerRestoreMechanics",
         ] {
@@ -182,6 +204,43 @@ final class
             )
         )
 
+        let nativeDecoderPackage =
+            withoutWhitespace(
+                try source(
+                    "Tests/PrimeNativeDecoderValidation/Package.swift"
+                )
+            )
+        XCTAssertTrue(
+            nativeDecoderPackage.contains(
+                #".package(name:"ergentics-prime",path:"../..")"#
+            )
+        )
+        XCTAssertTrue(
+            nativeDecoderPackage.contains(
+                #"url:"https://github.com/Ergentics/ergentics-mlx-swift""#
+            )
+        )
+        XCTAssertTrue(
+            nativeDecoderPackage.contains(
+                #".product(name:"PrimeNativeDecoder",package:"ergentics-prime")"#
+            )
+        )
+        XCTAssertTrue(
+            nativeDecoderPackage.contains(
+                #".product(name:"PrimeNativeDecoderCheckpoint",package:"ergentics-prime")"#
+            )
+        )
+        XCTAssertFalse(
+            nativeDecoderPackage.contains("MLXOptimizers")
+        )
+        XCTAssertEqual(
+            occurrences(
+                of: ".package(",
+                in: nativeDecoderPackage
+            ),
+            2
+        )
+
         try assertFirstPartyMLXPin(
             "Package.resolved",
             revision:
@@ -189,6 +248,11 @@ final class
         )
         try assertFirstPartyMLXPin(
             "Tests/PrimeNativeNeuralGateMLXValidation/Package.resolved",
+            revision:
+                "d37885a278f1c37484a94d0f401a418735e66519"
+        )
+        try assertFirstPartyMLXPin(
+            "Tests/PrimeNativeDecoderValidation/Package.resolved",
             revision:
                 "d37885a278f1c37484a94d0f401a418735e66519"
         )

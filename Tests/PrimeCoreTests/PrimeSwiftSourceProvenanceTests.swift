@@ -1,3 +1,4 @@
+import CoreFoundation
 import Foundation
 import XCTest
 @testable import PrimeCore
@@ -31,6 +32,177 @@ final class PrimeSwiftSourceProvenanceTests:
             snapshot.sourceIdentitySHA256,
             expectation.sourceIdentitySHA256
         )
+
+        let decoderMetalCorrection =
+            PrimeNativeDecoderMetalExecutionObservationCorrectionV1
+                .frozenV1
+        XCTAssertNoThrow(
+            try decoderMetalCorrection.validateExactV1()
+        )
+        XCTAssertFalse(
+            decoderMetalCorrection
+                .predecessorStandaloneConsumptionAllowed
+        )
+        XCTAssertFalse(
+            decoderMetalCorrection
+                .activeRootQuarantineGateCompleted
+        )
+        XCTAssertFalse(
+            decoderMetalCorrection
+                .exactHeadAndCleanGateSequenceCompleted
+        )
+        XCTAssertTrue(
+            decoderMetalCorrection
+                .predecessorMetalMechanicsProjectionRetained
+        )
+        XCTAssertEqual(
+            decoderMetalCorrection.retainedTotalTestCount,
+            44
+        )
+        XCTAssertFalse(
+            decoderMetalCorrection.gateRepairExecutionObserved
+        )
+
+        let decoderGateRepairObservation =
+            PrimeNativeDecoderGateRepairExecutionObservationV1
+                .frozenV1
+        XCTAssertNoThrow(
+            try decoderGateRepairObservation.validateExactV1()
+        )
+        XCTAssertTrue(
+            decoderGateRepairObservation
+                .activeRootQuarantineGateCompleted
+        )
+        XCTAssertFalse(
+            decoderGateRepairObservation
+                .exactHeadAndCleanGateSequenceCompleted
+        )
+        XCTAssertTrue(
+            decoderGateRepairObservation
+                .correctedActiveRootAndLatinGateSequenceObserved
+        )
+        XCTAssertTrue(
+            decoderGateRepairObservation
+                .gateRepairExecutionObserved
+        )
+        XCTAssertFalse(
+            decoderGateRepairObservation.githubHostedMetalObserved
+        )
+        XCTAssertFalse(
+            decoderGateRepairObservation.functionalTrainingAuthorized
+        )
+
+        let observationData =
+            try PrimeCanonicalJSON.encode(
+                decoderGateRepairObservation
+            )
+        let observationObject = try XCTUnwrap(
+            try JSONSerialization.jsonObject(
+                with: observationData
+            ) as? [String: Any]
+        )
+        let booleanKeys = observationObject.compactMap {
+            key,
+            value -> String? in
+            guard let number = value as? NSNumber,
+                  CFGetTypeID(number) == CFBooleanGetTypeID()
+            else {
+                return nil
+            }
+            return key
+        }
+        XCTAssertEqual(booleanKeys.count, 53)
+        for key in booleanKeys {
+            var mutation = observationObject
+            let value = try XCTUnwrap(
+                mutation[key] as? NSNumber
+            )
+            mutation[key] = !value.boolValue
+            let mutated = try JSONDecoder().decode(
+                PrimeNativeDecoderGateRepairExecutionObservationV1
+                    .self,
+                from: JSONSerialization.data(
+                    withJSONObject: mutation,
+                    options: [
+                        .sortedKeys,
+                        .withoutEscapingSlashes,
+                    ]
+                )
+            )
+            XCTAssertThrowsError(
+                try mutated.validateExactV1(),
+                "boolean mutation must fail closed: \(key)"
+            )
+        }
+        for (key, replacement) in [
+            (
+                "observedRevision",
+                "0000000000000000000000000000000000000000" as Any
+            ),
+            (
+                "observedTree",
+                "0000000000000000000000000000000000000000" as Any
+            ),
+            (
+                "observedEmbeddedSourceIdentitySHA256",
+                String(repeating: "0", count: 64) as Any
+            ),
+            (
+                "predecessorCorrectionSourceSHA256",
+                String(repeating: "0", count: 64) as Any
+            ),
+            (
+                "observedWorkflowSHA256",
+                String(repeating: "0", count: 64) as Any
+            ),
+            (
+                "observedGateSHA256",
+                String(repeating: "0", count: 64) as Any
+            ),
+            (
+                "observedLatinGateSHA256",
+                String(repeating: "0", count: 64) as Any
+            ),
+            (
+                "automaticRunID",
+                31_359_522_951 as Any
+            ),
+            (
+                "automaticJobID",
+                93_365_459_115 as Any
+            ),
+            (
+                "requiredSuccessfulStepNames",
+                ["mutated"] as Any
+            ),
+            (
+                "status",
+                "PASS" as Any
+            ),
+            (
+                "orderedNextActions",
+                ["train_now"] as Any
+            ),
+        ] {
+            var mutation = observationObject
+            XCTAssertNotNil(mutation[key])
+            mutation[key] = replacement
+            let mutated = try JSONDecoder().decode(
+                PrimeNativeDecoderGateRepairExecutionObservationV1
+                    .self,
+                from: JSONSerialization.data(
+                    withJSONObject: mutation,
+                    options: [
+                        .sortedKeys,
+                        .withoutEscapingSlashes,
+                    ]
+                )
+            )
+            XCTAssertThrowsError(
+                try mutated.validateExactV1(),
+                "bound mutation must fail closed: \(key)"
+            )
+        }
     }
 
     func testCapturePreservesCanonicalSnapshotContract()

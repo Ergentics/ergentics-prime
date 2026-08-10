@@ -74,6 +74,16 @@ jobs:
             Sources/PrimeLatinProposalValidationComposition/PrimeLatinProposalValidationCompositionV1.swift \
             Sources/PrimeLatinProposalValidationCompositionReceipt/PrimeLatinProposalValidationCompositionReceiptV1.swift \
             Sources/PrimeLatinProposalValidationCompositionReceiptPublisher/PrimeLatinProposalValidationCompositionReceiptPublisherV1.swift \
+            Sources/PrimeLatinProposalAdmissionPolicy/PrimeLatinProposalAdmissionPolicyV1.swift \
+            Sources/PrimeCore/PrimeNativeDecoderAuthority.swift \
+            Sources/PrimeCore/PrimeNativeDecoderDerivedDelta.swift \
+            Sources/PrimeCore/PrimeNativeDecoderCheckpointAuthority.swift \
+            Sources/PrimeCore/PrimeNativeDecoderMetalRepairAuthority.swift \
+            Sources/PrimeCore/PrimeNativeDecoderMetalExecutionObservation.swift \
+            Sources/PrimeCore/PrimeNativeDecoderMetalExecutionObservationCorrection.swift \
+            Sources/PrimeCore/PrimeNativeDecoderGateRepairExecutionObservation.swift \
+            Sources/PrimeNativeDecoder/PrimeNativeGQADecoder.swift \
+            Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV1.swift \
             Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalPairCaptureSourceContractTests.swift \
             Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalPairCaptureTests.swift \
             Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalGitSourceV3Tests.swift \
@@ -84,11 +94,16 @@ jobs:
             Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalValidationCompositionV1Tests.swift \
             Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalValidationCompositionReceiptV1Tests.swift \
             Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalValidationCompositionReceiptPublisherV1Tests.swift \
+            Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalAdmissionPolicyV1Tests.swift \
+            Tests/PrimeNativeDecoderValidation/Tests/PrimeNativeDecoderTests/PrimeNativeDecoderAuthorityTests.swift \
+            Tests/PrimeNativeDecoderValidation/Tests/PrimeNativeDecoderTests/PrimeNativeDecoderCheckpointTests.swift \
+            Tests/PrimeNativeDecoderValidation/Tests/PrimeNativeDecoderTests/PrimeNativeGQADecoderTests.swift \
             Tests/PrimeCoreTests/PrimeNativeCorpusReplaySourceContractTests.swift \
             Tests/PrimeCoreTests/PrimeNativeGenerationContractSourceContractTests.swift \
             Tests/PrimeCoreTests/PrimeNativeNeuralGateContractSourceContractTests.swift \
             Tests/PrimeCoreTests/PrimeNativeNeuralGateMLXIsolationSourceContractTests.swift \
-            Tests/PrimeCoreTests/PrimeNativeResolvedContractAdapterSourceContractTests.swift; do
+            Tests/PrimeCoreTests/PrimeNativeResolvedContractAdapterSourceContractTests.swift \
+            Tests/PrimeCoreTests/PrimeSwiftSourceProvenanceTests.swift; do
             xcrun swiftc -frontend -parse "$source_file"
           done
           [[ "$(git rev-parse HEAD)" == "$EXACT_REVISION" ]]
@@ -117,8 +132,15 @@ jobs:
             echo 'The Prime-owned validation composition target cooperatively sequences both child captures for one request and cross-binds their observations, but hosted CI uses synthetic tests only and never live-runs that composition.'
             echo 'The pure validation-composition receipt target defines, encodes, and exactly validates only the composed receipt schema without filesystem, network, runtime, proposal-policy, or publication capability; byte-canonical encoding and durable publication remain in the PrimeCore-backed publisher.'
             echo 'The receipt publisher is compiled and exercised only against synthetic temporary artifact roots in the existing Latin test lane; hosted CI does not live-run validation capture or publish repository, lab, model, proposal, or public-network artifacts.'
+            echo 'The pure internal Latin admission policy validates only the exact frozen typed receipt projection and emits typed ABSTAIN reasons for absent current liveness, the policy-classified structural fixture, and runtime decoder, dependency-closure, and initialization state not established by that receipt; it proves no artifact binding and creates no proposal packet or trial authorization.'
+            echo 'Prime now owns a dependency-isolated Swift/MLXNN GQA decoder body and opaque KV cache. The additive derived-delta contract authorizes source materialization, compilation, and bounded synthetic mechanics tests only; it does not claim live Metal execution, checkpoint readiness, training, canary replacement, or product authority.'
+            echo 'The frozen pre-repair checkpoint V1 target publicly binds only its historical Native-300M/Prime-byte-512 weights compatibility identity and analytic FP32 parameter catalog. Its executable borrowed-descriptor codec remains internal, exact-tiny-synthetic-only, size-capped, and non-authorizing; it is not the repaired decoder identity, and native checkpoint write/load, artifact provenance, atomic durability, runtime initialization, training, trial, canary, and product authority remain false.'
+            echo 'The append-only Metal-repair contract preserves the frozen decoder/checkpoint identities, binds the pinned batched single-token RoPE defect and Prime-local explicit-offset repair, and fixes TF32-off only as a synthetic CI-mechanics policy. The repaired checkpoint identity, admitted runtime policy, exact-head hosted observation, training, and downstream authority remain false.'
+            echo 'A subsequent append-only observation binds the exact committed repair head and tree plus an external Terminal run of all 44 strengthened tests with zero failures and zero skips. Its raw log and transport hashes are recorded but not retained here; GitHub-hosted execution, fresh-metallib provenance, repaired checkpoint identity, admitted runtime policy, training, and downstream authority remain false.'
+            echo 'An append-only correction preserves that 44/44 Metal projection but invalidates the predecessor active-root and whole-gate-sequence completion claims: the old fixed-substring Process matcher could not distinguish ProcessInfo or inProcess metadata from the forbidden standalone Process symbol. This exact-head run observes only the corrected lexical gate scope; it does not widen Metal, runtime, checkpoint, training, or downstream authority.'
+            echo 'A successor observation binds the corrected exact-head pull-request active-root and Latin gate execution. The reviewed-main Metal job remained skipped by design, so GitHub-hosted Metal, fresh-metallib provenance, runtime, checkpoint, training, and downstream authority remain false.'
             echo 'The locally declared origin is not network-authenticated, and ignored workspace bytes are not observed by this slice.'
-            echo 'No Prime proposal, candidate selection, trial authorization, decision receipt, decoder selection, model execution, training, publication, promotion, Driver V2, or PMHNP authority is granted.'
+            echo 'No Prime proposal, candidate selection, trial authorization, decision receipt, runtime/product/canary decoder activation, model execution, training, publication, promotion, Driver V2, or PMHNP authority is granted.'
           } >> "$GITHUB_STEP_SUMMARY"
 
   trusted-main-compile:
@@ -129,7 +151,7 @@ jobs:
     timeout-minutes: 45
     env:
       EXACT_REVISION: ${{ github.sha }}
-      MLX_REVISION: d37885a278f1c37484a94d0f401a418735e66519
+      PRIME_MLX_REVISION: d37885a278f1c37484a94d0f401a418735e66519
 
     steps:
       - name: Record the hosted Apple toolchain
@@ -168,17 +190,23 @@ jobs:
           set -euo pipefail
           [[ -n "$ERGENTICS_MLX_READ_TOKEN" ]]
           readonly mlx_bare="$RUNNER_TEMP/ergentics-mlx-swift.git"
+          readonly mlx_source="$RUNNER_TEMP/ergentics-mlx-swift"
           [[ ! -e "$mlx_bare" && ! -L "$mlx_bare" ]]
+          [[ ! -e "$mlx_source" && ! -L "$mlx_source" ]]
           git init --bare "$mlx_bare"
           git --git-dir="$mlx_bare" remote add origin \
             https://github.com/Ergentics/ergentics-mlx-swift
           export GIT_CONFIG_COUNT=1
           export GIT_CONFIG_KEY_0="url.https://x-access-token:${ERGENTICS_MLX_READ_TOKEN}@github.com/.insteadOf"
           export GIT_CONFIG_VALUE_0="https://github.com/"
-          git --git-dir="$mlx_bare" fetch --depth=1 --no-tags origin "$MLX_REVISION"
+          git --git-dir="$mlx_bare" fetch --depth=1 --no-tags origin "$PRIME_MLX_REVISION"
+          [[ "$(git --git-dir="$mlx_bare" rev-parse FETCH_HEAD)" == "$PRIME_MLX_REVISION" ]]
+          git --git-dir="$mlx_bare" update-ref refs/heads/prime-pinned "$PRIME_MLX_REVISION"
+          git --git-dir="$mlx_bare" worktree add --detach "$mlx_source" "$PRIME_MLX_REVISION"
           unset GIT_CONFIG_COUNT GIT_CONFIG_KEY_0 GIT_CONFIG_VALUE_0
-          [[ "$(git --git-dir="$mlx_bare" rev-parse FETCH_HEAD)" == "$MLX_REVISION" ]]
-          git --git-dir="$mlx_bare" update-ref refs/heads/prime-pinned "$MLX_REVISION"
+          git -C "$mlx_source" submodule update --init --recursive
+          [[ "$(git -C "$mlx_source" rev-parse HEAD)" == "$PRIME_MLX_REVISION" ]]
+          [[ -z "$(git -C "$mlx_source" status --porcelain=v1 --untracked-files=all)" ]]
           [[ "$(git --git-dir="$mlx_bare" remote get-url origin)" == \
             'https://github.com/Ergentics/ergentics-mlx-swift' ]]
           ! grep -R -Fq -- "$ERGENTICS_MLX_READ_TOKEN" "$mlx_bare"
@@ -190,7 +218,7 @@ jobs:
           readonly mlx_bare="$RUNNER_TEMP/ergentics-mlx-swift.git"
           readonly test_log="$RUNNER_TEMP/prime-active-root-tests.log"
           [[ "$(git --git-dir="$mlx_bare" rev-parse refs/heads/prime-pinned)" == \
-            "$MLX_REVISION" ]]
+            "$PRIME_MLX_REVISION" ]]
           mkdir -p \
             "$RUNNER_TEMP/prime-active-root-build" \
             "$RUNNER_TEMP/prime-active-root-cache" \
@@ -219,3 +247,7 @@ jobs:
           grep -Eq 'Executed [1-9][0-9]* tests?, with 0 failures' "$test_log"
           [[ "$(git rev-parse HEAD)" == "$EXACT_REVISION" ]]
           [[ -z "$(git status --porcelain=v1 --untracked-files=all)" ]]
+
+      - name: Run the Prime-owned decoder on live Metal
+        working-directory: ergentics-prime
+        run: bash .github/scripts/prime-ci-native-decoder-metal.sh

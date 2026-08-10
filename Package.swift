@@ -12,6 +12,14 @@ let package = Package(
             targets: ["PrimeCore"]
         ),
         .library(
+            name: "PrimeNativeDecoder",
+            targets: ["PrimeNativeDecoder"]
+        ),
+        .library(
+            name: "PrimeNativeDecoderCheckpoint",
+            targets: ["PrimeNativeDecoderCheckpoint"]
+        ),
+        .library(
             name: "PrimeLatinProposalPairCapture",
             targets: [
                 "PrimeLatinProposalPairCapture",
@@ -218,6 +226,35 @@ let package = Package(
             name: "PrimeCore"
         ),
         .target(
+            name: "PrimeNativeDecoder",
+            dependencies: [
+                "PrimeCore",
+                .product(
+                    name: "MLX",
+                    package: "ergentics-mlx-swift"
+                ),
+                .product(
+                    name: "MLXNN",
+                    package: "ergentics-mlx-swift"
+                ),
+            ]
+        ),
+        .target(
+            name: "PrimeNativeDecoderCheckpoint",
+            dependencies: [
+                "PrimeCore",
+                "PrimeNativeDecoder",
+                .product(
+                    name: "MLX",
+                    package: "ergentics-mlx-swift"
+                ),
+                .product(
+                    name: "MLXNN",
+                    package: "ergentics-mlx-swift"
+                ),
+            ]
+        ),
+        .target(
             name: "PrimeLatinProposalPairCapture"
         ),
         .target(
@@ -255,6 +292,12 @@ let package = Package(
             dependencies: [
                 "PrimeCore",
                 "PrimeLatinProposalValidationComposition",
+                "PrimeLatinProposalValidationCompositionReceipt",
+            ]
+        ),
+        .target(
+            name: "PrimeLatinProposalAdmissionPolicy",
+            dependencies: [
                 "PrimeLatinProposalValidationCompositionReceipt",
             ]
         ),
@@ -730,6 +773,7 @@ let package = Package(
                 "PrimeLatinProposalValidationComposition",
                 "PrimeLatinProposalValidationCompositionReceipt",
                 "PrimeLatinProposalValidationCompositionReceiptPublisher",
+                "PrimeLatinProposalAdmissionPolicy",
             ]
         ),
         .testTarget(

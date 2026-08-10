@@ -51,6 +51,12 @@ let package = Package(
                 "PrimeLatinProposalValidationCompositionReceipt",
             ]
         ),
+        .target(
+            name: "PrimeLatinProposalAdmissionPolicy",
+            dependencies: [
+                "PrimeLatinProposalValidationCompositionReceipt",
+            ]
+        ),
         .executableTarget(
             name: "PrimeLatinProposalPairCaptureProbe",
             dependencies: [
@@ -86,6 +92,7 @@ let package = Package(
                 "PrimeLatinProposalValidationComposition",
                 "PrimeLatinProposalValidationCompositionReceipt",
                 "PrimeLatinProposalValidationCompositionReceiptPublisher",
+                "PrimeLatinProposalAdmissionPolicy",
             ]
         ),
     ]

@@ -13,6 +13,30 @@ from the active package graph. Their source, receipts, notices, and historical
 instructions remain preserved for accounting and are not current execution
 entry points.
 
+The first Prime-owned replacement mechanics now live in the dependency-isolated
+`PrimeNativeDecoder` library target. Its GQA body and opaque KV cache do not
+import MLXLLM, MLXLMCommon, Llama, PMHNP, tokenizer, optimizer, checkpoint, or
+training code. The separate `PrimeNativeDecoderCheckpoint` target now defines
+the strict Native-300M/byte-512 weights-only compatibility identity, analytic
+parameter catalog, and internal bounded synthetic borrowed-descriptor codec.
+It does not expose native checkpoint I/O, establish a retained checkpoint,
+initialize a runtime, or authorize training. An append-only repair now works
+around the pinned MLX batched single-token RoPE dispatch defect and binds
+TF32-off as a synthetic CI-mechanics policy. The existing checkpoint V1
+identity remains frozen pre-repair history; a repaired-source successor is
+still required before runtime or training authority. An append-only execution
+observation now binds an exact clean committed repair head whose rebuilt
+44-test bundle passed on external live Metal with zero failures and skips;
+an append-only correction preserves that XCTest evidence while invalidating
+the predecessor's active-root and whole-gate-sequence completion claims. The
+active-root `Process` matcher is narrowed to the standalone symbol in this
+source slice. A successor observation binds the successful exact-head
+pull-request active-root and Latin gate execution without treating the skipped
+reviewed-main job as Metal evidence.
+GitHub-hosted Metal execution and fresh-metallib provenance remain unobserved.
+The exact implemented boundary and remaining replacement path are recorded in
+[`docs/PRIME-NATIVE-DECODER-REPLACEMENT-2026-08-09.md`](docs/PRIME-NATIVE-DECODER-REPLACEMENT-2026-08-09.md).
+
 The current Apple-native training, optimizer-resume, M5 Max, cross-repository,
 and product-integration roadmap is recorded in
 [`docs/APPLE-NATIVE-LEARNING-PLAN-2026-07-29.md`](docs/APPLE-NATIVE-LEARNING-PLAN-2026-07-29.md).
@@ -86,17 +110,21 @@ The exact private-MLX migration sequence, narrow commit-identity rewrite
 boundary, recovery anchors, and post-migration evidence gates are recorded in
 [`docs/PRIME-PICKUP-PRIVATE-MLX-MIRROR-2026-07-29.md`](docs/PRIME-PICKUP-PRIVATE-MLX-MIRROR-2026-07-29.md).
 
-## Implemented now
+## Frozen historical mechanics evidence
 
-- exact maintained `ergentics_prime_native_3b_gqa_v1` geometry;
+The following exact-3B work remains preserved as historical comparator and
+mechanics evidence. Its MLXLLM dependency and execution products are not in
+the active package graph, and it does not select Prime's current decoder:
+
+- exact historical `ergentics_prime_native_3b_gqa_v1` geometry;
 - random initialization and full FP32 weights;
 - explicit initialization, training-schedule, and evaluation controls;
 - Swift-native process supervision, mutation gates, and immutable receipts;
-- MLX/Metal execution through maintained model, differentiation, optimizer,
+- MLX/Metal execution through the then-maintained model, differentiation, optimizer,
   and device primitives.
 
-Prime's current mechanics target uses the same 512-entry model vocabulary as
-the existing companion arc. Prime now contains an exact isolated Swift
+That historical mechanics target used the same 512-entry model vocabulary as
+the companion arc. Prime retains an exact isolated Swift
 tokenizer/corpus transplant that regenerated and embedded-regraded all
 155,648 rows, plus standalone source-pinned projections of the fixed-cap/EOS
 generation boundary and NeuralKit's native-language gate contract. The gate
