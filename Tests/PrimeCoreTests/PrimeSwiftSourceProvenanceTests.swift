@@ -203,6 +203,233 @@ final class PrimeSwiftSourceProvenanceTests:
                 "bound mutation must fail closed: \(key)"
             )
         }
+
+        let reviewedMainMetalObservation =
+            PrimeNativeDecoderReviewedMainMetalExecutionObservationV1
+                .frozenV1
+        XCTAssertNoThrow(
+            try reviewedMainMetalObservation.validateExactV1()
+        )
+        XCTAssertTrue(
+            reviewedMainMetalObservation
+                .historyPreservingTwoParentMergeObserved
+        )
+        XCTAssertTrue(
+            reviewedMainMetalObservation
+                .exactHeadAndCleanGateSequenceCompleted
+        )
+        XCTAssertTrue(
+            reviewedMainMetalObservation.githubHostedMetalObserved
+        )
+        XCTAssertTrue(
+            reviewedMainMetalObservation
+                .freshMetallibBuildProvenanceObserved
+        )
+        XCTAssertEqual(
+            reviewedMainMetalObservation.executedTotalTestCount,
+            44
+        )
+        XCTAssertEqual(reviewedMainMetalObservation.failureCount, 0)
+        XCTAssertEqual(reviewedMainMetalObservation.skipCount, 0)
+        XCTAssertFalse(
+            reviewedMainMetalObservation
+                .runtimeLoadedExactStagedMetallibIdentityIndependentlyObserved
+        )
+        XCTAssertFalse(
+            reviewedMainMetalObservation
+                .repairedCheckpointCompatibilityIdentityEstablished
+        )
+        XCTAssertFalse(
+            reviewedMainMetalObservation
+                .admittedRuntimeComputePolicyEstablished
+        )
+        XCTAssertFalse(
+            reviewedMainMetalObservation.functionalTrainingAuthorized
+        )
+
+        let reviewedMainObservationData =
+            try PrimeCanonicalJSON.encode(
+                reviewedMainMetalObservation
+            )
+        let reviewedMainObservationObject = try XCTUnwrap(
+            try JSONSerialization.jsonObject(
+                with: reviewedMainObservationData
+            ) as? [String: Any]
+        )
+        let reviewedMainBooleanKeys =
+            reviewedMainObservationObject.compactMap {
+                key,
+                value -> String? in
+                guard let number = value as? NSNumber,
+                      CFGetTypeID(number) == CFBooleanGetTypeID()
+                else {
+                    return nil
+                }
+                return key
+            }
+        XCTAssertEqual(reviewedMainBooleanKeys.count, 83)
+        for key in reviewedMainBooleanKeys {
+            var mutation = reviewedMainObservationObject
+            let value = try XCTUnwrap(
+                mutation[key] as? NSNumber
+            )
+            mutation[key] = !value.boolValue
+            let mutated = try JSONDecoder().decode(
+                PrimeNativeDecoderReviewedMainMetalExecutionObservationV1
+                    .self,
+                from: JSONSerialization.data(
+                    withJSONObject: mutation,
+                    options: [
+                        .sortedKeys,
+                        .withoutEscapingSlashes,
+                    ]
+                )
+            )
+            XCTAssertThrowsError(
+                try mutated.validateExactV1(),
+                "hosted observation boolean mutation must fail closed: \(key)"
+            )
+        }
+
+        for (key, replacement) in [
+            (
+                "observedRevision",
+                "0000000000000000000000000000000000000000" as Any
+            ),
+            (
+                "observedOrderedParentRevisions",
+                ["0000000000000000000000000000000000000000"] as Any
+            ),
+            (
+                "observedTree",
+                "0000000000000000000000000000000000000000" as Any
+            ),
+            (
+                "observedEmbeddedSourceIdentitySHA256",
+                String(repeating: "0", count: 64) as Any
+            ),
+            (
+                "predecessorSourceSHA256",
+                String(repeating: "0", count: 64) as Any
+            ),
+            (
+                "observedWorkflowSHA256",
+                String(repeating: "0", count: 64) as Any
+            ),
+            (
+                "observedActiveGateSHA256",
+                String(repeating: "0", count: 64) as Any
+            ),
+            (
+                "observedLatinGateSHA256",
+                String(repeating: "0", count: 64) as Any
+            ),
+            (
+                "observedMetalLauncherSHA256",
+                String(repeating: "0", count: 64) as Any
+            ),
+            (
+                "observedDecoderSourceSHA256",
+                String(repeating: "0", count: 64) as Any
+            ),
+            (
+                "observedCheckpointSourceSHA256",
+                String(repeating: "0", count: 64) as Any
+            ),
+            (
+                "observedAuthorityTestSourceSHA256",
+                String(repeating: "0", count: 64) as Any
+            ),
+            (
+                "observedCheckpointTestSourceSHA256",
+                String(repeating: "0", count: 64) as Any
+            ),
+            (
+                "observedDecoderTestSourceSHA256",
+                String(repeating: "0", count: 64) as Any
+            ),
+            ("runID", 31_361_320_314 as Any),
+            ("activeRootJobID", 93_370_610_367 as Any),
+            ("reviewedMainJobID", 93_370_967_152 as Any),
+            (
+                "activeJobDownloadedLogSHA256",
+                String(repeating: "0", count: 64) as Any
+            ),
+            (
+                "reviewedMainJobDownloadedLogSHA256",
+                String(repeating: "0", count: 64) as Any
+            ),
+            ("activeJobDownloadedLogByteCount", 1 as Any),
+            ("reviewedMainJobDownloadedLogByteCount", 1 as Any),
+            ("downloadedJobLogBindingKind", "mutated" as Any),
+            ("publishedWorkflowArtifactCount", 1 as Any),
+            ("runnerImage", "mutated" as Any),
+            ("metalDeviceName", "mutated" as Any),
+            (
+                "exactMLXRevision",
+                "0000000000000000000000000000000000000000" as Any
+            ),
+            (
+                "exactMLXCoreRevision",
+                "0000000000000000000000000000000000000000" as Any
+            ),
+            (
+                "exactMLXCRevision",
+                "0000000000000000000000000000000000000000" as Any
+            ),
+            (
+                "generatedMetallibSHA256",
+                String(repeating: "0", count: 64) as Any
+            ),
+            ("generatedMetallibByteCount", 1 as Any),
+            ("focusedSourceContractTestCount", 30 as Any),
+            ("executedAuthorityTestCount", 10 as Any),
+            ("executedCheckpointTestCount", 13 as Any),
+            ("executedDecoderTestCount", 18 as Any),
+            ("executedTotalTestCount", 43 as Any),
+            ("requiredLiveMetalTestNames", ["mutated"] as Any),
+            ("status", "PASS" as Any),
+            ("orderedNextActions", ["train_now"] as Any),
+        ] {
+            var mutation = reviewedMainObservationObject
+            XCTAssertNotNil(mutation[key])
+            mutation[key] = replacement
+            let mutated = try JSONDecoder().decode(
+                PrimeNativeDecoderReviewedMainMetalExecutionObservationV1
+                    .self,
+                from: JSONSerialization.data(
+                    withJSONObject: mutation,
+                    options: [
+                        .sortedKeys,
+                        .withoutEscapingSlashes,
+                    ]
+                )
+            )
+            XCTAssertThrowsError(
+                try mutated.validateExactV1(),
+                "hosted observation binding mutation must fail closed: \(key)"
+            )
+        }
+
+        var policyMutation = reviewedMainObservationObject
+        var policy = try XCTUnwrap(
+            policyMutation["ciMechanicsPolicy"] as? [String: Any]
+        )
+        policy["requiredEnvironmentValue"] = "1"
+        policyMutation["ciMechanicsPolicy"] = policy
+        let mutatedPolicyObservation = try JSONDecoder().decode(
+            PrimeNativeDecoderReviewedMainMetalExecutionObservationV1.self,
+            from: JSONSerialization.data(
+                withJSONObject: policyMutation,
+                options: [
+                    .sortedKeys,
+                    .withoutEscapingSlashes,
+                ]
+            )
+        )
+        XCTAssertThrowsError(
+            try mutatedPolicyObservation.validateExactV1()
+        )
     }
 
     func testCapturePreservesCanonicalSnapshotContract()

@@ -148,8 +148,27 @@ successful exact-head pull-request active-root and Latin gate at
 reviewed-main job, which was skipped by design. It therefore is not a
 GitHub-hosted Metal or freshly built-metallib observation, a published binary
 provenance envelope, an admitted runtime policy, checkpoint admission,
-training, or model-quality evidence. The existing trusted-main action must
-still pass all 44 tests without skips after merge.
+training, or model-quality evidence.
+
+The history-preserving merge commit
+`b7bad4db76a3ceadba69195ff218af64b19fb716` then ran the complete workflow on
+reviewed `main`. `PrimeNativeDecoderReviewedMainMetalExecutionObservationV1`
+binds workflow run `31361320313`: the corrected active-root and Latin gates,
+focused source contracts, and reviewed-main Metal job all completed on the
+same exact clean tree. The `macos-26-arm64` job exposed an
+`Apple Paravirtual device`, built exactly one fresh pinned-MLX
+`default.metallib` (6,292,716 bytes; SHA-256
+`bf45fbb69d87f3cc51b3f8d9ca8a3b114dd155a7a9eee5001092d8fd5f7a7f61`),
+staged two byte-identical copies, and passed 11 authority, 14 checkpoint, and
+19 GQA tests: 44 total with zero failures, unexpected failures, or skips.
+
+This establishes GitHub-hosted synthetic Metal mechanics and job-scoped fresh
+metallib build/staging provenance. It does not identify the physical host GPU,
+instrument MLX to prove which staged metallib image it loaded, retain or
+publish the metallib or test binary, establish a repaired checkpoint identity
+or admitted runtime policy, execute Native-300M, or authorize training. Exact
+byte counts and SHA-256 values bind the two downloaded GitHub job-log endpoint
+responses, but no raw log archive or durable log artifact is retained here.
 
 The validation package deliberately has no repository-owned SwiftPM mirror.
 Every gate supplies an isolated `--config-path`, and the quarantine gate
@@ -167,26 +186,23 @@ dependency.
 
 The remaining replacement order is:
 
-1. with separate authorization, publish and merge the reviewed
-   history-preserving repair, then require the
-   existing trusted-main GitHub action to pass all 44 tests without skips and
-   record its fresh-metallib hosted observation append-only;
-2. append a repaired-source checkpoint compatibility identity, then separately
-   authorize native-profile checkpoint write/load and bind the container
-   through a verified artifact observation;
-3. append an admitted runtime compute policy, establish the exact dependency,
+1. append a repaired-source checkpoint compatibility identity without adding
+   a manifest, codec, native-profile I/O, or checkpoint admission;
+2. append an admitted runtime compute policy, establish the exact dependency,
    metallib, device, and initialization closure, and keep it separate from the
    synthetic CI policy;
+3. establish tokenizer/model functional compatibility, then define bounded
+   native-profile checkpoint container and I/O mechanics;
 4. define generic Prime-owned train/evaluate surfaces and persist exact
    optimizer, RNG, and data-cursor state for trajectory-exact resume;
-5. separately authorize bounded training and produce a non-fixture checkpoint
-   with exact training-state lineage;
+5. separately authorize bounded training, then produce and bind a non-fixture
+   checkpoint with exact training-state and artifact provenance;
 6. separately authorize and run a bounded candidate canary/trial;
 7. migrate the read-only PMHNP canary consumer to the Prime-owned interface and
    remove its active Llama factory after single-MLX-graph reconciliation;
 8. address CoreML/NeuralKit product export only after accepted checkpoint and
    parity evidence.
 
-No training, merge, PMHNP write, or product decision is part of this
-correction. Network activity is limited to the separately authorized branch,
-pull-request, and GitHub Actions workflow operations.
+No training, PMHNP write, or product decision is part of this hosted
+observation. Network activity is limited to the separately authorized branch,
+pull-request, merge, and GitHub Actions workflow operations.
