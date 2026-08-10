@@ -16,8 +16,12 @@ entry points.
 The first Prime-owned replacement mechanics now live in the dependency-isolated
 `PrimeNativeDecoder` library target. Its GQA body and opaque KV cache do not
 import MLXLLM, MLXLMCommon, Llama, PMHNP, tokenizer, optimizer, checkpoint, or
-training code. The exact implemented boundary and remaining replacement path
-are recorded in
+training code. The separate `PrimeNativeDecoderCheckpoint` target now defines
+the strict Native-300M/byte-512 weights-only compatibility identity, analytic
+parameter catalog, and internal bounded synthetic borrowed-descriptor codec.
+It does not expose native checkpoint I/O, establish a retained checkpoint,
+initialize a runtime, or authorize training. The exact implemented boundary
+and remaining replacement path are recorded in
 [`docs/PRIME-NATIVE-DECODER-REPLACEMENT-2026-08-09.md`](docs/PRIME-NATIVE-DECODER-REPLACEMENT-2026-08-09.md).
 
 The current Apple-native training, optimizer-resume, M5 Max, cross-repository,

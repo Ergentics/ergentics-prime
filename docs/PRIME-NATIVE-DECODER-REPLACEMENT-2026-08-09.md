@@ -35,6 +35,24 @@ query and KV heads equal, but does not claim parity with the earlier manual
 attention implementation. Native-300M GQA geometry is inventory only and is
 not allocated or executed by an authority contract.
 
+The separate library-only `PrimeNativeDecoderCheckpoint` target depends
+exactly on `PrimeCore`, `PrimeNativeDecoder`, `MLX`, and `MLXNN`. Its public
+surface is declarative: an exact Native-300M/Prime-byte-512 checkpoint
+compatibility identity, full ordered parameter path/shape/FP32/count catalog,
+weights-only manifest schema, canonical little-endian logical tensor hashing,
+and explicit state exclusions. Executable save/load mechanics remain internal
+and accept only the exact tiny synthetic configuration through caller-owned
+regular file descriptors. The loader size-caps the descriptor before MLX,
+requires exact canonical metadata and tensor projections, and restores only a
+fresh decoder after complete preflight.
+
+This checkpoint slice does not expose native-profile checkpoint write/load.
+It owns no path, closes no caller descriptor, and claims no atomic replace,
+fsync durability, failed-write recovery, container hash, retained artifact,
+artifact provenance, or checkpoint admission. A pinned MLX descriptor write
+truncates the borrowed file and may leave it empty or partial on failure; those
+bytes remain outside any accepted-artifact boundary.
+
 ## Authority ceiling
 
 `PrimeNativeDecoderAuthorityPlan.frozenV1` remains the frozen predecessor.
@@ -42,6 +60,14 @@ not allocated or executed by an authority contract.
 LLM donor commits, tree, source blob, byte count, SHA-256, implementation ID,
 derived architecture deltas, Prime product/target, and dependency closure.
 The donor revisions are explicitly recorded as not observed on `origin`.
+
+`PrimeNativeDecoderCheckpointAuthorityPlan.frozenV1` is another append-only
+successor. It authorizes strict compatibility-schema and analytic-catalog
+mechanics plus a bounded synthetic descriptor roundtrip only. Native-300M
+allocation/write/load, checkpoint provenance/admission, live runtime and Metal
+observations, tokenizer functional compatibility, optimizer/RNG/data-cursor
+state, training/resume, candidate selection, trial, canary, product, and
+publication authority all remain false.
 
 This slice authorizes source materialization, compilation, and bounded
 synthetic mechanics tests. It does not establish live Metal execution, cache
@@ -53,10 +79,13 @@ those boundaries.
 ## Verification and next slices
 
 The isolated validation package compiles against the exact first-party MLX
-pin. Metal-free configuration, overflow, profile-inventory, and cache
-arithmetic tests run in trusted-main CI. Full forward, GQA scalar parity, gradient,
-seed, and cache-parity tests require a Metal-visible process and must report no
-skips before runtime readiness can be claimed.
+pin. Metal-free configuration, overflow, profile inventory, cache arithmetic,
+compatibility identity, mutation, logical-byte encoding, and descriptor-cap
+tests run in trusted-main CI. Full forward, GQA scalar parity, gradient, seed,
+cache parity, and the synthetic weights roundtrip require a Metal-visible
+process and must report no skips before the corresponding execution mechanics
+can be recorded. Even a successful synthetic roundtrip is not runtime or
+checkpoint admission evidence.
 
 The validation package deliberately has no repository-owned SwiftPM mirror.
 Every gate supplies an isolated `--config-path`, and the quarantine gate
@@ -75,16 +104,17 @@ dependency.
 The remaining replacement order is:
 
 1. run the existing mechanics suite on a Metal-capable exact-head process and
-   publish a separate execution observation;
-2. define a strict Prime-owned decoder/checkpoint identity and generic
-   train/evaluate/load surface;
-3. persist exact optimizer, RNG, and data-cursor state for trajectory-exact
-   resume;
-4. produce a new non-fixture candidate and separately authorize a bounded
-   canary/trial;
-5. migrate the read-only PMHNP canary consumer to the Prime-owned interface and
+   publish a separate synthetic execution observation;
+2. append a separate authority for native-profile checkpoint write/load and
+   bind the container through a verified artifact observation;
+3. define generic Prime-owned train/evaluate surfaces and persist exact
+   optimizer, RNG, and data-cursor state for trajectory-exact resume;
+4. separately authorize bounded training, produce a non-fixture checkpoint,
+   and establish the exact runtime dependency/metallib/initialization closure;
+5. separately authorize and run a bounded candidate canary/trial;
+6. migrate the read-only PMHNP canary consumer to the Prime-owned interface and
    remove its active Llama factory after single-MLX-graph reconciliation;
-6. address CoreML/NeuralKit product export only after accepted checkpoint and
+7. address CoreML/NeuralKit product export only after accepted checkpoint and
    parity evidence.
 
 No training, network access, push, PR, PMHNP write, or product decision is part

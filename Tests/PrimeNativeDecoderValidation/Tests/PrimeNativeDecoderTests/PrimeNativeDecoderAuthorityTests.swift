@@ -155,4 +155,149 @@ final class PrimeNativeDecoderAuthorityTests: XCTestCase {
             }
         }
     }
+
+    func testCheckpointAuthorityIsAppendOnlyAndMechanicsScoped() throws {
+        let plan = PrimeNativeDecoderCheckpointAuthorityPlan.frozenV1
+        let root = URL(fileURLWithPath: #filePath)
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+        let checkpointSource = try Data(
+            contentsOf: root.appendingPathComponent(
+                plan.checkpointSourcePath))
+
+        try plan.validate()
+        XCTAssertEqual(
+            plan.predecessorAuthorityID,
+            PrimeNativeDecoderDerivedDeltaPlan.frozenV1.authorityID)
+        XCTAssertTrue(plan.predecessorRemainsFrozen)
+        XCTAssertEqual(
+            plan.authoritativeTargetDependencies,
+            ["PrimeCore", "PrimeNativeDecoder", "MLX", "MLXNN"])
+        XCTAssertEqual(
+            plan.checkpointSourcePath,
+            "Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV1.swift")
+        XCTAssertEqual(
+            plan.checkpointSourceGitBlob,
+            "24de078fb6424123b8e6974588b4cc514219c026")
+        XCTAssertEqual(plan.checkpointSourceByteCount, 39_956)
+        XCTAssertEqual(checkpointSource.count, 39_956)
+        XCTAssertEqual(
+            plan.checkpointSourceSHA256,
+            "a239d2dd4ea9cc794105e15c09457e7bda526d8e1dbafeb3383997bb14f89b8b")
+        XCTAssertEqual(
+            PrimeSHA256.hexDigest(of: checkpointSource),
+            plan.checkpointSourceSHA256)
+        XCTAssertTrue(plan.compatibilityIdentitySchemaEstablished)
+        XCTAssertTrue(plan.analyticParameterCatalogEstablished)
+        XCTAssertTrue(plan.exactLogicalTensorHashContractEstablished)
+        XCTAssertTrue(plan.borrowedDescriptorIOMechanicsImplemented)
+        XCTAssertTrue(plan.freshDecoderPreflightPolicyEstablished)
+        XCTAssertTrue(plan.boundedSyntheticRoundTripAuthorized)
+        XCTAssertEqual(plan.logicalTensorHashAlgorithm, "sha256")
+        XCTAssertEqual(
+            plan.logicalTensorByteEncoding,
+            "contiguous_row_major_little_endian_float32")
+        XCTAssertTrue(plan.status.hasPrefix("ABSTAIN_"))
+    }
+
+    func testCheckpointAuthorityKeepsRuntimeAndDownstreamCeilingsFalse() {
+        let plan = PrimeNativeDecoderCheckpointAuthorityPlan.frozenV1
+
+        XCTAssertFalse(plan.native300MModelAllocationAuthorized)
+        XCTAssertFalse(plan.native300MCheckpointWriteAuthorized)
+        XCTAssertFalse(plan.native300MCheckpointLoadAuthorized)
+        XCTAssertFalse(plan.liveSyntheticRoundTripObserved)
+        XCTAssertFalse(plan.metalDeviceObserved)
+        XCTAssertFalse(plan.defaultMetallibObserved)
+        XCTAssertFalse(plan.forwardExecutionObserved)
+        XCTAssertFalse(plan.runtimeDependencyClosureEstablished)
+        XCTAssertFalse(plan.runtimeInitializationEstablished)
+        XCTAssertFalse(plan.tokenizerFunctionalCompatibilityEstablished)
+        XCTAssertFalse(plan.acceptedCheckpointArtifactAvailable)
+        XCTAssertFalse(plan.checkpointArtifactProvenanceEstablished)
+        XCTAssertFalse(plan.checkpointContainerHashBound)
+        XCTAssertFalse(plan.atomicCheckpointReplacementEstablished)
+        XCTAssertFalse(plan.checkpointFsyncDurabilityEstablished)
+        XCTAssertFalse(plan.failedCheckpointWriteRecoveryEstablished)
+        XCTAssertFalse(plan.optimizerStateIncluded)
+        XCTAssertFalse(plan.rngStateIncluded)
+        XCTAssertFalse(plan.dataCursorIncluded)
+        XCTAssertFalse(plan.kvCacheStateIncluded)
+        XCTAssertFalse(plan.trainingResumeEstablished)
+        XCTAssertFalse(plan.functionalTrainingAuthorized)
+        XCTAssertFalse(plan.candidateAdmissionGranted)
+        XCTAssertFalse(plan.trialAuthorized)
+        XCTAssertFalse(plan.canaryReplacementAuthorized)
+        XCTAssertFalse(plan.quantizationAuthorized)
+        XCTAssertFalse(plan.productUseAuthorized)
+        XCTAssertFalse(plan.publicationAuthorized)
+    }
+
+    func testCheckpointAuthorityRejectsEveryBooleanMutation() throws {
+        let object = try XCTUnwrap(
+            JSONSerialization.jsonObject(
+                with: JSONEncoder().encode(
+                    PrimeNativeDecoderCheckpointAuthorityPlan.frozenV1)
+            ) as? [String: Any]
+        )
+        let mutations: [(String, Bool)] = [
+            ("predecessorRemainsFrozen", false),
+            ("compatibilityIdentitySchemaEstablished", false),
+            ("analyticParameterCatalogEstablished", false),
+            ("exactLogicalTensorHashContractEstablished", false),
+            ("borrowedDescriptorIOMechanicsImplemented", false),
+            ("freshDecoderPreflightPolicyEstablished", false),
+            ("boundedSyntheticRoundTripAuthorized", false),
+            ("native300MModelAllocationAuthorized", true),
+            ("native300MCheckpointWriteAuthorized", true),
+            ("native300MCheckpointLoadAuthorized", true),
+            ("liveSyntheticRoundTripObserved", true),
+            ("metalDeviceObserved", true),
+            ("defaultMetallibObserved", true),
+            ("forwardExecutionObserved", true),
+            ("runtimeDependencyClosureEstablished", true),
+            ("runtimeInitializationEstablished", true),
+            ("tokenizerFunctionalCompatibilityEstablished", true),
+            ("acceptedCheckpointArtifactAvailable", true),
+            ("checkpointArtifactProvenanceEstablished", true),
+            ("checkpointContainerHashBound", true),
+            ("atomicCheckpointReplacementEstablished", true),
+            ("checkpointFsyncDurabilityEstablished", true),
+            ("failedCheckpointWriteRecoveryEstablished", true),
+            ("optimizerStateIncluded", true),
+            ("rngStateIncluded", true),
+            ("dataCursorIncluded", true),
+            ("kvCacheStateIncluded", true),
+            ("trainingResumeEstablished", true),
+            ("functionalTrainingAuthorized", true),
+            ("candidateAdmissionGranted", true),
+            ("trialAuthorized", true),
+            ("canaryReplacementAuthorized", true),
+            ("quantizationAuthorized", true),
+            ("productUseAuthorized", true),
+            ("publicationAuthorized", true),
+        ]
+
+        for (key, value) in mutations {
+            var mutatedObject = object
+            mutatedObject[key] = value
+            let mutated = try JSONDecoder().decode(
+                PrimeNativeDecoderCheckpointAuthorityPlan.self,
+                from: JSONSerialization.data(
+                    withJSONObject: mutatedObject,
+                    options: [.sortedKeys]))
+            XCTAssertThrowsError(
+                try mutated.validate(),
+                "mutation was accepted: \(key)"
+            ) { error in
+                XCTAssertEqual(
+                    error as? PrimeNativeDecoderCheckpointAuthorityError,
+                    .contractDrift,
+                    "unexpected error for mutation: \(key)")
+            }
+        }
+    }
 }

@@ -96,6 +96,12 @@ require_preserved_object \
     "Sources/PrimeCore/PrimeNativeDecoderAuthority.swift" \
     "b4cc33cd079a1817dd233317772eaee59645ba2b"
 require_preserved_object \
+    "Sources/PrimeCore/PrimeNativeDecoderDerivedDelta.swift" \
+    "84b8c0ce3f6753d21800d0ce60b430ee2bd7db3f"
+require_preserved_object \
+    "Sources/PrimeCore/PrimeNativeDecoderCheckpointAuthority.swift" \
+    "2621721ef52cfb0aa823f096df9be83c37971aab"
+require_preserved_object \
     "Sources/PrimeNativeNeuralGateHistoricalReplayMechanics/EngineProposesNativeLanguageVerifyAbstainFixture.swift" \
     "14833cbae5a819d875663740bca8fb8ff175df0c"
 require_preserved_object \
@@ -248,11 +254,22 @@ jq -e \
           and .targets == ["PrimeNativeDecoder"]
           and .type.library == ["automatic"]
       )] | length) == 1
+      and ([.products[] | select(
+          .name == "PrimeNativeDecoderCheckpoint"
+          and .targets == ["PrimeNativeDecoderCheckpoint"]
+          and .type.library == ["automatic"]
+      )] | length) == 1
       and ([.targets[] | select(
           .name == "PrimeNativeDecoder"
           and .type == "regular"
           and ([.dependencies[] | (.byName[0] // .product[0])]
               == ["PrimeCore", "MLX", "MLXNN"])
+      )] | length) == 1
+      and ([.targets[] | select(
+          .name == "PrimeNativeDecoderCheckpoint"
+          and .type == "regular"
+          and ([.dependencies[] | (.byName[0] // .product[0])]
+              == ["PrimeCore", "PrimeNativeDecoder", "MLX", "MLXNN"])
       )] | length) == 1
     ' \
     "$manifest_dump" >/dev/null ||
@@ -289,10 +306,12 @@ jq -e \
       and ([.targets[0].dependencies[].product[0]] == [
           "PrimeCore",
           "PrimeNativeDecoder",
+          "PrimeNativeDecoderCheckpoint",
           "MLX",
           "MLXNN"
       ])
       and ([.targets[0].dependencies[].product[1]] == [
+          "ergentics-prime",
           "ergentics-prime",
           "ergentics-prime",
           "ergentics-mlx-swift",
@@ -308,15 +327,21 @@ jq -e \
 
 readonly decoder_source="$prime_root/Sources/PrimeNativeDecoder/PrimeNativeGQADecoder.swift"
 readonly decoder_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderAuthority.swift"
+readonly decoder_checkpoint_source="$prime_root/Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV1.swift"
+readonly decoder_checkpoint_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderCheckpointAuthority.swift"
 readonly decoder_validation_manifest="$prime_root/Tests/PrimeNativeDecoderValidation/Package.swift"
 readonly decoder_authority_test="$prime_root/Tests/PrimeNativeDecoderValidation/Tests/PrimeNativeDecoderTests/PrimeNativeDecoderAuthorityTests.swift"
 readonly decoder_validation_test="$prime_root/Tests/PrimeNativeDecoderValidation/Tests/PrimeNativeDecoderTests/PrimeNativeGQADecoderTests.swift"
+readonly decoder_checkpoint_test="$prime_root/Tests/PrimeNativeDecoderValidation/Tests/PrimeNativeDecoderTests/PrimeNativeDecoderCheckpointTests.swift"
 
 [[ "$(git -C "$prime_root" ls-files -- 'Sources/PrimeNativeDecoder')" \
     == "Sources/PrimeNativeDecoder/PrimeNativeGQADecoder.swift" ]] ||
     die "PrimeNativeDecoder production source inventory changed"
+[[ "$(git -C "$prime_root" ls-files -- 'Sources/PrimeNativeDecoderCheckpoint')" \
+    == "Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV1.swift" ]] ||
+    die "PrimeNativeDecoderCheckpoint production source inventory changed"
 [[ "$(git -C "$prime_root" ls-files -- 'Tests/PrimeNativeDecoderValidation')" \
-    == $'Tests/PrimeNativeDecoderValidation/Package.resolved\nTests/PrimeNativeDecoderValidation/Package.swift\nTests/PrimeNativeDecoderValidation/Tests/PrimeNativeDecoderTests/PrimeNativeDecoderAuthorityTests.swift\nTests/PrimeNativeDecoderValidation/Tests/PrimeNativeDecoderTests/PrimeNativeGQADecoderTests.swift' ]] ||
+    == $'Tests/PrimeNativeDecoderValidation/Package.resolved\nTests/PrimeNativeDecoderValidation/Package.swift\nTests/PrimeNativeDecoderValidation/Tests/PrimeNativeDecoderTests/PrimeNativeDecoderAuthorityTests.swift\nTests/PrimeNativeDecoderValidation/Tests/PrimeNativeDecoderTests/PrimeNativeDecoderCheckpointTests.swift\nTests/PrimeNativeDecoderValidation/Tests/PrimeNativeDecoderTests/PrimeNativeGQADecoderTests.swift' ]] ||
     die "PrimeNativeDecoder validation inventory changed"
 [[ ! -e "$prime_root/Tests/PrimeNativeDecoderValidation/.swiftpm" \
     && ! -L "$prime_root/Tests/PrimeNativeDecoderValidation/.swiftpm" ]] ||
@@ -325,10 +350,26 @@ readonly decoder_validation_test="$prime_root/Tests/PrimeNativeDecoderValidation
     die "PrimeNativeDecoder source is missing or linked"
 [[ -f "$decoder_validation_test" && ! -L "$decoder_validation_test" ]] ||
     die "PrimeNativeDecoder test source is missing or linked"
+[[ -f "$decoder_checkpoint_test" && ! -L "$decoder_checkpoint_test" ]] ||
+    die "PrimeNativeDecoderCheckpoint test source is missing or linked"
 [[ -f "$decoder_authority_test" && ! -L "$decoder_authority_test" ]] ||
     die "PrimeNativeDecoder authority test source is missing or linked"
 [[ -f "$decoder_authority_source" && ! -L "$decoder_authority_source" ]] ||
     die "frozen PrimeNativeDecoder authority is missing or linked"
+[[ -f "$decoder_checkpoint_source" && ! -L "$decoder_checkpoint_source" ]] ||
+    die "PrimeNativeDecoderCheckpoint source is missing or linked"
+[[ -f "$decoder_checkpoint_authority_source" \
+    && ! -L "$decoder_checkpoint_authority_source" ]] ||
+    die "PrimeNativeDecoderCheckpoint authority is missing or linked"
+[[ "$(wc -c < "$decoder_checkpoint_authority_source" | awk '{print $1}')" \
+    == "14399" ]] ||
+    die "PrimeNativeDecoderCheckpoint authority byte count changed"
+[[ "$(shasum -a 256 "$decoder_checkpoint_authority_source" | awk '{print $1}')" \
+    == "60d593b8b0346570400f98212b173cef9f4495f24af34517097c20309eb765ac" ]] ||
+    die "PrimeNativeDecoderCheckpoint authority SHA-256 changed"
+[[ "$(git -C "$prime_root" hash-object "$decoder_checkpoint_authority_source")" \
+    == "2621721ef52cfb0aa823f096df9be83c37971aab" ]] ||
+    die "PrimeNativeDecoderCheckpoint authority blob changed"
 [[ "$(wc -c < "$decoder_authority_source" | awk '{print $1}')" == "18462" ]] ||
     die "frozen PrimeNativeDecoder authority byte count changed"
 [[ "$(shasum -a 256 "$decoder_authority_source" | awk '{print $1}')" \
@@ -345,8 +386,19 @@ readonly decoder_validation_test="$prime_root/Tests/PrimeNativeDecoderValidation
 [[ "$(git -C "$prime_root" hash-object "$decoder_source")" \
     == "55407cba9dbcc4e915b0994aed16f02c1da95e16" ]] ||
     die "PrimeNativeDecoder materialized source blob changed"
+[[ "$(wc -c < "$decoder_checkpoint_source" | awk '{print $1}')" == "39956" ]] ||
+    die "PrimeNativeDecoderCheckpoint source byte count changed"
+[[ "$(shasum -a 256 "$decoder_checkpoint_source" | awk '{print $1}')" \
+    == "a239d2dd4ea9cc794105e15c09457e7bda526d8e1dbafeb3383997bb14f89b8b" ]] ||
+    die "PrimeNativeDecoderCheckpoint source SHA-256 changed"
+[[ "$(git -C "$prime_root" hash-object "$decoder_checkpoint_source")" \
+    == "24de078fb6424123b8e6974588b4cc514219c026" ]] ||
+    die "PrimeNativeDecoderCheckpoint source blob changed"
 swiftc -frontend -parse "$decoder_source"
+swiftc -frontend -parse "$decoder_checkpoint_source"
+swiftc -frontend -parse "$decoder_checkpoint_authority_source"
 swiftc -frontend -parse "$decoder_authority_test"
+swiftc -frontend -parse "$decoder_checkpoint_test"
 swiftc -frontend -parse "$decoder_validation_test"
 
 readonly observed_mlxllm_references="$({
@@ -368,10 +420,16 @@ readonly expected_mlxllm_imports=$'Sources/PrimeGPUCalibration/PrimeGPUCalibrati
 [[ "$(awk '/^import / {print $2}' "$decoder_source" | paste -sd, -)" \
     == "PrimeCore,MLX,MLXNN" ]] ||
     die "PrimeNativeDecoder production imports changed"
+[[ "$(awk '/^import / {print $2}' "$decoder_checkpoint_source" | paste -sd, -)" \
+    == "Darwin,Foundation,PrimeCore,PrimeNativeDecoder,MLX,MLXNN" ]] ||
+    die "PrimeNativeDecoderCheckpoint production imports changed"
 [[ "$(grep -Fc -- '.package(' "$decoder_validation_manifest")" == "2" ]] ||
     die "PrimeNativeDecoder validation gained an unexpected dependency"
 grep -Fq -- 'name: "PrimeNativeDecoder"' "$decoder_validation_manifest" ||
     die "PrimeNativeDecoder validation does not consume the Prime product"
+grep -Fq -- 'name: "PrimeNativeDecoderCheckpoint"' \
+    "$decoder_validation_manifest" ||
+    die "PrimeNativeDecoder validation does not consume the checkpoint product"
 grep -Fq -- "$root_mlx_revision" "$decoder_validation_manifest" ||
     die "PrimeNativeDecoder validation does not pin the active MLX revision"
 
@@ -404,8 +462,36 @@ for forbidden_decoder_value in \
     "NativeTinyDecoder" \
     "URLSession"; do
     if grep -Fq -- "$forbidden_decoder_value" \
-        "$decoder_source" "$decoder_authority_test" "$decoder_validation_test"; then
+        "$decoder_source" \
+        "$decoder_checkpoint_source" \
+        "$decoder_authority_test" \
+        "$decoder_checkpoint_test" \
+        "$decoder_validation_test"; then
         die "PrimeNativeDecoder closure contains forbidden value: $forbidden_decoder_value"
+    fi
+done
+
+for forbidden_checkpoint_capability in \
+    "FileManager" \
+    "FileHandle" \
+    "Data(contentsOf:" \
+    "write(to:" \
+    "PrimeArtifactRoot" \
+    "URL(fileURLWithPath:" \
+    "DispatchIO" \
+    "NSFileCoordinator" \
+    "open(" \
+    "creat(" \
+    "fopen(" \
+    "close(" \
+    "unlink(" \
+    "rename(" \
+    "fsync(" \
+    "writeNative300MByte512" \
+    "loadNative300MByte512"; do
+    if grep -Fq -- "$forbidden_checkpoint_capability" \
+        "$decoder_checkpoint_source"; then
+        die "PrimeNativeDecoderCheckpoint owns forbidden capability: $forbidden_checkpoint_capability"
     fi
 done
 

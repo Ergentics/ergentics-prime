@@ -35,7 +35,17 @@ final class
         )
         XCTAssertTrue(
             package.contains(
+                #".library(name:"PrimeNativeDecoderCheckpoint",targets:["PrimeNativeDecoderCheckpoint"])"#
+            )
+        )
+        XCTAssertTrue(
+            package.contains(
                 #".target(name:"PrimeNativeDecoder",dependencies:["PrimeCore",.product(name:"MLX",package:"ergentics-mlx-swift"),.product(name:"MLXNN",package:"ergentics-mlx-swift"),])"#
+            )
+        )
+        XCTAssertTrue(
+            package.contains(
+                #".target(name:"PrimeNativeDecoderCheckpoint",dependencies:["PrimeCore","PrimeNativeDecoder",.product(name:"MLX",package:"ergentics-mlx-swift"),.product(name:"MLXNN",package:"ergentics-mlx-swift"),])"#
             )
         )
         let mainTestTarget = try targetDeclaration(
@@ -88,6 +98,7 @@ final class
         )
         for mlxLinkedTarget in [
             "PrimeNativeDecoder",
+            "PrimeNativeDecoderCheckpoint",
             "PrimeNativeNeuralGateMLXLogSoftmaxRecomputation",
             "PrimeTypedOptimizerRestoreMechanics",
         ] {
@@ -212,6 +223,11 @@ final class
         XCTAssertTrue(
             nativeDecoderPackage.contains(
                 #".product(name:"PrimeNativeDecoder",package:"ergentics-prime")"#
+            )
+        )
+        XCTAssertTrue(
+            nativeDecoderPackage.contains(
+                #".product(name:"PrimeNativeDecoderCheckpoint",package:"ergentics-prime")"#
             )
         )
         XCTAssertFalse(

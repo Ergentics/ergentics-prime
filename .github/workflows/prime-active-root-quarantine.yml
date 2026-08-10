@@ -77,7 +77,9 @@ jobs:
             Sources/PrimeLatinProposalAdmissionPolicy/PrimeLatinProposalAdmissionPolicyV1.swift \
             Sources/PrimeCore/PrimeNativeDecoderAuthority.swift \
             Sources/PrimeCore/PrimeNativeDecoderDerivedDelta.swift \
+            Sources/PrimeCore/PrimeNativeDecoderCheckpointAuthority.swift \
             Sources/PrimeNativeDecoder/PrimeNativeGQADecoder.swift \
+            Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV1.swift \
             Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalPairCaptureSourceContractTests.swift \
             Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalPairCaptureTests.swift \
             Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalGitSourceV3Tests.swift \
@@ -90,6 +92,7 @@ jobs:
             Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalValidationCompositionReceiptPublisherV1Tests.swift \
             Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalAdmissionPolicyV1Tests.swift \
             Tests/PrimeNativeDecoderValidation/Tests/PrimeNativeDecoderTests/PrimeNativeDecoderAuthorityTests.swift \
+            Tests/PrimeNativeDecoderValidation/Tests/PrimeNativeDecoderTests/PrimeNativeDecoderCheckpointTests.swift \
             Tests/PrimeNativeDecoderValidation/Tests/PrimeNativeDecoderTests/PrimeNativeGQADecoderTests.swift \
             Tests/PrimeCoreTests/PrimeNativeCorpusReplaySourceContractTests.swift \
             Tests/PrimeCoreTests/PrimeNativeGenerationContractSourceContractTests.swift \
@@ -126,6 +129,7 @@ jobs:
             echo 'The receipt publisher is compiled and exercised only against synthetic temporary artifact roots in the existing Latin test lane; hosted CI does not live-run validation capture or publish repository, lab, model, proposal, or public-network artifacts.'
             echo 'The pure internal Latin admission policy validates only the exact frozen typed receipt projection and emits typed ABSTAIN reasons for absent current liveness, the policy-classified structural fixture, and runtime decoder, dependency-closure, and initialization state not established by that receipt; it proves no artifact binding and creates no proposal packet or trial authorization.'
             echo 'Prime now owns a dependency-isolated Swift/MLXNN GQA decoder body and opaque KV cache. The additive derived-delta contract authorizes source materialization, compilation, and bounded synthetic mechanics tests only; it does not claim live Metal execution, checkpoint readiness, training, canary replacement, or product authority.'
+            echo 'The isolated checkpoint target publicly binds only the exact Native-300M/Prime-byte-512 weights compatibility identity and analytic FP32 parameter catalog. Its executable borrowed-descriptor codec remains internal, exact-tiny-synthetic-only, size-capped, and non-authorizing; native checkpoint write/load, artifact provenance, atomic durability, runtime initialization, training, trial, canary, and product authority remain false.'
             echo 'The locally declared origin is not network-authenticated, and ignored workspace bytes are not observed by this slice.'
             echo 'No Prime proposal, candidate selection, trial authorization, decision receipt, runtime/product/canary decoder activation, model execution, training, publication, promotion, Driver V2, or PMHNP authority is granted.'
           } >> "$GITHUB_STEP_SUMMARY"
@@ -258,21 +262,39 @@ jobs:
             --disable-netrc \
             --disable-keychain \
             --force-resolved-versions \
-            --filter 'PrimeNativeDecoderAuthorityTests|PrimeNativeGQADecoderTests/(testCacheArithmeticIsPureAndFailClosedWithoutMetal|testConfigurationValidationFailsClosed|testLogic10MGeometryIsRepresentableWithoutParityClaim|testNative300MInventoryIsRepresentableWithoutAllocation|testSyntheticFixtureIsTrueGQAAndHasExactDerivedCount)' \
+            --filter 'PrimeNativeDecoderAuthorityTests|PrimeNativeGQADecoderTests/(testCacheArithmeticIsPureAndFailClosedWithoutMetal|testConfigurationValidationFailsClosed|testLogic10MGeometryIsRepresentableWithoutParityClaim|testNative300MInventoryIsRepresentableWithoutAllocation|testSyntheticFixtureIsTrueGQAAndHasExactDerivedCount)|PrimeNativeDecoderCheckpointTests/(testAnalyticCatalogsMatchSyntheticLogicAndNativeInventories|testBorrowedDescriptorAPIRejectsInvalidDescriptorsWithoutMetal|testCanonicalLogicalFloat32EncodingHasKnownVectorAndHash|testCheckpointManifestRejectsEveryBoundMutation|testCompatibilityIdentityRejectsEveryBoundFieldMutation|testConfigurationAndPublicIdentityRoundTripCanonicallyAndFailClosed|testNative300MByte512CompatibilityIdentityIsExactWithoutAllocation|testNonregularDescriptorIsRejectedBeforeMLXLoad|testOversizedSparseDescriptorIsRejectedBeforeMLXLoad|testSyntheticManifestIsCanonicalOrderedAndNotPubliclyAdmitted|testSyntheticValidationRejectsUnboundedGeometryBeforeCatalogWork)' \
             2>&1 | tee "$test_log"
           unset GIT_CONFIG_COUNT GIT_CONFIG_KEY_0 GIT_CONFIG_VALUE_0
           unset GIT_CONFIG_KEY_1 GIT_CONFIG_VALUE_1
           grep -Fq "Test Suite 'PrimeNativeDecoderAuthorityTests' passed" "$test_log"
+          grep -Fq "Test Suite 'PrimeNativeDecoderCheckpointTests' passed" "$test_log"
           grep -Fq "Test Suite 'PrimeNativeGQADecoderTests' passed" "$test_log"
-          grep -Eq 'Executed 10 tests, with 0 failures' "$test_log"
+          grep -Eq 'Executed 24 tests, with 0 failures' "$test_log"
           ! grep -Fqi -- 'skipped' "$test_log"
           for required_authority_test in \
             testDerivedAuthorityDoesNotPromoteMechanicsIntoRuntimeAuthority \
             testDerivedAuthorityRejectsEveryBooleanAuthorityMutation \
             testDerivedGQAMechanicsAuthorityIsExactAndAdditive \
+            testCheckpointAuthorityIsAppendOnlyAndMechanicsScoped \
+            testCheckpointAuthorityKeepsRuntimeAndDownstreamCeilingsFalse \
+            testCheckpointAuthorityRejectsEveryBooleanMutation \
             testFrozenPredecessorSourceIsByteExact \
             testFrozenPredecessorAuthorityStillValidatesExactly; do
             grep -Fq -- "$required_authority_test' passed" "$test_log"
+          done
+          for required_checkpoint_test in \
+            testAnalyticCatalogsMatchSyntheticLogicAndNativeInventories \
+            testBorrowedDescriptorAPIRejectsInvalidDescriptorsWithoutMetal \
+            testCanonicalLogicalFloat32EncodingHasKnownVectorAndHash \
+            testCheckpointManifestRejectsEveryBoundMutation \
+            testCompatibilityIdentityRejectsEveryBoundFieldMutation \
+            testConfigurationAndPublicIdentityRoundTripCanonicallyAndFailClosed \
+            testNative300MByte512CompatibilityIdentityIsExactWithoutAllocation \
+            testNonregularDescriptorIsRejectedBeforeMLXLoad \
+            testOversizedSparseDescriptorIsRejectedBeforeMLXLoad \
+            testSyntheticManifestIsCanonicalOrderedAndNotPubliclyAdmitted \
+            testSyntheticValidationRejectsUnboundedGeometryBeforeCatalogWork; do
+            grep -Fq -- "$required_checkpoint_test' passed" "$test_log"
           done
           [[ "$(git rev-parse HEAD)" == "$EXACT_REVISION" ]]
           [[ -z "$(git status --porcelain=v1 --untracked-files=all)" ]]

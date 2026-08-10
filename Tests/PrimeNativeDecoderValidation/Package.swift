@@ -31,6 +31,10 @@ let package = Package(
                     package: "ergentics-prime"
                 ),
                 .product(
+                    name: "PrimeNativeDecoderCheckpoint",
+                    package: "ergentics-prime"
+                ),
+                .product(
                     name: "MLX",
                     package: "ergentics-mlx-swift"
                 ),
