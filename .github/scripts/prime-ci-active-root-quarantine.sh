@@ -106,6 +106,9 @@ require_preserved_object \
     "Sources/PrimeCore/PrimeNativeDecoderMetalRepairAuthority.swift" \
     "f284cb6d9bfdd37add9273f3e0eecd69e13cd134"
 require_preserved_object \
+    "Sources/PrimeCore/PrimeNativeDecoderMetalExecutionObservation.swift" \
+    "39e37fc4dd7e2b6131ce0efc790b49602a94f484"
+require_preserved_object \
     "Sources/PrimeCore/PrimeMLXRuntimeEnvironmentPolicy.swift" \
     "302718448a233695f57eb9bf508a56f0790a778b"
 require_preserved_object \
@@ -392,6 +395,7 @@ readonly decoder_derived_authority_source="$prime_root/Sources/PrimeCore/PrimeNa
 readonly decoder_checkpoint_source="$prime_root/Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV1.swift"
 readonly decoder_checkpoint_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderCheckpointAuthority.swift"
 readonly decoder_metal_repair_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderMetalRepairAuthority.swift"
+readonly decoder_metal_execution_observation_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderMetalExecutionObservation.swift"
 readonly decoder_validation_manifest="$prime_root/Tests/PrimeNativeDecoderValidation/Package.swift"
 readonly decoder_authority_test="$prime_root/Tests/PrimeNativeDecoderValidation/Tests/PrimeNativeDecoderTests/PrimeNativeDecoderAuthorityTests.swift"
 readonly decoder_validation_test="$prime_root/Tests/PrimeNativeDecoderValidation/Tests/PrimeNativeDecoderTests/PrimeNativeGQADecoderTests.swift"
@@ -427,6 +431,9 @@ readonly decoder_checkpoint_test="$prime_root/Tests/PrimeNativeDecoderValidation
 [[ -f "$decoder_metal_repair_authority_source" \
     && ! -L "$decoder_metal_repair_authority_source" ]] ||
     die "PrimeNativeDecoder Metal-repair authority is missing or linked"
+[[ -f "$decoder_metal_execution_observation_source" \
+    && ! -L "$decoder_metal_execution_observation_source" ]] ||
+    die "PrimeNativeDecoder Metal execution observation is missing or linked"
 [[ "$(wc -c < "$decoder_checkpoint_authority_source" | awk '{print $1}')" \
     == "14399" ]] ||
     die "PrimeNativeDecoderCheckpoint authority byte count changed"
@@ -461,6 +468,15 @@ done
 [[ "$(git -C "$prime_root" hash-object "$decoder_metal_repair_authority_source")" \
     == "f284cb6d9bfdd37add9273f3e0eecd69e13cd134" ]] ||
     die "PrimeNativeDecoder Metal-repair authority blob changed"
+[[ "$(wc -c < "$decoder_metal_execution_observation_source" | awk '{print $1}')" \
+    == "17488" ]] ||
+    die "PrimeNativeDecoder Metal execution observation byte count changed"
+[[ "$(shasum -a 256 "$decoder_metal_execution_observation_source" | awk '{print $1}')" \
+    == "d132edeb434423e1f2c391258e7f0a502f872c53097b3a9a7db7780007a91306" ]] ||
+    die "PrimeNativeDecoder Metal execution observation SHA-256 changed"
+[[ "$(git -C "$prime_root" hash-object "$decoder_metal_execution_observation_source")" \
+    == "39e37fc4dd7e2b6131ce0efc790b49602a94f484" ]] ||
+    die "PrimeNativeDecoder Metal execution observation blob changed"
 [[ "$(wc -c < "$decoder_source" | awk '{print $1}')" == "39050" ]] ||
     die "PrimeNativeDecoder repaired source byte count changed"
 [[ "$(shasum -a 256 "$decoder_source" | awk '{print $1}')" \
@@ -477,13 +493,13 @@ done
 [[ "$(git -C "$prime_root" hash-object "$decoder_validation_test")" \
     == "0162a60c422de7d05abbdd6932420930adcd5813" ]] ||
     die "PrimeNativeDecoder repaired regression blob changed"
-[[ "$(wc -c < "$decoder_authority_test" | awk '{print $1}')" == "25430" ]] ||
+[[ "$(wc -c < "$decoder_authority_test" | awk '{print $1}')" == "34555" ]] ||
     die "PrimeNativeDecoder repair-authority test byte count changed"
 [[ "$(shasum -a 256 "$decoder_authority_test" | awk '{print $1}')" \
-    == "5b5c98c3be21a553136ea50c2ae8b5f0033f3837e965cc304e02b878e9e5a050" ]] ||
+    == "28b146996a0dede2e6cd8e6d8116641a3a398bc5f845051a75cbbc977e9f48fe" ]] ||
     die "PrimeNativeDecoder repair-authority test SHA-256 changed"
 [[ "$(git -C "$prime_root" hash-object "$decoder_authority_test")" \
-    == "43138caba3441eea42632946f5ca9acd5cb653e7" ]] ||
+    == "25b7c9b99e789988fb7362b73a41d35eafba406d" ]] ||
     die "PrimeNativeDecoder repair-authority test blob changed"
 [[ "$(wc -c < "$decoder_checkpoint_test" | awk '{print $1}')" == "33037" ]] ||
     die "PrimeNativeDecoder checkpoint execution test byte count changed"
@@ -505,6 +521,7 @@ swiftc -frontend -parse "$decoder_source"
 swiftc -frontend -parse "$decoder_checkpoint_source"
 swiftc -frontend -parse "$decoder_checkpoint_authority_source"
 swiftc -frontend -parse "$decoder_metal_repair_authority_source"
+swiftc -frontend -parse "$decoder_metal_execution_observation_source"
 swiftc -frontend -parse "$decoder_authority_test"
 swiftc -frontend -parse "$decoder_checkpoint_test"
 swiftc -frontend -parse "$decoder_validation_test"

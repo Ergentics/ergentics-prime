@@ -79,6 +79,7 @@ jobs:
             Sources/PrimeCore/PrimeNativeDecoderDerivedDelta.swift \
             Sources/PrimeCore/PrimeNativeDecoderCheckpointAuthority.swift \
             Sources/PrimeCore/PrimeNativeDecoderMetalRepairAuthority.swift \
+            Sources/PrimeCore/PrimeNativeDecoderMetalExecutionObservation.swift \
             Sources/PrimeNativeDecoder/PrimeNativeGQADecoder.swift \
             Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV1.swift \
             Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalPairCaptureSourceContractTests.swift \
@@ -132,6 +133,7 @@ jobs:
             echo 'Prime now owns a dependency-isolated Swift/MLXNN GQA decoder body and opaque KV cache. The additive derived-delta contract authorizes source materialization, compilation, and bounded synthetic mechanics tests only; it does not claim live Metal execution, checkpoint readiness, training, canary replacement, or product authority.'
             echo 'The frozen pre-repair checkpoint V1 target publicly binds only its historical Native-300M/Prime-byte-512 weights compatibility identity and analytic FP32 parameter catalog. Its executable borrowed-descriptor codec remains internal, exact-tiny-synthetic-only, size-capped, and non-authorizing; it is not the repaired decoder identity, and native checkpoint write/load, artifact provenance, atomic durability, runtime initialization, training, trial, canary, and product authority remain false.'
             echo 'The append-only Metal-repair contract preserves the frozen decoder/checkpoint identities, binds the pinned batched single-token RoPE defect and Prime-local explicit-offset repair, and fixes TF32-off only as a synthetic CI-mechanics policy. The repaired checkpoint identity, admitted runtime policy, exact-head hosted observation, training, and downstream authority remain false.'
+            echo 'A subsequent append-only observation binds the exact committed repair head and tree plus an external Terminal run of all 44 strengthened tests with zero failures and zero skips. Its raw log and transport hashes are recorded but not retained here; GitHub-hosted execution, fresh-metallib provenance, repaired checkpoint identity, admitted runtime policy, training, and downstream authority remain false.'
             echo 'The locally declared origin is not network-authenticated, and ignored workspace bytes are not observed by this slice.'
             echo 'No Prime proposal, candidate selection, trial authorization, decision receipt, runtime/product/canary decoder activation, model execution, training, publication, promotion, Driver V2, or PMHNP authority is granted.'
           } >> "$GITHUB_STEP_SUMMARY"

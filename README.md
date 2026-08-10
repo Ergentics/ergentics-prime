@@ -24,8 +24,11 @@ initialize a runtime, or authorize training. An append-only repair now works
 around the pinned MLX batched single-token RoPE dispatch defect and binds
 TF32-off as a synthetic CI-mechanics policy. The existing checkpoint V1
 identity remains frozen pre-repair history; a repaired-source successor is
-still required before runtime or training authority. The exact implemented
-boundary and remaining replacement path are recorded in
+still required before runtime or training authority. An append-only execution
+observation now binds an exact clean committed repair head whose rebuilt
+44-test bundle passed on external live Metal with zero failures and skips;
+GitHub-hosted execution and fresh-metallib provenance remain unobserved. The
+exact implemented boundary and remaining replacement path are recorded in
 [`docs/PRIME-NATIVE-DECODER-REPLACEMENT-2026-08-09.md`](docs/PRIME-NATIVE-DECODER-REPLACEMENT-2026-08-09.md).
 
 The current Apple-native training, optimizer-resume, M5 Max, cross-repository,

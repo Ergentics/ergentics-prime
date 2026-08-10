@@ -114,15 +114,27 @@ three runs used the same externally prebuilt, exact-pinned MLX
 `default.metallib`; its hash and byte count are bound, while fresh-build
 provenance remains unobserved until the hosted action builds it itself.
 
-That passing run was a live working-tree mechanics observation before the
-distinct-row regression and in-process environment preflight were
+That first passing run was a live working-tree mechanics observation before
+the distinct-row regression and in-process environment preflight were
 strengthened; its intermediate test-source identity was not retained. It is
 therefore decoder-mechanics evidence, not a complete source-identical suite
-observation, exact clean committed head, or GitHub-hosted observation. The
-reviewed workflow therefore still must
-compile the strengthened regression and pass all 44 tests with no skip under
-the exact CI-mechanics policy. Even that success is synthetic mechanics—not
-runtime, checkpoint admission, training, or model-quality evidence.
+observation.
+
+Commit `8e5d1555506a824d19528fb8dd3e115eb8aefb41` then sealed the repair,
+regression, policy, launcher, and source identity. A chained external Terminal
+run completed the exact clean-head active-root and Latin provenance gates,
+then executed the rebuilt bundle under `MLX_ENABLE_TF32=0`: 11 authority, 14
+checkpoint, and 19 GQA tests all passed, for 44 total with zero failures or
+skips. `PrimeNativeDecoderMetalExecutionObservationV1.frozenV1` binds that
+revision/tree, the exact raw-log and attachment-transport hashes, and their
+single trailing-line-feed difference. The raw bytes are not retained in the
+repository.
+
+This establishes exact committed-source external Metal mechanics. It still is
+not a GitHub-hosted or freshly built-metallib observation, a published binary
+provenance envelope, an admitted runtime policy, checkpoint admission,
+training, or model-quality evidence. The existing trusted-main action must
+still pass all 44 tests without skips after separately authorized publication.
 
 The validation package deliberately has no repository-owned SwiftPM mirror.
 Every gate supplies an isolated `--config-path`, and the quarantine gate
@@ -140,9 +152,9 @@ dependency.
 
 The remaining replacement order is:
 
-1. commit the repair, run the strengthened suite on a clean exact-head
-   Metal-capable process, and then require the existing trusted-main GitHub
-   action to pass all 44 tests without skips;
+1. with separate authorization, publish and merge the repair, then require the
+   existing trusted-main GitHub action to pass all 44 tests without skips and
+   record its fresh-metallib hosted observation append-only;
 2. append a repaired-source checkpoint compatibility identity, then separately
    authorize native-profile checkpoint write/load and bind the container
    through a verified artifact observation;

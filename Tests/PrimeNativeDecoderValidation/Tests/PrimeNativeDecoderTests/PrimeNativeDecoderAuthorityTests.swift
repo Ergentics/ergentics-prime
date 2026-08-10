@@ -303,6 +303,8 @@ final class PrimeNativeDecoderAuthorityTests: XCTestCase {
 
     func testMetalRepairAuthorityIsAppendOnlyAndSourceExact() throws {
         let plan = PrimeNativeDecoderMetalRepairAuthorityPlan.frozenV1
+        let executionObservation =
+            PrimeNativeDecoderMetalExecutionObservationV1.frozenV1
         let root = URL(fileURLWithPath: #filePath)
             .deletingLastPathComponent()
             .deletingLastPathComponent()
@@ -426,10 +428,51 @@ final class PrimeNativeDecoderAuthorityTests: XCTestCase {
         XCTAssertThrowsError(
             try PrimeMLXRuntimeEnvironmentPolicy.validate(
                 environment: ["MLX_ENABLE_TF32": "0"]))
+
+        try executionObservation.validateExactV1()
+        XCTAssertEqual(
+            executionObservation.predecessorRepairAuthorityID,
+            plan.authorityID)
+        XCTAssertTrue(executionObservation.predecessorRemainsFrozen)
+        XCTAssertEqual(
+            executionObservation.observedRevision,
+            "8e5d1555506a824d19528fb8dd3e115eb8aefb41")
+        XCTAssertEqual(
+            executionObservation.observedParentRevision,
+            "84504dc576603aa1c68f7d1a444b1e0e56fb29b0")
+        XCTAssertEqual(
+            executionObservation.observedTree,
+            "3549dd0f2e476bc7ff1d40d8097942463e52be2a")
+        XCTAssertEqual(
+            executionObservation.executedAuthorityTestCount,
+            11)
+        XCTAssertEqual(
+            executionObservation.executedCheckpointTestCount,
+            14)
+        XCTAssertEqual(
+            executionObservation.executedDecoderTestCount,
+            19)
+        XCTAssertEqual(executionObservation.executedTotalTestCount, 44)
+        XCTAssertEqual(executionObservation.failureCount, 0)
+        XCTAssertEqual(executionObservation.skipCount, 0)
+        XCTAssertEqual(
+            executionObservation.rawTerminalLogSHA256,
+            "0c4c8b1b40433cf391bdc49795dc8711ca3d9138a2e9b5ce6ccb7db9b6aeb431")
+        XCTAssertEqual(
+            executionObservation.attachmentTransportSHA256,
+            "09bd17943f38ae9f33485dc9b44c9c6bf9e42880ce79df5fec7ce0a18c16f7b6")
+        XCTAssertEqual(
+            executionObservation.rawTerminalLogByteCount,
+            executionObservation.attachmentTransportByteCount + 1)
+        XCTAssertEqual(executionObservation.rawTerminalLogFinalByteHex, "0a")
+        XCTAssertTrue(
+            executionObservation.attachmentHasNoOtherTransportMutation)
     }
 
     func testMetalRepairAuthorityKeepsRuntimeAndTrainingCeilingsFalse() {
         let plan = PrimeNativeDecoderMetalRepairAuthorityPlan.frozenV1
+        let executionObservation =
+            PrimeNativeDecoderMetalExecutionObservationV1.frozenV1
 
         XCTAssertTrue(plan.parameterTopologyUnchanged)
         XCTAssertTrue(plan.repairImplementationPresent)
@@ -462,6 +505,36 @@ final class PrimeNativeDecoderAuthorityTests: XCTestCase {
         XCTAssertFalse(plan.productUseAuthorized)
         XCTAssertFalse(plan.publicationAuthorized)
         XCTAssertTrue(plan.status.hasPrefix("ABSTAIN_"))
+
+        XCTAssertTrue(
+            executionObservation.exactCommittedHeadMetalMechanicsObserved)
+        XCTAssertTrue(executionObservation.metalDeviceObserved)
+        XCTAssertFalse(executionObservation.metalDeviceIdentityRecorded)
+        XCTAssertTrue(executionObservation.modelInitializationObserved)
+        XCTAssertTrue(executionObservation.forwardExecutionObserved)
+        XCTAssertTrue(executionObservation.gqaScalarParityObserved)
+        XCTAssertTrue(executionObservation.batchedRoPERegressionObserved)
+        XCTAssertTrue(executionObservation.cacheParityObserved)
+        XCTAssertTrue(executionObservation.gradientExecutionObserved)
+        XCTAssertTrue(
+            executionObservation.syntheticCheckpointRoundTripObserved)
+        XCTAssertFalse(executionObservation.githubHostedMetalObserved)
+        XCTAssertFalse(
+            executionObservation.repairedCheckpointCompatibilityIdentityEstablished)
+        XCTAssertFalse(
+            executionObservation.admittedRuntimeComputePolicyEstablished)
+        XCTAssertFalse(
+            executionObservation.runtimeDependencyClosureEstablished)
+        XCTAssertFalse(executionObservation.runtimeInitializationEstablished)
+        XCTAssertFalse(executionObservation.functionalTrainingAuthorized)
+        XCTAssertFalse(executionObservation.trainingResumeEstablished)
+        XCTAssertFalse(executionObservation.modelQualityEstablished)
+        XCTAssertFalse(executionObservation.candidateAdmissionGranted)
+        XCTAssertFalse(executionObservation.trialAuthorized)
+        XCTAssertFalse(executionObservation.canaryReplacementAuthorized)
+        XCTAssertFalse(executionObservation.productUseAuthorized)
+        XCTAssertFalse(executionObservation.publicationAuthorized)
+        XCTAssertTrue(executionObservation.status.hasPrefix("ABSTAIN_"))
     }
 
     func testMetalRepairAuthorityRejectsEveryBooleanAndPolicyMutation()
@@ -554,6 +627,111 @@ final class PrimeNativeDecoderAuthorityTests: XCTestCase {
             XCTAssertThrowsError(
                 try mutated.validate(),
                 "policy mutation was accepted: \(key)")
+        }
+
+        let observationObject = try XCTUnwrap(
+            JSONSerialization.jsonObject(
+                with: JSONEncoder().encode(
+                    PrimeNativeDecoderMetalExecutionObservationV1.frozenV1)
+            ) as? [String: Any])
+        let observationBooleanMutations: [(String, Bool)] = [
+            ("predecessorRemainsFrozen", false),
+            ("observedRevisionPublishedToOriginObserved", true),
+            ("rawLogAloneBindsRevisionOrTree", true),
+            ("attachmentAloneBindsRevisionOrTree", true),
+            ("exactHeadAndCleanGateSequenceCompleted", false),
+            ("activeRootQuarantineGateCompleted", false),
+            ("latinProvenanceGateCompleted", false),
+            ("exactObservedTreeAndEmbeddedSourceIdentityBound", false),
+            ("testBundleRebuiltFromObservedCheckout", false),
+            ("testBundleBinaryProvenancePublished", true),
+            ("inProcessMechanicsPolicyPreflightObserved", false),
+            ("externalMetallibFreshBuildProvenanceObserved", true),
+            ("allStrengthenedRegressionsPassed", false),
+            ("attachmentHasNoOtherTransportMutation", false),
+            ("rawObservationLogRetainedInRepository", true),
+            ("attachmentTransportRetainedInRepository", true),
+            ("exactCommittedHeadMetalMechanicsObserved", false),
+            ("metalDeviceObserved", false),
+            ("metalDeviceIdentityRecorded", true),
+            ("modelInitializationObserved", false),
+            ("forwardExecutionObserved", false),
+            ("gqaScalarParityObserved", false),
+            ("batchedRoPERegressionObserved", false),
+            ("cacheParityObserved", false),
+            ("gradientExecutionObserved", false),
+            ("syntheticCheckpointRoundTripObserved", false),
+            ("checkpointFailurePathsObserved", false),
+            ("githubHostedMetalObserved", true),
+            ("checkpointV1HistoricalIdentityPreserved", false),
+            ("repairedCheckpointCompatibilityIdentityEstablished", true),
+            ("admittedRuntimeComputePolicyEstablished", true),
+            ("runtimeDependencyClosureEstablished", true),
+            ("runtimeInitializationEstablished", true),
+            ("native300MModelAllocationAuthorized", true),
+            ("native300MCheckpointWriteAuthorized", true),
+            ("native300MCheckpointLoadAuthorized", true),
+            ("checkpointArtifactProvenanceEstablished", true),
+            ("checkpointAdmissionGranted", true),
+            ("trainingResumeEstablished", true),
+            ("modelQualityEstablished", true),
+            ("functionalTrainingAuthorized", true),
+            ("longTrainingAuthorized", true),
+            ("candidateAdmissionGranted", true),
+            ("trialAuthorized", true),
+            ("canaryReplacementAuthorized", true),
+            ("quantizationAuthorized", true),
+            ("productUseAuthorized", true),
+            ("publicationAuthorized", true),
+        ]
+        for (key, value) in observationBooleanMutations {
+            var mutatedObject = observationObject
+            mutatedObject[key] = value
+            let mutated = try JSONDecoder().decode(
+                PrimeNativeDecoderMetalExecutionObservationV1.self,
+                from: JSONSerialization.data(
+                    withJSONObject: mutatedObject,
+                    options: [.sortedKeys]))
+            XCTAssertThrowsError(
+                try mutated.validateExactV1(),
+                "execution-observation mutation was accepted: \(key)")
+        }
+
+        for (key, value) in [
+            ("observedRevision", String(repeating: "0", count: 40)),
+            ("observedParentRevision", String(repeating: "0", count: 40)),
+            ("observedTree", String(repeating: "0", count: 40)),
+            (
+                "observedEmbeddedSourceIdentitySHA256",
+                String(repeating: "0", count: 64)),
+            ("rawTerminalLogSHA256", String(repeating: "0", count: 64)),
+            ("attachmentTransportSHA256", String(repeating: "0", count: 64)),
+        ] {
+            var mutatedObject = observationObject
+            mutatedObject[key] = value
+            let mutated = try JSONDecoder().decode(
+                PrimeNativeDecoderMetalExecutionObservationV1.self,
+                from: JSONSerialization.data(
+                    withJSONObject: mutatedObject,
+                    options: [.sortedKeys]))
+            XCTAssertThrowsError(try mutated.validateExactV1())
+        }
+
+        let observationPolicyObject = try XCTUnwrap(
+            observationObject["ciMechanicsPolicy"] as? [String: Any])
+        for (key, value) in policyMutations {
+            var mutatedObject = observationObject
+            var mutatedPolicyObject = observationPolicyObject
+            mutatedPolicyObject[key] = value
+            mutatedObject["ciMechanicsPolicy"] = mutatedPolicyObject
+            let mutated = try JSONDecoder().decode(
+                PrimeNativeDecoderMetalExecutionObservationV1.self,
+                from: JSONSerialization.data(
+                    withJSONObject: mutatedObject,
+                    options: [.sortedKeys]))
+            XCTAssertThrowsError(
+                try mutated.validateExactV1(),
+                "execution-observation policy mutation was accepted: \(key)")
         }
     }
 }
