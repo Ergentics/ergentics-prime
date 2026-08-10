@@ -30,7 +30,9 @@ observation now binds an exact clean committed repair head whose rebuilt
 an append-only correction preserves that XCTest evidence while invalidating
 the predecessor's active-root and whole-gate-sequence completion claims. The
 active-root `Process` matcher is narrowed to the standalone symbol in this
-source slice and must still be observed on an exact clean successor head.
+source slice. A successor observation binds the successful exact-head
+pull-request active-root and Latin gate execution without treating the skipped
+reviewed-main job as Metal evidence.
 GitHub-hosted Metal execution and fresh-metallib provenance remain unobserved.
 The exact implemented boundary and remaining replacement path are recorded in
 [`docs/PRIME-NATIVE-DECODER-REPLACEMENT-2026-08-09.md`](docs/PRIME-NATIVE-DECODER-REPLACEMENT-2026-08-09.md).

@@ -141,11 +141,15 @@ active-root and whole-sequence completion claims unusable. The Latin claim is
 not re-adjudicated by this correction.
 
 The retained projection establishes exact committed-source external Metal
-mechanics, not an exact clean gate sequence. It still is
-not a GitHub-hosted or freshly built-metallib observation, a published binary
+mechanics. The later
+`PrimeNativeDecoderGateRepairExecutionObservationV1.frozenV1` binds the
+successful exact-head pull-request active-root and Latin gate at
+`4a79fb2cb66c55ebc581fb4488ebcf9c7e2382c1`; it does not reinterpret the
+reviewed-main job, which was skipped by design. It therefore is not a
+GitHub-hosted Metal or freshly built-metallib observation, a published binary
 provenance envelope, an admitted runtime policy, checkpoint admission,
 training, or model-quality evidence. The existing trusted-main action must
-still pass all 44 tests without skips after separately authorized publication.
+still pass all 44 tests without skips after merge.
 
 The validation package deliberately has no repository-owned SwiftPM mirror.
 Every gate supplies an isolated `--config-path`, and the quarantine gate
@@ -163,25 +167,24 @@ dependency.
 
 The remaining replacement order is:
 
-1. run the repaired standalone-`Process` matcher through the exact clean
-   successor active-root and Latin gates, and append that observation;
-2. with separate authorization, publish and merge the repair, then require the
+1. with separate authorization, publish and merge the reviewed
+   history-preserving repair, then require the
    existing trusted-main GitHub action to pass all 44 tests without skips and
    record its fresh-metallib hosted observation append-only;
-3. append a repaired-source checkpoint compatibility identity, then separately
+2. append a repaired-source checkpoint compatibility identity, then separately
    authorize native-profile checkpoint write/load and bind the container
    through a verified artifact observation;
-4. append an admitted runtime compute policy, establish the exact dependency,
+3. append an admitted runtime compute policy, establish the exact dependency,
    metallib, device, and initialization closure, and keep it separate from the
    synthetic CI policy;
-5. define generic Prime-owned train/evaluate surfaces and persist exact
+4. define generic Prime-owned train/evaluate surfaces and persist exact
    optimizer, RNG, and data-cursor state for trajectory-exact resume;
-6. separately authorize bounded training and produce a non-fixture checkpoint
+5. separately authorize bounded training and produce a non-fixture checkpoint
    with exact training-state lineage;
-7. separately authorize and run a bounded candidate canary/trial;
-8. migrate the read-only PMHNP canary consumer to the Prime-owned interface and
+6. separately authorize and run a bounded candidate canary/trial;
+7. migrate the read-only PMHNP canary consumer to the Prime-owned interface and
    remove its active Llama factory after single-MLX-graph reconciliation;
-9. address CoreML/NeuralKit product export only after accepted checkpoint and
+8. address CoreML/NeuralKit product export only after accepted checkpoint and
    parity evidence.
 
 No training, merge, PMHNP write, or product decision is part of this

@@ -112,6 +112,9 @@ require_preserved_object \
     "Sources/PrimeCore/PrimeNativeDecoderMetalExecutionObservationCorrection.swift" \
     "b9b0947cd814efc09d6412409d286b6be6db192f"
 require_preserved_object \
+    "Sources/PrimeCore/PrimeNativeDecoderGateRepairExecutionObservation.swift" \
+    "3b242cd57b4f922ada466d8ae39b58424ff878c2"
+require_preserved_object \
     "Sources/PrimeCore/PrimeMLXRuntimeEnvironmentPolicy.swift" \
     "302718448a233695f57eb9bf508a56f0790a778b"
 require_preserved_object \
@@ -400,6 +403,7 @@ readonly decoder_checkpoint_authority_source="$prime_root/Sources/PrimeCore/Prim
 readonly decoder_metal_repair_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderMetalRepairAuthority.swift"
 readonly decoder_metal_execution_observation_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderMetalExecutionObservation.swift"
 readonly decoder_metal_execution_correction_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderMetalExecutionObservationCorrection.swift"
+readonly decoder_gate_repair_execution_observation_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderGateRepairExecutionObservation.swift"
 readonly decoder_validation_manifest="$prime_root/Tests/PrimeNativeDecoderValidation/Package.swift"
 readonly decoder_authority_test="$prime_root/Tests/PrimeNativeDecoderValidation/Tests/PrimeNativeDecoderTests/PrimeNativeDecoderAuthorityTests.swift"
 readonly decoder_validation_test="$prime_root/Tests/PrimeNativeDecoderValidation/Tests/PrimeNativeDecoderTests/PrimeNativeGQADecoderTests.swift"
@@ -441,6 +445,9 @@ readonly decoder_checkpoint_test="$prime_root/Tests/PrimeNativeDecoderValidation
 [[ -f "$decoder_metal_execution_correction_source" \
     && ! -L "$decoder_metal_execution_correction_source" ]] ||
     die "PrimeNativeDecoder Metal execution correction is missing or linked"
+[[ -f "$decoder_gate_repair_execution_observation_source" \
+    && ! -L "$decoder_gate_repair_execution_observation_source" ]] ||
+    die "PrimeNativeDecoder gate-repair execution observation is missing or linked"
 [[ "$(wc -c < "$decoder_checkpoint_authority_source" | awk '{print $1}')" \
     == "14399" ]] ||
     die "PrimeNativeDecoderCheckpoint authority byte count changed"
@@ -497,6 +504,19 @@ done
 [[ "$(git -C "$prime_root" hash-object "$decoder_metal_execution_correction_source")" \
     == "b9b0947cd814efc09d6412409d286b6be6db192f" ]] ||
     die "PrimeNativeDecoder Metal execution correction blob changed"
+[[ "$(git -C "$prime_root" ls-files -s -- \
+    'Sources/PrimeCore/PrimeNativeDecoderGateRepairExecutionObservation.swift' | awk '{print $1}')" \
+    == "100644" ]] ||
+    die "PrimeNativeDecoder gate-repair execution observation mode changed"
+[[ "$(wc -c < "$decoder_gate_repair_execution_observation_source" | awk '{print $1}')" \
+    == "19780" ]] ||
+    die "PrimeNativeDecoder gate-repair execution observation byte count changed"
+[[ "$(shasum -a 256 "$decoder_gate_repair_execution_observation_source" | awk '{print $1}')" \
+    == "fcce012be39a0178ff22e21a4218e4384dea6d082733b45930c9b8133011de9d" ]] ||
+    die "PrimeNativeDecoder gate-repair execution observation SHA-256 changed"
+[[ "$(git -C "$prime_root" hash-object "$decoder_gate_repair_execution_observation_source")" \
+    == "3b242cd57b4f922ada466d8ae39b58424ff878c2" ]] ||
+    die "PrimeNativeDecoder gate-repair execution observation blob changed"
 [[ "$(wc -c < "$decoder_source" | awk '{print $1}')" == "39050" ]] ||
     die "PrimeNativeDecoder repaired source byte count changed"
 [[ "$(shasum -a 256 "$decoder_source" | awk '{print $1}')" \
@@ -543,6 +563,7 @@ swiftc -frontend -parse "$decoder_checkpoint_authority_source"
 swiftc -frontend -parse "$decoder_metal_repair_authority_source"
 swiftc -frontend -parse "$decoder_metal_execution_observation_source"
 swiftc -frontend -parse "$decoder_metal_execution_correction_source"
+swiftc -frontend -parse "$decoder_gate_repair_execution_observation_source"
 swiftc -frontend -parse "$decoder_authority_test"
 swiftc -frontend -parse "$decoder_checkpoint_test"
 swiftc -frontend -parse "$decoder_validation_test"
