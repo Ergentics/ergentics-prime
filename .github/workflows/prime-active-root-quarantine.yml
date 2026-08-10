@@ -80,6 +80,7 @@ jobs:
             Sources/PrimeCore/PrimeNativeDecoderCheckpointAuthority.swift \
             Sources/PrimeCore/PrimeNativeDecoderMetalRepairAuthority.swift \
             Sources/PrimeCore/PrimeNativeDecoderMetalExecutionObservation.swift \
+            Sources/PrimeCore/PrimeNativeDecoderMetalExecutionObservationCorrection.swift \
             Sources/PrimeNativeDecoder/PrimeNativeGQADecoder.swift \
             Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV1.swift \
             Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalPairCaptureSourceContractTests.swift \
@@ -100,7 +101,8 @@ jobs:
             Tests/PrimeCoreTests/PrimeNativeGenerationContractSourceContractTests.swift \
             Tests/PrimeCoreTests/PrimeNativeNeuralGateContractSourceContractTests.swift \
             Tests/PrimeCoreTests/PrimeNativeNeuralGateMLXIsolationSourceContractTests.swift \
-            Tests/PrimeCoreTests/PrimeNativeResolvedContractAdapterSourceContractTests.swift; do
+            Tests/PrimeCoreTests/PrimeNativeResolvedContractAdapterSourceContractTests.swift \
+            Tests/PrimeCoreTests/PrimeSwiftSourceProvenanceTests.swift; do
             xcrun swiftc -frontend -parse "$source_file"
           done
           [[ "$(git rev-parse HEAD)" == "$EXACT_REVISION" ]]
@@ -134,6 +136,7 @@ jobs:
             echo 'The frozen pre-repair checkpoint V1 target publicly binds only its historical Native-300M/Prime-byte-512 weights compatibility identity and analytic FP32 parameter catalog. Its executable borrowed-descriptor codec remains internal, exact-tiny-synthetic-only, size-capped, and non-authorizing; it is not the repaired decoder identity, and native checkpoint write/load, artifact provenance, atomic durability, runtime initialization, training, trial, canary, and product authority remain false.'
             echo 'The append-only Metal-repair contract preserves the frozen decoder/checkpoint identities, binds the pinned batched single-token RoPE defect and Prime-local explicit-offset repair, and fixes TF32-off only as a synthetic CI-mechanics policy. The repaired checkpoint identity, admitted runtime policy, exact-head hosted observation, training, and downstream authority remain false.'
             echo 'A subsequent append-only observation binds the exact committed repair head and tree plus an external Terminal run of all 44 strengthened tests with zero failures and zero skips. Its raw log and transport hashes are recorded but not retained here; GitHub-hosted execution, fresh-metallib provenance, repaired checkpoint identity, admitted runtime policy, training, and downstream authority remain false.'
+            echo 'An append-only correction preserves that 44/44 Metal projection but invalidates the predecessor active-root and whole-gate-sequence completion claims: the old fixed-substring Process matcher could not distinguish ProcessInfo or inProcess metadata from the forbidden standalone Process symbol. This exact-head run observes only the corrected lexical gate scope; it does not widen Metal, runtime, checkpoint, training, or downstream authority.'
             echo 'The locally declared origin is not network-authenticated, and ignored workspace bytes are not observed by this slice.'
             echo 'No Prime proposal, candidate selection, trial authorization, decision receipt, runtime/product/canary decoder activation, model execution, training, publication, promotion, Driver V2, or PMHNP authority is granted.'
           } >> "$GITHUB_STEP_SUMMARY"

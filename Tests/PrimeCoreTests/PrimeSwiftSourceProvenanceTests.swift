@@ -31,6 +31,36 @@ final class PrimeSwiftSourceProvenanceTests:
             snapshot.sourceIdentitySHA256,
             expectation.sourceIdentitySHA256
         )
+
+        let decoderMetalCorrection =
+            PrimeNativeDecoderMetalExecutionObservationCorrectionV1
+                .frozenV1
+        XCTAssertNoThrow(
+            try decoderMetalCorrection.validateExactV1()
+        )
+        XCTAssertFalse(
+            decoderMetalCorrection
+                .predecessorStandaloneConsumptionAllowed
+        )
+        XCTAssertFalse(
+            decoderMetalCorrection
+                .activeRootQuarantineGateCompleted
+        )
+        XCTAssertFalse(
+            decoderMetalCorrection
+                .exactHeadAndCleanGateSequenceCompleted
+        )
+        XCTAssertTrue(
+            decoderMetalCorrection
+                .predecessorMetalMechanicsProjectionRetained
+        )
+        XCTAssertEqual(
+            decoderMetalCorrection.retainedTotalTestCount,
+            44
+        )
+        XCTAssertFalse(
+            decoderMetalCorrection.gateRepairExecutionObserved
+        )
     }
 
     func testCapturePreservesCanonicalSnapshotContract()

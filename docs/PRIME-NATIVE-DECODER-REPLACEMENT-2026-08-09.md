@@ -121,16 +121,27 @@ therefore decoder-mechanics evidence, not a complete source-identical suite
 observation.
 
 Commit `8e5d1555506a824d19528fb8dd3e115eb8aefb41` then sealed the repair,
-regression, policy, launcher, and source identity. A chained external Terminal
-run completed the exact clean-head active-root and Latin provenance gates,
-then executed the rebuilt bundle under `MLX_ENABLE_TF32=0`: 11 authority, 14
+regression, policy, launcher, and source identity. An external Terminal run
+executed the rebuilt bundle under `MLX_ENABLE_TF32=0`: 11 authority, 14
 checkpoint, and 19 GQA tests all passed, for 44 total with zero failures or
 skips. `PrimeNativeDecoderMetalExecutionObservationV1.frozenV1` binds that
 revision/tree, the exact raw-log and attachment-transport hashes, and their
 single trailing-line-feed difference. The raw bytes are not retained in the
 repository.
 
-This establishes exact committed-source external Metal mechanics. It still is
+That predecessor also claimed the exact clean-head active-root and whole gate
+sequence completed. The claim is contradicted by the frozen gate itself: its
+fixed-substring `Process` matcher included validation sources containing the
+required `ProcessInfo.processInfo.environment` preflight. The same matcher
+failed both the pull-request and manually dispatched hosted active-root jobs
+at `ee5ed4276203b2c1eb299fa4eb17292de604e25d`. The append-only
+`PrimeNativeDecoderMetalExecutionObservationCorrectionV1.frozenV1` therefore
+preserves the exact 44/44 Metal projection but makes the predecessor's
+active-root and whole-sequence completion claims unusable. The Latin claim is
+not re-adjudicated by this correction.
+
+The retained projection establishes exact committed-source external Metal
+mechanics, not an exact clean gate sequence. It still is
 not a GitHub-hosted or freshly built-metallib observation, a published binary
 provenance envelope, an admitted runtime policy, checkpoint admission,
 training, or model-quality evidence. The existing trusted-main action must
@@ -152,24 +163,27 @@ dependency.
 
 The remaining replacement order is:
 
-1. with separate authorization, publish and merge the repair, then require the
+1. run the repaired standalone-`Process` matcher through the exact clean
+   successor active-root and Latin gates, and append that observation;
+2. with separate authorization, publish and merge the repair, then require the
    existing trusted-main GitHub action to pass all 44 tests without skips and
    record its fresh-metallib hosted observation append-only;
-2. append a repaired-source checkpoint compatibility identity, then separately
+3. append a repaired-source checkpoint compatibility identity, then separately
    authorize native-profile checkpoint write/load and bind the container
    through a verified artifact observation;
-3. append an admitted runtime compute policy, establish the exact dependency,
+4. append an admitted runtime compute policy, establish the exact dependency,
    metallib, device, and initialization closure, and keep it separate from the
    synthetic CI policy;
-4. define generic Prime-owned train/evaluate surfaces and persist exact
+5. define generic Prime-owned train/evaluate surfaces and persist exact
    optimizer, RNG, and data-cursor state for trajectory-exact resume;
-5. separately authorize bounded training and produce a non-fixture checkpoint
+6. separately authorize bounded training and produce a non-fixture checkpoint
    with exact training-state lineage;
-6. separately authorize and run a bounded candidate canary/trial;
-7. migrate the read-only PMHNP canary consumer to the Prime-owned interface and
+7. separately authorize and run a bounded candidate canary/trial;
+8. migrate the read-only PMHNP canary consumer to the Prime-owned interface and
    remove its active Llama factory after single-MLX-graph reconciliation;
-8. address CoreML/NeuralKit product export only after accepted checkpoint and
+9. address CoreML/NeuralKit product export only after accepted checkpoint and
    parity evidence.
 
-No training, network access, push, PR, PMHNP write, or product decision is part
-of this slice.
+No training, merge, PMHNP write, or product decision is part of this
+correction. Network activity is limited to the separately authorized branch,
+pull-request, and GitHub Actions workflow operations.

@@ -109,6 +109,9 @@ require_preserved_object \
     "Sources/PrimeCore/PrimeNativeDecoderMetalExecutionObservation.swift" \
     "39e37fc4dd7e2b6131ce0efc790b49602a94f484"
 require_preserved_object \
+    "Sources/PrimeCore/PrimeNativeDecoderMetalExecutionObservationCorrection.swift" \
+    "b9b0947cd814efc09d6412409d286b6be6db192f"
+require_preserved_object \
     "Sources/PrimeCore/PrimeMLXRuntimeEnvironmentPolicy.swift" \
     "302718448a233695f57eb9bf508a56f0790a778b"
 require_preserved_object \
@@ -396,6 +399,7 @@ readonly decoder_checkpoint_source="$prime_root/Sources/PrimeNativeDecoderCheckp
 readonly decoder_checkpoint_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderCheckpointAuthority.swift"
 readonly decoder_metal_repair_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderMetalRepairAuthority.swift"
 readonly decoder_metal_execution_observation_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderMetalExecutionObservation.swift"
+readonly decoder_metal_execution_correction_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderMetalExecutionObservationCorrection.swift"
 readonly decoder_validation_manifest="$prime_root/Tests/PrimeNativeDecoderValidation/Package.swift"
 readonly decoder_authority_test="$prime_root/Tests/PrimeNativeDecoderValidation/Tests/PrimeNativeDecoderTests/PrimeNativeDecoderAuthorityTests.swift"
 readonly decoder_validation_test="$prime_root/Tests/PrimeNativeDecoderValidation/Tests/PrimeNativeDecoderTests/PrimeNativeGQADecoderTests.swift"
@@ -434,6 +438,9 @@ readonly decoder_checkpoint_test="$prime_root/Tests/PrimeNativeDecoderValidation
 [[ -f "$decoder_metal_execution_observation_source" \
     && ! -L "$decoder_metal_execution_observation_source" ]] ||
     die "PrimeNativeDecoder Metal execution observation is missing or linked"
+[[ -f "$decoder_metal_execution_correction_source" \
+    && ! -L "$decoder_metal_execution_correction_source" ]] ||
+    die "PrimeNativeDecoder Metal execution correction is missing or linked"
 [[ "$(wc -c < "$decoder_checkpoint_authority_source" | awk '{print $1}')" \
     == "14399" ]] ||
     die "PrimeNativeDecoderCheckpoint authority byte count changed"
@@ -477,6 +484,19 @@ done
 [[ "$(git -C "$prime_root" hash-object "$decoder_metal_execution_observation_source")" \
     == "39e37fc4dd7e2b6131ce0efc790b49602a94f484" ]] ||
     die "PrimeNativeDecoder Metal execution observation blob changed"
+[[ "$(git -C "$prime_root" ls-files -s -- \
+    'Sources/PrimeCore/PrimeNativeDecoderMetalExecutionObservationCorrection.swift' | awk '{print $1}')" \
+    == "100644" ]] ||
+    die "PrimeNativeDecoder Metal execution correction mode changed"
+[[ "$(wc -c < "$decoder_metal_execution_correction_source" | awk '{print $1}')" \
+    == "22744" ]] ||
+    die "PrimeNativeDecoder Metal execution correction byte count changed"
+[[ "$(shasum -a 256 "$decoder_metal_execution_correction_source" | awk '{print $1}')" \
+    == "9ef5851532c58d10165c6e6f511889f29d4f10bce7cc7b0b5d305392d0e54748" ]] ||
+    die "PrimeNativeDecoder Metal execution correction SHA-256 changed"
+[[ "$(git -C "$prime_root" hash-object "$decoder_metal_execution_correction_source")" \
+    == "b9b0947cd814efc09d6412409d286b6be6db192f" ]] ||
+    die "PrimeNativeDecoder Metal execution correction blob changed"
 [[ "$(wc -c < "$decoder_source" | awk '{print $1}')" == "39050" ]] ||
     die "PrimeNativeDecoder repaired source byte count changed"
 [[ "$(shasum -a 256 "$decoder_source" | awk '{print $1}')" \
@@ -522,6 +542,7 @@ swiftc -frontend -parse "$decoder_checkpoint_source"
 swiftc -frontend -parse "$decoder_checkpoint_authority_source"
 swiftc -frontend -parse "$decoder_metal_repair_authority_source"
 swiftc -frontend -parse "$decoder_metal_execution_observation_source"
+swiftc -frontend -parse "$decoder_metal_execution_correction_source"
 swiftc -frontend -parse "$decoder_authority_test"
 swiftc -frontend -parse "$decoder_checkpoint_test"
 swiftc -frontend -parse "$decoder_validation_test"
@@ -579,7 +600,6 @@ for forbidden_decoder_value in \
     "/bin/bash" \
     "posix_spawn" \
     "execve(" \
-    "Process" \
     "HuggingFace" \
     "PMHNP" \
     "MLXOptimizers" \
@@ -595,6 +615,21 @@ for forbidden_decoder_value in \
         die "PrimeNativeDecoder closure contains forbidden value: $forbidden_decoder_value"
     fi
 done
+
+# The frozen implementation authority forbids the standalone Foundation
+# Process identifier.  The isolated XCTest target must nevertheless inspect
+# its own launched environment through ProcessInfo before its first Metal/MLX
+# call.  Match the Swift identifier token rather than an arbitrary substring
+# so ProcessInfo and inProcess-bound authority fields remain distinct.
+if grep -Eq -- \
+    '(^|[^[:alnum:]_])Process([^[:alnum:]_]|$)' \
+    "$decoder_source" \
+    "$decoder_checkpoint_source" \
+    "$decoder_authority_test" \
+    "$decoder_checkpoint_test" \
+    "$decoder_validation_test"; then
+    die "PrimeNativeDecoder closure contains forbidden value: Process"
+fi
 
 for forbidden_checkpoint_capability in \
     "FileManager" \
