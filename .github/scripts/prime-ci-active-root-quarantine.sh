@@ -13,13 +13,14 @@ readonly numerics_origin="https://github.com/apple/swift-numerics"
 readonly numerics_revision="0c0290ff6b24942dadb83a929ffaaa1481df04a2"
 readonly numerics_version="1.1.1"
 readonly workflow_path="$prime_root/.github/workflows/prime-active-root-quarantine.yml"
+readonly decoder_metal_gate_path="$prime_root/.github/scripts/prime-ci-native-decoder-metal.sh"
 
 die() {
     echo "prime-ci-active-root-quarantine: $*" >&2
     exit 1
 }
 
-for command_name in awk git grep jq mktemp paste shasum sort swift swiftc wc; do
+for command_name in awk bash git grep jq mktemp paste shasum sort swift swiftc wc; do
     command -v "$command_name" >/dev/null 2>&1 ||
         die "missing command: $command_name"
 done
@@ -216,6 +217,37 @@ grep -Fq -- 'github.event.pull_request.head.sha || github.sha' "$workflow_path" 
     die "workflow is not bound to the exact pull-request head"
 grep -Fq -- 'runs-on: macos-15' "$workflow_path" ||
     die "workflow is not on the standard hosted macOS runner"
+[[ -f "$decoder_metal_gate_path" && ! -L "$decoder_metal_gate_path" ]] ||
+    die "Prime native decoder Metal gate is missing or linked"
+[[ "$(git -C "$prime_root" ls-files -- '.github/scripts/prime-ci-native-decoder-metal.sh')" \
+    == '.github/scripts/prime-ci-native-decoder-metal.sh' ]] ||
+    die "Prime native decoder Metal gate is not tracked exactly"
+bash -n "$decoder_metal_gate_path" ||
+    die "Prime native decoder Metal gate is not valid Bash"
+grep -Fq -- 'run: bash .github/scripts/prime-ci-native-decoder-metal.sh' "$workflow_path" ||
+    die "trusted-main workflow does not invoke the Prime native decoder Metal gate"
+for required_metal_gate_value in \
+    'MTLCreateSystemDefaultDevice' \
+    '-target Cmlx' \
+    'default.metallib' \
+    'Executed 41 tests, with 0 failures' \
+    'live Metal gate cannot contain skipped tests'; do
+    grep -Fq -- "$required_metal_gate_value" "$decoder_metal_gate_path" ||
+        die "Prime native decoder Metal gate is missing: $required_metal_gate_value"
+done
+for forbidden_metal_gate_value in \
+    '--disable-sandbox' \
+    '--filter' \
+    'self-hosted' \
+    'xlarge' \
+    'PrimeValidationWorkflow' \
+    'DriverV2' \
+    'pmhnp-companion-ergentics' \
+    'MLXLLM'; do
+    if grep -Fq -- "$forbidden_metal_gate_value" "$decoder_metal_gate_path"; then
+        die "Prime native decoder Metal gate contains quarantined value: $forbidden_metal_gate_value"
+    fi
+done
 
 readonly runner_temp="${RUNNER_TEMP:-/private/tmp}"
 readonly manifest_dump="$(mktemp "$runner_temp/prime-package-dump.json.XXXXXX")"

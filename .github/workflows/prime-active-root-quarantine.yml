@@ -181,7 +181,9 @@ jobs:
           set -euo pipefail
           [[ -n "$ERGENTICS_MLX_READ_TOKEN" ]]
           readonly mlx_bare="$RUNNER_TEMP/ergentics-mlx-swift.git"
+          readonly mlx_source="$RUNNER_TEMP/ergentics-mlx-swift"
           [[ ! -e "$mlx_bare" && ! -L "$mlx_bare" ]]
+          [[ ! -e "$mlx_source" && ! -L "$mlx_source" ]]
           git init --bare "$mlx_bare"
           git --git-dir="$mlx_bare" remote add origin \
             https://github.com/Ergentics/ergentics-mlx-swift
@@ -189,9 +191,13 @@ jobs:
           export GIT_CONFIG_KEY_0="url.https://x-access-token:${ERGENTICS_MLX_READ_TOKEN}@github.com/.insteadOf"
           export GIT_CONFIG_VALUE_0="https://github.com/"
           git --git-dir="$mlx_bare" fetch --depth=1 --no-tags origin "$MLX_REVISION"
-          unset GIT_CONFIG_COUNT GIT_CONFIG_KEY_0 GIT_CONFIG_VALUE_0
           [[ "$(git --git-dir="$mlx_bare" rev-parse FETCH_HEAD)" == "$MLX_REVISION" ]]
           git --git-dir="$mlx_bare" update-ref refs/heads/prime-pinned "$MLX_REVISION"
+          git --git-dir="$mlx_bare" worktree add --detach "$mlx_source" "$MLX_REVISION"
+          unset GIT_CONFIG_COUNT GIT_CONFIG_KEY_0 GIT_CONFIG_VALUE_0
+          git -C "$mlx_source" submodule update --init --recursive
+          [[ "$(git -C "$mlx_source" rev-parse HEAD)" == "$MLX_REVISION" ]]
+          [[ -z "$(git -C "$mlx_source" status --porcelain=v1 --untracked-files=all)" ]]
           [[ "$(git --git-dir="$mlx_bare" remote get-url origin)" == \
             'https://github.com/Ergentics/ergentics-mlx-swift' ]]
           ! grep -R -Fq -- "$ERGENTICS_MLX_READ_TOKEN" "$mlx_bare"
@@ -233,68 +239,6 @@ jobs:
           [[ "$(git rev-parse HEAD)" == "$EXACT_REVISION" ]]
           [[ -z "$(git status --porcelain=v1 --untracked-files=all)" ]]
 
-      - name: Compile the Prime-owned decoder and run Metal-free contracts
+      - name: Run the Prime-owned decoder on live Metal
         working-directory: ergentics-prime
-        run: |
-          set -euo pipefail
-          readonly mlx_bare="$RUNNER_TEMP/ergentics-mlx-swift.git"
-          readonly test_log="$RUNNER_TEMP/prime-native-decoder-tests.log"
-          [[ "$(git --git-dir="$mlx_bare" rev-parse refs/heads/prime-pinned)" == \
-            "$MLX_REVISION" ]]
-          mkdir -p \
-            "$RUNNER_TEMP/prime-native-decoder-build" \
-            "$RUNNER_TEMP/prime-native-decoder-cache" \
-            "$RUNNER_TEMP/prime-native-decoder-config" \
-            "$RUNNER_TEMP/prime-native-decoder-security"
-          export GIT_CONFIG_COUNT=2
-          export GIT_CONFIG_KEY_0="url.file://${mlx_bare}/.insteadOf"
-          export GIT_CONFIG_VALUE_0="https://github.com/Ergentics/ergentics-mlx-swift"
-          export GIT_CONFIG_KEY_1="protocol.file.allow"
-          export GIT_CONFIG_VALUE_1="always"
-          TMPDIR="$RUNNER_TEMP" swift test \
-            --package-path Tests/PrimeNativeDecoderValidation \
-            --scratch-path "$RUNNER_TEMP/prime-native-decoder-build" \
-            --cache-path "$RUNNER_TEMP/prime-native-decoder-cache" \
-            --config-path "$RUNNER_TEMP/prime-native-decoder-config" \
-            --security-path "$RUNNER_TEMP/prime-native-decoder-security" \
-            --disable-dependency-cache \
-            --manifest-cache local \
-            --disable-netrc \
-            --disable-keychain \
-            --force-resolved-versions \
-            --filter 'PrimeNativeDecoderAuthorityTests|PrimeNativeGQADecoderTests/(testCacheArithmeticIsPureAndFailClosedWithoutMetal|testConfigurationValidationFailsClosed|testLogic10MGeometryIsRepresentableWithoutParityClaim|testNative300MInventoryIsRepresentableWithoutAllocation|testSyntheticFixtureIsTrueGQAAndHasExactDerivedCount)|PrimeNativeDecoderCheckpointTests/(testAnalyticCatalogsMatchSyntheticLogicAndNativeInventories|testBorrowedDescriptorAPIRejectsInvalidDescriptorsWithoutMetal|testCanonicalLogicalFloat32EncodingHasKnownVectorAndHash|testCheckpointManifestRejectsEveryBoundMutation|testCompatibilityIdentityRejectsEveryBoundFieldMutation|testConfigurationAndPublicIdentityRoundTripCanonicallyAndFailClosed|testNative300MByte512CompatibilityIdentityIsExactWithoutAllocation|testNonregularDescriptorIsRejectedBeforeMLXLoad|testOversizedSparseDescriptorIsRejectedBeforeMLXLoad|testSyntheticManifestIsCanonicalOrderedAndNotPubliclyAdmitted|testSyntheticValidationRejectsUnboundedGeometryBeforeCatalogWork)' \
-            2>&1 | tee "$test_log"
-          unset GIT_CONFIG_COUNT GIT_CONFIG_KEY_0 GIT_CONFIG_VALUE_0
-          unset GIT_CONFIG_KEY_1 GIT_CONFIG_VALUE_1
-          grep -Fq "Test Suite 'PrimeNativeDecoderAuthorityTests' passed" "$test_log"
-          grep -Fq "Test Suite 'PrimeNativeDecoderCheckpointTests' passed" "$test_log"
-          grep -Fq "Test Suite 'PrimeNativeGQADecoderTests' passed" "$test_log"
-          grep -Eq 'Executed 24 tests, with 0 failures' "$test_log"
-          ! grep -Fqi -- 'skipped' "$test_log"
-          for required_authority_test in \
-            testDerivedAuthorityDoesNotPromoteMechanicsIntoRuntimeAuthority \
-            testDerivedAuthorityRejectsEveryBooleanAuthorityMutation \
-            testDerivedGQAMechanicsAuthorityIsExactAndAdditive \
-            testCheckpointAuthorityIsAppendOnlyAndMechanicsScoped \
-            testCheckpointAuthorityKeepsRuntimeAndDownstreamCeilingsFalse \
-            testCheckpointAuthorityRejectsEveryBooleanMutation \
-            testFrozenPredecessorSourceIsByteExact \
-            testFrozenPredecessorAuthorityStillValidatesExactly; do
-            grep -Fq -- "$required_authority_test' passed" "$test_log"
-          done
-          for required_checkpoint_test in \
-            testAnalyticCatalogsMatchSyntheticLogicAndNativeInventories \
-            testBorrowedDescriptorAPIRejectsInvalidDescriptorsWithoutMetal \
-            testCanonicalLogicalFloat32EncodingHasKnownVectorAndHash \
-            testCheckpointManifestRejectsEveryBoundMutation \
-            testCompatibilityIdentityRejectsEveryBoundFieldMutation \
-            testConfigurationAndPublicIdentityRoundTripCanonicallyAndFailClosed \
-            testNative300MByte512CompatibilityIdentityIsExactWithoutAllocation \
-            testNonregularDescriptorIsRejectedBeforeMLXLoad \
-            testOversizedSparseDescriptorIsRejectedBeforeMLXLoad \
-            testSyntheticManifestIsCanonicalOrderedAndNotPubliclyAdmitted \
-            testSyntheticValidationRejectsUnboundedGeometryBeforeCatalogWork; do
-            grep -Fq -- "$required_checkpoint_test' passed" "$test_log"
-          done
-          [[ "$(git rev-parse HEAD)" == "$EXACT_REVISION" ]]
-          [[ -z "$(git status --porcelain=v1 --untracked-files=all)" ]]
+        run: bash .github/scripts/prime-ci-native-decoder-metal.sh
