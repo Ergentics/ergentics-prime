@@ -32,8 +32,14 @@ the predecessor's active-root and whole-gate-sequence completion claims. The
 active-root `Process` matcher is narrowed to the standalone symbol in this
 source slice. A successor observation binds the successful exact-head
 pull-request active-root and Latin gate execution without treating the skipped
-reviewed-main job as Metal evidence.
-GitHub-hosted Metal execution and fresh-metallib provenance remain unobserved.
+reviewed-main job as Metal evidence. The history-preserving merge commit then
+completed the full GitHub workflow on reviewed main: the exact pinned MLX
+source produced a fresh `default.metallib`, a Metal device was visible, and all
+44 isolated decoder tests passed with zero failures or skips under the bound
+TF32-off CI mechanics policy. That hosted observation does not identify a
+physical GPU, independently trace the exact metallib image loaded at runtime,
+establish a repaired checkpoint identity or maintained-runtime policy, or
+authorize training.
 The exact implemented boundary and remaining replacement path are recorded in
 [`docs/PRIME-NATIVE-DECODER-REPLACEMENT-2026-08-09.md`](docs/PRIME-NATIVE-DECODER-REPLACEMENT-2026-08-09.md).
 
