@@ -118,6 +118,21 @@ require_preserved_object \
     "Sources/PrimeCore/PrimeNativeDecoderReviewedMainMetalExecutionObservation.swift" \
     "f5025b136b761b2db680cdc656542c6d5caa309e"
 require_preserved_object \
+    "Sources/PrimeCore/PrimeNativeDecoderCheckpointCompatibilityV2Authority.swift" \
+    "b09e51e6cd79b3962fec4ddb28c1a154ef979076"
+require_preserved_object \
+    "Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCompatibilityIdentityV2.swift" \
+    "7e993df79cc3a7c37d130c9eb5e7f30f63a6c386"
+require_preserved_object \
+    "Tests/PrimeNativeDecoderCheckpointCompatibilityV2Validation/Package.swift" \
+    "f2694f6b9c85b997a4ce7dedca48e456cf65d7c1"
+require_preserved_object \
+    "Tests/PrimeNativeDecoderCheckpointCompatibilityV2Validation/Package.resolved" \
+    "3083ed5145d3f8eae3858a61b103ebf31071feef"
+require_preserved_object \
+    "Tests/PrimeNativeDecoderCheckpointCompatibilityV2Validation/Tests/PrimeNativeDecoderCheckpointCompatibilityV2Tests/PrimeNativeDecoderCompatibilityIdentityV2Tests.swift" \
+    "2dd3a7f4a381129580897e529f935275a7e38cf8"
+require_preserved_object \
     "Sources/PrimeCore/PrimeMLXRuntimeEnvironmentPolicy.swift" \
     "302718448a233695f57eb9bf508a56f0790a778b"
 require_preserved_object \
@@ -216,6 +231,10 @@ assert_active_lock \
     "Tests/PrimeNativeDecoderValidation/Package.swift" \
     "$root_mlx_revision"
 assert_active_lock \
+    "Tests/PrimeNativeDecoderCheckpointCompatibilityV2Validation/Package.resolved" \
+    "Tests/PrimeNativeDecoderCheckpointCompatibilityV2Validation/Package.swift" \
+    "$root_mlx_revision"
+assert_active_lock \
     "Tests/PrimeTypedOptimizerRestoreMechanicsValidation/Package.resolved" \
     "Tests/PrimeTypedOptimizerRestoreMechanicsValidation/Package.swift" \
     "$typed_mlx_revision"
@@ -259,6 +278,12 @@ bash -n "$decoder_metal_gate_path" ||
     die "Prime native decoder Metal gate blob changed"
 grep -Fq -- 'run: bash .github/scripts/prime-ci-native-decoder-metal.sh' "$workflow_path" ||
     die "trusted-main workflow does not invoke the Prime native decoder Metal gate"
+grep -Fq -- \
+    '--package-path Tests/PrimeNativeDecoderCheckpointCompatibilityV2Validation' \
+    "$workflow_path" ||
+    die "trusted-main workflow does not run checkpoint V2 validation"
+grep -Fq -- 'Executed 1 test, with 0 failures' "$workflow_path" ||
+    die "trusted-main workflow does not bind checkpoint V2 validation count"
 for required_metal_gate_value in \
     'MTLCreateSystemDefaultDevice' \
     '-target Cmlx' \
@@ -293,11 +318,12 @@ done
 readonly runner_temp="${RUNNER_TEMP:-/private/tmp}"
 readonly manifest_dump="$(mktemp "$runner_temp/prime-package-dump.json.XXXXXX")"
 readonly decoder_manifest_dump="$(mktemp "$runner_temp/prime-decoder-package-dump.json.XXXXXX")"
+readonly decoder_checkpoint_v2_manifest_dump="$(mktemp "$runner_temp/prime-decoder-checkpoint-v2-package-dump.json.XXXXXX")"
 readonly manifest_scratch="$runner_temp/prime-package-dump-build"
 readonly manifest_cache="$runner_temp/prime-package-dump-cache"
 readonly manifest_config="$runner_temp/prime-package-dump-config"
 readonly manifest_security="$runner_temp/prime-package-dump-security"
-trap 'unlink "$manifest_dump" "$decoder_manifest_dump" 2>/dev/null || true' EXIT
+trap 'unlink "$manifest_dump" "$decoder_manifest_dump" "$decoder_checkpoint_v2_manifest_dump" 2>/dev/null || true' EXIT
 mkdir -p \
     "$manifest_scratch" \
     "$manifest_cache" \
@@ -398,11 +424,48 @@ jq -e \
     "$decoder_manifest_dump" >/dev/null ||
     die "PrimeNativeDecoder validation manifest changed"
 
+TMPDIR="$runner_temp" swift package \
+    --package-path "$prime_root/Tests/PrimeNativeDecoderCheckpointCompatibilityV2Validation" \
+    --scratch-path "$manifest_scratch" \
+    --cache-path "$manifest_cache" \
+    --config-path "$manifest_config" \
+    --security-path "$manifest_security" \
+    --disable-netrc \
+    --disable-keychain \
+    dump-package > "$decoder_checkpoint_v2_manifest_dump"
+jq -e \
+    --arg prime_root "$prime_root" \
+    '
+      .name == "PrimeNativeDecoderCheckpointCompatibilityV2Validation"
+      and (.dependencies | length) == 1
+      and .dependencies[0].fileSystem[0]
+          .nameForTargetDependencyResolutionOnly == "ergentics-prime"
+      and .dependencies[0].fileSystem[0].path == $prime_root
+      and (.targets | length) == 1
+      and .targets[0].name
+          == "PrimeNativeDecoderCheckpointCompatibilityV2Tests"
+      and .targets[0].type == "test"
+      and ([.targets[0].dependencies[].product[0]] == [
+          "PrimeCore",
+          "PrimeNativeDecoderCheckpoint"
+      ])
+      and ([.targets[0].dependencies[].product[1]] == [
+          "ergentics-prime",
+          "ergentics-prime"
+      ])
+      and (.targets[0].settings | length) == 0
+      and (.products | length) == 0
+    ' \
+    "$decoder_checkpoint_v2_manifest_dump" >/dev/null ||
+    die "PrimeNativeDecoder checkpoint V2 validation manifest changed"
+
 readonly decoder_source="$prime_root/Sources/PrimeNativeDecoder/PrimeNativeGQADecoder.swift"
 readonly decoder_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderAuthority.swift"
 readonly decoder_derived_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderDerivedDelta.swift"
 readonly decoder_checkpoint_source="$prime_root/Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV1.swift"
 readonly decoder_checkpoint_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderCheckpointAuthority.swift"
+readonly decoder_checkpoint_v2_source="$prime_root/Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCompatibilityIdentityV2.swift"
+readonly decoder_checkpoint_v2_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderCheckpointCompatibilityV2Authority.swift"
 readonly decoder_metal_repair_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderMetalRepairAuthority.swift"
 readonly decoder_metal_execution_observation_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderMetalExecutionObservation.swift"
 readonly decoder_metal_execution_correction_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderMetalExecutionObservationCorrection.swift"
@@ -412,19 +475,30 @@ readonly decoder_validation_manifest="$prime_root/Tests/PrimeNativeDecoderValida
 readonly decoder_authority_test="$prime_root/Tests/PrimeNativeDecoderValidation/Tests/PrimeNativeDecoderTests/PrimeNativeDecoderAuthorityTests.swift"
 readonly decoder_validation_test="$prime_root/Tests/PrimeNativeDecoderValidation/Tests/PrimeNativeDecoderTests/PrimeNativeGQADecoderTests.swift"
 readonly decoder_checkpoint_test="$prime_root/Tests/PrimeNativeDecoderValidation/Tests/PrimeNativeDecoderTests/PrimeNativeDecoderCheckpointTests.swift"
+readonly decoder_checkpoint_v2_validation_root="$prime_root/Tests/PrimeNativeDecoderCheckpointCompatibilityV2Validation"
+readonly decoder_checkpoint_v2_validation_manifest="$decoder_checkpoint_v2_validation_root/Package.swift"
+readonly decoder_checkpoint_v2_validation_lock="$decoder_checkpoint_v2_validation_root/Package.resolved"
+readonly decoder_checkpoint_v2_validation_test="$decoder_checkpoint_v2_validation_root/Tests/PrimeNativeDecoderCheckpointCompatibilityV2Tests/PrimeNativeDecoderCompatibilityIdentityV2Tests.swift"
 
 [[ "$(git -C "$prime_root" ls-files -- 'Sources/PrimeNativeDecoder')" \
     == "Sources/PrimeNativeDecoder/PrimeNativeGQADecoder.swift" ]] ||
     die "PrimeNativeDecoder production source inventory changed"
 [[ "$(git -C "$prime_root" ls-files -- 'Sources/PrimeNativeDecoderCheckpoint')" \
-    == "Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV1.swift" ]] ||
+    == $'Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV1.swift\nSources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCompatibilityIdentityV2.swift' ]] ||
     die "PrimeNativeDecoderCheckpoint production source inventory changed"
 [[ "$(git -C "$prime_root" ls-files -- 'Tests/PrimeNativeDecoderValidation')" \
     == $'Tests/PrimeNativeDecoderValidation/Package.resolved\nTests/PrimeNativeDecoderValidation/Package.swift\nTests/PrimeNativeDecoderValidation/Tests/PrimeNativeDecoderTests/PrimeNativeDecoderAuthorityTests.swift\nTests/PrimeNativeDecoderValidation/Tests/PrimeNativeDecoderTests/PrimeNativeDecoderCheckpointTests.swift\nTests/PrimeNativeDecoderValidation/Tests/PrimeNativeDecoderTests/PrimeNativeGQADecoderTests.swift' ]] ||
     die "PrimeNativeDecoder validation inventory changed"
+[[ "$(git -C "$prime_root" ls-files -- \
+    'Tests/PrimeNativeDecoderCheckpointCompatibilityV2Validation')" \
+    == $'Tests/PrimeNativeDecoderCheckpointCompatibilityV2Validation/Package.resolved\nTests/PrimeNativeDecoderCheckpointCompatibilityV2Validation/Package.swift\nTests/PrimeNativeDecoderCheckpointCompatibilityV2Validation/Tests/PrimeNativeDecoderCheckpointCompatibilityV2Tests/PrimeNativeDecoderCompatibilityIdentityV2Tests.swift' ]] ||
+    die "PrimeNativeDecoder checkpoint V2 validation inventory changed"
 [[ ! -e "$prime_root/Tests/PrimeNativeDecoderValidation/.swiftpm" \
     && ! -L "$prime_root/Tests/PrimeNativeDecoderValidation/.swiftpm" ]] ||
     die "PrimeNativeDecoder validation must use the supplied isolated config path"
+[[ ! -e "$decoder_checkpoint_v2_validation_root/.swiftpm" \
+    && ! -L "$decoder_checkpoint_v2_validation_root/.swiftpm" ]] ||
+    die "PrimeNativeDecoder checkpoint V2 validation must use the supplied isolated config path"
 [[ -f "$decoder_source" && ! -L "$decoder_source" ]] ||
     die "PrimeNativeDecoder source is missing or linked"
 [[ -f "$decoder_validation_test" && ! -L "$decoder_validation_test" ]] ||
@@ -437,9 +511,24 @@ readonly decoder_checkpoint_test="$prime_root/Tests/PrimeNativeDecoderValidation
     die "frozen PrimeNativeDecoder authority is missing or linked"
 [[ -f "$decoder_checkpoint_source" && ! -L "$decoder_checkpoint_source" ]] ||
     die "PrimeNativeDecoderCheckpoint source is missing or linked"
+[[ -f "$decoder_checkpoint_v2_source" \
+    && ! -L "$decoder_checkpoint_v2_source" ]] ||
+    die "PrimeNativeDecoderCheckpoint V2 identity source is missing or linked"
 [[ -f "$decoder_checkpoint_authority_source" \
     && ! -L "$decoder_checkpoint_authority_source" ]] ||
     die "PrimeNativeDecoderCheckpoint authority is missing or linked"
+[[ -f "$decoder_checkpoint_v2_authority_source" \
+    && ! -L "$decoder_checkpoint_v2_authority_source" ]] ||
+    die "PrimeNativeDecoderCheckpoint V2 authority is missing or linked"
+[[ -f "$decoder_checkpoint_v2_validation_test" \
+    && ! -L "$decoder_checkpoint_v2_validation_test" ]] ||
+    die "PrimeNativeDecoderCheckpoint V2 validation test is missing or linked"
+[[ -f "$decoder_checkpoint_v2_validation_manifest" \
+    && ! -L "$decoder_checkpoint_v2_validation_manifest" ]] ||
+    die "PrimeNativeDecoderCheckpoint V2 validation manifest is missing or linked"
+[[ -f "$decoder_checkpoint_v2_validation_lock" \
+    && ! -L "$decoder_checkpoint_v2_validation_lock" ]] ||
+    die "PrimeNativeDecoderCheckpoint V2 validation lock is missing or linked"
 [[ -f "$decoder_metal_repair_authority_source" \
     && ! -L "$decoder_metal_repair_authority_source" ]] ||
     die "PrimeNativeDecoder Metal-repair authority is missing or linked"
@@ -464,6 +553,61 @@ readonly decoder_checkpoint_test="$prime_root/Tests/PrimeNativeDecoderValidation
 [[ "$(git -C "$prime_root" hash-object "$decoder_checkpoint_authority_source")" \
     == "2621721ef52cfb0aa823f096df9be83c37971aab" ]] ||
     die "PrimeNativeDecoderCheckpoint authority blob changed"
+for v2_regular_source in \
+    'Sources/PrimeCore/PrimeNativeDecoderCheckpointCompatibilityV2Authority.swift' \
+    'Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCompatibilityIdentityV2.swift' \
+    'Tests/PrimeNativeDecoderCheckpointCompatibilityV2Validation/Package.swift' \
+    'Tests/PrimeNativeDecoderCheckpointCompatibilityV2Validation/Package.resolved' \
+    'Tests/PrimeNativeDecoderCheckpointCompatibilityV2Validation/Tests/PrimeNativeDecoderCheckpointCompatibilityV2Tests/PrimeNativeDecoderCompatibilityIdentityV2Tests.swift'; do
+    [[ "$(git -C "$prime_root" ls-files -s -- "$v2_regular_source" | awk '{print $1}')" \
+        == "100644" ]] ||
+        die "PrimeNativeDecoderCheckpoint V2 source mode changed: $v2_regular_source"
+done
+[[ "$(wc -c < "$decoder_checkpoint_v2_authority_source" | awk '{print $1}')" \
+    == "29660" ]] ||
+    die "PrimeNativeDecoderCheckpoint V2 authority byte count changed"
+[[ "$(shasum -a 256 "$decoder_checkpoint_v2_authority_source" | awk '{print $1}')" \
+    == "ea5048b74b37cb8df9978f10c632c9fdbef47655b414518ce926b9d73ada8bdd" ]] ||
+    die "PrimeNativeDecoderCheckpoint V2 authority SHA-256 changed"
+[[ "$(git -C "$prime_root" hash-object "$decoder_checkpoint_v2_authority_source")" \
+    == "b09e51e6cd79b3962fec4ddb28c1a154ef979076" ]] ||
+    die "PrimeNativeDecoderCheckpoint V2 authority blob changed"
+[[ "$(wc -c < "$decoder_checkpoint_v2_source" | awk '{print $1}')" \
+    == "9228" ]] ||
+    die "PrimeNativeDecoderCheckpoint V2 identity byte count changed"
+[[ "$(shasum -a 256 "$decoder_checkpoint_v2_source" | awk '{print $1}')" \
+    == "2b73886d067015ea65a71944bdc9d0f06025ee65858e9cfccf9a8f0936cf36f3" ]] ||
+    die "PrimeNativeDecoderCheckpoint V2 identity SHA-256 changed"
+[[ "$(git -C "$prime_root" hash-object "$decoder_checkpoint_v2_source")" \
+    == "7e993df79cc3a7c37d130c9eb5e7f30f63a6c386" ]] ||
+    die "PrimeNativeDecoderCheckpoint V2 identity blob changed"
+[[ "$(wc -c < "$decoder_checkpoint_v2_validation_manifest" | awk '{print $1}')" \
+    == "759" ]] ||
+    die "PrimeNativeDecoderCheckpoint V2 validation manifest byte count changed"
+[[ "$(shasum -a 256 "$decoder_checkpoint_v2_validation_manifest" | awk '{print $1}')" \
+    == "dd1b0c661bd22a8d36b02ce310873a9dc7bd2b6e532661affae2a8baf1f2d7a5" ]] ||
+    die "PrimeNativeDecoderCheckpoint V2 validation manifest SHA-256 changed"
+[[ "$(git -C "$prime_root" hash-object "$decoder_checkpoint_v2_validation_manifest")" \
+    == "f2694f6b9c85b997a4ce7dedca48e456cf65d7c1" ]] ||
+    die "PrimeNativeDecoderCheckpoint V2 validation manifest blob changed"
+[[ "$(wc -c < "$decoder_checkpoint_v2_validation_lock" | awk '{print $1}')" \
+    == "645" ]] ||
+    die "PrimeNativeDecoderCheckpoint V2 validation lock byte count changed"
+[[ "$(shasum -a 256 "$decoder_checkpoint_v2_validation_lock" | awk '{print $1}')" \
+    == "a919de67d38bc986c38a52fa3e3fdcf9fbc5890eb987c506ced769d404829e34" ]] ||
+    die "PrimeNativeDecoderCheckpoint V2 validation lock SHA-256 changed"
+[[ "$(git -C "$prime_root" hash-object "$decoder_checkpoint_v2_validation_lock")" \
+    == "3083ed5145d3f8eae3858a61b103ebf31071feef" ]] ||
+    die "PrimeNativeDecoderCheckpoint V2 validation lock blob changed"
+[[ "$(wc -c < "$decoder_checkpoint_v2_validation_test" | awk '{print $1}')" \
+    == "16942" ]] ||
+    die "PrimeNativeDecoderCheckpoint V2 validation test byte count changed"
+[[ "$(shasum -a 256 "$decoder_checkpoint_v2_validation_test" | awk '{print $1}')" \
+    == "7a7e5111c4047ba009a4ddb5320e206e66e2b89f1674bf66739a0c3e7dda8c74" ]] ||
+    die "PrimeNativeDecoderCheckpoint V2 validation test SHA-256 changed"
+[[ "$(git -C "$prime_root" hash-object "$decoder_checkpoint_v2_validation_test")" \
+    == "2dd3a7f4a381129580897e529f935275a7e38cf8" ]] ||
+    die "PrimeNativeDecoderCheckpoint V2 validation test blob changed"
 [[ "$(wc -c < "$decoder_authority_source" | awk '{print $1}')" == "18462" ]] ||
     die "frozen PrimeNativeDecoder authority byte count changed"
 [[ "$(shasum -a 256 "$decoder_authority_source" | awk '{print $1}')" \
@@ -579,7 +723,9 @@ done
     die "PrimeNativeDecoderCheckpoint source blob changed"
 swiftc -frontend -parse "$decoder_source"
 swiftc -frontend -parse "$decoder_checkpoint_source"
+swiftc -frontend -parse "$decoder_checkpoint_v2_source"
 swiftc -frontend -parse "$decoder_checkpoint_authority_source"
+swiftc -frontend -parse "$decoder_checkpoint_v2_authority_source"
 swiftc -frontend -parse "$decoder_metal_repair_authority_source"
 swiftc -frontend -parse "$decoder_metal_execution_observation_source"
 swiftc -frontend -parse "$decoder_metal_execution_correction_source"
@@ -588,6 +734,7 @@ swiftc -frontend -parse "$decoder_reviewed_main_metal_execution_observation_sour
 swiftc -frontend -parse "$decoder_authority_test"
 swiftc -frontend -parse "$decoder_checkpoint_test"
 swiftc -frontend -parse "$decoder_validation_test"
+swiftc -frontend -parse "$decoder_checkpoint_v2_validation_test"
 
 readonly observed_mlxllm_references="$({
     git -C "$prime_root" grep -l -F 'MLXLLM' -- Sources || true
@@ -611,6 +758,9 @@ readonly expected_mlxllm_imports=$'Sources/PrimeGPUCalibration/PrimeGPUCalibrati
 [[ "$(awk '/^import / {print $2}' "$decoder_checkpoint_source" | paste -sd, -)" \
     == "Darwin,Foundation,PrimeCore,PrimeNativeDecoder,MLX,MLXNN" ]] ||
     die "PrimeNativeDecoderCheckpoint production imports changed"
+[[ "$(awk '/^import / {print $2}' "$decoder_checkpoint_v2_source" | paste -sd, -)" \
+    == "Foundation,PrimeCore" ]] ||
+    die "PrimeNativeDecoderCheckpoint V2 identity imports changed"
 [[ "$(grep -Fc -- '.package(' "$decoder_validation_manifest")" == "2" ]] ||
     die "PrimeNativeDecoder validation gained an unexpected dependency"
 grep -Fq -- 'name: "PrimeNativeDecoder"' "$decoder_validation_manifest" ||
@@ -620,6 +770,15 @@ grep -Fq -- 'name: "PrimeNativeDecoderCheckpoint"' \
     die "PrimeNativeDecoder validation does not consume the checkpoint product"
 grep -Fq -- "$root_mlx_revision" "$decoder_validation_manifest" ||
     die "PrimeNativeDecoder validation does not pin the active MLX revision"
+[[ "$(grep -Fc -- '.package(' "$decoder_checkpoint_v2_validation_manifest")" \
+    == "1" ]] ||
+    die "PrimeNativeDecoder checkpoint V2 validation gained an unexpected dependency"
+grep -Fq -- 'name: "PrimeCore"' \
+    "$decoder_checkpoint_v2_validation_manifest" ||
+    die "PrimeNativeDecoder checkpoint V2 validation does not consume PrimeCore"
+grep -Fq -- 'name: "PrimeNativeDecoderCheckpoint"' \
+    "$decoder_checkpoint_v2_validation_manifest" ||
+    die "PrimeNativeDecoder checkpoint V2 validation does not consume the checkpoint product"
 
 for forbidden_decoder_value in \
     "MLXLLM" \
@@ -651,9 +810,11 @@ for forbidden_decoder_value in \
     if grep -Fq -- "$forbidden_decoder_value" \
         "$decoder_source" \
         "$decoder_checkpoint_source" \
+        "$decoder_checkpoint_v2_source" \
         "$decoder_authority_test" \
         "$decoder_checkpoint_test" \
-        "$decoder_validation_test"; then
+        "$decoder_validation_test" \
+        "$decoder_checkpoint_v2_validation_test"; then
         die "PrimeNativeDecoder closure contains forbidden value: $forbidden_decoder_value"
     fi
 done
@@ -667,9 +828,11 @@ if grep -Eq -- \
     '(^|[^[:alnum:]_])Process([^[:alnum:]_]|$)' \
     "$decoder_source" \
     "$decoder_checkpoint_source" \
+    "$decoder_checkpoint_v2_source" \
     "$decoder_authority_test" \
     "$decoder_checkpoint_test" \
-    "$decoder_validation_test"; then
+    "$decoder_validation_test" \
+    "$decoder_checkpoint_v2_validation_test"; then
     die "PrimeNativeDecoder closure contains forbidden value: Process"
 fi
 
@@ -692,8 +855,33 @@ for forbidden_checkpoint_capability in \
     "writeNative300MByte512" \
     "loadNative300MByte512"; do
     if grep -Fq -- "$forbidden_checkpoint_capability" \
-        "$decoder_checkpoint_source"; then
+        "$decoder_checkpoint_source" \
+        "$decoder_checkpoint_v2_source"; then
         die "PrimeNativeDecoderCheckpoint owns forbidden capability: $forbidden_checkpoint_capability"
+    fi
+done
+
+for forbidden_v2_identity_capability in \
+    "import Darwin" \
+    "import Metal" \
+    "import MLX" \
+    "import MLXNN" \
+    "import MLXOptimizers" \
+    "MLXArray" \
+    "PrimeNativeDecoderCheckpointManifestV1" \
+    "PrimeNativeDecoderCheckpointCodecV1" \
+    "FileManager" \
+    "FileHandle" \
+    "URL(fileURLWithPath:" \
+    "open(" \
+    "close(" \
+    "read(" \
+    "write(" \
+    "load(" \
+    "save("; do
+    if grep -Fq -- "$forbidden_v2_identity_capability" \
+        "$decoder_checkpoint_v2_source"; then
+        die "PrimeNativeDecoderCheckpoint V2 identity owns forbidden capability: $forbidden_v2_identity_capability"
     fi
 done
 

@@ -78,6 +78,7 @@ jobs:
             Sources/PrimeCore/PrimeNativeDecoderAuthority.swift \
             Sources/PrimeCore/PrimeNativeDecoderDerivedDelta.swift \
             Sources/PrimeCore/PrimeNativeDecoderCheckpointAuthority.swift \
+            Sources/PrimeCore/PrimeNativeDecoderCheckpointCompatibilityV2Authority.swift \
             Sources/PrimeCore/PrimeNativeDecoderMetalRepairAuthority.swift \
             Sources/PrimeCore/PrimeNativeDecoderMetalExecutionObservation.swift \
             Sources/PrimeCore/PrimeNativeDecoderMetalExecutionObservationCorrection.swift \
@@ -85,6 +86,7 @@ jobs:
             Sources/PrimeCore/PrimeNativeDecoderReviewedMainMetalExecutionObservation.swift \
             Sources/PrimeNativeDecoder/PrimeNativeGQADecoder.swift \
             Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV1.swift \
+            Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCompatibilityIdentityV2.swift \
             Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalPairCaptureSourceContractTests.swift \
             Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalPairCaptureTests.swift \
             Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalGitSourceV3Tests.swift \
@@ -99,6 +101,7 @@ jobs:
             Tests/PrimeNativeDecoderValidation/Tests/PrimeNativeDecoderTests/PrimeNativeDecoderAuthorityTests.swift \
             Tests/PrimeNativeDecoderValidation/Tests/PrimeNativeDecoderTests/PrimeNativeDecoderCheckpointTests.swift \
             Tests/PrimeNativeDecoderValidation/Tests/PrimeNativeDecoderTests/PrimeNativeGQADecoderTests.swift \
+            Tests/PrimeNativeDecoderCheckpointCompatibilityV2Validation/Tests/PrimeNativeDecoderCheckpointCompatibilityV2Tests/PrimeNativeDecoderCompatibilityIdentityV2Tests.swift \
             Tests/PrimeCoreTests/PrimeNativeCorpusReplaySourceContractTests.swift \
             Tests/PrimeCoreTests/PrimeNativeGenerationContractSourceContractTests.swift \
             Tests/PrimeCoreTests/PrimeNativeNeuralGateContractSourceContractTests.swift \
@@ -141,6 +144,7 @@ jobs:
             echo 'An append-only correction preserves that 44/44 Metal projection but invalidates the predecessor active-root and whole-gate-sequence completion claims: the old fixed-substring Process matcher could not distinguish ProcessInfo or inProcess metadata from the forbidden standalone Process symbol. This exact-head run observes only the corrected lexical gate scope; it does not widen Metal, runtime, checkpoint, training, or downstream authority.'
             echo 'A successor observation binds the corrected exact-head pull-request active-root and Latin gate execution. The reviewed-main Metal job remained skipped by design, so GitHub-hosted Metal, fresh-metallib provenance, runtime, checkpoint, training, and downstream authority remain false.'
             echo 'A reviewed-main successor binds the exact merged revision whose active-root, Latin, focused-contract, fresh-metallib, and 44-test live-Metal jobs passed on GitHub. It remains synthetic mechanics evidence and leaves repaired checkpoint identity, admitted runtime policy, training, and downstream authority false.'
+            echo 'The repaired-source checkpoint compatibility V2 successor retains the exact V1 configuration, byte-512 tokenizer identity, and 218-entry FP32 parameter catalog while binding the repaired decoder source. It defines no V2 manifest, codec, artifact, native-profile I/O, runtime, or training authority.'
             echo 'The locally declared origin is not network-authenticated, and ignored workspace bytes are not observed by this slice.'
             echo 'No Prime proposal, candidate selection, trial authorization, decision receipt, runtime/product/canary decoder activation, model execution, training, publication, promotion, Driver V2, or PMHNP authority is granted.'
           } >> "$GITHUB_STEP_SUMMARY"
@@ -219,13 +223,18 @@ jobs:
           set -euo pipefail
           readonly mlx_bare="$RUNNER_TEMP/ergentics-mlx-swift.git"
           readonly test_log="$RUNNER_TEMP/prime-active-root-tests.log"
+          readonly checkpoint_v2_test_log="$RUNNER_TEMP/prime-checkpoint-v2-tests.log"
           [[ "$(git --git-dir="$mlx_bare" rev-parse refs/heads/prime-pinned)" == \
             "$PRIME_MLX_REVISION" ]]
           mkdir -p \
             "$RUNNER_TEMP/prime-active-root-build" \
             "$RUNNER_TEMP/prime-active-root-cache" \
             "$RUNNER_TEMP/prime-active-root-config" \
-            "$RUNNER_TEMP/prime-active-root-security"
+            "$RUNNER_TEMP/prime-active-root-security" \
+            "$RUNNER_TEMP/prime-checkpoint-v2-build" \
+            "$RUNNER_TEMP/prime-checkpoint-v2-cache" \
+            "$RUNNER_TEMP/prime-checkpoint-v2-config" \
+            "$RUNNER_TEMP/prime-checkpoint-v2-security"
           export GIT_CONFIG_COUNT=2
           export GIT_CONFIG_KEY_0="url.file://${mlx_bare}/.insteadOf"
           export GIT_CONFIG_VALUE_0="https://github.com/Ergentics/ergentics-mlx-swift"
@@ -244,9 +253,24 @@ jobs:
             --test-product ErgenticsPrimePackageTests \
             --filter 'PrimeNativeNeuralGateMLXIsolationSourceContractTests|PrimeNativeCorpusReplaySourceContractTests|PrimeNativeGenerationContractSourceContractTests|PrimeNativeNeuralGateContractSourceContractTests|PrimeNativeResolvedContractAdapterSourceContractTests|PrimeSwiftSourceProvenanceTests/testLiveRepositoryMatchesEmbeddedSourceIdentity' \
             2>&1 | tee "$test_log"
+          TMPDIR="$RUNNER_TEMP" swift test \
+            --package-path Tests/PrimeNativeDecoderCheckpointCompatibilityV2Validation \
+            --scratch-path "$RUNNER_TEMP/prime-checkpoint-v2-build" \
+            --cache-path "$RUNNER_TEMP/prime-checkpoint-v2-cache" \
+            --config-path "$RUNNER_TEMP/prime-checkpoint-v2-config" \
+            --security-path "$RUNNER_TEMP/prime-checkpoint-v2-security" \
+            --disable-dependency-cache \
+            --manifest-cache local \
+            --disable-netrc \
+            --disable-keychain \
+            --force-resolved-versions \
+            2>&1 | tee "$checkpoint_v2_test_log"
           unset GIT_CONFIG_COUNT GIT_CONFIG_KEY_0 GIT_CONFIG_VALUE_0
           unset GIT_CONFIG_KEY_1 GIT_CONFIG_VALUE_1
           grep -Eq 'Executed [1-9][0-9]* tests?, with 0 failures' "$test_log"
+          grep -Fq 'Executed 1 test, with 0 failures' \
+            "$checkpoint_v2_test_log"
+          ! grep -Fqi -- 'skipped' "$checkpoint_v2_test_log"
           [[ "$(git rev-parse HEAD)" == "$EXACT_REVISION" ]]
           [[ -z "$(git status --porcelain=v1 --untracked-files=all)" ]]
 

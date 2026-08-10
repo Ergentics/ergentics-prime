@@ -79,8 +79,15 @@ kernel without changing the MLX pin or parameter topology.
 
 The checkpoint V1 compatibility identity remains immutable history bound to
 the pre-repair decoder source. It is not the current repaired decoder identity.
-A successor checkpoint compatibility identity is required before native
-checkpoint, runtime, or training authority can advance.
+`PrimeNativeDecoderCheckpointCompatibilityV2AuthorityPlan.frozenV2` and
+`PrimeNativeDecoderCompatibilityIdentityV2` now provide the append-only
+declarative successor. V2 retains the exact V1 Native-300M configuration,
+Prime byte-512 tokenizer identity, and ordered 218-entry FP32 path/shape/count
+catalog while changing the schema, authority lineage, and decoder-source
+binding. V1 and V2 relabeling is rejected in both directions, and the V1
+manifest rejects a V2 identity. This is weight-topology compatibility only;
+behavioral parity with the historical source and existing artifact
+compatibility remain unestablished.
 
 The Metal gate also binds a separate synthetic CI-mechanics policy that starts
 without any inherited `MLX_`, `DYLD_`, or `LLVM_PROFILE_` override and sets
@@ -89,12 +96,13 @@ tolerance was globally widened. This policy does not weaken or satisfy the
 frozen maintained-runtime environment policy, which still rejects every
 `MLX_` key; an admitted runtime compute-policy successor remains required.
 
-These slices authorize source materialization, compilation, and bounded
-synthetic mechanics only. They do not establish a current checkpoint identity,
-an admitted runtime compute policy, runtime dependency closure, runtime
-initialization, checkpoint loading, training, trial authorization, canary
-replacement, quantization, product use, or publication. The result remains
-`ABSTAIN` at those boundaries.
+These slices establish the repaired source's exact declarative compatibility
+identity in addition to source materialization, compilation, and bounded
+synthetic mechanics. They do not define a V2 manifest or codec, establish a
+checkpoint artifact or native-profile I/O, admit a runtime compute policy,
+close runtime dependencies or initialization, validate tokenizer/model
+behavior, train, authorize a trial, replace a canary, quantize, select product
+use, or publish. The result remains `ABSTAIN` at those boundaries.
 
 ## Verification and next slices
 
@@ -102,6 +110,13 @@ The isolated validation package compiles against the exact first-party MLX
 pin. Metal-free configuration, overflow, profile inventory, cache arithmetic,
 compatibility identity, mutation, logical-byte encoding, and descriptor-cap
 tests run in trusted-main CI.
+
+A second isolated one-test package validates V2 without changing the frozen
+44-test Metal launcher or Driver V2 inventories. It checks the exact V1
+projection reuse, repaired source binding, canonical V1/catalog/V2 hashes,
+bidirectional version rejection, V1-manifest rejection, source capability
+ceiling, and fail-closed mutations. It performs no model allocation, Metal
+execution, or checkpoint I/O.
 
 The first external live-Metal run of exact head `84504dc` executed all 41 tests
 with no skips but reported 306 assertions. Disabling pinned-MLX TF32 removed
@@ -165,15 +180,18 @@ staged two byte-identical copies, and passed 11 authority, 14 checkpoint, and
 This establishes GitHub-hosted synthetic Metal mechanics and job-scoped fresh
 metallib build/staging provenance. It does not identify the physical host GPU,
 instrument MLX to prove which staged metallib image it loaded, retain or
-publish the metallib or test binary, establish a repaired checkpoint identity
-or admitted runtime policy, execute Native-300M, or authorize training. Exact
+publish the metallib or test binary, establish an admitted runtime policy,
+execute Native-300M, or authorize training. The later V2 identity is a
+separate declarative source/catalog successor, not a projection of this Metal
+observation. Exact
 byte counts and SHA-256 values bind the two downloaded GitHub job-log endpoint
 responses, but no raw log archive or durable log artifact is retained here.
 
-The validation package deliberately has no repository-owned SwiftPM mirror.
-Every gate supplies an isolated `--config-path`, and the quarantine gate
-asserts that no package-local mirror appears. This keeps dependency remapping
-outside the committed authority surface while the exact lock remains pinned.
+The decoder and V2 identity validation packages deliberately have no
+repository-owned SwiftPM mirror. Every gate supplies an isolated
+`--config-path`, and the quarantine gate asserts that no package-local mirror
+appears. This keeps dependency remapping outside the committed authority
+surface while each exact lock remains pinned.
 
 Geometry RenderKit remains a useful Metal lifecycle and CPU/GPU parity-pattern
 donor at its pinned audited revision. Prime's existing roadmap explicitly
@@ -186,21 +204,19 @@ dependency.
 
 The remaining replacement order is:
 
-1. append a repaired-source checkpoint compatibility identity without adding
-   a manifest, codec, native-profile I/O, or checkpoint admission;
-2. append an admitted runtime compute policy, establish the exact dependency,
+1. append an admitted runtime compute policy, establish the exact dependency,
    metallib, device, and initialization closure, and keep it separate from the
    synthetic CI policy;
-3. establish tokenizer/model functional compatibility, then define bounded
+2. establish tokenizer/model functional compatibility, then define bounded
    native-profile checkpoint container and I/O mechanics;
-4. define generic Prime-owned train/evaluate surfaces and persist exact
+3. define generic Prime-owned train/evaluate surfaces and persist exact
    optimizer, RNG, and data-cursor state for trajectory-exact resume;
-5. separately authorize bounded training, then produce and bind a non-fixture
+4. separately authorize bounded training, then produce and bind a non-fixture
    checkpoint with exact training-state and artifact provenance;
-6. separately authorize and run a bounded candidate canary/trial;
-7. migrate the read-only PMHNP canary consumer to the Prime-owned interface and
+5. separately authorize and run a bounded candidate canary/trial;
+6. migrate the read-only PMHNP canary consumer to the Prime-owned interface and
    remove its active Llama factory after single-MLX-graph reconciliation;
-8. address CoreML/NeuralKit product export only after accepted checkpoint and
+7. address CoreML/NeuralKit product export only after accepted checkpoint and
    parity evidence.
 
 No training, PMHNP write, or product decision is part of this hosted

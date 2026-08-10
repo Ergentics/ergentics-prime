@@ -23,8 +23,11 @@ It does not expose native checkpoint I/O, establish a retained checkpoint,
 initialize a runtime, or authorize training. An append-only repair now works
 around the pinned MLX batched single-token RoPE dispatch defect and binds
 TF32-off as a synthetic CI-mechanics policy. The existing checkpoint V1
-identity remains frozen pre-repair history; a repaired-source successor is
-still required before runtime or training authority. An append-only execution
+identity remains frozen pre-repair history. An append-only V2 declarative
+identity now retains its exact configuration, byte-512 tokenizer identity,
+and 218-entry FP32 parameter catalog while binding the repaired decoder source.
+It adds no V2 manifest, codec, checkpoint artifact or I/O, maintained-runtime
+policy, or training authority. An append-only execution
 observation now binds an exact clean committed repair head whose rebuilt
 44-test bundle passed on external live Metal with zero failures and skips;
 an append-only correction preserves that XCTest evidence while invalidating
@@ -38,8 +41,7 @@ source produced a fresh `default.metallib`, a Metal device was visible, and all
 44 isolated decoder tests passed with zero failures or skips under the bound
 TF32-off CI mechanics policy. That hosted observation does not identify a
 physical GPU, independently trace the exact metallib image loaded at runtime,
-establish a repaired checkpoint identity or maintained-runtime policy, or
-authorize training.
+or establish a maintained-runtime policy, and it does not authorize training.
 The exact implemented boundary and remaining replacement path are recorded in
 [`docs/PRIME-NATIVE-DECODER-REPLACEMENT-2026-08-09.md`](docs/PRIME-NATIVE-DECODER-REPLACEMENT-2026-08-09.md).
 

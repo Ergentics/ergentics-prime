@@ -1,0 +1,23 @@
+{
+  "originHash" : "dd1b0c661bd22a8d36b02ce310873a9dc7bd2b6e532661affae2a8baf1f2d7a5",
+  "pins" : [
+    {
+      "identity" : "ergentics-mlx-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Ergentics/ergentics-mlx-swift",
+      "state" : {
+        "revision" : "d37885a278f1c37484a94d0f401a418735e66519"
+      }
+    },
+    {
+      "identity" : "swift-numerics",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-numerics",
+      "state" : {
+        "revision" : "0c0290ff6b24942dadb83a929ffaaa1481df04a2",
+        "version" : "1.1.1"
+      }
+    }
+  ],
+  "version" : 3
+}
