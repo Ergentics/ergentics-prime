@@ -770,6 +770,9 @@ final class PrimeNativeDecoderCheckpointTests: XCTestCase {
     }
 
     private func requireCheckpointMetal() throws {
+        try PrimeNativeDecoderCIMLXComputeEnvironmentPolicy
+            .validateLaunched(
+                environment: ProcessInfo.processInfo.environment)
         guard MTLCreateSystemDefaultDevice() != nil else {
             throw XCTSkip(
                 "Metal is unavailable in this process; checkpoint execution was not observed")

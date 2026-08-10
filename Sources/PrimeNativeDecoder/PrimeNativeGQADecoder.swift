@@ -674,8 +674,21 @@ final class PrimeNativeGQAAttention: Module {
                 configuration.headWidth)
             .transposed(0, 2, 1, 3)
 
-        queries = rotaryPositionEncoding(queries, offset: positionOffset)
-        keys = rotaryPositionEncoding(keys, offset: positionOffset)
+        // The pinned MLX scalar-offset RoPE specialization dispatches only
+        // one batch plane when `sequenceLength == 1`. Supplying one explicit
+        // offset per rectangular batch row keeps batch-one on the same
+        // specialization while forcing the correct batch-aware kernel for
+        // batched decoding.
+        let positionOffsets = MLXArray(
+            Array(
+                repeating: Int32(positionOffset),
+                count: batchSize))
+        queries = rotaryPositionEncoding(
+            queries,
+            offset: positionOffsets)
+        keys = rotaryPositionEncoding(
+            keys,
+            offset: positionOffsets)
         return (queries, keys, values)
     }
 }

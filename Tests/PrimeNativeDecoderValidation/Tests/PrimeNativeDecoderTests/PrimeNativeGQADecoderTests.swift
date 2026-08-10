@@ -355,6 +355,41 @@ final class PrimeNativeGQADecoderTests: XCTestCase {
         XCTAssertEqual(
             atZero.values.asArray(Float.self),
             shifted.values.asArray(Float.self))
+
+        let firstOneTokenRow = (0 ..< 16).map {
+            Float($0 - 8) / 8
+        }
+        let secondOneTokenRow = (0 ..< 16).map {
+            Float(16 - $0) / 9
+        }
+        let batchedOneToken = MLXArray(
+            firstOneTokenRow + secondOneTokenRow,
+            [2, 1, 16])
+        let batchedShifted = attention.projectedQueriesKeysValues(
+            batchedOneToken,
+            positionOffset: 3)
+        let firstShifted = attention.projectedQueriesKeysValues(
+            MLXArray(firstOneTokenRow, [1, 1, 16]),
+            positionOffset: 3)
+        let secondShifted = attention.projectedQueriesKeysValues(
+            MLXArray(secondOneTokenRow, [1, 1, 16]),
+            positionOffset: 3)
+        eval(
+            batchedShifted.queries,
+            batchedShifted.keys,
+            batchedShifted.values,
+            firstShifted.queries,
+            firstShifted.keys,
+            firstShifted.values,
+            secondShifted.queries,
+            secondShifted.keys,
+            secondShifted.values)
+        assertClose(batchedShifted.queries[0], firstShifted.queries[0])
+        assertClose(batchedShifted.keys[0], firstShifted.keys[0])
+        assertClose(batchedShifted.values[0], firstShifted.values[0])
+        assertClose(batchedShifted.queries[1], secondShifted.queries[0])
+        assertClose(batchedShifted.keys[1], secondShifted.keys[0])
+        assertClose(batchedShifted.values[1], secondShifted.values[0])
     }
 
     func testPinnedCausalSDPAMatchesScalarGQAReference() throws {
@@ -894,6 +929,9 @@ final class PrimeNativeGQADecoderTests: XCTestCase {
     }
 
     private func requireMetal() throws {
+        try PrimeNativeDecoderCIMLXComputeEnvironmentPolicy
+            .validateLaunched(
+                environment: ProcessInfo.processInfo.environment)
         // Apple documents a CoreGraphics link requirement for default-device
         // discovery in nongraphical macOS executables. Referencing a concrete
         // symbol keeps that framework in this XCTest executable; it does not

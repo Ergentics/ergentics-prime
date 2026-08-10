@@ -10,7 +10,8 @@ fail() {
 readonly prime_root="$(cd "$(dirname "$0")/../.." && pwd -P)"
 readonly runner_temp="${RUNNER_TEMP:?RUNNER_TEMP is required}"
 readonly exact_revision="${EXACT_REVISION:?EXACT_REVISION is required}"
-readonly mlx_revision="${MLX_REVISION:?MLX_REVISION is required}"
+readonly mlx_revision="${PRIME_MLX_REVISION:?PRIME_MLX_REVISION is required}"
+readonly ci_policy_id="ergentics_prime_native_decoder_ci_mlx_compute_environment"
 readonly expected_mlx_submodules=$' ce45c52505c8158ea48d2a54e8caae05efd86bfe Source/Cmlx/mlx (v0.31.1)\n 0726ca922fc902c4c61ef9c27d94132be418e945 Source/Cmlx/mlx-c (v0.6.0)'
 readonly mlx_bare="$runner_temp/ergentics-mlx-swift.git"
 readonly mlx_source="$runner_temp/ergentics-mlx-swift"
@@ -24,6 +25,21 @@ readonly test_log="$runner_temp/prime-native-decoder-metal-tests.log"
 
 [[ "$exact_revision" =~ ^[0-9a-f]{40}$ ]] || fail "invalid exact revision"
 [[ "$mlx_revision" =~ ^[0-9a-f]{40}$ ]] || fail "invalid MLX revision"
+while IFS='=' read -r inherited_key _; do
+    case "$inherited_key" in
+        MLX_*|DYLD_*|LLVM_PROFILE_*)
+            fail "forbidden inherited environment key: $inherited_key"
+            ;;
+    esac
+done < <(env)
+export MLX_ENABLE_TF32=0
+[[ "$(env | awk -F= '$1 ~ /^MLX_/ {print $1}' | LC_ALL=C sort)" \
+    == "MLX_ENABLE_TF32" ]] ||
+    fail "reviewed launcher did not establish the exclusive MLX environment"
+[[ "$MLX_ENABLE_TF32" == "0" ]] ||
+    fail "reviewed launcher established the wrong TF32 value"
+[[ -z "$(env | awk -F= '$1 ~ /^(DYLD_|LLVM_PROFILE_)/ {print $1}')" ]] ||
+    fail "reviewed launcher retained a forbidden process override"
 [[ "$(uname -m)" == arm64 ]] || fail "live Metal gate requires Apple silicon"
 xcrun swift -e '
     import CoreGraphics
@@ -143,9 +159,7 @@ done
 echo "Prime decoder Metal gate: metallib_sha256=$(shasum -a 256 "$metallib" | awk '{print $1}') metallib_bytes=$(stat -f %z "$metallib")"
 
 set +e
-TMPDIR="$runner_temp" swift test \
-    "${swift_arguments[@]}" \
-    --skip-build \
+TMPDIR="$runner_temp" xcrun xctest "$test_bundle" \
     2>&1 | tee "$test_log"
 test_pipe_status=("${PIPESTATUS[@]}")
 set -e
@@ -162,8 +176,8 @@ grep -Fq "Test Suite 'PrimeNativeDecoderCheckpointTests' passed" "$test_log" ||
     fail "decoder checkpoint suite did not pass"
 grep -Fq "Test Suite 'PrimeNativeGQADecoderTests' passed" "$test_log" ||
     fail "decoder GQA suite did not pass"
-grep -Eq 'Executed 41 tests, with 0 failures' "$test_log" ||
-    fail "full 41-test decoder suite did not execute"
+grep -Eq 'Executed 44 tests, with 0 failures' "$test_log" ||
+    fail "full 44-test decoder suite did not execute"
 
 for required_metal_test in \
     testParameterInventoryIsExactAndOutputProjectionIsTied \
@@ -206,11 +220,11 @@ unset GIT_CONFIG_KEY_1 GIT_CONFIG_VALUE_1
 [[ -z "$(git -C "$swiftpm_mlx_source" status --porcelain=v1 --untracked-files=all)" ]] ||
     fail "SwiftPM MLX checkout changed during the Metal gate"
 
-echo "OK: exact-head Prime decoder body, GQA, RoPE, gradients, KV cache, and synthetic checkpoint mechanics passed on live Metal"
+echo "OK: exact-head Prime decoder body, GQA, RoPE, gradients, KV cache, and synthetic checkpoint mechanics passed on live Metal under ${ci_policy_id} v1"
 
 if [[ -n "${GITHUB_STEP_SUMMARY:-}" ]]; then
     {
-        echo 'The exact reviewed Prime main revision passed all 41 isolated native-decoder tests on a GitHub-hosted Apple-silicon Metal device with the exact pinned MLX source and freshly staged default.metallib.'
-        echo 'This is a CI mechanics observation only; it does not grant checkpoint admission, training, trial, canary, product, or publication authority.'
+        echo "The exact reviewed Prime main revision passed all 44 isolated native-decoder tests on a GitHub-hosted Apple-silicon Metal device under CI mechanics policy ${ci_policy_id} version 1, with MLX_ENABLE_TF32=0 fixed before first MLX access, the exact pinned MLX source, and a freshly staged default.metallib."
+        echo 'This synthetic CI mechanics observation neither changes nor satisfies the separate frozen maintained-runtime policy and grants no checkpoint admission, training or resume, trial, canary, product, or publication authority.'
     } >> "$GITHUB_STEP_SUMMARY"
 fi

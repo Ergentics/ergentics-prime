@@ -78,6 +78,7 @@ jobs:
             Sources/PrimeCore/PrimeNativeDecoderAuthority.swift \
             Sources/PrimeCore/PrimeNativeDecoderDerivedDelta.swift \
             Sources/PrimeCore/PrimeNativeDecoderCheckpointAuthority.swift \
+            Sources/PrimeCore/PrimeNativeDecoderMetalRepairAuthority.swift \
             Sources/PrimeNativeDecoder/PrimeNativeGQADecoder.swift \
             Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV1.swift \
             Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalPairCaptureSourceContractTests.swift \
@@ -129,7 +130,8 @@ jobs:
             echo 'The receipt publisher is compiled and exercised only against synthetic temporary artifact roots in the existing Latin test lane; hosted CI does not live-run validation capture or publish repository, lab, model, proposal, or public-network artifacts.'
             echo 'The pure internal Latin admission policy validates only the exact frozen typed receipt projection and emits typed ABSTAIN reasons for absent current liveness, the policy-classified structural fixture, and runtime decoder, dependency-closure, and initialization state not established by that receipt; it proves no artifact binding and creates no proposal packet or trial authorization.'
             echo 'Prime now owns a dependency-isolated Swift/MLXNN GQA decoder body and opaque KV cache. The additive derived-delta contract authorizes source materialization, compilation, and bounded synthetic mechanics tests only; it does not claim live Metal execution, checkpoint readiness, training, canary replacement, or product authority.'
-            echo 'The isolated checkpoint target publicly binds only the exact Native-300M/Prime-byte-512 weights compatibility identity and analytic FP32 parameter catalog. Its executable borrowed-descriptor codec remains internal, exact-tiny-synthetic-only, size-capped, and non-authorizing; native checkpoint write/load, artifact provenance, atomic durability, runtime initialization, training, trial, canary, and product authority remain false.'
+            echo 'The frozen pre-repair checkpoint V1 target publicly binds only its historical Native-300M/Prime-byte-512 weights compatibility identity and analytic FP32 parameter catalog. Its executable borrowed-descriptor codec remains internal, exact-tiny-synthetic-only, size-capped, and non-authorizing; it is not the repaired decoder identity, and native checkpoint write/load, artifact provenance, atomic durability, runtime initialization, training, trial, canary, and product authority remain false.'
+            echo 'The append-only Metal-repair contract preserves the frozen decoder/checkpoint identities, binds the pinned batched single-token RoPE defect and Prime-local explicit-offset repair, and fixes TF32-off only as a synthetic CI-mechanics policy. The repaired checkpoint identity, admitted runtime policy, exact-head hosted observation, training, and downstream authority remain false.'
             echo 'The locally declared origin is not network-authenticated, and ignored workspace bytes are not observed by this slice.'
             echo 'No Prime proposal, candidate selection, trial authorization, decision receipt, runtime/product/canary decoder activation, model execution, training, publication, promotion, Driver V2, or PMHNP authority is granted.'
           } >> "$GITHUB_STEP_SUMMARY"
@@ -142,7 +144,7 @@ jobs:
     timeout-minutes: 45
     env:
       EXACT_REVISION: ${{ github.sha }}
-      MLX_REVISION: d37885a278f1c37484a94d0f401a418735e66519
+      PRIME_MLX_REVISION: d37885a278f1c37484a94d0f401a418735e66519
 
     steps:
       - name: Record the hosted Apple toolchain
@@ -190,13 +192,13 @@ jobs:
           export GIT_CONFIG_COUNT=1
           export GIT_CONFIG_KEY_0="url.https://x-access-token:${ERGENTICS_MLX_READ_TOKEN}@github.com/.insteadOf"
           export GIT_CONFIG_VALUE_0="https://github.com/"
-          git --git-dir="$mlx_bare" fetch --depth=1 --no-tags origin "$MLX_REVISION"
-          [[ "$(git --git-dir="$mlx_bare" rev-parse FETCH_HEAD)" == "$MLX_REVISION" ]]
-          git --git-dir="$mlx_bare" update-ref refs/heads/prime-pinned "$MLX_REVISION"
-          git --git-dir="$mlx_bare" worktree add --detach "$mlx_source" "$MLX_REVISION"
+          git --git-dir="$mlx_bare" fetch --depth=1 --no-tags origin "$PRIME_MLX_REVISION"
+          [[ "$(git --git-dir="$mlx_bare" rev-parse FETCH_HEAD)" == "$PRIME_MLX_REVISION" ]]
+          git --git-dir="$mlx_bare" update-ref refs/heads/prime-pinned "$PRIME_MLX_REVISION"
+          git --git-dir="$mlx_bare" worktree add --detach "$mlx_source" "$PRIME_MLX_REVISION"
           unset GIT_CONFIG_COUNT GIT_CONFIG_KEY_0 GIT_CONFIG_VALUE_0
           git -C "$mlx_source" submodule update --init --recursive
-          [[ "$(git -C "$mlx_source" rev-parse HEAD)" == "$MLX_REVISION" ]]
+          [[ "$(git -C "$mlx_source" rev-parse HEAD)" == "$PRIME_MLX_REVISION" ]]
           [[ -z "$(git -C "$mlx_source" status --porcelain=v1 --untracked-files=all)" ]]
           [[ "$(git --git-dir="$mlx_bare" remote get-url origin)" == \
             'https://github.com/Ergentics/ergentics-mlx-swift' ]]
@@ -209,7 +211,7 @@ jobs:
           readonly mlx_bare="$RUNNER_TEMP/ergentics-mlx-swift.git"
           readonly test_log="$RUNNER_TEMP/prime-active-root-tests.log"
           [[ "$(git --git-dir="$mlx_bare" rev-parse refs/heads/prime-pinned)" == \
-            "$MLX_REVISION" ]]
+            "$PRIME_MLX_REVISION" ]]
           mkdir -p \
             "$RUNNER_TEMP/prime-active-root-build" \
             "$RUNNER_TEMP/prime-active-root-cache" \

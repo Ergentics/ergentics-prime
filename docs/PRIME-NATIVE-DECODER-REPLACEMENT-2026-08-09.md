@@ -69,23 +69,60 @@ observations, tokenizer functional compatibility, optimizer/RNG/data-cursor
 state, training/resume, candidate selection, trial, canary, product, and
 publication authority all remain false.
 
-This slice authorizes source materialization, compilation, and bounded
-synthetic mechanics tests. It does not establish live Metal execution, cache
-parity, gradients, runtime dependency closure, runtime initialization,
-checkpoint loading, training, trial authorization, canary replacement,
-quantization, product use, or publication. The result remains `ABSTAIN` at
-those boundaries.
+`PrimeNativeDecoderMetalRepairAuthorityPlan.frozenV1` succeeds those frozen
+records without rewriting them. It binds the old and repaired decoder source,
+the exact pinned MLX and nested-core revisions, the affected RoPE source, and
+the regression and upstream-repair revisions. The pinned MLX single-token
+scalar-offset RoPE dispatch omitted the batch dimension; Prime supplies one
+explicit `Int32` offset per rectangular batch row, forcing the batch-aware
+kernel without changing the MLX pin or parameter topology.
+
+The checkpoint V1 compatibility identity remains immutable history bound to
+the pre-repair decoder source. It is not the current repaired decoder identity.
+A successor checkpoint compatibility identity is required before native
+checkpoint, runtime, or training authority can advance.
+
+The Metal gate also binds a separate synthetic CI-mechanics policy that starts
+without any inherited `MLX_`, `DYLD_`, or `LLVM_PROFILE_` override and sets
+only `MLX_ENABLE_TF32=0` before its first Metal or MLX call. No comparison
+tolerance was globally widened. This policy does not weaken or satisfy the
+frozen maintained-runtime environment policy, which still rejects every
+`MLX_` key; an admitted runtime compute-policy successor remains required.
+
+These slices authorize source materialization, compilation, and bounded
+synthetic mechanics only. They do not establish a current checkpoint identity,
+an admitted runtime compute policy, runtime dependency closure, runtime
+initialization, checkpoint loading, training, trial authorization, canary
+replacement, quantization, product use, or publication. The result remains
+`ABSTAIN` at those boundaries.
 
 ## Verification and next slices
 
 The isolated validation package compiles against the exact first-party MLX
 pin. Metal-free configuration, overflow, profile inventory, cache arithmetic,
 compatibility identity, mutation, logical-byte encoding, and descriptor-cap
-tests run in trusted-main CI. Full forward, GQA scalar parity, gradient, seed,
-cache parity, and the synthetic weights roundtrip require a Metal-visible
-process and must report no skips before the corresponding execution mechanics
-can be recorded. Even a successful synthetic roundtrip is not runtime or
-checkpoint admission evidence.
+tests run in trusted-main CI.
+
+The first external live-Metal run of exact head `84504dc` executed all 41 tests
+with no skips but reported 306 assertions. Disabling pinned-MLX TF32 removed
+the scalar-reference and single-batch cache differences, leaving 96 assertions
+only in rectangular-batch continuation. With the explicit per-row RoPE-offset
+repair and TF32 disabled, the external working-tree run executed all 41 tests
+with zero failures or skips. The three raw log hashes and byte counts are bound
+by the repair authority, but the logs are not retained in the repository. All
+three runs used the same externally prebuilt, exact-pinned MLX
+`default.metallib`; its hash and byte count are bound, while fresh-build
+provenance remains unobserved until the hosted action builds it itself.
+
+That passing run was a live working-tree mechanics observation before the
+distinct-row regression and in-process environment preflight were
+strengthened; its intermediate test-source identity was not retained. It is
+therefore decoder-mechanics evidence, not a complete source-identical suite
+observation, exact clean committed head, or GitHub-hosted observation. The
+reviewed workflow therefore still must
+compile the strengthened regression and pass all 44 tests with no skip under
+the exact CI-mechanics policy. Even that success is synthetic mechanics—not
+runtime, checkpoint admission, training, or model-quality evidence.
 
 The validation package deliberately has no repository-owned SwiftPM mirror.
 Every gate supplies an isolated `--config-path`, and the quarantine gate
@@ -103,18 +140,23 @@ dependency.
 
 The remaining replacement order is:
 
-1. run the existing mechanics suite on a Metal-capable exact-head process and
-   publish a separate synthetic execution observation;
-2. append a separate authority for native-profile checkpoint write/load and
-   bind the container through a verified artifact observation;
-3. define generic Prime-owned train/evaluate surfaces and persist exact
+1. commit the repair, run the strengthened suite on a clean exact-head
+   Metal-capable process, and then require the existing trusted-main GitHub
+   action to pass all 44 tests without skips;
+2. append a repaired-source checkpoint compatibility identity, then separately
+   authorize native-profile checkpoint write/load and bind the container
+   through a verified artifact observation;
+3. append an admitted runtime compute policy, establish the exact dependency,
+   metallib, device, and initialization closure, and keep it separate from the
+   synthetic CI policy;
+4. define generic Prime-owned train/evaluate surfaces and persist exact
    optimizer, RNG, and data-cursor state for trajectory-exact resume;
-4. separately authorize bounded training, produce a non-fixture checkpoint,
-   and establish the exact runtime dependency/metallib/initialization closure;
-5. separately authorize and run a bounded candidate canary/trial;
-6. migrate the read-only PMHNP canary consumer to the Prime-owned interface and
+5. separately authorize bounded training and produce a non-fixture checkpoint
+   with exact training-state lineage;
+6. separately authorize and run a bounded candidate canary/trial;
+7. migrate the read-only PMHNP canary consumer to the Prime-owned interface and
    remove its active Llama factory after single-MLX-graph reconciliation;
-7. address CoreML/NeuralKit product export only after accepted checkpoint and
+8. address CoreML/NeuralKit product export only after accepted checkpoint and
    parity evidence.
 
 No training, network access, push, PR, PMHNP write, or product decision is part
