@@ -12,6 +12,10 @@ let package = Package(
             targets: ["PrimeCore"]
         ),
         .library(
+            name: "PrimeNativeDecoder",
+            targets: ["PrimeNativeDecoder"]
+        ),
+        .library(
             name: "PrimeLatinProposalPairCapture",
             targets: [
                 "PrimeLatinProposalPairCapture",
@@ -216,6 +220,20 @@ let package = Package(
     targets: [
         .target(
             name: "PrimeCore"
+        ),
+        .target(
+            name: "PrimeNativeDecoder",
+            dependencies: [
+                "PrimeCore",
+                .product(
+                    name: "MLX",
+                    package: "ergentics-mlx-swift"
+                ),
+                .product(
+                    name: "MLXNN",
+                    package: "ergentics-mlx-swift"
+                ),
+            ]
         ),
         .target(
             name: "PrimeLatinProposalPairCapture"
