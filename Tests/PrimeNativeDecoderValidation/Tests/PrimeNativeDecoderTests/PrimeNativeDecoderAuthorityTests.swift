@@ -1,6 +1,7 @@
 // SPDX-FileCopyrightText: 2026 Ergentics, LLC
 // SPDX-License-Identifier: LicenseRef-Ergentics-Proprietary
 
+import CryptoKit
 import Foundation
 import XCTest
 
@@ -303,6 +304,9 @@ final class PrimeNativeDecoderAuthorityTests: XCTestCase {
 
     func testMetalRepairAuthorityIsAppendOnlyAndSourceExact() throws {
         let plan = PrimeNativeDecoderMetalRepairAuthorityPlan.frozenV1
+        let currentDecoderSurface =
+            PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsAuthorityV1
+                .frozenV1.surfaceDesign
         let executionObservation =
             PrimeNativeDecoderMetalExecutionObservationV1.frozenV1
         let root = URL(fileURLWithPath: #filePath)
@@ -335,10 +339,22 @@ final class PrimeNativeDecoderAuthorityTests: XCTestCase {
         XCTAssertEqual(
             plan.repairedDecoderSourceGitBlob,
             "835a4826549e1f28ec27e3533f746218beb3bdf2")
-        XCTAssertEqual(decoderSource.count, plan.repairedDecoderSourceByteCount)
+        XCTAssertEqual(plan.repairedDecoderSourceByteCount, 39_050)
         XCTAssertEqual(
-            PrimeSHA256.hexDigest(of: decoderSource),
-            plan.repairedDecoderSourceSHA256)
+            plan.repairedDecoderSourceSHA256,
+            "058ab392ac74a132a2503a04ab48400d1ef78a1bcad38eaddefce828b9252c9b")
+        XCTAssertTrue(
+            currentDecoderSurface
+                .predecessorDecoderIdentityRemainsHistoricalAndFrozen)
+        XCTAssertEqual(
+            currentDecoderSurface.currentDecoderSuccessorExpectedGitBlob,
+            gitBlobOID(of: decoderSource))
+        XCTAssertEqual(
+            currentDecoderSurface.currentDecoderSuccessorExpectedByteCount,
+            decoderSource.count)
+        XCTAssertEqual(
+            currentDecoderSurface.currentDecoderSuccessorExpectedSHA256,
+            PrimeSHA256.hexDigest(of: decoderSource))
         XCTAssertEqual(
             regressionSource.count,
             plan.regressionTestSourceByteCount)
@@ -733,5 +749,13 @@ final class PrimeNativeDecoderAuthorityTests: XCTestCase {
                 try mutated.validateExactV1(),
                 "execution-observation policy mutation was accepted: \(key)")
         }
+    }
+
+    private func gitBlobOID(of data: Data) -> String {
+        var framed = Data("blob \(data.count)\0".utf8)
+        framed.append(data)
+        return Insecure.SHA1.hash(data: framed)
+            .map { String(format: "%02x", $0) }
+            .joined()
     }
 }

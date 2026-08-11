@@ -313,6 +313,35 @@ tokenizer, or Stage-2 evidence. The metallib-bootstrap repair remains blocked
 until a distinct exact-main closure completes successfully through the secure
 fetch and every retained gate.
 
+`PrimeNativeDecoderMetalCurrentDecoderIdentityAssertionFailureObservationV1`
+freezes that next exact-main closure. History-preserving merge
+`2d0464ca35212d3d84781654b6a4e08158f27eab` ran once in workflow
+`31533658617`, attempt 1. Active root, the unchanged secure private-dependency
+fetch, and all 36 focused root tests passed. The retained Metal launcher built
+the pinned-source `default.metallib` and executed all 44 tests with no skips,
+but one source-identity test emitted two assertion failures: the historical
+Metal repair plan correctly remained bound to the 39,050-byte
+`058ab392ac74a132a2503a04ab48400d1ef78a1bcad38eaddefce828b9252c9b`
+decoder while the current frozen Stage-2 decoder is 39,598 bytes with SHA-256
+`d59a19bdbb37a74d5d08bea65c6b77bf2ed2dd4d3f138e5758a4ef9613b93994`.
+The exact drift is the already-authorized package-only no-cache training seam;
+the run establishes neither a new decoder mutation nor a Metal-mechanics
+failure. Maintained runtime and tokenizer did not run. Stage-2 remained
+retired, no checkpoint command or receipt marker appeared, the artifact
+inventory was empty, and the run was not rerun.
+
+`PrimeNativeDecoderMetalCurrentDecoderIdentityAssertionRepairAuthorityV1`
+authorizes only the existing Metal authority test to preserve the historical
+repair-plan assertions while validating the live decoder against its exact
+frozen Stage-2 source binding. It does not authorize changing the historical
+plan, production decoder, Stage-2 implementation, package pins, Metal/runtime/
+tokenizer launchers, secure fetch, or any downstream surface. Two pure
+exhaustive root contracts now make the expected reviewed-main count 38; the
+Metal suite remains exactly 44 tests. A distinct exact-main closure must still
+pass root 38 and the retained Metal-44, runtime-1, tokenizer-1 sequence before
+any completion observation. The separate pinned-source Stage-2 metallib-
+bootstrap repair remains blocked until then.
+
 An append-only execution
 observation now binds an exact clean committed repair head whose rebuilt
 44-test bundle passed on external live Metal with zero failures and skips;

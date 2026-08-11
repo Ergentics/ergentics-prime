@@ -88,6 +88,8 @@ jobs:
             Sources/PrimeCore/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsAuthority.swift \
             Sources/PrimeCore/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsExecutionFailureObservation.swift \
             Sources/PrimeCore/PrimeReviewedMainPrivateDependencyTLSFailureObservation.swift \
+            Sources/PrimeCore/PrimeNativeDecoderMetalCurrentDecoderIdentityAssertionFailureObservation.swift \
+            Sources/PrimeCore/PrimeNativeDecoderMetalCurrentDecoderIdentityAssertionRepairAuthority.swift \
             Sources/PrimeCore/PrimeNativeDecoderMaintainedRuntimeComputeAuthority.swift \
             Sources/PrimeCore/PrimeNativeDecoderMaintainedRuntimeExecutionObservation.swift \
             Sources/PrimeCore/PrimeNativeDecoderTokenizerModelFunctionalCompatibilityAuthority.swift \
@@ -138,6 +140,8 @@ jobs:
             Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsAuthorityTests.swift \
             Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsExecutionFailureObservationTests.swift \
             Tests/PrimeCoreTests/PrimeReviewedMainPrivateDependencyTLSFailureObservationTests.swift \
+            Tests/PrimeCoreTests/PrimeNativeDecoderMetalCurrentDecoderIdentityAssertionFailureObservationTests.swift \
+            Tests/PrimeCoreTests/PrimeNativeDecoderMetalCurrentDecoderIdentityAssertionRepairAuthorityTests.swift \
             Tests/PrimeCoreTests/PrimeNativeGenerationContractSourceContractTests.swift \
             Tests/PrimeCoreTests/PrimeNativeNeuralGateContractSourceContractTests.swift \
             Tests/PrimeCoreTests/PrimeNativeNeuralGateMLXIsolationSourceContractTests.swift \
@@ -201,6 +205,8 @@ jobs:
             echo 'The first and only exact-main Stage-2 attempt, workflow run 31525634838, passed active root, 34 focused root tests, and the four predecessor isolated suites before the Stage-2 method started and failed at pinned MLX default-metallib loading in stream.cpp:106. The method emitted neither pass nor skip, reached no CPU-device assertion or trainer initialization, and the retained Metal, maintained-runtime, and tokenizer step was skipped. The run had no rerun, checkpoint one-shot or receipt marker, upload step, or Actions artifact.'
             echo 'The append-only Stage-2 execution-failure observation exhausts that attempt and removes the failed live validation invocation, log, and scratch paths while preserving its implementation, manifest, lock, and test source. The focused root suite now includes one pure failure-observation test, for 35 tests. A separately authorized successor must stage and bind an exact pinned-source default.metallib before any new mechanics attempt; Stage 3 remains blocked.'
             echo 'A later exact-main run failed externally in the unchanged secure private-dependency fetch because TLS validation rejected a self-signed certificate. No focused or live test ran, no retry or TLS bypass is authorized, and the metallib repair remains blocked until a distinct exact-main closure completes successfully.'
+            echo 'The following exact-main closure passed the unchanged secure fetch and all 36 focused root tests, then the frozen 44-test Metal suite ran with zero skips and failed one source-identity test through two assertions because its historical repair plan still bound the pre-Stage-2 decoder while the live decoder carried the frozen package-only training seam. Maintained runtime and tokenizer did not run; Stage-2 remained retired; no checkpoint one-shot, artifact, or rerun occurred.'
+            echo 'A narrow append-only repair authority permits only the existing Metal authority test to validate the current decoder against the already-frozen Stage-2 source binding while continuing to validate the historical Metal repair plan against its original source identity. Production source, plan, decoder, workflow live commands, and all downstream authority remain unchanged; a distinct exact-main root-38, Metal-44, runtime-1, tokenizer-1 closure is still required.'
             echo 'The locally declared origin is not network-authenticated, and ignored workspace bytes are not observed by this slice.'
             echo 'Beyond that one bounded random-initialized Native-300M witness and the separately bounded tiny CPU Stage-2 mechanics authority, no Prime proposal, candidate selection, trial authorization, decision receipt, runtime/product/canary decoder activation, Native-300M training or additional execution, publication, promotion, Driver V2, or PMHNP authority is granted.'
           } >> "$GITHUB_STEP_SUMMARY"
@@ -322,7 +328,7 @@ jobs:
             --disable-keychain \
             --force-resolved-versions \
             --test-product ErgenticsPrimePackageTests \
-            --filter 'PrimeNativeNeuralGateMLXIsolationSourceContractTests|PrimeNativeCorpusReplaySourceContractTests|PrimeCoreTests.PrimeNativeDecoderTrajectoryExactResumeDesignAuthorityTests/testFrozenV1CanonicalCodableMutationAndSourceBoundary|PrimeCoreTests.PrimeNativeDecoderTrajectoryDesignReviewedMainTimeoutObservationTests/testFrozenV1CanonicalCodableRecursiveMutationAndAuthorityCeiling|PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsAuthorityTests/testFrozenV1CanonicalCodableExhaustiveMutationAndCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsExecutionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeReviewedMainPrivateDependencyTLSFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeNativeGenerationContractSourceContractTests|PrimeNativeNeuralGateContractSourceContractTests|PrimeNativeResolvedContractAdapterSourceContractTests|PrimeSwiftSourceProvenanceTests/testLiveRepositoryMatchesEmbeddedSourceIdentity' \
+            --filter 'PrimeNativeNeuralGateMLXIsolationSourceContractTests|PrimeNativeCorpusReplaySourceContractTests|PrimeCoreTests.PrimeNativeDecoderTrajectoryExactResumeDesignAuthorityTests/testFrozenV1CanonicalCodableMutationAndSourceBoundary|PrimeCoreTests.PrimeNativeDecoderTrajectoryDesignReviewedMainTimeoutObservationTests/testFrozenV1CanonicalCodableRecursiveMutationAndAuthorityCeiling|PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsAuthorityTests/testFrozenV1CanonicalCodableExhaustiveMutationAndCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsExecutionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeReviewedMainPrivateDependencyTLSFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeNativeDecoderMetalCurrentDecoderIdentityAssertionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeNativeDecoderMetalCurrentDecoderIdentityAssertionRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling|PrimeNativeGenerationContractSourceContractTests|PrimeNativeNeuralGateContractSourceContractTests|PrimeNativeResolvedContractAdapterSourceContractTests|PrimeSwiftSourceProvenanceTests/testLiveRepositoryMatchesEmbeddedSourceIdentity' \
             2>&1 | tee "$test_log"
           TMPDIR="$RUNNER_TEMP" swift test \
             --package-path Tests/PrimeNativeDecoderCheckpointCompatibilityV2Validation \
@@ -374,7 +380,7 @@ jobs:
             2>&1 | tee "$checkpoint_v2_io_root_identity_repair_execution_pure_test_log"
           unset GIT_CONFIG_COUNT GIT_CONFIG_KEY_0 GIT_CONFIG_VALUE_0
           unset GIT_CONFIG_KEY_1 GIT_CONFIG_VALUE_1
-          grep -Fq 'Executed 36 tests, with 0 failures' "$test_log"
+          grep -Fq 'Executed 38 tests, with 0 failures' "$test_log"
           grep -Fq 'PrimeNativeDecoderTrajectoryExactResumeDesignAuthorityTests' \
             "$test_log"
           grep -Fq 'PrimeNativeDecoderTrajectoryDesignReviewedMainTimeoutObservationTests' \
@@ -390,6 +396,10 @@ jobs:
           grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling' \
             "$test_log"
           grep -Fq 'PrimeReviewedMainPrivateDependencyTLSFailureObservationTests' \
+            "$test_log"
+          grep -Fq 'PrimeNativeDecoderMetalCurrentDecoderIdentityAssertionFailureObservationTests' \
+            "$test_log"
+          grep -Fq 'PrimeNativeDecoderMetalCurrentDecoderIdentityAssertionRepairAuthorityTests' \
             "$test_log"
           grep -Fq 'Executed 1 test, with 0 failures' \
             "$checkpoint_v2_test_log"
