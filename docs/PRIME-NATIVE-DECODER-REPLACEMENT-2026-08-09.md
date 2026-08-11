@@ -447,6 +447,54 @@ execution, and no timeout or checkout-depth expansion. Training, exact resume,
 retention, provenance, admission, trial, canary, product, and publication
 authority all remain false.
 
+### Reviewed-main timeout observation and bounded repair
+
+The first reviewed-main execution after the Stage-1 design merge did not
+complete. `PrimeNativeDecoderTrajectoryDesignReviewedMainTimeoutObservationV1`
+binds exact merge/head `5eeba9e6483bafd1bbb5c96753491b3dd1609ea0`, tree
+`aeae7b7f0c7ab1eb0236a6a2216789c62a082ea1`, and workflow run
+`31509046898`. Active-root job `93837901444` completed all seven steps
+successfully in 2 minutes 30.767 seconds. Its decoded log is 227,498 bytes with
+SHA-256
+`5042f65f7185aa0395b126b4e9cdc8dffee39fb2bc277b9aae4bbf383fe3961a`.
+
+Reviewed-main job `93838685818` was observed for 45 minutes 15.472 seconds and
+finished cancelled. Setup, toolchain capture, exact depth-one checkout, pinned
+dependency fetch, and focused contracts all succeeded. The focused step took
+20 minutes 7.237 seconds by the retained step-member timestamps. Its five
+commands completed 38 tests in total with
+zero failures or skips: 32 root-package focused tests and groups of 1, 1, 2,
+and 2 tests in the four isolated packages. The live step then completed the
+frozen Metal suite with 44 tests and zero failures or skips, followed by exactly
+one maintained-runtime receipt and its success marker. The tokenizer launcher
+started next. It completed only the
+`PrimeNativeDecoderTokenizerCompatibilityProbe` product build in 527.15
+seconds. The following tokenizer authority-test build reached
+`[3/7] Write swift-version-7974D3F7F03D5E95.txt`; the sole subsequent error was
+`The operation was canceled.` when the job-level 45-minute timeout fired.
+The decoded reviewed log is 10,220,130 bytes with SHA-256
+`20844ca1de14ac3f3ab1990494338ea994a353d0b063f36be6669ecaa7219038`.
+
+No tokenizer test suite or probe ran, no Native-300M model was allocated, and
+no tokenizer receipt or tokenizer success marker was emitted. The run invoked
+no seed-42 or seed-43 one-shot/checkpoint launcher, emitted none of their
+markers, and the Actions artifacts API returned the exact empty inventory
+`[]`. It was not rerun. The timeout is therefore
+`timeout_incomplete_not_semantic_failure`: it neither invalidates the completed
+focused, Metal, or runtime evidence nor establishes tokenizer compatibility or
+a successful whole reviewed-main sequence.
+
+This append-only observation adds no trainer, evaluator, optimizer, RNG,
+cursor, checkpoint I/O, artifact retention, admission, or execution authority.
+In particular, `tiny_cpu_train_evaluate_mechanics_v1` remains blocked until a
+new exact reviewed-main execution completes the retained Metal, maintained
+runtime, and tokenizer sequence. The bounded repair raises only the
+reviewed-main job limit from 45 to 60 minutes. Active-root remains at 45
+minutes; both exact checkouts remain depth one; topology remains two jobs with
+five steps each; the only live decoder launchers remain Metal, maintained
+runtime, and tokenizer in that exact order; and no upload or one-shot launcher
+is added.
+
 ## Verification and next slices
 
 The isolated validation package compiles against the exact first-party MLX
@@ -505,8 +553,8 @@ validation or literal artifact cleanup; the run uploaded zero Actions
 artifacts. A second pure test now validates the exact append-only failure
 observation without model allocation or I/O. The existing hosted focused step
 runs both isolated pure tests with an exact two-test/no-skip assertion. The live
-V2 I/O command is absent, both workflow checkouts use depth one, and both job
-timeouts are 45 minutes.
+V2 I/O command is absent. At that predecessor boundary, both workflow checkouts
+used depth one and both job timeouts were 45 minutes.
 
 A seventh isolated package kept the seed-43 correction distinct from the
 exhausted seed-42 package. Its first pure test validates the repair authority,
@@ -516,17 +564,19 @@ tokenizer before exactly one public write and one public fresh load, emitted
 the complete bound receipt, and completed literal parent cleanup. Its
 append-only outcome observation adds a second pure mutation/source-identity
 test. The focused step now requires exactly two tests with no skips for this
-repair package. The live repair command is absent, both checkouts use depth one,
-both jobs use 45-minute limits, and the only reviewed live launchers are the
-frozen Metal, maintained-runtime, and tokenizer sequence.
+repair package. The live repair command is absent. At that repair boundary,
+both checkouts used depth one, both jobs used 45-minute limits, and the only
+reviewed live launchers were the frozen Metal, maintained-runtime, and tokenizer
+sequence.
 
 The trajectory-resume design authority is compiled and exercised by one pure
 `PrimeCoreTests` mutation test in the existing focused source-contract command.
 It adds no validation package, dependency checkout, workflow job or step, model
 allocation, checkpoint I/O, or live launcher. The active-root parser and gate
-pin the exact source and test identities while preserving two jobs, five steps
-per job, 45-minute timeouts, depth-one checkouts, and the reviewed live order
-Metal, maintained runtime, then tokenizer compatibility.
+pin the exact source and test identities. At that design-only merge, the
+workflow preserved two jobs, five steps per job, 45-minute timeouts, depth-one
+checkouts, and the reviewed live order Metal, maintained runtime, then tokenizer
+compatibility.
 
 The first external live-Metal run of exact head `84504dc` executed all 41 tests
 with no skips but reported 306 assertions. Disabling pinned-MLX TF32 removed
