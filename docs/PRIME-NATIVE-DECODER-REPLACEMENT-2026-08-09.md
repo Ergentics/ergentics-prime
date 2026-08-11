@@ -143,6 +143,29 @@ The old live command is removed and the temporary reviewed-main timeout and
 checkout-depth expansions are restored. Any correction must use a separately
 authorized seed-43 direct-successor arc; it cannot rerun this seed-42 attempt.
 
+`PrimeNativeDecoderCheckpointV2ContainerIORootIdentityRepairExecutionAuthorityPlanV1.frozenV1`
+defines that separate corrective arc without modifying any frozen seed-42
+source. Only the first attempt of the history-preserving direct successor may
+materialize one seed-43 Native-300M source, complete one public V2 write, and
+complete one public fresh load in a new fixed private root. Publication
+continuity compares only device, inode, owner, group, and mode. Directory link
+count and timestamps remain positive, validated observations rather than
+stable-object fields because creating the sole leaf changes directory topology.
+The root must begin empty, contain exactly the fixed immutable single-link leaf
+after publication, and retain its complete post-write identity through the
+read-only load. The parent must reconstruct and validate the complete ordered
+chunked receipt before literal `unlink`/`rmdir` cleanup. A failure handler is
+limited to the same exact root and fixed-leaf inventory, performs no recursive
+artifact-root deletion, and cannot establish success. The repair authority is
+`ABSTAIN` until its exact reviewed-main execution is separately observed. It
+authorizes no rerun, existing-artifact compatibility, replacement/recovery,
+retention, provenance, admission, forward, backward, training, product use, or
+publication. The reviewed lane is temporarily bounded at 90 minutes with a
+depth-two merge checkout; the append-only outcome successor must remove the
+repair command and restore 45 minutes/depth one before any later main merge.
+Its isolated pure authority/evidence test allocates no model and calls neither
+public checkpoint I/O entry point.
+
 The Metal gate also binds a separate synthetic CI-mechanics policy that starts
 without any inherited `MLX_`, `DYLD_`, or `LLVM_PROFILE_` override and sets
 only `MLX_ENABLE_TF32=0` before its first Metal or MLX call. No comparison
@@ -416,24 +439,19 @@ dependency.
 
 The remaining replacement order is:
 
-1. publish the append-only seed-42 failure observation while retiring its live
-   command and restoring the normal workflow timeout and checkout depth;
-2. define and independently review a seed-43 corrective execution authority
-   that permits the root directory link count to change across publication,
-   still requires all stable object fields, exact one-leaf topology, and full
-   post-write-to-post-load identity stability, and runs only as a new
-   first-attempt direct successor;
-3. append either that repair execution's exact success observation or its
+1. independently review, publish, and observe the seed-43 root-identity repair
+   on its single authorized first-attempt direct successor;
+2. append either that repair execution's exact success observation or its
    exact failure observation without artifact admission, and retire its live
    command before any later main merge;
-4. define generic Prime-owned train/evaluate surfaces and persist exact
+3. define generic Prime-owned train/evaluate surfaces and persist exact
    optimizer, RNG, and data-cursor state for trajectory-exact resume;
-5. separately authorize bounded training, then produce and bind a non-fixture
+4. separately authorize bounded training, then produce and bind a non-fixture
    checkpoint with exact training-state and artifact provenance;
-6. separately authorize and run a bounded candidate canary/trial;
-7. migrate the read-only PMHNP canary consumer to the Prime-owned interface and
+5. separately authorize and run a bounded candidate canary/trial;
+6. migrate the read-only PMHNP canary consumer to the Prime-owned interface and
    remove its active Llama factory after single-MLX-graph reconciliation;
-8. address CoreML/NeuralKit product export only after accepted checkpoint and
+7. address CoreML/NeuralKit product export only after accepted checkpoint and
    parity evidence.
 
 No training, PMHNP write, or product decision is part of this hosted
