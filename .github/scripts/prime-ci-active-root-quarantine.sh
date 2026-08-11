@@ -152,6 +152,27 @@ require_preserved_object \
     "Tests/PrimeNativeDecoderCheckpointV2IOValidation/Tests/PrimeNativeDecoderCheckpointV2IOTests/PrimeNativeDecoderCheckpointV2IOTests.swift" \
     "74129e24c11a742adb11a80a8e454924426c63ee"
 require_preserved_object \
+    "Sources/PrimeCore/PrimeNativeDecoderCheckpointV2ContainerIOExecutionAuthority.swift" \
+    "f82bd280fd1c269ce6a6e0392a8849630d0af124"
+require_preserved_object \
+    "Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV2ContainerIOExecutionEvidence.swift" \
+    "416423e41a072ab323a345a12782ac54faac57d8"
+require_preserved_object \
+    "Tests/PrimeNativeDecoderCheckpointV2IOExecutionValidation/Package.swift" \
+    "233ab6e0a2c747ca2166a3ad0a8841ddd83a24b6"
+require_preserved_object \
+    "Tests/PrimeNativeDecoderCheckpointV2IOExecutionValidation/Package.resolved" \
+    "9887e211ac39cdf8083419ba144f2ca26ffc44cd"
+require_preserved_object \
+    "Tests/PrimeNativeDecoderCheckpointV2IOExecutionValidation/Sources/PrimeNativeDecoderCheckpointV2IOExecutionProbe/main.swift" \
+    "71262c7794e5d47e0d8990346a0e6682f4fcd09b"
+require_preserved_object \
+    "Tests/PrimeNativeDecoderCheckpointV2IOExecutionValidation/Tests/PrimeNativeDecoderCheckpointV2IOExecutionAuthorityTests/PrimeNativeDecoderCheckpointV2IOExecutionAuthorityTests.swift" \
+    "8b1c18b57c70dda967885c2737d0d4170c7e417a"
+require_preserved_object \
+    ".github/scripts/prime-ci-native-decoder-checkpoint-v2-io.sh" \
+    "0683f4bfba4dc7929e4c397a499132f859a80b0e"
+require_preserved_object \
     "Sources/PrimeCore/PrimeNativeDecoderCheckpointV2ContainerIOExecutionFailureObservation.swift" \
     "ab6212e0499ae7aaa1da2cc66be8b67026f504c1"
 require_preserved_object \
@@ -164,6 +185,9 @@ require_preserved_object \
     "Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV2ContainerIORootIdentityRepairExecutionEvidence.swift" \
     "6edb77813df76adb8d7c84d8faf451e325634433"
 require_preserved_object \
+    "Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV2ContainerIORootIdentityRepairExecutionObservation.swift" \
+    "2e79695501fea9ce8ebbcf713a037a6190676f88"
+require_preserved_object \
     "Tests/PrimeNativeDecoderCheckpointV2IORootIdentityRepairExecutionValidation/Package.swift" \
     "1cc830db123defbf6a8c0f1362d6d2bb9d754d34"
 require_preserved_object \
@@ -175,6 +199,9 @@ require_preserved_object \
 require_preserved_object \
     "Tests/PrimeNativeDecoderCheckpointV2IORootIdentityRepairExecutionValidation/Tests/PrimeNativeDecoderCheckpointV2IORootIdentityRepairExecutionAuthorityTests/PrimeNativeDecoderCheckpointV2IORootIdentityRepairExecutionAuthorityTests.swift" \
     "8a7bbb1c147555a04e77937eda47b9938c6f742d"
+require_preserved_object \
+    "Tests/PrimeNativeDecoderCheckpointV2IORootIdentityRepairExecutionValidation/Tests/PrimeNativeDecoderCheckpointV2IORootIdentityRepairExecutionAuthorityTests/PrimeNativeDecoderCheckpointV2IORootIdentityRepairExecutionObservationTests.swift" \
+    "afed0e75e6da05475e2d3decce058d81072c2b6a"
 require_preserved_object \
     ".github/scripts/prime-ci-native-decoder-checkpoint-v2-io-root-identity-repair.sh" \
     "ed7852704219f61bc29841641257da697389458c"
@@ -401,14 +428,14 @@ grep -Fq -- 'runs-on: macos-15' "$workflow_path" ||
     && "$(awk '
         /^  trusted-main-compile:$/ { inside = 1; next }
         inside && /^    timeout-minutes:/ { print $2 }
-    ' "$workflow_path")" == "90" ]] ||
+    ' "$workflow_path")" == "45" ]] ||
     die "hosted quarantine workflow runner or timeout boundary changed"
 [[ "$(grep -Fxc -- \
     '          git -C ergentics-prime fetch --depth=1 --no-tags --no-write-fetch-head origin "$EXACT_REVISION"' \
-    "$workflow_path")" == "1" \
+    "$workflow_path")" == "2" \
     && "$(grep -Fxc -- \
         '          git -C ergentics-prime fetch --depth=2 --no-tags --no-write-fetch-head origin "$EXACT_REVISION"' \
-        "$workflow_path")" == "1" \
+        "$workflow_path")" == "0" \
     && "$(grep -Fxc -- \
         "    if: github.event_name == 'push' && github.ref == 'refs/heads/main'" \
         "$workflow_path")" == "1" ]] ||
@@ -496,24 +523,22 @@ readonly runtime_closure_workflow_line="$(grep -nFx -- \
 readonly tokenizer_compatibility_workflow_line="$(grep -nFx -- \
     '          bash .github/scripts/prime-ci-native-decoder-tokenizer-compatibility.sh' \
     "$workflow_path" | awk -F: '{print $1}')"
-readonly checkpoint_v2_io_root_identity_repair_workflow_line="$(grep -nFx -- \
-    '          bash .github/scripts/prime-ci-native-decoder-checkpoint-v2-io-root-identity-repair.sh' \
-    "$workflow_path" | awk -F: '{print $1}')"
 [[ "$frozen_metal_workflow_line" =~ ^[1-9][0-9]*$ \
     && "$runtime_closure_workflow_line" =~ ^[1-9][0-9]*$ \
     && "$tokenizer_compatibility_workflow_line" =~ ^[1-9][0-9]*$ \
-    && "$checkpoint_v2_io_root_identity_repair_workflow_line" =~ ^[1-9][0-9]*$ \
     && "$runtime_closure_workflow_line" \
         -eq $((frozen_metal_workflow_line + 1)) \
     && "$tokenizer_compatibility_workflow_line" \
-        -eq $((runtime_closure_workflow_line + 1)) \
-    && "$checkpoint_v2_io_root_identity_repair_workflow_line" \
-        -eq $((tokenizer_compatibility_workflow_line + 1)) ]] ||
-    die "trusted-main workflow does not run the three retained decoder gates and root-identity repair in exact order"
+        -eq $((runtime_closure_workflow_line + 1)) ]] ||
+    die "trusted-main workflow does not run the three retained decoder gates in exact order"
 ! grep -Fq -- \
     '          bash .github/scripts/prime-ci-native-decoder-checkpoint-v2-io.sh' \
     "$workflow_path" ||
     die "retired Prime native decoder checkpoint V2 I/O one-shot remains live"
+! grep -Fq -- \
+    '          bash .github/scripts/prime-ci-native-decoder-checkpoint-v2-io-root-identity-repair.sh' \
+    "$workflow_path" ||
+    die "retired Prime native decoder checkpoint V2 I/O root-identity repair one-shot remains live"
 grep -Fq -- \
     '--package-path Tests/PrimeNativeDecoderCheckpointCompatibilityV2Validation' \
     "$workflow_path" ||
@@ -546,7 +571,7 @@ grep -Fq -- 'Executed 1 test, with 0 failures' "$workflow_path" ||
         "$workflow_path")" == "2" \
     && "$(grep -Fc -- \
         'Executed 2 tests, with 0 failures' \
-        "$workflow_path")" == "1" ]] ||
+        "$workflow_path")" == "2" ]] ||
     die "trusted-main workflow does not run and bind the exact two-test V2 I/O execution pure suite"
 [[ "$(grep -Fc -- \
     '--package-path Tests/PrimeNativeDecoderCheckpointV2IORootIdentityRepairExecutionValidation' \
@@ -565,8 +590,11 @@ grep -Fq -- 'Executed 1 test, with 0 failures' "$workflow_path" ||
         "$workflow_path")" == "2" \
     && "$(grep -Fc -- \
         'prime-checkpoint-v2-io-root-identity-repair-execution-pure-security' \
+        "$workflow_path")" == "2" \
+    && "$(grep -Fc -- \
+        'Executed 2 tests, with 0 failures' \
         "$workflow_path")" == "2" ]] ||
-    die "trusted-main workflow does not run the exact root-identity repair pure suite"
+    die "trusted-main workflow does not run and bind the exact two-test root-identity repair pure suite"
 for required_metal_gate_value in \
     'MTLCreateSystemDefaultDevice' \
     '-target Cmlx' \
@@ -1395,6 +1423,7 @@ readonly decoder_checkpoint_v2_io_execution_failure_observation_source="$prime_r
 readonly decoder_checkpoint_v2_io_execution_evidence_source="$prime_root/Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV2ContainerIOExecutionEvidence.swift"
 readonly decoder_checkpoint_v2_io_root_identity_repair_execution_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderCheckpointV2ContainerIORootIdentityRepairExecutionAuthority.swift"
 readonly decoder_checkpoint_v2_io_root_identity_repair_execution_evidence_source="$prime_root/Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV2ContainerIORootIdentityRepairExecutionEvidence.swift"
+readonly decoder_checkpoint_v2_io_root_identity_repair_execution_observation_source="$prime_root/Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV2ContainerIORootIdentityRepairExecutionObservation.swift"
 readonly decoder_runtime_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderMaintainedRuntimeComputeAuthority.swift"
 readonly decoder_runtime_execution_observation_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderMaintainedRuntimeExecutionObservation.swift"
 readonly decoder_runtime_source="$prime_root/Sources/PrimeNativeDecoderRuntime/PrimeNativeDecoderRuntime.swift"
@@ -1426,6 +1455,7 @@ readonly decoder_checkpoint_v2_io_root_identity_repair_execution_validation_mani
 readonly decoder_checkpoint_v2_io_root_identity_repair_execution_validation_lock="$decoder_checkpoint_v2_io_root_identity_repair_execution_validation_root/Package.resolved"
 readonly decoder_checkpoint_v2_io_root_identity_repair_execution_probe="$decoder_checkpoint_v2_io_root_identity_repair_execution_validation_root/Sources/PrimeNativeDecoderCheckpointV2IORootIdentityRepairExecutionProbe/main.swift"
 readonly decoder_checkpoint_v2_io_root_identity_repair_execution_test="$decoder_checkpoint_v2_io_root_identity_repair_execution_validation_root/Tests/PrimeNativeDecoderCheckpointV2IORootIdentityRepairExecutionAuthorityTests/PrimeNativeDecoderCheckpointV2IORootIdentityRepairExecutionAuthorityTests.swift"
+readonly decoder_checkpoint_v2_io_root_identity_repair_execution_observation_test="$decoder_checkpoint_v2_io_root_identity_repair_execution_validation_root/Tests/PrimeNativeDecoderCheckpointV2IORootIdentityRepairExecutionAuthorityTests/PrimeNativeDecoderCheckpointV2IORootIdentityRepairExecutionObservationTests.swift"
 readonly decoder_runtime_closure_validation_root="$prime_root/Tests/PrimeNativeDecoderRuntimeClosureValidation"
 readonly decoder_runtime_closure_validation_manifest="$decoder_runtime_closure_validation_root/Package.swift"
 readonly decoder_runtime_closure_validation_lock="$decoder_runtime_closure_validation_root/Package.resolved"
@@ -1443,7 +1473,7 @@ readonly decoder_tokenizer_compatibility_test="$decoder_tokenizer_compatibility_
     == "Sources/PrimeNativeDecoder/PrimeNativeGQADecoder.swift" ]] ||
     die "PrimeNativeDecoder production source inventory changed"
 [[ "$(git -C "$prime_root" ls-files -- 'Sources/PrimeNativeDecoderCheckpoint')" \
-    == $'Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV1.swift\nSources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV2.swift\nSources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV2ContainerIOExecutionEvidence.swift\nSources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV2ContainerIORootIdentityRepairExecutionEvidence.swift\nSources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCompatibilityIdentityV2.swift' ]] ||
+    == $'Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV1.swift\nSources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV2.swift\nSources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV2ContainerIOExecutionEvidence.swift\nSources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV2ContainerIORootIdentityRepairExecutionEvidence.swift\nSources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV2ContainerIORootIdentityRepairExecutionObservation.swift\nSources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCompatibilityIdentityV2.swift' ]] ||
     die "PrimeNativeDecoderCheckpoint production source inventory changed"
 [[ "$(git -C "$prime_root" ls-files -- 'Sources/PrimeNativeDecoderRuntime')" \
     == 'Sources/PrimeNativeDecoderRuntime/PrimeNativeDecoderRuntime.swift' ]] ||
@@ -1465,7 +1495,7 @@ readonly decoder_tokenizer_compatibility_test="$decoder_tokenizer_compatibility_
     die "PrimeNativeDecoder checkpoint V2 I/O execution validation inventory changed"
 [[ "$(git -C "$prime_root" ls-files -- \
     'Tests/PrimeNativeDecoderCheckpointV2IORootIdentityRepairExecutionValidation')" \
-    == $'Tests/PrimeNativeDecoderCheckpointV2IORootIdentityRepairExecutionValidation/Package.resolved\nTests/PrimeNativeDecoderCheckpointV2IORootIdentityRepairExecutionValidation/Package.swift\nTests/PrimeNativeDecoderCheckpointV2IORootIdentityRepairExecutionValidation/Sources/PrimeNativeDecoderCheckpointV2IORootIdentityRepairExecutionProbe/main.swift\nTests/PrimeNativeDecoderCheckpointV2IORootIdentityRepairExecutionValidation/Tests/PrimeNativeDecoderCheckpointV2IORootIdentityRepairExecutionAuthorityTests/PrimeNativeDecoderCheckpointV2IORootIdentityRepairExecutionAuthorityTests.swift' ]] ||
+    == $'Tests/PrimeNativeDecoderCheckpointV2IORootIdentityRepairExecutionValidation/Package.resolved\nTests/PrimeNativeDecoderCheckpointV2IORootIdentityRepairExecutionValidation/Package.swift\nTests/PrimeNativeDecoderCheckpointV2IORootIdentityRepairExecutionValidation/Sources/PrimeNativeDecoderCheckpointV2IORootIdentityRepairExecutionProbe/main.swift\nTests/PrimeNativeDecoderCheckpointV2IORootIdentityRepairExecutionValidation/Tests/PrimeNativeDecoderCheckpointV2IORootIdentityRepairExecutionAuthorityTests/PrimeNativeDecoderCheckpointV2IORootIdentityRepairExecutionAuthorityTests.swift\nTests/PrimeNativeDecoderCheckpointV2IORootIdentityRepairExecutionValidation/Tests/PrimeNativeDecoderCheckpointV2IORootIdentityRepairExecutionAuthorityTests/PrimeNativeDecoderCheckpointV2IORootIdentityRepairExecutionObservationTests.swift' ]] ||
     die "PrimeNativeDecoder checkpoint V2 I/O root-identity repair execution validation inventory changed"
 [[ "$(git -C "$prime_root" ls-files -- \
     'Tests/PrimeNativeDecoderRuntimeClosureValidation')" \
@@ -1538,6 +1568,9 @@ readonly decoder_tokenizer_compatibility_test="$decoder_tokenizer_compatibility_
 [[ -f "$decoder_checkpoint_v2_io_root_identity_repair_execution_evidence_source" \
     && ! -L "$decoder_checkpoint_v2_io_root_identity_repair_execution_evidence_source" ]] ||
     die "PrimeNativeDecoderCheckpoint V2 I/O root-identity repair evidence is missing or linked"
+[[ -f "$decoder_checkpoint_v2_io_root_identity_repair_execution_observation_source" \
+    && ! -L "$decoder_checkpoint_v2_io_root_identity_repair_execution_observation_source" ]] ||
+    die "PrimeNativeDecoderCheckpoint V2 I/O root-identity repair observation is missing or linked"
 [[ -f "$decoder_checkpoint_v2_validation_test" \
     && ! -L "$decoder_checkpoint_v2_validation_test" ]] ||
     die "PrimeNativeDecoderCheckpoint V2 validation test is missing or linked"
@@ -1583,6 +1616,9 @@ readonly decoder_tokenizer_compatibility_test="$decoder_tokenizer_compatibility_
 [[ -f "$decoder_checkpoint_v2_io_root_identity_repair_execution_test" \
     && ! -L "$decoder_checkpoint_v2_io_root_identity_repair_execution_test" ]] ||
     die "PrimeNativeDecoderCheckpoint V2 I/O root-identity repair execution test is missing or linked"
+[[ -f "$decoder_checkpoint_v2_io_root_identity_repair_execution_observation_test" \
+    && ! -L "$decoder_checkpoint_v2_io_root_identity_repair_execution_observation_test" ]] ||
+    die "PrimeNativeDecoderCheckpoint V2 I/O root-identity repair execution observation test is missing or linked"
 [[ -f "$decoder_runtime_authority_source" \
     && ! -L "$decoder_runtime_authority_source" ]] ||
     die "PrimeNativeDecoder maintained-runtime authority is missing or linked"
@@ -1681,10 +1717,12 @@ done
 for v2_io_root_identity_repair_execution_regular_source in \
     'Sources/PrimeCore/PrimeNativeDecoderCheckpointV2ContainerIORootIdentityRepairExecutionAuthority.swift' \
     'Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV2ContainerIORootIdentityRepairExecutionEvidence.swift' \
+    'Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV2ContainerIORootIdentityRepairExecutionObservation.swift' \
     'Tests/PrimeNativeDecoderCheckpointV2IORootIdentityRepairExecutionValidation/Package.swift' \
     'Tests/PrimeNativeDecoderCheckpointV2IORootIdentityRepairExecutionValidation/Package.resolved' \
     'Tests/PrimeNativeDecoderCheckpointV2IORootIdentityRepairExecutionValidation/Sources/PrimeNativeDecoderCheckpointV2IORootIdentityRepairExecutionProbe/main.swift' \
-    'Tests/PrimeNativeDecoderCheckpointV2IORootIdentityRepairExecutionValidation/Tests/PrimeNativeDecoderCheckpointV2IORootIdentityRepairExecutionAuthorityTests/PrimeNativeDecoderCheckpointV2IORootIdentityRepairExecutionAuthorityTests.swift'; do
+    'Tests/PrimeNativeDecoderCheckpointV2IORootIdentityRepairExecutionValidation/Tests/PrimeNativeDecoderCheckpointV2IORootIdentityRepairExecutionAuthorityTests/PrimeNativeDecoderCheckpointV2IORootIdentityRepairExecutionAuthorityTests.swift' \
+    'Tests/PrimeNativeDecoderCheckpointV2IORootIdentityRepairExecutionValidation/Tests/PrimeNativeDecoderCheckpointV2IORootIdentityRepairExecutionAuthorityTests/PrimeNativeDecoderCheckpointV2IORootIdentityRepairExecutionObservationTests.swift'; do
     [[ "$(git -C "$prime_root" ls-files -s -- \
         "$v2_io_root_identity_repair_execution_regular_source" | awk '{print $1}')" \
         == "100644" ]] ||
@@ -1886,6 +1924,12 @@ assert_checkpoint_v2_io_root_identity_repair_execution_source_identity \
     '62078' \
     '3bd2fa7bd7ada430b05e16e28242e452ebcd8bd0fb8165ee17723efd44096de8'
 assert_checkpoint_v2_io_root_identity_repair_execution_source_identity \
+    'Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV2ContainerIORootIdentityRepairExecutionObservation.swift' \
+    '100644' \
+    '2e79695501fea9ce8ebbcf713a037a6190676f88' \
+    '127248' \
+    '1bd6ea60f5824e78e8f41bed84f397f5a85f1a90ba852afa4b64cf5d6d5efa78'
+assert_checkpoint_v2_io_root_identity_repair_execution_source_identity \
     'Tests/PrimeNativeDecoderCheckpointV2IORootIdentityRepairExecutionValidation/Package.swift' \
     '100644' \
     '1cc830db123defbf6a8c0f1362d6d2bb9d754d34' \
@@ -1909,6 +1953,12 @@ assert_checkpoint_v2_io_root_identity_repair_execution_source_identity \
     '8a7bbb1c147555a04e77937eda47b9938c6f742d' \
     '41659' \
     '07575be036b7901ac9c8adba11d1d35a71df453a00bf62e2a8435a6af3e86373'
+assert_checkpoint_v2_io_root_identity_repair_execution_source_identity \
+    'Tests/PrimeNativeDecoderCheckpointV2IORootIdentityRepairExecutionValidation/Tests/PrimeNativeDecoderCheckpointV2IORootIdentityRepairExecutionAuthorityTests/PrimeNativeDecoderCheckpointV2IORootIdentityRepairExecutionObservationTests.swift' \
+    '100644' \
+    'afed0e75e6da05475e2d3decce058d81072c2b6a' \
+    '39093' \
+    '5a433b7dadc32894f442420b17f42ac84dd44aee180b4966839c65abeca14881'
 assert_checkpoint_v2_io_root_identity_repair_execution_source_identity \
     '.github/scripts/prime-ci-native-decoder-checkpoint-v2-io-root-identity-repair.sh' \
     '100755' \
@@ -2237,6 +2287,7 @@ swiftc -frontend -parse "$decoder_checkpoint_v2_io_execution_authority_source"
 swiftc -frontend -parse "$decoder_checkpoint_v2_io_execution_failure_observation_source"
 swiftc -frontend -parse "$decoder_checkpoint_v2_io_root_identity_repair_execution_authority_source"
 swiftc -frontend -parse "$decoder_checkpoint_v2_io_root_identity_repair_execution_evidence_source"
+swiftc -frontend -parse "$decoder_checkpoint_v2_io_root_identity_repair_execution_observation_source"
 swiftc -frontend -parse "$decoder_runtime_authority_source"
 swiftc -frontend -parse "$decoder_runtime_execution_observation_source"
 swiftc -frontend -parse "$decoder_runtime_source"
@@ -2257,6 +2308,7 @@ swiftc -frontend -parse "$decoder_checkpoint_v2_io_execution_test"
 swiftc -frontend -parse "$decoder_checkpoint_v2_io_execution_failure_observation_test"
 swiftc -frontend -parse "$decoder_checkpoint_v2_io_root_identity_repair_execution_probe"
 swiftc -frontend -parse "$decoder_checkpoint_v2_io_root_identity_repair_execution_test"
+swiftc -frontend -parse "$decoder_checkpoint_v2_io_root_identity_repair_execution_observation_test"
 swiftc -frontend -parse "$decoder_runtime_closure_probe"
 swiftc -frontend -parse "$decoder_runtime_closure_test"
 swiftc -frontend -parse "$decoder_tokenizer_compatibility_probe"
@@ -2319,6 +2371,10 @@ readonly expected_mlxllm_imports=$'Sources/PrimeGPUCalibration/PrimeGPUCalibrati
     == "Foundation,PrimeCore" ]] ||
     die "PrimeNativeDecoderCheckpoint V2 I/O root-identity repair evidence imports changed"
 [[ "$(awk '/^import / {print $2}' \
+    "$decoder_checkpoint_v2_io_root_identity_repair_execution_observation_source" | paste -sd, -)" \
+    == "Foundation,PrimeCore" ]] ||
+    die "PrimeNativeDecoderCheckpoint V2 I/O root-identity repair observation imports changed"
+[[ "$(awk '/^import / {print $2}' \
     "$decoder_checkpoint_v2_io_execution_probe" | paste -sd, -)" \
     == "CoreGraphics,Darwin,Foundation,Metal,MLX,MLXNN,PrimeCore,PrimeNativeDecoder,PrimeNativeDecoderCheckpoint" ]] ||
     die "PrimeNativeDecoderCheckpoint V2 I/O execution probe imports changed"
@@ -2338,6 +2394,10 @@ readonly expected_mlxllm_imports=$'Sources/PrimeGPUCalibration/PrimeGPUCalibrati
     "$decoder_checkpoint_v2_io_root_identity_repair_execution_test" | paste -sd, -)" \
     == "CoreFoundation,Foundation,XCTest,PrimeCore,PrimeNativeDecoderCheckpoint" ]] ||
     die "PrimeNativeDecoderCheckpoint V2 I/O root-identity repair test imports changed"
+[[ "$(awk '/^import / {print $2}' \
+    "$decoder_checkpoint_v2_io_root_identity_repair_execution_observation_test" | paste -sd, -)" \
+    == "CoreFoundation,Foundation,XCTest,PrimeCore,PrimeNativeDecoderCheckpoint" ]] ||
+    die "PrimeNativeDecoderCheckpoint V2 I/O root-identity repair observation test imports changed"
 [[ "$(awk '/^import / {print $2}' "$decoder_runtime_authority_source" | paste -sd, -)" \
     == "Foundation" ]] ||
     die "PrimeNativeDecoder maintained-runtime authority imports changed"
@@ -2441,10 +2501,14 @@ done
 grep -Fq -- "$root_mlx_revision" \
     "$decoder_checkpoint_v2_io_root_identity_repair_execution_validation_manifest" ||
     die "PrimeNativeDecoder checkpoint V2 I/O root-identity repair manifest does not pin active MLX"
-[[ "$(grep -ER -- '^[[:space:]]+func test' \
+[[ "$(grep -Ec -- '^[[:space:]]+func test' \
+    "$decoder_checkpoint_v2_io_root_identity_repair_execution_test")" == "1" \
+    && "$(grep -Ec -- '^[[:space:]]+func test' \
+        "$decoder_checkpoint_v2_io_root_identity_repair_execution_observation_test")" == "1" \
+    && "$(grep -ER -- '^[[:space:]]+func test' \
     "$decoder_checkpoint_v2_io_root_identity_repair_execution_validation_root/Tests" \
-    | wc -l | awk '{print $1}')" == "1" ]] ||
-    die "PrimeNativeDecoder checkpoint V2 I/O root-identity repair target must contain exactly one pure test"
+        | wc -l | awk '{print $1}')" == "2" ]] ||
+    die "PrimeNativeDecoder checkpoint V2 I/O root-identity repair target must contain exactly two pure tests"
 for required_checkpoint_v2_io_execution_probe_value in \
     'PrimeNativeDecoderCheckpointV2ContainerIOExecutionEnvironmentPolicyV1' \
     '.validateLaunchedCurrentProcess()' \
@@ -3030,6 +3094,227 @@ for forbidden_checkpoint_v2_io_root_identity_repair_evidence_capability in \
     fi
 done
 
+for required_checkpoint_v2_io_root_identity_repair_observation_value in \
+    'PrimeNativeDecoderCheckpointV2ContainerIORootIdentityRepairExecutionObservationError' \
+    'case contractDrift' \
+    'PrimeNativeDecoderCheckpointV2ContainerIORootIdentityRepairExecutionObservationV1:' \
+    'PrimeNativeDecoderCheckpointV2ContainerIORootIdentityRepairExecutionEvidenceV1' \
+    'public static let frozenV1: Self = {' \
+    'public func validateExactV1() throws {' \
+    'try authority.validateExactV1()' \
+    'try receiptEvidence.validate()' \
+    'receiptData = try receiptEvidence.canonicalReceiptData()' \
+    'self == expected,' \
+    'observedSourceBindings.map(\.path) == expectedSourcePaths' \
+    'observedSourceBindings.count == 10' \
+    'Set(observedSourceBindings.map(\.path)).count == 10' \
+    'allObservedSourceHashesAreExactLowercaseHex' \
+    '"ergentics_prime_native_decoder_checkpoint_v2_container_io_root_identity_repair_execution_observation_v1"' \
+    '"github_reviewed_main_exact_one_shot_checkpoint_v2_io_root_identity_repair_success_observation"' \
+    'observedPullRequestNumber: 79,' \
+    '"https://github.com/Ergentics/ergentics-prime/pull/79"' \
+    '"44cfa2caa3af5bb44ad53294de33ba2d0faa9a59"' \
+    '"1a69407a8fbd5f141e8ece584066b8dcfa6f606f"' \
+    '"7314b8a85c5f134c9521b84d2d51d12d3d5084bb"' \
+    '"fbd57cd9de786e38121fa02b0664b1fb4fcd3d3c"' \
+    '"d1aa5b2352ebcf3595b5221f9bb784c610175ce3acc27d963d833cef85c57a90"' \
+    'historyPreservingTwoParentMergeObserved: true,' \
+    'mergeTreeEqualsReviewedHeadTree: true,' \
+    'exactDirectSuccessorOfAuthorizedBaseObserved: true,' \
+    '".github/scripts/prime-ci-active-root-quarantine.sh"' \
+    '"50ee76136a5d11a24119dc78053b357ab21cd1a3"' \
+    'byteCount: 200_218,' \
+    '"303658f5ffb680bf1536eb2ff76ec6d4b0994dd0c24cdd0ab887979387811f96"' \
+    '".github/workflows/prime-active-root-quarantine.yml"' \
+    '"f6d64634d66734a73061c9b93823ab7098776904"' \
+    'byteCount: 33_497,' \
+    '"0d98ca3634658693492e822a84b94f02f43850ecb54d5e690a94e5cd027407b6"' \
+    '"Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift"' \
+    '"610eb14185e746dcb24c26b780f56d70925f3af7"' \
+    '"df3efa4ef8242674a1fe85220ddf13af8f05cb465a1cf08ba67518010503e31c"' \
+    'workflowID: 329_017_041,' \
+    'runID: 31_484_642_403,' \
+    'runNumber: 55,' \
+    'runAttempt: 1,' \
+    'runCreatedAt: "2026-08-11T10:59:42Z",' \
+    'runStartedAt: "2026-08-11T10:59:42Z",' \
+    'runUpdatedAt: "2026-08-11T11:42:44Z",' \
+    'runStatus: "completed",' \
+    'runConclusion: "success",' \
+    'activeRootJobID: 93_757_136_546,' \
+    'activeRootJobStartedAt: "2026-08-11T10:59:45Z",' \
+    'activeRootJobCompletedAt: "2026-08-11T11:02:15Z",' \
+    'activeRootJobConclusion: "success",' \
+    'reviewedMainJobID: 93_757_733_456,' \
+    'reviewedMainJobStartedAt: "2026-08-11T11:02:18Z",' \
+    'reviewedMainJobCompletedAt: "2026-08-11T11:42:43Z",' \
+    'reviewedMainJobConclusion: "success",' \
+    'reviewedMainRanAfterActiveRootSuccess: true,' \
+    'liveStepStartedAt: "2026-08-11T11:15:26Z",' \
+    'liveStepCompletedAt: "2026-08-11T11:42:37Z",' \
+    'liveStepConclusion: "success",' \
+    '"bash .github/scripts/prime-ci-native-decoder-checkpoint-v2-io-root-identity-repair.sh"' \
+    '.observationSuccessorMustRemoveLiveLauncherCommandBeforeMerge' \
+    'consumedLiveLauncherPath' \
+    '== observedSourceBindings[6].path' \
+    'liveRepairCommandRetired: true,' \
+    'retiredLauncherSourceRemainsFrozen: true,' \
+    'consumedLiveExecutionReexecutionAuthorized: false,' \
+    'reviewedMainTimeoutDuringObservedExecutionMinutes == 90' \
+    'reviewedMainTimeoutRestoredAfterObservationMinutes == 45' \
+    'reviewedMainTimeoutRestoredToOrdinary45Minutes: true,' \
+    'reviewedMainCheckoutFetchDepthDuringObservedExecution == 2' \
+    'reviewedMainCheckoutFetchDepthRestoredAfterObservation == 1' \
+    'reviewedMainCheckoutDepthRestoredToOne: true,' \
+    'activeJobTransportDecodedUTF8LogByteCount: 225_372,' \
+    'activeJobTransportDecodedUTF8LogSplitLineCount: 1_717,' \
+    '"a6f948b106edb307a3a826af74bdc82398afba6b1961359e77ec79bb9f069de8"' \
+    'reviewedMainJobTransportDecodedUTF8LogByteCount: 10_348_719,' \
+    'reviewedMainJobTransportDecodedUTF8LogSplitLineCount: 78_565,' \
+    '"caa3e223077cca02d917d2814668a2dc4e36d5e8eed3f60c76689821ed53e588"' \
+    '"github_connector_transport_decoded_utf8_text_bom_included_response_wrapper_excluded"' \
+    'decodedJobLogsIncludedUTF8BOM: true,' \
+    'connectorResponseWrapperExcludedFromLogIdentity: true,' \
+    'decodedJobLogsBound: true,' \
+    'rawGitHubLogArchiveBytesBound: false,' \
+    'jobLogsRetainedInRepository: false,' \
+    'durableJobLogPublicationEstablished: false,' \
+    'reviewedMainErrorAnnotationCount: 0,' \
+    'publishedWorkflowArtifactCount: 0,' \
+    'checkpointArtifactUploaded: false,' \
+    'receiptBeginMarkerCount: 1,' \
+    'receiptChunkMarkerCount: 26,' \
+    'receiptEndMarkerCount: 1,' \
+    'receiptFirstChunkOrdinal: "000000",' \
+    'receiptLastChunkOrdinal: "000025",' \
+    'receiptChunkCharacterCount: 4_096,' \
+    'receiptFinalChunkCharacterCount: 540,' \
+    'receiptBase64CharacterCount: 102_940,' \
+    'receiptCanonicalByteCount: 77_205,' \
+    '"b4aec02aa666433fa7bff5e913629e51f06f5388d21bf9e86d7801ca00dd67bf"' \
+    'compatibilityIdentityCanonicalByteCount: 30_553,' \
+    '"aa3ee5d2208459280a81cc8067facd49cde6449659a766f58456a9c0d6150843"' \
+    'tensorBindingsCanonicalByteCount: 35_184,' \
+    '"7cc7aec0d990a0bb6bb1748de396b84c85af06dea918610343e2f6560c926566"' \
+    'manifestCanonicalByteCount: 66_373,' \
+    '"6b42dac70d522b248b02d564c8e850f82a28ca12fcfab4ca4db91ea8cc9098e3"' \
+    'externalBindingCanonicalByteCount: 66_854,' \
+    '"c5a9b8a8aa4301f2dde0ab199bc39771298b1842009836537a085ba4b676d961"' \
+    'receiptTransportWasOrderedContiguousAndFinal: true,' \
+    'beforeWrite.deviceID == 16_777_230' \
+    'beforeWrite.inode == 2_970_995' \
+    'beforeWrite.ownerUserID == 501' \
+    'beforeWrite.ownerGroupID == 20' \
+    'beforeWrite.permissionMode == 0o700' \
+    'beforeWrite.linkCount == 2' \
+    'beforeWrite.publicationStableObjectFieldsEqual(' \
+    'afterWrite.linkCount == 3' \
+    'afterLoad.linkCount == 3' \
+    'afterWrite.readOnlyFullIdentityEqual(to: afterLoad)' \
+    '"checkpoint-v2-native300m-seed43-root-identity-repair.safetensors"' \
+    'artifact.byteCount == 1_084_525_304' \
+    '"a6dae67b9a24e3d0220d22e3060bb43bab7d8cd027d97ea635db8580774cd538"' \
+    'receiptEvidence.publishedArtifactMode == 0o444' \
+    'receiptEvidence.publishedArtifactLinkCount == 1' \
+    'receiptEvidence.publicCheckpointWriteCompletionCount == 1' \
+    'receiptEvidence.publicCheckpointLoadCompletionCount == 1' \
+    '"public_checkpoint_write_invocation_count":1' \
+    '"public_checkpoint_write_completion_count":1' \
+    '"public_checkpoint_load_invocation_count":1' \
+    '"public_checkpoint_load_completion_count":1' \
+    'exactParentPostReceiptVerificationSourceLineRange' \
+    '== [1_156, 1_175]' \
+    'exactParentArtifactUnlinkSourceLine == 1_176' \
+    'exactParentArtifactRootRmdirSourceLine == 1_177' \
+    '== [1_178, 1_180]' \
+    'receiptEndObservedAt: "2026-08-11T11:42:37.6029040Z",' \
+    '"2026-08-11T11:42:37.8067580Z"' \
+    'receiptEndObservedAt < parentCleanupSuccessObservedAt' \
+    'receiptEndPrecededParentCleanup: true,' \
+    'parentReceiptVerificationCompleted: true,' \
+    'parentArtifactUnlinkCompleted: true,' \
+    'parentArtifactRootRmdirCompleted: true,' \
+    'parentLiteralCleanupPostconditionCompleted: true,' \
+    '!parentCleanupWasIndependentRetainedFilesystemObservation' \
+    'failureTrapCleanupEstablishedSuccess: false,' \
+    'predecessorAuthorityAttemptConsumed: true,' \
+    'predecessorAuthorityExhausted: true,' \
+    'rerunObserved: false,' \
+    'rerunAuthorized: false,' \
+    'replacementExecutionAuthorityEstablished: false,' \
+    'executionReceiptSourceAndRunBindingEstablished: true,' \
+    'native300MModelAllocationObserved: true,' \
+    'native300MCheckpointWriteObserved: true,' \
+    'native300MCheckpointLoadObserved: true,' \
+    'checkpointIOObserved: true,' \
+    'checkpointArtifactAvailableDuringProcess: true,' \
+    'checkpointContainerHashBound: true,' \
+    'checkpointDurabilityMechanicsCompleted: true,' \
+    'logicalParameterRoundTripViaPinnedCodecObserved: true,' \
+    'publicationStableFiveFieldsMatched: true,' \
+    'publicationRootLinkCountTransitionObserved: true,' \
+    'readOnlyFullRootIdentityMatched: true,' \
+    'allArtifactAdmissionTrainingAndProductCeilingsAreFalse' \
+    '!checkpointArtifactAvailabilityBeyondProcessEstablished' \
+    '&& !checkpointArtifactRetentionEstablished' \
+    '&& !checkpointArtifactProvenanceEstablished' \
+    '&& !checkpointAdmissionGranted' \
+    '&& !existingCheckpointArtifactCompatibilityObserved' \
+    '&& !atomicCheckpointReplacementEstablished' \
+    '&& !failedCheckpointWriteRecoveryObserved' \
+    '&& !independentPostLoadTensorHashReplayObserved' \
+    '&& !independentCodecComparatorObserved' \
+    '&& !independentPostLoadArtifactRootVerifyObserved' \
+    '&& !checkpointLoadedForwardObserved' \
+    '&& !checkpointRoundTripBehaviorParityEstablished' \
+    '&& !optimizerStateIncluded' \
+    '&& !rngStateIncluded' \
+    '&& !dataCursorIncluded' \
+    '&& !kvCacheStateIncluded' \
+    '&& !decoderForwardObserved' \
+    '&& !decoderKVCacheUsed' \
+    '&& !backwardInvoked' \
+    '&& !lossObserved' \
+    '&& !optimizerStepObserved' \
+    '&& !generationInvoked' \
+    '&& !trainEvaluateSurfaceEstablished' \
+    '&& !trainingResumeEstablished' \
+    '&& !trainingExecutionObserved' \
+    '&& !modelQualityEstablished' \
+    '&& !candidateAdmissionGranted' \
+    '&& !trialAuthorized' \
+    '&& !canaryReplacementAuthorized' \
+    '&& !quantizationAuthorized' \
+    '&& !productUseAuthorized' \
+    '&& !publicationAuthorized' \
+    '"ABSTAIN_exact_reviewed_main_seed43_native300m_v2_checkpoint_root_identity_repair_one_public_write_one_public_fresh_load_parent_verified_ephemeral_cleanup_observed_no_artifact_retention_provenance_or_admission"'; do
+    grep -Fq -- "$required_checkpoint_v2_io_root_identity_repair_observation_value" \
+        "$decoder_checkpoint_v2_io_root_identity_repair_execution_observation_source" ||
+        die "PrimeNativeDecoder checkpoint V2 I/O root-identity repair observation lost: $required_checkpoint_v2_io_root_identity_repair_observation_value"
+done
+
+for forbidden_checkpoint_v2_io_root_identity_repair_observation_capability in \
+    'FileManager' \
+    'FileHandle' \
+    'URL(' \
+    'URLSession' \
+    'posix_spawn' \
+    'execve(' \
+    'PrimeArtifactRoot(' \
+    'PrimeNativeGQADecoder.make(' \
+    'PrimeNativeDecoderCheckpointCodecV2.' \
+    '.writeNative300MByte512(' \
+    '.loadNative300MByte512(' \
+    'Memory.clearCache()' \
+    'import MLX' \
+    'import Metal' \
+    'Process()'; do
+    if grep -Fq -- "$forbidden_checkpoint_v2_io_root_identity_repair_observation_capability" \
+        "$decoder_checkpoint_v2_io_root_identity_repair_execution_observation_source"; then
+        die "PrimeNativeDecoder checkpoint V2 I/O root-identity repair observation owns forbidden capability: $forbidden_checkpoint_v2_io_root_identity_repair_observation_capability"
+    fi
+done
+
 for required_checkpoint_v2_io_root_identity_repair_probe_value in \
     'PrimeNativeDecoderCheckpointV2ContainerIORootIdentityRepairExecutionEnvironmentPolicyV1' \
     '.validateLaunchedCurrentProcess()' \
@@ -3185,6 +3470,124 @@ for forbidden_checkpoint_v2_io_root_identity_repair_test_value in \
     if grep -Fq -- "$forbidden_checkpoint_v2_io_root_identity_repair_test_value" \
         "$decoder_checkpoint_v2_io_root_identity_repair_execution_test"; then
         die "PrimeNativeDecoder checkpoint V2 I/O root-identity repair test gained execution capability: $forbidden_checkpoint_v2_io_root_identity_repair_test_value"
+    fi
+done
+
+for required_checkpoint_v2_io_root_identity_repair_observation_test_value in \
+    'func testExecutionObservationIsExactExhaustedRetiredAndPure() throws {' \
+    'PrimeNativeDecoderCheckpointV2ContainerIORootIdentityRepairExecutionObservationV1' \
+    'PrimeNativeDecoderCheckpointV2ContainerIORootIdentityRepairExecutionObservationError' \
+    'PrimeNativeDecoderCheckpointV2ContainerIORootIdentityRepairExecutionEvidenceV1' \
+    'let observation = Observation.frozenV1' \
+    'try observation.validateExactV1()' \
+    'let expectedSources = [' \
+    'observation.observedSourceBindings.count' \
+    'Set(observation.observedSourceBindings.map(\.path)).count' \
+    'try actual.validate()' \
+    'XCTAssertEqual(observation.runID, 31_484_642_403)' \
+    'XCTAssertEqual(observation.activeRootJobID, 93_757_136_546)' \
+    'XCTAssertEqual(observation.reviewedMainJobID, 93_757_733_456)' \
+    'XCTAssertTrue(observation.liveRepairCommandRetired)' \
+    'XCTAssertTrue(observation.retiredLauncherSourceRemainsFrozen)' \
+    'XCTAssertFalse(observation.consumedLiveExecutionReexecutionAuthorized)' \
+    'observation.reviewedMainTimeoutDuringObservedExecutionMinutes' \
+    'observation.reviewedMainTimeoutRestoredAfterObservationMinutes' \
+    'observation.reviewedMainTimeoutRestoredToOrdinary45Minutes' \
+    'observation.reviewedMainCheckoutFetchDepthDuringObservedExecution' \
+    'observation.reviewedMainCheckoutFetchDepthRestoredAfterObservation' \
+    'observation.reviewedMainCheckoutDepthRestoredToOne' \
+    'observation.activeJobTransportDecodedUTF8LogByteCount' \
+    'observation.activeJobTransportDecodedUTF8LogSplitLineCount' \
+    '"a6f948b106edb307a3a826af74bdc82398afba6b1961359e77ec79bb9f069de8"' \
+    'observation.reviewedMainJobTransportDecodedUTF8LogByteCount' \
+    'observation.reviewedMainJobTransportDecodedUTF8LogSplitLineCount' \
+    '"caa3e223077cca02d917d2814668a2dc4e36d5e8eed3f60c76689821ed53e588"' \
+    'XCTAssertFalse(observation.rawGitHubLogArchiveBytesBound)' \
+    'XCTAssertFalse(observation.jobLogsRetainedInRepository)' \
+    'XCTAssertFalse(observation.durableJobLogPublicationEstablished)' \
+    'XCTAssertEqual(observation.publishedWorkflowArtifactCount, 0)' \
+    'XCTAssertFalse(observation.checkpointArtifactUploaded)' \
+    'XCTAssertEqual(observation.receiptBeginMarkerCount, 1)' \
+    'XCTAssertEqual(observation.receiptChunkMarkerCount, 26)' \
+    'XCTAssertEqual(observation.receiptEndMarkerCount, 1)' \
+    'XCTAssertEqual(observation.receiptCanonicalByteCount, 77_205)' \
+    '"b4aec02aa666433fa7bff5e913629e51f06f5388d21bf9e86d7801ca00dd67bf"' \
+    'let evidence = observation.receiptEvidence' \
+    'try evidence.validate()' \
+    'XCTAssertEqual(evidence.initializationSeed, 43)' \
+    'XCTAssertEqual(beforeWrite.linkCount, 2)' \
+    'XCTAssertEqual(afterWrite.linkCount, 3)' \
+    'XCTAssertEqual(afterLoad, afterWrite)' \
+    'beforeWrite.publicationStableObjectFieldsEqual(to: afterWrite)' \
+    'afterWrite.readOnlyFullIdentityEqual(to: afterLoad)' \
+    'XCTAssertTrue(evidence.publicationStableFiveFieldsMatched)' \
+    'XCTAssertTrue(evidence.readOnlyFullRootIdentityMatched)' \
+    'artifact.byteCount, 1_084_525_304' \
+    '"a6dae67b9a24e3d0220d22e3060bb43bab7d8cd027d97ea635db8580774cd538"' \
+    'XCTAssertEqual(evidence.publicCheckpointWriteInvocationCount, 1)' \
+    'XCTAssertEqual(evidence.publicCheckpointWriteCompletionCount, 1)' \
+    'XCTAssertEqual(evidence.publicCheckpointLoadInvocationCount, 1)' \
+    'XCTAssertEqual(evidence.publicCheckpointLoadCompletionCount, 1)' \
+    'observation.exactParentPostReceiptVerificationSourceLineRange' \
+    'XCTAssertEqual(observation.exactParentArtifactUnlinkSourceLine, 1_176)' \
+    'observation.exactParentArtifactRootRmdirSourceLine' \
+    'observation.exactParentCleanupAbsencePostconditionSourceLineRange' \
+    '"2026-08-11T11:42:37.6029040Z"' \
+    '"2026-08-11T11:42:37.8067580Z"' \
+    'XCTAssertTrue(observation.receiptEndPrecededParentCleanup)' \
+    'XCTAssertTrue(observation.parentReceiptVerificationCompleted)' \
+    'XCTAssertTrue(observation.parentArtifactUnlinkCompleted)' \
+    'XCTAssertTrue(observation.parentArtifactRootRmdirCompleted)' \
+    'XCTAssertTrue(observation.parentLiteralCleanupPostconditionCompleted)' \
+    'let falseCeilings = [' \
+    'XCTAssertEqual(falseCeilings.count, 32)' \
+    'for key in falseCeilings.keys.sorted() {' \
+    'let receiptData = try evidence.canonicalReceiptData()' \
+    'PrimeSHA256.hexDigest(of: receiptData)' \
+    'let decodedReceipt = try Evidence.decodeCanonicalReceipt(' \
+    'try decodedReceipt.validate()' \
+    'let encodedObservation = try JSONEncoder().encode(observation)' \
+    'let decodedObservation = try JSONDecoder().decode(' \
+    'try decodedObservation.validateExactV1()' \
+    'let canonicalObservation = try PrimeCanonicalJSON.encode(observation)' \
+    'let mutations = recursiveScalarAndArrayMutations(' \
+    'XCTAssertGreaterThan(mutations.count, 2_500)' \
+    'mutations.contains { $0.0.hasSuffix(".boolean") }' \
+    'mutations.contains { $0.0.hasSuffix(".number") }' \
+    'mutations.contains { $0.0.hasSuffix(".string") }' \
+    'mutations.contains { $0.0.hasSuffix(".array-duplicate") }' \
+    'mutations.contains { $0.0.hasSuffix(".array-reorder") }' \
+    'var rejectedAfterDecodeCount = 0' \
+    'var rejectedAtDecodeCount = 0' \
+    'try mutated.validateExactV1()' \
+    '.contractDrift' \
+    'catch is DecodingError {' \
+    'XCTAssertGreaterThan(rejectedAfterDecodeCount, 2_500)' \
+    'XCTAssertGreaterThan(rejectedAtDecodeCount, 0)' \
+    'rejectedAfterDecodeCount + rejectedAtDecodeCount'; do
+    grep -Fq -- "$required_checkpoint_v2_io_root_identity_repair_observation_test_value" \
+        "$decoder_checkpoint_v2_io_root_identity_repair_execution_observation_test" ||
+        die "PrimeNativeDecoder checkpoint V2 I/O root-identity repair observation test lost: $required_checkpoint_v2_io_root_identity_repair_observation_test_value"
+done
+
+for forbidden_checkpoint_v2_io_root_identity_repair_observation_test_value in \
+    'PrimeNativeGQADecoder.make(' \
+    'PrimeNativeDecoderCheckpointCodecV2.' \
+    '.writeNative300MByte512(' \
+    '.loadNative300MByte512(' \
+    'PrimeArtifactRoot(' \
+    'Memory.clearCache()' \
+    'import MLX' \
+    'import Metal' \
+    'FileManager' \
+    'FileHandle' \
+    'URLSession' \
+    'posix_spawn' \
+    'execve(' \
+    'Process()'; do
+    if grep -Fq -- "$forbidden_checkpoint_v2_io_root_identity_repair_observation_test_value" \
+        "$decoder_checkpoint_v2_io_root_identity_repair_execution_observation_test"; then
+        die "PrimeNativeDecoder checkpoint V2 I/O root-identity repair observation test gained execution capability: $forbidden_checkpoint_v2_io_root_identity_repair_observation_test_value"
     fi
 done
 

@@ -157,14 +157,71 @@ read-only load. The parent must reconstruct and validate the complete ordered
 chunked receipt before literal `unlink`/`rmdir` cleanup. A failure handler is
 limited to the same exact root and fixed-leaf inventory, performs no recursive
 artifact-root deletion, and cannot establish success. The repair authority is
-`ABSTAIN` until its exact reviewed-main execution is separately observed. It
-authorizes no rerun, existing-artifact compatibility, replacement/recovery,
-retention, provenance, admission, forward, backward, training, product use, or
-publication. The reviewed lane is temporarily bounded at 90 minutes with a
-depth-two merge checkout; the append-only outcome successor must remove the
-repair command and restore 45 minutes/depth one before any later main merge.
-Its isolated pure authority/evidence test allocates no model and calls neither
-public checkpoint I/O entry point.
+`ABSTAIN` without a separate exact reviewed-main outcome. It authorizes no
+rerun, existing-artifact compatibility, replacement/recovery, retention,
+provenance, admission, forward, backward, training, product use, or
+publication.
+
+`PrimeNativeDecoderCheckpointV2ContainerIORootIdentityRepairExecutionObservationV1.frozenV1`
+is that append-only outcome. It binds history-preserving merge
+`44cfa2caa3af5bb44ad53294de33ba2d0faa9a59`, ordered parents
+`1a69407a8fbd5f141e8ece584066b8dcfa6f606f` and
+`7314b8a85c5f134c9521b84d2d51d12d3d5084bb`, tree
+`fbd57cd9de786e38121fa02b0664b1fb4fcd3d3c`, and direct-main workflow run
+`31484642403`, attempt 1. Active-root job `93757136546` and reviewed-main
+job `93757733456` completed successfully. Their decoded structured logs are
+respectively 225,372 bytes with SHA-256
+`a6f948b106edb307a3a826af74bdc82398afba6b1961359e77ec79bb9f069de8`
+and 10,348,719 bytes with SHA-256
+`caa3e223077cca02d917d2814668a2dc4e36d5e8eed3f60c76689821ed53e588`.
+The reviewed job rebuilt the 6,292,732-byte metallib with SHA-256
+`d4e858ce07e26d7c82f8218fc7964d05f307db95620242348699cfff33e0d52f`,
+then passed the frozen Metal, maintained-runtime, and tokenizer launchers in
+that exact order before invoking the seed-43 repair once.
+
+The repair invoked and completed exactly one public V2 write and exactly one
+public fresh load. Before the write, the empty 0700 artifact root was bound as
+device `16777230`, inode `2970995`, owner `501`, group `20`, mode
+`448`, link count `2`, mtime `1786448484.733729583`, and ctime
+`1786448484.735646374`. After the write its link count was `3` and both
+mtime and ctime were `1786448532.850740833`; every other field was unchanged.
+The complete post-load identity matched that post-write identity, giving the
+observed `2 -> 3 -> 3` link topology and exact read-only full-root identity.
+The root contained exactly
+`checkpoint-v2-native300m-seed43-root-identity-repair.safetensors`, a regular,
+non-symlink, single-link, 0444 `immutable_data` leaf. Its full container
+binding is 1,084,525,304 bytes with SHA-256
+`a6dae67b9a24e3d0220d22e3060bb43bab7d8cd027d97ea635db8580774cd538`.
+The manifest binds 218 finite FP32 tensors, 271,107,072 parameters, and
+1,084,428,288 parameter bytes.
+
+The receipt transport emitted one begin marker, 26 contiguous base64 chunks,
+and one end marker with no interleaving. It reconstructs to 77,205 canonical
+bytes with SHA-256
+`b4aec02aa666433fa7bff5e913629e51f06f5388d21bf9e86d7801ca00dd67bf`.
+Its canonical compatibility identity is 30,553 bytes/SHA-256
+`aa3ee5d2208459280a81cc8067facd49cde6449659a766f58456a9c0d6150843`;
+the 218 tensor bindings are 35,184 bytes/SHA-256
+`7cc7aec0d990a0bb6bb1748de396b84c85af06dea918610343e2f6560c926566`;
+the manifest is 66,373 bytes/SHA-256
+`6b42dac70d522b248b02d564c8e850f82a28ca12fcfab4ca4db91ea8cc9098e3`;
+and the full external binding is 66,854 bytes/SHA-256
+`c5a9b8a8aa4301f2dde0ab199bc39771298b1842009836537a085ba4b676d961`.
+Only after reconstructing and semantically validating that receipt did the
+parent revalidate the exact root and sole leaf, literally `unlink` the leaf,
+`rmdir` the empty root, and prove both paths absent. The receipt end preceded
+the exact cleanup-success line, and the run published zero Actions artifacts.
+
+This records one process-local V2 checkpoint round trip and its literal
+ephemeral cleanup. It does not retain a checkpoint, establish artifact
+provenance or checkpoint admission, authorize an existing artifact,
+replacement or failed-write recovery, run a loaded-model forward, or grant
+training, product, or publication authority. The repair live command is now
+removed, the ordinary 45-minute/depth-one workflow bounds are restored, and
+the reviewed live sequence remains exactly Metal, runtime, then tokenizer. The
+isolated repair package now runs exactly two pure authority/evidence and
+outcome-observation tests; both allocate no model and call neither public
+checkpoint-I/O entry point.
 
 The Metal gate also binds a separate synthetic CI-mechanics policy that starts
 without any inherited `MLX_`, `DYLD_`, or `LLVM_PROFILE_` override and sets
@@ -283,12 +340,13 @@ probe did not emit an executable byte identity.
 These slices establish the repaired source's exact declarative compatibility
 identity, admit the narrowly scoped maintained-runtime compute policy, and
 observe the bounded initialization closure at the exact hosted merge. The
-latest append-only successor now observes the exact
-tokenizer-to-random-initialized-Native-300M full-prefix forward witness. These
-execution slices do not establish a checkpoint artifact or observed
-native-profile I/O, establish broad model functional or semantic
-compatibility, train, authorize a trial, replace a canary, quantize, select
-product use, or publish. The result remains `ABSTAIN` at those boundaries.
+tokenizer successor observes the exact random-initialized Native-300M
+full-prefix forward witness, and the root-identity repair successor observes
+one exact process-local native-profile write/load followed by literal cleanup.
+These execution slices do not establish a retained checkpoint, artifact
+provenance or admission, broad model functional or semantic compatibility,
+training, trial, canary, quantization, product use, or publication. The result
+remains `ABSTAIN` at those boundaries.
 
 ## Verification and next slices
 
@@ -331,7 +389,8 @@ frozen 44-test launcher. Its separately approved seed-42 hosted successor was
 attempted once and source-pinned control flow establishes that the public write
 returned before the failure, before the public load or receipt. Neither that
 source contract nor the failed execution establishes retained or admitted
-checkpoint state; the next boundary is the distinct seed-43 repair below.
+checkpoint state. The distinct seed-43 repair and its observed outcome remain
+separate below.
 
 A sixth isolated package keeps the one-shot execution mechanics separate from
 that declarative test. Its one pure authority test constructs no model and
@@ -349,9 +408,18 @@ observation without model allocation or I/O. The existing hosted focused step
 runs both isolated pure tests with an exact two-test/no-skip assertion. The live
 V2 I/O command is absent, both workflow checkouts use depth one, and both job
 timeouts are 45 minutes.
-The next execution design is a distinct seed-43 repair arc with its own
-authority, evidence, isolated package, probe, test, and launcher—not a rerun of
-the frozen attempt.
+
+A seventh isolated package kept the seed-43 correction distinct from the
+exhausted seed-42 package. Its first pure test validates the repair authority,
+evidence, and chunk transport without model allocation or checkpoint I/O. The
+one authorized reviewed-main execution then passed Metal, runtime, and
+tokenizer before exactly one public write and one public fresh load, emitted
+the complete bound receipt, and completed literal parent cleanup. Its
+append-only outcome observation adds a second pure mutation/source-identity
+test. The focused step now requires exactly two tests with no skips for this
+repair package. The live repair command is absent, both checkouts use depth one,
+both jobs use 45-minute limits, and the only reviewed live launchers are the
+frozen Metal, maintained-runtime, and tokenizer sequence.
 
 The first external live-Metal run of exact head `84504dc` executed all 41 tests
 with no skips but reported 306 assertions. Disabling pinned-MLX TF32 removed
@@ -439,21 +507,15 @@ dependency.
 
 The remaining replacement order is:
 
-1. independently review, publish, and observe the seed-43 root-identity repair
-   on its single authorized first-attempt direct successor;
-2. append either that repair execution's exact success observation or its
-   exact failure observation without artifact admission, and retire its live
-   command before any later main merge;
-3. define generic Prime-owned train/evaluate surfaces and persist exact
-   optimizer, RNG, and data-cursor state for trajectory-exact resume;
-4. separately authorize bounded training, then produce and bind a non-fixture
+1. design generic Prime-owned train/evaluate surfaces and exact optimizer, RNG,
+   and data-cursor persistence for trajectory-exact resume;
+2. separately authorize bounded training, then produce and bind a non-fixture
    checkpoint with exact training-state and artifact provenance;
-5. separately authorize and run a bounded candidate canary/trial;
-6. migrate the read-only PMHNP canary consumer to the Prime-owned interface and
+3. separately authorize and run a bounded candidate canary/trial;
+4. migrate the read-only PMHNP canary consumer to the Prime-owned interface and
    remove its active Llama factory after single-MLX-graph reconciliation;
-7. address CoreML/NeuralKit product export only after accepted checkpoint and
+5. address CoreML/NeuralKit product export only after accepted checkpoint and
    parity evidence.
 
-No training, PMHNP write, or product decision is part of this hosted
-observation. Network activity is limited to the separately authorized branch,
-pull-request, merge, and GitHub Actions workflow operations.
+No training, PMHNP write, or product decision is part of the checkpoint
+observation or the next design arc.
