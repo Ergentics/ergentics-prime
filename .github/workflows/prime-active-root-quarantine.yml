@@ -80,6 +80,7 @@ jobs:
             Sources/PrimeCore/PrimeNativeDecoderCheckpointAuthority.swift \
             Sources/PrimeCore/PrimeNativeDecoderCheckpointCompatibilityV2Authority.swift \
             Sources/PrimeCore/PrimeNativeDecoderMaintainedRuntimeComputeAuthority.swift \
+            Sources/PrimeCore/PrimeNativeDecoderMaintainedRuntimeExecutionObservation.swift \
             Sources/PrimeCore/PrimeNativeDecoderMetalRepairAuthority.swift \
             Sources/PrimeCore/PrimeNativeDecoderMetalExecutionObservation.swift \
             Sources/PrimeCore/PrimeNativeDecoderMetalExecutionObservationCorrection.swift \
@@ -150,6 +151,7 @@ jobs:
             echo 'A reviewed-main successor binds the exact merged revision whose active-root, Latin, focused-contract, fresh-metallib, and 44-test live-Metal jobs passed on GitHub. It remains synthetic mechanics evidence and leaves repaired checkpoint identity, admitted runtime policy, training, and downstream authority false.'
             echo 'The repaired-source checkpoint compatibility V2 successor retains the exact V1 configuration, byte-512 tokenizer identity, and 218-entry FP32 parameter catalog while binding the repaired decoder source. It defines no V2 manifest, codec, artifact, native-profile I/O, runtime, or training authority.'
             echo 'The additive maintained-runtime closure policy and implementation bind the exact dependency, loader-candidate, Metal-device, and bounded MLX-initialization mechanics authorized for the reviewed-main lane. This active-root job does not execute that closure and grants no decoder forward, Native-300M allocation, checkpoint I/O or admission, training, trial, canary, product, or publication authority.'
+            echo 'An append-only successor binds the exact reviewed-main run whose frozen 44-test Metal suite and bounded Release runtime receipt passed against one fresh pinned-source metallib and a singleton Metal device. It establishes only the maintained dependency closure, source-pinned exclusive-candidate inference, and bounded MLX initialization; independent loaded-metallib identity, decoder execution, checkpoint I/O or admission, training, and downstream authority remain false.'
             echo 'The locally declared origin is not network-authenticated, and ignored workspace bytes are not observed by this slice.'
             echo 'No Prime proposal, candidate selection, trial authorization, decision receipt, runtime/product/canary decoder activation, model execution, training, publication, promotion, Driver V2, or PMHNP authority is granted.'
           } >> "$GITHUB_STEP_SUMMARY"
