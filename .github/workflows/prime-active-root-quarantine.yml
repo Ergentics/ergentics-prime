@@ -79,6 +79,7 @@ jobs:
             Sources/PrimeCore/PrimeNativeDecoderDerivedDelta.swift \
             Sources/PrimeCore/PrimeNativeDecoderCheckpointAuthority.swift \
             Sources/PrimeCore/PrimeNativeDecoderCheckpointCompatibilityV2Authority.swift \
+            Sources/PrimeCore/PrimeNativeDecoderMaintainedRuntimeComputeAuthority.swift \
             Sources/PrimeCore/PrimeNativeDecoderMetalRepairAuthority.swift \
             Sources/PrimeCore/PrimeNativeDecoderMetalExecutionObservation.swift \
             Sources/PrimeCore/PrimeNativeDecoderMetalExecutionObservationCorrection.swift \
@@ -87,6 +88,7 @@ jobs:
             Sources/PrimeNativeDecoder/PrimeNativeGQADecoder.swift \
             Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV1.swift \
             Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCompatibilityIdentityV2.swift \
+            Sources/PrimeNativeDecoderRuntime/PrimeNativeDecoderRuntime.swift \
             Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalPairCaptureSourceContractTests.swift \
             Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalPairCaptureTests.swift \
             Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalGitSourceV3Tests.swift \
@@ -102,6 +104,8 @@ jobs:
             Tests/PrimeNativeDecoderValidation/Tests/PrimeNativeDecoderTests/PrimeNativeDecoderCheckpointTests.swift \
             Tests/PrimeNativeDecoderValidation/Tests/PrimeNativeDecoderTests/PrimeNativeGQADecoderTests.swift \
             Tests/PrimeNativeDecoderCheckpointCompatibilityV2Validation/Tests/PrimeNativeDecoderCheckpointCompatibilityV2Tests/PrimeNativeDecoderCompatibilityIdentityV2Tests.swift \
+            Tests/PrimeNativeDecoderRuntimeClosureValidation/Sources/PrimeNativeDecoderRuntimeClosureProbe/main.swift \
+            Tests/PrimeNativeDecoderRuntimeClosureValidation/Tests/PrimeNativeDecoderRuntimeClosureAuthorityTests/PrimeNativeDecoderRuntimeClosureAuthorityTests.swift \
             Tests/PrimeCoreTests/PrimeNativeCorpusReplaySourceContractTests.swift \
             Tests/PrimeCoreTests/PrimeNativeGenerationContractSourceContractTests.swift \
             Tests/PrimeCoreTests/PrimeNativeNeuralGateContractSourceContractTests.swift \
@@ -145,6 +149,7 @@ jobs:
             echo 'A successor observation binds the corrected exact-head pull-request active-root and Latin gate execution. The reviewed-main Metal job remained skipped by design, so GitHub-hosted Metal, fresh-metallib provenance, runtime, checkpoint, training, and downstream authority remain false.'
             echo 'A reviewed-main successor binds the exact merged revision whose active-root, Latin, focused-contract, fresh-metallib, and 44-test live-Metal jobs passed on GitHub. It remains synthetic mechanics evidence and leaves repaired checkpoint identity, admitted runtime policy, training, and downstream authority false.'
             echo 'The repaired-source checkpoint compatibility V2 successor retains the exact V1 configuration, byte-512 tokenizer identity, and 218-entry FP32 parameter catalog while binding the repaired decoder source. It defines no V2 manifest, codec, artifact, native-profile I/O, runtime, or training authority.'
+            echo 'The additive maintained-runtime closure policy and implementation bind the exact dependency, loader-candidate, Metal-device, and bounded MLX-initialization mechanics authorized for the reviewed-main lane. This active-root job does not execute that closure and grants no decoder forward, Native-300M allocation, checkpoint I/O or admission, training, trial, canary, product, or publication authority.'
             echo 'The locally declared origin is not network-authenticated, and ignored workspace bytes are not observed by this slice.'
             echo 'No Prime proposal, candidate selection, trial authorization, decision receipt, runtime/product/canary decoder activation, model execution, training, publication, promotion, Driver V2, or PMHNP authority is granted.'
           } >> "$GITHUB_STEP_SUMMARY"
@@ -276,4 +281,6 @@ jobs:
 
       - name: Run the Prime-owned decoder on live Metal
         working-directory: ergentics-prime
-        run: bash .github/scripts/prime-ci-native-decoder-metal.sh
+        run: |
+          bash .github/scripts/prime-ci-native-decoder-metal.sh
+          bash .github/scripts/prime-ci-native-decoder-runtime-closure.sh

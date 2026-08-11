@@ -92,17 +92,39 @@ compatibility remain unestablished.
 The Metal gate also binds a separate synthetic CI-mechanics policy that starts
 without any inherited `MLX_`, `DYLD_`, or `LLVM_PROFILE_` override and sets
 only `MLX_ENABLE_TF32=0` before its first Metal or MLX call. No comparison
-tolerance was globally widened. This policy does not weaken or satisfy the
-frozen maintained-runtime environment policy, which still rejects every
-`MLX_` key; an admitted runtime compute-policy successor remains required.
+tolerance was globally widened. That historical CI policy does not weaken or
+satisfy the frozen maintained-runtime environment policy, which still rejects
+every `MLX_` key for its existing roles.
+
+`PrimeNativeDecoderMaintainedRuntimeComputeAuthorityPlanV1.frozenV1` now adds
+the decoder-specific successor policy without rewriting either predecessor.
+The supervisor must begin with no `MLX_`, `DYLD_`, or `LLVM_PROFILE_` key; the
+dedicated Release child must start with and retain exactly
+`MLX_ENABLE_TF32=0` in the MLX namespace until process exit. The additive
+`PrimeNativeDecoderRuntime` target validates V2 and Native-300M/byte-512
+geometry declaratively, checks release instrumentation, holds the Prime Metal
+lease, verifies one caller-expected `default.metallib` before and after the
+operation against the exact pinned loader-candidate order, reconciles a
+singleton Metal default device with MLX GPU index zero, and performs only an
+exact FP32 2x2 GPU matmul with checked evaluation and readback. It allocates no
+decoder, executes no forward pass, and performs no checkpoint I/O.
+
+The caller-supplied metallib size and SHA-256 are verification inputs, not
+artifact provenance or admission. The implementation supports only a
+source-pinned exclusive-candidate inference: direct instrumentation of the
+path MLX loaded remains false. The authority admits the compute policy and
+authorizes this bounded closure, but dependency, metallib, device, and MLX
+initialization observations remain false until an exact clean hosted execution
+is recorded by a separate successor.
 
 These slices establish the repaired source's exact declarative compatibility
-identity in addition to source materialization, compilation, and bounded
-synthetic mechanics. They do not define a V2 manifest or codec, establish a
-checkpoint artifact or native-profile I/O, admit a runtime compute policy,
-close runtime dependencies or initialization, validate tokenizer/model
-behavior, train, authorize a trial, replace a canary, quantize, select product
-use, or publish. The result remains `ABSTAIN` at those boundaries.
+identity, admit the narrowly scoped maintained-runtime compute policy, and
+implement—but do not yet observe—the bounded initialization closure. They do
+not define a V2 manifest or codec, establish a checkpoint artifact or
+native-profile I/O, validate tokenizer/model behavior, allocate Native-300M,
+execute the decoder, train, authorize a trial, replace a canary, quantize,
+select product use, or publish. The result remains `ABSTAIN` at those
+boundaries.
 
 ## Verification and next slices
 
@@ -117,6 +139,15 @@ projection reuse, repaired source binding, canonical V1/catalog/V2 hashes,
 bidirectional version rejection, V1-manifest rejection, source capability
 ceiling, and fail-closed mutations. It performs no model allocation, Metal
 execution, or checkpoint I/O.
+
+A third isolated package validates the maintained-runtime authority and pure
+runtime plan in one Metal-free test, then builds a separate Release probe for
+the reviewed-main lane. After the frozen 44-test launcher has produced its
+same-job pinned-source metallib, a new launcher stages one exclusive candidate,
+starts the probe from an empty private working directory with the admitted
+environment, requires explicit CoreGraphics and Metal linkage and no dynamic
+MLX/Cmlx image, and checks the bounded receipt. This adds no decoder test to
+the frozen 44-test inventory and no Driver V2 test resource.
 
 The first external live-Metal run of exact head `84504dc` executed all 41 tests
 with no skips but reported 306 assertions. Disabling pinned-MLX TF32 removed
@@ -204,9 +235,9 @@ dependency.
 
 The remaining replacement order is:
 
-1. append an admitted runtime compute policy, establish the exact dependency,
-   metallib, device, and initialization closure, and keep it separate from the
-   synthetic CI policy;
+1. run the exact clean reviewed-main maintained-runtime closure and append a
+   separate observation binding its dependency, metallib, device, and bounded
+   MLX-initialization receipt;
 2. establish tokenizer/model functional compatibility, then define bounded
    native-profile checkpoint container and I/O mechanics;
 3. define generic Prime-owned train/evaluate surfaces and persist exact

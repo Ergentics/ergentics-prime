@@ -14,6 +14,7 @@ readonly numerics_revision="0c0290ff6b24942dadb83a929ffaaa1481df04a2"
 readonly numerics_version="1.1.1"
 readonly workflow_path="$prime_root/.github/workflows/prime-active-root-quarantine.yml"
 readonly decoder_metal_gate_path="$prime_root/.github/scripts/prime-ci-native-decoder-metal.sh"
+readonly decoder_runtime_closure_gate_path="$prime_root/.github/scripts/prime-ci-native-decoder-runtime-closure.sh"
 
 die() {
     echo "prime-ci-active-root-quarantine: $*" >&2
@@ -139,6 +140,33 @@ require_preserved_object \
     ".github/scripts/prime-ci-native-decoder-metal.sh" \
     "418d2d2753cee38e0b3558ad45e1e09865ffd11d"
 require_preserved_object \
+    "Package.swift" \
+    "f201abbf928e5e3d6b0c7785110539cdaeee911b"
+require_preserved_object \
+    "Package.resolved" \
+    "dcd0192f705c22378f2d9e871a240c0493ad8a80"
+require_preserved_object \
+    "Sources/PrimeCore/PrimeNativeDecoderMaintainedRuntimeComputeAuthority.swift" \
+    "379c3e40ab24ae696c01da0b3f2116d0093cedb2"
+require_preserved_object \
+    "Sources/PrimeNativeDecoderRuntime/PrimeNativeDecoderRuntime.swift" \
+    "dd3ca76ba7799c6deb0012276967c07bee3644d0"
+require_preserved_object \
+    "Tests/PrimeNativeDecoderRuntimeClosureValidation/Package.swift" \
+    "ed63a3edf5def776cdb531166090a69afdf0e425"
+require_preserved_object \
+    "Tests/PrimeNativeDecoderRuntimeClosureValidation/Package.resolved" \
+    "9128fe027a155fe6ea3c56667cf57989bc05128d"
+require_preserved_object \
+    "Tests/PrimeNativeDecoderRuntimeClosureValidation/Sources/PrimeNativeDecoderRuntimeClosureProbe/main.swift" \
+    "63679a06c900b803b23778b011980636a3b302f1"
+require_preserved_object \
+    "Tests/PrimeNativeDecoderRuntimeClosureValidation/Tests/PrimeNativeDecoderRuntimeClosureAuthorityTests/PrimeNativeDecoderRuntimeClosureAuthorityTests.swift" \
+    "f159267dfa77a643337ba9cd7f60d733d4d84033"
+require_preserved_object \
+    ".github/scripts/prime-ci-native-decoder-runtime-closure.sh" \
+    "f1c3041d7e47fa315f60c889a736a412640e8710"
+require_preserved_object \
     "Sources/PrimeNativeNeuralGateHistoricalReplayMechanics/EngineProposesNativeLanguageVerifyAbstainFixture.swift" \
     "14833cbae5a819d875663740bca8fb8ff175df0c"
 require_preserved_object \
@@ -235,6 +263,10 @@ assert_active_lock \
     "Tests/PrimeNativeDecoderCheckpointCompatibilityV2Validation/Package.swift" \
     "$root_mlx_revision"
 assert_active_lock \
+    "Tests/PrimeNativeDecoderRuntimeClosureValidation/Package.resolved" \
+    "Tests/PrimeNativeDecoderRuntimeClosureValidation/Package.swift" \
+    "$root_mlx_revision"
+assert_active_lock \
     "Tests/PrimeTypedOptimizerRestoreMechanicsValidation/Package.resolved" \
     "Tests/PrimeTypedOptimizerRestoreMechanicsValidation/Package.swift" \
     "$typed_mlx_revision"
@@ -276,8 +308,33 @@ bash -n "$decoder_metal_gate_path" ||
 [[ "$(git -C "$prime_root" hash-object "$decoder_metal_gate_path")" \
     == "418d2d2753cee38e0b3558ad45e1e09865ffd11d" ]] ||
     die "Prime native decoder Metal gate blob changed"
-grep -Fq -- 'run: bash .github/scripts/prime-ci-native-decoder-metal.sh' "$workflow_path" ||
-    die "trusted-main workflow does not invoke the Prime native decoder Metal gate"
+[[ -f "$decoder_runtime_closure_gate_path" \
+    && ! -L "$decoder_runtime_closure_gate_path" ]] ||
+    die "Prime native decoder runtime-closure gate is missing or linked"
+[[ "$(git -C "$prime_root" ls-files -- \
+    '.github/scripts/prime-ci-native-decoder-runtime-closure.sh')" \
+    == '.github/scripts/prime-ci-native-decoder-runtime-closure.sh' ]] ||
+    die "Prime native decoder runtime-closure gate is not tracked exactly"
+bash -n "$decoder_runtime_closure_gate_path" ||
+    die "Prime native decoder runtime-closure gate is not valid Bash"
+[[ "$(git -C "$prime_root" ls-files -s -- \
+    '.github/scripts/prime-ci-native-decoder-runtime-closure.sh' | awk '{print $1}')" \
+    == "100755" ]] ||
+    die "Prime native decoder runtime-closure gate mode changed"
+grep -Fq -- '      - name: Run the Prime-owned decoder on live Metal' \
+    "$workflow_path" ||
+    die "trusted-main workflow lost the frozen decoder Metal step"
+readonly frozen_metal_workflow_line="$(grep -nFx -- \
+    '          bash .github/scripts/prime-ci-native-decoder-metal.sh' \
+    "$workflow_path" | awk -F: '{print $1}')"
+readonly runtime_closure_workflow_line="$(grep -nFx -- \
+    '          bash .github/scripts/prime-ci-native-decoder-runtime-closure.sh' \
+    "$workflow_path" | awk -F: '{print $1}')"
+[[ "$frozen_metal_workflow_line" =~ ^[1-9][0-9]*$ \
+    && "$runtime_closure_workflow_line" =~ ^[1-9][0-9]*$ \
+    && "$runtime_closure_workflow_line" \
+        -eq $((frozen_metal_workflow_line + 1)) ]] ||
+    die "trusted-main workflow does not run the runtime closure immediately after the frozen Metal gate"
 grep -Fq -- \
     '--package-path Tests/PrimeNativeDecoderCheckpointCompatibilityV2Validation' \
     "$workflow_path" ||
@@ -315,15 +372,51 @@ for forbidden_metal_gate_value in \
     fi
 done
 
+for required_runtime_closure_gate_value in \
+    'prime-native-decoder-metal-tests.log' \
+    'prime-native-decoder-metallib' \
+    '--configuration release' \
+    '--build-tests' \
+    'xcrun xctest' \
+    'Executed 1 test, with 0 failures' \
+    'MLX_ENABLE_TF32=0' \
+    'CoreGraphics' \
+    'Metal' \
+    'private_cwd' \
+    'PRIME_NATIVE_DECODER_RUNTIME_CLOSURE_RECEIPT='; do
+    grep -Fq -- "$required_runtime_closure_gate_value" \
+        "$decoder_runtime_closure_gate_path" ||
+        die "Prime native decoder runtime-closure gate is missing: $required_runtime_closure_gate_value"
+done
+for forbidden_runtime_closure_gate_value in \
+    '--disable-sandbox' \
+    'xcodebuild' \
+    'git fetch' \
+    'git clone' \
+    'submodule update' \
+    'MLXLLM' \
+    'PMHNP' \
+    'DriverV2' \
+    'Geometry' \
+    'RenderKit' \
+    'PrimeNativeGQADecoder.make' \
+    '.forward('; do
+    if grep -Fq -- "$forbidden_runtime_closure_gate_value" \
+        "$decoder_runtime_closure_gate_path"; then
+        die "Prime native decoder runtime-closure gate contains forbidden value: $forbidden_runtime_closure_gate_value"
+    fi
+done
+
 readonly runner_temp="${RUNNER_TEMP:-/private/tmp}"
 readonly manifest_dump="$(mktemp "$runner_temp/prime-package-dump.json.XXXXXX")"
 readonly decoder_manifest_dump="$(mktemp "$runner_temp/prime-decoder-package-dump.json.XXXXXX")"
 readonly decoder_checkpoint_v2_manifest_dump="$(mktemp "$runner_temp/prime-decoder-checkpoint-v2-package-dump.json.XXXXXX")"
+readonly decoder_runtime_closure_manifest_dump="$(mktemp "$runner_temp/prime-decoder-runtime-closure-package-dump.json.XXXXXX")"
 readonly manifest_scratch="$runner_temp/prime-package-dump-build"
 readonly manifest_cache="$runner_temp/prime-package-dump-cache"
 readonly manifest_config="$runner_temp/prime-package-dump-config"
 readonly manifest_security="$runner_temp/prime-package-dump-security"
-trap 'unlink "$manifest_dump" "$decoder_manifest_dump" "$decoder_checkpoint_v2_manifest_dump" 2>/dev/null || true' EXIT
+trap 'unlink "$manifest_dump" "$decoder_manifest_dump" "$decoder_checkpoint_v2_manifest_dump" "$decoder_runtime_closure_manifest_dump" 2>/dev/null || true' EXIT
 mkdir -p \
     "$manifest_scratch" \
     "$manifest_cache" \
@@ -358,6 +451,11 @@ jq -e \
           and .targets == ["PrimeNativeDecoderCheckpoint"]
           and .type.library == ["automatic"]
       )] | length) == 1
+      and ([.products[] | select(
+          .name == "PrimeNativeDecoderRuntime"
+          and .targets == ["PrimeNativeDecoderRuntime"]
+          and .type.library == ["automatic"]
+      )] | length) == 1
       and ([.targets[] | select(
           .name == "PrimeNativeDecoder"
           and .type == "regular"
@@ -369,6 +467,19 @@ jq -e \
           and .type == "regular"
           and ([.dependencies[] | (.byName[0] // .product[0])]
               == ["PrimeCore", "PrimeNativeDecoder", "MLX", "MLXNN"])
+      )] | length) == 1
+      and ([.targets[] | select(
+          .name == "PrimeNativeDecoderRuntime"
+          and .type == "regular"
+          and ([.dependencies[] | (.byName[0] // .product[0])]
+              == [
+                  "PrimeCore",
+                  "PrimeNativeDecoder",
+                  "PrimeNativeDecoderCheckpoint",
+                  "MLX"
+              ])
+          and ([.settings[].kind.linkedFramework._0]
+              == ["CoreGraphics", "Metal"])
       )] | length) == 1
     ' \
     "$manifest_dump" >/dev/null ||
@@ -459,6 +570,55 @@ jq -e \
     "$decoder_checkpoint_v2_manifest_dump" >/dev/null ||
     die "PrimeNativeDecoder checkpoint V2 validation manifest changed"
 
+TMPDIR="$runner_temp" swift package \
+    --package-path "$prime_root/Tests/PrimeNativeDecoderRuntimeClosureValidation" \
+    --scratch-path "$manifest_scratch" \
+    --cache-path "$manifest_cache" \
+    --config-path "$manifest_config" \
+    --security-path "$manifest_security" \
+    --disable-netrc \
+    --disable-keychain \
+    dump-package > "$decoder_runtime_closure_manifest_dump"
+jq -e \
+    --arg prime_root "$prime_root" \
+    '
+      .name == "PrimeNativeDecoderRuntimeClosureValidation"
+      and (.dependencies | length) == 1
+      and .dependencies[0].fileSystem[0]
+          .nameForTargetDependencyResolutionOnly == "ergentics-prime"
+      and .dependencies[0].fileSystem[0].path == $prime_root
+      and (.products | length) == 1
+      and .products[0].name == "PrimeNativeDecoderRuntimeClosureProbe"
+      and .products[0].targets == ["PrimeNativeDecoderRuntimeClosureProbe"]
+      and (.products[0].type | keys) == ["executable"]
+      and (.targets | length) == 2
+      and [.targets[].name] == [
+          "PrimeNativeDecoderRuntimeClosureProbe",
+          "PrimeNativeDecoderRuntimeClosureAuthorityTests"
+      ]
+      and [.targets[].type] == ["executable", "test"]
+      and ([.targets[0].dependencies[].product[0]] == [
+          "PrimeCore",
+          "PrimeNativeDecoderRuntime"
+      ])
+      and ([.targets[1].dependencies[].product[0]] == [
+          "PrimeCore",
+          "PrimeNativeDecoderRuntime"
+      ])
+      and ([.targets[0].dependencies[].product[1]] == [
+          "ergentics-prime",
+          "ergentics-prime"
+      ])
+      and ([.targets[1].dependencies[].product[1]] == [
+          "ergentics-prime",
+          "ergentics-prime"
+      ])
+      and (.targets[0].settings | length) == 0
+      and (.targets[1].settings | length) == 0
+    ' \
+    "$decoder_runtime_closure_manifest_dump" >/dev/null ||
+    die "PrimeNativeDecoder runtime-closure validation manifest changed"
+
 readonly decoder_source="$prime_root/Sources/PrimeNativeDecoder/PrimeNativeGQADecoder.swift"
 readonly decoder_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderAuthority.swift"
 readonly decoder_derived_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderDerivedDelta.swift"
@@ -466,6 +626,8 @@ readonly decoder_checkpoint_source="$prime_root/Sources/PrimeNativeDecoderCheckp
 readonly decoder_checkpoint_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderCheckpointAuthority.swift"
 readonly decoder_checkpoint_v2_source="$prime_root/Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCompatibilityIdentityV2.swift"
 readonly decoder_checkpoint_v2_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderCheckpointCompatibilityV2Authority.swift"
+readonly decoder_runtime_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderMaintainedRuntimeComputeAuthority.swift"
+readonly decoder_runtime_source="$prime_root/Sources/PrimeNativeDecoderRuntime/PrimeNativeDecoderRuntime.swift"
 readonly decoder_metal_repair_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderMetalRepairAuthority.swift"
 readonly decoder_metal_execution_observation_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderMetalExecutionObservation.swift"
 readonly decoder_metal_execution_correction_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderMetalExecutionObservationCorrection.swift"
@@ -479,6 +641,11 @@ readonly decoder_checkpoint_v2_validation_root="$prime_root/Tests/PrimeNativeDec
 readonly decoder_checkpoint_v2_validation_manifest="$decoder_checkpoint_v2_validation_root/Package.swift"
 readonly decoder_checkpoint_v2_validation_lock="$decoder_checkpoint_v2_validation_root/Package.resolved"
 readonly decoder_checkpoint_v2_validation_test="$decoder_checkpoint_v2_validation_root/Tests/PrimeNativeDecoderCheckpointCompatibilityV2Tests/PrimeNativeDecoderCompatibilityIdentityV2Tests.swift"
+readonly decoder_runtime_closure_validation_root="$prime_root/Tests/PrimeNativeDecoderRuntimeClosureValidation"
+readonly decoder_runtime_closure_validation_manifest="$decoder_runtime_closure_validation_root/Package.swift"
+readonly decoder_runtime_closure_validation_lock="$decoder_runtime_closure_validation_root/Package.resolved"
+readonly decoder_runtime_closure_probe="$decoder_runtime_closure_validation_root/Sources/PrimeNativeDecoderRuntimeClosureProbe/main.swift"
+readonly decoder_runtime_closure_test="$decoder_runtime_closure_validation_root/Tests/PrimeNativeDecoderRuntimeClosureAuthorityTests/PrimeNativeDecoderRuntimeClosureAuthorityTests.swift"
 
 [[ "$(git -C "$prime_root" ls-files -- 'Sources/PrimeNativeDecoder')" \
     == "Sources/PrimeNativeDecoder/PrimeNativeGQADecoder.swift" ]] ||
@@ -486,6 +653,9 @@ readonly decoder_checkpoint_v2_validation_test="$decoder_checkpoint_v2_validatio
 [[ "$(git -C "$prime_root" ls-files -- 'Sources/PrimeNativeDecoderCheckpoint')" \
     == $'Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV1.swift\nSources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCompatibilityIdentityV2.swift' ]] ||
     die "PrimeNativeDecoderCheckpoint production source inventory changed"
+[[ "$(git -C "$prime_root" ls-files -- 'Sources/PrimeNativeDecoderRuntime')" \
+    == 'Sources/PrimeNativeDecoderRuntime/PrimeNativeDecoderRuntime.swift' ]] ||
+    die "PrimeNativeDecoderRuntime production source inventory changed"
 [[ "$(git -C "$prime_root" ls-files -- 'Tests/PrimeNativeDecoderValidation')" \
     == $'Tests/PrimeNativeDecoderValidation/Package.resolved\nTests/PrimeNativeDecoderValidation/Package.swift\nTests/PrimeNativeDecoderValidation/Tests/PrimeNativeDecoderTests/PrimeNativeDecoderAuthorityTests.swift\nTests/PrimeNativeDecoderValidation/Tests/PrimeNativeDecoderTests/PrimeNativeDecoderCheckpointTests.swift\nTests/PrimeNativeDecoderValidation/Tests/PrimeNativeDecoderTests/PrimeNativeGQADecoderTests.swift' ]] ||
     die "PrimeNativeDecoder validation inventory changed"
@@ -493,12 +663,19 @@ readonly decoder_checkpoint_v2_validation_test="$decoder_checkpoint_v2_validatio
     'Tests/PrimeNativeDecoderCheckpointCompatibilityV2Validation')" \
     == $'Tests/PrimeNativeDecoderCheckpointCompatibilityV2Validation/Package.resolved\nTests/PrimeNativeDecoderCheckpointCompatibilityV2Validation/Package.swift\nTests/PrimeNativeDecoderCheckpointCompatibilityV2Validation/Tests/PrimeNativeDecoderCheckpointCompatibilityV2Tests/PrimeNativeDecoderCompatibilityIdentityV2Tests.swift' ]] ||
     die "PrimeNativeDecoder checkpoint V2 validation inventory changed"
+[[ "$(git -C "$prime_root" ls-files -- \
+    'Tests/PrimeNativeDecoderRuntimeClosureValidation')" \
+    == $'Tests/PrimeNativeDecoderRuntimeClosureValidation/Package.resolved\nTests/PrimeNativeDecoderRuntimeClosureValidation/Package.swift\nTests/PrimeNativeDecoderRuntimeClosureValidation/Sources/PrimeNativeDecoderRuntimeClosureProbe/main.swift\nTests/PrimeNativeDecoderRuntimeClosureValidation/Tests/PrimeNativeDecoderRuntimeClosureAuthorityTests/PrimeNativeDecoderRuntimeClosureAuthorityTests.swift' ]] ||
+    die "PrimeNativeDecoder runtime-closure validation inventory changed"
 [[ ! -e "$prime_root/Tests/PrimeNativeDecoderValidation/.swiftpm" \
     && ! -L "$prime_root/Tests/PrimeNativeDecoderValidation/.swiftpm" ]] ||
     die "PrimeNativeDecoder validation must use the supplied isolated config path"
 [[ ! -e "$decoder_checkpoint_v2_validation_root/.swiftpm" \
     && ! -L "$decoder_checkpoint_v2_validation_root/.swiftpm" ]] ||
     die "PrimeNativeDecoder checkpoint V2 validation must use the supplied isolated config path"
+[[ ! -e "$decoder_runtime_closure_validation_root/.swiftpm" \
+    && ! -L "$decoder_runtime_closure_validation_root/.swiftpm" ]] ||
+    die "PrimeNativeDecoder runtime-closure validation must use the supplied isolated config path"
 [[ -f "$decoder_source" && ! -L "$decoder_source" ]] ||
     die "PrimeNativeDecoder source is missing or linked"
 [[ -f "$decoder_validation_test" && ! -L "$decoder_validation_test" ]] ||
@@ -529,6 +706,23 @@ readonly decoder_checkpoint_v2_validation_test="$decoder_checkpoint_v2_validatio
 [[ -f "$decoder_checkpoint_v2_validation_lock" \
     && ! -L "$decoder_checkpoint_v2_validation_lock" ]] ||
     die "PrimeNativeDecoderCheckpoint V2 validation lock is missing or linked"
+[[ -f "$decoder_runtime_authority_source" \
+    && ! -L "$decoder_runtime_authority_source" ]] ||
+    die "PrimeNativeDecoder maintained-runtime authority is missing or linked"
+[[ -f "$decoder_runtime_source" && ! -L "$decoder_runtime_source" ]] ||
+    die "PrimeNativeDecoder runtime source is missing or linked"
+[[ -f "$decoder_runtime_closure_validation_manifest" \
+    && ! -L "$decoder_runtime_closure_validation_manifest" ]] ||
+    die "PrimeNativeDecoder runtime-closure validation manifest is missing or linked"
+[[ -f "$decoder_runtime_closure_validation_lock" \
+    && ! -L "$decoder_runtime_closure_validation_lock" ]] ||
+    die "PrimeNativeDecoder runtime-closure validation lock is missing or linked"
+[[ -f "$decoder_runtime_closure_probe" \
+    && ! -L "$decoder_runtime_closure_probe" ]] ||
+    die "PrimeNativeDecoder runtime-closure probe is missing or linked"
+[[ -f "$decoder_runtime_closure_test" \
+    && ! -L "$decoder_runtime_closure_test" ]] ||
+    die "PrimeNativeDecoder runtime-closure test is missing or linked"
 [[ -f "$decoder_metal_repair_authority_source" \
     && ! -L "$decoder_metal_repair_authority_source" ]] ||
     die "PrimeNativeDecoder Metal-repair authority is missing or linked"
@@ -563,6 +757,96 @@ for v2_regular_source in \
         == "100644" ]] ||
         die "PrimeNativeDecoderCheckpoint V2 source mode changed: $v2_regular_source"
 done
+for runtime_closure_regular_source in \
+    'Sources/PrimeCore/PrimeNativeDecoderMaintainedRuntimeComputeAuthority.swift' \
+    'Sources/PrimeNativeDecoderRuntime/PrimeNativeDecoderRuntime.swift' \
+    'Tests/PrimeNativeDecoderRuntimeClosureValidation/Package.swift' \
+    'Tests/PrimeNativeDecoderRuntimeClosureValidation/Package.resolved' \
+    'Tests/PrimeNativeDecoderRuntimeClosureValidation/Sources/PrimeNativeDecoderRuntimeClosureProbe/main.swift' \
+    'Tests/PrimeNativeDecoderRuntimeClosureValidation/Tests/PrimeNativeDecoderRuntimeClosureAuthorityTests/PrimeNativeDecoderRuntimeClosureAuthorityTests.swift'; do
+    [[ "$(git -C "$prime_root" ls-files -s -- \
+        "$runtime_closure_regular_source" | awk '{print $1}')" == "100644" ]] ||
+        die "PrimeNativeDecoder runtime-closure source mode changed: $runtime_closure_regular_source"
+done
+
+assert_runtime_closure_source_identity() {
+    local relative_path="$1"
+    local expected_mode="$2"
+    local expected_blob="$3"
+    local expected_byte_count="$4"
+    local expected_sha256="$5"
+    local source_path="$prime_root/$relative_path"
+
+    [[ -f "$source_path" && ! -L "$source_path" ]] ||
+        die "runtime-closure identity source is missing or linked: $relative_path"
+    [[ "$(git -C "$prime_root" ls-files -s -- \
+        "$relative_path" | awk '{print $1}')" == "$expected_mode" ]] ||
+        die "runtime-closure identity source mode changed: $relative_path"
+    [[ "$(git -C "$prime_root" hash-object "$source_path")" \
+        == "$expected_blob" ]] ||
+        die "runtime-closure identity source blob changed: $relative_path"
+    [[ "$(wc -c < "$source_path" | awk '{print $1}')" \
+        == "$expected_byte_count" ]] ||
+        die "runtime-closure identity source byte count changed: $relative_path"
+    [[ "$(shasum -a 256 "$source_path" | awk '{print $1}')" \
+        == "$expected_sha256" ]] ||
+        die "runtime-closure identity source SHA-256 changed: $relative_path"
+}
+
+assert_runtime_closure_source_identity \
+    'Package.swift' \
+    '100644' \
+    'f201abbf928e5e3d6b0c7785110539cdaeee911b' \
+    '32082' \
+    'db81e337640b8eb923dbc90b9e22ce898c371ccffe08eed08050e45c34551400'
+assert_runtime_closure_source_identity \
+    'Package.resolved' \
+    '100644' \
+    'dcd0192f705c22378f2d9e871a240c0493ad8a80' \
+    '645' \
+    'a18ded75fe953803945898aba0b04a9cec4fca674f38bf914e5fa45dfdb70741'
+assert_runtime_closure_source_identity \
+    'Sources/PrimeCore/PrimeNativeDecoderMaintainedRuntimeComputeAuthority.swift' \
+    '100644' \
+    '379c3e40ab24ae696c01da0b3f2116d0093cedb2' \
+    '60844' \
+    'f53a7a055058fbf528d7a96b4111c673fa3bc2dbd2ae10bf5129aa8b828a2445'
+assert_runtime_closure_source_identity \
+    'Sources/PrimeNativeDecoderRuntime/PrimeNativeDecoderRuntime.swift' \
+    '100644' \
+    'dd3ca76ba7799c6deb0012276967c07bee3644d0' \
+    '55550' \
+    '71d312d03f81509ece6234067a8b5f43c410ca2941da658134921141037fa981'
+assert_runtime_closure_source_identity \
+    'Tests/PrimeNativeDecoderRuntimeClosureValidation/Package.swift' \
+    '100644' \
+    'ed63a3edf5def776cdb531166090a69afdf0e425' \
+    '1368' \
+    '57239460a6e2dc6884ba1a034b04084dbc52477c78c11078824b006ce0abe058'
+assert_runtime_closure_source_identity \
+    'Tests/PrimeNativeDecoderRuntimeClosureValidation/Package.resolved' \
+    '100644' \
+    '9128fe027a155fe6ea3c56667cf57989bc05128d' \
+    '645' \
+    'fabc36489bd4b7af41d0a9994286e7a7458f46fedd25c545fd0ab190274f33e5'
+assert_runtime_closure_source_identity \
+    'Tests/PrimeNativeDecoderRuntimeClosureValidation/Sources/PrimeNativeDecoderRuntimeClosureProbe/main.swift' \
+    '100644' \
+    '63679a06c900b803b23778b011980636a3b302f1' \
+    '3133' \
+    '59419ec899b4ed12b8c40156c27c5f870efe78dcb93a45b0ec93ccf7ab26196c'
+assert_runtime_closure_source_identity \
+    'Tests/PrimeNativeDecoderRuntimeClosureValidation/Tests/PrimeNativeDecoderRuntimeClosureAuthorityTests/PrimeNativeDecoderRuntimeClosureAuthorityTests.swift' \
+    '100644' \
+    'f159267dfa77a643337ba9cd7f60d733d4d84033' \
+    '15364' \
+    'cf80369f52e83ab4b1be453a3ca1fec4eea14013ca3843d67c17de29f36c69f5'
+assert_runtime_closure_source_identity \
+    '.github/scripts/prime-ci-native-decoder-runtime-closure.sh' \
+    '100755' \
+    'f1c3041d7e47fa315f60c889a736a412640e8710' \
+    '26614' \
+    'aac5421ec7b1465bb746079bf5ea2634e20b9456099b33ce0271228638342cc5'
 [[ "$(wc -c < "$decoder_checkpoint_v2_authority_source" | awk '{print $1}')" \
     == "29660" ]] ||
     die "PrimeNativeDecoderCheckpoint V2 authority byte count changed"
@@ -726,6 +1010,8 @@ swiftc -frontend -parse "$decoder_checkpoint_source"
 swiftc -frontend -parse "$decoder_checkpoint_v2_source"
 swiftc -frontend -parse "$decoder_checkpoint_authority_source"
 swiftc -frontend -parse "$decoder_checkpoint_v2_authority_source"
+swiftc -frontend -parse "$decoder_runtime_authority_source"
+swiftc -frontend -parse "$decoder_runtime_source"
 swiftc -frontend -parse "$decoder_metal_repair_authority_source"
 swiftc -frontend -parse "$decoder_metal_execution_observation_source"
 swiftc -frontend -parse "$decoder_metal_execution_correction_source"
@@ -735,6 +1021,8 @@ swiftc -frontend -parse "$decoder_authority_test"
 swiftc -frontend -parse "$decoder_checkpoint_test"
 swiftc -frontend -parse "$decoder_validation_test"
 swiftc -frontend -parse "$decoder_checkpoint_v2_validation_test"
+swiftc -frontend -parse "$decoder_runtime_closure_probe"
+swiftc -frontend -parse "$decoder_runtime_closure_test"
 
 readonly observed_mlxllm_references="$({
     git -C "$prime_root" grep -l -F 'MLXLLM' -- Sources || true
@@ -761,6 +1049,18 @@ readonly expected_mlxllm_imports=$'Sources/PrimeGPUCalibration/PrimeGPUCalibrati
 [[ "$(awk '/^import / {print $2}' "$decoder_checkpoint_v2_source" | paste -sd, -)" \
     == "Foundation,PrimeCore" ]] ||
     die "PrimeNativeDecoderCheckpoint V2 identity imports changed"
+[[ "$(awk '/^import / {print $2}' "$decoder_runtime_authority_source" | paste -sd, -)" \
+    == "Foundation" ]] ||
+    die "PrimeNativeDecoder maintained-runtime authority imports changed"
+[[ "$(awk '/^import / {print $2}' "$decoder_runtime_source" | paste -sd, -)" \
+    == "CoreGraphics,Darwin,Foundation,Metal,MLX,PrimeCore,PrimeNativeDecoder,PrimeNativeDecoderCheckpoint" ]] ||
+    die "PrimeNativeDecoder runtime imports changed"
+[[ "$(awk '/^import / {print $2}' "$decoder_runtime_closure_probe" | paste -sd, -)" \
+    == "Darwin,Foundation,PrimeCore,PrimeNativeDecoderRuntime" ]] ||
+    die "PrimeNativeDecoder runtime-closure probe imports changed"
+[[ "$(awk '/^import / {print $2}' "$decoder_runtime_closure_test" | paste -sd, -)" \
+    == "CoreFoundation,Foundation,XCTest,PrimeCore,PrimeNativeDecoderRuntime" ]] ||
+    die "PrimeNativeDecoder runtime-closure test imports changed"
 [[ "$(grep -Fc -- '.package(' "$decoder_validation_manifest")" == "2" ]] ||
     die "PrimeNativeDecoder validation gained an unexpected dependency"
 grep -Fq -- 'name: "PrimeNativeDecoder"' "$decoder_validation_manifest" ||
@@ -779,6 +1079,51 @@ grep -Fq -- 'name: "PrimeCore"' \
 grep -Fq -- 'name: "PrimeNativeDecoderCheckpoint"' \
     "$decoder_checkpoint_v2_validation_manifest" ||
     die "PrimeNativeDecoder checkpoint V2 validation does not consume the checkpoint product"
+[[ "$(grep -Fc -- '.package(' "$decoder_runtime_closure_validation_manifest")" \
+    == "1" ]] ||
+    die "PrimeNativeDecoder runtime-closure validation gained an unexpected dependency"
+grep -Fq -- 'name: "PrimeCore"' \
+    "$decoder_runtime_closure_validation_manifest" ||
+    die "PrimeNativeDecoder runtime-closure validation does not consume PrimeCore"
+grep -Fq -- 'name: "PrimeNativeDecoderRuntime"' \
+    "$decoder_runtime_closure_validation_manifest" ||
+    die "PrimeNativeDecoder runtime-closure validation does not consume the runtime product"
+[[ "$(grep -Ec -- '^[[:space:]]+func test' \
+    "$decoder_runtime_closure_test")" == "1" ]] ||
+    die "PrimeNativeDecoder runtime-closure validation test count changed"
+
+for forbidden_runtime_closure_source_value in \
+    'MLXLLM' \
+    'MLXNN' \
+    'MLXOptimizers' \
+    'PMHNP' \
+    'Geometry' \
+    'RenderKit' \
+    'PrimeNativeGQADecoder.make' \
+    '.forward(' \
+    'PrimeNativeDecoderCheckpointManifestV1' \
+    'PrimeNativeDecoderCheckpointCodecV1' \
+    'writeNative300MByte512' \
+    'loadNative300MByte512' \
+    'URLSession' \
+    'posix_spawn' \
+    'execve('; do
+    if grep -Fq -- "$forbidden_runtime_closure_source_value" \
+        "$decoder_runtime_authority_source" \
+        "$decoder_runtime_source" \
+        "$decoder_runtime_closure_probe" \
+        "$decoder_runtime_closure_test"; then
+        die "PrimeNativeDecoder runtime closure contains forbidden value: $forbidden_runtime_closure_source_value"
+    fi
+done
+if grep -Eq -- \
+    '(^|[^[:alnum:]_])Process([^[:alnum:]_]|$)' \
+    "$decoder_runtime_authority_source" \
+    "$decoder_runtime_source" \
+    "$decoder_runtime_closure_probe" \
+    "$decoder_runtime_closure_test"; then
+    die "PrimeNativeDecoder runtime closure contains forbidden value: Process"
+fi
 
 for forbidden_decoder_value in \
     "MLXLLM" \
