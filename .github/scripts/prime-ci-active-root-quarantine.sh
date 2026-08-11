@@ -212,12 +212,6 @@ require_preserved_object \
     ".github/scripts/prime-ci-native-decoder-metal.sh" \
     "418d2d2753cee38e0b3558ad45e1e09865ffd11d"
 require_preserved_object \
-    "Package.swift" \
-    "f201abbf928e5e3d6b0c7785110539cdaeee911b"
-require_preserved_object \
-    "Package.resolved" \
-    "dcd0192f705c22378f2d9e871a240c0493ad8a80"
-require_preserved_object \
     "Sources/PrimeCore/PrimeNativeDecoderMaintainedRuntimeComputeAuthority.swift" \
     "379c3e40ab24ae696c01da0b3f2116d0093cedb2"
 require_preserved_object \
@@ -377,6 +371,10 @@ assert_active_lock \
 assert_active_lock \
     "Tests/PrimeNativeDecoderTokenizerCompatibilityValidation/Package.resolved" \
     "Tests/PrimeNativeDecoderTokenizerCompatibilityValidation/Package.swift" \
+    "$root_mlx_revision"
+assert_active_lock \
+    "Tests/PrimeNativeDecoderTrainingValidation/Package.resolved" \
+    "Tests/PrimeNativeDecoderTrainingValidation/Package.swift" \
     "$root_mlx_revision"
 assert_active_lock \
     "Tests/PrimeTypedOptimizerRestoreMechanicsValidation/Package.resolved" \
@@ -628,6 +626,57 @@ readonly trajectory_design_timeout_observation_filter='PrimeCoreTests.PrimeNativ
         "          grep -Fq 'testFrozenV1CanonicalCodableRecursiveMutationAndAuthorityCeiling' \\" \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the exact trajectory-design timeout observation"
+readonly tiny_cpu_mechanics_authority_filter='PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsAuthorityTests/testFrozenV1CanonicalCodableExhaustiveMutationAndCeiling'
+readonly tiny_cpu_mechanics_execution_filter='PrimeNativeDecoderTrainingTests/testTinyCPUTrainEvaluateMechanicsAreExactAndFailClosed'
+[[ "$(grep -Fc -- "$tiny_cpu_mechanics_authority_filter" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        'Sources/PrimeCore/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsAuthority.swift' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        'Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsAuthorityTests.swift' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        "          grep -Fq 'PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsAuthorityTests' \\" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveMutationAndCeiling' \\" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        '          grep -Fq '\''Executed 34 tests, with 0 failures'\'' "$test_log"' \
+        "$workflow_path")" == "1" ]] ||
+    die "hosted workflow does not parse and run the exact Stage-2 pure authority contract"
+[[ "$(grep -Fc -- \
+        'Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderTraining.swift' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        'Tests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTrainingTests.swift' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        '--package-path Tests/PrimeNativeDecoderTrainingValidation' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- "$tiny_cpu_mechanics_execution_filter" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- 'prime-native-decoder-training-tests.log' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- 'prime-native-decoder-training-build' \
+        "$workflow_path")" == "2" \
+    && "$(grep -Fc -- 'prime-native-decoder-training-cache' \
+        "$workflow_path")" == "2" \
+    && "$(grep -Fc -- 'prime-native-decoder-training-config' \
+        "$workflow_path")" == "2" \
+    && "$(grep -Fc -- 'prime-native-decoder-training-security' \
+        "$workflow_path")" == "2" \
+    && "$(grep -Fxc -- \
+        '          ! grep -Fqi -- '\''skipped'\'' "$tiny_cpu_training_test_log"' \
+        "$workflow_path")" == "1" ]] ||
+    die "reviewed-main workflow does not isolate the exact Stage-2 mechanics execution"
+readonly tiny_cpu_mechanics_workflow_line="$(grep -nF -- \
+    '            --package-path Tests/PrimeNativeDecoderTrainingValidation' \
+    "$workflow_path" | awk -F: '{print $1}')"
+[[ "$tiny_cpu_mechanics_workflow_line" =~ ^[1-9][0-9]*$ \
+    && "$tiny_cpu_mechanics_workflow_line" -lt "$frozen_metal_workflow_line" ]] ||
+    die "reviewed-main Stage-2 mechanics execution must precede the retained live sequence"
 for required_metal_gate_value in \
     'MTLCreateSystemDefaultDevice' \
     '-target Cmlx' \
@@ -1002,11 +1051,12 @@ readonly decoder_checkpoint_v2_io_execution_manifest_dump="$(mktemp "$runner_tem
 readonly decoder_checkpoint_v2_io_root_identity_repair_execution_manifest_dump="$(mktemp "$runner_temp/prime-decoder-checkpoint-v2-io-root-identity-repair-execution-package-dump.json.XXXXXX")"
 readonly decoder_runtime_closure_manifest_dump="$(mktemp "$runner_temp/prime-decoder-runtime-closure-package-dump.json.XXXXXX")"
 readonly decoder_tokenizer_compatibility_manifest_dump="$(mktemp "$runner_temp/prime-decoder-tokenizer-compatibility-package-dump.json.XXXXXX")"
+readonly decoder_training_validation_manifest_dump="$(mktemp "$runner_temp/prime-decoder-training-validation-package-dump.json.XXXXXX")"
 readonly manifest_scratch="$runner_temp/prime-package-dump-build"
 readonly manifest_cache="$runner_temp/prime-package-dump-cache"
 readonly manifest_config="$runner_temp/prime-package-dump-config"
 readonly manifest_security="$runner_temp/prime-package-dump-security"
-trap 'unlink "$manifest_dump" "$decoder_manifest_dump" "$decoder_checkpoint_v2_manifest_dump" "$decoder_checkpoint_v2_io_manifest_dump" "$decoder_checkpoint_v2_io_execution_manifest_dump" "$decoder_checkpoint_v2_io_root_identity_repair_execution_manifest_dump" "$decoder_runtime_closure_manifest_dump" "$decoder_tokenizer_compatibility_manifest_dump" 2>/dev/null || true' EXIT
+trap 'unlink "$manifest_dump" "$decoder_manifest_dump" "$decoder_checkpoint_v2_manifest_dump" "$decoder_checkpoint_v2_io_manifest_dump" "$decoder_checkpoint_v2_io_execution_manifest_dump" "$decoder_checkpoint_v2_io_root_identity_repair_execution_manifest_dump" "$decoder_runtime_closure_manifest_dump" "$decoder_tokenizer_compatibility_manifest_dump" "$decoder_training_validation_manifest_dump" 2>/dev/null || true' EXIT
 mkdir -p \
     "$manifest_scratch" \
     "$manifest_cache" \
@@ -1037,6 +1087,11 @@ jq -e \
           and .type.library == ["automatic"]
       )] | length) == 1
       and ([.products[] | select(
+          .name == "PrimeNativeDecoderTraining"
+          and .targets == ["PrimeNativeDecoderTraining"]
+          and .type.library == ["automatic"]
+      )] | length) == 1
+      and ([.products[] | select(
           .name == "PrimeNativeDecoderCheckpoint"
           and .targets == ["PrimeNativeDecoderCheckpoint"]
           and .type.library == ["automatic"]
@@ -1051,6 +1106,17 @@ jq -e \
           and .type == "regular"
           and ([.dependencies[] | (.byName[0] // .product[0])]
               == ["PrimeCore", "MLX", "MLXNN"])
+      )] | length) == 1
+      and ([.targets[] | select(
+          .name == "PrimeNativeDecoderTraining"
+          and .type == "regular"
+          and ([.dependencies[] | (.byName[0] // .product[0])] == [
+              "PrimeCore",
+              "PrimeNativeDecoder",
+              "MLX",
+              "MLXNN",
+              "MLXOptimizers"
+          ])
       )] | length) == 1
       and ([.targets[] | select(
           .name == "PrimeNativeDecoderCheckpoint"
@@ -1442,6 +1508,50 @@ jq -e \
     "$decoder_tokenizer_compatibility_manifest_dump" >/dev/null ||
     die "PrimeNativeDecoder tokenizer-compatibility validation manifest changed"
 
+TMPDIR="$runner_temp" swift package \
+    --package-path "$prime_root/Tests/PrimeNativeDecoderTrainingValidation" \
+    --scratch-path "$manifest_scratch" \
+    --cache-path "$manifest_cache" \
+    --config-path "$manifest_config" \
+    --security-path "$manifest_security" \
+    --disable-netrc \
+    --disable-keychain \
+    dump-package > "$decoder_training_validation_manifest_dump"
+jq -e \
+    --arg expected_origin "$expected_mlx_origin" \
+    --arg expected_revision "$root_mlx_revision" \
+    --arg prime_root "$prime_root" \
+    '
+      .name == "PrimeNativeDecoderTrainingValidation"
+      and (.dependencies | length) == 2
+      and ([.dependencies[] | select(
+          .fileSystem[0].nameForTargetDependencyResolutionOnly
+              == "ergentics-prime"
+          and .fileSystem[0].path == $prime_root
+      )] | length) == 1
+      and ([.dependencies[] | tostring | select(
+          contains($expected_origin)
+          and contains($expected_revision)
+      )] | length) == 1
+      and (.targets | length) == 1
+      and .targets[0].name == "PrimeNativeDecoderTrainingTests"
+      and .targets[0].type == "test"
+      and ([.targets[0].dependencies[].product[0]] == [
+          "PrimeNativeDecoderTraining",
+          "MLX"
+      ])
+      and ([.targets[0].dependencies[].product[1]] == [
+          "ergentics-prime",
+          "ergentics-mlx-swift"
+      ])
+      and ([.targets[0].settings[].kind.linkedFramework._0] == [
+          "CoreGraphics",
+          "Metal"
+      ])
+    ' \
+    "$decoder_training_validation_manifest_dump" >/dev/null ||
+    die "PrimeNativeDecoder Stage-2 validation manifest changed"
+
 readonly decoder_source="$prime_root/Sources/PrimeNativeDecoder/PrimeNativeGQADecoder.swift"
 readonly decoder_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderAuthority.swift"
 readonly decoder_derived_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderDerivedDelta.swift"
@@ -1505,6 +1615,13 @@ readonly decoder_tokenizer_compatibility_validation_manifest="$decoder_tokenizer
 readonly decoder_tokenizer_compatibility_validation_lock="$decoder_tokenizer_compatibility_validation_root/Package.resolved"
 readonly decoder_tokenizer_compatibility_probe="$decoder_tokenizer_compatibility_validation_root/Sources/PrimeNativeDecoderTokenizerCompatibilityProbe/main.swift"
 readonly decoder_tokenizer_compatibility_test="$decoder_tokenizer_compatibility_validation_root/Tests/PrimeNativeDecoderTokenizerCompatibilityAuthorityTests/PrimeNativeDecoderTokenizerCompatibilityAuthorityTests.swift"
+readonly decoder_tiny_cpu_mechanics_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsAuthority.swift"
+readonly decoder_tiny_cpu_mechanics_authority_test="$prime_root/Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsAuthorityTests.swift"
+readonly decoder_training_source="$prime_root/Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderTraining.swift"
+readonly decoder_training_validation_root="$prime_root/Tests/PrimeNativeDecoderTrainingValidation"
+readonly decoder_training_validation_manifest="$decoder_training_validation_root/Package.swift"
+readonly decoder_training_validation_lock="$decoder_training_validation_root/Package.resolved"
+readonly decoder_training_validation_test="$decoder_training_validation_root/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTrainingTests.swift"
 
 [[ "$(git -C "$prime_root" ls-files -- 'Sources/PrimeNativeDecoder')" \
     == "Sources/PrimeNativeDecoder/PrimeNativeGQADecoder.swift" ]] ||
@@ -1515,6 +1632,9 @@ readonly decoder_tokenizer_compatibility_test="$decoder_tokenizer_compatibility_
 [[ "$(git -C "$prime_root" ls-files -- 'Sources/PrimeNativeDecoderRuntime')" \
     == 'Sources/PrimeNativeDecoderRuntime/PrimeNativeDecoderRuntime.swift' ]] ||
     die "PrimeNativeDecoderRuntime production source inventory changed"
+[[ "$(git -C "$prime_root" ls-files -- 'Sources/PrimeNativeDecoderTraining')" \
+    == 'Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderTraining.swift' ]] ||
+    die "PrimeNativeDecoderTraining production source inventory changed"
 [[ "$(git -C "$prime_root" ls-files -- 'Tests/PrimeNativeDecoderValidation')" \
     == $'Tests/PrimeNativeDecoderValidation/Package.resolved\nTests/PrimeNativeDecoderValidation/Package.swift\nTests/PrimeNativeDecoderValidation/Tests/PrimeNativeDecoderTests/PrimeNativeDecoderAuthorityTests.swift\nTests/PrimeNativeDecoderValidation/Tests/PrimeNativeDecoderTests/PrimeNativeDecoderCheckpointTests.swift\nTests/PrimeNativeDecoderValidation/Tests/PrimeNativeDecoderTests/PrimeNativeGQADecoderTests.swift' ]] ||
     die "PrimeNativeDecoder validation inventory changed"
@@ -1542,6 +1662,10 @@ readonly decoder_tokenizer_compatibility_test="$decoder_tokenizer_compatibility_
     'Tests/PrimeNativeDecoderTokenizerCompatibilityValidation')" \
     == $'Tests/PrimeNativeDecoderTokenizerCompatibilityValidation/Package.resolved\nTests/PrimeNativeDecoderTokenizerCompatibilityValidation/Package.swift\nTests/PrimeNativeDecoderTokenizerCompatibilityValidation/Sources/PrimeNativeDecoderTokenizerCompatibilityProbe/main.swift\nTests/PrimeNativeDecoderTokenizerCompatibilityValidation/Tests/PrimeNativeDecoderTokenizerCompatibilityAuthorityTests/PrimeNativeDecoderTokenizerCompatibilityAuthorityTests.swift' ]] ||
     die "PrimeNativeDecoder tokenizer-compatibility validation inventory changed"
+[[ "$(git -C "$prime_root" ls-files -- \
+    'Tests/PrimeNativeDecoderTrainingValidation')" \
+    == $'Tests/PrimeNativeDecoderTrainingValidation/Package.resolved\nTests/PrimeNativeDecoderTrainingValidation/Package.swift\nTests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTrainingTests.swift' ]] ||
+    die "PrimeNativeDecoder Stage-2 validation inventory changed"
 [[ ! -e "$prime_root/Tests/PrimeNativeDecoderValidation/.swiftpm" \
     && ! -L "$prime_root/Tests/PrimeNativeDecoderValidation/.swiftpm" ]] ||
     die "PrimeNativeDecoder validation must use the supplied isolated config path"
@@ -1563,6 +1687,9 @@ readonly decoder_tokenizer_compatibility_test="$decoder_tokenizer_compatibility_
 [[ ! -e "$decoder_tokenizer_compatibility_validation_root/.swiftpm" \
     && ! -L "$decoder_tokenizer_compatibility_validation_root/.swiftpm" ]] ||
     die "PrimeNativeDecoder tokenizer-compatibility validation must use the supplied isolated config path"
+[[ ! -e "$decoder_training_validation_root/.swiftpm" \
+    && ! -L "$decoder_training_validation_root/.swiftpm" ]] ||
+    die "PrimeNativeDecoder Stage-2 validation must use the supplied isolated config path"
 [[ -f "$decoder_source" && ! -L "$decoder_source" ]] ||
     die "PrimeNativeDecoder source is missing or linked"
 [[ -f "$decoder_validation_test" && ! -L "$decoder_validation_test" ]] ||
@@ -1573,6 +1700,21 @@ readonly decoder_tokenizer_compatibility_test="$decoder_tokenizer_compatibility_
     die "PrimeNativeDecoder authority test source is missing or linked"
 [[ -f "$decoder_authority_source" && ! -L "$decoder_authority_source" ]] ||
     die "frozen PrimeNativeDecoder authority is missing or linked"
+[[ -f "$decoder_tiny_cpu_mechanics_authority_source" \
+    && ! -L "$decoder_tiny_cpu_mechanics_authority_source" ]] ||
+    die "PrimeNativeDecoder Stage-2 authority is missing or linked"
+[[ -f "$decoder_tiny_cpu_mechanics_authority_test" \
+    && ! -L "$decoder_tiny_cpu_mechanics_authority_test" ]] ||
+    die "PrimeNativeDecoder Stage-2 authority test is missing or linked"
+[[ -f "$decoder_training_source" && ! -L "$decoder_training_source" ]] ||
+    die "PrimeNativeDecoderTraining source is missing or linked"
+[[ -f "$decoder_training_validation_manifest" \
+    && ! -L "$decoder_training_validation_manifest" \
+    && -f "$decoder_training_validation_lock" \
+    && ! -L "$decoder_training_validation_lock" \
+    && -f "$decoder_training_validation_test" \
+    && ! -L "$decoder_training_validation_test" ]] ||
+    die "PrimeNativeDecoder Stage-2 validation source set is missing or linked"
 [[ -f "$decoder_checkpoint_source" && ! -L "$decoder_checkpoint_source" ]] ||
     die "PrimeNativeDecoderCheckpoint source is missing or linked"
 [[ -f "$decoder_checkpoint_v2_source" \
@@ -2034,18 +2176,6 @@ assert_runtime_closure_source_identity() {
 }
 
 assert_runtime_closure_source_identity \
-    'Package.swift' \
-    '100644' \
-    'f201abbf928e5e3d6b0c7785110539cdaeee911b' \
-    '32082' \
-    'db81e337640b8eb923dbc90b9e22ce898c371ccffe08eed08050e45c34551400'
-assert_runtime_closure_source_identity \
-    'Package.resolved' \
-    '100644' \
-    'dcd0192f705c22378f2d9e871a240c0493ad8a80' \
-    '645' \
-    'a18ded75fe953803945898aba0b04a9cec4fca674f38bf914e5fa45dfdb70741'
-assert_runtime_closure_source_identity \
     'Sources/PrimeCore/PrimeNativeDecoderMaintainedRuntimeComputeAuthority.swift' \
     '100644' \
     '379c3e40ab24ae696c01da0b3f2116d0093cedb2' \
@@ -2352,14 +2482,14 @@ done
 [[ "$(git -C "$prime_root" hash-object "$decoder_reviewed_main_metal_execution_observation_source")" \
     == "f5025b136b761b2db680cdc656542c6d5caa309e" ]] ||
     die "PrimeNativeDecoder reviewed-main Metal observation blob changed"
-[[ "$(wc -c < "$decoder_source" | awk '{print $1}')" == "39050" ]] ||
-    die "PrimeNativeDecoder repaired source byte count changed"
+[[ "$(wc -c < "$decoder_source" | awk '{print $1}')" == "39598" ]] ||
+    die "PrimeNativeDecoder Stage-2 successor source byte count changed"
 [[ "$(shasum -a 256 "$decoder_source" | awk '{print $1}')" \
-    == "058ab392ac74a132a2503a04ab48400d1ef78a1bcad38eaddefce828b9252c9b" ]] ||
-    die "PrimeNativeDecoder repaired source SHA-256 changed"
+    == "d59a19bdbb37a74d5d08bea65c6b77bf2ed2dd4d3f138e5758a4ef9613b93994" ]] ||
+    die "PrimeNativeDecoder Stage-2 successor source SHA-256 changed"
 [[ "$(git -C "$prime_root" hash-object "$decoder_source")" \
-    == "835a4826549e1f28ec27e3533f746218beb3bdf2" ]] ||
-    die "PrimeNativeDecoder repaired source blob changed"
+    == "0c80c1ab7173c2620a92c2a14e8d42d6562dbe0f" ]] ||
+    die "PrimeNativeDecoder Stage-2 successor source blob changed"
 [[ "$(wc -c < "$decoder_validation_test" | awk '{print $1}')" == "40513" ]] ||
     die "PrimeNativeDecoder repaired regression byte count changed"
 [[ "$(shasum -a 256 "$decoder_validation_test" | awk '{print $1}')" \
@@ -2430,6 +2560,10 @@ swiftc -frontend -parse "$decoder_runtime_closure_probe"
 swiftc -frontend -parse "$decoder_runtime_closure_test"
 swiftc -frontend -parse "$decoder_tokenizer_compatibility_probe"
 swiftc -frontend -parse "$decoder_tokenizer_compatibility_test"
+swiftc -frontend -parse "$decoder_tiny_cpu_mechanics_authority_source"
+swiftc -frontend -parse "$decoder_tiny_cpu_mechanics_authority_test"
+swiftc -frontend -parse "$decoder_training_source"
+swiftc -frontend -parse "$decoder_training_validation_test"
 
 readonly observed_mlxllm_references="$({
     git -C "$prime_root" grep -l -F 'MLXLLM' -- Sources || true
@@ -4372,8 +4506,409 @@ for forbidden_trajectory_design_timeout_observation_capability in \
         die "trajectory-design timeout observation gained execution capability: $forbidden_trajectory_design_timeout_observation_capability"
     fi
 done
-! grep -Fq -- 'name: "PrimeNativeDecoderTraining"' "$root_manifest" ||
-    die "trajectory exact-resume design arc added the future training target"
+assert_tiny_cpu_mechanics_source_identity() {
+    local relative_path="$1"
+    local expected_mode="$2"
+    local expected_blob="$3"
+    local expected_byte_count="$4"
+    local expected_sha256="$5"
+    local source_path="$prime_root/$relative_path"
+
+    [[ -f "$source_path" && ! -L "$source_path" ]] ||
+        die "Stage-2 identity source is missing or linked: $relative_path"
+    [[ "$(git -C "$prime_root" ls-files -s -- \
+        "$relative_path" | awk '{print $1}')" == "$expected_mode" ]] ||
+        die "Stage-2 identity source mode changed: $relative_path"
+    [[ "$(git -C "$prime_root" hash-object "$source_path")" \
+        == "$expected_blob" ]] ||
+        die "Stage-2 identity source blob changed: $relative_path"
+    [[ "$(wc -c < "$source_path" | awk '{print $1}')" \
+        == "$expected_byte_count" ]] ||
+        die "Stage-2 identity source byte count changed: $relative_path"
+    [[ "$(shasum -a 256 "$source_path" | awk '{print $1}')" \
+        == "$expected_sha256" ]] ||
+        die "Stage-2 identity source SHA-256 changed: $relative_path"
+}
+
+assert_tiny_cpu_mechanics_source_identity \
+    'Package.swift' \
+    '100644' \
+    '765d3c88139bc1f74af16b77b2f3b06d33f66f75' \
+    '32795' \
+    'bc889436fb167cc206aa87cb079da4888a7fe95e517eb7cf63cbf44b35dc27c2'
+assert_tiny_cpu_mechanics_source_identity \
+    'Package.resolved' \
+    '100644' \
+    '14d804bb4291720477240c27e24de6fbdc876b3b' \
+    '645' \
+    'bd7a18ec5b8def3b453d7eb86ba43a2f277c2308c9da806845b69ca5f76cd375'
+assert_tiny_cpu_mechanics_source_identity \
+    'Sources/PrimeNativeDecoder/PrimeNativeGQADecoder.swift' \
+    '100644' \
+    '0c80c1ab7173c2620a92c2a14e8d42d6562dbe0f' \
+    '39598' \
+    'd59a19bdbb37a74d5d08bea65c6b77bf2ed2dd4d3f138e5758a4ef9613b93994'
+assert_tiny_cpu_mechanics_source_identity \
+    'Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderTraining.swift' \
+    '100644' \
+    'e160cc829f8498abafd100f3f0444742058f0479' \
+    '37829' \
+    '5e6810a6bd5a9dc0bbe6d6369cec3db6dc84068dc9b415413aafb03f311211dc'
+assert_tiny_cpu_mechanics_source_identity \
+    'Sources/PrimeCore/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsAuthority.swift' \
+    '100644' \
+    'c24af7fab204b8139e4d6f919e9c04ade48bfe6b' \
+    '98327' \
+    'ed0f66770a3cf772af264c5bd7f592a433ee48574d80f98664bc8421c32db5e1'
+assert_tiny_cpu_mechanics_source_identity \
+    'Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsAuthorityTests.swift' \
+    '100644' \
+    '3ea30af2bbd8b4e77f69a55e910a04b9b82b34dc' \
+    '37484' \
+    '1aa3485ed39cf21a3a6fb2417b1d70903c9d2e74e0faa404696e70c8bcfb1f7a'
+assert_tiny_cpu_mechanics_source_identity \
+    'Tests/PrimeNativeDecoderTrainingValidation/Package.swift' \
+    '100644' \
+    '9f05e5a17426f00adf9dad7b55d84057122e98f9' \
+    '1054' \
+    '0523184de79bb204113432428e635113220e1f3f8ba20177762959a73e861d45'
+assert_tiny_cpu_mechanics_source_identity \
+    'Tests/PrimeNativeDecoderTrainingValidation/Package.resolved' \
+    '100644' \
+    '8bf05edf1ea8789e7683e72fe756d79aaaa61320' \
+    '645' \
+    'a393c9c0dad758b4b1cda315f583dcf9ee4b8cddd8d63a397602d6cf9bcec225'
+assert_tiny_cpu_mechanics_source_identity \
+    'Tests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTrainingTests.swift' \
+    '100644' \
+    '61e86200c508526ae2ab66e359d771841f7208db' \
+    '30214' \
+    '29399e46e1197e09fd181c373ca12f424260abc7f671189d0dc712a48fadac96'
+
+jq -e \
+    --slurpfile root_lock "$prime_root/Package.resolved" \
+    '
+      .pins == $root_lock[0].pins
+      and .version == $root_lock[0].version
+      and .originHash == "0523184de79bb204113432428e635113220e1f3f8ba20177762959a73e861d45"
+    ' \
+    "$decoder_training_validation_lock" >/dev/null ||
+    die "Stage-2 validation lock diverged from the exact root pin payload"
+
+[[ "$(grep -Ec -- '^import ' \
+        "$decoder_tiny_cpu_mechanics_authority_source")" == "1" \
+    && "$(grep -Fxc -- 'import Foundation' \
+        "$decoder_tiny_cpu_mechanics_authority_source")" == "1" \
+    && "$(grep -Ec -- '^[[:space:]]+func test' \
+        "$decoder_tiny_cpu_mechanics_authority_test")" == "1" ]] ||
+    die "Stage-2 pure authority gained a dependency or test"
+for required_tiny_cpu_authority_value in \
+    'public struct PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsAuthorityV1:' \
+    'public static let frozenV1: Self = {' \
+    'public func validateExactV1() throws {' \
+    'workflowRunID: 31_515_766_609' \
+    'reviewedMainTimeoutMinutes: 60' \
+    'exactFocusedTestCount: 39' \
+    'seed42CheckpointCommandCount: 0' \
+    'seed43CheckpointCommandCount: 0' \
+    'firstAndOnlyWorkflowAttemptCompletedSuccessfully: true' \
+    'currentArcImplementationSourcesRequireRefreshedEmbeddedClosure:' \
+    'externalSourceBindings.count == 23' \
+    'externalGitlinks.count == 2' \
+    'path: "mlx/c/stream.cpp"' \
+    'path: "mlx/backend/metal/metal.cpp"' \
+    'path: "mlx/backend/metal/device_info.cpp"' \
+    'path: "mlx/backend/metal/eval.cpp"' \
+    'checkpointTargetDependencyPresent: false' \
+    'predecessorDecoderIdentityRemainsHistoricalAndFrozen: true' \
+    'v2CheckpointCompatibilityForDecoderSuccessorReestablished:' \
+    'checkpointProvenanceForDecoderSuccessorEstablished: false' \
+    'localCapabilitySkipCountsAsMechanicsSuccess: false' \
+    'hostedFocusedTestRequiredExecutionCount: 1' \
+    'hostedFocusedTestRequiredSkipCount: 0' \
+    'hostedFocusedTestRequiredFailureCount: 0' \
+    'explicitRNGDomainImplementationAuthorized: false' \
+    'deterministicDataCursorImplementationAuthorized: false' \
+    'resumeExecutionAuthorized: false' \
+    'checkpointReadAuthorized: false' \
+    'checkpointWriteAuthorized: false' \
+    'metalTensorExecutionAuthorized: false' \
+    'native300MTrainingAuthorized: false' \
+    'publicationAuthorized: false' \
+    'implementationObservedByThisPreExecutionAuthority: true' \
+    'executionObservedByThisPreExecutionAuthority: false' \
+    'validate_bind_and_publish_already_materialized_exact_stage2_implementation_source_closure' \
+    'AUTHORIZED_TINY_CPU_TRAIN_EVALUATE_MECHANICS_ONLY_DOWNSTREAM_ABSTAIN'; do
+    grep -Fq -- "$required_tiny_cpu_authority_value" \
+        "$decoder_tiny_cpu_mechanics_authority_source" ||
+        die "Stage-2 authority lost: $required_tiny_cpu_authority_value"
+done
+[[ "$(grep -Fc -- \
+        'PrimeNativeDecoderTinyCPUFileIdentityV1(' \
+        "$decoder_tiny_cpu_mechanics_authority_source")" == "9" \
+    && "$(grep -Fc -- \
+        'PrimeNativeDecoderTinyCPUExternalSourceIdentityV1(' \
+        "$decoder_tiny_cpu_mechanics_authority_source")" == "23" \
+    && "$(grep -Fc -- \
+        'PrimeNativeDecoderTinyCPUExternalGitlinkV1(' \
+        "$decoder_tiny_cpu_mechanics_authority_source")" == "2" \
+    && "$(grep -Fc -- 'gitMode: "160000"' \
+        "$decoder_tiny_cpu_mechanics_authority_source")" == "4" ]] ||
+    die "Stage-2 authority source-binding inventory changed"
+for required_tiny_cpu_authority_test_value in \
+    'func testFrozenV1CanonicalCodableExhaustiveMutationAndCeiling()' \
+    'XCTAssertNoThrow(try authority.validateExactV1())' \
+    'XCTAssertEqual(authority.internalSourceBindings.count, 9)' \
+    'XCTAssertEqual(authority.externalSourceBindings.count, 23)' \
+    'XCTAssertEqual(authority.externalGitlinks.count, 2)' \
+    'XCTAssertTrue(stage2Ceilings(authority).allSatisfy { $0 })' \
+    'XCTAssertTrue(downstreamCeilings(authority).allSatisfy { !$0 })' \
+    'XCTAssertTrue(authority.implementationObservedByThisPreExecutionAuthority)' \
+    'XCTAssertFalse(authority.executionObservedByThisPreExecutionAuthority)' \
+    'validate_bind_and_publish_already_materialized_exact_stage2_implementation_source_closure' \
+    '3520f1a778b33be0fad8c8967318b0b4ad8ed86b4746620e0bbf0e6c385f7840' \
+    'XCTAssertGreaterThan(valuePaths.count, 300)' \
+    'null \(pathLabel(path))' \
+    'removed \(pathLabel(path))' \
+    'unknown_stage2_field_\(index)' \
+    'Authority.decodeCanonical(prefixed)' \
+    'Authority.decodeCanonical(suffixed)' \
+    'Authority.decodeCanonical(pretty)' \
+    'Authority.decodeCanonical(duplicateData)'; do
+    grep -Fq -- "$required_tiny_cpu_authority_test_value" \
+        "$decoder_tiny_cpu_mechanics_authority_test" ||
+        die "Stage-2 pure authority test lost: $required_tiny_cpu_authority_test_value"
+done
+for forbidden_tiny_cpu_authority_capability in \
+    'import MLX' \
+    'import MLXNN' \
+    'import MLXOptimizers' \
+    'import Metal' \
+    'PrimeNativeGQADecoder.make(' \
+    'PrimeArtifactRoot(' \
+    'FileManager' \
+    'FileHandle' \
+    'URLSession' \
+    'Process(' \
+    'posix_spawn' \
+    'execve('; do
+    if grep -Fq -- "$forbidden_tiny_cpu_authority_capability" \
+        "$decoder_tiny_cpu_mechanics_authority_source" \
+        "$decoder_tiny_cpu_mechanics_authority_test"; then
+        die "Stage-2 pure authority gained capability: $forbidden_tiny_cpu_authority_capability"
+    fi
+done
+
+[[ "$(awk '/^import / { print }' "$decoder_training_source")" \
+    == $'import Foundation\nimport PrimeCore\nimport PrimeNativeDecoder\nimport MLX\nimport MLXNN\nimport MLXOptimizers' ]] ||
+    die "PrimeNativeDecoderTraining import allowlist changed"
+[[ "$(grep -Ec -- '^public (struct|final class) ' \
+        "$decoder_training_source")" == "5" \
+    && "$(grep -Fxc -- \
+        'enum PrimeNativeDecoderTinyCPUTrainEvaluateErrorV1:' \
+        "$decoder_training_source")" == "1" \
+    && "$(grep -Fxc -- \
+        'struct PrimeNativeDecoderTinyCPUTrainEvaluateTensorDigestV1:' \
+        "$decoder_training_source")" == "1" \
+    && "$(grep -Fxc -- \
+        'struct PrimeNativeDecoderTinyCPUTrainEvaluateValidationSnapshotV1:' \
+        "$decoder_training_source")" == "1" ]] ||
+    die "PrimeNativeDecoderTraining public or internal type surface changed"
+for required_tiny_cpu_public_type in \
+    'public struct PrimeNativeDecoderTinyCPUTrainEvaluateConfigurationV1:' \
+    'public struct PrimeNativeDecoderTinyCPUTrainEvaluateBatchV1:' \
+    'public struct PrimeNativeDecoderTinyCPUTrainEvaluateStepResultV1:' \
+    'public struct PrimeNativeDecoderTinyCPUTrainEvaluateEvaluationV1:' \
+    'public final class PrimeNativeDecoderTinyCPUTrainEvaluateTrainerV1 {'; do
+    [[ "$(grep -Fxc -- "$required_tiny_cpu_public_type" \
+        "$decoder_training_source")" == "1" ]] ||
+        die "PrimeNativeDecoderTraining public surface lost: $required_tiny_cpu_public_type"
+done
+[[ "$(grep -Fc -- 'package func trainingLogitsNoCache(' \
+        "$decoder_source")" == "1" \
+    && "$(grep -Fc -- 'trainingLogitsNoCache(' \
+        "$decoder_source")" == "1" \
+    && "$(grep -Fc -- 'trainingLogitsNoCache(' \
+        "$decoder_training_source")" == "1" \
+    && "$(grep -Fc -- 'rankTwoTokenIDs.ndim == 2' \
+        "$decoder_source")" == "1" \
+    && "$(grep -Fc -- 'rankTwoTokenIDs.dtype == .int32' \
+        "$decoder_source")" == "1" \
+    && "$(grep -Fc -- 'return self(rankTwoTokenIDs, positionOffset: 0)' \
+        "$decoder_source")" == "1" \
+    && "$(grep -Fc -- 'public func trainingLogitsNoCache' \
+        "$decoder_source")" == "0" ]] ||
+    die "PrimeNativeDecoder package-scoped no-cache training seam changed"
+for required_tiny_cpu_training_value in \
+    'public let vocabularySize = 32' \
+    'public let modelWidth = 16' \
+    'public let layerCount = 2' \
+    'public let queryHeadCount = 4' \
+    'public let keyValueHeadCount = 2' \
+    'public let headWidth = 4' \
+    'public let intermediateWidth = 32' \
+    'public let maximumSequenceLength = 16' \
+    'public let maximumBatchSize = 2' \
+    'public let paddingTokenID = 0' \
+    'public let initializationSeed: UInt64 = 7' \
+    'public let uniqueParameterCount: Int64 = 5_200' \
+    'public let trainableParameterPathCount = 20' \
+    'public let maximumGlobalStep = 2' \
+    'public let learningRateFloat32BitPattern = Float(1e-4).bitPattern' \
+    'public let beta1Float32BitPattern = Float(0.9).bitPattern' \
+    'public let beta2Float32BitPattern = Float(0.999).bitPattern' \
+    'public let epsilonFloat32BitPattern = Float(1e-8).bitPattern' \
+    'public let weightDecayFloat32BitPattern = Float(0.01).bitPattern' \
+    'public let maximumGradientNormFloat32BitPattern = Float(1).bitPattern' \
+    'public let gradientNormEpsilonFloat32BitPattern = Float(1e-6).bitPattern' \
+    'guard (2 ... sequenceLength).contains(validTokenCount) else {' \
+    'for column in validTokenCount ..< sequenceLength {' \
+    'guard tokenID == configuration.paddingTokenID else {' \
+    'guard !completionMask[row][0] else {' \
+    '(1 ..< validTokenCount).first(where: {' \
+    'selectedTargetCount += validTokenCount - firstSelected' \
+    'try Device.withDefaultDevice(.cpu) {' \
+    'let optimizer = AdamW(' \
+    'let lossAndGradient = valueAndGrad(model: decoder) {' \
+    'let logits = model.trainingLogitsNoCache(tokenIDs)' \
+    'let shiftedTargets = tokenIDs[0..., 1 ..< sequenceLength]' \
+    'let shiftedMask = completionMask[0..., 1 ..< sequenceLength]' \
+    'labelSmoothing: 0,' \
+    'reduction: .none)' \
+    'let loss = sum(perTargetLoss * shiftedMask)' \
+    '/ Float(selectedTargetCount)' \
+    'if rawNormValue < Self.maximumGradientNorm {' \
+    'private static let maximumGradientNorm = Float(1)' \
+    'private static let gradientNormEpsilon = Float(1e-6)' \
+    '/ (globalNorm + gradientNormEpsilon)' \
+    'return shapes.sorted { utf8Less($0.0, $1.0) }' \
+    'for path in expectedParameterPaths {' \
+    'total = total + sum(square(gradient.asType(.float32)))' \
+    'return sqrt(total)' \
+    'lhs.utf8.lexicographicallyPrecedes(rhs.utf8)' \
+    'optimizer.update(' \
+    'optimizerState = try optimizer.parameters()' \
+    'globalStep = completedStep' \
+    'let before = try validationSnapshot()' \
+    'guard before == after,' \
+    '.maximumGlobalStepReached('; do
+    grep -Fq -- "$required_tiny_cpu_training_value" \
+        "$decoder_training_source" ||
+        die "PrimeNativeDecoderTraining mechanics lost: $required_tiny_cpu_training_value"
+done
+readonly tiny_cpu_third_step_guard_line="$(grep -nF -- \
+    'guard globalStep < configuration.maximumGlobalStep else {' \
+    "$decoder_training_source" | awk -F: '{print $1}')"
+readonly tiny_cpu_train_device_line="$(grep -nF -- \
+    'return try Device.withDefaultDevice(.cpu) {' \
+    "$decoder_training_source" | awk -F: '{print $1}')"
+readonly tiny_cpu_train_graph_line="$(grep -nF -- \
+    'let lossAndGradient = valueAndGrad(model: decoder) {' \
+    "$decoder_training_source" | awk -F: '{print $1}')"
+[[ "$tiny_cpu_third_step_guard_line" =~ ^[1-9][0-9]*$ \
+    && "$tiny_cpu_train_device_line" =~ ^[1-9][0-9]*$ \
+    && "$tiny_cpu_train_graph_line" =~ ^[1-9][0-9]*$ \
+    && "$tiny_cpu_third_step_guard_line" -lt "$tiny_cpu_train_device_line" \
+    && "$tiny_cpu_train_device_line" -lt "$tiny_cpu_train_graph_line" ]] ||
+    die "PrimeNativeDecoderTraining third-step pre-device/pre-graph boundary changed"
+for forbidden_tiny_cpu_training_capability in \
+    'PrimeNativeDecoderCheckpoint' \
+    'PrimeArtifactRoot' \
+    'FileManager' \
+    'FileHandle' \
+    'URL(' \
+    'URLSession' \
+    'Process(' \
+    'posix_spawn' \
+    'execve(' \
+    'MLXRandom.seed' \
+    'Random.seed' \
+    'globalState' \
+    '.forward(' \
+    'clipGradNorm' \
+    'clipGradients' \
+    '._updateInternal(' \
+    'biasCorrection' \
+    'resume' \
+    'cursor' \
+    'import Metal' \
+    'import CoreGraphics' \
+    'MTLCommand' \
+    'PrimeNativeGQADecoderCache' \
+    'makeCache' \
+    'writeNative300MByte512' \
+    'loadNative300MByte512'; do
+    if grep -Fq -- "$forbidden_tiny_cpu_training_capability" \
+        "$decoder_training_source"; then
+        die "PrimeNativeDecoderTraining gained forbidden capability: $forbidden_tiny_cpu_training_capability"
+    fi
+done
+
+[[ "$(awk '/^import / || /^@testable import / { print }' \
+        "$decoder_training_validation_test")" \
+    == $'import CoreGraphics\nimport Metal\nimport MLX\nimport XCTest\n@testable import PrimeNativeDecoderTraining' \
+    && "$(grep -Ec -- '^[[:space:]]+func test' \
+        "$decoder_training_validation_test")" == "1" \
+    && "$(grep -Fc -- 'throw XCTSkip(' \
+        "$decoder_training_validation_test")" == "1" \
+    && "$(grep -Fc -- 'MTLCopyAllDevices()' \
+        "$decoder_training_validation_test")" == "1" \
+    && "$(grep -Fc -- 'MTLCreateSystemDefaultDevice()' \
+        "$decoder_training_validation_test")" == "1" ]] ||
+    die "PrimeNativeDecoder Stage-2 validation surface changed"
+for required_tiny_cpu_validation_value in \
+    'func testTinyCPUTrainEvaluateMechanicsAreExactAndFailClosed() throws {' \
+    'let first = try PrimeNativeDecoderTinyCPUTrainEvaluateTrainerV1()' \
+    'let second = try PrimeNativeDecoderTinyCPUTrainEvaluateTrainerV1()' \
+    'XCTAssertFalse(first === second)' \
+    'XCTAssertEqual(initialFirst, initialSecond)' \
+    'try second.validationSnapshot(),' \
+    'let firstStepFirst = try first.train(batch: firstBatch)' \
+    'let firstStepSecond = try second.train(batch: firstBatch)' \
+    'let secondStepFirst = try first.train(batch: secondBatch)' \
+    'let secondStepSecond = try second.train(batch: secondBatch)' \
+    'let evaluationFirst = try first.evaluate(batch: evaluationBatch)' \
+    'let evaluationSecond = try second.evaluate(batch: evaluationBatch)' \
+    'assertGlobalMeanLoss(' \
+    '.maximumGlobalStepReached(maximum: 2, observed: 2)' \
+    'tokenIDs: [[1, 0, 2, 0]]' \
+    '.tokenIDOutOfRange(row: 0, column: 1, value: -1)' \
+    '.validationClipScale(globalNorm: Float(1).nextDown)' \
+    '.validationClipScale(globalNorm: 1)' \
+    'XCTAssertEqual(configuration.maximumBatchSize, 2)' \
+    'XCTAssertEqual(configuration.maximumGlobalStep, 2)'; do
+    grep -Fq -- "$required_tiny_cpu_validation_value" \
+        "$decoder_training_validation_test" ||
+        die "PrimeNativeDecoder Stage-2 validation lost: $required_tiny_cpu_validation_value"
+done
+readonly tiny_cpu_metal_guard_line="$(grep -nF -- \
+    'let metalDevices = MTLCopyAllDevices()' \
+    "$decoder_training_validation_test" | awk -F: '{print $1}')"
+readonly tiny_cpu_mlx_device_line="$(grep -nF -- \
+    'try Device.withDefaultDevice(.cpu) {' \
+    "$decoder_training_validation_test" | awk -F: '{print $1}')"
+[[ "$tiny_cpu_metal_guard_line" =~ ^[1-9][0-9]*$ \
+    && "$tiny_cpu_mlx_device_line" =~ ^[1-9][0-9]*$ \
+    && "$tiny_cpu_metal_guard_line" -lt "$tiny_cpu_mlx_device_line" ]] ||
+    die "Stage-2 test-only Metal capability guard no longer precedes MLX initialization"
+for forbidden_tiny_cpu_validation_capability in \
+    'PrimeNativeDecoderCheckpoint' \
+    'PrimeArtifactRoot' \
+    'FileManager' \
+    'FileHandle' \
+    'URLSession' \
+    'Process(' \
+    'posix_spawn' \
+    'execve(' \
+    'makeCommandQueue' \
+    'MTLCommandBuffer' \
+    'MTLBuffer' \
+    'MTLTexture'; do
+    if grep -Fq -- "$forbidden_tiny_cpu_validation_capability" \
+        "$decoder_training_validation_test"; then
+        die "Stage-2 validation gained forbidden capability: $forbidden_tiny_cpu_validation_capability"
+    fi
+done
 
 [[ -z "$(git -C "$prime_root" status --porcelain=v1 --untracked-files=all)" ]] ||
     die "Prime checkout changed during metadata validation"

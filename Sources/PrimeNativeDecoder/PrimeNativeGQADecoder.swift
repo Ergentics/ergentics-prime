@@ -896,6 +896,20 @@ public final class PrimeNativeGQADecoder: Module {
         return tokenEmbedding.asLinear(hidden)
     }
 
+    /// Package-only full-token training path. This intentionally has no cache,
+    /// position-offset, tokenizer, checkpoint, or generation surface.
+    package func trainingLogitsNoCache(
+        _ rankTwoTokenIDs: MLXArray
+    ) -> MLXArray {
+        precondition(
+            rankTwoTokenIDs.ndim == 2,
+            "training token IDs must have rank two")
+        precondition(
+            rankTwoTokenIDs.dtype == .int32,
+            "training token IDs must use int32 storage")
+        return self(rankTwoTokenIDs, positionOffset: 0)
+    }
+
     public func forward(
         tokenIDs: [Int],
         positionOffset: Int = 0

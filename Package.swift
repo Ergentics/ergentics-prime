@@ -16,6 +16,10 @@ let package = Package(
             targets: ["PrimeNativeDecoder"]
         ),
         .library(
+            name: "PrimeNativeDecoderTraining",
+            targets: ["PrimeNativeDecoderTraining"]
+        ),
+        .library(
             name: "PrimeNativeDecoderCheckpoint",
             targets: ["PrimeNativeDecoderCheckpoint"]
         ),
@@ -239,6 +243,25 @@ let package = Package(
                 ),
                 .product(
                     name: "MLXNN",
+                    package: "ergentics-mlx-swift"
+                ),
+            ]
+        ),
+        .target(
+            name: "PrimeNativeDecoderTraining",
+            dependencies: [
+                "PrimeCore",
+                "PrimeNativeDecoder",
+                .product(
+                    name: "MLX",
+                    package: "ergentics-mlx-swift"
+                ),
+                .product(
+                    name: "MLXNN",
+                    package: "ergentics-mlx-swift"
+                ),
+                .product(
+                    name: "MLXOptimizers",
                     package: "ergentics-mlx-swift"
                 ),
             ]
