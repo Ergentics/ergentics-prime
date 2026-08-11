@@ -84,6 +84,7 @@ jobs:
             Sources/PrimeCore/PrimeNativeDecoderCheckpointV2ContainerIOExecutionFailureObservation.swift \
             Sources/PrimeCore/PrimeNativeDecoderCheckpointV2ContainerIORootIdentityRepairExecutionAuthority.swift \
             Sources/PrimeCore/PrimeNativeDecoderTrajectoryExactResumeDesignAuthority.swift \
+            Sources/PrimeCore/PrimeNativeDecoderTrajectoryDesignReviewedMainTimeoutObservation.swift \
             Sources/PrimeCore/PrimeNativeDecoderMaintainedRuntimeComputeAuthority.swift \
             Sources/PrimeCore/PrimeNativeDecoderMaintainedRuntimeExecutionObservation.swift \
             Sources/PrimeCore/PrimeNativeDecoderTokenizerModelFunctionalCompatibilityAuthority.swift \
@@ -129,6 +130,7 @@ jobs:
             Tests/PrimeNativeDecoderTokenizerCompatibilityValidation/Tests/PrimeNativeDecoderTokenizerCompatibilityAuthorityTests/PrimeNativeDecoderTokenizerCompatibilityAuthorityTests.swift \
             Tests/PrimeCoreTests/PrimeNativeCorpusReplaySourceContractTests.swift \
             Tests/PrimeCoreTests/PrimeNativeDecoderTrajectoryExactResumeDesignAuthorityTests.swift \
+            Tests/PrimeCoreTests/PrimeNativeDecoderTrajectoryDesignReviewedMainTimeoutObservationTests.swift \
             Tests/PrimeCoreTests/PrimeNativeGenerationContractSourceContractTests.swift \
             Tests/PrimeCoreTests/PrimeNativeNeuralGateContractSourceContractTests.swift \
             Tests/PrimeCoreTests/PrimeNativeNeuralGateMLXIsolationSourceContractTests.swift \
@@ -184,6 +186,7 @@ jobs:
             echo 'Its append-only outcome observation binds exact reviewed-main merge 44cfa2caa3af5bb44ad53294de33ba2d0faa9a59 and workflow run 31484642403 attempt 1. The frozen Metal, maintained-runtime, and tokenizer launchers passed in that order before exactly one public write and one public fresh load. The artifact-root link topology was 2 to 3 to 3, its stable device/inode/owner/group/mode fields matched throughout, its complete post-write identity matched the post-load identity, and the parent reconstructed and validated the full typed receipt before literal leaf unlink and root rmdir cleanup. The run published zero Actions artifacts and establishes no retained artifact, artifact provenance, checkpoint admission, forward, training, product, or publication authority.'
             echo 'Hosted reviewed-main now executes exactly two isolated pure root-identity repair authority/evidence and outcome-observation tests. They construct only declarative fixtures, perform no checkpoint I/O or Native-300M allocation, and cannot repeat the retired live execution.'
             echo 'The dependency-free trajectory-exact-resume design authority records the exhausted seed-42 evidence gap, the ephemeral non-parent seed-43 outcome, frozen weights-only V2 boundary, exact future optimizer/RNG/data-cursor and commit requirements, and an ordered tiny-first successor sequence. Its one PrimeCore mutation test is pure: this arc adds no train/evaluate implementation, MLX execution, checkpoint I/O, model allocation, launcher, retention, provenance, admission, or training authority.'
+            echo 'The append-only reviewed-main timeout observation records that run 31509046898 passed active-root, focused contracts, Metal, and maintained runtime, then timed out during the tokenizer test build after the tokenizer product build. It records no tokenizer receipt or pass, no checkpoint or one-shot execution, no retained artifact, and no Stage-2 authority; reviewed main alone receives a 60-minute bound for a new exact-main completion observation.'
             echo 'The locally declared origin is not network-authenticated, and ignored workspace bytes are not observed by this slice.'
             echo 'Beyond that one bounded random-initialized Native-300M witness, no Prime proposal, candidate selection, trial authorization, decision receipt, runtime/product/canary decoder activation, additional model execution, training, publication, promotion, Driver V2, or PMHNP authority is granted.'
           } >> "$GITHUB_STEP_SUMMARY"
@@ -193,7 +196,7 @@ jobs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: active-root
     runs-on: macos-26
-    timeout-minutes: 45
+    timeout-minutes: 60
     env:
       EXACT_REVISION: ${{ github.sha }}
       PRIME_MLX_REVISION: d37885a278f1c37484a94d0f401a418735e66519
@@ -305,7 +308,7 @@ jobs:
             --disable-keychain \
             --force-resolved-versions \
             --test-product ErgenticsPrimePackageTests \
-            --filter 'PrimeNativeNeuralGateMLXIsolationSourceContractTests|PrimeNativeCorpusReplaySourceContractTests|PrimeCoreTests.PrimeNativeDecoderTrajectoryExactResumeDesignAuthorityTests/testFrozenV1CanonicalCodableMutationAndSourceBoundary|PrimeNativeGenerationContractSourceContractTests|PrimeNativeNeuralGateContractSourceContractTests|PrimeNativeResolvedContractAdapterSourceContractTests|PrimeSwiftSourceProvenanceTests/testLiveRepositoryMatchesEmbeddedSourceIdentity' \
+            --filter 'PrimeNativeNeuralGateMLXIsolationSourceContractTests|PrimeNativeCorpusReplaySourceContractTests|PrimeCoreTests.PrimeNativeDecoderTrajectoryExactResumeDesignAuthorityTests/testFrozenV1CanonicalCodableMutationAndSourceBoundary|PrimeCoreTests.PrimeNativeDecoderTrajectoryDesignReviewedMainTimeoutObservationTests/testFrozenV1CanonicalCodableRecursiveMutationAndAuthorityCeiling|PrimeNativeGenerationContractSourceContractTests|PrimeNativeNeuralGateContractSourceContractTests|PrimeNativeResolvedContractAdapterSourceContractTests|PrimeSwiftSourceProvenanceTests/testLiveRepositoryMatchesEmbeddedSourceIdentity' \
             2>&1 | tee "$test_log"
           TMPDIR="$RUNNER_TEMP" swift test \
             --package-path Tests/PrimeNativeDecoderCheckpointCompatibilityV2Validation \
@@ -359,6 +362,10 @@ jobs:
           unset GIT_CONFIG_KEY_1 GIT_CONFIG_VALUE_1
           grep -Eq 'Executed [1-9][0-9]* tests?, with 0 failures' "$test_log"
           grep -Fq 'PrimeNativeDecoderTrajectoryExactResumeDesignAuthorityTests' \
+            "$test_log"
+          grep -Fq 'PrimeNativeDecoderTrajectoryDesignReviewedMainTimeoutObservationTests' \
+            "$test_log"
+          grep -Fq 'testFrozenV1CanonicalCodableRecursiveMutationAndAuthorityCeiling' \
             "$test_log"
           grep -Fq 'Executed 1 test, with 0 failures' \
             "$checkpoint_v2_test_log"

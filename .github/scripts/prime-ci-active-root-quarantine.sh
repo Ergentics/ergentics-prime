@@ -428,7 +428,7 @@ grep -Fq -- 'runs-on: macos-15' "$workflow_path" ||
     && "$(awk '
         /^  trusted-main-compile:$/ { inside = 1; next }
         inside && /^    timeout-minutes:/ { print $2 }
-    ' "$workflow_path")" == "45" ]] ||
+    ' "$workflow_path")" == "60" ]] ||
     die "hosted quarantine workflow runner or timeout boundary changed"
 [[ "$(grep -Fxc -- \
     '          git -C ergentics-prime fetch --depth=1 --no-tags --no-write-fetch-head origin "$EXACT_REVISION"' \
@@ -612,6 +612,22 @@ readonly trajectory_exact_resume_design_filter='PrimeCoreTests.PrimeNativeDecode
         "          grep -Fq 'PrimeNativeDecoderTrajectoryExactResumeDesignAuthorityTests' \\" \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the exact trajectory-resume design contract"
+readonly trajectory_design_timeout_observation_filter='PrimeCoreTests.PrimeNativeDecoderTrajectoryDesignReviewedMainTimeoutObservationTests/testFrozenV1CanonicalCodableRecursiveMutationAndAuthorityCeiling'
+[[ "$(grep -Fc -- "$trajectory_design_timeout_observation_filter" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        'Sources/PrimeCore/PrimeNativeDecoderTrajectoryDesignReviewedMainTimeoutObservation.swift' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        'Tests/PrimeCoreTests/PrimeNativeDecoderTrajectoryDesignReviewedMainTimeoutObservationTests.swift' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        "          grep -Fq 'PrimeNativeDecoderTrajectoryDesignReviewedMainTimeoutObservationTests' \\" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        "          grep -Fq 'testFrozenV1CanonicalCodableRecursiveMutationAndAuthorityCeiling' \\" \
+        "$workflow_path")" == "1" ]] ||
+    die "hosted workflow does not parse and run the exact trajectory-design timeout observation"
 for required_metal_gate_value in \
     'MTLCreateSystemDefaultDevice' \
     '-target Cmlx' \
@@ -1443,6 +1459,8 @@ readonly decoder_checkpoint_v2_io_root_identity_repair_execution_evidence_source
 readonly decoder_checkpoint_v2_io_root_identity_repair_execution_observation_source="$prime_root/Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV2ContainerIORootIdentityRepairExecutionObservation.swift"
 readonly decoder_trajectory_exact_resume_design_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderTrajectoryExactResumeDesignAuthority.swift"
 readonly decoder_trajectory_exact_resume_design_authority_test="$prime_root/Tests/PrimeCoreTests/PrimeNativeDecoderTrajectoryExactResumeDesignAuthorityTests.swift"
+readonly decoder_trajectory_design_timeout_observation_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderTrajectoryDesignReviewedMainTimeoutObservation.swift"
+readonly decoder_trajectory_design_timeout_observation_test="$prime_root/Tests/PrimeCoreTests/PrimeNativeDecoderTrajectoryDesignReviewedMainTimeoutObservationTests.swift"
 readonly decoder_runtime_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderMaintainedRuntimeComputeAuthority.swift"
 readonly decoder_runtime_execution_observation_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderMaintainedRuntimeExecutionObservation.swift"
 readonly decoder_runtime_source="$prime_root/Sources/PrimeNativeDecoderRuntime/PrimeNativeDecoderRuntime.swift"
@@ -2179,6 +2197,43 @@ assert_trajectory_exact_resume_design_source_identity \
     '186dc546c7f889f28d700322ac06b7b8a8a4c252' \
     '26700' \
     '1fc9d8a4dde9e5e4192de9c248076f218ea38094eb68c335ade6de50862eb58b'
+
+assert_trajectory_design_timeout_observation_source_identity() {
+    local relative_path="$1"
+    local expected_mode="$2"
+    local expected_blob="$3"
+    local expected_byte_count="$4"
+    local expected_sha256="$5"
+    local source_path="$prime_root/$relative_path"
+
+    [[ -f "$source_path" && ! -L "$source_path" ]] ||
+        die "trajectory-design timeout observation source is missing or linked: $relative_path"
+    [[ "$(git -C "$prime_root" ls-files -s -- \
+        "$relative_path" | awk '{print $1}')" == "$expected_mode" ]] ||
+        die "trajectory-design timeout observation source mode changed: $relative_path"
+    [[ "$(git -C "$prime_root" hash-object "$source_path")" \
+        == "$expected_blob" ]] ||
+        die "trajectory-design timeout observation source blob changed: $relative_path"
+    [[ "$(wc -c < "$source_path" | awk '{print $1}')" \
+        == "$expected_byte_count" ]] ||
+        die "trajectory-design timeout observation source byte count changed: $relative_path"
+    [[ "$(shasum -a 256 "$source_path" | awk '{print $1}')" \
+        == "$expected_sha256" ]] ||
+        die "trajectory-design timeout observation source SHA-256 changed: $relative_path"
+}
+
+assert_trajectory_design_timeout_observation_source_identity \
+    'Sources/PrimeCore/PrimeNativeDecoderTrajectoryDesignReviewedMainTimeoutObservation.swift' \
+    '100644' \
+    '26be0dbd5cec53fd9ea013a1c470106a4fbe4225' \
+    '28691' \
+    'af3ef53cd5da61f68ca7c0aa661dfd57d58679d36c382a1ba0a306bf251197d0'
+assert_trajectory_design_timeout_observation_source_identity \
+    'Tests/PrimeCoreTests/PrimeNativeDecoderTrajectoryDesignReviewedMainTimeoutObservationTests.swift' \
+    '100644' \
+    'a85c2ebd99b0a2f088b7f683795ed878877296e4' \
+    '16123' \
+    'a87f58cedd3143bb359a58d6185a5f1482fe2f825ac509ffc7f7414eab7ab05a'
 [[ "$(wc -c < "$decoder_checkpoint_v2_authority_source" | awk '{print $1}')" \
     == "29660" ]] ||
     die "PrimeNativeDecoderCheckpoint V2 authority byte count changed"
@@ -4221,6 +4276,100 @@ for forbidden_trajectory_exact_resume_execution_capability in \
         "$decoder_trajectory_exact_resume_design_authority_source" \
         "$decoder_trajectory_exact_resume_design_authority_test"; then
         die "trajectory exact-resume design gained execution capability: $forbidden_trajectory_exact_resume_execution_capability"
+    fi
+done
+
+[[ "$(grep -Ec -- '^import ' \
+        "$decoder_trajectory_design_timeout_observation_source")" == "1" \
+    && "$(grep -Fxc -- 'import Foundation' \
+        "$decoder_trajectory_design_timeout_observation_source")" == "1" ]] ||
+    die "trajectory-design timeout observation gained a dependency import"
+[[ "$(grep -Ec -- '^[[:space:]]+func test' \
+        "$decoder_trajectory_design_timeout_observation_test")" == "1" ]] ||
+    die "trajectory-design timeout observation test count changed"
+
+for required_trajectory_design_timeout_observation_value in \
+    'public struct PrimeNativeDecoderTrajectoryDesignReviewedMainTimeoutObservationV1:' \
+    'public static let frozenV1 = Self(' \
+    'public func validateExactV1() throws {' \
+    'observationKind: "reviewed_main_timeout_observation"' \
+    'classification: "timeout_incomplete_not_semantic_failure"' \
+    'runID: 31_509_046_898' \
+    'runConclusion: "cancelled"' \
+    'configuredReviewedMainTimeoutMinutes: 45' \
+    'totalTestCount: 38' \
+    'testCount: 44' \
+    'receiptCount: 1' \
+    '"prime-ci-native-decoder-tokenizer-compatibility.sh"' \
+    'probeProductBuildReportedDurationMilliseconds: 527_150' \
+    '"tokenizer_authority_test_build_cancelled_before_test_execution"' \
+    'authorityTestBuildCompleted: false' \
+    'testExecutionStarted: false' \
+    'native300MModelAllocated: false' \
+    'successMarkerObserved: false' \
+    'publishedWorkflowArtifactCount: 0' \
+    'artifactUploadStepPresent: false' \
+    'retiredSeed42LauncherCommandCount: 0' \
+    'retiredSeed43LauncherCommandCount: 0' \
+    'publicCheckpointV2IOExecuted: false' \
+    'timeoutIncompleteNotSemanticFailure: true' \
+    'partialSuccessDoesNotCompleteReviewedMainJob: true' \
+    'rerunObserved: false' \
+    'tinyCPUTrainEvaluateMechanicsObserved: false' \
+    'publicationAuthorized: false' \
+    'ABSTAIN_REVIEWED_MAIN_TIMEOUT_INCOMPLETE_NOT_SEMANTIC_FAILURE' \
+    'require_full_exact_main_completion_after_repair' \
+    'do_not_advance_to_tiny_cpu_mechanics_before_full_completion'; do
+    grep -Fq -- "$required_trajectory_design_timeout_observation_value" \
+        "$decoder_trajectory_design_timeout_observation_source" ||
+        die "trajectory-design timeout observation lost: $required_trajectory_design_timeout_observation_value"
+done
+
+for required_trajectory_design_timeout_observation_test_value in \
+    'func testFrozenV1CanonicalCodableRecursiveMutationAndAuthorityCeiling()' \
+    'XCTAssertNoThrow(try observation.validateExactV1())' \
+    '"timeout_incomplete_not_semantic_failure"' \
+    '"tokenizer_authority_test_build_cancelled_before_test_execution"' \
+    'XCTAssertEqual(observation.focusedTests.totalTestCount, 38)' \
+    'XCTAssertEqual(observation.metal.testCount, 44)' \
+    'XCTAssertEqual(observation.maintainedRuntime.receiptCount, 1)' \
+    'XCTAssertEqual(observation.tokenizer.executedTestCount, 0)' \
+    'XCTAssertEqual(logs.publishedWorkflowArtifactCount, 0)' \
+    'XCTAssertFalse(observation.publicCheckpointV2IOExecuted)' \
+    'ceiling.tinyCPUTrainEvaluateMechanicsObserved' \
+    'let drifts = recursiveDrifts(root, path: "$")' \
+    'XCTAssertGreaterThan(drifts.count, 250)' \
+    'unknown_future_execution_authority'; do
+    grep -Fq -- "$required_trajectory_design_timeout_observation_test_value" \
+        "$decoder_trajectory_design_timeout_observation_test" ||
+        die "trajectory-design timeout observation test lost: $required_trajectory_design_timeout_observation_test_value"
+done
+
+for forbidden_trajectory_design_timeout_observation_capability in \
+    'import Darwin' \
+    'import Metal' \
+    'import MLX' \
+    'import MLXNN' \
+    'import MLXOptimizers' \
+    'PrimeNativeGQADecoder.make(' \
+    'PrimeArtifactRoot(' \
+    'writeNative300MByte512(' \
+    'loadNative300MByte512(' \
+    '.forward(' \
+    'checkedEval(' \
+    'AdamW(' \
+    'FileManager' \
+    'FileHandle' \
+    'Data(contentsOf:' \
+    'String(contentsOf:' \
+    'URLSession' \
+    'Process(' \
+    'posix_spawn' \
+    'execve('; do
+    if grep -Fq -- "$forbidden_trajectory_design_timeout_observation_capability" \
+        "$decoder_trajectory_design_timeout_observation_source" \
+        "$decoder_trajectory_design_timeout_observation_test"; then
+        die "trajectory-design timeout observation gained execution capability: $forbidden_trajectory_design_timeout_observation_capability"
     fi
 done
 ! grep -Fq -- 'name: "PrimeNativeDecoderTraining"' "$root_manifest" ||

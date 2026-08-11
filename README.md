@@ -194,6 +194,31 @@ probe; Native-300M trajectory-checkpoint execution; and only then retained
 trajectory provenance and admission. Exact Metal trajectory replay and
 Native-300M resource sufficiency remain unproved until their dedicated stages.
 
+`PrimeNativeDecoderTrajectoryDesignReviewedMainTimeoutObservationV1.frozenV1`
+records the first reviewed-main outcome after that design-only arc. Exact merge
+`5eeba9e6483bafd1bbb5c96753491b3dd1609ea0` and tree
+`aeae7b7f0c7ab1eb0236a6a2216789c62a082ea1` ran in workflow
+`31509046898`. Active-root job `93837901444` completed successfully with all
+seven steps. Reviewed-main job `93838685818` passed toolchain, checkout,
+dependency fetch, and all five focused test commands, which completed 38 tests
+in total with zero failures or skips. Its retained live sequence then completed
+the frozen 44-test Metal gate and exactly one maintained-runtime receipt. The
+tokenizer launcher completed its probe-product build in 527.15 seconds, but the
+job's 45-minute limit cancelled the following authority-test build after
+`[3/7] Write swift-version-7974D3F7F03D5E95.txt`. It therefore ran no tokenizer
+test suite or probe, allocated no Native-300M model, and emitted no tokenizer
+receipt or pass marker.
+
+That cancellation is an incomplete observation, not a tokenizer semantic
+failure and not a pass. The run was not rerun. It invoked no checkpoint or
+retired seed-42/seed-43 one-shot launcher, emitted none of their markers, and
+its Actions artifact inventory was empty. Stage 2 remains blocked until a new
+exact reviewed-main run completes the entire retained sequence. The bounded
+workflow repair raises only reviewed main from 45 to 60 minutes; active-root
+remains 45 minutes, both checkouts remain depth one, the workflow remains two
+jobs with five steps each, and the only live decoder order remains Metal,
+maintained runtime, then tokenizer.
+
 An append-only execution
 observation now binds an exact clean committed repair head whose rebuilt
 44-test bundle passed on external live Metal with zero failures and skips;
