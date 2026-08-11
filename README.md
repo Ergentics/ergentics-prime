@@ -138,9 +138,61 @@ both jobs again use their ordinary 45-minute bounds, both checkouts use depth
 one, and the reviewed lane retains only Metal, runtime, and tokenizer live
 launchers. The repair validation package now has exactly two pure declarative
 tests; neither allocates Native-300M nor calls a public checkpoint-I/O entry
-point. The next bounded boundary is design of generic Prime-owned
-train/evaluate surfaces and exact optimizer, RNG, and data-cursor state for
-trajectory-exact resume, not authorization to train.
+point.
+
+The practical consequence of seed 42 not completing in its one authorized shot
+is an evidence discontinuity, not loss of trained work. Source-pinned control
+flow says its ephemeral random-weight write returned, so the in-process
+artifact-root publication and complete external binding are source-inferred.
+The over-strong root guard stopped the process before those binding fields or
+hash were emitted or independently observed, and before a public load, complete
+receipt, parent receipt validation, or literal supervisor cleanup. Zero Actions
+artifacts or durable seed-42 bytes were retained, and no checkpoint was
+admitted. Because that one-shot authority is exhausted, the attempt cannot be
+rerun or retroactively completed under the frozen contract. The append-only
+seed-43 successor was therefore a distinct execution with a distinct seed-43
+random initialization and a repaired root comparison; its success validates
+that repaired V2 path but does not complete seed 42 or establish byte equality
+or inequality with the unavailable seed-42 artifact. Seed 43 was
+also deleted after validation, so neither run supplies a parent checkpoint for
+training or resume. The added cost was another authority, launcher,
+observation, review, and hosted execution; the benefit was exposing and
+correcting a filesystem-identity assumption before it could enter
+retained-checkpoint semantics.
+
+`PrimeNativeDecoderTrajectoryExactResumeDesignAuthorityV1.frozenV1` now records
+the next dependency-free, design-only boundary. It preserves V2 as an exact
+weights-only leaf and requires any future trajectory checkpoint to bind that
+leaf externally alongside a separate optimizer leaf and canonical control
+manifest, with one exclusive final commit manifest published last. The design
+requires all 218 AdamW paths and their 436 FP32 first/second-moment tensors
+(2,168,856,576 bytes), exact optimizer configuration and step, Prime-owned
+domain-separated key/counter RNG streams, and an exact next-unconsumed data
+cursor. Snapshots are limited to a post-update checked-evaluation boundary with
+`accumulationPhase == 0` and no pending gradients, prefetch, or KV cache. The
+public pinned MLX `RandomState` can export an inner state but has no dedicated,
+supported typed importer for exact continuation. A public underscored
+`MLXArray._updateInternal` mutation path exists, but it is an implementation
+detail rather than a stable or authorized resume contract. Future mechanics
+must not use it as one, and implicit global MLX randomness is not an acceptable
+resume mechanism. The predecessor embedded source digest remains explicitly a
+414-file repository-only closure; it does not claim to contain dependency
+bytes. Twelve exact external source bindings—including the MLX Swift protocol
+and array mutation surfaces—record the MLX Swift, MLX C, and MLX claims used by
+this design, while two exact gitlink relationships bind the pinned Swift
+revision to its MLX and MLX C child revisions. These are frozen design inputs,
+not a fresh external-source observation by this arc.
+
+This immediate arc is schema and pure-contract authority only. It adds no
+trainer, evaluator, optimizer codec, durable write, model allocation, live
+Metal command, training, retained artifact, provenance, admission, trial,
+canary, product, or publication authority. Follow-ups remain separately
+bounded and ordered: tiny CPU train/evaluate mechanics; tiny explicit
+RNG/cursor resume; tiny multi-leaf commit and fault injection; repeated tiny
+Metal trajectory-determinism assays; a Native-300M resource-only one-step
+probe; Native-300M trajectory-checkpoint execution; and only then retained
+trajectory provenance and admission. Exact Metal trajectory replay and
+Native-300M resource sufficiency remain unproved until their dedicated stages.
 
 An append-only execution
 observation now binds an exact clean committed repair head whose rebuilt
