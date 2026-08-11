@@ -113,13 +113,32 @@ The caller-supplied metallib size and SHA-256 are verification inputs, not
 artifact provenance or admission. The implementation supports only a
 source-pinned exclusive-candidate inference: direct instrumentation of the
 path MLX loaded remains false. The authority admits the compute policy and
-authorizes this bounded closure, but dependency, metallib, device, and MLX
-initialization observations remain false until an exact clean hosted execution
-is recorded by a separate successor.
+authorizes this bounded closure without claiming that it has executed.
+
+`PrimeNativeDecoderMaintainedRuntimeExecutionObservationV1.frozenV1` is the
+append-only execution successor. It binds the history-preserving merge commit
+`b127b2f96c1bcbc8f2ee2017027898853c871469`, workflow run `31449020532`,
+the successful active-root and reviewed-main jobs, their decoded log
+identities, the exact hosted toolchain and pinned MLX dependency revisions,
+and the canonical Release-process receipt. The `macos-26` job exposed the
+singleton `Apple Paravirtual device`, built one fresh 6,292,684-byte
+`default.metallib` with SHA-256
+`b7ea3fb0e851f4e2417f3e82be63deca8df627daf480cf04cc1b2b70195d7b87`,
+passed the frozen 44-test decoder suite with zero failures or skips, passed the
+one-test runtime authority package, and completed the exact FP32 2x2 GPU
+matmul readback under the sole `MLX_ENABLE_TF32=0` override.
+
+That observation establishes the maintained dependency closure, singleton
+Metal/default-index-zero binding, bounded MLX initialization, and
+source-pinned exclusive loader-candidate inference. It does not independently
+instrument the metallib path MLX loaded, establish artifact provenance or
+admission, identify a physical GPU, allocate or execute Native-300M, perform
+checkpoint I/O, observe the TF32 static or NAX consumer path, train, or grant
+trial, canary, product, or publication authority.
 
 These slices establish the repaired source's exact declarative compatibility
 identity, admit the narrowly scoped maintained-runtime compute policy, and
-implement—but do not yet observe—the bounded initialization closure. They do
+observe the bounded initialization closure at the exact hosted merge. They do
 not define a V2 manifest or codec, establish a checkpoint artifact or
 native-profile I/O, validate tokenizer/model behavior, allocate Native-300M,
 execute the decoder, train, authorize a trial, replace a canary, quantize,
@@ -235,19 +254,16 @@ dependency.
 
 The remaining replacement order is:
 
-1. run the exact clean reviewed-main maintained-runtime closure and append a
-   separate observation binding its dependency, metallib, device, and bounded
-   MLX-initialization receipt;
-2. establish tokenizer/model functional compatibility, then define bounded
+1. establish tokenizer/model functional compatibility, then define bounded
    native-profile checkpoint container and I/O mechanics;
-3. define generic Prime-owned train/evaluate surfaces and persist exact
+2. define generic Prime-owned train/evaluate surfaces and persist exact
    optimizer, RNG, and data-cursor state for trajectory-exact resume;
-4. separately authorize bounded training, then produce and bind a non-fixture
+3. separately authorize bounded training, then produce and bind a non-fixture
    checkpoint with exact training-state and artifact provenance;
-5. separately authorize and run a bounded candidate canary/trial;
-6. migrate the read-only PMHNP canary consumer to the Prime-owned interface and
+4. separately authorize and run a bounded candidate canary/trial;
+5. migrate the read-only PMHNP canary consumer to the Prime-owned interface and
    remove its active Llama factory after single-MLX-graph reconciliation;
-7. address CoreML/NeuralKit product export only after accepted checkpoint and
+6. address CoreML/NeuralKit product export only after accepted checkpoint and
    parity evidence.
 
 No training, PMHNP write, or product decision is part of this hosted

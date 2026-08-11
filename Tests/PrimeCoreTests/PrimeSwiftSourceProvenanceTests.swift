@@ -430,6 +430,500 @@ final class PrimeSwiftSourceProvenanceTests:
         XCTAssertThrowsError(
             try mutatedPolicyObservation.validateExactV1()
         )
+
+        let maintainedRuntimeObservation =
+            PrimeNativeDecoderMaintainedRuntimeExecutionObservationV1
+                .frozenV1
+        XCTAssertNoThrow(
+            try maintainedRuntimeObservation.validateExactV1()
+        )
+        XCTAssertTrue(
+            maintainedRuntimeObservation
+                .exactReviewedMainRuntimeClosureObserved
+        )
+        XCTAssertTrue(
+            maintainedRuntimeObservation
+                .runtimeDependencyClosureEstablished
+        )
+        XCTAssertTrue(
+            maintainedRuntimeObservation
+                .sourcePinnedExclusiveCandidateInferenceEstablished
+        )
+        XCTAssertTrue(
+            maintainedRuntimeObservation
+                .runtimeMetalDeviceIdentityEstablished
+        )
+        XCTAssertTrue(
+            maintainedRuntimeObservation
+                .boundedMLXRuntimeInitializationEstablished
+        )
+        XCTAssertFalse(
+            maintainedRuntimeObservation
+                .runtimeLoadedExactMetallibIdentityEstablished
+        )
+        XCTAssertFalse(
+            maintainedRuntimeObservation
+                .runtimeLoadedMetallibPathIndependentlyObserved
+        )
+        XCTAssertFalse(
+            maintainedRuntimeObservation
+                .callerExpectationIsArtifactAdmission
+        )
+        XCTAssertFalse(
+            maintainedRuntimeObservation
+                .metallibArtifactProvenanceEstablished
+        )
+        XCTAssertFalse(
+            maintainedRuntimeObservation.physicalGPUIdentityEstablished
+        )
+        XCTAssertFalse(
+            maintainedRuntimeObservation.tf32StaticValueDirectlyObserved
+        )
+        XCTAssertFalse(
+            maintainedRuntimeObservation.naxTF32ConsumerPathObserved
+        )
+        XCTAssertFalse(
+            maintainedRuntimeObservation.decoderModelAllocationObserved
+        )
+        XCTAssertFalse(
+            maintainedRuntimeObservation.decoderExecutionObserved
+        )
+        XCTAssertFalse(
+            maintainedRuntimeObservation.checkpointIOObserved
+        )
+        XCTAssertFalse(
+            maintainedRuntimeObservation.v2ManifestDefined
+        )
+        XCTAssertFalse(
+            maintainedRuntimeObservation.v2CodecDefined
+        )
+        XCTAssertFalse(
+            maintainedRuntimeObservation
+                .tokenizerFunctionalCompatibilityEstablished
+        )
+        XCTAssertFalse(
+            maintainedRuntimeObservation
+                .modelFunctionalCompatibilityEstablished
+        )
+        XCTAssertFalse(
+            maintainedRuntimeObservation.trainingResumeEstablished
+        )
+        XCTAssertFalse(
+            maintainedRuntimeObservation.trainEvaluateSurfaceEstablished
+        )
+        XCTAssertFalse(
+            maintainedRuntimeObservation.trainingExecutionObserved
+        )
+        XCTAssertFalse(
+            maintainedRuntimeObservation.candidateAdmissionGranted
+        )
+        XCTAssertFalse(
+            maintainedRuntimeObservation.trialAuthorized
+        )
+        XCTAssertFalse(
+            maintainedRuntimeObservation.canaryReplacementAuthorized
+        )
+        XCTAssertFalse(
+            maintainedRuntimeObservation.quantizationAuthorized
+        )
+        XCTAssertFalse(
+            maintainedRuntimeObservation.productUseAuthorized
+        )
+
+        let maintainedRuntimeObservationData =
+            try PrimeCanonicalJSON.encode(
+                maintainedRuntimeObservation
+            )
+        let maintainedRuntimeObservationObject = try XCTUnwrap(
+            try JSONSerialization.jsonObject(
+                with: maintainedRuntimeObservationData
+            ) as? [String: Any]
+        )
+
+        func assertMaintainedRuntimeObservationRejects(
+            _ mutation: [String: Any],
+            _ message: String
+        ) throws {
+            let mutated = try JSONDecoder().decode(
+                PrimeNativeDecoderMaintainedRuntimeExecutionObservationV1
+                    .self,
+                from: JSONSerialization.data(
+                    withJSONObject: mutation,
+                    options: [
+                        .sortedKeys,
+                        .withoutEscapingSlashes,
+                    ]
+                )
+            )
+            XCTAssertThrowsError(
+                try mutated.validateExactV1(),
+                message
+            )
+        }
+
+        let maintainedRuntimeBooleanKeys =
+            maintainedRuntimeObservationObject.compactMap {
+                key,
+                value -> String? in
+                guard let number = value as? NSNumber,
+                      CFGetTypeID(number) == CFBooleanGetTypeID()
+                else {
+                    return nil
+                }
+                return key
+            }
+        XCTAssertEqual(maintainedRuntimeBooleanKeys.count, 100)
+        for key in maintainedRuntimeBooleanKeys {
+            var mutation = maintainedRuntimeObservationObject
+            let value = try XCTUnwrap(
+                mutation[key] as? NSNumber
+            )
+            mutation[key] = !value.boolValue
+            try assertMaintainedRuntimeObservationRejects(
+                mutation,
+                "runtime observation boolean mutation must fail closed: \(key)"
+            )
+        }
+
+        let sourceBindingKeys = [
+            "predecessorSource",
+            "observedWorkflowSource",
+            "observedActiveGateSource",
+            "observedFrozenMetalLauncherSource",
+            "observedRuntimeClosureLauncherSource",
+            "observedRootPackageManifestSource",
+            "observedRootPackageResolvedSource",
+            "observedRuntimeSource",
+            "observedRuntimeValidationManifestSource",
+            "observedRuntimeValidationResolvedSource",
+            "observedRuntimeValidationProbeSource",
+            "observedRuntimeValidationTestSource",
+        ]
+        for sourceKey in sourceBindingKeys {
+            let source = try XCTUnwrap(
+                maintainedRuntimeObservationObject[sourceKey]
+                    as? [String: Any]
+            )
+            let sourceMode = try XCTUnwrap(
+                source["gitMode"] as? String
+            )
+            let mutatedSourceMode =
+                sourceMode == "100755" ? "100644" : "100755"
+            for (field, replacement) in [
+                ("path", "mutated" as Any),
+                ("gitMode", mutatedSourceMode as Any),
+                (
+                    "gitBlob",
+                    String(repeating: "0", count: 40) as Any
+                ),
+                ("byteCount", 1 as Any),
+                (
+                    "sha256",
+                    String(repeating: "0", count: 64) as Any
+                ),
+            ] {
+                var mutation = maintainedRuntimeObservationObject
+                var mutatedSource = source
+                XCTAssertNotNil(mutatedSource[field])
+                mutatedSource[field] = replacement
+                mutation[sourceKey] = mutatedSource
+                try assertMaintainedRuntimeObservationRejects(
+                    mutation,
+                    "runtime observation source mutation must fail closed: \(sourceKey).\(field)"
+                )
+            }
+        }
+
+        let maintainedPolicy = try XCTUnwrap(
+            maintainedRuntimeObservationObject[
+                "maintainedEnvironmentPolicy"
+            ] as? [String: Any]
+        )
+        let maintainedPolicyBooleanKeys =
+            maintainedPolicy.compactMap {
+                key,
+                value -> String? in
+                guard let number = value as? NSNumber,
+                      CFGetTypeID(number) == CFBooleanGetTypeID()
+                else {
+                    return nil
+                }
+                return key
+            }
+        XCTAssertEqual(maintainedPolicyBooleanKeys.count, 1)
+        for key in maintainedPolicyBooleanKeys {
+            var mutation = maintainedRuntimeObservationObject
+            var mutatedPolicy = maintainedPolicy
+            let value = try XCTUnwrap(
+                mutatedPolicy[key] as? NSNumber
+            )
+            mutatedPolicy[key] = !value.boolValue
+            mutation["maintainedEnvironmentPolicy"] = mutatedPolicy
+            try assertMaintainedRuntimeObservationRejects(
+                mutation,
+                "runtime observation policy boolean mutation must fail closed: \(key)"
+            )
+        }
+        for (field, replacement) in [
+            ("schemaVersion", 2 as Any),
+            ("policyID", "mutated" as Any),
+            ("policyVersion", 2 as Any),
+            ("scope", "mutated" as Any),
+            ("predecessorPolicyID", "mutated" as Any),
+            ("predecessorPolicyVersion", 2 as Any),
+            (
+                "exactMLXRevision",
+                String(repeating: "0", count: 40) as Any
+            ),
+            ("requiredEnvironmentKey", "MLX_MUTATED" as Any),
+            ("requiredEnvironmentValue", "1" as Any),
+            ("exclusiveEnvironmentKeyPrefix", "MUTATED_" as Any),
+            ("forbiddenEnvironmentKeyPrefixes", ["MUTATED_"] as Any),
+            ("numericMode", "mutated" as Any),
+            ("comparisonPolicy", "mutated" as Any),
+            ("authorityCeiling", "mutated" as Any),
+        ] {
+            var mutation = maintainedRuntimeObservationObject
+            var mutatedPolicy = maintainedPolicy
+            XCTAssertNotNil(mutatedPolicy[field])
+            mutatedPolicy[field] = replacement
+            mutation["maintainedEnvironmentPolicy"] = mutatedPolicy
+            try assertMaintainedRuntimeObservationRejects(
+                mutation,
+                "runtime observation policy mutation must fail closed: \(field)"
+            )
+        }
+
+        for (key, replacement) in [
+            ("schemaVersion", 2 as Any),
+            ("observationID", "mutated" as Any),
+            ("observationKind", "mutated" as Any),
+            ("predecessorAuthorityID", "mutated" as Any),
+            ("authoritativeRepository", "mutated" as Any),
+            ("observedPullRequestNumber", 73 as Any),
+            ("observedRef", "refs/heads/mutated" as Any),
+            (
+                "observedRevision",
+                String(repeating: "0", count: 40) as Any
+            ),
+            (
+                "observedOrderedParentRevisions",
+                [String(repeating: "0", count: 40)] as Any
+            ),
+            (
+                "observedTree",
+                String(repeating: "0", count: 40) as Any
+            ),
+            (
+                "reviewedPullRequestHeadRevision",
+                String(repeating: "0", count: 40) as Any
+            ),
+            (
+                "reviewedPullRequestHeadTree",
+                String(repeating: "0", count: 40) as Any
+            ),
+            (
+                "observedEmbeddedSourceIdentitySHA256",
+                String(repeating: "0", count: 64) as Any
+            ),
+            ("workflowID", 1 as Any),
+            ("workflowName", "mutated" as Any),
+            ("runID", 1 as Any),
+            ("runNumber", 1 as Any),
+            ("runAttempt", 2 as Any),
+            ("runEvent", "workflow_dispatch" as Any),
+            ("runURL", "https://example.invalid" as Any),
+            ("runActor", "mutated" as Any),
+            ("runTriggeringActor", "mutated" as Any),
+            ("runCreatedAt", "1970-01-01T00:00:00Z" as Any),
+            ("runStartedAt", "1970-01-01T00:00:00Z" as Any),
+            ("runUpdatedAt", "1970-01-01T00:00:00Z" as Any),
+            ("runStatus", "queued" as Any),
+            ("runConclusion", "failure" as Any),
+            ("publishedWorkflowArtifactCount", 1 as Any),
+            ("activeRootJobID", 1 as Any),
+            ("activeRootJobName", "mutated" as Any),
+            ("activeRootJobURL", "https://example.invalid" as Any),
+            (
+                "activeRootJobStartedAt",
+                "1970-01-01T00:00:00Z" as Any
+            ),
+            (
+                "activeRootJobCompletedAt",
+                "1970-01-01T00:00:00Z" as Any
+            ),
+            ("activeRootJobStatus", "queued" as Any),
+            ("activeRootJobConclusion", "failure" as Any),
+            ("activeRootRunnerLabel", "mutated" as Any),
+            ("activeRootRunnerName", "mutated" as Any),
+            ("activeRootRunnerGroupName", "mutated" as Any),
+            ("activeRootRequiredSuccessfulStepNames", ["mutated"] as Any),
+            ("reviewedMainJobID", 1 as Any),
+            ("reviewedMainJobName", "mutated" as Any),
+            ("reviewedMainJobURL", "https://example.invalid" as Any),
+            (
+                "reviewedMainJobStartedAt",
+                "1970-01-01T00:00:00Z" as Any
+            ),
+            (
+                "reviewedMainJobCompletedAt",
+                "1970-01-01T00:00:00Z" as Any
+            ),
+            ("reviewedMainJobStatus", "queued" as Any),
+            ("reviewedMainJobConclusion", "failure" as Any),
+            ("reviewedMainRunnerLabel", "mutated" as Any),
+            ("reviewedMainRunnerName", "mutated" as Any),
+            ("reviewedMainRunnerGroupName", "mutated" as Any),
+            (
+                "reviewedMainRequiredSuccessfulStepNames",
+                ["mutated"] as Any
+            ),
+            ("activeJobTransportDecodedUTF8LogByteCount", 1 as Any),
+            (
+                "activeJobTransportDecodedUTF8LogSHA256",
+                String(repeating: "0", count: 64) as Any
+            ),
+            (
+                "reviewedMainJobTransportDecodedUTF8LogByteCount",
+                1 as Any
+            ),
+            (
+                "reviewedMainJobTransportDecodedUTF8LogSHA256",
+                String(repeating: "0", count: 64) as Any
+            ),
+            ("decodedJobLogBindingKind", "mutated" as Any),
+            ("localGHCLIRunLogZIPByteCount", 1 as Any),
+            (
+                "localGHCLIRunLogZIPSHA256",
+                String(repeating: "0", count: 64) as Any
+            ),
+            ("runnerVersion", "mutated" as Any),
+            ("runnerProvisionerVersion", "mutated" as Any),
+            (
+                "runnerProvisionerCommit",
+                String(repeating: "0", count: 40) as Any
+            ),
+            ("activeRunnerImage", "mutated" as Any),
+            ("activeRunnerImageVersion", "mutated" as Any),
+            ("activeOperatingSystemVersion", "mutated" as Any),
+            ("activeOperatingSystemBuild", "mutated" as Any),
+            ("reviewedRunnerImage", "mutated" as Any),
+            ("reviewedRunnerImageVersion", "mutated" as Any),
+            ("reviewedOperatingSystemVersion", "mutated" as Any),
+            ("reviewedOperatingSystemBuild", "mutated" as Any),
+            ("reviewedArchitecture", "x86_64" as Any),
+            ("xcodeVersion", "mutated" as Any),
+            ("xcodeBuildVersion", "mutated" as Any),
+            ("swiftVersion", "mutated" as Any),
+            ("swiftTarget", "mutated" as Any),
+            ("macOSSDKVersion", "mutated" as Any),
+            ("swiftDriverVersion", "mutated" as Any),
+            ("exactMLXRepository", "mutated" as Any),
+            (
+                "exactMLXRevision",
+                String(repeating: "0", count: 40) as Any
+            ),
+            (
+                "exactMLXCoreRevision",
+                String(repeating: "0", count: 40) as Any
+            ),
+            (
+                "exactMLXCRevision",
+                String(repeating: "0", count: 40) as Any
+            ),
+            (
+                "exactSwiftNumericsRevision",
+                String(repeating: "0", count: 40) as Any
+            ),
+            ("generatedMetallibArtifactKind", "mutated" as Any),
+            ("generatedMetallibByteCount", 1 as Any),
+            (
+                "generatedMetallibSHA256",
+                String(repeating: "0", count: 64) as Any
+            ),
+            ("metallibArtifactRelativePath", "mutated" as Any),
+            ("metallibDeviceID", 1 as Any),
+            ("metallibInode", 1 as Any),
+            ("uniqueCandidateCountBeforeExecution", 1 as Any),
+            ("uniqueCandidateCountAfterExecution", 1 as Any),
+            ("existingCandidateCountBeforeExecution", 0 as Any),
+            ("existingCandidateCountAfterExecution", 0 as Any),
+            ("sourcePinnedLoaderIdentityClaimKind", "mutated" as Any),
+            ("metalDeviceEnumerationAPI", "mutated" as Any),
+            ("metalDefaultDeviceAPI", "mutated" as Any),
+            ("metalDeviceName", "mutated" as Any),
+            ("metalDeviceArchitectureName", "mutated" as Any),
+            ("metalDeviceRegistryID", 1 as Any),
+            ("enumeratedMetalDeviceCount", 2 as Any),
+            ("mlxDeviceIdentityClaimKind", "mutated" as Any),
+            ("focusedSourceContractTestCount", 30 as Any),
+            ("focusedSourceContractFailureCount", 1 as Any),
+            ("checkpointCompatibilityTestCount", 0 as Any),
+            ("checkpointCompatibilityFailureCount", 1 as Any),
+            ("frozenAuthorityTestCount", 10 as Any),
+            ("frozenCheckpointTestCount", 13 as Any),
+            ("frozenDecoderTestCount", 18 as Any),
+            ("frozenTotalTestCount", 43 as Any),
+            ("frozenFailureCount", 1 as Any),
+            ("frozenSkipCount", 1 as Any),
+            ("runtimeAuthorityTestName", "mutated" as Any),
+            ("runtimeAuthorityTestCount", 0 as Any),
+            ("runtimeAuthorityFailureCount", 1 as Any),
+            ("runtimeAuthoritySkipCount", 1 as Any),
+            ("receiptMarker", "mutated" as Any),
+            ("receiptJSONPayloadByteCount", 1 as Any),
+            (
+                "receiptJSONPayloadSHA256",
+                String(repeating: "0", count: 64) as Any
+            ),
+            ("receiptCount", 0 as Any),
+            ("receiptSchemaVersion", 2 as Any),
+            ("receiptEvidenceID", "mutated" as Any),
+            ("receiptAuthorityID", "mutated" as Any),
+            ("receiptPlanID", "mutated" as Any),
+            ("receiptExecutableName", "mutated" as Any),
+            ("receiptExecutableByteCount", 1 as Any),
+            (
+                "receiptExecutableSHA256",
+                String(repeating: "0", count: 64) as Any
+            ),
+            ("receiptExecutableDeviceID", 1 as Any),
+            ("receiptExecutableInode", 1 as Any),
+            ("receiptExecutableCaptureMethod", "mutated" as Any),
+            (
+                "receiptReleaseInstrumentationInspectedImageScope",
+                "mutated" as Any
+            ),
+            (
+                "receiptCompatibilityIdentityCanonicalByteCount",
+                1 as Any
+            ),
+            (
+                "receiptCompatibilityIdentitySHA256",
+                String(repeating: "0", count: 64) as Any
+            ),
+            ("receiptNativeConfigurationParameterCount", 1 as Any),
+            ("mlxInitializationDeviceType", "cpu" as Any),
+            ("mlxInitializationDeviceIndex", 1 as Any),
+            ("mlxInitializationOperation", "mutated" as Any),
+            ("mlxInitializationDType", "float16" as Any),
+            ("mlxInitializationShape", [1] as Any),
+            ("mlxInitializationLeftFloat32BitPatterns", [0] as Any),
+            ("mlxInitializationRightFloat32BitPatterns", [0] as Any),
+            ("mlxInitializationOutputFloat32BitPatterns", [0] as Any),
+            ("mlxInitializationEvaluationAPI", "mutated" as Any),
+            ("mlxInitializationReadbackAPI", "mutated" as Any),
+            ("status", "PASS" as Any),
+            ("orderedNextActions", ["train_now"] as Any),
+        ] {
+            var mutation = maintainedRuntimeObservationObject
+            XCTAssertNotNil(mutation[key])
+            mutation[key] = replacement
+            try assertMaintainedRuntimeObservationRejects(
+                mutation,
+                "runtime observation binding mutation must fail closed: \(key)"
+            )
+        }
     }
 
     func testCapturePreservesCanonicalSnapshotContract()

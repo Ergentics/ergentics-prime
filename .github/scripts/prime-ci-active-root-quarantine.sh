@@ -149,6 +149,9 @@ require_preserved_object \
     "Sources/PrimeCore/PrimeNativeDecoderMaintainedRuntimeComputeAuthority.swift" \
     "379c3e40ab24ae696c01da0b3f2116d0093cedb2"
 require_preserved_object \
+    "Sources/PrimeCore/PrimeNativeDecoderMaintainedRuntimeExecutionObservation.swift" \
+    "49e107f9fdd2ec5deb262d1885f015c6640eb33c"
+require_preserved_object \
     "Sources/PrimeNativeDecoderRuntime/PrimeNativeDecoderRuntime.swift" \
     "dd3ca76ba7799c6deb0012276967c07bee3644d0"
 require_preserved_object \
@@ -627,6 +630,7 @@ readonly decoder_checkpoint_authority_source="$prime_root/Sources/PrimeCore/Prim
 readonly decoder_checkpoint_v2_source="$prime_root/Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCompatibilityIdentityV2.swift"
 readonly decoder_checkpoint_v2_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderCheckpointCompatibilityV2Authority.swift"
 readonly decoder_runtime_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderMaintainedRuntimeComputeAuthority.swift"
+readonly decoder_runtime_execution_observation_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderMaintainedRuntimeExecutionObservation.swift"
 readonly decoder_runtime_source="$prime_root/Sources/PrimeNativeDecoderRuntime/PrimeNativeDecoderRuntime.swift"
 readonly decoder_metal_repair_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderMetalRepairAuthority.swift"
 readonly decoder_metal_execution_observation_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderMetalExecutionObservation.swift"
@@ -709,6 +713,9 @@ readonly decoder_runtime_closure_test="$decoder_runtime_closure_validation_root/
 [[ -f "$decoder_runtime_authority_source" \
     && ! -L "$decoder_runtime_authority_source" ]] ||
     die "PrimeNativeDecoder maintained-runtime authority is missing or linked"
+[[ -f "$decoder_runtime_execution_observation_source" \
+    && ! -L "$decoder_runtime_execution_observation_source" ]] ||
+    die "PrimeNativeDecoder maintained-runtime execution observation is missing or linked"
 [[ -f "$decoder_runtime_source" && ! -L "$decoder_runtime_source" ]] ||
     die "PrimeNativeDecoder runtime source is missing or linked"
 [[ -f "$decoder_runtime_closure_validation_manifest" \
@@ -759,6 +766,7 @@ for v2_regular_source in \
 done
 for runtime_closure_regular_source in \
     'Sources/PrimeCore/PrimeNativeDecoderMaintainedRuntimeComputeAuthority.swift' \
+    'Sources/PrimeCore/PrimeNativeDecoderMaintainedRuntimeExecutionObservation.swift' \
     'Sources/PrimeNativeDecoderRuntime/PrimeNativeDecoderRuntime.swift' \
     'Tests/PrimeNativeDecoderRuntimeClosureValidation/Package.swift' \
     'Tests/PrimeNativeDecoderRuntimeClosureValidation/Package.resolved' \
@@ -811,6 +819,12 @@ assert_runtime_closure_source_identity \
     '379c3e40ab24ae696c01da0b3f2116d0093cedb2' \
     '60844' \
     'f53a7a055058fbf528d7a96b4111c673fa3bc2dbd2ae10bf5129aa8b828a2445'
+assert_runtime_closure_source_identity \
+    'Sources/PrimeCore/PrimeNativeDecoderMaintainedRuntimeExecutionObservation.swift' \
+    '100644' \
+    '49e107f9fdd2ec5deb262d1885f015c6640eb33c' \
+    '47473' \
+    'ecbe1cbacb5da829e867bb1097cf2542eff346ae293488b49deb2f9287edb9c0'
 assert_runtime_closure_source_identity \
     'Sources/PrimeNativeDecoderRuntime/PrimeNativeDecoderRuntime.swift' \
     '100644' \
@@ -1011,6 +1025,7 @@ swiftc -frontend -parse "$decoder_checkpoint_v2_source"
 swiftc -frontend -parse "$decoder_checkpoint_authority_source"
 swiftc -frontend -parse "$decoder_checkpoint_v2_authority_source"
 swiftc -frontend -parse "$decoder_runtime_authority_source"
+swiftc -frontend -parse "$decoder_runtime_execution_observation_source"
 swiftc -frontend -parse "$decoder_runtime_source"
 swiftc -frontend -parse "$decoder_metal_repair_authority_source"
 swiftc -frontend -parse "$decoder_metal_execution_observation_source"
@@ -1052,6 +1067,9 @@ readonly expected_mlxllm_imports=$'Sources/PrimeGPUCalibration/PrimeGPUCalibrati
 [[ "$(awk '/^import / {print $2}' "$decoder_runtime_authority_source" | paste -sd, -)" \
     == "Foundation" ]] ||
     die "PrimeNativeDecoder maintained-runtime authority imports changed"
+[[ "$(awk '/^import / {print $2}' "$decoder_runtime_execution_observation_source" | paste -sd, -)" \
+    == "Foundation" ]] ||
+    die "PrimeNativeDecoder maintained-runtime execution observation imports changed"
 [[ "$(awk '/^import / {print $2}' "$decoder_runtime_source" | paste -sd, -)" \
     == "CoreGraphics,Darwin,Foundation,Metal,MLX,PrimeCore,PrimeNativeDecoder,PrimeNativeDecoderCheckpoint" ]] ||
     die "PrimeNativeDecoder runtime imports changed"
@@ -1110,6 +1128,7 @@ for forbidden_runtime_closure_source_value in \
     'execve('; do
     if grep -Fq -- "$forbidden_runtime_closure_source_value" \
         "$decoder_runtime_authority_source" \
+        "$decoder_runtime_execution_observation_source" \
         "$decoder_runtime_source" \
         "$decoder_runtime_closure_probe" \
         "$decoder_runtime_closure_test"; then
@@ -1119,6 +1138,7 @@ done
 if grep -Eq -- \
     '(^|[^[:alnum:]_])Process([^[:alnum:]_]|$)' \
     "$decoder_runtime_authority_source" \
+    "$decoder_runtime_execution_observation_source" \
     "$decoder_runtime_source" \
     "$decoder_runtime_closure_probe" \
     "$decoder_runtime_closure_test"; then

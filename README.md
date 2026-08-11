@@ -50,9 +50,18 @@ reject loader and instrumentation overrides, bind one caller-expected
 `default.metallib` through the pinned loader order and an exclusive-candidate
 check, hold the Metal lease, and complete an exact FP32 2x2 GPU matmul. It does
 not allocate the decoder, run a forward pass, or perform checkpoint I/O. The
-caller expectation is neither artifact provenance nor admission, and the new
-closure remains execution-unobserved until an exact reviewed-main run is
-recorded by a separate append-only observation.
+caller expectation is neither artifact provenance nor admission.
+`PrimeNativeDecoderMaintainedRuntimeExecutionObservationV1.frozenV1` now
+binds the exact reviewed-main merge and GitHub workflow execution of that
+closure. The hosted `macos-26` lane rebuilt the pinned dependency closure,
+reused its one same-job fresh `default.metallib` (6,292,684 bytes; SHA-256
+`b7ea3fb0e851f4e2417f3e82be63deca8df627daf480cf04cc1b2b70195d7b87`),
+passed the frozen 44-test decoder suite, and completed the Release-process
+authority test and exact FP32 2x2 GPU matmul receipt on an
+`Apple Paravirtual device`. This establishes the bounded maintained MLX
+initialization and source-pinned exclusive-candidate inference only; it does
+not independently identify the metallib MLX loaded, allocate or execute the
+decoder, perform checkpoint I/O, train, or grant product authority.
 The exact implemented boundary and remaining replacement path are recorded in
 [`docs/PRIME-NATIVE-DECODER-REPLACEMENT-2026-08-09.md`](docs/PRIME-NATIVE-DECODER-REPLACEMENT-2026-08-09.md).
 
