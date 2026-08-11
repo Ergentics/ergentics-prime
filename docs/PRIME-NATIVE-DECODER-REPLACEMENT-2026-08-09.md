@@ -38,22 +38,22 @@ it. The bounded execution observation below separately records one
 random-initialized allocation and forward.
 
 The separate library-only `PrimeNativeDecoderCheckpoint` target depends
-exactly on `PrimeCore`, `PrimeNativeDecoder`, `MLX`, and `MLXNN`. Its public
-surface is declarative: an exact Native-300M/Prime-byte-512 checkpoint
-compatibility identity, full ordered parameter path/shape/FP32/count catalog,
-weights-only manifest schema, canonical little-endian logical tensor hashing,
-and explicit state exclusions. Executable save/load mechanics remain internal
-and accept only the exact tiny synthetic configuration through caller-owned
-regular file descriptors. The loader size-caps the descriptor before MLX,
-requires exact canonical metadata and tensor projections, and restores only a
-fresh decoder after complete preflight.
+exactly on `PrimeCore`, `PrimeNativeDecoder`, `MLX`, and `MLXNN`. Its frozen V1
+surface supplies the historical compatibility identity, ordered
+path/shape/FP32/count catalog, weights-only manifest, logical tensor hashes,
+and explicit state exclusions. V1 executable save/load mechanics remain
+internal and accept only the exact tiny synthetic configuration through
+caller-owned regular file descriptors. That V1 writer truncates before save
+and may leave its borrowed file empty or partial on failure, so it is not the
+native-profile publication boundary and remains byte-frozen.
 
-This checkpoint slice does not expose native-profile checkpoint write/load.
-It owns no path, closes no caller descriptor, and claims no atomic replace,
-fsync durability, failed-write recovery, container hash, retained artifact,
-artifact provenance, or checkpoint admission. A pinned MLX descriptor write
-truncates the borrowed file and may leave it empty or partial on failure; those
-bytes remain outside any accepted-artifact boundary.
+The additive V2 surface described below does expose exact native-profile
+checkpoint write/load, but only through `PrimeArtifactRoot`; it neither
+promotes nor calls V1's private descriptor codec. V2 implements exclusive
+atomic-creation and synchronization mechanics, but this slice does not observe
+their Native-300M execution and does not establish atomic replacement,
+transparent failed-write recovery, retained artifact provenance, or checkpoint
+admission.
 
 ## Authority ceiling
 
@@ -90,6 +90,24 @@ binding. V1 and V2 relabeling is rejected in both directions, and the V1
 manifest rejects a V2 identity. This is weight-topology compatibility only;
 behavioral parity with the historical source and existing artifact
 compatibility remain unestablished.
+
+`PrimeNativeDecoderCheckpointV2ContainerIOAuthorityPlanV1.frozenV1` is the
+next append-only source authority. It defines an exact V2 weights-only
+manifest, per-tensor logical Float32 hashes, and an external binding that
+combines the canonical manifest identity with a whole-container
+`PrimeArtifactBinding`. The codec accepts only a held `PrimeArtifactRoot` and
+a descriptor-relative name. Its writer prevalidates the exact Native-300M
+catalog, generates beneath an exclusive hidden descriptor, strictly checks the
+raw safetensors header and extents, and reloads and materializes a fresh model
+before artifact-root sealing, synchronization, no-replace publication, and
+parent synchronization. Its loader requires the caller-supplied external
+binding, holds the verified artifact descriptor across full materialization,
+and returns a newly restored decoder after exact reinspection. There is no
+public raw-descriptor, URL, discover-and-trust, replacement, or in-place model
+mutation API, and embedded metadata cannot nominate its own expected
+whole-container hash. The two exact Native-300M write/load calls are authorized
+but are not executed by this source slice. No checkpoint is available,
+retained, admitted, or granted provenance by this design.
 
 The Metal gate also binds a separate synthetic CI-mechanics policy that starts
 without any inherited `MLX_`, `DYLD_`, or `LLVM_PROFILE_` override and sets
@@ -195,8 +213,8 @@ deterministic-replay claim.
 The successor establishes exact fixed-input tokenizer sequence mechanics and
 the one tokenizer-to-random-initialized-Native-300M interface witness. It does
 not establish broad model functional or semantic compatibility, model quality,
-padding/ragged-batch behavior, KV-cache or generation behavior, checkpoint
-manifest/codec/I/O, artifact provenance or admission, backward/training/resume,
+padding/ragged-batch behavior, KV-cache or generation behavior, checkpoint I/O
+execution or artifact provenance/admission, backward/training/resume,
 candidate/trial/canary/quantization, product use, artifact/product publication
 authority, independently observed loaded-metallib identity, or physical-GPU
 identity.
@@ -210,8 +228,8 @@ identity, admit the narrowly scoped maintained-runtime compute policy, and
 observe the bounded initialization closure at the exact hosted merge. The
 latest append-only successor now observes the exact
 tokenizer-to-random-initialized-Native-300M full-prefix forward witness. These
-slices do not define a V2 manifest or codec, establish a checkpoint artifact
-or native-profile I/O, establish broad model functional or semantic
+execution slices do not establish a checkpoint artifact or observed
+native-profile I/O, establish broad model functional or semantic
 compatibility, train, authorize a trial, replace a canary, quantize, select
 product use, or publish. The result remains `ABSTAIN` at those boundaries.
 
@@ -246,9 +264,16 @@ launchers, existing validation packages, or the 44-test inventory.
 The append-only execution observation now binds the exact reviewed-main merge,
 environment, same-job metallib metadata, catalog, evaluation, and output
 receipt. No rerun of that completed Stage-1 witness is required to begin the
-next bounded design;
-the next boundary is a separately authorized V2 checkpoint
-manifest/container/I/O contract with no artifact admission implied.
+next bounded design.
+
+A fifth isolated one-test package now validates the V2 container/I/O authority,
+canonical manifest and external-binding schemas, exhaustive Boolean and
+critical scalar mutations, and the exact source capability boundary. It does
+not call the codec, allocate Native-300M, create a checkpoint file, or alter the
+frozen 44-test launcher. The next boundary is a separately approved exact
+clean hosted one-write/one-load execution followed by an append-only
+observation; neither the source contract nor that execution alone admits a
+checkpoint artifact.
 
 The first external live-Metal run of exact head `84504dc` executed all 41 tests
 with no skips but reported 306 assertions. Disabling pinned-MLX TF32 removed
@@ -336,8 +361,9 @@ dependency.
 
 The remaining replacement order is:
 
-1. define bounded V2 native-profile checkpoint manifest, container, codec, and
-   I/O mechanics under separate authority without admitting checkpoint bytes;
+1. separately approve and run one exact clean Native-300M V2 checkpoint write
+   and load, then append its execution-local observation without artifact
+   admission;
 2. define generic Prime-owned train/evaluate surfaces and persist exact
    optimizer, RNG, and data-cursor state for trajectory-exact resume;
 3. separately authorize bounded training, then produce and bind a non-fixture
