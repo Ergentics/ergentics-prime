@@ -348,6 +348,105 @@ provenance or admission, broad model functional or semantic compatibility,
 training, trial, canary, quantization, product use, or publication. The result
 remains `ABSTAIN` at those boundaries.
 
+### Seed-42 consequence and trajectory-resume design
+
+Seed 42 did not complete its single authorized checkpoint-I/O execution. That
+created a permanent evidence gap, not loss of trained model state. Source-pinned
+control flow establishes that one ephemeral random-initialized V2 write
+returned, so the in-process artifact-root publication and complete external
+binding are source-inferred. Execution stopped at the first post-publication
+root guard before the binding fields or container hash were emitted or
+independently observed. It never reached a public load, receipt begin or end
+marker, parent receipt validation, or observed literal supervisor cleanup. The
+run uploaded zero Actions artifacts and retained no durable bytes, so there is
+no seed-42 checkpoint to admit, recover, or use as a training parent.
+
+The one-shot authority was consumed by that attempt. Repeating the command would
+have contradicted the frozen first-attempt contract and blurred failure evidence
+with a retry, so the correction required append-only design, test, launcher,
+observation, review, and hosted-execution work. The separate seed-43 authority
+used a distinct seed-43 random initialization and a repaired definition of
+directory continuity. It completed one public write and fresh load and then
+deleted the only leaf and root. That outcome validates the repaired mechanics
+but neither completes seed 42 nor establishes byte inequality or byte
+equivalence with the unavailable seed-42 artifact. It is deliberately ephemeral
+and is not an available parent checkpoint. Any future training arc must
+establish its own exact initial state and cannot cite either run as retained
+resume state.
+
+The dependency-free
+`PrimeNativeDecoderTrajectoryExactResumeDesignAuthorityV1.frozenV1` is the
+immediate successor. It is a schema and sequencing authority, not an execution
+authority. It keeps the existing V2 checkpoint exactly weights-only. A future
+trajectory checkpoint must instead use a separate envelope with externally
+bound immutable leaves for exact V2 weights, optimizer state, and canonical
+control state; the exclusive canonical commit manifest is published last and
+is the only commit point. Uncommitted or partial leaves are non-authoritative
+and cannot be discovered and promoted by a loader.
+
+The frozen design records these minimum exact-state requirements:
+
+- the exact model/configuration identity and 1,084,428,288 logical FP32 model
+  bytes already bound by V2;
+- AdamW first and second moments for all 218 model paths: 436 path-bound FP32
+  tensors and 2,168,856,576 logical bytes, plus exact hyperparameter bit
+  patterns, schedule identity/current learning rate, and optimizer step;
+- Prime-owned, domain-separated model, data-order, augmentation, and evaluation
+  key/counter streams, with no implicit global random state;
+- exact corpus, tokenizer, split, curriculum, row-order/permutation, batching,
+  masking, and next-unconsumed batch identity in the data cursor; and
+- a post-update checked-evaluation snapshot boundary where
+  `accumulationPhase == 0` and no pending gradients, prefetch, or KV cache
+  exists.
+
+The pinned public MLX `RandomState` can expose `innerState()` but provides no
+dedicated, supported typed exact-state importer. A public underscored
+`MLXArray._updateInternal` mutation path exists, but it is an implementation
+detail and is neither a stable nor an authorized resume contract. A future
+exact-resume implementation therefore cannot use that path to label implicit
+MLX randomness restorable; it must use the explicit Prime-owned streams
+required above or gain a separately reviewed pinned typed import API. Likewise,
+exact Metal trajectory
+replay is not inferred from deterministic seeds: repeated same-device
+uninterrupted-versus-resumed assays remain necessary because repeated-token
+embedding gradients can reach atomic scatter accumulation. Native-300M resource
+sufficiency also remains unproved. The minimum committed model-plus-moment state
+alone is 3,253,284,864 bytes before headers, manifests, gradients, graphs, and
+temporary buffers.
+
+The predecessor embedded source identity remains a repository-only closure of
+414 files, 413 records, 132 directories, and 83,251 canonical bytes. It covers
+every repository input used by this design but does not contain or authenticate
+external dependency bytes. The design therefore records twelve separate exact
+path/mode/blob/byte-count/SHA-256 bindings for the pinned MLX Swift, MLX C, and
+MLX sources supporting its optimizer, RNG, protocol/array underscored-mutation,
+gather-VJP, and Metal-scatter claims. Two mode-160000 relationships separately
+bind the root MLX Swift revision
+`d37885a278f1c37484a94d0f401a418735e66519` to MLX revision
+`ce45c52505c8158ea48d2a54e8caae05efd86bfe` and MLX C revision
+`0726ca922fc902c4c61ef9c27d94132be418e945`. This arc freezes those declared
+inputs and tests their exact shape; it does not perform a fresh external
+checkout or reclassify them as members of the embedded repository closure.
+
+The authorized stage order is:
+
+1. `trajectory_schema_and_pure_contract_v1` — this declaration and its one pure
+   mutation test only;
+2. `tiny_cpu_train_evaluate_mechanics_v1`;
+3. `tiny_cpu_explicit_rng_cursor_resume_v1`;
+4. `tiny_durable_multileaf_commit_fault_injection_v1`;
+5. `tiny_repeated_metal_trajectory_determinism_assay_v1`;
+6. `native300m_resource_only_one_step_probe_v1`;
+7. `native300m_trajectory_checkpoint_execution_v1`; and
+8. `retained_trajectory_provenance_and_admission_v1`.
+
+Only stage 1 is declared now. It introduces no training target or dependency,
+no train/evaluate implementation, no MLX or optimizer execution, no checkpoint
+I/O or artifact root, no Native-300M allocation, no workflow launcher or model
+execution, and no timeout or checkout-depth expansion. Training, exact resume,
+retention, provenance, admission, trial, canary, product, and publication
+authority all remain false.
+
 ## Verification and next slices
 
 The isolated validation package compiles against the exact first-party MLX
@@ -420,6 +519,14 @@ test. The focused step now requires exactly two tests with no skips for this
 repair package. The live repair command is absent, both checkouts use depth one,
 both jobs use 45-minute limits, and the only reviewed live launchers are the
 frozen Metal, maintained-runtime, and tokenizer sequence.
+
+The trajectory-resume design authority is compiled and exercised by one pure
+`PrimeCoreTests` mutation test in the existing focused source-contract command.
+It adds no validation package, dependency checkout, workflow job or step, model
+allocation, checkpoint I/O, or live launcher. The active-root parser and gate
+pin the exact source and test identities while preserving two jobs, five steps
+per job, 45-minute timeouts, depth-one checkouts, and the reviewed live order
+Metal, maintained runtime, then tokenizer compatibility.
 
 The first external live-Metal run of exact head `84504dc` executed all 41 tests
 with no skips but reported 306 assertions. Disabling pinned-MLX TF32 removed
@@ -507,15 +614,19 @@ dependency.
 
 The remaining replacement order is:
 
-1. design generic Prime-owned train/evaluate surfaces and exact optimizer, RNG,
-   and data-cursor persistence for trajectory-exact resume;
-2. separately authorize bounded training, then produce and bind a non-fixture
-   checkpoint with exact training-state and artifact provenance;
-3. separately authorize and run a bounded candidate canary/trial;
-4. migrate the read-only PMHNP canary consumer to the Prime-owned interface and
-   remove its active Llama factory after single-MLX-graph reconciliation;
-5. address CoreML/NeuralKit product export only after accepted checkpoint and
+1. execute the separately authorized tiny CPU train/evaluate and explicit
+   RNG/cursor stages;
+2. prove tiny durable multi-leaf commit behavior and repeated tiny Metal
+   trajectory determinism;
+3. run the separately authorized Native-300M resource-only probe, then decide
+   whether Native-300M trajectory-checkpoint execution is supportable;
+4. separately establish retained trajectory provenance/admission and only then
+   authorize bounded training that can produce a non-fixture checkpoint;
+5. separately authorize and run a bounded candidate canary/trial;
+6. migrate the read-only PMHNP canary consumer to the Prime-owned interface and
+   remove its active Llama factory after single-MLX-graph reconciliation; and
+7. address CoreML/NeuralKit product export only after accepted checkpoint and
    parity evidence.
 
 No training, PMHNP write, or product decision is part of the checkpoint
-observation or the next design arc.
+observation or the current design-authority arc.

@@ -531,6 +531,10 @@ readonly tokenizer_compatibility_workflow_line="$(grep -nFx -- \
     && "$tokenizer_compatibility_workflow_line" \
         -eq $((runtime_closure_workflow_line + 1)) ]] ||
     die "trusted-main workflow does not run the three retained decoder gates in exact order"
+[[ "$(grep -Fc -- \
+    '          bash .github/scripts/prime-ci-native-decoder-' \
+    "$workflow_path")" == "3" ]] ||
+    die "trusted-main workflow gained an unreviewed decoder launcher"
 ! grep -Fq -- \
     '          bash .github/scripts/prime-ci-native-decoder-checkpoint-v2-io.sh' \
     "$workflow_path" ||
@@ -595,6 +599,19 @@ grep -Fq -- 'Executed 1 test, with 0 failures' "$workflow_path" ||
         'Executed 2 tests, with 0 failures' \
         "$workflow_path")" == "2" ]] ||
     die "trusted-main workflow does not run and bind the exact two-test root-identity repair pure suite"
+readonly trajectory_exact_resume_design_filter='PrimeCoreTests.PrimeNativeDecoderTrajectoryExactResumeDesignAuthorityTests/testFrozenV1CanonicalCodableMutationAndSourceBoundary'
+[[ "$(grep -Fc -- "$trajectory_exact_resume_design_filter" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        'Sources/PrimeCore/PrimeNativeDecoderTrajectoryExactResumeDesignAuthority.swift' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        'Tests/PrimeCoreTests/PrimeNativeDecoderTrajectoryExactResumeDesignAuthorityTests.swift' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        "          grep -Fq 'PrimeNativeDecoderTrajectoryExactResumeDesignAuthorityTests' \\" \
+        "$workflow_path")" == "1" ]] ||
+    die "hosted workflow does not parse and run the exact trajectory-resume design contract"
 for required_metal_gate_value in \
     'MTLCreateSystemDefaultDevice' \
     '-target Cmlx' \
@@ -1424,6 +1441,8 @@ readonly decoder_checkpoint_v2_io_execution_evidence_source="$prime_root/Sources
 readonly decoder_checkpoint_v2_io_root_identity_repair_execution_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderCheckpointV2ContainerIORootIdentityRepairExecutionAuthority.swift"
 readonly decoder_checkpoint_v2_io_root_identity_repair_execution_evidence_source="$prime_root/Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV2ContainerIORootIdentityRepairExecutionEvidence.swift"
 readonly decoder_checkpoint_v2_io_root_identity_repair_execution_observation_source="$prime_root/Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV2ContainerIORootIdentityRepairExecutionObservation.swift"
+readonly decoder_trajectory_exact_resume_design_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderTrajectoryExactResumeDesignAuthority.swift"
+readonly decoder_trajectory_exact_resume_design_authority_test="$prime_root/Tests/PrimeCoreTests/PrimeNativeDecoderTrajectoryExactResumeDesignAuthorityTests.swift"
 readonly decoder_runtime_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderMaintainedRuntimeComputeAuthority.swift"
 readonly decoder_runtime_execution_observation_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderMaintainedRuntimeExecutionObservation.swift"
 readonly decoder_runtime_source="$prime_root/Sources/PrimeNativeDecoderRuntime/PrimeNativeDecoderRuntime.swift"
@@ -1571,6 +1590,12 @@ readonly decoder_tokenizer_compatibility_test="$decoder_tokenizer_compatibility_
 [[ -f "$decoder_checkpoint_v2_io_root_identity_repair_execution_observation_source" \
     && ! -L "$decoder_checkpoint_v2_io_root_identity_repair_execution_observation_source" ]] ||
     die "PrimeNativeDecoderCheckpoint V2 I/O root-identity repair observation is missing or linked"
+[[ -f "$decoder_trajectory_exact_resume_design_authority_source" \
+    && ! -L "$decoder_trajectory_exact_resume_design_authority_source" ]] ||
+    die "PrimeNativeDecoder trajectory exact-resume design authority is missing or linked"
+[[ -f "$decoder_trajectory_exact_resume_design_authority_test" \
+    && ! -L "$decoder_trajectory_exact_resume_design_authority_test" ]] ||
+    die "PrimeNativeDecoder trajectory exact-resume design test is missing or linked"
 [[ -f "$decoder_checkpoint_v2_validation_test" \
     && ! -L "$decoder_checkpoint_v2_validation_test" ]] ||
     die "PrimeNativeDecoderCheckpoint V2 validation test is missing or linked"
@@ -2117,6 +2142,43 @@ assert_tokenizer_compatibility_source_identity \
     'b12d52802e7f24be7a905ae0cbceeed945fcc11a' \
     '33174' \
     '0c70d3cd538e297cf629707a51bcc8ede87b42e488369ffd321ac3c44062f06a'
+
+assert_trajectory_exact_resume_design_source_identity() {
+    local relative_path="$1"
+    local expected_mode="$2"
+    local expected_blob="$3"
+    local expected_byte_count="$4"
+    local expected_sha256="$5"
+    local source_path="$prime_root/$relative_path"
+
+    [[ -f "$source_path" && ! -L "$source_path" ]] ||
+        die "trajectory exact-resume design source is missing or linked: $relative_path"
+    [[ "$(git -C "$prime_root" ls-files -s -- \
+        "$relative_path" | awk '{print $1}')" == "$expected_mode" ]] ||
+        die "trajectory exact-resume design source mode changed: $relative_path"
+    [[ "$(git -C "$prime_root" hash-object "$source_path")" \
+        == "$expected_blob" ]] ||
+        die "trajectory exact-resume design source blob changed: $relative_path"
+    [[ "$(wc -c < "$source_path" | awk '{print $1}')" \
+        == "$expected_byte_count" ]] ||
+        die "trajectory exact-resume design source byte count changed: $relative_path"
+    [[ "$(shasum -a 256 "$source_path" | awk '{print $1}')" \
+        == "$expected_sha256" ]] ||
+        die "trajectory exact-resume design source SHA-256 changed: $relative_path"
+}
+
+assert_trajectory_exact_resume_design_source_identity \
+    'Sources/PrimeCore/PrimeNativeDecoderTrajectoryExactResumeDesignAuthority.swift' \
+    '100644' \
+    '20bcbf28ddcfa9a6339510d53e81da02ada9953e' \
+    '77582' \
+    '92194cb171eb1219393008c1dcd3b1c7dfcb2fd9232f4149391dfc428a5e7969'
+assert_trajectory_exact_resume_design_source_identity \
+    'Tests/PrimeCoreTests/PrimeNativeDecoderTrajectoryExactResumeDesignAuthorityTests.swift' \
+    '100644' \
+    '186dc546c7f889f28d700322ac06b7b8a8a4c252' \
+    '26700' \
+    '1fc9d8a4dde9e5e4192de9c248076f218ea38094eb68c335ade6de50862eb58b'
 [[ "$(wc -c < "$decoder_checkpoint_v2_authority_source" | awk '{print $1}')" \
     == "29660" ]] ||
     die "PrimeNativeDecoderCheckpoint V2 authority byte count changed"
@@ -4028,6 +4090,141 @@ for forbidden_v2_identity_capability in \
         die "PrimeNativeDecoderCheckpoint V2 identity owns forbidden capability: $forbidden_v2_identity_capability"
     fi
 done
+
+[[ "$(grep -Ec -- '^import ' \
+        "$decoder_trajectory_exact_resume_design_authority_source")" == "1" \
+    && "$(grep -Fxc -- 'import Foundation' \
+        "$decoder_trajectory_exact_resume_design_authority_source")" == "1" ]] ||
+    die "trajectory exact-resume design authority gained a dependency import"
+[[ "$(grep -Ec -- '^[[:space:]]+func test' \
+        "$decoder_trajectory_exact_resume_design_authority_test")" == "1" ]] ||
+    die "trajectory exact-resume design test count changed"
+
+for required_trajectory_exact_resume_design_value in \
+    'public struct PrimeNativeDecoderTrajectoryExactResumeDesignAuthorityV1:' \
+    'public static let frozenV1: Self = {' \
+    'public func validateExactV1() throws {' \
+    'currentArc: "trajectory_schema_and_pure_contract_v1"' \
+    'predecessorSourceClosureCoversEveryRepositoryInputSourceUsedByThisDesign:' \
+    'seed42PublicWriteReturnSourceInferred: true' \
+    'seed42PublicWriteCompletionCountSourceInferred: 1' \
+    'seed42PublicLoadCompletionCountSourceInferred: 0' \
+    'seed42ExternalBindingFieldsIndependentlyBound: false' \
+    'seed42OriginalArtifactRecoverable: false' \
+    'seed42RegenerationWouldBeNewExecutionNotRecovery: true' \
+    'seed43VerifiedArtifactDeleted: true' \
+    'seed43ArtifactAvailableBeyondProcess: false' \
+    'seed43OriginalArtifactRecoverable: false' \
+    'seed43ExternalBindingCanBeUsedAsAvailableParent: false' \
+    '"model_parameters_only_no_optimizer_rng_cursor_or_cache"' \
+    '"tiny_cpu_mechanics_only_not_native300m_training"' \
+    'totalMomentTensorCount: 436' \
+    'totalMomentLogicalByteCount: 2_168_856_576' \
+    'dedicatedSupportedTypedExactStateImporterAvailable: false' \
+    'innerStateArrayContainerIsDirectStateReference: false' \
+    'innerStateElementsCanMutateStateViaUnderscoredUpdate: true' \
+    'publicUnderscoredMLXArrayUpdateInternalAvailable: true' \
+    'underscoredMutationDocumentedAsImplementationDetail: true' \
+    'underscoredMutationAuthorizedForTrajectoryResume: false' \
+    'underscoredMutationReliabilityEstablishedForTrajectoryResume:' \
+    'primeOwnedExplicitKeyCounterRequired: true' \
+    'accumulationPhaseAtSnapshot: 0' \
+    'pendingGradientTensorCountAtSnapshot: 0' \
+    'pendingPrefetchItemCountAtSnapshot: 0' \
+    'kvCacheEntryCountAtSnapshot: 0' \
+    'finalCommitManifestPublishedLast: true' \
+    'finalCommitManifestIsExclusiveCommitPoint: true' \
+    'artifactRootProvidesAtomicMultiFileTransaction: false' \
+    'partialPrecommitLeavesAreAuthoritative: false' \
+    'discoverAndTrustLoadAuthorized: false' \
+    'sameDeviceRepeatedUninterruptedAndResumedTrialsRequired:' \
+    'exactMetalGradientBytesEstablished: false' \
+    'minimumCommittedTensorStateByteCount: 3_253_284_864' \
+    'externalDependencySourcesIncludedInRepositoryClosure: false' \
+    'everyExternalDependencyClaimUsedByThisDesignHasExactSourceBinding:' \
+    'path: "Source/MLX/State.swift"' \
+    'path: "Source/MLX/Protocols.swift"' \
+    'path: "Source/MLX/MLXArray.swift"' \
+    'path: "Source/MLXOptimizers/Optimizers.swift"' \
+    'path: "mlx/primitives.cpp"' \
+    '"mlx/backend/metal/kernels/indexing/scatter_axis.h"' \
+    'childPath: "Source/Cmlx/mlx"' \
+    'childPath: "Source/Cmlx/mlx-c"' \
+    'allowedSourceImports: ["Foundation"]' \
+    'liveLauncherAuthorized: false' \
+    'trainingExecutionObserved: false' \
+    'publicationAuthorized: false' \
+    'ABSTAIN_design_only_no_usable_seed42_or_seed43_parent_no_training_io_retention_provenance_admission_or_exact_metal_resume_claim'; do
+    grep -Fq -- "$required_trajectory_exact_resume_design_value" \
+        "$decoder_trajectory_exact_resume_design_authority_source" ||
+        die "trajectory exact-resume design authority lost: $required_trajectory_exact_resume_design_value"
+done
+
+for required_trajectory_exact_resume_stage in \
+    'trajectory_schema_and_pure_contract_v1' \
+    'tiny_cpu_train_evaluate_mechanics_v1' \
+    'tiny_cpu_explicit_rng_cursor_resume_v1' \
+    'tiny_durable_multileaf_commit_fault_injection_v1' \
+    'tiny_repeated_metal_trajectory_determinism_assay_v1' \
+    'native300m_resource_only_one_step_probe_v1' \
+    'native300m_trajectory_checkpoint_execution_v1' \
+    'retained_trajectory_provenance_and_admission_v1'; do
+    grep -Fq -- "$required_trajectory_exact_resume_stage" \
+        "$decoder_trajectory_exact_resume_design_authority_source" ||
+        die "trajectory exact-resume stage order lost: $required_trajectory_exact_resume_stage"
+done
+
+for required_trajectory_exact_resume_test_value in \
+    'func testFrozenV1CanonicalCodableMutationAndSourceBoundary() throws {' \
+    'XCTAssertNoThrow(try authority.validateExactV1())' \
+    'for path in valuePaths {' \
+    'for path in fieldPaths {' \
+    'XCTAssertEqual(dependencyBindings.count, 12)' \
+    'XCTAssertEqual(dependencyRelationships.count, 2)' \
+    'executionAndAdmissionCeilings(authority).allSatisfy { !$0 }' \
+    'ccd5e2acdd8fb5a522331ee843f0e212e842453e2dcacd263702bc9951436589'; do
+    grep -Fq -- "$required_trajectory_exact_resume_test_value" \
+        "$decoder_trajectory_exact_resume_design_authority_test" ||
+        die "trajectory exact-resume pure mutation test lost: $required_trajectory_exact_resume_test_value"
+done
+[[ "$(grep -Fc -- 'gitMode: "160000"' \
+        "$decoder_trajectory_exact_resume_design_authority_source")" == "4" \
+    && "$(grep -Fc -- \
+        'PrimeNativeDecoderTrajectoryExternalDependencySourceBindingV1(' \
+        "$decoder_trajectory_exact_resume_design_authority_source")" == "12" ]] ||
+    die "trajectory exact-resume external dependency binding inventory changed"
+
+for forbidden_trajectory_exact_resume_execution_capability in \
+    'import MLX' \
+    'import MLXNN' \
+    'import MLXOptimizers' \
+    'MLXArray(' \
+    ': MLXArray' \
+    '-> MLXArray' \
+    '[MLXArray]' \
+    'PrimeNativeGQADecoder.make(' \
+    'PrimeArtifactRoot(' \
+    'writeNative300MByte512(' \
+    'loadNative300MByte512(' \
+    '.forward(' \
+    'checkedEval(' \
+    'AdamW(' \
+    '._updateInternal(' \
+    'FileManager' \
+    'FileHandle' \
+    'Data(contentsOf:' \
+    'String(contentsOf:' \
+    'URLSession' \
+    'posix_spawn' \
+    'execve('; do
+    if grep -Fq -- "$forbidden_trajectory_exact_resume_execution_capability" \
+        "$decoder_trajectory_exact_resume_design_authority_source" \
+        "$decoder_trajectory_exact_resume_design_authority_test"; then
+        die "trajectory exact-resume design gained execution capability: $forbidden_trajectory_exact_resume_execution_capability"
+    fi
+done
+! grep -Fq -- 'name: "PrimeNativeDecoderTraining"' "$root_manifest" ||
+    die "trajectory exact-resume design arc added the future training target"
 
 [[ -z "$(git -C "$prime_root" status --porcelain=v1 --untracked-files=all)" ]] ||
     die "Prime checkout changed during metadata validation"
