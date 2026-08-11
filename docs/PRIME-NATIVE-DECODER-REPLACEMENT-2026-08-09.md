@@ -109,6 +109,23 @@ whole-container hash. The two exact Native-300M write/load calls are authorized
 but are not executed by this source slice. No checkpoint is available,
 retained, admitted, or granted provenance by this design.
 
+`PrimeNativeDecoderCheckpointV2ContainerIOExecutionAuthorityPlanV1.frozenV1`
+defines the separate one-shot execution boundary. It permits only the
+first-attempt, two-parent direct successor of the exact reviewed-main base to
+materialize one seed-42 Native-300M source, call the public V2 writer exactly
+once, and call the public V2 loader exactly once into a fresh decoder. The
+hosted launcher first validates all predecessor logs and receipts, reclaims
+only its exact allowlisted predecessor scratch roots, and requires three times
+the checkpoint cap in free space. The child holds the maintained environment,
+Metal lease, and exclusive same-job metallib checks; it emits one bounded,
+ordered, chunked canonical receipt containing the complete external binding.
+The parent independently validates the receipt and then removes exactly the
+immutable checkpoint leaf and its empty private root with literal
+`unlink`/`rmdir`. The plan records no execution by itself and remains
+`ABSTAIN`. It grants no rerun, later-main execution, artifact upload or
+retention, admission, retry, forward, backward, training, product, or
+publication authority.
+
 The Metal gate also binds a separate synthetic CI-mechanics policy that starts
 without any inherited `MLX_`, `DYLD_`, or `LLVM_PROFILE_` override and sets
 only `MLX_ENABLE_TF32=0` before its first Metal or MLX call. No comparison
@@ -275,6 +292,15 @@ clean hosted one-write/one-load execution followed by an append-only
 observation; neither the source contract nor that execution alone admits a
 checkpoint artifact.
 
+A sixth isolated package keeps the one-shot execution mechanics separate from
+that declarative test. Its one pure authority test constructs no model and
+performs no checkpoint I/O; its Release executable is invoked only after the
+frozen Metal, maintained-runtime, and tokenizer launchers on the exact direct
+successor. The workflow temporarily raises only that reviewed-main job's time
+and checkout-depth bounds. A later append-only observation must remove the live
+command and restore those ordinary bounds so no later main merge or rerun can
+repeat the checkpoint operation.
+
 The first external live-Metal run of exact head `84504dc` executed all 41 tests
 with no skips but reported 306 assertions. Disabling pinned-MLX TF32 removed
 the scalar-reference and single-batch cache differences, leaving 96 assertions
@@ -361,17 +387,20 @@ dependency.
 
 The remaining replacement order is:
 
-1. separately approve and run one exact clean Native-300M V2 checkpoint write
-   and load, then append its execution-local observation without artifact
-   admission;
-2. define generic Prime-owned train/evaluate surfaces and persist exact
+1. publish the direct-successor execution authority, run its one exact clean
+   reviewed-main Native-300M V2 checkpoint write and fresh load, and verify the
+   canonical receipt plus literal ephemeral cleanup;
+2. append that execution-local observation without artifact admission while
+   removing the live command and restoring the normal workflow timeout and
+   checkout depth;
+3. define generic Prime-owned train/evaluate surfaces and persist exact
    optimizer, RNG, and data-cursor state for trajectory-exact resume;
-3. separately authorize bounded training, then produce and bind a non-fixture
+4. separately authorize bounded training, then produce and bind a non-fixture
    checkpoint with exact training-state and artifact provenance;
-4. separately authorize and run a bounded candidate canary/trial;
-5. migrate the read-only PMHNP canary consumer to the Prime-owned interface and
+5. separately authorize and run a bounded candidate canary/trial;
+6. migrate the read-only PMHNP canary consumer to the Prime-owned interface and
    remove its active Llama factory after single-MLX-graph reconciliation;
-6. address CoreML/NeuralKit product export only after accepted checkpoint and
+7. address CoreML/NeuralKit product export only after accepted checkpoint and
    parity evidence.
 
 No training, PMHNP write, or product decision is part of this hosted

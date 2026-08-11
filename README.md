@@ -41,7 +41,23 @@ and returns a fresh decoder after complete verification. The embedded manifest
 cannot supply its own trusted container hash. This source slice authorizes the
 two exact entry points but executes neither one, retains no checkpoint, and
 establishes no artifact provenance, admission, durability observation,
-training, or product authority. An append-only execution
+training, or product authority.
+`PrimeNativeDecoderCheckpointV2ContainerIOExecutionAuthorityPlanV1.frozenV1`
+adds the separately bounded execution successor. Only the first-attempt
+history-preserving direct successor of the frozen reviewed-main base may run
+it: after the established Metal, runtime, and tokenizer witnesses, one
+seed-42 Native-300M source is materialized, written once through the public V2
+codec into a private ephemeral `PrimeArtifactRoot`, and loaded once through
+the public V2 codec into a fresh decoder. The process emits one ordered,
+chunked canonical typed receipt containing the complete 218-entry manifest
+and out-of-band whole-container binding. Its parent independently reconstructs
+and validates that receipt before unlinking the sole immutable artifact and
+removing the empty root. The authority remains `ABSTAIN` until that exact
+reviewed-main execution is observed. It authorizes no retry, artifact upload
+or retention, checkpoint admission, forward pass, backward pass, training,
+product use, or publication.
+
+An append-only execution
 observation now binds an exact clean committed repair head whose rebuilt
 44-test bundle passed on external live Metal with zero failures and skips;
 an append-only correction preserves that XCTest evidence while invalidating
@@ -107,9 +123,10 @@ compatibility, model quality, deterministic replay, padding/ragged-batch,
 KV-cache or generation behavior, checkpoint I/O/artifact/admission,
 backward/training/resume, trial/canary/quantization, product use,
 artifact/product publication authority, independent loaded-metallib identity,
-and physical-GPU identity remain false. The next bounded boundary is an exact,
-clean, separately observed one-write/one-load exercise of the new V2 codec;
-the design itself admits no checkpoint bytes.
+and physical-GPU identity remain false. The next bounded boundary is the exact
+reviewed-main execution of the one-shot V2 write/load successor, followed by
+an append-only observation that removes the live command and restores the
+ordinary workflow bounds. The authority itself admits no checkpoint bytes.
 The exact implemented boundary and remaining replacement path are recorded in
 [`docs/PRIME-NATIVE-DECODER-REPLACEMENT-2026-08-09.md`](docs/PRIME-NATIVE-DECODER-REPLACEMENT-2026-08-09.md).
 

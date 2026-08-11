@@ -9,5 +9,5 @@ public enum PrimeEmbeddedBuildProvenance {
     // verification requires this exact canonical template and digest; every
     // other admitted package, source, test, and architecture file is hashed.
     public static let sourceIdentitySHA256 =
-        "efb9bd25738c946b0326241f492f6f576dfeef36481a373410b3951bc88aaeb7"
+        "0d5173da11223f9b8db98f9eff57bd3eefe3a087aa307a4185cfea566aad3110"
 }
