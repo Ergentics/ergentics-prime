@@ -268,6 +268,34 @@ does not carry rollback or continuation authority; that trainer must be
 discarded. Advancement to explicit RNG/cursor state remains blocked until the
 new implementation has its own successful exact-main execution observation.
 
+The first and only authorized Stage-2 execution attempt is now frozen as
+`PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsExecutionFailureObservationV1`.
+Exact-main merge `8d544c34a09a770198b50126f50adb766f234a8f` ran once in
+workflow `31525634838`, attempt 1. Active root passed. Reviewed main completed
+34 focused root tests and the four predecessor isolated suites with zero
+failures or skips, then started the sole Stage-2 validation method exactly
+once. Source-pinned control flow establishes that its CoreGraphics/Metal
+discovery calls returned and admitted the host before the following pinned-MLX
+CPU-device bootstrap terminated at `stream.cpp:106` with
+`MLX error: Failed to load the default metallib. library not found library not
+found library not found library not found`. The method emitted neither a pass
+nor a skip and reached no CPU-device assertion, trainer initialization,
+two-trainer comparison, optimizer step, evaluation, or third-step rejection.
+The retained Metal, maintained-runtime, and tokenizer launchers therefore did
+not run, no checkpoint one-shot or receipt marker appeared, and the Actions
+artifact inventory was exactly empty.
+
+That authorized execution opportunity is exhausted and was not rerun. Its live
+validation invocation, log, filter, and scratch paths are retired, while the
+implementation, isolated manifest and lock, and failed validation source remain
+frozen. The focused root suite now runs one pure exhaustive failure-observation
+contract, bringing its expected count to 35 without model or MLX execution. Any
+next Stage-2 attempt requires a distinct, separately authorized pinned-source
+metallib-bootstrap repair that stages and binds the exact `default.metallib`;
+it cannot recover or reinterpret the failed attempt. Stage 3 remains blocked
+until a later append-only observation binds a successful, zero-skip Stage-2
+execution.
+
 An append-only execution
 observation now binds an exact clean committed repair head whose rebuilt
 44-test bundle passed on external live Metal with zero failures and skips;
