@@ -575,6 +575,94 @@ validation failure is not established; continuation from such a trainer is
 forbidden. Stage 3 remains blocked until an append-only observation binds a
 successful exact-main Stage-2 execution.
 
+### First Stage-2 execution failure and retired invocation
+
+The first and only authorized Stage-2 mechanics attempt is frozen by
+`PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsExecutionFailureObservationV1`.
+The history-preserving exact-main merge was
+`8d544c34a09a770198b50126f50adb766f234a8f`, with ordered parents
+`605d47dde85715f356e4d6e11beb3a3262cc4e7e` and
+`f13322ebc368c639a0f04b7570af093cc57ec22b` and tree
+`c5b776a9ad25375ef681de3041ef6259ac84dc4a`. Push workflow run
+`31525634838`, run number 63, started at `2026-08-11T19:00:12Z` and completed
+as failure on attempt 1; it was not rerun or cancelled.
+
+Active-root job `93893140174` completed successfully. Its sealed raw whole-job
+log is 230,005 bytes and 1,733 LF-delimited lines with SHA-256
+`e1cc35d3a637432d22cbbb199b0227f1401d675f43231214081e00e30be11c65`.
+Reviewed-main job `93893902353` completed as failure. Before the failure, its
+focused command passed 34 root-package tests and the four predecessor isolated
+suites in groups of 1, 1, 2, and 2, all with zero failures or skips. The
+reviewed sealed raw whole-job log is 377,065 bytes and 3,829 LF-delimited lines
+with SHA-256
+`820af763e807444722af2390e29efa782ee12841ffbeeebc1591b751908527d4`.
+Its sealed raw focused-step archive member is
+`Reviewed main _ focused source contracts/5_Compile and run the focused contracts without a credential.txt`.
+It is 366,028 bytes and 3,687 LF-delimited lines,
+runs from `2026-08-11T19:03:11.786776Z` through
+`2026-08-11T19:24:39.4416120Z`, and has SHA-256
+`c19abc615ccff4cfced988c1b9b52956371d71c0116d26375ec94078586e2971`.
+The complete 17-member run-log archive is 168,501 bytes with SHA-256
+`431d7afb7ab70ce0b60b3b04da0969317a5734d562c2a461a2be7c5196b015ef`.
+These byte counts and hashes include each text member's leading UTF-8 BOM; the
+line counts are literal LF-byte counts, and each bound member ends in LF.
+
+The sole Stage-2 method,
+`PrimeNativeDecoderTrainingTests/testTinyCPUTrainEvaluateMechanicsAreExactAndFailClosed`,
+started exactly once. Its pre-MLX configuration, batch, and clipping calls
+precede the fatal site in frozen source, so source-pinned control flow
+establishes that those calls returned. The same inference establishes that
+`MTLCopyAllDevices` and the default-device discovery guard returned and
+admitted the host; this was not the local no-device skip. The subsequent
+`Device.withDefaultDevice(.cpu)` bootstrap terminated before its CPU-device
+assertion with the exact diagnostic:
+
+`MLX error: Failed to load the default metallib. library not found library not found library not found library not found  at /Users/runner/work/_temp/prime-native-decoder-training-build/checkouts/ergentics-mlx-swift/Source/Cmlx/mlx-c/mlx/c/stream.cpp:106`
+
+In the focused-step member, that diagnostic appeared at
+`2026-08-11T19:24:39.4258430Z` and the terminal error appeared at
+`2026-08-11T19:24:39.4416120Z`; the sealed whole-job log renders the same two
+lines at `2026-08-11T19:24:39.4258460Z` and
+`2026-08-11T19:24:39.4416130Z`, respectively. The terminal text was
+`Process completed with exit code 1.` The method emitted no completed pass and
+no skip. It constructed neither trainer, ran neither of the two required
+optimizer steps, completed no two-trainer equality assertion or evaluation,
+and reached no third-step guard. This is a pinned-MLX metallib-bootstrap
+failure, not a CPU mechanics pass, a semantic mechanics failure, or evidence
+that the required two-trainer/two-step outcome executed.
+The canonical observation status is
+`ABSTAIN_stage2_attempt_consumed_hosted_default_metallib_bootstrap_failed_before_cpu_trainer_model_step_or_evaluation_no_rerun_no_actions_or_checkpoint_artifact_no_downstream_authority`.
+
+Because the focused step failed, the later live step was skipped. Its source
+still retains exactly Metal, maintained runtime, and tokenizer in that order,
+but none ran in this attempt. No Native-300M allocation, retired seed-42 or
+seed-43 checkpoint one-shot, checkpoint marker, receipt marker, upload step,
+or retained log artifact occurred; the Actions artifacts response had
+`total_count` 0 and an exactly empty `artifacts` array. Both checkouts remained
+depth one, active root remained bounded at 45 minutes, reviewed main remained
+bounded at 60 minutes, and workflow topology remained two jobs with five
+workflow-authored steps each.
+
+The attempt authority is exhausted. The failed Stage-2 package invocation,
+filter, log, and four scratch-path families are removed from the live workflow
+and the gate requires their absence. The Stage-2 implementation source,
+isolated manifest, lock, and validation source remain frozen rather than being
+deleted or reinterpreted. One dependency-free exhaustive mutation test now
+validates this append-only failure observation in the focused root suite,
+raising that suite from 34 to 35 tests without allocating a model, importing
+MLX, or invoking the failed package. The frozen observation's canonical JSON
+SHA-256 is
+`3822447081af914836f0c158adfb6fd5cbad611a24082ebffd516bffc0f0f002`.
+
+The next permissible work is a separate, explicitly authorized
+pinned-source metallib-bootstrap repair that stages and binds the exact
+`default.metallib` before a new, distinct mechanics attempt. It is not a rerun
+or recovery of run `31525634838`, and this failure observation itself grants no
+repair or execution authority. Stage 3, including explicit RNG/cursor state,
+remains blocked until a later append-only observation binds one successful
+Stage-2 test with zero skips and zero failures and the full retained live
+sequence completes.
+
 ## Verification and next slices
 
 The isolated validation package compiles against the exact first-party MLX
@@ -744,8 +832,10 @@ dependency.
 
 The remaining replacement order is:
 
-1. obtain and record the separately authorized tiny CPU train/evaluate hosted
-   execution, then separately implement and execute explicit RNG/cursor state;
+1. separately authorize and execute the pinned-source metallib-bootstrap
+   repair, then obtain and record a new tiny CPU train/evaluate hosted
+   execution; only after that may explicit RNG/cursor state be separately
+   implemented and executed;
 2. prove tiny durable multi-leaf commit behavior and repeated tiny Metal
    trajectory determinism;
 3. run the separately authorized Native-300M resource-only probe, then decide

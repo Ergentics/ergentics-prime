@@ -627,14 +627,22 @@ readonly trajectory_design_timeout_observation_filter='PrimeCoreTests.PrimeNativ
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the exact trajectory-design timeout observation"
 readonly tiny_cpu_mechanics_authority_filter='PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsAuthorityTests/testFrozenV1CanonicalCodableExhaustiveMutationAndCeiling'
-readonly tiny_cpu_mechanics_execution_filter='PrimeNativeDecoderTrainingTests/testTinyCPUTrainEvaluateMechanicsAreExactAndFailClosed'
+readonly tiny_cpu_mechanics_failure_observation_filter='PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsExecutionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling'
 [[ "$(grep -Fc -- "$tiny_cpu_mechanics_authority_filter" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- "$tiny_cpu_mechanics_failure_observation_filter" \
         "$workflow_path")" == "1" \
     && "$(grep -Fc -- \
         'Sources/PrimeCore/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsAuthority.swift' \
         "$workflow_path")" == "1" \
     && "$(grep -Fc -- \
+        'Sources/PrimeCore/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsExecutionFailureObservation.swift' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
         'Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsAuthorityTests.swift' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        'Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsExecutionFailureObservationTests.swift' \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
         "          grep -Fq 'PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsAuthorityTests' \\" \
@@ -643,9 +651,15 @@ readonly tiny_cpu_mechanics_execution_filter='PrimeNativeDecoderTrainingTests/te
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveMutationAndCeiling' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 34 tests, with 0 failures'\'' "$test_log"' \
+        "          grep -Fq 'PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsExecutionFailureObservationTests' \\" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling' \\" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        '          grep -Fq '\''Executed 35 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
-    die "hosted workflow does not parse and run the exact Stage-2 pure authority contract"
+    die "hosted workflow does not run the exact Stage-2 authority and failure-observation pure contracts"
 [[ "$(grep -Fc -- \
         'Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderTraining.swift' \
         "$workflow_path")" == "1" \
@@ -654,29 +668,21 @@ readonly tiny_cpu_mechanics_execution_filter='PrimeNativeDecoderTrainingTests/te
         "$workflow_path")" == "1" \
     && "$(grep -Fc -- \
         '--package-path Tests/PrimeNativeDecoderTrainingValidation' \
-        "$workflow_path")" == "1" \
-    && "$(grep -Fc -- "$tiny_cpu_mechanics_execution_filter" \
-        "$workflow_path")" == "1" \
+        "$workflow_path")" == "0" \
+    && "$(grep -Fc -- \
+        'PrimeNativeDecoderTrainingTests/testTinyCPUTrainEvaluateMechanicsAreExactAndFailClosed' \
+        "$workflow_path")" == "0" \
     && "$(grep -Fc -- 'prime-native-decoder-training-tests.log' \
-        "$workflow_path")" == "1" \
+        "$workflow_path")" == "0" \
     && "$(grep -Fc -- 'prime-native-decoder-training-build' \
-        "$workflow_path")" == "2" \
+        "$workflow_path")" == "0" \
     && "$(grep -Fc -- 'prime-native-decoder-training-cache' \
-        "$workflow_path")" == "2" \
+        "$workflow_path")" == "0" \
     && "$(grep -Fc -- 'prime-native-decoder-training-config' \
-        "$workflow_path")" == "2" \
+        "$workflow_path")" == "0" \
     && "$(grep -Fc -- 'prime-native-decoder-training-security' \
-        "$workflow_path")" == "2" \
-    && "$(grep -Fxc -- \
-        '          ! grep -Fqi -- '\''skipped'\'' "$tiny_cpu_training_test_log"' \
-        "$workflow_path")" == "1" ]] ||
-    die "reviewed-main workflow does not isolate the exact Stage-2 mechanics execution"
-readonly tiny_cpu_mechanics_workflow_line="$(grep -nF -- \
-    '            --package-path Tests/PrimeNativeDecoderTrainingValidation' \
-    "$workflow_path" | awk -F: '{print $1}')"
-[[ "$tiny_cpu_mechanics_workflow_line" =~ ^[1-9][0-9]*$ \
-    && "$tiny_cpu_mechanics_workflow_line" -lt "$frozen_metal_workflow_line" ]] ||
-    die "reviewed-main Stage-2 mechanics execution must precede the retained live sequence"
+        "$workflow_path")" == "0" ]] ||
+    die "reviewed-main workflow did not retire the exhausted Stage-2 mechanics invocation"
 for required_metal_gate_value in \
     'MTLCreateSystemDefaultDevice' \
     '-target Cmlx' \
@@ -1617,6 +1623,8 @@ readonly decoder_tokenizer_compatibility_probe="$decoder_tokenizer_compatibility
 readonly decoder_tokenizer_compatibility_test="$decoder_tokenizer_compatibility_validation_root/Tests/PrimeNativeDecoderTokenizerCompatibilityAuthorityTests/PrimeNativeDecoderTokenizerCompatibilityAuthorityTests.swift"
 readonly decoder_tiny_cpu_mechanics_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsAuthority.swift"
 readonly decoder_tiny_cpu_mechanics_authority_test="$prime_root/Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsAuthorityTests.swift"
+readonly decoder_tiny_cpu_mechanics_failure_observation_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsExecutionFailureObservation.swift"
+readonly decoder_tiny_cpu_mechanics_failure_observation_test="$prime_root/Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsExecutionFailureObservationTests.swift"
 readonly decoder_training_source="$prime_root/Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderTraining.swift"
 readonly decoder_training_validation_root="$prime_root/Tests/PrimeNativeDecoderTrainingValidation"
 readonly decoder_training_validation_manifest="$decoder_training_validation_root/Package.swift"
@@ -1706,6 +1714,12 @@ readonly decoder_training_validation_test="$decoder_training_validation_root/Tes
 [[ -f "$decoder_tiny_cpu_mechanics_authority_test" \
     && ! -L "$decoder_tiny_cpu_mechanics_authority_test" ]] ||
     die "PrimeNativeDecoder Stage-2 authority test is missing or linked"
+[[ -f "$decoder_tiny_cpu_mechanics_failure_observation_source" \
+    && ! -L "$decoder_tiny_cpu_mechanics_failure_observation_source" ]] ||
+    die "PrimeNativeDecoder Stage-2 failure observation is missing or linked"
+[[ -f "$decoder_tiny_cpu_mechanics_failure_observation_test" \
+    && ! -L "$decoder_tiny_cpu_mechanics_failure_observation_test" ]] ||
+    die "PrimeNativeDecoder Stage-2 failure-observation test is missing or linked"
 [[ -f "$decoder_training_source" && ! -L "$decoder_training_source" ]] ||
     die "PrimeNativeDecoderTraining source is missing or linked"
 [[ -f "$decoder_training_validation_manifest" \
@@ -2562,6 +2576,8 @@ swiftc -frontend -parse "$decoder_tokenizer_compatibility_probe"
 swiftc -frontend -parse "$decoder_tokenizer_compatibility_test"
 swiftc -frontend -parse "$decoder_tiny_cpu_mechanics_authority_source"
 swiftc -frontend -parse "$decoder_tiny_cpu_mechanics_authority_test"
+swiftc -frontend -parse "$decoder_tiny_cpu_mechanics_failure_observation_source"
+swiftc -frontend -parse "$decoder_tiny_cpu_mechanics_failure_observation_test"
 swiftc -frontend -parse "$decoder_training_source"
 swiftc -frontend -parse "$decoder_training_validation_test"
 
@@ -4567,6 +4583,18 @@ assert_tiny_cpu_mechanics_source_identity \
     '37484' \
     '1aa3485ed39cf21a3a6fb2417b1d70903c9d2e74e0faa404696e70c8bcfb1f7a'
 assert_tiny_cpu_mechanics_source_identity \
+    'Sources/PrimeCore/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsExecutionFailureObservation.swift' \
+    '100644' \
+    '4fa7b0a7d32a997d0ab3a5bc89aa5dd4bd6f9909' \
+    '56633' \
+    '52ff3b2a9fcd0ad1a16c4dca467b4fbf1c14dc73f24c29284e9b27ec225635ef'
+assert_tiny_cpu_mechanics_source_identity \
+    'Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsExecutionFailureObservationTests.swift' \
+    '100644' \
+    '3ce9adbe899e7a7e3af3f281e172a4b80a7d0558' \
+    '32000' \
+    '1b54d3630f2881f1b78a362094954fbe0d816a3a1ad8216405404861c21e64cb'
+assert_tiny_cpu_mechanics_source_identity \
     'Tests/PrimeNativeDecoderTrainingValidation/Package.swift' \
     '100644' \
     '9f05e5a17426f00adf9dad7b55d84057122e98f9' \
@@ -4696,6 +4724,226 @@ for forbidden_tiny_cpu_authority_capability in \
         "$decoder_tiny_cpu_mechanics_authority_source" \
         "$decoder_tiny_cpu_mechanics_authority_test"; then
         die "Stage-2 pure authority gained capability: $forbidden_tiny_cpu_authority_capability"
+    fi
+done
+
+[[ "$(awk '/^import / { print }' \
+        "$decoder_tiny_cpu_mechanics_failure_observation_source")" \
+    == 'import Foundation' \
+    && "$(awk '/^import / || /^@testable import / { print }' \
+        "$decoder_tiny_cpu_mechanics_failure_observation_test")" \
+        == $'import CoreFoundation\nimport Foundation\n@testable import PrimeCore\nimport XCTest' \
+    && "$(grep -Ec -- '^[[:space:]]+func test' \
+        "$decoder_tiny_cpu_mechanics_failure_observation_test")" == "1" \
+    && "$(grep -Fc -- \
+        'PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsExecutionFailureObservationTests:' \
+        "$decoder_tiny_cpu_mechanics_failure_observation_test")" == "1" \
+    && "$(grep -Fc -- \
+        'func testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling()' \
+        "$decoder_tiny_cpu_mechanics_failure_observation_test")" == "1" \
+    && "$(grep -Fc -- \
+        'PrimeNativeDecoderTinyCPUFailureSourceIdentityV1(' \
+        "$decoder_tiny_cpu_mechanics_failure_observation_source")" == "12" \
+    && "$(grep -Fc -- \
+        'PrimeNativeDecoderTinyCPUFailureArchiveMemberIdentityV1(' \
+        "$decoder_tiny_cpu_mechanics_failure_observation_source")" == "17" \
+    && "$(grep -Fc -- \
+        'PrimeNativeDecoderTinyCPUFailureTestGroupV1(' \
+        "$decoder_tiny_cpu_mechanics_failure_observation_source")" == "5" ]] ||
+    die "Stage-2 failure observation import or sealed evidence inventory changed"
+for required_tiny_cpu_failure_observation_value in \
+    'PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsExecutionFailureObservationError:' \
+    'PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsExecutionFailureObservationV1:' \
+    'public static let frozenV1 = Self(' \
+    'public static func decodeCanonical(_ data: Data) throws -> Self {' \
+    'public func validateExactV1() throws {' \
+    '"exhausted_exact_main_stage2_hosted_metallib_bootstrap_failure"' \
+    'pullRequestNumber: 83' \
+    '"8d544c34a09a770198b50126f50adb766f234a8f"' \
+    '"605d47dde85715f356e4d6e11beb3a3262cc4e7e"' \
+    '"f13322ebc368c639a0f04b7570af093cc57ec22b"' \
+    '"c5b776a9ad25375ef681de3041ef6259ac84dc4a"' \
+    'path: "Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift"' \
+    'gitBlob: "afc0182aeb4e9bd15fb91c45029ab10a77f97805"' \
+    '"5cd23ce3656badd6d309797f257aeeec7dc66d0807df7f2845b75f8a1699c079"' \
+    'runID: 31_525_634_838' \
+    'runNumber: 63' \
+    'runAttempt: 1' \
+    'exactHeadPushRunCount: 1' \
+    'previousAttemptURLWasNull: true' \
+    'secondAttemptEndpointHTTPStatus: 404' \
+    'rerunCount: 0' \
+    'id: 93_893_140_174' \
+    'id: 93_893_902_353' \
+    'runnerVersion: "2.336.0"' \
+    'reviewedRunnerImage: "macos-26-arm64"' \
+    'swiftVersion: "6.3.3 (swiftlang-6.3.3.1.3 clang-2100.1.1.101)"' \
+    '"e1cc35d3a637432d22cbbb199b0227f1401d675f43231214081e00e30be11c65"' \
+    '"820af763e807444722af2390e29efa782ee12841ffbeeebc1591b751908527d4"' \
+    '"431d7afb7ab70ce0b60b3b04da0969317a5734d562c2a461a2be7c5196b015ef"' \
+    'memberCount: 17' \
+    'completedTestCountBeforeStage2Termination: 40' \
+    'stage2TestClass: "PrimeNativeDecoderTrainingTests"' \
+    '"testTinyCPUTrainEvaluateMechanicsAreExactAndFailClosed"' \
+    'stage2TestInvocationCount: 1' \
+    'stage2TestStartCount: 1' \
+    'stage2CompletedPassCount: 0' \
+    'stage2CompletedFailureCount: 0' \
+    'stage2CompletedSkipCount: 0' \
+    'hostedStage2RequirementSatisfied: false' \
+    '"metal_44_of_44"' \
+    '"maintained_runtime_receipt"' \
+    '"tokenizer_receipt"' \
+    'retainedLiveSequenceInvocationCounts: [0, 0, 0]' \
+    'retiredSeed42CheckpointCommandCount: 0' \
+    'retiredSeed43CheckpointCommandCount: 0' \
+    'checkpointReceiptMarkerCount: 0' \
+    'oldOneShotSuccessMarkerCount: 0' \
+    'name: "Run the Prime-owned decoder on live Metal"' \
+    'diagnosticFocusedArchiveMemberTimestamp:' \
+    '"2026-08-11T19:24:39.4258430Z"' \
+    'diagnosticAggregateLogTimestamp:' \
+    '"2026-08-11T19:24:39.4258460Z"' \
+    '"MLX error: Failed to load the default metallib. library not found library not found library not found library not found  at /Users/runner/work/_temp/prime-native-decoder-training-build/checkouts/ergentics-mlx-swift/Source/Cmlx/mlx-c/mlx/c/stream.cpp:106"' \
+    'failureSourceRevision:' \
+    '"0726ca922fc902c4c61ef9c27d94132be418e945"' \
+    'failureSourcePath: "mlx/c/stream.cpp"' \
+    'failureSourceLine: 106' \
+    'processExitCode: 1' \
+    'failureClassification:' \
+    '"pinned_mlx_default_metallib_bootstrap_failure_before_cpu_mechanics"' \
+    'hostedBootstrapFailureObserved: true' \
+    'CPUTrainEvaluateSemanticFailureObserved: false' \
+    'CPUTrainEvaluateMechanicsPassObserved: false' \
+    '"exact_frozen_source_order_plus_terminal_aggregate_and_archive_member_logs"' \
+    'metalCapabilityGuardAdmittedHostSourceInferred: true' \
+    'localNoMetalDeviceSkipPathTaken: false' \
+    'stage2WorkflowMetallibBuildCommandCount: 0' \
+    'stage2WorkflowMetallibStageCommandCount: 0' \
+    'loadableDefaultMetallibDiscovered: false' \
+    'withDefaultDeviceClosureEntryCount: 0' \
+    'CPUDeviceEstablished: false' \
+    'trainerConstructionCount: 0' \
+    'decoderModelAllocationCount: 0' \
+    'completedOptimizerStepCount: 0' \
+    'evaluationCompletionCount: 0' \
+    'twoTrainerEqualityAssertionCount: 0' \
+    'initialSnapshotEqualityAssertionCount: 0' \
+    'firstStepResultEqualityAssertionCount: 0' \
+    'secondStepResultEqualityAssertionCount: 0' \
+    'evaluationResultEqualityAssertionCount: 0' \
+    'evaluationSharedPrefixSelectedLossEqualityAssertionCount: 0' \
+    'globalMeanLossAssertionCount: 0' \
+    'thirdStepRejectionGuardInvocationCount: 0' \
+    'observedRuntimeDigestValueCount: 0' \
+    'observedFloat32BitPatternValueCount: 0' \
+    'MLXTensorComputationObserved: false' \
+    'metalTensorSubmissionObserved: false' \
+    'failurePrecedesCPUMechanics: true' \
+    'actionsArtifactsTotalCount: 0' \
+    'actionsArtifactsArrayExactlyEmpty: true' \
+    'runLogArchiveIsActionsArtifact: false' \
+    'checkpointArtifactCreated: false' \
+    'predecessorExecutionAttemptConsumed: true' \
+    'predecessorExecutionAuthorityExhausted: true' \
+    'rerunObserved: false' \
+    'rerunAuthorized: false' \
+    'failedAttemptRecoverable: false' \
+    'failedWorkflowInvocationRemainsLive: false' \
+    'bootstrapRepairRequiredBeforeAnotherAttempt: true' \
+    'bootstrapRepairAuthorizedByThisObservation: false' \
+    'stage3Blocked: true' \
+    '"ABSTAIN_stage2_attempt_consumed_hosted_default_metallib_bootstrap_failed_before_cpu_trainer_model_step_or_evaluation_no_rerun_no_actions_or_checkpoint_artifact_no_downstream_authority"' \
+    '"keep_the_exhausted_invocation_filter_log_and_scratch_paths_retired"' \
+    '"separately_authorize_a_pinned_source_default_metallib_bootstrap_repair"' \
+    '"require_one_successful_stage2_test_with_zero_skips_and_zero_failures_before_stage3"'; do
+    grep -Fq -- "$required_tiny_cpu_failure_observation_value" \
+        "$decoder_tiny_cpu_mechanics_failure_observation_source" ||
+        die "Stage-2 failure observation lost: $required_tiny_cpu_failure_observation_value"
+done
+for required_tiny_cpu_failure_observation_test_value in \
+    'func testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling()' \
+    'XCTAssertNoThrow(try observation.validateExactV1())' \
+    'XCTAssertEqual(observation.observedSourceBindings.count, 12)' \
+    'XCTAssertEqual(run.runID, 31_525_634_838)' \
+    'XCTAssertEqual(run.runAttempt, 1)' \
+    'XCTAssertEqual(run.rerunCount, 0)' \
+    'XCTAssertEqual(active.id, 93_893_140_174)' \
+    'XCTAssertEqual(reviewed.id, 93_893_902_353)' \
+    'XCTAssertEqual(activeLog.byteCount, 230_005)' \
+    'XCTAssertEqual(activeLog.lfByteCount, 1_733)' \
+    'activeLog.newlineDelimitedComponentCountIncludingTerminalEmpty,' \
+    'XCTAssertEqual(reviewedLog.byteCount, 377_065)' \
+    'XCTAssertEqual(reviewedLog.lfByteCount, 3_829)' \
+    'XCTAssertEqual(archive.memberCount, 17)' \
+    'XCTAssertEqual(archive.uncompressedByteCount, 1_215_574)' \
+    'focused.completedGroups.map(\.completedTestCount),' \
+    '[34, 1, 1, 2, 2]' \
+    'XCTAssertEqual(focused.stage2TestInvocationCount, 1)' \
+    'XCTAssertEqual(focused.stage2TestStartCount, 1)' \
+    'XCTAssertEqual(focused.stage2CompletedPassCount, 0)' \
+    'XCTAssertEqual(focused.stage2CompletedFailureCount, 0)' \
+    'XCTAssertEqual(focused.stage2CompletedSkipCount, 0)' \
+    'XCTAssertFalse(focused.hostedStage2RequirementSatisfied)' \
+    'XCTAssertEqual(focused.retainedLiveSequenceInvocationCounts, [0, 0, 0])' \
+    'failure.diagnosticFocusedArchiveMemberTimestamp,' \
+    'failure.diagnosticAggregateLogTimestamp,' \
+    'XCTAssertNotEqual(' \
+    'XCTAssertTrue(failure.hostedBootstrapFailureObserved)' \
+    'XCTAssertFalse(failure.CPUTrainEvaluateSemanticFailureObserved)' \
+    'XCTAssertFalse(failure.CPUTrainEvaluateMechanicsPassObserved)' \
+    'XCTAssertEqual(flow.batchRejectionCallCountSourceInferred, 17)' \
+    'XCTAssertEqual(flow.gradientClipCallCountSourceInferred, 7)' \
+    'XCTAssertEqual(flow.validBatchConstructionCountSourceInferred, 4)' \
+    'XCTAssertEqual(flow.stage2WorkflowMetallibBuildCommandCount, 0)' \
+    'XCTAssertEqual(flow.stage2WorkflowMetallibStageCommandCount, 0)' \
+    'XCTAssertFalse(flow.loadableDefaultMetallibDiscovered)' \
+    'Array(repeating: 0, count: 22)' \
+    'XCTAssertTrue(artifactFalseClaims(artifacts).allSatisfy { !$0 })' \
+    'XCTAssertTrue(ceiling.predecessorExecutionAttemptConsumed)' \
+    'XCTAssertTrue(ceiling.predecessorExecutionAuthorityExhausted)' \
+    'XCTAssertTrue(ceiling.bootstrapRepairRequiredBeforeAnotherAttempt)' \
+    'XCTAssertTrue(ceiling.stage3Blocked)' \
+    'XCTAssertTrue(authorityFalseClaims(ceiling).allSatisfy { !$0 })' \
+    '3822447081af914836f0c158adfb6fd5cbad611a24082ebffd516bffc0f0f002' \
+    'XCTAssertGreaterThan(valuePaths.count, 450)' \
+    'XCTAssertGreaterThan(dictionaryPaths.count, 45)' \
+    'XCTAssertGreaterThan(scalarPaths.count, 350)' \
+    'null \(pathLabel(path))' \
+    'removed \(pathLabel(path))' \
+    'unknown_stage2_failure_field_\(index)' \
+    'Observation.decodeCanonical(prefixed)' \
+    'Observation.decodeCanonical(suffixed)' \
+    'Observation.decodeCanonical(pretty)' \
+    'Observation.decodeCanonical(slashEscapedData)' \
+    'Observation.decodeCanonical(reorderedData)' \
+    'Observation.decodeCanonical(duplicateData)'; do
+    grep -Fq -- "$required_tiny_cpu_failure_observation_test_value" \
+        "$decoder_tiny_cpu_mechanics_failure_observation_test" ||
+        die "Stage-2 failure-observation test lost: $required_tiny_cpu_failure_observation_test_value"
+done
+for forbidden_tiny_cpu_failure_observation_capability in \
+    'import CoreGraphics' \
+    'import Metal' \
+    'import MLX' \
+    'import MLXNN' \
+    'import MLXOptimizers' \
+    'PrimeNativeDecoderTinyCPUTrainEvaluateTrainerV1(' \
+    'PrimeNativeGQADecoder.make(' \
+    'Device.withDefaultDevice(' \
+    'MTLCopyAllDevices(' \
+    'MTLCreateSystemDefaultDevice(' \
+    'PrimeArtifactRoot(' \
+    'FileManager' \
+    'FileHandle' \
+    'URLSession' \
+    'Process(' \
+    'posix_spawn' \
+    'execve('; do
+    if grep -Fq -- "$forbidden_tiny_cpu_failure_observation_capability" \
+        "$decoder_tiny_cpu_mechanics_failure_observation_source" \
+        "$decoder_tiny_cpu_mechanics_failure_observation_test"; then
+        die "Stage-2 failure observation gained capability: $forbidden_tiny_cpu_failure_observation_capability"
     fi
 done
 

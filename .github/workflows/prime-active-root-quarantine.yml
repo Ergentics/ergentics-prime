@@ -86,6 +86,7 @@ jobs:
             Sources/PrimeCore/PrimeNativeDecoderTrajectoryExactResumeDesignAuthority.swift \
             Sources/PrimeCore/PrimeNativeDecoderTrajectoryDesignReviewedMainTimeoutObservation.swift \
             Sources/PrimeCore/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsAuthority.swift \
+            Sources/PrimeCore/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsExecutionFailureObservation.swift \
             Sources/PrimeCore/PrimeNativeDecoderMaintainedRuntimeComputeAuthority.swift \
             Sources/PrimeCore/PrimeNativeDecoderMaintainedRuntimeExecutionObservation.swift \
             Sources/PrimeCore/PrimeNativeDecoderTokenizerModelFunctionalCompatibilityAuthority.swift \
@@ -134,6 +135,7 @@ jobs:
             Tests/PrimeCoreTests/PrimeNativeDecoderTrajectoryExactResumeDesignAuthorityTests.swift \
             Tests/PrimeCoreTests/PrimeNativeDecoderTrajectoryDesignReviewedMainTimeoutObservationTests.swift \
             Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsAuthorityTests.swift \
+            Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsExecutionFailureObservationTests.swift \
             Tests/PrimeCoreTests/PrimeNativeGenerationContractSourceContractTests.swift \
             Tests/PrimeCoreTests/PrimeNativeNeuralGateContractSourceContractTests.swift \
             Tests/PrimeCoreTests/PrimeNativeNeuralGateMLXIsolationSourceContractTests.swift \
@@ -194,6 +196,8 @@ jobs:
             echo 'The timeout repair completed on exact-main run 31515766609 attempt 1: 39 focused tests, the frozen 44-test live-Metal suite, one maintained-runtime receipt, and one tokenizer receipt all passed in the retained order, with no retired checkpoint command, receipt marker, artifact upload, or rerun.'
             echo 'The Stage-2 successor adds only one fixed seed-7, two-trainer, two-step CPU train/evaluate mechanics target, one package-scoped rank-two Int32 no-cache logits seam, one pure canonical authority test, and one isolated hosted mechanics test. It adds no checkpoint dependency, filesystem or process capability, RNG/cursor resume, Metal tensor execution, Native-300M allocation, artifact, provenance, admission, product, or publication authority.'
             echo 'The isolated mechanics test may use CoreGraphics and Metal only to fail closed before MLX initialization when the pinned scheduler bootstrap has no visible Metal device; reviewed main requires exactly one executed test with zero failures and zero skips, so a local capability skip is neither mechanics success nor an execution observation.'
+            echo 'The first and only exact-main Stage-2 attempt, workflow run 31525634838, passed active root, 34 focused root tests, and the four predecessor isolated suites before the Stage-2 method started and failed at pinned MLX default-metallib loading in stream.cpp:106. The method emitted neither pass nor skip, reached no CPU-device assertion or trainer initialization, and the retained Metal, maintained-runtime, and tokenizer step was skipped. The run had no rerun, checkpoint one-shot or receipt marker, upload step, or Actions artifact.'
+            echo 'The append-only Stage-2 execution-failure observation exhausts that attempt and removes the failed live validation invocation, log, and scratch paths while preserving its implementation, manifest, lock, and test source. The focused root suite now includes one pure failure-observation test, for 35 tests. A separately authorized successor must stage and bind an exact pinned-source default.metallib before any new mechanics attempt; Stage 3 remains blocked.'
             echo 'The locally declared origin is not network-authenticated, and ignored workspace bytes are not observed by this slice.'
             echo 'Beyond that one bounded random-initialized Native-300M witness and the separately bounded tiny CPU Stage-2 mechanics authority, no Prime proposal, candidate selection, trial authorization, decision receipt, runtime/product/canary decoder activation, Native-300M training or additional execution, publication, promotion, Driver V2, or PMHNP authority is granted.'
           } >> "$GITHUB_STEP_SUMMARY"
@@ -276,7 +280,6 @@ jobs:
           readonly checkpoint_v2_io_test_log="$RUNNER_TEMP/prime-checkpoint-v2-io-tests.log"
           readonly checkpoint_v2_io_execution_pure_test_log="$RUNNER_TEMP/prime-checkpoint-v2-io-execution-pure-tests.log"
           readonly checkpoint_v2_io_root_identity_repair_execution_pure_test_log="$RUNNER_TEMP/prime-checkpoint-v2-io-root-identity-repair-execution-pure-tests.log"
-          readonly tiny_cpu_training_test_log="$RUNNER_TEMP/prime-native-decoder-training-tests.log"
           [[ "$(git --git-dir="$mlx_bare" rev-parse refs/heads/prime-pinned)" == \
             "$PRIME_MLX_REVISION" ]]
           mkdir -p \
@@ -299,11 +302,7 @@ jobs:
             "$RUNNER_TEMP/prime-checkpoint-v2-io-root-identity-repair-execution-pure-build" \
             "$RUNNER_TEMP/prime-checkpoint-v2-io-root-identity-repair-execution-pure-cache" \
             "$RUNNER_TEMP/prime-checkpoint-v2-io-root-identity-repair-execution-pure-config" \
-            "$RUNNER_TEMP/prime-checkpoint-v2-io-root-identity-repair-execution-pure-security" \
-            "$RUNNER_TEMP/prime-native-decoder-training-build" \
-            "$RUNNER_TEMP/prime-native-decoder-training-cache" \
-            "$RUNNER_TEMP/prime-native-decoder-training-config" \
-            "$RUNNER_TEMP/prime-native-decoder-training-security"
+            "$RUNNER_TEMP/prime-checkpoint-v2-io-root-identity-repair-execution-pure-security"
           export GIT_CONFIG_COUNT=2
           export GIT_CONFIG_KEY_0="url.file://${mlx_bare}/.insteadOf"
           export GIT_CONFIG_VALUE_0="https://github.com/Ergentics/ergentics-mlx-swift"
@@ -320,7 +319,7 @@ jobs:
             --disable-keychain \
             --force-resolved-versions \
             --test-product ErgenticsPrimePackageTests \
-            --filter 'PrimeNativeNeuralGateMLXIsolationSourceContractTests|PrimeNativeCorpusReplaySourceContractTests|PrimeCoreTests.PrimeNativeDecoderTrajectoryExactResumeDesignAuthorityTests/testFrozenV1CanonicalCodableMutationAndSourceBoundary|PrimeCoreTests.PrimeNativeDecoderTrajectoryDesignReviewedMainTimeoutObservationTests/testFrozenV1CanonicalCodableRecursiveMutationAndAuthorityCeiling|PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsAuthorityTests/testFrozenV1CanonicalCodableExhaustiveMutationAndCeiling|PrimeNativeGenerationContractSourceContractTests|PrimeNativeNeuralGateContractSourceContractTests|PrimeNativeResolvedContractAdapterSourceContractTests|PrimeSwiftSourceProvenanceTests/testLiveRepositoryMatchesEmbeddedSourceIdentity' \
+            --filter 'PrimeNativeNeuralGateMLXIsolationSourceContractTests|PrimeNativeCorpusReplaySourceContractTests|PrimeCoreTests.PrimeNativeDecoderTrajectoryExactResumeDesignAuthorityTests/testFrozenV1CanonicalCodableMutationAndSourceBoundary|PrimeCoreTests.PrimeNativeDecoderTrajectoryDesignReviewedMainTimeoutObservationTests/testFrozenV1CanonicalCodableRecursiveMutationAndAuthorityCeiling|PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsAuthorityTests/testFrozenV1CanonicalCodableExhaustiveMutationAndCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsExecutionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeNativeGenerationContractSourceContractTests|PrimeNativeNeuralGateContractSourceContractTests|PrimeNativeResolvedContractAdapterSourceContractTests|PrimeSwiftSourceProvenanceTests/testLiveRepositoryMatchesEmbeddedSourceIdentity' \
             2>&1 | tee "$test_log"
           TMPDIR="$RUNNER_TEMP" swift test \
             --package-path Tests/PrimeNativeDecoderCheckpointCompatibilityV2Validation \
@@ -370,22 +369,9 @@ jobs:
             --disable-keychain \
             --force-resolved-versions \
             2>&1 | tee "$checkpoint_v2_io_root_identity_repair_execution_pure_test_log"
-          TMPDIR="$RUNNER_TEMP" swift test \
-            --package-path Tests/PrimeNativeDecoderTrainingValidation \
-            --scratch-path "$RUNNER_TEMP/prime-native-decoder-training-build" \
-            --cache-path "$RUNNER_TEMP/prime-native-decoder-training-cache" \
-            --config-path "$RUNNER_TEMP/prime-native-decoder-training-config" \
-            --security-path "$RUNNER_TEMP/prime-native-decoder-training-security" \
-            --disable-dependency-cache \
-            --manifest-cache local \
-            --disable-netrc \
-            --disable-keychain \
-            --force-resolved-versions \
-            --filter 'PrimeNativeDecoderTrainingTests/testTinyCPUTrainEvaluateMechanicsAreExactAndFailClosed' \
-            2>&1 | tee "$tiny_cpu_training_test_log"
           unset GIT_CONFIG_COUNT GIT_CONFIG_KEY_0 GIT_CONFIG_VALUE_0
           unset GIT_CONFIG_KEY_1 GIT_CONFIG_VALUE_1
-          grep -Fq 'Executed 34 tests, with 0 failures' "$test_log"
+          grep -Fq 'Executed 35 tests, with 0 failures' "$test_log"
           grep -Fq 'PrimeNativeDecoderTrajectoryExactResumeDesignAuthorityTests' \
             "$test_log"
           grep -Fq 'PrimeNativeDecoderTrajectoryDesignReviewedMainTimeoutObservationTests' \
@@ -395,6 +381,10 @@ jobs:
           grep -Fq 'PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsAuthorityTests' \
             "$test_log"
           grep -Fq 'testFrozenV1CanonicalCodableExhaustiveMutationAndCeiling' \
+            "$test_log"
+          grep -Fq 'PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsExecutionFailureObservationTests' \
+            "$test_log"
+          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling' \
             "$test_log"
           grep -Fq 'Executed 1 test, with 0 failures' \
             "$checkpoint_v2_test_log"
@@ -410,13 +400,6 @@ jobs:
             "$checkpoint_v2_io_root_identity_repair_execution_pure_test_log"
           ! grep -Fqi -- 'skipped' \
             "$checkpoint_v2_io_root_identity_repair_execution_pure_test_log"
-          grep -Fq 'Executed 1 test, with 0 failures' \
-            "$tiny_cpu_training_test_log"
-          grep -Fq 'PrimeNativeDecoderTrainingTests' \
-            "$tiny_cpu_training_test_log"
-          grep -Fq 'testTinyCPUTrainEvaluateMechanicsAreExactAndFailClosed' \
-            "$tiny_cpu_training_test_log"
-          ! grep -Fqi -- 'skipped' "$tiny_cpu_training_test_log"
           [[ "$(git rev-parse HEAD)" == "$EXACT_REVISION" ]]
           [[ -z "$(git status --porcelain=v1 --untracked-files=all)" ]]
 
