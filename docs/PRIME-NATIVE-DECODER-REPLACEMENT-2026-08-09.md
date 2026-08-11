@@ -122,9 +122,26 @@ ordered, chunked canonical receipt containing the complete external binding.
 The parent independently validates the receipt and then removes exactly the
 immutable checkpoint leaf and its empty private root with literal
 `unlink`/`rmdir`. The plan records no execution by itself and remains
-`ABSTAIN`. It grants no rerun, later-main execution, artifact upload or
-retention, admission, retry, forward, backward, training, product, or
-publication authority.
+`ABSTAIN`. Its one authorized attempt ran at reviewed-main merge
+`27749af3347437daa693d4375acb759283923a4a`, workflow run `31472165002`, job
+`93718282081`. The frozen predecessor, build, and pure-test gates passed;
+source-pinned control flow establishes that the public writer returned
+successfully before the probe rejected its first post-write artifact-root
+stable-identity comparison. The failed run emitted neither root snapshot nor
+the changed field. A separate local APFS reproduction diagnosed a directory
+link-count transition from two to three when one leaf was added; that diagnosis
+is not hosted-run telemetry. Execution stopped before artifact-path observation,
+the second cache clear, public load, any V2 receipt marker, parent validation,
+or literal `unlink`/`rmdir` cleanup; no external-binding field or container hash
+was independently observed, and the run uploaded zero Actions artifacts. The append-only
+`PrimeNativeDecoderCheckpointV2ContainerIOExecutionFailureObservationV1`
+binds that failure and establishes neither checkpoint-I/O success nor retained
+or admitted checkpoint state. Retry, forward, backward, training, product, and
+publication remain false. Its exact status is
+`ABSTAIN_seed42_public_write_return_source_inferred_postwrite_root_guard_failed_no_load_no_receipt_no_artifact_admission`.
+The old live command is removed and the temporary reviewed-main timeout and
+checkout-depth expansions are restored. Any correction must use a separately
+authorized seed-43 direct-successor arc; it cannot rerun this seed-42 attempt.
 
 The Metal gate also binds a separate synthetic CI-mechanics policy that starts
 without any inherited `MLX_`, `DYLD_`, or `LLVM_PROFILE_` override and sets
@@ -287,19 +304,31 @@ A fifth isolated one-test package now validates the V2 container/I/O authority,
 canonical manifest and external-binding schemas, exhaustive Boolean and
 critical scalar mutations, and the exact source capability boundary. It does
 not call the codec, allocate Native-300M, create a checkpoint file, or alter the
-frozen 44-test launcher. The next boundary is a separately approved exact
-clean hosted one-write/one-load execution followed by an append-only
-observation; neither the source contract nor that execution alone admits a
-checkpoint artifact.
+frozen 44-test launcher. Its separately approved seed-42 hosted successor was
+attempted once and source-pinned control flow establishes that the public write
+returned before the failure, before the public load or receipt. Neither that
+source contract nor the failed execution establishes retained or admitted
+checkpoint state; the next boundary is the distinct seed-43 repair below.
 
 A sixth isolated package keeps the one-shot execution mechanics separate from
 that declarative test. Its one pure authority test constructs no model and
 performs no checkpoint I/O; its Release executable is invoked only after the
 frozen Metal, maintained-runtime, and tokenizer launchers on the exact direct
-successor. The workflow temporarily raises only that reviewed-main job's time
-and checkout-depth bounds. A later append-only observation must remove the live
-command and restore those ordinary bounds so no later main merge or rerun can
-repeat the checkpoint operation.
+successor. Source-pinned control flow establishes that exact seed-42 attempt
+returned from its public write before failing at the first post-write root
+stable-identity comparison. The failed run did not emit either root snapshot or
+identify the changed field; a separate local APFS reproduction diagnosed the
+frozen contract's publication-stable directory link-count assumption. It
+reached no public load or V2 receipt marker, and its parent reached no receipt
+validation or literal artifact cleanup; the run uploaded zero Actions
+artifacts. A second pure test now validates the exact append-only failure
+observation without model allocation or I/O. The existing hosted focused step
+runs both isolated pure tests with an exact two-test/no-skip assertion. The live
+V2 I/O command is absent, both workflow checkouts use depth one, and both job
+timeouts are 45 minutes.
+The next execution design is a distinct seed-43 repair arc with its own
+authority, evidence, isolated package, probe, test, and launcher—not a rerun of
+the frozen attempt.
 
 The first external live-Metal run of exact head `84504dc` executed all 41 tests
 with no skips but reported 306 assertions. Disabling pinned-MLX TF32 removed
@@ -387,20 +416,24 @@ dependency.
 
 The remaining replacement order is:
 
-1. publish the direct-successor execution authority, run its one exact clean
-   reviewed-main Native-300M V2 checkpoint write and fresh load, and verify the
-   canonical receipt plus literal ephemeral cleanup;
-2. append that execution-local observation without artifact admission while
-   removing the live command and restoring the normal workflow timeout and
-   checkout depth;
-3. define generic Prime-owned train/evaluate surfaces and persist exact
+1. publish the append-only seed-42 failure observation while retiring its live
+   command and restoring the normal workflow timeout and checkout depth;
+2. define and independently review a seed-43 corrective execution authority
+   that permits the root directory link count to change across publication,
+   still requires all stable object fields, exact one-leaf topology, and full
+   post-write-to-post-load identity stability, and runs only as a new
+   first-attempt direct successor;
+3. append either that repair execution's exact success observation or its
+   exact failure observation without artifact admission, and retire its live
+   command before any later main merge;
+4. define generic Prime-owned train/evaluate surfaces and persist exact
    optimizer, RNG, and data-cursor state for trajectory-exact resume;
-4. separately authorize bounded training, then produce and bind a non-fixture
+5. separately authorize bounded training, then produce and bind a non-fixture
    checkpoint with exact training-state and artifact provenance;
-5. separately authorize and run a bounded candidate canary/trial;
-6. migrate the read-only PMHNP canary consumer to the Prime-owned interface and
+6. separately authorize and run a bounded candidate canary/trial;
+7. migrate the read-only PMHNP canary consumer to the Prime-owned interface and
    remove its active Llama factory after single-MLX-graph reconciliation;
-7. address CoreML/NeuralKit product export only after accepted checkpoint and
+8. address CoreML/NeuralKit product export only after accepted checkpoint and
    parity evidence.
 
 No training, PMHNP write, or product decision is part of this hosted

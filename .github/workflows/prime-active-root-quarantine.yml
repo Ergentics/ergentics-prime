@@ -81,6 +81,7 @@ jobs:
             Sources/PrimeCore/PrimeNativeDecoderCheckpointCompatibilityV2Authority.swift \
             Sources/PrimeCore/PrimeNativeDecoderCheckpointV2ContainerIOAuthority.swift \
             Sources/PrimeCore/PrimeNativeDecoderCheckpointV2ContainerIOExecutionAuthority.swift \
+            Sources/PrimeCore/PrimeNativeDecoderCheckpointV2ContainerIOExecutionFailureObservation.swift \
             Sources/PrimeCore/PrimeNativeDecoderMaintainedRuntimeComputeAuthority.swift \
             Sources/PrimeCore/PrimeNativeDecoderMaintainedRuntimeExecutionObservation.swift \
             Sources/PrimeCore/PrimeNativeDecoderTokenizerModelFunctionalCompatibilityAuthority.swift \
@@ -114,6 +115,7 @@ jobs:
             Tests/PrimeNativeDecoderCheckpointV2IOValidation/Tests/PrimeNativeDecoderCheckpointV2IOTests/PrimeNativeDecoderCheckpointV2IOTests.swift \
             Tests/PrimeNativeDecoderCheckpointV2IOExecutionValidation/Sources/PrimeNativeDecoderCheckpointV2IOExecutionProbe/main.swift \
             Tests/PrimeNativeDecoderCheckpointV2IOExecutionValidation/Tests/PrimeNativeDecoderCheckpointV2IOExecutionAuthorityTests/PrimeNativeDecoderCheckpointV2IOExecutionAuthorityTests.swift \
+            Tests/PrimeNativeDecoderCheckpointV2IOExecutionValidation/Tests/PrimeNativeDecoderCheckpointV2IOExecutionAuthorityTests/PrimeNativeDecoderCheckpointV2IOExecutionFailureObservationTests.swift \
             Tests/PrimeNativeDecoderRuntimeClosureValidation/Sources/PrimeNativeDecoderRuntimeClosureProbe/main.swift \
             Tests/PrimeNativeDecoderRuntimeClosureValidation/Tests/PrimeNativeDecoderRuntimeClosureAuthorityTests/PrimeNativeDecoderRuntimeClosureAuthorityTests.swift \
             Tests/PrimeNativeDecoderTokenizerCompatibilityValidation/Sources/PrimeNativeDecoderTokenizerCompatibilityProbe/main.swift \
@@ -168,6 +170,8 @@ jobs:
             echo 'The append-only V2 checkpoint container/I/O successor defines an exact weights-only manifest, caller-supplied external whole-container binding, and public Native-300M write/load codec whose filesystem capability remains inside PrimeArtifactRoot. It authorizes those bounded APIs but does not itself observe a write, load, artifact, durability outcome, checkpoint admission, runtime use, or training.'
             echo 'Hosted CI runs one isolated declarative V2 checkpoint I/O schema, mutation, source-identity, import, and capability-boundary test. That test does not call the codec, allocate Native-300M, or grant artifact, checkpoint, product, publication, trial, canary, or training authority.'
             echo 'The bounded execution successor authorizes only the first-attempt direct-main successor to run one seed-42 Native-300M V2 write and one fresh public load after its frozen predecessors, using ordered chunked receipt transport and literal ephemeral cleanup; it grants no retry, retention, upload, admission, forward, training, product, or publication authority.'
+            echo 'Its exact reviewed-main attempt passed every predecessor, build, and pure-test gate and source-inferably returned from the public write, then failed at the post-write artifact-root stable-identity guard before path observation, public load, any V2 receipt marker, or supervisor cleanup; it emitted neither root snapshot nor the changed field. A separate local APFS reproduction diagnosed a two-to-three directory link-count transition when one leaf was added, not hosted-run telemetry. The run uploaded zero Actions artifacts and establishes neither retained nor admitted checkpoint state. The append-only failure observation binds that narrow outcome, retires the old live command, and restores both 45-minute timeouts and depth-one checkouts; a separately authorized seed-43 repair is the next boundary, never a rerun.'
+            echo 'Hosted reviewed-main now executes exactly two isolated pure V2 I/O execution-contract tests, including exhaustive failure-observation mutation rejection. They allocate no model, call no checkpoint codec or public I/O entry point, and cannot reactivate the exhausted one-shot.'
             echo 'The locally declared origin is not network-authenticated, and ignored workspace bytes are not observed by this slice.'
             echo 'Beyond that one bounded random-initialized Native-300M witness, no Prime proposal, candidate selection, trial authorization, decision receipt, runtime/product/canary decoder activation, additional model execution, training, publication, promotion, Driver V2, or PMHNP authority is granted.'
           } >> "$GITHUB_STEP_SUMMARY"
@@ -177,7 +181,7 @@ jobs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: active-root
     runs-on: macos-26
-    timeout-minutes: 90
+    timeout-minutes: 45
     env:
       EXACT_REVISION: ${{ github.sha }}
       PRIME_MLX_REVISION: d37885a278f1c37484a94d0f401a418735e66519
@@ -205,7 +209,7 @@ jobs:
           export GIT_CONFIG_COUNT=1
           export GIT_CONFIG_KEY_0="url.https://x-access-token:${CHECKOUT_TOKEN}@github.com/.insteadOf"
           export GIT_CONFIG_VALUE_0="https://github.com/"
-          git -C ergentics-prime fetch --depth=2 --no-tags --no-write-fetch-head origin "$EXACT_REVISION"
+          git -C ergentics-prime fetch --depth=1 --no-tags --no-write-fetch-head origin "$EXACT_REVISION"
           git -C ergentics-prime checkout --detach "$EXACT_REVISION"
           unset GIT_CONFIG_COUNT GIT_CONFIG_KEY_0 GIT_CONFIG_VALUE_0
           [[ "$(git -C ergentics-prime rev-parse HEAD)" == "$EXACT_REVISION" ]]
@@ -248,6 +252,7 @@ jobs:
           readonly test_log="$RUNNER_TEMP/prime-active-root-tests.log"
           readonly checkpoint_v2_test_log="$RUNNER_TEMP/prime-checkpoint-v2-tests.log"
           readonly checkpoint_v2_io_test_log="$RUNNER_TEMP/prime-checkpoint-v2-io-tests.log"
+          readonly checkpoint_v2_io_execution_pure_test_log="$RUNNER_TEMP/prime-checkpoint-v2-io-execution-pure-tests.log"
           [[ "$(git --git-dir="$mlx_bare" rev-parse refs/heads/prime-pinned)" == \
             "$PRIME_MLX_REVISION" ]]
           mkdir -p \
@@ -262,7 +267,11 @@ jobs:
             "$RUNNER_TEMP/prime-checkpoint-v2-io-build" \
             "$RUNNER_TEMP/prime-checkpoint-v2-io-cache" \
             "$RUNNER_TEMP/prime-checkpoint-v2-io-config" \
-            "$RUNNER_TEMP/prime-checkpoint-v2-io-security"
+            "$RUNNER_TEMP/prime-checkpoint-v2-io-security" \
+            "$RUNNER_TEMP/prime-checkpoint-v2-io-execution-pure-build" \
+            "$RUNNER_TEMP/prime-checkpoint-v2-io-execution-pure-cache" \
+            "$RUNNER_TEMP/prime-checkpoint-v2-io-execution-pure-config" \
+            "$RUNNER_TEMP/prime-checkpoint-v2-io-execution-pure-security"
           export GIT_CONFIG_COUNT=2
           export GIT_CONFIG_KEY_0="url.file://${mlx_bare}/.insteadOf"
           export GIT_CONFIG_VALUE_0="https://github.com/Ergentics/ergentics-mlx-swift"
@@ -305,6 +314,18 @@ jobs:
             --disable-keychain \
             --force-resolved-versions \
             2>&1 | tee "$checkpoint_v2_io_test_log"
+          TMPDIR="$RUNNER_TEMP" swift test \
+            --package-path Tests/PrimeNativeDecoderCheckpointV2IOExecutionValidation \
+            --scratch-path "$RUNNER_TEMP/prime-checkpoint-v2-io-execution-pure-build" \
+            --cache-path "$RUNNER_TEMP/prime-checkpoint-v2-io-execution-pure-cache" \
+            --config-path "$RUNNER_TEMP/prime-checkpoint-v2-io-execution-pure-config" \
+            --security-path "$RUNNER_TEMP/prime-checkpoint-v2-io-execution-pure-security" \
+            --disable-dependency-cache \
+            --manifest-cache local \
+            --disable-netrc \
+            --disable-keychain \
+            --force-resolved-versions \
+            2>&1 | tee "$checkpoint_v2_io_execution_pure_test_log"
           unset GIT_CONFIG_COUNT GIT_CONFIG_KEY_0 GIT_CONFIG_VALUE_0
           unset GIT_CONFIG_KEY_1 GIT_CONFIG_VALUE_1
           grep -Eq 'Executed [1-9][0-9]* tests?, with 0 failures' "$test_log"
@@ -314,6 +335,10 @@ jobs:
           grep -Fq 'Executed 1 test, with 0 failures' \
             "$checkpoint_v2_io_test_log"
           ! grep -Fqi -- 'skipped' "$checkpoint_v2_io_test_log"
+          grep -Fq 'Executed 2 tests, with 0 failures' \
+            "$checkpoint_v2_io_execution_pure_test_log"
+          ! grep -Fqi -- 'skipped' \
+            "$checkpoint_v2_io_execution_pure_test_log"
           [[ "$(git rev-parse HEAD)" == "$EXACT_REVISION" ]]
           [[ -z "$(git status --porcelain=v1 --untracked-files=all)" ]]
 
@@ -323,4 +348,3 @@ jobs:
           bash .github/scripts/prime-ci-native-decoder-metal.sh
           bash .github/scripts/prime-ci-native-decoder-runtime-closure.sh
           bash .github/scripts/prime-ci-native-decoder-tokenizer-compatibility.sh
-          bash .github/scripts/prime-ci-native-decoder-checkpoint-v2-io.sh
