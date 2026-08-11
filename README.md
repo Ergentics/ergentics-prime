@@ -63,8 +63,8 @@ initialization and source-pinned exclusive-candidate inference only; it does
 not independently identify the metallib MLX loaded, allocate or execute the
 decoder, perform checkpoint I/O, train, or grant product authority.
 `PrimeNativeDecoderTokenizerModelFunctionalCompatibilityAuthorityPlanV1.frozenV1`
-now authorizes the next additive Stage-1 witness without claiming that it has
-run. The exact scope is the Prime byte-512 tokenizer mapping source text `A`
+defines the bounded Stage-1 witness but does not itself record its execution.
+The exact scope is the Prime byte-512 tokenizer mapping source text `A`
 to `[1, 321, 70]`, one seed-42 random initialization of the exact Native-300M
 V2 topology, materialization and ordered-catalog verification, and one
 full-prefix, no-KV-cache FP32 forward producing a finite `[1, 3, 512]` logits
@@ -76,11 +76,27 @@ establish deterministic replay, padding or ragged-batch behavior, KV-cache or
 generation behavior, checkpoint I/O or artifact provenance/admission,
 backward or gradient behavior, optimizer/RNG/data-cursor state,
 training/resume, model quality, candidate/trial/canary selection,
-quantization, product use, or publication authority. The next operational
-step is separately authorized repository publication and reviewed-main
-execution of the exact bounded gate, followed by an append-only observation
-that binds the resulting durable evidence; until then, allocation, catalog,
-forward, output, and reviewed-main execution observations all remain false.
+quantization, product use, or publication authority.
+`PrimeNativeDecoderTokenizerModelFunctionalCompatibilityExecutionObservationV1.frozenV1`
+is the append-only execution successor. It binds reviewed-main merge
+`16dbcb3bad551bc6fd94f02dc3289dff60a94f24` and workflow run
+`31457183699`: after the frozen 44-test suite and maintained-runtime closure,
+the exact `A` to `[1, 321, 70]` receipt matched all 218 live parameter
+descriptors and 271,107,072 FP32 parameters, then produced finite
+`[1, 3, 512]` logits in one seed-42 full-prefix, no-KV-cache forward. The
+observed ordered-bit-pattern output digest is
+`b3679db619f92575e87d48a7633d432b194b5b641ca6c54b1cc6996216ebb223`;
+it is run evidence, not a deterministic expected output. This establishes
+only the exact fixed-input tokenizer sequence mechanics and that one
+random-initialized interface witness. Broad model functional or semantic
+compatibility, model quality, deterministic replay, padding/ragged-batch,
+KV-cache or generation behavior, checkpoint I/O/artifact/admission,
+backward/training/resume, trial/canary/quantization, product use,
+artifact/product publication authority, independent loaded-metallib identity,
+and physical-GPU identity remain false. The next bounded boundary is a
+separately authorized V2
+checkpoint manifest/container/I/O design; no checkpoint bytes are admitted by
+this observation.
 The exact implemented boundary and remaining replacement path are recorded in
 [`docs/PRIME-NATIVE-DECODER-REPLACEMENT-2026-08-09.md`](docs/PRIME-NATIVE-DECODER-REPLACEMENT-2026-08-09.md).
 

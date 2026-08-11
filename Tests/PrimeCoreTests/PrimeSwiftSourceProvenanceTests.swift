@@ -924,6 +924,385 @@ final class PrimeSwiftSourceProvenanceTests:
                 "runtime observation binding mutation must fail closed: \(key)"
             )
         }
+
+        let tokenizerExecutionObservation =
+            PrimeNativeDecoderTokenizerModelFunctionalCompatibilityExecutionObservationV1
+                .frozenV1
+        XCTAssertNoThrow(
+            try tokenizerExecutionObservation.validateExactV1()
+        )
+        XCTAssertTrue(
+            tokenizerExecutionObservation
+                .exactReviewedMainCompatibilityExecutionObserved
+        )
+        XCTAssertTrue(
+            tokenizerExecutionObservation
+                .tokenizerSequenceMechanicsCompatibilityEstablished
+        )
+        XCTAssertTrue(
+            tokenizerExecutionObservation
+                .tokenizerToRandomInitializedNative300MFullPrefixForwardWitnessEstablished
+        )
+        XCTAssertTrue(
+            tokenizerExecutionObservation
+                .tokenizerFunctionalCompatibilityEstablished
+        )
+        XCTAssertTrue(
+            tokenizerExecutionObservation.native300MModelAllocationObserved
+        )
+        XCTAssertTrue(tokenizerExecutionObservation.decoderForwardObserved)
+        XCTAssertTrue(
+            tokenizerExecutionObservation
+                .actualParameterCatalogProjectionObserved
+        )
+        XCTAssertTrue(
+            tokenizerExecutionObservation
+                .outputShapeDTypeAndFinitenessObserved
+        )
+        XCTAssertTrue(
+            tokenizerExecutionObservation
+                .outputDigestRecordsSingleExecutionOnly
+        )
+        XCTAssertTrue(tokenizerExecutionObservation.processExitRequiredAfterReceipt)
+        XCTAssertFalse(
+            tokenizerExecutionObservation
+                .outputDigestIsExpectedValueOrDeterminismClaim
+        )
+        XCTAssertFalse(
+            tokenizerExecutionObservation
+                .compatibilityProcessExactMetalDeviceIdentityIndependentlyObserved
+        )
+        XCTAssertFalse(
+            tokenizerExecutionObservation
+                .callerSuppliedRevisionBindingIsIndependentObservation
+        )
+        XCTAssertFalse(
+            tokenizerExecutionObservation.callerExpectationIsArtifactAdmission
+        )
+        XCTAssertFalse(
+            tokenizerExecutionObservation.metallibArtifactProvenanceEstablished
+        )
+        XCTAssertFalse(
+            tokenizerExecutionObservation
+                .loadedMetallibIdentityIndependentlyObserved
+        )
+        XCTAssertFalse(
+            tokenizerExecutionObservation
+                .runtimeLoadedExactMetallibIdentityEstablished
+        )
+        XCTAssertFalse(
+            tokenizerExecutionObservation
+                .runtimeLoadedMetallibPathIndependentlyObserved
+        )
+        XCTAssertFalse(tokenizerExecutionObservation.decoderKVCacheUsed)
+        XCTAssertFalse(tokenizerExecutionObservation.backwardInvoked)
+        XCTAssertFalse(tokenizerExecutionObservation.generationInvoked)
+        XCTAssertFalse(
+            tokenizerExecutionObservation.modelFunctionalCompatibilityEstablished
+        )
+        XCTAssertFalse(
+            tokenizerExecutionObservation.semanticModelCompatibilityEstablished
+        )
+        XCTAssertFalse(
+            tokenizerExecutionObservation.deterministicSeedReplayObserved
+        )
+        XCTAssertFalse(tokenizerExecutionObservation.checkpointIOObserved)
+        XCTAssertFalse(tokenizerExecutionObservation.functionalTrainingAuthorized)
+        XCTAssertFalse(tokenizerExecutionObservation.longTrainingAuthorized)
+        XCTAssertFalse(tokenizerExecutionObservation.productUseAuthorized)
+        XCTAssertFalse(tokenizerExecutionObservation.publicationAuthorized)
+        XCTAssertEqual(tokenizerExecutionObservation.runID, 31_457_183_699)
+        XCTAssertEqual(
+            tokenizerExecutionObservation.activeRootJobID,
+            93_673_351_673
+        )
+        XCTAssertEqual(
+            tokenizerExecutionObservation.reviewedMainJobID,
+            93_673_756_089
+        )
+        XCTAssertEqual(
+            tokenizerExecutionObservation.focusedSourceContractTestCount,
+            31
+        )
+        XCTAssertEqual(
+            tokenizerExecutionObservation.checkpointCompatibilityTestCount,
+            1
+        )
+        XCTAssertEqual(tokenizerExecutionObservation.frozenTotalTestCount, 44)
+        XCTAssertEqual(tokenizerExecutionObservation.runtimeAuthorityTestCount, 1)
+        XCTAssertEqual(
+            tokenizerExecutionObservation.compatibilityAuthorityTestCount,
+            1
+        )
+        XCTAssertEqual(
+            tokenizerExecutionObservation.receiptJSONPayloadByteCount,
+            7_182
+        )
+        XCTAssertEqual(tokenizerExecutionObservation.receiptCount, 1)
+        XCTAssertEqual(
+            tokenizerExecutionObservation.outputFloat32BitPatternSHA256,
+            "b3679db619f92575e87d48a7633d432b194b5b641ca6c54b1cc6996216ebb223"
+        )
+
+        let tokenizerExecutionObservationData =
+            try PrimeCanonicalJSON.encode(tokenizerExecutionObservation)
+        let tokenizerExecutionObservationReplay =
+            try PrimeCanonicalJSON.decode(
+                PrimeNativeDecoderTokenizerModelFunctionalCompatibilityExecutionObservationV1
+                    .self,
+                from: tokenizerExecutionObservationData
+            )
+        XCTAssertEqual(
+            tokenizerExecutionObservationReplay,
+            tokenizerExecutionObservation
+        )
+        XCTAssertNoThrow(
+            try tokenizerExecutionObservationReplay.validateExactV1()
+        )
+
+        enum TokenizerExecutionObservationPathComponent:
+            CustomStringConvertible
+        {
+            case key(String)
+            case index(Int)
+
+            var description: String {
+                switch self {
+                case .key(let value): value
+                case .index(let value): "[\(value)]"
+                }
+            }
+        }
+
+        func tokenizerExecutionObservationLeafPaths(
+            in value: Any,
+            prefix: [TokenizerExecutionObservationPathComponent] = []
+        ) -> [[TokenizerExecutionObservationPathComponent]] {
+            if let object = value as? [String: Any] {
+                return object.keys.sorted().flatMap { key in
+                    tokenizerExecutionObservationLeafPaths(
+                        in: object[key] as Any,
+                        prefix: prefix + [.key(key)]
+                    )
+                }
+            }
+            if let array = value as? [Any] {
+                return array.indices.flatMap { index in
+                    tokenizerExecutionObservationLeafPaths(
+                        in: array[index],
+                        prefix: prefix + [.index(index)]
+                    )
+                }
+            }
+            return [prefix]
+        }
+
+        func tokenizerExecutionObservationArrayPaths(
+            in value: Any,
+            prefix: [TokenizerExecutionObservationPathComponent] = []
+        ) -> [[TokenizerExecutionObservationPathComponent]] {
+            if let object = value as? [String: Any] {
+                return object.keys.sorted().flatMap { key in
+                    tokenizerExecutionObservationArrayPaths(
+                        in: object[key] as Any,
+                        prefix: prefix + [.key(key)]
+                    )
+                }
+            }
+            if let array = value as? [Any] {
+                return [prefix] + array.indices.flatMap { index in
+                    tokenizerExecutionObservationArrayPaths(
+                        in: array[index],
+                        prefix: prefix + [.index(index)]
+                    )
+                }
+            }
+            return []
+        }
+
+        func tokenizerExecutionObservationValue(
+            in root: Any,
+            at path: ArraySlice<TokenizerExecutionObservationPathComponent>
+        ) throws -> Any {
+            guard let component = path.first else {
+                return root
+            }
+            switch component {
+            case .key(let key):
+                let object = try XCTUnwrap(root as? [String: Any])
+                return try tokenizerExecutionObservationValue(
+                    in: try XCTUnwrap(object[key]),
+                    at: path.dropFirst()
+                )
+            case .index(let index):
+                let array = try XCTUnwrap(root as? [Any])
+                return try tokenizerExecutionObservationValue(
+                    in: array[index],
+                    at: path.dropFirst()
+                )
+            }
+        }
+
+        func tokenizerExecutionObservationReplacement(
+            for value: Any
+        ) throws -> Any {
+            if let number = value as? NSNumber {
+                if CFGetTypeID(number) == CFBooleanGetTypeID() {
+                    return !number.boolValue
+                }
+                return number.int64Value + 1
+            }
+            if let string = value as? String {
+                return string + "x"
+            }
+            throw NSError(
+                domain: "PrimeSwiftSourceProvenanceTests",
+                code: 1,
+                userInfo: [
+                    NSLocalizedDescriptionKey:
+                        "unsupported tokenizer observation JSON leaf: \(type(of: value))",
+                ]
+            )
+        }
+
+        func replacingTokenizerExecutionObservationValue(
+            _ value: Any,
+            at path: ArraySlice<TokenizerExecutionObservationPathComponent>,
+            with replacement: Any? = nil
+        ) throws -> Any {
+            guard let component = path.first else {
+                if let replacement {
+                    return replacement
+                }
+                return try tokenizerExecutionObservationReplacement(for: value)
+            }
+            switch component {
+            case .key(let key):
+                var object = try XCTUnwrap(value as? [String: Any])
+                object[key] = try replacingTokenizerExecutionObservationValue(
+                    try XCTUnwrap(object[key]),
+                    at: path.dropFirst(),
+                    with: replacement
+                )
+                return object
+            case .index(let index):
+                var array = try XCTUnwrap(value as? [Any])
+                array[index] = try replacingTokenizerExecutionObservationValue(
+                    array[index],
+                    at: path.dropFirst(),
+                    with: replacement
+                )
+                return array
+            }
+        }
+
+        func assertTokenizerExecutionObservationRejects(
+            _ object: [String: Any],
+            _ message: String
+        ) throws {
+            let data = try JSONSerialization.data(
+                withJSONObject: object,
+                options: [.sortedKeys, .withoutEscapingSlashes]
+            )
+            do {
+                let mutation = try JSONDecoder().decode(
+                    PrimeNativeDecoderTokenizerModelFunctionalCompatibilityExecutionObservationV1
+                        .self,
+                    from: data
+                )
+                XCTAssertThrowsError(
+                    try mutation.validateExactV1(),
+                    message
+                )
+            } catch is DecodingError {
+                // A decoding rejection is also a fail-closed result.
+            }
+        }
+
+        let tokenizerExecutionObservationObject = try XCTUnwrap(
+            try JSONSerialization.jsonObject(
+                with: tokenizerExecutionObservationData
+            ) as? [String: Any]
+        )
+        XCTAssertEqual(tokenizerExecutionObservationObject.count, 229)
+        let tokenizerExecutionObservationLeafPaths =
+            tokenizerExecutionObservationLeafPaths(
+                in: tokenizerExecutionObservationObject
+            )
+        XCTAssertEqual(tokenizerExecutionObservationLeafPaths.count, 432)
+        let tokenizerExecutionObservationBooleanLeafCount = try
+            tokenizerExecutionObservationLeafPaths.reduce(into: 0) {
+                count,
+                path in
+                let value = try tokenizerExecutionObservationValue(
+                    in: tokenizerExecutionObservationObject,
+                    at: path[...]
+                )
+                if let number = value as? NSNumber,
+                   CFGetTypeID(number) == CFBooleanGetTypeID()
+                {
+                    count += 1
+                }
+            }
+        XCTAssertEqual(tokenizerExecutionObservationBooleanLeafCount, 180)
+        for path in tokenizerExecutionObservationLeafPaths {
+            let mutation = try XCTUnwrap(
+                try replacingTokenizerExecutionObservationValue(
+                    tokenizerExecutionObservationObject,
+                    at: path[...]
+                ) as? [String: Any]
+            )
+            try assertTokenizerExecutionObservationRejects(
+                mutation,
+                "tokenizer execution observation leaf mutation must fail closed: "
+                    + path.map(\.description).joined(separator: ".")
+            )
+        }
+
+        let tokenizerExecutionObservationArrayPaths =
+            tokenizerExecutionObservationArrayPaths(
+                in: tokenizerExecutionObservationObject
+            )
+        XCTAssertEqual(tokenizerExecutionObservationArrayPaths.count, 9)
+        for path in tokenizerExecutionObservationArrayPaths {
+            let array = try XCTUnwrap(
+                try tokenizerExecutionObservationValue(
+                    in: tokenizerExecutionObservationObject,
+                    at: path[...]
+                ) as? [Any]
+            )
+            XCTAssertFalse(array.isEmpty)
+
+            var dropped = array
+            dropped.removeLast()
+            let dropMutation = try XCTUnwrap(
+                try replacingTokenizerExecutionObservationValue(
+                    tokenizerExecutionObservationObject,
+                    at: path[...],
+                    with: dropped
+                ) as? [String: Any]
+            )
+            try assertTokenizerExecutionObservationRejects(
+                dropMutation,
+                "tokenizer execution observation array drop must fail closed: "
+                    + path.map(\.description).joined(separator: ".")
+            )
+
+            var duplicated = array
+            duplicated.append(try XCTUnwrap(array.first))
+            let duplicateMutation = try XCTUnwrap(
+                try replacingTokenizerExecutionObservationValue(
+                    tokenizerExecutionObservationObject,
+                    at: path[...],
+                    with: duplicated
+                ) as? [String: Any]
+            )
+            try assertTokenizerExecutionObservationRejects(
+                duplicateMutation,
+                "tokenizer execution observation array duplicate must fail closed: "
+                    + path.map(\.description).joined(separator: ".")
+            )
+        }
     }
 
     func testCapturePreservesCanonicalSnapshotContract()

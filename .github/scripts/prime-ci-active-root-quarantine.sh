@@ -174,6 +174,9 @@ require_preserved_object \
     "Sources/PrimeCore/PrimeNativeDecoderTokenizerModelFunctionalCompatibilityAuthority.swift" \
     "a14d52e2af3dee3c39d8bb6cb017995cf3a4aa0c"
 require_preserved_object \
+    "Sources/PrimeCore/PrimeNativeDecoderTokenizerModelFunctionalCompatibilityExecutionObservation.swift" \
+    "92bc5e2f1e802c37d2b3b6ac07c6b60ce483328c"
+require_preserved_object \
     "Tests/PrimeNativeDecoderTokenizerCompatibilityValidation/Package.swift" \
     "da9785a7263522541a81fd39c34acc2512d87100"
 require_preserved_object \
@@ -819,6 +822,7 @@ readonly decoder_runtime_closure_validation_lock="$decoder_runtime_closure_valid
 readonly decoder_runtime_closure_probe="$decoder_runtime_closure_validation_root/Sources/PrimeNativeDecoderRuntimeClosureProbe/main.swift"
 readonly decoder_runtime_closure_test="$decoder_runtime_closure_validation_root/Tests/PrimeNativeDecoderRuntimeClosureAuthorityTests/PrimeNativeDecoderRuntimeClosureAuthorityTests.swift"
 readonly decoder_tokenizer_compatibility_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderTokenizerModelFunctionalCompatibilityAuthority.swift"
+readonly decoder_tokenizer_compatibility_execution_observation_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderTokenizerModelFunctionalCompatibilityExecutionObservation.swift"
 readonly decoder_tokenizer_compatibility_validation_root="$prime_root/Tests/PrimeNativeDecoderTokenizerCompatibilityValidation"
 readonly decoder_tokenizer_compatibility_validation_manifest="$decoder_tokenizer_compatibility_validation_root/Package.swift"
 readonly decoder_tokenizer_compatibility_validation_lock="$decoder_tokenizer_compatibility_validation_root/Package.resolved"
@@ -914,6 +918,9 @@ readonly decoder_tokenizer_compatibility_test="$decoder_tokenizer_compatibility_
 [[ -f "$decoder_tokenizer_compatibility_authority_source" \
     && ! -L "$decoder_tokenizer_compatibility_authority_source" ]] ||
     die "PrimeNativeDecoder tokenizer-compatibility authority is missing or linked"
+[[ -f "$decoder_tokenizer_compatibility_execution_observation_source" \
+    && ! -L "$decoder_tokenizer_compatibility_execution_observation_source" ]] ||
+    die "PrimeNativeDecoder tokenizer-compatibility execution observation is missing or linked"
 [[ -f "$decoder_tokenizer_compatibility_validation_manifest" \
     && ! -L "$decoder_tokenizer_compatibility_validation_manifest" ]] ||
     die "PrimeNativeDecoder tokenizer-compatibility validation manifest is missing or linked"
@@ -974,6 +981,7 @@ for runtime_closure_regular_source in \
 done
 for tokenizer_compatibility_regular_source in \
     'Sources/PrimeCore/PrimeNativeDecoderTokenizerModelFunctionalCompatibilityAuthority.swift' \
+    'Sources/PrimeCore/PrimeNativeDecoderTokenizerModelFunctionalCompatibilityExecutionObservation.swift' \
     'Tests/PrimeNativeDecoderTokenizerCompatibilityValidation/Package.swift' \
     'Tests/PrimeNativeDecoderTokenizerCompatibilityValidation/Package.resolved' \
     'Tests/PrimeNativeDecoderTokenizerCompatibilityValidation/Sources/PrimeNativeDecoderTokenizerCompatibilityProbe/main.swift' \
@@ -1099,6 +1107,12 @@ assert_tokenizer_compatibility_source_identity \
     'a14d52e2af3dee3c39d8bb6cb017995cf3a4aa0c' \
     '66000' \
     '0ff6ee0e74176d6b059c9f97932301ecc3f62f8c3ea23103b69952b1eaad4efe'
+assert_tokenizer_compatibility_source_identity \
+    'Sources/PrimeCore/PrimeNativeDecoderTokenizerModelFunctionalCompatibilityExecutionObservation.swift' \
+    '100644' \
+    '92bc5e2f1e802c37d2b3b6ac07c6b60ce483328c' \
+    '48237' \
+    '62eb03797435a40b7c3265b2d9886f58b1b9a5be3f7759804daa6b1bcf2e94a4'
 assert_tokenizer_compatibility_source_identity \
     'Tests/PrimeNativeDecoderTokenizerCompatibilityValidation/Package.swift' \
     '100644' \
@@ -1296,6 +1310,7 @@ swiftc -frontend -parse "$decoder_runtime_authority_source"
 swiftc -frontend -parse "$decoder_runtime_execution_observation_source"
 swiftc -frontend -parse "$decoder_runtime_source"
 swiftc -frontend -parse "$decoder_tokenizer_compatibility_authority_source"
+swiftc -frontend -parse "$decoder_tokenizer_compatibility_execution_observation_source"
 swiftc -frontend -parse "$decoder_metal_repair_authority_source"
 swiftc -frontend -parse "$decoder_metal_execution_observation_source"
 swiftc -frontend -parse "$decoder_metal_execution_correction_source"
@@ -1354,6 +1369,10 @@ readonly expected_mlxllm_imports=$'Sources/PrimeGPUCalibration/PrimeGPUCalibrati
     "$decoder_tokenizer_compatibility_authority_source" | paste -sd, -)" \
     == "Foundation" ]] ||
     die "PrimeNativeDecoder tokenizer-compatibility authority imports changed"
+[[ "$(awk '/^import / {print $2}' \
+    "$decoder_tokenizer_compatibility_execution_observation_source" | paste -sd, -)" \
+    == "Foundation" ]] ||
+    die "PrimeNativeDecoder tokenizer-compatibility execution observation imports changed"
 [[ "$(awk '/^import / {print $2}' \
     "$decoder_tokenizer_compatibility_probe" | paste -sd, -)" \
     == "CoreGraphics,Darwin,Foundation,Metal,MLX,MLXNN,PrimeCore,PrimeNativeDecoder,PrimeNativeDecoderCheckpoint" ]] ||
@@ -1501,6 +1520,7 @@ for forbidden_tokenizer_compatibility_source_value in \
     'contentsOfDirectory'; do
     if grep -Fq -- "$forbidden_tokenizer_compatibility_source_value" \
         "$decoder_tokenizer_compatibility_authority_source" \
+        "$decoder_tokenizer_compatibility_execution_observation_source" \
         "$decoder_tokenizer_compatibility_probe" \
         "$decoder_tokenizer_compatibility_test"; then
         die "PrimeNativeDecoder tokenizer compatibility contains forbidden capability: $forbidden_tokenizer_compatibility_source_value"
@@ -1509,6 +1529,7 @@ done
 if grep -Eq -- \
     '(^|[^[:alnum:]_])Process([^[:alnum:]_]|$)' \
     "$decoder_tokenizer_compatibility_authority_source" \
+    "$decoder_tokenizer_compatibility_execution_observation_source" \
     "$decoder_tokenizer_compatibility_probe" \
     "$decoder_tokenizer_compatibility_test"; then
     die "PrimeNativeDecoder tokenizer compatibility contains forbidden value: Process"

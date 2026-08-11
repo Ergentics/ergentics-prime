@@ -82,6 +82,7 @@ jobs:
             Sources/PrimeCore/PrimeNativeDecoderMaintainedRuntimeComputeAuthority.swift \
             Sources/PrimeCore/PrimeNativeDecoderMaintainedRuntimeExecutionObservation.swift \
             Sources/PrimeCore/PrimeNativeDecoderTokenizerModelFunctionalCompatibilityAuthority.swift \
+            Sources/PrimeCore/PrimeNativeDecoderTokenizerModelFunctionalCompatibilityExecutionObservation.swift \
             Sources/PrimeCore/PrimeNativeDecoderMetalRepairAuthority.swift \
             Sources/PrimeCore/PrimeNativeDecoderMetalExecutionObservation.swift \
             Sources/PrimeCore/PrimeNativeDecoderMetalExecutionObservationCorrection.swift \
@@ -156,6 +157,7 @@ jobs:
             echo 'The additive maintained-runtime closure policy and implementation bind the exact dependency, loader-candidate, Metal-device, and bounded MLX-initialization mechanics authorized for the reviewed-main lane. This active-root job does not execute that closure and grants no decoder forward, Native-300M allocation, checkpoint I/O or admission, training, trial, canary, product, or publication authority.'
             echo 'An append-only successor binds the exact reviewed-main run whose frozen 44-test Metal suite and bounded Release runtime receipt passed against one fresh pinned-source metallib and a singleton Metal device. It establishes only the maintained dependency closure, source-pinned exclusive-candidate inference, and bounded MLX initialization; independent loaded-metallib identity, decoder execution, checkpoint I/O or admission, training, and downstream authority remain false.'
             echo 'The additive tokenizer/model functional-compatibility slice authorizes the reviewed-main lane to run one fixed-seed random-initialized Native-300M allocation and one full-prefix no-cache forward for source A after the frozen 44-test and maintained-runtime predecessors. It can establish only tokenizer sequence mechanics and that process-local witness; broad model functional compatibility, model quality, checkpoint I/O or admission, training, trial, canary, product, and publication authority remain false.'
+            echo 'An append-only execution observation binds the exact reviewed-main run whose tokenizer replay, 218-entry live Native-300M parameter projection, one random-initialized full-prefix forward, and finite [1,3,512] logits passed after the frozen Metal and runtime gates. It establishes only that narrow tokenizer-to-random-initialized-model witness; broad model functional or semantic compatibility, quality, checkpoint, training, trial, canary, product, and publication authority remain false.'
             echo 'The locally declared origin is not network-authenticated, and ignored workspace bytes are not observed by this slice.'
             echo 'Beyond that one bounded random-initialized Native-300M witness, no Prime proposal, candidate selection, trial authorization, decision receipt, runtime/product/canary decoder activation, additional model execution, training, publication, promotion, Driver V2, or PMHNP authority is granted.'
           } >> "$GITHUB_STEP_SUMMARY"
