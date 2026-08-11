@@ -296,6 +296,23 @@ it cannot recover or reinterpret the failed attempt. Stage 3 remains blocked
 until a later append-only observation binds a successful, zero-skip Stage-2
 execution.
 
+`PrimeReviewedMainPrivateDependencyTLSFailureObservationV1` freezes the first
+exact-main closure after that failure observation. History-preserving merge
+`e540b73f6a46cf6e0de5b932d7167f178d4ac6fb` ran once in workflow
+`31530684844`, run number 65, attempt 1. Active root succeeded, but reviewed
+main failed in step 4, `Fetch the exact private dependency without evaluating
+Prime`, before any focused or live test. The unchanged secure `git fetch`
+terminated with exit 128 and the exact external diagnostic
+`fatal: unable to access 'https://github.com/Ergentics/ergentics-mlx-swift/':
+SSL certificate problem: self signed certificate`. The run was not retried or
+rerun; no TLS bypass is authorized, the configured 35-test root suite and the
+retained Metal/runtime/tokenizer sequence did not execute, Stage-2 remained
+retired, and the Actions artifact inventory was empty. This is an external TLS
+trust failure, not dependency-source, focused-contract, Metal, runtime,
+tokenizer, or Stage-2 evidence. The metallib-bootstrap repair remains blocked
+until a distinct exact-main closure completes successfully through the secure
+fetch and every retained gate.
+
 An append-only execution
 observation now binds an exact clean committed repair head whose rebuilt
 44-test bundle passed on external live Metal with zero failures and skips;

@@ -663,6 +663,72 @@ remains blocked until a later append-only observation binds one successful
 Stage-2 test with zero skips and zero failures and the full retained live
 sequence completes.
 
+### Private-dependency TLS trust failure before focused execution
+
+`PrimeReviewedMainPrivateDependencyTLSFailureObservationV1` is the append-only
+terminal observation of the next exact-main closure. The history-preserving
+merge was `e540b73f6a46cf6e0de5b932d7167f178d4ac6fb`, with ordered parents
+`8d544c34a09a770198b50126f50adb766f234a8f` and
+`64eed284f0b5630a23feeea1e74dcd74fe275571` and tree
+`7f983f66b05c338464662f741d410ae70b1e662a`. Push workflow run
+`31530684844`, run number 65, ran from `2026-08-11T20:00:02Z` through
+`2026-08-11T20:03:08Z` and completed as failure on attempt 1. It was not
+rerun.
+
+Active-root job `93909705892` completed successfully. Reviewed-main job
+`93910498134` ran from `2026-08-11T20:02:52Z` through
+`2026-08-11T20:03:07Z` and failed in workflow-authored step 4,
+`Fetch the exact private dependency without evaluating Prime`. The secure
+fetch block was unchanged: it used the exact credential-scoped HTTPS
+`insteadOf` mapping and one depth-one `git fetch`, with no certificate bypass,
+alternate CA, insecure transport, retry, or fallback. At
+`2026-08-11T20:03:04.6476270Z`, that external fetch emitted exactly:
+
+`fatal: unable to access 'https://github.com/Ergentics/ergentics-mlx-swift/': SSL certificate problem: self signed certificate`
+
+The command then terminated with exit code 128 at
+`2026-08-11T20:03:04.6496520Z`. This is a TLS trust failure outside the frozen
+dependency source and Prime execution surfaces. It is not evidence of a bad
+MLX revision, dependency compilation, a focused-contract failure, Metal or
+runtime behavior, tokenizer behavior, or Stage-2 mechanics.
+
+The sealed active-root whole-job log is 231,409 bytes and 1,737 LF-delimited
+lines with SHA-256
+`9df1918e7a6bdd24ba52386a1878114029642d57ce1f739c7523e2071e9772a7`.
+The reviewed-main whole-job log is 10,195 bytes and 134 LF-delimited lines with
+SHA-256
+`763401f815fa31f7e3a8fb76468ac30b983580a84e3603b6219deaa8e3a79a2e`.
+The failed fetch-step member is 4,024 bytes and 46 LF-delimited lines with
+SHA-256
+`c347aee0e6e114955166c8418967817631ef9fa5befec474fd96379a051a4da9`.
+The same diagnostic and exit appear in the aggregate reviewed log at
+`2026-08-11T20:03:04.6476320Z` and `2026-08-11T20:03:04.6496540Z`.
+The complete 16-member run-log ZIP is 66,580 bytes, expands to 484,639 bytes,
+and has SHA-256
+`642d3b1d139c840c3f02a93fd96d03b3504e9ccf5340b1a05900dedda441e2fc`.
+Repeated downloads were byte-identical. These downloaded logs are not Actions
+artifacts and were not published by the workflow.
+
+The failure preceded the configured 35-test focused root suite and every
+isolated focused package. The retained live sequence—Metal, maintained
+runtime, then tokenizer—was skipped in full. The retired Stage-2 package
+invocation remained absent, no Stage-2 method or metallib repair ran, no
+checkpoint or one-shot marker was emitted, and the Actions artifacts endpoint
+returned `total_count` 0 with an exactly empty `artifacts` array. Both
+checkouts remained depth one, active root remained bounded at 45 minutes,
+reviewed main remained bounded at 60 minutes, and topology remained two jobs
+with five workflow-authored steps each.
+
+The canonical status is
+`ABSTAIN_exact_main_private_dependency_external_tls_failure_before_dependency_evaluation_root35_live_sequence_or_stage2_no_rerun_no_artifact_no_downstream_authority`.
+This observation grants no TLS workaround, retry, rerun, replacement-fetch,
+dependency, metallib, Stage-2, checkpoint, resume, admission, or downstream
+authority. The secure fetch remains byte-for-byte frozen. The separately
+required pinned-source metallib-bootstrap repair remains blocked until a
+distinct exact-main closure passes that secure fetch, the 36-test root suite
+including this pure observation, every retained focused package, and the
+exact Metal-to-runtime-to-tokenizer live sequence with zero failures or skips.
+
 ## Verification and next slices
 
 The isolated validation package compiles against the exact first-party MLX
