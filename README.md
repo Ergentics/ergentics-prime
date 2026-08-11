@@ -62,6 +62,25 @@ authority test and exact FP32 2x2 GPU matmul receipt on an
 initialization and source-pinned exclusive-candidate inference only; it does
 not independently identify the metallib MLX loaded, allocate or execute the
 decoder, perform checkpoint I/O, train, or grant product authority.
+`PrimeNativeDecoderTokenizerModelFunctionalCompatibilityAuthorityPlanV1.frozenV1`
+now authorizes the next additive Stage-1 witness without claiming that it has
+run. The exact scope is the Prime byte-512 tokenizer mapping source text `A`
+to `[1, 321, 70]`, one seed-42 random initialization of the exact Native-300M
+V2 topology, materialization and ordered-catalog verification, and one
+full-prefix, no-KV-cache FP32 forward producing a finite `[1, 3, 512]` logits
+tensor under the maintained runtime closure. Its status remains
+`ABSTAIN_tokenizer_to_random_initialized_native300m_full_prefix_forward_witness_authorized_not_observed`.
+This is authorization for a tokenizer-to-random-initialized-decoder interface
+witness, not broad model functional or semantic compatibility. It does not
+establish deterministic replay, padding or ragged-batch behavior, KV-cache or
+generation behavior, checkpoint I/O or artifact provenance/admission,
+backward or gradient behavior, optimizer/RNG/data-cursor state,
+training/resume, model quality, candidate/trial/canary selection,
+quantization, product use, or publication authority. The next operational
+step is separately authorized repository publication and reviewed-main
+execution of the exact bounded gate, followed by an append-only observation
+that binds the resulting durable evidence; until then, allocation, catalog,
+forward, output, and reviewed-main execution observations all remain false.
 The exact implemented boundary and remaining replacement path are recorded in
 [`docs/PRIME-NATIVE-DECODER-REPLACEMENT-2026-08-09.md`](docs/PRIME-NATIVE-DECODER-REPLACEMENT-2026-08-09.md).
 
