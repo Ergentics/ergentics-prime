@@ -387,13 +387,46 @@ assert_active_lock \
 
 for forbidden_workflow_value in \
     "--disable-sandbox" \
+    "--insecure" \
     "actions/upload-artifact" \
+    "GIT_SSL_NO_VERIFY" \
+    "http.sslCAInfo" \
+    "http.sslVerify" \
     "self-hosted" \
     "xlarge" \
     "pmhnp-companion-ergentics" \
     "PRIME_PMHNP_COMPANION_ROOT"; do
     if grep -Fq -- "$forbidden_workflow_value" "$workflow_path"; then
         die "hosted quarantine workflow contains forbidden value: $forbidden_workflow_value"
+    fi
+done
+emit_secure_dependency_fetch_block() {
+    awk '
+    /^      - name: Fetch the exact private dependency without evaluating Prime$/ {
+        inside = 1
+    }
+    inside && /^      - name: Compile and run the focused contracts without a credential$/ {
+        exit
+    }
+    inside { print }
+' "$workflow_path"
+}
+readonly secure_dependency_fetch_block="$(emit_secure_dependency_fetch_block)"
+readonly secure_dependency_fetch_block_sha256="$(
+    emit_secure_dependency_fetch_block | shasum -a 256 | awk '{print $1}'
+)"
+[[ "$secure_dependency_fetch_block_sha256" \
+    == "ef783783f50147161e2420fc8be7efd48b42d57ed1ebd79281033ab85ce90847" ]] ||
+    die "secure private-dependency fetch block changed"
+for forbidden_secure_fetch_value in \
+    '--insecure' \
+    'GIT_SSL_NO_VERIFY' \
+    'http.sslCAInfo' \
+    'http.sslVerify' \
+    'retry'; do
+    if grep -Fq -- "$forbidden_secure_fetch_value" \
+        <<< "$secure_dependency_fetch_block"; then
+        die "secure private-dependency fetch gained a TLS bypass or retry: $forbidden_secure_fetch_value"
     fi
 done
 grep -Fq -- 'github.event.pull_request.head.sha || github.sha' "$workflow_path" ||
@@ -628,6 +661,7 @@ readonly trajectory_design_timeout_observation_filter='PrimeCoreTests.PrimeNativ
     die "hosted workflow does not parse and run the exact trajectory-design timeout observation"
 readonly tiny_cpu_mechanics_authority_filter='PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsAuthorityTests/testFrozenV1CanonicalCodableExhaustiveMutationAndCeiling'
 readonly tiny_cpu_mechanics_failure_observation_filter='PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsExecutionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling'
+readonly private_dependency_tls_failure_observation_filter='PrimeCoreTests.PrimeReviewedMainPrivateDependencyTLSFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling'
 [[ "$(grep -Fc -- "$tiny_cpu_mechanics_authority_filter" \
         "$workflow_path")" == "1" \
     && "$(grep -Fc -- "$tiny_cpu_mechanics_failure_observation_filter" \
@@ -657,9 +691,21 @@ readonly tiny_cpu_mechanics_failure_observation_filter='PrimeCoreTests.PrimeNati
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 35 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 36 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not run the exact Stage-2 authority and failure-observation pure contracts"
+[[ "$(grep -Fc -- "$private_dependency_tls_failure_observation_filter" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        'Sources/PrimeCore/PrimeReviewedMainPrivateDependencyTLSFailureObservation.swift' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        'Tests/PrimeCoreTests/PrimeReviewedMainPrivateDependencyTLSFailureObservationTests.swift' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        "          grep -Fq 'PrimeReviewedMainPrivateDependencyTLSFailureObservationTests' \\" \
+        "$workflow_path")" == "1" ]] ||
+    die "hosted workflow does not parse and run the private-dependency TLS failure observation"
 [[ "$(grep -Fc -- \
         'Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderTraining.swift' \
         "$workflow_path")" == "1" \
@@ -1625,6 +1671,8 @@ readonly decoder_tiny_cpu_mechanics_authority_source="$prime_root/Sources/PrimeC
 readonly decoder_tiny_cpu_mechanics_authority_test="$prime_root/Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsAuthorityTests.swift"
 readonly decoder_tiny_cpu_mechanics_failure_observation_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsExecutionFailureObservation.swift"
 readonly decoder_tiny_cpu_mechanics_failure_observation_test="$prime_root/Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsExecutionFailureObservationTests.swift"
+readonly private_dependency_tls_failure_observation_source="$prime_root/Sources/PrimeCore/PrimeReviewedMainPrivateDependencyTLSFailureObservation.swift"
+readonly private_dependency_tls_failure_observation_test="$prime_root/Tests/PrimeCoreTests/PrimeReviewedMainPrivateDependencyTLSFailureObservationTests.swift"
 readonly decoder_training_source="$prime_root/Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderTraining.swift"
 readonly decoder_training_validation_root="$prime_root/Tests/PrimeNativeDecoderTrainingValidation"
 readonly decoder_training_validation_manifest="$decoder_training_validation_root/Package.swift"
@@ -1720,6 +1768,12 @@ readonly decoder_training_validation_test="$decoder_training_validation_root/Tes
 [[ -f "$decoder_tiny_cpu_mechanics_failure_observation_test" \
     && ! -L "$decoder_tiny_cpu_mechanics_failure_observation_test" ]] ||
     die "PrimeNativeDecoder Stage-2 failure-observation test is missing or linked"
+[[ -f "$private_dependency_tls_failure_observation_source" \
+    && ! -L "$private_dependency_tls_failure_observation_source" ]] ||
+    die "private-dependency TLS failure observation is missing or linked"
+[[ -f "$private_dependency_tls_failure_observation_test" \
+    && ! -L "$private_dependency_tls_failure_observation_test" ]] ||
+    die "private-dependency TLS failure-observation test is missing or linked"
 [[ -f "$decoder_training_source" && ! -L "$decoder_training_source" ]] ||
     die "PrimeNativeDecoderTraining source is missing or linked"
 [[ -f "$decoder_training_validation_manifest" \
@@ -2578,6 +2632,8 @@ swiftc -frontend -parse "$decoder_tiny_cpu_mechanics_authority_source"
 swiftc -frontend -parse "$decoder_tiny_cpu_mechanics_authority_test"
 swiftc -frontend -parse "$decoder_tiny_cpu_mechanics_failure_observation_source"
 swiftc -frontend -parse "$decoder_tiny_cpu_mechanics_failure_observation_test"
+swiftc -frontend -parse "$private_dependency_tls_failure_observation_source"
+swiftc -frontend -parse "$private_dependency_tls_failure_observation_test"
 swiftc -frontend -parse "$decoder_training_source"
 swiftc -frontend -parse "$decoder_training_validation_test"
 
@@ -4944,6 +5000,215 @@ for forbidden_tiny_cpu_failure_observation_capability in \
         "$decoder_tiny_cpu_mechanics_failure_observation_source" \
         "$decoder_tiny_cpu_mechanics_failure_observation_test"; then
         die "Stage-2 failure observation gained capability: $forbidden_tiny_cpu_failure_observation_capability"
+    fi
+done
+
+assert_private_dependency_tls_failure_observation_identity() {
+    local relative_path="$1"
+    local expected_mode="$2"
+    local expected_blob="$3"
+    local expected_byte_count="$4"
+    local expected_sha256="$5"
+    local source_path="$prime_root/$relative_path"
+
+    [[ -f "$source_path" && ! -L "$source_path" ]] ||
+        die "private-dependency TLS failure source is missing or linked: $relative_path"
+    [[ "$(git -C "$prime_root" ls-files -s -- \
+        "$relative_path" | awk '{print $1}')" == "$expected_mode" ]] ||
+        die "private-dependency TLS failure source mode changed: $relative_path"
+    [[ "$(git -C "$prime_root" hash-object "$source_path")" \
+        == "$expected_blob" ]] ||
+        die "private-dependency TLS failure source blob changed: $relative_path"
+    [[ "$(wc -c < "$source_path" | awk '{print $1}')" \
+        == "$expected_byte_count" ]] ||
+        die "private-dependency TLS failure source byte count changed: $relative_path"
+    [[ "$(shasum -a 256 "$source_path" | awk '{print $1}')" \
+        == "$expected_sha256" ]] ||
+        die "private-dependency TLS failure source SHA-256 changed: $relative_path"
+}
+
+assert_private_dependency_tls_failure_observation_identity \
+    'Sources/PrimeCore/PrimeReviewedMainPrivateDependencyTLSFailureObservation.swift' \
+    '100644' \
+    '4601692d5a52cbe1ae012e81ea5d86394e5ffadf' \
+    '56027' \
+    'e5092d50858d4fad76b229cc4b954d445df221d7019b06cb930c792370eddf6d'
+assert_private_dependency_tls_failure_observation_identity \
+    'Tests/PrimeCoreTests/PrimeReviewedMainPrivateDependencyTLSFailureObservationTests.swift' \
+    '100644' \
+    'b9d63cc1e4f6a60c99f1157bf08524befcc3f59a' \
+    '32599' \
+    'b53318309597cb3d3e270bb978d0f0f96661dbbb47eda374a7753de9c9795655'
+
+[[ "$(awk '/^import / { print }' \
+        "$private_dependency_tls_failure_observation_source")" \
+    == 'import Foundation' \
+    && "$(awk '/^import / || /^@testable import / { print }' \
+        "$private_dependency_tls_failure_observation_test")" \
+        == $'import CoreFoundation\nimport Foundation\n@testable import PrimeCore\nimport XCTest' \
+    && "$(grep -Ec -- '^[[:space:]]+func test' \
+        "$private_dependency_tls_failure_observation_test")" == "1" \
+    && "$(grep -Fc -- \
+        'PrimeReviewedMainPrivateDependencyTLSFailureObservationTests:' \
+        "$private_dependency_tls_failure_observation_test")" == "1" \
+    && "$(grep -Fc -- \
+        'func testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling()' \
+        "$private_dependency_tls_failure_observation_test")" == "1" \
+    && "$(grep -Fc -- 'PrimeReviewedMainTLSFailureSourceIdentityV1(' \
+        "$private_dependency_tls_failure_observation_source")" == "7" \
+    && "$(grep -Fc -- 'PrimeReviewedMainTLSFailureArchiveMemberIdentityV1(' \
+        "$private_dependency_tls_failure_observation_source")" == "16" \
+    && "$(grep -Fc -- 'PrimeReviewedMainTLSFailureJobStepV1(' \
+        "$private_dependency_tls_failure_observation_source")" == "14" ]] ||
+    die "private-dependency TLS failure observation import or sealed evidence inventory changed"
+for required_private_dependency_tls_failure_value in \
+    'PrimeReviewedMainPrivateDependencyTLSFailureObservationError:' \
+    'PrimeReviewedMainPrivateDependencyTLSFailureObservationV1:' \
+    'public static let frozenV1 = Self(' \
+    'public static func decodeCanonical(_ data: Data) throws -> Self {' \
+    'public func validateExactV1() throws {' \
+    '"ergentics_prime_reviewed_main_private_dependency_tls_failure_observation_v1"' \
+    '"exact_main_external_tls_failure_before_private_dependency_evaluation"' \
+    '"ergentics_prime_native_decoder_tiny_cpu_train_evaluate_mechanics_execution_failure_observation_v1"' \
+    '"3822447081af914836f0c158adfb6fd5cbad611a24082ebffd516bffc0f0f002"' \
+    'pullRequestNumber: 84' \
+    'revision: "e540b73f6a46cf6e0de5b932d7167f178d4ac6fb"' \
+    '"8d544c34a09a770198b50126f50adb766f234a8f"' \
+    '"64eed284f0b5630a23feeea1e74dcd74fe275571"' \
+    'tree: "7f983f66b05c338464662f741d410ae70b1e662a"' \
+    '"4790206681d2c41ffadbed2b774377fcdd2ef2e89c671f14d39026cc0018c2c8"' \
+    'runID: 31_530_684_844' \
+    'runNumber: 65' \
+    'runAttempt: 1' \
+    'exactHeadPushRunCount: 1' \
+    'previousAttemptURLWasNull: true' \
+    'secondAttemptEndpointHTTPStatus: 404' \
+    'rerunCount: 0' \
+    'id: 93_909_705_892' \
+    'id: 93_910_498_134' \
+    'byteCount: 231_409' \
+    '"9df1918e7a6bdd24ba52386a1878114029642d57ce1f739c7523e2071e9772a7"' \
+    'byteCount: 10_195' \
+    '"763401f815fa31f7e3a8fb76468ac30b983580a84e3603b6219deaa8e3a79a2e"' \
+    'byteCount: 4_024' \
+    '"c347aee0e6e114955166c8418967817631ef9fa5befec474fd96379a051a4da9"' \
+    'byteCount: 66_580' \
+    '"642d3b1d139c840c3f02a93fd96d03b3504e9ccf5340b1a05900dedda441e2fc"' \
+    'memberCount: 16' \
+    'uncompressedByteCount: 484_639' \
+    'requiredFocusedRootTestCount: 35' \
+    'focusedRootInvocationCount: 0' \
+    'focusedRootCompletedTestCount: 0' \
+    'retainedLiveSequenceWorkflowCounts: [1, 1, 1]' \
+    'retainedLiveSequenceInvocationCounts: [0, 0, 0]' \
+    'stage2ValidationPackageCommandCount: 0' \
+    'stage2InvocationCount: 0' \
+    'failedJobStepNumber: 4' \
+    '"Fetch the exact private dependency without evaluating Prime"' \
+    'transportFetchInvocationCount: 1' \
+    'dependencyFetchCompleted: false' \
+    'fetchHeadValidationCount: 0' \
+    'dependencyPackageEvaluationCount: 0' \
+    'credentialLeakScanCount: 0' \
+    '"fatal: unable to access '\''https://github.com/Ergentics/ergentics-mlx-swift/'\'': SSL certificate problem: self signed certificate"' \
+    '"2026-08-11T20:03:04.6476270Z"' \
+    '"2026-08-11T20:03:04.6476320Z"' \
+    'processExitCode: 128' \
+    '"Process completed with exit code 128."' \
+    '"git_https_tls_self_signed_certificate_before_private_dependency_fetch_completion"' \
+    'externalTLSFailureObserved: true' \
+    'failurePrecedesDependencyEvaluation: true' \
+    'failurePrecedesReviewedMainSwiftCompilation: true' \
+    'failurePrecedesFocusedRootExecution: true' \
+    'failurePrecedesRetainedLiveSequence: true' \
+    'predecessorStage2ObservationRemainsFrozen: true' \
+    'predecessorStage2AttemptRemainsExhausted: true' \
+    'runnerTLSRepairRequiredBeforeDistinctRun: true' \
+    'stage3RemainsBlocked: true' \
+    'repositorySourceDefectEstablished: false' \
+    'credentialRejectionObserved: false' \
+    'stage2RepairAttempted: false' \
+    'runnerTLSRepairEstablished: false' \
+    'actionsArtifactsTotalCount: 0' \
+    'actionsArtifactsArrayExactlyEmpty: true' \
+    'runLogArchiveIsActionsArtifact: false' \
+    'rerunAuthorized: false' \
+    'replacementRunAuthorized: false' \
+    'runnerTLSRepairAuthorized: false' \
+    'TLSVerificationBypassAuthorized: false' \
+    'customCAInstallationAuthorized: false' \
+    'stage2ExecutionEstablished: false' \
+    'stage2BootstrapRepairEstablished: false' \
+    'stage3AuthorityEstablished: false' \
+    '"ABSTAIN_exact_main_private_dependency_external_tls_failure_before_dependency_evaluation_root35_live_sequence_or_stage2_no_rerun_no_artifact_no_downstream_authority"' \
+    '"require_root36_then_metal44_then_runtime1_then_tokenizer1_before_any_success_observation"' \
+    '"keep_stage2_retired_and_stage3_blocked_pending_separate_default_metallib_repair_authority"'; do
+    grep -Fq -- "$required_private_dependency_tls_failure_value" \
+        "$private_dependency_tls_failure_observation_source" ||
+        die "private-dependency TLS failure observation lost: $required_private_dependency_tls_failure_value"
+done
+for required_private_dependency_tls_failure_test_value in \
+    'func testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling()' \
+    'XCTAssertNoThrow(try observation.validateExactV1())' \
+    'XCTAssertEqual(observation.observedSourceBindings.count, 7)' \
+    'XCTAssertEqual(run.runID, 31_530_684_844)' \
+    'XCTAssertEqual(run.runAttempt, 1)' \
+    'XCTAssertEqual(run.rerunCount, 0)' \
+    'XCTAssertFalse(run.rerunObserved)' \
+    'XCTAssertFalse(run.rerunAuthorized)' \
+    'XCTAssertEqual(active.id, 93_909_705_892)' \
+    'XCTAssertEqual(reviewed.id, 93_910_498_134)' \
+    'XCTAssertEqual(archive.memberCount, 16)' \
+    'XCTAssertEqual(archive.uncompressedByteCount, 484_639)' \
+    'XCTAssertEqual(execution.requiredFocusedRootTestCount, 35)' \
+    'XCTAssertEqual(execution.retainedLiveSequenceWorkflowCounts, [1, 1, 1])' \
+    'XCTAssertEqual(execution.retainedLiveSequenceInvocationCounts, [0, 0, 0])' \
+    'Array(repeating: 0, count: 18)' \
+    'XCTAssertEqual(failure.transportFetchInvocationCount, 1)' \
+    'XCTAssertFalse(failure.dependencyFetchCompleted)' \
+    'XCTAssertEqual(failure.processExitCode, 128)' \
+    'XCTAssertTrue(semantics.externalTLSFailureObserved)' \
+    'XCTAssertTrue(semantics.predecessorStage2ObservationRemainsFrozen)' \
+    'XCTAssertTrue(semantics.predecessorStage2AttemptRemainsExhausted)' \
+    'XCTAssertTrue(semantics.runnerTLSRepairRequiredBeforeDistinctRun)' \
+    'XCTAssertTrue(semantics.stage3RemainsBlocked)' \
+    'XCTAssertTrue(semanticFalseClaims(semantics).allSatisfy { !$0 })' \
+    'XCTAssertTrue(artifactFalseClaims(artifacts).allSatisfy { !$0 })' \
+    'authorityClaims(observation.authorityCeiling).allSatisfy { !$0 }' \
+    '"require_root36_then_metal44_then_runtime1_then_tokenizer1_before_any_success_observation"' \
+    '"44917549689204bb9aabbd24b642d491a26fa501c3828cbc82009aa5e157a35d"' \
+    'XCTAssertGreaterThan(valuePaths.count, 275)' \
+    'XCTAssertGreaterThan(dictionaryPaths.count, 25)' \
+    'XCTAssertGreaterThan(scalarPaths.count, 200)' \
+    'null \(pathLabel(path))' \
+    'removed \(pathLabel(path))' \
+    'unknown_reviewed_main_private_dependency_tls_failure_field_\(index)' \
+    'Observation.decodeCanonical(prefixed)' \
+    'Observation.decodeCanonical(suffixed)' \
+    'Observation.decodeCanonical(pretty)' \
+    'Observation.decodeCanonical(slashEscapedData)' \
+    'Observation.decodeCanonical(reorderedData)' \
+    'Observation.decodeCanonical(duplicateData)'; do
+    grep -Fq -- "$required_private_dependency_tls_failure_test_value" \
+        "$private_dependency_tls_failure_observation_test" ||
+        die "private-dependency TLS failure-observation test lost: $required_private_dependency_tls_failure_test_value"
+done
+for forbidden_private_dependency_tls_failure_capability in \
+    'import CoreGraphics' \
+    'import Metal' \
+    'import MLX' \
+    'import MLXNN' \
+    'import MLXOptimizers' \
+    'FileManager' \
+    'FileHandle' \
+    'URLSession' \
+    'Process(' \
+    'posix_spawn' \
+    'execve('; do
+    if grep -Fq -- "$forbidden_private_dependency_tls_failure_capability" \
+        "$private_dependency_tls_failure_observation_source" \
+        "$private_dependency_tls_failure_observation_test"; then
+        die "private-dependency TLS failure observation gained capability: $forbidden_private_dependency_tls_failure_capability"
     fi
 done
 
