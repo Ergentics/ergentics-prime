@@ -16,18 +16,32 @@ entry points.
 The first Prime-owned replacement mechanics now live in the dependency-isolated
 `PrimeNativeDecoder` library target. Its GQA body and opaque KV cache do not
 import MLXLLM, MLXLMCommon, Llama, PMHNP, tokenizer, optimizer, checkpoint, or
-training code. The separate `PrimeNativeDecoderCheckpoint` target now defines
-the strict Native-300M/byte-512 weights-only compatibility identity, analytic
-parameter catalog, and internal bounded synthetic borrowed-descriptor codec.
-It does not expose native checkpoint I/O, establish a retained checkpoint,
-initialize a runtime, or authorize training. An append-only repair now works
+training code. The separate `PrimeNativeDecoderCheckpoint` target's frozen V1
+surface defines the historical Native-300M/byte-512 weights-only compatibility
+identity, analytic parameter catalog, and internal bounded synthetic
+borrowed-descriptor codec. V1 does not expose native checkpoint I/O, establish
+a retained checkpoint, initialize a runtime, or authorize training. An
+append-only repair now works
 around the pinned MLX batched single-token RoPE dispatch defect and binds
 TF32-off as a synthetic CI-mechanics policy. The existing checkpoint V1
 identity remains frozen pre-repair history. An append-only V2 declarative
 identity now retains its exact configuration, byte-512 tokenizer identity,
 and 218-entry FP32 parameter catalog while binding the repaired decoder source.
-It adds no V2 manifest, codec, checkpoint artifact or I/O, maintained-runtime
-policy, or training authority. An append-only execution
+The append-only
+`PrimeNativeDecoderCheckpointV2ContainerIOAuthorityPlanV1` now adds the
+bounded V2 manifest, external whole-container binding, and exact
+Native-300M/byte-512 codec. Its public write/load entry points accept only a
+held `PrimeArtifactRoot` capability and a descriptor-relative artifact name;
+they expose no raw descriptor, URL, discovery, replacement, or in-place model
+mutation API. Publication uses an exclusive hidden file, complete same-file
+reload and materialization, immutable sealing, synchronization, no-replace
+rename, and parent synchronization. Loading requires both the expected
+canonical manifest and an out-of-band whole-container `PrimeArtifactBinding`
+and returns a fresh decoder after complete verification. The embedded manifest
+cannot supply its own trusted container hash. This source slice authorizes the
+two exact entry points but executes neither one, retains no checkpoint, and
+establishes no artifact provenance, admission, durability observation,
+training, or product authority. An append-only execution
 observation now binds an exact clean committed repair head whose rebuilt
 44-test bundle passed on external live Metal with zero failures and skips;
 an append-only correction preserves that XCTest evidence while invalidating
@@ -93,10 +107,9 @@ compatibility, model quality, deterministic replay, padding/ragged-batch,
 KV-cache or generation behavior, checkpoint I/O/artifact/admission,
 backward/training/resume, trial/canary/quantization, product use,
 artifact/product publication authority, independent loaded-metallib identity,
-and physical-GPU identity remain false. The next bounded boundary is a
-separately authorized V2
-checkpoint manifest/container/I/O design; no checkpoint bytes are admitted by
-this observation.
+and physical-GPU identity remain false. The next bounded boundary is an exact,
+clean, separately observed one-write/one-load exercise of the new V2 codec;
+the design itself admits no checkpoint bytes.
 The exact implemented boundary and remaining replacement path are recorded in
 [`docs/PRIME-NATIVE-DECODER-REPLACEMENT-2026-08-09.md`](docs/PRIME-NATIVE-DECODER-REPLACEMENT-2026-08-09.md).
 
