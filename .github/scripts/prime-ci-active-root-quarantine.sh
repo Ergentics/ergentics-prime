@@ -110,6 +110,9 @@ require_preserved_object \
     "Sources/PrimeCore/PrimeNativeDecoderMetalRepairAuthority.swift" \
     "f284cb6d9bfdd37add9273f3e0eecd69e13cd134"
 require_preserved_object \
+    "Sources/PrimeNativeDecoder/PrimeNativeGQADecoder.swift" \
+    "0c80c1ab7173c2620a92c2a14e8d42d6562dbe0f"
+require_preserved_object \
     "Sources/PrimeCore/PrimeNativeDecoderMetalExecutionObservation.swift" \
     "39e37fc4dd7e2b6131ce0efc790b49602a94f484"
 require_preserved_object \
@@ -662,6 +665,8 @@ readonly trajectory_design_timeout_observation_filter='PrimeCoreTests.PrimeNativ
 readonly tiny_cpu_mechanics_authority_filter='PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsAuthorityTests/testFrozenV1CanonicalCodableExhaustiveMutationAndCeiling'
 readonly tiny_cpu_mechanics_failure_observation_filter='PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsExecutionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling'
 readonly private_dependency_tls_failure_observation_filter='PrimeCoreTests.PrimeReviewedMainPrivateDependencyTLSFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling'
+readonly metal_current_decoder_identity_assertion_failure_observation_filter='PrimeCoreTests.PrimeNativeDecoderMetalCurrentDecoderIdentityAssertionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling'
+readonly metal_current_decoder_identity_assertion_repair_authority_filter='PrimeCoreTests.PrimeNativeDecoderMetalCurrentDecoderIdentityAssertionRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling'
 [[ "$(grep -Fc -- "$tiny_cpu_mechanics_authority_filter" \
         "$workflow_path")" == "1" \
     && "$(grep -Fc -- "$tiny_cpu_mechanics_failure_observation_filter" \
@@ -691,7 +696,7 @@ readonly private_dependency_tls_failure_observation_filter='PrimeCoreTests.Prime
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 36 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 38 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not run the exact Stage-2 authority and failure-observation pure contracts"
 [[ "$(grep -Fc -- "$private_dependency_tls_failure_observation_filter" \
@@ -706,6 +711,31 @@ readonly private_dependency_tls_failure_observation_filter='PrimeCoreTests.Prime
         "          grep -Fq 'PrimeReviewedMainPrivateDependencyTLSFailureObservationTests' \\" \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the private-dependency TLS failure observation"
+[[ "$(grep -Fc -- \
+        "$metal_current_decoder_identity_assertion_failure_observation_filter" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        "$metal_current_decoder_identity_assertion_repair_authority_filter" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        'Sources/PrimeCore/PrimeNativeDecoderMetalCurrentDecoderIdentityAssertionFailureObservation.swift' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        'Tests/PrimeCoreTests/PrimeNativeDecoderMetalCurrentDecoderIdentityAssertionFailureObservationTests.swift' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        'Sources/PrimeCore/PrimeNativeDecoderMetalCurrentDecoderIdentityAssertionRepairAuthority.swift' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        'Tests/PrimeCoreTests/PrimeNativeDecoderMetalCurrentDecoderIdentityAssertionRepairAuthorityTests.swift' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        "          grep -Fq 'PrimeNativeDecoderMetalCurrentDecoderIdentityAssertionFailureObservationTests' \\" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        "          grep -Fq 'PrimeNativeDecoderMetalCurrentDecoderIdentityAssertionRepairAuthorityTests' \\" \
+        "$workflow_path")" == "1" ]] ||
+    die "hosted workflow does not parse and run the current-decoder identity assertion failure and repair contracts"
 [[ "$(grep -Fc -- \
         'Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderTraining.swift' \
         "$workflow_path")" == "1" \
@@ -1673,6 +1703,10 @@ readonly decoder_tiny_cpu_mechanics_failure_observation_source="$prime_root/Sour
 readonly decoder_tiny_cpu_mechanics_failure_observation_test="$prime_root/Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsExecutionFailureObservationTests.swift"
 readonly private_dependency_tls_failure_observation_source="$prime_root/Sources/PrimeCore/PrimeReviewedMainPrivateDependencyTLSFailureObservation.swift"
 readonly private_dependency_tls_failure_observation_test="$prime_root/Tests/PrimeCoreTests/PrimeReviewedMainPrivateDependencyTLSFailureObservationTests.swift"
+readonly metal_current_decoder_identity_assertion_failure_observation_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderMetalCurrentDecoderIdentityAssertionFailureObservation.swift"
+readonly metal_current_decoder_identity_assertion_failure_observation_test="$prime_root/Tests/PrimeCoreTests/PrimeNativeDecoderMetalCurrentDecoderIdentityAssertionFailureObservationTests.swift"
+readonly metal_current_decoder_identity_assertion_repair_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderMetalCurrentDecoderIdentityAssertionRepairAuthority.swift"
+readonly metal_current_decoder_identity_assertion_repair_authority_test="$prime_root/Tests/PrimeCoreTests/PrimeNativeDecoderMetalCurrentDecoderIdentityAssertionRepairAuthorityTests.swift"
 readonly decoder_training_source="$prime_root/Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderTraining.swift"
 readonly decoder_training_validation_root="$prime_root/Tests/PrimeNativeDecoderTrainingValidation"
 readonly decoder_training_validation_manifest="$decoder_training_validation_root/Package.swift"
@@ -1774,6 +1808,18 @@ readonly decoder_training_validation_test="$decoder_training_validation_root/Tes
 [[ -f "$private_dependency_tls_failure_observation_test" \
     && ! -L "$private_dependency_tls_failure_observation_test" ]] ||
     die "private-dependency TLS failure-observation test is missing or linked"
+[[ -f "$metal_current_decoder_identity_assertion_failure_observation_source" \
+    && ! -L "$metal_current_decoder_identity_assertion_failure_observation_source" ]] ||
+    die "current-decoder identity assertion failure observation is missing or linked"
+[[ -f "$metal_current_decoder_identity_assertion_failure_observation_test" \
+    && ! -L "$metal_current_decoder_identity_assertion_failure_observation_test" ]] ||
+    die "current-decoder identity assertion failure-observation test is missing or linked"
+[[ -f "$metal_current_decoder_identity_assertion_repair_authority_source" \
+    && ! -L "$metal_current_decoder_identity_assertion_repair_authority_source" ]] ||
+    die "current-decoder identity assertion repair authority is missing or linked"
+[[ -f "$metal_current_decoder_identity_assertion_repair_authority_test" \
+    && ! -L "$metal_current_decoder_identity_assertion_repair_authority_test" ]] ||
+    die "current-decoder identity assertion repair-authority test is missing or linked"
 [[ -f "$decoder_training_source" && ! -L "$decoder_training_source" ]] ||
     die "PrimeNativeDecoderTraining source is missing or linked"
 [[ -f "$decoder_training_validation_manifest" \
@@ -2566,14 +2612,14 @@ done
 [[ "$(git -C "$prime_root" hash-object "$decoder_validation_test")" \
     == "0162a60c422de7d05abbdd6932420930adcd5813" ]] ||
     die "PrimeNativeDecoder repaired regression blob changed"
-[[ "$(wc -c < "$decoder_authority_test" | awk '{print $1}')" == "34555" ]] ||
-    die "PrimeNativeDecoder repair-authority test byte count changed"
+[[ "$(wc -c < "$decoder_authority_test" | awk '{print $1}')" == "35548" ]] ||
+    die "PrimeNativeDecoder current-decoder assertion repair test byte count changed"
 [[ "$(shasum -a 256 "$decoder_authority_test" | awk '{print $1}')" \
-    == "28b146996a0dede2e6cd8e6d8116641a3a398bc5f845051a75cbbc977e9f48fe" ]] ||
-    die "PrimeNativeDecoder repair-authority test SHA-256 changed"
+    == "40c65bd0169ed5af08248acb38b5b287a82894fec8e8f2c2808f348e3cd50373" ]] ||
+    die "PrimeNativeDecoder current-decoder assertion repair test SHA-256 changed"
 [[ "$(git -C "$prime_root" hash-object "$decoder_authority_test")" \
-    == "25b7c9b99e789988fb7362b73a41d35eafba406d" ]] ||
-    die "PrimeNativeDecoder repair-authority test blob changed"
+    == "329e57a8cbb2aa55879a94c88b17c391d13a1eb4" ]] ||
+    die "PrimeNativeDecoder current-decoder assertion repair test blob changed"
 [[ "$(wc -c < "$decoder_checkpoint_test" | awk '{print $1}')" == "33037" ]] ||
     die "PrimeNativeDecoder checkpoint execution test byte count changed"
 [[ "$(shasum -a 256 "$decoder_checkpoint_test" | awk '{print $1}')" \
@@ -2634,6 +2680,10 @@ swiftc -frontend -parse "$decoder_tiny_cpu_mechanics_failure_observation_source"
 swiftc -frontend -parse "$decoder_tiny_cpu_mechanics_failure_observation_test"
 swiftc -frontend -parse "$private_dependency_tls_failure_observation_source"
 swiftc -frontend -parse "$private_dependency_tls_failure_observation_test"
+swiftc -frontend -parse "$metal_current_decoder_identity_assertion_failure_observation_source"
+swiftc -frontend -parse "$metal_current_decoder_identity_assertion_failure_observation_test"
+swiftc -frontend -parse "$metal_current_decoder_identity_assertion_repair_authority_source"
+swiftc -frontend -parse "$metal_current_decoder_identity_assertion_repair_authority_test"
 swiftc -frontend -parse "$decoder_training_source"
 swiftc -frontend -parse "$decoder_training_validation_test"
 
@@ -5211,6 +5261,459 @@ for forbidden_private_dependency_tls_failure_capability in \
         die "private-dependency TLS failure observation gained capability: $forbidden_private_dependency_tls_failure_capability"
     fi
 done
+
+assert_metal_current_decoder_assertion_arc_identity() {
+    local relative_path="$1"
+    local expected_mode="$2"
+    local expected_blob="$3"
+    local expected_byte_count="$4"
+    local expected_sha256="$5"
+    local source_path="$prime_root/$relative_path"
+
+    [[ -f "$source_path" && ! -L "$source_path" ]] ||
+        die "Metal current-decoder assertion arc source is missing or linked: $relative_path"
+    [[ "$(git -C "$prime_root" ls-files -s -- \
+        "$relative_path" | awk '{print $1}')" == "$expected_mode" ]] ||
+        die "Metal current-decoder assertion arc source mode changed: $relative_path"
+    [[ "$(git -C "$prime_root" hash-object "$source_path")" \
+        == "$expected_blob" ]] ||
+        die "Metal current-decoder assertion arc source blob changed: $relative_path"
+    [[ "$(wc -c < "$source_path" | awk '{print $1}')" \
+        == "$expected_byte_count" ]] ||
+        die "Metal current-decoder assertion arc source byte count changed: $relative_path"
+    [[ "$(shasum -a 256 "$source_path" | awk '{print $1}')" \
+        == "$expected_sha256" ]] ||
+        die "Metal current-decoder assertion arc source SHA-256 changed: $relative_path"
+}
+
+assert_metal_current_decoder_assertion_arc_identity \
+    'Sources/PrimeCore/PrimeNativeDecoderMetalCurrentDecoderIdentityAssertionFailureObservation.swift' \
+    '100644' \
+    '2caec8b51732c35674212e1fc52bdba754e1aba5' \
+    '64802' \
+    '2751e4718cb2d25f25a2e8dc1e9b857457789d33a2f589ce60a1dd0e619475b2'
+assert_metal_current_decoder_assertion_arc_identity \
+    'Tests/PrimeCoreTests/PrimeNativeDecoderMetalCurrentDecoderIdentityAssertionFailureObservationTests.swift' \
+    '100644' \
+    'cf1c4aaee93932e84f79ac63ccbfc305bfc92d90' \
+    '35169' \
+    '952c84453e8cfec84528bc49c089a40cae0cd7052329158dd4d84c72ef3c9c52'
+
+[[ "$(awk '/^import / { print }' \
+        "$metal_current_decoder_identity_assertion_failure_observation_source")" \
+    == 'import Foundation' \
+    && "$(awk '/^import / || /^@testable import / { print }' \
+        "$metal_current_decoder_identity_assertion_failure_observation_test")" \
+        == $'import CoreFoundation\nimport Foundation\n@testable import PrimeCore\nimport XCTest' \
+    && "$(grep -Ec -- '^[[:space:]]+func test' \
+        "$metal_current_decoder_identity_assertion_failure_observation_test")" == "1" \
+    && "$(grep -Fc -- \
+        'PrimeNativeDecoderMetalCurrentDecoderIdentityAssertionFailureObservationTests:' \
+        "$metal_current_decoder_identity_assertion_failure_observation_test")" == "1" \
+    && "$(grep -Fc -- \
+        'func testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling()' \
+        "$metal_current_decoder_identity_assertion_failure_observation_test")" == "1" \
+    && "$(grep -Fc -- \
+        'PrimeNativeDecoderMetalIdentityFailureSourceIdentityV1(' \
+        "$metal_current_decoder_identity_assertion_failure_observation_source")" == "9" \
+    && "$(grep -Fc -- 'Self.member(' \
+        "$metal_current_decoder_identity_assertion_failure_observation_source")" == "18" \
+    && "$(grep -Fc -- 'PrimeNativeDecoderMetalIdentityFailureJobStepV1(' \
+        "$metal_current_decoder_identity_assertion_failure_observation_source")" == "14" ]] ||
+    die "Metal current-decoder assertion failure import or sealed evidence inventory changed"
+for required_metal_current_decoder_assertion_failure_value in \
+    'PrimeNativeDecoderMetalCurrentDecoderIdentityAssertionFailureObservationError:' \
+    'PrimeNativeDecoderMetalCurrentDecoderIdentityAssertionFailureObservationV1:' \
+    'public static let frozenV1 = Self(' \
+    'public static func decodeCanonical(_ data: Data) throws -> Self {' \
+    'public func validateExactV1() throws {' \
+    '"ergentics_prime_native_decoder_metal_current_decoder_identity_assertion_failure_observation_v1"' \
+    '"exact_main_metal_current_decoder_identity_assertion_failure_after_root36"' \
+    '"ergentics_prime_reviewed_main_private_dependency_tls_failure_observation_v1"' \
+    '"44917549689204bb9aabbd24b642d491a26fa501c3828cbc82009aa5e157a35d"' \
+    'pullRequestNumber: 85' \
+    'revision: "2d0464ca35212d3d84781654b6a4e08158f27eab"' \
+    '"e540b73f6a46cf6e0de5b932d7167f178d4ac6fb"' \
+    '"5198f5da94977d11f5fcfabf65bb55a62cb31f26"' \
+    'tree: "be66df2affb85e2d846ba6f5f51e540d17864796"' \
+    'embeddedSourceIdentitySHA256:' \
+    '"bb94b8a0e846639e2260bbe50d352b797e37b64f6318d13b28f3cbc5e1cc8f43"' \
+    'path: ".github/workflows/prime-active-root-quarantine.yml"' \
+    'gitBlob: "17cd469ea8ee75c070a404390abd2319c782f5e0"' \
+    'path: ".github/scripts/prime-ci-active-root-quarantine.sh"' \
+    'gitBlob: "da6389dfa57c0a67268dd441fe418ed1fc6ff521"' \
+    'path: ".github/scripts/prime-ci-native-decoder-metal.sh"' \
+    'gitBlob: "418d2d2753cee38e0b3558ad45e1e09865ffd11d"' \
+    'workflowID: 329_017_041' \
+    'runID: 31_533_658_617' \
+    'runNumber: 67' \
+    'runAttempt: 1' \
+    'checkSuiteID: 85_540_241_762' \
+    'exactHeadPushRunCount: 1' \
+    'secondAttemptEndpointHTTPStatus: 404' \
+    'rerunCount: 0' \
+    'id: 93_919_471_247' \
+    'id: 93_920_049_786' \
+    'runnerVersion: "2.336.0"' \
+    'reviewedRunnerImage: "macos-26-arm64"' \
+    'byteCount: 232_035' \
+    '"46187396b65c13adf6e1da20d625890eb804f6b4ba476615ed0a532a55c89682"' \
+    'byteCount: 10_192_525' \
+    '"0b2d720a64c341dc874f3271b0e4a5792c6d7af36337f1d15f1641d27937ef16"' \
+    'byteCount: 4_893' \
+    '"7c50a7eddd18f8c8049ef431164da6175ffae284140dfd68a9062d8d0bc701a2"' \
+    'byteCount: 337_696' \
+    '"f972a9fe4bf0f00c467dd90f43a60cc594f2228cec6e720d8acfd2816b6f61e1"' \
+    'byteCount: 9_843_772' \
+    '"343c5ae69d86eb6ba16d1ab0fe72663651c3ca3d4ae921e632c355e2f7506f6a"' \
+    'memberCount: 18' \
+    'uncompressedByteCount: 20_850_557' \
+    '"7ab28a53a38c61145065a921c53414d5ce15fe40a6db66b678c65b3c93e05736"' \
+    'securePrivateDependencyFetchInvocationCount: 1' \
+    'securePrivateDependencyFetchCompleted: true' \
+    'focusedRootRequiredTestCount: 36' \
+    'focusedRootCompletedTestCount: 36' \
+    'retainedLiveSequenceWorkflowCounts: [1, 1, 1]' \
+    'retainedLiveSequenceInvocationCounts: [1, 0, 0]' \
+    'metallibBuildInvocationCount: 1' \
+    'metallibBuildCompleted: true' \
+    'metallibByteCount: 6_292_732' \
+    'metalStartedTestCount: 44' \
+    'metalPassedTestCount: 43' \
+    'metalFailedTestCount: 1' \
+    'metalAssertionFailureCount: 2' \
+    'metalSkipCount: 0' \
+    'runtimeClosureInvocationCount: 0' \
+    'runtimeReceiptCount: 0' \
+    'tokenizerCompatibilityInvocationCount: 0' \
+    'tokenizerReceiptCount: 0' \
+    'stage2ValidationPackageCommandCount: 0' \
+    'stage2ValidationFilterCount: 0' \
+    'stage2ValidationLogPathCount: 0' \
+    'stage2ValidationScratchPathCount: 0' \
+    'stage2InvocationCount: 0' \
+    'retiredSeed42CheckpointCommandCount: 0' \
+    'retiredSeed43CheckpointCommandCount: 0' \
+    'checkpointReceiptMarkerCount: 0' \
+    'artifactUploadStepCount: 0' \
+    'frozenMetalAuthorityGitBlob:' \
+    '"835a4826549e1f28ec27e3533f746218beb3bdf2"' \
+    'frozenMetalAuthorityByteCount: 39_050' \
+    '"058ab392ac74a132a2503a04ab48400d1ef78a1bcad38eaddefce828b9252c9b"' \
+    'currentDecoderGitBlob:' \
+    '"0c80c1ab7173c2620a92c2a14e8d42d6562dbe0f"' \
+    'currentDecoderByteCount: 39_598' \
+    '"d59a19bdbb37a74d5d08bea65c6b77bf2ed2dd4d3f138e5758a4ef9613b93994"' \
+    'currentMinusFrozenByteCount: 548' \
+    '"f13322ebc368c639a0f04b7570af093cc57ec22b"' \
+    '"package func trainingLogitsNoCache(_ rankTwoTokenIDs: MLXArray) -> MLXArray"' \
+    'diffContainsOnlyStage2TrainingSeam: true' \
+    'frozenMetalAuthorityRemainsHistorical: true' \
+    'failedJobStepNumber: 6' \
+    '"testMetalRepairAuthorityIsAppendOnlyAndSourceExact"' \
+    'byteCountAssertionLine: 338' \
+    'sha256AssertionLine: 339' \
+    'failedTestCaseCount: 1' \
+    'assertionFailureCount: 2' \
+    'processExitCode: 2' \
+    '"metal_authority_current_decoder_identity_assertion_stale_after_stage2_package_only_seam"' \
+    'secureDependencyFetchSuccessObserved: true' \
+    'failureLimitedToCurrentDecoderIdentityAssertion: true' \
+    'runtimeAndTokenizerBlockedByOrderedFailClosedSequence: true' \
+    'predecessorTLSObservationRemainsFrozen: true' \
+    'predecessorStage2FailureObservationRemainsFrozen: true' \
+    'predecessorStage2AttemptRemainsExhausted: true' \
+    'separateIdentityAssertionRepairRequired: true' \
+    'privateDependencyTLSFailureObserved: false' \
+    'metalFunctionalRegressionEstablished: false' \
+    'currentDecoderIdentityRepairAttempted: false' \
+    'metalValidationEstablished: false' \
+    'runtimeClosureEstablished: false' \
+    'tokenizerCompatibilityEstablished: false' \
+    'stage2ExecutionEstablished: false' \
+    'stage2BootstrapRepairEstablished: false' \
+    'actionsArtifactsTotalCount: 0' \
+    'actionsArtifactsArrayExactlyEmpty: true' \
+    'runLogArchiveIsActionsArtifact: false' \
+    'rerunAuthorized: false' \
+    'replacementRunAuthorized: false' \
+    'currentDecoderIdentityAssertionRepairAuthorized: false' \
+    'checkpointArtifactUploadAuthorized: false' \
+    'native300MTrainingEstablished: false' \
+    'publicationAuthorized: false' \
+    '"ABSTAIN_exact_main_root36_and_fresh_metallib_passed_metal44_current_decoder_identity_assertion_failed_runtime_tokenizer_stage2_checkpoint_absent_no_rerun_no_artifact_no_downstream_authority"' \
+    '"require_root37_then_metal44_then_runtime1_then_tokenizer1_before_any_success_observation"'; do
+    grep -Fq -- "$required_metal_current_decoder_assertion_failure_value" \
+        "$metal_current_decoder_identity_assertion_failure_observation_source" ||
+        die "Metal current-decoder assertion failure observation lost: $required_metal_current_decoder_assertion_failure_value"
+done
+for required_metal_current_decoder_assertion_failure_test_value in \
+    'func testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling()' \
+    'XCTAssertNoThrow(try observation.validateExactV1())' \
+    'XCTAssertEqual(observation.observedSourceBindings.count, 9)' \
+    'XCTAssertEqual(run.workflowID, 329_017_041)' \
+    'XCTAssertEqual(run.runID, 31_533_658_617)' \
+    'XCTAssertEqual(run.runNumber, 67)' \
+    'XCTAssertEqual(run.runAttempt, 1)' \
+    'XCTAssertEqual(run.checkSuiteID, 85_540_241_762)' \
+    'XCTAssertEqual(run.rerunCount, 0)' \
+    'XCTAssertFalse(run.rerunObserved)' \
+    'XCTAssertFalse(run.rerunAuthorized)' \
+    'XCTAssertEqual(active.id, 93_919_471_247)' \
+    'XCTAssertEqual(reviewed.id, 93_920_049_786)' \
+    'XCTAssertEqual(archive.memberCount, 18)' \
+    'XCTAssertEqual(archive.uncompressedByteCount, 20_850_557)' \
+    'XCTAssertEqual(execution.focusedRootRequiredTestCount, 36)' \
+    'XCTAssertEqual(execution.retainedLiveSequenceWorkflowCounts, [1, 1, 1])' \
+    'XCTAssertEqual(execution.retainedLiveSequenceInvocationCounts, [1, 0, 0])' \
+    'XCTAssertEqual(execution.metalStartedTestCount, 44)' \
+    'XCTAssertEqual(execution.metalPassedTestCount, 43)' \
+    'XCTAssertEqual(execution.metalFailedTestCount, 1)' \
+    'XCTAssertEqual(execution.metalAssertionFailureCount, 2)' \
+    'Array(repeating: 0, count: 19)' \
+    'XCTAssertEqual(drift.currentMinusFrozenByteCount, 548)' \
+    'XCTAssertTrue(drift.diffContainsOnlyStage2TrainingSeam)' \
+    'XCTAssertTrue(drift.frozenMetalAuthorityRemainsHistorical)' \
+    'XCTAssertEqual(assertion.byteCountAssertionLine, 338)' \
+    'XCTAssertEqual(assertion.sha256AssertionLine, 339)' \
+    'XCTAssertEqual(assertion.failedTestCaseCount, 1)' \
+    'XCTAssertEqual(assertion.assertionFailureCount, 2)' \
+    'XCTAssertEqual(assertion.processExitCode, 2)' \
+    'XCTAssertTrue(semantics.failureLimitedToCurrentDecoderIdentityAssertion)' \
+    'semanticFalseClaims(semantics).allSatisfy { !$0 }' \
+    'artifactFalseClaims(artifacts).allSatisfy { !$0 }' \
+    'authorityClaims(observation.authorityCeiling).allSatisfy { !$0 }' \
+    '"require_root37_then_metal44_then_runtime1_then_tokenizer1_before_any_success_observation"' \
+    '"7d1d90667fdba0171b4c6b98431b7fd045fe5d2c11bd640689bb4bda6dde3424"' \
+    'XCTAssertGreaterThan(valuePaths.count, 300)' \
+    'XCTAssertGreaterThan(dictionaryPaths.count, 25)' \
+    'XCTAssertGreaterThan(scalarPaths.count, 225)' \
+    'null \(pathLabel(path))' \
+    'removed \(pathLabel(path))' \
+    'unknown_metal_current_decoder_identity_failure_field_\(index)' \
+    'Observation.decodeCanonical(prefixed)' \
+    'Observation.decodeCanonical(suffixed)' \
+    'Observation.decodeCanonical(pretty)' \
+    'Observation.decodeCanonical(slashEscapedData)' \
+    'Observation.decodeCanonical(reorderedData)' \
+    'Observation.decodeCanonical(duplicateData)'; do
+    grep -Fq -- "$required_metal_current_decoder_assertion_failure_test_value" \
+        "$metal_current_decoder_identity_assertion_failure_observation_test" ||
+        die "Metal current-decoder assertion failure test lost: $required_metal_current_decoder_assertion_failure_test_value"
+done
+for forbidden_metal_current_decoder_assertion_failure_capability in \
+    'import CoreGraphics' \
+    'import Metal' \
+    'import MLX' \
+    'import MLXNN' \
+    'import MLXOptimizers' \
+    'PrimeNativeGQADecoder.make(' \
+    'FileManager' \
+    'FileHandle' \
+    'URLSession' \
+    'Process(' \
+    'posix_spawn' \
+    'execve('; do
+    if grep -Fq -- "$forbidden_metal_current_decoder_assertion_failure_capability" \
+        "$metal_current_decoder_identity_assertion_failure_observation_source" \
+        "$metal_current_decoder_identity_assertion_failure_observation_test"; then
+        die "Metal current-decoder assertion failure observation gained capability: $forbidden_metal_current_decoder_assertion_failure_capability"
+    fi
+done
+
+assert_metal_current_decoder_assertion_arc_identity \
+    'Sources/PrimeCore/PrimeNativeDecoderMetalCurrentDecoderIdentityAssertionRepairAuthority.swift' \
+    '100644' \
+    '49c25bb51083dc8160e08e96a7445b1afad4f82f' \
+    '31511' \
+    '8e046899c393cc75935a83199654011f909e6a95884f1bbc862429993b5c68e3'
+assert_metal_current_decoder_assertion_arc_identity \
+    'Tests/PrimeCoreTests/PrimeNativeDecoderMetalCurrentDecoderIdentityAssertionRepairAuthorityTests.swift' \
+    '100644' \
+    'f24b0cbdb265332ebe6a9ff4c62e92e207474b20' \
+    '25001' \
+    '65aaeecfa44644a57a3f470e784e45444c32ddf2a73fe7861ef95b01c54a9825'
+
+[[ "$(awk '/^import / { print }' \
+        "$metal_current_decoder_identity_assertion_repair_authority_source")" \
+    == 'import Foundation' \
+    && "$(awk '/^import / || /^@testable import / { print }' \
+        "$metal_current_decoder_identity_assertion_repair_authority_test")" \
+        == $'import CoreFoundation\nimport Foundation\n@testable import PrimeCore\nimport XCTest' \
+    && "$(grep -Ec -- '^[[:space:]]+func test' \
+        "$metal_current_decoder_identity_assertion_repair_authority_test")" == "1" \
+    && "$(grep -Fc -- \
+        'PrimeNativeDecoderMetalCurrentDecoderIdentityAssertionRepairAuthorityTests:' \
+        "$metal_current_decoder_identity_assertion_repair_authority_test")" == "1" \
+    && "$(grep -Fc -- \
+        'func testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling()' \
+        "$metal_current_decoder_identity_assertion_repair_authority_test")" == "1" ]] ||
+    die "Metal current-decoder assertion repair import or single-test boundary changed"
+for required_metal_current_decoder_assertion_repair_value in \
+    'PrimeNativeDecoderMetalCurrentDecoderIdentityAssertionRepairAuthorityError:' \
+    'PrimeNativeDecoderMetalCurrentDecoderIdentityAssertionRepairAuthorityV1:' \
+    'public static let frozenV1 = Self(' \
+    'public static func decodeCanonical(_ data: Data) throws -> Self {' \
+    'public func validateExactV1() throws {' \
+    '"ergentics_prime_native_decoder_metal_current_decoder_identity_assertion_repair_authority_v1"' \
+    '"test_only_historical_plan_to_current_stage2_decoder_identity_assertion_repair"' \
+    '"ergentics_prime_native_decoder_metal_current_decoder_identity_assertion_failure_observation_v1"' \
+    '"7d1d90667fdba0171b4c6b98431b7fd045fe5d2c11bd640689bb4bda6dde3424"' \
+    'mergeRevision:' \
+    '"2d0464ca35212d3d84781654b6a4e08158f27eab"' \
+    'mergeTree:' \
+    '"be66df2affb85e2d846ba6f5f51e540d17864796"' \
+    'runID: 31_533_658_617' \
+    'runNumber: 67' \
+    'runAttempt: 1' \
+    'activeRootJobID: 93_919_471_247' \
+    'reviewedMainJobID: 93_920_049_786' \
+    'focusedRootRequiredTestCount: 36' \
+    'focusedRootCompletedTestCount: 36' \
+    'requiredMetalTestCount: 44' \
+    'completedMetalTestCount: 44' \
+    'passedMetalTestCaseCount: 43' \
+    'failedMetalTestCaseCount: 1' \
+    'assertionFailureCount: 2' \
+    'metalSkipCount: 0' \
+    'runtimeInvocationCount: 0' \
+    'tokenizerInvocationCount: 0' \
+    'runConsumedAsTerminalFailureEvidence: true' \
+    'runRecoveryOrReinterpretationAuthorized: false' \
+    '"Sources/PrimeCore/PrimeNativeDecoderMetalRepairAuthority.swift"' \
+    '"f284cb6d9bfdd37add9273f3e0eecd69e13cd134"' \
+    'repairedDecoderSourceByteCount: 39_050' \
+    '"058ab392ac74a132a2503a04ab48400d1ef78a1bcad38eaddefce828b9252c9b"' \
+    'sourceAuthorityCanonicalSHA256:' \
+    '"3520f1a778b33be0fad8c8967318b0b4ad8ed86b4746620e0bbf0e6c385f7840"' \
+    'expectedGitBlob:' \
+    '"0c80c1ab7173c2620a92c2a14e8d42d6562dbe0f"' \
+    'expectedByteCount: 39_598' \
+    '"d59a19bdbb37a74d5d08bea65c6b77bf2ed2dd4d3f138e5758a4ef9613b93994"' \
+    'packageOnlyTrainingLogitsNoCacheSeamIsSoleIdentityDelta: true' \
+    'predecessorGitBlob:' \
+    '"25b7c9b99e789988fb7362b73a41d35eafba406d"' \
+    'predecessorByteCount: 34_555' \
+    '"28b146996a0dede2e6cd8e6d8116641a3a398bc5f845051a75cbbc977e9f48fe"' \
+    'repairedGitBlob:' \
+    '"329e57a8cbb2aa55879a94c88b17c391d13a1eb4"' \
+    'repairedByteCount: 35_548' \
+    '"40c65bd0169ed5af08248acb38b5b287a82894fec8e8f2c2808f348e3cd50373"' \
+    'authorityTestClassMethodCount: 11' \
+    'requiredMetalTotalTestCount: 44' \
+    'liveHistoricalPlanIdentityAssertionCount: 0' \
+    'liveStage2SuccessorIdentityAssertionCount: 3' \
+    'cryptoKitSHA1ForPureGitBlobFramingAuthorized: true' \
+    'testCountChangeAuthorized: false' \
+    'productionTargetChangeAuthorized: false' \
+    'testOnlyCurrentDecoderIdentityAssertionRepairAuthorized: true' \
+    'implementationObservedByThisAuthority: true' \
+    'executionObservedByThisAuthority: false' \
+    'defaultMetallibRepairAuthorized: false' \
+    'stage2BootstrapRepairAuthorized: false' \
+    'checkpointArtifactAuthorized: false' \
+    'native300MTrainingAuthorized: false' \
+    'publicationAuthorized: false' \
+    '"AUTHORIZED_test_only_metal_current_decoder_identity_assertion_repair_preserve_historical_plan_bind_stage2_successor_no_run_recovery_or_downstream_authority"' \
+    '"require_distinct_exact_main_root38_then_metal44_then_runtime1_then_tokenizer1_before_any_new_success_observation"'; do
+    grep -Fq -- "$required_metal_current_decoder_assertion_repair_value" \
+        "$metal_current_decoder_identity_assertion_repair_authority_source" ||
+        die "Metal current-decoder assertion repair authority lost: $required_metal_current_decoder_assertion_repair_value"
+done
+for required_metal_current_decoder_assertion_repair_test_value in \
+    'func testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling()' \
+    'XCTAssertNoThrow(try authority.validateExactV1())' \
+    '"7d1d90667fdba0171b4c6b98431b7fd045fe5d2c11bd640689bb4bda6dde3424"' \
+    'XCTAssertEqual(consumed.runID, 31_533_658_617)' \
+    'XCTAssertEqual(consumed.runNumber, 67)' \
+    'XCTAssertEqual(consumed.runAttempt, 1)' \
+    'XCTAssertEqual(consumed.requiredMetalTestCount, 44)' \
+    'XCTAssertEqual(consumed.completedMetalTestCount, 44)' \
+    'XCTAssertEqual(consumed.passedMetalTestCaseCount, 43)' \
+    'XCTAssertEqual(consumed.failedMetalTestCaseCount, 1)' \
+    'XCTAssertEqual(consumed.assertionFailureCount, 2)' \
+    'consumed.rerunCount,' \
+    'Array(repeating: 0, count: 6)' \
+    'XCTAssertFalse(consumed.runRecoveryOrReinterpretationAuthorized)' \
+    'XCTAssertTrue(historical.remainsFrozen)' \
+    'XCTAssertTrue(historical.identityRemainsHistorical)' \
+    'XCTAssertTrue(current.stage2SurfaceDesignIsCurrentDecoderIdentitySource)' \
+    'XCTAssertEqual(patch.authorityTestClassMethodCount, 11)' \
+    'XCTAssertEqual(patch.requiredMetalTotalTestCount, 44)' \
+    'XCTAssertTrue(patch.cryptoKitSHA1ForPureGitBlobFramingAuthorized)' \
+    'falseClaims(authority.authorityCeiling).allSatisfy { !$0 }' \
+    '"beb9f8ba1c0c09527b4e30c1d3225e641a30498300ddd58c5e2f7086f0fb5e35"' \
+    'XCTAssertGreaterThan(valuePaths.count, 150)' \
+    'XCTAssertGreaterThan(dictionaryPaths.count, 5)' \
+    'XCTAssertGreaterThan(scalarPaths.count, 130)' \
+    'null \(pathLabel(path))' \
+    'removed \(pathLabel(path))' \
+    'unknown_metal_current_decoder_identity_assertion_repair_field_\(index)' \
+    'Authority.decodeCanonical(prefixed)' \
+    'Authority.decodeCanonical(suffixed)' \
+    'Authority.decodeCanonical(pretty)' \
+    'Authority.decodeCanonical(slashEscapedData)' \
+    'Authority.decodeCanonical(reorderedData)' \
+    'Authority.decodeCanonical(duplicateData)'; do
+    grep -Fq -- "$required_metal_current_decoder_assertion_repair_test_value" \
+        "$metal_current_decoder_identity_assertion_repair_authority_test" ||
+        die "Metal current-decoder assertion repair test lost: $required_metal_current_decoder_assertion_repair_test_value"
+done
+for forbidden_metal_current_decoder_assertion_repair_capability in \
+    'import CoreGraphics' \
+    'import Metal' \
+    'import MLX' \
+    'import MLXNN' \
+    'import MLXOptimizers' \
+    'PrimeNativeGQADecoder.make(' \
+    'FileManager' \
+    'FileHandle' \
+    'URLSession' \
+    'Process(' \
+    'posix_spawn' \
+    'execve('; do
+    if grep -Fq -- "$forbidden_metal_current_decoder_assertion_repair_capability" \
+        "$metal_current_decoder_identity_assertion_repair_authority_source" \
+        "$metal_current_decoder_identity_assertion_repair_authority_test"; then
+        die "Metal current-decoder assertion repair gained capability: $forbidden_metal_current_decoder_assertion_repair_capability"
+    fi
+done
+
+[[ "$(awk '/^import / { print }' "$decoder_authority_test")" \
+        == $'import CryptoKit\nimport Foundation\nimport XCTest\nimport PrimeCore' \
+    && "$(grep -Ec -- '^[[:space:]]+func test' \
+        "$decoder_authority_test")" == "11" \
+    && "$(grep -Fc -- \
+        'func testMetalRepairAuthorityIsAppendOnlyAndSourceExact() throws {' \
+        "$decoder_authority_test")" == "1" \
+    && "$(grep -Fc -- \
+        'PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsAuthorityV1' \
+        "$decoder_authority_test")" == "1" \
+    && "$(grep -Fc -- 'plan.repairedDecoderSourceGitBlob' \
+        "$decoder_authority_test")" == "1" \
+    && "$(grep -Fc -- 'plan.repairedDecoderSourceByteCount' \
+        "$decoder_authority_test")" == "1" \
+    && "$(grep -Fc -- 'plan.repairedDecoderSourceSHA256' \
+        "$decoder_authority_test")" == "1" \
+    && "$(grep -Fc -- \
+        'currentDecoderSurface.currentDecoderSuccessorExpectedGitBlob' \
+        "$decoder_authority_test")" == "1" \
+    && "$(grep -Fc -- \
+        'currentDecoderSurface.currentDecoderSuccessorExpectedByteCount' \
+        "$decoder_authority_test")" == "1" \
+    && "$(grep -Fc -- \
+        'currentDecoderSurface.currentDecoderSuccessorExpectedSHA256' \
+        "$decoder_authority_test")" == "1" \
+    && "$(grep -Fc -- 'gitBlobOID(' "$decoder_authority_test")" == "2" \
+    && "$(grep -Fc -- 'Insecure.SHA1.hash(data: framed)' \
+        "$decoder_authority_test")" == "1" \
+    && "$(grep -Fc -- '835a4826549e1f28ec27e3533f746218beb3bdf2' \
+        "$decoder_authority_test")" == "1" \
+    && "$(grep -Fc -- '39_050' "$decoder_authority_test")" == "1" \
+    && "$(grep -Fc -- \
+        '058ab392ac74a132a2503a04ab48400d1ef78a1bcad38eaddefce828b9252c9b' \
+        "$decoder_authority_test")" == "1" ]] ||
+    die "Metal current-decoder assertion repair exceeded its exact existing-test boundary"
 
 [[ "$(awk '/^import / { print }' "$decoder_training_source")" \
     == $'import Foundation\nimport PrimeCore\nimport PrimeNativeDecoder\nimport MLX\nimport MLXNN\nimport MLXOptimizers' ]] ||

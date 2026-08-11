@@ -729,6 +729,80 @@ distinct exact-main closure passes that secure fetch, the 36-test root suite
 including this pure observation, every retained focused package, and the
 exact Metal-to-runtime-to-tokenizer live sequence with zero failures or skips.
 
+### Current-decoder identity assertion failure and narrow test repair
+
+`PrimeNativeDecoderMetalCurrentDecoderIdentityAssertionFailureObservationV1`
+is the append-only terminal observation of the first exact-main closure after
+the TLS failure. The validly signed history-preserving merge was
+`2d0464ca35212d3d84781654b6a4e08158f27eab`, with ordered parents
+`e540b73f6a46cf6e0de5b932d7167f178d4ac6fb` and
+`5198f5da94977d11f5fcfabf65bb55a62cb31f26` and tree
+`be66df2affb85e2d846ba6f5f51e540d17864796`. Push workflow run
+`31533658617`, run number 67, attempt 1, ran from
+`2026-08-11T20:34:52Z` through `2026-08-11T21:00:56Z` and completed as a
+failure. It was the only exact-head push run and was not rerun; the attempt-2
+endpoint returned 404.
+
+Active-root job `93919471247` passed every step. Reviewed-main job
+`93920049786` checked out the exact merge, then invoked the unchanged secure
+private-dependency fetch exactly once. The depth-one fetch resolved the pinned
+private dependency at `d37885a278f1c37484a94d0f401a418735e66519`
+without a TLS bypass, alternate CA, fallback, or retry. The focused step then
+completed all 36 selected root tests with zero failures and no skips, together
+with every retained isolated pure suite. The retired Stage-2 package command,
+method filter, log, and scratch-path families remained absent.
+
+The final retained step started the Metal launcher first. It built and linked
+a fresh pinned-source `default.metallib`, then executed the complete frozen
+44-test decoder suite. Forty-three test cases passed; one test,
+`PrimeNativeDecoderAuthorityTests/testMetalRepairAuthorityIsAppendOnlyAndSourceExact`,
+failed through two equality assertions, with no skipped tests. The live source
+at `Sources/PrimeNativeDecoder/PrimeNativeGQADecoder.swift` was exactly Git
+blob `0c80c1ab7173c2620a92c2a14e8d42d6562dbe0f`, 39,598 bytes, and SHA-256
+`d59a19bdbb37a74d5d08bea65c6b77bf2ed2dd4d3f138e5758a4ef9613b93994`.
+The frozen Metal repair plan remained exactly bound to its historical repaired
+decoder blob `835a4826549e1f28ec27e3533f746218beb3bdf2`, 39,050 bytes, and SHA-256
+`058ab392ac74a132a2503a04ab48400d1ef78a1bcad38eaddefce828b9252c9b`.
+Those two expected historical values produced the two assertion failures; the
+Metal launcher terminated with exit code 2.
+
+The 548-byte difference is exactly the package-only
+`trainingLogitsNoCache(_:)` seam already added and frozen by Stage-2 commit
+`f13322ebc368c639a0f04b7570af093cc57ec22b`. It adds no cache,
+position-offset, tokenizer, checkpoint, or generation surface. This failure is
+therefore stale live-source identity selection in one test assertion, not
+evidence that the historical Metal repair plan drifted, the current decoder
+changed during this arc, or Metal tensor mechanics failed. Because the Metal
+launcher returned nonzero, shell fail-closed sequencing never invoked the
+maintained-runtime or tokenizer launchers and neither receipt was emitted.
+
+No Stage-2 execution, checkpoint one-shot, checkpoint receipt marker, upload
+step, Native-300M allocation, or training occurred. The Actions artifacts
+endpoint returned `total_count` 0 with an exactly empty `artifacts` array.
+The failed closure establishes no successful Metal-44 gate, maintained-runtime
+closure, tokenizer compatibility, Stage-2 bootstrap repair, Stage-2 outcome,
+checkpoint state, admission, trial, canary, product, or publication authority.
+
+`PrimeNativeDecoderMetalCurrentDecoderIdentityAssertionRepairAuthorityV1` is
+the separate narrow repair boundary. It preserves the frozen Metal repair plan
+and its 39,050-byte identity, preserves the current 39,598-byte Stage-2 decoder
+and its exact source binding, and authorizes only the existing Metal authority
+test to select the current decoder identity from that frozen Stage-2 binding
+when it validates the live source. The test path, class, method, and complete
+44-test inventory remain unchanged. The repair grants no production-source,
+plan, decoder, manifest, lock, secure-fetch, workflow-live-command, rerun,
+Metal execution, runtime, tokenizer, Stage-2 bootstrap, checkpoint, or
+downstream authority.
+
+Two dependency-free exhaustive canonical tests cover the failure observation
+and the repair authority, raising the reviewed-main focused root expectation
+from 36 to 38. A distinct exact-main closure must pass the unchanged secure
+fetch, root 38, all retained pure suites, Metal 44, maintained runtime 1, and
+tokenizer 1 in order, with zero failures and zero skips, before any completion
+observation. The separately required pinned-source Stage-2
+`default.metallib` bootstrap repair remains blocked until that full closure
+succeeds; this assertion repair neither attempts nor authorizes it.
+
 ## Verification and next slices
 
 The isolated validation package compiles against the exact first-party MLX
