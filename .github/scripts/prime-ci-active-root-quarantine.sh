@@ -15,6 +15,7 @@ readonly numerics_version="1.1.1"
 readonly workflow_path="$prime_root/.github/workflows/prime-active-root-quarantine.yml"
 readonly decoder_metal_gate_path="$prime_root/.github/scripts/prime-ci-native-decoder-metal.sh"
 readonly decoder_runtime_closure_gate_path="$prime_root/.github/scripts/prime-ci-native-decoder-runtime-closure.sh"
+readonly decoder_tokenizer_compatibility_gate_path="$prime_root/.github/scripts/prime-ci-native-decoder-tokenizer-compatibility.sh"
 
 die() {
     echo "prime-ci-active-root-quarantine: $*" >&2
@@ -170,6 +171,24 @@ require_preserved_object \
     ".github/scripts/prime-ci-native-decoder-runtime-closure.sh" \
     "f1c3041d7e47fa315f60c889a736a412640e8710"
 require_preserved_object \
+    "Sources/PrimeCore/PrimeNativeDecoderTokenizerModelFunctionalCompatibilityAuthority.swift" \
+    "a14d52e2af3dee3c39d8bb6cb017995cf3a4aa0c"
+require_preserved_object \
+    "Tests/PrimeNativeDecoderTokenizerCompatibilityValidation/Package.swift" \
+    "da9785a7263522541a81fd39c34acc2512d87100"
+require_preserved_object \
+    "Tests/PrimeNativeDecoderTokenizerCompatibilityValidation/Package.resolved" \
+    "6f080d562484a13a45194d430c395f8a3b64a0bd"
+require_preserved_object \
+    "Tests/PrimeNativeDecoderTokenizerCompatibilityValidation/Sources/PrimeNativeDecoderTokenizerCompatibilityProbe/main.swift" \
+    "3a5d77e0e874a082a0e8d3a8352de0f41b34010b"
+require_preserved_object \
+    "Tests/PrimeNativeDecoderTokenizerCompatibilityValidation/Tests/PrimeNativeDecoderTokenizerCompatibilityAuthorityTests/PrimeNativeDecoderTokenizerCompatibilityAuthorityTests.swift" \
+    "d8c696981633bceae281e681b9f33ef0d5ca6141"
+require_preserved_object \
+    ".github/scripts/prime-ci-native-decoder-tokenizer-compatibility.sh" \
+    "b12d52802e7f24be7a905ae0cbceeed945fcc11a"
+require_preserved_object \
     "Sources/PrimeNativeNeuralGateHistoricalReplayMechanics/EngineProposesNativeLanguageVerifyAbstainFixture.swift" \
     "14833cbae5a819d875663740bca8fb8ff175df0c"
 require_preserved_object \
@@ -270,6 +289,10 @@ assert_active_lock \
     "Tests/PrimeNativeDecoderRuntimeClosureValidation/Package.swift" \
     "$root_mlx_revision"
 assert_active_lock \
+    "Tests/PrimeNativeDecoderTokenizerCompatibilityValidation/Package.resolved" \
+    "Tests/PrimeNativeDecoderTokenizerCompatibilityValidation/Package.swift" \
+    "$root_mlx_revision"
+assert_active_lock \
     "Tests/PrimeTypedOptimizerRestoreMechanicsValidation/Package.resolved" \
     "Tests/PrimeTypedOptimizerRestoreMechanicsValidation/Package.swift" \
     "$typed_mlx_revision"
@@ -292,6 +315,22 @@ grep -Fq -- 'github.event.pull_request.head.sha || github.sha' "$workflow_path" 
     die "workflow is not bound to the exact pull-request head"
 grep -Fq -- 'runs-on: macos-15' "$workflow_path" ||
     die "workflow is not on the standard hosted macOS runner"
+[[ "$(grep -Fxc -- '  active-root:' "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- '  trusted-main-compile:' "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- '    steps:' "$workflow_path")" == "2" ]] ||
+    die "hosted quarantine workflow job topology changed"
+[[ "$(awk '
+    /^  active-root:$/ { inside = 1; next }
+    /^  trusted-main-compile:$/ { inside = 0 }
+    inside && /^      - name:/ { count += 1 }
+    END { print count + 0 }
+' "$workflow_path")" == "5" \
+    && "$(awk '
+        /^  trusted-main-compile:$/ { inside = 1; next }
+        inside && /^      - name:/ { count += 1 }
+        END { print count + 0 }
+    ' "$workflow_path")" == "5" ]] ||
+    die "hosted quarantine workflow step topology changed"
 [[ -f "$decoder_metal_gate_path" && ! -L "$decoder_metal_gate_path" ]] ||
     die "Prime native decoder Metal gate is missing or linked"
 [[ "$(git -C "$prime_root" ls-files -- '.github/scripts/prime-ci-native-decoder-metal.sh')" \
@@ -324,6 +363,19 @@ bash -n "$decoder_runtime_closure_gate_path" ||
     '.github/scripts/prime-ci-native-decoder-runtime-closure.sh' | awk '{print $1}')" \
     == "100755" ]] ||
     die "Prime native decoder runtime-closure gate mode changed"
+[[ -f "$decoder_tokenizer_compatibility_gate_path" \
+    && ! -L "$decoder_tokenizer_compatibility_gate_path" ]] ||
+    die "Prime native decoder tokenizer-compatibility gate is missing or linked"
+[[ "$(git -C "$prime_root" ls-files -- \
+    '.github/scripts/prime-ci-native-decoder-tokenizer-compatibility.sh')" \
+    == '.github/scripts/prime-ci-native-decoder-tokenizer-compatibility.sh' ]] ||
+    die "Prime native decoder tokenizer-compatibility gate is not tracked exactly"
+bash -n "$decoder_tokenizer_compatibility_gate_path" ||
+    die "Prime native decoder tokenizer-compatibility gate is not valid Bash"
+[[ "$(git -C "$prime_root" ls-files -s -- \
+    '.github/scripts/prime-ci-native-decoder-tokenizer-compatibility.sh' | awk '{print $1}')" \
+    == "100755" ]] ||
+    die "Prime native decoder tokenizer-compatibility gate mode changed"
 grep -Fq -- '      - name: Run the Prime-owned decoder on live Metal' \
     "$workflow_path" ||
     die "trusted-main workflow lost the frozen decoder Metal step"
@@ -333,11 +385,17 @@ readonly frozen_metal_workflow_line="$(grep -nFx -- \
 readonly runtime_closure_workflow_line="$(grep -nFx -- \
     '          bash .github/scripts/prime-ci-native-decoder-runtime-closure.sh' \
     "$workflow_path" | awk -F: '{print $1}')"
+readonly tokenizer_compatibility_workflow_line="$(grep -nFx -- \
+    '          bash .github/scripts/prime-ci-native-decoder-tokenizer-compatibility.sh' \
+    "$workflow_path" | awk -F: '{print $1}')"
 [[ "$frozen_metal_workflow_line" =~ ^[1-9][0-9]*$ \
     && "$runtime_closure_workflow_line" =~ ^[1-9][0-9]*$ \
+    && "$tokenizer_compatibility_workflow_line" =~ ^[1-9][0-9]*$ \
     && "$runtime_closure_workflow_line" \
-        -eq $((frozen_metal_workflow_line + 1)) ]] ||
-    die "trusted-main workflow does not run the runtime closure immediately after the frozen Metal gate"
+        -eq $((frozen_metal_workflow_line + 1)) \
+    && "$tokenizer_compatibility_workflow_line" \
+        -eq $((runtime_closure_workflow_line + 1)) ]] ||
+    die "trusted-main workflow does not run the three decoder gates in exact order"
 grep -Fq -- \
     '--package-path Tests/PrimeNativeDecoderCheckpointCompatibilityV2Validation' \
     "$workflow_path" ||
@@ -410,16 +468,63 @@ for forbidden_runtime_closure_gate_value in \
     fi
 done
 
+for required_tokenizer_compatibility_gate_value in \
+    'prime-native-decoder-metal-tests.log' \
+    'prime-native-decoder-runtime-closure-authority-tests.log' \
+    'prime-native-decoder-runtime-closure-probe.log' \
+    '--configuration release' \
+    '--jobs 2' \
+    '--build-tests' \
+    'xcrun xctest' \
+    'Executed 1 test, with 0 failures' \
+    'MLX_ENABLE_TF32=0' \
+    'PRIME_NATIVE_DECODER_TOKENIZER_COMPATIBILITY_EXECUTED_REVISION=' \
+    'PRIME_NATIVE_DECODER_TOKENIZER_COMPATIBILITY_EXECUTED_TREE=' \
+    'CoreGraphics' \
+    'Metal' \
+    'private_cwd' \
+    'PrimeNativeDecoderTokenizerCompatibilityProbe' \
+    'PRIME_NATIVE_DECODER_TOKENIZER_COMPATIBILITY_RECEIPT=' \
+    'PASS_process_local_tokenizer_to_random_initialized_native300m_full_prefix_forward_witness_only'; do
+    grep -Fq -- "$required_tokenizer_compatibility_gate_value" \
+        "$decoder_tokenizer_compatibility_gate_path" ||
+        die "Prime native decoder tokenizer-compatibility gate is missing: $required_tokenizer_compatibility_gate_value"
+done
+for forbidden_tokenizer_compatibility_gate_value in \
+    '--disable-sandbox' \
+    'xcodebuild' \
+    'git fetch' \
+    'git clone' \
+    'submodule update' \
+    'MLXLLM' \
+    'MLXOptimizers' \
+    'PMHNP' \
+    'DriverV2' \
+    'Geometry' \
+    'RenderKit' \
+    'PrimeNativeDecoderCheckpointManifestV1' \
+    'PrimeNativeDecoderCheckpointCodecV1' \
+    'writeNative300MByte512' \
+    'loadNative300MByte512' \
+    'synthetic_' \
+    'tiny'; do
+    if grep -Fq -- "$forbidden_tokenizer_compatibility_gate_value" \
+        "$decoder_tokenizer_compatibility_gate_path"; then
+        die "Prime native decoder tokenizer-compatibility gate contains forbidden value: $forbidden_tokenizer_compatibility_gate_value"
+    fi
+done
+
 readonly runner_temp="${RUNNER_TEMP:-/private/tmp}"
 readonly manifest_dump="$(mktemp "$runner_temp/prime-package-dump.json.XXXXXX")"
 readonly decoder_manifest_dump="$(mktemp "$runner_temp/prime-decoder-package-dump.json.XXXXXX")"
 readonly decoder_checkpoint_v2_manifest_dump="$(mktemp "$runner_temp/prime-decoder-checkpoint-v2-package-dump.json.XXXXXX")"
 readonly decoder_runtime_closure_manifest_dump="$(mktemp "$runner_temp/prime-decoder-runtime-closure-package-dump.json.XXXXXX")"
+readonly decoder_tokenizer_compatibility_manifest_dump="$(mktemp "$runner_temp/prime-decoder-tokenizer-compatibility-package-dump.json.XXXXXX")"
 readonly manifest_scratch="$runner_temp/prime-package-dump-build"
 readonly manifest_cache="$runner_temp/prime-package-dump-cache"
 readonly manifest_config="$runner_temp/prime-package-dump-config"
 readonly manifest_security="$runner_temp/prime-package-dump-security"
-trap 'unlink "$manifest_dump" "$decoder_manifest_dump" "$decoder_checkpoint_v2_manifest_dump" "$decoder_runtime_closure_manifest_dump" 2>/dev/null || true' EXIT
+trap 'unlink "$manifest_dump" "$decoder_manifest_dump" "$decoder_checkpoint_v2_manifest_dump" "$decoder_runtime_closure_manifest_dump" "$decoder_tokenizer_compatibility_manifest_dump" 2>/dev/null || true' EXIT
 mkdir -p \
     "$manifest_scratch" \
     "$manifest_cache" \
@@ -622,6 +727,69 @@ jq -e \
     "$decoder_runtime_closure_manifest_dump" >/dev/null ||
     die "PrimeNativeDecoder runtime-closure validation manifest changed"
 
+TMPDIR="$runner_temp" swift package \
+    --package-path "$prime_root/Tests/PrimeNativeDecoderTokenizerCompatibilityValidation" \
+    --scratch-path "$manifest_scratch" \
+    --cache-path "$manifest_cache" \
+    --config-path "$manifest_config" \
+    --security-path "$manifest_security" \
+    --disable-netrc \
+    --disable-keychain \
+    dump-package > "$decoder_tokenizer_compatibility_manifest_dump"
+jq -e \
+    --arg expected_origin "$expected_mlx_origin" \
+    --arg expected_revision "$root_mlx_revision" \
+    --arg prime_root "$prime_root" \
+    '
+      .name == "PrimeNativeDecoderTokenizerCompatibilityValidation"
+      and (.dependencies | length) == 2
+      and ([.dependencies[] | select(
+          .fileSystem[0].nameForTargetDependencyResolutionOnly
+              == "ergentics-prime"
+          and .fileSystem[0].path == $prime_root
+      )] | length) == 1
+      and ([.dependencies[] | tostring | select(
+          contains($expected_origin)
+          and contains($expected_revision)
+      )] | length) == 1
+      and (.products | length) == 1
+      and .products[0].name
+          == "PrimeNativeDecoderTokenizerCompatibilityProbe"
+      and .products[0].targets
+          == ["PrimeNativeDecoderTokenizerCompatibilityProbe"]
+      and (.products[0].type | keys) == ["executable"]
+      and (.targets | length) == 2
+      and [.targets[].name] == [
+          "PrimeNativeDecoderTokenizerCompatibilityProbe",
+          "PrimeNativeDecoderTokenizerCompatibilityAuthorityTests"
+      ]
+      and [.targets[].type] == ["executable", "test"]
+      and ([.targets[0].dependencies[].product[0]] == [
+          "PrimeCore",
+          "PrimeNativeDecoder",
+          "PrimeNativeDecoderCheckpoint",
+          "MLX",
+          "MLXNN"
+      ])
+      and ([.targets[0].dependencies[].product[1]] == [
+          "ergentics-prime",
+          "ergentics-prime",
+          "ergentics-prime",
+          "ergentics-mlx-swift",
+          "ergentics-mlx-swift"
+      ])
+      and ([.targets[0].settings[].kind.linkedFramework._0] == [
+          "CoreGraphics",
+          "Metal"
+      ])
+      and ([.targets[1].dependencies[].product[0]] == ["PrimeCore"])
+      and ([.targets[1].dependencies[].product[1]]
+          == ["ergentics-prime"])
+      and (.targets[1].settings | length) == 0
+    ' \
+    "$decoder_tokenizer_compatibility_manifest_dump" >/dev/null ||
+    die "PrimeNativeDecoder tokenizer-compatibility validation manifest changed"
+
 readonly decoder_source="$prime_root/Sources/PrimeNativeDecoder/PrimeNativeGQADecoder.swift"
 readonly decoder_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderAuthority.swift"
 readonly decoder_derived_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderDerivedDelta.swift"
@@ -650,6 +818,12 @@ readonly decoder_runtime_closure_validation_manifest="$decoder_runtime_closure_v
 readonly decoder_runtime_closure_validation_lock="$decoder_runtime_closure_validation_root/Package.resolved"
 readonly decoder_runtime_closure_probe="$decoder_runtime_closure_validation_root/Sources/PrimeNativeDecoderRuntimeClosureProbe/main.swift"
 readonly decoder_runtime_closure_test="$decoder_runtime_closure_validation_root/Tests/PrimeNativeDecoderRuntimeClosureAuthorityTests/PrimeNativeDecoderRuntimeClosureAuthorityTests.swift"
+readonly decoder_tokenizer_compatibility_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderTokenizerModelFunctionalCompatibilityAuthority.swift"
+readonly decoder_tokenizer_compatibility_validation_root="$prime_root/Tests/PrimeNativeDecoderTokenizerCompatibilityValidation"
+readonly decoder_tokenizer_compatibility_validation_manifest="$decoder_tokenizer_compatibility_validation_root/Package.swift"
+readonly decoder_tokenizer_compatibility_validation_lock="$decoder_tokenizer_compatibility_validation_root/Package.resolved"
+readonly decoder_tokenizer_compatibility_probe="$decoder_tokenizer_compatibility_validation_root/Sources/PrimeNativeDecoderTokenizerCompatibilityProbe/main.swift"
+readonly decoder_tokenizer_compatibility_test="$decoder_tokenizer_compatibility_validation_root/Tests/PrimeNativeDecoderTokenizerCompatibilityAuthorityTests/PrimeNativeDecoderTokenizerCompatibilityAuthorityTests.swift"
 
 [[ "$(git -C "$prime_root" ls-files -- 'Sources/PrimeNativeDecoder')" \
     == "Sources/PrimeNativeDecoder/PrimeNativeGQADecoder.swift" ]] ||
@@ -671,6 +845,10 @@ readonly decoder_runtime_closure_test="$decoder_runtime_closure_validation_root/
     'Tests/PrimeNativeDecoderRuntimeClosureValidation')" \
     == $'Tests/PrimeNativeDecoderRuntimeClosureValidation/Package.resolved\nTests/PrimeNativeDecoderRuntimeClosureValidation/Package.swift\nTests/PrimeNativeDecoderRuntimeClosureValidation/Sources/PrimeNativeDecoderRuntimeClosureProbe/main.swift\nTests/PrimeNativeDecoderRuntimeClosureValidation/Tests/PrimeNativeDecoderRuntimeClosureAuthorityTests/PrimeNativeDecoderRuntimeClosureAuthorityTests.swift' ]] ||
     die "PrimeNativeDecoder runtime-closure validation inventory changed"
+[[ "$(git -C "$prime_root" ls-files -- \
+    'Tests/PrimeNativeDecoderTokenizerCompatibilityValidation')" \
+    == $'Tests/PrimeNativeDecoderTokenizerCompatibilityValidation/Package.resolved\nTests/PrimeNativeDecoderTokenizerCompatibilityValidation/Package.swift\nTests/PrimeNativeDecoderTokenizerCompatibilityValidation/Sources/PrimeNativeDecoderTokenizerCompatibilityProbe/main.swift\nTests/PrimeNativeDecoderTokenizerCompatibilityValidation/Tests/PrimeNativeDecoderTokenizerCompatibilityAuthorityTests/PrimeNativeDecoderTokenizerCompatibilityAuthorityTests.swift' ]] ||
+    die "PrimeNativeDecoder tokenizer-compatibility validation inventory changed"
 [[ ! -e "$prime_root/Tests/PrimeNativeDecoderValidation/.swiftpm" \
     && ! -L "$prime_root/Tests/PrimeNativeDecoderValidation/.swiftpm" ]] ||
     die "PrimeNativeDecoder validation must use the supplied isolated config path"
@@ -680,6 +858,9 @@ readonly decoder_runtime_closure_test="$decoder_runtime_closure_validation_root/
 [[ ! -e "$decoder_runtime_closure_validation_root/.swiftpm" \
     && ! -L "$decoder_runtime_closure_validation_root/.swiftpm" ]] ||
     die "PrimeNativeDecoder runtime-closure validation must use the supplied isolated config path"
+[[ ! -e "$decoder_tokenizer_compatibility_validation_root/.swiftpm" \
+    && ! -L "$decoder_tokenizer_compatibility_validation_root/.swiftpm" ]] ||
+    die "PrimeNativeDecoder tokenizer-compatibility validation must use the supplied isolated config path"
 [[ -f "$decoder_source" && ! -L "$decoder_source" ]] ||
     die "PrimeNativeDecoder source is missing or linked"
 [[ -f "$decoder_validation_test" && ! -L "$decoder_validation_test" ]] ||
@@ -730,6 +911,21 @@ readonly decoder_runtime_closure_test="$decoder_runtime_closure_validation_root/
 [[ -f "$decoder_runtime_closure_test" \
     && ! -L "$decoder_runtime_closure_test" ]] ||
     die "PrimeNativeDecoder runtime-closure test is missing or linked"
+[[ -f "$decoder_tokenizer_compatibility_authority_source" \
+    && ! -L "$decoder_tokenizer_compatibility_authority_source" ]] ||
+    die "PrimeNativeDecoder tokenizer-compatibility authority is missing or linked"
+[[ -f "$decoder_tokenizer_compatibility_validation_manifest" \
+    && ! -L "$decoder_tokenizer_compatibility_validation_manifest" ]] ||
+    die "PrimeNativeDecoder tokenizer-compatibility validation manifest is missing or linked"
+[[ -f "$decoder_tokenizer_compatibility_validation_lock" \
+    && ! -L "$decoder_tokenizer_compatibility_validation_lock" ]] ||
+    die "PrimeNativeDecoder tokenizer-compatibility validation lock is missing or linked"
+[[ -f "$decoder_tokenizer_compatibility_probe" \
+    && ! -L "$decoder_tokenizer_compatibility_probe" ]] ||
+    die "PrimeNativeDecoder tokenizer-compatibility probe is missing or linked"
+[[ -f "$decoder_tokenizer_compatibility_test" \
+    && ! -L "$decoder_tokenizer_compatibility_test" ]] ||
+    die "PrimeNativeDecoder tokenizer-compatibility test is missing or linked"
 [[ -f "$decoder_metal_repair_authority_source" \
     && ! -L "$decoder_metal_repair_authority_source" ]] ||
     die "PrimeNativeDecoder Metal-repair authority is missing or linked"
@@ -775,6 +971,17 @@ for runtime_closure_regular_source in \
     [[ "$(git -C "$prime_root" ls-files -s -- \
         "$runtime_closure_regular_source" | awk '{print $1}')" == "100644" ]] ||
         die "PrimeNativeDecoder runtime-closure source mode changed: $runtime_closure_regular_source"
+done
+for tokenizer_compatibility_regular_source in \
+    'Sources/PrimeCore/PrimeNativeDecoderTokenizerModelFunctionalCompatibilityAuthority.swift' \
+    'Tests/PrimeNativeDecoderTokenizerCompatibilityValidation/Package.swift' \
+    'Tests/PrimeNativeDecoderTokenizerCompatibilityValidation/Package.resolved' \
+    'Tests/PrimeNativeDecoderTokenizerCompatibilityValidation/Sources/PrimeNativeDecoderTokenizerCompatibilityProbe/main.swift' \
+    'Tests/PrimeNativeDecoderTokenizerCompatibilityValidation/Tests/PrimeNativeDecoderTokenizerCompatibilityAuthorityTests/PrimeNativeDecoderTokenizerCompatibilityAuthorityTests.swift'; do
+    [[ "$(git -C "$prime_root" ls-files -s -- \
+        "$tokenizer_compatibility_regular_source" | awk '{print $1}')" \
+        == "100644" ]] ||
+        die "PrimeNativeDecoder tokenizer-compatibility source mode changed: $tokenizer_compatibility_regular_source"
 done
 
 assert_runtime_closure_source_identity() {
@@ -861,6 +1068,67 @@ assert_runtime_closure_source_identity \
     'f1c3041d7e47fa315f60c889a736a412640e8710' \
     '26614' \
     'aac5421ec7b1465bb746079bf5ea2634e20b9456099b33ce0271228638342cc5'
+
+assert_tokenizer_compatibility_source_identity() {
+    local relative_path="$1"
+    local expected_mode="$2"
+    local expected_blob="$3"
+    local expected_byte_count="$4"
+    local expected_sha256="$5"
+    local source_path="$prime_root/$relative_path"
+
+    [[ -f "$source_path" && ! -L "$source_path" ]] ||
+        die "tokenizer-compatibility identity source is missing or linked: $relative_path"
+    [[ "$(git -C "$prime_root" ls-files -s -- \
+        "$relative_path" | awk '{print $1}')" == "$expected_mode" ]] ||
+        die "tokenizer-compatibility identity source mode changed: $relative_path"
+    [[ "$(git -C "$prime_root" hash-object "$source_path")" \
+        == "$expected_blob" ]] ||
+        die "tokenizer-compatibility identity source blob changed: $relative_path"
+    [[ "$(wc -c < "$source_path" | awk '{print $1}')" \
+        == "$expected_byte_count" ]] ||
+        die "tokenizer-compatibility identity source byte count changed: $relative_path"
+    [[ "$(shasum -a 256 "$source_path" | awk '{print $1}')" \
+        == "$expected_sha256" ]] ||
+        die "tokenizer-compatibility identity source SHA-256 changed: $relative_path"
+}
+
+assert_tokenizer_compatibility_source_identity \
+    'Sources/PrimeCore/PrimeNativeDecoderTokenizerModelFunctionalCompatibilityAuthority.swift' \
+    '100644' \
+    'a14d52e2af3dee3c39d8bb6cb017995cf3a4aa0c' \
+    '66000' \
+    '0ff6ee0e74176d6b059c9f97932301ecc3f62f8c3ea23103b69952b1eaad4efe'
+assert_tokenizer_compatibility_source_identity \
+    'Tests/PrimeNativeDecoderTokenizerCompatibilityValidation/Package.swift' \
+    '100644' \
+    'da9785a7263522541a81fd39c34acc2512d87100' \
+    '1981' \
+    '8edbfc6aacb66fb90399c1812afb2877f9ea13356f71612271382db10c63e86a'
+assert_tokenizer_compatibility_source_identity \
+    'Tests/PrimeNativeDecoderTokenizerCompatibilityValidation/Package.resolved' \
+    '100644' \
+    '6f080d562484a13a45194d430c395f8a3b64a0bd' \
+    '645' \
+    'd1e5dfc20834ce54f02d65630ff58bbcc39592fa34d81bc209c45aa4776fa4d4'
+assert_tokenizer_compatibility_source_identity \
+    'Tests/PrimeNativeDecoderTokenizerCompatibilityValidation/Sources/PrimeNativeDecoderTokenizerCompatibilityProbe/main.swift' \
+    '100644' \
+    '3a5d77e0e874a082a0e8d3a8352de0f41b34010b' \
+    '33171' \
+    '46d46b739770484e55be23d9df8d699d1caa26584b4724db6f686dc637a578f1'
+assert_tokenizer_compatibility_source_identity \
+    'Tests/PrimeNativeDecoderTokenizerCompatibilityValidation/Tests/PrimeNativeDecoderTokenizerCompatibilityAuthorityTests/PrimeNativeDecoderTokenizerCompatibilityAuthorityTests.swift' \
+    '100644' \
+    'd8c696981633bceae281e681b9f33ef0d5ca6141' \
+    '20790' \
+    '43fb10b7af7936bca680e6e1377a4f94616049a26aec8fae45e097d805b3588f'
+assert_tokenizer_compatibility_source_identity \
+    '.github/scripts/prime-ci-native-decoder-tokenizer-compatibility.sh' \
+    '100755' \
+    'b12d52802e7f24be7a905ae0cbceeed945fcc11a' \
+    '33174' \
+    '0c70d3cd538e297cf629707a51bcc8ede87b42e488369ffd321ac3c44062f06a'
 [[ "$(wc -c < "$decoder_checkpoint_v2_authority_source" | awk '{print $1}')" \
     == "29660" ]] ||
     die "PrimeNativeDecoderCheckpoint V2 authority byte count changed"
@@ -1027,6 +1295,7 @@ swiftc -frontend -parse "$decoder_checkpoint_v2_authority_source"
 swiftc -frontend -parse "$decoder_runtime_authority_source"
 swiftc -frontend -parse "$decoder_runtime_execution_observation_source"
 swiftc -frontend -parse "$decoder_runtime_source"
+swiftc -frontend -parse "$decoder_tokenizer_compatibility_authority_source"
 swiftc -frontend -parse "$decoder_metal_repair_authority_source"
 swiftc -frontend -parse "$decoder_metal_execution_observation_source"
 swiftc -frontend -parse "$decoder_metal_execution_correction_source"
@@ -1038,6 +1307,8 @@ swiftc -frontend -parse "$decoder_validation_test"
 swiftc -frontend -parse "$decoder_checkpoint_v2_validation_test"
 swiftc -frontend -parse "$decoder_runtime_closure_probe"
 swiftc -frontend -parse "$decoder_runtime_closure_test"
+swiftc -frontend -parse "$decoder_tokenizer_compatibility_probe"
+swiftc -frontend -parse "$decoder_tokenizer_compatibility_test"
 
 readonly observed_mlxllm_references="$({
     git -C "$prime_root" grep -l -F 'MLXLLM' -- Sources || true
@@ -1079,6 +1350,18 @@ readonly expected_mlxllm_imports=$'Sources/PrimeGPUCalibration/PrimeGPUCalibrati
 [[ "$(awk '/^import / {print $2}' "$decoder_runtime_closure_test" | paste -sd, -)" \
     == "CoreFoundation,Foundation,XCTest,PrimeCore,PrimeNativeDecoderRuntime" ]] ||
     die "PrimeNativeDecoder runtime-closure test imports changed"
+[[ "$(awk '/^import / {print $2}' \
+    "$decoder_tokenizer_compatibility_authority_source" | paste -sd, -)" \
+    == "Foundation" ]] ||
+    die "PrimeNativeDecoder tokenizer-compatibility authority imports changed"
+[[ "$(awk '/^import / {print $2}' \
+    "$decoder_tokenizer_compatibility_probe" | paste -sd, -)" \
+    == "CoreGraphics,Darwin,Foundation,Metal,MLX,MLXNN,PrimeCore,PrimeNativeDecoder,PrimeNativeDecoderCheckpoint" ]] ||
+    die "PrimeNativeDecoder tokenizer-compatibility probe imports changed"
+[[ "$(awk '/^import / {print $2}' \
+    "$decoder_tokenizer_compatibility_test" | paste -sd, -)" \
+    == "CoreFoundation,Foundation,PrimeCore,XCTest" ]] ||
+    die "PrimeNativeDecoder tokenizer-compatibility test imports changed"
 [[ "$(grep -Fc -- '.package(' "$decoder_validation_manifest")" == "2" ]] ||
     die "PrimeNativeDecoder validation gained an unexpected dependency"
 grep -Fq -- 'name: "PrimeNativeDecoder"' "$decoder_validation_manifest" ||
@@ -1109,6 +1392,127 @@ grep -Fq -- 'name: "PrimeNativeDecoderRuntime"' \
 [[ "$(grep -Ec -- '^[[:space:]]+func test' \
     "$decoder_runtime_closure_test")" == "1" ]] ||
     die "PrimeNativeDecoder runtime-closure validation test count changed"
+[[ "$(grep -Fc -- '.package(' \
+    "$decoder_tokenizer_compatibility_validation_manifest")" == "2" ]] ||
+    die "PrimeNativeDecoder tokenizer-compatibility validation dependency count changed"
+for required_tokenizer_compatibility_product in \
+    'name: "PrimeCore"' \
+    'name: "PrimeNativeDecoder"' \
+    'name: "PrimeNativeDecoderCheckpoint"' \
+    'name: "MLX"' \
+    'name: "MLXNN"'; do
+    grep -Fq -- "$required_tokenizer_compatibility_product" \
+        "$decoder_tokenizer_compatibility_validation_manifest" ||
+        die "PrimeNativeDecoder tokenizer-compatibility validation is missing: $required_tokenizer_compatibility_product"
+done
+grep -Fq -- "$root_mlx_revision" \
+    "$decoder_tokenizer_compatibility_validation_manifest" ||
+    die "PrimeNativeDecoder tokenizer-compatibility validation does not pin active MLX"
+[[ "$(grep -Ec -- '^[[:space:]]+func test' \
+    "$decoder_tokenizer_compatibility_test")" == "1" ]] ||
+    die "PrimeNativeDecoder tokenizer-compatibility validation test count changed"
+for required_tokenizer_compatibility_test_value in \
+    'let paths = leafPaths(in: object)' \
+    'for path in paths {' \
+    'let evidenceBooleanPaths = try leafPaths(in: evidenceObject)' \
+    'for path in evidenceBooleanPaths {' \
+    'XCTAssertThrowsError(' \
+    'try evidenceReplay.validate()'; do
+    grep -Fq -- "$required_tokenizer_compatibility_test_value" \
+        "$decoder_tokenizer_compatibility_test" ||
+        die "PrimeNativeDecoder tokenizer-compatibility mutation test is missing: $required_tokenizer_compatibility_test_value"
+done
+
+[[ "$(grep -Fc -- 'Memory.clearCache()' \
+    "$decoder_tokenizer_compatibility_probe")" == "4" \
+    && "$(grep -Fc -- 'let model = PrimeNativeGQADecoder.make(' \
+        "$decoder_tokenizer_compatibility_probe")" == "1" \
+    && "$(grep -Fc -- 'model.train(false)' \
+        "$decoder_tokenizer_compatibility_probe")" == "1" \
+    && "$(grep -Fc -- 'try checkedEval(model)' \
+        "$decoder_tokenizer_compatibility_probe")" == "1" \
+    && "$(grep -Fc -- 'let catalog = try liveCatalog(' \
+        "$decoder_tokenizer_compatibility_probe")" == "1" \
+    && "$(grep -Fc -- 'let logits = try model.forward(tokenIDs: tokenIDs)' \
+        "$decoder_tokenizer_compatibility_probe")" == "1" \
+    && "$(grep -Fc -- 'try checkedEval(logits)' \
+        "$decoder_tokenizer_compatibility_probe")" == "1" \
+    && "$(grep -Fc -- 'let values = logits.asArray(Float.self)' \
+        "$decoder_tokenizer_compatibility_probe")" == "1" \
+    && "$(grep -Fc -- 'try Device.withDefaultDevice(gpu)' \
+        "$decoder_tokenizer_compatibility_probe")" == "1" \
+    && "$(grep -Fc -- 'try withError {' \
+        "$decoder_tokenizer_compatibility_probe")" == "1" ]] ||
+    die "PrimeNativeDecoder tokenizer-compatibility execution capability count changed"
+
+readonly tokenizer_clear_lines="$(grep -nF -- 'Memory.clearCache()' \
+    "$decoder_tokenizer_compatibility_probe" | awk -F: '{print $1}')"
+readonly tokenizer_clear_1="$(printf '%s\n' "$tokenizer_clear_lines" | awk 'NR == 1')"
+readonly tokenizer_clear_2="$(printf '%s\n' "$tokenizer_clear_lines" | awk 'NR == 2')"
+readonly tokenizer_clear_3="$(printf '%s\n' "$tokenizer_clear_lines" | awk 'NR == 3')"
+readonly tokenizer_clear_4="$(printf '%s\n' "$tokenizer_clear_lines" | awk 'NR == 4')"
+readonly tokenizer_make_line="$(grep -nF -- \
+    'let model = PrimeNativeGQADecoder.make(' \
+    "$decoder_tokenizer_compatibility_probe" | awk -F: '{print $1}')"
+readonly tokenizer_train_line="$(grep -nF -- 'model.train(false)' \
+    "$decoder_tokenizer_compatibility_probe" | awk -F: '{print $1}')"
+readonly tokenizer_model_eval_line="$(grep -nF -- 'try checkedEval(model)' \
+    "$decoder_tokenizer_compatibility_probe" | awk -F: '{print $1}')"
+readonly tokenizer_catalog_line="$(grep -nF -- \
+    'let catalog = try liveCatalog(' \
+    "$decoder_tokenizer_compatibility_probe" | awk -F: '{print $1}')"
+readonly tokenizer_forward_line="$(grep -nF -- \
+    'let logits = try model.forward(tokenIDs: tokenIDs)' \
+    "$decoder_tokenizer_compatibility_probe" | awk -F: '{print $1}')"
+readonly tokenizer_logits_eval_line="$(grep -nF -- 'try checkedEval(logits)' \
+    "$decoder_tokenizer_compatibility_probe" | awk -F: '{print $1}')"
+readonly tokenizer_readback_line="$(grep -nF -- \
+    'let values = logits.asArray(Float.self)' \
+    "$decoder_tokenizer_compatibility_probe" | awk -F: '{print $1}')"
+[[ "$tokenizer_clear_1" -lt "$tokenizer_make_line" \
+    && "$tokenizer_make_line" -lt "$tokenizer_train_line" \
+    && "$tokenizer_train_line" -lt "$tokenizer_model_eval_line" \
+    && "$tokenizer_model_eval_line" -lt "$tokenizer_clear_2" \
+    && "$tokenizer_clear_2" -lt "$tokenizer_catalog_line" \
+    && "$tokenizer_catalog_line" -lt "$tokenizer_forward_line" \
+    && "$tokenizer_forward_line" -lt "$tokenizer_clear_3" \
+    && "$tokenizer_clear_3" -lt "$tokenizer_logits_eval_line" \
+    && "$tokenizer_logits_eval_line" -lt "$tokenizer_readback_line" \
+    && "$tokenizer_readback_line" -lt "$tokenizer_clear_4" ]] ||
+    die "PrimeNativeDecoder tokenizer-compatibility evaluation order changed"
+
+for forbidden_tokenizer_compatibility_source_value in \
+    'MLXLLM' \
+    'MLXOptimizers' \
+    'PMHNP' \
+    'DriverV2' \
+    'Geometry' \
+    'RenderKit' \
+    'PrimeNativeDecoderCheckpointManifestV1' \
+    'PrimeNativeDecoderCheckpointCodecV1' \
+    'writeNative300MByte512' \
+    'loadNative300MByte512' \
+    'URLSession' \
+    'posix_spawn' \
+    'execve(' \
+    'FileHandle' \
+    'Data(contentsOf:' \
+    'write(to:' \
+    'contentsOfDirectory'; do
+    if grep -Fq -- "$forbidden_tokenizer_compatibility_source_value" \
+        "$decoder_tokenizer_compatibility_authority_source" \
+        "$decoder_tokenizer_compatibility_probe" \
+        "$decoder_tokenizer_compatibility_test"; then
+        die "PrimeNativeDecoder tokenizer compatibility contains forbidden capability: $forbidden_tokenizer_compatibility_source_value"
+    fi
+done
+if grep -Eq -- \
+    '(^|[^[:alnum:]_])Process([^[:alnum:]_]|$)' \
+    "$decoder_tokenizer_compatibility_authority_source" \
+    "$decoder_tokenizer_compatibility_probe" \
+    "$decoder_tokenizer_compatibility_test"; then
+    die "PrimeNativeDecoder tokenizer compatibility contains forbidden value: Process"
+fi
 
 for forbidden_runtime_closure_source_value in \
     'MLXLLM' \

@@ -81,6 +81,7 @@ jobs:
             Sources/PrimeCore/PrimeNativeDecoderCheckpointCompatibilityV2Authority.swift \
             Sources/PrimeCore/PrimeNativeDecoderMaintainedRuntimeComputeAuthority.swift \
             Sources/PrimeCore/PrimeNativeDecoderMaintainedRuntimeExecutionObservation.swift \
+            Sources/PrimeCore/PrimeNativeDecoderTokenizerModelFunctionalCompatibilityAuthority.swift \
             Sources/PrimeCore/PrimeNativeDecoderMetalRepairAuthority.swift \
             Sources/PrimeCore/PrimeNativeDecoderMetalExecutionObservation.swift \
             Sources/PrimeCore/PrimeNativeDecoderMetalExecutionObservationCorrection.swift \
@@ -107,6 +108,8 @@ jobs:
             Tests/PrimeNativeDecoderCheckpointCompatibilityV2Validation/Tests/PrimeNativeDecoderCheckpointCompatibilityV2Tests/PrimeNativeDecoderCompatibilityIdentityV2Tests.swift \
             Tests/PrimeNativeDecoderRuntimeClosureValidation/Sources/PrimeNativeDecoderRuntimeClosureProbe/main.swift \
             Tests/PrimeNativeDecoderRuntimeClosureValidation/Tests/PrimeNativeDecoderRuntimeClosureAuthorityTests/PrimeNativeDecoderRuntimeClosureAuthorityTests.swift \
+            Tests/PrimeNativeDecoderTokenizerCompatibilityValidation/Sources/PrimeNativeDecoderTokenizerCompatibilityProbe/main.swift \
+            Tests/PrimeNativeDecoderTokenizerCompatibilityValidation/Tests/PrimeNativeDecoderTokenizerCompatibilityAuthorityTests/PrimeNativeDecoderTokenizerCompatibilityAuthorityTests.swift \
             Tests/PrimeCoreTests/PrimeNativeCorpusReplaySourceContractTests.swift \
             Tests/PrimeCoreTests/PrimeNativeGenerationContractSourceContractTests.swift \
             Tests/PrimeCoreTests/PrimeNativeNeuralGateContractSourceContractTests.swift \
@@ -152,8 +155,9 @@ jobs:
             echo 'The repaired-source checkpoint compatibility V2 successor retains the exact V1 configuration, byte-512 tokenizer identity, and 218-entry FP32 parameter catalog while binding the repaired decoder source. It defines no V2 manifest, codec, artifact, native-profile I/O, runtime, or training authority.'
             echo 'The additive maintained-runtime closure policy and implementation bind the exact dependency, loader-candidate, Metal-device, and bounded MLX-initialization mechanics authorized for the reviewed-main lane. This active-root job does not execute that closure and grants no decoder forward, Native-300M allocation, checkpoint I/O or admission, training, trial, canary, product, or publication authority.'
             echo 'An append-only successor binds the exact reviewed-main run whose frozen 44-test Metal suite and bounded Release runtime receipt passed against one fresh pinned-source metallib and a singleton Metal device. It establishes only the maintained dependency closure, source-pinned exclusive-candidate inference, and bounded MLX initialization; independent loaded-metallib identity, decoder execution, checkpoint I/O or admission, training, and downstream authority remain false.'
+            echo 'The additive tokenizer/model functional-compatibility slice authorizes the reviewed-main lane to run one fixed-seed random-initialized Native-300M allocation and one full-prefix no-cache forward for source A after the frozen 44-test and maintained-runtime predecessors. It can establish only tokenizer sequence mechanics and that process-local witness; broad model functional compatibility, model quality, checkpoint I/O or admission, training, trial, canary, product, and publication authority remain false.'
             echo 'The locally declared origin is not network-authenticated, and ignored workspace bytes are not observed by this slice.'
-            echo 'No Prime proposal, candidate selection, trial authorization, decision receipt, runtime/product/canary decoder activation, model execution, training, publication, promotion, Driver V2, or PMHNP authority is granted.'
+            echo 'Beyond that one bounded random-initialized Native-300M witness, no Prime proposal, candidate selection, trial authorization, decision receipt, runtime/product/canary decoder activation, additional model execution, training, publication, promotion, Driver V2, or PMHNP authority is granted.'
           } >> "$GITHUB_STEP_SUMMARY"
 
   trusted-main-compile:
@@ -286,3 +290,4 @@ jobs:
         run: |
           bash .github/scripts/prime-ci-native-decoder-metal.sh
           bash .github/scripts/prime-ci-native-decoder-runtime-closure.sh
+          bash .github/scripts/prime-ci-native-decoder-tokenizer-compatibility.sh

@@ -136,14 +136,54 @@ admission, identify a physical GPU, allocate or execute Native-300M, perform
 checkpoint I/O, observe the TF32 static or NAX consumer path, train, or grant
 trial, canary, product, or publication authority.
 
+`PrimeNativeDecoderTokenizerModelFunctionalCompatibilityAuthorityPlanV1.frozenV1`
+is the append-only Stage-1 authority successor. It binds the exact reviewed
+base and maintained-runtime predecessor, tokenizer, repaired decoder, V2
+identity, root package, lock, and dependency revisions. It authorizes only an
+isolated gate that verifies the Prime byte-512 tokenizer maps source text `A`
+through two native paths to `[1, 321, 70]` with an exact decode roundtrip,
+constructs the exact V2 Native-300M topology once from seed 42, materializes
+its FP32 parameters before the forward, projects the exact globally
+lexicographically ordered 218-entry catalog and 271,107,072-parameter count,
+and executes exactly one full-prefix, no-KV-cache forward. The required output
+is a finite FP32 `[1, 3, 512]` tensor whose ordered big-endian Float32 bit
+patterns are hashed; the output hash is run evidence, not a frozen expected
+value. The bounded process repeats the maintained singleton GPU-index-zero,
+Metal-lease, and exclusive staged-metallib checks and uses four distinct
+allocator-cache clears around the two explicit checked-evaluation boundaries.
+
+The Stage-1 authority itself records no execution. Native-300M allocation,
+the live catalog projection, decoder forward, output shape/dtype/finiteness,
+and exact reviewed-main compatibility execution remain false, and its exact
+status is
+`ABSTAIN_tokenizer_to_random_initialized_native300m_full_prefix_forward_witness_authorized_not_observed`.
+Even a future passing receipt can establish only tokenizer sequence mechanics
+and the tokenizer-to-random-initialized-Native-300M full-prefix forward
+witness. Broad model functional or semantic compatibility, model quality,
+deterministic seed replay, padding/ragged-batch behavior, KV-cache behavior,
+generation or generated-token detokenization, backward/gradient behavior, a
+V2 manifest or codec, native checkpoint write/load, checkpoint artifact
+availability, provenance, or admission, optimizer/RNG/data-cursor state,
+train/evaluate or resume behavior, training, candidate admission, trial,
+canary replacement, quantization, product use, and publication authority all
+remain false. The caller-supplied revision/tree binding is not an independent
+observation, and caller metallib expectation is still not artifact admission;
+exact loaded-metallib identity, physical-GPU identity, TF32
+static/differential evidence, and the NAX TF32 consumer path also remain
+unobserved. No root-package, frozen-source, predecessor, frozen-launcher,
+existing-validation, 44-test-inventory, workflow-topology,
+external-rendering, or new-external-dependency mutation is authorized by this
+slice.
+
 These slices establish the repaired source's exact declarative compatibility
 identity, admit the narrowly scoped maintained-runtime compute policy, and
-observe the bounded initialization closure at the exact hosted merge. They do
-not define a V2 manifest or codec, establish a checkpoint artifact or
-native-profile I/O, validate tokenizer/model behavior, allocate Native-300M,
-execute the decoder, train, authorize a trial, replace a canary, quantize,
-select product use, or publish. The result remains `ABSTAIN` at those
-boundaries.
+observe the bounded initialization closure at the exact hosted merge. The
+latest Stage-1 successor authorizes, but does not yet observe, the exact
+tokenizer-to-random-initialized-Native-300M full-prefix forward witness. These
+slices do not define a V2 manifest or codec, establish a checkpoint artifact
+or native-profile I/O, establish broad model functional or semantic
+compatibility, train, authorize a trial, replace a canary, quantize, select
+product use, or publish. The result remains `ABSTAIN` at those boundaries.
 
 ## Verification and next slices
 
@@ -167,6 +207,17 @@ starts the probe from an empty private working directory with the admitted
 environment, requires explicit CoreGraphics and Metal linkage and no dynamic
 MLX/Cmlx image, and checks the bounded receipt. This adds no decoder test to
 the frozen 44-test inventory and no Driver V2 test resource.
+
+A fourth isolated package and launcher validate the Stage-1 authority and run
+the separately scoped tokenizer-to-random-initialized-Native-300M witness.
+Their addition extends the existing trusted workflow command list and source
+pins without changing workflow topology, the root package, frozen sources or
+launchers, existing validation packages, or the 44-test inventory.
+No durable Stage-1 execution observation exists yet. The next action requires
+separately authorized repository publication and exact reviewed-main workflow
+execution; only after that run may a new append-only observation bind its
+revision, tree, environment, artifact, catalog, evaluation, and output
+receipt.
 
 The first external live-Metal run of exact head `84504dc` executed all 41 tests
 with no skips but reported 306 assertions. Disabling pinned-MLX TF32 removed
@@ -254,16 +305,19 @@ dependency.
 
 The remaining replacement order is:
 
-1. establish tokenizer/model functional compatibility, then define bounded
-   native-profile checkpoint container and I/O mechanics;
-2. define generic Prime-owned train/evaluate surfaces and persist exact
+1. publish and execute the exact Stage-1 tokenizer-to-random-initialized-
+   Native-300M full-prefix forward witness on reviewed main, then bind its
+   durable receipt in an append-only observation without widening it into
+   broad model functional or semantic compatibility;
+2. define bounded native-profile checkpoint container and I/O mechanics;
+3. define generic Prime-owned train/evaluate surfaces and persist exact
    optimizer, RNG, and data-cursor state for trajectory-exact resume;
-3. separately authorize bounded training, then produce and bind a non-fixture
+4. separately authorize bounded training, then produce and bind a non-fixture
    checkpoint with exact training-state and artifact provenance;
-4. separately authorize and run a bounded candidate canary/trial;
-5. migrate the read-only PMHNP canary consumer to the Prime-owned interface and
+5. separately authorize and run a bounded candidate canary/trial;
+6. migrate the read-only PMHNP canary consumer to the Prime-owned interface and
    remove its active Llama factory after single-MLX-graph reconciliation;
-6. address CoreML/NeuralKit product export only after accepted checkpoint and
+7. address CoreML/NeuralKit product export only after accepted checkpoint and
    parity evidence.
 
 No training, PMHNP write, or product decision is part of this hosted
