@@ -42,6 +42,17 @@ source produced a fresh `default.metallib`, a Metal device was visible, and all
 TF32-off CI mechanics policy. That hosted observation does not identify a
 physical GPU, independently trace the exact metallib image loaded at runtime,
 or establish a maintained-runtime policy, and it does not authorize training.
+The additive `PrimeNativeDecoderRuntime` target now supplies the next bounded
+source boundary: a decoder-scoped maintained compute policy, a declarative
+Native-300M/byte-512 runtime plan, and a one-shot Release-process initializer.
+The child must start with only `MLX_ENABLE_TF32=0` in the MLX environment,
+reject loader and instrumentation overrides, bind one caller-expected
+`default.metallib` through the pinned loader order and an exclusive-candidate
+check, hold the Metal lease, and complete an exact FP32 2x2 GPU matmul. It does
+not allocate the decoder, run a forward pass, or perform checkpoint I/O. The
+caller expectation is neither artifact provenance nor admission, and the new
+closure remains execution-unobserved until an exact reviewed-main run is
+recorded by a separate append-only observation.
 The exact implemented boundary and remaining replacement path are recorded in
 [`docs/PRIME-NATIVE-DECODER-REPLACEMENT-2026-08-09.md`](docs/PRIME-NATIVE-DECODER-REPLACEMENT-2026-08-09.md).
 
