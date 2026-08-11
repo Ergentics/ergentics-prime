@@ -53,9 +53,34 @@ chunked canonical typed receipt containing the complete 218-entry manifest
 and out-of-band whole-container binding. Its parent independently reconstructs
 and validates that receipt before unlinking the sole immutable artifact and
 removing the empty root. The authority remains `ABSTAIN` until that exact
-reviewed-main execution is observed. It authorizes no retry, artifact upload
-or retention, checkpoint admission, forward pass, backward pass, training,
-product use, or publication.
+reviewed-main execution is observed. The authorized attempt ran exactly once
+at merge `27749af3347437daa693d4375acb759283923a4a` in workflow run
+`31472165002`, job `93718282081`. All predecessor, build, and pure-test gates
+passed; source-pinned control flow establishes that the public writer returned
+successfully before the probe rejected its first post-write artifact-root
+stable-identity comparison. The failed run emitted neither root snapshot nor
+the changed field. A separate local APFS reproduction diagnosed a directory
+link-count transition from two to three when one leaf was added; that diagnosis
+is not hosted-run telemetry. No public load, V2 receipt marker, parent receipt
+validation, or literal parent cleanup occurred; no external-binding field or
+container hash was independently observed, and the run uploaded zero Actions
+artifacts. The append-only
+`PrimeNativeDecoderCheckpointV2ContainerIOExecutionFailureObservationV1`
+records that narrow failure without converting it into successful checkpoint
+I/O evidence. Its exact status is
+`ABSTAIN_seed42_public_write_return_source_inferred_postwrite_root_guard_failed_no_load_no_receipt_no_artifact_admission`.
+The old live command is retired and the reviewed-main timeout and checkout
+depth are restored, so neither a rerun nor a later merge can repeat the frozen
+attempt. The failed run establishes neither retained nor admitted checkpoint
+state. The next boundary is a distinct seed-43 corrective authority and
+launcher with a repaired
+publication comparison; it is not a retry and is not authorized by the failure
+observation. Artifact upload or retention, checkpoint admission, forward pass,
+backward pass, training, product use, and publication remain unauthorized.
+The existing reviewed-main focused-contract step now runs exactly two isolated
+pure tests for this frozen execution package, including exhaustive mutation
+rejection for the failure observation. Those tests allocate no model and call
+neither the checkpoint codec nor either public checkpoint I/O entry point.
 
 An append-only execution
 observation now binds an exact clean committed repair head whose rebuilt
@@ -123,10 +148,13 @@ compatibility, model quality, deterministic replay, padding/ragged-batch,
 KV-cache or generation behavior, checkpoint I/O/artifact/admission,
 backward/training/resume, trial/canary/quantization, product use,
 artifact/product publication authority, independent loaded-metallib identity,
-and physical-GPU identity remain false. The next bounded boundary is the exact
-reviewed-main execution of the one-shot V2 write/load successor, followed by
-an append-only observation that removes the live command and restores the
-ordinary workflow bounds. The authority itself admits no checkpoint bytes.
+and physical-GPU identity remain false. The exact seed-42 V2 write/load
+successor was attempted once and source-pinned control flow establishes that
+its public write returned before the over-strong directory link-count guard
+failed, before any public load or receipt.
+Its append-only failure observation retires the live command and restores the
+ordinary workflow bounds. The authority admits no checkpoint bytes, and the
+next bounded boundary is a separate seed-43 repair arc rather than a rerun.
 The exact implemented boundary and remaining replacement path are recorded in
 [`docs/PRIME-NATIVE-DECODER-REPLACEMENT-2026-08-09.md`](docs/PRIME-NATIVE-DECODER-REPLACEMENT-2026-08-09.md).
 

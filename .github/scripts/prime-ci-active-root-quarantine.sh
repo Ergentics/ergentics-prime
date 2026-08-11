@@ -151,6 +151,12 @@ require_preserved_object \
     "Tests/PrimeNativeDecoderCheckpointV2IOValidation/Tests/PrimeNativeDecoderCheckpointV2IOTests/PrimeNativeDecoderCheckpointV2IOTests.swift" \
     "74129e24c11a742adb11a80a8e454924426c63ee"
 require_preserved_object \
+    "Sources/PrimeCore/PrimeNativeDecoderCheckpointV2ContainerIOExecutionFailureObservation.swift" \
+    "ab6212e0499ae7aaa1da2cc66be8b67026f504c1"
+require_preserved_object \
+    "Tests/PrimeNativeDecoderCheckpointV2IOExecutionValidation/Tests/PrimeNativeDecoderCheckpointV2IOExecutionAuthorityTests/PrimeNativeDecoderCheckpointV2IOExecutionFailureObservationTests.swift" \
+    "0ed3aa83f0dc16b0893655b9582985947509b919"
+require_preserved_object \
     "Sources/PrimeCore/PrimeMLXRuntimeEnvironmentPolicy.swift" \
     "302718448a233695f57eb9bf508a56f0790a778b"
 require_preserved_object \
@@ -368,14 +374,14 @@ grep -Fq -- 'runs-on: macos-15' "$workflow_path" ||
     && "$(awk '
         /^  trusted-main-compile:$/ { inside = 1; next }
         inside && /^    timeout-minutes:/ { print $2 }
-    ' "$workflow_path")" == "90" ]] ||
+    ' "$workflow_path")" == "45" ]] ||
     die "hosted quarantine workflow runner or timeout boundary changed"
 [[ "$(grep -Fxc -- \
     '          git -C ergentics-prime fetch --depth=1 --no-tags --no-write-fetch-head origin "$EXACT_REVISION"' \
-    "$workflow_path")" == "1" \
+    "$workflow_path")" == "2" \
     && "$(grep -Fxc -- \
         '          git -C ergentics-prime fetch --depth=2 --no-tags --no-write-fetch-head origin "$EXACT_REVISION"' \
-        "$workflow_path")" == "1" \
+        "$workflow_path")" == "0" \
     && "$(grep -Fxc -- \
         "    if: github.event_name == 'push' && github.ref == 'refs/heads/main'" \
         "$workflow_path")" == "1" ]] ||
@@ -450,20 +456,18 @@ readonly runtime_closure_workflow_line="$(grep -nFx -- \
 readonly tokenizer_compatibility_workflow_line="$(grep -nFx -- \
     '          bash .github/scripts/prime-ci-native-decoder-tokenizer-compatibility.sh' \
     "$workflow_path" | awk -F: '{print $1}')"
-readonly checkpoint_v2_io_execution_workflow_line="$(grep -nFx -- \
-    '          bash .github/scripts/prime-ci-native-decoder-checkpoint-v2-io.sh' \
-    "$workflow_path" | awk -F: '{print $1}')"
 [[ "$frozen_metal_workflow_line" =~ ^[1-9][0-9]*$ \
     && "$runtime_closure_workflow_line" =~ ^[1-9][0-9]*$ \
     && "$tokenizer_compatibility_workflow_line" =~ ^[1-9][0-9]*$ \
-    && "$checkpoint_v2_io_execution_workflow_line" =~ ^[1-9][0-9]*$ \
     && "$runtime_closure_workflow_line" \
         -eq $((frozen_metal_workflow_line + 1)) \
     && "$tokenizer_compatibility_workflow_line" \
-        -eq $((runtime_closure_workflow_line + 1)) \
-    && "$checkpoint_v2_io_execution_workflow_line" \
-        -eq $((tokenizer_compatibility_workflow_line + 1)) ]] ||
-    die "trusted-main workflow does not run the four decoder gates in exact order"
+        -eq $((runtime_closure_workflow_line + 1)) ]] ||
+    die "trusted-main workflow does not run the three retained decoder gates in exact order"
+! grep -Fq -- \
+    '          bash .github/scripts/prime-ci-native-decoder-checkpoint-v2-io.sh' \
+    "$workflow_path" ||
+    die "retired Prime native decoder checkpoint V2 I/O one-shot remains live"
 grep -Fq -- \
     '--package-path Tests/PrimeNativeDecoderCheckpointCompatibilityV2Validation' \
     "$workflow_path" ||
@@ -476,6 +480,28 @@ grep -Fq -- 'prime-checkpoint-v2-io-tests.log' "$workflow_path" ||
     die "trusted-main workflow does not retain checkpoint V2 I/O validation output"
 grep -Fq -- 'Executed 1 test, with 0 failures' "$workflow_path" ||
     die "trusted-main workflow does not bind checkpoint V2 validation count"
+[[ "$(grep -Fc -- \
+    '--package-path Tests/PrimeNativeDecoderCheckpointV2IOExecutionValidation' \
+    "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        'prime-checkpoint-v2-io-execution-pure-tests.log' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        'prime-checkpoint-v2-io-execution-pure-build' \
+        "$workflow_path")" == "2" \
+    && "$(grep -Fc -- \
+        'prime-checkpoint-v2-io-execution-pure-cache' \
+        "$workflow_path")" == "2" \
+    && "$(grep -Fc -- \
+        'prime-checkpoint-v2-io-execution-pure-config' \
+        "$workflow_path")" == "2" \
+    && "$(grep -Fc -- \
+        'prime-checkpoint-v2-io-execution-pure-security' \
+        "$workflow_path")" == "2" \
+    && "$(grep -Fc -- \
+        'Executed 2 tests, with 0 failures' \
+        "$workflow_path")" == "1" ]] ||
+    die "trusted-main workflow does not run and bind the exact two-test V2 I/O execution pure suite"
 for required_metal_gate_value in \
     'MTLCreateSystemDefaultDevice' \
     '-target Cmlx' \
@@ -1231,6 +1257,7 @@ readonly decoder_checkpoint_v2_authority_source="$prime_root/Sources/PrimeCore/P
 readonly decoder_checkpoint_v2_io_source="$prime_root/Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV2.swift"
 readonly decoder_checkpoint_v2_io_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderCheckpointV2ContainerIOAuthority.swift"
 readonly decoder_checkpoint_v2_io_execution_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderCheckpointV2ContainerIOExecutionAuthority.swift"
+readonly decoder_checkpoint_v2_io_execution_failure_observation_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderCheckpointV2ContainerIOExecutionFailureObservation.swift"
 readonly decoder_checkpoint_v2_io_execution_evidence_source="$prime_root/Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV2ContainerIOExecutionEvidence.swift"
 readonly decoder_runtime_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderMaintainedRuntimeComputeAuthority.swift"
 readonly decoder_runtime_execution_observation_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderMaintainedRuntimeExecutionObservation.swift"
@@ -1257,6 +1284,7 @@ readonly decoder_checkpoint_v2_io_execution_validation_manifest="$decoder_checkp
 readonly decoder_checkpoint_v2_io_execution_validation_lock="$decoder_checkpoint_v2_io_execution_validation_root/Package.resolved"
 readonly decoder_checkpoint_v2_io_execution_probe="$decoder_checkpoint_v2_io_execution_validation_root/Sources/PrimeNativeDecoderCheckpointV2IOExecutionProbe/main.swift"
 readonly decoder_checkpoint_v2_io_execution_test="$decoder_checkpoint_v2_io_execution_validation_root/Tests/PrimeNativeDecoderCheckpointV2IOExecutionAuthorityTests/PrimeNativeDecoderCheckpointV2IOExecutionAuthorityTests.swift"
+readonly decoder_checkpoint_v2_io_execution_failure_observation_test="$decoder_checkpoint_v2_io_execution_validation_root/Tests/PrimeNativeDecoderCheckpointV2IOExecutionAuthorityTests/PrimeNativeDecoderCheckpointV2IOExecutionFailureObservationTests.swift"
 readonly decoder_runtime_closure_validation_root="$prime_root/Tests/PrimeNativeDecoderRuntimeClosureValidation"
 readonly decoder_runtime_closure_validation_manifest="$decoder_runtime_closure_validation_root/Package.swift"
 readonly decoder_runtime_closure_validation_lock="$decoder_runtime_closure_validation_root/Package.resolved"
@@ -1292,7 +1320,7 @@ readonly decoder_tokenizer_compatibility_test="$decoder_tokenizer_compatibility_
     die "PrimeNativeDecoder checkpoint V2 I/O validation inventory changed"
 [[ "$(git -C "$prime_root" ls-files -- \
     'Tests/PrimeNativeDecoderCheckpointV2IOExecutionValidation')" \
-    == $'Tests/PrimeNativeDecoderCheckpointV2IOExecutionValidation/Package.resolved\nTests/PrimeNativeDecoderCheckpointV2IOExecutionValidation/Package.swift\nTests/PrimeNativeDecoderCheckpointV2IOExecutionValidation/Sources/PrimeNativeDecoderCheckpointV2IOExecutionProbe/main.swift\nTests/PrimeNativeDecoderCheckpointV2IOExecutionValidation/Tests/PrimeNativeDecoderCheckpointV2IOExecutionAuthorityTests/PrimeNativeDecoderCheckpointV2IOExecutionAuthorityTests.swift' ]] ||
+    == $'Tests/PrimeNativeDecoderCheckpointV2IOExecutionValidation/Package.resolved\nTests/PrimeNativeDecoderCheckpointV2IOExecutionValidation/Package.swift\nTests/PrimeNativeDecoderCheckpointV2IOExecutionValidation/Sources/PrimeNativeDecoderCheckpointV2IOExecutionProbe/main.swift\nTests/PrimeNativeDecoderCheckpointV2IOExecutionValidation/Tests/PrimeNativeDecoderCheckpointV2IOExecutionAuthorityTests/PrimeNativeDecoderCheckpointV2IOExecutionAuthorityTests.swift\nTests/PrimeNativeDecoderCheckpointV2IOExecutionValidation/Tests/PrimeNativeDecoderCheckpointV2IOExecutionAuthorityTests/PrimeNativeDecoderCheckpointV2IOExecutionFailureObservationTests.swift' ]] ||
     die "PrimeNativeDecoder checkpoint V2 I/O execution validation inventory changed"
 [[ "$(git -C "$prime_root" ls-files -- \
     'Tests/PrimeNativeDecoderRuntimeClosureValidation')" \
@@ -1353,6 +1381,9 @@ readonly decoder_tokenizer_compatibility_test="$decoder_tokenizer_compatibility_
 [[ -f "$decoder_checkpoint_v2_io_execution_evidence_source" \
     && ! -L "$decoder_checkpoint_v2_io_execution_evidence_source" ]] ||
     die "PrimeNativeDecoderCheckpoint V2 I/O execution evidence is missing or linked"
+[[ -f "$decoder_checkpoint_v2_io_execution_failure_observation_source" \
+    && ! -L "$decoder_checkpoint_v2_io_execution_failure_observation_source" ]] ||
+    die "PrimeNativeDecoderCheckpoint V2 I/O execution failure observation is missing or linked"
 [[ -f "$decoder_checkpoint_v2_validation_test" \
     && ! -L "$decoder_checkpoint_v2_validation_test" ]] ||
     die "PrimeNativeDecoderCheckpoint V2 validation test is missing or linked"
@@ -1383,6 +1414,9 @@ readonly decoder_tokenizer_compatibility_test="$decoder_tokenizer_compatibility_
 [[ -f "$decoder_checkpoint_v2_io_execution_test" \
     && ! -L "$decoder_checkpoint_v2_io_execution_test" ]] ||
     die "PrimeNativeDecoderCheckpoint V2 I/O execution test is missing or linked"
+[[ -f "$decoder_checkpoint_v2_io_execution_failure_observation_test" \
+    && ! -L "$decoder_checkpoint_v2_io_execution_failure_observation_test" ]] ||
+    die "PrimeNativeDecoderCheckpoint V2 I/O execution failure-observation test is missing or linked"
 [[ -f "$decoder_runtime_authority_source" \
     && ! -L "$decoder_runtime_authority_source" ]] ||
     die "PrimeNativeDecoder maintained-runtime authority is missing or linked"
@@ -1467,11 +1501,13 @@ for v2_io_regular_source in \
 done
 for v2_io_execution_regular_source in \
     'Sources/PrimeCore/PrimeNativeDecoderCheckpointV2ContainerIOExecutionAuthority.swift' \
+    'Sources/PrimeCore/PrimeNativeDecoderCheckpointV2ContainerIOExecutionFailureObservation.swift' \
     'Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV2ContainerIOExecutionEvidence.swift' \
     'Tests/PrimeNativeDecoderCheckpointV2IOExecutionValidation/Package.swift' \
     'Tests/PrimeNativeDecoderCheckpointV2IOExecutionValidation/Package.resolved' \
     'Tests/PrimeNativeDecoderCheckpointV2IOExecutionValidation/Sources/PrimeNativeDecoderCheckpointV2IOExecutionProbe/main.swift' \
-    'Tests/PrimeNativeDecoderCheckpointV2IOExecutionValidation/Tests/PrimeNativeDecoderCheckpointV2IOExecutionAuthorityTests/PrimeNativeDecoderCheckpointV2IOExecutionAuthorityTests.swift'; do
+    'Tests/PrimeNativeDecoderCheckpointV2IOExecutionValidation/Tests/PrimeNativeDecoderCheckpointV2IOExecutionAuthorityTests/PrimeNativeDecoderCheckpointV2IOExecutionAuthorityTests.swift' \
+    'Tests/PrimeNativeDecoderCheckpointV2IOExecutionValidation/Tests/PrimeNativeDecoderCheckpointV2IOExecutionAuthorityTests/PrimeNativeDecoderCheckpointV2IOExecutionFailureObservationTests.swift'; do
     [[ "$(git -C "$prime_root" ls-files -s -- \
         "$v2_io_execution_regular_source" | awk '{print $1}')" == "100644" ]] ||
         die "PrimeNativeDecoder checkpoint V2 I/O execution source mode changed: $v2_io_execution_regular_source"
@@ -1622,6 +1658,18 @@ assert_checkpoint_v2_io_execution_source_identity \
     '0683f4bfba4dc7929e4c397a499132f859a80b0e' \
     '60125' \
     '824fe36fcb6e0707650868e1fbfc1bb67cf6ccace7a9c0ea21a60bead27bbe07'
+assert_checkpoint_v2_io_execution_source_identity \
+    'Sources/PrimeCore/PrimeNativeDecoderCheckpointV2ContainerIOExecutionFailureObservation.swift' \
+    '100644' \
+    'ab6212e0499ae7aaa1da2cc66be8b67026f504c1' \
+    '44667' \
+    'e35bb2770a0b668fac0b9d26ea057ffe1837210abea0e30d8beb4ad4838e522f'
+assert_checkpoint_v2_io_execution_source_identity \
+    'Tests/PrimeNativeDecoderCheckpointV2IOExecutionValidation/Tests/PrimeNativeDecoderCheckpointV2IOExecutionAuthorityTests/PrimeNativeDecoderCheckpointV2IOExecutionFailureObservationTests.swift' \
+    '100644' \
+    '0ed3aa83f0dc16b0893655b9582985947509b919' \
+    '16695' \
+    '89ff93473e36ecc8a1fad38ef46c792ad0d12edee2508d91101d4df336cf7c2c'
 
 assert_runtime_closure_source_identity() {
     local relative_path="$1"
@@ -1941,6 +1989,7 @@ swiftc -frontend -parse "$decoder_checkpoint_authority_source"
 swiftc -frontend -parse "$decoder_checkpoint_v2_authority_source"
 swiftc -frontend -parse "$decoder_checkpoint_v2_io_authority_source"
 swiftc -frontend -parse "$decoder_checkpoint_v2_io_execution_authority_source"
+swiftc -frontend -parse "$decoder_checkpoint_v2_io_execution_failure_observation_source"
 swiftc -frontend -parse "$decoder_runtime_authority_source"
 swiftc -frontend -parse "$decoder_runtime_execution_observation_source"
 swiftc -frontend -parse "$decoder_runtime_source"
@@ -1958,6 +2007,7 @@ swiftc -frontend -parse "$decoder_checkpoint_v2_validation_test"
 swiftc -frontend -parse "$decoder_checkpoint_v2_io_validation_test"
 swiftc -frontend -parse "$decoder_checkpoint_v2_io_execution_probe"
 swiftc -frontend -parse "$decoder_checkpoint_v2_io_execution_test"
+swiftc -frontend -parse "$decoder_checkpoint_v2_io_execution_failure_observation_test"
 swiftc -frontend -parse "$decoder_runtime_closure_probe"
 swiftc -frontend -parse "$decoder_runtime_closure_test"
 swiftc -frontend -parse "$decoder_tokenizer_compatibility_probe"
@@ -2004,6 +2054,10 @@ readonly expected_mlxllm_imports=$'Sources/PrimeGPUCalibration/PrimeGPUCalibrati
     == "Foundation" ]] ||
     die "PrimeNativeDecoderCheckpoint V2 I/O execution authority imports changed"
 [[ "$(awk '/^import / {print $2}' \
+    "$decoder_checkpoint_v2_io_execution_failure_observation_source" | paste -sd, -)" \
+    == "Foundation" ]] ||
+    die "PrimeNativeDecoderCheckpoint V2 I/O execution failure-observation imports changed"
+[[ "$(awk '/^import / {print $2}' \
     "$decoder_checkpoint_v2_io_execution_evidence_source" | paste -sd, -)" \
     == "Foundation,PrimeCore" ]] ||
     die "PrimeNativeDecoderCheckpoint V2 I/O execution evidence imports changed"
@@ -2015,6 +2069,10 @@ readonly expected_mlxllm_imports=$'Sources/PrimeGPUCalibration/PrimeGPUCalibrati
     "$decoder_checkpoint_v2_io_execution_test" | paste -sd, -)" \
     == "CoreFoundation,Foundation,XCTest,PrimeCore,PrimeNativeDecoderCheckpoint" ]] ||
     die "PrimeNativeDecoderCheckpoint V2 I/O execution test imports changed"
+[[ "$(awk '/^import / {print $2}' \
+    "$decoder_checkpoint_v2_io_execution_failure_observation_test" | paste -sd, -)" \
+    == "CoreFoundation,Foundation,XCTest,PrimeCore" ]] ||
+    die "PrimeNativeDecoderCheckpoint V2 I/O execution failure-observation test imports changed"
 [[ "$(awk '/^import / {print $2}' "$decoder_runtime_authority_source" | paste -sd, -)" \
     == "Foundation" ]] ||
     die "PrimeNativeDecoder maintained-runtime authority imports changed"
@@ -2095,6 +2153,12 @@ grep -Fq -- "$root_mlx_revision" \
 [[ "$(grep -Ec -- '^[[:space:]]+func test' \
     "$decoder_checkpoint_v2_io_execution_test")" == "1" ]] ||
     die "PrimeNativeDecoder checkpoint V2 I/O execution test count changed"
+[[ "$(grep -Ec -- '^[[:space:]]+func test' \
+    "$decoder_checkpoint_v2_io_execution_failure_observation_test")" == "1" \
+    && "$(grep -ER -- '^[[:space:]]+func test' \
+        "$decoder_checkpoint_v2_io_execution_validation_root/Tests/PrimeNativeDecoderCheckpointV2IOExecutionAuthorityTests" \
+        | wc -l | awk '{print $1}')" == "2" ]] ||
+    die "PrimeNativeDecoder checkpoint V2 I/O execution target must contain exactly two pure tests"
 for required_checkpoint_v2_io_execution_probe_value in \
     'PrimeNativeDecoderCheckpointV2ContainerIOExecutionEnvironmentPolicyV1' \
     '.validateLaunchedCurrentProcess()' \
@@ -2264,6 +2328,47 @@ for forbidden_checkpoint_v2_io_execution_test_value in \
     fi
 done
 
+for required_checkpoint_v2_io_execution_failure_test_value in \
+    'func testFailedAttemptObservationIsExactExhaustedAndPure()' \
+    'PrimeNativeDecoderCheckpointV2ContainerIOExecutionFailureObservationV1' \
+    'try observation.validateExactV1()' \
+    'observation.runID, 31_472_165_002' \
+    'observation.reviewedMainJobID, 93_718_282_081' \
+    'observation.publicCheckpointWriteCompletionCountSourceInferred' \
+    'observation.externalBindingReturnSourceInferred' \
+    'observation.externalBindingFieldsIndependentlyObserved' \
+    'observation.publicCheckpointLoadInvocationCountSourceInferred' \
+    'observation.receiptBeginMarkerCount' \
+    'observation.parentArtifactUnlinkCompleted' \
+    'observation.eventualRunnerVMCleanupObserved' \
+    'ABSTAIN_seed42_public_write_return_source_inferred_postwrite_root_guard_failed_no_load_no_receipt_no_artifact_admission' \
+    'let mutations = recursiveMutations(of: object, path: "$root")' \
+    'XCTAssertGreaterThan(mutations.count, 200)' \
+    'XCTAssertGreaterThan(decodedMutationCount, 150)' \
+    'PrimeNativeDecoderCheckpointV2ContainerIOExecutionFailureObservationError' \
+    '.contractDrift'; do
+    grep -Fq -- "$required_checkpoint_v2_io_execution_failure_test_value" \
+        "$decoder_checkpoint_v2_io_execution_failure_observation_test" ||
+        die "PrimeNativeDecoder checkpoint V2 I/O failure-observation test lost: $required_checkpoint_v2_io_execution_failure_test_value"
+done
+for forbidden_checkpoint_v2_io_execution_failure_test_value in \
+    'PrimeNativeGQADecoder.make(' \
+    'PrimeNativeDecoderCheckpointCodecV2.' \
+    'PrimeArtifactRoot(' \
+    'Memory.clearCache()' \
+    'import MLX' \
+    'import Metal' \
+    'FileManager' \
+    'FileHandle' \
+    'URLSession' \
+    'posix_spawn' \
+    'execve('; do
+    if grep -Fq -- "$forbidden_checkpoint_v2_io_execution_failure_test_value" \
+        "$decoder_checkpoint_v2_io_execution_failure_observation_test"; then
+        die "PrimeNativeDecoder checkpoint V2 I/O failure-observation test gained execution capability: $forbidden_checkpoint_v2_io_execution_failure_test_value"
+    fi
+done
+
 for required_checkpoint_v2_io_execution_authority_value in \
     'public struct' \
     'PrimeNativeDecoderCheckpointV2ContainerIOExecutionAuthorityPlanV1:' \
@@ -2391,6 +2496,102 @@ for forbidden_checkpoint_v2_io_execution_evidence_capability in \
     if grep -Fq -- "$forbidden_checkpoint_v2_io_execution_evidence_capability" \
         "$decoder_checkpoint_v2_io_execution_evidence_source"; then
         die "PrimeNativeDecoder checkpoint V2 I/O execution evidence owns forbidden capability: $forbidden_checkpoint_v2_io_execution_evidence_capability"
+    fi
+done
+
+for required_checkpoint_v2_io_execution_failure_observation_value in \
+    'PrimeNativeDecoderCheckpointV2ContainerIOExecutionFailureObservationV1:' \
+    'PrimeNativeDecoderCheckpointV2ContainerIOExecutionFailureObservationError' \
+    'case contractDrift' \
+    'public static let frozenV1 = Self(' \
+    'try predecessor.validateExactV1()' \
+    'self == expected,' \
+    'observedSourceBindings.count == 10,' \
+    '"ergentics_prime_native_decoder_checkpoint_v2_container_io_execution_failure_observation_v1"' \
+    '"27749af3347437daa693d4375acb759283923a4a"' \
+    '"a222082fa6b5c469cc4da967a77cbb7e4960e455"' \
+    'runID: 31_472_165_002,' \
+    'runNumber: 51,' \
+    'runAttempt: 1,' \
+    'runConclusion: "failure",' \
+    'activeRootJobID: 93_717_678_740,' \
+    'activeRootJobSucceeded: true,' \
+    'reviewedMainJobID: 93_718_282_081,' \
+    'reviewedMainJobConclusion: "failure",' \
+    'renderedJobLogsBound: true,' \
+    'rawGitHubLogArchiveBytesBound: false,' \
+    'publishedWorkflowArtifactCount: 0,' \
+    'checkpointArtifactUploaded: false,' \
+    'freshMetallibBuildSucceeded: true,' \
+    'predecessorMetalGateSucceeded: true,' \
+    'predecessorMaintainedRuntimeClosureSucceeded: true,' \
+    'predecessorTokenizerCompatibilitySucceeded: true,' \
+    'predecessorValidatedLogCount: 8,' \
+    'predecessorValidatedReceiptCount: 2,' \
+    'authorizedRunnerTemporaryReclamationCompleted: true,' \
+    '"prime-native-decoder-checkpoint-v2-io-execution-probe: contract drift: artifact root changed identity during write"' \
+    'probeProcessExitCode: 2,' \
+    'receiptBeginMarkerCount: 0,' \
+    'receiptChunkMarkerCount: 0,' \
+    'receiptEndMarkerCount: 0,' \
+    'executionEvidenceValueConstructed: false,' \
+    'canonicalReceiptConstructed: false,' \
+    'canonicalReceiptEmitted: false,' \
+    'initializationSeed: 42,' \
+    'publicCheckpointWriteInvocationCountSourceInferred: 1,' \
+    'publicCheckpointWriteCompletionCountSourceInferred: 1,' \
+    'externalBindingReturnSourceInferred: true,' \
+    'externalBindingFieldsIndependentlyObserved: false,' \
+    'publicCheckpointLoadInvocationCountSourceInferred: 0,' \
+    'publicCheckpointLoadCompletionCountSourceInferred: 0,' \
+    'postWriteRootStableObjectIdentityGuardPassed: false,' \
+    'publishedArtifactPathInspectionCompleted: false,' \
+    'artifactRootChangedFieldIdentifiedByRun: false,' \
+    'localDiagnosticRootLinkCountBeforeLeafAddition: 2,' \
+    'localDiagnosticRootLinkCountAfterLeafAddition: 3,' \
+    'localDiagnosisIsFailedRunTelemetry: false,' \
+    'parentReceiptVerificationCompleted: false,' \
+    'parentArtifactUnlinkCompleted: false,' \
+    'parentArtifactRootRmdirCompleted: false,' \
+    'eventualRunnerVMCleanupObserved: false,' \
+    'predecessorAuthorityAttemptConsumed: true,' \
+    'predecessorAuthorityExhausted: true,' \
+    'rerunObserved: false,' \
+    'rerunAuthorized: false,' \
+    'replacementExecutionAuthorityEstablished: false,' \
+    'checkpointArtifactAvailabilityEstablished: false,' \
+    'checkpointArtifactRetentionEstablished: false,' \
+    'checkpointContainerHashIndependentlyObserved: false,' \
+    'checkpointIORoundTripObserved: false,' \
+    'checkpointAdmissionGranted: false,' \
+    'optimizerStateInclusionObservedByCheckpointAttempt: false,' \
+    'rngStateInclusionObservedByCheckpointAttempt: false,' \
+    'dataCursorInclusionObservedByCheckpointAttempt: false,' \
+    'kvCacheStateInclusionObservedByCheckpointAttempt: false,' \
+    'trainingExecutionObserved: false,' \
+    'publicationAuthorized: false,' \
+    '"ABSTAIN_seed42_public_write_return_source_inferred_postwrite_root_guard_failed_no_load_no_receipt_no_artifact_admission"' \
+    '"require_a_separate_successor_execution_authority_before_any_new_attempt"'; do
+    grep -Fq -- "$required_checkpoint_v2_io_execution_failure_observation_value" \
+        "$decoder_checkpoint_v2_io_execution_failure_observation_source" ||
+        die "PrimeNativeDecoder checkpoint V2 I/O failure observation lost: $required_checkpoint_v2_io_execution_failure_observation_value"
+done
+for forbidden_checkpoint_v2_io_execution_failure_observation_capability in \
+    'FileManager' \
+    'FileHandle' \
+    'URL(' \
+    'URLSession' \
+    'posix_spawn' \
+    'execve(' \
+    'PrimeArtifactRoot(' \
+    'PrimeNativeGQADecoder.make(' \
+    'PrimeNativeDecoderCheckpointCodecV2.' \
+    'import MLX' \
+    'import Metal' \
+    'Process()'; do
+    if grep -Fq -- "$forbidden_checkpoint_v2_io_execution_failure_observation_capability" \
+        "$decoder_checkpoint_v2_io_execution_failure_observation_source"; then
+        die "PrimeNativeDecoder checkpoint V2 I/O failure observation owns forbidden capability: $forbidden_checkpoint_v2_io_execution_failure_observation_capability"
     fi
 done
 
