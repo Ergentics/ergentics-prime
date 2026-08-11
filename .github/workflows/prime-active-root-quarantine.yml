@@ -97,6 +97,7 @@ jobs:
             Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV2.swift \
             Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV2ContainerIOExecutionEvidence.swift \
             Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV2ContainerIORootIdentityRepairExecutionEvidence.swift \
+            Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV2ContainerIORootIdentityRepairExecutionObservation.swift \
             Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCompatibilityIdentityV2.swift \
             Sources/PrimeNativeDecoderRuntime/PrimeNativeDecoderRuntime.swift \
             Tests/PrimeLatinProposalPairCaptureTests/PrimeLatinProposalPairCaptureSourceContractTests.swift \
@@ -120,6 +121,7 @@ jobs:
             Tests/PrimeNativeDecoderCheckpointV2IOExecutionValidation/Tests/PrimeNativeDecoderCheckpointV2IOExecutionAuthorityTests/PrimeNativeDecoderCheckpointV2IOExecutionFailureObservationTests.swift \
             Tests/PrimeNativeDecoderCheckpointV2IORootIdentityRepairExecutionValidation/Sources/PrimeNativeDecoderCheckpointV2IORootIdentityRepairExecutionProbe/main.swift \
             Tests/PrimeNativeDecoderCheckpointV2IORootIdentityRepairExecutionValidation/Tests/PrimeNativeDecoderCheckpointV2IORootIdentityRepairExecutionAuthorityTests/PrimeNativeDecoderCheckpointV2IORootIdentityRepairExecutionAuthorityTests.swift \
+            Tests/PrimeNativeDecoderCheckpointV2IORootIdentityRepairExecutionValidation/Tests/PrimeNativeDecoderCheckpointV2IORootIdentityRepairExecutionAuthorityTests/PrimeNativeDecoderCheckpointV2IORootIdentityRepairExecutionObservationTests.swift \
             Tests/PrimeNativeDecoderRuntimeClosureValidation/Sources/PrimeNativeDecoderRuntimeClosureProbe/main.swift \
             Tests/PrimeNativeDecoderRuntimeClosureValidation/Tests/PrimeNativeDecoderRuntimeClosureAuthorityTests/PrimeNativeDecoderRuntimeClosureAuthorityTests.swift \
             Tests/PrimeNativeDecoderTokenizerCompatibilityValidation/Sources/PrimeNativeDecoderTokenizerCompatibilityProbe/main.swift \
@@ -174,10 +176,11 @@ jobs:
             echo 'The append-only V2 checkpoint container/I/O successor defines an exact weights-only manifest, caller-supplied external whole-container binding, and public Native-300M write/load codec whose filesystem capability remains inside PrimeArtifactRoot. It authorizes those bounded APIs but does not itself observe a write, load, artifact, durability outcome, checkpoint admission, runtime use, or training.'
             echo 'Hosted CI runs one isolated declarative V2 checkpoint I/O schema, mutation, source-identity, import, and capability-boundary test. That test does not call the codec, allocate Native-300M, or grant artifact, checkpoint, product, publication, trial, canary, or training authority.'
             echo 'The bounded execution successor authorizes only the first-attempt direct-main successor to run one seed-42 Native-300M V2 write and one fresh public load after its frozen predecessors, using ordered chunked receipt transport and literal ephemeral cleanup; it grants no retry, retention, upload, admission, forward, training, product, or publication authority.'
-            echo 'Its exact reviewed-main attempt passed every predecessor, build, and pure-test gate and source-inferably returned from the public write, then failed at the post-write artifact-root stable-identity guard before path observation, public load, any V2 receipt marker, or supervisor cleanup; it emitted neither root snapshot nor the changed field. A separate local APFS reproduction diagnosed a two-to-three directory link-count transition when one leaf was added, not hosted-run telemetry. The run uploaded zero Actions artifacts and establishes neither retained nor admitted checkpoint state. The append-only failure observation binds that narrow outcome, retires the old live command, and restores both 45-minute timeouts and depth-one checkouts; a separately authorized seed-43 repair is the next boundary, never a rerun.'
+            echo 'Its exact reviewed-main attempt passed every predecessor, build, and pure-test gate and source-inferably returned from the public write, then failed at the post-write artifact-root stable-identity guard before path observation, public load, any V2 receipt marker, or supervisor cleanup; it emitted neither root snapshot nor the changed field. A separate local APFS reproduction diagnosed a two-to-three directory link-count transition when one leaf was added, not hosted-run telemetry. The run uploaded zero Actions artifacts and establishes neither retained nor admitted checkpoint state. The append-only failure observation binds that narrow outcome, retires the old live command, and restores both 45-minute timeouts and depth-one checkouts; a separately authorized seed-43 repair was the required next boundary, never a rerun.'
             echo 'Hosted reviewed-main now executes exactly two isolated pure V2 I/O execution-contract tests, including exhaustive failure-observation mutation rejection. They allocate no model, call no checkpoint codec or public I/O entry point, and cannot reactivate the exhausted one-shot.'
-            echo 'The append-only root-identity repair successor authorizes only the first-attempt direct-main successor to run one distinct seed-43 Native-300M V2 write and one fresh public load. It keeps the failed seed-42 authority, evidence, probe, codec, and failure observation frozen; before-to-after publication continuity excludes directory link-count and timestamp topology while after-write-to-after-load identity remains exact. No retry, retained artifact, admission, forward, training, product, or publication authority is granted.'
-            echo 'Hosted reviewed-main also executes one isolated pure root-identity repair authority/evidence test. It constructs only declarative fixtures, performs no checkpoint I/O or Native-300M allocation, and cannot itself establish a repaired execution outcome.'
+            echo 'The append-only root-identity repair successor authorized only the first-attempt direct-main successor to run one distinct seed-43 Native-300M V2 write and one fresh public load. It keeps the failed seed-42 authority, evidence, probe, codec, and failure observation frozen; before-to-after publication continuity excludes directory link-count and timestamp topology while after-write-to-after-load identity remains exact.'
+            echo 'Its append-only outcome observation binds exact reviewed-main merge 44cfa2caa3af5bb44ad53294de33ba2d0faa9a59 and workflow run 31484642403 attempt 1. The frozen Metal, maintained-runtime, and tokenizer launchers passed in that order before exactly one public write and one public fresh load. The artifact-root link topology was 2 to 3 to 3, its stable device/inode/owner/group/mode fields matched throughout, its complete post-write identity matched the post-load identity, and the parent reconstructed and validated the full typed receipt before literal leaf unlink and root rmdir cleanup. The run published zero Actions artifacts and establishes no retained artifact, artifact provenance, checkpoint admission, forward, training, product, or publication authority.'
+            echo 'Hosted reviewed-main now executes exactly two isolated pure root-identity repair authority/evidence and outcome-observation tests. They construct only declarative fixtures, perform no checkpoint I/O or Native-300M allocation, and cannot repeat the retired live execution.'
             echo 'The locally declared origin is not network-authenticated, and ignored workspace bytes are not observed by this slice.'
             echo 'Beyond that one bounded random-initialized Native-300M witness, no Prime proposal, candidate selection, trial authorization, decision receipt, runtime/product/canary decoder activation, additional model execution, training, publication, promotion, Driver V2, or PMHNP authority is granted.'
           } >> "$GITHUB_STEP_SUMMARY"
@@ -187,7 +190,7 @@ jobs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: active-root
     runs-on: macos-26
-    timeout-minutes: 90
+    timeout-minutes: 45
     env:
       EXACT_REVISION: ${{ github.sha }}
       PRIME_MLX_REVISION: d37885a278f1c37484a94d0f401a418735e66519
@@ -215,7 +218,7 @@ jobs:
           export GIT_CONFIG_COUNT=1
           export GIT_CONFIG_KEY_0="url.https://x-access-token:${CHECKOUT_TOKEN}@github.com/.insteadOf"
           export GIT_CONFIG_VALUE_0="https://github.com/"
-          git -C ergentics-prime fetch --depth=2 --no-tags --no-write-fetch-head origin "$EXACT_REVISION"
+          git -C ergentics-prime fetch --depth=1 --no-tags --no-write-fetch-head origin "$EXACT_REVISION"
           git -C ergentics-prime checkout --detach "$EXACT_REVISION"
           unset GIT_CONFIG_COUNT GIT_CONFIG_KEY_0 GIT_CONFIG_VALUE_0
           [[ "$(git -C ergentics-prime rev-parse HEAD)" == "$EXACT_REVISION" ]]
@@ -362,7 +365,7 @@ jobs:
             "$checkpoint_v2_io_execution_pure_test_log"
           ! grep -Fqi -- 'skipped' \
             "$checkpoint_v2_io_execution_pure_test_log"
-          grep -Fq 'Executed 1 test, with 0 failures' \
+          grep -Fq 'Executed 2 tests, with 0 failures' \
             "$checkpoint_v2_io_root_identity_repair_execution_pure_test_log"
           ! grep -Fqi -- 'skipped' \
             "$checkpoint_v2_io_root_identity_repair_execution_pure_test_log"
@@ -375,4 +378,3 @@ jobs:
           bash .github/scripts/prime-ci-native-decoder-metal.sh
           bash .github/scripts/prime-ci-native-decoder-runtime-closure.sh
           bash .github/scripts/prime-ci-native-decoder-tokenizer-compatibility.sh
-          bash .github/scripts/prime-ci-native-decoder-checkpoint-v2-io-root-identity-repair.sh

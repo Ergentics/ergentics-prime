@@ -72,10 +72,10 @@ I/O evidence. Its exact status is
 The old live command is retired and the reviewed-main timeout and checkout
 depth are restored, so neither a rerun nor a later merge can repeat the frozen
 attempt. The failed run establishes neither retained nor admitted checkpoint
-state. The next boundary is a distinct seed-43 corrective authority and
-launcher with a repaired
-publication comparison; it is not a retry and is not authorized by the failure
-observation. Artifact upload or retention, checkpoint admission, forward pass,
+state. The required next boundary was a distinct seed-43 corrective authority
+and launcher with a repaired publication comparison; it was not a retry and
+was not authorized by the failure observation. Artifact upload or retention,
+checkpoint admission, forward pass,
 backward pass, training, product use, and publication remain unauthorized.
 The existing reviewed-main focused-contract step now runs exactly two isolated
 pure tests for this frozen execution package, including exhaustive mutation
@@ -95,14 +95,52 @@ remain exact through the read-only load. The parent reconstructs and validates
 the full chunked typed receipt before literal leaf unlink and root removal. A
 bounded failure trap may remove only that exact empty root or its sole verified
 fixed leaf; it never recursively deletes the artifact root and never converts a
-failed process into success evidence. This repair remains authorization, not an
-observed checkpoint round trip. It grants no rerun, retained artifact,
-provenance, admission, forward, backward, training, product, or publication
-authority. Its one-shot reviewed lane temporarily uses a 90-minute limit and a
-depth-two merge checkout; the required append-only outcome successor must
-remove the live command and restore the ordinary 45-minute/depth-one bounds
-before any later main merge. Its isolated pure test constructs declarative
-fixtures only and performs no checkpoint I/O or Native-300M allocation.
+failed process into success evidence.
+
+`PrimeNativeDecoderCheckpointV2ContainerIORootIdentityRepairExecutionObservationV1.frozenV1`
+now binds the one authorized outcome at reviewed-main merge
+`44cfa2caa3af5bb44ad53294de33ba2d0faa9a59`, workflow run
+`31484642403`, attempt 1. Active-root job `93757136546` and reviewed job
+`93757733456` both completed successfully. The reviewed lane ran the frozen
+Metal, maintained-runtime, and tokenizer launchers in that exact order before
+the seed-43 repair; the repair invoked and completed exactly one public write
+and exactly one public fresh load. The private 0700 root retained device
+`16777230`, inode `2970995`, owner `501`, group `20`, and mode `448`
+throughout. Its link-count topology was `2 -> 3 -> 3`, and its complete
+post-write identity, including both timestamps, matched the post-load identity.
+The sole immutable, regular, non-symlink leaf had mode 0444, link count 1,
+1,084,525,304 bytes, and SHA-256
+`a6dae67b9a24e3d0220d22e3060bb43bab7d8cd027d97ea635db8580774cd538`.
+Its manifest binds 218 finite FP32 tensors, 271,107,072 parameters, and
+1,084,428,288 parameter bytes.
+
+The ordered 26-chunk receipt reconstructed to 77,205 canonical bytes with
+SHA-256
+`b4aec02aa666433fa7bff5e913629e51f06f5388d21bf9e86d7801ca00dd67bf`.
+Its compatibility identity, tensor bindings, manifest, and full external
+binding are respectively bound as
+`30553/aa3ee5d2208459280a81cc8067facd49cde6449659a766f58456a9c0d6150843`,
+`35184/7cc7aec0d990a0bb6bb1748de396b84c85af06dea918610343e2f6560c926566`,
+`66373/6b42dac70d522b248b02d564c8e850f82a28ca12fcfab4ca4db91ea8cc9098e3`,
+and
+`66854/c5a9b8a8aa4301f2dde0ab199bc39771298b1842009836537a085ba4b676d961`
+canonical-byte-count/SHA-256 pairs. Only after validating that complete
+receipt and rechecking the root and leaf did the parent literally unlink the
+leaf, remove the empty root with `rmdir`, and verify both paths absent. The
+exact cleanup success followed the receipt end marker, and the run published
+zero Actions artifacts.
+
+This is one process-local checkpoint-I/O and cleanup observation. It establishes
+no retained artifact, artifact provenance, checkpoint admission,
+existing-artifact compatibility, replacement/recovery, forward, backward,
+training, product, or publication authority. The live repair command is retired;
+both jobs again use their ordinary 45-minute bounds, both checkouts use depth
+one, and the reviewed lane retains only Metal, runtime, and tokenizer live
+launchers. The repair validation package now has exactly two pure declarative
+tests; neither allocates Native-300M nor calls a public checkpoint-I/O entry
+point. The next bounded boundary is design of generic Prime-owned
+train/evaluate surfaces and exact optimizer, RNG, and data-cursor state for
+trajectory-exact resume, not authorization to train.
 
 An append-only execution
 observation now binds an exact clean committed repair head whose rebuilt
@@ -173,10 +211,14 @@ artifact/product publication authority, independent loaded-metallib identity,
 and physical-GPU identity remain false. The exact seed-42 V2 write/load
 successor was attempted once and source-pinned control flow establishes that
 its public write returned before the over-strong directory link-count guard
-failed, before any public load or receipt.
-Its append-only failure observation retires the live command and restores the
-ordinary workflow bounds. The authority admits no checkpoint bytes, and the
-next bounded boundary is a separate seed-43 repair arc rather than a rerun.
+failed, before any public load or receipt. Its append-only failure observation
+retired that exhausted command. The distinct seed-43 repair then completed its
+single authorized write/load in workflow run `31484642403`, validated the
+full ephemeral artifact binding and `2 -> 3 -> 3` root topology, and removed
+the leaf and root after receipt validation. Its append-only outcome observation
+retires the repair command and restores the ordinary workflow bounds without
+claiming retention, provenance, or admission. The next bounded boundary is the
+generic train/evaluate and trajectory-exact resume design described above.
 The exact implemented boundary and remaining replacement path are recorded in
 [`docs/PRIME-NATIVE-DECODER-REPLACEMENT-2026-08-09.md`](docs/PRIME-NATIVE-DECODER-REPLACEMENT-2026-08-09.md).
 
