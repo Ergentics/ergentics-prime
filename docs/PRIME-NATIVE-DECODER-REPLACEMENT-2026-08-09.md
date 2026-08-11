@@ -440,12 +440,12 @@ The authorized stage order is:
 7. `native300m_trajectory_checkpoint_execution_v1`; and
 8. `retained_trajectory_provenance_and_admission_v1`.
 
-Only stage 1 is declared now. It introduces no training target or dependency,
-no train/evaluate implementation, no MLX or optimizer execution, no checkpoint
-I/O or artifact root, no Native-300M allocation, no workflow launcher or model
-execution, and no timeout or checkout-depth expansion. Training, exact resume,
-retention, provenance, admission, trial, canary, product, and publication
-authority all remain false.
+At that boundary only stage 1 was declared. It introduced no training target or
+dependency, no train/evaluate implementation, no MLX or optimizer execution,
+no checkpoint I/O or artifact root, no Native-300M allocation, no workflow
+launcher or model execution, and no timeout or checkout-depth expansion.
+Training, exact resume, retention, provenance, admission, trial, canary,
+product, and publication authority all remained false.
 
 ### Reviewed-main timeout observation and bounded repair
 
@@ -486,14 +486,94 @@ a successful whole reviewed-main sequence.
 
 This append-only observation adds no trainer, evaluator, optimizer, RNG,
 cursor, checkpoint I/O, artifact retention, admission, or execution authority.
-In particular, `tiny_cpu_train_evaluate_mechanics_v1` remains blocked until a
-new exact reviewed-main execution completes the retained Metal, maintained
-runtime, and tokenizer sequence. The bounded repair raises only the
-reviewed-main job limit from 45 to 60 minutes. Active-root remains at 45
-minutes; both exact checkouts remain depth one; topology remains two jobs with
-five steps each; the only live decoder launchers remain Metal, maintained
-runtime, and tokenizer in that exact order; and no upload or one-shot launcher
-is added.
+At that boundary, `tiny_cpu_train_evaluate_mechanics_v1` remained blocked until
+a new exact reviewed-main execution completed the retained Metal, maintained
+runtime, and tokenizer sequence. The bounded repair raised only the
+reviewed-main job limit from 45 to 60 minutes. Active-root remained at 45
+minutes; both exact checkouts remained depth one; topology remained two jobs
+with five steps each; the only live decoder launchers remained Metal,
+maintained runtime, and tokenizer in that exact order; and no upload or
+one-shot launcher was added.
+
+### Sixty-minute repair success and Stage-2 mechanics authority
+
+The repair successor merged as
+`605d47dde85715f356e4d6e11beb3a3262cc4e7e`, with ordered parents
+`5eeba9e6483bafd1bbb5c96753491b3dd1609ea0` and
+`defbefcc49a0dea3cbe723af0015a670323fe0e4` and tree
+`72200da83e2ae16f3986c525e3a6cd13b47869c4`. Exact-main workflow
+`31515766609` completed successfully on attempt one. Active-root job
+`93860388811` passed in 2 minutes 31 seconds. Reviewed-main job `93861112336`
+passed in 35 minutes 12 seconds, 24 minutes 48 seconds inside the 60-minute
+bound. The focused commands passed 39 tests total. The final live step then
+completed the exact sequence of 44 Metal tests, one maintained-runtime receipt
+and pass, and one tokenizer receipt and pass. The sealed active and reviewed
+job-log SHA-256 values are respectively
+`3cd63de60767b4a5bad072a5c444eea4fa167342d28c1e21fc4e26c6577b9e9d`
+and `ac682eb0ab4a179f5e621b731d176a73879ce2ceba55ff7a5dc0dd1a19b8b391`.
+The run had no rerun, retired checkpoint command or receipt marker, upload
+step, or Actions artifact. This clears the Stage-2 sequencing prerequisite; it
+does not itself establish train/evaluate or resume mechanics.
+
+The append-only
+`PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsAuthorityV1.frozenV1`
+authorizes one exact implementation and validation boundary:
+
+- a new `PrimeNativeDecoderTraining` product and target with exactly
+  `PrimeCore`, `PrimeNativeDecoder`, `MLX`, `MLXNN`, and `MLXOptimizers` as
+  dependencies; the checkpoint target is intentionally deferred;
+- one package-scoped rank-two decoder seam that performs full-prefix no-cache
+  forward computation without exposing a public raw-`MLXArray` decoder API;
+- one fixed true-GQA CPU fixture with vocabulary 32, width 16, two layers,
+  four query heads, two key/value heads, head width 4, intermediate width 32,
+  maximum sequence length 16, maximum batch size 2, seed 7, 20 parameter
+  paths, and 5,200 FP32 parameters;
+- rectangular right-padded batches whose `validTokenCounts` define the valid
+  prefix and whose token-aligned completion masks are `false* true+` before
+  padding. Token ID zero remains valid content inside that prefix; only suffix
+  positions are required to contain the fixed zero filler and a false mask;
+- causal cross-entropy at logits columns `0..<S-1` against token columns
+  `1..<S`, explicit zero label smoothing, reduction none, and one global sum
+  divided by the exact selected-target count;
+- a Prime-owned FP32 gradient norm: every path must be present, unique,
+  finite, nonzero, shape-exact, and FP32; paths are ordered by raw UTF-8 bytes;
+  per-tensor sums of squares are left-folded in that order; threshold 1 and
+  epsilon `1e-6` are exact Float32 values; and equality takes the scaled branch
+  `1/(norm+1e-6)`;
+- pinned constant-rate AdamW with exact Float32 hyperparameter bits, no bias
+  correction or internal step counter, complete first and second moments for
+  all 20 paths, and one Prime-owned step moving only from zero to one to two;
+  and
+- two independent same-seed trainers in one process, exact per-step loss,
+  parameter, and moment equality, read-only no-cache evaluation, and a third
+  step rejected before graph construction or mutation.
+
+The root manifest necessarily changes to add that target. Its lock refreshes
+only the `originHash`; the exact MLX and Swift Numerics pins and revisions do
+not change. The package-only seam also changes the decoder file's byte
+identity. All older V2, runtime, and tokenizer source bindings remain frozen
+historical evidence, but they are not silently projected onto the modified
+decoder. This Stage-2 authority establishes no new checkpoint compatibility,
+artifact provenance, or admission; the later durable-composition stage must
+bind the then-current decoder and state identities explicitly.
+
+The attached Codex app sandbox has no visible Metal device. Pinned MLX creates
+its process-level Metal scheduler state before returning even a default CPU
+stream, so local execution stops before trainer initialization. The isolated
+test performs only a test-scoped CoreGraphics/Metal discovery check before any
+MLX device access and may skip on that incapable local host. That skip is not a
+pass or execution observation. Trusted reviewed main must execute exactly one
+test with zero skips and failures, and the test asserts that all tensor work is
+on CPU. The test-only scheduler bootstrap does not authorize GPU or Metal
+tensor operations.
+
+This authority remains below checkpoint I/O, artifact creation, filesystem
+mutation, explicit RNG/cursor state, restart or resume, Metal determinism,
+Native-300M allocation or training, quality, candidate admission, trial,
+canary, product, and publication. General rollback after a post-optimizer
+validation failure is not established; continuation from such a trainer is
+forbidden. Stage 3 remains blocked until an append-only observation binds a
+successful exact-main Stage-2 execution.
 
 ## Verification and next slices
 
@@ -664,8 +744,8 @@ dependency.
 
 The remaining replacement order is:
 
-1. execute the separately authorized tiny CPU train/evaluate and explicit
-   RNG/cursor stages;
+1. obtain and record the separately authorized tiny CPU train/evaluate hosted
+   execution, then separately implement and execute explicit RNG/cursor state;
 2. prove tiny durable multi-leaf commit behavior and repeated tiny Metal
    trajectory determinism;
 3. run the separately authorized Native-300M resource-only probe, then decide
@@ -678,5 +758,7 @@ The remaining replacement order is:
 7. address CoreML/NeuralKit product export only after accepted checkpoint and
    parity evidence.
 
-No training, PMHNP write, or product decision is part of the checkpoint
-observation or the current design-authority arc.
+No training, PMHNP write, or product decision was part of the checkpoint
+observation or the Stage-1 design-authority arc. Stage 2 is limited to its
+separate two-step tiny CPU mechanics fixture and grants no PMHNP or product
+authority.

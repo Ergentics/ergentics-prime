@@ -183,10 +183,10 @@ this design, while two exact gitlink relationships bind the pinned Swift
 revision to its MLX and MLX C child revisions. These are frozen design inputs,
 not a fresh external-source observation by this arc.
 
-This immediate arc is schema and pure-contract authority only. It adds no
+That Stage-1 arc was schema and pure-contract authority only. It added no
 trainer, evaluator, optimizer codec, durable write, model allocation, live
 Metal command, training, retained artifact, provenance, admission, trial,
-canary, product, or publication authority. Follow-ups remain separately
+canary, product, or publication authority. Its follow-ups remained separately
 bounded and ordered: tiny CPU train/evaluate mechanics; tiny explicit
 RNG/cursor resume; tiny multi-leaf commit and fault injection; repeated tiny
 Metal trajectory-determinism assays; a Native-300M resource-only one-step
@@ -212,12 +212,61 @@ receipt or pass marker.
 That cancellation is an incomplete observation, not a tokenizer semantic
 failure and not a pass. The run was not rerun. It invoked no checkpoint or
 retired seed-42/seed-43 one-shot launcher, emitted none of their markers, and
-its Actions artifact inventory was empty. Stage 2 remains blocked until a new
-exact reviewed-main run completes the entire retained sequence. The bounded
-workflow repair raises only reviewed main from 45 to 60 minutes; active-root
-remains 45 minutes, both checkouts remain depth one, the workflow remains two
-jobs with five steps each, and the only live decoder order remains Metal,
-maintained runtime, then tokenizer.
+its Actions artifact inventory was empty. At that boundary Stage 2 remained
+blocked until a new exact reviewed-main run completed the entire retained
+sequence. The bounded workflow repair raised only reviewed main from 45 to 60
+minutes; active-root remained 45 minutes, both checkouts remained depth one,
+the workflow remained two jobs with five steps each, and the only live decoder
+order remained Metal, maintained runtime, then tokenizer.
+
+The history-preserving repair merge
+`605d47dde85715f356e4d6e11beb3a3262cc4e7e` and tree
+`72200da83e2ae16f3986c525e3a6cd13b47869c4` then completed exact-main workflow
+`31515766609` successfully on its first and only attempt. Active-root job
+`93860388811` passed in 2 minutes 31 seconds. Reviewed-main job `93861112336`
+completed in 35 minutes 12 seconds, leaving 24 minutes 48 seconds inside the
+new bound. Its focused commands passed 39 tests total; the retained live order
+then passed 44 Metal tests, emitted one maintained-runtime receipt, and emitted
+one tokenizer receipt and pass marker. It ran neither retired checkpoint
+one-shot, emitted none of their transport markers, uploaded nothing, and the
+Actions artifact inventory was empty. That result clears only the Stage-2
+precondition; it does not itself execute training or establish resume.
+
+`PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsAuthorityV1.frozenV1` now
+authorizes the next bounded implementation. The new
+`PrimeNativeDecoderTraining` target depends exactly on `PrimeCore`,
+`PrimeNativeDecoder`, `MLX`, `MLXNN`, and `MLXOptimizers`; it deliberately does
+not depend on the checkpoint target. Its only model fixture has 5,200 FP32
+parameters across 20 paths, true grouped-query attention with two layers, a
+maximum batch of two rows, a maximum sequence of sixteen tokens, and exactly
+two Prime-owned optimizer steps. Batches use an explicit valid-prefix length
+and token-aligned completion mask. Loss is the global mean over selected causal
+targets, not a mean of row means. Gradient clipping uses one Prime-owned FP32
+norm accumulated in raw-UTF-8 path order and the exact strict-`<` threshold
+rule before the pinned constant-rate AdamW update. Evaluation uses the same
+loss graph without a KV cache and must restore mode without changing model,
+moment, or step state.
+
+The only decoder change is a package-scoped rank-two no-cache training seam.
+That changes the decoder source identity, so predecessor V2, runtime, and
+tokenizer source bindings remain historical evidence; this arc does not
+re-establish checkpoint compatibility, checkpoint provenance, or admission for
+the modified decoder. The root lock refresh changes only the manifest origin
+hash; the exact MLX and Swift Numerics pins remain unchanged. The isolated
+validation uses a test-only Metal device-discovery guard because the pinned MLX
+scheduler initializes its Metal process state even for CPU streams. This
+attached app sandbox exposes no Metal device and therefore cannot reach trainer
+initialization. Such a local skip is neither a mechanics pass nor an execution
+observation. The hosted lane must execute exactly one test with zero skips and
+zero failures while all tensor operations remain on CPU.
+
+This Stage-2 arc still authorizes no checkpoint read or write, filesystem or
+artifact mutation, RNG/cursor resume, interruption boundary, Metal tensor
+execution, Native-300M allocation or training, quality claim, admission,
+trial, canary, product use, or publication. A post-update validation failure
+does not carry rollback or continuation authority; that trainer must be
+discarded. Advancement to explicit RNG/cursor state remains blocked until the
+new implementation has its own successful exact-main execution observation.
 
 An append-only execution
 observation now binds an exact clean committed repair head whose rebuilt
