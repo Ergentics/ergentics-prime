@@ -82,6 +82,28 @@ pure tests for this frozen execution package, including exhaustive mutation
 rejection for the failure observation. Those tests allocate no model and call
 neither the checkpoint codec nor either public checkpoint I/O entry point.
 
+`PrimeNativeDecoderCheckpointV2ContainerIORootIdentityRepairExecutionAuthorityPlanV1.frozenV1`
+is the separately bounded correction. It preserves the failed seed-42
+authority, evidence, probe, codec, and observation byte-for-byte and authorizes
+only the first attempt of the history-preserving direct-main successor to run
+one distinct seed-43 source materialization, one public V2 write, and one public
+fresh load. Across publication, continuity is limited to the directory's
+device, inode, owner, group, and mode; its positive link count and timestamps
+are recorded as mutable topology, and the root must change from empty to
+exactly one fixed immutable leaf. The complete post-write identity must then
+remain exact through the read-only load. The parent reconstructs and validates
+the full chunked typed receipt before literal leaf unlink and root removal. A
+bounded failure trap may remove only that exact empty root or its sole verified
+fixed leaf; it never recursively deletes the artifact root and never converts a
+failed process into success evidence. This repair remains authorization, not an
+observed checkpoint round trip. It grants no rerun, retained artifact,
+provenance, admission, forward, backward, training, product, or publication
+authority. Its one-shot reviewed lane temporarily uses a 90-minute limit and a
+depth-two merge checkout; the required append-only outcome successor must
+remove the live command and restore the ordinary 45-minute/depth-one bounds
+before any later main merge. Its isolated pure test constructs declarative
+fixtures only and performs no checkpoint I/O or Native-300M allocation.
+
 An append-only execution
 observation now binds an exact clean committed repair head whose rebuilt
 44-test bundle passed on external live Metal with zero failures and skips;
