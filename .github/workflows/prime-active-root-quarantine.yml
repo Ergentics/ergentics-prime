@@ -91,6 +91,7 @@ jobs:
             Sources/PrimeCore/PrimeNativeDecoderMetalCurrentDecoderIdentityAssertionFailureObservation.swift \
             Sources/PrimeCore/PrimeNativeDecoderMetalCurrentDecoderIdentityAssertionRepairAuthority.swift \
             Sources/PrimeCore/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapRepairAuthority.swift \
+            Sources/PrimeCore/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapRepairExecutionFailureObservation.swift \
             Sources/PrimeCore/PrimeNativeDecoderMaintainedRuntimeComputeAuthority.swift \
             Sources/PrimeCore/PrimeNativeDecoderMaintainedRuntimeExecutionObservation.swift \
             Sources/PrimeCore/PrimeNativeDecoderTokenizerModelFunctionalCompatibilityAuthority.swift \
@@ -144,6 +145,7 @@ jobs:
             Tests/PrimeCoreTests/PrimeNativeDecoderMetalCurrentDecoderIdentityAssertionFailureObservationTests.swift \
             Tests/PrimeCoreTests/PrimeNativeDecoderMetalCurrentDecoderIdentityAssertionRepairAuthorityTests.swift \
             Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapRepairAuthorityTests.swift \
+            Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapRepairExecutionFailureObservationTests.swift \
             Tests/PrimeCoreTests/PrimeNativeGenerationContractSourceContractTests.swift \
             Tests/PrimeCoreTests/PrimeNativeNeuralGateContractSourceContractTests.swift \
             Tests/PrimeCoreTests/PrimeNativeNeuralGateMLXIsolationSourceContractTests.swift \
@@ -210,6 +212,7 @@ jobs:
             echo 'The following exact-main closure passed the unchanged secure fetch and all 36 focused root tests, then the frozen 44-test Metal suite ran with zero skips and failed one source-identity test through two assertions because its historical repair plan still bound the pre-Stage-2 decoder while the live decoder carried the frozen package-only training seam. Maintained runtime and tokenizer did not run; Stage-2 remained retired; no checkpoint one-shot, artifact, or rerun occurred.'
             echo 'A narrow append-only repair authority permits only the existing Metal authority test to validate the current decoder against the already-frozen Stage-2 source binding while continuing to validate the historical Metal repair plan against its original source identity. Production source, plan, decoder, workflow live commands, and all downstream authority remain unchanged; a distinct exact-main root-38, Metal-44, runtime-1, tokenizer-1 closure is still required.'
             echo 'The Stage-2 default-metallib bootstrap repair authorizes one first-attempt direct-main successor to reuse the already-built pinned-source metallib only after root 39, Metal 44, maintained runtime 1, and tokenizer 1 pass in order, then stage exactly two byte-identical copies and directly execute the single frozen mechanics XCTest once. It authorizes no rebuild, retry, rerun, checkpoint, artifact upload, Stage 3, or downstream authority.'
+            echo 'Exact-main workflow run 31544702133 attempt 1 passed secure fetch, root 39, Metal 44, maintained runtime 1, and tokenizer 1, then the frozen launcher preflight falsely treated the passing test identifier testFailedAttemptObservationIsExactExhaustedAndPure as a failed predecessor. The launcher exited before fresh-metallib discovery, staging, build, direct XCTest, or Stage-2 test start and emitted no repair receipt. The append-only failure observation consumes and retires that invocation without characterizing a predecessor test or Stage-2 mechanics failure; no rerun, artifact, Stage 3, or downstream authority is established.'
             echo 'The locally declared origin is not network-authenticated, and ignored workspace bytes are not observed by this slice.'
             echo 'Beyond that one bounded random-initialized Native-300M witness and the separately bounded tiny CPU Stage-2 mechanics authority, no Prime proposal, candidate selection, trial authorization, decision receipt, runtime/product/canary decoder activation, Native-300M training or additional execution, publication, promotion, Driver V2, or PMHNP authority is granted.'
           } >> "$GITHUB_STEP_SUMMARY"
@@ -247,7 +250,7 @@ jobs:
           export GIT_CONFIG_COUNT=1
           export GIT_CONFIG_KEY_0="url.https://x-access-token:${CHECKOUT_TOKEN}@github.com/.insteadOf"
           export GIT_CONFIG_VALUE_0="https://github.com/"
-          git -C ergentics-prime fetch --depth=2 --no-tags --no-write-fetch-head origin "$EXACT_REVISION"
+          git -C ergentics-prime fetch --depth=1 --no-tags --no-write-fetch-head origin "$EXACT_REVISION"
           git -C ergentics-prime checkout --detach "$EXACT_REVISION"
           unset GIT_CONFIG_COUNT GIT_CONFIG_KEY_0 GIT_CONFIG_VALUE_0
           [[ "$(git -C ergentics-prime rev-parse HEAD)" == "$EXACT_REVISION" ]]
@@ -331,7 +334,7 @@ jobs:
             --disable-keychain \
             --force-resolved-versions \
             --test-product ErgenticsPrimePackageTests \
-            --filter 'PrimeNativeNeuralGateMLXIsolationSourceContractTests|PrimeNativeCorpusReplaySourceContractTests|PrimeCoreTests.PrimeNativeDecoderTrajectoryExactResumeDesignAuthorityTests/testFrozenV1CanonicalCodableMutationAndSourceBoundary|PrimeCoreTests.PrimeNativeDecoderTrajectoryDesignReviewedMainTimeoutObservationTests/testFrozenV1CanonicalCodableRecursiveMutationAndAuthorityCeiling|PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsAuthorityTests/testFrozenV1CanonicalCodableExhaustiveMutationAndCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsExecutionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeReviewedMainPrivateDependencyTLSFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeNativeDecoderMetalCurrentDecoderIdentityAssertionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeNativeDecoderMetalCurrentDecoderIdentityAssertionRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling|PrimeNativeGenerationContractSourceContractTests|PrimeNativeNeuralGateContractSourceContractTests|PrimeNativeResolvedContractAdapterSourceContractTests|PrimeSwiftSourceProvenanceTests/testLiveRepositoryMatchesEmbeddedSourceIdentity' \
+            --filter 'PrimeNativeNeuralGateMLXIsolationSourceContractTests|PrimeNativeCorpusReplaySourceContractTests|PrimeCoreTests.PrimeNativeDecoderTrajectoryExactResumeDesignAuthorityTests/testFrozenV1CanonicalCodableMutationAndSourceBoundary|PrimeCoreTests.PrimeNativeDecoderTrajectoryDesignReviewedMainTimeoutObservationTests/testFrozenV1CanonicalCodableRecursiveMutationAndAuthorityCeiling|PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsAuthorityTests/testFrozenV1CanonicalCodableExhaustiveMutationAndCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsExecutionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeReviewedMainPrivateDependencyTLSFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeNativeDecoderMetalCurrentDecoderIdentityAssertionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeNativeDecoderMetalCurrentDecoderIdentityAssertionRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapRepairExecutionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeNativeGenerationContractSourceContractTests|PrimeNativeNeuralGateContractSourceContractTests|PrimeNativeResolvedContractAdapterSourceContractTests|PrimeSwiftSourceProvenanceTests/testLiveRepositoryMatchesEmbeddedSourceIdentity' \
             2>&1 | tee "$test_log"
           TMPDIR="$RUNNER_TEMP" swift test \
             --package-path Tests/PrimeNativeDecoderCheckpointCompatibilityV2Validation \
@@ -383,7 +386,7 @@ jobs:
             2>&1 | tee "$checkpoint_v2_io_root_identity_repair_execution_pure_test_log"
           unset GIT_CONFIG_COUNT GIT_CONFIG_KEY_0 GIT_CONFIG_VALUE_0
           unset GIT_CONFIG_KEY_1 GIT_CONFIG_VALUE_1
-          grep -Fq 'Executed 39 tests, with 0 failures' "$test_log"
+          grep -Fq 'Executed 40 tests, with 0 failures' "$test_log"
           grep -Fq 'PrimeNativeDecoderTrajectoryExactResumeDesignAuthorityTests' \
             "$test_log"
           grep -Fq 'PrimeNativeDecoderTrajectoryDesignReviewedMainTimeoutObservationTests' \
@@ -408,6 +411,8 @@ jobs:
             "$test_log"
           grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling' \
             "$test_log"
+          grep -Fq 'PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapRepairExecutionFailureObservationTests' \
+            "$test_log"
           grep -Fq 'Executed 1 test, with 0 failures' \
             "$checkpoint_v2_test_log"
           ! grep -Fqi -- 'skipped' "$checkpoint_v2_test_log"
@@ -431,4 +436,3 @@ jobs:
           bash .github/scripts/prime-ci-native-decoder-metal.sh
           bash .github/scripts/prime-ci-native-decoder-runtime-closure.sh
           bash .github/scripts/prime-ci-native-decoder-tokenizer-compatibility.sh
-          bash .github/scripts/prime-ci-native-decoder-stage2-metallib-bootstrap-repair.sh
