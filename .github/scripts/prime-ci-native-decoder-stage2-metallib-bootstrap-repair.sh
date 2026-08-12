@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 # Exact-main Stage-2 default-metallib bootstrap repair. This successor repairs
-# only the predecessor-log outcome classifier, then consumes the retained Metal
+# only the fresh-metallib evidence surface, then consumes the retained Metal
 # launcher's same-job fresh metallib after the frozen Metal, maintained-runtime,
-# and tokenizer predecessors have completed. It neither builds nor retains a
-# metallib and grants no Stage-3 authority.
+# and tokenizer predecessors have completed. It binds the source artifact to
+# both Metal bundle copies and both exact JSON receipts without inferring a
+# loaded path. It neither builds nor retains a metallib and grants no Stage-3
+# authority.
 set -euo pipefail
 IFS=$'\n\t'
 
@@ -16,8 +18,8 @@ readonly prime_root="$(cd "$(dirname "$0")/../.." && pwd -P)"
 readonly runner_temp="${RUNNER_TEMP:?RUNNER_TEMP is required}"
 readonly exact_revision="${EXACT_REVISION:?EXACT_REVISION is required}"
 readonly mlx_revision="${PRIME_MLX_REVISION:?PRIME_MLX_REVISION is required}"
-readonly base_revision="775b247fb8c1f0e3c28d01fce281d8d29bbb4dd1"
-readonly base_tree="817405a8710ad24245721689e7a6736c55a0b06c"
+readonly base_revision="075922cec8361c0085d5b2c6d000828e3c0bfc35"
+readonly base_tree="c6bd910b13796bb12098834c5e7daab83cba8668"
 readonly required_mlx_revision="d37885a278f1c37484a94d0f401a418735e66519"
 readonly numerics_revision="0c0290ff6b24942dadb83a929ffaaa1481df04a2"
 readonly expected_mlx_submodules=$' ce45c52505c8158ea48d2a54e8caae05efd86bfe Source/Cmlx/mlx (v0.31.1)\n 0726ca922fc902c4c61ef9c27d94132be418e945 Source/Cmlx/mlx-c (v0.6.0)'
@@ -25,8 +27,9 @@ readonly validation_root="$prime_root/Tests/PrimeNativeDecoderTrainingValidation
 readonly validation_manifest="$validation_root/Package.swift"
 readonly validation_lock="$validation_root/Package.resolved"
 readonly validation_test="$validation_root/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTrainingTests.swift"
-readonly authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapPredecessorLogClassifierRepairAuthority.swift"
-readonly authority_test="$prime_root/Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapPredecessorLogClassifierRepairAuthorityTests.swift"
+readonly authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapFreshMetallibEvidenceSurfaceRepairAuthority.swift"
+readonly authority_test="$prime_root/Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapFreshMetallibEvidenceSurfaceRepairAuthorityTests.swift"
+readonly embedded_provenance="$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift"
 
 readonly mlx_bare="$runner_temp/ergentics-mlx-swift.git"
 readonly mlx_source="$runner_temp/ergentics-mlx-swift"
@@ -37,6 +40,7 @@ readonly checkpoint_v2_io_log="$runner_temp/prime-checkpoint-v2-io-tests.log"
 readonly checkpoint_v2_io_execution_log="$runner_temp/prime-checkpoint-v2-io-execution-pure-tests.log"
 readonly checkpoint_v2_io_root_repair_log="$runner_temp/prime-checkpoint-v2-io-root-identity-repair-execution-pure-tests.log"
 readonly metal_log="$runner_temp/prime-native-decoder-metal-tests.log"
+readonly metal_full_output_log="$runner_temp/prime-native-decoder-metal-full-output.log"
 readonly runtime_test_log="$runner_temp/prime-native-decoder-runtime-closure-authority-tests.log"
 readonly runtime_probe_log="$runner_temp/prime-native-decoder-runtime-closure-probe.log"
 readonly tokenizer_test_log="$runner_temp/prime-native-decoder-tokenizer-compatibility-authority-tests.log"
@@ -51,7 +55,7 @@ readonly config_path="$runner_temp/prime-native-decoder-stage2-metallib-bootstra
 readonly security_path="$runner_temp/prime-native-decoder-stage2-metallib-bootstrap-repair-security"
 readonly private_cwd="$runner_temp/prime-native-decoder-stage2-metallib-bootstrap-repair-cwd"
 readonly test_log="$runner_temp/prime-native-decoder-stage2-metallib-bootstrap-repair-tests.log"
-readonly receipt_prefix="PRIME_NATIVE_DECODER_STAGE2_METALLIB_BOOTSTRAP_PREDECESSOR_LOG_CLASSIFIER_REPAIR_RECEIPT="
+readonly receipt_prefix="PRIME_NATIVE_DECODER_STAGE2_METALLIB_BOOTSTRAP_FRESH_METALLIB_EVIDENCE_SURFACE_REPAIR_RECEIPT="
 readonly test_class="PrimeNativeDecoderTrainingTests"
 readonly test_method="testTinyCPUTrainEvaluateMechanicsAreExactAndFailClosed"
 readonly test_filter="${test_class}/${test_method}"
@@ -206,7 +210,7 @@ git -C "$prime_root" cat-file -e "${second_parent}^{commit}"
     fail "merge tree differs from the reviewed second-parent tree"
 readonly parent_count=2
 
-readonly expected_changed_status=$'A\tSources/PrimeCore/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapPredecessorLogClassifierRepairAuthority.swift\nA\tTests/PrimeCoreTests/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapPredecessorLogClassifierRepairAuthorityTests.swift\nM\t.github/scripts/prime-ci-active-root-quarantine.sh\nM\t.github/scripts/prime-ci-native-decoder-stage2-metallib-bootstrap-repair.sh\nM\t.github/workflows/prime-active-root-quarantine.yml\nM\tSources/PrimeCore/PrimeEmbeddedBuildProvenance.swift'
+readonly expected_changed_status=$'A\tSources/PrimeCore/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapFreshMetallibEvidenceSurfaceRepairAuthority.swift\nA\tTests/PrimeCoreTests/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapFreshMetallibEvidenceSurfaceRepairAuthorityTests.swift\nM\t.github/scripts/prime-ci-active-root-quarantine.sh\nM\t.github/scripts/prime-ci-native-decoder-stage2-metallib-bootstrap-repair.sh\nM\t.github/workflows/prime-active-root-quarantine.yml\nM\tSources/PrimeCore/PrimeEmbeddedBuildProvenance.swift'
 readonly observed_changed_status="$(git -C "$prime_root" diff-tree \
     --no-commit-id --name-status --no-renames -r \
     "$first_parent" "$exact_revision" | LC_ALL=C sort)"
@@ -285,6 +289,14 @@ assert_pinned_file \
     'Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapPredecessorLogClassifierRepairAuthorityTests.swift' \
     '100644' '15164c2256129816789fd2408f73f7b1c7eaccbd' '35453' \
     '2600a86636c5440ddd010e10a0928fd7f49b96d2926536d881364e524630d187'
+assert_pinned_file \
+    'Sources/PrimeCore/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapFreshMetallibEvidenceSurfaceRepairAuthority.swift' \
+    '100644' '523d30f7bd42d67276476ee545cc2f62c4a5b361' '63673' \
+    'cb1e143d35c553514aec2e715a0e6beb87fc63b212be390bb1bd50ca630f14e0'
+assert_pinned_file \
+    'Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapFreshMetallibEvidenceSurfaceRepairAuthorityTests.swift' \
+    '100644' 'cb5e9301694ae6f37d0d2001fecabe589d563c6c' '33534' \
+    '03b25be292a00917320d208333e1bfd820042dd8e44ba440f736db0d7363ece3'
 
 [[ -f "$authority_source" && ! -L "$authority_source" \
     && "$(stat -f %l "$authority_source")" == "1" ]] ||
@@ -293,13 +305,13 @@ assert_pinned_file \
     && "$(stat -f %l "$authority_test")" == "1" ]] ||
     fail "repair authority test is missing or linked"
 grep -Fq \
-    'PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapPredecessorLogClassifierRepairAuthorityV1' \
+    'PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapFreshMetallibEvidenceSurfaceRepairAuthorityV1' \
     "$authority_source" || fail "repair authority type is missing"
 grep -Fq \
     'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling' \
     "$authority_test" || fail "repair authority test is missing"
 grep -Fq \
-    '9c94ceeca77c3fc5173adfa41f9965d33c3a78f8d975b639dd3dc0aa2c2ed99b' \
+    'bc6aa0630196e1c02814834ffb3f8502ae51bcdc751ecbc37cb9bb5dd22c502a' \
     "$authority_test" || fail "repair authority canonical digest is missing"
 [[ "$(find "$validation_root" -type f ! -path '*/.*' -print |
     LC_ALL=C sort)" \
@@ -326,6 +338,17 @@ file_identity() {
         "$(stat -f %z "$path")" \
         "$(shasum -a 256 "$path" | awk '{print $1}')"
 }
+
+assert_regular_file "$embedded_provenance"
+readonly embedded_source_identity_matches="$(
+    grep -Eo '"[0-9a-f]{64}"' "$embedded_provenance" || true
+)"
+[[ "$(printf '%s\n' "$embedded_source_identity_matches" |
+    awk 'NF { count += 1 } END { print count + 0 }')" == "1" ]] ||
+    fail "embedded Prime provenance must contain exactly one source identity"
+readonly embedded_source_identity="${embedded_source_identity_matches//\"/}"
+[[ "$embedded_source_identity" =~ ^[0-9a-f]{64}$ ]] ||
+    fail "embedded Prime source identity is invalid"
 
 assert_mlx_worktree() {
     local path="$1"
@@ -382,20 +405,21 @@ readonly predecessor_logs=(
     "$checkpoint_v2_io_execution_log"
     "$checkpoint_v2_io_root_repair_log"
     "$metal_log"
+    "$metal_full_output_log"
     "$runtime_test_log"
     "$runtime_probe_log"
     "$tokenizer_test_log"
     "$tokenizer_probe_log"
 )
-[[ "${#predecessor_logs[@]}" -eq 10 ]] ||
+[[ "${#predecessor_logs[@]}" -eq 11 ]] ||
     fail "predecessor log inventory changed"
 for predecessor_log in "${predecessor_logs[@]}"; do
     assert_regular_file "$predecessor_log"
 done
-grep -Fq 'Executed 41 tests, with 0 failures' "$active_root_log" ||
-    fail "focused root-41 contracts did not complete"
+grep -Fq 'Executed 43 tests, with 0 failures' "$active_root_log" ||
+    fail "focused root-43 contracts did not complete"
 grep -Fq \
-    'PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapPredecessorLogClassifierRepairAuthorityTests' \
+    'PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapFreshMetallibEvidenceSurfaceRepairAuthorityTests' \
     "$active_root_log" ||
     fail "focused root log does not bind the repair authority class"
 grep -Fq \
@@ -468,48 +492,110 @@ readonly metallib_sha256="$(shasum -a 256 "$metallib" | awk '{print $1}')"
     fail "fresh metallib byte count is outside the bound"
 [[ "$metallib_sha256" =~ ^[0-9a-f]{64}$ ]] ||
     fail "fresh metallib SHA-256 is invalid"
-grep -Fq \
-    "Prime decoder Metal gate: metallib_sha256=${metallib_sha256} metallib_bytes=${metallib_byte_count}" \
-    "$metal_log" || fail "Metal log does not bind the fresh metallib"
 
-readonly runtime_receipt="$(grep -E \
-    '^PRIME_NATIVE_DECODER_RUNTIME_CLOSURE_RECEIPT=' "$runtime_probe_log" |
-    sed 's/^PRIME_NATIVE_DECODER_RUNTIME_CLOSURE_RECEIPT=//')"
+# The unchanged Metal launcher writes its artifact identity before its XCTest-
+# only tee begins. The workflow captures the launcher's complete output in a
+# fixed same-job log without changing the Metal launcher. Require the dynamic
+# identity once in that full-output log and zero times in the XCTest-only log,
+# then bind the fixed fresh source directly to both Metal bundle candidates and
+# to the runtime/tokenizer candidates. The exact JSON receipts below
+# independently bind the same bytes and SHA-256 without inferring a loaded path.
+readonly metal_identity_line="Prime decoder Metal gate: metallib_sha256=${metallib_sha256} metallib_bytes=${metallib_byte_count}"
+readonly metal_identity_prefix="Prime decoder Metal gate: metallib_sha256="
+readonly metal_full_output_identity_prefix_count="$(awk \
+    -v prefix="$metal_identity_prefix" \
+    'index($0, prefix) == 1 { count += 1 } END { print count + 0 }' \
+    "$metal_full_output_log")"
+readonly metal_full_output_identity_count="$(awk \
+    -v expected="$metal_identity_line" \
+    '$0 == expected { count += 1 } END { print count + 0 }' \
+    "$metal_full_output_log")"
+readonly metal_xctest_log_identity_prefix_count="$(awk \
+    -v prefix="$metal_identity_prefix" \
+    'index($0, prefix) == 1 { count += 1 } END { print count + 0 }' \
+    "$metal_log")"
+readonly metal_xctest_log_identity_count="$(awk \
+    -v expected="$metal_identity_line" \
+    '$0 == expected { count += 1 } END { print count + 0 }' \
+    "$metal_log")"
+[[ "$metal_full_output_identity_prefix_count" == "1" \
+    && "$metal_full_output_identity_count" == "1" ]] ||
+    fail "Metal full-output log does not bind exactly one exact fresh identity"
+[[ "$metal_xctest_log_identity_prefix_count" == "0" \
+    && "$metal_xctest_log_identity_count" == "0" ]] ||
+    fail "Metal XCTest-only log unexpectedly contains the fresh identity"
+
+readonly runtime_receipt_line="$(grep -E \
+    '^PRIME_NATIVE_DECODER_RUNTIME_CLOSURE_RECEIPT=' "$runtime_probe_log")"
+readonly runtime_receipt="${runtime_receipt_line#PRIME_NATIVE_DECODER_RUNTIME_CLOSURE_RECEIPT=}"
+[[ "$(printf '%s' "$runtime_receipt" | jq -cS .)" == "$runtime_receipt" ]] ||
+    fail "maintained-runtime predecessor receipt is not canonical JSON"
 printf '%s' "$runtime_receipt" | jq -e \
+    --arg mlx_revision "$mlx_revision" \
     --arg sha256 "$metallib_sha256" \
     --argjson byte_count "$metallib_byte_count" \
-    '.evidence_id == "ergentics_prime_native_decoder_maintained_runtime_initialization_v1"
+    '.schema_version == 1
+     and .evidence_id == "ergentics_prime_native_decoder_maintained_runtime_initialization_v1"
      and .runtime_dependency_closure_established == true
+     and .plan.exact_mlx_revision == $mlx_revision
      and .metallib.sha256 == $sha256
      and .metallib.byte_count == $byte_count
+     and .metallib.path_and_descriptor_reverified == true
+     and .metallib.metal_library_validated_from_exact_url == true
+     and .metallib.existing_candidate_count_before_execution == 1
+     and .metallib.existing_candidate_count_after_execution == 1
+     and .metallib.source_pinned_loader_identity_claim_kind == "source_pinned_exhaustive_loader_precedence_and_exclusive_candidate_inference_not_independent_instrumentation"
+     and .metallib_expectation.sha256 == $sha256
+     and .metallib_expectation.byteCount == $byte_count
+     and .source_pinned_exclusive_candidate_inference_established == true
+     and .loaded_metallib_identity_independently_observed == false
+     and .runtime_loaded_metallib_identity_established == false
      and .checkpoint_io_observed == false
      and .training_execution_observed == false' >/dev/null ||
-    fail "maintained-runtime predecessor receipt changed"
-readonly tokenizer_receipt="$(grep -E \
+    fail "maintained-runtime predecessor receipt or fresh-artifact cross-binding changed"
+readonly tokenizer_receipt_line="$(grep -E \
     '^PRIME_NATIVE_DECODER_TOKENIZER_COMPATIBILITY_RECEIPT=' \
-    "$tokenizer_probe_log" |
-    sed 's/^PRIME_NATIVE_DECODER_TOKENIZER_COMPATIBILITY_RECEIPT=//')"
+    "$tokenizer_probe_log")"
+readonly tokenizer_receipt="${tokenizer_receipt_line#PRIME_NATIVE_DECODER_TOKENIZER_COMPATIBILITY_RECEIPT=}"
+[[ "$(printf '%s' "$tokenizer_receipt" | jq -cS .)" \
+    == "$tokenizer_receipt" ]] ||
+    fail "tokenizer predecessor receipt is not canonical JSON"
 printf '%s' "$tokenizer_receipt" | jq -e \
     --arg revision "$exact_revision" \
     --arg tree "$exact_tree" \
+    --arg embedded_source_identity "$embedded_source_identity" \
     --arg sha256 "$metallib_sha256" \
     --argjson byte_count "$metallib_byte_count" \
-    '.executed_revision == $revision
+    '.schema_version == 1
+     and .evidence_id == "ergentics_prime_native_decoder_tokenizer_model_functional_compatibility_evidence_v1"
+     and .executed_revision == $revision
      and .executed_tree == $tree
+     and .executed_embedded_source_identity_sha256 == $embedded_source_identity
      and .metallib_sha256 == $sha256
      and .metallib_byte_count == $byte_count
+     and .existing_metallib_candidate_count_before_execution == 1
+     and .existing_metallib_candidate_count_after_execution == 1
+     and .metal_library_validated_from_exact_url == true
+     and .metallib_path_and_descriptor_reverified == true
+     and .loaded_metallib_identity_independently_observed == false
+     and .metallib_artifact_provenance_established == false
      and .status == "PASS_process_local_tokenizer_to_random_initialized_native300m_full_prefix_forward_witness_only"
      and .train_evaluate_surface_established == false
      and .training_execution_observed == false' >/dev/null ||
-    fail "tokenizer predecessor receipt changed"
+    fail "tokenizer predecessor receipt or fresh-artifact cross-binding changed"
 
 readonly metal_bin="$metal_build/arm64-apple-macosx/debug"
 readonly runtime_bin="$runtime_build/arm64-apple-macosx/release"
 readonly tokenizer_bin="$tokenizer_build/arm64-apple-macosx/release"
-readonly predecessor_metallibs=(
-    "$metallib"
+readonly metal_bundle_metallibs=(
     "$metal_bin/mlx-swift_Cmlx.bundle/Contents/Resources/default.metallib"
     "$metal_bin/PrimeNativeDecoderValidationPackageTests.xctest/Contents/Resources/mlx-swift_Cmlx.bundle/Contents/Resources/default.metallib"
+)
+[[ "${#metal_bundle_metallibs[@]}" -eq 2 ]] ||
+    fail "Metal bundle metallib inventory changed"
+readonly predecessor_metallibs=(
+    "$metallib"
+    "${metal_bundle_metallibs[@]}"
     "$runtime_bin/mlx-swift_Cmlx.bundle/Contents/Resources/default.metallib"
     "$tokenizer_bin/mlx-swift_Cmlx.bundle/Contents/Resources/default.metallib"
 )
@@ -539,7 +625,7 @@ readonly predecessor_artifacts=(
     "${predecessor_logs[@]}"
     "${predecessor_metallibs[@]}"
 )
-[[ "${#predecessor_artifacts[@]}" -eq 15 ]] ||
+[[ "${#predecessor_artifacts[@]}" -eq 16 ]] ||
     fail "predecessor artifact inventory changed"
 predecessor_artifact_identities=()
 for predecessor_artifact in "${predecessor_artifacts[@]}"; do
@@ -751,11 +837,11 @@ done
 
 readonly receipt_json="$(jq -cnS \
     --arg authority_id \
-        'ergentics_prime_native_decoder_tiny_cpu_train_evaluate_mechanics_default_metallib_bootstrap_predecessor_log_classifier_repair_authority_v1' \
+        'ergentics_prime_native_decoder_tiny_cpu_train_evaluate_mechanics_default_metallib_bootstrap_fresh_metallib_evidence_surface_repair_authority_v1' \
     --arg receipt_id \
-        'ergentics_prime_native_decoder_stage2_metallib_bootstrap_predecessor_log_classifier_repair_receipt_v1' \
+        'ergentics_prime_native_decoder_stage2_metallib_bootstrap_fresh_metallib_evidence_surface_repair_receipt_v1' \
     --arg status \
-        'PASS_exact_main_stage2_same_job_fresh_metallib_bootstrap_predecessor_log_classifier_repair_one_test_zero_failure_zero_skip' \
+        'PASS_exact_main_stage2_same_job_fresh_metallib_evidence_surface_repair_one_test_zero_failure_zero_skip' \
     --arg revision "$exact_revision" \
     --arg tree "$exact_tree" \
     --arg first_parent "$first_parent" \
@@ -763,10 +849,19 @@ readonly receipt_json="$(jq -cnS \
     --argjson parent_count "$parent_count" \
     --argjson changed_paths "$changed_paths_json" \
     --arg mlx_revision "$mlx_revision" \
+    --arg embedded_source_identity "$embedded_source_identity" \
     --arg predecessor_log_classifier_regex "$xctest_failure_or_skip_regex" \
     --arg source_relative_path "$metallib_relative_path" \
     --arg metallib_sha256 "$metallib_sha256" \
     --argjson metallib_byte_count "$metallib_byte_count" \
+    --argjson metal_full_output_identity_prefix_count \
+        "$metal_full_output_identity_prefix_count" \
+    --argjson metal_full_output_identity_count \
+        "$metal_full_output_identity_count" \
+    --argjson metal_xctest_log_identity_prefix_count \
+        "$metal_xctest_log_identity_prefix_count" \
+    --argjson metal_xctest_log_identity_count \
+        "$metal_xctest_log_identity_count" \
     --arg test_class "$test_class" \
     --arg test_method "$test_method" \
     --arg test_filter "$test_filter" \
@@ -788,24 +883,28 @@ readonly receipt_json="$(jq -cnS \
       },
       dependency: {
         mlx_revision: $mlx_revision,
+        embedded_source_identity_sha256: $embedded_source_identity,
         validated_repository_count_before_build: 8,
         validated_repository_count_after_execution: 10
       },
       predecessor: {
-        validated_log_count: 10,
+        validated_log_count: 11,
         validated_receipt_count: 2,
-        focused_root_test_count: 41,
+        predecessor_artifact_snapshot_count: 16,
+        predecessor_artifact_revalidation_count_after_xctest: 16,
+        focused_root_test_count: 43,
         focused_isolated_test_count: 6,
-        focused_whole_step_test_count: 47,
+        focused_whole_step_test_count: 49,
         metal_test_count: 44,
         maintained_runtime_test_count: 1,
         tokenizer_test_count: 1,
-        pre_stage2_total_test_count: 93,
+        pre_stage2_total_test_count: 95,
         retained_order: ["metal", "maintained_runtime", "tokenizer", "stage2"]
       },
       predecessor_log_classifier: {
         command: "grep -Eq",
         exact_regex: $predecessor_log_classifier_regex,
+        scanned_log_count: 8,
         matching_is_case_sensitive: true,
         quoted_xctest_case_and_suite_outcome_markers_require_closed_identity: true,
         line_leading_error_diagnostic_is_rejected: true,
@@ -814,6 +913,50 @@ readonly receipt_json="$(jq -cnS \
         acceptance_fixture_match_count: 0,
         rejection_fixture_count: 5,
         rejection_fixture_match_count: 5
+      },
+      fresh_metallib_evidence_surface: {
+        impossible_metal_xctest_identity_grep_removal_count: 1,
+        fresh_source_candidate_count: 1,
+        fresh_source_file_identity_validated: true,
+        metal_launcher_source_changed: false,
+        metal_launcher_mutation_count: 0,
+        predecessor_log_classifier_mutation_count: 0,
+        metal_full_output_log_relative_to_runner_temp: "prime-native-decoder-metal-full-output.log",
+        metal_full_output_log_capture_added: true,
+        metal_full_output_log_capture_invocation_count: 1,
+        metal_full_output_log_tee_invocation_count: 1,
+        metal_full_output_log_initial_absence_required: true,
+        metal_full_output_log_regular_file_required: true,
+        metal_full_output_log_symbolic_link_forbidden: true,
+        metal_full_output_log_required_hard_link_count: 1,
+        required_metal_launcher_pipe_status: 0,
+        required_metal_full_output_tee_pipe_status: 0,
+        metal_launcher_exit_and_tee_exit_validated: true,
+        metal_identity_line_prefix: "Prime decoder Metal gate: metallib_sha256=",
+        metal_fresh_identity_dynamic_template: "Prime decoder Metal gate: metallib_sha256=<fresh_sha256> metallib_bytes=<fresh_byte_count>",
+        metal_full_output_log_identity_prefix_count: $metal_full_output_identity_prefix_count,
+        metal_full_output_log_fresh_identity_count: $metal_full_output_identity_count,
+        metal_xctest_log_identity_prefix_count: $metal_xctest_log_identity_prefix_count,
+        metal_xctest_log_fresh_identity_count: $metal_xctest_log_identity_count,
+        dynamic_identity_line_match_required: true,
+        metallib_identity_inventory_count: 5,
+        metal_bundle_candidate_count: 2,
+        metal_bundle_byte_identity_match_count: 2,
+        runtime_bundle_candidate_count: 1,
+        tokenizer_bundle_candidate_count: 1,
+        byte_identical_comparison_count: 5,
+        byte_count_equality_count: 5,
+        sha256_equality_count: 5,
+        runtime_receipt_count: 1,
+        runtime_receipt_identity_match_count: 1,
+        tokenizer_receipt_count: 1,
+        tokenizer_receipt_identity_match_count: 1,
+        tokenizer_receipt_successor_revision_tree_binding_required: true,
+        tokenizer_receipt_embedded_source_identity_binding_required: true,
+        receipt_identity_cross_binding_established: true,
+        source_bound_evidence_established: true,
+        loaded_metallib_path_inferred: false,
+        independently_observed_loaded_metallib_identity_established: false
       },
       metallib: {
         source_relative_path: $source_relative_path,
@@ -835,6 +978,7 @@ readonly receipt_json="$(jq -cnS \
         build_command: "swift build --build-tests",
         build_command_count: 1,
         direct_xctest_invocation_count: 1,
+        trusted_completed_test_count: 96,
         test_class: $test_class,
         test_method: $test_method,
         test_filter: $test_filter,
@@ -844,7 +988,8 @@ readonly receipt_json="$(jq -cnS \
         skip_count: 0,
         private_working_directory_empty_before_and_after: true,
         tiny_cpu_train_evaluate_mechanics_execution_established: true,
-        default_metallib_bootstrap_repair_established: true
+        default_metallib_bootstrap_repair_established: true,
+        fresh_metallib_evidence_surface_repair_established: true
       },
       authority_ceiling: {
         same_job_ephemeral_metallib_only: true,
@@ -869,11 +1014,12 @@ readonly receipt_json="$(jq -cnS \
     fail "repair receipt is not canonical JSON"
 printf '%s%s\n' "$receipt_prefix" "$receipt_json"
 
-echo "OK: exact-main Stage-2 mechanics passed once with two mode-0444 byte-identical copies of the retained same-job fresh metallib; Stage 3 remains unauthorized"
+echo "OK: exact-main Stage-2 mechanics passed once after source-bound fresh-metallib evidence repair, with two mode-0444 byte-identical copies; Stage 3 remains unauthorized"
 
 if [[ -n "${GITHUB_STEP_SUMMARY:-}" ]]; then
     {
         echo 'The exact direct-successor reviewed-main attempt reused the retained Metal launcher’s same-job fresh default.metallib only after Metal 44/44, maintained runtime 1/1, and tokenizer 1/1 completed.'
+        echo 'The unchanged Metal launcher’s complete output bound the dynamic fresh identity exactly once while its XCTest-only log bound it zero times; both Metal bundle copies and both canonical predecessor receipts independently matched the source bytes and SHA-256 without a loaded-path inference.'
         echo 'The unchanged Stage-2 validation bundle was built once, received two mode-0444 byte-identical ephemeral bundle copies, and ran its sole frozen method directly from an empty private working directory with one pass, zero failures, and zero skips.'
         echo 'The one-line receipt is log-only and non-artifactual. No metallib build, checkpoint I/O or admission, retained artifact, Native-300M training, resume, Stage 3, trial, canary, product, publication, upload, or rerun authority is established.'
     } >> "$GITHUB_STEP_SUMMARY"
