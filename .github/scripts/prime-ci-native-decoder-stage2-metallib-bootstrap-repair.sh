@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
-# Exact-main Stage-2 default-metallib bootstrap repair. This launcher consumes
-# the retained Metal launcher's same-job fresh metallib only after the frozen
-# Metal, maintained-runtime, and tokenizer predecessors have completed. It
-# neither builds nor retains a metallib and grants no Stage-3 authority.
+# Exact-main Stage-2 default-metallib bootstrap repair. This successor repairs
+# only the predecessor-log outcome classifier, then consumes the retained Metal
+# launcher's same-job fresh metallib after the frozen Metal, maintained-runtime,
+# and tokenizer predecessors have completed. It neither builds nor retains a
+# metallib and grants no Stage-3 authority.
 set -euo pipefail
 IFS=$'\n\t'
 
@@ -15,8 +16,8 @@ readonly prime_root="$(cd "$(dirname "$0")/../.." && pwd -P)"
 readonly runner_temp="${RUNNER_TEMP:?RUNNER_TEMP is required}"
 readonly exact_revision="${EXACT_REVISION:?EXACT_REVISION is required}"
 readonly mlx_revision="${PRIME_MLX_REVISION:?PRIME_MLX_REVISION is required}"
-readonly base_revision="8504f0af692e19d3337cec00f2c624537bc7386a"
-readonly base_tree="1b2bd05d14287fbb145d5bf6af74eb537accca8f"
+readonly base_revision="775b247fb8c1f0e3c28d01fce281d8d29bbb4dd1"
+readonly base_tree="817405a8710ad24245721689e7a6736c55a0b06c"
 readonly required_mlx_revision="d37885a278f1c37484a94d0f401a418735e66519"
 readonly numerics_revision="0c0290ff6b24942dadb83a929ffaaa1481df04a2"
 readonly expected_mlx_submodules=$' ce45c52505c8158ea48d2a54e8caae05efd86bfe Source/Cmlx/mlx (v0.31.1)\n 0726ca922fc902c4c61ef9c27d94132be418e945 Source/Cmlx/mlx-c (v0.6.0)'
@@ -24,8 +25,8 @@ readonly validation_root="$prime_root/Tests/PrimeNativeDecoderTrainingValidation
 readonly validation_manifest="$validation_root/Package.swift"
 readonly validation_lock="$validation_root/Package.resolved"
 readonly validation_test="$validation_root/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTrainingTests.swift"
-readonly authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapRepairAuthority.swift"
-readonly authority_test="$prime_root/Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapRepairAuthorityTests.swift"
+readonly authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapPredecessorLogClassifierRepairAuthority.swift"
+readonly authority_test="$prime_root/Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapPredecessorLogClassifierRepairAuthorityTests.swift"
 
 readonly mlx_bare="$runner_temp/ergentics-mlx-swift.git"
 readonly mlx_source="$runner_temp/ergentics-mlx-swift"
@@ -50,7 +51,7 @@ readonly config_path="$runner_temp/prime-native-decoder-stage2-metallib-bootstra
 readonly security_path="$runner_temp/prime-native-decoder-stage2-metallib-bootstrap-repair-security"
 readonly private_cwd="$runner_temp/prime-native-decoder-stage2-metallib-bootstrap-repair-cwd"
 readonly test_log="$runner_temp/prime-native-decoder-stage2-metallib-bootstrap-repair-tests.log"
-readonly receipt_prefix="PRIME_NATIVE_DECODER_STAGE2_METALLIB_BOOTSTRAP_REPAIR_RECEIPT="
+readonly receipt_prefix="PRIME_NATIVE_DECODER_STAGE2_METALLIB_BOOTSTRAP_PREDECESSOR_LOG_CLASSIFIER_REPAIR_RECEIPT="
 readonly test_class="PrimeNativeDecoderTrainingTests"
 readonly test_method="testTinyCPUTrainEvaluateMechanicsAreExactAndFailClosed"
 readonly test_filter="${test_class}/${test_method}"
@@ -60,6 +61,49 @@ for command_name in \
     sed shasum sort stat swift tee tr uname wc xcrun; do
     command -v "$command_name" >/dev/null 2>&1 ||
         fail "missing command: $command_name"
+done
+
+# XCTest outcome recognition is case-sensitive and bounded to complete outcome
+# grammar. In particular, a passing test identifier may contain `Failed`
+# without becoming a failure observation.
+readonly xctest_failure_or_skip_regex="^Test Case '[^']+' failed \\(|^Test Suite '[^']+' failed at |^error:|^Test Case '[^']+' skipped \\(| : Test skipped - "
+
+xctest_log_has_failure_or_skip() {
+    local log_path="$1"
+    grep -Eq "$xctest_failure_or_skip_regex" "$log_path"
+}
+
+readonly classifier_acceptance_fixtures=(
+    "Test Case '-[PrimeNativeDecoderCheckpointV2IOExecutionAuthorityTests.PrimeNativeDecoderCheckpointV2IOExecutionFailureObservationTests testFailedAttemptObservationIsExactExhaustedAndPure]' started."
+    "Test Case '-[PrimeNativeDecoderCheckpointV2IOExecutionAuthorityTests.PrimeNativeDecoderCheckpointV2IOExecutionFailureObservationTests testFailedAttemptObservationIsExactExhaustedAndPure]' passed (0.860 seconds)."
+    "Test Case '-[ClassifierFixtureTests testSkippedAttemptNameIsOnlyAnIdentifier]' started."
+    "Test Case '-[ClassifierFixtureTests testSkippedAttemptNameIsOnlyAnIdentifier]' passed (0.001 seconds)."
+    "Test Suite 'ClassifierFixtureTests' passed at 2026-08-12 00:00:00.000."
+    $'\t Executed 2 tests, with 0 failures (0 unexpected) in 0.860 (0.861) seconds'
+    "Classifier fixture prose mentions failed and skipped without reporting an outcome."
+    "note: error: is quoted here only as classifier fixture prose"
+)
+[[ "${#classifier_acceptance_fixtures[@]}" -eq 8 ]] ||
+    fail "bounded classifier acceptance fixture count changed"
+for classifier_acceptance_fixture in "${classifier_acceptance_fixtures[@]}"; do
+    if printf '%s\n' "$classifier_acceptance_fixture" |
+        grep -Eq "$xctest_failure_or_skip_regex"; then
+        fail "bounded classifier rejected an accepted outcome fixture"
+    fi
+done
+readonly classifier_rejection_fixtures=(
+    "Test Case '-[ClassifierFixtureTests testExactFailure]' failed (0.001 seconds)."
+    "Test Suite 'ClassifierFixtureTests' failed at 2026-08-12 00:00:00.000."
+    "error: exact classifier fixture error"
+    "Test Case '-[ClassifierFixtureTests testExactSkip]' skipped (0.001 seconds)."
+    "/tmp/ClassifierFixtureTests.swift:1: -[ClassifierFixtureTests testExactSkip] : Test skipped - exact fixture"
+)
+[[ "${#classifier_rejection_fixtures[@]}" -eq 5 ]] ||
+    fail "bounded classifier rejection fixture count changed"
+for classifier_rejection_fixture in "${classifier_rejection_fixtures[@]}"; do
+    printf '%s\n' "$classifier_rejection_fixture" |
+        grep -Eq "$xctest_failure_or_skip_regex" ||
+        fail "bounded classifier accepted a failure-or-skip fixture"
 done
 
 # The repair is admitted only for the first exact-main attempt in GitHub's
@@ -162,7 +206,7 @@ git -C "$prime_root" cat-file -e "${second_parent}^{commit}"
     fail "merge tree differs from the reviewed second-parent tree"
 readonly parent_count=2
 
-readonly expected_changed_status=$'A\t.github/scripts/prime-ci-native-decoder-stage2-metallib-bootstrap-repair.sh\nA\tSources/PrimeCore/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapRepairAuthority.swift\nA\tTests/PrimeCoreTests/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapRepairAuthorityTests.swift\nM\t.github/scripts/prime-ci-active-root-quarantine.sh\nM\t.github/workflows/prime-active-root-quarantine.yml\nM\tSources/PrimeCore/PrimeEmbeddedBuildProvenance.swift'
+readonly expected_changed_status=$'A\tSources/PrimeCore/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapPredecessorLogClassifierRepairAuthority.swift\nA\tTests/PrimeCoreTests/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapPredecessorLogClassifierRepairAuthorityTests.swift\nM\t.github/scripts/prime-ci-active-root-quarantine.sh\nM\t.github/scripts/prime-ci-native-decoder-stage2-metallib-bootstrap-repair.sh\nM\t.github/workflows/prime-active-root-quarantine.yml\nM\tSources/PrimeCore/PrimeEmbeddedBuildProvenance.swift'
 readonly observed_changed_status="$(git -C "$prime_root" diff-tree \
     --no-commit-id --name-status --no-renames -r \
     "$first_parent" "$exact_revision" | LC_ALL=C sort)"
@@ -233,6 +277,14 @@ assert_pinned_file \
     'Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapRepairAuthorityTests.swift' \
     '100644' 'f84eefb6428187ba4e08b3febf0c87256bd7788c' '29596' \
     'f17aa6fedf3f460de44f706c9fe9d6ebb5cd9b690936d4fb5a5947765c8ddfd3'
+assert_pinned_file \
+    'Sources/PrimeCore/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapPredecessorLogClassifierRepairAuthority.swift' \
+    '100644' 'b3b42c285c8fe048d4eeea111f3f9f9bab37707d' '66167' \
+    '2f97065f3c09f69d2ce38774a16a5d4dcb9deb20899cdeb1f8821334d2486983'
+assert_pinned_file \
+    'Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapPredecessorLogClassifierRepairAuthorityTests.swift' \
+    '100644' '15164c2256129816789fd2408f73f7b1c7eaccbd' '35453' \
+    '2600a86636c5440ddd010e10a0928fd7f49b96d2926536d881364e524630d187'
 
 [[ -f "$authority_source" && ! -L "$authority_source" \
     && "$(stat -f %l "$authority_source")" == "1" ]] ||
@@ -241,11 +293,14 @@ assert_pinned_file \
     && "$(stat -f %l "$authority_test")" == "1" ]] ||
     fail "repair authority test is missing or linked"
 grep -Fq \
-    'PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapRepairAuthorityV1' \
+    'PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapPredecessorLogClassifierRepairAuthorityV1' \
     "$authority_source" || fail "repair authority type is missing"
 grep -Fq \
     'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling' \
     "$authority_test" || fail "repair authority test is missing"
+grep -Fq \
+    '9c94ceeca77c3fc5173adfa41f9965d33c3a78f8d975b639dd3dc0aa2c2ed99b' \
+    "$authority_test" || fail "repair authority canonical digest is missing"
 [[ "$(find "$validation_root" -type f ! -path '*/.*' -print |
     LC_ALL=C sort)" \
     == "$validation_lock"$'\n'"$validation_manifest"$'\n'"$validation_test" ]] ||
@@ -337,10 +392,10 @@ readonly predecessor_logs=(
 for predecessor_log in "${predecessor_logs[@]}"; do
     assert_regular_file "$predecessor_log"
 done
-grep -Fq 'Executed 39 tests, with 0 failures' "$active_root_log" ||
-    fail "focused root-39 contracts did not complete"
+grep -Fq 'Executed 41 tests, with 0 failures' "$active_root_log" ||
+    fail "focused root-41 contracts did not complete"
 grep -Fq \
-    'PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapRepairAuthorityTests' \
+    'PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapPredecessorLogClassifierRepairAuthorityTests' \
     "$active_root_log" ||
     fail "focused root log does not bind the repair authority class"
 grep -Fq \
@@ -369,8 +424,7 @@ for predecessor_test_log in \
     "$active_root_log" "$checkpoint_v2_log" "$checkpoint_v2_io_log" \
     "$checkpoint_v2_io_execution_log" "$checkpoint_v2_io_root_repair_log" \
     "$metal_log" "$runtime_test_log" "$tokenizer_test_log"; do
-    ! grep -Eiq '^Test (Case|Suite).*failed|^error:|skipped|Test skipped' \
-        "$predecessor_test_log" ||
+    ! xctest_log_has_failure_or_skip "$predecessor_test_log" ||
         fail "predecessor test log failed or skipped: $predecessor_test_log"
 done
 [[ "$(grep -Ec '^PRIME_NATIVE_DECODER_RUNTIME_CLOSURE_RECEIPT=' \
@@ -642,9 +696,10 @@ grep -Fq "Test Suite '${test_class}' passed" "$test_log" ||
     fail "Stage-2 XCTest class did not pass"
 grep -Eq 'Executed 1 test, with 0 failures' "$test_log" ||
     fail "Stage-2 XCTest did not execute exactly one test"
-! grep -Eiq '^Test (Case|Suite).*failed|^error:|skipped|Test skipped|Metal is unavailable' \
-    "$test_log" ||
+! xctest_log_has_failure_or_skip "$test_log" ||
     fail "Stage-2 XCTest reported a failure, error, or skip"
+! grep -Fq 'Metal is unavailable' "$test_log" ||
+    fail "Stage-2 XCTest reported unavailable Metal"
 
 # Revalidate every repository and predecessor artifact after the one direct
 # XCTest invocation. The two Stage-2 copies and the empty private cwd are also
@@ -696,11 +751,11 @@ done
 
 readonly receipt_json="$(jq -cnS \
     --arg authority_id \
-        'ergentics_prime_native_decoder_tiny_cpu_train_evaluate_mechanics_default_metallib_bootstrap_repair_authority_v1' \
+        'ergentics_prime_native_decoder_tiny_cpu_train_evaluate_mechanics_default_metallib_bootstrap_predecessor_log_classifier_repair_authority_v1' \
     --arg receipt_id \
-        'ergentics_prime_native_decoder_stage2_metallib_bootstrap_repair_receipt_v1' \
+        'ergentics_prime_native_decoder_stage2_metallib_bootstrap_predecessor_log_classifier_repair_receipt_v1' \
     --arg status \
-        'PASS_exact_main_stage2_same_job_fresh_metallib_bootstrap_repair_one_test_zero_failure_zero_skip' \
+        'PASS_exact_main_stage2_same_job_fresh_metallib_bootstrap_predecessor_log_classifier_repair_one_test_zero_failure_zero_skip' \
     --arg revision "$exact_revision" \
     --arg tree "$exact_tree" \
     --arg first_parent "$first_parent" \
@@ -708,6 +763,7 @@ readonly receipt_json="$(jq -cnS \
     --argjson parent_count "$parent_count" \
     --argjson changed_paths "$changed_paths_json" \
     --arg mlx_revision "$mlx_revision" \
+    --arg predecessor_log_classifier_regex "$xctest_failure_or_skip_regex" \
     --arg source_relative_path "$metallib_relative_path" \
     --arg metallib_sha256 "$metallib_sha256" \
     --argjson metallib_byte_count "$metallib_byte_count" \
@@ -738,11 +794,26 @@ readonly receipt_json="$(jq -cnS \
       predecessor: {
         validated_log_count: 10,
         validated_receipt_count: 2,
-        focused_root_test_count: 39,
+        focused_root_test_count: 41,
+        focused_isolated_test_count: 6,
+        focused_whole_step_test_count: 47,
         metal_test_count: 44,
         maintained_runtime_test_count: 1,
         tokenizer_test_count: 1,
+        pre_stage2_total_test_count: 93,
         retained_order: ["metal", "maintained_runtime", "tokenizer", "stage2"]
+      },
+      predecessor_log_classifier: {
+        command: "grep -Eq",
+        exact_regex: $predecessor_log_classifier_regex,
+        matching_is_case_sensitive: true,
+        quoted_xctest_case_and_suite_outcome_markers_require_closed_identity: true,
+        line_leading_error_diagnostic_is_rejected: true,
+        xctest_skip_diagnostic_is_rejected: true,
+        acceptance_fixture_count: 8,
+        acceptance_fixture_match_count: 0,
+        rejection_fixture_count: 5,
+        rejection_fixture_match_count: 5
       },
       metallib: {
         source_relative_path: $source_relative_path,
