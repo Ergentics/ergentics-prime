@@ -467,14 +467,14 @@ grep -Fq -- 'runs-on: macos-15' "$workflow_path" ||
     die "hosted quarantine workflow runner or timeout boundary changed"
 [[ "$(grep -Fxc -- \
     '          git -C ergentics-prime fetch --depth=1 --no-tags --no-write-fetch-head origin "$EXACT_REVISION"' \
-    "$workflow_path")" == "2" \
+    "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
         '          git -C ergentics-prime fetch --depth=2 --no-tags --no-write-fetch-head origin "$EXACT_REVISION"' \
-        "$workflow_path")" == "0" \
+        "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
         "    if: github.event_name == 'push' && github.ref == 'refs/heads/main'" \
         "$workflow_path")" == "1" ]] ||
-    die "hosted quarantine workflow depth-one checkout boundary changed"
+    die "hosted quarantine workflow active-depth-one/reviewed-depth-two boundary changed"
 [[ -f "$decoder_metal_gate_path" && ! -L "$decoder_metal_gate_path" ]] ||
     die "Prime native decoder Metal gate is missing or linked"
 [[ "$(git -C "$prime_root" ls-files -- '.github/scripts/prime-ci-native-decoder-metal.sh')" \
@@ -534,18 +534,18 @@ bash -n "$decoder_stage2_metallib_bootstrap_repair_gate_path" ||
     == "100755" ]] ||
     die "Prime native decoder Stage-2 metallib bootstrap repair gate mode changed"
 [[ "$(wc -c < "$decoder_stage2_metallib_bootstrap_repair_gate_path" | awk '{print $1}')" \
-    == "40231" ]] ||
+    == "44691" ]] ||
     die "Prime native decoder Stage-2 metallib bootstrap repair gate byte count changed"
 [[ "$(shasum -a 256 "$decoder_stage2_metallib_bootstrap_repair_gate_path" | awk '{print $1}')" \
-    == "a7d363ebe108aedaed1a83bc79429e87e60f5a1f9d3b992704b5a4617add9367" ]] ||
+    == "3b8a0790b521de9c6ca03760aef8e9bbece4d46f6d1f8505dae44fc9a559d185" ]] ||
     die "Prime native decoder Stage-2 metallib bootstrap repair gate SHA-256 changed"
 [[ "$(git -C "$prime_root" hash-object \
         "$decoder_stage2_metallib_bootstrap_repair_gate_path")" \
-    == "fd339c3819059050dcd31112023e169e22f9fbac" ]] ||
+    == "45fc1f82ecfe14a6a9e98c345706f75b37c2d1cb" ]] ||
     die "Prime native decoder Stage-2 metallib bootstrap repair gate blob changed"
 for required_stage2_metallib_bootstrap_repair_launcher_value in \
-    'readonly base_revision="8504f0af692e19d3337cec00f2c624537bc7386a"' \
-    'readonly base_tree="1b2bd05d14287fbb145d5bf6af74eb537accca8f"' \
+    'readonly base_revision="775b247fb8c1f0e3c28d01fce281d8d29bbb4dd1"' \
+    'readonly base_tree="817405a8710ad24245721689e7a6736c55a0b06c"' \
     '[[ "${GITHUB_REPOSITORY:-}" == "Ergentics/ergentics-prime" ]]' \
     '[[ "${GITHUB_WORKFLOW:-}" == "Prime active-root quarantine" \' \
     '&& "${GITHUB_JOB:-}" == "trusted-main-compile" ]]' \
@@ -560,20 +560,20 @@ for required_stage2_metallib_bootstrap_repair_launcher_value in \
     '[[ -z "${ERGENTICS_MLX_READ_TOKEN:-}" ]]' \
     'readonly expected_changed_status=$' \
     'M\t.github/scripts/prime-ci-active-root-quarantine.sh' \
-    'A\t.github/scripts/prime-ci-native-decoder-stage2-metallib-bootstrap-repair.sh' \
+    'A\tSources/PrimeCore/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapPredecessorLogClassifierRepairAuthority.swift' \
+    'A\tTests/PrimeCoreTests/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapPredecessorLogClassifierRepairAuthorityTests.swift' \
     'M\t.github/workflows/prime-active-root-quarantine.yml' \
     'M\tSources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' \
-    'A\tSources/PrimeCore/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapRepairAuthority.swift' \
-    'A\tTests/PrimeCoreTests/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapRepairAuthorityTests.swift' \
+    'M\t.github/scripts/prime-ci-native-decoder-stage2-metallib-bootstrap-repair.sh' \
     'fail "direct-successor change scope is not the exact six-path repair"' \
     'readonly frozen_metallib_root="$runner_temp/prime-native-decoder-metallib"' \
-    'readonly receipt_prefix="PRIME_NATIVE_DECODER_STAGE2_METALLIB_BOOTSTRAP_REPAIR_RECEIPT="' \
+    'readonly receipt_prefix="PRIME_NATIVE_DECODER_STAGE2_METALLIB_BOOTSTRAP_PREDECESSOR_LOG_CLASSIFIER_REPAIR_RECEIPT="' \
     'readonly test_log="$runner_temp/prime-native-decoder-stage2-metallib-bootstrap-repair-tests.log"' \
     'readonly test_class="PrimeNativeDecoderTrainingTests"' \
     'readonly test_method="testTinyCPUTrainEvaluateMechanicsAreExactAndFailClosed"' \
     '[[ "${#predecessor_logs[@]}" -eq 10 ]]' \
-    'grep -Fq '\''Executed 39 tests, with 0 failures'\'' "$active_root_log"' \
-    'PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapRepairAuthorityTests' \
+    'grep -Fq '\''Executed 41 tests, with 0 failures'\'' "$active_root_log"' \
+    'PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapPredecessorLogClassifierRepairAuthorityTests' \
     'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling' \
     'grep -Fq '\''Executed 44 tests, with 0 failures'\'' "$metal_log"' \
     'grep -Fq '\''Executed 1 test, with 0 failures'\'' "$runtime_test_log"' \
@@ -592,18 +592,66 @@ for required_stage2_metallib_bootstrap_repair_launcher_value in \
     'staged_copy_count: 2' \
     'validated_log_count: 10' \
     'validated_receipt_count: 2' \
-    'focused_root_test_count: 39' \
+    'focused_root_test_count: 41' \
+    'focused_isolated_test_count: 6' \
+    'focused_whole_step_test_count: 47' \
+    'pre_stage2_total_test_count: 93' \
     'build_command_count: 1' \
     'direct_xctest_invocation_count: 1' \
     'failure_count: 0' \
     'skip_count: 0' \
     'retained_order: ["metal", "maintained_runtime", "tokenizer", "stage2"]' \
+    'command: "grep -Eq"' \
+    'matching_is_case_sensitive: true' \
+    'quoted_xctest_case_and_suite_outcome_markers_require_closed_identity: true' \
+    'acceptance_fixture_count: 8' \
+    'acceptance_fixture_match_count: 0' \
+    'rejection_fixture_count: 5' \
+    'rejection_fixture_match_count: 5' \
     'artifact_upload_invoked: false' \
     'rerun_authorized: false'; do
     grep -Fq -- "$required_stage2_metallib_bootstrap_repair_launcher_value" \
         "$decoder_stage2_metallib_bootstrap_repair_gate_path" ||
         die "Stage-2 metallib bootstrap repair launcher lost: $required_stage2_metallib_bootstrap_repair_launcher_value"
 done
+readonly expected_stage2_predecessor_log_classifier_regex="^Test Case '[^']+' failed \\\\(|^Test Suite '[^']+' failed at |^error:|^Test Case '[^']+' skipped \\\\(| : Test skipped - "
+[[ "$(grep -Fxc -- \
+        "readonly xctest_failure_or_skip_regex=\"$expected_stage2_predecessor_log_classifier_regex\"" \
+        "$decoder_stage2_metallib_bootstrap_repair_gate_path")" == "1" \
+    && "$(grep -Fxc -- \
+        '    grep -Eq "$xctest_failure_or_skip_regex" "$log_path"' \
+        "$decoder_stage2_metallib_bootstrap_repair_gate_path")" == "1" \
+    && "$(grep -Fxc -- \
+        '[[ "${#classifier_acceptance_fixtures[@]}" -eq 8 ]] ||' \
+        "$decoder_stage2_metallib_bootstrap_repair_gate_path")" == "1" \
+    && "$(grep -Fxc -- \
+        '[[ "${#classifier_rejection_fixtures[@]}" -eq 5 ]] ||' \
+        "$decoder_stage2_metallib_bootstrap_repair_gate_path")" == "1" ]] ||
+    die "Stage-2 predecessor-log classifier grammar or fixture ceiling changed"
+for required_stage2_predecessor_log_classifier_fixture in \
+    "Test Case '-[PrimeNativeDecoderCheckpointV2IOExecutionAuthorityTests.PrimeNativeDecoderCheckpointV2IOExecutionFailureObservationTests testFailedAttemptObservationIsExactExhaustedAndPure]' started." \
+    "Test Case '-[PrimeNativeDecoderCheckpointV2IOExecutionAuthorityTests.PrimeNativeDecoderCheckpointV2IOExecutionFailureObservationTests testFailedAttemptObservationIsExactExhaustedAndPure]' passed (0.860 seconds)." \
+    "Test Case '-[ClassifierFixtureTests testSkippedAttemptNameIsOnlyAnIdentifier]' started." \
+    "Test Case '-[ClassifierFixtureTests testSkippedAttemptNameIsOnlyAnIdentifier]' passed (0.001 seconds)." \
+    "Test Suite 'ClassifierFixtureTests' passed at 2026-08-12 00:00:00.000." \
+    'Executed 2 tests, with 0 failures (0 unexpected) in 0.860 (0.861) seconds' \
+    'Classifier fixture prose mentions failed and skipped without reporting an outcome.' \
+    'note: error: is quoted here only as classifier fixture prose' \
+    "Test Case '-[ClassifierFixtureTests testExactFailure]' failed (0.001 seconds)." \
+    "Test Suite 'ClassifierFixtureTests' failed at 2026-08-12 00:00:00.000." \
+    'error: exact classifier fixture error' \
+    "Test Case '-[ClassifierFixtureTests testExactSkip]' skipped (0.001 seconds)." \
+    '/tmp/ClassifierFixtureTests.swift:1: -[ClassifierFixtureTests testExactSkip] : Test skipped - exact fixture'; do
+    [[ "$(grep -Fc -- "$required_stage2_predecessor_log_classifier_fixture" \
+        "$decoder_stage2_metallib_bootstrap_repair_gate_path")" == "1" ]] ||
+        die "Stage-2 predecessor-log classifier fixture changed: $required_stage2_predecessor_log_classifier_fixture"
+done
+[[ "$(grep -Fc -- 'grep -Eiq' \
+        "$decoder_stage2_metallib_bootstrap_repair_gate_path")" == "0" \
+    && "$(grep -Fc -- \
+        '^Test (Case|Suite).*failed|^error:|skipped|Test skipped' \
+        "$decoder_stage2_metallib_bootstrap_repair_gate_path")" == "0" ]] ||
+    die "Stage-2 launcher retains the exhausted case-insensitive unbounded classifier"
 [[ "$(grep -Ec -- '^[[:space:]]*TMPDIR=.*swift build ' \
         "$decoder_stage2_metallib_bootstrap_repair_gate_path")" == "1" \
     && "$(grep -Ec -- '^[[:space:]]*cp -X ' \
@@ -611,7 +659,7 @@ done
     && "$(grep -Ec -- '^[[:space:]]*TMPDIR=.*xcrun xctest ' \
         "$decoder_stage2_metallib_bootstrap_repair_gate_path")" == "1" \
     && "$(grep -Fc -- \
-        'PRIME_NATIVE_DECODER_STAGE2_METALLIB_BOOTSTRAP_REPAIR_RECEIPT=' \
+        'PRIME_NATIVE_DECODER_STAGE2_METALLIB_BOOTSTRAP_PREDECESSOR_LOG_CLASSIFIER_REPAIR_RECEIPT=' \
         "$decoder_stage2_metallib_bootstrap_repair_gate_path")" == "1" \
     && "$(grep -Fc -- 'readonly parent_count=2' \
         "$decoder_stage2_metallib_bootstrap_repair_gate_path")" == "1" \
@@ -679,21 +727,27 @@ readonly runtime_closure_workflow_line="$(grep -nFx -- \
 readonly tokenizer_compatibility_workflow_line="$(grep -nFx -- \
     '          bash .github/scripts/prime-ci-native-decoder-tokenizer-compatibility.sh' \
     "$workflow_path" | awk -F: '{print $1}')"
+readonly stage2_metallib_bootstrap_repair_workflow_line="$(grep -nFx -- \
+    '          bash .github/scripts/prime-ci-native-decoder-stage2-metallib-bootstrap-repair.sh' \
+    "$workflow_path" | awk -F: '{print $1}')"
 [[ "$frozen_metal_workflow_line" =~ ^[1-9][0-9]*$ \
     && "$runtime_closure_workflow_line" =~ ^[1-9][0-9]*$ \
     && "$tokenizer_compatibility_workflow_line" =~ ^[1-9][0-9]*$ \
+    && "$stage2_metallib_bootstrap_repair_workflow_line" =~ ^[1-9][0-9]*$ \
     && "$runtime_closure_workflow_line" \
         -eq $((frozen_metal_workflow_line + 1)) \
     && "$tokenizer_compatibility_workflow_line" \
-        -eq $((runtime_closure_workflow_line + 1)) ]] ||
-    die "trusted-main workflow does not retain exactly the Metal, runtime, tokenizer order"
+        -eq $((runtime_closure_workflow_line + 1)) \
+    && "$stage2_metallib_bootstrap_repair_workflow_line" \
+        -eq $((tokenizer_compatibility_workflow_line + 1)) ]] ||
+    die "trusted-main workflow does not retain exactly the Metal, runtime, tokenizer, Stage-2 order"
 [[ "$(grep -Fc -- \
     '          bash .github/scripts/prime-ci-native-decoder-' \
-    "$workflow_path")" == "3" \
+    "$workflow_path")" == "4" \
     && "$(grep -Fxc -- \
         '          bash .github/scripts/prime-ci-native-decoder-stage2-metallib-bootstrap-repair.sh' \
-        "$workflow_path")" == "0" ]] ||
-    die "trusted-main workflow gained an unreviewed decoder launcher"
+        "$workflow_path")" == "1" ]] ||
+    die "trusted-main workflow lost the exact four-launcher sequence"
 ! grep -Fq -- \
     '          bash .github/scripts/prime-ci-native-decoder-checkpoint-v2-io.sh' \
     "$workflow_path" ||
@@ -794,6 +848,7 @@ readonly metal_current_decoder_identity_assertion_failure_observation_filter='Pr
 readonly metal_current_decoder_identity_assertion_repair_authority_filter='PrimeCoreTests.PrimeNativeDecoderMetalCurrentDecoderIdentityAssertionRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling'
 readonly stage2_metallib_bootstrap_repair_authority_filter='PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling'
 readonly stage2_metallib_bootstrap_repair_failure_observation_filter='PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapRepairExecutionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling'
+readonly stage2_metallib_bootstrap_predecessor_log_classifier_repair_authority_filter='PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapPredecessorLogClassifierRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling'
 [[ "$(grep -Fc -- "$tiny_cpu_mechanics_authority_filter" \
         "$workflow_path")" == "1" \
     && "$(grep -Fc -- "$tiny_cpu_mechanics_failure_observation_filter" \
@@ -823,7 +878,7 @@ readonly stage2_metallib_bootstrap_repair_failure_observation_filter='PrimeCoreT
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 40 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 41 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not run the exact Stage-2 authority and failure-observation pure contracts"
 [[ "$(grep -Fc -- "$private_dependency_tls_failure_observation_filter" \
@@ -870,6 +925,9 @@ readonly stage2_metallib_bootstrap_repair_failure_observation_filter='PrimeCoreT
         "$stage2_metallib_bootstrap_repair_failure_observation_filter" \
         "$workflow_path")" == "1" \
     && "$(grep -Fc -- \
+        "$stage2_metallib_bootstrap_predecessor_log_classifier_repair_authority_filter" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
         'Sources/PrimeCore/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapRepairAuthority.swift' \
         "$workflow_path")" == "1" \
     && "$(grep -Fc -- \
@@ -881,6 +939,12 @@ readonly stage2_metallib_bootstrap_repair_failure_observation_filter='PrimeCoreT
     && "$(grep -Fc -- \
         'Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapRepairExecutionFailureObservationTests.swift' \
         "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        'Sources/PrimeCore/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapPredecessorLogClassifierRepairAuthority.swift' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        'Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapPredecessorLogClassifierRepairAuthorityTests.swift' \
+        "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
         "          grep -Fq 'PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapRepairAuthorityTests' \\" \
         "$workflow_path")" == "1" \
@@ -891,9 +955,12 @@ readonly stage2_metallib_bootstrap_repair_failure_observation_filter='PrimeCoreT
         "          grep -Fq 'PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapRepairExecutionFailureObservationTests' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 40 tests, with 0 failures'\'' "$test_log"' \
+        "          grep -Fq 'PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapPredecessorLogClassifierRepairAuthorityTests' \\" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        '          grep -Fq '\''Executed 41 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
-    die "hosted workflow does not parse and run the Stage-2 metallib bootstrap repair authority and failure observation"
+    die "hosted workflow does not parse and run the Stage-2 metallib bootstrap repair, failure observation, and classifier repair authority"
 for required_stage2_metallib_bootstrap_repair_failure_summary_value in \
     'Exact-main workflow run 31544702133 attempt 1' \
     'passed secure fetch, root 39, Metal 44, maintained runtime 1, and tokenizer 1' \
@@ -905,6 +972,17 @@ for required_stage2_metallib_bootstrap_repair_failure_summary_value in \
         "$required_stage2_metallib_bootstrap_repair_failure_summary_value" \
         "$workflow_path")" == "1" ]] ||
         die "workflow lost the exact Stage-2 repair failure summary: $required_stage2_metallib_bootstrap_repair_failure_summary_value"
+done
+for required_stage2_predecessor_log_classifier_repair_summary_value in \
+    'repairs only that predecessor-log classifier to a case-sensitive outcome grammar with eight accepted and five rejected regression fixtures' \
+    'after root 41, Metal 44, maintained runtime 1, and tokenizer 1 pass in order' \
+    'one Git-internal submodule clone retry from zero workflow-authored retries' \
+    'mutates neither secure fetch nor production' \
+    'a separate terminal outcome observation must retire the invocation'; do
+    [[ "$(grep -Fc -- \
+        "$required_stage2_predecessor_log_classifier_repair_summary_value" \
+        "$workflow_path")" == "1" ]] ||
+        die "workflow lost the exact Stage-2 classifier repair summary: $required_stage2_predecessor_log_classifier_repair_summary_value"
 done
 [[ "$(grep -Fc -- \
         'Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderTraining.swift' \
@@ -928,7 +1006,7 @@ done
         "$workflow_path")" == "0" \
     && "$(grep -Fc -- 'prime-native-decoder-training-security' \
         "$workflow_path")" == "0" ]] ||
-    die "reviewed-main workflow did not retire the exhausted Stage-2 mechanics invocation"
+    die "reviewed-main workflow bypassed the bounded Stage-2 successor launcher with an inline mechanics invocation"
 for required_metal_gate_value in \
     'MTLCreateSystemDefaultDevice' \
     '-target Cmlx' \
@@ -1881,6 +1959,8 @@ readonly stage2_metallib_bootstrap_repair_authority_source="$prime_root/Sources/
 readonly stage2_metallib_bootstrap_repair_authority_test="$prime_root/Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapRepairAuthorityTests.swift"
 readonly stage2_metallib_bootstrap_repair_failure_observation_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapRepairExecutionFailureObservation.swift"
 readonly stage2_metallib_bootstrap_repair_failure_observation_test="$prime_root/Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapRepairExecutionFailureObservationTests.swift"
+readonly stage2_metallib_bootstrap_predecessor_log_classifier_repair_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapPredecessorLogClassifierRepairAuthority.swift"
+readonly stage2_metallib_bootstrap_predecessor_log_classifier_repair_authority_test="$prime_root/Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapPredecessorLogClassifierRepairAuthorityTests.swift"
 readonly decoder_training_source="$prime_root/Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderTraining.swift"
 readonly decoder_training_validation_root="$prime_root/Tests/PrimeNativeDecoderTrainingValidation"
 readonly decoder_training_validation_manifest="$decoder_training_validation_root/Package.swift"
@@ -2006,6 +2086,12 @@ readonly decoder_training_validation_test="$decoder_training_validation_root/Tes
 [[ -f "$stage2_metallib_bootstrap_repair_failure_observation_test" \
     && ! -L "$stage2_metallib_bootstrap_repair_failure_observation_test" ]] ||
     die "Stage-2 metallib bootstrap repair failure-observation test is missing or linked"
+[[ -f "$stage2_metallib_bootstrap_predecessor_log_classifier_repair_authority_source" \
+    && ! -L "$stage2_metallib_bootstrap_predecessor_log_classifier_repair_authority_source" ]] ||
+    die "Stage-2 predecessor-log classifier repair authority is missing or linked"
+[[ -f "$stage2_metallib_bootstrap_predecessor_log_classifier_repair_authority_test" \
+    && ! -L "$stage2_metallib_bootstrap_predecessor_log_classifier_repair_authority_test" ]] ||
+    die "Stage-2 predecessor-log classifier repair authority test is missing or linked"
 [[ -f "$decoder_training_source" && ! -L "$decoder_training_source" ]] ||
     die "PrimeNativeDecoderTraining source is missing or linked"
 [[ -f "$decoder_training_validation_manifest" \
@@ -2874,6 +2960,8 @@ swiftc -frontend -parse "$stage2_metallib_bootstrap_repair_authority_source"
 swiftc -frontend -parse "$stage2_metallib_bootstrap_repair_authority_test"
 swiftc -frontend -parse "$stage2_metallib_bootstrap_repair_failure_observation_source"
 swiftc -frontend -parse "$stage2_metallib_bootstrap_repair_failure_observation_test"
+swiftc -frontend -parse "$stage2_metallib_bootstrap_predecessor_log_classifier_repair_authority_source"
+swiftc -frontend -parse "$stage2_metallib_bootstrap_predecessor_log_classifier_repair_authority_test"
 swiftc -frontend -parse "$decoder_training_source"
 swiftc -frontend -parse "$decoder_training_validation_test"
 
@@ -6337,6 +6425,179 @@ for forbidden_stage2_metallib_bootstrap_repair_failure_observation_capability in
         "$forbidden_stage2_metallib_bootstrap_repair_failure_observation_capability" \
         "$stage2_metallib_bootstrap_repair_failure_observation_source"; then
         die "Stage-2 metallib bootstrap repair failure observation gained capability: $forbidden_stage2_metallib_bootstrap_repair_failure_observation_capability"
+    fi
+done
+
+assert_metal_current_decoder_assertion_arc_identity \
+    'Sources/PrimeCore/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapPredecessorLogClassifierRepairAuthority.swift' \
+    '100644' \
+    'b3b42c285c8fe048d4eeea111f3f9f9bab37707d' \
+    '66167' \
+    '2f97065f3c09f69d2ce38774a16a5d4dcb9deb20899cdeb1f8821334d2486983'
+assert_metal_current_decoder_assertion_arc_identity \
+    'Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapPredecessorLogClassifierRepairAuthorityTests.swift' \
+    '100644' \
+    '15164c2256129816789fd2408f73f7b1c7eaccbd' \
+    '35453' \
+    '2600a86636c5440ddd010e10a0928fd7f49b96d2926536d881364e524630d187'
+
+[[ "$(awk '/^import / { print }' \
+        "$stage2_metallib_bootstrap_predecessor_log_classifier_repair_authority_source")" \
+        == 'import Foundation' \
+    && "$(awk '/^import / || /^@testable import / { print }' \
+        "$stage2_metallib_bootstrap_predecessor_log_classifier_repair_authority_test")" \
+        == $'import CoreFoundation\nimport Foundation\n@testable import PrimeCore\nimport XCTest' \
+    && "$(grep -Ec -- '^[[:space:]]+func test' \
+        "$stage2_metallib_bootstrap_predecessor_log_classifier_repair_authority_test")" == "1" \
+    && "$(grep -Fc -- \
+        'PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapPredecessorLogClassifierRepairAuthorityTests:' \
+        "$stage2_metallib_bootstrap_predecessor_log_classifier_repair_authority_test")" == "1" \
+    && "$(grep -Fc -- \
+        'func testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling()' \
+        "$stage2_metallib_bootstrap_predecessor_log_classifier_repair_authority_test")" == "1" ]] ||
+    die "Stage-2 predecessor-log classifier repair authority import or single-test boundary changed"
+for required_stage2_predecessor_log_classifier_repair_authority_value in \
+    'PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapPredecessorLogClassifierRepairAuthorityError:' \
+    'PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapPredecessorLogClassifierRepairAuthorityV1:' \
+    'public static let frozenV1 = Self(' \
+    'public static func decodeCanonical(_ data: Data) throws -> Self {' \
+    'public func validateExactV1() throws {' \
+    '"ergentics_prime_native_decoder_tiny_cpu_train_evaluate_mechanics_default_metallib_bootstrap_predecessor_log_classifier_repair_authority_v1"' \
+    '"exact_main_direct_successor_bounded_predecessor_log_classifier_repair_and_one_replacement_stage2_execution_authority"' \
+    '"775b247fb8c1f0e3c28d01fce281d8d29bbb4dd1"' \
+    '"817405a8710ad24245721689e7a6736c55a0b06c"' \
+    'workflowID: 329_017_041' \
+    'runID: 31_550_007_242' \
+    'runNumber: 73' \
+    'runAttempt: 1' \
+    'checkSuiteID: 85_584_105_952' \
+    'activeRootRunnerID: 1_000_001_700' \
+    'reviewedMainRunnerID: 1_000_001_701' \
+    'workflowAuthoredRetryCount: 0' \
+    'gitInternalSubmoduleRetryScheduledCount: 1' \
+    'mlxSubmoduleCloneAttemptCount: 2' \
+    'mlxCSubmoduleCloneAttemptCount: 1' \
+    'gitSubmoduleTLSFailureCount: 1' \
+    'tlsVerificationBypassCount: 0' \
+    'customCAInstallationCount: 0' \
+    '"Failed to clone '\''Source/Cmlx/mlx'\''. Retry scheduled"' \
+    'focusedRootTestCount: 40' \
+    'focusedWholeStepTestCount: 46' \
+    'retainedLiveSequenceInvocationCounts: [1, 1, 1]' \
+    'metalTestCount: 44' \
+    'runtimeTestCount: 1' \
+    'tokenizerTestCount: 1' \
+    'stage2InvocationCount: 0' \
+    'artifactUploadStepCount: 0' \
+    'actionsArtifactsTotalCount: 0' \
+    'failureObservationCanonicalSHA256:' \
+    '"2184710f59bc2b4625bb0a74f5f835c859fada79406ffc957b5ffca4861a9926"' \
+    'failedLauncherGitBlob:' \
+    '"fd339c3819059050dcd31112023e169e22f9fbac"' \
+    'retiredCaseInsensitiveRegex:' \
+    '"^Test (Case|Suite).*failed|^error:|skipped|Test skipped"' \
+    'classifierCommand: "grep -Eq"' \
+    'matchingIsCaseSensitive: true' \
+    'quotedXCTestCaseAndSuiteOutcomeMarkersRequireClosedIdentity: true' \
+    'passingFixtureMatchCount: 0' \
+    'rejectingFixtureMatchCount: 5' \
+    'requiredRootTestCount: 41' \
+    'requiredFocusedIsolatedTestCount: 6' \
+    'requiredFocusedWholeStepTestCount: 47' \
+    'requiredPreStage2CompletedTestCount: 93' \
+    'activeRootCheckoutFetchDepth: 1' \
+    'reviewedMainCheckoutFetchDepth: 2' \
+    'launcherNetworkFetchCommandCount: 0' \
+    '"PRIME_NATIVE_DECODER_STAGE2_METALLIB_BOOTSTRAP_PREDECESSOR_LOG_CLASSIFIER_REPAIR_RECEIPT="' \
+    'swiftBuildInvocationCount: 1' \
+    'stagedMetallibCopyCount: 2' \
+    'directXCTestInvocationCount: 1' \
+    'requiredStage2TestCount: 1' \
+    'requiredStage2FailureCount: 0' \
+    'requiredStage2SkipCount: 0' \
+    'oneDistinctExecutionAttemptAuthorized: true' \
+    'githubRunAttemptMustEqualOne: true' \
+    'successorObservationMustRetireLiveInvocation: true' \
+    'boundedPredecessorLogClassifierRepairAuthorized: true' \
+    'classifierMechanicalPinUpdatesAuthorized: true' \
+    'repairImplementationObservedByThisAuthority: false' \
+    'repairExecutionObservedByThisAuthority: false' \
+    'secureFetchMutationAuthorized: false' \
+    'workflowAuthoredRetryAuthorized: false' \
+    'gitInternalRetryBehaviorMutationAuthorized: false' \
+    'rerunAuthorized: false' \
+    'stage2SuccessEstablished: false' \
+    'stage3AuthorityEstablished: false' \
+    '"AUTHORIZED_exact_one_direct_successor_bounded_case_sensitive_predecessor_log_classifier_repair_and_one_replacement_stage2_execution_not_execution_evidence_no_authored_retry_rerun_artifact_checkpoint_or_downstream_authority"' \
+    'observedBaseSourceBindings.count == 21' \
+    'design.exactDirectSuccessorChangedPaths.count == 6'; do
+    grep -Fq -- "$required_stage2_predecessor_log_classifier_repair_authority_value" \
+        "$stage2_metallib_bootstrap_predecessor_log_classifier_repair_authority_source" ||
+        die "Stage-2 predecessor-log classifier repair authority lost: $required_stage2_predecessor_log_classifier_repair_authority_value"
+done
+for required_stage2_predecessor_log_classifier_repair_test_value in \
+    'func testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling()' \
+    'XCTAssertNoThrow(try authority.validateExactV1())' \
+    'XCTAssertEqual(green.runID, 31_550_007_242)' \
+    'XCTAssertEqual(green.runNumber, 73)' \
+    'XCTAssertEqual(green.runAttempt, 1)' \
+    'XCTAssertEqual(green.checkSuiteID, 85_584_105_952)' \
+    'XCTAssertEqual(green.activeRootRunnerID, 1_000_001_700)' \
+    'XCTAssertEqual(green.reviewedMainRunnerID, 1_000_001_701)' \
+    'XCTAssertEqual(green.workflowAuthoredRetryCount, 0)' \
+    'XCTAssertEqual(green.gitInternalSubmoduleRetryScheduledCount, 1)' \
+    'XCTAssertEqual(classifier.classifierCommand, "grep -Eq")' \
+    'XCTAssertTrue(classifier.matchingIsCaseSensitive)' \
+    'XCTAssertEqual(classifier.exactPassingRegressionFixtures.count, 8)' \
+    'XCTAssertEqual(classifier.exactRejectingRegressionFixtures.count, 5)' \
+    'XCTAssertEqual(classifier.passingFixtureMatchCount, 0)' \
+    'XCTAssertEqual(classifier.rejectingFixtureMatchCount, 5)' \
+    '[41, 6, 47, 44, 1, 1, 93]' \
+    'XCTAssertEqual(recipe.activeRootCheckoutFetchDepth, 1)' \
+    'XCTAssertEqual(recipe.reviewedMainCheckoutFetchDepth, 2)' \
+    '[1, 1, 0, 0, 0, 1, 0]' \
+    '[1, 0, 0]' \
+    'XCTAssertTrue(authority.boundedPredecessorLogClassifierRepairAuthorized)' \
+    'XCTAssertFalse(authority.repairImplementationObservedByThisAuthority)' \
+    'XCTAssertFalse(authority.repairExecutionObservedByThisAuthority)' \
+    'falseClaims(authority.authorityCeiling).allSatisfy { !$0 }' \
+    '"9c94ceeca77c3fc5173adfa41f9965d33c3a78f8d975b639dd3dc0aa2c2ed99b"' \
+    'XCTAssertGreaterThan(valuePaths.count, 350)' \
+    'XCTAssertGreaterThan(dictionaryPaths.count, 20)' \
+    'XCTAssertGreaterThan(scalarPaths.count, 250)' \
+    'null \(pathLabel(path))' \
+    'removed \(pathLabel(path))' \
+    'unknown_stage2_predecessor_log_classifier_repair_field_\(index)' \
+    'Authority.decodeCanonical(prefixed)' \
+    'Authority.decodeCanonical(suffixed)' \
+    'Authority.decodeCanonical(pretty)' \
+    'Authority.decodeCanonical(slashEscapedData)' \
+    'Authority.decodeCanonical(reorderedData)' \
+    'Authority.decodeCanonical(duplicateData)'; do
+    grep -Fq -- "$required_stage2_predecessor_log_classifier_repair_test_value" \
+        "$stage2_metallib_bootstrap_predecessor_log_classifier_repair_authority_test" ||
+        die "Stage-2 predecessor-log classifier repair test lost: $required_stage2_predecessor_log_classifier_repair_test_value"
+done
+! grep -Fq -- '__CANONICAL_SHA256__' \
+    "$stage2_metallib_bootstrap_predecessor_log_classifier_repair_authority_source" \
+    "$stage2_metallib_bootstrap_predecessor_log_classifier_repair_authority_test" ||
+    die "Stage-2 predecessor-log classifier repair authority retains a canonical placeholder"
+for forbidden_stage2_predecessor_log_classifier_repair_authority_capability in \
+    'import CoreGraphics' \
+    'import Metal' \
+    'import MLX' \
+    'import MLXNN' \
+    'import MLXOptimizers' \
+    'PrimeNativeGQADecoder.make(' \
+    'FileManager' \
+    'FileHandle' \
+    'URLSession' \
+    'Process(' \
+    'posix_spawn' \
+    'execve('; do
+    if grep -Fq -- "$forbidden_stage2_predecessor_log_classifier_repair_authority_capability" \
+        "$stage2_metallib_bootstrap_predecessor_log_classifier_repair_authority_source"; then
+        die "Stage-2 predecessor-log classifier repair authority gained capability: $forbidden_stage2_predecessor_log_classifier_repair_authority_capability"
     fi
 done
 
