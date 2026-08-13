@@ -468,14 +468,11 @@ grep -Fq -- 'runs-on: macos-15' "$workflow_path" ||
     die "hosted quarantine workflow runner or timeout boundary changed"
 [[ "$(grep -Fxc -- \
     '          git -C ergentics-prime fetch --depth=1 --no-tags --no-write-fetch-head origin "$EXACT_REVISION"' \
-    "$workflow_path")" == "1" \
-    && "$(grep -Fxc -- \
-        '          git -C ergentics-prime fetch --depth=2 --no-tags --no-write-fetch-head origin "$EXACT_REVISION"' \
-        "$workflow_path")" == "1" \
+    "$workflow_path")" == "2" \
     && "$(grep -Fxc -- \
         "    if: github.event_name == 'push' && github.ref == 'refs/heads/main'" \
         "$workflow_path")" == "1" ]] ||
-    die "hosted quarantine workflow active-depth-one/reviewed-depth-two boundary changed"
+    die "hosted quarantine workflow depth-one boundary changed"
 [[ -f "$decoder_metal_gate_path" && ! -L "$decoder_metal_gate_path" ]] ||
     die "Prime native decoder Metal gate is missing or linked"
 [[ "$(git -C "$prime_root" ls-files -- '.github/scripts/prime-ci-native-decoder-metal.sh')" \
@@ -820,30 +817,27 @@ readonly runtime_closure_workflow_line="$(grep -nFx -- \
 readonly tokenizer_compatibility_workflow_line="$(grep -nFx -- \
     '          bash .github/scripts/prime-ci-native-decoder-tokenizer-compatibility.sh' \
     "$workflow_path" | awk -F: '{print $1}')"
-readonly stage3_tiny_cpu_resume_workflow_line="$(grep -nFx -- \
-    '          bash .github/scripts/prime-ci-native-decoder-stage3-tiny-cpu-resume.sh' \
-    "$workflow_path" | awk -F: '{print $1}')"
 [[ "$frozen_metal_workflow_line" =~ ^[1-9][0-9]*$ \
     && "$runtime_closure_workflow_line" =~ ^[1-9][0-9]*$ \
     && "$tokenizer_compatibility_workflow_line" =~ ^[1-9][0-9]*$ \
-    && "$stage3_tiny_cpu_resume_workflow_line" =~ ^[1-9][0-9]*$ \
     && "$runtime_closure_workflow_line" \
         -eq $((frozen_metal_workflow_line + 1)) \
     && "$tokenizer_compatibility_workflow_line" \
-        -eq $((runtime_closure_workflow_line + 1)) \
-    && "$stage3_tiny_cpu_resume_workflow_line" \
-        -eq $((tokenizer_compatibility_workflow_line + 1)) ]] ||
-    die "trusted-main workflow does not retain exactly the Metal, runtime, tokenizer, Stage-3 order"
+        -eq $((runtime_closure_workflow_line + 1)) ]] ||
+    die "trusted-main workflow does not retain exactly the Metal, runtime, tokenizer order"
 [[ "$(grep -Fc -- \
     '          bash .github/scripts/prime-ci-native-decoder-' \
-    "$workflow_path")" == "4" \
+    "$workflow_path")" == "3" \
     && "$(grep -Fxc -- \
         '          bash .github/scripts/prime-ci-native-decoder-metal.sh' \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
         '          bash .github/scripts/prime-ci-native-decoder-stage2-metallib-bootstrap-repair.sh' \
+        "$workflow_path")" == "0" \
+    && "$(grep -Fxc -- \
+        '          bash .github/scripts/prime-ci-native-decoder-stage3-tiny-cpu-resume.sh' \
         "$workflow_path")" == "0" ]] ||
-    die "trusted-main workflow lost the exact three-launcher sequence or retained Stage-2 live"
+    die "trusted-main workflow lost the exact three-launcher sequence or retained a retired one-shot"
 readonly live_decoder_workflow_block="$(awk '
     /^      - name: Run the Prime-owned decoder on live Metal$/ { inside = 1 }
     inside { print }
@@ -853,10 +847,9 @@ readonly expected_live_decoder_workflow_block='      - name: Run the Prime-owned
         run: |
           bash .github/scripts/prime-ci-native-decoder-metal.sh
           bash .github/scripts/prime-ci-native-decoder-runtime-closure.sh
-          bash .github/scripts/prime-ci-native-decoder-tokenizer-compatibility.sh
-          bash .github/scripts/prime-ci-native-decoder-stage3-tiny-cpu-resume.sh'
+          bash .github/scripts/prime-ci-native-decoder-tokenizer-compatibility.sh'
 [[ "$live_decoder_workflow_block" == "$expected_live_decoder_workflow_block" ]] ||
-    die "trusted-main exact contiguous Metal, runtime, tokenizer, and Stage-3 block changed"
+    die "trusted-main exact contiguous Metal, runtime, and tokenizer block changed"
 ! grep -Fq -- \
     '          bash .github/scripts/prime-ci-native-decoder-checkpoint-v2-io.sh' \
     "$workflow_path" ||
@@ -964,6 +957,7 @@ readonly stage2_fresh_metallib_evidence_surface_repair_execution_observation_fil
 readonly stage3_tiny_cpu_explicit_rng_cursor_resume_authority_filter='PrimeCoreTests.PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling'
 readonly stage3_tiny_cpu_explicit_rng_cursor_resume_canonical_binding_repair_authority_filter='PrimeCoreTests.PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeAuthorityCanonicalBindingRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling'
 readonly stage3_tiny_cpu_explicit_rng_cursor_resume_validation_inventory_order_repair_authority_filter='PrimeCoreTests.PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeValidationInventoryOrderRepairAuthorityTests/testFrozenV1CanonicalCodableRecursiveMutationAndRepairCeiling'
+readonly stage3_tiny_cpu_explicit_rng_cursor_resume_execution_observation_filter='PrimeCoreTests.PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeExecutionObservationTests/testFrozenV1CanonicalCodableRecursiveMutationAndSuccessCeiling'
 [[ "$(grep -Fc -- "$tiny_cpu_mechanics_authority_filter" \
         "$workflow_path")" == "1" \
     && "$(grep -Fc -- "$tiny_cpu_mechanics_failure_observation_filter" \
@@ -993,7 +987,7 @@ readonly stage3_tiny_cpu_explicit_rng_cursor_resume_validation_inventory_order_r
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 47 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 48 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not run the exact Stage-2 authority and failure-observation pure contracts"
 [[ "$(grep -Fc -- "$private_dependency_tls_failure_observation_filter" \
@@ -1085,7 +1079,7 @@ readonly stage3_tiny_cpu_explicit_rng_cursor_resume_validation_inventory_order_r
         "          grep -Fq 'PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapFreshMetallibCrossBindingExecutionFailureObservationTests' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 47 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 48 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the Stage-2 metallib bootstrap repair, failure observations, and classifier repair authority"
 [[ "$(grep -Fc -- \
@@ -1156,6 +1150,19 @@ readonly stage3_tiny_cpu_explicit_rng_cursor_resume_validation_inventory_order_r
         "          grep -Fq 'PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeValidationInventoryOrderRepairAuthorityTests' \\" \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the Stage-3 validation-inventory order repair authority"
+[[ "$(grep -Fc -- \
+        "$stage3_tiny_cpu_explicit_rng_cursor_resume_execution_observation_filter" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        'Sources/PrimeCore/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeExecutionObservation.swift' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        'Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeExecutionObservationTests.swift' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        "          grep -Fq 'PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeExecutionObservationTests' \\" \
+        "$workflow_path")" == "1" ]] ||
+    die "hosted workflow does not parse and run the Stage-3 execution observation"
 for required_stage2_metallib_bootstrap_repair_failure_summary_value in \
     'Exact-main workflow run 31544702133 attempt 1' \
     'passed secure fetch, root 39, Metal 44, maintained runtime 1, and tokenizer 1' \
@@ -1237,8 +1244,7 @@ for required_stage3_tiny_cpu_explicit_rng_cursor_resume_summary_value in \
     'exact next-unconsumed cursor' \
     'no checkpoint file or codec' \
     'implicit MLX RNG restoration' \
-    'Native-300M work' \
-    'Stage 4'; do
+    'Native-300M work'; do
     [[ "$(grep -Fc -- \
         "$required_stage3_tiny_cpu_explicit_rng_cursor_resume_summary_value" \
         "$workflow_path")" == "1" ]] ||
@@ -1254,6 +1260,18 @@ for required_stage3_inventory_order_repair_summary_value in \
     [[ "$(grep -Fc -- "$required_stage3_inventory_order_repair_summary_value" \
         "$workflow_path")" == "1" ]] ||
         die "workflow lost the Stage-3 inventory-order repair summary: $required_stage3_inventory_order_repair_summary_value"
+done
+for required_stage3_execution_observation_summary_value in \
+    'Exact-main run 31679144989 attempt 1 passed root 47, Metal 44, maintained runtime 1, tokenizer 1, and exactly one Stage-3' \
+    'one canonical receipt' \
+    'typed in-memory snapshot/export/fresh-restore mechanics are established only for that bounded witness' \
+    'loaded-metallib identity remains inference-only' \
+    'no artifact was retained or uploaded' \
+    'one-shot is consumed and retired here' \
+    'checkpoint I/O, durable Stage 4, Native-300M training, trial, canary, product, publication, and rerun authority remain false'; do
+    [[ "$(grep -Fc -- "$required_stage3_execution_observation_summary_value" \
+        "$workflow_path")" == "1" ]] ||
+        die "workflow lost the Stage-3 execution-observation summary: $required_stage3_execution_observation_summary_value"
 done
 [[ "$(grep -Fc -- \
         'Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderTraining.swift' \
@@ -2247,6 +2265,8 @@ readonly stage3_tiny_cpu_explicit_rng_cursor_resume_canonical_binding_repair_aut
 readonly stage3_tiny_cpu_explicit_rng_cursor_resume_canonical_binding_repair_authority_test="$prime_root/Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeAuthorityCanonicalBindingRepairAuthorityTests.swift"
 readonly stage3_tiny_cpu_explicit_rng_cursor_resume_validation_inventory_order_repair_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeValidationInventoryOrderRepairAuthority.swift"
 readonly stage3_tiny_cpu_explicit_rng_cursor_resume_validation_inventory_order_repair_authority_test="$prime_root/Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeValidationInventoryOrderRepairAuthorityTests.swift"
+readonly stage3_tiny_cpu_explicit_rng_cursor_resume_execution_observation_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeExecutionObservation.swift"
+readonly stage3_tiny_cpu_explicit_rng_cursor_resume_execution_observation_test="$prime_root/Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeExecutionObservationTests.swift"
 readonly decoder_training_source="$prime_root/Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderTraining.swift"
 readonly decoder_training_validation_root="$prime_root/Tests/PrimeNativeDecoderTrainingValidation"
 readonly decoder_training_validation_manifest="$decoder_training_validation_root/Package.swift"
@@ -2415,6 +2435,12 @@ readonly decoder_stage3_tiny_cpu_resume_test="$decoder_training_validation_root/
 [[ -f "$stage3_tiny_cpu_explicit_rng_cursor_resume_validation_inventory_order_repair_authority_test" \
     && ! -L "$stage3_tiny_cpu_explicit_rng_cursor_resume_validation_inventory_order_repair_authority_test" ]] ||
     die "Stage-3 validation-inventory order repair authority test is missing or linked"
+[[ -f "$stage3_tiny_cpu_explicit_rng_cursor_resume_execution_observation_source" \
+    && ! -L "$stage3_tiny_cpu_explicit_rng_cursor_resume_execution_observation_source" ]] ||
+    die "Stage-3 execution observation is missing or linked"
+[[ -f "$stage3_tiny_cpu_explicit_rng_cursor_resume_execution_observation_test" \
+    && ! -L "$stage3_tiny_cpu_explicit_rng_cursor_resume_execution_observation_test" ]] ||
+    die "Stage-3 execution observation test is missing or linked"
 [[ -f "$decoder_training_source" && ! -L "$decoder_training_source" ]] ||
     die "PrimeNativeDecoderTraining source is missing or linked"
 [[ -f "$decoder_training_validation_manifest" \
@@ -3299,6 +3325,8 @@ swiftc -frontend -parse "$stage3_tiny_cpu_explicit_rng_cursor_resume_canonical_b
 swiftc -frontend -parse "$stage3_tiny_cpu_explicit_rng_cursor_resume_canonical_binding_repair_authority_test"
 swiftc -frontend -parse "$stage3_tiny_cpu_explicit_rng_cursor_resume_validation_inventory_order_repair_authority_source"
 swiftc -frontend -parse "$stage3_tiny_cpu_explicit_rng_cursor_resume_validation_inventory_order_repair_authority_test"
+swiftc -frontend -parse "$stage3_tiny_cpu_explicit_rng_cursor_resume_execution_observation_source"
+swiftc -frontend -parse "$stage3_tiny_cpu_explicit_rng_cursor_resume_execution_observation_test"
 swiftc -frontend -parse "$decoder_training_source"
 swiftc -frontend -parse "$decoder_training_validation_test"
 swiftc -frontend -parse "$decoder_stage3_tiny_cpu_resume_test"
@@ -7870,6 +7898,55 @@ for forbidden_stage3_inventory_order_repair_capability in \
     ! grep -Fq -- "$forbidden_stage3_inventory_order_repair_capability" \
         "$stage3_tiny_cpu_explicit_rng_cursor_resume_validation_inventory_order_repair_authority_source" ||
         die "Stage-3 validation-inventory order repair authority gained capability: $forbidden_stage3_inventory_order_repair_capability"
+done
+
+assert_metal_current_decoder_assertion_arc_identity \
+    'Sources/PrimeCore/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeExecutionObservation.swift' \
+    '100644' 'fd32a489ea3cae08cad3e6e462434f3f97df8cab' '10894' \
+    '737c91e750f7f3520a634b737c17b672d47a290e726dcce7179c5518b7745d22'
+assert_metal_current_decoder_assertion_arc_identity \
+    'Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeExecutionObservationTests.swift' \
+    '100644' 'fae2cc34a1f2d53dd8610e6bb93a379509742f6f' '3768' \
+    '3c04ec65c760d4caa92dce775bf96b7673075db3e459285806095ff8543a2807'
+[[ "$(wc -l < "$stage3_tiny_cpu_explicit_rng_cursor_resume_execution_observation_source" | awk '{print $1}')" == "235" \
+    && "$(wc -l < "$stage3_tiny_cpu_explicit_rng_cursor_resume_execution_observation_test" | awk '{print $1}')" == "75" \
+    && "$(awk '/^import / { print }' "$stage3_tiny_cpu_explicit_rng_cursor_resume_execution_observation_source")" == 'import Foundation' \
+    && "$(awk '/^import / || /^@testable import / { print }' "$stage3_tiny_cpu_explicit_rng_cursor_resume_execution_observation_test")" == $'import CoreFoundation\nimport Foundation\n@testable import PrimeCore\nimport XCTest' \
+    && "$(grep -Ec -- '^[[:space:]]+func test' "$stage3_tiny_cpu_explicit_rng_cursor_resume_execution_observation_test")" == "1" ]] ||
+    die "Stage-3 execution observation identity surface changed"
+for required_stage3_execution_observation_value in \
+    'public static let canonicalSHA256 = "9f0d4c974eca94edc6ca9953cd9cd27fef2e53ad6850addcbfc0a80512530d8d"' \
+    'mergeRevision: "ea96f7a503adfb5e814f81f2180318f8d1f06abd"' \
+    'workflowRunID: 31_679_144_989' \
+    'workflowRunNumber: 89' \
+    'checkSuiteID: 85_937_734_896' \
+    'exactHeadPushRunCount: 1' \
+    'artifactCount: 0' \
+    'focusedRootTestCount: 47' \
+    'metalTestCount: 44' \
+    'receiptPayloadByteCount: 2_842' \
+    'receiptPayloadSHA256: "f14c68a835ff6779a4b3a3fe5ab0f66e464d2070d63538c32f19842045f7826e"' \
+    'typedInMemorySnapshotExportRestoreEstablished: true' \
+    'uninterruptedAndFreshRestoredStep2ExactEqualityEstablished: true' \
+    'explicitRNGKeyCounterAndNextCursorBoundaryEstablished: true' \
+    'expectedRootTestCount: 48' \
+    'reviewedCheckoutDepth: 1' \
+    'stage3LauncherInvocationCount: 0' \
+    'stage3LauncherSourcePreserved: true' \
+    'successfulAttemptConsumed: true' \
+    'retryOrRerunAuthorized: false' \
+    'stage4Authorized: false' \
+    'exactMainRetirementClosureRequired: true'; do
+    grep -Fq -- "$required_stage3_execution_observation_value" \
+        "$stage3_tiny_cpu_explicit_rng_cursor_resume_execution_observation_source" ||
+        die "Stage-3 execution observation lost: $required_stage3_execution_observation_value"
+done
+for forbidden_stage3_execution_observation_capability in \
+    'import CoreGraphics' 'import Metal' 'import MLX' 'import MLXNN' \
+    'import MLXOptimizers' 'FileManager' 'FileHandle' 'URLSession' 'Process('; do
+    ! grep -Fq -- "$forbidden_stage3_execution_observation_capability" \
+        "$stage3_tiny_cpu_explicit_rng_cursor_resume_execution_observation_source" ||
+        die "Stage-3 execution observation gained capability: $forbidden_stage3_execution_observation_capability"
 done
 
 [[ "$(awk '/^import / { print }' "$decoder_authority_test")" \
