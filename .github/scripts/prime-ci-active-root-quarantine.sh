@@ -891,6 +891,7 @@ readonly stage2_metallib_bootstrap_predecessor_log_classifier_repair_authority_f
 readonly stage2_fresh_metallib_cross_binding_failure_observation_filter='PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapFreshMetallibCrossBindingExecutionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling'
 readonly stage2_fresh_metallib_evidence_surface_repair_authority_filter='PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapFreshMetallibEvidenceSurfaceRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling'
 readonly stage2_fresh_metallib_evidence_surface_repair_execution_observation_filter='PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapFreshMetallibEvidenceSurfaceRepairExecutionObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndSuccessCeiling'
+readonly stage3_tiny_cpu_explicit_rng_cursor_resume_authority_filter='PrimeCoreTests.PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling'
 [[ "$(grep -Fc -- "$tiny_cpu_mechanics_authority_filter" \
         "$workflow_path")" == "1" \
     && "$(grep -Fc -- "$tiny_cpu_mechanics_failure_observation_filter" \
@@ -920,7 +921,7 @@ readonly stage2_fresh_metallib_evidence_surface_repair_execution_observation_fil
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 44 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 45 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not run the exact Stage-2 authority and failure-observation pure contracts"
 [[ "$(grep -Fc -- "$private_dependency_tls_failure_observation_filter" \
@@ -1012,7 +1013,7 @@ readonly stage2_fresh_metallib_evidence_surface_repair_execution_observation_fil
         "          grep -Fq 'PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapFreshMetallibCrossBindingExecutionFailureObservationTests' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 44 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 45 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the Stage-2 metallib bootstrap repair, failure observations, and classifier repair authority"
 [[ "$(grep -Fc -- \
@@ -1041,6 +1042,22 @@ readonly stage2_fresh_metallib_evidence_surface_repair_execution_observation_fil
         "          grep -Fq 'PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapFreshMetallibEvidenceSurfaceRepairExecutionObservationTests' \\" \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the fresh-metallib evidence-surface repair execution observation"
+[[ "$(grep -Fc -- \
+        "$stage3_tiny_cpu_explicit_rng_cursor_resume_authority_filter" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        'Sources/PrimeCore/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeAuthority.swift' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        'Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeAuthorityTests.swift' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        "          grep -Fq 'PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeAuthorityTests' \\" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling' \\" \
+        "$workflow_path")" == "1" ]] ||
+    die "hosted workflow does not parse and run the Stage-3 explicit-RNG/cursor-resume authority"
 for required_stage2_metallib_bootstrap_repair_failure_summary_value in \
     'Exact-main workflow run 31544702133 attempt 1' \
     'passed secure fetch, root 39, Metal 44, maintained runtime 1, and tokenizer 1' \
@@ -1111,6 +1128,22 @@ for required_stage2_fresh_metallib_evidence_surface_repair_execution_summary_val
         "$required_stage2_fresh_metallib_evidence_surface_repair_execution_summary_value" \
         "$workflow_path")" == "1" ]] ||
         die "workflow lost the fresh-metallib evidence-surface repair execution summary: $required_stage2_fresh_metallib_evidence_surface_repair_execution_summary_value"
+done
+for required_stage3_tiny_cpu_explicit_rng_cursor_resume_summary_value in \
+    'Stage-3 tiny-CPU explicit-RNG/cursor-resume authority is dependency-free and execution-free' \
+    'typed in-memory step-1 snapshot' \
+    'fresh-trainer restore' \
+    'exact uninterrupted-versus-restored step-2 witness' \
+    'four Prime-owned key/counter domains' \
+    'exact next-unconsumed cursor' \
+    'no checkpoint file or codec' \
+    'implicit MLX RNG restoration' \
+    'Native-300M work' \
+    'Stage 4'; do
+    [[ "$(grep -Fc -- \
+        "$required_stage3_tiny_cpu_explicit_rng_cursor_resume_summary_value" \
+        "$workflow_path")" == "1" ]] ||
+        die "workflow lost the Stage-3 explicit-RNG/cursor-resume authority summary: $required_stage3_tiny_cpu_explicit_rng_cursor_resume_summary_value"
 done
 [[ "$(grep -Fc -- \
         'Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderTraining.swift' \
@@ -2095,6 +2128,8 @@ readonly stage2_fresh_metallib_evidence_surface_repair_authority_source="$prime_
 readonly stage2_fresh_metallib_evidence_surface_repair_authority_test="$prime_root/Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapFreshMetallibEvidenceSurfaceRepairAuthorityTests.swift"
 readonly stage2_fresh_metallib_evidence_surface_repair_execution_observation_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapFreshMetallibEvidenceSurfaceRepairExecutionObservation.swift"
 readonly stage2_fresh_metallib_evidence_surface_repair_execution_observation_test="$prime_root/Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapFreshMetallibEvidenceSurfaceRepairExecutionObservationTests.swift"
+readonly stage3_tiny_cpu_explicit_rng_cursor_resume_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeAuthority.swift"
+readonly stage3_tiny_cpu_explicit_rng_cursor_resume_authority_test="$prime_root/Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeAuthorityTests.swift"
 readonly decoder_training_source="$prime_root/Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderTraining.swift"
 readonly decoder_training_validation_root="$prime_root/Tests/PrimeNativeDecoderTrainingValidation"
 readonly decoder_training_validation_manifest="$decoder_training_validation_root/Package.swift"
@@ -2244,6 +2279,12 @@ readonly decoder_training_validation_test="$decoder_training_validation_root/Tes
 [[ -f "$stage2_fresh_metallib_evidence_surface_repair_execution_observation_test" \
     && ! -L "$stage2_fresh_metallib_evidence_surface_repair_execution_observation_test" ]] ||
     die "Stage-2 fresh-metallib evidence-surface repair execution-observation test is missing or linked"
+[[ -f "$stage3_tiny_cpu_explicit_rng_cursor_resume_authority_source" \
+    && ! -L "$stage3_tiny_cpu_explicit_rng_cursor_resume_authority_source" ]] ||
+    die "Stage-3 explicit-RNG/cursor-resume authority is missing or linked"
+[[ -f "$stage3_tiny_cpu_explicit_rng_cursor_resume_authority_test" \
+    && ! -L "$stage3_tiny_cpu_explicit_rng_cursor_resume_authority_test" ]] ||
+    die "Stage-3 explicit-RNG/cursor-resume authority test is missing or linked"
 [[ -f "$decoder_training_source" && ! -L "$decoder_training_source" ]] ||
     die "PrimeNativeDecoderTraining source is missing or linked"
 [[ -f "$decoder_training_validation_manifest" \
@@ -3120,6 +3161,8 @@ swiftc -frontend -parse "$stage2_fresh_metallib_evidence_surface_repair_authorit
 swiftc -frontend -parse "$stage2_fresh_metallib_evidence_surface_repair_authority_test"
 swiftc -frontend -parse "$stage2_fresh_metallib_evidence_surface_repair_execution_observation_source"
 swiftc -frontend -parse "$stage2_fresh_metallib_evidence_surface_repair_execution_observation_test"
+swiftc -frontend -parse "$stage3_tiny_cpu_explicit_rng_cursor_resume_authority_source"
+swiftc -frontend -parse "$stage3_tiny_cpu_explicit_rng_cursor_resume_authority_test"
 swiftc -frontend -parse "$decoder_training_source"
 swiftc -frontend -parse "$decoder_training_validation_test"
 
@@ -7413,6 +7456,152 @@ for forbidden_stage2_fresh_metallib_evidence_surface_repair_execution_observatio
         "$forbidden_stage2_fresh_metallib_evidence_surface_repair_execution_observation_capability" \
         "$stage2_fresh_metallib_evidence_surface_repair_execution_observation_source"; then
         die "Stage-2 fresh-metallib evidence-surface repair execution observation gained capability: $forbidden_stage2_fresh_metallib_evidence_surface_repair_execution_observation_capability"
+    fi
+done
+
+assert_metal_current_decoder_assertion_arc_identity \
+    'Sources/PrimeCore/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeAuthority.swift' \
+    '100644' \
+    '65cb43e09e9839c0b03cc2e5fafd1ad0b1d4f4fa' \
+    '37517' \
+    '72a521a0eb6e0e169150e8934925794639bb1d9576fa9c02896c817965af11b4'
+assert_metal_current_decoder_assertion_arc_identity \
+    'Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeAuthorityTests.swift' \
+    '100644' \
+    'ab751cfbb2bf728054d3e91ae25d5fce1be8533a' \
+    '14254' \
+    'baf8eb9c32f4298a77c619643535da98aea45f7c5cf996f54be78888130fedba'
+[[ "$(wc -l < \
+        "$stage3_tiny_cpu_explicit_rng_cursor_resume_authority_source" | awk '{print $1}')" == "794" \
+    && "$(wc -l < \
+        "$stage3_tiny_cpu_explicit_rng_cursor_resume_authority_test" | awk '{print $1}')" == "363" \
+    && "$(tr -cd '\r' < \
+        "$stage3_tiny_cpu_explicit_rng_cursor_resume_authority_source" | wc -c | awk '{print $1}')" == "0" \
+    && "$(tr -cd '\r' < \
+        "$stage3_tiny_cpu_explicit_rng_cursor_resume_authority_test" | wc -c | awk '{print $1}')" == "0" ]] ||
+    die "Stage-3 explicit-RNG/cursor-resume authority line-ending identity changed"
+
+[[ "$(awk '/^import / { print }' \
+        "$stage3_tiny_cpu_explicit_rng_cursor_resume_authority_source")" \
+        == 'import Foundation' \
+    && "$(awk '/^import / || /^@testable import / { print }' \
+        "$stage3_tiny_cpu_explicit_rng_cursor_resume_authority_test")" \
+        == $'import CoreFoundation\nimport Foundation\n@testable import PrimeCore\nimport XCTest' \
+    && "$(grep -Ec -- '^[[:space:]]+func test' \
+        "$stage3_tiny_cpu_explicit_rng_cursor_resume_authority_test")" == "1" \
+    && "$(grep -Fc -- \
+        'PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeAuthorityTests:' \
+        "$stage3_tiny_cpu_explicit_rng_cursor_resume_authority_test")" == "1" \
+    && "$(grep -Fc -- \
+        'func testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling()' \
+        "$stage3_tiny_cpu_explicit_rng_cursor_resume_authority_test")" == "1" ]] ||
+    die "Stage-3 explicit-RNG/cursor-resume authority import or single-test boundary changed"
+for required_stage3_tiny_cpu_explicit_rng_cursor_resume_authority_value in \
+    'PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeAuthorityError:' \
+    'PrimeNativeDecoderTinyCPUExplicitRNGDomainV1:' \
+    'PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeAuthorityV1:' \
+    'public static let frozenV1 = Self(' \
+    'public func validateExactV1() throws {' \
+    'self == Self.frozenV1' \
+    'public static func decodeCanonical(_ data: Data) throws -> Self {' \
+    '"0ab57d5e8c71b18d03c9730da1e90399d57c05ccaa155aa31aff0c3001987fe6"' \
+    '"tiny_cpu_explicit_rng_cursor_resume_v1"' \
+    '"71b456d78be5addc858b706677005753eb22c39a"' \
+    '"6e5a37bb71cdf62040e31a8ab21fc935e7f663a3"' \
+    '"f553a7ce431cedccf25b06a89af2a47f8adcf9db556ca4b5a2341bb3463729e4"' \
+    'mechanicsExecutionRunID: 31_565_094_400' \
+    'retirementRunID: 31_572_113_622' \
+    'retirementRootTestCount: 44' \
+    'stage2MechanicsEstablished: true' \
+    'stage2InvocationRetired: true' \
+    'uniqueParameterCount: 5_200' \
+    'trainableParameterPathCount: 20' \
+    'firstMomentTensorCount: 20' \
+    'secondMomentTensorCount: 20' \
+    'algorithmID: "sha256_counter_stream_v1"' \
+    'requiredDomains: PrimeNativeDecoderTinyCPUExplicitRNGDomainV1' \
+    'implicitGlobalRandomStateAuthorized: false' \
+    'mlxRandomStateInnerStateImporterAuthorized: false' \
+    'cursorPointsToNextUnconsumedBatch: true' \
+    'callerSuppliedBatchSubstitutionPermitted: false' \
+    'snapshotStorage: "process_local_typed_value_only"' \
+    'optimizerMomentTensorCount: 40' \
+    'restoreTargetMustBeFresh: true' \
+    'restoreTargetOptimizerMustBeUninitialized: true' \
+    'restoreFailureMustLeaveFreshTargetUnchanged: true' \
+    'step2ResultEqualityRequired: true' \
+    'tensorValueEqualityIsBitExact: true' \
+    'digestEqualityAloneIsSufficient: false' \
+    'exactlyOneHostedTestRequired: true' \
+    '".github/scripts/prime-ci-native-decoder-stage3-tiny-cpu-resume.sh"' \
+    '"Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderTraining.swift"' \
+    'newHostedLauncherRequired: true' \
+    'authorityOnlyNoExecutionEvidence: true' \
+    'implementationAuthorizedAfterGreenAuthorityClosure: true' \
+    'oneExactMainExecutionOpportunityAuthorized: true' \
+    'filesystemMutationAuthorized: false' \
+    'checkpointReadAuthorized: false' \
+    'checkpointWriteAuthorized: false' \
+    'artifactRootAuthorized: false' \
+    'metalDeterminismEstablished: false' \
+    'native300MTrainingAuthorized: false' \
+    'stage4Authorized: false' \
+    'publicationAuthorized: false' \
+    'AUTHORIZED_stage3_tiny_cpu_typed_in_memory_explicit_rng_cursor_resume_implementation_and_one_exact_main_witness_after_green_authority_closure_no_checkpoint_artifact_metal_determinism_native300m_or_downstream_authority'; do
+    grep -Fq -- \
+        "$required_stage3_tiny_cpu_explicit_rng_cursor_resume_authority_value" \
+        "$stage3_tiny_cpu_explicit_rng_cursor_resume_authority_source" ||
+        die "Stage-3 explicit-RNG/cursor-resume authority lost: $required_stage3_tiny_cpu_explicit_rng_cursor_resume_authority_value"
+done
+for required_stage3_tiny_cpu_explicit_rng_cursor_resume_test_value in \
+    'func testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling()' \
+    'XCTAssertNoThrow(try authority.validateExactV1())' \
+    'XCTAssertEqual(authority.stageID, "tiny_cpu_explicit_rng_cursor_resume_v1")' \
+    'XCTAssertTrue(authority.stage2Evidence.stage2MechanicsEstablished)' \
+    'XCTAssertTrue(authority.stage2Evidence.stage2InvocationRetired)' \
+    'XCTAssertEqual(authority.fixture.trainableParameterPathCount, 20)' \
+    'PrimeNativeDecoderTinyCPUExplicitRNGDomainV1.allCases' \
+    'XCTAssertFalse(authority.randomDesign.implicitGlobalRandomStateAuthorized)' \
+    'XCTAssertTrue(authority.cursorDesign.cursorPointsToNextUnconsumedBatch)' \
+    'XCTAssertTrue(authority.snapshotBoundary.restoreTargetMustBeFresh)' \
+    'XCTAssertTrue(authority.witness.step2ResultEqualityRequired)' \
+    'XCTAssertEqual(authority.successorScope.exactChangedPaths.count, 6)' \
+    'XCTAssertTrue(authority.ceiling.authorityOnlyNoExecutionEvidence)' \
+    'authorityFalseClaims(authority.ceiling).allSatisfy { !$0 }' \
+    'unknown_stage3_rng_cursor_authority_field_\(index)' \
+    'Authority.decodeCanonical(pretty)' \
+    'Authority.decodeCanonical(Data([0x20]) + canonical)' \
+    'Authority.decodeCanonical(canonical + Data([0x0a]))' \
+    'Authority.decodeCanonical(duplicate)' \
+    'requireSendable(Authority.self)'; do
+    grep -Fq -- \
+        "$required_stage3_tiny_cpu_explicit_rng_cursor_resume_test_value" \
+        "$stage3_tiny_cpu_explicit_rng_cursor_resume_authority_test" ||
+        die "Stage-3 explicit-RNG/cursor-resume authority test lost: $required_stage3_tiny_cpu_explicit_rng_cursor_resume_test_value"
+done
+for stage3_tiny_cpu_explicit_rng_cursor_resume_placeholder in \
+    '__CANONICAL_SHA256__' 'PINNED_CANONICAL_SHA256' 'PLACEHOLDER'; do
+    ! grep -Fq -- \
+        "$stage3_tiny_cpu_explicit_rng_cursor_resume_placeholder" \
+        "$stage3_tiny_cpu_explicit_rng_cursor_resume_authority_source" ||
+        die "Stage-3 explicit-RNG/cursor-resume authority retains a placeholder"
+done
+for forbidden_stage3_tiny_cpu_explicit_rng_cursor_resume_capability in \
+    'import CoreGraphics' \
+    'import Metal' \
+    'import MLX' \
+    'import MLXNN' \
+    'import MLXOptimizers' \
+    'FileManager' \
+    'FileHandle' \
+    'URLSession' \
+    'Process(' \
+    'posix_spawn' \
+    'execve('; do
+    if grep -Fq -- \
+        "$forbidden_stage3_tiny_cpu_explicit_rng_cursor_resume_capability" \
+        "$stage3_tiny_cpu_explicit_rng_cursor_resume_authority_source"; then
+        die "Stage-3 explicit-RNG/cursor-resume authority gained capability: $forbidden_stage3_tiny_cpu_explicit_rng_cursor_resume_capability"
     fi
 done
 
