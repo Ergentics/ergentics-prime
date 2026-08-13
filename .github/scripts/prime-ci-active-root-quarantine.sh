@@ -17,6 +17,7 @@ readonly decoder_metal_gate_path="$prime_root/.github/scripts/prime-ci-native-de
 readonly decoder_runtime_closure_gate_path="$prime_root/.github/scripts/prime-ci-native-decoder-runtime-closure.sh"
 readonly decoder_tokenizer_compatibility_gate_path="$prime_root/.github/scripts/prime-ci-native-decoder-tokenizer-compatibility.sh"
 readonly decoder_stage2_metallib_bootstrap_repair_gate_path="$prime_root/.github/scripts/prime-ci-native-decoder-stage2-metallib-bootstrap-repair.sh"
+readonly decoder_stage3_tiny_cpu_resume_gate_path="$prime_root/.github/scripts/prime-ci-native-decoder-stage3-tiny-cpu-resume.sh"
 readonly decoder_checkpoint_v2_io_execution_gate_path="$prime_root/.github/scripts/prime-ci-native-decoder-checkpoint-v2-io.sh"
 readonly decoder_checkpoint_v2_io_root_identity_repair_gate_path="$prime_root/.github/scripts/prime-ci-native-decoder-checkpoint-v2-io-root-identity-repair.sh"
 
@@ -467,14 +468,14 @@ grep -Fq -- 'runs-on: macos-15' "$workflow_path" ||
     die "hosted quarantine workflow runner or timeout boundary changed"
 [[ "$(grep -Fxc -- \
     '          git -C ergentics-prime fetch --depth=1 --no-tags --no-write-fetch-head origin "$EXACT_REVISION"' \
-    "$workflow_path")" == "2" \
+    "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
         '          git -C ergentics-prime fetch --depth=2 --no-tags --no-write-fetch-head origin "$EXACT_REVISION"' \
-        "$workflow_path")" == "0" \
+        "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
         "    if: github.event_name == 'push' && github.ref == 'refs/heads/main'" \
         "$workflow_path")" == "1" ]] ||
-    die "hosted quarantine workflow active-depth-one/reviewed-depth-one boundary changed"
+    die "hosted quarantine workflow active-depth-one/reviewed-depth-two boundary changed"
 [[ -f "$decoder_metal_gate_path" && ! -L "$decoder_metal_gate_path" ]] ||
     die "Prime native decoder Metal gate is missing or linked"
 [[ "$(git -C "$prime_root" ls-files -- '.github/scripts/prime-ci-native-decoder-metal.sh')" \
@@ -719,6 +720,64 @@ for forbidden_stage2_metallib_bootstrap_repair_launcher_value in \
         die "Stage-2 metallib bootstrap repair launcher gained forbidden behavior: $forbidden_stage2_metallib_bootstrap_repair_launcher_value"
     fi
 done
+[[ -f "$decoder_stage3_tiny_cpu_resume_gate_path" \
+    && ! -L "$decoder_stage3_tiny_cpu_resume_gate_path" ]] ||
+    die "Stage-3 tiny CPU resume launcher is missing or linked"
+[[ "$(git -C "$prime_root" ls-files -s -- \
+        '.github/scripts/prime-ci-native-decoder-stage3-tiny-cpu-resume.sh' |
+        awk '{print $1}')" == "100755" ]] ||
+    die "Stage-3 tiny CPU resume launcher mode changed"
+bash -n "$decoder_stage3_tiny_cpu_resume_gate_path" ||
+    die "Stage-3 tiny CPU resume launcher is not valid Bash"
+[[ "$(git -C "$prime_root" hash-object \
+        "$decoder_stage3_tiny_cpu_resume_gate_path")" \
+        == "d81f33663118b8345226c0414b432a17cfd444d3" \
+    && "$(wc -c < "$decoder_stage3_tiny_cpu_resume_gate_path" | awk '{print $1}')" \
+        == "23960" \
+    && "$(shasum -a 256 "$decoder_stage3_tiny_cpu_resume_gate_path" | awk '{print $1}')" \
+        == "fc052be0db48e4f2105706b97ef0a8f157af0548328cf2b09716f4e48244c159" ]] ||
+    die "Stage-3 tiny CPU resume launcher identity changed"
+for required_stage3_launcher_value in \
+    'readonly base_revision="90927b9e5a167e69dbb71d88e92c342f3fd0fd93"' \
+    'readonly base_tree="1bb47162fe5e567c0b82ba3eb9138139dde45154"' \
+    'readonly authority_canonical_sha256="0ab57d5e8c71b18d03c9730da1e90399d57c05ccaa155aa31aff0c3001987fe6"' \
+    'readonly receipt_prefix="PRIME_NATIVE_DECODER_STAGE3_TINY_CPU_EXPLICIT_RNG_CURSOR_RESUME_RECEIPT="' \
+    'A\t.github/scripts/prime-ci-native-decoder-stage3-tiny-cpu-resume.sh' \
+    'A\tTests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeTests.swift' \
+    'M\tSources/PrimeNativeDecoderTraining/PrimeNativeDecoderTraining.swift' \
+    'fail "Stage-3 direct-successor scope is not the exact six paths"' \
+    'grep -Fq '\''Executed 45 tests, with 0 failures'\'' "$active_root_log"' \
+    'grep -Fq '\''Executed 44 tests, with 0 failures'\'' "$metal_log"' \
+    'readonly test_method="testTinyCPUExplicitRNGCursorResumeIsExactAndFailClosed"' \
+    'TMPDIR="$runner_temp" swift build \' \
+    'cp -X "$metallib" "$cli_metallib"' \
+    'cp -X "$metallib" "$test_resource_metallib"' \
+    'TMPDIR="$runner_temp" xcrun xctest -XCTest "$test_filter" "$test_bundle"' \
+    'fail "Stage-3 test counts are not 1/1/0/0"' \
+    'typed_in_memory_snapshot_export_restore_established:true' \
+    'uninterrupted_and_fresh_restored_step2_exact_equality_established:true' \
+    'checkpoint_io_observed:false' \
+    'stage4_authorized:false' \
+    'rerun_authorized:false'; do
+    grep -Fq -- "$required_stage3_launcher_value" \
+        "$decoder_stage3_tiny_cpu_resume_gate_path" ||
+        die "Stage-3 tiny CPU resume launcher lost: $required_stage3_launcher_value"
+done
+[[ "$(grep -Ec -- '^[[:space:]]*TMPDIR=.*swift build ' \
+        "$decoder_stage3_tiny_cpu_resume_gate_path")" == "1" \
+    && "$(grep -Ec -- '^[[:space:]]*cp -X ' \
+        "$decoder_stage3_tiny_cpu_resume_gate_path")" == "2" \
+    && "$(grep -Ec -- '^[[:space:]]*TMPDIR=.*xcrun xctest ' \
+        "$decoder_stage3_tiny_cpu_resume_gate_path")" == "1" ]] ||
+    die "Stage-3 launcher command cardinality changed"
+for forbidden_stage3_launcher_value in \
+    'swift test' 'xcodebuild' 'git fetch' 'git clone' 'git submodule update' \
+    'curl ' 'wget ' 'actions/upload-artifact' 'PrimeArtifactRoot' \
+    'PrimeNativeDecoderCheckpoint'; do
+    ! grep -Fq -- "$forbidden_stage3_launcher_value" \
+        "$decoder_stage3_tiny_cpu_resume_gate_path" ||
+        die "Stage-3 launcher gained forbidden behavior: $forbidden_stage3_launcher_value"
+done
 [[ -f "$decoder_checkpoint_v2_io_execution_gate_path" \
     && ! -L "$decoder_checkpoint_v2_io_execution_gate_path" ]] ||
     die "Prime native decoder checkpoint V2 I/O execution gate is missing or linked"
@@ -757,17 +816,23 @@ readonly runtime_closure_workflow_line="$(grep -nFx -- \
 readonly tokenizer_compatibility_workflow_line="$(grep -nFx -- \
     '          bash .github/scripts/prime-ci-native-decoder-tokenizer-compatibility.sh' \
     "$workflow_path" | awk -F: '{print $1}')"
+readonly stage3_tiny_cpu_resume_workflow_line="$(grep -nFx -- \
+    '          bash .github/scripts/prime-ci-native-decoder-stage3-tiny-cpu-resume.sh' \
+    "$workflow_path" | awk -F: '{print $1}')"
 [[ "$frozen_metal_workflow_line" =~ ^[1-9][0-9]*$ \
     && "$runtime_closure_workflow_line" =~ ^[1-9][0-9]*$ \
     && "$tokenizer_compatibility_workflow_line" =~ ^[1-9][0-9]*$ \
+    && "$stage3_tiny_cpu_resume_workflow_line" =~ ^[1-9][0-9]*$ \
     && "$runtime_closure_workflow_line" \
         -eq $((frozen_metal_workflow_line + 1)) \
     && "$tokenizer_compatibility_workflow_line" \
-        -eq $((runtime_closure_workflow_line + 1)) ]] ||
-    die "trusted-main workflow does not retain exactly the Metal, runtime, tokenizer order"
+        -eq $((runtime_closure_workflow_line + 1)) \
+    && "$stage3_tiny_cpu_resume_workflow_line" \
+        -eq $((tokenizer_compatibility_workflow_line + 1)) ]] ||
+    die "trusted-main workflow does not retain exactly the Metal, runtime, tokenizer, Stage-3 order"
 [[ "$(grep -Fc -- \
     '          bash .github/scripts/prime-ci-native-decoder-' \
-    "$workflow_path")" == "3" \
+    "$workflow_path")" == "4" \
     && "$(grep -Fxc -- \
         '          bash .github/scripts/prime-ci-native-decoder-metal.sh' \
         "$workflow_path")" == "1" \
@@ -784,9 +849,10 @@ readonly expected_live_decoder_workflow_block='      - name: Run the Prime-owned
         run: |
           bash .github/scripts/prime-ci-native-decoder-metal.sh
           bash .github/scripts/prime-ci-native-decoder-runtime-closure.sh
-          bash .github/scripts/prime-ci-native-decoder-tokenizer-compatibility.sh'
+          bash .github/scripts/prime-ci-native-decoder-tokenizer-compatibility.sh
+          bash .github/scripts/prime-ci-native-decoder-stage3-tiny-cpu-resume.sh'
 [[ "$live_decoder_workflow_block" == "$expected_live_decoder_workflow_block" ]] ||
-    die "trusted-main exact contiguous Metal, runtime, and tokenizer block changed"
+    die "trusted-main exact contiguous Metal, runtime, tokenizer, and Stage-3 block changed"
 ! grep -Fq -- \
     '          bash .github/scripts/prime-ci-native-decoder-checkpoint-v2-io.sh' \
     "$workflow_path" ||
@@ -1130,7 +1196,8 @@ for required_stage2_fresh_metallib_evidence_surface_repair_execution_summary_val
         die "workflow lost the fresh-metallib evidence-surface repair execution summary: $required_stage2_fresh_metallib_evidence_surface_repair_execution_summary_value"
 done
 for required_stage3_tiny_cpu_explicit_rng_cursor_resume_summary_value in \
-    'Stage-3 tiny-CPU explicit-RNG/cursor-resume authority is dependency-free and execution-free' \
+    'Stage-3 tiny-CPU explicit-RNG/cursor-resume authority is dependency-free and remains frozen' \
+    'exact direct-main successor may run one' \
     'typed in-memory step-1 snapshot' \
     'fresh-trainer restore' \
     'exact uninterrupted-versus-restored step-2 witness' \
@@ -1150,6 +1217,9 @@ done
         "$workflow_path")" == "1" \
     && "$(grep -Fc -- \
         'Tests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTrainingTests.swift' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        'Tests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeTests.swift' \
         "$workflow_path")" == "1" \
     && "$(grep -Fc -- \
         '--package-path Tests/PrimeNativeDecoderTrainingValidation' \
@@ -2135,6 +2205,7 @@ readonly decoder_training_validation_root="$prime_root/Tests/PrimeNativeDecoderT
 readonly decoder_training_validation_manifest="$decoder_training_validation_root/Package.swift"
 readonly decoder_training_validation_lock="$decoder_training_validation_root/Package.resolved"
 readonly decoder_training_validation_test="$decoder_training_validation_root/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTrainingTests.swift"
+readonly decoder_stage3_tiny_cpu_resume_test="$decoder_training_validation_root/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeTests.swift"
 
 [[ "$(git -C "$prime_root" ls-files -- 'Sources/PrimeNativeDecoder')" \
     == "Sources/PrimeNativeDecoder/PrimeNativeGQADecoder.swift" ]] ||
@@ -2177,8 +2248,8 @@ readonly decoder_training_validation_test="$decoder_training_validation_root/Tes
     die "PrimeNativeDecoder tokenizer-compatibility validation inventory changed"
 [[ "$(git -C "$prime_root" ls-files -- \
     'Tests/PrimeNativeDecoderTrainingValidation')" \
-    == $'Tests/PrimeNativeDecoderTrainingValidation/Package.resolved\nTests/PrimeNativeDecoderTrainingValidation/Package.swift\nTests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTrainingTests.swift' ]] ||
-    die "PrimeNativeDecoder Stage-2 validation inventory changed"
+    == $'Tests/PrimeNativeDecoderTrainingValidation/Package.resolved\nTests/PrimeNativeDecoderTrainingValidation/Package.swift\nTests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeTests.swift\nTests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTrainingTests.swift' ]] ||
+    die "PrimeNativeDecoder Stage-3 validation inventory changed"
 [[ ! -e "$prime_root/Tests/PrimeNativeDecoderValidation/.swiftpm" \
     && ! -L "$prime_root/Tests/PrimeNativeDecoderValidation/.swiftpm" ]] ||
     die "PrimeNativeDecoder validation must use the supplied isolated config path"
@@ -2292,7 +2363,9 @@ readonly decoder_training_validation_test="$decoder_training_validation_root/Tes
     && -f "$decoder_training_validation_lock" \
     && ! -L "$decoder_training_validation_lock" \
     && -f "$decoder_training_validation_test" \
-    && ! -L "$decoder_training_validation_test" ]] ||
+    && ! -L "$decoder_training_validation_test" \
+    && -f "$decoder_stage3_tiny_cpu_resume_test" \
+    && ! -L "$decoder_stage3_tiny_cpu_resume_test" ]] ||
     die "PrimeNativeDecoder Stage-2 validation source set is missing or linked"
 [[ -f "$decoder_checkpoint_source" && ! -L "$decoder_checkpoint_source" ]] ||
     die "PrimeNativeDecoderCheckpoint source is missing or linked"
@@ -3165,6 +3238,7 @@ swiftc -frontend -parse "$stage3_tiny_cpu_explicit_rng_cursor_resume_authority_s
 swiftc -frontend -parse "$stage3_tiny_cpu_explicit_rng_cursor_resume_authority_test"
 swiftc -frontend -parse "$decoder_training_source"
 swiftc -frontend -parse "$decoder_training_validation_test"
+swiftc -frontend -parse "$decoder_stage3_tiny_cpu_resume_test"
 
 readonly observed_mlxllm_references="$({
     git -C "$prime_root" grep -l -F 'MLXLLM' -- Sources || true
@@ -5152,9 +5226,9 @@ assert_tiny_cpu_mechanics_source_identity \
 assert_tiny_cpu_mechanics_source_identity \
     'Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderTraining.swift' \
     '100644' \
-    'e160cc829f8498abafd100f3f0444742058f0479' \
-    '37829' \
-    '5e6810a6bd5a9dc0bbe6d6369cec3db6dc84068dc9b415413aafb03f311211dc'
+    '3e3517b747dac6c77b14747f4a0d92e892ad4448' \
+    '60976' \
+    '665568ea2ad237526acee5ded4805abaaac964c266cd2aa3841a3abbc48c4161'
 assert_tiny_cpu_mechanics_source_identity \
     'Sources/PrimeCore/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsAuthority.swift' \
     '100644' \
@@ -5197,6 +5271,12 @@ assert_tiny_cpu_mechanics_source_identity \
     '61e86200c508526ae2ab66e359d771841f7208db' \
     '30214' \
     '29399e46e1197e09fd181c373ca12f424260abc7f671189d0dc712a48fadac96'
+assert_tiny_cpu_mechanics_source_identity \
+    'Tests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeTests.swift' \
+    '100644' \
+    'a986a63c9d674b03dc879a6c8131577999311a88' \
+    '15726' \
+    '39051b266433bb510887750bafbc773646181f75cf85b2339ddd9fccb817cf6a'
 
 jq -e \
     --slurpfile root_lock "$prime_root/Package.resolved" \
@@ -7645,7 +7725,7 @@ done
     == $'import Foundation\nimport PrimeCore\nimport PrimeNativeDecoder\nimport MLX\nimport MLXNN\nimport MLXOptimizers' ]] ||
     die "PrimeNativeDecoderTraining import allowlist changed"
 [[ "$(grep -Ec -- '^public (struct|final class) ' \
-        "$decoder_training_source")" == "5" \
+        "$decoder_training_source")" == "9" \
     && "$(grep -Fxc -- \
         'enum PrimeNativeDecoderTinyCPUTrainEvaluateErrorV1:' \
         "$decoder_training_source")" == "1" \
@@ -7657,10 +7737,14 @@ done
         "$decoder_training_source")" == "1" ]] ||
     die "PrimeNativeDecoderTraining public or internal type surface changed"
 for required_tiny_cpu_public_type in \
+    'public final class PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeSessionV1 {' \
     'public struct PrimeNativeDecoderTinyCPUTrainEvaluateConfigurationV1:' \
     'public struct PrimeNativeDecoderTinyCPUTrainEvaluateBatchV1:' \
     'public struct PrimeNativeDecoderTinyCPUTrainEvaluateStepResultV1:' \
     'public struct PrimeNativeDecoderTinyCPUTrainEvaluateEvaluationV1:' \
+    'public struct PrimeNativeDecoderTinyCPUExplicitRNGRecordV1:' \
+    'public struct PrimeNativeDecoderTinyCPUDataCursorV1:' \
+    'public struct PrimeNativeDecoderTinyCPUInMemoryResumeSnapshotV1 {' \
     'public final class PrimeNativeDecoderTinyCPUTrainEvaluateTrainerV1 {'; do
     [[ "$(grep -Fxc -- "$required_tiny_cpu_public_type" \
         "$decoder_training_source")" == "1" ]] ||
@@ -7743,7 +7827,7 @@ readonly tiny_cpu_third_step_guard_line="$(grep -nF -- \
     "$decoder_training_source" | awk -F: '{print $1}')"
 readonly tiny_cpu_train_device_line="$(grep -nF -- \
     'return try Device.withDefaultDevice(.cpu) {' \
-    "$decoder_training_source" | awk -F: '{print $1}')"
+    "$decoder_training_source" | awk -F: 'NR == 1 {print $1}')"
 readonly tiny_cpu_train_graph_line="$(grep -nF -- \
     'let lossAndGradient = valueAndGrad(model: decoder) {' \
     "$decoder_training_source" | awk -F: '{print $1}')"
@@ -7771,8 +7855,6 @@ for forbidden_tiny_cpu_training_capability in \
     'clipGradients' \
     '._updateInternal(' \
     'biasCorrection' \
-    'resume' \
-    'cursor' \
     'import Metal' \
     'import CoreGraphics' \
     'MTLCommand' \
@@ -7850,6 +7932,79 @@ for forbidden_tiny_cpu_validation_capability in \
         "$decoder_training_validation_test"; then
         die "Stage-2 validation gained forbidden capability: $forbidden_tiny_cpu_validation_capability"
     fi
+done
+
+for required_stage3_training_value in \
+    'PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeSessionV1' \
+    'PrimeNativeDecoderTinyCPUInMemoryResumeSnapshotV1' \
+    'PrimeNativeDecoderTinyCPUExplicitRNGRecordV1' \
+    'PrimeNativeDecoderTinyCPUDataCursorV1' \
+    'PrimeNativeDecoderTinyCPUExactTensorStateV1' \
+    'float32BitPatterns: [UInt32]' \
+    'public static let stageID = "tiny_cpu_explicit_rng_cursor_resume_v1"' \
+    'public static let randomAlgorithmID = "sha256_counter_stream_v1"' \
+    'public func trainNext()' \
+    'public func exportInMemoryResumeSnapshot()' \
+    'func restoreInMemoryResumeSnapshot(' \
+    'cursor.nextBatchOrdinal == trainer.globalStep' \
+    'try decoder.update(' \
+    'verify: .all' \
+    'try optimizer.update(' \
+    'snapshot.accumulationPhase == 0' \
+    'snapshot.pendingGradientTensorCount == 0' \
+    'snapshot.pendingPrefetchItemCount == 0' \
+    'snapshot.kvCacheEntryCount == 0'; do
+    grep -Fq -- "$required_stage3_training_value" "$decoder_training_source" ||
+        die "PrimeNativeDecoderTraining Stage-3 resume boundary lost: $required_stage3_training_value"
+done
+[[ "$(awk '/^import / || /^@testable import / { print }' \
+        "$decoder_stage3_tiny_cpu_resume_test")" \
+    == $'import CoreGraphics\nimport Metal\nimport MLX\nimport MLXNN\nimport MLXOptimizers\nimport XCTest\n@testable import PrimeNativeDecoderTraining' \
+    && "$(grep -Ec -- '^[[:space:]]+func test' \
+        "$decoder_stage3_tiny_cpu_resume_test")" == "1" \
+    && "$(grep -Fc -- \
+        'func testTinyCPUExplicitRNGCursorResumeIsExactAndFailClosed() throws {' \
+        "$decoder_stage3_tiny_cpu_resume_test")" == "1" \
+    && "$(grep -Fc -- 'throw XCTSkip(' \
+        "$decoder_stage3_tiny_cpu_resume_test")" == "1" ]] ||
+    die "Stage-3 tiny CPU resume test import or single-method boundary changed"
+for required_stage3_test_value in \
+    'let control =' \
+    'let source =' \
+    'let snapshot = try source.exportInMemoryResumeSnapshot()' \
+    'let sourceStep2 = try source.trainNext()' \
+    'restoring: snapshot' \
+    'assertRestorableStateEqual(' \
+    'XCTAssertEqual(sourceStep2, controlStep2)' \
+    'XCTAssertEqual(restoredStep2, controlStep2)' \
+    'XCTAssertEqual(controlEvaluation2, restoredEvaluation2)' \
+    'let beforeExportExactTensors = try source.exactTensorState()' \
+    'XCTAssertNotEqual(' \
+    'try source.exactTensorState(),' \
+    'beforeExportExactTensors)' \
+    'try control.exactTensorState(),' \
+    'try restored.exactTensorState())' \
+    'assertMalformedSnapshotsFailClosed(snapshot)' \
+    'assertLifecycleRejections(snapshot)' \
+    'snapshot.randomRecords.map(\.counter)' \
+    '[1, 1, 0, 0]' \
+    '[1, 2, 0, 0]' \
+    'XCTAssertThrowsError(' \
+    'try target.restoreInMemoryResumeSnapshot(snapshot)' \
+    'XCTAssertEqual(' \
+    'try target.validationSnapshot(),' \
+    'before,'; do
+    grep -Fq -- "$required_stage3_test_value" \
+        "$decoder_stage3_tiny_cpu_resume_test" ||
+        die "Stage-3 tiny CPU resume test lost: $required_stage3_test_value"
+done
+for forbidden_stage3_product_capability in \
+    'PrimeArtifactRoot' 'PrimeNativeDecoderCheckpoint' 'FileManager' \
+    'FileHandle' 'URLSession' 'Process(' 'posix_spawn' 'execve(' \
+    'func trainNext(batch:'; do
+    ! grep -Fq -- "$forbidden_stage3_product_capability" \
+        "$decoder_training_source" ||
+        die "Stage-3 training source gained forbidden capability: $forbidden_stage3_product_capability"
 done
 
 [[ -z "$(git -C "$prime_root" status --porcelain=v1 --untracked-files=all)" ]] ||

@@ -161,6 +161,7 @@ jobs:
             Tests/PrimeCoreTests/PrimeNativeNeuralGateMLXIsolationSourceContractTests.swift \
             Tests/PrimeCoreTests/PrimeNativeResolvedContractAdapterSourceContractTests.swift \
             Tests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTrainingTests.swift \
+            Tests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeTests.swift \
             Tests/PrimeCoreTests/PrimeSwiftSourceProvenanceTests.swift; do
             xcrun swiftc -frontend -parse "$source_file"
           done
@@ -227,7 +228,7 @@ jobs:
             echo 'Exact-main workflow run 31555440908 attempt 1 passed secure fetch with zero workflow-authored and zero Git-internal retries, root 41, Metal 44, maintained runtime 1, and tokenizer 1 in order. The replacement Stage-2 launcher discovered and hashed the same-job fresh metallib, then required its identity binding from the XCTest-only Metal log even though the preserved Metal launcher emits that binding before its XCTest tee, so it exited before receipt validation, Stage-2 build, metallib staging, direct XCTest, test start, or receipt. The append-only failure observation consumes and retires that invocation; the launcher remains frozen, the reviewed-main checkout returns to depth one, and Metal, maintained runtime, and tokenizer remain live in order. No rerun, Actions artifact, checkpoint, Stage 3, or downstream authority is established.'
             echo 'The bounded evidence-surface successor captures the unchanged Metal launcher’s complete output once in a fixed initially absent same-job log, requires both launcher and tee pipeline statuses to be zero, and binds the dynamic fresh metallib identity exactly once there and zero times in the XCTest-only log. After root 43, Metal 44, maintained runtime 1, and tokenizer 1 pass in order, it cross-binds the same five metallib identities and two canonical receipts, snapshots and revalidates all 16 predecessor artifacts, then authorizes one direct Stage-2 XCTest attempt for trusted total 96. It grants no retry, rerun, artifact, checkpoint, Stage 3, or downstream authority; a separate terminal outcome must retire the invocation.'
             echo 'Exact-main workflow run 31565094400 attempt 1 passed the unchanged secure fetch with no workflow-authored or Git-internal retry, root 43, Metal 44, maintained runtime 1, tokenizer 1, and the single direct Stage-2 mechanics test with zero failures or skips. The canonical receipt cross-binds the fresh metallib file, both Metal bundle candidates, and the runtime and tokenizer receipts while explicitly declining to infer which metallib path MLX loaded. The append-only success observation consumes the repair authority and retires the full-output wrapper and Stage-2 invocation; the frozen launcher remains preserved, reviewed-main checkout returns to depth one, and the retained live order is Metal, then maintained runtime, then tokenizer. Mechanics execution is established, but Stage 3 remains blocked after this success observation merges and its retirement closure passes exact main, pending distinct authority; no rerun, Actions artifact, checkpoint, training-resume, product, publication, or downstream authority is granted.'
-            echo 'The Stage-3 tiny-CPU explicit-RNG/cursor-resume authority is dependency-free and execution-free. It authorizes only a later typed in-memory step-1 snapshot, fresh-trainer restore, and exact uninterrupted-versus-restored step-2 witness using four Prime-owned key/counter domains and the exact next-unconsumed cursor. It authorizes no checkpoint file or codec, artifact root, upload, implicit MLX RNG restoration, Metal determinism claim, Native-300M work, Stage 4, product, or publication.'
+            echo 'The Stage-3 tiny-CPU explicit-RNG/cursor-resume authority is dependency-free and remains frozen. Its exact direct-main successor may run one typed in-memory step-1 snapshot, fresh-trainer restore, and exact uninterrupted-versus-restored step-2 witness using four Prime-owned key/counter domains and the exact next-unconsumed cursor. It authorizes no checkpoint file or codec, artifact root, upload, implicit MLX RNG restoration, Metal determinism claim, Native-300M work, Stage 4, product, publication, or rerun.'
             echo 'The locally declared origin is not network-authenticated, and ignored workspace bytes are not observed by this slice.'
             echo 'Beyond that one bounded random-initialized Native-300M witness and the separately bounded tiny CPU Stage-2 mechanics authority, no Prime proposal, candidate selection, trial authorization, decision receipt, runtime/product/canary decoder activation, Native-300M training or additional execution, publication, promotion, Driver V2, or PMHNP authority is granted.'
           } >> "$GITHUB_STEP_SUMMARY"
@@ -265,7 +266,7 @@ jobs:
           export GIT_CONFIG_COUNT=1
           export GIT_CONFIG_KEY_0="url.https://x-access-token:${CHECKOUT_TOKEN}@github.com/.insteadOf"
           export GIT_CONFIG_VALUE_0="https://github.com/"
-          git -C ergentics-prime fetch --depth=1 --no-tags --no-write-fetch-head origin "$EXACT_REVISION"
+          git -C ergentics-prime fetch --depth=2 --no-tags --no-write-fetch-head origin "$EXACT_REVISION"
           git -C ergentics-prime checkout --detach "$EXACT_REVISION"
           unset GIT_CONFIG_COUNT GIT_CONFIG_KEY_0 GIT_CONFIG_VALUE_0
           [[ "$(git -C ergentics-prime rev-parse HEAD)" == "$EXACT_REVISION" ]]
@@ -463,3 +464,4 @@ jobs:
           bash .github/scripts/prime-ci-native-decoder-metal.sh
           bash .github/scripts/prime-ci-native-decoder-runtime-closure.sh
           bash .github/scripts/prime-ci-native-decoder-tokenizer-compatibility.sh
+          bash .github/scripts/prime-ci-native-decoder-stage3-tiny-cpu-resume.sh

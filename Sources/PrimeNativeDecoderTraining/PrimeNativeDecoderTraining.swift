@@ -53,7 +53,256 @@ enum PrimeNativeDecoderTinyCPUTrainEvaluateErrorV1:
     case invalidGlobalGradientNorm(UInt32)
     case optimizerStateUnavailable
     case evaluationMutatedState
+    case resumeBoundaryUnavailable
+    case resumeTargetNotFresh
+    case resumeStateMismatch(String)
+    case resumeBatchUnavailable
     case internalInvariant(String)
+}
+
+struct PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeValidationStateV1:
+    Equatable,
+    Sendable
+{
+    let trainer: PrimeNativeDecoderTinyCPUTrainEvaluateValidationSnapshotV1
+    let randomRecords: [PrimeNativeDecoderTinyCPUExplicitRNGRecordV1]
+    let cursor: PrimeNativeDecoderTinyCPUDataCursorV1
+    let evaluationCheckedAtCurrentStep: Bool
+}
+
+/// Owns the fixed two-batch trajectory. The caller can request only the next
+/// admitted batch; there is no batch argument that can skip, duplicate, or
+/// substitute cursor state.
+public final class PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeSessionV1 {
+    public static let stageID = "tiny_cpu_explicit_rng_cursor_resume_v1"
+    public static let randomAlgorithmID = "sha256_counter_stream_v1"
+    public static let cursorSchemaID =
+        "prime_native_decoder_tiny_cpu_data_cursor_v1"
+
+    static let secondBatchTokenAndMaskSHA256 = batchTokenAndMaskSHA256(
+        try! secondBatch())
+
+    private let trainer: PrimeNativeDecoderTinyCPUTrainEvaluateTrainerV1
+    public private(set) var randomRecords:
+        [PrimeNativeDecoderTinyCPUExplicitRNGRecordV1]
+    public private(set) var cursor: PrimeNativeDecoderTinyCPUDataCursorV1
+    private var evaluationCheckedAtCurrentStep = false
+
+    public init() throws {
+        trainer = try PrimeNativeDecoderTinyCPUTrainEvaluateTrainerV1()
+        var records = Self.initialRandomRecords()
+        records = Self.consuming(.modelInitialization, in: records)
+        randomRecords = records
+        cursor = Self.cursor(nextBatchOrdinal: 0)
+    }
+
+    public init(
+        restoring snapshot: PrimeNativeDecoderTinyCPUInMemoryResumeSnapshotV1
+    ) throws {
+        let fresh = try PrimeNativeDecoderTinyCPUTrainEvaluateTrainerV1()
+        try fresh.restoreInMemoryResumeSnapshot(snapshot)
+        trainer = fresh
+        randomRecords = snapshot.randomRecords
+        cursor = snapshot.cursor
+        evaluationCheckedAtCurrentStep = true
+    }
+
+    public var globalStep: Int { trainer.globalStep }
+
+    public func trainNext()
+        throws -> PrimeNativeDecoderTinyCPUTrainEvaluateStepResultV1
+    {
+        guard cursor.nextBatchOrdinal == trainer.globalStep,
+              (0 ... 1).contains(cursor.nextBatchOrdinal)
+        else {
+            throw PrimeNativeDecoderTinyCPUTrainEvaluateErrorV1
+                .resumeBatchUnavailable
+        }
+        if trainer.globalStep == 1, !evaluationCheckedAtCurrentStep {
+            throw PrimeNativeDecoderTinyCPUTrainEvaluateErrorV1
+                .resumeBoundaryUnavailable
+        }
+        let batch = try cursor.nextBatchOrdinal == 0
+            ? Self.firstBatch()
+            : Self.secondBatch()
+        let result = try trainer.train(batch: batch)
+        randomRecords = Self.consuming(.trainingDataOrder, in: randomRecords)
+        cursor = Self.cursor(nextBatchOrdinal: result.globalStep)
+        evaluationCheckedAtCurrentStep = false
+        return result
+    }
+
+    public func checkedEvaluate()
+        throws -> PrimeNativeDecoderTinyCPUTrainEvaluateEvaluationV1
+    {
+        let result = try trainer.evaluate(batch: Self.evaluationBatch())
+        evaluationCheckedAtCurrentStep = true
+        return result
+    }
+
+    public func exportInMemoryResumeSnapshot()
+        throws -> PrimeNativeDecoderTinyCPUInMemoryResumeSnapshotV1
+    {
+        guard trainer.globalStep == 1,
+              evaluationCheckedAtCurrentStep,
+              cursor.nextBatchOrdinal == 1
+        else {
+            throw PrimeNativeDecoderTinyCPUTrainEvaluateErrorV1
+                .resumeBoundaryUnavailable
+        }
+        return try trainer.exportInMemoryResumeSnapshot(
+            randomRecords: randomRecords,
+            cursor: cursor)
+    }
+
+    func validationState() throws
+        -> PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeValidationStateV1
+    {
+        .init(
+            trainer: try trainer.validationSnapshot(),
+            randomRecords: randomRecords,
+            cursor: cursor,
+            evaluationCheckedAtCurrentStep: evaluationCheckedAtCurrentStep)
+    }
+
+    func exactTensorState() throws
+        -> PrimeNativeDecoderTinyCPUExactTensorStateV1
+    {
+        try trainer.exactTensorState()
+    }
+
+    static func firstBatch()
+        throws -> PrimeNativeDecoderTinyCPUTrainEvaluateBatchV1
+    {
+        try .init(
+            tokenIDs: [
+                [1, 1, 1, 2, 3, 0],
+                [4, 5, 6, 7, 8, 9],
+            ],
+            validTokenCounts: [5, 6],
+            completionMask: [
+                [false, false, false, true, true, false],
+                [false, false, true, true, true, true],
+            ])
+    }
+
+    static func secondBatch()
+        throws -> PrimeNativeDecoderTinyCPUTrainEvaluateBatchV1
+    {
+        try .init(
+            tokenIDs: [
+                [10, 11, 12, 13, 0, 0],
+                [14, 15, 15, 15, 16, 0],
+            ],
+            validTokenCounts: [4, 5],
+            completionMask: [
+                [false, true, true, true, false, false],
+                [false, false, false, true, true, false],
+            ])
+    }
+
+    static func evaluationBatch()
+        throws -> PrimeNativeDecoderTinyCPUTrainEvaluateBatchV1
+    {
+        try .init(
+            tokenIDs: [
+                [17, 18, 19, 0, 0, 0],
+                [17, 18, 19, 20, 21, 22],
+            ],
+            validTokenCounts: [3, 6],
+            completionMask: [
+                [false, true, true, false, false, false],
+                [false, true, true, true, true, true],
+            ])
+    }
+
+    private static func initialRandomRecords()
+        -> [PrimeNativeDecoderTinyCPUExplicitRNGRecordV1]
+    {
+        PrimeNativeDecoderTinyCPUExplicitRNGDomainV1.allCases.map { domain in
+            let key = PrimeSHA256.hexDigest(
+                of: Data(
+                    "prime_rng_key_v1|7|\(domain.rawValue)".utf8))
+            return .init(
+                domain: domain,
+                keySHA256: key,
+                counter: 0,
+                consumptionSHA256: PrimeSHA256.hexDigest(
+                    of: Data(
+                        "prime_rng_consumption_v1|\(domain.rawValue)|\(key)|0"
+                            .utf8)))
+        }
+    }
+
+    private static func consuming(
+        _ domain: PrimeNativeDecoderTinyCPUExplicitRNGDomainV1,
+        in records: [PrimeNativeDecoderTinyCPUExplicitRNGRecordV1]
+    ) -> [PrimeNativeDecoderTinyCPUExplicitRNGRecordV1] {
+        records.map { record in
+            guard record.domain == domain else { return record }
+            let next = record.counter + 1
+            let output = PrimeSHA256.hexDigest(
+                of: Data(
+                    "prime_rng_output_v1|\(record.keySHA256)|\(record.counter)"
+                        .utf8))
+            let consumption = PrimeSHA256.hexDigest(
+                of: Data(
+                    "prime_rng_consumption_v1|\(domain.rawValue)|"
+                        .appending(record.keySHA256)
+                        .appending("|\(record.counter)|\(next)|\(output)")
+                        .utf8))
+            return .init(
+                domain: domain,
+                keySHA256: record.keySHA256,
+                counter: next,
+                consumptionSHA256: consumption)
+        }
+    }
+
+    private static func cursor(
+        nextBatchOrdinal: Int
+    ) -> PrimeNativeDecoderTinyCPUDataCursorV1 {
+        switch nextBatchOrdinal {
+        case 0:
+            return .init(
+                epoch: 0,
+                nextBatchOrdinal: 0,
+                nextRowIndex: 0,
+                nextRowIDs: ["train_row_0", "train_row_1"],
+                nextBatchTokenAndMaskSHA256:
+                    batchTokenAndMaskSHA256(try! firstBatch()))
+        case 1:
+            return .init(
+                epoch: 0,
+                nextBatchOrdinal: 1,
+                nextRowIndex: 2,
+                nextRowIDs: ["train_row_2", "train_row_3"],
+                nextBatchTokenAndMaskSHA256:
+                    secondBatchTokenAndMaskSHA256)
+        default:
+            return .init(
+                epoch: 1,
+                nextBatchOrdinal: 2,
+                nextRowIndex: 4,
+                nextRowIDs: [],
+                nextBatchTokenAndMaskSHA256: PrimeSHA256.hexDigest(
+                    of: Data("prime_no_next_batch_v1".utf8)))
+        }
+    }
+
+    private static func batchTokenAndMaskSHA256(
+        _ batch: PrimeNativeDecoderTinyCPUTrainEvaluateBatchV1
+    ) -> String {
+        var data = Data("prime_batch_tokens_masks_v1".utf8)
+        for row in batch.tokenIDs.indices {
+            for column in batch.tokenIDs[row].indices {
+                var token = Int32(batch.tokenIDs[row][column]).bigEndian
+                withUnsafeBytes(of: &token) { data.append(contentsOf: $0) }
+                data.append(batch.completionMask[row][column] ? 1 : 0)
+            }
+        }
+        return PrimeSHA256.hexDigest(of: data)
+    }
 }
 
 /// The one fixed, deliberately tiny CPU train/evaluate fixture admitted by V1.
@@ -321,6 +570,123 @@ struct PrimeNativeDecoderTinyCPUTrainEvaluateValidationSnapshotV1:
     let secondMomentStateSHA256: String
     let lastTrainResult:
         PrimeNativeDecoderTinyCPUTrainEvaluateStepResultV1?
+}
+
+struct PrimeNativeDecoderTinyCPUExactTensorValueV1:
+    Equatable,
+    Sendable
+{
+    let path: String
+    let shape: [Int]
+    let float32BitPatterns: [UInt32]
+}
+
+struct PrimeNativeDecoderTinyCPUExactTensorStateV1:
+    Equatable,
+    Sendable
+{
+    let modelParameters: [PrimeNativeDecoderTinyCPUExactTensorValueV1]
+    let firstMoments: [PrimeNativeDecoderTinyCPUExactTensorValueV1]
+    let secondMoments: [PrimeNativeDecoderTinyCPUExactTensorValueV1]
+}
+
+public enum PrimeNativeDecoderTinyCPUExplicitRNGDomainV1:
+    String,
+    CaseIterable,
+    Equatable,
+    Sendable
+{
+    case modelInitialization = "model_initialization_v1"
+    case trainingDataOrder = "training_data_order_v1"
+    case augmentation = "augmentation_v1"
+    case evaluation = "evaluation_v1"
+}
+
+public struct PrimeNativeDecoderTinyCPUExplicitRNGRecordV1:
+    Equatable,
+    Sendable
+{
+    public let domain: PrimeNativeDecoderTinyCPUExplicitRNGDomainV1
+    public let keySHA256: String
+    public let counter: UInt64
+    public let consumptionSHA256: String
+}
+
+public struct PrimeNativeDecoderTinyCPUDataCursorV1:
+    Equatable,
+    Sendable
+{
+    public let epoch: Int
+    public let nextBatchOrdinal: Int
+    public let nextRowIndex: Int
+    public let nextRowIDs: [String]
+    public let nextBatchTokenAndMaskSHA256: String
+}
+
+/// An immutable, process-local value. Tensor storage is deliberately not
+/// Codable and has no filesystem representation.
+public struct PrimeNativeDecoderTinyCPUInMemoryResumeSnapshotV1 {
+    public let schemaVersion: Int
+    public let globalStep: Int
+    public let modelTensorCount: Int
+    public let optimizerMomentTensorCount: Int
+    public let parameterStateSHA256: String
+    public let firstMomentStateSHA256: String
+    public let secondMomentStateSHA256: String
+    public let learningRateFloat32BitPattern: UInt32
+    public let beta1Float32BitPattern: UInt32
+    public let beta2Float32BitPattern: UInt32
+    public let epsilonFloat32BitPattern: UInt32
+    public let weightDecayFloat32BitPattern: UInt32
+    public let scheduleID: String
+    public let randomRecords: [PrimeNativeDecoderTinyCPUExplicitRNGRecordV1]
+    public let cursor: PrimeNativeDecoderTinyCPUDataCursorV1
+    public let accumulationPhase: Int
+    public let pendingGradientTensorCount: Int
+    public let pendingPrefetchItemCount: Int
+    public let kvCacheEntryCount: Int
+
+    let modelParameters: ModuleParameters
+    let optimizerState: AdamOptimizerState
+
+    init(
+        globalStep: Int,
+        modelParameters: ModuleParameters,
+        optimizerState: AdamOptimizerState,
+        parameterStateSHA256: String,
+        firstMomentStateSHA256: String,
+        secondMomentStateSHA256: String,
+        randomRecords: [PrimeNativeDecoderTinyCPUExplicitRNGRecordV1],
+        cursor: PrimeNativeDecoderTinyCPUDataCursorV1
+    ) {
+        let configuration =
+            PrimeNativeDecoderTinyCPUTrainEvaluateConfigurationV1.frozenV1
+        self.schemaVersion = 1
+        self.globalStep = globalStep
+        self.modelTensorCount = modelParameters.flattened().count
+        self.optimizerMomentTensorCount =
+            optimizerState.firstMoment.flattened().count
+                + optimizerState.secondMoment.flattened().count
+        self.parameterStateSHA256 = parameterStateSHA256
+        self.firstMomentStateSHA256 = firstMomentStateSHA256
+        self.secondMomentStateSHA256 = secondMomentStateSHA256
+        self.learningRateFloat32BitPattern =
+            configuration.learningRateFloat32BitPattern
+        self.beta1Float32BitPattern = configuration.beta1Float32BitPattern
+        self.beta2Float32BitPattern = configuration.beta2Float32BitPattern
+        self.epsilonFloat32BitPattern = configuration.epsilonFloat32BitPattern
+        self.weightDecayFloat32BitPattern =
+            configuration.weightDecayFloat32BitPattern
+        self.scheduleID = "constant_float32_learning_rate_v1"
+        self.randomRecords = randomRecords
+        self.cursor = cursor
+        self.accumulationPhase = 0
+        self.pendingGradientTensorCount = 0
+        self.pendingPrefetchItemCount = 0
+        self.kvCacheEntryCount = 0
+        self.modelParameters = modelParameters
+        self.optimizerState = optimizerState
+    }
 }
 
 /// Stateful two-step CPU mechanics for the fixed true-GQA fixture. The model
@@ -636,6 +1002,234 @@ public final class PrimeNativeDecoderTinyCPUTrainEvaluateTrainerV1 {
                         role: "second_moment",
                         tensors: optimizerCatalogs.second),
                     lastTrainResult: lastTrainResult)
+        }
+    }
+
+    func exactTensorState() throws
+        -> PrimeNativeDecoderTinyCPUExactTensorStateV1
+    {
+        try Device.withDefaultDevice(.cpu) {
+            try Self.requireCPUDefault()
+            let optimizerState: AdamOptimizerState
+            do {
+                optimizerState = try optimizer.parameters()
+            } catch AdamOptimizerStateError.emptyState {
+                throw PrimeNativeDecoderTinyCPUTrainEvaluateErrorV1
+                    .optimizerStateUnavailable
+            }
+            try checkedEval(
+                decoder.parameters(),
+                optimizerState.firstMoment,
+                optimizerState.secondMoment)
+            return .init(
+                modelParameters: try Self.exactTensorValues(
+                    decoder.parameters()),
+                firstMoments: try Self.exactTensorValues(
+                    optimizerState.firstMoment),
+                secondMoments: try Self.exactTensorValues(
+                    optimizerState.secondMoment))
+        }
+    }
+
+    func exportInMemoryResumeSnapshot(
+        randomRecords: [PrimeNativeDecoderTinyCPUExplicitRNGRecordV1],
+        cursor: PrimeNativeDecoderTinyCPUDataCursorV1
+    ) throws -> PrimeNativeDecoderTinyCPUInMemoryResumeSnapshotV1 {
+        guard globalStep == 1,
+              lastTrainResult?.globalStep == 1,
+              cursor.nextBatchOrdinal == 1,
+              cursor.nextRowIndex == 2,
+              cursor.nextRowIDs == ["train_row_2", "train_row_3"]
+        else {
+            throw PrimeNativeDecoderTinyCPUTrainEvaluateErrorV1
+                .resumeBoundaryUnavailable
+        }
+        return try Device.withDefaultDevice(.cpu) {
+            try Self.requireCPUDefault()
+            let validation = try validationSnapshot()
+            let optimizerState: AdamOptimizerState
+            do {
+                optimizerState = try optimizer.parameters()
+            } catch AdamOptimizerStateError.emptyState {
+                throw PrimeNativeDecoderTinyCPUTrainEvaluateErrorV1
+                    .optimizerStateUnavailable
+            }
+            try Self.validateOptimizerState(optimizerState)
+            let modelParameters = Self.isolatedSnapshot(decoder.parameters())
+            let isolatedOptimizerState = try Self.isolatedSnapshot(optimizerState)
+            try checkedEval(
+                modelParameters,
+                isolatedOptimizerState.firstMoment,
+                isolatedOptimizerState.secondMoment)
+            return PrimeNativeDecoderTinyCPUInMemoryResumeSnapshotV1(
+                globalStep: globalStep,
+                modelParameters: modelParameters,
+                optimizerState: isolatedOptimizerState,
+                parameterStateSHA256: validation.parameterStateSHA256,
+                firstMomentStateSHA256: validation.firstMomentStateSHA256,
+                secondMomentStateSHA256: validation.secondMomentStateSHA256,
+                randomRecords: randomRecords,
+                cursor: cursor)
+        }
+    }
+
+    func restoreInMemoryResumeSnapshot(
+        _ snapshot: PrimeNativeDecoderTinyCPUInMemoryResumeSnapshotV1
+    ) throws {
+        let before = try validationSnapshot()
+        guard globalStep == 0,
+              before.firstMoments.isEmpty,
+              before.secondMoments.isEmpty,
+              lastTrainResult == nil,
+              lastRawGradientDigests.isEmpty,
+              lastClippedGradientDigests.isEmpty
+        else {
+            throw PrimeNativeDecoderTinyCPUTrainEvaluateErrorV1
+                .resumeTargetNotFresh
+        }
+        try Self.validateResumeSnapshotMetadata(snapshot)
+        try Device.withDefaultDevice(.cpu) {
+            try Self.requireCPUDefault()
+            try Self.validateParameters(
+                snapshot.modelParameters,
+                scope: "resume_model")
+            try Self.validateOptimizerState(snapshot.optimizerState)
+            try Self.validateOptimizerState(
+                snapshot.optimizerState,
+                matching: decoder.trainableParameters())
+
+            try decoder.update(
+                parameters: Self.isolatedSnapshot(snapshot.modelParameters),
+                verify: .all)
+            try optimizer.update(
+                parameters: try Self.isolatedSnapshot(snapshot.optimizerState),
+                matching: decoder.trainableParameters())
+            try checkedEval(decoder, optimizer)
+            globalStep = snapshot.globalStep
+            decoder.train(true)
+
+            let restored = try validationSnapshot()
+            guard restored.parameterStateSHA256
+                    == snapshot.parameterStateSHA256,
+                  restored.firstMomentStateSHA256
+                    == snapshot.firstMomentStateSHA256,
+                  restored.secondMomentStateSHA256
+                    == snapshot.secondMomentStateSHA256,
+                  restored.modelParameters.count == snapshot.modelTensorCount,
+                  restored.firstMoments.count + restored.secondMoments.count
+                    == snapshot.optimizerMomentTensorCount
+            else {
+                throw PrimeNativeDecoderTinyCPUTrainEvaluateErrorV1
+                    .resumeStateMismatch("restored state identity")
+            }
+        }
+    }
+
+    private static func validateResumeSnapshotMetadata(
+        _ snapshot: PrimeNativeDecoderTinyCPUInMemoryResumeSnapshotV1
+    ) throws {
+        let configuration =
+            PrimeNativeDecoderTinyCPUTrainEvaluateConfigurationV1.frozenV1
+        guard snapshot.schemaVersion == 1,
+              snapshot.globalStep == 1,
+              snapshot.modelTensorCount == 20,
+              snapshot.optimizerMomentTensorCount == 40,
+              snapshot.learningRateFloat32BitPattern
+                == configuration.learningRateFloat32BitPattern,
+              snapshot.beta1Float32BitPattern
+                == configuration.beta1Float32BitPattern,
+              snapshot.beta2Float32BitPattern
+                == configuration.beta2Float32BitPattern,
+              snapshot.epsilonFloat32BitPattern
+                == configuration.epsilonFloat32BitPattern,
+              snapshot.weightDecayFloat32BitPattern
+                == configuration.weightDecayFloat32BitPattern,
+              snapshot.scheduleID == "constant_float32_learning_rate_v1",
+              snapshot.accumulationPhase == 0,
+              snapshot.pendingGradientTensorCount == 0,
+              snapshot.pendingPrefetchItemCount == 0,
+              snapshot.kvCacheEntryCount == 0,
+              snapshot.randomRecords.map(\.domain)
+                == PrimeNativeDecoderTinyCPUExplicitRNGDomainV1.allCases,
+              Set(snapshot.randomRecords.map(\.keySHA256)).count == 4,
+              snapshot.randomRecords.allSatisfy({
+                  $0.keySHA256.count == 64
+                    && $0.consumptionSHA256.count == 64
+              }),
+              snapshot.cursor.epoch == 0,
+              snapshot.cursor.nextBatchOrdinal == 1,
+              snapshot.cursor.nextRowIndex == 2,
+              snapshot.cursor.nextRowIDs == ["train_row_2", "train_row_3"],
+              snapshot.cursor.nextBatchTokenAndMaskSHA256
+                == PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeSessionV1
+                    .secondBatchTokenAndMaskSHA256
+        else {
+            throw PrimeNativeDecoderTinyCPUTrainEvaluateErrorV1
+                .resumeStateMismatch("snapshot metadata")
+        }
+    }
+
+    private static func isolatedSnapshot(
+        _ parameters: ModuleParameters
+    ) -> ModuleParameters {
+        parameters.mapValues { $0.reshaped($0.shape) }
+    }
+
+    private static func exactTensorValues(
+        _ parameters: ModuleParameters
+    ) throws -> [PrimeNativeDecoderTinyCPUExactTensorValueV1] {
+        try parameters.flattened().map { path, tensor in
+            guard tensor.dtype == .float32 else {
+                throw PrimeNativeDecoderTinyCPUTrainEvaluateErrorV1
+                    .resumeStateMismatch("non-Float32 tensor \(path)")
+            }
+            return .init(
+                path: path,
+                shape: tensor.shape,
+                float32BitPatterns:
+                    tensor.asArray(Float.self).map(\.bitPattern))
+        }.sorted { utf8Less($0.path, $1.path) }
+    }
+
+    private static func isolatedSnapshot(
+        _ state: AdamOptimizerState
+    ) throws -> AdamOptimizerState {
+        let snapshot = AdamOptimizerState(
+            firstMoment: isolatedSnapshot(state.firstMoment),
+            secondMoment: isolatedSnapshot(state.secondMoment))
+        try checkedEval(snapshot.firstMoment, snapshot.secondMoment)
+        return snapshot
+    }
+
+    private static func validateOptimizerState(
+        _ state: AdamOptimizerState,
+        matching parameters: ModuleParameters
+    ) throws {
+        let expected = Dictionary(
+            uniqueKeysWithValues: parameters.flattened().map { ($0.0, $0.1) })
+        let first = Dictionary(
+            uniqueKeysWithValues: state.firstMoment.flattened().map {
+                ($0.0, $0.1)
+            })
+        let second = Dictionary(
+            uniqueKeysWithValues: state.secondMoment.flattened().map {
+                ($0.0, $0.1)
+            })
+        guard Set(expected.keys) == Set(first.keys),
+              Set(expected.keys) == Set(second.keys)
+        else {
+            throw PrimeNativeDecoderTinyCPUTrainEvaluateErrorV1
+                .resumeStateMismatch("optimizer paths")
+        }
+        for path in expected.keys {
+            guard first[path]?.shape == expected[path]?.shape,
+                  second[path]?.shape == expected[path]?.shape,
+                  first[path]?.dtype == expected[path]?.dtype,
+                  second[path]?.dtype == expected[path]?.dtype
+            else {
+                throw PrimeNativeDecoderTinyCPUTrainEvaluateErrorV1
+                    .resumeStateMismatch("optimizer topology \(path)")
+            }
         }
     }
 
