@@ -836,6 +836,9 @@ readonly tokenizer_compatibility_workflow_line="$(grep -nFx -- \
         "$workflow_path")" == "0" \
     && "$(grep -Fxc -- \
         '          bash .github/scripts/prime-ci-native-decoder-stage3-tiny-cpu-resume.sh' \
+        "$workflow_path")" == "0" \
+    && "$(grep -Fxc -- \
+        '          bash .github/scripts/prime-ci-native-decoder-stage4-tiny-durable-multileaf.sh' \
         "$workflow_path")" == "0" ]] ||
     die "trusted-main workflow lost the exact three-launcher sequence or retained a retired one-shot"
 readonly live_decoder_workflow_block="$(awk '
@@ -958,6 +961,7 @@ readonly stage3_tiny_cpu_explicit_rng_cursor_resume_authority_filter='PrimeCoreT
 readonly stage3_tiny_cpu_explicit_rng_cursor_resume_canonical_binding_repair_authority_filter='PrimeCoreTests.PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeAuthorityCanonicalBindingRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling'
 readonly stage3_tiny_cpu_explicit_rng_cursor_resume_validation_inventory_order_repair_authority_filter='PrimeCoreTests.PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeValidationInventoryOrderRepairAuthorityTests/testFrozenV1CanonicalCodableRecursiveMutationAndRepairCeiling'
 readonly stage3_tiny_cpu_explicit_rng_cursor_resume_execution_observation_filter='PrimeCoreTests.PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeExecutionObservationTests/testFrozenV1CanonicalCodableRecursiveMutationAndSuccessCeiling'
+readonly stage4_tiny_durable_multileaf_commit_fault_injection_authority_filter='PrimeCoreTests.PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling'
 [[ "$(grep -Fc -- "$tiny_cpu_mechanics_authority_filter" \
         "$workflow_path")" == "1" \
     && "$(grep -Fc -- "$tiny_cpu_mechanics_failure_observation_filter" \
@@ -987,7 +991,7 @@ readonly stage3_tiny_cpu_explicit_rng_cursor_resume_execution_observation_filter
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 48 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 49 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not run the exact Stage-2 authority and failure-observation pure contracts"
 [[ "$(grep -Fc -- "$private_dependency_tls_failure_observation_filter" \
@@ -1079,7 +1083,7 @@ readonly stage3_tiny_cpu_explicit_rng_cursor_resume_execution_observation_filter
         "          grep -Fq 'PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapFreshMetallibCrossBindingExecutionFailureObservationTests' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 48 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 49 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the Stage-2 metallib bootstrap repair, failure observations, and classifier repair authority"
 [[ "$(grep -Fc -- \
@@ -1163,6 +1167,31 @@ readonly stage3_tiny_cpu_explicit_rng_cursor_resume_execution_observation_filter
         "          grep -Fq 'PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeExecutionObservationTests' \\" \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the Stage-3 execution observation"
+[[ "$(grep -Fc -- \
+        "$stage4_tiny_durable_multileaf_commit_fault_injection_authority_filter" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        'Sources/PrimeCore/PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionAuthority.swift' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        'Tests/PrimeCoreTests/PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionAuthorityTests.swift' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        "          grep -Fq 'PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionAuthorityTests' \\" \
+        "$workflow_path")" == "1" ]] ||
+    die "hosted workflow does not parse and run exactly the Stage-4 tiny durable multileaf authority"
+for required_stage4_tiny_durable_multileaf_authority_summary_value in \
+    'The dependency-free Stage-4 tiny durable multileaf authority is pure and nonexecuting.' \
+    'Only after this authority merges and its exact-main depth-one closure passes may one separately scoped exact-main mechanics successor' \
+    'The tiny weights mechanics fixture is not the frozen Native-300M V2 checkpoint and neither uses nor widens that public codec.' \
+    'performs no filesystem or checkpoint I/O' \
+    'invokes no Stage-4 launcher' \
+    'grants no retry, Stage 5, Metal-determinism, Native-300M, admission, training, trial, canary, product, or publication authority'; do
+    [[ "$(grep -Fc -- \
+        "$required_stage4_tiny_durable_multileaf_authority_summary_value" \
+        "$workflow_path")" == "1" ]] ||
+        die "workflow lost the exact Stage-4 authority summary: $required_stage4_tiny_durable_multileaf_authority_summary_value"
+done
 for required_stage2_metallib_bootstrap_repair_failure_summary_value in \
     'Exact-main workflow run 31544702133 attempt 1' \
     'passed secure fetch, root 39, Metal 44, maintained runtime 1, and tokenizer 1' \
@@ -2267,6 +2296,8 @@ readonly stage3_tiny_cpu_explicit_rng_cursor_resume_validation_inventory_order_r
 readonly stage3_tiny_cpu_explicit_rng_cursor_resume_validation_inventory_order_repair_authority_test="$prime_root/Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeValidationInventoryOrderRepairAuthorityTests.swift"
 readonly stage3_tiny_cpu_explicit_rng_cursor_resume_execution_observation_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeExecutionObservation.swift"
 readonly stage3_tiny_cpu_explicit_rng_cursor_resume_execution_observation_test="$prime_root/Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeExecutionObservationTests.swift"
+readonly stage4_tiny_durable_multileaf_commit_fault_injection_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionAuthority.swift"
+readonly stage4_tiny_durable_multileaf_commit_fault_injection_authority_test="$prime_root/Tests/PrimeCoreTests/PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionAuthorityTests.swift"
 readonly decoder_training_source="$prime_root/Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderTraining.swift"
 readonly decoder_training_validation_root="$prime_root/Tests/PrimeNativeDecoderTrainingValidation"
 readonly decoder_training_validation_manifest="$decoder_training_validation_root/Package.swift"
@@ -2441,6 +2472,12 @@ readonly decoder_stage3_tiny_cpu_resume_test="$decoder_training_validation_root/
 [[ -f "$stage3_tiny_cpu_explicit_rng_cursor_resume_execution_observation_test" \
     && ! -L "$stage3_tiny_cpu_explicit_rng_cursor_resume_execution_observation_test" ]] ||
     die "Stage-3 execution observation test is missing or linked"
+[[ -f "$stage4_tiny_durable_multileaf_commit_fault_injection_authority_source" \
+    && ! -L "$stage4_tiny_durable_multileaf_commit_fault_injection_authority_source" ]] ||
+    die "Stage-4 tiny durable multileaf authority is missing or linked"
+[[ -f "$stage4_tiny_durable_multileaf_commit_fault_injection_authority_test" \
+    && ! -L "$stage4_tiny_durable_multileaf_commit_fault_injection_authority_test" ]] ||
+    die "Stage-4 tiny durable multileaf authority test is missing or linked"
 [[ -f "$decoder_training_source" && ! -L "$decoder_training_source" ]] ||
     die "PrimeNativeDecoderTraining source is missing or linked"
 [[ -f "$decoder_training_validation_manifest" \
@@ -3327,6 +3364,8 @@ swiftc -frontend -parse "$stage3_tiny_cpu_explicit_rng_cursor_resume_validation_
 swiftc -frontend -parse "$stage3_tiny_cpu_explicit_rng_cursor_resume_validation_inventory_order_repair_authority_test"
 swiftc -frontend -parse "$stage3_tiny_cpu_explicit_rng_cursor_resume_execution_observation_source"
 swiftc -frontend -parse "$stage3_tiny_cpu_explicit_rng_cursor_resume_execution_observation_test"
+swiftc -frontend -parse "$stage4_tiny_durable_multileaf_commit_fault_injection_authority_source"
+swiftc -frontend -parse "$stage4_tiny_durable_multileaf_commit_fault_injection_authority_test"
 swiftc -frontend -parse "$decoder_training_source"
 swiftc -frontend -parse "$decoder_training_validation_test"
 swiftc -frontend -parse "$decoder_stage3_tiny_cpu_resume_test"
@@ -7947,6 +7986,127 @@ for forbidden_stage3_execution_observation_capability in \
     ! grep -Fq -- "$forbidden_stage3_execution_observation_capability" \
         "$stage3_tiny_cpu_explicit_rng_cursor_resume_execution_observation_source" ||
         die "Stage-3 execution observation gained capability: $forbidden_stage3_execution_observation_capability"
+done
+
+assert_metal_current_decoder_assertion_arc_identity \
+    'Sources/PrimeCore/PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionAuthority.swift' \
+    '100644' 'c9a1a23e65454fd7fd8f46e118c04060d0a78123' '36866' \
+    '6b38af1926584bc47d20971299214e737bbda931395b08cef6bb5bf64b439ba8'
+assert_metal_current_decoder_assertion_arc_identity \
+    'Tests/PrimeCoreTests/PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionAuthorityTests.swift' \
+    '100644' 'c9eeea7514f28350ed95ab42e77de6cb865a6347' '15413' \
+    '1a768e399edc92eacfbf32142fc9bf4faa897805697dc1b53c4f4441bbaf4406'
+[[ "$(wc -l < \
+        "$stage4_tiny_durable_multileaf_commit_fault_injection_authority_source" | \
+        awk '{print $1}')" == "775" \
+    && "$(wc -l < \
+        "$stage4_tiny_durable_multileaf_commit_fault_injection_authority_test" | \
+        awk '{print $1}')" == "379" \
+    && "$(awk '/^import / { print }' \
+        "$stage4_tiny_durable_multileaf_commit_fault_injection_authority_source")" \
+        == 'import Foundation' \
+    && "$(awk '/^import / || /^@testable import / { print }' \
+        "$stage4_tiny_durable_multileaf_commit_fault_injection_authority_test")" \
+        == $'import CoreFoundation\nimport Foundation\n@testable import PrimeCore\nimport XCTest' \
+    && "$(grep -Ec -- '^[[:space:]]+func test' \
+        "$stage4_tiny_durable_multileaf_commit_fault_injection_authority_test")" == "1" \
+    && "$(grep -Fc -- \
+        'func testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling()' \
+        "$stage4_tiny_durable_multileaf_commit_fault_injection_authority_test")" == "1" ]] ||
+    die "Stage-4 tiny durable multileaf authority parse or sole-test surface changed"
+for required_stage4_tiny_durable_multileaf_authority_value in \
+    'public static let canonicalSHA256 =' \
+    '"0b167685f0cc10cbf5d705d6cf67b72b54555dfa52b9f4aaebd00613e057b031"' \
+    'stage3RetirementMergeRevision:' \
+    '"5cadcfb915356984f1d6496d7a255725937f9007"' \
+    'stage3RetirementTree:' \
+    '"7fa0f3c9cdcbbd68386a55414e9e08425bccbc7a"' \
+    'stage3LauncherGitBlob:' \
+    '"f912e776309866eaec5c6a162892c096b9bc2488"' \
+    'stage3LauncherSHA256:' \
+    '"1a184b52e0055128afbb6a9ccc22c46e8a929f30b3e0f43752f6a43e48eae6bd"' \
+    'stageID: "tiny_durable_multileaf_commit_fault_injection_v1"' \
+    'nextStageID:' \
+    '"tiny_repeated_metal_trajectory_determinism_assay_v1"' \
+    'weightsRoleSemantics:' \
+    '"bounded_real_tiny_mechanics_safetensors_fixture_not_native300m_exact_v2_leaf"' \
+    'native300MPublicV2CodecUseAuthorized: false' \
+    'publicV2CodecMutationAuthorized: false' \
+    'native300MExactV2LeafCompositionDeferred: true' \
+    'finalCommitManifestPublishedLast: true' \
+    'finalCommitManifestIsExclusiveCommitPoint: true' \
+    'partialPrecommitLeavesAreAuthoritative: false' \
+    'partialPrecommitLeavesMustBeQuarantined: true' \
+    'loadRequiresExternallySuppliedExactCommitBinding: true' \
+    'loadRequiresExactInventoryAndEveryLeafBinding: true' \
+    'discoverAndTrustLoadAuthorized: false' \
+    'inPlaceMutationOrReplacementAuthorized: false' \
+    'failedWritePartialStateCanBePromoted: false' \
+    'injectedFailureCount: 7' \
+    'publishedFileCount: 4' \
+    'roundTripRestoresExactStage3Snapshot: true' \
+    'directXCTestCount: 1' \
+    'failureCount: 0' \
+    'skipCount: 0' \
+    '".github/scripts/prime-ci-active-root-quarantine.sh"' \
+    '".github/scripts/prime-ci-native-decoder-stage4-tiny-durable-multileaf.sh"' \
+    '".github/workflows/prime-active-root-quarantine.yml"' \
+    '"Package.resolved"' \
+    '"Package.swift"' \
+    '"Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift"' \
+    '"Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderTrajectoryCheckpointV1.swift"' \
+    '"Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderTraining.swift"' \
+    '"Tests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionTests.swift"' \
+    'rootPackageManifestMutationAuthorized: true' \
+    'rootPackageResolvedMutationAuthorized: true' \
+    'trainingValidationManifestMutationAuthorized: false' \
+    'trainingValidationLockMutationAuthorized: false' \
+    'checkpointTargetDependencyForTrainingAuthorized: true' \
+    'genericCodecMustBeInCheckpointTarget: true' \
+    'trainingSourceMayOnlyBridgeStage3Snapshot: true' \
+    'stage3LauncherMutationAuthorized: false' \
+    'existingMetalLauncherMutationAuthorized: false' \
+    'secureFetchMutationAuthorized: false' \
+    'workflowTimeoutChangeAuthorized: false' \
+    'reviewedCheckoutDepth: 2' \
+    'newHostedLauncherRequired: true' \
+    'authorityRootTestCount: 49' \
+    'implementationFocusedWholeTestCount: 55' \
+    'preStage4TotalTestCount: 101' \
+    'totalTestCount: 102' \
+    'authorityOnlyNoExecutionEvidence: true' \
+    'mechanicsImplementationAuthorizedAfterGreenAuthorityClosure: true' \
+    'oneExactMainExecutionOpportunityAuthorized: true' \
+    'tinyEphemeralArtifactRootAuthorizedForMechanics: true' \
+    'stage3SnapshotLeafSerializationAuthorizedForMechanics: true' \
+    'additionalExecutionOrRerunAuthorized: false' \
+    'retainedArtifactAuthorized: false' \
+    'artifactUploadAuthorized: false' \
+    'checkpointAdmissionGranted: false' \
+    'publicV2CodecWideningAuthorized: false' \
+    'metalDeterminismEstablished: false' \
+    'stage5Authorized: false' \
+    'native300MAllocationAuthorized: false' \
+    'native300MTrainingAuthorized: false' \
+    'generalTrainingResumeEstablished: false' \
+    'modelQualityEstablished: false' \
+    'candidateAdmissionGranted: false' \
+    'trialAuthorized: false' \
+    'canaryAuthorized: false' \
+    'productUseAuthorized: false' \
+    'publicationAuthorized: false' \
+    'AUTHORIZED_stage4_tiny_ephemeral_durable_four_leaf_commit_fault_injection_mechanics_and_one_exact_main_witness_after_green_authority_closure_no_retention_admission_metal_native300m_rerun_or_downstream_authority'; do
+    grep -Fq -- "$required_stage4_tiny_durable_multileaf_authority_value" \
+        "$stage4_tiny_durable_multileaf_commit_fault_injection_authority_source" ||
+        die "Stage-4 tiny durable multileaf authority lost: $required_stage4_tiny_durable_multileaf_authority_value"
+done
+for forbidden_stage4_tiny_durable_multileaf_authority_capability in \
+    'import CoreGraphics' 'import Metal' 'import MLX' 'import MLXNN' \
+    'import MLXOptimizers' 'FileManager' 'FileHandle' 'URLSession' 'Process(' \
+    'posix_spawn' 'execve('; do
+    ! grep -Fq -- "$forbidden_stage4_tiny_durable_multileaf_authority_capability" \
+        "$stage4_tiny_durable_multileaf_commit_fault_injection_authority_source" ||
+        die "Stage-4 tiny durable multileaf authority gained capability: $forbidden_stage4_tiny_durable_multileaf_authority_capability"
 done
 
 [[ "$(awk '/^import / { print }' "$decoder_authority_test")" \
