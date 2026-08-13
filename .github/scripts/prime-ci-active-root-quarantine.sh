@@ -40,6 +40,46 @@ done
 [[ -z "$(git -C "$prime_root" status --porcelain=v1 --untracked-files=all)" ]] ||
     die "Prime checkout is dirty"
 
+readonly stage5_swift_numerics_repair_source_relative_path="Sources/PrimeCore/PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayExactMainSwiftNumericsResolutionRepairAuthority.swift"
+readonly stage5_swift_numerics_repair_test_relative_path="Tests/PrimeCoreTests/PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayExactMainSwiftNumericsResolutionRepairAuthorityTests.swift"
+readonly expected_stage5_swift_numerics_repair_preserved_index_sha256="530e3332fbda8fbdfd9c3d0a78c530b844293adafd435f708d000a5edab70aa0"
+readonly observed_stage5_swift_numerics_repair_preserved_index_sha256="$({
+    git -C "$prime_root" ls-files -s |
+        while IFS= read -r index_record; do
+            relative_path="${index_record#*$'\t'}"
+            if [[ "$relative_path" \
+                    == '.github/scripts/prime-ci-active-root-quarantine.sh' \
+                || "$relative_path" \
+                    == '.github/workflows/prime-active-root-quarantine.yml' \
+                || "$relative_path" \
+                    == 'Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' \
+                || "$relative_path" \
+                    == "$stage5_swift_numerics_repair_source_relative_path" \
+                || "$relative_path" \
+                    == "$stage5_swift_numerics_repair_test_relative_path" ]]; then
+                continue
+            fi
+            printf '%s\n' "$index_record"
+        done
+} | LC_ALL=C sort | shasum -a 256 | awk '{print $1}')"
+[[ "$observed_stage5_swift_numerics_repair_preserved_index_sha256" \
+    == "$expected_stage5_swift_numerics_repair_preserved_index_sha256" ]] ||
+    die "Stage-5 Swift Numerics repair changed a path outside the exact five-path closure"
+for exact_stage5_swift_numerics_repair_path in \
+    '.github/workflows/prime-active-root-quarantine.yml' \
+    'Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' \
+    "$stage5_swift_numerics_repair_source_relative_path" \
+    "$stage5_swift_numerics_repair_test_relative_path"; do
+    [[ "$(git -C "$prime_root" ls-files -s -- \
+        "$exact_stage5_swift_numerics_repair_path" | awk '{print $1}')" \
+        == "100644" ]] ||
+        die "Stage-5 Swift Numerics repair exact path is missing or has the wrong mode: $exact_stage5_swift_numerics_repair_path"
+done
+[[ "$(git -C "$prime_root" ls-files -s -- \
+    '.github/scripts/prime-ci-active-root-quarantine.sh' | awk '{print $1}')" \
+    == "100755" ]] ||
+    die "active-root gate mode changed"
+
 require_preserved_object() {
     local preserved_relative_path="$1"
     local expected_object_id="$2"
@@ -1070,6 +1110,7 @@ readonly stage4_tiny_durable_multileaf_commit_fault_injection_authority_filter='
 readonly stage4_tiny_durable_multileaf_package_resolved_scope_repair_authority_filter='PrimeCoreTests.PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionPackageResolvedScopeRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling'
 readonly stage4_tiny_durable_multileaf_commit_fault_injection_execution_observation_filter='PrimeCoreTests.PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionExecutionObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndSuccessCeiling'
 readonly stage5_tiny_repeated_metal_trajectory_determinism_assay_authority_filter='PrimeCoreTests.PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling'
+readonly stage5_swift_numerics_resolution_repair_authority_filter='PrimeCoreTests.PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayExactMainSwiftNumericsResolutionRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling'
 [[ "$(grep -Fc -- "$tiny_cpu_mechanics_authority_filter" \
         "$workflow_path")" == "1" \
     && "$(grep -Fc -- "$tiny_cpu_mechanics_failure_observation_filter" \
@@ -1099,7 +1140,7 @@ readonly stage5_tiny_repeated_metal_trajectory_determinism_assay_authority_filte
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 52 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 53 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not run the exact Stage-2 authority and failure-observation pure contracts"
 [[ "$(grep -Fc -- "$private_dependency_tls_failure_observation_filter" \
@@ -1191,7 +1232,7 @@ readonly stage5_tiny_repeated_metal_trajectory_determinism_assay_authority_filte
         "          grep -Fq 'PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapFreshMetallibCrossBindingExecutionFailureObservationTests' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 52 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 53 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the Stage-2 metallib bootstrap repair, failure observations, and classifier repair authority"
 [[ "$(grep -Fc -- \
@@ -1330,6 +1371,135 @@ readonly stage5_tiny_repeated_metal_trajectory_determinism_assay_authority_filte
         "          grep -Fq 'PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayAuthorityTests' \\" \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run exactly the Stage-5 trajectory-determinism authority"
+[[ "$(grep -Fc -- \
+        "$stage5_swift_numerics_resolution_repair_authority_filter" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        'Sources/PrimeCore/PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayExactMainSwiftNumericsResolutionRepairAuthority.swift' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        'Tests/PrimeCoreTests/PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayExactMainSwiftNumericsResolutionRepairAuthorityTests.swift' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        "          grep -Fq 'PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayExactMainSwiftNumericsResolutionRepairAuthorityTests' \\" \
+        "$workflow_path")" == "1" ]] ||
+    die "hosted workflow does not parse and run exactly the Stage-5 Swift Numerics resolution-repair authority"
+for required_stage5_swift_numerics_resolution_workflow_value in \
+    'readonly numerics_revision="0c0290ff6b24942dadb83a929ffaaa1481df04a2"' \
+    'readonly numerics_source="$RUNNER_TEMP/prime-active-root-build/checkouts/swift-numerics"' \
+    'readonly numerics_cache="$RUNNER_TEMP/prime-active-root-build/repositories/swift-numerics-d936ec6c"'; do
+    [[ "$(grep -Fxc -- \
+        "          $required_stage5_swift_numerics_resolution_workflow_value" \
+        "$workflow_path")" == "1" ]] ||
+        die "workflow lost the exact post-root Swift Numerics resolution repair: $required_stage5_swift_numerics_resolution_workflow_value"
+done
+readonly expected_stage5_swift_numerics_resolution_workflow_block='          [[ -d "$numerics_source" && ! -L "$numerics_source" ]]
+          [[ "$(cd -- "$numerics_source" && pwd -P)" == "$numerics_source" ]]
+          [[ "$(git -C "$numerics_source" rev-parse --show-toplevel)" == \
+            "$numerics_source" ]]
+          [[ "$(git -C "$numerics_source" rev-parse --absolute-git-dir)" == \
+            "$numerics_source/.git" ]]
+          [[ "$(git -C "$numerics_source" rev-parse --is-bare-repository)" == \
+            "false" ]]
+          [[ "$(git -C "$numerics_source" rev-parse HEAD)" == \
+            "$numerics_revision" ]]
+          [[ "$(git -C "$numerics_source" remote)" == "origin" ]]
+          [[ "$(git -C "$numerics_source" config --get-all remote.origin.url | \
+            wc -l | tr -d '\''[:space:]'\'')" == "1" ]]
+          [[ "$(git -C "$numerics_source" config --get-all remote.origin.url)" == \
+            "$numerics_cache" ]]
+          [[ -z "$(git -C "$numerics_source" status \
+            --porcelain=v1 --untracked-files=all)" ]]
+          [[ -d "$numerics_cache" && ! -L "$numerics_cache" ]]
+          [[ "$(cd -- "$numerics_cache" && pwd -P)" == "$numerics_cache" ]]
+          [[ "$(git -C "$numerics_cache" rev-parse --absolute-git-dir)" == \
+            "$numerics_cache" ]]
+          [[ "$(git -C "$numerics_cache" rev-parse --is-bare-repository)" == \
+            "true" ]]
+          [[ "$(git -C "$numerics_cache" remote)" == "origin" ]]
+          [[ "$(git -C "$numerics_cache" config --get-all remote.origin.url | \
+            wc -l | tr -d '\''[:space:]'\'')" == "1" ]]
+          [[ "$(git -C "$numerics_cache" config --get-all remote.origin.url)" == \
+            "https://github.com/apple/swift-numerics" ]]
+          [[ "$(git -C "$numerics_cache" cat-file -t "$numerics_revision")" == \
+            "commit" ]]
+          [[ "$(git -C "$numerics_cache" rev-parse \
+            "$numerics_revision^{commit}")" == "$numerics_revision" ]]
+          [[ "$(git -C "$numerics_cache" rev-parse \
+            '\''refs/tags/1.1.1^{commit}'\'')" == "$numerics_revision" ]]
+          export GIT_CONFIG_COUNT=3
+          export GIT_CONFIG_KEY_1="url.file://${numerics_cache}/.insteadOf"
+          export GIT_CONFIG_VALUE_1="https://github.com/apple/swift-numerics"
+          export GIT_CONFIG_KEY_2="protocol.file.allow"
+          export GIT_CONFIG_VALUE_2="always"'
+readonly observed_stage5_swift_numerics_resolution_workflow_block="$(awk '
+    /^          \[\[ -d "\$numerics_source" && ! -L "\$numerics_source" \]\]$/ {
+        inside = 1
+    }
+    inside { print }
+    /^          export GIT_CONFIG_VALUE_2="always"$/ && inside { exit }
+' "$workflow_path")"
+[[ "$observed_stage5_swift_numerics_resolution_workflow_block" \
+    == "$expected_stage5_swift_numerics_resolution_workflow_block" ]] ||
+    die "workflow lost the exact contiguous Swift Numerics validation and rewrite block"
+[[ "$(grep -Fxc -- \
+        '          unset GIT_CONFIG_KEY_2 GIT_CONFIG_VALUE_2' \
+        "$workflow_path")" == "1" ]] ||
+    die "workflow lost the exact Swift Numerics rewrite cleanup"
+[[ "$(grep -Fxc -- '          export GIT_CONFIG_COUNT=2' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        '          export GIT_CONFIG_KEY_1="protocol.file.allow"' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        '          export GIT_CONFIG_VALUE_1="always"' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Ec -- \
+        '^[[:space:]]+TMPDIR=.* swift test \\' \
+        "$workflow_path")" == "5" \
+    && "$(grep -Fxc -- \
+        '            --force-resolved-versions \' \
+        "$workflow_path")" == "5" ]] ||
+    die "workflow changed the root/isolated SwiftPM command or pre-root MLX rewrite ceilings"
+readonly root_test_log_workflow_line="$(grep -nFx -- \
+    '            2>&1 | tee "$test_log"' "$workflow_path" | awk -F: '{print $1}')"
+readonly numerics_validation_workflow_line="$(grep -nFx -- \
+    '          [[ -d "$numerics_source" && ! -L "$numerics_source" ]]' \
+    "$workflow_path" | awk -F: '{print $1}')"
+readonly numerics_rewrite_workflow_line="$(grep -nFx -- \
+    '          export GIT_CONFIG_KEY_1="url.file://${numerics_cache}/.insteadOf"' \
+    "$workflow_path" | awk -F: '{print $1}')"
+readonly numerics_count_workflow_line="$(grep -nFx -- \
+    '          export GIT_CONFIG_COUNT=3' \
+    "$workflow_path" | awk -F: '{print $1}')"
+readonly numerics_protocol_workflow_line="$(grep -nFx -- \
+    '          export GIT_CONFIG_KEY_2="protocol.file.allow"' \
+    "$workflow_path" | awk -F: '{print $1}')"
+readonly first_isolated_workflow_line="$(grep -nFx -- \
+    '            --package-path Tests/PrimeNativeDecoderCheckpointCompatibilityV2Validation \' \
+    "$workflow_path" | awk -F: '{print $1}')"
+readonly final_isolated_workflow_line="$(grep -nFx -- \
+    '            --package-path Tests/PrimeNativeDecoderCheckpointV2IORootIdentityRepairExecutionValidation \' \
+    "$workflow_path" | awk -F: '{print $1}')"
+readonly numerics_rewrite_cleanup_workflow_line="$(grep -nFx -- \
+    '          unset GIT_CONFIG_KEY_2 GIT_CONFIG_VALUE_2' \
+    "$workflow_path" | awk -F: '{print $1}')"
+[[ "$root_test_log_workflow_line" =~ ^[1-9][0-9]*$ \
+    && "$numerics_validation_workflow_line" =~ ^[1-9][0-9]*$ \
+    && "$numerics_rewrite_workflow_line" =~ ^[1-9][0-9]*$ \
+    && "$numerics_count_workflow_line" =~ ^[1-9][0-9]*$ \
+    && "$numerics_protocol_workflow_line" =~ ^[1-9][0-9]*$ \
+    && "$first_isolated_workflow_line" =~ ^[1-9][0-9]*$ \
+    && "$final_isolated_workflow_line" =~ ^[1-9][0-9]*$ \
+    && "$numerics_rewrite_cleanup_workflow_line" =~ ^[1-9][0-9]*$ \
+    && "$root_test_log_workflow_line" -lt "$numerics_validation_workflow_line" \
+    && "$numerics_validation_workflow_line" -lt "$numerics_count_workflow_line" \
+    && "$numerics_count_workflow_line" -lt "$numerics_rewrite_workflow_line" \
+    && "$numerics_rewrite_workflow_line" -lt "$first_isolated_workflow_line" \
+    && "$numerics_protocol_workflow_line" -lt "$first_isolated_workflow_line" \
+    && "$first_isolated_workflow_line" -lt "$final_isolated_workflow_line" \
+    && "$final_isolated_workflow_line" -lt "$numerics_rewrite_cleanup_workflow_line" ]] ||
+    die "Swift Numerics checkout validation/rewrite is not strictly after root and before every isolated build"
 for required_stage4_tiny_durable_multileaf_authority_summary_value in \
     'The dependency-free Stage-4 tiny durable multileaf authority is pure and nonexecuting.' \
     'Only after this authority merges and its exact-main depth-one closure passes may one separately scoped exact-main mechanics successor' \
@@ -1398,6 +1568,24 @@ for required_stage5_tiny_repeated_metal_trajectory_authority_summary_value in \
         "$required_stage5_tiny_repeated_metal_trajectory_authority_summary_value" \
         "$workflow_path")" == "1" ]] ||
         die "workflow lost the exact Stage-5 authority summary: $required_stage5_tiny_repeated_metal_trajectory_authority_summary_value"
+done
+for required_stage5_swift_numerics_resolution_repair_summary_value in \
+    'Exact-main authority-closure run 31745220457 attempt 1 passed root 52, isolated checkpoint-compatibility 1, and isolated checkpoint-I/O 1' \
+    'one execution-pure package invocation failed before tests while SwiftPM cloned pinned public Swift Numerics at revision 0c0290ff6b24942dadb83a929ffaaa1481df04a2 because DNS could not resolve github.com; the command exited 1 and executed zero tests' \
+    'final root-identity-repair isolated invocation and all live invocations remained zero' \
+    'no current TLS failure, workflow-authored retry, Git-internal retry, Stage-5 launcher or receipt, Actions artifact, rerun, or Metal execution' \
+    'pure exact-five repair adds one declarative authority pair' \
+    'only after root 53 passes, validates the exact clean Swift Numerics checkout and its physical backing bare SwiftPM cache repository produced by the root build' \
+    'maps the exact public URL to the validated bare SwiftPM cache backing the exact root checkout for every later isolated build alongside the preserved MLX rewrite and file-protocol admission' \
+    'Secure fetch, timeout, jobs, both depth-one checkouts, the Metal-maintained-runtime-tokenizer live order, package manifests, locks, production source, and frozen launchers remain unchanged.' \
+    'closure counts are root 53, isolated 6, focused whole 59, and retained total 105' \
+    'future Stage-5 mechanics become pre-Stage-5 105 and total 106' \
+    'repairs dependency resolution only' \
+    'grants no current Stage-5 invocation or receipt, retry, rerun, artifact, durable I/O, cross-device claim, Stage 6, Native-300M allocation or training, trial, canary, product, publication, or downstream authority'; do
+    [[ "$(grep -Fc -- \
+        "$required_stage5_swift_numerics_resolution_repair_summary_value" \
+        "$workflow_path")" == "1" ]] ||
+        die "workflow lost the Stage-5 Swift Numerics resolution-repair summary: $required_stage5_swift_numerics_resolution_repair_summary_value"
 done
 [[ "$(grep -Fc -- \
         'Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderTrajectoryCheckpointV1.swift' \
@@ -2520,6 +2708,8 @@ readonly stage4_tiny_durable_multileaf_commit_fault_injection_execution_observat
 readonly stage4_tiny_durable_multileaf_commit_fault_injection_execution_observation_test="$prime_root/Tests/PrimeCoreTests/PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionExecutionObservationTests.swift"
 readonly stage5_tiny_repeated_metal_trajectory_determinism_assay_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayAuthority.swift"
 readonly stage5_tiny_repeated_metal_trajectory_determinism_assay_authority_test="$prime_root/Tests/PrimeCoreTests/PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayAuthorityTests.swift"
+readonly stage5_swift_numerics_resolution_repair_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayExactMainSwiftNumericsResolutionRepairAuthority.swift"
+readonly stage5_swift_numerics_resolution_repair_authority_test="$prime_root/Tests/PrimeCoreTests/PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayExactMainSwiftNumericsResolutionRepairAuthorityTests.swift"
 readonly decoder_training_source="$prime_root/Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderTraining.swift"
 readonly decoder_training_validation_root="$prime_root/Tests/PrimeNativeDecoderTrainingValidation"
 readonly decoder_training_validation_manifest="$decoder_training_validation_root/Package.swift"
@@ -2719,6 +2909,12 @@ readonly decoder_stage4_tiny_durable_multileaf_test="$decoder_training_validatio
 [[ -f "$stage5_tiny_repeated_metal_trajectory_determinism_assay_authority_test" \
     && ! -L "$stage5_tiny_repeated_metal_trajectory_determinism_assay_authority_test" ]] ||
     die "Stage-5 trajectory-determinism authority test is missing or linked"
+[[ -f "$stage5_swift_numerics_resolution_repair_authority_source" \
+    && ! -L "$stage5_swift_numerics_resolution_repair_authority_source" ]] ||
+    die "Stage-5 Swift Numerics resolution-repair authority is missing or linked"
+[[ -f "$stage5_swift_numerics_resolution_repair_authority_test" \
+    && ! -L "$stage5_swift_numerics_resolution_repair_authority_test" ]] ||
+    die "Stage-5 Swift Numerics resolution-repair authority test is missing or linked"
 [[ -f "$decoder_training_source" && ! -L "$decoder_training_source" ]] ||
     die "PrimeNativeDecoderTraining source is missing or linked"
 [[ -f "$decoder_training_validation_manifest" \
@@ -3619,6 +3815,8 @@ swiftc -frontend -parse "$stage4_tiny_durable_multileaf_commit_fault_injection_e
 swiftc -frontend -parse "$stage4_tiny_durable_multileaf_commit_fault_injection_execution_observation_test"
 swiftc -frontend -parse "$stage5_tiny_repeated_metal_trajectory_determinism_assay_authority_source"
 swiftc -frontend -parse "$stage5_tiny_repeated_metal_trajectory_determinism_assay_authority_test"
+swiftc -frontend -parse "$stage5_swift_numerics_resolution_repair_authority_source"
+swiftc -frontend -parse "$stage5_swift_numerics_resolution_repair_authority_test"
 swiftc -frontend -parse "$decoder_training_source"
 swiftc -frontend -parse "$decoder_training_validation_test"
 swiftc -frontend -parse "$decoder_stage3_tiny_cpu_resume_test"
@@ -8617,13 +8815,13 @@ for required_stage4_execution_observation_value in \
 done
 assert_metal_current_decoder_assertion_arc_identity \
     'Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' \
-    '100644' 'f63014cbf0dda276597126f650bb820daaf99d92' \
+    '100644' '3a70edb5ede19b858009324840e959c008c69ee2' \
     '546' \
-    '6dd4a53e8e6d6641c27547323db86eca07b1fc6265e5a57c362c3d4fe7432821'
+    'a90e7284812399cb0adace701e528124c4e0cb94dc76bc82693f09e62f7b9fee'
 [[ "$(wc -l < "$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift" | \
         awk '{print $1}')" == "13" \
     && "$(grep -Fxc -- \
-        '        "d83c414cf11ac5d4f91a18064efa69ae4ce32346d8b5eaba5d7bdbdb41d0bb8c"' \
+        '        "6c60fb76e5e81f82c21986aeae2f33342be59a0f403ee067fda066cf0234f0f7"' \
         "$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift")" == "1" ]] ||
     die "Stage-5 authority embedded provenance identity changed"
 for forbidden_stage4_execution_observation_capability in \
@@ -8840,6 +9038,192 @@ for forbidden_stage5_tiny_repeated_metal_trajectory_authority_capability in \
         "$stage5_tiny_repeated_metal_trajectory_determinism_assay_authority_source" ||
         die "Stage-5 trajectory-determinism authority gained capability: $forbidden_stage5_tiny_repeated_metal_trajectory_authority_capability"
 done
+
+assert_metal_current_decoder_assertion_arc_identity \
+    'Sources/PrimeCore/PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayExactMainSwiftNumericsResolutionRepairAuthority.swift' \
+    '100644' 'b66fabdd18edfa347a62982bc392a7a94b048da5' \
+    '44834' \
+    '81d576c4f43af56ba3b626339742a135a0c12c2ccfb7b23abf32a125daec9d39'
+assert_metal_current_decoder_assertion_arc_identity \
+    'Tests/PrimeCoreTests/PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayExactMainSwiftNumericsResolutionRepairAuthorityTests.swift' \
+    '100644' 'f516e1115ccea7973a541f5350437e599bbdadc2' \
+    '23310' \
+    'ac2bc1cb90ff9c1ea8a75478e90983f1b1f55bee0132c1031692cacb093cbb6f'
+[[ "$(awk '/^import / { print }' \
+        "$stage5_swift_numerics_resolution_repair_authority_source")" \
+        == 'import Foundation' \
+    && "$(wc -l < \
+        "$stage5_swift_numerics_resolution_repair_authority_source" | \
+        awk '{print $1}')" == "879" \
+    && "$(wc -l < \
+        "$stage5_swift_numerics_resolution_repair_authority_test" | \
+        awk '{print $1}')" == "518" \
+    && "$(awk '/^import / || /^@testable import / { print }' \
+        "$stage5_swift_numerics_resolution_repair_authority_test")" \
+        == $'import CoreFoundation\nimport Foundation\n@testable import PrimeCore\nimport XCTest' \
+    && "$(grep -Ec -- '^[[:space:]]+func test' \
+        "$stage5_swift_numerics_resolution_repair_authority_test")" == "1" \
+    && "$(grep -Fc -- \
+        'PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayExactMainSwiftNumericsResolutionRepairAuthorityTests:' \
+        "$stage5_swift_numerics_resolution_repair_authority_test")" == "1" \
+    && "$(grep -Fc -- \
+        'func testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling()' \
+        "$stage5_swift_numerics_resolution_repair_authority_test")" == "1" ]] ||
+    die "Stage-5 Swift Numerics resolution-repair authority sole-test surface changed"
+for required_stage5_swift_numerics_resolution_repair_authority_value in \
+    'public static let canonicalSHA256 =' \
+    '"a5a8e5300ea8413e738fddd4b8fed930dcc9983d5a29eea102862f9744b50fff"' \
+    '"1193a1f11a869f89b25706dbd270520dd61b37a8"' \
+    '"d92c838b7d9714ee6e1dc4d6ba03f23df094a3d0"' \
+    '"b198ba81f4c6958d70b56ea3a23f56f07fa90854"' \
+    '"2928711930fe7af8d8287702b966a25c440b10f8"' \
+    '"00c49e63315b2aacb439204e778f54bcf63c2fdf643282f3bd64e2b3b4094089"' \
+    '"71c69d89384c5c0878f43da309353093d159d43c"' \
+    '"367fc5c2759382f5980ceb59d25da27f945bfbff186f61b055bccca4411758ab"' \
+    '"42a2c60b7179f3f8c687b6c697513433a92eac30"' \
+    '"05f9a766860ea5c35b590b1d813a81eea0b42d1b0d941ee2b054509f0a3e7cdc"' \
+    'workflowRunID: 31_745_220_457' \
+    'workflowRunNumber: 101' \
+    'checkSuiteID: 86_124_999_845' \
+    'activeJobID: 94_598_042_972' \
+    'reviewedJobID: 94_598_786_638' \
+    'reviewedFailedStepIndex: 5' \
+    '"Compile and run the focused contracts without a credential"' \
+    'terminalConclusion: "failure"' \
+    'byteCount: 316_010' \
+    'lineFeedCount: 2_852' \
+    '"67066aa642f293cc08262d3c4e40111b92d161dad00e25fff3eba02e59a1227b"' \
+    'processExitCode: 1' \
+    'stepConclusion: "success"' \
+    'authenticatedDepthOneFetchCount: 1' \
+    'workflowAuthoredRetryCount: 0' \
+    'gitInternalRetryScheduledCount: 0' \
+    'tlsFailureCount: 0' \
+    'tlsVerificationBypassCount: 0' \
+    'customCAInstallationCount: 0' \
+    'rootExecutedTestCount: 52' \
+    'stage5AuthorityTestExecutedCount: 1' \
+    'expectedIsolatedTestCount: 6' \
+    'completedIsolatedTestCount: 2' \
+    'observedWholeTestCount: 54' \
+    'totalPublicCloneAttemptCount: 1' \
+    'totalDNSFailureCount: 1' \
+    '"public_swift_numerics_clone_dns_resolution_failure"' \
+    '"fatal: unable to access '\''https://github.com/apple/swift-numerics/'\'': Could not resolve host: github.com"' \
+    'publicDependencyTLSFailureCount: 0' \
+    'publicDependencyTLSVerificationBypassCount: 0' \
+    'metalLauncherInvocationCount: 0' \
+    'maintainedRuntimeLauncherInvocationCount: 0' \
+    'tokenizerLauncherInvocationCount: 0' \
+    'stage5LauncherInvocationCount: 0' \
+    'stage5ReceiptCount: 0' \
+    '"after_successful_root_53_tests_before_first_of_four_isolated_swift_test_invocations"' \
+    '"$RUNNER_TEMP/prime-active-root-build/checkouts/swift-numerics"' \
+    '"$RUNNER_TEMP/prime-active-root-build/repositories/swift-numerics-d936ec6c"' \
+    'sourceCheckoutRepositoryRootExpectedPath:' \
+    'sourceCheckoutAbsoluteGitDirectoryExpectedPath:' \
+    'sourceCheckoutIsBare: false' \
+    'sourceCheckoutExactRemoteNames: ["origin"]' \
+    'sourceCheckoutOriginURLValueCount: 1' \
+    'sourceCheckoutExpectedOrigin:' \
+    'sourceCheckoutRepositoryRootValidated: true' \
+    'sourceCheckoutOriginValidated: true' \
+    'sourceCheckoutValidatedAfterSuccessfulRootTests: true' \
+    'sourceCheckoutOriginEqualsCacheRepositoryPathRequired: true' \
+    'cacheRepositoryMustExistAsPhysicalDirectory: true' \
+    'cacheRepositorySymlinkAuthorized: false' \
+    'cacheRepositoryAbsoluteGitDirectoryExpectedPath:' \
+    'cacheRepositoryIsBare: true' \
+    'cacheRepositoryExactRemoteNames: ["origin"]' \
+    'cacheRepositoryOriginURLValueCount: 1' \
+    'cacheRepositoryExpectedOrigin:' \
+    'cacheRepositoryOriginValidated: true' \
+    'cacheRepositoryContainsExactRevision: true' \
+    'cacheRepositoryExactRevisionObjectType: "commit"' \
+    'cacheRepositoryPeeledCommitEqualsExactRevision: true' \
+    'cacheRepositoryPinnedVersionTag: "refs/tags/1.1.1"' \
+    'cacheRepositoryPinnedVersionTagPeeledCommitEqualsExactRevision:' \
+    'cacheRepositoryHEADMustEqualExactRevision: false' \
+    'cacheRepositoryWorkingTreeCleanStatusApplicable: false' \
+    'mappingActivatedBeforeFirstIsolatedBuild: true' \
+    'mappedIsolatedSwiftTestInvocationCount: 4' \
+    'localMappingSource: "validated_bare_swiftpm_cache_repository"' \
+    '"url.file://${numerics_cache}/.insteadOf=https://github.com/apple/swift-numerics"' \
+    'gitConfigCountAfterRepair: 3' \
+    '"url.file://${mlx_bare}/.insteadOf"' \
+    '"url.file://${numerics_cache}/.insteadOf"' \
+    '"protocol.file.allow"' \
+    '"https://github.com/Ergentics/ergentics-mlx-swift"' \
+    '"always"' \
+    'allLaterIsolatedBuildsMapped: true' \
+    'mappingRemovedAfterFinalIsolatedBuild: true' \
+    'publicSwiftNumericsFetchAfterMappingAuthorized: false' \
+    'rootPublicSwiftNumericsResolutionPreserved: true' \
+    'packageManifestMutationAuthorized: false' \
+    'packageResolvedMutationAuthorized: false' \
+    'packageResolvedBytePreservationRequired: true' \
+    'securePrivateFetchMutationAuthorized: false' \
+    'workflowJobTopologyMutationAuthorized: false' \
+    'workflowTimeoutMutationAuthorized: false' \
+    'activeCheckoutDepth: 1' \
+    'reviewedCheckoutDepth: 1' \
+    'activeJobTimeoutMinutes: 45' \
+    'reviewedJobTimeoutMinutes: 60' \
+    'exactAuthorityClosurePathCount: 5' \
+    'authorityRootTestCount: 53' \
+    'isolatedTestCount: 6' \
+    'authorityFocusedWholeTestCount: 59' \
+    'metalTestCount: 44' \
+    'maintainedRuntimeTestCount: 1' \
+    'maintainedRuntimeReceiptCount: 1' \
+    'tokenizerTestCount: 1' \
+    'tokenizerReceiptCount: 1' \
+    'preStage5TestCount: 105' \
+    'authorityClosureLiveOrder: [' \
+    'exactFutureMechanicsPathCount: 6' \
+    'futureStage5DirectXCTestCount: 1' \
+    'futureMechanicsTotalTestCount: 106' \
+    'pureAuthorityNoRepairExecutionEvidence: true' \
+    'failedRunIsAuthorityClosureFailure: true' \
+    'failedRunIsStage5MechanicsAttempt: false' \
+    'failedRunConsumesStage5MechanicsOpportunity: false' \
+    'oneExactMainRepairClosureExecutionAuthorized: true' \
+    'stage5MechanicsOpportunityPreservedAfterGreenRepairClosure: true' \
+    'additionalExecutionOrRerunAuthorized: false' \
+    'genericNetworkRetryAuthorized: false' \
+    'tlsOrCARepairAuthorized: false' \
+    'stage5MechanicsExecuted: false' \
+    'stage5ResultEstablished: false' \
+    'artifactUploadAuthorized: false' \
+    'durableCheckpointIOAuthorized: false' \
+    'crossDeviceClaimAuthorized: false' \
+    'stage6Authorized: false' \
+    'native300MAllocationAuthorized: false' \
+    'native300MTrainingAuthorized: false' \
+    'generalTrainingAuthorized: false' \
+    'candidateAdmissionGranted: false' \
+    'publicationAuthorized: false' \
+    'AUTHORIZED_stage5_authority_exact_main_swift_numerics_dns_resolution_repair_reuse_validated_physical_backing_bare_swiftpm_cache_repository_for_exact_validated_root_checkout_across_four_isolated_builds_one_repair_closure_then_original_mechanics_opportunity_no_retry_tls_secure_fetch_scope_mechanics_stage6_native300m_training_quality_admission_retention_or_downstream_authority'; do
+    grep -Fq -- "$required_stage5_swift_numerics_resolution_repair_authority_value" \
+        "$stage5_swift_numerics_resolution_repair_authority_source" ||
+        die "Stage-5 Swift Numerics resolution-repair authority lost: $required_stage5_swift_numerics_resolution_repair_authority_value"
+done
+for forbidden_stage5_swift_numerics_resolution_repair_authority_capability in \
+    'import CoreGraphics' 'import Metal' 'import MLX' 'import MLXNN' \
+    'import MLXOptimizers' 'FileManager' 'FileHandle' 'URLSession' 'Process(' \
+    'posix_spawn' 'execve('; do
+    ! grep -Fq -- \
+        "$forbidden_stage5_swift_numerics_resolution_repair_authority_capability" \
+        "$stage5_swift_numerics_resolution_repair_authority_source" ||
+        die "Stage-5 Swift Numerics resolution-repair authority gained capability: $forbidden_stage5_swift_numerics_resolution_repair_authority_capability"
+done
+[[ "$(grep -Fc -- '"metal"' \
+        "$stage5_swift_numerics_resolution_repair_authority_source")" -ge "1" \
+    && "$(grep -Fc -- '"maintained_runtime"' \
+        "$stage5_swift_numerics_resolution_repair_authority_source")" -ge "1" \
+    && "$(grep -Fc -- '"tokenizer"' \
+        "$stage5_swift_numerics_resolution_repair_authority_source")" -ge "1" ]] ||
+    die "Stage-5 Swift Numerics repair lost the exact Metal-runtime-tokenizer live order"
 
 [[ "$(awk '/^import / { print }' "$decoder_authority_test")" \
         == $'import CryptoKit\nimport Foundation\nimport XCTest\nimport PrimeCore' \
