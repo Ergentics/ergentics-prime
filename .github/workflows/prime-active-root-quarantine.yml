@@ -117,6 +117,7 @@ jobs:
             Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV2ContainerIOExecutionEvidence.swift \
             Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV2ContainerIORootIdentityRepairExecutionEvidence.swift \
             Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV2ContainerIORootIdentityRepairExecutionObservation.swift \
+            Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderTrajectoryCheckpointV1.swift \
             Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCompatibilityIdentityV2.swift \
             Sources/PrimeNativeDecoderRuntime/PrimeNativeDecoderRuntime.swift \
             Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderTraining.swift \
@@ -172,6 +173,7 @@ jobs:
             Tests/PrimeCoreTests/PrimeNativeResolvedContractAdapterSourceContractTests.swift \
             Tests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTrainingTests.swift \
             Tests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeTests.swift \
+            Tests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionTests.swift \
             Tests/PrimeCoreTests/PrimeSwiftSourceProvenanceTests.swift; do
             xcrun swiftc -frontend -parse "$source_file"
           done
@@ -244,6 +246,7 @@ jobs:
             echo 'Exact-main run 31679144989 attempt 1 passed root 47, Metal 44, maintained runtime 1, tokenizer 1, and exactly one Stage-3 tiny-CPU explicit-RNG/cursor-resume XCTest with one canonical receipt. The typed in-memory snapshot/export/fresh-restore mechanics are established only for that bounded witness; loaded-metallib identity remains inference-only, no artifact was retained or uploaded, the one-shot is consumed and retired here, and checkpoint I/O, durable Stage 4, Native-300M training, trial, canary, product, publication, and rerun authority remain false.'
             echo 'The dependency-free Stage-4 tiny durable multileaf authority is pure and nonexecuting. Only after this authority merges and its exact-main depth-one closure passes may one separately scoped exact-main mechanics successor serialize the frozen Stage-3 tiny snapshot into ephemeral weights-fixture, optimizer-moment, and canonical control leaves, publish one canonical commit leaf last, and fault-inject every bounded precommit cut. The tiny weights mechanics fixture is not the frozen Native-300M V2 checkpoint and neither uses nor widens that public codec. This authority performs no filesystem or checkpoint I/O, retains or uploads no artifact, invokes no Stage-4 launcher, and grants no retry, Stage 5, Metal-determinism, Native-300M, admission, training, trial, canary, product, or publication authority.'
             echo 'Exact-main run 31712088411 attempt 1 closed the pure Stage-4 authority after root 49, Metal 44, maintained runtime 1, and tokenizer 1 passed with the Stage-4 launcher absent. Two successful canonical package resolutions proved that adding only the internal Training-to-Checkpoint target edge leaves Package.resolved byte-identical, so the original exact-nine mechanics scope is impossible without fabricated lock churn and no Stage-4 attempt was consumed. This pure repair substitutes exactly the truthful eight-path mechanics scope, freezes the lock unchanged, and permits one later mechanics successor only after this repair merges and its root-50 exact-main closure passes; it performs no mechanics, filesystem, checkpoint, or launcher work and grants no rerun, retention, admission, Stage 5, Native-300M, product, publication, or downstream authority.'
+            echo 'Exact-main repair closure run 31720005455 attempt 1 passed root 50, Metal 44, maintained runtime 1, and tokenizer 1 with the Stage-4 launcher and receipt absent, zero artifacts, and no rerun. This direct exact-eight successor consumes the sole Stage-4 mechanics opportunity for one tiny ephemeral four-leaf publish/load and seven-cut fault-injection witness; Package.resolved remains byte-identical, no artifact may be retained or uploaded, and checkpoint admission, public V2 widening, Metal determinism, Stage 5, Native-300M, training, trial, canary, product, publication, rerun, and downstream authority remain false.'
             echo 'The locally declared origin is not network-authenticated, and ignored workspace bytes are not observed by this slice.'
             echo 'Beyond that one bounded random-initialized Native-300M witness and the separately bounded tiny CPU Stage-2 mechanics authority, no Prime proposal, candidate selection, trial authorization, decision receipt, runtime/product/canary decoder activation, Native-300M training or additional execution, publication, promotion, Driver V2, or PMHNP authority is granted.'
           } >> "$GITHUB_STEP_SUMMARY"
@@ -281,7 +284,7 @@ jobs:
           export GIT_CONFIG_COUNT=1
           export GIT_CONFIG_KEY_0="url.https://x-access-token:${CHECKOUT_TOKEN}@github.com/.insteadOf"
           export GIT_CONFIG_VALUE_0="https://github.com/"
-          git -C ergentics-prime fetch --depth=1 --no-tags --no-write-fetch-head origin "$EXACT_REVISION"
+          git -C ergentics-prime fetch --depth=2 --no-tags --no-write-fetch-head origin "$EXACT_REVISION"
           git -C ergentics-prime checkout --detach "$EXACT_REVISION"
           unset GIT_CONFIG_COUNT GIT_CONFIG_KEY_0 GIT_CONFIG_VALUE_0
           [[ "$(git -C ergentics-prime rev-parse HEAD)" == "$EXACT_REVISION" ]]
@@ -489,3 +492,4 @@ jobs:
           bash .github/scripts/prime-ci-native-decoder-metal.sh
           bash .github/scripts/prime-ci-native-decoder-runtime-closure.sh
           bash .github/scripts/prime-ci-native-decoder-tokenizer-compatibility.sh
+          bash .github/scripts/prime-ci-native-decoder-stage4-tiny-durable-multileaf.sh

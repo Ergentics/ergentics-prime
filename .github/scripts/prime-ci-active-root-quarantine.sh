@@ -18,6 +18,7 @@ readonly decoder_runtime_closure_gate_path="$prime_root/.github/scripts/prime-ci
 readonly decoder_tokenizer_compatibility_gate_path="$prime_root/.github/scripts/prime-ci-native-decoder-tokenizer-compatibility.sh"
 readonly decoder_stage2_metallib_bootstrap_repair_gate_path="$prime_root/.github/scripts/prime-ci-native-decoder-stage2-metallib-bootstrap-repair.sh"
 readonly decoder_stage3_tiny_cpu_resume_gate_path="$prime_root/.github/scripts/prime-ci-native-decoder-stage3-tiny-cpu-resume.sh"
+readonly decoder_stage4_tiny_durable_multileaf_gate_path="$prime_root/.github/scripts/prime-ci-native-decoder-stage4-tiny-durable-multileaf.sh"
 readonly decoder_checkpoint_v2_io_execution_gate_path="$prime_root/.github/scripts/prime-ci-native-decoder-checkpoint-v2-io.sh"
 readonly decoder_checkpoint_v2_io_root_identity_repair_gate_path="$prime_root/.github/scripts/prime-ci-native-decoder-checkpoint-v2-io-root-identity-repair.sh"
 
@@ -301,14 +302,29 @@ for mirror_relative_path in "${mirror_paths[@]}"; do
 done
 
 assert_active_lock() {
+    [[ "$#" == "3" || "$#" == "4" ]] ||
+        die "active lock assertion received an unexpected argument count"
     local lock_relative_path="$1"
     local manifest_relative_path="$2"
     local expected_revision="$3"
+    local frozen_origin_hash="${4:-}"
     local expected_origin_hash
-    expected_origin_hash="$(
-        shasum -a 256 "$prime_root/$manifest_relative_path" |
-            awk '{print $1}'
-    )"
+    if [[ -n "$frozen_origin_hash" ]]; then
+        [[ "$#" == "4" &&
+            "$lock_relative_path" == "Package.resolved" &&
+            "$manifest_relative_path" == "Package.swift" &&
+            "$expected_revision" == "$root_mlx_revision" &&
+            "$frozen_origin_hash" == "bc889436fb167cc206aa87cb079da4888a7fe95e517eb7cf63cbf44b35dc27c2" ]] ||
+            die "active lock origin-hash override is not the frozen root-only exception"
+        expected_origin_hash="$frozen_origin_hash"
+    else
+        [[ "$#" == "3" ]] ||
+            die "active lock origin-hash override must be nonempty"
+        expected_origin_hash="$(
+            shasum -a 256 "$prime_root/$manifest_relative_path" |
+                awk '{print $1}'
+        )"
+    fi
 
     jq -e \
         --arg expected_origin "$expected_mlx_origin" \
@@ -344,7 +360,8 @@ assert_active_lock() {
 assert_active_lock \
     "Package.resolved" \
     "Package.swift" \
-    "$root_mlx_revision"
+    "$root_mlx_revision" \
+    "bc889436fb167cc206aa87cb079da4888a7fe95e517eb7cf63cbf44b35dc27c2"
 assert_active_lock \
     "Tests/PrimeNativeNeuralGateMLXValidation/Package.resolved" \
     "Tests/PrimeNativeNeuralGateMLXValidation/Package.swift" \
@@ -468,11 +485,14 @@ grep -Fq -- 'runs-on: macos-15' "$workflow_path" ||
     die "hosted quarantine workflow runner or timeout boundary changed"
 [[ "$(grep -Fxc -- \
     '          git -C ergentics-prime fetch --depth=1 --no-tags --no-write-fetch-head origin "$EXACT_REVISION"' \
-    "$workflow_path")" == "2" \
+    "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        '          git -C ergentics-prime fetch --depth=2 --no-tags --no-write-fetch-head origin "$EXACT_REVISION"' \
+        "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
         "    if: github.event_name == 'push' && github.ref == 'refs/heads/main'" \
         "$workflow_path")" == "1" ]] ||
-    die "hosted quarantine workflow depth-one boundary changed"
+    die "hosted quarantine workflow active-depth-one/reviewed-depth-two boundary changed"
 [[ -f "$decoder_metal_gate_path" && ! -L "$decoder_metal_gate_path" ]] ||
     die "Prime native decoder Metal gate is missing or linked"
 [[ "$(git -C "$prime_root" ls-files -- '.github/scripts/prime-ci-native-decoder-metal.sh')" \
@@ -779,6 +799,84 @@ for forbidden_stage3_launcher_value in \
         "$decoder_stage3_tiny_cpu_resume_gate_path" ||
         die "Stage-3 launcher gained forbidden behavior: $forbidden_stage3_launcher_value"
 done
+[[ -f "$decoder_stage4_tiny_durable_multileaf_gate_path" \
+    && ! -L "$decoder_stage4_tiny_durable_multileaf_gate_path" ]] ||
+    die "Stage-4 tiny durable multileaf launcher is missing or linked"
+[[ "$(git -C "$prime_root" ls-files -s -- \
+        '.github/scripts/prime-ci-native-decoder-stage4-tiny-durable-multileaf.sh' |
+        awk '{print $1}')" == "100755" ]] ||
+    die "Stage-4 tiny durable multileaf launcher mode changed"
+[[ "$(git -C "$prime_root" hash-object -- \
+        '.github/scripts/prime-ci-native-decoder-stage4-tiny-durable-multileaf.sh')" \
+        == "4184e23941460fe397e284e094d782f1265d19d9" \
+    && "$(stat -f %z "$decoder_stage4_tiny_durable_multileaf_gate_path")" \
+        == "31829" \
+    && "$(wc -l < "$decoder_stage4_tiny_durable_multileaf_gate_path" |
+        tr -d '[:space:]')" == "519" \
+    && "$(shasum -a 256 "$decoder_stage4_tiny_durable_multileaf_gate_path" |
+        awk '{print $1}')" \
+        == "e3eb8a66340c924bbb579023eee04eaee1242a8a682f17ae668898ee8d36c6a2" ]] ||
+    die "Stage-4 tiny durable multileaf launcher identity changed"
+bash -n "$decoder_stage4_tiny_durable_multileaf_gate_path" ||
+    die "Stage-4 tiny durable multileaf launcher is not valid Bash"
+for required_stage4_launcher_value in \
+    'readonly base_revision="f15f22b580aebf924c1dfc4a5636263f962a659c"' \
+    'readonly base_tree="01cd4898cb9eb77d8aa19f61d543ae01c2001b6c"' \
+    'readonly repair_closure_workflow_run_id="31720005455"' \
+    'readonly repair_closure_workflow_run_number="95"' \
+    'readonly repair_closure_check_suite_id="86052386262"' \
+    'readonly authority_canonical_sha256="0b167685f0cc10cbf5d705d6cf67b72b54555dfa52b9f4aaebd00613e057b031"' \
+    'readonly repair_authority_canonical_sha256="6a6dfc7b30319f9ccc1d17c2f08282c266962cd500d47696cbb42b4b1b0ff826"' \
+    'A\t.github/scripts/prime-ci-native-decoder-stage4-tiny-durable-multileaf.sh' \
+    'A\tSources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderTrajectoryCheckpointV1.swift' \
+    'A\tTests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionTests.swift' \
+    'M\t.github/scripts/prime-ci-active-root-quarantine.sh' \
+    'M\t.github/workflows/prime-active-root-quarantine.yml' \
+    'M\tPackage.swift' \
+    'M\tSources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' \
+    'M\tSources/PrimeNativeDecoderTraining/PrimeNativeDecoderTraining.swift' \
+    'fail "Stage-4 direct-successor scope is not the exact eight paths"' \
+    'grep -Fq '\''Executed 50 tests, with 0 failures'\'' "$active_root_log"' \
+    'focused_root_test_count:50,stage4_launcher_invocation_count:0' \
+    'stage4_receipt_count:0,artifact_count:0,rerun_count:0' \
+    'focused_root_test_count:50,focused_isolated_test_count:6' \
+    'focused_whole_test_count:56,pre_stage4_total_test_count:102' \
+    'total_test_count_after_stage4:103,published_file_count:4' \
+    'injected_failure_count:7' \
+    'readonly embedded_source_identity_declaration_count="$(' \
+    'fail "embedded Prime provenance source identity format changed"' \
+    'embedded_source_identity_sha256:$embedded_source_identity' \
+    'readonly test_method="testTinyDurableMultileafCommitIsExactAndFailClosed"' \
+    'TMPDIR="$runner_temp" swift build ' \
+    'TMPDIR="$runner_temp" xcrun xctest ' \
+    'PRIME_NATIVE_DECODER_STAGE4_TINY_DURABLE_MULTILEAF_RECEIPT=' \
+    'exact_stage3_snapshot_round_trip_established:true' \
+    'artifact_upload_invoked:false' \
+    'retained_artifact_established:false' \
+    'retained_artifact_authorized:false,artifact_upload_authorized:false' \
+    'stage5_authorized:false' \
+    'additional_execution_or_rerun_authorized:false'; do
+    grep -Fq -- "$required_stage4_launcher_value" \
+        "$decoder_stage4_tiny_durable_multileaf_gate_path" ||
+        die "Stage-4 launcher lost: $required_stage4_launcher_value"
+done
+[[ "$(grep -Fc -- '__STAGE4_SCOPE_REPAIR_EXACT_MAIN_' \
+        "$decoder_stage4_tiny_durable_multileaf_gate_path")" == "0" ]] ||
+    die "Stage-4 launcher retains an unresolved repair-closure placeholder"
+[[ "$(grep -Ec -- '^[[:space:]]*TMPDIR=.*swift build ' \
+        "$decoder_stage4_tiny_durable_multileaf_gate_path")" == "1" \
+    && "$(grep -Ec -- '^[[:space:]]*cp -X ' \
+        "$decoder_stage4_tiny_durable_multileaf_gate_path")" == "2" \
+    && "$(grep -Ec -- '^[[:space:]]*TMPDIR=.*xcrun xctest ' \
+        "$decoder_stage4_tiny_durable_multileaf_gate_path")" == "1" ]] ||
+    die "Stage-4 launcher command cardinality changed"
+for forbidden_stage4_launcher_value in \
+    'swift test' 'xcodebuild' 'git fetch' 'git clone' 'git submodule update' \
+    'curl ' 'wget ' 'actions/upload-artifact' 'Package.resolved\nM'; do
+    ! grep -Fq -- "$forbidden_stage4_launcher_value" \
+        "$decoder_stage4_tiny_durable_multileaf_gate_path" ||
+        die "Stage-4 launcher gained forbidden behavior: $forbidden_stage4_launcher_value"
+done
 [[ -f "$decoder_checkpoint_v2_io_execution_gate_path" \
     && ! -L "$decoder_checkpoint_v2_io_execution_gate_path" ]] ||
     die "Prime native decoder checkpoint V2 I/O execution gate is missing or linked"
@@ -817,17 +915,23 @@ readonly runtime_closure_workflow_line="$(grep -nFx -- \
 readonly tokenizer_compatibility_workflow_line="$(grep -nFx -- \
     '          bash .github/scripts/prime-ci-native-decoder-tokenizer-compatibility.sh' \
     "$workflow_path" | awk -F: '{print $1}')"
+readonly stage4_tiny_durable_multileaf_workflow_line="$(grep -nFx -- \
+    '          bash .github/scripts/prime-ci-native-decoder-stage4-tiny-durable-multileaf.sh' \
+    "$workflow_path" | awk -F: '{print $1}')"
 [[ "$frozen_metal_workflow_line" =~ ^[1-9][0-9]*$ \
     && "$runtime_closure_workflow_line" =~ ^[1-9][0-9]*$ \
     && "$tokenizer_compatibility_workflow_line" =~ ^[1-9][0-9]*$ \
+    && "$stage4_tiny_durable_multileaf_workflow_line" =~ ^[1-9][0-9]*$ \
     && "$runtime_closure_workflow_line" \
         -eq $((frozen_metal_workflow_line + 1)) \
     && "$tokenizer_compatibility_workflow_line" \
-        -eq $((runtime_closure_workflow_line + 1)) ]] ||
-    die "trusted-main workflow does not retain exactly the Metal, runtime, tokenizer order"
+        -eq $((runtime_closure_workflow_line + 1)) \
+    && "$stage4_tiny_durable_multileaf_workflow_line" \
+        -eq $((tokenizer_compatibility_workflow_line + 1)) ]] ||
+    die "trusted-main workflow does not retain exactly the Metal, runtime, tokenizer, Stage-4 order"
 [[ "$(grep -Fc -- \
     '          bash .github/scripts/prime-ci-native-decoder-' \
-    "$workflow_path")" == "3" \
+    "$workflow_path")" == "4" \
     && "$(grep -Fxc -- \
         '          bash .github/scripts/prime-ci-native-decoder-metal.sh' \
         "$workflow_path")" == "1" \
@@ -839,8 +943,8 @@ readonly tokenizer_compatibility_workflow_line="$(grep -nFx -- \
         "$workflow_path")" == "0" \
     && "$(grep -Fxc -- \
         '          bash .github/scripts/prime-ci-native-decoder-stage4-tiny-durable-multileaf.sh' \
-        "$workflow_path")" == "0" ]] ||
-    die "trusted-main workflow lost the exact three-launcher sequence or retained a retired one-shot"
+        "$workflow_path")" == "1" ]] ||
+    die "trusted-main workflow lost the exact four-launcher Stage-4 sequence or retained a retired one-shot"
 readonly live_decoder_workflow_block="$(awk '
     /^      - name: Run the Prime-owned decoder on live Metal$/ { inside = 1 }
     inside { print }
@@ -850,9 +954,10 @@ readonly expected_live_decoder_workflow_block='      - name: Run the Prime-owned
         run: |
           bash .github/scripts/prime-ci-native-decoder-metal.sh
           bash .github/scripts/prime-ci-native-decoder-runtime-closure.sh
-          bash .github/scripts/prime-ci-native-decoder-tokenizer-compatibility.sh'
+          bash .github/scripts/prime-ci-native-decoder-tokenizer-compatibility.sh
+          bash .github/scripts/prime-ci-native-decoder-stage4-tiny-durable-multileaf.sh'
 [[ "$live_decoder_workflow_block" == "$expected_live_decoder_workflow_block" ]] ||
-    die "trusted-main exact contiguous Metal, runtime, and tokenizer block changed"
+    die "trusted-main exact contiguous Metal, runtime, tokenizer, and Stage-4 block changed"
 ! grep -Fq -- \
     '          bash .github/scripts/prime-ci-native-decoder-checkpoint-v2-io.sh' \
     "$workflow_path" ||
@@ -1219,6 +1324,24 @@ for required_stage4_package_resolved_scope_repair_summary_value in \
         "$workflow_path")" == "1" ]] ||
         die "workflow lost the exact Stage-4 Package.resolved scope repair: $required_stage4_package_resolved_scope_repair_summary_value"
 done
+for required_stage4_mechanics_summary_value in \
+    'Exact-main repair closure run 31720005455 attempt 1 passed root 50, Metal 44, maintained runtime 1, and tokenizer 1 with the Stage-4 launcher and receipt absent, zero artifacts, and no rerun.' \
+    'This direct exact-eight successor consumes the sole Stage-4 mechanics opportunity' \
+    'one tiny ephemeral four-leaf publish/load and seven-cut fault-injection witness' \
+    'Package.resolved remains byte-identical' \
+    'no artifact may be retained or uploaded' \
+    'checkpoint admission, public V2 widening, Metal determinism, Stage 5, Native-300M, training, trial, canary, product, publication, rerun, and downstream authority remain false'; do
+    [[ "$(grep -Fc -- "$required_stage4_mechanics_summary_value" \
+        "$workflow_path")" == "1" ]] ||
+        die "workflow lost the exact Stage-4 mechanics ceiling: $required_stage4_mechanics_summary_value"
+done
+[[ "$(grep -Fc -- \
+        'Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderTrajectoryCheckpointV1.swift' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        'Tests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionTests.swift' \
+        "$workflow_path")" == "1" ]] ||
+    die "workflow does not parse exactly the Stage-4 checkpoint and mechanics test"
 for required_stage2_metallib_bootstrap_repair_failure_summary_value in \
     'Exact-main workflow run 31544702133 attempt 1' \
     'passed secure fetch, root 39, Metal 44, maintained runtime 1, and tokenizer 1' \
@@ -1791,6 +1914,7 @@ jq -e \
           and ([.dependencies[] | (.byName[0] // .product[0])] == [
               "PrimeCore",
               "PrimeNativeDecoder",
+              "PrimeNativeDecoderCheckpoint",
               "MLX",
               "MLXNN",
               "MLXOptimizers"
@@ -2245,6 +2369,7 @@ readonly decoder_checkpoint_v2_io_execution_evidence_source="$prime_root/Sources
 readonly decoder_checkpoint_v2_io_root_identity_repair_execution_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderCheckpointV2ContainerIORootIdentityRepairExecutionAuthority.swift"
 readonly decoder_checkpoint_v2_io_root_identity_repair_execution_evidence_source="$prime_root/Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV2ContainerIORootIdentityRepairExecutionEvidence.swift"
 readonly decoder_checkpoint_v2_io_root_identity_repair_execution_observation_source="$prime_root/Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV2ContainerIORootIdentityRepairExecutionObservation.swift"
+readonly decoder_trajectory_checkpoint_source="$prime_root/Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderTrajectoryCheckpointV1.swift"
 readonly decoder_trajectory_exact_resume_design_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderTrajectoryExactResumeDesignAuthority.swift"
 readonly decoder_trajectory_exact_resume_design_authority_test="$prime_root/Tests/PrimeCoreTests/PrimeNativeDecoderTrajectoryExactResumeDesignAuthorityTests.swift"
 readonly decoder_trajectory_design_timeout_observation_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderTrajectoryDesignReviewedMainTimeoutObservation.swift"
@@ -2333,12 +2458,13 @@ readonly decoder_training_validation_manifest="$decoder_training_validation_root
 readonly decoder_training_validation_lock="$decoder_training_validation_root/Package.resolved"
 readonly decoder_training_validation_test="$decoder_training_validation_root/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTrainingTests.swift"
 readonly decoder_stage3_tiny_cpu_resume_test="$decoder_training_validation_root/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeTests.swift"
+readonly decoder_stage4_tiny_durable_multileaf_test="$decoder_training_validation_root/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionTests.swift"
 
 [[ "$(git -C "$prime_root" ls-files -- 'Sources/PrimeNativeDecoder')" \
     == "Sources/PrimeNativeDecoder/PrimeNativeGQADecoder.swift" ]] ||
     die "PrimeNativeDecoder production source inventory changed"
 [[ "$(git -C "$prime_root" ls-files -- 'Sources/PrimeNativeDecoderCheckpoint')" \
-    == $'Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV1.swift\nSources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV2.swift\nSources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV2ContainerIOExecutionEvidence.swift\nSources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV2ContainerIORootIdentityRepairExecutionEvidence.swift\nSources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV2ContainerIORootIdentityRepairExecutionObservation.swift\nSources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCompatibilityIdentityV2.swift' ]] ||
+    == $'Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV1.swift\nSources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV2.swift\nSources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV2ContainerIOExecutionEvidence.swift\nSources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV2ContainerIORootIdentityRepairExecutionEvidence.swift\nSources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCheckpointV2ContainerIORootIdentityRepairExecutionObservation.swift\nSources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderCompatibilityIdentityV2.swift\nSources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderTrajectoryCheckpointV1.swift' ]] ||
     die "PrimeNativeDecoderCheckpoint production source inventory changed"
 [[ "$(git -C "$prime_root" ls-files -- 'Sources/PrimeNativeDecoderRuntime')" \
     == 'Sources/PrimeNativeDecoderRuntime/PrimeNativeDecoderRuntime.swift' ]] ||
@@ -2375,8 +2501,8 @@ readonly decoder_stage3_tiny_cpu_resume_test="$decoder_training_validation_root/
     die "PrimeNativeDecoder tokenizer-compatibility validation inventory changed"
 [[ "$(git -C "$prime_root" ls-files -- \
     'Tests/PrimeNativeDecoderTrainingValidation')" \
-    == $'Tests/PrimeNativeDecoderTrainingValidation/Package.resolved\nTests/PrimeNativeDecoderTrainingValidation/Package.swift\nTests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeTests.swift\nTests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTrainingTests.swift' ]] ||
-    die "PrimeNativeDecoder Stage-3 validation inventory changed"
+    == $'Tests/PrimeNativeDecoderTrainingValidation/Package.resolved\nTests/PrimeNativeDecoderTrainingValidation/Package.swift\nTests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeTests.swift\nTests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionTests.swift\nTests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTrainingTests.swift' ]] ||
+    die "PrimeNativeDecoder Stage-4 validation inventory changed"
 [[ ! -e "$prime_root/Tests/PrimeNativeDecoderValidation/.swiftpm" \
     && ! -L "$prime_root/Tests/PrimeNativeDecoderValidation/.swiftpm" ]] ||
     die "PrimeNativeDecoder validation must use the supplied isolated config path"
@@ -2522,8 +2648,10 @@ readonly decoder_stage3_tiny_cpu_resume_test="$decoder_training_validation_root/
     && -f "$decoder_training_validation_test" \
     && ! -L "$decoder_training_validation_test" \
     && -f "$decoder_stage3_tiny_cpu_resume_test" \
-    && ! -L "$decoder_stage3_tiny_cpu_resume_test" ]] ||
-    die "PrimeNativeDecoder Stage-2 validation source set is missing or linked"
+    && ! -L "$decoder_stage3_tiny_cpu_resume_test" \
+    && -f "$decoder_stage4_tiny_durable_multileaf_test" \
+    && ! -L "$decoder_stage4_tiny_durable_multileaf_test" ]] ||
+    die "PrimeNativeDecoder Stage-4 validation source set is missing or linked"
 [[ -f "$decoder_checkpoint_source" && ! -L "$decoder_checkpoint_source" ]] ||
     die "PrimeNativeDecoderCheckpoint source is missing or linked"
 [[ -f "$decoder_checkpoint_v2_source" \
@@ -2559,6 +2687,9 @@ readonly decoder_stage3_tiny_cpu_resume_test="$decoder_training_validation_root/
 [[ -f "$decoder_checkpoint_v2_io_root_identity_repair_execution_observation_source" \
     && ! -L "$decoder_checkpoint_v2_io_root_identity_repair_execution_observation_source" ]] ||
     die "PrimeNativeDecoderCheckpoint V2 I/O root-identity repair observation is missing or linked"
+[[ -f "$decoder_trajectory_checkpoint_source" \
+    && ! -L "$decoder_trajectory_checkpoint_source" ]] ||
+    die "PrimeNativeDecoder trajectory checkpoint source is missing or linked"
 [[ -f "$decoder_trajectory_exact_resume_design_authority_source" \
     && ! -L "$decoder_trajectory_exact_resume_design_authority_source" ]] ||
     die "PrimeNativeDecoder trajectory exact-resume design authority is missing or linked"
@@ -3344,6 +3475,7 @@ swiftc -frontend -parse "$decoder_checkpoint_v2_io_execution_failure_observation
 swiftc -frontend -parse "$decoder_checkpoint_v2_io_root_identity_repair_execution_authority_source"
 swiftc -frontend -parse "$decoder_checkpoint_v2_io_root_identity_repair_execution_evidence_source"
 swiftc -frontend -parse "$decoder_checkpoint_v2_io_root_identity_repair_execution_observation_source"
+swiftc -frontend -parse "$decoder_trajectory_checkpoint_source"
 swiftc -frontend -parse "$decoder_runtime_authority_source"
 swiftc -frontend -parse "$decoder_runtime_execution_observation_source"
 swiftc -frontend -parse "$decoder_runtime_source"
@@ -3406,6 +3538,7 @@ swiftc -frontend -parse "$stage4_tiny_durable_multileaf_package_resolved_scope_r
 swiftc -frontend -parse "$decoder_training_source"
 swiftc -frontend -parse "$decoder_training_validation_test"
 swiftc -frontend -parse "$decoder_stage3_tiny_cpu_resume_test"
+swiftc -frontend -parse "$decoder_stage4_tiny_durable_multileaf_test"
 
 readonly observed_mlxllm_references="$({
     git -C "$prime_root" grep -l -F 'MLXLLM' -- Sources || true
@@ -3429,6 +3562,27 @@ readonly expected_mlxllm_imports=$'Sources/PrimeGPUCalibration/PrimeGPUCalibrati
 [[ "$(awk '/^import / {print $2}' "$decoder_checkpoint_source" | paste -sd, -)" \
     == "Darwin,Foundation,PrimeCore,PrimeNativeDecoder,MLX,MLXNN" ]] ||
     die "PrimeNativeDecoderCheckpoint production imports changed"
+[[ "$(awk '/^import / {print $2}' "$decoder_trajectory_checkpoint_source" | paste -sd, -)" \
+    == "Darwin,Foundation,PrimeCore" \
+    && "$(grep -Ec -- '^public (struct|enum) ' \
+        "$decoder_trajectory_checkpoint_source")" == "9" ]] ||
+    die "PrimeNativeDecoder trajectory checkpoint import or public surface changed"
+for required_trajectory_checkpoint_value in \
+    'public enum PrimeNativeDecoderTrajectoryCheckpointLeafRoleV1:' \
+    'public enum PrimeNativeDecoderTrajectoryCheckpointFaultV1:' \
+    'public struct PrimeNativeDecoderTrajectoryExternalCommitBindingV1:' \
+    'public enum PrimeNativeDecoderTrajectoryCheckpointV1 {' \
+    '"ergentics_prime_native_decoder_trajectory_exact_resume_checkpoint_v1"' \
+    '"ergentics_prime_native_decoder_trajectory_exact_resume_external_commit_binding_v1"' \
+    'finalCommitManifestIsExclusiveCommitPoint: true' \
+    'partialPrecommitLeavesAreAuthoritative: false' \
+    'loadRequiresExternallySuppliedExactCommitBinding: true' \
+    'case injectedFailure(PrimeNativeDecoderTrajectoryQuarantineV1)' \
+    'expectedRoles.indices.map({ $0 + 1 })'; do
+    grep -Fq -- "$required_trajectory_checkpoint_value" \
+        "$decoder_trajectory_checkpoint_source" ||
+        die "PrimeNativeDecoder trajectory checkpoint lost: $required_trajectory_checkpoint_value"
+done
 [[ "$(awk '/^import / {print $2}' "$decoder_checkpoint_v2_source" | paste -sd, -)" \
     == "Foundation,PrimeCore" ]] ||
     die "PrimeNativeDecoderCheckpoint V2 identity imports changed"
@@ -5375,9 +5529,9 @@ assert_tiny_cpu_mechanics_source_identity() {
 assert_tiny_cpu_mechanics_source_identity \
     'Package.swift' \
     '100644' \
-    '765d3c88139bc1f74af16b77b2f3b06d33f66f75' \
-    '32795' \
-    'bc889436fb167cc206aa87cb079da4888a7fe95e517eb7cf63cbf44b35dc27c2'
+    '8e14c10aded588b3902a042341bca7acc842bcc6' \
+    '32843' \
+    'fa68f463ca31a4ca25af6b14eb19b139df0c8ef8259a6348bb40e97c2dcdeb81'
 assert_tiny_cpu_mechanics_source_identity \
     'Package.resolved' \
     '100644' \
@@ -5393,9 +5547,21 @@ assert_tiny_cpu_mechanics_source_identity \
 assert_tiny_cpu_mechanics_source_identity \
     'Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderTraining.swift' \
     '100644' \
-    '3e3517b747dac6c77b14747f4a0d92e892ad4448' \
-    '60976' \
-    '665568ea2ad237526acee5ded4805abaaac964c266cd2aa3841a3abbc48c4161'
+    '2d12065e6b5ada265f2dbec2805fbb8bee8b7122' \
+    '74267' \
+    'fb3e804332b84371ed7aa4fa34bf264b35bf60d92b6426cc582f386d5f4b6416'
+assert_tiny_cpu_mechanics_source_identity \
+    'Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderTrajectoryCheckpointV1.swift' \
+    '100644' \
+    '3090f97ce75213d70bb1af18f915e168b6796f01' \
+    '24916' \
+    '36c696977ec37a5d6edc35f1ae1fa05015c15498021fb099f403efb75977b399'
+assert_tiny_cpu_mechanics_source_identity \
+    'Tests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionTests.swift' \
+    '100644' \
+    '72727fe7582d10b467d72b37d8027c6f68e145aa' \
+    '18869' \
+    '8746a70169b38bfea6f5a8ab75b08c23a59a4567e1501eb6009e8174db31116c'
 assert_tiny_cpu_mechanics_source_identity \
     'Sources/PrimeCore/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsAuthority.swift' \
     '100644' \
@@ -8268,7 +8434,7 @@ done
     == $'import Foundation\nimport PrimeCore\nimport PrimeNativeDecoder\nimport MLX\nimport MLXNN\nimport MLXOptimizers' ]] ||
     die "PrimeNativeDecoderTraining import allowlist changed"
 [[ "$(grep -Ec -- '^public (struct|final class) ' \
-        "$decoder_training_source")" == "9" \
+        "$decoder_training_source")" == "11" \
     && "$(grep -Fxc -- \
         'enum PrimeNativeDecoderTinyCPUTrainEvaluateErrorV1:' \
         "$decoder_training_source")" == "1" \
@@ -8287,6 +8453,8 @@ for required_tiny_cpu_public_type in \
     'public struct PrimeNativeDecoderTinyCPUTrainEvaluateEvaluationV1:' \
     'public struct PrimeNativeDecoderTinyCPUExplicitRNGRecordV1:' \
     'public struct PrimeNativeDecoderTinyCPUDataCursorV1:' \
+    'public struct PrimeNativeDecoderTinyDurableMultileafControlStateV1:' \
+    'public struct PrimeNativeDecoderTinyDurableMultileafPayloadV1 {' \
     'public struct PrimeNativeDecoderTinyCPUInMemoryResumeSnapshotV1 {' \
     'public final class PrimeNativeDecoderTinyCPUTrainEvaluateTrainerV1 {'; do
     [[ "$(grep -Fxc -- "$required_tiny_cpu_public_type" \
@@ -8548,6 +8716,75 @@ for forbidden_stage3_product_capability in \
     ! grep -Fq -- "$forbidden_stage3_product_capability" \
         "$decoder_training_source" ||
         die "Stage-3 training source gained forbidden capability: $forbidden_stage3_product_capability"
+done
+
+for required_stage4_training_bridge_value in \
+    'public func exportTinyDurableMultileafPayload()' \
+    'public struct PrimeNativeDecoderTinyDurableMultileafControlStateV1:' \
+    'public struct PrimeNativeDecoderTinyDurableMultileafPayloadV1 {' \
+    '"prime_native_decoder_tiny_durable_multileaf_control_state_v1"' \
+    'public func canonicalJSONData() throws -> Data {' \
+    'public static func decodeCanonicalJSON(' \
+    'public static let firstMomentKeyPrefix = "first_moment::"' \
+    'public static let secondMomentKeyPrefix = "second_moment::"' \
+    'restoringTinyDurableMultileafPayload payload:'; do
+    grep -Fq -- "$required_stage4_training_bridge_value" \
+        "$decoder_training_source" ||
+        die "Stage-4 checkpoint-neutral Training bridge lost: $required_stage4_training_bridge_value"
+done
+
+[[ "$(awk '/^import / || /^@testable import / { print }' \
+        "$decoder_stage4_tiny_durable_multileaf_test")" \
+    == $'import CoreGraphics\nimport Foundation\nimport Metal\nimport MLX\nimport XCTest\nimport PrimeCore\nimport PrimeNativeDecoderCheckpoint\n@testable import PrimeNativeDecoderTraining' \
+    && "$(grep -Ec -- '^[[:space:]]+func test' \
+        "$decoder_stage4_tiny_durable_multileaf_test")" == "1" \
+    && "$(grep -Fc -- \
+        'func testTinyDurableMultileafCommitIsExactAndFailClosed() throws {' \
+        "$decoder_stage4_tiny_durable_multileaf_test")" == "1" \
+    && "$(grep -Fc -- 'throw XCTSkip(' \
+        "$decoder_stage4_tiny_durable_multileaf_test")" == "2" ]] ||
+    die "Stage-4 durable multileaf test import or single-method boundary changed"
+for required_stage4_test_value in \
+    'PRIME_NATIVE_DECODER_STAGE4_ARTIFACT_ROOT' \
+    'PrimeNativeDecoderTrajectoryCheckpointFaultV1.allCases' \
+    'PrimeNativeDecoderTrajectoryCheckpointV1.publish(' \
+    '.requireQuarantined(' \
+    'PrimeNativeDecoderTrajectoryCheckpointV1.load(' \
+    'expectedPublishedRoles(before: fault)' \
+    '"checkpoint/weights.safetensors"' \
+    '"checkpoint/optimizer_moments.safetensors"' \
+    '"checkpoint/control_state.json"' \
+    '"checkpoint/commit.json"' \
+    'assertExternalBindingMutationsRejected(binding, root: root)' \
+    'assertExtraInventoryRejected(' \
+    'let restored = try' \
+    'restoringTinyDurableMultileafPayload: .init(' \
+    'XCTAssertEqual(restoredStep2, controlStep2)' \
+    'XCTAssertEqual(restoredTerminal, controlTerminal)' \
+    'try reclaimChildren(of: rootURL)' \
+    'try suppliedRoot.requireEmpty()'; do
+    grep -Fq -- "$required_stage4_test_value" \
+        "$decoder_stage4_tiny_durable_multileaf_test" ||
+        die "Stage-4 durable multileaf test lost: $required_stage4_test_value"
+done
+readonly stage4_metal_guard_line="$(grep -nF -- \
+    'let metalDevices = MTLCopyAllDevices()' \
+    "$decoder_stage4_tiny_durable_multileaf_test" | awk -F: '{print $1}')"
+readonly stage4_mlx_device_line="$(grep -nF -- \
+    'try Device.withDefaultDevice(.cpu) {' \
+    "$decoder_stage4_tiny_durable_multileaf_test" | awk -F: '{print $1}')"
+[[ "$stage4_metal_guard_line" =~ ^[1-9][0-9]*$ \
+    && "$stage4_mlx_device_line" =~ ^[1-9][0-9]*$ \
+    && "$stage4_metal_guard_line" -lt "$stage4_mlx_device_line" ]] ||
+    die "Stage-4 test-only Metal guard no longer precedes MLX initialization"
+for forbidden_trajectory_checkpoint_capability in \
+    'import Metal' 'import MLX' 'import MLXNN' 'import MLXOptimizers' \
+    'import PrimeNativeDecoderTraining' 'URLSession' 'Process(' \
+    'posix_spawn' 'execve(' 'writeNative300MByte512' \
+    'loadNative300MByte512'; do
+    ! grep -Fq -- "$forbidden_trajectory_checkpoint_capability" \
+        "$decoder_trajectory_checkpoint_source" ||
+        die "trajectory checkpoint gained forbidden capability: $forbidden_trajectory_checkpoint_capability"
 done
 
 [[ -z "$(git -C "$prime_root" status --porcelain=v1 --untracked-files=all)" ]] ||
