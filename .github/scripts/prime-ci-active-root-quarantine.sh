@@ -485,14 +485,11 @@ grep -Fq -- 'runs-on: macos-15' "$workflow_path" ||
     die "hosted quarantine workflow runner or timeout boundary changed"
 [[ "$(grep -Fxc -- \
     '          git -C ergentics-prime fetch --depth=1 --no-tags --no-write-fetch-head origin "$EXACT_REVISION"' \
-    "$workflow_path")" == "1" \
-    && "$(grep -Fxc -- \
-        '          git -C ergentics-prime fetch --depth=2 --no-tags --no-write-fetch-head origin "$EXACT_REVISION"' \
-        "$workflow_path")" == "1" \
+    "$workflow_path")" == "2" \
     && "$(grep -Fxc -- \
         "    if: github.event_name == 'push' && github.ref == 'refs/heads/main'" \
         "$workflow_path")" == "1" ]] ||
-    die "hosted quarantine workflow active-depth-one/reviewed-depth-two boundary changed"
+    die "hosted quarantine workflow depth-one boundary changed"
 [[ -f "$decoder_metal_gate_path" && ! -L "$decoder_metal_gate_path" ]] ||
     die "Prime native decoder Metal gate is missing or linked"
 [[ "$(git -C "$prime_root" ls-files -- '.github/scripts/prime-ci-native-decoder-metal.sh')" \
@@ -915,23 +912,17 @@ readonly runtime_closure_workflow_line="$(grep -nFx -- \
 readonly tokenizer_compatibility_workflow_line="$(grep -nFx -- \
     '          bash .github/scripts/prime-ci-native-decoder-tokenizer-compatibility.sh' \
     "$workflow_path" | awk -F: '{print $1}')"
-readonly stage4_tiny_durable_multileaf_workflow_line="$(grep -nFx -- \
-    '          bash .github/scripts/prime-ci-native-decoder-stage4-tiny-durable-multileaf.sh' \
-    "$workflow_path" | awk -F: '{print $1}')"
 [[ "$frozen_metal_workflow_line" =~ ^[1-9][0-9]*$ \
     && "$runtime_closure_workflow_line" =~ ^[1-9][0-9]*$ \
     && "$tokenizer_compatibility_workflow_line" =~ ^[1-9][0-9]*$ \
-    && "$stage4_tiny_durable_multileaf_workflow_line" =~ ^[1-9][0-9]*$ \
     && "$runtime_closure_workflow_line" \
         -eq $((frozen_metal_workflow_line + 1)) \
     && "$tokenizer_compatibility_workflow_line" \
-        -eq $((runtime_closure_workflow_line + 1)) \
-    && "$stage4_tiny_durable_multileaf_workflow_line" \
-        -eq $((tokenizer_compatibility_workflow_line + 1)) ]] ||
-    die "trusted-main workflow does not retain exactly the Metal, runtime, tokenizer, Stage-4 order"
+        -eq $((runtime_closure_workflow_line + 1)) ]] ||
+    die "trusted-main workflow does not retain exactly the Metal, runtime, tokenizer order"
 [[ "$(grep -Fc -- \
     '          bash .github/scripts/prime-ci-native-decoder-' \
-    "$workflow_path")" == "4" \
+    "$workflow_path")" == "3" \
     && "$(grep -Fxc -- \
         '          bash .github/scripts/prime-ci-native-decoder-metal.sh' \
         "$workflow_path")" == "1" \
@@ -943,8 +934,8 @@ readonly stage4_tiny_durable_multileaf_workflow_line="$(grep -nFx -- \
         "$workflow_path")" == "0" \
     && "$(grep -Fxc -- \
         '          bash .github/scripts/prime-ci-native-decoder-stage4-tiny-durable-multileaf.sh' \
-        "$workflow_path")" == "1" ]] ||
-    die "trusted-main workflow lost the exact four-launcher Stage-4 sequence or retained a retired one-shot"
+        "$workflow_path")" == "0" ]] ||
+    die "trusted-main workflow lost the exact three-launcher sequence or retained a retired one-shot"
 readonly live_decoder_workflow_block="$(awk '
     /^      - name: Run the Prime-owned decoder on live Metal$/ { inside = 1 }
     inside { print }
@@ -954,10 +945,9 @@ readonly expected_live_decoder_workflow_block='      - name: Run the Prime-owned
         run: |
           bash .github/scripts/prime-ci-native-decoder-metal.sh
           bash .github/scripts/prime-ci-native-decoder-runtime-closure.sh
-          bash .github/scripts/prime-ci-native-decoder-tokenizer-compatibility.sh
-          bash .github/scripts/prime-ci-native-decoder-stage4-tiny-durable-multileaf.sh'
+          bash .github/scripts/prime-ci-native-decoder-tokenizer-compatibility.sh'
 [[ "$live_decoder_workflow_block" == "$expected_live_decoder_workflow_block" ]] ||
-    die "trusted-main exact contiguous Metal, runtime, tokenizer, and Stage-4 block changed"
+    die "trusted-main exact contiguous Metal, runtime, and tokenizer block changed"
 ! grep -Fq -- \
     '          bash .github/scripts/prime-ci-native-decoder-checkpoint-v2-io.sh' \
     "$workflow_path" ||
@@ -1068,6 +1058,7 @@ readonly stage3_tiny_cpu_explicit_rng_cursor_resume_validation_inventory_order_r
 readonly stage3_tiny_cpu_explicit_rng_cursor_resume_execution_observation_filter='PrimeCoreTests.PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeExecutionObservationTests/testFrozenV1CanonicalCodableRecursiveMutationAndSuccessCeiling'
 readonly stage4_tiny_durable_multileaf_commit_fault_injection_authority_filter='PrimeCoreTests.PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling'
 readonly stage4_tiny_durable_multileaf_package_resolved_scope_repair_authority_filter='PrimeCoreTests.PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionPackageResolvedScopeRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling'
+readonly stage4_tiny_durable_multileaf_commit_fault_injection_execution_observation_filter='PrimeCoreTests.PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionExecutionObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndSuccessCeiling'
 [[ "$(grep -Fc -- "$tiny_cpu_mechanics_authority_filter" \
         "$workflow_path")" == "1" \
     && "$(grep -Fc -- "$tiny_cpu_mechanics_failure_observation_filter" \
@@ -1097,7 +1088,7 @@ readonly stage4_tiny_durable_multileaf_package_resolved_scope_repair_authority_f
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 50 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 51 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not run the exact Stage-2 authority and failure-observation pure contracts"
 [[ "$(grep -Fc -- "$private_dependency_tls_failure_observation_filter" \
@@ -1189,7 +1180,7 @@ readonly stage4_tiny_durable_multileaf_package_resolved_scope_repair_authority_f
         "          grep -Fq 'PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapFreshMetallibCrossBindingExecutionFailureObservationTests' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 50 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 51 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the Stage-2 metallib bootstrap repair, failure observations, and classifier repair authority"
 [[ "$(grep -Fc -- \
@@ -1299,6 +1290,22 @@ readonly stage4_tiny_durable_multileaf_package_resolved_scope_repair_authority_f
         "          grep -Fq 'PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionPackageResolvedScopeRepairAuthorityTests' \\" \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run exactly the Stage-4 Package.resolved scope-repair authority"
+[[ "$(grep -Fc -- \
+        "$stage4_tiny_durable_multileaf_commit_fault_injection_execution_observation_filter" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        'Sources/PrimeCore/PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionExecutionObservation.swift' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        'Tests/PrimeCoreTests/PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionExecutionObservationTests.swift' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        "          grep -Fq 'PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionExecutionObservationTests' \\" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndSuccessCeiling' \\" \
+        "$workflow_path")" == "1" ]] ||
+    die "hosted workflow does not parse and run exactly the Stage-4 execution observation"
 for required_stage4_tiny_durable_multileaf_authority_summary_value in \
     'The dependency-free Stage-4 tiny durable multileaf authority is pure and nonexecuting.' \
     'Only after this authority merges and its exact-main depth-one closure passes may one separately scoped exact-main mechanics successor' \
@@ -1334,6 +1341,21 @@ for required_stage4_mechanics_summary_value in \
     [[ "$(grep -Fc -- "$required_stage4_mechanics_summary_value" \
         "$workflow_path")" == "1" ]] ||
         die "workflow lost the exact Stage-4 mechanics ceiling: $required_stage4_mechanics_summary_value"
+done
+for required_stage4_execution_observation_summary_value in \
+    'Exact-main merge 8c310bb61fb9b44f1e789332eb3cfc29681ee407 and workflow run 31726013984 attempt 1' \
+    'passed root 50, six isolated focused tests, Metal 44, maintained runtime 1, tokenizer 1, and exactly one Stage-4' \
+    'single canonical Stage-4 receipt recorded zero failure or skip' \
+    'tiny ephemeral artifact root began empty, published its three payload leaves plus final commit leaf' \
+    'restored the exact Stage-3 snapshot, rejected all seven injected precommit cuts, and was literally reclaimed' \
+    'zero Actions artifacts and zero reruns occurred' \
+    'successful Stage-4 execution opportunity is now consumed and retired' \
+    'frozen launcher remains source-preserved but is no longer invoked' \
+    'both hosted checkouts are depth one' \
+    'checkpoint admission, public V2 widening, retention, upload, Metal determinism, Stage 5, Native-300M, training, trial, canary, product, publication, additional execution, rerun, and downstream authority remain false'; do
+    [[ "$(grep -Fc -- "$required_stage4_execution_observation_summary_value" \
+        "$workflow_path")" == "1" ]] ||
+        die "workflow lost the exact Stage-4 execution-observation summary: $required_stage4_execution_observation_summary_value"
 done
 [[ "$(grep -Fc -- \
         'Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderTrajectoryCheckpointV1.swift' \
@@ -2452,6 +2474,8 @@ readonly stage4_tiny_durable_multileaf_commit_fault_injection_authority_source="
 readonly stage4_tiny_durable_multileaf_commit_fault_injection_authority_test="$prime_root/Tests/PrimeCoreTests/PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionAuthorityTests.swift"
 readonly stage4_tiny_durable_multileaf_package_resolved_scope_repair_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionPackageResolvedScopeRepairAuthority.swift"
 readonly stage4_tiny_durable_multileaf_package_resolved_scope_repair_authority_test="$prime_root/Tests/PrimeCoreTests/PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionPackageResolvedScopeRepairAuthorityTests.swift"
+readonly stage4_tiny_durable_multileaf_commit_fault_injection_execution_observation_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionExecutionObservation.swift"
+readonly stage4_tiny_durable_multileaf_commit_fault_injection_execution_observation_test="$prime_root/Tests/PrimeCoreTests/PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionExecutionObservationTests.swift"
 readonly decoder_training_source="$prime_root/Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderTraining.swift"
 readonly decoder_training_validation_root="$prime_root/Tests/PrimeNativeDecoderTrainingValidation"
 readonly decoder_training_validation_manifest="$decoder_training_validation_root/Package.swift"
@@ -2639,6 +2663,12 @@ readonly decoder_stage4_tiny_durable_multileaf_test="$decoder_training_validatio
 [[ -f "$stage4_tiny_durable_multileaf_package_resolved_scope_repair_authority_test" \
     && ! -L "$stage4_tiny_durable_multileaf_package_resolved_scope_repair_authority_test" ]] ||
     die "Stage-4 Package.resolved scope-repair authority test is missing or linked"
+[[ -f "$stage4_tiny_durable_multileaf_commit_fault_injection_execution_observation_source" \
+    && ! -L "$stage4_tiny_durable_multileaf_commit_fault_injection_execution_observation_source" ]] ||
+    die "Stage-4 execution observation is missing or linked"
+[[ -f "$stage4_tiny_durable_multileaf_commit_fault_injection_execution_observation_test" \
+    && ! -L "$stage4_tiny_durable_multileaf_commit_fault_injection_execution_observation_test" ]] ||
+    die "Stage-4 execution-observation test is missing or linked"
 [[ -f "$decoder_training_source" && ! -L "$decoder_training_source" ]] ||
     die "PrimeNativeDecoderTraining source is missing or linked"
 [[ -f "$decoder_training_validation_manifest" \
@@ -3535,6 +3565,8 @@ swiftc -frontend -parse "$stage4_tiny_durable_multileaf_commit_fault_injection_a
 swiftc -frontend -parse "$stage4_tiny_durable_multileaf_commit_fault_injection_authority_test"
 swiftc -frontend -parse "$stage4_tiny_durable_multileaf_package_resolved_scope_repair_authority_source"
 swiftc -frontend -parse "$stage4_tiny_durable_multileaf_package_resolved_scope_repair_authority_test"
+swiftc -frontend -parse "$stage4_tiny_durable_multileaf_commit_fault_injection_execution_observation_source"
+swiftc -frontend -parse "$stage4_tiny_durable_multileaf_commit_fault_injection_execution_observation_test"
 swiftc -frontend -parse "$decoder_training_source"
 swiftc -frontend -parse "$decoder_training_validation_test"
 swiftc -frontend -parse "$decoder_stage3_tiny_cpu_resume_test"
@@ -8392,6 +8424,163 @@ for forbidden_stage4_package_resolved_scope_repair_capability in \
     ! grep -Fq -- "$forbidden_stage4_package_resolved_scope_repair_capability" \
         "$stage4_tiny_durable_multileaf_package_resolved_scope_repair_authority_source" ||
         die "Stage-4 Package.resolved scope-repair authority gained capability: $forbidden_stage4_package_resolved_scope_repair_capability"
+done
+
+assert_metal_current_decoder_assertion_arc_identity \
+    'Sources/PrimeCore/PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionExecutionObservation.swift' \
+    '100644' 'f33ea9a4d567002499170946928cc1f11ccc8000' \
+    '20729' \
+    '5aa6f297acb4070e62dcc14fb8caf4e6852b41a43ddd26e85ece9b1597091ac0'
+assert_metal_current_decoder_assertion_arc_identity \
+    'Tests/PrimeCoreTests/PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionExecutionObservationTests.swift' \
+    '100644' '35f76f1d39fea0f70cfe46f7092d38bab02da13e' \
+    '7433' \
+    'e28f7d1871023055638595049b81f43f15ca4691c356ffc9555c81b9c97cc273'
+[[ "$(wc -l < \
+        "$stage4_tiny_durable_multileaf_commit_fault_injection_execution_observation_source" | \
+        awk '{print $1}')" == "510" \
+    && "$(wc -l < \
+        "$stage4_tiny_durable_multileaf_commit_fault_injection_execution_observation_test" | \
+        awk '{print $1}')" == "174" \
+    && "$(awk '/^import / { print }' \
+        "$stage4_tiny_durable_multileaf_commit_fault_injection_execution_observation_source")" \
+        == 'import Foundation' \
+    && "$(awk '/^import / || /^@testable import / { print }' \
+        "$stage4_tiny_durable_multileaf_commit_fault_injection_execution_observation_test")" \
+        == $'import CoreFoundation\nimport Foundation\n@testable import PrimeCore\nimport XCTest' \
+    && "$(grep -Ec -- '^[[:space:]]+func test' \
+        "$stage4_tiny_durable_multileaf_commit_fault_injection_execution_observation_test")" == "1" \
+    && "$(grep -Fc -- \
+        'PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionExecutionObservationTests:' \
+        "$stage4_tiny_durable_multileaf_commit_fault_injection_execution_observation_test")" == "1" \
+    && "$(grep -Fc -- \
+        'func testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndSuccessCeiling()' \
+        "$stage4_tiny_durable_multileaf_commit_fault_injection_execution_observation_test")" == "1" ]] ||
+    die "Stage-4 execution observation identity or sole-test surface changed"
+for required_stage4_execution_observation_value in \
+    'public static let canonicalSHA256 =' \
+    '"7239edc86e007b1a8b6fa7a742bfb812e8ef8caa4b1dc8dbcb32b66b5b88e5e0"' \
+    'mergeRevision:' \
+    '"8c310bb61fb9b44f1e789332eb3cfc29681ee407"' \
+    '"4508cd0d62cfe6e9405ea2b9e4cfcb197965c5e5"' \
+    '"f15f22b580aebf924c1dfc4a5636263f962a659c"' \
+    '"ef9fc40c9bc947f78910f9f8cf8a243566f63728"' \
+    'workflowRunID: 31_726_013_984' \
+    'workflowRunNumber: 97' \
+    'checkSuiteID: 86_069_785_338' \
+    'runAttempt: 1' \
+    'activeJobID: 94_534_454_341' \
+    'reviewedJobID: 94_535_376_461' \
+    'activeJobConclusion: "success"' \
+    'reviewedJobConclusion: "success"' \
+    'exactHeadPushRunCount: 1' \
+    'rerunCount: 0' \
+    'artifactCount: 0' \
+    'terminalConclusion: "success"' \
+    'focusedRootTestCount: 50' \
+    'focusedIsolatedTestCount: 6' \
+    'focusedWholeTestCount: 56' \
+    'metalTestCount: 44' \
+    'maintainedRuntimeTestCount: 1' \
+    'tokenizerTestCount: 1' \
+    'preStage4TotalTestCount: 102' \
+    'stepConclusion: "success"' \
+    'invocationCount: 1' \
+    'completionCount: 1' \
+    'authenticatedDepthOneFetchCount: 1' \
+    'submoduleUpdateInvocationCount: 1' \
+    'mlxCloneCount: 1' \
+    'mlxCCloneCount: 1' \
+    'workflowAuthoredRetryCount: 0' \
+    'gitInternalRetryScheduledCount: 0' \
+    'tlsFailureCount: 0' \
+    'tlsVerificationBypassCount: 0' \
+    'customCAInstallationCount: 0' \
+    'byteCount: 6_292_668' \
+    '"b5045fe8a1a77aaefd249a7460aca65940fde3aff7422de73da0a9fba7134fd6"' \
+    'receiptPrefixOccurrenceCount: 1' \
+    'rawJSONByteCount: 4_147' \
+    '"a0bbebb611b12ef1e88ffe625120b86a3a0caf7f29f0edbf20233c7fbe244fbd"' \
+    'rawJSONWasCanonical: true' \
+    'PASS_exact_main_tiny_ephemeral_durable_four_leaf_commit_fault_injection_one_test_zero_failure_zero_skip' \
+    '"d6acf9c5e3e656e93a39d6c36529902d0b8c9ba1454dbd706a76aa53b7276ced"' \
+    'startedCount: 1' \
+    'passedCount: 1' \
+    'failureCount: 0' \
+    'skipCount: 0' \
+    'durationMilliseconds: 5_128' \
+    'totalTestCountAfterStage4: 103' \
+    'publishedFileCount: 4' \
+    'injectedFailureCount: 7' \
+    'finalCommitManifestPublishedLast: true' \
+    'externallySuppliedExactCommitBindingRequired: true' \
+    'everyPartialPrecommitInventoryQuarantined: true' \
+    'exactStage3SnapshotRoundTripEstablished: true' \
+    'ephemeralPrivateRoot: true' \
+    'initiallyEmpty: true' \
+    'reclaimedAfterTest: true' \
+    'retainedArtifactEstablished: false' \
+    'artifactUploadInvoked: false' \
+    '".github/scripts/prime-ci-active-root-quarantine.sh"' \
+    '".github/workflows/prime-active-root-quarantine.yml"' \
+    '"Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift"' \
+    '"Sources/PrimeCore/PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionExecutionObservation.swift"' \
+    '"Tests/PrimeCoreTests/PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionExecutionObservationTests.swift"' \
+    'expectedRootTestCount: 51' \
+    'reviewedCheckoutDepth: 1' \
+    '"metal"' \
+    '"maintained_runtime"' \
+    '"tokenizer"' \
+    'stage4LauncherPath:' \
+    '".github/scripts/prime-ci-native-decoder-stage4-tiny-durable-multileaf.sh"' \
+    'stage4LauncherMode: "100755"' \
+    '"4184e23941460fe397e284e094d782f1265d19d9"' \
+    'stage4LauncherByteCount: 31_829' \
+    'stage4LauncherLFByteCount: 519' \
+    '"e3eb8a66340c924bbb579023eee04eaee1242a8a682f17ae668898ee8d36c6a2"' \
+    'stage4LauncherInvocationCount: 0' \
+    'stage4ReceiptCount: 0' \
+    'stage4LauncherSourcePreserved: true' \
+    'successfulAttemptConsumed: true' \
+    'exactMainRetirementClosureRequired: true' \
+    'additionalExecutionOrRerunAuthorized: false' \
+    'retainedArtifactAuthorized: false' \
+    'artifactUploadAuthorized: false' \
+    'checkpointAdmissionGranted: false' \
+    'publicV2CodecWideningAuthorized: false' \
+    'metalDeterminismEstablished: false' \
+    'stage5Authorized: false' \
+    'native300MAllocationAuthorized: false' \
+    'native300MTrainingAuthorized: false' \
+    'generalTrainingResumeEstablished: false' \
+    'modelQualityEstablished: false' \
+    'candidateAdmissionGranted: false' \
+    'trialAuthorized: false' \
+    'canaryAuthorized: false' \
+    'productUseAuthorized: false' \
+    'publicationAuthorized: false'; do
+    grep -Fq -- "$required_stage4_execution_observation_value" \
+        "$stage4_tiny_durable_multileaf_commit_fault_injection_execution_observation_source" ||
+        die "Stage-4 execution observation lost: $required_stage4_execution_observation_value"
+done
+assert_metal_current_decoder_assertion_arc_identity \
+    'Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' \
+    '100644' '12e42286d12b08327bfc1b2393c7dc136d033d6c' \
+    '546' \
+    'fac7bdf1766ce52861df2df81579c7324f44753d092f554bfc42b91c0767af11'
+[[ "$(wc -l < "$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift" | \
+        awk '{print $1}')" == "13" \
+    && "$(grep -Fxc -- \
+        '        "24bb8290a09174ea70b14cc7f3303cf20a7912db5ff7e385d3e62051a3324abe"' \
+        "$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift")" == "1" ]] ||
+    die "Stage-4 retirement embedded provenance identity changed"
+for forbidden_stage4_execution_observation_capability in \
+    'import CoreGraphics' 'import Metal' 'import MLX' 'import MLXNN' \
+    'import MLXOptimizers' 'FileManager' 'FileHandle' 'URLSession' 'Process(' \
+    'posix_spawn' 'execve('; do
+    ! grep -Fq -- "$forbidden_stage4_execution_observation_capability" \
+        "$stage4_tiny_durable_multileaf_commit_fault_injection_execution_observation_source" ||
+        die "Stage-4 execution observation gained capability: $forbidden_stage4_execution_observation_capability"
 done
 
 [[ "$(awk '/^import / { print }' "$decoder_authority_test")" \
