@@ -107,6 +107,77 @@ public final class PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeSessionV1 {
         evaluationCheckedAtCurrentStep = true
     }
 
+    public convenience init(
+        restoringTinyDurableMultileafPayload payload:
+            PrimeNativeDecoderTinyDurableMultileafPayloadV1
+    ) throws {
+        let control = payload.controlState
+        try Self.validateTinyDurableMultileafControlState(control)
+
+        guard payload.weights.count == control.modelTensorCount else {
+            throw PrimeNativeDecoderTinyCPUTrainEvaluateErrorV1
+                .resumeStateMismatch("durable weight count")
+        }
+        var firstMoments = [String: MLXArray]()
+        var secondMoments = [String: MLXArray]()
+        for (key, value) in payload.optimizerMoments {
+            if key.hasPrefix(
+                PrimeNativeDecoderTinyDurableMultileafPayloadV1
+                    .firstMomentKeyPrefix)
+            {
+                let path = String(
+                    key.dropFirst(
+                        PrimeNativeDecoderTinyDurableMultileafPayloadV1
+                            .firstMomentKeyPrefix.count))
+                guard !path.isEmpty,
+                      firstMoments.updateValue(value, forKey: path) == nil
+                else {
+                    throw PrimeNativeDecoderTinyCPUTrainEvaluateErrorV1
+                        .resumeStateMismatch("durable first-moment keys")
+                }
+            } else if key.hasPrefix(
+                PrimeNativeDecoderTinyDurableMultileafPayloadV1
+                    .secondMomentKeyPrefix)
+            {
+                let path = String(
+                    key.dropFirst(
+                        PrimeNativeDecoderTinyDurableMultileafPayloadV1
+                            .secondMomentKeyPrefix.count))
+                guard !path.isEmpty,
+                      secondMoments.updateValue(value, forKey: path) == nil
+                else {
+                    throw PrimeNativeDecoderTinyCPUTrainEvaluateErrorV1
+                        .resumeStateMismatch("durable second-moment keys")
+                }
+            } else {
+                throw PrimeNativeDecoderTinyCPUTrainEvaluateErrorV1
+                    .resumeStateMismatch("durable optimizer role")
+            }
+        }
+        guard firstMoments.count == control.firstMomentTensorCount,
+              secondMoments.count == control.secondMomentTensorCount,
+              payload.optimizerMoments.count
+                == control.firstMomentTensorCount
+                    + control.secondMomentTensorCount
+        else {
+            throw PrimeNativeDecoderTinyCPUTrainEvaluateErrorV1
+                .resumeStateMismatch("durable optimizer count")
+        }
+
+        let snapshot = PrimeNativeDecoderTinyCPUInMemoryResumeSnapshotV1(
+            globalStep: control.globalStep,
+            modelParameters: ModuleParameters.unflattened(payload.weights),
+            optimizerState: AdamOptimizerState(
+                firstMoment: ModuleParameters.unflattened(firstMoments),
+                secondMoment: ModuleParameters.unflattened(secondMoments)),
+            parameterStateSHA256: control.parameterStateSHA256,
+            firstMomentStateSHA256: control.firstMomentStateSHA256,
+            secondMomentStateSHA256: control.secondMomentStateSHA256,
+            randomRecords: control.randomRecords,
+            cursor: control.cursor)
+        try self.init(restoring: snapshot)
+    }
+
     public var globalStep: Int { trainer.globalStep }
 
     public func trainNext()
@@ -155,6 +226,39 @@ public final class PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeSessionV1 {
             cursor: cursor)
     }
 
+    public func exportTinyDurableMultileafPayload()
+        throws -> PrimeNativeDecoderTinyDurableMultileafPayloadV1
+    {
+        let snapshot = try exportInMemoryResumeSnapshot()
+        let weights = Dictionary(
+            uniqueKeysWithValues: snapshot.modelParameters.flattened().map {
+                ($0.0, $0.1.reshaped($0.1.shape))
+            })
+        var optimizerMoments = [String: MLXArray]()
+        for (path, value) in snapshot.optimizerState.firstMoment.flattened() {
+            optimizerMoments[
+                PrimeNativeDecoderTinyDurableMultileafPayloadV1
+                    .firstMomentKeyPrefix + path
+            ] = value.reshaped(value.shape)
+        }
+        for (path, value) in snapshot.optimizerState.secondMoment.flattened() {
+            optimizerMoments[
+                PrimeNativeDecoderTinyDurableMultileafPayloadV1
+                    .secondMomentKeyPrefix + path
+            ] = value.reshaped(value.shape)
+        }
+        try checkedEval(
+            Array(weights.values),
+            Array(optimizerMoments.values))
+        return .init(
+            weights: weights,
+            optimizerMoments: optimizerMoments,
+            controlState: .init(
+                snapshot: snapshot,
+                evaluationCheckedAtCurrentStep:
+                    evaluationCheckedAtCurrentStep))
+    }
+
     func validationState() throws
         -> PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeValidationStateV1
     {
@@ -169,6 +273,63 @@ public final class PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeSessionV1 {
         -> PrimeNativeDecoderTinyCPUExactTensorStateV1
     {
         try trainer.exactTensorState()
+    }
+
+    private static func validateTinyDurableMultileafControlState(
+        _ control: PrimeNativeDecoderTinyDurableMultileafControlStateV1
+    ) throws {
+        let configuration =
+            PrimeNativeDecoderTinyCPUTrainEvaluateConfigurationV1.frozenV1
+        var expectedRandomRecords = initialRandomRecords()
+        expectedRandomRecords = consuming(
+            .modelInitialization,
+            in: expectedRandomRecords)
+        expectedRandomRecords = consuming(
+            .trainingDataOrder,
+            in: expectedRandomRecords)
+        let digests = [
+            control.parameterStateSHA256,
+            control.firstMomentStateSHA256,
+            control.secondMomentStateSHA256,
+        ]
+        guard control.schemaVersion == 1,
+              control.schemaID
+                == "prime_native_decoder_tiny_durable_multileaf_control_state_v1",
+              control.sourceStageID == stageID,
+              control.globalStep == 1,
+              control.modelTensorCount == 20,
+              control.firstMomentTensorCount == 20,
+              control.secondMomentTensorCount == 20,
+              digests.allSatisfy(Self.isLowercaseSHA256),
+              control.learningRateFloat32BitPattern
+                == configuration.learningRateFloat32BitPattern,
+              control.beta1Float32BitPattern
+                == configuration.beta1Float32BitPattern,
+              control.beta2Float32BitPattern
+                == configuration.beta2Float32BitPattern,
+              control.epsilonFloat32BitPattern
+                == configuration.epsilonFloat32BitPattern,
+              control.weightDecayFloat32BitPattern
+                == configuration.weightDecayFloat32BitPattern,
+              control.scheduleID == "constant_float32_learning_rate_v1",
+              control.randomRecords == expectedRandomRecords,
+              control.cursor == cursor(nextBatchOrdinal: 1),
+              control.accumulationPhase == 0,
+              control.pendingGradientTensorCount == 0,
+              control.pendingPrefetchItemCount == 0,
+              control.kvCacheEntryCount == 0,
+              control.evaluationCheckedAtCurrentStep
+        else {
+            throw PrimeNativeDecoderTinyCPUTrainEvaluateErrorV1
+                .resumeStateMismatch("durable control state")
+        }
+    }
+
+    private static func isLowercaseSHA256(_ value: String) -> Bool {
+        value.utf8.count == 64
+            && value.utf8.allSatisfy {
+                (48 ... 57).contains($0) || (97 ... 102).contains($0)
+            }
     }
 
     static func firstBatch()
@@ -592,6 +753,7 @@ struct PrimeNativeDecoderTinyCPUExactTensorStateV1:
 
 public enum PrimeNativeDecoderTinyCPUExplicitRNGDomainV1:
     String,
+    Codable,
     CaseIterable,
     Equatable,
     Sendable
@@ -603,6 +765,7 @@ public enum PrimeNativeDecoderTinyCPUExplicitRNGDomainV1:
 }
 
 public struct PrimeNativeDecoderTinyCPUExplicitRNGRecordV1:
+    Codable,
     Equatable,
     Sendable
 {
@@ -610,9 +773,17 @@ public struct PrimeNativeDecoderTinyCPUExplicitRNGRecordV1:
     public let keySHA256: String
     public let counter: UInt64
     public let consumptionSHA256: String
+
+    private enum CodingKeys: String, CodingKey {
+        case domain
+        case keySHA256 = "key_sha256"
+        case counter
+        case consumptionSHA256 = "consumption_sha256"
+    }
 }
 
 public struct PrimeNativeDecoderTinyCPUDataCursorV1:
+    Codable,
     Equatable,
     Sendable
 {
@@ -621,6 +792,147 @@ public struct PrimeNativeDecoderTinyCPUDataCursorV1:
     public let nextRowIndex: Int
     public let nextRowIDs: [String]
     public let nextBatchTokenAndMaskSHA256: String
+
+    private enum CodingKeys: String, CodingKey {
+        case epoch
+        case nextBatchOrdinal = "next_batch_ordinal"
+        case nextRowIndex = "next_row_index"
+        case nextRowIDs = "next_row_ids"
+        case nextBatchTokenAndMaskSHA256 =
+            "next_batch_token_and_mask_sha256"
+    }
+}
+
+/// Canonical value-only state paired with the two real tiny safetensors
+/// payloads. This deliberately knows nothing about files, roots, publication,
+/// discovery, retention, or admission.
+public struct PrimeNativeDecoderTinyDurableMultileafControlStateV1:
+    Codable,
+    Equatable,
+    Sendable
+{
+    public let schemaVersion: Int
+    public let schemaID: String
+    public let sourceStageID: String
+    public let globalStep: Int
+    public let modelTensorCount: Int
+    public let firstMomentTensorCount: Int
+    public let secondMomentTensorCount: Int
+    public let parameterStateSHA256: String
+    public let firstMomentStateSHA256: String
+    public let secondMomentStateSHA256: String
+    public let learningRateFloat32BitPattern: UInt32
+    public let beta1Float32BitPattern: UInt32
+    public let beta2Float32BitPattern: UInt32
+    public let epsilonFloat32BitPattern: UInt32
+    public let weightDecayFloat32BitPattern: UInt32
+    public let scheduleID: String
+    public let randomRecords: [PrimeNativeDecoderTinyCPUExplicitRNGRecordV1]
+    public let cursor: PrimeNativeDecoderTinyCPUDataCursorV1
+    public let accumulationPhase: Int
+    public let pendingGradientTensorCount: Int
+    public let pendingPrefetchItemCount: Int
+    public let kvCacheEntryCount: Int
+    public let evaluationCheckedAtCurrentStep: Bool
+
+    public func canonicalJSONData() throws -> Data {
+        try PrimeCanonicalJSON.encode(self)
+    }
+
+    public static func decodeCanonicalJSON(
+        _ data: Data
+    ) throws -> Self {
+        try PrimeCanonicalJSON.decode(Self.self, from: data)
+    }
+
+    init(
+        snapshot: PrimeNativeDecoderTinyCPUInMemoryResumeSnapshotV1,
+        evaluationCheckedAtCurrentStep: Bool
+    ) {
+        schemaVersion = 1
+        schemaID =
+            "prime_native_decoder_tiny_durable_multileaf_control_state_v1"
+        sourceStageID =
+            PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeSessionV1.stageID
+        globalStep = snapshot.globalStep
+        modelTensorCount = snapshot.modelTensorCount
+        firstMomentTensorCount =
+            snapshot.optimizerState.firstMoment.flattened().count
+        secondMomentTensorCount =
+            snapshot.optimizerState.secondMoment.flattened().count
+        parameterStateSHA256 = snapshot.parameterStateSHA256
+        firstMomentStateSHA256 = snapshot.firstMomentStateSHA256
+        secondMomentStateSHA256 = snapshot.secondMomentStateSHA256
+        learningRateFloat32BitPattern =
+            snapshot.learningRateFloat32BitPattern
+        beta1Float32BitPattern = snapshot.beta1Float32BitPattern
+        beta2Float32BitPattern = snapshot.beta2Float32BitPattern
+        epsilonFloat32BitPattern = snapshot.epsilonFloat32BitPattern
+        weightDecayFloat32BitPattern =
+            snapshot.weightDecayFloat32BitPattern
+        scheduleID = snapshot.scheduleID
+        randomRecords = snapshot.randomRecords
+        cursor = snapshot.cursor
+        accumulationPhase = snapshot.accumulationPhase
+        pendingGradientTensorCount = snapshot.pendingGradientTensorCount
+        pendingPrefetchItemCount = snapshot.pendingPrefetchItemCount
+        kvCacheEntryCount = snapshot.kvCacheEntryCount
+        self.evaluationCheckedAtCurrentStep =
+            evaluationCheckedAtCurrentStep
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case schemaVersion = "schema_version"
+        case schemaID = "schema_id"
+        case sourceStageID = "source_stage_id"
+        case globalStep = "global_step"
+        case modelTensorCount = "model_tensor_count"
+        case firstMomentTensorCount = "first_moment_tensor_count"
+        case secondMomentTensorCount = "second_moment_tensor_count"
+        case parameterStateSHA256 = "parameter_state_sha256"
+        case firstMomentStateSHA256 = "first_moment_state_sha256"
+        case secondMomentStateSHA256 = "second_moment_state_sha256"
+        case learningRateFloat32BitPattern =
+            "learning_rate_float32_bit_pattern"
+        case beta1Float32BitPattern = "beta1_float32_bit_pattern"
+        case beta2Float32BitPattern = "beta2_float32_bit_pattern"
+        case epsilonFloat32BitPattern = "epsilon_float32_bit_pattern"
+        case weightDecayFloat32BitPattern =
+            "weight_decay_float32_bit_pattern"
+        case scheduleID = "schedule_id"
+        case randomRecords = "random_records"
+        case cursor
+        case accumulationPhase = "accumulation_phase"
+        case pendingGradientTensorCount =
+            "pending_gradient_tensor_count"
+        case pendingPrefetchItemCount = "pending_prefetch_item_count"
+        case kvCacheEntryCount = "kv_cache_entry_count"
+        case evaluationCheckedAtCurrentStep =
+            "evaluation_checked_at_current_step"
+    }
+}
+
+/// A publication-neutral transfer value. Callers choose how these arrays and
+/// the canonical control value are encoded or transported.
+public struct PrimeNativeDecoderTinyDurableMultileafPayloadV1 {
+    public static let firstMomentKeyPrefix = "first_moment::"
+    public static let secondMomentKeyPrefix = "second_moment::"
+
+    public let weights: [String: MLXArray]
+    public let optimizerMoments: [String: MLXArray]
+    public let controlState:
+        PrimeNativeDecoderTinyDurableMultileafControlStateV1
+
+    public init(
+        weights: [String: MLXArray],
+        optimizerMoments: [String: MLXArray],
+        controlState:
+            PrimeNativeDecoderTinyDurableMultileafControlStateV1
+    ) {
+        self.weights = weights
+        self.optimizerMoments = optimizerMoments
+        self.controlState = controlState
+    }
 }
 
 /// An immutable, process-local value. Tensor storage is deliberately not

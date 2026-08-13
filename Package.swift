@@ -252,6 +252,7 @@ let package = Package(
             dependencies: [
                 "PrimeCore",
                 "PrimeNativeDecoder",
+                "PrimeNativeDecoderCheckpoint",
                 .product(
                     name: "MLX",
                     package: "ergentics-mlx-swift"
