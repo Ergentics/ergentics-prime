@@ -16,11 +16,12 @@ readonly prime_root="$(cd "$(dirname "$0")/../.." && pwd -P)"
 readonly runner_temp="${RUNNER_TEMP:?RUNNER_TEMP is required}"
 readonly exact_revision="${EXACT_REVISION:?EXACT_REVISION is required}"
 readonly mlx_revision="${PRIME_MLX_REVISION:?PRIME_MLX_REVISION is required}"
-readonly base_revision="90927b9e5a167e69dbb71d88e92c342f3fd0fd93"
-readonly base_tree="1bb47162fe5e567c0b82ba3eb9138139dde45154"
+readonly base_revision="e175bc5b99e89002184850d3fce5db595f2b9311"
+readonly base_tree="a4234937afa62ab85d26876c84481622b0505723"
 readonly required_mlx_revision="d37885a278f1c37484a94d0f401a418735e66519"
 readonly numerics_revision="0c0290ff6b24942dadb83a929ffaaa1481df04a2"
 readonly authority_canonical_sha256="0ab57d5e8c71b18d03c9730da1e90399d57c05ccaa155aa31aff0c3001987fe6"
+readonly repair_authority_canonical_sha256="34cd246fbeb754f31f7ecf3fee03d35fdc5c615e5a61c245e609a7ef03845b59"
 readonly authority_id="prime_native_decoder_tiny_cpu_explicit_rng_cursor_resume_authority_v1"
 readonly receipt_prefix="PRIME_NATIVE_DECODER_STAGE3_TINY_CPU_EXPLICIT_RNG_CURSOR_RESUME_RECEIPT="
 
@@ -32,6 +33,8 @@ readonly stage3_test="$validation_root/Tests/PrimeNativeDecoderTrainingTests/Pri
 readonly training_source="$prime_root/Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderTraining.swift"
 readonly authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeAuthority.swift"
 readonly authority_test="$prime_root/Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeAuthorityTests.swift"
+readonly repair_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeAuthorityCanonicalBindingRepairAuthority.swift"
+readonly repair_authority_test="$prime_root/Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeAuthorityCanonicalBindingRepairAuthorityTests.swift"
 readonly embedded_provenance="$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift"
 
 readonly mlx_bare="$runner_temp/ergentics-mlx-swift.git"
@@ -133,7 +136,7 @@ readonly exact_tree="$(git -C "$prime_root" rev-parse 'HEAD^{tree}')"
 [[ "$(git -C "$prime_root" rev-parse "${second_parent}^{tree}")" == "$exact_tree" ]] ||
     fail "merge tree differs from reviewed head tree"
 
-readonly expected_changed_status=$'A\t.github/scripts/prime-ci-native-decoder-stage3-tiny-cpu-resume.sh\nA\tTests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeTests.swift\nM\t.github/scripts/prime-ci-active-root-quarantine.sh\nM\t.github/workflows/prime-active-root-quarantine.yml\nM\tSources/PrimeCore/PrimeEmbeddedBuildProvenance.swift\nM\tSources/PrimeNativeDecoderTraining/PrimeNativeDecoderTraining.swift'
+readonly expected_changed_status=$'A\tSources/PrimeCore/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeAuthorityCanonicalBindingRepairAuthority.swift\nA\tTests/PrimeCoreTests/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeAuthorityCanonicalBindingRepairAuthorityTests.swift\nM\t.github/scripts/prime-ci-active-root-quarantine.sh\nM\t.github/scripts/prime-ci-native-decoder-stage3-tiny-cpu-resume.sh\nM\t.github/workflows/prime-active-root-quarantine.yml\nM\tSources/PrimeCore/PrimeEmbeddedBuildProvenance.swift'
 readonly observed_changed_status="$(git -C "$prime_root" diff-tree \
     --no-commit-id --name-status --no-renames -r \
     "$first_parent" "$exact_revision" | LC_ALL=C sort)"
@@ -166,8 +169,16 @@ assert_pinned_file 'Sources/PrimeCore/PrimeNativeDecoderTinyCPUExplicitRNGCursor
 assert_pinned_file 'Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeAuthorityTests.swift' \
     '100644' 'ab751cfbb2bf728054d3e91ae25d5fce1be8533a' '14254' \
     'baf8eb9c32f4298a77c619643535da98aea45f7c5cf996f54be78888130fedba'
-grep -Fq "$authority_canonical_sha256" "$authority_test" ||
+grep -Fq "$authority_canonical_sha256" "$authority_source" ||
     fail "authority canonical digest changed"
+assert_pinned_file 'Sources/PrimeCore/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeAuthorityCanonicalBindingRepairAuthority.swift' \
+    '100644' 'eefd30bc41cefc2fbfe226fc5c33b9525679c72c' '12344' \
+    'f535def96350b264b37143cc7f4c3be6e47ef6f37b000cf887ead93ae4daab1c'
+assert_pinned_file 'Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeAuthorityCanonicalBindingRepairAuthorityTests.swift' \
+    '100644' '24b36a968f97032146ca6833a9ff4eb20758ac92' '5090' \
+    '3401d564066cd7529d0001d505d91690a0290ddcd79c2242f6a97e8d8f0d5d74'
+grep -Fq "$repair_authority_canonical_sha256" "$repair_authority_source" ||
+    fail "repair authority canonical digest changed"
 assert_pinned_file 'Tests/PrimeNativeDecoderTrainingValidation/Package.swift' \
     '100644' '9f05e5a17426f00adf9dad7b55d84057122e98f9' '1054' \
     '0523184de79bb204113432428e635113220e1f3f8ba20177762959a73e861d45'
@@ -210,8 +221,8 @@ readonly predecessor_receipt_logs=("$runtime_probe_log" "$tokenizer_probe_log")
 for predecessor_log in "${predecessor_test_logs[@]}" "${predecessor_receipt_logs[@]}"; do
     assert_regular_file "$predecessor_log"
 done
-grep -Fq 'Executed 45 tests, with 0 failures' "$active_root_log" ||
-    fail "root-45 contracts did not complete"
+grep -Fq 'Executed 46 tests, with 0 failures' "$active_root_log" ||
+    fail "root-46 contracts did not complete"
 grep -Fq 'Executed 44 tests, with 0 failures' "$metal_log" ||
     fail "Metal 44 did not complete"
 grep -Fq 'Executed 1 test, with 0 failures' "$runtime_test_log" ||
@@ -370,7 +381,7 @@ readonly receipt_json="$(jq -cnS \
       execution:{revision:$revision,tree:$tree,first_parent_revision:$first_parent,
         second_parent_revision:$second_parent,parent_count:2,changed_paths:$changed_paths,
         github_event_name:"push",github_ref:"refs/heads/main",github_run_attempt:1},
-      predecessor:{focused_root_test_count:45,focused_isolated_test_count:6,
+      predecessor:{focused_root_test_count:46,focused_isolated_test_count:6,
         metal_test_count:44,maintained_runtime_test_count:1,tokenizer_test_count:1,
         retained_order:["metal","maintained_runtime","tokenizer","stage3"]},
       metallib:{byte_count:$metallib_byte_count,sha256:$metallib_sha256,
