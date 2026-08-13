@@ -19,6 +19,7 @@ readonly decoder_tokenizer_compatibility_gate_path="$prime_root/.github/scripts/
 readonly decoder_stage2_metallib_bootstrap_repair_gate_path="$prime_root/.github/scripts/prime-ci-native-decoder-stage2-metallib-bootstrap-repair.sh"
 readonly decoder_stage3_tiny_cpu_resume_gate_path="$prime_root/.github/scripts/prime-ci-native-decoder-stage3-tiny-cpu-resume.sh"
 readonly decoder_stage4_tiny_durable_multileaf_gate_path="$prime_root/.github/scripts/prime-ci-native-decoder-stage4-tiny-durable-multileaf.sh"
+readonly decoder_stage5_tiny_repeated_metal_trajectory_determinism_gate_path="$prime_root/.github/scripts/prime-ci-native-decoder-stage5-tiny-repeated-metal-trajectory-determinism.sh"
 readonly decoder_checkpoint_v2_io_execution_gate_path="$prime_root/.github/scripts/prime-ci-native-decoder-checkpoint-v2-io.sh"
 readonly decoder_checkpoint_v2_io_root_identity_repair_gate_path="$prime_root/.github/scripts/prime-ci-native-decoder-checkpoint-v2-io-root-identity-repair.sh"
 
@@ -874,6 +875,9 @@ for forbidden_stage4_launcher_value in \
         "$decoder_stage4_tiny_durable_multileaf_gate_path" ||
         die "Stage-4 launcher gained forbidden behavior: $forbidden_stage4_launcher_value"
 done
+[[ ! -e "$decoder_stage5_tiny_repeated_metal_trajectory_determinism_gate_path" \
+    && ! -L "$decoder_stage5_tiny_repeated_metal_trajectory_determinism_gate_path" ]] ||
+    die "Stage-5 authority closure must not contain a Stage-5 launcher"
 [[ -f "$decoder_checkpoint_v2_io_execution_gate_path" \
     && ! -L "$decoder_checkpoint_v2_io_execution_gate_path" ]] ||
     die "Prime native decoder checkpoint V2 I/O execution gate is missing or linked"
@@ -934,8 +938,14 @@ readonly tokenizer_compatibility_workflow_line="$(grep -nFx -- \
         "$workflow_path")" == "0" \
     && "$(grep -Fxc -- \
         '          bash .github/scripts/prime-ci-native-decoder-stage4-tiny-durable-multileaf.sh' \
+        "$workflow_path")" == "0" \
+    && "$(grep -Fxc -- \
+        '          bash .github/scripts/prime-ci-native-decoder-stage5-tiny-repeated-metal-trajectory-determinism.sh' \
+        "$workflow_path")" == "0" \
+    && "$(grep -Fc -- \
+        'PRIME_NATIVE_DECODER_STAGE5_TINY_REPEATED_METAL_TRAJECTORY_DETERMINISM_RECEIPT=' \
         "$workflow_path")" == "0" ]] ||
-    die "trusted-main workflow lost the exact three-launcher sequence or retained a retired one-shot"
+    die "trusted-main workflow lost the exact three-launcher sequence, retained a retired one-shot, or invoked Stage 5"
 readonly live_decoder_workflow_block="$(awk '
     /^      - name: Run the Prime-owned decoder on live Metal$/ { inside = 1 }
     inside { print }
@@ -1059,6 +1069,7 @@ readonly stage3_tiny_cpu_explicit_rng_cursor_resume_execution_observation_filter
 readonly stage4_tiny_durable_multileaf_commit_fault_injection_authority_filter='PrimeCoreTests.PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling'
 readonly stage4_tiny_durable_multileaf_package_resolved_scope_repair_authority_filter='PrimeCoreTests.PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionPackageResolvedScopeRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling'
 readonly stage4_tiny_durable_multileaf_commit_fault_injection_execution_observation_filter='PrimeCoreTests.PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionExecutionObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndSuccessCeiling'
+readonly stage5_tiny_repeated_metal_trajectory_determinism_assay_authority_filter='PrimeCoreTests.PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling'
 [[ "$(grep -Fc -- "$tiny_cpu_mechanics_authority_filter" \
         "$workflow_path")" == "1" \
     && "$(grep -Fc -- "$tiny_cpu_mechanics_failure_observation_filter" \
@@ -1088,7 +1099,7 @@ readonly stage4_tiny_durable_multileaf_commit_fault_injection_execution_observat
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 51 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 52 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not run the exact Stage-2 authority and failure-observation pure contracts"
 [[ "$(grep -Fc -- "$private_dependency_tls_failure_observation_filter" \
@@ -1180,7 +1191,7 @@ readonly stage4_tiny_durable_multileaf_commit_fault_injection_execution_observat
         "          grep -Fq 'PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapFreshMetallibCrossBindingExecutionFailureObservationTests' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 51 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 52 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the Stage-2 metallib bootstrap repair, failure observations, and classifier repair authority"
 [[ "$(grep -Fc -- \
@@ -1306,6 +1317,19 @@ readonly stage4_tiny_durable_multileaf_commit_fault_injection_execution_observat
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndSuccessCeiling' \\" \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run exactly the Stage-4 execution observation"
+[[ "$(grep -Fc -- \
+        "$stage5_tiny_repeated_metal_trajectory_determinism_assay_authority_filter" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        'Sources/PrimeCore/PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayAuthority.swift' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        'Tests/PrimeCoreTests/PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayAuthorityTests.swift' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        "          grep -Fq 'PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayAuthorityTests' \\" \
+        "$workflow_path")" == "1" ]] ||
+    die "hosted workflow does not parse and run exactly the Stage-5 trajectory-determinism authority"
 for required_stage4_tiny_durable_multileaf_authority_summary_value in \
     'The dependency-free Stage-4 tiny durable multileaf authority is pure and nonexecuting.' \
     'Only after this authority merges and its exact-main depth-one closure passes may one separately scoped exact-main mechanics successor' \
@@ -1356,6 +1380,24 @@ for required_stage4_execution_observation_summary_value in \
     [[ "$(grep -Fc -- "$required_stage4_execution_observation_summary_value" \
         "$workflow_path")" == "1" ]] ||
         die "workflow lost the exact Stage-4 execution-observation summary: $required_stage4_execution_observation_summary_value"
+done
+for required_stage5_tiny_repeated_metal_trajectory_authority_summary_value in \
+    'The dependency-free Stage-5 tiny repeated-Metal trajectory-determinism assay authority is pure and nonexecuting.' \
+    'Only after this exact-five authority merges and its root-52 exact-main depth-one closure passes may one separately scoped exact-six mechanics successor' \
+    'preserving both validation manifest and lock' \
+    'exactly three independent same-process trials, each with uninterrupted, source-snapshot-continuation, and fresh-restored branches—nine branch trajectories total' \
+    'under one full-duration PrimeMetalDeviceLease' \
+    'Step-1 source equality covers only the two source-producing branches; imported source state plus step-2 and terminal equality covers all three branches.' \
+    'SwiftPM debug with MLX eager and uncompiled, and no implicit or global MLX RNG' \
+    'Exact raw and clipped gradients, parameters, first and second Adam moments, and terminal control state are required.' \
+    'focused whole 58, pre-Stage-5 total 104, one future direct XCTest, and total 105' \
+    'invokes no Stage-5 launcher or receipt' \
+    'preserves the frozen Stage-4 launcher and exact Metal-runtime-tokenizer live order' \
+    'grants no current Stage-5 execution, rerun, artifact, durable checkpoint, cross-device determinism, Stage 6, Native-300M allocation or training, general resume, trial, canary, product, publication, or downstream authority'; do
+    [[ "$(grep -Fc -- \
+        "$required_stage5_tiny_repeated_metal_trajectory_authority_summary_value" \
+        "$workflow_path")" == "1" ]] ||
+        die "workflow lost the exact Stage-5 authority summary: $required_stage5_tiny_repeated_metal_trajectory_authority_summary_value"
 done
 [[ "$(grep -Fc -- \
         'Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderTrajectoryCheckpointV1.swift' \
@@ -2476,6 +2518,8 @@ readonly stage4_tiny_durable_multileaf_package_resolved_scope_repair_authority_s
 readonly stage4_tiny_durable_multileaf_package_resolved_scope_repair_authority_test="$prime_root/Tests/PrimeCoreTests/PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionPackageResolvedScopeRepairAuthorityTests.swift"
 readonly stage4_tiny_durable_multileaf_commit_fault_injection_execution_observation_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionExecutionObservation.swift"
 readonly stage4_tiny_durable_multileaf_commit_fault_injection_execution_observation_test="$prime_root/Tests/PrimeCoreTests/PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionExecutionObservationTests.swift"
+readonly stage5_tiny_repeated_metal_trajectory_determinism_assay_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayAuthority.swift"
+readonly stage5_tiny_repeated_metal_trajectory_determinism_assay_authority_test="$prime_root/Tests/PrimeCoreTests/PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayAuthorityTests.swift"
 readonly decoder_training_source="$prime_root/Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderTraining.swift"
 readonly decoder_training_validation_root="$prime_root/Tests/PrimeNativeDecoderTrainingValidation"
 readonly decoder_training_validation_manifest="$decoder_training_validation_root/Package.swift"
@@ -2669,6 +2713,12 @@ readonly decoder_stage4_tiny_durable_multileaf_test="$decoder_training_validatio
 [[ -f "$stage4_tiny_durable_multileaf_commit_fault_injection_execution_observation_test" \
     && ! -L "$stage4_tiny_durable_multileaf_commit_fault_injection_execution_observation_test" ]] ||
     die "Stage-4 execution-observation test is missing or linked"
+[[ -f "$stage5_tiny_repeated_metal_trajectory_determinism_assay_authority_source" \
+    && ! -L "$stage5_tiny_repeated_metal_trajectory_determinism_assay_authority_source" ]] ||
+    die "Stage-5 trajectory-determinism authority is missing or linked"
+[[ -f "$stage5_tiny_repeated_metal_trajectory_determinism_assay_authority_test" \
+    && ! -L "$stage5_tiny_repeated_metal_trajectory_determinism_assay_authority_test" ]] ||
+    die "Stage-5 trajectory-determinism authority test is missing or linked"
 [[ -f "$decoder_training_source" && ! -L "$decoder_training_source" ]] ||
     die "PrimeNativeDecoderTraining source is missing or linked"
 [[ -f "$decoder_training_validation_manifest" \
@@ -3567,6 +3617,8 @@ swiftc -frontend -parse "$stage4_tiny_durable_multileaf_package_resolved_scope_r
 swiftc -frontend -parse "$stage4_tiny_durable_multileaf_package_resolved_scope_repair_authority_test"
 swiftc -frontend -parse "$stage4_tiny_durable_multileaf_commit_fault_injection_execution_observation_source"
 swiftc -frontend -parse "$stage4_tiny_durable_multileaf_commit_fault_injection_execution_observation_test"
+swiftc -frontend -parse "$stage5_tiny_repeated_metal_trajectory_determinism_assay_authority_source"
+swiftc -frontend -parse "$stage5_tiny_repeated_metal_trajectory_determinism_assay_authority_test"
 swiftc -frontend -parse "$decoder_training_source"
 swiftc -frontend -parse "$decoder_training_validation_test"
 swiftc -frontend -parse "$decoder_stage3_tiny_cpu_resume_test"
@@ -8565,15 +8617,15 @@ for required_stage4_execution_observation_value in \
 done
 assert_metal_current_decoder_assertion_arc_identity \
     'Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' \
-    '100644' '12e42286d12b08327bfc1b2393c7dc136d033d6c' \
+    '100644' 'f63014cbf0dda276597126f650bb820daaf99d92' \
     '546' \
-    'fac7bdf1766ce52861df2df81579c7324f44753d092f554bfc42b91c0767af11'
+    '6dd4a53e8e6d6641c27547323db86eca07b1fc6265e5a57c362c3d4fe7432821'
 [[ "$(wc -l < "$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift" | \
         awk '{print $1}')" == "13" \
     && "$(grep -Fxc -- \
-        '        "24bb8290a09174ea70b14cc7f3303cf20a7912db5ff7e385d3e62051a3324abe"' \
+        '        "d83c414cf11ac5d4f91a18064efa69ae4ce32346d8b5eaba5d7bdbdb41d0bb8c"' \
         "$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift")" == "1" ]] ||
-    die "Stage-4 retirement embedded provenance identity changed"
+    die "Stage-5 authority embedded provenance identity changed"
 for forbidden_stage4_execution_observation_capability in \
     'import CoreGraphics' 'import Metal' 'import MLX' 'import MLXNN' \
     'import MLXOptimizers' 'FileManager' 'FileHandle' 'URLSession' 'Process(' \
@@ -8581,6 +8633,212 @@ for forbidden_stage4_execution_observation_capability in \
     ! grep -Fq -- "$forbidden_stage4_execution_observation_capability" \
         "$stage4_tiny_durable_multileaf_commit_fault_injection_execution_observation_source" ||
         die "Stage-4 execution observation gained capability: $forbidden_stage4_execution_observation_capability"
+done
+
+assert_metal_current_decoder_assertion_arc_identity \
+    'Sources/PrimeCore/PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayAuthority.swift' \
+    '100644' '71c69d89384c5c0878f43da309353093d159d43c' \
+    '64741' \
+    '367fc5c2759382f5980ceb59d25da27f945bfbff186f61b055bccca4411758ab'
+assert_metal_current_decoder_assertion_arc_identity \
+    'Tests/PrimeCoreTests/PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayAuthorityTests.swift' \
+    '100644' '42a2c60b7179f3f8c687b6c697513433a92eac30' \
+    '25386' \
+    '05f9a766860ea5c35b590b1d813a81eea0b42d1b0d941ee2b054509f0a3e7cdc'
+[[ "$(wc -l < \
+        "$stage5_tiny_repeated_metal_trajectory_determinism_assay_authority_source" | \
+        awk '{print $1}')" == "1297" \
+    && "$(wc -l < \
+        "$stage5_tiny_repeated_metal_trajectory_determinism_assay_authority_test" | \
+        awk '{print $1}')" == "540" \
+    && "$(awk '/^import / { print }' \
+        "$stage5_tiny_repeated_metal_trajectory_determinism_assay_authority_source")" \
+        == 'import Foundation' \
+    && "$(awk '/^import / || /^@testable import / { print }' \
+        "$stage5_tiny_repeated_metal_trajectory_determinism_assay_authority_test")" \
+        == $'import CoreFoundation\nimport Foundation\n@testable import PrimeCore\nimport XCTest' \
+    && "$(grep -Ec -- '^[[:space:]]+func test' \
+        "$stage5_tiny_repeated_metal_trajectory_determinism_assay_authority_test")" == "1" \
+    && "$(grep -Fc -- \
+        'PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayAuthorityTests:' \
+        "$stage5_tiny_repeated_metal_trajectory_determinism_assay_authority_test")" == "1" \
+    && "$(grep -Fc -- \
+        'func testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling()' \
+        "$stage5_tiny_repeated_metal_trajectory_determinism_assay_authority_test")" == "1" ]] ||
+    die "Stage-5 trajectory-determinism authority identity or sole-test surface changed"
+for required_stage5_tiny_repeated_metal_trajectory_authority_value in \
+    'public static let canonicalSHA256 =' \
+    '"00c49e63315b2aacb439204e778f54bcf63c2fdf643282f3bd64e2b3b4094089"' \
+    '"b198ba81f4c6958d70b56ea3a23f56f07fa90854"' \
+    '"54af1d38bdd454a924228a37a5b76a64ac5b56ae"' \
+    '"8c310bb61fb9b44f1e789332eb3cfc29681ee407"' \
+    '"9f9f792edaba668cd5bd2183cfbf00ca12b31193"' \
+    '"24bb8290a09174ea70b14cc7f3303cf20a7912db5ff7e385d3e62051a3324abe"' \
+    'stage4RetirementMergeIsCurrentAuthorityBase: true' \
+    'authorityMustMergeAndPassExactMainBeforeImplementation: true' \
+    'implementationMustBindFinalAuthorityMergeAndTree: true' \
+    'workflowRunID: 31_726_013_984' \
+    'workflowRunNumber: 97' \
+    'checkSuiteID: 86_069_785_338' \
+    'activeJobID: 94_534_454_341' \
+    'reviewedJobID: 94_535_376_461' \
+    'workflowRunID: 31_732_666_495' \
+    'workflowRunNumber: 99' \
+    'checkSuiteID: 86_089_225_356' \
+    'activeJobID: 94_556_644_948' \
+    'reviewedJobID: 94_557_541_771' \
+    'exactHeadPushRunCount: 1' \
+    'rerunCount: 0' \
+    'artifactCount: 0' \
+    'activeJobConclusion: "success"' \
+    'reviewedJobConclusion: "success"' \
+    'terminalConclusion: "success"' \
+    'focusedRootTestCount: 50' \
+    'focusedRootTestCount: 51' \
+    'focusedIsolatedTestCount: 6' \
+    'focusedWholeTestCount: 56' \
+    'focusedWholeTestCount: 57' \
+    'metalTestCount: 44' \
+    'maintainedRuntimeTestCount: 1' \
+    'maintainedRuntimeReceiptCount: 1' \
+    'tokenizerTestCount: 1' \
+    'tokenizerReceiptCount: 1' \
+    'stage4InvocationCount: 1' \
+    'stage4ReceiptCount: 1' \
+    'stage4InvocationCount: 0' \
+    'stage4ReceiptCount: 0' \
+    'rawJSONByteCount: 4_147' \
+    '"a0bbebb611b12ef1e88ffe625120b86a3a0caf7f29f0edbf20233c7fbe244fbd"' \
+    'workflowAuthoredRetryCount: 0' \
+    'gitInternalRetryScheduledCount: 0' \
+    'tlsFailureCount: 0' \
+    'tlsVerificationBypassCount: 0' \
+    'customCAInstallationCount: 0' \
+    'stage4LauncherSourcePreserved: true' \
+    'stage4SuccessfulAttemptConsumed: true' \
+    'stage4MechanicsEstablished: true' \
+    'stage4InvocationRetired: true' \
+    '"tiny_repeated_metal_trajectory_determinism_assay_v1"' \
+    '"measure_repeated_same_device_uninterrupted_and_resumed_exact_gradient_and_parameter_bytes"' \
+    '"MLX_ENABLE_TF32=0"' \
+    'metalDeviceIndex: 0' \
+    'exactMetalDeviceCount: 1' \
+    'sameMetalDeviceRequiredAcrossEveryTrialAndBranch: true' \
+    'crossDeviceComparisonAuthorized: false' \
+    'explicitDefaultGPUStreamRequired: true' \
+    'checkedEvaluationRequiredForEveryComparedArray: true' \
+    'explicitSynchronizeRequiredBeforeEveryByteRead: true' \
+    'exclusiveMetalDeviceLeaseRequiredForWholeAssay: true' \
+    'leaseType: "PrimeMetalDeviceLease"' \
+    'leaseModule: "PrimeCore"' \
+    'trainingValidationTestImportsPrimeCore: true' \
+    'trainingValidationTestDirectlyOwnsFullDurationLease: true' \
+    'leaseAcquiredBeforeCoreGraphicsMetalOrMLXAccess: true' \
+    'leaseHeldThroughPostflightAndReceipt: true' \
+    'leaseReleasedOnlyAfterReceipt: true' \
+    'singletonDeviceEnumerationRequired: true' \
+    'indexZeroMustMatchDefaultDevice: true' \
+    'postflightDeviceIdentityReverificationRequired: true' \
+    'swiftPMBuildConfiguration: "debug"' \
+    '"eager_uncompiled_no_compile_transform"' \
+    'mlxCompileTransformInvocationCount: 0' \
+    'uniqueParameterCount: 5_200' \
+    'independentTrialCount: 3' \
+    'totalTrajectoryBranchExecutionCount: 9' \
+    'allTrialsRunInOneProcess: true' \
+    'sourceSnapshotCaptureIsReadOnly: true' \
+    'sourceSnapshotBranchContinuesToTerminalStep: true' \
+    'restoredBranchUsesFreshModelOptimizerRNGAndCursor: true' \
+    'restoredBranchLoadsOnlyTheSourceSnapshot: true' \
+    'everyBranchReachesTerminalStep: true' \
+    'everyTrialUsesFreshObjectsAndArrays: true' \
+    'objectOrArrayAliasingAcrossBranchesAuthorized: false' \
+    'stateReuseAcrossTrialsAuthorized: false' \
+    'implicitOrGlobalMLXRandomStateAuthorized: false' \
+    'sourceSnapshotExistsOnlyInMemory: true' \
+    'durableCheckpointIOAuthorized: false' \
+    'filesystemArtifactIOAuthorized: false' \
+    'networkIOAuthorized: false' \
+    'buildCount: 1' \
+    'directXCTestCount: 1' \
+    'PRIME_NATIVE_DECODER_STAGE5_TINY_REPEATED_METAL_TRAJECTORY_DETERMINISM_RECEIPT=' \
+    'testRepeatedSameDeviceUninterruptedSourceSnapshotAndFreshRestoreExactBytes' \
+    'exactSourceStepWithinTrialAcrossProducingBranchesRequired: true' \
+    'exactSourceStepAcrossAllTrialsRequired: true' \
+    'exactSuccessorAndTerminalWithinTrialAcrossAllBranchesRequired: true' \
+    'exactSuccessorAndTerminalAcrossAllTrialsRequired: true' \
+    'unorderedOrToleranceComparisonAuthorized: false' \
+    'ulpToleranceEstablishesTrajectoryExactResume: false' \
+    'resultEstablishedByThisAuthority: false' \
+    'exactChangedPathCount: 5' \
+    'sourceAndTestAreOnlyNewPaths: true' \
+    '".github/scripts/prime-ci-native-decoder-stage5-tiny-repeated-metal-trajectory-determinism.sh"' \
+    '"Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderTraining.swift"' \
+    '"Tests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayTests.swift"' \
+    'rootPackageManifestMutationAuthorized: false' \
+    'rootPackageResolvedMutationAuthorized: false' \
+    'trainingValidationManifestMutationAuthorized: false' \
+    'trainingValidationLockMutationAuthorized: false' \
+    'trainingSourceMutationAuthorized: true' \
+    'existingMetalLauncherMutationAuthorized: false' \
+    'existingRuntimeLauncherMutationAuthorized: false' \
+    'existingTokenizerLauncherMutationAuthorized: false' \
+    'existingStage4LauncherMutationAuthorized: false' \
+    'newStage5LauncherRequired: true' \
+    'newTrainingValidationOneMethodTestRequired: true' \
+    'secureFetchMutationAuthorized: false' \
+    'workflowTimeoutChangeAuthorized: false' \
+    'existingCPUTrainingBehaviorMutationAuthorized: false' \
+    'stage5BoundedDevicePolicyRequired: true' \
+    'activeCheckoutDepth: 1' \
+    'reviewedCheckoutDepth: 1' \
+    'authorityRootTestCount: 52' \
+    'isolatedTestCount: 6' \
+    'implementationFocusedWholeTestCount: 58' \
+    'predecessorMetalTestCount: 44' \
+    'predecessorRuntimeTestCount: 1' \
+    'predecessorTokenizerTestCount: 1' \
+    'preStage5TotalTestCount: 104' \
+    'stage5DirectXCTestCount: 1' \
+    'totalTestCount: 105' \
+    'authorityStage5LauncherInvocationCount: 0' \
+    'authorityStage5ReceiptCount: 0' \
+    'authorityClosureLiveOrder:' \
+    'futureMechanicsLiveOrder:' \
+    'authorityOnlyNoAssayResultEvidence: true' \
+    'mechanicsImplementationAuthorizedAfterGreenAuthorityClosure: true' \
+    'oneExactMainExecutionOpportunityAuthorized: true' \
+    'threeBoundedSameProcessAssayTrialsAuthorized: true' \
+    'inMemorySourceSnapshotAuthorized: true' \
+    'additionalExecutionOrRerunAuthorized: false' \
+    'exactMetalGradientBytesEstablished: false' \
+    'metalDeterminismEstablished: false' \
+    'trainingExecutionObserved: false' \
+    'stage4RerunAuthorized: false' \
+    'stage6Authorized: false' \
+    'native300MAllocationAuthorized: false' \
+    'native300MTrainingAuthorized: false' \
+    'generalTrainingAuthorized: false' \
+    'generalTrainingResumeEstablished: false' \
+    'modelQualityEstablished: false' \
+    'checkpointAdmissionGranted: false' \
+    'candidateAdmissionGranted: false' \
+    'downstreamTrialAuthorized: false' \
+    'canaryAuthorized: false' \
+    'productUseAuthorized: false' \
+    'publicationAuthorized: false' \
+    'AUTHORIZED_stage5_tiny_single_device_three_trial_in_memory_exact_trajectory_determinism_assay_mechanics_and_one_exact_main_witness_after_green_authority_closure_no_durable_io_retention_cross_device_stage6_native300m_general_training_quality_admission_rerun_or_downstream_authority'; do
+    grep -Fq -- "$required_stage5_tiny_repeated_metal_trajectory_authority_value" \
+        "$stage5_tiny_repeated_metal_trajectory_determinism_assay_authority_source" ||
+        die "Stage-5 trajectory-determinism authority lost: $required_stage5_tiny_repeated_metal_trajectory_authority_value"
+done
+for forbidden_stage5_tiny_repeated_metal_trajectory_authority_capability in \
+    'import CoreGraphics' 'import Metal' 'import MLX' 'import MLXNN' \
+    'import MLXOptimizers' 'FileManager' 'FileHandle' 'URLSession' 'Process(' \
+    'posix_spawn' 'execve('; do
+    ! grep -Fq -- "$forbidden_stage5_tiny_repeated_metal_trajectory_authority_capability" \
+        "$stage5_tiny_repeated_metal_trajectory_determinism_assay_authority_source" ||
+        die "Stage-5 trajectory-determinism authority gained capability: $forbidden_stage5_tiny_repeated_metal_trajectory_authority_capability"
 done
 
 [[ "$(awk '/^import / { print }' "$decoder_authority_test")" \
