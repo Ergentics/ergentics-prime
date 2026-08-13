@@ -731,24 +731,26 @@ bash -n "$decoder_stage3_tiny_cpu_resume_gate_path" ||
     die "Stage-3 tiny CPU resume launcher is not valid Bash"
 [[ "$(git -C "$prime_root" hash-object \
         "$decoder_stage3_tiny_cpu_resume_gate_path")" \
-        == "25037b61310817772e28b58554340e07846baf2c" \
+        == "f912e776309866eaec5c6a162892c096b9bc2488" \
     && "$(wc -c < "$decoder_stage3_tiny_cpu_resume_gate_path" | awk '{print $1}')" \
-        == "25105" \
+        == "26319" \
     && "$(shasum -a 256 "$decoder_stage3_tiny_cpu_resume_gate_path" | awk '{print $1}')" \
-        == "e7e2fa08c85e3ccbdcbe9759ecd01b12e37638e5405919647b4d3088d46e2c8a" ]] ||
+        == "1a184b52e0055128afbb6a9ccc22c46e8a929f30b3e0f43752f6a43e48eae6bd" ]] ||
     die "Stage-3 tiny CPU resume launcher identity changed"
 for required_stage3_launcher_value in \
-    'readonly base_revision="e175bc5b99e89002184850d3fce5db595f2b9311"' \
-    'readonly base_tree="a4234937afa62ab85d26876c84481622b0505723"' \
+    'readonly base_revision="372248bd2e2d282bbb2b0fe39273211aee0da43a"' \
+    'readonly base_tree="f4df5d9b17c216748387435ef0f1f8d14ede2f54"' \
     'readonly authority_canonical_sha256="0ab57d5e8c71b18d03c9730da1e90399d57c05ccaa155aa31aff0c3001987fe6"' \
     'readonly repair_authority_canonical_sha256="34cd246fbeb754f31f7ecf3fee03d35fdc5c615e5a61c245e609a7ef03845b59"' \
+    'readonly inventory_order_repair_authority_canonical_sha256="52f2619ebcbc6e8d608042ffb107411bbcb6ac4630482dba0007436f52bb03ce"' \
     'readonly receipt_prefix="PRIME_NATIVE_DECODER_STAGE3_TINY_CPU_EXPLICIT_RNG_CURSOR_RESUME_RECEIPT="' \
-    'A\tSources/PrimeCore/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeAuthorityCanonicalBindingRepairAuthority.swift' \
-    'A\tTests/PrimeCoreTests/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeAuthorityCanonicalBindingRepairAuthorityTests.swift' \
+    'A\tSources/PrimeCore/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeValidationInventoryOrderRepairAuthority.swift' \
+    'A\tTests/PrimeCoreTests/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeValidationInventoryOrderRepairAuthorityTests.swift' \
     'M\t.github/scripts/prime-ci-native-decoder-stage3-tiny-cpu-resume.sh' \
     'fail "Stage-3 direct-successor scope is not the exact six paths"' \
-    'grep -Fq '\''Executed 46 tests, with 0 failures'\'' "$active_root_log"' \
+    'grep -Fq '\''Executed 47 tests, with 0 failures'\'' "$active_root_log"' \
     'grep -Fq "$authority_canonical_sha256" "$authority_source"' \
+    'grep -Fq "$inventory_order_repair_authority_canonical_sha256" \' \
     'grep -Fq '\''Executed 44 tests, with 0 failures'\'' "$metal_log"' \
     'readonly test_method="testTinyCPUExplicitRNGCursorResumeIsExactAndFailClosed"' \
     'TMPDIR="$runner_temp" swift build \' \
@@ -961,6 +963,7 @@ readonly stage2_fresh_metallib_evidence_surface_repair_authority_filter='PrimeCo
 readonly stage2_fresh_metallib_evidence_surface_repair_execution_observation_filter='PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapFreshMetallibEvidenceSurfaceRepairExecutionObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndSuccessCeiling'
 readonly stage3_tiny_cpu_explicit_rng_cursor_resume_authority_filter='PrimeCoreTests.PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling'
 readonly stage3_tiny_cpu_explicit_rng_cursor_resume_canonical_binding_repair_authority_filter='PrimeCoreTests.PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeAuthorityCanonicalBindingRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling'
+readonly stage3_tiny_cpu_explicit_rng_cursor_resume_validation_inventory_order_repair_authority_filter='PrimeCoreTests.PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeValidationInventoryOrderRepairAuthorityTests/testFrozenV1CanonicalCodableRecursiveMutationAndRepairCeiling'
 [[ "$(grep -Fc -- "$tiny_cpu_mechanics_authority_filter" \
         "$workflow_path")" == "1" \
     && "$(grep -Fc -- "$tiny_cpu_mechanics_failure_observation_filter" \
@@ -990,7 +993,7 @@ readonly stage3_tiny_cpu_explicit_rng_cursor_resume_canonical_binding_repair_aut
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 46 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 47 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not run the exact Stage-2 authority and failure-observation pure contracts"
 [[ "$(grep -Fc -- "$private_dependency_tls_failure_observation_filter" \
@@ -1082,7 +1085,7 @@ readonly stage3_tiny_cpu_explicit_rng_cursor_resume_canonical_binding_repair_aut
         "          grep -Fq 'PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapFreshMetallibCrossBindingExecutionFailureObservationTests' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 46 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 47 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the Stage-2 metallib bootstrap repair, failure observations, and classifier repair authority"
 [[ "$(grep -Fc -- \
@@ -1140,6 +1143,19 @@ readonly stage3_tiny_cpu_explicit_rng_cursor_resume_canonical_binding_repair_aut
         "          grep -Fq 'PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeAuthorityCanonicalBindingRepairAuthorityTests' \\" \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the Stage-3 canonical-binding repair authority"
+[[ "$(grep -Fc -- \
+        "$stage3_tiny_cpu_explicit_rng_cursor_resume_validation_inventory_order_repair_authority_filter" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        'Sources/PrimeCore/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeValidationInventoryOrderRepairAuthority.swift' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        'Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeValidationInventoryOrderRepairAuthorityTests.swift' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        "          grep -Fq 'PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeValidationInventoryOrderRepairAuthorityTests' \\" \
+        "$workflow_path")" == "1" ]] ||
+    die "hosted workflow does not parse and run the Stage-3 validation-inventory order repair authority"
 for required_stage2_metallib_bootstrap_repair_failure_summary_value in \
     'Exact-main workflow run 31544702133 attempt 1' \
     'passed secure fetch, root 39, Metal 44, maintained runtime 1, and tokenizer 1' \
@@ -1227,6 +1243,17 @@ for required_stage3_tiny_cpu_explicit_rng_cursor_resume_summary_value in \
         "$required_stage3_tiny_cpu_explicit_rng_cursor_resume_summary_value" \
         "$workflow_path")" == "1" ]] ||
         die "workflow lost the Stage-3 explicit-RNG/cursor-resume authority summary: $required_stage3_tiny_cpu_explicit_rng_cursor_resume_summary_value"
+done
+for required_stage3_inventory_order_repair_summary_value in \
+    'Exact-main run 31674969104 attempt 1' \
+    'root 46, Metal 44, maintained runtime 1, and tokenizer 1 passed' \
+    'expected the two validation test paths in an order contrary to its own bytewise sort' \
+    'exactly one expected-order replacement and one new direct-main successor' \
+    'does not recover or rerun either consumed attempt' \
+    'either consumed attempt and grants no Stage-3 success, checkpoint, downstream stage, artifact, product, or publication claim'; do
+    [[ "$(grep -Fc -- "$required_stage3_inventory_order_repair_summary_value" \
+        "$workflow_path")" == "1" ]] ||
+        die "workflow lost the Stage-3 inventory-order repair summary: $required_stage3_inventory_order_repair_summary_value"
 done
 [[ "$(grep -Fc -- \
         'Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderTraining.swift' \
@@ -2218,6 +2245,8 @@ readonly stage3_tiny_cpu_explicit_rng_cursor_resume_authority_source="$prime_roo
 readonly stage3_tiny_cpu_explicit_rng_cursor_resume_authority_test="$prime_root/Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeAuthorityTests.swift"
 readonly stage3_tiny_cpu_explicit_rng_cursor_resume_canonical_binding_repair_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeAuthorityCanonicalBindingRepairAuthority.swift"
 readonly stage3_tiny_cpu_explicit_rng_cursor_resume_canonical_binding_repair_authority_test="$prime_root/Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeAuthorityCanonicalBindingRepairAuthorityTests.swift"
+readonly stage3_tiny_cpu_explicit_rng_cursor_resume_validation_inventory_order_repair_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeValidationInventoryOrderRepairAuthority.swift"
+readonly stage3_tiny_cpu_explicit_rng_cursor_resume_validation_inventory_order_repair_authority_test="$prime_root/Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeValidationInventoryOrderRepairAuthorityTests.swift"
 readonly decoder_training_source="$prime_root/Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderTraining.swift"
 readonly decoder_training_validation_root="$prime_root/Tests/PrimeNativeDecoderTrainingValidation"
 readonly decoder_training_validation_manifest="$decoder_training_validation_root/Package.swift"
@@ -2380,6 +2409,12 @@ readonly decoder_stage3_tiny_cpu_resume_test="$decoder_training_validation_root/
 [[ -f "$stage3_tiny_cpu_explicit_rng_cursor_resume_canonical_binding_repair_authority_test" \
     && ! -L "$stage3_tiny_cpu_explicit_rng_cursor_resume_canonical_binding_repair_authority_test" ]] ||
     die "Stage-3 canonical-binding repair authority test is missing or linked"
+[[ -f "$stage3_tiny_cpu_explicit_rng_cursor_resume_validation_inventory_order_repair_authority_source" \
+    && ! -L "$stage3_tiny_cpu_explicit_rng_cursor_resume_validation_inventory_order_repair_authority_source" ]] ||
+    die "Stage-3 validation-inventory order repair authority is missing or linked"
+[[ -f "$stage3_tiny_cpu_explicit_rng_cursor_resume_validation_inventory_order_repair_authority_test" \
+    && ! -L "$stage3_tiny_cpu_explicit_rng_cursor_resume_validation_inventory_order_repair_authority_test" ]] ||
+    die "Stage-3 validation-inventory order repair authority test is missing or linked"
 [[ -f "$decoder_training_source" && ! -L "$decoder_training_source" ]] ||
     die "PrimeNativeDecoderTraining source is missing or linked"
 [[ -f "$decoder_training_validation_manifest" \
@@ -3262,6 +3297,8 @@ swiftc -frontend -parse "$stage3_tiny_cpu_explicit_rng_cursor_resume_authority_s
 swiftc -frontend -parse "$stage3_tiny_cpu_explicit_rng_cursor_resume_authority_test"
 swiftc -frontend -parse "$stage3_tiny_cpu_explicit_rng_cursor_resume_canonical_binding_repair_authority_source"
 swiftc -frontend -parse "$stage3_tiny_cpu_explicit_rng_cursor_resume_canonical_binding_repair_authority_test"
+swiftc -frontend -parse "$stage3_tiny_cpu_explicit_rng_cursor_resume_validation_inventory_order_repair_authority_source"
+swiftc -frontend -parse "$stage3_tiny_cpu_explicit_rng_cursor_resume_validation_inventory_order_repair_authority_test"
 swiftc -frontend -parse "$decoder_training_source"
 swiftc -frontend -parse "$decoder_training_validation_test"
 swiftc -frontend -parse "$decoder_stage3_tiny_cpu_resume_test"
@@ -7770,6 +7807,69 @@ for forbidden_stage3_canonical_binding_repair_capability in \
     ! grep -Fq -- "$forbidden_stage3_canonical_binding_repair_capability" \
         "$stage3_tiny_cpu_explicit_rng_cursor_resume_canonical_binding_repair_authority_source" ||
         die "Stage-3 canonical-binding repair authority gained capability: $forbidden_stage3_canonical_binding_repair_capability"
+done
+
+assert_metal_current_decoder_assertion_arc_identity \
+    'Sources/PrimeCore/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeValidationInventoryOrderRepairAuthority.swift' \
+    '100644' \
+    'a3537ccf14aaa1ceb158688999fdd6fb2af5f5cc' \
+    '10830' \
+    'cfac0afd75b61950aea7a4fa16c067a07d934d99a5cc2b27905725b3563b840d'
+assert_metal_current_decoder_assertion_arc_identity \
+    'Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeValidationInventoryOrderRepairAuthorityTests.swift' \
+    '100644' \
+    '9db7797c80c57b0b97e108f3b9688e4c069ea015' \
+    '3453' \
+    '3395533b29fa5b00a62448a42d9da4fa821e5f5eb1232c0f19f3ca5d749ffdb8'
+[[ "$(wc -l < "$stage3_tiny_cpu_explicit_rng_cursor_resume_validation_inventory_order_repair_authority_source" | awk '{print $1}')" == "215" \
+    && "$(wc -l < "$stage3_tiny_cpu_explicit_rng_cursor_resume_validation_inventory_order_repair_authority_test" | awk '{print $1}')" == "64" \
+    && "$(awk '/^import / { print }' "$stage3_tiny_cpu_explicit_rng_cursor_resume_validation_inventory_order_repair_authority_source")" == 'import Foundation' \
+    && "$(awk '/^import / || /^@testable import / { print }' "$stage3_tiny_cpu_explicit_rng_cursor_resume_validation_inventory_order_repair_authority_test")" == $'import CoreFoundation\nimport Foundation\n@testable import PrimeCore\nimport XCTest' \
+    && "$(grep -Ec -- '^[[:space:]]+func test' "$stage3_tiny_cpu_explicit_rng_cursor_resume_validation_inventory_order_repair_authority_test")" == "1" ]] ||
+    die "Stage-3 validation-inventory order repair authority identity surface changed"
+for required_stage3_inventory_order_repair_value in \
+    'public static let canonicalSHA256 = "52f2619ebcbc6e8d608042ffb107411bbcb6ac4630482dba0007436f52bb03ce"' \
+    'mergeRevision: "372248bd2e2d282bbb2b0fe39273211aee0da43a"' \
+    'workflowRunID: 31_674_969_104' \
+    'workflowRunNumber: 87' \
+    'checkSuiteID: 85_926_465_475' \
+    'rootTestCount: 46' \
+    'stage3LauncherInvocationCount: 1' \
+    'stage3BuildCount: 0' \
+    'stage3TestStartedCount: 0' \
+    'stage3ReceiptCount: 0' \
+    'packageInventoryMutationObserved: false' \
+    'failureWasBeforeStage3Build: true' \
+    'stage3MechanicsFailureEstablished: false' \
+    'expectedRootTestCount: 47' \
+    'inventoryExpectedOrderReplacementCount: 1' \
+    'retryOrRerunAuthorized: false' \
+    'oneDistinctDirectMainSuccessorAuthorized: true' \
+    'stage3ExecutionEstablished: false' \
+    'stage4Authorized: false' \
+    'terminalOutcomeObservationRequired: true'; do
+    grep -Fq -- "$required_stage3_inventory_order_repair_value" \
+        "$stage3_tiny_cpu_explicit_rng_cursor_resume_validation_inventory_order_repair_authority_source" ||
+        die "Stage-3 validation-inventory order repair authority lost: $required_stage3_inventory_order_repair_value"
+done
+for required_stage3_inventory_order_repair_test_value in \
+    'func testFrozenV1CanonicalCodableRecursiveMutationAndRepairCeiling() throws {' \
+    'XCTAssertGreaterThan(mutations, 45)' \
+    'XCTAssertFalse(authority.inventory.packageInventoryMutationObserved)' \
+    'XCTAssertFalse(authority.inventory.stage3MechanicsFailureEstablished)' \
+    'XCTAssertFalse(authority.repair.retryOrRerunAuthorized)' \
+    'XCTAssertFalse(authority.ceiling.stage3ExecutionEstablished)' \
+    'XCTAssertTrue(authority.ceiling.terminalOutcomeObservationRequired)'; do
+    grep -Fq -- "$required_stage3_inventory_order_repair_test_value" \
+        "$stage3_tiny_cpu_explicit_rng_cursor_resume_validation_inventory_order_repair_authority_test" ||
+        die "Stage-3 validation-inventory order repair authority test lost: $required_stage3_inventory_order_repair_test_value"
+done
+for forbidden_stage3_inventory_order_repair_capability in \
+    'import CoreGraphics' 'import Metal' 'import MLX' 'import MLXNN' \
+    'import MLXOptimizers' 'FileManager' 'FileHandle' 'URLSession' 'Process('; do
+    ! grep -Fq -- "$forbidden_stage3_inventory_order_repair_capability" \
+        "$stage3_tiny_cpu_explicit_rng_cursor_resume_validation_inventory_order_repair_authority_source" ||
+        die "Stage-3 validation-inventory order repair authority gained capability: $forbidden_stage3_inventory_order_repair_capability"
 done
 
 [[ "$(awk '/^import / { print }' "$decoder_authority_test")" \

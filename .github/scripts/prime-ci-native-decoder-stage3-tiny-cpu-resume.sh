@@ -16,12 +16,13 @@ readonly prime_root="$(cd "$(dirname "$0")/../.." && pwd -P)"
 readonly runner_temp="${RUNNER_TEMP:?RUNNER_TEMP is required}"
 readonly exact_revision="${EXACT_REVISION:?EXACT_REVISION is required}"
 readonly mlx_revision="${PRIME_MLX_REVISION:?PRIME_MLX_REVISION is required}"
-readonly base_revision="e175bc5b99e89002184850d3fce5db595f2b9311"
-readonly base_tree="a4234937afa62ab85d26876c84481622b0505723"
+readonly base_revision="372248bd2e2d282bbb2b0fe39273211aee0da43a"
+readonly base_tree="f4df5d9b17c216748387435ef0f1f8d14ede2f54"
 readonly required_mlx_revision="d37885a278f1c37484a94d0f401a418735e66519"
 readonly numerics_revision="0c0290ff6b24942dadb83a929ffaaa1481df04a2"
 readonly authority_canonical_sha256="0ab57d5e8c71b18d03c9730da1e90399d57c05ccaa155aa31aff0c3001987fe6"
 readonly repair_authority_canonical_sha256="34cd246fbeb754f31f7ecf3fee03d35fdc5c615e5a61c245e609a7ef03845b59"
+readonly inventory_order_repair_authority_canonical_sha256="52f2619ebcbc6e8d608042ffb107411bbcb6ac4630482dba0007436f52bb03ce"
 readonly authority_id="prime_native_decoder_tiny_cpu_explicit_rng_cursor_resume_authority_v1"
 readonly receipt_prefix="PRIME_NATIVE_DECODER_STAGE3_TINY_CPU_EXPLICIT_RNG_CURSOR_RESUME_RECEIPT="
 
@@ -35,6 +36,8 @@ readonly authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderTinyC
 readonly authority_test="$prime_root/Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeAuthorityTests.swift"
 readonly repair_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeAuthorityCanonicalBindingRepairAuthority.swift"
 readonly repair_authority_test="$prime_root/Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeAuthorityCanonicalBindingRepairAuthorityTests.swift"
+readonly inventory_order_repair_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeValidationInventoryOrderRepairAuthority.swift"
+readonly inventory_order_repair_authority_test="$prime_root/Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeValidationInventoryOrderRepairAuthorityTests.swift"
 readonly embedded_provenance="$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift"
 
 readonly mlx_bare="$runner_temp/ergentics-mlx-swift.git"
@@ -136,7 +139,7 @@ readonly exact_tree="$(git -C "$prime_root" rev-parse 'HEAD^{tree}')"
 [[ "$(git -C "$prime_root" rev-parse "${second_parent}^{tree}")" == "$exact_tree" ]] ||
     fail "merge tree differs from reviewed head tree"
 
-readonly expected_changed_status=$'A\tSources/PrimeCore/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeAuthorityCanonicalBindingRepairAuthority.swift\nA\tTests/PrimeCoreTests/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeAuthorityCanonicalBindingRepairAuthorityTests.swift\nM\t.github/scripts/prime-ci-active-root-quarantine.sh\nM\t.github/scripts/prime-ci-native-decoder-stage3-tiny-cpu-resume.sh\nM\t.github/workflows/prime-active-root-quarantine.yml\nM\tSources/PrimeCore/PrimeEmbeddedBuildProvenance.swift'
+readonly expected_changed_status=$'A\tSources/PrimeCore/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeValidationInventoryOrderRepairAuthority.swift\nA\tTests/PrimeCoreTests/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeValidationInventoryOrderRepairAuthorityTests.swift\nM\t.github/scripts/prime-ci-active-root-quarantine.sh\nM\t.github/scripts/prime-ci-native-decoder-stage3-tiny-cpu-resume.sh\nM\t.github/workflows/prime-active-root-quarantine.yml\nM\tSources/PrimeCore/PrimeEmbeddedBuildProvenance.swift'
 readonly observed_changed_status="$(git -C "$prime_root" diff-tree \
     --no-commit-id --name-status --no-renames -r \
     "$first_parent" "$exact_revision" | LC_ALL=C sort)"
@@ -179,6 +182,15 @@ assert_pinned_file 'Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUExplicitRNGCur
     '3401d564066cd7529d0001d505d91690a0290ddcd79c2242f6a97e8d8f0d5d74'
 grep -Fq "$repair_authority_canonical_sha256" "$repair_authority_source" ||
     fail "repair authority canonical digest changed"
+assert_pinned_file 'Sources/PrimeCore/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeValidationInventoryOrderRepairAuthority.swift' \
+    '100644' 'a3537ccf14aaa1ceb158688999fdd6fb2af5f5cc' '10830' \
+    'cfac0afd75b61950aea7a4fa16c067a07d934d99a5cc2b27905725b3563b840d'
+assert_pinned_file 'Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeValidationInventoryOrderRepairAuthorityTests.swift' \
+    '100644' '9db7797c80c57b0b97e108f3b9688e4c069ea015' '3453' \
+    '3395533b29fa5b00a62448a42d9da4fa821e5f5eb1232c0f19f3ca5d749ffdb8'
+grep -Fq "$inventory_order_repair_authority_canonical_sha256" \
+    "$inventory_order_repair_authority_source" ||
+    fail "inventory-order repair authority canonical digest changed"
 assert_pinned_file 'Tests/PrimeNativeDecoderTrainingValidation/Package.swift' \
     '100644' '9f05e5a17426f00adf9dad7b55d84057122e98f9' '1054' \
     '0523184de79bb204113432428e635113220e1f3f8ba20177762959a73e861d45'
@@ -196,7 +208,7 @@ assert_pinned_file 'Tests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNative
     '39051b266433bb510887750bafbc773646181f75cf85b2339ddd9fccb817cf6a'
 
 [[ "$(find "$validation_root" -type f ! -path '*/.*' -print | LC_ALL=C sort)" \
-    == "$validation_lock"$'\n'"$validation_manifest"$'\n'"$retained_stage2_test"$'\n'"$stage3_test" ]] ||
+    == "$validation_lock"$'\n'"$validation_manifest"$'\n'"$stage3_test"$'\n'"$retained_stage2_test" ]] ||
     fail "validation package inventory changed"
 
 assert_regular_file() {
@@ -221,8 +233,8 @@ readonly predecessor_receipt_logs=("$runtime_probe_log" "$tokenizer_probe_log")
 for predecessor_log in "${predecessor_test_logs[@]}" "${predecessor_receipt_logs[@]}"; do
     assert_regular_file "$predecessor_log"
 done
-grep -Fq 'Executed 46 tests, with 0 failures' "$active_root_log" ||
-    fail "root-46 contracts did not complete"
+grep -Fq 'Executed 47 tests, with 0 failures' "$active_root_log" ||
+    fail "root-47 contracts did not complete"
 grep -Fq 'Executed 44 tests, with 0 failures' "$metal_log" ||
     fail "Metal 44 did not complete"
 grep -Fq 'Executed 1 test, with 0 failures' "$runtime_test_log" ||
@@ -381,7 +393,7 @@ readonly receipt_json="$(jq -cnS \
       execution:{revision:$revision,tree:$tree,first_parent_revision:$first_parent,
         second_parent_revision:$second_parent,parent_count:2,changed_paths:$changed_paths,
         github_event_name:"push",github_ref:"refs/heads/main",github_run_attempt:1},
-      predecessor:{focused_root_test_count:46,focused_isolated_test_count:6,
+      predecessor:{focused_root_test_count:47,focused_isolated_test_count:6,
         metal_test_count:44,maintained_runtime_test_count:1,tokenizer_test_count:1,
         retained_order:["metal","maintained_runtime","tokenizer","stage3"]},
       metallib:{byte_count:$metallib_byte_count,sha256:$metallib_sha256,
