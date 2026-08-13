@@ -962,6 +962,7 @@ readonly stage3_tiny_cpu_explicit_rng_cursor_resume_canonical_binding_repair_aut
 readonly stage3_tiny_cpu_explicit_rng_cursor_resume_validation_inventory_order_repair_authority_filter='PrimeCoreTests.PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeValidationInventoryOrderRepairAuthorityTests/testFrozenV1CanonicalCodableRecursiveMutationAndRepairCeiling'
 readonly stage3_tiny_cpu_explicit_rng_cursor_resume_execution_observation_filter='PrimeCoreTests.PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeExecutionObservationTests/testFrozenV1CanonicalCodableRecursiveMutationAndSuccessCeiling'
 readonly stage4_tiny_durable_multileaf_commit_fault_injection_authority_filter='PrimeCoreTests.PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling'
+readonly stage4_tiny_durable_multileaf_package_resolved_scope_repair_authority_filter='PrimeCoreTests.PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionPackageResolvedScopeRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling'
 [[ "$(grep -Fc -- "$tiny_cpu_mechanics_authority_filter" \
         "$workflow_path")" == "1" \
     && "$(grep -Fc -- "$tiny_cpu_mechanics_failure_observation_filter" \
@@ -991,7 +992,7 @@ readonly stage4_tiny_durable_multileaf_commit_fault_injection_authority_filter='
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 49 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 50 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not run the exact Stage-2 authority and failure-observation pure contracts"
 [[ "$(grep -Fc -- "$private_dependency_tls_failure_observation_filter" \
@@ -1083,7 +1084,7 @@ readonly stage4_tiny_durable_multileaf_commit_fault_injection_authority_filter='
         "          grep -Fq 'PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapFreshMetallibCrossBindingExecutionFailureObservationTests' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 49 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 50 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the Stage-2 metallib bootstrap repair, failure observations, and classifier repair authority"
 [[ "$(grep -Fc -- \
@@ -1180,6 +1181,19 @@ readonly stage4_tiny_durable_multileaf_commit_fault_injection_authority_filter='
         "          grep -Fq 'PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionAuthorityTests' \\" \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run exactly the Stage-4 tiny durable multileaf authority"
+[[ "$(grep -Fc -- \
+        "$stage4_tiny_durable_multileaf_package_resolved_scope_repair_authority_filter" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        'Sources/PrimeCore/PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionPackageResolvedScopeRepairAuthority.swift' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        'Tests/PrimeCoreTests/PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionPackageResolvedScopeRepairAuthorityTests.swift' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        "          grep -Fq 'PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionPackageResolvedScopeRepairAuthorityTests' \\" \
+        "$workflow_path")" == "1" ]] ||
+    die "hosted workflow does not parse and run exactly the Stage-4 Package.resolved scope-repair authority"
 for required_stage4_tiny_durable_multileaf_authority_summary_value in \
     'The dependency-free Stage-4 tiny durable multileaf authority is pure and nonexecuting.' \
     'Only after this authority merges and its exact-main depth-one closure passes may one separately scoped exact-main mechanics successor' \
@@ -1191,6 +1205,19 @@ for required_stage4_tiny_durable_multileaf_authority_summary_value in \
         "$required_stage4_tiny_durable_multileaf_authority_summary_value" \
         "$workflow_path")" == "1" ]] ||
         die "workflow lost the exact Stage-4 authority summary: $required_stage4_tiny_durable_multileaf_authority_summary_value"
+done
+for required_stage4_package_resolved_scope_repair_summary_value in \
+    'Exact-main run 31712088411 attempt 1 closed the pure Stage-4 authority after root 49, Metal 44, maintained runtime 1, and tokenizer 1 passed with the Stage-4 launcher absent.' \
+    'Two successful canonical package resolutions proved that adding only the internal Training-to-Checkpoint target edge leaves Package.resolved byte-identical' \
+    'the original exact-nine mechanics scope is impossible without fabricated lock churn and no Stage-4 attempt was consumed' \
+    'substitutes exactly the truthful eight-path mechanics scope, freezes the lock unchanged' \
+    'permits one later mechanics successor only after this repair merges and its root-50 exact-main closure passes' \
+    'performs no mechanics, filesystem, checkpoint, or launcher work' \
+    'grants no rerun, retention, admission, Stage 5, Native-300M, product, publication, or downstream authority'; do
+    [[ "$(grep -Fc -- \
+        "$required_stage4_package_resolved_scope_repair_summary_value" \
+        "$workflow_path")" == "1" ]] ||
+        die "workflow lost the exact Stage-4 Package.resolved scope repair: $required_stage4_package_resolved_scope_repair_summary_value"
 done
 for required_stage2_metallib_bootstrap_repair_failure_summary_value in \
     'Exact-main workflow run 31544702133 attempt 1' \
@@ -2298,6 +2325,8 @@ readonly stage3_tiny_cpu_explicit_rng_cursor_resume_execution_observation_source
 readonly stage3_tiny_cpu_explicit_rng_cursor_resume_execution_observation_test="$prime_root/Tests/PrimeCoreTests/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeExecutionObservationTests.swift"
 readonly stage4_tiny_durable_multileaf_commit_fault_injection_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionAuthority.swift"
 readonly stage4_tiny_durable_multileaf_commit_fault_injection_authority_test="$prime_root/Tests/PrimeCoreTests/PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionAuthorityTests.swift"
+readonly stage4_tiny_durable_multileaf_package_resolved_scope_repair_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionPackageResolvedScopeRepairAuthority.swift"
+readonly stage4_tiny_durable_multileaf_package_resolved_scope_repair_authority_test="$prime_root/Tests/PrimeCoreTests/PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionPackageResolvedScopeRepairAuthorityTests.swift"
 readonly decoder_training_source="$prime_root/Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderTraining.swift"
 readonly decoder_training_validation_root="$prime_root/Tests/PrimeNativeDecoderTrainingValidation"
 readonly decoder_training_validation_manifest="$decoder_training_validation_root/Package.swift"
@@ -2478,6 +2507,12 @@ readonly decoder_stage3_tiny_cpu_resume_test="$decoder_training_validation_root/
 [[ -f "$stage4_tiny_durable_multileaf_commit_fault_injection_authority_test" \
     && ! -L "$stage4_tiny_durable_multileaf_commit_fault_injection_authority_test" ]] ||
     die "Stage-4 tiny durable multileaf authority test is missing or linked"
+[[ -f "$stage4_tiny_durable_multileaf_package_resolved_scope_repair_authority_source" \
+    && ! -L "$stage4_tiny_durable_multileaf_package_resolved_scope_repair_authority_source" ]] ||
+    die "Stage-4 Package.resolved scope-repair authority is missing or linked"
+[[ -f "$stage4_tiny_durable_multileaf_package_resolved_scope_repair_authority_test" \
+    && ! -L "$stage4_tiny_durable_multileaf_package_resolved_scope_repair_authority_test" ]] ||
+    die "Stage-4 Package.resolved scope-repair authority test is missing or linked"
 [[ -f "$decoder_training_source" && ! -L "$decoder_training_source" ]] ||
     die "PrimeNativeDecoderTraining source is missing or linked"
 [[ -f "$decoder_training_validation_manifest" \
@@ -3366,6 +3401,8 @@ swiftc -frontend -parse "$stage3_tiny_cpu_explicit_rng_cursor_resume_execution_o
 swiftc -frontend -parse "$stage3_tiny_cpu_explicit_rng_cursor_resume_execution_observation_test"
 swiftc -frontend -parse "$stage4_tiny_durable_multileaf_commit_fault_injection_authority_source"
 swiftc -frontend -parse "$stage4_tiny_durable_multileaf_commit_fault_injection_authority_test"
+swiftc -frontend -parse "$stage4_tiny_durable_multileaf_package_resolved_scope_repair_authority_source"
+swiftc -frontend -parse "$stage4_tiny_durable_multileaf_package_resolved_scope_repair_authority_test"
 swiftc -frontend -parse "$decoder_training_source"
 swiftc -frontend -parse "$decoder_training_validation_test"
 swiftc -frontend -parse "$decoder_stage3_tiny_cpu_resume_test"
@@ -8107,6 +8144,88 @@ for forbidden_stage4_tiny_durable_multileaf_authority_capability in \
     ! grep -Fq -- "$forbidden_stage4_tiny_durable_multileaf_authority_capability" \
         "$stage4_tiny_durable_multileaf_commit_fault_injection_authority_source" ||
         die "Stage-4 tiny durable multileaf authority gained capability: $forbidden_stage4_tiny_durable_multileaf_authority_capability"
+done
+
+assert_metal_current_decoder_assertion_arc_identity \
+    'Package.resolved' \
+    '100644' '14d804bb4291720477240c27e24de6fbdc876b3b' '645' \
+    'bd7a18ec5b8def3b453d7eb86ba43a2f277c2308c9da806845b69ca5f76cd375'
+assert_metal_current_decoder_assertion_arc_identity \
+    'Sources/PrimeCore/PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionPackageResolvedScopeRepairAuthority.swift' \
+    '100644' '3e2c1065d15f2a3dc40a9aebe716d8a07e9d8d9e' '20899' \
+    'a3ceff4fba525ec8bc625ce416feed78050f52da354bbcd3068e74552a8efe60'
+assert_metal_current_decoder_assertion_arc_identity \
+    'Tests/PrimeCoreTests/PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionPackageResolvedScopeRepairAuthorityTests.swift' \
+    '100644' 'b06c46b77ed4b02b4953334fad2ddd2ec8d4f27d' '14773' \
+    'aaf5d4e29842fd3b2695ca45aaf587d771eb1cefe9c4cc106f9974d3d3d837f3'
+[[ "$(wc -l < \
+        "$stage4_tiny_durable_multileaf_package_resolved_scope_repair_authority_source" | \
+        awk '{print $1}')" == "446" \
+    && "$(wc -l < \
+        "$stage4_tiny_durable_multileaf_package_resolved_scope_repair_authority_test" | \
+        awk '{print $1}')" == "361" \
+    && "$(awk '/^import / { print }' \
+        "$stage4_tiny_durable_multileaf_package_resolved_scope_repair_authority_source")" \
+        == 'import Foundation' \
+    && "$(awk '/^import / || /^@testable import / { print }' \
+        "$stage4_tiny_durable_multileaf_package_resolved_scope_repair_authority_test")" \
+        == $'import CoreFoundation\nimport Foundation\n@testable import PrimeCore\nimport XCTest' \
+    && "$(grep -Ec -- '^[[:space:]]+func test' \
+        "$stage4_tiny_durable_multileaf_package_resolved_scope_repair_authority_test")" == "1" \
+    && "$(grep -Fc -- \
+        'func testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling()' \
+        "$stage4_tiny_durable_multileaf_package_resolved_scope_repair_authority_test")" == "1" ]] ||
+    die "Stage-4 Package.resolved scope-repair identity or sole-test surface changed"
+for required_stage4_package_resolved_scope_repair_authority_value in \
+    'public static let canonicalSHA256 =' \
+    '"6a6dfc7b30319f9ccc1d17c2f08282c266962cd500d47696cbb42b4b1b0ff826"' \
+    '"0b167685f0cc10cbf5d705d6cf67b72b54555dfa52b9f4aaebd00613e057b031"' \
+    '"1cfab327cf82f2c109d1b330d6142efe8647f141"' \
+    '"2ec146f5d6604b86ebd5eef90484a56aa6be18f1"' \
+    'workflowRunID: 31_712_088_411' \
+    'workflowRunNumber: 93' \
+    'runAttempt: 1' \
+    'rootTestCount: 49' \
+    'stage4LauncherInvocationCount: 0' \
+    'gitBlob: "14d804bb4291720477240c27e24de6fbdc876b3b"' \
+    'byteCount: 645' \
+    '"bd7a18ec5b8def3b453d7eb86ba43a2f277c2308c9da806845b69ca5f76cd375"' \
+    '"bc889436fb167cc206aa87cb079da4888a7fe95e517eb7cf63cbf44b35dc27c2"' \
+    'successfulResolutionCount: 2' \
+    'lockBytesChanged: false' \
+    'externalDependencyGraphChanged: false' \
+    'fabricatedLockMutationAuthorized: false' \
+    'removedMechanicsPath: "Package.resolved"' \
+    'originalMechanicsPathCount: 9' \
+    'repairedMechanicsPathCount: 8' \
+    'repairAuthorityRootTestCount: 50' \
+    'implementationFocusedWholeTestCount: 56' \
+    'preStage4TotalTestCount: 102' \
+    'stage4DirectXCTestCount: 1' \
+    'totalTestCount: 103' \
+    'packageManifestMutationAuthorized: true' \
+    'packageResolvedMutationAuthorized: false' \
+    'packageResolvedPreservationRequired: true' \
+    'validationManifestOrLockMutationAuthorized: false' \
+    'oneMechanicsSuccessorAfterGreenRepairClosureAuthorized: true' \
+    'authorityOnlyNoMechanicsExecutionEvidence: true' \
+    'additionalExecutionOrRerunAuthorized: false' \
+    'retainedArtifactAuthorized: false' \
+    'checkpointAdmissionGranted: false' \
+    'stage5Authorized: false' \
+    'terminalMechanicsOutcomeObservationRequired: true' \
+    'AUTHORIZED_stage4_mechanics_scope_repair_preserve_byte_identical_package_resolved_substitute_exact_eight_paths_one_successor_after_green_repair_closure_no_rerun_retention_admission_stage5_native300m_or_downstream_authority'; do
+    grep -Fq -- "$required_stage4_package_resolved_scope_repair_authority_value" \
+        "$stage4_tiny_durable_multileaf_package_resolved_scope_repair_authority_source" ||
+        die "Stage-4 Package.resolved scope-repair authority lost: $required_stage4_package_resolved_scope_repair_authority_value"
+done
+for forbidden_stage4_package_resolved_scope_repair_capability in \
+    'import CoreGraphics' 'import Metal' 'import MLX' 'import MLXNN' \
+    'import MLXOptimizers' 'FileManager' 'FileHandle' 'URLSession' 'Process(' \
+    'posix_spawn' 'execve('; do
+    ! grep -Fq -- "$forbidden_stage4_package_resolved_scope_repair_capability" \
+        "$stage4_tiny_durable_multileaf_package_resolved_scope_repair_authority_source" ||
+        die "Stage-4 Package.resolved scope-repair authority gained capability: $forbidden_stage4_package_resolved_scope_repair_capability"
 done
 
 [[ "$(awk '/^import / { print }' "$decoder_authority_test")" \
