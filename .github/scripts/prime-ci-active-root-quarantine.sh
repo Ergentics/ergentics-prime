@@ -20,6 +20,7 @@ readonly decoder_stage2_metallib_bootstrap_repair_gate_path="$prime_root/.github
 readonly decoder_stage3_tiny_cpu_resume_gate_path="$prime_root/.github/scripts/prime-ci-native-decoder-stage3-tiny-cpu-resume.sh"
 readonly decoder_stage4_tiny_durable_multileaf_gate_path="$prime_root/.github/scripts/prime-ci-native-decoder-stage4-tiny-durable-multileaf.sh"
 readonly decoder_stage5_tiny_repeated_metal_trajectory_determinism_gate_path="$prime_root/.github/scripts/prime-ci-native-decoder-stage5-tiny-repeated-metal-trajectory-determinism.sh"
+readonly decoder_stage6_native300m_resource_only_one_step_gate_path="$prime_root/.github/scripts/prime-ci-native-decoder-stage6-native300m-resource-only-one-step.sh"
 readonly decoder_checkpoint_v2_io_execution_gate_path="$prime_root/.github/scripts/prime-ci-native-decoder-checkpoint-v2-io.sh"
 readonly decoder_checkpoint_v2_io_root_identity_repair_gate_path="$prime_root/.github/scripts/prime-ci-native-decoder-checkpoint-v2-io-root-identity-repair.sh"
 
@@ -28,7 +29,7 @@ die() {
     exit 1
 }
 
-for command_name in awk bash git grep jq mktemp paste shasum sort stat swift swiftc wc; do
+for command_name in awk bash git grep head jq mktemp paste shasum sort stat swift swiftc wc; do
     command -v "$command_name" >/dev/null 2>&1 ||
         die "missing command: $command_name"
 done
@@ -46,43 +47,59 @@ readonly stage5_failure_observation_source_relative_path="Sources/PrimeCore/Prim
 readonly stage5_failure_observation_test_relative_path="Tests/PrimeCoreTests/PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayExecutionFailureObservationTests.swift"
 readonly stage6_resource_probe_authority_source_relative_path="Sources/PrimeCore/PrimeNativeDecoderNative300MResourceOnlyOneStepProbeAuthority.swift"
 readonly stage6_resource_probe_authority_test_relative_path="Tests/PrimeCoreTests/PrimeNativeDecoderNative300MResourceOnlyOneStepProbeAuthorityTests.swift"
-readonly expected_stage6_resource_probe_authority_preserved_index_sha256="972c5f99d102ad4dd117fd020d403e4b7332c8aef0d346992d2e375fc1c5aecf"
-readonly observed_stage6_resource_probe_authority_preserved_index_sha256="$({
+readonly stage6_resource_probe_launcher_relative_path=".github/scripts/prime-ci-native-decoder-stage6-native300m-resource-only-one-step.sh"
+readonly stage6_resource_probe_training_source_relative_path="Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderNative300MResourceOnlyOneStepProbe.swift"
+readonly stage6_resource_probe_validation_manifest_relative_path="Tests/PrimeNativeDecoderTrainingValidation/Package.swift"
+readonly stage6_resource_probe_executable_main_relative_path="Tests/PrimeNativeDecoderTrainingValidation/Sources/PrimeNativeDecoderNative300MResourceOnlyOneStepProbe/main.swift"
+readonly stage6_resource_probe_contract_test_relative_path="Tests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderNative300MResourceOnlyOneStepProbeContractTests.swift"
+readonly expected_stage6_resource_probe_mechanics_preserved_index_sha256="643a78cbfc47dcb9bea1fa1a7193736d702918561acff440898d682bc378d7dc"
+readonly observed_stage6_resource_probe_mechanics_preserved_index_sha256="$({
     git -C "$prime_root" ls-files -s |
         while IFS= read -r index_record; do
             relative_path="${index_record#*$'\t'}"
             if [[ "$relative_path" \
                     == '.github/scripts/prime-ci-active-root-quarantine.sh' \
                 || "$relative_path" \
+                    == "$stage6_resource_probe_launcher_relative_path" \
+                || "$relative_path" \
                     == '.github/workflows/prime-active-root-quarantine.yml' \
                 || "$relative_path" \
                     == 'Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' \
                 || "$relative_path" \
-                    == "$stage6_resource_probe_authority_source_relative_path" \
+                    == "$stage6_resource_probe_training_source_relative_path" \
                 || "$relative_path" \
-                    == "$stage6_resource_probe_authority_test_relative_path" ]]; then
+                    == "$stage6_resource_probe_validation_manifest_relative_path" \
+                || "$relative_path" \
+                    == "$stage6_resource_probe_executable_main_relative_path" \
+                || "$relative_path" \
+                    == "$stage6_resource_probe_contract_test_relative_path" ]]; then
                 continue
             fi
             printf '%s\n' "$index_record"
         done
 } | LC_ALL=C sort | shasum -a 256 | awk '{print $1}')"
-[[ "$observed_stage6_resource_probe_authority_preserved_index_sha256" \
-    == "$expected_stage6_resource_probe_authority_preserved_index_sha256" ]] ||
-    die "Stage-6 resource-probe authority changed a path outside the exact five-path closure"
-for exact_stage6_resource_probe_authority_path in \
+[[ "$expected_stage6_resource_probe_mechanics_preserved_index_sha256" \
+        =~ ^[0-9a-f]{64}$ \
+    && "$observed_stage6_resource_probe_mechanics_preserved_index_sha256" \
+        == "$expected_stage6_resource_probe_mechanics_preserved_index_sha256" ]] ||
+    die "Stage-6 resource-probe mechanics changed a path outside the exact eight-path closure"
+for exact_stage6_resource_probe_mechanics_path in \
     '.github/scripts/prime-ci-active-root-quarantine.sh' \
+    "$stage6_resource_probe_launcher_relative_path" \
     '.github/workflows/prime-active-root-quarantine.yml' \
     'Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' \
-    "$stage6_resource_probe_authority_source_relative_path" \
-    "$stage6_resource_probe_authority_test_relative_path"; do
-    expected_stage6_resource_probe_authority_mode="100644"
-    case "$exact_stage6_resource_probe_authority_path" in
-        '.github/scripts/'*) expected_stage6_resource_probe_authority_mode="100755" ;;
+    "$stage6_resource_probe_training_source_relative_path" \
+    "$stage6_resource_probe_validation_manifest_relative_path" \
+    "$stage6_resource_probe_executable_main_relative_path" \
+    "$stage6_resource_probe_contract_test_relative_path"; do
+    expected_stage6_resource_probe_mechanics_mode="100644"
+    case "$exact_stage6_resource_probe_mechanics_path" in
+        '.github/scripts/'*) expected_stage6_resource_probe_mechanics_mode="100755" ;;
     esac
     [[ "$(git -C "$prime_root" ls-files -s -- \
-        "$exact_stage6_resource_probe_authority_path" | awk '{print $1}')" \
-        == "$expected_stage6_resource_probe_authority_mode" ]] ||
-        die "Stage-6 resource-probe authority exact path is missing or has the wrong mode: $exact_stage6_resource_probe_authority_path"
+        "$exact_stage6_resource_probe_mechanics_path" | awk '{print $1}')" \
+        == "$expected_stage6_resource_probe_mechanics_mode" ]] ||
+        die "Stage-6 resource-probe mechanics exact path is missing or has the wrong mode: $exact_stage6_resource_probe_mechanics_path"
 done
 
 assert_stage5_mechanics_payload_identity() {
@@ -390,12 +407,23 @@ assert_active_lock() {
     local frozen_origin_hash="${4:-}"
     local expected_origin_hash
     if [[ -n "$frozen_origin_hash" ]]; then
-        [[ "$#" == "4" &&
-            "$lock_relative_path" == "Package.resolved" &&
-            "$manifest_relative_path" == "Package.swift" &&
-            "$expected_revision" == "$root_mlx_revision" &&
-            "$frozen_origin_hash" == "bc889436fb167cc206aa87cb079da4888a7fe95e517eb7cf63cbf44b35dc27c2" ]] ||
-            die "active lock origin-hash override is not the frozen root-only exception"
+        [[ "$#" == "4" && "$expected_revision" == "$root_mlx_revision" ]] ||
+            die "active lock origin-hash override shape changed"
+        if [[ "$lock_relative_path" == "Package.resolved" \
+            && "$manifest_relative_path" == "Package.swift" \
+            && "$frozen_origin_hash" \
+                == "bc889436fb167cc206aa87cb079da4888a7fe95e517eb7cf63cbf44b35dc27c2" ]]; then
+            :
+        elif [[ "$lock_relative_path" \
+                == "Tests/PrimeNativeDecoderTrainingValidation/Package.resolved" \
+            && "$manifest_relative_path" \
+                == "Tests/PrimeNativeDecoderTrainingValidation/Package.swift" \
+            && "$frozen_origin_hash" \
+                == "0523184de79bb204113432428e635113220e1f3f8ba20177762959a73e861d45" ]]; then
+            :
+        else
+            die "active lock origin-hash override is not an exact frozen exception"
+        fi
         expected_origin_hash="$frozen_origin_hash"
     else
         [[ "$#" == "3" ]] ||
@@ -477,7 +505,8 @@ assert_active_lock \
 assert_active_lock \
     "Tests/PrimeNativeDecoderTrainingValidation/Package.resolved" \
     "Tests/PrimeNativeDecoderTrainingValidation/Package.swift" \
-    "$root_mlx_revision"
+    "$root_mlx_revision" \
+    "0523184de79bb204113432428e635113220e1f3f8ba20177762959a73e861d45"
 assert_active_lock \
     "Tests/PrimeTypedOptimizerRestoreMechanicsValidation/Package.resolved" \
     "Tests/PrimeTypedOptimizerRestoreMechanicsValidation/Package.swift" \
@@ -561,7 +590,7 @@ grep -Fq -- 'runs-on: macos-15' "$workflow_path" ||
     && "$(awk '
         /^  trusted-main-compile:$/ { inside = 1; next }
         inside && /^    timeout-minutes:/ { print $2 }
-    ' "$workflow_path")" == "60" ]] ||
+    ' "$workflow_path")" == "90" ]] ||
     die "hosted quarantine workflow runner or timeout boundary changed"
 [[ "$(grep -Fxc -- \
     '          git -C ergentics-prime fetch --depth=1 --no-tags --no-write-fetch-head origin "$EXACT_REVISION"' \
@@ -1044,6 +1073,17 @@ bash -n "$decoder_checkpoint_v2_io_execution_gate_path" ||
     die "Prime native decoder checkpoint V2 I/O root-identity repair gate mode changed"
 bash -n "$decoder_checkpoint_v2_io_root_identity_repair_gate_path" ||
     die "Prime native decoder checkpoint V2 I/O root-identity repair gate is not valid Bash"
+[[ -f "$decoder_stage6_native300m_resource_only_one_step_gate_path" \
+    && ! -L "$decoder_stage6_native300m_resource_only_one_step_gate_path" \
+    && "$(git -C "$prime_root" ls-files -- \
+        "$stage6_resource_probe_launcher_relative_path")" \
+        == "$stage6_resource_probe_launcher_relative_path" \
+    && "$(git -C "$prime_root" ls-files -s -- \
+        "$stage6_resource_probe_launcher_relative_path" | awk '{print $1}')" \
+        == "100755" ]] ||
+    die "Prime Stage-6 Native-300M resource-only launcher is missing, linked, untracked, or not executable"
+bash -n "$decoder_stage6_native300m_resource_only_one_step_gate_path" ||
+    die "Prime Stage-6 Native-300M resource-only launcher is not valid Bash"
 grep -Fq -- '      - name: Run the Prime-owned decoder on live Metal' \
     "$workflow_path" ||
     die "trusted-main workflow lost the frozen decoder Metal step"
@@ -1056,17 +1096,23 @@ readonly runtime_closure_workflow_line="$(grep -nFx -- \
 readonly tokenizer_compatibility_workflow_line="$(grep -nFx -- \
     '          bash .github/scripts/prime-ci-native-decoder-tokenizer-compatibility.sh' \
     "$workflow_path" | awk -F: '{print $1}')"
+readonly stage6_resource_probe_workflow_line="$(grep -nFx -- \
+    '          bash .github/scripts/prime-ci-native-decoder-stage6-native300m-resource-only-one-step.sh' \
+    "$workflow_path" | awk -F: '{print $1}')"
 [[ "$frozen_metal_workflow_line" =~ ^[1-9][0-9]*$ \
     && "$runtime_closure_workflow_line" =~ ^[1-9][0-9]*$ \
     && "$tokenizer_compatibility_workflow_line" =~ ^[1-9][0-9]*$ \
+    && "$stage6_resource_probe_workflow_line" =~ ^[1-9][0-9]*$ \
     && "$runtime_closure_workflow_line" \
         -eq $((frozen_metal_workflow_line + 1)) \
     && "$tokenizer_compatibility_workflow_line" \
-        -eq $((runtime_closure_workflow_line + 1)) ]] ||
-    die "trusted-main workflow does not retain exactly the Metal, runtime, tokenizer order"
+        -eq $((runtime_closure_workflow_line + 1)) \
+    && "$stage6_resource_probe_workflow_line" \
+        -eq $((tokenizer_compatibility_workflow_line + 1)) ]] ||
+    die "trusted-main workflow does not retain exactly the Metal, runtime, tokenizer, Stage-6 order"
 [[ "$(grep -Fc -- \
     '          bash .github/scripts/prime-ci-native-decoder-' \
-    "$workflow_path")" == "3" \
+    "$workflow_path")" == "4" \
     && "$(grep -Fxc -- \
         '          bash .github/scripts/prime-ci-native-decoder-metal.sh' \
         "$workflow_path")" == "1" \
@@ -1082,15 +1128,15 @@ readonly tokenizer_compatibility_workflow_line="$(grep -nFx -- \
     && "$(grep -Fxc -- \
         '          bash .github/scripts/prime-ci-native-decoder-stage5-tiny-repeated-metal-trajectory-determinism.sh' \
         "$workflow_path")" == "0" \
-    && "$(grep -Ec -- \
-        '^[[:space:]]*bash .*prime-ci-native-decoder-stage6' \
-        "$workflow_path")" == "0" \
+    && "$(grep -Fxc -- \
+        '          bash .github/scripts/prime-ci-native-decoder-stage6-native300m-resource-only-one-step.sh' \
+        "$workflow_path")" == "1" \
     && "$(grep -Fc -- \
         'PRIME_NATIVE_DECODER_STAGE5_TINY_REPEATED_METAL_TRAJECTORY_DETERMINISM_RECEIPT=' \
         "$workflow_path")" == "0" \
     && "$(grep -Ec -- 'PRIME_NATIVE_DECODER_STAGE6_.*RECEIPT=' \
         "$workflow_path")" == "0" ]] ||
-    die "trusted-main workflow lost the exact three-launcher sequence or retained a retired one-shot"
+    die "trusted-main workflow lost the exact four-launcher sequence or retained a retired one-shot"
 readonly live_decoder_workflow_block="$(awk '
     /^      - name: Run the Prime-owned decoder on live Metal$/ { inside = 1 }
     inside { print }
@@ -1100,9 +1146,10 @@ readonly expected_live_decoder_workflow_block='      - name: Run the Prime-owned
         run: |
           bash .github/scripts/prime-ci-native-decoder-metal.sh
           bash .github/scripts/prime-ci-native-decoder-runtime-closure.sh
-          bash .github/scripts/prime-ci-native-decoder-tokenizer-compatibility.sh'
+          bash .github/scripts/prime-ci-native-decoder-tokenizer-compatibility.sh
+          bash .github/scripts/prime-ci-native-decoder-stage6-native300m-resource-only-one-step.sh'
 [[ "$live_decoder_workflow_block" == "$expected_live_decoder_workflow_block" ]] ||
-    die "trusted-main exact contiguous Metal, runtime, and tokenizer block changed"
+    die "trusted-main exact contiguous Metal, runtime, tokenizer, and Stage-6 block changed"
 ! grep -Fq -- \
     '          bash .github/scripts/prime-ci-native-decoder-checkpoint-v2-io.sh' \
     "$workflow_path" ||
@@ -1529,6 +1576,29 @@ readonly stage6_native300m_resource_only_one_step_probe_authority_filter='PrimeC
         '          grep -Fq '\''Executed 55 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run exactly the Stage-6 resource-only probe authority"
+readonly stage6_native300m_resource_only_one_step_contract_filter='PrimeNativeDecoderNative300MResourceOnlyOneStepProbeContractTests/testNative300MResourceOnlyOneStepProbeContractIsExactAndExecutionPure'
+[[ "$(grep -Fxc -- \
+        "          readonly stage6_resource_probe_contract_filter='${stage6_native300m_resource_only_one_step_contract_filter}'" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        '            --package-path Tests/PrimeNativeDecoderTrainingValidation \' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        '            --filter "$stage6_resource_probe_contract_filter" \' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        "          grep -Fq 'Executed 1 test, with 0 failures' \\" \
+        "$workflow_path")" == "3" \
+    && "$(grep -Fxc -- \
+        "          ! grep -Fqi -- 'skipped' \"\$stage6_resource_probe_contract_test_log\"" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- "$stage6_resource_probe_training_source_relative_path" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- "$stage6_resource_probe_executable_main_relative_path" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- "$stage6_resource_probe_contract_test_relative_path" \
+        "$workflow_path")" == "1" ]] ||
+    die "hosted workflow lost the exact Stage-6 pure-contract focused validation"
 for required_stage5_swift_numerics_resolution_workflow_value in \
     'readonly numerics_revision="0c0290ff6b24942dadb83a929ffaaa1481df04a2"' \
     'readonly numerics_source="$RUNNER_TEMP/prime-active-root-build/checkouts/swift-numerics"' \
@@ -1601,10 +1671,10 @@ readonly observed_stage5_swift_numerics_resolution_workflow_block="$(awk '
         "$workflow_path")" == "1" \
     && "$(grep -Ec -- \
         '^[[:space:]]+TMPDIR=.* swift test \\' \
-        "$workflow_path")" == "5" \
+        "$workflow_path")" == "6" \
     && "$(grep -Fxc -- \
         '            --force-resolved-versions \' \
-        "$workflow_path")" == "5" ]] ||
+        "$workflow_path")" == "6" ]] ||
     die "workflow changed the root/isolated SwiftPM command or pre-root MLX rewrite ceilings"
 readonly root_test_log_workflow_line="$(grep -nFx -- \
     '            2>&1 | tee "$test_log"' "$workflow_path" | awk -F: '{print $1}')"
@@ -1788,6 +1858,26 @@ for required_stage6_resource_probe_authority_summary_value in \
         "$workflow_path")" == "1" ]] ||
         die "workflow lost the exact Stage-6 resource-probe authority summary: $required_stage6_resource_probe_authority_summary_value"
 done
+for required_stage6_resource_probe_mechanics_summary_value in \
+    'Exact-main pure-authority merge 7dd21f2b8c79ebe53f62eab1945ac41b104c2b27, tree 5124b8a75ca753d1e7659a2535242aa909329c44' \
+    'ordered parents f5a9638194c53922f09c39c3c76095b5cc47c25e then a2014dee81123f99600b0ac4ff41e4295131195d, PR 106' \
+    'workflow run 31773463958 number 109 attempt 1 check suite 86198647430' \
+    'active job 94683934560 on macos-15 and reviewed job 94684324255 on macos-26' \
+    'root 55, isolated 6, focused whole 61, Metal 44, maintained runtime 1 with one receipt, and tokenizer 1 with one receipt for 107 XTests' \
+    'Stage-6 launcher and receipt both zero, one exact-head push, and zero artifact, retry, rerun, TLS failure, bypass, or custom CA' \
+    'direct exact-eight mechanics successor preserves the frozen authority, root manifest and lock, validation lock, existing Training source, and all old launchers' \
+    'Reviewed main alone widens from 60 to 90 minutes' \
+    'new pure mechanics contract once before the live sequence' \
+    'retains Metal, maintained runtime, and tokenizer before exactly one Stage-6 launcher' \
+    'compiles Release once with --build-tests, reruns the same pure contract once with --skip-build' \
+    'resolves the already-built binary without compilation, stages one fresh metallib, and directly invokes one supervisor executable' \
+    'PASS or truthful classified ABSTAIN produces exactly one supervisor-owned canonical receipt' \
+    'no worker receipt-prefix stdout, receipt file, Actions artifact, retry, rerun, replacement execution, checkpoint I/O, quality claim, ordinary-job-fit claim, Stage 7, trial, canary, quantization, product, or publication authority is granted'; do
+    [[ "$(grep -Fc -- \
+        "$required_stage6_resource_probe_mechanics_summary_value" \
+        "$workflow_path")" == "1" ]] ||
+        die "workflow lost the exact Stage-6 mechanics summary: $required_stage6_resource_probe_mechanics_summary_value"
+done
 [[ "$(grep -Fc -- \
         'Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderTrajectoryCheckpointV1.swift' \
         "$workflow_path")" == "1" \
@@ -1918,7 +2008,7 @@ done
         "$workflow_path")" == "1" \
     && "$(grep -Fc -- \
         '--package-path Tests/PrimeNativeDecoderTrainingValidation' \
-        "$workflow_path")" == "0" \
+        "$workflow_path")" == "1" \
     && "$(grep -Fc -- \
         'PrimeNativeDecoderTrainingTests/testTinyCPUTrainEvaluateMechanicsAreExactAndFailClosed' \
         "$workflow_path")" == "0" \
@@ -2790,24 +2880,43 @@ jq -e \
           contains($expected_origin)
           and contains($expected_revision)
       )] | length) == 1
-      and (.targets | length) == 1
-      and .targets[0].name == "PrimeNativeDecoderTrainingTests"
-      and .targets[0].type == "test"
-      and ([.targets[0].dependencies[].product[0]] == [
+      and (.products | length) == 1
+      and .products[0].name
+          == "PrimeNativeDecoderNative300MResourceOnlyOneStepProbe"
+      and .products[0].targets
+          == ["PrimeNativeDecoderNative300MResourceOnlyOneStepProbe"]
+      and (.products[0].type | keys) == ["executable"]
+      and (.targets | length) == 2
+      and [.targets[].name] == [
+          "PrimeNativeDecoderNative300MResourceOnlyOneStepProbe",
+          "PrimeNativeDecoderTrainingTests"
+      ]
+      and [.targets[].type] == ["executable", "test"]
+      and ([.targets[0].dependencies[].product[0]]
+          == ["PrimeNativeDecoderTraining"])
+      and ([.targets[0].dependencies[].product[1]]
+          == ["ergentics-prime"])
+      and ([.targets[0].settings[].kind.linkedFramework._0] == [
+          "CoreGraphics",
+          "Metal"
+      ])
+      and ([.targets[1].dependencies[].product[0]] == [
+          "PrimeCore",
           "PrimeNativeDecoderTraining",
           "MLX"
       ])
-      and ([.targets[0].dependencies[].product[1]] == [
+      and ([.targets[1].dependencies[].product[1]] == [
+          "ergentics-prime",
           "ergentics-prime",
           "ergentics-mlx-swift"
       ])
-      and ([.targets[0].settings[].kind.linkedFramework._0] == [
+      and ([.targets[1].settings[].kind.linkedFramework._0] == [
           "CoreGraphics",
           "Metal"
       ])
     ' \
     "$decoder_training_validation_manifest_dump" >/dev/null ||
-    die "PrimeNativeDecoder Stage-2 validation manifest changed"
+    die "PrimeNativeDecoder Stage-6 validation manifest changed"
 
 readonly decoder_source="$prime_root/Sources/PrimeNativeDecoder/PrimeNativeGQADecoder.swift"
 readonly decoder_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderAuthority.swift"
@@ -2917,6 +3026,10 @@ readonly stage5_tiny_repeated_metal_trajectory_execution_failure_observation_sou
 readonly stage5_tiny_repeated_metal_trajectory_execution_failure_observation_test="$prime_root/$stage5_failure_observation_test_relative_path"
 readonly stage6_native300m_resource_only_one_step_probe_authority_source="$prime_root/$stage6_resource_probe_authority_source_relative_path"
 readonly stage6_native300m_resource_only_one_step_probe_authority_test="$prime_root/$stage6_resource_probe_authority_test_relative_path"
+readonly stage6_native300m_resource_only_one_step_probe_launcher="$prime_root/$stage6_resource_probe_launcher_relative_path"
+readonly stage6_native300m_resource_only_one_step_probe_training_source="$prime_root/$stage6_resource_probe_training_source_relative_path"
+readonly stage6_native300m_resource_only_one_step_probe_executable_main="$prime_root/$stage6_resource_probe_executable_main_relative_path"
+readonly stage6_native300m_resource_only_one_step_probe_contract_test="$prime_root/$stage6_resource_probe_contract_test_relative_path"
 readonly decoder_training_source="$prime_root/Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderTraining.swift"
 readonly decoder_training_validation_root="$prime_root/Tests/PrimeNativeDecoderTrainingValidation"
 readonly decoder_training_validation_manifest="$decoder_training_validation_root/Package.swift"
@@ -2936,7 +3049,7 @@ readonly decoder_stage5_tiny_repeated_metal_trajectory_test="$prime_root/$stage5
     == 'Sources/PrimeNativeDecoderRuntime/PrimeNativeDecoderRuntime.swift' ]] ||
     die "PrimeNativeDecoderRuntime production source inventory changed"
 [[ "$(git -C "$prime_root" ls-files -- 'Sources/PrimeNativeDecoderTraining')" \
-    == 'Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderTraining.swift' ]] ||
+    == $'Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderNative300MResourceOnlyOneStepProbe.swift\nSources/PrimeNativeDecoderTraining/PrimeNativeDecoderTraining.swift' ]] ||
     die "PrimeNativeDecoderTraining production source inventory changed"
 [[ "$(git -C "$prime_root" ls-files -- 'Tests/PrimeNativeDecoderValidation')" \
     == $'Tests/PrimeNativeDecoderValidation/Package.resolved\nTests/PrimeNativeDecoderValidation/Package.swift\nTests/PrimeNativeDecoderValidation/Tests/PrimeNativeDecoderTests/PrimeNativeDecoderAuthorityTests.swift\nTests/PrimeNativeDecoderValidation/Tests/PrimeNativeDecoderTests/PrimeNativeDecoderCheckpointTests.swift\nTests/PrimeNativeDecoderValidation/Tests/PrimeNativeDecoderTests/PrimeNativeGQADecoderTests.swift' ]] ||
@@ -2967,8 +3080,8 @@ readonly decoder_stage5_tiny_repeated_metal_trajectory_test="$prime_root/$stage5
     die "PrimeNativeDecoder tokenizer-compatibility validation inventory changed"
 [[ "$(git -C "$prime_root" ls-files -- \
     'Tests/PrimeNativeDecoderTrainingValidation')" \
-    == $'Tests/PrimeNativeDecoderTrainingValidation/Package.resolved\nTests/PrimeNativeDecoderTrainingValidation/Package.swift\nTests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeTests.swift\nTests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionTests.swift\nTests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayTests.swift\nTests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTrainingTests.swift' ]] ||
-    die "PrimeNativeDecoder Stage-5 validation inventory changed"
+    == $'Tests/PrimeNativeDecoderTrainingValidation/Package.resolved\nTests/PrimeNativeDecoderTrainingValidation/Package.swift\nTests/PrimeNativeDecoderTrainingValidation/Sources/PrimeNativeDecoderNative300MResourceOnlyOneStepProbe/main.swift\nTests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderNative300MResourceOnlyOneStepProbeContractTests.swift\nTests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeTests.swift\nTests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionTests.swift\nTests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayTests.swift\nTests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTrainingTests.swift' ]] ||
+    die "PrimeNativeDecoder Stage-6 validation inventory changed"
 [[ ! -e "$prime_root/Tests/PrimeNativeDecoderValidation/.swiftpm" \
     && ! -L "$prime_root/Tests/PrimeNativeDecoderValidation/.swiftpm" ]] ||
     die "PrimeNativeDecoder validation must use the supplied isolated config path"
@@ -2992,7 +3105,7 @@ readonly decoder_stage5_tiny_repeated_metal_trajectory_test="$prime_root/$stage5
     die "PrimeNativeDecoder tokenizer-compatibility validation must use the supplied isolated config path"
 [[ ! -e "$decoder_training_validation_root/.swiftpm" \
     && ! -L "$decoder_training_validation_root/.swiftpm" ]] ||
-    die "PrimeNativeDecoder Stage-2 validation must use the supplied isolated config path"
+    die "PrimeNativeDecoder Stage-6 validation must use the supplied isolated config path"
 [[ -f "$decoder_source" && ! -L "$decoder_source" ]] ||
     die "PrimeNativeDecoder source is missing or linked"
 [[ -f "$decoder_validation_test" && ! -L "$decoder_validation_test" ]] ||
@@ -6095,9 +6208,9 @@ assert_tiny_cpu_mechanics_source_identity \
 assert_tiny_cpu_mechanics_source_identity \
     'Tests/PrimeNativeDecoderTrainingValidation/Package.swift' \
     '100644' \
-    '9f05e5a17426f00adf9dad7b55d84057122e98f9' \
-    '1054' \
-    '0523184de79bb204113432428e635113220e1f3f8ba20177762959a73e861d45'
+    '1bce54baedf4293fcba01238228105f987fd43d3' \
+    '1993' \
+    '8488fbd194efcd6900604923a922485f72c2ce4b870c6efd2267564f3bff43a9'
 assert_tiny_cpu_mechanics_source_identity \
     'Tests/PrimeNativeDecoderTrainingValidation/Package.resolved' \
     '100644' \
@@ -9039,15 +9152,15 @@ for required_stage4_execution_observation_value in \
 done
 assert_metal_current_decoder_assertion_arc_identity \
     'Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' \
-    '100644' 'b82006b6669198339ad6097f07779674ac97eedb' \
+    '100644' 'f431fa730d5ba52ab16835a466f83ec48432398e' \
     '546' \
-    'bcb4f99183d3a7a430415412614605e9bad4dd0988ec8c05d268a6fe77f76e17'
+    '81f91539cd9256288c0ec1d56d7d910c6e0c8885f72d607e9d9b1c1c87cdd8aa'
 [[ "$(wc -l < "$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift" | \
         awk '{print $1}')" == "13" \
     && "$(grep -Fxc -- \
-        '        "22c6c08cf8cd65690ef481f156e70b9e192d63c241d17bbd0d9791b4e6f1f3d5"' \
+        '        "087b9008d051d8f1ec7ab5d762ae11180ffca94ee31e461a9c81f254b163f678"' \
         "$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift")" == "1" ]] ||
-    die "Stage-6 resource-probe authority embedded provenance identity changed"
+    die "Stage-6 resource-probe mechanics embedded provenance identity changed"
 for forbidden_stage4_execution_observation_capability in \
     'import CoreGraphics' 'import Metal' 'import MLX' 'import MLXNN' \
     'import MLXOptimizers' 'FileManager' 'FileHandle' 'URLSession' 'Process(' \
@@ -10593,6 +10706,322 @@ for forbidden_stage6_resource_probe_authority_capability in \
         "$stage6_native300m_resource_only_one_step_probe_authority_source" ||
         die "Stage-6 resource-only probe authority gained capability: $forbidden_stage6_resource_probe_authority_capability"
 done
+
+for stage6_resource_probe_mechanics_file in \
+    "$stage6_native300m_resource_only_one_step_probe_launcher" \
+    "$stage6_native300m_resource_only_one_step_probe_training_source" \
+    "$stage6_native300m_resource_only_one_step_probe_executable_main" \
+    "$stage6_native300m_resource_only_one_step_probe_contract_test"; do
+    [[ -f "$stage6_resource_probe_mechanics_file" \
+        && ! -L "$stage6_resource_probe_mechanics_file" \
+        && "$(stat -f %l "$stage6_resource_probe_mechanics_file")" == "1" ]] ||
+        die "Stage-6 resource-probe mechanics file is missing, linked, or multiply linked: $stage6_resource_probe_mechanics_file"
+done
+
+assert_stage6_resource_probe_mechanics_identity() {
+    local relative_path="$1" expected_mode="$2" expected_blob="$3"
+    local expected_bytes="$4" expected_lf_count="$5" expected_sha256="$6"
+    local absolute_path="$prime_root/$relative_path"
+    [[ -f "$absolute_path" && ! -L "$absolute_path" \
+        && "$(stat -f %l "$absolute_path")" == "1" \
+        && "$(git -C "$prime_root" ls-files -s -- "$relative_path" | \
+            awk '{print $1}')" == "$expected_mode" \
+        && "$(git -C "$prime_root" hash-object -- "$relative_path")" \
+            == "$expected_blob" \
+        && "$(stat -f %z "$absolute_path")" == "$expected_bytes" \
+        && "$(wc -l < "$absolute_path" | awk '{print $1}')" \
+            == "$expected_lf_count" \
+        && "$(shasum -a 256 "$absolute_path" | awk '{print $1}')" \
+            == "$expected_sha256" ]] ||
+        die "Stage-6 resource-probe mechanics identity changed: $relative_path"
+}
+
+assert_stage6_resource_probe_mechanics_identity \
+    '.github/scripts/prime-ci-native-decoder-stage6-native300m-resource-only-one-step.sh' \
+    '100755' '9e8f7ca0c6fa6c02bc4b0f40cc2185d2e6d46d13' \
+    '108576' '2016' \
+    '8801c46f54eaee475f3a2fdb697b2184af4233b9cdf7a66ddd9867d14eb4f349'
+assert_stage6_resource_probe_mechanics_identity \
+    '.github/workflows/prime-active-root-quarantine.yml' \
+    '100644' '46eea6e394fd8730550996418e53cc59b24e559a' \
+    '79973' '597' \
+    '320291ca90fbb7f11aaea5295a3cebe4370b7e0059f3e7015050c3addb4c35a5'
+assert_stage6_resource_probe_mechanics_identity \
+    'Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' \
+    '100644' 'f431fa730d5ba52ab16835a466f83ec48432398e' \
+    '546' '13' \
+    '81f91539cd9256288c0ec1d56d7d910c6e0c8885f72d607e9d9b1c1c87cdd8aa'
+assert_stage6_resource_probe_mechanics_identity \
+    'Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderNative300MResourceOnlyOneStepProbe.swift' \
+    '100644' '4c13d3098f07eb748980a351823dcf4fc36da337' \
+    '188872' '4334' \
+    'b29384112ed178b6d3bce6fb8dd138c861521cbddd968d418208baa669b5caf0'
+assert_stage6_resource_probe_mechanics_identity \
+    'Tests/PrimeNativeDecoderTrainingValidation/Package.swift' \
+    '100644' '1bce54baedf4293fcba01238228105f987fd43d3' \
+    '1993' '69' \
+    '8488fbd194efcd6900604923a922485f72c2ce4b870c6efd2267564f3bff43a9'
+assert_stage6_resource_probe_mechanics_identity \
+    'Tests/PrimeNativeDecoderTrainingValidation/Sources/PrimeNativeDecoderNative300MResourceOnlyOneStepProbe/main.swift' \
+    '100644' '22af7bd97dd53e9778eef3a437f7f3f10e120a2f' \
+    '231' '7' \
+    '6060f1e8afe7b27e68c96b16d2af60f617ccdcf875a085b21aed32b3589f9395'
+assert_stage6_resource_probe_mechanics_identity \
+    'Tests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderNative300MResourceOnlyOneStepProbeContractTests.swift' \
+    '100644' '75deca6b2d1d640d2c6d3b4eb3f6dfbb52101ec7' \
+    '3532' '90' \
+    'd7ad08a56dab0936cd9aac434de2a8828a2302df1a588b6ceca6de5d46a8981a'
+
+[[ "$(head -n 1 \
+        "$stage6_native300m_resource_only_one_step_probe_launcher")" \
+        == '#!/usr/bin/env bash' \
+    && "$(grep -Fxc -- 'set -euo pipefail' \
+        "$stage6_native300m_resource_only_one_step_probe_launcher")" == "1" \
+    && "$(grep -Fxc -- 'umask 077' \
+        "$stage6_native300m_resource_only_one_step_probe_launcher")" == "1" \
+    && "$(grep -Fxc -- \
+        'readonly authority_canonical_sha256="2627ffc0dd6499a9a1b20fa217b7f1c4a9723a6fd6332ef24a9ee251b5b0bf56"' \
+        "$stage6_native300m_resource_only_one_step_probe_launcher")" == "1" \
+    && "$(grep -Fxc -- \
+        'readonly authority_closure_revision="7dd21f2b8c79ebe53f62eab1945ac41b104c2b27"' \
+        "$stage6_native300m_resource_only_one_step_probe_launcher")" == "1" \
+    && "$(grep -Fxc -- \
+        'readonly authority_closure_run_id="31773463958"' \
+        "$stage6_native300m_resource_only_one_step_probe_launcher")" == "1" \
+    && "$(grep -Fxc -- \
+        'readonly authority_closure_run_number="109"' \
+        "$stage6_native300m_resource_only_one_step_probe_launcher")" == "1" \
+    && "$(grep -Fxc -- \
+        'readonly authority_closure_run_attempt="1"' \
+        "$stage6_native300m_resource_only_one_step_probe_launcher")" == "1" \
+    && "$(grep -Fxc -- \
+        'readonly authority_closure_check_suite_id="86198647430"' \
+        "$stage6_native300m_resource_only_one_step_probe_launcher")" == "1" \
+    && "$(grep -Fxc -- \
+        'readonly expected_preserved_index_sha256="643a78cbfc47dcb9bea1fa1a7193736d702918561acff440898d682bc378d7dc"' \
+        "$stage6_native300m_resource_only_one_step_probe_launcher")" == "1" ]] ||
+    die "Stage-6 launcher authority closure, one-shot, or exact-eight pins changed"
+
+[[ "$(grep -Fxc -- 'TMPDIR="$runner_temp" swift build \' \
+        "$stage6_native300m_resource_only_one_step_probe_launcher")" == "1" \
+    && "$(grep -Fxc -- \
+        'readonly bin_path="$(TMPDIR="$runner_temp" swift build \' \
+        "$stage6_native300m_resource_only_one_step_probe_launcher")" == "1" \
+    && "$(grep -Fxc -- 'TMPDIR="$runner_temp" swift test \' \
+        "$stage6_native300m_resource_only_one_step_probe_launcher")" == "1" \
+    && "$(grep -Fc -- '--build-tests' \
+        "$stage6_native300m_resource_only_one_step_probe_launcher")" == "1" \
+    && "$(grep -Fxc -- \
+        '    --package-path "$validation_root" --configuration release --skip-build \' \
+        "$stage6_native300m_resource_only_one_step_probe_launcher")" == "1" \
+    && "$(grep -Fc -- '--show-bin-path' \
+        "$stage6_native300m_resource_only_one_step_probe_launcher")" == "1" \
+    && "$(grep -Fc -- '-Xswiftc -enable-testing' \
+        "$stage6_native300m_resource_only_one_step_probe_launcher")" == "3" \
+    && "$(awk '
+        $0 == "    --package-path \"$validation_root\" --configuration release --build-tests \\" {
+            getline; build += ($0 == "    -Xswiftc -enable-testing \\")
+        }
+        $0 == "    --package-path \"$validation_root\" --configuration release --skip-build \\" {
+            getline; test += ($0 == "    -Xswiftc -enable-testing \\")
+        }
+        $0 == "    --package-path \"$validation_root\" --configuration release --show-bin-path \\" {
+            getline; query += ($0 == "    -Xswiftc -enable-testing \\")
+        }
+        END { exit !(build == 1 && test == 1 && query == 1) }
+    ' "$stage6_native300m_resource_only_one_step_probe_launcher" \
+        && printf 'true')" == "true" \
+    && "$(grep -Fc -- '--filter "$contract_filter"' \
+        "$stage6_native300m_resource_only_one_step_probe_launcher")" == "1" \
+    && "$(grep -Fxc -- '        "$executable"' \
+        "$stage6_native300m_resource_only_one_step_probe_launcher")" == "1" \
+    && "$(grep -Fxc -- \
+        'readonly contract_class="PrimeNativeDecoderNative300MResourceOnlyOneStepProbeContractTests"' \
+        "$stage6_native300m_resource_only_one_step_probe_launcher")" == "1" \
+    && "$(grep -Fxc -- \
+        'readonly contract_method="testNative300MResourceOnlyOneStepProbeContractIsExactAndExecutionPure"' \
+        "$stage6_native300m_resource_only_one_step_probe_launcher")" == "1" \
+    && "$(grep -Ec -- \
+        '^[[:space:]]+PRIME_NATIVE_DECODER_STAGE6_[A-Z0-9_]+=' \
+        "$stage6_native300m_resource_only_one_step_probe_launcher")" == "46" ]] ||
+    die "Stage-6 launcher lost its one-build, one-direct-contract, one-direct-executable, or exact environment topology"
+
+for required_stage6_resource_probe_launcher_value in \
+    'readonly exact_stage6_paths=(' \
+    'readonly raw_parent_count=' \
+    '&& "$first_parent" == "$authority_closure_revision"' \
+    'readonly shallow_path="$prime_root/.git/shallow"' \
+    'push event is not the direct Stage-6 mechanics successor' \
+    'readonly predecessor_test_logs=(' \
+    'readonly predecessor_receipt_logs=(' \
+    'readonly provenance_source_identities_json="$(' \
+    'readonly receipt_prefix="PRIME_NATIVE_DECODER_STAGE6_NATIVE300M_RESOURCE_ONLY_ONE_STEP_RECEIPT="' \
+    'Frozen receipt schema cardinalities: top-level 11, authority 6, ceiling 25,' \
+    'configuration 45, environment 26, execution 52, lease 8, limits 29,' \
+    'outcome 19, operation counts 19, six phase rows with 14 keys each.' \
+    'worker_spawn_failure' \
+    'executor_receipt_drift' \
+    'unavailable_before_probe_start' \
+    'unavailable_after_classification' \
+    'unavailable_after_fatal' \
+    'MLX_ENABLE_TF32=0' \
+    'eager_uncompiled_no_compile_transform' \
+    'Source/MLX/Memory.swift' \
+    'Source/MLXOptimizers/Optimizers.swift' \
+    'find "$frozen_metallib_root"' \
+    'cmp -s "$metallib" "$staged_metallib"' \
+    'Prime repository changed during Stage-6' \
+    'No Actions artifact, checkpoint I/O, quality claim, ordinary-job-fit claim, retry, rerun, Stage 7, trial, canary, product, or publication authority is granted.'; do
+    grep -Fq -- "$required_stage6_resource_probe_launcher_value" \
+        "$stage6_native300m_resource_only_one_step_probe_launcher" ||
+        die "Stage-6 launcher lost a required exact resource, receipt, cleanup, or ceiling binding: $required_stage6_resource_probe_launcher_value"
+done
+for forbidden_stage6_resource_probe_launcher_capability in \
+    'swift run' 'actions/upload-artifact' 'gh run rerun' \
+    'security add-trusted-cert' 'curl ' 'wget ' 'rm -rf' \
+    'PrimeNativeDecoderCheckpoint' 'writeNative300M' 'loadNative300M'; do
+    ! grep -Fq -- "$forbidden_stage6_resource_probe_launcher_capability" \
+        "$stage6_native300m_resource_only_one_step_probe_launcher" ||
+        die "Stage-6 launcher gained forbidden execution, network, artifact, or checkpoint capability: $forbidden_stage6_resource_probe_launcher_capability"
+done
+
+[[ "$(awk '/^import / { print }' \
+        "$stage6_native300m_resource_only_one_step_probe_training_source")" \
+        == $'import CoreGraphics\nimport Darwin\nimport Foundation\nimport Metal\nimport MLX\nimport MLXNN\nimport MLXOptimizers\nimport PrimeCore\nimport PrimeNativeDecoder' \
+    && "$(grep -Fc -- 'public static func runSupervisor()' \
+        "$stage6_native300m_resource_only_one_step_probe_training_source")" == "1" \
+    && "$(grep -Fc -- \
+        'fileprivate static func runWorkerProcess(epoch: Stage6Instant) -> Never' \
+        "$stage6_native300m_resource_only_one_step_probe_training_source")" == "1" \
+    && "$(grep -Fc -- 'fileprivate static func runWorkerProcess() -> Never' \
+        "$stage6_native300m_resource_only_one_step_probe_training_source")" == "0" \
+    && "$(grep -Fc -- 'let processEntryEpoch = stage6Now()' \
+        "$stage6_native300m_resource_only_one_step_probe_training_source")" == "1" \
+    && "$(grep -Fc -- 'runWorkerProcess(epoch: processEntryEpoch)' \
+        "$stage6_native300m_resource_only_one_step_probe_training_source")" == "1" \
+    && "$(awk '
+        $0 == "    public static func runSupervisor() {" {
+            getline
+            first = ($0 == "        let processEntryEpoch = stage6Now()")
+            getline
+            second = ($0 == "        if CommandLine.arguments.contains(workerArgument) {")
+            getline
+            third = ($0 == "            runWorkerProcess(epoch: processEntryEpoch)")
+            count += first && second && third
+        }
+        END { exit !(count == 1) }
+    ' "$stage6_native300m_resource_only_one_step_probe_training_source" \
+        && printf 'true')" == "true" \
+    && "$(grep -Fc -- 'private static func runAllocatedProbe(' \
+        "$stage6_native300m_resource_only_one_step_probe_training_source")" == "1" \
+    && "$(grep -Fc -- 'Device(.gpu, index: Int32(0))' \
+        "$stage6_native300m_resource_only_one_step_probe_training_source")" == "1" \
+    && "$(grep -Fc -- 'Device.withDefaultDevice(executionDevice)' \
+        "$stage6_native300m_resource_only_one_step_probe_training_source")" == "1" \
+    && "$(grep -Fc -- 'MLX.Memory.peakMemory = 0' \
+        "$stage6_native300m_resource_only_one_step_probe_training_source")" == "1" \
+    && "$(grep -Fc -- 'MLX.Memory.clearCache()' \
+        "$stage6_native300m_resource_only_one_step_probe_training_source")" == "1" \
+    && "$(grep -Fc -- 'Stream.gpu.synchronize()' \
+        "$stage6_native300m_resource_only_one_step_probe_training_source")" == "5" \
+    && "$(grep -Fc -- 'checkedEval(model, beforeFingerprintSampleViews)' \
+        "$stage6_native300m_resource_only_one_step_probe_training_source")" == "1" \
+    && "$(grep -Fc -- \
+        'checkedEval(lossAndGradient.loss, lossAndGradient.gradients)' \
+        "$stage6_native300m_resource_only_one_step_probe_training_source")" == "1" \
+    && "$(grep -Fc -- 'checkedEval(rawGradientNorm)' \
+        "$stage6_native300m_resource_only_one_step_probe_training_source")" == "1" \
+    && "$(grep -Fc -- 'checkedEval(clippedGradients)' \
+        "$stage6_native300m_resource_only_one_step_probe_training_source")" == "1" \
+    && "$(grep -Fc -- \
+        'checkedEval(model, optimizer, afterFingerprintSampleViews)' \
+        "$stage6_native300m_resource_only_one_step_probe_training_source")" == "1" \
+    && "$(grep -Fc -- 'MLXOptimizers.AdamW.innerState()' \
+        "$stage6_native300m_resource_only_one_step_probe_training_source")" == "1" \
+    && "$(grep -Fc -- 'native300MInventory(vocabularySize: 512)' \
+        "$stage6_native300m_resource_only_one_step_probe_training_source")" == "1" \
+    && "$(grep -Fc -- 'model.trainingLogitsNoCache(tokenIDs)' \
+        "$stage6_native300m_resource_only_one_step_probe_training_source")" == "1" \
+    && "$(grep -Fc -- 'valueAndGrad(model: model)' \
+        "$stage6_native300m_resource_only_one_step_probe_training_source")" == "1" \
+    && "$(grep -Fc -- 'optimizer.update(' \
+        "$stage6_native300m_resource_only_one_step_probe_training_source")" == "1" \
+    && "$(grep -Fc -- 'fputs($0, stdout)' \
+        "$stage6_native300m_resource_only_one_step_probe_training_source")" == "1" \
+    && "$(grep -Fc -- 'fflush(stdout)' \
+        "$stage6_native300m_resource_only_one_step_probe_training_source")" == "1" ]] ||
+    die "Stage-6 training probe lost its exact GPU, barrier, one-step, supervisor, or receipt topology"
+
+for required_stage6_resource_probe_training_value in \
+    'prime_stage6_causal_masked_mean_cross_entropy_f32_v1' \
+    'prime_stage6_global_f32_l2_norm_utf8_catalog_v1' \
+    'prime_stage6_global_norm_clip_f32_v1' \
+    'prime_stage6_parameter_catalog_sample_f32be_sha256_v1' \
+    'MLXNN.crossEntropy(logits:targets:weights:axis:labelSmoothing:reduction:)' \
+    'MLXNN.valueAndGrad(model:_:)' \
+    '218_adjacent_[first_moment,second_moment]_pairs_from_TupleState.innerState' \
+    '"frame_schema_version"' \
+    'worker_spawn_failure' \
+    'lease_busy' 'preflight_floor' 'oom' 'timeout' 'signal' \
+    'nonfinite' 'topology_dtype' 'no_update' 'executor_receipt_drift' \
+    'worker_active_timeout_seconds' \
+    'supervisor_end_to_end_timeout_seconds' \
+    'termination_grace_seconds' \
+    'worker_transport_drift_detected' \
+    'postflight_device_identity_matches_preflight' \
+    'postflight_mlx_policy_and_limits_match_preflight' \
+    'native300m_trajectory_training_resume_established' \
+    'stage7_authority_established' \
+    'artifact_upload_authorized'; do
+    grep -Fq -- "$required_stage6_resource_probe_training_value" \
+        "$stage6_native300m_resource_only_one_step_probe_training_source" ||
+        die "Stage-6 training probe lost a required contract, classification, provenance, or false-ceiling value: $required_stage6_resource_probe_training_value"
+done
+for forbidden_stage6_resource_probe_training_capability in \
+    'swift run' 'URLSession' 'FileManager' 'FileHandle' \
+    'PrimeNativeDecoderCheckpoint' 'writeNative300M' 'loadNative300M'; do
+    ! grep -Fq -- "$forbidden_stage6_resource_probe_training_capability" \
+        "$stage6_native300m_resource_only_one_step_probe_training_source" ||
+        die "Stage-6 training probe gained forbidden process, network, or checkpoint capability: $forbidden_stage6_resource_probe_training_capability"
+done
+
+[[ "$(awk '/^import / { print }' \
+        "$stage6_native300m_resource_only_one_step_probe_executable_main")" \
+        == $'import Foundation\nimport PrimeNativeDecoderTraining' \
+    && "$(grep -Fxc -- \
+        'PrimeNativeDecoderNative300MResourceOnlyOneStepProbe.runSupervisor()' \
+        "$stage6_native300m_resource_only_one_step_probe_executable_main")" == "1" \
+    && "$(grep -Ec -- '^[[:space:]]*(func |class |struct |enum )' \
+        "$stage6_native300m_resource_only_one_step_probe_executable_main")" == "0" \
+    && "$(awk '/^import / || /^@testable import / { print }' \
+        "$stage6_native300m_resource_only_one_step_probe_contract_test")" \
+        == $'import Foundation\nimport MLX\nimport PrimeCore\nimport PrimeNativeDecoderTraining\nimport XCTest' \
+    && "$(grep -Ec -- '^[[:space:]]+func test' \
+        "$stage6_native300m_resource_only_one_step_probe_contract_test")" == "1" \
+    && "$(grep -Fxc -- \
+        '    func testNative300MResourceOnlyOneStepProbeContractIsExactAndExecutionPure()' \
+        "$stage6_native300m_resource_only_one_step_probe_contract_test")" == "1" \
+    && "$(grep -Fc -- '.validatePureContractV1()' \
+        "$stage6_native300m_resource_only_one_step_probe_contract_test")" == "1" \
+    && "$(grep -Fc -- '.runSupervisor()' \
+        "$stage6_native300m_resource_only_one_step_probe_contract_test")" == "0" \
+    && "$(grep -Fc -- 'runWorkerProcess' \
+        "$stage6_native300m_resource_only_one_step_probe_contract_test")" == "0" \
+    && "$(grep -Fc -- 'XCTSkip' \
+        "$stage6_native300m_resource_only_one_step_probe_contract_test")" == "0" ]] ||
+    die "Stage-6 thin executable main or execution-pure contract-test topology changed"
+stage6_resource_probe_contract_test_ast="$(swiftc -frontend -dump-parse \
+    "$stage6_native300m_resource_only_one_step_probe_contract_test" \
+    2>/dev/null)" ||
+    die "Stage-6 pure contract test does not parse into a Swift AST"
+readonly stage6_resource_probe_contract_test_ast
+readonly stage6_resource_probe_contract_test_executable_ast="$(printf '%s\n' \
+    "$stage6_resource_probe_contract_test_ast" | \
+    grep -Fv -- 'string_literal_expr' || true)"
+! printf '%s\n' "$stage6_resource_probe_contract_test_executable_ast" | \
+    grep -Eq -- \
+        'name="(MLX|Memory|Device|PrimeNativeGQADecoder|runSupervisor|runWorkerProcess|runAllocatedProbe|snapshot|peakMemory|clearCache|trainingLogitsNoCache|make)"|field="(runSupervisor|runWorkerProcess|runAllocatedProbe|snapshot|peakMemory|clearCache|trainingLogitsNoCache|make)"' ||
+    die "Stage-6 pure contract test gained an executable MLX, model, supervisor, or worker call"
 
 [[ "$(awk '/^import / { print }' "$decoder_authority_test")" \
         == $'import CryptoKit\nimport Foundation\nimport XCTest\nimport PrimeCore' \

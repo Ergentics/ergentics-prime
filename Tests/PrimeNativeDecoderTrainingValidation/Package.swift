@@ -6,6 +6,15 @@ let package = Package(
     platforms: [
         .macOS(.v14),
     ],
+    products: [
+        .executable(
+            name:
+                "PrimeNativeDecoderNative300MResourceOnlyOneStepProbe",
+            targets: [
+                "PrimeNativeDecoderNative300MResourceOnlyOneStepProbe",
+            ]
+        ),
+    ],
     dependencies: [
         .package(
             name: "ergentics-prime",
@@ -19,9 +28,29 @@ let package = Package(
         ),
     ],
     targets: [
+        .executableTarget(
+            name:
+                "PrimeNativeDecoderNative300MResourceOnlyOneStepProbe",
+            dependencies: [
+                .product(
+                    name: "PrimeNativeDecoderTraining",
+                    package: "ergentics-prime"
+                ),
+            ],
+            path:
+                "Sources/PrimeNativeDecoderNative300MResourceOnlyOneStepProbe",
+            linkerSettings: [
+                .linkedFramework("CoreGraphics"),
+                .linkedFramework("Metal"),
+            ]
+        ),
         .testTarget(
             name: "PrimeNativeDecoderTrainingTests",
             dependencies: [
+                .product(
+                    name: "PrimeCore",
+                    package: "ergentics-prime"
+                ),
                 .product(
                     name: "PrimeNativeDecoderTraining",
                     package: "ergentics-prime"
