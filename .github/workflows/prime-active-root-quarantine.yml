@@ -107,6 +107,9 @@ jobs:
             Sources/PrimeCore/PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayExactMainSwiftNumericsResolutionRepairAuthority.swift \
             Sources/PrimeCore/PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayExecutionFailureObservation.swift \
             Sources/PrimeCore/PrimeNativeDecoderNative300MResourceOnlyOneStepProbeAuthority.swift \
+            Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderNative300MResourceOnlyOneStepProbe.swift \
+            Tests/PrimeNativeDecoderTrainingValidation/Sources/PrimeNativeDecoderNative300MResourceOnlyOneStepProbe/main.swift \
+            Tests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderNative300MResourceOnlyOneStepProbeContractTests.swift \
             Sources/PrimeCore/PrimeNativeDecoderMaintainedRuntimeComputeAuthority.swift \
             Sources/PrimeCore/PrimeNativeDecoderMaintainedRuntimeExecutionObservation.swift \
             Sources/PrimeCore/PrimeNativeDecoderTokenizerModelFunctionalCompatibilityAuthority.swift \
@@ -264,6 +267,7 @@ jobs:
             echo 'Exact-main authority-repair closure run 31750678556 attempt 1 passed root 53, all four Swift-Numerics-cache-mapped isolated invocations for isolated total 6 and focused whole 59, then Metal 44, maintained runtime 1, and tokenizer 1 in order, with the Stage-5 launcher and receipt absent, zero workflow-authored or Git-internal retry, zero TLS failure or bypass, zero custom CA, zero Actions artifacts, and zero reruns. This exact-six direct mechanics successor preserves both depth-one checkouts, secure fetch, jobs, timeouts, package manifests and locks, the frozen Stage-4 launcher with invocation zero, and the validated bare Swift Numerics cache mapping. It authorizes exactly one direct Stage-5 XCTest after the retained predecessors for pre-Stage-5 total 105 and total 106: three independent same-process trials and nine tiny GPU-index-zero trajectory branches under one full-duration test-owned PrimeMetalDeviceLease, with the sole canonical receipt emitted and flushed while that lease remains held and explicit release immediately afterward. No artifact is retained or uploaded, and no retry or Stage-4 rerun, cross-device claim, durable checkpoint, Stage 6, Native-300M allocation or training, general training resume, admission, trial, canary, product, publication, additional execution, or downstream authority is granted.'
             echo 'Exact-main Stage-5 mechanics merge 8bdf6abe15d7f9a83045a3f9ee21fcc28f7ee91d and workflow run 31756331438 attempt 1 passed root 53, all four Swift-Numerics-cache-mapped isolated invocations for isolated total 6 and focused whole 59, Metal 44, maintained runtime 1 with one receipt, and tokenizer 1 with one receipt before invoking the frozen Stage-5 launcher exactly once. Its launcher build completed once in 179.58 seconds, and its direct XCTest started once and failed once with no pass or skip after both fresh-session first-step calls returned, at the combined three-conjunct source-step guard whose failing conjunct and trial ordinal are not observable; zero through two prior completed trials are possible and the exact count is unknown. Postflight identity validation, the canonical Stage-5 receipt, explicit test release, launcher lease-file cleanup, and the launcher success marker were not reached. The attempted total was 106: 105 passed, one failed, and zero skipped; workflow-authored retry, Git-internal retry, TLS failure or bypass, custom CA, Actions artifact, and rerun counts were all zero. This pure exact-five failure observation consumes and retires the sole mechanics opportunity while preserving the frozen launcher, training source, and assay test without invoking the launcher or emitting its receipt. Both hosted checkouts remain depth one, the validated Swift Numerics cache mapping and secure fetch, jobs, timeouts, package manifests, locks, and upload-free topology remain unchanged, and retirement closes at root 54, isolated 6, focused whole 60, then retained Metal 44, maintained runtime 1, and tokenizer 1 for total 106. No trajectory determinism, Stage-5 receipt, retry, rerun, artifact retention, durable checkpoint, Stage 6, Native-300M allocation or training, general training resume, admission, trial, canary, product, publication, additional execution, or downstream authority is established.'
             echo 'Exact-main Stage-5 retirement merge f5a9638194c53922f09c39c3c76095b5cc47c25e, tree a17a8f92604157c0de0252dbc30cf22681d6a13d, and workflow run 31763253701 number 107 attempt 1 passed root 54, all four Swift-Numerics-cache-mapped isolated invocations for isolated total 6 and focused whole 60, then Metal 44, maintained runtime 1, and tokenizer 1 in order for total 106, with Stage-4, Stage-5, and Stage-6 launcher invocations and the Stage-5 receipt all zero. This dependency-free pure exact-five Stage-6 authority treats the Stage-5 lifecycle, one-shot consumption, exhaustion, and invocation retirement as complete while preserving the failed Stage-5 result, mechanics-success, assay-clearance, repeated-trajectory-determinism, exact-Metal-gradient-byte, and receipt claims as false. Only after this authority merges and its root-55 exact-main depth-one closure passes may one separately scoped exact-eight resource-only mechanics successor change the gate, add one Stage-6 launcher, change the workflow and provenance, add one resource-probe training source, change the validation manifest without its lock, add one executable main, and add one pure contract test. That successor may make exactly one no-retry, no-rerun, no-replacement exact-main supervised executable attempt to measure one Native-300M step memory, disk, and duration without a quality or checkpoint claim: release SwiftPM, eager uncompiled MLX with TF32 disabled, singleton default GPU index zero under the PrimeMetalDeviceLease, seed 44, one 128-token unpadded batch with 127 targets, one forward, backward, clipped AdamW update without bias correction, six resource boundaries, a 1200-second worker limit, a 1500-second supervisor limit, and one canonical Stage-6 receipt. Its analytic floors bind 271107072 parameters across 218 paths, 1084428288-byte weights and gradients, 2168856576-byte moments, 3253284864-byte committed state, 4337713152-byte state plus gradient, a 17179869184-byte maximum MLX memory limit, zero MLX cache bytes, and at least 12884901888 available filesystem bytes. This authority itself invokes no Stage-6 launcher, allocates no Native-300M model, performs no training or checkpoint I/O, retains or uploads no artifact, changes no package manifest or lock, and establishes no resource result, job fit, runner capacity, Stage 7 trajectory-checkpoint execution, quality, admission, trial, canary, quantization, product, publication, or downstream authority.'
+            echo 'Exact-main pure-authority merge 7dd21f2b8c79ebe53f62eab1945ac41b104c2b27, tree 5124b8a75ca753d1e7659a2535242aa909329c44, ordered parents f5a9638194c53922f09c39c3c76095b5cc47c25e then a2014dee81123f99600b0ac4ff41e4295131195d, PR 106, and workflow run 31773463958 number 109 attempt 1 check suite 86198647430 passed active job 94683934560 on macos-15 and reviewed job 94684324255 on macos-26. It passed root 55, isolated 6, focused whole 61, Metal 44, maintained runtime 1 with one receipt, and tokenizer 1 with one receipt for 107 XTests, with Stage-6 launcher and receipt both zero, one exact-head push, and zero artifact, retry, rerun, TLS failure, bypass, or custom CA. This direct exact-eight mechanics successor preserves the frozen authority, root manifest and lock, validation lock, existing Training source, and all old launchers. Reviewed main alone widens from 60 to 90 minutes, runs the new pure mechanics contract once before the live sequence, then retains Metal, maintained runtime, and tokenizer before exactly one Stage-6 launcher. That launcher compiles Release once with --build-tests, reruns the same pure contract once with --skip-build, resolves the already-built binary without compilation, stages one fresh metallib, and directly invokes one supervisor executable. PASS or truthful classified ABSTAIN produces exactly one supervisor-owned canonical receipt; no worker receipt-prefix stdout, receipt file, Actions artifact, retry, rerun, replacement execution, checkpoint I/O, quality claim, ordinary-job-fit claim, Stage 7, trial, canary, quantization, product, or publication authority is granted.'
             echo 'The locally declared origin is not network-authenticated, and ignored workspace bytes are not observed by this slice.'
             echo 'Beyond that one bounded random-initialized Native-300M witness and the separately bounded tiny CPU Stage-2 mechanics authority, no Prime proposal, candidate selection, trial authorization, decision receipt, runtime/product/canary decoder activation, Native-300M training or additional execution, publication, promotion, Driver V2, or PMHNP authority is granted.'
           } >> "$GITHUB_STEP_SUMMARY"
@@ -273,7 +277,7 @@ jobs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: active-root
     runs-on: macos-26
-    timeout-minutes: 60
+    timeout-minutes: 90
     env:
       EXACT_REVISION: ${{ github.sha }}
       PRIME_MLX_REVISION: d37885a278f1c37484a94d0f401a418735e66519
@@ -349,6 +353,8 @@ jobs:
           readonly checkpoint_v2_io_test_log="$RUNNER_TEMP/prime-checkpoint-v2-io-tests.log"
           readonly checkpoint_v2_io_execution_pure_test_log="$RUNNER_TEMP/prime-checkpoint-v2-io-execution-pure-tests.log"
           readonly checkpoint_v2_io_root_identity_repair_execution_pure_test_log="$RUNNER_TEMP/prime-checkpoint-v2-io-root-identity-repair-execution-pure-tests.log"
+          readonly stage6_resource_probe_contract_test_log="$RUNNER_TEMP/prime-native-decoder-stage6-resource-probe-contract-tests.log"
+          readonly stage6_resource_probe_contract_filter='PrimeNativeDecoderNative300MResourceOnlyOneStepProbeContractTests/testNative300MResourceOnlyOneStepProbeContractIsExactAndExecutionPure'
           [[ "$(git --git-dir="$mlx_bare" rev-parse refs/heads/prime-pinned)" == \
             "$PRIME_MLX_REVISION" ]]
           mkdir -p \
@@ -371,7 +377,11 @@ jobs:
             "$RUNNER_TEMP/prime-checkpoint-v2-io-root-identity-repair-execution-pure-build" \
             "$RUNNER_TEMP/prime-checkpoint-v2-io-root-identity-repair-execution-pure-cache" \
             "$RUNNER_TEMP/prime-checkpoint-v2-io-root-identity-repair-execution-pure-config" \
-            "$RUNNER_TEMP/prime-checkpoint-v2-io-root-identity-repair-execution-pure-security"
+            "$RUNNER_TEMP/prime-checkpoint-v2-io-root-identity-repair-execution-pure-security" \
+            "$RUNNER_TEMP/prime-native-decoder-stage6-resource-probe-contract-build" \
+            "$RUNNER_TEMP/prime-native-decoder-stage6-resource-probe-contract-cache" \
+            "$RUNNER_TEMP/prime-native-decoder-stage6-resource-probe-contract-config" \
+            "$RUNNER_TEMP/prime-native-decoder-stage6-resource-probe-contract-security"
           export GIT_CONFIG_COUNT=2
           export GIT_CONFIG_KEY_0="url.file://${mlx_bare}/.insteadOf"
           export GIT_CONFIG_VALUE_0="https://github.com/Ergentics/ergentics-mlx-swift"
@@ -477,6 +487,19 @@ jobs:
             --disable-keychain \
             --force-resolved-versions \
             2>&1 | tee "$checkpoint_v2_io_root_identity_repair_execution_pure_test_log"
+          TMPDIR="$RUNNER_TEMP" swift test \
+            --package-path Tests/PrimeNativeDecoderTrainingValidation \
+            --scratch-path "$RUNNER_TEMP/prime-native-decoder-stage6-resource-probe-contract-build" \
+            --cache-path "$RUNNER_TEMP/prime-native-decoder-stage6-resource-probe-contract-cache" \
+            --config-path "$RUNNER_TEMP/prime-native-decoder-stage6-resource-probe-contract-config" \
+            --security-path "$RUNNER_TEMP/prime-native-decoder-stage6-resource-probe-contract-security" \
+            --disable-dependency-cache \
+            --manifest-cache local \
+            --disable-netrc \
+            --disable-keychain \
+            --force-resolved-versions \
+            --filter "$stage6_resource_probe_contract_filter" \
+            2>&1 | tee "$stage6_resource_probe_contract_test_log"
           unset GIT_CONFIG_COUNT GIT_CONFIG_KEY_0 GIT_CONFIG_VALUE_0
           unset GIT_CONFIG_KEY_1 GIT_CONFIG_VALUE_1
           unset GIT_CONFIG_KEY_2 GIT_CONFIG_VALUE_2
@@ -555,6 +578,13 @@ jobs:
             "$checkpoint_v2_io_root_identity_repair_execution_pure_test_log"
           ! grep -Fqi -- 'skipped' \
             "$checkpoint_v2_io_root_identity_repair_execution_pure_test_log"
+          grep -Fq 'PrimeNativeDecoderNative300MResourceOnlyOneStepProbeContractTests' \
+            "$stage6_resource_probe_contract_test_log"
+          grep -Fq 'testNative300MResourceOnlyOneStepProbeContractIsExactAndExecutionPure' \
+            "$stage6_resource_probe_contract_test_log"
+          grep -Fq 'Executed 1 test, with 0 failures' \
+            "$stage6_resource_probe_contract_test_log"
+          ! grep -Fqi -- 'skipped' "$stage6_resource_probe_contract_test_log"
           [[ "$(git rev-parse HEAD)" == "$EXACT_REVISION" ]]
           [[ -z "$(git status --porcelain=v1 --untracked-files=all)" ]]
 
@@ -564,3 +594,4 @@ jobs:
           bash .github/scripts/prime-ci-native-decoder-metal.sh
           bash .github/scripts/prime-ci-native-decoder-runtime-closure.sh
           bash .github/scripts/prime-ci-native-decoder-tokenizer-compatibility.sh
+          bash .github/scripts/prime-ci-native-decoder-stage6-native300m-resource-only-one-step.sh
