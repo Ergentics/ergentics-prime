@@ -45,6 +45,8 @@ readonly stage5_launcher_relative_path=".github/scripts/prime-ci-native-decoder-
 readonly stage5_test_relative_path="Tests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayTests.swift"
 readonly stage5_failure_observation_source_relative_path="Sources/PrimeCore/PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayExecutionFailureObservation.swift"
 readonly stage5_failure_observation_test_relative_path="Tests/PrimeCoreTests/PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayExecutionFailureObservationTests.swift"
+readonly stage5_replacement_execution_authority_source_relative_path="Sources/PrimeCore/PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayReplacementExecutionAuthority.swift"
+readonly stage5_replacement_execution_authority_test_relative_path="Tests/PrimeCoreTests/PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayReplacementExecutionAuthorityTests.swift"
 readonly stage6_resource_probe_authority_source_relative_path="Sources/PrimeCore/PrimeNativeDecoderNative300MResourceOnlyOneStepProbeAuthority.swift"
 readonly stage6_resource_probe_authority_test_relative_path="Tests/PrimeCoreTests/PrimeNativeDecoderNative300MResourceOnlyOneStepProbeAuthorityTests.swift"
 readonly stage6_resource_probe_execution_observation_source_relative_path="Sources/PrimeCore/PrimeNativeDecoderNative300MResourceOnlyOneStepProbeExecutionObservation.swift"
@@ -54,60 +56,45 @@ readonly stage6_resource_probe_training_source_relative_path="Sources/PrimeNativ
 readonly stage6_resource_probe_validation_manifest_relative_path="Tests/PrimeNativeDecoderTrainingValidation/Package.swift"
 readonly stage6_resource_probe_executable_main_relative_path="Tests/PrimeNativeDecoderTrainingValidation/Sources/PrimeNativeDecoderNative300MResourceOnlyOneStepProbe/main.swift"
 readonly stage6_resource_probe_contract_test_relative_path="Tests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderNative300MResourceOnlyOneStepProbeContractTests.swift"
-readonly expected_stage6_resource_probe_mechanics_preserved_index_sha256="643a78cbfc47dcb9bea1fa1a7193736d702918561acff440898d682bc378d7dc"
-readonly observed_stage6_resource_probe_mechanics_preserved_index_sha256="$({
+readonly expected_stage5_replacement_execution_authority_preserved_index_sha256="311100a1da0e266d603b62bccb1608c25ad767cc201847d8ee81ec571dee3b40"
+readonly observed_stage5_replacement_execution_authority_preserved_index_sha256="$({
     git -C "$prime_root" ls-files -s |
         while IFS= read -r index_record; do
             relative_path="${index_record#*$'\t'}"
             if [[ "$relative_path" \
                     == '.github/scripts/prime-ci-active-root-quarantine.sh' \
                 || "$relative_path" \
-                    == "$stage6_resource_probe_launcher_relative_path" \
-                || "$relative_path" \
                     == '.github/workflows/prime-active-root-quarantine.yml' \
                 || "$relative_path" \
                     == 'Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' \
                 || "$relative_path" \
-                    == "$stage6_resource_probe_training_source_relative_path" \
+                    == "$stage5_replacement_execution_authority_source_relative_path" \
                 || "$relative_path" \
-                    == "$stage6_resource_probe_validation_manifest_relative_path" \
-                || "$relative_path" \
-                    == "$stage6_resource_probe_executable_main_relative_path" \
-                || "$relative_path" \
-                    == "$stage6_resource_probe_contract_test_relative_path" ]]; then
-                continue
-            fi
-            if [[ "$relative_path" \
-                    == "$stage6_resource_probe_execution_observation_source_relative_path" \
-                || "$relative_path" \
-                    == "$stage6_resource_probe_execution_observation_test_relative_path" ]]; then
+                    == "$stage5_replacement_execution_authority_test_relative_path" ]]; then
                 continue
             fi
             printf '%s\n' "$index_record"
         done
 } | LC_ALL=C sort | shasum -a 256 | awk '{print $1}')"
-[[ "$expected_stage6_resource_probe_mechanics_preserved_index_sha256" \
+[[ "$expected_stage5_replacement_execution_authority_preserved_index_sha256" \
         =~ ^[0-9a-f]{64}$ \
-    && "$observed_stage6_resource_probe_mechanics_preserved_index_sha256" \
-        == "$expected_stage6_resource_probe_mechanics_preserved_index_sha256" ]] ||
-    die "Stage-6 resource-probe lifecycle changed a path outside the exact-eight mechanics and exact-two observation pairs"
-for exact_stage6_resource_probe_mechanics_path in \
+    && "$observed_stage5_replacement_execution_authority_preserved_index_sha256" \
+        == "$expected_stage5_replacement_execution_authority_preserved_index_sha256" ]] ||
+    die "Stage-5 replacement-execution authority changed a path outside the exact five-path closure"
+for exact_stage5_replacement_execution_authority_path in \
     '.github/scripts/prime-ci-active-root-quarantine.sh' \
-    "$stage6_resource_probe_launcher_relative_path" \
     '.github/workflows/prime-active-root-quarantine.yml' \
     'Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' \
-    "$stage6_resource_probe_training_source_relative_path" \
-    "$stage6_resource_probe_validation_manifest_relative_path" \
-    "$stage6_resource_probe_executable_main_relative_path" \
-    "$stage6_resource_probe_contract_test_relative_path"; do
-    expected_stage6_resource_probe_mechanics_mode="100644"
-    case "$exact_stage6_resource_probe_mechanics_path" in
-        '.github/scripts/'*) expected_stage6_resource_probe_mechanics_mode="100755" ;;
+    "$stage5_replacement_execution_authority_source_relative_path" \
+    "$stage5_replacement_execution_authority_test_relative_path"; do
+    expected_stage5_replacement_execution_authority_mode="100644"
+    case "$exact_stage5_replacement_execution_authority_path" in
+        '.github/scripts/'*) expected_stage5_replacement_execution_authority_mode="100755" ;;
     esac
     [[ "$(git -C "$prime_root" ls-files -s -- \
-        "$exact_stage6_resource_probe_mechanics_path" | awk '{print $1}')" \
-        == "$expected_stage6_resource_probe_mechanics_mode" ]] ||
-        die "Stage-6 resource-probe mechanics exact path is missing or has the wrong mode: $exact_stage6_resource_probe_mechanics_path"
+        "$exact_stage5_replacement_execution_authority_path" | awk '{print $1}')" \
+        == "$expected_stage5_replacement_execution_authority_mode" ]] ||
+        die "Stage-5 replacement-execution authority exact path is missing or has the wrong mode: $exact_stage5_replacement_execution_authority_path"
 done
 
 assert_stage5_mechanics_payload_identity() {
@@ -1131,10 +1118,16 @@ readonly tokenizer_compatibility_workflow_line="$(grep -nFx -- \
         '          bash .github/scripts/prime-ci-native-decoder-stage5-tiny-repeated-metal-trajectory-determinism.sh' \
         "$workflow_path")" == "0" \
     && "$(grep -Fxc -- \
+        '          bash .github/scripts/prime-ci-native-decoder-stage5-repeated-trajectory-replacement.sh' \
+        "$workflow_path")" == "0" \
+    && "$(grep -Fxc -- \
         '          bash .github/scripts/prime-ci-native-decoder-stage6-native300m-resource-only-one-step.sh' \
         "$workflow_path")" == "0" \
     && "$(grep -Fc -- \
         'PRIME_NATIVE_DECODER_STAGE5_TINY_REPEATED_METAL_TRAJECTORY_DETERMINISM_RECEIPT=' \
+        "$workflow_path")" == "0" \
+    && "$(grep -Fc -- \
+        'PRIME_NATIVE_DECODER_STAGE5_REPLACEMENT_RECEIPT_V1=' \
         "$workflow_path")" == "0" \
     && "$(grep -Ec -- 'PRIME_NATIVE_DECODER_STAGE6_.*RECEIPT=' \
         "$workflow_path")" == "0" ]] ||
@@ -1265,6 +1258,7 @@ readonly stage4_tiny_durable_multileaf_commit_fault_injection_execution_observat
 readonly stage5_tiny_repeated_metal_trajectory_determinism_assay_authority_filter='PrimeCoreTests.PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling'
 readonly stage5_swift_numerics_resolution_repair_authority_filter='PrimeCoreTests.PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayExactMainSwiftNumericsResolutionRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling'
 readonly stage5_tiny_repeated_metal_trajectory_execution_failure_observation_filter='PrimeCoreTests.PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayExecutionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling'
+readonly stage5_replacement_execution_authority_filter='PrimeCoreTests.PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayReplacementExecutionAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling'
 readonly stage6_native300m_resource_only_one_step_probe_authority_filter='PrimeCoreTests.PrimeNativeDecoderNative300MResourceOnlyOneStepProbeAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling'
 readonly stage6_native300m_resource_only_one_step_probe_execution_observation_filter='PrimeCoreTests.PrimeNativeDecoderNative300MResourceOnlyOneStepProbeExecutionObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndSuccessCeiling'
 [[ "$(grep -Fc -- "$tiny_cpu_mechanics_authority_filter" \
@@ -1296,7 +1290,7 @@ readonly stage6_native300m_resource_only_one_step_probe_execution_observation_fi
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 56 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 57 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not run the exact Stage-2 authority and failure-observation pure contracts"
 [[ "$(grep -Fc -- "$private_dependency_tls_failure_observation_filter" \
@@ -1388,7 +1382,7 @@ readonly stage6_native300m_resource_only_one_step_probe_execution_observation_fi
         "          grep -Fq 'PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapFreshMetallibCrossBindingExecutionFailureObservationTests' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 56 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 57 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the Stage-2 metallib bootstrap repair, failure observations, and classifier repair authority"
 [[ "$(grep -Fc -- \
@@ -1556,9 +1550,28 @@ readonly stage6_native300m_resource_only_one_step_probe_execution_observation_fi
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 56 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 57 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run exactly the Stage-5 execution-failure observation"
+[[ "$(grep -Fc -- \
+        "$stage5_replacement_execution_authority_filter" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        "$stage5_replacement_execution_authority_source_relative_path" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        "$stage5_replacement_execution_authority_test_relative_path" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        "          grep -Fq 'PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayReplacementExecutionAuthorityTests' \\" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling' \\" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        '          grep -Fq '\''Executed 57 tests, with 0 failures'\'' "$test_log"' \
+        "$workflow_path")" == "1" ]] ||
+    die "hosted workflow does not parse and run exactly the Stage-5 replacement-execution authority"
 [[ "$(grep -Fc -- \
         "$stage6_native300m_resource_only_one_step_probe_authority_filter" \
         "$workflow_path")" == "1" \
@@ -1575,7 +1588,7 @@ readonly stage6_native300m_resource_only_one_step_probe_execution_observation_fi
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 56 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 57 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run exactly the Stage-6 resource-only probe authority"
 [[ "$(grep -Fc -- \
@@ -1909,6 +1922,58 @@ for required_stage6_resource_probe_execution_observation_summary_value in \
         "$required_stage6_resource_probe_execution_observation_summary_value" \
         "$workflow_path")" == "1" ]] ||
         die "workflow lost the exact Stage-6 execution-observation summary: $required_stage6_resource_probe_execution_observation_summary_value"
+done
+for required_stage5_replacement_execution_authority_summary_value in \
+    'dependency-free Stage-5 replacement-execution authority is a pure exact-five closure' \
+    'active-root gate, hosted workflow, embedded provenance, one new PrimeCore authority source, and its one-method root test' \
+    'preserves the consumed run-105 failure as an ambiguous combined-guard observation that neither establishes nor disproves repeated-trajectory determinism' \
+    'does not reinterpret or rerun the frozen Stage-5 launcher' \
+    'binds the successful Stage-6 resource witness to the pre-replacement decoder only' \
+    'Stage-6 resource-clearance applicability to candidate B remains false' \
+    'Candidate A preserves the maintained gather-backed training path for comparison' \
+    'candidate B must be a separately named package-only training path' \
+    'public inference, cache, generation, the existing trainingLogitsNoCache gather semantics, manifests, locks, and every frozen launcher remain preserved' \
+    'root 57, isolated 6, focused whole 63' \
+    'retained Metal 44, maintained runtime 1, and tokenizer 1 for retained live 46 and total 109' \
+    'separately reviewed exact-ten successor' \
+    'prime-ci-native-decoder-stage5-repeated-trajectory-replacement.sh' \
+    'add one current-decoder identity observation pair' \
+    'change PrimeNativeGQADecoder.swift and PrimeNativeDecoderTraining.swift' \
+    'repair only the retained PrimeNativeDecoderAuthorityTests.swift current-decoder pin' \
+    'add PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayReplacementTests.swift' \
+    'root 58 and focused whole 64, retain live predecessor total 110' \
+    'exactly one replacement assay XCTest for total 111' \
+    'invokes no Stage-5 or Stage-6 launcher, emits no Stage-5 or Stage-6 receipt' \
+    'changes no production source, manifest, lock, or retained Metal test' \
+    'establishes no Stage-5 result, assay clearance, repeated-trajectory determinism, exact-Metal-gradient bytes, Stage-6 applicability to candidate B' \
+    'Stage-7 authority or authorization, checkpoint or quality admission, trial, canary, product, publication, additional execution, retry, rerun, or downstream authority'; do
+    [[ "$(grep -Fc -- \
+        "$required_stage5_replacement_execution_authority_summary_value" \
+        "$workflow_path")" == "1" ]] ||
+        die "workflow lost the exact Stage-5 replacement-execution authority summary: $required_stage5_replacement_execution_authority_summary_value"
+done
+for required_stage5_replacement_execution_algorithm_summary_value in \
+    'algorithm prime_native_decoder_flattened_dense_one_hot_matmul_input_embedding_v1' \
+    'PrimeNativeGQADecoder.trainingLogitsNoCacheFlattenedDenseOneHotMatmulInputEmbeddingV1' \
+    'maintainedGatherV1 maps to maintained_gather_v1 by default' \
+    'denseOneHotMatmulV1 maps to flattened_dense_one_hot_matmul_input_embedding_v1' \
+    'fresh and restored sessions, train step, valueAndGrad, evaluation, and all nine B branch receipts' \
+    'Candidate A has 4 external API/VJP bindings, B has 9, their exact overlap is 2, B-only is 7, and the unique A/B union is 11' \
+    'checkedEval and default-GPU Stream synchronization are two separately inherited execution-support pins and do not claim determinism' \
+    'A runs first for 6 diagnostic source steps and never gates or skips B after a measured mismatch' \
+    'train 15, snapshot 3, restore 3, evaluate 18, forward-equivalence 9, whole-logits 57, embedding-pair seam 9' \
+    'dense construction, combined token-bounds validation, checked evaluation, GPU synchronization, and Bool host read all exactly 66' \
+    'one combined nonnegative-and-less-than-vocabulary predicate after checked Int32 vocabulary conversion' \
+    'Replay comparisons stay disjoint from same-model pre-mutation embedding and whole-logit forward-equivalence comparisons' \
+    'canonical Stage-5 replacement receipt uses exact equals framing and its prefix is absent from this authority-closure workflow' \
+    'PASS_CLEARANCE requires valid completion plus both comparison families' \
+    'MEASURED_EXACT_MISMATCH is a green completed measurement when either family is false, consumes the one-shot, establishes no clearance, and permits no rerun' \
+    'Every green receipt keeps Stage-6 resource clearance historical' \
+    'Stage-6 applicability to B, B-witness authorization or establishment, and Stage-7 authority or authorization remain false'; do
+    [[ "$(grep -Fc -- \
+        "$required_stage5_replacement_execution_algorithm_summary_value" \
+        "$workflow_path")" == "1" ]] ||
+        die "workflow lost the exact Stage-5 replacement algorithm summary: $required_stage5_replacement_execution_algorithm_summary_value"
 done
 [[ "$(grep -Fc -- \
         'Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderTrajectoryCheckpointV1.swift' \
@@ -3056,6 +3121,8 @@ readonly stage5_swift_numerics_resolution_repair_authority_source="$prime_root/S
 readonly stage5_swift_numerics_resolution_repair_authority_test="$prime_root/Tests/PrimeCoreTests/PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayExactMainSwiftNumericsResolutionRepairAuthorityTests.swift"
 readonly stage5_tiny_repeated_metal_trajectory_execution_failure_observation_source="$prime_root/$stage5_failure_observation_source_relative_path"
 readonly stage5_tiny_repeated_metal_trajectory_execution_failure_observation_test="$prime_root/$stage5_failure_observation_test_relative_path"
+readonly stage5_replacement_execution_authority_source="$prime_root/$stage5_replacement_execution_authority_source_relative_path"
+readonly stage5_replacement_execution_authority_test="$prime_root/$stage5_replacement_execution_authority_test_relative_path"
 readonly stage6_native300m_resource_only_one_step_probe_authority_source="$prime_root/$stage6_resource_probe_authority_source_relative_path"
 readonly stage6_native300m_resource_only_one_step_probe_authority_test="$prime_root/$stage6_resource_probe_authority_test_relative_path"
 readonly stage6_native300m_resource_only_one_step_probe_execution_observation_source="$prime_root/$stage6_resource_probe_execution_observation_source_relative_path"
@@ -3276,6 +3343,12 @@ readonly decoder_stage5_tiny_repeated_metal_trajectory_test="$prime_root/$stage5
 [[ -f "$stage5_tiny_repeated_metal_trajectory_execution_failure_observation_test" \
     && ! -L "$stage5_tiny_repeated_metal_trajectory_execution_failure_observation_test" ]] ||
     die "Stage-5 execution-failure observation test is missing or linked"
+[[ -f "$stage5_replacement_execution_authority_source" \
+    && ! -L "$stage5_replacement_execution_authority_source" ]] ||
+    die "Stage-5 replacement-execution authority is missing or linked"
+[[ -f "$stage5_replacement_execution_authority_test" \
+    && ! -L "$stage5_replacement_execution_authority_test" ]] ||
+    die "Stage-5 replacement-execution authority test is missing or linked"
 [[ -f "$stage6_native300m_resource_only_one_step_probe_authority_source" \
     && ! -L "$stage6_native300m_resource_only_one_step_probe_authority_source" ]] ||
     die "Stage-6 resource-only probe authority is missing or linked"
@@ -4194,6 +4267,8 @@ swiftc -frontend -parse "$stage5_swift_numerics_resolution_repair_authority_sour
 swiftc -frontend -parse "$stage5_swift_numerics_resolution_repair_authority_test"
 swiftc -frontend -parse "$stage5_tiny_repeated_metal_trajectory_execution_failure_observation_source"
 swiftc -frontend -parse "$stage5_tiny_repeated_metal_trajectory_execution_failure_observation_test"
+swiftc -frontend -parse "$stage5_replacement_execution_authority_source"
+swiftc -frontend -parse "$stage5_replacement_execution_authority_test"
 swiftc -frontend -parse "$stage6_native300m_resource_only_one_step_probe_execution_observation_source"
 swiftc -frontend -parse "$stage6_native300m_resource_only_one_step_probe_execution_observation_test"
 swiftc -frontend -parse "$decoder_training_source"
@@ -9195,9 +9270,9 @@ done
 [[ "$(wc -l < "$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift" | \
         awk '{print $1}')" == "13" \
     && "$(grep -Fxc -- \
-        '        "7f0c40bfa69e62d02e2fc5e4dc2c7d1e116f9739e4b39e885a23e245eec3aa57"' \
+        '        "18f452abc7ff9225c4af06f3faee72616e8aa03cb7a18d65d1b117816756d75e"' \
         "$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift")" == "1" ]] ||
-    die "Stage-6 PASS-observation retirement embedded provenance identity changed"
+    die "Stage-5 replacement authority embedded provenance identity changed"
 for forbidden_stage4_execution_observation_capability in \
     'import CoreGraphics' 'import Metal' 'import MLX' 'import MLXNN' \
     'import MLXOptimizers' 'FileManager' 'FileHandle' 'URLSession' 'Process(' \
@@ -11801,6 +11876,258 @@ done
         'fail "Stage-5 lease file or parent survived exact cleanup"' \
         "$decoder_stage5_tiny_repeated_metal_trajectory_determinism_gate_path")" == "1" ]] ||
     die "Stage-5 launcher persistent lease validation or exact reclamation changed"
+
+assert_metal_current_decoder_assertion_arc_identity \
+    'Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' \
+    '100644' 'c77baf865f48ac587a9b2e21901bf06fe1d23e29' \
+    '546' \
+    '8f38c70edbc13376eaa7dce476fc40300765ad3afe506060e8c29fa3de005287'
+assert_metal_current_decoder_assertion_arc_identity \
+    "$stage5_replacement_execution_authority_source_relative_path" \
+    '100644' 'ded305476edfc832ae4e910b1985da77c7a10cd0' \
+    '144935' \
+    '634eabe81f63a570cfe2f565d95befbd8c77ea98ba7864a212f45511c7f8b5fc'
+assert_metal_current_decoder_assertion_arc_identity \
+    "$stage5_replacement_execution_authority_test_relative_path" \
+    '100644' 'e7e240f6bb6e037f0b41f28d925ce0fcd38c42a7' \
+    '49796' \
+    '71506cbc21fb8d03886bdc95500e6249f5d61a59f84569dfda95875289435e08'
+[[ "$(wc -l < "$stage5_replacement_execution_authority_source" | \
+        awk '{print $1}')" == "2728" \
+    && "$(wc -l < "$stage5_replacement_execution_authority_test" | \
+        awk '{print $1}')" == "1017" \
+    && "$(awk '/^import / { print }' \
+        "$stage5_replacement_execution_authority_source")" \
+        == 'import Foundation' \
+    && "$(awk '/^import / || /^@testable import / { print }' \
+        "$stage5_replacement_execution_authority_test")" \
+        == $'import CoreFoundation\nimport Foundation\n@testable import PrimeCore\nimport XCTest' \
+    && "$(grep -Ec -- '^[[:space:]]+func test' \
+        "$stage5_replacement_execution_authority_test")" == "1" \
+    && "$(grep -Fc -- \
+        'PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayReplacementExecutionAuthorityTests:' \
+        "$stage5_replacement_execution_authority_test")" == "1" \
+    && "$(grep -Fc -- \
+        'func testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling()' \
+        "$stage5_replacement_execution_authority_test")" == "1" ]] ||
+    die "Stage-5 replacement authority identity, imports, or sole-test surface changed"
+
+for required_stage5_replacement_execution_authority_value in \
+    'PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayReplacementExecutionAuthorityV1:' \
+    'public static let frozenV1: Self = {' \
+    'public static let canonicalSHA256 =' \
+    '"e0b1fadf4075765078ba3cf29e7cce85be930791651020d45cba1b5b91466252"' \
+    'public func validateExactV1() throws {' \
+    'self == Self.frozenV1' \
+    'externalSourceBindings.count == 11' \
+    'inheritedExecutionSupportBindings.count == 2' \
+    'inheritedExecutionSupportBindingsExcludedFromArmABindingUnion:' \
+    'Source/MLXNN/Embedding.swift' \
+    'mlx/primitives.cpp' \
+    'Source/MLX/MLXArray+Ops.swift' \
+    'Source/MLX/Transforms+Eval.swift' \
+    'Source/MLX/Stream.swift' \
+    'armAExternalBindingSet.count == 4' \
+    'armBExternalBindingSet.count == 9' \
+    'externalBindingOverlapSet.count == 2' \
+    '.subtracting(armAExternalBindingSet).count == 7' \
+    '"prime_native_decoder_flattened_dense_one_hot_matmul_input_embedding_v1"' \
+    'caseName: "maintainedGatherV1"' \
+    'rawValue: "maintained_gather_v1"' \
+    'caseName: "denseOneHotMatmulV1"' \
+    '"flattened_dense_one_hot_matmul_input_embedding_v1"' \
+    '"stage5ReplacementTrainingInputPath"' \
+    'selectorImmutableAfterInitialization: true' \
+    'selectorExplicitlyPassedThroughTrainStep: true' \
+    'selectorExplicitlyPassedThroughValueAndGrad: true' \
+    'selectorExplicitlyPassedThroughEvaluate: true' \
+    'selectorExplicitInFreshAndRestoredBConstructors: true' \
+    '"stage5ReplacementTrainingInputPathID"' \
+    'allNineBBranchesExposeExpectedReadOnlyPathID: true' \
+    'PrimeNativeGQADecoder.trainingLogitsNoCacheFlattenedDenseOneHotMatmulInputEmbeddingV1' \
+    'PrimeNativeGQADecoder.trainingInputEmbeddingForwardPairForFlattenedDenseOneHotMatmulAssayV1' \
+    'embeddingForwardPairUsesSameModelAndState: true' \
+    '"checkedTrainingInputPathForwardEquivalenceAtCurrentBoundaryV1"' \
+    'sameModelPreMutationEmbeddingForwardPairSeamRequired: true' \
+    'sameModelPreMutationWholeLogitsPairRequired: true' \
+    '"guard let checkedInt32V = Int32(exactly: V) else { preconditionFailure() }"' \
+    '"((tokens .>= Int32(0)) .&& (tokens .< checkedInt32V)).all()"' \
+    '"do { try checkedEval(tokenBounds) } catch { preconditionFailure() }"' \
+    '"StreamOrDevice.default.stream.synchronize()"' \
+    '"precondition(tokenBounds.item(Bool.self))"' \
+    'tokenBoundsCheckedEvalCountPerDenseEmbeddingCall: 1' \
+    'tokenBoundsGPUSynchronizeCountPerDenseEmbeddingCall: 1' \
+    'tokenBoundsHostBoolItemCountPerDenseEmbeddingCall: 1' \
+    'tokenBoundsFailureOccursBeforeOneHotConstruction: true' \
+    '"(flattenedTokens .== vocabulary).asType(.float32)"' \
+    'usesSingleFlattenedTwoDimensionalMatmul: true' \
+    'usesBatchedBroadcastMatmul: false' \
+    'usesGatherForInputEmbedding: false' \
+    'usesScatterAddForInputEmbeddingWeightVJPByConstruction: false' \
+    'maintainedGatherImplementationChanged: false' \
+    'tiedOutputProjectionChanged: false' \
+    'dependencySourceBindingsClaimDeterminism: false' \
+    'forwardAndReplayExactnessRemainEmpirical: true' \
+    '"uninterrupted"' \
+    '"source_snapshot"' \
+    '"fresh_restored_from_source_snapshot"' \
+    'armAInfrastructureFailureIsInvalidInfrastructure: true' \
+    'armAMeasuredMismatchSkipsArmB: false' \
+    'armBValidMeasurementCompletesFullPlanBeforeTerminalReceipt:' \
+    'Set(assay.armBReplayExactComparisonDomains).isDisjoint(' \
+    '"fresh_constructor"' \
+    '"restore_constructor"' \
+    '"PRIME_NATIVE_DECODER_STAGE5_REPLACEMENT_RECEIPT_V1="' \
+    '"MEASURED_EXACT_MISMATCH", "PASS_CLEARANCE"' \
+    '"valid_completed_measurement && all_arm_b_exact_comparisons && all_forward_equivalence_checks"' \
+    '"valid_completed_measurement && (!all_arm_b_exact_comparisons || !all_forward_equivalence_checks)"' \
+    'passRequiresAllArmBExactComparisons: true' \
+    'passRequiresAllForwardEquivalenceChecks: true' \
+    'measuredMismatchRequiresAtLeastOneGatingComparisonFalse: true' \
+    'expectedArmASourceStepCount: 6' \
+    'expectedArmBTrainingStepCount: 15' \
+    'expectedArmBSnapshotCount: 3' \
+    'expectedArmBRestoreCount: 3' \
+    'expectedArmBEvaluateCount: 18' \
+    'expectedArmBForwardEquivalenceCheckCount: 9' \
+    'expectedArmBDenseWholeLogitsCallCount: 57' \
+    'expectedArmBInputEmbeddingPairSeamCount: 9' \
+    'expectedArmBDenseEmbeddingConstructionCount: 66' \
+    'expectedArmBTokenBoundsValidationCount: 66' \
+    'expectedArmBTokenBoundsCheckedEvalCount: 66' \
+    'expectedArmBTokenBoundsGPUSynchronizeCount: 66' \
+    'expectedArmBTokenBoundsHostBoolItemCount: 66' \
+    'expectedRootTestCount: 57' \
+    'expectedFocusedWholeTestCount: 63' \
+    'expectedTotalTestCount: 109' \
+    'originalStage5LauncherInvocationCount: 0' \
+    'replacementStage5LauncherInvocationCount: 0' \
+    'stage6LauncherInvocationCount: 0' \
+    'authorityOnlyNoMetalOrMLX: true' \
+    'expectedRootTestCount: 58' \
+    'expectedFocusedWholeTestCount: 64' \
+    'expectedPreReplacementTestCount: 110' \
+    'expectedReplacementTestCount: 1' \
+    'expectedTotalTestCount: 111' \
+    'manifestMutationAuthorized: false' \
+    'packageLockMutationAuthorized: false' \
+    'defaultGatherPathMutationAuthorized: false' \
+    'newPackageOnlyOptInPathAuthorized: true' \
+    'retainedAuthorityTestPermittedMutation:' \
+    'replace_only_live_Stage2_surfaceDesign_currentDecoderSuccessor_identity_comparison_with_PrimeNativeDecoderStage5RepeatedTrajectoryReplacementCurrentDecoderIdentityObservationV1' \
+    'passClearanceEstablishesRepeatedSameDeviceBPathDeterminism:' \
+    'passClearanceEstablishesExactSameDeviceBPathGradientBytes:' \
+    'passClearanceEstablishesDefaultGatherDeterminism: false' \
+    'measuredMismatchEstablishesStage5Result: true' \
+    'measuredMismatchEstablishesStage5Clearance: false' \
+    'measuredMismatchPermitsRerun: false' \
+    'stage7AuthorizedByPassClearance: false' \
+    'stage7RequiresNewBSpecificNative300ResourceWitness: true' \
+    'stage7RequiresSeparateAuthorityAfterWitness: true' \
+    'authorityClosureExecutedReplacement: false' \
+    'authorityClosureObservedMLX: false' \
+    'stage6ResourceClearanceRemainsHistorical: true' \
+    'stage6HistoricalResourceClearanceAppliesToBPath: false' \
+    'bSpecificNative300ResourceWitnessAuthorized: false' \
+    'bSpecificNative300ResourceWitnessRequiresSeparateAuthority:' \
+    'bSpecificNative300ResourceWitnessEstablished: false' \
+    'stage7AuthorityEstablished: false' \
+    'stage7Authorized: false' \
+    'AUTHORIZED_exact5_authority_closure_then_one_exact10_stage5_ab_replacement_opportunity_no_execution_observed_stage7_false'; do
+    grep -Fq -- "$required_stage5_replacement_execution_authority_value" \
+        "$stage5_replacement_execution_authority_source" ||
+        die "Stage-5 replacement-execution authority lost: $required_stage5_replacement_execution_authority_value"
+done
+! grep -Fq -- 'Source/MLX/Transforms.swift' \
+    "$stage5_replacement_execution_authority_source" ||
+    die "Stage-5 replacement authority retained the stale transforms binding path"
+
+for exact_stage5_replacement_successor_path in \
+    '.github/scripts/prime-ci-active-root-quarantine.sh' \
+    '.github/scripts/prime-ci-native-decoder-stage5-repeated-trajectory-replacement.sh' \
+    '.github/workflows/prime-active-root-quarantine.yml' \
+    'Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' \
+    'Sources/PrimeCore/PrimeNativeDecoderStage5RepeatedTrajectoryReplacementCurrentDecoderIdentityObservation.swift' \
+    'Sources/PrimeNativeDecoder/PrimeNativeGQADecoder.swift' \
+    'Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderTraining.swift' \
+    'Tests/PrimeCoreTests/PrimeNativeDecoderStage5RepeatedTrajectoryReplacementCurrentDecoderIdentityObservationTests.swift' \
+    'Tests/PrimeNativeDecoderValidation/Tests/PrimeNativeDecoderTests/PrimeNativeDecoderAuthorityTests.swift' \
+    'Tests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayReplacementTests.swift'; do
+    grep -Fq -- "$exact_stage5_replacement_successor_path" \
+        "$stage5_replacement_execution_authority_source" ||
+        die "Stage-5 replacement exact-ten successor lost: $exact_stage5_replacement_successor_path"
+done
+
+for required_stage5_replacement_execution_authority_test_value in \
+    'func testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling()' \
+    'XCTAssertNoThrow(try authority.validateExactV1())' \
+    'Authority.canonicalSHA256' \
+    'XCTAssertEqual(authority.externalSourceBindings.count, 11)' \
+    'XCTAssertEqual(authority.armAExternalBindingKeys.count, 4)' \
+    'XCTAssertEqual(authority.armBExternalBindingKeys.count, 9)' \
+    'XCTAssertEqual(authority.exactExternalBindingOverlapKeys.count, 2)' \
+    '"maintained_gather_v1"' \
+    '"flattened_dense_one_hot_matmul_input_embedding_v1"' \
+    'algorithm.tokenBoundsCheckedEvalCountPerDenseEmbeddingCall, 1)' \
+    'algorithm.tokenBoundsGPUSynchronizeCountPerDenseEmbeddingCall, 1)' \
+    'algorithm.tokenBoundsHostBoolItemCountPerDenseEmbeddingCall, 1)' \
+    'assay.armAInfrastructureFailureIsInvalidInfrastructure' \
+    'assay.armAMeasuredMismatchSkipsArmB' \
+    'assay.armBValidMeasurementCompletesFullPlanBeforeTerminalReceipt' \
+    'Set(assay.armBReplayExactComparisonDomains).isDisjoint(' \
+    '"PRIME_NATIVE_DECODER_STAGE5_REPLACEMENT_RECEIPT_V1="' \
+    'XCTAssertEqual(receipt.expectedArmASourceStepCount, 6)' \
+    'XCTAssertEqual(receipt.expectedArmBTrainingStepCount, 15)' \
+    'XCTAssertEqual(receipt.expectedArmBSnapshotCount, 3)' \
+    'XCTAssertEqual(receipt.expectedArmBRestoreCount, 3)' \
+    'XCTAssertEqual(receipt.expectedArmBEvaluateCount, 18)' \
+    'XCTAssertEqual(receipt.expectedArmBForwardEquivalenceCheckCount, 9)' \
+    'XCTAssertEqual(receipt.expectedArmBDenseWholeLogitsCallCount, 57)' \
+    'XCTAssertEqual(receipt.expectedArmBInputEmbeddingPairSeamCount, 9)' \
+    'XCTAssertEqual(receipt.expectedArmBDenseEmbeddingConstructionCount, 66)' \
+    'XCTAssertEqual(receipt.expectedArmBTokenBoundsValidationCount, 66)' \
+    'XCTAssertEqual(receipt.expectedArmBTokenBoundsCheckedEvalCount, 66)' \
+    'receipt.expectedArmBTokenBoundsGPUSynchronizeCount, 66)' \
+    'XCTAssertEqual(receipt.expectedArmBTokenBoundsHostBoolItemCount, 66)' \
+    'XCTAssertEqual(closure.expectedRootTestCount, 57)' \
+    'XCTAssertEqual(closure.expectedFocusedWholeTestCount, 63)' \
+    'XCTAssertEqual(closure.expectedTotalTestCount, 109)' \
+    'XCTAssertEqual(successor.expectedRootTestCount, 58)' \
+    'XCTAssertEqual(successor.expectedFocusedWholeTestCount, 64)' \
+    'XCTAssertEqual(successor.expectedPreReplacementTestCount, 110)' \
+    'XCTAssertEqual(successor.expectedTotalTestCount, 111)' \
+    'transition.stage7RequiresNewBSpecificNative300ResourceWitness' \
+    'transition.stage7RequiresSeparateAuthorityAfterWitness' \
+    'ceiling.stage6ResourceClearanceRemainsHistorical' \
+    'ceiling.stage6HistoricalResourceClearanceAppliesToBPath' \
+    'ceiling.bSpecificNative300ResourceWitnessAuthorized' \
+    'ceiling.bSpecificNative300ResourceWitnessRequiresSeparateAuthority' \
+    'ceiling.bSpecificNative300ResourceWitnessEstablished' \
+    'ceiling.stage7AuthorityEstablished' \
+    'ceiling.stage7Authorized' \
+    'PrimeSHA256.hexDigest(of: canonical)' \
+    'XCTAssertGreaterThan(valuePaths.count, 250)' \
+    'XCTAssertGreaterThan(dictionaryPaths.count, 15)' \
+    'XCTAssertGreaterThan(arrayPaths.count, 20)' \
+    'XCTAssertGreaterThan(scalarPaths.count, 175)' \
+    'unknown_stage5_replacement_field_\(index)' \
+    'try assertNoncanonicalEncodingsReject(canonical, object: object)' \
+    'testText.components(separatedBy: "func " + "test").count - 1'; do
+    grep -Fq -- "$required_stage5_replacement_execution_authority_test_value" \
+        "$stage5_replacement_execution_authority_test" ||
+        die "Stage-5 replacement-execution authority test lost: $required_stage5_replacement_execution_authority_test_value"
+done
+! grep -Fq -- '__PRIME_STAGE5_REPLACEMENT_AUTHORITY_CANONICAL_SHA256__' \
+    "$stage5_replacement_execution_authority_source" ||
+    die "Stage-5 replacement-execution authority retains a canonical placeholder"
+for forbidden_stage5_replacement_execution_authority_capability in \
+    'import CoreGraphics' 'import Darwin' 'import Metal' 'import MLX' \
+    'import MLXNN' 'import MLXOptimizers' 'FileManager' 'FileHandle' \
+    'URLSession' 'Process(' 'posix_spawn' 'execve('; do
+    ! grep -Fq -- "$forbidden_stage5_replacement_execution_authority_capability" \
+        "$stage5_replacement_execution_authority_source" ||
+        die "Stage-5 replacement authority gained capability: $forbidden_stage5_replacement_execution_authority_capability"
+done
 
 [[ -z "$(git -C "$prime_root" status --porcelain=v1 --untracked-files=all)" ]] ||
     die "Prime checkout changed during metadata validation"
