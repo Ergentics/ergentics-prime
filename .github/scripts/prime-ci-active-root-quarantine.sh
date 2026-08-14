@@ -42,46 +42,45 @@ done
 
 readonly stage5_launcher_relative_path=".github/scripts/prime-ci-native-decoder-stage5-tiny-repeated-metal-trajectory-determinism.sh"
 readonly stage5_test_relative_path="Tests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayTests.swift"
-readonly expected_stage5_mechanics_preserved_index_sha256="1d1b11d0d5f3cde042d887693dd1222de4ecd7a027654cab734d80247db5e33c"
-readonly observed_stage5_mechanics_preserved_index_sha256="$({
+readonly stage5_failure_observation_source_relative_path="Sources/PrimeCore/PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayExecutionFailureObservation.swift"
+readonly stage5_failure_observation_test_relative_path="Tests/PrimeCoreTests/PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayExecutionFailureObservationTests.swift"
+readonly expected_stage5_failure_retirement_preserved_index_sha256="0639993b640562c244efd21ab5b37b96805287c8564ca7c518738bf229645e6d"
+readonly observed_stage5_failure_retirement_preserved_index_sha256="$({
     git -C "$prime_root" ls-files -s |
         while IFS= read -r index_record; do
             relative_path="${index_record#*$'\t'}"
             if [[ "$relative_path" \
                     == '.github/scripts/prime-ci-active-root-quarantine.sh' \
                 || "$relative_path" \
-                    == "$stage5_launcher_relative_path" \
-                || "$relative_path" \
                     == '.github/workflows/prime-active-root-quarantine.yml' \
                 || "$relative_path" \
                     == 'Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' \
                 || "$relative_path" \
-                    == 'Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderTraining.swift' \
+                    == "$stage5_failure_observation_source_relative_path" \
                 || "$relative_path" \
-                    == "$stage5_test_relative_path" ]]; then
+                    == "$stage5_failure_observation_test_relative_path" ]]; then
                 continue
             fi
             printf '%s\n' "$index_record"
         done
 } | LC_ALL=C sort | shasum -a 256 | awk '{print $1}')"
-[[ "$observed_stage5_mechanics_preserved_index_sha256" \
-    == "$expected_stage5_mechanics_preserved_index_sha256" ]] ||
-    die "Stage-5 mechanics changed a path outside the exact six-path closure"
-for exact_stage5_mechanics_path in \
+[[ "$observed_stage5_failure_retirement_preserved_index_sha256" \
+    == "$expected_stage5_failure_retirement_preserved_index_sha256" ]] ||
+    die "Stage-5 failure retirement changed a path outside the exact five-path closure"
+for exact_stage5_failure_retirement_path in \
     '.github/scripts/prime-ci-active-root-quarantine.sh' \
-    "$stage5_launcher_relative_path" \
     '.github/workflows/prime-active-root-quarantine.yml' \
     'Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' \
-    'Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderTraining.swift' \
-    "$stage5_test_relative_path"; do
-    expected_stage5_mechanics_mode="100644"
-    case "$exact_stage5_mechanics_path" in
-        '.github/scripts/'*) expected_stage5_mechanics_mode="100755" ;;
+    "$stage5_failure_observation_source_relative_path" \
+    "$stage5_failure_observation_test_relative_path"; do
+    expected_stage5_failure_retirement_mode="100644"
+    case "$exact_stage5_failure_retirement_path" in
+        '.github/scripts/'*) expected_stage5_failure_retirement_mode="100755" ;;
     esac
     [[ "$(git -C "$prime_root" ls-files -s -- \
-        "$exact_stage5_mechanics_path" | awk '{print $1}')" \
-        == "$expected_stage5_mechanics_mode" ]] ||
-        die "Stage-5 mechanics exact path is missing or has the wrong mode: $exact_stage5_mechanics_path"
+        "$exact_stage5_failure_retirement_path" | awk '{print $1}')" \
+        == "$expected_stage5_failure_retirement_mode" ]] ||
+        die "Stage-5 failure-retirement exact path is missing or has the wrong mode: $exact_stage5_failure_retirement_path"
 done
 
 assert_stage5_mechanics_payload_identity() {
@@ -107,16 +106,6 @@ assert_stage5_mechanics_payload_identity \
     '100755' '6547ee06663c1ea409a6256e48f6111245056020' \
     '48869' '830' \
     'c639cfcb4d1d0a103b285ed38849565f16b00932fc3b9d921febbf798c30d5f9'
-assert_stage5_mechanics_payload_identity \
-    '.github/workflows/prime-active-root-quarantine.yml' \
-    '100644' '241f65ff275bbe401c4a86adea2b3cf3150dc939' \
-    '70447' '557' \
-    '697e64f4a46ae4b650d6bd00f642c0ee80fa155d7cc04103a5a5ed5a96fc1bf4'
-assert_stage5_mechanics_payload_identity \
-    'Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' \
-    '100644' 'ba6188767be6d1f3c027c800ae5322c9238944a2' \
-    '546' '13' \
-    '6240657510b9983caf6b459d950945df67a6251bd0bac0a666130f62d542de9b'
 assert_stage5_mechanics_payload_identity \
     'Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderTraining.swift' \
     '100644' '271b7fe4a856a76a00730954c23bdca3b33e761d' \
@@ -1065,23 +1054,17 @@ readonly runtime_closure_workflow_line="$(grep -nFx -- \
 readonly tokenizer_compatibility_workflow_line="$(grep -nFx -- \
     '          bash .github/scripts/prime-ci-native-decoder-tokenizer-compatibility.sh' \
     "$workflow_path" | awk -F: '{print $1}')"
-readonly stage5_tiny_repeated_metal_trajectory_workflow_line="$(grep -nFx -- \
-    '          bash .github/scripts/prime-ci-native-decoder-stage5-tiny-repeated-metal-trajectory-determinism.sh' \
-    "$workflow_path" | awk -F: '{print $1}')"
 [[ "$frozen_metal_workflow_line" =~ ^[1-9][0-9]*$ \
     && "$runtime_closure_workflow_line" =~ ^[1-9][0-9]*$ \
     && "$tokenizer_compatibility_workflow_line" =~ ^[1-9][0-9]*$ \
-    && "$stage5_tiny_repeated_metal_trajectory_workflow_line" =~ ^[1-9][0-9]*$ \
     && "$runtime_closure_workflow_line" \
         -eq $((frozen_metal_workflow_line + 1)) \
     && "$tokenizer_compatibility_workflow_line" \
-        -eq $((runtime_closure_workflow_line + 1)) \
-    && "$stage5_tiny_repeated_metal_trajectory_workflow_line" \
-        -eq $((tokenizer_compatibility_workflow_line + 1)) ]] ||
-    die "trusted-main workflow does not retain exactly the Metal, runtime, tokenizer, Stage-5 order"
+        -eq $((runtime_closure_workflow_line + 1)) ]] ||
+    die "trusted-main workflow does not retain exactly the Metal, runtime, tokenizer order"
 [[ "$(grep -Fc -- \
     '          bash .github/scripts/prime-ci-native-decoder-' \
-    "$workflow_path")" == "4" \
+    "$workflow_path")" == "3" \
     && "$(grep -Fxc -- \
         '          bash .github/scripts/prime-ci-native-decoder-metal.sh' \
         "$workflow_path")" == "1" \
@@ -1096,11 +1079,11 @@ readonly stage5_tiny_repeated_metal_trajectory_workflow_line="$(grep -nFx -- \
         "$workflow_path")" == "0" \
     && "$(grep -Fxc -- \
         '          bash .github/scripts/prime-ci-native-decoder-stage5-tiny-repeated-metal-trajectory-determinism.sh' \
-        "$workflow_path")" == "1" \
+        "$workflow_path")" == "0" \
     && "$(grep -Fc -- \
         'PRIME_NATIVE_DECODER_STAGE5_TINY_REPEATED_METAL_TRAJECTORY_DETERMINISM_RECEIPT=' \
         "$workflow_path")" == "0" ]] ||
-    die "trusted-main workflow lost the exact four-launcher Stage-5 sequence or retained a retired one-shot"
+    die "trusted-main workflow lost the exact three-launcher sequence or retained a retired one-shot"
 readonly live_decoder_workflow_block="$(awk '
     /^      - name: Run the Prime-owned decoder on live Metal$/ { inside = 1 }
     inside { print }
@@ -1110,10 +1093,9 @@ readonly expected_live_decoder_workflow_block='      - name: Run the Prime-owned
         run: |
           bash .github/scripts/prime-ci-native-decoder-metal.sh
           bash .github/scripts/prime-ci-native-decoder-runtime-closure.sh
-          bash .github/scripts/prime-ci-native-decoder-tokenizer-compatibility.sh
-          bash .github/scripts/prime-ci-native-decoder-stage5-tiny-repeated-metal-trajectory-determinism.sh'
+          bash .github/scripts/prime-ci-native-decoder-tokenizer-compatibility.sh'
 [[ "$live_decoder_workflow_block" == "$expected_live_decoder_workflow_block" ]] ||
-    die "trusted-main exact contiguous Metal, runtime, tokenizer, and Stage-5 block changed"
+    die "trusted-main exact contiguous Metal, runtime, and tokenizer block changed"
 ! grep -Fq -- \
     '          bash .github/scripts/prime-ci-native-decoder-checkpoint-v2-io.sh' \
     "$workflow_path" ||
@@ -1227,6 +1209,7 @@ readonly stage4_tiny_durable_multileaf_package_resolved_scope_repair_authority_f
 readonly stage4_tiny_durable_multileaf_commit_fault_injection_execution_observation_filter='PrimeCoreTests.PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionExecutionObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndSuccessCeiling'
 readonly stage5_tiny_repeated_metal_trajectory_determinism_assay_authority_filter='PrimeCoreTests.PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling'
 readonly stage5_swift_numerics_resolution_repair_authority_filter='PrimeCoreTests.PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayExactMainSwiftNumericsResolutionRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling'
+readonly stage5_tiny_repeated_metal_trajectory_execution_failure_observation_filter='PrimeCoreTests.PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayExecutionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling'
 [[ "$(grep -Fc -- "$tiny_cpu_mechanics_authority_filter" \
         "$workflow_path")" == "1" \
     && "$(grep -Fc -- "$tiny_cpu_mechanics_failure_observation_filter" \
@@ -1256,7 +1239,7 @@ readonly stage5_swift_numerics_resolution_repair_authority_filter='PrimeCoreTest
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 53 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 54 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not run the exact Stage-2 authority and failure-observation pure contracts"
 [[ "$(grep -Fc -- "$private_dependency_tls_failure_observation_filter" \
@@ -1348,7 +1331,7 @@ readonly stage5_swift_numerics_resolution_repair_authority_filter='PrimeCoreTest
         "          grep -Fq 'PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapFreshMetallibCrossBindingExecutionFailureObservationTests' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 53 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 54 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the Stage-2 metallib bootstrap repair, failure observations, and classifier repair authority"
 [[ "$(grep -Fc -- \
@@ -1500,6 +1483,25 @@ readonly stage5_swift_numerics_resolution_repair_authority_filter='PrimeCoreTest
         "          grep -Fq 'PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayExactMainSwiftNumericsResolutionRepairAuthorityTests' \\" \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run exactly the Stage-5 Swift Numerics resolution-repair authority"
+[[ "$(grep -Fc -- \
+        "$stage5_tiny_repeated_metal_trajectory_execution_failure_observation_filter" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        "$stage5_failure_observation_source_relative_path" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        "$stage5_failure_observation_test_relative_path" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        "          grep -Fq 'PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayExecutionFailureObservationTests' \\" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling' \\" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        '          grep -Fq '\''Executed 54 tests, with 0 failures'\'' "$test_log"' \
+        "$workflow_path")" == "1" ]] ||
+    die "hosted workflow does not parse and run exactly the Stage-5 execution-failure observation"
 for required_stage5_swift_numerics_resolution_workflow_value in \
     'readonly numerics_revision="0c0290ff6b24942dadb83a929ffaaa1481df04a2"' \
     'readonly numerics_source="$RUNNER_TEMP/prime-active-root-build/checkouts/swift-numerics"' \
@@ -1704,8 +1706,7 @@ for required_stage5_swift_numerics_resolution_repair_summary_value in \
         die "workflow lost the Stage-5 Swift Numerics resolution-repair summary: $required_stage5_swift_numerics_resolution_repair_summary_value"
 done
 for required_stage5_mechanics_summary_value in \
-    'Exact-main authority-repair closure run 31750678556 attempt 1 passed root 53' \
-    'all four Swift-Numerics-cache-mapped isolated invocations for isolated total 6 and focused whole 59' \
+    'Exact-main authority-repair closure run 31750678556 attempt 1 passed root 53, all four Swift-Numerics-cache-mapped isolated invocations for isolated total 6 and focused whole 59' \
     'then Metal 44, maintained runtime 1, and tokenizer 1 in order, with the Stage-5 launcher and receipt absent' \
     'zero workflow-authored or Git-internal retry, zero TLS failure or bypass, zero custom CA, zero Actions artifacts, and zero reruns' \
     'exact-six direct mechanics successor preserves both depth-one checkouts, secure fetch, jobs, timeouts, package manifests and locks, the frozen Stage-4 launcher with invocation zero, and the validated bare Swift Numerics cache mapping' \
@@ -1717,6 +1718,27 @@ for required_stage5_mechanics_summary_value in \
     [[ "$(grep -Fc -- "$required_stage5_mechanics_summary_value" \
         "$workflow_path")" == "1" ]] ||
         die "workflow lost the exact Stage-5 mechanics ceiling: $required_stage5_mechanics_summary_value"
+done
+for required_stage5_execution_failure_observation_summary_value in \
+    'Exact-main Stage-5 mechanics merge 8bdf6abe15d7f9a83045a3f9ee21fcc28f7ee91d and workflow run 31756331438 attempt 1' \
+    'passed root 53, all four Swift-Numerics-cache-mapped isolated invocations for isolated total 6 and focused whole 59, Metal 44, maintained runtime 1 with one receipt, and tokenizer 1 with one receipt' \
+    'invoking the frozen Stage-5 launcher exactly once' \
+    'launcher build completed once in 179.58 seconds, and its direct XCTest started once and failed once with no pass or skip' \
+    'both fresh-session first-step calls returned' \
+    'combined three-conjunct source-step guard whose failing conjunct and trial ordinal are not observable; zero through two prior completed trials are possible and the exact count is unknown' \
+    'Postflight identity validation, the canonical Stage-5 receipt, explicit test release, launcher lease-file cleanup, and the launcher success marker were not reached.' \
+    'attempted total was 106: 105 passed, one failed, and zero skipped' \
+    'workflow-authored retry, Git-internal retry, TLS failure or bypass, custom CA, Actions artifact, and rerun counts were all zero' \
+    'pure exact-five failure observation consumes and retires the sole mechanics opportunity' \
+    'preserving the frozen launcher, training source, and assay test without invoking the launcher or emitting its receipt' \
+    'Both hosted checkouts remain depth one' \
+    'validated Swift Numerics cache mapping and secure fetch, jobs, timeouts, package manifests, locks, and upload-free topology remain unchanged' \
+    'root 54, isolated 6, focused whole 60, then retained Metal 44, maintained runtime 1, and tokenizer 1 for total 106' \
+    'No trajectory determinism, Stage-5 receipt, retry, rerun, artifact retention, durable checkpoint, Stage 6, Native-300M allocation or training, general training resume, admission, trial, canary, product, publication, additional execution, or downstream authority is established.'; do
+    [[ "$(grep -Fc -- \
+        "$required_stage5_execution_failure_observation_summary_value" \
+        "$workflow_path")" == "1" ]] ||
+        die "workflow lost the exact Stage-5 execution-failure observation summary: $required_stage5_execution_failure_observation_summary_value"
 done
 [[ "$(grep -Fc -- \
         'Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderTrajectoryCheckpointV1.swift' \
@@ -2843,6 +2865,8 @@ readonly stage5_tiny_repeated_metal_trajectory_determinism_assay_authority_sourc
 readonly stage5_tiny_repeated_metal_trajectory_determinism_assay_authority_test="$prime_root/Tests/PrimeCoreTests/PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayAuthorityTests.swift"
 readonly stage5_swift_numerics_resolution_repair_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayExactMainSwiftNumericsResolutionRepairAuthority.swift"
 readonly stage5_swift_numerics_resolution_repair_authority_test="$prime_root/Tests/PrimeCoreTests/PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayExactMainSwiftNumericsResolutionRepairAuthorityTests.swift"
+readonly stage5_tiny_repeated_metal_trajectory_execution_failure_observation_source="$prime_root/$stage5_failure_observation_source_relative_path"
+readonly stage5_tiny_repeated_metal_trajectory_execution_failure_observation_test="$prime_root/$stage5_failure_observation_test_relative_path"
 readonly decoder_training_source="$prime_root/Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderTraining.swift"
 readonly decoder_training_validation_root="$prime_root/Tests/PrimeNativeDecoderTrainingValidation"
 readonly decoder_training_validation_manifest="$decoder_training_validation_root/Package.swift"
@@ -3049,6 +3073,12 @@ readonly decoder_stage5_tiny_repeated_metal_trajectory_test="$prime_root/$stage5
 [[ -f "$stage5_swift_numerics_resolution_repair_authority_test" \
     && ! -L "$stage5_swift_numerics_resolution_repair_authority_test" ]] ||
     die "Stage-5 Swift Numerics resolution-repair authority test is missing or linked"
+[[ -f "$stage5_tiny_repeated_metal_trajectory_execution_failure_observation_source" \
+    && ! -L "$stage5_tiny_repeated_metal_trajectory_execution_failure_observation_source" ]] ||
+    die "Stage-5 execution-failure observation is missing or linked"
+[[ -f "$stage5_tiny_repeated_metal_trajectory_execution_failure_observation_test" \
+    && ! -L "$stage5_tiny_repeated_metal_trajectory_execution_failure_observation_test" ]] ||
+    die "Stage-5 execution-failure observation test is missing or linked"
 [[ -f "$decoder_training_source" && ! -L "$decoder_training_source" ]] ||
     die "PrimeNativeDecoderTraining source is missing or linked"
 [[ -f "$decoder_training_validation_manifest" \
@@ -3953,6 +3983,8 @@ swiftc -frontend -parse "$stage5_tiny_repeated_metal_trajectory_determinism_assa
 swiftc -frontend -parse "$stage5_tiny_repeated_metal_trajectory_determinism_assay_authority_test"
 swiftc -frontend -parse "$stage5_swift_numerics_resolution_repair_authority_source"
 swiftc -frontend -parse "$stage5_swift_numerics_resolution_repair_authority_test"
+swiftc -frontend -parse "$stage5_tiny_repeated_metal_trajectory_execution_failure_observation_source"
+swiftc -frontend -parse "$stage5_tiny_repeated_metal_trajectory_execution_failure_observation_test"
 swiftc -frontend -parse "$decoder_training_source"
 swiftc -frontend -parse "$decoder_training_validation_test"
 swiftc -frontend -parse "$decoder_stage3_tiny_cpu_resume_test"
@@ -8951,15 +8983,15 @@ for required_stage4_execution_observation_value in \
 done
 assert_metal_current_decoder_assertion_arc_identity \
     'Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' \
-    '100644' 'ba6188767be6d1f3c027c800ae5322c9238944a2' \
+    '100644' '506b03d6ce0c226e2052bf18d6eecd8a5dca4e26' \
     '546' \
-    '6240657510b9983caf6b459d950945df67a6251bd0bac0a666130f62d542de9b'
+    '3194d28ef388386e36c781448f5130a58692e36c9a49bcb8d339bdd048fa860d'
 [[ "$(wc -l < "$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift" | \
         awk '{print $1}')" == "13" \
     && "$(grep -Fxc -- \
-        '        "4f8d6f238fcdeaf800d7a12af76be6082682b42b38d79c9b9bfe0f490309c791"' \
+        '        "ff7ca9cc027fec8430b06f57e84ff56772437ac156049eb195bc821711d803e6"' \
         "$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift")" == "1" ]] ||
-    die "Stage-5 mechanics embedded provenance identity changed"
+    die "Stage-5 failure-retirement embedded provenance identity changed"
 for forbidden_stage4_execution_observation_capability in \
     'import CoreGraphics' 'import Metal' 'import MLX' 'import MLXNN' \
     'import MLXOptimizers' 'FileManager' 'FileHandle' 'URLSession' 'Process(' \
@@ -9360,6 +9392,345 @@ done
     && "$(grep -Fc -- '"tokenizer"' \
         "$stage5_swift_numerics_resolution_repair_authority_source")" -ge "1" ]] ||
     die "Stage-5 Swift Numerics repair lost the exact Metal-runtime-tokenizer live order"
+
+assert_metal_current_decoder_assertion_arc_identity \
+    'Sources/PrimeCore/PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayExecutionFailureObservation.swift' \
+    '100644' '6b3eba9a247b8a200491e5d8298f08086c1d2cca' \
+    '55118' \
+    '009606cea10a06747e274d176b88a4a8b3d3d8b1c2c5f2487e8775e145a883af'
+assert_metal_current_decoder_assertion_arc_identity \
+    'Tests/PrimeCoreTests/PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayExecutionFailureObservationTests.swift' \
+    '100644' '137fd5930c91e97e90fe3d9f646544b17a63fd83' \
+    '37805' \
+    '308875161943d6fce257c348a209352da4ec569dd4567cfd5e70600ab9b2f768'
+[[ "$(wc -l < \
+        "$stage5_tiny_repeated_metal_trajectory_execution_failure_observation_source" | \
+        awk '{print $1}')" == "1163" \
+    && "$(wc -l < \
+        "$stage5_tiny_repeated_metal_trajectory_execution_failure_observation_test" | \
+        awk '{print $1}')" == "901" \
+    && "$(awk '/^import / { print }' \
+        "$stage5_tiny_repeated_metal_trajectory_execution_failure_observation_source")" \
+        == 'import Foundation' \
+    && "$(awk '/^import / || /^@testable import / { print }' \
+        "$stage5_tiny_repeated_metal_trajectory_execution_failure_observation_test")" \
+        == $'import CoreFoundation\nimport Foundation\n@testable import PrimeCore\nimport XCTest' \
+    && "$(grep -Ec -- '^[[:space:]]+func test' \
+        "$stage5_tiny_repeated_metal_trajectory_execution_failure_observation_test")" == "1" \
+    && "$(grep -Fc -- \
+        'PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayExecutionFailureObservationTests:' \
+        "$stage5_tiny_repeated_metal_trajectory_execution_failure_observation_test")" == "1" \
+    && "$(grep -Fc -- \
+        'func testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling()' \
+        "$stage5_tiny_repeated_metal_trajectory_execution_failure_observation_test")" == "1" ]] ||
+    die "Stage-5 execution-failure observation identity, imports, or sole-test surface changed"
+for required_stage5_execution_failure_observation_value in \
+    'PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayExecutionFailureObservationError:' \
+    'case contractDrift' \
+    'case noncanonicalEncoding' \
+    'PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayExecutionFailureObservationV1:' \
+    'public static let frozenV1 = Self(' \
+    'public static func decodeCanonical(_ data: Data) throws -> Self {' \
+    'public func validateExactV1() throws {' \
+    'self == Self.frozenV1' \
+    '"ergentics_prime_native_decoder_tiny_repeated_metal_trajectory_determinism_assay_execution_failure_observation_v1"' \
+    '"terminal_exact_main_one_shot_stage5_combined_source_step_guard_failure"' \
+    '"a5a8e5300ea8413e738fddd4b8fed930dcc9983d5a29eea102862f9744b50fff"' \
+    'pullRequestNumber: 104' \
+    '"522e4620596eed909822b80b782d74d282f429c5"' \
+    '"d0304aadcf533a341d89df262f8cbe74c1c13b90"' \
+    '"ed4833a3a90b265f61a06b6ab25547010bba8807"' \
+    '"8bdf6abe15d7f9a83045a3f9ee21fcc28f7ee91d"' \
+    '"f7dbc81e4f7e8ccebdf39f0fb5200a7780be91dc"' \
+    'changedPathCount: 6' \
+    'manifestOrLockChangedPathCount: 0' \
+    '"4f8d6f238fcdeaf800d7a12af76be6082682b42b38d79c9b9bfe0f490309c791"' \
+    'Set(observedSourceBindings.map(\.path)).count == 6' \
+    '"consumed_stage5_mechanics_active_gate"' \
+    '"consumed_launcher_preserved_for_audit"' \
+    '"exact_main_one_shot_workflow"' \
+    '"embedded_changed_source_identity"' \
+    '"stage5_training_mechanics"' \
+    '"sole_stage5_live_xctest"' \
+    '"51b587dc62d3a8a682b5a1bc2e69368e98dbad01"' \
+    '"6547ee06663c1ea409a6256e48f6111245056020"' \
+    '"241f65ff275bbe401c4a86adea2b3cf3150dc939"' \
+    '"ba6188767be6d1f3c027c800ae5322c9238944a2"' \
+    '"271b7fe4a856a76a00730954c23bdca3b33e761d"' \
+    '"46f91f32e91870d21c46cd318972a857b8ef6e12"' \
+    'workflowID: 329_017_041' \
+    'runID: 31_756_331_438' \
+    'runNumber: 105' \
+    'runAttempt: 1' \
+    'checkSuiteID: 86_154_359_326' \
+    'exactHeadPushRunCount: 1' \
+    'previousAttemptURLWasNull: true' \
+    'rerunCount: 0' \
+    'rerunObserved: false' \
+    'rerunAuthorized: false' \
+    '94_632_729_903' \
+    '94_633_409_696' \
+    '1_000_001_748' \
+    '1_000_001_749' \
+    '1, ".github", 75_376, "Process completed with exit code 2."' \
+    '254_662, 1_797' \
+    '"9d891c4dc94e2fdfc2422c08a1455d7841bdd8431538dad07a1acacfdb0aff04"' \
+    '10_320_159, 79_103' \
+    '"9141883d20c03c210a6d544256dd89b4bfa31406230dd372b4d44df65b27f16c"' \
+    'workflowRunID: 31_750_678_556' \
+    'workflowRunNumber: 103' \
+    'checkSuiteID: 86_139_786_214' \
+    '"00c49e63315b2aacb439204e778f54bcf63c2fdf643282f3bd64e2b3b4094089"' \
+    '"d37885a278f1c37484a94d0f401a418735e66519"' \
+    '"0c0290ff6b24942dadb83a929ffaaa1481df04a2"' \
+    'focusedRootTestCount: 53' \
+    'isolatedCheckpointGroupTestCounts: [1, 1, 2, 2]' \
+    'isolatedCheckpointTestCount: 6' \
+    'focusedWholeStepTestCount: 59' \
+    'depthOneCheckoutCount: 2' \
+    'securePrivateDependencyFetchInvocationCount: 1' \
+    'securePrivateDependencyFetchCompletionCount: 1' \
+    'authenticatedDepthOneFetchCount: 1' \
+    'submoduleUpdateCount: 1' \
+    'mlxCloneCount: 1' \
+    'mlxCCloneCount: 1' \
+    'workflowAuthoredFetchRetryCount: 0' \
+    'gitInternalFetchRetryCount: 0' \
+    'tlsVerificationFailureCount: 0' \
+    'tlsVerificationBypassCount: 0' \
+    'customCertificateAuthorityCount: 0' \
+    'swiftNumericsCacheMappingValidated: true' \
+    'swiftNumericsCacheMappingCount: 1' \
+    'swiftNumericsCacheFetchCompletionCount: 9' \
+    'swiftNumericsMappedIsolatedInvocationCount: 4' \
+    'metallibPublicSwiftNumericsFetchCount: 1' \
+    'metallibPublicSwiftNumericsCheckoutCount: 1' \
+    'metallibPublicSwiftNumericsResolutionSucceeded: true' \
+    'observedLiveExecutionOrder: [' \
+    '"metal", "maintained_runtime", "tokenizer"' \
+    'metalTestCount: 44' \
+    'runtimeTestCount: 1' \
+    'runtimeReceiptCount: 1' \
+    'tokenizerTestCount: 1' \
+    'tokenizerReceiptCount: 1' \
+    'preStage5TestCount: 105' \
+    'predecessorStage3TypedInMemoryResumeRemainsEstablished: true' \
+    'predecessorStage4DurableRoundTripRemainsEstablished: true' \
+    'stage4LauncherInvocationCount: 0' \
+    'stage6LauncherInvocationCount: 0' \
+    'failedJobStepNumber: 6' \
+    '"Run the Prime-owned decoder on live Metal"' \
+    'stage5LauncherInvocationCount: 1' \
+    'stage5BuildInvocationCount: 1' \
+    'stage5BuildCompletionCount: 1' \
+    'stage5BuildDurationMilliseconds: 179_580' \
+    'stage5DirectXCTestInvocationCount: 1' \
+    'failureSourceLine: 135' \
+    '"PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayTests"' \
+    '"testRepeatedSameDeviceUninterruptedSourceSnapshotAndFreshRestoreExactBytes"' \
+    'testStartCount: 1' \
+    'testPassCount: 0' \
+    'testFailureCount: 1' \
+    'testSkipCount: 0' \
+    'allReviewedTestStartCount: 106' \
+    'allReviewedTestPassCount: 105' \
+    'allReviewedTestFailureCount: 1' \
+    'allReviewedTestSkipCount: 0' \
+    'testDurationMilliseconds: 2_205' \
+    'exactThrownError: "contractDrift(\"source-step exact bytes\")"' \
+    'combinedGuardConjuncts: [' \
+    '"uninterruptedSourceStep == sourceSnapshotSourceStep"' \
+    '"uninterruptedSourceStep.result.globalStep == 1"' \
+    '"uninterruptedSourceStep.result.selectedTargetCount == 6"' \
+    'combinedGuardFailed: true' \
+    'failedConjunctIdentified: false' \
+    'sourceStepEqualityEstablished: false' \
+    'sourceStepEqualityDisproved: false' \
+    'globalStepOneEstablished: false' \
+    'globalStepOneDisproved: false' \
+    'selectedTargetCountSixEstablished: false' \
+    'selectedTargetCountSixDisproved: false' \
+    'failingTrialOrdinalEstablished: false' \
+    'failingTrialOrdinalMinimum: 1' \
+    'failingTrialOrdinalMaximum: 3' \
+    'priorCompletedTrialCountEstablished: false' \
+    'priorCompletedTrialCountMinimum: 0' \
+    'priorCompletedTrialCountMaximum: 2' \
+    'globalCompletedBranchCountEstablished: false' \
+    'freshSourceObjectsGuardPassedInFailingTrial: true' \
+    'bothFirstStepCallsReturnedInFailingTrial: true' \
+    'tinyStage5TrainingExecutionObserved: true' \
+    'failingTrialEvaluationReached: false' \
+    'failingTrialSnapshotReached: false' \
+    'receiptPostflightAfterLoopReached: false' \
+    'stage5ReceiptAnchoredCount: 0' \
+    'stage5ReceiptTotalOccurrenceCount: 0' \
+    'stage5ReceiptConstructed: false' \
+    'stage5ReceiptEmitted: false' \
+    'stage5DeterminismEstablished: false' \
+    'launcherExitCode: 2' \
+    'workflowProcessExitCode: 2' \
+    'workflowExitAnnotationOccurrenceCount: 1' \
+    'environmentKey: "PRIME_NATIVE_DECODER_STAGE5_METAL_LEASE_PATH"' \
+    'acquiredBeforeCoreGraphicsMetalOrMLXAccessSourceInferred: true' \
+    'heldAtFailedGuardSourceInferred: true' \
+    'acquisitionFailureObserved: false' \
+    'receiptEmittedWhileHeld: false' \
+    'receiptFlushedWhileHeld: false' \
+    'explicitReleaseImmediatelyAfterReceiptReached: false' \
+    'deinitCallsReleaseInFrozenSource: true' \
+    'deinitReleaseObservedInTerminalLog: false' \
+    'processTerminationReleasesKernelFlock: true' \
+    'launcherPostSuccessLeaseFileCleanupReached: false' \
+    'leaseFileDeletionObserved: false' \
+    'leaseParentDeletionObserved: false' \
+    'leaseHeldAfterXCTestProcessExit: false' \
+    'actionsArtifactsTotalCount: 0' \
+    'actionsArtifactsArrayExactlyEmpty: true' \
+    'artifactUploadStepCount: 0' \
+    'stage5ReceiptArtifactCreated: false' \
+    'stage5ReceiptArtifactUploaded: false' \
+    'stage5ReceiptRetainedInRepository: false' \
+    'durableJobLogPublicationEstablished: false' \
+    'retirementRequired: true' \
+    'retirementObserved: false' \
+    'exactChangedPathCount: 5' \
+    'expectedRootTestCount: 54' \
+    'expectedIsolatedCheckpointGroupTestCounts: [1, 1, 2, 2]' \
+    'expectedIsolatedCheckpointTestCount: 6' \
+    'expectedFocusedWholeStepTestCount: 60' \
+    'expectedMetalTestCount: 44' \
+    'expectedRuntimeTestCount: 1' \
+    'expectedTokenizerTestCount: 1' \
+    'expectedLiveExecutionOrder: [' \
+    'expectedTotalTestCount: 106' \
+    'expectedDepthOneCheckoutCount: 2' \
+    'expectedStage4LauncherInvocationCount: 0' \
+    'expectedStage5LauncherInvocationCount: 0' \
+    'expectedStage5ReceiptCount: 0' \
+    'expectedStage6LauncherInvocationCount: 0' \
+    'stage5LauncherMustRemainPreserved: true' \
+    'stage5LauncherGitMode: "100755"' \
+    'stage5LauncherByteCount: 48_869' \
+    'stage5LauncherLFByteCount: 830' \
+    'replacementLiveExecutionPermittedByRetirement: false' \
+    'oneShotExecutionConsumed: true' \
+    'oneShotExecutionExhausted: true' \
+    'failureObservationAuthorizesNothing: true' \
+    'exactRetirementRequired: true' \
+    'launcherPreservationRequired: true' \
+    'mechanicsImplementationAuthorizedAfterGreenAuthorityClosure: false' \
+    'oneExactMainExecutionOpportunityAuthorized: false' \
+    'threeBoundedSameProcessAssayTrialsAuthorized: false' \
+    'inMemorySourceSnapshotAuthorized: false' \
+    'retryAuthorized: false' \
+    'replacementRunAuthorized: false' \
+    'launcherMutationAuthorized: false' \
+    'additionalExecutionOrRerunAuthorized: false' \
+    'stage4RerunAuthorized: false' \
+    'stage5ReceiptEstablished: false' \
+    'stage5MechanicsExecuted: true' \
+    'stage5ResultEstablished: false' \
+    'stage5MechanicsSuccessEstablished: false' \
+    'repeatedTrajectoryDeterminismEstablished: false' \
+    'stage5AssayCheckpointResumeEstablished: false' \
+    'stage5AssayDurableCheckpointIOObserved: false' \
+    'durableCheckpointIOAuthorized: false' \
+    'retainedCheckpointArtifactAuthorized: false' \
+    'retainedArtifactAuthorized: false' \
+    'checkpointArtifactUploadAuthorized: false' \
+    'artifactUploadAuthorized: false' \
+    'crossDeviceDeterminismEstablished: false' \
+    'crossDeviceClaimAuthorized: false' \
+    'exactMetalGradientBytesEstablished: false' \
+    'metalDeterminismEstablished: false' \
+    'trainingExecutionObserved: true' \
+    'stage5AssayNative300MModelAllocationObserved: false' \
+    'native300MAllocationAuthorized: false' \
+    'native300MTrainingEstablished: false' \
+    'native300MTrainingAuthorized: false' \
+    'native300MTrainingObserved: false' \
+    'generalTrainingEstablished: false' \
+    'generalTrainingAuthorized: false' \
+    'stage5AssayTrainingResumeEstablished: false' \
+    'generalTrainingResumeEstablished: false' \
+    'checkpointAdmissionGranted: false' \
+    'modelQualityEstablished: false' \
+    'candidateAdmissionGranted: false' \
+    'downstreamTrialAuthorized: false' \
+    'canaryAuthorized: false' \
+    'quantizationAuthorized: false' \
+    'productUseAuthorized: false' \
+    'publicationAuthorized: false' \
+    'stage6AuthorityEstablished: false' \
+    'stage6Authorized: false' \
+    '"FAIL_exact_main_stage5_combined_source_step_guard_one_test_one_failure_no_receipt_no_explicit_cleanup_no_determinism_one_shot_consumed_no_retry_no_stage6"'; do
+    grep -Fq -- "$required_stage5_execution_failure_observation_value" \
+        "$stage5_tiny_repeated_metal_trajectory_execution_failure_observation_source" ||
+        die "Stage-5 execution-failure observation lost: $required_stage5_execution_failure_observation_value"
+done
+for required_stage5_execution_failure_observation_test_value in \
+    'func testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling()' \
+    'XCTAssertNoThrow(try observation.validateExactV1())' \
+    'XCTAssertEqual(run.runID, 31_756_331_438)' \
+    'XCTAssertEqual(pre.focusedRootTestCount, 53)' \
+    'XCTAssertEqual(pre.preStage5TestCount, 105)' \
+    'XCTAssertEqual(failure.stage5LauncherInvocationCount, 1)' \
+    'XCTAssertEqual(failure.stage5BuildInvocationCount, 1)' \
+    'XCTAssertEqual(failure.stage5DirectXCTestInvocationCount, 1)' \
+    'XCTAssertEqual(failure.testPassCount, 0)' \
+    'XCTAssertEqual(failure.testFailureCount, 1)' \
+    'XCTAssertFalse(failure.failedConjunctIdentified)' \
+    'XCTAssertEqual(failure.failingTrialOrdinalMinimum, 1)' \
+    'XCTAssertEqual(failure.failingTrialOrdinalMaximum, 3)' \
+    'XCTAssertEqual(failure.priorCompletedTrialCountMinimum, 0)' \
+    'XCTAssertEqual(failure.priorCompletedTrialCountMaximum, 2)' \
+    'XCTAssertTrue(failure.bothFirstStepCallsReturnedInFailingTrial)' \
+    'XCTAssertFalse(failure.failingTrialEvaluationReached)' \
+    'XCTAssertFalse(failure.failingTrialSnapshotReached)' \
+    'XCTAssertEqual(failure.stage5ReceiptAnchoredCount, 0)' \
+    'XCTAssertFalse(lease.launcherPostSuccessLeaseFileCleanupReached)' \
+    'XCTAssertEqual(artifacts.actionsArtifactsTotalCount, 0)' \
+    'XCTAssertEqual(retirement.expectedRootTestCount, 54)' \
+    'XCTAssertEqual(retirement.expectedFocusedWholeStepTestCount, 60)' \
+    'XCTAssertEqual(retirement.expectedTotalTestCount, 106)' \
+    'XCTAssertEqual(retirement.expectedStage5LauncherInvocationCount, 0)' \
+    'XCTAssertEqual(retirement.expectedStage5ReceiptCount, 0)' \
+    'XCTAssertFalse(retirement.replacementLiveExecutionPermittedByRetirement)' \
+    'XCTAssertTrue(ceiling.stage5MechanicsExecuted)' \
+    'XCTAssertFalse(ceiling.stage5ResultEstablished)' \
+    'ceiling.repeatedTrajectoryDeterminismEstablished,' \
+    'XCTAssertFalse(ceiling.generalTrainingResumeEstablished)' \
+    'XCTAssertFalse(ceiling.stage6Authorized)' \
+    'XCTAssertTrue(authorityFalseClaims(ceiling).allSatisfy { !$0 })' \
+    '"ac735b84948e6b9b6b492a79925d7e0770d6eb332ba4d643d7f2884a4a7f81d2"' \
+    'XCTAssertGreaterThan(valuePaths.count, 250)' \
+    'XCTAssertGreaterThan(dictionaryPaths.count, 15)' \
+    'XCTAssertGreaterThan(scalarPaths.count, 180)' \
+    'unknown_stage5_failure_field_\(index)' \
+    'Observation.decodeCanonical(prefixed)' \
+    'Observation.decodeCanonical(suffixed)' \
+    'Observation.decodeCanonical(pretty)' \
+    'Observation.decodeCanonical(slashEscapedData)' \
+    'Observation.decodeCanonical(reorderedData)' \
+    'Observation.decodeCanonical(duplicateData)'; do
+    grep -Fq -- "$required_stage5_execution_failure_observation_test_value" \
+        "$stage5_tiny_repeated_metal_trajectory_execution_failure_observation_test" ||
+        die "Stage-5 execution-failure observation test lost: $required_stage5_execution_failure_observation_test_value"
+done
+! grep -Fq -- '__CANONICAL_SHA256__' \
+    "$stage5_tiny_repeated_metal_trajectory_execution_failure_observation_source" \
+    "$stage5_tiny_repeated_metal_trajectory_execution_failure_observation_test" ||
+    die "Stage-5 execution-failure observation retains a canonical placeholder"
+for forbidden_stage5_execution_failure_observation_capability in \
+    'import CoreGraphics' 'import Metal' 'import MLX' 'import MLXNN' \
+    'import MLXOptimizers' 'PrimeNativeGQADecoder.make(' \
+    'FileManager' 'FileHandle' 'URLSession' 'Process(' \
+    'posix_spawn' 'execve('; do
+    ! grep -Fq -- "$forbidden_stage5_execution_failure_observation_capability" \
+        "$stage5_tiny_repeated_metal_trajectory_execution_failure_observation_source" ||
+        die "Stage-5 execution-failure observation gained capability: $forbidden_stage5_execution_failure_observation_capability"
+done
 
 [[ "$(awk '/^import / { print }' "$decoder_authority_test")" \
         == $'import CryptoKit\nimport Foundation\nimport XCTest\nimport PrimeCore' \
@@ -9867,6 +10238,35 @@ readonly expected_stage5_synchronized_float_values_block='    private static fun
     && "$(grep -Fc -- 'throw XCTSkip(' \
         "$decoder_stage5_tiny_repeated_metal_trajectory_test")" == "0" ]] ||
     die "Stage-5 tiny repeated-Metal trajectory test surface or cardinality changed"
+
+readonly observed_stage5_source_step_combined_guard_block="$(awk '
+    $0 == "        let uninterruptedSourceStep =" { capture = 1 }
+    capture == 1 { print }
+    capture == 1 && $0 == "        }" { exit }
+' "$decoder_stage5_tiny_repeated_metal_trajectory_test")"
+readonly expected_stage5_source_step_combined_guard_block='        let uninterruptedSourceStep =
+            try uninterrupted.trainNextExactMetalTrajectoryStep()
+        let sourceSnapshotSourceStep =
+            try sourceSnapshot.trainNextExactMetalTrajectoryStep()
+        guard uninterruptedSourceStep == sourceSnapshotSourceStep,
+              uninterruptedSourceStep.result.globalStep == 1,
+              uninterruptedSourceStep.result.selectedTargetCount == 6 else {
+            throw AssayError.contractDrift("source-step exact bytes")
+        }'
+[[ "$observed_stage5_source_step_combined_guard_block" \
+        == "$expected_stage5_source_step_combined_guard_block" \
+    && "$(grep -Fxc -- \
+        '            throw AssayError.contractDrift("source-step exact bytes")' \
+        "$decoder_stage5_tiny_repeated_metal_trajectory_test")" == "1" \
+    && "$(grep -nFx -- \
+        '        guard uninterruptedSourceStep == sourceSnapshotSourceStep,' \
+        "$decoder_stage5_tiny_repeated_metal_trajectory_test" | \
+        awk -F: '{print $1}')" == "132" \
+    && "$(grep -nFx -- \
+        '            throw AssayError.contractDrift("source-step exact bytes")' \
+        "$decoder_stage5_tiny_repeated_metal_trajectory_test" | \
+        awk -F: '{print $1}')" == "135" ]] ||
+    die "Stage-5 failure site is no longer the exact ambiguous three-conjunct source-step guard"
 
 readonly stage5_lease_acquire_line="$(grep -nFx -- \
     '        let lease = try PrimeMetalDeviceLease.acquire(' \
