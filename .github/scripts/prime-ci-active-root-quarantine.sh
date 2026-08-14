@@ -44,8 +44,10 @@ readonly stage5_launcher_relative_path=".github/scripts/prime-ci-native-decoder-
 readonly stage5_test_relative_path="Tests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayTests.swift"
 readonly stage5_failure_observation_source_relative_path="Sources/PrimeCore/PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayExecutionFailureObservation.swift"
 readonly stage5_failure_observation_test_relative_path="Tests/PrimeCoreTests/PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayExecutionFailureObservationTests.swift"
-readonly expected_stage5_failure_retirement_preserved_index_sha256="0639993b640562c244efd21ab5b37b96805287c8564ca7c518738bf229645e6d"
-readonly observed_stage5_failure_retirement_preserved_index_sha256="$({
+readonly stage6_resource_probe_authority_source_relative_path="Sources/PrimeCore/PrimeNativeDecoderNative300MResourceOnlyOneStepProbeAuthority.swift"
+readonly stage6_resource_probe_authority_test_relative_path="Tests/PrimeCoreTests/PrimeNativeDecoderNative300MResourceOnlyOneStepProbeAuthorityTests.swift"
+readonly expected_stage6_resource_probe_authority_preserved_index_sha256="972c5f99d102ad4dd117fd020d403e4b7332c8aef0d346992d2e375fc1c5aecf"
+readonly observed_stage6_resource_probe_authority_preserved_index_sha256="$({
     git -C "$prime_root" ls-files -s |
         while IFS= read -r index_record; do
             relative_path="${index_record#*$'\t'}"
@@ -56,31 +58,31 @@ readonly observed_stage5_failure_retirement_preserved_index_sha256="$({
                 || "$relative_path" \
                     == 'Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' \
                 || "$relative_path" \
-                    == "$stage5_failure_observation_source_relative_path" \
+                    == "$stage6_resource_probe_authority_source_relative_path" \
                 || "$relative_path" \
-                    == "$stage5_failure_observation_test_relative_path" ]]; then
+                    == "$stage6_resource_probe_authority_test_relative_path" ]]; then
                 continue
             fi
             printf '%s\n' "$index_record"
         done
 } | LC_ALL=C sort | shasum -a 256 | awk '{print $1}')"
-[[ "$observed_stage5_failure_retirement_preserved_index_sha256" \
-    == "$expected_stage5_failure_retirement_preserved_index_sha256" ]] ||
-    die "Stage-5 failure retirement changed a path outside the exact five-path closure"
-for exact_stage5_failure_retirement_path in \
+[[ "$observed_stage6_resource_probe_authority_preserved_index_sha256" \
+    == "$expected_stage6_resource_probe_authority_preserved_index_sha256" ]] ||
+    die "Stage-6 resource-probe authority changed a path outside the exact five-path closure"
+for exact_stage6_resource_probe_authority_path in \
     '.github/scripts/prime-ci-active-root-quarantine.sh' \
     '.github/workflows/prime-active-root-quarantine.yml' \
     'Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' \
-    "$stage5_failure_observation_source_relative_path" \
-    "$stage5_failure_observation_test_relative_path"; do
-    expected_stage5_failure_retirement_mode="100644"
-    case "$exact_stage5_failure_retirement_path" in
-        '.github/scripts/'*) expected_stage5_failure_retirement_mode="100755" ;;
+    "$stage6_resource_probe_authority_source_relative_path" \
+    "$stage6_resource_probe_authority_test_relative_path"; do
+    expected_stage6_resource_probe_authority_mode="100644"
+    case "$exact_stage6_resource_probe_authority_path" in
+        '.github/scripts/'*) expected_stage6_resource_probe_authority_mode="100755" ;;
     esac
     [[ "$(git -C "$prime_root" ls-files -s -- \
-        "$exact_stage5_failure_retirement_path" | awk '{print $1}')" \
-        == "$expected_stage5_failure_retirement_mode" ]] ||
-        die "Stage-5 failure-retirement exact path is missing or has the wrong mode: $exact_stage5_failure_retirement_path"
+        "$exact_stage6_resource_probe_authority_path" | awk '{print $1}')" \
+        == "$expected_stage6_resource_probe_authority_mode" ]] ||
+        die "Stage-6 resource-probe authority exact path is missing or has the wrong mode: $exact_stage6_resource_probe_authority_path"
 done
 
 assert_stage5_mechanics_payload_identity() {
@@ -1080,8 +1082,13 @@ readonly tokenizer_compatibility_workflow_line="$(grep -nFx -- \
     && "$(grep -Fxc -- \
         '          bash .github/scripts/prime-ci-native-decoder-stage5-tiny-repeated-metal-trajectory-determinism.sh' \
         "$workflow_path")" == "0" \
+    && "$(grep -Ec -- \
+        '^[[:space:]]*bash .*prime-ci-native-decoder-stage6' \
+        "$workflow_path")" == "0" \
     && "$(grep -Fc -- \
         'PRIME_NATIVE_DECODER_STAGE5_TINY_REPEATED_METAL_TRAJECTORY_DETERMINISM_RECEIPT=' \
+        "$workflow_path")" == "0" \
+    && "$(grep -Ec -- 'PRIME_NATIVE_DECODER_STAGE6_.*RECEIPT=' \
         "$workflow_path")" == "0" ]] ||
     die "trusted-main workflow lost the exact three-launcher sequence or retained a retired one-shot"
 readonly live_decoder_workflow_block="$(awk '
@@ -1210,6 +1217,7 @@ readonly stage4_tiny_durable_multileaf_commit_fault_injection_execution_observat
 readonly stage5_tiny_repeated_metal_trajectory_determinism_assay_authority_filter='PrimeCoreTests.PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling'
 readonly stage5_swift_numerics_resolution_repair_authority_filter='PrimeCoreTests.PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayExactMainSwiftNumericsResolutionRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling'
 readonly stage5_tiny_repeated_metal_trajectory_execution_failure_observation_filter='PrimeCoreTests.PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayExecutionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling'
+readonly stage6_native300m_resource_only_one_step_probe_authority_filter='PrimeCoreTests.PrimeNativeDecoderNative300MResourceOnlyOneStepProbeAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling'
 [[ "$(grep -Fc -- "$tiny_cpu_mechanics_authority_filter" \
         "$workflow_path")" == "1" \
     && "$(grep -Fc -- "$tiny_cpu_mechanics_failure_observation_filter" \
@@ -1239,7 +1247,7 @@ readonly stage5_tiny_repeated_metal_trajectory_execution_failure_observation_fil
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 54 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 55 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not run the exact Stage-2 authority and failure-observation pure contracts"
 [[ "$(grep -Fc -- "$private_dependency_tls_failure_observation_filter" \
@@ -1331,7 +1339,7 @@ readonly stage5_tiny_repeated_metal_trajectory_execution_failure_observation_fil
         "          grep -Fq 'PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapFreshMetallibCrossBindingExecutionFailureObservationTests' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 54 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 55 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the Stage-2 metallib bootstrap repair, failure observations, and classifier repair authority"
 [[ "$(grep -Fc -- \
@@ -1499,9 +1507,28 @@ readonly stage5_tiny_repeated_metal_trajectory_execution_failure_observation_fil
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 54 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 55 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run exactly the Stage-5 execution-failure observation"
+[[ "$(grep -Fc -- \
+        "$stage6_native300m_resource_only_one_step_probe_authority_filter" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        "$stage6_resource_probe_authority_source_relative_path" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        "$stage6_resource_probe_authority_test_relative_path" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        "          grep -Fq 'PrimeNativeDecoderNative300MResourceOnlyOneStepProbeAuthorityTests' \\" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling' \\" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        '          grep -Fq '\''Executed 55 tests, with 0 failures'\'' "$test_log"' \
+        "$workflow_path")" == "1" ]] ||
+    die "hosted workflow does not parse and run exactly the Stage-6 resource-only probe authority"
 for required_stage5_swift_numerics_resolution_workflow_value in \
     'readonly numerics_revision="0c0290ff6b24942dadb83a929ffaaa1481df04a2"' \
     'readonly numerics_source="$RUNNER_TEMP/prime-active-root-build/checkouts/swift-numerics"' \
@@ -1739,6 +1766,27 @@ for required_stage5_execution_failure_observation_summary_value in \
         "$required_stage5_execution_failure_observation_summary_value" \
         "$workflow_path")" == "1" ]] ||
         die "workflow lost the exact Stage-5 execution-failure observation summary: $required_stage5_execution_failure_observation_summary_value"
+done
+for required_stage6_resource_probe_authority_summary_value in \
+    'Exact-main Stage-5 retirement merge f5a9638194c53922f09c39c3c76095b5cc47c25e, tree a17a8f92604157c0de0252dbc30cf22681d6a13d, and workflow run 31763253701 number 107 attempt 1' \
+    'passed root 54, all four Swift-Numerics-cache-mapped isolated invocations for isolated total 6 and focused whole 60, then Metal 44, maintained runtime 1, and tokenizer 1 in order for total 106' \
+    'Stage-4, Stage-5, and Stage-6 launcher invocations and the Stage-5 receipt all zero' \
+    'dependency-free pure exact-five Stage-6 authority treats the Stage-5 lifecycle, one-shot consumption, exhaustion, and invocation retirement as complete' \
+    'preserving the failed Stage-5 result, mechanics-success, assay-clearance, repeated-trajectory-determinism, exact-Metal-gradient-byte, and receipt claims as false' \
+    'Only after this authority merges and its root-55 exact-main depth-one closure passes may one separately scoped exact-eight resource-only mechanics successor' \
+    'change the gate, add one Stage-6 launcher, change the workflow and provenance, add one resource-probe training source, change the validation manifest without its lock, add one executable main, and add one pure contract test' \
+    'exactly one no-retry, no-rerun, no-replacement exact-main supervised executable attempt' \
+    'release SwiftPM, eager uncompiled MLX with TF32 disabled, singleton default GPU index zero under the PrimeMetalDeviceLease, seed 44, one 128-token unpadded batch with 127 targets' \
+    'one forward, backward, clipped AdamW update without bias correction, six resource boundaries, a 1200-second worker limit, a 1500-second supervisor limit, and one canonical Stage-6 receipt' \
+    '271107072 parameters across 218 paths, 1084428288-byte weights and gradients, 2168856576-byte moments, 3253284864-byte committed state, 4337713152-byte state plus gradient' \
+    'a 17179869184-byte maximum MLX memory limit, zero MLX cache bytes, and at least 12884901888 available filesystem bytes' \
+    'invokes no Stage-6 launcher, allocates no Native-300M model, performs no training or checkpoint I/O, retains or uploads no artifact' \
+    'changes no package manifest or lock' \
+    'establishes no resource result, job fit, runner capacity, Stage 7 trajectory-checkpoint execution, quality, admission, trial, canary, quantization, product, publication, or downstream authority'; do
+    [[ "$(grep -Fc -- \
+        "$required_stage6_resource_probe_authority_summary_value" \
+        "$workflow_path")" == "1" ]] ||
+        die "workflow lost the exact Stage-6 resource-probe authority summary: $required_stage6_resource_probe_authority_summary_value"
 done
 [[ "$(grep -Fc -- \
         'Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderTrajectoryCheckpointV1.swift' \
@@ -2867,6 +2915,8 @@ readonly stage5_swift_numerics_resolution_repair_authority_source="$prime_root/S
 readonly stage5_swift_numerics_resolution_repair_authority_test="$prime_root/Tests/PrimeCoreTests/PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayExactMainSwiftNumericsResolutionRepairAuthorityTests.swift"
 readonly stage5_tiny_repeated_metal_trajectory_execution_failure_observation_source="$prime_root/$stage5_failure_observation_source_relative_path"
 readonly stage5_tiny_repeated_metal_trajectory_execution_failure_observation_test="$prime_root/$stage5_failure_observation_test_relative_path"
+readonly stage6_native300m_resource_only_one_step_probe_authority_source="$prime_root/$stage6_resource_probe_authority_source_relative_path"
+readonly stage6_native300m_resource_only_one_step_probe_authority_test="$prime_root/$stage6_resource_probe_authority_test_relative_path"
 readonly decoder_training_source="$prime_root/Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderTraining.swift"
 readonly decoder_training_validation_root="$prime_root/Tests/PrimeNativeDecoderTrainingValidation"
 readonly decoder_training_validation_manifest="$decoder_training_validation_root/Package.swift"
@@ -3079,6 +3129,12 @@ readonly decoder_stage5_tiny_repeated_metal_trajectory_test="$prime_root/$stage5
 [[ -f "$stage5_tiny_repeated_metal_trajectory_execution_failure_observation_test" \
     && ! -L "$stage5_tiny_repeated_metal_trajectory_execution_failure_observation_test" ]] ||
     die "Stage-5 execution-failure observation test is missing or linked"
+[[ -f "$stage6_native300m_resource_only_one_step_probe_authority_source" \
+    && ! -L "$stage6_native300m_resource_only_one_step_probe_authority_source" ]] ||
+    die "Stage-6 resource-only probe authority is missing or linked"
+[[ -f "$stage6_native300m_resource_only_one_step_probe_authority_test" \
+    && ! -L "$stage6_native300m_resource_only_one_step_probe_authority_test" ]] ||
+    die "Stage-6 resource-only probe authority test is missing or linked"
 [[ -f "$decoder_training_source" && ! -L "$decoder_training_source" ]] ||
     die "PrimeNativeDecoderTraining source is missing or linked"
 [[ -f "$decoder_training_validation_manifest" \
@@ -8983,15 +9039,15 @@ for required_stage4_execution_observation_value in \
 done
 assert_metal_current_decoder_assertion_arc_identity \
     'Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' \
-    '100644' '506b03d6ce0c226e2052bf18d6eecd8a5dca4e26' \
+    '100644' 'b82006b6669198339ad6097f07779674ac97eedb' \
     '546' \
-    '3194d28ef388386e36c781448f5130a58692e36c9a49bcb8d339bdd048fa860d'
+    'bcb4f99183d3a7a430415412614605e9bad4dd0988ec8c05d268a6fe77f76e17'
 [[ "$(wc -l < "$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift" | \
         awk '{print $1}')" == "13" \
     && "$(grep -Fxc -- \
-        '        "ff7ca9cc027fec8430b06f57e84ff56772437ac156049eb195bc821711d803e6"' \
+        '        "22c6c08cf8cd65690ef481f156e70b9e192d63c241d17bbd0d9791b4e6f1f3d5"' \
         "$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift")" == "1" ]] ||
-    die "Stage-5 failure-retirement embedded provenance identity changed"
+    die "Stage-6 resource-probe authority embedded provenance identity changed"
 for forbidden_stage4_execution_observation_capability in \
     'import CoreGraphics' 'import Metal' 'import MLX' 'import MLXNN' \
     'import MLXOptimizers' 'FileManager' 'FileHandle' 'URLSession' 'Process(' \
@@ -9730,6 +9786,812 @@ for forbidden_stage5_execution_failure_observation_capability in \
     ! grep -Fq -- "$forbidden_stage5_execution_failure_observation_capability" \
         "$stage5_tiny_repeated_metal_trajectory_execution_failure_observation_source" ||
         die "Stage-5 execution-failure observation gained capability: $forbidden_stage5_execution_failure_observation_capability"
+done
+
+assert_metal_current_decoder_assertion_arc_identity \
+    "$stage6_resource_probe_authority_source_relative_path" \
+    '100644' 'd65361e24a5eb3608ca774066a76ecf608c76d53' \
+    '210057' \
+    'a03507b0cbd532949178fa5515d0b0d0cabfe786b0d79619d89453ea23b855c6'
+assert_metal_current_decoder_assertion_arc_identity \
+    "$stage6_resource_probe_authority_test_relative_path" \
+    '100644' 'a6ff11d4d8beb2aa39ca6e04ac32defb94220033' \
+    '36733' \
+    'a501188363b11b61731099066d61594a0dc3d27fbe5c5c4eec3d0fbcea0de065'
+[[ "$(wc -l < \
+        "$stage6_native300m_resource_only_one_step_probe_authority_source" | \
+        awk '{print $1}')" == "3571" \
+    && "$(wc -l < \
+        "$stage6_native300m_resource_only_one_step_probe_authority_test" | \
+        awk '{print $1}')" == "796" \
+    && "$(awk '/^import / { print }' \
+        "$stage6_native300m_resource_only_one_step_probe_authority_source")" \
+        == 'import Foundation' \
+    && "$(awk '/^import / || /^@testable import / { print }' \
+        "$stage6_native300m_resource_only_one_step_probe_authority_test")" \
+        == $'import CoreFoundation\nimport Foundation\n@testable import PrimeCore\nimport XCTest' \
+    && "$(grep -Ec -- '^[[:space:]]+func test' \
+        "$stage6_native300m_resource_only_one_step_probe_authority_test")" == "1" \
+    && "$(grep -Fc -- \
+        'PrimeNativeDecoderNative300MResourceOnlyOneStepProbeAuthorityTests:' \
+        "$stage6_native300m_resource_only_one_step_probe_authority_test")" == "1" \
+    && "$(grep -Fc -- \
+        'func testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling()' \
+        "$stage6_native300m_resource_only_one_step_probe_authority_test")" == "1" ]] ||
+    die "Stage-6 resource-only probe authority identity, imports, or sole-test surface changed"
+for required_stage6_resource_probe_authority_value in \
+    'PrimeNativeDecoderNative300MResourceOnlyOneStepProbeAuthorityV1:' \
+    'public static let frozenV1: Self = {' \
+    'public static let canonicalSHA256 =' \
+    '"2627ffc0dd6499a9a1b20fa217b7f1c4a9723a6fd6332ef24a9ee251b5b0bf56"' \
+    'public func validateExactV1() throws {' \
+    'self == Self.frozenV1' \
+    '"prime_native_decoder_native300m_resource_only_one_step_probe_authority_v1"' \
+    '"append_only_dependency_free_nonexecuting_stage6_native300m_resource_probe_authority"' \
+    '"f5a9638194c53922f09c39c3c76095b5cc47c25e"' \
+    '"a17a8f92604157c0de0252dbc30cf22681d6a13d"' \
+    '"8bdf6abe15d7f9a83045a3f9ee21fcc28f7ee91d"' \
+    '"7ad93b26d1fb8fc353cc03ee3062fd6bacb88ecd"' \
+    'authorityClosurePreservedIndexSHA256:' \
+    '"972c5f99d102ad4dd117fd020d403e4b7332c8aef0d346992d2e375fc1c5aecf"' \
+    'retirementPullRequestNumber: 105' \
+    'workflowRunID: 31_763_253_701' \
+    'workflowRunNumber: 107' \
+    'workflowRunAttempt: 1' \
+    'checkSuiteID: 86_172_361_851' \
+    '94_653_827_612' \
+    '94_654_353_548' \
+    'event: "push"' \
+    'headBranch: "main"' \
+    'status: "completed"' \
+    'conclusion: "success"' \
+    'previousAttemptURLWasNull: true' \
+    'exactHeadPushRunCount: 1' \
+    'rerunCount: 0' \
+    'artifactCount: 0' \
+    'activeRunnerImage: "macos-15"' \
+    'activeJobConclusion: "success"' \
+    'reviewedRunnerImage: "macos-26"' \
+    'reviewedJobConclusion: "success"' \
+    'rootTestCount: 54' \
+    'focusedWholeTestCount: 60' \
+    'metalTestCount: 44' \
+    'maintainedRuntimeTestCount: 1' \
+    'maintainedRuntimeReceiptCount: 1' \
+    'tokenizerTestCount: 1' \
+    'tokenizerReceiptCount: 1' \
+    'totalTestCount: 106' \
+    'depthOneCheckoutCount: 2' \
+    'stage4LauncherInvocationCount: 0' \
+    'stage6LauncherInvocationCount: 0' \
+    'stage6ReceiptCount: 0' \
+    'workflowAuthoredRetryCount: 0' \
+    'gitInternalRetryCount: 0' \
+    'tlsFailureCount: 0' \
+    'tlsVerificationBypassCount: 0' \
+    'customCAInstallationCount: 0' \
+    'predecessorStageLifecycleCompleted: true' \
+    'predecessorResultEstablished: false' \
+    'predecessorAssayClearanceEstablished: false' \
+    'stage5MechanicsExecuted: true' \
+    'oneShotExecutionConsumed: true' \
+    'oneShotExecutionExhausted: true' \
+    'stage5ResultEstablished: false' \
+    'stage5MechanicsSuccessEstablished: false' \
+    'repeatedTrajectoryDeterminismEstablished: false' \
+    'exactMetalGradientBytesEstablished: false' \
+    'metalDeterminismEstablished: false' \
+    'replacementStage5ExecutionAuthorized: false' \
+    'stage5ReceiptCount: 0' \
+    'stage5InvocationRetired: true' \
+    'stage5LauncherPreservedForAudit: true' \
+    '"measure_native300m_one_step_memory_disk_and_duration_without_quality_or_checkpoint_claim"' \
+    '"native300m_trajectory_checkpoint_execution_v1"' \
+    'nextStageRequiresAssayAndResourceClearance: true' \
+    'nextStageAuthorizedByThisAuthority: false' \
+    'separatelyAuthorizedSuccessorRequired: true' \
+    'compatibilitySchemaID:' \
+    '"ergentics_prime_native_decoder_checkpoint_compatibility_v2"' \
+    'vocabularySize: 512' \
+    'modelWidth: 1_024' \
+    'layerCount: 24' \
+    'queryHeadCount: 16' \
+    'keyValueHeadCount: 4' \
+    'headWidth: 64' \
+    'intermediateWidth: 2_816' \
+    'maximumSequenceLength: 2_048' \
+    'ropeThetaFloat32BitPattern: 1_176_256_512' \
+    'rmsNormEpsilonFloat32BitPattern: 925_353_388' \
+    'parameterPathCount: 218' \
+    'uniqueParameterCount: 271_107_072' \
+    'logicalFP32ParameterByteCount: 1_084_428_288' \
+    'initializationSeed: 44' \
+    'batchSize: 1' \
+    'sequenceLength: 128' \
+    'validTokenCount: 128' \
+    'gradientAccumulationCount: 1' \
+    'optimizerStepCount: 1' \
+    '"prime_stage6_seed44_batch1x128_mod510_stride73_v1"' \
+    'batchTokenIDs: [probeTokens]' \
+    '[[false] + Array(repeating: true, count: 127)]' \
+    'selectedTargetCount: 127' \
+    'learningRateFloat32BitPattern: 953_267_991' \
+    'beta1Float32BitPattern: 1_063_675_494' \
+    'beta2Float32BitPattern: 1_065_336_439' \
+    'epsilonFloat32BitPattern: 841_731_191' \
+    'weightDecayFloat32BitPattern: 1_008_981_770' \
+    'maximumGradientNormFloat32BitPattern: 1_065_353_216' \
+    'gradientNormEpsilonFloat32BitPattern: 897_988_541' \
+    'parameterDType: "float32"' \
+    'optimizerQualifiedType: "MLXOptimizers.AdamW"' \
+    'adamWBiasCorrectionApplied: false' \
+    '"global_l2_norm_clip_once_before_adamw_update"' \
+    'paddingAuthorized: false' \
+    'kvCacheAuthorized: false' \
+    'modelQualityOrReadOnlyEvaluationAuthorized: false' \
+    'generationAuthorized: false' \
+    'checkpointAuthorized: false' \
+    'configurationIsResourceProbeOnlyNotTrainingPolicy: true' \
+    'weightsLogicalByteCount: 1_084_428_288' \
+    'optimizerMomentTensorCount: 436' \
+    'optimizerMomentLogicalByteCount: 2_168_856_576' \
+    'minimumCommittedTensorStateByteCount: 3_253_284_864' \
+    'gradientLogicalByteCount: 1_084_428_288' \
+    'minimumStatePlusGradientByteCount: 4_337_713_152' \
+    'threeTimesCommittedStateDiskComparatorByteCount: 9_759_854_592' \
+    'containerHeadersAndManifestsIncludedInMinimum: false' \
+    'duplicateMaterializationsGraphsAndTemporaryBuffersIncluded: false' \
+    'seed43ObservedWeightsContainerByteCount: 1_084_525_304' \
+    'seed43ObservedLiveStepDurationSeconds: 1_631' \
+    'seed43ObservedAvailableFilesystemBytesAfterBuild:' \
+    '101_145_567_232' \
+    'seed43RunnerMemoryCapacityRecorded: false' \
+    'native300MOneStepFitsCurrentReviewedJobEstablished: false' \
+    'native300MOneStepFitsObservedMemoryEstablished: false' \
+    'configuredMLXMemoryLimitMaximumByteCount: 17_179_869_184' \
+    '"min(UInt64(17179869184), retainedMTLDevice.recommendedMaxWorkingSetSize)"' \
+    'configuredMLXMemoryLimitRecommendedWorkingSetSource:' \
+    '"retainedMTLDevice.recommendedMaxWorkingSetSize"' \
+    'recommendedMaxWorkingSetSizeMustBePositive: true' \
+    'configuredMLXMemoryLimitUInt64ToIntConversionOverflowChecked:' \
+    'receiptConfiguredMemoryLimitMustEqualRetainedDeviceFormula:' \
+    'configuredMLXMemoryLimitSetter: "MLX.Memory.memoryLimit"' \
+    'configuredMLXMemoryLimitSetCount: 1' \
+    'configuredMLXMemoryLimitReadbackRequired: true' \
+    'configuredMLXMemoryLimitReadbackMustEqualFormulaResult: true' \
+    'configuredMLXMemoryLimitReceiptBindingRequired: true' \
+    'configuredMLXCacheLimitByteCount: 0' \
+    'configuredMLXCacheLimitSetter: "MLX.Memory.cacheLimit"' \
+    'configuredMLXCacheLimitSetCount: 1' \
+    'configuredMLXCacheLimitReadbackRequired: true' \
+    'postDeallocationClearCacheCount: 1' \
+    'minimumConfiguredMLXMemoryLimitByteCount: 4_337_713_152' \
+    'preflightAbstainWhenConfiguredMLXMemoryLimitBelowMinimum: true' \
+    'minimumAvailableFilesystemByteCount: 12_884_901_888' \
+    'preflightAbstainWhenAvailableFilesystemBelowMinimum: true' \
+    'mlxLimitIsNotProcessRSSLimit: true' \
+    'statfsIsObservationNotCheckpointDiskSufficiencyClaim: true' \
+    'separateResourceOnlyProbeRequired: true' \
+    '"MLX_ENABLE_TF32=0"' \
+    'metalDeviceIndex: 0' \
+    'exactMetalDeviceCount: 1' \
+    'singletonDeviceEnumerationRequired: true' \
+    'indexZeroMustMatchDefaultDevice: true' \
+    'exclusiveMetalDeviceLeaseRequired: true' \
+    'leaseType: "PrimeMetalDeviceLease"' \
+    'leaseModule: "PrimeCore"' \
+    'swiftPMBuildConfiguration: "release"' \
+    'mlxGraphCompileMode: "eager_uncompiled_no_compile_transform"' \
+    'mlxCompileTransformInvocationCount: 0' \
+    'activeCheckoutDepth: 1' \
+    'reviewedCheckoutDepth: 1' \
+    'authorityClosureActiveJobTimeoutMinutes: 45' \
+    'authorityClosureReviewedJobTimeoutMinutes: 60' \
+    'authorityClosureWorkflowTimeoutMutationAuthorized: false' \
+    'successorActiveJobTimeoutMinutes: 45' \
+    'successorReviewedJobTimeoutMinutes: 90' \
+    'successorReviewedWorkflowTimeoutMutationAuthorized: true' \
+    'secureFetchMutationAuthorized: false' \
+    '"Ergentics/ergentics-mlx-swift"' \
+    '"d37885a278f1c37484a94d0f401a418735e66519"' \
+    '"Source/MLX/Memory.swift"' \
+    '"89baf9cc69d7e4f046467f197ce9da8a309248c3"' \
+    'memorySourceByteCount: 12_919' \
+    'memorySourceLFByteCount: 361' \
+    '"cb6976cc37aa3e8a0fa1be8269fea2869ecdf5951e469556f67e21604b1701f8"' \
+    'mlxPeakMemoryResetBeforeProbeRequired: true' \
+    'physicalMemoryCapacityObservationRequired: true' \
+    'darwinTaskResidentAndPhysicalFootprintObservationRequired: true' \
+    'getrusageMaxRSSObservationRequired: true' \
+    'mlxActiveCacheAndPeakBytesObservationRequired: true' \
+    'filesystemCapacityAndAvailableBytesObservationRequired: true' \
+    'cumulativeWorkerProbeElapsedObservationRequired: true' \
+    'metalCurrentAllocatedSizeObservationRequired: true' \
+    '"cumulative_worker_probe_elapsed_nanoseconds"' \
+    '"physical_memory_capacity_bytes"' \
+    '"task_resident_bytes"' \
+    '"task_physical_footprint_bytes"' \
+    '"getrusage_max_rss_bytes"' \
+    '"mlx_active_bytes"' \
+    '"mlx_cache_bytes"' \
+    '"mlx_peak_bytes"' \
+    '"metal_current_allocated_bytes"' \
+    '"filesystem_capacity_bytes"' \
+    '"filesystem_available_bytes"' \
+    '"ProcessInfo.processInfo.physicalMemory_bytes"' \
+    '"task_info_TASK_VM_INFO_resident_size_and_phys_footprint_bytes"' \
+    '"getrusage_RUSAGE_SELF_ru_maxrss_macos_bytes"' \
+    '"MLX.Memory_activeMemory_cacheMemory_peakMemory_bytes"' \
+    '"capacity=checked_UInt64(f_blocks)*checked_UInt64(f_bsize);available=checked_UInt64(f_bavail)*checked_UInt64(f_bsize)_using_multipliedReportingOverflow_nonnegative_representable_operands"' \
+    '"ContinuousClock_elapsed_overflow_safe_nanoseconds"' \
+    'overflowCheckedMetricConversionsRequired: true' \
+    '"MTLDevice.currentAllocatedSize_bytes"' \
+    'metalCurrentAllocatedSizeUsesRetainedSingletonDeviceRequired:' \
+    'metalDeviceHasUnifiedMemoryRequired: true' \
+    'metalDeviceNameRegistryUnifiedMemoryRecommendedAndBufferBindingsRequired:' \
+    'successfulLeaseAcquisitionPrecedesCoreGraphicsMetalOrMLX: true' \
+    'passLeaseHeldThroughCandidateFlushAndPostflight: true' \
+    'postAcquisitionFatalRequiresChildTerminationThenSupervisorReacquireReleaseProof:' \
+    'leaseBusyRequiresAcquiredFalseAndCleanupProofNotApplicable:' \
+    'leaseBusyNeverWaitsOrSteals: true' \
+    'buildCount: 1' \
+    'stage6LauncherInvocationCount: 1' \
+    'directXCTestCount: 1' \
+    'directExecutableProbeCount: 1' \
+    'aggregateDirectInvocationCount: 2' \
+    'supervisorProcessCount: 1' \
+    'maximumWorkerProcessCount: 1' \
+    'workerSpawnAttemptCount: 1' \
+    'modelAllocationCount: 1' \
+    'modelMaterializationCount: 1' \
+    'valueAndGradCount: 1' \
+    'forwardLossCount: 1' \
+    'backwardCount: 1' \
+    'gradientNormCount: 1' \
+    'gradientClipCount: 1' \
+    'adamWUpdateCount: 1' \
+    'fullGraphEvaluationCount: 1' \
+    'kvCacheAllocationCount: 0' \
+    'evaluationForwardPassCount: 0' \
+    'checkedTensorMaterializationEvaluationRequired: true' \
+    'fullGraphEvaluationMeansTensorMaterializationNotEvaluationPass:' \
+    '"preflight"' \
+    '"post_model_materialization"' \
+    '"post_forward_backward"' \
+    '"post_norm_clip"' \
+    '"post_adam_update_full_evaluation"' \
+    '"post_lexical_deallocation_and_clear_cache"' \
+    'workerActiveTimeoutSeconds: 1_200' \
+    'supervisorEndToEndTimeoutSeconds: 1_500' \
+    'terminationGraceSeconds: 10' \
+    'PRIME_NATIVE_DECODER_STAGE6_NATIVE300M_RESOURCE_ONLY_ONE_STEP_RECEIPT=' \
+    'receiptCount: 1' \
+    'normativeMaximumWorkerCandidateFrameCount: 1' \
+    'passWorkerCandidateFrameCount: 1' \
+    'abstainAcceptedWorkerCandidateCount: 0' \
+    'workerCandidateIsCapturedAndNeverEmittedWithCanonicalPrefix:' \
+    'workerCanonicalReceiptPrefixEmissionCount: 0' \
+    'supervisorEmittedCanonicalReceiptCount: 1' \
+    'supervisorCanonicalReceiptStdoutLineCount: 1' \
+    'receiptFileCount: 0' \
+    'fatalOutcomeStillRequiresSupervisorCanonicalReceipt: true' \
+    'supervisorSynthesizesABSTAINReceiptWhenWorkerCandidateAbsent:' \
+    '"ergentics_prime_native_decoder_native300m_resource_only_one_step_probe_receipt_v1"' \
+    'authorityCanonicalSHA256Binding:' \
+    '"PrimeNativeDecoderNative300MResourceOnlyOneStepProbeAuthorityV1.canonicalSHA256"' \
+    'authorityBaseRevisionBinding:' \
+    'authorityBaseTreeBinding:' \
+    'authorityClosureRunBindingRequired: true' \
+    'authorityClosureRequiredEvent: "push"' \
+    'authorityClosureRequiredRef: "refs/heads/main"' \
+    'authorityClosureRequiredAttempt: 1' \
+    'authorityClosureRequiredStatus: "completed"' \
+    'authorityClosureRequiredConclusion: "success"' \
+    'authorityClosureRequiredJobConclusion: "success"' \
+    'authorityClosureRequiredArtifactCount: 0' \
+    'authorityClosureRequiredRerunCount: 0' \
+    'authorityClosureRevisionMustEqualWorkflowHeadAndMechanicsFirstParent:' \
+    'topLevelKeys:' \
+    'authorityKeys:' \
+    'ceilingKeys:' \
+    'configurationKeys:' \
+    'environmentKeys:' \
+    'executionKeys:' \
+    'sourceIdentityKeys:' \
+    'leaseKeys:' \
+    'limitsKeys:' \
+    'outcomeKeys:' \
+    'outcomeTransitionKeys:' \
+    'outcomeTransitionRules:' \
+    'operationCountKeys:' \
+    'phaseNames:' \
+    'phaseMetricKeys:' \
+    'nullableNumericMetricKeys:' \
+    '"authority_canonical_sha256"' \
+    '"authority_source_git_blob"' \
+    '"authority_source_sha256"' \
+    '"authority_test_git_blob"' \
+    '"authority_test_sha256"' \
+    '"resource_clearance_established"' \
+    '"resource_envelope_established"' \
+    '"resource_probe_executed"' \
+    '"runner_memory_capacity_established"' \
+    '"one_shot_consumed"' \
+    '"batch_token_ids_sha256"' \
+    '"gradient_clip_mode"' \
+    '"parameter_fingerprint_before"' \
+    '"parameter_fingerprint_after"' \
+    '"update_occurred"' \
+    '"worker_candidate_present"' \
+    '"exact_changed_source_identities"' \
+    '"provenance_source_identities"' \
+    '"worker_exit_code"' \
+    '"worker_signal"' \
+    '"worker_timeout_triggered"' \
+    '"worker_timeout_trigger_elapsed_nanoseconds"' \
+    '"authority_closure_revision"' \
+    '"authority_closure_tree"' \
+    '"authority_closure_run_id"' \
+    '"authority_closure_run_number"' \
+    '"authority_closure_run_attempt"' \
+    '"authority_closure_check_suite_id"' \
+    '"authority_closure_active_job_id"' \
+    '"authority_closure_reviewed_job_id"' \
+    '"mechanics_head_ordered_parent_revisions"' \
+    '"mechanics_head_revision"' \
+    '"mechanics_head_tree"' \
+    '"mechanics_run_id"' \
+    '"mechanics_run_number"' \
+    '"mechanics_run_attempt"' \
+    '"mechanics_event"' \
+    '"mechanics_ref"' \
+    '"supervisor_reacquire_release_proved"' \
+    '"metal_device_has_unified_memory"' \
+    '"configured_memory_limit_readback_bytes"' \
+    '"configured_cache_limit_readback_bytes"' \
+    'statusDomain: ["PASS", "ABSTAIN"]' \
+    '"pass:all_six_observed"' \
+    '"preflight_floor:preflight_observed_then_unavailable_after_classification_suffix"' \
+    '"lease_busy:all_six_unavailable_before_probe_start"' \
+    '"oom:possibly_empty_observed_prefix_then_unavailable_after_fatal_suffix"' \
+    '"timeout:possibly_empty_observed_prefix_then_unavailable_after_fatal_suffix"' \
+    '"signal:possibly_empty_observed_prefix_then_unavailable_after_fatal_suffix"' \
+    '"nonfinite:observed_prefix_then_unavailable_after_classification_suffix"' \
+    '"topology_dtype:possibly_empty_observed_prefix_then_unavailable_after_classification_suffix"' \
+    '"no_update:observed_prefix_then_unavailable_after_classification_suffix"' \
+    '"executor_receipt_drift:possibly_empty_observed_prefix_then_unavailable_after_classification_suffix"' \
+    'unavailableMetricEncoding: "JSON_null_with_keys_present"' \
+    'byteUnit: "bytes"' \
+    'durationUnit: "nanoseconds"' \
+    'canonicalSortedJSONRequired: true' \
+    'passRequiresWorkerCandidate: true' \
+    'passRequiresAllSixObservedBoundaries: true' \
+    'passRequiresMonotonicElapsedPeakAndMaxRSS: true' \
+    'passRequiresExactOperationCountsAndUpdateChecks: true' \
+    'abstainRequiresPossiblyEmptyObservedPrefixAndExplicitUnavailableSuffix:' \
+    'unavailableSuffixRequiresAllNumericMetricKeysPresentAndNull:' \
+    'phaseAndAvailabilityMetadataAlwaysNonNull: true' \
+    'unavailableReasonKeyAlwaysPresent: true' \
+    'unavailableReasonNullIffAvailabilityObserved: true' \
+    'unavailableReasonEqualsClassificationIffAvailabilityUnavailable:' \
+    '"parent_captured_anonymous_pipe_progress_and_at_most_one_final_candidate"' \
+    'workerProgressAndMaximumOneCandidateOnly: true' \
+    'workerStdoutReceiptCount: 0' \
+    'workerReceiptFileCount: 0' \
+    'workerArtifactCount: 0' \
+    'supervisorSoleReceiptStdoutOwner: true' \
+    'supervisorUsesFputsThenOneFlush: true' \
+    'supervisorEmitsAfterApplicableChildTerminationAndLeaseCleanupDisposition:' \
+    'supervisorValidatesCandidateOrSynthesizesABSTAINWhenAbsent:' \
+    'terminalSupervisorReceiptCount: 1' \
+    'buildOrLauncherBeforeSupervisorFailureReceiptCount: 0' \
+    'buildOrLauncherBeforeSupervisorFailureClassifiedExternally:' \
+    'receiptBindsExactAuthoritySourceExecutionAndProvenanceIDs: true' \
+    'receiptBindsAllPersistentFalseCeilings: true' \
+    'receiptBindsOutcomeTransitionFieldsSeparately: true' \
+    'receiptContract.ceilingKeys.count == 25' \
+    'receiptContract.configurationKeys.count == 45' \
+    'receiptContract.environmentKeys.count == 26' \
+    'receiptContract.executionKeys.count == 52' \
+    'receiptContract.limitsKeys.count == 29' \
+    'receiptContract.outcomeKeys.count == 19' \
+    'receiptContract.operationCountKeys.count == 19' \
+    'receiptContract.outcomeTransitionRules.count == 5' \
+    '"exact_parameter_counts_shapes_and_float32_dtypes"' \
+    '"finite_loss_and_gradient_norm"' \
+    '"nonzero_gradient_norm"' \
+    '"sampled_parameter_fingerprint_changed"' \
+    '"complete_phase_resource_metrics"' \
+    '"postflight_device_and_lease_identity"' \
+    '"preflight_floor"' \
+    '"lease_busy"' \
+    '"oom"' \
+    '"timeout"' \
+    '"signal"' \
+    '"nonfinite"' \
+    '"topology_dtype"' \
+    '"no_update"' \
+    '"executor_receipt_drift"' \
+    'oneExactMainOpportunityAfterGreenAuthorityClosure: true' \
+    'retryAuthorized: false' \
+    'rerunAuthorized: false' \
+    'replacementRunAuthorized: false' \
+    'checkpointReadCount: 0' \
+    'checkpointWriteCount: 0' \
+    'artifactUploadCount: 0' \
+    'qualityMetricComputationCount: 0' \
+    'generatedTokenCount: 0' \
+    '".github/scripts/prime-ci-active-root-quarantine.sh"' \
+    '".github/scripts/prime-ci-native-decoder-stage6-native300m-resource-only-one-step.sh"' \
+    '".github/workflows/prime-active-root-quarantine.yml"' \
+    '"Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift"' \
+    '"Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderNative300MResourceOnlyOneStepProbe.swift"' \
+    '"Tests/PrimeNativeDecoderTrainingValidation/Package.swift"' \
+    '"Tests/PrimeNativeDecoderTrainingValidation/Sources/PrimeNativeDecoderNative300MResourceOnlyOneStepProbe/main.swift"' \
+    '"Tests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderNative300MResourceOnlyOneStepProbeContractTests.swift"' \
+    'Set(repository.authorityClosureExactChangedPaths).count == 5' \
+    'Set(successorScope.exactChangedPaths).count == 8' \
+    'sourceAndTestAreOnlyNewPaths: true' \
+    'sourceAndTestAreOnlyNewPaths: false' \
+    'rootPackageManifestMutationAuthorized: false' \
+    'rootPackageResolvedMutationAuthorized: false' \
+    'trainingValidationManifestMutationAuthorized: true' \
+    'trainingValidationLockMutationAuthorized: false' \
+    'newTrainingProbeSourceAuthorized: true' \
+    'existingTrainingSourceMutationAuthorized: false' \
+    'newStage6LauncherAuthorized: true' \
+    'newStage6ExecutableMainAuthorized: true' \
+    'newStage6AuthorityTestAuthorized: true' \
+    'newStage6AuthorityTestAuthorized: false' \
+    'newStage6MechanicsPureContractTestAuthorized: false' \
+    'newStage6MechanicsPureContractTestAuthorized: true' \
+    'existingMetalLauncherMutationAuthorized: false' \
+    'existingRuntimeLauncherMutationAuthorized: false' \
+    'existingTokenizerLauncherMutationAuthorized: false' \
+    'existingStage5LauncherMutationAuthorized: false' \
+    'authorityRootTestCount: 55' \
+    'isolatedGroupTestCounts: [1, 1, 2, 2]' \
+    'isolatedTestCount: 6' \
+    'authorityFocusedWholeTestCount: 61' \
+    'predecessorMetalTestCount: 44' \
+    'predecessorRuntimeTestCount: 1' \
+    'predecessorTokenizerTestCount: 1' \
+    'authorityTotalTestCount: 107' \
+    'authorityStage5LauncherInvocationCount: 0' \
+    'authorityStage5ReceiptCount: 0' \
+    'authorityStage6LauncherInvocationCount: 0' \
+    'authorityStage6ReceiptCount: 0' \
+    'futureStage6PureContractFocusedXCTestCount: 1' \
+    'futureStage6PureContractDirectXCTestCount: 1' \
+    'futureStage6PureContractXCTestStartCount: 2' \
+    'futureStage6ExecutableOperationalProbeCount: 1' \
+    'futureStage6LauncherLocalAggregateDirectInvocationCount: 2' \
+    'futureStage6AggregateInvocationCount: 3' \
+    'futureMechanicsXCTestTotalCount: 109' \
+    'authorityOnlyNoProbeResultEvidence: true' \
+    'mechanicsImplementationAuthorizedAfterGreenAuthorityClosure: true' \
+    'oneExactMainResourceProbeOpportunityAuthorized: true' \
+    'oneNative300MAllocationAuthorizedForResourceProbe: true' \
+    'oneNative300MTrainingStepAuthorizedForResourceProbe: true' \
+    'boundedResourceMeasurementAuthorized: true' \
+    'stage5ReplacementExecutionAuthorized: false' \
+    'stage5AssayClearanceEstablished: false' \
+    'resourceProbeExecuted: false' \
+    'resourceEnvelopeEstablished: false' \
+    'resourceClearanceEstablished: false' \
+    'ordinaryJobFitEstablished: false' \
+    'runnerMemoryCapacityEstablished: false' \
+    'broadNative300MTrainingAuthorized: false' \
+    'additionalExecutionOrRerunAuthorized: false' \
+    'durableCheckpointIOAuthorized: false' \
+    'retainedArtifactAuthorized: false' \
+    'artifactUploadAuthorized: false' \
+    'tinyTypedInMemoryResumeEstablished: true' \
+    'tinyDurableSnapshotRoundTripEstablished: true' \
+    'generalTrainingResumeEstablished: false' \
+    'native300MTrajectoryTrainingResumeEstablished: false' \
+    'checkpointAdmissionGranted: false' \
+    'modelQualityEstablished: false' \
+    'candidateAdmissionGranted: false' \
+    'stage7AuthorityEstablished: false' \
+    'stage7Authorized: false' \
+    'downstreamTrialAuthorized: false' \
+    'canaryAuthorized: false' \
+    'quantizationAuthorized: false' \
+    'productUseAuthorized: false' \
+    'publicationAuthorized: false' \
+    '"separately_implement_exact_eight_path_stage6_resource_probe_mechanics"' \
+    '"use_exactly_one_direct_main_stage6_resource_probe_opportunity_without_retry_or_rerun"' \
+    'AUTHORIZED_stage6_native300m_resource_only_one_step_probe_mechanics_and_one_exact_main_witness_after_green_authority_closure_stage5_terminally_closed_result_false_no_assay_clearance_checkpoint_quality_stage7_rerun_or_downstream_authority'; do
+    grep -Fq -- "$required_stage6_resource_probe_authority_value" \
+        "$stage6_native300m_resource_only_one_step_probe_authority_source" ||
+        die "Stage-6 resource-only probe authority lost: $required_stage6_resource_probe_authority_value"
+done
+for required_stage6_resource_probe_expanded_plan_value in \
+    'lossGraphAlgorithmID:' \
+    '"prime_stage6_causal_masked_mean_cross_entropy_f32_v1"' \
+    'tokenIDStorageDType: "int32"' \
+    'completionMaskStorageDType: "bool"' \
+    '"PrimeNativeGQADecoder.trainingLogitsNoCache"' \
+    'trainingLogitsInvocationCount: 1' \
+    'trainingLogitsExpectedShape: [1, 128, 512]' \
+    'trainingLogitsDType: "float32"' \
+    'trainingLogitsUsesCausalAttentionMask: true' \
+    'trainingLogitsKVCacheAllocationCount: 0' \
+    '"logits[0...,0..<127,0...]"' \
+    '"token_ids[0...,1..<128]"' \
+    '"completion_mask[0...,1..<128]"' \
+    'shiftedLogitsExpectedShape: [1, 127, 512]' \
+    'shiftedTargetsExpectedShape: [1, 127]' \
+    'shiftedCompletionMaskExpectedShape: [1, 127]' \
+    'shiftedCompletionMaskAllTrue: true' \
+    '"MLXNN.crossEntropy(logits:targets:weights:axis:labelSmoothing:reduction:)"' \
+    'crossEntropyWeights: "nil"' \
+    'crossEntropyAxis: -1' \
+    'crossEntropyLabelSmoothingFloat32BitPattern: 0' \
+    'crossEntropyReduction: "none"' \
+    'perTargetLossDType: "float32"' \
+    'perTargetLossExpectedShape: [1, 127]' \
+    'perTargetLossExpectedElementCount: 127' \
+    'perTargetLossAllElementsSelectedByShiftedMask: true' \
+    'perTargetLossShapeAndDTypeValidatedInsideValueAndGradClosureBeforeReduction:' \
+    '"MLX.sum(per_target_loss*shifted_completion_mask.asType(.float32))/Float32(127)"' \
+    'lossDType: "float32"' \
+    'lossExpectedRank: 0' \
+    'valueAndGradAPI: "MLXNN.valueAndGrad(model:_:)"' \
+    'valueAndGradClosureReturnsOnlyScalarLoss: true' \
+    'independentOrDetachedLossAuthorized: false' \
+    'optimizerStateInspectionAPI:' \
+    '"MLXOptimizers.AdamW.innerState()"' \
+    '"218_adjacent_[first_moment,second_moment]_pairs_from_TupleState.innerState"' \
+    'optimizerStateExpectedArrayCount: 436' \
+    'optimizerStateExpectedPairCount: 218' \
+    'optimizerNamedStateExportDuringProbeAuthorized: false' \
+    'optimizerStateMustBeEmptyBeforeUpdate: true' \
+    'optimizerStateAdjacentPairsSameShapeAndFloat32Required: true' \
+    'optimizerStateParityElementCountEach: 271_107_072' \
+    'optimizerStateParityLogicalByteCountEach: 1_084_428_288' \
+    'optimizerStatePairShapeMultisetMustEqualModelParameterShapeMultiset:' \
+    'optimizerStatePerPathMomentNamingEstablished: false' \
+    '"checkedEval(model,optimizer,after_fingerprint_sample_views)"' \
+    '"checkedEval(model,before_fingerprint_sample_views)"' \
+    'postUpdateFullStateEvaluationIncludes218ModelAnd436OptimizerArrays:' \
+    '"trainable_parameters_flattened_unique_paths_utf8_ascending"' \
+    'expectedGradientPathCount: 218' \
+    '"prime_stage6_global_f32_l2_norm_utf8_catalog_v1"' \
+    '"sqrt(sum_in_utf8_path_order(MLX.sum(MLX.square(gradient.asType(.float32)))))"' \
+    'rawGradientNormAccumulatorDType: "float32"' \
+    'gradientNormEpsilonInsideNorm: false' \
+    '"prime_stage6_global_norm_clip_f32_v1"' \
+    'gradientClipComparison: "raw_norm_float32_less_than_1"' \
+    '"raw_norm<1?Float32(1):Float32(1)/(raw_norm+Float32(1e-6))"' \
+    'gradientClipScaleHostDType: "float32"' \
+    'gradientClipApplicationCount: 1' \
+    'gradientClipOccursExactlyOnceBeforeAdamW: true' \
+    'adamWConsumesOnlyClippedGradientCatalog: true' \
+    '"prime_stage6_parameter_catalog_sample_f32be_sha256_v1"' \
+    '"module_parameters_flattened_unique_paths_utf8_ascending"' \
+    '"deduplicated_ascending_[0,size/2,size-1]_per_nonempty_tensor"' \
+    'parameterFingerprintExpectedPathCount: 218' \
+    'parameterFingerprintSamplesPerPath: 3' \
+    'parameterFingerprintExpectedSampleCount: 654' \
+    'parameterFingerprintRequiresEveryTensorElementCountAtLeastThree:' \
+    'parameterFingerprintRejectsEmptyOrDuplicatePaths: true' \
+    'parameterFingerprintFullTensorHostCopyAuthorized: false' \
+    'parameterFingerprintSamplePlanHashOmitsValueBitsOnly: true' \
+    'mlxExecutionDeviceConstruction:' \
+    '"Device(.gpu,index:Int32(0))"' \
+    'mlxExecutionDeviceType: "gpu"' \
+    'mlxExecutionDeviceConstructorIndex: 0' \
+    'mlxDeviceIndexRuntimeReadbackAvailable: false' \
+    'mlxDeviceEqualityNotUsedForIdentity: true' \
+    '"Device.withDefaultDevice(executionDevice)"' \
+    '"Device.defaultDevice()===executionDevice"' \
+    'mlxDefaultDeviceObjectIdentityRequired: true' \
+    'mlxDefaultGPUStreamRequired: true' \
+    '"Stream()==Stream.gpu"' \
+    'mlxCPUFallbackAuthorized: false' \
+    'mlxExecutionScopeCoversModelAllocationThroughLexicalDeallocation:' \
+    'mlxGPUIndexEqualsMetalDeviceIndexRequired: true' \
+    'optimizerSourcePath: "Source/MLXOptimizers/Optimizers.swift"' \
+    '"fb9c5d9636a211bb74fae7bf6a1dbbd4fe01d7b9"' \
+    'optimizerSourceByteCount: 24_109' \
+    'optimizerSourceLFByteCount: 698' \
+    '"f2a36919b73cbec5f3fac6ea23022832474a7aca04b7bfc4ce63bd1f201f6e2d"' \
+    'mlxPeakMemoryResetAPI: "MLX.Memory.peakMemory = 0"' \
+    'mlxPeakMemoryResetCount: 1' \
+    '"after_memory_and_cache_limit_set_and_readback_before_preflight_snapshot_and_model_allocation"' \
+    '"resolved_swiftpm_scratch_directory_containing_release_executable"' \
+    'filesystemObservationUsesStatFS: true' \
+    'filesystemObservationRequiresScratchAndExecutableSameFSID:' \
+    '"darwin_fsid_t_ordered_two_int32_decimal_json_array"' \
+    '"absolute_physical_UTF8_existing_directory_no_dot_or_dotdot_no_trailing_slash_and_not_root"' \
+    '"statfs_resolved_executable_and_parent_require_identical_ordered_fsid_and_all_six_snapshots_retain_that_pair"' \
+    'filesystemResolutionOrFSIDDriftClassification:' \
+    'releaseBuildCommand:' \
+    '"swift build --package-path Tests/PrimeNativeDecoderTrainingValidation --configuration release --build-tests"' \
+    'releaseBuildCompilesDefaultProductsAndTests: true' \
+    'releaseContractXCTestCommand:' \
+    'releaseContractXCTestUsesSkipBuild: true' \
+    'releaseBinPathResolutionCompilationCount: 0' \
+    '"invoke_resolved_release_bin_path/PrimeNativeDecoderNative300MResourceOnlyOneStepProbe_directly_never_swift_run"' \
+    'swiftRunInvocationCount: 0' \
+    'additionalBuildCount: 0' \
+    'checkedEvaluationAPI: "checkedEval"' \
+    'gpuSynchronizationAPI: "Stream.gpu.synchronize()"' \
+    'checkedEvaluationBarrierCount: 5' \
+    'gpuSynchronizationBarrierCount: 5' \
+    'phaseMetricsSampledOnlyAfterApplicableBarrier: true' \
+    'hostScalarAndFingerprintReadsImmediatelyAfterApplicableSynchronization:' \
+    'finalFullStateBarrierIncludesModelAndBothMomentCatalogs: true' \
+    '"post_model_materialization_all_model_parameters_and_before_fingerprint_samples"' \
+    '"post_forward_backward_loss_and_all_gradients"' \
+    '"pre_clip_raw_gradient_norm_before_host_scalar_read"' \
+    '"post_norm_clip_all_clipped_gradients"' \
+    '"post_adam_update_all_model_parameters_both_moment_catalogs_and_after_fingerprint_samples"' \
+    'allocatedProbeFunctionInlining: "@inline(never)"' \
+    'allocatedProbeFunctionName: "runAllocatedProbe"' \
+    'allocatedProbeFunctionReturnType: "PureSwiftProbeObservation"' \
+    'allocatedProbeReturnAllowsMLXOrReferenceEscape: false' \
+    'memoryClearCacheCount: 1' \
+    'memoryClearCacheOccursAfterAllocatedProbeReturnAndBeforeFinalSnapshot:' \
+    'postflightDeviceReenumerationCount: 1' \
+    'postflightRunsAfterFinalDeallocationSnapshot: true' \
+    'postflightRunsWhileLeaseHeldAndInsideSuppliedDefaultDeviceScope:' \
+    'postflightDeviceIdentityBindingsMustEqualPreflight: true' \
+    'postflightCurrentAllocatedSizeEqualityCheckAuthorized: false' \
+    'postflightMLXPolicyAndLimitReadbacksMustEqualPreflight: true' \
+    'postflightMismatchClassification: "topology_dtype"' \
+    '"mlx_peak_memory_reset_count"' \
+    '"postflight_device_reenumeration_count"' \
+    '"raw_gradient_norm_float32_bits"' \
+    '"gradient_clip_scale_float32_bits"' \
+    '"mlx_device_constructor_index"' \
+    '"worker_spawn_failure"' \
+    '"worker_spawn_attempt_count"' \
+    '"supervisor_end_to_end_elapsed_nanoseconds"' \
+    '"metal_current_allocated_bytes"' \
+    'nullableEnvironmentObservationKeys:' \
+    'nullableLimitObservationKeys:' \
+    'nullableOutcomeObservationKeys:' \
+    'nullableExecutionTerminationKeys:' \
+    'timeoutScopeDomain:' \
+    '"all_six_rows_present_as_contiguous_possibly_empty_observed_prefix_plus_possibly_empty_unavailable_suffix"' \
+    'operationCountsRecordAttemptedInvocationsIncludingFatalAttempt:' \
+    'passWorkerExitCode: 0' \
+    'passWorkerSignalMustBeNull: true' \
+    'passWorkerTimeoutMustBeFalse: true' \
+    'passMLXDeviceType: "gpu"' \
+    'passMLXDeviceConstructorIndex: 0' \
+    'passMLXDefaultDeviceIsSuppliedDevice: true' \
+    'passMLXDefaultStreamIsGPU: true' \
+    'passMLXCPUFallbackUsed: false' \
+    'passCheckedEvaluationBarrierCount: 5' \
+    'passGPUSynchronizationBarrierCount: 5' \
+    'passFingerprintRequiresExactPlanPathAndSampleCounts: true' \
+    'passFingerprintRequiresLowercaseHexAndBeforeAfterDifference:' \
+    'passPostflightDeviceIdentityMatchesPreflightMustBeTrue: true' \
+    'passPostflightMLXPolicyAndLimitsMatchPreflightMustBeTrue:' \
+    'receiptAnalyticLimitsMustEqualFrozenResourceEnvelope: true' \
+    'passValidatedParameterPathCount: 218' \
+    'passValidatedUniqueParameterCount: 271_107_072' \
+    'passValidatedWeightsLogicalByteCount: 1_084_428_288' \
+    'passValidatedGradientPathCount: 218' \
+    'passValidatedGradientLogicalByteCount: 1_084_428_288' \
+    'passValidatedFirstMomentTensorCount: 218' \
+    'passValidatedSecondMomentTensorCount: 218' \
+    'passValidatedOptimizerMomentLogicalByteCount: 2_168_856_576' \
+    'receiptTimeoutCapsMustEqualFutureProbe: true' \
+    'workerFrameSchemaVersion: 1' \
+    'workerFrameMaximumByteCount: 1_048_576' \
+    'workerFrameMaximumCompactJSONByteCount: 1_048_575' \
+    'workerTransportFrameByteCountIncludesFinalLF: true' \
+    'workerTransportDoesNotAssumePIPEBUFAtomicity: true' \
+    'workerCandidateAcceptedIffPASS: true' \
+    'abstainObservedCandidateFrameRule:' \
+    '"worker_candidate_frame_count_is_observed_syntactically_complete_candidate_kind_frames;PASS_exactly_1;cooperative_or_fatal_ABSTAIN_may_be_0;late_wait_status_timeout_candidate_payload_or_transport_validation_or_trailing_partial_ABSTAIN_may_be_1;duplicate_frame_executor_receipt_drift_may_be_at_least_2;worker_candidate_present_means_one_candidate_accepted_for_PASS_and_is_false_for_every_ABSTAIN;supervisor_synthesizes_every_ABSTAIN"' \
+    'allABSTAINReceiptsSupervisorSynthesized: true' \
+    'supervisorCompletesAllFallibleWorkBeforeCanonicalEmission:' \
+    'supervisorFputsAndFlushReturnAndFerrorChecksRequired: true' \
+    'supervisorHasNoFallibleWorkAssertionsDefersOrCleanupAfterFlush:' \
+    'supervisorImmediateExitZeroAfterSuccessfulFlush: true' \
+    'supervisorSuccessfulFlushExitAPI: "_exit(0)"' \
+    'newContractTestClassName:' \
+    '"PrimeNativeDecoderNative300MResourceOnlyOneStepProbeContractTests"' \
+    '"testNative300MResourceOnlyOneStepProbeContractIsExactAndExecutionPure"' \
+    'bothContractTestInvocationsUseSameExactFilterOnce: true'; do
+    grep -Fq -- "$required_stage6_resource_probe_expanded_plan_value" \
+        "$stage6_native300m_resource_only_one_step_probe_authority_source" ||
+        die "Stage-6 expanded resource-probe plan lost: $required_stage6_resource_probe_expanded_plan_value"
+done
+for required_stage6_resource_probe_authority_test_value in \
+    'func testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling()' \
+    'XCTAssertNoThrow(try authority.validateExactV1())' \
+    'XCTAssertTrue(authority.roadmap.predecessorStageLifecycleCompleted)' \
+    'XCTAssertTrue(authority.stage5Failure.stage5MechanicsExecuted)' \
+    'XCTAssertTrue(authority.stage5Failure.oneShotExecutionConsumed)' \
+    'XCTAssertTrue(authority.stage5Failure.oneShotExecutionExhausted)' \
+    'XCTAssertFalse(authority.stage5Failure.stage5ResultEstablished)' \
+    'XCTAssertTrue(authority.stage5Retirement.stage5InvocationRetired)' \
+    'XCTAssertEqual(authority.configuration.initializationSeed, 44)' \
+    'XCTAssertEqual(authority.configuration.sequenceLength, 128)' \
+    'XCTAssertEqual(authority.configuration.selectedTargetCount, 127)' \
+    'XCTAssertFalse(authority.configuration.adamWBiasCorrectionApplied)' \
+    'authority.environment.authorityClosureReviewedJobTimeoutMinutes' \
+    'authority.environment.successorReviewedJobTimeoutMinutes' \
+    'XCTAssertEqual(authority.futureProbe.workerActiveTimeoutSeconds, 1_200)' \
+    'XCTAssertEqual(authority.futureProbe.directXCTestCount, 1)' \
+    'XCTAssertEqual(authority.futureProbe.directExecutableProbeCount, 1)' \
+    'XCTAssertEqual(authority.futureProbe.aggregateDirectInvocationCount, 2)' \
+    'authority.futureProbe.normativeMaximumWorkerCandidateFrameCount' \
+    'XCTAssertEqual(authority.futureProbe.passWorkerCandidateFrameCount, 1)' \
+    'XCTAssertEqual(authority.futureProbe.abstainAcceptedWorkerCandidateCount, 0)' \
+    'XCTAssertTrue(authority.receiptContract.workerCandidateAcceptedIffPASS)' \
+    'preflightAbstainWhenAvailableFilesystemBelowMinimum' \
+    'authority.receiptContract.nullableNumericMetricKeys' \
+    'authority.receiptContract.topLevelKeys' \
+    'authority.receiptContract.statusDomain' \
+    'authority.receiptContract.classificationDomain' \
+    'XCTAssertTrue(authority.receiptContract.canonicalSortedJSONRequired)' \
+    'XCTAssertTrue(authority.receiptContract.supervisorSoleReceiptStdoutOwner)' \
+    'XCTAssertEqual(authority.receiptContract.workerStdoutReceiptCount, 0)' \
+    'XCTAssertEqual(authority.receiptContract.terminalSupervisorReceiptCount, 1)' \
+    'XCTAssertEqual(authority.receiptContract.configurationKeys.count, 45)' \
+    'XCTAssertEqual(authority.receiptContract.environmentKeys.count, 26)' \
+    'XCTAssertEqual(authority.receiptContract.executionKeys.count, 52)' \
+    'XCTAssertEqual(authority.receiptContract.limitsKeys.count, 29)' \
+    'XCTAssertEqual(authority.receiptContract.outcomeKeys.count, 19)' \
+    'XCTAssertEqual(authority.receiptContract.operationCountKeys.count, 19)' \
+    'XCTAssertEqual(authority.receiptContract.ceilingKeys.count, 25)' \
+    'XCTAssertEqual(authority.receiptContract.outcomeTransitionKeys.count, 5)' \
+    'authority.authorityClosureScope.newStage6AuthorityTestAuthorized' \
+    'newStage6MechanicsPureContractTestAuthorized' \
+    'authority.successorScope.newStage6AuthorityTestAuthorized' \
+    'XCTAssertEqual(authority.successorScope.exactChangedPaths.count, 8)' \
+    'XCTAssertEqual(authority.suite.authorityTotalTestCount, 107)' \
+    'authority.suite.futureStage6PureContractFocusedXCTestCount' \
+    'authority.suite.futureStage6PureContractDirectXCTestCount' \
+    'authority.suite.futureStage6PureContractXCTestStartCount' \
+    'authority.suite.futureStage6ExecutableOperationalProbeCount' \
+    'authority.suite.futureStage6LauncherLocalAggregateDirectInvocationCount' \
+    'authority.suite.futureStage6AggregateInvocationCount' \
+    'XCTAssertEqual(authority.suite.futureMechanicsXCTestTotalCount, 109)' \
+    'XCTAssertTrue(falseCeilings(authority).allSatisfy { !$0 })' \
+    'let canonicalSHA256 = PrimeSHA256.hexDigest(of: canonical)' \
+    'XCTAssertEqual(canonicalSHA256, Authority.canonicalSHA256)' \
+    'let decoded = try Authority.decodeCanonical(canonical)' \
+    'XCTAssertGreaterThan(valuePaths.count, 250)' \
+    'XCTAssertGreaterThan(dictionaryPaths.count, 15)' \
+    'XCTAssertGreaterThan(arrayPaths.count, 10)' \
+    'XCTAssertGreaterThan(scalarPaths.count, 175)' \
+    'XCTAssertGreaterThan(regularDecodedDriftCount, 175)' \
+    'unknown_stage6_authority_field_\(index)' \
+    'canonicalJSONFragment(array[left])' \
+    '!= canonicalJSONFragment(array[right])' \
+    'XCTAssertGreaterThan(reorderedArrayCount, 0)' \
+    'try assertNoncanonicalEncodingsReject(canonical, object: object)' \
+    'try Authority.decodeCanonical(Data([0x20]) + canonical)' \
+    'try Authority.decodeCanonical(canonical + Data([0x0a]))' \
+    'try Authority.decodeCanonical(pretty)' \
+    'try Authority.decodeCanonical(Data(slashEscaped.utf8))' \
+    'try Authority.decodeCanonical(Data(duplicate.utf8))' \
+    'sourceText.contains("__PRIME_STAGE6_AUTHORITY_CANONICAL_SHA256__")' \
+    'sourceText.split(separator: "\n").filter {' \
+    '["import Foundation"]' \
+    'XCTAssertFalse(sourceText.contains(forbidden), forbidden)' \
+    'testText.components(separatedBy: "func " + "test").count - 1'; do
+    grep -Fq -- "$required_stage6_resource_probe_authority_test_value" \
+        "$stage6_native300m_resource_only_one_step_probe_authority_test" ||
+        die "Stage-6 resource-only probe authority test lost: $required_stage6_resource_probe_authority_test_value"
+done
+for forbidden_stage6_resource_probe_authority_capability in \
+    'import CoreGraphics' 'import Darwin' 'import Metal' 'import MLX' 'import MLXNN' \
+    'import MLXOptimizers' 'PrimeNativeGQADecoder.make(' \
+    'FileManager' 'FileHandle' 'URLSession' 'Process(' \
+    'posix_spawn' 'execve(' 'Memory.snapshot('; do
+    ! grep -Fq -- "$forbidden_stage6_resource_probe_authority_capability" \
+        "$stage6_native300m_resource_only_one_step_probe_authority_source" ||
+        die "Stage-6 resource-only probe authority gained capability: $forbidden_stage6_resource_probe_authority_capability"
 done
 
 [[ "$(awk '/^import / { print }' "$decoder_authority_test")" \
