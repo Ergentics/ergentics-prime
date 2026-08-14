@@ -39,6 +39,7 @@ enum PrimeNativeDecoderTinyCPUTrainEvaluateErrorV1:
     case nonContiguousCompletionSuffix(row: Int, column: Int)
     case maximumGlobalStepReached(maximum: Int, observed: Int)
     case nonCPUExecution(String)
+    case executionPolicyMismatch(String)
     case parameterTopologyMismatch(expected: [String], observed: [String])
     case tensorShapeMismatch(
         scope: String,
@@ -70,6 +71,29 @@ struct PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeValidationStateV1:
     let evaluationCheckedAtCurrentStep: Bool
 }
 
+enum PrimeNativeDecoderTinyTrainEvaluateExecutionPolicyV1 {
+    case cpu
+    case metalGPUIndexZero(Device)
+
+    var device: Device {
+        switch self {
+        case .cpu:
+            return .cpu
+        case let .metalGPUIndexZero(device):
+            return device
+        }
+    }
+
+    var requiresDeepSnapshotMaterialization: Bool {
+        switch self {
+        case .cpu:
+            return false
+        case .metalGPUIndexZero:
+            return true
+        }
+    }
+}
+
 /// Owns the fixed two-batch trajectory. The caller can request only the next
 /// admitted batch; there is no batch argument that can skip, duplicate, or
 /// substitute cursor state.
@@ -88,18 +112,46 @@ public final class PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeSessionV1 {
     public private(set) var cursor: PrimeNativeDecoderTinyCPUDataCursorV1
     private var evaluationCheckedAtCurrentStep = false
 
-    public init() throws {
-        trainer = try PrimeNativeDecoderTinyCPUTrainEvaluateTrainerV1()
+    public convenience init() throws {
+        try self.init(executionPolicy: .cpu)
+    }
+
+    convenience init(metalGPUIndexZero device: Device) throws {
+        try self.init(executionPolicy: .metalGPUIndexZero(device))
+    }
+
+    private init(
+        executionPolicy: PrimeNativeDecoderTinyTrainEvaluateExecutionPolicyV1
+    ) throws {
+        trainer = try PrimeNativeDecoderTinyCPUTrainEvaluateTrainerV1(
+            executionPolicy: executionPolicy)
         var records = Self.initialRandomRecords()
         records = Self.consuming(.modelInitialization, in: records)
         randomRecords = records
         cursor = Self.cursor(nextBatchOrdinal: 0)
     }
 
-    public init(
+    public convenience init(
         restoring snapshot: PrimeNativeDecoderTinyCPUInMemoryResumeSnapshotV1
     ) throws {
-        let fresh = try PrimeNativeDecoderTinyCPUTrainEvaluateTrainerV1()
+        try self.init(restoring: snapshot, executionPolicy: .cpu)
+    }
+
+    convenience init(
+        restoring snapshot: PrimeNativeDecoderTinyCPUInMemoryResumeSnapshotV1,
+        metalGPUIndexZero device: Device
+    ) throws {
+        try self.init(
+            restoring: snapshot,
+            executionPolicy: .metalGPUIndexZero(device))
+    }
+
+    private init(
+        restoring snapshot: PrimeNativeDecoderTinyCPUInMemoryResumeSnapshotV1,
+        executionPolicy: PrimeNativeDecoderTinyTrainEvaluateExecutionPolicyV1
+    ) throws {
+        let fresh = try PrimeNativeDecoderTinyCPUTrainEvaluateTrainerV1(
+            executionPolicy: executionPolicy)
         try fresh.restoreInMemoryResumeSnapshot(snapshot)
         trainer = fresh
         randomRecords = snapshot.randomRecords
@@ -203,6 +255,36 @@ public final class PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeSessionV1 {
         return result
     }
 
+    func trainNextExactMetalTrajectoryStep()
+        throws -> PrimeNativeDecoderTinyMetalTrajectoryStepObservationV1
+    {
+        guard cursor.nextBatchOrdinal == trainer.globalStep,
+              (0 ... 1).contains(cursor.nextBatchOrdinal)
+        else {
+            throw PrimeNativeDecoderTinyCPUTrainEvaluateErrorV1
+                .resumeBatchUnavailable
+        }
+        if trainer.globalStep == 1, !evaluationCheckedAtCurrentStep {
+            throw PrimeNativeDecoderTinyCPUTrainEvaluateErrorV1
+                .resumeBoundaryUnavailable
+        }
+        let batch = try cursor.nextBatchOrdinal == 0
+            ? Self.firstBatch()
+            : Self.secondBatch()
+        let exactStep = try trainer.trainExactMetalTrajectoryStep(batch: batch)
+        randomRecords = Self.consuming(.trainingDataOrder, in: randomRecords)
+        cursor = Self.cursor(nextBatchOrdinal: exactStep.result.globalStep)
+        evaluationCheckedAtCurrentStep = false
+        return .init(
+            result: exactStep.result,
+            rawGradients: exactStep.rawGradients,
+            clippedGradients: exactStep.clippedGradients,
+            postStepTensors: exactStep.postStepTensors,
+            controlState: .init(
+                randomRecords: randomRecords,
+                cursor: cursor))
+    }
+
     public func checkedEvaluate()
         throws -> PrimeNativeDecoderTinyCPUTrainEvaluateEvaluationV1
     {
@@ -273,6 +355,17 @@ public final class PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeSessionV1 {
         -> PrimeNativeDecoderTinyCPUExactTensorStateV1
     {
         try trainer.exactTensorState()
+    }
+
+    func exactMetalTrajectoryBoundaryState()
+        throws -> PrimeNativeDecoderTinyMetalTrajectoryBoundaryObservationV1
+    {
+        .init(
+            globalStep: globalStep,
+            tensors: try trainer.exactTensorState(),
+            controlState: .init(
+                randomRecords: randomRecords,
+                cursor: cursor))
     }
 
     private static func validateTinyDurableMultileafControlState(
@@ -739,7 +832,9 @@ struct PrimeNativeDecoderTinyCPUExactTensorValueV1:
 {
     let path: String
     let shape: [Int]
+    let dtype: String
     let float32BitPatterns: [UInt32]
+    let float32LittleEndianBytes: [UInt8]
 }
 
 struct PrimeNativeDecoderTinyCPUExactTensorStateV1:
@@ -749,6 +844,96 @@ struct PrimeNativeDecoderTinyCPUExactTensorStateV1:
     let modelParameters: [PrimeNativeDecoderTinyCPUExactTensorValueV1]
     let firstMoments: [PrimeNativeDecoderTinyCPUExactTensorValueV1]
     let secondMoments: [PrimeNativeDecoderTinyCPUExactTensorValueV1]
+}
+
+struct PrimeNativeDecoderTinyMetalTrajectoryControlStateV1:
+    Equatable,
+    Sendable
+{
+    let randomRecords: [PrimeNativeDecoderTinyCPUExplicitRNGRecordV1]
+    let cursor: PrimeNativeDecoderTinyCPUDataCursorV1
+    let canonicalBytes: [UInt8]
+
+    init(
+        randomRecords: [PrimeNativeDecoderTinyCPUExplicitRNGRecordV1],
+        cursor: PrimeNativeDecoderTinyCPUDataCursorV1
+    ) {
+        self.randomRecords = randomRecords
+        self.cursor = cursor
+        var bytes = Array(
+            "prime_native_decoder_tiny_metal_control_state_v1\0".utf8)
+        Self.appendUInt32(UInt32(randomRecords.count), to: &bytes)
+        for record in randomRecords {
+            Self.appendUTF8(record.domain.rawValue, to: &bytes)
+            Self.appendUTF8(record.keySHA256, to: &bytes)
+            Self.appendUInt64(record.counter, to: &bytes)
+            Self.appendUTF8(record.consumptionSHA256, to: &bytes)
+        }
+        Self.appendUInt64(UInt64(cursor.epoch), to: &bytes)
+        Self.appendUInt64(UInt64(cursor.nextBatchOrdinal), to: &bytes)
+        Self.appendUInt64(UInt64(cursor.nextRowIndex), to: &bytes)
+        Self.appendUInt32(UInt32(cursor.nextRowIDs.count), to: &bytes)
+        for rowID in cursor.nextRowIDs {
+            Self.appendUTF8(rowID, to: &bytes)
+        }
+        Self.appendUTF8(cursor.nextBatchTokenAndMaskSHA256, to: &bytes)
+        canonicalBytes = bytes
+    }
+
+    private static func appendUTF8(
+        _ value: String,
+        to bytes: inout [UInt8]
+    ) {
+        let utf8 = Array(value.utf8)
+        appendUInt32(UInt32(utf8.count), to: &bytes)
+        bytes.append(contentsOf: utf8)
+    }
+
+    private static func appendUInt32(
+        _ value: UInt32,
+        to bytes: inout [UInt8]
+    ) {
+        bytes.append(UInt8(value & 0xff))
+        bytes.append(UInt8((value >> 8) & 0xff))
+        bytes.append(UInt8((value >> 16) & 0xff))
+        bytes.append(UInt8((value >> 24) & 0xff))
+    }
+
+    private static func appendUInt64(
+        _ value: UInt64,
+        to bytes: inout [UInt8]
+    ) {
+        for shift in stride(from: 0, through: 56, by: 8) {
+            bytes.append(UInt8((value >> UInt64(shift)) & 0xff))
+        }
+    }
+}
+
+struct PrimeNativeDecoderTinyMetalTrajectoryStepObservationV1:
+    Equatable,
+    Sendable
+{
+    let result: PrimeNativeDecoderTinyCPUTrainEvaluateStepResultV1
+    let rawGradients: [PrimeNativeDecoderTinyCPUExactTensorValueV1]
+    let clippedGradients: [PrimeNativeDecoderTinyCPUExactTensorValueV1]
+    let postStepTensors: PrimeNativeDecoderTinyCPUExactTensorStateV1
+    let controlState: PrimeNativeDecoderTinyMetalTrajectoryControlStateV1
+}
+
+struct PrimeNativeDecoderTinyMetalTrajectoryBoundaryObservationV1:
+    Equatable,
+    Sendable
+{
+    let globalStep: Int
+    let tensors: PrimeNativeDecoderTinyCPUExactTensorStateV1
+    let controlState: PrimeNativeDecoderTinyMetalTrajectoryControlStateV1
+}
+
+struct PrimeNativeDecoderTinyMetalTrainerStepObservationV1 {
+    let result: PrimeNativeDecoderTinyCPUTrainEvaluateStepResultV1
+    let rawGradients: [PrimeNativeDecoderTinyCPUExactTensorValueV1]
+    let clippedGradients: [PrimeNativeDecoderTinyCPUExactTensorValueV1]
+    let postStepTensors: PrimeNativeDecoderTinyCPUExactTensorStateV1
 }
 
 public enum PrimeNativeDecoderTinyCPUExplicitRNGDomainV1:
@@ -1011,6 +1196,9 @@ public final class PrimeNativeDecoderTinyCPUTrainEvaluateTrainerV1 {
 
     private let decoder: PrimeNativeGQADecoder
     private let optimizer: AdamW
+    private let executionPolicy:
+        PrimeNativeDecoderTinyTrainEvaluateExecutionPolicyV1
+    private let executionDevice: Device
     private var lastTrainResult:
         PrimeNativeDecoderTinyCPUTrainEvaluateStepResultV1?
     private var lastRawGradientDigests =
@@ -1018,10 +1206,19 @@ public final class PrimeNativeDecoderTinyCPUTrainEvaluateTrainerV1 {
     private var lastClippedGradientDigests =
         [PrimeNativeDecoderTinyCPUTrainEvaluateTensorDigestV1]()
 
-    public init() throws {
+    public convenience init() throws {
+        try self.init(executionPolicy: .cpu)
+    }
+
+    init(
+        executionPolicy: PrimeNativeDecoderTinyTrainEvaluateExecutionPolicyV1
+    ) throws {
         let configuration = self.configuration
-        let state = try Device.withDefaultDevice(.cpu) {
-            try Self.requireCPUDefault()
+        let executionDevice = executionPolicy.device
+        let state = try Device.withDefaultDevice(executionDevice) {
+            try Self.requireExecutionPolicy(
+                executionPolicy,
+                executionDevice: executionDevice)
             let decoderConfiguration =
                 try PrimeNativeGQADecoderConfiguration(
                     vocabularySize: configuration.vocabularySize,
@@ -1068,11 +1265,26 @@ public final class PrimeNativeDecoderTinyCPUTrainEvaluateTrainerV1 {
         }
         self.decoder = state.0
         self.optimizer = state.1
+        self.executionPolicy = executionPolicy
+        self.executionDevice = executionDevice
     }
 
     public func train(
         batch: PrimeNativeDecoderTinyCPUTrainEvaluateBatchV1
     ) throws -> PrimeNativeDecoderTinyCPUTrainEvaluateStepResultV1 {
+        try trainStep(batch: batch, captureExactBytes: false).result
+    }
+
+    func trainExactMetalTrajectoryStep(
+        batch: PrimeNativeDecoderTinyCPUTrainEvaluateBatchV1
+    ) throws -> PrimeNativeDecoderTinyMetalTrainerStepObservationV1 {
+        try trainStep(batch: batch, captureExactBytes: true)
+    }
+
+    private func trainStep(
+        batch: PrimeNativeDecoderTinyCPUTrainEvaluateBatchV1,
+        captureExactBytes: Bool
+    ) throws -> PrimeNativeDecoderTinyMetalTrainerStepObservationV1 {
         // This rejection is intentionally before device scoping, graph
         // construction, parameter inspection, or any model/optimizer mutation.
         guard globalStep < configuration.maximumGlobalStep else {
@@ -1082,8 +1294,8 @@ public final class PrimeNativeDecoderTinyCPUTrainEvaluateTrainerV1 {
                     observed: globalStep)
         }
 
-        return try Device.withDefaultDevice(.cpu) {
-            try Self.requireCPUDefault()
+        return try Device.withDefaultDevice(executionDevice) {
+            try requireExecutionPolicy()
             try Self.validateParameters(
                 decoder.trainableParameters(),
                 scope: "pre_step_model")
@@ -1114,14 +1326,15 @@ public final class PrimeNativeDecoderTinyCPUTrainEvaluateTrainerV1 {
                 observedBefore.perTargetLoss,
                 loss,
                 gradients)
+            StreamOrDevice.default.stream.synchronize()
 
-            let observedLoss = loss.item(Float.self)
+            let observedLoss = try Self.synchronizedFloatItem(loss)
             guard observedLoss.isFinite else {
                 throw PrimeNativeDecoderTinyCPUTrainEvaluateErrorV1
                     .nonFiniteLoss(observedLoss.bitPattern)
             }
             let independentlyObservedLoss =
-                observedBefore.loss.item(Float.self)
+                try Self.synchronizedFloatItem(observedBefore.loss)
             guard independentlyObservedLoss.bitPattern
                     == observedLoss.bitPattern
             else {
@@ -1132,10 +1345,14 @@ public final class PrimeNativeDecoderTinyCPUTrainEvaluateTrainerV1 {
             let rawGradientDigests = try Self.tensorDigests(
                 gradients,
                 scope: "raw_gradient")
+            let exactRawGradients = captureExactBytes
+                ? try Self.exactTensorValues(gradients)
+                : []
 
             let rawNorm = Self.globalGradientNorm(gradients)
             try checkedEval(rawNorm)
-            let rawNormValue = rawNorm.item(Float.self)
+            StreamOrDevice.default.stream.synchronize()
+            let rawNormValue = try Self.synchronizedFloatItem(rawNorm)
             let clipScale = try Self.clipScale(globalNorm: rawNormValue)
             let clippedGradients: ModuleParameters
             if rawNormValue < Self.maximumGradientNorm {
@@ -1149,9 +1366,13 @@ public final class PrimeNativeDecoderTinyCPUTrainEvaluateTrainerV1 {
             let clippedGradientDigests = try Self.tensorDigests(
                 clippedGradients,
                 scope: "clipped_gradient")
+            let exactClippedGradients = captureExactBytes
+                ? try Self.exactTensorValues(clippedGradients)
+                : []
             let clippedNorm = Self.globalGradientNorm(clippedGradients)
             try checkedEval(clippedNorm)
-            let clippedNormValue = clippedNorm.item(Float.self)
+            StreamOrDevice.default.stream.synchronize()
+            let clippedNormValue = try Self.synchronizedFloatItem(clippedNorm)
             guard clippedNormValue.isFinite else {
                 throw PrimeNativeDecoderTinyCPUTrainEvaluateErrorV1
                     .invalidGlobalGradientNorm(clippedNormValue.bitPattern)
@@ -1213,15 +1434,31 @@ public final class PrimeNativeDecoderTinyCPUTrainEvaluateTrainerV1 {
             lastTrainResult = result
             lastRawGradientDigests = rawGradientDigests
             lastClippedGradientDigests = clippedGradientDigests
-            return result
+            let postStepTensors = captureExactBytes
+                ? PrimeNativeDecoderTinyCPUExactTensorStateV1(
+                    modelParameters: try Self.exactTensorValues(
+                        decoder.parameters()),
+                    firstMoments: try Self.exactTensorValues(
+                        optimizerState.firstMoment),
+                    secondMoments: try Self.exactTensorValues(
+                        optimizerState.secondMoment))
+                : .init(
+                    modelParameters: [],
+                    firstMoments: [],
+                    secondMoments: [])
+            return .init(
+                result: result,
+                rawGradients: exactRawGradients,
+                clippedGradients: exactClippedGradients,
+                postStepTensors: postStepTensors)
         }
     }
 
     public func evaluate(
         batch: PrimeNativeDecoderTinyCPUTrainEvaluateBatchV1
     ) throws -> PrimeNativeDecoderTinyCPUTrainEvaluateEvaluationV1 {
-        try Device.withDefaultDevice(.cpu) {
-            try Self.requireCPUDefault()
+        try Device.withDefaultDevice(executionDevice) {
+            try requireExecutionPolicy()
             let before = try validationSnapshot()
             let priorTrainingMode = decoder.training
             decoder.train(false)
@@ -1239,7 +1476,8 @@ public final class PrimeNativeDecoderTinyCPUTrainEvaluateTrainerV1 {
                 completionMask: arrays.completionMask,
                 selectedTargetCount: batch.selectedTargetCount)
             try checkedEval(observation.loss, observation.perTargetLoss)
-            let loss = observation.loss.item(Float.self)
+            StreamOrDevice.default.stream.synchronize()
+            let loss = try Self.synchronizedFloatItem(observation.loss)
             guard loss.isFinite else {
                 throw PrimeNativeDecoderTinyCPUTrainEvaluateErrorV1
                     .nonFiniteLoss(loss.bitPattern)
@@ -1270,8 +1508,8 @@ public final class PrimeNativeDecoderTinyCPUTrainEvaluateTrainerV1 {
     func validationSnapshot() throws
         -> PrimeNativeDecoderTinyCPUTrainEvaluateValidationSnapshotV1
     {
-        try Device.withDefaultDevice(.cpu) {
-            try Self.requireCPUDefault()
+        try Device.withDefaultDevice(executionDevice) {
+            try requireExecutionPolicy()
             let modelCatalog = try Self.tensorDigests(
                 decoder.parameters(),
                 scope: "model_parameter")
@@ -1320,8 +1558,8 @@ public final class PrimeNativeDecoderTinyCPUTrainEvaluateTrainerV1 {
     func exactTensorState() throws
         -> PrimeNativeDecoderTinyCPUExactTensorStateV1
     {
-        try Device.withDefaultDevice(.cpu) {
-            try Self.requireCPUDefault()
+        try Device.withDefaultDevice(executionDevice) {
+            try requireExecutionPolicy()
             let optimizerState: AdamOptimizerState
             do {
                 optimizerState = try optimizer.parameters()
@@ -1356,8 +1594,8 @@ public final class PrimeNativeDecoderTinyCPUTrainEvaluateTrainerV1 {
             throw PrimeNativeDecoderTinyCPUTrainEvaluateErrorV1
                 .resumeBoundaryUnavailable
         }
-        return try Device.withDefaultDevice(.cpu) {
-            try Self.requireCPUDefault()
+        return try Device.withDefaultDevice(executionDevice) {
+            try requireExecutionPolicy()
             let validation = try validationSnapshot()
             let optimizerState: AdamOptimizerState
             do {
@@ -1367,8 +1605,8 @@ public final class PrimeNativeDecoderTinyCPUTrainEvaluateTrainerV1 {
                     .optimizerStateUnavailable
             }
             try Self.validateOptimizerState(optimizerState)
-            let modelParameters = Self.isolatedSnapshot(decoder.parameters())
-            let isolatedOptimizerState = try Self.isolatedSnapshot(optimizerState)
+            let modelParameters = try isolatedSnapshot(decoder.parameters())
+            let isolatedOptimizerState = try isolatedSnapshot(optimizerState)
             try checkedEval(
                 modelParameters,
                 isolatedOptimizerState.firstMoment,
@@ -1400,8 +1638,8 @@ public final class PrimeNativeDecoderTinyCPUTrainEvaluateTrainerV1 {
                 .resumeTargetNotFresh
         }
         try Self.validateResumeSnapshotMetadata(snapshot)
-        try Device.withDefaultDevice(.cpu) {
-            try Self.requireCPUDefault()
+        try Device.withDefaultDevice(executionDevice) {
+            try requireExecutionPolicy()
             try Self.validateParameters(
                 snapshot.modelParameters,
                 scope: "resume_model")
@@ -1411,10 +1649,10 @@ public final class PrimeNativeDecoderTinyCPUTrainEvaluateTrainerV1 {
                 matching: decoder.trainableParameters())
 
             try decoder.update(
-                parameters: Self.isolatedSnapshot(snapshot.modelParameters),
+                parameters: try isolatedSnapshot(snapshot.modelParameters),
                 verify: .all)
             try optimizer.update(
-                parameters: try Self.isolatedSnapshot(snapshot.optimizerState),
+                parameters: try isolatedSnapshot(snapshot.optimizerState),
                 matching: decoder.trainableParameters())
             try checkedEval(decoder, optimizer)
             globalStep = snapshot.globalStep
@@ -1481,34 +1719,66 @@ public final class PrimeNativeDecoderTinyCPUTrainEvaluateTrainerV1 {
         }
     }
 
-    private static func isolatedSnapshot(
+    private static func cpuIsolatedSnapshot(
         _ parameters: ModuleParameters
     ) -> ModuleParameters {
         parameters.mapValues { $0.reshaped($0.shape) }
     }
 
+    private func isolatedSnapshot(
+        _ parameters: ModuleParameters
+    ) throws -> ModuleParameters {
+        guard executionPolicy.requiresDeepSnapshotMaterialization else {
+            return Self.cpuIsolatedSnapshot(parameters)
+        }
+        let flattened = parameters.flattened()
+        let materialized = Dictionary(
+            uniqueKeysWithValues: try flattened.map { path, tensor in
+                (
+                    path,
+                    MLXArray(
+                        try Self.synchronizedFloatValues(tensor),
+                        tensor.shape)
+                )
+            })
+        try checkedEval(Array(materialized.values))
+        StreamOrDevice.default.stream.synchronize()
+        return ModuleParameters.unflattened(materialized)
+    }
+
     private static func exactTensorValues(
         _ parameters: ModuleParameters
     ) throws -> [PrimeNativeDecoderTinyCPUExactTensorValueV1] {
-        try parameters.flattened().map { path, tensor in
+        let flattened = parameters.flattened()
+        return try flattened.map { path, tensor in
             guard tensor.dtype == .float32 else {
                 throw PrimeNativeDecoderTinyCPUTrainEvaluateErrorV1
                     .resumeStateMismatch("non-Float32 tensor \(path)")
             }
+            let values = try Self.synchronizedFloatValues(tensor)
             return .init(
                 path: path,
                 shape: tensor.shape,
-                float32BitPatterns:
-                    tensor.asArray(Float.self).map(\.bitPattern))
+                dtype: tensor.dtype == .float32 ? "float32" : "unexpected",
+                float32BitPatterns: values.map(\.bitPattern),
+                float32LittleEndianBytes: values.flatMap {
+                        let bits = $0.bitPattern
+                        return [
+                            UInt8(bits & 0xff),
+                            UInt8((bits >> 8) & 0xff),
+                            UInt8((bits >> 16) & 0xff),
+                            UInt8((bits >> 24) & 0xff),
+                        ]
+                    })
         }.sorted { utf8Less($0.path, $1.path) }
     }
 
-    private static func isolatedSnapshot(
+    private func isolatedSnapshot(
         _ state: AdamOptimizerState
     ) throws -> AdamOptimizerState {
         let snapshot = AdamOptimizerState(
-            firstMoment: isolatedSnapshot(state.firstMoment),
-            secondMoment: isolatedSnapshot(state.secondMoment))
+            firstMoment: try isolatedSnapshot(state.firstMoment),
+            secondMoment: try isolatedSnapshot(state.secondMoment))
         try checkedEval(snapshot.firstMoment, snapshot.secondMoment)
         return snapshot
     }
@@ -1626,7 +1896,6 @@ public final class PrimeNativeDecoderTinyCPUTrainEvaluateTrainerV1 {
         _ perTargetLoss: MLXArray,
         batch: PrimeNativeDecoderTinyCPUTrainEvaluateBatchV1
     ) throws -> [UInt32] {
-        try checkedEval(perTargetLoss)
         guard perTargetLoss.dtype == .float32,
               perTargetLoss.shape
                 == [batch.batchSize, batch.sequenceLength - 1]
@@ -1634,7 +1903,7 @@ public final class PrimeNativeDecoderTinyCPUTrainEvaluateTrainerV1 {
             throw PrimeNativeDecoderTinyCPUTrainEvaluateErrorV1
                 .internalInvariant("per-target loss shape or dtype")
         }
-        let values = perTargetLoss.asArray(Float.self)
+        let values = try Self.synchronizedFloatValues(perTargetLoss)
         let selected = batch.selectedShiftedLossIndices.map { values[$0] }
         guard selected.count == batch.selectedTargetCount,
               selected.allSatisfy(\.isFinite) else {
@@ -1668,6 +1937,40 @@ public final class PrimeNativeDecoderTinyCPUTrainEvaluateTrainerV1 {
             total = total + sum(square(gradient.asType(.float32)))
         }
         return sqrt(total)
+    }
+
+    private func requireExecutionPolicy() throws {
+        try Self.requireExecutionPolicy(
+            executionPolicy,
+            executionDevice: executionDevice)
+    }
+
+    private static func requireExecutionPolicy(
+        _ policy: PrimeNativeDecoderTinyTrainEvaluateExecutionPolicyV1,
+        executionDevice: Device
+    ) throws {
+        let observedDevice = Device.defaultDevice()
+        let observedStream = StreamOrDevice.default.stream
+        let streamDescription = observedStream.description
+        switch policy {
+        case .cpu:
+            guard observedDevice === executionDevice,
+                  observedDevice.deviceType == .cpu,
+                  streamDescription.lowercased().contains("cpu") else {
+                throw PrimeNativeDecoderTinyCPUTrainEvaluateErrorV1
+                    .nonCPUExecution(
+                        "device=\(observedDevice) stream=\(streamDescription)")
+            }
+        case let .metalGPUIndexZero(suppliedDevice):
+            guard executionDevice === suppliedDevice,
+                  observedDevice === suppliedDevice,
+                  observedDevice.deviceType == .gpu,
+                  observedStream == Stream.gpu else {
+                throw PrimeNativeDecoderTinyCPUTrainEvaluateErrorV1
+                    .executionPolicyMismatch(
+                        "device=\(observedDevice) stream=\(streamDescription)")
+            }
+        }
     }
 
     private static func requireCPUDefault() throws {
@@ -1730,9 +2033,9 @@ public final class PrimeNativeDecoderTinyCPUTrainEvaluateTrainerV1 {
             throw PrimeNativeDecoderTinyCPUTrainEvaluateErrorV1
                 .internalInvariant("\(scope) parameter count")
         }
-        try checkedEval(expectedParameterPaths.map { catalog[$0]! })
         for path in expectedParameterPaths {
-            guard catalog[path]!.asArray(Float.self).allSatisfy(\.isFinite)
+            let values = try synchronizedFloatValues(catalog[path]!)
+            guard values.allSatisfy(\.isFinite)
             else {
                 throw PrimeNativeDecoderTinyCPUTrainEvaluateErrorV1
                     .nonFiniteTensor(scope: scope, path: path)
@@ -1745,12 +2048,12 @@ public final class PrimeNativeDecoderTinyCPUTrainEvaluateTrainerV1 {
     ) throws {
         try validateParameters(gradients, scope: "gradient")
         let catalog = try uniqueCatalog(gradients, scope: "gradient")
-        for path in expectedParameterPaths
-        where !catalog[path]!.asArray(Float.self).contains(where: {
-            $0 != 0
-        }) {
-            throw PrimeNativeDecoderTinyCPUTrainEvaluateErrorV1
-                .zeroGradient(path)
+        for path in expectedParameterPaths {
+            let values = try synchronizedFloatValues(catalog[path]!)
+            guard values.contains(where: { $0 != 0 }) else {
+                throw PrimeNativeDecoderTinyCPUTrainEvaluateErrorV1
+                    .zeroGradient(path)
+            }
         }
     }
 
@@ -1767,9 +2070,9 @@ public final class PrimeNativeDecoderTinyCPUTrainEvaluateTrainerV1 {
     ) throws -> [PrimeNativeDecoderTinyCPUTrainEvaluateTensorDigestV1] {
         try validateParameters(parameters, scope: scope)
         let catalog = try uniqueCatalog(parameters, scope: scope)
-        return expectedParameterPaths.map { path in
+        return try expectedParameterPaths.map { path in
             let array = catalog[path]!
-            let values = array.asArray(Float.self)
+            let values = try synchronizedFloatValues(array)
             return PrimeNativeDecoderTinyCPUTrainEvaluateTensorDigestV1(
                 path: path,
                 shape: array.shape,
@@ -1783,6 +2086,22 @@ public final class PrimeNativeDecoderTinyCPUTrainEvaluateTrainerV1 {
                     if $1 != 0 { $0 += 1 }
                 })
         }
+    }
+
+    private static func synchronizedFloatItem(
+        _ array: MLXArray
+    ) throws -> Float {
+        try checkedEval(array)
+        StreamOrDevice.default.stream.synchronize()
+        return array.item(Float.self)
+    }
+
+    private static func synchronizedFloatValues(
+        _ array: MLXArray
+    ) throws -> [Float] {
+        try checkedEval(array)
+        StreamOrDevice.default.stream.synchronize()
+        return array.asArray(Float.self)
     }
 
     private static func tensorDigest(

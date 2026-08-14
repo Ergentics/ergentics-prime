@@ -28,7 +28,7 @@ die() {
     exit 1
 }
 
-for command_name in awk bash git grep jq mktemp paste shasum sort swift swiftc wc; do
+for command_name in awk bash git grep jq mktemp paste shasum sort stat swift swiftc wc; do
     command -v "$command_name" >/dev/null 2>&1 ||
         die "missing command: $command_name"
 done
@@ -40,45 +40,93 @@ done
 [[ -z "$(git -C "$prime_root" status --porcelain=v1 --untracked-files=all)" ]] ||
     die "Prime checkout is dirty"
 
-readonly stage5_swift_numerics_repair_source_relative_path="Sources/PrimeCore/PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayExactMainSwiftNumericsResolutionRepairAuthority.swift"
-readonly stage5_swift_numerics_repair_test_relative_path="Tests/PrimeCoreTests/PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayExactMainSwiftNumericsResolutionRepairAuthorityTests.swift"
-readonly expected_stage5_swift_numerics_repair_preserved_index_sha256="530e3332fbda8fbdfd9c3d0a78c530b844293adafd435f708d000a5edab70aa0"
-readonly observed_stage5_swift_numerics_repair_preserved_index_sha256="$({
+readonly stage5_launcher_relative_path=".github/scripts/prime-ci-native-decoder-stage5-tiny-repeated-metal-trajectory-determinism.sh"
+readonly stage5_test_relative_path="Tests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayTests.swift"
+readonly expected_stage5_mechanics_preserved_index_sha256="1d1b11d0d5f3cde042d887693dd1222de4ecd7a027654cab734d80247db5e33c"
+readonly observed_stage5_mechanics_preserved_index_sha256="$({
     git -C "$prime_root" ls-files -s |
         while IFS= read -r index_record; do
             relative_path="${index_record#*$'\t'}"
             if [[ "$relative_path" \
                     == '.github/scripts/prime-ci-active-root-quarantine.sh' \
                 || "$relative_path" \
+                    == "$stage5_launcher_relative_path" \
+                || "$relative_path" \
                     == '.github/workflows/prime-active-root-quarantine.yml' \
                 || "$relative_path" \
                     == 'Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' \
                 || "$relative_path" \
-                    == "$stage5_swift_numerics_repair_source_relative_path" \
+                    == 'Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderTraining.swift' \
                 || "$relative_path" \
-                    == "$stage5_swift_numerics_repair_test_relative_path" ]]; then
+                    == "$stage5_test_relative_path" ]]; then
                 continue
             fi
             printf '%s\n' "$index_record"
         done
 } | LC_ALL=C sort | shasum -a 256 | awk '{print $1}')"
-[[ "$observed_stage5_swift_numerics_repair_preserved_index_sha256" \
-    == "$expected_stage5_swift_numerics_repair_preserved_index_sha256" ]] ||
-    die "Stage-5 Swift Numerics repair changed a path outside the exact five-path closure"
-for exact_stage5_swift_numerics_repair_path in \
+[[ "$observed_stage5_mechanics_preserved_index_sha256" \
+    == "$expected_stage5_mechanics_preserved_index_sha256" ]] ||
+    die "Stage-5 mechanics changed a path outside the exact six-path closure"
+for exact_stage5_mechanics_path in \
+    '.github/scripts/prime-ci-active-root-quarantine.sh' \
+    "$stage5_launcher_relative_path" \
     '.github/workflows/prime-active-root-quarantine.yml' \
     'Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' \
-    "$stage5_swift_numerics_repair_source_relative_path" \
-    "$stage5_swift_numerics_repair_test_relative_path"; do
+    'Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderTraining.swift' \
+    "$stage5_test_relative_path"; do
+    expected_stage5_mechanics_mode="100644"
+    case "$exact_stage5_mechanics_path" in
+        '.github/scripts/'*) expected_stage5_mechanics_mode="100755" ;;
+    esac
     [[ "$(git -C "$prime_root" ls-files -s -- \
-        "$exact_stage5_swift_numerics_repair_path" | awk '{print $1}')" \
-        == "100644" ]] ||
-        die "Stage-5 Swift Numerics repair exact path is missing or has the wrong mode: $exact_stage5_swift_numerics_repair_path"
+        "$exact_stage5_mechanics_path" | awk '{print $1}')" \
+        == "$expected_stage5_mechanics_mode" ]] ||
+        die "Stage-5 mechanics exact path is missing or has the wrong mode: $exact_stage5_mechanics_path"
 done
-[[ "$(git -C "$prime_root" ls-files -s -- \
-    '.github/scripts/prime-ci-active-root-quarantine.sh' | awk '{print $1}')" \
-    == "100755" ]] ||
-    die "active-root gate mode changed"
+
+assert_stage5_mechanics_payload_identity() {
+    local relative_path="$1" expected_mode="$2" expected_blob="$3"
+    local expected_bytes="$4" expected_lf_bytes="$5" expected_sha256="$6"
+    local absolute_path="$prime_root/$relative_path"
+    [[ -f "$absolute_path" && ! -L "$absolute_path" \
+        && "$(stat -f %l "$absolute_path")" == "1" \
+        && "$(git -C "$prime_root" ls-files -s -- "$relative_path" | \
+            awk '{print $1}')" == "$expected_mode" \
+        && "$(git -C "$prime_root" hash-object -- "$relative_path")" \
+            == "$expected_blob" \
+        && "$(stat -f %z "$absolute_path")" == "$expected_bytes" \
+        && "$(wc -l < "$absolute_path" | awk '{print $1}')" \
+            == "$expected_lf_bytes" \
+        && "$(shasum -a 256 "$absolute_path" | awk '{print $1}')" \
+            == "$expected_sha256" ]] ||
+        die "Stage-5 mechanics payload identity changed: $relative_path"
+}
+
+assert_stage5_mechanics_payload_identity \
+    "$stage5_launcher_relative_path" \
+    '100755' '6547ee06663c1ea409a6256e48f6111245056020' \
+    '48869' '830' \
+    'c639cfcb4d1d0a103b285ed38849565f16b00932fc3b9d921febbf798c30d5f9'
+assert_stage5_mechanics_payload_identity \
+    '.github/workflows/prime-active-root-quarantine.yml' \
+    '100644' '241f65ff275bbe401c4a86adea2b3cf3150dc939' \
+    '70447' '557' \
+    '697e64f4a46ae4b650d6bd00f642c0ee80fa155d7cc04103a5a5ed5a96fc1bf4'
+assert_stage5_mechanics_payload_identity \
+    'Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' \
+    '100644' 'ba6188767be6d1f3c027c800ae5322c9238944a2' \
+    '546' '13' \
+    '6240657510b9983caf6b459d950945df67a6251bd0bac0a666130f62d542de9b'
+assert_stage5_mechanics_payload_identity \
+    'Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderTraining.swift' \
+    '100644' '271b7fe4a856a76a00730954c23bdca3b33e761d' \
+    '86387' '2173' \
+    'f49b946e5272992f09ecf7b1dd8439bda15c5ac696a4f6298bafa19994f2b4c2'
+assert_stage5_mechanics_payload_identity \
+    "$stage5_test_relative_path" \
+    '100644' '46f91f32e91870d21c46cd318972a857b8ef6e12' \
+    '28292' '606' \
+    '50b19a0bfe8752d2b80c09527b70731d906e8064c8e2d49a758c8c48b48f4398'
 
 require_preserved_object() {
     local preserved_relative_path="$1"
@@ -915,9 +963,70 @@ for forbidden_stage4_launcher_value in \
         "$decoder_stage4_tiny_durable_multileaf_gate_path" ||
         die "Stage-4 launcher gained forbidden behavior: $forbidden_stage4_launcher_value"
 done
-[[ ! -e "$decoder_stage5_tiny_repeated_metal_trajectory_determinism_gate_path" \
+[[ -f "$decoder_stage5_tiny_repeated_metal_trajectory_determinism_gate_path" \
     && ! -L "$decoder_stage5_tiny_repeated_metal_trajectory_determinism_gate_path" ]] ||
-    die "Stage-5 authority closure must not contain a Stage-5 launcher"
+    die "Stage-5 tiny repeated-Metal trajectory launcher is missing or linked"
+[[ "$(git -C "$prime_root" ls-files -s -- "$stage5_launcher_relative_path" | \
+        awk '{print $1}')" == "100755" ]] ||
+    die "Stage-5 tiny repeated-Metal trajectory launcher mode changed"
+bash -n "$decoder_stage5_tiny_repeated_metal_trajectory_determinism_gate_path" ||
+    die "Stage-5 tiny repeated-Metal trajectory launcher is not valid Bash"
+for required_stage5_launcher_value in \
+    'readonly base_revision="522e4620596eed909822b80b782d74d282f429c5"' \
+    'readonly base_tree="d0304aadcf533a341d89df262f8cbe74c1c13b90"' \
+    'readonly authority_repair_closure_workflow_run_id="31750678556"' \
+    'readonly authority_repair_closure_workflow_run_number="103"' \
+    'readonly authority_repair_closure_check_suite_id="86139786214"' \
+    'readonly expected_stage5_preserved_index_sha256="1d1b11d0d5f3cde042d887693dd1222de4ecd7a027654cab734d80247db5e33c"' \
+    'readonly authority_canonical_sha256="00c49e63315b2aacb439204e778f54bcf63c2fdf643282f3bd64e2b3b4094089"' \
+    'readonly repair_authority_canonical_sha256="a5a8e5300ea8413e738fddd4b8fed930dcc9983d5a29eea102862f9744b50fff"' \
+    'readonly raw_commit_header="$(git -C "$prime_root" cat-file -p HEAD |' \
+    'fail "raw exact-head commit topology is not the direct two-parent successor"' \
+    'fail "Stage-5 mechanics changed a path outside the exact six-path closure"' \
+    'readonly root_numerics_checkout="$runner_temp/prime-active-root-build/checkouts/swift-numerics"' \
+    'readonly root_numerics_cache="$runner_temp/prime-active-root-build/repositories/swift-numerics-d936ec6c"' \
+    '== "$root_numerics_cache"' \
+    '== "https://github.com/apple/swift-numerics"' \
+    'export GIT_CONFIG_KEY_1="url.file://${root_numerics_cache}/.insteadOf"' \
+    'readonly test_method="testRepeatedSameDeviceUninterruptedSourceSnapshotAndFreshRestoreExactBytes"' \
+    'PRIME_NATIVE_DECODER_STAGE5_METAL_LEASE_PATH="$lease_path"' \
+    'PRIME_NATIVE_DECODER_STAGE5_TINY_REPEATED_METAL_TRAJECTORY_DETERMINISM_RECEIPT=' \
+    'and .repair_closure.stage5_launcher_invocation_count == 0' \
+    'and .repair_closure.stage5_receipt_count == 0' \
+    'focused_root_test_count:53,' \
+    'focused_isolated_test_count:6,focused_whole_test_count:59,' \
+    'pre_stage5_total_test_count:105,' \
+    'stage5_direct_xctest_count:1,total_test_count:106,' \
+    'live_order:["root","metal","maintained_runtime","tokenizer","stage5"]' \
+    'and .lease.acquired_before_coregraphics_metal_or_mlx_access == true' \
+    'and .lease.held_through_postflight_identity_validation == true' \
+    'and .lease.receipt_emitted_while_held == true' \
+    'and .lease.receipt_flushed_while_held == true' \
+    'and .lease.explicit_release_immediately_after_receipt == true' \
+    'and .lease.no_fallible_operation_after_receipt == true' \
+    'and .ceiling.stage4_rerun_authorized == false' \
+    'and .ceiling.general_training_resume_established == false' \
+    'and .ceiling.stage6_authorized == false'; do
+    grep -Fq -- "$required_stage5_launcher_value" \
+        "$decoder_stage5_tiny_repeated_metal_trajectory_determinism_gate_path" ||
+        die "Stage-5 launcher lost: $required_stage5_launcher_value"
+done
+[[ "$(grep -Ec -- '__[A-Z0-9_]+__|BLUEPRINT|PLACEHOLDER' \
+        "$decoder_stage5_tiny_repeated_metal_trajectory_determinism_gate_path")" == "0" \
+    && "$(grep -Ec -- '^[[:space:]]*TMPDIR=.*swift build ' \
+        "$decoder_stage5_tiny_repeated_metal_trajectory_determinism_gate_path")" == "1" \
+    && "$(grep -Ec -- '^[[:space:]]*cp -X ' \
+        "$decoder_stage5_tiny_repeated_metal_trajectory_determinism_gate_path")" == "2" \
+    && "$(grep -Ec -- '^[[:space:]]*xcrun xctest ' \
+        "$decoder_stage5_tiny_repeated_metal_trajectory_determinism_gate_path")" == "1" ]] ||
+    die "Stage-5 launcher placeholder or command cardinality changed"
+for forbidden_stage5_launcher_value in \
+    'swift test' 'git fetch' 'git clone' 'git submodule update' \
+    'curl ' 'wget ' 'actions/upload-artifact'; do
+    ! grep -Fq -- "$forbidden_stage5_launcher_value" \
+        "$decoder_stage5_tiny_repeated_metal_trajectory_determinism_gate_path" ||
+        die "Stage-5 launcher gained forbidden behavior: $forbidden_stage5_launcher_value"
+done
 [[ -f "$decoder_checkpoint_v2_io_execution_gate_path" \
     && ! -L "$decoder_checkpoint_v2_io_execution_gate_path" ]] ||
     die "Prime native decoder checkpoint V2 I/O execution gate is missing or linked"
@@ -956,17 +1065,23 @@ readonly runtime_closure_workflow_line="$(grep -nFx -- \
 readonly tokenizer_compatibility_workflow_line="$(grep -nFx -- \
     '          bash .github/scripts/prime-ci-native-decoder-tokenizer-compatibility.sh' \
     "$workflow_path" | awk -F: '{print $1}')"
+readonly stage5_tiny_repeated_metal_trajectory_workflow_line="$(grep -nFx -- \
+    '          bash .github/scripts/prime-ci-native-decoder-stage5-tiny-repeated-metal-trajectory-determinism.sh' \
+    "$workflow_path" | awk -F: '{print $1}')"
 [[ "$frozen_metal_workflow_line" =~ ^[1-9][0-9]*$ \
     && "$runtime_closure_workflow_line" =~ ^[1-9][0-9]*$ \
     && "$tokenizer_compatibility_workflow_line" =~ ^[1-9][0-9]*$ \
+    && "$stage5_tiny_repeated_metal_trajectory_workflow_line" =~ ^[1-9][0-9]*$ \
     && "$runtime_closure_workflow_line" \
         -eq $((frozen_metal_workflow_line + 1)) \
     && "$tokenizer_compatibility_workflow_line" \
-        -eq $((runtime_closure_workflow_line + 1)) ]] ||
-    die "trusted-main workflow does not retain exactly the Metal, runtime, tokenizer order"
+        -eq $((runtime_closure_workflow_line + 1)) \
+    && "$stage5_tiny_repeated_metal_trajectory_workflow_line" \
+        -eq $((tokenizer_compatibility_workflow_line + 1)) ]] ||
+    die "trusted-main workflow does not retain exactly the Metal, runtime, tokenizer, Stage-5 order"
 [[ "$(grep -Fc -- \
     '          bash .github/scripts/prime-ci-native-decoder-' \
-    "$workflow_path")" == "3" \
+    "$workflow_path")" == "4" \
     && "$(grep -Fxc -- \
         '          bash .github/scripts/prime-ci-native-decoder-metal.sh' \
         "$workflow_path")" == "1" \
@@ -981,11 +1096,11 @@ readonly tokenizer_compatibility_workflow_line="$(grep -nFx -- \
         "$workflow_path")" == "0" \
     && "$(grep -Fxc -- \
         '          bash .github/scripts/prime-ci-native-decoder-stage5-tiny-repeated-metal-trajectory-determinism.sh' \
-        "$workflow_path")" == "0" \
+        "$workflow_path")" == "1" \
     && "$(grep -Fc -- \
         'PRIME_NATIVE_DECODER_STAGE5_TINY_REPEATED_METAL_TRAJECTORY_DETERMINISM_RECEIPT=' \
         "$workflow_path")" == "0" ]] ||
-    die "trusted-main workflow lost the exact three-launcher sequence, retained a retired one-shot, or invoked Stage 5"
+    die "trusted-main workflow lost the exact four-launcher Stage-5 sequence or retained a retired one-shot"
 readonly live_decoder_workflow_block="$(awk '
     /^      - name: Run the Prime-owned decoder on live Metal$/ { inside = 1 }
     inside { print }
@@ -995,9 +1110,10 @@ readonly expected_live_decoder_workflow_block='      - name: Run the Prime-owned
         run: |
           bash .github/scripts/prime-ci-native-decoder-metal.sh
           bash .github/scripts/prime-ci-native-decoder-runtime-closure.sh
-          bash .github/scripts/prime-ci-native-decoder-tokenizer-compatibility.sh'
+          bash .github/scripts/prime-ci-native-decoder-tokenizer-compatibility.sh
+          bash .github/scripts/prime-ci-native-decoder-stage5-tiny-repeated-metal-trajectory-determinism.sh'
 [[ "$live_decoder_workflow_block" == "$expected_live_decoder_workflow_block" ]] ||
-    die "trusted-main exact contiguous Metal, runtime, and tokenizer block changed"
+    die "trusted-main exact contiguous Metal, runtime, tokenizer, and Stage-5 block changed"
 ! grep -Fq -- \
     '          bash .github/scripts/prime-ci-native-decoder-checkpoint-v2-io.sh' \
     "$workflow_path" ||
@@ -1587,13 +1703,30 @@ for required_stage5_swift_numerics_resolution_repair_summary_value in \
         "$workflow_path")" == "1" ]] ||
         die "workflow lost the Stage-5 Swift Numerics resolution-repair summary: $required_stage5_swift_numerics_resolution_repair_summary_value"
 done
+for required_stage5_mechanics_summary_value in \
+    'Exact-main authority-repair closure run 31750678556 attempt 1 passed root 53' \
+    'all four Swift-Numerics-cache-mapped isolated invocations for isolated total 6 and focused whole 59' \
+    'then Metal 44, maintained runtime 1, and tokenizer 1 in order, with the Stage-5 launcher and receipt absent' \
+    'zero workflow-authored or Git-internal retry, zero TLS failure or bypass, zero custom CA, zero Actions artifacts, and zero reruns' \
+    'exact-six direct mechanics successor preserves both depth-one checkouts, secure fetch, jobs, timeouts, package manifests and locks, the frozen Stage-4 launcher with invocation zero, and the validated bare Swift Numerics cache mapping' \
+    'pre-Stage-5 total 105 and total 106' \
+    'three independent same-process trials and nine tiny GPU-index-zero trajectory branches under one full-duration test-owned PrimeMetalDeviceLease' \
+    'sole canonical receipt emitted and flushed while that lease remains held and explicit release immediately afterward' \
+    'No artifact is retained or uploaded' \
+    'no retry or Stage-4 rerun, cross-device claim, durable checkpoint, Stage 6, Native-300M allocation or training, general training resume, admission, trial, canary, product, publication, additional execution, or downstream authority is granted'; do
+    [[ "$(grep -Fc -- "$required_stage5_mechanics_summary_value" \
+        "$workflow_path")" == "1" ]] ||
+        die "workflow lost the exact Stage-5 mechanics ceiling: $required_stage5_mechanics_summary_value"
+done
 [[ "$(grep -Fc -- \
         'Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderTrajectoryCheckpointV1.swift' \
         "$workflow_path")" == "1" \
     && "$(grep -Fc -- \
         'Tests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionTests.swift' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- "$stage5_test_relative_path" \
         "$workflow_path")" == "1" ]] ||
-    die "workflow does not parse exactly the Stage-4 checkpoint and mechanics test"
+    die "workflow does not parse exactly the Stage-4 and Stage-5 mechanics sources"
 for required_stage2_metallib_bootstrap_repair_failure_summary_value in \
     'Exact-main workflow run 31544702133 attempt 1' \
     'passed secure fetch, root 39, Metal 44, maintained runtime 1, and tokenizer 1' \
@@ -2717,6 +2850,7 @@ readonly decoder_training_validation_lock="$decoder_training_validation_root/Pac
 readonly decoder_training_validation_test="$decoder_training_validation_root/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTrainingTests.swift"
 readonly decoder_stage3_tiny_cpu_resume_test="$decoder_training_validation_root/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeTests.swift"
 readonly decoder_stage4_tiny_durable_multileaf_test="$decoder_training_validation_root/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionTests.swift"
+readonly decoder_stage5_tiny_repeated_metal_trajectory_test="$prime_root/$stage5_test_relative_path"
 
 [[ "$(git -C "$prime_root" ls-files -- 'Sources/PrimeNativeDecoder')" \
     == "Sources/PrimeNativeDecoder/PrimeNativeGQADecoder.swift" ]] ||
@@ -2759,8 +2893,8 @@ readonly decoder_stage4_tiny_durable_multileaf_test="$decoder_training_validatio
     die "PrimeNativeDecoder tokenizer-compatibility validation inventory changed"
 [[ "$(git -C "$prime_root" ls-files -- \
     'Tests/PrimeNativeDecoderTrainingValidation')" \
-    == $'Tests/PrimeNativeDecoderTrainingValidation/Package.resolved\nTests/PrimeNativeDecoderTrainingValidation/Package.swift\nTests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeTests.swift\nTests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionTests.swift\nTests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTrainingTests.swift' ]] ||
-    die "PrimeNativeDecoder Stage-4 validation inventory changed"
+    == $'Tests/PrimeNativeDecoderTrainingValidation/Package.resolved\nTests/PrimeNativeDecoderTrainingValidation/Package.swift\nTests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeTests.swift\nTests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionTests.swift\nTests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayTests.swift\nTests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTrainingTests.swift' ]] ||
+    die "PrimeNativeDecoder Stage-5 validation inventory changed"
 [[ ! -e "$prime_root/Tests/PrimeNativeDecoderValidation/.swiftpm" \
     && ! -L "$prime_root/Tests/PrimeNativeDecoderValidation/.swiftpm" ]] ||
     die "PrimeNativeDecoder validation must use the supplied isolated config path"
@@ -2926,8 +3060,10 @@ readonly decoder_stage4_tiny_durable_multileaf_test="$decoder_training_validatio
     && -f "$decoder_stage3_tiny_cpu_resume_test" \
     && ! -L "$decoder_stage3_tiny_cpu_resume_test" \
     && -f "$decoder_stage4_tiny_durable_multileaf_test" \
-    && ! -L "$decoder_stage4_tiny_durable_multileaf_test" ]] ||
-    die "PrimeNativeDecoder Stage-4 validation source set is missing or linked"
+    && ! -L "$decoder_stage4_tiny_durable_multileaf_test" \
+    && -f "$decoder_stage5_tiny_repeated_metal_trajectory_test" \
+    && ! -L "$decoder_stage5_tiny_repeated_metal_trajectory_test" ]] ||
+    die "PrimeNativeDecoder Stage-5 validation source set is missing or linked"
 [[ -f "$decoder_checkpoint_source" && ! -L "$decoder_checkpoint_source" ]] ||
     die "PrimeNativeDecoderCheckpoint source is missing or linked"
 [[ -f "$decoder_checkpoint_v2_source" \
@@ -5829,9 +5965,9 @@ assert_tiny_cpu_mechanics_source_identity \
 assert_tiny_cpu_mechanics_source_identity \
     'Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderTraining.swift' \
     '100644' \
-    '2d12065e6b5ada265f2dbec2805fbb8bee8b7122' \
-    '74267' \
-    'fb3e804332b84371ed7aa4fa34bf264b35bf60d92b6426cc582f386d5f4b6416'
+    '271b7fe4a856a76a00730954c23bdca3b33e761d' \
+    '86387' \
+    'f49b946e5272992f09ecf7b1dd8439bda15c5ac696a4f6298bafa19994f2b4c2'
 assert_tiny_cpu_mechanics_source_identity \
     'Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderTrajectoryCheckpointV1.swift' \
     '100644' \
@@ -8815,15 +8951,15 @@ for required_stage4_execution_observation_value in \
 done
 assert_metal_current_decoder_assertion_arc_identity \
     'Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' \
-    '100644' '3a70edb5ede19b858009324840e959c008c69ee2' \
+    '100644' 'ba6188767be6d1f3c027c800ae5322c9238944a2' \
     '546' \
-    'a90e7284812399cb0adace701e528124c4e0cb94dc76bc82693f09e62f7b9fee'
+    '6240657510b9983caf6b459d950945df67a6251bd0bac0a666130f62d542de9b'
 [[ "$(wc -l < "$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift" | \
         awk '{print $1}')" == "13" \
     && "$(grep -Fxc -- \
-        '        "6c60fb76e5e81f82c21986aeae2f33342be59a0f403ee067fda066cf0234f0f7"' \
+        '        "4f8d6f238fcdeaf800d7a12af76be6082682b42b38d79c9b9bfe0f490309c791"' \
         "$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift")" == "1" ]] ||
-    die "Stage-5 authority embedded provenance identity changed"
+    die "Stage-5 mechanics embedded provenance identity changed"
 for forbidden_stage4_execution_observation_capability in \
     'import CoreGraphics' 'import Metal' 'import MLX' 'import MLXNN' \
     'import MLXOptimizers' 'FileManager' 'FileHandle' 'URLSession' 'Process(' \
@@ -9335,7 +9471,10 @@ for required_tiny_cpu_training_value in \
     'guard !completionMask[row][0] else {' \
     '(1 ..< validTokenCount).first(where: {' \
     'selectedTargetCount += validTokenCount - firstSelected' \
-    'try Device.withDefaultDevice(.cpu) {' \
+    'try self.init(executionPolicy: .cpu)' \
+    'let executionDevice = executionPolicy.device' \
+    'return try Device.withDefaultDevice(executionDevice) {' \
+    'try requireExecutionPolicy()' \
     'let optimizer = AdamW(' \
     'let lossAndGradient = valueAndGrad(model: decoder) {' \
     'let logits = model.trainingLogitsNoCache(tokenIDs)' \
@@ -9368,7 +9507,7 @@ readonly tiny_cpu_third_step_guard_line="$(grep -nF -- \
     'guard globalStep < configuration.maximumGlobalStep else {' \
     "$decoder_training_source" | awk -F: '{print $1}')"
 readonly tiny_cpu_train_device_line="$(grep -nF -- \
-    'return try Device.withDefaultDevice(.cpu) {' \
+    'return try Device.withDefaultDevice(executionDevice) {' \
     "$decoder_training_source" | awk -F: 'NR == 1 {print $1}')"
 readonly tiny_cpu_train_graph_line="$(grep -nF -- \
     'let lossAndGradient = valueAndGrad(model: decoder) {' \
@@ -9378,7 +9517,7 @@ readonly tiny_cpu_train_graph_line="$(grep -nF -- \
     && "$tiny_cpu_train_graph_line" =~ ^[1-9][0-9]*$ \
     && "$tiny_cpu_third_step_guard_line" -lt "$tiny_cpu_train_device_line" \
     && "$tiny_cpu_train_device_line" -lt "$tiny_cpu_train_graph_line" ]] ||
-    die "PrimeNativeDecoderTraining third-step pre-device/pre-graph boundary changed"
+    die "PrimeNativeDecoderTraining third-step pre-policy-device/pre-graph boundary changed"
 for forbidden_tiny_cpu_training_capability in \
     'PrimeNativeDecoderCheckpoint' \
     'PrimeArtifactRoot' \
@@ -9617,6 +9756,228 @@ for forbidden_trajectory_checkpoint_capability in \
         "$decoder_trajectory_checkpoint_source" ||
         die "trajectory checkpoint gained forbidden capability: $forbidden_trajectory_checkpoint_capability"
 done
+
+for required_stage5_training_mechanics_value in \
+    'enum PrimeNativeDecoderTinyTrainEvaluateExecutionPolicyV1 {' \
+    'case metalGPUIndexZero(Device)' \
+    'var requiresDeepSnapshotMaterialization: Bool {' \
+    'convenience init(metalGPUIndexZero device: Device) throws {' \
+    'metalGPUIndexZero device: Device' \
+    'func trainNextExactMetalTrajectoryStep()' \
+    'func exactMetalTrajectoryBoundaryState()' \
+    'struct PrimeNativeDecoderTinyMetalTrajectoryControlStateV1:' \
+    'struct PrimeNativeDecoderTinyMetalTrajectoryStepObservationV1:' \
+    'struct PrimeNativeDecoderTinyMetalTrajectoryBoundaryObservationV1:' \
+    'struct PrimeNativeDecoderTinyMetalTrainerStepObservationV1 {' \
+    'let dtype: String' \
+    'let float32LittleEndianBytes: [UInt8]' \
+    'captureExactBytes: Bool' \
+    'try trainStep(batch: batch, captureExactBytes: true)' \
+    'observedStream == Stream.gpu' \
+    'StreamOrDevice.default.stream.synchronize()' \
+    'private static func synchronizedFloatItem(' \
+    'private static func synchronizedFloatValues(' \
+    'try Self.synchronizedFloatValues(tensor)' \
+    'return ModuleParameters.unflattened(materialized)' \
+    '.executionPolicyMismatch('; do
+    grep -Fq -- "$required_stage5_training_mechanics_value" \
+        "$decoder_training_source" ||
+        die "PrimeNativeDecoderTraining Stage-5 mechanics lost: $required_stage5_training_mechanics_value"
+done
+[[ "$(grep -Fc -- 'observedStream == Stream.gpu' \
+        "$decoder_training_source")" == "1" \
+    && "$(grep -Fc -- '.item(Float.self)' \
+        "$decoder_training_source")" == "1" \
+    && "$(grep -Fc -- '.asArray(Float.self)' \
+        "$decoder_training_source")" == "1" \
+    && "$(grep -Fc -- 'try Self.synchronizedFloatValues(tensor)' \
+        "$decoder_training_source")" == "2" ]] ||
+    die "PrimeNativeDecoderTraining Stage-5 exact GPU stream or synchronized host-read surface changed"
+readonly stage5_synchronized_float_item_block="$(awk '
+    /^    private static func synchronizedFloatItem\(/ { capture = 1 }
+    capture == 1 { print }
+    capture == 1 && /^    }$/ { exit }
+' "$decoder_training_source")"
+readonly expected_stage5_synchronized_float_item_block='    private static func synchronizedFloatItem(
+        _ array: MLXArray
+    ) throws -> Float {
+        try checkedEval(array)
+        StreamOrDevice.default.stream.synchronize()
+        return array.item(Float.self)
+    }'
+[[ "$stage5_synchronized_float_item_block" \
+    == "$expected_stage5_synchronized_float_item_block" ]] ||
+    die "PrimeNativeDecoderTraining scalar host read lost contiguous evaluation and synchronization"
+readonly stage5_synchronized_float_values_block="$(awk '
+    /^    private static func synchronizedFloatValues\(/ { capture = 1 }
+    capture == 1 { print }
+    capture == 1 && /^    }$/ { exit }
+' "$decoder_training_source")"
+readonly expected_stage5_synchronized_float_values_block='    private static func synchronizedFloatValues(
+        _ array: MLXArray
+    ) throws -> [Float] {
+        try checkedEval(array)
+        StreamOrDevice.default.stream.synchronize()
+        return array.asArray(Float.self)
+    }'
+[[ "$stage5_synchronized_float_values_block" \
+    == "$expected_stage5_synchronized_float_values_block" ]] ||
+    die "PrimeNativeDecoderTraining tensor host read lost contiguous evaluation and synchronization"
+
+[[ "$(awk '/^import / || /^@testable import / { print }' \
+        "$decoder_stage5_tiny_repeated_metal_trajectory_test")" \
+    == $'import CoreGraphics\nimport Darwin\nimport Foundation\nimport Metal\nimport MLX\nimport PrimeCore\nimport XCTest\n@testable import PrimeNativeDecoderTraining' \
+    && "$(grep -Ec -- '^[[:space:]]+func test' \
+        "$decoder_stage5_tiny_repeated_metal_trajectory_test")" == "1" \
+    && "$(grep -Fxc -- \
+        '    func testRepeatedSameDeviceUninterruptedSourceSnapshotAndFreshRestoreExactBytes()' \
+        "$decoder_stage5_tiny_repeated_metal_trajectory_test")" == "1" \
+    && "$(grep -Fxc -- \
+        '        let lease = try PrimeMetalDeviceLease.acquire(' \
+        "$decoder_stage5_tiny_repeated_metal_trajectory_test")" == "1" \
+    && "$(grep -Fxc -- '        lease.release()' \
+        "$decoder_stage5_tiny_repeated_metal_trajectory_test")" == "1" \
+    && "$(grep -Fxc -- '        fputs(receiptLine, stdout)' \
+        "$decoder_stage5_tiny_repeated_metal_trajectory_test")" == "1" \
+    && "$(grep -Fxc -- '        fflush(stdout)' \
+        "$decoder_stage5_tiny_repeated_metal_trajectory_test")" == "1" \
+    && "$(grep -Fc -- 'lease.isHeld' \
+        "$decoder_stage5_tiny_repeated_metal_trajectory_test")" == "4" \
+    && "$(grep -Fxc -- '            for _ in 0 ..< 3 {' \
+        "$decoder_stage5_tiny_repeated_metal_trajectory_test")" == "1" \
+    && "$(grep -Fxc -- '        let gpu = Device(.gpu, index: 0)' \
+        "$decoder_stage5_tiny_repeated_metal_trajectory_test")" == "1" \
+    && "$(grep -Fc -- 'StreamOrDevice.default.stream == Stream.gpu' \
+        "$decoder_stage5_tiny_repeated_metal_trajectory_test")" == "2" \
+    && "$(grep -Ec -- '\.(item|asArray)\(Float\.self\)' \
+        "$decoder_stage5_tiny_repeated_metal_trajectory_test")" == "0" \
+    && "$(grep -Fc -- 'MTLCopyAllDevices()' \
+        "$decoder_stage5_tiny_repeated_metal_trajectory_test")" == "2" \
+    && "$(grep -Fc -- 'MTLCreateSystemDefaultDevice()' \
+        "$decoder_stage5_tiny_repeated_metal_trajectory_test")" == "2" \
+    && "$(grep -Fc -- \
+        'PRIME_NATIVE_DECODER_STAGE5_TINY_REPEATED_METAL_TRAJECTORY_DETERMINISM_RECEIPT=' \
+        "$decoder_stage5_tiny_repeated_metal_trajectory_test")" == "1" \
+    && "$(grep -Fxc -- \
+        '                "stage4_rerun_authorized": false,' \
+        "$decoder_stage5_tiny_repeated_metal_trajectory_test")" == "1" \
+    && "$(grep -Fxc -- \
+        '                "general_training_resume_established": false,' \
+        "$decoder_stage5_tiny_repeated_metal_trajectory_test")" == "1" \
+    && "$(grep -Fc -- 'throw XCTSkip(' \
+        "$decoder_stage5_tiny_repeated_metal_trajectory_test")" == "0" ]] ||
+    die "Stage-5 tiny repeated-Metal trajectory test surface or cardinality changed"
+
+readonly stage5_lease_acquire_line="$(grep -nFx -- \
+    '        let lease = try PrimeMetalDeviceLease.acquire(' \
+    "$decoder_stage5_tiny_repeated_metal_trajectory_test" | awk -F: '{print $1}')"
+readonly stage5_first_coregraphics_access_line="$(grep -nF -- \
+    'CGColorSpaceCreateDeviceRGB()' \
+    "$decoder_stage5_tiny_repeated_metal_trajectory_test" | \
+    awk -F: 'NR == 1 {print $1}')"
+readonly stage5_first_metal_access_line="$(grep -nF -- \
+    'MTLCopyAllDevices()' \
+    "$decoder_stage5_tiny_repeated_metal_trajectory_test" | \
+    awk -F: 'NR == 1 {print $1}')"
+readonly stage5_first_mlx_access_line="$(grep -nF -- \
+    'Device(.gpu, index: 0)' \
+    "$decoder_stage5_tiny_repeated_metal_trajectory_test" | \
+    awk -F: 'NR == 1 {print $1}')"
+readonly stage5_device_scope_line="$(grep -nFx -- \
+    '        let receiptLine = try Device.withDefaultDevice(gpu) {' \
+    "$decoder_stage5_tiny_repeated_metal_trajectory_test" | awk -F: '{print $1}')"
+readonly stage5_trial_loop_line="$(grep -nFx -- \
+    '            for _ in 0 ..< 3 {' \
+    "$decoder_stage5_tiny_repeated_metal_trajectory_test" | awk -F: '{print $1}')"
+readonly stage5_postflight_metal_line="$(grep -nFx -- \
+    '            let postflightDevices = MTLCopyAllDevices()' \
+    "$decoder_stage5_tiny_repeated_metal_trajectory_test" | awk -F: '{print $1}')"
+readonly stage5_receipt_build_line="$(grep -nFx -- \
+    '            return try Self.makeCanonicalReceiptLine(' \
+    "$decoder_stage5_tiny_repeated_metal_trajectory_test" | awk -F: '{print $1}')"
+readonly stage5_pre_receipt_lease_guard_line="$(grep -nFx -- \
+    '        guard lease.isHeld else {' \
+    "$decoder_stage5_tiny_repeated_metal_trajectory_test" | \
+    awk -F: 'END {print $1}')"
+readonly stage5_receipt_emit_line="$(grep -nFx -- \
+    '        fputs(receiptLine, stdout)' \
+    "$decoder_stage5_tiny_repeated_metal_trajectory_test" | awk -F: '{print $1}')"
+readonly stage5_receipt_flush_line="$(grep -nFx -- \
+    '        fflush(stdout)' \
+    "$decoder_stage5_tiny_repeated_metal_trajectory_test" | awk -F: '{print $1}')"
+readonly stage5_lease_release_line="$(grep -nFx -- \
+    '        lease.release()' \
+    "$decoder_stage5_tiny_repeated_metal_trajectory_test" | awk -F: '{print $1}')"
+for stage5_lifecycle_line in \
+    "$stage5_lease_acquire_line" \
+    "$stage5_first_coregraphics_access_line" \
+    "$stage5_first_metal_access_line" \
+    "$stage5_first_mlx_access_line" \
+    "$stage5_device_scope_line" \
+    "$stage5_trial_loop_line" \
+    "$stage5_postflight_metal_line" \
+    "$stage5_receipt_build_line" \
+    "$stage5_pre_receipt_lease_guard_line" \
+    "$stage5_receipt_emit_line" \
+    "$stage5_receipt_flush_line" \
+    "$stage5_lease_release_line"; do
+    [[ "$stage5_lifecycle_line" =~ ^[1-9][0-9]*$ ]] ||
+        die "Stage-5 lease/receipt lifecycle line is missing or ambiguous"
+done
+[[ "$stage5_lease_acquire_line" -lt "$stage5_first_coregraphics_access_line" \
+    && "$stage5_lease_acquire_line" -lt "$stage5_first_metal_access_line" \
+    && "$stage5_lease_acquire_line" -lt "$stage5_first_mlx_access_line" \
+    && "$stage5_first_mlx_access_line" -lt "$stage5_device_scope_line" \
+    && "$stage5_device_scope_line" -lt "$stage5_trial_loop_line" \
+    && "$stage5_trial_loop_line" -lt "$stage5_postflight_metal_line" \
+    && "$stage5_postflight_metal_line" -lt "$stage5_receipt_build_line" \
+    && "$stage5_receipt_build_line" -lt "$stage5_pre_receipt_lease_guard_line" \
+    && "$stage5_pre_receipt_lease_guard_line" -lt "$stage5_receipt_emit_line" \
+    && "$stage5_receipt_emit_line" -lt "$stage5_receipt_flush_line" \
+    && "$stage5_receipt_flush_line" -lt "$stage5_lease_release_line" ]] ||
+    die "Stage-5 direct persistent lease no longer encloses preflight, all trials, postflight, and receipt"
+readonly stage5_receipt_release_block="$(awk '
+    $0 == "        guard lease.isHeld else {" {
+        guard_count += 1
+        if (guard_count == 2) capture = 1
+    }
+    capture == 1 { print }
+    capture == 1 && $0 == "        lease.release()" { exit }
+' "$decoder_stage5_tiny_repeated_metal_trajectory_test")"
+readonly expected_stage5_receipt_release_block='        guard lease.isHeld else {
+            throw AssayError.contractDrift("lease before receipt")
+        }
+        fputs(receiptLine, stdout)
+        fflush(stdout)
+        lease.release()'
+[[ "$stage5_receipt_release_block" == "$expected_stage5_receipt_release_block" ]] ||
+    die "Stage-5 receipt is not emitted and flushed while held with immediate explicit release"
+readonly stage5_first_nonblank_after_release="$(awk '
+    $0 == "        lease.release()" { capture = 1; next }
+    capture == 1 && $0 !~ /^[[:space:]]*$/ { print; exit }
+' "$decoder_stage5_tiny_repeated_metal_trajectory_test")"
+[[ "$stage5_first_nonblank_after_release" == '    }' ]] ||
+    die "Stage-5 test gained user code after its explicit lease release"
+for forbidden_stage5_test_capability in \
+    'defer {' 'PrimeArtifactRoot' 'PrimeNativeDecoderCheckpoint' \
+    'FileManager' 'FileHandle' 'URLSession' 'Process(' 'posix_spawn' \
+    'execve(' 'MLXRandom.seed' 'Random.seed' 'accuracy:' \
+    'writeNative300M' 'loadNative300M'; do
+    ! grep -Fq -- "$forbidden_stage5_test_capability" \
+        "$decoder_stage5_tiny_repeated_metal_trajectory_test" ||
+        die "Stage-5 test gained forbidden capability: $forbidden_stage5_test_capability"
+done
+
+[[ "$(grep -Fxc -- 'rm -- "$lease_path"' \
+        "$decoder_stage5_tiny_repeated_metal_trajectory_determinism_gate_path")" == "1" \
+    && "$(grep -Fxc -- 'rmdir -- "$lease_root"' \
+        "$decoder_stage5_tiny_repeated_metal_trajectory_determinism_gate_path")" == "1" \
+    && "$(grep -Fc -- '"$(stat -f %z "$lease_path")" == "0"' \
+        "$decoder_stage5_tiny_repeated_metal_trajectory_determinism_gate_path")" == "1" \
+    && "$(grep -Fc -- \
+        'fail "Stage-5 lease file or parent survived exact cleanup"' \
+        "$decoder_stage5_tiny_repeated_metal_trajectory_determinism_gate_path")" == "1" ]] ||
+    die "Stage-5 launcher persistent lease validation or exact reclamation changed"
 
 [[ -z "$(git -C "$prime_root" status --porcelain=v1 --untracked-files=all)" ]] ||
     die "Prime checkout changed during metadata validation"
