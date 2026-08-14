@@ -910,6 +910,97 @@ public final class PrimeNativeGQADecoder: Module {
         return self(rankTwoTokenIDs, positionOffset: 0)
     }
 
+    /// Opt-in training path for the Stage-5 replacement assay. The flattened
+    /// dense one-hot input projection is the only changed operation; decoder
+    /// layers, final normalization, and the tied output projection are shared
+    /// with the maintained path.
+    package func trainingLogitsNoCacheFlattenedDenseOneHotMatmulInputEmbeddingV1(
+        _ tokens: MLXArray
+    ) -> MLXArray {
+        var hidden = flattenedDenseOneHotMatmulInputEmbeddingV1(tokens)
+        for layer in layers {
+            hidden = layer(hidden, positionOffset: 0)
+        }
+        hidden = finalNorm(hidden)
+        return tokenEmbedding.asLinear(hidden)
+    }
+
+    /// Returns the two input-embedding forwards from this exact model state.
+    /// The dense member performs one and only one validated dense construction.
+    package func trainingInputEmbeddingForwardPairForFlattenedDenseOneHotMatmulAssayV1(
+        _ rankTwoTokenIDs: MLXArray
+    ) -> (
+        maintainedGather: MLXArray,
+        flattenedDenseOneHotMatmul: MLXArray
+    ) {
+        let maintainedGather = tokenEmbedding(rankTwoTokenIDs)
+        let flattenedDenseOneHotMatmul =
+            flattenedDenseOneHotMatmulInputEmbeddingV1(rankTwoTokenIDs)
+        return (maintainedGather, flattenedDenseOneHotMatmul)
+    }
+
+    private func flattenedDenseOneHotMatmulInputEmbeddingV1(
+        _ tokens: MLXArray
+    ) -> MLXArray {
+        precondition(tokens.ndim == 2)
+        precondition(tokens.dtype == .int32)
+
+        let batchSize = tokens.dim(0)
+        let sequenceLength = tokens.dim(1)
+        precondition(batchSize > 0)
+        precondition(sequenceLength > 0)
+        precondition(
+            sequenceLength <= configuration.maximumSequenceLength)
+
+        let flattenedCount = batchSize.multipliedReportingOverflow(
+            by: sequenceLength)
+        precondition(!flattenedCount.overflow)
+
+        let vocabularySize = configuration.vocabularySize
+        guard let checkedInt32V = Int32(exactly: vocabularySize) else {
+            preconditionFailure()
+        }
+        let tokenBounds = (
+            (tokens .>= Int32(0)) .&& (tokens .< checkedInt32V)
+        ).all()
+        do {
+            try checkedEval(tokenBounds)
+        } catch {
+            preconditionFailure()
+        }
+        StreamOrDevice.default.stream.synchronize()
+        precondition(tokenBounds.item(Bool.self))
+
+        let embeddingWeight = tokenEmbedding.weight
+        precondition(embeddingWeight.dtype == .float32)
+        precondition(
+            embeddingWeight.shape
+                == [configuration.vocabularySize, configuration.modelWidth])
+
+        let flattenedTokens = tokens.reshaped(
+            [flattenedCount.partialValue, 1])
+        precondition(
+            flattenedTokens.shape == [flattenedCount.partialValue, 1])
+        let vocabulary = arange(vocabularySize, dtype: .int32)
+            .reshaped([1, vocabularySize])
+        precondition(vocabulary.shape == [1, vocabularySize])
+        let oneHot = (flattenedTokens .== vocabulary).asType(.float32)
+        precondition(oneHot.dtype == .float32)
+        precondition(
+            oneHot.shape == [flattenedCount.partialValue, vocabularySize])
+        let flattenedEmbedding = matmul(oneHot, embeddingWeight)
+        precondition(flattenedEmbedding.dtype == .float32)
+        precondition(
+            flattenedEmbedding.shape
+                == [flattenedCount.partialValue, configuration.modelWidth])
+        let restoredEmbedding = flattenedEmbedding.reshaped(
+            [batchSize, sequenceLength, configuration.modelWidth])
+        precondition(
+            restoredEmbedding.shape
+                == [batchSize, sequenceLength, configuration.modelWidth])
+        return restoredEmbedding
+    }
+
     public func forward(
         tokenIDs: [Int],
         positionOffset: Int = 0

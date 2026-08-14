@@ -94,6 +94,15 @@ enum PrimeNativeDecoderTinyTrainEvaluateExecutionPolicyV1 {
     }
 }
 
+enum PrimeNativeDecoderTinyMetalTrajectoryTrainingInputPathV1:
+    String,
+    Sendable
+{
+    case maintainedGatherV1 = "maintained_gather_v1"
+    case denseOneHotMatmulV1 =
+        "flattened_dense_one_hot_matmul_input_embedding_v1"
+}
+
 /// Owns the fixed two-batch trajectory. The caller can request only the next
 /// admitted batch; there is no batch argument that can skip, duplicate, or
 /// substitute cursor state.
@@ -107,24 +116,36 @@ public final class PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeSessionV1 {
         try! secondBatch())
 
     private let trainer: PrimeNativeDecoderTinyCPUTrainEvaluateTrainerV1
+    let stage5ReplacementTrainingInputPath:
+        PrimeNativeDecoderTinyMetalTrajectoryTrainingInputPathV1
     public private(set) var randomRecords:
         [PrimeNativeDecoderTinyCPUExplicitRNGRecordV1]
     public private(set) var cursor: PrimeNativeDecoderTinyCPUDataCursorV1
     private var evaluationCheckedAtCurrentStep = false
 
     public convenience init() throws {
-        try self.init(executionPolicy: .cpu)
+        try self.init(
+            executionPolicy: .cpu,
+            stage5ReplacementTrainingInputPath: .maintainedGatherV1)
     }
 
     convenience init(metalGPUIndexZero device: Device) throws {
-        try self.init(executionPolicy: .metalGPUIndexZero(device))
+        try self.init(
+            executionPolicy: .metalGPUIndexZero(device),
+            stage5ReplacementTrainingInputPath: .maintainedGatherV1)
     }
 
     private init(
-        executionPolicy: PrimeNativeDecoderTinyTrainEvaluateExecutionPolicyV1
+        executionPolicy: PrimeNativeDecoderTinyTrainEvaluateExecutionPolicyV1,
+        stage5ReplacementTrainingInputPath:
+            PrimeNativeDecoderTinyMetalTrajectoryTrainingInputPathV1
     ) throws {
         trainer = try PrimeNativeDecoderTinyCPUTrainEvaluateTrainerV1(
-            executionPolicy: executionPolicy)
+            executionPolicy: executionPolicy,
+            stage5ReplacementTrainingInputPath:
+                stage5ReplacementTrainingInputPath)
+        self.stage5ReplacementTrainingInputPath =
+            stage5ReplacementTrainingInputPath
         var records = Self.initialRandomRecords()
         records = Self.consuming(.modelInitialization, in: records)
         randomRecords = records
@@ -134,7 +155,10 @@ public final class PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeSessionV1 {
     public convenience init(
         restoring snapshot: PrimeNativeDecoderTinyCPUInMemoryResumeSnapshotV1
     ) throws {
-        try self.init(restoring: snapshot, executionPolicy: .cpu)
+        try self.init(
+            restoring: snapshot,
+            executionPolicy: .cpu,
+            stage5ReplacementTrainingInputPath: .maintainedGatherV1)
     }
 
     convenience init(
@@ -143,17 +167,48 @@ public final class PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeSessionV1 {
     ) throws {
         try self.init(
             restoring: snapshot,
-            executionPolicy: .metalGPUIndexZero(device))
+            executionPolicy: .metalGPUIndexZero(device),
+            stage5ReplacementTrainingInputPath: .maintainedGatherV1)
+    }
+
+    convenience init(
+        metalGPUIndexZero device: Device,
+        stage5ReplacementTrainingInputPath:
+            PrimeNativeDecoderTinyMetalTrajectoryTrainingInputPathV1
+    ) throws {
+        try self.init(
+            executionPolicy: .metalGPUIndexZero(device),
+            stage5ReplacementTrainingInputPath:
+                stage5ReplacementTrainingInputPath)
+    }
+
+    convenience init(
+        restoring snapshot: PrimeNativeDecoderTinyCPUInMemoryResumeSnapshotV1,
+        metalGPUIndexZero device: Device,
+        stage5ReplacementTrainingInputPath:
+            PrimeNativeDecoderTinyMetalTrajectoryTrainingInputPathV1
+    ) throws {
+        try self.init(
+            restoring: snapshot,
+            executionPolicy: .metalGPUIndexZero(device),
+            stage5ReplacementTrainingInputPath:
+                stage5ReplacementTrainingInputPath)
     }
 
     private init(
         restoring snapshot: PrimeNativeDecoderTinyCPUInMemoryResumeSnapshotV1,
-        executionPolicy: PrimeNativeDecoderTinyTrainEvaluateExecutionPolicyV1
+        executionPolicy: PrimeNativeDecoderTinyTrainEvaluateExecutionPolicyV1,
+        stage5ReplacementTrainingInputPath:
+            PrimeNativeDecoderTinyMetalTrajectoryTrainingInputPathV1
     ) throws {
         let fresh = try PrimeNativeDecoderTinyCPUTrainEvaluateTrainerV1(
-            executionPolicy: executionPolicy)
+            executionPolicy: executionPolicy,
+            stage5ReplacementTrainingInputPath:
+                stage5ReplacementTrainingInputPath)
         try fresh.restoreInMemoryResumeSnapshot(snapshot)
         trainer = fresh
+        self.stage5ReplacementTrainingInputPath =
+            stage5ReplacementTrainingInputPath
         randomRecords = snapshot.randomRecords
         cursor = snapshot.cursor
         evaluationCheckedAtCurrentStep = true
@@ -232,6 +287,10 @@ public final class PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeSessionV1 {
 
     public var globalStep: Int { trainer.globalStep }
 
+    var stage5ReplacementTrainingInputPathID: String {
+        stage5ReplacementTrainingInputPath.rawValue
+    }
+
     public func trainNext()
         throws -> PrimeNativeDecoderTinyCPUTrainEvaluateStepResultV1
     {
@@ -291,6 +350,23 @@ public final class PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeSessionV1 {
         let result = try trainer.evaluate(batch: Self.evaluationBatch())
         evaluationCheckedAtCurrentStep = true
         return result
+    }
+
+    func checkedEvaluateExactMetalTrajectory()
+        throws -> PrimeNativeDecoderTinyMetalTrajectoryEvaluationObservationV1
+    {
+        let observation = try trainer.evaluateExactMetalTrajectory(
+            batch: Self.evaluationBatch())
+        evaluationCheckedAtCurrentStep = true
+        return observation
+    }
+
+    func checkedTrainingInputPathForwardEquivalenceAtCurrentBoundaryV1()
+        throws
+        -> PrimeNativeDecoderTinyTrainingInputPathForwardEquivalenceObservationV1
+    {
+        try trainer
+            .checkedTrainingInputPathForwardEquivalenceAtCurrentBoundaryV1()
     }
 
     public func exportInMemoryResumeSnapshot()
@@ -837,6 +913,26 @@ struct PrimeNativeDecoderTinyCPUExactTensorValueV1:
     let float32LittleEndianBytes: [UInt8]
 }
 
+struct PrimeNativeDecoderTinyMetalTrajectoryEvaluationObservationV1:
+    Equatable,
+    Sendable
+{
+    let result: PrimeNativeDecoderTinyCPUTrainEvaluateEvaluationV1
+    let logits: PrimeNativeDecoderTinyCPUExactTensorValueV1
+}
+
+struct PrimeNativeDecoderTinyTrainingInputPathForwardEquivalenceObservationV1:
+    Equatable,
+    Sendable
+{
+    let maintainedGatherEmbedding:
+        PrimeNativeDecoderTinyCPUExactTensorValueV1
+    let denseEmbedding: PrimeNativeDecoderTinyCPUExactTensorValueV1
+    let maintainedGatherWholeLogits:
+        PrimeNativeDecoderTinyCPUExactTensorValueV1
+    let denseWholeLogits: PrimeNativeDecoderTinyCPUExactTensorValueV1
+}
+
 struct PrimeNativeDecoderTinyCPUExactTensorStateV1:
     Equatable,
     Sendable
@@ -1199,6 +1295,8 @@ public final class PrimeNativeDecoderTinyCPUTrainEvaluateTrainerV1 {
     private let executionPolicy:
         PrimeNativeDecoderTinyTrainEvaluateExecutionPolicyV1
     private let executionDevice: Device
+    let stage5ReplacementTrainingInputPath:
+        PrimeNativeDecoderTinyMetalTrajectoryTrainingInputPathV1
     private var lastTrainResult:
         PrimeNativeDecoderTinyCPUTrainEvaluateStepResultV1?
     private var lastRawGradientDigests =
@@ -1207,11 +1305,15 @@ public final class PrimeNativeDecoderTinyCPUTrainEvaluateTrainerV1 {
         [PrimeNativeDecoderTinyCPUTrainEvaluateTensorDigestV1]()
 
     public convenience init() throws {
-        try self.init(executionPolicy: .cpu)
+        try self.init(
+            executionPolicy: .cpu,
+            stage5ReplacementTrainingInputPath: .maintainedGatherV1)
     }
 
     init(
-        executionPolicy: PrimeNativeDecoderTinyTrainEvaluateExecutionPolicyV1
+        executionPolicy: PrimeNativeDecoderTinyTrainEvaluateExecutionPolicyV1,
+        stage5ReplacementTrainingInputPath:
+            PrimeNativeDecoderTinyMetalTrajectoryTrainingInputPathV1
     ) throws {
         let configuration = self.configuration
         let executionDevice = executionPolicy.device
@@ -1267,23 +1369,35 @@ public final class PrimeNativeDecoderTinyCPUTrainEvaluateTrainerV1 {
         self.optimizer = state.1
         self.executionPolicy = executionPolicy
         self.executionDevice = executionDevice
+        self.stage5ReplacementTrainingInputPath =
+            stage5ReplacementTrainingInputPath
     }
 
     public func train(
         batch: PrimeNativeDecoderTinyCPUTrainEvaluateBatchV1
     ) throws -> PrimeNativeDecoderTinyCPUTrainEvaluateStepResultV1 {
-        try trainStep(batch: batch, captureExactBytes: false).result
+        try trainStep(
+            batch: batch,
+            captureExactBytes: false,
+            stage5ReplacementTrainingInputPath:
+                stage5ReplacementTrainingInputPath).result
     }
 
     func trainExactMetalTrajectoryStep(
         batch: PrimeNativeDecoderTinyCPUTrainEvaluateBatchV1
     ) throws -> PrimeNativeDecoderTinyMetalTrainerStepObservationV1 {
-        try trainStep(batch: batch, captureExactBytes: true)
+        try trainStep(
+            batch: batch,
+            captureExactBytes: true,
+            stage5ReplacementTrainingInputPath:
+                stage5ReplacementTrainingInputPath)
     }
 
     private func trainStep(
         batch: PrimeNativeDecoderTinyCPUTrainEvaluateBatchV1,
-        captureExactBytes: Bool
+        captureExactBytes: Bool,
+        stage5ReplacementTrainingInputPath:
+            PrimeNativeDecoderTinyMetalTrajectoryTrainingInputPathV1
     ) throws -> PrimeNativeDecoderTinyMetalTrainerStepObservationV1 {
         // This rejection is intentionally before device scoping, graph
         // construction, parameter inspection, or any model/optimizer mutation.
@@ -1306,7 +1420,9 @@ public final class PrimeNativeDecoderTinyCPUTrainEvaluateTrainerV1 {
                 model: decoder,
                 tokenIDs: arrays.tokenIDs,
                 completionMask: arrays.completionMask,
-                selectedTargetCount: batch.selectedTargetCount)
+                selectedTargetCount: batch.selectedTargetCount,
+                stage5ReplacementTrainingInputPath:
+                    stage5ReplacementTrainingInputPath)
             let lossAndGradient = valueAndGrad(model: decoder) {
                 model,
                 tokenIDs,
@@ -1315,7 +1431,9 @@ public final class PrimeNativeDecoderTinyCPUTrainEvaluateTrainerV1 {
                     model: model,
                     tokenIDs: tokenIDs,
                     completionMask: completionMask,
-                    selectedTargetCount: batch.selectedTargetCount).loss
+                    selectedTargetCount: batch.selectedTargetCount,
+                    stage5ReplacementTrainingInputPath:
+                        stage5ReplacementTrainingInputPath).loss
             }
             let (loss, gradients) = lossAndGradient(
                 decoder,
@@ -1457,6 +1575,37 @@ public final class PrimeNativeDecoderTinyCPUTrainEvaluateTrainerV1 {
     public func evaluate(
         batch: PrimeNativeDecoderTinyCPUTrainEvaluateBatchV1
     ) throws -> PrimeNativeDecoderTinyCPUTrainEvaluateEvaluationV1 {
+        try evaluateImplementation(
+            batch: batch,
+            captureExactLogits: false,
+            stage5ReplacementTrainingInputPath:
+                stage5ReplacementTrainingInputPath).result
+    }
+
+    func evaluateExactMetalTrajectory(
+        batch: PrimeNativeDecoderTinyCPUTrainEvaluateBatchV1
+    ) throws -> PrimeNativeDecoderTinyMetalTrajectoryEvaluationObservationV1 {
+        let observation = try evaluateImplementation(
+            batch: batch,
+            captureExactLogits: true,
+            stage5ReplacementTrainingInputPath:
+                stage5ReplacementTrainingInputPath)
+        guard let logits = observation.logits else {
+            throw PrimeNativeDecoderTinyCPUTrainEvaluateErrorV1
+                .internalInvariant("exact evaluation logits")
+        }
+        return .init(result: observation.result, logits: logits)
+    }
+
+    private func evaluateImplementation(
+        batch: PrimeNativeDecoderTinyCPUTrainEvaluateBatchV1,
+        captureExactLogits: Bool,
+        stage5ReplacementTrainingInputPath:
+            PrimeNativeDecoderTinyMetalTrajectoryTrainingInputPathV1
+    ) throws -> (
+        result: PrimeNativeDecoderTinyCPUTrainEvaluateEvaluationV1,
+        logits: PrimeNativeDecoderTinyCPUExactTensorValueV1?
+    ) {
         try Device.withDefaultDevice(executionDevice) {
             try requireExecutionPolicy()
             let before = try validationSnapshot()
@@ -1474,9 +1623,23 @@ public final class PrimeNativeDecoderTinyCPUTrainEvaluateTrainerV1 {
                 model: decoder,
                 tokenIDs: arrays.tokenIDs,
                 completionMask: arrays.completionMask,
-                selectedTargetCount: batch.selectedTargetCount)
-            try checkedEval(observation.loss, observation.perTargetLoss)
+                selectedTargetCount: batch.selectedTargetCount,
+                stage5ReplacementTrainingInputPath:
+                    stage5ReplacementTrainingInputPath)
+            if captureExactLogits {
+                try checkedEval(
+                    observation.loss,
+                    observation.perTargetLoss,
+                    observation.logits)
+            } else {
+                try checkedEval(observation.loss, observation.perTargetLoss)
+            }
             StreamOrDevice.default.stream.synchronize()
+            let exactLogits = captureExactLogits
+                ? try Self.exactFloat32TensorValueFromAlreadyMaterializedArray(
+                    observation.logits,
+                    path: "evaluation_logits")
+                : nil
             let loss = try Self.synchronizedFloatItem(observation.loss)
             guard loss.isFinite else {
                 throw PrimeNativeDecoderTinyCPUTrainEvaluateErrorV1
@@ -1494,14 +1657,75 @@ public final class PrimeNativeDecoderTinyCPUTrainEvaluateTrainerV1 {
                 throw PrimeNativeDecoderTinyCPUTrainEvaluateErrorV1
                     .evaluationMutatedState
             }
-            return PrimeNativeDecoderTinyCPUTrainEvaluateEvaluationV1(
-                globalStep: globalStep,
-                selectedTargetCount: batch.selectedTargetCount,
-                lossFloat32BitPattern: loss.bitPattern,
-                selectedLossFloat32BitPatterns: selectedLossBitPatterns,
-                parameterStateSHA256: before.parameterStateSHA256,
-                firstMomentStateSHA256: before.firstMomentStateSHA256,
-                secondMomentStateSHA256: before.secondMomentStateSHA256)
+            return (
+                result: PrimeNativeDecoderTinyCPUTrainEvaluateEvaluationV1(
+                    globalStep: globalStep,
+                    selectedTargetCount: batch.selectedTargetCount,
+                    lossFloat32BitPattern: loss.bitPattern,
+                    selectedLossFloat32BitPatterns: selectedLossBitPatterns,
+                    parameterStateSHA256: before.parameterStateSHA256,
+                    firstMomentStateSHA256: before.firstMomentStateSHA256,
+                    secondMomentStateSHA256:
+                        before.secondMomentStateSHA256),
+                logits: exactLogits)
+        }
+    }
+
+    func checkedTrainingInputPathForwardEquivalenceAtCurrentBoundaryV1()
+        throws
+        -> PrimeNativeDecoderTinyTrainingInputPathForwardEquivalenceObservationV1
+    {
+        try Device.withDefaultDevice(executionDevice) {
+            try requireExecutionPolicy()
+            let expectedGlobalStep = globalStep
+            let expectedTrainingMode = decoder.training
+            let sequenceLength = 6
+            let repeatedTokenIDs =
+                Array(repeating: 1, count: sequenceLength)
+                    + Array(repeating: 15, count: sequenceLength)
+            let tokens = MLXArray(
+                repeatedTokenIDs,
+                [2, sequenceLength])
+
+            let embeddings = decoder
+                .trainingInputEmbeddingForwardPairForFlattenedDenseOneHotMatmulAssayV1(
+                    tokens)
+            let maintainedGatherWholeLogits =
+                decoder.trainingLogitsNoCache(tokens)
+            let denseWholeLogits = decoder
+                .trainingLogitsNoCacheFlattenedDenseOneHotMatmulInputEmbeddingV1(
+                    tokens)
+            try checkedEval(
+                embeddings.maintainedGather,
+                embeddings.flattenedDenseOneHotMatmul,
+                maintainedGatherWholeLogits,
+                denseWholeLogits)
+            StreamOrDevice.default.stream.synchronize()
+
+            let observation =
+                PrimeNativeDecoderTinyTrainingInputPathForwardEquivalenceObservationV1(
+                    maintainedGatherEmbedding:
+                        try Self.exactFloat32TensorValueFromAlreadyMaterializedArray(
+                            embeddings.maintainedGather,
+                            path: "maintained_gather_embedding"),
+                    denseEmbedding:
+                        try Self.exactFloat32TensorValueFromAlreadyMaterializedArray(
+                            embeddings.flattenedDenseOneHotMatmul,
+                            path: "dense_embedding"),
+                    maintainedGatherWholeLogits:
+                        try Self.exactFloat32TensorValueFromAlreadyMaterializedArray(
+                            maintainedGatherWholeLogits,
+                            path: "maintained_gather_whole_logits"),
+                    denseWholeLogits:
+                        try Self.exactFloat32TensorValueFromAlreadyMaterializedArray(
+                            denseWholeLogits,
+                            path: "dense_whole_logits"))
+            guard globalStep == expectedGlobalStep,
+                  decoder.training == expectedTrainingMode else {
+                throw PrimeNativeDecoderTinyCPUTrainEvaluateErrorV1
+                    .evaluationMutatedState
+            }
+            return observation
         }
     }
 
@@ -1773,6 +1997,39 @@ public final class PrimeNativeDecoderTinyCPUTrainEvaluateTrainerV1 {
         }.sorted { utf8Less($0.path, $1.path) }
     }
 
+    /// Captures an array that the caller has already evaluated and synchronized.
+    /// This helper deliberately performs no evaluation or stream operation.
+    private static func exactFloat32TensorValueFromAlreadyMaterializedArray(
+        _ array: MLXArray,
+        path: String
+    ) throws -> PrimeNativeDecoderTinyCPUExactTensorValueV1 {
+        guard array.dtype == .float32 else {
+            throw PrimeNativeDecoderTinyCPUTrainEvaluateErrorV1
+                .tensorDTypeMismatch(
+                    scope: "materialized_exact_tensor",
+                    path: path)
+        }
+        let values = array.asArray(Float.self)
+        guard values.count == array.size else {
+            throw PrimeNativeDecoderTinyCPUTrainEvaluateErrorV1
+                .internalInvariant("materialized exact tensor value count")
+        }
+        return .init(
+            path: path,
+            shape: array.shape,
+            dtype: "float32",
+            float32BitPatterns: values.map(\.bitPattern),
+            float32LittleEndianBytes: values.flatMap {
+                let bits = $0.bitPattern
+                return [
+                    UInt8(bits & 0xff),
+                    UInt8((bits >> 8) & 0xff),
+                    UInt8((bits >> 16) & 0xff),
+                    UInt8((bits >> 24) & 0xff),
+                ]
+            })
+    }
+
     private func isolatedSnapshot(
         _ state: AdamOptimizerState
     ) throws -> AdamOptimizerState {
@@ -1870,10 +2127,24 @@ public final class PrimeNativeDecoderTinyCPUTrainEvaluateTrainerV1 {
         model: PrimeNativeGQADecoder,
         tokenIDs: MLXArray,
         completionMask: MLXArray,
-        selectedTargetCount: Int
-    ) -> (loss: MLXArray, perTargetLoss: MLXArray) {
+        selectedTargetCount: Int,
+        stage5ReplacementTrainingInputPath:
+            PrimeNativeDecoderTinyMetalTrajectoryTrainingInputPathV1
+    ) -> (
+        loss: MLXArray,
+        perTargetLoss: MLXArray,
+        logits: MLXArray
+    ) {
         let sequenceLength = tokenIDs.dim(1)
-        let logits = model.trainingLogitsNoCache(tokenIDs)
+        let logits: MLXArray
+        switch stage5ReplacementTrainingInputPath {
+        case .maintainedGatherV1:
+            logits = model.trainingLogitsNoCache(tokenIDs)
+        case .denseOneHotMatmulV1:
+            logits = model
+                .trainingLogitsNoCacheFlattenedDenseOneHotMatmulInputEmbeddingV1(
+                    tokenIDs)
+        }
         let shiftedLogits = logits[
             0...,
             ..<(sequenceLength - 1),
@@ -1889,7 +2160,7 @@ public final class PrimeNativeDecoderTinyCPUTrainEvaluateTrainerV1 {
             reduction: .none)
         let loss = sum(perTargetLoss * shiftedMask)
             / Float(selectedTargetCount)
-        return (loss, perTargetLoss)
+        return (loss, perTargetLoss, logits)
     }
 
     private static func selectedLossBitPatterns(

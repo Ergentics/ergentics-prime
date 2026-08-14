@@ -304,9 +304,9 @@ final class PrimeNativeDecoderAuthorityTests: XCTestCase {
 
     func testMetalRepairAuthorityIsAppendOnlyAndSourceExact() throws {
         let plan = PrimeNativeDecoderMetalRepairAuthorityPlan.frozenV1
-        let currentDecoderSurface =
-            PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsAuthorityV1
-                .frozenV1.surfaceDesign
+        let currentDecoderIdentity =
+            PrimeNativeDecoderStage5RepeatedTrajectoryReplacementCurrentDecoderIdentityObservationV1
+                .frozenV1
         let executionObservation =
             PrimeNativeDecoderMetalExecutionObservationV1.frozenV1
         let root = URL(fileURLWithPath: #filePath)
@@ -344,16 +344,16 @@ final class PrimeNativeDecoderAuthorityTests: XCTestCase {
             plan.repairedDecoderSourceSHA256,
             "058ab392ac74a132a2503a04ab48400d1ef78a1bcad38eaddefce828b9252c9b")
         XCTAssertTrue(
-            currentDecoderSurface
+            currentDecoderIdentity
                 .predecessorDecoderIdentityRemainsHistoricalAndFrozen)
         XCTAssertEqual(
-            currentDecoderSurface.currentDecoderSuccessorExpectedGitBlob,
+            currentDecoderIdentity.currentDecoder.gitBlob,
             gitBlobOID(of: decoderSource))
         XCTAssertEqual(
-            currentDecoderSurface.currentDecoderSuccessorExpectedByteCount,
+            currentDecoderIdentity.currentDecoder.byteCount,
             decoderSource.count)
         XCTAssertEqual(
-            currentDecoderSurface.currentDecoderSuccessorExpectedSHA256,
+            currentDecoderIdentity.currentDecoder.sha256,
             PrimeSHA256.hexDigest(of: decoderSource))
         XCTAssertEqual(
             regressionSource.count,
