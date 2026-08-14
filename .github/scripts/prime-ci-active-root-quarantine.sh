@@ -63,6 +63,9 @@ readonly stage6_resource_probe_training_source_relative_path="Sources/PrimeNativ
 readonly stage6_resource_probe_validation_manifest_relative_path="Tests/PrimeNativeDecoderTrainingValidation/Package.swift"
 readonly stage6_resource_probe_executable_main_relative_path="Tests/PrimeNativeDecoderTrainingValidation/Sources/PrimeNativeDecoderNative300MResourceOnlyOneStepProbe/main.swift"
 readonly stage6_resource_probe_contract_test_relative_path="Tests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderNative300MResourceOnlyOneStepProbeContractTests.swift"
+readonly b_specific_native300m_resource_witness_authority_source_relative_path="Sources/PrimeCore/PrimeNativeDecoderBSpecificNative300MResourceWitnessAuthority.swift"
+readonly b_specific_native300m_resource_witness_authority_test_relative_path="Tests/PrimeCoreTests/PrimeNativeDecoderBSpecificNative300MResourceWitnessAuthorityTests.swift"
+readonly b_specific_native300m_resource_witness_launcher_relative_path=".github/scripts/prime-ci-native-decoder-b-specific-native300m-resource-witness.sh"
 readonly expected_stage5_replacement_mechanics_preserved_index_sha256="8742966c9f6322aa353facd846f4bcfab546cff6ab7997fac86b76249c56dcbb"
 readonly observed_stage5_replacement_mechanics_preserved_index_sha256="$({
     git -C "$prime_root" ls-files -s |
@@ -74,6 +77,10 @@ readonly observed_stage5_replacement_mechanics_preserved_index_sha256="$({
                     == '.github/workflows/prime-active-root-quarantine.yml' \
                 || "$relative_path" \
                     == 'Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' \
+                || "$relative_path" \
+                    == "$b_specific_native300m_resource_witness_authority_source_relative_path" \
+                || "$relative_path" \
+                    == "$b_specific_native300m_resource_witness_authority_test_relative_path" \
                 || "$relative_path" \
                     == "$stage5_replacement_launcher_relative_path" \
                 || "$relative_path" \
@@ -103,7 +110,7 @@ readonly observed_stage5_replacement_mechanics_preserved_index_sha256="$({
         =~ ^[0-9a-f]{64}$ \
     && "$observed_stage5_replacement_mechanics_preserved_index_sha256" \
         == "$expected_stage5_replacement_mechanics_preserved_index_sha256" ]] ||
-    die "Stage-5 replacement lifecycle changed a path outside the exact-ten mechanics and exact-two observation pairs"
+    die "B-specific Native300M authority changed a path outside its exact-five closure or the frozen Stage-5 mechanics and observation scopes"
 for exact_stage5_replacement_mechanics_path in \
     '.github/scripts/prime-ci-active-root-quarantine.sh' \
     "$stage5_replacement_launcher_relative_path" \
@@ -131,6 +138,24 @@ for exact_stage5_replacement_retirement_observation_path in \
         "$exact_stage5_replacement_retirement_observation_path" | awk '{print $1}')" \
         == "100644" ]] ||
         die "Stage-5 replacement retirement observation is missing or has the wrong mode: $exact_stage5_replacement_retirement_observation_path"
+done
+for exact_b_specific_native300m_resource_witness_authority_path in \
+    '.github/scripts/prime-ci-active-root-quarantine.sh' \
+    '.github/workflows/prime-active-root-quarantine.yml' \
+    'Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' \
+    "$b_specific_native300m_resource_witness_authority_source_relative_path" \
+    "$b_specific_native300m_resource_witness_authority_test_relative_path"; do
+    expected_b_specific_native300m_resource_witness_authority_mode="100644"
+    case "$exact_b_specific_native300m_resource_witness_authority_path" in
+        '.github/scripts/'*)
+            expected_b_specific_native300m_resource_witness_authority_mode="100755"
+            ;;
+    esac
+    [[ "$(git -C "$prime_root" ls-files -s -- \
+        "$exact_b_specific_native300m_resource_witness_authority_path" | \
+        awk '{print $1}')" \
+        == "$expected_b_specific_native300m_resource_witness_authority_mode" ]] ||
+        die "B-specific Native300M resource-witness authority exact-five path is missing or has the wrong mode: $exact_b_specific_native300m_resource_witness_authority_path"
 done
 
 assert_stage5_mechanics_payload_identity() {
@@ -1159,6 +1184,9 @@ readonly tokenizer_compatibility_workflow_line="$(grep -nFx -- \
     && "$(grep -Fxc -- \
         '          bash .github/scripts/prime-ci-native-decoder-stage6-native300m-resource-only-one-step.sh' \
         "$workflow_path")" == "0" \
+    && "$(grep -Fxc -- \
+        '          bash .github/scripts/prime-ci-native-decoder-b-specific-native300m-resource-witness.sh' \
+        "$workflow_path")" == "0" \
     && "$(grep -Fc -- \
         'PRIME_NATIVE_DECODER_STAGE5_TINY_REPEATED_METAL_TRAJECTORY_DETERMINISM_RECEIPT=' \
         "$workflow_path")" == "0" \
@@ -1166,8 +1194,14 @@ readonly tokenizer_compatibility_workflow_line="$(grep -nFx -- \
         'PRIME_NATIVE_DECODER_STAGE5_REPLACEMENT_RECEIPT_V1=' \
         "$workflow_path")" == "0" \
     && "$(grep -Ec -- 'PRIME_NATIVE_DECODER_STAGE6_.*RECEIPT=' \
+        "$workflow_path")" == "0" \
+    && "$(grep -Fc -- \
+        'PRIME_NATIVE_DECODER_B_SPECIFIC_NATIVE300M_RESOURCE_WITNESS_RECEIPT_V1=' \
+        "$workflow_path")" == "0" \
+    && "$(grep -Fc -- \
+        'PRIME_NATIVE_DECODER_B_SPECIFIC_NATIVE300M_RESOURCE_WITNESS_INTERNAL_CANDIDATE_V1=' \
         "$workflow_path")" == "0" ]] ||
-    die "trusted-main workflow lost the exact three-launcher sequence or reactivated a retired one-shot"
+    die "trusted-main workflow lost the exact three-launcher sequence or activated a retired or future one-shot"
 readonly live_decoder_workflow_block="$(awk '
     /^      - name: Run the Prime-owned decoder on live Metal$/ { inside = 1 }
     inside { print }
@@ -1188,6 +1222,10 @@ readonly expected_live_decoder_workflow_block='      - name: Run the Prime-owned
     '          bash .github/scripts/prime-ci-native-decoder-checkpoint-v2-io-root-identity-repair.sh' \
     "$workflow_path" ||
     die "retired Prime native decoder checkpoint V2 I/O root-identity repair one-shot remains live"
+[[ ! -e "$prime_root/$b_specific_native300m_resource_witness_launcher_relative_path" \
+    && -z "$(git -C "$prime_root" ls-files -- \
+        "$b_specific_native300m_resource_witness_launcher_relative_path")" ]] ||
+    die "B-specific Native300M resource-witness launcher exists inside the pure exact-five authority"
 grep -Fq -- \
     '--package-path Tests/PrimeNativeDecoderCheckpointCompatibilityV2Validation' \
     "$workflow_path" ||
@@ -1299,6 +1337,7 @@ readonly stage5_replacement_current_decoder_identity_filter='PrimeCoreTests.Prim
 readonly stage5_replacement_execution_observation_filter='PrimeCoreTests.PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayReplacementExecutionObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndSplitOutcomeCeiling'
 readonly stage6_native300m_resource_only_one_step_probe_authority_filter='PrimeCoreTests.PrimeNativeDecoderNative300MResourceOnlyOneStepProbeAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling'
 readonly stage6_native300m_resource_only_one_step_probe_execution_observation_filter='PrimeCoreTests.PrimeNativeDecoderNative300MResourceOnlyOneStepProbeExecutionObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndSuccessCeiling'
+readonly b_specific_native300m_resource_witness_authority_filter='PrimeCoreTests.PrimeNativeDecoderBSpecificNative300MResourceWitnessAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling'
 [[ "$(grep -Fc -- "$tiny_cpu_mechanics_authority_filter" \
         "$workflow_path")" == "1" \
     && "$(grep -Fc -- "$tiny_cpu_mechanics_failure_observation_filter" \
@@ -1328,7 +1367,7 @@ readonly stage6_native300m_resource_only_one_step_probe_execution_observation_fi
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 59 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 60 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not run the exact Stage-2 authority and failure-observation pure contracts"
 [[ "$(grep -Fc -- "$private_dependency_tls_failure_observation_filter" \
@@ -1420,7 +1459,7 @@ readonly stage6_native300m_resource_only_one_step_probe_execution_observation_fi
         "          grep -Fq 'PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapFreshMetallibCrossBindingExecutionFailureObservationTests' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 59 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 60 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the Stage-2 metallib bootstrap repair, failure observations, and classifier repair authority"
 [[ "$(grep -Fc -- \
@@ -1588,7 +1627,7 @@ readonly stage6_native300m_resource_only_one_step_probe_execution_observation_fi
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 59 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 60 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run exactly the Stage-5 execution-failure observation"
 [[ "$(grep -Fc -- \
@@ -1607,7 +1646,7 @@ readonly stage6_native300m_resource_only_one_step_probe_execution_observation_fi
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 59 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 60 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run exactly the Stage-5 replacement-execution authority"
 [[ "$(grep -Fc -- \
@@ -1623,7 +1662,7 @@ readonly stage6_native300m_resource_only_one_step_probe_execution_observation_fi
         "          grep -Fq 'PrimeNativeDecoderStage5RepeatedTrajectoryReplacementCurrentDecoderIdentityObservationTests' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 59 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 60 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not run the exact Stage-5 current-decoder identity observation"
 [[ "$(grep -Fc -- \
@@ -1639,7 +1678,7 @@ readonly stage6_native300m_resource_only_one_step_probe_execution_observation_fi
         "          grep -Fq 'PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayReplacementExecutionObservationTests' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 59 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 60 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not run the exact Stage-5 replacement execution observation"
 [[ "$(grep -Fc -- \
@@ -1658,7 +1697,7 @@ readonly stage6_native300m_resource_only_one_step_probe_execution_observation_fi
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 59 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 60 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run exactly the Stage-6 resource-only probe authority"
 [[ "$(grep -Fc -- \
@@ -1674,6 +1713,32 @@ readonly stage6_native300m_resource_only_one_step_probe_execution_observation_fi
         "          grep -Fq 'PrimeNativeDecoderNative300MResourceOnlyOneStepProbeExecutionObservationTests' \\" \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run exactly the Stage-6 resource-only probe execution observation"
+[[ "$(grep -Fc -- \
+        "$b_specific_native300m_resource_witness_authority_filter" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        "$b_specific_native300m_resource_witness_authority_source_relative_path" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        "$b_specific_native300m_resource_witness_authority_test_relative_path" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        "          grep -Fq 'PrimeNativeDecoderBSpecificNative300MResourceWitnessAuthorityTests' \\" \
+        "$workflow_path")" == "1" ]] ||
+    die "hosted workflow does not parse and run the sole B-specific Native300M resource-witness authority contract"
+[[ "$(grep -Fc -- \
+        'PrimeNativeDecoderBSpecificNative300MResourceWitnessContractTests/testBSpecificNative300MResourceWitnessContractIsExactAndExecutionPure' \
+        "$workflow_path")" == "0" \
+    && "$(grep -Fc -- \
+        'Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderBSpecificNative300MResourceWitness.swift' \
+        "$workflow_path")" == "0" \
+    && "$(grep -Fc -- \
+        'Tests/PrimeNativeDecoderTrainingValidation/Sources/PrimeNativeDecoderBSpecificNative300MResourceWitness/main.swift' \
+        "$workflow_path")" == "0" \
+    && "$(grep -Fc -- \
+        'Tests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderBSpecificNative300MResourceWitnessContractTests.swift' \
+        "$workflow_path")" == "0" ]] ||
+    die "hosted workflow executes or parses future exact-eight B-specific Native300M mechanics during the pure authority"
 [[ "$(grep -Fc -- 'stage6_resource_probe_contract_filter' \
         "$workflow_path")" == "0" \
     && "$(grep -Fc -- 'stage6_resource_probe_contract_test_log' \
@@ -2074,6 +2139,34 @@ for required_stage5_replacement_execution_observation_summary_value in \
         "$required_stage5_replacement_execution_observation_summary_value" \
         "$workflow_path")" == "1" ]] ||
         die "workflow lost the exact Stage-5 replacement execution-observation summary: $required_stage5_replacement_execution_observation_summary_value"
+done
+for required_b_specific_native300m_resource_witness_authority_summary_value in \
+    'dependency-free B-specific Native-300M resource-witness authority is a nonexecuting exact-five closure' \
+    'PrimeNativeDecoderBSpecificNative300MResourceWitnessAuthority.swift, and its sole one-method root test' \
+    'root 60, keeps isolated 6 for focused whole 66' \
+    'exact live Metal 44, maintained runtime 1, tokenizer 1 order for live 46 and total 112 under the reviewed-main 60-minute timeout' \
+    'Original Stage-5, replacement Stage-5, historical Stage-6, and future B-witness launchers and receipts all remain at zero' \
+    'separately reviewed exact-eight successor use the explicit flattened dense one-hot B API at seed 44, batch 1 by 128, vocabulary 512' \
+    'exactly one model allocation and materialization, one value-and-grad forward/backward, one clipped AdamW update and full-state evaluation' \
+    'one dense construction and matmul, one B bounds checked-evaluation/synchronization/Bool read, six total checked-evaluation and GPU-synchronization barriers' \
+    'maintained gather path remains invocation zero for that witness' \
+    'Stage-5 B PASS combines with a future B-specific PASS only to establish the exact-run B resource witness and clearance' \
+    'historical Stage-6 evidence remains nonapplicable to B, ordinary-job fit and Stage 7 remain false' \
+    'internal worker candidate non-result evidence and the supervisor as sole lease owner before explicit release, through candidate and device/MLX postflight' \
+    'descriptor-derived parent and leaf tuples, exact unordered inventory, ACL, xattr, and security flags after shell rebind; parent st_nlink is observed but never a predicate' \
+    'exact PASS-capable operational topology uses one supervisor, one resource worker, and one distinct exec release verifier, two successful lease acquisitions out of two, two release calls, and one zero exit each for verifier and supervisor' \
+    'verifier reacquisition plus process exit proves release, never a raw release-call success alone' \
+    'resource ABSTAIN may omit the verifier only when no lease acquisition succeeded; every post-acquisition resource ABSTAIN requires it' \
+    'No unlink, remove, rmdir, or manual cleanup is allowed' \
+    'safely classified verifier, identity, or postflight failure may publish terminal ABSTAIN_INTEGRITY while preserving candidate status and keeping B clearance false' \
+    'malformed or private packets may yield no public receipt, and no outcome authorizes retry' \
+    'every required postflight has passed or yielded its safely captured first failure and outer classification is complete' \
+    'cleared-trap exec /usr/bin/printf final launcher action with no later OK marker or fallible action' \
+    'public receipt carries neither workflow_success nor an unscoped mechanics_success claim'; do
+    [[ "$(grep -Fc -- \
+        "$required_b_specific_native300m_resource_witness_authority_summary_value" \
+        "$workflow_path")" == "1" ]] ||
+        die "workflow lost the B-specific Native300M resource-witness authority summary: $required_b_specific_native300m_resource_witness_authority_summary_value"
 done
 [[ "$(grep -Fc -- \
         'Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderTrajectoryCheckpointV1.swift' \
@@ -3238,6 +3331,8 @@ readonly stage6_native300m_resource_only_one_step_probe_launcher="$prime_root/$s
 readonly stage6_native300m_resource_only_one_step_probe_training_source="$prime_root/$stage6_resource_probe_training_source_relative_path"
 readonly stage6_native300m_resource_only_one_step_probe_executable_main="$prime_root/$stage6_resource_probe_executable_main_relative_path"
 readonly stage6_native300m_resource_only_one_step_probe_contract_test="$prime_root/$stage6_resource_probe_contract_test_relative_path"
+readonly b_specific_native300m_resource_witness_authority_source="$prime_root/$b_specific_native300m_resource_witness_authority_source_relative_path"
+readonly b_specific_native300m_resource_witness_authority_test="$prime_root/$b_specific_native300m_resource_witness_authority_test_relative_path"
 readonly decoder_training_source="$prime_root/Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderTraining.swift"
 readonly decoder_training_validation_root="$prime_root/Tests/PrimeNativeDecoderTrainingValidation"
 readonly decoder_training_validation_manifest="$decoder_training_validation_root/Package.swift"
@@ -9404,9 +9499,9 @@ done
 [[ "$(wc -l < "$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift" | \
         awk '{print $1}')" == "13" \
     && "$(grep -Fxc -- \
-        '        "9dd52e311c9332e9f48f8e05e24c0da32397fac33de8766c6b02bddb5e7b6e35"' \
+        '        "fe5bcfaa1aced97aa93268c9cd8f3d773e377ca307effa76d1132c60e7a44369"' \
         "$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift")" == "1" ]] ||
-    die "Stage-5 replacement PASS retirement embedded provenance identity changed"
+    die "B-specific Native300M resource-witness authority embedded provenance identity changed"
 for forbidden_stage4_execution_observation_capability in \
     'import CoreGraphics' 'import Metal' 'import MLX' 'import MLXNN' \
     'import MLXOptimizers' 'FileManager' 'FileHandle' 'URLSession' 'Process(' \
@@ -12337,16 +12432,6 @@ readonly stage5_replacement_ok_line="$(grep -nFx -- \
         -lt "$stage5_replacement_ok_line" ]] ||
     die "Stage-5 replacement receipt, aggregate guard, cleanup, postflight, or OK ordering changed"
 assert_stage5_mechanics_payload_identity \
-    '.github/workflows/prime-active-root-quarantine.yml' \
-    '100644' 'cfcaf7014d2a20b95759d7a1cee3df7599b028ce' \
-    '91822' '594' \
-    'a3ccc7ace3b0794ac1dcf89127c2c4d69f8dc07ba6199ecacf8650c5fdde9284'
-assert_stage5_mechanics_payload_identity \
-    'Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' \
-    '100644' '5b0cc44a0edcf2eb439adb88cf979b2326efcf75' \
-    '546' '13' \
-    '67d58a726cbb1e603e4db8d539e0f180d81d90fb9db94e2742500d1b2194905c'
-assert_stage5_mechanics_payload_identity \
     "$stage5_replacement_execution_observation_source_relative_path" \
     '100644' 'daca1d73cdb2d71fc2298aa30b39da757e881923' \
     '70671' '1205' \
@@ -12744,6 +12829,447 @@ for forbidden_stage5_replacement_execution_observation_capability in \
     ! grep -Fq -- "$forbidden_stage5_replacement_execution_observation_capability" \
         "$stage5_replacement_execution_observation_source" ||
         die "Stage-5 replacement execution observation gained capability: $forbidden_stage5_replacement_execution_observation_capability"
+done
+
+for b_specific_native300m_resource_witness_authority_file in \
+    "$b_specific_native300m_resource_witness_authority_source" \
+    "$b_specific_native300m_resource_witness_authority_test"; do
+    [[ -f "$b_specific_native300m_resource_witness_authority_file" \
+        && ! -L "$b_specific_native300m_resource_witness_authority_file" \
+        && "$(stat -f %l \
+            "$b_specific_native300m_resource_witness_authority_file")" \
+            == "1" ]] ||
+        die "B-specific Native300M resource-witness authority pair is missing, linked, or multiply linked: $b_specific_native300m_resource_witness_authority_file"
+done
+[[ "$(awk '/^import / { print }' \
+        "$b_specific_native300m_resource_witness_authority_source")" \
+        == 'import Foundation' \
+    && "$(awk '/^import / || /^@testable import / { print }' \
+        "$b_specific_native300m_resource_witness_authority_test")" \
+        == $'import CoreFoundation\nimport Foundation\n@testable import PrimeCore\nimport XCTest' \
+    && "$(grep -Ec -- '^[[:space:]]+func test' \
+        "$b_specific_native300m_resource_witness_authority_test")" == "1" \
+    && "$(grep -Fc -- \
+        'PrimeNativeDecoderBSpecificNative300MResourceWitnessAuthorityTests:' \
+        "$b_specific_native300m_resource_witness_authority_test")" == "1" \
+    && "$(grep -Fc -- \
+        'func testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling()' \
+        "$b_specific_native300m_resource_witness_authority_test")" == "1" ]] ||
+    die "B-specific Native300M resource-witness authority imports or sole-test surface changed"
+
+assert_b_specific_native300m_resource_witness_authority_identity() {
+    local relative_path="$1" expected_blob="$2" expected_bytes="$3"
+    local expected_lf_count="$4" expected_sha256="$5"
+    local absolute_path="$prime_root/$relative_path"
+    [[ -f "$absolute_path" && ! -L "$absolute_path" \
+        && "$(stat -f %l "$absolute_path")" == "1" \
+        && "$(git -C "$prime_root" ls-files -s -- "$relative_path" | \
+            awk '{print $1}')" == "100644" \
+        && "$(git -C "$prime_root" hash-object -- "$relative_path")" \
+            == "$expected_blob" \
+        && "$(stat -f %z "$absolute_path")" == "$expected_bytes" \
+        && "$(wc -l < "$absolute_path" | awk '{print $1}')" \
+            == "$expected_lf_count" \
+        && "$(shasum -a 256 "$absolute_path" | awk '{print $1}')" \
+            == "$expected_sha256" ]] ||
+        die "B-specific Native300M resource-witness authority identity changed: $relative_path"
+}
+assert_b_specific_native300m_resource_witness_authority_identity \
+    "$b_specific_native300m_resource_witness_authority_source_relative_path" \
+    '6712e7951d282b2a7169484b618584904e72e9a6' '144770' '2625' \
+    'f5d23cd0a3cf6c5d0c60ab9bb1b80eb2a15a49f61f002c3dbc89609b2d9d58c4'
+assert_b_specific_native300m_resource_witness_authority_identity \
+    "$b_specific_native300m_resource_witness_authority_test_relative_path" \
+    '97fa185a0afc9aab8b83cbdd4f7f78f0a14d8433' '28919' '653' \
+    'd1ed3fb89c310ea1d38b1eca8485cf7c3d071a3f5815887415914c40dc3a0543'
+[[ "$(grep -Fxc -- '    public static let canonicalSHA256 =' \
+        "$b_specific_native300m_resource_witness_authority_source")" == "1" \
+    && "$(grep -Fxc -- \
+        '        "15e00a65594a69e380e93362dc22103ccf3ae42de2676ef9e459b4603af887ba"' \
+        "$b_specific_native300m_resource_witness_authority_source")" == "1" ]] ||
+    die "B-specific Native300M resource-witness authority canonical identity changed"
+readonly b_specific_native300m_resource_witness_authority_placeholder_prefix='__PRIME_B_SPECIFIC_'
+! grep -Fq -- \
+    "${b_specific_native300m_resource_witness_authority_placeholder_prefix}NATIVE300M_RESOURCE_WITNESS_AUTHORITY_SHA256__" \
+    "$b_specific_native300m_resource_witness_authority_source" ||
+    die "B-specific Native300M resource-witness authority retains a canonical placeholder"
+
+for future_b_specific_native300m_resource_witness_mechanics_path in \
+    "$b_specific_native300m_resource_witness_launcher_relative_path" \
+    'Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderBSpecificNative300MResourceWitness.swift' \
+    'Tests/PrimeNativeDecoderTrainingValidation/Sources/PrimeNativeDecoderBSpecificNative300MResourceWitness/main.swift' \
+    'Tests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderBSpecificNative300MResourceWitnessContractTests.swift'; do
+    [[ ! -e "$prime_root/$future_b_specific_native300m_resource_witness_mechanics_path" \
+        && -z "$(git -C "$prime_root" ls-files -- \
+            "$future_b_specific_native300m_resource_witness_mechanics_path")" ]] ||
+        die "future exact-eight B-specific Native300M mechanics entered the pure exact-five authority: $future_b_specific_native300m_resource_witness_mechanics_path"
+done
+
+for required_b_specific_native300m_resource_witness_authority_value in \
+    'PrimeNativeDecoderBSpecificNative300MResourceWitnessAuthorityV1:' \
+    'public static let frozenV1: Self = {' \
+    'public static let canonicalSHA256 =' \
+    '"15e00a65594a69e380e93362dc22103ccf3ae42de2676ef9e459b4603af887ba"' \
+    'public func validateExactV1() throws {' \
+    'self == Self.frozenV1' \
+    '"prime_native_decoder_b_specific_native300m_resource_witness_authority_v1"' \
+    '"append_only_dependency_free_nonexecuting_current_b_path_native300m_resource_compatibility_revalidation_authority"' \
+    '"7be3d77ad3ed3ae3ec7ec10d0aed6231c1083be4"' \
+    '"428097e2bf01276b91c9f4d7023a3c6ad496c4ca"' \
+    '"68422b34425fce761ce8d4afcbd7b0edbc1cf648"' \
+    '"5ec7b58ed9186e93268b1dad0dcac889a03cb3ff"' \
+    'retirementWorkflowRunID: 31_842_165_031' \
+    'retirementWorkflowRunNumber: 119' \
+    'retirementWorkflowRunAttempt: 1' \
+    'retirementCheckSuiteID: 86_388_590_215' \
+    'retirementActiveRootJobID: 94_901_180_243' \
+    'retirementReviewedMainJobID: 94_901_897_572' \
+    'retirementExactHeadPushRunCount: 1' \
+    'retirementRerunCount: 0' \
+    'retirementArtifactCount: 0' \
+    'retirementRootTestCount: 59' \
+    'retirementIsolatedTestCount: 6' \
+    'retirementFocusedWholeTestCount: 65' \
+    'retirementTotalTestCount: 111' \
+    'preservedIndexSHA256:' \
+    '"8742966c9f6322aa353facd846f4bcfab546cff6ab7997fac86b76249c56dcbb"' \
+    'authoritySourceAndTestAreOnlyNewPaths: true' \
+    '"prime_native_decoder_flattened_dense_one_hot_matmul_input_embedding_v1"' \
+    'selectorCase: "denseOneHotMatmulV1"' \
+    '"flattened_dense_one_hot_matmul_input_embedding_v1"' \
+    '"PrimeNativeGQADecoder.trainingLogitsNoCacheFlattenedDenseOneHotMatmulInputEmbeddingV1"' \
+    '"PrimeNativeGQADecoder.trainingLogitsNoCache"' \
+    '"PrimeNativeGQADecoder.trainingInputEmbeddingForwardPairForFlattenedDenseOneHotMatmulAssayV1"' \
+    'packageOnlySurfaceRequired: true' \
+    'publicDecoderAPIAdded: false' \
+    'defaultGatherPathRemainsByteIdentical: true' \
+    'densePathIsExplicitOptIn: true' \
+    'tokenBoundsCheckedEvalCountPerDenseConstruction: 1' \
+    'tokenBoundsGPUSynchronizeCountPerDenseConstruction: 1' \
+    'tokenBoundsHostBoolItemCountPerDenseConstruction: 1' \
+    'denseMatmulCountPerDenseConstruction: 1' \
+    'vocabularySize: 512' \
+    'modelWidth: 1_024' \
+    'layerCount: 24' \
+    'queryHeadCount: 16' \
+    'keyValueHeadCount: 4' \
+    'headWidth: 64' \
+    'intermediateWidth: 2_816' \
+    'maximumSequenceLength: 2_048' \
+    'parameterPathCount: 218' \
+    'uniqueParameterCount: 271_107_072' \
+    'logicalParameterByteCount: 1_084_428_288' \
+    'initializationSeed: 44' \
+    'batchSize: 1' \
+    'sequenceLength: 128' \
+    'validTokenCount: 128' \
+    'selectedTargetCount: 127' \
+    'denseOneHotShape: [128, 512]' \
+    'denseOneHotElementCount: 65_536' \
+    'denseOneHotLogicalByteCount: 262_144' \
+    'flattenedDenseEmbeddingShape: [128, 1_024]' \
+    'flattenedDenseEmbeddingElementCount: 131_072' \
+    'flattenedDenseEmbeddingLogicalByteCount: 524_288' \
+    'trainingLogitsExpectedShape: [1, 128, 512]' \
+    'shiftedLogitsExpectedShape: [1, 127, 512]' \
+    'optimizerStateExpectedArrayCount: 436' \
+    'optimizerStateExpectedPairCount: 218' \
+    'gradientAccumulationCount: 1' \
+    'optimizerStepCount: 1' \
+    'configurationIsResourceWitnessOnlyNotTrainingPolicy: true' \
+    'weightsLogicalByteCount: 1_084_428_288' \
+    'gradientLogicalByteCount: 1_084_428_288' \
+    'optimizerMomentTensorCount: 436' \
+    'optimizerMomentLogicalByteCount: 2_168_856_576' \
+    'minimumCommittedTensorStateByteCount: 3_253_284_864' \
+    'minimumStatePlusGradientByteCount: 4_337_713_152' \
+    'minimumConfiguredMLXMemoryLimitByteCount: 4_337_713_152' \
+    'configuredMLXMemoryLimitMaximumByteCount: 17_179_869_184' \
+    'configuredMLXCacheLimitByteCount: 0' \
+    'minimumAvailableFilesystemByteCount: 12_884_901_888' \
+    'analyticBIncrementalBytesArePeakEvidence: false' \
+    'analyticBIncrementalBytesAreClearanceEvidence: false' \
+    'passEstablishesOnlyExactRunResourceWitness: true' \
+    'swiftPMBuildConfiguration: "release"' \
+    'buildCount: 1' \
+    'focusedPureContractXCTestCount: 1' \
+    'launcherPureContractXCTestCount: 1' \
+    'pureContractXCTestStartCount: 2' \
+    'launcherInvocationCount: 1' \
+    'directExecutableProbeCount: 1' \
+    'successorAggregateInvocationCount: 3' \
+    'supervisorProcessCount: 1' \
+    'maximumWorkerProcessCount: 1' \
+    'workerSpawnAttemptCount: 1' \
+    'modelAllocationCount: 1' \
+    'modelMaterializationCount: 1' \
+    'valueAndGradCount: 1' \
+    'directPackageBTrainingLogitsAPICallCount: 1' \
+    'maintainedGatherTrainingLogitsCount: 0' \
+    'denseEmbeddingConstructionCount: 1' \
+    'tokenBoundsValidationCount: 1' \
+    'tokenBoundsCheckedEvalCount: 1' \
+    'tokenBoundsGPUSynchronizeCount: 1' \
+    'tokenBoundsHostBoolItemCount: 1' \
+    'crossEntropyCount: 1' \
+    'forwardLossCount: 1' \
+    'backwardCount: 1' \
+    'rawGradientNormCount: 1' \
+    'gradientClipCount: 1' \
+    'optimizerStepCount: 1' \
+    'adamWUpdateCount: 1' \
+    'fullGraphEvaluationCount: 1' \
+    'checkedEvaluationBarrierCount: 6' \
+    'gpuSynchronizationBarrierCount: 6' \
+    'memoryClearCacheCount: 1' \
+    'postflightDeviceReenumerationCount: 1' \
+    'kvCacheAllocationCount: 0' \
+    'evaluationForwardPassCount: 0' \
+    'checkpointReadCount: 0' \
+    'checkpointWriteCount: 0' \
+    'artifactUploadCount: 0' \
+    'qualityMetricComputationCount: 0' \
+    'generatedTokenCount: 0' \
+    'retryAuthorized: false' \
+    'rerunAuthorized: false' \
+    'replacementRunAuthorized: false' \
+    'leaseAcquisitionMode: "exclusive_nonblocking"' \
+    '"O_RDONLY", "O_DIRECTORY", "O_NOFOLLOW", "O_CLOEXEC"' \
+    '"O_RDWR", "O_CREAT", "O_NOFOLLOW", "O_CLOEXEC"' \
+    'descriptorNameRebindRequired: true' \
+    'descriptorNameRebindMustMatchDeviceAndInode: true' \
+    'identityEvidenceIsDescriptorDerivedInSupervisorAndVerifier:' \
+    'parentSecurityFlagsRequiredValue: 0' \
+    'parentACLEntryCountRequired: 0' \
+    '"com.apple.provenance"' \
+    'parentObservedExtendedAttributeNamesMustBeAllowedSubset: true' \
+    'parentLinkCountObserved: true' \
+    'parentLinkCountMustBePositive: false' \
+    'parentLinkCountUsedAsStableIdentityAfterChildCreation: false' \
+    'postCandidateParentFieldsRequiringExactPreflightEquality:' \
+    'postCandidateParentIdentityGuardIsOpaqueAggregate: false' \
+    'postCandidateParentMismatchIdentifiesExactField: true' \
+    'exactOneChildInventoryRequired: true' \
+    'leaseInventoryComparisonRule:' \
+    '"unordered_exact_basename_set_equals_{device-0.lock}"' \
+    'exactChildBasename: "device-0.lock"' \
+    'leaseFileSecurityFlagsRequiredValue: 0' \
+    'leaseFileACLEntryCountRequired: 0' \
+    'leaseFileObservedExtendedAttributeNamesMustBeAllowedSubset:' \
+    'resourceWorkerExecProcessCount: 1' \
+    'releaseVerifierExecProcessCount: 1' \
+    'operationalProbeRoleProcessInvocationCount: 3' \
+    'resourceWorkerSpawnCount: 1' \
+    'releaseVerifierSpawnCount: 1' \
+    'primeLeaseAcquireAttemptCount: 2' \
+    'primeLeaseAcquireSuccessCount: 2' \
+    'primeLeaseReleaseCallCount: 2' \
+    'individualFlockSyscallSuccessClaimCount: 0' \
+    'individualCloseSyscallSuccessClaimCount: 0' \
+    'supervisorIsSoleLeaseOwnerBeforeExplicitRelease: true' \
+    'supervisorHoldsLeaseThroughCandidateAndDeviceMLXPostflight:' \
+    'explicitSupervisorReleaseCount: 1' \
+    'releaseVerifierExecChildCount: 1' \
+    'verifierExecutesWhileSupervisorAliveAfterVoidRelease: true' \
+    'releaseVerifierMustAcquireReleaseAndExitZero: true' \
+    'releaseVerifierExitZeroObservationCount: 1' \
+    'supervisorExitZeroObservationCount: 1' \
+    'outerWaitsForSupervisorExitBeforePublication: true' \
+    'verifierProcessExitProvidesKernelCloseBackstop: true' \
+    'launcherUnlinksLeaseFile: false' \
+    'launcherRemovesLeaseParent: false' \
+    'launcherCleanupUnlinkCount: 0' \
+    'launcherCleanupRemoveFileCount: 0' \
+    'launcherCleanupRemoveDirectoryCount: 0' \
+    'persistentLeaseRootAndLeafAreIntentionalLeaseSemantics: true' \
+    'persistentLeaseRootAndLeafAreRetainedArtifact: false' \
+    'internalCandidateMaximumCount: 1' \
+    'workerPublicCanonicalReceiptCount: 0' \
+    'supervisorPublicCanonicalReceiptCount: 0' \
+    'launcherPublicCanonicalReceiptMaximumCount: 1' \
+    'validTerminalClassificationPublicReceiptCount: 1' \
+    'internalCandidateIsResultEvidence: false' \
+    'anyPublicReceiptRequiresTerminalClassificationClosure: true' \
+    'anyPublicReceiptRequiresSupervisorTermination: true' \
+    'passRequiresValidatedScientificCandidate: true' \
+    'passRequiresLeaseReleaseVerifierAndPersistentIdentityProof:' \
+    'passRequiresAllPostflights: true' \
+    'passRequiresOuterIntegritySuccess: true' \
+    'resourceAbstainMayBeSupervisorSynthesizedWithoutCandidate:' \
+    'resourceAbstainMayCompleteWithoutReleaseVerifierOnlyWhenNoLeaseWasAcquired:' \
+    'resourceAbstainAfterLeaseAcquisitionRequiresReleaseVerifier:' \
+    'resourceAbstainRequiresApplicableLeaseDispositionProof: true' \
+    'resourceAbstainRequiresAllApplicableOuterPostflights: true' \
+    'resourceAbstainRequiresSafeOuterPublicationClosure: true' \
+    '"non_hostile_same_uid_runner_temp_environment"' \
+    'outerPathRebindIsAuthoritativeAgainstHostileSameUIDMutation:' \
+    'integrityAbstainRequiresOuterIntegritySuccess: false' \
+    'publicReceiptEmissionAndFlushAreFinalFallibleLauncherAction:' \
+    'launcherExitTrapsClearedBeforePublicReceipt: true' \
+    '"exec /usr/bin/printf '\''%s\\n'\'' \"$public_line\""' \
+    'noAuthoredActionAfterFinalPublicReceiptExec: true' \
+    'launcherOKMarkerAfterPublicReceipt: false' \
+    'publicReceiptEmissionFailureExitsNonzeroWithoutReceiptClaim:' \
+    'candidateIntegrityOrPostflightFailureEmitsPassOrResourceAbstain:' \
+    'candidateIntegrityOrPostflightFailureEstablishesClearance:' \
+    'candidateIntegrityOrPostflightFailureConsumesOpportunity:' \
+    'candidateIntegrityOrPostflightFailurePermitsRetry: false' \
+    'integrityFailureReceiptStatus: "ABSTAIN_INTEGRITY"' \
+    'integrityFailureReceiptRequiresValidatedCandidate: true' \
+    'integrityFailureReceiptPreservesCandidateScientificStatus:' \
+    'integrityFailureReceiptRequiresFirstFailedGuard: true' \
+    'integrityFailureReceiptRequiresErrnoWhenAvailable: true' \
+    'integrityFailureReceiptRequiresActualMetadataAvailability:' \
+    'integrityFailureReceiptActualMetadataMayBeNull: true' \
+    'integrityFailureReceiptNullActualMetadataRequiresUnavailableReasonOrErrno:' \
+    'integrityFailureReceiptEstablishesResourceClearance: false' \
+    'malformedOrUnsafePrivatePacketMayProduceNoPublicReceipt: true' \
+    'candidateRemainsSeparatelyObservableInRetirement: true' \
+    '"mechanics_success", "workflow_success"' \
+    'authorityRootTestCount: 60' \
+    'isolatedGroupTestCounts: [1, 1, 2, 2]' \
+    'isolatedTestCount: 6' \
+    'authorityFocusedWholeTestCount: 66' \
+    'metalTestCount: 44' \
+    'maintainedRuntimeTestCount: 1' \
+    'tokenizerTestCount: 1' \
+    'authorityTotalXCTestCount: 112' \
+    'authorityOriginalStage5LauncherInvocationCount: 0' \
+    'authorityReplacementStage5LauncherInvocationCount: 0' \
+    'authorityHistoricalStage6LauncherInvocationCount: 0' \
+    'authorityBResourceWitnessLauncherInvocationCount: 0' \
+    'authorityMaintainedRuntimeReceiptCount: 1' \
+    'authorityTokenizerReceiptCount: 1' \
+    'authorityOriginalStage5ReceiptCount: 0' \
+    'authorityReplacementStage5ReceiptCount: 0' \
+    'authorityHistoricalStage6ReceiptCount: 0' \
+    'authorityBResourceWitnessReceiptCount: 0' \
+    'futureFocusedStepXCTestCount: 67' \
+    'futureLiveStepXCTestCount: 47' \
+    'futureTotalXCTestCount: 114' \
+    'futureBContractFocusedXCTestCount: 1' \
+    'futureBContractLauncherXCTestCount: 1' \
+    'futureBContractXCTestStartCount: 2' \
+    'futureBExecutableOperationalProbeCount: 1' \
+    'futureBSuccessorAggregateInvocationCount: 3' \
+    'futureBLauncherInvocationCount: 1' \
+    'futureBPublicReceiptMaximumCount: 1' \
+    '"ABSTAIN", "ABSTAIN_INTEGRITY", "PASS"' \
+    'passRequiresAllResourceAndIntegrityClosureProof: true' \
+    'passEstablishesBSpecificResourceWitness: true' \
+    'passEstablishesHistoricalStage6ApplicabilityToB: false' \
+    'passEstablishesOrdinaryJobFit: false' \
+    'passAuthorizesStage7: false' \
+    'integrityAbstainStatus: "ABSTAIN_INTEGRITY"' \
+    'integrityAbstainEstablishesBSpecificResourceWitness: false' \
+    'integrityAbstainEstablishesResourceClearance: false' \
+    'malformedOrUnsafePrivatePacketEmitsPublicReceipt: false' \
+    'mechanicsBeginningConsumesOneShotEvenWithoutTerminalReceipt:' \
+    'everyOutcomeForbidsRetryAndRerun: true' \
+    'historicalStage6ResourceClearanceAppliesToBPath: false' \
+    'bSpecificNative300MResourceWitnessExecuted: false' \
+    'bSpecificNative300MResourceWitnessEstablished: false' \
+    'bSpecificNative300MResourceClearanceEstablished: false' \
+    'ordinaryJobFitEstablished: false' \
+    'stage7RequiresBSpecificNative300MResourceWitness: true' \
+    'stage7RequiresSeparateAuthorityAfterWitness: true' \
+    'stage7AuthorityEstablished: false' \
+    'stage7Authorized: false' \
+    'candidateAdmissionGranted: false' \
+    'publicationAuthorized: false' \
+    '"AUTHORIZED_exact5_pure_b_specific_native300m_resource_witness_authority_then_one_exact8_exact_main_opportunity_historical_stage6_nonapplicable_candidate_before_public_receipt_stage7_false"'; do
+    grep -Fq -- "$required_b_specific_native300m_resource_witness_authority_value" \
+        "$b_specific_native300m_resource_witness_authority_source" ||
+        die "B-specific Native300M resource-witness authority lost: $required_b_specific_native300m_resource_witness_authority_value"
+done
+
+for exact_b_specific_native300m_resource_witness_successor_path in \
+    '.github/scripts/prime-ci-active-root-quarantine.sh' \
+    '.github/scripts/prime-ci-native-decoder-b-specific-native300m-resource-witness.sh' \
+    '.github/workflows/prime-active-root-quarantine.yml' \
+    'Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' \
+    'Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderBSpecificNative300MResourceWitness.swift' \
+    'Tests/PrimeNativeDecoderTrainingValidation/Package.swift' \
+    'Tests/PrimeNativeDecoderTrainingValidation/Sources/PrimeNativeDecoderBSpecificNative300MResourceWitness/main.swift' \
+    'Tests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderBSpecificNative300MResourceWitnessContractTests.swift'; do
+    grep -Fq -- "$exact_b_specific_native300m_resource_witness_successor_path" \
+        "$b_specific_native300m_resource_witness_authority_source" ||
+        die "B-specific Native300M exact-eight successor lost: $exact_b_specific_native300m_resource_witness_successor_path"
+done
+
+for required_b_specific_native300m_resource_witness_authority_test_value in \
+    'func testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling()' \
+    'XCTAssertNoThrow(try authority.validateExactV1())' \
+    'PrimeSHA256.hexDigest(of: canonical), Authority.canonicalSHA256' \
+    'authority.repository.authorityClosureExactChangedPaths.count, 5' \
+    'authority.successorScope.exactChangedPaths.count, 8' \
+    'authority.configuration.vocabularySize, 512' \
+    'authority.configuration.uniqueParameterCount, 271_107_072' \
+    'authority.configuration.denseOneHotLogicalByteCount, 262_144' \
+    'authority.futureExecution.modelAllocationCount, 1' \
+    'authority.futureExecution.directPackageBTrainingLogitsAPICallCount' \
+    'authority.futureExecution.maintainedGatherTrainingLogitsCount, 0' \
+    'authority.futureExecution.checkedEvaluationBarrierCount, 6' \
+    'authority.futureExecution.gpuSynchronizationBarrierCount, 6' \
+    'XCTAssertFalse(integrity.parentLinkCountMustBePositive)' \
+    'integrity.parentLinkCountUsedAsStableIdentityAfterChildCreation' \
+    'integrity.leaseInventoryComparisonRule' \
+    '["O_RDWR", "O_CREAT", "O_NOFOLLOW", "O_CLOEXEC"]' \
+    'integrity.supervisorIsSoleLeaseOwnerBeforeExplicitRelease' \
+    'integrity.supervisorHoldsLeaseThroughCandidateAndDeviceMLXPostflight' \
+    'integrity.releaseVerifierMustAcquireReleaseAndExitZero' \
+    'integrity.operationalProbeRoleProcessInvocationCount, 3' \
+    'integrity.primeLeaseAcquireAttemptCount, 2' \
+    'integrity.primeLeaseAcquireSuccessCount, 2' \
+    'integrity.primeLeaseReleaseCallCount, 2' \
+    'integrity.individualFlockSyscallSuccessClaimCount, 0' \
+    'integrity.individualCloseSyscallSuccessClaimCount, 0' \
+    '.resourceAbstainMayCompleteWithoutReleaseVerifierOnlyWhenNoLeaseWasAcquired' \
+    '.resourceAbstainAfterLeaseAcquisitionRequiresReleaseVerifier' \
+    'integrity.integrityFailureReceiptStatus, "ABSTAIN_INTEGRITY"' \
+    'integrity.integrityFailureReceiptEstablishesResourceClearance' \
+    '.publicReceiptEmissionAndFlushAreFinalFallibleLauncherAction' \
+    'integrity.launcherExitTrapsClearedBeforePublicReceipt' \
+    'integrity.finalPublicReceiptCommand' \
+    '"exec /usr/bin/printf '\''%s\\n'\'' \"$public_line\""' \
+    'integrity.noAuthoredActionAfterFinalPublicReceiptExec' \
+    'integrity.launcherOKMarkerAfterPublicReceipt' \
+    'authority.suite.authorityRootTestCount, 60' \
+    'authority.suite.authorityTotalXCTestCount, 112' \
+    'authority.suite.authorityMaintainedRuntimeReceiptCount, 1)' \
+    'authority.suite.authorityTokenizerReceiptCount, 1)' \
+    'authority.suite.authorityOriginalStage5ReceiptCount, 0)' \
+    'authority.suite.authorityReplacementStage5ReceiptCount, 0)' \
+    'authority.suite.authorityHistoricalStage6ReceiptCount, 0)' \
+    'authority.suite.authorityBResourceWitnessReceiptCount, 0)' \
+    '"ABSTAIN", "ABSTAIN_INTEGRITY", "PASS"' \
+    'authority.transitions.malformedOrUnsafePrivatePacketEmitsPublicReceipt' \
+    'authority.transitions.integrityAbstainEstablishesResourceClearance' \
+    'ceiling.historicalStage6ResourceClearanceAppliesToBPath' \
+    'ceiling.bSpecificNative300MResourceWitnessExecuted' \
+    'ceiling.bSpecificNative300MResourceWitnessEstablished' \
+    'ceiling.stage7RequiresBSpecificNative300MResourceWitness' \
+    'ceiling.stage7RequiresSeparateAuthorityAfterWitness' \
+    'ceiling.stage7AuthorityEstablished' \
+    'ceiling.stage7Authorized' \
+    'XCTAssertGreaterThan(valuePaths.count, 400)' \
+    'XCTAssertGreaterThan(regularDecodedDriftCount, 300)' \
+    'unknown_b_resource_authority_field_\(index)' \
+    'try assertNoncanonicalEncodingsReject(canonical, object: object)' \
+    'testText.components(separatedBy: "func " + "test").count - 1'; do
+    grep -Fq -- "$required_b_specific_native300m_resource_witness_authority_test_value" \
+        "$b_specific_native300m_resource_witness_authority_test" ||
+        die "B-specific Native300M resource-witness authority test lost: $required_b_specific_native300m_resource_witness_authority_test_value"
+done
+for forbidden_b_specific_native300m_resource_witness_authority_capability in \
+    'import CoreGraphics' 'import Darwin' 'import Metal' 'import MLX' \
+    'import MLXNN' 'import MLXOptimizers' 'PrimeNativeGQADecoder.make(' \
+    'FileManager' 'FileHandle' 'URLSession' 'Process(' \
+    'posix_spawn' 'execve(' 'Memory.snapshot(' 'func runSupervisor('; do
+    ! grep -Fq -- \
+        "$forbidden_b_specific_native300m_resource_witness_authority_capability" \
+        "$b_specific_native300m_resource_witness_authority_source" ||
+        die "B-specific Native300M resource-witness authority gained capability: $forbidden_b_specific_native300m_resource_witness_authority_capability"
 done
 
 [[ -z "$(git -C "$prime_root" status --porcelain=v1 --untracked-files=all)" ]] ||
