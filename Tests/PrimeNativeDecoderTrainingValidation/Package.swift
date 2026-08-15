@@ -9,6 +9,13 @@ let package = Package(
     products: [
         .executable(
             name:
+                "PrimeNativeDecoderBSpecificNative300MResourceWitness",
+            targets: [
+                "PrimeNativeDecoderBSpecificNative300MResourceWitness",
+            ]
+        ),
+        .executable(
+            name:
                 "PrimeNativeDecoderNative300MResourceOnlyOneStepProbe",
             targets: [
                 "PrimeNativeDecoderNative300MResourceOnlyOneStepProbe",
@@ -28,6 +35,22 @@ let package = Package(
         ),
     ],
     targets: [
+        .executableTarget(
+            name:
+                "PrimeNativeDecoderBSpecificNative300MResourceWitness",
+            dependencies: [
+                .product(
+                    name: "PrimeNativeDecoderTraining",
+                    package: "ergentics-prime"
+                ),
+            ],
+            path:
+                "Sources/PrimeNativeDecoderBSpecificNative300MResourceWitness",
+            linkerSettings: [
+                .linkedFramework("CoreGraphics"),
+                .linkedFramework("Metal"),
+            ]
+        ),
         .executableTarget(
             name:
                 "PrimeNativeDecoderNative300MResourceOnlyOneStepProbe",

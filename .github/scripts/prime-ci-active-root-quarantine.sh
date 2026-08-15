@@ -21,6 +21,7 @@ readonly decoder_stage3_tiny_cpu_resume_gate_path="$prime_root/.github/scripts/p
 readonly decoder_stage4_tiny_durable_multileaf_gate_path="$prime_root/.github/scripts/prime-ci-native-decoder-stage4-tiny-durable-multileaf.sh"
 readonly decoder_stage5_tiny_repeated_metal_trajectory_determinism_gate_path="$prime_root/.github/scripts/prime-ci-native-decoder-stage5-tiny-repeated-metal-trajectory-determinism.sh"
 readonly decoder_stage6_native300m_resource_only_one_step_gate_path="$prime_root/.github/scripts/prime-ci-native-decoder-stage6-native300m-resource-only-one-step.sh"
+readonly decoder_b_specific_native300m_resource_witness_gate_path="$prime_root/.github/scripts/prime-ci-native-decoder-b-specific-native300m-resource-witness.sh"
 readonly decoder_checkpoint_v2_io_execution_gate_path="$prime_root/.github/scripts/prime-ci-native-decoder-checkpoint-v2-io.sh"
 readonly decoder_checkpoint_v2_io_root_identity_repair_gate_path="$prime_root/.github/scripts/prime-ci-native-decoder-checkpoint-v2-io-root-identity-repair.sh"
 
@@ -66,51 +67,41 @@ readonly stage6_resource_probe_contract_test_relative_path="Tests/PrimeNativeDec
 readonly b_specific_native300m_resource_witness_authority_source_relative_path="Sources/PrimeCore/PrimeNativeDecoderBSpecificNative300MResourceWitnessAuthority.swift"
 readonly b_specific_native300m_resource_witness_authority_test_relative_path="Tests/PrimeCoreTests/PrimeNativeDecoderBSpecificNative300MResourceWitnessAuthorityTests.swift"
 readonly b_specific_native300m_resource_witness_launcher_relative_path=".github/scripts/prime-ci-native-decoder-b-specific-native300m-resource-witness.sh"
-readonly expected_stage5_replacement_mechanics_preserved_index_sha256="8742966c9f6322aa353facd846f4bcfab546cff6ab7997fac86b76249c56dcbb"
-readonly observed_stage5_replacement_mechanics_preserved_index_sha256="$({
+readonly b_specific_native300m_resource_witness_training_source_relative_path="Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderBSpecificNative300MResourceWitness.swift"
+readonly b_specific_native300m_resource_witness_validation_manifest_relative_path="Tests/PrimeNativeDecoderTrainingValidation/Package.swift"
+readonly b_specific_native300m_resource_witness_executable_main_relative_path="Tests/PrimeNativeDecoderTrainingValidation/Sources/PrimeNativeDecoderBSpecificNative300MResourceWitness/main.swift"
+readonly b_specific_native300m_resource_witness_contract_test_relative_path="Tests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderBSpecificNative300MResourceWitnessContractTests.swift"
+readonly expected_b_specific_native300m_resource_witness_mechanics_preserved_index_sha256="de530cb1b5e6c2d8612d97ca1d22a0378fe530a6915dab88648a5caf3dae056d"
+readonly observed_b_specific_native300m_resource_witness_mechanics_preserved_index_sha256="$({
     git -C "$prime_root" ls-files -s |
         while IFS= read -r index_record; do
             relative_path="${index_record#*$'\t'}"
             if [[ "$relative_path" \
                     == '.github/scripts/prime-ci-active-root-quarantine.sh' \
                 || "$relative_path" \
+                    == "$b_specific_native300m_resource_witness_launcher_relative_path" \
+                || "$relative_path" \
                     == '.github/workflows/prime-active-root-quarantine.yml' \
                 || "$relative_path" \
                     == 'Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' \
                 || "$relative_path" \
-                    == "$b_specific_native300m_resource_witness_authority_source_relative_path" \
+                    == "$b_specific_native300m_resource_witness_training_source_relative_path" \
                 || "$relative_path" \
-                    == "$b_specific_native300m_resource_witness_authority_test_relative_path" \
+                    == "$b_specific_native300m_resource_witness_validation_manifest_relative_path" \
                 || "$relative_path" \
-                    == "$stage5_replacement_launcher_relative_path" \
+                    == "$b_specific_native300m_resource_witness_executable_main_relative_path" \
                 || "$relative_path" \
-                    == "$stage5_replacement_current_decoder_identity_source_relative_path" \
-                || "$relative_path" \
-                    == 'Sources/PrimeNativeDecoder/PrimeNativeGQADecoder.swift' \
-                || "$relative_path" \
-                    == 'Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderTraining.swift' \
-                || "$relative_path" \
-                    == "$stage5_replacement_current_decoder_identity_test_relative_path" \
-                || "$relative_path" \
-                    == "$stage5_replacement_assay_test_relative_path" \
-                || "$relative_path" \
-                    == "$stage5_replacement_retained_decoder_authority_test_relative_path" ]]; then
-                continue
-            fi
-            if [[ "$relative_path" \
-                    == "$stage5_replacement_execution_observation_source_relative_path" \
-                || "$relative_path" \
-                    == "$stage5_replacement_execution_observation_test_relative_path" ]]; then
+                    == "$b_specific_native300m_resource_witness_contract_test_relative_path" ]]; then
                 continue
             fi
             printf '%s\n' "$index_record"
         done
 } | LC_ALL=C sort | shasum -a 256 | awk '{print $1}')"
-[[ "$expected_stage5_replacement_mechanics_preserved_index_sha256" \
+[[ "$expected_b_specific_native300m_resource_witness_mechanics_preserved_index_sha256" \
         =~ ^[0-9a-f]{64}$ \
-    && "$observed_stage5_replacement_mechanics_preserved_index_sha256" \
-        == "$expected_stage5_replacement_mechanics_preserved_index_sha256" ]] ||
-    die "B-specific Native300M authority changed a path outside its exact-five closure or the frozen Stage-5 mechanics and observation scopes"
+    && "$observed_b_specific_native300m_resource_witness_mechanics_preserved_index_sha256" \
+        == "$expected_b_specific_native300m_resource_witness_mechanics_preserved_index_sha256" ]] ||
+    die "B-specific Native300M mechanics changed a path outside its exact eight-path closure"
 for exact_stage5_replacement_mechanics_path in \
     '.github/scripts/prime-ci-active-root-quarantine.sh' \
     "$stage5_replacement_launcher_relative_path" \
@@ -156,6 +147,27 @@ for exact_b_specific_native300m_resource_witness_authority_path in \
         awk '{print $1}')" \
         == "$expected_b_specific_native300m_resource_witness_authority_mode" ]] ||
         die "B-specific Native300M resource-witness authority exact-five path is missing or has the wrong mode: $exact_b_specific_native300m_resource_witness_authority_path"
+done
+for exact_b_specific_native300m_resource_witness_mechanics_path in \
+    '.github/scripts/prime-ci-active-root-quarantine.sh' \
+    "$b_specific_native300m_resource_witness_launcher_relative_path" \
+    '.github/workflows/prime-active-root-quarantine.yml' \
+    'Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' \
+    "$b_specific_native300m_resource_witness_training_source_relative_path" \
+    "$b_specific_native300m_resource_witness_validation_manifest_relative_path" \
+    "$b_specific_native300m_resource_witness_executable_main_relative_path" \
+    "$b_specific_native300m_resource_witness_contract_test_relative_path"; do
+    expected_b_specific_native300m_resource_witness_mechanics_mode="100644"
+    case "$exact_b_specific_native300m_resource_witness_mechanics_path" in
+        '.github/scripts/'*)
+            expected_b_specific_native300m_resource_witness_mechanics_mode="100755"
+            ;;
+    esac
+    [[ "$(git -C "$prime_root" ls-files -s -- \
+        "$exact_b_specific_native300m_resource_witness_mechanics_path" | \
+        awk '{print $1}')" \
+        == "$expected_b_specific_native300m_resource_witness_mechanics_mode" ]] ||
+        die "B-specific Native300M mechanics exact path is missing or has the wrong mode: $exact_b_specific_native300m_resource_witness_mechanics_path"
 done
 
 assert_stage5_mechanics_payload_identity() {
@@ -646,7 +658,7 @@ grep -Fq -- 'runs-on: macos-15' "$workflow_path" ||
     && "$(awk '
         /^  trusted-main-compile:$/ { inside = 1; next }
         inside && /^    timeout-minutes:/ { print $2 }
-    ' "$workflow_path")" == "60" ]] ||
+    ' "$workflow_path")" == "90" ]] ||
     die "hosted quarantine workflow runner or timeout boundary changed"
 [[ "$(grep -Fxc -- \
     '          git -C ergentics-prime fetch --depth=1 --no-tags --no-write-fetch-head origin "$EXACT_REVISION"' \
@@ -1140,6 +1152,17 @@ bash -n "$decoder_checkpoint_v2_io_root_identity_repair_gate_path" ||
     die "Prime Stage-6 Native-300M resource-only launcher is missing, linked, untracked, or not executable"
 bash -n "$decoder_stage6_native300m_resource_only_one_step_gate_path" ||
     die "Prime Stage-6 Native-300M resource-only launcher is not valid Bash"
+[[ -f "$decoder_b_specific_native300m_resource_witness_gate_path" \
+    && ! -L "$decoder_b_specific_native300m_resource_witness_gate_path" \
+    && "$(git -C "$prime_root" ls-files -- \
+        "$b_specific_native300m_resource_witness_launcher_relative_path")" \
+        == "$b_specific_native300m_resource_witness_launcher_relative_path" \
+    && "$(git -C "$prime_root" ls-files -s -- \
+        "$b_specific_native300m_resource_witness_launcher_relative_path" | \
+        awk '{print $1}')" == "100755" ]] ||
+    die "Prime B-specific Native300M resource-witness launcher is missing, linked, untracked, or not executable"
+bash -n "$decoder_b_specific_native300m_resource_witness_gate_path" ||
+    die "Prime B-specific Native300M resource-witness launcher is not valid Bash"
 grep -Fq -- '      - name: Run the Prime-owned decoder on live Metal' \
     "$workflow_path" ||
     die "trusted-main workflow lost the frozen decoder Metal step"
@@ -1152,17 +1175,24 @@ readonly runtime_closure_workflow_line="$(grep -nFx -- \
 readonly tokenizer_compatibility_workflow_line="$(grep -nFx -- \
     '          bash .github/scripts/prime-ci-native-decoder-tokenizer-compatibility.sh' \
     "$workflow_path" | awk -F: '{print $1}')"
+readonly b_specific_native300m_resource_witness_workflow_line="$(grep -nFx -- \
+    '          bash .github/scripts/prime-ci-native-decoder-b-specific-native300m-resource-witness.sh' \
+    "$workflow_path" | awk -F: '{print $1}')"
 [[ "$frozen_metal_workflow_line" =~ ^[1-9][0-9]*$ \
     && "$runtime_closure_workflow_line" =~ ^[1-9][0-9]*$ \
     && "$tokenizer_compatibility_workflow_line" =~ ^[1-9][0-9]*$ \
+    && "$b_specific_native300m_resource_witness_workflow_line" \
+        =~ ^[1-9][0-9]*$ \
     && "$runtime_closure_workflow_line" \
         -eq $((frozen_metal_workflow_line + 1)) \
     && "$tokenizer_compatibility_workflow_line" \
-        -eq $((runtime_closure_workflow_line + 1)) ]] ||
-    die "trusted-main workflow does not retain exactly the Metal, runtime, tokenizer order"
+        -eq $((runtime_closure_workflow_line + 1)) \
+    && "$b_specific_native300m_resource_witness_workflow_line" \
+        -eq $((tokenizer_compatibility_workflow_line + 1)) ]] ||
+    die "trusted-main workflow does not retain exactly the Metal, runtime, tokenizer, B-witness order"
 [[ "$(grep -Fc -- \
     '          bash .github/scripts/prime-ci-native-decoder-' \
-    "$workflow_path")" == "3" \
+    "$workflow_path")" == "4" \
     && "$(grep -Fxc -- \
         '          bash .github/scripts/prime-ci-native-decoder-metal.sh' \
         "$workflow_path")" == "1" \
@@ -1186,7 +1216,7 @@ readonly tokenizer_compatibility_workflow_line="$(grep -nFx -- \
         "$workflow_path")" == "0" \
     && "$(grep -Fxc -- \
         '          bash .github/scripts/prime-ci-native-decoder-b-specific-native300m-resource-witness.sh' \
-        "$workflow_path")" == "0" \
+        "$workflow_path")" == "1" \
     && "$(grep -Fc -- \
         'PRIME_NATIVE_DECODER_STAGE5_TINY_REPEATED_METAL_TRAJECTORY_DETERMINISM_RECEIPT=' \
         "$workflow_path")" == "0" \
@@ -1201,7 +1231,7 @@ readonly tokenizer_compatibility_workflow_line="$(grep -nFx -- \
     && "$(grep -Fc -- \
         'PRIME_NATIVE_DECODER_B_SPECIFIC_NATIVE300M_RESOURCE_WITNESS_INTERNAL_CANDIDATE_V1=' \
         "$workflow_path")" == "0" ]] ||
-    die "trusted-main workflow lost the exact three-launcher sequence or activated a retired or future one-shot"
+    die "trusted-main workflow lost the exact four-launcher sequence or activated a retired one-shot"
 readonly live_decoder_workflow_block="$(awk '
     /^      - name: Run the Prime-owned decoder on live Metal$/ { inside = 1 }
     inside { print }
@@ -1211,9 +1241,10 @@ readonly expected_live_decoder_workflow_block='      - name: Run the Prime-owned
         run: |
           bash .github/scripts/prime-ci-native-decoder-metal.sh
           bash .github/scripts/prime-ci-native-decoder-runtime-closure.sh
-          bash .github/scripts/prime-ci-native-decoder-tokenizer-compatibility.sh'
+          bash .github/scripts/prime-ci-native-decoder-tokenizer-compatibility.sh
+          bash .github/scripts/prime-ci-native-decoder-b-specific-native300m-resource-witness.sh'
 [[ "$live_decoder_workflow_block" == "$expected_live_decoder_workflow_block" ]] ||
-    die "trusted-main exact contiguous Metal, runtime, and tokenizer block changed"
+    die "trusted-main exact contiguous Metal, runtime, tokenizer, and B-witness block changed"
 ! grep -Fq -- \
     '          bash .github/scripts/prime-ci-native-decoder-checkpoint-v2-io.sh' \
     "$workflow_path" ||
@@ -1222,10 +1253,6 @@ readonly expected_live_decoder_workflow_block='      - name: Run the Prime-owned
     '          bash .github/scripts/prime-ci-native-decoder-checkpoint-v2-io-root-identity-repair.sh' \
     "$workflow_path" ||
     die "retired Prime native decoder checkpoint V2 I/O root-identity repair one-shot remains live"
-[[ ! -e "$prime_root/$b_specific_native300m_resource_witness_launcher_relative_path" \
-    && -z "$(git -C "$prime_root" ls-files -- \
-        "$b_specific_native300m_resource_witness_launcher_relative_path")" ]] ||
-    die "B-specific Native300M resource-witness launcher exists inside the pure exact-five authority"
 grep -Fq -- \
     '--package-path Tests/PrimeNativeDecoderCheckpointCompatibilityV2Validation' \
     "$workflow_path" ||
@@ -1338,6 +1365,7 @@ readonly stage5_replacement_execution_observation_filter='PrimeCoreTests.PrimeNa
 readonly stage6_native300m_resource_only_one_step_probe_authority_filter='PrimeCoreTests.PrimeNativeDecoderNative300MResourceOnlyOneStepProbeAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling'
 readonly stage6_native300m_resource_only_one_step_probe_execution_observation_filter='PrimeCoreTests.PrimeNativeDecoderNative300MResourceOnlyOneStepProbeExecutionObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndSuccessCeiling'
 readonly b_specific_native300m_resource_witness_authority_filter='PrimeCoreTests.PrimeNativeDecoderBSpecificNative300MResourceWitnessAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling'
+readonly b_specific_native300m_resource_witness_contract_filter='PrimeNativeDecoderBSpecificNative300MResourceWitnessContractTests/testBSpecificNative300MResourceWitnessContractIsExactAndExecutionPure'
 [[ "$(grep -Fc -- "$tiny_cpu_mechanics_authority_filter" \
         "$workflow_path")" == "1" \
     && "$(grep -Fc -- "$tiny_cpu_mechanics_failure_observation_filter" \
@@ -1726,26 +1754,52 @@ readonly b_specific_native300m_resource_witness_authority_filter='PrimeCoreTests
         "          grep -Fq 'PrimeNativeDecoderBSpecificNative300MResourceWitnessAuthorityTests' \\" \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the sole B-specific Native300M resource-witness authority contract"
-[[ "$(grep -Fc -- \
-        'PrimeNativeDecoderBSpecificNative300MResourceWitnessContractTests/testBSpecificNative300MResourceWitnessContractIsExactAndExecutionPure' \
-        "$workflow_path")" == "0" \
+[[ "$(grep -Fxc -- \
+        "          readonly b_specific_native300m_resource_witness_contract_filter='${b_specific_native300m_resource_witness_contract_filter}'" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        '          readonly b_specific_native300m_resource_witness_focused_contract_test_log="$RUNNER_TEMP/prime-native-decoder-b-specific-native300m-resource-witness-focused-contract-tests.log"' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        '            --package-path Tests/PrimeNativeDecoderTrainingValidation \' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        '            --filter "$b_specific_native300m_resource_witness_contract_filter" \' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        "          grep -Fq 'PrimeNativeDecoderBSpecificNative300MResourceWitnessContractTests' \\" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        "          grep -Fq 'testBSpecificNative300MResourceWitnessContractIsExactAndExecutionPure' \\" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        "          grep -Fq 'Executed 1 test, with 0 failures' \\" \
+        "$workflow_path")" == "3" \
     && "$(grep -Fc -- \
-        'Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderBSpecificNative300MResourceWitness.swift' \
-        "$workflow_path")" == "0" \
+        "$b_specific_native300m_resource_witness_training_source_relative_path" \
+        "$workflow_path")" == "1" \
     && "$(grep -Fc -- \
-        'Tests/PrimeNativeDecoderTrainingValidation/Sources/PrimeNativeDecoderBSpecificNative300MResourceWitness/main.swift' \
-        "$workflow_path")" == "0" \
+        "$b_specific_native300m_resource_witness_executable_main_relative_path" \
+        "$workflow_path")" == "1" \
     && "$(grep -Fc -- \
-        'Tests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderBSpecificNative300MResourceWitnessContractTests.swift' \
-        "$workflow_path")" == "0" ]] ||
-    die "hosted workflow executes or parses future exact-eight B-specific Native300M mechanics during the pure authority"
+        "$b_specific_native300m_resource_witness_contract_test_relative_path" \
+        "$workflow_path")" == "1" ]] ||
+    die "hosted workflow lost the exact B-specific Native300M focused pure-contract validation"
+readonly b_specific_native300m_resource_witness_focused_filter_workflow_line="$(grep -nFx -- \
+    '            --filter "$b_specific_native300m_resource_witness_contract_filter" \' \
+    "$workflow_path" | awk -F: '{print $1}')"
+[[ "$b_specific_native300m_resource_witness_focused_filter_workflow_line" \
+        =~ ^[1-9][0-9]*$ \
+    && "$b_specific_native300m_resource_witness_focused_filter_workflow_line" \
+        -lt "$b_specific_native300m_resource_witness_workflow_line" ]] ||
+    die "B-specific Native300M focused pure contract is not ordered before the retained live sequence"
 [[ "$(grep -Fc -- 'stage6_resource_probe_contract_filter' \
         "$workflow_path")" == "0" \
     && "$(grep -Fc -- 'stage6_resource_probe_contract_test_log' \
         "$workflow_path")" == "0" \
     && "$(grep -Fxc -- \
         '            --package-path Tests/PrimeNativeDecoderTrainingValidation \' \
-        "$workflow_path")" == "0" \
+        "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
         '          bash .github/scripts/prime-ci-native-decoder-stage6-native300m-resource-only-one-step.sh' \
         "$workflow_path")" == "0" \
@@ -1755,7 +1809,7 @@ readonly b_specific_native300m_resource_witness_authority_filter='PrimeCoreTests
         "$workflow_path")" == "1" \
     && "$(grep -Fc -- "$stage6_resource_probe_contract_test_relative_path" \
         "$workflow_path")" == "1" ]] ||
-    die "hosted workflow retained a Stage-6 focused or live execution while losing syntax-only mechanics coverage"
+    die "hosted workflow retained a historical Stage-6 execution or lost syntax-only historical mechanics coverage"
 for required_stage5_swift_numerics_resolution_workflow_value in \
     'readonly numerics_revision="0c0290ff6b24942dadb83a929ffaaa1481df04a2"' \
     'readonly numerics_source="$RUNNER_TEMP/prime-active-root-build/checkouts/swift-numerics"' \
@@ -1828,11 +1882,11 @@ readonly observed_stage5_swift_numerics_resolution_workflow_block="$(awk '
         "$workflow_path")" == "1" \
     && "$(grep -Ec -- \
         '^[[:space:]]+TMPDIR=.* swift test \\' \
-        "$workflow_path")" == "5" \
+        "$workflow_path")" == "6" \
     && "$(grep -Fxc -- \
         '            --force-resolved-versions \' \
-        "$workflow_path")" == "5" ]] ||
-    die "workflow changed the root/isolated SwiftPM command or pre-root MLX rewrite ceilings"
+        "$workflow_path")" == "6" ]] ||
+    die "workflow changed the root/isolated/B-pure SwiftPM command or pre-root MLX rewrite ceilings"
 readonly root_test_log_workflow_line="$(grep -nFx -- \
     '            2>&1 | tee "$test_log"' "$workflow_path" | awk -F: '{print $1}')"
 readonly numerics_validation_workflow_line="$(grep -nFx -- \
@@ -2023,7 +2077,7 @@ for required_stage6_resource_probe_mechanics_summary_value in \
     'root 55, isolated 6, focused whole 61, Metal 44, maintained runtime 1 with one receipt, and tokenizer 1 with one receipt for 107 XTests' \
     'Stage-6 launcher and receipt both zero, one exact-head push, and zero artifact, retry, rerun, TLS failure, bypass, or custom CA' \
     'direct exact-eight mechanics successor preserves the frozen authority, root manifest and lock, validation lock, existing Training source, and all old launchers' \
-    'Reviewed main alone widens from 60 to 90 minutes' \
+    'Reviewed main alone widens from 60 to 90 minutes, runs the new pure mechanics contract once before the live sequence' \
     'new pure mechanics contract once before the live sequence' \
     'retains Metal, maintained runtime, and tokenizer before exactly one Stage-6 launcher' \
     'compiles Release once with --build-tests, reruns the same pure contract once with --skip-build' \
@@ -2168,6 +2222,31 @@ for required_b_specific_native300m_resource_witness_authority_summary_value in \
         "$workflow_path")" == "1" ]] ||
         die "workflow lost the B-specific Native300M resource-witness authority summary: $required_b_specific_native300m_resource_witness_authority_summary_value"
 done
+for required_b_specific_native300m_resource_witness_mechanics_summary_value in \
+    'Exact-main B-specific Native-300M authority merge b1695b17523068e2b720066d84c422cbe2e67975, tree 3b910fe8bbdec008cf9665b6208292f7c1c0c7f3' \
+    'ordered parents 7be3d77ad3ed3ae3ec7ec10d0aed6231c1083be4 then ff612ddc6420bc7db0f4993b7aeff7e17fb3f9bc, PR 112' \
+    'unique push workflow run 31850975271 number 121 attempt 1 check suite 86410537152' \
+    'active job 94926582838 and reviewed job 94927151419' \
+    'root 60, isolated 6, focused whole 66' \
+    'Metal 44, maintained runtime 1 with one receipt, and tokenizer 1 with one receipt for live 46 and total 112' \
+    'original Stage-5, replacement Stage-5, historical Stage-6, and B-witness launcher and receipt counts were zero' \
+    'direct exact-eight successor preserves the frozen authority pair, root manifest and lock, validation lock, every preexisting production decoder source, and all old launchers' \
+    'Reviewed main alone widens from 60 to 90 minutes, adds exactly one focused execution-pure B contract for focused whole 67' \
+    'exactly one focused execution-pure B contract for focused whole 67' \
+    'retains Metal, maintained runtime, and tokenizer before exactly one B-witness launcher' \
+    'one Release build, reruns that same pure contract once, and directly invokes one supervisor executable' \
+    'live XTests 47 and total XTests 114 plus one operational probe' \
+    'exact successor aggregate invocation topology is three: focused contract, launcher-local contract, and direct executable' \
+    'safe terminal PASS, ABSTAIN, or ABSTAIN_INTEGRITY may publish at most one supervisor-owned canonical public receipt' \
+    'sole public receipt embeds the validated private candidate when present and the validated private supervisor terminal with their canonical byte counts and hashes' \
+    'preserving measured phase, peak, and descriptor-closure evidence while binding any outer first failure separately' \
+    'all outcomes consume the one-shot' \
+    'no retry, rerun, replacement, unlink, remove, rmdir, manual cleanup, receipt file, Actions artifact, checkpoint, ordinary-job-fit, Stage-7 authority, trial, canary, quantization, product, or publication authority is granted'; do
+    [[ "$(grep -Fc -- \
+        "$required_b_specific_native300m_resource_witness_mechanics_summary_value" \
+        "$workflow_path")" == "1" ]] ||
+        die "workflow lost the B-specific Native300M mechanics summary: $required_b_specific_native300m_resource_witness_mechanics_summary_value"
+done
 [[ "$(grep -Fc -- \
         'Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderTrajectoryCheckpointV1.swift' \
         "$workflow_path")" == "1" \
@@ -2298,7 +2377,7 @@ done
         "$workflow_path")" == "1" \
     && "$(grep -Fc -- \
         '--package-path Tests/PrimeNativeDecoderTrainingValidation' \
-        "$workflow_path")" == "0" \
+        "$workflow_path")" == "1" \
     && "$(grep -Fc -- \
         'PrimeNativeDecoderTrainingTests/testTinyCPUTrainEvaluateMechanicsAreExactAndFailClosed' \
         "$workflow_path")" == "0" \
@@ -2312,7 +2391,7 @@ done
         "$workflow_path")" == "0" \
     && "$(grep -Fc -- 'prime-native-decoder-training-security' \
         "$workflow_path")" == "0" ]] ||
-    die "reviewed-main workflow bypassed the bounded Stage-2 successor launcher with an inline mechanics invocation"
+    die "reviewed-main workflow changed the sole B-pure package invocation or bypassed the bounded Stage-2 successor launcher with inline mechanics"
 for required_metal_gate_value in \
     'MTLCreateSystemDefaultDevice' \
     '-target Cmlx' \
@@ -3170,18 +3249,26 @@ jq -e \
           contains($expected_origin)
           and contains($expected_revision)
       )] | length) == 1
-      and (.products | length) == 1
-      and .products[0].name
-          == "PrimeNativeDecoderNative300MResourceOnlyOneStepProbe"
-      and .products[0].targets
-          == ["PrimeNativeDecoderNative300MResourceOnlyOneStepProbe"]
-      and (.products[0].type | keys) == ["executable"]
-      and (.targets | length) == 2
+      and (.products | length) == 2
+      and [.products[].name] == [
+          "PrimeNativeDecoderBSpecificNative300MResourceWitness",
+          "PrimeNativeDecoderNative300MResourceOnlyOneStepProbe"
+      ]
+      and [.products[].targets] == [
+          ["PrimeNativeDecoderBSpecificNative300MResourceWitness"],
+          ["PrimeNativeDecoderNative300MResourceOnlyOneStepProbe"]
+      ]
+      and [.products[].type | keys] == [
+          ["executable"],
+          ["executable"]
+      ]
+      and (.targets | length) == 3
       and [.targets[].name] == [
+          "PrimeNativeDecoderBSpecificNative300MResourceWitness",
           "PrimeNativeDecoderNative300MResourceOnlyOneStepProbe",
           "PrimeNativeDecoderTrainingTests"
       ]
-      and [.targets[].type] == ["executable", "test"]
+      and [.targets[].type] == ["executable", "executable", "test"]
       and ([.targets[0].dependencies[].product[0]]
           == ["PrimeNativeDecoderTraining"])
       and ([.targets[0].dependencies[].product[1]]
@@ -3190,23 +3277,31 @@ jq -e \
           "CoreGraphics",
           "Metal"
       ])
-      and ([.targets[1].dependencies[].product[0]] == [
+      and ([.targets[1].dependencies[].product[0]]
+          == ["PrimeNativeDecoderTraining"])
+      and ([.targets[1].dependencies[].product[1]]
+          == ["ergentics-prime"])
+      and ([.targets[1].settings[].kind.linkedFramework._0] == [
+          "CoreGraphics",
+          "Metal"
+      ])
+      and ([.targets[2].dependencies[].product[0]] == [
           "PrimeCore",
           "PrimeNativeDecoderTraining",
           "MLX"
       ])
-      and ([.targets[1].dependencies[].product[1]] == [
+      and ([.targets[2].dependencies[].product[1]] == [
           "ergentics-prime",
           "ergentics-prime",
           "ergentics-mlx-swift"
       ])
-      and ([.targets[1].settings[].kind.linkedFramework._0] == [
+      and ([.targets[2].settings[].kind.linkedFramework._0] == [
           "CoreGraphics",
           "Metal"
       ])
     ' \
     "$decoder_training_validation_manifest_dump" >/dev/null ||
-    die "PrimeNativeDecoder Stage-6 validation manifest changed"
+    die "PrimeNativeDecoder B-specific Native300M validation manifest changed"
 
 readonly decoder_source="$prime_root/Sources/PrimeNativeDecoder/PrimeNativeGQADecoder.swift"
 readonly decoder_authority_source="$prime_root/Sources/PrimeCore/PrimeNativeDecoderAuthority.swift"
@@ -3333,6 +3428,10 @@ readonly stage6_native300m_resource_only_one_step_probe_executable_main="$prime_
 readonly stage6_native300m_resource_only_one_step_probe_contract_test="$prime_root/$stage6_resource_probe_contract_test_relative_path"
 readonly b_specific_native300m_resource_witness_authority_source="$prime_root/$b_specific_native300m_resource_witness_authority_source_relative_path"
 readonly b_specific_native300m_resource_witness_authority_test="$prime_root/$b_specific_native300m_resource_witness_authority_test_relative_path"
+readonly b_specific_native300m_resource_witness_launcher="$prime_root/$b_specific_native300m_resource_witness_launcher_relative_path"
+readonly b_specific_native300m_resource_witness_training_source="$prime_root/$b_specific_native300m_resource_witness_training_source_relative_path"
+readonly b_specific_native300m_resource_witness_executable_main="$prime_root/$b_specific_native300m_resource_witness_executable_main_relative_path"
+readonly b_specific_native300m_resource_witness_contract_test="$prime_root/$b_specific_native300m_resource_witness_contract_test_relative_path"
 readonly decoder_training_source="$prime_root/Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderTraining.swift"
 readonly decoder_training_validation_root="$prime_root/Tests/PrimeNativeDecoderTrainingValidation"
 readonly decoder_training_validation_manifest="$decoder_training_validation_root/Package.swift"
@@ -3352,7 +3451,7 @@ readonly decoder_stage5_tiny_repeated_metal_trajectory_test="$prime_root/$stage5
     == 'Sources/PrimeNativeDecoderRuntime/PrimeNativeDecoderRuntime.swift' ]] ||
     die "PrimeNativeDecoderRuntime production source inventory changed"
 [[ "$(git -C "$prime_root" ls-files -- 'Sources/PrimeNativeDecoderTraining')" \
-    == $'Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderNative300MResourceOnlyOneStepProbe.swift\nSources/PrimeNativeDecoderTraining/PrimeNativeDecoderTraining.swift' ]] ||
+    == $'Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderBSpecificNative300MResourceWitness.swift\nSources/PrimeNativeDecoderTraining/PrimeNativeDecoderNative300MResourceOnlyOneStepProbe.swift\nSources/PrimeNativeDecoderTraining/PrimeNativeDecoderTraining.swift' ]] ||
     die "PrimeNativeDecoderTraining production source inventory changed"
 [[ "$(git -C "$prime_root" ls-files -- 'Tests/PrimeNativeDecoderValidation')" \
     == $'Tests/PrimeNativeDecoderValidation/Package.resolved\nTests/PrimeNativeDecoderValidation/Package.swift\nTests/PrimeNativeDecoderValidation/Tests/PrimeNativeDecoderTests/PrimeNativeDecoderAuthorityTests.swift\nTests/PrimeNativeDecoderValidation/Tests/PrimeNativeDecoderTests/PrimeNativeDecoderCheckpointTests.swift\nTests/PrimeNativeDecoderValidation/Tests/PrimeNativeDecoderTests/PrimeNativeGQADecoderTests.swift' ]] ||
@@ -3383,8 +3482,8 @@ readonly decoder_stage5_tiny_repeated_metal_trajectory_test="$prime_root/$stage5
     die "PrimeNativeDecoder tokenizer-compatibility validation inventory changed"
 [[ "$(git -C "$prime_root" ls-files -- \
     'Tests/PrimeNativeDecoderTrainingValidation')" \
-    == $'Tests/PrimeNativeDecoderTrainingValidation/Package.resolved\nTests/PrimeNativeDecoderTrainingValidation/Package.swift\nTests/PrimeNativeDecoderTrainingValidation/Sources/PrimeNativeDecoderNative300MResourceOnlyOneStepProbe/main.swift\nTests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderNative300MResourceOnlyOneStepProbeContractTests.swift\nTests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeTests.swift\nTests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionTests.swift\nTests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayReplacementTests.swift\nTests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayTests.swift\nTests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTrainingTests.swift' ]] ||
-    die "PrimeNativeDecoder Stage-5 replacement validation inventory changed"
+    == $'Tests/PrimeNativeDecoderTrainingValidation/Package.resolved\nTests/PrimeNativeDecoderTrainingValidation/Package.swift\nTests/PrimeNativeDecoderTrainingValidation/Sources/PrimeNativeDecoderBSpecificNative300MResourceWitness/main.swift\nTests/PrimeNativeDecoderTrainingValidation/Sources/PrimeNativeDecoderNative300MResourceOnlyOneStepProbe/main.swift\nTests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderBSpecificNative300MResourceWitnessContractTests.swift\nTests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderNative300MResourceOnlyOneStepProbeContractTests.swift\nTests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeTests.swift\nTests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionTests.swift\nTests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayReplacementTests.swift\nTests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayTests.swift\nTests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTrainingTests.swift' ]] ||
+    die "PrimeNativeDecoder B-specific Native300M mechanics validation inventory changed"
 [[ ! -e "$prime_root/Tests/PrimeNativeDecoderValidation/.swiftpm" \
     && ! -L "$prime_root/Tests/PrimeNativeDecoderValidation/.swiftpm" ]] ||
     die "PrimeNativeDecoder validation must use the supplied isolated config path"
@@ -4500,6 +4599,11 @@ swiftc -frontend -parse "$stage5_replacement_execution_observation_test"
 swiftc -frontend -parse "$stage5_replacement_assay_test"
 swiftc -frontend -parse "$stage6_native300m_resource_only_one_step_probe_execution_observation_source"
 swiftc -frontend -parse "$stage6_native300m_resource_only_one_step_probe_execution_observation_test"
+swiftc -frontend -parse "$b_specific_native300m_resource_witness_authority_source"
+swiftc -frontend -parse "$b_specific_native300m_resource_witness_authority_test"
+swiftc -frontend -parse "$b_specific_native300m_resource_witness_training_source"
+swiftc -frontend -parse "$b_specific_native300m_resource_witness_executable_main"
+swiftc -frontend -parse "$b_specific_native300m_resource_witness_contract_test"
 swiftc -frontend -parse "$decoder_training_source"
 swiftc -frontend -parse "$decoder_training_validation_test"
 swiftc -frontend -parse "$decoder_stage3_tiny_cpu_resume_test"
@@ -6554,9 +6658,9 @@ assert_tiny_cpu_mechanics_source_identity \
 assert_tiny_cpu_mechanics_source_identity \
     'Tests/PrimeNativeDecoderTrainingValidation/Package.swift' \
     '100644' \
-    '1bce54baedf4293fcba01238228105f987fd43d3' \
-    '1993' \
-    '8488fbd194efcd6900604923a922485f72c2ce4b870c6efd2267564f3bff43a9'
+    '08b732f88ce3be0cd86905df8b78f2492c7ca557' \
+    '2778' \
+    '46fca0c696a46ccc9e22180ca5ec80cffc202a43b68b5f8c9568051e8e71348e'
 assert_tiny_cpu_mechanics_source_identity \
     'Tests/PrimeNativeDecoderTrainingValidation/Package.resolved' \
     '100644' \
@@ -9499,9 +9603,42 @@ done
 [[ "$(wc -l < "$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift" | \
         awk '{print $1}')" == "13" \
     && "$(grep -Fxc -- \
-        '        "fe5bcfaa1aced97aa93268c9cd8f3d773e377ca307effa76d1132c60e7a44369"' \
+        '        "2e349f89ce2c0e4f985c93cc7ea834f14f9cf8f9ecaee6812347c96192665e9d"' \
         "$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift")" == "1" ]] ||
     die "B-specific Native300M resource-witness authority embedded provenance identity changed"
+readonly expected_embedded_source_identity_sha256="$(awk -F'"' \
+    '/^[[:space:]]+"[0-9a-f]{64}"$/ { print $2 }' \
+    "$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift")"
+readonly recomputed_embedded_source_identity_sha256="$({
+    printf '%s\n' \
+        '.gitignore' \
+        '.swiftpm/configuration/mirrors.json' \
+        'Tests/PrimeTypedOptimizerRestoreMechanicsValidation/.swiftpm/configuration/mirrors.json' \
+        'Tests/PrimeNativeNeuralGateMLXValidation/.swiftpm/configuration/mirrors.json' \
+        'Tests/PrimeValidationWorkflow/.swiftpm/configuration/mirrors.json' \
+        'LICENSE' \
+        'Package.swift' \
+        'Package.resolved' \
+        'README.md' \
+        'THIRD_PARTY_NOTICES.md'
+    git -C "$prime_root" ls-files -- Sources Tests docs
+} | LC_ALL=C sort -u | while IFS= read -r relative_path; do
+    [[ "$relative_path" \
+        != 'Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' ]] ||
+        continue
+    absolute_path="$prime_root/$relative_path"
+    [[ -f "$absolute_path" && ! -L "$absolute_path" ]] ||
+        die "embedded provenance admitted path is missing or unsafe: $relative_path"
+    jq -cn \
+        --arg relative_path "$relative_path" \
+        --arg sha256 "$(shasum -a 256 "$absolute_path" | awk '{print $1}')" \
+        --argjson byte_count "$(stat -f %z "$absolute_path")" \
+        '{relative_path: $relative_path, sha256: $sha256, byte_count: $byte_count}'
+done | jq -jcsS '.' | shasum -a 256 | awk '{print $1}')"
+[[ "$expected_embedded_source_identity_sha256" =~ ^[0-9a-f]{64}$ \
+    && "$recomputed_embedded_source_identity_sha256" \
+        == "$expected_embedded_source_identity_sha256" ]] ||
+    die "embedded Prime source provenance does not recompute exactly"
 for forbidden_stage4_execution_observation_capability in \
     'import CoreGraphics' 'import Metal' 'import MLX' 'import MLXNN' \
     'import MLXOptimizers' 'FileManager' 'FileHandle' 'URLSession' 'Process(' \
@@ -11089,9 +11226,9 @@ assert_stage6_resource_probe_mechanics_identity \
     'b29384112ed178b6d3bce6fb8dd138c861521cbddd968d418208baa669b5caf0'
 assert_stage6_resource_probe_mechanics_identity \
     'Tests/PrimeNativeDecoderTrainingValidation/Package.swift' \
-    '100644' '1bce54baedf4293fcba01238228105f987fd43d3' \
-    '1993' '69' \
-    '8488fbd194efcd6900604923a922485f72c2ce4b870c6efd2267564f3bff43a9'
+    '100644' '08b732f88ce3be0cd86905df8b78f2492c7ca557' \
+    '2778' '92' \
+    '46fca0c696a46ccc9e22180ca5ec80cffc202a43b68b5f8c9568051e8e71348e'
 assert_stage6_resource_probe_mechanics_identity \
     'Tests/PrimeNativeDecoderTrainingValidation/Sources/PrimeNativeDecoderNative300MResourceOnlyOneStepProbe/main.swift' \
     '100644' '22af7bd97dd53e9778eef3a437f7f3f10e120a2f' \
@@ -11458,6 +11595,336 @@ readonly stage6_resource_probe_contract_test_executable_ast="$(printf '%s\n' \
     grep -Eq -- \
         'name="(MLX|Memory|Device|PrimeNativeGQADecoder|runSupervisor|runWorkerProcess|runAllocatedProbe|snapshot|peakMemory|clearCache|trainingLogitsNoCache|make)"|field="(runSupervisor|runWorkerProcess|runAllocatedProbe|snapshot|peakMemory|clearCache|trainingLogitsNoCache|make)"' ||
     die "Stage-6 pure contract test gained an executable MLX, model, supervisor, or worker call"
+
+[[ "$(head -n 1 "$b_specific_native300m_resource_witness_launcher")" \
+        == '#!/usr/bin/env bash' \
+    && "$(grep -Fxc -- 'set -euo pipefail' \
+        "$b_specific_native300m_resource_witness_launcher")" == "1" \
+    && "$(grep -Fxc -- 'umask 077' \
+        "$b_specific_native300m_resource_witness_launcher")" == "1" ]] ||
+    die "B-specific Native300M launcher shell boundary changed"
+for required_b_specific_native300m_resource_witness_launcher_pin in \
+    'readonly authority_canonical_sha256="15e00a65594a69e380e93362dc22103ccf3ae42de2676ef9e459b4603af887ba"' \
+    'readonly authority_closure_revision="b1695b17523068e2b720066d84c422cbe2e67975"' \
+    'readonly authority_closure_tree="3b910fe8bbdec008cf9665b6208292f7c1c0c7f3"' \
+    'readonly authority_closure_first_parent="7be3d77ad3ed3ae3ec7ec10d0aed6231c1083be4"' \
+    'readonly authority_closure_second_parent="ff612ddc6420bc7db0f4993b7aeff7e17fb3f9bc"' \
+    'readonly authority_closure_pull_request_number="112"' \
+    'readonly authority_closure_run_id="31850975271"' \
+    'readonly authority_closure_run_number="121"' \
+    'readonly authority_closure_run_attempt="1"' \
+    'readonly authority_closure_check_suite_id="86410537152"' \
+    'readonly authority_closure_active_job_id="94926582838"' \
+    'readonly authority_closure_reviewed_job_id="94927151419"' \
+    'readonly expected_preserved_index_sha256="de530cb1b5e6c2d8612d97ca1d22a0378fe530a6915dab88648a5caf3dae056d"' \
+    'readonly candidate_maximum_count="1"' \
+    'readonly terminal_exact_count="1"' \
+    'readonly public_receipt_maximum_count="1"' \
+    'readonly candidate_schema_key_count="8"' \
+    'readonly terminal_schema_key_count="26"' \
+    'readonly public_receipt_schema_key_count="39"' \
+    'readonly public_receipt_maximum_byte_count="1048576"' \
+    'readonly launcher_environment_binding_count="54"' \
+    'readonly integrity_guard_count="18"' \
+    'readonly expected_root_test_count="60"' \
+    'readonly expected_isolated_test_count="6"' \
+    'readonly expected_focused_contract_test_count="1"' \
+    'readonly expected_focused_whole_test_count="67"' \
+    'readonly expected_metal_test_count="44"' \
+    'readonly expected_maintained_runtime_test_count="1"' \
+    'readonly expected_tokenizer_test_count="1"' \
+    'readonly expected_launcher_contract_test_count="1"' \
+    'readonly expected_live_xctest_count="47"' \
+    'readonly expected_total_xctest_count="114"' \
+    'readonly expected_original_stage5_launcher_invocation_count="0"' \
+    'readonly expected_replacement_stage5_launcher_invocation_count="0"' \
+    'readonly expected_historical_stage6_launcher_invocation_count="0"'; do
+    [[ "$(grep -Fxc -- \
+        "$required_b_specific_native300m_resource_witness_launcher_pin" \
+        "$b_specific_native300m_resource_witness_launcher")" == "1" ]] ||
+        die "B-specific Native300M launcher lost an exact authority, suite, or topology pin: $required_b_specific_native300m_resource_witness_launcher_pin"
+done
+[[ "$(grep -Fxc -- 'readonly exact_successor_paths=(' \
+        "$b_specific_native300m_resource_witness_launcher")" == "1" ]] ||
+    die "B-specific Native300M launcher lost its exact-eight array"
+for required_b_specific_native300m_resource_witness_exact_path_line in \
+    '    "$gate_relative_path"' \
+    '    "$launcher_relative_path"' \
+    '    "$workflow_relative_path"' \
+    '    "$provenance_relative_path"' \
+    '    "$training_probe_relative_path"' \
+    '    "$validation_manifest_relative_path"' \
+    '    "$executable_main_relative_path"' \
+    '    "$contract_test_relative_path"'; do
+    [[ "$(grep -Fxc -- \
+        "$required_b_specific_native300m_resource_witness_exact_path_line" \
+        "$b_specific_native300m_resource_witness_launcher")" == "1" ]] ||
+        die "B-specific Native300M launcher exact-eight scope changed: $required_b_specific_native300m_resource_witness_exact_path_line"
+done
+[[ "$(grep -Fxc -- 'TMPDIR="$runner_temp" swift build \' \
+        "$b_specific_native300m_resource_witness_launcher")" == "1" \
+    && "$(grep -Fxc -- \
+        'readonly bin_path="$(TMPDIR="$runner_temp" swift build \' \
+        "$b_specific_native300m_resource_witness_launcher")" == "1" \
+    && "$(grep -Fxc -- 'TMPDIR="$runner_temp" swift test \' \
+        "$b_specific_native300m_resource_witness_launcher")" == "1" \
+    && "$(grep -Fc -- '--build-tests' \
+        "$b_specific_native300m_resource_witness_launcher")" == "1" \
+    && "$(grep -Fc -- '--skip-build' \
+        "$b_specific_native300m_resource_witness_launcher")" == "1" \
+    && "$(grep -Fc -- '--filter "$contract_filter"' \
+        "$b_specific_native300m_resource_witness_launcher")" == "1" \
+    && "$(grep -Fxc -- '        "$executable"' \
+        "$b_specific_native300m_resource_witness_launcher")" == "1" \
+    && "$(grep -Ec -- \
+        '^[[:space:]]+PRIME_NATIVE_DECODER_B_SPECIFIC_NATIVE300M_RESOURCE_WITNESS_[A-Z0-9_]+=' \
+        "$b_specific_native300m_resource_witness_launcher")" == "54" ]] ||
+    die "B-specific Native300M launcher lost its one-build, one-contract, one-direct-executable, or exact-54 environment topology"
+for required_b_specific_native300m_resource_witness_launcher_value in \
+    'readonly predecessor_test_logs=(' \
+    'readonly predecessor_receipt_logs=(' \
+    'readonly original_stage5_receipt_prefix=' \
+    'readonly replacement_stage5_receipt_prefix=' \
+    'readonly historical_stage6_receipt_prefix=' \
+    'retired or B-witness receipt prefix existed before the one-shot launcher' \
+    'PrimeMetalDeviceLease' \
+    'ABSTAIN_INTEGRITY' \
+    'pass_measured_mlx_peak_below_configured_limit' \
+    'outer_private_working_directory_postflight' \
+    'outer_repository_postflight' \
+    'outer_metallib_postflight' \
+    'outer_parent_and_lease_file_rebind' \
+    'historical_stage6_resource_clearance_applies_to_b_path:false' \
+    'candidate_canonical_byte_count:$candidate_canonical_byte_count' \
+    'terminal_canonical_byte_count:$terminal_canonical_byte_count' \
+    'validated_private_candidate:$validated_private_candidate[0]' \
+    'validated_private_terminal:$validated_private_terminal[0]' \
+    '.validated_private_candidate == $expected_candidate[0]' \
+    '.validated_private_terminal == $expected_terminal[0]' \
+    'schema_version:1' \
+    'embedded validated private candidate is not canonically cross-bound' \
+    'embedded validated private terminal is not canonically cross-bound' \
+    'final public receipt exceeds the one-mebibyte publication ceiling' \
+    'one_shot_consumed:true' \
+    'ordinary_job_fit_established:false' \
+    'retained_artifact_authorized:false' \
+    'retry_authorized:false' \
+    'rerun_authorized:false' \
+    'stage7_authorized:false' \
+    'and (.mechanics_success? == null)' \
+    'and (.workflow_success? == null)'; do
+    grep -Fq -- "$required_b_specific_native300m_resource_witness_launcher_value" \
+        "$b_specific_native300m_resource_witness_launcher" ||
+        die "B-specific Native300M launcher lost a required retained measurement, integrity, postflight, or ceiling binding: $required_b_specific_native300m_resource_witness_launcher_value"
+done
+readonly b_specific_native300m_resource_witness_launcher_final_lines="$(awk '
+    NF { previous = current; current = $0 }
+    END { printf "%s\n%s", previous, current }
+' "$b_specific_native300m_resource_witness_launcher")"
+[[ "$b_specific_native300m_resource_witness_launcher_final_lines" \
+        == $'trap - EXIT HUP INT TERM\nexec /usr/bin/printf \'%s\\n\' "$public_line"' ]] ||
+    die "B-specific Native300M public receipt is not the cleared-trap final launcher action"
+for forbidden_b_specific_native300m_resource_witness_launcher_capability in \
+    'swift run' 'actions/upload-artifact' 'gh run rerun' \
+    'security add-trusted-cert' 'curl ' 'wget ' 'rm -rf' \
+    'PrimeNativeDecoderCheckpoint' 'writeNative300M' 'loadNative300M' \
+    'GITHUB_STEP_SUMMARY' 'OK:' 'unlink('; do
+    ! grep -Fq -- "$forbidden_b_specific_native300m_resource_witness_launcher_capability" \
+        "$b_specific_native300m_resource_witness_launcher" ||
+        die "B-specific Native300M launcher gained forbidden execution, network, artifact, checkpoint, cleanup, or post-receipt capability: $forbidden_b_specific_native300m_resource_witness_launcher_capability"
+done
+! grep -Eq -- '^[[:space:]]*(rm|rmdir)[[:space:]]' \
+    "$b_specific_native300m_resource_witness_launcher" ||
+    die "B-specific Native300M launcher gained manual cleanup"
+
+[[ "$(awk '/^import / { print }' \
+        "$b_specific_native300m_resource_witness_training_source")" \
+        == $'import CoreGraphics\nimport Darwin\nimport Foundation\nimport Metal\nimport MLX\nimport MLXNN\nimport MLXOptimizers\nimport PrimeCore\nimport PrimeNativeDecoder' \
+    && "$(grep -Fc -- 'public enum PrimeNativeDecoderBSpecificNative300MResourceWitness {' \
+        "$b_specific_native300m_resource_witness_training_source")" == "1" \
+    && "$(grep -Fc -- 'public static func runSupervisor()' \
+        "$b_specific_native300m_resource_witness_training_source")" == "1" \
+    && "$(grep -Fc -- 'fileprivate static func runSupervisorProcess(bindings:' \
+        "$b_specific_native300m_resource_witness_training_source")" == "1" \
+    && "$(grep -Fc -- 'fileprivate static func runResourceWorkerProcess(epoch:' \
+        "$b_specific_native300m_resource_witness_training_source")" == "1" \
+    && "$(grep -Fc -- 'fileprivate static func runReleaseVerifierProcess()' \
+        "$b_specific_native300m_resource_witness_training_source")" == "1" \
+    && "$(grep -Fc -- 'let arguments = CommandLine.arguments' \
+        "$b_specific_native300m_resource_witness_training_source")" == "1" \
+    && "$(grep -Fc -- 'if arguments.count == 3,' \
+        "$b_specific_native300m_resource_witness_training_source")" == "1" \
+    && "$(grep -Fc -- 'arguments[1] == workerArgument,' \
+        "$b_specific_native300m_resource_witness_training_source")" == "1" \
+    && "$(grep -Fc -- \
+        'arguments[2] == "--frame-descriptor=\(workerFrameDescriptor)"' \
+        "$b_specific_native300m_resource_witness_training_source")" == "1" \
+    && "$(grep -Fc -- \
+        'if arguments.count == 2, arguments[1] == verifierArgument {' \
+        "$b_specific_native300m_resource_witness_training_source")" == "1" \
+    && "$(grep -Fc -- 'guard arguments.count == 1 else {' \
+        "$b_specific_native300m_resource_witness_training_source")" == "1" \
+    && "$(grep -Fc -- \
+        'let arguments = [bindings.executablePath, verifierArgument]' \
+        "$b_specific_native300m_resource_witness_training_source")" == "1" \
+    && "$(grep -Fxc -- '            executable, workerArgument,' \
+        "$b_specific_native300m_resource_witness_training_source")" == "1" \
+    && "$(grep -Fxc -- \
+        '            "--frame-descriptor=\(workerFrameDescriptor)",' \
+        "$b_specific_native300m_resource_witness_training_source")" == "1" \
+    && "$(grep -Fc -- 'PrimeMetalDeviceLease.acquire(' \
+        "$b_specific_native300m_resource_witness_training_source")" == "2" \
+    && "$(grep -Fc -- 'posix_spawn(' \
+        "$b_specific_native300m_resource_witness_training_source")" == "2" \
+    && "$(grep -Fc -- 'POSIX_SPAWN_SETPGROUP' \
+        "$b_specific_native300m_resource_witness_training_source")" == "2" \
+    && "$(grep -Fc -- 'POSIX_SPAWN_CLOEXEC_DEFAULT' \
+        "$b_specific_native300m_resource_witness_training_source")" == "2" ]] ||
+    die "B-specific Native300M source import, exact argv, public entrypoint, process, or lease topology changed"
+readonly b_specific_native300m_resource_witness_worker_source_block="$(awk '
+    /fileprivate static func runResourceWorkerProcess\(epoch:/ { inside = 1 }
+    inside { print }
+    inside && /^    @inline\(never\)/ { exit }
+' "$b_specific_native300m_resource_witness_training_source")"
+[[ "$(grep -Fc -- 'PrimeMetalDeviceLease.acquire(' <<<"$b_specific_native300m_resource_witness_worker_source_block")" == "0" \
+    && "$(grep -Ec -- '\.release\(\)|bResourceVoidRelease' <<<"$b_specific_native300m_resource_witness_worker_source_block")" == "0" ]] ||
+    die "B-specific Native300M resource worker acquired or released the supervisor-owned lease"
+readonly b_specific_native300m_resource_witness_verifier_source_block="$(awk '
+    /fileprivate static func runReleaseVerifierProcess\(\)/ { inside = 1 }
+    inside { print }
+    inside && /^    private static func spawnResourceWorker\(/ { exit }
+' "$b_specific_native300m_resource_witness_training_source")"
+[[ "$(grep -Fc -- 'PrimeMetalDeviceLease.acquire(' <<<"$b_specific_native300m_resource_witness_verifier_source_block")" == "1" \
+    && "$(grep -Fc -- 'verifierLease.release()' <<<"$b_specific_native300m_resource_witness_verifier_source_block")" == "1" ]] ||
+    die "B-specific Native300M release verifier lost its one acquire/release proof"
+[[ "$(grep -Fc -- 'Device(.gpu, index: Int32(0))' \
+        "$b_specific_native300m_resource_witness_training_source")" == "1" \
+    && "$(grep -Fc -- 'MLX.Memory.peakMemory = 0' \
+        "$b_specific_native300m_resource_witness_training_source")" == "1" \
+    && "$(grep -Fc -- 'MLX.Memory.clearCache()' \
+        "$b_specific_native300m_resource_witness_training_source")" == "1" \
+    && "$(grep -Fc -- 'MTLCopyAllDevices()' \
+        "$b_specific_native300m_resource_witness_training_source")" == "2" \
+    && "$(grep -Fc -- 'MTLCreateSystemDefaultDevice()' \
+        "$b_specific_native300m_resource_witness_training_source")" == "2" \
+    && "$(grep -Fc -- 'checkedEval(model, beforeFingerprintSampleViews)' \
+        "$b_specific_native300m_resource_witness_training_source")" == "1" \
+    && "$(grep -Fc -- 'checkedEval(lossAndGradient.loss, lossAndGradient.gradients)' \
+        "$b_specific_native300m_resource_witness_training_source")" == "1" \
+    && "$(grep -Fc -- 'checkedEval(rawGradientNorm)' \
+        "$b_specific_native300m_resource_witness_training_source")" == "1" \
+    && "$(grep -Fc -- 'checkedEval(clippedGradients)' \
+        "$b_specific_native300m_resource_witness_training_source")" == "1" \
+    && "$(grep -Fc -- 'checkedEval(model, optimizer, afterFingerprintSampleViews)' \
+        "$b_specific_native300m_resource_witness_training_source")" == "1" \
+    && "$(grep -Fc -- 'Stream.gpu.synchronize()' \
+        "$b_specific_native300m_resource_witness_training_source")" == "5" \
+    && "$(grep -Fc -- 'native300MInventory(vocabularySize: 512)' \
+        "$b_specific_native300m_resource_witness_training_source")" == "1" \
+    && "$(grep -Fc -- 'PrimeNativeGQADecoder.make(' \
+        "$b_specific_native300m_resource_witness_training_source")" == "1" \
+    && "$(grep -Fc -- 'valueAndGrad(model: model)' \
+        "$b_specific_native300m_resource_witness_training_source")" == "1" \
+    && "$(grep -Fc -- '.trainingLogitsNoCacheFlattenedDenseOneHotMatmulInputEmbeddingV1(' \
+        "$b_specific_native300m_resource_witness_training_source")" == "1" \
+    && "$(grep -Fc -- '.trainingLogitsNoCache(' \
+        "$b_specific_native300m_resource_witness_training_source")" == "0" \
+    && "$(grep -Fc -- 'optimizer.update(' \
+        "$b_specific_native300m_resource_witness_training_source")" == "1" \
+    && "$(grep -Fc -- 'crossEntropy(' \
+        "$b_specific_native300m_resource_witness_training_source")" == "1" \
+    && "$(grep -Fc -- 'observePhase(' \
+        "$b_specific_native300m_resource_witness_training_source")" == "7" ]] ||
+    die "B-specific Native300M exact B API, one-step operation, six-phase, or six-barrier topology changed"
+for required_b_specific_native300m_resource_witness_training_value in \
+    'prime_stage6_parameter_catalog_sample_f32be_sha256_v1' \
+    'Int32(2 + ((index * 73 + 44) % 510))' \
+    'let completion = [false] + Array(repeating: true, count: 127)' \
+    'seed: 44' \
+    'labelSmoothing: 0' \
+    'reduction: .none' \
+    'MLX.sqrt(squaredNorm)' \
+    '1 / (normValue + Float32(1e-6))' \
+    'workerActiveTimeoutNanoseconds: UInt64 =' \
+    '1_200_000_000_000' \
+    'supervisorTimeoutNanoseconds: UInt64 =' \
+    '1_500_000_000_000' \
+    'terminationGraceNanoseconds: UInt64 =' \
+    '10_000_000_000' \
+    '"supervisor_integrity_guard_count"' \
+    'completedSupervisorGuardCount = 3' \
+    'completedSupervisorGuardCount = failureIndex ?? 13' \
+    '"worker_inherited_lease_descriptor_count": 0' \
+    '"maintained_gather_training_logits_count"' \
+    '"direct_package_b_training_logits_api_call_count"' \
+    '"checked_evaluation_barrier_count": 6' \
+    '"gpu_synchronization_barrier_count": 6' \
+    '"resource_clearance_established": pass'; do
+    grep -Fq -- "$required_b_specific_native300m_resource_witness_training_value" \
+        "$b_specific_native300m_resource_witness_training_source" ||
+        die "B-specific Native300M training source lost a required operation, timeout, lease, or ceiling binding: $required_b_specific_native300m_resource_witness_training_value"
+done
+readonly b_specific_native300m_resource_witness_parent_stability_block="$(awk '
+    /func sameStableParentFields\(as other: Self\)/ { inside = 1 }
+    inside { print }
+    inside && /^    }$/ { exit }
+' "$b_specific_native300m_resource_witness_training_source")"
+[[ "$(grep -Fc -- 'observedLinkCount' <<<"$b_specific_native300m_resource_witness_parent_stability_block")" == "0" \
+    && "$(grep -Fc -- 'tuple.observedLinkCount == 1' \
+        "$b_specific_native300m_resource_witness_training_source")" == "1" \
+    && "$(grep -Fc -- 'removeValue(forKey: "observed_nlink")' \
+        "$b_specific_native300m_resource_witness_training_source")" == "4" ]] ||
+    die "B-specific Native300M parent nlink became gating or leaf nlink lost its exact-one policy"
+for forbidden_b_specific_native300m_resource_witness_training_capability in \
+    'swift run' 'URLSession' 'FileManager' 'PrimeNativeDecoderCheckpoint' \
+    'writeNative300M' 'loadNative300M' 'emitPrivatePacket(prefix: publicReceiptPrefix' \
+    'publicReceiptPrefix +' 'unlink(' 'rmdir('; do
+    ! grep -Fq -- "$forbidden_b_specific_native300m_resource_witness_training_capability" \
+        "$b_specific_native300m_resource_witness_training_source" ||
+        die "B-specific Native300M training source gained forbidden public, network, checkpoint, or cleanup capability: $forbidden_b_specific_native300m_resource_witness_training_capability"
+done
+awk '
+    {
+        line = $0
+        sub(/^[[:space:]]+/, "", line)
+        if (line == "Process()" || index(line, "= Process()") > 0) exit 1
+    }
+' "$b_specific_native300m_resource_witness_training_source" ||
+    die "B-specific Native300M training source gained Foundation Process execution"
+
+[[ "$(awk '/^import / { print }' \
+        "$b_specific_native300m_resource_witness_executable_main")" \
+        == $'import Foundation\nimport PrimeNativeDecoderTraining' \
+    && "$(grep -Fxc -- \
+        'PrimeNativeDecoderBSpecificNative300MResourceWitness.runSupervisor()' \
+        "$b_specific_native300m_resource_witness_executable_main")" == "1" \
+    && "$(grep -Ec -- '^[[:space:]]*(func |class |struct |enum )' \
+        "$b_specific_native300m_resource_witness_executable_main")" == "0" \
+    && "$(awk '/^import / || /^@testable import / { print }' \
+        "$b_specific_native300m_resource_witness_contract_test")" \
+        == $'import Foundation\nimport PrimeCore\nimport PrimeNativeDecoderTraining\nimport XCTest' \
+    && "$(grep -Ec -- '^[[:space:]]+func test' \
+        "$b_specific_native300m_resource_witness_contract_test")" == "1" \
+    && "$(grep -Fxc -- \
+        '    func testBSpecificNative300MResourceWitnessContractIsExactAndExecutionPure()' \
+        "$b_specific_native300m_resource_witness_contract_test")" == "1" \
+    && "$(grep -Fc -- '.validatePureContractV1()' \
+        "$b_specific_native300m_resource_witness_contract_test")" == "1" \
+    && "$(grep -Fc -- 'XCTSkip' \
+        "$b_specific_native300m_resource_witness_contract_test")" == "0" ]] ||
+    die "B-specific Native300M thin executable main or execution-pure contract-test topology changed"
+readonly b_specific_native300m_resource_witness_contract_test_ast="$(swiftc \
+    -frontend -dump-parse \
+    "$b_specific_native300m_resource_witness_contract_test" 2>/dev/null)" ||
+    die "B-specific Native300M pure contract test does not parse into a Swift AST"
+readonly b_specific_native300m_resource_witness_contract_test_executable_ast="$(printf '%s\n' \
+    "$b_specific_native300m_resource_witness_contract_test_ast" | \
+    grep -Fv -- 'string_literal_expr' || true)"
+! printf '%s\n' \
+    "$b_specific_native300m_resource_witness_contract_test_executable_ast" | \
+    grep -Eq -- \
+        'name="(MLX|Memory|Device|PrimeNativeGQADecoder|runSupervisor|runResourceWorkerProcess|runReleaseVerifierProcess|runAllocatedProbe|snapshot|peakMemory|clearCache|trainingLogitsNoCache|make)"|field="(runSupervisor|runResourceWorkerProcess|runReleaseVerifierProcess|runAllocatedProbe|snapshot|peakMemory|clearCache|trainingLogitsNoCache|make)"' ||
+    die "B-specific Native300M pure contract test gained an executable MLX, model, supervisor, worker, or verifier call"
 
 [[ "$(awk '/^import / { print }' "$decoder_authority_test")" \
         == $'import CryptoKit\nimport Foundation\nimport XCTest\nimport PrimeCore' \
@@ -12882,6 +13349,63 @@ assert_b_specific_native300m_resource_witness_authority_identity \
     "$b_specific_native300m_resource_witness_authority_test_relative_path" \
     '97fa185a0afc9aab8b83cbdd4f7f78f0a14d8433' '28919' '653' \
     'd1ed3fb89c310ea1d38b1eca8485cf7c3d071a3f5815887415914c40dc3a0543'
+
+# The gate is the eighth successor path and cannot self-pin. These seven
+# frozen identities close every other successor byte, including provenance.
+assert_b_specific_native300m_resource_witness_successor_identity() {
+    local relative_path="$1" expected_mode="$2" expected_blob="$3"
+    local expected_bytes="$4" expected_lf_count="$5" expected_sha256="$6"
+    local absolute_path="$prime_root/$relative_path"
+    [[ -f "$absolute_path" && ! -L "$absolute_path" \
+        && "$(stat -f %l "$absolute_path")" == "1" \
+        && "$(git -C "$prime_root" ls-files -s -- "$relative_path" | \
+            awk '{print $1}')" == "$expected_mode" \
+        && "$(git -C "$prime_root" hash-object -- "$relative_path")" \
+            == "$expected_blob" \
+        && "$(stat -f %z "$absolute_path")" == "$expected_bytes" \
+        && "$(wc -l < "$absolute_path" | awk '{print $1}')" \
+            == "$expected_lf_count" \
+        && "$(shasum -a 256 "$absolute_path" | awk '{print $1}')" \
+            == "$expected_sha256" ]] ||
+        die "B-specific Native300M successor identity changed: $relative_path"
+}
+
+assert_b_specific_native300m_resource_witness_successor_identity \
+    "$b_specific_native300m_resource_witness_launcher_relative_path" \
+    '100755' 'b621916a678e6a2eb492504e3f63994d2d561491' \
+    '137210' '2445' \
+    '08dc6e648b81fee6f59b46b7009a74eb2f8e20ac2616c8d81a8a54f90c9597b4'
+assert_b_specific_native300m_resource_witness_successor_identity \
+    '.github/workflows/prime-active-root-quarantine.yml' \
+    '100644' '8b461c5ac489c6f224882822b359c309992ce581' \
+    '100706' '634' \
+    '34d7871c162015416b28f35ba5fb0a2450d4a358873bf64958e104993dadf82a'
+assert_b_specific_native300m_resource_witness_successor_identity \
+    'Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' \
+    '100644' '04085f3be80123e41b1dfed54360f02c24107ab2' \
+    '546' '13' \
+    'e56e3de248d0546541e7ddb7ef480727b8e7fba1999932147fe3fe05e6a56b23'
+assert_b_specific_native300m_resource_witness_successor_identity \
+    "$b_specific_native300m_resource_witness_training_source_relative_path" \
+    '100644' 'cf3d743d121f4eaa028e0e392e04587bcd0b93d8' \
+    '225960' '5233' \
+    '77fbe6b5e9548d84af30c95ba4ca0cfa2d03d5e1884c74d0a9ae297b109eed8b'
+assert_b_specific_native300m_resource_witness_successor_identity \
+    "$b_specific_native300m_resource_witness_validation_manifest_relative_path" \
+    '100644' '08b732f88ce3be0cd86905df8b78f2492c7ca557' \
+    '2778' '92' \
+    '46fca0c696a46ccc9e22180ca5ec80cffc202a43b68b5f8c9568051e8e71348e'
+assert_b_specific_native300m_resource_witness_successor_identity \
+    "$b_specific_native300m_resource_witness_executable_main_relative_path" \
+    '100644' 'a8d85ea641b5442475893d97631fc3d1f886b9b9' \
+    '231' '7' \
+    'd10ebc104e8fa883509e4f42a7185484004ad37bc1f9d69c91cdd0e6c4695f51'
+assert_b_specific_native300m_resource_witness_successor_identity \
+    "$b_specific_native300m_resource_witness_contract_test_relative_path" \
+    '100644' 'b78613e392ab20df0d11a2546aadf484e419b75c' \
+    '30202' '564' \
+    'fb3abc5d6377867d438b8c48fd9cbeab3549f4570ded7570cf4bc9f585c1d8a7'
+
 [[ "$(grep -Fxc -- '    public static let canonicalSHA256 =' \
         "$b_specific_native300m_resource_witness_authority_source")" == "1" \
     && "$(grep -Fxc -- \
@@ -12893,17 +13417,6 @@ readonly b_specific_native300m_resource_witness_authority_placeholder_prefix='__
     "${b_specific_native300m_resource_witness_authority_placeholder_prefix}NATIVE300M_RESOURCE_WITNESS_AUTHORITY_SHA256__" \
     "$b_specific_native300m_resource_witness_authority_source" ||
     die "B-specific Native300M resource-witness authority retains a canonical placeholder"
-
-for future_b_specific_native300m_resource_witness_mechanics_path in \
-    "$b_specific_native300m_resource_witness_launcher_relative_path" \
-    'Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderBSpecificNative300MResourceWitness.swift' \
-    'Tests/PrimeNativeDecoderTrainingValidation/Sources/PrimeNativeDecoderBSpecificNative300MResourceWitness/main.swift' \
-    'Tests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderBSpecificNative300MResourceWitnessContractTests.swift'; do
-    [[ ! -e "$prime_root/$future_b_specific_native300m_resource_witness_mechanics_path" \
-        && -z "$(git -C "$prime_root" ls-files -- \
-            "$future_b_specific_native300m_resource_witness_mechanics_path")" ]] ||
-        die "future exact-eight B-specific Native300M mechanics entered the pure exact-five authority: $future_b_specific_native300m_resource_witness_mechanics_path"
-done
 
 for required_b_specific_native300m_resource_witness_authority_value in \
     'PrimeNativeDecoderBSpecificNative300MResourceWitnessAuthorityV1:' \

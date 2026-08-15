@@ -115,6 +115,9 @@ jobs:
             Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderNative300MResourceOnlyOneStepProbe.swift \
             Tests/PrimeNativeDecoderTrainingValidation/Sources/PrimeNativeDecoderNative300MResourceOnlyOneStepProbe/main.swift \
             Tests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderNative300MResourceOnlyOneStepProbeContractTests.swift \
+            Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderBSpecificNative300MResourceWitness.swift \
+            Tests/PrimeNativeDecoderTrainingValidation/Sources/PrimeNativeDecoderBSpecificNative300MResourceWitness/main.swift \
+            Tests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderBSpecificNative300MResourceWitnessContractTests.swift \
             Sources/PrimeCore/PrimeNativeDecoderMaintainedRuntimeComputeAuthority.swift \
             Sources/PrimeCore/PrimeNativeDecoderMaintainedRuntimeExecutionObservation.swift \
             Sources/PrimeCore/PrimeNativeDecoderTokenizerModelFunctionalCompatibilityAuthority.swift \
@@ -289,6 +292,8 @@ jobs:
             echo 'This dependency-free B-specific Native-300M resource-witness authority is a nonexecuting exact-five closure: the active-root gate, hosted workflow, embedded provenance, PrimeNativeDecoderBSpecificNative300MResourceWitnessAuthority.swift, and its sole one-method root test. It passes only that new pure filter for root 60, keeps isolated 6 for focused whole 66, then preserves the exact live Metal 44, maintained runtime 1, tokenizer 1 order for live 46 and total 112 under the reviewed-main 60-minute timeout. Original Stage-5, replacement Stage-5, historical Stage-6, and future B-witness launchers and receipts all remain at zero; no Native-300M allocation, Metal mechanics, training step, artifact, retry, rerun, B resource clearance, Stage-7 authority, or downstream authorization occurs in this authority.'
             echo 'Only after the exact-five closure is green may one separately reviewed exact-eight successor use the explicit flattened dense one-hot B API at seed 44, batch 1 by 128, vocabulary 512, exactly one model allocation and materialization, one value-and-grad forward/backward, one clipped AdamW update and full-state evaluation, one dense construction and matmul, one B bounds checked-evaluation/synchronization/Bool read, six total checked-evaluation and GPU-synchronization barriers, six resource phases, and one cache clear and device re-enumeration. The maintained gather path remains invocation zero for that witness. The Stage-5 B PASS combines with a future B-specific PASS only to establish the exact-run B resource witness and clearance; historical Stage-6 evidence remains nonapplicable to B, ordinary-job fit and Stage 7 remain false, and a separate Stage-7 authority is still required.'
             echo 'The future integrity contract keeps the internal worker candidate non-result evidence and the supervisor as sole lease owner before explicit release, through candidate and device/MLX postflight. Under its explicit non-hostile-same-UID model it validates descriptor-derived parent and leaf tuples, exact unordered inventory, ACL, xattr, and security flags after shell rebind; parent st_nlink is observed but never a predicate. The exact PASS-capable operational topology uses one supervisor, one resource worker, and one distinct exec release verifier, two successful lease acquisitions out of two, two release calls, and one zero exit each for verifier and supervisor; verifier reacquisition plus process exit proves release, never a raw release-call success alone. A resource ABSTAIN may omit the verifier only when no lease acquisition succeeded; every post-acquisition resource ABSTAIN requires it. No unlink, remove, rmdir, or manual cleanup is allowed. A valid candidate followed by a safely classified verifier, identity, or postflight failure may publish terminal ABSTAIN_INTEGRITY while preserving candidate status and keeping B clearance false; malformed or private packets may yield no public receipt, and no outcome authorizes retry. After every required postflight has passed or yielded its safely captured first failure and outer classification is complete, publication is the cleared-trap exec /usr/bin/printf final launcher action with no later OK marker or fallible action, and the public receipt carries neither workflow_success nor an unscoped mechanics_success claim.'
+            echo 'Exact-main B-specific Native-300M authority merge b1695b17523068e2b720066d84c422cbe2e67975, tree 3b910fe8bbdec008cf9665b6208292f7c1c0c7f3, ordered parents 7be3d77ad3ed3ae3ec7ec10d0aed6231c1083be4 then ff612ddc6420bc7db0f4993b7aeff7e17fb3f9bc, PR 112, and unique push workflow run 31850975271 number 121 attempt 1 check suite 86410537152 passed active job 94926582838 and reviewed job 94927151419. It passed root 60, isolated 6, focused whole 66, then Metal 44, maintained runtime 1 with one receipt, and tokenizer 1 with one receipt for live 46 and total 112; original Stage-5, replacement Stage-5, historical Stage-6, and B-witness launcher and receipt counts were zero, with zero Actions artifacts and reruns. This direct exact-eight successor preserves the frozen authority pair, root manifest and lock, validation lock, every preexisting production decoder source, and all old launchers. Reviewed main alone widens from 60 to 90 minutes, adds exactly one focused execution-pure B contract for focused whole 67, then retains Metal, maintained runtime, and tokenizer before exactly one B-witness launcher. The launcher performs one Release build, reruns that same pure contract once, and directly invokes one supervisor executable, yielding live XTests 47 and total XTests 114 plus one operational probe; the exact successor aggregate invocation topology is three: focused contract, launcher-local contract, and direct executable. A safe terminal PASS, ABSTAIN, or ABSTAIN_INTEGRITY may publish at most one supervisor-owned canonical public receipt; all outcomes consume the one-shot, no retry, rerun, replacement, unlink, remove, rmdir, manual cleanup, receipt file, Actions artifact, checkpoint, ordinary-job-fit, Stage-7 authority, trial, canary, quantization, product, or publication authority is granted.'
+            echo 'The sole public receipt embeds the validated private candidate when present and the validated private supervisor terminal with their canonical byte counts and hashes, preserving measured phase, peak, and descriptor-closure evidence while binding any outer first failure separately.'
             echo 'The locally declared origin is not network-authenticated, and ignored workspace bytes are not observed by this slice.'
             echo 'Beyond that one bounded random-initialized Native-300M witness and the separately bounded tiny CPU Stage-2 mechanics authority, no Prime proposal, candidate selection, trial authorization, decision receipt, runtime/product/canary decoder activation, Native-300M training or additional execution, publication, promotion, Driver V2, or PMHNP authority is granted.'
           } >> "$GITHUB_STEP_SUMMARY"
@@ -298,7 +303,7 @@ jobs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: active-root
     runs-on: macos-26
-    timeout-minutes: 60
+    timeout-minutes: 90
     env:
       EXACT_REVISION: ${{ github.sha }}
       PRIME_MLX_REVISION: d37885a278f1c37484a94d0f401a418735e66519
@@ -374,6 +379,8 @@ jobs:
           readonly checkpoint_v2_io_test_log="$RUNNER_TEMP/prime-checkpoint-v2-io-tests.log"
           readonly checkpoint_v2_io_execution_pure_test_log="$RUNNER_TEMP/prime-checkpoint-v2-io-execution-pure-tests.log"
           readonly checkpoint_v2_io_root_identity_repair_execution_pure_test_log="$RUNNER_TEMP/prime-checkpoint-v2-io-root-identity-repair-execution-pure-tests.log"
+          readonly b_specific_native300m_resource_witness_focused_contract_test_log="$RUNNER_TEMP/prime-native-decoder-b-specific-native300m-resource-witness-focused-contract-tests.log"
+          readonly b_specific_native300m_resource_witness_contract_filter='PrimeNativeDecoderBSpecificNative300MResourceWitnessContractTests/testBSpecificNative300MResourceWitnessContractIsExactAndExecutionPure'
           [[ "$(git --git-dir="$mlx_bare" rev-parse refs/heads/prime-pinned)" == \
             "$PRIME_MLX_REVISION" ]]
           mkdir -p \
@@ -396,7 +403,11 @@ jobs:
             "$RUNNER_TEMP/prime-checkpoint-v2-io-root-identity-repair-execution-pure-build" \
             "$RUNNER_TEMP/prime-checkpoint-v2-io-root-identity-repair-execution-pure-cache" \
             "$RUNNER_TEMP/prime-checkpoint-v2-io-root-identity-repair-execution-pure-config" \
-            "$RUNNER_TEMP/prime-checkpoint-v2-io-root-identity-repair-execution-pure-security"
+            "$RUNNER_TEMP/prime-checkpoint-v2-io-root-identity-repair-execution-pure-security" \
+            "$RUNNER_TEMP/prime-native-decoder-b-specific-native300m-resource-witness-focused-contract-build" \
+            "$RUNNER_TEMP/prime-native-decoder-b-specific-native300m-resource-witness-focused-contract-cache" \
+            "$RUNNER_TEMP/prime-native-decoder-b-specific-native300m-resource-witness-focused-contract-config" \
+            "$RUNNER_TEMP/prime-native-decoder-b-specific-native300m-resource-witness-focused-contract-security"
           export GIT_CONFIG_COUNT=2
           export GIT_CONFIG_KEY_0="url.file://${mlx_bare}/.insteadOf"
           export GIT_CONFIG_VALUE_0="https://github.com/Ergentics/ergentics-mlx-swift"
@@ -502,6 +513,19 @@ jobs:
             --disable-keychain \
             --force-resolved-versions \
             2>&1 | tee "$checkpoint_v2_io_root_identity_repair_execution_pure_test_log"
+          TMPDIR="$RUNNER_TEMP" swift test \
+            --package-path Tests/PrimeNativeDecoderTrainingValidation \
+            --scratch-path "$RUNNER_TEMP/prime-native-decoder-b-specific-native300m-resource-witness-focused-contract-build" \
+            --cache-path "$RUNNER_TEMP/prime-native-decoder-b-specific-native300m-resource-witness-focused-contract-cache" \
+            --config-path "$RUNNER_TEMP/prime-native-decoder-b-specific-native300m-resource-witness-focused-contract-config" \
+            --security-path "$RUNNER_TEMP/prime-native-decoder-b-specific-native300m-resource-witness-focused-contract-security" \
+            --disable-dependency-cache \
+            --manifest-cache local \
+            --disable-netrc \
+            --disable-keychain \
+            --force-resolved-versions \
+            --filter "$b_specific_native300m_resource_witness_contract_filter" \
+            2>&1 | tee "$b_specific_native300m_resource_witness_focused_contract_test_log"
           unset GIT_CONFIG_COUNT GIT_CONFIG_KEY_0 GIT_CONFIG_VALUE_0
           unset GIT_CONFIG_KEY_1 GIT_CONFIG_VALUE_1
           unset GIT_CONFIG_KEY_2 GIT_CONFIG_VALUE_2
@@ -590,6 +614,14 @@ jobs:
             "$checkpoint_v2_io_root_identity_repair_execution_pure_test_log"
           ! grep -Fqi -- 'skipped' \
             "$checkpoint_v2_io_root_identity_repair_execution_pure_test_log"
+          grep -Fq 'PrimeNativeDecoderBSpecificNative300MResourceWitnessContractTests' \
+            "$b_specific_native300m_resource_witness_focused_contract_test_log"
+          grep -Fq 'testBSpecificNative300MResourceWitnessContractIsExactAndExecutionPure' \
+            "$b_specific_native300m_resource_witness_focused_contract_test_log"
+          grep -Fq 'Executed 1 test, with 0 failures' \
+            "$b_specific_native300m_resource_witness_focused_contract_test_log"
+          ! grep -Fqi -- 'skipped' \
+            "$b_specific_native300m_resource_witness_focused_contract_test_log"
           [[ "$(git rev-parse HEAD)" == "$EXACT_REVISION" ]]
           [[ -z "$(git status --porcelain=v1 --untracked-files=all)" ]]
 
@@ -599,3 +631,4 @@ jobs:
           bash .github/scripts/prime-ci-native-decoder-metal.sh
           bash .github/scripts/prime-ci-native-decoder-runtime-closure.sh
           bash .github/scripts/prime-ci-native-decoder-tokenizer-compatibility.sh
+          bash .github/scripts/prime-ci-native-decoder-b-specific-native300m-resource-witness.sh
