@@ -82,8 +82,10 @@ readonly native300m_trajectory_checkpoint_execution_training_source_relative_pat
 readonly native300m_trajectory_checkpoint_execution_validation_manifest_relative_path="Tests/PrimeNativeDecoderTrainingValidation/Package.swift"
 readonly native300m_trajectory_checkpoint_execution_executable_main_relative_path="Tests/PrimeNativeDecoderTrainingValidation/Sources/PrimeNativeDecoderBSpecificNative300MTrajectoryCheckpointExecution/main.swift"
 readonly native300m_trajectory_checkpoint_execution_contract_test_relative_path="Tests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderBSpecificNative300MTrajectoryCheckpointExecutionContractTests.swift"
-readonly expected_native300m_trajectory_checkpoint_execution_mechanics_preserved_index_sha256="ef6d76c7fc23cbbbe4d91fb408516ba605c92b3fd53d07720003d72930d8006f"
-readonly observed_native300m_trajectory_checkpoint_execution_mechanics_preserved_index_sha256="$({
+readonly native300m_trajectory_checkpoint_execution_failure_observation_source_relative_path="Sources/PrimeCore/PrimeNativeDecoderBSpecificNative300MTrajectoryCheckpointExecutionFailureObservation.swift"
+readonly native300m_trajectory_checkpoint_execution_failure_observation_test_relative_path="Tests/PrimeCoreTests/PrimeNativeDecoderBSpecificNative300MTrajectoryCheckpointExecutionFailureObservationTests.swift"
+readonly expected_native300m_trajectory_checkpoint_execution_retirement_preserved_index_sha256="f587270f8fc32f7911b5881a2b5aed8f92fc9fd21de57ee63078838f4eb96b88"
+readonly observed_native300m_trajectory_checkpoint_execution_retirement_preserved_index_sha256="$({
     git -C "$prime_root" ls-files -s |
         while IFS= read -r index_record; do
             relative_path="${index_record#*$'\t'}"
@@ -94,53 +96,41 @@ readonly observed_native300m_trajectory_checkpoint_execution_mechanics_preserved
                 || "$relative_path" \
                     == 'Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' \
                 || "$relative_path" \
-                    == "$native300m_trajectory_checkpoint_execution_launcher_relative_path" \
+                    == "$native300m_trajectory_checkpoint_execution_failure_observation_source_relative_path" \
                 || "$relative_path" \
-                    == "$native300m_trajectory_checkpoint_source_relative_path" \
-                || "$relative_path" \
-                    == "$native300m_trajectory_checkpoint_execution_training_source_relative_path" \
-                || "$relative_path" \
-                    == "$native300m_trajectory_checkpoint_execution_validation_manifest_relative_path" \
-                || "$relative_path" \
-                    == "$native300m_trajectory_checkpoint_execution_executable_main_relative_path" \
-                || "$relative_path" \
-                    == "$native300m_trajectory_checkpoint_execution_contract_test_relative_path" ]]; then
+                    == "$native300m_trajectory_checkpoint_execution_failure_observation_test_relative_path" ]]; then
                 continue
             fi
             printf '%s\n' "$index_record"
         done
 } | LC_ALL=C sort | shasum -a 256 | awk '{print $1}')"
-[[ "$expected_native300m_trajectory_checkpoint_execution_mechanics_preserved_index_sha256" \
+[[ "$expected_native300m_trajectory_checkpoint_execution_retirement_preserved_index_sha256" \
         =~ ^[0-9a-f]{64}$ \
-    && "$observed_native300m_trajectory_checkpoint_execution_mechanics_preserved_index_sha256" \
-        == "$expected_native300m_trajectory_checkpoint_execution_mechanics_preserved_index_sha256" ]] ||
-    die "Native300M trajectory-checkpoint mechanics changed a path outside its exact-nine closure"
-for exact_native300m_trajectory_checkpoint_execution_mechanics_path in \
+    && "$observed_native300m_trajectory_checkpoint_execution_retirement_preserved_index_sha256" \
+        == "$expected_native300m_trajectory_checkpoint_execution_retirement_preserved_index_sha256" ]] ||
+    die "Native300M trajectory-checkpoint retirement changed a path outside its exact-five closure"
+for exact_native300m_trajectory_checkpoint_execution_retirement_path in \
     '.github/scripts/prime-ci-active-root-quarantine.sh' \
-    "$native300m_trajectory_checkpoint_execution_launcher_relative_path" \
     '.github/workflows/prime-active-root-quarantine.yml' \
     'Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' \
-    "$native300m_trajectory_checkpoint_source_relative_path" \
-    "$native300m_trajectory_checkpoint_execution_training_source_relative_path" \
-    "$native300m_trajectory_checkpoint_execution_validation_manifest_relative_path" \
-    "$native300m_trajectory_checkpoint_execution_executable_main_relative_path" \
-    "$native300m_trajectory_checkpoint_execution_contract_test_relative_path"; do
-    expected_native300m_trajectory_checkpoint_execution_mechanics_mode="100644"
-    case "$exact_native300m_trajectory_checkpoint_execution_mechanics_path" in
+    "$native300m_trajectory_checkpoint_execution_failure_observation_source_relative_path" \
+    "$native300m_trajectory_checkpoint_execution_failure_observation_test_relative_path"; do
+    expected_native300m_trajectory_checkpoint_execution_retirement_mode="100644"
+    case "$exact_native300m_trajectory_checkpoint_execution_retirement_path" in
         '.github/scripts/'*)
-            expected_native300m_trajectory_checkpoint_execution_mechanics_mode="100755"
+            expected_native300m_trajectory_checkpoint_execution_retirement_mode="100755"
             ;;
     esac
     [[ "$(git -C "$prime_root" ls-files -s -- \
-        "$exact_native300m_trajectory_checkpoint_execution_mechanics_path" | \
+        "$exact_native300m_trajectory_checkpoint_execution_retirement_path" | \
         awk '{print $1}')" \
-        == "$expected_native300m_trajectory_checkpoint_execution_mechanics_mode" ]] ||
-        die "Native300M trajectory-checkpoint mechanics exact-nine path is missing or has the wrong mode: $exact_native300m_trajectory_checkpoint_execution_mechanics_path"
+        == "$expected_native300m_trajectory_checkpoint_execution_retirement_mode" ]] ||
+        die "Native300M trajectory-checkpoint retirement exact-five path is missing or has the wrong mode: $exact_native300m_trajectory_checkpoint_execution_retirement_path"
 done
 
-# The gate, workflow, and embedded provenance form the integration boundary.
-# Freeze the other six exact-nine payloads byte-for-byte so mechanics cannot
-# drift behind the structural assertions or the admitted-source digest.
+# The exact-five gate, workflow, provenance, and failure-observation pair form
+# the retirement integration boundary. Freeze all six mechanics payloads
+# byte-for-byte so retired execution capability cannot drift behind it.
 assert_native300m_trajectory_checkpoint_execution_successor_identity() {
     local relative_path="$1" expected_mode="$2" expected_blob="$3"
     local expected_bytes="$4" expected_lf_count="$5" expected_sha256="$6"
@@ -188,6 +178,18 @@ assert_native300m_trajectory_checkpoint_execution_successor_identity \
     '100644' '10dae9f4911b8965e700de7ae7160f730888fdc7' \
     '132644' '2875' \
     '9dcdf7856814f3e7bf624c6a61c2eab191e7ecb759e50a4e11a3d84aaa7e303a'
+# The new pure observation pair is the only source/test addition in the
+# retirement closure and is itself frozen at the canonical audit boundary.
+assert_native300m_trajectory_checkpoint_execution_successor_identity \
+    "$native300m_trajectory_checkpoint_execution_failure_observation_source_relative_path" \
+    '100644' '1db7426754a0983317d6d310a4f33893524f0a5e' \
+    '60513' '1263' \
+    'e00ed2c5630a7619676d7b22bbea3ba9b77af07a87f4bdc9336dc7b033a48ac3'
+assert_native300m_trajectory_checkpoint_execution_successor_identity \
+    "$native300m_trajectory_checkpoint_execution_failure_observation_test_relative_path" \
+    '100644' 'c1f770115d95ab0cb297121c273c4fd3df23b7d0' \
+    '41978' '905' \
+    'ed6b5ec4a7644cf521ebe580e04e1e1b08bdc8c16ebe86209dfcb950a8ca1bbc'
 
 for exact_stage5_replacement_mechanics_path in \
     '.github/scripts/prime-ci-active-root-quarantine.sh' \
@@ -723,9 +725,9 @@ grep -Fq -- 'runs-on: macos-15' "$workflow_path" ||
     die "workflow is not on the standard hosted macOS runner"
 [[ "$(grep -Fxc -- '  active-root:' "$workflow_path")" == "1" \
     && "$(grep -Fxc -- '  trusted-main-compile:' "$workflow_path")" == "1" \
-    && "$(grep -Fxc -- '  trusted-main-stage7:' "$workflow_path")" == "1" \
-    && "$(grep -Fxc -- '    steps:' "$workflow_path")" == "3" ]] ||
-    die "hosted quarantine workflow job topology changed"
+    && "$(grep -Fxc -- '  trusted-main-stage7:' "$workflow_path")" == "0" \
+    && "$(grep -Fxc -- '    steps:' "$workflow_path")" == "2" ]] ||
+    die "hosted quarantine workflow retirement job topology changed"
 [[ "$(awk '
     /^  active-root:$/ { inside = 1; next }
     /^  trusted-main-compile:$/ { inside = 0 }
@@ -734,18 +736,12 @@ grep -Fq -- 'runs-on: macos-15' "$workflow_path" ||
 ' "$workflow_path")" == "5" \
     && "$(awk '
         /^  trusted-main-compile:$/ { inside = 1; next }
-        /^  trusted-main-stage7:$/ { inside = 0 }
         inside && /^      - name:/ { count += 1 }
         END { print count + 0 }
-    ' "$workflow_path")" == "5" \
-    && "$(awk '
-        /^  trusted-main-stage7:$/ { inside = 1; next }
-        inside && /^      - name:/ { count += 1 }
-        END { print count + 0 }
-    ' "$workflow_path")" == "4" ]] ||
-    die "hosted quarantine workflow step topology changed"
+    ' "$workflow_path")" == "5" ]] ||
+    die "hosted quarantine workflow retirement step topology changed"
 [[ "$(grep -Fxc -- '    runs-on: macos-15' "$workflow_path")" == "1" \
-    && "$(grep -Fxc -- '    runs-on: macos-26' "$workflow_path")" == "2" \
+    && "$(grep -Fxc -- '    runs-on: macos-26' "$workflow_path")" == "1" \
     && "$(awk '
         /^  active-root:$/ { inside = 1; next }
         /^  trusted-main-compile:$/ { inside = 0 }
@@ -753,24 +749,18 @@ grep -Fq -- 'runs-on: macos-15' "$workflow_path" ||
     ' "$workflow_path")" == "45" \
     && "$(awk '
         /^  trusted-main-compile:$/ { inside = 1; next }
-        /^  trusted-main-stage7:$/ { inside = 0 }
         inside && /^    timeout-minutes:/ { print $2 }
-    ' "$workflow_path")" == "120" \
-    && "$(awk '
-        /^  trusted-main-stage7:$/ { inside = 1; next }
-        inside && /^    timeout-minutes:/ { print $2 }
-    ' "$workflow_path")" == "120" ]] ||
-    die "hosted quarantine workflow runner or timeout boundary changed"
+    ' "$workflow_path")" == "60" ]] ||
+    die "hosted quarantine workflow retirement runner or timeout boundary changed"
 [[ "$(grep -Fxc -- \
-    '          git -C ergentics-prime fetch --depth=1 --no-tags --no-write-fetch-head origin "$EXACT_REVISION"' \
-    "$workflow_path")" == "3" \
+        '          git -C ergentics-prime fetch --depth=1 --no-tags --no-write-fetch-head origin "$EXACT_REVISION"' \
+        "$workflow_path")" == "2" \
     && "$(grep -Fxc -- \
         "    if: github.event_name == 'push' && github.ref == 'refs/heads/main'" \
-        "$workflow_path")" == "2" \
+        "$workflow_path")" == "1" \
     && "$(grep -Fxc -- '    needs: active-root' "$workflow_path")" == "1" \
-    && "$(grep -Fxc -- '    needs: trusted-main-compile' "$workflow_path")" \
-        == "1" ]] ||
-    die "hosted quarantine workflow depth-one boundary changed"
+    && "$(grep -Fxc -- '    needs: trusted-main-compile' "$workflow_path")" == "0" ]] ||
+    die "hosted quarantine workflow retirement depth-one boundary changed"
 readonly active_root_workflow_job_block="$(awk '
     /^  active-root:$/ { inside = 1 }
     /^  trusted-main-compile:$/ { inside = 0 }
@@ -778,88 +768,29 @@ readonly active_root_workflow_job_block="$(awk '
 ' "$workflow_path")"
 readonly trusted_main_workflow_job_block="$(awk '
     /^  trusted-main-compile:$/ { inside = 1 }
-    /^  trusted-main-stage7:$/ { inside = 0 }
     inside { print }
 ' "$workflow_path")"
-readonly trusted_main_stage7_workflow_job_block="$(awk '
-    /^  trusted-main-stage7:$/ { inside = 1 }
-    inside { print }
-' "$workflow_path")"
-emit_native300m_trajectory_checkpoint_execution_stage7_private_fetch_block() {
-    awk '
-    /^      - name: Fetch the exact Stage-7 private dependency without evaluating Prime$/ {
-        inside = 1
-    }
-    inside && /^      - name: Reconstruct exact Stage-7 inputs and invoke the sole launcher$/ {
-        exit
-    }
-    inside { print }
-' "$workflow_path"
-}
-readonly native300m_trajectory_checkpoint_execution_stage7_private_fetch_block="$(
-    emit_native300m_trajectory_checkpoint_execution_stage7_private_fetch_block
-)"
-readonly native300m_trajectory_checkpoint_execution_stage7_private_fetch_sha256="$(
-    emit_native300m_trajectory_checkpoint_execution_stage7_private_fetch_block |
-        shasum -a 256 | awk '{print $1}'
-)"
-[[ "$native300m_trajectory_checkpoint_execution_stage7_private_fetch_sha256" \
-        == "3855f9f631bad2cd8ce0d7198d768a514e6f9efabb5a3a59cea42e19c6f8e77c" \
-    && "$(grep -Fxc -- \
-        '          ERGENTICS_MLX_READ_TOKEN: ${{ secrets.ERGENTICS_PAT }}' \
-        <<<"$native300m_trajectory_checkpoint_execution_stage7_private_fetch_block")" \
-        == "1" \
-    && "$(grep -Fxc -- \
-        '          export GIT_CONFIG_KEY_0="url.https://x-access-token:${ERGENTICS_MLX_READ_TOKEN}@github.com/.insteadOf"' \
-        <<<"$native300m_trajectory_checkpoint_execution_stage7_private_fetch_block")" \
-        == "1" \
-    && "$(grep -Fxc -- \
-        '          git --git-dir="$mlx_bare" fetch --depth=1 --no-tags origin "$PRIME_MLX_REVISION"' \
-        <<<"$native300m_trajectory_checkpoint_execution_stage7_private_fetch_block")" \
-        == "1" \
-    && "$(grep -Fxc -- \
-        '          unset GIT_CONFIG_COUNT GIT_CONFIG_KEY_0 GIT_CONFIG_VALUE_0' \
-        <<<"$native300m_trajectory_checkpoint_execution_stage7_private_fetch_block")" \
-        == "1" \
-    && "$(grep -Fxc -- \
-        '          [[ -z "${GIT_CONFIG_COUNT:-}${GIT_CONFIG_KEY_0:-}${GIT_CONFIG_VALUE_0:-}" ]]' \
-        <<<"$native300m_trajectory_checkpoint_execution_stage7_private_fetch_block")" \
-        == "1" \
-    && "$(grep -Fxc -- \
-        '          ! grep -R -Fq -- "$ERGENTICS_MLX_READ_TOKEN" "$mlx_bare"' \
-        <<<"$native300m_trajectory_checkpoint_execution_stage7_private_fetch_block")" \
-        == "1" ]] ||
-    die "Stage-7 credentialed MLX fetch or credential removal changed"
-for forbidden_native300m_trajectory_checkpoint_execution_stage7_fetch_value in \
-    '--insecure' \
-    'GIT_SSL_NO_VERIFY' \
-    'http.sslCAInfo' \
-    'http.sslVerify' \
-    'retry'; do
-    if grep -Fq -- \
-        "$forbidden_native300m_trajectory_checkpoint_execution_stage7_fetch_value" \
-        <<<"$native300m_trajectory_checkpoint_execution_stage7_private_fetch_block"; then
-        die "Stage-7 credentialed MLX fetch gained a TLS bypass or retry: $forbidden_native300m_trajectory_checkpoint_execution_stage7_fetch_value"
-    fi
-done
 [[ "$(grep -Fxc -- \
         '          bash .github/scripts/prime-ci-native-decoder-b-specific-native300m-trajectory-checkpoint-execution.sh' \
-        <<<"$active_root_workflow_job_block")" == "0" \
+        "$workflow_path")" == "0" \
     && "$(grep -Fxc -- \
         '            --filter "$native300m_trajectory_checkpoint_execution_contract_filter" \' \
-        <<<"$active_root_workflow_job_block")" == "0" \
-    && "$(grep -Fxc -- \
-        '          bash .github/scripts/prime-ci-native-decoder-b-specific-native300m-trajectory-checkpoint-execution.sh' \
-        <<<"$trusted_main_workflow_job_block")" == "0" \
-    && "$(grep -Fxc -- \
-        '            --filter "$native300m_trajectory_checkpoint_execution_contract_filter" \' \
-        <<<"$trusted_main_workflow_job_block")" == "1" \
-    && "$(grep -Fxc -- \
-        '          bash .github/scripts/prime-ci-native-decoder-b-specific-native300m-trajectory-checkpoint-execution.sh' \
-        <<<"$trusted_main_stage7_workflow_job_block")" == "1" \
-    && "$(grep -Fxc -- \
-        '            --filter "$native300m_trajectory_checkpoint_execution_contract_filter" \' \
-        <<<"$trusted_main_stage7_workflow_job_block")" == "0" \
+        "$workflow_path")" == "0" \
+    && "$(grep -Fc -- \
+        'PrimeNativeDecoderBSpecificNative300MTrajectoryCheckpointExecutionContractTests/testBSpecificNative300MTrajectoryCheckpointExecutionContractIsExactAndExecutionPure' \
+        "$workflow_path")" == "0" \
+    && "$(grep -Fc -- \
+        'PrimeNativeDecoderBSpecificNative300MTrajectoryCheckpointExecution.runSupervisor' \
+        "$workflow_path")" == "0" \
+    && "$(grep -Fc -- \
+        '--product PrimeNativeDecoderBSpecificNative300MTrajectoryCheckpointExecution' \
+        "$workflow_path")" == "0" \
+    && "$(grep -Fc -- 'PRIME_NATIVE_DECODER_NATIVE300M_TRAJECTORY_CHECKPOINT_EXECUTION_INTERNAL_CANDIDATE_V1=' \
+        "$workflow_path")" == "0" \
+    && "$(grep -Fc -- 'PRIME_NATIVE_DECODER_NATIVE300M_TRAJECTORY_CHECKPOINT_EXECUTION_INTERNAL_TERMINAL_V1=' \
+        "$workflow_path")" == "0" \
+    && "$(grep -Fc -- 'PRIME_NATIVE_DECODER_NATIVE300M_TRAJECTORY_CHECKPOINT_EXECUTION_RECEIPT_V1=' \
+        "$workflow_path")" == "0" \
     && "$(grep -Fxc -- \
         '          bash .github/scripts/prime-ci-native-decoder-metal.sh' \
         <<<"$trusted_main_workflow_job_block")" == "1" \
@@ -869,199 +800,13 @@ done
     && "$(grep -Fxc -- \
         '          bash .github/scripts/prime-ci-native-decoder-tokenizer-compatibility.sh' \
         <<<"$trusted_main_workflow_job_block")" == "1" \
-    && "$(grep -Ec -- \
-        'prime-ci-native-decoder-(metal|runtime-closure|tokenizer-compatibility)\.sh' \
-        <<<"$trusted_main_stage7_workflow_job_block")" == "0" ]] ||
-    die "Stage-7 execution escaped reviewed main or entered the pull-request lane"
-
-readonly native300m_trajectory_checkpoint_execution_stage7_epoch_step_block="$(awk '
-    /^      - name: Record the immutable Stage-7 job budget epoch$/ {
-        inside = 1
-    }
-    /^      - name: Check out exact main for Stage-7$/ {
-        if (inside) exit
-    }
-    inside { print }
-' <<<"$trusted_main_stage7_workflow_job_block")"
-readonly native300m_trajectory_checkpoint_execution_stage7_input_step_block="$(awk '
-    /^      - name: Reconstruct exact Stage-7 inputs and invoke the sole launcher$/ {
-        inside = 1
-    }
-    inside { print }
-' <<<"$trusted_main_stage7_workflow_job_block")"
-readonly native300m_trajectory_checkpoint_execution_stage7_input_step_sha256="$(awk '
-    /^      - name: Reconstruct exact Stage-7 inputs and invoke the sole launcher$/ {
-        inside = 1
-    }
-    inside { print }
-' "$workflow_path" | shasum -a 256 | awk '{print $1}')"
-readonly native300m_trajectory_checkpoint_execution_stage7_epoch_step_line="$(grep -nFx -- \
-    '      - name: Record the immutable Stage-7 job budget epoch' \
-    <<<"$trusted_main_stage7_workflow_job_block" | awk -F: '{print $1}')"
-readonly native300m_trajectory_checkpoint_execution_stage7_checkout_step_line="$(grep -nFx -- \
-    '      - name: Check out exact main for Stage-7' \
-    <<<"$trusted_main_stage7_workflow_job_block" | awk -F: '{print $1}')"
-readonly native300m_trajectory_checkpoint_execution_stage7_fetch_step_line="$(grep -nFx -- \
-    '      - name: Fetch the exact Stage-7 private dependency without evaluating Prime' \
-    <<<"$trusted_main_stage7_workflow_job_block" | awk -F: '{print $1}')"
-readonly native300m_trajectory_checkpoint_execution_stage7_input_step_line="$(grep -nFx -- \
-    '      - name: Reconstruct exact Stage-7 inputs and invoke the sole launcher' \
-    <<<"$trusted_main_stage7_workflow_job_block" | awk -F: '{print $1}')"
-for native300m_trajectory_checkpoint_execution_stage7_order_line in \
-    "$native300m_trajectory_checkpoint_execution_stage7_epoch_step_line" \
-    "$native300m_trajectory_checkpoint_execution_stage7_checkout_step_line" \
-    "$native300m_trajectory_checkpoint_execution_stage7_fetch_step_line" \
-    "$native300m_trajectory_checkpoint_execution_stage7_input_step_line"; do
-    [[ "$native300m_trajectory_checkpoint_execution_stage7_order_line" \
-        =~ ^[1-9][0-9]*$ ]] ||
-        die "Stage-7 split job lost an ordered setup or launcher step"
-done
-[[ "$native300m_trajectory_checkpoint_execution_stage7_epoch_step_line" \
-        -lt "$native300m_trajectory_checkpoint_execution_stage7_checkout_step_line" \
-    && "$native300m_trajectory_checkpoint_execution_stage7_checkout_step_line" \
-        -lt "$native300m_trajectory_checkpoint_execution_stage7_fetch_step_line" \
-    && "$native300m_trajectory_checkpoint_execution_stage7_fetch_step_line" \
-        -lt "$native300m_trajectory_checkpoint_execution_stage7_input_step_line" \
-    && "$(grep -Fxc -- '          umask 077' \
-        <<<"$native300m_trajectory_checkpoint_execution_stage7_epoch_step_block")" \
-        == "1" \
-    && "$(grep -Fxc -- \
-        '          readonly epoch_file="$RUNNER_TEMP/prime-native-decoder-native300m-trajectory-checkpoint-execution-job.epoch"' \
-        <<<"$native300m_trajectory_checkpoint_execution_stage7_epoch_step_block")" \
-        == "1" \
-    && "$(grep -Fxc -- \
-        '          [[ ! -e "$epoch_file" && ! -L "$epoch_file" ]]' \
-        <<<"$native300m_trajectory_checkpoint_execution_stage7_epoch_step_block")" \
-        == "1" \
-    && "$(grep -Fxc -- '          /bin/date '\''+%s'\'' > "$epoch_file"' \
-        <<<"$native300m_trajectory_checkpoint_execution_stage7_epoch_step_block")" \
-        == "1" \
-    && "$(grep -Fxc -- '          chmod 400 "$epoch_file"' \
-        <<<"$native300m_trajectory_checkpoint_execution_stage7_epoch_step_block")" \
-        == "1" \
-    && "$(grep -Fxc -- \
-        '            && "$(stat -f %l "$epoch_file")" == "1" \' \
-        <<<"$native300m_trajectory_checkpoint_execution_stage7_epoch_step_block")" \
-        == "1" \
-    && "$(grep -Fxc -- \
-        '            && "$(stat -f %u "$epoch_file")" == "$(id -u)" \' \
-        <<<"$native300m_trajectory_checkpoint_execution_stage7_epoch_step_block")" \
-        == "1" \
-    && "$(grep -Fxc -- \
-        '            && "$(stat -f %Lp "$epoch_file")" == "400" \' \
-        <<<"$native300m_trajectory_checkpoint_execution_stage7_epoch_step_block")" \
-        == "1" \
-    && "$(grep -Fxc -- \
-        '            && "$(stat -f %z "$epoch_file")" == "11" \' \
-        <<<"$native300m_trajectory_checkpoint_execution_stage7_epoch_step_block")" \
-        == "1" ]] ||
-    die "Stage-7 earliest immutable epoch-file budget anchor changed"
-
-for required_native300m_trajectory_checkpoint_execution_stage7_input_anchor in \
-    '          readonly numerics_revision="0c0290ff6b24942dadb83a929ffaaa1481df04a2"' \
-    '          readonly numerics_cache="$RUNNER_TEMP/prime-active-root-build/repositories/swift-numerics-d936ec6c"' \
-    '          readonly numerics_source="$RUNNER_TEMP/prime-active-root-build/checkouts/swift-numerics"' \
-    '          readonly mlx_source="$RUNNER_TEMP/ergentics-mlx-swift"' \
-    '          readonly metallib_root="$RUNNER_TEMP/prime-native-decoder-metallib"' \
-    '          git init --bare "$numerics_cache"' \
-    '          git --git-dir="$numerics_cache" remote add origin \' \
-    '          [[ "$(git --git-dir="$numerics_cache" remote get-url origin)" == \' \
-    '          git --git-dir="$numerics_cache" fetch --depth=1 --no-tags origin "$numerics_revision"' \
-    '          git --git-dir="$numerics_cache" update-ref \' \
-    '          git clone --no-checkout "$numerics_cache" "$numerics_source"' \
-    '          git -C "$numerics_source" checkout --detach "$numerics_revision"' \
-    '            -project "$mlx_source/xcode/MLX.xcodeproj" \' \
-    '            -target Cmlx \' \
-    '            -configuration Debug \' \
-    '            OBJROOT="$metallib_root/obj" \' \
-    '            SYMROOT="$metallib_root/products" \' \
-    '            CODE_SIGNING_ALLOWED=NO \' \
-    '            ONLY_ACTIVE_ARCH=YES \' \
-    '            ARCHS=arm64 \' \
-    '            build' \
-    '          readonly metallib_count="$(find "$metallib_root" \' \
-    '          [[ "$metallib_count" == "1" ]]' \
-    '          bash .github/scripts/prime-ci-native-decoder-b-specific-native300m-trajectory-checkpoint-execution.sh'; do
-    [[ "$(grep -Fxc -- \
-        "$required_native300m_trajectory_checkpoint_execution_stage7_input_anchor" \
-        <<<"$native300m_trajectory_checkpoint_execution_stage7_input_step_block")" \
-        == "1" ]] ||
-        die "Stage-7 split job lost exact offline input reconstruction: $required_native300m_trajectory_checkpoint_execution_stage7_input_anchor"
-done
-readonly native300m_trajectory_checkpoint_execution_stage7_numerics_origin_line="$(grep -nFx -- \
-    '          git --git-dir="$numerics_cache" remote add origin \' \
-    <<<"$native300m_trajectory_checkpoint_execution_stage7_input_step_block" | awk -F: '{print $1}')"
-readonly native300m_trajectory_checkpoint_execution_stage7_numerics_fetch_line="$(grep -nFx -- \
-    '          git --git-dir="$numerics_cache" fetch --depth=1 --no-tags origin "$numerics_revision"' \
-    <<<"$native300m_trajectory_checkpoint_execution_stage7_input_step_block" | awk -F: '{print $1}')"
-readonly native300m_trajectory_checkpoint_execution_stage7_numerics_checkout_line="$(grep -nFx -- \
-    '          git -C "$numerics_source" checkout --detach "$numerics_revision"' \
-    <<<"$native300m_trajectory_checkpoint_execution_stage7_input_step_block" | awk -F: '{print $1}')"
-readonly native300m_trajectory_checkpoint_execution_stage7_xcodebuild_line="$(grep -nFx -- \
-    '          xcodebuild \' \
-    <<<"$native300m_trajectory_checkpoint_execution_stage7_input_step_block" | awk -F: '{print $1}')"
-readonly native300m_trajectory_checkpoint_execution_stage7_metallib_count_line="$(grep -nFx -- \
-    '          readonly metallib_count="$(find "$metallib_root" \' \
-    <<<"$native300m_trajectory_checkpoint_execution_stage7_input_step_block" | awk -F: '{print $1}')"
-readonly native300m_trajectory_checkpoint_execution_stage7_launcher_line="$(grep -nFx -- \
-    '          bash .github/scripts/prime-ci-native-decoder-b-specific-native300m-trajectory-checkpoint-execution.sh' \
-    <<<"$native300m_trajectory_checkpoint_execution_stage7_input_step_block" | awk -F: '{print $1}')"
-[[ "$native300m_trajectory_checkpoint_execution_stage7_input_step_sha256" \
-        == "67c90f27c6e50471070fd56c519b763e002115fc6b98bad8e5d68a11173958a1" \
-    && "$native300m_trajectory_checkpoint_execution_stage7_numerics_origin_line" \
-        =~ ^[1-9][0-9]*$ \
-    && "$native300m_trajectory_checkpoint_execution_stage7_numerics_fetch_line" \
-        =~ ^[1-9][0-9]*$ \
-    && "$native300m_trajectory_checkpoint_execution_stage7_numerics_checkout_line" \
-        =~ ^[1-9][0-9]*$ \
-    && "$native300m_trajectory_checkpoint_execution_stage7_xcodebuild_line" \
-        =~ ^[1-9][0-9]*$ \
-    && "$native300m_trajectory_checkpoint_execution_stage7_metallib_count_line" \
-        =~ ^[1-9][0-9]*$ \
-    && "$native300m_trajectory_checkpoint_execution_stage7_launcher_line" \
-        =~ ^[1-9][0-9]*$ \
-    && "$native300m_trajectory_checkpoint_execution_stage7_numerics_origin_line" \
-        -lt "$native300m_trajectory_checkpoint_execution_stage7_numerics_fetch_line" \
-    && "$native300m_trajectory_checkpoint_execution_stage7_numerics_fetch_line" \
-        -lt "$native300m_trajectory_checkpoint_execution_stage7_numerics_checkout_line" \
-    && "$native300m_trajectory_checkpoint_execution_stage7_numerics_checkout_line" \
-        -lt "$native300m_trajectory_checkpoint_execution_stage7_xcodebuild_line" \
-    && "$native300m_trajectory_checkpoint_execution_stage7_xcodebuild_line" \
-        -lt "$native300m_trajectory_checkpoint_execution_stage7_metallib_count_line" \
-    && "$native300m_trajectory_checkpoint_execution_stage7_metallib_count_line" \
-        -lt "$native300m_trajectory_checkpoint_execution_stage7_launcher_line" \
-    && "$(grep -Fc -- 'https://github.com/apple/swift-numerics' \
-        <<<"$native300m_trajectory_checkpoint_execution_stage7_input_step_block")" \
-        == "2" \
-    && "$(grep -Fxc -- \
-        '          git --git-dir="$numerics_cache" fetch --depth=1 --no-tags origin "$numerics_revision"' \
-        <<<"$native300m_trajectory_checkpoint_execution_stage7_input_step_block")" \
-        == "1" \
-    && "$(grep -Fxc -- '            build' \
-        <<<"$native300m_trajectory_checkpoint_execution_stage7_input_step_block")" \
-        == "1" \
-    && "$(grep -Eic -- '(^|[[:space:]])(test|build-for-testing|test-without-building)([[:space:]]|$)' \
-        <<<"$native300m_trajectory_checkpoint_execution_stage7_input_step_block")" \
-        == "0" \
-    && "$(grep -Eic -- \
-        '(retry|x-access-token|GIT_CONFIG|ERGENTICS_MLX_READ_TOKEN|CHECKOUT_TOKEN|github\.token|secrets\.)' \
-        <<<"$native300m_trajectory_checkpoint_execution_stage7_input_step_block")" \
-        == "0" \
-    && "$(grep -Ec -- '(^|[[:space:]])swift[[:space:]]+(build|test)' \
-        <<<"$trusted_main_stage7_workflow_job_block")" == "0" \
     && "$(grep -Ec -- 'actions/(upload-artifact|download-artifact|cache)(@|/)' \
         "$workflow_path")" == "0" \
     && "$(grep -Ec -- '^[[:space:]]+outputs:' "$workflow_path")" == "0" \
     && "$(grep -Fc -- 'GITHUB_OUTPUT' "$workflow_path")" == "0" \
     && "$(grep -Ec -- '\$\{\{[[:space:]]*needs\.[^}]*\.outputs' \
-        "$workflow_path")" == "0" \
-    && "$(grep -Ec -- '^    needs:' \
-        <<<"$trusted_main_stage7_workflow_job_block")" == "1" \
-    && "$(grep -Fxc -- '    needs: trusted-main-compile' \
-        <<<"$trusted_main_stage7_workflow_job_block")" == "1" \
-    && "$(grep -Fc -- '${{ needs.' \
-        <<<"$trusted_main_stage7_workflow_job_block")" == "0" ]] ||
-    die "Stage-7 split job changed exact input reconstruction, invoked tests, or gained cross-job data transfer"
+        "$workflow_path")" == "0" ]] ||
+    die "Stage-7 retirement regained a focused contract, job, launcher, executable, receipt, or cross-job transfer surface"
 [[ -f "$decoder_metal_gate_path" && ! -L "$decoder_metal_gate_path" ]] ||
     die "Prime native decoder Metal gate is missing or linked"
 [[ "$(git -C "$prime_root" ls-files -- '.github/scripts/prime-ci-native-decoder-metal.sh')" \
@@ -1581,26 +1326,17 @@ readonly runtime_closure_workflow_line="$(grep -nFx -- \
 readonly tokenizer_compatibility_workflow_line="$(grep -nFx -- \
     '          bash .github/scripts/prime-ci-native-decoder-tokenizer-compatibility.sh' \
     "$workflow_path" | awk -F: '{print $1}')"
-readonly native300m_trajectory_checkpoint_execution_workflow_line="$(grep -nFx -- \
-    '          bash .github/scripts/prime-ci-native-decoder-b-specific-native300m-trajectory-checkpoint-execution.sh' \
-    "$workflow_path" | awk -F: '{print $1}')"
 [[ "$frozen_metal_workflow_line" =~ ^[1-9][0-9]*$ \
     && "$runtime_closure_workflow_line" =~ ^[1-9][0-9]*$ \
     && "$tokenizer_compatibility_workflow_line" =~ ^[1-9][0-9]*$ \
-    && "$native300m_trajectory_checkpoint_execution_workflow_line" \
-        =~ ^[1-9][0-9]*$ \
     && "$runtime_closure_workflow_line" \
         -eq $((frozen_metal_workflow_line + 1)) \
     && "$tokenizer_compatibility_workflow_line" \
-        -eq $((runtime_closure_workflow_line + 1)) \
-    && "$native300m_trajectory_checkpoint_execution_workflow_line" \
-        -gt "$tokenizer_compatibility_workflow_line" \
-    && "$(grep -Fxc -- '    needs: trusted-main-compile' \
-        <<<"$trusted_main_stage7_workflow_job_block")" == "1" ]] ||
-    die "reviewed-main jobs do not preserve the logical Metal, runtime, tokenizer, then Stage-7 order"
+        -eq $((runtime_closure_workflow_line + 1)) ]] ||
+    die "reviewed-main retirement job does not preserve the exact Metal, runtime, tokenizer order"
 [[ "$(grep -Fc -- \
     '          bash .github/scripts/prime-ci-native-decoder-' \
-    "$workflow_path")" == "4" \
+    "$workflow_path")" == "3" \
     && "$(grep -Fxc -- \
         '          bash .github/scripts/prime-ci-native-decoder-metal.sh' \
         "$workflow_path")" == "1" \
@@ -1627,7 +1363,7 @@ readonly native300m_trajectory_checkpoint_execution_workflow_line="$(grep -nFx -
         "$workflow_path")" == "0" \
     && "$(grep -Fxc -- \
         '          bash .github/scripts/prime-ci-native-decoder-b-specific-native300m-trajectory-checkpoint-execution.sh' \
-        "$workflow_path")" == "1" \
+        "$workflow_path")" == "0" \
     && "$(grep -Ec -- \
         '^[[:space:]]+bash \.github/scripts/prime-ci-native-decoder-stage7-' \
         "$workflow_path")" == "0" \
@@ -1650,10 +1386,9 @@ readonly native300m_trajectory_checkpoint_execution_workflow_line="$(grep -nFx -
         "$workflow_path")" == "0" \
     && "$(grep -Ec -- 'PRIME_NATIVE_DECODER_STAGE7_.*RECEIPT=' \
         "$workflow_path")" == "0" ]] ||
-    die "reviewed-main jobs lost the three retained launchers plus sole Stage-7 launcher or activated a retired one-shot"
+    die "reviewed-main retirement job lost a retained launcher or activated a retired one-shot"
 readonly live_decoder_workflow_block="$(awk '
     /^      - name: Run the Prime-owned decoder on live Metal$/ { inside = 1 }
-    /^  trusted-main-stage7:$/ { inside = 0 }
     inside { print }
 ' "$workflow_path")"
 readonly expected_live_decoder_workflow_block='      - name: Run the Prime-owned decoder on live Metal
@@ -1663,7 +1398,7 @@ readonly expected_live_decoder_workflow_block='      - name: Run the Prime-owned
           bash .github/scripts/prime-ci-native-decoder-runtime-closure.sh
           bash .github/scripts/prime-ci-native-decoder-tokenizer-compatibility.sh'
 [[ "$live_decoder_workflow_block" == "$expected_live_decoder_workflow_block" ]] ||
-    die "trusted-main predecessor exact contiguous Metal, runtime, and tokenizer block changed"
+    die "trusted-main exact contiguous Metal, runtime, and tokenizer block changed"
 ! grep -Fq -- \
     '          bash .github/scripts/prime-ci-native-decoder-checkpoint-v2-io.sh' \
     "$workflow_path" ||
@@ -1787,6 +1522,7 @@ readonly b_specific_native300m_resource_witness_authority_filter='PrimeCoreTests
 readonly b_specific_native300m_resource_witness_execution_observation_filter='PrimeCoreTests.PrimeNativeDecoderBSpecificNative300MResourceWitnessExecutionObservationTests/testBSpecificNative300MResourceWitnessPASSExecutionObservationIsExactAndRejectsEveryRecursiveMutation'
 readonly native300m_trajectory_checkpoint_execution_authority_filter='PrimeCoreTests.PrimeNativeDecoderNative300MTrajectoryCheckpointExecutionAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling'
 readonly native300m_trajectory_checkpoint_execution_contract_filter='PrimeNativeDecoderBSpecificNative300MTrajectoryCheckpointExecutionContractTests/testBSpecificNative300MTrajectoryCheckpointExecutionContractIsExactAndExecutionPure'
+readonly native300m_trajectory_checkpoint_execution_failure_observation_filter='PrimeCoreTests.PrimeNativeDecoderBSpecificNative300MTrajectoryCheckpointExecutionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling'
 [[ "$(grep -Fc -- "$tiny_cpu_mechanics_authority_filter" \
         "$workflow_path")" == "1" \
     && "$(grep -Fc -- "$tiny_cpu_mechanics_failure_observation_filter" \
@@ -1814,9 +1550,9 @@ readonly native300m_trajectory_checkpoint_execution_contract_filter='PrimeNative
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling' \\" \
-        "$workflow_path")" == "1" \
+        "$workflow_path")" == "2" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 62 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 63 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not run the exact Stage-2 authority and failure-observation pure contracts"
 [[ "$(grep -Fc -- "$private_dependency_tls_failure_observation_filter" \
@@ -1908,7 +1644,7 @@ readonly native300m_trajectory_checkpoint_execution_contract_filter='PrimeNative
         "          grep -Fq 'PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapFreshMetallibCrossBindingExecutionFailureObservationTests' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 62 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 63 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the Stage-2 metallib bootstrap repair, failure observations, and classifier repair authority"
 [[ "$(grep -Fc -- \
@@ -2074,9 +1810,9 @@ readonly native300m_trajectory_checkpoint_execution_contract_filter='PrimeNative
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling' \\" \
-        "$workflow_path")" == "1" \
+        "$workflow_path")" == "2" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 62 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 63 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run exactly the Stage-5 execution-failure observation"
 [[ "$(grep -Fc -- \
@@ -2095,7 +1831,7 @@ readonly native300m_trajectory_checkpoint_execution_contract_filter='PrimeNative
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 62 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 63 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run exactly the Stage-5 replacement-execution authority"
 [[ "$(grep -Fc -- \
@@ -2111,7 +1847,7 @@ readonly native300m_trajectory_checkpoint_execution_contract_filter='PrimeNative
         "          grep -Fq 'PrimeNativeDecoderStage5RepeatedTrajectoryReplacementCurrentDecoderIdentityObservationTests' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 62 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 63 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not run the exact Stage-5 current-decoder identity observation"
 [[ "$(grep -Fc -- \
@@ -2127,7 +1863,7 @@ readonly native300m_trajectory_checkpoint_execution_contract_filter='PrimeNative
         "          grep -Fq 'PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayReplacementExecutionObservationTests' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 62 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 63 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not run the exact Stage-5 replacement execution observation"
 [[ "$(grep -Fc -- \
@@ -2146,7 +1882,7 @@ readonly native300m_trajectory_checkpoint_execution_contract_filter='PrimeNative
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 62 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 63 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run exactly the Stage-6 resource-only probe authority"
 [[ "$(grep -Fc -- \
@@ -2204,30 +1940,46 @@ readonly native300m_trajectory_checkpoint_execution_contract_filter='PrimeNative
         "          grep -Fq 'PrimeNativeDecoderNative300MTrajectoryCheckpointExecutionAuthorityTests' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 62 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 63 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the sole Native300M trajectory-checkpoint execution authority contract"
-[[ "$(grep -Fxc -- \
-        "          readonly native300m_trajectory_checkpoint_execution_contract_filter='${native300m_trajectory_checkpoint_execution_contract_filter}'" \
+[[ "$(grep -Fc -- \
+        "$native300m_trajectory_checkpoint_execution_failure_observation_filter" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        "$native300m_trajectory_checkpoint_execution_failure_observation_source_relative_path" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        "$native300m_trajectory_checkpoint_execution_failure_observation_test_relative_path" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          readonly native300m_trajectory_checkpoint_execution_focused_contract_test_log="$RUNNER_TEMP/prime-native-decoder-native300m-trajectory-checkpoint-execution-focused-contract-tests.log"' \
+        "          grep -Fq 'PrimeNativeDecoderBSpecificNative300MTrajectoryCheckpointExecutionFailureObservationTests' \\" \
         "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        '          grep -Fq '\''Executed 63 tests, with 0 failures'\'' "$test_log"' \
+        "$workflow_path")" == "1" ]] ||
+    die "hosted workflow does not parse and run the Native300M trajectory-checkpoint failure observation"
+[[ "$(grep -Fc -- \
+        "$native300m_trajectory_checkpoint_execution_contract_filter" \
+        "$workflow_path")" == "0" \
+    && "$(grep -Fc -- \
+        'native300m_trajectory_checkpoint_execution_contract_filter' \
+        "$workflow_path")" == "0" \
+    && "$(grep -Fc -- \
+        'native300m_trajectory_checkpoint_execution_focused_contract_test_log' \
+        "$workflow_path")" == "0" \
     && "$(grep -Fxc -- \
         '            --package-path Tests/PrimeNativeDecoderTrainingValidation \' \
-        "$workflow_path")" == "1" \
+        "$workflow_path")" == "0" \
     && "$(grep -Fxc -- \
         '            --filter "$native300m_trajectory_checkpoint_execution_contract_filter" \' \
-        "$workflow_path")" == "1" \
+        "$workflow_path")" == "0" \
     && "$(grep -Fxc -- \
         "          grep -Fq 'PrimeNativeDecoderBSpecificNative300MTrajectoryCheckpointExecutionContractTests' \\" \
-        "$workflow_path")" == "1" \
+        "$workflow_path")" == "0" \
     && "$(grep -Fxc -- \
         "          grep -Fq 'testBSpecificNative300MTrajectoryCheckpointExecutionContractIsExactAndExecutionPure' \\" \
-        "$workflow_path")" == "1" \
-    && "$(grep -Fxc -- \
-        "          grep -Fq 'Executed 1 test, with 0 failures' \\" \
-        "$workflow_path")" == "3" \
+        "$workflow_path")" == "0" \
     && "$(grep -Fc -- \
         "$native300m_trajectory_checkpoint_source_relative_path" \
         "$workflow_path")" == "1" \
@@ -2240,15 +1992,7 @@ readonly native300m_trajectory_checkpoint_execution_contract_filter='PrimeNative
     && "$(grep -Fc -- \
         "$native300m_trajectory_checkpoint_execution_contract_test_relative_path" \
         "$workflow_path")" == "1" ]] ||
-    die "hosted workflow lost the exact Native300M trajectory-checkpoint focused pure-contract validation"
-readonly native300m_trajectory_checkpoint_execution_focused_filter_workflow_line="$(grep -nFx -- \
-    '            --filter "$native300m_trajectory_checkpoint_execution_contract_filter" \' \
-    "$workflow_path" | awk -F: '{print $1}')"
-[[ "$native300m_trajectory_checkpoint_execution_focused_filter_workflow_line" \
-        =~ ^[1-9][0-9]*$ \
-    && "$native300m_trajectory_checkpoint_execution_focused_filter_workflow_line" \
-        -lt "$native300m_trajectory_checkpoint_execution_workflow_line" ]] ||
-    die "Native300M trajectory-checkpoint focused pure contract is not ordered before the retained live sequence"
+    die "hosted workflow regained Native300M trajectory-checkpoint focused execution or lost syntax-only mechanics coverage"
 [[ "$(grep -Fc -- 'b_specific_native300m_resource_witness_contract_filter' \
         "$workflow_path")" == "0" \
     && "$(grep -Fc -- \
@@ -2256,7 +2000,7 @@ readonly native300m_trajectory_checkpoint_execution_focused_filter_workflow_line
         "$workflow_path")" == "0" \
     && "$(grep -Fxc -- \
         '            --package-path Tests/PrimeNativeDecoderTrainingValidation \' \
-        "$workflow_path")" == "1" \
+        "$workflow_path")" == "0" \
     && "$(grep -Fc -- \
         "$b_specific_native300m_resource_witness_training_source_relative_path" \
         "$workflow_path")" == "1" \
@@ -2273,7 +2017,7 @@ readonly native300m_trajectory_checkpoint_execution_focused_filter_workflow_line
         "$workflow_path")" == "0" \
     && "$(grep -Fxc -- \
         '            --package-path Tests/PrimeNativeDecoderTrainingValidation \' \
-        "$workflow_path")" == "1" \
+        "$workflow_path")" == "0" \
     && "$(grep -Fxc -- \
         '          bash .github/scripts/prime-ci-native-decoder-stage6-native300m-resource-only-one-step.sh' \
         "$workflow_path")" == "0" \
@@ -2356,11 +2100,11 @@ readonly observed_stage5_swift_numerics_resolution_workflow_block="$(awk '
         "$workflow_path")" == "1" \
     && "$(grep -Ec -- \
         '^[[:space:]]+TMPDIR=.* swift test \\' \
-        "$workflow_path")" == "6" \
+        "$workflow_path")" == "5" \
     && "$(grep -Fxc -- \
         '            --force-resolved-versions \' \
-        "$workflow_path")" == "6" ]] ||
-    die "workflow changed the root/isolated/Stage-7-pure SwiftPM command or pre-root MLX rewrite ceilings"
+        "$workflow_path")" == "5" ]] ||
+    die "workflow changed the root/isolated SwiftPM command or pre-root MLX rewrite ceilings"
 readonly root_test_log_workflow_line="$(grep -nFx -- \
     '            2>&1 | tee "$test_log"' "$workflow_path" | awk -F: '{print $1}')"
 readonly numerics_validation_workflow_line="$(grep -nFx -- \
@@ -2784,7 +2528,7 @@ for required_native300m_trajectory_checkpoint_execution_authority_summary_value 
     'Resource abstention requires positive ENOMEM, ENOSPC, MLX-limit, floor, or safely closed timeout proof' \
     'unknown errors and semantic or inventory failures are not resource abstentions' \
     'measured mismatch requires two complete valid trajectories and establishes no resume' \
-    'single exact-nine Stage-7 opportunity gated to the reviewed-main push described above' \
+    'single exact-nine Stage-7 opportunity is consumed, failed without a public receipt, and retired with no retry or replacement' \
     'no Prime proposal, candidate selection, trial authorization, decision receipt, runtime/product/canary decoder activation, further Native-300M training or additional execution'; do
     [[ "$(grep -Fc -- \
         "$required_native300m_trajectory_checkpoint_execution_authority_summary_value" \
@@ -2827,6 +2571,45 @@ for required_native300m_trajectory_checkpoint_execution_mechanics_summary_value 
         <<<"$active_root_workflow_job_block")" == "1" ]] ||
         die "workflow lost the Native300M trajectory-checkpoint mechanics summary: $required_native300m_trajectory_checkpoint_execution_mechanics_summary_value"
 done
+for required_native300m_trajectory_checkpoint_execution_failure_retirement_summary_value in \
+    'Draft PR 116 and its unique pull-request workflow run 31882905671 number 128 attempt 1 check suite 86483861376' \
+    'passed active job 95007853688 while reviewed-main jobs 95008130205 and 95008130384 were skipped' \
+    'Stage-7 focused-contract, launcher, executable, hosted-log receipt-prefix, Actions-artifact, and rerun counts all zero' \
+    'Exact-main Stage-7 mechanics merge 88e001083c19f995f5ef5bd7c36f48356a90b997, tree 63019d792346f8a6aeec461bdfc06721671385e8' \
+    'ordered parents 300bad298bc9ff6f2752d1409639ff9e99318db6 then c2077a68d5ac684528bf948cef3d3fa38b823a02, PR 116' \
+    'unique push workflow run 31883255378 number 129 attempt 1 check suite 86484623523' \
+    'passed active job 95008665011 and predecessor reviewed job 95008982463 before dependent fresh Stage-7 job 95013990901 failed' \
+    'predecessor passed root 62, isolated 6, one focused Stage-7 pure contract for focused whole 69' \
+    'then Metal 44, maintained runtime 1 with one receipt, and tokenizer 1 with one receipt; the fresh job recorded its immutable epoch' \
+    'completed one Release build in 633.92 seconds' \
+    'passed the launcher-local Stage-7 pure contract once in 8.901 seconds' \
+    'launcher reported its sole supervisor nonzero and exited 2' \
+    'launcher-failure marker appeared about 237 seconds after the pure-test pass line' \
+    'interval includes intervening setup and does not measure supervisor runtime' \
+    'complete Stage-7 job terminal log contains zero occurrences of the internal-candidate, internal-terminal, public Stage-7, or other PRIME receipt prefixes' \
+    'run has zero Actions artifacts or reruns; unlogged private-frame facts remain unknown' \
+    'Runner cleanup directly observed and terminated one orphan sleep process' \
+    'attributing that orphan to the watchdog subshell cancellation path is inference only, not hosted-run telemetry' \
+    'private supervisor stdout and stderr were not surfaced before launcher failure, so its inner cause is unrecoverable' \
+    'no scientific terminal outcome is established' \
+    'Stage-7 one-shot is consumed and exhausted and authorizes no retry, rerun, replacement, or additional execution' \
+    'exact-five pure retirement adds only this dependency-free failure-observation pair with the gate, workflow, and embedded provenance' \
+    'returns the reviewed-main timeout to 60 minutes' \
+    'removes the focused Stage-7 contract and the entire Stage-7 job, launcher, executable, and receipt invocation surface' \
+    'preserves every exact-nine mechanics payload byte' \
+    'closes at active Latin 116, root 63, isolated 6, focused whole 69' \
+    'retained Metal 44, maintained runtime 1, and tokenizer 1 for live 46 and total 115 XTests' \
+    'Every retired old-mechanics and Stage-7 mechanics launcher, executable, hosted-log receipt-prefix, and workflow receipt emission count is zero in retirement' \
+    'No Stage 8, checkpoint admission, Native-300M trajectory resume, durable checkpoint availability, quality, trial, canary, quantization, product, publication, retry, rerun, replacement, or further execution authority is established'; do
+    [[ "$(grep -Fc -- \
+        "$required_native300m_trajectory_checkpoint_execution_failure_retirement_summary_value" \
+        <<<"$active_root_workflow_job_block")" == "1" ]] ||
+        die "workflow lost the Native300M trajectory-checkpoint failure-retirement summary: $required_native300m_trajectory_checkpoint_execution_failure_retirement_summary_value"
+done
+[[ "$(grep -Fc -- \
+        'single exact-nine Stage-7 opportunity is consumed, failed without a public receipt, and retired with no retry or replacement' \
+        <<<"$active_root_workflow_job_block")" == "1" ]] ||
+    die "workflow did not retire the consumed Stage-7 opportunity globally"
 [[ "$(grep -Fc -- \
         'Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderTrajectoryCheckpointV1.swift' \
         "$workflow_path")" == "1" \
@@ -2957,7 +2740,7 @@ done
         "$workflow_path")" == "1" \
     && "$(grep -Fc -- \
         '--package-path Tests/PrimeNativeDecoderTrainingValidation' \
-        "$workflow_path")" == "1" \
+        "$workflow_path")" == "0" \
     && "$(grep -Fc -- \
         'PrimeNativeDecoderTrainingTests/testTinyCPUTrainEvaluateMechanicsAreExactAndFailClosed' \
         "$workflow_path")" == "0" \
@@ -2971,7 +2754,7 @@ done
         "$workflow_path")" == "0" \
     && "$(grep -Fc -- 'prime-native-decoder-training-security' \
         "$workflow_path")" == "0" ]] ||
-    die "reviewed-main workflow changed the sole Stage-7 pure package invocation or bypassed the bounded Stage-2 successor launcher with inline mechanics"
+    die "reviewed-main retirement workflow regained a Stage-7 validation-package invocation or bypassed the bounded Stage-2 successor launcher with inline mechanics"
 for required_metal_gate_value in \
     'MTLCreateSystemDefaultDevice' \
     '-target Cmlx' \
@@ -4034,6 +3817,8 @@ readonly native300m_trajectory_checkpoint_source="$prime_root/$native300m_trajec
 readonly native300m_trajectory_checkpoint_execution_training_source="$prime_root/$native300m_trajectory_checkpoint_execution_training_source_relative_path"
 readonly native300m_trajectory_checkpoint_execution_executable_main="$prime_root/$native300m_trajectory_checkpoint_execution_executable_main_relative_path"
 readonly native300m_trajectory_checkpoint_execution_contract_test="$prime_root/$native300m_trajectory_checkpoint_execution_contract_test_relative_path"
+readonly native300m_trajectory_checkpoint_execution_failure_observation_source="$prime_root/$native300m_trajectory_checkpoint_execution_failure_observation_source_relative_path"
+readonly native300m_trajectory_checkpoint_execution_failure_observation_test="$prime_root/$native300m_trajectory_checkpoint_execution_failure_observation_test_relative_path"
 readonly decoder_training_source="$prime_root/Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderTraining.swift"
 readonly decoder_training_validation_root="$prime_root/Tests/PrimeNativeDecoderTrainingValidation"
 readonly decoder_training_validation_manifest="$decoder_training_validation_root/Package.swift"
@@ -4286,6 +4071,11 @@ bash -n "$stage5_replacement_launcher" ||
 [[ -f "$stage6_native300m_resource_only_one_step_probe_execution_observation_test" \
     && ! -L "$stage6_native300m_resource_only_one_step_probe_execution_observation_test" ]] ||
     die "Stage-6 resource-only probe execution-observation test is missing or linked"
+[[ -f "$native300m_trajectory_checkpoint_execution_failure_observation_source" \
+    && ! -L "$native300m_trajectory_checkpoint_execution_failure_observation_source" \
+    && -f "$native300m_trajectory_checkpoint_execution_failure_observation_test" \
+    && ! -L "$native300m_trajectory_checkpoint_execution_failure_observation_test" ]] ||
+    die "Native300M trajectory-checkpoint failure-observation pair is missing or linked"
 [[ -f "$decoder_training_source" && ! -L "$decoder_training_source" ]] ||
     die "PrimeNativeDecoderTraining source is missing or linked"
 [[ -f "$decoder_training_validation_manifest" \
@@ -5214,6 +5004,8 @@ swiftc -frontend -parse "$native300m_trajectory_checkpoint_source"
 swiftc -frontend -parse "$native300m_trajectory_checkpoint_execution_training_source"
 swiftc -frontend -parse "$native300m_trajectory_checkpoint_execution_executable_main"
 swiftc -frontend -parse "$native300m_trajectory_checkpoint_execution_contract_test"
+swiftc -frontend -parse "$native300m_trajectory_checkpoint_execution_failure_observation_source"
+swiftc -frontend -parse "$native300m_trajectory_checkpoint_execution_failure_observation_test"
 swiftc -frontend -parse "$decoder_training_source"
 swiftc -frontend -parse "$decoder_training_validation_test"
 swiftc -frontend -parse "$decoder_stage3_tiny_cpu_resume_test"
@@ -10209,9 +10001,9 @@ done
 [[ "$(wc -l < "$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift" | \
         awk '{print $1}')" == "13" \
     && "$(grep -Fxc -- \
-        '        "026ac33c426c8368e3eecfc327637580590b580c9b094af7aef61a7158c9906a"' \
+        '        "dd8ec692d700e9b90df232841bec3c1c591fdae45b6a8ddb94bb8946ac31447b"' \
         "$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift")" == "1" ]] ||
-    die "Native300M trajectory-checkpoint execution-authority embedded provenance identity changed"
+    die "Native300M trajectory-checkpoint retirement embedded provenance identity changed"
 readonly expected_embedded_source_identity_sha256="$(awk -F'"' \
     '/^[[:space:]]+"[0-9a-f]{64}"$/ { print $2 }' \
     "$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift")"
@@ -10253,7 +10045,7 @@ while IFS= read -r relative_path; do
         '{relative_path: $relative_path, sha256: $sha256, byte_count: $byte_count}'
 done | jq -jcsS '.' | shasum -a 256 | awk '{print $1}')"
 [[ "$expected_embedded_source_identity_sha256" =~ ^[0-9a-f]{64}$ \
-    && "$recomputed_embedded_source_identity_record_count" == "494" \
+    && "$recomputed_embedded_source_identity_record_count" == "496" \
     && "$recomputed_embedded_source_identity_sha256" \
         == "$expected_embedded_source_identity_sha256" ]] ||
     die "embedded Prime source provenance does not recompute exactly"
@@ -14595,6 +14387,343 @@ for forbidden_b_specific_native300m_resource_witness_execution_observation_capab
         die "B-specific Native300M execution observation gained capability: $forbidden_b_specific_native300m_resource_witness_execution_observation_capability"
 done
 
+for native300m_trajectory_checkpoint_execution_failure_observation_file in \
+    "$native300m_trajectory_checkpoint_execution_failure_observation_source" \
+    "$native300m_trajectory_checkpoint_execution_failure_observation_test"; do
+    [[ -f "$native300m_trajectory_checkpoint_execution_failure_observation_file" \
+        && ! -L "$native300m_trajectory_checkpoint_execution_failure_observation_file" \
+        && "$(stat -f %l \
+            "$native300m_trajectory_checkpoint_execution_failure_observation_file")" \
+            == "1" \
+        && "$(git -C "$prime_root" ls-files -s -- \
+            "${native300m_trajectory_checkpoint_execution_failure_observation_file#"$prime_root/"}" | \
+            awk '{print $1}')" == "100644" ]] ||
+        die "Native300M trajectory-checkpoint failure-observation pair is missing, linked, multiply linked, or has the wrong mode: $native300m_trajectory_checkpoint_execution_failure_observation_file"
+done
+[[ "$(awk '/^import / { print }' \
+        "$native300m_trajectory_checkpoint_execution_failure_observation_source")" \
+        == 'import Foundation' \
+    && "$(awk '/^import / || /^@testable import / { print }' \
+        "$native300m_trajectory_checkpoint_execution_failure_observation_test")" \
+        == $'import CoreFoundation\nimport Foundation\n@testable import PrimeCore\nimport XCTest' \
+    && "$(grep -Ec -- '^[[:space:]]+func test' \
+        "$native300m_trajectory_checkpoint_execution_failure_observation_test")" \
+        == "1" \
+    && "$(grep -Fc -- \
+        'PrimeNativeDecoderBSpecificNative300MTrajectoryCheckpointExecutionFailureObservationTests:' \
+        "$native300m_trajectory_checkpoint_execution_failure_observation_test")" \
+        == "1" \
+    && "$(grep -Fc -- \
+        'func testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling()' \
+        "$native300m_trajectory_checkpoint_execution_failure_observation_test")" \
+        == "1" ]] ||
+    die "Native300M trajectory-checkpoint failure observation imports or sole-test surface changed"
+for required_native300m_trajectory_checkpoint_execution_failure_observation_value in \
+    'PrimeNativeDecoderBSpecificNative300MTrajectoryCheckpointExecutionFailureObservationV1:' \
+    'public static let frozenV1' \
+    'public static let canonicalSHA256' \
+    'public static func decodeCanonical(_ data: Data) throws -> Self' \
+    'public func validateExactV1() throws' \
+    'Codable' \
+    'Sendable' \
+    '"ergentics_prime_native_decoder_b_specific_native300m_trajectory_checkpoint_execution_failure_observation_v1"' \
+    '"terminal_exact_main_stage7_supervisor_nonzero_no_public_receipt_orphan_sleep_observed_private_cause_unrecoverable"' \
+    '"prime_native_decoder_native300m_trajectory_checkpoint_execution_authority_v1"' \
+    '"4d995b21a20424f1b05fbcb9fbe33780dbd7af03cbf68047270db4aae192caa4"' \
+    'pullRequestNumber: 116' \
+    '"300bad298bc9ff6f2752d1409639ff9e99318db6"' \
+    '"d7c57b442e6c9a278b2ab58142ac86cbfa622930"' \
+    '"c2077a68d5ac684528bf948cef3d3fa38b823a02"' \
+    '"88e001083c19f995f5ef5bd7c36f48356a90b997"' \
+    '"63019d792346f8a6aeec461bdfc06721671385e8"' \
+    'mergeCommitSignatureVerified: true' \
+    'historyPreservingTwoParentMergeObserved: true' \
+    'mergeTreeEqualsReviewedHeadTree: true' \
+    'changedPathCount: 9' \
+    'embeddedSourceIdentitySHA256:' \
+    '"026ac33c426c8368e3eecfc327637580590b580c9b094af7aef61a7158c9906a"' \
+    'workflowRunID: 31_882_905_671' \
+    'workflowRunNumber: 128' \
+    'workflowRunAttempt: 1' \
+    'workflowCheckSuiteID: 86_483_861_376' \
+    'activeRootJobID: 95_007_853_688' \
+    'reviewedMainCompileJobID: 95_008_130_205' \
+    'stage7JobID: 95_008_130_384' \
+    'activeRootTestStartCount: 116' \
+    'activeRootTestPassCount: 116' \
+    'pullRequestActiveRootRawLog: rawLog(' \
+    '292_354, 1_846,' \
+    '"9f4a4beba90cbc170a74eda15fd7ad16daa549395cca658a5f02a62c9bf9e10f"' \
+    'runID: 31_883_255_378' \
+    'runNumber: 129' \
+    'checkSuiteID: 86_484_623_523' \
+    'exactHeadPushRunCount: 1' \
+    '95_008_665_011' \
+    '95_008_982_463' \
+    '95_013_990_901' \
+    'activeRootRawLog: rawLog(' \
+    '292_453, 1_847,' \
+    '"36f626e4a038d513fbb0629db54c9806690eb644135bfdd13009a8abeb1cb584"' \
+    'reviewedMainCompileRawLog: rawLog(' \
+    '10_348_477, 79_295,' \
+    '"c565edf57bba08e2430ec82570a75604f9b9730300fe17102eac4cb4ff337e22"' \
+    'stage7RawLog: rawLog(' \
+    '9_829_534, 74_429,' \
+    '"b446819db9570743f162d9ea9015d4927689e854d5aba16f9c4ce65543e59be2"' \
+    'utf8BOMHex: "efbbbf"' \
+    'startsWithUTF8BOM: true' \
+    'usesLFOnly: true' \
+    'endsWithLF: true' \
+    'repeatFetchExactlyEqual: true' \
+    'bindingKind: "github_job_log_endpoint_decoded_utf8_bytes_v1"' \
+    'rawGitHubLogArchiveBytesBound: false' \
+    'retainedInRepository: false' \
+    'activeLatinTestStartCount: 116' \
+    'activeLatinTestPassCount: 116' \
+    'focusedRootTestCount: 62' \
+    'isolatedCheckpointGroupTestCounts: [1, 1, 2, 2]' \
+    'isolatedCheckpointTestCount: 6' \
+    'focusedStage7ContractTestCount: 1' \
+    'focusedWholeStepTestCount: 69' \
+    'metalTestCount: 44' \
+    'maintainedRuntimeTestCount: 1' \
+    'tokenizerTestCount: 1' \
+    'liveTestCount: 46' \
+    'reviewedCompileTestCount: 115' \
+    'stage7LauncherLocalContractTestCount: 1' \
+    'aggregateReviewedXCTestCount: 116' \
+    'directOperationalProbeInvocationCount: 1' \
+    'directOperationalProbeSuccessCount: 0' \
+    'releaseBuildInvocationCount: 1' \
+    'releaseBuildCompletionCount: 1' \
+    'releaseBuildDurationMilliseconds: 633_920' \
+    'launcherLocalPureContractInvocationCount: 1' \
+    'launcherLocalPureContractPassCount: 1' \
+    'launcherLocalPureContractDurationMilliseconds: 8_901' \
+    'launcherInvocationCount: 1' \
+    'directSupervisorExecutableInvocationCount: 1' \
+    'oneShotBoundaryReached: true' \
+    'oneShotConsumed: true' \
+    'oneShotExhausted: true' \
+    'sole supervisor invocation did not exit zero' \
+    'supervisorNonzeroMarkerOccurrenceCount: 1' \
+    '"unknown_nonzero_launcher_disclosed_no_numeric_supervisor_status"' \
+    'launcherExitCode: 2' \
+    '"Process completed with exit code 2."' \
+    'hostedLogPublicReceiptPrefixOccurrenceCount: 0' \
+    'privateCandidateSchemaID:' \
+    '"ergentics_prime_native_decoder_native300m_trajectory_checkpoint_execution_internal_candidate_v1"' \
+    'hostedLogPrivateCandidateSchemaIDOccurrenceCount: 0' \
+    'privateTerminalSchemaID:' \
+    '"ergentics_prime_native_decoder_native300m_trajectory_checkpoint_execution_internal_terminal_v1"' \
+    'hostedLogPrivateTerminalSchemaIDOccurrenceCount: 0' \
+    'publicReceiptSchemaID:' \
+    '"ergentics_prime_native_decoder_native300m_trajectory_checkpoint_execution_receipt_v1"' \
+    'hostedLogPublicReceiptSchemaIDOccurrenceCount: 0' \
+    'hostedLogExternalFailsafeStartedMarkerCount: 0' \
+    'hostedLogExternalFailsafeFailedMarkerCount: 0' \
+    'privateSupervisorCauseRecoverable: false' \
+    '"unrecoverable_private_stdout_stderr_and_frames_not_published"' \
+    '"unknown_private_capture_not_published"' \
+    '"unknown_no_publicly_recoverable_frame"' \
+    'workerProcessEvidence: "unknown"' \
+    'releaseVerifierProcessEvidence: "unknown"' \
+    'leaseEvidence: "unknown"' \
+    'checkpointPublicationEvidence: "unknown"' \
+    'comparisonDomainEvidence: "unknown"' \
+    'resourcePhaseEvidence: "unknown"' \
+    'artifactCleanupAndAbsenceEvidence: "unknown"' \
+    'scientificOutcomeEvidence:' \
+    '"unknown_not_a_valid_terminal_scientific_classification"' \
+    'resourceOutcomeEvidence: "unknown"' \
+    'exactResumeEvidence: "unknown"' \
+    'validPublicTerminalEstablished: false' \
+    'mechanicsSuccessEstablished: false' \
+    'workflowFailureEstablished: true' \
+    'githubRunnerOrphanCleanupObserved: true' \
+    'observedOrphanProcessCount: 1' \
+    'observedOrphanPID: 29_906' \
+    'observedOrphanProcessName: "sleep"' \
+    '"Terminate orphan process: pid (29906) (sleep)"' \
+    'noOrphanClosureEstablished: false' \
+    '"unknown_unattributed_sleep_process"' \
+    'watchdogChildAttributionDirectlyObserved: false' \
+    'watchdogChildExplanationIsInferenceOnly: true' \
+    'explanationConsistentWithFrozenSource: true' \
+    'supervisorWorkerOrVerifierOrphanEstablished: false' \
+    'pullRequestRunArtifactCount: 0' \
+    'exactMainRunArtifactCount: 0' \
+    'exactMainRunCountForHead: 1' \
+    'runAttemptCount: 1' \
+    'retryCount: 0' \
+    'rerunCount: 0' \
+    'replacementExecutionCount: 0' \
+    'publicReceiptCount: 0' \
+    'retirementRequired: true' \
+    'retirementObserved: false' \
+    'exactChangedPathCount: 5' \
+    'expectedActiveLatinTestCount: 116' \
+    'expectedRootTestCount: 63' \
+    'expectedIsolatedCheckpointGroupTestCounts: [1, 1, 2, 2]' \
+    'expectedIsolatedCheckpointTestCount: 6' \
+    'expectedFocusedWholeStepTestCount: 69' \
+    'expectedMetalTestCount: 44' \
+    'expectedRuntimeTestCount: 1' \
+    'expectedTokenizerTestCount: 1' \
+    'expectedLiveTestCount: 46' \
+    'expectedTotalTestCount: 115' \
+    'expectedStage7JobCount: 0' \
+    'expectedStage7FocusedContractInvocationCount: 0' \
+    'expectedStage7LauncherLocalContractInvocationCount: 0' \
+    'expectedStage7LauncherInvocationCount: 0' \
+    'expectedStage7ExecutableInvocationCount: 0' \
+    'expectedStage7ReceiptCount: 0' \
+    'stage7MechanicsPayloadsMustRemainPreserved: true' \
+    'replacementOrRepairExecutionPermittedByRetirement: false' \
+    'oneShotExecutionConsumed: true' \
+    'oneShotExecutionExhausted: true' \
+    'failureObservationAuthorizesNothing: true' \
+    'exactRetirementRequired: true' \
+    'mechanicsPayloadPreservationRequired: true' \
+    'requiredPublicTerminalIntegrityClosureFailureEstablished: true' \
+    'privateFailureCauseRecovered: false' \
+    'stage7MechanicsSuccessEstablished: false' \
+    'retryAuthorized: false' \
+    'rerunAuthorized: false' \
+    'replacementExecutionAuthorized: false' \
+    'additionalNative300MExecutionAuthorized: false' \
+    'stage8AuthorityEstablished: false' \
+    'stage8Authorized: false' \
+    '"retire_consumed_stage7_invocation_without_retry_rerun_or_replacement"' \
+    '"preserve_exact_nine_stage7_mechanics_payloads_for_audit"' \
+    '"freeze_private_supervisor_worker_verifier_and_scientific_cause_as_unrecoverable"' \
+    '"record_orphan_sleep_as_observed_and_watchdog_child_attribution_as_inference_only"' \
+    '"FAIL_exact_main_stage7_release_and_pure_pass_supervisor_nonzero_no_public_receipt_private_cause_unrecoverable_orphan_sleep_observed_one_shot_consumed_no_retry_no_stage8"' \
+    'public static let canonicalByteCount = 20_617' \
+    '"0a188a5a99d90d90828dca5eadeb0a167a71c6a9348201ff103be042d60ccf97"'; do
+    grep -Fq -- \
+        "$required_native300m_trajectory_checkpoint_execution_failure_observation_value" \
+        "$native300m_trajectory_checkpoint_execution_failure_observation_source" ||
+        die "Native300M trajectory-checkpoint failure observation lost: $required_native300m_trajectory_checkpoint_execution_failure_observation_value"
+done
+for required_native300m_trajectory_checkpoint_execution_failure_observation_test_value in \
+    'func testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling()' \
+    'requireSendable(Observation.self)' \
+    'XCTAssertNoThrow(try observation.validate())' \
+    'XCTAssertNoThrow(try observation.validateExactV1())' \
+    'observation.pullRequestActiveRootRawLog,' \
+    'byteCount: 292_354,' \
+    'lfByteCount: 1_846,' \
+    'sha256: "9f4a4beba90cbc170a74eda15fd7ad16daa549395cca658a5f02a62c9bf9e10f"' \
+    'observation.activeRootRawLog,' \
+    'byteCount: 292_453,' \
+    'lfByteCount: 1_847,' \
+    'sha256: "36f626e4a038d513fbb0629db54c9806690eb644135bfdd13009a8abeb1cb584"' \
+    'observation.reviewedMainCompileRawLog,' \
+    'byteCount: 10_348_477,' \
+    'lfByteCount: 79_295,' \
+    'sha256: "c565edf57bba08e2430ec82570a75604f9b9730300fe17102eac4cb4ff337e22"' \
+    'observation.stage7RawLog,' \
+    'byteCount: 9_829_534,' \
+    'lfByteCount: 74_429,' \
+    'sha256: "b446819db9570743f162d9ea9015d4927689e854d5aba16f9c4ce65543e59be2"' \
+    'log.newlineDelimitedComponentCountIncludingTerminalEmpty' \
+    'XCTAssertEqual(log.utf8BOMHex, "efbbbf")' \
+    'XCTAssertTrue(log.startsWithUTF8BOM)' \
+    'XCTAssertTrue(log.usesLFOnly)' \
+    'XCTAssertTrue(log.endsWithLF)' \
+    'XCTAssertTrue(log.repeatFetchExactlyEqual)' \
+    '"github_job_log_endpoint_decoded_utf8_bytes_v1"' \
+    'XCTAssertFalse(log.rawGitHubLogArchiveBytesBound)' \
+    'XCTAssertFalse(log.retainedInRepository)' \
+    'XCTAssertEqual(topology.activeLatinTestStartCount, 116)' \
+    'XCTAssertEqual(retirement.expectedActiveLatinTestCount, 116)' \
+    'XCTAssertEqual(retirement.expectedRootTestCount, 63)' \
+    'XCTAssertEqual(retirement.expectedIsolatedCheckpointTestCount, 6)' \
+    'XCTAssertEqual(retirement.expectedFocusedWholeStepTestCount, 69)' \
+    'XCTAssertEqual(retirement.expectedLiveTestCount, 46)' \
+    'XCTAssertEqual(retirement.expectedTotalTestCount, 115)' \
+    'XCTAssertEqual(retirement.expectedStage7JobCount, 0)' \
+    'XCTAssertEqual(retirement.expectedStage7FocusedContractInvocationCount, 0)' \
+    'XCTAssertEqual(retirement.expectedStage7LauncherLocalContractInvocationCount, 0)' \
+    'XCTAssertEqual(retirement.expectedStage7LauncherInvocationCount, 0)' \
+    'XCTAssertEqual(retirement.expectedStage7ExecutableInvocationCount, 0)' \
+    'XCTAssertEqual(retirement.expectedStage7ReceiptCount, 0)' \
+    'failure.exactSupervisorExitStatusEvidence,' \
+    '"unknown_nonzero_launcher_disclosed_no_numeric_supervisor_status"' \
+    'XCTAssertEqual(failure.launcherExitCode, 2)' \
+    'XCTAssertEqual(failure.hostedLogPublicReceiptPrefixOccurrenceCount, 0)' \
+    'failure.privateCandidateSchemaID,' \
+    '"ergentics_prime_native_decoder_native300m_trajectory_checkpoint_execution_internal_candidate_v1"' \
+    'XCTAssertEqual(failure.hostedLogPrivateCandidateSchemaIDOccurrenceCount, 0)' \
+    'failure.privateTerminalSchemaID,' \
+    '"ergentics_prime_native_decoder_native300m_trajectory_checkpoint_execution_internal_terminal_v1"' \
+    'XCTAssertEqual(failure.hostedLogPrivateTerminalSchemaIDOccurrenceCount, 0)' \
+    'failure.publicReceiptSchemaID,' \
+    '"ergentics_prime_native_decoder_native300m_trajectory_checkpoint_execution_receipt_v1"' \
+    'XCTAssertEqual(failure.hostedLogPublicReceiptSchemaIDOccurrenceCount, 0)' \
+    'XCTAssertEqual(failure.hostedLogExternalFailsafeStartedMarkerCount, 0)' \
+    'XCTAssertEqual(failure.hostedLogExternalFailsafeFailedMarkerCount, 0)' \
+    'XCTAssertFalse(failure.privateSupervisorCauseRecoverable)' \
+    'XCTAssertEqual(failure.workerProcessEvidence, "unknown")' \
+    'XCTAssertEqual(failure.releaseVerifierProcessEvidence, "unknown")' \
+    'XCTAssertEqual(failure.leaseEvidence, "unknown")' \
+    'XCTAssertEqual(failure.checkpointPublicationEvidence, "unknown")' \
+    'XCTAssertEqual(failure.comparisonDomainEvidence, "unknown")' \
+    'XCTAssertEqual(failure.resourcePhaseEvidence, "unknown")' \
+    'XCTAssertEqual(failure.artifactCleanupAndAbsenceEvidence, "unknown")' \
+    'XCTAssertEqual(failure.resourceOutcomeEvidence, "unknown")' \
+    'XCTAssertEqual(failure.exactResumeEvidence, "unknown")' \
+    'XCTAssertTrue(orphan.githubRunnerOrphanCleanupObserved)' \
+    'XCTAssertEqual(orphan.observedOrphanProcessName, "sleep")' \
+    'XCTAssertFalse(orphan.watchdogChildAttributionDirectlyObserved)' \
+    'XCTAssertTrue(orphan.watchdogChildExplanationIsInferenceOnly)' \
+    'XCTAssertFalse(orphan.supervisorWorkerOrVerifierOrphanEstablished)' \
+    'XCTAssertEqual(canonical.count, Observation.canonicalByteCount)' \
+    'XCTAssertEqual(Observation.canonicalByteCount, 20_617)' \
+    'PrimeSHA256.hexDigest(of: canonical),' \
+    'Observation.canonicalSHA256' \
+    '"0a188a5a99d90d90828dca5eadeb0a167a71c6a9348201ff103be042d60ccf97"' \
+    'try Observation.decodeCanonical(canonical)' \
+    'XCTAssertGreaterThan(valuePaths.count, 350)' \
+    'XCTAssertGreaterThan(dictionaryPaths.count, 20)' \
+    'XCTAssertGreaterThan(scalarPaths.count, 250)' \
+    'XCTAssertGreaterThan(regularDecodedDriftCount, 250)' \
+    'XCTAssertGreaterThan(reorderedArrayCount, 10)' \
+    'unknown_stage7_failure_field_\(index)' \
+    'try assertNoncanonicalEncodingsReject(canonical, object: object)' \
+    'testText.components(separatedBy: "func " + "test").count - 1'; do
+    grep -Fq -- \
+        "$required_native300m_trajectory_checkpoint_execution_failure_observation_test_value" \
+        "$native300m_trajectory_checkpoint_execution_failure_observation_test" ||
+        die "Native300M trajectory-checkpoint failure-observation test lost: $required_native300m_trajectory_checkpoint_execution_failure_observation_test_value"
+done
+for exact_native300m_trajectory_checkpoint_execution_failure_retirement_path in \
+    '.github/scripts/prime-ci-active-root-quarantine.sh' \
+    '.github/workflows/prime-active-root-quarantine.yml' \
+    'Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' \
+    'Sources/PrimeCore/PrimeNativeDecoderBSpecificNative300MTrajectoryCheckpointExecutionFailureObservation.swift' \
+    'Tests/PrimeCoreTests/PrimeNativeDecoderBSpecificNative300MTrajectoryCheckpointExecutionFailureObservationTests.swift'; do
+    grep -Fq -- \
+        "$exact_native300m_trajectory_checkpoint_execution_failure_retirement_path" \
+        "$native300m_trajectory_checkpoint_execution_failure_observation_source" ||
+        die "Native300M trajectory-checkpoint failure observation lost exact-five path: $exact_native300m_trajectory_checkpoint_execution_failure_retirement_path"
+done
+[[ "$(grep -Eic -- 'supervisor.*duration|duration.*supervisor' \
+        "$native300m_trajectory_checkpoint_execution_failure_observation_source")" \
+        == "0" ]] ||
+    die "Native300M trajectory-checkpoint failure observation fabricated supervisor runtime"
+for forbidden_native300m_trajectory_checkpoint_execution_failure_observation_capability in \
+    'import CoreGraphics' 'import Darwin' 'import Metal' 'import MLX' \
+    'import MLXNN' 'import MLXOptimizers' 'PrimeNativeGQADecoder.make(' \
+    'FileManager' 'FileHandle' 'URLSession' 'Process(' \
+    'posix_spawn' 'execve(' 'Memory.snapshot(' 'runSupervisor('; do
+    ! grep -Fq -- \
+        "$forbidden_native300m_trajectory_checkpoint_execution_failure_observation_capability" \
+        "$native300m_trajectory_checkpoint_execution_failure_observation_source" ||
+        die "Native300M trajectory-checkpoint failure observation gained capability: $forbidden_native300m_trajectory_checkpoint_execution_failure_observation_capability"
+done
+
 for native300m_trajectory_checkpoint_execution_authority_file in \
     "$native300m_trajectory_checkpoint_execution_authority_source" \
     "$native300m_trajectory_checkpoint_execution_authority_test"; do
@@ -15145,10 +15274,6 @@ readonly native300m_trajectory_checkpoint_execution_absence_proof_line="$(grep -
     '        for proof_attempt in 1 2 3 4 5 6 7 8 9 10; do' \
     <<<"$native300m_trajectory_checkpoint_execution_launcher_watchdog_block" | \
     awk -F: 'NR == 2 {print $1}')"
-readonly native300m_trajectory_checkpoint_execution_stage7_job_timeout_minutes="$(awk '
-    /^  trusted-main-stage7:$/ { inside = 1; next }
-    inside && /^    timeout-minutes:/ { print $2; exit }
-' "$workflow_path")"
 readonly native300m_trajectory_checkpoint_execution_launcher_outer_timeout_seconds="$(awk -F'"' '
     /^readonly outer_workflow_timeout_seconds="[0-9]+"$/ { print $2 }
 ' "$decoder_native300m_trajectory_checkpoint_execution_gate_path")"
@@ -15324,13 +15449,10 @@ readonly native300m_trajectory_checkpoint_execution_launcher_outer_timeout_secon
     && "$(grep -Fc -- 'sleep "$supervisor_timeout_seconds"' \
         "$decoder_native300m_trajectory_checkpoint_execution_gate_path")" \
         == "0" \
-    && "$native300m_trajectory_checkpoint_execution_stage7_job_timeout_minutes" \
-        == "120" \
+    && "$(grep -Fxc -- '  trusted-main-stage7:' "$workflow_path")" == "0" \
     && "$native300m_trajectory_checkpoint_execution_launcher_outer_timeout_seconds" \
-        == "7200" \
-    && "$((native300m_trajectory_checkpoint_execution_stage7_job_timeout_minutes * 60))" \
-        == "$native300m_trajectory_checkpoint_execution_launcher_outer_timeout_seconds" ]] ||
-    die "Native300M trajectory-checkpoint supervisor watchdog, grace escalation, or outer timeout enforcement changed"
+        == "7200" ]] ||
+    die "frozen retired Native300M trajectory-checkpoint supervisor watchdog or grace escalation changed"
 
 readonly native300m_trajectory_checkpoint_execution_process_wait_block="$(awk '
     /^private func trajectoryWaitForProcess\(/ { inside = 1 }
