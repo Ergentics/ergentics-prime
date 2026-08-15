@@ -73,8 +73,10 @@ readonly b_specific_native300m_resource_witness_executable_main_relative_path="T
 readonly b_specific_native300m_resource_witness_contract_test_relative_path="Tests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderBSpecificNative300MResourceWitnessContractTests.swift"
 readonly b_specific_native300m_resource_witness_execution_observation_source_relative_path="Sources/PrimeCore/PrimeNativeDecoderBSpecificNative300MResourceWitnessExecutionObservation.swift"
 readonly b_specific_native300m_resource_witness_execution_observation_test_relative_path="Tests/PrimeCoreTests/PrimeNativeDecoderBSpecificNative300MResourceWitnessExecutionObservationTests.swift"
-readonly expected_b_specific_native300m_resource_witness_retirement_preserved_index_sha256="535dbd253cc99392ec6abfcb81eac30199d372803f09d107e52dcbb48fc1d497"
-readonly observed_b_specific_native300m_resource_witness_retirement_preserved_index_sha256="$({
+readonly native300m_trajectory_checkpoint_execution_authority_source_relative_path="Sources/PrimeCore/PrimeNativeDecoderNative300MTrajectoryCheckpointExecutionAuthority.swift"
+readonly native300m_trajectory_checkpoint_execution_authority_test_relative_path="Tests/PrimeCoreTests/PrimeNativeDecoderNative300MTrajectoryCheckpointExecutionAuthorityTests.swift"
+readonly expected_native300m_trajectory_checkpoint_execution_authority_preserved_index_sha256="1f5a5ec072be92348a655924c2db8a6a250982eac1a8668454d2afb8af70816c"
+readonly observed_native300m_trajectory_checkpoint_execution_authority_preserved_index_sha256="$({
     git -C "$prime_root" ls-files -s |
         while IFS= read -r index_record; do
             relative_path="${index_record#*$'\t'}"
@@ -85,36 +87,36 @@ readonly observed_b_specific_native300m_resource_witness_retirement_preserved_in
                 || "$relative_path" \
                     == 'Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' \
                 || "$relative_path" \
-                    == "$b_specific_native300m_resource_witness_execution_observation_source_relative_path" \
+                    == "$native300m_trajectory_checkpoint_execution_authority_source_relative_path" \
                 || "$relative_path" \
-                    == "$b_specific_native300m_resource_witness_execution_observation_test_relative_path" ]]; then
+                    == "$native300m_trajectory_checkpoint_execution_authority_test_relative_path" ]]; then
                 continue
             fi
             printf '%s\n' "$index_record"
         done
 } | LC_ALL=C sort | shasum -a 256 | awk '{print $1}')"
-[[ "$expected_b_specific_native300m_resource_witness_retirement_preserved_index_sha256" \
+[[ "$expected_native300m_trajectory_checkpoint_execution_authority_preserved_index_sha256" \
         =~ ^[0-9a-f]{64}$ \
-    && "$observed_b_specific_native300m_resource_witness_retirement_preserved_index_sha256" \
-        == "$expected_b_specific_native300m_resource_witness_retirement_preserved_index_sha256" ]] ||
-    die "B-specific Native300M retirement changed a path outside its exact-five closure"
-for exact_b_specific_native300m_resource_witness_retirement_path in \
+    && "$observed_native300m_trajectory_checkpoint_execution_authority_preserved_index_sha256" \
+        == "$expected_native300m_trajectory_checkpoint_execution_authority_preserved_index_sha256" ]] ||
+    die "Native300M trajectory-checkpoint execution authority changed a path outside its exact-five closure"
+for exact_native300m_trajectory_checkpoint_execution_authority_path in \
     '.github/scripts/prime-ci-active-root-quarantine.sh' \
     '.github/workflows/prime-active-root-quarantine.yml' \
     'Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' \
-    "$b_specific_native300m_resource_witness_execution_observation_source_relative_path" \
-    "$b_specific_native300m_resource_witness_execution_observation_test_relative_path"; do
-    expected_b_specific_native300m_resource_witness_retirement_mode="100644"
-    case "$exact_b_specific_native300m_resource_witness_retirement_path" in
+    "$native300m_trajectory_checkpoint_execution_authority_source_relative_path" \
+    "$native300m_trajectory_checkpoint_execution_authority_test_relative_path"; do
+    expected_native300m_trajectory_checkpoint_execution_authority_mode="100644"
+    case "$exact_native300m_trajectory_checkpoint_execution_authority_path" in
         '.github/scripts/'*)
-            expected_b_specific_native300m_resource_witness_retirement_mode="100755"
+            expected_native300m_trajectory_checkpoint_execution_authority_mode="100755"
             ;;
     esac
     [[ "$(git -C "$prime_root" ls-files -s -- \
-        "$exact_b_specific_native300m_resource_witness_retirement_path" | \
+        "$exact_native300m_trajectory_checkpoint_execution_authority_path" | \
         awk '{print $1}')" \
-        == "$expected_b_specific_native300m_resource_witness_retirement_mode" ]] ||
-        die "B-specific Native300M retirement exact-five path is missing or has the wrong mode: $exact_b_specific_native300m_resource_witness_retirement_path"
+        == "$expected_native300m_trajectory_checkpoint_execution_authority_mode" ]] ||
+        die "Native300M trajectory-checkpoint execution authority exact-five path is missing or has the wrong mode: $exact_native300m_trajectory_checkpoint_execution_authority_path"
 done
 for exact_stage5_replacement_mechanics_path in \
     '.github/scripts/prime-ci-active-root-quarantine.sh' \
@@ -1224,6 +1226,12 @@ readonly tokenizer_compatibility_workflow_line="$(grep -nFx -- \
     && "$(grep -Fxc -- \
         '          bash .github/scripts/prime-ci-native-decoder-b-specific-native300m-resource-witness.sh' \
         "$workflow_path")" == "0" \
+    && "$(grep -Fxc -- \
+        '          bash .github/scripts/prime-ci-native-decoder-b-specific-native300m-trajectory-checkpoint-execution.sh' \
+        "$workflow_path")" == "0" \
+    && "$(grep -Ec -- \
+        '^[[:space:]]+bash \.github/scripts/prime-ci-native-decoder-stage7-' \
+        "$workflow_path")" == "0" \
     && "$(grep -Fc -- \
         'PRIME_NATIVE_DECODER_STAGE5_TINY_REPEATED_METAL_TRAJECTORY_DETERMINISM_RECEIPT=' \
         "$workflow_path")" == "0" \
@@ -1237,6 +1245,11 @@ readonly tokenizer_compatibility_workflow_line="$(grep -nFx -- \
         "$workflow_path")" == "0" \
     && "$(grep -Fc -- \
         'PRIME_NATIVE_DECODER_B_SPECIFIC_NATIVE300M_RESOURCE_WITNESS_INTERNAL_CANDIDATE_V1=' \
+        "$workflow_path")" == "0" \
+    && "$(grep -Ec -- \
+        'PRIME_NATIVE_DECODER_B_SPECIFIC_NATIVE300M_TRAJECTORY_CHECKPOINT.*RECEIPT.*=' \
+        "$workflow_path")" == "0" \
+    && "$(grep -Ec -- 'PRIME_NATIVE_DECODER_STAGE7_.*RECEIPT=' \
         "$workflow_path")" == "0" ]] ||
     die "trusted-main workflow lost the exact three-launcher sequence or activated a retired one-shot"
 readonly live_decoder_workflow_block="$(awk '
@@ -1372,6 +1385,7 @@ readonly stage6_native300m_resource_only_one_step_probe_authority_filter='PrimeC
 readonly stage6_native300m_resource_only_one_step_probe_execution_observation_filter='PrimeCoreTests.PrimeNativeDecoderNative300MResourceOnlyOneStepProbeExecutionObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndSuccessCeiling'
 readonly b_specific_native300m_resource_witness_authority_filter='PrimeCoreTests.PrimeNativeDecoderBSpecificNative300MResourceWitnessAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling'
 readonly b_specific_native300m_resource_witness_execution_observation_filter='PrimeCoreTests.PrimeNativeDecoderBSpecificNative300MResourceWitnessExecutionObservationTests/testBSpecificNative300MResourceWitnessPASSExecutionObservationIsExactAndRejectsEveryRecursiveMutation'
+readonly native300m_trajectory_checkpoint_execution_authority_filter='PrimeCoreTests.PrimeNativeDecoderNative300MTrajectoryCheckpointExecutionAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling'
 [[ "$(grep -Fc -- "$tiny_cpu_mechanics_authority_filter" \
         "$workflow_path")" == "1" \
     && "$(grep -Fc -- "$tiny_cpu_mechanics_failure_observation_filter" \
@@ -1401,7 +1415,7 @@ readonly b_specific_native300m_resource_witness_execution_observation_filter='Pr
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 61 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 62 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not run the exact Stage-2 authority and failure-observation pure contracts"
 [[ "$(grep -Fc -- "$private_dependency_tls_failure_observation_filter" \
@@ -1493,7 +1507,7 @@ readonly b_specific_native300m_resource_witness_execution_observation_filter='Pr
         "          grep -Fq 'PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapFreshMetallibCrossBindingExecutionFailureObservationTests' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 61 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 62 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the Stage-2 metallib bootstrap repair, failure observations, and classifier repair authority"
 [[ "$(grep -Fc -- \
@@ -1661,7 +1675,7 @@ readonly b_specific_native300m_resource_witness_execution_observation_filter='Pr
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 61 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 62 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run exactly the Stage-5 execution-failure observation"
 [[ "$(grep -Fc -- \
@@ -1680,7 +1694,7 @@ readonly b_specific_native300m_resource_witness_execution_observation_filter='Pr
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 61 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 62 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run exactly the Stage-5 replacement-execution authority"
 [[ "$(grep -Fc -- \
@@ -1696,7 +1710,7 @@ readonly b_specific_native300m_resource_witness_execution_observation_filter='Pr
         "          grep -Fq 'PrimeNativeDecoderStage5RepeatedTrajectoryReplacementCurrentDecoderIdentityObservationTests' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 61 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 62 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not run the exact Stage-5 current-decoder identity observation"
 [[ "$(grep -Fc -- \
@@ -1712,7 +1726,7 @@ readonly b_specific_native300m_resource_witness_execution_observation_filter='Pr
         "          grep -Fq 'PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayReplacementExecutionObservationTests' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 61 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 62 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not run the exact Stage-5 replacement execution observation"
 [[ "$(grep -Fc -- \
@@ -1731,7 +1745,7 @@ readonly b_specific_native300m_resource_witness_execution_observation_filter='Pr
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 61 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 62 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run exactly the Stage-6 resource-only probe authority"
 [[ "$(grep -Fc -- \
@@ -1776,6 +1790,22 @@ readonly b_specific_native300m_resource_witness_execution_observation_filter='Pr
         "          grep -Fq 'testBSpecificNative300MResourceWitnessPASSExecutionObservationIsExactAndRejectsEveryRecursiveMutation' \\" \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not run the exact B-specific Native300M PASS execution observation"
+[[ "$(grep -Fc -- \
+        "$native300m_trajectory_checkpoint_execution_authority_filter" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        "$native300m_trajectory_checkpoint_execution_authority_source_relative_path" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        "$native300m_trajectory_checkpoint_execution_authority_test_relative_path" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        "          grep -Fq 'PrimeNativeDecoderNative300MTrajectoryCheckpointExecutionAuthorityTests' \\" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        '          grep -Fq '\''Executed 62 tests, with 0 failures'\'' "$test_log"' \
+        "$workflow_path")" == "1" ]] ||
+    die "hosted workflow does not parse and run the sole Native300M trajectory-checkpoint execution authority contract"
 [[ "$(grep -Fc -- 'b_specific_native300m_resource_witness_contract_filter' \
         "$workflow_path")" == "0" \
     && "$(grep -Fc -- \
@@ -2270,6 +2300,53 @@ for required_b_specific_native300m_resource_witness_retirement_summary_value in 
         "$required_b_specific_native300m_resource_witness_retirement_summary_value" \
         "$workflow_path")" == "1" ]] ||
         die "workflow lost the B-specific Native300M PASS retirement summary: $required_b_specific_native300m_resource_witness_retirement_summary_value"
+done
+for required_native300m_trajectory_checkpoint_execution_authority_summary_value in \
+    'dependency-free Native-300M trajectory-checkpoint execution authority is a nonexecuting exact-five Stage-7 closure' \
+    'PrimeNativeDecoderNative300MTrajectoryCheckpointExecutionAuthority.swift, and its sole one-method root test' \
+    'exactly one pure root authority contract for root 62, keeps isolated 6 for focused whole 68' \
+    'exact live Metal 44, maintained runtime 1, tokenizer 1 order for live 46 and total 114 under the reviewed-main 60-minute timeout' \
+    'Original Stage-5, replacement Stage-5, historical Stage-6, B-resource-witness, and B-specific Native-300M trajectory-checkpoint mechanics launcher and receipt counts all remain zero' \
+    'production authority source exposes no launcher, executable, process, filesystem, network, Metal, MLX, model, training, checkpoint-I/O, or artifact capability' \
+    'closure establishes no execution result, checkpoint admission, quality, trial, canary, quantization, product, publication, additional execution, retry, or rerun' \
+    'separately reviewed exact-nine successor change the active-root gate' \
+    'prime-ci-native-decoder-b-specific-native300m-trajectory-checkpoint-execution.sh' \
+    'PrimeNativeDecoderNative300MTrajectoryCheckpointV1.swift and PrimeNativeDecoderBSpecificNative300MTrajectoryCheckpointExecution.swift' \
+    'validation Package.swift without its lock' \
+    'one executable main plus one pure contract test' \
+    'focused whole 69, retains Metal 44, maintained runtime 1, and tokenizer 1' \
+    'same contract once launcher-locally for live 47 and total 116 XTests before one direct operational probe' \
+    'exact future aggregate Stage-7 invocation topology is three: focused contract, launcher-local contract, and direct executable' \
+    'every old mechanics launcher remains invocation zero' \
+    'exact 17-source immutable implementation inventory and all 17 required runtime primitive APIs' \
+    'only the validation manifest may change while the root manifest, both locks, and every existing production implementation source remain byte-identical' \
+    'resource envelope is 12 ordered phases with 15 metrics each' \
+    'checkedEval at the exact eight live-target phases, GPU synchronization before all 12 measurements' \
+    'three ephemeral four-leaf roles, and descriptor-bound sequential one-path-at-a-time comparison after deallocating and cache-clearing both uninterrupted and resumed model/optimizer states' \
+    'observed run-123 peak is not a Stage-7 bound' \
+    'MLX TF32 policy disabled with value zero, exact MLX revision d37885a278f1c37484a94d0f401a418735e66519' \
+    'from https://github.com/Ergentics/ergentics-mlx-swift' \
+    'exactly default unified-memory Metal device zero with no CPU fallback' \
+    'Private candidate and terminal frames carry out-of-band byte counts and SHA-256' \
+    'capped at 262144 and 65536 canonical bytes with 16384-byte chunks and a 30-second read deadline' \
+    'at-most-one public canonical receipt is capped at 131072 bytes' \
+    'exact private-candidate/private-terminal/public field counts 16/10/18' \
+    'claims neither launcher nor outer-workflow success' \
+    'pure maximal nested receipt fixture is exactly 54022 canonical bytes' \
+    '18 comparison domains, 12 resource phases, three checkpoint sets, five semantic-path projections, and a 218-path tensor-catalog ceiling' \
+    'one-shot is consumed immediately before the sole supervisor invocation and before lease acquisition' \
+    'worker, supervisor, and outer ceilings are 4800, 5100, and 7200 seconds' \
+    'PASS_EXACT, MEASURED_EXACT_MISMATCH, ABSTAIN_RESOURCE, and ABSTAIN_INTEGRITY all require append-only retirement' \
+    'Seven fail-closed classes emit no public receipt, including lease unavailability or acquisition failure after one-shot consumption' \
+    'Resource abstention requires positive ENOMEM, ENOSPC, MLX-limit, floor, or safely closed timeout proof' \
+    'unknown errors and semantic or inventory failures are not resource abstentions' \
+    'measured mismatch requires two complete valid trajectories and establishes no resume' \
+    'single not-yet-executed exact-nine Stage-7 opportunity described above' \
+    'no Prime proposal, candidate selection, trial authorization, decision receipt, runtime/product/canary decoder activation, further Native-300M training or additional execution'; do
+    [[ "$(grep -Fc -- \
+        "$required_native300m_trajectory_checkpoint_execution_authority_summary_value" \
+        "$workflow_path")" == "1" ]] ||
+        die "workflow lost the Native300M trajectory-checkpoint execution-authority summary: $required_native300m_trajectory_checkpoint_execution_authority_summary_value"
 done
 [[ "$(grep -Fc -- \
         'Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderTrajectoryCheckpointV1.swift' \
@@ -3458,6 +3535,8 @@ readonly b_specific_native300m_resource_witness_executable_main="$prime_root/$b_
 readonly b_specific_native300m_resource_witness_contract_test="$prime_root/$b_specific_native300m_resource_witness_contract_test_relative_path"
 readonly b_specific_native300m_resource_witness_execution_observation_source="$prime_root/$b_specific_native300m_resource_witness_execution_observation_source_relative_path"
 readonly b_specific_native300m_resource_witness_execution_observation_test="$prime_root/$b_specific_native300m_resource_witness_execution_observation_test_relative_path"
+readonly native300m_trajectory_checkpoint_execution_authority_source="$prime_root/$native300m_trajectory_checkpoint_execution_authority_source_relative_path"
+readonly native300m_trajectory_checkpoint_execution_authority_test="$prime_root/$native300m_trajectory_checkpoint_execution_authority_test_relative_path"
 readonly decoder_training_source="$prime_root/Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderTraining.swift"
 readonly decoder_training_validation_root="$prime_root/Tests/PrimeNativeDecoderTrainingValidation"
 readonly decoder_training_validation_manifest="$decoder_training_validation_root/Package.swift"
@@ -9631,9 +9710,9 @@ done
 [[ "$(wc -l < "$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift" | \
         awk '{print $1}')" == "13" \
     && "$(grep -Fxc -- \
-        '        "1b2290a13d37b147c1e40cbb2e023f03175733c7fb4cf474c48fd482c5921dd9"' \
+        '        "bc480c6aab32affaa0f2ed6aa0d21f7ee5c1be1876a52b0843aae6cea9e43e10"' \
         "$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift")" == "1" ]] ||
-    die "B-specific Native300M PASS retirement embedded provenance identity changed"
+    die "Native300M trajectory-checkpoint execution-authority embedded provenance identity changed"
 readonly expected_embedded_source_identity_sha256="$(awk -F'"' \
     '/^[[:space:]]+"[0-9a-f]{64}"$/ { print $2 }' \
     "$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift")"
@@ -14013,6 +14092,242 @@ for forbidden_b_specific_native300m_resource_witness_execution_observation_capab
         "$forbidden_b_specific_native300m_resource_witness_execution_observation_capability" \
         "$b_specific_native300m_resource_witness_execution_observation_source" ||
         die "B-specific Native300M execution observation gained capability: $forbidden_b_specific_native300m_resource_witness_execution_observation_capability"
+done
+
+for native300m_trajectory_checkpoint_execution_authority_file in \
+    "$native300m_trajectory_checkpoint_execution_authority_source" \
+    "$native300m_trajectory_checkpoint_execution_authority_test"; do
+    [[ -f "$native300m_trajectory_checkpoint_execution_authority_file" \
+        && ! -L "$native300m_trajectory_checkpoint_execution_authority_file" \
+        && "$(stat -f %l \
+            "$native300m_trajectory_checkpoint_execution_authority_file")" \
+            == "1" ]] ||
+        die "Native300M trajectory-checkpoint execution-authority pair is missing, linked, or multiply linked: $native300m_trajectory_checkpoint_execution_authority_file"
+done
+[[ "$(awk '/^import / { print }' \
+        "$native300m_trajectory_checkpoint_execution_authority_source")" \
+        == 'import Foundation' \
+    && "$(awk '/^import / || /^@testable import / { print }' \
+        "$native300m_trajectory_checkpoint_execution_authority_test")" \
+        == $'import CoreFoundation\nimport Foundation\n@testable import PrimeCore\nimport XCTest' \
+    && "$(grep -Ec -- '^[[:space:]]+func test' \
+        "$native300m_trajectory_checkpoint_execution_authority_test")" == "1" \
+    && "$(grep -Fc -- \
+        'PrimeNativeDecoderNative300MTrajectoryCheckpointExecutionAuthorityTests:' \
+        "$native300m_trajectory_checkpoint_execution_authority_test")" == "1" \
+    && "$(grep -Fc -- \
+        'func testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling()' \
+        "$native300m_trajectory_checkpoint_execution_authority_test")" == "1" ]] ||
+    die "Native300M trajectory-checkpoint execution authority imports or sole-test surface changed"
+
+assert_native300m_trajectory_checkpoint_execution_authority_identity() {
+    local relative_path="$1" expected_blob="$2" expected_bytes="$3"
+    local expected_lf_count="$4" expected_sha256="$5"
+    local absolute_path="$prime_root/$relative_path"
+    [[ -f "$absolute_path" && ! -L "$absolute_path" \
+        && "$(stat -f %l "$absolute_path")" == "1" \
+        && "$(git -C "$prime_root" ls-files -s -- "$relative_path" | \
+            awk '{print $1}')" == "100644" \
+        && "$(git -C "$prime_root" hash-object -- "$relative_path")" \
+            == "$expected_blob" \
+        && "$(stat -f %z "$absolute_path")" == "$expected_bytes" \
+        && "$(wc -l < "$absolute_path" | awk '{print $1}')" \
+            == "$expected_lf_count" \
+        && "$(shasum -a 256 "$absolute_path" | awk '{print $1}')" \
+            == "$expected_sha256" ]] ||
+        die "Native300M trajectory-checkpoint execution-authority identity changed: $relative_path"
+}
+assert_native300m_trajectory_checkpoint_execution_authority_identity \
+    "$native300m_trajectory_checkpoint_execution_authority_source_relative_path" \
+    '0f61ed60957106eeb25c760a94422a0f7b78f687' '155828' '2784' \
+    '8e61957ffeb1fe3aa312a37201ea87bce5e0999430334f454fbd1b4e1125f075'
+assert_native300m_trajectory_checkpoint_execution_authority_identity \
+    "$native300m_trajectory_checkpoint_execution_authority_test_relative_path" \
+    '505129d3c8ae319389055fec47c26b8fc2c77cbb' '33247' '783' \
+    '1c62d518cf8575c9c82765893322b6a4c107c7e7fed8f3a68fcb77364c65687f'
+
+[[ "$(grep -Fxc -- '    public static let canonicalSHA256 =' \
+        "$native300m_trajectory_checkpoint_execution_authority_source")" == "1" \
+    && "$(grep -Fxc -- \
+        '        "4d995b21a20424f1b05fbcb9fbe33780dbd7af03cbf68047270db4aae192caa4"' \
+        "$native300m_trajectory_checkpoint_execution_authority_source")" == "1" ]] ||
+    die "Native300M trajectory-checkpoint execution-authority canonical identity changed"
+! grep -Fq -- 'CANONICAL_SHA256_PLACEHOLDER' \
+    "$native300m_trajectory_checkpoint_execution_authority_source" \
+    "$native300m_trajectory_checkpoint_execution_authority_test" ||
+    die "Native300M trajectory-checkpoint execution-authority pair retains a canonical placeholder"
+for required_native300m_trajectory_checkpoint_execution_authority_value in \
+    'PrimeNativeDecoderNative300MTrajectoryCheckpointExecutionAuthorityV1:' \
+    'public static let frozenV1' \
+    'public static let canonicalSHA256' \
+    'public static func decodeCanonical(_ data: Data) throws -> Self' \
+    'public func validateExactV1() throws' \
+    'Codable' \
+    'Sendable' \
+    '"prime_native_decoder_native300m_trajectory_checkpoint_execution_authority_v1"' \
+    '"append_only_dependency_free_nonexecuting_native300m_trajectory_checkpoint_execution_authority"' \
+    '"912ca2ab8148255fa588a2a1d336b9dcb1221978"' \
+    '"3f9dbf9abb6df4bd739a9f5c17a3583afdfee9c0"' \
+    '"bf98ddb13f6f6128a185b2f553b5cb3f1e30904b"' \
+    '"f0bda9c9cf7a2bd8aadbc8acd2f0c2abc07189b8"' \
+    'pullRequestNumber: 114' \
+    'workflowRunID: 31_865_057_224' \
+    'workflowRunNumber: 125' \
+    'workflowRunAttempt: 1' \
+    'activeRootJobID: 94_964_670_621' \
+    'reviewedMainJobID: 94_965_011_315' \
+    'rootTestCount: 61' \
+    'isolatedTestCount: 6' \
+    'focusedWholeTestCount: 67' \
+    'retainedLiveTestCount: 46' \
+    'totalTestCount: 113' \
+    'authorityClosure.expectedRootTestCount == 62' \
+    'authorityClosure.expectedIsolatedGroupTestCounts == [1, 1, 2, 2]' \
+    'authorityClosure.expectedIsolatedTestCount == 6' \
+    'authorityClosure.expectedFocusedWholeTestCount == 68' \
+    'authorityClosure.expectedLiveTestCount == 46' \
+    'authorityClosure.expectedTotalTestCount == 114' \
+    'authorityClosure.reviewedMainTimeoutMinutes == 60' \
+    'authorityClosure.launcherInvocationCount == 0' \
+    'authorityClosure.mechanicsExecutionCount == 0' \
+    'authorityClosure.relevantReceiptCount == 0' \
+    'successorPaths.count == 9' \
+    'successor.oneShotOpportunityCount == 1' \
+    'successor.expectedFocusedWholeTestCount == 69' \
+    'successor.expectedTotalXCTestCount == 116' \
+    'successor.checkoutDepth == 1' \
+    'immutableImplementation.exactBaseSourceCount == 17' \
+    'immutableImplementation.requiredRuntimePrimitiveAPIs.count' \
+    'immutableImplementation.receiptCarriesExactImplementationInventory' \
+    'resource.requiredPhaseIDs.count == 12' \
+    'resource.requiredPerPhaseMetricFields.count == 15' \
+    'resource.requiredCheckedEvalPhaseTargets.count == 8' \
+    'operationCounts.resourceMeasurementCheckedEvalCount == 8' \
+    'operationCounts.resourceMeasurementSynchronizeCount == 12' \
+    'trajectory.resumedStateDeallocatedBeforeStreamingComparison' \
+    'trajectory.cacheClearedAfterResumedComparatorPublication' \
+    'trajectory.uninterruptedStateDeallocatedBeforeRestore' \
+    'trajectory.cacheClearedBeforeRestore' \
+    'resource.peakResetCountBeforeActiveWork == 1' \
+    'resource.descriptorBoundStreamingLeafComparisonRequired' \
+    'privateComparatorInventoryBoundAndDeletedBeforeReceipt: true' \
+    'resource.predecessorPeakIsStage7PeakBound' \
+    'environment.mlxEnableTF32 == "0"' \
+    'environment.exactMLXCheckoutOrigin' \
+    'environment.compileTransformInvocationCount == 0' \
+    'environment.requiredDynamicBindings.count == 9' \
+    'environment.cpuFallbackAuthorized' \
+    'integrity.requiredPrivateCandidateFields.count == 16' \
+    'integrity.requiredPrivateTerminalFields.count == 10' \
+    'integrity.requiredPublicReceiptFields.count == 18' \
+    'integrity.publicReceiptMaximumCount == 1' \
+    'integrity.publicReceiptIsLastAuthoredFallibleAction' \
+    'integrity.publicReceiptClaimsLauncherSuccess' \
+    'integrity.publicReceiptClaimsOuterWorkflowSuccess' \
+    'integrity.maximumPublicCanonicalByteCount == 131_072' \
+    'integrity.maximumPrivateCandidateCanonicalByteCount == 262_144' \
+    'integrity.maximumPrivateTerminalCanonicalByteCount == 65_536' \
+    'integrity.maximumFrameChunkByteCount == 16_384' \
+    'integrity.frameReadDeadlineSeconds == 30' \
+    'integrity.frameSHA256VerifiedBeforeDecode' \
+    'integrity.frameEOFAndTrailingByteRejectionRequired' \
+    'integrity.implementationInventoryEntryFields.count == 6' \
+    'integrity.comparisonDomainResultFields.count == 14' \
+    'integrity.resourcePhaseRecordFields.count == 17' \
+    'integrity.checkpointSetBindingFields.count == 10' \
+    'integrity.publicDescriptorTupleFields.count == 13' \
+    'integrity.tensorCatalogProjectionFields.count == 7' \
+    'integrity.authorityAndExactMainBindingFields.count == 9' \
+    'integrity.firstMismatchReceiptFields.count == 5' \
+    'integrity.leaseAndVerifierReceiptFields.count == 11' \
+    'integrity.semanticPathProjectionCount == 5' \
+    'integrity.publicReceiptNestedTypeAndCardinalityRules.count' \
+    'integrity.checkpointLeafBindingFields.count == 4' \
+    'integrity.externalV2BindingFields.count == 7' \
+    'integrity.filesystemIDFields == ["word0", "word1"]' \
+    'integrity.lockBindingFields.count == 4' \
+    'integrity.maximumTensorCatalogPathCount == 218' \
+    'integrity.pureMaximalReceiptSerializationCeilingTestRequired' \
+    'integrity.maximalPublicReceiptFixtureCanonicalByteCount' \
+    '== 54_022' \
+    'successor.workerTimeoutSeconds == 4_800' \
+    'successor.supervisorTimeoutSeconds == 5_100' \
+    'successor.outerWorkflowTimeoutSeconds' \
+    'successor.timeoutConsumesOneShotAndNeverRetries' \
+    'timeoutReceiptRequiresIntegrityCleanupAndVerifierClosure:' \
+    'outcomes.noPublicReceiptFailureClasses.count == 7' \
+    'outcomes.oneShotConsumptionBoundary' \
+    'immediately_before_sole_supervisor_invocation_and_before_any_lease_acquisition' \
+    'outcomes.mechanicsBeginningConsumesOneShot' \
+    'outcomes.everyOutcomeForbidsRetryRerunAndReplacement' \
+    'outcomes.resourceAbstainRequiresPositiveAuthorizedGuardProof' \
+    'unknownErrorsAndSemanticOrInventoryFailuresAreResource:' \
+    'outcomes.measuredMismatchRequiresTwoCompleteValidTrajectories' \
+    'leaseUnavailableConsumesOneShotPermitsNullBindingsAndEmitsNoPublicReceipt:' \
+    '"PASS_EXACT",' \
+    '"MEASURED_EXACT_MISMATCH",' \
+    '"ABSTAIN_RESOURCE",' \
+    '"ABSTAIN_INTEGRITY"' \
+    'ceiling.authorityOnlyNoExecutionEvidence' \
+    'ceiling.stage7AuthorityEstablished' \
+    'ceiling.stage7MechanicsAuthorizedAfterGreenClosure' \
+    '.oneSeparatelyReviewedExactMainStage7OpportunityAuthorized' \
+    'ceiling.processExecutionAuthorizedByThisClosure' \
+    'ceiling.filesystemIOAuthorizedByThisClosure' \
+    'ceiling.stage7ExecutionObserved' \
+    'ceiling.native300MTrajectoryResumeEstablished' \
+    'ceiling.durableCheckpointAvailabilityEstablished' \
+    'ceiling.checkpointAdmissionGranted' \
+    'ceiling.broadNative300MTrainingAuthorized' \
+    'ceiling.stage8AuthorityEstablished' \
+    'ceiling.stage8Authorized' \
+    'AUTHORIZED_exact5_pure_stage7_authority_then_one_separately_reviewed_exact9_exact_main_opportunity_no_execution_retention_admission_or_stage8_authority'; do
+    grep -Fq -- "$required_native300m_trajectory_checkpoint_execution_authority_value" \
+        "$native300m_trajectory_checkpoint_execution_authority_source" ||
+        die "Native300M trajectory-checkpoint execution authority lost: $required_native300m_trajectory_checkpoint_execution_authority_value"
+done
+for exact_native300m_trajectory_checkpoint_execution_successor_path in \
+    '.github/scripts/prime-ci-active-root-quarantine.sh' \
+    '.github/scripts/prime-ci-native-decoder-b-specific-native300m-trajectory-checkpoint-execution.sh' \
+    '.github/workflows/prime-active-root-quarantine.yml' \
+    'Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' \
+    'Sources/PrimeNativeDecoderCheckpoint/PrimeNativeDecoderNative300MTrajectoryCheckpointV1.swift' \
+    'Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderBSpecificNative300MTrajectoryCheckpointExecution.swift' \
+    'Tests/PrimeNativeDecoderTrainingValidation/Package.swift' \
+    'Tests/PrimeNativeDecoderTrainingValidation/Sources/PrimeNativeDecoderBSpecificNative300MTrajectoryCheckpointExecution/main.swift' \
+    'Tests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderBSpecificNative300MTrajectoryCheckpointExecutionContractTests.swift'; do
+    grep -Fq -- "$exact_native300m_trajectory_checkpoint_execution_successor_path" \
+        "$native300m_trajectory_checkpoint_execution_authority_source" ||
+        die "Native300M trajectory-checkpoint exact-nine successor lost: $exact_native300m_trajectory_checkpoint_execution_successor_path"
+done
+for required_native300m_trajectory_checkpoint_execution_authority_test_value in \
+    'func testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling()' \
+    'XCTAssertNoThrow(try authority.validateExactV1())' \
+    'PrimeSHA256.hexDigest(of: canonical)' \
+    'try Authority.decodeCanonical(canonical)' \
+    'Data([0x20]) + canonical' \
+    'canonical + Data([0x0A])' \
+    'XCTAssertThrowsError(try Authority.decodeCanonical(injectedData))' \
+    'options: [.prettyPrinted, .sortedKeys]' \
+    'XCTAssertThrowsError(try Authority.decodeCanonical(pretty))' \
+    'integrity.pureMaximalReceiptSerializationCeilingTestRequired' \
+    'maximalReceiptData.count' \
+    'integrity.maximumPublicCanonicalByteCount' \
+    'integrity.maximalPublicReceiptFixtureCanonicalByteCount'; do
+    grep -Fq -- "$required_native300m_trajectory_checkpoint_execution_authority_test_value" \
+        "$native300m_trajectory_checkpoint_execution_authority_test" ||
+        die "Native300M trajectory-checkpoint execution-authority test lost: $required_native300m_trajectory_checkpoint_execution_authority_test_value"
+done
+for forbidden_native300m_trajectory_checkpoint_execution_authority_capability in \
+    'import CoreGraphics' 'import Darwin' 'import Metal' 'import MLX' \
+    'import MLXNN' 'import MLXOptimizers' \
+    'FileManager' 'FileHandle' 'URLSession' 'Process(' \
+    'posix_spawn' 'execve(' 'Memory.snapshot(' 'runSupervisor(' \
+    'checkpointRead(' 'checkpointWrite('; do
+    ! grep -Fq -- \
+        "$forbidden_native300m_trajectory_checkpoint_execution_authority_capability" \
+        "$native300m_trajectory_checkpoint_execution_authority_source" ||
+        die "Native300M trajectory-checkpoint execution authority gained capability: $forbidden_native300m_trajectory_checkpoint_execution_authority_capability"
 done
 
 [[ -z "$(git -C "$prime_root" status --porcelain=v1 --untracked-files=all)" ]] ||
