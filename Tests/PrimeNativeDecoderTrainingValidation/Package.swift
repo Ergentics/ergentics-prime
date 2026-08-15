@@ -9,6 +9,13 @@ let package = Package(
     products: [
         .executable(
             name:
+                "PrimeNativeDecoderBSpecificNative300MTrajectoryCheckpointExecution",
+            targets: [
+                "PrimeNativeDecoderBSpecificNative300MTrajectoryCheckpointExecution",
+            ]
+        ),
+        .executable(
+            name:
                 "PrimeNativeDecoderBSpecificNative300MResourceWitness",
             targets: [
                 "PrimeNativeDecoderBSpecificNative300MResourceWitness",
@@ -35,6 +42,22 @@ let package = Package(
         ),
     ],
     targets: [
+        .executableTarget(
+            name:
+                "PrimeNativeDecoderBSpecificNative300MTrajectoryCheckpointExecution",
+            dependencies: [
+                .product(
+                    name: "PrimeNativeDecoderTraining",
+                    package: "ergentics-prime"
+                ),
+            ],
+            path:
+                "Sources/PrimeNativeDecoderBSpecificNative300MTrajectoryCheckpointExecution",
+            linkerSettings: [
+                .linkedFramework("CoreGraphics"),
+                .linkedFramework("Metal"),
+            ]
+        ),
         .executableTarget(
             name:
                 "PrimeNativeDecoderBSpecificNative300MResourceWitness",
