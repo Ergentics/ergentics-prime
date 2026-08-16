@@ -86,6 +86,82 @@ readonly native300m_trajectory_checkpoint_execution_failure_observation_source_r
 readonly native300m_trajectory_checkpoint_execution_failure_observation_test_relative_path="Tests/PrimeCoreTests/PrimeNativeDecoderBSpecificNative300MTrajectoryCheckpointExecutionFailureObservationTests.swift"
 readonly secure_child_process_evidence_design_authority_source_relative_path="Sources/PrimeCore/PrimeSecureChildProcessEvidenceDesignAuthority.swift"
 readonly secure_child_process_evidence_design_authority_test_relative_path="Tests/PrimeCoreTests/PrimeSecureChildProcessEvidenceDesignAuthorityTests.swift"
+readonly secure_child_process_evidence_implementation_authority_source_relative_path="Sources/PrimeCore/PrimeSecureChildProcessEvidenceImplementationAuthority.swift"
+readonly secure_child_process_evidence_implementation_authority_test_relative_path="Tests/PrimeCoreTests/PrimeSecureChildProcessEvidenceImplementationAuthorityTests.swift"
+readonly secure_child_process_evidence_implementation_authority_predecessor_revision="bd8bd792ad77344c7c6b77de0459c1b53a6abd0b"
+readonly secure_child_process_evidence_implementation_authority_predecessor_tree="4fe40b0de8e38dad1837905e15cfbe73518b612b"
+readonly expected_secure_child_process_evidence_implementation_authority_preserved_index_sha256="2e4485d6dcb6b764cf0e16392d0944290afbad7034460f3f0cd5e5af844299f4"
+readonly observed_secure_child_process_evidence_implementation_authority_preserved_index_sha256="$({
+    git -C "$prime_root" ls-files -s |
+        while IFS= read -r index_record; do
+            relative_path="${index_record#*$'\t'}"
+            if [[ "$relative_path" \
+                    == '.github/scripts/prime-ci-active-root-quarantine.sh' \
+                || "$relative_path" \
+                    == '.github/workflows/prime-active-root-quarantine.yml' \
+                || "$relative_path" \
+                    == 'Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' \
+                || "$relative_path" \
+                    == "$secure_child_process_evidence_implementation_authority_source_relative_path" \
+                || "$relative_path" \
+                    == "$secure_child_process_evidence_implementation_authority_test_relative_path" ]]; then
+                continue
+            fi
+            printf '%s\n' "$index_record"
+        done
+} | LC_ALL=C sort | shasum -a 256 | awk '{print $1}')"
+[[ "$expected_secure_child_process_evidence_implementation_authority_preserved_index_sha256" \
+        =~ ^[0-9a-f]{64}$ \
+    && "$observed_secure_child_process_evidence_implementation_authority_preserved_index_sha256" \
+        == "$expected_secure_child_process_evidence_implementation_authority_preserved_index_sha256" ]] ||
+    die "secure-child process/evidence implementation authority changed a path outside its exact-five closure"
+for exact_secure_child_process_evidence_implementation_authority_path in \
+    '.github/scripts/prime-ci-active-root-quarantine.sh' \
+    '.github/workflows/prime-active-root-quarantine.yml' \
+    'Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' \
+    "$secure_child_process_evidence_implementation_authority_source_relative_path" \
+    "$secure_child_process_evidence_implementation_authority_test_relative_path"; do
+    expected_secure_child_process_evidence_implementation_authority_mode="100644"
+    case "$exact_secure_child_process_evidence_implementation_authority_path" in
+        '.github/scripts/'*)
+            expected_secure_child_process_evidence_implementation_authority_mode="100755"
+            ;;
+    esac
+    [[ "$(git -C "$prime_root" ls-files -s -- \
+        "$exact_secure_child_process_evidence_implementation_authority_path" | \
+        awk '{print $1}')" \
+        == "$expected_secure_child_process_evidence_implementation_authority_mode" ]] ||
+        die "secure-child process/evidence implementation-authority exact-five path is missing or has the wrong mode: $exact_secure_child_process_evidence_implementation_authority_path"
+done
+assert_secure_child_process_evidence_implementation_authority_identity() {
+    local relative_path="$1" expected_mode="$2" expected_blob="$3"
+    local expected_bytes="$4" expected_lf_count="$5" expected_sha256="$6"
+    local absolute_path="$prime_root/$relative_path"
+    [[ -f "$absolute_path" && ! -L "$absolute_path" \
+        && "$(stat -f %l "$absolute_path")" == "1" \
+        && "$(git -C "$prime_root" ls-files -s -- "$relative_path" | \
+            awk '{print $1}')" == "$expected_mode" \
+        && "$(git -C "$prime_root" hash-object -- "$relative_path")" \
+            == "$expected_blob" \
+        && "$(stat -f %z "$absolute_path")" == "$expected_bytes" \
+        && "$(wc -l < "$absolute_path" | awk '{print $1}')" \
+            == "$expected_lf_count" \
+        && "$(LC_ALL=C tr -cd '\r' < "$absolute_path" | wc -c | \
+            awk '{print $1}')" == "0" \
+        && "$(shasum -a 256 "$absolute_path" | awk '{print $1}')" \
+            == "$expected_sha256" ]] ||
+        die "secure-child process/evidence implementation-authority identity changed: $relative_path"
+}
+assert_secure_child_process_evidence_implementation_authority_identity \
+    "$secure_child_process_evidence_implementation_authority_source_relative_path" \
+    '100644' '23ec89e31f24ccc11673f63242c0ebeefd5265b8' \
+    '52912' '1081' \
+    '1f75f558231cfb7eead325148220d4a392f358e9c94d3cdb921149c821a657c1'
+assert_secure_child_process_evidence_implementation_authority_identity \
+    "$secure_child_process_evidence_implementation_authority_test_relative_path" \
+    '100644' '36ec5d012a4d3c1a751d722e9d4cfd0d43cc7b42' \
+    '26756' '614' \
+    '47a290effef7c4512150f4fee1220dba96cd94f599783e01a0c5f1263c524a3f'
 readonly secure_child_process_evidence_design_authority_predecessor_revision="7077b6d2195e847bdff583e945e58d6c3b042d63"
 readonly secure_child_process_evidence_design_authority_predecessor_tree="d549a876312f9d65a86b030d35fb601a981dbdc6"
 readonly expected_secure_child_process_evidence_design_authority_preserved_index_sha256="9d33a0f0e85178085afabb71cef1a83d8fa0bef0278beba48c032261f6a9f033"
@@ -102,7 +178,11 @@ readonly observed_secure_child_process_evidence_design_authority_preserved_index
                 || "$relative_path" \
                     == "$secure_child_process_evidence_design_authority_source_relative_path" \
                 || "$relative_path" \
-                    == "$secure_child_process_evidence_design_authority_test_relative_path" ]]; then
+                    == "$secure_child_process_evidence_design_authority_test_relative_path" \
+                || "$relative_path" \
+                    == "$secure_child_process_evidence_implementation_authority_source_relative_path" \
+                || "$relative_path" \
+                    == "$secure_child_process_evidence_implementation_authority_test_relative_path" ]]; then
                 continue
             fi
             printf '%s\n' "$index_record"
@@ -178,7 +258,11 @@ readonly observed_native300m_trajectory_checkpoint_execution_retirement_preserve
                 || "$relative_path" \
                     == "$secure_child_process_evidence_design_authority_source_relative_path" \
                 || "$relative_path" \
-                    == "$secure_child_process_evidence_design_authority_test_relative_path" ]]; then
+                    == "$secure_child_process_evidence_design_authority_test_relative_path" \
+                || "$relative_path" \
+                    == "$secure_child_process_evidence_implementation_authority_source_relative_path" \
+                || "$relative_path" \
+                    == "$secure_child_process_evidence_implementation_authority_test_relative_path" ]]; then
                 continue
             fi
             printf '%s\n' "$index_record"
@@ -210,9 +294,9 @@ done
 
 # The retired exact-five gate, workflow, provenance, and failure-observation
 # pair remain the historical retirement integration boundary. The new pure
-# design pair is separately admitted above; freeze the six concrete Stage-7
-# mechanics payloads byte-for-byte so retired execution capability cannot
-# drift behind either boundary.
+# design and implementation-authority pairs are separately admitted above;
+# freeze the six concrete Stage-7 mechanics payloads byte-for-byte so retired
+# execution capability cannot drift behind any later pure boundary.
 assert_native300m_trajectory_checkpoint_execution_successor_identity() {
     local relative_path="$1" expected_mode="$2" expected_blob="$3"
     local expected_bytes="$4" expected_lf_count="$5" expected_sha256="$6"
@@ -1606,6 +1690,7 @@ readonly native300m_trajectory_checkpoint_execution_authority_filter='PrimeCoreT
 readonly native300m_trajectory_checkpoint_execution_contract_filter='PrimeNativeDecoderBSpecificNative300MTrajectoryCheckpointExecutionContractTests/testBSpecificNative300MTrajectoryCheckpointExecutionContractIsExactAndExecutionPure'
 readonly native300m_trajectory_checkpoint_execution_failure_observation_filter='PrimeCoreTests.PrimeNativeDecoderBSpecificNative300MTrajectoryCheckpointExecutionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling'
 readonly secure_child_process_evidence_design_authority_filter='PrimeCoreTests.PrimeSecureChildProcessEvidenceDesignAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling'
+readonly secure_child_process_evidence_implementation_authority_filter='PrimeCoreTests.PrimeSecureChildProcessEvidenceImplementationAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling'
 [[ "$(grep -Fc -- "$tiny_cpu_mechanics_authority_filter" \
         "$workflow_path")" == "1" \
     && "$(grep -Fc -- "$tiny_cpu_mechanics_failure_observation_filter" \
@@ -1635,7 +1720,7 @@ readonly secure_child_process_evidence_design_authority_filter='PrimeCoreTests.P
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling' \\" \
         "$workflow_path")" == "2" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 64 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 65 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not run the exact Stage-2 authority and failure-observation pure contracts"
 [[ "$(grep -Fc -- "$private_dependency_tls_failure_observation_filter" \
@@ -1727,7 +1812,7 @@ readonly secure_child_process_evidence_design_authority_filter='PrimeCoreTests.P
         "          grep -Fq 'PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapFreshMetallibCrossBindingExecutionFailureObservationTests' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 64 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 65 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the Stage-2 metallib bootstrap repair, failure observations, and classifier repair authority"
 [[ "$(grep -Fc -- \
@@ -1770,7 +1855,7 @@ readonly secure_child_process_evidence_design_authority_filter='PrimeCoreTests.P
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling' \\" \
-        "$workflow_path")" == "2" ]] ||
+        "$workflow_path")" == "3" ]] ||
     die "hosted workflow does not parse and run the Stage-3 explicit-RNG/cursor-resume authority"
 [[ "$(grep -Fc -- \
         "$stage3_tiny_cpu_explicit_rng_cursor_resume_canonical_binding_repair_authority_filter" \
@@ -1895,7 +1980,7 @@ readonly secure_child_process_evidence_design_authority_filter='PrimeCoreTests.P
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling' \\" \
         "$workflow_path")" == "2" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 64 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 65 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run exactly the Stage-5 execution-failure observation"
 [[ "$(grep -Fc -- \
@@ -1912,9 +1997,9 @@ readonly secure_child_process_evidence_design_authority_filter='PrimeCoreTests.P
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling' \\" \
-        "$workflow_path")" == "2" \
+        "$workflow_path")" == "3" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 64 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 65 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run exactly the Stage-5 replacement-execution authority"
 [[ "$(grep -Fc -- \
@@ -1930,7 +2015,7 @@ readonly secure_child_process_evidence_design_authority_filter='PrimeCoreTests.P
         "          grep -Fq 'PrimeNativeDecoderStage5RepeatedTrajectoryReplacementCurrentDecoderIdentityObservationTests' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 64 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 65 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not run the exact Stage-5 current-decoder identity observation"
 [[ "$(grep -Fc -- \
@@ -1946,7 +2031,7 @@ readonly secure_child_process_evidence_design_authority_filter='PrimeCoreTests.P
         "          grep -Fq 'PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayReplacementExecutionObservationTests' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 64 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 65 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not run the exact Stage-5 replacement execution observation"
 [[ "$(grep -Fc -- \
@@ -1963,9 +2048,9 @@ readonly secure_child_process_evidence_design_authority_filter='PrimeCoreTests.P
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling' \\" \
-        "$workflow_path")" == "2" \
+        "$workflow_path")" == "3" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 64 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 65 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run exactly the Stage-6 resource-only probe authority"
 [[ "$(grep -Fc -- \
@@ -2023,7 +2108,7 @@ readonly secure_child_process_evidence_design_authority_filter='PrimeCoreTests.P
         "          grep -Fq 'PrimeNativeDecoderNative300MTrajectoryCheckpointExecutionAuthorityTests' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 64 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 65 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the sole Native300M trajectory-checkpoint execution authority contract"
 [[ "$(grep -Fc -- \
@@ -2039,7 +2124,7 @@ readonly secure_child_process_evidence_design_authority_filter='PrimeCoreTests.P
         "          grep -Fq 'PrimeNativeDecoderBSpecificNative300MTrajectoryCheckpointExecutionFailureObservationTests' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 64 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 65 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the Native300M trajectory-checkpoint failure observation"
 [[ "$(grep -Fc -- \
@@ -2056,11 +2141,30 @@ readonly secure_child_process_evidence_design_authority_filter='PrimeCoreTests.P
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling' \\" \
-        "$workflow_path")" == "2" \
+        "$workflow_path")" == "3" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 64 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 65 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the sole secure-child process/evidence design-authority contract"
+[[ "$(grep -Fc -- \
+        "$secure_child_process_evidence_implementation_authority_filter" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        'Sources/PrimeCore/PrimeSecureChildProcessEvidenceImplementationAuthority.swift' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        'Tests/PrimeCoreTests/PrimeSecureChildProcessEvidenceImplementationAuthorityTests.swift' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        "          grep -Fq 'PrimeSecureChildProcessEvidenceImplementationAuthorityTests' \\" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling' \\" \
+        "$workflow_path")" == "3" \
+    && "$(grep -Fxc -- \
+        '          grep -Fq '\''Executed 65 tests, with 0 failures'\'' "$test_log"' \
+        "$workflow_path")" == "1" ]] ||
+    die "hosted workflow does not parse and run the sole secure-child process/evidence implementation-authority contract"
 [[ "$(grep -Fc -- \
         "$native300m_trajectory_checkpoint_execution_contract_filter" \
         "$workflow_path")" == "0" \
@@ -2728,6 +2832,33 @@ for required_secure_child_process_evidence_design_authority_summary_value in \
         "$required_secure_child_process_evidence_design_authority_summary_value" \
         <<<"$active_root_workflow_job_block")" == "1" ]] ||
         die "workflow lost the secure-child process/evidence design-authority summary: $required_secure_child_process_evidence_design_authority_summary_value"
+done
+for required_secure_child_process_evidence_implementation_authority_summary_value in \
+    'Exact-main secure-child process/evidence design-authority merge bd8bd792ad77344c7c6b77de0459c1b53a6abd0b, tree 4fe40b0de8e38dad1837905e15cfbe73518b612b' \
+    'ordered parents 7077b6d2195e847bdff583e945e58d6c3b042d63 then 756dc967768029d5e11f46ede79e7447ae4297a9, PR 118' \
+    'unique push workflow run 31922080458 number 133 attempt 1 check suite 86573644107 passed with no previous attempt URL' \
+    'Active job 95103468969 passed Latin 116' \
+    'dependent reviewed job 95103856298 passed root 64 plus isolated 6 for focused whole 70' \
+    'retained 46 live tests—Metal 44, maintained runtime 1, and tokenizer 1—for total 116 XTests with zero failures and skips' \
+    'The run produced zero Actions artifacts or reruns; Stage-7 job, launcher, product, supervisor, and receipt counts' \
+    'secure-child fixture and capture counts, lease-acquisition count, Python-interpreter count, and new C++ implementation count were all zero' \
+    'design-authority method started and passed once' \
+    'dependency-free pure exact-five implementation authority changes only the active-root gate, hosted workflow, embedded provenance, one new PrimeCore implementation-authority source, and its one-method root test' \
+    'active Latin 116, root 65, isolated 6, focused whole 71, retained live 46, total 117 XTests, and 500 embedded provenance records with zero mechanics' \
+    'later exact ordered 13-path deterministic Swift implementation over the existing Prime substrate' \
+    'four internal PrimeCore source files, seven internal types, and targeted terminal-drain adjustment' \
+    'internal canonical diagnostic envelope capped at 4096 bytes' \
+    'internal optional opaque retention seam for an externally owned lease while its owner remains live' \
+    '12 injected-value tests' \
+    'authorizes no process, fixture, or canary execution' \
+    'hosted projection or emission; persistence, fsync, upload, retention, or durable evidence' \
+    'concrete lease acquisition, release, reacquisition, file mutation, Metal adapter, worker handoff, or owner-death continuity' \
+    'Retained baseline compilation of the existing MLX C++ dependency and copying of existing Python resource files remain observed predecessor build facts, not new implementation activity' \
+    'full-native C++ alternative or Swift/C-ABI adapter remains separately permissible later but unauthorized now'; do
+    [[ "$(grep -Fc -- \
+        "$required_secure_child_process_evidence_implementation_authority_summary_value" \
+        <<<"$active_root_workflow_job_block")" == "1" ]] ||
+        die "workflow lost the secure-child process/evidence implementation-authority summary: $required_secure_child_process_evidence_implementation_authority_summary_value"
 done
 ! grep -Eq -- \
     '(^|[^[:alnum:]_])(python([0-9]+([.][0-9]+)*)?|c\+\+|clang\+\+|g\+\+)([^[:alnum:]_+]|$)' \
@@ -3948,6 +4079,8 @@ readonly native300m_trajectory_checkpoint_execution_failure_observation_source="
 readonly native300m_trajectory_checkpoint_execution_failure_observation_test="$prime_root/$native300m_trajectory_checkpoint_execution_failure_observation_test_relative_path"
 readonly secure_child_process_evidence_design_authority_source="$prime_root/$secure_child_process_evidence_design_authority_source_relative_path"
 readonly secure_child_process_evidence_design_authority_test="$prime_root/$secure_child_process_evidence_design_authority_test_relative_path"
+readonly secure_child_process_evidence_implementation_authority_source="$prime_root/$secure_child_process_evidence_implementation_authority_source_relative_path"
+readonly secure_child_process_evidence_implementation_authority_test="$prime_root/$secure_child_process_evidence_implementation_authority_test_relative_path"
 readonly decoder_training_source="$prime_root/Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderTraining.swift"
 readonly decoder_training_validation_root="$prime_root/Tests/PrimeNativeDecoderTrainingValidation"
 readonly decoder_training_validation_manifest="$decoder_training_validation_root/Package.swift"
@@ -4210,6 +4343,11 @@ bash -n "$stage5_replacement_launcher" ||
     && -f "$secure_child_process_evidence_design_authority_test" \
     && ! -L "$secure_child_process_evidence_design_authority_test" ]] ||
     die "secure-child process/evidence design-authority pair is missing or linked"
+[[ -f "$secure_child_process_evidence_implementation_authority_source" \
+    && ! -L "$secure_child_process_evidence_implementation_authority_source" \
+    && -f "$secure_child_process_evidence_implementation_authority_test" \
+    && ! -L "$secure_child_process_evidence_implementation_authority_test" ]] ||
+    die "secure-child process/evidence implementation-authority pair is missing or linked"
 [[ -f "$decoder_training_source" && ! -L "$decoder_training_source" ]] ||
     die "PrimeNativeDecoderTraining source is missing or linked"
 [[ -f "$decoder_training_validation_manifest" \
@@ -5142,6 +5280,8 @@ swiftc -frontend -parse "$native300m_trajectory_checkpoint_execution_failure_obs
 swiftc -frontend -parse "$native300m_trajectory_checkpoint_execution_failure_observation_test"
 swiftc -frontend -parse "$secure_child_process_evidence_design_authority_source"
 swiftc -frontend -parse "$secure_child_process_evidence_design_authority_test"
+swiftc -frontend -parse "$secure_child_process_evidence_implementation_authority_source"
+swiftc -frontend -parse "$secure_child_process_evidence_implementation_authority_test"
 swiftc -frontend -parse "$decoder_training_source"
 swiftc -frontend -parse "$decoder_training_validation_test"
 swiftc -frontend -parse "$decoder_stage3_tiny_cpu_resume_test"
@@ -10137,9 +10277,9 @@ done
 [[ "$(wc -l < "$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift" | \
         awk '{print $1}')" == "13" \
     && "$(grep -Fxc -- \
-        '        "013459e6207657cd72d54e5adb3b85db9c647cf1cf3afb9cf3ec16c088a99bff"' \
+        '        "967e4b98150a54e5a0d4ebcd467650f7cc1597b105c01e8405dd5b533185c72a"' \
         "$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift")" == "1" ]] ||
-    die "Native300M trajectory-checkpoint retirement embedded provenance identity changed"
+    die "secure child-process evidence implementation-authority embedded provenance identity changed"
 readonly expected_embedded_source_identity_sha256="$(awk -F'"' \
     '/^[[:space:]]+"[0-9a-f]{64}"$/ { print $2 }' \
     "$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift")"
@@ -10181,7 +10321,7 @@ while IFS= read -r relative_path; do
         '{relative_path: $relative_path, sha256: $sha256, byte_count: $byte_count}'
 done | jq -jcsS '.' | shasum -a 256 | awk '{print $1}')"
 [[ "$expected_embedded_source_identity_sha256" =~ ^[0-9a-f]{64}$ \
-    && "$recomputed_embedded_source_identity_record_count" == "498" \
+    && "$recomputed_embedded_source_identity_record_count" == "500" \
     && "$recomputed_embedded_source_identity_sha256" \
         == "$expected_embedded_source_identity_sha256" ]] ||
     die "embedded Prime source provenance does not recompute exactly"
@@ -15077,6 +15217,251 @@ readonly secure_child_process_evidence_design_authority_pair_executable_ast="$(p
     grep -Eq -- \
         'name="(Process|FileManager|FileHandle|URLSession|PrimeMetalDeviceLease|posix_spawn|waitpid|kill|flock|execve|runSupervisor|trajectoryRunWorkerProcess|trajectoryRunReleaseVerifierProcess|acquire)"|field="(runSupervisor|trajectoryRunWorkerProcess|trajectoryRunReleaseVerifierProcess|acquire)"' ||
     die "secure-child process/evidence design-authority pair gained executable process, lease, launcher, worker, verifier, or filesystem capability"
+
+for secure_child_process_evidence_implementation_authority_file in \
+    "$secure_child_process_evidence_implementation_authority_source" \
+    "$secure_child_process_evidence_implementation_authority_test"; do
+    [[ -f "$secure_child_process_evidence_implementation_authority_file" \
+        && ! -L "$secure_child_process_evidence_implementation_authority_file" \
+        && "$(stat -f %l \
+            "$secure_child_process_evidence_implementation_authority_file")" \
+            == "1" ]] ||
+        die "secure-child process/evidence implementation-authority pair is missing, linked, or multiply linked: $secure_child_process_evidence_implementation_authority_file"
+done
+[[ "$(awk '/^import / { print }' \
+        "$secure_child_process_evidence_implementation_authority_source")" \
+        == 'import Foundation' \
+    && "$(awk '/^import / || /^@testable import / { print }' \
+        "$secure_child_process_evidence_implementation_authority_test")" \
+        == $'import CoreFoundation\nimport Foundation\nimport XCTest\n@testable import PrimeCore' \
+    && "$(grep -Ec -- '^[[:space:]]+func test' \
+        "$secure_child_process_evidence_implementation_authority_test")" \
+        == "1" \
+    && "$(grep -Fc -- \
+        'PrimeSecureChildProcessEvidenceImplementationAuthorityTests:' \
+        "$secure_child_process_evidence_implementation_authority_test")" \
+        == "1" \
+    && "$(grep -Fc -- \
+        'func testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling()' \
+        "$secure_child_process_evidence_implementation_authority_test")" \
+        == "1" ]] ||
+    die "secure-child process/evidence implementation-authority imports or sole-test surface changed"
+! grep -Fq -- 'CANONICAL_SHA256_PLACEHOLDER' \
+    "$secure_child_process_evidence_implementation_authority_source" ||
+    die "secure-child process/evidence implementation-authority source retains a canonical placeholder"
+for required_secure_child_process_evidence_implementation_authority_value in \
+    'PrimeSecureChildProcessEvidenceImplementationAuthorityV1:' \
+    'PrimeSecureChildProcessEvidenceImplementationAuthorityError' \
+    'public static let frozenV1' \
+    'public static let canonicalByteCount = 18_370' \
+    'public static let canonicalSHA256' \
+    '"43c29ff6e225219bfd13b642bd9ba2121aae9d2591bd1d1af3cf4d3bb41f08db"' \
+    'public static func decodeCanonical(_ data: Data) throws -> Self' \
+    'public func validateExactV1() throws' \
+    'Codable' \
+    'Sendable' \
+    '"prime_secure_child_process_evidence_implementation_authority_schema_v1"' \
+    '"prime_secure_child_process_evidence_implementation_authority_v1"' \
+    '"pure_exact13_layer_a_implementation_authority_after_green_design_retirement"' \
+    '"bd8bd792ad77344c7c6b77de0459c1b53a6abd0b"' \
+    '"4fe40b0de8e38dad1837905e15cfbe73518b612b"' \
+    '"7077b6d2195e847bdff583e945e58d6c3b042d63"' \
+    '"756dc967768029d5e11f46ede79e7447ae4297a9"' \
+    'pullRequestNumber: 118' \
+    'workflowRunID: 31_922_080_458' \
+    'workflowRunNumber: 133' \
+    'workflowAttempt: 1' \
+    'checkSuiteID: 86_573_644_107' \
+    'previousAttemptURLIsNull: true' \
+    'workflowRerunCount: 0' \
+    'activeJobID: 95_103_468_969' \
+    'reviewedJobID: 95_103_856_298' \
+    'activeLatinTestCount: 116' \
+    'rootTestCount: 64' \
+    'focusedWholeTestCount: 70' \
+    'retainedLiveTestCount: 46' \
+    'aggregateTestCount: 116' \
+    'actionsArtifactCount: 0' \
+    'pythonInterpreterInvocationCount: 0' \
+    'newCppImplementationInvocationCount: 0' \
+    'retainedMLXCompiledExistingCppDependency: true' \
+    'retainedMLXCopiedExistingPythonResources: true' \
+    'rootTestCount: 65' \
+    'focusedWholeTestCount: 71' \
+    'aggregateTestCount: 117' \
+    'embeddedProvenanceRecordCount: 500' \
+    'processMechanicsInvocationCount: 0' \
+    'fixtureInvocationCount: 0' \
+    'leaseInvocationCount: 0' \
+    'hostedDiagnosticEmissionCount: 0' \
+    'exactPathCount: 13' \
+    'implementationMayBeginAfterAuthorityClosure: true' \
+    'implementationExecutionAuthorized: false' \
+    'expectedRootTestCount: 77' \
+    'expectedFocusedWholeTestCount: 83' \
+    'expectedAggregateTestCount: 129' \
+    'expectedEmbeddedProvenanceRecordCount: 505' \
+    'maximumCanonicalByteCount: 4_096' \
+    'constructionAuthorized: true' \
+    'optionalOpaqueRetentionSeamAuthorized: true' \
+    'deterministicFakeLeaseTestAuthorized: true' \
+    'externallyOwnedLeaseMayBeRetainedWhileOwnerLives: true' \
+    'exactTestCount: 12' \
+    'allFaultsAreInjectedValues: true' \
+    'implementationAuthorityEstablished: true' \
+    'deterministicExact13SourcePatchAuthorized: true' \
+    '"AUTHORITY_ONLY_deterministic_layer_a_implementation_exact13_no_live_execution_no_hosted_emission_no_lease_acquisition_no_python_cpp_deferred"'; do
+    grep -Fq -- \
+        "$required_secure_child_process_evidence_implementation_authority_value" \
+        "$secure_child_process_evidence_implementation_authority_source" ||
+        die "secure-child process/evidence implementation authority lost: $required_secure_child_process_evidence_implementation_authority_value"
+done
+for required_secure_child_process_evidence_implementation_authority_false_anchor in \
+    'implementationAuthorizedByPredecessor: false' \
+    'implementationExecutionAuthorized: false' \
+    'publicGenericExecutableAuthorityAdded: false' \
+    'publicArbitraryArgumentAuthorityAdded: false' \
+    'publicArbitraryEnvironmentAuthorityAdded: false' \
+    'customInheritedDescriptorsAuthorized: false' \
+    'continuousThroughSystemSleepClockEstablished: false' \
+    'hostileCodeSandboxEstablished: false' \
+    'capturedPrefixSHA256MayClaimFullStreamSHA256: false' \
+    'processGroupContainsHostileDaemonization: false' \
+    'cleanupAfterKernelOrHostLossGuaranteed: false' \
+    'activeOrUnsettledDrainProjectsEvidence: false' \
+    'terminalErrorMayClaimReachedEOF: false' \
+    'capturedPrefixDigestIsFullStreamDigest: false' \
+    'duplicateRawProcessSyscallsAuthorized: false' \
+    'neutralLayerEmissionAuthorized: false' \
+    'hostedEmissionAuthorized: false' \
+    'localPersistenceAuthorized: false' \
+    'fsyncAuthorized: false' \
+    'artifactUploadAuthorized: false' \
+    'retentionAuthorized: false' \
+    'seamItselfAcquiresLease: false' \
+    'concretePrimeMetalDeviceLeaseAdapterAuthorized: false' \
+    'leaseFileMutationAuthorized: false' \
+    'leaseReleaseOrReacquisitionAuthorized: false' \
+    'descriptorTransferToWorkerAuthorized: false' \
+    'workerOwnedAcquisitionAuthorized: false' \
+    'ownerDeathContinuityEstablished: false' \
+    'physicalMetalReservationEstablished: false' \
+    'mlxDeviceIdentityOrIdlenessEstablished: false' \
+    'crossHostOrCrossJobContinuityEstablished: false' \
+    'leaseTelemetryIsDurableEvidence: false' \
+    'liveFixtureExecutionAuthorized: false' \
+    'rawProcessSyscallsAuthorizedInNewCoreFiles: false' \
+    'rawProcessSyscallsMayIncreaseInModifiedSubstrate: false' \
+    'foundationProcessAuthorized: false' \
+    'shellExecutionAuthorized: false' \
+    'pathSearchAuthorized: false' \
+    'inheritedAmbientEnvironmentAuthorized: false' \
+    'networkOrUploadAuthorized: false' \
+    'freeFormHostedPrintingAuthorized: false' \
+    'mlxMetalOrNative300ImportsAuthorized: false' \
+    'arbitraryExecutableFixtureAdapterAuthorized: false' \
+    'pythonPermitted: false' \
+    'cppAlternativeAuthorizedNow: false' \
+    'leaseAcquisitionIncluded: false' \
+    'mlxMetalOrNative300Included: false' \
+    'hostedDiagnosticEmissionIncluded: false' \
+    'authorizedNow: false' \
+    'processExecutionAuthorized: false' \
+    'hostedDiagnosticProjectionAuthorized: false' \
+    'hostedDiagnosticEmissionAuthorized: false' \
+    'customDescriptorTransportAuthorized: false' \
+    'durableEvidenceEstablished: false' \
+    'durableTransactionImplementationAuthorized: false' \
+    'leaseAcquisitionAuthorized: false' \
+    'leaseReleaseObservationAuthorized: false' \
+    'leaseContinuityEstablished: false' \
+    'watchdogRepairAuthorized: false' \
+    'oldLauncherMutationAuthorized: false' \
+    'retryAuthorized: false' \
+    'rerunAuthorized: false' \
+    'replacementExecutionAuthorized: false' \
+    'mlxAuthorized: false' \
+    'metalAuthorized: false' \
+    'native300MExecutionAuthorized: false' \
+    'scientificOutcomeEstablished: false' \
+    'checkpointAdmissionGranted: false' \
+    'stage8Authorized: false' \
+    'stage8AuthorityEstablished: false' \
+    'generalTrainingResumeAuthorized: false' \
+    'modelQualityEstablished: false' \
+    'candidateAdmissionAuthorized: false' \
+    'downstreamTrialAuthorized: false' \
+    'canaryAuthorized: false' \
+    'quantizationAuthorized: false' \
+    'productUseAuthorized: false' \
+    'publicationAuthorized: false'; do
+    grep -Fq -- \
+        "$required_secure_child_process_evidence_implementation_authority_false_anchor" \
+        "$secure_child_process_evidence_implementation_authority_source" ||
+        die "secure-child process/evidence implementation authority lost a false boundary: $required_secure_child_process_evidence_implementation_authority_false_anchor"
+done
+for required_secure_child_process_evidence_implementation_authority_test_value in \
+    'let authority = Authority.frozenV1' \
+    'XCTAssertTrue(ceiling.implementationAuthorityEstablished)' \
+    'XCTAssertTrue(ceiling.deterministicExact13SourcePatchAuthorized)' \
+    'XCTAssertTrue(authorityFalseClaims(ceiling).allSatisfy { !$0 })' \
+    'XCTAssertEqual(scope.exactPathCount, 13)' \
+    'XCTAssertEqual(matrix.exactTestCount, 12)' \
+    'matrix.exactOrderedTests.allSatisfy' \
+    '!$0.invokesLiveProcess && !$0.invokesLiveLease' \
+    'XCTAssertEqual(language.pythonInvocationCount, 0)' \
+    'XCTAssertEqual(language.cppNewImplementationInvocationCount, 0)' \
+    'language.retainedBaselineCppDependencyCompilationObserved' \
+    'language.cppFullNativeAlternativeSeparatelyPermissibleLater' \
+    'language.cppSwiftCABIAlternativeSeparatelyPermissibleLater' \
+    'XCTAssertFalse(language.cppAlternativeAuthorizedNow)' \
+    'language.cppAlternativeRequiresSeparateAuthority' \
+    'requireSendable(Authority.self)' \
+    'let canonical = try authority.canonicalData()' \
+    'PrimeSHA256.hexDigest(of: canonical)' \
+    'try Authority.decodeCanonical(canonical)' \
+    'XCTAssertNoThrow(try authority.validateExactV1())' \
+    'for path in valuePaths' \
+    'with: { _ in NSNull() }' \
+    'removingValue(in: object, at: path)' \
+    'for path in allArrayPaths(in: object)' \
+    'dictionary["unknown_implementation_field_\(index)"] = true' \
+    'try Authority.decodeCanonical(Data([0x20]) + canonical)' \
+    'try Authority.decodeCanonical(canonical + Data([0x0a]))'; do
+    grep -Fq -- \
+        "$required_secure_child_process_evidence_implementation_authority_test_value" \
+        "$secure_child_process_evidence_implementation_authority_test" ||
+        die "secure-child process/evidence implementation-authority test lost canonical, mutation, or ceiling coverage: $required_secure_child_process_evidence_implementation_authority_test_value"
+done
+for forbidden_secure_child_process_evidence_implementation_authority_capability in \
+    'import CoreGraphics' 'import Darwin' 'import Dispatch' 'import Metal' \
+    'import MLX' 'import MLXNN' 'import MLXOptimizers' 'FileManager.' \
+    'FileHandle.' 'URLSession' 'Process(' 'PrimeMetalDeviceLease(' \
+    '.acquire(' 'posix_spawn(' 'waitpid(' 'kill(' 'flock(' 'execve(' \
+    'runSupervisor(' 'trajectoryRunWorkerProcess(' \
+    'trajectoryRunReleaseVerifierProcess('; do
+    ! grep -Fq -- \
+        "$forbidden_secure_child_process_evidence_implementation_authority_capability" \
+        "$secure_child_process_evidence_implementation_authority_source" ||
+        die "secure-child process/evidence implementation authority gained executable capability: $forbidden_secure_child_process_evidence_implementation_authority_capability"
+done
+readonly secure_child_process_evidence_implementation_authority_source_ast="$(swiftc \
+    -frontend -dump-parse \
+    "$secure_child_process_evidence_implementation_authority_source" 2>/dev/null)" ||
+    die "secure-child process/evidence implementation-authority source does not parse into a Swift AST"
+readonly secure_child_process_evidence_implementation_authority_test_ast="$(swiftc \
+    -frontend -dump-parse \
+    "$secure_child_process_evidence_implementation_authority_test" 2>/dev/null)" ||
+    die "secure-child process/evidence implementation-authority test does not parse into a Swift AST"
+readonly secure_child_process_evidence_implementation_authority_pair_executable_ast="$(printf '%s\n%s\n' \
+    "$secure_child_process_evidence_implementation_authority_source_ast" \
+    "$secure_child_process_evidence_implementation_authority_test_ast" | \
+    grep -Fv -- 'string_literal_expr' || true)"
+! printf '%s\n' \
+    "$secure_child_process_evidence_implementation_authority_pair_executable_ast" | \
+    grep -Eq -- \
+        'name="(Process|FileManager|FileHandle|URLSession|PrimeMetalDeviceLease|posix_spawn|waitpid|kill|flock|execve|runSupervisor|trajectoryRunWorkerProcess|trajectoryRunReleaseVerifierProcess|acquire)"|field="(runSupervisor|trajectoryRunWorkerProcess|trajectoryRunReleaseVerifierProcess|acquire)"' ||
+    die "secure-child process/evidence implementation-authority pair gained executable process, lease, launcher, worker, verifier, or filesystem capability"
 
 for native300m_trajectory_checkpoint_execution_authority_file in \
     "$native300m_trajectory_checkpoint_execution_authority_source" \
