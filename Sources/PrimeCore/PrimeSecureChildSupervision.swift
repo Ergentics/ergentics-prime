@@ -127,6 +127,8 @@ final class PrimeSecureChildSupervisionCapability {
         ExecutionState = .suspended
     private var cleanupState:
         CleanupState = .notStarted
+    private var retainedCleanupTimeline:
+        PrimeSecureChildCleanupTimeline? = nil
 
     private init(
         spawn: PrimeSecureChildSpawnHandle,
@@ -279,6 +281,15 @@ final class PrimeSecureChildSupervisionCapability {
         PrimeSecureChildExactPIDWaitObservation?
     {
         lifecycle.exactPIDWaitObservation
+    }
+
+    /// A read-only record of the cleanup timing plan, if cleanup reached
+    /// timeline construction. Signal delivery outcomes remain lifecycle-owned
+    /// and unavailable through this seam.
+    var cleanupTimelineSnapshot:
+        PrimeSecureChildCleanupTimeline?
+    {
+        retainedCleanupTimeline
     }
 
     /// Joins the suspended child to the session and process-group authority
@@ -539,7 +550,7 @@ final class PrimeSecureChildSupervisionCapability {
         }
         if lifecycle.exactPIDWaitObservation
                 != nil,
-           drainsReachedEOF()
+           drainsAreTerminalAndClosed()
         {
             let disposition =
                 disposition(
@@ -569,6 +580,7 @@ final class PrimeSecureChildSupervisionCapability {
             )
             return disposition
         }
+        retainedCleanupTimeline = timeline
         cleanupState = .running(timeline)
 
         if !lifecycle.hasReaped {
@@ -613,6 +625,9 @@ final class PrimeSecureChildSupervisionCapability {
         return finalDisposition
     }
 
+    /// This checks only drain ownership. Callers may accept a closed terminal
+    /// error as contained only after the exact child has independently been
+    /// reaped; ordinary fixture success still validates clean EOF separately.
     static func memoryDrainContainmentDisposition(
         standardOutput:
             PrimeSecureChildMemoryDrainSnapshot,
@@ -620,9 +635,13 @@ final class PrimeSecureChildSupervisionCapability {
             PrimeSecureChildMemoryDrainSnapshot
     ) -> PrimeSecureChildCleanupDisposition {
         standardOutput.workerFinished
-            && standardOutput.reachedEOF
+            && standardOutput.descriptorsClosed
+            && standardOutput.terminalReason
+                != .active
             && standardError.workerFinished
-            && standardError.reachedEOF
+            && standardError.descriptorsClosed
+            && standardError.terminalReason
+                != .active
             ? .contained
             : .mustFailStop(
                 .streamDrainUncontained
@@ -636,9 +655,13 @@ final class PrimeSecureChildSupervisionCapability {
             PrimeSecureChildFileBackedDrainSnapshot
     ) -> PrimeSecureChildCleanupDisposition {
         standardOutput.workerFinished
-            && standardOutput.reachedEOF
+            && standardOutput.descriptorsClosed
+            && standardOutput.terminalReason
+                != .active
             && standardError.workerFinished
-            && standardError.reachedEOF
+            && standardError.descriptorsClosed
+            && standardError.terminalReason
+                != .active
             ? .contained
             : .mustFailStop(
                 .streamDrainUncontained
@@ -685,6 +708,15 @@ final class PrimeSecureChildSupervisionCapability {
             standardOutput,
             standardError
         ):
+            if drainGroup.wait(
+                timeout:
+                    timeline
+                    .containmentDeadline
+                    .dispatchTime
+            ) != .success {
+                standardOutput.requestStop()
+                standardError.requestStop()
+            }
             guard drainGroup.wait(
                 timeout:
                     timeline
@@ -706,7 +738,9 @@ final class PrimeSecureChildSupervisionCapability {
         }
     }
 
-    private func drainsReachedEOF() -> Bool {
+    private func drainsAreTerminalAndClosed()
+        -> Bool
+    {
         switch drainEvidence() {
         case let .memory(
             standardOutput,
@@ -799,7 +833,7 @@ final class PrimeSecureChildSupervisionCapability {
         guard terminalReturnIsAuthorized,
               lifecycle.exactPIDWaitObservation
                 != nil,
-              drainsReachedEOF()
+              drainsAreTerminalAndClosed()
         else {
             lifecycle.attemptEmergencySIGKILL()
             Darwin._exit(70)

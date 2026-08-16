@@ -39,6 +39,18 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
     private static let supervisionRelativePath =
         "Sources/PrimeCore/" +
         "PrimeSecureChildSupervision.swift"
+    private static let processPlanRelativePath =
+        "Sources/PrimeCore/" +
+        "PrimeSecureChildProcessPlan.swift"
+    private static let trustedCaptureRelativePath =
+        "Sources/PrimeCore/" +
+        "PrimeTrustedSecureChildProcessCapture.swift"
+    private static let executionKernelRelativePath =
+        "Sources/PrimeCore/" +
+        "PrimeSecureChildExecutionKernel.swift"
+    private static let fixtureKernelRelativePath =
+        "Sources/PrimeCore/" +
+        "PrimeSecureChildKernel.swift"
     private static let swiftPackageExecutableAbsolutePath =
         "/Applications/Xcode.app/Contents/Developer/" +
         "Toolchains/XcodeDefault.xctoolchain/usr/bin/" +
@@ -452,7 +464,7 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
                 of: "requestStop()",
                 in: supervisionSource
             ),
-            2
+            4
         )
         XCTAssertEqual(
             occurrences(
@@ -1088,9 +1100,16 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
         XCTAssertEqual(snapshot.capturedByteCount, 32)
         XCTAssertTrue(snapshot.overflowed)
         XCTAssertTrue(snapshot.workerFinished)
+        XCTAssertEqual(
+            snapshot.terminalReason,
+            .endOfFile
+        )
+        XCTAssertTrue(snapshot.descriptorsClosed)
         XCTAssertTrue(snapshot.reachedEOF)
         XCTAssertEqual(snapshot.readErrorNumber, 0)
         XCTAssertEqual(snapshot.writeErrorNumber, 0)
+        XCTAssertEqual(snapshot.finalizationErrorNumber, 0)
+        XCTAssertEqual(snapshot.closeErrorNumber, 0)
         XCTAssertTrue(snapshot.outputMetadataObserved)
         XCTAssertGreaterThan(snapshot.outputDeviceID, 0)
         XCTAssertGreaterThan(snapshot.outputInode, 0)
@@ -1216,8 +1235,10 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
         let resultPath = directory.appendingPathComponent(
             PrimeSecureChildFixtureInvocation.resultLeaf
         ).path
+        let plan = try PrimeSecureChildProcessPlanV1
+            .validationWorkflowFixture(mode: .pass)
         let invocation = try PrimeSecureChildFixtureInvocation(
-            mode: .pass,
+            plan: plan,
             resultAbsolutePath: resultPath
         )
         let expected = try XCTUnwrap(invocation.expectedResultData)
@@ -1258,10 +1279,30 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
         let root = packageRoot()
         let source = try String(
             contentsOf: root.appendingPathComponent(
-                "Sources/PrimeCore/PrimeSecureChildKernel.swift"
+                Self.fixtureKernelRelativePath
             ),
             encoding: .utf8
         )
+        let planSource = try String(
+            contentsOf: root.appendingPathComponent(
+                Self.processPlanRelativePath
+            ),
+            encoding: .utf8
+        )
+        let trustedCaptureSource = try String(
+            contentsOf: root.appendingPathComponent(
+                Self.trustedCaptureRelativePath
+            ),
+            encoding: .utf8
+        )
+        let executionKernelSource = try String(
+            contentsOf: root.appendingPathComponent(
+                Self.executionKernelRelativePath
+            ),
+            encoding: .utf8
+        )
+        let executionTopologySource =
+            executionKernelSource + "\n" + source
         let spawnAdapterSource = try String(
             contentsOf: root.appendingPathComponent(
                 "Sources/PrimeCore/PrimeNativeNeuralGateSecureExternalChildCapture.swift"
@@ -1285,6 +1326,7 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
             PrimeValidationWorkflowFixtureChildMode.allCases.count,
             9
         )
+        try assertAllFixtureModesMapThroughClosedProcessPlan()
         XCTAssertNoThrow(
             try PrimeSecureChildDarwinSubstrate
                 .requireArgumentZero("swift-build")
@@ -1327,8 +1369,33 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
         )
         XCTAssertTrue(
             source.contains(
-                "private init(\n        prepared: PrimeSecureChildPreparedFixture"
+                "private init(\n        prepared: PrimeSecureChildPreparedFixture,"
             )
+        )
+        let compactFixtureKernel = withoutWhitespace(source)
+        XCTAssertTrue(
+            compactFixtureKernel.contains(
+                "publicstaticfuncprepare(executableURL:URL,privateWorkingDirectoryURL:URL,privateResultDirectoryURL:URL,mode:PrimeValidationWorkflowFixtureChildMode)throws->Self"
+            )
+        )
+        XCTAssertTrue(
+            compactFixtureKernel.contains(
+                "publicfuncexecute()throws->PrimeValidationWorkflowFixtureChildResult"
+            )
+        )
+        XCTAssertEqual(
+            occurrences(
+                of: "public static func prepare(",
+                in: source
+            ),
+            1
+        )
+        XCTAssertEqual(
+            occurrences(
+                of: "public func execute() throws",
+                in: source
+            ),
+            1
         )
         XCTAssertFalse(source.contains("public init("))
         XCTAssertFalse(source.contains("Foundation.Process"))
@@ -1369,6 +1436,71 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
                 "PrimeSecureChildDarwinSubstrate\n                .spawnSuspended("
             )
         )
+        XCTAssertFalse(
+            executionKernelSource.contains(
+                "PrimeSecureChildDarwinSubstrate"
+            )
+        )
+        XCTAssertFalse(
+            executionKernelSource.contains("Darwin.")
+        )
+        XCTAssertFalse(
+            executionKernelSource.contains("public ")
+        )
+        XCTAssertTrue(
+            executionKernelSource.contains("struct RawOutcome")
+        )
+        XCTAssertTrue(
+            executionKernelSource.contains(
+                "private let executionClaim:"
+            )
+        )
+        XCTAssertFalse(
+            source.contains(
+                "struct PrimeSecureChildFixtureKernelResult"
+            )
+        )
+        XCTAssertTrue(
+            source.contains(
+                "PrimeSecureChildDiagnosticProjection"
+            )
+        )
+        XCTAssertTrue(
+            executionKernelSource.contains(
+                "let diagnosticCanonicalData: Data"
+            )
+        )
+        XCTAssertTrue(
+            source.contains(
+                "operationalFailureCode:\n                    \"stream_capture\""
+            )
+        )
+        XCTAssertFalse(
+            planSource.contains("public ")
+        )
+        XCTAssertFalse(
+            trustedCaptureSource.contains("public ")
+        )
+        for forbiddenExecutionSurface in [
+            "Foundation.Process",
+            "NSTask",
+            "posix_spawn",
+            "execve(",
+            "execl(",
+            "system(",
+            "popen(",
+            "/bin/sh",
+            "/bin/zsh",
+            "/bin/bash",
+            "python",
+        ] {
+            XCTAssertFalse(
+                executionKernelSource
+                    .localizedCaseInsensitiveContains(
+                        forbiddenExecutionSurface
+                    )
+            )
+        }
         XCTAssertTrue(
             spawnAdapterSource.contains(
                 ".adoptMemory("
@@ -1449,7 +1581,172 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
             )
         )
 
+        assertAppearsInOrder(
+            [
+                "let plan = try PrimeSecureChildProcessPlanV1",
+                "let prepared =",
+                "PrimeTrustedSecureChildProcessCapture(",
+                "consumption = try capture.consume()",
+                "PrimeSecureChildExecutionKernel",
+                ".fixtureResult",
+            ],
+            in: source
+        )
+        assertAppearsInOrder(
+            [
+                "claim = try consumption.claimForExecution()",
+                "claim.retainsClosedContext(prepared)",
+                "claim.plan",
+                ".validationWorkflowFixtureMode",
+                "PrimeSecureChildKernel",
+                ".execute(",
+                "claim: claim",
+            ],
+            in: executionTopologySource
+        )
+        XCTAssertEqual(
+            occurrences(
+                of: "PrimeSecureChildKernel\n            .execute(",
+                in: source
+            ),
+            1
+        )
+        XCTAssertEqual(
+            occurrences(
+                of: "claimForExecution()",
+                in: executionTopologySource
+            ),
+            1
+        )
+        XCTAssertFalse(
+            executionTopologySource.contains("consumption.plan")
+        )
+        XCTAssertTrue(
+            source.contains("private enum PrimeSecureChildKernel")
+        )
+        XCTAssertTrue(
+            source.contains(
+                "let plan = claim.plan"
+            )
+        )
+        XCTAssertFalse(
+            executionTopologySource.contains("plan: claim.plan")
+        )
+
         try assertSpawnHandleTransfersOrClosesBothDescriptors()
+    }
+
+    private func assertAllFixtureModesMapThroughClosedProcessPlan()
+        throws
+    {
+        let resultPath =
+            "/private/tmp/prime-secure-child-pure-mapping/"
+            + PrimeSecureChildFixtureInvocation.resultLeaf
+        let physicalExecutable =
+            "/private/tmp/PrimeValidationWorkflowFixtureChild"
+        for mode in PrimeValidationWorkflowFixtureChildMode.allCases {
+            let expectedFixtureValues:
+                (stdout: Int, stderr: Int, exit: Int32, result: Bool)
+            switch mode {
+            case .pass, .logicalArgumentZero:
+                expectedFixtureValues = (0, 0, 0, true)
+            case .nonzeroExit:
+                expectedFixtureValues = (0, 0, 23, true)
+            case .boundedStreams:
+                expectedFixtureValues = (4_096, 2_048, 0, true)
+            case .overflow:
+                expectedFixtureValues = (131_072, 131_072, 0, true)
+            case .hang, .selfSignal, .descendantRetainsStreams:
+                expectedFixtureValues = (0, 0, 0, true)
+            case .exitWithoutResult:
+                expectedFixtureValues = (0, 0, 0, false)
+            }
+            var expectedArguments = ["--mode", mode.rawValue]
+            if expectedFixtureValues.result {
+                expectedArguments += [
+                    "--result-path",
+                    resultPath,
+                ]
+            }
+            if mode == .nonzeroExit {
+                expectedArguments += ["--exit-code", "23"]
+            }
+            if mode == .boundedStreams || mode == .overflow {
+                expectedArguments += [
+                    "--stdout-bytes",
+                    String(expectedFixtureValues.stdout),
+                    "--stderr-bytes",
+                    String(expectedFixtureValues.stderr),
+                ]
+            }
+            let plan = try PrimeSecureChildProcessPlanV1
+                .validationWorkflowFixture(
+                    mode: mode
+                )
+            let invocation = try PrimeSecureChildFixtureInvocation(
+                plan: plan,
+                resultAbsolutePath: resultPath
+            )
+            XCTAssertEqual(
+                plan.validationWorkflowFixtureMode,
+                mode
+            )
+            XCTAssertEqual(invocation.mode, mode)
+            XCTAssertEqual(
+                invocation.configuredPayloadStandardOutputBytes,
+                expectedFixtureValues.stdout
+            )
+            XCTAssertEqual(
+                invocation.configuredPayloadStandardErrorBytes,
+                expectedFixtureValues.stderr
+            )
+            XCTAssertEqual(
+                invocation.configuredExitCode,
+                expectedFixtureValues.exit
+            )
+            XCTAssertEqual(
+                invocation.expectsResult,
+                expectedFixtureValues.result
+            )
+            XCTAssertEqual(
+                invocation.maximumWallNanoseconds,
+                mode == .hang
+                    || mode == .descendantRetainsStreams
+                    ? 1_000_000_000
+                    : 10_000_000_000
+            )
+            XCTAssertEqual(
+                plan.standardOutputMaximumByteCount,
+                PrimeSecureChildFixtureInvocation
+                    .streamPrefixLimit
+            )
+            XCTAssertEqual(
+                plan.standardErrorMaximumByteCount,
+                PrimeSecureChildFixtureInvocation
+                    .streamPrefixLimit
+            )
+            XCTAssertTrue(plan.orderedEnvironment.isEmpty)
+            XCTAssertEqual(
+                try plan.argumentZero(
+                    physicalExecutableAbsolutePath:
+                        physicalExecutable
+                ),
+                mode == .logicalArgumentZero
+                    ? PrimeSecureChildArgumentZeroPolicy
+                        .swiftBuildCanaryValue
+                    : physicalExecutable
+            )
+            XCTAssertEqual(
+                try plan.exactArguments(
+                    resultAbsolutePath:
+                        expectedFixtureValues.result
+                        ? resultPath
+                        : ""
+                ),
+                expectedArguments
+            )
+            XCTAssertEqual(invocation.arguments, expectedArguments)
+        }
     }
 
     private func assertSpawnHandleTransfersOrClosesBothDescriptors()

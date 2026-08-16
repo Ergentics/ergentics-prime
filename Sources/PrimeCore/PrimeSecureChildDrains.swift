@@ -9,12 +9,19 @@ struct PrimeSecureChildMemoryDrainSnapshot:
     Equatable,
     Sendable
 {
+    let terminalReason:
+        PrimeSecureChildProcessEvidenceV1
+        .StreamTerminalReason
     let data: Data
     let totalByteCount: UInt64
     let overflowed: Bool
     let workerFinished: Bool
     let reachedEOF: Bool
     let readErrorNumber: Int32
+    let writeErrorNumber: Int32
+    let finalizationErrorNumber: Int32
+    let closeErrorNumber: Int32
+    let descriptorsClosed: Bool
 }
 
 final class PrimeSecureChildMemoryBoundedDrain:
@@ -29,8 +36,14 @@ final class PrimeSecureChildMemoryBoundedDrain:
     private var totalByteCount: UInt64 = 0
     private var overflowed = false
     private var workerFinished = false
+    private var terminalReason:
+        PrimeSecureChildProcessEvidenceV1
+        .StreamTerminalReason = .active
     private var reachedEOF = false
     private var readErrorNumber: Int32 = 0
+    private var finalizationErrorNumber: Int32 = 0
+    private var closeErrorNumber: Int32 = 0
+    private var descriptorsClosed = false
     private var stopRequested = false
 
     init(
@@ -77,6 +90,8 @@ final class PrimeSecureChildMemoryBoundedDrain:
             lock.unlock()
         }
         return PrimeSecureChildMemoryDrainSnapshot(
+            terminalReason:
+                terminalReason,
             data: data,
             totalByteCount:
                 totalByteCount,
@@ -86,27 +101,54 @@ final class PrimeSecureChildMemoryBoundedDrain:
             reachedEOF:
                 reachedEOF,
             readErrorNumber:
-                readErrorNumber
+                readErrorNumber,
+            writeErrorNumber: 0,
+            finalizationErrorNumber:
+                finalizationErrorNumber,
+            closeErrorNumber:
+                closeErrorNumber,
+            descriptorsClosed:
+                descriptorsClosed
         )
     }
 
     private func drain() {
-        defer {
-            lock.lock()
-            workerFinished = true
-            lock.unlock()
-            _ = Darwin.close(
-                descriptor
-            )
-        }
+        let reason = drainToTerminalReason()
+        errno = 0
+        let closeResult = Darwin.close(
+            descriptor
+        )
+        let closeFailure = closeResult == 0
+            ? 0
+            : errno == 0 ? EIO : errno
+
+        lock.lock()
+        closeErrorNumber = closeFailure
+        descriptorsClosed = closeResult == 0
+        terminalReason =
+            reason == .endOfFile
+                && closeFailure != 0
+            ? .writeOrFinalizationError
+            : reason
+        reachedEOF = terminalReason
+            == .endOfFile
+        workerFinished = true
+        lock.unlock()
+    }
+
+    private func drainToTerminalReason()
+        -> PrimeSecureChildProcessEvidenceV1
+        .StreamTerminalReason
+    {
         var buffer = [UInt8](
             repeating: 0,
             count: chunkByteCount
         )
         while true {
             if shouldStop() {
-                return
+                return .cleanupStop
             }
+            errno = 0
             let count =
                 buffer
                 .withUnsafeMutableBytes {
@@ -123,10 +165,7 @@ final class PrimeSecureChildMemoryBoundedDrain:
                 continue
             }
             if count == 0 {
-                lock.lock()
-                reachedEOF = true
-                lock.unlock()
-                return
+                return .endOfFile
             }
             let readErrno = errno
             if readErrno == EINTR {
@@ -146,6 +185,7 @@ final class PrimeSecureChildMemoryBoundedDrain:
                             ),
                         revents: 0
                     )
+                errno = 0
                 let pollResult =
                     Darwin.poll(
                         &event,
@@ -158,14 +198,14 @@ final class PrimeSecureChildMemoryBoundedDrain:
                     recordReadError(
                         errno
                     )
-                    return
+                    return .readError
                 }
                 continue
             }
             recordReadError(
                 readErrno
             )
-            return
+            return .readError
         }
     }
 
@@ -224,7 +264,9 @@ final class PrimeSecureChildMemoryBoundedDrain:
     ) {
         lock.lock()
         readErrorNumber =
-            errorNumber
+            errorNumber == 0
+            ? EIO
+            : errorNumber
         lock.unlock()
     }
 }
@@ -233,6 +275,9 @@ struct PrimeSecureChildFileBackedDrainSnapshot:
     Equatable,
     Sendable
 {
+    let terminalReason:
+        PrimeSecureChildProcessEvidenceV1
+        .StreamTerminalReason
     let totalByteCount: UInt64
     let capturedByteCount: UInt64
     let overflowed: Bool
@@ -240,6 +285,9 @@ struct PrimeSecureChildFileBackedDrainSnapshot:
     let reachedEOF: Bool
     let readErrorNumber: Int32
     let writeErrorNumber: Int32
+    let finalizationErrorNumber: Int32
+    let closeErrorNumber: Int32
+    let descriptorsClosed: Bool
     let outputDeviceID: UInt64
     let outputInode: UInt64
     let outputByteCount: UInt64
@@ -259,9 +307,16 @@ final class PrimeSecureChildFileBackedBoundedDrain:
     private var capturedByteCount: UInt64 = 0
     private var overflowed = false
     private var workerFinished = false
+    private var terminalReason:
+        PrimeSecureChildProcessEvidenceV1
+        .StreamTerminalReason = .active
     private var reachedEOF = false
     private var readErrorNumber: Int32 = 0
     private var writeErrorNumber: Int32 = 0
+    private var finalizationErrorNumber: Int32 = 0
+    private var closeErrorNumber: Int32 = 0
+    private var descriptorsClosed = false
+    private var stopRequested = false
     private var outputDeviceID: UInt64 = 0
     private var outputInode: UInt64 = 0
     private var outputByteCount: UInt64 = 0
@@ -287,10 +342,17 @@ final class PrimeSecureChildFileBackedBoundedDrain:
         }
     }
 
+    func requestStop() {
+        lock.lock()
+        stopRequested = true
+        lock.unlock()
+    }
+
     func snapshot() -> PrimeSecureChildFileBackedDrainSnapshot {
         lock.lock()
         defer { lock.unlock() }
         return PrimeSecureChildFileBackedDrainSnapshot(
+            terminalReason: terminalReason,
             totalByteCount: totalByteCount,
             capturedByteCount: capturedByteCount,
             overflowed: overflowed,
@@ -298,6 +360,10 @@ final class PrimeSecureChildFileBackedBoundedDrain:
             reachedEOF: reachedEOF,
             readErrorNumber: readErrorNumber,
             writeErrorNumber: writeErrorNumber,
+            finalizationErrorNumber:
+                finalizationErrorNumber,
+            closeErrorNumber: closeErrorNumber,
+            descriptorsClosed: descriptorsClosed,
             outputDeviceID: outputDeviceID,
             outputInode: outputInode,
             outputByteCount: outputByteCount,
@@ -308,16 +374,59 @@ final class PrimeSecureChildFileBackedBoundedDrain:
     }
 
     private func drain() {
-        defer {
-            finalizeOutput()
-            Darwin.close(outputDescriptor)
-            Darwin.close(inputDescriptor)
-            lock.lock()
-            workerFinished = true
-            lock.unlock()
+        let reason = drainToTerminalReason()
+        finalizeOutput()
+        errno = 0
+        let outputCloseResult = Darwin.close(
+            outputDescriptor
+        )
+        let outputCloseFailure =
+            outputCloseResult == 0
+            ? 0
+            : errno == 0 ? EIO : errno
+        errno = 0
+        let inputCloseResult = Darwin.close(
+            inputDescriptor
+        )
+        let inputCloseFailure =
+            inputCloseResult == 0
+            ? 0
+            : errno == 0 ? EIO : errno
+
+        lock.lock()
+        closeErrorNumber =
+            outputCloseFailure != 0
+            ? outputCloseFailure
+            : inputCloseFailure
+        descriptorsClosed =
+            outputCloseResult == 0
+            && inputCloseResult == 0
+        if reason == .endOfFile,
+           writeErrorNumber != 0
+            || finalizationErrorNumber != 0
+            || closeErrorNumber != 0
+        {
+            terminalReason =
+                .writeOrFinalizationError
+        } else {
+            terminalReason = reason
         }
+        reachedEOF = terminalReason
+            == .endOfFile
+        workerFinished = true
+        lock.unlock()
+    }
+
+    private func drainToTerminalReason()
+        -> PrimeSecureChildProcessEvidenceV1
+        .StreamTerminalReason
+    {
         var buffer = [UInt8](repeating: 0, count: 64 * 1024)
         while true {
+            if shouldStop() {
+                return .cleanupStop
+            }
+            errno = 0
             let count = buffer.withUnsafeMutableBytes {
                 Darwin.read(inputDescriptor, $0.baseAddress, $0.count)
             }
@@ -326,10 +435,7 @@ final class PrimeSecureChildFileBackedBoundedDrain:
                 continue
             }
             if count == 0 {
-                lock.lock()
-                reachedEOF = true
-                lock.unlock()
-                return
+                return .endOfFile
             }
             var failure = errno
             if failure == EINTR { continue }
@@ -339,15 +445,31 @@ final class PrimeSecureChildFileBackedBoundedDrain:
                     events: Int16(POLLIN | POLLHUP | POLLERR),
                     revents: 0
                 )
+                errno = 0
                 let polled = Darwin.poll(&event, 1, 100)
                 if polled >= 0 || errno == EINTR { continue }
                 failure = errno
             }
-            lock.lock()
-            readErrorNumber = failure
-            lock.unlock()
-            return
+            recordReadError(failure)
+            return .readError
         }
+    }
+
+    private func shouldStop() -> Bool {
+        lock.lock()
+        defer { lock.unlock() }
+        return stopRequested
+    }
+
+    private func recordReadError(
+        _ value: Int32
+    ) {
+        lock.lock()
+        if readErrorNumber == 0 {
+            readErrorNumber =
+                value == 0 ? EIO : value
+        }
+        lock.unlock()
     }
 
     private func consume(_ bytes: ArraySlice<UInt8>) {
@@ -371,6 +493,7 @@ final class PrimeSecureChildFileBackedBoundedDrain:
         let prefix = bytes.prefix(wanted)
         var offset = 0
         while offset < prefix.count {
+            errno = 0
             let written = prefix.withUnsafeBytes {
                 Darwin.write(
                     outputDescriptor,
@@ -383,7 +506,11 @@ final class PrimeSecureChildFileBackedBoundedDrain:
                 continue
             }
             if written < 0 && errno == EINTR { continue }
-            recordWriteError(errno)
+            recordWriteError(
+                written == 0
+                ? EIO
+                : errno
+            )
             return
         }
         lock.lock()
@@ -400,19 +527,23 @@ final class PrimeSecureChildFileBackedBoundedDrain:
     }
 
     private func finalizeOutput() {
+        errno = 0
         if fchmod(outputDescriptor, mode_t(0o444)) != 0 {
-            recordWriteError(errno)
+            recordFinalizationError(errno)
         }
+        errno = 0
         if fsync(outputDescriptor) != 0 {
-            recordWriteError(errno)
+            recordFinalizationError(errno)
         }
+        errno = 0
         if fcntl(outputDescriptor, F_FULLFSYNC) != 0 {
-            recordWriteError(errno)
+            recordFinalizationError(errno)
         }
         var before = stat()
         lock.lock()
         let expectedByteCount = capturedByteCount
         lock.unlock()
+        errno = 0
         guard fstat(outputDescriptor, &before) == 0,
               before.st_mode & mode_t(S_IFMT) == mode_t(S_IFREG),
               before.st_uid == geteuid(),
@@ -421,7 +552,9 @@ final class PrimeSecureChildFileBackedBoundedDrain:
               before.st_size >= 0,
               UInt64(before.st_size) == expectedByteCount
         else {
-            recordWriteError(errno == 0 ? EIO : errno)
+            recordFinalizationError(
+                errno == 0 ? EIO : errno
+            )
             return
         }
         let data: Data
@@ -431,10 +564,11 @@ final class PrimeSecureChildFileBackedBoundedDrain:
                 byteCount: Int(before.st_size)
             )
         } catch {
-            recordWriteError(EIO)
+            recordFinalizationError(EIO)
             return
         }
         var after = stat()
+        errno = 0
         guard fstat(outputDescriptor, &after) == 0,
               after.st_dev == before.st_dev,
               after.st_ino == before.st_ino,
@@ -446,7 +580,9 @@ final class PrimeSecureChildFileBackedBoundedDrain:
               after.st_ctimespec.tv_sec == before.st_ctimespec.tv_sec,
               after.st_ctimespec.tv_nsec == before.st_ctimespec.tv_nsec
         else {
-            recordWriteError(errno == 0 ? EIO : errno)
+            recordFinalizationError(
+                errno == 0 ? EIO : errno
+            )
             return
         }
         lock.lock()
@@ -457,6 +593,17 @@ final class PrimeSecureChildFileBackedBoundedDrain:
             UInt16(after.st_mode & mode_t(0o7777))
         outputSHA256 = PrimeSHA256.hexDigest(of: data)
         outputMetadataObserved = true
+        lock.unlock()
+    }
+
+    private func recordFinalizationError(
+        _ value: Int32
+    ) {
+        lock.lock()
+        if finalizationErrorNumber == 0 {
+            finalizationErrorNumber =
+                value == 0 ? EIO : value
+        }
         lock.unlock()
     }
 }
