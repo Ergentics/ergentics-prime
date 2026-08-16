@@ -88,6 +88,8 @@ readonly secure_child_process_evidence_design_authority_source_relative_path="So
 readonly secure_child_process_evidence_design_authority_test_relative_path="Tests/PrimeCoreTests/PrimeSecureChildProcessEvidenceDesignAuthorityTests.swift"
 readonly secure_child_process_evidence_implementation_authority_source_relative_path="Sources/PrimeCore/PrimeSecureChildProcessEvidenceImplementationAuthority.swift"
 readonly secure_child_process_evidence_implementation_authority_test_relative_path="Tests/PrimeCoreTests/PrimeSecureChildProcessEvidenceImplementationAuthorityTests.swift"
+readonly secure_child_process_evidence_closed_fixture_canary_authority_source_relative_path="Sources/PrimeCore/PrimeSecureChildProcessEvidenceClosedFixtureCanaryAuthority.swift"
+readonly secure_child_process_evidence_closed_fixture_canary_authority_test_relative_path="Tests/PrimeCoreTests/PrimeSecureChildProcessEvidenceClosedFixtureCanaryAuthorityTests.swift"
 readonly secure_child_process_plan_relative_path="Sources/PrimeCore/PrimeSecureChildProcessPlan.swift"
 readonly secure_child_process_evidence_relative_path="Sources/PrimeCore/PrimeSecureChildProcessEvidence.swift"
 readonly trusted_secure_child_process_capture_relative_path="Sources/PrimeCore/PrimeTrustedSecureChildProcessCapture.swift"
@@ -98,6 +100,60 @@ readonly secure_child_kernel_relative_path="Sources/PrimeCore/PrimeSecureChildKe
 readonly secure_child_process_evidence_test_relative_path="Tests/PrimeCoreTests/PrimeSecureChildProcessEvidenceTests.swift"
 readonly secure_child_lifecycle_test_relative_path="Tests/PrimeCoreTests/PrimeNativeNeuralGateSecureChildLifecycleTests.swift"
 readonly secure_external_child_capture_test_relative_path="Tests/PrimeCoreTests/PrimeNativeNeuralGateSecureExternalChildCaptureTests.swift"
+readonly secure_child_process_evidence_closed_fixture_canary_authority_predecessor_revision="232a17e8f58a297919366d963ee1d7bc38cdbaee"
+readonly secure_child_process_evidence_closed_fixture_canary_authority_predecessor_tree="c2a351449824ec15bc3154158d10f28c8a8310ad"
+readonly expected_secure_child_process_evidence_closed_fixture_canary_authority_preserved_index_sha256="e8dd30060ea370f01e135f8c2e379ab2d9bb6138dca9d928c395cdd9f967f291"
+readonly observed_secure_child_process_evidence_closed_fixture_canary_authority_preserved_index_sha256="$({
+    git -C "$prime_root" ls-files -s |
+        while IFS= read -r index_record; do
+            relative_path="${index_record#*$'\t'}"
+            if [[ "$relative_path" \
+                    == '.github/scripts/prime-ci-active-root-quarantine.sh' \
+                || "$relative_path" \
+                    == '.github/workflows/prime-active-root-quarantine.yml' \
+                || "$relative_path" \
+                    == 'Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' \
+                || "$relative_path" \
+                    == "$secure_child_process_evidence_closed_fixture_canary_authority_source_relative_path" \
+                || "$relative_path" \
+                    == "$secure_child_process_evidence_closed_fixture_canary_authority_test_relative_path" ]]; then
+                continue
+            fi
+            printf '%s\n' "$index_record"
+        done
+} | LC_ALL=C sort | shasum -a 256 | awk '{print $1}')"
+[[ "$expected_secure_child_process_evidence_closed_fixture_canary_authority_preserved_index_sha256" \
+        =~ ^[0-9a-f]{64}$ \
+    && "$observed_secure_child_process_evidence_closed_fixture_canary_authority_preserved_index_sha256" \
+        == "$expected_secure_child_process_evidence_closed_fixture_canary_authority_preserved_index_sha256" ]] ||
+    die "secure-child process/evidence closed fixture-canary authority changed a path outside its exact-five closure"
+[[ "$(git -C "$prime_root" rev-parse \
+        "$secure_child_process_evidence_closed_fixture_canary_authority_predecessor_revision^{tree}")" \
+        == "$secure_child_process_evidence_closed_fixture_canary_authority_predecessor_tree" ]] ||
+    die "secure-child process/evidence closed fixture-canary authority predecessor tree changed"
+readonly expected_secure_child_process_evidence_closed_fixture_canary_authority_status=$'M\t.github/scripts/prime-ci-active-root-quarantine.sh\nM\t.github/workflows/prime-active-root-quarantine.yml\nM\tSources/PrimeCore/PrimeEmbeddedBuildProvenance.swift\nA\tSources/PrimeCore/PrimeSecureChildProcessEvidenceClosedFixtureCanaryAuthority.swift\nA\tTests/PrimeCoreTests/PrimeSecureChildProcessEvidenceClosedFixtureCanaryAuthorityTests.swift'
+[[ "$(git -C "$prime_root" diff --name-status --no-renames \
+        "$secure_child_process_evidence_closed_fixture_canary_authority_predecessor_revision" HEAD)" \
+        == "$expected_secure_child_process_evidence_closed_fixture_canary_authority_status" ]] ||
+    die "secure-child process/evidence closed fixture-canary authority successor is not the exact ordered five paths"
+for exact_secure_child_process_evidence_closed_fixture_canary_authority_path in \
+    '.github/scripts/prime-ci-active-root-quarantine.sh' \
+    '.github/workflows/prime-active-root-quarantine.yml' \
+    'Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' \
+    "$secure_child_process_evidence_closed_fixture_canary_authority_source_relative_path" \
+    "$secure_child_process_evidence_closed_fixture_canary_authority_test_relative_path"; do
+    expected_secure_child_process_evidence_closed_fixture_canary_authority_mode="100644"
+    case "$exact_secure_child_process_evidence_closed_fixture_canary_authority_path" in
+        '.github/scripts/'*)
+            expected_secure_child_process_evidence_closed_fixture_canary_authority_mode="100755"
+            ;;
+    esac
+    [[ "$(git -C "$prime_root" ls-files -s -- \
+        "$exact_secure_child_process_evidence_closed_fixture_canary_authority_path" | \
+        awk '{print $1}')" \
+        == "$expected_secure_child_process_evidence_closed_fixture_canary_authority_mode" ]] ||
+        die "secure-child process/evidence closed fixture-canary authority exact-five path is missing or has the wrong mode: $exact_secure_child_process_evidence_closed_fixture_canary_authority_path"
+done
 readonly secure_child_process_evidence_layer_a_predecessor_revision="a4d8583fa7c59f885002ee06a07c1d5264c0c223"
 readonly secure_child_process_evidence_layer_a_predecessor_tree="d253a26469573fcb12923e042a38f4d86f248ebd"
 readonly expected_secure_child_process_evidence_layer_a_preserved_index_sha256="92675b42ddb688c2df592061ee2da5ed3cb515de1c24edef6b2db5b57877caaa"
@@ -116,7 +172,9 @@ secure_child_process_evidence_layer_a_path_is_excluded() {
         "$secure_child_kernel_relative_path"|\
         "$secure_child_process_evidence_test_relative_path"|\
         "$secure_child_lifecycle_test_relative_path"|\
-        "$secure_external_child_capture_test_relative_path")
+        "$secure_external_child_capture_test_relative_path"|\
+        "$secure_child_process_evidence_closed_fixture_canary_authority_source_relative_path"|\
+        "$secure_child_process_evidence_closed_fixture_canary_authority_test_relative_path")
             return 0
             ;;
         *)
@@ -145,8 +203,19 @@ readonly observed_secure_child_process_evidence_layer_a_preserved_index_sha256="
         == "$secure_child_process_evidence_layer_a_predecessor_tree" ]] ||
     die "secure-child process/evidence Layer-A predecessor tree changed"
 readonly expected_secure_child_process_evidence_layer_a_status=$'M\t.github/scripts/prime-ci-active-root-quarantine.sh\nM\t.github/workflows/prime-active-root-quarantine.yml\nM\tSources/PrimeCore/PrimeEmbeddedBuildProvenance.swift\nM\tSources/PrimeCore/PrimeSecureChildDrains.swift\nA\tSources/PrimeCore/PrimeSecureChildExecutionKernel.swift\nM\tSources/PrimeCore/PrimeSecureChildKernel.swift\nA\tSources/PrimeCore/PrimeSecureChildProcessEvidence.swift\nA\tSources/PrimeCore/PrimeSecureChildProcessPlan.swift\nM\tSources/PrimeCore/PrimeSecureChildSupervision.swift\nA\tSources/PrimeCore/PrimeTrustedSecureChildProcessCapture.swift\nM\tTests/PrimeCoreTests/PrimeNativeNeuralGateSecureChildLifecycleTests.swift\nM\tTests/PrimeCoreTests/PrimeNativeNeuralGateSecureExternalChildCaptureTests.swift\nA\tTests/PrimeCoreTests/PrimeSecureChildProcessEvidenceTests.swift'
-[[ "$(git -C "$prime_root" diff --name-status --no-renames \
-        "$secure_child_process_evidence_layer_a_predecessor_revision" HEAD)" \
+readonly observed_secure_child_process_evidence_layer_a_status="$(git -C "$prime_root" \
+    diff --name-status --no-renames \
+    "$secure_child_process_evidence_layer_a_predecessor_revision" HEAD | \
+    while IFS=$'\t' read -r change relative_path; do
+        if [[ "$relative_path" \
+                == "$secure_child_process_evidence_closed_fixture_canary_authority_source_relative_path" \
+            || "$relative_path" \
+                == "$secure_child_process_evidence_closed_fixture_canary_authority_test_relative_path" ]]; then
+            continue
+        fi
+        printf '%s\t%s\n' "$change" "$relative_path"
+    done)"
+[[ "$observed_secure_child_process_evidence_layer_a_status" \
         == "$expected_secure_child_process_evidence_layer_a_status" ]] ||
     die "secure-child process/evidence Layer-A successor is not the exact ordered 13 paths"
 for exact_secure_child_process_evidence_layer_a_path in \
@@ -1081,14 +1150,14 @@ grep -Fq -- 'runs-on: macos-15' "$workflow_path" ||
     ' "$workflow_path")" == "60" ]] ||
     die "hosted quarantine workflow retirement runner or timeout boundary changed"
 [[ "$(grep -Fxc -- \
-        '          git -C ergentics-prime fetch --depth=2 --no-tags --no-write-fetch-head origin "$EXACT_REVISION"' \
+        '          git -C ergentics-prime fetch --depth=2 --no-tags --no-write-fetch-head origin "$EXACT_REVISION" a4d8583fa7c59f885002ee06a07c1d5264c0c223' \
         "$workflow_path")" == "2" \
     && "$(grep -Fxc -- \
         "    if: github.event_name == 'push' && github.ref == 'refs/heads/main'" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- '    needs: active-root' "$workflow_path")" == "1" \
     && "$(grep -Fxc -- '    needs: trusted-main-compile' "$workflow_path")" == "0" ]] ||
-    die "hosted quarantine workflow retirement direct-parent fetch boundary changed"
+    die "hosted quarantine workflow bounded pinned-lineage fetch boundary changed"
 readonly active_root_workflow_job_block="$(awk '
     /^  active-root:$/ { inside = 1 }
     /^  trusted-main-compile:$/ { inside = 0 }
@@ -1853,6 +1922,7 @@ readonly native300m_trajectory_checkpoint_execution_contract_filter='PrimeNative
 readonly native300m_trajectory_checkpoint_execution_failure_observation_filter='PrimeCoreTests.PrimeNativeDecoderBSpecificNative300MTrajectoryCheckpointExecutionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling'
 readonly secure_child_process_evidence_design_authority_filter='PrimeCoreTests.PrimeSecureChildProcessEvidenceDesignAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling'
 readonly secure_child_process_evidence_implementation_authority_filter='PrimeCoreTests.PrimeSecureChildProcessEvidenceImplementationAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling'
+readonly secure_child_process_evidence_closed_fixture_canary_authority_filter='PrimeCoreTests.PrimeSecureChildProcessEvidenceClosedFixtureCanaryAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling'
 [[ "$(grep -Fc -- "$tiny_cpu_mechanics_authority_filter" \
         "$workflow_path")" == "1" \
     && "$(grep -Fc -- "$tiny_cpu_mechanics_failure_observation_filter" \
@@ -1882,7 +1952,7 @@ readonly secure_child_process_evidence_implementation_authority_filter='PrimeCor
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling' \\" \
         "$workflow_path")" == "2" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 77 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 78 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not run the exact Stage-2 authority and failure-observation pure contracts"
 [[ "$(grep -Fc -- "$private_dependency_tls_failure_observation_filter" \
@@ -1974,7 +2044,7 @@ readonly secure_child_process_evidence_implementation_authority_filter='PrimeCor
         "          grep -Fq 'PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapFreshMetallibCrossBindingExecutionFailureObservationTests' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 77 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 78 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the Stage-2 metallib bootstrap repair, failure observations, and classifier repair authority"
 [[ "$(grep -Fc -- \
@@ -2017,7 +2087,7 @@ readonly secure_child_process_evidence_implementation_authority_filter='PrimeCor
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling' \\" \
-        "$workflow_path")" == "3" ]] ||
+        "$workflow_path")" == "4" ]] ||
     die "hosted workflow does not parse and run the Stage-3 explicit-RNG/cursor-resume authority"
 [[ "$(grep -Fc -- \
         "$stage3_tiny_cpu_explicit_rng_cursor_resume_canonical_binding_repair_authority_filter" \
@@ -2142,7 +2212,7 @@ readonly secure_child_process_evidence_implementation_authority_filter='PrimeCor
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling' \\" \
         "$workflow_path")" == "2" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 77 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 78 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run exactly the Stage-5 execution-failure observation"
 [[ "$(grep -Fc -- \
@@ -2159,9 +2229,9 @@ readonly secure_child_process_evidence_implementation_authority_filter='PrimeCor
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling' \\" \
-        "$workflow_path")" == "3" \
+        "$workflow_path")" == "4" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 77 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 78 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run exactly the Stage-5 replacement-execution authority"
 [[ "$(grep -Fc -- \
@@ -2177,7 +2247,7 @@ readonly secure_child_process_evidence_implementation_authority_filter='PrimeCor
         "          grep -Fq 'PrimeNativeDecoderStage5RepeatedTrajectoryReplacementCurrentDecoderIdentityObservationTests' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 77 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 78 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not run the exact Stage-5 current-decoder identity observation"
 [[ "$(grep -Fc -- \
@@ -2193,7 +2263,7 @@ readonly secure_child_process_evidence_implementation_authority_filter='PrimeCor
         "          grep -Fq 'PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayReplacementExecutionObservationTests' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 77 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 78 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not run the exact Stage-5 replacement execution observation"
 [[ "$(grep -Fc -- \
@@ -2210,9 +2280,9 @@ readonly secure_child_process_evidence_implementation_authority_filter='PrimeCor
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling' \\" \
-        "$workflow_path")" == "3" \
+        "$workflow_path")" == "4" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 77 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 78 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run exactly the Stage-6 resource-only probe authority"
 [[ "$(grep -Fc -- \
@@ -2270,7 +2340,7 @@ readonly secure_child_process_evidence_implementation_authority_filter='PrimeCor
         "          grep -Fq 'PrimeNativeDecoderNative300MTrajectoryCheckpointExecutionAuthorityTests' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 77 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 78 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the sole Native300M trajectory-checkpoint execution authority contract"
 [[ "$(grep -Fc -- \
@@ -2286,7 +2356,7 @@ readonly secure_child_process_evidence_implementation_authority_filter='PrimeCor
         "          grep -Fq 'PrimeNativeDecoderBSpecificNative300MTrajectoryCheckpointExecutionFailureObservationTests' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 77 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 78 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the Native300M trajectory-checkpoint failure observation"
 [[ "$(grep -Fc -- \
@@ -2303,9 +2373,9 @@ readonly secure_child_process_evidence_implementation_authority_filter='PrimeCor
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling' \\" \
-        "$workflow_path")" == "3" \
+        "$workflow_path")" == "4" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 77 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 78 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the sole secure-child process/evidence design-authority contract"
 [[ "$(grep -Fc -- \
@@ -2322,13 +2392,32 @@ readonly secure_child_process_evidence_implementation_authority_filter='PrimeCor
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling' \\" \
-        "$workflow_path")" == "3" \
+        "$workflow_path")" == "4" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 77 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 78 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the sole secure-child process/evidence implementation-authority contract"
+[[ "$(grep -Fc -- \
+        "$secure_child_process_evidence_closed_fixture_canary_authority_filter" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        "$secure_child_process_evidence_closed_fixture_canary_authority_source_relative_path" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        "$secure_child_process_evidence_closed_fixture_canary_authority_test_relative_path" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        "          grep -Fq 'PrimeSecureChildProcessEvidenceClosedFixtureCanaryAuthorityTests' \\" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling' \\" \
+        "$workflow_path")" == "4" \
+    && "$(grep -Fxc -- \
+        '          grep -Fq '\''Executed 78 tests, with 0 failures'\'' "$test_log"' \
+        "$workflow_path")" == "1" ]] ||
+    die "hosted workflow does not parse and run the sole secure-child closed-fixture canary pure-authority contract"
 [[ "$(grep -Fxc -- \
-        "            --filter 'PrimeSecureChildProcessEvidenceTests|PrimeNativeNeuralGateMLXIsolationSourceContractTests|PrimeNativeCorpusReplaySourceContractTests|PrimeCoreTests.PrimeNativeDecoderTrajectoryExactResumeDesignAuthorityTests/testFrozenV1CanonicalCodableMutationAndSourceBoundary|PrimeCoreTests.PrimeNativeDecoderTrajectoryDesignReviewedMainTimeoutObservationTests/testFrozenV1CanonicalCodableRecursiveMutationAndAuthorityCeiling|PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsAuthorityTests/testFrozenV1CanonicalCodableExhaustiveMutationAndCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsExecutionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeReviewedMainPrivateDependencyTLSFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeNativeDecoderMetalCurrentDecoderIdentityAssertionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeNativeDecoderMetalCurrentDecoderIdentityAssertionRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapRepairExecutionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapPredecessorLogClassifierRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapFreshMetallibCrossBindingExecutionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapFreshMetallibEvidenceSurfaceRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapFreshMetallibEvidenceSurfaceRepairExecutionObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndSuccessCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeAuthorityCanonicalBindingRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeValidationInventoryOrderRepairAuthorityTests/testFrozenV1CanonicalCodableRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeExecutionObservationTests/testFrozenV1CanonicalCodableRecursiveMutationAndSuccessCeiling|PrimeCoreTests.PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionPackageResolvedScopeRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionExecutionObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndSuccessCeiling|PrimeCoreTests.PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayExactMainSwiftNumericsResolutionRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayExecutionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayReplacementExecutionAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeNativeDecoderStage5RepeatedTrajectoryReplacementCurrentDecoderIdentityObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndIdentityCeiling|PrimeCoreTests.PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayReplacementExecutionObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndSplitOutcomeCeiling|PrimeCoreTests.PrimeNativeDecoderNative300MResourceOnlyOneStepProbeAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeNativeDecoderNative300MResourceOnlyOneStepProbeExecutionObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndSuccessCeiling|PrimeCoreTests.PrimeNativeDecoderBSpecificNative300MResourceWitnessAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeNativeDecoderBSpecificNative300MResourceWitnessExecutionObservationTests/testBSpecificNative300MResourceWitnessPASSExecutionObservationIsExactAndRejectsEveryRecursiveMutation|PrimeCoreTests.PrimeNativeDecoderNative300MTrajectoryCheckpointExecutionAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeNativeDecoderBSpecificNative300MTrajectoryCheckpointExecutionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeSecureChildProcessEvidenceDesignAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeSecureChildProcessEvidenceImplementationAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeNativeGenerationContractSourceContractTests|PrimeNativeNeuralGateContractSourceContractTests|PrimeNativeResolvedContractAdapterSourceContractTests|PrimeSwiftSourceProvenanceTests/testLiveRepositoryMatchesEmbeddedSourceIdentity' \\" \
+        "            --filter 'PrimeCoreTests.PrimeSecureChildProcessEvidenceClosedFixtureCanaryAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeSecureChildProcessEvidenceTests|PrimeNativeNeuralGateMLXIsolationSourceContractTests|PrimeNativeCorpusReplaySourceContractTests|PrimeCoreTests.PrimeNativeDecoderTrajectoryExactResumeDesignAuthorityTests/testFrozenV1CanonicalCodableMutationAndSourceBoundary|PrimeCoreTests.PrimeNativeDecoderTrajectoryDesignReviewedMainTimeoutObservationTests/testFrozenV1CanonicalCodableRecursiveMutationAndAuthorityCeiling|PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsAuthorityTests/testFrozenV1CanonicalCodableExhaustiveMutationAndCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsExecutionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeReviewedMainPrivateDependencyTLSFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeNativeDecoderMetalCurrentDecoderIdentityAssertionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeNativeDecoderMetalCurrentDecoderIdentityAssertionRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapRepairExecutionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapPredecessorLogClassifierRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapFreshMetallibCrossBindingExecutionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapFreshMetallibEvidenceSurfaceRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapFreshMetallibEvidenceSurfaceRepairExecutionObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndSuccessCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeAuthorityCanonicalBindingRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeValidationInventoryOrderRepairAuthorityTests/testFrozenV1CanonicalCodableRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeExecutionObservationTests/testFrozenV1CanonicalCodableRecursiveMutationAndSuccessCeiling|PrimeCoreTests.PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionPackageResolvedScopeRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionExecutionObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndSuccessCeiling|PrimeCoreTests.PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayExactMainSwiftNumericsResolutionRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayExecutionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayReplacementExecutionAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeNativeDecoderStage5RepeatedTrajectoryReplacementCurrentDecoderIdentityObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndIdentityCeiling|PrimeCoreTests.PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayReplacementExecutionObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndSplitOutcomeCeiling|PrimeCoreTests.PrimeNativeDecoderNative300MResourceOnlyOneStepProbeAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeNativeDecoderNative300MResourceOnlyOneStepProbeExecutionObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndSuccessCeiling|PrimeCoreTests.PrimeNativeDecoderBSpecificNative300MResourceWitnessAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeNativeDecoderBSpecificNative300MResourceWitnessExecutionObservationTests/testBSpecificNative300MResourceWitnessPASSExecutionObservationIsExactAndRejectsEveryRecursiveMutation|PrimeCoreTests.PrimeNativeDecoderNative300MTrajectoryCheckpointExecutionAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeNativeDecoderBSpecificNative300MTrajectoryCheckpointExecutionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeSecureChildProcessEvidenceDesignAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeSecureChildProcessEvidenceImplementationAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeNativeGenerationContractSourceContractTests|PrimeNativeNeuralGateContractSourceContractTests|PrimeNativeResolvedContractAdapterSourceContractTests|PrimeSwiftSourceProvenanceTests/testLiveRepositoryMatchesEmbeddedSourceIdentity' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fc -- \
         "$secure_child_process_evidence_test_relative_path" \
@@ -2337,7 +2426,7 @@ readonly secure_child_process_evidence_implementation_authority_filter='PrimeCor
         '          grep -Fq '\''PrimeSecureChildProcessEvidenceTests'\'' "$test_log"' \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 77 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 78 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run exactly the 12 secure-child process/evidence Layer-A tests"
 [[ "$(grep -Fc -- \
@@ -3058,6 +3147,124 @@ for required_secure_child_process_evidence_layer_a_summary_value in \
         "$required_secure_child_process_evidence_layer_a_summary_value" \
         <<<"$active_root_workflow_job_block")" == "1" ]] ||
         die "workflow lost the secure-child process/evidence Layer-A summary: $required_secure_child_process_evidence_layer_a_summary_value"
+done
+for required_secure_child_process_evidence_closed_fixture_canary_authority_summary_value in \
+    'Exact-main secure-child process/evidence Layer-A implementation merge 232a17e8f58a297919366d963ee1d7bc38cdbaee, tree c2a351449824ec15bc3154158d10f28c8a8310ad' \
+    'ordered parents a4d8583fa7c59f885002ee06a07c1d5264c0c223 then 960c705028f56d5bd4522f354632f3f14c869647, PR 120' \
+    'unique push workflow run 31931241261 number 138 attempt 1 check suite 86594321030 passed with no previous attempt URL or rerun' \
+    'merge was authored and committed at 2026-08-16T06:21:51Z and its GitHub verification was valid at 2026-08-16T06:21:52Z' \
+    'run was created and started at 2026-08-16T06:21:53Z and updated at 2026-08-16T07:17:50Z with zero Actions artifacts' \
+    'Active job 95126300172 passed Latin 116 from 2026-08-16T06:21:57Z through 2026-08-16T06:26:24Z' \
+    'dependent reviewed job 95126735634 passed from 2026-08-16T06:26:27Z through 2026-08-16T07:17:49Z' \
+    'root 77 plus isolated groups 1, 1, 2, and 2 for isolated 6 and focused whole 83' \
+    'retained Metal 44, maintained runtime 1, and tokenizer 1 for live 46 and total 129 XTests, with zero failures or skips' \
+    'focused step ran from 2026-08-16T06:26:43Z through 2026-08-16T06:57:03Z' \
+    'retained live sequence ran from 2026-08-16T06:57:03Z through 2026-08-16T07:17:40Z' \
+    'All 12 Layer-A evidence tests started and passed once' \
+    'Stage-7, closed-canary, secure-child fixture and capture, new lease-acquisition, Python-interpreter, and new C++ mechanics counts were zero' \
+    'dependency-free pure exact-five closed fixture-canary authority changes only the active-root gate, hosted workflow, embedded provenance, one new PrimeCore authority source, and its sole exhaustive root test' \
+    'active Latin 116, root 78, isolated 6, focused whole 84, retained live 46, total 130 XTests, and 507 embedded provenance records' \
+    'preserving the exact depth-two checkout and two-job topology' \
+    'existing byte-frozen nine-mode integration, exactly one future adapter invocation, ten future actual child captures, one concurrent one-shot race, and executable-replacement rejection' \
+    'pure authority invokes no child, fixture, capture, lease, MLX, Metal, Native-300M, Python, new C++, watchdog, launcher, or hosted diagnostic mechanics' \
+    'emits, persists, uploads, or retains no process evidence or artifact' \
+    'Only after this authority closes green may one separately reviewed exact-three exact-main mechanics opportunity' \
+    'modifying only the active-root gate and workflow while adding one launcher, with embedded provenance byte-identical at 507 records' \
+    'future final launcher step is literal, has no continue-on-error, and admits only GitHub run attempt 1 under the exact push/main repository, ref, SHA, reviewed-job, and clean-checkout bindings' \
+    'any later attempt refuses before the adapter, requires append-only observation, and retires the opportunity' \
+    'Workflow concurrency retains cancel-in-progress false' \
+    'exact-three commit must have the future signed exact-main closure of this authority as its direct parent and prove only the frozen exact-three delta' \
+    'any later distinct push or non-exact-three tree fails in active-root before the reviewed job' \
+    'produces Actions metadata only with no outer launcher record and zero adapter calls' \
+    'retires the opportunity without retry, and is never passed through to the launcher' \
+    'checkout, toolchain, dependency-fetch, focused-test, or retained-live failure before that literal final step means the reviewed launcher never starts' \
+    'leaves only Actions metadata, no outer launcher record, and zero adapter calls' \
+    'permits no automatic rerun' \
+    'Both boundaries are launcher_not_reached' \
+    'Actions metadata and logs are the only observation, outer launcher record count is zero' \
+    'adapter terminal state, containment, and capture cleanup remain unknown' \
+    'opportunity retires without rerun' \
+    'distinct from a launcher-controlled not_attempted record and from ambiguous abrupt host loss' \
+    'Immediate append-only observation plus retirement is the only next authorized repository change' \
+    'exclusively creates the reviewed-job wall-clock epoch as its first workflow-controlled user step before toolchain setup in the fixed $RUNNER_TEMP/prime-secure-child-process-evidence-closed-fixture-canary-reviewed-job-epoch leaf' \
+    'non-symlink regular mode-0400, link-count-one, runner-owned file containing a positive epoch and treated as read-only by policy' \
+    'Runner allocation and initialization precede it' \
+    'neither the literal earliest job action nor a GitHub job-start timestamp' \
+    'mode 0400 does not establish kernel immutability for the same UID' \
+    'launcher binds its descriptor identity, metadata, and hash, then immediately before invocation revalidates them unchanged and the epoch nonfuture' \
+    'wall-clock evidence, not continuous-through-sleep time' \
+    'same reviewed job, that mechanics step must reuse the already validated MLX bare repository and Swift Numerics cache through exact file-URL rewrites, protocol.file.allow, force-resolved versions, and private build/configuration directories' \
+    'performs no network fetch or resolution, swift run or test, eval, or arbitrary shell execution' \
+    'Immediately before the build, it must revalidate fixed RUNNER_TEMP mirror paths as non-symlink physical bare repositories with absolute git directories and sole exact origins' \
+    'MLX at d37885a278f1c37484a94d0f401a418735e66519 matching the Prime pin' \
+    'Swift Numerics at 0c0290ff6b24942dadb83a929ffaaa1481df04a2 matching peeled tag 1.1.1' \
+    'Release build is limited to the exact fixture and integration products, resolves their binary paths boundedly' \
+    'exactly one direct integration-executable call with one explicit pinned-fixture argument, process argc 2 including argv0' \
+    'Only that future exact-three successor raises the reviewed-job timeout from the current 60 minutes to 75 minutes' \
+    '4500-second job ceiling, 4200-second pre-invocation cutoff, and 300-second remaining job reserve—not a guaranteed watchdog deadline' \
+    'run 138 used 3082 seconds and the Release validation build remains unmeasured' \
+    'only 100-second quantity is the authorized capture and deadline-cleanup budget of 82 plus two times 9 seconds' \
+    'preparation, filesystem, hashing, and readiness remain outside it' \
+    'Admission and pre-command refusals remain separately classified as INVOCATION_ADMISSION_REFUSED, EPOCH_REFUSED, PREINVOCATION_CUTOFF, PLATFORM_REFUSED, MIRROR_REFUSED, SWIFTPM_ROOT_REFUSED, ADAPTER_IDENTITY_REFUSED, BUILD_REFUSED, PIN_MISMATCH, or CAPTURE_SETUP_REFUSED, with no hidden aggregate conjunct' \
+    'future launcher uses a private mode-0700 root and capped regular capture files, forwards no raw stdout or stderr' \
+    'only after launcher-controlled refusal or synchronous foreground shell-command return plus capture cleanup attempts an allowlisted sanitized operational record' \
+    'adapter_command_state not_attempted or shell_command_returned, adapter_execution_observation observed_true, observed_false, or unavailable' \
+    'nullable shell_wait_status from 0 through 255, adapter_command_attempt_one_shot_consumed, and per-stream byte count, SHA-256, and capture_cap_reached' \
+    'shell status alone establishes neither raw child execution nor terminal kind' \
+    'capture-cap equality is a failure without proving overflow or truncation' \
+    'unknown raw error maps to UNCLASSIFIED' \
+    'outer cleanup is bounded to exactly two named capture-file unlinks and one exact-root rmdir, with zero recursive, wildcard, or scan deletion' \
+    'When projection succeeds, the exact one hosted line uses prefix prime-secure-child closed-fixture-canary observation: followed by canonical JSON schema prime_secure_child_process_evidence_closed_fixture_canary_outer_observation_v1' \
+    'exactly 27 fields including nullable adapter and fixture executable byte counts and SHA-256 values' \
+    'total hosted line is at most 4096 bytes, its canonical JSON payload is at most 4041 bytes' \
+    'zero raw child-output or error fields' \
+    'Cancellation or host timeout yields Actions metadata only, permits the hosted record to be absent, and establishes no containment claim' \
+    'record is distinct from the internal Layer-A diagnostic, scientific or durable evidence, and any retained artifact; artifact count remains zero' \
+    'launcher-controlled terminal setup, build, executable-hash, or refusal outcome before the foreground adapter command consumes no adapter command attempt, records execution observed false' \
+    'retires that exact mechanics opportunity without retry, rerun, or replacement absent new authority' \
+    'opportunity is consumed immediately before the sole shell command attempt' \
+    'every post-command-attempt outcome likewise requires append-only observation and retirement' \
+    'frozen future exact-three offline command topology binds package Tests/PrimeValidationWorkflow at physical $GITHUB_WORKSPACE/ergentics-prime/Tests/PrimeValidationWorkflow' \
+    '$RUNNER_TEMP/prime-secure-child-process-evidence-closed-fixture-canary-scratch' \
+    '$RUNNER_TEMP/prime-secure-child-process-evidence-closed-fixture-canary-cache' \
+    '$RUNNER_TEMP/prime-secure-child-process-evidence-closed-fixture-canary-config' \
+    '$RUNNER_TEMP/prime-secure-child-process-evidence-closed-fixture-canary-security, with TMPDIR exactly $RUNNER_TEMP' \
+    'Every Swift command carries the exact two file-URL insteadOf mappings, protocol.file.allow=always, --package-path, --configuration release, all four private-root flags, --disable-dependency-cache, --manifest-cache local, --disable-netrc, --disable-keychain, and --force-resolved-versions, while retaining the SwiftPM sandbox' \
+    'exact command order is swift build --product PrimeValidationWorkflowFixtureChild, swift build --product PrimeValidationWorkflowSecureChildIntegration, then exactly one swift build --show-bin-path with identical isolation flags' \
+    'swift run, swift test, and build-tests counts are zero' \
+    'Show-bin output is exactly one canonical absolute physical path confined under the fixed scratch root' \
+    'exact PrimeValidationWorkflowFixtureChild and PrimeValidationWorkflowSecureChildIntegration leaves are regular, non-symlink, link-count-one, and executable' \
+    'both metadata and hashes are bound and revalidated immediately before the direct call' \
+    'fixture must match 89632 bytes and eae9573027fe736cab0d4aa319ae43f22231eaef9c55af91d73fbe3d87bc9ebd' \
+    'Admission binds Ergentics/ergentics-prime, push, refs/heads/main, trusted-main-compile, arm64, macOS 26, attempt 1, lowercase 40-hex GITHUB_SHA equal to EXACT_REVISION and HEAD, and a checkout clean including untracked files' \
+    'literal no-continue-on-error launcher remains the final reviewed-job step after retained live 46' \
+    'deferred future exact-three admission must additionally bind this pure authority exact-main closure revision and tree' \
+    'unique green push workflow run ID, run number, check-suite ID, attempt 1, null previous-attempt URL, rerun count zero' \
+    'exact active-root and reviewed-job IDs and success conclusions, exact test counts, and zero Actions artifacts' \
+    'values remain unset until this authority closes on exact main' \
+    'exact absent outer-record taxonomy is launcher_not_reached, launcher_reached_record_absent' \
+    'ordinary shell, hash, stat, JSON, or trap failure despite best-effort UNCLASSIFIED projection' \
+    'abrupt_host_or_runner_loss' \
+    'absent record alone establishes no adapter execution or terminal state, containment, or capture cleanup' \
+    'For launcher_not_reached only, Actions job and step metadata independently prove adapter command-attempt count zero and adapter not invoked' \
+    'launcher_reached_record_absent and abrupt_host_or_runner_loss leave execution unknown' \
+    'Every absent-record state is observed only through Actions metadata and logs' \
+    'retires the mechanics opportunity without retry' \
+    'future outer capture applies Bash ulimit -f 128 in 1024-byte units for an exact 131072-byte per-stream cap' \
+    'capture_cap_reached flag is true exactly when the captured byte count equals the cap' \
+    'causes CAPTURE_CAP_REACHED failure' \
+    'does not establish attempted excess bytes, overflow, or truncation' \
+    'Shell status 1 or 2 plus the exact single-line adapter FAIL envelope maps to ADAPTER_REPORTED_FAILURE' \
+    'status 70 plus the exact single-line Layer-A fail-stop envelope maps to LAYER_A_FAIL_STOP_REPORTED' \
+    'both standard output and standard error empty maps to ADAPTER_NO_REPORT' \
+    'other nonzero report maps to ADAPTER_UNEXPECTED_REPORT' \
+    'status zero with the wrong exact output maps to ADAPTER_OUTPUT_CONTRACT_MISMATCH' \
+    'Classification uses fixed byte operations and never projects raw text' \
+    'before lease generalization, durability, composition, or any Native-300M adapter review'; do
+    [[ "$(grep -Fc -- \
+        "$required_secure_child_process_evidence_closed_fixture_canary_authority_summary_value" \
+        <<<"$active_root_workflow_job_block")" == "1" ]] ||
+        die "workflow lost the secure-child closed-fixture canary pure-authority summary: $required_secure_child_process_evidence_closed_fixture_canary_authority_summary_value"
 done
 ! grep -Eq -- \
     '(^|[^[:alnum:]_])(python([0-9]+([.][0-9]+)*)?|c\+\+|clang\+\+|g\+\+)([^[:alnum:]_+]|$)' \
@@ -4280,6 +4487,8 @@ readonly secure_child_process_evidence_design_authority_source="$prime_root/$sec
 readonly secure_child_process_evidence_design_authority_test="$prime_root/$secure_child_process_evidence_design_authority_test_relative_path"
 readonly secure_child_process_evidence_implementation_authority_source="$prime_root/$secure_child_process_evidence_implementation_authority_source_relative_path"
 readonly secure_child_process_evidence_implementation_authority_test="$prime_root/$secure_child_process_evidence_implementation_authority_test_relative_path"
+readonly secure_child_process_evidence_closed_fixture_canary_authority_source="$prime_root/$secure_child_process_evidence_closed_fixture_canary_authority_source_relative_path"
+readonly secure_child_process_evidence_closed_fixture_canary_authority_test="$prime_root/$secure_child_process_evidence_closed_fixture_canary_authority_test_relative_path"
 readonly secure_child_process_plan="$prime_root/$secure_child_process_plan_relative_path"
 readonly secure_child_process_evidence="$prime_root/$secure_child_process_evidence_relative_path"
 readonly trusted_secure_child_process_capture="$prime_root/$trusted_secure_child_process_capture_relative_path"
@@ -4557,6 +4766,11 @@ bash -n "$stage5_replacement_launcher" ||
     && -f "$secure_child_process_evidence_implementation_authority_test" \
     && ! -L "$secure_child_process_evidence_implementation_authority_test" ]] ||
     die "secure-child process/evidence implementation-authority pair is missing or linked"
+[[ -f "$secure_child_process_evidence_closed_fixture_canary_authority_source" \
+    && ! -L "$secure_child_process_evidence_closed_fixture_canary_authority_source" \
+    && -f "$secure_child_process_evidence_closed_fixture_canary_authority_test" \
+    && ! -L "$secure_child_process_evidence_closed_fixture_canary_authority_test" ]] ||
+    die "secure-child process/evidence closed fixture-canary authority pair is missing or linked"
 for secure_child_process_evidence_layer_a_file in \
     "$secure_child_process_plan" \
     "$secure_child_process_evidence" \
@@ -5507,6 +5721,8 @@ swiftc -frontend -parse "$secure_child_process_evidence_design_authority_source"
 swiftc -frontend -parse "$secure_child_process_evidence_design_authority_test"
 swiftc -frontend -parse "$secure_child_process_evidence_implementation_authority_source"
 swiftc -frontend -parse "$secure_child_process_evidence_implementation_authority_test"
+swiftc -frontend -parse "$secure_child_process_evidence_closed_fixture_canary_authority_source"
+swiftc -frontend -parse "$secure_child_process_evidence_closed_fixture_canary_authority_test"
 swiftc -frontend -parse "$secure_child_process_plan"
 swiftc -frontend -parse "$secure_child_process_evidence"
 swiftc -frontend -parse "$trusted_secure_child_process_capture"
@@ -10511,10 +10727,20 @@ for required_stage4_execution_observation_value in \
 done
 [[ "$(wc -l < "$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift" | \
         awk '{print $1}')" == "13" \
+    && "$(git -C "$prime_root" hash-object -- \
+        'Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift')" \
+        == "da069b70bead2f5799f29c4294a09c81d4146e06" \
+    && "$(stat -f %z \
+        "$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift")" \
+        == "546" \
+    && "$(shasum -a 256 \
+        "$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift" | \
+        awk '{print $1}')" \
+        == "9b4c4878b7b22493da4715b31b28d7f1f98dff75f89e9053c9415b1c9ffff149" \
     && "$(grep -Fxc -- \
-        '        "f9362d044dcac6120950be43d7e1a22094b38795dff456f0e81e698a91614b49"' \
+        '        "aeb974cc4ee85eb6c462424a749a352b28c1ff1e65ccbf7a43c652a2f7bd554d"' \
         "$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift")" == "1" ]] ||
-    die "secure child-process evidence Layer-A embedded provenance identity changed"
+    die "secure-child closed-fixture canary authority embedded provenance identity changed"
 readonly expected_embedded_source_identity_sha256="$(awk -F'"' \
     '/^[[:space:]]+"[0-9a-f]{64}"$/ { print $2 }' \
     "$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift")"
@@ -10556,7 +10782,7 @@ while IFS= read -r relative_path; do
         '{relative_path: $relative_path, sha256: $sha256, byte_count: $byte_count}'
 done | jq -jcsS '.' | shasum -a 256 | awk '{print $1}')"
 [[ "$expected_embedded_source_identity_sha256" =~ ^[0-9a-f]{64}$ \
-    && "$recomputed_embedded_source_identity_record_count" == "505" \
+    && "$recomputed_embedded_source_identity_record_count" == "507" \
     && "$recomputed_embedded_source_identity_sha256" \
         == "$expected_embedded_source_identity_sha256" ]] ||
     die "embedded Prime source provenance does not recompute exactly"
@@ -15697,6 +15923,727 @@ readonly secure_child_process_evidence_implementation_authority_pair_executable_
     grep -Eq -- \
         'name="(Process|FileManager|FileHandle|URLSession|PrimeMetalDeviceLease|posix_spawn|waitpid|kill|flock|execve|runSupervisor|trajectoryRunWorkerProcess|trajectoryRunReleaseVerifierProcess|acquire)"|field="(runSupervisor|trajectoryRunWorkerProcess|trajectoryRunReleaseVerifierProcess|acquire)"' ||
     die "secure-child process/evidence implementation-authority pair gained executable process, lease, launcher, worker, verifier, or filesystem capability"
+
+for secure_child_process_evidence_closed_fixture_canary_authority_file in \
+    "$secure_child_process_evidence_closed_fixture_canary_authority_source" \
+    "$secure_child_process_evidence_closed_fixture_canary_authority_test"; do
+    [[ -f "$secure_child_process_evidence_closed_fixture_canary_authority_file" \
+        && ! -L "$secure_child_process_evidence_closed_fixture_canary_authority_file" \
+        && "$(stat -f %l \
+            "$secure_child_process_evidence_closed_fixture_canary_authority_file")" \
+            == "1" \
+        && "$(git -C "$prime_root" ls-files -s -- \
+            "${secure_child_process_evidence_closed_fixture_canary_authority_file#"$prime_root/"}" | \
+            awk '{print $1}')" == "100644" ]] ||
+        die "secure-child closed-fixture canary pure-authority pair is missing, linked, multiply linked, or has the wrong mode: $secure_child_process_evidence_closed_fixture_canary_authority_file"
+done
+assert_secure_child_process_evidence_closed_fixture_canary_authority_identity() {
+    local relative_path="$1" expected_blob="$2" expected_bytes="$3"
+    local expected_lf_count="$4" expected_sha256="$5"
+    local absolute_path="$prime_root/$relative_path"
+    [[ -f "$absolute_path" && ! -L "$absolute_path" \
+        && "$(stat -f %l "$absolute_path")" == "1" \
+        && "$(git -C "$prime_root" ls-files -s -- "$relative_path" | \
+            awk '{print $1}')" == "100644" \
+        && "$(git -C "$prime_root" hash-object -- "$relative_path")" \
+            == "$expected_blob" \
+        && "$(stat -f %z "$absolute_path")" == "$expected_bytes" \
+        && "$(wc -l < "$absolute_path" | awk '{print $1}')" \
+            == "$expected_lf_count" \
+        && "$(shasum -a 256 "$absolute_path" | awk '{print $1}')" \
+            == "$expected_sha256" ]] ||
+        die "secure-child closed-fixture canary pure-authority identity changed: $relative_path"
+    ! LC_ALL=C grep -q $'\r' "$absolute_path" ||
+        die "secure-child closed-fixture canary pure-authority identity gained a carriage return: $relative_path"
+}
+assert_secure_child_process_evidence_closed_fixture_canary_authority_identity \
+    "$secure_child_process_evidence_closed_fixture_canary_authority_source_relative_path" \
+    '75eb75e5fd50f5ca62690d8a32ac666255437b34' '163973' '3006' \
+    'ab0348a46627d69dc2ab5280cfccfad8cc855f97c8c4100d912f4a79e1f5053e'
+assert_secure_child_process_evidence_closed_fixture_canary_authority_identity \
+    "$secure_child_process_evidence_closed_fixture_canary_authority_test_relative_path" \
+    '4dded5edd6d43802e3e7341ee5b4b6d2cce531b4' '74789' '1538' \
+    '73a6d64a509b2fa47fae6df593c0d10e7ab3cf44fb2921d585d2f8ffca838682'
+[[ "$(awk '/^import / { print }' \
+        "$secure_child_process_evidence_closed_fixture_canary_authority_source")" \
+        == 'import Foundation' \
+    && "$(awk '/^import / || /^@testable import / { print }' \
+        "$secure_child_process_evidence_closed_fixture_canary_authority_test")" \
+        == $'import CoreFoundation\nimport Foundation\nimport XCTest\n@testable import PrimeCore' \
+    && "$(grep -Ec -- '^[[:space:]]+func test' \
+        "$secure_child_process_evidence_closed_fixture_canary_authority_test")" \
+        == "1" \
+    && "$(grep -Fc -- \
+        'PrimeSecureChildProcessEvidenceClosedFixtureCanaryAuthorityTests:' \
+        "$secure_child_process_evidence_closed_fixture_canary_authority_test")" \
+        == "1" \
+    && "$(grep -Fc -- \
+        'func testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling()' \
+        "$secure_child_process_evidence_closed_fixture_canary_authority_test")" \
+        == "1" ]] ||
+    die "secure-child closed-fixture canary pure-authority imports or sole-test surface changed"
+[[ "$(grep -Fxc -- '    public static let canonicalByteCount = 48_364' \
+        "$secure_child_process_evidence_closed_fixture_canary_authority_source")" \
+        == "1" \
+    && "$(grep -Fxc -- '    public static let canonicalSHA256 =' \
+        "$secure_child_process_evidence_closed_fixture_canary_authority_source")" \
+        == "1" \
+    && "$(grep -Fxc -- \
+        '        "29cd7cb18001da845021bc60f8f250a920f927cdc302e5d5071e95f049c3351f"' \
+        "$secure_child_process_evidence_closed_fixture_canary_authority_source")" \
+        == "1" ]] ||
+    die "secure-child closed-fixture canary pure-authority canonical identity changed"
+! grep -Fq -- 'CANONICAL_SHA256_PLACEHOLDER' \
+    "$secure_child_process_evidence_closed_fixture_canary_authority_source" ||
+    die "secure-child closed-fixture canary pure-authority source retains a canonical placeholder"
+[[ "$(grep -Fxc -- \
+        '        if Authority.canonicalSHA256 == "CANONICAL_SHA256_PLACEHOLDER" {' \
+        "$secure_child_process_evidence_closed_fixture_canary_authority_test")" \
+        == "1" ]] ||
+    die "secure-child closed-fixture canary pure-authority test lost its derivation guard"
+for required_secure_child_process_evidence_closed_fixture_canary_authority_value in \
+    'PrimeSecureChildProcessEvidenceClosedFixtureCanaryAuthorityV1:' \
+    'PrimeSecureChildProcessEvidenceClosedFixtureCanaryAuthorityError' \
+    'public static let frozenV1' \
+    'public static let canonicalByteCount = 48_364' \
+    'public static let canonicalSHA256' \
+    '"29cd7cb18001da845021bc60f8f250a920f927cdc302e5d5071e95f049c3351f"' \
+    'public static func decodeCanonical(_ data: Data) throws -> Self' \
+    'public func validateExactV1() throws' \
+    'Codable' \
+    'Sendable' \
+    '"prime_secure_child_process_evidence_closed_fixture_canary_authority_schema_v1"' \
+    '"prime_secure_child_process_evidence_closed_fixture_canary_authority_v1"' \
+    '"pure_exact5_authority_for_one_later_closed_fixture_canary_after_green_layer_a"' \
+    '"prime_secure_child_process_evidence_implementation_authority_v1"' \
+    'canonicalByteCount: 18_370' \
+    '"43c29ff6e225219bfd13b642bd9ba2121aae9d2591bd1d1af3cf4d3bb41f08db"' \
+    'liveCanaryAuthorizedByPredecessor: false' \
+    'separateCanaryAuthorityRequired: true' \
+    '"232a17e8f58a297919366d963ee1d7bc38cdbaee"' \
+    '"c2a351449824ec15bc3154158d10f28c8a8310ad"' \
+    '"a4d8583fa7c59f885002ee06a07c1d5264c0c223"' \
+    '"960c705028f56d5bd4522f354632f3f14c869647"' \
+    'pullRequestNumber: 120' \
+    'signedMergeVerified: true' \
+    'mergeTimestampUTC: "2026-08-16T06:21:51Z"' \
+    'signatureVerifiedAtUTC: "2026-08-16T06:21:52Z"' \
+    'workflowRunID: 31_931_241_261' \
+    'workflowRunNumber: 138' \
+    'workflowAttempt: 1' \
+    'checkSuiteID: 86_594_321_030' \
+    'previousAttemptURLIsNull: true' \
+    'workflowRerunCount: 0' \
+    'workflowCreatedAtUTC: "2026-08-16T06:21:53Z"' \
+    'workflowStartedAtUTC: "2026-08-16T06:21:53Z"' \
+    'workflowUpdatedAtUTC: "2026-08-16T07:17:50Z"' \
+    'activeJobID: 95_126_300_172' \
+    'activeJobStartedAtUTC: "2026-08-16T06:21:57Z"' \
+    'activeJobCompletedAtUTC: "2026-08-16T06:26:24Z"' \
+    'reviewedJobID: 95_126_735_634' \
+    'reviewedJobStartedAtUTC: "2026-08-16T06:26:27Z"' \
+    'reviewedJobCompletedAtUTC: "2026-08-16T07:17:49Z"' \
+    'focusedTestsStartedAtUTC: "2026-08-16T06:26:43Z"' \
+    'focusedTestsCompletedAtUTC: "2026-08-16T06:57:03Z"' \
+    'retainedLiveTestsStartedAtUTC: "2026-08-16T06:57:03Z"' \
+    'retainedLiveTestsCompletedAtUTC: "2026-08-16T07:17:40Z"' \
+    'rootTestCount: 77' \
+    'focusedWholeTestCount: 83' \
+    'retainedLiveTestCount: 46' \
+    'aggregateTestCount: 129' \
+    'layerATestMethodStartCount: 12' \
+    'layerATestMethodPassCount: 12' \
+    '"f9362d044dcac6120950be43d7e1a22094b38795dff456f0e81e698a91614b49"' \
+    'exactPathCount: 5' \
+    '"e8dd30060ea370f01e135f8c2e379ab2d9bb6138dca9d928c395cdd9f967f291"' \
+    'rootTestCount: 78' \
+    'focusedWholeTestCount: 84' \
+    'aggregateTestCount: 130' \
+    'embeddedProvenanceRecordCount: 507' \
+    'authorityTestMethodCount: 1' \
+    'exactIdentityCount: 11' \
+    'exactInternalTypeCount: 7' \
+    'exactInjectedTestMethodCount: 12' \
+    'publicFixtureModeCount: 9' \
+    'diagnosticMaximumCanonicalByteCount: 4_096' \
+    'exactModeCount: 9' \
+    'dynamicByteCountSentinel: -1' \
+    'expectedLauncherInvocationCount: 1' \
+    'expectedIntegrationAdapterInvocationCount: 1' \
+    'expectedCapabilityPreparationCount: 11' \
+    'expectedCapabilityExecuteCallCount: 13' \
+    'expectedSuccessfulTopLevelCaptureCount: 10' \
+    'expectedTopLevelFixtureProcessCount: 10' \
+    'expectedPhysicalFixtureProcessCount: 11' \
+    'expectedInternalDescendantProcessCount: 1' \
+    'expectedRejectedExecuteCallCount: 3' \
+    'expectedPreSpawnReplacementRejectionCount: 1' \
+    'expectedSequentialAlreadyConsumedRejectionCount: 1' \
+    'expectedConcurrentWinnerCount: 1' \
+    'expectedConcurrentAlreadyConsumedRejectionCount: 1' \
+    '"933bf087c8b15408aef9aaca1447dfbc07c9685ca0fda451d9db7fda4c1198af"' \
+    'exactPathCount: 3' \
+    'modifiedExistingPathCount: 2' \
+    'addedLauncherPathCount: 1' \
+    'authorizedOnlyAfterThisAuthorityExactMainGreen: true' \
+    'currentAuthorityExecutesMechanics: false' \
+    'mainPushOnly: true' \
+    'existingReviewedJobFinalForegroundStep: true' \
+    'newHostedJobAuthorized: false' \
+    'workflowName: "Prime active-root quarantine"' \
+    'reviewedJobID: "trusted-main-compile"' \
+    'reviewedJobNeedsActiveRootSuccess: true' \
+    'requiredGitHubEventName: "push"' \
+    'requiredGitHubRef: "refs/heads/main"' \
+    'requiredGitHubRepository: "Ergentics/ergentics-prime"' \
+    'requiredGitHubRunAttempt: 1' \
+    'githubSHAEqualsExactRevisionAndCheckoutHEADRequired: true' \
+    'exactRevisionMustBeLowercaseGitSHA: true' \
+    'mechanicsRevisionMustBeDirectSuccessorOfAuthorityClosure:' \
+    'mechanicsFirstParentMustEqualAuthorityClosureRevision: true' \
+    'mechanicsFirstParentTreeMustEqualAuthorityClosureTree: true' \
+    'expectedMechanicsMergeParentCount: 2' \
+    '"unavailable_until_this_authority_exact_main_merge"' \
+    'exactThreeDeltaMustEqualOrderedSuccessorPaths: true' \
+    'gateAndLauncherRevalidateExactStatusModeMapping: true' \
+    'gateAndLauncherFreezeClosureRevisionAndTreeAfterMerge: true' \
+    'launcherRevalidatesDirectParentAndExactThreeDelta: true' \
+    'laterDistinctMainPushMustRefuseBeforeAdapterInvocation: true' \
+    'laterDistinctMainPushAdapterInvocationAuthorized: false' \
+    'observationAndRetirementMustBeNextAuthorizedChange: true' \
+    'deferredAuthorityExactMainGreenEvidence:' \
+    '"unavailable_until_this_authority_exact_main_green_closure"' \
+    'signedAuthorityClosureRequired: true' \
+    'exactAuthorityClosureRevisionAndTreeRequired: true' \
+    'uniquePushWorkflowRunCount: 1' \
+    'exactWorkflowRunIDRequired: true' \
+    'exactWorkflowRunNumberRequired: true' \
+    'exactCheckSuiteIDRequired: true' \
+    'requiredWorkflowAttempt: 1' \
+    'previousAttemptURLMustBeNull: true' \
+    'requiredWorkflowConclusion: "success"' \
+    'exactActiveJobIDRequired: true' \
+    'requiredActiveJobConclusion: "success"' \
+    'expectedActiveLatinTestCount: 116' \
+    'expectedActiveLatinFailureCount: 0' \
+    'exactReviewedJobIDRequired: true' \
+    'requiredReviewedJobConclusion: "success"' \
+    'expectedReviewedFailureCount: 0' \
+    'expectedReviewedSkipCount: 0' \
+    'expectedActionsArtifactCount: 0' \
+    'gateAndWorkflowFreezeExactValuesBeforeMechanics: true' \
+    'launcherClosureEvidenceAPIInvocationCount: 0' \
+    'launcherClosureEvidenceNetworkInvocationCount: 0' \
+    'cleanDetachedCheckoutRequiredImmediatelyBeforeLauncher: true' \
+    'reviewedCheckoutFetchDepth: 2' \
+    'concurrencyCancelInProgress: false' \
+    'launcherMustBeLiteralFinalWorkflowStep: true' \
+    'launcherContinueOnError: false' \
+    'invocationAdmissionMismatchResultCode:' \
+    '"INVOCATION_ADMISSION_REFUSED"' \
+    'invocationAdmissionMismatchEstablishesAdapterInvocation: false' \
+    'invocationAdmissionMismatchRetiresMechanicsOpportunity: true' \
+    'validationPackagePath: "Tests/PrimeValidationWorkflow"' \
+    '"$GITHUB_WORKSPACE/ergentics-prime/Tests/PrimeValidationWorkflow"' \
+    'validationPackageMustBePhysicalDirectory: true' \
+    'validationPackageSymbolicLinkAuthorized: false' \
+    'orderedSwiftBuildProducts: [' \
+    'expectedSwiftBuildProductCommandCount: 2' \
+    'expectedSwiftShowBinPathCommandCount: 1' \
+    'expectedSwiftRunCommandCount: 0' \
+    'expectedSwiftTestCommandCount: 0' \
+    'expectedSwiftBuildTestsCommandCount: 0' \
+    '"release_build_PrimeValidationWorkflowFixtureChild"' \
+    '"release_build_PrimeValidationWorkflowSecureChildIntegration"' \
+    '"release_show_bin_path_without_product_build"' \
+    'exactSwiftPMCommandCount: 3' \
+    '"--package-path Tests/PrimeValidationWorkflow"' \
+    '"--configuration release"' \
+    '"--disable-dependency-cache"' \
+    '"--manifest-cache local"' \
+    '"--disable-netrc"' \
+    '"--disable-keychain"' \
+    '"--force-resolved-versions"' \
+    'alreadyValidatedLocalBareMirrorsRequired: true' \
+    'expectedLocalBareMirrorCount: 2' \
+    'sameReviewedJobLocalBareMirrorsRequired: true' \
+    'localBareMirrorsRevalidatedImmediatelyBeforeMappingsAndBuilds:' \
+    'runnerTempMustBeCanonicalAbsolutePhysicalDirectory: true' \
+    '"$RUNNER_TEMP/ergentics-mlx-swift.git"' \
+    '"file://$RUNNER_TEMP/ergentics-mlx-swift.git/"' \
+    '"https://github.com/Ergentics/ergentics-mlx-swift"' \
+    '"d37885a278f1c37484a94d0f401a418735e66519"' \
+    '"refs/heads/prime-pinned^{commit}"' \
+    '"$RUNNER_TEMP/prime-active-root-build/repositories/swift-numerics-d936ec6c"' \
+    '"file://$RUNNER_TEMP/prime-active-root-build/repositories/swift-numerics-d936ec6c/"' \
+    '"https://github.com/apple/swift-numerics"' \
+    '"0c0290ff6b24942dadb83a929ffaaa1481df04a2"' \
+    '"refs/tags/1.1.1^{commit}"' \
+    'physicalPathMustEqualExpandedRunnerTempPath: true' \
+    'absoluteGitDirectoryMustEqualPhysicalPath: true' \
+    'bareRepositoryRequired: true' \
+    'soleRemoteName: "origin"' \
+    'exactOriginURLValueCount: 1' \
+    'revisionObjectType: "commit"' \
+    'typedCommitMustResolveToExactCommit: true' \
+    'pinnedRefMustResolveToExactCommit: true' \
+    'exactFileURLInsteadOfMappingCount: 2' \
+    'protocolFileAllowAlwaysRequired: true' \
+    'forceResolvedVersionsRequired: true' \
+    'mirrorMismatchRequiresAppendOnlyObservation: true' \
+    'mirrorMismatchRetiresMechanicsOpportunity: true' \
+    'mirrorMismatchEstablishesAdapterInvocation: false' \
+    'mirrorMismatchPermitsRetryWithoutNewAuthority: false' \
+    'freshPrivateSwiftPMRootCount: 4' \
+    'freshPrivateSwiftPMRootMode: "0700"' \
+    'freshPrivateSwiftPMRootsMustNotPreexistOrBeSymbolicLinks: true' \
+    'freshPrivateSwiftPMRootsMustBeCanonicalPhysicalDirectories: true' \
+    'disableDependencyCacheRequired: true' \
+    'manifestCacheMode: "local"' \
+    'disableNetrcRequired: true' \
+    'disableKeychainRequired: true' \
+    'disableSandboxAuthorized: false' \
+    'isolationFlagsRequiredOnEveryBuildAndShowBinPathCommand: true' \
+    'fileURLMappingsRequiredOnEveryBuildAndShowBinPathCommand: true' \
+    'swiftPMTMPDIR: "$RUNNER_TEMP"' \
+    'canonicalBinPathMustBePhysicalDescendantOfScratchPath: true' \
+    'showBinPathExactOutputLineCount: 1' \
+    'exactExpectedExecutableLeafCount: 2' \
+    'expectedExecutableLeavesMustBeRegular: true' \
+    'expectedExecutableLeafSymbolicLinksAuthorized: false' \
+    'expectedExecutableLeafLinkCount: 1' \
+    'expectedExecutableLeavesMustBeExecutable: true' \
+    'bothExecutableDescriptorMetadataAndSHA256Bound: true' \
+    'bothExecutableIdentitiesRevalidatedImmediatelyBeforeCall: true' \
+    'launcherFinalStepAfterRetainedLiveTestCount: 46' \
+    'dependencyNetworkInvocationCountAfterReviewedFetch: 0' \
+    'directAdapterArgumentCountExcludingArgumentZero: 1' \
+    'directAdapterProcessArgumentCountIncludingArgumentZero: 2' \
+    'adapterExecutableAbsolutePathRequired: true' \
+    'fixtureArgumentCanonicalAbsolutePathRequired: true' \
+    'callerControlledEnvironmentAuthorized: false' \
+    'callerControlledCommandAuthorized: false' \
+    'evalInvocationCount: 0' \
+    'arbitraryShellExecInvocationCount: 0' \
+    'fixtureExecutableBuildOutputIdentityCapturedImmediatelyBeforeInvocation:' \
+    'fixtureExecutableDescriptorNameAndInodeJoinRequired: true' \
+    'measuredBuildMustMatchExistingLayerAAcceptancePin: true' \
+    'pinMismatchRefusesBeforeOneShotConsumption: true' \
+    '"$RUNNER_TEMP/prime-secure-child-process-evidence-closed-fixture-canary-reviewed-job-epoch"' \
+    'reviewedJobEpochCreatedInFirstWorkflowUserStepBeforeToolchain:' \
+    'reviewedJobEpochRepresentsGitHubJobStartTimestamp: false' \
+    'reviewedJobEpochFileMustInitiallyNotExistOrBeSymbolicLink:' \
+    'reviewedJobEpochFileCreatedExclusiveNoClobber: true' \
+    'reviewedJobEpochFileKernelImmutableClaimed: false' \
+    'reviewedJobEpochFileReadOnlyByPolicy: true' \
+    'reviewedJobEpochFileMustBeRegular: true' \
+    'reviewedJobEpochFileSymbolicLinkAuthorized: false' \
+    'reviewedJobEpochFileMode: "0400"' \
+    'reviewedJobEpochFileLinkCount: 1' \
+    'reviewedJobEpochFileOwnerUIDAndGIDBound: true' \
+    '"canonical_positive_base10_unix_epoch_seconds_lf"' \
+    'reviewedJobEpochContentLineCount: 1' \
+    'reviewedJobEpochMustBePositive: true' \
+    'reviewedJobEpochLeadingZeroAuthorized: false' \
+    'reviewedJobEpochDescriptorIdentityBoundByLauncher: true' \
+    'reviewedJobEpochMetadataBoundByLauncher: true' \
+    'reviewedJobEpochSHA256BoundByLauncher: true' \
+    'reviewedJobEpochRevalidatedUnchangedImmediatelyBeforeOneShot:' \
+    'reviewedJobEpochMustNotBeFutureAtRevalidation: true' \
+    'preInvocationElapsedUsesWallClockEpochDifference: true' \
+    'continuousThroughSystemSleepClaimed: false' \
+    'expectedJobCeilingSeconds: 4_500' \
+    'maximumPreInvocationElapsedSeconds: 4_200' \
+    'requiredRemainingJobReserveSeconds: 300' \
+    'predecessorReviewedJobElapsedSeconds: 3_082' \
+    'predecessorRetainedLiveCompletionElapsedSeconds: 3_073' \
+    'priorJobCeilingSeconds: 3_600' \
+    'predecessorRemainingSecondsUnderPriorCeiling: 527' \
+    'priorPreInvocationCutoffSeconds: 3_300' \
+    'predecessorRemainingSecondsUnderPriorCutoff: 227' \
+    'exactLaneReleaseBuildDurationBoundObserved: false' \
+    'sameJobDebugOrCacheStateEstablishesReleaseBuildBound: false' \
+    'expectedCapturePhaseCeilingSeconds: 82' \
+    'expectedDeadlineCleanupCount: 2' \
+    'expectedPerDeadlineCleanupCeilingSeconds: 9' \
+    'expectedCaptureAndDeadlineCleanupBudgetSeconds: 100' \
+    'capabilityPreparationHashFilesystemAndReadyBarrierIncludedInBudget:' \
+    'concurrentReadyBarrierMaximumSeconds: 3' \
+    'wholeAdapterWallCeilingEstablished: false' \
+    'remainingJobReserveIsPracticalNonGuaranteedOuterEnvelope: true' \
+    'directForegroundInvocationRequired: true' \
+    'backgroundWatchdogAuthorized: false' \
+    'shellKillOrProcessScanAuthorized: false' \
+    'mechanicsOpportunityConsumedImmediatelyBeforeAdapterCommandAttempt:' \
+    'preCommandRefusalConsumesAdapterCommandAttemptOneShot: false' \
+    'preCommandRefusalEstablishesAdapterExecution: false' \
+    'preCommandRefusalRetiresMechanicsOpportunity: true' \
+    'automaticRetryAfterPreInvocationFailureAuthorized: false' \
+    'everyPostCommandAttemptOutcomeConsumesMechanicsOpportunity:' \
+    'expectedEmbeddedProvenanceRecordCountWithLauncherPresent: 507' \
+    'embeddedProvenanceBytesMustRemainIdentical: true' \
+    'privateCaptureRootMustInitiallyNotExistOrBeSymbolicLink:' \
+    'privateCaptureRootCreatedByExactPathMkdirWithoutParents:' \
+    'privateCaptureRootMode: "0700"' \
+    'privateCaptureRootMustBePhysicalDirectory: true' \
+    'privateCaptureRootSymbolicLinkAuthorized: false' \
+    'orderedCaptureStreamNames: ["standard_output", "standard_error"]' \
+    'fixedCaptureLeavesPrecreatedBeforeInvocation: true' \
+    'captureFileMode: "0600"' \
+    'captureFilesMustBeRegular: true' \
+    'captureFileSymbolicLinksAuthorized: false' \
+    'captureFileLinkCount: 1' \
+    'perStreamCaptureByteCap: 131_072' \
+    'bash1024ByteFileSizeLimitBlockCount: 128' \
+    'layerACapturedPrefixByteCap: 65_536' \
+    'outerCaptureCapDistinctFromLayerACapturedPrefixCap: true' \
+    'rawStreamBytesForwarded: false' \
+    'rawStreamBytesIncludedInSummary: false' \
+    'rawStreamBytesUploadedAsArtifact: false' \
+    '"not_attempted", "shell_command_returned"' \
+    '"observed_true", "observed_false", "unavailable"' \
+    'shellWaitStatusObservationRequiredAfterSynchronousReturn:' \
+    'shellWaitStatusAloneEstablishesAdapterExecution: false' \
+    'exactRecognizedAdapterEnvelopesMayEstablishExecution: true' \
+    'preCommandRefusalEstablishesAdapterExecutionObservedFalse:' \
+    'noReportOrUnexpectedReportEstablishesAdapterExecution: false' \
+    'nativeWaiterUsed: false' \
+    'exactExitVersusSignalClassificationEstablished: false' \
+    'shellWaitStatusType: "null_or_uint8"' \
+    'shellWaitStatusMinimum: 0' \
+    'shellWaitStatusMaximum: 255' \
+    'shellWaitStatusZeroRequiresExpectedOutputContractForPass: true' \
+    'shellWaitStatusNonzeroUsesClosedDiagnosticClassification:' \
+    'adapterReportedFailureAllowedShellStatuses: [1, 2]' \
+    '"prime-validation secure-child integration: FAIL "' \
+    'adapterReportedFailureStandardErrorPrefixByteCount: 48' \
+    'layerAFailStopReportedShellStatus: 70' \
+    '"prime-secure-child fail-stop: "' \
+    'layerAFailStopStandardErrorPrefixByteCount: 30' \
+    'reportedFailureRequiresExactlyOneTerminalLF: true' \
+    'reportedFailureRequiresEmptyStandardOutput: true' \
+    'reportedFailureAllowsAdditionalLine: false' \
+    'reportedFailureAllowsCaptureCapReached: false' \
+    'adapterNoReportRequiresEmptyStandardOutput: true' \
+    'adapterNoReportRequiresEmptyStandardError: true' \
+    'unmatchedNonzeroReportResultCode:' \
+    'statusZeroWrongOutputContractResultCode:' \
+    'diagnosticClassifierUsesOnlyFixedByteOperations: true' \
+    'notAttemptedRequiresZeroCapturedByteCounts: true' \
+    'notAttemptedRequiredEmptyStreamSHA256:' \
+    'notAttemptedRequiresCaptureCapNotReached: true' \
+    'perStreamCapturedByteCountRequired: true' \
+    'perStreamSHA256Required: true' \
+    'perStreamCaptureCapReachedStateRequired: true' \
+    'captureCapReachedTrueIffCapturedByteCountEqualsCap: true' \
+    'captureCapReachedEstablishesAttemptedExcessBytes: false' \
+    'outerStreamOverflowOrTruncationEstablished: false' \
+    '"adapter_command_not_attempted_or_synchronous_shell_command_return_and_status"' \
+    '"both_stream_counts_hashes_and_capture_cap_reached_states_captured"' \
+    'captureCleanupAttemptBounded: true' \
+    'captureCleanupBoundIsExactOperationTopology: true' \
+    'exactCaptureLeafUnlinkAttemptCount: 2' \
+    'exactCaptureRootRmdirAttemptCount: 1' \
+    'recursiveDeletionInvocationCount: 0' \
+    'wildcardCleanupPathCount: 0' \
+    'cleanupDirectoryScanInvocationCount: 0' \
+    'exactCaptureCleanupAbsenceStates: [' \
+    'captureCleanupFailureResultCode: "CAPTURE_CLEANUP_FAILED"' \
+    'captureCleanupFailureRequiresNonzeroLauncherExit: true' \
+    'captureSetupRefusalResultCode: "CAPTURE_SETUP_REFUSED"' \
+    'captureSetupRefusalEstablishesAdapterExecutionObservedFalse:' \
+    'cleanupFailureOverridesPrimaryResultOnlyWhenPrimaryWasPass:' \
+    'nonPassPrimaryResultPreservedWhenCleanupFails: true' \
+    'cleanupFailureStillRecordsObservedFalseAbsence: true' \
+    '"EPOCH_REFUSED"' \
+    '"PREINVOCATION_CUTOFF"' \
+    '"PLATFORM_REFUSED"' \
+    '"MIRROR_REFUSED"' \
+    '"SWIFTPM_ROOT_REFUSED"' \
+    '"ADAPTER_IDENTITY_REFUSED"' \
+    '"BUILD_REFUSED"' \
+    '"PIN_MISMATCH"' \
+    '"CAPTURE_SETUP_REFUSED"' \
+    '"ADAPTER_REPORTED_FAILURE"' \
+    '"LAYER_A_FAIL_STOP_REPORTED"' \
+    '"ADAPTER_NO_REPORT"' \
+    '"ADAPTER_UNEXPECTED_REPORT"' \
+    '"ADAPTER_OUTPUT_CONTRACT_MISMATCH"' \
+    '"CAPTURE_CAP_REACHED"' \
+    'unknownRawErrorResultCode: "UNCLASSIFIED"' \
+    'rawErrorTextInterpolatedIntoProjection: false' \
+    '"prime-secure-child closed-fixture-canary observation: "' \
+    'hostedRecordPrefixByteCount: 54' \
+    '"prime_secure_child_process_evidence_closed_fixture_canary_outer_observation_v1"' \
+    'hostedRecordSchemaVersion: 1' \
+    'hostedRecordCanonicalJSONRequired: true' \
+    'hostedRecordExactLineCount: 1' \
+    'hostedRecordTerminalLFRequired: true' \
+    'hostedRecordTerminalLFByteCount: 1' \
+    'hostedRecordMaximumCanonicalJSONByteCount: 4_041' \
+    'hostedRecordMaximumTotalLineByteCount: 4_096' \
+    'hostedRecordExactFieldCount: 27' \
+    'hostedRecordExecutableIdentityFieldsNullableForPreCommandRefusal:' \
+    'commandAttemptRecordRequiresBothExecutableIdentities: true' \
+    'identityOrPinRefusalRecordsMeasuredIdentitiesWhenAvailable:' \
+    'nonnullFixtureIdentityMustMatchLayerAAcceptancePin: true' \
+    'hostedRecordExactRevisionMustBeLowercaseGitSHA: true' \
+    'hostedRecordOpportunityState: "retired"' \
+    'hostedRecordScientificOutcome: "not_established"' \
+    'hostedRecordDurableEvidenceValue: false' \
+    'hostedRecordActionsArtifactValue: false' \
+    'hostedRecordRawChildOutputOrErrorFieldCount: 0' \
+    'exactSanitizedOperationalRecordCountWhenProjectionSucceeds:' \
+    'projectionIsOuterOperationalCompatibilityEvidenceOnly: true' \
+    'projectionIsLayerADiagnostic: false' \
+    'projectionIsScientificEvidence: false' \
+    'projectionIsDurableEvidence: false' \
+    'hostedCancellationOrTimeoutObservedOnlyFromActionsMetadata:' \
+    'hostedOperationalRecordMayBeAbsentOnAbruptHostOrRunnerLoss:' \
+    'hostedOperationalRecordMayBeAbsentOnActiveRootAdmissionRefusal:' \
+    'hostedOperationalRecordMayBeAbsentOnPreLauncherReviewedJobFailure:' \
+    'hostedOperationalRecordMayBeAbsentOnLauncherReachedProjectionFailure:' \
+    '"launcher_not_reached"' \
+    '"launcher_reached_record_absent"' \
+    '"abrupt_host_or_runner_loss"' \
+    'absentHostedOperationalRecordCount: 0' \
+    'launcherNotReachedEstablishesAdapterNotInvoked: true' \
+    'launcherNotReachedHostedOperationalRecordCount: 0' \
+    'launcherNotReachedAdapterCommandAttemptCount: 0' \
+    'launcherNotReachedEstablishesAdapterTerminalState: false' \
+    'launcherNotReachedEstablishesContainmentOrCleanup: false' \
+    'launcherNotReachedRetiresMechanicsOpportunity: true' \
+    'launcherNotReachedPermitsRetryOrRerun: false' \
+    '"ordinary_shell_failure"' \
+    '"hash_failure"' \
+    '"stat_failure"' \
+    '"canonical_json_projection_failure"' \
+    '"trap_projection_failure"' \
+    'launcherTrapAttemptsUNCLASSIFIEDRecord: true' \
+    'launcherTrapRecordEmissionGuaranteed: false' \
+    'launcherReachedRecordAbsentEstablishesAdapterExecution: false' \
+    'launcherReachedRecordAbsentEstablishesAdapterTerminalState:' \
+    'launcherReachedRecordAbsentEstablishesContainmentOrCleanup:' \
+    'launcherReachedRecordAbsentRetiresMechanicsOpportunity: true' \
+    'launcherReachedRecordAbsentPermitsRetryOrRerun: false' \
+    'absentHostedRecordObservedOnlyFromActionsRunJobStepMetadataAndLogs:' \
+    'activeRootAdmissionRefusalOccursBeforeReviewedJob: true' \
+    'activeRootAdmissionRefusalEstablishesAdapterInvocation: false' \
+    'activeRootAdmissionRefusalRetiresMechanicsOpportunity: true' \
+    'activeRootAdmissionRefusalPermitsRetryOrRerun: false' \
+    'preLauncherReviewedJobFailureEstablishesAdapterNotInvoked:' \
+    'preLauncherReviewedJobFailureRetiresMechanicsOpportunity:' \
+    'preLauncherReviewedJobFailurePermitsAutomaticRerun: false' \
+    'absentHostedRecordEstablishesAdapterTerminalState: false' \
+    'absentHostedRecordEstablishesFixtureOrProcessContainment: false' \
+    'absentHostedRecordEstablishesCaptureCleanupAbsence: false' \
+    'absentHostedRecordRetiresMechanicsOpportunity: true' \
+    'absentHostedRecordPermitsRetryOrRerun: false' \
+    'hostedCancellationOrTimeoutEstablishesContainment: false' \
+    'actionsArtifactCount: 0' \
+    'setupOutcomeRequiresObservation: true' \
+    'setupOutcomeRetiresMechanicsOpportunity: true' \
+    'setupOutcomeEstablishesCanaryExecution: false' \
+    'setupOutcomePermitsRetryWithoutNewAuthority: false' \
+    'monitorOrHostLossEstablishesContainment: false' \
+    'pythonPermitted: false' \
+    'cppNewImplementationInvocationCount: 0' \
+    'cppAlternativeAuthorizedNow: false' \
+    'closedFixtureCanaryAuthorityEstablished: true' \
+    'exactThreeMechanicsSuccessorAuthorizedAfterClosure: true' \
+    '"AUTHORITY_ONLY_closed_nine_mode_fixture_canary_exact5_no_live_execution_exact3_successor_then_observe_and_retire_no_python_no_current_cpp"'; do
+    grep -Fq -- \
+        "$required_secure_child_process_evidence_closed_fixture_canary_authority_value" \
+        "$secure_child_process_evidence_closed_fixture_canary_authority_source" ||
+        die "secure-child closed-fixture canary pure authority lost: $required_secure_child_process_evidence_closed_fixture_canary_authority_value"
+done
+for exact_secure_child_process_evidence_closed_fixture_canary_authority_bound_path in \
+    '.github/scripts/prime-ci-active-root-quarantine.sh' \
+    '.github/workflows/prime-active-root-quarantine.yml' \
+    'Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' \
+    "$secure_child_process_evidence_closed_fixture_canary_authority_source_relative_path" \
+    "$secure_child_process_evidence_closed_fixture_canary_authority_test_relative_path" \
+    '.github/scripts/prime-ci-secure-child-process-evidence-closed-fixture-canary.sh'; do
+    grep -Fq -- \
+        "$exact_secure_child_process_evidence_closed_fixture_canary_authority_bound_path" \
+        "$secure_child_process_evidence_closed_fixture_canary_authority_source" ||
+        die "secure-child closed-fixture canary pure authority lost a frozen authority or exact-three mechanics path: $exact_secure_child_process_evidence_closed_fixture_canary_authority_bound_path"
+done
+for exact_secure_child_process_evidence_closed_fixture_canary_mode in \
+    '"pass"' \
+    '"logical-argument-zero"' \
+    '"nonzero-exit"' \
+    '"bounded-streams"' \
+    '"overflow"' \
+    '"hang"' \
+    '"self-signal"' \
+    '"descendant-retains-streams"' \
+    '"exit-without-result"'; do
+    grep -Fq -- \
+        "$exact_secure_child_process_evidence_closed_fixture_canary_mode" \
+        "$secure_child_process_evidence_closed_fixture_canary_authority_source" ||
+        die "secure-child closed-fixture canary pure authority lost a frozen public mode: $exact_secure_child_process_evidence_closed_fixture_canary_mode"
+done
+for exact_secure_child_process_evidence_closed_fixture_canary_hosted_record_field_contract in \
+    '"actions_artifact:bool"' \
+    '"adapter_command_attempt_one_shot_consumed:bool"' \
+    '"adapter_command_state:enum_not_attempted_shell_command_returned"' \
+    '"adapter_execution_observation:enum_observed_true_observed_false_unavailable"' \
+    '"adapter_executable_byte_count:null_or_positive_int"' \
+    '"adapter_executable_sha256:null_or_lowercase_hex_64"' \
+    '"authority_canonical_sha256:lowercase_hex_64"' \
+    '"authority_id:utf8_exact"' \
+    '"capture_cleanup_absence:enum_observed_true_observed_false_unavailable"' \
+    '"durable_evidence:bool"' \
+    '"exact_revision:lowercase_git_sha_40"' \
+    '"fixture_executable_byte_count:null_or_positive_int"' \
+    '"fixture_executable_sha256:null_or_lowercase_hex_64"' \
+    '"opportunity_state:enum_retired"' \
+    '"result_code:closed_enum"' \
+    '"schema_id:utf8_exact"' \
+    '"schema_version:positive_int"' \
+    '"scientific_outcome:enum_not_established"' \
+    '"shell_wait_status:null_or_uint8"' \
+    '"standard_error_byte_cap:positive_int"' \
+    '"standard_error_captured_byte_count:nonnegative_int"' \
+    '"standard_error_capture_cap_reached:bool"' \
+    '"standard_error_sha256:lowercase_hex_64"' \
+    '"standard_output_byte_cap:positive_int"' \
+    '"standard_output_captured_byte_count:nonnegative_int"' \
+    '"standard_output_capture_cap_reached:bool"' \
+    '"standard_output_sha256:lowercase_hex_64"'; do
+    grep -Fq -- \
+        "$exact_secure_child_process_evidence_closed_fixture_canary_hosted_record_field_contract" \
+        "$secure_child_process_evidence_closed_fixture_canary_authority_source" ||
+        die "secure-child closed-fixture canary pure authority lost an exact outer hosted-record field: $exact_secure_child_process_evidence_closed_fixture_canary_hosted_record_field_contract"
+done
+for required_secure_child_process_evidence_closed_fixture_canary_authority_test_value in \
+    'let authority = Authority.frozenV1' \
+    'XCTAssertTrue(predecessor.separateCanaryAuthorityRequired)' \
+    'XCTAssertEqual(closure.workflowRunID, 31_931_241_261)' \
+    'XCTAssertEqual(scaffold.embeddedProvenanceRecordCount, 507)' \
+    'XCTAssertEqual(canary.exactModeCount, 9)' \
+    'XCTAssertEqual(canary.expectedIntegrationAdapterInvocationCount, 1)' \
+    'XCTAssertEqual(canary.expectedSuccessfulTopLevelCaptureCount, 10)' \
+    'XCTAssertEqual(mechanics.exactPathCount, 3)' \
+    'XCTAssertEqual(mechanics.modifiedExistingPathCount, 2)' \
+    'XCTAssertEqual(mechanics.addedLauncherPathCount, 1)' \
+    'mechanics.orderedMechanicsSuccessorPathContracts,' \
+    'mechanics.gateAndLauncherRevalidateExactStatusModeMapping' \
+    'let deferredClosure = mechanics.deferredAuthorityExactMainGreenEvidence' \
+    'deferredClosure.uniquePushWorkflowRunCount, 1' \
+    'deferredClosure.requiredWorkflowAttempt, 1' \
+    'deferredClosure.previousAttemptURLMustBeNull' \
+    'deferredClosure.workflowRerunCount, 0' \
+    'deferredClosure.expectedRootTestCount, 78' \
+    'deferredClosure.expectedFocusedWholeTestCount, 84' \
+    'deferredClosure.expectedAggregateTestCount, 130' \
+    'deferredClosure.expectedActionsArtifactCount, 0' \
+    'deferredClosure.gateAndWorkflowFreezeExactValuesBeforeMechanics' \
+    'XCTAssertEqual(mechanics.expectedSwiftBuildProductCommandCount, 2)' \
+    'XCTAssertEqual(mechanics.expectedSwiftShowBinPathCommandCount, 1)' \
+    'XCTAssertEqual(mechanics.expectedSwiftRunCommandCount, 0)' \
+    'XCTAssertEqual(mechanics.expectedSwiftTestCommandCount, 0)' \
+    'XCTAssertTrue(mechanics.alreadyValidatedLocalBareMirrorsRequired)' \
+    'XCTAssertEqual(mechanics.exactFileURLInsteadOfMappingCount, 2)' \
+    'XCTAssertTrue(mechanics.protocolFileAllowAlwaysRequired)' \
+    'XCTAssertTrue(mechanics.forceResolvedVersionsRequired)' \
+    'mechanics.dependencyNetworkInvocationCountAfterReviewedFetch' \
+    'mechanics.directAdapterArgumentCountExcludingArgumentZero' \
+    'mechanics.directAdapterProcessArgumentCountIncludingArgumentZero' \
+    'XCTAssertFalse(mechanics.callerControlledEnvironmentAuthorized)' \
+    'XCTAssertFalse(mechanics.callerControlledCommandAuthorized)' \
+    'XCTAssertEqual(mechanics.evalInvocationCount, 0)' \
+    'XCTAssertEqual(mechanics.arbitraryShellExecInvocationCount, 0)' \
+    'XCTAssertEqual(mechanics.expectedJobCeilingSeconds, 4_500)' \
+    'XCTAssertEqual(mechanics.maximumPreInvocationElapsedSeconds, 4_200)' \
+    'XCTAssertEqual(mechanics.requiredRemainingJobReserveSeconds, 300)' \
+    'reviewedJobEpochCreatedInFirstWorkflowUserStepBeforeToolchain' \
+    'mechanics.reviewedJobEpochRepresentsGitHubJobStartTimestamp' \
+    'mechanics.reviewedJobEpochFileCreatedExclusiveNoClobber' \
+    'mechanics.reviewedJobEpochFileKernelImmutableClaimed' \
+    'mechanics.reviewedJobEpochFileReadOnlyByPolicy' \
+    'mechanicsOpportunityConsumedImmediatelyBeforeAdapterCommandAttempt' \
+    'mechanics.preCommandRefusalConsumesAdapterCommandAttemptOneShot' \
+    'XCTAssertFalse(mechanics.preCommandRefusalEstablishesAdapterExecution)' \
+    'mechanics.preCommandRefusalRetiresMechanicsOpportunity' \
+    'mechanics.everyPostCommandAttemptOutcomeConsumesMechanicsOpportunity' \
+    'XCTAssertEqual(outer.bash1024ByteFileSizeLimitBlockCount, 128)' \
+    'outer.exactAdapterCommandStates,' \
+    'outer.exactAdapterExecutionObservationStates,' \
+    'outer.shellWaitStatusAloneEstablishesAdapterExecution' \
+    'outer.adapterNoReportRequiresEmptyStandardOutput' \
+    'outer.adapterNoReportRequiresEmptyStandardError' \
+    'outer.captureCapReachedTrueIffCapturedByteCountEqualsCap' \
+    'outer.captureCapReachedEstablishesAttemptedExcessBytes' \
+    'outer.outerStreamOverflowOrTruncationEstablished' \
+    'outer.hostedRecordMaximumCanonicalJSONByteCount,' \
+    'XCTAssertEqual(outer.hostedRecordMaximumTotalLineByteCount, 4_096)' \
+    'XCTAssertEqual(outer.hostedRecordExactFieldCount, 27)' \
+    'outer.commandAttemptRecordRequiresBothExecutableIdentities' \
+    'outer.exactSanitizedOperationalRecordCountWhenProjectionSucceeds' \
+    'outer.exactHostedOperationalRecordAbsenceStates,' \
+    'outer.launcherNotReachedHostedOperationalRecordCount, 0' \
+    'outer.launcherNotReachedAdapterCommandAttemptCount, 0' \
+    'outer.launcherReachedRecordAbsentEstablishesAdapterExecution' \
+    'absentHostedRecordObservedOnlyFromActionsRunJobStepMetadataAndLogs' \
+    'XCTAssertTrue(mechanics.embeddedProvenanceBytesMustRemainIdentical)' \
+    'XCTAssertTrue(retirement.setupOutcomeRequiresObservation)' \
+    'XCTAssertTrue(retirement.setupOutcomeRetiresMechanicsOpportunity)' \
+    'XCTAssertFalse(retirement.setupOutcomeEstablishesCanaryExecution)' \
+    'retirement.setupOutcomePermitsRetryWithoutNewAuthority' \
+    'ceiling.exactThreeMechanicsSuccessorAuthorizedAfterClosure' \
+    'XCTAssertTrue(authorityFalseClaims(ceiling).allSatisfy { !$0 })' \
+    'XCTAssertEqual(language.pythonInvocationCount, 0)' \
+    'XCTAssertEqual(language.cppNewImplementationInvocationCount, 0)' \
+    'requireSendable(Authority.self)' \
+    'let canonical = try authority.canonicalData()' \
+    'PrimeSHA256.hexDigest(of: canonical)' \
+    'try Authority.decodeCanonical(canonical)' \
+    'XCTAssertNoThrow(try authority.validateExactV1())' \
+    'for path in valuePaths' \
+    'with: { _ in NSNull() }' \
+    'removingValue(in: object, at: path)' \
+    'for path in allArrayPaths(in: object)' \
+    'dictionary["unknown_canary_field_\(index)"] = true' \
+    'try Authority.decodeCanonical(Data([0x20]) + canonical)' \
+    'try Authority.decodeCanonical(canonical + Data([0x0a]))'; do
+    grep -Fq -- \
+        "$required_secure_child_process_evidence_closed_fixture_canary_authority_test_value" \
+        "$secure_child_process_evidence_closed_fixture_canary_authority_test" ||
+        die "secure-child closed-fixture canary pure-authority test lost canonical, mutation, or ceiling coverage: $required_secure_child_process_evidence_closed_fixture_canary_authority_test_value"
+done
+for forbidden_secure_child_process_evidence_closed_fixture_canary_authority_capability in \
+    'import CoreGraphics' 'import Darwin' 'import Dispatch' 'import Metal' \
+    'import MLX' 'import MLXNN' 'import MLXOptimizers' 'FileManager.' \
+    'FileHandle.' 'URLSession' 'Process(' 'PrimeMetalDeviceLease(' \
+    '.acquire(' 'posix_spawn(' 'waitpid(' 'kill(' 'flock(' 'execve(' \
+    'runSupervisor(' 'trajectoryRunWorkerProcess(' \
+    'trajectoryRunReleaseVerifierProcess('; do
+    ! grep -Fq -- \
+        "$forbidden_secure_child_process_evidence_closed_fixture_canary_authority_capability" \
+        "$secure_child_process_evidence_closed_fixture_canary_authority_source" ||
+        die "secure-child closed-fixture canary pure authority gained executable capability: $forbidden_secure_child_process_evidence_closed_fixture_canary_authority_capability"
+done
+readonly secure_child_process_evidence_closed_fixture_canary_authority_source_ast="$(swiftc \
+    -frontend -dump-parse \
+    "$secure_child_process_evidence_closed_fixture_canary_authority_source" \
+    2>/dev/null)" ||
+    die "secure-child closed-fixture canary pure-authority source does not parse into a Swift AST"
+readonly secure_child_process_evidence_closed_fixture_canary_authority_test_ast="$(swiftc \
+    -frontend -dump-parse \
+    "$secure_child_process_evidence_closed_fixture_canary_authority_test" \
+    2>/dev/null)" ||
+    die "secure-child closed-fixture canary pure-authority test does not parse into a Swift AST"
+readonly secure_child_process_evidence_closed_fixture_canary_authority_pair_executable_ast="$(printf '%s\n%s\n' \
+    "$secure_child_process_evidence_closed_fixture_canary_authority_source_ast" \
+    "$secure_child_process_evidence_closed_fixture_canary_authority_test_ast" | \
+    grep -Fv -- 'string_literal_expr' || true)"
+! printf '%s\n' \
+    "$secure_child_process_evidence_closed_fixture_canary_authority_pair_executable_ast" | \
+    grep -Eq -- \
+        'name="(Process|FileManager|FileHandle|URLSession|PrimeMetalDeviceLease|posix_spawn|waitpid|kill|flock|execve|runSupervisor|trajectoryRunWorkerProcess|trajectoryRunReleaseVerifierProcess|acquire)"|field="(runSupervisor|trajectoryRunWorkerProcess|trajectoryRunReleaseVerifierProcess|acquire)"' ||
+    die "secure-child closed-fixture canary pure-authority pair gained executable process, lease, launcher, worker, verifier, or filesystem capability"
 
 for native300m_trajectory_checkpoint_execution_authority_file in \
     "$native300m_trajectory_checkpoint_execution_authority_source" \
