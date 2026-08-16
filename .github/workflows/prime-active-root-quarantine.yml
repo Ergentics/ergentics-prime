@@ -42,11 +42,13 @@ jobs:
           export GIT_CONFIG_COUNT=1
           export GIT_CONFIG_KEY_0="url.https://x-access-token:${CHECKOUT_TOKEN}@github.com/.insteadOf"
           export GIT_CONFIG_VALUE_0="https://github.com/"
-          git -C ergentics-prime fetch --depth=2 --no-tags --no-write-fetch-head origin "$EXACT_REVISION" a4d8583fa7c59f885002ee06a07c1d5264c0c223
+          git -C ergentics-prime fetch --depth=2 --no-tags --no-write-fetch-head origin "$EXACT_REVISION" 232a17e8f58a297919366d963ee1d7bc38cdbaee a4d8583fa7c59f885002ee06a07c1d5264c0c223
           git -C ergentics-prime checkout --detach "$EXACT_REVISION"
           unset GIT_CONFIG_COUNT GIT_CONFIG_KEY_0 GIT_CONFIG_VALUE_0
           [[ "$(git -C ergentics-prime rev-parse HEAD)" == "$EXACT_REVISION" ]]
-          [[ -z "$(git -C ergentics-prime status --porcelain=v1 --untracked-files=all)" ]]
+          active_checkout_status="$(git -C ergentics-prime status --porcelain=v1 --untracked-files=all)" || exit 1
+          readonly active_checkout_status
+          [[ -z "$active_checkout_status" ]]
           ! grep -Fq -- "$CHECKOUT_TOKEN" ergentics-prime/.git/config
 
       - name: Validate active metadata and preserved history
@@ -232,7 +234,9 @@ jobs:
             xcrun swiftc -frontend -parse "$source_file"
           done
           [[ "$(git rev-parse HEAD)" == "$EXACT_REVISION" ]]
-          [[ -z "$(git status --porcelain=v1 --untracked-files=all)" ]]
+          active_parse_status="$(git status --porcelain=v1 --untracked-files=all)" || exit 1
+          readonly active_parse_status
+          [[ -z "$active_parse_status" ]]
 
       - name: Validate isolated Latin capture and observation contracts
         working-directory: ergentics-prime
@@ -337,6 +341,7 @@ jobs:
             echo 'The deferred future exact-three admission must additionally bind this pure authority exact-main closure revision and tree plus its unique green push workflow run ID, run number, check-suite ID, attempt 1, null previous-attempt URL, rerun count zero, exact active-root and reviewed-job IDs and success conclusions, exact test counts, and zero Actions artifacts. Those values remain unset until this authority closes on exact main.'
             echo 'The exact absent outer-record taxonomy is launcher_not_reached, launcher_reached_record_absent for an ordinary shell, hash, stat, JSON, or trap failure despite best-effort UNCLASSIFIED projection, and abrupt_host_or_runner_loss. An absent record alone establishes no adapter execution or terminal state, containment, or capture cleanup. For launcher_not_reached only, Actions job and step metadata independently prove adapter command-attempt count zero and adapter not invoked; launcher_reached_record_absent and abrupt_host_or_runner_loss leave execution unknown. Every absent-record state is observed only through Actions metadata and logs and retires the mechanics opportunity without retry.'
             echo 'The future outer capture applies Bash ulimit -f 128 in 1024-byte units for an exact 131072-byte per-stream cap. Each capture_cap_reached flag is true exactly when the captured byte count equals the cap, causes CAPTURE_CAP_REACHED failure, and does not establish attempted excess bytes, overflow, or truncation. Shell status 1 or 2 plus the exact single-line adapter FAIL envelope maps to ADAPTER_REPORTED_FAILURE; status 70 plus the exact single-line Layer-A fail-stop envelope maps to LAYER_A_FAIL_STOP_REPORTED; both standard output and standard error empty maps to ADAPTER_NO_REPORT; any other nonzero report maps to ADAPTER_UNEXPECTED_REPORT; and status zero with the wrong exact output maps to ADAPTER_OUTPUT_CONTRACT_MISMATCH. Classification uses fixed byte operations and never projects raw text.'
+            echo 'Exact-main secure-child process/evidence closed fixture-canary authority merge b3402efd96d3ff893a0c2b73897cf48c9b313c8c, tree 7fb3f5505796a43c9db1537ca72f81e19367365f, ordered parents 232a17e8f58a297919366d963ee1d7bc38cdbaee then 82ae2c2611e62144c066db990be6eaf48fdff47a, and GitHub signature verification were valid. Unique push workflow run 31957009710 number 141 attempt 1 check suite 86653677663 passed with null previous-attempt URL and rerun count zero. Active job 95189063495 passed Latin 116; dependent reviewed job 95189438167 passed root 78 plus isolated groups 1, 1, 2, and 2 for isolated 6 and focused whole 84, then retained Metal 44, maintained runtime 1, and tokenizer 1 for live 46 and aggregate 130 XTests. The sole pure-authority test passed once, with zero failures, skips, Actions artifacts, closed-canary launcher or adapter invocations, fixture or capture mechanics, lease acquisitions, Python interpreters, or new C++ mechanics.'
           } >> "$GITHUB_STEP_SUMMARY"
 
   trusted-main-compile:
@@ -344,12 +349,29 @@ jobs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: active-root
     runs-on: macos-26
-    timeout-minutes: 60
+    timeout-minutes: 75
     env:
       EXACT_REVISION: ${{ github.sha }}
       PRIME_MLX_REVISION: d37885a278f1c37484a94d0f401a418735e66519
 
     steps:
+      - name: Create the closed-fixture canary reviewed-job epoch
+        run: |
+          set -euo pipefail
+          readonly epoch_path="$RUNNER_TEMP/prime-secure-child-process-evidence-closed-fixture-canary-reviewed-job-epoch"
+          [[ ! -e "$epoch_path" && ! -L "$epoch_path" ]]
+          epoch="$(date +%s)" || exit 1
+          readonly epoch
+          [[ "$epoch" =~ ^[1-9][0-9]*$ ]]
+          (umask 0377; set -o noclobber; printf '%s\n' "$epoch" > "$epoch_path")
+          [[ -f "$epoch_path" && ! -L "$epoch_path" ]]
+          [[ "$(stat -f %Lp "$epoch_path")" == "400" ]]
+          [[ "$(stat -f %l "$epoch_path")" == "1" ]]
+          [[ "$(stat -f %u "$epoch_path")" == "$(id -u)" ]]
+          [[ "$(stat -f %g "$epoch_path")" == "$(id -g)" ]]
+          [[ "$(wc -l < "$epoch_path" | tr -d '[:space:]')" == "1" ]]
+          [[ "$(< "$epoch_path")" == "$epoch" ]]
+
       - name: Record the hosted Apple toolchain
         run: |
           set -euo pipefail
@@ -372,11 +394,13 @@ jobs:
           export GIT_CONFIG_COUNT=1
           export GIT_CONFIG_KEY_0="url.https://x-access-token:${CHECKOUT_TOKEN}@github.com/.insteadOf"
           export GIT_CONFIG_VALUE_0="https://github.com/"
-          git -C ergentics-prime fetch --depth=2 --no-tags --no-write-fetch-head origin "$EXACT_REVISION" a4d8583fa7c59f885002ee06a07c1d5264c0c223
+          git -C ergentics-prime fetch --depth=2 --no-tags --no-write-fetch-head origin "$EXACT_REVISION" 232a17e8f58a297919366d963ee1d7bc38cdbaee a4d8583fa7c59f885002ee06a07c1d5264c0c223
           git -C ergentics-prime checkout --detach "$EXACT_REVISION"
           unset GIT_CONFIG_COUNT GIT_CONFIG_KEY_0 GIT_CONFIG_VALUE_0
           [[ "$(git -C ergentics-prime rev-parse HEAD)" == "$EXACT_REVISION" ]]
-          [[ -z "$(git -C ergentics-prime status --porcelain=v1 --untracked-files=all)" ]]
+          reviewed_checkout_status="$(git -C ergentics-prime status --porcelain=v1 --untracked-files=all)" || exit 1
+          readonly reviewed_checkout_status
+          [[ -z "$reviewed_checkout_status" ]]
           ! grep -Fq -- "$CHECKOUT_TOKEN" ergentics-prime/.git/config
 
       - name: Fetch the exact private dependency without evaluating Prime
@@ -660,7 +684,9 @@ jobs:
           ! grep -Fqi -- 'skipped' \
             "$checkpoint_v2_io_root_identity_repair_execution_pure_test_log"
           [[ "$(git rev-parse HEAD)" == "$EXACT_REVISION" ]]
-          [[ -z "$(git status --porcelain=v1 --untracked-files=all)" ]]
+          focused_checkout_status="$(git status --porcelain=v1 --untracked-files=all)" || exit 1
+          readonly focused_checkout_status
+          [[ -z "$focused_checkout_status" ]]
 
       - name: Run the Prime-owned decoder on live Metal
         working-directory: ergentics-prime
@@ -668,3 +694,29 @@ jobs:
           bash .github/scripts/prime-ci-native-decoder-metal.sh
           bash .github/scripts/prime-ci-native-decoder-runtime-closure.sh
           bash .github/scripts/prime-ci-native-decoder-tokenizer-compatibility.sh
+
+      - name: Run the closed secure-child fixture canary exactly once
+        working-directory: ergentics-prime
+        env:
+          PRIME_SECURE_CHILD_PROCESS_EVIDENCE_CLOSED_FIXTURE_CANARY_AUTHORITY_CLOSURE_REVISION: 'b3402efd96d3ff893a0c2b73897cf48c9b313c8c'
+          PRIME_SECURE_CHILD_PROCESS_EVIDENCE_CLOSED_FIXTURE_CANARY_AUTHORITY_CLOSURE_TREE: '7fb3f5505796a43c9db1537ca72f81e19367365f'
+          PRIME_SECURE_CHILD_PROCESS_EVIDENCE_CLOSED_FIXTURE_CANARY_AUTHORITY_WORKFLOW_RUN_ID: '31957009710'
+          PRIME_SECURE_CHILD_PROCESS_EVIDENCE_CLOSED_FIXTURE_CANARY_AUTHORITY_WORKFLOW_RUN_NUMBER: '141'
+          PRIME_SECURE_CHILD_PROCESS_EVIDENCE_CLOSED_FIXTURE_CANARY_AUTHORITY_WORKFLOW_ATTEMPT: '1'
+          PRIME_SECURE_CHILD_PROCESS_EVIDENCE_CLOSED_FIXTURE_CANARY_AUTHORITY_CHECK_SUITE_ID: '86653677663'
+          PRIME_SECURE_CHILD_PROCESS_EVIDENCE_CLOSED_FIXTURE_CANARY_AUTHORITY_PREVIOUS_ATTEMPT_URL_IS_NULL: 'true'
+          PRIME_SECURE_CHILD_PROCESS_EVIDENCE_CLOSED_FIXTURE_CANARY_AUTHORITY_WORKFLOW_RERUN_COUNT: '0'
+          PRIME_SECURE_CHILD_PROCESS_EVIDENCE_CLOSED_FIXTURE_CANARY_AUTHORITY_ACTIVE_JOB_ID: '95189063495'
+          PRIME_SECURE_CHILD_PROCESS_EVIDENCE_CLOSED_FIXTURE_CANARY_AUTHORITY_ACTIVE_JOB_CONCLUSION: 'success'
+          PRIME_SECURE_CHILD_PROCESS_EVIDENCE_CLOSED_FIXTURE_CANARY_AUTHORITY_ACTIVE_LATIN_TEST_COUNT: '116'
+          PRIME_SECURE_CHILD_PROCESS_EVIDENCE_CLOSED_FIXTURE_CANARY_AUTHORITY_REVIEWED_JOB_ID: '95189438167'
+          PRIME_SECURE_CHILD_PROCESS_EVIDENCE_CLOSED_FIXTURE_CANARY_AUTHORITY_REVIEWED_JOB_CONCLUSION: 'success'
+          PRIME_SECURE_CHILD_PROCESS_EVIDENCE_CLOSED_FIXTURE_CANARY_AUTHORITY_ROOT_TEST_COUNT: '78'
+          PRIME_SECURE_CHILD_PROCESS_EVIDENCE_CLOSED_FIXTURE_CANARY_AUTHORITY_ISOLATED_TEST_COUNT: '6'
+          PRIME_SECURE_CHILD_PROCESS_EVIDENCE_CLOSED_FIXTURE_CANARY_AUTHORITY_FOCUSED_WHOLE_TEST_COUNT: '84'
+          PRIME_SECURE_CHILD_PROCESS_EVIDENCE_CLOSED_FIXTURE_CANARY_AUTHORITY_RETAINED_LIVE_TEST_COUNT: '46'
+          PRIME_SECURE_CHILD_PROCESS_EVIDENCE_CLOSED_FIXTURE_CANARY_AUTHORITY_AGGREGATE_TEST_COUNT: '130'
+          PRIME_SECURE_CHILD_PROCESS_EVIDENCE_CLOSED_FIXTURE_CANARY_AUTHORITY_TEST_METHOD_COUNT: '1'
+          PRIME_SECURE_CHILD_PROCESS_EVIDENCE_CLOSED_FIXTURE_CANARY_AUTHORITY_ACTIONS_ARTIFACT_COUNT: '0'
+          PRIME_SECURE_CHILD_PROCESS_EVIDENCE_CLOSED_FIXTURE_CANARY_AUTHORITY_CANARY_MECHANICS_INVOCATION_COUNT: '0'
+        run: /bin/bash -p .github/scripts/prime-ci-secure-child-process-evidence-closed-fixture-canary.sh

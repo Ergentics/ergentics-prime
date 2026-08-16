@@ -40,7 +40,11 @@ done
     die "exact revision must be a lowercase 40-character object ID"
 [[ "$(git -C "$prime_root" rev-parse HEAD)" == "$expected_prime_head" ]] ||
     die "Prime checkout does not match ERGENTICS_EXACT_REVISION"
-[[ -z "$(git -C "$prime_root" status --porcelain=v1 --untracked-files=all)" ]] ||
+initial_prime_status="$(git -C "$prime_root" status \
+    --porcelain=v1 --untracked-files=all)" ||
+    die "could not inspect the initial Prime checkout status"
+readonly initial_prime_status
+[[ -z "$initial_prime_status" ]] ||
     die "Prime checkout is dirty"
 
 readonly stage5_launcher_relative_path=".github/scripts/prime-ci-native-decoder-stage5-tiny-repeated-metal-trajectory-determinism.sh"
@@ -90,6 +94,7 @@ readonly secure_child_process_evidence_implementation_authority_source_relative_
 readonly secure_child_process_evidence_implementation_authority_test_relative_path="Tests/PrimeCoreTests/PrimeSecureChildProcessEvidenceImplementationAuthorityTests.swift"
 readonly secure_child_process_evidence_closed_fixture_canary_authority_source_relative_path="Sources/PrimeCore/PrimeSecureChildProcessEvidenceClosedFixtureCanaryAuthority.swift"
 readonly secure_child_process_evidence_closed_fixture_canary_authority_test_relative_path="Tests/PrimeCoreTests/PrimeSecureChildProcessEvidenceClosedFixtureCanaryAuthorityTests.swift"
+readonly secure_child_process_evidence_closed_fixture_canary_launcher_relative_path=".github/scripts/prime-ci-secure-child-process-evidence-closed-fixture-canary.sh"
 readonly secure_child_process_plan_relative_path="Sources/PrimeCore/PrimeSecureChildProcessPlan.swift"
 readonly secure_child_process_evidence_relative_path="Sources/PrimeCore/PrimeSecureChildProcessEvidence.swift"
 readonly trusted_secure_child_process_capture_relative_path="Sources/PrimeCore/PrimeTrustedSecureChildProcessCapture.swift"
@@ -100,6 +105,691 @@ readonly secure_child_kernel_relative_path="Sources/PrimeCore/PrimeSecureChildKe
 readonly secure_child_process_evidence_test_relative_path="Tests/PrimeCoreTests/PrimeSecureChildProcessEvidenceTests.swift"
 readonly secure_child_lifecycle_test_relative_path="Tests/PrimeCoreTests/PrimeNativeNeuralGateSecureChildLifecycleTests.swift"
 readonly secure_external_child_capture_test_relative_path="Tests/PrimeCoreTests/PrimeNativeNeuralGateSecureExternalChildCaptureTests.swift"
+readonly secure_child_process_evidence_closed_fixture_canary_authority_closure_revision="b3402efd96d3ff893a0c2b73897cf48c9b313c8c"
+readonly secure_child_process_evidence_closed_fixture_canary_authority_closure_tree="7fb3f5505796a43c9db1537ca72f81e19367365f"
+readonly secure_child_process_evidence_closed_fixture_canary_authority_closure_first_parent="232a17e8f58a297919366d963ee1d7bc38cdbaee"
+readonly secure_child_process_evidence_closed_fixture_canary_authority_closure_second_parent="82ae2c2611e62144c066db990be6eaf48fdff47a"
+readonly expected_secure_child_process_evidence_closed_fixture_canary_mechanics_preserved_index_sha256="ba70d7cdeb0d52cf45fe95639b83fa2ce781523fdf650d4fcc9b49d5967dbe61"
+exact_commit_header() {
+    local revision="$1"
+    [[ "$(git -C "$prime_root" cat-file -t "$revision")" == "commit" ]] ||
+        die "secure-child process/evidence closed fixture-canary mechanics expected a commit object: $revision"
+    local header
+    header="$(git -C "$prime_root" cat-file -p "$revision" | awk '
+        !found_separator && $0 == "" { found_separator = 1; next }
+        !found_separator { print }
+        END { if (!found_separator) exit 1 }
+    ')" || die "secure-child process/evidence closed fixture-canary mechanics commit has no header separator: $revision"
+    awk '
+        /^ / {
+            if (field != "gpgsig" && field != "gpgsig-sha256" &&
+                    field != "mergetag") {
+                exit 1
+            }
+            next
+        }
+        /^[A-Za-z0-9][A-Za-z0-9-]* .+$/ {
+            split($0, words, " ")
+            field = words[1]
+            next
+        }
+        { exit 1 }
+    ' <<< "$header" ||
+        die "secure-child process/evidence closed fixture-canary mechanics commit has a malformed header: $revision"
+    local tree_prefix_lines tree_prefix_count
+    tree_prefix_lines="$(awk '/^tree/ { print }' <<< "$header")"
+    tree_prefix_count="$(awk '/^tree/ { count += 1 } END { print count + 0 }' \
+        <<< "$header")"
+    [[ "$tree_prefix_count" == "1" \
+        && "$tree_prefix_lines" =~ ^tree\ [0-9a-f]{40}$ ]] ||
+        die "secure-child process/evidence closed fixture-canary mechanics commit has a malformed or nonexact tree header: $revision"
+    local parent_prefix_lines parent_prefix_count
+    parent_prefix_lines="$(awk '/^parent/ { print }' <<< "$header")"
+    parent_prefix_count="$(awk '/^parent/ { count += 1 } END { print count + 0 }' \
+        <<< "$header")"
+    if [[ "$parent_prefix_count" != "0" ]]; then
+        while IFS= read -r parent_line; do
+            [[ "$parent_line" =~ ^parent\ [0-9a-f]{40}$ ]] ||
+                die "secure-child process/evidence closed fixture-canary mechanics commit has a malformed parent header: $revision"
+        done <<< "$parent_prefix_lines"
+    fi
+    printf '%s\n' "$header"
+}
+exact_commit_tree() {
+    local revision="$1"
+    exact_commit_header "$revision" | awk '/^tree / { print $2 }'
+}
+exact_commit_parent_lines() {
+    local revision="$1"
+    exact_commit_header "$revision" | awk '/^parent / { print $2 }'
+}
+readonly observed_secure_child_process_evidence_closed_fixture_canary_mechanics_preserved_index_sha256="$({
+    git -C "$prime_root" ls-files -s |
+        while IFS= read -r index_record; do
+            relative_path="${index_record#*$'\t'}"
+            if [[ "$relative_path" \
+                    == '.github/scripts/prime-ci-active-root-quarantine.sh' \
+                || "$relative_path" \
+                    == '.github/scripts/prime-ci-secure-child-process-evidence-closed-fixture-canary.sh' \
+                || "$relative_path" \
+                    == '.github/workflows/prime-active-root-quarantine.yml' ]]; then
+                continue
+            fi
+            printf '%s\n' "$index_record"
+        done
+} | LC_ALL=C sort | shasum -a 256 | awk '{print $1}')"
+[[ "$observed_secure_child_process_evidence_closed_fixture_canary_mechanics_preserved_index_sha256" \
+        == "$expected_secure_child_process_evidence_closed_fixture_canary_mechanics_preserved_index_sha256" ]] ||
+    die "secure-child process/evidence closed fixture-canary mechanics changed a path outside its exact-three closure"
+[[ "$(exact_commit_tree \
+        "$secure_child_process_evidence_closed_fixture_canary_authority_closure_revision")" \
+        == "$secure_child_process_evidence_closed_fixture_canary_authority_closure_tree" \
+    && "$(exact_commit_parent_lines \
+        "$secure_child_process_evidence_closed_fixture_canary_authority_closure_revision")" \
+        == "$secure_child_process_evidence_closed_fixture_canary_authority_closure_first_parent
+$secure_child_process_evidence_closed_fixture_canary_authority_closure_second_parent" ]] ||
+    die "secure-child process/evidence closed fixture-canary authority exact-main closure changed"
+readonly secure_child_process_evidence_closed_fixture_canary_mechanics_head_parent_lines="$(
+    exact_commit_parent_lines HEAD
+)"
+readonly secure_child_process_evidence_closed_fixture_canary_mechanics_head_parent_count="$(
+    awk 'NF { count += 1 } END { print count + 0 }' \
+        <<< "$secure_child_process_evidence_closed_fixture_canary_mechanics_head_parent_lines"
+)"
+[[ "${GITHUB_JOB:-}" == "active-root" ]] ||
+    die "secure-child process/evidence closed fixture-canary mechanics gate is outside the active-root job"
+case "$secure_child_process_evidence_closed_fixture_canary_mechanics_head_parent_count" in
+    1)
+        [[ "$secure_child_process_evidence_closed_fixture_canary_mechanics_head_parent_lines" \
+                == "$secure_child_process_evidence_closed_fixture_canary_authority_closure_revision" \
+            && "${GITHUB_REPOSITORY:-}" == "Ergentics/ergentics-prime" \
+            && "${GITHUB_EVENT_NAME:-}" == "pull_request" \
+            && "${GITHUB_RUN_ATTEMPT:-}" == "1" ]] ||
+            die "secure-child process/evidence closed fixture-canary mechanics is not a direct authority-closure successor"
+        ;;
+    2)
+        readonly secure_child_process_evidence_closed_fixture_canary_mechanics_merge_first_parent="$(
+            head -n 1 <<< "$secure_child_process_evidence_closed_fixture_canary_mechanics_head_parent_lines"
+        )"
+        readonly secure_child_process_evidence_closed_fixture_canary_mechanics_merge_second_parent="$(
+            awk 'NR == 2 { print }' \
+                <<< "$secure_child_process_evidence_closed_fixture_canary_mechanics_head_parent_lines"
+        )"
+        [[ "$secure_child_process_evidence_closed_fixture_canary_mechanics_merge_first_parent" \
+                == "$secure_child_process_evidence_closed_fixture_canary_authority_closure_revision" \
+            && "$(exact_commit_parent_lines \
+                "$secure_child_process_evidence_closed_fixture_canary_mechanics_merge_second_parent")" \
+                == "$secure_child_process_evidence_closed_fixture_canary_authority_closure_revision" \
+            && "$(exact_commit_tree \
+                "$secure_child_process_evidence_closed_fixture_canary_mechanics_merge_second_parent")" \
+                == "$(exact_commit_tree HEAD)" \
+            && "${GITHUB_REPOSITORY:-}" == "Ergentics/ergentics-prime" \
+            && "${GITHUB_EVENT_NAME:-}" == "push" \
+            && "${GITHUB_REF:-}" == "refs/heads/main" \
+            && "${GITHUB_RUN_ATTEMPT:-}" == "1" \
+            && "${GITHUB_SHA:-}" == "$expected_prime_head" ]] ||
+            die "secure-child process/evidence closed fixture-canary mechanics merge shape changed"
+        ;;
+    *)
+        die "secure-child process/evidence closed fixture-canary mechanics has an unauthorized parent count"
+        ;;
+esac
+readonly expected_secure_child_process_evidence_closed_fixture_canary_mechanics_status=$'M\t.github/scripts/prime-ci-active-root-quarantine.sh\nA\t.github/scripts/prime-ci-secure-child-process-evidence-closed-fixture-canary.sh\nM\t.github/workflows/prime-active-root-quarantine.yml'
+[[ "$(git -C "$prime_root" diff --name-status --no-renames \
+        "$secure_child_process_evidence_closed_fixture_canary_authority_closure_revision" HEAD)" \
+        == "$expected_secure_child_process_evidence_closed_fixture_canary_mechanics_status" ]] ||
+    die "secure-child process/evidence closed fixture-canary mechanics successor is not the exact ordered three paths"
+for exact_secure_child_process_evidence_closed_fixture_canary_mechanics_path_and_mode in \
+    '100755 .github/scripts/prime-ci-active-root-quarantine.sh' \
+    '100755 .github/scripts/prime-ci-secure-child-process-evidence-closed-fixture-canary.sh' \
+    '100644 .github/workflows/prime-active-root-quarantine.yml'; do
+    expected_secure_child_process_evidence_closed_fixture_canary_mechanics_mode="${exact_secure_child_process_evidence_closed_fixture_canary_mechanics_path_and_mode%% *}"
+    exact_secure_child_process_evidence_closed_fixture_canary_mechanics_path="${exact_secure_child_process_evidence_closed_fixture_canary_mechanics_path_and_mode#* }"
+    [[ "$(git -C "$prime_root" ls-files -s -- \
+        "$exact_secure_child_process_evidence_closed_fixture_canary_mechanics_path" | \
+        awk '{print $1}')" \
+        == "$expected_secure_child_process_evidence_closed_fixture_canary_mechanics_mode" ]] ||
+        die "secure-child process/evidence closed fixture-canary mechanics path is missing or has the wrong mode: $exact_secure_child_process_evidence_closed_fixture_canary_mechanics_path"
+done
+readonly secure_child_process_evidence_closed_fixture_canary_mechanics_launcher="$prime_root/$secure_child_process_evidence_closed_fixture_canary_launcher_relative_path"
+readonly expected_secure_child_process_evidence_closed_fixture_canary_launcher_blob="2b4cd9ca38410eed6661c1de50fcdab595c24b77"
+readonly expected_secure_child_process_evidence_closed_fixture_canary_launcher_bytes="57143"
+readonly expected_secure_child_process_evidence_closed_fixture_canary_launcher_lf_count="1204"
+readonly expected_secure_child_process_evidence_closed_fixture_canary_launcher_sha256="0c00a5ff7b5752be59d674699b7dca4bfa5b3fe973ab96e7cf8a0f455b9f2eea"
+[[ -f "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher" \
+    && ! -L "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher" \
+    && "$(stat -f %l \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "1" \
+    && "$(git -C "$prime_root" ls-files -s -- \
+        "$secure_child_process_evidence_closed_fixture_canary_launcher_relative_path" | \
+        awk '{print $1}')" == "100755" \
+    && "$(git -C "$prime_root" hash-object -- \
+        "$secure_child_process_evidence_closed_fixture_canary_launcher_relative_path")" \
+        == "$expected_secure_child_process_evidence_closed_fixture_canary_launcher_blob" \
+    && "$(stat -f %z \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "$expected_secure_child_process_evidence_closed_fixture_canary_launcher_bytes" \
+    && "$(wc -l < \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher" | \
+        awk '{print $1}')" \
+        == "$expected_secure_child_process_evidence_closed_fixture_canary_launcher_lf_count" \
+    && "$(shasum -a 256 \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher" | \
+        awk '{print $1}')" \
+        == "$expected_secure_child_process_evidence_closed_fixture_canary_launcher_sha256" ]] ||
+    die "secure-child process/evidence closed fixture-canary launcher identity changed"
+! LC_ALL=C grep -q $'\r' \
+    "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher" ||
+    die "secure-child process/evidence closed fixture-canary launcher gained a carriage return"
+bash -n "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher" ||
+    die "secure-child process/evidence closed fixture-canary launcher does not parse as Bash"
+[[ "$(head -n 1 \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == '#!/bin/bash -p' \
+    && "$(tail -n 3 \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == $'if [[ "${BASH_SOURCE[0]}" == "$0" ]]; then\n    prime_canary_main "$@"\nfi' ]] ||
+    die "secure-child process/evidence closed fixture-canary launcher entry guard changed"
+readonly observed_secure_child_process_evidence_closed_fixture_canary_launcher_helpers="$(awk '
+    /^[A-Za-z_][A-Za-z0-9_]*\(\) \{$/ {
+        sub(/\(\) \{$/, "")
+        print
+    }
+' "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")"
+readonly expected_secure_child_process_evidence_closed_fixture_canary_launcher_helpers=$'prime_canary_is_sha256\nprime_canary_is_git_sha\nprime_canary_is_nonnegative_integer\nprime_canary_is_positive_integer\nprime_canary_is_nonnegative_integer_at_most\nprime_canary_sha256_file\nprime_canary_file_byte_count\nprime_canary_file_metadata\nprime_canary_file_inode_and_size\nprime_canary_commit_header\nprime_canary_commit_tree\nprime_canary_commit_parents\nprime_canary_exact_result_code\nprime_canary_prefix_matches\nprime_canary_exactly_one_terminal_lf\nprime_canary_classify_observation\nprime_canary_projection_values_valid\nprime_canary_emit_record\nprime_canary_refuse\nprime_canary_initialize_state\nprime_canary_exit_trap\nprime_canary_authority_environment_matches\nprime_canary_bound_closure_evidence_matches\nprime_canary_validate_topology\nprime_canary_validate_admission\nprime_canary_validate_epoch\nprime_canary_revalidate_epoch\nprime_canary_cutoff_valid\nprime_canary_validate_platform\nprime_canary_physical_directory\nprime_canary_validate_bare_mirror\nprime_canary_validate_mirrors\nprime_canary_create_swiftpm_roots\nprime_canary_build_products\nprime_canary_validate_executable_leaf\nprime_canary_bind_executables\nprime_canary_revalidate_executables\nprime_canary_cleanup_capture\nprime_canary_create_capture\nprime_canary_refuse_after_capture\nprime_canary_close_adapter_environment\nprime_canary_measure_streams\nprime_canary_stream_measurements_still_match\nprime_canary_main'
+[[ "$observed_secure_child_process_evidence_closed_fixture_canary_launcher_helpers" \
+        == "$expected_secure_child_process_evidence_closed_fixture_canary_launcher_helpers" ]] ||
+    die "secure-child process/evidence closed fixture-canary launcher helper surface changed"
+readonly secure_child_process_evidence_closed_fixture_canary_launcher_main_opening="$(awk '
+    /^prime_canary_main\(\) \{$/ {
+        print
+        if (getline > 0) {
+            print
+        }
+        exit
+    }
+' "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")"
+[[ "$secure_child_process_evidence_closed_fixture_canary_launcher_main_opening" \
+        == $'prime_canary_main() {\n    [[ "$-" == *p* ]] || return 1' ]] ||
+    die "secure-child process/evidence closed fixture-canary launcher lost its first-statement privileged-shell admission"
+for required_secure_child_process_evidence_closed_fixture_canary_launcher_value in \
+    'readonly PRIME_CANARY_AUTHORITY_ID="prime_secure_child_process_evidence_closed_fixture_canary_authority_v1"' \
+    'readonly PRIME_CANARY_AUTHORITY_CANONICAL_SHA256="29cd7cb18001da845021bc60f8f250a920f927cdc302e5d5071e95f049c3351f"' \
+    'readonly PRIME_CANARY_AUTHORITY_CLOSURE_REVISION="b3402efd96d3ff893a0c2b73897cf48c9b313c8c"' \
+    'readonly PRIME_CANARY_AUTHORITY_CLOSURE_TREE="7fb3f5505796a43c9db1537ca72f81e19367365f"' \
+    'readonly PRIME_CANARY_AUTHORITY_CLOSURE_FIRST_PARENT="232a17e8f58a297919366d963ee1d7bc38cdbaee"' \
+    'readonly PRIME_CANARY_AUTHORITY_CLOSURE_SECOND_PARENT="82ae2c2611e62144c066db990be6eaf48fdff47a"' \
+    'readonly PRIME_CANARY_AUTHORITY_CLOSURE_GITHUB_SIGNATURE_VERIFIED="true"' \
+    'readonly PRIME_CANARY_AUTHORITY_CLOSURE_GITHUB_SIGNATURE_REASON="valid"' \
+    'readonly PRIME_CANARY_AUTHORITY_UNIQUE_PUSH_RUN_COUNT="1"' \
+    'readonly PRIME_CANARY_AUTHORITY_WORKFLOW_CONCLUSION="success"' \
+    'readonly PRIME_CANARY_AUTHORITY_ACTIVE_FAILURE_COUNT="0"' \
+    'readonly PRIME_CANARY_AUTHORITY_REVIEWED_FAILURE_COUNT="0"' \
+    'readonly PRIME_CANARY_AUTHORITY_REVIEWED_SKIP_COUNT="0"' \
+    'readonly PRIME_CANARY_FIXTURE_BYTE_COUNT="89632"' \
+    'readonly PRIME_CANARY_FIXTURE_SHA256="eae9573027fe736cab0d4aa319ae43f22231eaef9c55af91d73fbe3d87bc9ebd"' \
+    'readonly PRIME_CANARY_SUCCESS_STDOUT_BYTE_COUNT="121"' \
+    'readonly PRIME_CANARY_SUCCESS_STDOUT_SHA256="933bf087c8b15408aef9aaca1447dfbc07c9685ca0fda451d9db7fda4c1198af"' \
+    'readonly PRIME_CANARY_CAPTURE_BYTE_CAP="131072"' \
+    'readonly PRIME_CANARY_RECORD_PREFIX="prime-secure-child closed-fixture-canary observation: "' \
+    'readonly PRIME_CANARY_RECORD_SCHEMA_ID="prime_secure_child_process_evidence_closed_fixture_canary_outer_observation_v1"' \
+    'readonly PRIME_CANARY_RECORD_MAXIMUM_JSON_BYTES="4041"' \
+    'readonly PRIME_CANARY_RECORD_MAXIMUM_LINE_BYTES="4096"' \
+    'readonly PRIME_CANARY_SIGNED_INTEGER_MAX="9223372036854775807"' \
+    'readonly PRIME_CANARY_EPOCH_LEAF="prime-secure-child-process-evidence-closed-fixture-canary-reviewed-job-epoch"' \
+    'readonly PRIME_CANARY_CAPTURE_ROOT_LEAF="prime-secure-child-process-evidence-closed-fixture-canary-outer-capture"' \
+    'readonly PRIME_CANARY_MLX_REVISION="d37885a278f1c37484a94d0f401a418735e66519"' \
+    'readonly PRIME_CANARY_NUMERICS_REVISION="0c0290ff6b24942dadb83a929ffaaa1481df04a2"' \
+    'prime_canary_is_nonnegative_integer_at_most() {' \
+    'local LC_ALL=C' \
+    '[[ "$value" == "$maximum" || "$value" < "$maximum" ]]' \
+    '"${GITHUB_ACTIONS:-}" == "true"' \
+    '"${GITHUB_REPOSITORY:-}" == "Ergentics/ergentics-prime"' \
+    '"${GITHUB_EVENT_NAME:-}" == "push"' \
+    '"${GITHUB_REF:-}" == "refs/heads/main"' \
+    '"${GITHUB_JOB:-}" == "trusted-main-compile"' \
+    '"${GITHUB_RUN_ATTEMPT:-}" == "1"' \
+    '"${EXACT_REVISION:-}" == "$prime_canary_exact_revision"' \
+    'local observed_head observed_status symbolic_status' \
+    'observed_head="$(git -C "$repository" rev-parse HEAD 2>/dev/null)" || return 1' \
+    'observed_status="$(git -C "$repository" status \' \
+    '--porcelain=v1 --untracked-files=all' \
+    '&& "$observed_head" == "$prime_canary_exact_revision"' \
+    '&& -z "$observed_status" ]] || return 1' \
+    'if git -C "$repository" symbolic-ref -q HEAD >/dev/null 2>&1; then' \
+    'symbolic_status="$?"' \
+    '[[ "$symbolic_status" == "1" ]] || return 1' \
+    'cat-file -p "$revision"' \
+    '== "$PRIME_CANARY_AUTHORITY_CLOSURE_TREE"' \
+    '== "$PRIME_CANARY_AUTHORITY_CLOSURE_FIRST_PARENT' \
+    '$PRIME_CANARY_AUTHORITY_CLOSURE_SECOND_PARENT"' \
+    'expected_status=$' \
+    'M\t.github/scripts/prime-ci-active-root-quarantine.sh' \
+    'A\t.github/scripts/prime-ci-secure-child-process-evidence-closed-fixture-canary.sh' \
+    'M\t.github/workflows/prime-active-root-quarantine.yml' \
+    'prime_canary_epoch_path_metadata="$(prime_canary_file_metadata "$epoch_path")"' \
+    '"$epoch_mode" == "400"' \
+    '"$epoch_uid" == "$(id -u)"' \
+    '"$epoch_gid" == "$(id -g)"' \
+    '"$epoch_links" == "1"' \
+    '"$prime_canary_epoch_value" "$PRIME_CANARY_SIGNED_INTEGER_MAX" || return 1' \
+    'expected_epoch_byte_count=$((${#prime_canary_epoch_value} + 1))' \
+    '"$(prime_canary_file_byte_count "$epoch_path")" == "$expected_epoch_byte_count"' \
+    'cmp -s "$epoch_path" <(printf '\''%s\n'\'' "$prime_canary_epoch_value") || return 1' \
+    'prime_canary_epoch_sha="$(prime_canary_sha256_file "$epoch_path")"' \
+    '"$(prime_canary_file_metadata "$epoch_path")" == "$prime_canary_epoch_path_metadata"' \
+    '"$(prime_canary_sha256_file "$epoch_path")" == "$prime_canary_epoch_sha"' \
+    '"$(prime_canary_file_inode_and_size "$epoch_path")"' \
+    '"$(prime_canary_file_inode_and_size /dev/fd/9)"' \
+    '"$(prime_canary_sha256_file /dev/fd/9)" == "$prime_canary_epoch_sha"' \
+    '"$elapsed" -le "4200"' \
+    '$((4500 - elapsed)) -ge "300"' \
+    '"$now" "$PRIME_CANARY_SIGNED_INTEGER_MAX" || return 1' \
+    '"$prime_canary_epoch_value" "$now" || return 1' \
+    '"$observed_byte_count" "$PRIME_CANARY_CAPTURE_BYTE_CAP" || return 1' \
+    '"$prefix_bytes" "$observed_byte_count" || return 1' \
+    '"$runner_temp/ergentics-mlx-swift.git"' \
+    '"$runner_temp/prime-active-root-build/repositories/swift-numerics-d936ec6c"' \
+    "'refs/heads/prime-pinned^{commit}'" \
+    "'refs/tags/1.1.1^{commit}'" \
+    '--disable-dependency-cache' \
+    '--manifest-cache local' \
+    '--disable-netrc' \
+    '--disable-keychain' \
+    '--force-resolved-versions' \
+    'prime_canary_fixture_path="$bin_path/PrimeValidationWorkflowFixtureChild"' \
+    'prime_canary_adapter_path="$bin_path/PrimeValidationWorkflowSecureChildIntegration"' \
+    'prime_canary_adapter_metadata="$(prime_canary_file_metadata "$prime_canary_adapter_path")"' \
+    'prime_canary_fixture_metadata="$(prime_canary_file_metadata "$prime_canary_fixture_path")"' \
+    'prime_canary_adapter_fd_metadata="$(prime_canary_file_metadata /dev/fd/7)"' \
+    'prime_canary_fixture_fd_metadata="$(prime_canary_file_metadata /dev/fd/8)"' \
+    'exec 3>&1 || return 1' \
+    'if ! exec >/dev/null 2>/dev/null; then' \
+    'exec 3>&- 2>/dev/null || true' \
+    'trap prime_canary_exit_trap EXIT || {' \
+    'if [[ "${prime_canary_record_emitted:-false}" != "true" ]]; then' \
+    'prime_canary_emit_record "UNCLASSIFIED" || true' \
+    'builtin compgen -A function' \
+    'builtin compgen -e' \
+    'builtin export -n -f "$function_name"' \
+    'builtin export -n "$environment_name"' \
+    'builtin export TMPDIR="$fixed_tmpdir"' \
+    'prime_canary_attempt_consumed=true' \
+    'prime_canary_classification_complete=false' \
+    'prime_canary_classified_result_code="null"' \
+    'prime_canary_classification_complete=true' \
+    'prime_canary_classified_result_code="$result_code"' \
+    '"$prime_canary_classification_complete" == "true"' \
+    '"$prime_canary_classified_result_code" == "$result_code"' \
+    '"$prime_canary_classified_result_code" == "PASS"' \
+    'PIN_MISMATCH)' \
+    '"$prime_canary_adapter_bytes" != "null"' \
+    '"$prime_canary_adapter_bytes" "$PRIME_CANARY_SIGNED_INTEGER_MAX" || return 1' \
+    '"$prime_canary_adapter_sha" != "null"' \
+    '"$prime_canary_fixture_bytes" == "null"' \
+    '"$prime_canary_fixture_sha" == "null"' \
+    '"$prime_canary_execution_observation" == "observed_true"' \
+    '"$prime_canary_execution_observation" == "unavailable"' \
+    '"$prime_canary_shell_status" == "70"' \
+    '"$prime_canary_shell_status" != "0"' \
+    '"$prime_canary_stdout_count" == "0"' \
+    '"$prime_canary_stderr_count" -gt "0"' \
+    'prime_canary_stream_measurements_still_match() {' \
+    '"$(prime_canary_file_byte_count "$prime_canary_stdout_path")"' \
+    '== "$prime_canary_stdout_count"' \
+    '"$(prime_canary_sha256_file "$prime_canary_stdout_path")"' \
+    '== "$prime_canary_stdout_sha"' \
+    '"$(prime_canary_file_byte_count "$prime_canary_stderr_path")"' \
+    '== "$prime_canary_stderr_count"' \
+    '"$(prime_canary_sha256_file "$prime_canary_stderr_path")"' \
+    '== "$prime_canary_stderr_sha"' \
+    '&& ( "$prime_canary_cleanup_absence" == "observed_true"' \
+    '|| "$prime_canary_cleanup_absence" == "observed_false" ) ]] || return 1' \
+    '"$prime_canary_cleanup_absence" == "observed_false"' \
+    '"$prime_canary_adapter_path" "$prime_canary_fixture_path"' \
+    '</dev/null >"$prime_canary_stdout_path" 2>"$prime_canary_stderr_path"' \
+    '3>&- 7<&- 8<&- 9<&-' \
+    '/bin/unlink "$prime_canary_stdout_path"' \
+    '/bin/unlink "$prime_canary_stderr_path"' \
+    '/bin/rmdir "$prime_canary_capture_root"' \
+    'json="$(jq -cnS' \
+    '"$(printf '\''%s'\'' "$json" | jq -cS . 2>/dev/null)" == "$json"' \
+    'printf '\''%s%s\n'\'' "$PRIME_CANARY_RECORD_PREFIX" "$json" >&3' \
+    'trap prime_canary_exit_trap EXIT'; do
+    grep -Fq -- \
+        "$required_secure_child_process_evidence_closed_fixture_canary_launcher_value" \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher" ||
+        die "secure-child process/evidence closed fixture-canary launcher lost a required frozen value: $required_secure_child_process_evidence_closed_fixture_canary_launcher_value"
+done
+[[ "$(grep -Ec -- '^[[:space:]]+swift build \\$' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "3" \
+    && "$(grep -Fxc -- \
+        '            --product PrimeValidationWorkflowFixtureChild \' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "1" \
+    && "$(grep -Fxc -- \
+        '            --product PrimeValidationWorkflowSecureChildIntegration \' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "1" \
+    && "$(grep -Ec -- '^[[:space:]]+--show-bin-path' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "1" \
+    && "$(grep -Ec -- '^[[:space:]]+GIT_CONFIG_COUNT=3 \\$' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "3" \
+    && "$(grep -Fc -- 'GIT_CONFIG_KEY_0="url.${mlx_url}.insteadOf"' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "3" \
+    && "$(grep -Fc -- 'GIT_CONFIG_VALUE_0="$PRIME_CANARY_MLX_ORIGIN"' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "3" \
+    && "$(grep -Fc -- 'GIT_CONFIG_KEY_1="url.${numerics_url}.insteadOf"' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "3" \
+    && "$(grep -Fc -- 'GIT_CONFIG_VALUE_1="$PRIME_CANARY_NUMERICS_ORIGIN"' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "3" \
+    && "$(grep -Fc -- "GIT_CONFIG_KEY_2='protocol.file.allow'" \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "3" \
+    && "$(grep -Fc -- "GIT_CONFIG_VALUE_2='always'" \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "3" \
+    && "$(grep -Ec -- '^[[:space:]]+--configuration release \\$' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "3" \
+    && "$(grep -Ec -- '^[[:space:]]+--scratch-path "[$]prime_canary_scratch" \\$' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "3" \
+    && "$(grep -Ec -- '^[[:space:]]+--cache-path "[$]prime_canary_cache" \\$' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "3" \
+    && "$(grep -Ec -- '^[[:space:]]+--config-path "[$]prime_canary_config" \\$' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "3" \
+    && "$(grep -Ec -- '^[[:space:]]+--security-path "[$]prime_canary_security" \\$' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "3" \
+    && "$(grep -Ec -- '^[[:space:]]+[(]umask 0077; mkdir "[$]prime_canary_(scratch|cache|config|security)"[)] [|][|] return 1$' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "4" \
+    && "$(grep -Fxc -- \
+        '    (umask 0077; mkdir "$prime_canary_capture_root") || return 1' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "1" \
+    && "$(grep -Ec -- '^[[:space:]]+[(]umask 0177; set -o noclobber; : > "[$]prime_canary_(stdout|stderr)_path"[)] [|][|] return 1$' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "2" \
+    && "$(grep -Fxc -- '    exec 9< "$epoch_path" || return 1' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "1" \
+    && "$(grep -Fxc -- '    exec 3>&1 || return 1' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "1" \
+    && "$(grep -Fxc -- '    if ! exec >/dev/null 2>/dev/null; then' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "1" \
+    && "$(grep -Fxc -- '        exec 3>&- 2>/dev/null || true' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "2" \
+    && "$(grep -Fxc -- '    trap prime_canary_exit_trap EXIT || {' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "1" \
+    && "$(grep -Fxc -- \
+        '    if [[ "${prime_canary_record_emitted:-false}" != "true" ]]; then' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "1" \
+    && "$(grep -Fxc -- '        prime_canary_emit_record "UNCLASSIFIED" || true' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "1" \
+    && "$(grep -Fxc -- \
+        '    cmp -s "$epoch_path" <(printf '\''%s\n'\'' "$prime_canary_epoch_value") || return 1' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "1" \
+    && "$(grep -Fxc -- '    exec 9<&-' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "1" \
+    && "$(grep -Fxc -- '    exec 7< "$prime_canary_adapter_path" || return 1' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "2" \
+    && "$(grep -Fxc -- '    exec 8< "$prime_canary_fixture_path" || return 1' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "2" \
+    && "$(grep -Fc -- 'prime_canary_sha256_file /dev/fd/7' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "2" \
+    && "$(grep -Fc -- 'prime_canary_sha256_file /dev/fd/8' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "2" \
+    && "$(grep -Fc -- 'prime_canary_sha256_file /dev/fd/9' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "1" \
+    && "$(grep -Fxc -- '    prime_canary_attempt_consumed=true' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "1" \
+    && "$(grep -Fxc -- '    prime_canary_classification_complete=false' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "1" \
+    && "$(grep -Fxc -- '    prime_canary_classified_result_code="null"' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "1" \
+    && "$(grep -Fxc -- '    prime_canary_classification_complete=true' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "1" \
+    && "$(grep -Fxc -- '    prime_canary_classified_result_code="$result_code"' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "1" \
+    && "$(grep -Fc -- 'prime_canary_stream_measurements_still_match' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "4" \
+    && "$(grep -Fxc -- \
+        '    if ! prime_canary_stream_measurements_still_match; then' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "2" \
+    && "$(grep -Fxc -- \
+        '        if ! prime_canary_stream_measurements_still_match; then' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "1" \
+    && "$(grep -Fxc -- \
+        '    if git -C "$repository" symbolic-ref -q HEAD >/dev/null 2>&1; then' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "1" \
+    && "$(grep -Fxc -- '        symbolic_status="$?"' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "1" \
+    && "$(grep -Fxc -- '    [[ "$symbolic_status" == "1" ]] || return 1' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "1" \
+    && "$(grep -Fxc -- \
+        '            && ( "$prime_canary_cleanup_absence" == "observed_true" \' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "1" \
+    && "$(grep -Fxc -- \
+        '                || "$prime_canary_cleanup_absence" == "observed_false" ) ]] || return 1' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "1" \
+    && "$(grep -Fc -- 'prime_canary_is_nonnegative_integer_at_most' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "12" \
+    && "$(grep -Fxc -- \
+        '            "$prime_canary_adapter_bytes" "$PRIME_CANARY_SIGNED_INTEGER_MAX" || return 1' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "1" \
+    && "$(grep -Fxc -- \
+        '        "$prime_canary_stdout_count" "$PRIME_CANARY_CAPTURE_BYTE_CAP" || return 1' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "2" \
+    && "$(grep -Fxc -- \
+        '        "$prime_canary_stderr_count" "$PRIME_CANARY_CAPTURE_BYTE_CAP" || return 1' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "2" \
+    && "$(grep -Fxc -- \
+        '            "$prime_canary_shell_status" "255" || return 1' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "1" \
+    && "$(grep -Fxc -- \
+        '        "$observed_byte_count" "$PRIME_CANARY_CAPTURE_BYTE_CAP" || return 1' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "1" \
+    && "$(grep -Fxc -- \
+        '        "$prefix_bytes" "$observed_byte_count" || return 1' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "1" \
+    && "$(grep -Fxc -- \
+        '        "$prime_canary_epoch_value" "$PRIME_CANARY_SIGNED_INTEGER_MAX" || return 1' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "1" \
+    && "$(grep -Fxc -- \
+        '        "$now" "$PRIME_CANARY_SIGNED_INTEGER_MAX" || return 1' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "1" \
+    && "$(grep -Fxc -- '        "$prime_canary_epoch_value" "$now" || return 1' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "1" \
+    && "$(grep -Fxc -- '    "$prime_canary_adapter_path" "$prime_canary_fixture_path" \' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "1" \
+    && "$(grep -Fxc -- '    done < <(builtin compgen -e)' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "1" \
+    && "$(grep -Fxc -- '    done < <(builtin compgen -A function)' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "1" \
+    && "$(grep -Fxc -- \
+        '        builtin export -n -f "$function_name" 2>/dev/null || return 1' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "1" \
+    && "$(grep -Fxc -- \
+        '        builtin export -n "$environment_name" 2>/dev/null || return 1' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "1" \
+    && "$(grep -Fxc -- '    builtin export TMPDIR="$fixed_tmpdir"' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "1" \
+    && "$(grep -Fxc -- '    [[ "$-" == *p* ]] || return 1' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "1" \
+    && "$(grep -Fc -- 'done < <(compgen' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "0" \
+    && "$(grep -Ec -- '^[[:space:]]+export ' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "0" \
+    && "$(grep -Fxc -- '    if ! ulimit -f 128; then' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "1" \
+    && "$(grep -Ec -- '^[[:space:]]*/bin/unlink ' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "2" \
+    && "$(grep -Ec -- '^[[:space:]]*/bin/rmdir ' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "1" \
+    && "$(grep -Ec -- '^[[:space:]]*trap ' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "2" \
+    && "$(grep -Fxc -- '    json="$(jq -cnS \' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "1" \
+    && "$(grep -Fc -- 'jq -cS .' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "1" \
+    && "$(grep -Fxc -- \
+        '    printf '\''%s%s\n'\'' "$PRIME_CANARY_RECORD_PREFIX" "$json" >&3 || return 1' \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "1" ]] ||
+    die "secure-child process/evidence closed fixture-canary launcher command topology changed"
+for expected_secure_child_process_evidence_closed_fixture_canary_launcher_tuple_count_and_literal in \
+    '2 prime_canary_file_metadata "$prime_canary_adapter_path"' \
+    '2 prime_canary_file_metadata /dev/fd/7' \
+    '2 prime_canary_file_inode_and_size "$prime_canary_adapter_path"' \
+    '2 prime_canary_file_inode_and_size /dev/fd/7' \
+    '2 prime_canary_file_byte_count /dev/fd/7' \
+    '2 prime_canary_sha256_file /dev/fd/7' \
+    '2 prime_canary_file_metadata "$prime_canary_fixture_path"' \
+    '2 prime_canary_file_metadata /dev/fd/8' \
+    '2 prime_canary_file_inode_and_size "$prime_canary_fixture_path"' \
+    '2 prime_canary_file_inode_and_size /dev/fd/8' \
+    '2 prime_canary_file_byte_count /dev/fd/8' \
+    '2 prime_canary_sha256_file /dev/fd/8' \
+    '2 prime_canary_file_metadata "$epoch_path"' \
+    '1 prime_canary_file_metadata /dev/fd/9' \
+    '1 prime_canary_file_inode_and_size "$epoch_path"' \
+    '1 prime_canary_file_inode_and_size /dev/fd/9' \
+    '1 prime_canary_file_byte_count "$epoch_path"' \
+    '1 prime_canary_sha256_file /dev/fd/9' \
+    '2 prime_canary_file_byte_count "$prime_canary_stdout_path"' \
+    '2 prime_canary_sha256_file "$prime_canary_stdout_path"' \
+    '2 prime_canary_file_byte_count "$prime_canary_stderr_path"' \
+    '2 prime_canary_sha256_file "$prime_canary_stderr_path"'; do
+    expected_secure_child_process_evidence_closed_fixture_canary_launcher_tuple_count="${expected_secure_child_process_evidence_closed_fixture_canary_launcher_tuple_count_and_literal%% *}"
+    secure_child_process_evidence_closed_fixture_canary_launcher_tuple_literal="${expected_secure_child_process_evidence_closed_fixture_canary_launcher_tuple_count_and_literal#* }"
+    [[ "$(grep -Fc -- \
+        "$secure_child_process_evidence_closed_fixture_canary_launcher_tuple_literal" \
+        "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")" \
+        == "$expected_secure_child_process_evidence_closed_fixture_canary_launcher_tuple_count" ]] ||
+        die "secure-child process/evidence closed fixture-canary launcher identity tuple topology changed: $secure_child_process_evidence_closed_fixture_canary_launcher_tuple_literal"
+done
+readonly secure_child_process_evidence_closed_fixture_canary_launcher_exit_trap_block="$(awk '
+    /^prime_canary_exit_trap\(\) \{$/ { inside = 1 }
+    inside { print }
+    inside && /^}$/ { exit }
+' "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher")"
+[[ "$(grep -Fc -- 'prime_canary_projection_ready' \
+        <<< "$secure_child_process_evidence_closed_fixture_canary_launcher_exit_trap_block")" \
+        == "0" ]] ||
+    die "secure-child process/evidence closed fixture-canary launcher trap made its best-effort UNCLASSIFIED attempt conditional on projection readiness"
+! grep -Eiq -- \
+    '(^|[^[:alnum:]_])(python3?|clang[+][+]|g[+][+]|c[+][+]|curl|wget|flock|fsync|lease|acquire|reacquire|descriptor[_-]transfer|pkill|pgrep|disown)([^[:alnum:]_]|$)|(^|[^[:alnum:]_])release[[:space:]]*[(]' \
+    "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher" ||
+    die "secure-child process/evidence closed fixture-canary launcher gained a forbidden language, network, lease, durability, or process capability"
+! grep -Eq -- \
+    '(^|[^[:alnum:]_])(PrimeMetalDeviceLease|Native300|watchdog|supervisor)([^[:alnum:]_]|$)|import[[:space:]]+(MLX|Metal)' \
+    "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher" ||
+    die "secure-child process/evidence closed fixture-canary launcher gained a forbidden domain or watchdog capability"
+! grep -Eq -- \
+    '(^|[[:space:]])swift[[:space:]]+(run|test)([[:space:]]|$)|--build-tests|git([^[:cntrl:]]*[[:space:]])(fetch|clone|pull|ls-remote)([[:space:]]|$)|(^|[[:space:]])(bash|sh)[[:space:]]+-c([[:space:]]|$)|(^|[[:space:]])(eval|env|source|gh|ssh|scp|nc)([[:space:]]|$)|^[[:space:]]*[.][[:space:]]' \
+    "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher" ||
+    die "secure-child process/evidence closed fixture-canary launcher gained an unauthorized build, fetch, shell, or eval path"
+! grep -Eq -- \
+    'actions/upload-artifact|GITHUB_STEP_SUMMARY|GITHUB_OUTPUT|::set-output|(^|[[:space:];|&])(/bin/)?(rm|find|xargs)([[:space:];|&]|$)' \
+    "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher" ||
+    die "secure-child process/evidence closed fixture-canary launcher gained persistence, artifact, recursive, wildcard, or scan cleanup"
+! grep -Eq -- \
+    '[[:space:]]&[[:space:]]*($|#)|(^|[[:space:];|&])(/bin/)?(wait|kill|jobs|disown|ps|cat|tee)([[:space:];|&]|$)' \
+    "$secure_child_process_evidence_closed_fixture_canary_mechanics_launcher" ||
+    die "secure-child process/evidence closed fixture-canary launcher gained a background, wait, signal, or job-control path"
+readonly initial_prime_clean_status_block_sha256="$(awk '
+    /^initial_prime_status=/ { inside = 1 }
+    inside { print }
+    inside && /die "Prime checkout is dirty"$/ { exit }
+' "$script_directory/prime-ci-active-root-quarantine.sh" | \
+    shasum -a 256 | awk '{print $1}')"
+readonly final_prime_clean_status_block_sha256="$(awk '
+    /^final_prime_status=/ { inside = 1 }
+    inside { print }
+    inside && /die "Prime checkout changed during metadata validation"$/ {
+        exit
+    }
+' "$script_directory/prime-ci-active-root-quarantine.sh" | \
+    shasum -a 256 | awk '{print $1}')"
+[[ "$initial_prime_clean_status_block_sha256" \
+        == "341afc082a9100d66d915416a10be80e0794995ee14aeb42bd9aad3e05b86f2b" \
+    && "$final_prime_clean_status_block_sha256" \
+        == "c7f1562fd1c7c28ce59522703357a97747dc459112fb9515843400e0fc0717c0" ]] ||
+    die "Prime checkout clean-status validation lost its fail-closed capture shape"
+[[ "$(git -C "$prime_root" ls-files -s -- \
+        'Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' | awk '{print $1, $2}')" \
+        == '100644 da069b70bead2f5799f29c4294a09c81d4146e06' \
+    && "$(stat -f %z \
+        "$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift")" == "546" \
+    && "$(wc -l < \
+        "$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift" | awk '{print $1}')" == "13" \
+    && "$(shasum -a 256 \
+        "$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift" | awk '{print $1}')" \
+        == '9b4c4878b7b22493da4715b31b28d7f1f98dff75f89e9053c9415b1c9ffff149' ]] ||
+    die "secure-child process/evidence closed fixture-canary mechanics changed byte-frozen embedded provenance"
 readonly secure_child_process_evidence_closed_fixture_canary_authority_predecessor_revision="232a17e8f58a297919366d963ee1d7bc38cdbaee"
 readonly secure_child_process_evidence_closed_fixture_canary_authority_predecessor_tree="c2a351449824ec15bc3154158d10f28c8a8310ad"
 readonly expected_secure_child_process_evidence_closed_fixture_canary_authority_preserved_index_sha256="e8dd30060ea370f01e135f8c2e379ab2d9bb6138dca9d928c395cdd9f967f291"
@@ -119,6 +809,10 @@ readonly observed_secure_child_process_evidence_closed_fixture_canary_authority_
                     == "$secure_child_process_evidence_closed_fixture_canary_authority_test_relative_path" ]]; then
                 continue
             fi
+            if [[ "$relative_path" \
+                    == "$secure_child_process_evidence_closed_fixture_canary_launcher_relative_path" ]]; then
+                continue
+            fi
             printf '%s\n' "$index_record"
         done
 } | LC_ALL=C sort | shasum -a 256 | awk '{print $1}')"
@@ -133,7 +827,8 @@ readonly observed_secure_child_process_evidence_closed_fixture_canary_authority_
     die "secure-child process/evidence closed fixture-canary authority predecessor tree changed"
 readonly expected_secure_child_process_evidence_closed_fixture_canary_authority_status=$'M\t.github/scripts/prime-ci-active-root-quarantine.sh\nM\t.github/workflows/prime-active-root-quarantine.yml\nM\tSources/PrimeCore/PrimeEmbeddedBuildProvenance.swift\nA\tSources/PrimeCore/PrimeSecureChildProcessEvidenceClosedFixtureCanaryAuthority.swift\nA\tTests/PrimeCoreTests/PrimeSecureChildProcessEvidenceClosedFixtureCanaryAuthorityTests.swift'
 [[ "$(git -C "$prime_root" diff --name-status --no-renames \
-        "$secure_child_process_evidence_closed_fixture_canary_authority_predecessor_revision" HEAD)" \
+        "$secure_child_process_evidence_closed_fixture_canary_authority_predecessor_revision" \
+        "$secure_child_process_evidence_closed_fixture_canary_authority_closure_revision")" \
         == "$expected_secure_child_process_evidence_closed_fixture_canary_authority_status" ]] ||
     die "secure-child process/evidence closed fixture-canary authority successor is not the exact ordered five paths"
 for exact_secure_child_process_evidence_closed_fixture_canary_authority_path in \
@@ -174,7 +869,8 @@ secure_child_process_evidence_layer_a_path_is_excluded() {
         "$secure_child_lifecycle_test_relative_path"|\
         "$secure_external_child_capture_test_relative_path"|\
         "$secure_child_process_evidence_closed_fixture_canary_authority_source_relative_path"|\
-        "$secure_child_process_evidence_closed_fixture_canary_authority_test_relative_path")
+        "$secure_child_process_evidence_closed_fixture_canary_authority_test_relative_path"|\
+        "$secure_child_process_evidence_closed_fixture_canary_launcher_relative_path")
             return 0
             ;;
         *)
@@ -210,7 +906,9 @@ readonly observed_secure_child_process_evidence_layer_a_status="$(git -C "$prime
         if [[ "$relative_path" \
                 == "$secure_child_process_evidence_closed_fixture_canary_authority_source_relative_path" \
             || "$relative_path" \
-                == "$secure_child_process_evidence_closed_fixture_canary_authority_test_relative_path" ]]; then
+                == "$secure_child_process_evidence_closed_fixture_canary_authority_test_relative_path" \
+            || "$relative_path" \
+                == "$secure_child_process_evidence_closed_fixture_canary_launcher_relative_path" ]]; then
             continue
         fi
         printf '%s\t%s\n' "$change" "$relative_path"
@@ -1135,8 +1833,19 @@ grep -Fq -- 'runs-on: macos-15' "$workflow_path" ||
         /^  trusted-main-compile:$/ { inside = 1; next }
         inside && /^      - name:/ { count += 1 }
         END { print count + 0 }
-    ' "$workflow_path")" == "5" ]] ||
+    ' "$workflow_path")" == "7" ]] ||
     die "hosted quarantine workflow retirement step topology changed"
+readonly expected_trusted_main_workflow_step_names=$'Create the closed-fixture canary reviewed-job epoch\nRecord the hosted Apple toolchain\nCheck out reviewed main exactly\nFetch the exact private dependency without evaluating Prime\nCompile and run the focused contracts without a credential\nRun the Prime-owned decoder on live Metal\nRun the closed secure-child fixture canary exactly once'
+readonly observed_trusted_main_workflow_step_names="$(awk '
+    /^  trusted-main-compile:$/ { inside = 1; next }
+    inside && /^      - name:/ {
+        sub(/^      - name: /, "")
+        print
+    }
+' "$workflow_path")"
+[[ "$observed_trusted_main_workflow_step_names" \
+        == "$expected_trusted_main_workflow_step_names" ]] ||
+    die "hosted quarantine reviewed-job exact step order changed"
 [[ "$(grep -Fxc -- '    runs-on: macos-15' "$workflow_path")" == "1" \
     && "$(grep -Fxc -- '    runs-on: macos-26' "$workflow_path")" == "1" \
     && "$(awk '
@@ -1147,17 +1856,54 @@ grep -Fq -- 'runs-on: macos-15' "$workflow_path" ||
     && "$(awk '
         /^  trusted-main-compile:$/ { inside = 1; next }
         inside && /^    timeout-minutes:/ { print $2 }
-    ' "$workflow_path")" == "60" ]] ||
+    ' "$workflow_path")" == "75" ]] ||
     die "hosted quarantine workflow retirement runner or timeout boundary changed"
 [[ "$(grep -Fxc -- \
-        '          git -C ergentics-prime fetch --depth=2 --no-tags --no-write-fetch-head origin "$EXACT_REVISION" a4d8583fa7c59f885002ee06a07c1d5264c0c223' \
+        '          git -C ergentics-prime fetch --depth=2 --no-tags --no-write-fetch-head origin "$EXACT_REVISION" 232a17e8f58a297919366d963ee1d7bc38cdbaee a4d8583fa7c59f885002ee06a07c1d5264c0c223' \
         "$workflow_path")" == "2" \
+    && "$(grep -Fc -- \
+        'git -C ergentics-prime fetch --depth=' "$workflow_path")" == "2" \
     && "$(grep -Fxc -- \
         "    if: github.event_name == 'push' && github.ref == 'refs/heads/main'" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- '    needs: active-root' "$workflow_path")" == "1" \
     && "$(grep -Fxc -- '    needs: trusted-main-compile' "$workflow_path")" == "0" ]] ||
     die "hosted quarantine workflow bounded pinned-lineage fetch boundary changed"
+[[ "$(grep -Fxc -- \
+        '          active_checkout_status="$(git -C ergentics-prime status --porcelain=v1 --untracked-files=all)" || exit 1' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- '          readonly active_checkout_status' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- '          [[ -z "$active_checkout_status" ]]' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        '          reviewed_checkout_status="$(git -C ergentics-prime status --porcelain=v1 --untracked-files=all)" || exit 1' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- '          readonly reviewed_checkout_status' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- '          [[ -z "$reviewed_checkout_status" ]]' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        '          focused_checkout_status="$(git status --porcelain=v1 --untracked-files=all)" || exit 1' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- '          readonly focused_checkout_status' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- '          [[ -z "$focused_checkout_status" ]]' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        '          active_parse_status="$(git status --porcelain=v1 --untracked-files=all)" || exit 1' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- '          readonly active_parse_status' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- '          [[ -z "$active_parse_status" ]]' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        '[[ -z "$(git -C ergentics-prime status --porcelain=v1 --untracked-files=all)" ]]' \
+        "$workflow_path")" == "0" \
+    && "$(grep -Fc -- \
+        '[[ -z "$(git status --porcelain=v1 --untracked-files=all)" ]]' \
+        "$workflow_path")" == "0" ]] ||
+    die "hosted quarantine workflow exact checkout or pre-launch clean validation lost its fail-closed capture shape"
 readonly active_root_workflow_job_block="$(awk '
     /^  active-root:$/ { inside = 1 }
     /^  trusted-main-compile:$/ { inside = 0 }
@@ -1167,6 +1913,64 @@ readonly trusted_main_workflow_job_block="$(awk '
     /^  trusted-main-compile:$/ { inside = 1 }
     inside { print }
 ' "$workflow_path")"
+emit_secure_child_process_evidence_closed_fixture_canary_epoch_step_block() {
+    awk '
+    /^      - name: Create the closed-fixture canary reviewed-job epoch$/ {
+        inside = 1
+    }
+    inside && /^      - name:/ &&
+        $0 !~ /Create the closed-fixture canary reviewed-job epoch/ {
+        exit
+    }
+    inside { print }
+' "$workflow_path"
+}
+readonly secure_child_process_evidence_closed_fixture_canary_epoch_step_block_sha256="$(
+    emit_secure_child_process_evidence_closed_fixture_canary_epoch_step_block |
+        shasum -a 256 | awk '{print $1}'
+)"
+readonly secure_child_process_evidence_closed_fixture_canary_epoch_step_block="$(
+    emit_secure_child_process_evidence_closed_fixture_canary_epoch_step_block
+)"
+[[ "$secure_child_process_evidence_closed_fixture_canary_epoch_step_block_sha256" \
+        == "321bf0b7d43019079eba71fcbb4071dceb319b3b4a48e068d69d7ed4f9e3aed1" \
+    && "$(grep -Fxc -- '          epoch="$(date +%s)" || exit 1' \
+        <<< "$secure_child_process_evidence_closed_fixture_canary_epoch_step_block")" \
+        == "1" \
+    && "$(grep -Fxc -- '          readonly epoch' \
+        <<< "$secure_child_process_evidence_closed_fixture_canary_epoch_step_block")" \
+        == "1" \
+    && "$(grep -Fc -- 'readonly epoch="$(' \
+        <<< "$secure_child_process_evidence_closed_fixture_canary_epoch_step_block")" \
+        == "0" ]] ||
+    die "secure-child process/evidence closed fixture-canary reviewed-job epoch step changed"
+emit_secure_child_process_evidence_closed_fixture_canary_launcher_step_block() {
+    awk '
+    /^      - name: Run the closed secure-child fixture canary exactly once$/ {
+        inside = 1
+    }
+    inside { print }
+' "$workflow_path"
+}
+readonly secure_child_process_evidence_closed_fixture_canary_launcher_step_block_sha256="$(
+    emit_secure_child_process_evidence_closed_fixture_canary_launcher_step_block |
+        shasum -a 256 | awk '{print $1}'
+)"
+readonly secure_child_process_evidence_closed_fixture_canary_launcher_step_block="$(
+    emit_secure_child_process_evidence_closed_fixture_canary_launcher_step_block
+)"
+[[ "$secure_child_process_evidence_closed_fixture_canary_launcher_step_block_sha256" \
+        == "b86353c2efac0f1d99418616885ef11096c60c45eda53d72f37b2005e0deebc5" \
+    && "$(grep -Fxc -- \
+        '        run: /bin/bash -p .github/scripts/prime-ci-secure-child-process-evidence-closed-fixture-canary.sh' \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- 'continue-on-error' \
+        <<< "$secure_child_process_evidence_closed_fixture_canary_launcher_step_block")" == "0" ]] ||
+    die "secure-child process/evidence closed fixture-canary literal final launcher step changed"
+[[ "$(grep -Fxc -- \
+        "            echo 'Exact-main secure-child process/evidence closed fixture-canary authority merge b3402efd96d3ff893a0c2b73897cf48c9b313c8c, tree 7fb3f5505796a43c9db1537ca72f81e19367365f, ordered parents 232a17e8f58a297919366d963ee1d7bc38cdbaee then 82ae2c2611e62144c066db990be6eaf48fdff47a, and GitHub signature verification were valid. Unique push workflow run 31957009710 number 141 attempt 1 check suite 86653677663 passed with null previous-attempt URL and rerun count zero. Active job 95189063495 passed Latin 116; dependent reviewed job 95189438167 passed root 78 plus isolated groups 1, 1, 2, and 2 for isolated 6 and focused whole 84, then retained Metal 44, maintained runtime 1, and tokenizer 1 for live 46 and aggregate 130 XTests. The sole pure-authority test passed once, with zero failures, skips, Actions artifacts, closed-canary launcher or adapter invocations, fixture or capture mechanics, lease acquisitions, Python interpreters, or new C++ mechanics.'" \
+        "$workflow_path")" == "1" ]] ||
+    die "secure-child process/evidence closed fixture-canary authority exact-main evidence changed"
 [[ "$(grep -Fxc -- \
         '          bash .github/scripts/prime-ci-native-decoder-b-specific-native300m-trajectory-checkpoint-execution.sh' \
         "$workflow_path")" == "0" \
@@ -1786,6 +2590,10 @@ readonly tokenizer_compatibility_workflow_line="$(grep -nFx -- \
     die "reviewed-main retirement job lost a retained launcher or activated a retired one-shot"
 readonly live_decoder_workflow_block="$(awk '
     /^      - name: Run the Prime-owned decoder on live Metal$/ { inside = 1 }
+    inside &&
+        /^      - name: Run the closed secure-child fixture canary exactly once$/ {
+        exit
+    }
     inside { print }
 ' "$workflow_path")"
 readonly expected_live_decoder_workflow_block='      - name: Run the Prime-owned decoder on live Metal
@@ -4489,6 +5297,7 @@ readonly secure_child_process_evidence_implementation_authority_source="$prime_r
 readonly secure_child_process_evidence_implementation_authority_test="$prime_root/$secure_child_process_evidence_implementation_authority_test_relative_path"
 readonly secure_child_process_evidence_closed_fixture_canary_authority_source="$prime_root/$secure_child_process_evidence_closed_fixture_canary_authority_source_relative_path"
 readonly secure_child_process_evidence_closed_fixture_canary_authority_test="$prime_root/$secure_child_process_evidence_closed_fixture_canary_authority_test_relative_path"
+readonly secure_child_process_evidence_closed_fixture_canary_launcher="$prime_root/$secure_child_process_evidence_closed_fixture_canary_launcher_relative_path"
 readonly secure_child_process_plan="$prime_root/$secure_child_process_plan_relative_path"
 readonly secure_child_process_evidence="$prime_root/$secure_child_process_evidence_relative_path"
 readonly trusted_secure_child_process_capture="$prime_root/$trusted_secure_child_process_capture_relative_path"
@@ -18995,7 +19804,11 @@ readonly observed_secure_child_process_evidence_layer_a_test_methods="$(sed -n -
         == $'import Dispatch\nimport Foundation\nimport XCTest\n@testable import PrimeCore' ]] ||
     die "secure-child process/evidence Layer-A exact injected-value test inventory changed"
 
-[[ -z "$(git -C "$prime_root" status --porcelain=v1 --untracked-files=all)" ]] ||
+final_prime_status="$(git -C "$prime_root" status \
+    --porcelain=v1 --untracked-files=all)" ||
+    die "could not inspect the final Prime checkout status"
+readonly final_prime_status
+[[ -z "$final_prime_status" ]] ||
     die "Prime checkout changed during metadata validation"
 [[ "$(git -C "$prime_root" rev-parse HEAD)" == "$expected_prime_head" ]] ||
     die "Prime checkout changed commits during metadata validation"
