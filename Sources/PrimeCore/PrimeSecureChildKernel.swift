@@ -150,14 +150,16 @@ public struct PrimeValidationWorkflowFixtureChildResult:
 public final class PrimeValidationWorkflowFixtureChildCapability:
     @unchecked Sendable
 {
-    private let lock = NSLock()
-    private var consumed = false
     private let prepared: PrimeSecureChildPreparedFixture
+    private let capture:
+        PrimeTrustedSecureChildProcessCapture
 
     private init(
-        prepared: PrimeSecureChildPreparedFixture
+        prepared: PrimeSecureChildPreparedFixture,
+        capture: PrimeTrustedSecureChildProcessCapture
     ) {
         self.prepared = prepared
+        self.capture = capture
     }
 
     @available(macOS 26.0, *)
@@ -167,15 +169,25 @@ public final class PrimeValidationWorkflowFixtureChildCapability:
         privateResultDirectoryURL: URL,
         mode: PrimeValidationWorkflowFixtureChildMode
     ) throws -> Self {
-        Self(
-            prepared:
-                try PrimeSecureChildPreparedFixture(
-                    executableURL: executableURL,
-                    workingDirectoryURL:
-                        privateWorkingDirectoryURL,
-                    resultDirectoryURL:
-                        privateResultDirectoryURL,
-                    mode: mode
+        let plan = try PrimeSecureChildProcessPlanV1
+            .validationWorkflowFixture(
+                mode: mode
+            )
+        let prepared =
+            try PrimeSecureChildPreparedFixture(
+                executableURL: executableURL,
+                workingDirectoryURL:
+                    privateWorkingDirectoryURL,
+                resultDirectoryURL:
+                    privateResultDirectoryURL,
+                plan: plan
+            )
+        return Self(
+            prepared: prepared,
+            capture:
+                PrimeTrustedSecureChildProcessCapture(
+                    plan: plan,
+                    closedContext: prepared
                 )
         )
     }
@@ -184,17 +196,28 @@ public final class PrimeValidationWorkflowFixtureChildCapability:
     public func execute() throws
         -> PrimeValidationWorkflowFixtureChildResult
     {
-        lock.lock()
-        guard !consumed else {
-            lock.unlock()
+        let consumption:
+            PrimeTrustedSecureChildProcessCapture
+            .Consumption
+        do {
+            consumption = try capture.consume()
+        } catch {
             throw PrimeValidationWorkflowFixtureChildError
                 .rejected("capability_already_consumed")
         }
-        consumed = true
-        lock.unlock()
-        return try PrimeSecureChildKernel.execute(
-            prepared
-        )
+        let execution = try PrimeSecureChildExecutionKernel
+            .execute(
+                consumption: consumption,
+                prepared: prepared
+            )
+        guard let fixtureResult = execution.fixtureResult else {
+            throw PrimeValidationWorkflowFixtureChildError
+                .rejected(
+                    execution.operationalFailureCode
+                    ?? "execution_kernel_result"
+                )
+        }
+        return fixtureResult
     }
 }
 
@@ -269,65 +292,51 @@ struct PrimeSecureChildFixtureInvocation {
     let expectsResult: Bool
 
     init(
-        mode: PrimeValidationWorkflowFixtureChildMode,
+        plan: PrimeSecureChildProcessPlanV1,
         resultAbsolutePath: String
     ) throws {
+        let mode = plan.validationWorkflowFixtureMode
         self.mode = mode
-        orderedEnvironment = []
+        orderedEnvironment = plan.orderedEnvironment
         argumentZeroPolicy = mode == .logicalArgumentZero
             ? .swiftBuildCanary
             : .physicalExecutablePath
 
-        let values: (Int, Int, Int32, Bool, UInt64)
+        let values: (Int, Int, Int32, Bool)
         switch mode {
         case .pass, .logicalArgumentZero:
-            values = (0, 0, 0, true, 10)
+            values = (0, 0, 0, true)
         case .nonzeroExit:
-            values = (0, 0, 23, true, 10)
+            values = (0, 0, 23, true)
         case .boundedStreams:
-            values = (4_096, 2_048, 0, true, 10)
+            values = (4_096, 2_048, 0, true)
         case .overflow:
-            values = (131_072, 131_072, 0, true, 10)
+            values = (131_072, 131_072, 0, true)
         case .hang:
-            values = (0, 0, 0, true, 1)
+            values = (0, 0, 0, true)
         case .selfSignal:
-            values = (0, 0, 0, true, 10)
+            values = (0, 0, 0, true)
         case .descendantRetainsStreams:
-            values = (0, 0, 0, true, 1)
+            values = (0, 0, 0, true)
         case .exitWithoutResult:
-            values = (0, 0, 0, false, 10)
+            values = (0, 0, 0, false)
         }
         configuredPayloadStandardOutputBytes = values.0
         configuredPayloadStandardErrorBytes = values.1
         configuredExitCode = values.2
         expectsResult = values.3
-        maximumWallNanoseconds = values.4 * 1_000_000_000
-
-        var exact = ["--mode", mode.rawValue]
-        if expectsResult {
-            try Self.requireFixtureResultPath(
-                resultAbsolutePath
-            )
-            exact += [
-                "--result-path",
-                resultAbsolutePath,
-            ]
-        }
-        if mode == .nonzeroExit {
-            exact += [
-                "--exit-code",
-                String(configuredExitCode),
-            ]
-        }
-        if mode == .boundedStreams || mode == .overflow {
-            exact += [
-                "--stdout-bytes",
-                String(configuredPayloadStandardOutputBytes),
-                "--stderr-bytes",
-                String(configuredPayloadStandardErrorBytes),
-            ]
-        }
-        arguments = exact
+        maximumWallNanoseconds =
+            plan.maximumWallNanoseconds
+        try Self.requireFixtureResultPathIfRequired(
+            resultAbsolutePath,
+            expectsResult: expectsResult
+        )
+        arguments = try plan.exactArguments(
+            resultAbsolutePath:
+                expectsResult
+                ? resultAbsolutePath
+                : ""
+        )
     }
 
     var expectedResultData: Data? {
@@ -353,9 +362,11 @@ struct PrimeSecureChildFixtureInvocation {
         )
     }
 
-    private static func requireFixtureResultPath(
-        _ path: String
+    private static func requireFixtureResultPathIfRequired(
+        _ path: String,
+        expectsResult: Bool
     ) throws {
+        guard expectsResult else { return }
         guard path.hasPrefix("/"),
               path != "/",
               !path.hasSuffix("/"),
@@ -404,20 +415,24 @@ private enum PrimeSecureChildFixtureSemantic {
     }
 }
 
-private final class PrimeSecureChildPreparedFixture:
+final class PrimeSecureChildPreparedFixture:
     @unchecked Sendable
 {
     let mode: PrimeValidationWorkflowFixtureChildMode
-    let executable: PrimeSecureChildHeldExecutable
-    let workingDirectory: PrimeSecureChildHeldDirectory
-    let resultDirectory: PrimeSecureChildHeldDirectory
-    let invocation: PrimeSecureChildFixtureInvocation
+    fileprivate let executable:
+        PrimeSecureChildHeldExecutable
+    fileprivate let workingDirectory:
+        PrimeSecureChildHeldDirectory
+    fileprivate let resultDirectory:
+        PrimeSecureChildHeldDirectory
+    fileprivate let invocation:
+        PrimeSecureChildFixtureInvocation
 
     init(
         executableURL: URL,
         workingDirectoryURL: URL,
         resultDirectoryURL: URL,
-        mode: PrimeValidationWorkflowFixtureChildMode
+        plan: PrimeSecureChildProcessPlanV1
     ) throws {
         executable = try PrimeSecureChildHeldExecutable(
             url: executableURL
@@ -441,13 +456,13 @@ private final class PrimeSecureChildPreparedFixture:
                 .rejected("working_and_result_directories_not_disjoint")
         }
         invocation = try PrimeSecureChildFixtureInvocation(
-            mode: mode,
+            plan: plan,
             resultAbsolutePath:
                 resultDirectory.absolutePath
                 + "/"
                 + PrimeSecureChildFixtureInvocation.resultLeaf
         )
-        self.mode = mode
+        mode = plan.validationWorkflowFixtureMode
     }
 }
 
@@ -837,6 +852,90 @@ final class PrimeSecureChildHeldDirectory:
         )
     }
 
+    /// Reads only a capture file already admitted by this held directory.
+    /// This is the contained operational-error path: it does not mint an
+    /// immutable artifact binding or claim successful finalization.
+    func readContainedCapturePrefix(
+        leaf: String,
+        snapshot: PrimeSecureChildFileBackedDrainSnapshot
+    ) throws -> Data {
+        guard snapshot.workerFinished,
+              snapshot.descriptorsClosed,
+              snapshot.terminalReason != .active,
+              snapshot.capturedByteCount
+                <= PrimeSecureChildFixtureInvocation.streamPrefixLimit,
+              snapshot.capturedByteCount <= UInt64(Int.max)
+        else {
+            throw PrimeValidationWorkflowFixtureChildError
+                .rejected("contained_capture_unsettled")
+        }
+        let opened = leaf.withCString {
+            openat(
+                descriptor,
+                $0,
+                O_RDONLY | O_NOFOLLOW | O_CLOEXEC
+            )
+        }
+        guard opened >= 3 else {
+            if opened >= 0 { Darwin.close(opened) }
+            throw PrimeValidationWorkflowFixtureChildError
+                .rejected("contained_capture_open_\(errno)")
+        }
+        defer { Darwin.close(opened) }
+        entryLedgerLock.lock()
+        let admittedIdentity = admittedEntries[leaf]
+        entryLedgerLock.unlock()
+        var before = stat()
+        guard let admittedIdentity,
+              fstat(opened, &before) == 0,
+              PrimeSecureChildFileIdentity(before)
+                == admittedIdentity,
+              before.st_mode & mode_t(S_IFMT) == mode_t(S_IFREG),
+              before.st_uid == geteuid(),
+              before.st_nlink == 1,
+              (
+                  before.st_mode & mode_t(0o7777) == mode_t(0o600)
+                    || before.st_mode & mode_t(0o7777) == mode_t(0o444)
+              ),
+              before.st_size >= 0,
+              UInt64(before.st_size) == snapshot.capturedByteCount,
+              fcntl(opened, F_GETFD) & FD_CLOEXEC != 0
+        else {
+            throw PrimeValidationWorkflowFixtureChildError
+                .rejected("contained_capture_metadata")
+        }
+        let data = try PrimeSecureChildPath.readExact(
+            descriptor: opened,
+            byteCount: Int(before.st_size)
+        )
+        var after = stat()
+        guard fstat(opened, &after) == 0,
+              PrimeSecureChildFileIdentity(after)
+                == admittedIdentity,
+              after.st_mode == before.st_mode,
+              after.st_size == before.st_size,
+              after.st_mtimespec.tv_sec == before.st_mtimespec.tv_sec,
+              after.st_mtimespec.tv_nsec == before.st_mtimespec.tv_nsec,
+              after.st_ctimespec.tv_sec == before.st_ctimespec.tv_sec,
+              after.st_ctimespec.tv_nsec == before.st_ctimespec.tv_nsec,
+              !snapshot.outputMetadataObserved
+                || (
+                    snapshot.outputDeviceID
+                        == admittedIdentity.deviceID
+                    && snapshot.outputInode
+                        == admittedIdentity.inode
+                    && snapshot.outputByteCount
+                        == snapshot.capturedByteCount
+                    && snapshot.outputSHA256
+                        == PrimeSHA256.hexDigest(of: data)
+                )
+        else {
+            throw PrimeValidationWorkflowFixtureChildError
+                .rejected("contained_capture_changed")
+        }
+        return data
+    }
+
     private func directoryEntries() throws
         -> [String: PrimeSecureChildFileIdentity]
     {
@@ -912,7 +1011,7 @@ final class PrimeSecureChildHeldDirectory:
     }
 }
 
-private final class PrimeSecureChildHeldExecutable:
+fileprivate final class PrimeSecureChildHeldExecutable:
     @unchecked Sendable
 {
     static let expectedBasename =
@@ -1098,11 +1197,95 @@ private final class PrimeSecureChildHeldExecutable:
     }
 }
 
+extension PrimeSecureChildExecutionKernel {
+    @available(macOS 26.0, *)
+    static func execute(
+        consumption:
+            PrimeTrustedSecureChildProcessCapture.Consumption,
+        prepared: PrimeSecureChildPreparedFixture
+    ) throws -> Result {
+        let claim:
+            PrimeTrustedSecureChildProcessCapture
+            .Consumption.ExecutionClaim
+        do {
+            claim = try consumption.claimForExecution()
+        } catch {
+            throw PrimeValidationWorkflowFixtureChildError
+                .rejected(
+                    "execution_authority_already_claimed"
+                )
+        }
+        guard claim.retainsClosedContext(prepared),
+              claim.plan
+                .validationWorkflowFixtureMode == prepared.mode,
+              claim.plan.standardInputPolicy == .devNull,
+              claim.plan.orderedEnvironment.isEmpty,
+              claim.plan
+                .standardOutputMaximumByteCount
+                == PrimeSecureChildFixtureInvocation.streamPrefixLimit,
+              claim.plan
+                .standardErrorMaximumByteCount
+                == PrimeSecureChildFixtureInvocation.streamPrefixLimit
+        else {
+            throw PrimeValidationWorkflowFixtureChildError
+                .rejected("execution_kernel_context")
+        }
+
+        let outcome = try PrimeSecureChildKernel
+            .execute(
+                prepared,
+                claim: claim
+            )
+        guard outcome.mode
+                == claim.plan
+                .validationWorkflowFixtureMode,
+              UInt64(outcome.standardOutputPrefix.count)
+                == outcome.standardOutputDrain.capturedByteCount,
+              UInt64(outcome.standardErrorPrefix.count)
+                == outcome.standardErrorDrain.capturedByteCount,
+              outcome.fixtureResult != nil
+                || outcome.operationalFailureCode == "stream_capture"
+        else {
+            throw PrimeValidationWorkflowFixtureChildError
+                .rejected("execution_kernel_outcome")
+        }
+
+        let evidence = processEvidence(
+            outcome: outcome,
+            leaseTelemetry:
+                claim.leaseRetention?.telemetry
+        )
+        let diagnosticCanonicalData: Data
+        do {
+            diagnosticCanonicalData = try PrimeSecureChildDiagnosticProjection
+                .canonicalData(for: evidence)
+        } catch {
+            if let failure = outcome.operationalFailureCode {
+                throw PrimeValidationWorkflowFixtureChildError
+                    .rejected(failure)
+            }
+            throw PrimeValidationWorkflowFixtureChildError
+                .rejected("execution_kernel_evidence")
+        }
+        return Result(
+            executionClaim: claim,
+            rawOutcome: outcome,
+            evidence: evidence,
+            diagnosticCanonicalData:
+                diagnosticCanonicalData
+        )
+    }
+}
+
 private enum PrimeSecureChildKernel {
     @available(macOS 26.0, *)
     static func execute(
-        _ prepared: PrimeSecureChildPreparedFixture
-    ) throws -> PrimeValidationWorkflowFixtureChildResult {
+        _ prepared: PrimeSecureChildPreparedFixture,
+        claim:
+            PrimeTrustedSecureChildProcessCapture
+            .Consumption.ExecutionClaim
+    ) throws -> PrimeSecureChildExecutionKernel.RawOutcome {
+        let plan = claim.plan
         let phaseDeadline:
             PrimeSecureChildPhaseDeadline
         do {
@@ -1112,8 +1295,7 @@ private enum PrimeSecureChildKernel {
                         DispatchTime.now()
                         .uptimeNanoseconds,
                     durationNanoseconds:
-                        prepared.invocation
-                        .maximumWallNanoseconds
+                        plan.maximumWallNanoseconds
                 )
         } catch {
             throw rejected("deadline_overflow")
@@ -1168,18 +1350,24 @@ private enum PrimeSecureChildKernel {
                     executableAbsolutePath:
                         prepared.executable.absolutePath,
                     argumentZero:
-                        prepared.invocation
-                        .argumentZeroPolicy
-                        .resolved(
+                        try plan.argumentZero(
                             physicalExecutableAbsolutePath:
                                 prepared.executable.absolutePath
                         ),
                     workingDirectoryDescriptor:
                         prepared.workingDirectory.descriptor,
                     exactArguments:
-                        prepared.invocation.arguments,
+                        try plan.exactArguments(
+                            resultAbsolutePath:
+                                prepared.invocation.expectsResult
+                                ? prepared.resultDirectory.absolutePath
+                                    + "/"
+                                    + PrimeSecureChildFixtureInvocation
+                                    .resultLeaf
+                                : ""
+                        ),
                     orderedEnvironment:
-                        prepared.invocation.orderedEnvironment
+                        plan.orderedEnvironment
                 )
             supervision =
                 PrimeSecureChildSupervisionCapability
@@ -1192,8 +1380,8 @@ private enum PrimeSecureChildKernel {
                     standardErrorDescriptor:
                         stderrFile,
                     maximumByteCount:
-                        PrimeSecureChildFixtureInvocation
-                        .streamPrefixLimit
+                        plan
+                        .standardOutputMaximumByteCount
                 )
         } catch let error as
             PrimeSecureChildDarwinSubstrate.Rejection
@@ -1500,7 +1688,7 @@ private enum PrimeSecureChildKernel {
         drainEvidence:
             PrimeSecureChildDrainEvidence,
         phaseDeadline: PrimeSecureChildPhaseDeadline
-    ) throws -> PrimeValidationWorkflowFixtureChildResult {
+    ) throws -> PrimeSecureChildExecutionKernel.RawOutcome {
         let stdoutSnapshot:
             PrimeSecureChildFileBackedDrainSnapshot
         let stderrSnapshot:
@@ -1517,8 +1705,82 @@ private enum PrimeSecureChildKernel {
                 .invalidLifecycleTransition
             )
         }
+        guard terminalDrainIsContained(stdoutSnapshot),
+              terminalDrainIsContained(stderrSnapshot)
+        else {
+            failStop(.streamDrainUncontained)
+        }
         try prepared.executable.requireUnchanged()
         try prepared.workingDirectory.requireStable()
+        if !terminalDrainIsClean(stdoutSnapshot)
+            || !terminalDrainIsClean(stderrSnapshot)
+        {
+            let stdoutPrefix: Data
+            let stderrPrefix: Data
+            do {
+                stdoutPrefix = try prepared.resultDirectory
+                    .readContainedCapturePrefix(
+                        leaf:
+                            PrimeSecureChildFixtureInvocation.stdoutLeaf,
+                        snapshot: stdoutSnapshot
+                    )
+                stderrPrefix = try prepared.resultDirectory
+                    .readContainedCapturePrefix(
+                        leaf:
+                            PrimeSecureChildFixtureInvocation.stderrLeaf,
+                        snapshot: stderrSnapshot
+                    )
+            } catch {
+                throw rejected("stream_capture")
+            }
+            let containedCompletion = completion(
+                wait: wait,
+                wallClockLimitReached:
+                    wallClockLimitReached,
+                streamContainmentLimitReached:
+                    streamContainmentLimitReached
+            )
+            return PrimeSecureChildExecutionKernel.RawOutcome(
+                fixtureResult: nil,
+                operationalFailureCode:
+                    "stream_capture",
+                mode: prepared.mode,
+                processIdentifier:
+                    supervision.processIdentifier,
+                appliedSpawnFlags:
+                    supervision.appliedFlags,
+                sessionIdentifier: sessionIdentifier,
+                processGroupIdentifier:
+                    processGroupIdentifier,
+                executable:
+                    prepared.executable.observation,
+                workingDirectoryJoin:
+                    workingDirectoryJoin,
+                mappedExecutable:
+                    mappedExecutable,
+                exactPIDWait: wait,
+                completion: containedCompletion,
+                preReapProcessGroupMembers:
+                    preReapMembers,
+                processGroupEmptyAfterReap: true,
+                fixtureContractSatisfied: false,
+                standardOutputPrefix: stdoutPrefix,
+                standardErrorPrefix: stderrPrefix,
+                standardOutputDrain: stdoutSnapshot,
+                standardErrorDrain: stderrSnapshot,
+                phaseDeadline: phaseDeadline,
+                spawnReturnCode:
+                    supervision.spawnReturnCode,
+                spawnReturnedMonotonicNanoseconds:
+                    supervision
+                    .spawnReturnedMonotonicNanoseconds,
+                deathObservedMonotonicNanoseconds:
+                    supervision
+                    .deathObservedMonotonicNanoseconds(),
+                cleanupTimeline:
+                    supervision.cleanupTimelineSnapshot
+            )
+        }
         try prepared.resultDirectory.admitExpectedFixtureResult(
             expectsResult: prepared.invocation.expectsResult
         )
@@ -1590,7 +1852,8 @@ private enum PrimeSecureChildKernel {
                 .processIdentifier,
             preReapMembers: preReapMembers
         )
-        return PrimeValidationWorkflowFixtureChildResult(
+        let fixtureResult =
+            PrimeValidationWorkflowFixtureChildResult(
             mode: prepared.mode,
             processIdentifier:
                 supervision.processIdentifier,
@@ -1619,6 +1882,69 @@ private enum PrimeSecureChildKernel {
             processGroupEmptyAfterReap: true,
             fixtureContractSatisfied: satisfied
         )
+        return PrimeSecureChildExecutionKernel.RawOutcome(
+            fixtureResult: fixtureResult,
+            operationalFailureCode: nil,
+            mode: prepared.mode,
+            processIdentifier:
+                supervision.processIdentifier,
+            appliedSpawnFlags:
+                supervision.appliedFlags,
+            sessionIdentifier: sessionIdentifier,
+            processGroupIdentifier:
+                processGroupIdentifier,
+            executable:
+                prepared.executable.observation,
+            workingDirectoryJoin:
+                workingDirectoryJoin,
+            mappedExecutable:
+                mappedExecutable,
+            exactPIDWait: wait,
+            completion: completion,
+            preReapProcessGroupMembers:
+                preReapMembers,
+            processGroupEmptyAfterReap: true,
+            fixtureContractSatisfied: satisfied,
+            standardOutputPrefix:
+                stdout.prefixData,
+            standardErrorPrefix:
+                stderr.prefixData,
+            standardOutputDrain: stdoutSnapshot,
+            standardErrorDrain: stderrSnapshot,
+            phaseDeadline: phaseDeadline,
+            spawnReturnCode:
+                supervision.spawnReturnCode,
+            spawnReturnedMonotonicNanoseconds:
+                supervision
+                .spawnReturnedMonotonicNanoseconds,
+            deathObservedMonotonicNanoseconds:
+                supervision
+                .deathObservedMonotonicNanoseconds(),
+            cleanupTimeline:
+                supervision.cleanupTimelineSnapshot
+        )
+    }
+
+    private static func terminalDrainIsContained(
+        _ snapshot:
+            PrimeSecureChildFileBackedDrainSnapshot
+    ) -> Bool {
+        snapshot.workerFinished
+            && snapshot.descriptorsClosed
+            && snapshot.terminalReason != .active
+    }
+
+    private static func terminalDrainIsClean(
+        _ snapshot:
+            PrimeSecureChildFileBackedDrainSnapshot
+    ) -> Bool {
+        terminalDrainIsContained(snapshot)
+            && snapshot.terminalReason == .endOfFile
+            && snapshot.reachedEOF
+            && snapshot.readErrorNumber == 0
+            && snapshot.writeErrorNumber == 0
+            && snapshot.finalizationErrorNumber == 0
+            && snapshot.closeErrorNumber == 0
     }
 
     private static func streamObservation(
@@ -1628,9 +1954,13 @@ private enum PrimeSecureChildKernel {
         leaf: String
     ) throws -> PrimeSecureChildStreamObservation {
         guard snapshot.workerFinished,
+              snapshot.descriptorsClosed,
+              snapshot.terminalReason == .endOfFile,
               snapshot.reachedEOF,
               snapshot.readErrorNumber == 0,
               snapshot.writeErrorNumber == 0,
+              snapshot.finalizationErrorNumber == 0,
+              snapshot.closeErrorNumber == 0,
               snapshot.outputMetadataObserved,
               snapshot.outputByteCount
                 == snapshot.capturedByteCount,

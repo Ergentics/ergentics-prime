@@ -626,7 +626,26 @@ final class PrimeNativeNeuralGateSecureChildLifecycleTests:
         XCTAssertTrue(snapshot.reachedEOF)
         XCTAssertTrue(snapshot.workerFinished)
         XCTAssertEqual(
+            snapshot.terminalReason,
+            .endOfFile
+        )
+        XCTAssertTrue(
+            snapshot.descriptorsClosed
+        )
+        XCTAssertEqual(
             snapshot.readErrorNumber,
+            0
+        )
+        XCTAssertEqual(
+            snapshot.writeErrorNumber,
+            0
+        )
+        XCTAssertEqual(
+            snapshot.finalizationErrorNumber,
+            0
+        )
+        XCTAssertEqual(
+            snapshot.closeErrorNumber,
             0
         )
 
@@ -676,6 +695,10 @@ final class PrimeNativeNeuralGateSecureChildLifecycleTests:
             try drainClosedReadDescriptor()
 
         XCTAssertTrue(snapshot.workerFinished)
+        XCTAssertEqual(
+            snapshot.terminalReason,
+            .readError
+        )
         XCTAssertFalse(snapshot.reachedEOF)
         XCTAssertFalse(snapshot.overflowed)
         XCTAssertNotEqual(
@@ -686,6 +709,17 @@ final class PrimeNativeNeuralGateSecureChildLifecycleTests:
             snapshot.readErrorNumber,
             EBADF
         )
+        XCTAssertEqual(
+            snapshot.finalizationErrorNumber,
+            0
+        )
+        XCTAssertEqual(
+            snapshot.closeErrorNumber,
+            EBADF
+        )
+        XCTAssertFalse(
+            snapshot.descriptorsClosed
+        )
         XCTAssertFalse(
             snapshot.workerFinished
                 && snapshot.reachedEOF
@@ -693,6 +727,21 @@ final class PrimeNativeNeuralGateSecureChildLifecycleTests:
                     == 0
                 && !snapshot.overflowed
         )
+
+        let closedReadFailure =
+            Capture.DrainSnapshot(
+                terminalReason: .readError,
+                data: Data(),
+                totalByteCount: 0,
+                overflowed: false,
+                workerFinished: true,
+                reachedEOF: false,
+                readErrorNumber: EIO,
+                writeErrorNumber: 0,
+                finalizationErrorNumber: 0,
+                closeErrorNumber: 0,
+                descriptorsClosed: true
+            )
 
         let processIdentifier: Int32 = 4_108
         let harness = Harness(
@@ -717,6 +766,16 @@ final class PrimeNativeNeuralGateSecureChildLifecycleTests:
             )
         )
         XCTAssertEqual(
+            PrimeSecureChildSupervisionCapability
+                .memoryDrainContainmentDisposition(
+                    standardOutput:
+                        closedReadFailure,
+                    standardError:
+                        finishedEOFSnapshot()
+                ),
+            .contained
+        )
+        XCTAssertEqual(
             cleanup(child),
             .contained
         )
@@ -733,12 +792,46 @@ final class PrimeNativeNeuralGateSecureChildLifecycleTests:
     func testUncontainedDrainWorkerProducesFailStopDisposition() {
         let active =
             Capture.DrainSnapshot(
+                terminalReason: .active,
                 data: Data(),
                 totalByteCount: 0,
                 overflowed: false,
                 workerFinished: false,
                 reachedEOF: false,
-                readErrorNumber: 0
+                readErrorNumber: 0,
+                writeErrorNumber: 0,
+                finalizationErrorNumber: 0,
+                closeErrorNumber: 0,
+                descriptorsClosed: false
+            )
+        let closedWriteFinalizationFailure =
+            Capture.DrainSnapshot(
+                terminalReason:
+                    .writeOrFinalizationError,
+                data: Data(),
+                totalByteCount: 0,
+                overflowed: false,
+                workerFinished: true,
+                reachedEOF: false,
+                readErrorNumber: 0,
+                writeErrorNumber: EIO,
+                finalizationErrorNumber: EIO,
+                closeErrorNumber: 0,
+                descriptorsClosed: true
+            )
+        let closedCleanupStop =
+            Capture.DrainSnapshot(
+                terminalReason: .cleanupStop,
+                data: Data(),
+                totalByteCount: 0,
+                overflowed: false,
+                workerFinished: true,
+                reachedEOF: false,
+                readErrorNumber: 0,
+                writeErrorNumber: 0,
+                finalizationErrorNumber: 0,
+                closeErrorNumber: 0,
+                descriptorsClosed: true
             )
 
         XCTAssertEqual(
@@ -751,6 +844,16 @@ final class PrimeNativeNeuralGateSecureChildLifecycleTests:
             .mustFailStop(
                 .streamDrainUncontained
             )
+        )
+        XCTAssertEqual(
+            PrimeSecureChildSupervisionCapability
+                .memoryDrainContainmentDisposition(
+                    standardOutput:
+                        closedWriteFinalizationFailure,
+                    standardError:
+                        closedCleanupStop
+                ),
+            .contained
         )
         XCTAssertEqual(
             PrimeSecureChildSupervisionCapability
@@ -1069,12 +1172,17 @@ final class PrimeNativeNeuralGateSecureChildLifecycleTests:
         -> Capture.DrainSnapshot
     {
         Capture.DrainSnapshot(
+            terminalReason: .endOfFile,
             data: Data(),
             totalByteCount: 0,
             overflowed: false,
             workerFinished: true,
             reachedEOF: true,
-            readErrorNumber: 0
+            readErrorNumber: 0,
+            writeErrorNumber: 0,
+            finalizationErrorNumber: 0,
+            closeErrorNumber: 0,
+            descriptorsClosed: true
         )
     }
 
