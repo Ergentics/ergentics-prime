@@ -98,6 +98,8 @@ readonly secure_child_process_evidence_closed_fixture_canary_pin_mismatch_execut
 readonly secure_child_process_evidence_closed_fixture_canary_pin_mismatch_execution_observation_test_relative_path="Tests/PrimeCoreTests/PrimeSecureChildProcessEvidenceClosedFixtureCanaryPINMismatchExecutionObservationTests.swift"
 readonly neutral_resource_lease_generalization_authority_source_relative_path="Sources/PrimeCore/PrimeNeutralResourceLeaseGeneralizationAuthority.swift"
 readonly neutral_resource_lease_generalization_authority_test_relative_path="Tests/PrimeCoreTests/PrimeNeutralResourceLeaseGeneralizationAuthorityTests.swift"
+readonly neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_source_relative_path="Sources/PrimeCore/PrimeNeutralResourceLeaseGeneralizationAuthorityReviewedMainTimeoutObservation.swift"
+readonly neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_test_relative_path="Tests/PrimeCoreTests/PrimeNeutralResourceLeaseGeneralizationAuthorityReviewedMainTimeoutObservationTests.swift"
 readonly secure_child_process_evidence_closed_fixture_canary_launcher_relative_path=".github/scripts/prime-ci-secure-child-process-evidence-closed-fixture-canary.sh"
 readonly secure_child_process_plan_relative_path="Sources/PrimeCore/PrimeSecureChildProcessPlan.swift"
 readonly secure_child_process_evidence_relative_path="Sources/PrimeCore/PrimeSecureChildProcessEvidence.swift"
@@ -121,7 +123,11 @@ readonly secure_child_process_evidence_closed_fixture_canary_retirement_closure_
 readonly secure_child_process_evidence_closed_fixture_canary_retirement_closure_tree="29d28080eb945563ca6da7e1e8475189bdce7c11"
 readonly secure_child_process_evidence_closed_fixture_canary_retirement_closure_first_parent="d825c5366135cc6ef8d0c9dc7d26d3d2e4300ba6"
 readonly secure_child_process_evidence_closed_fixture_canary_retirement_closure_second_parent="18ec420a4870657adc0125425a2b26ec41d06ed2"
-readonly expected_neutral_resource_lease_generalization_authority_preserved_index_sha256="d6d6472a04630580cbb7dc2a6bafd8aab02b0243f1f4e4d931830a5d1490338e"
+readonly neutral_resource_lease_generalization_authority_closure_revision="0abcb4ad5487a775627bbb587184c375dd691978"
+readonly neutral_resource_lease_generalization_authority_closure_tree="94e16511f39fc79b2854423bc82b763974a9cc46"
+readonly neutral_resource_lease_generalization_authority_closure_first_parent="4570716892722873757de6eae1bd897167d674eb"
+readonly neutral_resource_lease_generalization_authority_closure_second_parent="3258f3d8b8d79df7e2b152c4bdb9eac77223bb78"
+readonly expected_neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_preserved_index_sha256="1f757845f06af36410cdc5d4bc9c96d0a7dd40ed43defff7934753484c96ad4f"
 exact_commit_header() {
     local revision="$1"
     [[ "$(git -C "$prime_root" cat-file -t "$revision")" == "commit" ]] ||
@@ -175,7 +181,7 @@ exact_commit_parent_lines() {
     local revision="$1"
     exact_commit_header "$revision" | awk '/^parent / { print $2 }'
 }
-readonly observed_neutral_resource_lease_generalization_authority_preserved_index_sha256="$({
+readonly observed_neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_preserved_index_sha256="$({
     git -C "$prime_root" ls-files -s |
         while IFS= read -r index_record; do
             relative_path="${index_record#*$'\t'}"
@@ -186,17 +192,17 @@ readonly observed_neutral_resource_lease_generalization_authority_preserved_inde
                 || "$relative_path" \
                     == 'Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' \
                 || "$relative_path" \
-                    == "$neutral_resource_lease_generalization_authority_source_relative_path" \
+                    == "$neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_source_relative_path" \
                 || "$relative_path" \
-                    == "$neutral_resource_lease_generalization_authority_test_relative_path" ]]; then
+                    == "$neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_test_relative_path" ]]; then
                 continue
             fi
             printf '%s\n' "$index_record"
         done
 } | LC_ALL=C sort | shasum -a 256 | awk '{print $1}')"
-[[ "$observed_neutral_resource_lease_generalization_authority_preserved_index_sha256" \
-        == "$expected_neutral_resource_lease_generalization_authority_preserved_index_sha256" ]] ||
-    die "neutral resource-lease generalization authority changed a path outside its exact-five closure"
+[[ "$observed_neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_preserved_index_sha256" \
+        == "$expected_neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_preserved_index_sha256" ]] ||
+    die "neutral resource-lease generalization authority timeout observation changed a path outside its exact-five closure"
 [[ "$(exact_commit_tree \
         "$secure_child_process_evidence_closed_fixture_canary_authority_closure_revision")" \
         == "$secure_child_process_evidence_closed_fixture_canary_authority_closure_tree" \
@@ -221,6 +227,14 @@ $secure_child_process_evidence_closed_fixture_canary_mechanics_closure_second_pa
         == "$secure_child_process_evidence_closed_fixture_canary_retirement_closure_first_parent
 $secure_child_process_evidence_closed_fixture_canary_retirement_closure_second_parent" ]] ||
     die "secure-child process/evidence closed fixture-canary retirement exact-main closure changed"
+[[ "$(exact_commit_tree \
+        "$neutral_resource_lease_generalization_authority_closure_revision")" \
+        == "$neutral_resource_lease_generalization_authority_closure_tree" \
+    && "$(exact_commit_parent_lines \
+        "$neutral_resource_lease_generalization_authority_closure_revision")" \
+        == "$neutral_resource_lease_generalization_authority_closure_first_parent
+$neutral_resource_lease_generalization_authority_closure_second_parent" ]] ||
+    die "neutral resource-lease generalization authority exact-main closure changed"
 readonly expected_secure_child_process_evidence_closed_fixture_canary_mechanics_status=$'M\t.github/scripts/prime-ci-active-root-quarantine.sh\nA\t.github/scripts/prime-ci-secure-child-process-evidence-closed-fixture-canary.sh\nM\t.github/workflows/prime-active-root-quarantine.yml'
 [[ "$(git -C "$prime_root" diff --name-status --no-renames \
         "$secure_child_process_evidence_closed_fixture_canary_authority_closure_revision" \
@@ -265,69 +279,92 @@ for frozen_secure_child_process_evidence_closed_fixture_canary_retirement_entry 
         == "$frozen_secure_child_process_evidence_closed_fixture_canary_retirement_mode $frozen_secure_child_process_evidence_closed_fixture_canary_retirement_blob" ]] ||
         die "secure-child process/evidence closed fixture-canary historical retirement identity changed: $frozen_secure_child_process_evidence_closed_fixture_canary_retirement_path"
 done
-readonly neutral_resource_lease_generalization_authority_head_parent_lines="$(
+readonly expected_neutral_resource_lease_generalization_authority_historical_status=$'M\t.github/scripts/prime-ci-active-root-quarantine.sh\nM\t.github/workflows/prime-active-root-quarantine.yml\nM\tSources/PrimeCore/PrimeEmbeddedBuildProvenance.swift\nA\tSources/PrimeCore/PrimeNeutralResourceLeaseGeneralizationAuthority.swift\nA\tTests/PrimeCoreTests/PrimeNeutralResourceLeaseGeneralizationAuthorityTests.swift'
+[[ "$(git -C "$prime_root" diff --name-status --no-renames \
+        "$secure_child_process_evidence_closed_fixture_canary_retirement_closure_revision" \
+        "$neutral_resource_lease_generalization_authority_closure_revision")" \
+        == "$expected_neutral_resource_lease_generalization_authority_historical_status" ]] ||
+    die "neutral resource-lease generalization historical authority is not the exact ordered five paths"
+for frozen_neutral_resource_lease_generalization_authority_entry in \
+    '100755 90df96e4909d01ac073eff79bfb1321323419f81 .github/scripts/prime-ci-active-root-quarantine.sh' \
+    '100644 b5b3dee162db46a1456756bef185dcf40849a79e .github/workflows/prime-active-root-quarantine.yml' \
+    '100644 fd966bf2f11acebe1e4ab0a4df2e7aad1a2db28e Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' \
+    '100644 2d1a91b1d428b3d47698ed16e57392a0aba8695a Sources/PrimeCore/PrimeNeutralResourceLeaseGeneralizationAuthority.swift' \
+    '100644 eb35192c9fd4eac162195f73788b73df71d31e8a Tests/PrimeCoreTests/PrimeNeutralResourceLeaseGeneralizationAuthorityTests.swift'; do
+    frozen_neutral_resource_lease_generalization_authority_mode="${frozen_neutral_resource_lease_generalization_authority_entry%% *}"
+    frozen_neutral_resource_lease_generalization_authority_remainder="${frozen_neutral_resource_lease_generalization_authority_entry#* }"
+    frozen_neutral_resource_lease_generalization_authority_blob="${frozen_neutral_resource_lease_generalization_authority_remainder%% *}"
+    frozen_neutral_resource_lease_generalization_authority_path="${frozen_neutral_resource_lease_generalization_authority_remainder#* }"
+    [[ "$(git -C "$prime_root" ls-tree \
+        "$neutral_resource_lease_generalization_authority_closure_revision" -- \
+        "$frozen_neutral_resource_lease_generalization_authority_path" | \
+        awk '{print $1, $3}')" \
+        == "$frozen_neutral_resource_lease_generalization_authority_mode $frozen_neutral_resource_lease_generalization_authority_blob" ]] ||
+        die "neutral resource-lease generalization historical authority identity changed: $frozen_neutral_resource_lease_generalization_authority_path"
+done
+readonly neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_head_parent_lines="$(
     exact_commit_parent_lines HEAD
 )"
-readonly neutral_resource_lease_generalization_authority_head_parent_count="$(
+readonly neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_head_parent_count="$(
     awk 'NF { count += 1 } END { print count + 0 }' \
-        <<< "$neutral_resource_lease_generalization_authority_head_parent_lines"
+        <<< "$neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_head_parent_lines"
 )"
 [[ "${GITHUB_JOB:-}" == "active-root" ]] ||
-    die "neutral resource-lease generalization authority gate is outside the active-root job"
-case "$neutral_resource_lease_generalization_authority_head_parent_count" in
+    die "neutral resource-lease generalization timeout observation gate is outside the active-root job"
+case "$neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_head_parent_count" in
     1)
-        [[ "$neutral_resource_lease_generalization_authority_head_parent_lines" \
-                == "$secure_child_process_evidence_closed_fixture_canary_retirement_closure_revision" \
+        [[ "$neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_head_parent_lines" \
+                == "$neutral_resource_lease_generalization_authority_closure_revision" \
             && "${GITHUB_REPOSITORY:-}" == "Ergentics/ergentics-prime" \
             && "${GITHUB_EVENT_NAME:-}" == "pull_request" \
             && "${GITHUB_RUN_ATTEMPT:-}" == "1" ]] ||
-            die "neutral resource-lease generalization authority is not a direct retirement-closure successor"
+            die "neutral resource-lease generalization timeout observation is not a direct authority-closure successor"
         ;;
     2)
-        readonly neutral_resource_lease_generalization_authority_merge_first_parent="$(
-            head -n 1 <<< "$neutral_resource_lease_generalization_authority_head_parent_lines"
+        readonly neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_merge_first_parent="$(
+            head -n 1 <<< "$neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_head_parent_lines"
         )"
-        readonly neutral_resource_lease_generalization_authority_merge_second_parent="$(
+        readonly neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_merge_second_parent="$(
             awk 'NR == 2 { print }' \
-                <<< "$neutral_resource_lease_generalization_authority_head_parent_lines"
+                <<< "$neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_head_parent_lines"
         )"
-        [[ "$neutral_resource_lease_generalization_authority_merge_first_parent" \
-                == "$secure_child_process_evidence_closed_fixture_canary_retirement_closure_revision" \
+        [[ "$neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_merge_first_parent" \
+                == "$neutral_resource_lease_generalization_authority_closure_revision" \
             && "$(exact_commit_parent_lines \
-                "$neutral_resource_lease_generalization_authority_merge_second_parent")" \
-                == "$secure_child_process_evidence_closed_fixture_canary_retirement_closure_revision" \
+                "$neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_merge_second_parent")" \
+                == "$neutral_resource_lease_generalization_authority_closure_revision" \
             && "$(exact_commit_tree \
-                "$neutral_resource_lease_generalization_authority_merge_second_parent")" \
+                "$neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_merge_second_parent")" \
                 == "$(exact_commit_tree HEAD)" \
             && "${GITHUB_REPOSITORY:-}" == "Ergentics/ergentics-prime" \
             && "${GITHUB_EVENT_NAME:-}" == "push" \
             && "${GITHUB_REF:-}" == "refs/heads/main" \
             && "${GITHUB_RUN_ATTEMPT:-}" == "1" \
             && "${GITHUB_SHA:-}" == "$expected_prime_head" ]] ||
-            die "neutral resource-lease generalization authority merge shape changed"
+            die "neutral resource-lease generalization timeout observation merge shape changed"
         ;;
     *)
-        die "neutral resource-lease generalization authority has an unauthorized parent count"
+        die "neutral resource-lease generalization timeout observation has an unauthorized parent count"
         ;;
 esac
-readonly expected_neutral_resource_lease_generalization_authority_status=$'M\t.github/scripts/prime-ci-active-root-quarantine.sh\nM\t.github/workflows/prime-active-root-quarantine.yml\nM\tSources/PrimeCore/PrimeEmbeddedBuildProvenance.swift\nA\tSources/PrimeCore/PrimeNeutralResourceLeaseGeneralizationAuthority.swift\nA\tTests/PrimeCoreTests/PrimeNeutralResourceLeaseGeneralizationAuthorityTests.swift'
+readonly expected_neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_status=$'M\t.github/scripts/prime-ci-active-root-quarantine.sh\nM\t.github/workflows/prime-active-root-quarantine.yml\nM\tSources/PrimeCore/PrimeEmbeddedBuildProvenance.swift\nA\tSources/PrimeCore/PrimeNeutralResourceLeaseGeneralizationAuthorityReviewedMainTimeoutObservation.swift\nA\tTests/PrimeCoreTests/PrimeNeutralResourceLeaseGeneralizationAuthorityReviewedMainTimeoutObservationTests.swift'
 [[ "$(git -C "$prime_root" diff --name-status --no-renames \
-        "$secure_child_process_evidence_closed_fixture_canary_retirement_closure_revision" HEAD)" \
-        == "$expected_neutral_resource_lease_generalization_authority_status" ]] ||
-    die "neutral resource-lease generalization authority successor is not the exact ordered five paths"
-for exact_neutral_resource_lease_generalization_authority_path_and_mode in \
+        "$neutral_resource_lease_generalization_authority_closure_revision" HEAD)" \
+        == "$expected_neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_status" ]] ||
+    die "neutral resource-lease generalization timeout observation successor is not the exact ordered five paths"
+for exact_neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_path_and_mode in \
     '100755 .github/scripts/prime-ci-active-root-quarantine.sh' \
     '100644 .github/workflows/prime-active-root-quarantine.yml' \
     '100644 Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' \
-    '100644 Sources/PrimeCore/PrimeNeutralResourceLeaseGeneralizationAuthority.swift' \
-    '100644 Tests/PrimeCoreTests/PrimeNeutralResourceLeaseGeneralizationAuthorityTests.swift'; do
-    expected_neutral_resource_lease_generalization_authority_mode="${exact_neutral_resource_lease_generalization_authority_path_and_mode%% *}"
-    exact_neutral_resource_lease_generalization_authority_path="${exact_neutral_resource_lease_generalization_authority_path_and_mode#* }"
+    '100644 Sources/PrimeCore/PrimeNeutralResourceLeaseGeneralizationAuthorityReviewedMainTimeoutObservation.swift' \
+    '100644 Tests/PrimeCoreTests/PrimeNeutralResourceLeaseGeneralizationAuthorityReviewedMainTimeoutObservationTests.swift'; do
+    expected_neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_mode="${exact_neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_path_and_mode%% *}"
+    exact_neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_path="${exact_neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_path_and_mode#* }"
     [[ "$(git -C "$prime_root" ls-files -s -- \
-        "$exact_neutral_resource_lease_generalization_authority_path" | \
+        "$exact_neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_path" | \
         awk '{print $1}')" \
-        == "$expected_neutral_resource_lease_generalization_authority_mode" ]] ||
-        die "neutral resource-lease generalization authority path is missing or has the wrong mode: $exact_neutral_resource_lease_generalization_authority_path"
+        == "$expected_neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_mode" ]] ||
+        die "neutral resource-lease generalization timeout observation path is missing or has the wrong mode: $exact_neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_path"
 done
 readonly secure_child_process_evidence_closed_fixture_canary_mechanics_launcher="$prime_root/$secure_child_process_evidence_closed_fixture_canary_launcher_relative_path"
 readonly expected_secure_child_process_evidence_closed_fixture_canary_launcher_blob="2b4cd9ca38410eed6661c1de50fcdab595c24b77"
@@ -862,13 +899,13 @@ readonly final_prime_clean_status_block_sha256="$(awk '
     && "$(git -C "$prime_root" ls-files -s -- \
         '.github/workflows/prime-active-root-quarantine.yml' | \
         awk '{print $1, $2}')" \
-        == '100644 b5b3dee162db46a1456756bef185dcf40849a79e' \
-    && "$(stat -f %z "$workflow_path")" == "146013" \
-    && "$(wc -l < "$workflow_path" | awk '{print $1}')" == "694" \
+        == '100644 8030cedb7d967513434c2b24f513c1b09212cc14' \
+    && "$(stat -f %z "$workflow_path")" == "149756" \
+    && "$(wc -l < "$workflow_path" | awk '{print $1}')" == "702" \
     && "$(LC_ALL=C tr -cd '\r' < "$workflow_path" | wc -c | \
         awk '{print $1}')" == "0" \
     && "$(shasum -a 256 "$workflow_path" | awk '{print $1}')" \
-        == 'b4e20c181e8ca4f6d002f8a521025d89750c053510745bcf2ec3773b0fa43d78' ]] ||
+        == '6c25bfc77d24998b5847df65abd01a6ed18beea6c8eea1604fd73091a1dcc4ca' ]] ||
     die "neutral resource-lease generalization authority workflow identity changed"
 awk '
     function reject() {
@@ -922,14 +959,14 @@ awk '
     die "neutral resource-lease generalization authority summary shell block is not exact valid Bash"
 [[ "$(git -C "$prime_root" ls-files -s -- \
         'Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' | awk '{print $1, $2}')" \
-        == '100644 fd966bf2f11acebe1e4ab0a4df2e7aad1a2db28e' \
+        == '100644 7891914f0a8716cd5cb56b77214daa7d3c667a0e' \
     && "$(stat -f %z \
         "$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift")" == "546" \
     && "$(wc -l < \
         "$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift" | awk '{print $1}')" == "13" \
     && "$(shasum -a 256 \
         "$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift" | awk '{print $1}')" \
-        == '272332346a40372e5a4bd8c466bbab4e6c65a67be58a6e352c2a9f233cd6230b' ]] ||
+        == '72688a285dfefe2ebcb277fd3e80ace4a2ccebb230cf1bd1232c78d920fe6f42' ]] ||
     die "neutral resource-lease generalization authority embedded provenance identity changed"
 readonly secure_child_process_evidence_closed_fixture_canary_authority_predecessor_revision="232a17e8f58a297919366d963ee1d7bc38cdbaee"
 readonly secure_child_process_evidence_closed_fixture_canary_authority_predecessor_tree="c2a351449824ec15bc3154158d10f28c8a8310ad"
@@ -961,7 +998,11 @@ readonly observed_secure_child_process_evidence_closed_fixture_canary_authority_
             if [[ "$relative_path" \
                     == "$neutral_resource_lease_generalization_authority_source_relative_path" \
                 || "$relative_path" \
-                    == "$neutral_resource_lease_generalization_authority_test_relative_path" ]]; then
+                    == "$neutral_resource_lease_generalization_authority_test_relative_path" \
+                || "$relative_path" \
+                    == "$neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_source_relative_path" \
+                || "$relative_path" \
+                    == "$neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_test_relative_path" ]]; then
                 continue
             fi
             printf '%s\n' "$index_record"
@@ -1025,6 +1066,8 @@ secure_child_process_evidence_layer_a_path_is_excluded() {
         "$secure_child_process_evidence_closed_fixture_canary_pin_mismatch_execution_observation_test_relative_path"|\
         "$neutral_resource_lease_generalization_authority_source_relative_path"|\
         "$neutral_resource_lease_generalization_authority_test_relative_path"|\
+        "$neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_source_relative_path"|\
+        "$neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_test_relative_path"|\
         "$secure_child_process_evidence_closed_fixture_canary_launcher_relative_path")
             return 0
             ;;
@@ -1070,6 +1113,10 @@ readonly observed_secure_child_process_evidence_layer_a_status="$(git -C "$prime
                 == "$neutral_resource_lease_generalization_authority_source_relative_path" \
             || "$relative_path" \
                 == "$neutral_resource_lease_generalization_authority_test_relative_path" \
+            || "$relative_path" \
+                == "$neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_source_relative_path" \
+            || "$relative_path" \
+                == "$neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_test_relative_path" \
             || "$relative_path" \
                 == "$secure_child_process_evidence_closed_fixture_canary_launcher_relative_path" ]]; then
             continue
@@ -2019,10 +2066,10 @@ readonly observed_trusted_main_workflow_step_names="$(awk '
     && "$(awk '
         /^  trusted-main-compile:$/ { inside = 1; next }
         inside && /^    timeout-minutes:/ { print $2 }
-    ' "$workflow_path")" == "60" ]] ||
-    die "hosted quarantine workflow retirement runner or timeout boundary changed"
+    ' "$workflow_path")" == "75" ]] ||
+    die "hosted quarantine workflow timeout-observation runner or timeout boundary changed"
 [[ "$(grep -Fxc -- \
-        '          git -C ergentics-prime fetch --depth=2 --no-tags --no-write-fetch-head origin "$EXACT_REVISION" d825c5366135cc6ef8d0c9dc7d26d3d2e4300ba6 b3402efd96d3ff893a0c2b73897cf48c9b313c8c 232a17e8f58a297919366d963ee1d7bc38cdbaee a4d8583fa7c59f885002ee06a07c1d5264c0c223' \
+        '          git -C ergentics-prime fetch --depth=2 --no-tags --no-write-fetch-head origin "$EXACT_REVISION" 4570716892722873757de6eae1bd897167d674eb d825c5366135cc6ef8d0c9dc7d26d3d2e4300ba6 b3402efd96d3ff893a0c2b73897cf48c9b313c8c 232a17e8f58a297919366d963ee1d7bc38cdbaee a4d8583fa7c59f885002ee06a07c1d5264c0c223' \
         "$workflow_path")" == "2" \
     && "$(grep -Fc -- \
         'git -C ergentics-prime fetch --depth=' "$workflow_path")" == "2" \
@@ -2095,6 +2142,64 @@ readonly trusted_main_workflow_job_block="$(awk '
         '^[[:space:]]+PRIME_SECURE_CHILD_PROCESS_EVIDENCE_CLOSED_FIXTURE_CANARY_[A-Z0-9_]+:' \
         "$workflow_path")" == "0" ]] ||
     die "secure-child process/evidence closed fixture-canary workflow retirement restored an epoch, launcher path, environment, or invocation"
+workflow_executable_run_script_and_uses_nodes_excluding_echo_payload_text_corpus="$(awk '
+    {
+        if (inside_run_script) {
+            if (index($0, "          ") == 1) {
+                line = substr($0, 11)
+                trimmed = line
+                sub(/^[[:space:]]+/, "", trimmed)
+                if (trimmed !~ /^echo([[:space:]]|$)/) {
+                    print line
+                }
+                next
+            }
+            inside_run_script = 0
+        }
+        if (index($0, "        uses: ") == 1) {
+            print substr($0, 9)
+            next
+        }
+        if (index($0, "        run: ") == 1) {
+            node = substr($0, 9)
+            if (node ~ /^run: [|>][-+]?$/) {
+                inside_run_script = 1
+                next
+            }
+            command = node
+            sub(/^run: /, "", command)
+            if (command !~ /^echo([[:space:]]|$)/) {
+                print node
+            }
+        }
+    }
+' "$workflow_path")" ||
+    die "neutral resource-lease timeout repair parsed workflow operational corpus could not be formed"
+readonly workflow_executable_run_script_and_uses_nodes_excluding_echo_payload_text_corpus
+[[ "$(grep -Ec -- '^[[:space:]]{8}run: ' "$workflow_path")" == "10" \
+    && "$(grep -Ec -- '^[[:space:]]{8}uses: ' "$workflow_path")" == "0" \
+    && "$(printf '%s\n' \
+        "$workflow_executable_run_script_and_uses_nodes_excluding_echo_payload_text_corpus" | \
+        wc -l | awk '{print $1}')" == "516" \
+    && "$(printf '%s\n' \
+        "$workflow_executable_run_script_and_uses_nodes_excluding_echo_payload_text_corpus" | \
+        shasum -a 256 | awk '{print $1}')" \
+        == "080148ad05e9487dfffbe306337892dec179cc064dcd6099ab9c290c31118b43" \
+    && "$(grep -Fc -- 'uses: actions/upload-artifact@' \
+        <<< "$workflow_executable_run_script_and_uses_nodes_excluding_echo_payload_text_corpus")" == "0" \
+    && "$(grep -Fc -- \
+        '.github/scripts/prime-ci-secure-child-process-evidence-closed-fixture-canary.sh' \
+        "$workflow_path")" == "0" \
+    && "$(grep -Fxc -- \
+        'run: bash .github/scripts/prime-ci-secure-child-process-evidence-closed-fixture-canary.sh' \
+        <<< "$workflow_executable_run_script_and_uses_nodes_excluding_echo_payload_text_corpus")" == "0" \
+    && "$(grep -Fc -- \
+        'swift build --product PrimeValidationWorkflowSecureChildIntegration' \
+        <<< "$workflow_executable_run_script_and_uses_nodes_excluding_echo_payload_text_corpus")" == "0" \
+    && "$(grep -Fc -- \
+        'swift build --product PrimeValidationWorkflowFixtureChild' \
+        <<< "$workflow_executable_run_script_and_uses_nodes_excluding_echo_payload_text_corpus")" == "0" ]] ||
+    die "neutral resource-lease timeout repair workflow operational surface regained an artifact, canary, adapter, or fixture command"
 [[ "$(grep -Fxc -- \
         "            echo 'Exact-main secure-child process/evidence closed fixture-canary authority merge b3402efd96d3ff893a0c2b73897cf48c9b313c8c, tree 7fb3f5505796a43c9db1537ca72f81e19367365f, ordered parents 232a17e8f58a297919366d963ee1d7bc38cdbaee then 82ae2c2611e62144c066db990be6eaf48fdff47a, and GitHub signature verification were valid. Unique push workflow run 31957009710 number 141 attempt 1 check suite 86653677663 passed with null previous-attempt URL and rerun count zero. Active job 95189063495 passed Latin 116; dependent reviewed job 95189438167 passed root 78 plus isolated groups 1, 1, 2, and 2 for isolated 6 and focused whole 84, then retained Metal 44, maintained runtime 1, and tokenizer 1 for live 46 and aggregate 130 XTests. The sole pure-authority test passed once, with zero failures, skips, Actions artifacts, closed-canary launcher or adapter invocations, fixture or capture mechanics, lease acquisitions, Python interpreters, or new C++ mechanics.'" \
         "$workflow_path")" == "1" ]] ||
@@ -2148,6 +2253,54 @@ for required_neutral_resource_lease_generalization_authority_summary_fragment in
         "$required_neutral_resource_lease_generalization_authority_summary_fragment" \
         <<< "$neutral_resource_lease_generalization_authority_run145_summary_line")" == "1" ]] ||
         die "neutral resource-lease generalization authority summary lost an exact fact: $required_neutral_resource_lease_generalization_authority_summary_fragment"
+done
+readonly neutral_resource_lease_generalization_authority_run148_timeout_summary_line="$(grep -F -- \
+    'Exact-main neutral resource-lease generalization authority merge 0abcb4ad5487a775627bbb587184c375dd691978' \
+    "$workflow_path")"
+readonly neutral_resource_lease_generalization_authority_timeout_repair_summary_line="$(grep -F -- \
+    'This append-only dependency-free exact-five timeout observation and closure repair' \
+    "$workflow_path")"
+[[ "$(grep -Fc -- \
+        'Exact-main neutral resource-lease generalization authority merge 0abcb4ad5487a775627bbb587184c375dd691978' \
+        "$workflow_path")" == "1" \
+    && "$(printf '%s\n' \
+        "$neutral_resource_lease_generalization_authority_run148_timeout_summary_line" | \
+        shasum -a 256 | awk '{print $1}')" \
+        == "36da647976e0d765aafd5be44db3a8bc2d6d2f060c8f396aac9a66f42aa9370b" \
+    && "$(grep -Fc -- \
+        'This append-only dependency-free exact-five timeout observation and closure repair' \
+        "$workflow_path")" == "1" \
+    && "$(printf '%s\n' \
+        "$neutral_resource_lease_generalization_authority_timeout_repair_summary_line" | \
+        shasum -a 256 | awk '{print $1}')" \
+        == "591c85282538e039d72c863335ee70d94e136bb6f573458b28841a82bb35ea6c" ]] ||
+    die "neutral resource-lease generalization run 148 timeout or repair summary identity changed"
+for required_neutral_resource_lease_generalization_authority_run148_timeout_summary_fragment in \
+    'tree 94e16511f39fc79b2854423bc82b763974a9cc46, ordered parents 4570716892722873757de6eae1bd897167d674eb then 3258f3d8b8d79df7e2b152c4bdb9eac77223bb78, PR 124' \
+    'Unique push workflow run 31990567513 number 148 attempt 1 check suite 86731396865 had a null previous-attempt URL and completed cancelled after the reviewed job exceeded the exact 60-minute ceiling' \
+    'Active job 95273237917 passed Latin 116' \
+    'Dependent reviewed job 95273924450 passed root 80 plus isolated groups 1, 1, 2, and 2 for isolated 6 and focused whole 86' \
+    'passed retained Metal 44 and maintained runtime 1 with one runtime receipt' \
+    'tokenizer authority build reached [197/199] before cancellation; tokenizer test start, pass, and receipt counts were zero' \
+    'Exactly 131 XTests started and passed with zero failures or skips, but retained live 46 and aggregate 132 were not established' \
+    'closed-canary launcher path reference count, executable closed-canary launcher command count, executable secure-child adapter product-build command count, and executable fixture-child product-build command count were each zero' \
+    'those counts bind parsed executable run-script and uses nodes excluding echo payload text, not decoded-log substring absence'; do
+    [[ "$(grep -Foc -- \
+        "$required_neutral_resource_lease_generalization_authority_run148_timeout_summary_fragment" \
+        <<< "$neutral_resource_lease_generalization_authority_run148_timeout_summary_line")" == "1" ]] ||
+        die "neutral resource-lease generalization run 148 summary lost an exact fact: $required_neutral_resource_lease_generalization_authority_run148_timeout_summary_fragment"
+done
+for required_neutral_resource_lease_generalization_authority_timeout_repair_summary_fragment in \
+    'sole reviewed-job execution-budget change raises reviewed main from 60 to 75 minutes' \
+    'Job topology and ordered step names remain unchanged; retained test and live command order and retained live script bytes remain unchanged; production source, frozen authority pair, README, launcher, legacy lease, Layer-A, B-path, and MLX bytes remain preserved' \
+    'Each existing single authenticated depth-two Prime checkout adds only the exact immutable 4570716892722873757de6eae1bd897167d674eb want for proof-only lineage hydration, with no new fetch, step, ref, or mechanics surface' \
+    'retires run 148 as timeout-incomplete rather than semantic failure and authorizes no rerun or recovery of that attempt' \
+    'active Latin 116, root 81, isolated 6, focused whole 87, retained live 46, and aggregate 133 XTests with 513 embedded provenance records' \
+    'additive neutral-lease implementation remains unauthorized until that closure is green'; do
+    [[ "$(grep -Foc -- \
+        "$required_neutral_resource_lease_generalization_authority_timeout_repair_summary_fragment" \
+        <<< "$neutral_resource_lease_generalization_authority_timeout_repair_summary_line")" == "1" ]] ||
+        die "neutral resource-lease generalization timeout repair summary lost an exact fact: $required_neutral_resource_lease_generalization_authority_timeout_repair_summary_fragment"
 done
 [[ "$(grep -Fxc -- \
         '          bash .github/scripts/prime-ci-native-decoder-b-specific-native300m-trajectory-checkpoint-execution.sh' \
@@ -2911,6 +3064,7 @@ readonly secure_child_process_evidence_implementation_authority_filter='PrimeCor
 readonly secure_child_process_evidence_closed_fixture_canary_authority_filter='PrimeCoreTests.PrimeSecureChildProcessEvidenceClosedFixtureCanaryAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling'
 readonly secure_child_process_evidence_closed_fixture_canary_pin_mismatch_execution_observation_filter='PrimeCoreTests.PrimeSecureChildProcessEvidenceClosedFixtureCanaryPINMismatchExecutionObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRetirementCeiling'
 readonly neutral_resource_lease_generalization_authority_filter='PrimeCoreTests.PrimeNeutralResourceLeaseGeneralizationAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling'
+readonly neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_filter='PrimeCoreTests.PrimeNeutralResourceLeaseGeneralizationAuthorityReviewedMainTimeoutObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndTimeoutCeiling'
 [[ "$(grep -Fc -- "$tiny_cpu_mechanics_authority_filter" \
         "$workflow_path")" == "1" \
     && "$(grep -Fc -- "$tiny_cpu_mechanics_failure_observation_filter" \
@@ -2940,7 +3094,7 @@ readonly neutral_resource_lease_generalization_authority_filter='PrimeCoreTests.
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling' \\" \
         "$workflow_path")" == "2" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 80 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 81 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not run the exact Stage-2 authority and failure-observation pure contracts"
 [[ "$(grep -Fc -- "$private_dependency_tls_failure_observation_filter" \
@@ -3032,7 +3186,7 @@ readonly neutral_resource_lease_generalization_authority_filter='PrimeCoreTests.
         "          grep -Fq 'PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapFreshMetallibCrossBindingExecutionFailureObservationTests' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 80 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 81 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the Stage-2 metallib bootstrap repair, failure observations, and classifier repair authority"
 [[ "$(grep -Fc -- \
@@ -3200,7 +3354,7 @@ readonly neutral_resource_lease_generalization_authority_filter='PrimeCoreTests.
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling' \\" \
         "$workflow_path")" == "2" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 80 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 81 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run exactly the Stage-5 execution-failure observation"
 [[ "$(grep -Fc -- \
@@ -3219,7 +3373,7 @@ readonly neutral_resource_lease_generalization_authority_filter='PrimeCoreTests.
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling' \\" \
         "$workflow_path")" == "5" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 80 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 81 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run exactly the Stage-5 replacement-execution authority"
 [[ "$(grep -Fc -- \
@@ -3235,7 +3389,7 @@ readonly neutral_resource_lease_generalization_authority_filter='PrimeCoreTests.
         "          grep -Fq 'PrimeNativeDecoderStage5RepeatedTrajectoryReplacementCurrentDecoderIdentityObservationTests' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 80 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 81 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not run the exact Stage-5 current-decoder identity observation"
 [[ "$(grep -Fc -- \
@@ -3251,7 +3405,7 @@ readonly neutral_resource_lease_generalization_authority_filter='PrimeCoreTests.
         "          grep -Fq 'PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayReplacementExecutionObservationTests' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 80 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 81 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not run the exact Stage-5 replacement execution observation"
 [[ "$(grep -Fc -- \
@@ -3270,7 +3424,7 @@ readonly neutral_resource_lease_generalization_authority_filter='PrimeCoreTests.
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling' \\" \
         "$workflow_path")" == "5" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 80 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 81 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run exactly the Stage-6 resource-only probe authority"
 [[ "$(grep -Fc -- \
@@ -3328,7 +3482,7 @@ readonly neutral_resource_lease_generalization_authority_filter='PrimeCoreTests.
         "          grep -Fq 'PrimeNativeDecoderNative300MTrajectoryCheckpointExecutionAuthorityTests' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 80 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 81 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the sole Native300M trajectory-checkpoint execution authority contract"
 [[ "$(grep -Fc -- \
@@ -3344,7 +3498,7 @@ readonly neutral_resource_lease_generalization_authority_filter='PrimeCoreTests.
         "          grep -Fq 'PrimeNativeDecoderBSpecificNative300MTrajectoryCheckpointExecutionFailureObservationTests' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 80 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 81 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the Native300M trajectory-checkpoint failure observation"
 [[ "$(grep -Fc -- \
@@ -3363,7 +3517,7 @@ readonly neutral_resource_lease_generalization_authority_filter='PrimeCoreTests.
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling' \\" \
         "$workflow_path")" == "5" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 80 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 81 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the sole secure-child process/evidence design-authority contract"
 [[ "$(grep -Fc -- \
@@ -3382,7 +3536,7 @@ readonly neutral_resource_lease_generalization_authority_filter='PrimeCoreTests.
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling' \\" \
         "$workflow_path")" == "5" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 80 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 81 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the sole secure-child process/evidence implementation-authority contract"
 [[ "$(grep -Fc -- \
@@ -3401,7 +3555,7 @@ readonly neutral_resource_lease_generalization_authority_filter='PrimeCoreTests.
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling' \\" \
         "$workflow_path")" == "5" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 80 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 81 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the sole secure-child closed-fixture canary pure-authority contract"
 [[ "$(grep -Fc -- \
@@ -3420,7 +3574,7 @@ readonly neutral_resource_lease_generalization_authority_filter='PrimeCoreTests.
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRetirementCeiling' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 80 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 81 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the sole secure-child closed-fixture canary PIN-mismatch retirement observation"
 [[ "$(grep -Fc -- \
@@ -3439,11 +3593,30 @@ readonly neutral_resource_lease_generalization_authority_filter='PrimeCoreTests.
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling' \\" \
         "$workflow_path")" == "5" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 80 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 81 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the sole neutral resource-lease generalization pure-authority contract"
+[[ "$(grep -Fc -- \
+        "$neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_filter" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        "$neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_source_relative_path" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        "$neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_test_relative_path" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        "          grep -Fq 'PrimeNeutralResourceLeaseGeneralizationAuthorityReviewedMainTimeoutObservationTests' \\" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndTimeoutCeiling' \\" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        '          grep -Fq '\''Executed 81 tests, with 0 failures'\'' "$test_log"' \
+        "$workflow_path")" == "1" ]] ||
+    die "hosted workflow does not parse and run the sole neutral resource-lease generalization timeout observation"
 [[ "$(grep -Fxc -- \
-        "            --filter 'PrimeCoreTests.PrimeNeutralResourceLeaseGeneralizationAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeSecureChildProcessEvidenceClosedFixtureCanaryPINMismatchExecutionObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRetirementCeiling|PrimeCoreTests.PrimeSecureChildProcessEvidenceClosedFixtureCanaryAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeSecureChildProcessEvidenceTests|PrimeNativeNeuralGateMLXIsolationSourceContractTests|PrimeNativeCorpusReplaySourceContractTests|PrimeCoreTests.PrimeNativeDecoderTrajectoryExactResumeDesignAuthorityTests/testFrozenV1CanonicalCodableMutationAndSourceBoundary|PrimeCoreTests.PrimeNativeDecoderTrajectoryDesignReviewedMainTimeoutObservationTests/testFrozenV1CanonicalCodableRecursiveMutationAndAuthorityCeiling|PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsAuthorityTests/testFrozenV1CanonicalCodableExhaustiveMutationAndCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsExecutionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeReviewedMainPrivateDependencyTLSFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeNativeDecoderMetalCurrentDecoderIdentityAssertionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeNativeDecoderMetalCurrentDecoderIdentityAssertionRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapRepairExecutionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapPredecessorLogClassifierRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapFreshMetallibCrossBindingExecutionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapFreshMetallibEvidenceSurfaceRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapFreshMetallibEvidenceSurfaceRepairExecutionObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndSuccessCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeAuthorityCanonicalBindingRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeValidationInventoryOrderRepairAuthorityTests/testFrozenV1CanonicalCodableRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeExecutionObservationTests/testFrozenV1CanonicalCodableRecursiveMutationAndSuccessCeiling|PrimeCoreTests.PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionPackageResolvedScopeRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionExecutionObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndSuccessCeiling|PrimeCoreTests.PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayExactMainSwiftNumericsResolutionRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayExecutionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayReplacementExecutionAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeNativeDecoderStage5RepeatedTrajectoryReplacementCurrentDecoderIdentityObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndIdentityCeiling|PrimeCoreTests.PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayReplacementExecutionObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndSplitOutcomeCeiling|PrimeCoreTests.PrimeNativeDecoderNative300MResourceOnlyOneStepProbeAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeNativeDecoderNative300MResourceOnlyOneStepProbeExecutionObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndSuccessCeiling|PrimeCoreTests.PrimeNativeDecoderBSpecificNative300MResourceWitnessAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeNativeDecoderBSpecificNative300MResourceWitnessExecutionObservationTests/testBSpecificNative300MResourceWitnessPASSExecutionObservationIsExactAndRejectsEveryRecursiveMutation|PrimeCoreTests.PrimeNativeDecoderNative300MTrajectoryCheckpointExecutionAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeNativeDecoderBSpecificNative300MTrajectoryCheckpointExecutionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeSecureChildProcessEvidenceDesignAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeSecureChildProcessEvidenceImplementationAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeNativeGenerationContractSourceContractTests|PrimeNativeNeuralGateContractSourceContractTests|PrimeNativeResolvedContractAdapterSourceContractTests|PrimeSwiftSourceProvenanceTests/testLiveRepositoryMatchesEmbeddedSourceIdentity' \\" \
+        "            --filter 'PrimeCoreTests.PrimeNeutralResourceLeaseGeneralizationAuthorityReviewedMainTimeoutObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndTimeoutCeiling|PrimeCoreTests.PrimeNeutralResourceLeaseGeneralizationAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeSecureChildProcessEvidenceClosedFixtureCanaryPINMismatchExecutionObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRetirementCeiling|PrimeCoreTests.PrimeSecureChildProcessEvidenceClosedFixtureCanaryAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeSecureChildProcessEvidenceTests|PrimeNativeNeuralGateMLXIsolationSourceContractTests|PrimeNativeCorpusReplaySourceContractTests|PrimeCoreTests.PrimeNativeDecoderTrajectoryExactResumeDesignAuthorityTests/testFrozenV1CanonicalCodableMutationAndSourceBoundary|PrimeCoreTests.PrimeNativeDecoderTrajectoryDesignReviewedMainTimeoutObservationTests/testFrozenV1CanonicalCodableRecursiveMutationAndAuthorityCeiling|PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsAuthorityTests/testFrozenV1CanonicalCodableExhaustiveMutationAndCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsExecutionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeReviewedMainPrivateDependencyTLSFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeNativeDecoderMetalCurrentDecoderIdentityAssertionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeNativeDecoderMetalCurrentDecoderIdentityAssertionRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapRepairExecutionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapPredecessorLogClassifierRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapFreshMetallibCrossBindingExecutionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapFreshMetallibEvidenceSurfaceRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapFreshMetallibEvidenceSurfaceRepairExecutionObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndSuccessCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeAuthorityCanonicalBindingRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeValidationInventoryOrderRepairAuthorityTests/testFrozenV1CanonicalCodableRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeExecutionObservationTests/testFrozenV1CanonicalCodableRecursiveMutationAndSuccessCeiling|PrimeCoreTests.PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionPackageResolvedScopeRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionExecutionObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndSuccessCeiling|PrimeCoreTests.PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayExactMainSwiftNumericsResolutionRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayExecutionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayReplacementExecutionAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeNativeDecoderStage5RepeatedTrajectoryReplacementCurrentDecoderIdentityObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndIdentityCeiling|PrimeCoreTests.PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayReplacementExecutionObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndSplitOutcomeCeiling|PrimeCoreTests.PrimeNativeDecoderNative300MResourceOnlyOneStepProbeAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeNativeDecoderNative300MResourceOnlyOneStepProbeExecutionObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndSuccessCeiling|PrimeCoreTests.PrimeNativeDecoderBSpecificNative300MResourceWitnessAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeNativeDecoderBSpecificNative300MResourceWitnessExecutionObservationTests/testBSpecificNative300MResourceWitnessPASSExecutionObservationIsExactAndRejectsEveryRecursiveMutation|PrimeCoreTests.PrimeNativeDecoderNative300MTrajectoryCheckpointExecutionAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeNativeDecoderBSpecificNative300MTrajectoryCheckpointExecutionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeSecureChildProcessEvidenceDesignAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeSecureChildProcessEvidenceImplementationAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeNativeGenerationContractSourceContractTests|PrimeNativeNeuralGateContractSourceContractTests|PrimeNativeResolvedContractAdapterSourceContractTests|PrimeSwiftSourceProvenanceTests/testLiveRepositoryMatchesEmbeddedSourceIdentity' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fc -- \
         "$secure_child_process_evidence_test_relative_path" \
@@ -3452,7 +3625,7 @@ readonly neutral_resource_lease_generalization_authority_filter='PrimeCoreTests.
         '          grep -Fq '\''PrimeSecureChildProcessEvidenceTests'\'' "$test_log"' \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 80 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 81 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run exactly the 12 secure-child process/evidence Layer-A tests"
 [[ "$(grep -Fc -- \
@@ -5519,6 +5692,8 @@ readonly secure_child_process_evidence_closed_fixture_canary_pin_mismatch_execut
 readonly secure_child_process_evidence_closed_fixture_canary_pin_mismatch_execution_observation_test="$prime_root/$secure_child_process_evidence_closed_fixture_canary_pin_mismatch_execution_observation_test_relative_path"
 readonly neutral_resource_lease_generalization_authority_source="$prime_root/$neutral_resource_lease_generalization_authority_source_relative_path"
 readonly neutral_resource_lease_generalization_authority_test="$prime_root/$neutral_resource_lease_generalization_authority_test_relative_path"
+readonly neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_source="$prime_root/$neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_source_relative_path"
+readonly neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_test="$prime_root/$neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_test_relative_path"
 readonly secure_child_process_evidence_closed_fixture_canary_launcher="$prime_root/$secure_child_process_evidence_closed_fixture_canary_launcher_relative_path"
 readonly secure_child_process_plan="$prime_root/$secure_child_process_plan_relative_path"
 readonly secure_child_process_evidence="$prime_root/$secure_child_process_evidence_relative_path"
@@ -11760,16 +11935,16 @@ done
         awk '{print $1}')" == "13" \
     && "$(git -C "$prime_root" hash-object -- \
         'Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift')" \
-        == "fd966bf2f11acebe1e4ab0a4df2e7aad1a2db28e" \
+        == "7891914f0a8716cd5cb56b77214daa7d3c667a0e" \
     && "$(stat -f %z \
         "$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift")" \
         == "546" \
     && "$(shasum -a 256 \
         "$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift" | \
         awk '{print $1}')" \
-        == "272332346a40372e5a4bd8c466bbab4e6c65a67be58a6e352c2a9f233cd6230b" \
+        == "72688a285dfefe2ebcb277fd3e80ace4a2ccebb230cf1bd1232c78d920fe6f42" \
     && "$(grep -Fxc -- \
-        '        "bbed26d450773374e5f5086410041a133113e79fa08a38064706b060c4c5ecee"' \
+        '        "9a885368070b3fe60f7fb90daee2a8f3a2f8b1b955e1261aa41e772e52ba6428"' \
         "$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift")" == "1" ]] ||
     die "neutral resource-lease generalization authority embedded provenance identity changed"
 readonly expected_embedded_source_identity_sha256="$(awk -F'"' \
@@ -11813,7 +11988,7 @@ while IFS= read -r relative_path; do
         '{relative_path: $relative_path, sha256: $sha256, byte_count: $byte_count}'
 done | jq -jcsS '.' | shasum -a 256 | awk '{print $1}')"
 [[ "$expected_embedded_source_identity_sha256" =~ ^[0-9a-f]{64}$ \
-    && "$recomputed_embedded_source_identity_record_count" == "511" \
+    && "$recomputed_embedded_source_identity_record_count" == "513" \
     && "$recomputed_embedded_source_identity_sha256" \
         == "$expected_embedded_source_identity_sha256" ]] ||
     die "embedded Prime source provenance does not recompute exactly"
@@ -18056,6 +18231,263 @@ readonly neutral_resource_lease_generalization_authority_pair_executable_ast="$(
     grep -Eq -- \
         'name="(Process|FileManager|FileHandle|URLSession|PrimeMetalDeviceLease|posix_spawn|waitpid|kill|flock|execve|runSupervisor|trajectoryRunWorkerProcess|trajectoryRunReleaseVerifierProcess|acquire|release)"|field="(runSupervisor|trajectoryRunWorkerProcess|trajectoryRunReleaseVerifierProcess|acquire|release)"' ||
     die "neutral resource-lease generalization authority pair gained executable process, lease, launcher, worker, verifier, filesystem, or network capability"
+
+for neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_file in \
+    "$neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_source" \
+    "$neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_test"; do
+    [[ -f "$neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_file" \
+        && ! -L "$neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_file" \
+        && "$(stat -f %l \
+            "$neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_file")" \
+            == "1" \
+        && "$(git -C "$prime_root" ls-files -s -- \
+            "${neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_file#"$prime_root/"}" | \
+            awk '{print $1}')" == "100644" ]] ||
+        die "neutral resource-lease generalization reviewed-main timeout observation pair is missing, linked, multiply linked, or has the wrong mode: $neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_file"
+done
+assert_neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_identity() {
+    local relative_path="$1" expected_blob="$2" expected_bytes="$3"
+    local expected_lf_count="$4" expected_sha256="$5"
+    local absolute_path="$prime_root/$relative_path"
+    [[ -f "$absolute_path" && ! -L "$absolute_path" \
+        && "$(stat -f %l "$absolute_path")" == "1" \
+        && "$(git -C "$prime_root" ls-files -s -- "$relative_path" | \
+            awk '{print $1}')" == "100644" \
+        && "$(git -C "$prime_root" hash-object -- "$relative_path")" \
+            == "$expected_blob" \
+        && "$(stat -f %z "$absolute_path")" == "$expected_bytes" \
+        && "$(wc -l < "$absolute_path" | awk '{print $1}')" \
+            == "$expected_lf_count" \
+        && "$(shasum -a 256 "$absolute_path" | awk '{print $1}')" \
+            == "$expected_sha256" \
+        && "$(LC_ALL=C tr -cd '\r' < "$absolute_path" | wc -c | \
+            awk '{print $1}')" == "0" ]] ||
+        die "neutral resource-lease generalization reviewed-main timeout observation identity changed: $relative_path"
+}
+assert_neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_identity \
+    "$neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_source_relative_path" \
+    '34cb09d6845c50035cf881bb7cc97dfdcb655f92' '42072' '861' \
+    '286c494149add8e06cbaa8ae21d25da320f2b2295542704fc082d0dc7deaf6e3'
+assert_neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_identity \
+    "$neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_test_relative_path" \
+    '0a5a248c8bd2b5f85f129ea014dad7287102e5fc' '47996' '1114' \
+    'e2710c6cb502aa7cc25f7738f02b7210883b29efb2e96a2a34fcf32d8b5f5843'
+[[ "$(awk '/^import / { print }' \
+        "$neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_source")" \
+        == 'import Foundation' \
+    && "$(awk '/^import / || /^@testable import / { print }' \
+        "$neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_test")" \
+        == $'import CoreFoundation\nimport Foundation\n@testable import PrimeCore\nimport XCTest' \
+    && "$(grep -Ec -- '^[[:space:]]+func test' \
+        "$neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_test")" \
+        == "1" \
+    && "$(grep -Fc -- \
+        'PrimeNeutralResourceLeaseGeneralizationAuthorityReviewedMainTimeoutObservationTests:' \
+        "$neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_test")" \
+        == "1" \
+    && "$(grep -Fc -- \
+        'func testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndTimeoutCeiling()' \
+        "$neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_test")" \
+        == "1" ]] ||
+    die "neutral resource-lease generalization reviewed-main timeout observation imports or sole-test surface changed"
+[[ "$(grep -Fxc -- '    public static let canonicalByteCount = 18_232' \
+        "$neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_source")" \
+        == "1" \
+    && "$(grep -Fxc -- '    public static let canonicalSHA256 =' \
+        "$neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_source")" \
+        == "1" \
+    && "$(grep -Fxc -- \
+        '        "366c46a3531b292451bbd5ebecc1110ae5f0b78f29b23e49f7df03d59ae64baf"' \
+        "$neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_source")" \
+        == "1" ]] ||
+    die "neutral resource-lease generalization reviewed-main timeout observation canonical identity changed"
+[[ "$(grep -Fxc -- \
+        '                "github_connector_decoded_utf8_job_log_aggregate_not_raw_zip",' \
+        "$neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_source")" \
+        == "2" \
+    && "$(grep -Fxc -- \
+        '                "github_connector_decoded_utf8_job_log_aggregate_identity",' \
+        "$neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_source")" \
+        == "2" \
+    && "$(grep -Fxc -- '            crByteCount: 0,' \
+        "$neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_source")" \
+        == "2" \
+    && "$(grep -Fxc -- '            utf8BOMPresent: true,' \
+        "$neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_source")" \
+        == "2" \
+    && "$(grep -Fxc -- '            terminalLFPresent: true,' \
+        "$neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_source")" \
+        == "2" \
+    && "$(grep -Fxc -- '            repeatFetchExactlyEqual: true,' \
+        "$neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_source")" \
+        == "2" \
+    && "$(grep -Fxc -- '            rawArchiveBytesBound: false,' \
+        "$neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_source")" \
+        == "2" \
+    && "$(grep -Fxc -- '            rawArchiveRetained: false,' \
+        "$neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_source")" \
+        == "2" ]] ||
+    die "neutral resource-lease generalization reviewed-main timeout connector-log representation binding changed"
+! grep -Eq -- 'PLACEHOLDER|replaced before freeze|Replaced with' \
+    "$neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_source" \
+    "$neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_test" ||
+    die "neutral resource-lease generalization reviewed-main timeout observation pair retains a placeholder"
+for required_neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_value in \
+    'PrimeNeutralResourceLeaseGeneralizationAuthorityReviewedMainTimeoutObservationV1:' \
+    'Codable,' 'Equatable,' 'Sendable' \
+    'public static let frozenV1' \
+    'public static func decodeCanonical(_ data: Data) throws -> Self' \
+    'public func validate() throws' \
+    'public func validateExactV1() throws' \
+    'guard self == Self.frozenV1 else {' \
+    '"prime_neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_v1"' \
+    '"append_only_reviewed_main_timeout_observation_and_bounded_repair_authority"' \
+    'classification: "timeout_incomplete_not_semantic_failure"' \
+    'mergeRevision: "0abcb4ad5487a775627bbb587184c375dd691978"' \
+    'mergeTree: "94e16511f39fc79b2854423bc82b763974a9cc46"' \
+    '"4570716892722873757de6eae1bd897167d674eb"' \
+    '"3258f3d8b8d79df7e2b152c4bdb9eac77223bb78"' \
+    'pullRequestNumber: 124' \
+    'workflowRunID: 31_989_606_001' \
+    'workflowRunNumber: 147' \
+    'activeRootJobID: 95_270_648_656' \
+    'reviewedMainJobID: 95_271_322_489' \
+    'runID: 31_990_567_513' \
+    'runNumber: 148' \
+    'runAttempt: 1' \
+    'checkSuiteID: 86_731_396_865' \
+    'conclusion: "cancelled"' \
+    'jobID: 95_273_237_917' \
+    'jobID: 95_273_924_450' \
+    '"github_connector_decoded_utf8_job_log_aggregate_not_raw_zip"' \
+    '"github_connector_decoded_utf8_job_log_aggregate_identity"' \
+    'byteCount: 327_304' \
+    'lfByteCount: 1_886' \
+    '"518d82f2e9c687bcfca06bc1ae583904f99e5acbaaef9168dda528ce161e319b"' \
+    'byteCount: 10_316_082' \
+    'lfByteCount: 78_941' \
+    '"125d6f45ce2ca3ad688a66795ab85e8dbb5e79ed661ed921c7fae7a3cdd324fd"' \
+    'utf8BOMPresent: true' \
+    'terminalLFPresent: true' \
+    'repeatFetchExactlyEqual: true' \
+    'rawArchiveBytesBound: false' \
+    'rawArchiveRetained: false' \
+    'configuredReviewedMainTimeoutMinutes: 60' \
+    'proposedReviewedMainTimeoutMinutes: 75' \
+    'reviewedJobAPIDurationSeconds: 3_627' \
+    '"The job has exceeded the maximum execution time of 1h0m0s"' \
+    '"2026-08-17T04:20:13.8459900Z ##[error]The operation was canceled."' \
+    'rootTestCount: 80' \
+    'isolatedTestCount: 6' \
+    'focusedWholeTestCount: 86' \
+    'completedLiveTestCount: 45' \
+    'expectedCompleteLiveTestCount: 46' \
+    'completedAggregateTestCount: 131' \
+    'expectedCompleteAggregateTestCount: 132' \
+    '"[197/199] Compiling PrimeNativeDecoder PrimeNativeGQADecoder.swift"' \
+    'workflowSoleTestExecutionBudgetChange:' \
+    '"trusted_main_compile_timeout_minutes_60_to_75"' \
+    'workflowSoleTestExecutionBudgetChangeOccurrenceCount: 1' \
+    'workflowJobAndStepOrderMustRemainUnchanged: true' \
+    'retainedLiveCommandSequenceMustRemainByteIdentical: true' \
+    'historicalAuthorityBaseObjectID:' \
+    'activeRootExistingFetchAddsOnlyHistoricalAuthorityBaseObject: true' \
+    'reviewedMainExistingFetchAddsOnlyHistoricalAuthorityBaseObject: true' \
+    'exactPrimeFetchInvocationCountPerCheckoutStepRemainsOne: true' \
+    'addedImmutableProofWantCountPerExistingFetch: 1' \
+    'additionalFetchStepCount: 0' \
+    'additionalPrimeFetchInvocationCountPerCheckoutStep: 0' \
+    'additionalMutableRefCount: 0' \
+    'historicalAuthorityBaseObjectIsExistingFetchInput: true' \
+    'historicalAuthorityBaseObjectIsDetachedWorktreeCheckoutTarget: false' \
+    'historicalAuthorityBaseObjectIsTestOrLiveExecutionInput: false' \
+    'lineageHydrationAddsMechanics: false' \
+    'actionsAPIArtifactCount: 0' \
+    '"parsed_workflow_executable_run_script_and_uses_nodes_excluding_echo_payload_text"' \
+    '"uses: actions/upload-artifact@"' \
+    'workflowArtifactUploadActionReferenceCount: 0' \
+    'workflowExactClosedCanaryLauncherPathReferenceCount: 0' \
+    'workflowExecutableClosedCanaryLauncherCommandCount: 0' \
+    'workflowExecutableSecureChildAdapterProductBuildCommandCount: 0' \
+    'workflowExecutableFixtureChildProductBuildCommandCount: 0' \
+    'directSuccessorAuthorizedOnlyAfterExactFiveClosure: true' \
+    'observedRunRerunAuthorized: false' \
+    'observedRunRetryAuthorized: false' \
+    'activeLatinTestCount: 116' \
+    'rootTestCount: 81' \
+    'focusedWholeTestCount: 87' \
+    'retainedLiveTestCount: 46' \
+    'aggregateTestCount: 133' \
+    'embeddedProvenanceRecordCount: 513' \
+    'newMechanicsInvocationCount: 0' \
+    'implementationAuthorizedByThisObservation: false' \
+    '"OBSERVED_TIMEOUT_INCOMPLETE_REPAIR_AUTHORIZED_exact5_timeout_60_to_75_no_implementation_no_new_mechanics"' \
+    '"merge_only_this_pure_exact5_timeout_observation_and_repair"' \
+    '"require_one_unique_attempt1_direct_successor_exact_main_completion_at_75_minutes"' \
+    '"do_not_rerun_retry_or_recover_run148"' \
+    '"require_root81_isolated6_focused87_live46_aggregate133_and_provenance513"' \
+    '"only_after_green_separately_review_the_neutral_alias_and_typed_retention_implementation"'; do
+    grep -Fq -- \
+        "$required_neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_value" \
+        "$neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_source" ||
+        die "neutral resource-lease generalization reviewed-main timeout observation lost a frozen fact or ceiling: $required_neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_value"
+done
+for required_neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_test_value in \
+    'requireSendable(Observation.self)' \
+    'assertConnectorDecodedJobLog(' \
+    'let canonical = try observation.canonicalData()' \
+    'PrimeSHA256.hexDigest(of: canonical)' \
+    'try Observation.decodeCanonical(canonical)' \
+    'XCTAssertNoThrow(try observation.validate())' \
+    'XCTAssertNoThrow(try observation.validateExactV1())' \
+    'let scalarPaths = allScalarPaths(in: object)' \
+    'for path in valuePaths {' \
+    'for path in allArrayPaths(in: object)' \
+    'dictionary["unknown_timeout_observation_field_\(index)"] = true' \
+    'XCTAssertThrowsError(try loose.validate(), file: file, line: line)' \
+    'XCTAssertThrowsError(try loose.validateExactV1(), file: file, line: line)' \
+    'XCTAssertTrue(absenceCounts(absence).allSatisfy { $0 == 0 })' \
+    'assertExactFive(repair.exactOrderedPaths)' \
+    'XCTAssertTrue(authorityFalseClaims(ceiling).allSatisfy { !$0 })' \
+    'XCTAssertEqual(expected.rootTestCount + expected.isolatedTestCount, 87)' \
+    'XCTAssertEqual(expected.focusedWholeTestCount + expected.retainedLiveTestCount, 133)'; do
+    grep -Fq -- \
+        "$required_neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_test_value" \
+        "$neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_test" ||
+        die "neutral resource-lease generalization reviewed-main timeout observation test lost canonical, totality, or ceiling coverage: $required_neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_test_value"
+done
+for forbidden_neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_capability in \
+    'import CoreGraphics' 'import Darwin' 'import Dispatch' 'import Metal' \
+    'import MLX' 'import MLXNN' 'import MLXOptimizers' 'FileManager.' \
+    'FileHandle.' 'URLSession' 'Process(' 'PrimeMetalDeviceLease(' \
+    '.acquire(' '.release(' 'posix_spawn(' 'waitpid(' 'kill(' 'flock(' \
+    'execve(' 'runSupervisor(' 'trajectoryRunWorkerProcess(' \
+    'trajectoryRunReleaseVerifierProcess('; do
+    ! grep -Fq -- \
+        "$forbidden_neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_capability" \
+        "$neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_source" \
+        "$neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_test" ||
+        die "neutral resource-lease generalization reviewed-main timeout observation gained executable capability: $forbidden_neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_capability"
+done
+readonly neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_source_ast="$(swiftc \
+    -frontend -dump-parse \
+    "$neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_source" \
+    2>/dev/null)" ||
+    die "neutral resource-lease generalization reviewed-main timeout observation source does not parse into a Swift AST"
+readonly neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_test_ast="$(swiftc \
+    -frontend -dump-parse \
+    "$neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_test" \
+    2>/dev/null)" ||
+    die "neutral resource-lease generalization reviewed-main timeout observation test does not parse into a Swift AST"
+readonly neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_pair_executable_ast="$(printf '%s\n%s\n' \
+    "$neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_source_ast" \
+    "$neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_test_ast" | \
+    grep -Fv -- 'string_literal_expr' || true)"
+! printf '%s\n' \
+    "$neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_pair_executable_ast" | \
+    grep -Eq -- \
+        'name="(Process|FileManager|FileHandle|URLSession|PrimeMetalDeviceLease|posix_spawn|waitpid|kill|flock|execve|runSupervisor|trajectoryRunWorkerProcess|trajectoryRunReleaseVerifierProcess|acquire|release)"|field="(runSupervisor|trajectoryRunWorkerProcess|trajectoryRunReleaseVerifierProcess|acquire|release)"' ||
+    die "neutral resource-lease generalization reviewed-main timeout observation pair gained executable process, lease, launcher, worker, verifier, filesystem, or network capability"
 
 for native300m_trajectory_checkpoint_execution_authority_file in \
     "$native300m_trajectory_checkpoint_execution_authority_source" \
