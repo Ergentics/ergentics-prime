@@ -104,6 +104,8 @@ readonly exclusive_resource_lease_source_relative_path="Sources/PrimeCore/PrimeE
 readonly exclusive_resource_lease_test_relative_path="Tests/PrimeCoreTests/PrimeExclusiveResourceLeaseTests.swift"
 readonly monitor_held_lease_secure_child_containment_authority_source_relative_path="Sources/PrimeCore/PrimeMonitorHeldLeaseSecureChildContainmentAuthority.swift"
 readonly monitor_held_lease_secure_child_containment_authority_test_relative_path="Tests/PrimeCoreTests/PrimeMonitorHeldLeaseSecureChildContainmentAuthorityTests.swift"
+readonly monitor_held_lease_secure_child_containment_source_relative_path="Sources/PrimeCore/PrimeMonitorHeldLeaseSecureChildContainment.swift"
+readonly monitor_held_lease_secure_child_containment_test_relative_path="Tests/PrimeCoreTests/PrimeMonitorHeldLeaseSecureChildContainmentTests.swift"
 readonly secure_child_process_evidence_closed_fixture_canary_launcher_relative_path=".github/scripts/prime-ci-secure-child-process-evidence-closed-fixture-canary.sh"
 readonly secure_child_process_plan_relative_path="Sources/PrimeCore/PrimeSecureChildProcessPlan.swift"
 readonly secure_child_process_evidence_relative_path="Sources/PrimeCore/PrimeSecureChildProcessEvidence.swift"
@@ -139,7 +141,11 @@ readonly exclusive_resource_lease_implementation_closure_revision="ef64686e76d2d
 readonly exclusive_resource_lease_implementation_closure_tree="127dc50e07e192e5868ef734cd27f74d59c63de6"
 readonly exclusive_resource_lease_implementation_closure_first_parent="e1d90e3f2ae6c4d3c279bf5fb64ce3baafc1f540"
 readonly exclusive_resource_lease_implementation_closure_second_parent="c2a42ca4a3bd1c31f06560dd1bff970039dcc7f0"
-readonly expected_monitor_held_lease_secure_child_containment_authority_preserved_index_sha256="9e2557cefc8760584285009d4d059b89b01f34d2f394f8079226d4c34109f516"
+readonly monitor_held_lease_secure_child_containment_authority_closure_revision="3ad8087ed6e403ba81f46bba97ceb5d440979e0a"
+readonly monitor_held_lease_secure_child_containment_authority_closure_tree="e867e7a562ab89ec638c3e6ebc7d539fc6b790df"
+readonly monitor_held_lease_secure_child_containment_authority_closure_first_parent="ef64686e76d2d67e46deb696bfeef18ea96c96a2"
+readonly monitor_held_lease_secure_child_containment_authority_closure_second_parent="25449c716a82eb67494aaf45b308cac0aeda7817"
+readonly expected_monitor_held_lease_secure_child_containment_preserved_index_sha256="1833ec64e9fb83cd550cd74417f07596dedf63cdfbe52264dfeb1c6fc75350ee"
 exact_commit_header() {
     local revision="$1"
     [[ "$(git -C "$prime_root" cat-file -t "$revision")" == "commit" ]] ||
@@ -193,7 +199,7 @@ exact_commit_parent_lines() {
     local revision="$1"
     exact_commit_header "$revision" | awk '/^parent / { print $2 }'
 }
-readonly observed_monitor_held_lease_secure_child_containment_authority_preserved_index_sha256="$({
+readonly observed_monitor_held_lease_secure_child_containment_preserved_index_sha256="$({
     git -C "$prime_root" ls-files -s |
         while IFS= read -r index_record; do
             relative_path="${index_record#*$'\t'}"
@@ -203,16 +209,16 @@ readonly observed_monitor_held_lease_secure_child_containment_authority_preserve
                     == '.github/workflows/prime-active-root-quarantine.yml' \
                 || "$relative_path" \
                     == 'Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' \
-                || "$relative_path" == "$monitor_held_lease_secure_child_containment_authority_source_relative_path" \
-                || "$relative_path" == "$monitor_held_lease_secure_child_containment_authority_test_relative_path" ]]; then
+                || "$relative_path" == "$monitor_held_lease_secure_child_containment_source_relative_path" \
+                || "$relative_path" == "$monitor_held_lease_secure_child_containment_test_relative_path" ]]; then
                 continue
             fi
             printf '%s\n' "$index_record"
         done
 } | LC_ALL=C sort | shasum -a 256 | awk '{print $1}')"
-[[ "$observed_monitor_held_lease_secure_child_containment_authority_preserved_index_sha256" \
-        == "$expected_monitor_held_lease_secure_child_containment_authority_preserved_index_sha256" ]] ||
-    die "monitor-held lease secure-child containment authority changed a path outside its exact-five closure"
+[[ "$observed_monitor_held_lease_secure_child_containment_preserved_index_sha256" \
+        == "$expected_monitor_held_lease_secure_child_containment_preserved_index_sha256" ]] ||
+    die "monitor-held lease secure-child containment implementation changed a path outside its exact-five closure"
 [[ "$(exact_commit_tree \
         "$secure_child_process_evidence_closed_fixture_canary_authority_closure_revision")" \
         == "$secure_child_process_evidence_closed_fixture_canary_authority_closure_tree" \
@@ -261,6 +267,14 @@ $neutral_resource_lease_generalization_authority_reviewed_main_timeout_observati
         == "$exclusive_resource_lease_implementation_closure_first_parent
 $exclusive_resource_lease_implementation_closure_second_parent" ]] ||
     die "exclusive resource-lease implementation exact-main closure changed"
+[[ "$(exact_commit_tree \
+        "$monitor_held_lease_secure_child_containment_authority_closure_revision")" \
+        == "$monitor_held_lease_secure_child_containment_authority_closure_tree" \
+    && "$(exact_commit_parent_lines \
+        "$monitor_held_lease_secure_child_containment_authority_closure_revision")" \
+        == "$monitor_held_lease_secure_child_containment_authority_closure_first_parent
+$monitor_held_lease_secure_child_containment_authority_closure_second_parent" ]] ||
+    die "monitor-held lease secure-child containment authority exact-main closure changed"
 readonly expected_secure_child_process_evidence_closed_fixture_canary_mechanics_status=$'M\t.github/scripts/prime-ci-active-root-quarantine.sh\nA\t.github/scripts/prime-ci-secure-child-process-evidence-closed-fixture-canary.sh\nM\t.github/workflows/prime-active-root-quarantine.yml'
 [[ "$(git -C "$prime_root" diff --name-status --no-renames \
         "$secure_child_process_evidence_closed_fixture_canary_authority_closure_revision" \
@@ -374,69 +388,92 @@ for frozen_exclusive_resource_lease_implementation_entry in \
         == "$frozen_exclusive_resource_lease_implementation_mode $frozen_exclusive_resource_lease_implementation_blob" ]] ||
         die "exclusive resource-lease implementation historical identity changed: $frozen_exclusive_resource_lease_implementation_path"
 done
-readonly monitor_held_lease_secure_child_containment_authority_head_parent_lines="$(
+readonly expected_monitor_held_lease_secure_child_containment_authority_historical_status=$'M\t.github/scripts/prime-ci-active-root-quarantine.sh\nM\t.github/workflows/prime-active-root-quarantine.yml\nM\tSources/PrimeCore/PrimeEmbeddedBuildProvenance.swift\nA\tSources/PrimeCore/PrimeMonitorHeldLeaseSecureChildContainmentAuthority.swift\nA\tTests/PrimeCoreTests/PrimeMonitorHeldLeaseSecureChildContainmentAuthorityTests.swift'
+[[ "$(git -C "$prime_root" diff --name-status --no-renames \
+        "$exclusive_resource_lease_implementation_closure_revision" \
+        "$monitor_held_lease_secure_child_containment_authority_closure_revision")" \
+        == "$expected_monitor_held_lease_secure_child_containment_authority_historical_status" ]] ||
+    die "monitor-held lease secure-child containment historical authority is not the exact ordered five paths"
+for frozen_monitor_held_lease_secure_child_containment_authority_entry in \
+    '100755 57adbe6834f759f8d72ba764eb404811e8689ea6 .github/scripts/prime-ci-active-root-quarantine.sh' \
+    '100644 77f9b470134b8f8e0e9d7fef59c27b69a25f801f .github/workflows/prime-active-root-quarantine.yml' \
+    '100644 5444b5dec076a505d3ab079b6e04d2b3a62cfbf7 Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' \
+    '100644 dbf8f6732409c4336052c59ad4db99398d43843b Sources/PrimeCore/PrimeMonitorHeldLeaseSecureChildContainmentAuthority.swift' \
+    '100644 28731b855ecc433ff8bf21c42d968d2900e8ff35 Tests/PrimeCoreTests/PrimeMonitorHeldLeaseSecureChildContainmentAuthorityTests.swift'; do
+    frozen_monitor_held_lease_secure_child_containment_authority_mode="${frozen_monitor_held_lease_secure_child_containment_authority_entry%% *}"
+    frozen_monitor_held_lease_secure_child_containment_authority_remainder="${frozen_monitor_held_lease_secure_child_containment_authority_entry#* }"
+    frozen_monitor_held_lease_secure_child_containment_authority_blob="${frozen_monitor_held_lease_secure_child_containment_authority_remainder%% *}"
+    frozen_monitor_held_lease_secure_child_containment_authority_path="${frozen_monitor_held_lease_secure_child_containment_authority_remainder#* }"
+    [[ "$(git -C "$prime_root" ls-tree \
+        "$monitor_held_lease_secure_child_containment_authority_closure_revision" -- \
+        "$frozen_monitor_held_lease_secure_child_containment_authority_path" | \
+        awk '{print $1, $3}')" \
+        == "$frozen_monitor_held_lease_secure_child_containment_authority_mode $frozen_monitor_held_lease_secure_child_containment_authority_blob" ]] ||
+        die "monitor-held lease secure-child containment historical authority identity changed: $frozen_monitor_held_lease_secure_child_containment_authority_path"
+done
+readonly monitor_held_lease_secure_child_containment_head_parent_lines="$(
     exact_commit_parent_lines HEAD
 )"
-readonly monitor_held_lease_secure_child_containment_authority_head_parent_count="$(
+readonly monitor_held_lease_secure_child_containment_head_parent_count="$(
     awk 'NF { count += 1 } END { print count + 0 }' \
-        <<< "$monitor_held_lease_secure_child_containment_authority_head_parent_lines"
+        <<< "$monitor_held_lease_secure_child_containment_head_parent_lines"
 )"
 [[ "${GITHUB_JOB:-}" == "active-root" ]] ||
-    die "monitor-held lease secure-child containment authority gate is outside the active-root job"
-case "$monitor_held_lease_secure_child_containment_authority_head_parent_count" in
+    die "monitor-held lease secure-child containment implementation gate is outside the active-root job"
+case "$monitor_held_lease_secure_child_containment_head_parent_count" in
     1)
-        [[ "$monitor_held_lease_secure_child_containment_authority_head_parent_lines" \
-                == "$exclusive_resource_lease_implementation_closure_revision" \
+        [[ "$monitor_held_lease_secure_child_containment_head_parent_lines" \
+                == "$monitor_held_lease_secure_child_containment_authority_closure_revision" \
             && "${GITHUB_REPOSITORY:-}" == "Ergentics/ergentics-prime" \
             && "${GITHUB_EVENT_NAME:-}" == "pull_request" \
             && "${GITHUB_RUN_ATTEMPT:-}" == "1" ]] ||
-            die "monitor-held lease secure-child containment authority is not a direct run-152 closure successor"
+            die "monitor-held lease secure-child containment implementation is not a direct run-154 closure successor"
         ;;
     2)
-        readonly monitor_held_lease_secure_child_containment_authority_merge_first_parent="$(
-            head -n 1 <<< "$monitor_held_lease_secure_child_containment_authority_head_parent_lines"
+        readonly monitor_held_lease_secure_child_containment_merge_first_parent="$(
+            head -n 1 <<< "$monitor_held_lease_secure_child_containment_head_parent_lines"
         )"
-        readonly monitor_held_lease_secure_child_containment_authority_merge_second_parent="$(
+        readonly monitor_held_lease_secure_child_containment_merge_second_parent="$(
             awk 'NR == 2 { print }' \
-                <<< "$monitor_held_lease_secure_child_containment_authority_head_parent_lines"
+                <<< "$monitor_held_lease_secure_child_containment_head_parent_lines"
         )"
-        [[ "$monitor_held_lease_secure_child_containment_authority_merge_first_parent" \
-                == "$exclusive_resource_lease_implementation_closure_revision" \
+        [[ "$monitor_held_lease_secure_child_containment_merge_first_parent" \
+                == "$monitor_held_lease_secure_child_containment_authority_closure_revision" \
             && "$(exact_commit_parent_lines \
-                "$monitor_held_lease_secure_child_containment_authority_merge_second_parent")" \
-                == "$exclusive_resource_lease_implementation_closure_revision" \
+                "$monitor_held_lease_secure_child_containment_merge_second_parent")" \
+                == "$monitor_held_lease_secure_child_containment_authority_closure_revision" \
             && "$(exact_commit_tree \
-                "$monitor_held_lease_secure_child_containment_authority_merge_second_parent")" \
+                "$monitor_held_lease_secure_child_containment_merge_second_parent")" \
                 == "$(exact_commit_tree HEAD)" \
             && "${GITHUB_REPOSITORY:-}" == "Ergentics/ergentics-prime" \
             && "${GITHUB_EVENT_NAME:-}" == "push" \
             && "${GITHUB_REF:-}" == "refs/heads/main" \
             && "${GITHUB_RUN_ATTEMPT:-}" == "1" \
             && "${GITHUB_SHA:-}" == "$expected_prime_head" ]] ||
-            die "monitor-held lease secure-child containment authority merge shape changed"
+            die "monitor-held lease secure-child containment implementation merge shape changed"
         ;;
     *)
-        die "monitor-held lease secure-child containment authority has an unauthorized parent count"
+        die "monitor-held lease secure-child containment implementation has an unauthorized parent count"
         ;;
 esac
-readonly expected_monitor_held_lease_secure_child_containment_authority_status=$'M\t.github/scripts/prime-ci-active-root-quarantine.sh\nM\t.github/workflows/prime-active-root-quarantine.yml\nM\tSources/PrimeCore/PrimeEmbeddedBuildProvenance.swift\nA\tSources/PrimeCore/PrimeMonitorHeldLeaseSecureChildContainmentAuthority.swift\nA\tTests/PrimeCoreTests/PrimeMonitorHeldLeaseSecureChildContainmentAuthorityTests.swift'
+readonly expected_monitor_held_lease_secure_child_containment_status=$'M\t.github/scripts/prime-ci-active-root-quarantine.sh\nM\t.github/workflows/prime-active-root-quarantine.yml\nM\tSources/PrimeCore/PrimeEmbeddedBuildProvenance.swift\nA\tSources/PrimeCore/PrimeMonitorHeldLeaseSecureChildContainment.swift\nA\tTests/PrimeCoreTests/PrimeMonitorHeldLeaseSecureChildContainmentTests.swift'
 [[ "$(git -C "$prime_root" diff --name-status --no-renames \
-        "$exclusive_resource_lease_implementation_closure_revision" HEAD)" \
-        == "$expected_monitor_held_lease_secure_child_containment_authority_status" ]] ||
-    die "monitor-held lease secure-child containment authority successor is not the exact ordered five paths"
-for exact_monitor_held_lease_secure_child_containment_authority_path_and_mode in \
+        "$monitor_held_lease_secure_child_containment_authority_closure_revision" HEAD)" \
+        == "$expected_monitor_held_lease_secure_child_containment_status" ]] ||
+    die "monitor-held lease secure-child containment implementation successor is not the exact ordered five paths"
+for exact_monitor_held_lease_secure_child_containment_path_and_mode in \
     '100755 .github/scripts/prime-ci-active-root-quarantine.sh' \
     '100644 .github/workflows/prime-active-root-quarantine.yml' \
     '100644 Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' \
-    '100644 Sources/PrimeCore/PrimeMonitorHeldLeaseSecureChildContainmentAuthority.swift' \
-    '100644 Tests/PrimeCoreTests/PrimeMonitorHeldLeaseSecureChildContainmentAuthorityTests.swift'; do
-    expected_monitor_held_lease_secure_child_containment_authority_mode="${exact_monitor_held_lease_secure_child_containment_authority_path_and_mode%% *}"
-    exact_monitor_held_lease_secure_child_containment_authority_path="${exact_monitor_held_lease_secure_child_containment_authority_path_and_mode#* }"
+    '100644 Sources/PrimeCore/PrimeMonitorHeldLeaseSecureChildContainment.swift' \
+    '100644 Tests/PrimeCoreTests/PrimeMonitorHeldLeaseSecureChildContainmentTests.swift'; do
+    expected_monitor_held_lease_secure_child_containment_mode="${exact_monitor_held_lease_secure_child_containment_path_and_mode%% *}"
+    exact_monitor_held_lease_secure_child_containment_path="${exact_monitor_held_lease_secure_child_containment_path_and_mode#* }"
     [[ "$(git -C "$prime_root" ls-files -s -- \
-        "$exact_monitor_held_lease_secure_child_containment_authority_path" | \
+        "$exact_monitor_held_lease_secure_child_containment_path" | \
         awk '{print $1}')" \
-        == "$expected_monitor_held_lease_secure_child_containment_authority_mode" ]] ||
-        die "monitor-held lease secure-child containment authority path is missing or has the wrong mode: $exact_monitor_held_lease_secure_child_containment_authority_path"
+        == "$expected_monitor_held_lease_secure_child_containment_mode" ]] ||
+        die "monitor-held lease secure-child containment implementation path is missing or has the wrong mode: $exact_monitor_held_lease_secure_child_containment_path"
 done
 readonly secure_child_process_evidence_closed_fixture_canary_mechanics_launcher="$prime_root/$secure_child_process_evidence_closed_fixture_canary_launcher_relative_path"
 readonly expected_secure_child_process_evidence_closed_fixture_canary_launcher_blob="2b4cd9ca38410eed6661c1de50fcdab595c24b77"
@@ -971,14 +1008,14 @@ readonly final_prime_clean_status_block_sha256="$(awk '
     && "$(git -C "$prime_root" ls-files -s -- \
         '.github/workflows/prime-active-root-quarantine.yml' | \
         awk '{print $1, $2}')" \
-        == '100644 77f9b470134b8f8e0e9d7fef59c27b69a25f801f' \
-    && "$(stat -f %z "$workflow_path")" == "159053" \
-    && "$(wc -l < "$workflow_path" | awk '{print $1}')" == "718" \
+        == '100644 c2473bf53462e44e837429b7140320cede65d020' \
+    && "$(stat -f %z "$workflow_path")" == "164657" \
+    && "$(wc -l < "$workflow_path" | awk '{print $1}')" == "726" \
     && "$(LC_ALL=C tr -cd '\r' < "$workflow_path" | wc -c | \
         awk '{print $1}')" == "0" \
     && "$(shasum -a 256 "$workflow_path" | awk '{print $1}')" \
-        == '218d4a17de785da08b0a94058128cd08fd201736ee620134e7be7787d216efbb' ]] ||
-    die "monitor-held lease secure-child containment authority workflow identity changed"
+        == 'cb8505522cf8bbff51517ae0158408048798cd41b9b2b632ebb1c0ddabbf7ce5' ]] ||
+    die "monitor-held lease secure-child containment implementation workflow identity changed"
 awk '
     function reject() {
         rejected = 1
@@ -1031,15 +1068,15 @@ awk '
     die "neutral resource-lease generalization authority summary shell block is not exact valid Bash"
 [[ "$(git -C "$prime_root" ls-files -s -- \
         'Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' | awk '{print $1, $2}')" \
-        == '100644 5444b5dec076a505d3ab079b6e04d2b3a62cfbf7' \
+        == '100644 9be87f801ed0290659d612c6fd6453137a47a46c' \
     && "$(stat -f %z \
         "$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift")" == "546" \
     && "$(wc -l < \
         "$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift" | awk '{print $1}')" == "13" \
     && "$(shasum -a 256 \
         "$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift" | awk '{print $1}')" \
-        == '2ea8eb9261e94fce348beb0221963f96b463a1eac0a2cf34bdedf8588821829a' ]] ||
-    die "monitor-held lease secure-child containment authority embedded provenance identity changed"
+        == '7b6ab69f587fb8b0b336cc983e126e7ea8b71664ec2a26e6f66dd794d2cc8cac' ]] ||
+    die "monitor-held lease secure-child containment implementation embedded provenance identity changed"
 readonly secure_child_process_evidence_closed_fixture_canary_authority_predecessor_revision="232a17e8f58a297919366d963ee1d7bc38cdbaee"
 readonly secure_child_process_evidence_closed_fixture_canary_authority_predecessor_tree="c2a351449824ec15bc3154158d10f28c8a8310ad"
 readonly expected_secure_child_process_evidence_closed_fixture_canary_authority_preserved_index_sha256="e8dd30060ea370f01e135f8c2e379ab2d9bb6138dca9d928c395cdd9f967f291"
@@ -1078,7 +1115,9 @@ readonly observed_secure_child_process_evidence_closed_fixture_canary_authority_
                 || "$relative_path" == "$exclusive_resource_lease_source_relative_path" \
                 || "$relative_path" == "$exclusive_resource_lease_test_relative_path" \
                 || "$relative_path" == "$monitor_held_lease_secure_child_containment_authority_source_relative_path" \
-                || "$relative_path" == "$monitor_held_lease_secure_child_containment_authority_test_relative_path" ]]; then
+                || "$relative_path" == "$monitor_held_lease_secure_child_containment_authority_test_relative_path" \
+                || "$relative_path" == "$monitor_held_lease_secure_child_containment_source_relative_path" \
+                || "$relative_path" == "$monitor_held_lease_secure_child_containment_test_relative_path" ]]; then
                 continue
             fi
             printf '%s\n' "$index_record"
@@ -1148,6 +1187,8 @@ secure_child_process_evidence_layer_a_path_is_excluded() {
         "$exclusive_resource_lease_test_relative_path"|\
         "$monitor_held_lease_secure_child_containment_authority_source_relative_path"|\
         "$monitor_held_lease_secure_child_containment_authority_test_relative_path"|\
+        "$monitor_held_lease_secure_child_containment_source_relative_path"|\
+        "$monitor_held_lease_secure_child_containment_test_relative_path"|\
         "$secure_child_process_evidence_closed_fixture_canary_launcher_relative_path")
             return 0
             ;;
@@ -1201,6 +1242,8 @@ readonly observed_secure_child_process_evidence_layer_a_status="$(git -C "$prime
             || "$relative_path" == "$exclusive_resource_lease_test_relative_path" \
             || "$relative_path" == "$monitor_held_lease_secure_child_containment_authority_source_relative_path" \
             || "$relative_path" == "$monitor_held_lease_secure_child_containment_authority_test_relative_path" \
+            || "$relative_path" == "$monitor_held_lease_secure_child_containment_source_relative_path" \
+            || "$relative_path" == "$monitor_held_lease_secure_child_containment_test_relative_path" \
             || "$relative_path" \
                 == "$secure_child_process_evidence_closed_fixture_canary_launcher_relative_path" ]]; then
             continue
@@ -2153,7 +2196,7 @@ readonly observed_trusted_main_workflow_step_names="$(awk '
     ' "$workflow_path")" == "75" ]] ||
     die "hosted quarantine workflow timeout-observation runner or timeout boundary changed"
 [[ "$(grep -Fxc -- \
-        '          git -C ergentics-prime fetch --depth=2 --no-tags --no-write-fetch-head origin "$EXACT_REVISION" e1d90e3f2ae6c4d3c279bf5fb64ce3baafc1f540 0abcb4ad5487a775627bbb587184c375dd691978 4570716892722873757de6eae1bd897167d674eb d825c5366135cc6ef8d0c9dc7d26d3d2e4300ba6 b3402efd96d3ff893a0c2b73897cf48c9b313c8c 232a17e8f58a297919366d963ee1d7bc38cdbaee a4d8583fa7c59f885002ee06a07c1d5264c0c223' \
+        '          git -C ergentics-prime fetch --depth=2 --no-tags --no-write-fetch-head origin "$EXACT_REVISION" ef64686e76d2d67e46deb696bfeef18ea96c96a2 e1d90e3f2ae6c4d3c279bf5fb64ce3baafc1f540 0abcb4ad5487a775627bbb587184c375dd691978 4570716892722873757de6eae1bd897167d674eb d825c5366135cc6ef8d0c9dc7d26d3d2e4300ba6 b3402efd96d3ff893a0c2b73897cf48c9b313c8c 232a17e8f58a297919366d963ee1d7bc38cdbaee a4d8583fa7c59f885002ee06a07c1d5264c0c223' \
         "$workflow_path")" == "2" \
     && "$(grep -Fc -- \
         'git -C ergentics-prime fetch --depth=' "$workflow_path")" == "2" \
@@ -2264,11 +2307,11 @@ readonly workflow_executable_run_script_and_uses_nodes_excluding_echo_payload_te
     && "$(grep -Ec -- '^[[:space:]]{8}uses: ' "$workflow_path")" == "0" \
     && "$(printf '%s\n' \
         "$workflow_executable_run_script_and_uses_nodes_excluding_echo_payload_text_corpus" | \
-        wc -l | awk '{print $1}')" == "528" \
+        wc -l | awk '{print $1}')" == "534" \
     && "$(printf '%s\n' \
         "$workflow_executable_run_script_and_uses_nodes_excluding_echo_payload_text_corpus" | \
         shasum -a 256 | awk '{print $1}')" \
-        == "fe7cc9cfdaf566159bfdf0fd9067bd4623a249cb61c6eb1b51f7e3264cdf47eb" \
+        == "c90afabe309d784a8d296905b10f0210c3fd5fc71cd94b34ce2f4f8ab460ff73" \
     && "$(grep -Fc -- 'uses: actions/upload-artifact@' \
         <<< "$workflow_executable_run_script_and_uses_nodes_excluding_echo_payload_text_corpus")" == "0" \
     && "$(grep -Fc -- \
@@ -2286,7 +2329,7 @@ readonly workflow_executable_run_script_and_uses_nodes_excluding_echo_payload_te
     && "$(grep -Eic -- \
         'Prime(MetalDevice|ExclusiveResource)Lease[.]?(acquire|release|reacquire)?[[:space:]]*[(]|[.]((acquire|release|reacquire))[[:space:]]*[(]|Process[[:space:]]*[(]|posix_spawn[[:space:]]*[(]|fork[[:space:]]*[(]|execve[[:space:]]*[(]' \
         <<< "$workflow_executable_run_script_and_uses_nodes_excluding_echo_payload_text_corpus")" == "0" ]] ||
-    die "monitor-held lease secure-child containment authority workflow operational surface gained an artifact, canary, adapter, fixture, lease-lifecycle, or process command"
+    die "monitor-held lease secure-child containment implementation workflow operational surface gained an artifact, canary, adapter, fixture, lease-lifecycle, or process command"
 [[ "$(grep -Fxc -- \
         "            echo 'Exact-main secure-child process/evidence closed fixture-canary authority merge b3402efd96d3ff893a0c2b73897cf48c9b313c8c, tree 7fb3f5505796a43c9db1537ca72f81e19367365f, ordered parents 232a17e8f58a297919366d963ee1d7bc38cdbaee then 82ae2c2611e62144c066db990be6eaf48fdff47a, and GitHub signature verification were valid. Unique push workflow run 31957009710 number 141 attempt 1 check suite 86653677663 passed with null previous-attempt URL and rerun count zero. Active job 95189063495 passed Latin 116; dependent reviewed job 95189438167 passed root 78 plus isolated groups 1, 1, 2, and 2 for isolated 6 and focused whole 84, then retained Metal 44, maintained runtime 1, and tokenizer 1 for live 46 and aggregate 130 XTests. The sole pure-authority test passed once, with zero failures, skips, Actions artifacts, closed-canary launcher or adapter invocations, fixture or capture mechanics, lease acquisitions, Python interpreters, or new C++ mechanics.'" \
         "$workflow_path")" == "1" ]] ||
@@ -2491,6 +2534,68 @@ for required_monitor_held_lease_secure_child_containment_authority_summary_fragm
         "$required_monitor_held_lease_secure_child_containment_authority_summary_fragment" \
         <<< "$monitor_held_lease_secure_child_containment_authority_summary_line")" == "1" ]] ||
         die "monitor-held lease secure-child containment authority summary lost an exact boundary: $required_monitor_held_lease_secure_child_containment_authority_summary_fragment"
+done
+readonly monitor_held_lease_secure_child_containment_run154_summary_line="$(grep -F -- \
+    'Exact-main monitor-held lease secure-child containment authority merge 3ad8087ed6e403ba81f46bba97ceb5d440979e0a' \
+    "$workflow_path")"
+[[ "$(grep -Fc -- \
+        'Exact-main monitor-held lease secure-child containment authority merge 3ad8087ed6e403ba81f46bba97ceb5d440979e0a' \
+        "$workflow_path")" == "1" \
+    && "$(printf '%s\n' "$monitor_held_lease_secure_child_containment_run154_summary_line" | \
+        shasum -a 256 | awk '{print $1}')" \
+        == "6fb85ea1698989cf547689b416150dc61e5b941293756469908413375854f298" ]] ||
+    die "monitor-held lease secure-child containment run 154 summary identity changed"
+for required_monitor_held_lease_secure_child_containment_run154_summary_fragment in \
+    'tree e867e7a562ab89ec638c3e6ebc7d539fc6b790df, ordered parents ef64686e76d2d67e46deb696bfeef18ea96c96a2 then 25449c716a82eb67494aaf45b308cac0aeda7817, PR 127' \
+    'Unique pull-request workflow run 32340999942 number 153 attempt 1 check suite 87670733211 passed with a null previous-attempt URL' \
+    'active job 96339925651 passed Latin 116, reviewed job 96340741948 was skipped with zero steps, and Actions artifacts were zero' \
+    '339449 UTF-8 bytes with 1898 LF bytes, zero CR bytes, a UTF-8 BOM and terminal LF, SHA-256 ebb6de5f0517c3c163aba5592a6d1c50013b87e54fa02fc77cdd95dff8a948f5' \
+    'Unique push-main workflow run 32341626418 number 154 attempt 1 check suite 87672329712 passed with a null previous-attempt URL and zero Actions artifacts' \
+    'active job 96341732869 passed Latin 116; reviewed job 96342466582 passed root 83 plus isolated groups 1, 1, 2, and 2 for focused whole 89' \
+    'retained Metal 44, maintained runtime 1, and tokenizer 1 for live 46 and aggregate 135 XTests with zero failures or skips' \
+    '339355 bytes, 1897 LF, zero CR, BOM plus terminal LF, SHA-256 df0a0f4200ab6b4255ea653cde70795c3e0b034503b20d97460d60a12e877ab7' \
+    '10333123 bytes, 79020 LF, zero CR, BOM plus terminal LF, SHA-256 b50f417aec64ffc8ab97dd223cb6041cf2c03372cd89dd4af89f6989ce9b3876' \
+    'No new A2 lease, process, model, launcher, adapter, or fixture mechanics were added or invoked'; do
+    [[ "$(grep -Foc -- \
+        "$required_monitor_held_lease_secure_child_containment_run154_summary_fragment" \
+        <<< "$monitor_held_lease_secure_child_containment_run154_summary_line")" == "1" ]] ||
+        die "monitor-held lease secure-child containment run 154 summary lost an exact fact: $required_monitor_held_lease_secure_child_containment_run154_summary_fragment"
+done
+readonly monitor_held_lease_secure_child_containment_implementation_summary_line="$(grep -F -- \
+    'This additive dependency-free exact-five monitor-held lease secure-child containment implementation changes only the active-root gate, hosted workflow, embedded provenance, one new PrimeCore implementation source, and its sole pure root test. It implements the authority-frozen' \
+    "$workflow_path")"
+[[ "$(grep -Fc -- \
+        'This additive dependency-free exact-five monitor-held lease secure-child containment implementation changes only the active-root gate, hosted workflow, embedded provenance, one new PrimeCore implementation source, and its sole pure root test. It implements the authority-frozen' \
+        "$workflow_path")" == "1" \
+    && "$(printf '%s\n' \
+        "$monitor_held_lease_secure_child_containment_implementation_summary_line" | \
+        shasum -a 256 | awk '{print $1}')" \
+        == "b86eefdc105dd7d652653cdcbe173bc3318c1aa6680faef6e84b6c9fb9a9ad26" ]] ||
+    die "monitor-held lease secure-child containment implementation summary identity changed"
+for required_monitor_held_lease_secure_child_containment_implementation_summary_fragment in \
+    'prepare derives the fixed private leaf prime-secure-child-monitor-held-resource-lease-v1.lock below the trusted lease directory' \
+    'performs exactly one internal PrimeExclusiveResourceLease acquisition before plan or prepared-fixture construction' \
+    'accepts and returns no lease alias or caller-selected resource identifier' \
+    'PrimeExclusiveResourceLeaseRetention, PrimeSecureChildLeaseRetention, PrimeTrustedSecureChildProcessCapture.State, Consumption, ExecutionClaim, and PrimeSecureChildExecutionKernel.Result' \
+    'contains no explicit release or reacquisition, descriptor transfer, inherited or worker lease operation' \
+    'existing secure-child supervisor remains the sole child-lifecycle owner' \
+    'Layer A remains byte-identical' \
+    'externallyOwnedAdvisory remains a non-proof telemetry label' \
+    'child-lifetime continuity, MLX-device identity, physical reservation, and durable evidence remain unestablished' \
+    'sole root test is an in-memory fake topology test that calls neither public prepare nor execute' \
+    'no real lease, filesystem, fixture, child process, or kernel execution is invoked by this patch' \
+    'Package.swift, Package.resolved, README.md, the legacy lease pair, A1 pair, authority pair, Layer A, B-path, MLX, model, checkpoint, and retired canary launcher bytes remain unchanged' \
+    'adds only immutable ef64686e76d2d67e46deb696bfeef18ea96c96a2 for proof-only authority-predecessor lineage hydration' \
+    'active Latin 116, root 84, isolated 6, focused whole 90, retained live 46, aggregate 136 XTests' \
+    '519 embedded provenance records' \
+    'next required separate action is exact-main closure of this implementation without invoking real lease or process mechanics' \
+    'one-shot real lease-and-containment canary' \
+    'observation and irreversible retirement before separately authorized durable Layer B' \
+    'Optional fixture-pin investigation remains deferred, unauthorized here, and requires distinct authority'; do
+    [[ "$(grep -Foc -- \
+        "$required_monitor_held_lease_secure_child_containment_implementation_summary_fragment" \
+        <<< "$monitor_held_lease_secure_child_containment_implementation_summary_line")" == "1" ]] ||
+        die "monitor-held lease secure-child containment implementation summary lost an exact boundary: $required_monitor_held_lease_secure_child_containment_implementation_summary_fragment"
 done
 [[ "$(grep -Fxc -- \
         '          bash .github/scripts/prime-ci-native-decoder-b-specific-native300m-trajectory-checkpoint-execution.sh' \
@@ -3257,6 +3362,7 @@ readonly neutral_resource_lease_generalization_authority_filter='PrimeCoreTests.
 readonly neutral_resource_lease_generalization_authority_reviewed_main_timeout_observation_filter='PrimeCoreTests.PrimeNeutralResourceLeaseGeneralizationAuthorityReviewedMainTimeoutObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndTimeoutCeiling'
 readonly exclusive_resource_lease_implementation_filter='PrimeCoreTests.PrimeExclusiveResourceLeaseTests/testAliasesAndTypedRetentionRemainPureAndTruthful'
 readonly monitor_held_lease_secure_child_containment_authority_filter='PrimeCoreTests.PrimeMonitorHeldLeaseSecureChildContainmentAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling'
+readonly monitor_held_lease_secure_child_containment_filter='PrimeCoreTests.PrimeMonitorHeldLeaseSecureChildContainmentTests/testPureInMemoryFakeRetainsOrderedOwnershipTopologyWithoutMechanics'
 [[ "$(grep -Fc -- "$tiny_cpu_mechanics_authority_filter" \
         "$workflow_path")" == "1" \
     && "$(grep -Fc -- "$tiny_cpu_mechanics_failure_observation_filter" \
@@ -3286,7 +3392,7 @@ readonly monitor_held_lease_secure_child_containment_authority_filter='PrimeCore
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling' \\" \
         "$workflow_path")" == "2" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 83 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 84 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not run the exact Stage-2 authority and failure-observation pure contracts"
 [[ "$(grep -Fc -- "$private_dependency_tls_failure_observation_filter" \
@@ -3378,7 +3484,7 @@ readonly monitor_held_lease_secure_child_containment_authority_filter='PrimeCore
         "          grep -Fq 'PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapFreshMetallibCrossBindingExecutionFailureObservationTests' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 83 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 84 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the Stage-2 metallib bootstrap repair, failure observations, and classifier repair authority"
 [[ "$(grep -Fc -- \
@@ -3546,7 +3652,7 @@ readonly monitor_held_lease_secure_child_containment_authority_filter='PrimeCore
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling' \\" \
         "$workflow_path")" == "2" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 83 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 84 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run exactly the Stage-5 execution-failure observation"
 [[ "$(grep -Fc -- \
@@ -3565,7 +3671,7 @@ readonly monitor_held_lease_secure_child_containment_authority_filter='PrimeCore
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling' \\" \
         "$workflow_path")" == "6" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 83 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 84 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run exactly the Stage-5 replacement-execution authority"
 [[ "$(grep -Fc -- \
@@ -3581,7 +3687,7 @@ readonly monitor_held_lease_secure_child_containment_authority_filter='PrimeCore
         "          grep -Fq 'PrimeNativeDecoderStage5RepeatedTrajectoryReplacementCurrentDecoderIdentityObservationTests' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 83 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 84 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not run the exact Stage-5 current-decoder identity observation"
 [[ "$(grep -Fc -- \
@@ -3597,7 +3703,7 @@ readonly monitor_held_lease_secure_child_containment_authority_filter='PrimeCore
         "          grep -Fq 'PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayReplacementExecutionObservationTests' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 83 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 84 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not run the exact Stage-5 replacement execution observation"
 [[ "$(grep -Fc -- \
@@ -3616,7 +3722,7 @@ readonly monitor_held_lease_secure_child_containment_authority_filter='PrimeCore
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling' \\" \
         "$workflow_path")" == "6" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 83 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 84 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run exactly the Stage-6 resource-only probe authority"
 [[ "$(grep -Fc -- \
@@ -3674,7 +3780,7 @@ readonly monitor_held_lease_secure_child_containment_authority_filter='PrimeCore
         "          grep -Fq 'PrimeNativeDecoderNative300MTrajectoryCheckpointExecutionAuthorityTests' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 83 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 84 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the sole Native300M trajectory-checkpoint execution authority contract"
 [[ "$(grep -Fc -- \
@@ -3690,7 +3796,7 @@ readonly monitor_held_lease_secure_child_containment_authority_filter='PrimeCore
         "          grep -Fq 'PrimeNativeDecoderBSpecificNative300MTrajectoryCheckpointExecutionFailureObservationTests' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 83 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 84 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the Native300M trajectory-checkpoint failure observation"
 [[ "$(grep -Fc -- \
@@ -3709,7 +3815,7 @@ readonly monitor_held_lease_secure_child_containment_authority_filter='PrimeCore
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling' \\" \
         "$workflow_path")" == "6" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 83 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 84 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the sole secure-child process/evidence design-authority contract"
 [[ "$(grep -Fc -- \
@@ -3728,7 +3834,7 @@ readonly monitor_held_lease_secure_child_containment_authority_filter='PrimeCore
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling' \\" \
         "$workflow_path")" == "6" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 83 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 84 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the sole secure-child process/evidence implementation-authority contract"
 [[ "$(grep -Fc -- \
@@ -3747,7 +3853,7 @@ readonly monitor_held_lease_secure_child_containment_authority_filter='PrimeCore
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling' \\" \
         "$workflow_path")" == "6" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 83 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 84 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the sole secure-child closed-fixture canary pure-authority contract"
 [[ "$(grep -Fc -- \
@@ -3766,7 +3872,7 @@ readonly monitor_held_lease_secure_child_containment_authority_filter='PrimeCore
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRetirementCeiling' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 83 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 84 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the sole secure-child closed-fixture canary PIN-mismatch retirement observation"
 [[ "$(grep -Fc -- \
@@ -3785,7 +3891,7 @@ readonly monitor_held_lease_secure_child_containment_authority_filter='PrimeCore
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling' \\" \
         "$workflow_path")" == "6" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 83 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 84 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the sole neutral resource-lease generalization pure-authority contract"
 [[ "$(grep -Fc -- \
@@ -3804,7 +3910,7 @@ readonly monitor_held_lease_secure_child_containment_authority_filter='PrimeCore
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndTimeoutCeiling' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 83 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 84 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the sole neutral resource-lease generalization timeout observation"
 [[ "$(grep -Fc -- "$exclusive_resource_lease_implementation_filter" \
@@ -3820,7 +3926,7 @@ readonly monitor_held_lease_secure_child_containment_authority_filter='PrimeCore
         "          grep -Fq 'testAliasesAndTypedRetentionRemainPureAndTruthful' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 83 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 84 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the sole pure exclusive resource-lease implementation test"
 [[ "$(grep -Fc -- \
@@ -3839,11 +3945,30 @@ readonly monitor_held_lease_secure_child_containment_authority_filter='PrimeCore
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling' \\" \
         "$workflow_path")" == "6" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 83 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 84 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the sole pure monitor-held lease secure-child containment authority test"
+[[ "$(grep -Fc -- \
+        "$monitor_held_lease_secure_child_containment_filter" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        "$monitor_held_lease_secure_child_containment_source_relative_path" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        "$monitor_held_lease_secure_child_containment_test_relative_path" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        "          grep -Fq 'PrimeMonitorHeldLeaseSecureChildContainmentTests' \\" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        "          grep -Fq 'testPureInMemoryFakeRetainsOrderedOwnershipTopologyWithoutMechanics' \\" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        '          grep -Fq '\''Executed 84 tests, with 0 failures'\'' "$test_log"' \
+        "$workflow_path")" == "1" ]] ||
+    die "hosted workflow does not parse and run the sole pure monitor-held lease secure-child containment implementation test"
 [[ "$(grep -Fxc -- \
-        "            --filter 'PrimeCoreTests.PrimeMonitorHeldLeaseSecureChildContainmentAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeExclusiveResourceLeaseTests/testAliasesAndTypedRetentionRemainPureAndTruthful|PrimeCoreTests.PrimeNeutralResourceLeaseGeneralizationAuthorityReviewedMainTimeoutObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndTimeoutCeiling|PrimeCoreTests.PrimeNeutralResourceLeaseGeneralizationAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeSecureChildProcessEvidenceClosedFixtureCanaryPINMismatchExecutionObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRetirementCeiling|PrimeCoreTests.PrimeSecureChildProcessEvidenceClosedFixtureCanaryAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeSecureChildProcessEvidenceTests|PrimeNativeNeuralGateMLXIsolationSourceContractTests|PrimeNativeCorpusReplaySourceContractTests|PrimeCoreTests.PrimeNativeDecoderTrajectoryExactResumeDesignAuthorityTests/testFrozenV1CanonicalCodableMutationAndSourceBoundary|PrimeCoreTests.PrimeNativeDecoderTrajectoryDesignReviewedMainTimeoutObservationTests/testFrozenV1CanonicalCodableRecursiveMutationAndAuthorityCeiling|PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsAuthorityTests/testFrozenV1CanonicalCodableExhaustiveMutationAndCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsExecutionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeReviewedMainPrivateDependencyTLSFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeNativeDecoderMetalCurrentDecoderIdentityAssertionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeNativeDecoderMetalCurrentDecoderIdentityAssertionRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapRepairExecutionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapPredecessorLogClassifierRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapFreshMetallibCrossBindingExecutionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapFreshMetallibEvidenceSurfaceRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapFreshMetallibEvidenceSurfaceRepairExecutionObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndSuccessCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeAuthorityCanonicalBindingRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeValidationInventoryOrderRepairAuthorityTests/testFrozenV1CanonicalCodableRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeExecutionObservationTests/testFrozenV1CanonicalCodableRecursiveMutationAndSuccessCeiling|PrimeCoreTests.PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionPackageResolvedScopeRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionExecutionObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndSuccessCeiling|PrimeCoreTests.PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayExactMainSwiftNumericsResolutionRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayExecutionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayReplacementExecutionAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeNativeDecoderStage5RepeatedTrajectoryReplacementCurrentDecoderIdentityObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndIdentityCeiling|PrimeCoreTests.PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayReplacementExecutionObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndSplitOutcomeCeiling|PrimeCoreTests.PrimeNativeDecoderNative300MResourceOnlyOneStepProbeAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeNativeDecoderNative300MResourceOnlyOneStepProbeExecutionObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndSuccessCeiling|PrimeCoreTests.PrimeNativeDecoderBSpecificNative300MResourceWitnessAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeNativeDecoderBSpecificNative300MResourceWitnessExecutionObservationTests/testBSpecificNative300MResourceWitnessPASSExecutionObservationIsExactAndRejectsEveryRecursiveMutation|PrimeCoreTests.PrimeNativeDecoderNative300MTrajectoryCheckpointExecutionAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeNativeDecoderBSpecificNative300MTrajectoryCheckpointExecutionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeSecureChildProcessEvidenceDesignAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeSecureChildProcessEvidenceImplementationAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeNativeGenerationContractSourceContractTests|PrimeNativeNeuralGateContractSourceContractTests|PrimeNativeResolvedContractAdapterSourceContractTests|PrimeSwiftSourceProvenanceTests/testLiveRepositoryMatchesEmbeddedSourceIdentity' \\" \
+        "            --filter 'PrimeCoreTests.PrimeMonitorHeldLeaseSecureChildContainmentTests/testPureInMemoryFakeRetainsOrderedOwnershipTopologyWithoutMechanics|PrimeCoreTests.PrimeMonitorHeldLeaseSecureChildContainmentAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeExclusiveResourceLeaseTests/testAliasesAndTypedRetentionRemainPureAndTruthful|PrimeCoreTests.PrimeNeutralResourceLeaseGeneralizationAuthorityReviewedMainTimeoutObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndTimeoutCeiling|PrimeCoreTests.PrimeNeutralResourceLeaseGeneralizationAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeSecureChildProcessEvidenceClosedFixtureCanaryPINMismatchExecutionObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRetirementCeiling|PrimeCoreTests.PrimeSecureChildProcessEvidenceClosedFixtureCanaryAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeSecureChildProcessEvidenceTests|PrimeNativeNeuralGateMLXIsolationSourceContractTests|PrimeNativeCorpusReplaySourceContractTests|PrimeCoreTests.PrimeNativeDecoderTrajectoryExactResumeDesignAuthorityTests/testFrozenV1CanonicalCodableMutationAndSourceBoundary|PrimeCoreTests.PrimeNativeDecoderTrajectoryDesignReviewedMainTimeoutObservationTests/testFrozenV1CanonicalCodableRecursiveMutationAndAuthorityCeiling|PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsAuthorityTests/testFrozenV1CanonicalCodableExhaustiveMutationAndCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsExecutionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeReviewedMainPrivateDependencyTLSFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeNativeDecoderMetalCurrentDecoderIdentityAssertionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeNativeDecoderMetalCurrentDecoderIdentityAssertionRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapRepairExecutionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapPredecessorLogClassifierRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapFreshMetallibCrossBindingExecutionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapFreshMetallibEvidenceSurfaceRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapFreshMetallibEvidenceSurfaceRepairExecutionObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndSuccessCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeAuthorityCanonicalBindingRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeValidationInventoryOrderRepairAuthorityTests/testFrozenV1CanonicalCodableRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeExecutionObservationTests/testFrozenV1CanonicalCodableRecursiveMutationAndSuccessCeiling|PrimeCoreTests.PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionPackageResolvedScopeRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionExecutionObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndSuccessCeiling|PrimeCoreTests.PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayExactMainSwiftNumericsResolutionRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayExecutionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayReplacementExecutionAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeNativeDecoderStage5RepeatedTrajectoryReplacementCurrentDecoderIdentityObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndIdentityCeiling|PrimeCoreTests.PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayReplacementExecutionObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndSplitOutcomeCeiling|PrimeCoreTests.PrimeNativeDecoderNative300MResourceOnlyOneStepProbeAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeNativeDecoderNative300MResourceOnlyOneStepProbeExecutionObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndSuccessCeiling|PrimeCoreTests.PrimeNativeDecoderBSpecificNative300MResourceWitnessAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeNativeDecoderBSpecificNative300MResourceWitnessExecutionObservationTests/testBSpecificNative300MResourceWitnessPASSExecutionObservationIsExactAndRejectsEveryRecursiveMutation|PrimeCoreTests.PrimeNativeDecoderNative300MTrajectoryCheckpointExecutionAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeNativeDecoderBSpecificNative300MTrajectoryCheckpointExecutionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeSecureChildProcessEvidenceDesignAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeSecureChildProcessEvidenceImplementationAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeNativeGenerationContractSourceContractTests|PrimeNativeNeuralGateContractSourceContractTests|PrimeNativeResolvedContractAdapterSourceContractTests|PrimeSwiftSourceProvenanceTests/testLiveRepositoryMatchesEmbeddedSourceIdentity' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fc -- \
         "$secure_child_process_evidence_test_relative_path" \
@@ -3852,7 +3977,7 @@ readonly monitor_held_lease_secure_child_containment_authority_filter='PrimeCore
         '          grep -Fq '\''PrimeSecureChildProcessEvidenceTests'\'' "$test_log"' \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 83 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 84 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run exactly the 12 secure-child process/evidence Layer-A tests"
 [[ "$(grep -Fc -- \
@@ -5925,6 +6050,8 @@ readonly exclusive_resource_lease_source="$prime_root/$exclusive_resource_lease_
 readonly exclusive_resource_lease_test="$prime_root/$exclusive_resource_lease_test_relative_path"
 readonly monitor_held_lease_secure_child_containment_authority_source="$prime_root/$monitor_held_lease_secure_child_containment_authority_source_relative_path"
 readonly monitor_held_lease_secure_child_containment_authority_test="$prime_root/$monitor_held_lease_secure_child_containment_authority_test_relative_path"
+readonly monitor_held_lease_secure_child_containment_source="$prime_root/$monitor_held_lease_secure_child_containment_source_relative_path"
+readonly monitor_held_lease_secure_child_containment_test="$prime_root/$monitor_held_lease_secure_child_containment_test_relative_path"
 readonly secure_child_process_evidence_closed_fixture_canary_launcher="$prime_root/$secure_child_process_evidence_closed_fixture_canary_launcher_relative_path"
 readonly secure_child_process_plan="$prime_root/$secure_child_process_plan_relative_path"
 readonly secure_child_process_evidence="$prime_root/$secure_child_process_evidence_relative_path"
@@ -12166,18 +12293,18 @@ done
         awk '{print $1}')" == "13" \
     && "$(git -C "$prime_root" hash-object -- \
         'Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift')" \
-        == "5444b5dec076a505d3ab079b6e04d2b3a62cfbf7" \
+        == "9be87f801ed0290659d612c6fd6453137a47a46c" \
     && "$(stat -f %z \
         "$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift")" \
         == "546" \
     && "$(shasum -a 256 \
         "$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift" | \
         awk '{print $1}')" \
-        == "2ea8eb9261e94fce348beb0221963f96b463a1eac0a2cf34bdedf8588821829a" \
+        == "7b6ab69f587fb8b0b336cc983e126e7ea8b71664ec2a26e6f66dd794d2cc8cac" \
     && "$(grep -Fxc -- \
-        '        "0c578ae7e239cacaeea9659ae4f0094cd674737890d05b7b0af7329a015cf8cc"' \
+        '        "9e33230dcc0ea07fbf3ef61accbba2e34602e09a3a579f6aca73316a2b53f848"' \
         "$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift")" == "1" ]] ||
-    die "monitor-held lease secure-child containment authority embedded provenance identity changed"
+    die "monitor-held lease secure-child containment implementation embedded provenance identity changed"
 readonly expected_embedded_source_identity_sha256="$(awk -F'"' \
     '/^[[:space:]]+"[0-9a-f]{64}"$/ { print $2 }' \
     "$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift")"
@@ -12219,7 +12346,7 @@ while IFS= read -r relative_path; do
         '{relative_path: $relative_path, sha256: $sha256, byte_count: $byte_count}'
 done | jq -jcsS '.' | shasum -a 256 | awk '{print $1}')"
 [[ "$expected_embedded_source_identity_sha256" =~ ^[0-9a-f]{64}$ \
-    && "$recomputed_embedded_source_identity_record_count" == "517" \
+    && "$recomputed_embedded_source_identity_record_count" == "519" \
     && "$recomputed_embedded_source_identity_sha256" \
         == "$expected_embedded_source_identity_sha256" ]] ||
     die "embedded Prime source provenance does not recompute exactly"
@@ -19017,6 +19144,169 @@ readonly monitor_held_lease_secure_child_containment_authority_pair_executable_a
     grep -Eq -- \
         'name="(Process|FileManager|FileHandle|URLSession|posix_spawn|waitpid|kill|flock|execve|runSupervisor|trajectoryRunWorkerProcess|trajectoryRunReleaseVerifierProcess|acquire|release|reacquire)"|field="(runSupervisor|trajectoryRunWorkerProcess|trajectoryRunReleaseVerifierProcess|acquire|release|reacquire)"' ||
     die "monitor-held lease secure-child containment authority pair gained executable process, lease lifecycle, launcher, worker, verifier, filesystem, or network capability"
+
+for monitor_held_lease_secure_child_containment_file in \
+    "$monitor_held_lease_secure_child_containment_source" \
+    "$monitor_held_lease_secure_child_containment_test"; do
+    [[ -f "$monitor_held_lease_secure_child_containment_file" \
+        && ! -L "$monitor_held_lease_secure_child_containment_file" \
+        && "$(stat -f %l \
+            "$monitor_held_lease_secure_child_containment_file")" \
+            == "1" ]] ||
+        die "monitor-held lease secure-child containment implementation pair is missing, linked, or multiply linked: $monitor_held_lease_secure_child_containment_file"
+done
+assert_monitor_held_lease_secure_child_containment_identity() {
+    local relative_path="$1" expected_blob="$2" expected_bytes="$3"
+    local expected_lf_count="$4" expected_sha256="$5"
+    local absolute_path="$prime_root/$relative_path"
+    [[ "$(git -C "$prime_root" ls-files -s -- "$relative_path" | \
+            awk '{print $1}')" == "100644" \
+        && "$(git -C "$prime_root" hash-object -- "$relative_path")" \
+            == "$expected_blob" \
+        && "$(stat -f %z "$absolute_path")" == "$expected_bytes" \
+        && "$(wc -l < "$absolute_path" | awk '{print $1}')" \
+            == "$expected_lf_count" \
+        && "$(LC_ALL=C tr -cd '\r' < "$absolute_path" | wc -c | \
+            awk '{print $1}')" == "0" \
+        && "$(shasum -a 256 "$absolute_path" | awk '{print $1}')" \
+            == "$expected_sha256" ]] ||
+        die "monitor-held lease secure-child containment implementation identity changed: $relative_path"
+}
+assert_monitor_held_lease_secure_child_containment_identity \
+    "$monitor_held_lease_secure_child_containment_source_relative_path" \
+    'bc101249a70522ec0080c3064be7668c5cff1425' \
+    '3940' \
+    '108' \
+    '5253f74c363825617dc25e8ef66f0fda95e285969d4b24fee0d975585fba7dba'
+assert_monitor_held_lease_secure_child_containment_identity \
+    "$monitor_held_lease_secure_child_containment_test_relative_path" \
+    'e16b70540ad3215984bf3389b4cb109e09c16368' \
+    '4018' \
+    '116' \
+    '069e1091461ce680938185bfeca3001a3a164018d491a805782b52690109933c'
+[[ "$(awk '/^import / { print }' \
+        "$monitor_held_lease_secure_child_containment_source")" \
+        == 'import Foundation' \
+    && "$(awk '/^import / || /^@testable import / { print }' \
+        "$monitor_held_lease_secure_child_containment_test")" \
+        == $'import Foundation\nimport XCTest\n@testable import PrimeCore' \
+    && "$(grep -Ec -- '^[[:space:]]+func test' \
+        "$monitor_held_lease_secure_child_containment_test")" == "1" \
+    && "$(grep -Fxc -- \
+        'final class PrimeMonitorHeldLeaseSecureChildContainmentTests:' \
+        "$monitor_held_lease_secure_child_containment_test")" == "1" \
+    && "$(grep -Fxc -- \
+        '    func testPureInMemoryFakeRetainsOrderedOwnershipTopologyWithoutMechanics()' \
+        "$monitor_held_lease_secure_child_containment_test")" == "1" ]] ||
+    die "monitor-held lease secure-child containment implementation imports or sole-test surface changed"
+for exact_monitor_held_lease_secure_child_containment_source_anchor in \
+    'public final class PrimeMonitorHeldLeaseSecureChildContainment:' \
+    '    @unchecked Sendable' \
+    '    private static let resourceLeaseLeaf =' \
+    '        "prime-secure-child-monitor-held-resource-lease-v1.lock"' \
+    '    private let prepared: PrimeSecureChildPreparedFixture' \
+    '    private let capture: PrimeTrustedSecureChildProcessCapture' \
+    '    public static func prepare(' \
+    '        trustedLeaseDirectoryURL: URL,' \
+    '        executableURL: URL,' \
+    '        privateWorkingDirectoryURL: URL,' \
+    '        privateResultDirectoryURL: URL,' \
+    '        mode: PrimeValidationWorkflowFixtureChildMode' \
+    '    public func execute() throws' \
+    '    static func captureRetaining(' \
+    '        _ lease: any PrimeExclusiveResourceLeaseCapability,' \
+    '        closedContext: AnyObject' \
+    '            PrimeExclusiveResourceLeaseRetention(lease)' \
+    '        let secureChildRetention = PrimeSecureChildLeaseRetention(' \
+    '            externallyOwnedCapability: exclusiveRetention' \
+    '            leaseRetention: secureChildRetention'; do
+    [[ "$(grep -Fxc -- \
+        "$exact_monitor_held_lease_secure_child_containment_source_anchor" \
+        "$monitor_held_lease_secure_child_containment_source")" == "1" ]] ||
+        die "monitor-held lease secure-child containment implementation lost an exact authority-bound declaration: $exact_monitor_held_lease_secure_child_containment_source_anchor"
+done
+[[ "$(grep -Fc -- 'PrimeExclusiveResourceLease.acquire(' \
+        "$monitor_held_lease_secure_child_containment_source")" == "1" \
+    && "$(grep -Fc -- '.validationWorkflowFixture(mode: mode)' \
+        "$monitor_held_lease_secure_child_containment_source")" == "1" \
+    && "$(grep -Fc -- 'PrimeSecureChildPreparedFixture(' \
+        "$monitor_held_lease_secure_child_containment_source")" == "1" \
+    && "$(grep -Fc -- 'PrimeExclusiveResourceLeaseRetention(lease)' \
+        "$monitor_held_lease_secure_child_containment_source")" == "1" \
+    && "$(grep -Fc -- 'PrimeSecureChildLeaseRetention(' \
+        "$monitor_held_lease_secure_child_containment_source")" == "1" \
+    && "$(grep -Fc -- 'PrimeTrustedSecureChildProcessCapture(' \
+        "$monitor_held_lease_secure_child_containment_source")" == "1" \
+    && "$(grep -Fc -- 'PrimeSecureChildExecutionKernel.execute(' \
+        "$monitor_held_lease_secure_child_containment_source")" == "1" \
+    && "$(grep -Fc -- '.release(' \
+        "$monitor_held_lease_secure_child_containment_source")" == "0" \
+    && "$(grep -Fc -- '.reacquire(' \
+        "$monitor_held_lease_secure_child_containment_source")" == "0" ]] ||
+    die "monitor-held lease secure-child containment implementation lifecycle topology changed"
+[[ "$(grep -Fxc -- \
+        'private final class InMemoryMonitorHeldLeaseCapability:' \
+        "$monitor_held_lease_secure_child_containment_test")" == "1" \
+    && "$(grep -Fxc -- \
+        'private final class InMemorySecureChildClosedContext: @unchecked Sendable {}' \
+        "$monitor_held_lease_secure_child_containment_test")" == "1" \
+    && "$(grep -Fc -- \
+        'PrimeMonitorHeldLeaseSecureChildContainment.captureRetaining(' \
+        "$monitor_held_lease_secure_child_containment_test")" == "1" \
+    && "$(grep -Fc -- 'try capture!.consume()' \
+        "$monitor_held_lease_secure_child_containment_test")" == "2" \
+    && "$(grep -Fc -- 'try consumption!.claimForExecution()' \
+        "$monitor_held_lease_secure_child_containment_test")" == "2" \
+    && "$(grep -Fc -- 'XCTAssertNotNil(weakLease.value)' \
+        "$monitor_held_lease_secure_child_containment_test")" == "3" \
+    && "$(grep -Fc -- 'XCTAssertNil(weakLease.value)' \
+        "$monitor_held_lease_secure_child_containment_test")" == "1" \
+    && "$(grep -Fc -- '.acquire(' \
+        "$monitor_held_lease_secure_child_containment_test")" == "0" \
+    && "$(grep -Fc -- '.release(' \
+        "$monitor_held_lease_secure_child_containment_test")" == "0" \
+    && "$(grep -Fc -- '.execute(' \
+        "$monitor_held_lease_secure_child_containment_test")" == "0" \
+    && "$(grep -Fc -- '.prepare(' \
+        "$monitor_held_lease_secure_child_containment_test")" == "0" ]] ||
+    die "monitor-held lease secure-child containment pure fake test topology changed"
+for forbidden_monitor_held_lease_secure_child_containment_test_capability in \
+    'FileManager' 'FileHandle' 'URLSession' 'Process(' 'posix_spawn' \
+    'waitpid' 'kill(' 'flock(' 'execve(' 'runSupervisor(' \
+    'trajectoryRunWorkerProcess(' 'trajectoryRunReleaseVerifierProcess(' \
+    'import CoreGraphics' 'import Darwin' 'import Dispatch' 'import Metal' \
+    'import MLX' 'import MLXNN' 'import MLXOptimizers'; do
+    ! grep -Fq -- \
+        "$forbidden_monitor_held_lease_secure_child_containment_test_capability" \
+        "$monitor_held_lease_secure_child_containment_test" ||
+        die "monitor-held lease secure-child containment pure test gained a forbidden capability: $forbidden_monitor_held_lease_secure_child_containment_test_capability"
+done
+for forbidden_monitor_held_lease_secure_child_containment_source_capability in \
+    'FileManager' 'FileHandle' 'URLSession' 'Process(' 'posix_spawn' \
+    'waitpid' 'kill(' 'flock(' 'execve(' 'runSupervisor(' \
+    'trajectoryRunWorkerProcess(' 'trajectoryRunReleaseVerifierProcess(' \
+    'import CoreGraphics' 'import Darwin' 'import Dispatch' 'import Metal' \
+    'import MLX' 'import MLXNN' 'import MLXOptimizers'; do
+    ! grep -Fq -- \
+        "$forbidden_monitor_held_lease_secure_child_containment_source_capability" \
+        "$monitor_held_lease_secure_child_containment_source" ||
+        die "monitor-held lease secure-child containment implementation gained a forbidden direct capability: $forbidden_monitor_held_lease_secure_child_containment_source_capability"
+done
+swiftc -frontend -parse "$monitor_held_lease_secure_child_containment_source"
+swiftc -frontend -parse "$monitor_held_lease_secure_child_containment_test"
+readonly monitor_held_lease_secure_child_containment_test_ast="$(swiftc \
+    -frontend -dump-parse \
+    "$monitor_held_lease_secure_child_containment_test" \
+    2>/dev/null)" ||
+    die "monitor-held lease secure-child containment pure test does not parse into a Swift AST"
+readonly monitor_held_lease_secure_child_containment_test_executable_ast="$(printf '%s\n' \
+    "$monitor_held_lease_secure_child_containment_test_ast" | \
+    grep -Fv -- 'string_literal_expr' || true)"
+! printf '%s\n' \
+    "$monitor_held_lease_secure_child_containment_test_executable_ast" | \
+    grep -Eq -- \
+        'name="(Process|FileManager|FileHandle|URLSession|posix_spawn|waitpid|kill|flock|execve|runSupervisor|trajectoryRunWorkerProcess|trajectoryRunReleaseVerifierProcess|acquire|release)"|field="(runSupervisor|trajectoryRunWorkerProcess|trajectoryRunReleaseVerifierProcess|acquire|release)"' ||
+    die "monitor-held lease secure-child containment pure test gained executable lease, process, filesystem, network, or production-execution capability"
 
 for native300m_trajectory_checkpoint_execution_authority_file in \
     "$native300m_trajectory_checkpoint_execution_authority_source" \
