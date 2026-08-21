@@ -1,10 +1,93 @@
 #!/bin/bash
 
+[[ "$-" == *p* ]] || {
+    builtin printf '%s\n' 'privileged Bash mode required' >&2
+    exit 97
+}
+builtin unset BASH_ENV ENV
 set -euo pipefail
 IFS=$'\n\t'
 
-readonly script_directory="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)"
-readonly prime_root="$(cd -- "$script_directory/../.." && pwd -P)"
+readonly prime_gate_relative_source="${BASH_SOURCE[0]}"
+[[ "$prime_gate_relative_source" \
+        == '.github/scripts/prime-ci-active-root-quarantine.sh' ]] || {
+    builtin printf '%s\n' 'canonical relative gate source token required' >&2
+    exit 98
+}
+prime_root="$(builtin pwd -P)" || exit 98
+readonly prime_root
+readonly script_directory="$prime_root/.github/scripts"
+
+# Parse the exact lossless status frame used by both the live gate-root
+# construction and the private matrix entry.  Expected values never enter this
+# production parser; callers compare only its bounded sanitized globals.
+prime_gate_admit_private_root_capture_v1() {
+    [[ "$#" == "5" ]] || return 2
+    local probe_kind="$1" validated_runner_temp="$2" decimal_euid="$3"
+    local outer_status="$4" raw_capture="$5"
+    local LC_ALL=C
+    PRIME_GATE_ROOT_CAPTURE_ACCEPTED=""
+    PRIME_GATE_ROOT_CAPTURE_EXTERNAL_FAILURE="external_failure"
+    PRIME_GATE_ROOT_CAPTURE_PARSED_VALUE=""
+
+    [[ "$probe_kind" == "mktemp_path" \
+        || "$probe_kind" == "stat_metadata" ]] || return 2
+    [[ "$validated_runner_temp" == /* \
+        && "${#validated_runner_temp}" -le 1024 \
+        && ! "$validated_runner_temp" =~ [[:cntrl:]] \
+        && "$validated_runner_temp" != *'/./'* \
+        && "$validated_runner_temp" != *'/../'* \
+        && "$validated_runner_temp" != */. \
+        && "$validated_runner_temp" != */.. \
+        && "$decimal_euid" =~ ^[0-9]+$ \
+        && "$outer_status" =~ ^[0-9]+$ ]] || return 2
+
+    local maximum_capture_bytes=60
+    [[ "$probe_kind" == "mktemp_path" ]] && maximum_capture_bytes=1077
+    if [[ "$outer_status" != "0" \
+        || "${#raw_capture}" -lt 22 \
+        || "${#raw_capture}" -gt "$maximum_capture_bytes" ]]; then
+        return 0
+    fi
+    local trailer="${raw_capture: -22}"
+    local body="${raw_capture%$trailer}"
+    if [[ ! "$trailer" =~ ^$'\036'prime_status:([0-9]{3}):([0-9]{3})$'\037'$ \
+        || "${BASH_REMATCH[1]}" != "000" \
+        || "${BASH_REMATCH[2]}" != "000" ]]; then
+        return 0
+    fi
+
+    if [[ "$probe_kind" == "mktemp_path" ]]; then
+        [[ "${#body}" -ge 32 \
+            && "${#body}" -le 1054 \
+            && "$body" == *$'\n' ]] || return 0
+        local parsed_path="${body%$'\n'}"
+        local expected_prefix="$validated_runner_temp/prime-topology-gate."
+        local leaf="${parsed_path##*/}"
+        [[ "$parsed_path" == "$expected_prefix"* \
+            && "$leaf" =~ ^prime-topology-gate\.[A-Za-z0-9]{8}$ \
+            && ! "$parsed_path" =~ [[:cntrl:]] ]] || return 0
+        PRIME_GATE_ROOT_CAPTURE_PARSED_VALUE="$parsed_path"
+    else
+        [[ "$body" == "$decimal_euid 40700 Directory"$'\n' ]] || return 0
+        PRIME_GATE_ROOT_CAPTURE_PARSED_VALUE="$decimal_euid:40700:Directory"
+    fi
+    PRIME_GATE_ROOT_CAPTURE_ACCEPTED="accepted"
+    PRIME_GATE_ROOT_CAPTURE_EXTERNAL_FAILURE=""
+    return 0
+}
+
+if [[ "${1:-}" == "--prime-internal-test-gate-root-capture-v1" ]]; then
+    [[ "$#" == "8" ]] || exit 2
+    prime_gate_admit_private_root_capture_v1 "$2" "$3" "$4" "$5" "$6" ||
+        exit 2
+    [[ "${PRIME_GATE_ROOT_CAPTURE_ACCEPTED:-${PRIME_GATE_ROOT_CAPTURE_EXTERNAL_FAILURE:-}}" \
+            == "$7" \
+        && "${PRIME_GATE_ROOT_CAPTURE_PARSED_VALUE:-}" == "$8" ]] || exit 2
+    exit 0
+fi
+[[ "$#" == "0" ]] || exit 2
+
 readonly expected_prime_head="${ERGENTICS_EXACT_REVISION:?ERGENTICS_EXACT_REVISION is required}"
 readonly expected_mlx_origin="https://github.com/Ergentics/ergentics-mlx-swift"
 readonly root_mlx_revision="d37885a278f1c37484a94d0f401a418735e66519"
@@ -46,6 +129,109 @@ initial_prime_status="$(git -C "$prime_root" status \
 readonly initial_prime_status
 [[ -z "$initial_prime_status" ]] ||
     die "Prime checkout is dirty"
+[[ "${GITHUB_JOB:-}" == "active-root" \
+    && "${GITHUB_REPOSITORY:-}" == "Ergentics/ergentics-prime" \
+    && "${GITHUB_RUN_ATTEMPT:-}" == "1" \
+    && ( "${GITHUB_EVENT_NAME:-}" == "pull_request" \
+        || ( "${GITHUB_EVENT_NAME:-}" == "push" \
+            && "${GITHUB_REF:-}" == "refs/heads/main" \
+            && "${GITHUB_SHA:-}" == "$expected_prime_head" ) ) ]] ||
+    die "exact-revision topology-verifier implementation is outside the attempt-1 PR or push-main admission"
+
+# Copy and admit the runner root once.  All topology-private roots descend from
+# this frozen value; the helper receives only the admitted copy and never
+# rereads ambient RUNNER_TEMP.
+readonly exact_revision_topology_admitted_runner_temp="${RUNNER_TEMP:?RUNNER_TEMP is required}"
+prime_gate_admit_runner_temp_v1() {
+    [[ "$#" == "1" ]] || return 2
+    local candidate="$1"
+    local LC_ALL=C
+    [[ "${#candidate}" -le 1024 \
+        && "$candidate" == /* \
+        && ! "$candidate" =~ [[:cntrl:]] \
+        && "$candidate" != *'/./'* \
+        && "$candidate" != *'/../'* \
+        && "$candidate" != */. \
+        && "$candidate" != */.. \
+        && -d "$candidate" \
+        && ! -L "$candidate" \
+        && -O "$candidate" \
+        && -w "$candidate" \
+        && "$(cd -- "$candidate" && pwd -P)" == "$candidate" ]]
+}
+prime_gate_admit_runner_temp_v1 \
+    "$exact_revision_topology_admitted_runner_temp" ||
+    die "exact-revision topology RUNNER_TEMP admission failed"
+for exact_revision_topology_fixed_path in \
+    /usr/bin/mktemp /usr/bin/stat /usr/bin/head /usr/bin/env; do
+    [[ -f "$exact_revision_topology_fixed_path" \
+        && ! -L "$exact_revision_topology_fixed_path" \
+        && -x "$exact_revision_topology_fixed_path" ]] ||
+        die "exact-revision topology fixed tool admission failed: $exact_revision_topology_fixed_path"
+done
+[[ -c /dev/null && ! -L /dev/null ]] ||
+    die "exact-revision topology fixed stderr sink admission failed"
+umask 077
+
+set +e
+exact_revision_topology_gate_path_capture="$({
+    set +e
+    /usr/bin/mktemp -d \
+        "$exact_revision_topology_admitted_runner_temp/prime-topology-gate.XXXXXXXX" \
+        2>&1 | /usr/bin/env -i LC_ALL=C /usr/bin/head -c 1055 \
+        2>/dev/null
+    exact_revision_topology_gate_path_statuses=( "${PIPESTATUS[@]}" )
+    [[ "${#exact_revision_topology_gate_path_statuses[@]}" == "2" ]] || exit 125
+    builtin printf '\036prime_status:%03d:%03d\037' \
+        "${exact_revision_topology_gate_path_statuses[0]}" \
+        "${exact_revision_topology_gate_path_statuses[1]}"
+})"
+exact_revision_topology_gate_path_outer_status="$?"
+set -e
+readonly exact_revision_topology_gate_path_capture
+readonly exact_revision_topology_gate_path_outer_status
+prime_gate_admit_private_root_capture_v1 mktemp_path \
+    "$exact_revision_topology_admitted_runner_temp" "$EUID" \
+    "$exact_revision_topology_gate_path_outer_status" \
+    "$exact_revision_topology_gate_path_capture" ||
+    die "exact-revision topology gate-root path capture protocol failed"
+[[ "${PRIME_GATE_ROOT_CAPTURE_ACCEPTED:-}" == "accepted" ]] ||
+    die "exact-revision topology gate-root path observation failed"
+readonly exact_revision_topology_gate_private_root="$PRIME_GATE_ROOT_CAPTURE_PARSED_VALUE"
+[[ -d "$exact_revision_topology_gate_private_root" \
+    && ! -L "$exact_revision_topology_gate_private_root" \
+    && -O "$exact_revision_topology_gate_private_root" \
+    && -w "$exact_revision_topology_gate_private_root" \
+    && "$(cd -- "$exact_revision_topology_gate_private_root" && pwd -P)" \
+        == "$exact_revision_topology_gate_private_root" ]] ||
+    die "exact-revision topology gate-root filesystem admission failed"
+
+set +e
+exact_revision_topology_gate_stat_capture="$({
+    set +e
+    /usr/bin/env -i LC_ALL=C /usr/bin/stat -f '%u %p %HT' -- \
+        "$exact_revision_topology_gate_private_root" 2>&1 | \
+        /usr/bin/env -i LC_ALL=C /usr/bin/head -c 38 2>/dev/null
+    exact_revision_topology_gate_stat_statuses=( "${PIPESTATUS[@]}" )
+    [[ "${#exact_revision_topology_gate_stat_statuses[@]}" == "2" ]] || exit 125
+    builtin printf '\036prime_status:%03d:%03d\037' \
+        "${exact_revision_topology_gate_stat_statuses[0]}" \
+        "${exact_revision_topology_gate_stat_statuses[1]}"
+})"
+exact_revision_topology_gate_stat_outer_status="$?"
+set -e
+readonly exact_revision_topology_gate_stat_capture
+readonly exact_revision_topology_gate_stat_outer_status
+prime_gate_admit_private_root_capture_v1 stat_metadata \
+    "$exact_revision_topology_admitted_runner_temp" "$EUID" \
+    "$exact_revision_topology_gate_stat_outer_status" \
+    "$exact_revision_topology_gate_stat_capture" ||
+    die "exact-revision topology gate-root stat capture protocol failed"
+[[ "${PRIME_GATE_ROOT_CAPTURE_ACCEPTED:-}" == "accepted" \
+    && "$PRIME_GATE_ROOT_CAPTURE_PARSED_VALUE" == "$EUID:40700:Directory" ]] ||
+    die "exact-revision topology gate-root stat observation failed"
+export PRIME_EXACT_REVISION_TOPOLOGY_ADMITTED_RUNNER_TEMP_V1="$exact_revision_topology_admitted_runner_temp"
+unset RUNNER_TEMP
 
 readonly stage5_launcher_relative_path=".github/scripts/prime-ci-native-decoder-stage5-tiny-repeated-metal-trajectory-determinism.sh"
 readonly stage5_test_relative_path="Tests/PrimeNativeDecoderTrainingValidation/Tests/PrimeNativeDecoderTrainingTests/PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayTests.swift"
@@ -225,6 +411,11 @@ readonly exact_revision_topology_relation_timeout_repair_authority_base_revision
 readonly exact_revision_topology_relation_timeout_repair_authority_base_tree="2471a8610f4081c8a181daf9ac1d6d4ae8ec5f37"
 readonly exact_revision_topology_relation_timeout_repair_authority_base_first_parent="3c40cce6350da7ed0ce0f5ccb0620f76feff0501"
 readonly exact_revision_topology_relation_timeout_repair_authority_base_second_parent="2aa0185f43a470669fcabd160d897680d35a1b66"
+readonly exact_revision_topology_relation_timeout_repair_authority_merge_revision="b7808f39815ebf639b183e00d2cd769a29ebad18"
+readonly exact_revision_topology_relation_timeout_repair_authority_merge_tree="93f8b071397dbde3b2031d98d8e8631963311bcd"
+readonly exact_revision_topology_relation_timeout_repair_authority_merge_first_parent="444cd402c966521f6163f4949b4a73f9a5184e29"
+readonly exact_revision_topology_relation_timeout_repair_authority_merge_second_parent="1bc2471d12f034d51ae6eb8c977198635bc37717"
+readonly expected_exact_revision_topology_verifier_implementation_preserved_index_sha256="563806eb2f5e5306f174eab3b537488e85373ad849e375a2b33cf4ca9e5c1f47"
 readonly expected_exact_revision_topology_relation_timeout_repair_authority_preserved_index_sha256="915fe480012287f0620a38c0f298618966b1437fbca8038e35d53929a8c20d36"
 readonly expected_exact_revision_topology_relation_timeout_repair_authority_source_blob="ff4d218de7b95a908d75e70037ae3e5f651eaa0c"
 readonly expected_exact_revision_topology_relation_timeout_repair_authority_source_bytes="70984"
@@ -247,6 +438,24 @@ readonly expected_exact_revision_topology_relation_timeout_repair_workflow_sha25
 readonly expected_exact_revision_topology_relation_timeout_repair_authority_workflow_operational_corpus_sha256="7e17d8b21ff09c4e0221e261741756d5e4e855871f0cf9f0a1ced55fc6200ded"
 readonly expected_exact_revision_topology_relation_timeout_repair_authority_summary_sha256="fdc6bf4c8be7767c636fa8f8ce64e4f6cadb8c18532bd7ed8147a6c6837134d3"
 readonly expected_exact_revision_topology_relation_timeout_repair_run166_summary_sha256="61edc41a5437f2da5a020c2eb371f22677d50726ebc79100c8dc4eebea0928dd"
+readonly expected_exact_revision_topology_relation_timeout_repair_run168_summary_sha256="a41cbe0897fa72806c3f71055900145e043969886580cec524ea59d6c0506f3b"
+readonly expected_exact_revision_topology_verifier_implementation_workflow_operational_corpus_sha256="658572febc425100017d5eec71bc2670b0161aaad28d2696182786f3c1baabae"
+readonly expected_exact_revision_topology_classifier_blob="853f893a057da09e7ce2b0fda873cd944cb45907"
+readonly expected_exact_revision_topology_classifier_bytes="25327"
+readonly expected_exact_revision_topology_classifier_lf_count="751"
+readonly expected_exact_revision_topology_classifier_sha256="e2ae76e886deb1ec970c10a2d10dbadc79c8f4a3358533c68aea748ba184c4cb"
+readonly expected_exact_revision_topology_verifier_helper_blob="73533fa440b29c5eae6f4ecc5fbde078a747636f"
+readonly expected_exact_revision_topology_verifier_helper_bytes="101131"
+readonly expected_exact_revision_topology_verifier_helper_lf_count="2262"
+readonly expected_exact_revision_topology_verifier_helper_sha256="78c7ea04310ba5f531f626e320c0a959554c97caf3cec640360b292869d611f1"
+readonly expected_exact_revision_topology_verifier_matrix_blob="dd660a068c6645957567b97eeff917907e365966"
+readonly expected_exact_revision_topology_verifier_matrix_bytes="138129"
+readonly expected_exact_revision_topology_verifier_matrix_lf_count="2614"
+readonly expected_exact_revision_topology_verifier_matrix_sha256="37233f80067bd3aebc82a1fad8fc00d27b89d82278bbc23a5f66c1067dd6e0f2"
+readonly expected_exact_revision_topology_verifier_implementation_workflow_blob="9470bba66c913d6cbb18348c1c50ffac93e1dd2c"
+readonly expected_exact_revision_topology_verifier_implementation_workflow_bytes="214709"
+readonly expected_exact_revision_topology_verifier_implementation_workflow_lf_count="771"
+readonly expected_exact_revision_topology_verifier_implementation_workflow_sha256="58ac13432cddd236ae71fc1de55ca1541f14996b430dd80f26708586a30f864d"
 exact_commit_header() {
     local revision="$1"
     [[ "$(git -C "$prime_root" cat-file -t "$revision")" == "commit" ]] ||
@@ -469,7 +678,13 @@ readonly observed_exact_revision_topology_relation_amendment_authority_preserved
                 || "$relative_path" \
                     == "$exact_revision_topology_relation_timeout_repair_authority_source_relative_path" \
                 || "$relative_path" \
-                    == "$exact_revision_topology_relation_timeout_repair_authority_test_relative_path" ]]; then
+                    == "$exact_revision_topology_relation_timeout_repair_authority_test_relative_path" \
+                || "$relative_path" \
+                    == '.github/scripts/PrimeExactRevisionTopologyClassifier.swift' \
+                || "$relative_path" \
+                    == '.github/scripts/prime-ci-exact-revision-topology-verifier.sh' \
+                || "$relative_path" \
+                    == '.github/scripts/prime-ci-exact-revision-topology-verifier-test.sh' ]]; then
                 continue
             fi
             tree_metadata="${tree_record%%$'\t'*}"
@@ -492,58 +707,30 @@ readonly observed_exact_revision_topology_relation_amendment_authority_preserved
         == "$exact_revision_topology_relation_amendment_authority_historical_pr_head" ]] ||
     die "exact-revision topology relation timeout-repair predecessor constants diverged from the signed run-166 closure"
 
-readonly exact_revision_topology_relation_timeout_repair_authority_head_parent_lines="$(
-    exact_commit_parent_lines HEAD
-)"
-readonly exact_revision_topology_relation_timeout_repair_authority_head_parent_count="$(
-    awk 'NF { count += 1 } END { print count + 0 }' \
-        <<< "$exact_revision_topology_relation_timeout_repair_authority_head_parent_lines"
-)"
-[[ "${GITHUB_JOB:-}" == "active-root" \
-    && "${GITHUB_REPOSITORY:-}" == "Ergentics/ergentics-prime" \
-    && "${GITHUB_RUN_ATTEMPT:-}" == "1" ]] ||
-    die "exact-revision topology relation timeout-repair authority is outside the attempt-1 active-root admission"
-case "$exact_revision_topology_relation_timeout_repair_authority_head_parent_count" in
-    1)
-        [[ "$exact_revision_topology_relation_timeout_repair_authority_head_parent_lines" \
-                == "$exact_revision_topology_relation_timeout_repair_authority_base_revision" \
-            && "${GITHUB_EVENT_NAME:-}" == "pull_request" ]] ||
-            die "exact-revision topology relation timeout-repair authority is not a direct pull-request child of the exact base"
-        ;;
-    2)
-        readonly exact_revision_topology_relation_timeout_repair_authority_merge_first_parent="$(
-            head -n 1 \
-                <<< "$exact_revision_topology_relation_timeout_repair_authority_head_parent_lines"
-        )"
-        readonly exact_revision_topology_relation_timeout_repair_authority_merge_second_parent="$(
-            awk 'NR == 2 { print }' \
-                <<< "$exact_revision_topology_relation_timeout_repair_authority_head_parent_lines"
-        )"
-        [[ "$exact_revision_topology_relation_timeout_repair_authority_merge_first_parent" \
-                == "$exact_revision_topology_relation_timeout_repair_authority_base_revision" \
-            && "$(exact_commit_parent_lines \
-                "$exact_revision_topology_relation_timeout_repair_authority_merge_second_parent")" \
-                == "$exact_revision_topology_relation_timeout_repair_authority_base_revision" \
-            && "$(exact_commit_tree \
-                "$exact_revision_topology_relation_timeout_repair_authority_merge_second_parent")" \
-                == "$(exact_commit_tree HEAD)" \
-            && "$(exact_commit_header HEAD | \
-                awk '$1 == "gpgsig" { count += 1 } END { print count + 0 }')" \
-                == "1" \
-            && "${GITHUB_EVENT_NAME:-}" == "push" \
-            && "${GITHUB_REF:-}" == "refs/heads/main" \
-            && "${GITHUB_SHA:-}" == "$expected_prime_head" ]] ||
-            die "exact-revision topology relation timeout-repair authority same-tree signed-main shape changed"
-        ;;
-    *)
-        die "exact-revision topology relation timeout-repair authority has an unauthorized parent count"
-        ;;
-esac
+[[ "$(exact_commit_tree \
+        "$exact_revision_topology_relation_timeout_repair_authority_merge_revision")" \
+        == "$exact_revision_topology_relation_timeout_repair_authority_merge_tree" \
+    && "$(exact_commit_parent_lines \
+        "$exact_revision_topology_relation_timeout_repair_authority_merge_revision")" \
+        == "$exact_revision_topology_relation_timeout_repair_authority_merge_first_parent
+$exact_revision_topology_relation_timeout_repair_authority_merge_second_parent" \
+    && "$(exact_commit_parent_lines \
+        "$exact_revision_topology_relation_timeout_repair_authority_merge_second_parent")" \
+        == "$exact_revision_topology_relation_timeout_repair_authority_merge_first_parent" \
+    && "$(exact_commit_tree \
+        "$exact_revision_topology_relation_timeout_repair_authority_merge_second_parent")" \
+        == "$exact_revision_topology_relation_timeout_repair_authority_merge_tree" \
+    && "$(exact_commit_header \
+        "$exact_revision_topology_relation_timeout_repair_authority_merge_revision" | \
+        awk '$1 == "gpgsig" { count += 1 } END { print count + 0 }')" \
+        == "1" ]] ||
+    die "exact-revision topology relation timeout-repair signed exact-main closure changed"
 readonly expected_exact_revision_topology_relation_timeout_repair_authority_status=$'M\t.github/scripts/prime-ci-active-root-quarantine.sh\nM\t.github/workflows/prime-active-root-quarantine.yml\nM\tSources/PrimeCore/PrimeEmbeddedBuildProvenance.swift\nA\tSources/PrimeCore/PrimeExactRevisionTopologyRelationTimeoutRepairAuthority.swift\nA\tTests/PrimeCoreTests/PrimeExactRevisionTopologyRelationTimeoutRepairAuthorityTests.swift'
 [[ "$(git -C "$prime_root" diff --name-status --no-renames \
-        "$exact_revision_topology_relation_timeout_repair_authority_base_revision" HEAD)" \
+        "$exact_revision_topology_relation_timeout_repair_authority_base_revision" \
+        "$exact_revision_topology_relation_timeout_repair_authority_merge_revision")" \
         == "$expected_exact_revision_topology_relation_timeout_repair_authority_status" ]] ||
-    die "exact-revision topology relation timeout-repair authority is not the exact ordered five paths"
+    die "exact-revision topology relation timeout-repair historical authority is not the exact ordered five paths"
 for exact_revision_topology_relation_timeout_repair_authority_path_and_mode in \
     '100755 .github/scripts/prime-ci-active-root-quarantine.sh' \
     '100644 .github/workflows/prime-active-root-quarantine.yml' \
@@ -552,10 +739,11 @@ for exact_revision_topology_relation_timeout_repair_authority_path_and_mode in \
     '100644 Tests/PrimeCoreTests/PrimeExactRevisionTopologyRelationTimeoutRepairAuthorityTests.swift'; do
     expected_exact_revision_topology_relation_timeout_repair_authority_mode="${exact_revision_topology_relation_timeout_repair_authority_path_and_mode%% *}"
     exact_revision_topology_relation_timeout_repair_authority_path="${exact_revision_topology_relation_timeout_repair_authority_path_and_mode#* }"
-    [[ "$(git -C "$prime_root" ls-files -s -- \
+    [[ "$(git -C "$prime_root" ls-tree \
+        "$exact_revision_topology_relation_timeout_repair_authority_merge_revision" -- \
         "$exact_revision_topology_relation_timeout_repair_authority_path" | awk '{print $1}')" \
         == "$expected_exact_revision_topology_relation_timeout_repair_authority_mode" ]] ||
-        die "exact-revision topology relation timeout-repair authority path is missing or has the wrong mode: $exact_revision_topology_relation_timeout_repair_authority_path"
+        die "exact-revision topology relation timeout-repair historical authority path is missing or has the wrong mode: $exact_revision_topology_relation_timeout_repair_authority_path"
 done
 assert_exact_revision_topology_relation_timeout_repair_authority_identity() {
     local relative_path="$1" expected_blob="$2" expected_bytes="$3"
@@ -587,9 +775,10 @@ assert_exact_revision_topology_relation_timeout_repair_authority_identity \
     "$expected_exact_revision_topology_relation_timeout_repair_authority_test_lf_count" \
     "$expected_exact_revision_topology_relation_timeout_repair_authority_test_sha256"
 readonly observed_exact_revision_topology_relation_timeout_repair_authority_preserved_index_sha256="$({
-    git -C "$prime_root" ls-files -s |
-        while IFS= read -r index_record; do
-            relative_path="${index_record#*$'\t'}"
+    git -C "$prime_root" ls-tree -r \
+        "$exact_revision_topology_relation_timeout_repair_authority_merge_revision" |
+        while IFS= read -r tree_record; do
+            relative_path="${tree_record#*$'\t'}"
             if [[ "$relative_path" \
                     == '.github/scripts/prime-ci-active-root-quarantine.sh' \
                 || "$relative_path" \
@@ -599,10 +788,20 @@ readonly observed_exact_revision_topology_relation_timeout_repair_authority_pres
                 || "$relative_path" \
                     == "$exact_revision_topology_relation_timeout_repair_authority_source_relative_path" \
                 || "$relative_path" \
-                    == "$exact_revision_topology_relation_timeout_repair_authority_test_relative_path" ]]; then
+                    == "$exact_revision_topology_relation_timeout_repair_authority_test_relative_path" \
+                || "$relative_path" \
+                    == '.github/scripts/PrimeExactRevisionTopologyClassifier.swift' \
+                || "$relative_path" \
+                    == '.github/scripts/prime-ci-exact-revision-topology-verifier.sh' \
+                || "$relative_path" \
+                    == '.github/scripts/prime-ci-exact-revision-topology-verifier-test.sh' ]]; then
                 continue
             fi
-            printf '%s\n' "$index_record"
+            tree_metadata="${tree_record%%$'\t'*}"
+            tree_mode="${tree_metadata%% *}"
+            tree_blob="${tree_metadata##* }"
+            printf '%s %s 0\t%s\n' \
+                "$tree_mode" "$tree_blob" "$relative_path"
         done
 } | LC_ALL=C sort | shasum -a 256 | awk '{print $1}')"
 [[ "$observed_exact_revision_topology_relation_timeout_repair_authority_preserved_index_sha256" \
@@ -612,12 +811,289 @@ for absent_exact_revision_topology_verifier_implementation_path in \
     "$exact_revision_topology_verifier_helper_relative_path" \
     "$exact_revision_topology_classifier_relative_path" \
     "$exact_revision_topology_verifier_test_script_relative_path"; do
-    [[ -z "$(git -C "$prime_root" ls-files -- \
-            "$absent_exact_revision_topology_verifier_implementation_path")" \
-        && ! -e "$prime_root/$absent_exact_revision_topology_verifier_implementation_path" \
-        && ! -L "$prime_root/$absent_exact_revision_topology_verifier_implementation_path" ]] ||
-        die "exact-revision topology relation timeout-repair authority prematurely added a future implementation path: $absent_exact_revision_topology_verifier_implementation_path"
+    [[ -z "$(git -C "$prime_root" ls-tree \
+            "$exact_revision_topology_relation_timeout_repair_authority_merge_revision" -- \
+            "$absent_exact_revision_topology_verifier_implementation_path")" ]] ||
+        die "exact-revision topology relation timeout-repair historical authority prematurely added a future implementation path: $absent_exact_revision_topology_verifier_implementation_path"
 done
+
+readonly exact_revision_topology_verifier_implementation_parent_lines="$(
+    exact_commit_parent_lines HEAD
+)"
+readonly exact_revision_topology_verifier_implementation_parent_count="$(
+    awk 'NF { count += 1 } END { print count + 0 }' \
+        <<< "$exact_revision_topology_verifier_implementation_parent_lines"
+)"
+case "${GITHUB_EVENT_NAME:-}" in
+    pull_request)
+        [[ "$exact_revision_topology_verifier_implementation_parent_count" == "1" \
+            && "$exact_revision_topology_verifier_implementation_parent_lines" \
+                == "$exact_revision_topology_relation_timeout_repair_authority_merge_revision" ]] ||
+            die "exact-revision topology-verifier implementation is not a direct pull-request child of the exact repair merge"
+        ;;
+    push)
+        readonly exact_revision_topology_verifier_implementation_merge_first_parent="$(
+            head -n 1 <<< "$exact_revision_topology_verifier_implementation_parent_lines"
+        )"
+        readonly exact_revision_topology_verifier_implementation_merge_second_parent="$(
+            awk 'NR == 2 { print }' \
+                <<< "$exact_revision_topology_verifier_implementation_parent_lines"
+        )"
+        [[ "$exact_revision_topology_verifier_implementation_parent_count" == "2" \
+            && "$exact_revision_topology_verifier_implementation_merge_first_parent" \
+                == "$exact_revision_topology_relation_timeout_repair_authority_merge_revision" \
+            && "$(exact_commit_parent_lines \
+                "$exact_revision_topology_verifier_implementation_merge_second_parent")" \
+                == "$exact_revision_topology_relation_timeout_repair_authority_merge_revision" \
+            && "$(exact_commit_tree \
+                "$exact_revision_topology_verifier_implementation_merge_second_parent")" \
+                == "$(exact_commit_tree HEAD)" \
+            && "$(exact_commit_header HEAD | \
+                awk '$1 == "gpgsig" { count += 1 } END { print count + 0 }')" \
+                == "1" ]] ||
+            die "exact-revision topology-verifier implementation same-tree signed-main shape changed"
+        ;;
+    *)
+        die "exact-revision topology-verifier implementation event is unauthorized"
+        ;;
+esac
+readonly expected_exact_revision_topology_verifier_implementation_status=$'A\t.github/scripts/PrimeExactRevisionTopologyClassifier.swift\nM\t.github/scripts/prime-ci-active-root-quarantine.sh\nA\t.github/scripts/prime-ci-exact-revision-topology-verifier-test.sh\nA\t.github/scripts/prime-ci-exact-revision-topology-verifier.sh\nM\t.github/workflows/prime-active-root-quarantine.yml'
+[[ "$(git -C "$prime_root" diff --name-status --no-renames \
+        "$exact_revision_topology_relation_timeout_repair_authority_merge_revision" HEAD)" \
+        == "$expected_exact_revision_topology_verifier_implementation_status" ]] ||
+    die "exact-revision topology-verifier implementation is not the exact ordered five paths"
+for exact_revision_topology_verifier_implementation_path_and_mode in \
+    '100755 .github/scripts/prime-ci-active-root-quarantine.sh' \
+    '100644 .github/scripts/PrimeExactRevisionTopologyClassifier.swift' \
+    '100755 .github/scripts/prime-ci-exact-revision-topology-verifier.sh' \
+    '100755 .github/scripts/prime-ci-exact-revision-topology-verifier-test.sh' \
+    '100644 .github/workflows/prime-active-root-quarantine.yml'; do
+    expected_exact_revision_topology_verifier_implementation_mode="${exact_revision_topology_verifier_implementation_path_and_mode%% *}"
+    exact_revision_topology_verifier_implementation_path="${exact_revision_topology_verifier_implementation_path_and_mode#* }"
+    [[ -f "$prime_root/$exact_revision_topology_verifier_implementation_path" \
+        && ! -L "$prime_root/$exact_revision_topology_verifier_implementation_path" \
+        && "$(git -C "$prime_root" ls-files -s -- \
+            "$exact_revision_topology_verifier_implementation_path" | \
+            awk '{print $1}')" \
+            == "$expected_exact_revision_topology_verifier_implementation_mode" ]] ||
+        die "exact-revision topology-verifier implementation path is missing or has the wrong mode: $exact_revision_topology_verifier_implementation_path"
+done
+readonly observed_exact_revision_topology_verifier_implementation_preserved_index_sha256="$({
+    git -C "$prime_root" ls-files -s |
+        while IFS= read -r index_record; do
+            relative_path="${index_record#*$'\t'}"
+            if [[ "$relative_path" \
+                    == '.github/scripts/prime-ci-active-root-quarantine.sh' \
+                || "$relative_path" \
+                    == '.github/scripts/PrimeExactRevisionTopologyClassifier.swift' \
+                || "$relative_path" \
+                    == '.github/scripts/prime-ci-exact-revision-topology-verifier.sh' \
+                || "$relative_path" \
+                    == '.github/scripts/prime-ci-exact-revision-topology-verifier-test.sh' \
+                || "$relative_path" \
+                    == '.github/workflows/prime-active-root-quarantine.yml' ]]; then
+                continue
+            fi
+            printf '%s\n' "$index_record"
+        done
+} | LC_ALL=C sort | shasum -a 256 | awk '{print $1}')"
+[[ "$observed_exact_revision_topology_verifier_implementation_preserved_index_sha256" \
+        == "$expected_exact_revision_topology_verifier_implementation_preserved_index_sha256" ]] ||
+    die "exact-revision topology-verifier implementation changed a path outside its exact-five closure"
+
+assert_exact_revision_topology_verifier_implementation_identity() {
+    [[ "$#" == "6" ]] || return 1
+    local relative_path="$1" expected_mode="$2" expected_blob="$3"
+    local expected_bytes="$4" expected_lf_count="$5" expected_sha256="$6"
+    local absolute_path="$prime_root/$relative_path"
+    [[ -f "$absolute_path" && ! -L "$absolute_path" \
+        && "$(stat -f %l "$absolute_path")" == "1" \
+        && "$(git -C "$prime_root" ls-files -s -- "$relative_path" | \
+            awk '{print $1, $2}')" == "$expected_mode $expected_blob" \
+        && "$(git -C "$prime_root" hash-object --no-filters -- "$relative_path")" \
+            == "$expected_blob" \
+        && "$(stat -f %z "$absolute_path")" == "$expected_bytes" \
+        && "$(wc -l < "$absolute_path" | awk '{print $1}')" \
+            == "$expected_lf_count" \
+        && "$(LC_ALL=C tr -cd '\r' < "$absolute_path" | wc -c | \
+            awk '{print $1}')" == "0" \
+        && "$(shasum -a 256 "$absolute_path" | awk '{print $1}')" \
+            == "$expected_sha256" ]]
+}
+assert_exact_revision_topology_verifier_implementation_identity \
+    "$exact_revision_topology_classifier_relative_path" 100644 \
+    "$expected_exact_revision_topology_classifier_blob" \
+    "$expected_exact_revision_topology_classifier_bytes" \
+    "$expected_exact_revision_topology_classifier_lf_count" \
+    "$expected_exact_revision_topology_classifier_sha256" ||
+    die "exact-revision topology classifier identity changed"
+assert_exact_revision_topology_verifier_implementation_identity \
+    "$exact_revision_topology_verifier_helper_relative_path" 100755 \
+    "$expected_exact_revision_topology_verifier_helper_blob" \
+    "$expected_exact_revision_topology_verifier_helper_bytes" \
+    "$expected_exact_revision_topology_verifier_helper_lf_count" \
+    "$expected_exact_revision_topology_verifier_helper_sha256" ||
+    die "exact-revision topology helper identity changed"
+assert_exact_revision_topology_verifier_implementation_identity \
+    "$exact_revision_topology_verifier_test_script_relative_path" 100755 \
+    "$expected_exact_revision_topology_verifier_matrix_blob" \
+    "$expected_exact_revision_topology_verifier_matrix_bytes" \
+    "$expected_exact_revision_topology_verifier_matrix_lf_count" \
+    "$expected_exact_revision_topology_verifier_matrix_sha256" ||
+    die "exact-revision topology matrix identity changed"
+assert_exact_revision_topology_verifier_implementation_identity \
+    '.github/workflows/prime-active-root-quarantine.yml' 100644 \
+    "$expected_exact_revision_topology_verifier_implementation_workflow_blob" \
+    "$expected_exact_revision_topology_verifier_implementation_workflow_bytes" \
+    "$expected_exact_revision_topology_verifier_implementation_workflow_lf_count" \
+    "$expected_exact_revision_topology_verifier_implementation_workflow_sha256" ||
+    die "exact-revision topology-verifier implementation workflow identity changed"
+
+source "$prime_root/$exact_revision_topology_verifier_helper_relative_path"
+[[ "$(type -t prime_verify_exact_revision_topology_v1)" == "function" ]] ||
+    die "exact-revision topology shared helper API is unavailable"
+export PRIME_EXACT_REVISION_TOPOLOGY_MATRIX_ADMITTED_V1="prime_exact_revision_topology_matrix_admitted_v1"
+/bin/bash -p "$prime_root/$exact_revision_topology_verifier_test_script_relative_path"
+unset PRIME_EXACT_REVISION_TOPOLOGY_MATRIX_ADMITTED_V1
+
+set +e
+exact_revision_topology_gate_status_capture="$({
+    prime_enter_exact_revision_topology_closed_child_v1 || exit 124
+    /usr/bin/env -i LC_ALL=C \
+        TMPDIR="$exact_revision_topology_gate_private_root" \
+        GIT_NO_REPLACE_OBJECTS=1 GIT_NO_LAZY_FETCH=1 \
+        GIT_CONFIG_NOSYSTEM=1 GIT_CONFIG_GLOBAL=/dev/null \
+        GIT_TERMINAL_PROMPT=0 GIT_OPTIONAL_LOCKS=0 \
+        /usr/bin/git -C "$prime_root" status \
+        --porcelain=v1 --untracked-files=all 2>&1 | \
+        /usr/bin/env -i LC_ALL=C /usr/bin/head -c 1 2>/dev/null
+    exact_revision_topology_gate_status_statuses=( "${PIPESTATUS[@]}" )
+    [[ "${#exact_revision_topology_gate_status_statuses[@]}" == "2" ]] || exit 125
+    builtin printf '\036prime_status:%03d:%03d\037' \
+        "${exact_revision_topology_gate_status_statuses[0]}" \
+        "${exact_revision_topology_gate_status_statuses[1]}"
+})"
+exact_revision_topology_gate_status_outer="$?"
+set -e
+readonly exact_revision_topology_gate_status_capture
+readonly exact_revision_topology_gate_status_outer
+prime_parse_bounded_status_capture_v1 clean_status \
+    "$exact_revision_topology_gate_status_outer" \
+    "$exact_revision_topology_gate_status_capture" ||
+    die "exact-revision topology gate clean-status capture protocol failed"
+[[ "${prime_topology_frame_accepted:-false}" == "true" \
+    && -z "${prime_topology_capture_body:-}" ]] ||
+    die "exact-revision topology gate clean-status admission failed"
+
+set +e
+exact_revision_topology_gate_tree_capture="$({
+    prime_enter_exact_revision_topology_closed_child_v1 || exit 124
+    /usr/bin/env -i LC_ALL=C \
+        TMPDIR="$exact_revision_topology_gate_private_root" \
+        GIT_NO_REPLACE_OBJECTS=1 GIT_NO_LAZY_FETCH=1 \
+        GIT_CONFIG_NOSYSTEM=1 GIT_CONFIG_GLOBAL=/dev/null \
+        GIT_TERMINAL_PROMPT=0 GIT_OPTIONAL_LOCKS=0 \
+        /usr/bin/git -C "$prime_root" write-tree 2>&1 | \
+        /usr/bin/env -i LC_ALL=C /usr/bin/head -c 42 2>/dev/null
+    exact_revision_topology_gate_tree_statuses=( "${PIPESTATUS[@]}" )
+    [[ "${#exact_revision_topology_gate_tree_statuses[@]}" == "2" ]] || exit 125
+    builtin printf '\036prime_status:%03d:%03d\037' \
+        "${exact_revision_topology_gate_tree_statuses[0]}" \
+        "${exact_revision_topology_gate_tree_statuses[1]}"
+})"
+exact_revision_topology_gate_tree_outer="$?"
+set -e
+readonly exact_revision_topology_gate_tree_capture
+readonly exact_revision_topology_gate_tree_outer
+prime_parse_bounded_status_capture_v1 write_tree \
+    "$exact_revision_topology_gate_tree_outer" \
+    "$exact_revision_topology_gate_tree_capture" ||
+    die "exact-revision topology gate write-tree capture protocol failed"
+[[ "${prime_topology_frame_accepted:-false}" == "true" \
+    && "${prime_topology_capture_body:-}" =~ ^[0-9a-f]{40}$'\n'$ ]] ||
+    die "exact-revision topology gate write-tree admission failed"
+readonly exact_revision_topology_gate_index_tree="${prime_topology_capture_body%$'\n'}"
+
+exact_revision_topology_live_arguments=()
+case "${GITHUB_EVENT_NAME:-}" in
+    pull_request)
+        exact_revision_topology_live_arguments=(
+            "$prime_root" "1"
+            "current_exact_revision" "$expected_prime_head"
+            "$exact_revision_topology_gate_index_tree" "1"
+            "$exact_revision_topology_relation_timeout_repair_authority_merge_revision"
+            "--current-index-exact-revision"
+        )
+        ;;
+    push)
+        exact_revision_topology_live_arguments=(
+            "$prime_root" "1"
+            "authority_base"
+            "$exact_revision_topology_relation_timeout_repair_authority_merge_revision"
+            "$exact_revision_topology_relation_timeout_repair_authority_merge_tree" "2"
+            "$exact_revision_topology_relation_timeout_repair_authority_merge_first_parent"
+            "$exact_revision_topology_relation_timeout_repair_authority_merge_second_parent"
+            "--ordered-merge-child-relation"
+            "current_exact_revision" "$expected_prime_head"
+            "$exact_revision_topology_gate_index_tree"
+            "$exact_revision_topology_relation_timeout_repair_authority_merge_revision"
+            "current_reviewed_child"
+        )
+        ;;
+esac
+set +e
+exact_revision_topology_live_capture="$({
+    set +e
+    {
+        prime_verify_exact_revision_topology_v1 \
+            "${exact_revision_topology_live_arguments[@]}" 2>&1
+        exact_revision_topology_live_status="$?"
+        builtin printf '\036prime_status:%03d\037' \
+            "$exact_revision_topology_live_status"
+    } | /usr/bin/env -i LC_ALL=C /usr/bin/head -c 532 2>/dev/null
+})"
+exact_revision_topology_live_outer_status="$?"
+set -e
+readonly exact_revision_topology_live_capture
+readonly exact_revision_topology_live_outer_status
+[[ "$exact_revision_topology_live_outer_status" == "0" \
+    && "${#exact_revision_topology_live_capture}" -le 531 \
+    && "${#exact_revision_topology_live_capture}" -ge 18 ]] ||
+    die "exact-revision topology-verifier implementation capture exceeded its bound"
+readonly exact_revision_topology_live_trailer="${exact_revision_topology_live_capture: -18}"
+[[ "$exact_revision_topology_live_trailer" \
+        =~ ^$'\036'prime_status:[0-9]{3}$'\037'$ ]] ||
+    die "exact-revision topology-verifier implementation status trailer is malformed"
+readonly exact_revision_topology_live_status="${exact_revision_topology_live_trailer:14:3}"
+readonly exact_revision_topology_live_record="${exact_revision_topology_live_capture%$exact_revision_topology_live_trailer}"
+[[ "$exact_revision_topology_live_record" == *$'\n' \
+    && "$(builtin printf '%s' "$exact_revision_topology_live_record" | \
+        wc -l | awk '{print $1}')" == "1" \
+    && "$(builtin printf '%s' "$exact_revision_topology_live_record" | \
+        wc -c | awk '{print $1}')" -le 513 ]] ||
+    die "exact-revision topology-verifier implementation record framing is invalid"
+readonly exact_revision_topology_live_canonical_record="$(
+    builtin printf '%s' "$exact_revision_topology_live_record" | jq -ceS .
+)" 2>/dev/null ||
+    die "exact-revision topology-verifier implementation emitted invalid JSON"
+builtin printf '%s' "$exact_revision_topology_live_record" | jq -e '
+    keys == [
+        "first_failed_guard_id", "missing_object_role", "result_code",
+        "schema_id", "schema_version", "shallow_state"
+    ]
+    and .first_failed_guard_id == null
+    and .missing_object_role == null
+    and .result_code == "TOPOLOGY_VERIFIED"
+    and .schema_id == "prime_exact_revision_topology_verifier_result_v1"
+    and .schema_version == 1
+    and (.shallow_state == "complete" or .shallow_state == "shallow")
+' >/dev/null 2>/dev/null ||
+    die "exact-revision topology-verifier implementation emitted an invalid record"
+[[ "$exact_revision_topology_live_status" == "000" \
+    && "$exact_revision_topology_live_record" \
+        == "$exact_revision_topology_live_canonical_record"$'\n' ]] ||
+    die "exact-revision topology-verifier implementation topology was not verified"
+builtin printf '%s' "$exact_revision_topology_live_record"
 readonly observed_secure_child_validation_fixture_identity_measurement_mechanics_preserved_index_sha256="$({
     git -C "$prime_root" ls-tree -r \
         "$secure_child_validation_fixture_identity_measurement_mechanics_closure_revision" |
@@ -668,7 +1144,13 @@ readonly observed_secure_child_validation_fixture_identity_measurement_outcome_o
                 || "$relative_path" \
                     == "$exact_revision_topology_relation_timeout_repair_authority_source_relative_path" \
                 || "$relative_path" \
-                    == "$exact_revision_topology_relation_timeout_repair_authority_test_relative_path" ]]; then
+                    == "$exact_revision_topology_relation_timeout_repair_authority_test_relative_path" \
+                || "$relative_path" \
+                    == '.github/scripts/PrimeExactRevisionTopologyClassifier.swift' \
+                || "$relative_path" \
+                    == '.github/scripts/prime-ci-exact-revision-topology-verifier.sh' \
+                || "$relative_path" \
+                    == '.github/scripts/prime-ci-exact-revision-topology-verifier-test.sh' ]]; then
                 continue
             fi
             printf '%s\n' "$index_record"
@@ -1542,21 +2024,27 @@ readonly final_prime_clean_status_block_sha256="$(awk '
         shasum -a 256 | awk '{print $1}')" \
         == "$expected_exact_revision_topology_relation_amendment_workflow_sha256" ]] ||
     die "exact-revision topology relation-amendment historical authority workflow identity changed"
-[[ -f "$workflow_path" && ! -L "$workflow_path" \
-    && "$(stat -f %l "$workflow_path")" == "1" \
-    && "$(git -C "$prime_root" ls-files -s -- \
+[[ "$(git -C "$prime_root" ls-tree \
+        "$exact_revision_topology_relation_timeout_repair_authority_merge_revision" -- \
         '.github/workflows/prime-active-root-quarantine.yml' | \
-        awk '{print $1, $2}')" \
+        awk '{print $1, $3}')" \
         == "100644 $expected_exact_revision_topology_relation_timeout_repair_workflow_blob" \
-    && "$(stat -f %z "$workflow_path")" \
+    && "$(git -C "$prime_root" cat-file -s \
+        "$expected_exact_revision_topology_relation_timeout_repair_workflow_blob")" \
         == "$expected_exact_revision_topology_relation_timeout_repair_workflow_bytes" \
-    && "$(wc -l < "$workflow_path" | awk '{print $1}')" \
+    && "$(git -C "$prime_root" cat-file blob \
+        "$expected_exact_revision_topology_relation_timeout_repair_workflow_blob" | \
+        wc -l | awk '{print $1}')" \
         == "$expected_exact_revision_topology_relation_timeout_repair_workflow_lf_count" \
-    && "$(LC_ALL=C tr -cd '\r' < "$workflow_path" | wc -c | \
+    && "$(git -C "$prime_root" cat-file blob \
+        "$expected_exact_revision_topology_relation_timeout_repair_workflow_blob" | \
+        LC_ALL=C tr -cd '\r' | wc -c | \
         awk '{print $1}')" == "0" \
-    && "$(shasum -a 256 "$workflow_path" | awk '{print $1}')" \
+    && "$(git -C "$prime_root" cat-file blob \
+        "$expected_exact_revision_topology_relation_timeout_repair_workflow_blob" | \
+        shasum -a 256 | awk '{print $1}')" \
         == "$expected_exact_revision_topology_relation_timeout_repair_workflow_sha256" ]] ||
-    die "exact-revision topology relation timeout-repair authority workflow identity changed"
+    die "exact-revision topology relation timeout-repair historical authority workflow identity changed"
 awk '
     function reject() {
         rejected = 1
@@ -1687,7 +2175,10 @@ readonly observed_secure_child_process_evidence_closed_fixture_canary_authority_
                 || "$relative_path" == "$exact_revision_topology_relation_amendment_authority_source_relative_path" \
                 || "$relative_path" == "$exact_revision_topology_relation_amendment_authority_test_relative_path" \
                 || "$relative_path" == "$exact_revision_topology_relation_timeout_repair_authority_source_relative_path" \
-                || "$relative_path" == "$exact_revision_topology_relation_timeout_repair_authority_test_relative_path" ]]; then
+                || "$relative_path" == "$exact_revision_topology_relation_timeout_repair_authority_test_relative_path" \
+                || "$relative_path" == '.github/scripts/PrimeExactRevisionTopologyClassifier.swift' \
+                || "$relative_path" == '.github/scripts/prime-ci-exact-revision-topology-verifier.sh' \
+                || "$relative_path" == '.github/scripts/prime-ci-exact-revision-topology-verifier-test.sh' ]]; then
                 continue
             fi
             printf '%s\n' "$index_record"
@@ -1771,6 +2262,9 @@ secure_child_process_evidence_layer_a_path_is_excluded() {
         "$exact_revision_topology_relation_amendment_authority_test_relative_path"|\
         "$exact_revision_topology_relation_timeout_repair_authority_source_relative_path"|\
         "$exact_revision_topology_relation_timeout_repair_authority_test_relative_path"|\
+        '.github/scripts/PrimeExactRevisionTopologyClassifier.swift'|\
+        '.github/scripts/prime-ci-exact-revision-topology-verifier.sh'|\
+        '.github/scripts/prime-ci-exact-revision-topology-verifier-test.sh'|\
         "$secure_child_process_evidence_closed_fixture_canary_launcher_relative_path")
             return 0
             ;;
@@ -1838,6 +2332,9 @@ readonly observed_secure_child_process_evidence_layer_a_status="$(git -C "$prime
             || "$relative_path" == "$exact_revision_topology_relation_amendment_authority_test_relative_path" \
             || "$relative_path" == "$exact_revision_topology_relation_timeout_repair_authority_source_relative_path" \
             || "$relative_path" == "$exact_revision_topology_relation_timeout_repair_authority_test_relative_path" \
+            || "$relative_path" == "$exact_revision_topology_classifier_relative_path" \
+            || "$relative_path" == "$exact_revision_topology_verifier_helper_relative_path" \
+            || "$relative_path" == "$exact_revision_topology_verifier_test_script_relative_path" \
             || "$relative_path" \
                 == "$secure_child_process_evidence_closed_fixture_canary_launcher_relative_path" ]]; then
             continue
@@ -2790,7 +3287,7 @@ readonly observed_trusted_main_workflow_step_names="$(awk '
     ' "$workflow_path")" == "90" ]] ||
     die "hosted quarantine workflow topology relation timeout-repair runner or timeout boundary changed"
 [[ "$(grep -Fxc -- \
-        '          git -C ergentics-prime fetch --depth=2 --no-tags --no-write-fetch-head origin "$EXACT_REVISION" 3c40cce6350da7ed0ce0f5ccb0620f76feff0501 3d2148227d264502010e64a0c0db70bc1362c50c 6a811d3029bdb77e038750694fbf10eec0f358f8 5623872afda1895630ba0eacdfab76961c5e755b 57f4264dd865a47766e27a9dbc06a82dd1fbfe11 f5db7101cf3538daae103ba56601a509ad8bad80 fe0ad36a9163aaa0e03478f5556dfb34b70e24e7 75b14056b75e8af6af0c070453f7ef14ac10a063 3ad8087ed6e403ba81f46bba97ceb5d440979e0a ef64686e76d2d67e46deb696bfeef18ea96c96a2 e1d90e3f2ae6c4d3c279bf5fb64ce3baafc1f540 0abcb4ad5487a775627bbb587184c375dd691978 4570716892722873757de6eae1bd897167d674eb d825c5366135cc6ef8d0c9dc7d26d3d2e4300ba6 b3402efd96d3ff893a0c2b73897cf48c9b313c8c 232a17e8f58a297919366d963ee1d7bc38cdbaee a4d8583fa7c59f885002ee06a07c1d5264c0c223' \
+        '          git -C ergentics-prime fetch --depth=2 --no-tags --no-write-fetch-head origin "$EXACT_REVISION" b7808f39815ebf639b183e00d2cd769a29ebad18 444cd402c966521f6163f4949b4a73f9a5184e29 1bc2471d12f034d51ae6eb8c977198635bc37717 3c40cce6350da7ed0ce0f5ccb0620f76feff0501 3d2148227d264502010e64a0c0db70bc1362c50c 6a811d3029bdb77e038750694fbf10eec0f358f8 5623872afda1895630ba0eacdfab76961c5e755b 57f4264dd865a47766e27a9dbc06a82dd1fbfe11 f5db7101cf3538daae103ba56601a509ad8bad80 fe0ad36a9163aaa0e03478f5556dfb34b70e24e7 75b14056b75e8af6af0c070453f7ef14ac10a063 3ad8087ed6e403ba81f46bba97ceb5d440979e0a ef64686e76d2d67e46deb696bfeef18ea96c96a2 e1d90e3f2ae6c4d3c279bf5fb64ce3baafc1f540 0abcb4ad5487a775627bbb587184c375dd691978 4570716892722873757de6eae1bd897167d674eb d825c5366135cc6ef8d0c9dc7d26d3d2e4300ba6 b3402efd96d3ff893a0c2b73897cf48c9b313c8c 232a17e8f58a297919366d963ee1d7bc38cdbaee a4d8583fa7c59f885002ee06a07c1d5264c0c223' \
         "$workflow_path")" == "2" \
     && "$(grep -Fc -- \
         'git -C ergentics-prime fetch --depth=' "$workflow_path")" == "2" \
@@ -2950,6 +3447,48 @@ readonly exact_revision_topology_relation_amendment_authority_historical_workflo
         shasum -a 256 | awk '{print $1}')" \
         == "$expected_exact_revision_topology_relation_amendment_authority_workflow_operational_corpus_sha256" ]] ||
     die "exact-revision topology relation-amendment historical workflow operational corpus changed"
+readonly exact_revision_topology_relation_timeout_repair_authority_historical_workflow_operational_corpus="$(git \
+    -C "$prime_root" cat-file blob \
+    "$expected_exact_revision_topology_relation_timeout_repair_workflow_blob" | awk '
+    {
+        if (inside_run_script) {
+            if (index($0, "          ") == 1) {
+                line = substr($0, 11)
+                trimmed = line
+                sub(/^[[:space:]]+/, "", trimmed)
+                if (trimmed !~ /^echo([[:space:]]|$)/) {
+                    print line
+                }
+                next
+            }
+            inside_run_script = 0
+        }
+        if (index($0, "        uses: ") == 1) {
+            print substr($0, 9)
+            next
+        }
+        if (index($0, "        run: ") == 1) {
+            node = substr($0, 9)
+            if (node ~ /^run: [|>][-+]?$/) {
+                inside_run_script = 1
+                next
+            }
+            command = node
+            sub(/^run: /, "", command)
+            if (command !~ /^echo([[:space:]]|$)/) {
+                print node
+            }
+        }
+    }
+')"
+[[ "$(printf '%s\n' \
+        "$exact_revision_topology_relation_timeout_repair_authority_historical_workflow_operational_corpus" | \
+        wc -l | awk '{print $1}')" == "564" \
+    && "$(printf '%s\n' \
+        "$exact_revision_topology_relation_timeout_repair_authority_historical_workflow_operational_corpus" | \
+        shasum -a 256 | awk '{print $1}')" \
+        == "$expected_exact_revision_topology_relation_timeout_repair_authority_workflow_operational_corpus_sha256" ]] ||
+    die "exact-revision topology relation timeout-repair historical workflow operational corpus changed"
 [[ "$(grep -Ec -- '^[[:space:]]{8}run: ' "$workflow_path")" == "10" \
     && "$(grep -Ec -- '^[[:space:]]{8}uses: ' "$workflow_path")" == "0" \
     && "$(printf '%s\n' \
@@ -2958,19 +3497,19 @@ readonly exact_revision_topology_relation_amendment_authority_historical_workflo
     && "$(printf '%s\n' \
         "$workflow_executable_run_script_and_uses_nodes_excluding_echo_payload_text_corpus" | \
         shasum -a 256 | awk '{print $1}')" \
-        == "$expected_exact_revision_topology_relation_timeout_repair_authority_workflow_operational_corpus_sha256" \
+        == "$expected_exact_revision_topology_verifier_implementation_workflow_operational_corpus_sha256" \
     && "$(grep -Fxc -- \
         'run: bash .github/scripts/prime-ci-active-root-quarantine.sh' \
-        <<< "$workflow_executable_run_script_and_uses_nodes_excluding_echo_payload_text_corpus")" == "1" \
+        <<< "$workflow_executable_run_script_and_uses_nodes_excluding_echo_payload_text_corpus")" == "0" \
     && "$(grep -Fxc -- \
         'run: /bin/bash -p .github/scripts/prime-ci-active-root-quarantine.sh' \
         <<< "$workflow_executable_run_script_and_uses_nodes_excluding_echo_payload_text_corpus")" == "0" \
     && "$(grep -Fxc -- \
         'run: source .github/scripts/prime-ci-active-root-quarantine.sh' \
-        <<< "$workflow_executable_run_script_and_uses_nodes_excluding_echo_payload_text_corpus")" == "0" \
+        <<< "$workflow_executable_run_script_and_uses_nodes_excluding_echo_payload_text_corpus")" == "1" \
     && "$(grep -Fxc -- \
         '        shell: '\''/bin/bash --noprofile --norc -p -e -o pipefail -- "{0}"'\''' \
-        "$workflow_path")" == "0" \
+        "$workflow_path")" == "1" \
     && "$(grep -Fc -- 'uses: actions/upload-artifact@' \
         <<< "$workflow_executable_run_script_and_uses_nodes_excluding_echo_payload_text_corpus")" == "0" \
     && "$(grep -Fc -- \
@@ -3800,6 +4339,41 @@ for required_exact_revision_topology_relation_timeout_repair_authority_summary_f
         "$required_exact_revision_topology_relation_timeout_repair_authority_summary_fragment" \
         <<< "$exact_revision_topology_relation_timeout_repair_authority_summary_line")" == "1" ]] ||
         die "exact-revision topology relation timeout-repair authority summary lost an exact boundary: $required_exact_revision_topology_relation_timeout_repair_authority_summary_fragment"
+done
+readonly exact_revision_topology_relation_timeout_repair_run168_summary_line="$(grep -F -- \
+    'Signed exact-main topology relation timeout-repair closure b7808f39815ebf639b183e00d2cd769a29ebad18' \
+    "$workflow_path")"
+[[ "$(grep -Fc -- \
+        'Signed exact-main topology relation timeout-repair closure b7808f39815ebf639b183e00d2cd769a29ebad18' \
+        "$workflow_path")" == "1" \
+    && "$(printf '%s\n' \
+        "$exact_revision_topology_relation_timeout_repair_run168_summary_line" | \
+        shasum -a 256 | awk '{print $1}')" \
+        == "$expected_exact_revision_topology_relation_timeout_repair_run168_summary_sha256" ]] ||
+    die "exact-revision topology relation timeout-repair run-168 closure summary identity changed"
+for required_exact_revision_topology_relation_timeout_repair_run168_summary_fragment in \
+    'tree 93f8b071397dbde3b2031d98d8e8631963311bcd, ordered parents 444cd402c966521f6163f4949b4a73f9a5184e29 then 1bc2471d12f034d51ae6eb8c977198635bc37717' \
+    'direct second-parent child of 444cd402c966521f6163f4949b4a73f9a5184e29 with the same tree' \
+    'GitHub signature verification valid at 2026-08-21T17:36:55Z' \
+    'workflow run 32509079040 number 168 attempt 1 check suite 88126445929 completed success' \
+    'null previous-attempt URL, zero reruns, and zero Actions artifacts' \
+    'Active job 96855756164 passed all five user steps and Latin 116' \
+    '391017 bytes, 1926 LF, zero CR, one leading BOM, terminal LF, and SHA-256 648dfb836eb7ee34956821ea2a189ba66911ed2150a451345f1d6a52b44a2967' \
+    'Reviewed job 96856730745 completed under the 90-minute boundary' \
+    'focused root 89 plus isolated 6 equaled 95' \
+    'retained Metal 44 plus maintained runtime 1 plus tokenizer 1 equaled live 46' \
+    'aggregate XTests were 141' \
+    'sole timeout-repair authority test passed once in 0.084 seconds' \
+    'failures and skips were zero' \
+    '10346293 bytes, 79113 LF, zero CR, five chunk-leading BOMs, terminal LF, and SHA-256 1823c9e8127bccb00097f2904996896d91a65589db369bb39cfd6dd82b96f3b8' \
+    'satisfies the timeout authority conditional prerequisite' \
+    'successor relation implementation to be rebuilt with b7808f39815ebf639b183e00d2cd769a29ebad18 as fixed parent1' \
+    'subject to this separate implementation review and testing' \
+    'creates no new post-closure authority pair and does not itself establish a topology-verification result'; do
+    [[ "$(grep -Foc -- \
+        "$required_exact_revision_topology_relation_timeout_repair_run168_summary_fragment" \
+        <<< "$exact_revision_topology_relation_timeout_repair_run168_summary_line")" == "1" ]] ||
+        die "exact-revision topology relation timeout-repair lost a run-168 closure fact: $required_exact_revision_topology_relation_timeout_repair_run168_summary_fragment"
 done
 [[ "$(grep -Fxc -- \
         '          bash .github/scripts/prime-ci-native-decoder-b-specific-native300m-trajectory-checkpoint-execution.sh' \
@@ -6653,7 +7227,7 @@ readonly checkpoint_v2_io_rmdir_line="$(grep -nFx -- \
     && "$checkpoint_v2_io_unlink_line" -lt "$checkpoint_v2_io_rmdir_line" ]] ||
     die "Prime native decoder checkpoint V2 I/O one-shot execution order changed"
 
-readonly runner_temp="${RUNNER_TEMP:-/private/tmp}"
+readonly runner_temp="$exact_revision_topology_admitted_runner_temp"
 readonly manifest_dump="$(mktemp "$runner_temp/prime-package-dump.json.XXXXXX")"
 readonly decoder_manifest_dump="$(mktemp "$runner_temp/prime-decoder-package-dump.json.XXXXXX")"
 readonly decoder_checkpoint_v2_manifest_dump="$(mktemp "$runner_temp/prime-decoder-checkpoint-v2-package-dump.json.XXXXXX")"
