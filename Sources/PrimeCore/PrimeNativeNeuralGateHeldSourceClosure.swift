@@ -29,7 +29,7 @@ final class PrimeNativeNeuralGateHeldSourceClosure {
     }
 
     private struct HeldFile {
-        let snapshot: PrimeSwiftSourceFileSnapshot
+        let snapshot: PrimeSecureHeldFileSnapshot
         let descriptor: Int32
         let initialStatus: stat
     }
@@ -47,6 +47,24 @@ final class PrimeNativeNeuralGateHeldSourceClosure {
             case inode
             case fileType = "file_type"
         }
+    }
+
+    private enum TopologyPolicy {
+        case legacyPrimeSource(
+            expectedDirectoryIdentities:
+                [String: PrimeSecureHeldNodeIdentity]?,
+            expectedFileIdentities:
+                [String: PrimeSecureHeldNodeIdentity]?
+        )
+        case completeWorkingTree(
+            expectedEntryNamesByDirectory: [String: [String]],
+            excludedRootGitDirectoryInode: UInt64,
+            excludedRootGitDirectoryDeviceID: Int32,
+            expectedDirectoryIdentities:
+                [String: PrimeSecureHeldNodeIdentity],
+            expectedFileIdentities:
+                [String: PrimeSecureHeldNodeIdentity]
+        )
     }
 
     private static let maximumDirectoryEntryCount =
@@ -80,8 +98,6 @@ final class PrimeNativeNeuralGateHeldSourceClosure {
     private static let readChunkByteCount =
         64 * 1024
 
-    private let sourceSnapshot:
-        PrimeSwiftSourceSnapshot
     private let sourceSnapshotSHA256: String
     private let aggregateFileByteCount: UInt64
     private let sourceAdmissionMaximumSeconds:
@@ -93,6 +109,7 @@ final class PrimeNativeNeuralGateHeldSourceClosure {
     private let filesystemType: String
     private let rootFilesystemIdentity:
         LocalAPFSFilesystemIdentity
+    private let topologyPolicy: TopologyPolicy
     private var queueDescriptor: Int32 = -1
     private var directoryDescriptors:
         [String: Int32] = [:]
@@ -121,10 +138,122 @@ final class PrimeNativeNeuralGateHeldSourceClosure {
     private var poisoned = false
     private var closed = false
 
-    init(
+    convenience init(
         rootDescriptor: Int32,
         sourceSnapshot:
             PrimeSwiftSourceSnapshot,
+        sourceAdmissionStartedMonotonicNanoseconds:
+            UInt64,
+        sourceAdmissionMaximumSeconds:
+            UInt64,
+        admissionIdentitySnapshot:
+            PrimeSecureHeldLegacySourceIdentitySnapshot? = nil
+    ) throws {
+        let snapshotData =
+            try PrimeCanonicalJSON.encode(
+                sourceSnapshot
+            )
+        try self.init(
+            rootDescriptor: rootDescriptor,
+            fileSnapshots: sourceSnapshot.files.map(
+                PrimeSecureHeldFileSnapshot.init
+            ),
+            authorityDirectoryPaths:
+                Self.authorityDirectoryPaths(
+                    for: sourceSnapshot
+                ),
+            snapshotIdentitySHA256:
+                PrimeSHA256.hexDigest(
+                    of: snapshotData
+                ),
+            maximumFileByteCount:
+                8 * 1024 * 1024,
+            requiresNonemptyFiles: true,
+            topologyPolicy:
+                .legacyPrimeSource(
+                    expectedDirectoryIdentities:
+                        admissionIdentitySnapshot?.directoryIdentities,
+                    expectedFileIdentities:
+                        admissionIdentitySnapshot?.fileIdentities
+                ),
+            sourceAdmissionStartedMonotonicNanoseconds:
+                sourceAdmissionStartedMonotonicNanoseconds,
+            sourceAdmissionMaximumSeconds:
+                sourceAdmissionMaximumSeconds
+        )
+    }
+
+    convenience init(
+        rootDescriptor: Int32,
+        completeWorkingTreeFiles:
+            [PrimeSecureHeldFileSnapshot],
+        completeWorkingTreeDirectoryRelativePaths:
+            [String],
+        excludedRootGitDirectoryInode:
+            UInt64,
+        excludedRootGitDirectoryDeviceID:
+            Int32,
+        expectedDirectoryIdentities:
+            [String: PrimeSecureHeldNodeIdentity],
+        expectedFileIdentities:
+            [String: PrimeSecureHeldNodeIdentity],
+        snapshotIdentitySHA256: String,
+        maximumFileByteCount: UInt64
+    ) throws {
+        let expectedEntryNames =
+            try Self.completeTopologyExpectedEntryNames(
+                files: completeWorkingTreeFiles,
+                directoryPaths:
+                    completeWorkingTreeDirectoryRelativePaths
+            )
+        guard Set(expectedDirectoryIdentities.keys)
+                == Set(completeWorkingTreeDirectoryRelativePaths),
+              Set(expectedFileIdentities.keys)
+                == Set(completeWorkingTreeFiles.map(\.relativePath))
+        else {
+            throw Self.rejected(
+                "source_complete_topology_identity_shape"
+            )
+        }
+        try self.init(
+            rootDescriptor: rootDescriptor,
+            fileSnapshots:
+                completeWorkingTreeFiles,
+            authorityDirectoryPaths:
+                completeWorkingTreeDirectoryRelativePaths,
+            snapshotIdentitySHA256:
+                snapshotIdentitySHA256,
+            maximumFileByteCount:
+                maximumFileByteCount,
+            requiresNonemptyFiles: false,
+            topologyPolicy:
+                .completeWorkingTree(
+                    expectedEntryNamesByDirectory:
+                        expectedEntryNames,
+                    excludedRootGitDirectoryInode:
+                        excludedRootGitDirectoryInode,
+                    excludedRootGitDirectoryDeviceID:
+                        excludedRootGitDirectoryDeviceID,
+                    expectedDirectoryIdentities:
+                        expectedDirectoryIdentities,
+                    expectedFileIdentities:
+                        expectedFileIdentities
+                ),
+            sourceAdmissionStartedMonotonicNanoseconds:
+                Self.monotonicNanoseconds(),
+            sourceAdmissionMaximumSeconds: 30
+        )
+    }
+
+    private init(
+        rootDescriptor: Int32,
+        fileSnapshots:
+            [PrimeSecureHeldFileSnapshot],
+        authorityDirectoryPaths: [String],
+        snapshotIdentitySHA256: String,
+        maximumFileByteCount: UInt64,
+        requiresNonemptyFiles: Bool,
+        topologyPolicy: TopologyPolicy,
         sourceAdmissionStartedMonotonicNanoseconds:
             UInt64,
         sourceAdmissionMaximumSeconds:
@@ -133,8 +262,12 @@ final class PrimeNativeNeuralGateHeldSourceClosure {
         try Self.requireCalibratedKqueueABI()
         guard sourceAdmissionStartedMonotonicNanoseconds
                 > 0,
-              sourceAdmissionMaximumSeconds
-                == 30
+              sourceAdmissionMaximumSeconds == 30,
+              snapshotIdentitySHA256.utf8.count == 64,
+              snapshotIdentitySHA256.utf8.allSatisfy({
+                  ($0 >= 48 && $0 <= 57)
+                      || ($0 >= 97 && $0 <= 102)
+              })
         else {
             throw Self.rejected(
                 "source_admission_contract"
@@ -147,20 +280,18 @@ final class PrimeNativeNeuralGateHeldSourceClosure {
                 context:
                     "source_root_filesystem"
             )
-        let snapshotData =
-            try PrimeCanonicalJSON.encode(
-                sourceSnapshot
-            )
         let aggregate =
             try Self.validateAdmission(
-                sourceSnapshot
+                files: fileSnapshots,
+                directoryPaths:
+                    authorityDirectoryPaths,
+                maximumFileByteCount:
+                    maximumFileByteCount,
+                requiresNonemptyFiles:
+                    requiresNonemptyFiles
             )
-        self.sourceSnapshot =
-            sourceSnapshot
         sourceSnapshotSHA256 =
-            PrimeSHA256.hexDigest(
-                of: snapshotData
-            )
+            snapshotIdentitySHA256
         aggregateFileByteCount =
             aggregate
         self.sourceAdmissionMaximumSeconds =
@@ -172,6 +303,7 @@ final class PrimeNativeNeuralGateHeldSourceClosure {
             .typeName
         self.rootFilesystemIdentity =
             rootFilesystemIdentity
+        self.topologyPolicy = topologyPolicy
         do {
             queueDescriptor =
                 try Self.normalizedDescriptor(
@@ -189,11 +321,7 @@ final class PrimeNativeNeuralGateHeldSourceClosure {
                 descriptor: heldRoot
             )
 
-            let directoryPaths =
-                Self.authorityDirectoryPaths(
-                    for: sourceSnapshot
-                )
-            for path in directoryPaths
+            for path in authorityDirectoryPaths
                 where !path.isEmpty
             {
                 guard let parent =
@@ -224,7 +352,7 @@ final class PrimeNativeNeuralGateHeldSourceClosure {
                 )
             }
 
-            for file in sourceSnapshot.files {
+            for file in fileSnapshots {
                 let parent =
                     Self.parentRelativePath(
                         of: file.relativePath
@@ -485,6 +613,10 @@ final class PrimeNativeNeuralGateHeldSourceClosure {
         return try validateCheckpoint(
             context: "prepared"
         ).monotonicNanoseconds
+    }
+
+    var heldWatcherDescriptorCount: Int {
+        watcherPathByDescriptor.count
     }
 
     func validateAfterReap() throws
@@ -777,6 +909,11 @@ final class PrimeNativeNeuralGateHeldSourceClosure {
             status.st_mode & mode_t(0o022)
                 == 0,
             status.st_ino > 0,
+            try matchesAdmissionIdentity(
+                relativePath: relativePath,
+                status: status,
+                isDirectory: true
+            ),
             directoryDescriptors[
                 relativePath
             ] == nil
@@ -806,7 +943,7 @@ final class PrimeNativeNeuralGateHeldSourceClosure {
 
     private func admitFile(
         snapshot:
-            PrimeSwiftSourceFileSnapshot,
+            PrimeSecureHeldFileSnapshot,
         descriptor: Int32
     ) throws {
         do {
@@ -845,7 +982,12 @@ final class PrimeNativeNeuralGateHeldSourceClosure {
             status.st_size >= 0,
             UInt64(status.st_size)
                 == snapshot.byteCount,
-            status.st_ino > 0
+            status.st_ino > 0,
+            try matchesAdmissionIdentity(
+                relativePath: snapshot.relativePath,
+                status: status,
+                isDirectory: false
+            )
             else {
                 throw Self.rejected(
                     "source_file_admission"
@@ -972,9 +1114,10 @@ final class PrimeNativeNeuralGateHeldSourceClosure {
                 try directoryInventory(
                     descriptor: descriptor
                 )
-            try rejectVersionSpecificRootManifest(
+            try validateTopology(
                 relativePath: path,
-                inventory: inventory
+                inventory: inventory,
+                directoryDescriptor: descriptor
             )
             totalEntries +=
                 inventory.count
@@ -1065,9 +1208,10 @@ final class PrimeNativeNeuralGateHeldSourceClosure {
                 try directoryInventory(
                     descriptor: descriptor
                 )
-            try rejectVersionSpecificRootManifest(
+            try validateTopology(
                 relativePath: path,
-                inventory: observed
+                inventory: observed,
+                directoryDescriptor: descriptor
             )
             totalEntries +=
                 observed.count
@@ -1303,6 +1447,120 @@ final class PrimeNativeNeuralGateHeldSourceClosure {
             throw Self.rejected(
                 "source_root_version_specific_package_manifest"
             )
+        }
+    }
+
+    private func validateTopology(
+        relativePath: String,
+        inventory: [DirectoryEntryRecord],
+        directoryDescriptor: Int32
+    ) throws {
+        switch topologyPolicy {
+        case .legacyPrimeSource:
+            try rejectVersionSpecificRootManifest(
+                relativePath: relativePath,
+                inventory: inventory
+            )
+        case let .completeWorkingTree(
+            expectedEntryNamesByDirectory,
+            excludedRootGitDirectoryInode,
+            excludedRootGitDirectoryDeviceID,
+            _,
+            _
+        ):
+            guard let expected =
+                    expectedEntryNamesByDirectory[
+                        relativePath
+                    ],
+                  inventory.map(\.name) == expected
+            else {
+                throw Self.rejected(
+                    "source_complete_topology_inventory"
+                )
+            }
+            if relativePath.isEmpty {
+                guard let git = inventory.first(where: {
+                    $0.name == ".git"
+                }),
+                git.inode
+                    == excludedRootGitDirectoryInode,
+                git.fileType == UInt8(DT_DIR)
+                else {
+                    throw Self.rejected(
+                        "source_complete_topology_git_entry"
+                    )
+                }
+                let gitDescriptor = try Self.openRelativeLeaf(
+                    directory: directoryDescriptor,
+                    leaf: ".git",
+                    isDirectory: true
+                )
+                defer { _ = Darwin.close(gitDescriptor) }
+                var gitStatus = stat()
+                try Self.requireFilesystemIdentity(
+                    descriptor: gitDescriptor,
+                    expected: rootFilesystemIdentity,
+                    context: "source_complete_topology_git_filesystem"
+                )
+                guard fstat(gitDescriptor, &gitStatus) == 0,
+                      gitStatus.st_mode & mode_t(S_IFMT)
+                        == mode_t(S_IFDIR),
+                      gitStatus.st_ino > 0,
+                      Int32(gitStatus.st_dev)
+                        == excludedRootGitDirectoryDeviceID,
+                      UInt64(gitStatus.st_ino)
+                        == excludedRootGitDirectoryInode,
+                      gitStatus.st_uid == geteuid(),
+                      gitStatus.st_mode & mode_t(0o022) == 0
+                else {
+                    throw Self.rejected(
+                        "source_complete_topology_git_join"
+                    )
+                }
+            }
+        }
+    }
+
+    private func matchesAdmissionIdentity(
+        relativePath: String,
+        status: stat,
+        isDirectory: Bool
+    ) throws -> Bool {
+        switch topologyPolicy {
+        case let .legacyPrimeSource(
+            expectedDirectoryIdentities,
+            expectedFileIdentities
+        ):
+            guard expectedDirectoryIdentities != nil
+                    || expectedFileIdentities != nil
+            else {
+                return true
+            }
+            guard let expected = isDirectory
+                    ? expectedDirectoryIdentities?[relativePath]
+                    : expectedFileIdentities?[relativePath]
+            else {
+                throw Self.rejected(
+                    "source_legacy_identity_missing"
+                )
+            }
+            return expected.matches(status)
+        case let .completeWorkingTree(
+            _,
+            _,
+            _,
+            expectedDirectoryIdentities,
+            expectedFileIdentities
+        ):
+            let expected = isDirectory
+                ? expectedDirectoryIdentities[relativePath]
+                : expectedFileIdentities[relativePath]
+            guard let expected else {
+                throw Self.rejected(
+                    "source_complete_topology_identity_missing"
+                )
+            }
+            return expected.matches(status)
         }
     }
 
@@ -1678,27 +1936,61 @@ final class PrimeNativeNeuralGateHeldSourceClosure {
     }
 
     private static func validateAdmission(
-        _ snapshot:
-            PrimeSwiftSourceSnapshot
+        files: [PrimeSecureHeldFileSnapshot],
+        directoryPaths: [String],
+        maximumFileByteCount: UInt64,
+        requiresNonemptyFiles: Bool
     ) throws -> UInt64 {
-        guard !snapshot.files.isEmpty,
-              snapshot.files.count
+        guard (!requiresNonemptyFiles || !files.isEmpty),
+              files.count
                 <= PrimeSwiftSourceProvenance
-                .maximumSnapshotFileCount
+                .maximumSnapshotFileCount,
+              maximumFileByteCount
+                == 8 * 1024 * 1024
+                || maximumFileByteCount
+                    == 64 * 1024 * 1024,
+              !directoryPaths.isEmpty,
+              directoryPaths.count
+                <= PrimeSwiftSourceProvenance
+                .maximumSnapshotDirectoryCount,
+              directoryPaths.first == "",
+              Set(directoryPaths).count
+                == directoryPaths.count,
+              directoryPaths.allSatisfy({
+                  isSafeRelativeDirectoryPath($0)
+              })
         else {
             throw rejected(
-                "source_snapshot_file_count"
+                "source_snapshot_shape"
             )
         }
+        let directorySet = Set(directoryPaths)
+        for path in directoryPaths
+            where !path.isEmpty
+        {
+            guard let parent =
+                    parentRelativePath(of: path),
+                  directorySet.contains(parent)
+            else {
+                throw rejected(
+                    "source_snapshot_directory_parent"
+                )
+            }
+        }
+
         var aggregate: UInt64 = 0
         var paths = Set<String>()
-        for file in snapshot.files {
+        for file in files {
             let components =
                 file.relativePath.split(
                     separator: "/",
                     omittingEmptySubsequences:
                         false
                 )
+            let parent =
+                parentRelativePath(
+                    of: file.relativePath
+                ) ?? ""
             guard !file.relativePath.isEmpty,
                   !file.relativePath
                     .hasPrefix("/"),
@@ -1712,6 +2004,7 @@ final class PrimeNativeNeuralGateHeldSourceClosure {
                           && $0 != "."
                           && $0 != ".."
                   }),
+                  directorySet.contains(parent),
                   paths.insert(
                       file.relativePath
                   ).inserted,
@@ -1720,7 +2013,7 @@ final class PrimeNativeNeuralGateHeldSourceClosure {
                         file.contents.count
                     ),
                   file.byteCount
-                    <= 8 * 1024 * 1024,
+                    <= maximumFileByteCount,
                   file.sha256
                     == PrimeSHA256
                     .hexDigest(
@@ -1749,21 +2042,109 @@ final class PrimeNativeNeuralGateHeldSourceClosure {
             aggregate =
                 next.partialValue
         }
-        let ordered =
-            snapshot.files
-            .map(\.relativePath)
+        let ordered = files.map(\.relativePath)
         guard ordered == ordered.sorted(),
-              authorityDirectoryPaths(
-                  for: snapshot
-              ).count
-                <= PrimeSwiftSourceProvenance
-                .maximumSnapshotDirectoryCount
+              Set(ordered).count == ordered.count
         else {
             throw rejected(
-                "source_snapshot_order_or_directory_count"
+                "source_snapshot_order"
             )
         }
         return aggregate
+    }
+
+    private static func completeTopologyExpectedEntryNames(
+        files: [PrimeSecureHeldFileSnapshot],
+        directoryPaths: [String]
+    ) throws -> [String: [String]] {
+        guard directoryPaths.first == "",
+              Set(directoryPaths).count
+                == directoryPaths.count
+        else {
+            throw rejected(
+                "source_complete_topology_directories"
+            )
+        }
+        let directorySet = Set(directoryPaths)
+        var namesByDirectory = Dictionary(
+            uniqueKeysWithValues:
+                directoryPaths.map {
+                    ($0, Set<String>())
+                }
+        )
+        for path in directoryPaths
+            where !path.isEmpty
+        {
+            guard let parent =
+                    parentRelativePath(of: path),
+                  directorySet.contains(parent),
+                  namesByDirectory[parent]?
+                    .insert(
+                        leafName(of: path)
+                    ).inserted == true
+            else {
+                throw rejected(
+                    "source_complete_topology_directory"
+                )
+            }
+        }
+        for file in files {
+            let parent =
+                parentRelativePath(
+                    of: file.relativePath
+                ) ?? ""
+            guard directorySet.contains(parent),
+                  namesByDirectory[parent]?
+                    .insert(
+                        leafName(
+                            of: file.relativePath
+                        )
+                    ).inserted == true
+            else {
+                throw rejected(
+                    "source_complete_topology_file"
+                )
+            }
+        }
+        guard namesByDirectory[""]?
+                .insert(".git").inserted == true
+        else {
+            throw rejected(
+                "source_complete_topology_git"
+            )
+        }
+        return namesByDirectory.mapValues {
+            $0.sorted(by: rawUTF8Precedes)
+        }
+    }
+
+    private static func isSafeRelativeDirectoryPath(
+        _ path: String
+    ) -> Bool {
+        if path.isEmpty {
+            return true
+        }
+        let components = path.split(
+            separator: "/",
+            omittingEmptySubsequences: false
+        )
+        return components.count
+                <= PrimeSwiftSourceProvenance
+                .maximumSnapshotRelativeDepth
+            && components.allSatisfy {
+                !$0.isEmpty
+                    && $0 != "."
+                    && $0 != ".."
+            }
+    }
+
+    private static func rawUTF8Precedes(
+        _ lhs: String,
+        _ rhs: String
+    ) -> Bool {
+        lhs.utf8.lexicographicallyPrecedes(
+            rhs.utf8
+        )
     }
 
     private static func parentRelativePath(

@@ -379,11 +379,11 @@ public final class PrimeValidationSwiftPMBuildInventoryPrerequisite:
     /// Atomically transfers the retained admission state into a guarded,
     /// still-non-executing pre-executor.
     ///
-    /// The Prime source watch is armed before the current holder-process image
-    /// is retained. A complete guard checkpoint then revalidates all previously
-    /// admitted inputs while workspace and evidence roots are still empty.
-    /// Failure poisons this one-shot transition; callers cannot retry with a
-    /// changed source tree or current holder-process image.
+    /// The Prime and companion working-tree watches are both armed before the
+    /// current holder-process image is retained. A complete guard checkpoint
+    /// then revalidates all previously admitted inputs while workspace and
+    /// evidence roots are still empty. Failure poisons this one-shot
+    /// transition; callers cannot retry with changed content or image.
     public func prepareGuardedPreExecutor() throws
         -> PrimeValidationSwiftPMBuildInventoryGuardedPreExecutor
     {
@@ -414,20 +414,55 @@ public final class PrimeValidationSwiftPMBuildInventoryPrerequisite:
         preparationLock.unlock()
 
         try retainedState.revalidate()
+        let expectedPrimeWatcherCount =
+            PrimeSecureHeldSourceWatch.expectedWatcherDescriptorCount(
+                sourceSnapshot: retainedState.sourceSnapshot
+            )
+        let expectedCompanionWatcherCount =
+            PrimeSecureHeldSourceWatch.expectedWatcherDescriptorCount(
+                completeWorkingTreeSnapshot:
+                    retainedState.companionContentSnapshot
+            )
+        let expectedCombinedWatcherCount = expectedPrimeWatcherCount
+            .addingReportingOverflow(expectedCompanionWatcherCount)
+        guard !expectedCombinedWatcherCount.overflow,
+              expectedCombinedWatcherCount.partialValue
+                <= PrimeValidationSwiftPMRetainedGuardedPreExecutorState
+                .maximumCombinedSourceWatcherDescriptorCount
+        else {
+            throw PrimeValidationSwiftPMBuildInventoryAdmissionError
+                .rejected("combined_source_watcher_count")
+        }
         let sourceRootDescriptor =
             try retainedState.primeRepository.root
             .duplicateTrustedRootDescriptorForInventory()
+        defer { _ = Darwin.close(sourceRootDescriptor) }
         let sourceWatch: PrimeSecureHeldSourceWatch
-        do {
-            sourceWatch = try PrimeSecureHeldSourceWatch(
-                rootDescriptor: sourceRootDescriptor,
-                sourceSnapshot: retainedState.sourceSnapshot
-            )
-        } catch {
-            _ = Darwin.close(sourceRootDescriptor)
-            throw error
+        sourceWatch = try PrimeSecureHeldSourceWatch(
+            rootDescriptor: sourceRootDescriptor,
+            sourceSnapshot: retainedState.sourceSnapshot,
+            admissionIdentitySnapshot:
+                retainedState.primeSourceIdentitySnapshot
+        )
+
+        let companionRootDescriptor =
+            try retainedState.companionRepository.root
+            .duplicateTrustedRootDescriptorForInventory()
+        defer { _ = Darwin.close(companionRootDescriptor) }
+        let companionSourceWatch = try PrimeSecureHeldSourceWatch(
+            rootDescriptor: companionRootDescriptor,
+            completeWorkingTreeSnapshot:
+                retainedState.companionContentSnapshot
+        )
+        let combinedWatcherCount =
+            sourceWatch.heldWatcherDescriptorCount
+            + companionSourceWatch.heldWatcherDescriptorCount
+        guard combinedWatcherCount
+                == expectedCombinedWatcherCount.partialValue
+        else {
+            throw PrimeValidationSwiftPMBuildInventoryAdmissionError
+                .rejected("combined_source_watcher_count")
         }
-        _ = Darwin.close(sourceRootDescriptor)
 
         let currentProcessImage:
             PrimeSecureHeldRunningExecutable
@@ -444,6 +479,8 @@ public final class PrimeValidationSwiftPMBuildInventoryPrerequisite:
             PrimeValidationSwiftPMRetainedGuardedPreExecutorState(
                 admission: retainedState,
                 sourceWatch: sourceWatch,
+                companionSourceWatch:
+                    companionSourceWatch,
                 currentProcessImage: currentProcessImage,
                 productionSupervisorImageEligible:
                     !allowRootOwnedCurrentProcessForTesting
@@ -458,8 +495,8 @@ public final class PrimeValidationSwiftPMBuildInventoryPrerequisite:
 
 /// Live input guards for a future fixed-role executor.
 ///
-/// This type closes only the descriptor-backed Prime source closure, its
-/// continuous prepared-state watch window. It also retains the exact current
+/// This type closes only the descriptor-backed Prime and companion content
+/// closures and their continuous prepared-state watch windows. It also retains the exact current
 /// holder-process image as prerequisite evidence, but does not claim that the
 /// image is the Driver V2 supervisor; that role requires the separate
 /// DriverCore intent bridge. This type deliberately exposes no process,
@@ -541,6 +578,22 @@ public final class PrimeValidationSwiftPMBuildInventoryGuardedPreExecutor:
 
     public var sourceWatchWindowArmed: Bool {
         guardState == .prepared
+    }
+
+    public var companionSourceDescriptorClosureHeld: Bool {
+        guardState == .prepared
+    }
+
+    public var companionSourceWatchWindowArmed: Bool {
+        guardState == .prepared
+    }
+
+    var combinedSourceWatcherDescriptorCount: Int {
+        guardLock.lock()
+        defer { guardLock.unlock() }
+        guard case let .prepared(value) = state
+        else { return 0 }
+        return value.combinedSourceWatcherDescriptorCount
     }
 
     public var currentProcessExecutableImageHeld: Bool {
@@ -937,6 +990,9 @@ public final class PrimeValidationSwiftPMBuildInventoryAdmissionCapability:
 public enum PrimeValidationSwiftPMBuildInventoryAdmission {
     private static let requiredPrimeSourcePaths: Set<String> = [
         "Sources/PrimeCore/" +
+            "PrimeNativeNeuralGateHeldSourceClosure.swift",
+        "Sources/PrimeCore/PrimeSecureHeldSourceWatch.swift",
+        "Sources/PrimeCore/" +
             "PrimeValidationSwiftPMBuildInventoryAdmission.swift",
         "Sources/PrimeCore/PrimeValidationDriverV2RoleFacade.swift",
         "Package.resolved",
@@ -1054,6 +1110,34 @@ public enum PrimeValidationSwiftPMBuildInventoryAdmission {
         )
         try packageResolvedBinding.validateDeclaration()
 
+        let primeRootDescriptor =
+            try primeRepository.root
+            .duplicateTrustedRootDescriptorForInventory()
+        let primeSourceIdentitySnapshot:
+            PrimeSecureHeldLegacySourceIdentitySnapshot
+        do {
+            defer { _ = Darwin.close(primeRootDescriptor) }
+            primeSourceIdentitySnapshot = try
+                PrimeSecureHeldWorkingTreeSnapshot
+                .captureLegacyPrimeSourceIdentity(
+                    rootDescriptor: primeRootDescriptor,
+                    sourceSnapshot: sourceSnapshot
+                )
+        }
+
+        let companionRootDescriptor =
+            try companionRepository.root
+            .duplicateTrustedRootDescriptorForInventory()
+        let companionContentSnapshot:
+            PrimeSecureHeldWorkingTreeSnapshot
+        do {
+            defer { _ = Darwin.close(companionRootDescriptor) }
+            companionContentSnapshot = try
+                PrimeSecureHeldWorkingTreeSnapshot.capture(
+                    rootDescriptor: companionRootDescriptor
+                )
+        }
+
         let toolchain = try PrimeValidationSwiftPMHeldToolchain(
             developerDirectoryURL: developerDirectoryURL,
             workspaceRootPath:
@@ -1069,6 +1153,10 @@ public enum PrimeValidationSwiftPMBuildInventoryAdmission {
             lease: lease,
             sourceExpectation: sourceExpectation,
             sourceSnapshot: sourceSnapshot,
+            primeSourceIdentitySnapshot:
+                primeSourceIdentitySnapshot,
+            companionContentSnapshot:
+                companionContentSnapshot,
             packageResolvedBinding: packageResolvedBinding,
             companionDeclaration: companionDeclaration,
             toolchain: toolchain
@@ -1134,6 +1222,10 @@ final class PrimeValidationSwiftPMRetainedAdmissionState:
     let lease: PrimeMetalDeviceLease
     let sourceExpectation: PrimeSwiftSourceProvenanceExpectation?
     let sourceSnapshot: PrimeSwiftSourceSnapshot
+    let primeSourceIdentitySnapshot:
+        PrimeSecureHeldLegacySourceIdentitySnapshot
+    let companionContentSnapshot:
+        PrimeSecureHeldWorkingTreeSnapshot
     let packageResolvedBinding: PrimeArtifactBinding
     let companionDeclaration: PrimeValidationSwiftPMCompanionDeclaration
     let toolchain: PrimeValidationSwiftPMHeldToolchain
@@ -1147,6 +1239,10 @@ final class PrimeValidationSwiftPMRetainedAdmissionState:
         lease: PrimeMetalDeviceLease,
         sourceExpectation: PrimeSwiftSourceProvenanceExpectation?,
         sourceSnapshot: PrimeSwiftSourceSnapshot,
+        primeSourceIdentitySnapshot:
+            PrimeSecureHeldLegacySourceIdentitySnapshot,
+        companionContentSnapshot:
+            PrimeSecureHeldWorkingTreeSnapshot,
         packageResolvedBinding: PrimeArtifactBinding,
         companionDeclaration: PrimeValidationSwiftPMCompanionDeclaration,
         toolchain: PrimeValidationSwiftPMHeldToolchain
@@ -1159,6 +1255,10 @@ final class PrimeValidationSwiftPMRetainedAdmissionState:
         self.lease = lease
         self.sourceExpectation = sourceExpectation
         self.sourceSnapshot = sourceSnapshot
+        self.primeSourceIdentitySnapshot =
+            primeSourceIdentitySnapshot
+        self.companionContentSnapshot =
+            companionContentSnapshot
         self.packageResolvedBinding = packageResolvedBinding
         self.companionDeclaration = companionDeclaration
         self.toolchain = toolchain
@@ -1181,6 +1281,9 @@ final class PrimeValidationSwiftPMRetainedAdmissionState:
                 at: primeRepository.url,
                 requiredRelativePaths: [
                     "Sources/PrimeCore/" +
+                        "PrimeNativeNeuralGateHeldSourceClosure.swift",
+                    "Sources/PrimeCore/PrimeSecureHeldSourceWatch.swift",
+                    "Sources/PrimeCore/" +
                         "PrimeValidationSwiftPMBuildInventoryAdmission.swift",
                     "Sources/PrimeCore/" +
                         "PrimeValidationDriverV2RoleFacade.swift",
@@ -1192,6 +1295,9 @@ final class PrimeValidationSwiftPMRetainedAdmissionState:
             replay = try PrimeSwiftSourceProvenance.capture(
                 at: primeRepository.url,
                 requiredRelativePaths: [
+                    "Sources/PrimeCore/" +
+                        "PrimeNativeNeuralGateHeldSourceClosure.swift",
+                    "Sources/PrimeCore/PrimeSecureHeldSourceWatch.swift",
                     "Sources/PrimeCore/" +
                         "PrimeValidationSwiftPMBuildInventoryAdmission.swift",
                     "Sources/PrimeCore/" +
@@ -1209,14 +1315,53 @@ final class PrimeValidationSwiftPMRetainedAdmissionState:
         else {
             throw rejected("prime_source_replay")
         }
+
+        let primeRootDescriptor =
+            try primeRepository.root
+            .duplicateTrustedRootDescriptorForInventory()
+        let primeIdentityReplay:
+            PrimeSecureHeldLegacySourceIdentitySnapshot
+        do {
+            defer { _ = Darwin.close(primeRootDescriptor) }
+            primeIdentityReplay = try
+                PrimeSecureHeldWorkingTreeSnapshot
+                .captureLegacyPrimeSourceIdentity(
+                    rootDescriptor: primeRootDescriptor,
+                    sourceSnapshot: replay
+                )
+        }
+        guard primeIdentityReplay == primeSourceIdentitySnapshot
+        else {
+            throw rejected("prime_source_identity_replay")
+        }
+
+        let companionRootDescriptor =
+            try companionRepository.root
+            .duplicateTrustedRootDescriptorForInventory()
+        let companionReplay:
+            PrimeSecureHeldWorkingTreeSnapshot
+        do {
+            defer { _ = Darwin.close(companionRootDescriptor) }
+            companionReplay = try
+                PrimeSecureHeldWorkingTreeSnapshot.capture(
+                    rootDescriptor: companionRootDescriptor
+                )
+        }
+        guard companionReplay == companionContentSnapshot
+        else {
+            throw rejected("companion_content_replay")
+        }
     }
 }
 
 final class PrimeValidationSwiftPMRetainedGuardedPreExecutorState:
     @unchecked Sendable
 {
+    static let maximumCombinedSourceWatcherDescriptorCount = 4_096
+
     let admission: PrimeValidationSwiftPMRetainedAdmissionState
     let sourceWatch: PrimeSecureHeldSourceWatch
+    let companionSourceWatch: PrimeSecureHeldSourceWatch
     let currentProcessImage: PrimeSecureHeldRunningExecutable
     let productionSupervisorImageEligible: Bool
     let currentProcessObservation:
@@ -1225,11 +1370,14 @@ final class PrimeValidationSwiftPMRetainedGuardedPreExecutorState:
     init(
         admission: PrimeValidationSwiftPMRetainedAdmissionState,
         sourceWatch: PrimeSecureHeldSourceWatch,
+        companionSourceWatch: PrimeSecureHeldSourceWatch,
         currentProcessImage: PrimeSecureHeldRunningExecutable,
         productionSupervisorImageEligible: Bool
     ) {
         self.admission = admission
         self.sourceWatch = sourceWatch
+        self.companionSourceWatch =
+            companionSourceWatch
         self.currentProcessImage = currentProcessImage
         self.productionSupervisorImageEligible =
             productionSupervisorImageEligible
@@ -1258,13 +1406,21 @@ final class PrimeValidationSwiftPMRetainedGuardedPreExecutorState:
             )
     }
 
+    var combinedSourceWatcherDescriptorCount: Int {
+        sourceWatch.heldWatcherDescriptorCount
+            + companionSourceWatch.heldWatcherDescriptorCount
+    }
+
     func revalidate() throws {
         try admission.revalidate()
         _ = try sourceWatch.revalidateWhilePrepared()
+        _ = try companionSourceWatch.revalidateWhilePrepared()
         try currentProcessImage.revalidate()
-        // Close the checkpoint window for roots and static toolchain inputs
-        // after the more expensive source and image reads complete.
+        // Rejoin every admitted input, then poll both continuously armed
+        // watches again before returning a non-executing checkpoint.
         try admission.revalidate()
+        _ = try sourceWatch.revalidateWhilePrepared()
+        _ = try companionSourceWatch.revalidateWhilePrepared()
     }
 }
 

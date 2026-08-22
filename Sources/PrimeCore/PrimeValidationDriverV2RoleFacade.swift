@@ -317,16 +317,32 @@ struct PrimeValidationDriverV2RolePolicyObservation:
 
 /// Opaque, non-restorable ownership of the Gate B fixed-role policy sequence.
 ///
-/// Gate B intentionally exposes no spawn, execute, resume, collect, advance,
-/// next-role, or arbitrary policy method. The facade is positioned at build
-/// and retains the source watch, lease, descriptors, and supervisor-image
-/// proof for Gate C's separately authorized continuity transition.
+/// Gate C adds only a zero-argument dual-root continuity checkpoint. The
+/// facade still exposes no spawn, execute, resume, collect, advance,
+/// next-role, or arbitrary policy method. It is positioned at build and
+/// retains both content watches, the lease, descriptors, and image proof.
+enum PrimeValidationDriverV2RoleFacadeContinuityState:
+    String,
+    Equatable,
+    Sendable
+{
+    case dualRootGuarded = "dual_root_guarded"
+    case poisoned
+}
+
 @_spi(PrimeValidationDriverV2RoleFacade)
 public final class PrimeValidationDriverV2RoleFacade:
     @unchecked Sendable
 {
-    private let retainedState:
-        PrimeValidationSwiftPMRetainedGuardedPreExecutorState
+    private enum State {
+        case guarded(
+            PrimeValidationSwiftPMRetainedGuardedPreExecutorState
+        )
+        case poisoned
+    }
+
+    private let continuityLock = NSLock()
+    private var state: State
     private let context: PrimeValidationDriverV2RoleContext
     private let fixedPolicies:
         [PrimeValidationDriverV2ClosedRolePolicy]
@@ -344,6 +360,43 @@ public final class PrimeValidationDriverV2RoleFacade:
     let inventoryExecutionObservation:
         PrimeValidationSwiftPMObservationState = .unobserved
     let completionAuthorized = false
+
+    var continuityState:
+        PrimeValidationDriverV2RoleFacadeContinuityState
+    {
+        continuityLock.lock()
+        defer { continuityLock.unlock() }
+        switch state {
+        case .guarded:
+            return .dualRootGuarded
+        case .poisoned:
+            return .poisoned
+        }
+    }
+
+    var primeSourceDescriptorClosureHeld: Bool {
+        continuityState == .dualRootGuarded
+    }
+
+    var companionSourceDescriptorClosureHeld: Bool {
+        continuityState == .dualRootGuarded
+    }
+
+    var primeSourceWatchWindowArmed: Bool {
+        continuityState == .dualRootGuarded
+    }
+
+    var companionSourceWatchWindowArmed: Bool {
+        continuityState == .dualRootGuarded
+    }
+
+    var combinedSourceWatcherDescriptorCount: Int {
+        continuityLock.lock()
+        defer { continuityLock.unlock() }
+        guard case let .guarded(value) = state
+        else { return 0 }
+        return value.combinedSourceWatcherDescriptorCount
+    }
 
     init(
         retainedState:
@@ -364,7 +417,6 @@ public final class PrimeValidationDriverV2RoleFacade:
             throw PrimeValidationSwiftPMBuildInventoryAdmissionError
                 .rejected("driver_v2_role_order")
         }
-        self.retainedState = retainedState
         self.context = context
         fixedPolicies = policies
         fixedPolicyObservations = policies.map(
@@ -373,6 +425,30 @@ public final class PrimeValidationDriverV2RoleFacade:
         positionedPolicy = PrimeValidationDriverV2RolePolicyObservation(
             policies[0]
         )
+        state = .guarded(retainedState)
+    }
+
+    /// Revalidates the one retained Prime-and-companion continuity owner.
+    /// No selector, path, role, command, or observation crosses this seam.
+    /// Any failure drops the live resources and permanently poisons retry.
+    public func revalidateContinuity() throws {
+        continuityLock.lock()
+        defer { continuityLock.unlock() }
+        let retainedState:
+            PrimeValidationSwiftPMRetainedGuardedPreExecutorState
+        switch state {
+        case let .guarded(value):
+            retainedState = value
+        case .poisoned:
+            throw PrimeValidationSwiftPMBuildInventoryAdmissionError
+                .guardedPreExecutorPoisoned
+        }
+        do {
+            try retainedState.revalidate()
+        } catch {
+            state = .poisoned
+            throw error
+        }
     }
 }
 

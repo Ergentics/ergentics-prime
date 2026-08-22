@@ -98,6 +98,12 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
             XCTAssertEqual(guarded.guardState, .prepared)
             XCTAssertTrue(guarded.sourceDescriptorClosureHeld)
             XCTAssertTrue(guarded.sourceWatchWindowArmed)
+            XCTAssertTrue(guarded.companionSourceDescriptorClosureHeld)
+            XCTAssertTrue(guarded.companionSourceWatchWindowArmed)
+            XCTAssertEqual(
+                guarded.combinedSourceWatcherDescriptorCount,
+                2_150
+            )
             XCTAssertTrue(
                 guarded.missingAuthorities.contains(
                     .supervisorExecutableImage
@@ -277,7 +283,7 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
         reacquired.release()
     }
 
-    func testGuardedPreExecutorClosesOnlyPrimeSourceAuthorities()
+    func testGuardedPreExecutorClosesDualSourceContinuityOnly()
         throws
     {
         let fixture = try Fixture()
@@ -296,6 +302,12 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
         )
         XCTAssertTrue(guarded.sourceDescriptorClosureHeld)
         XCTAssertTrue(guarded.sourceWatchWindowArmed)
+        XCTAssertTrue(guarded.companionSourceDescriptorClosureHeld)
+        XCTAssertTrue(guarded.companionSourceWatchWindowArmed)
+        XCTAssertEqual(
+            guarded.combinedSourceWatcherDescriptorCount,
+            38
+        )
         XCTAssertTrue(guarded.currentProcessExecutableImageHeld)
         XCTAssertEqual(
             guarded.missingAuthorities,
@@ -423,6 +435,9 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
         )
         XCTAssertFalse(guarded.sourceDescriptorClosureHeld)
         XCTAssertFalse(guarded.sourceWatchWindowArmed)
+        XCTAssertFalse(guarded.companionSourceDescriptorClosureHeld)
+        XCTAssertFalse(guarded.companionSourceWatchWindowArmed)
+        XCTAssertEqual(guarded.combinedSourceWatcherDescriptorCount, 0)
         XCTAssertFalse(guarded.currentProcessExecutableImageHeld)
         XCTAssertFalse(image.productionSupervisorImageEligible)
         XCTAssertEqual(image.imageState, .bound)
@@ -447,6 +462,44 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
                 $0 as?
                     PrimeValidationSwiftPMBuildInventoryAdmissionError,
                 .guardedPreExecutorTransferred
+            )
+        }
+    }
+
+    func testPostGuardCompanionMutationPermanentlyPoisonsGuard()
+        throws
+    {
+        let fixture = try Fixture()
+        defer { fixture.cleanup() }
+        let guarded = try fixture.admit()
+            .consumePrerequisites()
+            .prepareGuardedPreExecutor(
+                allowRootOwnedCurrentProcessForTesting: true
+            )
+        XCTAssertEqual(guarded.combinedSourceWatcherDescriptorCount, 38)
+
+        try Data("mutated companion\n".utf8).write(
+            to: fixture.companion.appendingPathComponent(
+                "Sources/Companion.swift"
+            )
+        )
+        XCTAssertThrowsError(try guarded.revalidateGuards())
+        XCTAssertEqual(guarded.guardState, .poisoned)
+        XCTAssertEqual(guarded.authorityCeiling, .poisonedNoAuthority)
+        XCTAssertEqual(
+            guarded.missingAuthorities,
+            PrimeValidationSwiftPMMissingAuthority.allCases
+        )
+        XCTAssertFalse(guarded.sourceDescriptorClosureHeld)
+        XCTAssertFalse(guarded.sourceWatchWindowArmed)
+        XCTAssertFalse(guarded.companionSourceDescriptorClosureHeld)
+        XCTAssertFalse(guarded.companionSourceWatchWindowArmed)
+        XCTAssertEqual(guarded.combinedSourceWatcherDescriptorCount, 0)
+        XCTAssertThrowsError(try guarded.revalidateGuards()) {
+            XCTAssertEqual(
+                $0 as?
+                    PrimeValidationSwiftPMBuildInventoryAdmissionError,
+                .guardedPreExecutorPoisoned
             )
         }
     }
@@ -770,20 +823,26 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
         try held.revalidate()
     }
 
-    func testAdmissionRequiresDriverV2RoleFacadeSource() throws {
-        let fixture = try Fixture()
-        defer { fixture.cleanup() }
-        try FileManager.default.removeItem(
-            at: fixture.prime.appendingPathComponent(
-                "Sources/PrimeCore/PrimeValidationDriverV2RoleFacade.swift"
+    func testAdmissionRequiresEveryGateCPrimeCoreSource() throws {
+        try [
+            "Sources/PrimeCore/" +
+                "PrimeNativeNeuralGateHeldSourceClosure.swift",
+            "Sources/PrimeCore/PrimeSecureHeldSourceWatch.swift",
+            "Sources/PrimeCore/PrimeValidationDriverV2RoleFacade.swift",
+        ].forEach { relativePath in
+            let fixture = try Fixture()
+            defer { fixture.cleanup() }
+            try FileManager.default.removeItem(
+                at: fixture.prime.appendingPathComponent(relativePath)
             )
-        )
 
-        XCTAssertThrowsError(try fixture.admit()) {
-            XCTAssertEqual(
-                $0 as? PrimeSwiftSourceProvenanceError,
-                .incompleteSourceSnapshot
-            )
+            XCTAssertThrowsError(try fixture.admit()) {
+                XCTAssertEqual(
+                    $0 as? PrimeSwiftSourceProvenanceError,
+                    .incompleteSourceSnapshot,
+                    relativePath
+                )
+            }
         }
     }
 
@@ -836,6 +895,14 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
         let facade = try image.transferDriverV2RoleFacade(
             context: inputs.context
         )
+        XCTAssertEqual(facade.continuityState, .dualRootGuarded)
+        XCTAssertTrue(facade.primeSourceDescriptorClosureHeld)
+        XCTAssertTrue(facade.companionSourceDescriptorClosureHeld)
+        XCTAssertTrue(facade.primeSourceWatchWindowArmed)
+        XCTAssertTrue(facade.companionSourceWatchWindowArmed)
+        XCTAssertEqual(facade.combinedSourceWatcherDescriptorCount, 38)
+        try facade.revalidateContinuity()
+        XCTAssertEqual(facade.continuityState, .dualRootGuarded)
         let policies = facade.fixedPolicyObservations
         XCTAssertEqual(
             policies.map(\.role),
@@ -1303,6 +1370,227 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
         }
     }
 
+    @available(macOS 26.0, *)
+    func testFixedRoleFacadeContinuityMutationMatrixPermanentlyPoisons()
+        throws
+    {
+        try assertFacadeContinuityPoison(
+            "prime_file_write",
+            mutate: { fixture in
+                try Data("mutated prime\n".utf8).write(
+                    to: fixture.prime.appendingPathComponent("README.md")
+                )
+            },
+            restore: { fixture in
+                try Data("fixture\n".utf8).write(
+                    to: fixture.prime.appendingPathComponent("README.md")
+                )
+            }
+        )
+        try assertFacadeContinuityPoison(
+            "companion_file_write",
+            mutate: { fixture in
+                try Data("mutated companion\n".utf8).write(
+                    to: fixture.companion.appendingPathComponent(
+                        "Sources/Companion.swift"
+                    )
+                )
+            },
+            restore: { fixture in
+                try Data("// companion source\n".utf8).write(
+                    to: fixture.companion.appendingPathComponent(
+                        "Sources/Companion.swift"
+                    )
+                )
+            }
+        )
+        try assertFacadeContinuityPoison(
+            "companion_same_bytes_new_inode",
+            mutate: { fixture in
+                let original = fixture.companion.appendingPathComponent(
+                    "Sources/Companion.swift"
+                )
+                let saved = fixture.base.appendingPathComponent(
+                    "Companion.original"
+                )
+                let bytes = try Data(contentsOf: original)
+                try FileManager.default.moveItem(at: original, to: saved)
+                try bytes.write(to: original)
+                var savedStatus = stat()
+                var replacementStatus = stat()
+                guard lstat(saved.path, &savedStatus) == 0,
+                      lstat(original.path, &replacementStatus) == 0,
+                      savedStatus.st_ino != replacementStatus.st_ino
+                else {
+                    throw FixtureError.invalid("replacement_inode")
+                }
+            },
+            restore: { fixture in
+                let replacement = fixture.companion.appendingPathComponent(
+                    "Sources/Companion.swift"
+                )
+                let saved = fixture.base.appendingPathComponent(
+                    "Companion.original"
+                )
+                try FileManager.default.removeItem(at: replacement)
+                try FileManager.default.moveItem(at: saved, to: replacement)
+            }
+        )
+        try assertFacadeContinuityPoison(
+            "companion_rename_away_and_back",
+            mutate: { fixture in
+                let original = fixture.companion.appendingPathComponent(
+                    "Sources/Companion.swift"
+                )
+                let moved = fixture.companion.appendingPathComponent(
+                    "Sources/Companion.moved"
+                )
+                try FileManager.default.moveItem(at: original, to: moved)
+                try FileManager.default.moveItem(at: moved, to: original)
+            }
+        )
+        try assertFacadeContinuityPoison(
+            "companion_transient_create_unlink",
+            mutate: { fixture in
+                let transient = fixture.companion.appendingPathComponent(
+                    "transient"
+                )
+                try Data("transient\n".utf8).write(to: transient)
+                try FileManager.default.removeItem(at: transient)
+            }
+        )
+        try assertFacadeContinuityPoison(
+            "companion_hidden_file_write",
+            mutate: { fixture in
+                try Data("mutated hidden\n".utf8).write(
+                    to: fixture.companion.appendingPathComponent(
+                        ".hidden/config"
+                    )
+                )
+            },
+            restore: { fixture in
+                try Data("hidden fixture\n".utf8).write(
+                    to: fixture.companion.appendingPathComponent(
+                        ".hidden/config"
+                    )
+                )
+            }
+        )
+        try assertFacadeContinuityPoison(
+            "companion_preexisting_empty_directory_insertion",
+            mutate: { fixture in
+                let transient = fixture.companion.appendingPathComponent(
+                    "Empty/later"
+                )
+                try Data("later\n".utf8).write(to: transient)
+                try FileManager.default.removeItem(at: transient)
+            }
+        )
+        try assertFacadeContinuityPoison(
+            "companion_root_git_rename_away_and_back",
+            mutate: { fixture in
+                let original = fixture.companion.appendingPathComponent(
+                    ".git",
+                    isDirectory: true
+                )
+                let moved = fixture.companion.appendingPathComponent(
+                    ".git-moved",
+                    isDirectory: true
+                )
+                try FileManager.default.moveItem(at: original, to: moved)
+                try FileManager.default.moveItem(at: moved, to: original)
+            }
+        )
+        try assertFacadeContinuityPoison(
+            "companion_root_git_replacement",
+            mutate: { fixture in
+                let original = fixture.companion.appendingPathComponent(
+                    ".git",
+                    isDirectory: true
+                )
+                let saved = fixture.companion.appendingPathComponent(
+                    ".git-original",
+                    isDirectory: true
+                )
+                try FileManager.default.moveItem(at: original, to: saved)
+                try FileManager.default.createDirectory(
+                    at: original,
+                    withIntermediateDirectories: false
+                )
+                guard chmod(original.path, 0o700) == 0 else {
+                    throw FixtureError.invalid("replacement_git_mode")
+                }
+            },
+            restore: { fixture in
+                let replacement = fixture.companion.appendingPathComponent(
+                    ".git",
+                    isDirectory: true
+                )
+                let saved = fixture.companion.appendingPathComponent(
+                    ".git-original",
+                    isDirectory: true
+                )
+                try FileManager.default.removeItem(at: replacement)
+                try FileManager.default.moveItem(at: saved, to: replacement)
+            }
+        )
+        try assertFacadeContinuityPoison(
+            "companion_root_git_removal",
+            mutate: { fixture in
+                try FileManager.default.moveItem(
+                    at: fixture.companion.appendingPathComponent(
+                        ".git",
+                        isDirectory: true
+                    ),
+                    to: fixture.companion.appendingPathComponent(
+                        ".git-removed",
+                        isDirectory: true
+                    )
+                )
+            },
+            restore: { fixture in
+                try FileManager.default.moveItem(
+                    at: fixture.companion.appendingPathComponent(
+                        ".git-removed",
+                        isDirectory: true
+                    ),
+                    to: fixture.companion.appendingPathComponent(
+                        ".git",
+                        isDirectory: true
+                    )
+                )
+            }
+        )
+    }
+
+    @available(macOS 26.0, *)
+    func testFixedRoleFacadeExcludesOnlyRootGitDescendantChurn()
+        throws
+    {
+        let fixture = try Fixture()
+        defer { fixture.cleanup() }
+        let guarded = try preparedGuard(for: fixture)
+        let image = try boundTestImage(for: guarded)
+        let context = try roleTransferInputs(
+            fixture: fixture,
+            guarded: guarded
+        ).context
+        let facade = try image.transferDriverV2RoleFacade(context: context)
+        let head = fixture.companion.appendingPathComponent(".git/HEAD")
+
+        try Data("ref: refs/heads/main\n".utf8).write(to: head)
+        try facade.revalidateContinuity()
+        try Data("ref: refs/heads/other\n".utf8).write(to: head)
+        try facade.revalidateContinuity()
+
+        XCTAssertEqual(facade.continuityState, .dualRootGuarded)
+        XCTAssertEqual(facade.combinedSourceWatcherDescriptorCount, 38)
+        XCTAssertEqual(facade.processExecutionObservation, .unobserved)
+        XCTAssertEqual(facade.buildExecutionObservation, .unobserved)
+        XCTAssertEqual(facade.inventoryExecutionObservation, .unobserved)
+        XCTAssertFalse(facade.completionAuthorized)
+    }
+
     func testFixedRoleFacadeSourceHasNoExecutionOrRoleIssuingSurface()
         throws
     {
@@ -1355,6 +1643,18 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
         )
         XCTAssertFalse(facadeSource.contains("public init("))
         XCTAssertFalse(facadeSource.contains("package init("))
+        XCTAssertEqual(
+            facadeSource.components(
+                separatedBy: "public func revalidateContinuity() throws"
+            ).count - 1,
+            1
+        )
+        XCTAssertEqual(
+            facadeSource.components(
+                separatedBy: "func revalidateContinuity("
+            ).count - 1,
+            1
+        )
         for forbidden in [
             "func execute",
             "func takeNextRole",
@@ -1640,16 +1940,400 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
         let fixture = try Fixture()
         defer { fixture.cleanup() }
         let capability = try fixture.admit()
-        try Data("mutation".utf8).write(
-            to: fixture.companion.appendingPathComponent("unexpected")
+        try Data("mutation\n".utf8).write(
+            to: fixture.companion.appendingPathComponent(
+                "Sources/Companion.swift"
+            )
         )
 
-        XCTAssertThrowsError(try capability.consumePrerequisites())
+        XCTAssertThrowsError(try capability.consumePrerequisites()) {
+            XCTAssertEqual(
+                $0 as?
+                    PrimeValidationSwiftPMBuildInventoryAdmissionError,
+                .rejected("companion_content_replay")
+            )
+        }
         XCTAssertThrowsError(try capability.consumePrerequisites()) {
             XCTAssertEqual(
                 $0 as?
                     PrimeValidationSwiftPMBuildInventoryAdmissionError,
                 .capabilityAlreadyConsumed
+            )
+        }
+    }
+
+    func testPostAdmissionPrimeByteRestorationCannotRebaselineBeforeWatch()
+        throws
+    {
+        let fixture = try Fixture()
+        defer { fixture.cleanup() }
+        let prerequisite = try fixture.admit().consumePrerequisites()
+        let readme = fixture.prime.appendingPathComponent("README.md")
+        let admitted = try Data(contentsOf: readme)
+        try Data("mutated before Prime watch\n".utf8).write(to: readme)
+        try admitted.write(to: readme)
+
+        XCTAssertThrowsError(
+            try prerequisite.prepareGuardedPreExecutor(
+                allowRootOwnedCurrentProcessForTesting: true
+            )
+        ) {
+            XCTAssertEqual(
+                $0 as?
+                    PrimeValidationSwiftPMBuildInventoryAdmissionError,
+                .rejected("prime_source_identity_replay")
+            )
+        }
+        XCTAssertThrowsError(
+            try prerequisite.prepareGuardedPreExecutor(
+                allowRootOwnedCurrentProcessForTesting: true
+            )
+        ) {
+            XCTAssertEqual(
+                $0 as?
+                    PrimeValidationSwiftPMBuildInventoryAdmissionError,
+                .prerequisiteAlreadyConsumed
+            )
+        }
+    }
+
+    func testPostAdmissionCompanionSameBytesNewInodeCannotRebaseline()
+        throws
+    {
+        let fixture = try Fixture()
+        defer { fixture.cleanup() }
+        let prerequisite = try fixture.admit().consumePrerequisites()
+        let original = fixture.companion.appendingPathComponent(
+            "Sources/Companion.swift"
+        )
+        let saved = fixture.base.appendingPathComponent(
+            "Companion.original"
+        )
+        let bytes = try Data(contentsOf: original)
+        try FileManager.default.moveItem(at: original, to: saved)
+        try bytes.write(to: original)
+        var savedStatus = stat()
+        var replacementStatus = stat()
+        XCTAssertEqual(lstat(saved.path, &savedStatus), 0)
+        XCTAssertEqual(lstat(original.path, &replacementStatus), 0)
+        XCTAssertNotEqual(savedStatus.st_ino, replacementStatus.st_ino)
+
+        XCTAssertThrowsError(
+            try prerequisite.prepareGuardedPreExecutor(
+                allowRootOwnedCurrentProcessForTesting: true
+            )
+        ) {
+            XCTAssertEqual(
+                $0 as?
+                    PrimeValidationSwiftPMBuildInventoryAdmissionError,
+                .rejected("companion_content_replay")
+            )
+        }
+        XCTAssertThrowsError(
+            try prerequisite.prepareGuardedPreExecutor(
+                allowRootOwnedCurrentProcessForTesting: true
+            )
+        ) {
+            XCTAssertEqual(
+                $0 as?
+                    PrimeValidationSwiftPMBuildInventoryAdmissionError,
+                .prerequisiteAlreadyConsumed
+            )
+        }
+    }
+
+    func testPostAdmissionTransientCompanionMutationCannotRebaseline()
+        throws
+    {
+        let fixture = try Fixture()
+        defer { fixture.cleanup() }
+        let capability = try fixture.admit()
+        let transient = fixture.companion.appendingPathComponent(
+            "Empty/transient-before-watch"
+        )
+        try Data("transient\n".utf8).write(to: transient)
+        try FileManager.default.removeItem(at: transient)
+
+        XCTAssertThrowsError(try capability.consumePrerequisites()) {
+            XCTAssertEqual(
+                $0 as?
+                    PrimeValidationSwiftPMBuildInventoryAdmissionError,
+                .rejected("companion_content_replay")
+            )
+        }
+        XCTAssertThrowsError(try capability.consumePrerequisites()) {
+            XCTAssertEqual(
+                $0 as?
+                    PrimeValidationSwiftPMBuildInventoryAdmissionError,
+                .capabilityAlreadyConsumed
+            )
+        }
+    }
+
+    func testCompanionCompleteTopologyAllowsNoFilesAndHoldsEmptyDirectory()
+        throws
+    {
+        let fixture = try Fixture()
+        defer { fixture.cleanup() }
+        let minimal = try fixture.makeDirectory("minimal-companion")
+        try makePrivateDirectory(
+            minimal.appendingPathComponent(".git", isDirectory: true)
+        )
+        try makePrivateDirectory(
+            minimal.appendingPathComponent("Empty", isDirectory: true)
+        )
+
+        let guarded = try fixture.admit(companion: minimal)
+            .consumePrerequisites()
+            .prepareGuardedPreExecutor(
+                allowRootOwnedCurrentProcessForTesting: true
+            )
+        try guarded.revalidateGuards()
+        XCTAssertTrue(guarded.companionSourceDescriptorClosureHeld)
+        XCTAssertTrue(guarded.companionSourceWatchWindowArmed)
+        XCTAssertEqual(guarded.combinedSourceWatcherDescriptorCount, 32)
+    }
+
+    func testCompanionAdmissionSnapshotCarriesCompleteVnodeTopology()
+        throws
+    {
+        let fixture = try Fixture()
+        defer { fixture.cleanup() }
+        let ignoredGitDescendant = fixture.companion.appendingPathComponent(
+            ".git/HEAD"
+        )
+        try Data("ref: refs/heads/main\n".utf8).write(
+            to: ignoredGitDescendant
+        )
+        XCTAssertTrue(
+            FileManager.default.fileExists(
+                atPath: ignoredGitDescendant.path
+            )
+        )
+        let descriptor = open(
+            fixture.companion.path,
+            O_RDONLY | O_DIRECTORY | O_NOFOLLOW_ANY | O_CLOEXEC
+        )
+        guard descriptor >= 3 else {
+            throw FixtureError.invalid("companion_snapshot_open_\(errno)")
+        }
+        defer { _ = Darwin.close(descriptor) }
+        let snapshot = try PrimeSecureHeldWorkingTreeSnapshot.capture(
+            rootDescriptor: descriptor
+        )
+
+        XCTAssertEqual(
+            Set(snapshot.directoryRelativePaths),
+            Set(["", ".hidden", "Empty", "Sources"])
+        )
+        XCTAssertEqual(
+            Set(snapshot.directoryIdentities.keys),
+            Set(snapshot.directoryRelativePaths)
+        )
+        XCTAssertEqual(
+            Set(snapshot.files.map(\.relativePath)),
+            Set([
+                ".gitignore",
+                ".hidden/config",
+                "Package.swift",
+                "Sources/Companion.swift",
+            ])
+        )
+        XCTAssertEqual(
+            Set(snapshot.fileIdentities.keys),
+            Set(snapshot.files.map(\.relativePath))
+        )
+
+        var emptyStatus = stat()
+        XCTAssertEqual(
+            lstat(
+                fixture.companion.appendingPathComponent("Empty").path,
+                &emptyStatus
+            ),
+            0
+        )
+        XCTAssertEqual(
+            snapshot.directoryIdentities["Empty"]?.deviceID,
+            Int32(emptyStatus.st_dev)
+        )
+        XCTAssertEqual(
+            snapshot.directoryIdentities["Empty"]?.inode,
+            UInt64(emptyStatus.st_ino)
+        )
+
+        var fileStatus = stat()
+        XCTAssertEqual(
+            lstat(
+                fixture.companion.appendingPathComponent(
+                    "Sources/Companion.swift"
+                ).path,
+                &fileStatus
+            ),
+            0
+        )
+        XCTAssertEqual(
+            snapshot.fileIdentities["Sources/Companion.swift"]?.deviceID,
+            Int32(fileStatus.st_dev)
+        )
+        XCTAssertEqual(
+            snapshot.fileIdentities["Sources/Companion.swift"]?.inode,
+            UInt64(fileStatus.st_ino)
+        )
+
+        var gitStatus = stat()
+        XCTAssertEqual(
+            lstat(
+                fixture.companion.appendingPathComponent(".git").path,
+                &gitStatus
+            ),
+            0
+        )
+        XCTAssertEqual(
+            snapshot.excludedRootGitDirectoryDeviceID,
+            Int32(gitStatus.st_dev)
+        )
+        XCTAssertEqual(
+            snapshot.excludedRootGitDirectoryInode,
+            UInt64(gitStatus.st_ino)
+        )
+        XCTAssertFalse(
+            snapshot.directoryRelativePaths.contains(where: {
+                $0 == ".git" || $0.hasPrefix(".git/")
+            })
+        )
+        XCTAssertFalse(
+            snapshot.files.contains(where: {
+                $0.relativePath == ".git"
+                    || $0.relativePath.hasPrefix(".git/")
+            })
+        )
+        XCTAssertEqual(snapshot.identitySHA256.count, 64)
+    }
+
+    func testCompanionCaptureRejectsSymlinkFIFORootGitFile()
+        throws
+    {
+        try ["symlink", "fifo", "root_git_file"].forEach { mutation in
+            let fixture = try Fixture()
+            defer { fixture.cleanup() }
+            switch mutation {
+            case "symlink":
+                try FileManager.default.createSymbolicLink(
+                    at: fixture.companion.appendingPathComponent("linked"),
+                    withDestinationURL:
+                        fixture.companion.appendingPathComponent(".gitignore")
+                )
+            case "fifo":
+                let path = fixture.companion.appendingPathComponent("fifo")
+                guard mkfifo(path.path, 0o600) == 0 else {
+                    throw FixtureError.invalid("mkfifo_\(errno)")
+                }
+            case "root_git_file":
+                let git = fixture.companion.appendingPathComponent(
+                    ".git",
+                    isDirectory: true
+                )
+                try FileManager.default.removeItem(at: git)
+                try Data("gitdir: elsewhere\n".utf8).write(to: git)
+            default:
+                throw FixtureError.invalid("unknown_mutation")
+            }
+
+            XCTAssertThrowsError(try fixture.admit(), mutation) { error in
+                guard let admissionError = error as?
+                        PrimeValidationSwiftPMBuildInventoryAdmissionError,
+                      case .rejected(let detail) = admissionError
+                else {
+                    return XCTFail(
+                        "unexpected \(mutation) error: \(error)"
+                    )
+                }
+                XCTAssertTrue(
+                    detail.hasPrefix("companion_working_tree_"),
+                    mutation
+                )
+            }
+        }
+    }
+
+    func testCompanionTopologyLimitsAreFrozenAndRejectDepthAndFileBytes()
+        throws
+    {
+        XCTAssertEqual(
+            PrimeSecureHeldWorkingTreeSnapshot.maximumFileCount,
+            4_096
+        )
+        XCTAssertEqual(
+            PrimeSecureHeldWorkingTreeSnapshot.maximumDirectoryCount,
+            4_096
+        )
+        XCTAssertEqual(
+            PrimeSecureHeldWorkingTreeSnapshot.maximumFileByteCount,
+            64 * 1024 * 1024
+        )
+        XCTAssertEqual(
+            PrimeSecureHeldWorkingTreeSnapshot.maximumAggregateByteCount,
+            512 * 1024 * 1024
+        )
+        XCTAssertEqual(
+            PrimeSecureHeldWorkingTreeSnapshot.maximumRelativeDepth,
+            32
+        )
+        XCTAssertEqual(
+            PrimeSecureHeldWorkingTreeSnapshot.maximumDirectoryEntryCount,
+            16_384
+        )
+        XCTAssertEqual(
+            PrimeSecureHeldWorkingTreeSnapshot
+                .maximumAggregateDirectoryEntryCount,
+            65_536
+        )
+        XCTAssertEqual(
+            PrimeValidationSwiftPMRetainedGuardedPreExecutorState
+                .maximumCombinedSourceWatcherDescriptorCount,
+            4_096
+        )
+
+        let deepFixture = try Fixture()
+        defer { deepFixture.cleanup() }
+        let tooDeep = (1 ... 33).map { "d\($0)" }.joined(separator: "/")
+        try FileManager.default.createDirectory(
+            at: deepFixture.companion.appendingPathComponent(
+                tooDeep,
+                isDirectory: true
+            ),
+            withIntermediateDirectories: true
+        )
+        XCTAssertThrowsError(try deepFixture.admit()) { error in
+            XCTAssertEqual(
+                error as?
+                    PrimeValidationSwiftPMBuildInventoryAdmissionError,
+                .rejected("companion_working_tree_relative_depth")
+            )
+        }
+
+        let largeFixture = try Fixture()
+        defer { largeFixture.cleanup() }
+        let oversized = largeFixture.companion.appendingPathComponent(
+            "oversized"
+        )
+        let descriptor = open(
+            oversized.path,
+            O_WRONLY | O_CREAT | O_EXCL | O_CLOEXEC,
+            0o600
+        )
+        guard descriptor >= 3 else {
+            throw FixtureError.invalid("oversized_open_\(errno)")
+        }
+        defer { _ = Darwin.close(descriptor) }
+        guard ftruncate(descriptor, 64 * 1024 * 1024 + 1) == 0 else {
+            throw FixtureError.invalid("oversized_truncate_\(errno)")
+        }
+        XCTAssertThrowsError(try largeFixture.admit()) { error in
+            XCTAssertEqual(
+                error as?
+                    PrimeValidationSwiftPMBuildInventoryAdmissionError,
+                .rejected("companion_working_tree_file_metadata")
             )
         }
     }
@@ -1866,6 +2550,122 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
             byteCount: UInt64(data.count),
             sha256: PrimeSHA256.hexDigest(of: data)
         )
+    }
+
+    @available(macOS 26.0, *)
+    private func assertFacadeContinuityPoison(
+        _ label: String,
+        mutate: (Fixture) throws -> Void,
+        restore: ((Fixture) throws -> Void)? = nil,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) throws {
+        let fixture = try Fixture()
+        defer { fixture.cleanup() }
+        let guarded = try preparedGuard(for: fixture)
+        let image = try boundTestImage(for: guarded)
+        let context = try roleTransferInputs(
+            fixture: fixture,
+            guarded: guarded
+        ).context
+        let facade = try image.transferDriverV2RoleFacade(context: context)
+        try facade.revalidateContinuity()
+        assertLeaseBusy(fixture.lockURL, file: file, line: line)
+
+        try mutate(fixture)
+        XCTAssertThrowsError(
+            try facade.revalidateContinuity(),
+            label,
+            file: file,
+            line: line
+        )
+        XCTAssertEqual(
+            facade.continuityState,
+            .poisoned,
+            label,
+            file: file,
+            line: line
+        )
+        XCTAssertFalse(
+            facade.primeSourceDescriptorClosureHeld,
+            label,
+            file: file,
+            line: line
+        )
+        XCTAssertFalse(
+            facade.companionSourceDescriptorClosureHeld,
+            label,
+            file: file,
+            line: line
+        )
+        XCTAssertFalse(
+            facade.primeSourceWatchWindowArmed,
+            label,
+            file: file,
+            line: line
+        )
+        XCTAssertFalse(
+            facade.companionSourceWatchWindowArmed,
+            label,
+            file: file,
+            line: line
+        )
+        XCTAssertEqual(
+            facade.combinedSourceWatcherDescriptorCount,
+            0,
+            label,
+            file: file,
+            line: line
+        )
+        XCTAssertEqual(
+            facade.processExecutionObservation,
+            .unobserved,
+            label,
+            file: file,
+            line: line
+        )
+        XCTAssertEqual(
+            facade.buildExecutionObservation,
+            .unobserved,
+            label,
+            file: file,
+            line: line
+        )
+        XCTAssertEqual(
+            facade.inventoryExecutionObservation,
+            .unobserved,
+            label,
+            file: file,
+            line: line
+        )
+        XCTAssertFalse(
+            facade.completionAuthorized,
+            label,
+            file: file,
+            line: line
+        )
+
+        try restore?(fixture)
+        XCTAssertThrowsError(
+            try facade.revalidateContinuity(),
+            label,
+            file: file,
+            line: line
+        ) {
+            XCTAssertEqual(
+                $0 as?
+                    PrimeValidationSwiftPMBuildInventoryAdmissionError,
+                .guardedPreExecutorPoisoned,
+                label,
+                file: file,
+                line: line
+            )
+        }
+        let diagnostic = try PrimeMetalDeviceLease.acquire(
+            at: fixture.lockURL
+        )
+        XCTAssertTrue(diagnostic.isHeld, label, file: file, line: line)
+        diagnostic.release()
     }
 
     private func assertLeaseBusy(
@@ -2131,6 +2931,29 @@ private final class Fixture {
         ] {
             try Self.createDirectory(directory)
         }
+        for relativePath in [
+            ".git",
+            ".hidden",
+            "Sources",
+            "Empty",
+        ] {
+            try Self.createDirectory(
+                companion.appendingPathComponent(
+                    relativePath,
+                    isDirectory: true
+                )
+            )
+        }
+        for (relativePath, contents) in [
+            (".gitignore", ".build/\n"),
+            (".hidden/config", "hidden fixture\n"),
+            ("Package.swift", "// companion fixture\n"),
+            ("Sources/Companion.swift", "// companion source\n"),
+        ] {
+            try Data(contents.utf8).write(
+                to: companion.appendingPathComponent(relativePath)
+            )
+        }
         sourceExpectation = try Self.sealSyntheticSource(at: prime)
     }
 
@@ -2320,6 +3143,11 @@ private final class Fixture {
             "README.md": Data("fixture\n".utf8),
             "THIRD_PARTY_NOTICES.md": Data("fixture\n".utf8),
             "Sources/PrimeCore/" +
+                "PrimeNativeNeuralGateHeldSourceClosure.swift":
+                Data("// fixture held closure\n".utf8),
+            "Sources/PrimeCore/PrimeSecureHeldSourceWatch.swift":
+                Data("// fixture secure held watch\n".utf8),
+            "Sources/PrimeCore/" +
                 "PrimeValidationSwiftPMBuildInventoryAdmission.swift":
                 Data("// fixture admission\n".utf8),
             "Sources/PrimeCore/PrimeValidationDriverV2RoleFacade.swift":
@@ -2349,6 +3177,9 @@ private final class Fixture {
                 at: root,
                 requiredRelativePaths: [
                     "Sources/PrimeCore/" +
+                        "PrimeNativeNeuralGateHeldSourceClosure.swift",
+                    "Sources/PrimeCore/PrimeSecureHeldSourceWatch.swift",
+                    "Sources/PrimeCore/" +
                         "PrimeValidationSwiftPMBuildInventoryAdmission.swift",
                     "Sources/PrimeCore/" +
                         "PrimeValidationDriverV2RoleFacade.swift",
@@ -2372,6 +3203,9 @@ private final class Fixture {
         _ = try PrimeSwiftSourceProvenance.capture(
             at: root,
             requiredRelativePaths: [
+                "Sources/PrimeCore/" +
+                    "PrimeNativeNeuralGateHeldSourceClosure.swift",
+                "Sources/PrimeCore/PrimeSecureHeldSourceWatch.swift",
                 "Sources/PrimeCore/" +
                     "PrimeValidationSwiftPMBuildInventoryAdmission.swift",
                 "Sources/PrimeCore/" +
