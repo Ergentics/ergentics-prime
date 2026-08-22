@@ -2220,13 +2220,14 @@ HEAD `163fc100710ece48119bc25954452d10f6a84f7f`.
 | 9 | `Tests/PrimeValidationWorkflow/Sources/PrimeValidationWorkflowDriverV2Supervisor/main.swift` | after the unchanged decoded frame binds the supervisor, unconditionally consume and run the zero-argument Gate E transition; no transport growth |
 | 10 | `Tests/PrimeValidationWorkflow/Tests/PrimeValidationWorkflowDriverCoreTests/PrimeValidationDriverV2AdmissionTests.swift` | pure binding, parser, mutation, source-surface, and production-host-rejection cases only |
 | 11 | `Tests/PrimeValidationWorkflow/Tests/PrimeValidationWorkflowDriverCoreTests/PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests.swift` | Gate E retained-owner and local Release supervisor cases only |
+| 12 | `Sources/PrimeCore/PrimeSecureRunningExecutableCapture.swift` | add only a module-internal zero-argument identity-only revalidation on the existing held supervisor-image owner: held-descriptor `fstat` against the admitted tuple, `FD_CLOEXEC`, loaded-vnode join, and nofollow named rebound; no byte read, descriptor escape, initializer, or public API |
 
 No package manifest, lock file, product, target, resource, inventory list,
 planner, contract, missing-authority enum, receipt schema, B role table, role
 bridge, image bridge, Gate D manifest owner, tracked-held-entry mechanics,
 spawn canary or pin, process substrate, supervision owner, Git blob transport,
 staging owner, `.github`, root test, science, or product path is in this
-allowlist. A change outside the eleven paths is a hard stop.
+allowlist. A change outside the twelve paths is a hard stop.
 
 The two new source files add two files and no directory. With no deletion or
 rename, the candidate must measure exactly 545 source-snapshot files, 544
@@ -2494,6 +2495,28 @@ hide that cost inside the 30-second pin. Full admission/held-byte validation
 occurs exactly at Gate E entry, after each of the two local tracked-entry
 joins, and at Gate E terminal.
 
+The implementation audit found the same anti-pattern on the separately held
+supervisor image: its 46,722,904-byte production image would be read twice by
+each of 52 lightweight checkpoints, totaling 4,859,182,016 bytes (4.53 GiB)
+inside the same 30-second deadline. The twelfth allowlisted owner path closes
+that defect at its existing descriptor owner. Its identity-only operation
+must compare the held descriptor with the admission `stat`, retain
+`FD_CLOEXEC`, join the loaded main-image vnode, and reopen the canonical named
+image with `O_NOFOLLOW` for the same exact identity and metadata. It reads no
+image bytes. The four full entry/join/terminal passes continue to call the
+existing byte-authoritative `revalidate()`; this correction changes neither
+their count nor any topology count.
+
+The raw capability transfer and DriverCore's final live-binding accept must
+not create a fifth full pass. After the terminal pass, the retained lifetime
+therefore exposes only a zero-argument transferred-continuity checkpoint: C
+kqueue poll, held lease, admitted repository/private-root identities and
+emptiness, identity-only complete toolchain set, identity-only held/loaded/
+named supervisor image, then a second C kqueue poll. That operation carries
+the same nonregressing deadline and poisons on failure. It does not reread
+source, toolchain, or supervisor bytes and retains no Gate E `.git` or journal
+owner. DriverCore's final revalidation ends with that checkpoint.
+
 Paths 5 and 6 may add one zero-argument lightweight, non-rebaselining
 checkpoint on the existing C owner. It does exactly one thing: poll both
 continuously armed C kqueues and reject any event, read error, or unexpected
@@ -2724,7 +2747,7 @@ authorized by this freeze.
 
 ### Conserved predecessor data and successor
 
-All Gate D conserved blobs and data remain exact except the eleven allowlisted
+All Gate D conserved blobs and data remain exact except the twelve allowlisted
 paths. In particular, the Gate D manifest/held-entry implementations, both
 bridges, contracts/planner, every receipt field/layout/encoding, B role table,
 isolated canary/child pin, Darwin substrate/supervision owners, forbidden
