@@ -759,3 +759,75 @@ freeze at commit `8bfb27f2475ed336e4343150cd02dffb5cc0cc9d` / tree
 `5c8d30c0f666d2d7c0f86bff78e532b4d31fb25e`, its own changed-path allowlist,
 focused fixtures, and a separate local checkpoint. It does not authorize the
 904-test run, GitHub execution, Stage 7, Metal, MLX/training, or publication.
+
+## B0 predecessor freeze
+
+Status: `FROZEN_FOR_GATE_B_IMPLEMENTATION`
+
+This record authorizes only the bounded implementation of Gate B. It does not
+change Gate A, authorize a live child, or promote any observation to execution
+authority.
+
+| Pin | Exact value |
+| --- | --- |
+| Gate B predecessor commit | `8bfb27f2475ed336e4343150cd02dffb5cc0cc9d` |
+| Gate B predecessor tree | `5c8d30c0f666d2d7c0f86bff78e532b4d31fb25e` |
+| Gate A parent commit | `a6f76bd3f246a443ef96e21fa4c769499a62b875` |
+| Gate A parent tree | `f4f826e42f928f17cc4854a183b912b56f265e0c` |
+| Base provenance blob | `0d1176766bcc4b1eac828f286486142cd76b8432` |
+| Gate A provenance blob | `311faccf662db5df35ec960251e42a5daec32e01` |
+| Excluded dirty fixture provenance blob | `45d3a061b7b28cd37cba25001886284bc366bc0a` |
+| Frozen supervisor main blob | `1b5582ac9a40dce9ea06b94a82c9985978069b76` |
+| Frozen DriverCore image bridge blob | `7ffdfb4e5063ddc7362a0d6b07d0cbbeb8b46e15` |
+| Frozen PrimeCore image admission blob | `94e678d66b77fc47d93dce50cfd05f3d33e0157b` |
+
+The Gate A provenance-file delta is exactly its embedded identity change from
+`ab9ba1c8...` to `5f98c788...`. The excluded dirty fixture worktree instead
+contains `c0d2cc3e...`. No fixture-measurement script, evaluator, `.github`
+change, or dirty provenance value entered the Gate A tree.
+
+### Frozen A-to-B boundary
+
+1. `main.swift` remains the exact closed Gate A stdin frame. Gate B must not
+   add a request-path loader, environment protocol, command language, new argv,
+   receipt writer, or live-authority restoration path. It remains argc one,
+   canonical stdin only, bounded to 256 KiB, and subject to the fixed five-
+   second read/EOF deadline.
+2. Normal exit zero remains a transient self-bind canary. The live capability
+   dies with the process and the exit cannot be interpreted as process,
+   execution, resume, receipt, completion, or scientific authority.
+3. Production success inside Apple `xctest` remains forbidden. Internal test
+   seams may exercise mechanics only and must remain explicitly non-production.
+4. The PrimeCore mapped-image join remains mandatory on bind and revalidation:
+   `deviceID == loadedImageDeviceID`, `inode == loadedImageInode`, and
+   `mappedImageJoined == true`. Path, realpath, bytes, hash, owner, mode, and
+   link-count checks supplement but never replace this join.
+5. Non-UTF-8 path conversion and transferred-no-authority naming remain
+   fail-closed residuals. They cannot create success and are not Gate B work.
+
+### Lease disposal and retirement
+
+| State or artifact | Frozen meaning |
+| --- | --- |
+| Live parent and leaf `flock` descriptors | The only lease authority |
+| Persistent lock leaf | Inert; never authority, continuity, or permission |
+| Poison or rejection | Drops retained state and releases kernel locks before continuation or process end |
+| Normal process exit or crash | Kernel closes descriptors and releases locks; leaf remains |
+| Used lease directory | Permanently retired for admission, regardless of exit |
+| Next Gate B invocation | Fresh canonical, private `0700`, empty, disjoint lease root and fresh admission |
+| Unlink, replacement, or cleanup of old leaf | Administrative cleanup only; never retry or authority restoration |
+
+Gate B must preserve the rule that a released lock, stale file, inode, text, or
+PID-like content is not authority. A diagnostic may prove that a kernel lock
+was released, but successful reacquisition cannot establish continuity with a
+prior process or consumed capability.
+
+### Gate B implementation ceiling
+
+Gate B may add only a Driver-V2-specific fixed-role facade over the existing
+internal neutral secure-child substrate and focused policy/disposal mutation
+proofs. It must not change the frozen main or image bridge, add another spawn
+implementation, expose arbitrary command/argv/environment/cwd/deadline/output
+parameters, launch a repository-wide test run, or claim that a role policy is
+live execution evidence. Gate B begins with source inspection and static or
+closed-fixture proof; live Git/Swift observations remain Gate E.
