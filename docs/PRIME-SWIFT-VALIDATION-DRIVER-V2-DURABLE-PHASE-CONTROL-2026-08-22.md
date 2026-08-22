@@ -2774,3 +2774,77 @@ authorities. Gate F is then the sole permitted successor: descriptor-relative
 private staging plus exactly the fixed `build` role. Gate E authorizes no
 Gate F source or execution, and Gate G inventory remains later. This control
 record is prose rank 4 and cannot certify that E ran or passed.
+
+## Gate E1 recovery freeze — silent phase discrimination and durable harness
+
+This successor freeze is based only on source commit
+`781e38f82a774b5583ca4254196773b0400c220d`, tree
+`19d319f844259628d71188322477f4345f6187a3`. That commit binds the Release
+run ID to the embedded source identity but is not a passing Gate E checkpoint.
+
+The consumed `22a040a3a89276f8695d681bc34df1493c1cc886` attempt exited normally with
+status 65 in approximately 0.986 seconds, emitted zero stdout and stderr
+bytes, and left the outer-created journal at link count two with zero leaves.
+It therefore published no prestart, launched no Gate E child, and identifies
+no exact internal rejecting guard. The cause remains `ABSTAIN`. In particular,
+the intent's `.../usr/bin/swift` path is correct: it is the no-follow logical
+personality mapped to held `swift-frontend`. `swift-package` remains the
+unmapped Gate F/G image and must not replace it.
+
+Two non-executing Release admission proofs completed before this freeze. A
+throwaway standalone Prime clone at `22a040a...` plus the standalone pinned
+companion clone admitted and revalidated exactly 2,157 held watchers in 2.768
+seconds; the source candidate plus the same companion repeated that result in
+2.759 seconds. Each invocation selected one existing admission-only test,
+passed with zero failures, and launched no Gate E child. The exact preserved
+production-proof clones also have real no-follow `.git` directories, clean
+status, the expected commits and trees, 697 Prime watchers, and 1,460
+companion watchers. These data rule out changing Core admission, topology,
+Git-directory, or Swift-personality semantics to explain the consumed 65.
+
+The next candidate may change only these three already allowlisted paths:
+
+| Path | Exact recovery scope |
+| --- | --- |
+| `Tests/PrimeValidationWorkflow/Sources/PrimeValidationWorkflowDriverV2Supervisor/main.swift` | keep the Gate A frame byte-for-byte in policy while assigning fixed silent exit statuses only after phase boundaries |
+| `Tests/PrimeValidationWorkflow/Tests/PrimeValidationWorkflowDriverCoreTests/PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests.swift` | candidate-bound one-shot root, failure preservation, exit/base reporting, and static phase-code assertions inside an existing Gate E method |
+| `Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift` | canonical identity reseal only |
+
+No PrimeCore executor, facade, watch, journal, DriverCore binding, role table,
+manifest, planner, request type, package manifest, lock, inventory, or child
+policy may change. The fixed silent process statuses are:
+
+| Status | Last phase entered |
+| ---: | --- |
+| 65 | argc/stdin timeout and cap, canonical decode, request validation |
+| 66 | developer-directory derivation, prerequisite admission, consume, and dual-root guard preparation |
+| 67 | dedicated mapped supervisor-image bind and image revalidation |
+| 68 | Gate E facade consumption, fixed probes, raw transfer, and DriverCore semantic bind |
+| 69 | final retained four-authority revalidation |
+| 0 | all prior phases accepted and the live binding remained retained through return |
+
+The supervisor remains silent. This adds no stdout, stderr, environment read,
+path loader, request field, argv command, cwd, timeout selector, role ID,
+process API, or authority. All Gate A transport failures remain status 65;
+argc one, canonical stdin-only framing, the 256-KiB cap, five-second EOF
+deadline, and request schema remain unchanged.
+
+The Release harness replaces its random base with the exact candidate-bound
+leaf
+`/private/tmp/prime-driver-v2-gate-e-release-<source-identity-sha256>` and
+requires that path to be absent before creating it. It must not unconditionally
+delete that root. A nonzero supervisor status throws with both the exact status
+and absolute base path while preserving the private root, lease, journal, and
+0600 outer captures. A fully verified success is likewise retained until a
+separate durable control record binds its identities; cleanup may occur only
+after that record and must name the exact path. An occupied candidate-bound
+root forbids another launch under the same source identity.
+
+After the successor source commit and clean tree exist, run the seven frozen
+Debug Gate E methods separately, then the existing one-test Release admission
+proof, then exactly one Release method-8 invocation against the two standalone
+clean clones. Any nonzero result is incomplete, is classified only by its
+fixed status plus durable journal prefix, and consumes that candidate-bound
+root. No GitHub, network, fetch, broad test, 904 inventory, build/list role,
+or Gate F source is authorized. This recovery freeze is prose rank 4 and
+cannot certify a run or scientific outcome.
