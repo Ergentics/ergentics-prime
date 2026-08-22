@@ -102,7 +102,7 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
             XCTAssertTrue(guarded.companionSourceWatchWindowArmed)
             XCTAssertEqual(
                 guarded.combinedSourceWatcherDescriptorCount,
-                2_150
+                2_153
             )
             XCTAssertTrue(
                 guarded.missingAuthorities.contains(
@@ -306,7 +306,7 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
         XCTAssertTrue(guarded.companionSourceWatchWindowArmed)
         XCTAssertEqual(
             guarded.combinedSourceWatcherDescriptorCount,
-            38
+            39
         )
         XCTAssertTrue(guarded.currentProcessExecutableImageHeld)
         XCTAssertEqual(
@@ -476,7 +476,7 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
             .prepareGuardedPreExecutor(
                 allowRootOwnedCurrentProcessForTesting: true
             )
-        XCTAssertEqual(guarded.combinedSourceWatcherDescriptorCount, 38)
+        XCTAssertEqual(guarded.combinedSourceWatcherDescriptorCount, 39)
 
         try Data("mutated companion\n".utf8).write(
             to: fixture.companion.appendingPathComponent(
@@ -828,6 +828,8 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
             "Sources/PrimeCore/" +
                 "PrimeNativeNeuralGateHeldSourceClosure.swift",
             "Sources/PrimeCore/PrimeSecureHeldSourceWatch.swift",
+            "Sources/PrimeCore/" +
+                "PrimeValidationDriverV2IsolatedSpawnCanary.swift",
             "Sources/PrimeCore/PrimeValidationDriverV2RoleFacade.swift",
         ].forEach { relativePath in
             let fixture = try Fixture()
@@ -900,7 +902,7 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
         XCTAssertTrue(facade.companionSourceDescriptorClosureHeld)
         XCTAssertTrue(facade.primeSourceWatchWindowArmed)
         XCTAssertTrue(facade.companionSourceWatchWindowArmed)
-        XCTAssertEqual(facade.combinedSourceWatcherDescriptorCount, 38)
+        XCTAssertEqual(facade.combinedSourceWatcherDescriptorCount, 39)
         try facade.revalidateContinuity()
         XCTAssertEqual(facade.continuityState, .dualRootGuarded)
         let policies = facade.fixedPolicyObservations
@@ -1584,14 +1586,459 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
         try facade.revalidateContinuity()
 
         XCTAssertEqual(facade.continuityState, .dualRootGuarded)
-        XCTAssertEqual(facade.combinedSourceWatcherDescriptorCount, 38)
+        XCTAssertEqual(facade.combinedSourceWatcherDescriptorCount, 39)
         XCTAssertEqual(facade.processExecutionObservation, .unobserved)
         XCTAssertEqual(facade.buildExecutionObservation, .unobserved)
         XCTAssertEqual(facade.inventoryExecutionObservation, .unobserved)
         XCTAssertFalse(facade.completionAuthorized)
     }
 
-    func testFixedRoleFacadeSourceHasNoExecutionOrRoleIssuingSurface()
+    @available(macOS 26.0, *)
+    func testIsolatedSpawnCanaryClosesOnlyContainmentMechanics()
+        throws
+    {
+        let fixture = try Fixture()
+        defer { fixture.cleanup() }
+        let facade = try testCanaryFacade(fixture: fixture)
+
+        XCTAssertEqual(facade.isolatedSpawnCanaryState, .available)
+        XCTAssertNil(facade.isolatedSpawnCanaryObservation)
+        try facade.spawnIsolatedContainmentCanary()
+
+        XCTAssertEqual(facade.isolatedSpawnCanaryState, .observed)
+        let observation = try XCTUnwrap(
+            facade.isolatedSpawnCanaryObservation
+        )
+        XCTAssertEqual(observation.appliedSpawnFlags, 0x448c)
+        XCTAssertEqual(
+            observation.sessionIdentifier,
+            observation.processIdentifier
+        )
+        XCTAssertEqual(
+            observation.processGroupIdentifier,
+            observation.processIdentifier
+        )
+        XCTAssertEqual(
+            observation.executableByteCount,
+            PrimeValidationDriverV2IsolatedSpawnCanaryHeldExecutable
+                .expectedByteCount
+        )
+        XCTAssertEqual(
+            observation.executableSHA256,
+            PrimeValidationDriverV2IsolatedSpawnCanaryHeldExecutable
+                .expectedSHA256
+        )
+        XCTAssertTrue(observation.mappedImageJoined)
+        XCTAssertEqual(
+            observation.exactPIDWait.requestedProcessIdentifier,
+            observation.processIdentifier
+        )
+        XCTAssertEqual(
+            observation.exactPIDWait.returnedProcessIdentifier,
+            observation.processIdentifier
+        )
+        XCTAssertEqual(observation.exactPIDWait.waitOptions, 0)
+        XCTAssertTrue(observation.exactPIDWait.exitedNormally)
+        XCTAssertEqual(observation.exactPIDWait.exitStatus, 0)
+        XCTAssertEqual(observation.exactPIDWait.terminationSignal, 0)
+        XCTAssertFalse(observation.exactPIDWait.coreDumped)
+        XCTAssertEqual(observation.standardOutputByteCount, 0)
+        XCTAssertEqual(observation.standardErrorByteCount, 0)
+        XCTAssertTrue(observation.standardOutputReachedEOF)
+        XCTAssertTrue(observation.standardErrorReachedEOF)
+        XCTAssertTrue(observation.processGroupEmptyAfterReap)
+        XCTAssertEqual(
+            observation.combinedSourceWatcherDescriptorCount,
+            39
+        )
+        XCTAssertTrue(observation.workspaceEmptyAfterReap)
+        XCTAssertFalse(observation.productionSupervisorImageEligible)
+        XCTAssertEqual(facade.processExecutionObservation, .unobserved)
+        XCTAssertEqual(facade.buildExecutionObservation, .unobserved)
+        XCTAssertEqual(facade.inventoryExecutionObservation, .unobserved)
+        XCTAssertFalse(facade.completionAuthorized)
+
+        let journalEntries = try FileManager.default
+            .contentsOfDirectory(atPath: fixture.canaryJournal.path)
+        XCTAssertEqual(
+            Set(journalEntries),
+            [
+                "v2-spawn-01-start.json",
+                "v2-spawn-01-terminal.json",
+            ]
+        )
+        let startURL = fixture.canaryJournal.appendingPathComponent(
+            "v2-spawn-01-start.json"
+        )
+        let terminalURL = fixture.canaryJournal.appendingPathComponent(
+            "v2-spawn-01-terminal.json"
+        )
+        let startData = try Data(contentsOf: startURL)
+        let terminalData = try Data(contentsOf: terminalURL)
+        XCTAssertEqual(
+            PrimeSHA256.hexDigest(of: startData),
+            observation.startLeafSHA256
+        )
+        XCTAssertEqual(
+            PrimeSHA256.hexDigest(of: terminalData),
+            observation.terminalLeafSHA256
+        )
+        let startJSON = try XCTUnwrap(
+            try JSONSerialization.jsonObject(with: startData)
+                as? [String: Any]
+        )
+        let terminalJSON = try XCTUnwrap(
+            try JSONSerialization.jsonObject(with: terminalData)
+                as? [String: Any]
+        )
+        XCTAssertNil(startJSON["start_leaf_sha256"])
+        XCTAssertNil(startJSON["terminal_leaf_sha256"])
+        XCTAssertEqual(
+            terminalJSON["start_leaf_sha256"] as? String,
+            observation.startLeafSHA256
+        )
+        XCTAssertNil(terminalJSON["terminal_leaf_sha256"])
+        for url in [startURL, terminalURL] {
+            var status = stat()
+            XCTAssertEqual(lstat(url.path, &status), 0)
+            XCTAssertEqual(
+                status.st_mode & mode_t(0o7777),
+                mode_t(0o400)
+            )
+            XCTAssertEqual(status.st_nlink, 1)
+        }
+        XCTAssertEqual(
+            try FileManager.default.contentsOfDirectory(
+                atPath: fixture.workspace.path
+            ),
+            []
+        )
+        XCTAssertEqual(
+            try FileManager.default.contentsOfDirectory(
+                atPath: fixture.evidence.path
+            ),
+            []
+        )
+        try facade.revalidateContinuity()
+        XCTAssertThrowsError(
+            try facade.spawnIsolatedContainmentCanary()
+        ) {
+            XCTAssertEqual(
+                $0 as?
+                    PrimeValidationSwiftPMBuildInventoryAdmissionError,
+                .guardedPreExecutorTransferred
+            )
+        }
+        XCTAssertEqual(facade.isolatedSpawnCanaryState, .observed)
+    }
+
+    @available(macOS 26.0, *)
+    func testConcurrentIsolatedSpawnCanaryHasExactlyOneWinner()
+        throws
+    {
+        let fixture = try Fixture()
+        defer { fixture.cleanup() }
+        let interlock =
+            PrimeValidationDriverV2IsolatedSpawnCanaryTestInterlock()
+        let facade = try testCanaryFacade(
+            fixture: fixture,
+            interlock: interlock
+        )
+        let race = DriverV2IsolatedSpawnCanaryRace()
+        let ready = DispatchGroup()
+        let done = DispatchGroup()
+        let start = DispatchSemaphore(value: 0)
+        for _ in 0 ..< 2 {
+            ready.enter()
+            done.enter()
+            DispatchQueue.global(qos: .userInitiated).async {
+                ready.leave()
+                start.wait()
+                race.record {
+                    try facade.spawnIsolatedContainmentCanary()
+                }
+                done.leave()
+            }
+        }
+        ready.wait()
+        start.signal()
+        start.signal()
+        guard interlock.waitForDurableStartPublication() else {
+            interlock.permitResume()
+            _ = done.wait(timeout: .now() + .seconds(10))
+            return XCTFail("canary did not publish durable start")
+        }
+        XCTAssertEqual(facade.isolatedSpawnCanaryState, .running)
+        interlock.permitResume()
+        XCTAssertEqual(
+            done.wait(timeout: .now() + .seconds(10)),
+            .success
+        )
+        XCTAssertEqual(race.successCount, 1)
+        XCTAssertEqual(race.errors.count, 1)
+        XCTAssertEqual(
+            race.errors.first as?
+                PrimeValidationSwiftPMBuildInventoryAdmissionError,
+            .guardedPreExecutorTransferred
+        )
+        XCTAssertEqual(facade.isolatedSpawnCanaryState, .observed)
+        XCTAssertEqual(
+            Set(
+                try FileManager.default.contentsOfDirectory(
+                    atPath: fixture.canaryJournal.path
+                )
+            ),
+            [
+                "v2-spawn-01-start.json",
+                "v2-spawn-01-terminal.json",
+            ]
+        )
+    }
+
+    @available(macOS 26.0, *)
+    func testPrimeMutationDuringIsolatedSpawnCanaryPoisonsFacade()
+        throws
+    {
+        try assertIsolatedSpawnCanaryMutationPoisons { fixture in
+            try Data("canary-prime-mutation\n".utf8).write(
+                to: fixture.prime.appendingPathComponent(
+                    "Sources/PrimeCore/" +
+                        "PrimeValidationDriverV2RoleFacade.swift"
+                )
+            )
+        }
+    }
+
+    @available(macOS 26.0, *)
+    func testCompanionMutationDuringIsolatedSpawnCanaryPoisonsFacade()
+        throws
+    {
+        try assertIsolatedSpawnCanaryMutationPoisons { fixture in
+            try Data("canary-companion-mutation\n".utf8).write(
+                to: fixture.companion.appendingPathComponent(
+                    "Sources/Companion.swift"
+                )
+            )
+        }
+    }
+
+    @available(macOS 26.0, *)
+    func testIsolatedSpawnCanaryJournalCollisionPoisonsBeforeSpawn()
+        throws
+    {
+        let fixture = try Fixture()
+        defer { fixture.cleanup() }
+        let collision = fixture.canaryJournal.appendingPathComponent(
+            "v2-spawn-01-start.json"
+        )
+        let bytes = Data("preexisting\n".utf8)
+        try bytes.write(to: collision)
+        let facade = try testCanaryFacade(fixture: fixture)
+
+        XCTAssertThrowsError(
+            try facade.spawnIsolatedContainmentCanary()
+        )
+        XCTAssertEqual(facade.isolatedSpawnCanaryState, .poisoned)
+        XCTAssertNil(facade.isolatedSpawnCanaryObservation)
+        XCTAssertEqual(try Data(contentsOf: collision), bytes)
+        XCTAssertEqual(
+            try FileManager.default.contentsOfDirectory(
+                atPath: fixture.canaryJournal.path
+            ),
+            ["v2-spawn-01-start.json"]
+        )
+        XCTAssertThrowsError(
+            try facade.spawnIsolatedContainmentCanary()
+        ) {
+            XCTAssertEqual(
+                $0 as?
+                    PrimeValidationSwiftPMBuildInventoryAdmissionError,
+                .guardedPreExecutorPoisoned
+            )
+        }
+    }
+
+    @available(macOS 26.0, *)
+    func testIsolatedSpawnCanaryPostSpawnJournalCollisionContainsAndPoisons()
+        throws
+    {
+        let fixture = try Fixture()
+        defer { fixture.cleanup() }
+        let interlock =
+            PrimeValidationDriverV2IsolatedSpawnCanaryTestInterlock()
+        let facade = try testCanaryFacade(
+            fixture: fixture,
+            interlock: interlock
+        )
+        let race = DriverV2IsolatedSpawnCanaryRace()
+        let done = DispatchGroup()
+        done.enter()
+        DispatchQueue.global(qos: .userInitiated).async {
+            race.record {
+                try facade.spawnIsolatedContainmentCanary()
+            }
+            done.leave()
+        }
+        guard interlock.waitForDurableStartPublication() else {
+            interlock.permitResume()
+            _ = done.wait(timeout: .now() + .seconds(10))
+            return XCTFail("canary did not publish durable start")
+        }
+        let collision = fixture.canaryJournal.appendingPathComponent(
+            "v2-spawn-01-terminal.json"
+        )
+        try Data("collision\n".utf8).write(to: collision)
+        interlock.permitResume()
+        XCTAssertEqual(
+            done.wait(timeout: .now() + .seconds(10)),
+            .success
+        )
+        XCTAssertEqual(race.successCount, 0)
+        XCTAssertEqual(race.errors.count, 1)
+        try assertCanaryPIDContained(
+            try canaryStartProcessIdentifier(fixture: fixture)
+        )
+        XCTAssertEqual(facade.isolatedSpawnCanaryState, .poisoned)
+        XCTAssertNil(facade.isolatedSpawnCanaryObservation)
+        XCTAssertEqual(
+            Set(
+                try FileManager.default.contentsOfDirectory(
+                    atPath: fixture.canaryJournal.path
+                )
+            ),
+            [
+                "v2-spawn-01-start.json",
+                "v2-spawn-01-terminal.json",
+            ]
+        )
+        XCTAssertEqual(
+            try FileManager.default.contentsOfDirectory(
+                atPath: fixture.workspace.path
+            ),
+            []
+        )
+        XCTAssertEqual(
+            try FileManager.default.contentsOfDirectory(
+                atPath: fixture.evidence.path
+            ),
+            []
+        )
+        XCTAssertThrowsError(
+            try facade.spawnIsolatedContainmentCanary()
+        ) {
+            XCTAssertEqual(
+                $0 as?
+                    PrimeValidationSwiftPMBuildInventoryAdmissionError,
+                .guardedPreExecutorPoisoned
+            )
+        }
+    }
+
+    func testIsolatedSpawnCanarySourceAndManifestAreClosed() throws {
+        var repositoryRoot = URL(fileURLWithPath: #filePath)
+        for _ in 0 ..< 5 { repositoryRoot.deleteLastPathComponent() }
+        var nestedRoot = URL(fileURLWithPath: #filePath)
+        for _ in 0 ..< 3 { nestedRoot.deleteLastPathComponent() }
+        let childURL = nestedRoot.appendingPathComponent(
+            "Sources/PrimeValidationWorkflowDriverV2SpawnCanary/" +
+                "main.swift"
+        )
+        let childData = try Data(contentsOf: childURL)
+        XCTAssertEqual(childData.count, 381)
+        XCTAssertEqual(
+            PrimeSHA256.hexDigest(of: childData),
+            "052b27259c5bf39748bafbc22eeafb205fb1b3e00e247cda3e368c8ff2dbdd9c"
+        )
+        let childSource = try XCTUnwrap(
+            String(data: childData, encoding: .utf8)
+        )
+        XCTAssertTrue(childSource.contains("import Darwin"))
+        XCTAssertTrue(childSource.contains("Darwin._exit(0)"))
+        for forbidden in [
+            "CommandLine",
+            "STDIN_FILENO",
+            "STDOUT_FILENO",
+            "STDERR_FILENO",
+            "FileManager",
+            "Process(",
+            "posix_spawn",
+            "fork(",
+            "exec",
+            "URLSession",
+            "import Foundation",
+        ] {
+            XCTAssertFalse(childSource.contains(forbidden), forbidden)
+        }
+        let helperSource = try String(
+            contentsOf: repositoryRoot.appendingPathComponent(
+                "Sources/PrimeCore/" +
+                    "PrimeValidationDriverV2IsolatedSpawnCanary.swift"
+            ),
+            encoding: .utf8
+        )
+        XCTAssertEqual(
+            helperSource.components(
+                separatedBy:
+                    "PrimeSecureChildDarwinSubstrate.spawnSuspended("
+            ).count - 1,
+            1
+        )
+        XCTAssertFalse(helperSource.contains("public func"))
+        XCTAssertFalse(helperSource.contains("public init"))
+        XCTAssertFalse(helperSource.contains("CommandLine"))
+        XCTAssertFalse(helperSource.contains("Process("))
+        XCTAssertFalse(helperSource.contains("swift-package"))
+        let deadlineIndex = try XCTUnwrap(
+            helperSource.range(
+                of: "let deadline: PrimeSecureChildPhaseDeadline"
+            )
+        ).lowerBound
+        let continuityIndex = try XCTUnwrap(
+            helperSource.range(of: "try retainedState.revalidate()")
+        ).lowerBound
+        let journalIndex = try XCTUnwrap(
+            helperSource.range(
+                of:
+                    "let journal = try PrimeValidationDriverV2CanaryJournal("
+            )
+        ).lowerBound
+        let spawnIndex = try XCTUnwrap(
+            helperSource.range(
+                of: "PrimeSecureChildDarwinSubstrate.spawnSuspended("
+            )
+        ).lowerBound
+        XCTAssertLessThan(deadlineIndex, continuityIndex)
+        XCTAssertLessThan(continuityIndex, journalIndex)
+        XCTAssertLessThan(journalIndex, spawnIndex)
+        let manifest = try String(
+            contentsOf: Fixture.nestedManifestURL,
+            encoding: .utf8
+        )
+        let canaryTarget = try slice(
+            manifest,
+            from:
+                ".executableTarget(\n            name: \"PrimeValidationWorkflowDriverV2SpawnCanary\"",
+            through: "        .testTarget("
+        )
+        XCTAssertEqual(
+            manifest.components(
+                separatedBy:
+                    ".executable(\n            name: \"PrimeValidationWorkflowDriverV2SpawnCanary\""
+            ).count - 1,
+            1
+        )
+        XCTAssertEqual(
+            manifest.components(
+                separatedBy:
+                    ".executableTarget(\n            name: \"PrimeValidationWorkflowDriverV2SpawnCanary\""
+            ).count - 1,
+            1
+        )
+        XCTAssertFalse(canaryTarget.contains("dependencies:"))
+        XCTAssertTrue(canaryTarget.contains("\"-Xlinker\", \"-S\""))
+    }
+
+    func testFixedRoleFacadeSourceHasOnlyClosedCanaryExecutionSurface()
         throws
     {
         var repositoryRoot = URL(fileURLWithPath: #filePath)
@@ -1627,6 +2074,17 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
             )
         )
         XCTAssertTrue(
+            coreAdmissionSource.contains(
+                "func transferDriverV2RoleFacadeAllowingTestCanary("
+            )
+        )
+        XCTAssertFalse(
+            coreAdmissionSource.contains(
+                "public func " +
+                    "transferDriverV2RoleFacadeAllowingTestCanary("
+            )
+        )
+        XCTAssertTrue(
             coreSource.contains(
                 "make(role: .build, context: context, toolchain: toolchain),\n"
                     + "            make(role: .listXCTest, context: context, "
@@ -1652,6 +2110,13 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
         XCTAssertEqual(
             facadeSource.components(
                 separatedBy: "func revalidateContinuity("
+            ).count - 1,
+            1
+        )
+        XCTAssertEqual(
+            facadeSource.components(
+                separatedBy:
+                    "public func spawnIsolatedContainmentCanary() throws"
             ).count - 1,
             1
         )
@@ -1736,6 +2201,214 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
         ] {
             XCTAssertFalse(driverBridgeSource.contains(forbidden), forbidden)
         }
+    }
+
+    @available(macOS 26.0, *)
+    private func testCanaryFacade(
+        fixture: Fixture,
+        interlock:
+            PrimeValidationDriverV2IsolatedSpawnCanaryTestInterlock? = nil
+    ) throws -> PrimeValidationDriverV2RoleFacade {
+        let guarded = try preparedGuard(for: fixture)
+        let image = try boundTestImage(for: guarded)
+        guard !image.productionSupervisorImageEligible else {
+            throw FixtureError.invalid(
+                "test_canary_production_image"
+            )
+        }
+        let context = try roleTransferInputs(
+            fixture: fixture,
+            guarded: guarded
+        ).context
+        let descriptor = try fixture.openPinnedSpawnCanaryExecutable()
+        defer { _ = Darwin.close(descriptor) }
+        return try image
+            .transferDriverV2RoleFacadeAllowingTestCanary(
+                context: context,
+                heldCanaryExecutableDescriptor: descriptor,
+                testInterlock: interlock
+            )
+    }
+
+    @available(macOS 26.0, *)
+    private func assertIsolatedSpawnCanaryMutationPoisons(
+        mutate: (Fixture) throws -> Void,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) throws {
+        let fixture = try Fixture()
+        defer { fixture.cleanup() }
+        let interlock =
+            PrimeValidationDriverV2IsolatedSpawnCanaryTestInterlock()
+        let facade = try testCanaryFacade(
+            fixture: fixture,
+            interlock: interlock
+        )
+        let race = DriverV2IsolatedSpawnCanaryRace()
+        let done = DispatchGroup()
+        done.enter()
+        DispatchQueue.global(qos: .userInitiated).async {
+            race.record {
+                try facade.spawnIsolatedContainmentCanary()
+            }
+            done.leave()
+        }
+        guard interlock.waitForDurableStartPublication() else {
+            interlock.permitResume()
+            _ = done.wait(timeout: .now() + .seconds(10))
+            return XCTFail(
+                "canary did not publish durable start",
+                file: file,
+                line: line
+            )
+        }
+        do {
+            try mutate(fixture)
+        } catch {
+            interlock.permitResume()
+            _ = done.wait(timeout: .now() + .seconds(10))
+            throw error
+        }
+        interlock.permitResume()
+        XCTAssertEqual(
+            done.wait(timeout: .now() + .seconds(10)),
+            .success,
+            file: file,
+            line: line
+        )
+        XCTAssertEqual(race.successCount, 0, file: file, line: line)
+        XCTAssertEqual(race.errors.count, 1, file: file, line: line)
+        try assertCanaryPIDContained(
+            try canaryStartProcessIdentifier(fixture: fixture),
+            file: file,
+            line: line
+        )
+        XCTAssertEqual(
+            facade.isolatedSpawnCanaryState,
+            .poisoned,
+            file: file,
+            line: line
+        )
+        XCTAssertEqual(
+            facade.continuityState,
+            .poisoned,
+            file: file,
+            line: line
+        )
+        XCTAssertNil(
+            facade.isolatedSpawnCanaryObservation,
+            file: file,
+            line: line
+        )
+        XCTAssertEqual(
+            facade.combinedSourceWatcherDescriptorCount,
+            0,
+            file: file,
+            line: line
+        )
+        XCTAssertThrowsError(
+            try facade.spawnIsolatedContainmentCanary(),
+            file: file,
+            line: line
+        ) {
+            XCTAssertEqual(
+                $0 as?
+                    PrimeValidationSwiftPMBuildInventoryAdmissionError,
+                .guardedPreExecutorPoisoned,
+                file: file,
+                line: line
+            )
+        }
+        XCTAssertEqual(
+            try FileManager.default.contentsOfDirectory(
+                atPath: fixture.canaryJournal.path
+            ),
+            ["v2-spawn-01-start.json"],
+            file: file,
+            line: line
+        )
+        XCTAssertEqual(
+            try FileManager.default.contentsOfDirectory(
+                atPath: fixture.workspace.path
+            ),
+            [],
+            file: file,
+            line: line
+        )
+        XCTAssertEqual(
+            try FileManager.default.contentsOfDirectory(
+                atPath: fixture.evidence.path
+            ),
+            [],
+            file: file,
+            line: line
+        )
+        XCTAssertEqual(
+            facade.processExecutionObservation,
+            .unobserved,
+            file: file,
+            line: line
+        )
+        XCTAssertEqual(
+            facade.buildExecutionObservation,
+            .unobserved,
+            file: file,
+            line: line
+        )
+        XCTAssertEqual(
+            facade.inventoryExecutionObservation,
+            .unobserved,
+            file: file,
+            line: line
+        )
+        XCTAssertFalse(
+            facade.completionAuthorized,
+            file: file,
+            line: line
+        )
+    }
+
+    private func canaryStartProcessIdentifier(
+        fixture: Fixture
+    ) throws -> Int32 {
+        let data = try Data(
+            contentsOf: fixture.canaryJournal.appendingPathComponent(
+                "v2-spawn-01-start.json"
+            )
+        )
+        guard let object = try JSONSerialization.jsonObject(with: data)
+                as? [String: Any],
+              let number = object["process_identifier"] as? NSNumber,
+              number.int64Value > 0,
+              number.int64Value <= Int64(Int32.max)
+        else {
+            throw FixtureError.invalid("canary_start_pid")
+        }
+        return number.int32Value
+    }
+
+    private func assertCanaryPIDContained(
+        _ processIdentifier: Int32,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) throws {
+        var status: Int32 = 0
+        errno = 0
+        XCTAssertEqual(
+            waitpid(processIdentifier, &status, WNOHANG),
+            -1,
+            file: file,
+            line: line
+        )
+        XCTAssertEqual(errno, ECHILD, file: file, line: line)
+        errno = 0
+        XCTAssertEqual(
+            Darwin.kill(-processIdentifier, 0),
+            -1,
+            file: file,
+            line: line
+        )
+        XCTAssertEqual(errno, ESRCH, file: file, line: line)
     }
 
     @available(macOS 26.0, *)
@@ -2091,7 +2764,7 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
         try guarded.revalidateGuards()
         XCTAssertTrue(guarded.companionSourceDescriptorClosureHeld)
         XCTAssertTrue(guarded.companionSourceWatchWindowArmed)
-        XCTAssertEqual(guarded.combinedSourceWatcherDescriptorCount, 32)
+        XCTAssertEqual(guarded.combinedSourceWatcherDescriptorCount, 33)
     }
 
     func testCompanionAdmissionSnapshotCarriesCompleteVnodeTopology()
@@ -2831,6 +3504,27 @@ private final class DriverV2RoleFacadeTransferRace:
     }
 }
 
+private final class DriverV2IsolatedSpawnCanaryRace:
+    @unchecked Sendable
+{
+    private let lock = NSLock()
+    private(set) var successCount = 0
+    private(set) var errors: [Error] = []
+
+    func record(_ operation: () throws -> Void) {
+        do {
+            try operation()
+            lock.lock()
+            successCount += 1
+            lock.unlock()
+        } catch {
+            lock.lock()
+            errors.append(error)
+            lock.unlock()
+        }
+    }
+}
+
 private enum FixtureError: Error {
     case invalid(String)
 }
@@ -2888,6 +3582,7 @@ private final class Fixture {
     let base: URL
     let prime: URL
     let workspace: URL
+    let canaryJournal: URL
     let evidence: URL
     let lease: URL
     let companion: URL
@@ -2912,6 +3607,11 @@ private final class Fixture {
             "workspace",
             isDirectory: true
         )
+        canaryJournal = URL(
+            fileURLWithPath:
+                workspace.path + ".v2-spawn-01-journal",
+            isDirectory: true
+        )
         evidence = base.appendingPathComponent(
             "evidence",
             isDirectory: true
@@ -2925,6 +3625,7 @@ private final class Fixture {
             base,
             prime,
             workspace,
+            canaryJournal,
             evidence,
             lease,
             companion,
@@ -2974,6 +3675,27 @@ private final class Fixture {
         )
         try Self.createDirectory(url)
         return url
+    }
+
+    func openPinnedSpawnCanaryExecutable() throws -> Int32 {
+        var nestedRoot = URL(fileURLWithPath: #filePath)
+        for _ in 0 ..< 3 { nestedRoot.deleteLastPathComponent() }
+        let executable = nestedRoot.appendingPathComponent(
+            ".build/arm64-apple-macosx/release/" +
+                "PrimeValidationWorkflowDriverV2SpawnCanary",
+            isDirectory: false
+        )
+        let descriptor = Darwin.open(
+            executable.path,
+            O_RDONLY | O_NOFOLLOW_ANY | O_CLOEXEC
+        )
+        guard descriptor >= 3 else {
+            if descriptor >= 0 { _ = Darwin.close(descriptor) }
+            throw FixtureError.invalid(
+                "spawn_canary_open_\(errno)"
+            )
+        }
+        return descriptor
     }
 
     func admit(
@@ -3150,6 +3872,9 @@ private final class Fixture {
             "Sources/PrimeCore/" +
                 "PrimeValidationSwiftPMBuildInventoryAdmission.swift":
                 Data("// fixture admission\n".utf8),
+            "Sources/PrimeCore/" +
+                "PrimeValidationDriverV2IsolatedSpawnCanary.swift":
+                Data("// fixture Driver V2 spawn canary\n".utf8),
             "Sources/PrimeCore/PrimeValidationDriverV2RoleFacade.swift":
                 Data("// fixture Driver V2 role facade\n".utf8),
         ]
@@ -3182,6 +3907,8 @@ private final class Fixture {
                     "Sources/PrimeCore/" +
                         "PrimeValidationSwiftPMBuildInventoryAdmission.swift",
                     "Sources/PrimeCore/" +
+                        "PrimeValidationDriverV2IsolatedSpawnCanary.swift",
+                    "Sources/PrimeCore/" +
                         "PrimeValidationDriverV2RoleFacade.swift",
                     "Package.resolved",
                 ],
@@ -3208,6 +3935,8 @@ private final class Fixture {
                 "Sources/PrimeCore/PrimeSecureHeldSourceWatch.swift",
                 "Sources/PrimeCore/" +
                     "PrimeValidationSwiftPMBuildInventoryAdmission.swift",
+                "Sources/PrimeCore/" +
+                    "PrimeValidationDriverV2IsolatedSpawnCanary.swift",
                 "Sources/PrimeCore/" +
                     "PrimeValidationDriverV2RoleFacade.swift",
                 "Package.resolved",

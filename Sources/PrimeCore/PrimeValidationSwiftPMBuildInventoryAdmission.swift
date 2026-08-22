@@ -902,6 +902,37 @@ public final class PrimeValidationSwiftPMDriverV2SupervisorImageCapability:
     public func transferDriverV2RoleFacade(
         context: PrimeValidationDriverV2RoleContext
     ) throws -> PrimeValidationDriverV2RoleFacade {
+        try transferDriverV2RoleFacade(
+            context: context,
+            testCanaryExecutableDescriptor: nil,
+            testCanaryInterlock: nil
+        )
+    }
+
+    /// XCTest-only transfer seam. The caller can transfer only an already-
+    /// opened canary descriptor; no path, role, argv, environment, cwd,
+    /// deadline, stream policy, or callback crosses into production code.
+    /// This method is internal, so DriverCore cannot invoke it.
+    func transferDriverV2RoleFacadeAllowingTestCanary(
+        context: PrimeValidationDriverV2RoleContext,
+        heldCanaryExecutableDescriptor: Int32,
+        testInterlock:
+            PrimeValidationDriverV2IsolatedSpawnCanaryTestInterlock? = nil
+    ) throws -> PrimeValidationDriverV2RoleFacade {
+        try transferDriverV2RoleFacade(
+            context: context,
+            testCanaryExecutableDescriptor:
+                heldCanaryExecutableDescriptor,
+            testCanaryInterlock: testInterlock
+        )
+    }
+
+    private func transferDriverV2RoleFacade(
+        context: PrimeValidationDriverV2RoleContext,
+        testCanaryExecutableDescriptor: Int32?,
+        testCanaryInterlock:
+            PrimeValidationDriverV2IsolatedSpawnCanaryTestInterlock?
+    ) throws -> PrimeValidationDriverV2RoleFacade {
         stateLock.lock()
         let retainedState:
             PrimeValidationSwiftPMRetainedGuardedPreExecutorState
@@ -920,10 +951,27 @@ public final class PrimeValidationSwiftPMDriverV2SupervisorImageCapability:
 
         let facade: PrimeValidationDriverV2RoleFacade
         do {
+            if testCanaryExecutableDescriptor != nil {
+                guard !productionSupervisorImageEligible else {
+                    throw
+                        PrimeValidationSwiftPMBuildInventoryAdmissionError
+                        .rejected(
+                            "driver_v2_canary_test_seam_production_image"
+                        )
+                }
+            } else if testCanaryInterlock != nil {
+                throw PrimeValidationSwiftPMBuildInventoryAdmissionError
+                    .rejected(
+                        "driver_v2_canary_test_interlock_without_image"
+                    )
+            }
             try retainedState.revalidate()
             facade = try PrimeValidationDriverV2RoleFacade(
                 retainedState: retainedState,
-                context: context
+                context: context,
+                testCanaryExecutableDescriptor:
+                    testCanaryExecutableDescriptor,
+                testCanaryInterlock: testCanaryInterlock
             )
             try retainedState.revalidate()
             state = .transferred
@@ -994,6 +1042,8 @@ public enum PrimeValidationSwiftPMBuildInventoryAdmission {
         "Sources/PrimeCore/PrimeSecureHeldSourceWatch.swift",
         "Sources/PrimeCore/" +
             "PrimeValidationSwiftPMBuildInventoryAdmission.swift",
+        "Sources/PrimeCore/" +
+            "PrimeValidationDriverV2IsolatedSpawnCanary.swift",
         "Sources/PrimeCore/PrimeValidationDriverV2RoleFacade.swift",
         "Package.resolved",
     ]
@@ -1286,6 +1336,8 @@ final class PrimeValidationSwiftPMRetainedAdmissionState:
                     "Sources/PrimeCore/" +
                         "PrimeValidationSwiftPMBuildInventoryAdmission.swift",
                     "Sources/PrimeCore/" +
+                        "PrimeValidationDriverV2IsolatedSpawnCanary.swift",
+                    "Sources/PrimeCore/" +
                         "PrimeValidationDriverV2RoleFacade.swift",
                     "Package.resolved",
                 ],
@@ -1300,6 +1352,8 @@ final class PrimeValidationSwiftPMRetainedAdmissionState:
                     "Sources/PrimeCore/PrimeSecureHeldSourceWatch.swift",
                     "Sources/PrimeCore/" +
                         "PrimeValidationSwiftPMBuildInventoryAdmission.swift",
+                    "Sources/PrimeCore/" +
+                        "PrimeValidationDriverV2IsolatedSpawnCanary.swift",
                     "Sources/PrimeCore/" +
                         "PrimeValidationDriverV2RoleFacade.swift",
                     "Package.resolved",

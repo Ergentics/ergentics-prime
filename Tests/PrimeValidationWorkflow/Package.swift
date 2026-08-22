@@ -27,6 +27,10 @@ let package = Package(
             name: "PrimeValidationWorkflowDriverV2Supervisor",
             targets: ["PrimeValidationWorkflowDriverV2Supervisor"]
         ),
+        .executable(
+            name: "PrimeValidationWorkflowDriverV2SpawnCanary",
+            targets: ["PrimeValidationWorkflowDriverV2SpawnCanary"]
+        ),
     ],
     dependencies: [
         .package(
@@ -80,6 +84,14 @@ let package = Package(
                     package: "ergentics-prime"
                 ),
             ],
+            linkerSettings: [
+                .unsafeFlags([
+                    "-Xlinker", "-S",
+                ]),
+            ]
+        ),
+        .executableTarget(
+            name: "PrimeValidationWorkflowDriverV2SpawnCanary",
             linkerSettings: [
                 .unsafeFlags([
                     "-Xlinker", "-S",

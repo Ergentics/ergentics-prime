@@ -317,10 +317,12 @@ struct PrimeValidationDriverV2RolePolicyObservation:
 
 /// Opaque, non-restorable ownership of the Gate B fixed-role policy sequence.
 ///
-/// Gate C adds only a zero-argument dual-root continuity checkpoint. The
-/// facade still exposes no spawn, execute, resume, collect, advance,
-/// next-role, or arbitrary policy method. It is positioned at build and
-/// retains both content watches, the lease, descriptors, and image proof.
+/// Gate C adds a zero-argument dual-root continuity checkpoint. V2-SPAWN-01
+/// adds one zero-argument isolated containment canary without advancing or
+/// executing any fixed build/list role. The facade exposes no arbitrary
+/// policy, command, path, argv, environment, cwd, deadline, or callback. It
+/// remains positioned at build and retains both content watches, the lease,
+/// descriptors, and image proof.
 enum PrimeValidationDriverV2RoleFacadeContinuityState:
     String,
     Equatable,
@@ -338,6 +340,13 @@ public final class PrimeValidationDriverV2RoleFacade:
         case guarded(
             PrimeValidationSwiftPMRetainedGuardedPreExecutorState
         )
+        case canaryRunning(
+            PrimeValidationSwiftPMRetainedGuardedPreExecutorState
+        )
+        case canaryComplete(
+            PrimeValidationSwiftPMRetainedGuardedPreExecutorState,
+            PrimeValidationDriverV2IsolatedSpawnCanaryObservation
+        )
         case poisoned
     }
 
@@ -346,6 +355,10 @@ public final class PrimeValidationDriverV2RoleFacade:
     private let context: PrimeValidationDriverV2RoleContext
     private let fixedPolicies:
         [PrimeValidationDriverV2ClosedRolePolicy]
+    private var testHeldCanaryExecutable:
+        PrimeValidationDriverV2IsolatedSpawnCanaryHeldExecutable?
+    private var testCanaryInterlock:
+        PrimeValidationDriverV2IsolatedSpawnCanaryTestInterlock?
 
     let positionedRole:
         PrimeValidationDriverV2FixedRole = .build
@@ -367,7 +380,7 @@ public final class PrimeValidationDriverV2RoleFacade:
         continuityLock.lock()
         defer { continuityLock.unlock() }
         switch state {
-        case .guarded:
+        case .guarded, .canaryRunning, .canaryComplete:
             return .dualRootGuarded
         case .poisoned:
             return .poisoned
@@ -393,16 +406,59 @@ public final class PrimeValidationDriverV2RoleFacade:
     var combinedSourceWatcherDescriptorCount: Int {
         continuityLock.lock()
         defer { continuityLock.unlock() }
-        guard case let .guarded(value) = state
-        else { return 0 }
-        return value.combinedSourceWatcherDescriptorCount
+        switch state {
+        case let .guarded(value),
+             let .canaryRunning(value),
+             let .canaryComplete(value, _):
+            return value.combinedSourceWatcherDescriptorCount
+        case .poisoned:
+            return 0
+        }
+    }
+
+    var isolatedSpawnCanaryState:
+        PrimeValidationDriverV2IsolatedSpawnCanaryState
+    {
+        continuityLock.lock()
+        defer { continuityLock.unlock() }
+        switch state {
+        case .guarded:
+            return .available
+        case .canaryRunning:
+            return .running
+        case .canaryComplete:
+            return .observed
+        case .poisoned:
+            return .poisoned
+        }
+    }
+
+    var isolatedSpawnCanaryObservation:
+        PrimeValidationDriverV2IsolatedSpawnCanaryObservation?
+    {
+        continuityLock.lock()
+        defer { continuityLock.unlock() }
+        guard case let .canaryComplete(_, observation) = state
+        else { return nil }
+        return observation
     }
 
     init(
         retainedState:
             PrimeValidationSwiftPMRetainedGuardedPreExecutorState,
-        context: PrimeValidationDriverV2RoleContext
+        context: PrimeValidationDriverV2RoleContext,
+        testCanaryExecutableDescriptor: Int32? = nil,
+        testCanaryInterlock:
+            PrimeValidationDriverV2IsolatedSpawnCanaryTestInterlock? = nil
     ) throws {
+        guard testCanaryExecutableDescriptor == nil
+                || !retainedState.productionSupervisorImageEligible,
+              testCanaryInterlock == nil
+                || testCanaryExecutableDescriptor != nil
+        else {
+            throw PrimeValidationSwiftPMBuildInventoryAdmissionError
+                .rejected("driver_v2_canary_test_seam")
+        }
         try context.validate(against: retainedState)
         let policies = try PrimeValidationDriverV2ClosedRolePolicy
             .fixedSequence(
@@ -425,6 +481,16 @@ public final class PrimeValidationDriverV2RoleFacade:
         positionedPolicy = PrimeValidationDriverV2RolePolicyObservation(
             policies[0]
         )
+        if let testCanaryExecutableDescriptor {
+            testHeldCanaryExecutable = try
+                PrimeValidationDriverV2IsolatedSpawnCanaryHeldExecutable(
+                    duplicatingTestDescriptor:
+                        testCanaryExecutableDescriptor
+                )
+        } else {
+            testHeldCanaryExecutable = nil
+        }
+        self.testCanaryInterlock = testCanaryInterlock
         state = .guarded(retainedState)
     }
 
@@ -437,8 +503,12 @@ public final class PrimeValidationDriverV2RoleFacade:
         let retainedState:
             PrimeValidationSwiftPMRetainedGuardedPreExecutorState
         switch state {
-        case let .guarded(value):
+        case let .guarded(value),
+             let .canaryComplete(value, _):
             retainedState = value
+        case .canaryRunning:
+            throw PrimeValidationSwiftPMBuildInventoryAdmissionError
+                .guardedPreExecutorTransferred
         case .poisoned:
             throw PrimeValidationSwiftPMBuildInventoryAdmissionError
                 .guardedPreExecutorPoisoned
@@ -447,6 +517,61 @@ public final class PrimeValidationDriverV2RoleFacade:
             try retainedState.revalidate()
         } catch {
             state = .poisoned
+            throw error
+        }
+    }
+
+    /// Runs exactly one pinned, silent, no-argument containment canary while
+    /// both Gate C continuity windows remain armed. This does not advance the
+    /// build role or close any process-derived Driver V2 authority.
+    @available(macOS 26.0, *)
+    public func spawnIsolatedContainmentCanary() throws {
+        let retainedState:
+            PrimeValidationSwiftPMRetainedGuardedPreExecutorState
+        let heldCanaryExecutable:
+            PrimeValidationDriverV2IsolatedSpawnCanaryHeldExecutable?
+        let canaryInterlock:
+            PrimeValidationDriverV2IsolatedSpawnCanaryTestInterlock?
+        continuityLock.lock()
+        switch state {
+        case let .guarded(value):
+            retainedState = value
+            heldCanaryExecutable = testHeldCanaryExecutable
+            canaryInterlock = testCanaryInterlock
+            testHeldCanaryExecutable = nil
+            testCanaryInterlock = nil
+            state = .canaryRunning(value)
+        case .canaryRunning, .canaryComplete:
+            continuityLock.unlock()
+            throw PrimeValidationSwiftPMBuildInventoryAdmissionError
+                .guardedPreExecutorTransferred
+        case .poisoned:
+            continuityLock.unlock()
+            throw PrimeValidationSwiftPMBuildInventoryAdmissionError
+                .guardedPreExecutorPoisoned
+        }
+        continuityLock.unlock()
+
+        do {
+            let observation = try
+                PrimeValidationDriverV2IsolatedSpawnCanaryExecutor.execute(
+                    retainedState: retainedState,
+                    testHeldExecutable: heldCanaryExecutable,
+                    testInterlock: canaryInterlock
+                )
+            continuityLock.lock()
+            guard case .canaryRunning = state else {
+                state = .poisoned
+                continuityLock.unlock()
+                throw PrimeValidationSwiftPMBuildInventoryAdmissionError
+                    .guardedPreExecutorPoisoned
+            }
+            state = .canaryComplete(retainedState, observation)
+            continuityLock.unlock()
+        } catch {
+            continuityLock.lock()
+            state = .poisoned
+            continuityLock.unlock()
             throw error
         }
     }
