@@ -1176,7 +1176,18 @@ paths are outside the allowlist.
 
 The canonical companion measured at freeze has 1,306 regular files, 154
 directories, 66,812,637 aggregate bytes, and a largest file of 32,833,664
-bytes. Prime's 8 MiB per-file provenance limit therefore cannot be reused.
+bytes. Its complete non-`.git` topology requires 1,460 watches. The exact
+Gate B Prime snapshot requires 539 file watches and 151 parent-directory
+watches, for 690. The combined predecessor requirement is therefore 2,150,
+which is below the frozen 4,096 ceiling. Prime's 8 MiB per-file provenance
+limit remains unchanged and cannot be reused for companion files.
+
+Every captured non-`.git` directory, including an empty directory, is an
+explicit held directory with its own vnode registration and exact parent
+inventory membership. An empty directory is never dropped merely because no
+file path names it. A directory or file appearing after capture cannot become
+part of the initial baseline: the complete topology join rejects it before the
+guarded owner is published.
 
 The companion snapshot is internal continuity state only. It is not a Git
 HEAD, cleanliness, tracked-tree, manifest, or process observation. Gate D
@@ -1213,7 +1224,9 @@ poisoned, and rejects retry even if bytes are restored.
 | Transient companion create/unlink | poison remains permanent |
 | Hidden non-`.git` file mutation | poison remains permanent |
 | Root `.git` replacement/removal | reject or poison |
-| Empty directory, symlink, FIFO/special node | reject before guarded owner |
+| Pre-existing empty non-`.git` directory | retained and watched as explicit topology |
+| New or transient empty directory after capture | reject or poison; never rebaseline |
+| Symlink, `.git` file, FIFO, socket, or device | reject before guarded owner |
 | Excess depth/count/bytes | bounded rejection |
 | Mutation after admission and before watch construction | rejection; no rebaseline |
 
