@@ -2147,3 +2147,595 @@ Gate E is the only permitted successor, separately frozen on exact source
 live Git/Swift process bytes while retaining C continuity and performing the
 PrimeCore held join. This durable checkpoint is rank-4 prose and is not Gate
 E's source predecessor. No Gate E source or process is authorized here.
+
+## Gate D1 / E0 predecessor freeze — corrected live scope and fixed probes
+
+Status: `FROZEN_NOT_EXECUTED`
+
+### Exact predecessor and data correction
+
+| Field | Exact value |
+| --- | --- |
+| Gate | E only; fixed live Prime Git, companion Git, Swift version, and Swift target-info observations |
+| Source predecessor | `272baaba5e4e3be3f17f6c1704e4622b514b12d8` |
+| Source predecessor tree | `fdbf508d3a461f4e5ba5098453c6c1f8351f75b1` |
+| Source predecessor parent | `9f7d95a5bebd492827f71fa0bb340d5af1859a90` |
+| Embedded source identity | `36fed0d96845ea8f5304cd762f21cbf487d278fd00c90080e4b35ffffbcb18c0` |
+| Durable-control predecessor | `ab26e6dd00202f5fd963e970ba5481986f0ddd91` |
+| Durable-control predecessor tree | `1dff8d74d72521c3e28dc561a1126325336b7495` |
+| Source worktree requirement | clean before the first source mutation |
+| Durable-control rank | prose rank 4; never a source predecessor or execution fact |
+
+The D0 phrase `Prime tracked tree` was too broad for the live Gate C owner.
+The measured predecessor data are authoritative over that phrase:
+
+| Prime scope at `272baaba...` | Tracked paths | Aggregate blob bytes | Largest blob | Blobs over the frozen 8 MiB Prime cap |
+| --- | ---: | ---: | ---: | ---: |
+| Full Git tree | 658 | 176,428,530 | 34,828,304 | 4 |
+| Retained legacy source authority | 543 | 21,779,231 | 604,772 | 0 |
+| Outside the Gate C authority | 115 | 154,649,299 | — | 4 |
+
+The full Prime Git tree therefore cannot join Gate C and cannot satisfy Gate
+D's Prime per-file cap. D1 corrects only the future live Prime scope:
+
+- `repositoryTrackedTreeSHA256` binds the exact retained legacy Prime source
+  authority path set, not every tracked path in the repository;
+- `companionTrackedTreeSHA256` continues to bind the complete companion Git
+  tree outside `.git/**`; and
+- both whole-root clean-status observations include ignored entries and remain
+  exact and empty, so every tracked change and every nonempty untracked or
+  ignored entry Git reports outside Prime's manifest scope rejects Gate E.
+
+Git does not represent empty untracked directories. Outside Prime's legacy C
+roots, such a directory is a named residual rather than something prose calls
+clean; it closes no tracked-content fact. Inside Prime's C roots and throughout
+the companion working tree, C topology continuity remains authoritative.
+
+No Gate D source, Codable schema, receipt field, canonical grammar, cap,
+golden fixture, or checkpoint identity changes. A Gate D manifest alone does
+not carry this scope or restore live authority. The Gate E non-Codable binding
+must require the live Prime raw path set to equal the retained Gate C source
+snapshot one-for-one.
+
+An outer-workstation measurement using the exact fixed Prime pathspecs below
+produced 543 NUL records, 77,819 raw bytes, and SHA-256
+`57ee1fa93231d5e85f4b17cd7713f0af56feb470bf4a8e4c79cf6a2778da2e41`.
+This is a predecessor measurement, not a frozen future manifest digest or a
+Driver V2 observation. The companion predecessor remains 1,306 files,
+66,812,637 aggregate held bytes, largest file 32,833,664 bytes, and pinned
+HEAD `163fc100710ece48119bc25954452d10f6a84f7f`.
+
+### Exact source mutation allowlist
+
+| Ordinal | Path | Permitted mutation |
+| --- | --- | --- |
+| 1 | `Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift` | exact source-identity reseal only |
+| 2 | `Sources/PrimeCore/PrimeValidationDriverV2FixedProbeExecutor.swift` | new fixed 16-child executor, raw observation, held executable policy, and private Gate E journal |
+| 3 | `Sources/PrimeCore/PrimeValidationDriverV2RoleFacade.swift` | add one zero-argument one-shot fixed-probe transition and retained success state only |
+| 4 | `Sources/PrimeCore/PrimeValidationSwiftPMBuildInventoryAdmission.swift` | retain and revalidate fixed Git and Swift physical images/personalities; add the two new source owners to existing source lists |
+| 5 | `Sources/PrimeCore/PrimeNativeNeuralGateHeldSourceClosure.swift` | project Gate D held-entry values from the existing Gate C descriptors after exact revalidation; no second owner |
+| 6 | `Sources/PrimeCore/PrimeSecureHeldSourceWatch.swift` | internal forwarding seam for the existing retained watch owner only |
+| 7 | `Tests/PrimeValidationWorkflow/Sources/PrimeValidationWorkflowDriverCore/PrimeValidationDriverV2Admission.swift` | make the existing target-info parser module-internal and correct only the repository receipt's fixed Git path policy from `/usr/bin/git` to exact `<validated-DEVELOPER_DIR>/usr/bin/git`; Codable fields/layout stay unchanged |
+| 8 | `Tests/PrimeValidationWorkflow/Sources/PrimeValidationWorkflowDriverCore/PrimeValidationDriverV2FixedProbeBinding.swift` | new non-Codable raw-to-manifest/toolchain/repository binding which retains the facade |
+| 9 | `Tests/PrimeValidationWorkflow/Sources/PrimeValidationWorkflowDriverV2Supervisor/main.swift` | after the unchanged decoded frame binds the supervisor, unconditionally consume and run the zero-argument Gate E transition; no transport growth |
+| 10 | `Tests/PrimeValidationWorkflow/Tests/PrimeValidationWorkflowDriverCoreTests/PrimeValidationDriverV2AdmissionTests.swift` | pure binding, parser, mutation, source-surface, and production-host-rejection cases only |
+| 11 | `Tests/PrimeValidationWorkflow/Tests/PrimeValidationWorkflowDriverCoreTests/PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests.swift` | Gate E retained-owner and local Release supervisor cases only |
+
+No package manifest, lock file, product, target, resource, inventory list,
+planner, contract, missing-authority enum, receipt schema, B role table, role
+bridge, image bridge, Gate D manifest owner, tracked-held-entry mechanics,
+spawn canary or pin, process substrate, supervision owner, Git blob transport,
+staging owner, `.github`, root test, science, or product path is in this
+allowlist. A change outside the eleven paths is a hard stop.
+
+The two new source files add two files and no directory. With no deletion or
+rename, the candidate must measure exactly 545 source-snapshot files, 544
+canonical identity records, and 152 Prime authority directories. The watch
+topology must be 545 Prime files plus 152 directories = 697 Prime watches;
+companion remains 1,460; combined must be exactly 2,157 / 4,096. Prime's
+8 MiB per-file limit and companion's 64 MiB per-file limit remain unchanged.
+
+### Closed facade transition and authority split
+
+Gate E adds exactly one public SPI operation to the existing opaque facade:
+
+~~~swift
+facade.observeFixedGitAndSwiftProbes()
+    throws -> PrimeValidationDriverV2FixedProbeRawCapability
+~~~
+
+It accepts zero arguments and exposes no role ID, path, descriptor, argv,
+environment, cwd, timeout, cap, output sink, callback, or retry selector. It
+is one-winner under sequential and concurrent calls. Any acquisition,
+continuity, journal, spawn, drain, containment, raw-validation, or DriverCore
+binding failure permanently poisons and releases the live capability; it is
+not repaired, decoded, or retried. The already-frozen B role table remains
+exactly `build`, `list_xctest`, `list_swift_testing`, still positioned at
+`build`, and none of those roles executes or advances in E.
+
+The return is an opaque, non-Codable, one-shot raw capability, not an evidence
+value that can be reconstructed. The shared state transition is exact:
+
+~~~text
+facade guarded -> probes_running -> awaiting_one_binding
+raw owner awaiting_one_binding -> bound_lifetime | poisoned
+facade/raw owner after either terminal transition -> never reusable
+~~~
+
+On process success the facade transfers the sole retained C/lease/image
+lifetime into the raw capability and remains permanently consumed. Its
+read-only raw observation is descriptor-free and may be copied only as data;
+the authority object is unique. After independently validating every semantic
+field, DriverCore calls exactly one zero-argument internal/SPI
+`consumeValidatedBindingLifetime()` on that raw owner. It either transfers the
+same live state into the non-Codable bound lifetime or rejects as already
+consumed. Dropping or explicitly rejecting an awaiting raw owner invokes its
+fail-only zero-argument poison transition and releases the retained resources.
+No Boolean success input, callback, facade observation property, or second
+owner exists. The successful DriverCore binding retains the consumed facade
+identity plus the bound lifetime.
+
+The ownership split is exact:
+
+| Owner | Gate E responsibility | Explicit non-authority |
+| --- | --- | --- |
+| PrimeCore | retain C watches/descriptors/lease/image, hold fixed Git/Swift images, execute the fixed sequence, contain each child, project held entries from the existing C owner, and return one non-Codable raw observation | no semantic repository/toolchain receipt, completion, build/list/staging/inventory, generic command API, or durable product truth |
+| DriverCore | reparse every raw byte sequence, construct the two existing Gate D manifests and complete repository receipt, construct a new non-Codable partial Swift-probe binding, bind those identities to the retained raw lifetime, and expose the reduced missing-authority set | no complete toolchain receipt before `swift-package` maps in F; no filesystem, image opening, process, journal writer, argv/env/cwd selection, role advance, staging, build, inventory, shard, or completion authority |
+| Dedicated Release supervisor | consume the canonical stdin request, bind its own image, run the fixed transition, require DriverCore binding, revalidate continuity, retain the live owner through silent exit 0 | no new request field, JSON path loader, environment protocol, command language, child selector, or public receipt |
+
+PrimeCore raw success closes no Driver V2 semantic authority. Only a successful
+non-Codable DriverCore binding backed by the retained facade removes exactly:
+
+- `prime_git_head_and_clean_process_observation`;
+- `companion_git_head_and_clean_process_observation`;
+- `swift_version_process_observation`; and
+- `swift_target_info_process_observation`.
+
+Build execution, artifact staging, XCTest inventory, and Swift Testing
+inventory remain missing. `frozenPlannerV2`, every Codable field/layout, the
+toolchain receipt validation, missing-authority enum, and current admission
+chain remain unchanged. The repository receipt's fixed Git-path validation
+policy is corrected to the Xcode Git image actually executed; its shape and
+encoding do not change.
+
+### Exact Git roots, scope, and entry join
+
+Both production roots must have a root `.git` directory entry. Companion C
+already captured its no-follow device/inode/type identity while excluding its
+descendants. Prime's legacy C topology deliberately did not include `.git`;
+Gate E therefore opens that one Prime root entry no-follow exactly once before
+the first child, retains its descriptor and initial identity for the complete
+sequence, and never enters a descendant. Gate E also opens the companion entry
+no-follow exactly once and must join it to C's recorded excluded-root-`.git`
+device/inode identity before retaining it; C recorded that namespace entry but
+did not watch descendants or supply a Git-content descriptor. This does not
+create a second companion working-tree content closure. Both entries are
+revalidated before and after every child and at terminal. `.git/**`
+descendants remain excluded from the C watches. A root `.git` file, deletion,
+rename, replacement, type change, or identity rebound rejects production Gate
+E. A Release harness may create a clean local clone at the exact source
+commit/tree to provide a real `.git` directory; it uses no network and does
+not make Git the scientific authority.
+
+For each `.git` entry, E retains exact no-follow directory type, device,
+inode, uid, gid, and permission mode from the first descriptor-relative open.
+The device must equal the held repository-root device, uid must equal the
+effective user, and mode must be nonzero with no group/world write bits. The
+companion device/inode/type must also equal C's recorded excluded-entry
+identity. Before and after every child and at terminal, E requires the held
+descriptor tuple unchanged and a descriptor-relative no-follow named rebound
+to that tuple. Directory size, link count, mtime, and ctime are deliberately
+not identity fields because accepted `.git/**` descendant churn can change
+them; they cannot substitute for the frozen tuple.
+
+Prime uses exactly these ten literal pathspecs, in this unsigned ASCII order,
+fixed inside PrimeCore and never supplied by the caller:
+
+1. `.gitignore`
+2. `.swiftpm/configuration/mirrors.json`
+3. `LICENSE`
+4. `Package.resolved`
+5. `Package.swift`
+6. `README.md`
+7. `Sources`
+8. `THIRD_PARTY_NOTICES.md`
+9. `Tests`
+10. `docs`
+
+The parsed live Prime path set must equal the retained
+`PrimeSwiftSourceSnapshot.files` raw UTF-8 path set exactly. The parsed live
+companion path set must equal the retained complete non-`.git` file snapshot
+exactly. A hidden tracked entry that C did not retain, any symlink, any
+gitlink, missing/extra/reordered path, or same-bytes/new-inode replacement is
+fail-closed `ABSTAIN`; E does not widen C or add a symlink holder.
+
+For every regular-file entry, the existing Gate C owner—not an absolute/root
+reopen or a second retained closure—constructs
+`PrimeValidationDriverV2TrackedTreeHeldEntry` after checking its original
+admission identity, held descriptor identity, post-read identity, exact
+bytes/hash, and current named-path rebound. The rebound is descriptor-relative
+through the already-held C directory chain using no-follow `fstatat` or a
+transient no-follow `openat`; it is identity-checked and not retained as a
+second owner. The projection returns evidence data but no descriptor.
+Continuity is polled again after the complete local join.
+
+### Exact fixed process sequence
+
+Gate E executes exactly 16 children in this order under one facade call:
+
+| Ordinal | Fixed role | Root / cwd | Required stdout |
+| ---: | --- | --- | --- |
+| 01 | `prime_head_pre` | held Prime root | exactly 40 lowercase hex bytes plus LF |
+| 02 | `prime_object_format` | held Prime root | exactly `sha1` plus LF |
+| 03 | `prime_status_pre` | held Prime root | exactly empty |
+| 04 | `prime_tree_discovery` | held Prime root | bounded Gate D raw tree bytes |
+| — | local held-entry join | existing Prime C owner | no child |
+| 05 | `prime_tree_replay` | held Prime root | byte-for-byte equal to discovery |
+| 06 | `prime_status_post` | held Prime root | exactly empty |
+| 07 | `prime_head_post` | held Prime root | byte-for-byte equal to HEAD pre |
+| 08 | `companion_head_pre` | held companion root | exactly 40 lowercase hex bytes plus LF |
+| 09 | `companion_object_format` | held companion root | exactly `sha1` plus LF |
+| 10 | `companion_status_pre` | held companion root | exactly empty |
+| 11 | `companion_tree_discovery` | held companion root | bounded Gate D raw tree bytes |
+| — | local held-entry join | existing companion C owner | no child |
+| 12 | `companion_tree_replay` | held companion root | byte-for-byte equal to discovery |
+| 13 | `companion_status_post` | held companion root | exactly empty |
+| 14 | `companion_head_post` | held companion root | byte-for-byte equal to HEAD pre and the pinned companion commit |
+| 15 | `swift_version` | held Prime root | bounded exact Swift version bytes |
+| 16 | `swift_target_info` | held Prime root | bounded exact target-info JSON bytes |
+
+For each root, discovery/replay exact equality, HEAD pre/post exact equality,
+both exact-empty statuses, exact SHA-1 object format, held-entry join, and C
+continuity are one indivisible observation. The replay tree supplies Gate D's
+manifest input. Because `.git/**` is intentionally unwatched, these bookends
+prove bounded endpoint agreement; they do not claim detection of Git-admin
+state which changes and restores wholly between endpoints.
+
+### Exact Git and Swift invocation policy
+
+The Git physical image is the already-held no-follow regular executable at
+exact `<held-DEVELOPER_DIR>/usr/bin/git`, capped at 64 MiB, with logical
+`argv[0]` exactly `git`. A dry measurement established that `/usr/bin/git`
+emits a Darwin temporary-directory warning under the frozen five-entry
+environment, while the Xcode Git image emits exact empty stderr; `/usr/bin/git`
+is therefore not the Gate E image. Every Git child receives this fixed common
+prefix:
+
+~~~text
+--no-pager
+--no-optional-locks
+--no-replace-objects
+--no-lazy-fetch
+--literal-pathspecs
+--git-dir=.git
+--work-tree=.
+-c core.fsmonitor=false
+-c core.untrackedCache=false
+-c submodule.recurse=false
+-c core.hooksPath=/dev/null
+~~~
+
+The suffixes are exact:
+
+~~~text
+rev-parse --verify HEAD^{commit}
+rev-parse --show-object-format
+status --porcelain=v2 -z --untracked-files=all --ignored=matching --ignore-submodules=none --no-renames
+ls-tree -r -z --full-tree <validated-HEAD-pre> -- <ten-fixed-Prime-pathspecs>
+ls-tree -r -z --full-tree <validated-HEAD-pre> --
+~~~
+
+The final tree form is companion-only. The commit argument is derived inside
+PrimeCore from the exact validated pre-HEAD bytes; it never crosses the
+facade. HEAD stdout is capped at 128 bytes, object format at 5 bytes, status
+and tree stdout independently at 16 MiB, and every Git stderr at 64 KiB.
+Every independent memory drain uses exact 64 KiB chunks. Success requires
+exact exit 0, EOF, no overflow, and empty stderr.
+`--no-lazy-fetch` is mandatory: missing local objects reject rather than
+hydrating a partial clone. No command has network authority.
+The fixed relative `--git-dir=.git` and `--work-tree=.` are resolved only after
+the suspended cwd join. They prevent ancestor discovery or repository
+`core.worktree` configuration from redirecting the observation away from the
+held root and held `.git` entry.
+
+Admission also holds the physical Xcode `swift-frontend` image with a 512 MiB
+cap and the no-follow `swift -> swift-frontend` and
+`swiftc -> swift-frontend` personalities. Their physical image, symlink
+metadata/target, canonical path, device/inode, exact bytes/count/hash, owner,
+mode, link count, and mapped-image join must agree. Both Swift children use
+the physical held `swift-frontend`, logical `argv[0]` exactly `swift`, held
+Prime cwd, and respectively exact argument lists `--version` and
+`-print-target-info`. Stdout caps are 16 KiB and 64 KiB respectively; stderr
+is independently capped at 64 KiB and must be empty.
+
+All 16 children use stdin `/dev/null` / immediate EOF and this complete,
+sorted, five-entry replacement environment derived from retained admission:
+
+~~~text
+DEVELOPER_DIR=<held canonical developer directory>
+LANG=C
+LC_ALL=C
+SDKROOT=<held canonical SDK root>
+TERM=dumb
+~~~
+
+There is no inherited environment, `PATH`, `HOME`, Git environment, SwiftPM
+19-entry environment, or staging overlay.
+
+### One deadline, containment, and continuity ordering
+
+Git, `swift-frontend`, `swift`, and `swiftc` are acquired and retained during
+the existing prerequisite admission, before the facade exists. At facade
+entry, before opening the Gate E journal, acquiring either `.git` entry, or
+spawning a child, Gate E establishes one checked absolute deadline using the
+existing `DispatchTime.now().uptimeNanoseconds` /
+`PrimeSecureChildPhaseDeadline` clock authority. The limit is exactly
+30,000,000,000 nanoseconds and is never reset per root or child. Every pre-held
+image is revalidated under that deadline. Exhaustion before a spawn rejects
+without that spawn; exhaustion after a spawn invokes exact containment. No
+deadline or supervision owner is mutated by E.
+
+The same endpoint covers the whole semantic transition, not only child wall
+time. Nonregressing uptime checks are required through every lightweight and
+full validation, every journal publication/readback, raw-terminal publication,
+DriverCore parse/binding work, and the final raw-owner transfer. The
+zero-argument `consumeValidatedBindingLifetime()` performs the last
+`PrimeSecureChildPhaseDeadline.acceptsCompletion` check; no successful bound
+lifetime may cross the deadline. Expiration with a live child contains it.
+Expiration after reap poisons and leaves Gate E semantically incomplete and
+nonretryable; whatever exact journal prefix already exists remains immutable,
+without pretending child cleanup is still needed.
+
+The measured retained Prime-plus-companion content is 88,591,868 bytes per
+paired held-byte pass. Calling the current full retained-state revalidation
+three times around each of 16 children would force at least 4.25 GiB of reread
+work, and the current double-pass wrapper would be still larger. E does not
+hide that cost inside the 30-second pin. Full admission/held-byte validation
+occurs exactly at Gate E entry, after each of the two local tracked-entry
+joins, and at Gate E terminal.
+
+Paths 5 and 6 may add one zero-argument lightweight, non-rebaselining
+checkpoint on the existing C owner. It does exactly one thing: poll both
+continuously armed C kqueues and reject any event, read error, or unexpected
+event count. No path, descriptor, callback, selector, or E-owned object crosses
+that seam; it does not reread source contents, reopen a root, replace a
+descriptor, clear a baseline, or create a second owner. Immediately after that
+zero-argument poll, the executor privately revalidates the lease,
+admission-held roots/cwd/images, and E-owned `.git` and journal descriptors plus
+named identities. Any poll failure, lease loss, or identity drift poisons.
+The heavy entry/join/terminal checks remain the byte authority.
+
+Before child 1, Gate E performs the full entry validation, derives all held E
+views, publishes and verifies `gate-e-prestart.json`, and then begins the fixed
+sequence. Every child uses only the existing Darwin suspended-spawn substrate
+and supervision kernel. The per-child requirements are:
+
+1. run the lightweight checkpoint under the one deadline;
+2. spawn the one fixed child suspended, adopt both independent memory drains
+   and the exact-child obligation, and prove `SID == PGID == PID`;
+3. join the suspended cwd device/inode and the mapped physical executable
+   device/inode;
+4. run the lightweight checkpoint again and publish/verify that child's
+   durable start;
+5. deliver exactly one `SIGCONT` only after the start is durable;
+6. observe death, reach independent bounded EOF on stdout and stderr, reject
+   overflow rather than truncate, require the fixed semantic raw framing,
+   prove pre-reap group membership contains the exact child, call
+   `waitpid(PID, 0)` exactly once, and require `process_group_empty`;
+7. run the lightweight checkpoint again, then publish/verify that child's
+   terminal; and
+8. only then begin the next never-started fixed role.
+
+After each discovery tree, the corresponding existing-owner held-entry join
+and its full paired validation complete before that root's replay child. After
+child 16, the final full paired validation and root/name rebound complete
+before `gate-e-raw-terminal.json` and before DriverCore binding.
+
+Fixed Git or Swift implementations may transiently create helpers. E claims
+only isolated session/process-group containment and an empty terminal group,
+not that no descendant ever existed. Every post-spawn rejection contains,
+drains, reaps, and proves group empty before throwing. If cleanup returns the
+existing `mustFailStop` result, the dedicated supervisor exits 70. `Process`,
+shell, `fork`, a second cleanup spawn, detach, caller callback, and
+`PrimeNativeGitBlobTransport` are forbidden.
+
+### Private Gate E durability journal
+
+The general live-execution rule forbids resuming a child before its start is
+durable. E therefore owns one new pre-existing, canonical, local-APFS, private
+`0700`, initially empty root at the exact derived sibling path:
+
+~~~text
+workspaceRoot.absolutePath + ".driver-v2-gate-e-journal"
+~~~
+
+It is a real no-symlink directory, effective-user owned, group-consistent
+with the workspace, link count two while empty, descriptor-held,
+device/inode named-path rebound, and disjoint/non-nested with Prime,
+companion, workspace, evidence, and lease roots. It is not the Driver V2
+evidence ledger, staging tree, product receipt, or release truth. Workspace
+and evidence remain empty throughout E.
+
+Local APFS changes this journal directory's observed link count from `2+n` to
+`2+n+1` when the next authorized regular leaf is published. For every exact
+prefix `n = 0...34`, the journal implementation must require inventory count
+and names equal that prefix and root link count exactly `2+n`. Device, inode,
+type, uid, gid, and mode never change. Root mtime/ctime and link count may
+transition only around the single exclusive publication of the next expected
+leaf; after sync/readback they are recaptured, named-path rebound, checked
+stable across a second read, and become the sole expected identity for the
+next prefix. Any other root transition rejects. This generalizes the measured
+canary `2 -> 3 -> 4` rule rather than repeating its off-by-one failure.
+
+The exact 34 exclusive/no-replace canonical JSON-plus-LF leaves are:
+
+- `gate-e-prestart.json`;
+- for each ordinal/role base `01-prime-head-pre`,
+  `02-prime-object-format`, `03-prime-status-pre`,
+  `04-prime-tree-discovery`, `05-prime-tree-replay`,
+  `06-prime-status-post`, `07-prime-head-post`,
+  `08-companion-head-pre`, `09-companion-object-format`,
+  `10-companion-status-pre`, `11-companion-tree-discovery`,
+  `12-companion-tree-replay`, `13-companion-status-post`,
+  `14-companion-head-post`, `15-swift-version`, and
+  `16-swift-target-info`: exact `<base>-start.json` and
+  `<base>-terminal.json`; and
+- `gate-e-raw-terminal.json`.
+
+Each leaf is at most 64 KiB, encoded from fields that exclude its own digest,
+written completely, synchronized, changed to mode `0400`, synchronized again,
+parent-directory full-synchronized, reopened no-follow, read back, canonical
+byte-equal, identity-joined, and SHA-256 verified while held. An existing or
+unexpected leaf rejects. A start without terminal is permanently incomplete;
+the same journal is never reused or repaired.
+
+The prestart binds the source identity, journal/root/image identities, fixed
+policy digest, complete five-entry environment digest, one absolute deadline,
+and the exact 16-role order. Each child start binds its ordinal/role, prestart
+hash, predecessor kind/hash, PID/session/group, spawn flags and return time,
+deadline, held cwd and physical image, suspended cwd join, mapped-image join,
+and pre-resume continuity state. Ordinal 1 encodes predecessor kind exact
+`prestart` plus the prestart leaf hash; every later ordinal encodes predecessor
+kind exact `child_terminal` plus the immediately prior child-terminal hash.
+There is no absent/null predecessor and absence is never treated as evidence.
+Each child terminal binds its
+complete external start-leaf hash, raw stdout/stderr counts and SHA-256 values,
+EOF and overflow facts, exact completion/reap/group-empty facts, and post-reap
+continuity. The raw terminal binds every ordered terminal hash plus the two
+HEAD agreements, four empty statuses, two object-format values, two tree
+replay equalities, both held-join summaries, and both Swift raw bindings.
+None attempts a self-hashing fixed point.
+
+These leaves prove only local start ordering, containment, and raw sequence
+durability. Decoding them restores no capability and closes no semantic Gate
+E authority. Missing `gate-e-raw-terminal.json` is incomplete even if all
+children exited. The DriverCore non-Codable binding must succeed in the same
+live process before silent supervisor exit 0.
+
+### DriverCore semantic binding
+
+After PrimeCore returns the retained raw owner, DriverCore must independently:
+
+1. validate the canonical intent and exact dedicated supervisor observation;
+2. parse both HEAD bookends, both `sha1\n` values, all four statuses, both
+   discovery/replay pairs, Swift version, and Swift target-info bytes;
+3. require Prime HEAD stability, companion HEAD stability and equality to
+   `PrimeValidationRunIntentV2.requiredCompanionCommit`, exact empty statuses,
+   exact tree replay equality, and exact process/journal lifecycle facts;
+4. construct both existing Gate D manifests from the replay bytes and the
+   PrimeCore-held entries, with Prime's path set exactly equal to the retained
+   source authority and companion's path set exactly equal to the complete C
+   closure;
+5. construct the complete repository receipt from both live Git observations
+   and manifest digests, using exact artifact paths
+   `admission/repository_head.bin`, `admission/repository_status.bin`,
+   `admission/companion_head.bin`, and
+   `admission/companion_status.bin`; validate its corrected Xcode Git path and
+   bind its complete identity to both Gate D manifests;
+6. construct a non-Codable partial toolchain-probe binding from held developer
+   and SDK observations, mapped `swift-frontend`, both no-follow `swift` and
+   `swiftc` personality joins, and live artifacts at exact paths
+   `admission/swift_version.bin` and
+   `admission/swift_target_info.bin`. The existing derived Xcode/SDK artifacts
+   are pinned as `admission/xcode_version.bin`, `admission/sdk_path.bin`, and
+   `admission/sdk_version.bin`; they remain projections from held plist/path
+   observations, not newly claimed process evidence;
+7. require the intent's Swift executable bytes/path and companion declaration
+   to join those live values. The held but unmapped `swift-package` declaration
+   remains explicit: E must not set `mappedExecutableJoined` true, instantiate
+   a complete `PrimeValidationToolchainAdmissionReceiptV2`, or claim its
+   identity. Gate F first maps `swift-package` and is the earliest gate that
+   may complete that receipt from this retained partial binding; and
+8. retain the bound lifetime in a new non-Codable Gate E binding which binds
+   the partial toolchain-probe identity, complete repository receipt identity,
+   both canonical manifest identities, supervisor identity, intent identity,
+   and exact expected four-authority reduction.
+
+No raw field, durable leaf, Codable receipt, or observation member can be
+scraped to open a second owner. Any parse or semantic bind failure invokes the
+awaiting raw owner's zero-argument fail-only poison transition (or dropping it
+triggers that same transition) and releases the retained capability. The
+already-consumed facade has no callable post-transfer transition. Success
+remains before `build` and authorizes no subsequent role in this gate.
+
+### Candidate discipline and required proof
+
+Before one clean source candidate commit/tree exists, only source inspection,
+topology recount, provenance reseal, and compilation are authorized. No live
+Git/Swift Gate E sequence runs to define the candidate. After the candidate
+commit exists, each focused test is run separately by exact test name; no
+broad target/class filter is used. Required cases are:
+
+1. corrected Prime scope equals the retained source authority while full-root
+   clean status remains independent;
+2. exact fixed policy/order/caps/five-entry environment and absence of every
+   caller execution parameter or B role-table mutation;
+3. pure raw parsing and manifest/partial-toolchain/repository fixtures compute
+   the expected four-authority reduction, while a test-host live construction
+   still rejects because it cannot close `supervisor_executable_image`;
+4. every HEAD, status, object-format, tree replay, Swift framing, stderr,
+   overflow, exit, and pinned-companion mutation rejects and poisons;
+5. missing/extra/reordered/unheld/symlink/gitlink and same-bytes/new-inode held
+   joins reject without reopening a second C owner;
+6. journal no-replace, canonical readback, self-hash exclusion, start-before-
+   resume, missing-terminal incompleteness, one-winner, and permanent poison;
+7. Prime or companion mutation during a child interval poisons and cannot be
+   retried; and
+8. an Apple `xctest` production bind still rejects and poisons, while any
+   package-internal test-host seam closes no `supervisor_executable_image`.
+
+The exact focused method names are frozen before source:
+
+| Ordinal | Exact method | Configuration / authority |
+| ---: | --- | --- |
+| 1 | `testGateEPrimeScopeAndFixedPolicyAreExact` | Debug; pure data/source policy |
+| 2 | `testGateERawParsersAndPartialBindingsAreClosed` | Debug; pure data and expected reduction only |
+| 3 | `testGateERejectsEveryRawProcessAndRepositoryMutation` | Debug; pure mutation matrix |
+| 4 | `testGateEJournalChainOneWinnerAndPoisonAreExact` | Debug; test-host mechanics only |
+| 5 | `testGateEHeldProjectionRejectsSetSymlinkGitlinkAndVnodeDrift` | Debug; test-host existing-owner mechanics only |
+| 6 | `testGateELightweightContinuityPoisonsOnEitherRootMutation` | Debug; test-host watch mechanics only |
+| 7 | `testGateEXCTestHostCannotConstructProductionFixedProbeBinding` | Debug; exact production rejection |
+| 8 | `testGateEReleaseSupervisorRequiresLiveFourAuthorityBindingBeforeExit` | Release; outer observation of dedicated production child |
+
+Each method is invoked in a separate `swift test --filter <exact-method>`
+command against the candidate. Method 8 is the sole positive production
+proof; methods 1 through 7 cannot close production Gate E.
+
+The only positive production proof is a separately launched Release
+dedicated supervisor built from the exact candidate. Before the measured
+invocation, outer workstation preparation may create clean local clones at
+the exact Prime and pinned companion commits plus the four private roots,
+lease root, and empty Gate E journal. That preparation is not part of Gate E
+and uses no network. The excluded measured harness consumes those pre-existing
+roots, uses the unchanged canonical stdin frame, and launches no child other
+than the dedicated supervisor. Success is exact exit 0 with empty supervisor
+stdout and stderr, 34 verified journal leaves, 16 exact child terminals, both
+C watches still armed, and the dedicated child having required in process
+that its production DriverCore binding is live and its missing-authority set
+is exactly build, staging, XCTest inventory, and Swift Testing inventory before
+permitting exit 0. The outer XCTest independently asserts only child exit,
+empty stdio, and journal mechanics; it does not derive semantics from
+`gate-e-raw-terminal.json` or a dead token. XCTest is not production
+supervisor identity and never owns the child's live token.
+
+No broad root test, 904 inventory, SwiftPM build/list role, staging creation,
+GitHub runner, network request, dependency fetch, or remote publication is
+authorized by this freeze.
+
+### Conserved predecessor data and successor
+
+All Gate D conserved blobs and data remain exact except the eleven allowlisted
+paths. In particular, the Gate D manifest/held-entry implementations, both
+bridges, contracts/planner, every receipt field/layout/encoding, B role table,
+isolated canary/child pin, Darwin substrate/supervision owners, forbidden
+Process Git transport, package manifests, locks, 892/12 inventories, and
+`main.swift` framing/schema/argc/256-KiB/5-second rules are conserved. The
+only receipt-validation policy change is the truthful fixed Git path in the
+allowlisted Admission owner. `main.swift` may only add the unconditional
+post-bind zero-argument transition described above.
+
+A passing Gate E checkpoint closes only the four named live probe
+authorities. Gate F is then the sole permitted successor: descriptor-relative
+private staging plus exactly the fixed `build` role. Gate E authorizes no
+Gate F source or execution, and Gate G inventory remains later. This control
+record is prose rank 4 and cannot certify that E ran or passed.
