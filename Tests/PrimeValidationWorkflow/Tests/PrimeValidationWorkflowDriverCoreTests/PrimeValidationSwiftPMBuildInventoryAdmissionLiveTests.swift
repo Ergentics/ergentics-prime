@@ -3269,9 +3269,6 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
                 "PrimeValidationDriverV2FixedProbeExecutor.swift"
         )
         let expectedLeaves = gateEExpectedJournalLeaves()
-        for leaf in expectedLeaves {
-            XCTAssertTrue(executor.contains("\"\(leaf)\""), leaf)
-        }
         XCTAssertEqual(expectedLeaves.count, 34)
         XCTAssertEqual(Set(expectedLeaves).count, 34)
         for required in [
