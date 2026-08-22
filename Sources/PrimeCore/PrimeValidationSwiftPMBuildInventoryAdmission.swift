@@ -1045,6 +1045,11 @@ public enum PrimeValidationSwiftPMBuildInventoryAdmission {
         "Sources/PrimeCore/" +
             "PrimeValidationDriverV2IsolatedSpawnCanary.swift",
         "Sources/PrimeCore/PrimeValidationDriverV2RoleFacade.swift",
+        "Sources/PrimeCore/" +
+            "PrimeValidationDriverV2TrackedTreeHeldEntry.swift",
+        "Tests/PrimeValidationWorkflow/Sources/" +
+            "PrimeValidationWorkflowDriverCore/" +
+            "PrimeValidationDriverV2TrackedTreeManifest.swift",
         "Package.resolved",
     ]
     private static let leaseLeafName =
@@ -1339,6 +1344,11 @@ final class PrimeValidationSwiftPMRetainedAdmissionState:
                         "PrimeValidationDriverV2IsolatedSpawnCanary.swift",
                     "Sources/PrimeCore/" +
                         "PrimeValidationDriverV2RoleFacade.swift",
+                    "Sources/PrimeCore/" +
+                        "PrimeValidationDriverV2TrackedTreeHeldEntry.swift",
+                    "Tests/PrimeValidationWorkflow/Sources/" +
+                        "PrimeValidationWorkflowDriverCore/" +
+                        "PrimeValidationDriverV2TrackedTreeManifest.swift",
                     "Package.resolved",
                 ],
                 expectation: sourceExpectation
@@ -1356,6 +1366,11 @@ final class PrimeValidationSwiftPMRetainedAdmissionState:
                         "PrimeValidationDriverV2IsolatedSpawnCanary.swift",
                     "Sources/PrimeCore/" +
                         "PrimeValidationDriverV2RoleFacade.swift",
+                    "Sources/PrimeCore/" +
+                        "PrimeValidationDriverV2TrackedTreeHeldEntry.swift",
+                    "Tests/PrimeValidationWorkflow/Sources/" +
+                        "PrimeValidationWorkflowDriverCore/" +
+                        "PrimeValidationDriverV2TrackedTreeManifest.swift",
                     "Package.resolved",
                 ]
             )

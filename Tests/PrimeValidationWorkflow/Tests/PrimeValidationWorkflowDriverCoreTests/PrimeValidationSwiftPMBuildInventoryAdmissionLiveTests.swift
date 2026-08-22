@@ -102,7 +102,7 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
             XCTAssertTrue(guarded.companionSourceWatchWindowArmed)
             XCTAssertEqual(
                 guarded.combinedSourceWatcherDescriptorCount,
-                2_153
+                2_155
             )
             XCTAssertTrue(
                 guarded.missingAuthorities.contains(
@@ -831,6 +831,11 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
             "Sources/PrimeCore/" +
                 "PrimeValidationDriverV2IsolatedSpawnCanary.swift",
             "Sources/PrimeCore/PrimeValidationDriverV2RoleFacade.swift",
+            "Sources/PrimeCore/" +
+                "PrimeValidationDriverV2TrackedTreeHeldEntry.swift",
+            "Tests/PrimeValidationWorkflow/Sources/" +
+                "PrimeValidationWorkflowDriverCore/" +
+                "PrimeValidationDriverV2TrackedTreeManifest.swift",
         ].forEach { relativePath in
             let fixture = try Fixture()
             defer { fixture.cleanup() }
@@ -3899,6 +3904,8 @@ private final class Fixture {
                 ".swiftpm/configuration",
             "Tests/PrimeValidationWorkflow/.swiftpm/configuration",
             "Sources/PrimeCore",
+            "Tests/PrimeValidationWorkflow/Sources/" +
+                "PrimeValidationWorkflowDriverCore",
             "Tests",
             "docs",
         ] {
@@ -3935,6 +3942,13 @@ private final class Fixture {
                 Data("// fixture Driver V2 spawn canary\n".utf8),
             "Sources/PrimeCore/PrimeValidationDriverV2RoleFacade.swift":
                 Data("// fixture Driver V2 role facade\n".utf8),
+            "Sources/PrimeCore/" +
+                "PrimeValidationDriverV2TrackedTreeHeldEntry.swift":
+                Data("// fixture Driver V2 tracked-tree held entry\n".utf8),
+            "Tests/PrimeValidationWorkflow/Sources/" +
+                "PrimeValidationWorkflowDriverCore/" +
+                "PrimeValidationDriverV2TrackedTreeManifest.swift":
+                Data("// fixture Driver V2 tracked-tree manifest\n".utf8),
         ]
         for (relativePath, data) in files {
             try data.write(
@@ -3968,6 +3982,11 @@ private final class Fixture {
                         "PrimeValidationDriverV2IsolatedSpawnCanary.swift",
                     "Sources/PrimeCore/" +
                         "PrimeValidationDriverV2RoleFacade.swift",
+                    "Sources/PrimeCore/" +
+                        "PrimeValidationDriverV2TrackedTreeHeldEntry.swift",
+                    "Tests/PrimeValidationWorkflow/Sources/" +
+                        "PrimeValidationWorkflowDriverCore/" +
+                        "PrimeValidationDriverV2TrackedTreeManifest.swift",
                     "Package.resolved",
                 ],
                 expectation: dummy
@@ -3997,6 +4016,11 @@ private final class Fixture {
                     "PrimeValidationDriverV2IsolatedSpawnCanary.swift",
                 "Sources/PrimeCore/" +
                     "PrimeValidationDriverV2RoleFacade.swift",
+                "Sources/PrimeCore/" +
+                    "PrimeValidationDriverV2TrackedTreeHeldEntry.swift",
+                "Tests/PrimeValidationWorkflow/Sources/" +
+                    "PrimeValidationWorkflowDriverCore/" +
+                    "PrimeValidationDriverV2TrackedTreeManifest.swift",
                 "Package.resolved",
             ],
             expectation: expectation
