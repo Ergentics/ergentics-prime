@@ -13,6 +13,7 @@ public enum PrimeValidationSwiftPMBuildInventoryAdmissionError:
     case capabilityAlreadyConsumed
     case prerequisiteAlreadyConsumed
     case guardedPreExecutorPoisoned
+    case guardedPreExecutorTransferred
 }
 
 extension PrimeValidationSwiftPMBuildInventoryAdmissionError:
@@ -28,6 +29,8 @@ extension PrimeValidationSwiftPMBuildInventoryAdmissionError:
             "SwiftPM build/inventory prerequisite was already consumed"
         case .guardedPreExecutorPoisoned:
             "SwiftPM build/inventory guarded pre-executor is poisoned"
+        case .guardedPreExecutorTransferred:
+            "SwiftPM build/inventory guarded pre-executor authority was transferred"
         }
     }
 }
@@ -74,6 +77,85 @@ public struct PrimeValidationSwiftPMFileObservation:
     public let modificationNanoseconds: Int64
     public let statusChangeSeconds: Int64
     public let statusChangeNanoseconds: Int64
+}
+
+/// Exact Driver V2 executable identity expected by the same-process bridge.
+///
+/// This value is a declaration, not live authority. Only the opaque
+/// descriptor-retaining capability returned by the guarded pre-executor can
+/// prove that the declaration names the process's mapped main image.
+public struct PrimeValidationSwiftPMDriverV2ExecutableExpectation:
+    Equatable,
+    Sendable
+{
+    public let canonicalAbsolutePath: String
+    public let byteCount: UInt64
+    public let sha256: String
+
+    public init(
+        canonicalAbsolutePath: String,
+        byteCount: UInt64,
+        sha256: String
+    ) {
+        self.canonicalAbsolutePath = canonicalAbsolutePath
+        self.byteCount = byteCount
+        self.sha256 = sha256
+    }
+
+    fileprivate func validate() throws {
+        guard canonicalAbsolutePath.hasPrefix("/"),
+              canonicalAbsolutePath != "/",
+              !canonicalAbsolutePath.contains("\\"),
+              canonicalAbsolutePath.utf8.count <= 16 * 1024,
+              canonicalAbsolutePath.utf8.allSatisfy({
+                  $0 >= 0x20 && $0 != 0x7f
+              }),
+              canonicalAbsolutePath.split(
+                  separator: "/",
+                  omittingEmptySubsequences: false
+              ).dropFirst().allSatisfy({
+                  !$0.isEmpty && $0 != "." && $0 != ".."
+              }),
+              byteCount > 0,
+              sha256.utf8.count == 64,
+              sha256.utf8.allSatisfy({
+                  ($0 >= 48 && $0 <= 57)
+                      || ($0 >= 97 && $0 <= 102)
+              })
+        else {
+            throw PrimeValidationSwiftPMBuildInventoryAdmissionError
+                .rejected("driver_v2_supervisor_expectation")
+        }
+    }
+}
+
+/// Descriptor and loaded-vnode observation retained by the Gate A image
+/// capability. The two identity pairs are kept separately so the mapped-image
+/// join is data, rather than an ungrounded Boolean supplied by a caller.
+public struct PrimeValidationSwiftPMDriverV2SupervisorImageObservation:
+    Equatable,
+    Sendable
+{
+    public let canonicalAbsolutePath: String
+    public let deviceID: UInt64
+    public let inode: UInt64
+    public let loadedImageDeviceID: UInt64
+    public let loadedImageInode: UInt64
+    public let ownerUserID: UInt32
+    public let ownerGroupID: UInt32
+    public let permissionMode: UInt16
+    public let linkCount: UInt64
+    public let byteCount: UInt64
+    public let sha256: String
+    public let modificationSeconds: Int64
+    public let modificationNanoseconds: Int64
+    public let statusChangeSeconds: Int64
+    public let statusChangeNanoseconds: Int64
+
+    public var mappedImageJoined: Bool {
+        deviceID == loadedImageDeviceID
+            && inode == loadedImageInode
+    }
 }
 
 public struct PrimeValidationSwiftPMPersonalityObservation:
@@ -178,6 +260,7 @@ public enum PrimeValidationSwiftPMAuthorityCeiling:
     case retainedInputsOnlyNoPreparedExecutor =
         "retained_inputs_only_no_prepared_executor"
     case sourceGuardsPreparedOnly = "source_guards_prepared_only"
+    case transferredNoAuthority = "transferred_no_authority"
     case poisonedNoAuthority = "poisoned_no_authority"
 }
 
@@ -187,6 +270,18 @@ public enum PrimeValidationSwiftPMGuardState:
     Sendable
 {
     case prepared
+    case transferred
+    case poisoned
+}
+
+/// State of the consumed, role-bound current-process image capability.
+/// This is deliberately distinct from the pre-executor's prepared state.
+public enum PrimeValidationSwiftPMDriverV2SupervisorImageState:
+    String,
+    Equatable,
+    Sendable
+{
+    case bound
     case poisoned
 }
 
@@ -215,6 +310,11 @@ public enum PrimeValidationSwiftPMObservationState:
 public final class PrimeValidationSwiftPMBuildInventoryPrerequisite:
     @unchecked Sendable
 {
+    private enum State {
+        case available(PrimeValidationSwiftPMRetainedAdmissionState)
+        case consumed
+    }
+
     public let primeRepository:
         PrimeValidationSwiftPMDirectoryObservation
     public let workspaceRoot:
@@ -231,9 +331,18 @@ public final class PrimeValidationSwiftPMBuildInventoryPrerequisite:
         PrimeValidationSwiftPMToolchainObservation
     public let missingAuthorities:
         [PrimeValidationSwiftPMMissingAuthority]
-    public let authorityCeiling:
-        PrimeValidationSwiftPMAuthorityCeiling =
-            .retainedInputsOnlyNoPreparedExecutor
+    public var authorityCeiling:
+        PrimeValidationSwiftPMAuthorityCeiling
+    {
+        preparationLock.lock()
+        defer { preparationLock.unlock() }
+        switch state {
+        case .available:
+            return .retainedInputsOnlyNoPreparedExecutor
+        case .consumed:
+            return .transferredNoAuthority
+        }
+    }
     public let processExecutionObservation:
         PrimeValidationSwiftPMObservationState = .unobserved
     public let buildExecutionObservation:
@@ -246,14 +355,13 @@ public final class PrimeValidationSwiftPMBuildInventoryPrerequisite:
 
     // Retention is the authority. A decoded or memberwise-reconstructed value
     // cannot create this state because there is no public initializer.
-    let retainedState: PrimeValidationSwiftPMRetainedAdmissionState
     private let preparationLock = NSLock()
-    private var preparationConsumed = false
+    private var state: State
 
     init(
         retainedState: PrimeValidationSwiftPMRetainedAdmissionState
     ) {
-        self.retainedState = retainedState
+        state = .available(retainedState)
         primeRepository = retainedState.primeRepository.observation
         workspaceRoot = retainedState.workspaceRoot.observation
         evidenceRoot = retainedState.evidenceRoot.observation
@@ -291,13 +399,17 @@ public final class PrimeValidationSwiftPMBuildInventoryPrerequisite:
     ) throws
         -> PrimeValidationSwiftPMBuildInventoryGuardedPreExecutor
     {
+        let retainedState: PrimeValidationSwiftPMRetainedAdmissionState
         preparationLock.lock()
-        guard !preparationConsumed else {
+        switch state {
+        case let .available(value):
+            retainedState = value
+            state = .consumed
+        case .consumed:
             preparationLock.unlock()
             throw PrimeValidationSwiftPMBuildInventoryAdmissionError
                 .prerequisiteAlreadyConsumed
         }
-        preparationConsumed = true
         preparationLock.unlock()
 
         try retainedState.revalidate()
@@ -331,7 +443,9 @@ public final class PrimeValidationSwiftPMBuildInventoryPrerequisite:
             PrimeValidationSwiftPMRetainedGuardedPreExecutorState(
                 admission: retainedState,
                 sourceWatch: sourceWatch,
-                currentProcessImage: currentProcessImage
+                currentProcessImage: currentProcessImage,
+                productionSupervisorImageEligible:
+                    !allowRootOwnedCurrentProcessForTesting
             )
         try guardedState.revalidate()
         return
@@ -346,13 +460,21 @@ public final class PrimeValidationSwiftPMBuildInventoryPrerequisite:
 /// This type closes only the descriptor-backed Prime source closure, its
 /// continuous prepared-state watch window. It also retains the exact current
 /// holder-process image as prerequisite evidence, but does not claim that the
-/// image is the Driver V2 supervisor; that role requires the still-absent
+/// image is the Driver V2 supervisor; that role requires the separate
 /// DriverCore intent bridge. This type deliberately exposes no process,
 /// staging, build, inventory, shard, receipt-publication, or completion
 /// operation.
 public final class PrimeValidationSwiftPMBuildInventoryGuardedPreExecutor:
     @unchecked Sendable
 {
+    private enum State {
+        case prepared(
+            PrimeValidationSwiftPMRetainedGuardedPreExecutorState
+        )
+        case transferred
+        case poisoned
+    }
+
     public let primeRepository:
         PrimeValidationSwiftPMDirectoryObservation
     public let workspaceRoot:
@@ -381,15 +503,20 @@ public final class PrimeValidationSwiftPMBuildInventoryGuardedPreExecutor:
         PrimeValidationSwiftPMObservationState = .unobserved
     public let completionAuthorized = false
 
-    private let retainedState:
-        PrimeValidationSwiftPMRetainedGuardedPreExecutorState
     private let guardLock = NSLock()
-    private var poisoned = false
+    private var state: State
 
     public var guardState: PrimeValidationSwiftPMGuardState {
         guardLock.lock()
         defer { guardLock.unlock() }
-        return poisoned ? .poisoned : .prepared
+        switch state {
+        case .prepared:
+            return .prepared
+        case .transferred:
+            return .transferred
+        case .poisoned:
+            return .poisoned
+        }
     }
 
     public var authorityCeiling:
@@ -397,7 +524,14 @@ public final class PrimeValidationSwiftPMBuildInventoryGuardedPreExecutor:
     {
         guardLock.lock()
         defer { guardLock.unlock() }
-        return poisoned ? .poisonedNoAuthority : .sourceGuardsPreparedOnly
+        switch state {
+        case .prepared:
+            return .sourceGuardsPreparedOnly
+        case .transferred:
+            return .transferredNoAuthority
+        case .poisoned:
+            return .poisonedNoAuthority
+        }
     }
 
     public var sourceDescriptorClosureHeld: Bool {
@@ -417,7 +551,7 @@ public final class PrimeValidationSwiftPMBuildInventoryGuardedPreExecutor:
     {
         guardLock.lock()
         defer { guardLock.unlock() }
-        guard !poisoned else {
+        guard case .prepared = state else {
             return PrimeValidationSwiftPMMissingAuthority.allCases
         }
         let closed: Set<PrimeValidationSwiftPMMissingAuthority> = [
@@ -433,7 +567,7 @@ public final class PrimeValidationSwiftPMBuildInventoryGuardedPreExecutor:
         retainedState:
             PrimeValidationSwiftPMRetainedGuardedPreExecutorState
     ) {
-        self.retainedState = retainedState
+        state = .prepared(retainedState)
         let admission = retainedState.admission
         primeRepository = admission.primeRepository.observation
         workspaceRoot = admission.workspaceRoot.observation
@@ -454,14 +588,248 @@ public final class PrimeValidationSwiftPMBuildInventoryGuardedPreExecutor:
     public func revalidateGuards() throws {
         guardLock.lock()
         defer { guardLock.unlock() }
-        guard !poisoned else {
+        let retainedState:
+            PrimeValidationSwiftPMRetainedGuardedPreExecutorState
+        switch state {
+        case let .prepared(value):
+            retainedState = value
+        case .transferred:
+            throw PrimeValidationSwiftPMBuildInventoryAdmissionError
+                .guardedPreExecutorTransferred
+        case .poisoned:
             throw PrimeValidationSwiftPMBuildInventoryAdmissionError
                 .guardedPreExecutorPoisoned
         }
         do {
             try retainedState.revalidate()
         } catch {
-            poisoned = true
+            state = .poisoned
+            throw error
+        }
+    }
+
+    /// Consumes the prepared source/image token into the exact dedicated
+    /// Driver V2 supervisor-image proof. This transition launches nothing.
+    /// Any rejection after consumption begins permanently poisons this token.
+    public func bindDriverV2SupervisorImage(
+        expecting expectation:
+            PrimeValidationSwiftPMDriverV2ExecutableExpectation
+    ) throws
+        -> PrimeValidationSwiftPMDriverV2SupervisorImageCapability
+    {
+        try bindDriverV2SupervisorImage(
+            expecting: expectation,
+            permitsNonSupervisorTestHost: false
+        )
+    }
+
+    /// Internal XCTest seam. It exercises the exact-match, one-shot, poison,
+    /// and retained-guard mechanics without allowing Apple's `xctest` image to
+    /// become production Driver V2 supervisor authority.
+    func bindDriverV2SupervisorImageAllowingTestHost(
+        expecting expectation:
+            PrimeValidationSwiftPMDriverV2ExecutableExpectation
+    ) throws
+        -> PrimeValidationSwiftPMDriverV2SupervisorImageCapability
+    {
+        try bindDriverV2SupervisorImage(
+            expecting: expectation,
+            permitsNonSupervisorTestHost: true
+        )
+    }
+
+    private func bindDriverV2SupervisorImage(
+        expecting expectation:
+            PrimeValidationSwiftPMDriverV2ExecutableExpectation,
+        permitsNonSupervisorTestHost: Bool
+    ) throws
+        -> PrimeValidationSwiftPMDriverV2SupervisorImageCapability
+    {
+        guardLock.lock()
+        defer { guardLock.unlock() }
+        let retainedState:
+            PrimeValidationSwiftPMRetainedGuardedPreExecutorState
+        switch state {
+        case let .prepared(value):
+            retainedState = value
+        case .transferred:
+            throw PrimeValidationSwiftPMBuildInventoryAdmissionError
+                .guardedPreExecutorTransferred
+        case .poisoned:
+            throw PrimeValidationSwiftPMBuildInventoryAdmissionError
+                .guardedPreExecutorPoisoned
+        }
+
+        do {
+            try expectation.validate()
+            try retainedState.revalidate()
+            let image = retainedState.currentProcessImage
+            guard expectation.canonicalAbsolutePath
+                    == image.canonicalAbsolutePath,
+                  expectation.byteCount == image.byteCount,
+                  expectation.sha256
+                    == PrimeSHA256.hexDigest(of: image.data),
+                  image.deviceID == image.loadedImageDeviceID,
+                  image.inode == image.loadedImageInode
+            else {
+                throw PrimeValidationSwiftPMBuildInventoryAdmissionError
+                    .rejected("driver_v2_supervisor_image_binding")
+            }
+            if !permitsNonSupervisorTestHost {
+                guard retainedState.productionSupervisorImageEligible,
+                      URL(
+                          fileURLWithPath: image.canonicalAbsolutePath
+                      ).lastPathComponent
+                        == PrimeValidationSwiftPMDriverV2SupervisorRole
+                        .executableLeafName
+                else {
+                    throw
+                        PrimeValidationSwiftPMBuildInventoryAdmissionError
+                        .rejected("driver_v2_supervisor_executable_role")
+                }
+            }
+            try retainedState.revalidate()
+        } catch {
+            state = .poisoned
+            throw error
+        }
+
+        state = .transferred
+        return PrimeValidationSwiftPMDriverV2SupervisorImageCapability(
+            retainedState: retainedState,
+            expectation: expectation,
+            productionSupervisorImageEligible:
+                !permitsNonSupervisorTestHost
+        )
+    }
+}
+
+private enum PrimeValidationSwiftPMDriverV2SupervisorRole {
+    static let executableLeafName =
+        "PrimeValidationWorkflowDriverV2Supervisor"
+}
+
+/// Opaque, non-restorable proof that a single guarded transition matched the
+/// exact current image declaration. The retained descriptor, source watch,
+/// and exclusive lease remain live behind this object.
+///
+/// This type has no public initializer, no Codable conformance, and no child,
+/// process, staging, build, inventory, shard, receipt, or completion method.
+public final class PrimeValidationSwiftPMDriverV2SupervisorImageCapability:
+    @unchecked Sendable
+{
+    private enum State {
+        case live(
+            PrimeValidationSwiftPMRetainedGuardedPreExecutorState
+        )
+        case poisoned
+    }
+
+    public let observation:
+        PrimeValidationSwiftPMDriverV2SupervisorImageObservation
+    public let productionSupervisorImageEligible: Bool
+
+    private let expectation:
+        PrimeValidationSwiftPMDriverV2ExecutableExpectation
+    private let stateLock = NSLock()
+    private var state: State
+
+    init(
+        retainedState:
+            PrimeValidationSwiftPMRetainedGuardedPreExecutorState,
+        expectation:
+            PrimeValidationSwiftPMDriverV2ExecutableExpectation,
+        productionSupervisorImageEligible: Bool
+    ) {
+        state = .live(retainedState)
+        self.expectation = expectation
+        self.productionSupervisorImageEligible =
+            productionSupervisorImageEligible
+        let image = retainedState.currentProcessImage
+        observation =
+            PrimeValidationSwiftPMDriverV2SupervisorImageObservation(
+                canonicalAbsolutePath: image.canonicalAbsolutePath,
+                deviceID: image.deviceID,
+                inode: image.inode,
+                loadedImageDeviceID: image.loadedImageDeviceID,
+                loadedImageInode: image.loadedImageInode,
+                ownerUserID: image.ownerUserID,
+                ownerGroupID: image.ownerGroupID,
+                permissionMode: image.permissionMode,
+                linkCount: image.linkCount,
+                byteCount: image.byteCount,
+                sha256: PrimeSHA256.hexDigest(of: image.data),
+                modificationSeconds: image.modificationSeconds,
+                modificationNanoseconds: image.modificationNanoseconds,
+                statusChangeSeconds: image.statusChangeSeconds,
+                statusChangeNanoseconds: image.statusChangeNanoseconds
+            )
+    }
+
+    public var imageState:
+        PrimeValidationSwiftPMDriverV2SupervisorImageState
+    {
+        stateLock.lock()
+        defer { stateLock.unlock() }
+        switch state {
+        case .live:
+            return .bound
+        case .poisoned:
+            return .poisoned
+        }
+    }
+
+    /// Revalidates the held descriptor, its named path, exact bytes, source
+    /// watch, lease, and current loaded vnode. Failure is permanent.
+    public func revalidate() throws {
+        stateLock.lock()
+        defer { stateLock.unlock() }
+        let retainedState:
+            PrimeValidationSwiftPMRetainedGuardedPreExecutorState
+        switch state {
+        case let .live(value):
+            retainedState = value
+        case .poisoned:
+            throw PrimeValidationSwiftPMBuildInventoryAdmissionError
+                .guardedPreExecutorPoisoned
+        }
+        do {
+            try retainedState.revalidate()
+            let image = retainedState.currentProcessImage
+            guard expectation.canonicalAbsolutePath
+                    == image.canonicalAbsolutePath,
+                  expectation.byteCount == image.byteCount,
+                  expectation.sha256
+                    == PrimeSHA256.hexDigest(of: image.data),
+                  observation.canonicalAbsolutePath
+                    == image.canonicalAbsolutePath,
+                  observation.deviceID == image.deviceID,
+                  observation.inode == image.inode,
+                  observation.loadedImageDeviceID
+                    == image.loadedImageDeviceID,
+                  observation.loadedImageInode == image.loadedImageInode,
+                  observation.byteCount == image.byteCount,
+                  observation.sha256
+                    == PrimeSHA256.hexDigest(of: image.data),
+                  observation.mappedImageJoined
+            else {
+                throw PrimeValidationSwiftPMBuildInventoryAdmissionError
+                    .rejected("driver_v2_supervisor_image_revalidation")
+            }
+            if productionSupervisorImageEligible {
+                guard URL(
+                    fileURLWithPath: image.canonicalAbsolutePath
+                ).lastPathComponent
+                    == PrimeValidationSwiftPMDriverV2SupervisorRole
+                    .executableLeafName
+                else {
+                    throw
+                        PrimeValidationSwiftPMBuildInventoryAdmissionError
+                        .rejected("driver_v2_supervisor_executable_role")
+                }
+            }
+        } catch {
+            state = .poisoned
             throw error
         }
     }
@@ -795,17 +1163,21 @@ final class PrimeValidationSwiftPMRetainedGuardedPreExecutorState:
     let admission: PrimeValidationSwiftPMRetainedAdmissionState
     let sourceWatch: PrimeSecureHeldSourceWatch
     let currentProcessImage: PrimeSecureHeldRunningExecutable
+    let productionSupervisorImageEligible: Bool
     let currentProcessObservation:
         PrimeValidationSwiftPMFileObservation
 
     init(
         admission: PrimeValidationSwiftPMRetainedAdmissionState,
         sourceWatch: PrimeSecureHeldSourceWatch,
-        currentProcessImage: PrimeSecureHeldRunningExecutable
+        currentProcessImage: PrimeSecureHeldRunningExecutable,
+        productionSupervisorImageEligible: Bool
     ) {
         self.admission = admission
         self.sourceWatch = sourceWatch
         self.currentProcessImage = currentProcessImage
+        self.productionSupervisorImageEligible =
+            productionSupervisorImageEligible
         currentProcessObservation =
             PrimeValidationSwiftPMFileObservation(
                 canonicalAbsolutePath:

@@ -23,9 +23,16 @@ let package = Package(
             name: "PrimeValidationWorkflowSecureChildIntegration",
             targets: ["PrimeValidationWorkflowSecureChildIntegration"]
         ),
+        .executable(
+            name: "PrimeValidationWorkflowDriverV2Supervisor",
+            targets: ["PrimeValidationWorkflowDriverV2Supervisor"]
+        ),
     ],
     dependencies: [
-        .package(path: "../.."),
+        .package(
+            name: "ergentics-prime",
+            path: "../.."
+        ),
     ],
     targets: [
         .target(
@@ -62,6 +69,21 @@ let package = Package(
                     name: "PrimeCore",
                     package: "ergentics-prime"
                 ),
+            ]
+        ),
+        .executableTarget(
+            name: "PrimeValidationWorkflowDriverV2Supervisor",
+            dependencies: [
+                "PrimeValidationWorkflowDriverCore",
+                .product(
+                    name: "PrimeCore",
+                    package: "ergentics-prime"
+                ),
+            ],
+            linkerSettings: [
+                .unsafeFlags([
+                    "-Xlinker", "-S",
+                ]),
             ]
         ),
         .testTarget(

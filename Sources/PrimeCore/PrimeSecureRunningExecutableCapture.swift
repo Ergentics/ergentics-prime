@@ -26,6 +26,8 @@ final class PrimeSecureHeldRunningExecutable: @unchecked Sendable {
     let data: Data
     let deviceID: UInt64
     let inode: UInt64
+    let loadedImageDeviceID: UInt64
+    let loadedImageInode: UInt64
     let ownerUserID: UInt32
     let ownerGroupID: UInt32
     let permissionMode: UInt16
@@ -56,14 +58,14 @@ final class PrimeSecureHeldRunningExecutable: @unchecked Sendable {
         ) == 0 else {
             throw Self.invalid("path")
         }
-        let url = URL(
-            fileURLWithPath: String(cString: pathBuffer)
-        ).resolvingSymlinksInPath().standardizedFileURL
+        let executablePath = try Self.canonicalExecutablePath(
+            String(cString: pathBuffer)
+        )
         let loaded = try PrimeNative3BLoadedExecutableVnode
             .observeCurrentProcess()
 
         var pathMetadata = stat()
-        guard lstat(url.path, &pathMetadata) == 0 else {
+        guard lstat(executablePath, &pathMetadata) == 0 else {
             throw Self.invalid("path stat \(errno)")
         }
         guard Self.isAdmittedExecutable(
@@ -79,7 +81,7 @@ final class PrimeSecureHeldRunningExecutable: @unchecked Sendable {
         }
 
         let opened = open(
-            url.path,
+            executablePath,
             O_RDONLY | O_NOFOLLOW | O_CLOEXEC
         )
         guard opened >= 0 else {
@@ -116,11 +118,13 @@ final class PrimeSecureHeldRunningExecutable: @unchecked Sendable {
                 throw Self.invalid("changed during read")
             }
 
-            canonicalAbsolutePath = url.path
+            canonicalAbsolutePath = executablePath
             data = captured
             initialStatus = after
             deviceID = UInt64(bitPattern: Int64(after.st_dev))
             inode = UInt64(after.st_ino)
+            loadedImageDeviceID = loaded.deviceID
+            loadedImageInode = loaded.inode
             ownerUserID = after.st_uid
             ownerGroupID = after.st_gid
             permissionMode = UInt16(after.st_mode & mode_t(0o777))
@@ -199,6 +203,31 @@ final class PrimeSecureHeldRunningExecutable: @unchecked Sendable {
             && value.st_size > 0
             && UInt64(value.st_size)
                 <= PrimeSecureRunningExecutableCapture.maximumByteCount
+    }
+
+    private static func canonicalExecutablePath(
+        _ requestedPath: String
+    ) throws -> String {
+        guard requestedPath.hasPrefix("/"),
+              requestedPath != "/"
+        else {
+            throw Self.invalid("nonabsolute executable path")
+        }
+        var buffer = [CChar](
+            repeating: 0,
+            count: Int(PATH_MAX)
+        )
+        let succeeded = requestedPath.withCString { input in
+            buffer.withUnsafeMutableBufferPointer {
+                realpath(input, $0.baseAddress) != nil
+            }
+        }
+        guard succeeded else {
+            throw Self.invalid("realpath \(errno)")
+        }
+        return buffer.withUnsafeBufferPointer {
+            String(cString: $0.baseAddress!)
+        }
     }
 
     private static func sameIdentityAndMetadata(

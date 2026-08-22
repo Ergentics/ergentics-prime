@@ -5,6 +5,7 @@ import Darwin
 import Dispatch
 import Foundation
 @testable import PrimeCore
+import PrimeValidationWorkflowContracts
 import PrimeValidationWorkflowDriverCore
 import XCTest
 
@@ -397,6 +398,310 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
         race.releaseValues()
     }
 
+    func testDriverV2ImageMatchTransfersGuardAndRetainsMappedJoin()
+        throws
+    {
+        let fixture = try Fixture()
+        defer { fixture.cleanup() }
+        let guarded = try fixture.admit()
+            .consumePrerequisites()
+            .prepareGuardedPreExecutor(
+                allowRootOwnedCurrentProcessForTesting: true
+            )
+        let expected = try expectation(for: guarded)
+
+        let image = try guarded
+            .bindDriverV2SupervisorImageAllowingTestHost(
+                expecting: expected
+            )
+
+        XCTAssertEqual(guarded.guardState, .transferred)
+        XCTAssertEqual(guarded.authorityCeiling, .transferredNoAuthority)
+        XCTAssertEqual(
+            guarded.missingAuthorities,
+            PrimeValidationSwiftPMMissingAuthority.allCases
+        )
+        XCTAssertFalse(guarded.sourceDescriptorClosureHeld)
+        XCTAssertFalse(guarded.sourceWatchWindowArmed)
+        XCTAssertFalse(guarded.currentProcessExecutableImageHeld)
+        XCTAssertFalse(image.productionSupervisorImageEligible)
+        XCTAssertEqual(image.imageState, .bound)
+        XCTAssertTrue(image.observation.mappedImageJoined)
+        XCTAssertEqual(
+            image.observation.deviceID,
+            image.observation.loadedImageDeviceID
+        )
+        XCTAssertEqual(
+            image.observation.inode,
+            image.observation.loadedImageInode
+        )
+        XCTAssertEqual(
+            image.observation.canonicalAbsolutePath,
+            expected.canonicalAbsolutePath
+        )
+        XCTAssertEqual(image.observation.byteCount, expected.byteCount)
+        XCTAssertEqual(image.observation.sha256, expected.sha256)
+        try image.revalidate()
+        XCTAssertThrowsError(try guarded.revalidateGuards()) {
+            XCTAssertEqual(
+                $0 as?
+                    PrimeValidationSwiftPMBuildInventoryAdmissionError,
+                .guardedPreExecutorTransferred
+            )
+        }
+    }
+
+    func testDriverV2ImageMismatchPermanentlyPoisonsGuard() throws {
+        enum Mutation: CaseIterable {
+            case path
+            case malformedPath
+            case byteCount
+            case sha256
+        }
+
+        for mutation in Mutation.allCases {
+            let fixture = try Fixture()
+            defer { fixture.cleanup() }
+            let guarded = try fixture.admit()
+                .consumePrerequisites()
+                .prepareGuardedPreExecutor(
+                    allowRootOwnedCurrentProcessForTesting: true
+                )
+            let exact = try expectation(for: guarded)
+            let mutated =
+                PrimeValidationSwiftPMDriverV2ExecutableExpectation(
+                    canonicalAbsolutePath: mutation == .path
+                        ? "/private/tmp/not-the-mapped-supervisor"
+                        : mutation == .malformedPath
+                            ? "/private/tmp/../not-canonical"
+                        : exact.canonicalAbsolutePath,
+                    byteCount: mutation == .byteCount
+                        ? exact.byteCount + 1
+                        : exact.byteCount,
+                    sha256: mutation == .sha256
+                        ? String(repeating: "0", count: 64)
+                        : exact.sha256
+                )
+
+            XCTAssertThrowsError(
+                try guarded
+                    .bindDriverV2SupervisorImageAllowingTestHost(
+                        expecting: mutated
+                    )
+            ) {
+                XCTAssertEqual(
+                    $0 as?
+                        PrimeValidationSwiftPMBuildInventoryAdmissionError,
+                    mutation == .malformedPath
+                        ? .rejected(
+                            "driver_v2_supervisor_expectation"
+                        )
+                        : .rejected(
+                            "driver_v2_supervisor_image_binding"
+                        )
+                )
+            }
+            XCTAssertEqual(guarded.guardState, .poisoned)
+            XCTAssertEqual(
+                guarded.authorityCeiling,
+                .poisonedNoAuthority
+            )
+            XCTAssertEqual(
+                guarded.missingAuthorities,
+                PrimeValidationSwiftPMMissingAuthority.allCases
+            )
+            XCTAssertThrowsError(
+                try guarded
+                    .bindDriverV2SupervisorImageAllowingTestHost(
+                        expecting: exact
+                    )
+            ) {
+                XCTAssertEqual(
+                    $0 as?
+                        PrimeValidationSwiftPMBuildInventoryAdmissionError,
+                    .guardedPreExecutorPoisoned
+                )
+            }
+        }
+    }
+
+    func testConcurrentDriverV2ImageMatchHasExactlyOneWinner()
+        throws
+    {
+        let fixture = try Fixture()
+        defer { fixture.cleanup() }
+        let guarded = try fixture.admit()
+            .consumePrerequisites()
+            .prepareGuardedPreExecutor(
+                allowRootOwnedCurrentProcessForTesting: true
+            )
+        let expected = try expectation(for: guarded)
+        let race = DriverV2ImageBindingRace()
+        let ready = DispatchGroup()
+        let done = DispatchGroup()
+        let start = DispatchSemaphore(value: 0)
+        let queue = DispatchQueue(
+            label: "prime.validation.driver-v2-image-binding-race",
+            attributes: .concurrent
+        )
+
+        for _ in 0 ..< 2 {
+            ready.enter()
+            done.enter()
+            queue.async {
+                ready.leave()
+                start.wait()
+                race.record {
+                    try guarded
+                        .bindDriverV2SupervisorImageAllowingTestHost(
+                            expecting: expected
+                        )
+                }
+                done.leave()
+            }
+        }
+        XCTAssertEqual(ready.wait(timeout: .now() + 5), .success)
+        start.signal()
+        start.signal()
+        XCTAssertEqual(done.wait(timeout: .now() + 30), .success)
+
+        XCTAssertEqual(race.values.count, 1)
+        XCTAssertEqual(race.errors.count, 1)
+        XCTAssertEqual(
+            race.errors.first as?
+                PrimeValidationSwiftPMBuildInventoryAdmissionError,
+            .guardedPreExecutorTransferred
+        )
+        try race.values.first?.revalidate()
+        race.releaseValues()
+    }
+
+    func testProductionDriverV2BridgeRejectsXCTestHost() throws {
+        let fixture = try Fixture()
+        defer { fixture.cleanup() }
+        let guarded = try fixture.admit()
+            .consumePrerequisites()
+            .prepareGuardedPreExecutor(
+                allowRootOwnedCurrentProcessForTesting: true
+            )
+        let imageData = try Data(
+            contentsOf: URL(
+                fileURLWithPath:
+                    guarded.currentProcessExecutable
+                    .canonicalAbsolutePath
+            )
+        )
+        let intent = try fixture.makeIntent(
+            guarded: guarded,
+            driverImageData: imageData
+        )
+
+        XCTAssertThrowsError(
+            try PrimeValidationDriverV2SupervisorImageBridge.bind(
+                intent: intent,
+                guardedPreExecutor: guarded
+            )
+        ) {
+            XCTAssertEqual(
+                $0 as?
+                    PrimeValidationSwiftPMBuildInventoryAdmissionError,
+                .rejected("driver_v2_supervisor_executable_role")
+            )
+        }
+        XCTAssertEqual(guarded.guardState, .poisoned)
+        XCTAssertEqual(
+            guarded.missingAuthorities,
+            PrimeValidationSwiftPMMissingAuthority.allCases
+        )
+    }
+
+    func testDriverV2LaunchRequestIsCanonicalTransportOnly()
+        throws
+    {
+        let fixture = try Fixture()
+        defer { fixture.cleanup() }
+        let guarded = try fixture.admit()
+            .consumePrerequisites()
+            .prepareGuardedPreExecutor(
+                allowRootOwnedCurrentProcessForTesting: true
+            )
+        let imageData = try Data(
+            contentsOf: URL(
+                fileURLWithPath:
+                    guarded.currentProcessExecutable
+                    .canonicalAbsolutePath
+            )
+        )
+        let intent = try fixture.makeIntent(
+            guarded: guarded,
+            driverImageData: imageData
+        )
+        let exact = PrimeValidationDriverV2SupervisorLaunchRequestV1(
+            intent: intent,
+            leaseDirectoryAbsolutePath: fixture.lease.path
+        )
+        try exact.validate()
+        let canonical = try PrimeCanonicalJSON.encode(exact)
+        XCTAssertEqual(
+            try PrimeCanonicalJSON.decode(
+                PrimeValidationDriverV2SupervisorLaunchRequestV1.self,
+                from: canonical
+            ),
+            exact
+        )
+
+        var noncanonical = canonical
+        noncanonical.append(0x0a)
+        XCTAssertThrowsError(
+            try PrimeCanonicalJSON.decode(
+                PrimeValidationDriverV2SupervisorLaunchRequestV1.self,
+                from: noncanonical
+            )
+        )
+
+        for invalidLease in [
+            fixture.prime.path,
+            fixture.base.path,
+            fixture.workspace.appendingPathComponent("nested").path,
+        ] {
+            XCTAssertThrowsError(
+                try PrimeValidationDriverV2SupervisorLaunchRequestV1(
+                    intent: intent,
+                    leaseDirectoryAbsolutePath: invalidLease
+                ).validate()
+            )
+        }
+    }
+
+    func testMatchedDriverV2ImagePoisonsAfterSourceMutation()
+        throws
+    {
+        let fixture = try Fixture()
+        defer { fixture.cleanup() }
+        let guarded = try fixture.admit()
+            .consumePrerequisites()
+            .prepareGuardedPreExecutor(
+                allowRootOwnedCurrentProcessForTesting: true
+            )
+        let image = try guarded
+            .bindDriverV2SupervisorImageAllowingTestHost(
+                expecting: try expectation(for: guarded)
+            )
+
+        try Data("mutated\n".utf8).write(
+            to: fixture.prime.appendingPathComponent("README.md")
+        )
+        XCTAssertThrowsError(try image.revalidate())
+        XCTAssertEqual(image.imageState, .poisoned)
+        XCTAssertThrowsError(try image.revalidate()) {
+            XCTAssertEqual(
+                $0 as?
+                    PrimeValidationSwiftPMBuildInventoryAdmissionError,
+                .guardedPreExecutorPoisoned
+            )
+        }
+    }
+
     func testGuardPreparationFailurePoisonsOneShotTransition() throws {
         let fixture = try Fixture()
         defer { fixture.cleanup() }
@@ -629,7 +934,7 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
             through:
                 "public enum PrimeValidationSwiftPMBuildInventoryAdmission"
         )
-        XCTAssertFalse(capabilitySource.contains("Codable"))
+        XCTAssertFalse(capabilitySource.contains(": Codable"))
         XCTAssertFalse(capabilitySource.contains("public init("))
         XCTAssertFalse(capabilitySource.contains("arguments:"))
         XCTAssertFalse(capabilitySource.contains("environment:"))
@@ -639,9 +944,9 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
             from:
                 "public final class PrimeValidationSwiftPMBuildInventoryPrerequisite",
             through:
-                "public final class PrimeValidationSwiftPMBuildInventoryAdmissionCapability"
+                "/// Live input guards for a future fixed-role executor."
         )
-        XCTAssertFalse(prerequisiteSource.contains("Codable"))
+        XCTAssertFalse(prerequisiteSource.contains(": Codable"))
         XCTAssertFalse(prerequisiteSource.contains("public init("))
 
         let guardedSource = try slice(
@@ -649,15 +954,153 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
             from:
                 "public final class PrimeValidationSwiftPMBuildInventoryGuardedPreExecutor",
             through:
-                "/// A single-use live capability for inputs needed by a future SwiftPM"
+                "private enum PrimeValidationSwiftPMDriverV2SupervisorRole"
         )
-        XCTAssertFalse(guardedSource.contains("Codable"))
+        XCTAssertFalse(guardedSource.contains(": Codable"))
         XCTAssertFalse(guardedSource.contains("public init("))
         XCTAssertFalse(guardedSource.contains("arguments:"))
         XCTAssertFalse(guardedSource.contains("environment:"))
         XCTAssertFalse(guardedSource.contains("posix_spawn"))
         XCTAssertFalse(guardedSource.contains("Process("))
         XCTAssertFalse(guardedSource.contains("createDirectory"))
+
+        let imageCapabilitySource = try slice(
+            source,
+            from:
+                "public final class PrimeValidationSwiftPMDriverV2SupervisorImageCapability",
+            through:
+                "/// A single-use live capability for inputs needed by a future SwiftPM"
+        )
+        XCTAssertFalse(imageCapabilitySource.contains(": Codable"))
+        XCTAssertFalse(imageCapabilitySource.contains("public init("))
+        XCTAssertFalse(imageCapabilitySource.contains("arguments:"))
+        XCTAssertFalse(imageCapabilitySource.contains("environment:"))
+        XCTAssertFalse(imageCapabilitySource.contains("posix_spawn"))
+        XCTAssertFalse(imageCapabilitySource.contains("Process("))
+        XCTAssertFalse(imageCapabilitySource.contains("restore("))
+        XCTAssertFalse(imageCapabilitySource.contains("execute("))
+
+        let bridgeSource = try String(
+            contentsOf: Fixture.supervisorBridgeSourceURL,
+            encoding: .utf8
+        )
+        let liveBridgeSource = try slice(
+            bridgeSource,
+            from:
+                "package final class PrimeValidationDriverV2SupervisorImageCapability",
+            through:
+                "/// The only DriverCore transition that can close Gate A."
+        )
+        XCTAssertFalse(liveBridgeSource.contains(": Codable"))
+        XCTAssertFalse(liveBridgeSource.contains("public init("))
+        XCTAssertFalse(liveBridgeSource.contains("restore("))
+        XCTAssertFalse(liveBridgeSource.contains("Process("))
+        XCTAssertFalse(liveBridgeSource.contains("posix_spawn"))
+        XCTAssertFalse(liveBridgeSource.contains("arguments:"))
+        XCTAssertFalse(liveBridgeSource.contains("environment:"))
+        XCTAssertTrue(
+            liveBridgeSource.contains(".driverExecutableOnly")
+        )
+        XCTAssertFalse(liveBridgeSource.contains("intentSHA256"))
+        XCTAssertFalse(liveBridgeSource.contains("runID"))
+
+        let supervisorSource = try String(
+            contentsOf: Fixture.supervisorSourceURL,
+            encoding: .utf8
+        )
+        for forbidden in [
+            "ProcessInfo",
+            ".environment",
+            "dropFirst",
+            "posix_spawn",
+            "Process(",
+            "fork(",
+            "execve(",
+            "createDirectory",
+            "FileManager",
+            ".github",
+        ] {
+            XCTAssertFalse(
+                supervisorSource.contains(forbidden),
+                forbidden
+            )
+        }
+        XCTAssertTrue(
+            supervisorSource.contains(
+                "guard CommandLine.arguments.count == 1"
+            )
+        )
+        XCTAssertTrue(
+            supervisorSource.contains("STDIN_FILENO")
+        )
+        XCTAssertTrue(
+            supervisorSource.contains("CLOCK_MONOTONIC_RAW")
+        )
+        XCTAssertTrue(
+            supervisorSource.contains(
+                "requestReadTimeoutNanoseconds"
+            )
+        )
+        XCTAssertFalse(supervisorSource.contains("STDOUT_FILENO"))
+        XCTAssertFalse(supervisorSource.contains("STDERR_FILENO"))
+
+        let manifest = try String(
+            contentsOf: Fixture.nestedManifestURL,
+            encoding: .utf8
+        )
+        let target = try slice(
+            manifest,
+            from:
+                ".executableTarget(\n            name: \"PrimeValidationWorkflowDriverV2Supervisor\"",
+            through: "        .testTarget("
+        )
+        XCTAssertTrue(
+            target.contains("PrimeValidationWorkflowDriverCore")
+        )
+        XCTAssertFalse(
+            target.contains("PrimeValidationWorkflowFixtureChild")
+        )
+        XCTAssertFalse(
+            target.contains(
+                "PrimeValidationWorkflowSecureChildIntegration"
+            )
+        )
+        XCTAssertEqual(PrimeValidationBaselineAnchorV2.xctestCount, 892)
+        XCTAssertEqual(
+            PrimeValidationBaselineAnchorV2.swiftTestingCount,
+            12
+        )
+    }
+
+    private func expectation(
+        for guarded:
+            PrimeValidationSwiftPMBuildInventoryGuardedPreExecutor,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) throws -> PrimeValidationSwiftPMDriverV2ExecutableExpectation {
+        let observed = guarded.currentProcessExecutable
+        let data = try Data(
+            contentsOf: URL(
+                fileURLWithPath: observed.canonicalAbsolutePath
+            )
+        )
+        XCTAssertEqual(
+            UInt64(data.count),
+            observed.byteCount,
+            file: file,
+            line: line
+        )
+        XCTAssertEqual(
+            PrimeSHA256.hexDigest(of: data),
+            observed.sha256,
+            file: file,
+            line: line
+        )
+        return PrimeValidationSwiftPMDriverV2ExecutableExpectation(
+            canonicalAbsolutePath: observed.canonicalAbsolutePath,
+            byteCount: UInt64(data.count),
+            sha256: PrimeSHA256.hexDigest(of: data)
+        )
     }
 
     private func assertLeaseBusy(
@@ -763,6 +1206,37 @@ private final class GuardPreparationRace: @unchecked Sendable {
     }
 }
 
+private final class DriverV2ImageBindingRace:
+    @unchecked Sendable
+{
+    private let lock = NSLock()
+    private(set) var values:
+        [PrimeValidationSwiftPMDriverV2SupervisorImageCapability] = []
+    private(set) var errors: [Error] = []
+
+    func record(
+        _ operation: () throws
+            -> PrimeValidationSwiftPMDriverV2SupervisorImageCapability
+    ) {
+        do {
+            let value = try operation()
+            lock.lock()
+            values.append(value)
+            lock.unlock()
+        } catch {
+            lock.lock()
+            errors.append(error)
+            lock.unlock()
+        }
+    }
+
+    func releaseValues() {
+        lock.lock()
+        values.removeAll()
+        lock.unlock()
+    }
+}
+
 private enum FixtureError: Error {
     case invalid(String)
 }
@@ -785,6 +1259,36 @@ private final class Fixture {
             "Sources/PrimeCore/" +
                 "PrimeValidationSwiftPMBuildInventoryAdmission.swift"
         )
+    }()
+
+    static let supervisorBridgeSourceURL: URL = {
+        var root = URL(fileURLWithPath: #filePath)
+        for _ in 0 ..< 3 {
+            root.deleteLastPathComponent()
+        }
+        return root.appendingPathComponent(
+            "Sources/PrimeValidationWorkflowDriverCore/" +
+                "PrimeValidationDriverV2SupervisorImageBridge.swift"
+        )
+    }()
+
+    static let supervisorSourceURL: URL = {
+        var root = URL(fileURLWithPath: #filePath)
+        for _ in 0 ..< 3 {
+            root.deleteLastPathComponent()
+        }
+        return root.appendingPathComponent(
+            "Sources/PrimeValidationWorkflowDriverV2Supervisor/" +
+                "main.swift"
+        )
+    }()
+
+    static let nestedManifestURL: URL = {
+        var root = URL(fileURLWithPath: #filePath)
+        for _ in 0 ..< 3 {
+            root.deleteLastPathComponent()
+        }
+        return root.appendingPathComponent("Package.swift")
     }()
 
     let base: URL
@@ -883,6 +1387,96 @@ private final class Fixture {
                 ),
                 sourceExpectation: sourceExpectation
             )
+    }
+
+    func makeIntent(
+        guarded:
+            PrimeValidationSwiftPMBuildInventoryGuardedPreExecutor,
+        driverImageData: Data
+    ) throws -> PrimeValidationRunIntentV2 {
+        let roots = PrimeValidationDriverRootLayoutV2(
+            repositoryRoot: Self.rootBinding(
+                guarded.primeRepository
+            ),
+            companionRoot: Self.rootBinding(
+                guarded.companionRepository
+            ),
+            workspaceRoot: Self.rootBinding(
+                guarded.workspaceRoot
+            ),
+            evidenceRoot: Self.rootBinding(
+                guarded.evidenceRoot
+            ),
+            scratchRelativePath: "root-release-build",
+            cacheRelativePath: "cache",
+            configRelativePath: "config",
+            securityRelativePath: "security",
+            clangModuleCacheRelativePath: "clang-module-cache",
+            homeRelativePath: "home",
+            swiftPMModuleCacheRelativePath: "swiftpm-module-cache",
+            temporaryRelativePath: "temporary",
+            outputRelativePath: "output"
+        )
+        let metallib = PrimeValidationRequiredMetallibV2(
+            relativePath:
+                "root-release-build/arm64-apple-macosx/release/" +
+                "mlx-swift_Cmlx.bundle/Contents/Resources/" +
+                "default.metallib",
+            content: .init(data: Data("gate-a-metallib".utf8))
+        )
+        let swiftImage = guarded.toolchain.swiftPackageExecutable
+        let swiftImageData = try Data(
+            contentsOf: URL(
+                fileURLWithPath: swiftImage.canonicalAbsolutePath
+            )
+        )
+        let intent = PrimeValidationRunIntentV2(
+            runID: "gate-a-xctest-rejection",
+            roots: roots,
+            sourceSnapshot: .init(
+                data: Data("gate-a-source-snapshot".utf8)
+            ),
+            packageLock: .init(
+                data: Data("gate-a-package-lock".utf8)
+            ),
+            driverExecutable: .init(
+                absolutePath:
+                    guarded.currentProcessExecutable
+                    .canonicalAbsolutePath,
+                content: .init(data: driverImageData)
+            ),
+            swiftExecutable: .init(
+                absolutePath: swiftImage.canonicalAbsolutePath,
+                content: .init(data: swiftImageData)
+            ),
+            companionCommit:
+                PrimeValidationRunIntentV2.requiredCompanionCommit,
+            requiredPinnedMetallib: metallib,
+            baseline: .init(),
+            phaseBudgets:
+                PrimeValidationExecutorAdmissionPolicyV2
+                .frozenV1.phaseBudgets,
+            environmentPolicy: .make(
+                roots: roots,
+                pinnedMetallib: metallib
+            ),
+            optionalSkipPolicySHA256:
+                try PrimeValidationOptionalSkipPolicy.identitySHA256()
+        )
+        try intent.validate()
+        return intent
+    }
+
+    private static func rootBinding(
+        _ observation: PrimeValidationSwiftPMDirectoryObservation
+    ) -> PrimeValidationDirectoryBindingV2 {
+        PrimeValidationDirectoryBindingV2(
+            absolutePath: observation.canonicalAbsolutePath,
+            deviceID: observation.deviceID,
+            inode: observation.inode,
+            ownerUserID: observation.ownerUserID,
+            mode: observation.permissionMode
+        )
     }
 
     private static func createDirectory(
