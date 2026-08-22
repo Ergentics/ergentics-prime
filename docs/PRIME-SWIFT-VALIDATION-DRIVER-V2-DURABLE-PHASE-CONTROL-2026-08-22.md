@@ -831,3 +831,51 @@ implementation, expose arbitrary command/argv/environment/cwd/deadline/output
 parameters, launch a repository-wide test run, or claim that a role policy is
 live execution evidence. Gate B begins with source inspection and static or
 closed-fixture proof; live Git/Swift observations remain Gate E.
+
+### B0.1 transfer-seam amendment
+
+Status: `FROZEN_BOUNDED_AMENDMENT`
+
+Source inspection found one concrete module-boundary gap in the B0
+predecessor. The exact DriverCore launch declarations are separated from the
+PrimeCore descriptor, watch, lease, and secure-child substrate by two private
+stored properties:
+
+| Owner | Frozen predecessor fact | Consequence |
+| --- | --- | --- |
+| `PrimeValidationDriverV2SupervisorImageCapability` | `liveImage` is `private` | A new DriverCore file cannot forward the Gate A live token |
+| `PrimeValidationSwiftPMDriverV2SupervisorImageCapability` | its retained guarded state is `private` | A new PrimeCore file cannot transfer the held descriptors, source watch, or lease into B |
+
+Keeping both files byte-frozen would leave only an arbitrary command surface,
+reflection, or reopening unjoined paths. All three are rejected. The B0 blob
+values remain the exact predecessor pins; this amendment authorizes only the
+smallest additive typed transfer through those two owners. It does not reopen
+Gate A image admission or the stdin frame.
+
+The exact Gate B mutation allowlist is:
+
+1. `Sources/PrimeCore/PrimeValidationSwiftPMBuildInventoryAdmission.swift` —
+   one-shot transfer of the retained guarded state; no admission weakening;
+2. `Sources/PrimeCore/PrimeSecureChildDarwinProcessProof.swift` — one named
+   Driver V2 repository-directory proof context only;
+3. `Sources/PrimeCore/PrimeValidationDriverV2RoleFacade.swift` — new closed
+   three-role facade over the existing substrate;
+4. `Tests/PrimeValidationWorkflow/Sources/PrimeValidationWorkflowDriverCore/PrimeValidationDriverV2SupervisorImageBridge.swift`
+   — one package-scoped forwarding transition from the private Gate A token;
+5. `Tests/PrimeValidationWorkflow/Sources/PrimeValidationWorkflowDriverCore/PrimeValidationDriverV2RoleBridge.swift`
+   — new typed mapping from the already-frozen admission launch declarations;
+6. focused nested-package role-policy tests only; and
+7. `Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift` only for the final
+   source-identity reseal.
+
+The fixed Gate B role set is exactly `build`, `list_xctest`, and
+`list_swift_testing`, in that order. `shard` remains unavailable because its
+validated execution plan depends on the live inventories admitted only at
+Gate G; shard execution remains Gate H work.
+
+`main.swift` remains byte-identical to blob
+`1b5582ac9a40dce9ea06b94a82c9985978069b76`. Contracts, planner, receipts,
+package manifests, inventory resources, root test identifiers, `.github`, and
+Stage-7 paths remain outside the allowlist. Gate B may prove policy shape,
+one-shot transfer, poison, disposal, and containment routing, but it may not
+run Git, SwiftPM build/list roles, or claim process-derived authority.
