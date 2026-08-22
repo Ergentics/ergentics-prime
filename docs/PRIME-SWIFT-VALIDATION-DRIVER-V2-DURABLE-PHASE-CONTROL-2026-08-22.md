@@ -1233,3 +1233,156 @@ poisoned, and rejects retry even if bytes are restored.
 Gate C closes no process-derived authority and launches zero Driver V2
 children. The first spawn remains a separately frozen isolated facade canary
 after C, before Gate E and before any 904-test spend.
+
+## Gate C continuity-only checkpoint
+
+Status: `COMPLETE_CONTINUITY_ONLY`
+
+This checkpoint records the closed, local Gate C source tree. It authorizes no
+child launch, role advance, Git observation, root 904-test run, GitHub action,
+or scientific/product conclusion.
+
+### Exact source identity
+
+| Pin | Exact value |
+| --- | --- |
+| Gate B predecessor commit | `40b5bb31fc7040c72c8c46af66944b60507033c7` |
+| Gate B predecessor tree | `326da31d21a41c4f7342ad2b07ccbbd909bde806` |
+| Gate C implementation commit | `129322d07aad8adae156f35b474608027ca1344a` |
+| Gate C implementation tree | `84ae91c9324f0a5e566440c360bae723a6c2bb93` |
+| Gate C implementation parent | `40b5bb31fc7040c72c8c46af66944b60507033c7` |
+| Source commit time | `2026-08-22T10:45:26-07:00` |
+| Changed path count | 6 |
+| Embedded Prime source identity | `2dd8118749ca80eed4c35a6b645b29a493c27c44ace2352dc56fb3435b9c9f1b` |
+| Canonical identity records | 538 |
+| Canonical source snapshot files | 539, including the excluded embedded-provenance file |
+| Source worktree after commit | clean |
+
+| Allowed changed path | Gate C blob |
+| --- | --- |
+| `Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift` | `bd6d91d0d1483151513af6d34b20e70e633fc6f4` |
+| `Sources/PrimeCore/PrimeNativeNeuralGateHeldSourceClosure.swift` | `73156c1baeaa64f902b12ac54032160b703ceca5` |
+| `Sources/PrimeCore/PrimeSecureHeldSourceWatch.swift` | `14c08c0dd11f6ce7318f2486d9ba29ccce359f4b` |
+| `Sources/PrimeCore/PrimeValidationDriverV2RoleFacade.swift` | `67582c0a74c3019d92c0acdeff479c27d26929ea` |
+| `Sources/PrimeCore/PrimeValidationSwiftPMBuildInventoryAdmission.swift` | `4aaafc965ad0405277a01eebb7a370d009872f54` |
+| `Tests/PrimeValidationWorkflow/Tests/PrimeValidationWorkflowDriverCoreTests/PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests.swift` | `f38cef7703e5d4c5dc8adec543fedde9bc3edb21` |
+
+### Closed continuity data
+
+| Gate C datum | Terminal value |
+| --- | --- |
+| Companion non-`.git` files | 1,306 held regular files |
+| Companion non-`.git` directories | 154 held directories, including root and empty directories |
+| Companion aggregate bytes | 66,812,637 |
+| Companion largest file | 32,833,664 bytes |
+| Companion watcher requirement | 1,460 |
+| Prime watcher requirement | 539 files + 151 file-derived directories = 690 |
+| Combined watcher requirement | 2,150 of 4,096 maximum |
+| Root `.git` | recorded entry; descriptor-rejoined by device and inode |
+| Root `.git` descendants | excluded; descendant churn accepted |
+| Other hidden entries | included and held |
+| Empty companion directories | explicit admission nodes and held watches |
+| File and directory join | canonical path + device + inode + bounded metadata/content identity |
+| Same bytes on a new inode | replacement; reject or permanently poison |
+| Admission-to-watch mutation | reject before guarded owner publication; never rebaseline |
+| Prime topology | unchanged legacy file-derived allowlist |
+| Prime per-file ceiling | unchanged at 8 MiB |
+| Companion per-file ceiling | 64 MiB |
+| Revalidation surface | one zero-argument `revalidateContinuity() throws` operation |
+| Failure state | permanent poison; retained owner dropped; retry rejected |
+| Driver V2 children launched by the candidate | 0 |
+| Git/Swift subprocess surface exposed by the facade | none |
+
+The combined watch ceiling is checked before either watch set is published,
+and the constructed watcher count must equal the preflight count. Both roots
+are replayed around image retention in the frozen order: admission, Prime
+watch, companion watch, image, admission, Prime watch, companion watch.
+
+### Non-vacuous verification
+
+| Verification | Exact result |
+| --- | --- |
+| Nested Debug focused class | 40 executed; 39 passed; 1 expected Release-only skip; 0 failures; 10.177 seconds |
+| Canonical Release source-admission case | 1 executed; 1 passed; 0 failures; 1.808 seconds; Release build 179.98 seconds |
+| Root held-source closure class | 8 executed; 8 passed; 0 failures; 0.010 seconds |
+| `git diff --check` | clean |
+| Final authority/security audit | PASS; no blocking finding |
+| Final boundary/conservation audit | PASS; no blocking finding |
+| Final focused-test audit | PASS; no remaining finding |
+
+The Debug command was:
+
+~~~text
+swift test --package-path Tests/PrimeValidationWorkflow --filter PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests
+~~~
+
+The Release proof selected only
+`PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests.testPublicReleaseAdmissionUsesEmbeddedSourceAuthority`
+with `-c release` and the clean canonical companion root at
+`163fc100710ece48119bc25954452d10f6a84f7f`. Its exact companion path was:
+
+~~~text
+/Users/ergentics/Documents/Codex/2026-08-03/the-hard-authority-bind-is-corrected/work/prime-driver-v2-final-canonical.x8nPI1/companion
+~~~
+
+The Release case asserted the exact 2,150 combined watchers. It remained an
+XCTest source-admission proof: the test-host token was production-ineligible,
+production DriverCore bind against Apple `xctest` rejected and poisoned, and
+`supervisor_executable_image` was not closed by the test seam.
+
+| Required Gate C case | Observed result |
+| --- | --- |
+| Admission metadata includes a pre-existing empty directory | passed; exact directory set and vnode identity asserted |
+| Admission metadata includes the root `.git` entry | passed; device and inode asserted; descendants absent |
+| Companion same-bytes/new-inode replacement after admission | rejected; no rebaseline |
+| Prime bytes restored before watch construction | rejected; no rebaseline |
+| Companion transient create/unlink before watch construction | rejected; no rebaseline |
+| Prime file mutation after facade transfer | permanently poisoned |
+| Companion write, rename-away/back, transient entry, hidden entry, or empty-directory insertion | permanently poisoned |
+| Root `.git` rename, replacement, or removal | rejected or permanently poisoned |
+| Root `.git` descendant-only churn | accepted |
+| Symlink, FIFO, or root `.git` file | rejected before guarded owner |
+| Depth 33 or file bytes 64 MiB + 1 | bounded rejection |
+| Sequential and concurrent one-shot transitions | exactly one winner |
+| Production DriverCore bind under Apple `xctest` | rejected and permanently poisoned |
+| Facade source scan | no spawn, process, argv, environment, cwd, timeout, role selector, or second owner surface |
+
+### Conservation anchors
+
+| Conserved object | Exact value |
+| --- | --- |
+| Supervisor `main.swift` blob | `1b5582ac9a40dce9ea06b94a82c9985978069b76` |
+| Root `Package.swift` blob | `8e14c10aded588b3902a042341bca7acc842bcc6` |
+| Root `Package.resolved` blob | `14d804bb4291720477240c27e24de6fbdc876b3b` |
+| Nested validation `Package.swift` blob | `5c658c1e9006b9111a49789816a826467b3da9c1` |
+| Nested validation `Package.resolved` blob | `69919288b1a5da256ff408a4d65106b23abc8f89` |
+| DriverCore changed paths from Gate B | 0 |
+| XCTest inventory blob | `5cde9d386b851673ac864321a75ae713cd136feb` |
+| XCTest inventory | 892 lines; 114,186 bytes; SHA-256 `93ccc091a0343ac4fed35b208447d7460eae27668ddec3e931f54b9a7769212b` |
+| Swift Testing inventory blob | `69515eee4fe6a11d99f708de81f10e2fbc4fbced` |
+| Swift Testing inventory | 12 lines; 1,287 bytes; SHA-256 `487c601e9693d6a0fbc31d1b683ffd342ba0d10007c780f315af1113d825e8a3` |
+
+### Authority boundary after Gate C
+
+| Observation or authority | Gate C terminal value |
+| --- | --- |
+| Prime content continuity | closed for the unchanged legacy file-derived topology |
+| Companion content continuity | closed for the complete non-`.git` topology plus root `.git` entry identity |
+| Test-host production supervisor identity | false |
+| Production `supervisor_executable_image` closure from XCTest | false |
+| Driver V2 child execution | `UNOBSERVED` |
+| Driver V2 build-role execution | `UNOBSERVED` |
+| Gate E Git observation | `UNOBSERVED` |
+| 892/12 root inventory execution | `UNOBSERVED` |
+| Scientific/product conclusion | `ABSTAIN` |
+
+Named residual: pre-existing empty directories inside Prime's legacy
+`Sources`/`Tests`/`docs` roots remain outside its file-derived directory set.
+Gate C did not widen Prime's topology or identity schema to absorb them. This
+residual does not apply to the companion policy.
+
+The only recommended successor is a new, separately frozen isolated facade
+spawn canary on commit `129322d07aad8adae156f35b474608027ca1344a` and tree
+`84ae91c9324f0a5e566440c360bae723a6c2bb93`. This checkpoint does not authorize
+that spawn. Gate E, the root 904-test spend, GitHub, and publication remain
+outside Gate C.
