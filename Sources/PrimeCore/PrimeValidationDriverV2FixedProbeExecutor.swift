@@ -2671,9 +2671,14 @@ enum PrimeValidationDriverV2FixedProbeExecutor {
             PrimeValidationSwiftPMRetainedGuardedPreExecutorState
     ) throws {
         let admission = retainedState.admission
+        let expectedWatcherDescriptorCount =
+            retainedState.productionSupervisorImageEligible
+            ? 2_157
+            : 45
         try retainedState.fixedProbeCheckpointNoPendingEvents()
         guard admission.lease.isHeld,
-              retainedState.combinedSourceWatcherDescriptorCount == 2_157
+              retainedState.combinedSourceWatcherDescriptorCount
+                == expectedWatcherDescriptorCount
         else {
             throw primeValidationDriverV2FixedProbeRejected(
                 "lease_or_watcher_count"

@@ -767,6 +767,14 @@ public final class PrimeValidationDriverV2RoleFacade:
         continuityLock.lock()
         switch state {
         case let .guarded(value):
+            guard value.productionSupervisorImageEligible else {
+                state = .poisoned
+                continuityLock.unlock()
+                throw PrimeValidationSwiftPMBuildInventoryAdmissionError
+                    .rejected(
+                        "driver_v2_fixed_probe_production_image"
+                    )
+            }
             retainedState = value
             state = .fixedProbesRunning(value)
         case .canaryRunning, .canaryComplete,

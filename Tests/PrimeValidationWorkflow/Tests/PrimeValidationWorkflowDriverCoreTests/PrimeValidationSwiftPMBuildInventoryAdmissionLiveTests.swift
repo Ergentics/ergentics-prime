@@ -3765,6 +3765,7 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
         }
     }
 
+    @available(macOS 26.0, *)
     func testGateEXCTestHostCannotConstructProductionFixedProbeBinding()
         throws
     {
@@ -3810,6 +3811,44 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
                     ".driver-v2-gate-e-journal"
             )
         )
+
+        // Even a package-internal test-host facade cannot enter the public
+        // production transition. Rejection occurs before the executor can
+        // open a journal or launch any fixed child.
+        let directFixture = try Fixture()
+        defer { directFixture.cleanup() }
+        let directGuarded = try preparedGuard(for: directFixture)
+        let directImage = try boundTestImage(for: directGuarded)
+        XCTAssertFalse(directImage.productionSupervisorImageEligible)
+        let directContext = try roleTransferInputs(
+            fixture: directFixture,
+            guarded: directGuarded
+        ).context
+        let directFacade = try directImage.transferDriverV2RoleFacade(
+            context: directContext
+        )
+        XCTAssertThrowsError(
+            try directFacade.observeFixedGitAndSwiftProbes()
+        ) {
+            XCTAssertEqual(
+                $0 as?
+                    PrimeValidationSwiftPMBuildInventoryAdmissionError,
+                .rejected("driver_v2_fixed_probe_production_image")
+            )
+        }
+        XCTAssertEqual(directFacade.continuityState, .poisoned)
+        XCTAssertEqual(
+            directFacade.processExecutionObservation,
+            .unobserved
+        )
+        XCTAssertFalse(
+            FileManager.default.fileExists(
+                atPath:
+                    directFixture.workspace.path +
+                    ".driver-v2-gate-e-journal"
+            )
+        )
+
         let binding = try gateEProductionSource(
             "Tests/PrimeValidationWorkflow/Sources/" +
                 "PrimeValidationWorkflowDriverCore/" +
