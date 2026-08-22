@@ -1098,3 +1098,125 @@ cwd/deadline/role API, restore authority from facade observations, or launch a
 child before both content closures and watches are continuously armed. Gate D
 and later work, the root 904-test spend, GitHub, Stage 7, Metal, training, and
 publication remain unauthorized by this checkpoint.
+
+## C0 predecessor freeze
+
+Status: `FROZEN_FOR_GATE_C_IMPLEMENTATION`
+
+This record authorizes only the non-executing Gate C continuity slice. The
+source predecessor is the Gate B implementation commit, not this rank-4
+control branch. No child, Git probe, Swift probe, role advance, receipt, or
+scientific observation is authorized.
+
+### Exact predecessor split
+
+| Pin | Exact value |
+| --- | --- |
+| Gate C source predecessor commit | `40b5bb31fc7040c72c8c46af66944b60507033c7` |
+| Gate C source predecessor tree | `326da31d21a41c4f7342ad2b07ccbbd909bde806` |
+| Direct Gate A parent commit | `8bfb27f2475ed336e4343150cd02dffb5cc0cc9d` |
+| Direct Gate A parent tree | `5c8d30c0f666d2d7c0f86bff78e532b4d31fb25e` |
+| Gate B durable-record commit | `fed39cfb3ea917f5d0e636c60d4c02833d189c3c` |
+| Gate B durable-record tree | `d1dcfe1719209ea3cc8097ff3c30d648eb2e292b` |
+| Durable record in source ancestry | false |
+| Gate B source worktree at freeze | clean |
+| Frozen supervisor main blob | `1b5582ac9a40dce9ea06b94a82c9985978069b76` |
+| Frozen Gate B facade blob | `58f82888e7af1fdff798e9dd43db9e90acfc2f23` |
+| Frozen admission blob | `8e4619b850d50f1f722c9c3a0ea8f3083a00dee5` |
+| Frozen source-watch wrapper blob | `7b4f6c632b430d9391769cf86937b2ca0ea6bcda` |
+| Frozen held-watch implementation blob | `1c7f8160b2c81fad00bfb6770d0d1721dd9fd9a5` |
+
+Local source refs are sufficient for this implementation checkpoint. Their
+absence from `origin` is not missing scientific evidence because neither GitHub
+nor a released product claim is in scope.
+
+### Gate C mutation allowlist
+
+1. `Sources/PrimeCore/PrimeNativeNeuralGateHeldSourceClosure.swift` — add one
+   closed complete-working-tree topology/limit policy while preserving the
+   legacy Prime-source policy;
+2. `Sources/PrimeCore/PrimeSecureHeldSourceWatch.swift` — internal bounded,
+   descriptor-relative companion working-tree snapshot and neutral watch
+   construction;
+3. `Sources/PrimeCore/PrimeValidationSwiftPMBuildInventoryAdmission.swift` —
+   retain the companion baseline and second watch, enforce combined capacity,
+   and revalidate both roots;
+4. `Sources/PrimeCore/PrimeValidationDriverV2RoleFacade.swift` — one
+   lock-protected, zero-argument `revalidateContinuity() -> Void` transition
+   with permanent poison;
+5. the existing isolated
+   `PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests.swift` only; and
+6. `Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift` only for the final
+   canonical source-identity reseal.
+
+DriverCore, supervisor `main.swift`, package manifests, lock files, inventory
+resources, root tests, `.github`, Stage 7, Metal, MLX/training, and product
+paths are outside the allowlist.
+
+### Closed companion working-tree policy
+
+| Datum | Frozen value |
+| --- | --- |
+| Root kind | full local APFS checkout |
+| Root `.git` entry | required real owner-safe directory; entry identity retained in the root inventory |
+| `.git` descendants | excluded from Gate C content authority |
+| Other hidden entries | included |
+| Accepted node kinds | regular files and directories only |
+| Symlink, FIFO, socket, or device | reject |
+| Path components | printable ASCII, no slash/NUL/dot/dot-dot; raw-UTF-8 order |
+| Maximum regular files | 4,096 |
+| Maximum held directories | 4,096 |
+| Maximum one-file bytes | 64 MiB |
+| Maximum aggregate file bytes | 512 MiB |
+| Maximum relative depth | 32 |
+| Maximum entries per directory | 16,384 |
+| Maximum aggregate directory entries | 65,536 |
+| Capture/arm deadline | 30 seconds |
+| Maximum combined Prime-plus-companion watchers | 4,096 |
+
+The canonical companion measured at freeze has 1,306 regular files, 154
+directories, 66,812,637 aggregate bytes, and a largest file of 32,833,664
+bytes. Prime's 8 MiB per-file provenance limit therefore cannot be reused.
+
+The companion snapshot is internal continuity state only. It is not a Git
+HEAD, cleanliness, tracked-tree, manifest, or process observation. Gate D
+owns canonical tracked-tree semantics; Gate E owns bounded live Git output and
+must not cite the excluded `.git` subtree as watched by C.
+
+### Gapless no-child ordering
+
+~~~text
+admission/root/toolchain replay
+    -> arm Prime watch
+    -> arm companion watch with complete topology join
+    -> retain current supervisor/test-host image
+    -> admission replay
+    -> Prime watch checkpoint
+    -> companion watch checkpoint
+    -> publish guarded owner
+    -> Gate B image bind and facade transfer
+    -> zero-argument dual-root continuity checkpoints only
+~~~
+
+Both watch objects remain inside the same retained PrimeCore state. A failure
+while arming the second watch drops the first through normal lifetime cleanup.
+Any later error drops the facade's retained owner, sets it permanently
+poisoned, and rejects retry even if bytes are restored.
+
+### Required focused mutations
+
+| Mutation | Required result |
+| --- | --- |
+| Prime file write or replacement | facade poisons; retry rejected |
+| Companion regular-file write | facade poisons; retry rejected |
+| Companion rename-away and restoration | poison remains permanent |
+| Transient companion create/unlink | poison remains permanent |
+| Hidden non-`.git` file mutation | poison remains permanent |
+| Root `.git` replacement/removal | reject or poison |
+| Empty directory, symlink, FIFO/special node | reject before guarded owner |
+| Excess depth/count/bytes | bounded rejection |
+| Mutation after admission and before watch construction | rejection; no rebaseline |
+
+Gate C closes no process-derived authority and launches zero Driver V2
+children. The first spawn remains a separately frozen isolated facade canary
+after C, before Gate E and before any 904-test spend.
