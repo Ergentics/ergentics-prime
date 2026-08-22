@@ -879,3 +879,222 @@ package manifests, inventory resources, root test identifiers, `.github`, and
 Stage-7 paths remain outside the allowlist. Gate B may prove policy shape,
 one-shot transfer, poison, disposal, and containment routing, but it may not
 run Git, SwiftPM build/list roles, or claim process-derived authority.
+
+## Gate B local checkpoint — successor record
+
+Status: `CHECKPOINTED`
+
+This section supersedes only Gate B's earlier `NOT_STARTED` development state.
+It records a local source checkpoint, not a live capability, Prime receipt,
+process result, scientific result, or off-device publication.
+
+### Exact checkpoint identity
+
+| Datum | Observed value |
+| --- | --- |
+| Gate | B — fixed Driver V2 role facade |
+| Predecessor commit | `8bfb27f2475ed336e4343150cd02dffb5cc0cc9d` |
+| Predecessor tree | `5c8d30c0f666d2d7c0f86bff78e532b4d31fb25e` |
+| Candidate commit | `40b5bb31fc7040c72c8c46af66944b60507033c7` |
+| Candidate tree | `326da31d21a41c4f7342ad2b07ccbbd909bde806` |
+| Local branch | `agent/prime-validation-driver-v2-gate-b` |
+| Worktree after checkpoint | clean |
+| Embedded Prime source identity | `e797f22c992cc3f5624958c08c7417fb563d69a6b4c50f55639be460fa96c959` |
+| Provenance source bytes | 546 |
+| Provenance source SHA-256 | `c725f846f9a18ef184baa3a2791e3320873d929ea6904929505dd973b0e001ce` |
+| Provenance Git blob | `8ce4329ad720097f4416088bf6d7807529a6904c` |
+| GitHub or off-device execution | none |
+| Driver V2 child launches | zero |
+| Prime receipt or scientific outcome | none; `ABSTAIN` |
+
+The source identity was recomputed from the complete admitted fixed paths plus
+all non-hidden regular files below `Sources`, `Tests`, and `docs`, excluding
+only the canonical embedded-provenance source. Recomputing after the one-line
+reseal produced the same `e797f22c...c959` identity. Relative paths were sorted
+and the canonical records bound `byte_count`, `relative_path`, and `sha256`.
+
+### Exact changed paths
+
+| Status | Path |
+| --- | --- |
+| M | `Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift` |
+| A | `Sources/PrimeCore/PrimeValidationDriverV2RoleFacade.swift` |
+| M | `Sources/PrimeCore/PrimeValidationSwiftPMBuildInventoryAdmission.swift` |
+| A | `Tests/PrimeValidationWorkflow/Sources/PrimeValidationWorkflowDriverCore/PrimeValidationDriverV2RoleBridge.swift` |
+| M | `Tests/PrimeValidationWorkflow/Sources/PrimeValidationWorkflowDriverCore/PrimeValidationDriverV2SupervisorImageBridge.swift` |
+| M | `Tests/PrimeValidationWorkflow/Tests/PrimeValidationWorkflowDriverCoreTests/PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests.swift` |
+
+The allowlisted `PrimeSecureChildDarwinProcessProof.swift` extension was not
+needed and did not change. No package manifest, lock, inventory resource,
+supervisor `main.swift`, `.github`, Stage-7, Native-300M, Metal, training,
+product, or root-test path entered the checkpoint.
+
+### Frozen-input conservation
+
+| Input | Exact conserved result |
+| --- | --- |
+| Supervisor `main.swift` Git blob | `1b5582ac9a40dce9ea06b94a82c9985978069b76` |
+| Root `Package.swift` Git blob | `8e14c10aded588b3902a042341bca7acc842bcc6` |
+| Root `Package.resolved` Git blob | `14d804bb4291720477240c27e24de6fbdc876b3b` |
+| Nested `Package.swift` Git blob | `5c658c1e9006b9111a49789816a826467b3da9c1` |
+| Nested `Package.resolved` Git blob | `69919288b1a5da256ff408a4d65106b23abc8f89` |
+| All repository manifests and lock files | 29 paths checked; parent-to-candidate drift 0 |
+| Root XCTest inventory | 892 lines; 114,186 bytes; SHA-256 `93ccc091a0343ac4fed35b208447d7460eae27668ddec3e931f54b9a7769212b` |
+| Root Swift Testing inventory | 12 lines; 1,287 bytes; SHA-256 `487c601e9693d6a0fbc31d1b683ffd342ba0d10007c780f315af1113d825e8a3` |
+| `git diff --cached --check` | pass before commit |
+| `git write-tree` | `326da31d21a41c4f7342ad2b07ccbbd909bde806` |
+
+The provenance delta from Gate A is exactly the embedded identity value
+`5f98c788...6819` to `e797f22c...c959`; the canonical template is otherwise
+byte-identical.
+
+### Closed facade and transfer data
+
+| Contract datum | Candidate result |
+| --- | --- |
+| DriverCore consume surface | exactly zero-argument `consumeFixedRoleFacade()` |
+| Consume-time role/argv/env/cwd/deadline input | none |
+| Role order | `build`, `list_xctest`, `list_swift_testing` |
+| Physical executable | retained direct `swift-package` |
+| Logical argument zero | `swift-build`, then `swift-test`, `swift-test` |
+| Replacement environment | exact sorted 19-entry table |
+| Role deadlines | 900 seconds, 300 seconds, 300 seconds |
+| stdin | EOF for every role |
+| stdout/stderr ceilings | independent 16 MiB each |
+| Drain chunk | 64 KiB |
+| Primary result | none, stdout, stdout |
+| Initial facade position | build |
+| Execution/advance/spawn surface | absent |
+| Retained ownership | lease, descriptors, source watch, mapped image, and held toolchain remain inside PrimeCore |
+| DriverCore ownership | opaque token only; no observation scraping or second owner |
+
+DriverCore validates the complete frozen admission policy before deriving the
+semantic role context. PrimeCore then compares the repository, companion,
+workspace, and evidence path/device/inode/owner/mode tuples with its retained
+observations before transferring ownership. A second retained-state
+revalidation occurs before the original image token becomes permanently
+`transferred`.
+
+The logical intent binding and physical SwiftPM image remain deliberately
+separate:
+
+| Binding | Meaning |
+| --- | --- |
+| `intent.swiftExecutable` | logical `/swift` request, canonically the `swift-frontend` probe binding |
+| retained `swiftPackageExecutable` | descriptor-backed direct physical `swift-package` |
+| `intent.driverExecutable` | dedicated Driver V2 supervisor image correlated by the Gate A bridge |
+
+Equating `intent.swiftExecutable` with retained `swift-package` would reject
+the frozen planner/receipt contract and is forbidden. Physical role policies
+correctly use the retained `swift-package` while preserving the separate
+intent-to-toolchain Swift binding.
+
+### Focused proof
+
+All accepted proof commands ran from:
+
+`/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.driver-v2-gate-b-staging`
+
+Debug build:
+
+~~~text
+CLANG_MODULE_CACHE_PATH=/private/tmp/prime-driver-v2-gate-b-clang-module-cache SWIFTPM_MODULECACHE_OVERRIDE=/private/tmp/prime-driver-v2-gate-b-swiftpm-module-cache swift build --disable-sandbox --disable-automatic-resolution --package-path Tests/PrimeValidationWorkflow --scratch-path /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.driver-v2-gate-a-staging/Tests/PrimeValidationWorkflow/.build
+~~~
+
+Result: exit 0; build complete in 8.48 seconds.
+
+Focused Debug tests:
+
+~~~text
+CLANG_MODULE_CACHE_PATH=/private/tmp/prime-driver-v2-gate-b-clang-module-cache SWIFTPM_MODULECACHE_OVERRIDE=/private/tmp/prime-driver-v2-gate-b-swiftpm-module-cache swift test --disable-sandbox --disable-automatic-resolution --package-path Tests/PrimeValidationWorkflow --scratch-path /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.driver-v2-gate-a-staging/Tests/PrimeValidationWorkflow/.build --filter PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests
+~~~
+
+Result: exit 0; 30 executed; 29 passed; one intentional Release-only skip;
+zero failures; 4.254 seconds. An earlier pre-candidate compile stopped before
+running tests because one new test needed the existing macOS 26 availability
+annotation. The annotation was added and the complete focused command above
+was the accepted rerun.
+
+Focused Release source-admission proof:
+
+~~~text
+CLANG_MODULE_CACHE_PATH=/private/tmp/prime-driver-v2-gate-b-clang-module-cache SWIFTPM_MODULECACHE_OVERRIDE=/private/tmp/prime-driver-v2-gate-b-swiftpm-module-cache PRIME_PMHNP_COMPANION_ROOT=/Users/ergentics/Documents/Codex/2026-08-03/the-hard-authority-bind-is-corrected/work/prime-driver-v2-final-canonical.x8nPI1/companion swift test --disable-sandbox --disable-automatic-resolution -c release --package-path Tests/PrimeValidationWorkflow --scratch-path /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.driver-v2-gate-a-staging/Tests/PrimeValidationWorkflow/.build --filter PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests.testPublicReleaseAdmissionUsesEmbeddedSourceAuthority
+~~~
+
+Result: exit 0; Release build complete in 175.46 seconds; one selected test
+passed with zero failures in 0.571 seconds. The companion root was clean at
+commit `163fc100710ece48119bc25954452d10f6a84f7f`, canonical, mode `0755`, and
+owned by `501:20`.
+
+The reused scratch directory held already-materialized local dependencies;
+automatic resolution was disabled. It is a compilation cache, not authority
+or evidence. No dependency fetch, Actions job, root 904-test suite, Git/SwiftPM
+role, shard, or Driver V2 child was run.
+
+### Mutation and lifetime result matrix
+
+| Proof | Result |
+| --- | --- |
+| Explicit PrimeCore test-host bind | passed; `productionSupervisorImageEligible == false` |
+| Mapped image join on the test-host token | passed; device and inode equal their loaded-image values |
+| Production DriverCore bind under Apple `xctest` | rejected and permanently poisoned |
+| Sequential facade consume | exactly one winner; second consume rejected |
+| Concurrent facade consume | exactly one winner; loser rejected |
+| Frozen role-policy table | exact role order, arguments, environment, deadlines, streams, and results |
+| Frozen phase budget +1 mutation | rejected by DriverCore before transfer; guarded source owner remained prepared |
+| Root inode mismatch at transfer | rejected; image token poisoned; exact retry rejected |
+| Missing required role-facade source | incomplete source snapshot rejection |
+| Role-facade source mutation | source-identity mismatch; image token poisoned; no retry |
+| Facade disposal | kernel lease released for diagnosis; original token remained transferred and authority was not restored |
+| Static production-source scan | no new spawn implementation, Foundation `Process`, shell, Python, command language, role selector, execute, next-role, advance, or restore surface |
+
+XCTest proves only owner mechanics. It does not prove production supervisor
+identity. The test-host image token stays explicitly ineligible for production
+and cannot close `supervisor_executable_image`. The production DriverCore
+entry remains unreachable from the test seam and rejects the Apple host. A
+future live invocation must still bind the exact dedicated Release self-image
+against `intent.driverExecutable`; no XCTest success substitutes for that
+dynamic proof.
+
+### Exact-tree independent audit
+
+| Luna audit | Bound candidate | Result |
+| --- | --- | --- |
+| Current-code ownership/security audit | commit `40b5bb31...33c7`; tree `326da31d...e806`; six paths | no blocker; implementation matched the reviewed tree plus only the canonical provenance reseal |
+| Swift contract and conservation audit | same exact commit/tree | no blocker; `/swift` versus physical `swift-package`, 29 manifest/lock paths, 892/12 inventories, main, and provenance all conserved |
+
+Both final audits were read-only. No Llama, build, test, network, GitHub, or
+source edit was delegated to either audit.
+
+### Authority after Gate B
+
+| Observation or authority | Gate B terminal value |
+| --- | --- |
+| Test-host production image eligibility | false |
+| Process execution | `UNOBSERVED` |
+| Build execution | `UNOBSERVED` |
+| XCTest inventory execution | `UNOBSERVED` |
+| Swift Testing inventory execution | `UNOBSERVED` |
+| Completion authorized | false |
+| Scientific/product conclusion | `ABSTAIN` |
+| Additional missing-authority enum cases closed by B | zero |
+
+Gate B preserves Gate A's dedicated production-image prerequisite but creates
+no serializable or lasting live authority. Eight live authority enum cases
+remain missing after the Gate A predecessor checkpoint. The facade dies with
+its owning process; a later invocation begins from fresh admission and cannot
+restore it from this record, a lock leaf, or any public observation.
+
+### Next permitted direction
+
+Gate C is the only permitted successor. It must start from a fresh predecessor
+freeze naming commit `40b5bb31fc7040c72c8c46af66944b60507033c7` and tree
+`326da31d21a41c4f7342ad2b07ccbbd909bde806`. Its bounded purpose is gapless,
+descriptor-held Prime and companion content continuity across the fixed role
+sequence, with mutation at every boundary poisoning permanently.
+
+Gate C must not enlarge `main.swift`, add a generic command/argv/environment/
+cwd/deadline/role API, restore authority from facade observations, or launch a
+child before both content closures and watches are continuously armed. Gate D
+and later work, the root 904-test spend, GitHub, Stage 7, Metal, training, and
+publication remain unauthorized by this checkpoint.
