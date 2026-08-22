@@ -2006,3 +2006,144 @@ On a passing source checkpoint, Gate E alone may be frozen on Gate D's exact
 implementation commit/tree. Gate E is the first live Git/Swift process slice
 and must provide bounded raw bytes plus a gapless retained PrimeCore join.
 This D0 freeze authorizes neither Gate E source nor any process execution.
+
+## Gate D durable checkpoint — canonical tracked-tree mechanics
+
+Status: `CHECKPOINTED_LOCAL_PURE_MECHANICS_ONLY`
+
+### Exact result identity
+
+| Field | Exact value |
+| --- | --- |
+| Source predecessor | `9f7d95a5bebd492827f71fa0bb340d5af1859a90` |
+| Source predecessor tree | `f3f4a244e7557227b40d390b1d7246ced41b21d1` |
+| Gate D source | `272baaba5e4e3be3f17f6c1704e4622b514b12d8` |
+| Gate D source tree | `fdbf508d3a461f4e5ba5098453c6c1f8351f75b1` |
+| Gate D source parent | `9f7d95a5bebd492827f71fa0bb340d5af1859a90` |
+| Initial / corrected freeze | `ba5da9206284a0e5487fc79f88fd7742df366efc` / `b0945df265f0c379cdf300a1ea1972b8545b258e` |
+| Corrected freeze tree | `a75421ce4dc97cbda3dd43bb746ac910806f83e2` |
+| Embedded Prime source identity | `36fed0d96845ea8f5304cd762f21cbf487d278fd00c90080e4b35ffffbcb18c0` |
+| Source topology | 543 snapshot files; 542 canonical identity records; 152 Prime authority directories |
+| Watch topology | 543 Prime files + 152 Prime directories = 695; companion = 1,460; combined = 2,155 / 4,096 |
+| Root inventories | 892 / 12 unchanged; exact byte counts and SHA-256 unchanged |
+| Source worktree after proof | clean |
+| Durable control in source ancestry | false |
+
+The first freeze was corrected before the source candidate commit to require
+raw-byte lexical symlink-target containment. The accepted source is a single
+commit directly on the V2-SPAWN-01 checkpoint; neither durable-control commit
+is in its ancestry.
+
+### Exact six source blobs
+
+| Path | Gate D blob |
+| --- | --- |
+| `Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift` | `a9bde6d8af34491251695ff4d231300bde54198c` |
+| `Sources/PrimeCore/PrimeValidationDriverV2TrackedTreeHeldEntry.swift` | `be1f825bde835b6c8d4f76a217ec49391a601085` |
+| `Sources/PrimeCore/PrimeValidationSwiftPMBuildInventoryAdmission.swift` | `746bc90e74a916953ea2ea4d8a39f972eaedd25e` |
+| `Tests/PrimeValidationWorkflow/Sources/PrimeValidationWorkflowDriverCore/PrimeValidationDriverV2TrackedTreeManifest.swift` | `340c65f658f3a03a5f4991dfcd88b44b963bee7f` |
+| `Tests/PrimeValidationWorkflow/Tests/PrimeValidationWorkflowDriverCoreTests/PrimeValidationDriverV2AdmissionTests.swift` | `3c34467d8a2b7d98df4b0582820efed8416de911` |
+| `Tests/PrimeValidationWorkflow/Tests/PrimeValidationWorkflowDriverCoreTests/PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests.swift` | `d82f2f16c972eaf3e2910e4f44ab8e361b523f7b` |
+
+The commit contains exactly those six paths: two additions, four mutations,
+1,929 insertions, and 6 deletions. The new PrimeCore owner is 8,487 bytes;
+the new DriverCore owner is 22,906 bytes. All conserved predecessor anchors
+named by the freeze remained exact, including `frozenPlannerV2`, supervisor
+`main.swift`, both bridges, facade and role table, isolated spawn canary and
+child pin, C closure/watch owners, Darwin/process owners, Process-based Git
+transport, both package manifests, both lock files, and both inventory
+resources.
+
+### Closed mechanics
+
+The accepted implementation establishes these pure data transitions:
+
+1. exact five-byte `sha1` object-format framing and strict NUL-record parsing;
+2. raw-path byte preservation, unsigned byte order, fixed limits, and
+   duplicate/unsafe/ancestor rejection without lossy Unicode conversion;
+3. exact Git mode/type/lowercase object-ID parsing and Git blob SHA-1
+   recomputation over descriptor-read bytes;
+4. one-to-one held-entry join across opened, post-read descriptor, and
+   post-read named-path identities, including same-bytes/new-inode rejection;
+5. owner-execute-bit agreement for Git `100644` / `100755`;
+6. conditional no-follow `120000` mechanics with byte-wise, root-contained,
+   non-`.git`, 1,023-byte/32-component target resolution; and unconditional
+   gitlink rejection;
+7. a stable canonical manifest whose digest excludes host vnode IDs and does
+   not hash itself; and
+8. a non-Codable binding which requires repository and companion manifests,
+   both computed digest fields, and the exact complete repository-receipt
+   identity.
+
+The stable repository golden fixture is exact:
+
+| Item | Exact value |
+| --- | --- |
+| Raw tree byte count | 131 |
+| Raw tree SHA-256 | `c39e939477b4417019298b4637206ec700aae744786ee8083a8978e467a87a6e` |
+| Canonical manifest byte count | 975 |
+| Canonical manifest SHA-256 | `9372e53a7d6b704fd0c40ffdc63d8aecdc10589f108212694afa9a740a33fd5c` |
+| Entry modes | `100644`, `100755` |
+| First blob object ID | `67bbe3ba8e768c60a01fd1ece2faa2a3b5791f69` |
+| Second blob object ID | `98975b256fb01bb13924496db833b4122e26bb31` |
+
+The legacy Codable repository receipt remains declaration/chain-shape data;
+its schema is unchanged. Happy fixtures now carry digests computed from exact
+canonical manifests. An otherwise well-formed `b...` / `c...` declaration
+still validates only as a declaration and fails to construct the new binding.
+An otherwise-valid alternate receipt with the same two manifest digests also
+fails an existing binding because its full receipt identity differs.
+
+### Compile and focused proof
+
+Before the source commit, nested `swift build --build-tests` compiled PrimeCore,
+DriverCore, and the test bundle without running a test. Existing nested
+executables were linked as ordinary build products; none of those products,
+including the Driver V2 child, was launched. After source commit
+`272baaba...`, each row below ran as a separate exact filter. Aggregate: 8
+selected tests, 8 passed, 0 failed.
+
+| Exact focused test | Result | Data established |
+| --- | --- | --- |
+| `testGateDGoldenRegularAndExecutableManifestIsCanonical` | PASS | exact raw/canonical bytes, hashes, modes, held kinds, deterministic encoding |
+| `testGateDRawPathBytesPreserveInvalidUTF8AndControls` | PASS | invalid UTF-8 plus tab/LF/CR/backslash path bytes survive parsing and canonical decode exactly |
+| `testGateDRejectsPrefixesFramingObjectFormatModeTypeAndObjectID` | PASS | every proper prefix and malformed format/header/mode/type/OID class rejects |
+| `testGateDRejectsUnsafeDuplicateUnorderedAndAncestorPaths` | PASS | absolute/dot/empty/over-limit/`.git`, duplicate, order, and ancestor collisions reject |
+| `testGateDRejectsHeldSetHashCountAndFixedCapDrift` | PASS | missing/extra/rename/kind/mode/hash/count/per-file/aggregate limits reject; owner-execute semantics admit exact valid cases |
+| `testGateDRejectsSameBytesNewInodeAndIdentityReboundDrift` | PASS | descriptor or named-path vnode drift rejects even with identical bytes |
+| `testGateDSymlinkMechanicsAreConditionalAndGitlinksReject` | PASS | in-root relative target admits mechanically; escape/absolute/`.git`/empty/combined-limit targets and gitlinks reject |
+| `testGateDCanonicalDecodeReceiptBindingAndSourceSurfaceAreClosed` | PASS | canonical-only decode, self-hash exclusion, complete receipt-identity binding, arbitrary-digest rejection, exact source-owner admission, and forbidden surface absence |
+
+The final focused test re-captured and validated the complete Release source
+snapshot against embedded identity
+`36fed0d96845ea8f5304cd762f21cbf487d278fd00c90080e4b35ffffbcb18c0`.
+The topology and provenance values were also independently recomputed by
+three read-only audits. No broad class/target filter, live admission test,
+root test, or 904 inventory ran.
+
+### Authority ceiling and successor
+
+Gate D closes no live process or staging authority. The eight post-A missing
+authorities remain missing: Prime Git, companion Git, Swift version, Swift
+target info, SwiftPM build, artifact staging, XCTest inventory, and Swift
+Testing inventory. The facade remains at frozen `build`; no role advanced or
+was consumed. `frozenPlannerV2` and the existing missing-authority enum were
+unchanged.
+
+In particular, Gate D observed no live Git bytes, `.git`/object database,
+retained production tracked-entry closure, production symlink holder, child,
+process group, build, inventory, evidence publication, science, product, or
+release fact. A decoded manifest or declaration cannot restore a descriptor
+or satisfy Gate E. XCTest proved pure mechanics only.
+
+Outer local Swift compilation, exact filtered test harness activity, and Git
+commit/worktree bookkeeping are workstation observations, not Driver V2
+process evidence. GitHub Actions, hosted runners, network permission,
+dependency fetches, and remote publication were not used.
+
+Gate E is the only permitted successor, separately frozen on exact source
+`272baaba5e4e3be3f17f6c1704e4622b514b12d8` and tree
+`fdbf508d3a461f4e5ba5098453c6c1f8351f75b1`. It must supply the first fixed
+live Git/Swift process bytes while retaining C continuity and performing the
+PrimeCore held join. This durable checkpoint is rank-4 prose and is not Gate
+E's source predecessor. No Gate E source or process is authorized here.
