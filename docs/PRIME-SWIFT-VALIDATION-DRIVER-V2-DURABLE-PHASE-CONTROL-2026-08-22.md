@@ -1914,7 +1914,11 @@ preserved rather than normalized.
 executable-bit semantics. `120000` requires an explicitly held no-follow
 symlink observation whose target bytes, symlink vnode, post-read descriptor
 identity, and named-path rebound identity agree. A caller-declared target is
-not admitted. Gate C's current production closures construct no symlink-held
+not admitted. Before construction, the raw target bytes must lexically resolve
+against the raw link-path parent without following or Unicode conversion;
+absolute or NUL-bearing targets, empty or dot components, traversal above the
+admitted root, fixed-limit overflow, and a resolved root `.git` entry reject.
+Gate C's current production closures construct no symlink-held
 observation, so a live tracked symlink in Gate E is a fail-closed `ABSTAIN`
 pending a separately frozen no-follow acquisition slice. Pure D symlink
 mechanics do not claim that live support exists. Gitlinks always reject.
