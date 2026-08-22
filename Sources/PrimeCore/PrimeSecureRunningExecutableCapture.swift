@@ -190,6 +190,47 @@ final class PrimeSecureHeldRunningExecutable: @unchecked Sendable {
         #endif
     }
 
+    /// Rejoins the retained descriptor, loaded vnode, and nofollow named
+    /// image without rereading the already-admitted executable bytes.
+    ///
+    /// Gate E uses this only between its four byte-authoritative passes. The
+    /// descriptor and admission metadata remain private to this owner.
+    func revalidateIdentityOnly() throws {
+        #if os(macOS)
+        let loaded = try PrimeNative3BLoadedExecutableVnode
+            .observeCurrentProcess()
+        var held = stat()
+        guard fstat(descriptor, &held) == 0,
+              Self.sameIdentityAndMetadata(initialStatus, held),
+              fcntl(descriptor, F_GETFD) & FD_CLOEXEC != 0
+        else {
+            throw Self.invalid("held descriptor identity changed")
+        }
+        try loaded.requireMatches(
+            deviceID: deviceID,
+            inode: inode
+        )
+
+        let rebound = open(
+            canonicalAbsolutePath,
+            O_RDONLY | O_NOFOLLOW | O_CLOEXEC
+        )
+        guard rebound >= 0 else {
+            throw Self.invalid("path rebound identity open")
+        }
+        defer { _ = close(rebound) }
+        var named = stat()
+        guard fstat(rebound, &named) == 0,
+              Self.sameIdentityAndMetadata(initialStatus, named),
+              fcntl(rebound, F_GETFD) & FD_CLOEXEC != 0
+        else {
+            throw Self.invalid("path rebound identity changed")
+        }
+        #else
+        throw Self.invalid("unsupported platform")
+        #endif
+    }
+
     private static func isAdmittedExecutable(
         _ value: stat,
         allowRootOwnerForTesting: Bool

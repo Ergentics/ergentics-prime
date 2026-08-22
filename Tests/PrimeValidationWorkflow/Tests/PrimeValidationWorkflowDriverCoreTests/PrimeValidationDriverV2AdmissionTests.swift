@@ -1126,6 +1126,339 @@ final class PrimeValidationDriverV2AdmissionTests: XCTestCase {
         }
     }
 
+    func testGateEPrimeScopeAndFixedPolicyAreExact() throws {
+        let executor = try gateEProductionSource(
+            "Sources/PrimeCore/" +
+                "PrimeValidationDriverV2FixedProbeExecutor.swift"
+        )
+        let facade = try gateEProductionSource(
+            "Sources/PrimeCore/PrimeValidationDriverV2RoleFacade.swift"
+        )
+        let binding = try gateEProductionSource(
+            "Tests/PrimeValidationWorkflow/Sources/" +
+                "PrimeValidationWorkflowDriverCore/" +
+                "PrimeValidationDriverV2FixedProbeBinding.swift"
+        )
+
+        let roles = [
+            "prime_head_pre", "prime_object_format", "prime_status_pre",
+            "prime_tree_discovery", "prime_tree_replay",
+            "prime_status_post", "prime_head_post",
+            "companion_head_pre", "companion_object_format",
+            "companion_status_pre", "companion_tree_discovery",
+            "companion_tree_replay", "companion_status_post",
+            "companion_head_post", "swift_version", "swift_target_info",
+        ]
+        XCTAssertEqual(
+            roles.compactMap { executor.range(of: "\"\($0)\"")?.lowerBound },
+            roles.compactMap { executor.range(of: "\"\($0)\"")?.lowerBound }
+                .sorted()
+        )
+        XCTAssertEqual(roles.count, 16)
+
+        let pathspecs = [
+            ".gitignore", ".swiftpm/configuration/mirrors.json", "LICENSE",
+            "Package.resolved", "Package.swift", "README.md", "Sources",
+            "THIRD_PARTY_NOTICES.md", "Tests", "docs",
+        ]
+        for value in pathspecs {
+            XCTAssertTrue(executor.contains("\"\(value)\""), value)
+            XCTAssertTrue(binding.contains("\"\(value)\""), value)
+        }
+        for value in [
+            "--no-pager", "--no-optional-locks", "--no-replace-objects",
+            "--no-lazy-fetch", "--literal-pathspecs", "--git-dir=.git",
+            "--work-tree=.", "core.fsmonitor=false",
+            "core.untrackedCache=false", "submodule.recurse=false",
+            "core.hooksPath=/dev/null",
+        ] {
+            XCTAssertTrue(executor.contains("\"\(value)\""), value)
+            XCTAssertTrue(binding.contains("\"\(value)\""), value)
+        }
+        for value in [
+            "static let requiredSpawnFlags: UInt16 = 0x448c",
+            "static let deadlineNanoseconds: UInt64 = 30_000_000_000",
+            "standardErrorMaximumByteCount: UInt64 = 64 * 1024",
+            "drainChunkByteCount = 64 * 1024",
+            "treeOrStatusMaximumByteCount: UInt64 = 16 * 1024 * 1024",
+            "(\"LANG\", \"C\")", "(\"LC_ALL\", \"C\")",
+            "(\"TERM\", \"dumb\")",
+        ] {
+            XCTAssertTrue(executor.contains(value), value)
+        }
+        XCTAssertTrue(executor.contains("(\"DEVELOPER_DIR\", toolchain."))
+        XCTAssertTrue(executor.contains("(\"SDKROOT\", toolchain."))
+
+        let publicTransition = try XCTUnwrap(
+            facade.range(of: "public func observeFixedGitAndSwiftProbes()")
+        )
+        let transitionTail = facade[publicTransition.lowerBound...]
+        XCTAssertTrue(transitionTail.hasPrefix(
+            "public func observeFixedGitAndSwiftProbes() throws"
+        ))
+        XCTAssertEqual(
+            facade.components(
+                separatedBy: "public func observeFixedGitAndSwiftProbes()"
+            ).count - 1,
+            1
+        )
+        XCTAssertTrue(executor.contains("sourceSnapshot.files"))
+        XCTAssertTrue(executor.contains("fixedProbePrimeHeldEntries()"))
+        XCTAssertTrue(executor.contains("fixedProbeCompanionHeldEntries()"))
+        XCTAssertTrue(binding.contains("exactMissingAuthorities"))
+        for missing in [
+            ".swiftPMBuildExecution", ".artifactStaging",
+            ".xctestInventoryExecution", ".swiftTestingInventoryExecution",
+        ] {
+            XCTAssertTrue(binding.contains(missing), missing)
+        }
+        for frozenRole in [".build", ".listXCTest", ".listSwiftTesting"] {
+            XCTAssertTrue(facade.contains(frozenRole), frozenRole)
+        }
+    }
+
+    func testGateERawParsersAndPartialBindingsAreClosed() throws {
+        let fixture = try makeFixture()
+        try fixture.toolchain.validate()
+        try fixture.repository.validate(intent: fixture.intent)
+
+        let parsedTarget = try PrimeValidationSwiftTargetInfoObservationV2
+            .parse(fixture.toolchain.swiftTargetInfoOutput.data)
+        XCTAssertEqual(parsedTarget, fixture.toolchain.targetInfo)
+        var truncated = fixture.toolchain.swiftTargetInfoOutput.data
+        truncated.removeLast()
+        XCTAssertThrowsError(
+            try PrimeValidationSwiftTargetInfoObservationV2.parse(truncated)
+        )
+
+        let tracked = try gateDCanonicalTrackedTrees()
+        let heldBinding = try fixture.repository.bindingTrackedTreeManifests(
+            intent: fixture.intent,
+            repositoryManifest: tracked.repository,
+            companionManifest: tracked.companion
+        )
+        try heldBinding.validate(receipt: fixture.repository, intent: fixture.intent)
+        XCTAssertEqual(
+            PrimeValidationDriverV2FixedProbeBinding.exactMissingAuthorities,
+            [
+                .swiftPMBuildExecution,
+                .artifactStaging,
+                .xctestInventoryExecution,
+                .swiftTestingInventoryExecution,
+            ]
+        )
+
+        let source = try gateEProductionSource(
+            "Tests/PrimeValidationWorkflow/Sources/" +
+                "PrimeValidationWorkflowDriverCore/" +
+                "PrimeValidationDriverV2FixedProbeBinding.swift"
+        )
+        for exactPath in [
+            "admission/repository_head.bin",
+            "admission/repository_status.bin",
+            "admission/companion_head.bin",
+            "admission/companion_status.bin",
+            "admission/xcode_version.bin", "admission/sdk_path.bin",
+            "admission/sdk_version.bin", "admission/swift_version.bin",
+            "admission/swift_target_info.bin",
+        ] {
+            XCTAssertTrue(source.contains("\"\(exactPath)\""), exactPath)
+        }
+        XCTAssertTrue(source.contains(
+            "package struct PrimeValidationDriverV2PartialToolchainProbeBinding"
+        ))
+        XCTAssertTrue(source.contains("swiftPackageMappedExecutableJoined: false"))
+        XCTAssertFalse(source.contains("PrimeValidationToolchainAdmissionReceiptV2("))
+        XCTAssertTrue(source.contains("private let consumedFacade:"))
+        XCTAssertTrue(source.contains("private let boundLifetime:"))
+        XCTAssertTrue(source.contains("semanticBindingIdentitySHA256"))
+        XCTAssertFalse(source.contains("extension PrimeValidationDriverV2FixedProbeBinding: Codable"))
+        XCTAssertFalse(source.contains("extension PrimeValidationDriverV2PartialToolchainProbeBinding: Codable"))
+    }
+
+    func testGateERejectsEveryRawProcessAndRepositoryMutation() throws {
+        let fixture = try makeFixture()
+        let tracked = try gateDCanonicalTrackedTrees()
+
+        assertGateDRepositoryRejects(
+            objectFormat: Data("sha256\n".utf8),
+            rawTree: tracked.repositoryRawTree,
+            heldEntries: tracked.repositoryHeldEntries
+        )
+        var truncated = tracked.repositoryRawTree
+        truncated.removeLast()
+        assertGateDRepositoryRejects(
+            rawTree: truncated,
+            heldEntries: tracked.repositoryHeldEntries
+        )
+        let arbitrary = try repository(
+            intent: fixture.intent,
+            repositoryTrackedTreeSHA256: String(repeating: "b", count: 64),
+            companionTrackedTreeSHA256: String(repeating: "c", count: 64)
+        )
+        try arbitrary.validate(intent: fixture.intent)
+        XCTAssertThrowsError(
+            try arbitrary.bindingTrackedTreeManifests(
+                intent: fixture.intent,
+                repositoryManifest: tracked.repository,
+                companionManifest: tracked.companion
+            )
+        )
+
+        for (fact, receipt) in [
+            (
+                "repository_head",
+                try repository(
+                    intent: fixture.intent,
+                    repositoryHEADOutputData:
+                        Data((String(repeating: "0", count: 40) + "\n").utf8)
+                )
+            ),
+            (
+                "companion_head",
+                try repository(
+                    intent: fixture.intent,
+                    companionHEADOutputData:
+                        Data((String(repeating: "0", count: 40) + "\n").utf8)
+                )
+            ),
+            (
+                "repository_status",
+                try repository(
+                    intent: fixture.intent,
+                    repositoryStatusOutputData: Data("1 .M N... dirty\0".utf8)
+                )
+            ),
+            (
+                "companion_status",
+                try repository(
+                    intent: fixture.intent,
+                    companionStatusOutputData: Data("? dirty\0".utf8)
+                )
+            ),
+            (
+                "companion_pinned_head",
+                try repository(
+                    intent: fixture.intent,
+                    companionCommit: String(repeating: "0", count: 40)
+                )
+            ),
+        ] {
+            XCTAssertThrowsError(
+                try receipt.validate(intent: fixture.intent),
+                fact
+            )
+        }
+
+        XCTAssertThrowsError(
+            try PrimeValidationTrackedTreeManifestBuilderV2.companion(
+                objectFormatOutput: Data("sha256\n".utf8),
+                rawTreeOutput: tracked.companionRawTree,
+                heldEntries: tracked.companionHeldEntries
+            )
+        )
+        var truncatedCompanion = tracked.companionRawTree
+        truncatedCompanion.removeLast()
+        XCTAssertThrowsError(
+            try PrimeValidationTrackedTreeManifestBuilderV2.companion(
+                objectFormatOutput: Data("sha1\n".utf8),
+                rawTreeOutput: truncatedCompanion,
+                heldEntries: tracked.companionHeldEntries
+            )
+        )
+
+        for malformed in [
+            Data(), Data("{}".utf8), Data("{\"target\":null}".utf8),
+            Data("{\"target\":{}}\ntrailing".utf8),
+        ] {
+            XCTAssertThrowsError(
+                try PrimeValidationSwiftTargetInfoObservationV2.parse(malformed)
+            )
+        }
+
+        for (fact, receipt) in [
+            (
+                "swift_version",
+                toolchain(
+                    intent: fixture.intent,
+                    swiftVersionOutputData: Data("mutated swift\n".utf8)
+                )
+            ),
+            (
+                "swift_target_info",
+                toolchain(
+                    intent: fixture.intent,
+                    swiftTargetInfoOutputData: Data("{}".utf8)
+                )
+            ),
+        ] {
+            XCTAssertThrowsError(try receipt.validate(), fact)
+        }
+
+        let expectedProcessFacts = [
+            "ordered_role", "role", "ordinal", "logical_argument_zero",
+            "arguments", "ordered_environment", "working_directory",
+            "executable_image", "standard_output_cap",
+            "standard_error_empty", "process_identifier", "spawn_flags",
+            "spawn_return_code", "spawn_after_deadline_start",
+            "spawn_after_predecessor_terminal",
+            "spawn_before_start_publication", "session_identifier",
+            "process_group_identifier",
+            "suspended_working_directory_device",
+            "suspended_working_directory_inode",
+            "exact_suspended_working_directory_join", "death_observed",
+            "death_after_resume", "pre_reap_process_group_members",
+            "start_after_spawn", "start_before_resume",
+            "pre_resume_checkpoint_after_start_publication",
+            "pre_resume_checkpoint_before_resume",
+            "pre_resume_checkpoint_within_deadline",
+            "resume_after_deadline_start", "resume_before_deadline_expiry",
+            "start_durable_before_resume", "mapped_image_joined",
+            "requested_wait_process_identifier",
+            "returned_wait_process_identifier", "wait_options",
+            "raw_wait_status", "wait_after_death",
+            "wait_before_deadline_expiry", "wait_before_executor_terminal",
+            "exited_normally", "exit_status", "termination_signal",
+            "core_dumped",
+            "standard_output_reached_eof",
+            "standard_output_total_byte_count",
+            "standard_output_terminal_reason", "standard_output_overflowed",
+            "standard_output_worker_finished",
+            "standard_output_read_error_number",
+            "standard_output_write_error_number",
+            "standard_output_finalization_error_number",
+            "standard_output_close_error_number",
+            "standard_output_descriptors_closed",
+            "standard_error_reached_eof",
+            "standard_error_total_byte_count",
+            "standard_error_terminal_reason", "standard_error_overflowed",
+            "standard_error_worker_finished",
+            "standard_error_read_error_number",
+            "standard_error_write_error_number",
+            "standard_error_finalization_error_number",
+            "standard_error_close_error_number",
+            "standard_error_descriptors_closed",
+            "process_group_empty_after_reap", "terminal_after_wait",
+            "terminal_before_deadline_expiry",
+        ]
+        let processMatrix = try
+            PrimeValidationDriverV2FixedProbeSemanticTestSeam
+                .processMutationMatrix()
+        XCTAssertEqual(processMatrix.map(\.fact), expectedProcessFacts)
+        for mutation in processMatrix {
+            XCTAssertTrue(mutation.rejected, mutation.fact)
+        }
+    }
+
+    private func gateEProductionSource(_ relativePath: String) throws
+        -> String
+    {
+        var root = URL(fileURLWithPath: #filePath)
+        for _ in 0 ..< 5 { root.deleteLastPathComponent() }
+        let data = try Data(contentsOf: root.appendingPathComponent(relativePath))
+        return String(decoding: data, as: UTF8.self)
+    }
+
     private struct Fixture {
         let intent: PrimeValidationRunIntentV2
         let toolchain: PrimeValidationToolchainAdmissionReceiptV2
@@ -1234,7 +1567,9 @@ final class PrimeValidationDriverV2AdmissionTests: XCTestCase {
         declaredXcodeVersion: String = "26.6",
         rawXcodeVersion: String = "26.6",
         runtimeResourcePathOverride: String? = nil,
-        extraEnvironment: [PrimeValidationEnvironmentEntry] = []
+        extraEnvironment: [PrimeValidationEnvironmentEntry] = [],
+        swiftVersionOutputData: Data? = nil,
+        swiftTargetInfoOutputData: Data? = nil
     ) -> PrimeValidationToolchainAdmissionReceiptV2 {
         let developer =
             "/Applications/Xcode.app/Contents/Developer"
@@ -1361,7 +1696,7 @@ final class PrimeValidationDriverV2AdmissionTests: XCTestCase {
             ),
             swiftVersionOutput: bound(
                 name: "swift_version",
-                data: Data(
+                data: swiftVersionOutputData ?? Data(
                     (
                         "swift-driver version: 1.148.6 "
                             + target.compilerVersion
@@ -1371,7 +1706,7 @@ final class PrimeValidationDriverV2AdmissionTests: XCTestCase {
             ),
             swiftTargetInfoOutput: bound(
                 name: "swift_target_info",
-                data: targetJSON
+                data: swiftTargetInfoOutputData ?? targetJSON
             ),
             xcodeVersion: declaredXcodeVersion,
             xcodeBuildVersion: "17F113",
@@ -1389,6 +1724,11 @@ final class PrimeValidationDriverV2AdmissionTests: XCTestCase {
     private func repository(
         intent: PrimeValidationRunIntentV2,
         repositoryCommit: String = String(repeating: "e", count: 40),
+        companionCommit: String? = nil,
+        repositoryHEADOutputData: Data? = nil,
+        repositoryStatusOutputData: Data? = nil,
+        companionHEADOutputData: Data? = nil,
+        companionStatusOutputData: Data? = nil,
         packageLockDeviceID: UInt64 = 1,
         packageLockOwnerUserID: UInt32 = 501,
         packageLockOwnerGroupID: UInt32 = 20,
@@ -1396,7 +1736,7 @@ final class PrimeValidationDriverV2AdmissionTests: XCTestCase {
         repositoryTrackedTreeSHA256: String? = nil,
         companionTrackedTreeSHA256: String? = nil
     ) throws -> PrimeValidationRepositoryAdmissionReceiptV2 {
-        let companionCommit = intent.companionCommit
+        let companionCommit = companionCommit ?? intent.companionCommit
         let sourceFixture = try sourceFixture()
         let trackedTrees = try gateDCanonicalTrackedTrees()
         let packageLockFile = heldRegularFile(
@@ -1437,8 +1777,10 @@ final class PrimeValidationDriverV2AdmissionTests: XCTestCase {
                 mode: intent.roots.companionRoot.mode
             ),
             gitExecutable: heldExecutable(
-                requestedPath: "/usr/bin/git",
-                canonicalPath: "/usr/bin/git",
+                requestedPath:
+                    "/Applications/Xcode.app/Contents/Developer/usr/bin/git",
+                canonicalPath:
+                    "/Applications/Xcode.app/Contents/Developer/usr/bin/git",
                 symlinkTarget: nil,
                 content: content("git"),
                 inode: 200
@@ -1462,24 +1804,26 @@ final class PrimeValidationDriverV2AdmissionTests: XCTestCase {
                 packageLockFileAfterAdmission,
             repositoryHEADOutput: bound(
                 name: "repository_head",
-                data: Data((repositoryCommit + "\n").utf8)
+                data: repositoryHEADOutputData
+                    ?? Data((repositoryCommit + "\n").utf8)
             ),
             repositoryCommit: repositoryCommit,
             repositoryStatusOutput: bound(
                 name: "repository_status",
-                data: Data()
+                data: repositoryStatusOutputData ?? Data()
             ),
             repositoryTrackedTreeSHA256:
                 repositoryTrackedTreeSHA256
                     ?? trackedTrees.repository.sha256,
             companionHEADOutput: bound(
                 name: "companion_head",
-                data: Data((companionCommit + "\n").utf8)
+                data: companionHEADOutputData
+                    ?? Data((companionCommit + "\n").utf8)
             ),
             companionCommit: companionCommit,
             companionStatusOutput: bound(
                 name: "companion_status",
-                data: Data()
+                data: companionStatusOutputData ?? Data()
             ),
             companionTrackedTreeSHA256:
                 companionTrackedTreeSHA256

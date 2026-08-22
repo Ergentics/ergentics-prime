@@ -615,6 +615,132 @@ final class PrimeNativeNeuralGateHeldSourceClosure {
         ).monotonicNanoseconds
     }
 
+    /// Polls only the continuously armed kqueue. No descriptor, byte baseline,
+    /// or namespace inventory is reopened or replaced by this checkpoint.
+    func fixedProbeCheckpointNoPendingEvents() throws {
+        do {
+            guard !poisoned,
+                  !closed,
+                  preResumeValidationMonotonicNanoseconds == nil,
+                  postReapValidationMonotonicNanoseconds == nil
+            else {
+                poisoned = true
+                throw Self.rejected(
+                    "source_fixed_probe_state"
+                )
+            }
+            guard try pollFirstPendingEvent() == nil else {
+                poisoned = true
+                throw Self.rejected(
+                    "source_fixed_probe_pending_event"
+                )
+            }
+        } catch {
+            poisoned = true
+            throw error
+        }
+    }
+
+    /// Returns evidence-only Gate D held entries from the already-retained
+    /// file descriptors. The named identity is rejoined through the existing
+    /// descriptor-held parent directory and no live descriptor escapes.
+    func fixedProbeHeldEntries() throws
+        -> [PrimeValidationDriverV2TrackedTreeHeldEntry]
+    {
+        do {
+            try fixedProbeCheckpointNoPendingEvents()
+            var entries: [PrimeValidationDriverV2TrackedTreeHeldEntry] = []
+            entries.reserveCapacity(fileRecords.count)
+            for file in fileRecords {
+                var opened = stat()
+                try Self.requireFilesystemIdentity(
+                    descriptor: file.descriptor,
+                    expected: rootFilesystemIdentity,
+                    context: "source_fixed_probe_held_filesystem"
+                )
+                guard fstat(file.descriptor, &opened) == 0,
+                      fcntl(file.descriptor, F_GETFD) & FD_CLOEXEC != 0,
+                      Self.sameRegularFileIdentity(
+                          file.initialStatus,
+                          opened
+                      )
+                else {
+                    throw Self.rejected(
+                        "source_fixed_probe_opened_identity"
+                    )
+                }
+
+                let data = try Self.readExactDescriptor(
+                    file.descriptor,
+                    byteCount: file.snapshot.byteCount
+                )
+                var postRead = stat()
+                guard fstat(file.descriptor, &postRead) == 0,
+                      Self.sameRegularFileIdentity(opened, postRead),
+                      data == file.snapshot.contents,
+                      PrimeSHA256.hexDigest(of: data)
+                        == file.snapshot.sha256
+                else {
+                    throw Self.rejected(
+                        "source_fixed_probe_post_read"
+                    )
+                }
+
+                let parentPath = Self.parentRelativePath(
+                    of: file.snapshot.relativePath
+                ) ?? ""
+                guard let parentDescriptor = directoryDescriptors[parentPath]
+                else {
+                    throw Self.rejected(
+                        "source_fixed_probe_parent"
+                    )
+                }
+                var named = stat()
+                let namedResult = Self.leafName(
+                    of: file.snapshot.relativePath
+                ).withCString {
+                    fstatat(
+                        parentDescriptor,
+                        $0,
+                        &named,
+                        AT_SYMLINK_NOFOLLOW
+                    )
+                }
+                guard namedResult == 0,
+                      Self.sameRegularFileIdentity(postRead, named)
+                else {
+                    throw Self.rejected(
+                        "source_fixed_probe_named_rebound"
+                    )
+                }
+
+                entries.append(
+                    try PrimeValidationDriverV2TrackedTreeHeldEntry(
+                        validatingRawPathBytes:
+                            Data(file.snapshot.relativePath.utf8),
+                        kind: .regularFile,
+                        openedIdentity:
+                            try Self.fixedProbeHeldIdentity(opened),
+                        postReadDescriptorIdentity:
+                            try Self.fixedProbeHeldIdentity(postRead),
+                        namedPathReboundIdentity:
+                            try Self.fixedProbeHeldIdentity(named),
+                        contents: data
+                    )
+                )
+            }
+            try fixedProbeCheckpointNoPendingEvents()
+            return entries.sorted {
+                $0.rawPathBytes.lexicographicallyPrecedes(
+                    $1.rawPathBytes
+                )
+            }
+        } catch {
+            poisoned = true
+            throw error
+        }
+    }
+
     var heldWatcherDescriptorCount: Int {
         watcherPathByDescriptor.count
     }
@@ -2374,6 +2500,29 @@ final class PrimeNativeNeuralGateHeldSourceClosure {
                 == rhs.st_ctimespec.tv_sec
             && lhs.st_ctimespec.tv_nsec
                 == rhs.st_ctimespec.tv_nsec
+    }
+
+    private static func fixedProbeHeldIdentity(
+        _ value: stat
+    ) throws -> PrimeValidationDriverV2TrackedTreeHeldIdentity {
+        guard value.st_mode & mode_t(S_IFMT) == mode_t(S_IFREG),
+              value.st_ino > 0,
+              value.st_size >= 0
+        else {
+            throw rejected(
+                "source_fixed_probe_identity"
+            )
+        }
+        return PrimeValidationDriverV2TrackedTreeHeldIdentity(
+            deviceID: UInt64(bitPattern: Int64(value.st_dev)),
+            inode: UInt64(value.st_ino),
+            ownerUserID: value.st_uid,
+            ownerGroupID: value.st_gid,
+            permissionMode: UInt16(value.st_mode & mode_t(0o7777)),
+            linkCount: UInt64(value.st_nlink),
+            byteCount: UInt64(value.st_size),
+            posixFileType: .regularFile
+        )
     }
 
     private static func sameDirectoryIdentity(

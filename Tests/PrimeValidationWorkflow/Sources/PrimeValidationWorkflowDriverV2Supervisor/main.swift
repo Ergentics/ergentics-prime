@@ -10,9 +10,9 @@ private enum PrimeValidationDriverV2SupervisorMainError: Error {
     case rejected
 }
 
-/// Gate A owns exactly one operation: consume a canonical typed intent and
-/// prove that this process's mapped image is that intent's driver image.
-/// It launches no child and publishes no receipt.
+/// Gate A's transport remains one closed canonical typed intent frame. After
+/// this process binds that intent to its mapped image, Gate E unconditionally
+/// runs the facade's zero-argument fixed Git and Swift probe transition.
 @main
 private struct PrimeValidationWorkflowDriverV2Supervisor {
     private static let maximumRequestByteCount = 256 * 1024
@@ -90,7 +90,18 @@ private struct PrimeValidationWorkflowDriverV2Supervisor {
                 guardedPreExecutor: guarded
             )
         try bound.revalidate()
-        withExtendedLifetime(bound) {}
+        guard #available(macOS 26.0, *) else {
+            throw PrimeValidationDriverV2SupervisorMainError.rejected
+        }
+        let fixedProbeBinding = try
+            PrimeValidationDriverV2FixedProbeBindingBridge.bind(
+                intent: intent,
+                supervisorImage: bound
+            )
+        // Revalidation requires the exact four-authority remainder before its
+        // final retained-lifetime deadline and continuity accept.
+        try fixedProbeBinding.revalidate()
+        withExtendedLifetime(fixedProbeBinding) {}
     }
 
     private static func developerDirectory(

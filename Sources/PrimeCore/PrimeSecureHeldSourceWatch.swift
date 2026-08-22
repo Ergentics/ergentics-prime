@@ -1071,6 +1071,16 @@ final class PrimeSecureHeldSourceWatch {
         try implementation.validateWhilePrepared()
     }
 
+    func fixedProbeCheckpointNoPendingEvents() throws {
+        try implementation.fixedProbeCheckpointNoPendingEvents()
+    }
+
+    func fixedProbeHeldEntries() throws
+        -> [PrimeValidationDriverV2TrackedTreeHeldEntry]
+    {
+        try implementation.fixedProbeHeldEntries()
+    }
+
     var heldWatcherDescriptorCount: Int {
         implementation.heldWatcherDescriptorCount
     }

@@ -102,7 +102,7 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
             XCTAssertTrue(guarded.companionSourceWatchWindowArmed)
             XCTAssertEqual(
                 guarded.combinedSourceWatcherDescriptorCount,
-                2_155
+                2_157
             )
             XCTAssertTrue(
                 guarded.missingAuthorities.contains(
@@ -306,7 +306,7 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
         XCTAssertTrue(guarded.companionSourceWatchWindowArmed)
         XCTAssertEqual(
             guarded.combinedSourceWatcherDescriptorCount,
-            39
+            41
         )
         XCTAssertTrue(guarded.currentProcessExecutableImageHeld)
         XCTAssertEqual(
@@ -476,7 +476,7 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
             .prepareGuardedPreExecutor(
                 allowRootOwnedCurrentProcessForTesting: true
             )
-        XCTAssertEqual(guarded.combinedSourceWatcherDescriptorCount, 39)
+        XCTAssertEqual(guarded.combinedSourceWatcherDescriptorCount, 41)
 
         try Data("mutated companion\n".utf8).write(
             to: fixture.companion.appendingPathComponent(
@@ -830,12 +830,17 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
             "Sources/PrimeCore/PrimeSecureHeldSourceWatch.swift",
             "Sources/PrimeCore/" +
                 "PrimeValidationDriverV2IsolatedSpawnCanary.swift",
+            "Sources/PrimeCore/" +
+                "PrimeValidationDriverV2FixedProbeExecutor.swift",
             "Sources/PrimeCore/PrimeValidationDriverV2RoleFacade.swift",
             "Sources/PrimeCore/" +
                 "PrimeValidationDriverV2TrackedTreeHeldEntry.swift",
             "Tests/PrimeValidationWorkflow/Sources/" +
                 "PrimeValidationWorkflowDriverCore/" +
                 "PrimeValidationDriverV2TrackedTreeManifest.swift",
+            "Tests/PrimeValidationWorkflow/Sources/" +
+                "PrimeValidationWorkflowDriverCore/" +
+                "PrimeValidationDriverV2FixedProbeBinding.swift",
         ].forEach { relativePath in
             let fixture = try Fixture()
             defer { fixture.cleanup() }
@@ -907,7 +912,7 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
         XCTAssertTrue(facade.companionSourceDescriptorClosureHeld)
         XCTAssertTrue(facade.primeSourceWatchWindowArmed)
         XCTAssertTrue(facade.companionSourceWatchWindowArmed)
-        XCTAssertEqual(facade.combinedSourceWatcherDescriptorCount, 39)
+        XCTAssertEqual(facade.combinedSourceWatcherDescriptorCount, 41)
         try facade.revalidateContinuity()
         XCTAssertEqual(facade.continuityState, .dualRootGuarded)
         let policies = facade.fixedPolicyObservations
@@ -1591,7 +1596,7 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
         try facade.revalidateContinuity()
 
         XCTAssertEqual(facade.continuityState, .dualRootGuarded)
-        XCTAssertEqual(facade.combinedSourceWatcherDescriptorCount, 39)
+        XCTAssertEqual(facade.combinedSourceWatcherDescriptorCount, 41)
         XCTAssertEqual(facade.processExecutionObservation, .unobserved)
         XCTAssertEqual(facade.buildExecutionObservation, .unobserved)
         XCTAssertEqual(facade.inventoryExecutionObservation, .unobserved)
@@ -1654,7 +1659,7 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
         XCTAssertTrue(observation.processGroupEmptyAfterReap)
         XCTAssertEqual(
             observation.combinedSourceWatcherDescriptorCount,
-            39
+            41
         )
         XCTAssertTrue(observation.workspaceEmptyAfterReap)
         XCTAssertFalse(observation.productionSupervisorImageEligible)
@@ -2827,7 +2832,7 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
         try guarded.revalidateGuards()
         XCTAssertTrue(guarded.companionSourceDescriptorClosureHeld)
         XCTAssertTrue(guarded.companionSourceWatchWindowArmed)
-        XCTAssertEqual(guarded.combinedSourceWatcherDescriptorCount, 33)
+        XCTAssertEqual(guarded.combinedSourceWatcherDescriptorCount, 35)
     }
 
     func testCompanionAdmissionSnapshotCarriesCompleteVnodeTopology()
@@ -3257,6 +3262,1173 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
         )
     }
 
+    @available(macOS 26.0, *)
+    func testGateEJournalChainOneWinnerAndPoisonAreExact() throws {
+        let executor = try gateEProductionSource(
+            "Sources/PrimeCore/" +
+                "PrimeValidationDriverV2FixedProbeExecutor.swift"
+        )
+        let expectedLeaves = gateEExpectedJournalLeaves()
+        for leaf in expectedLeaves {
+            XCTAssertTrue(executor.contains("\"\(leaf)\""), leaf)
+        }
+        XCTAssertEqual(expectedLeaves.count, 34)
+        XCTAssertEqual(Set(expectedLeaves).count, 34)
+        for required in [
+            "O_EXCL | O_NOFOLLOW | O_CLOEXEC",
+            "data.append(0x0a)",
+            "fchmod(opened, mode_t(0o400))",
+            "current.linkCount == UInt64(2 + leaves.count)",
+            "leaf == Self.allowedLeaves[leaves.count]",
+            "preResumeContinuityCheckpointUptimeNanoseconds:",
+            "gate-e-raw-terminal.json",
+        ] {
+            XCTAssertTrue(executor.contains(required), required)
+        }
+        let resumeOrder = [
+            "let startPublishedAt = try clock.observeCompletion(",
+            "let preResumeContinuityCheckpointUptimeNanoseconds = try\n" +
+                "                lightweightCheckpoint(",
+            "switch try supervision.resume(",
+            "notBeforeUptimeNanoseconds:\n" +
+                "                    " +
+                "preResumeContinuityCheckpointUptimeNanoseconds",
+        ]
+        let resumeOrderPositions = resumeOrder.compactMap {
+            executor.range(of: $0)?.lowerBound
+        }
+        XCTAssertEqual(resumeOrderPositions.count, resumeOrder.count)
+        XCTAssertEqual(
+            resumeOrderPositions,
+            resumeOrderPositions.sorted()
+        )
+
+        let fixture = try Fixture()
+        defer { fixture.cleanup() }
+        let journal = URL(
+            fileURLWithPath:
+                fixture.workspace.path +
+                ".driver-v2-gate-e-journal",
+            isDirectory: true
+        )
+        try makePrivateDirectory(journal)
+        let guarded = try preparedGuard(for: fixture)
+        let image = try boundTestImage(for: guarded)
+        XCTAssertFalse(image.productionSupervisorImageEligible)
+        let context = try roleTransferInputs(
+            fixture: fixture,
+            guarded: guarded
+        ).context
+        let facade = try image.transferDriverV2RoleFacade(context: context)
+        let race = GateEJournalMechanicsRace()
+        let ready = DispatchGroup()
+        let done = DispatchGroup()
+        let start = DispatchSemaphore(value: 0)
+        let queue = DispatchQueue(
+            label: "prime.validation.gate-e-facade-race",
+            attributes: .concurrent
+        )
+        for _ in 0 ..< 2 {
+            ready.enter()
+            done.enter()
+            queue.async {
+                ready.leave()
+                start.wait()
+                race.record {
+                    try facade.exerciseFixedProbeJournalMechanicsForTesting()
+                }
+                done.leave()
+            }
+        }
+        XCTAssertEqual(ready.wait(timeout: .now() + 5), .success)
+        start.signal()
+        start.signal()
+        XCTAssertEqual(done.wait(timeout: .now() + 30), .success)
+        let observation = try XCTUnwrap(race.values.first)
+        XCTAssertEqual(race.values.count, 1)
+        XCTAssertEqual(race.errors.count, 1)
+        let raceError = race.errors.first as?
+            PrimeValidationSwiftPMBuildInventoryAdmissionError
+        XCTAssertTrue(
+            raceError == .guardedPreExecutorTransferred
+                || raceError == .guardedPreExecutorPoisoned
+        )
+        race.releaseValues()
+        XCTAssertEqual(
+            observation.orderedLeaves.map(\.leaf),
+            expectedLeaves
+        )
+        XCTAssertEqual(observation.rootLinkCount, 36)
+        XCTAssertEqual(observation.heldLeafDescriptorCount, 34)
+        XCTAssertEqual(observation.spawnedChildCount, 0)
+        XCTAssertTrue(observation.leafPermissionModes.allSatisfy {
+            $0 == 0o400
+        })
+        XCTAssertTrue(observation.leafLinkCounts.allSatisfy { $0 == 1 })
+        XCTAssertEqual(
+            Set(observation.orderedLeaves.map {
+                "\($0.deviceID):\($0.inode)"
+            }).count,
+            34
+        )
+        XCTAssertEqual(facade.continuityState, .poisoned)
+        XCTAssertEqual(facade.processExecutionObservation, .unobserved)
+        XCTAssertThrowsError(
+            try facade.exerciseFixedProbeJournalMechanicsForTesting()
+        ) {
+            XCTAssertEqual(
+                $0 as?
+                    PrimeValidationSwiftPMBuildInventoryAdmissionError,
+                .guardedPreExecutorPoisoned
+            )
+        }
+        XCTAssertEqual(
+            Set(
+                try FileManager.default.contentsOfDirectory(
+                    atPath: journal.path
+                )
+            ),
+            Set(expectedLeaves)
+        )
+        var predecessorSHA256 = String(repeating: "0", count: 64)
+        for (index, pair) in zip(
+            expectedLeaves,
+            observation.orderedLeaves
+        ).enumerated() {
+            let (leaf, leafObservation) = pair
+            let url = journal.appendingPathComponent(leaf)
+            let data = try Data(contentsOf: url)
+            var status = stat()
+            XCTAssertEqual(lstat(url.path, &status), 0, leaf)
+            XCTAssertEqual(
+                status.st_mode & mode_t(S_IFMT),
+                mode_t(S_IFREG),
+                leaf
+            )
+            XCTAssertEqual(status.st_mode & mode_t(0o7777), 0o400, leaf)
+            XCTAssertEqual(status.st_nlink, 1, leaf)
+            XCTAssertEqual(data.last, 0x0a, leaf)
+            XCTAssertLessThanOrEqual(data.count, 64 * 1024, leaf)
+            XCTAssertEqual(
+                UInt64(data.count),
+                leafObservation.byteCount,
+                leaf
+            )
+            XCTAssertEqual(
+                PrimeSHA256.hexDigest(of: data),
+                leafObservation.sha256,
+                leaf
+            )
+            XCTAssertNil(
+                data.range(of: Data(leafObservation.sha256.utf8)),
+                leaf
+            )
+            let canonical = Data(data.dropLast())
+            let record = try PrimeCanonicalJSON.decode(
+                GateEJournalMechanicsRecord.self,
+                from: canonical
+            )
+            XCTAssertEqual(
+                try PrimeCanonicalJSON.encode(record),
+                canonical,
+                leaf
+            )
+            XCTAssertEqual(
+                record.schema,
+                "prime_driver_v2_gate_e_journal_mechanics_test_v1",
+                leaf
+            )
+            XCTAssertEqual(record.ordinal, index + 1, leaf)
+            XCTAssertEqual(record.leaf, leaf, leaf)
+            XCTAssertEqual(
+                record.predecessorSHA256,
+                predecessorSHA256,
+                leaf
+            )
+            predecessorSHA256 = leafObservation.sha256
+        }
+
+        // A pre-existing first leaf rejects before any journal publication or
+        // child and permanently poisons a separate test-host facade.
+        let collisionFixture = try Fixture()
+        defer { collisionFixture.cleanup() }
+        let collisionJournal = URL(
+            fileURLWithPath:
+                collisionFixture.workspace.path +
+                ".driver-v2-gate-e-journal",
+            isDirectory: true
+        )
+        try makePrivateDirectory(collisionJournal)
+        let collision = collisionJournal.appendingPathComponent(
+            "gate-e-prestart.json"
+        )
+        try Data("collision\n".utf8).write(to: collision)
+        guard chmod(collision.path, 0o400) == 0 else {
+            throw FixtureError.invalid("gate_e_collision_mode")
+        }
+        let collisionGuarded = try preparedGuard(for: collisionFixture)
+        let collisionImage = try boundTestImage(for: collisionGuarded)
+        XCTAssertFalse(collisionImage.productionSupervisorImageEligible)
+        let collisionContext = try roleTransferInputs(
+            fixture: collisionFixture,
+            guarded: collisionGuarded
+        ).context
+        let collisionFacade = try collisionImage.transferDriverV2RoleFacade(
+            context: collisionContext
+        )
+        XCTAssertThrowsError(
+            try collisionFacade.exerciseFixedProbeJournalMechanicsForTesting()
+        )
+        XCTAssertEqual(collisionFacade.continuityState, .poisoned)
+        XCTAssertEqual(
+            collisionFacade.processExecutionObservation,
+            .unobserved
+        )
+        XCTAssertThrowsError(
+            try collisionFacade.exerciseFixedProbeJournalMechanicsForTesting()
+        ) {
+            XCTAssertEqual(
+                $0 as?
+                    PrimeValidationSwiftPMBuildInventoryAdmissionError,
+                .guardedPreExecutorPoisoned
+            )
+        }
+        XCTAssertEqual(
+            try FileManager.default.contentsOfDirectory(
+                atPath: collisionJournal.path
+            ),
+            ["gate-e-prestart.json"]
+        )
+    }
+
+    @available(macOS 26.0, *)
+    func testGateEHeldProjectionRejectsSetSymlinkGitlinkAndVnodeDrift()
+        throws
+    {
+        let projectionFixture = try Fixture()
+        defer { projectionFixture.cleanup() }
+        let projectionGuarded = try preparedGuard(for: projectionFixture)
+        let projectionImage = try boundTestImage(for: projectionGuarded)
+        XCTAssertFalse(projectionImage.productionSupervisorImageEligible)
+        let projectionContext = try roleTransferInputs(
+            fixture: projectionFixture,
+            guarded: projectionGuarded
+        ).context
+        let projectionFacade = try projectionImage
+            .transferDriverV2RoleFacade(context: projectionContext)
+        let projection = try projectionFacade
+            .exerciseFixedProbeHeldProjectionForTesting()
+        XCTAssertGreaterThan(projection.primeHeldEntryCount, 0)
+        XCTAssertGreaterThan(projection.companionHeldEntryCount, 0)
+        XCTAssertEqual(
+            projection.combinedSourceWatcherDescriptorCountBefore,
+            41
+        )
+        XCTAssertEqual(
+            projection.combinedSourceWatcherDescriptorCountAfter,
+            41
+        )
+        XCTAssertEqual(projection.primeHeldEntriesSHA256.count, 64)
+        XCTAssertEqual(projection.companionHeldEntriesSHA256.count, 64)
+        XCTAssertTrue(projection.allProjectedEntriesRegular)
+        XCTAssertTrue(projection.regularTreeAccepted)
+        XCTAssertTrue(projection.symbolicLinkTreeRejected)
+        XCTAssertTrue(projection.gitlinkTreeRejected)
+        XCTAssertEqual(projection.spawnedChildCount, 0)
+        XCTAssertEqual(projectionFacade.processExecutionObservation, .unobserved)
+        let replay = try projectionFacade
+            .exerciseFixedProbeHeldProjectionForTesting()
+        XCTAssertEqual(
+            replay.primeHeldEntryCount,
+            projection.primeHeldEntryCount
+        )
+        XCTAssertEqual(
+            replay.companionHeldEntryCount,
+            projection.companionHeldEntryCount
+        )
+        XCTAssertEqual(
+            replay.primeHeldEntriesSHA256,
+            projection.primeHeldEntriesSHA256
+        )
+        XCTAssertEqual(
+            replay.companionHeldEntriesSHA256,
+            projection.companionHeldEntriesSHA256
+        )
+        XCTAssertEqual(
+            replay.combinedSourceWatcherDescriptorCountAfter,
+            projection.combinedSourceWatcherDescriptorCountAfter
+        )
+        XCTAssertEqual(replay.spawnedChildCount, 0)
+
+        let original = projectionFixture.prime.appendingPathComponent(
+            "README.md"
+        )
+        let saved = projectionFixture.base.appendingPathComponent(
+            "README.held-projection-original"
+        )
+        let originalBytes = try Data(contentsOf: original)
+        try FileManager.default.moveItem(at: original, to: saved)
+        try originalBytes.write(to: original)
+        XCTAssertThrowsError(
+            try projectionFacade
+                .exerciseFixedProbeHeldProjectionForTesting()
+        )
+        XCTAssertEqual(projectionFacade.continuityState, .poisoned)
+        XCTAssertThrowsError(
+            try projectionFacade
+                .exerciseFixedProbeHeldProjectionForTesting()
+        ) {
+            XCTAssertEqual(
+                $0 as?
+                    PrimeValidationSwiftPMBuildInventoryAdmissionError,
+                .guardedPreExecutorPoisoned
+            )
+        }
+
+        let bytes = Data("held\n".utf8)
+        let path = Data("Sources/Held.swift".utf8)
+        let identity = PrimeValidationDriverV2TrackedTreeHeldIdentity(
+            deviceID: 91,
+            inode: 92,
+            ownerUserID: 501,
+            ownerGroupID: 20,
+            permissionMode: 0o644,
+            linkCount: 1,
+            byteCount: UInt64(bytes.count),
+            posixFileType: .regularFile
+        )
+        let held = try PrimeValidationDriverV2TrackedTreeHeldEntry(
+            validatingRawPathBytes: path,
+            kind: .regularFile,
+            openedIdentity: identity,
+            postReadDescriptorIdentity: identity,
+            namedPathReboundIdentity: identity,
+            contents: bytes
+        )
+        var raw = Data("100644 blob \(held.gitBlobSHA1)\t".utf8)
+        raw.append(path)
+        raw.append(0)
+        let accepted = try PrimeValidationTrackedTreeManifestBuilderV2
+            .repository(
+                objectFormatOutput: Data("sha1\n".utf8),
+                rawTreeOutput: raw,
+                heldEntries: [held]
+            )
+        XCTAssertEqual(accepted.manifest.entries.count, 1)
+        XCTAssertThrowsError(
+            try PrimeValidationTrackedTreeManifestBuilderV2.repository(
+                objectFormatOutput: Data("sha1\n".utf8),
+                rawTreeOutput: raw,
+                heldEntries: []
+            )
+        )
+        XCTAssertThrowsError(
+            try PrimeValidationTrackedTreeManifestBuilderV2.repository(
+                objectFormatOutput: Data("sha1\n".utf8),
+                rawTreeOutput: raw,
+                heldEntries: [held, held]
+            )
+        )
+        let secondPath = Data("Tests/HeldTests.swift".utf8)
+        let secondIdentity = PrimeValidationDriverV2TrackedTreeHeldIdentity(
+            deviceID: identity.deviceID,
+            inode: identity.inode + 2,
+            ownerUserID: identity.ownerUserID,
+            ownerGroupID: identity.ownerGroupID,
+            permissionMode: identity.permissionMode,
+            linkCount: identity.linkCount,
+            byteCount: identity.byteCount,
+            posixFileType: .regularFile
+        )
+        let secondHeld = try PrimeValidationDriverV2TrackedTreeHeldEntry(
+            validatingRawPathBytes: secondPath,
+            kind: .regularFile,
+            openedIdentity: secondIdentity,
+            postReadDescriptorIdentity: secondIdentity,
+            namedPathReboundIdentity: secondIdentity,
+            contents: bytes
+        )
+        var orderedRaw = raw
+        orderedRaw.append(
+            Data("100644 blob \(secondHeld.gitBlobSHA1)\t".utf8)
+        )
+        orderedRaw.append(secondPath)
+        orderedRaw.append(0)
+        XCTAssertThrowsError(
+            try PrimeValidationTrackedTreeManifestBuilderV2.repository(
+                objectFormatOutput: Data("sha1\n".utf8),
+                rawTreeOutput: orderedRaw,
+                heldEntries: [secondHeld, held]
+            )
+        )
+
+        let rebound = PrimeValidationDriverV2TrackedTreeHeldIdentity(
+            deviceID: identity.deviceID,
+            inode: identity.inode + 1,
+            ownerUserID: identity.ownerUserID,
+            ownerGroupID: identity.ownerGroupID,
+            permissionMode: identity.permissionMode,
+            linkCount: identity.linkCount,
+            byteCount: identity.byteCount,
+            posixFileType: .regularFile
+        )
+        XCTAssertThrowsError(
+            try PrimeValidationDriverV2TrackedTreeHeldEntry(
+                validatingRawPathBytes: path,
+                kind: .regularFile,
+                openedIdentity: identity,
+                postReadDescriptorIdentity: identity,
+                namedPathReboundIdentity: rebound,
+                contents: bytes
+            )
+        )
+
+        let symlinkBytes = Data("../Held.swift".utf8)
+        let symlinkIdentity = PrimeValidationDriverV2TrackedTreeHeldIdentity(
+            deviceID: 91,
+            inode: 93,
+            ownerUserID: 501,
+            ownerGroupID: 20,
+            permissionMode: 0o777,
+            linkCount: 1,
+            byteCount: UInt64(symlinkBytes.count),
+            posixFileType: .symbolicLink
+        )
+        let symlink = try PrimeValidationDriverV2TrackedTreeHeldEntry(
+            validatingRawPathBytes: Data("Sources/link".utf8),
+            kind: .symbolicLink,
+            openedIdentity: symlinkIdentity,
+            postReadDescriptorIdentity: symlinkIdentity,
+            namedPathReboundIdentity: symlinkIdentity,
+            contents: symlinkBytes
+        )
+        var symlinkRaw = Data("120000 blob \(symlink.gitBlobSHA1)\t".utf8)
+        symlinkRaw.append(symlink.rawPathBytes)
+        symlinkRaw.append(0)
+        _ = try PrimeValidationTrackedTreeManifestBuilderV2.repository(
+            objectFormatOutput: Data("sha1\n".utf8),
+            rawTreeOutput: symlinkRaw,
+            heldEntries: [symlink]
+        )
+        try PrimeValidationDriverV2FixedProbeSemanticTestSeam
+            .requireRegularHeldEntryKinds(
+                prime: [held],
+                companion: [held]
+            )
+        XCTAssertThrowsError(
+            try PrimeValidationDriverV2FixedProbeSemanticTestSeam
+                .requireRegularHeldEntryKinds(
+                    prime: [symlink],
+                    companion: [held]
+                )
+        )
+        XCTAssertThrowsError(
+            try PrimeValidationDriverV2FixedProbeSemanticTestSeam
+                .requireRegularHeldEntryKinds(
+                    prime: [held],
+                    companion: [symlink]
+                )
+        )
+
+        var gitlink = Data(
+            ("160000 commit " + String(repeating: "1", count: 40) + "\t").utf8
+        )
+        gitlink.append(Data("submodule".utf8))
+        gitlink.append(0)
+        XCTAssertThrowsError(
+            try PrimeValidationTrackedTreeManifestBuilderV2.repository(
+                objectFormatOutput: Data("sha1\n".utf8),
+                rawTreeOutput: gitlink,
+                heldEntries: []
+            )
+        )
+    }
+
+    @available(macOS 26.0, *)
+    func testGateELightweightContinuityPoisonsOnEitherRootMutation()
+        throws
+    {
+        try assertGateELightweightEventHistoryPoisons(
+            "prime_event_history"
+        ) { fixture in
+            let transient = fixture.prime.appendingPathComponent(
+                "Sources/PrimeCore/GateETransient.swift"
+            )
+            try Data("transient\n".utf8).write(to: transient)
+            try FileManager.default.removeItem(at: transient)
+        }
+        try assertGateELightweightEventHistoryPoisons(
+            "companion_event_history"
+        ) { fixture in
+            let transient = fixture.companion.appendingPathComponent(
+                "Sources/GateETransient.swift"
+            )
+            try Data("transient\n".utf8).write(to: transient)
+            try FileManager.default.removeItem(at: transient)
+        }
+    }
+
+    func testGateEXCTestHostCannotConstructProductionFixedProbeBinding()
+        throws
+    {
+        let fixture = try Fixture()
+        defer { fixture.cleanup() }
+        let guarded = try fixture.admit()
+            .consumePrerequisites()
+            .prepareGuardedPreExecutor(
+                allowRootOwnedCurrentProcessForTesting: true
+            )
+        let imageData = try Data(
+            contentsOf: URL(
+                fileURLWithPath:
+                    guarded.currentProcessExecutable.canonicalAbsolutePath
+            )
+        )
+        let intent = try fixture.makeIntent(
+            guarded: guarded,
+            driverImageData: imageData
+        )
+        XCTAssertThrowsError(
+            try PrimeValidationDriverV2SupervisorImageBridge.bind(
+                intent: intent,
+                guardedPreExecutor: guarded
+            )
+        ) {
+            XCTAssertEqual(
+                $0 as?
+                    PrimeValidationSwiftPMBuildInventoryAdmissionError,
+                .rejected("driver_v2_supervisor_executable_role")
+            )
+        }
+        XCTAssertEqual(guarded.guardState, .poisoned)
+        XCTAssertEqual(guarded.authorityCeiling, .poisonedNoAuthority)
+        XCTAssertEqual(
+            guarded.missingAuthorities,
+            PrimeValidationSwiftPMMissingAuthority.allCases
+        )
+        XCTAssertFalse(
+            FileManager.default.fileExists(
+                atPath:
+                    fixture.workspace.path +
+                    ".driver-v2-gate-e-journal"
+            )
+        )
+        let binding = try gateEProductionSource(
+            "Tests/PrimeValidationWorkflow/Sources/" +
+                "PrimeValidationWorkflowDriverCore/" +
+                "PrimeValidationDriverV2FixedProbeBinding.swift"
+        )
+        XCTAssertTrue(binding.contains("raw.productionSupervisorImageEligible"))
+        XCTAssertTrue(binding.contains("boundLifetime.productionSupervisorImageEligible"))
+        XCTAssertFalse(binding.contains("allowRootOwnedCurrentProcessForTesting"))
+        let facadeSource = try gateEProductionSource(
+            "Sources/PrimeCore/PrimeValidationDriverV2RoleFacade.swift"
+        )
+        for seam in [
+            "exerciseFixedProbeJournalMechanicsForTesting()",
+            "exerciseFixedProbeHeldProjectionForTesting()",
+            "revalidateFixedProbeLightweightContinuityForTesting()",
+        ] {
+            let start = try XCTUnwrap(facadeSource.range(of: seam))
+            let next = try XCTUnwrap(
+                facadeSource.range(
+                    of: "\n    ///",
+                    range: start.upperBound ..< facadeSource.endIndex
+                )
+            )
+            let body = facadeSource[start.lowerBound ..< next.lowerBound]
+            XCTAssertTrue(
+                body.contains("!value.productionSupervisorImageEligible"),
+                seam
+            )
+        }
+    }
+
+    func testGateEReleaseSupervisorRequiresLiveFourAuthorityBindingBeforeExit()
+        throws
+    {
+        #if DEBUG
+            throw XCTSkip("Gate E production proof is Release-only")
+        #else
+            let environment = ProcessInfo.processInfo.environment
+            let primePath = try XCTUnwrap(environment[
+                "PRIME_DRIVER_V2_GATE_E_PRIME_ROOT"
+            ], "PRIME_DRIVER_V2_GATE_E_PRIME_ROOT is required")
+            let companionPath = try XCTUnwrap(environment[
+                "PRIME_PMHNP_COMPANION_ROOT"
+            ], "PRIME_PMHNP_COMPANION_ROOT is required")
+            guard primePath.hasPrefix("/"),
+                  companionPath.hasPrefix("/") else {
+                throw FixtureError.invalid("gate_e_release_clone_paths")
+            }
+            let prime = URL(
+                fileURLWithPath: primePath,
+                isDirectory: true
+            ).resolvingSymlinksInPath().standardizedFileURL
+            let companion = URL(
+                fileURLWithPath: companionPath,
+                isDirectory: true
+            ).resolvingSymlinksInPath().standardizedFileURL
+
+            var nestedRoot = URL(fileURLWithPath: #filePath)
+            for _ in 0 ..< 3 { nestedRoot.deleteLastPathComponent() }
+            let supervisor = nestedRoot.appendingPathComponent(
+                ".build/arm64-apple-macosx/release/" +
+                    "PrimeValidationWorkflowDriverV2Supervisor"
+            ).resolvingSymlinksInPath().standardizedFileURL
+            let supervisorData = try Data(contentsOf: supervisor)
+            guard !supervisorData.isEmpty else {
+                throw FixtureError.invalid("gate_e_supervisor_image")
+            }
+
+            let base = URL(
+                fileURLWithPath:
+                    "/private/tmp/prime-driver-v2-gate-e-release-" +
+                    UUID().uuidString,
+                isDirectory: true
+            )
+            defer { try? FileManager.default.removeItem(at: base) }
+            let workspace = base.appendingPathComponent(
+                "workspace",
+                isDirectory: true
+            )
+            let evidence = base.appendingPathComponent(
+                "evidence",
+                isDirectory: true
+            )
+            let lease = base.appendingPathComponent(
+                "lease",
+                isDirectory: true
+            )
+            let journal = URL(
+                fileURLWithPath:
+                    workspace.path + ".driver-v2-gate-e-journal",
+                isDirectory: true
+            )
+            for directory in [base, workspace, evidence, lease, journal] {
+                try makePrivateDirectory(directory)
+            }
+
+            let roots = PrimeValidationDriverRootLayoutV2(
+                repositoryRoot: try gateERootBinding(prime),
+                companionRoot: try gateERootBinding(companion),
+                workspaceRoot: try gateERootBinding(workspace),
+                evidenceRoot: try gateERootBinding(evidence),
+                scratchRelativePath: "root-release-build",
+                cacheRelativePath: "cache",
+                configRelativePath: "config",
+                securityRelativePath: "security",
+                clangModuleCacheRelativePath: "clang-module-cache",
+                homeRelativePath: "home",
+                swiftPMModuleCacheRelativePath: "swiftpm-module-cache",
+                temporaryRelativePath: "temporary",
+                outputRelativePath: "output"
+            )
+            let snapshot = try PrimeSwiftSourceProvenance.capture(
+                at: prime,
+                requiredRelativePaths: [
+                    "Sources/PrimeCore/" +
+                        "PrimeValidationDriverV2FixedProbeExecutor.swift",
+                    "Tests/PrimeValidationWorkflow/Sources/" +
+                        "PrimeValidationWorkflowDriverCore/" +
+                        "PrimeValidationDriverV2FixedProbeBinding.swift",
+                ]
+            )
+            let sourceData = try PrimeCanonicalJSON.encode(snapshot)
+            let packageLockData = try Data(
+                contentsOf: prime.appendingPathComponent("Package.resolved")
+            )
+            let swift = URL(
+                fileURLWithPath:
+                    Fixture.developerPath +
+                    "/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift"
+            ).standardizedFileURL
+            let swiftData = try Data(contentsOf: swift)
+            let metallib = PrimeValidationRequiredMetallibV2(
+                relativePath:
+                    "root-release-build/arm64-apple-macosx/release/" +
+                    "mlx-swift_Cmlx.bundle/Contents/Resources/" +
+                    "default.metallib",
+                content: .init(data: Data("gate-e-metallib-pin".utf8))
+            )
+            let intent = PrimeValidationRunIntentV2(
+                runID: "gate-e-release-fixed-probes",
+                roots: roots,
+                sourceSnapshot: .init(data: sourceData),
+                packageLock: .init(data: packageLockData),
+                driverExecutable: .init(
+                    absolutePath: supervisor.path,
+                    content: .init(data: supervisorData)
+                ),
+                swiftExecutable: .init(
+                    absolutePath: swift.path,
+                    content: .init(data: swiftData)
+                ),
+                companionCommit:
+                    PrimeValidationRunIntentV2.requiredCompanionCommit,
+                requiredPinnedMetallib: metallib,
+                baseline: .init(),
+                phaseBudgets:
+                    PrimeValidationExecutorAdmissionPolicyV2
+                    .frozenV1.phaseBudgets,
+                environmentPolicy: .make(
+                    roots: roots,
+                    pinnedMetallib: metallib
+                ),
+                optionalSkipPolicySHA256:
+                    try PrimeValidationOptionalSkipPolicy.identitySHA256()
+            )
+            try intent.validate()
+            let request = PrimeValidationDriverV2SupervisorLaunchRequestV1(
+                intent: intent,
+                leaseDirectoryAbsolutePath: lease.path
+            )
+            try request.validate()
+            let requestData = try PrimeCanonicalJSON.encode(request)
+            XCTAssertLessThanOrEqual(requestData.count, 256 * 1024)
+
+            let launch = try gateELaunchReleaseSupervisor(
+                executable: supervisor,
+                request: requestData,
+                captureRoot: base
+            )
+            XCTAssertEqual(launch.exitStatus, 0)
+            XCTAssertTrue(launch.standardOutput.isEmpty)
+            XCTAssertTrue(launch.standardError.isEmpty)
+
+            let leaves = try FileManager.default.contentsOfDirectory(
+                atPath: journal.path
+            ).sorted()
+            XCTAssertEqual(leaves, gateEExpectedJournalLeaves().sorted())
+            var journalStatus = stat()
+            XCTAssertEqual(lstat(journal.path, &journalStatus), 0)
+            XCTAssertEqual(journalStatus.st_nlink, 36)
+            for leaf in leaves {
+                let url = journal.appendingPathComponent(leaf)
+                let data = try Data(contentsOf: url)
+                var status = stat()
+                XCTAssertEqual(lstat(url.path, &status), 0, leaf)
+                XCTAssertEqual(
+                    status.st_mode & mode_t(S_IFMT),
+                    mode_t(S_IFREG),
+                    leaf
+                )
+                XCTAssertEqual(status.st_mode & mode_t(0o7777), 0o400, leaf)
+                XCTAssertEqual(status.st_nlink, 1, leaf)
+                XCTAssertLessThanOrEqual(data.count, 64 * 1024, leaf)
+                XCTAssertEqual(data.last, 0x0a, leaf)
+            }
+            XCTAssertEqual(
+                try FileManager.default.contentsOfDirectory(
+                    atPath: workspace.path
+                ),
+                []
+            )
+            XCTAssertEqual(
+                try FileManager.default.contentsOfDirectory(
+                    atPath: evidence.path
+                ),
+                []
+            )
+        #endif
+    }
+
+    private func gateERootBinding(_ url: URL) throws
+        -> PrimeValidationDirectoryBindingV2
+    {
+        let canonical = url.resolvingSymlinksInPath().standardizedFileURL
+        var status = stat()
+        guard canonical.path == url.standardizedFileURL.path,
+              lstat(canonical.path, &status) == 0,
+              status.st_mode & mode_t(S_IFMT) == mode_t(S_IFDIR)
+        else {
+            throw FixtureError.invalid("gate_e_root_binding")
+        }
+        return PrimeValidationDirectoryBindingV2(
+            absolutePath: canonical.path,
+            deviceID: UInt64(bitPattern: Int64(status.st_dev)),
+            inode: UInt64(status.st_ino),
+            ownerUserID: status.st_uid,
+            mode: UInt16(status.st_mode & mode_t(0o7777))
+        )
+    }
+
+    private struct GateEReleaseLaunchObservation {
+        let exitStatus: Int32
+        let standardOutput: Data
+        let standardError: Data
+    }
+
+    private struct GateEJournalMechanicsRecord:
+        Codable,
+        Equatable
+    {
+        let schema: String
+        let ordinal: Int
+        let leaf: String
+        let predecessorSHA256: String
+    }
+
+    private func gateELaunchReleaseSupervisor(
+        executable: URL,
+        request: Data,
+        captureRoot: URL
+    ) throws -> GateEReleaseLaunchObservation {
+        var input = [Int32](repeating: -1, count: 2)
+        guard pipe(&input) == 0 else {
+            throw FixtureError.invalid("gate_e_outer_stdin_pipe")
+        }
+        defer {
+            for descriptor in input where descriptor >= 0 {
+                _ = Darwin.close(descriptor)
+            }
+        }
+        let stdoutPath = captureRoot.appendingPathComponent(
+            "outer-supervisor-stdout.bin"
+        ).path
+        let stderrPath = captureRoot.appendingPathComponent(
+            "outer-supervisor-stderr.bin"
+        ).path
+        let stdout = Darwin.open(
+            stdoutPath,
+            O_RDWR | O_CREAT | O_EXCL | O_CLOEXEC,
+            mode_t(0o600)
+        )
+        guard stdout >= 3 else {
+            if stdout >= 0 { _ = Darwin.close(stdout) }
+            throw FixtureError.invalid("gate_e_outer_stdout_open")
+        }
+        defer { _ = Darwin.close(stdout) }
+        let stderr = Darwin.open(
+            stderrPath,
+            O_RDWR | O_CREAT | O_EXCL | O_CLOEXEC,
+            mode_t(0o600)
+        )
+        guard stderr >= 3 else {
+            if stderr >= 0 { _ = Darwin.close(stderr) }
+            throw FixtureError.invalid("gate_e_outer_stderr_open")
+        }
+        defer { _ = Darwin.close(stderr) }
+
+        var actions: posix_spawn_file_actions_t?
+        guard posix_spawn_file_actions_init(&actions) == 0 else {
+            throw FixtureError.invalid("gate_e_outer_actions_init")
+        }
+        defer { posix_spawn_file_actions_destroy(&actions) }
+        for result in [
+            posix_spawn_file_actions_addclose(&actions, input[1]),
+            posix_spawn_file_actions_adddup2(
+                &actions,
+                input[0],
+                STDIN_FILENO
+            ),
+            posix_spawn_file_actions_addclose(&actions, input[0]),
+            posix_spawn_file_actions_adddup2(
+                &actions,
+                stdout,
+                STDOUT_FILENO
+            ),
+            posix_spawn_file_actions_addclose(&actions, stdout),
+            posix_spawn_file_actions_adddup2(
+                &actions,
+                stderr,
+                STDERR_FILENO
+            ),
+            posix_spawn_file_actions_addclose(&actions, stderr),
+        ] where result != 0 {
+            throw FixtureError.invalid("gate_e_outer_actions")
+        }
+
+        var attributes: posix_spawnattr_t?
+        guard posix_spawnattr_init(&attributes) == 0 else {
+            throw FixtureError.invalid("gate_e_outer_attributes_init")
+        }
+        defer { posix_spawnattr_destroy(&attributes) }
+        var defaultSignals = sigset_t()
+        var emptyMask = sigset_t()
+        guard sigemptyset(&defaultSignals) == 0,
+              sigemptyset(&emptyMask) == 0 else {
+            throw FixtureError.invalid("gate_e_outer_signal_sets")
+        }
+        for signal in 1 ..< NSIG where signal != SIGKILL && signal != SIGSTOP {
+            guard sigaddset(&defaultSignals, signal) == 0 else {
+                throw FixtureError.invalid("gate_e_outer_signal_default")
+            }
+        }
+        let flags = UInt16(POSIX_SPAWN_CLOEXEC_DEFAULT)
+            | UInt16(POSIX_SPAWN_SETSID)
+            | UInt16(POSIX_SPAWN_SETSIGDEF)
+            | UInt16(POSIX_SPAWN_SETSIGMASK)
+        guard posix_spawnattr_setsigdefault(
+            &attributes,
+            &defaultSignals
+        ) == 0,
+        posix_spawnattr_setsigmask(&attributes, &emptyMask) == 0,
+        posix_spawnattr_setflags(
+            &attributes,
+            Int16(bitPattern: flags)
+        ) == 0 else {
+            throw FixtureError.invalid("gate_e_outer_spawn_policy")
+        }
+        guard let argumentZero = strdup(executable.path) else {
+            throw FixtureError.invalid("gate_e_outer_argument_zero")
+        }
+        defer { free(argumentZero) }
+        var arguments: [UnsafeMutablePointer<CChar>?] = [argumentZero, nil]
+        var environment: [UnsafeMutablePointer<CChar>?] = [nil]
+        var processIdentifier: pid_t = 0
+        let spawnResult = arguments.withUnsafeMutableBufferPointer {
+            argumentBuffer in
+            environment.withUnsafeMutableBufferPointer {
+                environmentBuffer in
+                posix_spawn(
+                    &processIdentifier,
+                    executable.path,
+                    &actions,
+                    &attributes,
+                    argumentBuffer.baseAddress,
+                    environmentBuffer.baseAddress
+                )
+            }
+        }
+        guard spawnResult == 0, processIdentifier > 0 else {
+            throw FixtureError.invalid("gate_e_outer_spawn_\(spawnResult)")
+        }
+        _ = Darwin.close(input[0])
+        input[0] = -1
+        do {
+            try gateEWriteAll(request, descriptor: input[1])
+        } catch {
+            _ = Darwin.kill(-processIdentifier, SIGKILL)
+            var rejectedStatus: Int32 = 0
+            _ = Darwin.waitpid(processIdentifier, &rejectedStatus, 0)
+            throw error
+        }
+        _ = Darwin.close(input[1])
+        input[1] = -1
+
+        let expires = DispatchTime.now().uptimeNanoseconds
+            + 60_000_000_000
+        var rawStatus: Int32 = 0
+        while true {
+            let waited = Darwin.waitpid(
+                processIdentifier,
+                &rawStatus,
+                WNOHANG
+            )
+            if waited == processIdentifier { break }
+            if waited < 0, errno == EINTR { continue }
+            guard waited == 0,
+                  DispatchTime.now().uptimeNanoseconds < expires else {
+                _ = Darwin.kill(-processIdentifier, SIGKILL)
+                _ = Darwin.waitpid(processIdentifier, &rawStatus, 0)
+                throw FixtureError.invalid("gate_e_outer_reap")
+            }
+            _ = Darwin.usleep(10_000)
+        }
+        guard rawStatus & 0x7f == 0 else {
+            throw FixtureError.invalid("gate_e_outer_signal")
+        }
+        let standardOutput = try gateEReadBoundedCapture(stdout)
+        let standardError = try gateEReadBoundedCapture(stderr)
+        return GateEReleaseLaunchObservation(
+            exitStatus: (rawStatus >> 8) & 0xff,
+            standardOutput: standardOutput,
+            standardError: standardError
+        )
+    }
+
+    private func gateEWriteAll(_ data: Data, descriptor: Int32) throws {
+        try data.withUnsafeBytes { bytes in
+            var offset = 0
+            while offset < bytes.count {
+                let result = Darwin.write(
+                    descriptor,
+                    bytes.baseAddress!.advanced(by: offset),
+                    bytes.count - offset
+                )
+                if result < 0, errno == EINTR { continue }
+                guard result > 0 else {
+                    throw FixtureError.invalid("gate_e_outer_stdin_write")
+                }
+                offset += result
+            }
+        }
+    }
+
+    private func gateEReadBoundedCapture(_ descriptor: Int32) throws
+        -> Data
+    {
+        guard lseek(descriptor, 0, SEEK_SET) == 0 else {
+            throw FixtureError.invalid("gate_e_outer_capture_seek")
+        }
+        var data = Data()
+        var buffer = [UInt8](repeating: 0, count: 16 * 1024)
+        while true {
+            let count = buffer.withUnsafeMutableBytes {
+                Darwin.read(descriptor, $0.baseAddress, $0.count)
+            }
+            if count < 0, errno == EINTR { continue }
+            guard count >= 0 else {
+                throw FixtureError.invalid("gate_e_outer_capture_read")
+            }
+            if count == 0 { break }
+            guard data.count <= 64 * 1024 - count else {
+                throw FixtureError.invalid("gate_e_outer_capture_overflow")
+            }
+            data.append(contentsOf: buffer.prefix(count))
+        }
+        return data
+    }
+
+    private func gateEProductionSource(_ relativePath: String) throws
+        -> String
+    {
+        var root = URL(fileURLWithPath: #filePath)
+        for _ in 0 ..< 5 { root.deleteLastPathComponent() }
+        return try String(
+            contentsOf: root.appendingPathComponent(relativePath),
+            encoding: .utf8
+        )
+    }
+
+    private func gateEExpectedJournalLeaves() -> [String] {
+        let bases = [
+            "01-prime-head-pre", "02-prime-object-format",
+            "03-prime-status-pre", "04-prime-tree-discovery",
+            "05-prime-tree-replay", "06-prime-status-post",
+            "07-prime-head-post", "08-companion-head-pre",
+            "09-companion-object-format", "10-companion-status-pre",
+            "11-companion-tree-discovery", "12-companion-tree-replay",
+            "13-companion-status-post", "14-companion-head-post",
+            "15-swift-version", "16-swift-target-info",
+        ]
+        return ["gate-e-prestart.json"]
+            + bases.flatMap { ["\($0)-start.json", "\($0)-terminal.json"] }
+            + ["gate-e-raw-terminal.json"]
+    }
+
+    @available(macOS 26.0, *)
+    private func assertGateELightweightEventHistoryPoisons(
+        _ label: String,
+        mutateAndRestore: (Fixture) throws -> Void,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) throws {
+        let fixture = try Fixture()
+        defer { fixture.cleanup() }
+        let guarded = try preparedGuard(for: fixture)
+        let image = try boundTestImage(for: guarded)
+        XCTAssertFalse(
+            image.productionSupervisorImageEligible,
+            file: file,
+            line: line
+        )
+        let context = try roleTransferInputs(
+            fixture: fixture,
+            guarded: guarded
+        ).context
+        let facade = try image.transferDriverV2RoleFacade(context: context)
+        let clean = try facade
+            .revalidateFixedProbeLightweightContinuityForTesting()
+        XCTAssertEqual(
+            clean.combinedSourceWatcherDescriptorCountBefore,
+            41,
+            label,
+            file: file,
+            line: line
+        )
+        XCTAssertEqual(
+            clean.combinedSourceWatcherDescriptorCountAfter,
+            41,
+            label,
+            file: file,
+            line: line
+        )
+        XCTAssertEqual(
+            clean.spawnedChildCount,
+            0,
+            label,
+            file: file,
+            line: line
+        )
+        XCTAssertEqual(
+            facade.processExecutionObservation,
+            .unobserved,
+            label,
+            file: file,
+            line: line
+        )
+
+        try mutateAndRestore(fixture)
+        XCTAssertThrowsError(
+            try facade.revalidateFixedProbeLightweightContinuityForTesting(),
+            label,
+            file: file,
+            line: line
+        )
+        XCTAssertEqual(
+            facade.continuityState,
+            .poisoned,
+            label,
+            file: file,
+            line: line
+        )
+        XCTAssertFalse(
+            facade.primeSourceDescriptorClosureHeld,
+            label,
+            file: file,
+            line: line
+        )
+        XCTAssertFalse(
+            facade.companionSourceDescriptorClosureHeld,
+            label,
+            file: file,
+            line: line
+        )
+        XCTAssertFalse(
+            facade.primeSourceWatchWindowArmed,
+            label,
+            file: file,
+            line: line
+        )
+        XCTAssertFalse(
+            facade.companionSourceWatchWindowArmed,
+            label,
+            file: file,
+            line: line
+        )
+        XCTAssertEqual(
+            facade.combinedSourceWatcherDescriptorCount,
+            0,
+            label,
+            file: file,
+            line: line
+        )
+        XCTAssertEqual(
+            facade.processExecutionObservation,
+            .unobserved,
+            label,
+            file: file,
+            line: line
+        )
+        XCTAssertThrowsError(
+            try facade.revalidateFixedProbeLightweightContinuityForTesting(),
+            label,
+            file: file,
+            line: line
+        ) {
+            XCTAssertEqual(
+                $0 as?
+                    PrimeValidationSwiftPMBuildInventoryAdmissionError,
+                .guardedPreExecutorPoisoned,
+                label,
+                file: file,
+                line: line
+            )
+        }
+    }
+
     private func expectation(
         for guarded:
             PrimeValidationSwiftPMBuildInventoryGuardedPreExecutor,
@@ -3547,6 +4719,37 @@ private final class DriverV2RoleFacadeTransferRace:
 
     func record(
         _ operation: () throws -> PrimeValidationDriverV2RoleFacade
+    ) {
+        do {
+            let value = try operation()
+            lock.lock()
+            values.append(value)
+            lock.unlock()
+        } catch {
+            lock.lock()
+            errors.append(error)
+            lock.unlock()
+        }
+    }
+
+    func releaseValues() {
+        lock.lock()
+        values.removeAll()
+        lock.unlock()
+    }
+}
+
+private final class GateEJournalMechanicsRace:
+    @unchecked Sendable
+{
+    private let lock = NSLock()
+    private(set) var values:
+        [PrimeValidationDriverV2FixedProbeJournalMechanicsTestObservation] = []
+    private(set) var errors: [Error] = []
+
+    func record(
+        _ operation: () throws
+            -> PrimeValidationDriverV2FixedProbeJournalMechanicsTestObservation
     ) {
         do {
             let value = try operation()
@@ -3940,6 +5143,9 @@ private final class Fixture {
             "Sources/PrimeCore/" +
                 "PrimeValidationDriverV2IsolatedSpawnCanary.swift":
                 Data("// fixture Driver V2 spawn canary\n".utf8),
+            "Sources/PrimeCore/" +
+                "PrimeValidationDriverV2FixedProbeExecutor.swift":
+                Data("// fixture Driver V2 fixed probe executor\n".utf8),
             "Sources/PrimeCore/PrimeValidationDriverV2RoleFacade.swift":
                 Data("// fixture Driver V2 role facade\n".utf8),
             "Sources/PrimeCore/" +
@@ -3949,6 +5155,10 @@ private final class Fixture {
                 "PrimeValidationWorkflowDriverCore/" +
                 "PrimeValidationDriverV2TrackedTreeManifest.swift":
                 Data("// fixture Driver V2 tracked-tree manifest\n".utf8),
+            "Tests/PrimeValidationWorkflow/Sources/" +
+                "PrimeValidationWorkflowDriverCore/" +
+                "PrimeValidationDriverV2FixedProbeBinding.swift":
+                Data("// fixture Driver V2 fixed probe binding\n".utf8),
         ]
         for (relativePath, data) in files {
             try data.write(
@@ -3981,12 +5191,17 @@ private final class Fixture {
                     "Sources/PrimeCore/" +
                         "PrimeValidationDriverV2IsolatedSpawnCanary.swift",
                     "Sources/PrimeCore/" +
+                        "PrimeValidationDriverV2FixedProbeExecutor.swift",
+                    "Sources/PrimeCore/" +
                         "PrimeValidationDriverV2RoleFacade.swift",
                     "Sources/PrimeCore/" +
                         "PrimeValidationDriverV2TrackedTreeHeldEntry.swift",
                     "Tests/PrimeValidationWorkflow/Sources/" +
                         "PrimeValidationWorkflowDriverCore/" +
                         "PrimeValidationDriverV2TrackedTreeManifest.swift",
+                    "Tests/PrimeValidationWorkflow/Sources/" +
+                        "PrimeValidationWorkflowDriverCore/" +
+                        "PrimeValidationDriverV2FixedProbeBinding.swift",
                     "Package.resolved",
                 ],
                 expectation: dummy
@@ -4015,12 +5230,17 @@ private final class Fixture {
                 "Sources/PrimeCore/" +
                     "PrimeValidationDriverV2IsolatedSpawnCanary.swift",
                 "Sources/PrimeCore/" +
+                    "PrimeValidationDriverV2FixedProbeExecutor.swift",
+                "Sources/PrimeCore/" +
                     "PrimeValidationDriverV2RoleFacade.swift",
                 "Sources/PrimeCore/" +
                     "PrimeValidationDriverV2TrackedTreeHeldEntry.swift",
                 "Tests/PrimeValidationWorkflow/Sources/" +
                     "PrimeValidationWorkflowDriverCore/" +
                     "PrimeValidationDriverV2TrackedTreeManifest.swift",
+                "Tests/PrimeValidationWorkflow/Sources/" +
+                    "PrimeValidationWorkflowDriverCore/" +
+                    "PrimeValidationDriverV2FixedProbeBinding.swift",
                 "Package.resolved",
             ],
             expectation: expectation

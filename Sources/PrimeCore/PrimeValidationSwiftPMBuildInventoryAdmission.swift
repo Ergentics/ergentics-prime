@@ -1044,12 +1044,17 @@ public enum PrimeValidationSwiftPMBuildInventoryAdmission {
             "PrimeValidationSwiftPMBuildInventoryAdmission.swift",
         "Sources/PrimeCore/" +
             "PrimeValidationDriverV2IsolatedSpawnCanary.swift",
+        "Sources/PrimeCore/" +
+            "PrimeValidationDriverV2FixedProbeExecutor.swift",
         "Sources/PrimeCore/PrimeValidationDriverV2RoleFacade.swift",
         "Sources/PrimeCore/" +
             "PrimeValidationDriverV2TrackedTreeHeldEntry.swift",
         "Tests/PrimeValidationWorkflow/Sources/" +
             "PrimeValidationWorkflowDriverCore/" +
             "PrimeValidationDriverV2TrackedTreeManifest.swift",
+        "Tests/PrimeValidationWorkflow/Sources/" +
+            "PrimeValidationWorkflowDriverCore/" +
+            "PrimeValidationDriverV2FixedProbeBinding.swift",
         "Package.resolved",
     ]
     private static let leaseLeafName =
@@ -1343,12 +1348,17 @@ final class PrimeValidationSwiftPMRetainedAdmissionState:
                     "Sources/PrimeCore/" +
                         "PrimeValidationDriverV2IsolatedSpawnCanary.swift",
                     "Sources/PrimeCore/" +
+                        "PrimeValidationDriverV2FixedProbeExecutor.swift",
+                    "Sources/PrimeCore/" +
                         "PrimeValidationDriverV2RoleFacade.swift",
                     "Sources/PrimeCore/" +
                         "PrimeValidationDriverV2TrackedTreeHeldEntry.swift",
                     "Tests/PrimeValidationWorkflow/Sources/" +
                         "PrimeValidationWorkflowDriverCore/" +
                         "PrimeValidationDriverV2TrackedTreeManifest.swift",
+                    "Tests/PrimeValidationWorkflow/Sources/" +
+                        "PrimeValidationWorkflowDriverCore/" +
+                        "PrimeValidationDriverV2FixedProbeBinding.swift",
                     "Package.resolved",
                 ],
                 expectation: sourceExpectation
@@ -1365,12 +1375,17 @@ final class PrimeValidationSwiftPMRetainedAdmissionState:
                     "Sources/PrimeCore/" +
                         "PrimeValidationDriverV2IsolatedSpawnCanary.swift",
                     "Sources/PrimeCore/" +
+                        "PrimeValidationDriverV2FixedProbeExecutor.swift",
+                    "Sources/PrimeCore/" +
                         "PrimeValidationDriverV2RoleFacade.swift",
                     "Sources/PrimeCore/" +
                         "PrimeValidationDriverV2TrackedTreeHeldEntry.swift",
                     "Tests/PrimeValidationWorkflow/Sources/" +
                         "PrimeValidationWorkflowDriverCore/" +
                         "PrimeValidationDriverV2TrackedTreeManifest.swift",
+                    "Tests/PrimeValidationWorkflow/Sources/" +
+                        "PrimeValidationWorkflowDriverCore/" +
+                        "PrimeValidationDriverV2FixedProbeBinding.swift",
                     "Package.resolved",
                 ]
             )
@@ -1491,6 +1506,56 @@ final class PrimeValidationSwiftPMRetainedGuardedPreExecutorState:
         _ = try sourceWatch.revalidateWhilePrepared()
         _ = try companionSourceWatch.revalidateWhilePrepared()
     }
+
+    /// Polls only the two already-armed Gate C kqueues. This does not reread
+    /// bytes, reopen a root, or establish a new baseline.
+    func fixedProbeCheckpointNoPendingEvents() throws {
+        try sourceWatch.fixedProbeCheckpointNoPendingEvents()
+        try companionSourceWatch.fixedProbeCheckpointNoPendingEvents()
+    }
+
+    /// Final Gate E continuity accept after the fourth and terminal
+    /// byte-authoritative pass. This preserves the transferred live owner but
+    /// performs identity-only checks under the original deadline.
+    func fixedProbeRevalidateTransferredContinuity() throws {
+        try fixedProbeCheckpointNoPendingEvents()
+        guard admission.lease.isHeld,
+              combinedSourceWatcherDescriptorCount == 2_157
+        else {
+            throw PrimeValidationSwiftPMBuildInventoryAdmissionError
+                .rejected("fixed probe transferred continuity")
+        }
+        try admission.primeRepository.revalidate()
+        try admission.companionRepository.revalidate()
+        try admission.workspaceRoot.revalidate(requirePrivateAndEmpty: true)
+        try admission.evidenceRoot.revalidate(requirePrivateAndEmpty: true)
+        try admission.leaseDirectory.revalidate()
+        try admission.toolchain.fixedProbeRevalidateAdmissionHeldSet()
+        try currentProcessImage.revalidateIdentityOnly()
+        try fixedProbeCheckpointNoPendingEvents()
+    }
+
+    /// Projects Prime descriptor-backed Gate D entries from the existing Gate
+    /// C owner. The value contains data only and retains no descriptor.
+    func fixedProbePrimeHeldEntries() throws
+        -> [PrimeValidationDriverV2TrackedTreeHeldEntry]
+    {
+        try fixedProbeCheckpointNoPendingEvents()
+        let prime = try sourceWatch.fixedProbeHeldEntries()
+        try fixedProbeCheckpointNoPendingEvents()
+        return prime
+    }
+
+    /// Projects companion descriptor-backed Gate D entries from the existing
+    /// Gate C owner. The value contains data only and retains no descriptor.
+    func fixedProbeCompanionHeldEntries() throws
+        -> [PrimeValidationDriverV2TrackedTreeHeldEntry]
+    {
+        try fixedProbeCheckpointNoPendingEvents()
+        let companion = try companionSourceWatch.fixedProbeHeldEntries()
+        try fixedProbeCheckpointNoPendingEvents()
+        return companion
+    }
 }
 
 final class PrimeValidationSwiftPMHeldUserDirectory:
@@ -1567,6 +1632,10 @@ final class PrimeValidationSwiftPMHeldToolchain:
     let binaryDirectory: PrimeValidationSwiftPMHeldSystemDirectory
     let xcodeVersionPlist: PrimeValidationSwiftPMHeldSystemFile
     let sdkSettingsPlist: PrimeValidationSwiftPMHeldSystemFile
+    let fixedProbeGitExecutable: PrimeValidationSwiftPMHeldSystemFile
+    let swiftFrontendExecutable: PrimeValidationSwiftPMHeldSystemFile
+    let swiftExecutablePersonality: PrimeValidationSwiftPMHeldPersonality
+    let swiftCompilerPersonality: PrimeValidationSwiftPMHeldPersonality
     let swiftPackageExecutable: PrimeValidationSwiftPMHeldSystemFile
     let swiftBuildPersonality: PrimeValidationSwiftPMHeldPersonality
     let swiftTestPersonality: PrimeValidationSwiftPMHeldPersonality
@@ -1620,6 +1689,32 @@ final class PrimeValidationSwiftPMHeldToolchain:
             maximumByteCount: 1024 * 1024,
             executableRequired: false
         )
+        fixedProbeGitExecutable = try PrimeValidationSwiftPMHeldSystemFile(
+            url: developerDirectoryURL.appendingPathComponent("usr/bin/git"),
+            maximumByteCount: 64 * 1024 * 1024,
+            executableRequired: true
+        )
+        swiftFrontendExecutable = try PrimeValidationSwiftPMHeldSystemFile(
+            url: binaryURL.appendingPathComponent("swift-frontend"),
+            maximumByteCount: 512 * 1024 * 1024,
+            executableRequired: true
+        )
+        swiftExecutablePersonality =
+            try PrimeValidationSwiftPMHeldPersonality(
+                binaryDirectory: binaryDirectory,
+                leaf: "swift",
+                expectedTarget: "swift-frontend",
+                executablePath:
+                    swiftFrontendExecutable.observation.canonicalAbsolutePath
+            )
+        swiftCompilerPersonality =
+            try PrimeValidationSwiftPMHeldPersonality(
+                binaryDirectory: binaryDirectory,
+                leaf: "swiftc",
+                expectedTarget: "swift-frontend",
+                executablePath:
+                    swiftFrontendExecutable.observation.canonicalAbsolutePath
+            )
         swiftPackageExecutable =
             try PrimeValidationSwiftPMHeldSystemFile(
                 url: binaryURL.appendingPathComponent("swift-package"),
@@ -1673,6 +1768,23 @@ final class PrimeValidationSwiftPMHeldToolchain:
             swiftVersionProcessObservationMissing: true,
             swiftTargetInfoProcessObservationMissing: true
         )
+        guard fixedProbeGitExecutable.observation.canonicalAbsolutePath
+                == developerDirectory.observation.canonicalAbsolutePath
+                    + "/usr/bin/git",
+              fixedProbeGitExecutable.observation.deviceID
+                == developerDirectory.observation.deviceID,
+              swiftFrontendExecutable.observation.canonicalAbsolutePath
+                == binaryDirectory.observation.canonicalAbsolutePath
+                    + "/swift-frontend",
+              swiftFrontendExecutable.observation.deviceID
+                == developerDirectory.observation.deviceID,
+              swiftExecutablePersonality.identity.deviceID
+                == binaryDirectory.observation.deviceID,
+              swiftCompilerPersonality.identity.deviceID
+                == binaryDirectory.observation.deviceID
+        else {
+            throw rejected("fixed_probe_toolchain_join")
+        }
     }
 
     func revalidate() throws {
@@ -1682,7 +1794,31 @@ final class PrimeValidationSwiftPMHeldToolchain:
         try binaryDirectory.revalidate()
         try xcodeVersionPlist.revalidate()
         try sdkSettingsPlist.revalidate()
+        try fixedProbeGitExecutable.revalidate()
+        try swiftFrontendExecutable.revalidate()
+        try swiftExecutablePersonality.revalidate()
+        try swiftCompilerPersonality.revalidate()
         try swiftPackageExecutable.revalidate()
+        try swiftBuildPersonality.revalidate()
+        try swiftTestPersonality.revalidate()
+    }
+
+    /// Complete, identity-only Gate E checkpoint for every admission-held
+    /// toolchain input. Large file contents remain owned by their original
+    /// descriptors and are reread only at the four frozen heavyweight points:
+    /// entry, post-Prime join, post-companion join, and terminal.
+    func fixedProbeRevalidateAdmissionHeldSet() throws {
+        try developerDirectory.revalidate()
+        try toolchainDirectory.revalidate()
+        try sdkRoot.revalidate()
+        try binaryDirectory.revalidate()
+        try xcodeVersionPlist.revalidateIdentityOnly()
+        try sdkSettingsPlist.revalidateIdentityOnly()
+        try fixedProbeGitExecutable.revalidateIdentityOnly()
+        try swiftFrontendExecutable.revalidateIdentityOnly()
+        try swiftExecutablePersonality.revalidate()
+        try swiftCompilerPersonality.revalidate()
+        try swiftPackageExecutable.revalidateIdentityOnly()
         try swiftBuildPersonality.revalidate()
         try swiftTestPersonality.revalidate()
     }
@@ -1915,6 +2051,61 @@ final class PrimeValidationSwiftPMHeldSystemFile:
         try requireNamedPathRebound()
     }
 
+    /// Gate E's per-child checkpoint retains the admitted file identity
+    /// without rereading large executable bytes. The full admission replay
+    /// still performs byte equality at the four frozen heavyweight points.
+    func revalidateIdentityOnly() throws {
+        try requireHeldIdentity(descriptor)
+        guard try primeValidationCanonicalPath(
+            URL(fileURLWithPath: observation.canonicalAbsolutePath)
+        ) == observation.canonicalAbsolutePath else {
+            throw rejected("system_file_identity_path")
+        }
+        let rebound = Darwin.open(
+            observation.canonicalAbsolutePath,
+            O_RDONLY | O_NONBLOCK | O_NOFOLLOW_ANY | O_CLOEXEC
+        )
+        guard rebound >= 0 else {
+            throw rejected("system_file_identity_rebound_open")
+        }
+        defer { _ = Darwin.close(rebound) }
+        try requireHeldIdentity(rebound)
+    }
+
+    private func requireHeldIdentity(_ candidate: Int32) throws {
+        var metadata = stat()
+        guard fstat(candidate, &metadata) == 0,
+              metadata.st_mode & mode_t(S_IFMT) == mode_t(S_IFREG),
+              UInt64(bitPattern: Int64(metadata.st_dev))
+                == observation.deviceID,
+              UInt64(metadata.st_ino) == observation.inode,
+              metadata.st_uid == observation.ownerUserID,
+              metadata.st_gid == observation.ownerGroupID,
+              UInt16(metadata.st_mode & mode_t(0o777))
+                == observation.permissionMode,
+              UInt64(metadata.st_nlink) == observation.linkCount,
+              metadata.st_size > 0,
+              UInt64(metadata.st_size) == observation.byteCount,
+              UInt64(metadata.st_size) <= maximumByteCount,
+              Int64(metadata.st_mtimespec.tv_sec)
+                == observation.modificationSeconds,
+              Int64(metadata.st_mtimespec.tv_nsec)
+                == observation.modificationNanoseconds,
+              Int64(metadata.st_ctimespec.tv_sec)
+                == observation.statusChangeSeconds,
+              Int64(metadata.st_ctimespec.tv_nsec)
+                == observation.statusChangeNanoseconds,
+              metadata.st_mode & mode_t(0o022) == 0,
+              metadata.st_mode & mode_t(0o7000) == 0,
+              (!executableRequired
+                  || metadata.st_mode & mode_t(0o111) != 0),
+              fcntl(candidate, F_GETFD) & FD_CLOEXEC != 0
+        else {
+            throw rejected("system_file_identity_changed")
+        }
+        try primeValidationRequireNoACLOrUnknownXattrs(candidate)
+    }
+
     private func requireNamedPathRebound() throws {
         let rebound = Darwin.open(
             observation.canonicalAbsolutePath,
@@ -1944,6 +2135,8 @@ final class PrimeValidationSwiftPMHeldPersonality:
     let leaf: String
     let expectedTarget: String
     let observation: PrimeValidationSwiftPMPersonalityObservation
+    let identity:
+        PrimeValidationSwiftPMPersonalityIdentity
 
     init(
         binaryDirectory: PrimeValidationSwiftPMHeldSystemDirectory,
@@ -1954,29 +2147,64 @@ final class PrimeValidationSwiftPMHeldPersonality:
         self.binaryDirectory = binaryDirectory
         self.leaf = leaf
         self.expectedTarget = expectedTarget
-        let target = try primeValidationReadPersonalityTarget(
+        let checkpoint = try primeValidationPersonalityCheckpoint(
             descriptor: binaryDirectory.descriptor,
             leaf: leaf
         )
-        guard target == expectedTarget else {
+        guard checkpoint.target == expectedTarget else {
             throw rejected("personality_target")
         }
+        identity = checkpoint.identity
         observation = PrimeValidationSwiftPMPersonalityObservation(
             requestedAbsolutePath:
                 binaryDirectory.observation.canonicalAbsolutePath
                     + "/" + leaf,
-            symbolicLinkTarget: target,
+                symbolicLinkTarget: checkpoint.target,
             canonicalExecutableAbsolutePath: executablePath
         )
     }
 
     func revalidate() throws {
-        guard try primeValidationReadPersonalityTarget(
+        let checkpoint = try primeValidationPersonalityCheckpoint(
             descriptor: binaryDirectory.descriptor,
             leaf: leaf
-        ) == expectedTarget else {
+        )
+        guard checkpoint.target == expectedTarget,
+              checkpoint.identity == identity
+        else {
             throw rejected("personality_changed")
         }
+    }
+}
+
+struct PrimeValidationSwiftPMPersonalityIdentity:
+    Equatable,
+    Sendable
+{
+    let deviceID: UInt64
+    let inode: UInt64
+    let ownerUserID: UInt32
+    let ownerGroupID: UInt32
+    let mode: UInt32
+    let linkCount: UInt64
+    let byteCount: Int64
+    let modificationSeconds: Int64
+    let modificationNanoseconds: Int64
+    let statusChangeSeconds: Int64
+    let statusChangeNanoseconds: Int64
+
+    init(_ value: stat) {
+        deviceID = UInt64(bitPattern: Int64(value.st_dev))
+        inode = UInt64(value.st_ino)
+        ownerUserID = value.st_uid
+        ownerGroupID = value.st_gid
+        mode = UInt32(value.st_mode)
+        linkCount = UInt64(value.st_nlink)
+        byteCount = Int64(value.st_size)
+        modificationSeconds = Int64(value.st_mtimespec.tv_sec)
+        modificationNanoseconds = Int64(value.st_mtimespec.tv_nsec)
+        statusChangeSeconds = Int64(value.st_ctimespec.tv_sec)
+        statusChangeNanoseconds = Int64(value.st_ctimespec.tv_nsec)
     }
 }
 
@@ -2142,10 +2370,13 @@ private func primeValidationSystemFileCheckpoint(
     )
 }
 
-private func primeValidationReadPersonalityTarget(
+private func primeValidationPersonalityCheckpoint(
     descriptor: Int32,
     leaf: String
-) throws -> String {
+) throws -> (
+    target: String,
+    identity: PrimeValidationSwiftPMPersonalityIdentity
+) {
     var before = stat()
     let status = leaf.withCString {
         fstatat(descriptor, $0, &before, AT_SYMLINK_NOFOLLOW)
@@ -2174,17 +2405,15 @@ private func primeValidationReadPersonalityTarget(
     guard leaf.withCString({
         fstatat(descriptor, $0, &after, AT_SYMLINK_NOFOLLOW)
     }) == 0,
-    before.st_dev == after.st_dev,
-    before.st_ino == after.st_ino,
-    before.st_size == after.st_size,
-    before.st_mtimespec.tv_sec == after.st_mtimespec.tv_sec,
-    before.st_mtimespec.tv_nsec == after.st_mtimespec.tv_nsec,
-    before.st_ctimespec.tv_sec == after.st_ctimespec.tv_sec,
-    before.st_ctimespec.tv_nsec == after.st_ctimespec.tv_nsec
+    PrimeValidationSwiftPMPersonalityIdentity(before)
+        == PrimeValidationSwiftPMPersonalityIdentity(after)
     else {
         throw rejected("personality_changed")
     }
-    return String(cString: bytes)
+    return (
+        String(cString: bytes),
+        PrimeValidationSwiftPMPersonalityIdentity(after)
+    )
 }
 
 private func primeValidationFilesystemObservation(

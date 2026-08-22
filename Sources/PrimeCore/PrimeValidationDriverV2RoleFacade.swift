@@ -347,6 +347,10 @@ public final class PrimeValidationDriverV2RoleFacade:
             PrimeValidationSwiftPMRetainedGuardedPreExecutorState,
             PrimeValidationDriverV2IsolatedSpawnCanaryObservation
         )
+        case fixedProbesRunning(
+            PrimeValidationSwiftPMRetainedGuardedPreExecutorState
+        )
+        case fixedProbesTransferred
         case poisoned
     }
 
@@ -380,9 +384,10 @@ public final class PrimeValidationDriverV2RoleFacade:
         continuityLock.lock()
         defer { continuityLock.unlock() }
         switch state {
-        case .guarded, .canaryRunning, .canaryComplete:
+        case .guarded, .canaryRunning, .canaryComplete,
+             .fixedProbesRunning:
             return .dualRootGuarded
-        case .poisoned:
+        case .fixedProbesTransferred, .poisoned:
             return .poisoned
         }
     }
@@ -409,9 +414,10 @@ public final class PrimeValidationDriverV2RoleFacade:
         switch state {
         case let .guarded(value),
              let .canaryRunning(value),
-             let .canaryComplete(value, _):
+             let .canaryComplete(value, _),
+             let .fixedProbesRunning(value):
             return value.combinedSourceWatcherDescriptorCount
-        case .poisoned:
+        case .fixedProbesTransferred, .poisoned:
             return 0
         }
     }
@@ -428,7 +434,7 @@ public final class PrimeValidationDriverV2RoleFacade:
             return .running
         case .canaryComplete:
             return .observed
-        case .poisoned:
+        case .fixedProbesRunning, .fixedProbesTransferred, .poisoned:
             return .poisoned
         }
     }
@@ -506,7 +512,8 @@ public final class PrimeValidationDriverV2RoleFacade:
         case let .guarded(value),
              let .canaryComplete(value, _):
             retainedState = value
-        case .canaryRunning:
+        case .canaryRunning, .fixedProbesRunning,
+             .fixedProbesTransferred:
             throw PrimeValidationSwiftPMBuildInventoryAdmissionError
                 .guardedPreExecutorTransferred
         case .poisoned:
@@ -541,7 +548,8 @@ public final class PrimeValidationDriverV2RoleFacade:
             testHeldCanaryExecutable = nil
             testCanaryInterlock = nil
             state = .canaryRunning(value)
-        case .canaryRunning, .canaryComplete:
+        case .canaryRunning, .canaryComplete,
+             .fixedProbesRunning, .fixedProbesTransferred:
             continuityLock.unlock()
             throw PrimeValidationSwiftPMBuildInventoryAdmissionError
                 .guardedPreExecutorTransferred
@@ -568,6 +576,232 @@ public final class PrimeValidationDriverV2RoleFacade:
             }
             state = .canaryComplete(retainedState, observation)
             continuityLock.unlock()
+        } catch {
+            continuityLock.lock()
+            state = .poisoned
+            continuityLock.unlock()
+            throw error
+        }
+    }
+
+    /// Internal XCTest-only, zero-argument exercise of the exact Gate E
+    /// journal owner. It publishes all 34 frozen leaves through production
+    /// journal mechanics, creates no child, returns data only, and permanently
+    /// consumes the facade whether it succeeds or fails.
+    func exerciseFixedProbeJournalMechanicsForTesting() throws
+        -> PrimeValidationDriverV2FixedProbeJournalMechanicsTestObservation
+    {
+        let retainedState:
+            PrimeValidationSwiftPMRetainedGuardedPreExecutorState
+        continuityLock.lock()
+        switch state {
+        case let .guarded(value):
+            guard !value.productionSupervisorImageEligible else {
+                state = .poisoned
+                continuityLock.unlock()
+                throw PrimeValidationSwiftPMBuildInventoryAdmissionError
+                    .rejected(
+                        "driver_v2_fixed_probe_journal_test_production_image"
+                    )
+            }
+            retainedState = value
+            state = .fixedProbesRunning(value)
+        case .canaryRunning, .canaryComplete,
+             .fixedProbesRunning, .fixedProbesTransferred:
+            continuityLock.unlock()
+            throw PrimeValidationSwiftPMBuildInventoryAdmissionError
+                .guardedPreExecutorTransferred
+        case .poisoned:
+            continuityLock.unlock()
+            throw PrimeValidationSwiftPMBuildInventoryAdmissionError
+                .guardedPreExecutorPoisoned
+        }
+        continuityLock.unlock()
+
+        do {
+            let observation = try PrimeValidationDriverV2FixedProbeExecutor
+                .exerciseJournalMechanicsForTesting(
+                    retainedState: retainedState
+                )
+            continuityLock.lock()
+            guard case .fixedProbesRunning = state else {
+                state = .poisoned
+                continuityLock.unlock()
+                throw PrimeValidationSwiftPMBuildInventoryAdmissionError
+                    .guardedPreExecutorPoisoned
+            }
+            state = .poisoned
+            continuityLock.unlock()
+            return observation
+        } catch {
+            continuityLock.lock()
+            state = .poisoned
+            continuityLock.unlock()
+            throw error
+        }
+    }
+
+    /// Internal XCTest-only, zero-argument projection from the one existing
+    /// Gate C owner. Success returns the same owner to guarded state; failure
+    /// drops it permanently. No held descriptor or live capability escapes.
+    func exerciseFixedProbeHeldProjectionForTesting() throws
+        -> PrimeValidationDriverV2FixedProbeHeldProjectionTestObservation
+    {
+        let retainedState:
+            PrimeValidationSwiftPMRetainedGuardedPreExecutorState
+        continuityLock.lock()
+        switch state {
+        case let .guarded(value):
+            guard !value.productionSupervisorImageEligible else {
+                state = .poisoned
+                continuityLock.unlock()
+                throw PrimeValidationSwiftPMBuildInventoryAdmissionError
+                    .rejected(
+                        "driver_v2_fixed_probe_projection_test_production_image"
+                    )
+            }
+            retainedState = value
+            state = .fixedProbesRunning(value)
+        case .canaryRunning, .canaryComplete,
+             .fixedProbesRunning, .fixedProbesTransferred:
+            continuityLock.unlock()
+            throw PrimeValidationSwiftPMBuildInventoryAdmissionError
+                .guardedPreExecutorTransferred
+        case .poisoned:
+            continuityLock.unlock()
+            throw PrimeValidationSwiftPMBuildInventoryAdmissionError
+                .guardedPreExecutorPoisoned
+        }
+        continuityLock.unlock()
+
+        do {
+            let observation = try PrimeValidationDriverV2FixedProbeExecutor
+                .exerciseHeldProjectionForTesting(
+                    retainedState: retainedState
+                )
+            continuityLock.lock()
+            guard case .fixedProbesRunning = state else {
+                state = .poisoned
+                continuityLock.unlock()
+                throw PrimeValidationSwiftPMBuildInventoryAdmissionError
+                    .guardedPreExecutorPoisoned
+            }
+            state = .guarded(retainedState)
+            continuityLock.unlock()
+            return observation
+        } catch {
+            continuityLock.lock()
+            state = .poisoned
+            continuityLock.unlock()
+            throw error
+        }
+    }
+
+    /// Internal XCTest-only, zero-argument entry to the production-shared
+    /// retained half of Gate E's lightweight checkpoint. A successful poll is
+    /// repeatable; either root's pending kqueue event permanently poisons.
+    func revalidateFixedProbeLightweightContinuityForTesting() throws
+        ->
+        PrimeValidationDriverV2FixedProbeLightweightCheckpointTestObservation
+    {
+        let retainedState:
+            PrimeValidationSwiftPMRetainedGuardedPreExecutorState
+        continuityLock.lock()
+        switch state {
+        case let .guarded(value):
+            guard !value.productionSupervisorImageEligible else {
+                state = .poisoned
+                continuityLock.unlock()
+                throw PrimeValidationSwiftPMBuildInventoryAdmissionError
+                    .rejected(
+                        "driver_v2_fixed_probe_lightweight_test_production_image"
+                    )
+            }
+            retainedState = value
+            state = .fixedProbesRunning(value)
+        case .canaryRunning, .canaryComplete,
+             .fixedProbesRunning, .fixedProbesTransferred:
+            continuityLock.unlock()
+            throw PrimeValidationSwiftPMBuildInventoryAdmissionError
+                .guardedPreExecutorTransferred
+        case .poisoned:
+            continuityLock.unlock()
+            throw PrimeValidationSwiftPMBuildInventoryAdmissionError
+                .guardedPreExecutorPoisoned
+        }
+        continuityLock.unlock()
+
+        do {
+            let observation = try PrimeValidationDriverV2FixedProbeExecutor
+                .revalidateLightweightContinuityForTesting(
+                    retainedState: retainedState
+                )
+            continuityLock.lock()
+            guard case .fixedProbesRunning = state else {
+                state = .poisoned
+                continuityLock.unlock()
+                throw PrimeValidationSwiftPMBuildInventoryAdmissionError
+                    .guardedPreExecutorPoisoned
+            }
+            state = .guarded(retainedState)
+            continuityLock.unlock()
+            return observation
+        } catch {
+            continuityLock.lock()
+            state = .poisoned
+            continuityLock.unlock()
+            throw error
+        }
+    }
+
+    /// Runs the one frozen Gate E sequence and transfers the sole retained
+    /// continuity lifetime into a unique descriptor-free raw capability.
+    /// The caller supplies no process parameter and the B role table does not
+    /// advance.
+    @available(macOS 26.0, *)
+    public func observeFixedGitAndSwiftProbes() throws
+        -> PrimeValidationDriverV2FixedProbeRawCapability
+    {
+        let retainedState:
+            PrimeValidationSwiftPMRetainedGuardedPreExecutorState
+        continuityLock.lock()
+        switch state {
+        case let .guarded(value):
+            retainedState = value
+            state = .fixedProbesRunning(value)
+        case .canaryRunning, .canaryComplete,
+             .fixedProbesRunning, .fixedProbesTransferred:
+            continuityLock.unlock()
+            throw PrimeValidationSwiftPMBuildInventoryAdmissionError
+                .guardedPreExecutorTransferred
+        case .poisoned:
+            continuityLock.unlock()
+            throw PrimeValidationSwiftPMBuildInventoryAdmissionError
+                .guardedPreExecutorPoisoned
+        }
+        continuityLock.unlock()
+
+        do {
+            let result = try PrimeValidationDriverV2FixedProbeExecutor
+                .execute(retainedState: retainedState)
+            let capability = PrimeValidationDriverV2FixedProbeRawCapability(
+                retainedState: retainedState,
+                deadline: result.deadline,
+                lastObservedUptimeNanoseconds:
+                    result.lastObservedUptimeNanoseconds,
+                observation: result.observation
+            )
+            continuityLock.lock()
+            guard case .fixedProbesRunning = state else {
+                state = .poisoned
+                continuityLock.unlock()
+                capability.rejectValidatedBindingLifetime()
+                throw PrimeValidationSwiftPMBuildInventoryAdmissionError
+                    .guardedPreExecutorPoisoned
+            }
+            state = .fixedProbesTransferred
+            continuityLock.unlock()
+            return capability
         } catch {
             continuityLock.lock()
             state = .poisoned

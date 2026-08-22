@@ -463,7 +463,7 @@ public struct PrimeValidationSwiftTargetInfoObservationV2:
         self.runtimeResourcePath = runtimeResourcePath
     }
 
-    fileprivate static func parse(_ data: Data) throws -> Self {
+    static func parse(_ data: Data) throws -> Self {
         struct Target: Decodable {
             let triple: String
             let unversionedTriple: String
@@ -1274,6 +1274,8 @@ public struct PrimeValidationRepositoryAdmissionReceiptV2:
 
     public func validate(intent: PrimeValidationRunIntentV2) throws {
         try intent.validate()
+        let expectedGitExecutableAbsolutePath = try Self
+            .expectedXcodeGitExecutableAbsolutePath(intent: intent)
         guard repositoryRoot.role == .repository,
               companionRoot.role == .companion
         else {
@@ -1392,8 +1394,10 @@ public struct PrimeValidationRepositoryAdmissionReceiptV2:
               repositoryHEADOutput.data == Data((repositoryCommit + "\n").utf8),
               companionHEADOutput.data == Data((companionCommit + "\n").utf8),
               companionCommit == intent.companionCommit,
-              gitExecutable.requestedAbsolutePath == "/usr/bin/git",
-              gitExecutable.canonicalAbsolutePath == "/usr/bin/git",
+              gitExecutable.requestedAbsolutePath
+                == expectedGitExecutableAbsolutePath,
+              gitExecutable.canonicalAbsolutePath
+                == expectedGitExecutableAbsolutePath,
               gitExecutable.requestedSymlinkTarget == nil,
               gitExecutable.ownerUserID == 0,
               gitExecutable.ownerGroupID == 0,
@@ -1419,6 +1423,33 @@ public struct PrimeValidationRepositoryAdmissionReceiptV2:
         value.utf8.count == 40 && value.utf8.allSatisfy {
             ($0 >= 48 && $0 <= 57) || ($0 >= 97 && $0 <= 102)
         }
+    }
+
+    private static func expectedXcodeGitExecutableAbsolutePath(
+        intent: PrimeValidationRunIntentV2
+    ) throws -> String {
+        let marker = "/Toolchains/XcodeDefault.xctoolchain/usr/bin/"
+        let swiftPath = intent.swiftExecutable.absolutePath
+        guard let markerRange = swiftPath.range(of: marker),
+              markerRange.lowerBound != swiftPath.startIndex,
+              String(swiftPath[markerRange.upperBound...]) == "swift"
+        else {
+            throw PrimeValidationDriverV2Error.invalidBinding(
+                "repository_git"
+            )
+        }
+        let developerDirectory = String(
+            swiftPath[..<markerRange.lowerBound]
+        )
+        guard developerDirectory.hasSuffix("/Contents/Developer")
+        else {
+            throw PrimeValidationDriverV2Error.invalidBinding(
+                "repository_git"
+            )
+        }
+        let result = developerDirectory + "/usr/bin/git"
+        try PrimeValidationDriverV2Validation.requireSafeAbsolutePath(result)
+        return result
     }
 }
 
