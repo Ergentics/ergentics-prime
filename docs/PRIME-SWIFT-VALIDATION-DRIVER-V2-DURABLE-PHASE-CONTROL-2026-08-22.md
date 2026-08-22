@@ -1662,3 +1662,151 @@ After a checkpointed and independently audited canary, Gate D's pure
 manifest/parser mechanics is the only permitted next freeze. Gate E may be
 frozen only after a separate accepted Gate D checkpoint. This freeze itself
 authorizes neither successor.
+
+## V2-SPAWN-01 durable containment-canary checkpoint
+
+Status: `CHECKPOINTED_LOCAL_CONTAINMENT_MECHANICS_ONLY`
+
+### Frozen result identity
+
+| Field | Exact value |
+| --- | --- |
+| Classification | local, bounded, isolated containment canary; not D, E, F, G, H, or 904 |
+| Gate C source predecessor | `129322d07aad8adae156f35b474608027ca1344a` |
+| Gate C source predecessor tree | `84ae91c9324f0a5e566440c360bae723a6c2bb93` |
+| Initial contained-incomplete source | `5b76bee7c60f317730996196c105e255442cc649` |
+| Initial contained-incomplete tree | `bbbccb903ea20fc305142c8713c47bbc950043d6` |
+| Final repaired source | `9f7d95a5bebd492827f71fa0bb340d5af1859a90` |
+| Final repaired source tree | `f3f4a244e7557227b40d390b1d7246ced41b21d1` |
+| Final source parent | `5b76bee7c60f317730996196c105e255442cc649` |
+| Freeze / corrected freeze | `294321188acfd9a7def37536cd217908f21064dc` / `6e2648469b55f822bc67079dbf3408c355e035d6` |
+| Durable-control predecessor tree | `154507359294e76273cfeeaca6b90338c4350aa6` |
+| Embedded Prime source identity | `faeafa93ed8a9331aa8608769ab7a2304c8b20764dc584279f84ca9b85d0c4e6` |
+| Source topology | 541 snapshot files; 540 canonical identity records; 152 Prime authority directories |
+| Watch topology | 541 Prime files + 152 Prime directories = 693; companion = 1,460; combined = 2,153 / 4,096 |
+| Source aggregate from Gate C | exactly the frozen seven paths; no expansion |
+| Final source worktree | clean |
+| Durable control in source ancestry | false |
+
+### Exact final source blobs
+
+| Path | Final blob |
+| --- | --- |
+| `Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift` | `1085823f9705a8ec566ec28aa4ad0824ad352c97` |
+| `Sources/PrimeCore/PrimeValidationDriverV2IsolatedSpawnCanary.swift` | `1c174ffd12173f492e9bab68aff07ef2df5b74d7` |
+| `Sources/PrimeCore/PrimeValidationDriverV2RoleFacade.swift` | `5c59eaaa5831bbd058f358ab99e028f54d393739` |
+| `Sources/PrimeCore/PrimeValidationSwiftPMBuildInventoryAdmission.swift` | `446e044b02451252e9c258f156cc32339581f053` |
+| `Tests/PrimeValidationWorkflow/Package.swift` | `b8c29f2530efa863b99f0ddc7b32a363e7b525ed` |
+| `Tests/PrimeValidationWorkflow/Sources/PrimeValidationWorkflowDriverV2SpawnCanary/main.swift` | `a3a37f5782d9f7c904737a91d29718f839f2072a` |
+| `Tests/PrimeValidationWorkflow/Tests/PrimeValidationWorkflowDriverCoreTests/PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests.swift` | `0f577c505a24576eca5e1e7d258ba57c97e2fcb8` |
+
+All conserved predecessor anchors outside the exact mutation allowlist
+remained exact. In particular, supervisor `main.swift`, both DriverCore
+bridges, the frozen role-policy suffix, root package files, both lock files,
+the Darwin spawn owner, the child kernel and supervision owner, both Gate C
+source-watch owners, the fixture children, and the 892/12 inventories did not
+change.
+
+### Pinned child identity and build-only evidence
+
+| Field | Exact value |
+| --- | --- |
+| Product, target, and image leaf | `PrimeValidationWorkflowDriverV2SpawnCanary` |
+| Child source byte count | 381 |
+| Child source SHA-256 | `052b27259c5bf39748bafbc22eeafb205fb1b3e00e247cda3e368c8ff2dbdd9c` |
+| Release image byte count | 33,784 |
+| Release image SHA-256 | `ced48ad5cb41a3a2e13c779f57ca008b213425d6e02ea7dc827bdd6ddfd6988e` |
+| Mach-O UUID | `2970B4C8-7A39-30C2-B576-383FF950C1D3` |
+| Platform / minimum OS / SDK | macOS / 14.0 / 26.5 |
+| Frozen load-command transcript SHA-256 | `7b1ba98f32973d7c9a2ec356fcbadb0d4601d599261f4eee692c041dfc256474` |
+| Two disjoint prelaunch Release builds | byte-identical PASS; child not executed |
+| Fresh Release build from final source | byte-identical PASS in `/private/tmp/v2-spawn-01-repaired-offline.Gqrt3o` |
+| Final Release `PrimeCore` compile | PASS |
+| Final Debug nested test-bundle compile | PASS; tests not run by the build command |
+
+Fresh scratch SwiftPM planning first failed closed on blocked GitHub dependency
+and MLX-submodule resolution. No network permission was granted and no remote
+dependency was accepted. The final fresh build used the already-present local
+repository cache. A transient Git environment mapping redirected the two MLX
+submodule URLs to the already-present local submodule repositories; no
+persistent checkout configuration changed and no fetch succeeded. GitHub
+Actions, a hosted runner, and an admitted-tree Driver V2 SwiftPM child were not
+used.
+
+### Consumed incomplete attempt
+
+| Field | Recorded result |
+| --- | --- |
+| Source / tree | `5b76bee7c60f317730996196c105e255442cc649` / `bbbccb903ea20fc305142c8713c47bbc950043d6` |
+| Classification | `INCOMPLETE` / `ABSTAIN` |
+| First rejection | `driver_v2_isolated_spawn_canary_journal_authorized_root` |
+| Child state at rejection | created suspended; never received `SIGCONT` |
+| Root transition | the synchronized, reopened start leaf changed local APFS directory `st_nlink` from 2 to 3 |
+| Cleanup | returned only after the existing containment path reaped the exact child and closed drains |
+| Terminal | none; no success authority; journal identity permanently nonretryable |
+
+The repaired source permits only the two fixed authorized root transitions:
+empty-to-start is exactly `2 -> 3`, and start-to-terminal is exactly `3 -> 4`.
+Device, inode, owner, group, and mode remain equal across publication. Exact
+inventory, held leaf descriptors, leaf vnode/metadata/bytes/hash, full
+post-publication identity stability, and named-path rebound remain mandatory.
+The full accepted post-publication identity becomes the next exact read-only
+baseline.
+
+### Final focused evidence
+
+All rows below ran as separate focused filters on final source
+`9f7d95a5bebd492827f71fa0bb340d5af1859a90`. Aggregate result: 9 selected
+tests, 9 passed, 0 failed. No broad class filter and no 904-test inventory ran.
+
+| Individual test | Result | Closed fact | Explicit non-claim |
+| --- | --- | --- | --- |
+| `testIsolatedSpawnCanarySourceAndManifestAreClosed` | PASS | exact silent child bytes; one dependency-free product/target; deadline, continuity, journal, then sole spawn ordering | no runtime authority |
+| `testFixedRoleFacadeSourceHasOnlyClosedCanaryExecutionSurface` | PASS | one public zero-argument canary transition; no generic command inputs | no build/list advance |
+| `testProductionDriverV2BridgeRejectsXCTestHost` | PASS | production DriverCore bind against Apple `xctest` rejects and poisons | XCTest does not close `supervisor_executable_image` |
+| `testIsolatedSpawnCanaryClosesOnlyContainmentMechanics` | PASS | held image and cwd joins; durable start before resume; silent exit 0; exact reap; empty group; post-reap test-host fixture continuity; terminal binds start | no process/build/inventory role observation |
+| `testConcurrentIsolatedSpawnCanaryHasExactlyOneWinner` | PASS | two simultaneous entrants; one winner; journal root observed at exact link counts 2, 3, and 4 on one vnode/mode/owner | no retry authority |
+| `testPrimeMutationDuringIsolatedSpawnCanaryPoisonsFacade` | PASS | Prime mutation poisons after containment; `ECHILD`, group `ESRCH`, empty workspace/evidence | no terminal success |
+| `testCompanionMutationDuringIsolatedSpawnCanaryPoisonsFacade` | PASS | companion mutation poisons with the same containment postconditions | no terminal success |
+| `testIsolatedSpawnCanaryJournalCollisionPoisonsBeforeSpawn` | PASS | preexisting start leaf poisons before spawn without overwrite | no child and no retry |
+| `testIsolatedSpawnCanaryPostSpawnJournalCollisionContainsAndPoisons` | PASS | terminal collision contains exact child/group and poisons; workspace/evidence empty | collision leaf is not terminal authority |
+
+Across the passing clean interval, the deadline was established before spawn;
+the held child descriptor joined the suspended mapped vnode; SID, PGID, and
+PID were equal; the held workspace joined the suspended cwd; the fully synced
+and reopened start leaf preceded the sole resume; stdout and stderr each
+reached zero-byte EOF and closed independently; the exact PID exited 0 and was
+reaped once; the process group was empty; both test-host fixture Gate C
+continuity mechanisms survived; the workspace stayed empty; and the terminal
+leaf bound the complete external start-leaf SHA-256. Fixture journals were
+throwaway local mechanics evidence and were disposed after assertions; they
+are not released product artifacts.
+
+### Authority ceiling and successor
+
+| Authority | State after this checkpoint |
+| --- | --- |
+| `test_host_isolated_facade_spawn_canary_observed` | true, for this exact source/image and mechanics only |
+| Production supervisor-to-canary composition | `UNOBSERVED` |
+| Public production process execution | `UNOBSERVED` |
+| Driver V2 Prime Git HEAD + clean process observation | `UNOBSERVED` |
+| Driver V2 companion Git HEAD + clean process observation | `UNOBSERVED` |
+| Driver V2 Swift version process observation | `UNOBSERVED` |
+| Driver V2 Swift target-info process observation | `UNOBSERVED` |
+| Driver V2 SwiftPM build-role execution | `UNOBSERVED` |
+| Driver V2 artifact staging | `UNOBSERVED` |
+| Driver V2 XCTest inventory-role execution | `UNOBSERVED` |
+| Driver V2 Swift Testing inventory-role execution | `UNOBSERVED` |
+| Completion, shard, Driver V2 evidence-ledger publication, science, product, release | unauthorized or `ABSTAIN` |
+
+Outer workstation build and focused-test harness activity does not close or
+populate any of those Driver V2 role observations.
+
+The facade remains positioned at frozen `build`; no build/list role advanced
+or was consumed. Gate D is the sole permitted successor on source
+`9f7d95a5bebd492827f71fa0bb340d5af1859a90` and tree
+`f3f4a244e7557227b40d390b1d7246ced41b21d1`: tracked-tree manifest/parser
+mechanics only, no live Git and no child, under a separately frozen allowlist.
+This durable-control commit is prose rank 4 and is not Gate D's source
+predecessor. Gate E remains the first named Git/Swift process and is not
+authorized by this checkpoint.
