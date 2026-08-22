@@ -2821,6 +2821,7 @@ policy may change. The fixed silent process statuses are:
 | 67 | dedicated mapped supervisor-image bind and image revalidation |
 | 68 | Gate E facade consumption, fixed probes, raw transfer, and DriverCore semantic bind |
 | 69 | final retained four-authority revalidation |
+| 70 | existing post-spawn containment fail-stop; unchanged and never translated |
 | 0 | all prior phases accepted and the live binding remained retained through return |
 
 The supervisor remains silent. This adds no stdout, stderr, environment read,
