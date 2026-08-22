@@ -307,6 +307,10 @@ readonly exact_revision_topology_relation_timeout_repair_authority_test_relative
 readonly exact_revision_topology_verifier_helper_relative_path=".github/scripts/prime-ci-exact-revision-topology-verifier.sh"
 readonly exact_revision_topology_classifier_relative_path=".github/scripts/PrimeExactRevisionTopologyClassifier.swift"
 readonly exact_revision_topology_verifier_test_script_relative_path=".github/scripts/prime-ci-exact-revision-topology-verifier-test.sh"
+readonly secure_child_validation_fixture_identity_measurement_v2_authority_source_relative_path="Sources/PrimeCore/PrimeSecureChildValidationFixtureIdentityMeasurementV2Authority.swift"
+readonly secure_child_validation_fixture_identity_measurement_v2_authority_test_relative_path="Tests/PrimeCoreTests/PrimeSecureChildValidationFixtureIdentityMeasurementV2AuthorityTests.swift"
+readonly secure_child_validation_fixture_identity_measurement_v2_launcher_relative_path=".github/scripts/prime-ci-secure-child-validation-fixture-identity-measurement-v2.sh"
+readonly secure_child_validation_fixture_identity_evaluator_v2_relative_path="Tests/PrimeValidationWorkflow/Tools/PrimeSecureChildValidationFixtureIdentityEvaluatorV2.swift"
 readonly secure_child_process_evidence_closed_fixture_canary_launcher_relative_path=".github/scripts/prime-ci-secure-child-process-evidence-closed-fixture-canary.sh"
 readonly secure_child_process_plan_relative_path="Sources/PrimeCore/PrimeSecureChildProcessPlan.swift"
 readonly secure_child_process_evidence_relative_path="Sources/PrimeCore/PrimeSecureChildProcessEvidence.swift"
@@ -415,6 +419,30 @@ readonly exact_revision_topology_relation_timeout_repair_authority_merge_revisio
 readonly exact_revision_topology_relation_timeout_repair_authority_merge_tree="93f8b071397dbde3b2031d98d8e8631963311bcd"
 readonly exact_revision_topology_relation_timeout_repair_authority_merge_first_parent="444cd402c966521f6163f4949b4a73f9a5184e29"
 readonly exact_revision_topology_relation_timeout_repair_authority_merge_second_parent="1bc2471d12f034d51ae6eb8c977198635bc37717"
+readonly exact_revision_topology_verifier_implementation_merge_revision="8dbbe8987da06b7e6cb9279e65a339595b77ca3b"
+readonly exact_revision_topology_verifier_implementation_merge_tree="354265ca2344246abc33ce1e33ba56f749b16797"
+readonly exact_revision_topology_verifier_implementation_merge_first_parent="b7808f39815ebf639b183e00d2cd769a29ebad18"
+readonly exact_revision_topology_verifier_implementation_merge_second_parent="8167f1eafdedf6e9344fde7a6542bd7e07600d8e"
+readonly expected_secure_child_validation_fixture_identity_measurement_v2_authority_preserved_index_sha256="4f528c8a72027a1cd46f6bac6ac40c3d8732a82f0de398f3d3bd1668ec0c48c0"
+readonly expected_secure_child_validation_fixture_identity_measurement_v2_authority_source_blob="44dac55cb6620f9f667cf564efb137102e1546c8"
+readonly expected_secure_child_validation_fixture_identity_measurement_v2_authority_source_bytes="73439"
+readonly expected_secure_child_validation_fixture_identity_measurement_v2_authority_source_lf_count="1408"
+readonly expected_secure_child_validation_fixture_identity_measurement_v2_authority_source_sha256="0ce03a04ffd3fac1dfd71c91d5a0353747916ed90f7b0c7fb8c14371e28d2438"
+readonly expected_secure_child_validation_fixture_identity_measurement_v2_authority_test_blob="a7f5624d2147f4852b2b0422a90c14776689b4b2"
+readonly expected_secure_child_validation_fixture_identity_measurement_v2_authority_test_bytes="52465"
+readonly expected_secure_child_validation_fixture_identity_measurement_v2_authority_test_lf_count="1178"
+readonly expected_secure_child_validation_fixture_identity_measurement_v2_authority_test_sha256="8a442a5cd17b18ebb7379ceec53384b252be9b980048a392ed5e9d89e9299db2"
+readonly expected_secure_child_validation_fixture_identity_measurement_v2_authority_canonical_bytes="41626"
+readonly expected_secure_child_validation_fixture_identity_measurement_v2_authority_canonical_sha256="d32cc3d90e5476e6f279d24bcb392f570358836c702429ecebf27dc1458077c4"
+readonly expected_secure_child_validation_fixture_identity_measurement_v2_authority_provenance_blob="2e2cb7cfb1ede79e30a97db1a4d8ee675f961703"
+readonly expected_secure_child_validation_fixture_identity_measurement_v2_authority_provenance_bytes="546"
+readonly expected_secure_child_validation_fixture_identity_measurement_v2_authority_provenance_lf_count="13"
+readonly expected_secure_child_validation_fixture_identity_measurement_v2_authority_provenance_sha256="e8be1c58d823c05997b9ac3aa3196e5970836d985fc20eac8737456253915b9b"
+readonly expected_secure_child_validation_fixture_identity_measurement_v2_authority_workflow_blob="a18a517bdbb31c0f452ac8d4d13068441500aa02"
+readonly expected_secure_child_validation_fixture_identity_measurement_v2_authority_workflow_bytes="222682"
+readonly expected_secure_child_validation_fixture_identity_measurement_v2_authority_workflow_lf_count="780"
+readonly expected_secure_child_validation_fixture_identity_measurement_v2_authority_workflow_sha256="ee501dc525924918b7706b1c929696f92e87ec50961d1a82079a1bf1f1f4f915"
+readonly expected_secure_child_validation_fixture_identity_measurement_v2_embedded_source_identity_sha256="2ce0c64fa8af6a675af863861a44e169da950da063c9c2715ad100346a3593bc"
 readonly expected_exact_revision_topology_verifier_implementation_preserved_index_sha256="563806eb2f5e5306f174eab3b537488e85373ad849e375a2b33cf4ca9e5c1f47"
 readonly expected_exact_revision_topology_relation_timeout_repair_authority_preserved_index_sha256="915fe480012287f0620a38c0f298618966b1437fbca8038e35d53929a8c20d36"
 readonly expected_exact_revision_topology_relation_timeout_repair_authority_source_blob="ff4d218de7b95a908d75e70037ae3e5f651eaa0c"
@@ -439,7 +467,10 @@ readonly expected_exact_revision_topology_relation_timeout_repair_authority_work
 readonly expected_exact_revision_topology_relation_timeout_repair_authority_summary_sha256="fdc6bf4c8be7767c636fa8f8ce64e4f6cadb8c18532bd7ed8147a6c6837134d3"
 readonly expected_exact_revision_topology_relation_timeout_repair_run166_summary_sha256="61edc41a5437f2da5a020c2eb371f22677d50726ebc79100c8dc4eebea0928dd"
 readonly expected_exact_revision_topology_relation_timeout_repair_run168_summary_sha256="a41cbe0897fa72806c3f71055900145e043969886580cec524ea59d6c0506f3b"
-readonly expected_exact_revision_topology_verifier_implementation_workflow_operational_corpus_sha256="658572febc425100017d5eec71bc2670b0161aaad28d2696182786f3c1baabae"
+readonly expected_exact_revision_topology_verifier_implementation_run170_run171_summary_sha256="46a9abd2b5cded6c37c6e193e2a9511fa40b77a0a41a861934569f5eed54d6b2"
+readonly expected_secure_child_validation_fixture_identity_measurement_v2_authority_summary_sha256="79634e6732ead82a00d61e4e5fc7d1604601d3b826d604c97c87de808a35f4aa"
+readonly expected_secure_child_validation_fixture_identity_measurement_v2_terminal_semantics_summary_sha256="e950bd3bc3274d311ba622061fbf394ad751e5b3b4658e0dd4e0e3a940ac4b73"
+readonly expected_secure_child_validation_fixture_identity_measurement_v2_authority_workflow_operational_corpus_sha256="3c1e1d60f97776bef9f0c6bd11f6a0c24bb6d315e97d029cf42d2052efb4bab2"
 readonly expected_exact_revision_topology_classifier_blob="853f893a057da09e7ce2b0fda873cd944cb45907"
 readonly expected_exact_revision_topology_classifier_bytes="25327"
 readonly expected_exact_revision_topology_classifier_lf_count="751"
@@ -817,51 +848,30 @@ for absent_exact_revision_topology_verifier_implementation_path in \
         die "exact-revision topology relation timeout-repair historical authority prematurely added a future implementation path: $absent_exact_revision_topology_verifier_implementation_path"
 done
 
-readonly exact_revision_topology_verifier_implementation_parent_lines="$(
-    exact_commit_parent_lines HEAD
-)"
-readonly exact_revision_topology_verifier_implementation_parent_count="$(
-    awk 'NF { count += 1 } END { print count + 0 }' \
-        <<< "$exact_revision_topology_verifier_implementation_parent_lines"
-)"
-case "${GITHUB_EVENT_NAME:-}" in
-    pull_request)
-        [[ "$exact_revision_topology_verifier_implementation_parent_count" == "1" \
-            && "$exact_revision_topology_verifier_implementation_parent_lines" \
-                == "$exact_revision_topology_relation_timeout_repair_authority_merge_revision" ]] ||
-            die "exact-revision topology-verifier implementation is not a direct pull-request child of the exact repair merge"
-        ;;
-    push)
-        readonly exact_revision_topology_verifier_implementation_merge_first_parent="$(
-            head -n 1 <<< "$exact_revision_topology_verifier_implementation_parent_lines"
-        )"
-        readonly exact_revision_topology_verifier_implementation_merge_second_parent="$(
-            awk 'NR == 2 { print }' \
-                <<< "$exact_revision_topology_verifier_implementation_parent_lines"
-        )"
-        [[ "$exact_revision_topology_verifier_implementation_parent_count" == "2" \
-            && "$exact_revision_topology_verifier_implementation_merge_first_parent" \
-                == "$exact_revision_topology_relation_timeout_repair_authority_merge_revision" \
-            && "$(exact_commit_parent_lines \
-                "$exact_revision_topology_verifier_implementation_merge_second_parent")" \
-                == "$exact_revision_topology_relation_timeout_repair_authority_merge_revision" \
-            && "$(exact_commit_tree \
-                "$exact_revision_topology_verifier_implementation_merge_second_parent")" \
-                == "$(exact_commit_tree HEAD)" \
-            && "$(exact_commit_header HEAD | \
-                awk '$1 == "gpgsig" { count += 1 } END { print count + 0 }')" \
-                == "1" ]] ||
-            die "exact-revision topology-verifier implementation same-tree signed-main shape changed"
-        ;;
-    *)
-        die "exact-revision topology-verifier implementation event is unauthorized"
-        ;;
-esac
+# Both inherited depth-two fetch vectors make the 8db merge object available,
+# but do not make its 8167 second-parent object available from the new
+# authority tip.  Recheck only 8db raw consistency here.  The shared helper
+# below supplies the replacement-disabled, OID-recomputed current trust proof;
+# GitHub signature validity and 8167 direct-child/same-tree remain frozen
+# external run-170/run-171/prior-authority evidence.
+[[ "$(exact_commit_tree \
+        "$exact_revision_topology_verifier_implementation_merge_revision")" \
+        == "$exact_revision_topology_verifier_implementation_merge_tree" \
+    && "$(exact_commit_parent_lines \
+        "$exact_revision_topology_verifier_implementation_merge_revision")" \
+        == "$exact_revision_topology_verifier_implementation_merge_first_parent
+$exact_revision_topology_verifier_implementation_merge_second_parent" \
+    && "$(exact_commit_header \
+        "$exact_revision_topology_verifier_implementation_merge_revision" | \
+        awk '$1 == "gpgsig" { count += 1 } END { print count + 0 }')" \
+        == "1" ]] ||
+    die "exact-revision topology-verifier implementation signature-bearing exact-main raw closure changed"
 readonly expected_exact_revision_topology_verifier_implementation_status=$'A\t.github/scripts/PrimeExactRevisionTopologyClassifier.swift\nM\t.github/scripts/prime-ci-active-root-quarantine.sh\nA\t.github/scripts/prime-ci-exact-revision-topology-verifier-test.sh\nA\t.github/scripts/prime-ci-exact-revision-topology-verifier.sh\nM\t.github/workflows/prime-active-root-quarantine.yml'
 [[ "$(git -C "$prime_root" diff --name-status --no-renames \
-        "$exact_revision_topology_relation_timeout_repair_authority_merge_revision" HEAD)" \
+        "$exact_revision_topology_relation_timeout_repair_authority_merge_revision" \
+        "$exact_revision_topology_verifier_implementation_merge_revision")" \
         == "$expected_exact_revision_topology_verifier_implementation_status" ]] ||
-    die "exact-revision topology-verifier implementation is not the exact ordered five paths"
+    die "exact-revision topology-verifier historical implementation is not the exact ordered five paths"
 for exact_revision_topology_verifier_implementation_path_and_mode in \
     '100755 .github/scripts/prime-ci-active-root-quarantine.sh' \
     '100644 .github/scripts/PrimeExactRevisionTopologyClassifier.swift' \
@@ -870,18 +880,18 @@ for exact_revision_topology_verifier_implementation_path_and_mode in \
     '100644 .github/workflows/prime-active-root-quarantine.yml'; do
     expected_exact_revision_topology_verifier_implementation_mode="${exact_revision_topology_verifier_implementation_path_and_mode%% *}"
     exact_revision_topology_verifier_implementation_path="${exact_revision_topology_verifier_implementation_path_and_mode#* }"
-    [[ -f "$prime_root/$exact_revision_topology_verifier_implementation_path" \
-        && ! -L "$prime_root/$exact_revision_topology_verifier_implementation_path" \
-        && "$(git -C "$prime_root" ls-files -s -- \
+    [[ "$(git -C "$prime_root" ls-tree \
+            "$exact_revision_topology_verifier_implementation_merge_revision" -- \
             "$exact_revision_topology_verifier_implementation_path" | \
             awk '{print $1}')" \
             == "$expected_exact_revision_topology_verifier_implementation_mode" ]] ||
-        die "exact-revision topology-verifier implementation path is missing or has the wrong mode: $exact_revision_topology_verifier_implementation_path"
+        die "exact-revision topology-verifier historical implementation path is missing or has the wrong mode: $exact_revision_topology_verifier_implementation_path"
 done
 readonly observed_exact_revision_topology_verifier_implementation_preserved_index_sha256="$({
-    git -C "$prime_root" ls-files -s |
-        while IFS= read -r index_record; do
-            relative_path="${index_record#*$'\t'}"
+    git -C "$prime_root" ls-tree -r \
+        "$exact_revision_topology_verifier_implementation_merge_revision" |
+        while IFS= read -r tree_record; do
+            relative_path="${tree_record#*$'\t'}"
             if [[ "$relative_path" \
                     == '.github/scripts/prime-ci-active-root-quarantine.sh' \
                 || "$relative_path" \
@@ -894,12 +904,93 @@ readonly observed_exact_revision_topology_verifier_implementation_preserved_inde
                     == '.github/workflows/prime-active-root-quarantine.yml' ]]; then
                 continue
             fi
-            printf '%s\n' "$index_record"
+            tree_metadata="${tree_record%%$'\t'*}"
+            tree_mode="${tree_metadata%% *}"
+            tree_blob="${tree_metadata##* }"
+            printf '%s %s 0\t%s\n' \
+                "$tree_mode" "$tree_blob" "$relative_path"
         done
 } | LC_ALL=C sort | shasum -a 256 | awk '{print $1}')"
 [[ "$observed_exact_revision_topology_verifier_implementation_preserved_index_sha256" \
         == "$expected_exact_revision_topology_verifier_implementation_preserved_index_sha256" ]] ||
-    die "exact-revision topology-verifier implementation changed a path outside its exact-five closure"
+    die "exact-revision topology-verifier historical implementation changed a path outside its exact-five closure"
+
+readonly secure_child_validation_fixture_identity_measurement_v2_authority_parent_lines="$(
+    exact_commit_parent_lines HEAD
+)"
+readonly secure_child_validation_fixture_identity_measurement_v2_authority_parent_count="$(
+    awk 'NF { count += 1 } END { print count + 0 }' \
+        <<< "$secure_child_validation_fixture_identity_measurement_v2_authority_parent_lines"
+)"
+case "${GITHUB_EVENT_NAME:-}" in
+    pull_request)
+        [[ "$secure_child_validation_fixture_identity_measurement_v2_authority_parent_count" \
+                == "1" \
+            && "$secure_child_validation_fixture_identity_measurement_v2_authority_parent_lines" \
+                == "$exact_revision_topology_verifier_implementation_merge_revision" ]] ||
+            die "validation-fixture identity-measurement V2 authority is not a direct pull-request child of exact main run 171"
+        ;;
+    push)
+        readonly secure_child_validation_fixture_identity_measurement_v2_authority_merge_first_parent="$(
+            head -n 1 \
+                <<< "$secure_child_validation_fixture_identity_measurement_v2_authority_parent_lines"
+        )"
+        [[ "$secure_child_validation_fixture_identity_measurement_v2_authority_parent_count" \
+                == "2" \
+            && "$secure_child_validation_fixture_identity_measurement_v2_authority_merge_first_parent" \
+                == "$exact_revision_topology_verifier_implementation_merge_revision" \
+            && "$(exact_commit_header HEAD | \
+                awk '$1 == "gpgsig" { count += 1 } END { print count + 0 }')" \
+                == "1" ]] ||
+            die "validation-fixture identity-measurement V2 authority signed-main event shape changed"
+        ;;
+    *)
+        die "validation-fixture identity-measurement V2 authority event is unauthorized"
+        ;;
+esac
+readonly expected_secure_child_validation_fixture_identity_measurement_v2_authority_status=$'M\t.github/scripts/prime-ci-active-root-quarantine.sh\nM\t.github/workflows/prime-active-root-quarantine.yml\nM\tSources/PrimeCore/PrimeEmbeddedBuildProvenance.swift\nA\tSources/PrimeCore/PrimeSecureChildValidationFixtureIdentityMeasurementV2Authority.swift\nA\tTests/PrimeCoreTests/PrimeSecureChildValidationFixtureIdentityMeasurementV2AuthorityTests.swift'
+[[ "$(git -C "$prime_root" diff --name-status --no-renames \
+        "$exact_revision_topology_verifier_implementation_merge_revision" HEAD)" \
+        == "$expected_secure_child_validation_fixture_identity_measurement_v2_authority_status" ]] ||
+    die "validation-fixture identity-measurement V2 authority is not the exact ordered five paths"
+for secure_child_validation_fixture_identity_measurement_v2_authority_path_and_mode in \
+    '100755 .github/scripts/prime-ci-active-root-quarantine.sh' \
+    '100644 .github/workflows/prime-active-root-quarantine.yml' \
+    '100644 Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' \
+    '100644 Sources/PrimeCore/PrimeSecureChildValidationFixtureIdentityMeasurementV2Authority.swift' \
+    '100644 Tests/PrimeCoreTests/PrimeSecureChildValidationFixtureIdentityMeasurementV2AuthorityTests.swift'; do
+    expected_secure_child_validation_fixture_identity_measurement_v2_authority_mode="${secure_child_validation_fixture_identity_measurement_v2_authority_path_and_mode%% *}"
+    secure_child_validation_fixture_identity_measurement_v2_authority_path="${secure_child_validation_fixture_identity_measurement_v2_authority_path_and_mode#* }"
+    [[ -f "$prime_root/$secure_child_validation_fixture_identity_measurement_v2_authority_path" \
+        && ! -L "$prime_root/$secure_child_validation_fixture_identity_measurement_v2_authority_path" \
+        && "$(git -C "$prime_root" ls-files -s -- \
+            "$secure_child_validation_fixture_identity_measurement_v2_authority_path" | \
+            awk '{print $1}')" \
+            == "$expected_secure_child_validation_fixture_identity_measurement_v2_authority_mode" ]] ||
+        die "validation-fixture identity-measurement V2 authority path is missing or has the wrong mode: $secure_child_validation_fixture_identity_measurement_v2_authority_path"
+done
+readonly observed_secure_child_validation_fixture_identity_measurement_v2_authority_preserved_index_sha256="$({
+    git -C "$prime_root" ls-files -s |
+        while IFS= read -r index_record; do
+            relative_path="${index_record#*$'\t'}"
+            if [[ "$relative_path" \
+                    == '.github/scripts/prime-ci-active-root-quarantine.sh' \
+                || "$relative_path" \
+                    == '.github/workflows/prime-active-root-quarantine.yml' \
+                || "$relative_path" \
+                    == 'Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' \
+                || "$relative_path" \
+                    == "$secure_child_validation_fixture_identity_measurement_v2_authority_source_relative_path" \
+                || "$relative_path" \
+                    == "$secure_child_validation_fixture_identity_measurement_v2_authority_test_relative_path" ]]; then
+                continue
+            fi
+            printf '%s\n' "$index_record"
+        done
+} | LC_ALL=C sort | shasum -a 256 | awk '{print $1}')"
+[[ "$observed_secure_child_validation_fixture_identity_measurement_v2_authority_preserved_index_sha256" \
+        == "$expected_secure_child_validation_fixture_identity_measurement_v2_authority_preserved_index_sha256" ]] ||
+    die "validation-fixture identity-measurement V2 authority changed a path outside its exact-five closure"
 
 assert_exact_revision_topology_verifier_implementation_identity() {
     [[ "$#" == "6" ]] || return 1
@@ -941,19 +1032,30 @@ assert_exact_revision_topology_verifier_implementation_identity \
     "$expected_exact_revision_topology_verifier_matrix_lf_count" \
     "$expected_exact_revision_topology_verifier_matrix_sha256" ||
     die "exact-revision topology matrix identity changed"
-assert_exact_revision_topology_verifier_implementation_identity \
-    '.github/workflows/prime-active-root-quarantine.yml' 100644 \
-    "$expected_exact_revision_topology_verifier_implementation_workflow_blob" \
-    "$expected_exact_revision_topology_verifier_implementation_workflow_bytes" \
-    "$expected_exact_revision_topology_verifier_implementation_workflow_lf_count" \
-    "$expected_exact_revision_topology_verifier_implementation_workflow_sha256" ||
-    die "exact-revision topology-verifier implementation workflow identity changed"
+[[ "$(git -C "$prime_root" ls-tree \
+        "$exact_revision_topology_verifier_implementation_merge_revision" -- \
+        '.github/workflows/prime-active-root-quarantine.yml' | \
+        awk '{print $1, $3}')" \
+        == "100644 $expected_exact_revision_topology_verifier_implementation_workflow_blob" \
+    && "$(git -C "$prime_root" cat-file -s \
+        "$expected_exact_revision_topology_verifier_implementation_workflow_blob")" \
+        == "$expected_exact_revision_topology_verifier_implementation_workflow_bytes" \
+    && "$(git -C "$prime_root" cat-file blob \
+        "$expected_exact_revision_topology_verifier_implementation_workflow_blob" | \
+        wc -l | awk '{print $1}')" \
+        == "$expected_exact_revision_topology_verifier_implementation_workflow_lf_count" \
+    && "$(git -C "$prime_root" cat-file blob \
+        "$expected_exact_revision_topology_verifier_implementation_workflow_blob" | \
+        shasum -a 256 | awk '{print $1}')" \
+        == "$expected_exact_revision_topology_verifier_implementation_workflow_sha256" ]] ||
+    die "exact-revision topology-verifier historical implementation workflow identity changed"
 
 source "$prime_root/$exact_revision_topology_verifier_helper_relative_path"
 [[ "$(type -t prime_verify_exact_revision_topology_v1)" == "function" ]] ||
     die "exact-revision topology shared helper API is unavailable"
 export PRIME_EXACT_REVISION_TOPOLOGY_MATRIX_ADMITTED_V1="prime_exact_revision_topology_matrix_admitted_v1"
-/bin/bash -p "$prime_root/$exact_revision_topology_verifier_test_script_relative_path"
+/bin/bash -p "$prime_root/$exact_revision_topology_verifier_test_script_relative_path" ||
+    die "exact-revision topology verifier matrix failed"
 unset PRIME_EXACT_REVISION_TOPOLOGY_MATRIX_ADMITTED_V1
 
 set +e
@@ -1017,26 +1119,33 @@ readonly exact_revision_topology_gate_index_tree="${prime_topology_capture_body%
 exact_revision_topology_live_arguments=()
 case "${GITHUB_EVENT_NAME:-}" in
     pull_request)
+        # Ordinal 1 is the current-index-bound authority head.  Ordinal 2
+        # independently raw-verifies the available 8db implementation base.
         exact_revision_topology_live_arguments=(
-            "$prime_root" "1"
+            "$prime_root" "2"
             "current_exact_revision" "$expected_prime_head"
             "$exact_revision_topology_gate_index_tree" "1"
+            "$exact_revision_topology_verifier_implementation_merge_revision"
+            "verified_implementation_base"
+            "$exact_revision_topology_verifier_implementation_merge_revision"
+            "$exact_revision_topology_verifier_implementation_merge_tree" "2"
             "$exact_revision_topology_relation_timeout_repair_authority_merge_revision"
+            "$exact_revision_topology_verifier_implementation_merge_second_parent"
             "--current-index-exact-revision"
         )
         ;;
     push)
         exact_revision_topology_live_arguments=(
             "$prime_root" "1"
-            "authority_base"
+            "verified_implementation_base"
+            "$exact_revision_topology_verifier_implementation_merge_revision"
+            "$exact_revision_topology_verifier_implementation_merge_tree" "2"
             "$exact_revision_topology_relation_timeout_repair_authority_merge_revision"
-            "$exact_revision_topology_relation_timeout_repair_authority_merge_tree" "2"
-            "$exact_revision_topology_relation_timeout_repair_authority_merge_first_parent"
-            "$exact_revision_topology_relation_timeout_repair_authority_merge_second_parent"
+            "$exact_revision_topology_verifier_implementation_merge_second_parent"
             "--ordered-merge-child-relation"
             "current_exact_revision" "$expected_prime_head"
             "$exact_revision_topology_gate_index_tree"
-            "$exact_revision_topology_relation_timeout_repair_authority_merge_revision"
+            "$exact_revision_topology_verifier_implementation_merge_revision"
             "current_reviewed_child"
         )
         ;;
@@ -1059,11 +1168,11 @@ readonly exact_revision_topology_live_outer_status
 [[ "$exact_revision_topology_live_outer_status" == "0" \
     && "${#exact_revision_topology_live_capture}" -le 531 \
     && "${#exact_revision_topology_live_capture}" -ge 18 ]] ||
-    die "exact-revision topology-verifier implementation capture exceeded its bound"
+    die "validation-fixture identity-measurement V2 authority topology capture exceeded its bound"
 readonly exact_revision_topology_live_trailer="${exact_revision_topology_live_capture: -18}"
 [[ "$exact_revision_topology_live_trailer" \
         =~ ^$'\036'prime_status:[0-9]{3}$'\037'$ ]] ||
-    die "exact-revision topology-verifier implementation status trailer is malformed"
+    die "validation-fixture identity-measurement V2 authority topology status trailer is malformed"
 readonly exact_revision_topology_live_status="${exact_revision_topology_live_trailer:14:3}"
 readonly exact_revision_topology_live_record="${exact_revision_topology_live_capture%$exact_revision_topology_live_trailer}"
 [[ "$exact_revision_topology_live_record" == *$'\n' \
@@ -1071,11 +1180,11 @@ readonly exact_revision_topology_live_record="${exact_revision_topology_live_cap
         wc -l | awk '{print $1}')" == "1" \
     && "$(builtin printf '%s' "$exact_revision_topology_live_record" | \
         wc -c | awk '{print $1}')" -le 513 ]] ||
-    die "exact-revision topology-verifier implementation record framing is invalid"
+    die "validation-fixture identity-measurement V2 authority topology record framing is invalid"
 readonly exact_revision_topology_live_canonical_record="$(
     builtin printf '%s' "$exact_revision_topology_live_record" | jq -ceS .
 )" 2>/dev/null ||
-    die "exact-revision topology-verifier implementation emitted invalid JSON"
+    die "validation-fixture identity-measurement V2 authority topology check emitted invalid JSON"
 builtin printf '%s' "$exact_revision_topology_live_record" | jq -e '
     keys == [
         "first_failed_guard_id", "missing_object_role", "result_code",
@@ -1088,11 +1197,11 @@ builtin printf '%s' "$exact_revision_topology_live_record" | jq -e '
     and .schema_version == 1
     and (.shallow_state == "complete" or .shallow_state == "shallow")
 ' >/dev/null 2>/dev/null ||
-    die "exact-revision topology-verifier implementation emitted an invalid record"
+    die "validation-fixture identity-measurement V2 authority topology check emitted an invalid record"
 [[ "$exact_revision_topology_live_status" == "000" \
     && "$exact_revision_topology_live_record" \
         == "$exact_revision_topology_live_canonical_record"$'\n' ]] ||
-    die "exact-revision topology-verifier implementation topology was not verified"
+    die "validation-fixture identity-measurement V2 authority topology was not verified"
 builtin printf '%s' "$exact_revision_topology_live_record"
 readonly observed_secure_child_validation_fixture_identity_measurement_mechanics_preserved_index_sha256="$({
     git -C "$prime_root" ls-tree -r \
@@ -1150,7 +1259,11 @@ readonly observed_secure_child_validation_fixture_identity_measurement_outcome_o
                 || "$relative_path" \
                     == '.github/scripts/prime-ci-exact-revision-topology-verifier.sh' \
                 || "$relative_path" \
-                    == '.github/scripts/prime-ci-exact-revision-topology-verifier-test.sh' ]]; then
+                    == '.github/scripts/prime-ci-exact-revision-topology-verifier-test.sh' \
+                || "$relative_path" \
+                    == "$secure_child_validation_fixture_identity_measurement_v2_authority_source_relative_path" \
+                || "$relative_path" \
+                    == "$secure_child_validation_fixture_identity_measurement_v2_authority_test_relative_path" ]]; then
                 continue
             fi
             printf '%s\n' "$index_record"
@@ -2111,18 +2224,22 @@ awk '
         shasum -a 256 | awk '{print $1}')" \
         == "$expected_exact_revision_topology_relation_amendment_authority_provenance_sha256" ]] ||
     die "exact-revision topology relation-amendment historical authority embedded provenance identity changed"
-[[ "$(git -C "$prime_root" ls-files -s -- \
-        'Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' | awk '{print $1, $2}')" \
+[[ "$(git -C "$prime_root" ls-tree \
+        "$exact_revision_topology_verifier_implementation_merge_revision" -- \
+        'Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' | \
+        awk '{print $1, $3}')" \
         == "100644 $expected_exact_revision_topology_relation_timeout_repair_authority_provenance_blob" \
-    && "$(stat -f %z \
-        "$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift")" \
+    && "$(git -C "$prime_root" cat-file -s \
+        "$expected_exact_revision_topology_relation_timeout_repair_authority_provenance_blob")" \
         == "$expected_exact_revision_topology_relation_timeout_repair_authority_provenance_bytes" \
-    && "$(wc -l < \
-        "$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift" | awk '{print $1}')" == "13" \
-    && "$(shasum -a 256 \
-        "$prime_root/Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift" | awk '{print $1}')" \
+    && "$(git -C "$prime_root" cat-file blob \
+        "$expected_exact_revision_topology_relation_timeout_repair_authority_provenance_blob" | \
+        wc -l | awk '{print $1}')" == "13" \
+    && "$(git -C "$prime_root" cat-file blob \
+        "$expected_exact_revision_topology_relation_timeout_repair_authority_provenance_blob" | \
+        shasum -a 256 | awk '{print $1}')" \
         == "$expected_exact_revision_topology_relation_timeout_repair_authority_provenance_sha256" ]] ||
-    die "exact-revision topology relation timeout-repair authority embedded provenance identity changed"
+    die "exact-revision topology-verifier implementation inherited embedded provenance identity changed"
 readonly secure_child_process_evidence_closed_fixture_canary_authority_predecessor_revision="232a17e8f58a297919366d963ee1d7bc38cdbaee"
 readonly secure_child_process_evidence_closed_fixture_canary_authority_predecessor_tree="c2a351449824ec15bc3154158d10f28c8a8310ad"
 readonly expected_secure_child_process_evidence_closed_fixture_canary_authority_preserved_index_sha256="e8dd30060ea370f01e135f8c2e379ab2d9bb6138dca9d928c395cdd9f967f291"
@@ -2178,7 +2295,9 @@ readonly observed_secure_child_process_evidence_closed_fixture_canary_authority_
                 || "$relative_path" == "$exact_revision_topology_relation_timeout_repair_authority_test_relative_path" \
                 || "$relative_path" == '.github/scripts/PrimeExactRevisionTopologyClassifier.swift' \
                 || "$relative_path" == '.github/scripts/prime-ci-exact-revision-topology-verifier.sh' \
-                || "$relative_path" == '.github/scripts/prime-ci-exact-revision-topology-verifier-test.sh' ]]; then
+                || "$relative_path" == '.github/scripts/prime-ci-exact-revision-topology-verifier-test.sh' \
+                || "$relative_path" == "$secure_child_validation_fixture_identity_measurement_v2_authority_source_relative_path" \
+                || "$relative_path" == "$secure_child_validation_fixture_identity_measurement_v2_authority_test_relative_path" ]]; then
                 continue
             fi
             printf '%s\n' "$index_record"
@@ -2265,6 +2384,8 @@ secure_child_process_evidence_layer_a_path_is_excluded() {
         '.github/scripts/PrimeExactRevisionTopologyClassifier.swift'|\
         '.github/scripts/prime-ci-exact-revision-topology-verifier.sh'|\
         '.github/scripts/prime-ci-exact-revision-topology-verifier-test.sh'|\
+        "$secure_child_validation_fixture_identity_measurement_v2_authority_source_relative_path"|\
+        "$secure_child_validation_fixture_identity_measurement_v2_authority_test_relative_path"|\
         "$secure_child_process_evidence_closed_fixture_canary_launcher_relative_path")
             return 0
             ;;
@@ -2335,6 +2456,8 @@ readonly observed_secure_child_process_evidence_layer_a_status="$(git -C "$prime
             || "$relative_path" == "$exact_revision_topology_classifier_relative_path" \
             || "$relative_path" == "$exact_revision_topology_verifier_helper_relative_path" \
             || "$relative_path" == "$exact_revision_topology_verifier_test_script_relative_path" \
+            || "$relative_path" == "$secure_child_validation_fixture_identity_measurement_v2_authority_source_relative_path" \
+            || "$relative_path" == "$secure_child_validation_fixture_identity_measurement_v2_authority_test_relative_path" \
             || "$relative_path" \
                 == "$secure_child_process_evidence_closed_fixture_canary_launcher_relative_path" ]]; then
             continue
@@ -3307,6 +3430,25 @@ readonly observed_trusted_main_workflow_step_names="$(awk '
         "$secure_child_validation_fixture_identity_measurement_launcher_relative_path" \
         "$workflow_path")" == "0" ]] ||
     die "validation-fixture identity-measurement outcome observation restored the retired launcher step or path"
+for absent_secure_child_validation_fixture_identity_measurement_v2_mechanics_path in \
+    "$secure_child_validation_fixture_identity_measurement_v2_launcher_relative_path" \
+    "$secure_child_validation_fixture_identity_evaluator_v2_relative_path"; do
+    [[ ! -e "$prime_root/$absent_secure_child_validation_fixture_identity_measurement_v2_mechanics_path" \
+        && ! -L "$prime_root/$absent_secure_child_validation_fixture_identity_measurement_v2_mechanics_path" \
+        && -z "$(git -C "$prime_root" ls-files -- \
+            "$absent_secure_child_validation_fixture_identity_measurement_v2_mechanics_path")" \
+        && "$(grep -Fc -- \
+            "$absent_secure_child_validation_fixture_identity_measurement_v2_mechanics_path" \
+            "$workflow_path")" == "0" ]] ||
+        die "validation-fixture identity-measurement V2 authority prematurely added or invoked a future mechanics path: $absent_secure_child_validation_fixture_identity_measurement_v2_mechanics_path"
+done
+[[ "$(grep -Fxc -- \
+        '      - name: Measure the native validation-fixture identity V2 once' \
+        "$workflow_path")" == "0" \
+    && "$(grep -Fc -- \
+        'PrimeSecureChildValidationFixtureIdentityEvaluatorV2' \
+        "$workflow_path")" == "0" ]] ||
+    die "validation-fixture identity-measurement V2 authority prematurely added a mechanics step or evaluator invocation"
 [[ "$(grep -Fxc -- \
         '          active_checkout_status="$(git -C ergentics-prime status --porcelain=v1 --untracked-files=all)" || exit 1' \
         "$workflow_path")" == "1" \
@@ -3493,11 +3635,11 @@ readonly exact_revision_topology_relation_timeout_repair_authority_historical_wo
     && "$(grep -Ec -- '^[[:space:]]{8}uses: ' "$workflow_path")" == "0" \
     && "$(printf '%s\n' \
         "$workflow_executable_run_script_and_uses_nodes_excluding_echo_payload_text_corpus" | \
-        wc -l | awk '{print $1}')" == "564" \
+        wc -l | awk '{print $1}')" == "570" \
     && "$(printf '%s\n' \
         "$workflow_executable_run_script_and_uses_nodes_excluding_echo_payload_text_corpus" | \
         shasum -a 256 | awk '{print $1}')" \
-        == "$expected_exact_revision_topology_verifier_implementation_workflow_operational_corpus_sha256" \
+        == "$expected_secure_child_validation_fixture_identity_measurement_v2_authority_workflow_operational_corpus_sha256" \
     && "$(grep -Fxc -- \
         'run: bash .github/scripts/prime-ci-active-root-quarantine.sh' \
         <<< "$workflow_executable_run_script_and_uses_nodes_excluding_echo_payload_text_corpus")" == "0" \
@@ -4375,6 +4517,109 @@ for required_exact_revision_topology_relation_timeout_repair_run168_summary_frag
         <<< "$exact_revision_topology_relation_timeout_repair_run168_summary_line")" == "1" ]] ||
         die "exact-revision topology relation timeout-repair lost a run-168 closure fact: $required_exact_revision_topology_relation_timeout_repair_run168_summary_fragment"
 done
+readonly exact_revision_topology_verifier_implementation_run170_run171_summary_line="$(grep -F -- \
+    'Exact predecessor topology-verifier implementation closure binds pull-request workflow run 32536596669 number 170' \
+    "$workflow_path")"
+readonly secure_child_validation_fixture_identity_measurement_v2_authority_summary_line="$(grep -F -- \
+    'This dependency-free pure exact-five validation-fixture identity-measurement V2 authority changes only' \
+    "$workflow_path")"
+readonly secure_child_validation_fixture_identity_measurement_v2_terminal_semantics_summary_line="$(grep -F -- \
+    'The closed V2 outcome map binds exactly 32 terminal low-level codes partitioned as' \
+    "$workflow_path")"
+[[ "$(grep -Fc -- \
+        'Exact predecessor topology-verifier implementation closure binds pull-request workflow run 32536596669 number 170' \
+        "$workflow_path")" == "1" \
+    && "$(printf '%s\n' \
+        "$exact_revision_topology_verifier_implementation_run170_run171_summary_line" | \
+        shasum -a 256 | awk '{print $1}')" \
+        == "$expected_exact_revision_topology_verifier_implementation_run170_run171_summary_sha256" \
+    && "$(grep -Fc -- \
+        'This dependency-free pure exact-five validation-fixture identity-measurement V2 authority changes only' \
+        "$workflow_path")" == "1" \
+    && "$(printf '%s\n' \
+        "$secure_child_validation_fixture_identity_measurement_v2_authority_summary_line" | \
+        shasum -a 256 | awk '{print $1}')" \
+        == "$expected_secure_child_validation_fixture_identity_measurement_v2_authority_summary_sha256" ]] ||
+    die "validation-fixture identity-measurement V2 predecessor or authority summary identity changed"
+[[ "$(grep -Fc -- \
+        'The closed V2 outcome map binds exactly 32 terminal low-level codes partitioned as' \
+        "$workflow_path")" == "1" \
+    && "$(printf '%s\n' \
+        "$secure_child_validation_fixture_identity_measurement_v2_terminal_semantics_summary_line" | \
+        shasum -a 256 | awk '{print $1}')" \
+        == "$expected_secure_child_validation_fixture_identity_measurement_v2_terminal_semantics_summary_sha256" ]] ||
+    die "validation-fixture identity-measurement V2 terminal-semantics summary identity changed"
+for required_exact_revision_topology_verifier_implementation_run170_run171_summary_fragment in \
+    'check suite 88200731091 for PR 135 head 8167f1eafdedf6e9344fde7a6542bd7e07600d8e over base b7808f39815ebf639b183e00d2cd769a29ebad18' \
+    'it completed success with a null previous-attempt URL, zero retries, zero reruns, and zero Actions artifacts' \
+    'Active job 96938589193 passed all five user steps and Latin 116; reviewed job 96940077274 was skipped with zero user steps' \
+    '393783 bytes, 1929 LF, zero CR, one leading BOM, terminal LF, and SHA-256 4edb6534f4eb7d34be58017a89d043a3e24036f5ca87cf5306dad104ef9f0cf6' \
+    'Exact-main implementation merge 8dbbe8987da06b7e6cb9279e65a339595b77ca3b has tree 354265ca2344246abc33ce1e33ba56f749b16797 and ordered parents b7808f39815ebf639b183e00d2cd769a29ebad18 then 8167f1eafdedf6e9344fde7a6542bd7e07600d8e' \
+    'GitHub externally reported signature verification valid at 2026-08-21T23:34:30Z' \
+    'workflow run 32537357695 number 171 attempt 1 check suite 88202577325 completed success' \
+    'through 2026-08-22T00:54:06Z with a null previous-attempt URL, zero retries, zero reruns, and zero Actions artifacts' \
+    'Active job 96940664684 passed all five user steps and Latin 116' \
+    '393906 bytes, 1929 LF, zero CR, one leading BOM, terminal LF, and SHA-256 671f797da021f6ffc2798d4afc482fa69691e0fd48eb662f6e3b0f483b20bc89' \
+    'Reviewed job 96942618564 passed all five user steps' \
+    'focused root 89 plus isolated groups 1, 1, 2, and 2 for isolated 6 equaled focused whole 95' \
+    'retained Metal 44 plus maintained runtime 1 plus tokenizer 1 equaled live 46, aggregate XTests were 141' \
+    '10346720 bytes, 79116 LF, zero CR, five chunk-leading BOMs, terminal LF, and SHA-256 412797e5b2420d2af3184bf06df96052db631489472eeba584d03d75387da9a1' \
+    'shared helper emitted one TOPOLOGY_VERIFIED record with status zero and null failed guard and missing role' \
+    'matrix and post-matrix gate passed' \
+    'both existing depth-two fetch vectors preserved byte-for-byte' \
+    'current gate freshly rechecks only the locally available 8dbbe8987da06b7e6cb9279e65a339595b77ca3b signature header, raw tree, ordered parent literals, exact baseline tree delta, and frozen baseline identities' \
+    'cryptographic signature validity plus the 8167f1eafdedf6e9344fde7a6542bd7e07600d8e direct-child and same-tree facts remain frozen external pull-request-run-170, main-run-171, and prior-authority evidence' \
+    'not freshly re-proved from that unavailable depth-boundary object'; do
+    [[ "$(grep -Foc -- \
+        "$required_exact_revision_topology_verifier_implementation_run170_run171_summary_fragment" \
+        <<< "$exact_revision_topology_verifier_implementation_run170_run171_summary_line")" == "1" ]] ||
+        die "validation-fixture identity-measurement V2 authority lost a predecessor run-170/run-171 fact: $required_exact_revision_topology_verifier_implementation_run170_run171_summary_fragment"
+done
+for required_secure_child_validation_fixture_identity_measurement_v2_authority_summary_fragment in \
+    'changes only the mode-100755 active-root gate, mode-100644 hosted workflow, mode-100644 embedded provenance, one new mode-100644 PrimeCore authority source, and its sole new mode-100644 exhaustive root test' \
+    'PURE_V2_MEASUREMENT_AUTHORITY_ONLY_exact_main_run171_topology_verified_future_one_shot_measurement_no_current_mechanics_identity_pin_repair_confirmation_or_canary' \
+    'active Latin 116, root 90, isolated groups 1, 1, 2, and 2 for isolated 6, focused whole 96, retained live 46, aggregate 142 XTests' \
+    'sole new authority test once with zero failures or skips, and 532 embedded provenance records' \
+    'preserves Package.swift, Package.resolved, all eleven retired V1 launcher, evaluator, authority, observation, canary-authority, and canary-observation paths byte-identical and uninvoked' \
+    'classifier, shared helper, matrix, and both predecessor topology authority pairs byte-identical' \
+    'exact two jobs and five user steps per job' \
+    'both authenticated fetch commands and ordered wants, checkout targets, parse and retained-live command order' \
+    'active 45-minute and reviewed-main 90-minute bounds' \
+    'every new V2 launcher, evaluator, and mechanics path absent and unexecuted' \
+    'new authority contributes only one pure value test' \
+    'hosted shared-helper topology projection, matrix validation in the gate, and retained Metal, maintained-runtime, and tokenizer executions remain inherited baseline validation rather than new measurement mechanics' \
+    'replacement-disabled and SHA-rebound shared helper' \
+    'pull requests use explicit request count two with ordinal 1 current_exact_revision under the current-index marker and ordinal 2 verified_implementation_base' \
+    'literal 8dbbe8987da06b7e6cb9279e65a339595b77ca3b, tree 354265ca2344246abc33ce1e33ba56f749b16797, and ordered parents b7808f39815ebf639b183e00d2cd769a29ebad18 then 8167f1eafdedf6e9344fde7a6542bd7e07600d8e' \
+    'push-main uses that same verified_implementation_base as its explicit relation request and binds the current index plus discovered reviewed child' \
+    'Legacy exact_commit header, tree, and parent parsing is consistency-only, not the dynamic trust proof' \
+    'Outcome DIFFERENT means only full-byte A-versus-B inequality and is terminal' \
+    'byte-identical A and B with a configured-pin mismatch means outcome IDENTICAL plus pinRelation DIFFERENT and can permit only a separate future pin-repair authority' \
+    'This pure authority establishes neither outcome, no fixture identity, no repeat-build determinism, no current-pin relation, no pin-repair confirmation, and no canary result' \
+    'future separately reviewed one-shot V2 mechanics launcher must use /bin/bash -p, source the shared topology helper after equivalent three-path bootstrap admission, and use its ordered merge-child relation plus current-index barrier without copying the retired V1 parser' \
+    'Run 171 reviewed main consumed 67 minutes 26 seconds and left 22 minutes 34 seconds of observed headroom under 90 minutes' \
+    'not a guarantee that later two-build mechanics fits, no timeout is widened now' \
+    'demonstrated insufficiency requires a separate timing authority before the one-shot' \
+    'adds or authorizes no current launcher, evaluator, fixture, process, lease, build-pair measurement, pin repair, canary, model, MLX, Metal, Native-300M, Python, C++, network, artifact, retry, rerun, replacement, product, publication, or mechanics execution'; do
+    [[ "$(grep -Foc -- \
+        "$required_secure_child_validation_fixture_identity_measurement_v2_authority_summary_fragment" \
+        <<< "$secure_child_validation_fixture_identity_measurement_v2_authority_summary_line")" == "1" ]] ||
+        die "validation-fixture identity-measurement V2 authority summary lost an exact boundary: $required_secure_child_validation_fixture_identity_measurement_v2_authority_summary_fragment"
+done
+for required_secure_child_validation_fixture_identity_measurement_v2_terminal_semantics_summary_fragment in \
+    'exactly 32 terminal low-level codes partitioned as 2 IDENTICAL, 1 DIFFERENT, 23 UNAVAILABLE, and 6 FAILURE' \
+    'EXTERNAL_TIMEOUT and EXIT_PROJECTION_FAILURE are explicit zero-or-one-nonaccepting terminal cases' \
+    'RECORD_ABSENT_CAUSE_UNESTABLISHED is the explicit zero-record terminal fallback' \
+    'absent-record cause requires positive evidence, is never inferred or invented, and otherwise maps to RECORD_ABSENT_CAUSE_UNESTABLISHED' \
+    'Without separate proof, every FAILURE leaves attempt consumption unavailable and establishes neither a measurement nor fixture identity' \
+    'Every accepted-record, nonaccepting-record, or absent-record outcome requires an append-only observation' \
+    'irreversibly retires the one-shot opportunity' \
+    'authorizes no retry, rerun, or replacement'; do
+    [[ "$(grep -Foc -- \
+        "$required_secure_child_validation_fixture_identity_measurement_v2_terminal_semantics_summary_fragment" \
+        <<< "$secure_child_validation_fixture_identity_measurement_v2_terminal_semantics_summary_line")" == "1" ]] ||
+        die "validation-fixture identity-measurement V2 terminal-semantics summary lost an exact boundary: $required_secure_child_validation_fixture_identity_measurement_v2_terminal_semantics_summary_fragment"
+done
 [[ "$(grep -Fxc -- \
         '          bash .github/scripts/prime-ci-native-decoder-b-specific-native300m-trajectory-checkpoint-execution.sh' \
         "$workflow_path")" == "0" \
@@ -5146,6 +5391,7 @@ readonly secure_child_validation_fixture_identity_measurement_outcome_observatio
 readonly exact_revision_topology_verifier_authority_filter='PrimeCoreTests.PrimeExactRevisionTopologyVerifierAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling'
 readonly exact_revision_topology_relation_amendment_authority_filter='PrimeCoreTests.PrimeExactRevisionTopologyRelationAmendmentAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling'
 readonly exact_revision_topology_relation_timeout_repair_authority_filter='PrimeCoreTests.PrimeExactRevisionTopologyRelationTimeoutRepairAuthorityTests/testFrozenV1CanonicalCodableBoundedMutationAndTimeoutRepairCeiling'
+readonly secure_child_validation_fixture_identity_measurement_v2_authority_filter='PrimeCoreTests.PrimeSecureChildValidationFixtureIdentityMeasurementV2AuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling'
 [[ "$(grep -Fc -- "$tiny_cpu_mechanics_authority_filter" \
         "$workflow_path")" == "1" \
     && "$(grep -Fc -- "$tiny_cpu_mechanics_failure_observation_filter" \
@@ -5175,7 +5421,7 @@ readonly exact_revision_topology_relation_timeout_repair_authority_filter='Prime
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling' \\" \
         "$workflow_path")" == "2" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 89 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 90 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not run the exact Stage-2 authority and failure-observation pure contracts"
 [[ "$(grep -Fc -- "$private_dependency_tls_failure_observation_filter" \
@@ -5267,7 +5513,7 @@ readonly exact_revision_topology_relation_timeout_repair_authority_filter='Prime
         "          grep -Fq 'PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapFreshMetallibCrossBindingExecutionFailureObservationTests' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 89 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 90 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the Stage-2 metallib bootstrap repair, failure observations, and classifier repair authority"
 [[ "$(grep -Fc -- \
@@ -5310,7 +5556,7 @@ readonly exact_revision_topology_relation_timeout_repair_authority_filter='Prime
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling' \\" \
-        "$workflow_path")" == "9" ]] ||
+        "$workflow_path")" == "10" ]] ||
     die "hosted workflow does not parse and run the Stage-3 explicit-RNG/cursor-resume authority"
 [[ "$(grep -Fc -- \
         "$stage3_tiny_cpu_explicit_rng_cursor_resume_canonical_binding_repair_authority_filter" \
@@ -5435,7 +5681,7 @@ readonly exact_revision_topology_relation_timeout_repair_authority_filter='Prime
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling' \\" \
         "$workflow_path")" == "2" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 89 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 90 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run exactly the Stage-5 execution-failure observation"
 [[ "$(grep -Fc -- \
@@ -5452,9 +5698,9 @@ readonly exact_revision_topology_relation_timeout_repair_authority_filter='Prime
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling' \\" \
-        "$workflow_path")" == "9" \
+        "$workflow_path")" == "10" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 89 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 90 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run exactly the Stage-5 replacement-execution authority"
 [[ "$(grep -Fc -- \
@@ -5470,7 +5716,7 @@ readonly exact_revision_topology_relation_timeout_repair_authority_filter='Prime
         "          grep -Fq 'PrimeNativeDecoderStage5RepeatedTrajectoryReplacementCurrentDecoderIdentityObservationTests' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 89 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 90 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not run the exact Stage-5 current-decoder identity observation"
 [[ "$(grep -Fc -- \
@@ -5486,7 +5732,7 @@ readonly exact_revision_topology_relation_timeout_repair_authority_filter='Prime
         "          grep -Fq 'PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayReplacementExecutionObservationTests' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 89 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 90 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not run the exact Stage-5 replacement execution observation"
 [[ "$(grep -Fc -- \
@@ -5503,9 +5749,9 @@ readonly exact_revision_topology_relation_timeout_repair_authority_filter='Prime
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling' \\" \
-        "$workflow_path")" == "9" \
+        "$workflow_path")" == "10" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 89 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 90 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run exactly the Stage-6 resource-only probe authority"
 [[ "$(grep -Fc -- \
@@ -5563,7 +5809,7 @@ readonly exact_revision_topology_relation_timeout_repair_authority_filter='Prime
         "          grep -Fq 'PrimeNativeDecoderNative300MTrajectoryCheckpointExecutionAuthorityTests' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 89 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 90 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the sole Native300M trajectory-checkpoint execution authority contract"
 [[ "$(grep -Fc -- \
@@ -5579,7 +5825,7 @@ readonly exact_revision_topology_relation_timeout_repair_authority_filter='Prime
         "          grep -Fq 'PrimeNativeDecoderBSpecificNative300MTrajectoryCheckpointExecutionFailureObservationTests' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 89 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 90 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the Native300M trajectory-checkpoint failure observation"
 [[ "$(grep -Fc -- \
@@ -5596,9 +5842,9 @@ readonly exact_revision_topology_relation_timeout_repair_authority_filter='Prime
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling' \\" \
-        "$workflow_path")" == "9" \
+        "$workflow_path")" == "10" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 89 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 90 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the sole secure-child process/evidence design-authority contract"
 [[ "$(grep -Fc -- \
@@ -5615,9 +5861,9 @@ readonly exact_revision_topology_relation_timeout_repair_authority_filter='Prime
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling' \\" \
-        "$workflow_path")" == "9" \
+        "$workflow_path")" == "10" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 89 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 90 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the sole secure-child process/evidence implementation-authority contract"
 [[ "$(grep -Fc -- \
@@ -5634,9 +5880,9 @@ readonly exact_revision_topology_relation_timeout_repair_authority_filter='Prime
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling' \\" \
-        "$workflow_path")" == "9" \
+        "$workflow_path")" == "10" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 89 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 90 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the sole secure-child closed-fixture canary pure-authority contract"
 [[ "$(grep -Fc -- \
@@ -5655,7 +5901,7 @@ readonly exact_revision_topology_relation_timeout_repair_authority_filter='Prime
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRetirementCeiling' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 89 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 90 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the sole secure-child closed-fixture canary PIN-mismatch retirement observation"
 [[ "$(grep -Fc -- \
@@ -5672,9 +5918,9 @@ readonly exact_revision_topology_relation_timeout_repair_authority_filter='Prime
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling' \\" \
-        "$workflow_path")" == "9" \
+        "$workflow_path")" == "10" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 89 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 90 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the sole neutral resource-lease generalization pure-authority contract"
 [[ "$(grep -Fc -- \
@@ -5693,7 +5939,7 @@ readonly exact_revision_topology_relation_timeout_repair_authority_filter='Prime
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndTimeoutCeiling' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 89 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 90 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the sole neutral resource-lease generalization timeout observation"
 [[ "$(grep -Fc -- "$exclusive_resource_lease_implementation_filter" \
@@ -5709,7 +5955,7 @@ readonly exact_revision_topology_relation_timeout_repair_authority_filter='Prime
         "          grep -Fq 'testAliasesAndTypedRetentionRemainPureAndTruthful' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 89 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 90 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the sole pure exclusive resource-lease implementation test"
 [[ "$(grep -Fc -- \
@@ -5726,9 +5972,9 @@ readonly exact_revision_topology_relation_timeout_repair_authority_filter='Prime
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling' \\" \
-        "$workflow_path")" == "9" \
+        "$workflow_path")" == "10" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 89 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 90 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the sole pure monitor-held lease secure-child containment authority test"
 [[ "$(grep -Fc -- \
@@ -5747,7 +5993,7 @@ readonly exact_revision_topology_relation_timeout_repair_authority_filter='Prime
         "          grep -Fq 'testPureInMemoryFakeRetainsOrderedOwnershipTopologyWithoutMechanics' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 89 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 90 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the sole pure monitor-held lease secure-child containment implementation test"
 [[ "$(grep -Fc -- \
@@ -5764,9 +6010,9 @@ readonly exact_revision_topology_relation_timeout_repair_authority_filter='Prime
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling' \\" \
-        "$workflow_path")" == "9" \
+        "$workflow_path")" == "10" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 89 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 90 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the sole pure validation-fixture identity-measurement authority test"
 [[ "$(grep -Fc -- \
@@ -5795,7 +6041,7 @@ readonly exact_revision_topology_relation_timeout_repair_authority_filter='Prime
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRetirementCeiling' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 89 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 90 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the sole pure validation-fixture identity-measurement outcome-observation test"
 [[ "$(grep -Fc -- "$exact_revision_topology_verifier_authority_filter" \
@@ -5811,9 +6057,9 @@ readonly exact_revision_topology_relation_timeout_repair_authority_filter='Prime
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling' \\" \
-        "$workflow_path")" == "9" \
+        "$workflow_path")" == "10" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 89 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 90 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the sole pure exact-revision topology-verifier authority test"
 [[ "$(grep -Fc -- \
@@ -5830,9 +6076,9 @@ readonly exact_revision_topology_relation_timeout_repair_authority_filter='Prime
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
         "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling' \\" \
-        "$workflow_path")" == "9" \
+        "$workflow_path")" == "10" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 89 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 90 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the sole pure exact-revision topology relation-amendment authority test"
 [[ "$(grep -Fc -- \
@@ -5851,12 +6097,32 @@ readonly exact_revision_topology_relation_timeout_repair_authority_filter='Prime
         "          grep -Fq 'testFrozenV1CanonicalCodableBoundedMutationAndTimeoutRepairCeiling' \\" \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 89 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 90 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run the sole pure exact-revision topology relation timeout-repair authority test"
+[[ "$(grep -Fc -- \
+        "$secure_child_validation_fixture_identity_measurement_v2_authority_filter" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        "$secure_child_validation_fixture_identity_measurement_v2_authority_source_relative_path" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fc -- \
+        "$secure_child_validation_fixture_identity_measurement_v2_authority_test_relative_path" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        "          grep -Fq 'PrimeSecureChildValidationFixtureIdentityMeasurementV2AuthorityTests' \\" \
+        "$workflow_path")" == "1" \
+    && "$(grep -Fxc -- \
+        "          grep -Fq 'testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling' \\" \
+        "$workflow_path")" == "10" \
+    && "$(grep -Fxc -- \
+        '          grep -Fq '\''Executed 90 tests, with 0 failures'\'' "$test_log"' \
+        "$workflow_path")" == "1" ]] ||
+    die "hosted workflow does not parse and run the sole pure validation-fixture identity-measurement V2 authority test"
 [[ "$(grep -Fxc -- \
         "            --filter 'PrimeCoreTests.PrimeSecureChildValidationFixtureIdentityMeasurementAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeMonitorHeldLeaseSecureChildContainmentTests/testPureInMemoryFakeRetainsOrderedOwnershipTopologyWithoutMechanics|PrimeCoreTests.PrimeMonitorHeldLeaseSecureChildContainmentAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeExclusiveResourceLeaseTests/testAliasesAndTypedRetentionRemainPureAndTruthful|PrimeCoreTests.PrimeNeutralResourceLeaseGeneralizationAuthorityReviewedMainTimeoutObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndTimeoutCeiling|PrimeCoreTests.PrimeNeutralResourceLeaseGeneralizationAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeSecureChildProcessEvidenceClosedFixtureCanaryPINMismatchExecutionObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRetirementCeiling|PrimeCoreTests.PrimeSecureChildProcessEvidenceClosedFixtureCanaryAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeSecureChildProcessEvidenceTests|PrimeNativeNeuralGateMLXIsolationSourceContractTests|PrimeNativeCorpusReplaySourceContractTests|PrimeCoreTests.PrimeNativeDecoderTrajectoryExactResumeDesignAuthorityTests/testFrozenV1CanonicalCodableMutationAndSourceBoundary|PrimeCoreTests.PrimeNativeDecoderTrajectoryDesignReviewedMainTimeoutObservationTests/testFrozenV1CanonicalCodableRecursiveMutationAndAuthorityCeiling|PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsAuthorityTests/testFrozenV1CanonicalCodableExhaustiveMutationAndCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsExecutionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeReviewedMainPrivateDependencyTLSFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeNativeDecoderMetalCurrentDecoderIdentityAssertionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeNativeDecoderMetalCurrentDecoderIdentityAssertionRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapRepairExecutionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapPredecessorLogClassifierRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapFreshMetallibCrossBindingExecutionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapFreshMetallibEvidenceSurfaceRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapFreshMetallibEvidenceSurfaceRepairExecutionObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndSuccessCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeAuthorityCanonicalBindingRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeValidationInventoryOrderRepairAuthorityTests/testFrozenV1CanonicalCodableRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeExecutionObservationTests/testFrozenV1CanonicalCodableRecursiveMutationAndSuccessCeiling|PrimeCoreTests.PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionPackageResolvedScopeRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionExecutionObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndSuccessCeiling|PrimeCoreTests.PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayExactMainSwiftNumericsResolutionRepairAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndRepairCeiling|PrimeCoreTests.PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayExecutionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayReplacementExecutionAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeNativeDecoderStage5RepeatedTrajectoryReplacementCurrentDecoderIdentityObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndIdentityCeiling|PrimeCoreTests.PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayReplacementExecutionObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndSplitOutcomeCeiling|PrimeCoreTests.PrimeNativeDecoderNative300MResourceOnlyOneStepProbeAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeNativeDecoderNative300MResourceOnlyOneStepProbeExecutionObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndSuccessCeiling|PrimeCoreTests.PrimeNativeDecoderBSpecificNative300MResourceWitnessAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeNativeDecoderBSpecificNative300MResourceWitnessExecutionObservationTests/testBSpecificNative300MResourceWitnessPASSExecutionObservationIsExactAndRejectsEveryRecursiveMutation|PrimeCoreTests.PrimeNativeDecoderNative300MTrajectoryCheckpointExecutionAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeNativeDecoderBSpecificNative300MTrajectoryCheckpointExecutionFailureObservationTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndFailureCeiling|PrimeCoreTests.PrimeSecureChildProcessEvidenceDesignAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeCoreTests.PrimeSecureChildProcessEvidenceImplementationAuthorityTests/testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling|PrimeNativeGenerationContractSourceContractTests|PrimeNativeNeuralGateContractSourceContractTests|PrimeNativeResolvedContractAdapterSourceContractTests|PrimeSwiftSourceProvenanceTests/testLiveRepositoryMatchesEmbeddedSourceIdentity' \\" \
         < <(sed \
+            -e "s|${secure_child_validation_fixture_identity_measurement_v2_authority_filter}[|]||" \
             -e "s|${exact_revision_topology_relation_timeout_repair_authority_filter}[|]||" \
             -e "s|${exact_revision_topology_relation_amendment_authority_filter}[|]||" \
             -e "s|${exact_revision_topology_verifier_authority_filter}[|]||" \
@@ -5869,7 +6135,7 @@ readonly exact_revision_topology_relation_timeout_repair_authority_filter='Prime
         '          grep -Fq '\''PrimeSecureChildProcessEvidenceTests'\'' "$test_log"' \
         "$workflow_path")" == "1" \
     && "$(grep -Fxc -- \
-        '          grep -Fq '\''Executed 89 tests, with 0 failures'\'' "$test_log"' \
+        '          grep -Fq '\''Executed 90 tests, with 0 failures'\'' "$test_log"' \
         "$workflow_path")" == "1" ]] ||
     die "hosted workflow does not parse and run exactly the 12 secure-child process/evidence Layer-A tests"
 [[ "$(grep -Fc -- \
@@ -7956,6 +8222,8 @@ readonly exact_revision_topology_relation_amendment_authority_source="$prime_roo
 readonly exact_revision_topology_relation_amendment_authority_test="$prime_root/$exact_revision_topology_relation_amendment_authority_test_relative_path"
 readonly exact_revision_topology_relation_timeout_repair_authority_source="$prime_root/$exact_revision_topology_relation_timeout_repair_authority_source_relative_path"
 readonly exact_revision_topology_relation_timeout_repair_authority_test="$prime_root/$exact_revision_topology_relation_timeout_repair_authority_test_relative_path"
+readonly secure_child_validation_fixture_identity_measurement_v2_authority_source="$prime_root/$secure_child_validation_fixture_identity_measurement_v2_authority_source_relative_path"
+readonly secure_child_validation_fixture_identity_measurement_v2_authority_test="$prime_root/$secure_child_validation_fixture_identity_measurement_v2_authority_test_relative_path"
 readonly secure_child_process_evidence_closed_fixture_canary_launcher="$prime_root/$secure_child_process_evidence_closed_fixture_canary_launcher_relative_path"
 readonly secure_child_process_plan="$prime_root/$secure_child_process_plan_relative_path"
 readonly secure_child_process_evidence="$prime_root/$secure_child_process_evidence_relative_path"
@@ -14244,7 +14512,9 @@ emit_embedded_source_identity_paths() {
         "$exact_revision_topology_relation_amendment_authority_source_relative_path" \
         "$exact_revision_topology_relation_amendment_authority_test_relative_path" \
         "$exact_revision_topology_relation_timeout_repair_authority_source_relative_path" \
-        "$exact_revision_topology_relation_timeout_repair_authority_test_relative_path"
+        "$exact_revision_topology_relation_timeout_repair_authority_test_relative_path" \
+        "$secure_child_validation_fixture_identity_measurement_v2_authority_source_relative_path" \
+        "$secure_child_validation_fixture_identity_measurement_v2_authority_test_relative_path"
     git -C "$prime_root" ls-files -- Sources Tests docs
 }
 readonly recomputed_embedded_source_identity_record_count="$(
@@ -14271,8 +14541,8 @@ while IFS= read -r relative_path; do
         '{relative_path: $relative_path, sha256: $sha256, byte_count: $byte_count}'
 done | jq -jcsS '.' | shasum -a 256 | awk '{print $1}')"
 [[ "$expected_embedded_source_identity_sha256" \
-        == "$expected_exact_revision_topology_relation_timeout_repair_embedded_source_identity_sha256" \
-    && "$recomputed_embedded_source_identity_record_count" == "530" \
+        == "$expected_secure_child_validation_fixture_identity_measurement_v2_embedded_source_identity_sha256" \
+    && "$recomputed_embedded_source_identity_record_count" == "532" \
     && "$recomputed_embedded_source_identity_sha256" \
         == "$expected_embedded_source_identity_sha256" ]] ||
     die "embedded Prime source provenance does not recompute exactly"
@@ -22635,6 +22905,240 @@ readonly observed_exact_revision_topology_relation_timeout_repair_authority_call
     && "$observed_exact_revision_topology_relation_timeout_repair_authority_call_callee_allowlist" \
         == "$expected_exact_revision_topology_relation_timeout_repair_authority_call_callee_allowlist" ]] ||
     die "exact-revision topology relation timeout-repair authority AST call-site allowlist changed"
+
+assert_secure_child_validation_fixture_identity_measurement_v2_authority_identity() {
+    [[ "$#" == "6" ]] || return 1
+    local relative_path="$1" expected_mode="$2" expected_blob="$3"
+    local expected_bytes="$4" expected_lf_count="$5" expected_sha256="$6"
+    local absolute_path="$prime_root/$relative_path"
+    [[ -f "$absolute_path" && ! -L "$absolute_path" \
+        && "$(stat -f %l "$absolute_path")" == "1" \
+        && "$(git -C "$prime_root" ls-files -s -- "$relative_path" | \
+            awk '{print $1, $2}')" == "$expected_mode $expected_blob" \
+        && "$(git -C "$prime_root" hash-object --no-filters -- \
+            "$relative_path")" == "$expected_blob" \
+        && "$(stat -f %z "$absolute_path")" == "$expected_bytes" \
+        && "$(wc -l < "$absolute_path" | awk '{print $1}')" \
+            == "$expected_lf_count" \
+        && "$(LC_ALL=C tr -cd '\r' < "$absolute_path" | wc -c | \
+            awk '{print $1}')" == "0" \
+        && "$(shasum -a 256 "$absolute_path" | awk '{print $1}')" \
+            == "$expected_sha256" ]]
+}
+assert_secure_child_validation_fixture_identity_measurement_v2_authority_identity \
+    "$secure_child_validation_fixture_identity_measurement_v2_authority_source_relative_path" \
+    100644 \
+    "$expected_secure_child_validation_fixture_identity_measurement_v2_authority_source_blob" \
+    "$expected_secure_child_validation_fixture_identity_measurement_v2_authority_source_bytes" \
+    "$expected_secure_child_validation_fixture_identity_measurement_v2_authority_source_lf_count" \
+    "$expected_secure_child_validation_fixture_identity_measurement_v2_authority_source_sha256" ||
+    die "validation-fixture identity-measurement V2 authority source identity changed"
+assert_secure_child_validation_fixture_identity_measurement_v2_authority_identity \
+    "$secure_child_validation_fixture_identity_measurement_v2_authority_test_relative_path" \
+    100644 \
+    "$expected_secure_child_validation_fixture_identity_measurement_v2_authority_test_blob" \
+    "$expected_secure_child_validation_fixture_identity_measurement_v2_authority_test_bytes" \
+    "$expected_secure_child_validation_fixture_identity_measurement_v2_authority_test_lf_count" \
+    "$expected_secure_child_validation_fixture_identity_measurement_v2_authority_test_sha256" ||
+    die "validation-fixture identity-measurement V2 authority test identity changed"
+assert_secure_child_validation_fixture_identity_measurement_v2_authority_identity \
+    'Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' 100644 \
+    "$expected_secure_child_validation_fixture_identity_measurement_v2_authority_provenance_blob" \
+    "$expected_secure_child_validation_fixture_identity_measurement_v2_authority_provenance_bytes" \
+    "$expected_secure_child_validation_fixture_identity_measurement_v2_authority_provenance_lf_count" \
+    "$expected_secure_child_validation_fixture_identity_measurement_v2_authority_provenance_sha256" ||
+    die "validation-fixture identity-measurement V2 authority provenance identity changed"
+assert_secure_child_validation_fixture_identity_measurement_v2_authority_identity \
+    '.github/workflows/prime-active-root-quarantine.yml' 100644 \
+    "$expected_secure_child_validation_fixture_identity_measurement_v2_authority_workflow_blob" \
+    "$expected_secure_child_validation_fixture_identity_measurement_v2_authority_workflow_bytes" \
+    "$expected_secure_child_validation_fixture_identity_measurement_v2_authority_workflow_lf_count" \
+    "$expected_secure_child_validation_fixture_identity_measurement_v2_authority_workflow_sha256" ||
+    die "validation-fixture identity-measurement V2 authority workflow identity changed"
+
+[[ "$(awk '/^import / { print }' \
+        "$secure_child_validation_fixture_identity_measurement_v2_authority_source")" \
+        == 'import Foundation' \
+    && "$(awk '/^import / || /^@testable import / { print }' \
+        "$secure_child_validation_fixture_identity_measurement_v2_authority_test")" \
+        == $'import CoreFoundation\nimport Foundation\n@testable import PrimeCore\nimport XCTest' \
+    && "$(grep -Fc -- \
+        'public struct PrimeSecureChildValidationFixtureIdentityMeasurementV2AuthorityV1:' \
+        "$secure_child_validation_fixture_identity_measurement_v2_authority_source")" \
+        == "1" \
+    && "$(grep -Ec -- '^[[:space:]]+func test' \
+        "$secure_child_validation_fixture_identity_measurement_v2_authority_test")" \
+        == "1" \
+    && "$(grep -Fxc -- \
+        'final class PrimeSecureChildValidationFixtureIdentityMeasurementV2AuthorityTests:' \
+        "$secure_child_validation_fixture_identity_measurement_v2_authority_test")" \
+        == "1" \
+    && "$(grep -Fc -- \
+        'func testFrozenV1CanonicalCodableExhaustiveRecursiveMutationAndAuthorityCeiling()' \
+        "$secure_child_validation_fixture_identity_measurement_v2_authority_test")" \
+        == "1" \
+    && "$(grep -Fc -- 'XCTSkip' \
+        "$secure_child_validation_fixture_identity_measurement_v2_authority_test")" \
+        == "0" ]] ||
+    die "validation-fixture identity-measurement V2 authority imports or sole-test surface changed"
+readonly observed_secure_child_validation_fixture_identity_measurement_v2_authority_canonical_bytes="$(awk '
+    /^    public static let canonicalByteCount = [0-9_]+$/ {
+        value = $NF
+        gsub(/_/, "", value)
+        print value
+    }
+' "$secure_child_validation_fixture_identity_measurement_v2_authority_source")"
+[[ "$observed_secure_child_validation_fixture_identity_measurement_v2_authority_canonical_bytes" \
+        == "$expected_secure_child_validation_fixture_identity_measurement_v2_authority_canonical_bytes" \
+    && "$(grep -Fxc -- \
+        "        \"$expected_secure_child_validation_fixture_identity_measurement_v2_authority_canonical_sha256\"" \
+        "$secure_child_validation_fixture_identity_measurement_v2_authority_source")" \
+        == "1" ]] ||
+    die "validation-fixture identity-measurement V2 authority canonical identity changed"
+
+for required_secure_child_validation_fixture_identity_measurement_v2_authority_source_anchor in \
+    'PURE_V2_MEASUREMENT_AUTHORITY_ONLY_exact_main_run171_topology_verified_future_one_shot_measurement_no_current_mechanics_identity_pin_repair_confirmation_or_canary' \
+    'path(1, ".github/scripts/prime-ci-active-root-quarantine.sh", "M", "100755", "bind_run171_and_exact5_v2_authority_ceiling")' \
+    'path(2, ".github/workflows/prime-active-root-quarantine.yml", "M", "100644", "integrate_sole_pure_v2_authority_test")' \
+    'path(3, "Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift", "M", "100644", "bind_532_record_source_identity")' \
+    'path(4, "Sources/PrimeCore/PrimeSecureChildValidationFixtureIdentityMeasurementV2Authority.swift", "A", "100644", "pure_v2_measurement_authority")' \
+    'path(5, "Tests/PrimeCoreTests/PrimeSecureChildValidationFixtureIdentityMeasurementV2AuthorityTests.swift", "A", "100644", "sole_exhaustive_pure_authority_test")' \
+    'mapping("EXTERNAL_TIMEOUT", "zero_or_one_nonaccepting", "unavailable", "FAILURE", nil, "timed_out")' \
+    'mapping("EXIT_PROJECTION_FAILURE", "zero_or_one_nonaccepting", "unavailable", "FAILURE", nil, "failure")' \
+    'mapping("RECORD_ABSENT_CAUSE_UNESTABLISHED", "zero", "unavailable", "FAILURE", nil, "failure")' \
+    'absentRecordCauseClassificationRequiresPositiveEvidence: true,' \
+    'absentRecordCauseMustNeverBeInferredOrInvented: true,' \
+    'absentRecordAttemptConsumptionWithoutSeparateProof: "unavailable",' \
+    'failureOutcomesEstablishMeasurement: false,' \
+    'failureOutcomesEstablishFixtureIdentity: false,' \
+    'failureOutcomesAuthorizeRetryRerunOrReplacement: false,' \
+    'everyRecordOrAbsentOutcomeRequiresAppendOnlyObservationAndRetirement:' \
+    'falseAttemptConsumptionStillRetiresOpportunity: true),' \
+    '"for_DIFFERENT_UNAVAILABLE_FAILURE_or_topology_helper_failure_stop_terminally_without_repair_confirmation_rerun_replacement_or_canary",'; do
+    grep -Fq -- \
+        "$required_secure_child_validation_fixture_identity_measurement_v2_authority_source_anchor" \
+        "$secure_child_validation_fixture_identity_measurement_v2_authority_source" ||
+        die "validation-fixture identity-measurement V2 authority source lost a frozen semantic boundary: $required_secure_child_validation_fixture_identity_measurement_v2_authority_source_anchor"
+done
+for required_secure_child_validation_fixture_identity_measurement_v2_authority_test_anchor in \
+    'XCTAssertEqual(output.exactLowLevelResultMappings.count, 32)' \
+    '["IDENTICAL": 2, "DIFFERENT": 1, "UNAVAILABLE": 23, "FAILURE": 6]' \
+    '"EXTERNAL_TIMEOUT",' \
+    '"EXIT_PROJECTION_FAILURE",' \
+    '"RECORD_ABSENT_CAUSE_UNESTABLISHED",' \
+    'XCTAssertTrue(output.absentRecordCauseClassificationRequiresPositiveEvidence)' \
+    'XCTAssertTrue(output.absentRecordCauseMustNeverBeInferredOrInvented)' \
+    'output.absentRecordAttemptConsumptionWithoutSeparateProof,' \
+    'XCTAssertFalse(output.failureOutcomesEstablishMeasurement)' \
+    'XCTAssertFalse(output.failureOutcomesEstablishFixtureIdentity)' \
+    'XCTAssertFalse(output.failureOutcomesAuthorizeRetryRerunOrReplacement)' \
+    'output.everyRecordOrAbsentOutcomeRequiresAppendOnlyObservationAndRetirement' \
+    'XCTAssertTrue(output.falseAttemptConsumptionStillRetiresOpportunity)'; do
+    grep -Fq -- \
+        "$required_secure_child_validation_fixture_identity_measurement_v2_authority_test_anchor" \
+        "$secure_child_validation_fixture_identity_measurement_v2_authority_test" ||
+        die "validation-fixture identity-measurement V2 authority test lost a frozen semantic assertion: $required_secure_child_validation_fixture_identity_measurement_v2_authority_test_anchor"
+done
+
+for false_secure_child_validation_fixture_identity_measurement_v2_authority_ceiling_field in \
+    filesystemReadPerformedByAuthorityValue \
+    filesystemWritePerformedByAuthorityValue processExecutionPerformedByAuthorityValue \
+    gitExecutionPerformedByAuthorityValue compilerExecutionPerformedByAuthorityValue \
+    verifierExecutionPerformedByAuthorityValue networkExecutionPerformedByAuthorityValue \
+    fixtureBuildPerformed fixtureExecutionPerformed evaluatorExecutionPerformed \
+    measurementMechanicsPerformed measurementObservationEstablished \
+    measurementOutcomeEstablished fixtureIdentityEstablished \
+    repeatBuildDeterminismEstablished currentPinMatchEstablished \
+    currentPinMismatchEstablished pinRepairAuthorized pinRepairPerformed \
+    noMutationConfirmationAuthorized noMutationConfirmationPerformed \
+    realMonitorHeldLeaseCanaryAuthorized realMonitorHeldLeaseCanaryPerformed \
+    retryOrRerunAuthorized modelExecutionAuthorized productUseAuthorized \
+    publicationAuthorized; do
+    { grep -Fq -- \
+            "$false_secure_child_validation_fixture_identity_measurement_v2_authority_ceiling_field: false," \
+            "$secure_child_validation_fixture_identity_measurement_v2_authority_source" \
+        || grep -Fq -- \
+            "$false_secure_child_validation_fixture_identity_measurement_v2_authority_ceiling_field: false)" \
+            "$secure_child_validation_fixture_identity_measurement_v2_authority_source"; } ||
+        die "validation-fixture identity-measurement V2 authority zero-capability ceiling changed: $false_secure_child_validation_fixture_identity_measurement_v2_authority_ceiling_field"
+done
+swiftc -frontend -parse \
+    "$secure_child_validation_fixture_identity_measurement_v2_authority_source"
+swiftc -frontend -parse \
+    "$secure_child_validation_fixture_identity_measurement_v2_authority_test"
+readonly secure_child_validation_fixture_identity_measurement_v2_authority_source_ast="$(swiftc \
+    -frontend -dump-parse \
+    "$secure_child_validation_fixture_identity_measurement_v2_authority_source" \
+    2>/dev/null)" ||
+    die "validation-fixture identity-measurement V2 authority source does not parse into a Swift AST"
+readonly secure_child_validation_fixture_identity_measurement_v2_authority_test_ast="$(swiftc \
+    -frontend -dump-parse \
+    "$secure_child_validation_fixture_identity_measurement_v2_authority_test" \
+    2>/dev/null)" ||
+    die "validation-fixture identity-measurement V2 authority test does not parse into a Swift AST"
+readonly secure_child_validation_fixture_identity_measurement_v2_authority_executable_ast="$(printf '%s\n%s\n' \
+    "$secure_child_validation_fixture_identity_measurement_v2_authority_source_ast" \
+    "$secure_child_validation_fixture_identity_measurement_v2_authority_test_ast" | \
+    grep -Fv -- 'string_literal_expr' || true)"
+! printf '%s\n' \
+    "$secure_child_validation_fixture_identity_measurement_v2_authority_executable_ast" | \
+    grep -Eq -- \
+        'name="(Process|NSTask|FileManager|FileHandle|URLSession|NWConnection|posix_spawn|posix_spawnp|fork|vfork|execve|execl|execv|execvp|system|popen|dlopen|open|openat|read|pread|pwrite|close|socket|connect|bind|listen|accept|accept4|send|recv|stat|lstat|fstat|opendir|readdir|closedir|unlink|rename|mkdir|rmdir|chmod|chown|access|mmap|munmap|fcntl|ioctl|PrimeExclusiveResourceLease|PrimeMetalDeviceLease|PrimeSecureChildExecutionKernel|MLModel|MLX|MLXArray|Metal)"|field="(runSupervisor|acquire|release|reacquire|execute|spawn|fork|execve|system|popen|dlopen|contentsOf|write|loadModel|compileModel)"' ||
+    die "validation-fixture identity-measurement V2 authority AST gained process, network, lease, model, fixture, verifier, or filesystem capability"
+printf '%s\n' \
+    "$secure_child_validation_fixture_identity_measurement_v2_authority_executable_ast" | \
+    awk '
+        /\(unresolved_decl_ref_expr .* name="(Data|String)" function_ref=unapplied\)/ {
+            possible_contents_initializer = 1
+            next
+        }
+        possible_contents_initializer {
+            if ($0 ~ /\(argument_list labels="contentsOf/) {
+                exit 1
+            }
+            possible_contents_initializer = 0
+        }
+    ' ||
+    die "validation-fixture identity-measurement V2 authority AST gained a Foundation contents-of filesystem initializer"
+readonly expected_secure_child_validation_fixture_identity_measurement_v2_authority_call_expr_count="809"
+readonly expected_secure_child_validation_fixture_identity_measurement_v2_authority_call_callee_allowlist=$'field:allSatisfy\nfield:append\nfield:appendInterpolation\nfield:appendLiteral(_:)\nfield:canonicalData\nfield:compactMap\nfield:contains\nfield:data\nfield:decode\nfield:decodeCanonical\nfield:dropFirst\nfield:encode\nfield:enumerated\nfield:hasSuffix\nfield:hexDigest\nfield:jsonObject\nfield:map\nfield:mapValues\nfield:reduce\nfield:remove\nfield:removeValue\nfield:sorted\nfield:swapAt\nfield:validate\nfield:validateExactV1\nname:Array\nname:CFBooleanGetTypeID\nname:CFGetTypeID\nname:Data\nname:Dictionary\nname:JSONDecoder\nname:Set\nname:String\nname:XCTAssertEqual\nname:XCTAssertFalse\nname:XCTAssertGreaterThan\nname:XCTAssertNil\nname:XCTAssertNoThrow\nname:XCTAssertThrowsError\nname:XCTAssertTrue\nname:XCTFail\nname:XCTUnwrap\nname:allValuePaths\nname:allValuePathsIncludingRoot\nname:assertCanonicalRejects\nname:assertEveryRecursiveMutationRejects\nname:assertExactFive\nname:assertFiles\nname:assertJob\nname:assertLog\nname:assertNoncanonicalEncodingsReject\nname:assertRun\nname:authorityFalseClaims\nname:canonicalFragment\nname:canonicalJSONData\nname:describe\nname:file\nname:index\nname:init\nname:key\nname:mapping\nname:path\nname:removingValue\nname:replacingValue\nname:requireSendable\nname:transition\nname:type\nname:validate\nname:value\nname:visit'
+readonly observed_secure_child_validation_fixture_identity_measurement_v2_authority_call_callees="$(printf '%s\n' \
+    "$secure_child_validation_fixture_identity_measurement_v2_authority_executable_ast" | \
+    awk '
+        /\(call_expr( implicit)? / {
+            if (awaiting_callee) exit 3
+            awaiting_callee = 1
+            call_count++
+            next
+        }
+        awaiting_callee {
+            if (match($0, /(field|name)="[^"]+"/)) {
+                token = substr($0, RSTART, RLENGTH)
+                sub(/="/, ":", token)
+                sub(/"$/, "", token)
+                print token
+                extracted_count++
+                awaiting_callee = 0
+            } else {
+                exit 4
+            }
+        }
+        END {
+            if (awaiting_callee || call_count != extracted_count) exit 5
+        }
+    ')" ||
+    die "validation-fixture identity-measurement V2 authority AST call-site extraction failed"
+readonly observed_secure_child_validation_fixture_identity_measurement_v2_authority_call_expr_count="$(printf '%s\n' \
+    "$observed_secure_child_validation_fixture_identity_measurement_v2_authority_call_callees" | \
+    awk 'NF { count++ } END { print count + 0 }')"
+readonly observed_secure_child_validation_fixture_identity_measurement_v2_authority_call_callee_allowlist="$(printf '%s\n' \
+    "$observed_secure_child_validation_fixture_identity_measurement_v2_authority_call_callees" | \
+    LC_ALL=C sort -u)"
+[[ "$observed_secure_child_validation_fixture_identity_measurement_v2_authority_call_expr_count" \
+        == "$expected_secure_child_validation_fixture_identity_measurement_v2_authority_call_expr_count" \
+    && "$observed_secure_child_validation_fixture_identity_measurement_v2_authority_call_callee_allowlist" \
+        == "$expected_secure_child_validation_fixture_identity_measurement_v2_authority_call_callee_allowlist" ]] ||
+    die "validation-fixture identity-measurement V2 authority AST call-site allowlist changed"
 
 for native300m_trajectory_checkpoint_execution_authority_file in \
     "$native300m_trajectory_checkpoint_execution_authority_source" \
