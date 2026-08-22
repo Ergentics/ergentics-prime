@@ -1810,3 +1810,195 @@ mechanics only, no live Git and no child, under a separately frozen allowlist.
 This durable-control commit is prose rank 4 and is not Gate D's source
 predecessor. Gate E remains the first named Git/Swift process and is not
 authorized by this checkpoint.
+
+## Gate D0 predecessor freeze — canonical tracked-tree bytes and held join
+
+Status: `FROZEN_NOT_EXECUTED`
+
+### Exact predecessor and rank
+
+| Field | Exact value |
+| --- | --- |
+| Gate | D only; canonical tracked-tree parser, manifest, and held-entry join mechanics |
+| Source predecessor | `9f7d95a5bebd492827f71fa0bb340d5af1859a90` |
+| Source predecessor tree | `f3f4a244e7557227b40d390b1d7246ced41b21d1` |
+| Source predecessor parent | `5b76bee7c60f317730996196c105e255442cc649` |
+| Embedded source identity | `faeafa93ed8a9331aa8608769ab7a2304c8b20764dc584279f84ca9b85d0c4e6` |
+| Durable-control predecessor | `623192cd2a65908dc7e956135f264b99380ed480` |
+| Durable-control predecessor tree | `dc4dd338d1c91ddbcb5c83bd6a7317a03080d4eb` |
+| Worktree requirement | clean before the first source mutation |
+| Durable-control rank | prose rank 4; never a source predecessor or execution fact |
+
+Gate D closes only
+`canonical_tracked_tree_parser_manifest_and_held_join_mechanics`. It closes
+zero `PrimeValidationSwiftPMMissingAuthority` cases. Both live Git process
+observations, both production tracked-tree bindings, all Swift/build/list
+roles, completion, science, product, and release remain `UNOBSERVED` or
+`ABSTAIN`.
+
+### Exact source mutation allowlist
+
+| Ordinal | Path | Permitted mutation |
+| --- | --- | --- |
+| 1 | `Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift` | exact source-identity reseal only |
+| 2 | `Sources/PrimeCore/PrimeValidationDriverV2TrackedTreeHeldEntry.swift` | new non-Codable held-entry observation and vnode/name-join mechanics |
+| 3 | `Sources/PrimeCore/PrimeValidationSwiftPMBuildInventoryAdmission.swift` | add both new Gate D source owners to every existing required/replay source list only |
+| 4 | `Tests/PrimeValidationWorkflow/Sources/PrimeValidationWorkflowDriverCore/PrimeValidationDriverV2TrackedTreeManifest.swift` | new pure raw-byte parser, canonical manifest, and declaration-binding mechanics |
+| 5 | `Tests/PrimeValidationWorkflow/Tests/PrimeValidationWorkflowDriverCoreTests/PrimeValidationDriverV2AdmissionTests.swift` | pure fixture bytes, canonical digest fixtures, binding mutations, and source contract checks only |
+| 6 | `Tests/PrimeValidationWorkflow/Tests/PrimeValidationWorkflowDriverCoreTests/PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests.swift` | synthetic source fixture and required-source-list reseal only |
+
+No package manifest, lock file, resource, supervisor `main.swift`, facade,
+spawn canary, process substrate, C watch owner, receipt schema, planner, role
+bridge, Git transport, `.github`, root test, inventory list, or documentation
+path is in the source allowlist. A changed path outside these six is a hard
+stop.
+
+The two new source files add two files and no directory. With no deletion or
+rename, the candidate must measure exactly 543 source-snapshot files, 542
+canonical identity records, and 152 Prime authority directories. The watch
+topology must be 543 Prime files plus 152 Prime directories = 695 Prime
+watches; companion remains 1,460; combined must be 2,155 / 4,096. Prime's
+8 MiB source-provenance per-file ceiling and legacy allowlisted topology do
+not change. Any measured mismatch stops the slice and requires a corrected
+freeze.
+
+### Frozen module and authority split
+
+| Owner | Gate D responsibility | Explicit non-authority |
+| --- | --- | --- |
+| PrimeCore | construct an immutable, non-Codable held-entry observation only after descriptor-read identity and named-path rebound identities agree | no public path loader, descriptor input, root selector, facade transition, or restorable capability |
+| DriverCore | parse bounded caller-supplied fixture bytes, join them one-for-one to PrimeCore held observations, emit canonical manifest bytes, and bind the two computed digests to the existing declaration fields | no filesystem, Git, Swift, process, environment, cwd, timeout, callback, child, or receipt-minting authority |
+
+`PrimeValidationRepositoryAdmissionReceiptV2`, its existing
+`repositoryTrackedTreeSHA256` and `companionTrackedTreeSHA256` fields, and its
+Codable layout remain unchanged. Its current validation remains declaration
+and chain-shape validation only. Gate D adds a non-Codable binding value that
+requires both canonical manifests, their recomputed SHA-256 values, and the
+exact repository receipt identity. A bare receipt or a well-formed arbitrary
+64-hex digest cannot construct or validate that binding. Every future live or
+positive path must accept the bound form plus a retained PrimeCore live
+capability; Gate E owns that composition.
+
+### Frozen raw byte grammar and limits
+
+The future Gate E Git role supplies exact bytes equivalent to:
+
+~~~text
+git rev-parse --show-object-format
+git ls-tree -r -z --full-tree <exact-commit> --
+~~~
+
+Gate D launches neither command. Its fixtures must satisfy:
+
+| Item | Exact Gate D rule |
+| --- | --- |
+| Object-format stdout | exactly five bytes: `sha1` plus one LF; no CR, extra LF, prefix, suffix, or `sha256` |
+| Tree record | `mode SP blob SP lowercase-40-hex-object-id TAB path-bytes NUL` |
+| Tree output framing | nonempty and at most 16 MiB; every record is NUL-terminated, the final byte is NUL, and an extra trailing NUL/empty record rejects |
+| Entry count | 1 through 4,096 inclusive |
+| Accepted modes | `100644`, `100755`, and `120000` only; `040000`, `160000`, and every other mode/type reject |
+| Git object identity | exact lowercase nonzero SHA-1 object ID; SHA-1 is repository compatibility identity only, not authenticity or collision resistance |
+| Path representation | raw bytes remain authoritative and are encoded as Foundation `Data` in canonical JSON; never `String(cString:)`, lossy UTF-8, locale, or Unicode normalization |
+| Path safety | relative, nonempty, at most 1,023 bytes, at most 32 components, each component 1 through 255 bytes; no NUL, empty, `.` or `..` component; root `.git` and `.git/**` reject |
+| Ordering | strictly increasing unsigned raw-path byte order; duplicate and blob/ancestor prefix collision reject |
+| Per-file bytes | Prime 8 MiB; companion 64 MiB; fixed by manifest role, never caller-selected |
+| Aggregate held bytes | at most 512 MiB with checked arithmetic |
+| Canonical manifest bytes | at most 64 MiB |
+
+Tabs, line feeds, carriage returns, invalid UTF-8, and backslashes inside an
+otherwise safe path component are data, not separators, because NUL frames
+the path and JSON carries its raw bytes. Tests must prove that these bytes are
+preserved rather than normalized.
+
+`100644` and `100755` require a held regular-file observation with matching
+executable-bit semantics. `120000` requires an explicitly held no-follow
+symlink observation whose target bytes, symlink vnode, post-read descriptor
+identity, and named-path rebound identity agree. A caller-declared target is
+not admitted. Gate C's current production closures construct no symlink-held
+observation, so a live tracked symlink in Gate E is a fail-closed `ABSTAIN`
+pending a separately frozen no-follow acquisition slice. Pure D symlink
+mechanics do not claim that live support exists. Gitlinks always reject.
+
+### Held join and stable canonical manifest
+
+For every parsed Git entry, Gate D requires exactly one held observation at
+the same raw path and in the same canonical order. PrimeCore's observation
+must bind:
+
+- held kind and POSIX file type;
+- opened, post-read descriptor, and post-read named-path device/inode/owner/
+  group/mode/link-count/byte-count identities, all equal;
+- link count exactly one;
+- descriptor-read content or no-follow symlink-target bytes;
+- exact byte count and SHA-256; and
+- Git blob SHA-1 recomputed over `blob <decimal-byte-count> NUL <exact-bytes>`.
+
+Missing, extra, renamed, reordered, replaced, duplicate, unsafe, unheld,
+wrong-kind, mode-mismatched, hash-mismatched, or same-bytes/new-inode entries
+reject. The join returns no live descriptor and cannot be decoded into one.
+
+The canonical manifest contains only stable evidence data:
+
+| Canonical field | Bound value |
+| --- | --- |
+| `artifact_kind` | exact Driver V2 tracked-tree-manifest V1 literal |
+| `schema_version` | `1` |
+| `root_role` | exactly `repository` or `companion` |
+| `object_format` | `sha1` |
+| raw tree | exact bytes, byte count, and SHA-256 |
+| entries | canonical raw-path order; path bytes, Git mode/type/object ID, held kind, byte count, held SHA-256 |
+
+Host-local vnode IDs prove the live join but are deliberately excluded from
+the durable manifest digest. The tracked-tree SHA-256 is the hash of exact
+`PrimeCanonicalJSON` bytes which do not contain that digest. Decode must fully
+validate, re-encode, and require byte equality; unknown/duplicate keys,
+alternate key order, whitespace, trailing LF, and noncanonical encodings
+reject rather than normalize.
+
+### Focused proof and source-candidate discipline
+
+Before the source candidate exists, only compile, source-contract inspection,
+topology recount, and provenance reseal are authorized. No test is run to
+define the candidate. After one clean source commit/tree exists, run only the
+individually named nested Gate D fixture tests covering:
+
+1. golden regular/executable canonical bytes and digest;
+2. raw non-UTF-8/control path preservation and deterministic re-encoding;
+3. every proper prefix, terminal-NUL, separator, object-format, mode/type, and
+   object-ID rejection class;
+4. unsafe, duplicate, noncanonical-order, and file/ancestor path rejection;
+5. missing, extra, rename, executable-bit, held-kind, SHA-1, SHA-256, count,
+   and fixed-cap rejection;
+6. same-bytes/new-inode and any other vnode/name-rebound rejection;
+7. conditional held-symlink mechanics plus unheld symlink and all gitlink
+   rejection; and
+8. canonical decode/re-encode, self-hash exclusion, receipt-digest binding,
+   arbitrary-digest rejection, and source-surface exclusions.
+
+No broad test target/class filter, live admission proof, Git/Swift command,
+Driver V2 child, build/list role, staged root, inventory run, 904, GitHub,
+network request, or dependency fetch is authorized. Outer local compilation
+and Git worktree/commit bookkeeping are not Driver V2 observations.
+
+### Conserved predecessor data and successor
+
+The following predecessor blobs must remain exact: supervisor `main.swift`
+`1b5582ac9a40dce9ea06b94a82c9985978069b76`; DriverCore contracts/planner/
+admission `25daa69226aab8ca88894c6c93834aa42313e33d` /
+`38d703b86a98d08cc8b88e0dd23d828464ece46b` /
+`c4e15ff38a0697e724a0d1208e3824aba15691dd`; role and image bridges
+`15bb266ea5bad4cac96c54fdfabe4d9508e5301d` /
+`6842674b7b29b45d7cb3cc0753f6ab2f1b4b9c10`; facade and isolated canary
+`5c59eaaa5831bbd058f358ab99e028f54d393739` /
+`1c174ffd12173f492e9bab68aff07ef2df5b74d7`; C held-source closure/watch
+`73156c1baeaa64f902b12ac54032160b703ceca5` /
+`14c08c0dd11f6ce7318f2486d9ba29ccce359f4b`; forbidden Process-based Git
+transport `a2159438ed945e8cfd9cfe1fec5f86a6046c5832`; and the Darwin spawn,
+secure-child, and supervision owners already frozen above. Both package
+manifests, both lock files, the exact spawn-canary source/image pin, and the
+892/12 root inventories remain unchanged.
+
+On a passing source checkpoint, Gate E alone may be frozen on Gate D's exact
+implementation commit/tree. Gate E is the first live Git/Swift process slice
+and must provide bounded raw bytes plus a gapless retained PrimeCore join.
+This D0 freeze authorizes neither Gate E source nor any process execution.
