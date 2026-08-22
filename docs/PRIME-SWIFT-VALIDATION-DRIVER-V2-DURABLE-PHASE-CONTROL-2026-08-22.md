@@ -1386,3 +1386,257 @@ spawn canary on commit `129322d07aad8adae156f35b474608027ca1344a` and tree
 `84ae91c9324f0a5e566440c360bae723a6c2bb93`. This checkpoint does not authorize
 that spawn. Gate E, the root 904-test spend, GitHub, and publication remain
 outside Gate C.
+
+## V2-SPAWN-01 predecessor freeze — isolated facade spawn canary
+
+Status: `FROZEN_FOR_V2_SPAWN_01_IMPLEMENTATION`
+
+This is a separately named local containment-mechanics slice after Gate C. It
+is not Gate C.1, D, E, F, G, H, or a 904-test authorization. It may create one
+new closed child product and one zero-argument facade transition only. It
+closes none of the eight live authorities that remained after Gate A.
+
+### Exact predecessor split
+
+| Pin | Exact value |
+| --- | --- |
+| Source predecessor commit | `129322d07aad8adae156f35b474608027ca1344a` |
+| Source predecessor tree | `84ae91c9324f0a5e566440c360bae723a6c2bb93` |
+| Source predecessor parent | `40b5bb31fc7040c72c8c46af66944b60507033c7` |
+| Source predecessor worktree | clean |
+| Durable-control predecessor commit | `5d2fce150dba636aea324f6e4a2bc699fe58bdc7` |
+| Durable-control predecessor tree | `4ca2d398af9f02a83f2bca4ce9a8d81f3955a9c6` |
+| Durable-control predecessor parent | `66abaf3db26ed40cdba49d3083c5552869cecdf1` |
+| Durable-control predecessor worktree | clean |
+| Durable control in source ancestry | false |
+| GitHub or off-device execution | none authorized |
+
+The source candidate must be a direct descendant of the Gate C implementation
+commit. This rank-4 control lineage remains separate and is not a source
+predecessor.
+
+### Exact source mutation allowlist
+
+1. `Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift` — final canonical
+   source-identity reseal only;
+2. `Sources/PrimeCore/PrimeValidationDriverV2IsolatedSpawnCanary.swift` — one
+   new closed canary image/root holder, development-only start/terminal
+   journal, and typed containment coordinator;
+3. `Sources/PrimeCore/PrimeValidationDriverV2RoleFacade.swift` — exactly one
+   public zero-argument `spawnIsolatedContainmentCanary() throws` one-shot and
+   its retained running/terminal/poison states; the fixed build/list policy
+   table remains byte-for-byte unchanged;
+4. `Sources/PrimeCore/PrimeValidationSwiftPMBuildInventoryAdmission.swift` —
+   require the new PrimeCore source and add only a package-internal test-host
+   transfer seam that consumes an already-opened no-follow executable
+   descriptor, never a path;
+5. `Tests/PrimeValidationWorkflow/Package.swift` — exactly one dependency-free
+   executable product and target named
+   `PrimeValidationWorkflowDriverV2SpawnCanary`, with linker stripping `-S`;
+6. `Tests/PrimeValidationWorkflow/Sources/PrimeValidationWorkflowDriverV2SpawnCanary/main.swift`
+   — one new `@main` program that returns zero, parses no inputs, emits no
+   bytes, writes no files, and creates no descendant; and
+7. the existing focused
+   `PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests.swift` only.
+
+There is no fallback expansion. If the implementation requires a change to
+the supervisor stdin frame, DriverCore, the frozen role table, the neutral
+Darwin spawn owner, lifecycle, drains, FixtureChild, SecureChildIntegration,
+Gate-D parsers, root tests, inventory resources, or a lock file, work stops for
+a new freeze.
+
+### Frozen custom-child policy
+
+| Datum | Exact frozen value |
+| --- | --- |
+| Product, target, and image leaf | `PrimeValidationWorkflowDriverV2SpawnCanary` |
+| Production image locator | exact sibling of the already-bound dedicated supervisor image |
+| Test image locator | none; package-internal seam consumes an already-opened `O_NOFOLLOW_ANY` descriptor and derives its canonical name internally |
+| Logical `argv[0]` | `prime-driver-v2-spawn-canary-v1` |
+| Additional argv | none |
+| Replacement environment | empty |
+| Standard input | `/dev/null`, immediate EOF |
+| Working directory | the already-held, private, empty Driver V2 workspace root |
+| Child writes | none |
+| Maximum wall time | 5,000,000,000 nanoseconds, established before spawn |
+| Standard-output cap | 4,096 bytes; terminal accepted value is exact zero bytes plus EOF |
+| Standard-error cap | 4,096 bytes; terminal accepted value is exact zero bytes plus EOF |
+| Spawn implementation | existing `PrimeSecureChildDarwinSubstrate.spawnSuspended` only |
+| Caller-supplied role/path/argv/env/cwd/deadline/cap | none |
+
+The held child image must bind canonical path, descriptor, device, inode,
+owner, mode, link count, exact bytes, exact byte count, and SHA-256. The
+suspended mapped-main-image proof must join the same device and inode. A path
+or matching byte string without the vnode join is rejection, not authority.
+
+The workspace descriptor already retained by Gate C is the cwd authority. No
+directory is created below it, and the workspace must be exactly empty before
+spawn and after reap. Prime, companion, evidence, lease, and canary-journal
+roots are never the child's cwd.
+
+### New-image measurement barrier
+
+The new product has no predecessor executable identity. Before its first
+launch, implementation must:
+
+1. build the dependency-free child without executing it in two disjoint
+   scratch roots;
+2. require byte-for-byte equality and record its byte count, SHA-256, Mach-O
+   UUID, platform, minimum OS, and SDK fields;
+3. embed the exact byte-count and SHA-256 pin in PrimeCore;
+4. reseal the Prime embedded source identity and checkpoint the resulting
+   source candidate; and
+5. rebuild from that exact candidate and require the held binary to match the
+   embedded pin before the first `posix_spawn`.
+
+Build-only identity measurement is authorized by this freeze. Executing an
+unmeasured, unpinned, dirty-tree, or post-checkpoint-different child is a hard
+stop. Building or locating the child at Driver V2 runtime through SwiftPM is
+forbidden.
+
+### Development-only durable canary journal
+
+The general hard stop forbids resuming any child before its start is durably
+published. V2-SPAWN-01 therefore owns exactly two fixed leaves in one new
+pre-existing, private `0700`, initially empty journal root derived internally
+as a disjoint sibling of the workspace root:
+
+- `v2-spawn-01-start.json`
+- `v2-spawn-01-terminal.json`
+
+Each leaf is exclusive/no-replace, bounded canonical sorted JSON plus one LF,
+fully written, file-synchronized, full-synchronized, changed to immutable
+read mode, directory-synchronized, reopened without following links, read
+back, identity-joined, and SHA-256 verified. An existing leaf rejects. A start
+without a terminal is incomplete and permanently nonretryable under that
+journal root.
+
+The start record binds at least the schema/stage, embedded Prime source
+identity, held canary byte count/hash/device/inode, held workspace
+device/inode, child PID/session/group, spawn flags/return time, absolute
+deadline bounds, suspended cwd join, suspended mapped-image join, and its own
+canonical byte count/hash. The terminal binds the start hash, exact-PID wait,
+exit status, independent drain terminal facts, process-group emptiness,
+post-reap continuity, workspace emptiness, and terminal canonical byte
+count/hash.
+
+These two leaves are local development containment evidence only. They are
+not the Driver V2 evidence ledger, a Gate-H writer, a phase/shard/final
+receipt, an outer publication envelope, a restorable capability, or released
+product truth. No Prime execution, completion, PASS, GROUNDED, scientific, or
+product authority can be decoded or minted from them.
+
+### Required one-child ordering
+
+~~~text
+consume one-shot canary transition
+    -> establish absolute deadline
+    -> revalidate Gate C Prime + companion continuity
+    -> revalidate held child image and empty held workspace
+    -> require the private canary journal root empty and identity-stable
+    -> posix_spawn the pinned child suspended, exactly once
+    -> adopt both memory drains and the exact-child obligation
+    -> prove SID == PGID == PID
+    -> prove suspended cwd device/inode join
+    -> prove suspended mapped-image device/inode join
+    -> revalidate Gate C continuity and all held inputs
+    -> exclusively publish, sync, reopen, and verify durable start
+    -> revalidate Gate C continuity and all held inputs again
+    -> deliver SIGCONT exactly once, after start publication
+    -> observe death and complete independent bounded EOF drains
+    -> require pre-reap group membership == [PID]
+    -> exact waitpid(PID) exactly once
+    -> require process_group_empty
+    -> revalidate Gate C continuity
+    -> require workspace still empty and both frozen root names rebound
+    -> exclusively publish, sync, reopen, and verify terminal
+    -> retain Gate C continuity owner in a canary-complete, non-advancing facade
+~~~
+
+Every error after spawn transfers through the existing cleanup authority. The
+method may return an error only after exact containment and closed drains are
+proven; a cleanup result of `mustFailStop` terminates the abandoning process
+through the established exit-70 path. No second spawn, shell, `Process`,
+`fork`, `exec`, callback, or cleanup by caller-supplied path is allowed.
+
+### Required focused proof
+
+| Proof | Required terminal fact |
+| --- | --- |
+| Source surface | exactly one public zero-argument canary method returning `Void`; no generic execution inputs or role advance |
+| Child source | no argv/stdin/env parsing, output, file operation, process creation, Git/SwiftPM, network, or product/science code |
+| Image | two disjoint build-only outputs identical; exact embedded pin; held descriptor and suspended mapping join |
+| Cwd | held workspace descriptor joins the suspended child and remains empty after reap |
+| Start order | durable start readback completes before the sole `SIGCONT` delivery |
+| Success | exit 0; exact PID reap; group empty; both streams zero-byte EOF and closed |
+| Continuity interval | both Gate C watches remain armed; Prime or companion mutation permanently poisons after containment |
+| One shot | sequential and concurrent calls produce at most one PID and one start leaf; retry rejected |
+| Journal collision/failure | no second child; after-spawn failures contain before return or fail-stop |
+| XCTest boundary | test-host token remains production-ineligible and cannot close `supervisor_executable_image` |
+| Role conservation | role remains `build`; build/list policies and observations remain unchanged and unobserved |
+| Scope | no Driver V2 build/list/Git child, no staging tree, no 904 tests, no GitHub |
+
+XCTest may exercise mechanics through the PrimeCore-only held-descriptor and
+fixed-interlock seams. Such a seam is a concrete canary test mechanism, not a
+generic callback or production image loader. It cannot establish production
+supervisor identity. A later optional Release self-image proof must use an
+excluded harness; the frozen supervisor `main.swift` is not enlarged here.
+
+### Predecessor conservation anchors
+
+| Conserved object | Exact predecessor value |
+| --- | --- |
+| Supervisor `main.swift` blob | `1b5582ac9a40dce9ea06b94a82c9985978069b76` |
+| DriverCore supervisor-image bridge blob | `6842674b7b29b45d7cb3cc0753f6ab2f1b4b9c10` |
+| DriverCore role bridge blob | `15bb266ea5bad4cac96c54fdfabe4d9508e5301d` |
+| Root `Package.swift` blob | `8e14c10aded588b3902a042341bca7acc842bcc6` |
+| Root `Package.resolved` blob | `14d804bb4291720477240c27e24de6fbdc876b3b` |
+| Nested `Package.swift` predecessor blob | `5c658c1e9006b9111a49789816a826467b3da9c1`; sole authorized manifest drift |
+| Nested `Package.resolved` blob | `69919288b1a5da256ff408a4d65106b23abc8f89` |
+| Sole `posix_spawn` owner blob | `a0a63e9e44b787aaa84cce7381e3af9f4b67fb49` |
+| Existing secure-child kernel blob | `bfa381796b9647863e704006dbaa1406c533c7c5` |
+| Existing supervision blob | `13d882363479143d2a207375ac3eb84971fabb35` |
+| Existing FixtureChild source blob | `5e45832ed046da7bfd4541ad362018fad97371f5` |
+| Existing SecureChildIntegration source blob | `cce94e857f770f8108d7a694675ca75386a40ddb` |
+| Gate C held-source closure blob | `73156c1baeaa64f902b12ac54032160b703ceca5` |
+| Gate C held-source watch blob | `14c08c0dd11f6ce7318f2486d9ba29ccce359f4b` |
+| Gate C admission predecessor blob | `4aaafc965ad0405277a01eebb7a370d009872f54` |
+| Gate C facade predecessor blob | `67582c0a74c3019d92c0acdeff479c27d26929ea` |
+| Gate C embedded identity | `2dd8118749ca80eed4c35a6b645b29a493c27c44ace2352dc56fb3435b9c9f1b` |
+| Gate C provenance blob | `bd6d91d0d1483151513af6d34b20e70e633fc6f4` |
+| Root XCTest inventory | 892 lines; 114,186 bytes; SHA-256 `93ccc091a0343ac4fed35b208447d7460eae27668ddec3e931f54b9a7769212b` |
+| Root Swift Testing inventory | 12 lines; 1,287 bytes; SHA-256 `487c601e9693d6a0fbc31d1b683ffd342ba0d10007c780f315af1113d825e8a3` |
+
+Adding the nested product intentionally changes the nested manifest; it must
+be recorded as an exact old-to-new blob transition, never reported unchanged.
+Both lock files and the root package graph remain unchanged. Adding the new
+PrimeCore source intentionally changes the embedded identity and adds one
+Prime file/watch under the existing `Sources/PrimeCore` directory; the exact
+candidate counts and combined watcher total must be measured and resealed,
+not inferred. Companion topology and the 1,460 companion watches remain
+unchanged. Prime's legacy topology policy and 8 MiB per-file ceiling remain
+unchanged.
+
+### Authority ceiling after a passing canary
+
+Only the local operational fact
+`isolated_facade_spawn_canary_observed` may become true for the exact pinned
+candidate and journal. It is not added to the production missing-authority
+enum and cannot satisfy another gate.
+
+The following remain exactly as before this slice:
+
+- `prime_git_head_and_clean_process_observation`: `UNOBSERVED`;
+- `companion_git_head_and_clean_process_observation`: `UNOBSERVED`;
+- `swift_version_process_observation`: `UNOBSERVED`;
+- `swift_target_info_process_observation`: `UNOBSERVED`;
+- `swiftpm_build_execution`: `UNOBSERVED`;
+- `artifact_staging`: `UNOBSERVED`;
+- `xctest_inventory_execution`: `UNOBSERVED`;
+- `swift_testing_inventory_execution`: `UNOBSERVED`;
+- completion, shard, receipt publication, science, and product: unauthorized
+  or `ABSTAIN`.
+
+After a checkpointed and independently audited canary, the next allowlist may
+freeze Gate D's pure manifest/parser mechanics or Gate E's fixed live probes,
+but not both together. This freeze itself authorizes neither successor.
