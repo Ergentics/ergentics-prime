@@ -2497,9 +2497,11 @@ joins, and at Gate E terminal.
 
 The implementation audit found the same anti-pattern on the separately held
 supervisor image: its 46,722,904-byte production image would be read twice by
-each of 52 lightweight checkpoints, totaling 4,859,182,016 bytes (4.53 GiB)
-inside the same 30-second deadline. The twelfth allowlisted owner path closes
-that defect at its existing descriptor owner. Its identity-only operation
+each of 68 lightweight checkpoints, totaling 6,354,314,944 bytes (5.92 GiB)
+inside the same 30-second deadline. The count includes the required suspended
+post-start-publication checkpoint for each of the 16 children. The twelfth
+allowlisted owner path closes that defect at its existing descriptor owner.
+Its identity-only operation
 must compare the held descriptor with the admission `stat`, retain
 `FD_CLOEXEC`, join the loaded main-image vnode, and reopen the canonical named
 image with `O_NOFOLLOW` for the same exact identity and metadata. It reads no
@@ -2540,14 +2542,19 @@ and supervision kernel. The per-child requirements are:
    device/inode;
 4. run the lightweight checkpoint again and publish/verify that child's
    durable start;
-5. deliver exactly one `SIGCONT` only after the start is durable;
-6. observe death, reach independent bounded EOF on stdout and stderr, reject
+5. while the child remains suspended, run the lightweight checkpoint a third
+   time after durable start readback; bind its monotonic completion in the
+   live raw observation and child-terminal leaf, and require that completion
+   to follow start publication and precede resume;
+6. deliver exactly one `SIGCONT` only after both the durable start and that
+   post-publication continuity checkpoint;
+7. observe death, reach independent bounded EOF on stdout and stderr, reject
    overflow rather than truncate, require the fixed semantic raw framing,
    prove pre-reap group membership contains the exact child, call
    `waitpid(PID, 0)` exactly once, and require `process_group_empty`;
-7. run the lightweight checkpoint again, then publish/verify that child's
+8. run the lightweight checkpoint again, then publish/verify that child's
    terminal; and
-8. only then begin the next never-started fixed role.
+9. only then begin the next never-started fixed role.
 
 After each discovery tree, the corresponding existing-owner held-entry join
 and its full paired validation complete before that root's replay child. After
@@ -2623,8 +2630,13 @@ kind exact `child_terminal` plus the immediately prior child-terminal hash.
 There is no absent/null predecessor and absence is never treated as evidence.
 Each child terminal binds its
 complete external start-leaf hash, raw stdout/stderr counts and SHA-256 values,
-EOF and overflow facts, exact completion/reap/group-empty facts, and post-reap
-continuity. The raw terminal binds every ordered terminal hash plus the two
+the post-start-publication continuity-check completion time, EOF and overflow
+facts, exact completion/reap/group-empty facts, and post-reap continuity.
+DriverCore must reject unless that checkpoint time is at or after the durable
+start publication, before resume, and within the one Gate E deadline. Both
+ordering edges are production-shared mutation-matrix facts rather than a
+source-text-only assertion. The raw terminal binds every ordered terminal
+hash plus the two
 HEAD agreements, four empty statuses, two object-format values, two tree
 replay equalities, both held-join summaries, and both Swift raw bindings.
 None attempts a self-hashing fixed point.
