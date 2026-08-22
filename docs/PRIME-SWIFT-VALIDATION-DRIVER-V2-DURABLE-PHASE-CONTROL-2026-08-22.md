@@ -1411,9 +1411,13 @@ closes none of the eight live authorities that remained after Gate A.
 | Durable control in source ancestry | false |
 | GitHub or off-device execution | none authorized |
 
-The source candidate must be a direct descendant of the Gate C implementation
-commit. This rank-4 control lineage remains separate and is not a source
-predecessor.
+The aggregate source diff from the Gate C implementation commit to the source
+candidate must be exactly the seven-path allowlist below. If the candidate is
+one implementation commit, it is a direct child; if build-only pinning needs
+an intermediate source commit, every intermediate and the aggregate remain on
+that same bounded source lineage. This rank-4 control lineage remains separate
+and is not a source predecessor. The worktree-clean value above records the
+historical predecessor checkpoint, not the later implementation worktree.
 
 ### Exact source mutation allowlist
 
@@ -1498,27 +1502,38 @@ forbidden.
 
 The general hard stop forbids resuming any child before its start is durably
 published. V2-SPAWN-01 therefore owns exactly two fixed leaves in one new
-pre-existing, private `0700`, initially empty journal root derived internally
-as a disjoint sibling of the workspace root:
+pre-existing, private `0700`, initially empty journal root at the exact
+internally derived sibling path
+`workspaceRoot.absolutePath + ".v2-spawn-01-journal"`:
 
 - `v2-spawn-01-start.json`
 - `v2-spawn-01-terminal.json`
 
+The journal root must be canonical, local APFS, a real no-symlink directory,
+owned by the effective user, group-consistent with the workspace, mode `0700`,
+link count two while empty, descriptor-held, named-path rebound by device and
+inode, and disjoint/non-nested with Prime, companion, workspace, evidence, and
+lease roots.
+
 Each leaf is exclusive/no-replace, bounded canonical sorted JSON plus one LF,
-fully written, file-synchronized, full-synchronized, changed to immutable
-read mode, directory-synchronized, reopened without following links, read
-back, identity-joined, and SHA-256 verified. An existing leaf rejects. A start
-without a terminal is incomplete and permanently nonretryable under that
-journal root.
+fully written, file-synchronized and full-synchronized, changed to exact
+read-only mode `0400`, synchronized again after chmod, directory-synchronized,
+reopened without following links, read back, identity-joined, and SHA-256
+verified. An existing leaf rejects. A start without a terminal is incomplete
+and permanently nonretryable under that journal root. `0400` is not claimed
+as filesystem immutability; integrity derives from the held descriptor,
+exclusive namespace, vnode/name join, exact bytes, and repeated readback.
 
 The start record binds at least the schema/stage, embedded Prime source
 identity, held canary byte count/hash/device/inode, held workspace
 device/inode, child PID/session/group, spawn flags/return time, absolute
-deadline bounds, suspended cwd join, suspended mapped-image join, and its own
-canonical byte count/hash. The terminal binds the start hash, exact-PID wait,
-exit status, independent drain terminal facts, process-group emptiness,
-post-reap continuity, workspace emptiness, and terminal canonical byte
-count/hash.
+deadline bounds, suspended cwd join, and suspended mapped-image join. The
+complete canonical start bytes are hashed only after durable readback. The
+terminal binds that external full-start-leaf SHA-256, exact-PID wait, exit
+status, independent drain terminal facts, process-group emptiness, post-reap
+continuity, and workspace emptiness. The complete canonical terminal bytes are
+then hashed after durable readback and retained as the external terminal
+binding. Neither leaf attempts an undefined fixed-point self-hash.
 
 These two leaves are local development containment evidence only. They are
 not the Driver V2 evidence ledger, a Gate-H writer, a phase/shard/final
@@ -1609,20 +1624,26 @@ excluded harness; the frozen supervisor `main.swift` is not enlarged here.
 
 Adding the nested product intentionally changes the nested manifest; it must
 be recorded as an exact old-to-new blob transition, never reported unchanged.
-Both lock files and the root package graph remain unchanged. Adding the new
-PrimeCore source intentionally changes the embedded identity and adds one
-Prime file/watch under the existing `Sources/PrimeCore` directory; the exact
-candidate counts and combined watcher total must be measured and resealed,
-not inferred. Companion topology and the 1,460 companion watches remain
-unchanged. Prime's legacy topology policy and 8 MiB per-file ceiling remain
-unchanged.
+Both lock files and the root package graph remain unchanged. The new PrimeCore
+coordinator and nested child source add two snapshot files; the child also
+adds one file-derived directory. With the exact allowlist and no deletions,
+the required expected candidate values are 541 snapshot files, 540 canonical
+identity records, 541 Prime file watches plus 152 Prime directory watches =
+693 Prime watches, and 693 + 1,460 = 2,153 combined watches. These values must
+still be recomputed from the candidate and resealed; any mismatch is a hard
+stop, not an inferred correction. Companion topology and the 1,460 companion
+watches remain unchanged. Prime's legacy topology policy and 8 MiB per-file
+ceiling remain unchanged.
 
 ### Authority ceiling after a passing canary
 
-Only the local operational fact
-`isolated_facade_spawn_canary_observed` may become true for the exact pinned
-candidate and journal. It is not added to the production missing-authority
-enum and cannot satisfy another gate.
+Only the local test-host development fact
+`test_host_isolated_facade_spawn_canary_observed` may become true for the exact
+pinned candidate and journal. It is not added to the production
+missing-authority enum and cannot satisfy another gate. Because frozen
+supervisor `main.swift` has no call edge to this transition, production
+supervisor-to-canary composition and public process execution remain
+`UNOBSERVED`.
 
 The following remain exactly as before this slice:
 
@@ -1637,6 +1658,7 @@ The following remain exactly as before this slice:
 - completion, shard, receipt publication, science, and product: unauthorized
   or `ABSTAIN`.
 
-After a checkpointed and independently audited canary, the next allowlist may
-freeze Gate D's pure manifest/parser mechanics or Gate E's fixed live probes,
-but not both together. This freeze itself authorizes neither successor.
+After a checkpointed and independently audited canary, Gate D's pure
+manifest/parser mechanics is the only permitted next freeze. Gate E may be
+frozen only after a separate accepted Gate D checkpoint. This freeze itself
+authorizes neither successor.
