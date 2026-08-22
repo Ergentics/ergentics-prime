@@ -1738,6 +1738,12 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
     {
         let fixture = try Fixture()
         defer { fixture.cleanup() }
+        var emptyJournalStatus = stat()
+        XCTAssertEqual(
+            lstat(fixture.canaryJournal.path, &emptyJournalStatus),
+            0
+        )
+        XCTAssertEqual(emptyJournalStatus.st_nlink, 2)
         let interlock =
             PrimeValidationDriverV2IsolatedSpawnCanaryTestInterlock()
         let facade = try testCanaryFacade(
@@ -1769,6 +1775,32 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
             return XCTFail("canary did not publish durable start")
         }
         XCTAssertEqual(facade.isolatedSpawnCanaryState, .running)
+        var startedJournalStatus = stat()
+        XCTAssertEqual(
+            lstat(fixture.canaryJournal.path, &startedJournalStatus),
+            0
+        )
+        XCTAssertEqual(
+            startedJournalStatus.st_dev,
+            emptyJournalStatus.st_dev
+        )
+        XCTAssertEqual(
+            startedJournalStatus.st_ino,
+            emptyJournalStatus.st_ino
+        )
+        XCTAssertEqual(
+            startedJournalStatus.st_uid,
+            emptyJournalStatus.st_uid
+        )
+        XCTAssertEqual(
+            startedJournalStatus.st_gid,
+            emptyJournalStatus.st_gid
+        )
+        XCTAssertEqual(
+            startedJournalStatus.st_mode,
+            emptyJournalStatus.st_mode
+        )
+        XCTAssertEqual(startedJournalStatus.st_nlink, 3)
         interlock.permitResume()
         XCTAssertEqual(
             done.wait(timeout: .now() + .seconds(10)),
@@ -1782,6 +1814,32 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
             .guardedPreExecutorTransferred
         )
         XCTAssertEqual(facade.isolatedSpawnCanaryState, .observed)
+        var terminalJournalStatus = stat()
+        XCTAssertEqual(
+            lstat(fixture.canaryJournal.path, &terminalJournalStatus),
+            0
+        )
+        XCTAssertEqual(
+            terminalJournalStatus.st_dev,
+            emptyJournalStatus.st_dev
+        )
+        XCTAssertEqual(
+            terminalJournalStatus.st_ino,
+            emptyJournalStatus.st_ino
+        )
+        XCTAssertEqual(
+            terminalJournalStatus.st_uid,
+            emptyJournalStatus.st_uid
+        )
+        XCTAssertEqual(
+            terminalJournalStatus.st_gid,
+            emptyJournalStatus.st_gid
+        )
+        XCTAssertEqual(
+            terminalJournalStatus.st_mode,
+            emptyJournalStatus.st_mode
+        )
+        XCTAssertEqual(terminalJournalStatus.st_nlink, 4)
         XCTAssertEqual(
             Set(
                 try FileManager.default.contentsOfDirectory(

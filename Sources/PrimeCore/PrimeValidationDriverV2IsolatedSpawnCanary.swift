@@ -699,7 +699,8 @@ private final class PrimeValidationDriverV2CanaryJournal:
         let before = try root.verifiedRootIdentity()
         guard Self.sameStableRootCapability(
             before,
-            expectedRootIdentity
+            expectedRootIdentity,
+            expectedLeafCount: expectedLeafCount
         ) else {
             throw primeValidationDriverV2CanaryRejected(
                 "journal_authorized_root"
@@ -872,14 +873,21 @@ private final class PrimeValidationDriverV2CanaryJournal:
 
     private static func sameStableRootCapability(
         _ lhs: PrimeArtifactRootIdentity,
-        _ rhs: PrimeArtifactRootIdentity
+        _ rhs: PrimeArtifactRootIdentity,
+        expectedLeafCount: Int
     ) -> Bool {
-        lhs.deviceID == rhs.deviceID
+        guard expectedLeafCount == 1 || expectedLeafCount == 2 else {
+            return false
+        }
+        let priorLinkCount = UInt64(expectedLeafCount + 1)
+        let currentLinkCount = UInt64(expectedLeafCount + 2)
+        return lhs.deviceID == rhs.deviceID
             && lhs.inode == rhs.inode
             && lhs.ownerUserID == rhs.ownerUserID
             && lhs.ownerGroupID == rhs.ownerGroupID
             && lhs.actualMode == rhs.actualMode
-            && lhs.linkCount == rhs.linkCount
+            && rhs.linkCount == priorLinkCount
+            && lhs.linkCount == currentLinkCount
     }
 
     private static func matchesLeaf(
