@@ -282,6 +282,7 @@ public enum PrimeValidationSwiftPMDriverV2SupervisorImageState:
     Sendable
 {
     case bound
+    case transferred
     case poisoned
 }
 
@@ -722,6 +723,7 @@ public final class PrimeValidationSwiftPMDriverV2SupervisorImageCapability:
         case live(
             PrimeValidationSwiftPMRetainedGuardedPreExecutorState
         )
+        case transferred
         case poisoned
     }
 
@@ -774,6 +776,8 @@ public final class PrimeValidationSwiftPMDriverV2SupervisorImageCapability:
         switch state {
         case .live:
             return .bound
+        case .transferred:
+            return .transferred
         case .poisoned:
             return .poisoned
         }
@@ -789,6 +793,9 @@ public final class PrimeValidationSwiftPMDriverV2SupervisorImageCapability:
         switch state {
         case let .live(value):
             retainedState = value
+        case .transferred:
+            throw PrimeValidationSwiftPMBuildInventoryAdmissionError
+                .guardedPreExecutorTransferred
         case .poisoned:
             throw PrimeValidationSwiftPMBuildInventoryAdmissionError
                 .guardedPreExecutorPoisoned
@@ -832,6 +839,49 @@ public final class PrimeValidationSwiftPMDriverV2SupervisorImageCapability:
             state = .poisoned
             throw error
         }
+    }
+
+    /// DriverCore-only transfer of the already-bound image and every retained
+    /// admission resource into the non-executing Gate B role facade. The
+    /// semantic context is derived from the validated intent by DriverCore;
+    /// PrimeCore admits it against the retained roots before ownership moves.
+    @_spi(PrimeValidationDriverV2RoleFacade)
+    public func transferDriverV2RoleFacade(
+        context: PrimeValidationDriverV2RoleContext
+    ) throws -> PrimeValidationDriverV2RoleFacade {
+        stateLock.lock()
+        let retainedState:
+            PrimeValidationSwiftPMRetainedGuardedPreExecutorState
+        switch state {
+        case let .live(value):
+            retainedState = value
+        case .transferred:
+            stateLock.unlock()
+            throw PrimeValidationSwiftPMBuildInventoryAdmissionError
+                .guardedPreExecutorTransferred
+        case .poisoned:
+            stateLock.unlock()
+            throw PrimeValidationSwiftPMBuildInventoryAdmissionError
+                .guardedPreExecutorPoisoned
+        }
+
+        let facade: PrimeValidationDriverV2RoleFacade
+        do {
+            try retainedState.revalidate()
+            facade = try PrimeValidationDriverV2RoleFacade(
+                retainedState: retainedState,
+                context: context
+            )
+            try retainedState.revalidate()
+            state = .transferred
+        } catch {
+            state = .poisoned
+            stateLock.unlock()
+            throw error
+        }
+        stateLock.unlock()
+
+        return facade
     }
 }
 
@@ -888,6 +938,7 @@ public enum PrimeValidationSwiftPMBuildInventoryAdmission {
     private static let requiredPrimeSourcePaths: Set<String> = [
         "Sources/PrimeCore/" +
             "PrimeValidationSwiftPMBuildInventoryAdmission.swift",
+        "Sources/PrimeCore/PrimeValidationDriverV2RoleFacade.swift",
         "Package.resolved",
     ]
     private static let leaseLeafName =
@@ -1131,6 +1182,8 @@ final class PrimeValidationSwiftPMRetainedAdmissionState:
                 requiredRelativePaths: [
                     "Sources/PrimeCore/" +
                         "PrimeValidationSwiftPMBuildInventoryAdmission.swift",
+                    "Sources/PrimeCore/" +
+                        "PrimeValidationDriverV2RoleFacade.swift",
                     "Package.resolved",
                 ],
                 expectation: sourceExpectation
@@ -1141,6 +1194,8 @@ final class PrimeValidationSwiftPMRetainedAdmissionState:
                 requiredRelativePaths: [
                     "Sources/PrimeCore/" +
                         "PrimeValidationSwiftPMBuildInventoryAdmission.swift",
+                    "Sources/PrimeCore/" +
+                        "PrimeValidationDriverV2RoleFacade.swift",
                     "Package.resolved",
                 ]
             )

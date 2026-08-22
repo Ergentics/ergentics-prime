@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: LicenseRef-Ergentics-Proprietary
 
 import Foundation
-import PrimeCore
+@_spi(PrimeValidationDriverV2RoleFacade) import PrimeCore
 import PrimeValidationWorkflowContracts
 
 /// Canonical, bounded transport for the dedicated Gate A process. This outer
@@ -75,6 +75,8 @@ package enum PrimeValidationDriverV2LiveAuthorityCeiling:
 {
     case supervisorImageBoundNoExecution =
         "supervisor_image_bound_no_execution"
+    case fixedRoleFacadeTransferredNoAuthority =
+        "fixed_role_facade_transferred_no_authority"
     case poisonedNoAuthority = "poisoned_no_authority"
 }
 
@@ -88,13 +90,14 @@ package enum PrimeValidationDriverV2IntentCorrelation:
 
 /// Non-Codable, non-restorable DriverCore ownership of the exact image match.
 /// It retains the opaque PrimeCore capability; durable values cannot recreate
-/// it and it exposes no process, build, staging, inventory, shard, or receipt
-/// operation.
+/// it and it exposes no generic process, build, staging, inventory, shard, or
+/// receipt operation. Gate B adds only the zero-input fixed-role transfer.
 package final class PrimeValidationDriverV2SupervisorImageCapability:
     @unchecked Sendable
 {
     private enum State {
         case bound
+        case fixedRoleFacadeTransferred
         case poisoned
     }
 
@@ -103,6 +106,7 @@ package final class PrimeValidationDriverV2SupervisorImageCapability:
             .driverExecutableOnly
     package let supervisorExecutable:
         PrimeValidationHeldExecutableObservationV2
+    private let roleContext: PrimeValidationDriverV2RoleContext
 
     private let driverExecutable:
         PrimeValidationExecutableBindingV2
@@ -112,6 +116,7 @@ package final class PrimeValidationDriverV2SupervisorImageCapability:
     private var state: State = .bound
 
     fileprivate init(
+        roleContext: PrimeValidationDriverV2RoleContext,
         driverExecutable:
             PrimeValidationExecutableBindingV2,
         supervisorExecutable:
@@ -119,6 +124,7 @@ package final class PrimeValidationDriverV2SupervisorImageCapability:
         liveImage:
             PrimeValidationSwiftPMDriverV2SupervisorImageCapability
     ) {
+        self.roleContext = roleContext
         self.driverExecutable = driverExecutable
         self.supervisorExecutable = supervisorExecutable
         self.liveImage = liveImage
@@ -132,6 +138,8 @@ package final class PrimeValidationDriverV2SupervisorImageCapability:
         switch state {
         case .bound:
             return .supervisorImageBoundNoExecution
+        case .fixedRoleFacadeTransferred:
+            return .fixedRoleFacadeTransferredNoAuthority
         case .poisoned:
             return .poisonedNoAuthority
         }
@@ -226,6 +234,33 @@ package final class PrimeValidationDriverV2SupervisorImageCapability:
             throw error
         }
     }
+
+    /// Consumes the complete Gate-A token into the fixed, ordered Driver V2
+    /// role facade. Its context was derived solely from the validated intent;
+    /// no command, argv, environment, cwd, deadline, or callback crosses
+    /// this boundary.
+    @available(macOS 26.0, *)
+    package func consumeFixedRoleFacade()
+        throws -> PrimeValidationDriverV2RoleFacade
+    {
+        stateLock.lock()
+        guard case .bound = state else {
+            stateLock.unlock()
+            throw PrimeValidationDriverV2Error.authorityViolation
+        }
+        do {
+            let facade = try liveImage.transferDriverV2RoleFacade(
+                context: roleContext
+            )
+            state = .fixedRoleFacadeTransferred
+            stateLock.unlock()
+            return facade
+        } catch {
+            state = .poisoned
+            stateLock.unlock()
+            throw error
+        }
+    }
 }
 
 /// The only DriverCore transition that can close Gate A. It validates the
@@ -239,6 +274,8 @@ package enum PrimeValidationDriverV2SupervisorImageBridge {
             PrimeValidationSwiftPMBuildInventoryGuardedPreExecutor
     ) throws -> PrimeValidationDriverV2SupervisorImageCapability {
         try intent.validate()
+        let roleContext = try PrimeValidationDriverV2RoleBridge
+            .roleContext(from: intent)
         let expected =
             PrimeValidationSwiftPMDriverV2ExecutableExpectation(
                 canonicalAbsolutePath:
@@ -279,6 +316,7 @@ package enum PrimeValidationDriverV2SupervisorImageBridge {
         )
         let capability =
             PrimeValidationDriverV2SupervisorImageCapability(
+                roleContext: roleContext,
                 driverExecutable: intent.driverExecutable,
                 supervisorExecutable: observation,
                 liveImage: liveImage
