@@ -3988,7 +3988,9 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
                 content: .init(data: Data("gate-e-metallib-pin".utf8))
             )
             let intent = PrimeValidationRunIntentV2(
-                runID: "gate-e-release-fixed-probes",
+                runID:
+                    "gate-e-release-fixed-probes-" +
+                    snapshot.sourceIdentitySHA256,
                 roots: roots,
                 sourceSnapshot: .init(data: sourceData),
                 packageLock: .init(data: packageLockData),
