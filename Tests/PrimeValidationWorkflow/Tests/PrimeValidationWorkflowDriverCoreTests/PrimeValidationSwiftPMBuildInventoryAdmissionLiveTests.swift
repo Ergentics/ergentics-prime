@@ -306,7 +306,7 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
         XCTAssertTrue(guarded.companionSourceWatchWindowArmed)
         XCTAssertEqual(
             guarded.combinedSourceWatcherDescriptorCount,
-            41
+            45
         )
         XCTAssertTrue(guarded.currentProcessExecutableImageHeld)
         XCTAssertEqual(
@@ -476,7 +476,7 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
             .prepareGuardedPreExecutor(
                 allowRootOwnedCurrentProcessForTesting: true
             )
-        XCTAssertEqual(guarded.combinedSourceWatcherDescriptorCount, 41)
+        XCTAssertEqual(guarded.combinedSourceWatcherDescriptorCount, 45)
 
         try Data("mutated companion\n".utf8).write(
             to: fixture.companion.appendingPathComponent(
@@ -912,7 +912,7 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
         XCTAssertTrue(facade.companionSourceDescriptorClosureHeld)
         XCTAssertTrue(facade.primeSourceWatchWindowArmed)
         XCTAssertTrue(facade.companionSourceWatchWindowArmed)
-        XCTAssertEqual(facade.combinedSourceWatcherDescriptorCount, 41)
+        XCTAssertEqual(facade.combinedSourceWatcherDescriptorCount, 45)
         try facade.revalidateContinuity()
         XCTAssertEqual(facade.continuityState, .dualRootGuarded)
         let policies = facade.fixedPolicyObservations
@@ -1596,7 +1596,7 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
         try facade.revalidateContinuity()
 
         XCTAssertEqual(facade.continuityState, .dualRootGuarded)
-        XCTAssertEqual(facade.combinedSourceWatcherDescriptorCount, 41)
+        XCTAssertEqual(facade.combinedSourceWatcherDescriptorCount, 45)
         XCTAssertEqual(facade.processExecutionObservation, .unobserved)
         XCTAssertEqual(facade.buildExecutionObservation, .unobserved)
         XCTAssertEqual(facade.inventoryExecutionObservation, .unobserved)
@@ -1659,7 +1659,7 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
         XCTAssertTrue(observation.processGroupEmptyAfterReap)
         XCTAssertEqual(
             observation.combinedSourceWatcherDescriptorCount,
-            41
+            45
         )
         XCTAssertTrue(observation.workspaceEmptyAfterReap)
         XCTAssertFalse(observation.productionSupervisorImageEligible)
@@ -3519,11 +3519,11 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
         XCTAssertGreaterThan(projection.companionHeldEntryCount, 0)
         XCTAssertEqual(
             projection.combinedSourceWatcherDescriptorCountBefore,
-            41
+            45
         )
         XCTAssertEqual(
             projection.combinedSourceWatcherDescriptorCountAfter,
-            41
+            45
         )
         XCTAssertEqual(projection.primeHeldEntriesSHA256.count, 64)
         XCTAssertEqual(projection.companionHeldEntriesSHA256.count, 64)
@@ -4330,14 +4330,14 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
             .revalidateFixedProbeLightweightContinuityForTesting()
         XCTAssertEqual(
             clean.combinedSourceWatcherDescriptorCountBefore,
-            41,
+            45,
             label,
             file: file,
             line: line
         )
         XCTAssertEqual(
             clean.combinedSourceWatcherDescriptorCountAfter,
-            41,
+            45,
             label,
             file: file,
             line: line
