@@ -7441,3 +7441,70 @@ The R4 terminal is one clean two-path source commit. It may be followed only
 by a separately committed static source checkpoint and then a separately
 committed R5 readiness freeze with a fresh epoch. R4 authorizes no Swift
 command, no R3 retry, no production Gate-E action, and no cleanup.
+
+## Gate E1.4-R4 source checkpoint — held-executable initialization repair
+
+| Coordinate | Checkpoint value |
+| --- | --- |
+| Status | `SOURCE_CHECKPOINTED_STATIC_ONLY_NOT_EXECUTED` |
+| Durable-control authority | `f83a9a52ce7e79217c1d62355c2e22680a8e0125` / tree `500ed0af043495fe25b5529f67dbdb32484c1641` |
+| Source predecessor | `22ae3332aa75dad68e12660d43e8822f03a871a3` / tree `4ed3c124be29e5b0d194009bc0617ca2ae5ca24b` |
+| Source checkpoint | `7fbd52386283295d6312b57dbcb3acd97b1b5bce` / tree `dd45c962af0683db73c1e2785e7232b243d628d9` |
+| Parent relation | exactly one parent, the frozen source predecessor |
+| Source delta | exactly `2` modified mode-`100644` paths; `12` insertions / `9` deletions |
+| Swift build / test / executable launch | `0 / 0 / 0` |
+| Dependency resolution / fetch / network / GitHub | `0 / 0 / 0 / 0` |
+| Authority vector / Gate-E outcome / clearance | `00000000 / ABSTAIN / 0` |
+
+The exact successor files are:
+
+| Path | Lines / bytes | Blob / SHA-256 |
+| --- | ---: | --- |
+| `Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift` | `13 / 546` | `d14bc8172c2b4b2f3e67627697e5a7713f7034db` / `cb6fc1e452f7c53feeb93ee9c59c3f78d1151ce7c1b242a8209b741fa39b867f` |
+| `Tests/PrimeValidationWorkflow/Sources/PrimeValidationWorkflowDriverV2ShotGovernorCore/PrimeValidationDriverV2ShotGovernor.swift` | `5,472 / 209,156` | `c7466665b5225260c6b0084193f44a06a44c00ea` / `216ccd2df97af811bdeb6c2625850e2c08bcd3f10bd59106751d3c2b284c3e4f` |
+
+Independent Python and Ruby calculators each reproduced the R4 predecessor
+from its Git blob, then agreed on the successor before and after the excluded
+provenance reseal:
+
+| Quantity | R4 predecessor | R4 successor |
+| --- | ---: | ---: |
+| Admitted files | `548` | `548` |
+| Identity records | `547` | `547` |
+| Canonical record bytes | `112,279` | `112,279` |
+| Aggregate admitted bytes | `22,458,475` | `22,458,595` |
+| Capture-enumerator directories | `146` | `146` |
+| Held authority directories | `155` | `155` |
+| Prime / combined watchers | `703 / 2,163` | `703 / 2,163` |
+| Source identity SHA-256 | `689807021fe36551afcda7d65e1bfc66e12092abcb9feb097e5d53a343e9ca3b` | `77d5cfa3d9b9fc7054a40b0651940641d0da1d52afee197ce178b3c480446b76` |
+
+The provenance file equals the canonical excluded template byte-for-byte and
+contains the successor digest exactly once. The capture-enumerator count and
+the complete proper-parent authority-directory count remain distinct; watcher
+arithmetic uses the latter.
+
+Two independent static audits established:
+
+```text
+changed_paths = 2
+initializer_hunks = 1
+requiredLeaf.map_sites = 0
+local_canonical_binding_path_values = 1
+nonclosure_optional_leaf_checks = 1
+stored_absolutePath_assignment_before_existing_open = 1
+binding_initializer_definitions/call_sites = 1/4
+descriptor_test_initializer_definitions/call_sites = 1/1
+leaf_rejection_sites = 2
+frozen_executable_leaf_literals = 5
+```
+
+The leaf check now uses only the local canonical value and cannot capture
+partially initialized `self`. The same rejection coordinate and all subsequent
+open, descriptor, vnode, metadata, xattr, content, rewind, and revalidation
+predicates remain unchanged. A whole-file initializer scan found no masked
+sibling of the R3 diagnostic. No manifest, test, production `main.swift`,
+DriverCore, role table, receipt, journal, API, process, or authority surface
+changed.
+
+This is a static source checkpoint only. It makes no compilation, XCTest,
+fixture, production-image, process-containment, or Gate-E claim.
