@@ -3075,3 +3075,101 @@ production result consumes the new identity and must be recorded with status,
 phase, retained-root inventory, and `ABSTAIN` for any cause not proved by
 those data. Only exit `0` plus the complete verified journal can checkpoint
 Gate E and permit a later Gate F freeze.
+
+## Gate E1.2 pre-shot interruption — manifest cache denial
+
+| Field | Observed value |
+| --- | --- |
+| Result | `PRE_SHOT_FLOOR_BLOCKED_NON_AUTHORITY` |
+| Durable-control predecessor | `cbe1ea75d41ff0b0460f5f679517ca3463fc31ba` / tree `74d111e46b1608e29269d9cedeff2fa35f3e8808` |
+| Source commit/tree | `1d341a529c442e63369c361b1e5ac95ca464fdf7` / `e787b3573bd44259606536860dc980720d73d64f` |
+| Source predecessor/tree | `aba540a3009c4218b75fc065188dddce330f4b50` / `ee13a67abb0853e15e2da7745bc6def11cae5f6f` |
+| Embedded/source identity | `194cf7141172ee06b5f9734af2e9c3df498547a2f718698ccd421ef7ae961d0f` |
+| Canonical source cardinality | 545 admitted files / 544 identity records |
+| Root / nested compile-only gates | exit `0` / `0`; wall `9.359` / `12.413` seconds |
+| Seven separate Debug methods | all exit `0`; each exactly 1 XCTest / 0 failures |
+| Debug test elapsed seconds | `0.030`, `1.004`, `1.388`, `5.756`, `2.239`, `4.432`, `3.458` |
+| Diagnostic Prime clone | clean `1d341a529c442e63369c361b1e5ac95ca464fdf7` / `e787b3573bd44259606536860dc980720d73d64f` |
+| Companion clone | clean `163fc100710ece48119bc25954452d10f6a84f7f` / `9009daa4f8a07fbd5897e00b9571cef44ec292db` |
+| Release-admission SwiftPM harness attempts | `1` |
+| Shell result | exit `1` during package-manifest compilation |
+| Exact observed blocker | write below `/Users/ergentics/.cache/clang/ModuleCache` denied with `Operation not permitted` |
+| Test-runner markers | `Selected tests=0`; `Test Suite=0`; `Test Case=0`; `Test run started=0` |
+| Selected-test executions | `0` |
+| Production method-8 invocations | `0` |
+| Supervisor / fixed-probe children | `0` / `0` |
+| Identity-bound production root | absent |
+| Consumed prior root | retained at device `16777231`, inode `17321558`, mtime `1787444179`, link count `8` |
+| Candidate consumption | `false` |
+| Gate E outcome | `NOT_RUN`; no authority or scientific conclusion |
+
+The command stopped in outer SwiftPM manifest compilation before XCTest
+started. Ignored build state may have changed, but the committed source/tree,
+canonical identity, and both standalone clone worktrees remained clean. No
+production root, lease, or journal was created, and no Driver V2 supervisor
+or fixed-probe child process was launched. The E1.2 floor hard stop therefore
+blocks method 8 under the prior freeze, but the source identity is not
+consumed.
+
+## Gate E1.2 cache-only Release-admission recovery freeze
+
+| Field | Frozen value |
+| --- | --- |
+| Status | `FROZEN_NOT_EXECUTED` |
+| Source commit/tree | `1d341a529c442e63369c361b1e5ac95ca464fdf7` / `e787b3573bd44259606536860dc980720d73d64f` |
+| Source identity | unconsumed `194cf7141172ee06b5f9734af2e9c3df498547a2f718698ccd421ef7ae961d0f` |
+| Source edits / commits | `0` / `0` |
+| Authorized corrected Release-admission attempts | exactly `1` |
+| Authorized production invocations during recovery | `0` |
+| Production method-8 budget after a passing recovery | still the original first invocation; no retry added |
+| Gate F authorization | `false` |
+
+This freeze supersedes only the Release-admission floor hard stop caused by
+the sandbox-blocked default module-cache path. Every other E1.2 boundary and
+hard stop remains exact. These interruption and recovery sections must first
+exist in a clean control commit/tree descended directly from
+`cbe1ea75d41ff0b0460f5f679517ca3463fc31ba`; creating either cache directory
+or invoking the corrected command before that commit is a hard stop.
+
+Use the clean successor clone
+`/private/tmp/gate-e-preflight-prime.IBJAfD/prime` and clean pinned companion
+`/private/tmp/gate-e-companion-measure.pMGSXT/companion`. The only corrected
+inputs are these fresh, empty, nonsymlink, UID-501, mode-0700 build-harness
+cache directories:
+
+- `CLANG_MODULE_CACHE_PATH=/private/tmp/gate-e1-2-release-admission-clang-module-cache-194cf7141172ee06`
+- `SWIFTPM_MODULECACHE_OVERRIDE=/private/tmp/gate-e1-2-release-admission-swiftpm-module-cache-194cf7141172ee06`
+
+Create each exact leaf once with an exclusive `mkdir`; `EEXIST` is a hard
+stop rather than reuse. Before invocation, open each leaf
+`O_RDONLY|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC`, join its descriptor
+device/inode to an `lstat` path readback, and require directory type, UID
+`501`, mode `0700`, link count `2`, zero entries, and no ACL. Any
+symlink, ACL marker/entry, ownership or mode mismatch, rebound path, or
+preexisting content is a hard stop.
+
+Use exact working directory
+`/private/tmp/gate-e-preflight-prime.IBJAfD/prime` and run exactly:
+
+```sh
+CLANG_MODULE_CACHE_PATH=/private/tmp/gate-e1-2-release-admission-clang-module-cache-194cf7141172ee06 SWIFTPM_MODULECACHE_OVERRIDE=/private/tmp/gate-e1-2-release-admission-swiftpm-module-cache-194cf7141172ee06 PRIME_PMHNP_COMPANION_ROOT=/private/tmp/gate-e-companion-measure.pMGSXT/companion swift test --package-path /private/tmp/gate-e-preflight-prime.IBJAfD/prime/Tests/PrimeValidationWorkflow --configuration release --disable-automatic-resolution --disable-sandbox --filter PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests.testPublicReleaseAdmissionUsesEmbeddedSourceAuthority
+```
+
+No extra or missing CLI argument or inline environment assignment is
+permitted. Do not set `HOME` or an external scratch path.
+
+Before the command, require both clone statuses empty, both cache paths fresh
+and private, the successor production root absent, and the consumed
+`afb3c464…` root unchanged. A pass requires shell exit `0`, exactly one
+selected XCTest pass, 2,157 watchers, zero supervisor/fixed-probe children,
+clean post-statuses, and the production root still absent. The cache variables
+are outer compilation controls, not Driver V2 request inputs. The selected
+test does not read them, and no Driver V2 child is authorized.
+
+Any source edit, dependency fetch, network access, broad selection,
+production supervisor, method 8, fixed probe, candidate-root creation,
+consumed-root mutation, cache-path mismatch, or nonpassing corrected result is
+a hard stop. It authorizes neither another admission attempt nor method 8. A
+passing recovery satisfies only the blocked admission floor; every remaining
+E1.2 pre-shot condition must be revalidated before the candidate's first and
+only production method-8 invocation.
