@@ -9625,3 +9625,198 @@ next action is a separate no-execution repair freeze for a generation-joined,
 per-PID census with deadline charging and a death-aware exact-reap transition;
 `EPERM` must not become acceptable merely because death was observed. No R12
 retry, cleanup, production launch, or Gate-E promotion is authorized.
+
+## Gate E1.4-R13 freeze — generation-joined census and reap-first containment
+
+| Coordinate | Frozen value |
+| --- | --- |
+| Status | `FROZEN_SOURCE_REPAIR_ONLY_NOT_IMPLEMENTED` |
+| Direct control predecessor | `c1da3d13b5d4ca72fe91ee7a50edf95fbf03a94a` / tree `9d5320f49e8c41bb35b0c12ba28a020e2d8c9877` |
+| Source predecessor | clean `b7eefedd33baa9238f93bf92659636d2e15ce20c` / tree `2416b4281d39f85b349d77f8b052ff1f1845a045` |
+| Source identity | `d388fa32da538cd40b88d21308fd3d55be1a916d505761b37f891f9e804b1128` |
+| Functional source paths | exact `2` |
+| Provenance reseal paths | exact `1` |
+| Add / delete / mode change | `0 / 0 / 0` |
+| SwiftPM / build / test / target launch / production | `0 / 0 / 0 / 0 / 0` |
+| Authority vector / Gate-E outcome / clearance | `00000000 / ABSTAIN / 0` |
+
+R12 causally joined two defects in one selected-method interval: the all-PID
+census could not complete because a per-PID transition restarted the complete
+sample, and unwind then sent a blind stop to the retired supervisor group and
+received `-1 / EPERM`. R13 is one atomic repair checkpoint for those two joined
+defects. Splitting them would knowingly spend another Release diagnostic on a
+path that still cannot reach containment.
+
+### Exact source mutation set
+
+Only these existing mode-`100644` files may differ:
+
+1. `Tests/PrimeValidationWorkflow/Sources/PrimeValidationWorkflowDriverV2ShotGovernorCore/PrimeValidationDriverV2ShotGovernor.swift`
+2. `Tests/PrimeValidationWorkflow/Tests/PrimeValidationWorkflowDriverCoreTests/PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests.swift`
+3. `Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift`
+
+The first path may implement only the census/reap repair and private scalar
+helpers. The second may add source-order, source-count, and closed-branch
+assertions only inside the existing selected XCTest method. The third changes
+only after the first two are final and only to reseal their independently
+derived canonical source identity.
+
+Out of scope are both `main.swift` files, SessionFixture source, DriverCore,
+PrimeCore process/facade surfaces, role tables, manifests and locks, products,
+targets, package resolution, journal schemas/publishers/leaves, Git or Swift
+roles, `.github`, any new test identifier, any new package/public seam, and any
+new executable, root, descriptor, watcher, wait owner, callback, or signal API.
+The frozen source cardinalities remain `548 / 547` files, canonical identity
+bytes `112,279`, enumerated/held directories `146 / 155`, Prime/combined
+watchers `703 / 2,163`, and XCTest/Swift-testing baselines `892 / 12` until the
+final static recount proves the successor values.
+
+### Census primitive
+
+`scan` must take the already-held absolute deadline explicitly. It keeps
+`pidCapacity = 131_072`, `maximumScans = 256`, and the existing four-attempt
+bound, but moves that four-attempt bound from the whole process table to the
+single PID whose generation cannot join. There is exactly one
+`proc_listpids(PROC_ALL_PIDS, ...)` sample per `scan`; positive PIDs must be
+unique and sorted.
+
+For each sampled PID `p`, the accepted observation is:
+
+```text
+deadline -> A = full BSD(p)
+         -> deadline -> SID(p)
+         -> deadline -> PGID(p) when SID is the target
+         -> deadline-charged optional mapped-image telemetry
+         -> deadline -> B = full BSD(p) -> deadline
+
+join(p) = A.pid = B.pid = p
+          AND A.start_sec = B.start_sec
+          AND A.start_usec = B.start_usec
+member(p) = join(p) AND SID(p) = requested_session AND PGID(p) > 0
+```
+
+BSD A precedes `getsid`; BSD B follows every admitted SID/PGID/mapping value.
+A stable non-target also requires the A/B join before omission. A full A/B
+generation mismatch retries only `p`, at most four times, under the same
+deadline. Exhaustion throws the already-closed coordinate
+`session_census_nonconvergent_query`; it never admits a mixed generation or an
+empty result. Exact `ESRCH` after an anchored generation is a local tombstone
+for that vanished generation and does not restart the process-table sample.
+Every other errno, any short positive BSD result, PID mismatch, invalid group,
+capacity/duplicate/arithmetic error, or deadline exhaustion rejects. Deadline
+exhaustion inside the local join uses the same closed nonconvergent coordinate;
+the existing `deadlineExpired` scalar distinguishes it without expanding the
+R11 v2 schema.
+
+Mapped identity remains optional telemetry, not membership authority. It must
+sit inside the A/B envelope, and each of its existing at-most-`256` region
+queries must charge the same deadline. No unjoined SID, PGID, mapping, parent,
+UID, kernel status, or start tuple may enter members, captured generations,
+process groups, or success evidence. Every `scan` caller must pass the same
+held deadline; no default, duration, sleep, attempt budget, or caller-supplied
+parameter is added.
+
+### Death-observed transition
+
+The monotonic existing watcher determines only which state transition is
+legal; it is not session-empty evidence:
+
+```text
+watcher already true
+  -> exact waitpid(supervisorPID, options 0) returns supervisorPID once
+  -> onExactReap exactly once
+  -> joined post-reap SID scans
+  -> member-derived containment or two complete empty scans
+```
+
+At `contain` entry this transition occurs before any
+`kill(-supervisorPID, SIGSTOP)` when the watcher is already true. The
+live-supervisor stop-first path remains exact. If its stop returns `ESRCH` and
+the existing immediate watcher check is true, it takes the same exact-reap
+transition instead of a pre-reap census. `EPERM`, `EINVAL`, and every other
+errno remain immediate containment uncertainty; a false-to-true race that
+reaches `EPERM` is not translated into death or absence.
+
+`reapNormallyAfterExit` must likewise exact-wait and invoke `onExactReap`
+before any scan, group query, or signal. Two consecutive complete joined empty
+post-reap scans plus absence of the retired supervisor group may close the
+ordinary path. A nonempty post-reap scan transfers into the existing post-reap
+containment state; exact reap alone never proves session empty.
+
+The orphan fixture keeps its one successful death wait and then enters this
+shared reap-first transition directly. It may not run the former raw
+`orphan_initial_census` before exact reap. The prepublication-held branch stays
+stop-first. There remains one watcher, one wait owner, one exact-wait path, one
+spawn, and unconditional fail-stop status `70` for uncertainty.
+
+### Member-derived post-reap actuation
+
+Post-reap state separates actuation from proof:
+
+```text
+G_observed = union(PGID(m) for joined live target member m)
+G_proof    = G_observed union { retired supervisorPID }
+signal targets = { -g | g in G_observed }
+```
+
+The retired supervisor group is never stopped or killed merely because its
+numeric identity equals the retired PID. It becomes an actuation target only
+when a joined live target member reports that PGID. It remains in `G_proof`,
+and final success still requires `kill(-g, 0) == -1 && errno == ESRCH` for it
+and for every captured member-derived group.
+
+Existing conservation rules remain mandatory: two equal complete joined
+stopped/zombie scans form the stopped fixed point; captured generation and
+group unions never shrink; all live member-derived groups are killed; late
+members are joined, captured, and killed; two complete empty scans close
+emptiness; each captured PID/start generation is absent; each proof group is
+absent. `EPERM` is never absence, containment, or success.
+
+### Static checkpoint and retained evidence
+
+The existing selected method must pin the A/SID/PGID/mapping/B order, exact
+generation equality before member construction, per-PID rather than whole-list
+retry, deadline-bearing call sites and region loop, exact-wait-before-scan
+death routing, member-derived post-reap signals, retired-group proof-only
+handling, no `EPERM` acceptance, unchanged bounds, unchanged v2 schema/key
+count/publisher, and no new XCTest identifier. These assertions are structural;
+R13 makes no runtime claim and adds no mock-kernel or injectable syscall
+surface.
+
+After functional edits, independently derive the canonical identity with the
+existing exclusion of `PrimeEmbeddedBuildProvenance.swift`; Python and Ruby
+calculations must agree. Then reseal the exact canonical thirteen-line,
+`546`-byte provenance file and rederive the same identity. Record the final
+path set, line delta, aggregate bytes, digest, counts, and read-only static
+audit before the single source commit. Do not invoke Swift, SwiftPM, XCTest,
+the governor, the fixture, or any child.
+
+All sixteen retained admission roots remain immutable. Their full sorted path
+set stays `6185ea35d684b2a50529aa79f1455bae789eda056e298f5509e7c5127423abd5`;
+the R12 five-root delta stays
+`01a4067f853f513dcdcdfdda45b2579c5f17abfb590ceceb7a5b4ea1cf7323de`.
+The R12 epoch remains device/inode `16777231/17395708`, with child inodes
+`17395709...17395717` assigned in order to home, config, tmp, Git template,
+SwiftPM cache, SwiftPM config, SwiftPM security, Clang module cache, and SwiftPM
+module cache. The Git template remains empty; public roots remain `0`; the R11
+production root remains absent. R12 build products are immutable non-input
+canary data. No retained root may be cleaned or mutated, and R13 may not write
+under `/private/tmp`.
+
+R13 closes none of the eight process-derived authorities. Its source checkpoint
+must retain:
+
+```text
+R13_swiftpm_commands = 0
+R13_builds = 0
+R13_tests = 0
+R13_target_launches = 0
+R13_production_attempts = 0
+outer_journal_authority_vector = 00000000
+gate_E_scientific_outcome = ABSTAIN
+gate_E_clearance_granted = 0
+```
+
+Any later Release assessment requires a separate committed readiness freeze,
+a fresh disjoint epoch, freshly measured artifact preimages, and exactly one
+newly authorized local command. This freeze authorizes no such run.
