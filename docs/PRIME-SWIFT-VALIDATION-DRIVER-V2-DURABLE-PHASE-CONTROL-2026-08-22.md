@@ -4988,3 +4988,75 @@ and observations. Even `S3` authorizes only a separate clean result
 checkpoint with status `READY_PENDING_SEPARATE_SHOT_FREEZE`. It does not
 authorize the reserved production root, either reserved shot cache, method 8,
 a Driver V2 production child, Gate F, or Gate G.
+
+## Gate E1.3 `r2` readiness interruption — metadata field width
+
+| Field | Observed value |
+| --- | --- |
+| Status | `STOPPED_BEFORE_CLONE_OR_SWIFT` |
+| Executed freeze | `eaf857cb57cb9571a8c1a0c3f4af1f20d8a28390` / tree `7e9d6af62e49eb53a25915caf97b611a7106d77f` |
+| Holder identity | SHA-256 `3afc1642328529c658075fc07a46ed85b775a4de753fc590eac2bbcd8b872e20`; blob `0051aba1b5ddf2f292b07ac9767756daf1b6e477` |
+| Holder executions / exit | `1 / 70` |
+| Successful namespace operations | exactly `7`: epoch plus six child `mkdir` operations |
+| Extended-metadata observations | `14` started: first `13` accepted, ordinal `14` rejected |
+| Local clone / Swift build / Swift test | `0 / 0 / 0` |
+| XCTest / method 8 / supervisor / fixed child | `0 / 0 / 0 / 0` |
+| Network / dependency fetch / GitHub | `0 / 0 / 0` |
+| Production consumption | `UNCONSUMED_PROVEN` |
+
+The holder emitted the single failure object:
+
+```json
+{"status":"failed","error_class":"RuntimeError","error":"extended-metadata:/private/tmp/gate-e1-3-readiness-r2-474008bdffccf410"}
+```
+
+The rejection occurred on the second observation of the epoch parent, after
+all six children and their individual pre-clone observations passed, and
+before `fchdir` or the Git spawn. The exact direct-spawn prefix was therefore
+`7 x /bin/mkdir + 14 x /bin/ls + 0 x /usr/bin/env`, or `21` direct children.
+Every returned group was reaped and group-empty.
+
+The metadata itself satisfied the intended predicate. The exact rejected
+xattr line bytes were:
+
+`09 63 6f 6d 2e 61 70 70 6c 65 2e 70 72 6f 76 65 6e 61 6e 63 65 09 20 31 31 20 0a`
+
+That is tab, `com.apple.provenance`, tab, **one leading space**, `11`, space,
+LF. The frozen parser accepted `[0-9]+` immediately after the second tab and
+therefore rejected the leading `0x20`. The already-accepted child line lacked
+that byte:
+
+`09 63 6f 6d 2e 61 70 70 6c 65 2e 70 72 6f 76 65 6e 61 6e 63 65 09 31 31 20 0a`
+
+This is a human-column formatting dependency in `/bin/ls`, not an ACL, flag,
+xattr-set, namespace, Git, Prime, Driver V2, SwiftPM, compiler, XCTest, or
+production result. The fail-closed rejection remains binding.
+
+The exact retained `R2` topology is:
+
+| Entry | Device / inode | UID/GID | mode / nlink / flags / bytes | Inventory |
+| --- | --- | --- | --- | --- |
+| epoch | `16777231/17351796` | `501/0` | `0700 / 8 / 0 / 256` | exact six frozen children |
+| `home` | `16777231/17351797` | `501/0` | `0700 / 2 / 0 / 64` | empty |
+| `tmp` | `16777231/17351798` | `501/0` | `0700 / 2 / 0 / 64` | empty |
+| `git-template` | `16777231/17351799` | `501/0` | `0700 / 2 / 0 / 64` | empty |
+| `clang-module-cache` | `16777231/17351800` | `501/0` | `0700 / 2 / 0 / 64` | empty |
+| `swiftpm-module-cache` | `16777231/17351801` | `501/0` | `0700 / 2 / 0 / 64` | empty |
+| `prime` | `16777231/17351802` | `501/0` | `0700 / 2 / 0 / 64` | empty; `.git` absent |
+
+Every entry is ACL-free with exact xattr-name set
+`{com.apple.provenance}`. The entire `R2` epoch is retained permanently and
+is ineligible for cleanup, reuse, continuation, or a successor launch.
+
+The three clean repository tuples, five manifest/lock/workspace-state tuples,
+four dependency-store commitments, prior cache/root tuples, and all admitted
+tool hashes compared exactly equal to `S0` after the stop. All six `A0` hashes
+also remained exact. The reserved production root and both reserved shot
+caches remained absent. Consequently the production identity remains proven
+unconsumed, but this freeze is spent and authorizes no further holder, clone,
+Swift, XCTest, or production action.
+
+Any successor must use a new epoch and a separately frozen metadata primitive.
+It must not repair the `/bin/ls` regular expression. Extended metadata should
+be read from held descriptors through typed Darwin APIs so flags, ACL count,
+and xattr-name bytes are data fields rather than human-formatted columns.
