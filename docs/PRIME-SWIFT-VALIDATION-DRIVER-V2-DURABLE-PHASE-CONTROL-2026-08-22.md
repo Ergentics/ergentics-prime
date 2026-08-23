@@ -6106,3 +6106,191 @@ path (entry 12 in the prior ordering)
 The later checkpoint must bind the exact thirteen-path delta and `2,163`
 watchers. No Swift command, fixture, governor, supervisor, child, Git probe,
 or shot is authorized by this correction.
+
+## Gate E1.4-C2 correction — outer continuity and receipt authority
+
+| Coordinate | Frozen value |
+| --- | --- |
+| Status | `FROZEN_SOURCE_EDIT_NOT_CHECKPOINTED` |
+| Durable-control predecessor | `035b56aadbe8a0b9005f24f91cbf645418265f87` / tree `7461b88fa8b865521036b83ed0612c9613a76d23` |
+| Source predecessor | clean `2d705a71dc1827cf4fe6f0f9f3bc8255063e1dd3` / tree `0077ac10f1dbba50680502a31084f7280c2c2f65` |
+| Authorized successor source commits | exactly `1`, the same direct child already frozen by E1.4-C/C1 |
+| Authorized source paths | the same exact `13`; no new path |
+| Successor files / identity records / authority directories | exactly `548 / 547 / 155` |
+| Prime / companion / combined watcher descriptors | exactly `703 / 1,460 / 2,163` |
+| Production authority vector before / success | `00000000 / 11110000` |
+| XCTest mechanics authority vector | exactly `00000000` |
+| Swift build / test / executable launch | `0 / 0 / 0` in this source slice |
+| Clone / root / cache / capsule creation | `0 / 0 / 0 / 0` |
+| Dependency resolution / fetch / network / GitHub | `0 / 0 / 0 / 0` |
+
+This correction does not authorize a second source commit, new file, new test
+identifier, process execution, or roadmap advance. It corrects implementation
+gaps found by three independent static audits before the first source
+checkpoint. The matrices and predicates below are authority. A passing test,
+record, comment, or normal supervisor exit cannot override a false predicate.
+
+### Audit blocker vector
+
+The candidate is not checkpointable while any coordinate below is false:
+
+```text
+C_outer_terminal = governor-owned Prime and companion descriptor/watch
+                   continuity remains retained and revalidated through the
+                   durable outer terminal
+D_one_deadline    = no deadline is created after successful posix_spawn;
+                   join, containment, exact reap, and both drains use the
+                   same absolute expiry
+R_exact_wait      = death is independently observed, then exactly one
+                   blocking waitpid(S, ..., 0), retrying EINTR only
+J_inner_receipt   = all 34 exact canonical framed inner leaves are retained,
+                   named-vnode joined, semantically validated, and revalidated
+                   through outer-terminal publication
+I_self_image      = the governor's mapped executable vnode joins its held
+                   descriptor and declared bytes; proc_pidpath is telemetry
+E_empty_env       = the governor's incoming environment is exactly empty
+F_capsule         = EOF is observed before the fixed five-second deadline and
+                   capsule.source_identity_sha256 equals embedded provenance
+P_absence         = every non-authorized declared-absent path is still absent
+                   after reap; only the three exact authorized leaves may
+                   transition absent -> present
+O_ordinary        = production success was ordinary completion and never a
+                   containment transition
+G_kernel_absence  = only ESRCH proves process-generation/group absence;
+                   EPERM or unexplained query failure is exit 70 uncertainty
+T_mechanics       = the existing named XCTest dynamically proves outer
+                   canonical framing, O_EXCL publication, one-shot/poison,
+                   independent caps+EOF drains, and retained terminal joins
+                   while spawning zero production processes
+
+checkpointable = C_outer_terminal * D_one_deadline * R_exact_wait
+                 * J_inner_receipt * I_self_image * E_empty_env * F_capsule
+                 * P_absence * O_ordinary * G_kernel_absence * T_mechanics
+```
+
+Every coordinate is Boolean and all are required. The source checkpoint is a
+hard stop if any value is unknown.
+
+### Strong primitive boundaries
+
+The existing allowlisted
+`Sources/PrimeCore/PrimeValidationDriverV2FixedProbeExecutor.swift` may add
+one opaque SPI continuity owner for the separate GovernorCore package. Its
+production surface is limited to capture from already-held Prime and
+companion root descriptors plus the exact captured Prime source snapshot;
+an immutable data-only observation; and zero-argument
+`revalidateContinuity()`. It retains complete Prime legacy allowlist and
+companion non-`.git` descriptors and watches inside one locked owner. It
+exposes no path loader, descriptor, watch, role, argv, environment, process,
+lease, facade, or retry capability. GovernorCore must independently join the
+captured Prime snapshot to the capsule's exact source identity, `548 / 547`,
+and embedded provenance before this owner can close `C_outer_terminal`.
+
+The owner is independent of the supervisor process so `S` death cannot end
+the outer watch window. Capture occurs before supervisor spawn; revalidation
+occurs before resume, after reap, immediately before terminal publication,
+and after the durable terminal join. The owner remains live through the last
+check. Prime legacy topology and companion `.git/**` policy remain exactly C;
+this correction does not alter the `703 + 1,460 = 2,163` descriptor count.
+
+The existing allowlisted DriverCore binding file may add one package-internal,
+value-only inner-journal receipt validator. GovernorCore supplies exact bytes
+and descriptor-derived vnode/metadata observations from 34 retained O_RDONLY,
+no-follow leaves. DriverCore opens no path and receives no process, facade,
+binding lifetime, raw owner, or executable capability. It must strictly
+decode and canonical-round-trip the frozen prestart, 16 ordered start, 16
+ordered terminal, and raw-terminal schemas; validate exact names/order,
+full-frame SHA-256 links, roles, fixed argv/images/roots, `0x408e`,
+`PID(Ci)=PGID(Ci)`, `SID(Ci)=S`, unique positive child identities, timing,
+wait/EOF/drain/group/continuity facts, output hashes and role facts, and raw
+terminal agreement. Its result is non-Codable, Sendable, value-only, and has
+no publicly constructible initializer. It is a journal/exit receipt, never a
+second semantic binding or owner.
+
+GovernorCore retains the 34 leaf descriptors, exact metadata, xattrs, framed
+bytes, names, hashes, and unique vnode vector from first admission through the
+outer terminal. It revalidates held descriptor, named vnode, metadata, xattrs,
+bytes, inventory, exact prefix, and root `nlink = 36`. The outer success data
+binds each inner leaf's descriptor-derived device/inode and one deterministic
+journal-receipt identity. This proves post-reap admission continuity. Because
+the predecessor inner schemas do not durably carry the writer-held inode
+vector, this slice must not claim a stronger publisher-to-governor vnode join.
+That residual cannot be papered over by a hash match.
+
+### Exact process and failure corrections
+
+The one outer deadline begins before `posix_spawn`. A successful spawn cannot
+construct another deadline. The containment guard distinguishes `armed`,
+`exact_reaped`, and `complete`: exact reap alone never disarms drain cleanup.
+Both drain completions are attempted under the same deadline even if one
+fails. Deinitialization contains when still armed, then finishes both drains;
+any uncertainty is fixed exit 70.
+
+The death source is the bounded precondition for the sole blocking exact wait;
+the persisted wait options are exactly `0`, never `WNOHANG`. A normal path
+that observes an unexpected session member transitions to containment and
+sets `ordinary_completion_without_containment = false`. Such a path cannot
+produce success even if the supervisor status is zero. Process-generation and
+group probes distinguish ESRCH from EPERM and all other failures; only ESRCH
+is absence.
+
+The governor requires `ProcessInfo.processInfo.environment.isEmpty` before
+live state, verifies time again after EOF, joins the current mapped executable
+vnode to the held governor image, and requires capsule source identity equal
+to `PrimeEmbeddedBuildProvenance.sourceIdentitySHA256`. After reap it checks
+every declared forbidden path except exactly these authorized creations:
+
+```text
+productionBase/gate-e-shot-governor-journal
+productionBase/outer-supervisor-stdout.bin
+productionBase/outer-supervisor-stderr.bin
+```
+
+No derived exemption or additional absent-to-present transition is allowed.
+
+### Mechanics-only dynamic proof
+
+Only the existing
+`testGateEJournalChainOneWinnerAndPoisonAreExact` identifier may be extended.
+It uses already-held descriptors and canonical data through a package-internal
+fixture in the existing GovernorCore file. It must reuse the production
+capsule decoder, outer journal publisher, finite request descriptor, captures,
+drains, and one-shot state machine. It must not invoke current production
+identity, `spawnSupervisor`, `posix_spawn`, Git/Swift paths, or any Gate-E
+role. Every observation fixes `spawned_process_count = 0`,
+`git_or_swift_probe_count = 0`, `production_status_eligible = false`, and
+`authority_vector = 00000000`.
+
+The dynamic cases are exact:
+
+1. canonical capsule/request, four distinct held/named outer leaf vnodes,
+   request EOF, empty stdout, independently capped-and-drained overflowing
+   stderr, immutable terminal, and retained revalidation;
+2. sequential second and third consumes reject and permanently poison;
+3. LF, insignificant-whitespace, and oversize frames reject before a journal;
+4. concurrent consume has one body winner and one rejection, but contention
+   leaves the final state permanently poisoned;
+5. a new fixture on the same durable root rejects existing outputs without
+   replacement;
+6. deterministic terminal O_EXCL collision preserves collision bytes/inode,
+   leaves only the exact three-leaf prefix, and poisons; and
+7. same-byte terminal rebound on a new inode fails retained revalidation and
+   poisons.
+
+The one-shot winner may set `complete` only if locked state remains `running`;
+a concurrent loser or failed retained revalidation permanently preserves
+`poisoned`. The package-internal fixture neither launches the session fixture
+nor closes production supervisor identity. The retired production XCTest
+remains a skip before work. No new test count or production fixture count is
+authorized.
+
+### Checkpoint rule
+
+After all twelve non-provenance paths are final, two independent canonical
+calculators must agree on exact `548 / 547`, canonical byte count, and digest.
+Only then may the embedded provenance digest change. Static source audits must
+then independently establish every blocker coordinate above and verify the
+exact thirteen-path delta. The one source commit remains a direct child of
+`2d705a71dc1827cf4fe6f0f9f3bc8255063e1dd3`. A later separately frozen
+readiness run, not this slice, may compile and execute the mechanics proof.
+No production governor invocation is authorized by C2.
