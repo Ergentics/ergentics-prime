@@ -8331,3 +8331,61 @@ recompute the complete Prime source identity, reseal the excluded provenance
 template, and checkpoint the source without running Swift. A later Release
 command requires its own R9 readiness freeze, fresh epoch, exact preimages, and
 one-shot authorization. No command is authorized by R8 itself.
+
+## Gate E1.4-R8 source checkpoint — APFS admission boundary repaired
+
+| Coordinate | Checkpoint value |
+| --- | --- |
+| Status | `SOURCE_CHECKPOINTED_STATIC_ONLY_NOT_EXECUTED` |
+| Durable-control freeze | `5c36eb948f294fe4aee835dd91ab4c071b166153` / tree `1feefbde57fbdd32d7d3b96fca120912d6dbebe9` |
+| Source predecessor | `d408680dec3bebe64251903c0d7526d98efab2d7` / tree `894ba2b82614a19e094a2124f1e8f936c5b7f2d5` |
+| Source checkpoint | `1bd9b9e2f30dc17e7983cb6f9bf0ae4831851efd` / tree `a2aff7d040c97c379161eec3ea0459f336cd9205` |
+| Parent relation | exactly one parent, the frozen source predecessor |
+| Source delta | exactly `2` modified mode-`100644` paths; `75` insertions / `19` deletions |
+| Swift build / test / executable launch | `0 / 0 / 0` |
+| Production attempts / authority vector | `0 / 00000000` |
+| Network / fetch / GitHub | `0 / 0 / 0` |
+
+The exact successor files are:
+
+| Path | Lines / bytes | Blob / SHA-256 |
+| --- | ---: | --- |
+| `Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift` | `13 / 546` | `e7d2c31b569f8e9d9f902b197d3d7f10b16fd94f` / `a52048db1a099ee0e7bedfc545211d3dc664579bfac36c4dec9a1b0e54e39840` |
+| `Tests/PrimeValidationWorkflow/Tests/PrimeValidationWorkflowDriverCoreTests/PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests.swift` | `6,816 / 245,638` | `1c2c251fdd57668f939a796838ff44482447d702` / `df2e6803106d28d76d91b76a24d0d76bf887b40085c0a1936f384d3517eb73f2` |
+
+Independent Python and Ruby calculators reproduced the R8 predecessor and
+agreed on the successor:
+
+| Quantity | R8 predecessor | R8 successor |
+| --- | ---: | ---: |
+| Admitted files | `548` | `548` |
+| Identity records | `547` | `547` |
+| Canonical record bytes | `112,279` | `112,279` |
+| Aggregate admitted bytes | `22,488,186` | `22,489,847` |
+| Capture-enumerator directories | `146` | `146` |
+| Held authority directories | `155` | `155` |
+| Prime / combined watchers | `703 / 2,163` | `703 / 2,163` |
+| Source identity SHA-256 | `9a46327485eb257fb835bda48758267324c090731fe9ce7e2a3074b8afc4687d` | `e458c197935662e827596db947b5b432cf21a3001fb8b2478f8ac49d2737e128` |
+
+The excluded provenance file is the exact canonical `546`-byte template and
+contains the successor identity once and the predecessor identity zero times.
+The companion pin and topology remain unchanged.
+
+The implementation uses `UInt64.addingReportingOverflow(1)`, rejects overflow,
+and admits only exact equality between the post-create base link count and the
+checked partial value. Base identity, owner, type, mode, flags, link transition,
+and xattrs and leaf owner, GID, mode, link count, flags, and size now each have
+a bounded lowercase diagnostic coordinate. The old aggregate coordinate is
+absent. Full post-create base and leaf descriptor states still become the only
+later revalidation baselines, and the descriptor-relative named-vnode join is
+unchanged.
+
+Three independent static reviews found no source, scope, or likely Swift-shape
+defect. GovernorCore, SessionFixture, manifests, production mains, DriverCore,
+schemas, process behavior, test identifiers, and every other path equal the
+predecessor. No `Process`, `CommandLine`, spawn, argv, environment, path loader,
+callback, role, timeout, writer, or second authority surface was added.
+
+This checkpoint authorizes no execution. Any R9 command must be separately
+frozen on this exact source commit, tree, and identity and must use a new
+private epoch. R7 remains consumed and is not retried.
