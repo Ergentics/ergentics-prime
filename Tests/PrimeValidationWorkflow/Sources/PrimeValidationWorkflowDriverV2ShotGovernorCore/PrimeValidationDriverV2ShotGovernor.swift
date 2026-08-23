@@ -512,6 +512,33 @@ private enum PrimeValidationDriverV2GovernorIO {
         }
     }
 
+    static func writeAllPositioned(
+        _ data: Data,
+        descriptor: Int32,
+        coordinate: String
+    ) throws {
+        var offset = 0
+        try data.withUnsafeBytes { bytes in
+            while offset < bytes.count {
+                let count = Darwin.pwrite(
+                    descriptor,
+                    bytes.baseAddress!.advanced(by: offset),
+                    bytes.count - offset,
+                    off_t(offset)
+                )
+                if count < 0, errno == EINTR { continue }
+                guard count > 0 else {
+                    throw governorRejected(
+                        PrimeValidationDriverV2ShotGovernorStatus
+                            .durableBoundary,
+                        coordinate + "_pwrite"
+                    )
+                }
+                offset += count
+            }
+        }
+    }
+
     static func synchronize(
         _ descriptor: Int32,
         coordinate: String
@@ -5136,10 +5163,373 @@ package enum PrimeValidationDriverV2SessionFixtureMode: Sendable {
     }
 }
 
-private enum PrimeValidationDriverV2SessionFixtureContainmentState {
+private enum PrimeValidationDriverV2SessionFixtureDiagnosticMode:
+    String,
+    Codable
+{
+    case prepublicationHeld = "prepublication_held"
+    case orphanTransition = "orphan_transition"
+}
+
+private enum PrimeValidationDriverV2SessionFixtureExecutionPhase:
+    String,
+    Codable
+{
+    case postSpawnJoin = "post_spawn_join"
+    case prepublicationChildDiscovery =
+        "prepublication_child_discovery"
+    case orphanDeathWait = "orphan_death_wait"
+    case orphanInitialCensus = "orphan_initial_census"
+    case primaryContainment = "primary_containment"
+}
+
+private enum PrimeValidationDriverV2SessionFixtureContainmentState:
+    String,
+    Codable
+{
     case armed
-    case exactReaped
-    case conservationComplete
+    case exactReaped = "exact_reaped"
+    case conservationComplete = "conservation_complete"
+}
+
+private struct PrimeValidationDriverV2SessionFixtureFailStopV1:
+    Codable,
+    Equatable
+{
+    static let requiredLeaf =
+        "gate-e-session-fixture-fail-stop.json"
+    static let schemaValue =
+        "prime_driver_v2_session_fixture_fail_stop_v1"
+    static let maximumByteCount = 1_024
+    static let maximumCoordinateByteCount = 256
+
+    let schema: String
+    let sourceIdentitySHA256: String
+    let fixtureMode:
+        PrimeValidationDriverV2SessionFixtureDiagnosticMode
+    let executionPhase:
+        PrimeValidationDriverV2SessionFixtureExecutionPhase
+    let containmentState:
+        PrimeValidationDriverV2SessionFixtureContainmentState
+    let deadlineExpired: Bool
+    let failureStatus: Int32
+    let failureCoordinate: String
+    let admittedDeviceID: UInt64
+    let admittedInode: UInt64
+    let fixedFailStopStatus: Int32
+
+    init(
+        fixtureMode:
+            PrimeValidationDriverV2SessionFixtureDiagnosticMode,
+        executionPhase:
+            PrimeValidationDriverV2SessionFixtureExecutionPhase,
+        containmentState:
+            PrimeValidationDriverV2SessionFixtureContainmentState,
+        deadlineExpired: Bool,
+        failure: PrimeValidationDriverV2ShotGovernorFailure,
+        admittedDeviceID: UInt64,
+        admittedInode: UInt64
+    ) throws {
+        guard failure.status
+                == PrimeValidationDriverV2ShotGovernorStatus
+                    .containmentUncertain,
+              !failure.coordinate.isEmpty,
+              failure.coordinate.utf8.count
+                <= Self.maximumCoordinateByteCount,
+              failure.coordinate.utf8.allSatisfy({ byte in
+                  (byte >= 97 && byte <= 122)
+                    || (byte >= 48 && byte <= 57)
+                    || byte == 95
+              })
+        else {
+            throw governorRejected(
+                PrimeValidationDriverV2ShotGovernorStatus.durableBoundary,
+                "session_fixture_fail_stop_coordinate"
+            )
+        }
+        schema = Self.schemaValue
+        sourceIdentitySHA256 =
+            PrimeEmbeddedBuildProvenance.sourceIdentitySHA256
+        self.fixtureMode = fixtureMode
+        self.executionPhase = executionPhase
+        self.containmentState = containmentState
+        self.deadlineExpired = deadlineExpired
+        failureStatus = failure.status
+        failureCoordinate = failure.coordinate
+        self.admittedDeviceID = admittedDeviceID
+        self.admittedInode = admittedInode
+        fixedFailStopStatus =
+            PrimeValidationDriverV2ShotGovernorStatus
+                .containmentUncertain
+    }
+}
+
+private final class PrimeValidationDriverV2SessionFixtureFailStopLeaf {
+    private(set) var descriptor: Int32
+    private let absolutePath: String
+    private let admittedMetadata:
+        PrimeValidationDriverV2GovernorMetadata
+    private let admittedXattrs: PrimeValidationDriverV2GovernorXattrs
+    private let admittedDescriptorFlags: Int32
+    private let admittedStatusFlags: Int32
+
+    var admittedDeviceID: UInt64 { admittedMetadata.deviceID }
+    var admittedInode: UInt64 { admittedMetadata.inode }
+
+    init(duplicatingTestDescriptor source: Int32) throws {
+        guard source >= 3,
+              Self.descriptorPolicyIsExact(source)
+        else {
+            throw governorRejected(
+                PrimeValidationDriverV2ShotGovernorStatus.admission,
+                "session_fixture_fail_stop_source_descriptor"
+            )
+        }
+        descriptor = fcntl(source, F_DUPFD_CLOEXEC, 3)
+        guard descriptor >= 3 else {
+            if descriptor >= 0 { _ = Darwin.close(descriptor) }
+            throw governorRejected(
+                PrimeValidationDriverV2ShotGovernorStatus.admission,
+                "session_fixture_fail_stop_duplicate"
+            )
+        }
+        do {
+            absolutePath = try PrimeValidationDriverV2GovernorIO
+                .pathForDescriptor(
+                    descriptor,
+                    coordinate: "session_fixture_fail_stop_path"
+                )
+            guard URL(fileURLWithPath: absolutePath).lastPathComponent
+                    == PrimeValidationDriverV2SessionFixtureFailStopV1
+                        .requiredLeaf,
+                  Self.descriptorPolicyIsExact(descriptor)
+            else {
+                throw governorRejected(
+                    PrimeValidationDriverV2ShotGovernorStatus.admission,
+                    "session_fixture_fail_stop_descriptor"
+                )
+            }
+            var held = stat()
+            var named = stat()
+            guard fstat(descriptor, &held) == 0,
+                  lstat(absolutePath, &named) == 0,
+                  held.st_mode & mode_t(S_IFMT) == mode_t(S_IFREG),
+                  named.st_mode & mode_t(S_IFMT) == mode_t(S_IFREG),
+                  held.st_dev == named.st_dev,
+                  held.st_ino == named.st_ino,
+                  held.st_uid == geteuid(),
+                  held.st_nlink == 1,
+                  held.st_mode & mode_t(0o7777) == mode_t(0o600),
+                  held.st_size == 0,
+                  held.st_flags == 0
+            else {
+                throw governorRejected(
+                    PrimeValidationDriverV2ShotGovernorStatus.admission,
+                    "session_fixture_fail_stop_preimage"
+                )
+            }
+            let heldMetadata = try PrimeValidationDriverV2GovernorMetadata(
+                held
+            )
+            let descriptorFlags = fcntl(descriptor, F_GETFD)
+            let statusFlags = fcntl(descriptor, F_GETFL)
+            guard try PrimeValidationDriverV2GovernorMetadata(named)
+                    == heldMetadata,
+                  descriptorFlags >= 0,
+                  statusFlags >= 0
+            else {
+                throw governorRejected(
+                    PrimeValidationDriverV2ShotGovernorStatus.admission,
+                    "session_fixture_fail_stop_named_join"
+                )
+            }
+            admittedMetadata = heldMetadata
+            admittedDescriptorFlags = descriptorFlags
+            admittedStatusFlags = statusFlags
+            admittedXattrs = try PrimeValidationDriverV2GovernorXattrs
+                .capture(
+                    descriptor,
+                    coordinate: "session_fixture_fail_stop"
+                )
+            _ = try PrimeValidationDriverV2GovernorIO.requireLocalAPFS(
+                descriptor,
+                coordinate: "session_fixture_fail_stop"
+            )
+            try revalidateEmpty()
+        } catch {
+            _ = Darwin.close(descriptor)
+            descriptor = -1
+            throw error
+        }
+    }
+
+    deinit {
+        if descriptor >= 3 { _ = Darwin.close(descriptor) }
+    }
+
+    func revalidateEmpty() throws {
+        var held = stat()
+        var named = stat()
+        guard descriptor >= 3,
+              Self.descriptorPolicyIsExact(descriptor),
+              fcntl(descriptor, F_GETFD) == admittedDescriptorFlags,
+              fcntl(descriptor, F_GETFL) == admittedStatusFlags,
+              fstat(descriptor, &held) == 0,
+              lstat(absolutePath, &named) == 0,
+              try PrimeValidationDriverV2GovernorMetadata(held)
+                == admittedMetadata,
+              try PrimeValidationDriverV2GovernorMetadata(named)
+                == admittedMetadata,
+              try PrimeValidationDriverV2GovernorXattrs.capture(
+                  descriptor,
+                  coordinate: "session_fixture_fail_stop"
+              ) == admittedXattrs,
+              try PrimeValidationDriverV2GovernorIO.readExact(
+                  descriptor: descriptor,
+                  byteCount: 0,
+                  coordinate: "session_fixture_fail_stop"
+              ).isEmpty
+        else {
+            throw governorRejected(
+                PrimeValidationDriverV2ShotGovernorStatus.admission,
+                "session_fixture_fail_stop_changed"
+            )
+        }
+    }
+
+    func publishBestEffort(
+        caughtError: Error,
+        fixtureMode:
+            PrimeValidationDriverV2SessionFixtureDiagnosticMode,
+        executionPhase:
+            PrimeValidationDriverV2SessionFixtureExecutionPhase,
+        containmentState:
+            PrimeValidationDriverV2SessionFixtureContainmentState,
+        deadlineExpired: Bool
+    ) {
+        do {
+            guard let failure = caughtError
+                    as? PrimeValidationDriverV2ShotGovernorFailure,
+                  failure.status
+                    == PrimeValidationDriverV2ShotGovernorStatus
+                        .containmentUncertain
+            else { return }
+            let record = try PrimeValidationDriverV2SessionFixtureFailStopV1(
+                fixtureMode: fixtureMode,
+                executionPhase: executionPhase,
+                containmentState: containmentState,
+                deadlineExpired: deadlineExpired,
+                failure: failure,
+                admittedDeviceID: admittedMetadata.deviceID,
+                admittedInode: admittedMetadata.inode
+            )
+            let canonical = try PrimeCanonicalJSON.encode(record)
+            guard !canonical.isEmpty,
+                  canonical.count
+                    <= PrimeValidationDriverV2SessionFixtureFailStopV1
+                        .maximumByteCount,
+                  canonical.last != 0x0a
+            else {
+                throw governorRejected(
+                    PrimeValidationDriverV2ShotGovernorStatus
+                        .durableBoundary,
+                    "session_fixture_fail_stop_frame"
+                )
+            }
+            try revalidateEmpty()
+            try PrimeValidationDriverV2GovernorIO.writeAllPositioned(
+                canonical,
+                descriptor: descriptor,
+                coordinate: "session_fixture_fail_stop"
+            )
+            guard lseek(descriptor, 0, SEEK_CUR) == 0 else {
+                throw governorRejected(
+                    PrimeValidationDriverV2ShotGovernorStatus
+                        .durableBoundary,
+                    "session_fixture_fail_stop_offset"
+                )
+            }
+            try PrimeValidationDriverV2GovernorIO.synchronize(
+                descriptor,
+                coordinate: "session_fixture_fail_stop_data"
+            )
+            guard fchmod(descriptor, mode_t(0o400)) == 0 else {
+                throw governorRejected(
+                    PrimeValidationDriverV2ShotGovernorStatus
+                        .durableBoundary,
+                    "session_fixture_fail_stop_mode"
+                )
+            }
+            try PrimeValidationDriverV2GovernorIO.synchronize(
+                descriptor,
+                coordinate: "session_fixture_fail_stop_frozen"
+            )
+            try revalidatePostimage(record: record, canonical: canonical)
+        } catch {
+            return
+        }
+    }
+
+    private func revalidatePostimage(
+        record: PrimeValidationDriverV2SessionFixtureFailStopV1,
+        canonical: Data
+    ) throws {
+        var held = stat()
+        var named = stat()
+        guard descriptor >= 3,
+              Self.descriptorPolicyIsExact(descriptor),
+              fcntl(descriptor, F_GETFD) == admittedDescriptorFlags,
+              fcntl(descriptor, F_GETFL) == admittedStatusFlags,
+              fstat(descriptor, &held) == 0,
+              lstat(absolutePath, &named) == 0,
+              held.st_mode & mode_t(S_IFMT) == mode_t(S_IFREG),
+              named.st_mode & mode_t(S_IFMT) == mode_t(S_IFREG),
+              held.st_dev == named.st_dev,
+              held.st_ino == named.st_ino,
+              UInt64(bitPattern: Int64(held.st_dev))
+                == admittedMetadata.deviceID,
+              UInt64(held.st_ino) == admittedMetadata.inode,
+              held.st_uid == admittedMetadata.ownerUserID,
+              held.st_gid == admittedMetadata.ownerGroupID,
+              held.st_nlink == 1,
+              held.st_mode & mode_t(0o7777) == mode_t(0o400),
+              held.st_size == off_t(canonical.count),
+              held.st_flags == 0,
+              try PrimeValidationDriverV2GovernorMetadata(named)
+                == PrimeValidationDriverV2GovernorMetadata(held),
+              try PrimeValidationDriverV2GovernorXattrs.capture(
+                  descriptor,
+                  coordinate: "session_fixture_fail_stop"
+              ) == admittedXattrs,
+              try PrimeValidationDriverV2GovernorIO.readExact(
+                  descriptor: descriptor,
+                  byteCount: canonical.count,
+                  coordinate: "session_fixture_fail_stop"
+              ) == canonical,
+              try PrimeCanonicalJSON.decode(
+                  PrimeValidationDriverV2SessionFixtureFailStopV1.self,
+                  from: canonical
+              ) == record,
+              record.admittedDeviceID == admittedMetadata.deviceID,
+              record.admittedInode == admittedMetadata.inode
+        else {
+            throw governorRejected(
+                PrimeValidationDriverV2ShotGovernorStatus.durableBoundary,
+                "session_fixture_fail_stop_postimage"
+            )
+        }
+    }
+
+    private static func descriptorPolicyIsExact(_ value: Int32) -> Bool {
+        let descriptorFlags = fcntl(value, F_GETFD)
+        let statusFlags = fcntl(value, F_GETFL)
+        return descriptorFlags >= 0
+            && descriptorFlags & FD_CLOEXEC != 0
+            && statusFlags >= 0
+            && statusFlags & O_ACCMODE == O_RDWR
+            && statusFlags & (O_APPEND | O_NONBLOCK | O_ASYNC) == 0
+            && lseek(value, 0, SEEK_CUR) == 0
+    }
 }
 
 package struct PrimeValidationDriverV2SessionFixtureObservation:
@@ -5173,14 +5563,28 @@ package struct PrimeValidationDriverV2SessionFixtureWaitObservation:
 }
 
 package extension PrimeValidationDriverV2ShotGovernor {
-    /// Package-internal mechanics only. Both capabilities enter as already
+    /// Package-internal mechanics only. All capabilities enter as already
     /// held descriptors; this seam has no path loader and cannot be reached by
     /// the production capsule entry.
     static func exerciseSessionFixtureForTesting(
         heldSessionFixtureDescriptor: Int32,
         heldWorkingDirectoryDescriptor: Int32,
+        heldFailStopDiagnosticDescriptor: Int32,
         mode: PrimeValidationDriverV2SessionFixtureMode
     ) throws -> PrimeValidationDriverV2SessionFixtureObservation {
+        let failStopDiagnostic = try
+            PrimeValidationDriverV2SessionFixtureFailStopLeaf(
+                duplicatingTestDescriptor:
+                    heldFailStopDiagnosticDescriptor
+            )
+        let diagnosticMode:
+            PrimeValidationDriverV2SessionFixtureDiagnosticMode
+        switch mode {
+        case .prepublicationHeld:
+            diagnosticMode = .prepublicationHeld
+        case .orphanTransition:
+            diagnosticMode = .orphanTransition
+        }
         let executable = try PrimeValidationDriverV2GovernorHeldExecutable(
             duplicatingTestDescriptor: heldSessionFixtureDescriptor,
             requiredLeaf: "PrimeValidationWorkflowDriverV2SessionFixture",
@@ -5325,6 +5729,9 @@ package extension PrimeValidationDriverV2ShotGovernor {
                 "session_fixture_spawn_\(result)"
             )
         }
+        var executionPhase:
+            PrimeValidationDriverV2SessionFixtureExecutionPhase =
+                .postSpawnJoin
         let deathWatcher = PrimeValidationDriverV2GovernorDeathWatcher(pid: pid)
         var containmentState:
             PrimeValidationDriverV2SessionFixtureContainmentState = .armed
@@ -5365,6 +5772,16 @@ package extension PrimeValidationDriverV2ShotGovernor {
                     break
                 }
             } catch {
+                let deadlineExpired =
+                    DispatchTime.now().uptimeNanoseconds
+                        >= deadline.expiresAt
+                failStopDiagnostic.publishBestEffort(
+                    caughtError: error,
+                    fixtureMode: diagnosticMode,
+                    executionPhase: executionPhase,
+                    containmentState: containmentState,
+                    deadlineExpired: deadlineExpired
+                )
                 Darwin._exit(
                     PrimeValidationDriverV2ShotGovernorStatus
                         .containmentUncertain
@@ -5411,6 +5828,7 @@ package extension PrimeValidationDriverV2ShotGovernor {
         var acceptedAlreadyEmpty = false
         switch mode {
         case .prepublicationHeld:
+            executionPhase = .prepublicationChildDiscovery
             while firstMembers.count < 2 {
                 try deadline.requireTime("session_fixture_child_discovery")
                 firstMembers = try PrimeValidationDriverV2GovernorSessionCensus
@@ -5418,6 +5836,7 @@ package extension PrimeValidationDriverV2ShotGovernor {
                 if firstMembers.count < 2 { _ = Darwin.usleep(1_000) }
             }
         case .orphanTransition:
+            executionPhase = .orphanDeathWait
             guard deathWatcher.wait(deadline: deadline) else {
                 throw governorRejected(
                     PrimeValidationDriverV2ShotGovernorStatus
@@ -5425,12 +5844,14 @@ package extension PrimeValidationDriverV2ShotGovernor {
                     "session_fixture_orphan_death"
                 )
             }
+            executionPhase = .orphanInitialCensus
             firstMembers = try PrimeValidationDriverV2GovernorSessionCensus
                 .scan(sessionIdentifier: pid)
             acceptedAlreadyEmpty = firstMembers.allSatisfy {
                 $0.processIdentifier == pid
             }
         }
+        executionPhase = .primaryContainment
         let resultObservation = try PrimeValidationDriverV2GovernorSessionCensus
             .contain(
                 supervisorPID: pid,
@@ -5439,6 +5860,7 @@ package extension PrimeValidationDriverV2ShotGovernor {
                 onExactReap: { containmentState = .exactReaped }
             )
         containmentState = .conservationComplete
+        try failStopDiagnostic.revalidateEmpty()
         return .init(
             supervisorProcessIdentifier: pid,
             supervisorSessionIdentifier: pid,

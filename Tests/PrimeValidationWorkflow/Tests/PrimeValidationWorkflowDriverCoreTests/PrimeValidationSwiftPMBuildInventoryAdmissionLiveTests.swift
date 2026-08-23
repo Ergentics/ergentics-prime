@@ -4103,6 +4103,9 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
         )
         XCTAssertThrowsError(try reboundFacade.revalidateRetainedTerminal())
 
+        let failStopDiagnostic = try
+            GateESessionFixtureFailStopDiagnosticLeaf(base: fixture.base)
+        try failStopDiagnostic.revalidateUnchangedEmpty()
         let sessionFixtureDescriptor = try fixture
             .openPinnedSessionFixtureExecutable()
         defer { _ = Darwin.close(sessionFixtureDescriptor) }
@@ -4119,8 +4122,11 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
             .exerciseSessionFixtureForTesting(
                 heldSessionFixtureDescriptor: sessionFixtureDescriptor,
                 heldWorkingDirectoryDescriptor: workingDescriptor,
+                heldFailStopDiagnosticDescriptor:
+                    failStopDiagnostic.descriptor,
                 mode: .prepublicationHeld
             )
+        try failStopDiagnostic.revalidateUnchangedEmpty()
         XCTAssertEqual(
             prepublication.supervisorProcessIdentifier,
             prepublication.supervisorSessionIdentifier
@@ -4144,8 +4150,11 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
             .exerciseSessionFixtureForTesting(
                 heldSessionFixtureDescriptor: sessionFixtureDescriptor,
                 heldWorkingDirectoryDescriptor: workingDescriptor,
+                heldFailStopDiagnosticDescriptor:
+                    failStopDiagnostic.descriptor,
                 mode: .orphanTransition
             )
+        try failStopDiagnostic.revalidateUnchangedEmpty()
         XCTAssertTrue(
             orphan.discoveredDedicatedChildGroup
                 || orphan.acceptedOrphanAlreadyEmpty
@@ -5919,6 +5928,360 @@ private final class DriverV2IsolatedSpawnCanaryRace:
 
 private enum FixtureError: Error {
     case invalid(String)
+}
+
+private struct GateESessionFixtureFailStopMetadata: Equatable {
+    let deviceID: UInt64
+    let inode: UInt64
+    let byteCount: UInt64
+    let ownerUserID: UInt32
+    let ownerGroupID: UInt32
+    let fileType: UInt16
+    let permissionMode: UInt16
+    let linkCount: UInt64
+    let flags: UInt32
+    let modificationSeconds: Int64
+    let modificationNanoseconds: Int64
+    let statusChangeSeconds: Int64
+    let statusChangeNanoseconds: Int64
+
+    init(_ value: stat) throws {
+        guard value.st_size >= 0 else {
+            throw FixtureError.invalid(
+                "session_fail_stop_negative_size"
+            )
+        }
+        deviceID = UInt64(bitPattern: Int64(value.st_dev))
+        inode = UInt64(value.st_ino)
+        byteCount = UInt64(value.st_size)
+        ownerUserID = value.st_uid
+        ownerGroupID = value.st_gid
+        fileType = UInt16(value.st_mode & mode_t(S_IFMT))
+        permissionMode = UInt16(value.st_mode & mode_t(0o7777))
+        linkCount = UInt64(value.st_nlink)
+        flags = value.st_flags
+        modificationSeconds = Int64(value.st_mtimespec.tv_sec)
+        modificationNanoseconds = Int64(value.st_mtimespec.tv_nsec)
+        statusChangeSeconds = Int64(value.st_ctimespec.tv_sec)
+        statusChangeNanoseconds = Int64(value.st_ctimespec.tv_nsec)
+    }
+}
+
+private struct GateESessionFixtureFailStopXattrs: Equatable {
+    let provenance: Data?
+
+    static func capture(
+        descriptor: Int32,
+        coordinate: String
+    ) throws -> Self {
+        errno = 0
+        if let accessControlList = acl_get_fd_np(
+            descriptor,
+            ACL_TYPE_EXTENDED
+        ) {
+            acl_free(UnsafeMutableRawPointer(accessControlList))
+            throw FixtureError.invalid(coordinate + "_acl")
+        }
+        guard errno == ENOENT else {
+            throw FixtureError.invalid(coordinate + "_acl_query")
+        }
+
+        let size = flistxattr(descriptor, nil, 0, 0)
+        guard size >= 0, size <= 65_536 else {
+            throw FixtureError.invalid(coordinate + "_xattr_size")
+        }
+        guard size > 0 else { return .init(provenance: nil) }
+
+        var names = [CChar](repeating: 0, count: size)
+        let returned = names.withUnsafeMutableBufferPointer {
+            flistxattr(descriptor, $0.baseAddress, $0.count, 0)
+        }
+        guard returned == size else {
+            throw FixtureError.invalid(coordinate + "_xattr_inventory")
+        }
+        let bytes = names.prefix(returned).map { UInt8(bitPattern: $0) }
+        var observed = [String]()
+        var start = 0
+        for index in bytes.indices where bytes[index] == 0 {
+            guard start < index,
+                  let name = String(
+                      bytes: bytes[start ..< index],
+                      encoding: .utf8
+                  )
+            else {
+                throw FixtureError.invalid(coordinate + "_xattr_name")
+            }
+            observed.append(name)
+            start = index + 1
+        }
+        guard start == bytes.endIndex,
+              observed == ["com.apple.provenance"]
+        else {
+            throw FixtureError.invalid(coordinate + "_xattr_policy")
+        }
+
+        let valueSize = "com.apple.provenance".withCString {
+            fgetxattr(descriptor, $0, nil, 0, 0, 0)
+        }
+        guard valueSize >= 0, valueSize <= 65_536 else {
+            throw FixtureError.invalid(coordinate + "_xattr_value_size")
+        }
+        var value = Data(count: valueSize)
+        let valueCount = value.withUnsafeMutableBytes { buffer in
+            "com.apple.provenance".withCString {
+                fgetxattr(
+                    descriptor,
+                    $0,
+                    buffer.baseAddress,
+                    buffer.count,
+                    0,
+                    0
+                )
+            }
+        }
+        guard valueCount == valueSize else {
+            throw FixtureError.invalid(coordinate + "_xattr_value")
+        }
+        return .init(provenance: value)
+    }
+}
+
+private struct GateESessionFixtureFailStopDescriptorState: Equatable {
+    let metadata: GateESessionFixtureFailStopMetadata
+    let xattrs: GateESessionFixtureFailStopXattrs
+    let descriptorFlags: Int32
+    let statusFlags: Int32
+    let offset: Int64
+
+    static func capture(
+        descriptor: Int32,
+        expectedFileType: mode_t,
+        expectedAccessMode: Int32,
+        coordinate: String
+    ) throws -> Self {
+        var status = stat()
+        let descriptorFlags = fcntl(descriptor, F_GETFD)
+        let statusFlags = fcntl(descriptor, F_GETFL)
+        let offset = lseek(descriptor, 0, SEEK_CUR)
+        guard fstat(descriptor, &status) == 0,
+              status.st_mode & mode_t(S_IFMT) == expectedFileType,
+              descriptorFlags >= 0,
+              descriptorFlags & FD_CLOEXEC != 0,
+              statusFlags >= 0,
+              statusFlags & O_ACCMODE == expectedAccessMode,
+              statusFlags & (O_APPEND | O_NONBLOCK | O_ASYNC) == 0,
+              offset == 0
+        else {
+            throw FixtureError.invalid(coordinate + "_descriptor")
+        }
+        return try .init(
+            metadata: .init(status),
+            xattrs: .capture(
+                descriptor: descriptor,
+                coordinate: coordinate
+            ),
+            descriptorFlags: descriptorFlags,
+            statusFlags: statusFlags,
+            offset: Int64(offset)
+        )
+    }
+}
+
+private final class GateESessionFixtureFailStopDiagnosticLeaf {
+    private static let leaf =
+        "gate-e-session-fixture-fail-stop.json"
+
+    private let baseDescriptor: Int32
+    let descriptor: Int32
+    private let frozenBase:
+        GateESessionFixtureFailStopDescriptorState
+    private let frozenLeaf:
+        GateESessionFixtureFailStopDescriptorState
+
+    init(base: URL) throws {
+        let heldBase = Darwin.open(
+            base.path,
+            O_RDONLY | O_DIRECTORY | O_NOFOLLOW_ANY | O_CLOEXEC
+        )
+        guard heldBase >= 3 else {
+            if heldBase >= 0 { _ = Darwin.close(heldBase) }
+            throw FixtureError.invalid(
+                "session_fail_stop_base_open_\(errno)"
+            )
+        }
+        var retainBase = false
+        defer {
+            if !retainBase { _ = Darwin.close(heldBase) }
+        }
+        let admittedBase = try
+            GateESessionFixtureFailStopDescriptorState.capture(
+                descriptor: heldBase,
+                expectedFileType: mode_t(S_IFDIR),
+                expectedAccessMode: O_RDONLY,
+                coordinate: "session_fail_stop_base"
+            )
+        guard admittedBase.metadata.ownerUserID == Darwin.geteuid(),
+              admittedBase.metadata.permissionMode == 0o700,
+              admittedBase.metadata.flags == 0
+        else {
+            throw FixtureError.invalid(
+                "session_fail_stop_base_metadata"
+            )
+        }
+
+        let opened = Self.leaf.withCString {
+            openat(
+                heldBase,
+                $0,
+                O_RDWR | O_CREAT | O_EXCL | O_NOFOLLOW | O_CLOEXEC,
+                mode_t(0o600)
+            )
+        }
+        guard opened >= 3 else {
+            if opened >= 0 { _ = Darwin.close(opened) }
+            throw FixtureError.invalid(
+                "session_fail_stop_leaf_open_\(errno)"
+            )
+        }
+        var retainLeaf = false
+        defer {
+            if !retainLeaf { _ = Darwin.close(opened) }
+        }
+        guard fchmod(opened, mode_t(0o600)) == 0,
+              fsync(opened) == 0,
+              fcntl(opened, F_FULLFSYNC) == 0,
+              fsync(heldBase) == 0,
+              fcntl(heldBase, F_FULLFSYNC) == 0
+        else {
+            throw FixtureError.invalid(
+                "session_fail_stop_leaf_freeze_\(errno)"
+            )
+        }
+
+        let frozenLeaf = try
+            GateESessionFixtureFailStopDescriptorState.capture(
+                descriptor: opened,
+                expectedFileType: mode_t(S_IFREG),
+                expectedAccessMode: O_RDWR,
+                coordinate: "session_fail_stop_leaf"
+            )
+        let frozenBase = try
+            GateESessionFixtureFailStopDescriptorState.capture(
+                descriptor: heldBase,
+                expectedFileType: mode_t(S_IFDIR),
+                expectedAccessMode: O_RDONLY,
+                coordinate: "session_fail_stop_base_frozen"
+            )
+        guard frozenBase.metadata.deviceID
+                == admittedBase.metadata.deviceID,
+              frozenBase.metadata.inode == admittedBase.metadata.inode,
+              frozenBase.metadata.ownerUserID
+                == admittedBase.metadata.ownerUserID,
+              frozenBase.metadata.ownerGroupID
+                == admittedBase.metadata.ownerGroupID,
+              frozenBase.metadata.fileType
+                == admittedBase.metadata.fileType,
+              frozenBase.metadata.permissionMode
+                == admittedBase.metadata.permissionMode,
+              frozenBase.metadata.linkCount
+                == admittedBase.metadata.linkCount,
+              frozenBase.metadata.flags == admittedBase.metadata.flags,
+              frozenBase.xattrs == admittedBase.xattrs,
+              frozenLeaf.metadata.ownerUserID == Darwin.geteuid(),
+              frozenLeaf.metadata.ownerGroupID
+                == frozenBase.metadata.ownerGroupID,
+              frozenLeaf.metadata.permissionMode == 0o600,
+              frozenLeaf.metadata.linkCount == 1,
+              frozenLeaf.metadata.flags == 0,
+              frozenLeaf.metadata.byteCount == 0
+        else {
+            throw FixtureError.invalid(
+                "session_fail_stop_frozen_metadata"
+            )
+        }
+        let rebound = try Self.openNamedLeaf(
+            baseDescriptor: heldBase,
+            coordinate: "session_fail_stop_leaf_initial_rejoin"
+        )
+        guard rebound.metadata == frozenLeaf.metadata,
+              rebound.xattrs == frozenLeaf.xattrs
+        else {
+            throw FixtureError.invalid(
+                "session_fail_stop_leaf_initial_rebound"
+            )
+        }
+
+        baseDescriptor = heldBase
+        descriptor = opened
+        self.frozenBase = frozenBase
+        self.frozenLeaf = frozenLeaf
+        retainBase = true
+        retainLeaf = true
+    }
+
+    deinit {
+        if descriptor >= 3 { _ = Darwin.close(descriptor) }
+        if baseDescriptor >= 3 { _ = Darwin.close(baseDescriptor) }
+    }
+
+    func revalidateUnchangedEmpty() throws {
+        let currentBase = try
+            GateESessionFixtureFailStopDescriptorState.capture(
+                descriptor: baseDescriptor,
+                expectedFileType: mode_t(S_IFDIR),
+                expectedAccessMode: O_RDONLY,
+                coordinate: "session_fail_stop_base_revalidate"
+            )
+        let currentLeaf = try
+            GateESessionFixtureFailStopDescriptorState.capture(
+                descriptor: descriptor,
+                expectedFileType: mode_t(S_IFREG),
+                expectedAccessMode: O_RDWR,
+                coordinate: "session_fail_stop_leaf_revalidate"
+            )
+        let rebound = try Self.openNamedLeaf(
+            baseDescriptor: baseDescriptor,
+            coordinate: "session_fail_stop_leaf_rejoin"
+        )
+        guard currentBase == frozenBase,
+              currentLeaf == frozenLeaf,
+              rebound.metadata == frozenLeaf.metadata,
+              rebound.xattrs == frozenLeaf.xattrs,
+              rebound.metadata.deviceID == currentLeaf.metadata.deviceID,
+              rebound.metadata.inode == currentLeaf.metadata.inode,
+              currentLeaf.metadata.byteCount == 0,
+              currentLeaf.offset == 0,
+              rebound.offset == 0
+        else {
+            throw FixtureError.invalid(
+                "session_fail_stop_leaf_changed"
+            )
+        }
+    }
+
+    private static func openNamedLeaf(
+        baseDescriptor: Int32,
+        coordinate: String
+    ) throws -> GateESessionFixtureFailStopDescriptorState {
+        let rebound = leaf.withCString {
+            openat(
+                baseDescriptor,
+                $0,
+                O_RDONLY | O_NOFOLLOW | O_CLOEXEC
+            )
+        }
+        guard rebound >= 3 else {
+            if rebound >= 0 { _ = Darwin.close(rebound) }
+            throw FixtureError.invalid(coordinate + "_open_\(errno)")
+        }
+        defer { _ = Darwin.close(rebound) }
+        return try GateESessionFixtureFailStopDescriptorState.capture(
+            descriptor: rebound,
+            expectedFileType: mode_t(S_IFREG),
+            expectedAccessMode: O_RDONLY,
+            coordinate: coordinate
+        )
+    }
 }
 
 private final class Fixture {
