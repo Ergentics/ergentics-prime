@@ -3426,3 +3426,163 @@ exact result, final XCTest hash/metadata, final supervisor hash/metadata,
 complete pre-shot floor, clean statuses, and both root states must be recorded
 in a separate clean final-shot-readiness checkpoint before any later freeze
 may authorize the first method-8 invocation.
+
+## Gate E1.2 Release test-bundle build interruption
+
+| Field | Observed value |
+| --- | --- |
+| Result | `PRE_SHOT_BUILD_BLOCKED_NON_AUTHORITY` |
+| Durable-control predecessor | `14e90e7068da73bfd1444cd5654383ccb99be9a1` / tree `39fc231dd20b6bd8d73a7e5b8f2a61bf65d74ea4` |
+| Source commit/tree | clean `1d341a529c442e63369c361b1e5ac95ca464fdf7` / `e787b3573bd44259606536860dc980720d73d64f` |
+| Build start | `2026-08-23T01:29:34Z`; epoch `1787448574` |
+| Shell result | exit `1`; `2.903` seconds |
+| Exact Swift diagnostic | `module 'PrimeValidationWorkflowContracts' was not compiled for testing` at the ContractsTests `@testable import` |
+| Transcript prefix | SpawnCanary compile/link and ContractsTests compile; no XCTest/Swift-Testing runner marker |
+| Selected XCTest executions | `0` |
+| Production method-8 invocations | `0` |
+| Driver V2 supervisor / fixed-probe launches | `0` / `0` |
+| Supervisor after failure | unchanged inode `17335100`; SHA-256 `342cd64bcb2e01ce4d037293ef11cc64386bfa0e5a9f05e6ba05292eca3b1b53` |
+| XCTest executable after failure | unchanged inode `17321182`; stale SHA-256 `6ac8a09f4d6df5b1fef612e631b90c770e848ba44e4bed68a925222b2302d73d` |
+| Failed-build cache leaves | device `16777231`; inodes `17335574` / `17335575`; UID `501`; mode `0700`; post link counts `3` / `10`; retained and ineligible for reuse |
+| Post-command statuses | source, production Prime clone, companion, and control: `0` bytes |
+| Successor production root | absent |
+| Prior consumed root | unchanged at device `16777231`, inode `17321558`, mtime `1787444179`, link count `8` |
+| Candidate consumption | `false` |
+| Gate E outcome | `NOT_RUN`; no authority or scientific conclusion |
+
+The failure occurred in SwiftPM's test-build transaction before a runner
+started. The available Release Contracts module was not compiled for testing;
+the transcript does not establish why SwiftPM supplied that module. Neither
+definitive artifact changed, so the source identity remains unconsumed. The
+frozen compile-only command is exhausted and may not be retried.
+
+## Gate E1.2 freeze — one Release test-enabled structural recovery
+
+| Field | Frozen value |
+| --- | --- |
+| Status | `FROZEN_NOT_EXECUTED` |
+| Durable-control predecessor | `14e90e7068da73bfd1444cd5654383ccb99be9a1` / tree `39fc231dd20b6bd8d73a7e5b8f2a61bf65d74ea4` |
+| Source commit/tree | clean `1d341a529c442e63369c361b1e5ac95ca464fdf7` / `e787b3573bd44259606536860dc980720d73d64f` |
+| Authorized SwiftPM recovery invocations | exactly `1` |
+| Authorized XCTest runner invocations | exactly `1`, loading only the exact bundle and selected method |
+| Authorized selected XCTest executions | exactly `1` |
+| Exact selected method | `PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests.testCapabilitySurfaceHasNoCodecPublicInitializerOrSpawn` |
+| Every other package-product / child / runner execution | `0` |
+| Authorized production supervisor / fixed-probe launches | `0` / `0` |
+| Production method-8 invocations | `0` |
+| Source edits / commits | `0` / `0` |
+| Gate F authorization | `false` |
+
+The exact selected method is source-only: it reads the committed admission,
+DriverCore bridge, supervisor-main, and nested-manifest sources and asserts
+the absence of codecs, public initializers, raw process/spawn surfaces, caller
+arguments/environment, and fixture-child dependencies. It constructs no
+fixture, root, lease, watch, journal, process, environment input, request, or
+live capability. It is not Debug-only. Its sole purpose in this recovery is
+to make SwiftPM compile the Release test graph with testable dependencies,
+relink the current package XCTest executable, and execute one
+non-authoritative structural assertion set.
+
+This interruption and recovery freeze must first exist in a clean control
+commit directly descended from
+`14e90e7068da73bfd1444cd5654383ccb99be9a1`. Before that commit, cache
+creation or the recovery command is forbidden.
+
+Immediately before cache creation and again immediately before the recovery
+command, require the control worktree clean at that direct-child commit,
+whose only predecessor delta is this interruption and freeze in the one
+durable-control path. Any control HEAD, tree, tracked-status, or uncommitted
+document drift is a hard stop.
+
+Create exactly once with exclusive `mkdir` these currently absent leaves:
+
+- `CLANG_MODULE_CACHE_PATH=/private/tmp/gate-e1-2-source-release-structural-test-clang-module-cache-194cf7141172ee06`
+- `SWIFTPM_MODULECACHE_OVERRIDE=/private/tmp/gate-e1-2-source-release-structural-test-swiftpm-module-cache-194cf7141172ee06`
+
+`EEXIST` is a hard stop. Apply the same no-follow descriptor/path join, UID
+`501`, mode `0700`, empty/link-count-two, ACL-free, and APFS device
+`16777231` checks. The product-build and failed-build cache leaves are not
+inputs to this command.
+
+Both recovery-cache leaves must remain retained after the command. The four
+earlier product-build and failed-build cache leaves remain retained,
+unchanged, and ineligible for input, reuse, cleanup, or mutation:
+
+- `/private/tmp/gate-e1-2-source-release-supervisor-clang-module-cache-194cf7141172ee06`
+- `/private/tmp/gate-e1-2-source-release-supervisor-swiftpm-module-cache-194cf7141172ee06`
+- `/private/tmp/gate-e1-2-source-release-build-tests-clang-module-cache-194cf7141172ee06`
+- `/private/tmp/gate-e1-2-source-release-build-tests-swiftpm-module-cache-194cf7141172ee06`
+
+Disappearance, path/inode rebound, reuse, cleanup, or unexplained mutation of
+any of these six retained leaves is a hard stop.
+
+Immediately before the command, require source, production Prime clone, and
+companion clean at their exact commits/trees; the successor production root
+absent; and the prior consumed root unchanged. Re-admit both Release artifacts
+with the complete no-follow component walk, held `O_NOFOLLOW | O_CLOEXEC`
+descriptors, descriptor/path device-and-inode joins, stable descriptor reads,
+regular arm64 Mach-O checks, and every previously recorded type, UID/GID,
+mode, link-count, flags, ACL, xattr, size, timestamp, identity, and hash fact.
+The supervisor must remain device `16777231`, inode `17335100`, size
+`45596744`, mtime/ctime `1787447820`, and SHA-256
+`342cd64bcb2e01ce4d037293ef11cc64386bfa0e5a9f05e6ba05292eca3b1b53`,
+with current identity present and predecessor absent. The stale XCTest
+executable must remain device `16777231`, inode `17321182`, size `56482224`,
+mtime/ctime `1787444108`, and SHA-256
+`6ac8a09f4d6df5b1fef612e631b90c770e848ba44e4bed68a925222b2302d73d`,
+with predecessor identity
+`afb3c46461736ddf7b275d797d054000d260eeebc0c6c50a7a94451ef1c97a19`
+present and current identity
+`194cf7141172ee06b5f9734af2e9c3df498547a2f718698ccd421ef7ae961d0f`
+absent. The supervisor has the inverse identity membership.
+
+Use exact working directory
+`/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.driver-v2-gate-c-staging`
+and run exactly once:
+
+```sh
+CLANG_MODULE_CACHE_PATH=/private/tmp/gate-e1-2-source-release-structural-test-clang-module-cache-194cf7141172ee06 SWIFTPM_MODULECACHE_OVERRIDE=/private/tmp/gate-e1-2-source-release-structural-test-swiftpm-module-cache-194cf7141172ee06 swift test --package-path /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.driver-v2-gate-c-staging/Tests/PrimeValidationWorkflow --configuration release --disable-automatic-resolution --disable-sandbox --disable-swift-testing --filter PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests.testCapabilitySurfaceHasNoCodecPublicInitializerOrSpawn
+```
+
+No extra or missing argument or inline environment assignment is permitted.
+Do not set `HOME`, Prime or companion inputs, an external scratch path, or
+`--skip-build`.
+
+A pass requires shell exit `0`; a test-enabled Release build; explicit
+DriverCoreTests compilation and package XCTest relink; exactly one selected
+XCTest execution and pass; and no method-8 selection. The execution whitelist
+is SwiftPM/compiler/linker/manifest tooling plus exactly one XCTest runner
+loading the exact bundle and selector. Authorized launches are zero for
+`PrimeValidationWorkflowFixtureChild`, SecureChildIntegration children,
+`PrimeValidationWorkflowDriverV2SpawnCanary`,
+`PrimeValidationWorkflowDriverV2Supervisor`, every Git/Swift fixed-probe
+child, every other package-built executable, and any additional XCTest or
+Swift-Testing runner. Compilation or linking of package targets does not
+authorize their execution.
+
+Afterward, perform the complete no-follow component walk, descriptor/path
+join, stable-read, arm64 Mach-O, UID/GID/mode/link-count, flags, ACL, xattr,
+and identity checks on both final artifacts. The XCTest executable must have
+mtime/ctime after recovery start, a new SHA-256 differing from
+`6ac8a09f4d6df5b1fef612e631b90c770e848ba44e4bed68a925222b2302d73d`,
+current identity
+`194cf7141172ee06b5f9734af2e9c3df498547a2f718698ccd421ef7ae961d0f`
+and the exact source-worktree `#filePath` present, and predecessor
+`afb3c46461736ddf7b275d797d054000d260eeebc0c6c50a7a94451ef1c97a19`
+absent. The supervisor may be unchanged or explainably relinked inside the
+recovery interval, but its final image must contain current identity, exclude
+predecessor identity, and pass every prior image check.
+
+All tracked statuses and clone identities must remain exact; manifests and
+`Package.resolved` must remain unchanged; the successor root must remain
+absent; and the prior root must remain unchanged. Any failure, wrong test
+count, non-whitelisted child or runner execution, production selection or
+launch, dependency fetch, network access, cache mismatch, unexplained artifact
+mutation, identity mismatch, root drift, or extra invocation forbids another
+recovery attempt and method 8.
+
+Even a pass authorizes no production launch. Its exact selected-test result,
+final XCTest and supervisor hashes/metadata, complete floor, clean statuses,
+and root states must be committed in a separate final-shot-readiness
+checkpoint before the candidate's first method-8 invocation can be
+authorized.
