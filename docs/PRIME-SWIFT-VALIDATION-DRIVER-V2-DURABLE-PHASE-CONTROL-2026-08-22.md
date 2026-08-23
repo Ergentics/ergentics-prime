@@ -5308,3 +5308,717 @@ G. The next possible action is a separately reviewed clean freeze that names
 the exact final A2 images and one production-shot command. Until that new
 authority exists, readiness is complete and production execution remains
 closed.
+
+## Gate E1.3 production-shot prefreeze audit — authority withheld
+
+| Coordinate | Exact result |
+| --- | --- |
+| Audit predecessor | clean `3b93b69eed2e2fe1b005dbf7344b7b20b46e5957` / tree `9ab09018a17f9cc6b366af344e31a7c07591da45` |
+| Source | clean `2d705a71dc1827cf4fe6f0f9f3bc8255063e1dd3` / tree `0077ac10f1dbba50680502a31084f7280c2c2f65` |
+| Current production authority vector | `00000000` |
+| Current A2 disposition | retained readiness evidence; not production-shot authority |
+| Shot-freeze disposition | `BLOCK_CURRENT_METHOD8_OUTER_CONTAINMENT` |
+| Production commands / method 8 / supervisor / fixed child | `0 / 0 / 0 / 0` |
+| Network / fetch / GitHub | `0 / 0 / 0` |
+
+The eight vector coordinates, in order, are
+`[prime_git, companion_git, swift_version, swift_target_info,
+swiftpm_build, artifact_staging, xctest_inventory, swift_testing_inventory]`.
+No partial journal prefix changes this vector. A future complete Gate E result
+may change it atomically from `00000000` to `11110000`; every incomplete,
+nonpass, missing-terminal, or containment-uncertain result leaves it
+`00000000`.
+
+The retained A2 images remain exact:
+
+| Image | Exact retained readiness fact |
+| --- | --- |
+| Supervisor | device/inode `16777231/17361435`; `47,679,960` bytes; mode `0700`; UUID `02CCEC13-5745-3245-AF0F-E2A49D4A68C4`; SHA-256 `57bae5845d7b2ad108309d623902bd7a68688c7882e1649ca23f8a93764dfafe` |
+| XCTest | device/inode `16777231/17361530`; `56,562,128` bytes; mode `0700`; UUID `F62F4215-B00C-30C0-B7B2-43BF6924B73D`; SHA-256 `c3427b8c8c659a3be3e526f47adf2d5d6ed332b665ff9b967b0132e49187e712` |
+
+Both images contain current identity
+`474008bdffccf4102566c98088abf2799ad3a4934edadb8c0357c23190c71a52`
+once and both consumed predecessor identities zero times. Those facts remain
+valid readiness data. They cannot authorize a shot because the current outer
+launcher fails the following containment relation:
+
+```text
+outer supervisor process group = {S}
+fixed probe process groups      = {C1}, {C2}, ... {C16}
+current timeout kill(-S)        = {S}, not any live Ci
+```
+
+The excluded XCTest launcher starts `S` without
+`POSIX_SPAWN_START_SUSPENDED`, without a held-cwd join, and without a mapped
+supervisor-image join. Its write-failure and 60-second timeout branches kill
+and reap only `S`. Every fixed probe is deliberately a distinct
+start-suspended session and process-group leader. Therefore an outer kill can
+orphan the one active Git or Swift role. Passing expected-path behavior cannot
+repair a failure-path containment mismatch.
+
+Three additional data gaps are conserved rather than explained away:
+
+1. the exact canonical supervisor request is generated in memory but its
+   byte count, SHA-256, and bytes are not durably retained;
+2. the inner raw-terminal leaf precedes DriverCore semantic binding and final
+   live continuity revalidation, so it is not a complete terminal; and
+3. the old outer phase label maps `65`, `66`, `67...73`, and `70`, but not the
+   typed admission statuses `74...90`.
+
+No control prose may waive these failed coordinates. The current production
+root and both reserved final-shot cache paths remain absent. The complete R3
+epoch, including its Prime clone, is retained but ineligible for production
+reuse by its own freeze. No production-shot freeze or invocation is
+authorized on current A2.
+
+## Gate E1.4 withdrawn draft — separately grouped shot governor
+
+| Field | Frozen value |
+| --- | --- |
+| Status | `WITHDRAWN_BEFORE_COMMIT_NO_AUTHORITY` |
+| Durable-control predecessor | `3b93b69eed2e2fe1b005dbf7344b7b20b46e5957` / tree `9ab09018a17f9cc6b366af344e31a7c07591da45` |
+| Source predecessor | clean `2d705a71dc1827cf4fe6f0f9f3bc8255063e1dd3` / tree `0077ac10f1dbba50680502a31084f7280c2c2f65` |
+| Authorized successor source commits | `0` |
+| Authorized source paths | `0`; the five-path candidate below is historical audit input only |
+| Swift build / test / governor / supervisor / fixed child | `0 / 0 / 0 / 0 / 0` in this source slice |
+| Source dependency resolution / fetch / network / GitHub | `0 / 0 / 0 / 0` |
+| Gate F / Gate G authorization | `false / false` |
+
+This draft is retained to make the rejected reasoning inspectable. It is not
+a freeze and authorizes no source mutation or execution. Its separately
+sessioned-child design loses safe child discovery if the supervisor dies after
+`posix_spawn` and before the inner start leaf exists. The authoritative
+successor is the Gate E1.4-C shared-session freeze below; every conflicting
+allowlist, process relation, proof claim, or successor rule in this withdrawn
+section is void.
+
+The five-path allowlist is:
+
+1. `Tests/PrimeValidationWorkflow/Package.swift` — add exactly one executable
+   product, one non-product core target named
+   `PrimeValidationWorkflowDriverV2ShotGovernorCore`, and one executable target
+   named `PrimeValidationWorkflowDriverV2ShotGovernor`; the core target's only
+   dependencies are `PrimeValidationWorkflowDriverCore` and root-package
+   `PrimeCore`, the executable depends only on the core target, and the existing
+   test target gains only the core target; no plugin, external dependency,
+   command plugin, resource, or new package input;
+2. `Tests/PrimeValidationWorkflow/Sources/PrimeValidationWorkflowDriverV2ShotGovernorCore/PrimeValidationDriverV2ShotGovernor.swift`
+   — one new package-scoped, closed capsule/launch/containment owner in its own
+   target; DriverCore remains forwarding-only and contains no spawn substrate;
+3. `Tests/PrimeValidationWorkflow/Sources/PrimeValidationWorkflowDriverV2ShotGovernor/main.swift`
+   — one new silent `@main` that invokes only the closed governor and exposes
+   no public or generic command surface;
+4. `Tests/PrimeValidationWorkflow/Tests/PrimeValidationWorkflowDriverCoreTests/PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests.swift`
+   — disable the old method-8 launch path before root creation, extend an
+   existing selected mechanics method with the fixed governor fixture proof,
+   and bind the governor source/manifest surface; no new or renamed XCTest
+   identifier; and
+5. `Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift` — canonical source
+   identity reseal only after the first four paths are final.
+
+Current preimages for the three existing mutable paths are:
+
+| Path | Lines / bytes | Git blob / SHA-256 |
+| --- | ---: | --- |
+| nested `Package.swift` | `122 / 3,668` | `b8c29f2530efa863b99f0ddc7b32a363e7b525ed` / `8dc77c80ee6a13d5ce184d1c7886701b3d317c07abda0f7ab38d21ef7eef8d35` |
+| live-test source | `5,931 / 212,136` | `686a199b270666b01106ce1c941b249a041705a3` / `41f5c3ec45489a856d800ec9737ef4af440559fcf10b474fac599c254c38c59f` |
+| embedded provenance | `13 / 546` | `8cba2df196ce65f7c83cf2aa4444faf01b8b336b` / `4e2b4b81ea8d7ffade440ddcdcd6d1462e7c163380f49facdecea901b2a159d7` |
+
+Both new paths are absent at freeze. Adding exactly those two regular files
+and the two new target directories predicts `547` admitted files, `546` source
+identity records, `154` Prime authority directories, and
+`547 + 154 + 1,460 = 2,161` combined watchers. Those counts are acceptance
+predicates, not estimates to be silently corrected. A mismatch stops the
+slice and requires a successor control record.
+
+### Closed governor transport and authority ceiling
+
+The governor has `argc == 1`, requires an empty replacement environment, and
+accepts exactly one canonical typed capsule from standard input with a fixed
+byte cap and EOF deadline. It has no JSON-path loader, environment protocol,
+subcommand, role selector, caller timeout, caller cwd, caller argv, shell,
+`Process`, build, list, staging, inventory, or retry surface. The capsule is a
+declaration only; decoding it restores no live descriptor, lease, watch,
+process, or capability. The governor opens and joins every live object itself.
+
+The capsule canonical payload contains no self-digest. Its SHA-256 is computed
+over the exact canonical payload bytes, then attached only to the separately
+published outer start. A future capsule must bind the future readiness
+commit/tree, source commit/tree/identity/cardinality, companion commit/tree,
+fresh Prime-clone policy, exact governor and supervisor images, tools, roots,
+absent paths, attempt `1`, `rerun_authorized = false`, `local_only = true`,
+and `network = fetch = github = 0`. No current capsule or production command is
+authorized by this source-edit freeze.
+
+The governor directly parents the dedicated supervisor. SwiftPM and XCTest
+are not members of the production-shot process hierarchy. The governor builds
+the existing `PrimeValidationDriverV2SupervisorLaunchRequestV1` from the
+closed capsule and newly admitted roots, validates it, and persists the exact
+canonical request bytes before using those same held bytes as the
+supervisor's stdin frame. The supervisor `main.swift`, DriverCore target,
+request schema, DriverCore intent/image bridge, facade, fixed role table, and
+the 16-role PrimeCore executor remain byte-for-byte unchanged.
+
+### Required process-set and durable order
+
+Let
+
+```text
+Q = (
+  governor, supervisor,
+  roleStart[1...16], roleTerminal[1...16],
+  build, staging, listXCTest, listSwiftTesting,
+  extraRunner, fixture, network, fetch, GitHub
+)
+```
+
+The sole future success vector is
+
+```text
+Qsuccess = (1, 1, 1^16, 1^16, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+```
+
+Fixture processes are permitted only in the package-internal mechanics seam
+and are not reachable from the governor `@main`. Production success requires
+fixture count `0`. The governor deadline begins before supervisor spawn. It
+opens the exact supervisor image and a fixed private cwd on held no-follow
+descriptors, spawns the supervisor suspended in a dedicated session/group,
+proves descriptor/named-vnode equality plus suspended cwd and mapped-image
+joins, and publishes an exclusive immutable outer start before exactly one
+resume.
+
+The durable order is:
+
+```text
+capsuleDurable < requestDurable < outerStartDurable < supervisorResume
+  < innerPrestart
+  < start[1] < terminal[1] < ... < start[16] < terminal[16]
+  < innerRawTerminal < supervisorExactReap
+  < supervisorGroupEmpty and everyObservedChildGroupEmpty
+  < outerTerminalDurable
+```
+
+The order is strict except that each completed leaf publication time may equal
+the immediately preceding observation only where the underlying monotonic
+clock reports equality; it may never reverse. Role ordinals, names, hashes,
+and predecessor links remain exact. `innerRawTerminal` is necessary but not a
+success terminal. The outer terminal is published with exclusive no-replace,
+`fsync`, `F_FULLFSYNC`, and parent-directory durability only after exact
+supervisor wait, bounded independent EOF drains, complete inner journal
+validation, root/image rejoins, and post-run conservation.
+
+At most one fixed probe is live because the existing executor is sequential.
+On timeout, interruption, or post-spawn rejection, the governor first stops
+and confirms the supervisor, identifies zero or one live direct fixed child
+using kernel process identity plus the immutable start journal, contains and
+proves empty that child's dedicated group, then contains/reaps the supervisor
+and proves its group empty. More than one live child, an unidentified
+descendant, image/cwd mismatch, PID identity ambiguity, nonempty group, or
+uncontained drain is containment uncertainty and must end in the governor's
+fixed exit-70 fail-stop path; it can never become an ordinary test failure or
+`PASS`.
+
+### Mechanics proof and old-launch closure
+
+The package-internal test seam may accept only a held, already-opened fixture
+image and private throwaway roots; production accepts no caller path. Extend
+the existing
+`testGateEJournalChainOneWinnerAndPoisonAreExact` identifier to prove:
+
+- exclusive capsule/request/start/terminal publication and collision poison;
+- start durability before resume;
+- suspended cwd and mapped-image joins;
+- normal exact reap, independent EOF drains, and group-empty proof;
+- timeout with one separately grouped child leaves both child and governor
+  groups empty; and
+- one winner under sequential and concurrent consume, permanent poison, and
+  no retry.
+
+The fixture seam must not close `supervisor_executable_image`, any Gate E
+process observation, or any roadmap authority. The old
+`testGateEReleaseSupervisorRequiresLiveFourAuthorityBindingBeforeExit`
+identifier remains present for inventory stability but must fail closed before
+production-root creation and launch zero processes. Its phase map is updated
+to name all supervisor statuses `65...90` exactly, with unclassified values
+remaining `unknown`; it is never the future production command.
+
+### Conservation and successor requirement
+
+The future execution predicate is coordinate-wise:
+
+```text
+B_before = B_preResume = B_after
+A_before = A_after
+M_before = 00000000
+M_success = 11110000
+```
+
+`B` includes control/source/companion and fresh-clone identities; capsule and
+request bytes; manifests, locks, dependency commitments and tools; governor
+and supervisor images; retained prior evidence; root joins; and forbidden-path
+absence. `A` is exact governor/supervisor/XCTest and object identity across a
+`--skip-build`-free direct governor invocation. Only explicitly frozen
+home/tmp/cache, production-root, journal, lease, and capture transitions are
+outside equality. An incomplete prefix changes no `M` bit.
+
+The source-edit slice authorizes only the five paths, two independent
+canonical source-identity calculations, one provenance reseal, and one clean
+source commit. It authorizes no Swift command, fixture execution, namespace
+creation, clone, cache, capsule, governor, supervisor, Git/Swift probe,
+production root, cleanup, or shot. After implementation, a separate clean
+source checkpoint and then a fresh finite readiness freeze/result must build
+and admit new images and exercise the fixture seam. Only a later direct-child
+production-shot freeze may name one direct governor invocation. Gate F and
+Gate G remain separate and closed.
+
+## Gate E1.4-C freeze — conserved-session local shot governor source slice
+
+| Coordinate | Frozen value |
+| --- | --- |
+| Status | `FROZEN_SOURCE_EDIT_NOT_IMPLEMENTED` |
+| Durable-control predecessor | `3b93b69eed2e2fe1b005dbf7344b7b20b46e5957` / tree `9ab09018a17f9cc6b366af344e31a7c07591da45` |
+| Source predecessor | clean `2d705a71dc1827cf4fe6f0f9f3bc8255063e1dd3` / tree `0077ac10f1dbba50680502a31084f7280c2c2f65` |
+| Authorized successor source commits | exactly `1`, a direct child of the source predecessor |
+| Authorized source paths | exactly `12` |
+| New regular files / new directories | exactly `3 / 3` |
+| Swift build / test / executable launch | `0 / 0 / 0` in this source slice |
+| Clone / root / cache / capsule creation | `0 / 0 / 0 / 0` |
+| Dependency resolution / fetch / network / GitHub | `0 / 0 / 0 / 0` |
+| Gate F / Gate G authorization | `false / false` |
+
+The matrices, exact sets, hashes, counts, and equality predicates in this
+section are authority. Prose explains them and cannot relax a mismatch. This
+section supersedes the withdrawn five-path candidate above.
+
+### Exact mutation set
+
+The twelve-path allowlist is:
+
+1. `Tests/PrimeValidationWorkflow/Package.swift`;
+2. `Tests/PrimeValidationWorkflow/Sources/PrimeValidationWorkflowDriverV2ShotGovernorCore/PrimeValidationDriverV2ShotGovernor.swift`;
+3. `Tests/PrimeValidationWorkflow/Sources/PrimeValidationWorkflowDriverV2ShotGovernor/main.swift`;
+4. `Tests/PrimeValidationWorkflow/Sources/PrimeValidationWorkflowDriverV2SessionFixture/main.swift`;
+5. `Tests/PrimeValidationWorkflow/Tests/PrimeValidationWorkflowDriverCoreTests/PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests.swift`;
+6. `Tests/PrimeValidationWorkflow/Tests/PrimeValidationWorkflowDriverCoreTests/PrimeValidationDriverV2AdmissionTests.swift`;
+7. `Sources/PrimeCore/PrimeSecureChildDarwinSubstrate.swift`;
+8. `Sources/PrimeCore/PrimeSecureChildLifecycle.swift`;
+9. `Sources/PrimeCore/PrimeSecureChildSupervision.swift`;
+10. `Sources/PrimeCore/PrimeValidationDriverV2FixedProbeExecutor.swift`;
+11. `Tests/PrimeValidationWorkflow/Sources/PrimeValidationWorkflowDriverCore/PrimeValidationDriverV2FixedProbeBinding.swift`; and
+12. `Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift`.
+
+The three new paths in entries 2, 3, and 4, and their three target directories,
+are absent at freeze. The nine existing preimages are exact:
+
+| Path | Lines / bytes | Git blob / SHA-256 |
+| --- | ---: | --- |
+| nested `Package.swift` | `122 / 3,668` | `b8c29f2530efa863b99f0ddc7b32a363e7b525ed` / `8dc77c80ee6a13d5ce184d1c7886701b3d317c07abda0f7ab38d21ef7eef8d35` |
+| Gate-E live tests | `5,931 / 212,136` | `686a199b270666b01106ce1c941b249a041705a3` / `41f5c3ec45489a856d800ec9737ef4af440559fcf10b474fac599c254c38c59f` |
+| Gate-E admission tests | `2,331 / 88,036` | `5ee18564fd204ff0af2b502deead4027e0b583f4` / `8022c5aae4fd437e76101e0136f3ffe830d5ca373db8fda2fb8d7871759a4d33` |
+| `PrimeSecureChildDarwinSubstrate.swift` | `726 / 21,442` | `a0a63e9e44b787aaa84cce7381e3af9f4b67fb49` / `072e8766286e0edda802f15df8137f94ff3febea7bf3f222d350d2efb776bfc5` |
+| `PrimeSecureChildLifecycle.swift` | `1,000 / 26,436` | `e2b65441e015b7c4728f3bd3aaaf125ea21b137e` / `21fe130dbf1d4fc42437bfe6a9224d9f6d7f4568b7785c9dc5a0f8014538adb6` |
+| `PrimeSecureChildSupervision.swift` | `842 / 24,830` | `13d882363479143d2a207375ac3eb84971fabb35` / `700f64199ccfcfac2c21cd7e0e8145d6e72d3cc85ad64ee8781a08fc7dcc6caf` |
+| Gate-E fixed-probe executor | `3,114 / 125,292` | `54cccf156d55bced3de69486e66e242a4a39fda1` / `ec5f426edf48a89d11fda1df85c029de68aa09352e3cece39425c322a91101ab` |
+| DriverCore Gate-E binding | `2,374 / 102,490` | `f4c3685364952d1e122644f2a4902060bea8256b` / `4765f2b055780f681311cd0ac095412dd17739d4fe868c18ced7537db07ecee9` |
+| embedded provenance | `13 / 546` | `8cba2df196ce65f7c83cf2aa4444faf01b8b336b` / `4e2b4b81ea8d7ffade440ddcdcd6d1462e7c163380f49facdecea901b2a159d7` |
+
+The manifest adds exactly two executable products, one non-product target
+`PrimeValidationWorkflowDriverV2ShotGovernorCore`, and two executable targets
+`PrimeValidationWorkflowDriverV2ShotGovernor` and
+`PrimeValidationWorkflowDriverV2SessionFixture`. GovernorCore depends only on
+`PrimeValidationWorkflowDriverCore` and the root `PrimeCore` product. The
+governor executable depends only on GovernorCore. The session fixture has no
+dependency. The existing DriverCore test target gains only GovernorCore. No
+external dependency, plugin, command plugin, resource, or lockfile input is
+added. The predecessor `PrimeValidationWorkflowFixtureChild` source, product,
+target, bytes, and all authorities that pin it remain unchanged.
+
+Only the three new source files and three target directories change topology.
+The successor acceptance counts are therefore exact:
+
+```text
+Prime admitted files            = 545 + 3 = 548
+source-identity records         = 544 + 3 = 547
+Prime authority directories     = 152 + 3 = 155
+companion file+directory watches           = 1,460
+combined watcher descriptors    = 548 + 155 + 1,460 = 2,163
+```
+
+A different count is a hard stop requiring a successor control record; it is
+not corrected in implementation prose.
+
+### Conserved session and local child groups
+
+The kernel ownership relation is:
+
+```text
+governor G: outside the production session
+supervisor S: PID(S) = PGID(S) = SID(S) = S
+probe Ci: PID(Ci) = PGID(Ci) = Ci; SID(Ci) = S
+```
+
+The dedicated supervisor retains its existing
+`POSIX_SPAWN_START_SUSPENDED | POSIX_SPAWN_CLOEXEC_DEFAULT |
+POSIX_SPAWN_SETSID | POSIX_SPAWN_SETSIGDEF |
+POSIX_SPAWN_SETSIGMASK` launch. Only the Gate-E fixed-probe spawn changes.
+Its exact flags are:
+
+```text
+POSIX_SPAWN_START_SUSPENDED | POSIX_SPAWN_CLOEXEC_DEFAULT |
+POSIX_SPAWN_SETPGROUP | POSIX_SPAWN_SETSIGDEF |
+POSIX_SPAWN_SETSIGMASK = 0x408e
+```
+
+The Gate-E-only substrate entry calls `posix_spawnattr_setpgroup(..., 0)`.
+It has no caller-supplied session, group, or containment-mode parameter. It
+derives `S` from the current process and rejects unless
+`getpid() == getpgrp() == getsid(0)`. Before any child resume, supervision
+must prove `getsid(Ci) == S` and `getpgid(Ci) == Ci`. Every other
+secure-child caller retains the existing `0x448c` isolated-session entry and
+semantics byte-for-byte in behavior.
+
+Lifecycle gains a distinct internal authority state for a dedicated child
+group within the held supervisor session. It must not mislabel that state as
+an isolated child session. Existing group-backed signal, exact-child wait,
+drain, and cleanup mechanics remain:
+
+```text
+pre-reap members = [Ci]
+signal target = -Ci
+wait target = Ci exactly once
+post-reap kill(-Ci, 0) = -1 and errno = ESRCH
+```
+
+The fixed executor uses only the Gate-E entry, includes the containment mode
+and `0x408e` in its policy identity, and records
+`supervisorPID = supervisorSID = supervisorPGID = S`. Each of the 16 start
+records binds `sessionIdentifier = S`,
+`processGroupIdentifier = processIdentifier = Ci`, unique child PGIDs, and
+the exact flags. Its prestart, start, terminal, and raw-terminal schemas are
+versioned for this changed relation. Each terminal retains exact reap,
+independent EOF drains, and `process_group_empty_after_reap = true`.
+
+DriverCore does not select a session, group, path, role, argument, or command.
+It validates that all 16 observations have the one recorded supervisor SID,
+that no child PID equals `S`, that all child PIDs/PGIDs are positive and
+unique, and that `PGID(Ci) = PID(Ci)`. Its fixed authority vector still changes
+only after the complete ordered semantic bind. The existing source-contract
+test is updated from the stale `0x448c` Gate-E assertion to the new exact
+Gate-E relation; retaining that stale assertion is forbidden.
+
+This relation supplies one reparent-stable discovery coordinate. PPID is
+telemetry and may change; SID is authority. If `S` dies after child spawn and
+before a start leaf exists, an unjournaled suspended `Ci` still has `SID=S`
+and `PGID=Ci`. No unrelated process can join session `S`.
+
+A descendant of `Ci` could deliberately call `setsid()` and escape. `Ci`
+itself cannot because it is a process-group leader. This descendant residual
+already exists in the predecessor design and is not widened here. The exact
+admitted Git/Swift images, fixed argv, absent hooks, closed configuration, and
+five-entry environment are frozen as non-daemonizing roles. Any observed
+extra descendant, new session, or unexplained group is containment uncertainty
+and cannot yield `PASS`. A future kernel job/container primitive is required
+if descendant non-escape must become an OS theorem independent of admitted
+executable behavior.
+
+### Closed fixture and test boundaries
+
+The new dedicated `PrimeValidationWorkflowDriverV2SessionFixture` has exactly
+two closed internal modes. Both require the fixture supervisor to satisfy
+`PID = PGID = SID`, spawn exactly one child with `SETPGROUP(0)` and no
+`SETSID`, and prove
+`SID(child) = SID(parent)` and `PGID(child) = PID(child)`:
+
+1. `--driver-v2-shared-session-prepublication-held` leaves the child
+   start-suspended while the fixture supervisor remains alive, so the governor
+   must discover and stop the unjournaled child by SID before containing the
+   still-live supervisor; and
+2. `--driver-v2-shared-session-orphan-transition` exits the fixture
+   supervisor with the child still start-suspended. POSIX may send `SIGHUP`
+   followed by `SIGCONT` when that stopped process group becomes orphaned, so
+   the accepted observation is either the bound child identity still in
+   `SID=S` or complete session/child-group disappearance. It must never assume
+   that the orphan remains suspended.
+
+The modes are reachable only through the package-internal governor mechanics
+seam. The production governor capsule has no fixture selector and production
+fixture count is always zero.
+
+No XCTest identifier is added or renamed. Extend only the existing
+`testGateEJournalChainOneWinnerAndPoisonAreExact` method to prove:
+
+- canonical capsule/request framing, exact caps, and exclusive publication;
+- one winner under sequential and concurrent consume, permanent poison, and
+  no retry;
+- suspended supervisor cwd/mapped-image joins and durable start before resume;
+- the normal `S -> Ci` shared-session/dedicated-group relation;
+- prepublication SID-only discovery while stopped `S` remains alive, plus the
+  abrupt-`S` orphan transition accepting either a bound surviving SID member
+  or already-empty session/group, followed by exact reap of `S` and final
+  session/group emptiness; and
+- independent output caps, EOF drains, immutable terminal, and collision
+  poison.
+
+The fixture proves mechanics only. It closes no production supervisor image,
+Gate-E observation, or roadmap authority. XCTest is not production identity.
+The existing production method
+`testGateEReleaseSupervisorRequiresLiveFourAuthorityBindingBeforeExit` remains
+present for inventory stability but becomes a passing structural closure (or
+an explicit skip) before root creation and launches zero processes. It is not
+an intentional XCTest failure. Its historical supervisor phase parser names
+every status `65...90`; unknown values remain `unknown`. It is never the future
+production command.
+
+### Exact outer durable boundary
+
+The future identity-bound production base has two distinct journals:
+
+| Relative leaf | Authority |
+| --- | --- |
+| `workspace.driver-v2-gate-e-journal` | unchanged inner 16-role journal |
+| `gate-e-shot-governor-journal` | exact outer governor journal |
+
+The outer journal is a held, named-vnode-joined mode-`0700` directory on the
+same local APFS device as the production base, owned by the exact effective
+UID/GID. The governor sets `umask(077)` before any create. The journal has
+exactly these four regular leaves in success:
+
+| Ordinal | Exact leaf | Schema / bytes / final mode |
+| ---: | --- | --- |
+| 0 | `00-capsule.json` | `prime_driver_v2_gate_e_shot_capsule_v1`; exact canonical stdin bytes; at most `262,144`; `0400` |
+| 1 | `01-supervisor-request.json` | existing `ergentics_prime_validation_driver_v2_supervisor_launch_request_v1`; exact supervisor stdin bytes; at most `262,144`; `0400` |
+| 2 | `02-outer-start.json` | `prime_driver_v2_gate_e_outer_start_v1`; at most `65,536`; `0400` |
+| 3 | `03-outer-terminal.json` | `prime_driver_v2_gate_e_outer_terminal_v1`; at most `65,536`; `0400` |
+
+All four are canonical JSON with no trailing line feed. Each publication is
+exactly:
+
+```text
+openat(journalFD, leaf,
+       O_RDWR | O_CREAT | O_EXCL | O_NOFOLLOW | O_CLOEXEC, 0600)
+-> complete write
+-> fsync + F_FULLFSYNC
+-> fchmod(0400)
+-> fsync + F_FULLFSYNC
+-> parent-directory fsync + F_FULLFSYNC
+-> openat(journalFD, leaf, O_RDONLY | O_NOFOLLOW | O_CLOEXEC)
+-> rebound vnode + complete bytes/hash/metadata join
+-> close the original O_RDWR descriptor
+-> retain only the O_RDONLY rebound descriptor
+```
+
+Existing leaves poison; there is no replace, rename-over, truncate, repair,
+or retry.
+
+Every published leaf descriptor remains held through outer-terminal
+finalization. At every authorized transition and at terminal, the governor
+revalidates exact descriptor bytes/hash/size/mode, UID/GID, nlink `1`, flags
+`0`, no ACL, bounded xattr policy
+`set in {empty, {com.apple.provenance}}` with any provenance bytes retained
+and unchanged, descriptor/named-vnode equality, exact ordered inventory, and
+journal-root identity. Root link count is exactly `2 + publishedLeafCount` and
+therefore `6` on success. An unlink/recreate, extra leaf, lost descriptor,
+metadata drift, or xattr drift poisons permanently.
+
+No record contains its own digest. The capsule SHA-256 is over the exact bytes
+of leaf 0. The request SHA-256 is over leaf 1. The start includes both hashes,
+byte counts, vnodes, root/image joins, deadline, and the exact supervisor
+PID/SID/PGID. The terminal includes the start SHA-256, exact supervisor wait
+and drain facts, the conserved process/session result, and final revalidation.
+Its outcome is discriminated: success contains exactly the complete 34-leaf
+inner name/hash chain and raw-terminal hash; a contained nonzero contains the
+exact immutable prefix of `0...34` leaves and a raw-terminal hash if and only
+if that leaf is present; and `contained_zero_semantic_rejection` carries the
+exact zero-status wait/drain facts, the same immutable-prefix rule, and the
+exact failed journal, semantic, or conservation coordinate. Every incomplete
+or rejected prefix leaves `M = 00000000`. The outer terminal's digest is an
+external observation made after publication.
+
+The production base also retains exactly two independent mode-`0600`,
+no-follow, exclusive captures named `outer-supervisor-stdout.bin` and
+`outer-supervisor-stderr.bin`, each capped at `65,536` bytes. Neither is an
+authority ledger. Success requires both exact zero-byte SHA-256
+`e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`.
+Before supervisor resume, both output-pipe read descriptors are atomically
+adopted by independent drain workers that write through the held capture
+descriptors. Overflow poisons success but the affected worker continues
+reading and discarding through EOF so containment cannot be blocked by a full
+pipe. Final capture descriptor/named-vnode identity, metadata, byte count, and
+hash are revalidated before outer-terminal publication.
+
+The capsule frame has `argc == 1`, empty replacement environment, maximum
+`262,144` bytes, EOF within `5,000,000,000` nanoseconds, canonical round-trip,
+and no trailing line feed. Its fixed fields include schema/artifact kind;
+attempt `1`; `rerun_authorized = false`; `local_only = true`; network, fetch,
+and GitHub counts `0`; future control/source/companion commit/tree coordinates;
+source identity and `548 / 547` cardinality; exact governor, supervisor, and
+Git/Swift image declarations; fresh-root and absent-path declarations; and the
+existing typed run intent inputs. Decoding restores no
+descriptor, watch, lease, process, or capability. There is no capsule-path
+loader, environment protocol, subcommand, role selector, caller argv, cwd,
+timeout, shell, `Process`, build, list, staging, inventory, or retry surface.
+
+### Governor transition and containment algorithm
+
+The governor is a silent `@main`. Its only executable-target source calls the
+closed package entry and maps these statuses exactly:
+
+| Status | Meaning |
+| ---: | --- |
+| `0` | complete outer terminal and atomic Gate-E success |
+| `65` | capsule transport/canonical rejection before live state |
+| `66` | capsule, root, tool, or image admission rejection before spawn |
+| `67` | capsule/request/start durable-boundary rejection before resume |
+| `68` | supervisor spawn, cwd, mapped-image, or session join rejection before resume |
+| `69` | post-reap journal, conservation, or semantic rejection |
+| `71` | contained nonzero supervisor result; exact supervisor status retained in terminal |
+| `72` | contained outer-terminal publication failure |
+| `70` | post-spawn containment uncertainty; fixed fail-stop |
+
+The deadline starts before supervisor spawn and is fixed at
+`60,000,000,000` nanoseconds. The governor opens its own mapped image; the
+exact supervisor, Git, and Swift images; production base; fixed private cwd;
+inner and outer journals; captures; and declared roots on held no-follow
+descriptors. It hashes and joins the Git/Swift descriptors before spawn,
+retains them independently of the supervisor, and rejoins/re-hashes them after
+reap to establish outer `A_after`. It
+builds and validates the existing supervisor request, publishes capsule and
+request exact bytes, then spawns `S` suspended with empty replacement
+environment and `argv[0]` only. Before the only resume it proves descriptor
+cwd, mapped supervisor-image, `PID=PGID=SID`, named-vnode, root, and start
+durability joins and starts both output drains.
+
+Supervisor stdin is the exact durable request vnode, not reconstructed by a
+second writer. After leaf 1 is frozen, the governor opens one independent
+`O_RDONLY | O_NOFOLLOW | O_CLOEXEC` descriptor, rejoins its vnode and complete
+bytes/hash to the retained leaf, sets and verifies offset zero, and uses one
+spawn file action to duplicate it to `STDIN_FILENO` and close the original
+child-side descriptor. The parent copy of that second input descriptor closes
+immediately after successful spawn. The read-only finite file yields EOF after
+the exact canonical bytes; no pipe writer, partial write, missing close, or
+post-spawn request mutation exists. The retained request-leaf authority
+descriptor is the first independent O_RDONLY rebound and is never shared with
+the child's file offset.
+
+The supervisor `main.swift`, its request schema, DriverCore intent/image
+bridge, facade, role table, and command ceiling remain unchanged.
+
+Normal success requires the supervisor to exact-reap all 16 child PIDs and
+prove each child PGID empty. The governor exact-reaps only its direct child
+`S`; it never claims `waitpid(Ci)`. It then requires bounded independent EOF
+drains, complete inner journal validation, no process with `SID=S`,
+`kill(-S, 0) == -1/ESRCH`, every recorded child PGID empty, root/image rejoins,
+and conservation before publishing the outer terminal.
+
+On timeout, interruption, supervisor death, or any post-spawn rejection, the
+governor retains `S` unreaped while it establishes the containment set. It
+uses a fixed `131,072`-PID buffer for a complete duplicate-free
+`PROC_ALL_PIDS` scan; capacity equality is uncertainty. It filters only
+`getsid(pid) == S`, records PID, start generation/time, PPID, SID, PGID, UID,
+and mapped-image identity when available, and groups the result by PGID.
+`ESRCH` during a query forces a rescan; `EPERM`, overflow, duplicate identity,
+or any other unexplained error is uncertainty.
+
+The stopped fixed point accepts each extant session member only in kernel
+status `SSTOP` or `SZOMB`; a zombie cannot and need not be stopped. Stop/death
+confirmation uses `PROC_PIDTBSDINFO` plus the governor's exact direct-child
+death observation. `waitpid(..., WUNTRACED)` is forbidden because it can reap
+an already-exited `S`; the sole wait is the exact frozen reap below.
+
+The failure transition is:
+
+```text
+stop and exact-confirm live S, OR confirm S already dead without reaping it
+-> enumerate every PID with SID S
+-> stop every distinct PGID in SID S
+-> rescan to a bounded stable stopped fixed point
+-> kill every non-S PGID
+-> kill PGID S
+-> exact waitpid(S) once
+-> require two complete consecutive scans with no SID S member
+-> require every captured PID generation absent
+-> require kill(-pgid, 0) = -1/ESRCH for every captured PGID
+-> bounded independent drains
+```
+
+`ESRCH` from the initial group stop is accepted only with an independent
+death observation for the exact still-unreaped `S`; it never means
+"successfully stopped." Retaining that zombie prevents PID/session reuse until
+the census is captured and the one exact `waitpid(S)` occurs.
+
+All scans, stops, kills, the exact wait, and drains remain inside the one
+60-second deadline and a maximum of `256` complete scans. A journal match is
+validated when present but never selects kill authority. A missing child start
+leaf is a valid incomplete prepublication prefix inside `SID=S`; it closes no
+authority bit. Failure containment is exact reap of `S` plus kernel-certified
+session, identity, and group disappearance—not a false grandchild-reap claim.
+Any uncertainty exits `70` and can never be an ordinary rejection or `PASS`.
+
+### Authority and process predicates
+
+The authority coordinates remain:
+
+```text
+M = [prime_git, companion_git, swift_version, swift_target_info,
+     swiftpm_build, artifact_staging, xctest_inventory,
+     swift_testing_inventory]
+M_before = 00000000
+M_success = 11110000
+```
+
+Every incomplete prefix, nonzero supervisor, missing leaf, mutation,
+containment uncertainty, or publication failure leaves `M = 00000000`.
+Success leaves exactly the final four Gate-F/G coordinates missing.
+
+For
+
+```text
+Q = (governor, supervisor, roleStart[1...16], roleTerminal[1...16],
+     build, staging, listXCTest, listSwiftTesting,
+     extraRunner, fixture, network, fetch, GitHub)
+```
+
+the sole production success vector is:
+
+```text
+Qsuccess = (1, 1, 1^16, 1^16, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+```
+
+SwiftPM and XCTest are absent from the future production-shot hierarchy.
+Fixture execution is test-only and must be zero in production. The facade
+still exposes zero caller execution parameters; build, list, staging,
+inventory, and shard transitions remain absent or unarmed.
+
+The conservation equations are coordinate-wise:
+
+```text
+B_before = B_preResume = B_after
+A_before = A_after
+M_before = 00000000
+M_after in {00000000, 11110000}
+```
+
+`B` includes exact control/source/companion and fresh-clone identities;
+canonical capsule/request bytes; manifests, locks, tools, roots, watches,
+governor/supervisor images; prior retained evidence; absent forbidden paths;
+and exact inner/outer journal prefixes. `A` is the exact admitted governor,
+supervisor, Git, and Swift artifact identity across the direct invocation.
+Only explicitly frozen fresh home/tmp/cache, production-root, lease, journal,
+and capture transitions are outside equality.
+
+### Source-slice terminal
+
+This source slice authorizes only edits to the twelve paths, two independent
+canonical source-identity calculations over the exact successor tree, one
+embedded-provenance reseal after the other eleven paths are final, and one
+clean source commit. It authorizes no Swift command, test, fixture, governor,
+supervisor, Git/Swift child, clone, root, cache, capsule, cleanup, network, or
+GitHub operation.
+
+After that source commit, a separate direct-child control checkpoint must
+bind its commit/tree, exact twelve-path delta, recomputed identity/cardinality,
+and `2,163` watchers. A later finite readiness freeze/result may build and
+exercise the package-internal fixture seam and must produce new Release
+governor/supervisor/XCTest image identities. Only a still-later production
+shot freeze may create one exact capsule and authorize one direct governor
+invocation. Gate F and Gate G remain separate and closed.
