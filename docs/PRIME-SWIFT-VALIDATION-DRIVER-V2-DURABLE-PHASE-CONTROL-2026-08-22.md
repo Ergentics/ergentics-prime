@@ -8289,3 +8289,45 @@ gate_E_clearance_granted = 0
 
 R7 is consumed. Its epoch and all R5 forensic roots remain retained. No R7
 retry, cleanup, production launch, or Gate-E movement is authorized.
+
+## Gate E1.4-R8 freeze — APFS post-create diagnostic admission repair
+
+| Coordinate | Frozen value |
+| --- | --- |
+| Status | `FROZEN_STATIC_SOURCE_REPAIR_NOT_IMPLEMENTED` |
+| Durable-control predecessor | R7 result `c082059a22ab4ba86a02838787f691be1bb6f8dc` / tree `d9bf781c2b398f48b8197a9112762089ebb336b3` |
+| Source predecessor | clean `d408680dec3bebe64251903c0d7526d98efab2d7` / tree `894ba2b82614a19e094a2124f1e8f936c5b7f2d5` / identity `9a46327485eb257fb835bda48758267324c090731fe9ce7e2a3074b8afc4687d` |
+| Purpose | admit the exact authorized one-leaf APFS topology transition, then freeze the post-create parent/leaf state |
+| Source allowlist | exactly LiveTests plus the excluded embedded-provenance reseal |
+| GovernorCore / SessionFixture / manifests / production `main.swift` / DriverCore | unchanged |
+| Swift build / test / executable launch | `0 / 0 / 0` during implementation |
+| Production attempts / authority vector | `0 / 00000000` |
+| Network / fetch / GitHub | `0 / 0 / 0` |
+
+R8 is a test-helper admission-boundary repair, not an R7 retry and not a
+containment, census, deadline, process, or production change. Preserve the
+existing descriptor-relative exclusive create, exact fixed leaf, base and leaf
+held descriptors, UID/GID/mode/flags/xattr policy, named-vnode join, empty
+preimage, and all GovernorCore publication behavior.
+
+Replace only the false pre-create/post-create parent link-count equality with
+an overflow-safe exact `+1` transition. The pre-create and post-create base
+must retain identical device/inode, owner UID/GID, directory type, mode,
+flags, and admitted xattrs. The post-create base and leaf become the frozen
+states for every later revalidation. The leaf must still be UID-owned, inherit
+the frozen base GID, be mode `0600`, one-link, flags `0`, and empty. Do not
+weaken the transition to “greater than,” permit a range, or omit the held/name
+join.
+
+Split the current compound `session_fail_stop_frozen_metadata` guard into
+distinct bounded coordinates for base identity, base owner/type/mode/flags,
+base link transition, base xattrs, and leaf owner/GID/mode/link/flags/size.
+The coordinates are diagnostic only and must not enter the canonical
+GovernorCore record schema or a production surface. No path, argv, environment,
+role, callback, timeout, process API, or second owner may be added.
+
+After implementation, independently reproduce the exact two-file diff,
+recompute the complete Prime source identity, reseal the excluded provenance
+template, and checkpoint the source without running Swift. A later Release
+command requires its own R9 readiness freeze, fresh epoch, exact preimages, and
+one-shot authorization. No command is authorized by R8 itself.
