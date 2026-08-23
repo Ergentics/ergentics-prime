@@ -6172,31 +6172,87 @@ private final class GateESessionFixtureFailStopDiagnosticLeaf {
                 expectedAccessMode: O_RDONLY,
                 coordinate: "session_fail_stop_base_frozen"
             )
+        let baseLinkTransition = admittedBase.metadata.linkCount
+            .addingReportingOverflow(1)
         guard frozenBase.metadata.deviceID
                 == admittedBase.metadata.deviceID,
-              frozenBase.metadata.inode == admittedBase.metadata.inode,
-              frozenBase.metadata.ownerUserID
-                == admittedBase.metadata.ownerUserID,
-              frozenBase.metadata.ownerGroupID
-                == admittedBase.metadata.ownerGroupID,
-              frozenBase.metadata.fileType
-                == admittedBase.metadata.fileType,
-              frozenBase.metadata.permissionMode
-                == admittedBase.metadata.permissionMode,
-              frozenBase.metadata.linkCount
-                == admittedBase.metadata.linkCount,
-              frozenBase.metadata.flags == admittedBase.metadata.flags,
-              frozenBase.xattrs == admittedBase.xattrs,
-              frozenLeaf.metadata.ownerUserID == Darwin.geteuid(),
-              frozenLeaf.metadata.ownerGroupID
-                == frozenBase.metadata.ownerGroupID,
-              frozenLeaf.metadata.permissionMode == 0o600,
-              frozenLeaf.metadata.linkCount == 1,
-              frozenLeaf.metadata.flags == 0,
-              frozenLeaf.metadata.byteCount == 0
+              frozenBase.metadata.inode == admittedBase.metadata.inode
         else {
             throw FixtureError.invalid(
-                "session_fail_stop_frozen_metadata"
+                "session_fail_stop_base_identity_transition"
+            )
+        }
+        guard frozenBase.metadata.ownerUserID
+                == admittedBase.metadata.ownerUserID,
+              frozenBase.metadata.ownerGroupID
+                == admittedBase.metadata.ownerGroupID
+        else {
+            throw FixtureError.invalid(
+                "session_fail_stop_base_owner_transition"
+            )
+        }
+        guard frozenBase.metadata.fileType
+                == admittedBase.metadata.fileType
+        else {
+            throw FixtureError.invalid(
+                "session_fail_stop_base_type_transition"
+            )
+        }
+        guard frozenBase.metadata.permissionMode
+                == admittedBase.metadata.permissionMode
+        else {
+            throw FixtureError.invalid(
+                "session_fail_stop_base_mode_transition"
+            )
+        }
+        guard frozenBase.metadata.flags == admittedBase.metadata.flags else {
+            throw FixtureError.invalid(
+                "session_fail_stop_base_flags_transition"
+            )
+        }
+        guard !baseLinkTransition.overflow,
+              frozenBase.metadata.linkCount
+                == baseLinkTransition.partialValue
+        else {
+            throw FixtureError.invalid(
+                "session_fail_stop_base_link_transition"
+            )
+        }
+        guard frozenBase.xattrs == admittedBase.xattrs else {
+            throw FixtureError.invalid(
+                "session_fail_stop_base_xattrs_transition"
+            )
+        }
+        guard frozenLeaf.metadata.ownerUserID == Darwin.geteuid() else {
+            throw FixtureError.invalid(
+                "session_fail_stop_leaf_owner"
+            )
+        }
+        guard frozenLeaf.metadata.ownerGroupID
+                == frozenBase.metadata.ownerGroupID
+        else {
+            throw FixtureError.invalid(
+                "session_fail_stop_leaf_gid"
+            )
+        }
+        guard frozenLeaf.metadata.permissionMode == 0o600 else {
+            throw FixtureError.invalid(
+                "session_fail_stop_leaf_mode"
+            )
+        }
+        guard frozenLeaf.metadata.linkCount == 1 else {
+            throw FixtureError.invalid(
+                "session_fail_stop_leaf_link"
+            )
+        }
+        guard frozenLeaf.metadata.flags == 0 else {
+            throw FixtureError.invalid(
+                "session_fail_stop_leaf_flags"
+            )
+        }
+        guard frozenLeaf.metadata.byteCount == 0 else {
+            throw FixtureError.invalid(
+                "session_fail_stop_leaf_size"
             )
         }
         let rebound = try Self.openNamedLeaf(
