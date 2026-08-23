@@ -2626,6 +2626,33 @@ private struct PrimeValidationDriverV2GovernorSessionMember:
     }
 }
 
+/// Retains monotone SID evidence and the single scan budget across exact reap
+/// and any fail-stop post-reap continuation for one spawned supervisor.
+private final class PrimeValidationDriverV2GovernorSessionLifecycleState {
+    let supervisorPID: pid_t
+    private(set) var capturedGenerations =
+        [String: PrimeValidationDriverV2GovernorSessionMember]()
+    private(set) var proofProcessGroups: Set<Int32>
+    private(set) var completedScanCount = 0
+
+    init(supervisorPID: pid_t) {
+        self.supervisorPID = supervisorPID
+        proofProcessGroups = [supervisorPID]
+    }
+
+    func recordCompletedScan(
+        _ members: [PrimeValidationDriverV2GovernorSessionMember]
+    ) {
+        completedScanCount += 1
+        for member in members {
+            if capturedGenerations[member.generationKey] == nil {
+                capturedGenerations[member.generationKey] = member
+            }
+            proofProcessGroups.insert(member.processGroupIdentifier)
+        }
+    }
+}
+
 private struct PrimeValidationDriverV2GovernorWaitObservation:
     Codable,
     Equatable,
@@ -2740,8 +2767,8 @@ private final class PrimeValidationDriverV2GovernorDeathWatcher:
 
     func wait(deadline: PrimeValidationDriverV2GovernorDeadline) -> Bool {
         if hasObservedExit() { return true }
-        // Keep a fixed interval inside the same outer deadline for the
-        // mandatory stopped-census/kill/reap transition.
+        // Keep a fixed interval inside the same outer deadline for exact reap
+        // and retained session-conservation work.
         let containmentReserve: UInt64 = 5_000_000_000
         let latestOrdinaryDeath = deadline.expiresAt > containmentReserve
             ? deadline.expiresAt - containmentReserve
@@ -2766,137 +2793,214 @@ private enum PrimeValidationDriverV2GovernorSessionCensus {
     static let pidCapacity = 131_072
 
     static func scan(
-        sessionIdentifier: pid_t
+        sessionIdentifier: pid_t,
+        deadline: PrimeValidationDriverV2GovernorDeadline
     ) throws -> [PrimeValidationDriverV2GovernorSessionMember] {
+        try deadline.requireTime("session_census_nonconvergent_query")
+        var identifiers = [Int32](repeating: 0, count: pidCapacity)
+        let byteCapacity = identifiers.count * MemoryLayout<Int32>.size
+        errno = 0
+        let returned = identifiers.withUnsafeMutableBytes {
+            proc_listpids(
+                UInt32(PROC_ALL_PIDS),
+                0,
+                $0.baseAddress,
+                Int32($0.count)
+            )
+        }
+        try deadline.requireTime("session_census_nonconvergent_query")
+        guard returned > 0,
+              Int(returned) < byteCapacity,
+              Int(returned) % MemoryLayout<Int32>.size == 0
+        else {
+            throw governorRejected(
+                PrimeValidationDriverV2ShotGovernorStatus.containmentUncertain,
+                "session_census_capacity"
+            )
+        }
+        let count = Int(returned) / MemoryLayout<Int32>.size
+        let positive = identifiers.prefix(count).filter { $0 > 0 }
+        guard Set(positive).count == positive.count else {
+            throw governorRejected(
+                PrimeValidationDriverV2ShotGovernorStatus.containmentUncertain,
+                "session_census_duplicate_pid"
+            )
+        }
+        var members = [PrimeValidationDriverV2GovernorSessionMember]()
+        for pid in positive.sorted() {
+            if let member = try joinedMemberIfInTargetSession(
+                pid: pid,
+                sessionIdentifier: sessionIdentifier,
+                deadline: deadline
+            ) {
+                members.append(member)
+            }
+        }
+        guard Set(members.map(\.generationKey)).count == members.count else {
+            throw governorRejected(
+                PrimeValidationDriverV2ShotGovernorStatus.containmentUncertain,
+                "session_census_duplicate_generation"
+            )
+        }
+        return members.sorted {
+            $0.processIdentifier < $1.processIdentifier
+        }
+    }
+
+    static func recordedScan(
+        lifecycleState:
+            PrimeValidationDriverV2GovernorSessionLifecycleState,
+        deadline: PrimeValidationDriverV2GovernorDeadline,
+        exhaustionCoordinate: String
+    ) throws -> [PrimeValidationDriverV2GovernorSessionMember] {
+        guard lifecycleState.completedScanCount < maximumScans else {
+            throw governorRejected(
+                PrimeValidationDriverV2ShotGovernorStatus.containmentUncertain,
+                exhaustionCoordinate
+            )
+        }
+        let members = try scan(
+            sessionIdentifier: lifecycleState.supervisorPID,
+            deadline: deadline
+        )
+        lifecycleState.recordCompletedScan(members)
+        return members
+    }
+
+    private static func joinedMemberIfInTargetSession(
+        pid: pid_t,
+        sessionIdentifier: pid_t,
+        deadline: PrimeValidationDriverV2GovernorDeadline
+    ) throws -> PrimeValidationDriverV2GovernorSessionMember? {
+        let expected = MemoryLayout<proc_bsdinfo>.size
         for _ in 0 ..< 4 {
-            var identifiers = [Int32](repeating: 0, count: pidCapacity)
-            let byteCapacity = identifiers.count
-                * MemoryLayout<Int32>.size
+            try deadline.requireTime("session_census_nonconvergent_query")
+            var firstGeneration = proc_bsdinfo()
             errno = 0
-            let returned = identifiers.withUnsafeMutableBytes {
-                proc_listpids(
-                    UInt32(PROC_ALL_PIDS),
+            let firstCount = withUnsafeMutablePointer(
+                to: &firstGeneration
+            ) {
+                proc_pidinfo(
+                    pid,
+                    PROC_PIDTBSDINFO,
                     0,
-                    $0.baseAddress,
-                    Int32($0.count)
+                    $0,
+                    Int32(expected)
                 )
             }
-            guard returned > 0,
-                  Int(returned) < byteCapacity,
-                  Int(returned) % MemoryLayout<Int32>.size == 0
-            else {
+            let firstErrno = errno
+            try deadline.requireTime("session_census_nonconvergent_query")
+            if firstCount <= 0, firstErrno == ESRCH { return nil }
+            guard firstCount == Int32(expected) else {
                 throw governorRejected(
-                    PrimeValidationDriverV2ShotGovernorStatus.containmentUncertain,
-                    "session_census_capacity"
+                    PrimeValidationDriverV2ShotGovernorStatus
+                        .containmentUncertain,
+                    "session_census_bsdinfo_\(firstErrno)"
                 )
             }
-            let count = Int(returned) / MemoryLayout<Int32>.size
-            let positive = identifiers.prefix(count).filter { $0 > 0 }
-            guard Set(positive).count == positive.count else {
+            guard firstGeneration.pbi_pid == UInt32(pid) else {
                 throw governorRejected(
-                    PrimeValidationDriverV2ShotGovernorStatus.containmentUncertain,
-                    "session_census_duplicate_pid"
+                    PrimeValidationDriverV2ShotGovernorStatus
+                        .containmentUncertain,
+                    "session_census_bsdinfo_\(firstErrno)"
                 )
             }
-            var retry = false
-            var members = [PrimeValidationDriverV2GovernorSessionMember]()
-            for pid in positive.sorted() {
-                errno = 0
-                let observedSession = Darwin.getsid(pid)
-                if observedSession < 0 {
-                    if errno == ESRCH { retry = true; break }
-                    throw governorRejected(
-                        PrimeValidationDriverV2ShotGovernorStatus.containmentUncertain,
-                        "session_census_getsid_\(errno)"
-                    )
-                }
-                guard observedSession == sessionIdentifier else { continue }
-                var first = proc_bsdinfo()
-                let expected = MemoryLayout<proc_bsdinfo>.size
-                errno = 0
-                let firstCount = withUnsafeMutablePointer(to: &first) {
-                    proc_pidinfo(
-                        pid,
-                        PROC_PIDTBSDINFO,
-                        0,
-                        $0,
-                        Int32(expected)
-                    )
-                }
-                if firstCount <= 0, errno == ESRCH {
-                    retry = true
-                    break
-                }
-                guard firstCount == Int32(expected) else {
-                    throw governorRejected(
-                        PrimeValidationDriverV2ShotGovernorStatus.containmentUncertain,
-                        "session_census_bsdinfo_\(errno)"
-                    )
-                }
+
+            errno = 0
+            let observedSession = Darwin.getsid(pid)
+            let sessionErrno = errno
+            try deadline.requireTime("session_census_nonconvergent_query")
+            if observedSession < 0, sessionErrno == ESRCH { return nil }
+            guard observedSession >= 0 else {
+                throw governorRejected(
+                    PrimeValidationDriverV2ShotGovernorStatus
+                        .containmentUncertain,
+                    "session_census_getsid_\(sessionErrno)"
+                )
+            }
+
+            var observedGroup: pid_t? = nil
+            var mapped:
+                (deviceID: UInt64, inode: UInt64, path: String)? = nil
+            if observedSession == sessionIdentifier {
                 errno = 0
                 let group = Darwin.getpgid(pid)
-                if group < 0, errno == ESRCH {
-                    retry = true
-                    break
-                }
+                let groupErrno = errno
+                try deadline.requireTime("session_census_nonconvergent_query")
+                if group < 0, groupErrno == ESRCH { return nil }
                 guard group > 0 else {
                     throw governorRejected(
-                        PrimeValidationDriverV2ShotGovernorStatus.containmentUncertain,
-                        "session_census_getpgid_\(errno)"
+                        PrimeValidationDriverV2ShotGovernorStatus
+                            .containmentUncertain,
+                        "session_census_getpgid_\(groupErrno)"
                     )
                 }
-                var second = proc_bsdinfo()
-                errno = 0
-                let secondCount = withUnsafeMutablePointer(to: &second) {
-                    proc_pidinfo(
-                        pid,
-                        PROC_PIDTBSDINFO,
-                        0,
-                        $0,
-                        Int32(expected)
-                    )
-                }
-                if secondCount <= 0, errno == ESRCH {
-                    retry = true
-                    break
-                }
-                guard secondCount == Int32(expected),
-                      first.pbi_start_tvsec == second.pbi_start_tvsec,
-                      first.pbi_start_tvusec == second.pbi_start_tvusec,
-                      first.pbi_pid == second.pbi_pid,
-                      first.pbi_pid == UInt32(pid)
-                else {
-                    retry = true
-                    break
-                }
-                let mapped = mappedIdentityIfAvailable(pid: pid)
-                members.append(
-                    .init(
-                        processIdentifier: pid,
-                        parentProcessIdentifier: Int32(first.pbi_ppid),
-                        sessionIdentifier: observedSession,
-                        processGroupIdentifier: group,
-                        ownerUserID: first.pbi_uid,
-                        kernelStatus: first.pbi_status,
-                        startSeconds: first.pbi_start_tvsec,
-                        startMicroseconds: first.pbi_start_tvusec,
-                        mappedDeviceID: mapped?.deviceID,
-                        mappedInode: mapped?.inode,
-                        mappedPathTelemetry: mapped?.path
-                    )
+                observedGroup = group
+                mapped = try mappedIdentityIfAvailable(
+                    pid: pid,
+                    deadline: deadline
                 )
             }
-            if retry { continue }
-            guard Set(members.map(\.generationKey)).count == members.count
-            else {
+
+            var secondGeneration = proc_bsdinfo()
+            errno = 0
+            let secondCount = withUnsafeMutablePointer(
+                to: &secondGeneration
+            ) {
+                proc_pidinfo(
+                    pid,
+                    PROC_PIDTBSDINFO,
+                    0,
+                    $0,
+                    Int32(expected)
+                )
+            }
+            let secondErrno = errno
+            try deadline.requireTime("session_census_nonconvergent_query")
+            if secondCount <= 0, secondErrno == ESRCH { return nil }
+            guard secondCount == Int32(expected) else {
                 throw governorRejected(
-                    PrimeValidationDriverV2ShotGovernorStatus.containmentUncertain,
-                    "session_census_duplicate_generation"
+                    PrimeValidationDriverV2ShotGovernorStatus
+                        .containmentUncertain,
+                    "session_census_bsdinfo_\(secondErrno)"
                 )
             }
-            return members.sorted {
-                $0.processIdentifier < $1.processIdentifier
+            guard secondGeneration.pbi_pid == UInt32(pid) else {
+                throw governorRejected(
+                    PrimeValidationDriverV2ShotGovernorStatus
+                        .containmentUncertain,
+                    "session_census_bsdinfo_\(secondErrno)"
+                )
             }
+            guard firstGeneration.pbi_start_tvsec
+                    == secondGeneration.pbi_start_tvsec,
+                  firstGeneration.pbi_start_tvusec
+                    == secondGeneration.pbi_start_tvusec
+            else {
+                continue
+            }
+            guard observedSession == sessionIdentifier else { return nil }
+            guard let observedGroup else {
+                throw governorRejected(
+                    PrimeValidationDriverV2ShotGovernorStatus
+                        .containmentUncertain,
+                    "session_census_getpgid_0"
+                )
+            }
+            return .init(
+                processIdentifier: pid,
+                parentProcessIdentifier:
+                    Int32(secondGeneration.pbi_ppid),
+                sessionIdentifier: observedSession,
+                processGroupIdentifier: observedGroup,
+                ownerUserID: secondGeneration.pbi_uid,
+                kernelStatus: secondGeneration.pbi_status,
+                startSeconds: secondGeneration.pbi_start_tvsec,
+                startMicroseconds: secondGeneration.pbi_start_tvusec,
+                mappedDeviceID: mapped?.deviceID,
+                mappedInode: mapped?.inode,
+                mappedPathTelemetry: mapped?.path
+            )
         }
         throw governorRejected(
             PrimeValidationDriverV2ShotGovernorStatus.containmentUncertain,
@@ -2905,19 +3009,27 @@ private enum PrimeValidationDriverV2GovernorSessionCensus {
     }
 
     static func contain(
-        supervisorPID: pid_t,
+        lifecycleState:
+            PrimeValidationDriverV2GovernorSessionLifecycleState,
         deathWatcher: PrimeValidationDriverV2GovernorDeathWatcher,
         deadline: PrimeValidationDriverV2GovernorDeadline,
-        onExactReap: () -> Void = {}
+        onExactReap: () -> Void
     ) throws -> (
         wait: PrimeValidationDriverV2GovernorWaitObservation,
         conservation: PrimeValidationDriverV2GovernorConservation
     ) {
-        var scanCount = 0
-        var captured = [String: PrimeValidationDriverV2GovernorSessionMember]()
-        var groups = Set<Int32>([supervisorPID])
+        let supervisorPID = lifecycleState.supervisorPID
+        if deathWatcher.hasObservedExit() {
+            return try reapNormallyAfterExit(
+                lifecycleState: lifecycleState,
+                deathWatcher: deathWatcher,
+                deadline: deadline,
+                onExactReap: onExactReap
+            )
+        }
 
         let stopTarget = -supervisorPID
+        try deadline.requireTime("containment_stopped_fixed_point_deadline")
         errno = 0
         let stopReturn = Darwin.kill(stopTarget, SIGSTOP)
         let stopErrno = errno
@@ -2931,31 +3043,40 @@ private enum PrimeValidationDriverV2GovernorSessionCensus {
             deathEventObserved = false
         }
         if stopReturn != 0 {
-            guard stopErrno == ESRCH, deathEventObserved else {
-                throw governorRejected(
-                    PrimeValidationDriverV2ShotGovernorStatus.containmentUncertain,
-                    "supervisor_stop",
-                    preliminarySupervisorStopObservation: .init(
-                        returnValue: stopReturn,
-                        errorNumber: stopErrno,
-                        deathEventCheckPerformed: deathEventCheckPerformed,
-                        deathEventObserved: deathEventObserved
-                    )
+            if stopErrno == ESRCH, deathEventObserved {
+                return try reapNormallyAfterExit(
+                    lifecycleState: lifecycleState,
+                    deathWatcher: deathWatcher,
+                    deadline: deadline,
+                    onExactReap: onExactReap
                 )
             }
+            throw governorRejected(
+                PrimeValidationDriverV2ShotGovernorStatus.containmentUncertain,
+                "supervisor_stop",
+                preliminarySupervisorStopObservation: .init(
+                    returnValue: stopReturn,
+                    errorNumber: stopErrno,
+                    deathEventCheckPerformed: deathEventCheckPerformed,
+                    deathEventObserved: deathEventObserved
+                )
+            )
         }
 
         var previous: [PrimeValidationDriverV2GovernorSessionMember]?
+        var fixedPointMembers = [PrimeValidationDriverV2GovernorSessionMember]()
         var stableCount = 0
-        while scanCount < maximumScans {
+        while lifecycleState.completedScanCount < maximumScans {
             try deadline.requireTime("containment_stopped_fixed_point_deadline")
-            let members = try scan(sessionIdentifier: supervisorPID)
-            scanCount += 1
-            for member in members {
-                captured[member.generationKey] = member
-                groups.insert(member.processGroupIdentifier)
-            }
+            let members = try recordedScan(
+                lifecycleState: lifecycleState,
+                deadline: deadline,
+                exhaustionCoordinate: "session_stopped_fixed_point"
+            )
             for group in Set(members.map(\.processGroupIdentifier)) {
+                try deadline.requireTime(
+                    "containment_stopped_fixed_point_deadline"
+                )
                 errno = 0
                 if Darwin.kill(-group, SIGSTOP) != 0, errno != ESRCH {
                     throw governorRejected(
@@ -2969,7 +3090,10 @@ private enum PrimeValidationDriverV2GovernorSessionCensus {
             } else {
                 stableCount = 0
             }
-            if stableCount >= 1 { break }
+            if stableCount >= 1 {
+                fixedPointMembers = members
+                break
+            }
             previous = members
             _ = Darwin.usleep(1_000)
         }
@@ -2980,7 +3104,13 @@ private enum PrimeValidationDriverV2GovernorSessionCensus {
             )
         }
 
-        for group in groups.sorted() where group != supervisorPID {
+        let fixedPointGroups = Set(
+            fixedPointMembers.map(\.processGroupIdentifier)
+        )
+        for group in fixedPointGroups.sorted() where group != supervisorPID {
+            try deadline.requireTime(
+                "containment_stopped_fixed_point_deadline"
+            )
             errno = 0
             if Darwin.kill(-group, SIGKILL) != 0, errno != ESRCH {
                 throw governorRejected(
@@ -2989,14 +3119,20 @@ private enum PrimeValidationDriverV2GovernorSessionCensus {
                 )
             }
         }
-        errno = 0
-        if Darwin.kill(-supervisorPID, SIGKILL) != 0,
-           !(errno == ESRCH && deathWatcher.hasObservedExit())
-        {
-            throw governorRejected(
-                PrimeValidationDriverV2ShotGovernorStatus.containmentUncertain,
-                "session_supervisor_kill"
+        if fixedPointGroups.contains(supervisorPID) {
+            try deadline.requireTime(
+                "containment_stopped_fixed_point_deadline"
             )
+            errno = 0
+            if Darwin.kill(-supervisorPID, SIGKILL) != 0,
+               !(errno == ESRCH && deathWatcher.hasObservedExit())
+            {
+                throw governorRejected(
+                    PrimeValidationDriverV2ShotGovernorStatus
+                        .containmentUncertain,
+                    "session_supervisor_kill"
+                )
+            }
         }
         let wait = try exactWait(
             supervisorPID: supervisorPID,
@@ -3004,16 +3140,23 @@ private enum PrimeValidationDriverV2GovernorSessionCensus {
             deadline: deadline
         )
         onExactReap()
+        try deadline.requireTime("exact_supervisor_wait_return_deadline")
         var emptyCount = 0
-        while scanCount < maximumScans, emptyCount < 2 {
+        while lifecycleState.completedScanCount < maximumScans,
+              emptyCount < 2
+        {
             try deadline.requireTime("containment_empty_scan_deadline")
-            let members = try scan(sessionIdentifier: supervisorPID)
-            scanCount += 1
+            let members = try recordedScan(
+                lifecycleState: lifecycleState,
+                deadline: deadline,
+                exhaustionCoordinate: "session_not_empty"
+            )
             if members.isEmpty { emptyCount += 1 } else {
                 emptyCount = 0
                 for member in members {
-                    captured[member.generationKey] = member
-                    groups.insert(member.processGroupIdentifier)
+                    try deadline.requireTime(
+                        "containment_empty_scan_deadline"
+                    )
                     errno = 0
                     if Darwin.kill(-member.processGroupIdentifier, SIGKILL)
                         != 0, errno != ESRCH
@@ -3034,7 +3177,8 @@ private enum PrimeValidationDriverV2GovernorSessionCensus {
                 "session_not_empty"
             )
         }
-        for member in captured.values {
+        for member in lifecycleState.capturedGenerations.values {
+            try deadline.requireTime("containment_empty_scan_deadline")
             if let current = try bsdInfoIfPresent(
                 pid: member.processIdentifier
             ),
@@ -3047,7 +3191,8 @@ private enum PrimeValidationDriverV2GovernorSessionCensus {
                 )
             }
         }
-        for group in groups {
+        for group in lifecycleState.proofProcessGroups {
+            try deadline.requireTime("containment_empty_scan_deadline")
             errno = 0
             guard Darwin.kill(-group, 0) == -1, errno == ESRCH else {
                 throw governorRejected(
@@ -3060,11 +3205,13 @@ private enum PrimeValidationDriverV2GovernorSessionCensus {
             wait,
             .init(
                 supervisorSessionIdentifier: supervisorPID,
-                capturedMembers: captured.values.sorted {
+                capturedMembers:
+                    lifecycleState.capturedGenerations.values.sorted {
                     $0.processIdentifier < $1.processIdentifier
                 },
-                capturedProcessGroups: groups.sorted(),
-                completeScanCount: scanCount,
+                capturedProcessGroups:
+                    lifecycleState.proofProcessGroups.sorted(),
+                completeScanCount: lifecycleState.completedScanCount,
                 finalEmptyScanCount: emptyCount,
                 capturedGenerationsAbsent: true,
                 capturedGroupsAbsent: true,
@@ -3075,61 +3222,100 @@ private enum PrimeValidationDriverV2GovernorSessionCensus {
     }
 
     static func reapNormallyAfterExit(
-        supervisorPID: pid_t,
+        lifecycleState:
+            PrimeValidationDriverV2GovernorSessionLifecycleState,
         deathWatcher: PrimeValidationDriverV2GovernorDeathWatcher,
         deadline: PrimeValidationDriverV2GovernorDeadline,
-        onExactReap: () -> Void = {}
+        onExactReap: () -> Void
     ) throws -> (
         wait: PrimeValidationDriverV2GovernorWaitObservation,
         conservation: PrimeValidationDriverV2GovernorConservation
     ) {
+        let supervisorPID = lifecycleState.supervisorPID
         guard deathWatcher.hasObservedExit() else {
             throw governorRejected(
                 PrimeValidationDriverV2ShotGovernorStatus.containmentUncertain,
                 "normal_reap_without_death"
             )
         }
-        let members = try scan(sessionIdentifier: supervisorPID)
-        let unexpected = members.filter {
-            $0.processIdentifier != supervisorPID
-        }
-        guard unexpected.isEmpty else {
-            return try contain(
-                supervisorPID: supervisorPID,
-                deathWatcher: deathWatcher,
-                deadline: deadline,
-                onExactReap: onExactReap
-            )
-        }
-        let captured = members
         let wait = try exactWait(
             supervisorPID: supervisorPID,
             deathWatcher: deathWatcher,
             deadline: deadline
         )
         onExactReap()
-        let first = try scan(sessionIdentifier: supervisorPID)
-        let second = try scan(sessionIdentifier: supervisorPID)
-        guard first.isEmpty, second.isEmpty else {
-            throw governorRejected(
-                PrimeValidationDriverV2ShotGovernorStatus.containmentUncertain,
-                "normal_session_not_empty"
+        try deadline.requireTime("exact_supervisor_wait_return_deadline")
+        let first = try recordedScan(
+            lifecycleState: lifecycleState,
+            deadline: deadline,
+            exhaustionCoordinate: "post_reap_session_not_empty"
+        )
+        if !first.isEmpty {
+            return (
+                wait,
+                try containSessionAfterSupervisorReaped(
+                    lifecycleState: lifecycleState,
+                    deadline: deadline,
+                    initialMembers: first
+                )
             )
         }
-        errno = 0
-        guard Darwin.kill(-supervisorPID, 0) == -1, errno == ESRCH else {
-            throw governorRejected(
-                PrimeValidationDriverV2ShotGovernorStatus.containmentUncertain,
-                "normal_supervisor_group_present"
+        let second = try recordedScan(
+            lifecycleState: lifecycleState,
+            deadline: deadline,
+            exhaustionCoordinate: "post_reap_session_not_empty"
+        )
+        if !second.isEmpty {
+            return (
+                wait,
+                try containSessionAfterSupervisorReaped(
+                    lifecycleState: lifecycleState,
+                    deadline: deadline,
+                    initialMembers: second
+                )
             )
+        }
+        for member in lifecycleState.capturedGenerations.values {
+            try deadline.requireTime(
+                "post_reap_containment_empty_scan_deadline"
+            )
+            if let current = try bsdInfoIfPresent(
+                pid: member.processIdentifier
+            ),
+               current.pbi_start_tvsec == member.startSeconds,
+               current.pbi_start_tvusec == member.startMicroseconds
+            {
+                throw governorRejected(
+                    PrimeValidationDriverV2ShotGovernorStatus
+                        .containmentUncertain,
+                    "post_reap_captured_generation_present"
+                )
+            }
+        }
+        for group in lifecycleState.proofProcessGroups {
+            try deadline.requireTime(
+                "post_reap_containment_empty_scan_deadline"
+            )
+            errno = 0
+            guard Darwin.kill(-group, 0) == -1, errno == ESRCH else {
+                throw governorRejected(
+                    PrimeValidationDriverV2ShotGovernorStatus
+                        .containmentUncertain,
+                    "post_reap_captured_group_present"
+                )
+            }
         }
         return (
             wait,
             .init(
                 supervisorSessionIdentifier: supervisorPID,
-                capturedMembers: captured,
-                capturedProcessGroups: [supervisorPID],
-                completeScanCount: 3,
+                capturedMembers:
+                    lifecycleState.capturedGenerations.values.sorted {
+                    $0.processIdentifier < $1.processIdentifier
+                },
+                capturedProcessGroups:
+                    lifecycleState.proofProcessGroups.sorted(),
+                completeScanCount: lifecycleState.completedScanCount,
                 finalEmptyScanCount: 2,
                 capturedGenerationsAbsent: true,
                 capturedGroupsAbsent: true,
@@ -3139,34 +3325,64 @@ private enum PrimeValidationDriverV2GovernorSessionCensus {
         )
     }
 
-    /// Completes SID/group conservation after the dedicated supervisor has
-    /// already been reaped. This transition deliberately has no waitpid path:
-    /// it stops a fixed point, kills every captured group, proves two empty
-    /// SID scans, and rejects anything other than ESRCH for every captured
-    /// generation and process group.
+    /// Continues retained SID/group conservation after exact supervisor reap.
+    /// It has no waitpid path, actuates only current complete joined groups,
+    /// and proves every cumulative generation and proof group absent. A new
+    /// invocation resets only its local fixed-point and empty-scan counters.
     static func containSessionAfterSupervisorReaped(
-        supervisorPID: pid_t,
+        lifecycleState:
+            PrimeValidationDriverV2GovernorSessionLifecycleState,
         deadline: PrimeValidationDriverV2GovernorDeadline
     ) throws -> PrimeValidationDriverV2GovernorConservation {
-        var scanCount = 0
-        var captured = [String: PrimeValidationDriverV2GovernorSessionMember]()
-        var groups = Set<Int32>([supervisorPID])
+        return try containSessionAfterSupervisorReaped(
+            lifecycleState: lifecycleState,
+            deadline: deadline,
+            initialMembers: []
+        )
+    }
+
+    private static func containSessionAfterSupervisorReaped(
+        lifecycleState:
+            PrimeValidationDriverV2GovernorSessionLifecycleState,
+        deadline: PrimeValidationDriverV2GovernorDeadline,
+        initialMembers: [PrimeValidationDriverV2GovernorSessionMember]
+    ) throws -> PrimeValidationDriverV2GovernorConservation {
+        let supervisorPID = lifecycleState.supervisorPID
         var previous: [PrimeValidationDriverV2GovernorSessionMember]?
+        var fixedPointMembers = [PrimeValidationDriverV2GovernorSessionMember]()
         var stableCount = 0
 
-        while scanCount < maximumScans {
+        if !initialMembers.isEmpty {
+            for group in Set(initialMembers.map(\.processGroupIdentifier)) {
+                try deadline.requireTime(
+                    "post_reap_containment_stopped_fixed_point_deadline"
+                )
+                errno = 0
+                if Darwin.kill(-group, SIGSTOP) != 0, errno != ESRCH {
+                    throw governorRejected(
+                        PrimeValidationDriverV2ShotGovernorStatus
+                            .containmentUncertain,
+                        "post_reap_session_group_stop_\(errno)"
+                    )
+                }
+            }
+            previous = initialMembers
+        }
+
+        while lifecycleState.completedScanCount < maximumScans {
             try deadline.requireTime(
                 "post_reap_containment_stopped_fixed_point_deadline"
             )
-            let members = try scan(sessionIdentifier: supervisorPID)
-            scanCount += 1
-            for member in members {
-                captured[member.generationKey] = member
-                groups.insert(member.processGroupIdentifier)
-            }
-            for group in Set(members.map(\.processGroupIdentifier))
-                .union([supervisorPID])
-            {
+            let members = try recordedScan(
+                lifecycleState: lifecycleState,
+                deadline: deadline,
+                exhaustionCoordinate:
+                    "post_reap_session_stopped_fixed_point"
+            )
+            for group in Set(members.map(\.processGroupIdentifier)) {
+                try deadline.requireTime(
+                    "post_reap_containment_stopped_fixed_point_deadline"
+                )
                 errno = 0
                 if Darwin.kill(-group, SIGSTOP) != 0, errno != ESRCH {
                     throw governorRejected(
@@ -3181,7 +3397,10 @@ private enum PrimeValidationDriverV2GovernorSessionCensus {
             } else {
                 stableCount = 0
             }
-            if stableCount >= 1 { break }
+            if stableCount >= 1 {
+                fixedPointMembers = members
+                break
+            }
             previous = members
             _ = Darwin.usleep(1_000)
         }
@@ -3192,7 +3411,13 @@ private enum PrimeValidationDriverV2GovernorSessionCensus {
             )
         }
 
-        for group in groups.sorted() {
+        let fixedPointGroups = Set(
+            fixedPointMembers.map(\.processGroupIdentifier)
+        )
+        for group in fixedPointGroups.sorted() {
+            try deadline.requireTime(
+                "post_reap_containment_stopped_fixed_point_deadline"
+            )
             errno = 0
             if Darwin.kill(-group, SIGKILL) != 0, errno != ESRCH {
                 throw governorRejected(
@@ -3204,19 +3429,25 @@ private enum PrimeValidationDriverV2GovernorSessionCensus {
         }
 
         var emptyCount = 0
-        while scanCount < maximumScans, emptyCount < 2 {
+        while lifecycleState.completedScanCount < maximumScans,
+              emptyCount < 2
+        {
             try deadline.requireTime(
                 "post_reap_containment_empty_scan_deadline"
             )
-            let members = try scan(sessionIdentifier: supervisorPID)
-            scanCount += 1
+            let members = try recordedScan(
+                lifecycleState: lifecycleState,
+                deadline: deadline,
+                exhaustionCoordinate: "post_reap_session_not_empty"
+            )
             if members.isEmpty {
                 emptyCount += 1
             } else {
                 emptyCount = 0
                 for member in members {
-                    captured[member.generationKey] = member
-                    groups.insert(member.processGroupIdentifier)
+                    try deadline.requireTime(
+                        "post_reap_containment_empty_scan_deadline"
+                    )
                     errno = 0
                     if Darwin.kill(-member.processGroupIdentifier, SIGKILL)
                         != 0, errno != ESRCH
@@ -3237,7 +3468,10 @@ private enum PrimeValidationDriverV2GovernorSessionCensus {
                 "post_reap_session_not_empty"
             )
         }
-        for member in captured.values {
+        for member in lifecycleState.capturedGenerations.values {
+            try deadline.requireTime(
+                "post_reap_containment_empty_scan_deadline"
+            )
             if let current = try bsdInfoIfPresent(
                 pid: member.processIdentifier
             ),
@@ -3251,7 +3485,10 @@ private enum PrimeValidationDriverV2GovernorSessionCensus {
                 )
             }
         }
-        for group in groups {
+        for group in lifecycleState.proofProcessGroups {
+            try deadline.requireTime(
+                "post_reap_containment_empty_scan_deadline"
+            )
             errno = 0
             guard Darwin.kill(-group, 0) == -1, errno == ESRCH else {
                 throw governorRejected(
@@ -3263,11 +3500,13 @@ private enum PrimeValidationDriverV2GovernorSessionCensus {
         }
         return .init(
             supervisorSessionIdentifier: supervisorPID,
-            capturedMembers: captured.values.sorted {
+            capturedMembers:
+                lifecycleState.capturedGenerations.values.sorted {
                 $0.processIdentifier < $1.processIdentifier
             },
-            capturedProcessGroups: groups.sorted(),
-            completeScanCount: scanCount,
+            capturedProcessGroups:
+                lifecycleState.proofProcessGroups.sorted(),
+            completeScanCount: lifecycleState.completedScanCount,
             finalEmptyScanCount: emptyCount,
             capturedGenerationsAbsent: true,
             capturedGroupsAbsent: true,
@@ -3295,7 +3534,6 @@ private enum PrimeValidationDriverV2GovernorSessionCensus {
             errno = 0
             let returned = Darwin.waitpid(supervisorPID, &raw, 0)
             if returned == supervisorPID {
-                try deadline.requireTime("exact_supervisor_wait_return_deadline")
                 return .init(
                     pid: supervisorPID,
                     rawStatus: raw,
@@ -3318,7 +3556,16 @@ private enum PrimeValidationDriverV2GovernorSessionCensus {
         let returned = withUnsafeMutablePointer(to: &value) {
             proc_pidinfo(pid, PROC_PIDTBSDINFO, 0, $0, Int32(size))
         }
-        if returned == Int32(size) { return value }
+        if returned == Int32(size) {
+            guard value.pbi_pid == UInt32(pid) else {
+                throw governorRejected(
+                    PrimeValidationDriverV2ShotGovernorStatus
+                        .containmentUncertain,
+                    "captured_generation_query_\(errno)"
+                )
+            }
+            return value
+        }
         if returned <= 0, errno == ESRCH { return nil }
         throw governorRejected(
             PrimeValidationDriverV2ShotGovernorStatus.containmentUncertain,
@@ -3327,10 +3574,12 @@ private enum PrimeValidationDriverV2GovernorSessionCensus {
     }
 
     private static func mappedIdentityIfAvailable(
-        pid: pid_t
-    ) -> (deviceID: UInt64, inode: UInt64, path: String)? {
+        pid: pid_t,
+        deadline: PrimeValidationDriverV2GovernorDeadline
+    ) throws -> (deviceID: UInt64, inode: UInt64, path: String)? {
         var address: UInt64 = 0
         for _ in 0 ..< 256 {
+            try deadline.requireTime("session_census_nonconvergent_query")
             var raw = proc_regionwithpathinfo()
             let returned = withUnsafeMutablePointer(to: &raw) {
                 proc_pidinfo(
@@ -3341,6 +3590,7 @@ private enum PrimeValidationDriverV2GovernorSessionCensus {
                     Int32(MemoryLayout<proc_regionwithpathinfo>.size)
                 )
             }
+            try deadline.requireTime("session_census_nonconvergent_query")
             guard returned == Int32(MemoryLayout<proc_regionwithpathinfo>.size)
             else { return nil }
             let region = raw.prp_prinfo
@@ -3373,6 +3623,7 @@ private enum PrimeValidationDriverV2GovernorSessionCensus {
 
 private struct PrimeValidationDriverV2GovernorSpawnedSupervisor {
     let processIdentifier: pid_t
+    let lifecycleState: PrimeValidationDriverV2GovernorSessionLifecycleState
     let appliedFlags: UInt16
     let spawnedAtUptimeNanoseconds: UInt64
     let cwdProof: PrimeValidationDriverV2GovernorCWDProof
@@ -3435,7 +3686,7 @@ private final class PrimeValidationDriverV2GovernorSpawnContainmentGuard {
                     do {
                         _ = try PrimeValidationDriverV2GovernorSessionCensus
                             .contain(
-                                supervisorPID: spawned.processIdentifier,
+                                lifecycleState: spawned.lifecycleState,
                                 deathWatcher: spawned.deathWatcher,
                                 deadline: deadline,
                                 onExactReap: acceptExactReap
@@ -3447,7 +3698,7 @@ private final class PrimeValidationDriverV2GovernorSpawnContainmentGuard {
                         }
                         _ = try PrimeValidationDriverV2GovernorSessionCensus
                             .containSessionAfterSupervisorReaped(
-                                supervisorPID: spawned.processIdentifier,
+                                lifecycleState: spawned.lifecycleState,
                                 deadline: deadline
                             )
                         state = .conservationCompleted
@@ -3455,7 +3706,7 @@ private final class PrimeValidationDriverV2GovernorSpawnContainmentGuard {
                 } else if case .exactReapCompleted = state {
                     _ = try PrimeValidationDriverV2GovernorSessionCensus
                         .containSessionAfterSupervisorReaped(
-                            supervisorPID: spawned.processIdentifier,
+                            lifecycleState: spawned.lifecycleState,
                             deadline: deadline
                         )
                     state = .conservationCompleted
@@ -3655,6 +3906,10 @@ private enum PrimeValidationDriverV2GovernorSpawner {
                 "supervisor_spawn_\(spawnResult)"
             )
         }
+        let lifecycleState =
+            PrimeValidationDriverV2GovernorSessionLifecycleState(
+                supervisorPID: pid
+            )
         _ = Darwin.close(stdoutPipe[1])
         parentDescriptors[1] = -1
         _ = Darwin.close(stderrPipe[1])
@@ -3693,6 +3948,7 @@ private enum PrimeValidationDriverV2GovernorSpawner {
                 .mappedImage(pid: pid, executable: executable)
             return .init(
                 processIdentifier: pid,
+                lifecycleState: lifecycleState,
                 appliedFlags: supervisorFlags,
                 spawnedAtUptimeNanoseconds: spawnedAt,
                 cwdProof: cwd,
@@ -3703,12 +3959,26 @@ private enum PrimeValidationDriverV2GovernorSpawner {
             )
         } catch {
             let proofFailure = error
-            let containment = Result {
-                try PrimeValidationDriverV2GovernorSessionCensus.contain(
-                    supervisorPID: pid,
-                    deathWatcher: deathWatcher,
-                    deadline: deadline
-                )
+            var suspendedJoinExactReaped = false
+            let containment: Result<Void, Error> = Result {
+                do {
+                    _ = try PrimeValidationDriverV2GovernorSessionCensus
+                        .contain(
+                            lifecycleState: lifecycleState,
+                            deathWatcher: deathWatcher,
+                            deadline: deadline,
+                            onExactReap: {
+                                suspendedJoinExactReaped = true
+                            }
+                        )
+                } catch {
+                    guard suspendedJoinExactReaped else { throw error }
+                    _ = try PrimeValidationDriverV2GovernorSessionCensus
+                        .containSessionAfterSupervisorReaped(
+                            lifecycleState: lifecycleState,
+                            deadline: deadline
+                        )
+                }
             }
             let stdoutFinished = Result {
                 try stdoutDrain.finish(deadline: deadline)
@@ -4349,7 +4619,7 @@ package enum PrimeValidationDriverV2ShotGovernor {
         if spawned.deathWatcher.wait(deadline: deadline) {
             processResult = try PrimeValidationDriverV2GovernorSessionCensus
                 .reapNormallyAfterExit(
-                    supervisorPID: spawned.processIdentifier,
+                    lifecycleState: spawned.lifecycleState,
                     deathWatcher: spawned.deathWatcher,
                     deadline: deadline,
                     onExactReap: containmentGuard.acceptExactReap
@@ -4357,7 +4627,7 @@ package enum PrimeValidationDriverV2ShotGovernor {
         } else {
             processResult = try PrimeValidationDriverV2GovernorSessionCensus
                 .contain(
-                    supervisorPID: spawned.processIdentifier,
+                    lifecycleState: spawned.lifecycleState,
                     deathWatcher: spawned.deathWatcher,
                     deadline: deadline,
                     onExactReap: containmentGuard.acceptExactReap
@@ -6034,6 +6304,10 @@ package extension PrimeValidationDriverV2ShotGovernor {
                 "session_fixture_spawn_\(result)"
             )
         }
+        let lifecycleState =
+            PrimeValidationDriverV2GovernorSessionLifecycleState(
+                supervisorPID: pid
+            )
         var executionPhase:
             PrimeValidationDriverV2SessionFixtureExecutionPhase =
                 .postSpawnJoin
@@ -6050,7 +6324,7 @@ package extension PrimeValidationDriverV2ShotGovernor {
                     do {
                         _ = try PrimeValidationDriverV2GovernorSessionCensus
                             .contain(
-                                supervisorPID: pid,
+                                lifecycleState: lifecycleState,
                                 deathWatcher: deathWatcher,
                                 deadline: deadline,
                                 onExactReap: {
@@ -6064,7 +6338,7 @@ package extension PrimeValidationDriverV2ShotGovernor {
                         }
                         _ = try PrimeValidationDriverV2GovernorSessionCensus
                             .containSessionAfterSupervisorReaped(
-                                supervisorPID: pid,
+                                lifecycleState: lifecycleState,
                                 deadline: deadline
                             )
                         containmentState = .conservationComplete
@@ -6072,7 +6346,7 @@ package extension PrimeValidationDriverV2ShotGovernor {
                 case .exactReaped:
                     _ = try PrimeValidationDriverV2GovernorSessionCensus
                         .containSessionAfterSupervisorReaped(
-                            supervisorPID: pid,
+                            lifecycleState: lifecycleState,
                             deadline: deadline
                         )
                     containmentState = .conservationComplete
@@ -6143,15 +6417,32 @@ package extension PrimeValidationDriverV2ShotGovernor {
 
         var firstMembers = [PrimeValidationDriverV2GovernorSessionMember]()
         var acceptedAlreadyEmpty = false
+        let resultObservation: (
+            wait: PrimeValidationDriverV2GovernorWaitObservation,
+            conservation: PrimeValidationDriverV2GovernorConservation
+        )
         switch mode {
         case .prepublicationHeld:
             executionPhase = .prepublicationChildDiscovery
             while firstMembers.count < 2 {
                 try deadline.requireTime("session_fixture_child_discovery")
                 firstMembers = try PrimeValidationDriverV2GovernorSessionCensus
-                    .scan(sessionIdentifier: pid)
+                    .recordedScan(
+                        lifecycleState: lifecycleState,
+                        deadline: deadline,
+                        exhaustionCoordinate:
+                            "session_census_nonconvergent_query"
+                    )
                 if firstMembers.count < 2 { _ = Darwin.usleep(1_000) }
             }
+            executionPhase = .primaryContainment
+            resultObservation = try PrimeValidationDriverV2GovernorSessionCensus
+                .contain(
+                    lifecycleState: lifecycleState,
+                    deathWatcher: deathWatcher,
+                    deadline: deadline,
+                    onExactReap: { containmentState = .exactReaped }
+                )
         case .orphanTransition:
             executionPhase = .orphanDeathWait
             let waitReturned = deathWatcher.wait(deadline: deadline)
@@ -6164,20 +6455,18 @@ package extension PrimeValidationDriverV2ShotGovernor {
                 )
             }
             executionPhase = .orphanInitialCensus
-            firstMembers = try PrimeValidationDriverV2GovernorSessionCensus
-                .scan(sessionIdentifier: pid)
-            acceptedAlreadyEmpty = firstMembers.allSatisfy {
-                $0.processIdentifier == pid
-            }
+            resultObservation = try PrimeValidationDriverV2GovernorSessionCensus
+                .reapNormallyAfterExit(
+                    lifecycleState: lifecycleState,
+                    deathWatcher: deathWatcher,
+                    deadline: deadline,
+                    onExactReap: { containmentState = .exactReaped }
+                )
+            executionPhase = .primaryContainment
+            firstMembers = resultObservation.conservation.capturedMembers
+            acceptedAlreadyEmpty =
+                resultObservation.conservation.ordinaryExitPath
         }
-        executionPhase = .primaryContainment
-        let resultObservation = try PrimeValidationDriverV2GovernorSessionCensus
-            .contain(
-                supervisorPID: pid,
-                deathWatcher: deathWatcher,
-                deadline: deadline,
-                onExactReap: { containmentState = .exactReaped }
-            )
         containmentState = .conservationComplete
         try failStopDiagnostic.revalidateEmpty()
         return .init(

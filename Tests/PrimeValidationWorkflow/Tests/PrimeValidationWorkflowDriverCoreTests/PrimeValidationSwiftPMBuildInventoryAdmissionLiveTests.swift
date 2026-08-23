@@ -3557,6 +3557,15 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
             contentsOf: URL(fileURLWithPath: #filePath),
             encoding: .utf8
         )
+        let selectedTestIdentifier =
+            "func testGateEJournalChain" +
+            "OneWinnerAndPoisonAreExact() throws"
+        XCTAssertEqual(
+            liveTestsSource.components(
+                separatedBy: selectedTestIdentifier
+            ).count - 1,
+            1
+        )
         let expectedLeaves = gateEExpectedJournalLeaves()
         XCTAssertEqual(expectedLeaves.count, 34)
         XCTAssertEqual(Set(expectedLeaves).count, 34)
@@ -3931,7 +3940,9 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
                 "deathEventCheckPerformed = true",
                 "deathEventObserved = deathWatcher.hasObservedExit()",
                 "if stopReturn != 0",
-                "guard stopErrno == ESRCH, deathEventObserved else",
+                "if stopErrno == ESRCH, deathEventObserved",
+                "return try reapNormallyAfterExit(",
+                "throw governorRejected(",
                 "preliminarySupervisorStopObservation: .init(",
                 "returnValue: stopReturn",
                 "errorNumber: stopErrno",
@@ -3970,8 +3981,9 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
                 "deathWaitReturned = waitReturned",
                 "guard waitReturned else",
                 "executionPhase = .orphanInitialCensus",
-                "firstMembers = try " +
-                    "PrimeValidationDriverV2GovernorSessionCensus .scan(",
+                "resultObservation = try " +
+                    "PrimeValidationDriverV2GovernorSessionCensus " +
+                    ".reapNormallyAfterExit(",
                 "executionPhase = .primaryContainment",
                 "} catch { if let failure = error as? " +
                     "PrimeValidationDriverV2ShotGovernorFailure",
@@ -4000,6 +4012,634 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
             sessionExerciseSource.contains(
                 "DispatchSource.makeProcessSource"
             )
+        )
+
+        let censusSource = try slice(
+            governor,
+            from:
+                "private enum " +
+                "PrimeValidationDriverV2GovernorSessionCensus {",
+            through:
+                "private enum PrimeValidationDriverV2GovernorSpawner {"
+        )
+        let normalizedCensus = censusSource
+            .split(whereSeparator: { $0.isWhitespace })
+            .joined(separator: " ")
+        XCTAssertTrue(
+            normalizedCensus.contains("static let maximumScans = 256")
+        )
+        XCTAssertTrue(
+            normalizedCensus.contains("static let pidCapacity = 131_072")
+        )
+        XCTAssertEqual(
+            censusSource.components(separatedBy: "proc_listpids(")
+                .count - 1,
+            1
+        )
+        XCTAssertEqual(
+            normalizedCensus.components(
+                separatedBy:
+                    "for group in lifecycleState.proofProcessGroups { " +
+                    "try deadline.requireTime("
+            ).count - 1,
+            3
+        )
+        XCTAssertEqual(
+            governor.components(separatedBy: "scan(").count - 1,
+            2
+        )
+        XCTAssertEqual(
+            governor.components(
+                separatedBy:
+                    "PrimeValidationDriverV2GovernorSessionLifecycleState("
+            ).count - 1,
+            2
+        )
+        XCTAssertFalse(
+            governor.contains(
+                "sessionCensusRepairModelCanonicalFixtureForTesting"
+            )
+        )
+        XCTAssertFalse(censusSource.contains("EPERM"))
+
+        let censusScanSource = try slice(
+            censusSource,
+            from: "static func scan(",
+            through: "static func recordedScan("
+        )
+        let normalizedCensusScan = censusScanSource
+            .split(whereSeparator: { $0.isWhitespace })
+            .joined(separator: " ")
+        XCTAssertTrue(
+            normalizedCensusScan.contains(
+                "static func scan( sessionIdentifier: pid_t, " +
+                    "deadline: " +
+                    "PrimeValidationDriverV2GovernorDeadline ) throws"
+            )
+        )
+        XCTAssertFalse(censusScanSource.contains("for _ in 0 ..< 4"))
+        XCTAssertFalse(censusScanSource.contains("var retry"))
+        try requireSourceOrder(
+            [
+                "try deadline.requireTime(" +
+                    "\"session_census_nonconvergent_query\")",
+                "proc_listpids(",
+                "try deadline.requireTime(" +
+                    "\"session_census_nonconvergent_query\")",
+                "guard Set(positive).count == positive.count",
+                "for pid in positive.sorted()",
+                "joinedMemberIfInTargetSession(",
+                "members.append(member)",
+                "guard Set(members.map(\\.generationKey)).count " +
+                    "== members.count",
+                "return members.sorted",
+            ],
+            in: censusScanSource,
+            coordinate: "r13_census_sample_order"
+        )
+
+        let lifecycleStateSource = try slice(
+            governor,
+            from:
+                "private final class " +
+                "PrimeValidationDriverV2GovernorSessionLifecycleState {",
+            through:
+                "private struct " +
+                "PrimeValidationDriverV2GovernorWaitObservation:"
+        )
+        let normalizedLifecycleState = lifecycleStateSource
+            .split(whereSeparator: { $0.isWhitespace })
+            .joined(separator: " ")
+        for required in [
+            "let supervisorPID: pid_t",
+            "private(set) var capturedGenerations = " +
+                "[String: PrimeValidationDriverV2GovernorSessionMember]()",
+            "private(set) var proofProcessGroups: Set<Int32>",
+            "private(set) var completedScanCount = 0",
+            "proofProcessGroups = [supervisorPID]",
+            "completedScanCount += 1",
+            "if capturedGenerations[member.generationKey] == nil",
+            "capturedGenerations[member.generationKey] = member",
+            "proofProcessGroups.insert(member.processGroupIdentifier)",
+        ] {
+            XCTAssertTrue(normalizedLifecycleState.contains(required), required)
+        }
+        for forbidden in [
+            "capturedGenerations.remove",
+            "capturedGenerations = [:]",
+            "proofProcessGroups.remove",
+            "proofProcessGroups.removeAll",
+            "completedScanCount -=",
+            "completedScanCount = 0",
+        ] {
+            if forbidden == "completedScanCount = 0" {
+                XCTAssertEqual(
+                    lifecycleStateSource.components(
+                        separatedBy: forbidden
+                    ).count - 1,
+                    1
+                )
+            } else {
+                XCTAssertFalse(lifecycleStateSource.contains(forbidden))
+            }
+        }
+        let recordedScanSource = try slice(
+            censusSource,
+            from: "static func recordedScan(",
+            through: "private static func joinedMemberIfInTargetSession("
+        )
+        let normalizedRecordedScan = recordedScanSource
+            .split(whereSeparator: { $0.isWhitespace })
+            .joined(separator: " ")
+        XCTAssertEqual(
+            governor.components(separatedBy: "recordedScan(").count - 1,
+            8
+        )
+        try requireSourceOrder(
+            [
+                "guard lifecycleState.completedScanCount < maximumScans",
+                "let members = try scan(",
+                "sessionIdentifier: lifecycleState.supervisorPID",
+                "deadline: deadline",
+                "lifecycleState.recordCompletedScan(members)",
+                "return members",
+            ],
+            in: normalizedRecordedScan,
+            coordinate: "r13_recorded_scan_atomic_order"
+        )
+
+        let joinedMemberSource = try slice(
+            censusSource,
+            from: "private static func joinedMemberIfInTargetSession(",
+            through: "static func contain("
+        )
+        let normalizedJoinedMember = joinedMemberSource
+            .split(whereSeparator: { $0.isWhitespace })
+            .joined(separator: " ")
+        XCTAssertEqual(
+            joinedMemberSource.components(
+                separatedBy: "for _ in 0 ..< 4"
+            ).count - 1,
+            1
+        )
+        for required in [
+            "if firstCount <= 0, firstErrno == ESRCH { return nil }",
+            "if observedSession < 0, sessionErrno == ESRCH { " +
+                "return nil }",
+            "if group < 0, groupErrno == ESRCH { return nil }",
+            "if secondCount <= 0, secondErrno == ESRCH { return nil }",
+            "guard firstCount == Int32(expected) else",
+            "guard observedSession >= 0 else",
+            "guard group > 0 else",
+            "guard secondCount == Int32(expected) else",
+            "session_census_bsdinfo_\\(firstErrno)",
+            "session_census_bsdinfo_\\(secondErrno)",
+            "session_census_getpgid_0",
+            "session_census_nonconvergent_query",
+            "var observedGroup: pid_t? = nil",
+            "var mapped: (deviceID: UInt64, inode: UInt64, " +
+                "path: String)? = nil",
+            "parentProcessIdentifier: " +
+                "Int32(secondGeneration.pbi_ppid)",
+            "ownerUserID: secondGeneration.pbi_uid",
+            "kernelStatus: secondGeneration.pbi_status",
+            "startSeconds: secondGeneration.pbi_start_tvsec",
+            "startMicroseconds: secondGeneration.pbi_start_tvusec",
+            "mappedDeviceID: mapped?.deviceID",
+            "mappedInode: mapped?.inode",
+            "mappedPathTelemetry: mapped?.path",
+        ] {
+            XCTAssertTrue(normalizedJoinedMember.contains(required), required)
+        }
+        XCTAssertEqual(
+            joinedMemberSource.components(separatedBy: "continue")
+                .count - 1,
+            1
+        )
+        try requireSourceOrder(
+            [
+                "for _ in 0 ..< 4",
+                "try deadline.requireTime(" +
+                    "\"session_census_nonconvergent_query\")",
+                "var firstGeneration = proc_bsdinfo()",
+                "proc_pidinfo(",
+                "let firstErrno = errno",
+                "try deadline.requireTime(" +
+                    "\"session_census_nonconvergent_query\")",
+                "firstGeneration.pbi_pid == UInt32(pid)",
+                "let observedSession = Darwin.getsid(pid)",
+                "let sessionErrno = errno",
+                "try deadline.requireTime(" +
+                    "\"session_census_nonconvergent_query\")",
+                "if observedSession == sessionIdentifier",
+                "let group = Darwin.getpgid(pid)",
+                "let groupErrno = errno",
+                "try deadline.requireTime(" +
+                    "\"session_census_nonconvergent_query\")",
+                "mapped = try mappedIdentityIfAvailable(",
+                "var secondGeneration = proc_bsdinfo()",
+                "proc_pidinfo(",
+                "let secondErrno = errno",
+                "try deadline.requireTime(" +
+                    "\"session_census_nonconvergent_query\")",
+                "secondGeneration.pbi_pid == UInt32(pid)",
+                "firstGeneration.pbi_start_tvsec",
+                "== secondGeneration.pbi_start_tvsec",
+                "firstGeneration.pbi_start_tvusec",
+                "== secondGeneration.pbi_start_tvusec",
+                "continue",
+                "guard observedSession == sessionIdentifier else",
+                "guard let observedGroup else",
+                "return .init(",
+            ],
+            in: joinedMemberSource,
+            coordinate: "r13_generation_join_order"
+        )
+
+        let mappedTelemetrySource = try slice(
+            censusSource,
+            from: "private static func mappedIdentityIfAvailable(",
+            through:
+                "private struct " +
+                "PrimeValidationDriverV2GovernorSpawnedSupervisor {"
+        )
+        let normalizedMappedTelemetry = mappedTelemetrySource
+            .split(whereSeparator: { $0.isWhitespace })
+            .joined(separator: " ")
+        XCTAssertTrue(
+            normalizedMappedTelemetry.contains(
+                "pid: pid_t, deadline: " +
+                    "PrimeValidationDriverV2GovernorDeadline ) throws"
+            )
+        )
+        XCTAssertEqual(
+            mappedTelemetrySource.components(
+                separatedBy: "for _ in 0 ..< 256"
+            ).count - 1,
+            1
+        )
+        try requireSourceOrder(
+            [
+                "for _ in 0 ..< 256",
+                "try deadline.requireTime(" +
+                    "\"session_census_nonconvergent_query\")",
+                "proc_pidinfo(",
+                "try deadline.requireTime(" +
+                    "\"session_census_nonconvergent_query\")",
+            ],
+            in: mappedTelemetrySource,
+            coordinate: "r13_mapped_telemetry_deadline_order"
+        )
+        let containEntrySource = try slice(
+            censusSource,
+            from: "static func contain(",
+            through: "static func reapNormallyAfterExit("
+        )
+        let normalizedContainEntry = containEntrySource
+            .split(whereSeparator: { $0.isWhitespace })
+            .joined(separator: " ")
+        try requireSourceOrder(
+            [
+                "let supervisorPID = lifecycleState.supervisorPID",
+                "if deathWatcher.hasObservedExit()",
+                "return try reapNormallyAfterExit(",
+                "lifecycleState: lifecycleState",
+                "let stopTarget = -supervisorPID",
+                "let stopReturn = Darwin.kill(stopTarget, SIGSTOP)",
+                "if stopReturn == -1, stopErrno == ESRCH",
+                "deathEventObserved = deathWatcher.hasObservedExit()",
+                "if stopReturn != 0",
+                "if stopErrno == ESRCH, deathEventObserved",
+                "return try reapNormallyAfterExit(",
+                "lifecycleState: lifecycleState",
+                "throw governorRejected(",
+            ],
+            in: normalizedContainEntry,
+            coordinate: "r13_reap_first_entry_order"
+        )
+        try requireSourceOrder(
+            [
+                "let wait = try exactWait(",
+                "onExactReap()",
+                "try deadline.requireTime(" +
+                    "\"exact_supervisor_wait_return_deadline\")",
+                "let members = try recordedScan(",
+                "lifecycleState: lifecycleState",
+            ],
+            in: normalizedContainEntry,
+            coordinate: "r13_contain_atomic_reap_order"
+        )
+
+        let normalReapSource = try slice(
+            censusSource,
+            from: "static func reapNormallyAfterExit(",
+            through: "static func containSessionAfterSupervisorReaped("
+        )
+        let normalizedNormalReap = normalReapSource
+            .split(whereSeparator: { $0.isWhitespace })
+            .joined(separator: " ")
+        let beforePostReapScan = try slice(
+            normalReapSource,
+            from: "static func reapNormallyAfterExit(",
+            through: "onExactReap()"
+        )
+        XCTAssertFalse(beforePostReapScan.contains("recordedScan("))
+        XCTAssertFalse(beforePostReapScan.contains("Darwin.kill("))
+        try requireSourceOrder(
+            [
+                "let supervisorPID = lifecycleState.supervisorPID",
+                "guard deathWatcher.hasObservedExit() else",
+                "let wait = try exactWait(",
+                "onExactReap()",
+                "try deadline.requireTime(" +
+                    "\"exact_supervisor_wait_return_deadline\")",
+                "let first = try recordedScan(",
+                "lifecycleState: lifecycleState",
+                "deadline: deadline",
+                "if !first.isEmpty",
+                "containSessionAfterSupervisorReaped(",
+                "lifecycleState: lifecycleState",
+                "initialMembers: first",
+                "let second = try recordedScan(",
+                "lifecycleState: lifecycleState",
+                "deadline: deadline",
+                "if !second.isEmpty",
+                "containSessionAfterSupervisorReaped(",
+                "lifecycleState: lifecycleState",
+                "initialMembers: second",
+                "for member in lifecycleState.capturedGenerations.values",
+                "for group in lifecycleState.proofProcessGroups",
+                "finalEmptyScanCount: 2",
+                "ordinaryExitPath: true",
+            ],
+            in: normalizedNormalReap,
+            coordinate: "r13_exact_reap_then_two_empty_order"
+        )
+
+        let postReapContainmentSource = try slice(
+            censusSource,
+            from:
+                "private static func " +
+                "containSessionAfterSupervisorReaped(",
+            through: "private static func exactWait("
+        )
+        let normalizedPostReapContainment = postReapContainmentSource
+            .split(whereSeparator: { $0.isWhitespace })
+            .joined(separator: " ")
+        XCTAssertFalse(
+            postReapContainmentSource.contains(
+                "Darwin.kill(-supervisorPID, SIGSTOP)"
+            )
+        )
+        XCTAssertFalse(
+            postReapContainmentSource.contains(
+                "Darwin.kill(-supervisorPID, SIGKILL)"
+            )
+        )
+        for required in [
+            "for group in Set(initialMembers.map(" +
+                "\\.processGroupIdentifier)) { " +
+                "try deadline.requireTime( " +
+                "\"post_reap_containment_stopped_fixed_point_deadline\" " +
+                ") errno = 0 if Darwin.kill(-group, SIGSTOP)",
+            "for group in Set(members.map(" +
+                "\\.processGroupIdentifier)) { " +
+                "try deadline.requireTime( " +
+                "\"post_reap_containment_stopped_fixed_point_deadline\" " +
+                ") errno = 0 if Darwin.kill(-group, SIGSTOP)",
+            "for group in fixedPointGroups.sorted() { " +
+                "try deadline.requireTime( " +
+                "\"post_reap_containment_stopped_fixed_point_deadline\" " +
+                ") errno = 0 if Darwin.kill(-group, SIGKILL)",
+            "for member in members { " +
+                "try deadline.requireTime( " +
+                "\"post_reap_containment_empty_scan_deadline\" ) " +
+                "errno = 0 if Darwin.kill(" +
+                "-member.processGroupIdentifier, SIGKILL)",
+            "for member in " +
+                "lifecycleState.capturedGenerations.values { " +
+                "try deadline.requireTime( " +
+                "\"post_reap_containment_empty_scan_deadline\" ) " +
+                "if let current = try bsdInfoIfPresent(",
+            "for group in lifecycleState.proofProcessGroups { " +
+                "try deadline.requireTime( " +
+                "\"post_reap_containment_empty_scan_deadline\" ) " +
+                "errno = 0 guard Darwin.kill(-group, 0)",
+        ] {
+            XCTAssertTrue(
+                normalizedPostReapContainment.contains(required),
+                required
+            )
+        }
+        try requireSourceOrder(
+            [
+                "let supervisorPID = lifecycleState.supervisorPID",
+                "for group in Set(initialMembers.map(" +
+                    "\\.processGroupIdentifier))",
+                "Darwin.kill(-group, SIGSTOP)",
+                "while lifecycleState.completedScanCount < maximumScans",
+                "let members = try recordedScan(",
+                "for group in Set(members.map(" +
+                    "\\.processGroupIdentifier))",
+                "members.allSatisfy(\\.stoppedOrZombie)",
+                "fixedPointMembers = members",
+                "let fixedPointGroups = Set(",
+                "for group in fixedPointGroups.sorted()",
+                "Darwin.kill(-group, SIGKILL)",
+                "while lifecycleState.completedScanCount < maximumScans, " +
+                    "emptyCount < 2",
+                "let members = try recordedScan(",
+                "guard emptyCount == 2 else",
+                "for member in " +
+                    "lifecycleState.capturedGenerations.values",
+                "for group in lifecycleState.proofProcessGroups",
+                "guard Darwin.kill(-group, 0) == -1, " +
+                    "errno == ESRCH else",
+                "capturedMembers: " +
+                    "lifecycleState.capturedGenerations.values.sorted",
+                "capturedProcessGroups: " +
+                    "lifecycleState.proofProcessGroups.sorted()",
+                "completeScanCount: lifecycleState.completedScanCount",
+            ],
+            in: normalizedPostReapContainment,
+            coordinate: "r13_member_group_actuation_and_proof_order"
+        )
+
+        let sessionFixtureModeSource = try slice(
+            sessionExerciseSource,
+            from:
+                "var firstMembers = " +
+                "[PrimeValidationDriverV2GovernorSessionMember]()",
+            through: "return .init("
+        )
+        let prepublicationContainmentSource = try slice(
+            sessionFixtureModeSource,
+            from: "case .prepublicationHeld:",
+            through: "case .orphanTransition:"
+        )
+        XCTAssertTrue(prepublicationContainmentSource.contains(".contain("))
+        XCTAssertFalse(
+            prepublicationContainmentSource.contains(
+                ".reapNormallyAfterExit("
+            )
+        )
+        let orphanReapSource = try slice(
+            sessionFixtureModeSource,
+            from: "case .orphanTransition:",
+            through: "try failStopDiagnostic.revalidateEmpty()"
+        )
+        XCTAssertFalse(orphanReapSource.contains(".recordedScan("))
+        try requireSourceOrder(
+            [
+                "executionPhase = .orphanDeathWait",
+                "let waitReturned = deathWatcher.wait(deadline: deadline)",
+                "guard waitReturned else",
+                "executionPhase = .orphanInitialCensus",
+                ".reapNormallyAfterExit(",
+                "onExactReap: { containmentState = .exactReaped }",
+                "executionPhase = .primaryContainment",
+                "containmentState = .conservationComplete",
+            ],
+            in: orphanReapSource,
+            coordinate: "r13_orphan_reap_first_order"
+        )
+        let productionDeathRoute = try slice(
+            governor,
+            from: "if spawned.deathWatcher.wait(deadline: deadline) {",
+            through: "containmentGuard.acceptConservation()"
+        )
+        try requireSourceOrder(
+            [
+                "if spawned.deathWatcher.wait(deadline: deadline)",
+                ".reapNormallyAfterExit(",
+                "} else {",
+                ".contain(",
+            ],
+            in: productionDeathRoute,
+            coordinate: "r13_production_death_route_order"
+        )
+        let spawnedSupervisorSource = try slice(
+            governor,
+            from:
+                "private struct " +
+                "PrimeValidationDriverV2GovernorSpawnedSupervisor {",
+            through:
+                "private final class " +
+                "PrimeValidationDriverV2GovernorSpawnContainmentGuard"
+        )
+        XCTAssertTrue(
+            spawnedSupervisorSource.contains(
+                "let lifecycleState: " +
+                    "PrimeValidationDriverV2GovernorSessionLifecycleState"
+            )
+        )
+        let containmentGuardSource = try slice(
+            governor,
+            from:
+                "private final class " +
+                "PrimeValidationDriverV2GovernorSpawnContainmentGuard",
+            through:
+                "private enum PrimeValidationDriverV2GovernorSpawner {"
+        )
+        XCTAssertEqual(
+            containmentGuardSource.components(
+                separatedBy: "lifecycleState: spawned.lifecycleState"
+            ).count - 1,
+            3
+        )
+
+        let spawnerSource = try slice(
+            governor,
+            from: "static func spawnSupervisor(",
+            through:
+                "private struct " +
+                "PrimeValidationDriverV2GovernorStartRecordV1:"
+        )
+        try requireSourceOrder(
+            [
+                "guard spawnResult == 0, pid > 0 else",
+                "let lifecycleState =",
+                "PrimeValidationDriverV2GovernorSessionLifecycleState(",
+                "return .init(",
+                "lifecycleState: lifecycleState",
+                "var suspendedJoinExactReaped = false",
+                ".contain(",
+                "lifecycleState: lifecycleState",
+                "onExactReap:",
+                "suspendedJoinExactReaped = true",
+                "guard suspendedJoinExactReaped else",
+                ".containSessionAfterSupervisorReaped(",
+                "lifecycleState: lifecycleState",
+            ],
+            in: spawnerSource,
+            coordinate: "r13_suspended_join_retained_state_order"
+        )
+
+        try requireSourceOrder(
+            [
+                "guard result == 0, pid > 0 else",
+                "let lifecycleState =",
+                "PrimeValidationDriverV2GovernorSessionLifecycleState(",
+                "defer {",
+                ".contain(",
+                "lifecycleState: lifecycleState",
+                ".containSessionAfterSupervisorReaped(",
+                "lifecycleState: lifecycleState",
+                "do { guard Darwin.getpgid(pid) == pid",
+                "switch mode",
+                ".recordedScan(",
+                "lifecycleState: lifecycleState",
+                ".contain(",
+                "lifecycleState: lifecycleState",
+                ".reapNormallyAfterExit(",
+                "lifecycleState: lifecycleState",
+            ],
+            in: normalizedSessionExercise,
+            coordinate: "r13_fixture_retained_state_order"
+        )
+
+        let exactWaitSource = try slice(
+            censusSource,
+            from: "private static func exactWait(",
+            through: "private static func bsdInfoIfPresent("
+        )
+        XCTAssertEqual(
+            exactWaitSource.components(
+                separatedBy:
+                    "Darwin.waitpid(supervisorPID, &raw, 0)"
+            ).count - 1,
+            1
+        )
+        XCTAssertFalse(
+            exactWaitSource.contains(
+                "exact_supervisor_wait_return_deadline"
+            )
+        )
+        XCTAssertFalse(
+            normalizedCensus.contains(
+                "onExactReap: () -> Void ="
+            )
+        )
+        XCTAssertEqual(
+            censusSource.components(
+                separatedBy: "onExactReap: () -> Void"
+            ).count - 1,
+            2
+        )
+        let capturedGenerationQuerySource = try slice(
+            censusSource,
+            from: "private static func bsdInfoIfPresent(",
+            through: "private static func mappedIdentityIfAvailable("
+        )
+        try requireSourceOrder(
+            [
+                "if returned == Int32(size)",
+                "guard value.pbi_pid == UInt32(pid) else",
+                "throw governorRejected(",
+                "return value",
+            ],
+            in: capturedGenerationQuerySource,
+            coordinate: "r13_captured_generation_pid_join_order"
         )
 
         let fixture = try Fixture()
