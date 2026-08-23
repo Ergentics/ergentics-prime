@@ -8539,3 +8539,144 @@ production_attempt_count = 0
 gate_E_scientific_outcome = ABSTAIN
 gate_E_clearance_granted = 0
 ```
+
+## Gate E1.4-R9 result — valid fail-stop datum, frozen freshness rejection
+
+| Coordinate | Observed value |
+| --- | --- |
+| Status | `CONSUMED_VALID_FAIL_STOP_RECORD_BUT_FROZEN_BUILD_FRESHNESS_REJECTED` |
+| Durable-control freeze | `1c0d8a06dc59c82ab92386781e0eb38bf68f5fce` / tree `d93f7f29ff24647a8da7edde004d0b2a08346e5a` |
+| Source commit/tree/identity | clean `1bd9b9e2f30dc17e7983cb6f9bf0ae4831851efd` / `a2aff7d040c97c379161eec3ea0459f336cd9205` / `e458c197935662e827596db947b5b432cf21a3001fb8b2478f8ac49d2737e128` |
+| Authorized Release `swift test` commands consumed | `1 / 1`; no retry |
+| Release build | `PASS`; `Build complete! (195.25s)` |
+| Selected XCTest | started at `2026-08-23T18:39:50.214Z`; no XCTest case/suite or SwiftPM test terminal; the outer harness returned exit `1` |
+| Outer Swift shell | exit `1`; not an observed inner status `70` |
+| New admission roots / fixed leaves | exact `5 / 1` |
+| Intrinsic retained-record validation | `PASS` |
+| Frozen DriverCoreTests module freshness | `REJECT` |
+| R9 mechanics / fail-stop diagnostic | `ABSTAIN / ABSTAIN` |
+| Production attempts / authority vector / Gate-E clearance | `0 / 00000000 / 0` |
+
+The R9 command built and linked the R8 source and entered the selected test.
+It then terminated with the exact missing-XCTest-terminal shape. The scoped
+admission set gained exactly five roots:
+
+| Role | Retained R9 root | Device/inode; files / directories; residue |
+| --- | --- | --- |
+| Main | `/private/tmp/prime-validation-admission-tests-BFD21FC0-9AEA-4E76-A7ED-66BDD4FDCD14` | `16777231/17392535`; `66 / 32`; only root containing the fixed fail-stop leaf |
+| Collision | `/private/tmp/prime-validation-admission-tests-C5AECB28-860A-46E3-AA8B-255A2353DE8B` | `16777231/17392623`; `26 / 29`; exact `10`-byte first-leaf collision SHA-256 `591e7ef56458a393c1831cddcecd0a3415848deb290b6ebac689d0656293e48f` |
+| Concurrent winner | `/private/tmp/prime-validation-admission-tests-04CB7182-E6AC-46BC-BC8E-98DCA27BA43E` | `16777231/17392849`; `31 / 30`; `723`-byte terminal SHA-256 `fc92b004b31154d665c6e668a41a77e80d265a7cac187ec981b300dd7825dd79` |
+| Terminal collision | `/private/tmp/prime-validation-admission-tests-54A24D44-4193-4278-9319-8BFB3A3827A3` | `16777231/17392911`; `31 / 30`; deliberate empty terminal SHA-256 `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` |
+| Rebound | `/private/tmp/prime-validation-admission-tests-F4D5BEA9-7A8A-4592-A01B-5C851D54135E` | `16777231/17392972`; `31 / 30`; `723`-byte rebound terminal SHA-256 `34299b6fb76f5c2fdbebe2858bba2b5c272de199a3af5eec943f8812c8d1ab72` |
+
+All five roots are UID/GID `501/0`, mode `0700`, flags `0`. Their direct-entry
+and link-count arithmetic remains exact: main `13/15`, collision `7/9`, and
+the other three `10/12`. The five-root delta's sorted path-set SHA-256 is
+`b5a681997e0eebb7e9207cccd9d929b35b1fd46a794f3cd3fd61b869b1864a9a`.
+The complete eleven-root sorted path-set SHA-256 is
+`4b7a0c36a26fa051bd58703538b60f3762b73a94e109a9b960abc743d7e66216`.
+
+The exact retained diagnostic leaf is:
+
+```text
+/private/tmp/prime-validation-admission-tests-BFD21FC0-9AEA-4E76-A7ED-66BDD4FDCD14/gate-e-session-fixture-fail-stop.json
+```
+
+It is the exact named regular vnode `16777231/17393034`, UID/GID `501/0`,
+mode `0400`, one link, flags `0`, and `408` bytes. It has no extended ACL and
+only the `11`-byte `com.apple.provenance` xattr, value SHA-256
+`b01372585adb6c87881e5cf3e1d7472972cdec3ef5ecd45f86d42498a2df536a`.
+The parent is device/inode `16777231/17392535`, UID/GID `501/0`, mode `0700`,
+and the leaf GID equals its parent GID. The file SHA-256 is
+`72a4c0ab6b88c3d4deda001dcc444812245d946b91b0b968391b354606a7368d`.
+
+Independent byte decoders agree that the leaf is compact sorted canonical
+JSON, has no trailing line feed, and contains exactly the required eleven keys
+with no unknowns:
+
+```text
+schema = prime_driver_v2_session_fixture_fail_stop_v1
+sourceIdentitySHA256 = e458c197935662e827596db947b5b432cf21a3001fb8b2478f8ac49d2737e128
+fixtureMode = orphan_transition
+executionPhase = orphan_initial_census
+containmentState = armed
+deadlineExpired = false
+failureStatus = 70
+failureCoordinate = supervisor_stop
+admittedDeviceID = 16777231
+admittedInode = 17393034
+fixedFailStopStatus = 70
+```
+
+The coordinate is `15` lowercase/underscore bytes. The admitted device/inode
+joins both the final leaf and the fixed named path. These observations satisfy
+every intrinsic R6/R7 record and vnode predicate. They do not prove
+process-local postimage return, admitted-to-final xattr conservation, or an
+observed process exit `70`.
+
+The R8 object/link/runtime chain is present, but the complete frozen freshness
+frontier is not:
+
+| Product | R7 preimage -> R9 terminal |
+| --- | --- |
+| Provenance object | `17390573` / `0b4ccd02...` -> `17392418` / `9baacd40eca8c61e91e795ea32b10a18577ff6db037ffb0b255ad14ebf27dcc5` |
+| PrimeCore module | `17390522` / `285a7d8a...` -> `17392356` / `61d9617eaa9f9b565ff0b31bbb2732e151aef0483687d82b0bce105afb071970` |
+| LiveTests object | `17390684` / `1b93706d...` -> `17392517` / `9260a773322426ce328d24babb746d44d128c6979d0edaa438e70aebc99811ed` |
+| DriverCoreTests module | exact retained `17390678`, `209,764` bytes, SHA-256 `b77b99c13294628437d3d6d2f8e9add5eaa1ea9beccae2b67d6c316bf7a2de4b`, mtime/ctime `1787508809` |
+| XCTest executable | `17390704` / `9e985311...` -> `17392529`, `57,901,248` bytes, SHA-256 `4e0230361dda9fb23a8e66c751512cd10b330adae0a1e45a95ef91ccd9e95d9c`, UUID `4E968865-6BD0-3420-992B-BB777AD6CAC9` |
+
+The provenance object, PrimeCore module, LiveTests object, and XCTest are fresh
+R9 successors with timestamps inside the command interval. The XCTest contains
+the R8 identity exactly once, the R7 identity zero times, and the selected
+method on exactly one strings record. GovernorCore object/module and
+SessionFixture remain allowed exact preimages. ShotGovernor, Supervisor, and
+SecureChildIntegration rebuilt with the R8 identity once and R7 identity zero
+times; their launch counts are structurally zero and no launch evidence was
+observed.
+
+The frozen R9 authority nevertheless required the DriverCoreTests
+`.swiftmodule` itself to have a new hash and timestamp for every non-`ABSTAIN`
+result. It remained the exact R7 file. That is normal compiler behavior for a
+private test implementation-only edit: the changed object is linked into the
+new XCTest while the serialized module interface remains byte-identical. It is
+not evidence that R8 was stale—the object/link/runtime chain proves the
+opposite—but the committed R9 condition cannot be waived after execution.
+Therefore R9's formal diagnostic classification is `ABSTAIN`.
+
+The retained record still narrows the real mechanics failure. The first
+prepublication SessionFixture call returned far enough for the second
+`orphan_transition` call to begin. The body advanced through the death wait to
+`orphan_initial_census`; its census then began unwinding. The defer's armed
+containment called the preliminary `kill(-supervisorPID, SIGSTOP)` and rejected
+at `supervisor_stop` with the shared deadline still unexpired. The record names
+that defer-containment error, not the initiating census coordinate and not
+successful containment.
+
+Manifests, locks, workspace state, both dependency checkouts, source/control
+worktrees, the empty Git template, and reserved production-root absence remain
+exact. The R9 epoch remains at `16777231/17391900` with the same exact nine
+first-level children. Targeted `lsof` found no handle on the five R9 roots;
+the environment still denies a global process-list snapshot, so no broader
+process-census claim is made. Nothing is cleaned.
+
+The terminal vector is:
+
+```text
+R9_release_build_telemetry = PASS
+R9_release_test_compile = ABSTAIN
+R9_selected_xctest = STARTED_NO_TERMINAL
+R9_build_freshness = REJECT_DRIVERCORETESTS_MODULE_RETAINED
+R9_retained_fail_stop_record_intrinsic_validation = PASS
+R9_mixed_test_host_mechanics = ABSTAIN
+R9_fail_stop_diagnostic = ABSTAIN
+outer_journal_authority_vector = 00000000
+production_attempt_count = 0
+gate_E_scientific_outcome = ABSTAIN
+gate_E_clearance_granted = 0
+```
+
+R9 is consumed. It must not be retried and none of its five roots or prior
+forensic roots may be cleaned. The data-supported next action is a no-execution
+freshness-sufficiency correction for private implementation-only deltas, not a
+repeat build. Only after that correction may a separately frozen source slice
+change orphan containment semantics.
