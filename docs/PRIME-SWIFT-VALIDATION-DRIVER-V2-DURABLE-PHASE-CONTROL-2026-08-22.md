@@ -7997,3 +7997,211 @@ remain retained and unmodified.
 This checkpoint authorizes no execution. A later diagnostic requires a
 separately committed R7 readiness freeze on this exact source commit, tree, and
 identity, a fresh private epoch, and one exact Release selected-test command.
+
+## Gate E1.4-R7 freeze — one held-vnode Release diagnostic
+
+| Coordinate | Frozen value |
+| --- | --- |
+| Status | `FROZEN_NOT_EXECUTED` |
+| Durable-control predecessor | R6 source checkpoint `71c6ac4b70c2c733ad46d77b11afb72a2119610a` / tree `c7b1324e76b6d471bc8e00ef58dc2582dfca7c0f` |
+| Source commit/tree/identity | clean `d408680dec3bebe64251903c0d7526d98efab2d7` / `894ba2b82614a19e094a2124f1e8f936c5b7f2d5` / `9a46327485eb257fb835bda48758267324c090731fe9ce7e2a3074b8afc4687d` |
+| R7 epoch | `/private/tmp/gate-e1-4-mechanics-r7-d408680d-9a46327485eb257f`; absent before this freeze |
+| Authorized SwiftPM commands | exactly `1`: one Release `swift test`; no `--skip-build` |
+| Selected XCTest methods | exactly the existing one anchored identifier |
+| Overall wall ceiling | `900` seconds |
+| Process credentials / initial cwd | effective UID/GID `501 / 20`; exact clean source worktree root |
+| Production attempts / authority vector | `0 / 00000000` |
+| Fetch / network / GitHub | `0 / 0 / 0` |
+
+R7 is a new diagnostic on the R6 source identity, not an R5 retry and not a
+containment repair. After this freeze is committed, create the fresh epoch and
+require its no-follow root to be UID-owned mode `0700` with an inventory equal
+to exactly the nine private mode-`0700` children `home`, `config`, `tmp`,
+`git-template`, `swiftpm-cache`, `swiftpm-config`, `swiftpm-security`,
+`clang-module-cache`, and `swiftpm-module-cache` once. Rejoin every no-follow
+path/device/inode and require all nine children empty before the command. R0,
+R1, R3, and R5 epochs
+and all five R5 forensic roots remain retained and forbidden for reuse or
+cleanup.
+
+Define `rho7` as replacement of the sole R5 root string
+
+```text
+/private/tmp/gate-e1-4-mechanics-r5-7fbd5238-77d5cfa3d9b9fc70
+```
+
+with
+
+```text
+/private/tmp/gate-e1-4-mechanics-r7-d408680d-9a46327485eb257f
+```
+
+throughout R5's exact finite `env -i` map and cache/config/security CLI paths.
+Every other key and value, `umask 077`, stdin `/dev/null`, package path,
+existing default `.build` scratch path, Xcode tool/SDK path, offline Git map,
+and SwiftPM flag remains byte-for-byte unchanged. Observer timing uses the
+command runner's wall clock; timing adds no observer process or `date`
+invocation and does not change the one SwiftPM command count.
+
+The frozen inputs and R5 build preimages are:
+
+| Input | Exact R7 preimage |
+| --- | --- |
+| Package build root | device/inode `16777231/17179422`; existing default `Tests/PrimeValidationWorkflow/.build` only |
+| Root manifest / lock | `fa68f463ca31a4ca25af6b14eb19b139df0c8ef8259a6348bb40e97c2dcdeb81` / `bd7a18ec5b8def3b453d7eb86ba43a2f277c2308c9da806845b69ca5f76cd375` |
+| Nested manifest / lock | `753f42251e768faaee3686da38e6f6bf7de048526199445f0e11c088af53dada` / `d70a43567cbd3be75083ab147020b86b055513020d95632f8286f60913c9374a` |
+| Workspace state | `1,704` bytes; SHA-256 `8eeb391d590b20e5eec603ab9d078757f2106a29467a7ff079194278bba921bf` |
+| MLX checkout | clean `d37885a278f1c37484a94d0f401a418735e66519` / tree `5310749549cca107fc1bb07d82dacf043bc02b9e` |
+| Numerics checkout | clean `0c0290ff6b24942dadb83a929ffaaa1481df04a2` / tree `4560bfb65f2c26cbd159c3e1a9cbf01600bace1b` |
+| SessionFixture source / image | SHA-256 `c42e91519d8a792145a7478963e56ec92ddb7bdbf709a960b363241fd88305ab`; image device/inode `16777231/17382060`, `53,072` bytes, SHA-256 `177a18c20bc42486c77b52af4c472be222dec1baabf8973ece7b2d44ea92756e`, UUID `2EBB880A-D28B-32FF-9B7E-EB868AF5D9B6` |
+| GovernorCore source / object / module | source SHA-256 `0eaf7c7d94a073b550cdd130f968f54d5344508fea251893114fdcc9c4a125a5`; object device/inode `16777231/17387443`, `2,185,384` bytes, SHA-256 `13c58ace3b6bc30a1c2de6143bbe3f179dd0cebde91f629b1440b8be1dc9b0b5`; module device/inode `16777231/17387439`, `279,816` bytes, SHA-256 `d0edeed6d6b7033ced04011e85bd3476986dc3bdf1909fe2189c569fe540044e` |
+| GovernorCore diagnostic | retained inode `17383411`; clean `268` bytes; SHA-256 `2c72d5afff8cce441f2f8299a18215b0bf79605aa7eb05839e38f7949b46c0e2` |
+| LiveTests source / object / module / diagnostic | source SHA-256 `66a4c527b09a3f0bfb0dbed354c8a61e7474b413ea770bb8a39608f883200af7`; object device/inode `16777231/17387483`, `2,723,512` bytes, SHA-256 `fa02d1caf9be90c611253b169b567e556bcaae90471c09d5da82d637e15c034e`; module device/inode `16777231/17387474`, `200,924` bytes, SHA-256 `1f60edd84e7b365117705c5cd9b3b785a610806a6bb07c4c4ba11996fdeb20ae`; aggregate DriverCoreTests diagnostic `592` bytes, SHA-256 `61b5974155fa1e0fafa45b9ed0a13f808c78bebb297d00dc54b49f43339b35d0`, containing only the pre-existing unreachable-code warning |
+| Embedded provenance source | `546` bytes; SHA-256 `87d8b9a6719d420340bdc7501cbc8c0353b4bd4789a6dcfc90ebb3b5267c8a87`; canonical R6 template |
+| ShotGovernor | device/inode `16777231/17387463`; `48,698,952` bytes; SHA-256 `383724ac78b86b2bb0c6e5b3499b56ccd219cc2963fd2cdfd9662363333b32fb`; UUID `DD524F45-91F6-3254-BE83-6EBCE5C12CFD` |
+| DriverV2Supervisor | device/inode `16777231/17387436`; `48,029,880` bytes; SHA-256 `f3df1071ba0a105825f7ae8879ecbf791de71034e190cc428a739222fc42be95`; UUID `46E79B3B-22EE-30B2-A266-82E0664716BB` |
+| SecureChildIntegration | device/inode `16777231/17387405`; `51,271,120` bytes; SHA-256 `a473a1d0d22335b88059a84bc4de57459d9b7363d2d19190c418bca4fa40299b`; UUID `34144441-3267-3AE0-96A4-381BE6EBE8D8` |
+| XCTest executable | device/inode `16777231/17387503`; `57,803,920` bytes; SHA-256 `d2540ec6202c5360bf930dcd951980ff52bf6dad605157f03a749903d2c7cfb1`; UUID `00C5C75A-A3B4-3C49-9F30-BE89D326A0DF`; one selected-method strings record |
+
+Every recorded image is a regular arm64 Mach-O, mode `0700`, one link,
+flags `0`, and has only the exact `com.apple.provenance` xattr. The object and
+module are regular mode-`0600`, one-link, flags-`0` files with the same sole
+xattr. SessionFixture contains none of the historical source identities. The
+other four images contain the R5 identity
+`77d5cfa3d9b9fc7054a40b0651940641d0da1d52afee197ce178b3c480446b76`
+exactly once and the R7 identity zero times. These are build preimages, not
+launch authority.
+
+The exact reserved production root
+`/private/tmp/prime-driver-v2-gate-e-release-9a46327485eb257fb835bda48758267324c090731fe9ce7e2a3074b8afc4687d`
+is absent and forbidden. The two historical production roots remain retained
+and are not R7 inputs. The scoped admission inventory before R7 is exactly the
+historical `20260803-c` root plus the five named R5 forensic roots. The scoped
+public-admission inventory is empty.
+
+The command block below is argv only. It is authorized exclusively as the
+child of `umask 077` and the fully resolved `rho7` finite `env -i` map frozen
+above, with effective credentials `501 / 20` and initial cwd exactly
+`/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.driver-v2-gate-c-staging`.
+An ambient-environment execution or a different cwd is forbidden. `USER` and
+`LOGNAME` environment strings are not credential evidence.
+
+Run exactly once:
+
+```sh
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift test \
+  --package-path /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.driver-v2-gate-c-staging/Tests/PrimeValidationWorkflow \
+  --configuration release \
+  --scratch-path /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.driver-v2-gate-c-staging/Tests/PrimeValidationWorkflow/.build \
+  --cache-path /private/tmp/gate-e1-4-mechanics-r7-d408680d-9a46327485eb257f/swiftpm-cache \
+  --config-path /private/tmp/gate-e1-4-mechanics-r7-d408680d-9a46327485eb257f/swiftpm-config \
+  --security-path /private/tmp/gate-e1-4-mechanics-r7-d408680d-9a46327485eb257f/swiftpm-security \
+  --disable-netrc --disable-keychain --force-resolved-versions \
+  --disable-automatic-resolution --disable-sandbox --disable-swift-testing \
+  --filter '^PrimeValidationWorkflowDriverCoreTests\.PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests/testGateEJournalChainOneWinnerAndPoisonAreExact$' \
+  </dev/null
+```
+
+Starting the Swift command consumes R7. Normal SwiftPM compilation and linkage
+are harness telemetry. No target executable other than the XCTest runner and
+the test-held SessionFixture children may launch. ShotGovernor, production
+Supervisor, fixed Git/Swift roles, SpawnCanary, FixtureChild, and
+SecureChildIntegration launch counts remain zero. No retry, same-epoch reuse,
+cleanup, production root, or authority promotion is authorized after any
+result.
+
+Every non-`ABSTAIN` R7 path first requires a fresh R7 build frontier. The final
+GovernorCore object and module must be no-follow joined terminal files with
+different SHA-256 from their frozen R5 preimages and mtime/ctime inside the R7
+command interval. The final LiveTests object and DriverCoreTests module must
+likewise differ from
+`fa02d1caf9be90c611253b169b567e556bcaae90471c09d5da82d637e15c034e`
+and `1f60edd84e7b365117705c5cd9b3b785a610806a6bb07c4c4ba11996fdeb20ae`,
+with every terminal tuple and retained-versus-replaced inode transition
+recorded. The final XCTest executable must be a
+regular no-follow successor with a different device/inode and SHA-256 from
+`16777231/17387503` and
+`d2540ec6202c5360bf930dcd951980ff52bf6dad605157f03a749903d2c7cfb1`.
+Its strings must contain the R7 identity
+`9a46327485eb257fb835bda48758267324c090731fe9ce7e2a3074b8afc4687d`
+exactly once, the R5 identity zero times, and the selected-method substring on
+exactly one strings record. Record the GovernorCore and DriverCoreTests
+diagnostic transitions even if their canonical diagnostic payload is
+unchanged. Failure of any freshness join keeps compile, mechanics, and
+diagnostic results `ABSTAIN`.
+
+There are three disjoint R7 outcomes:
+
+1. A normal XCTest terminal with shell exit `0`, exactly one selected test
+   passed, zero failures/skips, an exact new admission-root delta of `0`, and
+   all existing mechanics predicates satisfied yields
+   `R7_mixed_test_host_mechanics = PASS`; no fail-stop record is expected.
+2. A missing XCTest terminal may yield
+   `R7_fail_stop_diagnostic = PASS` only if the exact new admission-root delta
+   is `5`, comprising main, collision, concurrent, terminal-collision, and
+   rebound roots, and exactly one—the main root—contains the exact leaf
+   `gate-e-session-fixture-fail-stop.json`. The postmortem predicates below
+   must all pass. Any additional or missing root is rejection. Mechanics
+   remains `ABSTAIN`; the diagnostic closes only the failure-coordinate
+   observation.
+3. A compile failure, timeout, ordinary test failure, or missing/empty/partial/
+   writable/noncanonical/unjoined diagnostic after a missing terminal consumes
+   R7 with both mechanics and diagnostic `ABSTAIN`.
+
+A diagnostic pass requires exact canonical bytes no larger than `1,024` and no
+trailing line feed and exactly the R6 eleven-key set with no unknown key;
+schema `prime_driver_v2_session_fixture_fail_stop_v1`; R7 source identity;
+fixture mode `prepublication_held` or `orphan_transition`; execution phase
+`post_spawn_join`, `prepublication_child_discovery`, `orphan_death_wait`,
+`orphan_initial_census`, or `primary_containment`; containment state `armed`,
+`exact_reaped`, or `conservation_complete`; a boolean deadline-expiry field;
+failure and fixed-fail-stop statuses both `70`; a nonempty at-most-`256`-byte
+`[a-z0-9_]+` coordinate; and nonzero admitted device/inode.
+
+The leaf must be a mode-`0400`, one-link, flags-`0`, UID-owned regular file.
+Its final no-follow device/inode must equal the admitted device/inode in the
+canonical record and independently join the exact fixed named leaf. Its final
+GID must equal the final held-parent GID, and the parent must remain a
+UID-owned mode-`0700` private fixture root. The final leaf must have no extended
+ACL and either no xattrs or exactly the sole `com.apple.provenance` xattr with
+at most `65,536` value bytes; record the exact final xattr inventory and value
+hash. A postmortem byte hash and full final metadata tuple are mandatory.
+
+The canonical mode-`0400` leaf is externally checkable, but it is written,
+synced, and frozen before GovernorCore's process-local postimage revalidation.
+Therefore `R7_fail_stop_diagnostic = PASS` means only that the outer observer
+independently validated the durable failure-coordinate record and final named
+vnode. It does not prove that internal `revalidatePostimage` returned, recover
+the original descriptor flags/offset, or externally prove admitted-to-final
+xattr conservation. The record's fixed status states the source-level next
+action and does not prove an observed process exit status.
+
+After the command, record all build transitions, the complete new temporary-
+root set, source/control and dependency cleanliness, manifests, locks,
+workspace state, epoch identities, Git-template emptiness, reserved-root
+absence, and a post-command process snapshot. Any new fixture root is retained;
+none is cleaned. A valid coordinate may support only a separately frozen
+semantic repair or a normal-return assessment. It cannot close a Gate-E bit or
+authorize production.
+
+The maximum transitions are:
+
+```text
+normal return:
+R7_release_test_compile = PASS
+R7_selected_xctest = PASS
+R7_mixed_test_host_mechanics = PASS
+R7_fail_stop_diagnostic = NOT_PUBLISHED_NORMAL_RETURN
+
+durable fail-stop datum:
+R7_release_test_compile = PASS
+R7_selected_xctest = STARTED_NO_TERMINAL
+R7_mixed_test_host_mechanics = ABSTAIN
+R7_fail_stop_diagnostic = PASS
+
+both paths:
+outer_journal_authority_vector = 00000000
+production_attempt_count = 0
+gate_E_scientific_outcome = ABSTAIN
+gate_E_clearance_granted = 0
+```
