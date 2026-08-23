@@ -8205,3 +8205,87 @@ production_attempt_count = 0
 gate_E_scientific_outcome = ABSTAIN
 gate_E_clearance_granted = 0
 ```
+
+## Gate E1.4-R7 result — ordinary pre-spawn XCTest failure
+
+| Coordinate | Observed value |
+| --- | --- |
+| Status | `CONSUMED_ORDINARY_XCTEST_FAILURE_BEFORE_SESSION_FIXTURE_ENTRY` |
+| Durable-control freeze | `d0d2872bf3722819fd376a97bfa9e56c32f31434` / tree `780bef82370b0d92d048e04e628486f7c4f95159` |
+| Source commit/tree/identity | clean `d408680dec3bebe64251903c0d7526d98efab2d7` / `894ba2b82614a19e094a2124f1e8f936c5b7f2d5` / `9a46327485eb257fb835bda48758267324c090731fe9ce7e2a3074b8afc4687d` |
+| Authorized Release `swift test` commands consumed | `1 / 1`; no retry |
+| Release build | `PASS`; `Build complete! (195.89s)` |
+| Selected XCTest | ordinary terminal `FAIL`; one test / one unexpected failure / zero skips in `10.918s` |
+| Exact XCTest error | LiveTests line `6198`: `invalid("session_fail_stop_frozen_metadata")` |
+| Admission-root delta / fail-stop leaves | `0 / 0` |
+| SessionFixture / production attempts | `0 / 0` |
+| Authority vector / Gate-E outcome / clearance | `00000000 / ABSTAIN / 0` |
+
+The exact Release command reached a normal SwiftPM and XCTest terminal with
+outer exit `1`. This is R7 outcome three: it is neither a normal mechanics
+pass nor a missing-terminal fail-stop diagnostic. The source/control trees
+were clean at their frozen commits; root and nested manifests and locks,
+workspace state, both dependency checkouts, the empty Git template, and the
+absent reserved production root remained exact. The R7 epoch remains retained
+at device/inode `16777231/17390069`, UID/GID `501/0`, mode `0700`, flags `0`,
+with exactly the same nine first-level children. SwiftPM populated only the
+frozen cache/config/home/tmp descendants; the Git template remains empty.
+
+The fresh-build frontier passed independently of the failed test:
+
+| Product | R7 terminal identity |
+| --- | --- |
+| GovernorCore object | device/inode `16777231/17390652`; `2,344,520` bytes; SHA-256 `0c1a79690124aff8fa8b05505d559d091751d3d880a6b0b31e21d4b35e01bd9c` |
+| GovernorCore module | device/inode `16777231/17390645`; `293,820` bytes; SHA-256 `f2699a9e6e90e2429556cfe481f180f792440a8d53901f3095207654ec934b6b` |
+| LiveTests object | device/inode `16777231/17390684`; `2,834,488` bytes; SHA-256 `1b93706d86179fed9867c542e38b6e0722c16b9f1df95de2bc18ffce0273707f` |
+| DriverCoreTests module | device/inode `16777231/17390678`; `209,764` bytes; SHA-256 `b77b99c13294628437d3d6d2f8e9add5eaa1ea9beccae2b67d6c316bf7a2de4b` |
+| XCTest executable | device/inode `16777231/17390704`; `57,901,248` bytes; SHA-256 `9e98531150d3f4b79eec44e129493cf938aa03a6b47ad046fc98bd779f3e2fec`; UUID `1F69E202-7FCC-317A-9761-266D1A51DEF8` |
+
+All five files are one-link, flags-`0`, sole-provenance-xattr successors with
+timestamps inside the command interval. The four object/module hashes and the
+XCTest vnode/hash differ from their frozen R5 preimages. The final XCTest
+contains the R7 source identity exactly once, the R5 identity zero times, and
+the selected-method substring on exactly one strings record. This closes only
+R7 compilation freshness; it is not execution authority.
+
+The scoped admission inventory after R7 is exactly the frozen historical root
+plus the five R5 roots. Its sorted path-set SHA-256 is
+`0c540b2d5c6845ac8c1a633d4f4caaa1d3f34dba8fb26804c7c75dbfa9d32738`.
+No `gate-e-session-fixture-fail-stop.json` exists under `/private/tmp`.
+Ordinary XCTest unwinding ran the five R7 `Fixture` cleanup defers, so no R7
+fixture root remains. The exact error arises in
+`GateESessionFixtureFailStopDiagnosticLeaf.init`, before
+`openPinnedSessionFixtureExecutable()` and before either
+`exerciseSessionFixtureForTesting` call. GovernorCore's publisher is therefore
+unreachable in this execution, SessionFixture supervisor/passive-child launch
+counts are structurally zero, and there are no diagnostic bytes or vnode to
+validate. Targeted `lsof` found no retained handle; this environment denied a
+global process-list snapshot, so no broader process-census claim is made.
+
+The failing source predicate is identified independently by the held APFS
+topology. The helper captures the base directory, creates exactly one regular
+leaf with descriptor-relative `O_EXCL`, captures the base again, and then
+requires its link count to be unchanged. Every retained R5 fixture root on
+this same volume instead has exact arithmetic `st_nlink = 2 + direct entry
+count`: the main root is `14 = 2 + 12`, the collision root is `9 = 2 + 7`,
+and each of the remaining three is `12 = 2 + 10`. The authorized one-entry
+transition therefore increments the base link count by exactly one. Requiring
+equality makes the aggregate `session_fail_stop_frozen_metadata` guard false
+before the diagnostic capability exists. This is not the inherited-GID rule:
+the retained roots and representative files remain UID/GID `501/0`.
+
+The terminal vector is:
+
+```text
+R7_release_test_compile = PASS
+R7_selected_xctest = FAIL
+R7_mixed_test_host_mechanics = ABSTAIN
+R7_fail_stop_diagnostic = ABSTAIN
+outer_journal_authority_vector = 00000000
+production_attempt_count = 0
+gate_E_scientific_outcome = ABSTAIN
+gate_E_clearance_granted = 0
+```
+
+R7 is consumed. Its epoch and all R5 forensic roots remain retained. No R7
+retry, cleanup, production launch, or Gate-E movement is authorized.
