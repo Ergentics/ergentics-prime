@@ -934,16 +934,19 @@ private final class PrimeValidationDriverV2GovernorHeldExecutable {
     ) throws {
         try binding.validate()
         self.binding = binding
-        absolutePath = try PrimeValidationDriverV2GovernorIO
+        let canonicalAbsolutePath = try PrimeValidationDriverV2GovernorIO
             .canonicalPath(binding.absolutePath)
-        guard requiredLeaf.map({
-            URL(fileURLWithPath: absolutePath).lastPathComponent == $0
-        }) ?? true else {
-            throw governorRejected(
-                PrimeValidationDriverV2ShotGovernorStatus.admission,
-                coordinate + "_leaf"
-            )
+        if let requiredLeaf {
+            guard URL(fileURLWithPath: canonicalAbsolutePath)
+                .lastPathComponent == requiredLeaf
+            else {
+                throw governorRejected(
+                    PrimeValidationDriverV2ShotGovernorStatus.admission,
+                    coordinate + "_leaf"
+                )
+            }
         }
+        absolutePath = canonicalAbsolutePath
         descriptor = Darwin.open(
             absolutePath,
             O_RDONLY | O_NOFOLLOW_ANY | O_CLOEXEC
