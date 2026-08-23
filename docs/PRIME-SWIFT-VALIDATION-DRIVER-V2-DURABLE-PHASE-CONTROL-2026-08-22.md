@@ -3005,3 +3005,73 @@ a systematic developer-path regression less likely, but it cannot identify
 what the later process observed. The exact Gate E1 rejection remains
 `ABSTAIN`; the residual is an invocation-specific developer-path or early
 admission/lease-prefix failure.
+
+## Gate E1.2 freeze — phase-local admission discrimination
+
+| Field | Frozen value |
+| --- | --- |
+| Status | `FROZEN_NOT_EXECUTED` |
+| Durable-control predecessor | `bd11d779bd19813cbfba9e070c20be11e6dcbbb4` / tree `8c2aa495fcde674b003040455637c7ce0750956a` |
+| Source predecessor | `aba540a3009c4218b75fc065188dddce330f4b50` / tree `ee13a67abb0853e15e2da7745bc6def11cae5f6f` |
+| Consumed source identity | `afb3c46461736ddf7b275d797d054000d260eeebc0c6c50a7a94451ef1c97a19`; no relaunch |
+| Authorized successor source commits | `1` |
+| Authorized production method-8 invocations | at most `1`, only after the pre-shot floor |
+| New authority | none |
+| New process or role | none |
+| Gate F authorization | `false` |
+
+The successor may change only these three paths:
+
+1. `Tests/PrimeValidationWorkflow/Sources/PrimeValidationWorkflowDriverV2Supervisor/main.swift`
+2. `Tests/PrimeValidationWorkflow/Tests/PrimeValidationWorkflowDriverCoreTests/PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests.swift`
+3. `Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift`
+
+`main.swift` may only replace the status-66 lexical block with four sequential
+typed assignments and fixed phase-local catches. It may not inspect an error
+type, associated value, string, errno, path, or child state. The exact silent
+status map is:
+
+| Status | Last operation entered |
+| ---: | --- |
+| `65` | Gate A argc/stdin/canonical decode/request validation |
+| `66` | private developer-directory derivation |
+| `71` | public `admitPrerequisites` call |
+| `72` | one-shot prerequisite consume |
+| `73` | guarded-preexecutor preparation |
+| `67` | dedicated supervisor-image bind and revalidation |
+| `68` | Gate E fixed probes and semantic bind |
+| `69` | final retained-binding revalidation |
+| `70` | existing Core containment fail-stop; unchanged and untranslatable |
+| `0` | complete retained Gate E binding through normal return |
+
+The existing Gate E static method must bind all nine `_exit` references to
+those exact operation boundaries and conserve the Gate A frame, silence, and
+absence of explicit exit `0` or `70`. Method 8 may only update its fixed
+status-to-label table. Its source-identity root, exclusive creation, retention,
+metadata checks, one-invocation rule, and journal verification remain exact.
+The provenance file changes only by canonical reseal.
+
+Every PrimeCore admission, lease, source/watch, executor, facade, process,
+journal, and containment path is immutable. DriverCore bindings, requests,
+contracts, planner, role table, package manifests, locks, inventories,
+`Package.resolved`, `.github`, and Gate F remain immutable. The consumed root
+at `/private/tmp/prime-driver-v2-gate-e-release-afb3c46461736ddf7b275d797d054000d260eeebc0c6c50a7a94451ef1c97a19`
+must remain retained and unmodified.
+
+Before execution, require a clean successor commit/tree and canonical
+545-file/544-record reseal, both compile-only gates, the seven frozen Debug
+methods separately, and exactly one Release admission proof from an exact
+standalone successor clone under the existing XCTest-only seam. Update the
+standalone Prime production-proof clone locally to the exact successor; keep
+the pinned companion clean. The new identity-bound candidate root must be
+absent. Record the Release supervisor's regular-file metadata, byte count, and
+SHA-256 before method 8. Then run exactly one existing Release method-8
+invocation. No simultaneous clone inspection, network, dependency fetch,
+GitHub operation, broad suite, production retry, or cleanup is authorized.
+Any unexpected path delta, identity/count mismatch, dirty status, clone
+commit/tree mismatch, consumed-root drift, occupied successor root, or
+compile/test/admission failure is a hard stop before method 8. Any nonzero
+production result consumes the new identity and must be recorded with status,
+phase, retained-root inventory, and `ABSTAIN` for any cause not proved by
+those data. Only exit `0` plus the complete verified journal can checkpoint
+Gate E and permit a later Gate F freeze.
