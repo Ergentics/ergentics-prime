@@ -4185,3 +4185,60 @@ selectors, the production clone, Release images, absent identity-bound root,
 and one-shot accounting before a replacement Gate E invocation can be
 authorized. Gate F build/staging and Gate G inventory remain missing and
 forbidden even if that later Gate E invocation succeeds.
+
+## Gate E1.3 source-edit checkpoint — typed admission rejection sites
+
+| Field | Recorded value |
+| --- | --- |
+| Status | `SOURCE_COMMITTED_NO_BUILD_OR_TEST` |
+| Durable-control predecessor | `a0082053e33d8a908738e1a00f2cfa8d648f646f` / tree `ba8deecc8792e86faabf1df9cb9e25427f2c0f12` |
+| Source predecessor | `1d341a529c442e63369c361b1e5ac95ca464fdf7` / tree `e787b3573bd44259606536860dc980720d73d64f` |
+| Source commit | `2d705a71dc1827cf4fe6f0f9f3bc8255063e1dd3` |
+| Source tree | `0077ac10f1dbba50680502a31084f7280c2c2f65` |
+| Parent edge | exactly one direct parent: `1d341a529c442e63369c361b1e5ac95ca464fdf7` |
+| Control-prose ancestry exclusion | `a0082053e33d8a908738e1a00f2cfa8d648f646f` is not an ancestor of the source commit (`git merge-base --is-ancestor` exit `1`) |
+| Changed-path set | exactly `4`, all tracked modifications; no add, delete, rename, or mode change |
+| Changed XCTest methods | exactly the frozen `9`; no new or renamed identifier |
+| Source worktree after commit | clean |
+| New canonical source identity | `474008bdffccf4102566c98088abf2799ad3a4934edadb8c0357c23190c71a52` |
+| Consumed predecessor identity | `194cf7141172ee06b5f9734af2e9c3df498547a2f718698ccd421ef7ae961d0f`; not reused and permanently no-retry |
+| Canonical cardinality | `545` admitted files / `544` identity records / `111,620` canonical JSON bytes |
+| Watch arithmetic | `545` Prime files + `152` authority directories = `697`; companion `1,460`; combined `2,157 / 4,096` |
+| Embedded canonical template | exact equality; `546` bytes; SHA-256 `4e2b4b81ea8d7ffade440ddcdcd6d1462e7c163380f49facdecea901b2a159d7` |
+| Static conservation | `17` payload-free sites; statuses `74...90`; `8` lexical catches; `9` `_exit` calls; `git diff --check` clean |
+| Swift build / test / production supervisor / method 8 | `0 / 0 / 0 / 0` |
+| Network / GitHub / dependency fetch | `0 / 0 / 0` |
+| Gate F / Gate G authorization | `false / false` |
+
+The exact four committed path identities are:
+
+| Path | Git blob | Byte count | Raw SHA-256 |
+| --- | --- | ---: | --- |
+| `Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift` | `8cba2df196ce65f7c83cf2aa4444faf01b8b336b` | `546` | `4e2b4b81ea8d7ffade440ddcdcd6d1462e7c163380f49facdecea901b2a159d7` |
+| `Sources/PrimeCore/PrimeValidationSwiftPMBuildInventoryAdmission.swift` | `dc37b1f041031fa2994b4156630085940e3a512a` | `97,844` | `ab6ebf4bc7629ca901b6bbe5643a556b82995d302b269464c94ffad65b128fb2` |
+| `Tests/PrimeValidationWorkflow/Sources/PrimeValidationWorkflowDriverV2Supervisor/main.swift` | `c5c3e09d936e7fcb34b9939242c4dba090a271d6` | `14,458` | `a6ee17b234abcd789d839abadd5f5a551ecabe99d731186c566422f46e6276d2` |
+| `Tests/PrimeValidationWorkflow/Tests/PrimeValidationWorkflowDriverCoreTests/PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests.swift` | `686a199b270666b01106ce1c941b249a041705a3` | `212,136` | `41f5c3ec45489a856d800ec9737ef4af440559fcf10b474fac599c254c38c59f` |
+
+The identity instruments were independently checked before they were trusted.
+A Ruby `Find` + ordered JSON implementation and a Perl `File::Find` +
+canonical `JSON::PP` implementation each measured the archived predecessor as
+`545 / 544 / 111,620` and reproduced its embedded identity
+`194cf7141172ee06b5f9734af2e9c3df498547a2f718698ccd421ef7ae961d0f`.
+The same two implementations independently measured the successor, both
+before and after the excluded provenance-file reseal, as
+`545 / 544 / 111,620` with identity
+`474008bdffccf4102566c98088abf2799ad3a4934edadb8c0357c23190c71a52`.
+The predecessor measurement copy remains at
+`/private/tmp/prime-gate-e-identity-base.QnZgnL`; neither source worktree nor
+any consumed evidence root was mutated by either calculation.
+
+Three independent static Sol audits accepted the final four-path candidate.
+Those audits are rank-4 source review, not execution evidence. This checkpoint
+records only the new source identity and its closed typed observation seam. It
+does not authorize a Swift build, selected test, production supervisor,
+method-8 invocation, fixed probe, retry, or cleanup. The only next admissible
+work is a separate control-only readiness freeze binding new identity-scoped
+cache leaves, exact selectors, production-clone and companion roots, Release
+image replacement and predecessor-identity exclusion, an absent fresh
+identity-bound shot root, and one-shot accounting. Until that freeze is cleanly
+committed, every Swift or production invocation remains forbidden.
