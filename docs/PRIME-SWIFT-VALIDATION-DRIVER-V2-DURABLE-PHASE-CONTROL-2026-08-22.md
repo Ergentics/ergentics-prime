@@ -7660,3 +7660,219 @@ R5 authorizes no production root, capsule, journal, Governor invocation,
 fixed Git/Swift role, Gate F/G action, GitHub action, retry, or cleanup. A
 clean pass permits only a separately frozen production-shot readiness
 assessment.
+
+## Gate E1.4-R5 result — selected XCTest terminated without a terminal
+
+| Coordinate | Observed value |
+| --- | --- |
+| Status | `CONSUMED_XCTEST_RUNNER_TERMINATED_AFTER_SELECTED_TEST_START_WITHOUT_TEST_TERMINAL` |
+| Durable-control freeze | `fac16714685206114b1d05b1d9f58e20b2881213` / tree `040437520c5c27f93211ede544c82d0b7473ef4c` |
+| Source commit/tree/identity | clean `7fbd52386283295d6312b57dbcb3acd97b1b5bce` / `dd45c962af0683db73c1e2785e7232b243d628d9` / `77d5cfa3d9b9fc7054a40b0651940641d0da1d52afee197ce178b3c480446b76` |
+| Authorized Release `swift test` commands consumed | `1 / 1`; no retry |
+| Release build | `PASS`; `Build complete! (204.05s)` |
+| Selected XCTest | started at `2026-08-23T17:13:04.926Z`; no case, suite, or command terminal |
+| Outer Swift shell | exit `1`; this is not an observed inner wait status |
+| Conservative observer interval | epoch born `2026-08-23T17:08:46Z` through post-observer `2026-08-23T17:13:25Z`; at most `279` seconds |
+| Production attempts / authority vector | `0 / 00000000` |
+| Gate-E scientific outcome / clearance | `ABSTAIN / 0` |
+
+The wrapper's two observer-only `/usr/bin/date` calls failed because this host
+provides `date` at `/bin/date`. They neither changed the exact `env -i` Swift
+command nor created another Swift invocation. The one authorized Release
+command was consumed. No rerun under R5 is permitted.
+
+The build crossed the R3/R4 compile frontiers. The terminal build products
+and diagnostics were:
+
+| Product | R5 transition and terminal identity |
+| --- | --- |
+| SessionFixture | retained device/inode `16777231/17382060`; `53,072` bytes; SHA-256 `177a18c20bc42486c77b52af4c472be222dec1baabf8973ece7b2d44ea92756e`; UUID `2EBB880A-D28B-32FF-9B7E-EB868AF5D9B6` |
+| ShotGovernor | absent to device/inode `16777231/17387463`; `48,698,952` bytes; SHA-256 `383724ac78b86b2bb0c6e5b3499b56ccd219cc2963fd2cdfd9662363333b32fb`; UUID `DD524F45-91F6-3254-BE83-6EBCE5C12CFD` |
+| DriverV2Supervisor | replaced by device/inode `16777231/17387436`; `48,029,880` bytes; SHA-256 `f3df1071ba0a105825f7ae8879ecbf791de71034e190cc428a739222fc42be95`; UUID `46E79B3B-22EE-30B2-A266-82E0664716BB` |
+| SecureChildIntegration | replaced by device/inode `16777231/17387405`; `51,271,120` bytes; SHA-256 `a473a1d0d22335b88059a84bc4de57459d9b7363d2d19190c418bca4fa40299b`; UUID `34144441-3267-3AE0-96A4-381BE6EBE8D8` |
+| XCTest executable | replaced by device/inode `16777231/17387503`; `57,803,920` bytes; SHA-256 `d2540ec6202c5360bf930dcd951980ff52bf6dad605157f03a749903d2c7cfb1`; UUID `00C5C75A-A3B4-3C49-9F30-BE89D326A0DF` |
+| GovernorCore object | absent to device/inode `16777231/17387443`; `2,185,384` bytes; SHA-256 `13c58ace3b6bc30a1c2de6143bbe3f179dd0cebde91f629b1440b8be1dc9b0b5` |
+| GovernorCore module | absent to device/inode `16777231/17387439`; `279,816` bytes; SHA-256 `d0edeed6d6b7033ced04011e85bd3476986dc3bdf1909fe2189c569fe540044e` |
+| GovernorCore compiler diagnostic | same retained inode `17383411`, replaced `800`-byte R3 failure by clean `268` bytes; SHA-256 `2c72d5afff8cce441f2f8299a18215b0bf79605aa7eb05839e38f7949b46c0e2` |
+
+Each newly identity-bearing ShotGovernor, Supervisor,
+SecureChildIntegration, and XCTest image contains the R5 identity exactly
+once and contains the stale R0, intermediate R0, and R3 identities zero
+times. The XCTest strings inventory contains the selected-method substring
+on exactly one record. These are build and linkage observations. They are not
+production supervisor or Gate-E launch authority.
+
+Five R5 fixture roots remain retained and must not be cleaned:
+
+| Retained root | Root identity and durable residue |
+| --- | --- |
+| `/private/tmp/prime-validation-admission-tests-9B0C29D5-BFE6-4983-A1D8-9376FB249C69` | device/inode `16777231/17387510`; born `17:13:04Z`; `65` files / `32` directories; complete `34`-leaf inner journal; `723`-byte outer terminal SHA-256 `d973b116ba5cfeffb981a5e285784749e6bb5d46eab58c6c317fb5e259038646`, spawn count `0`, Git/Swift count `0`, vector `00000000` |
+| `/private/tmp/prime-validation-admission-tests-27939ACC-14D5-4C63-B420-DB1D75DDE491` | device/inode `16777231/17387598`; born `17:13:08Z`; `26` files / `29` directories; deliberate `10`-byte first-leaf collision SHA-256 `591e7ef56458a393c1831cddcecd0a3415848deb290b6ebac689d0656293e48f` |
+| `/private/tmp/prime-validation-admission-tests-E2FE16A0-6601-4261-BDD3-8A31F77A082C` | device/inode `16777231/17387826`; born `17:13:13Z`; `31` files / `30` directories; `723`-byte concurrent-winner terminal SHA-256 `4d9c60c252b35eb3d69c24686cc7eac49466b09d8fcbe86ac64fe198a6de7f34` |
+| `/private/tmp/prime-validation-admission-tests-74F5E773-3A1C-473B-BDEE-B3B3F7ABE846` | device/inode `16777231/17387887`; born `17:13:14Z`; `31` files / `30` directories; deliberate empty terminal SHA-256 `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` after the three-prefix chain |
+| `/private/tmp/prime-validation-admission-tests-29D60937-15FB-4364-96F1-7EBCDA198BDF` | device/inode `16777231/17387948`; born `17:13:15Z`; `31` files / `30` directories; `723`-byte same-bytes/new-inode rebound terminal SHA-256 `d7e682d02805bf10afe6d721fa3828bed861b9ec551cb24f241e6a16c3cc860a` |
+
+The main root's inner mechanics mutated between `17:13:07Z` and
+`17:13:10Z`; the per-root birth times above overlap that interval and are not
+asserted as a total order. This durable data establishes control-flow arrival through the outer
+mechanics region. It does not convert the missing XCTest terminal into passed
+assertions and does not prove either SessionFixture interval. SessionFixture
+supervisor and passive-child counts therefore remain `ABSTAIN`.
+
+No matching SessionFixture or XCTest image was present in the post-command
+`libproc` snapshot, and `lsof` found no current handle on the five roots or
+fixture/Governor images. That is a post-snapshot absence observation, not a
+lifetime process census. No scoped crash, core, or xcresult artifact identifies
+the stopping instruction. The source/control worktrees, manifests, locks,
+workspace state, dependency checkouts, Git template, and exact absent R5
+production root remained conserved. The scoped temporary-root inventory did
+not restore because the five roots remain; that independently rejects R5's
+pass predicate.
+
+The next package-internal SessionFixture seam in source order contains one
+explicit source-level `Darwin._exit`, its containment defer's `_exit(70)`; R5
+does not prove that seam was entered. External runner, kernel, or signal
+termination remains possible. The observed shape is therefore
+`CONSISTENT_WITH_TEST_SEAM_CONTAINMENT_FAIL_STOP`, but neither exit `70`, the
+first versus second fixture mode, nor a failure coordinate is present in a
+durable R5 datum. The exact cause remains `ABSTAIN`. Static possibilities
+include `session_fixture_child_discovery` exhausting the shared ten-second
+budget before defer containment, `session_census_nonconvergent_query`, and the
+`session_census_getsid_*` or `session_census_bsdinfo_*` syscall coordinates.
+No deadline, census, or containment semantic may change without a new datum.
+
+The terminal R5 vector is:
+
+```text
+R5_release_test_compile = PASS
+R5_selected_xctest = STARTED_NO_TERMINAL
+R5_mixed_test_host_mechanics = ABSTAIN
+outer_journal_authority_vector = 00000000
+production_attempt_count = 0
+gate_E_scientific_outcome = ABSTAIN
+gate_E_clearance_granted = 0
+```
+
+## Gate E1.4-R6 freeze — held-vnode fail-stop diagnostic source slice
+
+| Coordinate | Frozen value |
+| --- | --- |
+| Status | `FROZEN_STATIC_SOURCE_DIAGNOSTIC_NOT_IMPLEMENTED` |
+| Durable-control predecessor | R5 readiness freeze `fac16714685206114b1d05b1d9f58e20b2881213` / tree `040437520c5c27f93211ede544c82d0b7473ef4c` |
+| Source predecessor | clean `7fbd52386283295d6312b57dbcb3acd97b1b5bce` / tree `dd45c962af0683db73c1e2785e7232b243d628d9` / identity `77d5cfa3d9b9fc7054a40b0651940641d0da1d52afee197ce178b3c480446b76` |
+| Purpose | expose one bounded source-internal package-test containment coordinate and its state as durable local data before the unchanged fail-stop |
+| Source allowlist | exactly GovernorCore, the existing LiveTests file, and excluded embedded-provenance reseal |
+| Swift build / test / executable launch | `0 / 0 / 0` |
+| Production attempts / authority vector | `0 / 00000000` |
+| Network / fetch / GitHub | `0 / 0 / 0` |
+
+R6 is not an R5 retry and is not a containment repair. It changes no census,
+deadline, kill, reap, process-group, spawn, or production behavior. It adds
+one package-internal observation capability to the existing mechanics seam so
+that a later, separately frozen source identity can distinguish the fail-stop
+coordinate without promoting shell or XCTest prose to evidence authority.
+
+The exact private leaf is
+`gate-e-session-fixture-fail-stop.json`. LiveTests creates it once, after all
+retained outer-mechanics and rebound cases and immediately before the first
+SessionFixture call, directly
+under the already-private main `Fixture.base`, never under workspace,
+evidence, lease, a source root, a production root, or the Driver V2 evidence
+ledger. Creation is relative to an already-held base-directory descriptor and
+uses exactly
+`O_RDWR | O_CREAT | O_EXCL | O_NOFOLLOW | O_CLOEXEC`, mode `0600`.
+LiveTests retains the descriptor, initial vnode metadata, and xattr set. It
+adds exactly one argument—the immediately constrained held diagnostic
+descriptor—to the existing package-internal `exerciseSessionFixtureForTesting`
+seam. No path, environment, argv, callback, writer object, role identifier,
+timeout, or production entry is added, and the descriptor is never inherited
+into SessionFixture.
+
+GovernorCore duplicates the descriptor with `F_DUPFD_CLOEXEC` and admits only
+a regular file whose frozen preimage is exact device/inode, current uid and
+gid, one link, mode `0600`, size zero, `st_flags == 0`, exact xattr bytes,
+descriptor offset zero, `FD_CLOEXEC` set, and access mode `O_RDWR` with append,
+nonblocking, and asynchronous flags absent. The exact named leaf must join the
+held descriptor before spawn. Each normal return from both frozen fixture
+modes must leave the same vnode, metadata, xattrs, descriptor flags, offset,
+and zero length unchanged; LiveTests checks that condition after each call. A
+normal test completion publishes no diagnostic.
+
+Only the existing containment-defer catch may publish, and only when the
+caught error is the private Governor failure value with status exactly `70`.
+The coordinate remains a bounded source-internal string; it is not represented
+as a closed Swift enum and must not be called typed authority. Fixture mode,
+execution phase, and containment state are closed source enums. The phase is
+set before each existing post-spawn join, prepublication child-discovery,
+orphan death-wait, orphan initial-census, and primary-containment region; this
+adds observation only and does not alter their order or semantics. It is the
+last body phase entered before defer unwinding and the defer must not overwrite
+it. `failureCoordinate` is the private failure caught inside the defer's
+containment attempt; it is not necessarily the body error that initiated
+unwinding.
+The canonical record has exactly these closed fields:
+
+```text
+schema = "prime_driver_v2_session_fixture_fail_stop_v1"
+sourceIdentitySHA256 = PrimeEmbeddedBuildProvenance.sourceIdentitySHA256
+fixtureMode = "prepublication_held" | "orphan_transition"
+executionPhase = "post_spawn_join" | "prepublication_child_discovery" |
+                 "orphan_death_wait" | "orphan_initial_census" |
+                 "primary_containment"
+containmentState = "armed" | "exact_reaped" | "conservation_complete"
+deadlineExpired = <monotonic deadline comparison boolean at catch entry>
+failureStatus = 70
+failureCoordinate = <exact bounded internal Governor failure coordinate>
+admittedDeviceID = <held diagnostic preimage device id>
+admittedInode = <held diagnostic preimage inode>
+fixedFailStopStatus = 70
+```
+
+The canonical bytes contain no trailing line feed, path, PID, timestamp,
+localized description, prose field, or self-digest and may not exceed `1,024`
+bytes. GovernorCore writes the bytes once through an EINTR-safe bounded
+`pwrite`-all loop at explicit offsets so the duplicated descriptor's shared
+open-file-description offset remains zero, performs `fsync` plus `F_FULLFSYNC`,
+changes the mode to `0400`, synchronizes again, reads the exact bytes back,
+requires canonical
+byte equality, and revalidates the same device/inode, one link, owner, size,
+group, flags, descriptor access/close-on-exec state, offset, and xattrs. The
+postimage must be the same device/inode, uid/gid, one link, `st_flags == 0`,
+mode `0400`, exact canonical size and bytes, and the exact named leaf must join
+the admitted device/inode carried in the record during postmortem. Missing,
+partial, unfrozen, noncanonical, unjoined, untyped-error, or non-70 data
+remains `ABSTAIN`. `fixedFailStopStatus` states the source-level action that
+follows publication; it is not by itself a process-terminal observation.
+
+Diagnostic publication is best-effort only with respect to containment. Every
+thrown publication or validation error is caught, after which the existing
+`_exit(70)` lexically follows. There is no retry, return, thrown replacement
+error, stderr record, fallback channel, or weakened containment path. No claim
+is made about uncatchable traps, signals, or kernel termination.
+
+The exact R6 source allowlist is:
+
+1. `Tests/PrimeValidationWorkflow/Sources/PrimeValidationWorkflowDriverV2ShotGovernorCore/PrimeValidationDriverV2ShotGovernor.swift`
+2. `Tests/PrimeValidationWorkflow/Tests/PrimeValidationWorkflowDriverCoreTests/PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests.swift`
+3. `Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift`
+
+Out of scope are every manifest, SessionFixture source, production Governor or
+Supervisor `main.swift`, DriverCore bridge or planner, role table, receipt,
+journal schema, `.github` path, Gate D parser, Gate E production capsule, and
+Gate F/G/H surface. No product, target, test case, or selected-method
+identifier is added. The eight missing process-derived authorities and vector
+`00000000` are unchanged.
+
+Because R6 modifies existing files only, topology remains exactly `548`
+admitted files, `547` source-identity records, `112,279` canonical-record
+bytes, `155` held Prime authority directories, `703` Prime watchers, and
+`2,163 / 4,096` combined watchers. After the two code paths are final,
+independent calculators must agree on aggregate admitted bytes and the new
+source identity; only then may the excluded provenance file be resealed, and
+both calculators must reproduce the result again.
+
+R6 terminates in one clean, three-path source commit with no Swift command,
+executable launch, cleanup, or R5-root mutation. It may be followed only by a
+separate static source checkpoint and then a separately frozen fresh-epoch
+Release diagnostic. No execution is authorized by this freeze or by its
+implementation commit.
