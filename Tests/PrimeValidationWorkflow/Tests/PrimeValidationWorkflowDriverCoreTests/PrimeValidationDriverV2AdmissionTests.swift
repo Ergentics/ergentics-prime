@@ -1149,11 +1149,11 @@ final class PrimeValidationDriverV2AdmissionTests: XCTestCase {
             "companion_tree_replay", "companion_status_post",
             "companion_head_post", "swift_version", "swift_target_info",
         ]
-        XCTAssertEqual(
-            roles.compactMap { executor.range(of: "\"\($0)\"")?.lowerBound },
-            roles.compactMap { executor.range(of: "\"\($0)\"")?.lowerBound }
-                .sorted()
-        )
+        let roleOffsets = roles.compactMap {
+            executor.range(of: "\"\($0)\"")?.lowerBound
+        }
+        XCTAssertEqual(roleOffsets.count, roles.count)
+        XCTAssertEqual(roleOffsets, roleOffsets.sorted())
         XCTAssertEqual(roles.count, 16)
 
         let pathspecs = [
@@ -1176,7 +1176,15 @@ final class PrimeValidationDriverV2AdmissionTests: XCTestCase {
             XCTAssertTrue(binding.contains("\"\(value)\""), value)
         }
         for value in [
-            "static let requiredSpawnFlags: UInt16 = 0x448c",
+            "dedicated_group_within_supervisor_session",
+            "static let requiredSpawnFlags: UInt16 = 0x408e",
+            "spawnDriverV2FixedProbeSuspended",
+            "establishDriverV2DedicatedGroupWithinSupervisorSession",
+            "prime_driver_v2_gate_e_fixed_policy_v2",
+            "prime_driver_v2_gate_e_prestart_v2",
+            "prime_driver_v2_gate_e_child_start_v2",
+            "prime_driver_v2_gate_e_child_terminal_v2",
+            "prime_driver_v2_gate_e_raw_terminal_v2",
             "static let deadlineNanoseconds: UInt64 = 30_000_000_000",
             "standardErrorMaximumByteCount: UInt64 = 64 * 1024",
             "drainChunkByteCount = 64 * 1024",
@@ -1185,6 +1193,21 @@ final class PrimeValidationDriverV2AdmissionTests: XCTestCase {
             "(\"TERM\", \"dumb\")",
         ] {
             XCTAssertTrue(executor.contains(value), value)
+        }
+        XCTAssertFalse(executor.contains("spawnSuspended("))
+        XCTAssertFalse(
+            executor.contains(
+                "establishIsolatedSessionAndDedicatedGroup"
+            )
+        )
+        for value in [
+            "raw.supervisorSessionIdentifier",
+            "processIdentifierDiffersFromSupervisor",
+            "processIdentifierUnique",
+            "processGroupIdentifierUnique",
+            "value.appliedSpawnFlags == 0x408e",
+        ] {
+            XCTAssertTrue(binding.contains(value), value)
         }
         XCTAssertTrue(executor.contains("(\"DEVELOPER_DIR\", toolchain."))
         XCTAssertTrue(executor.contains("(\"SDKROOT\", toolchain."))
@@ -1399,11 +1422,13 @@ final class PrimeValidationDriverV2AdmissionTests: XCTestCase {
             "ordered_role", "role", "ordinal", "logical_argument_zero",
             "arguments", "ordered_environment", "working_directory",
             "executable_image", "standard_output_cap",
-            "standard_error_empty", "process_identifier", "spawn_flags",
+            "standard_error_empty", "process_identifier",
+            "process_identifier_differs_from_supervisor",
+            "process_identifier_unique", "spawn_flags",
             "spawn_return_code", "spawn_after_deadline_start",
             "spawn_after_predecessor_terminal",
             "spawn_before_start_publication", "session_identifier",
-            "process_group_identifier",
+            "process_group_identifier", "process_group_identifier_unique",
             "suspended_working_directory_device",
             "suspended_working_directory_inode",
             "exact_suspended_working_directory_join", "death_observed",

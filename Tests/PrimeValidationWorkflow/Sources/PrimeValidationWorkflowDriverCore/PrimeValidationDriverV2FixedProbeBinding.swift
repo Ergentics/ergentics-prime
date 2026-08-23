@@ -812,8 +812,30 @@ package final class PrimeValidationDriverV2FixedProbeBinding:
               missingAuthorities == Self.exactMissingAuthorities,
               rawObservation.productionSupervisorImageEligible,
               boundLifetime.productionSupervisorImageEligible,
-              rawObservation.combinedSourceWatcherDescriptorCount == 2_157,
-              boundLifetime.combinedSourceWatcherDescriptorCount == 2_157,
+              rawObservation.combinedSourceWatcherDescriptorCount == 2_163,
+              boundLifetime.combinedSourceWatcherDescriptorCount == 2_163,
+              rawObservation.supervisorProcessIdentifier > 0,
+              rawObservation.supervisorSessionIdentifier
+                == rawObservation.supervisorProcessIdentifier,
+              rawObservation.supervisorProcessGroupIdentifier
+                == rawObservation.supervisorProcessIdentifier,
+              rawObservation.orderedProcesses.count == 16,
+              Set(rawObservation.orderedProcesses.map(\.processIdentifier))
+                .count == 16,
+              Set(
+                  rawObservation.orderedProcesses.map(
+                      \.processGroupIdentifier
+                  )
+              ).count == 16,
+              rawObservation.orderedProcesses.allSatisfy({ value in
+                  value.processIdentifier > 0
+                    && value.processIdentifier
+                        != rawObservation.supervisorProcessIdentifier
+                    && value.sessionIdentifier
+                        == rawObservation.supervisorSessionIdentifier
+                    && value.processGroupIdentifier
+                        == value.processIdentifier
+              }),
               consumedSupervisorImage.authorityCeiling
                 == .fixedRoleFacadeTransferredNoAuthority
         else {
@@ -858,6 +880,200 @@ package final class PrimeValidationDriverV2FixedProbeBinding:
         let companionManifestSHA256: String
         let partialToolchainIdentitySHA256: String
         let missingAuthorities: [String]
+    }
+}
+
+/// Descriptor-free identity copied from a leaf already held by the outer
+/// governor. This value cannot open, retain, or recover the vnode.
+package struct PrimeValidationDriverV2FixedProbeJournalVnodeV2:
+    Equatable,
+    Sendable
+{
+    package let deviceID: UInt64
+    package let inode: UInt64
+
+    package init(deviceID: UInt64, inode: UInt64) {
+        self.deviceID = deviceID
+        self.inode = inode
+    }
+}
+
+/// Exact durable bytes and descriptor-derived identity for one frozen Gate E
+/// journal leaf. `framedBytes` includes the journal's single trailing LF.
+package struct PrimeValidationDriverV2FixedProbeJournalLeafFrameV2:
+    Equatable,
+    Sendable
+{
+    package let leaf: String
+    package let framedBytes: Data
+    package let vnode: PrimeValidationDriverV2FixedProbeJournalVnodeV2
+
+    package init(
+        leaf: String,
+        framedBytes: Data,
+        vnode: PrimeValidationDriverV2FixedProbeJournalVnodeV2
+    ) {
+        self.leaf = leaf
+        self.framedBytes = framedBytes
+        self.vnode = vnode
+    }
+}
+
+/// Exact wait facts copied from the governor's sole wait of the dedicated
+/// supervisor. This is evidence only; it cannot wait, signal, or reap.
+package struct PrimeValidationDriverV2FixedProbeSupervisorExitWitnessV2:
+    Equatable,
+    Sendable
+{
+    package let requestedProcessIdentifier: Int32
+    package let returnedProcessIdentifier: Int32
+    package let waitOptions: Int32
+    package let rawWaitStatus: Int32
+    package let returnedAtUptimeNanoseconds: UInt64
+    package let exitedNormally: Bool
+    package let exitStatus: Int32
+    package let terminationSignal: Int32
+    package let coreDumped: Bool
+
+    package init(
+        requestedProcessIdentifier: Int32,
+        returnedProcessIdentifier: Int32,
+        waitOptions: Int32,
+        rawWaitStatus: Int32,
+        returnedAtUptimeNanoseconds: UInt64,
+        exitedNormally: Bool,
+        exitStatus: Int32,
+        terminationSignal: Int32,
+        coreDumped: Bool
+    ) {
+        self.requestedProcessIdentifier = requestedProcessIdentifier
+        self.returnedProcessIdentifier = returnedProcessIdentifier
+        self.waitOptions = waitOptions
+        self.rawWaitStatus = rawWaitStatus
+        self.returnedAtUptimeNanoseconds = returnedAtUptimeNanoseconds
+        self.exitedNormally = exitedNormally
+        self.exitStatus = exitStatus
+        self.terminationSignal = terminationSignal
+        self.coreDumped = coreDumped
+    }
+}
+
+/// Closed value expectations copied from the admitted capsule and the
+/// governor's already-held roots and images. No string in this value is ever
+/// opened by DriverCore.
+package struct PrimeValidationDriverV2FixedProbeJournalReceiptExpectationV2:
+    Sendable
+{
+    package let intent: PrimeValidationRunIntentV2
+    package let repositoryCommit: String
+    package let sourceIdentitySHA256: String
+    package let journalRoot: PrimeValidationDirectoryBindingV2
+    package let leaseRoot: PrimeValidationDirectoryBindingV2
+    package let gitExecutable: PrimeValidationExecutableBindingV2
+    package let swiftFrontendExecutable:
+        PrimeValidationExecutableBindingV2
+    package let supervisorExecutableVnode:
+        PrimeValidationDriverV2FixedProbeJournalVnodeV2
+    package let gitExecutableVnode:
+        PrimeValidationDriverV2FixedProbeJournalVnodeV2
+    package let swiftFrontendExecutableVnode:
+        PrimeValidationDriverV2FixedProbeJournalVnodeV2
+    package let supervisorProcessIdentifier: Int32
+    package let outerDeadlineStartedAtUptimeNanoseconds: UInt64
+    package let outerDeadlineExpiresAtUptimeNanoseconds: UInt64
+
+    package init(
+        intent: PrimeValidationRunIntentV2,
+        repositoryCommit: String,
+        sourceIdentitySHA256: String,
+        journalRoot: PrimeValidationDirectoryBindingV2,
+        leaseRoot: PrimeValidationDirectoryBindingV2,
+        gitExecutable: PrimeValidationExecutableBindingV2,
+        swiftFrontendExecutable: PrimeValidationExecutableBindingV2,
+        supervisorExecutableVnode:
+            PrimeValidationDriverV2FixedProbeJournalVnodeV2,
+        gitExecutableVnode:
+            PrimeValidationDriverV2FixedProbeJournalVnodeV2,
+        swiftFrontendExecutableVnode:
+            PrimeValidationDriverV2FixedProbeJournalVnodeV2,
+        supervisorProcessIdentifier: Int32,
+        outerDeadlineStartedAtUptimeNanoseconds: UInt64,
+        outerDeadlineExpiresAtUptimeNanoseconds: UInt64
+    ) {
+        self.intent = intent
+        self.repositoryCommit = repositoryCommit
+        self.sourceIdentitySHA256 = sourceIdentitySHA256
+        self.journalRoot = journalRoot
+        self.leaseRoot = leaseRoot
+        self.gitExecutable = gitExecutable
+        self.swiftFrontendExecutable = swiftFrontendExecutable
+        self.supervisorExecutableVnode = supervisorExecutableVnode
+        self.gitExecutableVnode = gitExecutableVnode
+        self.swiftFrontendExecutableVnode = swiftFrontendExecutableVnode
+        self.supervisorProcessIdentifier = supervisorProcessIdentifier
+        self.outerDeadlineStartedAtUptimeNanoseconds =
+            outerDeadlineStartedAtUptimeNanoseconds
+        self.outerDeadlineExpiresAtUptimeNanoseconds =
+            outerDeadlineExpiresAtUptimeNanoseconds
+    }
+}
+
+/// Deterministic, value-only proof that the complete durable journal agrees
+/// with the fixed DriverCore policy and the exact successful supervisor wait.
+/// Its initializer is not visible outside this file, so copied observations
+/// cannot manufacture a validated receipt.
+package struct PrimeValidationDriverV2FixedProbeDurableJournalReceiptV2:
+    Equatable,
+    Sendable
+{
+    package let identitySHA256: String
+    package let orderedLeafSHA256Values: [String]
+    package let orderedLeafVnodes:
+        [PrimeValidationDriverV2FixedProbeJournalVnodeV2]
+    package let supervisorProcessIdentifier: Int32
+    package let orderedChildProcessIdentifiers: [Int32]
+    package let orderedChildProcessGroupIdentifiers: [Int32]
+    package let rawTerminalSHA256: String
+
+    fileprivate init(
+        identitySHA256: String,
+        orderedLeafSHA256Values: [String],
+        orderedLeafVnodes:
+            [PrimeValidationDriverV2FixedProbeJournalVnodeV2],
+        supervisorProcessIdentifier: Int32,
+        orderedChildProcessIdentifiers: [Int32],
+        orderedChildProcessGroupIdentifiers: [Int32],
+        rawTerminalSHA256: String
+    ) {
+        self.identitySHA256 = identitySHA256
+        self.orderedLeafSHA256Values = orderedLeafSHA256Values
+        self.orderedLeafVnodes = orderedLeafVnodes
+        self.supervisorProcessIdentifier = supervisorProcessIdentifier
+        self.orderedChildProcessIdentifiers =
+            orderedChildProcessIdentifiers
+        self.orderedChildProcessGroupIdentifiers =
+            orderedChildProcessGroupIdentifiers
+        self.rawTerminalSHA256 = rawTerminalSHA256
+    }
+}
+
+/// A fixed Gate E reader, not a second execution or semantic-binding owner.
+/// It opens no paths and consumes no PrimeCore raw capability.
+package enum PrimeValidationDriverV2FixedProbeDurableJournalValidatorV2 {
+    package static func validate(
+        orderedLeaves:
+            [PrimeValidationDriverV2FixedProbeJournalLeafFrameV2],
+        expectation:
+            PrimeValidationDriverV2FixedProbeJournalReceiptExpectationV2,
+        supervisorExit:
+            PrimeValidationDriverV2FixedProbeSupervisorExitWitnessV2
+    ) throws -> PrimeValidationDriverV2FixedProbeDurableJournalReceiptV2 {
+        try PrimeValidationDriverV2FixedProbeSemanticValidator
+            .validateDurableJournal(
+                orderedLeaves: orderedLeaves,
+                expectation: expectation,
+                supervisorExit: supervisorExit
+            )
     }
 }
 
@@ -966,6 +1182,8 @@ private enum PrimeValidationDriverV2FixedProbeSemanticValidator {
         var standardOutputWithinCap: Bool
         var standardErrorEmpty: Bool
         var processIdentifierPositive: Bool
+        var processIdentifierDiffersFromSupervisor: Bool
+        var processIdentifierUnique: Bool
         var spawnFlagsMatch: Bool
         var spawnReturnCodeMatches: Bool
         var spawnAfterDeadlineStart: Bool
@@ -973,6 +1191,7 @@ private enum PrimeValidationDriverV2FixedProbeSemanticValidator {
         var spawnBeforeStartPublication: Bool
         var sessionIdentifierMatches: Bool
         var processGroupIdentifierMatches: Bool
+        var processGroupIdentifierUnique: Bool
         var suspendedWorkingDirectoryDeviceMatches: Bool
         var suspendedWorkingDirectoryInodeMatches: Bool
         var exactSuspendedWorkingDirectoryJoin: Bool
@@ -1089,7 +1308,12 @@ private enum PrimeValidationDriverV2FixedProbeSemanticValidator {
         let deadline = raw.deadlineStartedAtUptimeNanoseconds
             .addingReportingOverflow(30_000_000_000)
         guard raw.productionSupervisorImageEligible,
-              raw.combinedSourceWatcherDescriptorCount == 2_157,
+              raw.combinedSourceWatcherDescriptorCount == 2_163,
+              raw.supervisorProcessIdentifier > 0,
+              raw.supervisorSessionIdentifier
+                == raw.supervisorProcessIdentifier,
+              raw.supervisorProcessGroupIdentifier
+                == raw.supervisorProcessIdentifier,
               raw.deadlineStartedAtUptimeNanoseconds > 0,
               !deadline.overflow,
               raw.deadlineExpiresAtUptimeNanoseconds
@@ -1372,6 +1596,8 @@ private extension PrimeValidationDriverV2FixedProbeSemanticValidator {
             ("TERM", "dumb"),
         ]
         var journalInodes = Set<String>()
+        var childProcessIdentifiers = Set<Int32>()
+        var childProcessGroupIdentifiers = Set<Int32>()
         var predecessorTerminalUptime =
             raw.prestartPublishedUptimeNanoseconds
         try validateLeaf(raw.prestartLeaf, expected: "gate-e-prestart.json")
@@ -1398,6 +1624,13 @@ private extension PrimeValidationDriverV2FixedProbeSemanticValidator {
                 companionHEAD: companionHEAD
             )
             let expectedOutputCap = outputCap(role)
+            let processIdentifierUnique = childProcessIdentifiers.insert(
+                value.processIdentifier
+            ).inserted
+            let processGroupIdentifierUnique =
+                childProcessGroupIdentifiers.insert(
+                    value.processGroupIdentifier
+                ).inserted
 
             try validateFile(
                 value.executable,
@@ -1444,7 +1677,11 @@ private extension PrimeValidationDriverV2FixedProbeSemanticValidator {
                     standardErrorEmpty: value.standardError.isEmpty,
                     processIdentifierPositive:
                         value.processIdentifier > 0,
-                    spawnFlagsMatch: value.appliedSpawnFlags == 0x448c,
+                    processIdentifierDiffersFromSupervisor:
+                        value.processIdentifier
+                            != raw.supervisorProcessIdentifier,
+                    processIdentifierUnique: processIdentifierUnique,
+                    spawnFlagsMatch: value.appliedSpawnFlags == 0x408e,
                     spawnReturnCodeMatches: value.spawnReturnCode == 0,
                     spawnAfterDeadlineStart:
                         value.spawnReturnedUptimeNanoseconds
@@ -1456,10 +1693,13 @@ private extension PrimeValidationDriverV2FixedProbeSemanticValidator {
                         value.spawnReturnedUptimeNanoseconds
                             <= value.startPublishedUptimeNanoseconds,
                     sessionIdentifierMatches:
-                        value.sessionIdentifier == value.processIdentifier,
+                        value.sessionIdentifier
+                            == raw.supervisorSessionIdentifier,
                     processGroupIdentifierMatches:
                         value.processGroupIdentifier
                             == value.processIdentifier,
+                    processGroupIdentifierUnique:
+                        processGroupIdentifierUnique,
                     suspendedWorkingDirectoryDeviceMatches:
                         value.suspendedWorkingDirectoryDeviceID
                             == expectedRoot.deviceID,
@@ -1589,6 +1829,8 @@ private extension PrimeValidationDriverV2FixedProbeSemanticValidator {
         ).inserted,
         raw.rawTerminalLeaf.deviceID == raw.prestartLeaf.deviceID,
         journalInodes.count == 34,
+        childProcessIdentifiers.count == 16,
+        childProcessGroupIdentifiers.count == 16,
         raw.rawTerminalPublishedUptimeNanoseconds
             >= predecessorTerminalUptime
         else {
@@ -1641,6 +1883,8 @@ private extension PrimeValidationDriverV2FixedProbeSemanticValidator {
               value.standardOutputWithinCap,
               value.standardErrorEmpty,
               value.processIdentifierPositive,
+              value.processIdentifierDiffersFromSupervisor,
+              value.processIdentifierUnique,
               value.spawnFlagsMatch,
               value.spawnReturnCodeMatches,
               value.spawnAfterDeadlineStart,
@@ -1648,6 +1892,7 @@ private extension PrimeValidationDriverV2FixedProbeSemanticValidator {
               value.spawnBeforeStartPublication,
               value.sessionIdentifierMatches,
               value.processGroupIdentifierMatches,
+              value.processGroupIdentifierUnique,
               value.suspendedWorkingDirectoryDeviceMatches,
               value.suspendedWorkingDirectoryInodeMatches,
               value.exactSuspendedWorkingDirectoryJoin,
@@ -1714,6 +1959,8 @@ private extension PrimeValidationDriverV2FixedProbeSemanticValidator {
         standardOutputWithinCap: true,
         standardErrorEmpty: true,
         processIdentifierPositive: true,
+        processIdentifierDiffersFromSupervisor: true,
+        processIdentifierUnique: true,
         spawnFlagsMatch: true,
         spawnReturnCodeMatches: true,
         spawnAfterDeadlineStart: true,
@@ -1721,6 +1968,7 @@ private extension PrimeValidationDriverV2FixedProbeSemanticValidator {
         spawnBeforeStartPublication: true,
         sessionIdentifierMatches: true,
         processGroupIdentifierMatches: true,
+        processGroupIdentifierUnique: true,
         suspendedWorkingDirectoryDeviceMatches: true,
         suspendedWorkingDirectoryInodeMatches: true,
         exactSuspendedWorkingDirectoryJoin: true,
@@ -1802,6 +2050,14 @@ private extension PrimeValidationDriverV2FixedProbeSemanticValidator {
             fact: "process_identifier",
             keyPath: \.processIdentifierPositive
         ),
+        .init(
+            fact: "process_identifier_differs_from_supervisor",
+            keyPath: \.processIdentifierDiffersFromSupervisor
+        ),
+        .init(
+            fact: "process_identifier_unique",
+            keyPath: \.processIdentifierUnique
+        ),
         .init(fact: "spawn_flags", keyPath: \.spawnFlagsMatch),
         .init(
             fact: "spawn_return_code",
@@ -1826,6 +2082,10 @@ private extension PrimeValidationDriverV2FixedProbeSemanticValidator {
         .init(
             fact: "process_group_identifier",
             keyPath: \.processGroupIdentifierMatches
+        ),
+        .init(
+            fact: "process_group_identifier_unique",
+            keyPath: \.processGroupIdentifierUnique
         ),
         .init(
             fact: "suspended_working_directory_device",
@@ -2076,6 +2336,244 @@ private extension PrimeValidationDriverV2FixedProbeSemanticValidator {
             )
         }
     }
+}
+
+private struct PrimeValidationDriverV2DurableIdentityRecordV2: Codable {
+    let role: String
+    let absolutePath: String
+    let deviceID: UInt64
+    let inode: UInt64
+    let ownerUserID: UInt32
+    let ownerGroupID: UInt32
+    let permissionMode: UInt16
+    let linkCount: UInt64
+    let byteCount: UInt64
+    let sha256: String
+    let modificationSeconds: Int64
+    let modificationNanoseconds: Int64
+    let statusChangeSeconds: Int64
+    let statusChangeNanoseconds: Int64
+}
+
+private struct PrimeValidationDriverV2DurablePrestartRecordV2: Codable {
+    let schema: String
+    let stage: String
+    let supervisorProcessIdentifier: Int32
+    let supervisorSessionIdentifier: Int32
+    let supervisorProcessGroupIdentifier: Int32
+    let embeddedPrimeSourceIdentitySHA256: String
+    let policySHA256: String
+    let environmentSHA256: String
+    let journalAbsolutePath: String
+    let primeRootDeviceID: UInt64
+    let primeRootInode: UInt64
+    let companionRootDeviceID: UInt64
+    let companionRootInode: UInt64
+    let primeGitDeviceID: UInt64
+    let primeGitInode: UInt64
+    let primeGitAbsolutePath: String
+    let primeGitOwnerUserID: UInt32
+    let primeGitOwnerGroupID: UInt32
+    let primeGitPermissionMode: UInt16
+    let companionGitDeviceID: UInt64
+    let companionGitInode: UInt64
+    let companionGitAbsolutePath: String
+    let companionGitOwnerUserID: UInt32
+    let companionGitOwnerGroupID: UInt32
+    let companionGitPermissionMode: UInt16
+    let gitExecutableSHA256: String
+    let swiftFrontendSHA256: String
+    let supervisorExecutableSHA256: String
+    let journalIdentity: PrimeValidationDriverV2DurableIdentityRecordV2
+    let rootIdentities: [PrimeValidationDriverV2DurableIdentityRecordV2]
+    let imageIdentities: [PrimeValidationDriverV2DurableIdentityRecordV2]
+    let deadlineStartedAtUptimeNanoseconds: UInt64
+    let deadlineExpiresAtUptimeNanoseconds: UInt64
+    let orderedRoles: [String]
+    let combinedSourceWatcherDescriptorCount: Int
+}
+
+private struct PrimeValidationDriverV2DurableStartRecordV2: Codable {
+    let schema: String
+    let stage: String
+    let ordinal: Int
+    let role: String
+    let prestartSHA256: String
+    let predecessorKind: String
+    let predecessorSHA256: String
+    let processIdentifier: Int32
+    let sessionIdentifier: Int32
+    let processGroupIdentifier: Int32
+    let appliedSpawnFlags: UInt16
+    let spawnReturnCode: Int32
+    let spawnReturnedUptimeNanoseconds: UInt64
+    let deadlineStartedAtUptimeNanoseconds: UInt64
+    let deadlineExpiresAtUptimeNanoseconds: UInt64
+    let workingDirectoryDeviceID: UInt64
+    let workingDirectoryInode: UInt64
+    let workingDirectoryAbsolutePath: String
+    let childWorkingDirectoryDeviceID: UInt64
+    let childWorkingDirectoryInode: UInt64
+    let executableDeviceID: UInt64
+    let executableInode: UInt64
+    let executableAbsolutePath: String
+    let executableByteCount: UInt64
+    let executableSHA256: String
+    let logicalArgumentZero: String
+    let arguments: [String]
+    let argumentVectorSHA256: String
+    let mappedExecutablePathTelemetry: String
+    let mappedExecutableQueryCount: Int
+    let mappedExecutableTerminalErrno: Int32
+    let exactWorkingDirectoryJoin: Bool
+    let exactMappedExecutableJoin: Bool
+    let preResumeContinuityChecked: Bool
+}
+
+private struct PrimeValidationDriverV2DurableTerminalRecordV2: Codable {
+    let schema: String
+    let stage: String
+    let ordinal: Int
+    let role: String
+    let startLeafSHA256: String
+    let supervisorProcessIdentifier: Int32
+    let supervisorSessionIdentifier: Int32
+    let supervisorProcessGroupIdentifier: Int32
+    let processIdentifier: Int32
+    let sessionIdentifier: Int32
+    let processGroupIdentifier: Int32
+    let deathObservedUptimeNanoseconds: UInt64
+    let preReapProcessGroupMemberIdentifiers: [Int32]
+    let startPublishedUptimeNanoseconds: UInt64
+    let preResumeContinuityCheckpointUptimeNanoseconds: UInt64
+    let resumedAtUptimeNanoseconds: UInt64
+    let requestedWaitProcessIdentifier: Int32
+    let returnedWaitProcessIdentifier: Int32
+    let waitOptions: Int32
+    let rawWaitStatus: Int32
+    let waitReturnedUptimeNanoseconds: UInt64
+    let exitedNormally: Bool
+    let exitStatus: Int32
+    let terminationSignal: Int32
+    let coreDumped: Bool
+    let standardOutputByteCount: UInt64
+    let standardOutputSHA256: String
+    let standardOutputReachedEOF: Bool
+    let standardOutputTerminalReason: String
+    let standardOutputOverflowed: Bool
+    let standardOutputWorkerFinished: Bool
+    let standardOutputReadErrorNumber: Int32
+    let standardOutputWriteErrorNumber: Int32
+    let standardOutputFinalizationErrorNumber: Int32
+    let standardOutputCloseErrorNumber: Int32
+    let standardOutputDescriptorsClosed: Bool
+    let standardErrorByteCount: UInt64
+    let standardErrorSHA256: String
+    let standardErrorReachedEOF: Bool
+    let standardErrorTerminalReason: String
+    let standardErrorOverflowed: Bool
+    let standardErrorWorkerFinished: Bool
+    let standardErrorReadErrorNumber: Int32
+    let standardErrorWriteErrorNumber: Int32
+    let standardErrorFinalizationErrorNumber: Int32
+    let standardErrorCloseErrorNumber: Int32
+    let standardErrorDescriptorsClosed: Bool
+    let processGroupEmptyAfterReap: Bool
+    let postReapContinuityChecked: Bool
+}
+
+private struct PrimeValidationDriverV2DurableRawTerminalRecordV2: Codable {
+    let schema: String
+    let stage: String
+    let supervisorProcessIdentifier: Int32
+    let supervisorSessionIdentifier: Int32
+    let supervisorProcessGroupIdentifier: Int32
+    let orderedProcessIdentifiers: [Int32]
+    let orderedSessionIdentifiers: [Int32]
+    let orderedProcessGroupIdentifiers: [Int32]
+    let orderedTerminalSHA256Values: [String]
+    let primeHEADAgreement: Bool
+    let companionHEADAgreement: Bool
+    let primeStatusPreEmpty: Bool
+    let primeStatusPostEmpty: Bool
+    let companionStatusPreEmpty: Bool
+    let companionStatusPostEmpty: Bool
+    let primeObjectFormat: String
+    let companionObjectFormat: String
+    let primeTreeReplayEqual: Bool
+    let companionTreeReplayEqual: Bool
+    let primeHeldEntriesSHA256: String
+    let companionHeldEntriesSHA256: String
+    let swiftVersionSHA256: String
+    let swiftTargetInfoSHA256: String
+}
+
+private struct PrimeValidationDriverV2DurableArgumentVectorRecordV2:
+    Encodable
+{
+    let logicalArgumentZero: String
+    let arguments: [String]
+}
+
+private struct PrimeValidationDriverV2DurablePolicyRoleRecordV2: Encodable {
+    let ordinal: Int
+    let role: String
+    let root: String
+    let image: String
+    let logicalArgumentZero: String
+    let arguments: [String]
+    let standardOutputMaximumByteCount: UInt64
+}
+
+private struct PrimeValidationDriverV2DurablePolicyRecordV2: Encodable {
+    let schema: String
+    let containmentMode: String
+    let requiredSpawnFlags: UInt16
+    let orderedRoles: [PrimeValidationDriverV2DurablePolicyRoleRecordV2]
+    let primePathspecs: [String]
+    let environment: [String]
+    let deadlineNanoseconds: UInt64
+    let standardErrorMaximumByteCount: UInt64
+    let drainChunkByteCount: Int
+}
+
+private struct PrimeValidationDriverV2DurableReceiptLeafProjectionV2:
+    Codable
+{
+    let leaf: String
+    let byteCount: UInt64
+    let sha256: String
+    let deviceID: UInt64
+    let inode: UInt64
+}
+
+private struct PrimeValidationDriverV2DurableReceiptIdentityProjectionV2:
+    Codable
+{
+    let schema: String
+    let intentIdentitySHA256: String
+    let repositoryCommit: String
+    let sourceIdentitySHA256: String
+    let journalRootIdentitySHA256: String
+    let leaseRootIdentitySHA256: String
+    let gitExecutableIdentitySHA256: String
+    let swiftFrontendExecutableIdentitySHA256: String
+    let supervisorExecutableDeviceID: UInt64
+    let supervisorExecutableInode: UInt64
+    let gitExecutableDeviceID: UInt64
+    let gitExecutableInode: UInt64
+    let swiftFrontendExecutableDeviceID: UInt64
+    let swiftFrontendExecutableInode: UInt64
+    let supervisorProcessIdentifier: Int32
+    let outerDeadlineStartedAtUptimeNanoseconds: UInt64
+    let outerDeadlineExpiresAtUptimeNanoseconds: UInt64
+    let supervisorWaitReturnedAtUptimeNanoseconds: UInt64
+    let orderedLeaves:
+        [PrimeValidationDriverV2DurableReceiptLeafProjectionV2]
+    let orderedChildProcessIdentifiers: [Int32]
+    let orderedChildProcessGroupIdentifiers: [Int32]
+    let rawTerminalSHA256: String
+    let supervisorExitContract: String
 }
 
 private extension PrimeValidationDriverV2FixedProbeSemanticValidator {
@@ -2370,5 +2868,1014 @@ private extension PrimeValidationDriverV2FixedProbeSemanticValidator {
             noSymlinkComponentsObserved: true,
             retainedDescriptorClosureHeld: true
         )
+    }
+}
+
+private extension PrimeValidationDriverV2FixedProbeSemanticValidator {
+    static var durableJournalSiblingSuffix: String {
+        ".driver-v2-gate-e-journal"
+    }
+    static var durableJournalMaximumLeafByteCount: Int { 64 * 1024 }
+    static var durableInnerDeadlineNanoseconds: UInt64 { 30_000_000_000 }
+    static var durableOuterDeadlineNanoseconds: UInt64 { 60_000_000_000 }
+    static var durableInnerSpawnFlags: UInt16 { 0x408e }
+    static var durableEmptySHA256: String {
+        "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+
+    static var durableOrderedLeaves: [String] {
+        ["gate-e-prestart.json"]
+            + roles.enumerated().flatMap { index, role in
+                let base = String(format: "%02d", index + 1) + "-"
+                    + role.rawValue.replacingOccurrences(
+                        of: "_",
+                        with: "-"
+                    )
+                return [base + "-start.json", base + "-terminal.json"]
+            }
+            + ["gate-e-raw-terminal.json"]
+    }
+
+    static func validateDurableJournal(
+        orderedLeaves:
+            [PrimeValidationDriverV2FixedProbeJournalLeafFrameV2],
+        expectation:
+            PrimeValidationDriverV2FixedProbeJournalReceiptExpectationV2,
+        supervisorExit:
+            PrimeValidationDriverV2FixedProbeSupervisorExitWitnessV2
+    ) throws -> PrimeValidationDriverV2FixedProbeDurableJournalReceiptV2 {
+        try validateDurableExpectation(
+            expectation,
+            supervisorExit: supervisorExit
+        )
+        let expectedLeaves = durableOrderedLeaves
+        guard expectedLeaves.count == 34,
+              orderedLeaves.count == expectedLeaves.count,
+              orderedLeaves.map(\.leaf) == expectedLeaves
+        else {
+            throw durableJournalRejection("leaf_order")
+        }
+
+        var leafSHA256Values = [String]()
+        var leafVnodes =
+            [PrimeValidationDriverV2FixedProbeJournalVnodeV2]()
+        var vnodeKeys = Set<String>()
+        leafSHA256Values.reserveCapacity(orderedLeaves.count)
+        leafVnodes.reserveCapacity(orderedLeaves.count)
+        for leaf in orderedLeaves {
+            let body = try durableCanonicalBody(leaf)
+            guard !body.isEmpty,
+                  leaf.vnode.deviceID == expectation.journalRoot.deviceID,
+                  vnodeKeys.insert(
+                      "\(leaf.vnode.deviceID):\(leaf.vnode.inode)"
+                  ).inserted,
+                  leaf.vnode.inode != expectation.journalRoot.inode
+            else {
+                throw durableJournalRejection("leaf_vnode")
+            }
+            leafSHA256Values.append(
+                PrimeSHA256.hexDigest(of: leaf.framedBytes)
+            )
+            leafVnodes.append(leaf.vnode)
+        }
+
+        let prestart = try durableDecode(
+            PrimeValidationDriverV2DurablePrestartRecordV2.self,
+            from: orderedLeaves[0],
+            coordinate: "prestart"
+        )
+        var starts = [PrimeValidationDriverV2DurableStartRecordV2]()
+        var terminals =
+            [PrimeValidationDriverV2DurableTerminalRecordV2]()
+        starts.reserveCapacity(roles.count)
+        terminals.reserveCapacity(roles.count)
+        for index in roles.indices {
+            starts.append(
+                try durableDecode(
+                    PrimeValidationDriverV2DurableStartRecordV2.self,
+                    from: orderedLeaves[1 + index * 2],
+                    coordinate: "start_\(index + 1)"
+                )
+            )
+            terminals.append(
+                try durableDecode(
+                    PrimeValidationDriverV2DurableTerminalRecordV2.self,
+                    from: orderedLeaves[2 + index * 2],
+                    coordinate: "terminal_\(index + 1)"
+                )
+            )
+        }
+        let rawTerminal = try durableDecode(
+            PrimeValidationDriverV2DurableRawTerminalRecordV2.self,
+            from: orderedLeaves[33],
+            coordinate: "raw_terminal"
+        )
+
+        try validateDurablePrestart(
+            prestart,
+            expectation: expectation
+        )
+        try validateDurableProcesses(
+            starts: starts,
+            terminals: terminals,
+            leafSHA256Values: leafSHA256Values,
+            expectation: expectation,
+            prestart: prestart,
+            supervisorExit: supervisorExit
+        )
+        try validateDurableRawTerminal(
+            rawTerminal,
+            starts: starts,
+            terminals: terminals,
+            leafSHA256Values: leafSHA256Values,
+            expectation: expectation
+        )
+
+        let rawTerminalSHA256 = leafSHA256Values[33]
+        let orderedChildProcessIdentifiers =
+            starts.map(\.processIdentifier)
+        let orderedChildProcessGroupIdentifiers =
+            starts.map(\.processGroupIdentifier)
+        let leafProjections = zip(orderedLeaves, leafSHA256Values).map {
+            PrimeValidationDriverV2DurableReceiptLeafProjectionV2(
+                leaf: $0.0.leaf,
+                byteCount: UInt64($0.0.framedBytes.count),
+                sha256: $0.1,
+                deviceID: $0.0.vnode.deviceID,
+                inode: $0.0.vnode.inode
+            )
+        }
+        let receiptIdentity = try PrimeValidationDriverV2Validation.identity(
+            PrimeValidationDriverV2DurableReceiptIdentityProjectionV2(
+                schema:
+                    "prime_driver_v2_gate_e_durable_journal_receipt_v2",
+                intentIdentitySHA256:
+                    try expectation.intent.identitySHA256(),
+                repositoryCommit: expectation.repositoryCommit,
+                sourceIdentitySHA256: expectation.sourceIdentitySHA256,
+                journalRootIdentitySHA256:
+                    try PrimeValidationDriverV2Validation.identity(
+                        expectation.journalRoot
+                    ),
+                leaseRootIdentitySHA256:
+                    try PrimeValidationDriverV2Validation.identity(
+                        expectation.leaseRoot
+                    ),
+                gitExecutableIdentitySHA256:
+                    try PrimeValidationDriverV2Validation.identity(
+                        expectation.gitExecutable
+                    ),
+                swiftFrontendExecutableIdentitySHA256:
+                    try PrimeValidationDriverV2Validation.identity(
+                        expectation.swiftFrontendExecutable
+                    ),
+                supervisorExecutableDeviceID:
+                    expectation.supervisorExecutableVnode.deviceID,
+                supervisorExecutableInode:
+                    expectation.supervisorExecutableVnode.inode,
+                gitExecutableDeviceID:
+                    expectation.gitExecutableVnode.deviceID,
+                gitExecutableInode:
+                    expectation.gitExecutableVnode.inode,
+                swiftFrontendExecutableDeviceID:
+                    expectation.swiftFrontendExecutableVnode.deviceID,
+                swiftFrontendExecutableInode:
+                    expectation.swiftFrontendExecutableVnode.inode,
+                supervisorProcessIdentifier:
+                    expectation.supervisorProcessIdentifier,
+                outerDeadlineStartedAtUptimeNanoseconds:
+                    expectation.outerDeadlineStartedAtUptimeNanoseconds,
+                outerDeadlineExpiresAtUptimeNanoseconds:
+                    expectation.outerDeadlineExpiresAtUptimeNanoseconds,
+                supervisorWaitReturnedAtUptimeNanoseconds:
+                    supervisorExit.returnedAtUptimeNanoseconds,
+                orderedLeaves: leafProjections,
+                orderedChildProcessIdentifiers:
+                    orderedChildProcessIdentifiers,
+                orderedChildProcessGroupIdentifiers:
+                    orderedChildProcessGroupIdentifiers,
+                rawTerminalSHA256: rawTerminalSHA256,
+                supervisorExitContract:
+                    "binding_bridge_then_final_revalidation_normal_zero_v1"
+            )
+        )
+        try PrimeValidationDriverV2Validation.requireSHA256(receiptIdentity)
+        return PrimeValidationDriverV2FixedProbeDurableJournalReceiptV2(
+            identitySHA256: receiptIdentity,
+            orderedLeafSHA256Values: leafSHA256Values,
+            orderedLeafVnodes: leafVnodes,
+            supervisorProcessIdentifier:
+                expectation.supervisorProcessIdentifier,
+            orderedChildProcessIdentifiers:
+                orderedChildProcessIdentifiers,
+            orderedChildProcessGroupIdentifiers:
+                orderedChildProcessGroupIdentifiers,
+            rawTerminalSHA256: rawTerminalSHA256
+        )
+    }
+
+    static func validateDurableExpectation(
+        _ expectation:
+            PrimeValidationDriverV2FixedProbeJournalReceiptExpectationV2,
+        supervisorExit:
+            PrimeValidationDriverV2FixedProbeSupervisorExitWitnessV2
+    ) throws {
+        try expectation.intent.validate()
+        try expectation.journalRoot.validate(requirePrivateMode: true)
+        try expectation.leaseRoot.validate(requirePrivateMode: true)
+        try expectation.gitExecutable.validate()
+        try expectation.swiftFrontendExecutable.validate()
+        try PrimeValidationDriverV2Validation.requireSHA256(
+            expectation.sourceIdentitySHA256
+        )
+        let expectedSwiftFrontendAbsolutePath = try
+            durableSwiftFrontendAbsolutePath(expectation.intent)
+        let outerDeadline = expectation
+            .outerDeadlineStartedAtUptimeNanoseconds
+            .addingReportingOverflow(durableOuterDeadlineNanoseconds)
+        let imageVnodes = [
+            expectation.supervisorExecutableVnode,
+            expectation.gitExecutableVnode,
+            expectation.swiftFrontendExecutableVnode,
+        ]
+        let imageVnodeKeys = Set(imageVnodes.map {
+            "\($0.deviceID):\($0.inode)"
+        })
+        let protectedRoots = [
+            expectation.intent.roots.repositoryRoot.absolutePath,
+            expectation.intent.roots.companionRoot.absolutePath,
+            expectation.intent.roots.workspaceRoot.absolutePath,
+            expectation.intent.roots.evidenceRoot.absolutePath,
+            expectation.leaseRoot.absolutePath,
+            expectation.journalRoot.absolutePath,
+        ]
+        guard durableGitObjectName(expectation.repositoryCommit),
+              expectation.journalRoot.absolutePath
+                == expectation.intent.roots.workspaceRoot.absolutePath
+                    + durableJournalSiblingSuffix,
+              expectation.journalRoot.mode == 0o700,
+              expectation.leaseRoot.mode == 0o700,
+              expectation.swiftFrontendExecutable.absolutePath
+                == expectedSwiftFrontendAbsolutePath,
+              expectation.swiftFrontendExecutable.content
+                == expectation.intent.swiftExecutable.content,
+              Set(protectedRoots).count == protectedRoots.count,
+              imageVnodes.allSatisfy({
+                  $0.deviceID > 0 && $0.inode > 0
+              }),
+              imageVnodeKeys.count == imageVnodes.count,
+              expectation.supervisorProcessIdentifier > 0,
+              expectation.outerDeadlineStartedAtUptimeNanoseconds > 0,
+              !outerDeadline.overflow,
+              expectation.outerDeadlineExpiresAtUptimeNanoseconds
+                == outerDeadline.partialValue,
+              supervisorExit.requestedProcessIdentifier
+                == expectation.supervisorProcessIdentifier,
+              supervisorExit.returnedProcessIdentifier
+                == expectation.supervisorProcessIdentifier,
+              supervisorExit.waitOptions == 0,
+              supervisorExit.rawWaitStatus == 0,
+              supervisorExit.returnedAtUptimeNanoseconds
+                >= expectation.outerDeadlineStartedAtUptimeNanoseconds,
+              supervisorExit.returnedAtUptimeNanoseconds
+                <= expectation.outerDeadlineExpiresAtUptimeNanoseconds,
+              supervisorExit.exitedNormally,
+              supervisorExit.exitStatus == 0,
+              supervisorExit.terminationSignal == 0,
+              !supervisorExit.coreDumped
+        else {
+            throw durableJournalRejection("expectation_or_exit")
+        }
+    }
+
+    static func durableCanonicalBody(
+        _ leaf: PrimeValidationDriverV2FixedProbeJournalLeafFrameV2
+    ) throws -> Data {
+        guard PrimeValidationDriverV2Validation.isSafeName(leaf.leaf),
+              leaf.framedBytes.count > 1,
+              leaf.framedBytes.count <= durableJournalMaximumLeafByteCount,
+              leaf.framedBytes.last == 0x0a
+        else {
+            throw durableJournalRejection("leaf_frame")
+        }
+        let body = Data(leaf.framedBytes.dropLast())
+        guard !body.contains(0x0a), !body.contains(0x0d) else {
+            throw durableJournalRejection("leaf_frame_newline")
+        }
+        return body
+    }
+
+    static func durableDecode<Value: Codable>(
+        _ type: Value.Type,
+        from leaf: PrimeValidationDriverV2FixedProbeJournalLeafFrameV2,
+        coordinate: String
+    ) throws -> Value {
+        let body = try durableCanonicalBody(leaf)
+        let value: Value
+        do {
+            value = try PrimeCanonicalJSON.decode(
+                type,
+                from: body,
+                artifact: "driver_v2_gate_e_durable_\(coordinate)"
+            )
+        } catch {
+            throw durableJournalRejection(coordinate + "_decode")
+        }
+        guard (try? PrimeCanonicalJSON.encode(value)) == body else {
+            throw durableJournalRejection(coordinate + "_canonical")
+        }
+        return value
+    }
+
+    static func durableJournalRejection(
+        _ coordinate: String
+    ) -> PrimeValidationDriverV2Error {
+        .invalidBinding("fixed_probe_durable_journal_" + coordinate)
+    }
+
+    static func durableGitObjectName(_ value: String) -> Bool {
+        value.utf8.count == 40 && value.utf8.allSatisfy {
+            ($0 >= 48 && $0 <= 57) || ($0 >= 97 && $0 <= 102)
+        }
+    }
+}
+
+private extension PrimeValidationDriverV2FixedProbeSemanticValidator {
+    static func validateDurablePrestart(
+        _ value: PrimeValidationDriverV2DurablePrestartRecordV2,
+        expectation:
+            PrimeValidationDriverV2FixedProbeJournalReceiptExpectationV2
+    ) throws {
+        let supervisor = expectation.supervisorProcessIdentifier
+        let innerDeadline = value.deadlineStartedAtUptimeNanoseconds
+            .addingReportingOverflow(durableInnerDeadlineNanoseconds)
+        let policyDigests = try durablePolicyDigests(expectation.intent)
+        try PrimeValidationDriverV2Validation.requireSHA256(
+            value.embeddedPrimeSourceIdentitySHA256
+        )
+        try PrimeValidationDriverV2Validation.requireSHA256(
+            value.policySHA256
+        )
+        try PrimeValidationDriverV2Validation.requireSHA256(
+            value.environmentSHA256
+        )
+        try PrimeValidationDriverV2Validation.requireSHA256(
+            value.gitExecutableSHA256
+        )
+        try PrimeValidationDriverV2Validation.requireSHA256(
+            value.swiftFrontendSHA256
+        )
+        try PrimeValidationDriverV2Validation.requireSHA256(
+            value.supervisorExecutableSHA256
+        )
+        guard value.schema == "prime_driver_v2_gate_e_prestart_v2",
+              value.stage == "GATE-E",
+              value.supervisorProcessIdentifier == supervisor,
+              value.supervisorSessionIdentifier == supervisor,
+              value.supervisorProcessGroupIdentifier == supervisor,
+              value.embeddedPrimeSourceIdentitySHA256
+                == expectation.sourceIdentitySHA256,
+              value.policySHA256 == policyDigests.policy,
+              value.environmentSHA256 == policyDigests.environment,
+              value.journalAbsolutePath
+                == expectation.journalRoot.absolutePath,
+              value.primeRootDeviceID
+                == expectation.intent.roots.repositoryRoot.deviceID,
+              value.primeRootInode
+                == expectation.intent.roots.repositoryRoot.inode,
+              value.companionRootDeviceID
+                == expectation.intent.roots.companionRoot.deviceID,
+              value.companionRootInode
+                == expectation.intent.roots.companionRoot.inode,
+              value.primeGitDeviceID == value.primeRootDeviceID,
+              value.primeGitInode > 0,
+              value.primeGitInode != value.primeRootInode,
+              value.primeGitAbsolutePath
+                == expectation.intent.roots.repositoryRoot.absolutePath
+                    + "/.git",
+              value.primeGitOwnerUserID
+                == expectation.intent.roots.repositoryRoot.ownerUserID,
+              value.primeGitPermissionMode > 0,
+              value.primeGitPermissionMode & 0o022 == 0,
+              value.companionGitDeviceID == value.companionRootDeviceID,
+              value.companionGitInode > 0,
+              value.companionGitInode != value.companionRootInode,
+              value.companionGitAbsolutePath
+                == expectation.intent.roots.companionRoot.absolutePath
+                    + "/.git",
+              value.companionGitOwnerUserID
+                == expectation.intent.roots.companionRoot.ownerUserID,
+              value.companionGitPermissionMode > 0,
+              value.companionGitPermissionMode & 0o022 == 0,
+              value.gitExecutableSHA256
+                == expectation.gitExecutable.content.sha256,
+              value.swiftFrontendSHA256
+                == expectation.swiftFrontendExecutable.content.sha256,
+              value.supervisorExecutableSHA256
+                == expectation.intent.driverExecutable.content.sha256,
+              value.deadlineStartedAtUptimeNanoseconds
+                >= expectation.outerDeadlineStartedAtUptimeNanoseconds,
+              !innerDeadline.overflow,
+              value.deadlineExpiresAtUptimeNanoseconds
+                == innerDeadline.partialValue,
+              value.deadlineExpiresAtUptimeNanoseconds
+                <= expectation.outerDeadlineExpiresAtUptimeNanoseconds,
+              value.orderedRoles == roles.map(\.rawValue),
+              value.combinedSourceWatcherDescriptorCount == 2_163
+        else {
+            throw durableJournalRejection("prestart")
+        }
+
+        try validateDurableDirectoryIdentity(
+            value.journalIdentity,
+            role: "journal",
+            expected: expectation.journalRoot,
+            exactLinkCount: 2
+        )
+        let expectedRoots: [(
+            String,
+            PrimeValidationDirectoryBindingV2,
+            UInt64?
+        )] = [
+            ("prime_root", expectation.intent.roots.repositoryRoot, nil),
+            ("companion_root", expectation.intent.roots.companionRoot, nil),
+            ("workspace_root", expectation.intent.roots.workspaceRoot, 2),
+            ("evidence_root", expectation.intent.roots.evidenceRoot, 2),
+            ("lease_root", expectation.leaseRoot, nil),
+        ]
+        guard value.rootIdentities.count == expectedRoots.count else {
+            throw durableJournalRejection("prestart_roots")
+        }
+        for (record, expected) in zip(
+            value.rootIdentities,
+            expectedRoots
+        ) {
+            try validateDurableDirectoryIdentity(
+                record,
+                role: expected.0,
+                expected: expected.1,
+                exactLinkCount: expected.2
+            )
+        }
+
+        let expectedImages: [(
+            String,
+            PrimeValidationExecutableBindingV2,
+            PrimeValidationDriverV2FixedProbeJournalVnodeV2,
+            String
+        )] = [
+            (
+                "supervisor",
+                expectation.intent.driverExecutable,
+                expectation.supervisorExecutableVnode,
+                expectation.intent.driverExecutable.absolutePath
+            ),
+            (
+                "git",
+                expectation.gitExecutable,
+                expectation.gitExecutableVnode,
+                expectation.gitExecutable.absolutePath
+            ),
+            (
+                "swift_frontend",
+                expectation.swiftFrontendExecutable,
+                expectation.swiftFrontendExecutableVnode,
+                expectation.swiftFrontendExecutable.absolutePath
+            ),
+        ]
+        guard value.imageIdentities.count == expectedImages.count else {
+            throw durableJournalRejection("prestart_images")
+        }
+        for (record, expected) in zip(
+            value.imageIdentities,
+            expectedImages
+        ) {
+            try validateDurableImageIdentity(
+                record,
+                role: expected.0,
+                expected: expected.1,
+                vnode: expected.2,
+                expectedAbsolutePath: expected.3
+            )
+        }
+    }
+
+    static func validateDurableDirectoryIdentity(
+        _ value: PrimeValidationDriverV2DurableIdentityRecordV2,
+        role: String,
+        expected: PrimeValidationDirectoryBindingV2,
+        exactLinkCount: UInt64?
+    ) throws {
+        try PrimeValidationDriverV2Validation.requireSafeAbsolutePath(
+            value.absolutePath
+        )
+        guard value.role == role,
+              value.absolutePath == expected.absolutePath,
+              value.deviceID == expected.deviceID,
+              value.inode == expected.inode,
+              value.ownerUserID == expected.ownerUserID,
+              value.permissionMode == expected.mode,
+              value.linkCount >= 2,
+              exactLinkCount.map({ value.linkCount == $0 }) ?? true,
+              value.byteCount == 0,
+              value.sha256.isEmpty,
+              durableTimestamp(
+                  seconds: value.modificationSeconds,
+                  nanoseconds: value.modificationNanoseconds
+              ),
+              durableTimestamp(
+                  seconds: value.statusChangeSeconds,
+                  nanoseconds: value.statusChangeNanoseconds
+              )
+        else {
+            throw durableJournalRejection("identity_" + role)
+        }
+    }
+
+    static func validateDurableImageIdentity(
+        _ value: PrimeValidationDriverV2DurableIdentityRecordV2,
+        role: String,
+        expected: PrimeValidationExecutableBindingV2,
+        vnode: PrimeValidationDriverV2FixedProbeJournalVnodeV2,
+        expectedAbsolutePath: String
+    ) throws {
+        try PrimeValidationDriverV2Validation.requireSafeAbsolutePath(
+            value.absolutePath
+        )
+        try PrimeValidationDriverV2Validation.requireSHA256(value.sha256)
+        guard value.role == role,
+              value.absolutePath == expectedAbsolutePath,
+              value.deviceID == vnode.deviceID,
+              value.inode == vnode.inode,
+              value.permissionMode & 0o111 != 0,
+              value.permissionMode & 0o022 == 0,
+              value.linkCount == 1,
+              value.byteCount == expected.content.byteCount,
+              value.sha256 == expected.content.sha256,
+              durableTimestamp(
+                  seconds: value.modificationSeconds,
+                  nanoseconds: value.modificationNanoseconds
+              ),
+              durableTimestamp(
+                  seconds: value.statusChangeSeconds,
+                  nanoseconds: value.statusChangeNanoseconds
+              )
+        else {
+            throw durableJournalRejection("identity_" + role)
+        }
+    }
+
+    static func durableTimestamp(
+        seconds: Int64,
+        nanoseconds: Int64
+    ) -> Bool {
+        seconds >= 0 && nanoseconds >= 0 && nanoseconds < 1_000_000_000
+    }
+
+    static func durableSwiftFrontendAbsolutePath(
+        _ intent: PrimeValidationRunIntentV2
+    ) throws -> String {
+        let requested = intent.swiftExecutable.absolutePath
+        guard requested.hasSuffix("/swift") else {
+            throw durableJournalRejection("swift_frontend_path")
+        }
+        let value = String(requested.dropLast("swift".count))
+            + "swift-frontend"
+        try PrimeValidationDriverV2Validation.requireSafeAbsolutePath(value)
+        return value
+    }
+
+    static func durablePolicyDigests(
+        _ intent: PrimeValidationRunIntentV2
+    ) throws -> (policy: String, environment: String) {
+        let swiftPath = intent.swiftExecutable.absolutePath
+        let marker =
+            "/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift"
+        guard swiftPath.hasSuffix(marker) else {
+            throw durableJournalRejection("policy_developer_path")
+        }
+        let developerDirectory = String(swiftPath.dropLast(marker.count))
+        let sdkRoot = developerDirectory
+            + "/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk"
+        let environment = [
+            ("DEVELOPER_DIR", developerDirectory),
+            ("LANG", "C"),
+            ("LC_ALL", "C"),
+            ("SDKROOT", sdkRoot),
+            ("TERM", "dumb"),
+        ]
+        let primePlaceholder = "<validated-prime-head-from-role-01>"
+        let companionPlaceholder =
+            "<validated-companion-head-from-role-08>"
+        let orderedPolicy = try roles.enumerated().map { index, role in
+            let isSwift = role == .swiftVersion || role == .swiftTargetInfo
+            let root = durableRootBinding(for: role, intent: intent)
+            return PrimeValidationDriverV2DurablePolicyRoleRecordV2(
+                ordinal: index + 1,
+                role: role.rawValue,
+                root: root == intent.roots.companionRoot
+                    ? "companion" : "prime",
+                image: isSwift ? "swift_frontend" : "git",
+                logicalArgumentZero: isSwift ? "swift" : "git",
+                arguments: try arguments(
+                    role: role,
+                    primeHEAD: primePlaceholder,
+                    companionHEAD: companionPlaceholder
+                ),
+                standardOutputMaximumByteCount: UInt64(Self.outputCap(role))
+            )
+        }
+        let policy = PrimeValidationDriverV2DurablePolicyRecordV2(
+            schema: "prime_driver_v2_gate_e_fixed_policy_v2",
+            containmentMode: "dedicated_group_within_supervisor_session",
+            requiredSpawnFlags: durableInnerSpawnFlags,
+            orderedRoles: orderedPolicy,
+            primePathspecs: primePathspecs,
+            environment: environment.map { "\($0.0)=\($0.1)" },
+            deadlineNanoseconds: durableInnerDeadlineNanoseconds,
+            standardErrorMaximumByteCount: 64 * 1024,
+            drainChunkByteCount: 64 * 1024
+        )
+        let environmentData = Data(
+            environment.flatMap { "\($0.0)=\($0.1)\u{0}".utf8 }
+        )
+        return (
+            try PrimeValidationDriverV2Validation.identity(policy),
+            PrimeSHA256.hexDigest(of: environmentData)
+        )
+    }
+}
+
+private extension PrimeValidationDriverV2FixedProbeSemanticValidator {
+    static func validateDurableProcesses(
+        starts: [PrimeValidationDriverV2DurableStartRecordV2],
+        terminals: [PrimeValidationDriverV2DurableTerminalRecordV2],
+        leafSHA256Values: [String],
+        expectation:
+            PrimeValidationDriverV2FixedProbeJournalReceiptExpectationV2,
+        prestart: PrimeValidationDriverV2DurablePrestartRecordV2,
+        supervisorExit:
+            PrimeValidationDriverV2FixedProbeSupervisorExitWitnessV2
+    ) throws {
+        guard starts.count == roles.count,
+              terminals.count == roles.count,
+              leafSHA256Values.count == 34
+        else {
+            throw durableJournalRejection("process_count")
+        }
+        let supervisor = expectation.supervisorProcessIdentifier
+        var processIdentifiers = Set<Int32>()
+        var processGroupIdentifiers = Set<Int32>()
+        var predecessorKind = "prestart"
+        var predecessorSHA256 = leafSHA256Values[0]
+        var predecessorWait =
+            prestart.deadlineStartedAtUptimeNanoseconds
+
+        for index in roles.indices {
+            let role = roles[index]
+            let ordinal = index + 1
+            let start = starts[index]
+            let terminal = terminals[index]
+            let expectedRoot = durableRootBinding(
+                for: role,
+                intent: expectation.intent
+            )
+            let isSwift = role == .swiftVersion || role == .swiftTargetInfo
+            let expectedExecutable = isSwift
+                ? expectation.swiftFrontendExecutable
+                : expectation.gitExecutable
+            let expectedExecutableVnode = isSwift
+                ? expectation.swiftFrontendExecutableVnode
+                : expectation.gitExecutableVnode
+            let expectedExecutablePath = isSwift
+                ? expectation.swiftFrontendExecutable.absolutePath
+                : expectation.gitExecutable.absolutePath
+            let expectedArgumentZero = isSwift ? "swift" : "git"
+            let expectedArguments = try arguments(
+                role: role,
+                primeHEAD: expectation.repositoryCommit,
+                companionHEAD: expectation.intent.companionCommit
+            )
+            let expectedArgumentVectorSHA256 = try
+                PrimeValidationDriverV2Validation.identity(
+                    PrimeValidationDriverV2DurableArgumentVectorRecordV2(
+                        logicalArgumentZero: expectedArgumentZero,
+                        arguments: expectedArguments
+                    )
+                )
+            let startLeafIndex = 1 + index * 2
+            let terminalLeafIndex = startLeafIndex + 1
+
+            try PrimeValidationDriverV2Validation.requireSHA256(
+                start.prestartSHA256
+            )
+            try PrimeValidationDriverV2Validation.requireSHA256(
+                start.predecessorSHA256
+            )
+            try PrimeValidationDriverV2Validation.requireSHA256(
+                start.argumentVectorSHA256
+            )
+            guard start.schema
+                    == "prime_driver_v2_gate_e_child_start_v2",
+                  start.stage == "GATE-E",
+                  start.ordinal == ordinal,
+                  start.role == role.rawValue,
+                  start.prestartSHA256 == leafSHA256Values[0],
+                  start.predecessorKind == predecessorKind,
+                  start.predecessorSHA256 == predecessorSHA256,
+                  start.processIdentifier > 0,
+                  start.processIdentifier != supervisor,
+                  processIdentifiers.insert(
+                      start.processIdentifier
+                  ).inserted,
+                  start.sessionIdentifier == supervisor,
+                  start.processGroupIdentifier
+                    == start.processIdentifier,
+                  processGroupIdentifiers.insert(
+                      start.processGroupIdentifier
+                  ).inserted,
+                  start.appliedSpawnFlags == durableInnerSpawnFlags,
+                  start.spawnReturnCode == 0,
+                  start.spawnReturnedUptimeNanoseconds >= predecessorWait,
+                  start.spawnReturnedUptimeNanoseconds
+                    >= prestart.deadlineStartedAtUptimeNanoseconds,
+                  start.spawnReturnedUptimeNanoseconds
+                    <= prestart.deadlineExpiresAtUptimeNanoseconds,
+                  start.deadlineStartedAtUptimeNanoseconds
+                    == prestart.deadlineStartedAtUptimeNanoseconds,
+                  start.deadlineExpiresAtUptimeNanoseconds
+                    == prestart.deadlineExpiresAtUptimeNanoseconds,
+                  start.workingDirectoryDeviceID == expectedRoot.deviceID,
+                  start.workingDirectoryInode == expectedRoot.inode,
+                  start.workingDirectoryAbsolutePath
+                    == expectedRoot.absolutePath,
+                  start.childWorkingDirectoryDeviceID
+                    == expectedRoot.deviceID,
+                  start.childWorkingDirectoryInode == expectedRoot.inode,
+                  start.executableDeviceID
+                    == expectedExecutableVnode.deviceID,
+                  start.executableInode
+                    == expectedExecutableVnode.inode,
+                  start.executableAbsolutePath == expectedExecutablePath,
+                  start.executableByteCount
+                    == expectedExecutable.content.byteCount,
+                  start.executableSHA256
+                    == expectedExecutable.content.sha256,
+                  start.logicalArgumentZero == expectedArgumentZero,
+                  start.arguments == expectedArguments,
+                  start.argumentVectorSHA256
+                    == expectedArgumentVectorSHA256,
+                  PrimeValidationDriverV2Validation.isSafeAbsolutePath(
+                      start.mappedExecutablePathTelemetry
+                  ),
+                  start.mappedExecutableQueryCount > 0,
+                  start.mappedExecutableQueryCount <= 256,
+                  start.mappedExecutableTerminalErrno >= 0,
+                  start.exactWorkingDirectoryJoin,
+                  start.exactMappedExecutableJoin,
+                  start.preResumeContinuityChecked
+            else {
+                throw durableJournalRejection("start_\(ordinal)")
+            }
+
+            try PrimeValidationDriverV2Validation.requireSHA256(
+                terminal.startLeafSHA256
+            )
+            try PrimeValidationDriverV2Validation.requireSHA256(
+                terminal.standardOutputSHA256
+            )
+            try PrimeValidationDriverV2Validation.requireSHA256(
+                terminal.standardErrorSHA256
+            )
+            let expectedOutputCap = UInt64(Self.outputCap(role))
+            guard terminal.schema
+                    == "prime_driver_v2_gate_e_child_terminal_v2",
+                  terminal.stage == "GATE-E",
+                  terminal.ordinal == ordinal,
+                  terminal.role == role.rawValue,
+                  terminal.startLeafSHA256
+                    == leafSHA256Values[startLeafIndex],
+                  terminal.supervisorProcessIdentifier == supervisor,
+                  terminal.supervisorSessionIdentifier == supervisor,
+                  terminal.supervisorProcessGroupIdentifier == supervisor,
+                  terminal.processIdentifier == start.processIdentifier,
+                  terminal.sessionIdentifier == supervisor,
+                  terminal.processGroupIdentifier
+                    == start.processGroupIdentifier,
+                  terminal.preReapProcessGroupMemberIdentifiers
+                    == [start.processIdentifier],
+                  terminal.startPublishedUptimeNanoseconds
+                    >= start.spawnReturnedUptimeNanoseconds,
+                  terminal.startPublishedUptimeNanoseconds
+                    >= prestart.deadlineStartedAtUptimeNanoseconds,
+                  terminal.startPublishedUptimeNanoseconds
+                    <= prestart.deadlineExpiresAtUptimeNanoseconds,
+                  terminal.preResumeContinuityCheckpointUptimeNanoseconds
+                    >= terminal.startPublishedUptimeNanoseconds,
+                  terminal.preResumeContinuityCheckpointUptimeNanoseconds
+                    <= prestart.deadlineExpiresAtUptimeNanoseconds,
+                  terminal.resumedAtUptimeNanoseconds
+                    >= terminal
+                        .preResumeContinuityCheckpointUptimeNanoseconds,
+                  terminal.resumedAtUptimeNanoseconds
+                    > terminal.startPublishedUptimeNanoseconds,
+                  terminal.resumedAtUptimeNanoseconds
+                    <= prestart.deadlineExpiresAtUptimeNanoseconds,
+                  terminal.deathObservedUptimeNanoseconds
+                    >= terminal.resumedAtUptimeNanoseconds,
+                  terminal.requestedWaitProcessIdentifier
+                    == start.processIdentifier,
+                  terminal.returnedWaitProcessIdentifier
+                    == start.processIdentifier,
+                  terminal.waitOptions == 0,
+                  terminal.rawWaitStatus == 0,
+                  terminal.waitReturnedUptimeNanoseconds
+                    >= terminal.deathObservedUptimeNanoseconds,
+                  terminal.waitReturnedUptimeNanoseconds
+                    <= prestart.deadlineExpiresAtUptimeNanoseconds,
+                  terminal.waitReturnedUptimeNanoseconds
+                    <= supervisorExit.returnedAtUptimeNanoseconds,
+                  terminal.exitedNormally,
+                  terminal.exitStatus == 0,
+                  terminal.terminationSignal == 0,
+                  !terminal.coreDumped,
+                  terminal.standardOutputByteCount <= expectedOutputCap,
+                  terminal.standardOutputReachedEOF,
+                  terminal.standardOutputTerminalReason == "end_of_file",
+                  !terminal.standardOutputOverflowed,
+                  terminal.standardOutputWorkerFinished,
+                  terminal.standardOutputReadErrorNumber == 0,
+                  terminal.standardOutputWriteErrorNumber == 0,
+                  terminal.standardOutputFinalizationErrorNumber == 0,
+                  terminal.standardOutputCloseErrorNumber == 0,
+                  terminal.standardOutputDescriptorsClosed,
+                  terminal.standardErrorByteCount == 0,
+                  terminal.standardErrorSHA256 == durableEmptySHA256,
+                  terminal.standardErrorReachedEOF,
+                  terminal.standardErrorTerminalReason == "end_of_file",
+                  !terminal.standardErrorOverflowed,
+                  terminal.standardErrorWorkerFinished,
+                  terminal.standardErrorReadErrorNumber == 0,
+                  terminal.standardErrorWriteErrorNumber == 0,
+                  terminal.standardErrorFinalizationErrorNumber == 0,
+                  terminal.standardErrorCloseErrorNumber == 0,
+                  terminal.standardErrorDescriptorsClosed,
+                  terminal.processGroupEmptyAfterReap,
+                  terminal.postReapContinuityChecked
+            else {
+                throw durableJournalRejection("terminal_\(ordinal)")
+            }
+            try validateDurableRoleOutput(
+                role,
+                terminal: terminal,
+                repositoryCommit: expectation.repositoryCommit,
+                companionCommit: expectation.intent.companionCommit
+            )
+            predecessorKind = "child_terminal"
+            predecessorSHA256 = leafSHA256Values[terminalLeafIndex]
+            predecessorWait = terminal.waitReturnedUptimeNanoseconds
+        }
+        guard processIdentifiers.count == roles.count,
+              processGroupIdentifiers.count == roles.count
+        else {
+            throw durableJournalRejection("process_identity_set")
+        }
+    }
+
+    static func durableRootBinding(
+        for role: PrimeValidationDriverV2FixedProbeRole,
+        intent: PrimeValidationRunIntentV2
+    ) -> PrimeValidationDirectoryBindingV2 {
+        switch role {
+        case .companionHeadPre, .companionObjectFormat,
+             .companionStatusPre, .companionTreeDiscovery,
+             .companionTreeReplay, .companionStatusPost,
+             .companionHeadPost:
+            intent.roots.companionRoot
+        default:
+            intent.roots.repositoryRoot
+        }
+    }
+
+    static func validateDurableRoleOutput(
+        _ role: PrimeValidationDriverV2FixedProbeRole,
+        terminal: PrimeValidationDriverV2DurableTerminalRecordV2,
+        repositoryCommit: String,
+        companionCommit: String
+    ) throws {
+        let exactData: Data?
+        switch role {
+        case .primeHeadPre, .primeHeadPost:
+            exactData = Data((repositoryCommit + "\n").utf8)
+        case .companionHeadPre, .companionHeadPost:
+            exactData = Data((companionCommit + "\n").utf8)
+        case .primeObjectFormat, .companionObjectFormat:
+            exactData = Data("sha1\n".utf8)
+        case .primeStatusPre, .primeStatusPost,
+             .companionStatusPre, .companionStatusPost:
+            exactData = Data()
+        case .primeTreeDiscovery, .primeTreeReplay,
+             .companionTreeDiscovery, .companionTreeReplay,
+             .swiftVersion, .swiftTargetInfo:
+            exactData = nil
+        }
+        if let exactData {
+            guard terminal.standardOutputByteCount
+                    == UInt64(exactData.count),
+                  terminal.standardOutputSHA256
+                    == PrimeSHA256.hexDigest(of: exactData)
+            else {
+                throw durableJournalRejection(
+                    "output_" + role.rawValue
+                )
+            }
+        } else {
+            guard terminal.standardOutputByteCount > 0 else {
+                throw durableJournalRejection(
+                    "output_" + role.rawValue
+                )
+            }
+        }
+    }
+}
+
+private extension PrimeValidationDriverV2FixedProbeSemanticValidator {
+    static func validateDurableRawTerminal(
+        _ value: PrimeValidationDriverV2DurableRawTerminalRecordV2,
+        starts: [PrimeValidationDriverV2DurableStartRecordV2],
+        terminals: [PrimeValidationDriverV2DurableTerminalRecordV2],
+        leafSHA256Values: [String],
+        expectation:
+            PrimeValidationDriverV2FixedProbeJournalReceiptExpectationV2
+    ) throws {
+        let supervisor = expectation.supervisorProcessIdentifier
+        let processIdentifiers = starts.map(\.processIdentifier)
+        let processGroupIdentifiers = starts.map(\.processGroupIdentifier)
+        let terminalSHA256Values = roles.indices.map {
+            leafSHA256Values[2 + $0 * 2]
+        }
+        for digest in value.orderedTerminalSHA256Values {
+            try PrimeValidationDriverV2Validation.requireSHA256(digest)
+        }
+        try PrimeValidationDriverV2Validation.requireSHA256(
+            value.primeHeldEntriesSHA256
+        )
+        try PrimeValidationDriverV2Validation.requireSHA256(
+            value.companionHeldEntriesSHA256
+        )
+        try PrimeValidationDriverV2Validation.requireSHA256(
+            value.swiftVersionSHA256
+        )
+        try PrimeValidationDriverV2Validation.requireSHA256(
+            value.swiftTargetInfoSHA256
+        )
+        guard value.schema == "prime_driver_v2_gate_e_raw_terminal_v2",
+              value.stage == "GATE-E",
+              value.supervisorProcessIdentifier == supervisor,
+              value.supervisorSessionIdentifier == supervisor,
+              value.supervisorProcessGroupIdentifier == supervisor,
+              value.orderedProcessIdentifiers == processIdentifiers,
+              value.orderedSessionIdentifiers
+                == Array(repeating: supervisor, count: roles.count),
+              value.orderedProcessGroupIdentifiers
+                == processGroupIdentifiers,
+              value.orderedTerminalSHA256Values == terminalSHA256Values,
+              value.primeHEADAgreement,
+              value.companionHEADAgreement,
+              value.primeStatusPreEmpty,
+              value.primeStatusPostEmpty,
+              value.companionStatusPreEmpty,
+              value.companionStatusPostEmpty,
+              value.primeObjectFormat == "sha1\n",
+              value.companionObjectFormat == "sha1\n",
+              value.primeTreeReplayEqual,
+              value.companionTreeReplayEqual,
+              value.swiftVersionSHA256
+                == terminals[14].standardOutputSHA256,
+              value.swiftTargetInfoSHA256
+                == terminals[15].standardOutputSHA256,
+              terminals[0].standardOutputSHA256
+                == terminals[6].standardOutputSHA256,
+              terminals[0].standardOutputByteCount
+                == terminals[6].standardOutputByteCount,
+              terminals[7].standardOutputSHA256
+                == terminals[13].standardOutputSHA256,
+              terminals[7].standardOutputByteCount
+                == terminals[13].standardOutputByteCount,
+              terminals[3].standardOutputSHA256
+                == terminals[4].standardOutputSHA256,
+              terminals[3].standardOutputByteCount
+                == terminals[4].standardOutputByteCount,
+              terminals[10].standardOutputSHA256
+                == terminals[11].standardOutputSHA256,
+              terminals[10].standardOutputByteCount
+                == terminals[11].standardOutputByteCount,
+              terminals[2].standardOutputSHA256 == durableEmptySHA256,
+              terminals[5].standardOutputSHA256 == durableEmptySHA256,
+              terminals[9].standardOutputSHA256 == durableEmptySHA256,
+              terminals[12].standardOutputSHA256 == durableEmptySHA256
+        else {
+            throw durableJournalRejection("raw_terminal")
+        }
     }
 }

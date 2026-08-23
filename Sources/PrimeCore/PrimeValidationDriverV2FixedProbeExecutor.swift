@@ -5,6 +5,360 @@ import Darwin
 import Dispatch
 import Foundation
 
+/// Data-only receipt for the independent outer Governor source-continuity
+/// owner. Decoding or copying this value cannot restore either held root,
+/// snapshot, kqueue, or watch.
+@_spi(PrimeValidationDriverV2OuterContinuity)
+public struct PrimeValidationDriverV2OuterSourceContinuityObservation:
+    Codable,
+    Equatable,
+    Sendable
+{
+    public let primeSourceIdentitySHA256: String
+    public let primeSourceSnapshotByteCount: UInt64
+    public let primeSourceSnapshotSHA256: String
+    public let primeAdmittedFileCount: Int
+    public let primeSourceIdentityRecordCount: Int
+    public let primeAuthorityDirectoryCount: Int
+    public let companionWorkingTreeIdentitySHA256: String
+    public let companionFileCount: Int
+    public let companionDirectoryCount: Int
+    public let primeWatcherDescriptorCount: Int
+    public let companionWatcherDescriptorCount: Int
+    public let combinedWatcherDescriptorCount: Int
+
+    fileprivate init(
+        primeSourceIdentitySHA256: String,
+        primeSourceSnapshotByteCount: UInt64,
+        primeSourceSnapshotSHA256: String,
+        primeAdmittedFileCount: Int,
+        primeSourceIdentityRecordCount: Int,
+        primeAuthorityDirectoryCount: Int,
+        companionWorkingTreeIdentitySHA256: String,
+        companionFileCount: Int,
+        companionDirectoryCount: Int,
+        primeWatcherDescriptorCount: Int,
+        companionWatcherDescriptorCount: Int,
+        combinedWatcherDescriptorCount: Int
+    ) {
+        self.primeSourceIdentitySHA256 =
+            primeSourceIdentitySHA256
+        self.primeSourceSnapshotByteCount =
+            primeSourceSnapshotByteCount
+        self.primeSourceSnapshotSHA256 =
+            primeSourceSnapshotSHA256
+        self.primeAdmittedFileCount = primeAdmittedFileCount
+        self.primeSourceIdentityRecordCount =
+            primeSourceIdentityRecordCount
+        self.primeAuthorityDirectoryCount =
+            primeAuthorityDirectoryCount
+        self.companionWorkingTreeIdentitySHA256 =
+            companionWorkingTreeIdentitySHA256
+        self.companionFileCount = companionFileCount
+        self.companionDirectoryCount = companionDirectoryCount
+        self.primeWatcherDescriptorCount =
+            primeWatcherDescriptorCount
+        self.companionWatcherDescriptorCount =
+            companionWatcherDescriptorCount
+        self.combinedWatcherDescriptorCount =
+            combinedWatcherDescriptorCount
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case primeSourceIdentitySHA256 =
+            "prime_source_identity_sha256"
+        case primeSourceSnapshotByteCount =
+            "prime_source_snapshot_byte_count"
+        case primeSourceSnapshotSHA256 =
+            "prime_source_snapshot_sha256"
+        case primeAdmittedFileCount =
+            "prime_admitted_file_count"
+        case primeSourceIdentityRecordCount =
+            "prime_source_identity_record_count"
+        case primeAuthorityDirectoryCount =
+            "prime_authority_directory_count"
+        case companionWorkingTreeIdentitySHA256 =
+            "companion_working_tree_identity_sha256"
+        case companionFileCount = "companion_file_count"
+        case companionDirectoryCount = "companion_directory_count"
+        case primeWatcherDescriptorCount =
+            "prime_watcher_descriptor_count"
+        case companionWatcherDescriptorCount =
+            "companion_watcher_descriptor_count"
+        case combinedWatcherDescriptorCount =
+            "combined_watcher_descriptor_count"
+    }
+}
+
+/// Independent outer-process owner of the two Gate C source closures.
+///
+/// The Governor supplies only already-held root descriptors and Prime's
+/// canonical data snapshot. This owner duplicates the descriptors, joins the
+/// snapshot bytes to the held Prime vnode, captures the complete companion
+/// non-`.git` topology, closes both capture-to-watch gaps with vnode metadata,
+/// and retains both kqueues until this opaque object is released. It exposes
+/// no root, path, snapshot, descriptor, watch, spawn, or retry surface.
+@_spi(PrimeValidationDriverV2OuterContinuity)
+public final class PrimeValidationDriverV2OuterSourceContinuity:
+    @unchecked Sendable
+{
+    private enum State {
+        case live(
+            prime: PrimeSecureHeldSourceWatch,
+            companion: PrimeSecureHeldSourceWatch
+        )
+        case poisoned
+    }
+
+    private static let requiredPrimeSourcePaths: Set<String> = [
+        "Sources/PrimeCore/" +
+            "PrimeNativeNeuralGateHeldSourceClosure.swift",
+        "Sources/PrimeCore/PrimeSecureHeldSourceWatch.swift",
+        "Sources/PrimeCore/" +
+            "PrimeValidationDriverV2FixedProbeExecutor.swift",
+    ]
+    private static let requiredPrimeAdmittedFileCount = 548
+    private static let requiredPrimeSourceIdentityRecordCount = 547
+    private static let requiredPrimeAuthorityDirectoryCount = 155
+    private static let requiredCompanionFileCount = 1_306
+    private static let requiredCompanionDirectoryCount = 154
+    private static let requiredPrimeWatcherDescriptorCount = 703
+    private static let requiredCompanionWatcherDescriptorCount = 1_460
+    private static let requiredCombinedWatcherDescriptorCount = 2_163
+
+    public let observation:
+        PrimeValidationDriverV2OuterSourceContinuityObservation
+
+    private let lock = NSLock()
+    private var state: State
+
+    private init(
+        primeWatch: PrimeSecureHeldSourceWatch,
+        companionWatch: PrimeSecureHeldSourceWatch,
+        observation:
+            PrimeValidationDriverV2OuterSourceContinuityObservation
+    ) {
+        state = .live(
+            prime: primeWatch,
+            companion: companionWatch
+        )
+        self.observation = observation
+    }
+
+    /// Captures one independent outer continuity owner. The caller retains no
+    /// way to reconstruct the internal admission identities or either watch
+    /// from the returned data-only observation.
+    public static func capture(
+        primeRootDescriptor: Int32,
+        primeSourceSnapshot: PrimeSwiftSourceSnapshot,
+        companionRootDescriptor: Int32
+    ) throws -> PrimeValidationDriverV2OuterSourceContinuity {
+        try PrimeSwiftSourceProvenance.validate(
+            primeSourceSnapshot,
+            requiredRelativePaths: requiredPrimeSourcePaths
+        )
+        let primeSnapshotCanonicalData = try PrimeCanonicalJSON.encode(
+            primeSourceSnapshot
+        )
+        let embeddedPath =
+            PrimeSwiftSourceProvenance.embeddedProvenanceRelativePath
+        let embeddedRecordCount = primeSourceSnapshot.files.reduce(0) {
+            $0 + ($1.relativePath == embeddedPath ? 1 : 0)
+        }
+        let primeSourceIdentityRecordCount =
+            primeSourceSnapshot.files.count - embeddedRecordCount
+        guard embeddedRecordCount == 1,
+              primeSourceSnapshot.sourceIdentitySHA256
+                == primeSourceSnapshot.embeddedSourceIdentitySHA256,
+              primeSourceSnapshot.embeddedSourceIdentitySHA256
+                == PrimeEmbeddedBuildProvenance.sourceIdentitySHA256,
+              primeSourceSnapshot.buildConfiguration == "release",
+              primeSourceSnapshot.files.count
+                == requiredPrimeAdmittedFileCount,
+              primeSourceIdentityRecordCount
+                == requiredPrimeSourceIdentityRecordCount
+        else {
+            throw rejected("prime_source_snapshot")
+        }
+
+        let primeDescriptor = try duplicateHeldRootDescriptor(
+            primeRootDescriptor,
+            label: "prime"
+        )
+        defer { _ = Darwin.close(primeDescriptor) }
+        let companionDescriptor = try duplicateHeldRootDescriptor(
+            companionRootDescriptor,
+            label: "companion"
+        )
+        defer { _ = Darwin.close(companionDescriptor) }
+
+        var primeRootStatus = stat()
+        var companionRootStatus = stat()
+        guard fstat(primeDescriptor, &primeRootStatus) == 0,
+              fstat(companionDescriptor, &companionRootStatus) == 0,
+              primeRootStatus.st_mode & mode_t(S_IFMT)
+                == mode_t(S_IFDIR),
+              companionRootStatus.st_mode & mode_t(S_IFMT)
+                == mode_t(S_IFDIR),
+              primeRootStatus.st_dev != companionRootStatus.st_dev
+                || primeRootStatus.st_ino != companionRootStatus.st_ino
+        else {
+            throw rejected("root_descriptor_identity")
+        }
+
+        // Capture both metadata baselines before registering either watch.
+        // Each watch constructor then requires the exact captured identities,
+        // so neither tree can absorb a mutation from this point to arming.
+        let primeAdmissionIdentity = try
+            PrimeSecureHeldWorkingTreeSnapshot
+            .captureLegacyPrimeSourceIdentity(
+                rootDescriptor: primeDescriptor,
+                sourceSnapshot: primeSourceSnapshot
+            )
+        let companionSnapshot = try
+            PrimeSecureHeldWorkingTreeSnapshot.capture(
+                rootDescriptor: companionDescriptor
+            )
+
+        let expectedPrimeWatcherCount =
+            PrimeSecureHeldSourceWatch.expectedWatcherDescriptorCount(
+                sourceSnapshot: primeSourceSnapshot
+            )
+        let expectedCompanionWatcherCount =
+            PrimeSecureHeldSourceWatch.expectedWatcherDescriptorCount(
+                completeWorkingTreeSnapshot: companionSnapshot
+            )
+        let primeAuthorityDirectoryCount =
+            expectedPrimeWatcherCount - primeSourceSnapshot.files.count
+        let expectedCombinedWatcherCount = expectedPrimeWatcherCount
+            .addingReportingOverflow(expectedCompanionWatcherCount)
+        guard primeAuthorityDirectoryCount
+                == requiredPrimeAuthorityDirectoryCount,
+              companionSnapshot.files.count
+                == requiredCompanionFileCount,
+              companionSnapshot.directoryRelativePaths.count
+                == requiredCompanionDirectoryCount,
+              expectedPrimeWatcherCount
+                == requiredPrimeWatcherDescriptorCount,
+              expectedCompanionWatcherCount
+                == requiredCompanionWatcherDescriptorCount,
+              !expectedCombinedWatcherCount.overflow,
+              expectedCombinedWatcherCount.partialValue
+                == requiredCombinedWatcherDescriptorCount
+        else {
+            throw rejected("source_topology_count")
+        }
+
+        let primeWatch = try PrimeSecureHeldSourceWatch(
+            rootDescriptor: primeDescriptor,
+            sourceSnapshot: primeSourceSnapshot,
+            admissionIdentitySnapshot: primeAdmissionIdentity
+        )
+        let companionWatch = try PrimeSecureHeldSourceWatch(
+            rootDescriptor: companionDescriptor,
+            completeWorkingTreeSnapshot: companionSnapshot
+        )
+        guard primeWatch.heldWatcherDescriptorCount
+                == expectedPrimeWatcherCount,
+              companionWatch.heldWatcherDescriptorCount
+                == expectedCompanionWatcherCount,
+              primeWatch.heldWatcherDescriptorCount
+                + companionWatch.heldWatcherDescriptorCount
+                == requiredCombinedWatcherDescriptorCount
+        else {
+            throw rejected("source_watcher_count")
+        }
+
+        let owner = PrimeValidationDriverV2OuterSourceContinuity(
+            primeWatch: primeWatch,
+            companionWatch: companionWatch,
+            observation: .init(
+                primeSourceIdentitySHA256:
+                    primeSourceSnapshot.sourceIdentitySHA256,
+                primeSourceSnapshotByteCount:
+                    UInt64(primeSnapshotCanonicalData.count),
+                primeSourceSnapshotSHA256:
+                    PrimeSHA256.hexDigest(
+                        of: primeSnapshotCanonicalData
+                    ),
+                primeAdmittedFileCount:
+                    primeSourceSnapshot.files.count,
+                primeSourceIdentityRecordCount:
+                    primeSourceIdentityRecordCount,
+                primeAuthorityDirectoryCount:
+                    primeAuthorityDirectoryCount,
+                companionWorkingTreeIdentitySHA256:
+                    companionSnapshot.identitySHA256,
+                companionFileCount: companionSnapshot.files.count,
+                companionDirectoryCount:
+                    companionSnapshot.directoryRelativePaths.count,
+                primeWatcherDescriptorCount:
+                    primeWatch.heldWatcherDescriptorCount,
+                companionWatcherDescriptorCount:
+                    companionWatch.heldWatcherDescriptorCount,
+                combinedWatcherDescriptorCount:
+                    requiredCombinedWatcherDescriptorCount
+            )
+        )
+        try owner.revalidateContinuity()
+        return owner
+    }
+
+    /// Revalidates only the two already-armed closures. Failure permanently
+    /// poisons and releases both owners; there is no retry or rebaseline path.
+    public func revalidateContinuity() throws {
+        lock.lock()
+        defer { lock.unlock() }
+        guard case let .live(primeWatch, companionWatch) = state else {
+            throw Self.rejected("poisoned")
+        }
+        do {
+            _ = try primeWatch.revalidateWhilePrepared()
+            _ = try companionWatch.revalidateWhilePrepared()
+            try primeWatch.fixedProbeCheckpointNoPendingEvents()
+            try companionWatch.fixedProbeCheckpointNoPendingEvents()
+        } catch {
+            state = .poisoned
+            throw error
+        }
+    }
+
+    private static func duplicateHeldRootDescriptor(
+        _ descriptor: Int32,
+        label: String
+    ) throws -> Int32 {
+        let flags = descriptor >= 3
+            ? fcntl(descriptor, F_GETFD)
+            : -1
+        guard flags >= 0,
+              flags & FD_CLOEXEC != 0
+        else {
+            throw rejected("\(label)_root_descriptor")
+        }
+        let duplicate = fcntl(descriptor, F_DUPFD_CLOEXEC, 3)
+        guard duplicate >= 3 else {
+            let failure = errno
+            if duplicate >= 0 { _ = Darwin.close(duplicate) }
+            throw rejected("\(label)_root_duplicate_\(failure)")
+        }
+        let duplicateFlags = fcntl(duplicate, F_GETFD)
+        guard duplicateFlags >= 0,
+              duplicateFlags & FD_CLOEXEC != 0
+        else {
+            let failure = errno
+            _ = Darwin.close(duplicate)
+            throw rejected("\(label)_root_duplicate_\(failure)")
+        }
+        return duplicate
+    }
+
+    private static func rejected(
+        _ detail: String
+    ) -> PrimeValidationSwiftPMBuildInventoryAdmissionError {
+        .rejected("driver_v2_outer_source_continuity_\(detail)")
+    }
+}
+
 @_spi(PrimeValidationDriverV2RoleFacade)
 public enum PrimeValidationDriverV2FixedProbeRole:
     String,
@@ -162,6 +516,9 @@ public struct PrimeValidationDriverV2FixedProbeRawObservation:
     Equatable,
     Sendable
 {
+    public let supervisorProcessIdentifier: Int32
+    public let supervisorSessionIdentifier: Int32
+    public let supervisorProcessGroupIdentifier: Int32
     public let orderedProcesses:
         [PrimeValidationDriverV2FixedProbeProcessObservation]
     public let primeHeldEntries:
@@ -480,7 +837,9 @@ private struct PrimeValidationDriverV2FixedProbePolicy {
         case swiftFrontend
     }
 
-    static let requiredSpawnFlags: UInt16 = 0x448c
+    static let containmentMode =
+        "dedicated_group_within_supervisor_session"
+    static let requiredSpawnFlags: UInt16 = 0x408e
     static let deadlineNanoseconds: UInt64 = 30_000_000_000
     static let standardErrorMaximumByteCount: UInt64 = 64 * 1024
     static let drainChunkByteCount = 64 * 1024
@@ -1336,7 +1695,9 @@ private struct PrimeValidationDriverV2FixedProbePolicyRoleDigestRecord:
 private struct PrimeValidationDriverV2FixedProbePolicyDigestRecord:
     Encodable
 {
-    let schema = "prime_driver_v2_gate_e_fixed_policy_v1"
+    let schema = "prime_driver_v2_gate_e_fixed_policy_v2"
+    let containmentMode: String
+    let requiredSpawnFlags: UInt16
     let orderedRoles:
         [PrimeValidationDriverV2FixedProbePolicyRoleDigestRecord]
     let primePathspecs: [String]
@@ -1368,8 +1729,11 @@ private struct PrimeValidationDriverV2FixedProbeIdentityRecord:
 private struct PrimeValidationDriverV2FixedProbePrestartRecord:
     Encodable
 {
-    let schema = "prime_driver_v2_gate_e_prestart_v1"
+    let schema = "prime_driver_v2_gate_e_prestart_v2"
     let stage = "GATE-E"
+    let supervisorProcessIdentifier: Int32
+    let supervisorSessionIdentifier: Int32
+    let supervisorProcessGroupIdentifier: Int32
     let embeddedPrimeSourceIdentitySHA256: String
     let policySHA256: String
     let environmentSHA256: String
@@ -1408,7 +1772,7 @@ private struct PrimeValidationDriverV2FixedProbePrestartRecord:
 private struct PrimeValidationDriverV2FixedProbeStartRecord:
     Encodable
 {
-    let schema = "prime_driver_v2_gate_e_child_start_v1"
+    let schema = "prime_driver_v2_gate_e_child_start_v2"
     let stage = "GATE-E"
     let ordinal: Int
     let role: String
@@ -1454,14 +1818,20 @@ private struct PrimeValidationDriverV2FixedProbeArgumentVectorRecord:
 private struct PrimeValidationDriverV2FixedProbeTerminalRecord:
     Encodable
 {
-    let schema = "prime_driver_v2_gate_e_child_terminal_v1"
+    let schema = "prime_driver_v2_gate_e_child_terminal_v2"
     let stage = "GATE-E"
     let ordinal: Int
     let role: String
     let startLeafSHA256: String
+    let supervisorProcessIdentifier: Int32
+    let supervisorSessionIdentifier: Int32
+    let supervisorProcessGroupIdentifier: Int32
     let processIdentifier: Int32
+    let sessionIdentifier: Int32
+    let processGroupIdentifier: Int32
     let deathObservedUptimeNanoseconds: UInt64
     let preReapProcessGroupMemberIdentifiers: [Int32]
+    let startPublishedUptimeNanoseconds: UInt64
     let preResumeContinuityCheckpointUptimeNanoseconds: UInt64
     let resumedAtUptimeNanoseconds: UInt64
     let requestedWaitProcessIdentifier: Int32
@@ -1502,8 +1872,14 @@ private struct PrimeValidationDriverV2FixedProbeTerminalRecord:
 private struct PrimeValidationDriverV2FixedProbeRawTerminalRecord:
     Encodable
 {
-    let schema = "prime_driver_v2_gate_e_raw_terminal_v1"
+    let schema = "prime_driver_v2_gate_e_raw_terminal_v2"
     let stage = "GATE-E"
+    let supervisorProcessIdentifier: Int32
+    let supervisorSessionIdentifier: Int32
+    let supervisorProcessGroupIdentifier: Int32
+    let orderedProcessIdentifiers: [Int32]
+    let orderedSessionIdentifiers: [Int32]
+    let orderedProcessGroupIdentifiers: [Int32]
     let orderedTerminalSHA256Values: [String]
     let primeHEADAgreement: Bool
     let companionHEADAgreement: Bool
@@ -1659,6 +2035,18 @@ enum PrimeValidationDriverV2FixedProbeExecutor {
         retainedState:
             PrimeValidationSwiftPMRetainedGuardedPreExecutorState
     ) throws -> PrimeValidationDriverV2FixedProbeExecutionResult {
+        let supervisorProcessIdentifier = Darwin.getpid()
+        let supervisorSessionIdentifier = getsid(0)
+        let supervisorProcessGroupIdentifier = getpgrp()
+        guard supervisorProcessIdentifier > 0,
+              supervisorSessionIdentifier == supervisorProcessIdentifier,
+              supervisorProcessGroupIdentifier
+                == supervisorProcessIdentifier
+        else {
+            throw primeValidationDriverV2FixedProbeRejected(
+                "supervisor_session_identity"
+            )
+        }
         let deadline: PrimeSecureChildPhaseDeadline
         do {
             deadline = try PrimeSecureChildPhaseDeadline(
@@ -1744,13 +2132,17 @@ enum PrimeValidationDriverV2FixedProbeExecutor {
             )
         let orderedRoleNames = frozenPolicies.map { $0.role.rawValue }
         guard orderedRoleNames.count == 16,
-              retainedState.combinedSourceWatcherDescriptorCount == 2_157
+              retainedState.combinedSourceWatcherDescriptorCount == 2_163
         else {
             throw primeValidationDriverV2FixedProbeRejected(
                 "frozen_topology_or_role_order"
             )
         }
         let policyRecord = PrimeValidationDriverV2FixedProbePolicyDigestRecord(
+            containmentMode:
+                PrimeValidationDriverV2FixedProbePolicy.containmentMode,
+            requiredSpawnFlags:
+                PrimeValidationDriverV2FixedProbePolicy.requiredSpawnFlags,
             orderedRoles: frozenPolicies.map {
                 PrimeValidationDriverV2FixedProbePolicyRoleDigestRecord(
                     ordinal: $0.ordinal,
@@ -1790,6 +2182,10 @@ enum PrimeValidationDriverV2FixedProbeExecutor {
         try clock.observeCompletion(label: "prestart_before_publication")
         let prestart = try journal.publish(
             PrimeValidationDriverV2FixedProbePrestartRecord(
+                supervisorProcessIdentifier: supervisorProcessIdentifier,
+                supervisorSessionIdentifier: supervisorSessionIdentifier,
+                supervisorProcessGroupIdentifier:
+                    supervisorProcessGroupIdentifier,
                 embeddedPrimeSourceIdentitySHA256:
                     PrimeEmbeddedBuildProvenance.sourceIdentitySHA256,
                 policySHA256: PrimeSHA256.hexDigest(of: policyData),
@@ -1894,6 +2290,8 @@ enum PrimeValidationDriverV2FixedProbeExecutor {
             [PrimeValidationDriverV2TrackedTreeHeldEntry]?
         var predecessorKind = "prestart"
         var predecessorSHA256 = prestart.sha256
+        var childProcessIdentifiers = Set<Int32>()
+        var childProcessGroupIdentifiers = Set<Int32>()
 
         for ordinal in 1 ... 16 {
             guard let policy = try
@@ -1919,10 +2317,30 @@ enum PrimeValidationDriverV2FixedProbeExecutor {
                 companionGit: companionGit,
                 journal: journal,
                 prestart: prestart,
+                supervisorSessionIdentifier:
+                    supervisorSessionIdentifier,
                 predecessorKind: predecessorKind,
                 predecessorSHA256: predecessorSHA256,
                 processByRole: processByRole
             )
+            guard process.processIdentifier > 0,
+                  process.processIdentifier
+                    != supervisorProcessIdentifier,
+                  process.sessionIdentifier
+                    == supervisorSessionIdentifier,
+                  process.processGroupIdentifier
+                    == process.processIdentifier,
+                  childProcessIdentifiers.insert(
+                      process.processIdentifier
+                  ).inserted,
+                  childProcessGroupIdentifiers.insert(
+                      process.processGroupIdentifier
+                  ).inserted
+            else {
+                throw primeValidationDriverV2FixedProbeRejected(
+                    "child_session_or_group_\(ordinal)"
+                )
+            }
             processes.append(process)
             processByRole[policy.role] = process
             predecessorKind = "child_terminal"
@@ -1995,7 +2413,9 @@ enum PrimeValidationDriverV2FixedProbeExecutor {
         guard let primeHeldEntries,
               let companionHeldEntries,
               processes.count == 16,
-              processByRole.count == 16
+              processByRole.count == 16,
+              childProcessIdentifiers.count == 16,
+              childProcessGroupIdentifiers.count == 16
         else {
             throw primeValidationDriverV2FixedProbeRejected(
                 "terminal_process_set"
@@ -2021,6 +2441,12 @@ enum PrimeValidationDriverV2FixedProbeExecutor {
             try rawTerminalRecord(
                 processByRole: processByRole,
                 processes: processes,
+                supervisorProcessIdentifier:
+                    supervisorProcessIdentifier,
+                supervisorSessionIdentifier:
+                    supervisorSessionIdentifier,
+                supervisorProcessGroupIdentifier:
+                    supervisorProcessGroupIdentifier,
                 primeHeldEntriesSHA256: primeHeldSHA,
                 companionHeldEntriesSHA256: companionHeldSHA
             ),
@@ -2068,6 +2494,10 @@ enum PrimeValidationDriverV2FixedProbeExecutor {
         let finalExecutorUptimeNanoseconds = try
             clock.observeCompletion(label: "raw_observation_complete")
         let observation = PrimeValidationDriverV2FixedProbeRawObservation(
+            supervisorProcessIdentifier: supervisorProcessIdentifier,
+            supervisorSessionIdentifier: supervisorSessionIdentifier,
+            supervisorProcessGroupIdentifier:
+                supervisorProcessGroupIdentifier,
             orderedProcesses: processes,
             primeHeldEntries: primeHeldEntries,
             companionHeldEntries: companionHeldEntries,
@@ -2152,6 +2582,7 @@ enum PrimeValidationDriverV2FixedProbeExecutor {
         journal: PrimeValidationDriverV2FixedProbeJournal,
         prestart:
             PrimeValidationDriverV2FixedProbeJournalLeafObservation,
+        supervisorSessionIdentifier: Int32,
         predecessorKind: String,
         predecessorSHA256: String,
         processByRole:
@@ -2194,7 +2625,8 @@ enum PrimeValidationDriverV2FixedProbeExecutor {
         )
         let spawn: PrimeSecureChildSpawnHandle
         do {
-            spawn = try PrimeSecureChildDarwinSubstrate.spawnSuspended(
+            spawn = try PrimeSecureChildDarwinSubstrate
+                .spawnDriverV2FixedProbeSuspended(
                 executableAbsolutePath:
                     executable.observation.canonicalAbsolutePath,
                 argumentZero: policy.logicalArgumentZero,
@@ -2227,13 +2659,24 @@ enum PrimeValidationDriverV2FixedProbeExecutor {
                     == PrimeValidationDriverV2FixedProbePolicy
                     .requiredSpawnFlags,
                   supervision.spawnReturnCode == 0,
-                  supervision.establishIsolatedSessionAndDedicatedGroup()
+                  let establishedSupervisorSessionIdentifier =
+                    supervision
+                    .establishDriverV2DedicatedGroupWithinSupervisorSession(),
+                  establishedSupervisorSessionIdentifier
+                    == supervisorSessionIdentifier
             else {
                 throw primeValidationDriverV2FixedProbeRejected(
                     "spawn_or_group_\(policy.role.rawValue)"
                 )
             }
             let pid = supervision.processIdentifier
+            guard pid > 0,
+                  pid != supervisorSessionIdentifier
+            else {
+                throw primeValidationDriverV2FixedProbeRejected(
+                    "child_process_identity_\(policy.role.rawValue)"
+                )
+            }
             let cwdProof: PrimeSecureChildDarwinProcessProof
                 .SuspendedWorkingDirectoryProof
             let mappedProof: PrimeSecureChildDarwinProcessProof
@@ -2292,7 +2735,7 @@ enum PrimeValidationDriverV2FixedProbeExecutor {
                     predecessorKind: predecessorKind,
                     predecessorSHA256: predecessorSHA256,
                     processIdentifier: pid,
-                    sessionIdentifier: pid,
+                    sessionIdentifier: supervisorSessionIdentifier,
                     processGroupIdentifier: pid,
                     appliedSpawnFlags: supervision.appliedFlags,
                     spawnReturnCode: supervision.spawnReturnCode,
@@ -2482,9 +2925,18 @@ enum PrimeValidationDriverV2FixedProbeExecutor {
                     ordinal: policy.ordinal,
                     role: policy.role.rawValue,
                     startLeafSHA256: startLeaf.sha256,
+                    supervisorProcessIdentifier:
+                        supervisorSessionIdentifier,
+                    supervisorSessionIdentifier:
+                        supervisorSessionIdentifier,
+                    supervisorProcessGroupIdentifier:
+                        supervisorSessionIdentifier,
                     processIdentifier: pid,
+                    sessionIdentifier: supervisorSessionIdentifier,
+                    processGroupIdentifier: pid,
                     deathObservedUptimeNanoseconds: deathObservedAt,
                     preReapProcessGroupMemberIdentifiers: preReapMembers,
+                    startPublishedUptimeNanoseconds: startPublishedAt,
                     preResumeContinuityCheckpointUptimeNanoseconds:
                         preResumeContinuityCheckpointUptimeNanoseconds,
                     resumedAtUptimeNanoseconds: resumedAt,
@@ -2554,7 +3006,7 @@ enum PrimeValidationDriverV2FixedProbeExecutor {
                 spawnReturnCode: supervision.spawnReturnCode,
                 spawnReturnedUptimeNanoseconds:
                     supervision.spawnReturnedMonotonicNanoseconds,
-                sessionIdentifier: pid,
+                sessionIdentifier: supervisorSessionIdentifier,
                 processGroupIdentifier: pid,
                 suspendedWorkingDirectoryDeviceID:
                     cwdProof.suspendedChildCurrentDirectoryDeviceID,
@@ -2673,7 +3125,7 @@ enum PrimeValidationDriverV2FixedProbeExecutor {
         let admission = retainedState.admission
         let expectedWatcherDescriptorCount =
             retainedState.productionSupervisorImageEligible
-            ? 2_157
+            ? 2_163
             : 45
         try retainedState.fixedProbeCheckpointNoPendingEvents()
         guard admission.lease.isHeld,
@@ -2898,6 +3350,9 @@ enum PrimeValidationDriverV2FixedProbeExecutor {
                 PrimeValidationDriverV2FixedProbeProcessObservation],
         processes:
             [PrimeValidationDriverV2FixedProbeProcessObservation],
+        supervisorProcessIdentifier: Int32,
+        supervisorSessionIdentifier: Int32,
+        supervisorProcessGroupIdentifier: Int32,
         primeHeldEntriesSHA256: String,
         companionHeldEntriesSHA256: String
     ) throws -> PrimeValidationDriverV2FixedProbeRawTerminalRecord {
@@ -2912,6 +3367,16 @@ enum PrimeValidationDriverV2FixedProbeExecutor {
             return value.standardOutput
         }
         return PrimeValidationDriverV2FixedProbeRawTerminalRecord(
+            supervisorProcessIdentifier: supervisorProcessIdentifier,
+            supervisorSessionIdentifier: supervisorSessionIdentifier,
+            supervisorProcessGroupIdentifier:
+                supervisorProcessGroupIdentifier,
+            orderedProcessIdentifiers:
+                processes.map(\.processIdentifier),
+            orderedSessionIdentifiers:
+                processes.map(\.sessionIdentifier),
+            orderedProcessGroupIdentifiers:
+                processes.map(\.processGroupIdentifier),
             orderedTerminalSHA256Values:
                 processes.map { $0.terminalLeaf.sha256 },
             primeHEADAgreement:

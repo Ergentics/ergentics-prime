@@ -7,6 +7,7 @@ import Foundation
 @_spi(PrimeValidationDriverV2RoleFacade) @testable import PrimeCore
 import PrimeValidationWorkflowContracts
 import PrimeValidationWorkflowDriverCore
+import PrimeValidationWorkflowDriverV2ShotGovernorCore
 import XCTest
 
 final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
@@ -110,7 +111,7 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
             XCTAssertTrue(guarded.companionSourceWatchWindowArmed)
             XCTAssertEqual(
                 guarded.combinedSourceWatcherDescriptorCount,
-                2_157
+                2_163
             )
             XCTAssertTrue(
                 guarded.missingAuthorities.contains(
@@ -2104,7 +2105,8 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
             manifest,
             from:
                 ".executableTarget(\n            name: \"PrimeValidationWorkflowDriverV2SpawnCanary\"",
-            through: "        .testTarget("
+            through:
+                "        .target(\n            name: \"PrimeValidationWorkflowDriverV2ShotGovernorCore\""
         )
         XCTAssertEqual(
             manifest.components(
@@ -3515,7 +3517,8 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
             manifest,
             from:
                 ".executableTarget(\n            name: \"PrimeValidationWorkflowDriverV2Supervisor\"",
-            through: "        .testTarget("
+            through:
+                "        .executableTarget(\n            name: \"PrimeValidationWorkflowDriverV2SpawnCanary\""
         )
         XCTAssertTrue(
             target.contains("PrimeValidationWorkflowDriverCore")
@@ -3585,11 +3588,13 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
         let guarded = try preparedGuard(for: fixture)
         let image = try boundTestImage(for: guarded)
         XCTAssertFalse(image.productionSupervisorImageEligible)
-        let context = try roleTransferInputs(
+        let transfer = try roleTransferInputs(
             fixture: fixture,
             guarded: guarded
-        ).context
-        let facade = try image.transferDriverV2RoleFacade(context: context)
+        )
+        let facade = try image.transferDriverV2RoleFacade(
+            context: transfer.context
+        )
         let race = GateEJournalMechanicsRace()
         let ready = DispatchGroup()
         let done = DispatchGroup()
@@ -3768,6 +3773,388 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
                 atPath: collisionJournal.path
             ),
             ["gate-e-prestart.json"]
+        )
+
+        let governor = try gateEProductionSource(
+            "Tests/PrimeValidationWorkflow/Sources/" +
+                "PrimeValidationWorkflowDriverV2ShotGovernorCore/" +
+                "PrimeValidationDriverV2ShotGovernor.swift"
+        )
+        for required in [
+            "prime_driver_v2_gate_e_shot_capsule_v1",
+            "prime_driver_v2_gate_e_outer_start_v1",
+            "prime_driver_v2_gate_e_outer_terminal_v1",
+            "00-capsule.json",
+            "01-supervisor-request.json",
+            "02-outer-start.json",
+            "03-outer-terminal.json",
+            "O_RDWR | O_CREAT | O_EXCL | O_NOFOLLOW | O_CLOEXEC",
+            "independentRequestInputDescriptor()",
+            "posix_spawn_file_actions_addfchdir(",
+            "private static let emptySHA256",
+            "static let pidCapacity = 131_072",
+            "static let maximumScans = 256",
+            "kernelStatus == 4 || kernelStatus == 5",
+            "Darwin.waitpid(supervisorPID, &raw, 0)",
+            "PrimeValidationDriverV2GovernorSessionCensus.contain(",
+            "containSessionAfterSupervisorReaped(",
+            "case conservationCompleted",
+            "onExactReap: containmentGuard.acceptExactReap",
+            "PrimeValidationDriverV2OuterSourceContinuity.capture(",
+            "PrimeValidationDriverV2FixedProbeDurableJournalValidatorV2",
+            "sourceIdentitySHA256\n" +
+                "                == PrimeEmbeddedBuildProvenance" +
+                ".sourceIdentitySHA256",
+        ] {
+            XCTAssertTrue(governor.contains(required), required)
+        }
+        for forbidden in [
+            "Process(",
+            "swift-package",
+            "list_xctest",
+            "list_swift_testing",
+            "WUNTRACED",
+            "waitpid(supervisorPID, &raw, WNOHANG)",
+        ] {
+            XCTAssertFalse(governor.contains(forbidden), forbidden)
+        }
+
+        func outerMechanicsFacade(
+            fixture: Fixture,
+            intent: PrimeValidationRunIntentV2,
+            mutation: PrimeValidationDriverV2OuterJournalMechanicsMutation
+                = .canonical
+        ) throws -> PrimeValidationDriverV2OuterJournalMechanicsFacade {
+            let working = try fixture.makeDirectory(
+                "outer-mechanics-working-" + UUID().uuidString
+            )
+            let baseDescriptor = Darwin.open(
+                fixture.base.path,
+                O_RDONLY | O_DIRECTORY | O_NOFOLLOW_ANY | O_CLOEXEC
+            )
+            guard baseDescriptor >= 3 else {
+                if baseDescriptor >= 0 { _ = Darwin.close(baseDescriptor) }
+                throw FixtureError.invalid("outer_mechanics_base_open")
+            }
+            defer { _ = Darwin.close(baseDescriptor) }
+            let workingDescriptor = Darwin.open(
+                working.path,
+                O_RDONLY | O_DIRECTORY | O_NOFOLLOW_ANY | O_CLOEXEC
+            )
+            guard workingDescriptor >= 3 else {
+                if workingDescriptor >= 0 {
+                    _ = Darwin.close(workingDescriptor)
+                }
+                throw FixtureError.invalid("outer_mechanics_working_open")
+            }
+            defer { _ = Darwin.close(workingDescriptor) }
+            return try PrimeValidationDriverV2OuterJournalMechanicsFacade(
+                heldBaseDirectoryDescriptor: baseDescriptor,
+                heldWorkingDirectoryDescriptor: workingDescriptor,
+                intent: intent,
+                mutation: mutation
+            )
+        }
+
+        func outerDurableSnapshot(
+            fixture: Fixture
+        ) throws -> (
+            bytes: [String: Data],
+            vnodes: [String: String]
+        ) {
+            let journalRoot = fixture.base.appendingPathComponent(
+                "gate-e-shot-governor-journal",
+                isDirectory: true
+            )
+            let names = [
+                "00-capsule.json",
+                "01-supervisor-request.json",
+                "02-outer-start.json",
+                "03-outer-terminal.json",
+                "../outer-supervisor-stdout.bin",
+                "../outer-supervisor-stderr.bin",
+            ]
+            var bytes = [String: Data]()
+            var vnodes = [String: String]()
+            for name in names {
+                let url = journalRoot.appendingPathComponent(name)
+                    .standardizedFileURL
+                var status = stat()
+                guard lstat(url.path, &status) == 0 else {
+                    throw FixtureError.invalid(
+                        "outer_durable_snapshot_\(name)"
+                    )
+                }
+                bytes[name] = try Data(contentsOf: url)
+                vnodes[name] =
+                    "\(UInt64(bitPattern: Int64(status.st_dev))):" +
+                    "\(UInt64(status.st_ino))"
+            }
+            return (bytes, vnodes)
+        }
+
+        let outerFacade = try outerMechanicsFacade(
+            fixture: fixture,
+            intent: transfer.intent
+        )
+        let outer = try outerFacade.consume()
+        XCTAssertEqual(
+            outer.orderedLeaves.map(\.leaf),
+            [
+                "00-capsule.json",
+                "01-supervisor-request.json",
+                "02-outer-start.json",
+                "03-outer-terminal.json",
+            ]
+        )
+        XCTAssertEqual(
+            Set(outer.orderedLeaves.map {
+                "\($0.deviceID):\($0.inode)"
+            }).count,
+            4
+        )
+        XCTAssertEqual(outer.rootLinkCount, 6)
+        XCTAssertTrue(outer.requestReachedFiniteEOF)
+        XCTAssertEqual(outer.standardOutputByteCount, 0)
+        XCTAssertTrue(outer.standardOutputReachedEOF)
+        XCTAssertFalse(outer.standardOutputOverflowed)
+        XCTAssertEqual(outer.standardErrorByteCount, 65_536)
+        XCTAssertTrue(outer.standardErrorReachedEOF)
+        XCTAssertTrue(outer.standardErrorOverflowed)
+        XCTAssertTrue(outer.retainedTerminalRevalidated)
+        XCTAssertEqual(outer.spawnedProcessCount, 0)
+        XCTAssertEqual(outer.gitOrSwiftProbeCount, 0)
+        XCTAssertFalse(outer.productionStatusEligible)
+        XCTAssertEqual(outer.authorityVector, "00000000")
+        try outerFacade.revalidateRetainedTerminal()
+        XCTAssertThrowsError(try outerFacade.consume())
+        XCTAssertThrowsError(try outerFacade.consume())
+        XCTAssertTrue(outerFacade.permanentlyPoisoned)
+        try outerFacade.revalidateRetainedTerminal()
+
+        // A second owner cannot absorb an already-published durable root or
+        // its capture outputs as a fresh baseline.
+        let durableBeforeSecondOwner = try outerDurableSnapshot(
+            fixture: fixture
+        )
+        let existingOutputsFacade = try outerMechanicsFacade(
+            fixture: fixture,
+            intent: transfer.intent
+        )
+        XCTAssertThrowsError(try existingOutputsFacade.consume())
+        XCTAssertTrue(existingOutputsFacade.permanentlyPoisoned)
+        let durableAfterSecondOwner = try outerDurableSnapshot(
+            fixture: fixture
+        )
+        XCTAssertEqual(
+            durableAfterSecondOwner.bytes,
+            durableBeforeSecondOwner.bytes
+        )
+        XCTAssertEqual(
+            durableAfterSecondOwner.vnodes,
+            durableBeforeSecondOwner.vnodes
+        )
+
+        for mutation in [
+            PrimeValidationDriverV2OuterJournalMechanicsMutation.trailingLF,
+            .leadingWhitespace,
+            .oversized,
+        ] {
+            let rejectedFixture = try Fixture()
+            defer { rejectedFixture.cleanup() }
+            let rejectedGuarded = try preparedGuard(for: rejectedFixture)
+            let rejectedIntent = try roleTransferInputs(
+                fixture: rejectedFixture,
+                guarded: rejectedGuarded
+            ).intent
+            let rejected = try outerMechanicsFacade(
+                fixture: rejectedFixture,
+                intent: rejectedIntent,
+                mutation: mutation
+            )
+            XCTAssertThrowsError(try rejected.consume())
+            XCTAssertTrue(rejected.permanentlyPoisoned)
+            XCTAssertFalse(
+                FileManager.default.fileExists(
+                    atPath: rejectedFixture.base.appendingPathComponent(
+                        "gate-e-shot-governor-journal"
+                    ).path
+                )
+            )
+        }
+
+        let concurrentFixture = try Fixture()
+        defer { concurrentFixture.cleanup() }
+        let concurrentGuarded = try preparedGuard(for: concurrentFixture)
+        let concurrentIntent = try roleTransferInputs(
+            fixture: concurrentFixture,
+            guarded: concurrentGuarded
+        ).intent
+        let concurrentFacade = try outerMechanicsFacade(
+            fixture: concurrentFixture,
+            intent: concurrentIntent
+        )
+        let outerRace = GateEOuterJournalMechanicsRace()
+        let outerReady = DispatchGroup()
+        let outerDone = DispatchGroup()
+        let outerStart = DispatchSemaphore(value: 0)
+        let outerQueue = DispatchQueue(
+            label: "prime.validation.gate-e-outer-mechanics-race",
+            attributes: .concurrent
+        )
+        for _ in 0 ..< 2 {
+            outerReady.enter()
+            outerDone.enter()
+            outerQueue.async {
+                outerReady.leave()
+                outerStart.wait()
+                outerRace.record { try concurrentFacade.consume() }
+                outerDone.leave()
+            }
+        }
+        XCTAssertEqual(outerReady.wait(timeout: .now() + 5), .success)
+        outerStart.signal()
+        outerStart.signal()
+        XCTAssertEqual(outerDone.wait(timeout: .now() + 30), .success)
+        XCTAssertEqual(outerRace.values.count, 1)
+        XCTAssertEqual(outerRace.errors.count, 1)
+        XCTAssertTrue(concurrentFacade.permanentlyPoisoned)
+        outerRace.releaseValues()
+
+        let terminalCollisionFixture = try Fixture()
+        defer { terminalCollisionFixture.cleanup() }
+        let terminalCollisionGuarded = try preparedGuard(
+            for: terminalCollisionFixture
+        )
+        let terminalCollisionIntent = try roleTransferInputs(
+            fixture: terminalCollisionFixture,
+            guarded: terminalCollisionGuarded
+        ).intent
+        let terminalCollisionFacade = try outerMechanicsFacade(
+            fixture: terminalCollisionFixture,
+            intent: terminalCollisionIntent,
+            mutation: .terminalCollision
+        )
+        XCTAssertThrowsError(try terminalCollisionFacade.consume())
+        XCTAssertEqual(terminalCollisionFacade.failurePrefixCount, 3)
+        XCTAssertTrue(terminalCollisionFacade.permanentlyPoisoned)
+        XCTAssertEqual(
+            Set(
+                try FileManager.default.contentsOfDirectory(
+                    atPath: terminalCollisionFixture.base
+                        .appendingPathComponent(
+                            "gate-e-shot-governor-journal"
+                        ).path
+                )
+            ),
+            Set([
+                "00-capsule.json",
+                "01-supervisor-request.json",
+                "02-outer-start.json",
+                "03-outer-terminal.json",
+            ])
+        )
+        let collisionTerminal = terminalCollisionFixture.base
+            .appendingPathComponent(
+                "gate-e-shot-governor-journal/03-outer-terminal.json"
+            )
+        let collisionBytesBefore = try Data(contentsOf: collisionTerminal)
+        var collisionStatusBefore = stat()
+        XCTAssertEqual(
+            lstat(collisionTerminal.path, &collisionStatusBefore),
+            0
+        )
+        XCTAssertThrowsError(try terminalCollisionFacade.consume())
+        XCTAssertEqual(terminalCollisionFacade.failurePrefixCount, 3)
+        let collisionBytesAfter = try Data(contentsOf: collisionTerminal)
+        var collisionStatusAfter = stat()
+        XCTAssertEqual(
+            lstat(collisionTerminal.path, &collisionStatusAfter),
+            0
+        )
+        XCTAssertEqual(collisionBytesAfter, collisionBytesBefore)
+        XCTAssertEqual(collisionStatusAfter.st_dev, collisionStatusBefore.st_dev)
+        XCTAssertEqual(collisionStatusAfter.st_ino, collisionStatusBefore.st_ino)
+
+        let reboundFixture = try Fixture()
+        defer { reboundFixture.cleanup() }
+        let reboundGuarded = try preparedGuard(for: reboundFixture)
+        let reboundIntent = try roleTransferInputs(
+            fixture: reboundFixture,
+            guarded: reboundGuarded
+        ).intent
+        let reboundFacade = try outerMechanicsFacade(
+            fixture: reboundFixture,
+            intent: reboundIntent,
+            mutation: .terminalSameBytesNewInode
+        )
+        XCTAssertThrowsError(try reboundFacade.consume())
+        XCTAssertEqual(reboundFacade.failurePrefixCount, 4)
+        XCTAssertTrue(reboundFacade.permanentlyPoisoned)
+        let rebound = try XCTUnwrap(reboundFacade.reboundObservation)
+        XCTAssertTrue(rebound.exactBytesEqual)
+        XCTAssertEqual(
+            rebound.replacementDeviceID,
+            rebound.retainedDeviceID
+        )
+        XCTAssertNotEqual(
+            rebound.replacementInode,
+            rebound.retainedInode
+        )
+        XCTAssertThrowsError(try reboundFacade.revalidateRetainedTerminal())
+
+        let sessionFixtureDescriptor = try fixture
+            .openPinnedSessionFixtureExecutable()
+        defer { _ = Darwin.close(sessionFixtureDescriptor) }
+        let workingDescriptor = Darwin.open(
+            fixture.workspace.path,
+            O_RDONLY | O_DIRECTORY | O_NOFOLLOW_ANY | O_CLOEXEC
+        )
+        guard workingDescriptor >= 3 else {
+            if workingDescriptor >= 0 { _ = Darwin.close(workingDescriptor) }
+            throw FixtureError.invalid("session_fixture_cwd_open")
+        }
+        defer { _ = Darwin.close(workingDescriptor) }
+        let prepublication = try PrimeValidationDriverV2ShotGovernor
+            .exerciseSessionFixtureForTesting(
+                heldSessionFixtureDescriptor: sessionFixtureDescriptor,
+                heldWorkingDirectoryDescriptor: workingDescriptor,
+                mode: .prepublicationHeld
+            )
+        XCTAssertEqual(
+            prepublication.supervisorProcessIdentifier,
+            prepublication.supervisorSessionIdentifier
+        )
+        XCTAssertEqual(
+            prepublication.supervisorProcessIdentifier,
+            prepublication.supervisorProcessGroupIdentifier
+        )
+        XCTAssertEqual(prepublication.appliedSupervisorSpawnFlags, 0x448c)
+        XCTAssertTrue(prepublication.mappedFixtureImageJoined)
+        XCTAssertTrue(prepublication.workingDirectoryJoined)
+        XCTAssertTrue(prepublication.discoveredDedicatedChildGroup)
+        XCTAssertTrue(prepublication.finalSessionEmpty)
+        XCTAssertTrue(prepublication.finalGroupsEmpty)
+        XCTAssertEqual(
+            prepublication.exactSupervisorWait.requestedProcessIdentifier,
+            prepublication.exactSupervisorWait.returnedProcessIdentifier
+        )
+
+        let orphan = try PrimeValidationDriverV2ShotGovernor
+            .exerciseSessionFixtureForTesting(
+                heldSessionFixtureDescriptor: sessionFixtureDescriptor,
+                heldWorkingDirectoryDescriptor: workingDescriptor,
+                mode: .orphanTransition
+            )
+        XCTAssertTrue(
+            orphan.discoveredDedicatedChildGroup
+                || orphan.acceptedOrphanAlreadyEmpty
+        )
+        XCTAssertTrue(orphan.finalSessionEmpty)
+        XCTAssertTrue(orphan.finalGroupsEmpty)
+        XCTAssertEqual(
+            orphan.exactSupervisorWait.requestedProcessIdentifier,
+            orphan.exactSupervisorWait.returnedProcessIdentifier
         )
     }
 
@@ -4460,6 +4847,16 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
     func testGateEReleaseSupervisorRequiresLiveFourAuthorityBindingBeforeExit()
         throws
     {
+        for status in Int32(65) ... Int32(90) {
+            XCTAssertNotEqual(
+                gateEReleasePhaseLabel(status),
+                "unknown",
+                "historical supervisor status \(status)"
+            )
+        }
+        throw XCTSkip(
+            "retired: production Gate E is now one direct local governor shot"
+        )
         #if DEBUG
             throw XCTSkip("Gate E production proof is Release-only")
         #else
@@ -4729,13 +5126,30 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
         switch exitStatus {
         case 65: "transport"
         case 66: "developer_directory"
-        case 71: "admit_prerequisites"
-        case 72: "consume_prerequisites"
-        case 73: "prepare_guarded_pre_executor"
         case 67: "supervisor_image"
         case 68: "fixed_probes_and_semantic_binding"
         case 69: "final_binding_revalidation"
         case 70: "containment_fail_stop"
+        case 71: "admit_prerequisites"
+        case 72: "consume_prerequisites"
+        case 73: "prepare_guarded_pre_executor"
+        case 74: "admission_companion_declaration"
+        case 75: "admission_prime_repository"
+        case 76: "admission_workspace_root"
+        case 77: "admission_workspace_private_and_empty"
+        case 78: "admission_evidence_root"
+        case 79: "admission_evidence_private_and_empty"
+        case 80: "admission_companion_repository"
+        case 81: "admission_lease_directory"
+        case 82: "admission_lease_private_and_empty"
+        case 83: "admission_root_topology"
+        case 84: "admission_exclusive_lease"
+        case 85: "admission_post_lease_directory"
+        case 86: "admission_source_snapshot"
+        case 87: "admission_package_resolved_binding"
+        case 88: "admission_prime_source_identity_snapshot"
+        case 89: "admission_companion_content_snapshot"
+        case 90: "admission_held_toolchain"
         default: "unknown"
         }
     }
@@ -5451,6 +5865,37 @@ private final class GateEJournalMechanicsRace:
     }
 }
 
+private final class GateEOuterJournalMechanicsRace:
+    @unchecked Sendable
+{
+    private let lock = NSLock()
+    private(set) var values:
+        [PrimeValidationDriverV2OuterJournalMechanicsObservation] = []
+    private(set) var errors: [Error] = []
+
+    func record(
+        _ operation: () throws
+            -> PrimeValidationDriverV2OuterJournalMechanicsObservation
+    ) {
+        do {
+            let value = try operation()
+            lock.lock()
+            values.append(value)
+            lock.unlock()
+        } catch {
+            lock.lock()
+            errors.append(error)
+            lock.unlock()
+        }
+    }
+
+    func releaseValues() {
+        lock.lock()
+        values.removeAll()
+        lock.unlock()
+    }
+}
+
 private final class DriverV2IsolatedSpawnCanaryRace:
     @unchecked Sendable
 {
@@ -5640,6 +6085,27 @@ private final class Fixture {
             if descriptor >= 0 { _ = Darwin.close(descriptor) }
             throw FixtureError.invalid(
                 "spawn_canary_open_\(errno)"
+            )
+        }
+        return descriptor
+    }
+
+    func openPinnedSessionFixtureExecutable() throws -> Int32 {
+        var nestedRoot = URL(fileURLWithPath: #filePath)
+        for _ in 0 ..< 3 { nestedRoot.deleteLastPathComponent() }
+        let executable = nestedRoot.appendingPathComponent(
+            ".build/arm64-apple-macosx/release/" +
+                "PrimeValidationWorkflowDriverV2SessionFixture",
+            isDirectory: false
+        )
+        let descriptor = Darwin.open(
+            executable.path,
+            O_RDONLY | O_NOFOLLOW_ANY | O_CLOEXEC
+        )
+        guard descriptor >= 3 else {
+            if descriptor >= 0 { _ = Darwin.close(descriptor) }
+            throw FixtureError.invalid(
+                "session_fixture_open_\(errno)"
             )
         }
         return descriptor

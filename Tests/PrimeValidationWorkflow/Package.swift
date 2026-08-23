@@ -31,6 +31,14 @@ let package = Package(
             name: "PrimeValidationWorkflowDriverV2SpawnCanary",
             targets: ["PrimeValidationWorkflowDriverV2SpawnCanary"]
         ),
+        .executable(
+            name: "PrimeValidationWorkflowDriverV2ShotGovernor",
+            targets: ["PrimeValidationWorkflowDriverV2ShotGovernor"]
+        ),
+        .executable(
+            name: "PrimeValidationWorkflowDriverV2SessionFixture",
+            targets: ["PrimeValidationWorkflowDriverV2SessionFixture"]
+        ),
     ],
     dependencies: [
         .package(
@@ -98,6 +106,35 @@ let package = Package(
                 ]),
             ]
         ),
+        .target(
+            name: "PrimeValidationWorkflowDriverV2ShotGovernorCore",
+            dependencies: [
+                "PrimeValidationWorkflowDriverCore",
+                .product(
+                    name: "PrimeCore",
+                    package: "ergentics-prime"
+                ),
+            ]
+        ),
+        .executableTarget(
+            name: "PrimeValidationWorkflowDriverV2ShotGovernor",
+            dependencies: [
+                "PrimeValidationWorkflowDriverV2ShotGovernorCore",
+            ],
+            linkerSettings: [
+                .unsafeFlags([
+                    "-Xlinker", "-S",
+                ]),
+            ]
+        ),
+        .executableTarget(
+            name: "PrimeValidationWorkflowDriverV2SessionFixture",
+            linkerSettings: [
+                .unsafeFlags([
+                    "-Xlinker", "-S",
+                ]),
+            ]
+        ),
         .testTarget(
             name: "PrimeValidationWorkflowContractsTests",
             dependencies: [
@@ -108,6 +145,7 @@ let package = Package(
             name: "PrimeValidationWorkflowDriverCoreTests",
             dependencies: [
                 "PrimeValidationWorkflowDriverCore",
+                "PrimeValidationWorkflowDriverV2ShotGovernorCore",
                 .product(
                     name: "PrimeCore",
                     package: "ergentics-prime"
