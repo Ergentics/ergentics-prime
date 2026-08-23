@@ -3173,3 +3173,122 @@ a hard stop. It authorizes neither another admission attempt nor method 8. A
 passing recovery satisfies only the blocked admission floor; every remaining
 E1.2 pre-shot condition must be revalidated before the candidate's first and
 only production method-8 invocation.
+
+## Gate E1.2 cache-only Release-admission recovery result
+
+| Field | Observed value |
+| --- | --- |
+| Result | `PASS_PRE_SHOT_FLOOR_NON_AUTHORITY` |
+| Durable-control predecessor | `992e57c4ccd6b2d9172d8a75646d71e14933e881` / tree `9dc99acbac8374e31c55fa9e2c3d00545ffdf154` |
+| Source commit/tree | `1d341a529c442e63369c361b1e5ac95ca464fdf7` / `e787b3573bd44259606536860dc980720d73d64f` |
+| Embedded/source identity | `194cf7141172ee06b5f9734af2e9c3df498547a2f718698ccd421ef7ae961d0f` |
+| Corrected command result | exit `0`; Release build `187.24` seconds |
+| Measured XCTest interval | `2026-08-23T01:04:24.759Z` through `2026-08-23T01:04:27.510Z` |
+| Selected XCTest | exactly `1` executed / `1` pass / `0` failures |
+| Selected-test elapsed | `2.751` seconds |
+| Combined watcher assertion | `2,157` |
+| Total Release-admission SwiftPM harness attempts | `2`: one manifest denial plus one corrected pass |
+| Selected-test executions across both attempts | `1` |
+| Production method-8 invocations | `0` |
+| Driver V2 supervisor / fixed-probe launches | `0` / `0` |
+| Cache descriptor/path joins before command | device `16777231`; inodes `17325697` / `17325698`; UID `501`; mode `0700`; link count `2`; empty; ACL-free |
+| Cache leaves after command | same inodes; link counts `3` / `10`; retained |
+| Post-command statuses | source, diagnostic Prime, companion, and control: `0` bytes |
+| Identity-bound production root | absent |
+| Consumed prior root | unchanged at device `16777231`, inode `17321558`, mtime `1787444179`, link count `8` |
+| Candidate consumption | `false` |
+| Gate E outcome | `NOT_RUN`; no new authority or scientific conclusion |
+
+The passing selected test re-established only the existing public
+admission/consume/dual-watch floor under the XCTest-only current-image seam.
+It did not close `supervisor_executable_image`, execute fixed Git/Swift
+probes, or authorize Gate F. The earlier failed SwiftPM command remains
+recorded and is not rewritten as a test execution.
+
+## Gate E1.2 source-worktree Release supervisor build freeze
+
+| Field | Frozen value |
+| --- | --- |
+| Status | `FROZEN_NOT_EXECUTED` |
+| Durable-control predecessor | `992e57c4ccd6b2d9172d8a75646d71e14933e881` / tree `9dc99acbac8374e31c55fa9e2c3d00545ffdf154` |
+| Source worktree | `/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.driver-v2-gate-c-staging` |
+| Source commit/tree | clean `1d341a529c442e63369c361b1e5ac95ca464fdf7` / `e787b3573bd44259606536860dc980720d73d64f` |
+| Production-proof Prime clone | `/private/tmp/gate-e-prime-proof.lJ0uQj/prime`; clean `1d341a529c442e63369c361b1e5ac95ca464fdf7` / `e787b3573bd44259606536860dc980720d73d64f` |
+| Companion clone | clean `163fc100710ece48119bc25954452d10f6a84f7f` / `9009daa4f8a07fbd5897e00b9571cef44ec292db` |
+| Authorized build commands | exactly `1` |
+| Authorized tests / production invocations | `0` / `0` |
+| Source edits / commits | `0` / `0` |
+| Gate F authorization | `false` |
+
+Method 8 derives the supervisor image from its compile-time `#filePath`.
+Therefore the required product belongs to the source worktree's nested
+package, not either standalone Prime clone. This build command has no Prime
+clone environment input. The conserved later method-8 binding is
+`PRIME_DRIVER_V2_GATE_E_PRIME_ROOT=/private/tmp/gate-e-prime-proof.lJ0uQj/prime`;
+the diagnostic `gate-e-preflight-prime.IBJAfD` clone is ineligible for that
+production invocation.
+
+The current source-worktree image is a pre-successor artifact and is a hard
+stop: device `16777231`, inode `17321155`, UID `501`, mode `0755`,
+link count `1`, byte count `47,675,784`, mtime `1787444101`, SHA-256
+`09fb981b6350e630443998024eba11e4877e633bc5ff2f87b90d6513d75ff909`.
+Immediately before the command, require that exact device, inode, byte count,
+mtime, and SHA-256 preimage again; any drift is a hard stop.
+
+These exact cache leaves must be absent before this control section is
+committed:
+
+- `CLANG_MODULE_CACHE_PATH=/private/tmp/gate-e1-2-source-release-supervisor-clang-module-cache-194cf7141172ee06`
+- `SWIFTPM_MODULECACHE_OVERRIDE=/private/tmp/gate-e1-2-source-release-supervisor-swiftpm-module-cache-194cf7141172ee06`
+
+After this section exists in a clean control commit directly descended from
+`992e57c4ccd6b2d9172d8a75646d71e14933e881`, create each leaf once with
+exclusive `mkdir`; `EEXIST` is a hard stop. Before the build, open each
+leaf `O_RDONLY|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC`, join its descriptor
+device/inode to `lstat` before and after an empty-directory read, and require
+directory type, UID `501`, mode `0700`, link count `2`, zero entries, no
+ACL, and local APFS device `16777231`.
+
+Use exact working directory
+`/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.driver-v2-gate-c-staging`
+and run exactly:
+
+```sh
+CLANG_MODULE_CACHE_PATH=/private/tmp/gate-e1-2-source-release-supervisor-clang-module-cache-194cf7141172ee06 SWIFTPM_MODULECACHE_OVERRIDE=/private/tmp/gate-e1-2-source-release-supervisor-swiftpm-module-cache-194cf7141172ee06 swift build --package-path /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.driver-v2-gate-c-staging/Tests/PrimeValidationWorkflow --configuration release --product PrimeValidationWorkflowDriverV2Supervisor --disable-automatic-resolution --disable-sandbox
+```
+
+No extra or missing CLI argument or inline environment assignment is
+permitted. Do not set `HOME`, a companion input, or an external scratch path.
+The exact expected product is
+`/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.driver-v2-gate-c-staging/Tests/PrimeValidationWorkflow/.build/arm64-apple-macosx/release/PrimeValidationWorkflowDriverV2Supervisor`.
+
+A pass requires shell exit `0`; explicit recompilation of the changed
+PrimeCore provenance input and supervisor `main.swift`; relinking of
+`PrimeValidationWorkflowDriverV2Supervisor`; and no XCTest/Swift-Testing
+runner markers. A no-op build is a hard stop. Record the build-start epoch and
+require the exact product's mtime and ctime to advance beyond it.
+
+Open the resulting image `O_RDONLY|O_NOFOLLOW|O_CLOEXEC`; join descriptor and
+path device/inode before and after the read; and require a regular arm64 Mach-O
+with UID `501`, mode `0755`, link count `1`, no ACL, safe file flags,
+specifically numeric file flags `0`, only the permitted
+`com.apple.provenance` extended attribute, and stable
+nonzero bytes. Compute SHA-256 from the held descriptor, require it to differ
+from the pre-successor hash, and require the bytes to contain sealed identity
+`194cf7141172ee06b5f9734af2e9c3df498547a2f718698ccd421ef7ae961d0f`
+but not predecessor identity
+`afb3c46461736ddf7b275d797d054000d260eeebc0c6c50a7a94451ef1c97a19`.
+
+Source and both clone statuses must remain clean; `Package.resolved` and all
+manifests must remain unchanged; the successor production root must remain
+absent; and the consumed prior root must remain unchanged. Compiler and linker
+descendants are expected and confer no Driver V2 authority. This build
+authorizes no test, image bind, fixed probe, journal, production supervisor
+launch, Gate E conclusion, or Gate F work.
+
+Any cache mismatch, source/clone drift, dependency fetch, network access,
+unexpected runner marker, missing or unchanged product, occupied production
+root, consumed-root mutation, or nonzero build result is a hard stop. It
+authorizes neither another build attempt nor method 8. A passing build must be
+recorded with its exact product metadata and hash before the remaining
+pre-shot floor may be declared ready.
