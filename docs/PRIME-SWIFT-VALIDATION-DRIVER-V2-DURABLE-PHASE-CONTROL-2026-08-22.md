@@ -3698,3 +3698,223 @@ F work. A later clean direct-child control commit must bind this checkpoint's
 commit/tree, both final artifact hashes and vnodes, exact roots, one explicit
 cache policy, one exact method-8 command/environment, and permanent no-retry
 terms before the first production invocation is authorized.
+
+## Gate E1.2 freeze — first and only production method-8 shot
+
+| Field | Frozen value |
+| --- | --- |
+| Status | `FROZEN_NOT_EXECUTED` |
+| Durable-control predecessor | `baf55fb1939f96c949b906178ec4945c1742fa2a` / tree `4820b1705a1f3dad32591b4ba660c490f90a8411` |
+| Permitted predecessor delta | this freeze only, in this one durable-control path |
+| Source commit/tree | clean `1d341a529c442e63369c361b1e5ac95ca464fdf7` / `e787b3573bd44259606536860dc980720d73d64f` |
+| Source identity/cardinality | unconsumed `194cf7141172ee06b5f9734af2e9c3df498547a2f718698ccd421ef7ae961d0f`; `545` files / `544` records |
+| Authorized SwiftPM shot commands | at most `1`; success requires exactly `1` |
+| Authorized method-8 executions | at most `1`; success requires exactly `1` |
+| Exact selector | `PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests.testGateEReleaseSupervisorRequiresLiveFourAuthorityBindingBeforeExit` |
+| Source edits / package builds / relinks | `0` / `0` / `0` |
+| Retry or relaunch after command start | permanently `false` |
+| Gate F authorization | `false` |
+
+This freeze must first exist in a clean control commit directly descended from
+`baf55fb1939f96c949b906178ec4945c1742fa2a`, with this section as its
+only predecessor delta. Cache creation or command execution before that commit
+is a hard stop. After the commit and immediately before cache creation, require
+the control worktree clean at that exact direct-child commit/tree. Repeat that
+control check immediately before the command.
+
+### Frozen harness and executable preimages
+
+| Artifact | Required preimage |
+| --- | --- |
+| Outer Swift harness | `/usr/bin/swift`; device `16777231`; inode `1152921500312571585`; UID/GID `0`/`0`; mode `0755`; nlink `78`; flags `524320` (`restricted,compressed`); size `118928`; mtime/ctime `1782354543`; universal Mach-O UUIDs `091206DD-5D8E-3B10-A6BE-B9CE23E2C670` (`x86_64`) / `108866E5-077A-3BE9-8E2C-0DADD00E2F09` (`arm64e`); SHA-256 `179301dcb41ea78accc3fa0048a7e6f6710d891945a751a34addd622020c1818`; ACL-free and xattr-free |
+| Supervisor path | `/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.driver-v2-gate-c-staging/Tests/PrimeValidationWorkflow/.build/arm64-apple-macosx/release/PrimeValidationWorkflowDriverV2Supervisor` |
+| Supervisor vnode | device `16777231`; inode `17337418`; UID/GID `501`/`20`; mode `0755`; nlink `1`; flags `0`; size `47,675,784`; mtime/ctime `1787449777` |
+| Supervisor image/hash | arm64 `MH_EXECUTE`; UUID `6A097D4D-B7F2-32FD-B77C-012BE54EDD0E`; SHA-256 `fda8ab7c8f06a94c4f957f879312a6911d7e32015a344ea5b9ad63bbd04215ff` |
+| XCTest path | `/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.driver-v2-gate-c-staging/Tests/PrimeValidationWorkflow/.build/arm64-apple-macosx/release/PrimeValidationWorkflowPackageTests.xctest/Contents/MacOS/PrimeValidationWorkflowPackageTests` |
+| XCTest vnode | device `16777231`; inode `17337446`; UID/GID `501`/`20`; mode `0755`; nlink `1`; flags `0`; size `56,490,080`; mtime/ctime `1787449784` |
+| XCTest image/hash | arm64 `MH_BUNDLE`; UUID `B65DABC8-28A9-3EE9-ABCC-4DB026D7FC39`; SHA-256 `b3cf7e6aee0a73b05b493ff279b435f7b81b73c24c24b1731986d0adc0f534d5` |
+
+Walk every path component no-follow. Open the two Release images on held
+`O_RDONLY | O_NOFOLLOW | O_CLOEXEC` descriptors and repeat the readiness
+checkpoint's descriptor/path joins, stable reads, Mach-O type/architecture,
+ownership, mode, link-count, flags, ACL, xattr, UUID, hash, and byte-membership
+checks. Both images must contain current identity
+`194cf7141172ee06b5f9734af2e9c3df498547a2f718698ccd421ef7ae961d0f`
+exactly once and exclude predecessor identity
+`afb3c46461736ddf7b275d797d054000d260eeebc0c6c50a7a94451ef1c97a19`;
+the XCTest image must contain the exact source-worktree `#filePath` and exact
+selected method once. Only `com.apple.provenance` is permitted as an xattr.
+
+Immediately before and after the shot, separately open `/usr/bin/swift` on a
+held `O_RDONLY | O_NOFOLLOW | O_CLOEXEC` descriptor. Join descriptor/path
+device and inode before and after a stable descriptor hash, and require its
+complete table tuple, regular universal-Mach-O type, both recorded UUIDs,
+flags, ACL-free/xattr-free state, and SHA-256 unchanged.
+
+`--skip-build` is mandatory. Any package-target compile or link marker, or
+any pre/post artifact inode, timestamp, size, UUID, hash, permission, identity,
+ACL, flag, or xattr drift, is a hard stop.
+
+### Frozen roots, repositories, and predecessor evidence
+
+| Item | Frozen value |
+| --- | --- |
+| Production Prime clone | `/private/tmp/gate-e-prime-proof.lJ0uQj/prime`; device/inode `16777231`/`17289159`; UID `501`; mode `0755`; clean source commit/tree above |
+| Diagnostic Prime clone | `/private/tmp/gate-e-preflight-prime.IBJAfD/prime`; conserved clean at the same source commit/tree; not a command input |
+| Companion clone | `/private/tmp/gate-e-companion-measure.pMGSXT/companion`; device/inode `16777231`/`17279918`; UID `501`; mode `0755`; clean `163fc100710ece48119bc25954452d10f6a84f7f` / tree `9009daa4f8a07fbd5897e00b9571cef44ec292db` |
+| Successor root | `/private/tmp/prime-driver-v2-gate-e-release-194cf7141172ee06b5f9734af2e9c3df498547a2f718698ccd421ef7ae961d0f`; must be absent by no-follow `lstat` |
+| Prior consumed root | retained device/inode `16777231`/`17321558`; UID `501`; mode `0700`; nlink `8`; mtime `1787444179` |
+| Prior-root direct inventory | exactly `workspace`, `evidence`, `lease`, `workspace.driver-v2-gate-e-journal`, `outer-supervisor-stdout.bin`, `outer-supervisor-stderr.bin`; all six retained at their recorded empty pre-authority state |
+
+Require clean control, source, all three clone statuses, exact commits/trees,
+canonical identity/cardinality, unchanged manifests and `Package.resolved`,
+the complete prior-root inventory, and all eight readiness-cache tuples. No
+simultaneous clone, artifact, root, or process inspection is permitted while
+the measured runner/supervisor hierarchy is live. Repeat read-only checks only
+after the command and all descendants have terminated.
+
+### One-use outer-cache policy
+
+The eight readiness-checkpoint cache leaves remain retained, unchanged, and
+ineligible as command inputs. These two final-shot leaves are currently absent:
+
+- `/private/tmp/gate-e1-2-final-shot-clang-module-cache-194cf7141172ee06`
+- `/private/tmp/gate-e1-2-final-shot-swiftpm-module-cache-194cf7141172ee06`
+
+After the shot-freeze commit, create each once with exclusive `mkdir`;
+`EEXIST` is a permanent hard stop. Open each
+`O_RDONLY | O_DIRECTORY | O_NOFOLLOW | O_CLOEXEC`, join descriptor/path device
+and inode before and after an empty read, and require local APFS device
+`16777231`, directory type, UID/GID `501`/`0`, mode `0700`, nlink `2`, flags
+`0`, empty inventory, no ACL, and exact xattr set `{com.apple.provenance}`.
+These are the only external cache leaves authorized as command inputs. Retain
+both after the command at their admitted path/inodes and record final metadata;
+no cache cleanup or later reuse is authorized.
+
+### Exact one-shot command
+
+Use exact working directory
+`/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.driver-v2-gate-c-staging`
+and run exactly once:
+
+```sh
+CLANG_MODULE_CACHE_PATH=/private/tmp/gate-e1-2-final-shot-clang-module-cache-194cf7141172ee06 SWIFTPM_MODULECACHE_OVERRIDE=/private/tmp/gate-e1-2-final-shot-swiftpm-module-cache-194cf7141172ee06 PRIME_DRIVER_V2_GATE_E_PRIME_ROOT=/private/tmp/gate-e-prime-proof.lJ0uQj/prime PRIME_PMHNP_COMPANION_ROOT=/private/tmp/gate-e-companion-measure.pMGSXT/companion /usr/bin/swift test --package-path /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.driver-v2-gate-c-staging/Tests/PrimeValidationWorkflow --configuration release --skip-build --disable-automatic-resolution --disable-sandbox --disable-swift-testing --filter PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests.testGateEReleaseSupervisorRequiresLiveFourAuthorityBindingBeforeExit
+```
+
+No extra or missing CLI argument or inline environment assignment is
+permitted. Do not set `HOME`, `DEVELOPER_DIR`, a scratch path, the diagnostic
+clone, or another `PRIME_DRIVER_V2_*` / `PRIME_PMHNP_*` input. No network,
+dependency fetch, GitHub operation, source mutation, cleanup, broad selection,
+other test, build, list, or inventory role is authorized. The two outer cache
+variables and root selectors are harness inputs; the dedicated supervisor is
+spawned with argument zero only and an empty replacement environment.
+
+### Exhaustive process and role ceiling
+
+| Process or role | Authorized count |
+| --- | ---: |
+| Exact SwiftPM shot command | at most `1`; success requires exactly `1` |
+| SwiftPM manifest compiler/linker/evaluator descendants | only those necessary to evaluate the pinned plugin-free manifests under the exact `--skip-build` command; package-target/test compilation or relinking remains `0` |
+| XCTest runner / exact selected method | at most `1` / `1`; success requires exactly `1` / `1` |
+| Dedicated production supervisor | at most `1`; success requires exactly `1` |
+| Fixed-probe children | at most `16`; success requires exactly `16`, each role once in frozen order |
+| Additional XCTest or Swift-Testing runner | `0` |
+| FixtureChild, SecureChildIntegration, SpawnCanary, or another package executable | `0` |
+| Build, staging, XCTest-inventory, or Swift-Testing-inventory Driver roles | `0` |
+
+The frozen role order is:
+
+1. `prime_head_pre`
+2. `prime_object_format`
+3. `prime_status_pre`
+4. `prime_tree_discovery`
+5. `prime_tree_replay`
+6. `prime_status_post`
+7. `prime_head_post`
+8. `companion_head_pre`
+9. `companion_object_format`
+10. `companion_status_pre`
+11. `companion_tree_discovery`
+12. `companion_tree_replay`
+13. `companion_status_post`
+14. `companion_head_post`
+15. `swift_version`
+16. `swift_target_info`
+
+The first 14 use the frozen Git image; the final two use the frozen physical
+Swift frontend with logical argument zero `swift`. Every role is sequential,
+one-shot, and internally owns its argv, root, image, five-entry environment
+(`DEVELOPER_DIR`, `LANG=C`, `LC_ALL=C`, `SDKROOT`, `TERM=dumb`), output caps,
+and the single absolute 30-second deadline. The outer supervisor containment
+deadline is 60 seconds. Every child must prove suspended cwd/image joins,
+durable start before resume, exact PID reap, independent EOF drains, and
+`process_group_empty`. No seventeenth or retried role is authorized.
+
+### Required result and retained evidence
+
+A production pass requires all of these data:
+
+- shell exit `0`; exactly one selected XCTest pass and no other test/runner;
+- one supervisor normal exit `0` with retained empty stdout/stderr captures;
+- exactly 16 successful fixed-role terminals in frozen order;
+- successor base device `16777231`, UID/GID `501`/`0`, mode `0700`, nlink `8`,
+  flags `0`, ACL-free/provenance-only, retained with exact direct inventory
+  `workspace`, `evidence`, `lease`,
+  `workspace.driver-v2-gate-e-journal`,
+  `outer-supervisor-stdout.bin`, `outer-supervisor-stderr.bin`;
+- both outer captures regular mode `0600`, nlink `1`, zero bytes, and SHA-256
+  `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`;
+- empty workspace and evidence directories;
+- lease inventory containing only regular zero-byte mode-`0600`, nlink-`1`
+  `prime-validation-swiftpm-build-inventory.lock`;
+- journal nlink `36` and exactly 34 unique regular leaves: prestart, sixteen
+  ordered start/terminal pairs, and raw terminal;
+- every leaf no-follow admitted, UID `501`, mode `0400`, nlink `1`, at most
+  64 KiB, newline-terminated canonical JSON, and individually hashed;
+- canonical JSON framing, SHA chain, leaf schemas/names/ordinals, metadata,
+  hashes, and internal self-consistency of recorded fields validated from the
+  retained bytes; status, replay/agreement, and raw-terminal fields recorded as
+  retained claims, not independent proof of missing raw child stdout or live
+  semantic agreement;
+- the retained four-authority binding and both source watches live through
+  normal supervisor return, established in-process by exit `0` rather than
+  reconstructed from a dead journal token;
+- final repositories, artifacts, manifests, prior root, and eight predecessor
+  caches unchanged; both final-shot cache roots retained at admitted vnodes.
+
+Record the command interval and result, exact root descriptor/path identity,
+complete direct/descendant inventories, all present journal leaf names,
+metadata and hashes, lease/capture facts, artifact pre/post identities, clone
+statuses, cache metadata, supervisor phase/status, and observed fixed-role
+prefix. Do not clean any root, capture, lease, journal leaf, or cache.
+
+### Failure, consumption, and no-retry disposition
+
+Any pre-shot mismatch forbids the command and authorizes no repair or
+execution. Once the exact SwiftPM command starts, its command budget is
+permanently exhausted whether or not SwiftPM, XCTest, method 8, or the
+supervisor starts. Once exclusive creation of the successor base succeeds,
+source identity `194cf7141172ee06b5f9734af2e9c3df498547a2f718698ccd421ef7ae961d0f`
+is permanently consumed regardless of later result.
+
+On any nonpass, signal, timeout, unexpected process/mutation, or missing
+postcondition, retain all created caches, roots, captures, lease state, and
+journal leaves. Record which layers started, exact status/signal and fixed
+phase, root and journal prefix, observed role prefix, stdio hashes, artifact
+states, and all available metadata. Classify the scientific result
+`INCOMPLETE`; use `ABSTAIN` for causality not proved by the fixed status or
+durable prefix. No retry, cleanup, source repair, replacement build, or
+production relaunch is authorized for this identity.
+
+The frozen nonzero phase map is: `65` transport; `66` developer directory;
+`71` prerequisite admission; `72` prerequisite consume; `73` guarded
+pre-executor preparation; `67` supervisor-image bind; `68` fixed probes or
+semantic binding; `69` final retained-binding revalidation; `70` untranslated
+Core containment fail-stop. Signal or the outer 60-second containment timeout
+remains signal/reap evidence, not a narrower phase. No postmortem prose may
+narrow a phase beyond the fixed status and durable prefix.
+
+Even fully verified exit `0` authorizes no Gate F execution. A separate clean
+Gate E result checkpoint must bind this freeze commit/tree and all retained
+evidence before any later Gate F proposal. SwiftPM build, artifact staging,
+XCTest inventory, and Swift-Testing inventory remain missing and forbidden.
