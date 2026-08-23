@@ -8680,3 +8680,161 @@ forensic roots may be cleaned. The data-supported next action is a no-execution
 freshness-sufficiency correction for private implementation-only deltas, not a
 repeat build. Only after that correction may a separately frozen source slice
 change orphan containment semantics.
+
+## Gate E1.4-R10 retained-evidence sufficiency adjudication — no execution
+
+This is a successor adjudication over R9's frozen byte observations and
+retained artifact identities. Its durable
+predecessor is the R9 result commit
+`11a6abff40bc9b15a11f2b398c951cae81669b1a` / tree
+`ee0dcb5dc0c870f59d20efd7ccbb9d84a9e1be4e`. It runs no SwiftPM command,
+build, test, XCTest/target binary, or production attempt; changes no source;
+mutates no retained root or leaf; and does not amend the frozen R9 contract or
+result. Ordinary read-only inspection and the control-tree checkpoint are not
+scientific target execution.
+
+The exact sufficiency predicate is:
+
+```text
+R10_sufficiency =
+    S_source
+    AND S_object
+    AND S_link
+    AND S_runtime
+    AND S_module_neutral
+```
+
+All five terms must be true. No prose inference can substitute for a false or
+unknown term.
+
+### `S_source` — exact private implementation delta
+
+- the source remains the clean commit/tree/identity
+  `1bd9b9e2f30dc17e7983cb6f9bf0ae4831851efd` /
+  `a2aff7d040c97c379161eec3ea0459f336cd9205` /
+  `e458c197935662e827596db947b5b432cf21a3001fb8b2478f8ac49d2737e128`;
+- R7 source `d408680dec3bebe64251903c0d7526d98efab2d7` to R8 changes exactly
+  `Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift` and
+  `Tests/PrimeValidationWorkflow/Tests/PrimeValidationWorkflowDriverCoreTests/PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests.swift`,
+  `+75/-19`;
+- the LiveTests source is blob
+  `1c2c251fdd57668f939a796838ff44482447d702`, SHA-256
+  `df2e6803106d28d76d91b76a24d0d76bf887b40085c0a1936f384d3517eb73f2`;
+- apart from the provenance reseal, the delta is confined to the body of the
+  existing private diagnostic-leaf initializer: it adds an overflow-safe
+  admitted-base link-count `+1` transition and splits one aggregate rejection
+  into exact local coordinates. It changes no import, declaration signature,
+  stored-property layout, conformance, test identifier, or module-visible
+  surface.
+
+`S_source = true`.
+
+### `S_object` — compiled implementation successor
+
+- the LiveTests object is the joined R9 successor
+  `16777231/17392517`, `2,838,280` bytes, SHA-256
+  `9260a773322426ce328d24babb746d44d128c6979d0edaa438e70aebc99811ed`,
+  with mtime/ctime inside R9 and different from the R7 preimage;
+- the provenance object is successor inode `17392418`, SHA-256
+  `9baacd40eca8c61e91e795ea32b10a18577ff6db037ffb0b255ad14ebf27dcc5`;
+- the PrimeCore module is successor inode `17392356`, SHA-256
+  `61d9617eaa9f9b565ff0b31bbb2732e151aef0483687d82b0bce105afb071970`.
+
+`S_object = true`.
+
+### `S_link` — fresh linked selected XCTest
+
+The final no-follow-joined XCTest is `16777231/17392529`, `57,901,248` bytes,
+SHA-256
+`4e0230361dda9fb23a8e66c751512cd10b330adae0a1e45a95ef91ccd9e95d9c`,
+Mach-O UUID `4E968865-6BD0-3420-992B-BB777AD6CAC9`. It is different from the
+R7 XCTest, contains the R8 identity exactly once and the R7 identity zero
+times, and contains the unchanged selected-method string on exactly one
+strings record.
+
+`S_link = true`.
+
+### `S_runtime` — R8-only post-admission reachability
+
+The scoped retained delta is the exact five-root set with SHA-256
+`b5a681997e0eebb7e9207cccd9d929b35b1fd46a794f3cd3fd61b869b1864a9a`
+and exactly one fixed fail-stop leaf. The source creates that leaf at a fixed
+name with `O_EXCL`; the retained final named regular vnode is
+`16777231/17393034`, SHA-256
+`72a4c0ab6b88c3d4deda001dcc444812245d946b91b0b968391b354606a7368d`,
+and passes the canonical eleven-key/no-line-feed, metadata, xattr, fixed-name,
+and admitted-vnode joins recorded in R9. Its discriminating fields are:
+
+```text
+sourceIdentitySHA256 = e458c197935662e827596db947b5b432cf21a3001fb8b2478f8ac49d2737e128
+fixtureMode = orphan_transition
+executionPhase = orphan_initial_census
+containmentState = armed
+deadlineExpired = false
+failureCoordinate = supervisor_stop
+```
+
+R7 rejected the same APFS parent-link transition at
+`session_fail_stop_frozen_metadata` before it could emit this record. Under the
+exact R8 source, reaching this leaf requires the overflow-safe `+1` transition
+to pass, the held leaf to survive its fixed-name rejoin, the prepublication
+call to return, the orphan call to pass the death wait and enter
+`orphan_initial_census`, and the unwind to publish through GovernorCore. This
+is positive runtime discrimination for the changed private body. It is not
+containment completion or the original census error.
+
+`S_runtime = true`.
+
+### `S_module_neutral` — interface artifact is not implementation authority
+
+For this exact unannotated private initializer-body delta, the DriverCoreTests
+`.swiftmodule` may be the exact known R7 preimage or a fully recorded joined
+successor. Exact retention is neutral, not affirmative evidence: the changed
+machine implementation is in the rebuilt LiveTests object joined into the new
+XCTest, while this delta adds no serialized declaration or explicitly emitted
+body. Requiring a changed module hash therefore conflated interface freshness
+with implementation freshness for this exact case. No general claim about
+`.swiftmodule` contents follows.
+
+The observed module is the exact allowed R7 preimage `16777231/17390678`,
+`209,764` bytes, SHA-256
+`b77b99c13294628437d3d6d2f8e9add5eaa1ea9beccae2b67d6c316bf7a2de4b`,
+mtime/ctime `1787508809`. Unknown module drift would make this term false. Any
+future declaration/interface delta makes this rule inapplicable and requires a
+separately frozen interface-artifact predicate.
+
+`S_module_neutral = true`.
+
+Therefore the retained R9 data is sufficient to establish only that the exact
+R8 private implementation was compiled, linked into the selected XCTest,
+crossed the repaired APFS admission boundary, and emitted the intrinsically
+valid R6 fail-stop record. The terminal adjudication is:
+
+```text
+R10_swiftpm_command_count = 0
+R10_build_count = 0
+R10_test_count = 0
+R10_xctest_or_target_binary_launch_count = 0
+R10_retained_evidence_sufficiency = SUFFICIENT
+R10_R8_private_implementation_build_chain = PASS
+R10_R8_post_admission_runtime_reachability = PASS
+R10_intrinsic_fail_stop_record_validation = PASS
+R10_R9_formal_reclassification = FORBIDDEN
+R9_build_freshness = REJECT_DRIVERCORETESTS_MODULE_RETAINED
+R9_fail_stop_diagnostic = ABSTAIN
+R10_original_orphan_census_error = UNKNOWN
+R10_containment_completion = NOT_PROVED
+R10_observed_inner_exit_70 = NOT_OBSERVED
+R10_mixed_test_host_mechanics = ABSTAIN
+outer_journal_authority_vector = 00000000
+production_attempt_count = 0
+gate_E_scientific_outcome = ABSTAIN
+gate_E_clearance_granted = 0
+```
+
+R10 authorizes no retry, new epoch, build, test, target-binary launch, cleanup,
+source mutation, production attempt, journal bit, or Gate-E clearance. A
+semantic repair requires a separately committed source freeze. The next freeze
+must preserve the R9 fact that the monotonic death event was observed before
+`orphan_initial_census` and preserve the semantic distinction between an
+initiating body failure and a defer-containment failure. R10 selects no repair.
