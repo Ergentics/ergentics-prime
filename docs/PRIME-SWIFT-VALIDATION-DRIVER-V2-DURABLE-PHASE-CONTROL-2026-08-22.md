@@ -6755,3 +6755,148 @@ terminal, sixteen fixed-role receipts, Git/Swift observations, or any roadmap
 authority bit. Its only possible successor is a separate production
 Release-shot readiness assessment and freeze; this R0 record authorizes no
 production invocation.
+
+## Gate E1.4-R0 result — Release testability stop before XCTest
+
+| Coordinate | Observed value |
+| --- | --- |
+| Executed freeze | `72cc0a489bb39384e4166cc05dd76ef187c55dc0` / tree `b6f550c75772858dca32c88718421c6e6635a3e8` |
+| Status | `STOPPED_COMMAND_1_BUILD_FAILURE_COMMAND_2_FORBIDDEN` |
+| Command 1 / command 2 attempts | `1 / 0` |
+| Command 1 exit | `1` |
+| Observed bounding interval | `2026-08-23T15:53:29Z` through `2026-08-23T15:57:52Z`; at most `263` seconds |
+| Frozen selector count / executed / passed / failed / skipped XTests | `1 / 0 / 0 / 0 / 0` |
+| XCTest / Swift Testing runners | `0 / 0` |
+| SessionFixture supervisors / children launched | `0 / 0` |
+| Production governor/supervisor/fixed roles | `0 / 0 / 0` |
+| Production root | absent before and after |
+| Dependency fetch/network/GitHub | `0 / 0 / 0` |
+
+The exact terminal compiler diagnostic was:
+
+```text
+PrimeValidationWorkflowContractsTests.swift:6:18: error:
+module 'PrimeValidationWorkflowContracts' was not compiled for testing
+@testable import PrimeValidationWorkflowContracts
+```
+
+The Release `swift build --build-tests` command compiled and linked the new
+SessionFixture, then reached PrimeCore and the contracts test target. This
+SwiftPM/toolchain combination did not make the Release contracts library
+testable under `build --build-tests`, so compilation stopped before the live
+test object, test bundle replacement, XCTest, or any fixture invocation. No
+same-epoch retry and no `--skip-build` test was permitted.
+
+Measured build outputs are:
+
+| Image | R0 terminal fact |
+| --- | --- |
+| SessionFixture | frozen `absent -> present`; device/inode `16777231/17382060`; `53,072` bytes; SHA-256 `177a18c20bc42486c77b52af4c472be222dec1baabf8973ece7b2d44ea92756e`; arm64 UUID `2EBB880A-D28B-32FF-9B7E-EB868AF5D9B6`; mode `0700`; mtime/ctime `1787500441/1787500441` |
+| ShotGovernor | absent |
+| DriverV2Supervisor | retained pre-R0 image; SHA-256 `57bae5845d7b2ad108309d623902bd7a68688c7882e1649ca23f8a93764dfafe`; no R0 replacement |
+| XCTest bundle executable | retained exact preimage `c3427b8c8c659a3be3e526f47adf2d5d6ed332b665ff9b967b0132e49187e712`; no R0 replacement |
+
+The source commit/tree remained clean and exact. All four manifest/lock hashes,
+the `1,704`-byte workspace-state hash, three changed-source hashes, Xcode tool
+facts, and both dependency commit/tree pairs remained exact. Both dependency
+checkouts remained clean. The Git template remained empty; the temporary
+prefix inventory before and after remained exactly the retained
+`/private/tmp/prime-validation-admission-tests-20260803-c` root and no public-
+admission root. The R0 epoch is retained at device/inode
+`16777231/17381583`; no child root was rebound.
+
+The only valid result vector is:
+
+```text
+R0_release_build_tests = FAIL
+R0_mixed_test_host_mechanics = ABSTAIN
+outer_journal_authority_vector = 00000000
+production_attempt_count = 0
+gate_E_scientific_outcome = ABSTAIN
+gate_E_clearance_granted = 0
+```
+
+This is a readiness-command incompatibility, not a GitHub failure, production
+shot, fixture failure, or Gate-E scientific result. It does not establish that
+later source files compile because the compiler stopped earlier in the graph.
+
+## Gate E1.4-R1 successor freeze — one Release `swift test`
+
+| Coordinate | Frozen value |
+| --- | --- |
+| Status | `FROZEN_NOT_EXECUTED` |
+| Durable-control predecessor | R0 freeze `72cc0a489bb39384e4166cc05dd76ef187c55dc0` / tree `b6f550c75772858dca32c88718421c6e6635a3e8` plus the R0 observations immediately above |
+| Permitted control delta | this combined R0 result and R1 successor freeze only |
+| Source commit/tree/identity | unchanged `4735739b10a699ebc1ef3b4dc87a209fb5189834` / `c44c7ae54cffa95a9d2c705191c542fa1ceda5db` / `74354d4581835d12f0624d0455e8167a4d608a5eecb8427debbe894a88a16ad2` |
+| R1 epoch | `/private/tmp/gate-e1-4-mechanics-r1-4735739b-74354d4581835d12`; absent before this freeze |
+| Authorized SwiftPM commands | exactly `1`: Release `swift test`, not `build --build-tests`, not `--skip-build` |
+| Selected XCTest methods | the same exact one anchored identifier |
+| R1 wall ceiling | `5,400` seconds |
+| Production attempts | `0` |
+| Fetch/network/GitHub | `0 / 0 / 0` |
+
+R1 corrects only the failed outer build command. `swift test` owns both the
+testable Release compilation and, only if that compilation succeeds, the exact
+one-method XCTest execution. No source, target, test identifier, process
+policy, authority bit, or production input changes.
+
+Create the fresh R1 epoch and the same exact nine private `0700` children as
+R0. Define `rho1` as replacement of the sole root string
+
+```text
+/private/tmp/gate-e1-4-mechanics-4735739b-74354d4581835d12
+```
+
+with
+
+```text
+/private/tmp/gate-e1-4-mechanics-r1-4735739b-74354d4581835d12
+```
+
+throughout the exact R0 `env -i` map and cache/config/security CLI paths. Every
+other environment key and value is byte-for-byte unchanged. The package path,
+explicit default scratch path, manifests, locks, workspace state, checkouts,
+Xcode tool/SDK paths, `umask 077`, stdin `/dev/null`, and reserved production-
+root absence are unchanged.
+
+Run this command exactly once:
+
+```sh
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift test \
+  --package-path /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.driver-v2-gate-c-staging/Tests/PrimeValidationWorkflow \
+  --configuration release \
+  --scratch-path /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.driver-v2-gate-c-staging/Tests/PrimeValidationWorkflow/.build \
+  --cache-path /private/tmp/gate-e1-4-mechanics-r1-4735739b-74354d4581835d12/swiftpm-cache \
+  --config-path /private/tmp/gate-e1-4-mechanics-r1-4735739b-74354d4581835d12/swiftpm-config \
+  --security-path /private/tmp/gate-e1-4-mechanics-r1-4735739b-74354d4581835d12/swiftpm-security \
+  --disable-netrc --disable-keychain --force-resolved-versions \
+  --disable-automatic-resolution --disable-sandbox --disable-swift-testing \
+  --filter '^PrimeValidationWorkflowDriverCoreTests\.PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests/testGateEJournalChainOneWinnerAndPoisonAreExact$' \
+  </dev/null
+```
+
+The R0 SessionFixture image is only R1's frozen preimage, not launched-image
+authority. A normal Release `swift test` may rebuild and relink it because the
+test graph enables testability across package targets. There is deliberately no
+outer pause between compilation and XCTest. Prelaunch image authority is the
+test's internal `O_NOFOLLOW` held descriptor plus mapped-image join; the outer
+observer records the final image after the complete command. The transcript
+must account for either exact retention or the preimage-to-successor
+transition. The XCTest bundle must replace its old
+`c3427b8c8c659a3be3e526f47adf2d5d6ed332b665ff9b967b0132e49187e712`
+preimage inside R1 and contain the new source identity and exact selected
+method. Any compile error prevents XCTest and yields `ABSTAIN`; it does not
+authorize a retry.
+
+R1 retains the exact R0 mixed-method process envelope: one XCTest runner, two
+SessionFixture supervisors, two passive children, and zero production
+Governor, production Supervisor, fixed Git/Swift role, spawn-canary,
+FixtureChild, or SecureChildIntegration launches. SwiftPM may use local Git
+only for read-only package planning; fetch, network, and mutation remain hard
+stops. The same eight ephemeral fixture bases must restore the pre-command
+temporary-prefix inventory before return.
+
+Acceptance and the claim ceiling are otherwise exactly R0. A pass may set only
+`R_mixed_test_host_mechanics = PASS` while retaining authority vector
+`00000000`, production attempt count `0`, Gate-E scientific outcome `ABSTAIN`,
+and Gate-E clearance `0`. R1 authorizes no production invocation.
