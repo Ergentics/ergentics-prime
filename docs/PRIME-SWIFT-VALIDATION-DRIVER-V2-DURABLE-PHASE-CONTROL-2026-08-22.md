@@ -6022,3 +6022,87 @@ exercise the package-internal fixture seam and must produce new Release
 governor/supervisor/XCTest image identities. Only a still-later production
 shot freeze may create one exact capsule and authorize one direct governor
 invocation. Gate F and Gate G remain separate and closed.
+
+## Gate E1.4-C1 correction — transferred-continuity watcher join
+
+| Coordinate | Frozen value |
+| --- | --- |
+| Status | `FROZEN_SOURCE_EDIT_NOT_IMPLEMENTED` |
+| Durable-control predecessor | `80b873f1129016d2f6506d749594fa81ec088074` / tree `46b4c4d95fe2a75f2480cf4efa318b40eb19822c` |
+| Source predecessor | clean `2d705a71dc1827cf4fe6f0f9f3bc8255063e1dd3` / tree `0077ac10f1dbba50680502a31084f7280c2c2f65` |
+| Authorized successor source commits | exactly `1`, a direct child of the source predecessor |
+| Authorized source paths | exactly `13` |
+| Existing preimages / new files / new directories | exactly `10 / 3 / 3` |
+| Successor files / identity records / authority directories | exactly `548 / 547 / 155` |
+| Prime / companion / combined watcher descriptors | exactly `703 / 1,460 / 2,163` |
+| Swift build / test / executable launch | `0 / 0 / 0` in this source slice |
+| Clone / root / cache / capsule creation | `0 / 0 / 0 / 0` |
+| Dependency resolution / fetch / network / GitHub | `0 / 0 / 0 / 0` |
+
+This correction supersedes only the twelve-path count, exact mutation set,
+and twelve-path wording in the E1.4-C source-slice terminal above. Every
+other E1.4-C matrix, equality predicate, process ceiling, and prohibition
+remains unchanged. The source successor is still one commit, not a second
+source commit or a retry.
+
+The hard-stop predicate found before source checkpoint was:
+
+```text
+W_success = 548 + 155 + 1,460 = 2,163
+W_transferred_continuity_predecessor = 2,157
+W_success != W_transferred_continuity_predecessor
+```
+
+`PrimeValidationSwiftPMBuildInventoryAdmissionCapability.revalidate()`
+reaches `fixedProbeRevalidateTransferredContinuity()` through the retained
+owner. Therefore the predecessor literal would reject every otherwise-valid
+successor binding. A test cannot override that production predicate.
+
+The corrected exact mutation set is the prior twelve-path set plus exactly:
+
+13. `Sources/PrimeCore/PrimeValidationSwiftPMBuildInventoryAdmission.swift`.
+
+Its source-predecessor preimage is exact:
+
+| Lines / bytes | Git blob / SHA-256 |
+| ---: | --- |
+| `2,568 / 97,844` | `dc37b1f041031fa2994b4156630085940e3a512a` / `ab6ebf4bc7629ca901b6bbe5643a556b82995d302b269464c94ffad65b128fb2` |
+
+The authorized delta in that thirteenth path is only the production watcher
+join `2_157 -> 2_163` inside
+`fixedProbeRevalidateTransferredContinuity()`. The already-authorized live
+test path changes its matching production-live expectation to `2_163` and
+repairs two manifest source slices so each proves only its intended target:
+
+```text
+SpawnCanary target -> terminate at the following GovernorCore .target(
+Supervisor target  -> terminate at the following SpawnCanary .executableTarget(
+```
+
+Those proof repairs add no product, target, source owner, watcher, authority,
+or execution surface. No other active `2_157`, `2157`, `545`, `544`, or `152`
+coupling requires mutation. Retired fixture manifests and historical
+identities remain byte-for-byte unchanged.
+
+The measured successor topology is:
+
+```text
+complete admitted files                    = 548
+source-identity records                    = 547
+held Prime parent-directory authorities    = 155
+Prime watcher descriptors                  = 548 + 155 = 703
+companion file+directory watcher descriptors          = 1,460
+combined watcher descriptors               = 703 + 1,460 = 2,163
+```
+
+The complete `Sources` / `Tests` traversal already captures the three new
+files, and the admission owner already requires itself. No required-source
+list changes are authorized. After all twelve non-provenance paths are final,
+two independent canonical calculations must agree on `548 / 547`, canonical
+byte count, and source-identity SHA-256. Only then may the existing provenance
+path (entry 12 in the prior ordering)
+`PrimeEmbeddedBuildProvenance.swift` receive the matching digest reseal.
+
+The later checkpoint must bind the exact thirteen-path delta and `2,163`
+watchers. No Swift command, fixture, governor, supervisor, child, Git probe,
+or shot is authorized by this correction.
