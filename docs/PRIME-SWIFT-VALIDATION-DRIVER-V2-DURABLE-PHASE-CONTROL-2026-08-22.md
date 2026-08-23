@@ -9157,3 +9157,77 @@ diff and independently recomputed source identity. Any later Release build or
 selected diagnostic requires a new readiness freeze and a fresh epoch. A
 missing, malformed, or causally unjoined v2 record remains `ABSTAIN`; it never
 authorizes an automatic retry.
+
+## Gate E1.4-R11 result — causal diagnostic source checkpointed
+
+| Coordinate | Exact result |
+| --- | --- |
+| Status | `SOURCE_CHECKPOINTED_STATIC_ONLY` |
+| R11 freeze | `23d46760e8ebdb49d67a36ccd735fce16ffea265` / tree `b8d08fc0fa6a4fa0d803e58e7d3d74999ce8a2fd` |
+| Source predecessor | `1bd9b9e2f30dc17e7983cb6f9bf0ae4831851efd` / tree `a2aff7d040c97c379161eec3ea0459f336cd9205` |
+| Source checkpoint | `b7eefedd33baa9238f93bf92659636d2e15ce20c` / tree `2416b4281d39f85b349d77f8b052ff1f1845a045` |
+| Commit patch SHA-256 | `4a75d14a4553ed87b0d725582591105fb9a52167d8b2a2c7d09bcc0104b9b62e` |
+| Source identity | `d388fa32da538cd40b88d21308fd3d55be1a916d505761b37f891f9e804b1128` |
+| Diff | exactly three modified `100644` paths; `+841/-64`; no topology or mode change |
+| SwiftPM / build / test / target launch / production attempt | `0 / 0 / 0 / 0 / 0` |
+| Authority vector / Gate-E outcome / clearance | `00000000 / ABSTAIN / 0` |
+
+The exact successor files are:
+
+| Path | Lines / bytes | Git blob | SHA-256 |
+| --- | ---: | --- | --- |
+| `Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift` | `13 / 546` | `805b36ebd383ea425e87884dbab80b7cd4a1aa0b` | `31a09226702b2fe41a72e4e3eaa5c42ccf308e9894c8bed17c886905b87eb62a` |
+| `Tests/PrimeValidationWorkflow/Sources/PrimeValidationWorkflowDriverV2ShotGovernorCore/PrimeValidationDriverV2ShotGovernor.swift` | `6,224 / 238,520` | `66386bf05a0941db9291c4ac1a5ca25ec5d34a08` | `1f2875701698d59b22a445e8f3be44401a925ad1981e5af9f670e86789376b08` |
+| `Tests/PrimeValidationWorkflow/Tests/PrimeValidationWorkflowDriverCoreTests/PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests.swift` | `7,263 / 263,762` | `2d94d0d087aaa9b3f4bd975af20ab63ac24870b7` | `b308ecf10a3dac62794530f3fcd1126ea955ac0e87e85a0eeed61de6469e1ced` |
+
+Independent canonical calculators agree after the provenance reseal:
+
+```text
+admitted files = 548
+identity records = 547
+canonical identity bytes = 112279
+aggregate admitted bytes = 22520871
+enumerated / held directories = 146 / 155
+Prime / combined watchers = 703 / 2163
+source identity = d388fa32da538cd40b88d21308fd3d55be1a916d505761b37f891f9e804b1128
+```
+
+The provenance file is the exact canonical `13`-line, `546`-byte template; it
+contains the successor identity once and its immediate predecessor identity
+zero times. Its only diff is the digest line.
+
+Three independent static audits agree on the implementation vector:
+
+```text
+v1 live publisher/schema count = 0
+v2 schema literal count = 1
+v2 stored field count = 20
+fixed canonical fixture bytes / trailing LF = 738 / 0
+fixed canonical fixture SHA-256 = c684e58083b0e1bfa9fd99afccc750a2a2f18a28b046e57c394b042a9f6ee796
+package data-seam definitions / LiveTests calls / governor-main calls = 1 / 1 / 0
+LiveTests method identifiers before / after = 52 / 52
+selected identifier occurrences = 1
+posix_spawn / Darwin.kill / Darwin.waitpid / DispatchSource owner deltas = 0 / 0 / 0 / 0
+diagnostic reads of the existing death watcher = +1
+SessionCensus.contain signature delta = 0
+```
+
+The source now preserves the initiating typed census status/coordinate before
+unchanged rethrow and attaches the defer stop's immediate return/errno and
+existing watcher-check scalars to the unique private `supervisor_stop` failure.
+The exact `orphan_initial_census / armed` join fixes the record's attempt to
+`1`. The contained decision, signal target, deadline, scan, reap, held-leaf
+publication, and unconditional `_exit(70)` semantics remain unchanged.
+
+The retained admission inventory remains exactly eleven roots with sorted
+path-set SHA-256
+`4b7a0c36a26fa051bd58703538b60f3762b73a94e109a9b960abc743d7e66216`.
+No retained root was mutated or cleaned. The reserved successor production root
+`/private/tmp/prime-driver-v2-gate-e-release-d388fa32da538cd40b88d21308fd3d55be1a916d505761b37f891f9e804b1128`
+is absent.
+
+R11 closes no one of the eight process-derived authorities. Its pure fixture
+and source assertions have not been compiled or executed. A future Release
+diagnostic requires a separately committed readiness freeze, a fresh disjoint
+epoch, corrected implementation-artifact freshness predicates, and exactly one
+authorized selected test command. No R9 root, command, or epoch may be reused.
