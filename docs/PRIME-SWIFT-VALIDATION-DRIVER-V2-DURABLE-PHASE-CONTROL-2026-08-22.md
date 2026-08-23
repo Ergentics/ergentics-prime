@@ -6294,3 +6294,51 @@ exact thirteen-path delta. The one source commit remains a direct child of
 `2d705a71dc1827cf4fe6f0f9f3bc8255063e1dd3`. A later separately frozen
 readiness run, not this slice, may compile and execute the mechanics proof.
 No production governor invocation is authorized by C2.
+
+## Gate E1.4-C3 correction — physical Swift image join
+
+| Coordinate | Frozen value |
+| --- | --- |
+| Status | `FROZEN_SOURCE_EDIT_NOT_CHECKPOINTED` |
+| Durable-control predecessor | `6e8bbd55e2304d2adc1340a2d076bae212988a05` / tree `5a0b7c96f3073235c26e0b4214d8beffb61bf0d9` |
+| Source predecessor / successor / paths | unchanged from C2: `2d705a71...`, one direct child, exact `13` paths |
+| Topology and watchers | unchanged: `548 / 547 / 155`; `703 + 1,460 = 2,163` |
+| Swift build / test / executable launch | `0 / 0 / 0` in this source slice |
+
+Static receipt integration established this false candidate equation:
+
+```text
+I_swift = intent.swift_executable
+        = .../XcodeDefault.xctoolchain/usr/bin/swift
+
+P_swift = fixed Gate-E process image
+        = .../XcodeDefault.xctoolchain/usr/bin/swift-frontend
+
+path(I_swift) != path(P_swift)
+bytes(I_swift) are not authority for bytes(P_swift)
+```
+
+The existing capsule field `swift_executable` is therefore frozen as the
+physical `P_swift` declaration, not a duplicate of `I_swift`. Capsule
+validation must derive the exact sibling `swift-frontend` path from the
+already-validated intent `/swift` path and require the physical binding's
+absolute path to equal it. The governor opens, hashes, retains, mapped-vnode
+joins, and rejoins that exact physical binding. The inner prestart and every
+Swift role must agree with its bytes and vnode.
+
+The intent remains byte-for-byte the logical requested Swift contract and is
+still forwarded unchanged to the supervisor. It continues to derive the
+developer directory, SDK, deterministic environment, and logical `argv[0] =
+swift`. It is never substituted as the executed-image content authority.
+
+Accordingly, the C2 value-only DriverCore expectation must carry both the
+complete physical `swift-frontend` executable binding and its descriptor-
+derived vnode observation. A vnode without the independently held content
+binding is insufficient. Receipt identity includes the physical binding.
+DriverCore opens no path and derives no bytes from the inner journal.
+
+This correction changes no capsule schema key, source path, process count,
+authority bit, topology, or watcher count. Any implementation retaining
+`capsule.swiftExecutable == capsule.intent.swiftExecutable`, comparing a
+Swift-role image hash with intent `/swift` bytes, or accepting a vnode-only
+frontend expectation is a hard stop. All C2 predicates remain required.
