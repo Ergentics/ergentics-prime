@@ -7083,3 +7083,67 @@ receipt schema, or control source may change. The one clean source commit is
 the terminal of R2. A separately committed R3 readiness freeze is required
 before any Swift compile or XCTest command. R2 itself authorizes no retry and
 no production Gate-E action.
+
+## Gate E1.4-R2 source checkpoint — Darwin primitive repair
+
+| Coordinate | Checkpoint value |
+| --- | --- |
+| Status | `SOURCE_CHECKPOINTED_STATIC_ONLY_NOT_EXECUTED` |
+| Durable-control authority | `98e780276798563f36695a89a9adadd2d43dc4c9` / tree `3a9dc71c81430f66b8a94f69a026ed0f24fc00af` |
+| Source predecessor | `4735739b10a699ebc1ef3b4dc87a209fb5189834` / tree `c44c7ae54cffa95a9d2c705191c542fa1ceda5db` |
+| Source checkpoint | `22ae3332aa75dad68e12660d43e8822f03a871a3` / tree `4ed3c124be29e5b0d194009bc0617ca2ae5ca24b` |
+| Parent relation | exactly one parent, the frozen source predecessor |
+| Source delta | exactly `2` modified mode-`100644` paths; `103` insertions / `64` deletions |
+| Swift build / test / executable launch | `0 / 0 / 0` |
+| Dependency resolution / fetch / network / GitHub | `0 / 0 / 0 / 0` |
+| Authority vector / Gate-E outcome / clearance | `00000000 / ABSTAIN / 0` |
+
+The exact successor files are:
+
+| Path | Lines / bytes | Blob / SHA-256 |
+| --- | ---: | --- |
+| `Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift` | `13 / 546` | `06ab44fda46c03f3a00f84f9d5510a848eb4a73b` / `6ce0e7bc6699639103ef26ddf9daa14b844562018858ae33545175c8b716c547` |
+| `Tests/PrimeValidationWorkflow/Sources/PrimeValidationWorkflowDriverV2ShotGovernorCore/PrimeValidationDriverV2ShotGovernor.swift` | `5,469 / 209,036` | `b460519eedd325b190f92bfd34874d4efe483017` / `a10477265e56e36513b2f643fef342f1b5f2839b1c35ce3f0c2c9019c88c1ac9` |
+
+Independent Python and Ruby calculations both reproduced the predecessor
+identity from its Git blob before agreeing on the successor:
+
+| Quantity | Predecessor control | R2 successor |
+| --- | ---: | ---: |
+| Admitted files | `548` | `548` |
+| Identity records | `547` | `547` |
+| Canonical record bytes | `112,279` | `112,279` |
+| Aggregate admitted bytes | `22,457,455` | `22,458,475` |
+| Held Prime authority directories | `155` | `155` |
+| Prime / combined watchers | `703 / 2,163` | `703 / 2,163` |
+| Source identity SHA-256 | `74354d4581835d12f0624d0455e8167a4d608a5eecb8427debbe894a88a16ad2` | `689807021fe36551afcda7d65e1bfc66e12092abcb9feb097e5d53a343e9ca3b` |
+
+Both calculators rechecked the successor after the exact excluded-provenance
+reseal and returned the same identity. The capture enumerator's `146`
+directory-safety count is a different quantity from the complete `155`
+proper-parent authority set and does not replace the watcher arithmetic.
+
+Three independent static audits established the frozen source vector:
+
+```text
+descriptor_path_proc_pidfdinfo_sites = 1
+F_GETPATH_sites = 0
+standard_addfchdir_symbols = 1
+legacy_np_addfchdir_symbols = 1
+working_directory_helper_definition = 1
+working_directory_helper_call_sites = 2
+direct_addfchdir_calls_outside_helper = 0
+macOS_26_availability_partitions = 1
+```
+
+The helper takes only an action pointer and already-held descriptor. Both
+call sites retain `addinherit_np -> one fchdir action -> addclose`. Path
+recovery is an observation from a duplicated descriptor; constructor-specific
+leaf checks and held/named vnode, metadata, xattr, byte, and continuity joins
+remain the authority. The request bytes are read only after metadata equality.
+No Package.swift, test, main, DriverCore, fixed-role, receipt, command, argv,
+environment, cwd, timeout, retry, or process surface changed.
+
+This checkpoint closes only the four R1 compiler constructs by static source
+inspection. It makes no compilation, XCTest, fixture, production-image, or
+Gate-E claim.
