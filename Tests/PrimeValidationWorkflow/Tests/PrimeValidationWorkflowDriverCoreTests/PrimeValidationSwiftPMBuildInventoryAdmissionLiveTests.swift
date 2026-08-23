@@ -18,17 +18,25 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
         #if DEBUG
             throw XCTSkip("public embedded-source admission is Release-only")
         #else
-            guard let companionPath = ProcessInfo.processInfo.environment[
-                "PRIME_PMHNP_COMPANION_ROOT"
-            ], companionPath.hasPrefix("/") else {
-                throw XCTSkip(
-                    "set PRIME_PMHNP_COMPANION_ROOT for the public live gate"
+            let environment = ProcessInfo.processInfo.environment
+            guard let primePath = environment[
+                "PRIME_DRIVER_V2_GATE_E_PRIME_ROOT"
+            ], primePath.hasPrefix("/") else {
+                throw FixtureError.invalid(
+                    "PRIME_DRIVER_V2_GATE_E_PRIME_ROOT"
                 )
             }
-            var primeRepository = URL(fileURLWithPath: #filePath)
-            for _ in 0 ..< 5 {
-                primeRepository.deleteLastPathComponent()
+            guard let companionPath = environment[
+                "PRIME_PMHNP_COMPANION_ROOT"
+            ], companionPath.hasPrefix("/") else {
+                throw FixtureError.invalid(
+                    "PRIME_PMHNP_COMPANION_ROOT"
+                )
             }
+            let primeRepository = URL(
+                fileURLWithPath: primePath,
+                isDirectory: true
+            )
             let base = URL(
                 fileURLWithPath:
                     "/private/tmp/prime-validation-public-admission-"
@@ -272,6 +280,15 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
 
         var prerequisite = try capability?.consumePrerequisites()
         XCTAssertNotNil(prerequisite)
+        XCTAssertEqual(
+            prerequisite?.processExecutionObservation,
+            .unobserved
+        )
+        XCTAssertEqual(
+            prerequisite?.missingAuthorities,
+            PrimeValidationSwiftPMMissingAuthority.allCases
+        )
+        XCTAssertEqual(prerequisite?.completionAuthorized, false)
         capability = nil
         assertLeaseBusy(fixture.lockURL)
 
@@ -850,8 +867,9 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
 
             XCTAssertThrowsError(try fixture.admit()) {
                 XCTAssertEqual(
-                    $0 as? PrimeSwiftSourceProvenanceError,
-                    .incompleteSourceSnapshot,
+                    $0 as?
+                        PrimeValidationSwiftPMBuildInventoryAdmissionRejectionSite,
+                    .sourceSnapshot,
                     relativePath
                 )
             }
@@ -2630,7 +2648,13 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
         )
         XCTAssertThrowsError(
             try fixture.admit(workspace: alias)
-        )
+        ) { error in
+            XCTAssertEqual(
+                error as?
+                    PrimeValidationSwiftPMBuildInventoryAdmissionRejectionSite,
+                .workspaceRoot
+            )
+        }
 
         let parent = try fixture.makeDirectory("overlap-parent")
         let child = try fixture.makeDirectory(
@@ -2644,8 +2668,8 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
         ) { error in
             XCTAssertEqual(
                 error as?
-                    PrimeValidationSwiftPMBuildInventoryAdmissionError,
-                .rejected("directory_path_overlap")
+                    PrimeValidationSwiftPMBuildInventoryAdmissionRejectionSite,
+                .rootTopology
             )
         }
     }
@@ -2981,16 +3005,10 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
             }
 
             XCTAssertThrowsError(try fixture.admit(), mutation) { error in
-                guard let admissionError = error as?
-                        PrimeValidationSwiftPMBuildInventoryAdmissionError,
-                      case .rejected(let detail) = admissionError
-                else {
-                    return XCTFail(
-                        "unexpected \(mutation) error: \(error)"
-                    )
-                }
-                XCTAssertTrue(
-                    detail.hasPrefix("companion_working_tree_"),
+                XCTAssertEqual(
+                    error as?
+                        PrimeValidationSwiftPMBuildInventoryAdmissionRejectionSite,
+                    .companionContentSnapshot,
                     mutation
                 )
             }
@@ -3048,8 +3066,8 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
         XCTAssertThrowsError(try deepFixture.admit()) { error in
             XCTAssertEqual(
                 error as?
-                    PrimeValidationSwiftPMBuildInventoryAdmissionError,
-                .rejected("companion_working_tree_relative_depth")
+                    PrimeValidationSwiftPMBuildInventoryAdmissionRejectionSite,
+                .companionContentSnapshot
             )
         }
 
@@ -3073,8 +3091,8 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
         XCTAssertThrowsError(try largeFixture.admit()) { error in
             XCTAssertEqual(
                 error as?
-                    PrimeValidationSwiftPMBuildInventoryAdmissionError,
-                .rejected("companion_working_tree_file_metadata")
+                    PrimeValidationSwiftPMBuildInventoryAdmissionRejectionSite,
+                .companionContentSnapshot
             )
         }
     }
@@ -3094,8 +3112,8 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
         ) { error in
             XCTAssertEqual(
                 error as?
-                    PrimeValidationSwiftPMBuildInventoryAdmissionError,
-                .rejected("companion_declaration")
+                    PrimeValidationSwiftPMBuildInventoryAdmissionRejectionSite,
+                .companionDeclaration
             )
         }
     }
@@ -3115,6 +3133,261 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
             "/usr/bin/swift",
         ] {
             XCTAssertFalse(source.contains(forbidden), forbidden)
+        }
+
+        let rejectionSiteSource = try slice(
+            source,
+            from:
+                "@frozen\npublic enum PrimeValidationSwiftPMBuildInventoryAdmissionRejectionSite",
+            through:
+                "extension PrimeValidationSwiftPMBuildInventoryAdmissionError"
+        )
+        XCTAssertTrue(rejectionSiteSource.contains("Error,"))
+        XCTAssertTrue(rejectionSiteSource.contains("Equatable,"))
+        XCTAssertTrue(rejectionSiteSource.contains("Sendable"))
+        XCTAssertEqual(
+            rejectionSiteSource.components(separatedBy: "    case ")
+                .count - 1,
+            17
+        )
+        let rejectionSiteNames = [
+            "companionDeclaration",
+            "primeRepository",
+            "workspaceRoot",
+            "workspacePrivateAndEmpty",
+            "evidenceRoot",
+            "evidencePrivateAndEmpty",
+            "companionRepository",
+            "leaseDirectory",
+            "leasePrivateAndEmpty",
+            "rootTopology",
+            "exclusiveLease",
+            "postLeaseDirectory",
+            "sourceSnapshot",
+            "packageResolvedBinding",
+            "primeSourceIdentitySnapshot",
+            "companionContentSnapshot",
+            "heldToolchain",
+        ]
+        let rejectionSiteCaseLines = rejectionSiteSource
+            .split(separator: "\n")
+            .map {
+                String($0).trimmingCharacters(in: .whitespaces)
+            }
+            .filter { $0.hasPrefix("case ") }
+        XCTAssertEqual(
+            rejectionSiteCaseLines,
+            rejectionSiteNames.map { "case \($0)" }
+        )
+        var rejectionSiteCursor = rejectionSiteSource.startIndex
+        for siteName in rejectionSiteNames {
+            let range = try XCTUnwrap(
+                rejectionSiteSource.range(
+                    of: "case \(siteName)",
+                    range:
+                        rejectionSiteCursor ..< rejectionSiteSource.endIndex
+                )
+            )
+            rejectionSiteCursor = range.upperBound
+        }
+        for forbidden in [
+            "Codable",
+            "RawRepresentable",
+            "rawValue",
+            "String",
+            "Int32",
+            "URL",
+            "Data",
+            "public init(",
+        ] {
+            XCTAssertFalse(rejectionSiteSource.contains(forbidden), forbidden)
+        }
+        XCTAssertEqual(
+            source.components(
+                separatedBy: "public static func admitPrerequisites("
+            ).count - 1,
+            1
+        )
+        XCTAssertEqual(
+            source.components(
+                separatedBy: "static func admitPrerequisites("
+            ).count - 1,
+            2
+        )
+        XCTAssertFalse(source.contains("observationEnabled"))
+        XCTAssertFalse(source.contains("observeAdmission"))
+
+        let rejectionHelperSource = try slice(
+            source,
+            from: "private static func atRejectionSite<Value>(",
+            through: "    /// Admits only live prerequisites."
+        )
+        let normalizedRejectionHelper = rejectionHelperSource
+            .split(whereSeparator: { $0.isWhitespace })
+            .joined(separator: " ")
+        XCTAssertEqual(
+            normalizedRejectionHelper,
+            "private static func atRejectionSite<Value>( " +
+                "_ site: " +
+                "PrimeValidationSwiftPMBuildInventoryAdmissionRejectionSite, " +
+                "_ operation: () throws -> Value ) throws -> Value " +
+                "{ do { return try operation() } catch { throw site } }"
+        )
+
+        let admissionBodySource = try slice(
+            source,
+            from:
+                "    /// Internal only: permits isolated tests to seal a synthetic complete",
+            through:
+                "    private static func validateCompanionDeclaration("
+        )
+        let normalizedAdmissionBody = admissionBodySource
+            .split(whereSeparator: { $0.isWhitespace })
+            .joined(separator: " ")
+            .replacingOccurrences(of: "( ", with: "(")
+            .replacingOccurrences(of: " )", with: ")")
+        XCTAssertEqual(
+            normalizedAdmissionBody.components(
+                separatedBy: "atRejectionSite("
+            ).count - 1,
+            17
+        )
+        var admissionSiteCursor = normalizedAdmissionBody.startIndex
+        for siteName in rejectionSiteNames {
+            let range = try XCTUnwrap(
+                normalizedAdmissionBody.range(
+                    of: "atRejectionSite(.\(siteName))",
+                    range:
+                        admissionSiteCursor ..< normalizedAdmissionBody.endIndex
+                )
+            )
+            admissionSiteCursor = range.upperBound
+        }
+        let admissionOperationAnchors: [(String, [String])] = [
+            (
+                "companionDeclaration",
+                ["validateCompanionDeclaration(companionDeclaration)"]
+            ),
+            (
+                "primeRepository",
+                [
+                    "PrimeValidationSwiftPMHeldUserDirectory(",
+                    "url: primeRepositoryURL",
+                ]
+            ),
+            (
+                "workspaceRoot",
+                [
+                    "PrimeValidationSwiftPMHeldUserDirectory(",
+                    "url: workspaceRootURL",
+                ]
+            ),
+            (
+                "workspacePrivateAndEmpty",
+                ["workspaceRoot.requirePrivateAndEmpty()"]
+            ),
+            (
+                "evidenceRoot",
+                [
+                    "PrimeValidationSwiftPMHeldUserDirectory(",
+                    "url: evidenceRootURL",
+                ]
+            ),
+            (
+                "evidencePrivateAndEmpty",
+                ["evidenceRoot.requirePrivateAndEmpty()"]
+            ),
+            (
+                "companionRepository",
+                [
+                    "PrimeValidationSwiftPMHeldUserDirectory(",
+                    "url: companionRepositoryURL",
+                ]
+            ),
+            (
+                "leaseDirectory",
+                [
+                    "PrimeValidationSwiftPMHeldUserDirectory(",
+                    "url: leaseDirectoryURL",
+                ]
+            ),
+            (
+                "leasePrivateAndEmpty",
+                ["initialLeaseDirectory.requirePrivateAndEmpty()"]
+            ),
+            (
+                "rootTopology",
+                [
+                    "requireDisjointAndNonNested([",
+                    "initialLeaseDirectory.observation",
+                ]
+            ),
+            (
+                "exclusiveLease",
+                ["PrimeMetalDeviceLease.acquire(at: leaseURL)"]
+            ),
+            (
+                "postLeaseDirectory",
+                [
+                    "PrimeValidationSwiftPMHeldUserDirectory(",
+                    "url: leaseDirectoryURL",
+                ]
+            ),
+            (
+                "sourceSnapshot",
+                [
+                    "if let sourceExpectation",
+                    "PrimeSwiftSourceProvenance.capture(",
+                    "expectation: sourceExpectation",
+                ]
+            ),
+            (
+                "packageResolvedBinding",
+                [
+                    "sourceSnapshot.files.first(where:",
+                    "binding.validateDeclaration()",
+                ]
+            ),
+            (
+                "primeSourceIdentitySnapshot",
+                ["captureLegacyPrimeSourceIdentity("]
+            ),
+            (
+                "companionContentSnapshot",
+                ["PrimeSecureHeldWorkingTreeSnapshot.capture("]
+            ),
+            (
+                "heldToolchain",
+                ["PrimeValidationSwiftPMHeldToolchain("]
+            ),
+        ]
+        XCTAssertEqual(
+            admissionOperationAnchors.map { $0.0 },
+            rejectionSiteNames
+        )
+        for index in admissionOperationAnchors.indices {
+            let siteName = admissionOperationAnchors[index].0
+            let start = try XCTUnwrap(
+                normalizedAdmissionBody.range(
+                    of: "atRejectionSite(.\(siteName))"
+                )
+            ).lowerBound
+            let end: String.Index
+            if index + 1 < admissionOperationAnchors.count {
+                let nextSiteName = admissionOperationAnchors[index + 1].0
+                end = try XCTUnwrap(
+                    normalizedAdmissionBody.range(
+                        of: "atRejectionSite(.\(nextSiteName))",
+                        range: start ..< normalizedAdmissionBody.endIndex
+                    )
+                ).lowerBound
+            } else {
+                end = normalizedAdmissionBody.endIndex
+            }
+            let segment = normalizedAdmissionBody[start ..< end]
+            for anchor in admissionOperationAnchors[index].1 {
+                XCTAssertTrue(segment.contains(anchor), "\(siteName):\(anchor)")
+            }
         }
 
         let capabilitySource = try slice(
@@ -3883,10 +4156,73 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
             "Tests/PrimeValidationWorkflow/Sources/" +
                 "PrimeValidationWorkflowDriverV2Supervisor/main.swift"
         )
+        let admissionSiteStatuses = [
+            ("companionDeclaration", "admissionCompanionDeclaration", 74),
+            ("primeRepository", "admissionPrimeRepository", 75),
+            ("workspaceRoot", "admissionWorkspaceRoot", 76),
+            (
+                "workspacePrivateAndEmpty",
+                "admissionWorkspacePrivateAndEmpty",
+                77
+            ),
+            ("evidenceRoot", "admissionEvidenceRoot", 78),
+            (
+                "evidencePrivateAndEmpty",
+                "admissionEvidencePrivateAndEmpty",
+                79
+            ),
+            ("companionRepository", "admissionCompanionRepository", 80),
+            ("leaseDirectory", "admissionLeaseDirectory", 81),
+            (
+                "leasePrivateAndEmpty",
+                "admissionLeasePrivateAndEmpty",
+                82
+            ),
+            ("rootTopology", "admissionRootTopology", 83),
+            ("exclusiveLease", "admissionExclusiveLease", 84),
+            ("postLeaseDirectory", "admissionPostLeaseDirectory", 85),
+            ("sourceSnapshot", "admissionSourceSnapshot", 86),
+            (
+                "packageResolvedBinding",
+                "admissionPackageResolvedBinding",
+                87
+            ),
+            (
+                "primeSourceIdentitySnapshot",
+                "admissionPrimeSourceIdentitySnapshot",
+                88
+            ),
+            (
+                "companionContentSnapshot",
+                "admissionCompanionContentSnapshot",
+                89
+            ),
+            ("heldToolchain", "admissionHeldToolchain", 90),
+        ]
+        XCTAssertEqual(admissionSiteStatuses.count, 17)
+        XCTAssertEqual(
+            Set(admissionSiteStatuses.map { $0.0 }).count,
+            17
+        )
+        XCTAssertEqual(
+            Set(admissionSiteStatuses.map { $0.1 }).count,
+            17
+        )
+        XCTAssertEqual(
+            Set(admissionSiteStatuses.map { $0.2 }).count,
+            17
+        )
+        XCTAssertEqual(
+            admissionSiteStatuses.map { $0.2 },
+            Array(74 ... 90)
+        )
         let phaseStatuses = [
             "static let transport: Int32 = 65",
             "static let developerDirectory: Int32 = 66",
             "static let prerequisiteAdmission: Int32 = 71",
+        ] + admissionSiteStatuses.map {
+            "static let \($0.1): Int32 = \($0.2)"
+        } + [
             "static let prerequisiteConsume: Int32 = 72",
             "static let guardPreparation: Int32 = 73",
             "static let supervisorImage: Int32 = 67",
@@ -3938,6 +4274,104 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
                 reference
             )
         }
+        for (_, statusName, _) in admissionSiteStatuses {
+            let reference = ".\(statusName)"
+            XCTAssertEqual(
+                supervisorSource.components(
+                    separatedBy: reference
+                ).count - 1,
+                1,
+                reference
+            )
+        }
+        let admissionMapperSource = try slice(
+            supervisorSource,
+            from:
+                "private static func prerequisiteAdmissionExitStatus(",
+            through: "private static func requestFromStandardInput() throws"
+        )
+        XCTAssertTrue(
+            admissionMapperSource.contains(
+                "error as?\n                PrimeValidationSwiftPMBuildInventoryAdmissionRejectionSite"
+            )
+        )
+        let normalizedAdmissionMapper = admissionMapperSource
+            .split(whereSeparator: { $0.isWhitespace })
+            .joined(separator: " ")
+        XCTAssertTrue(
+            normalizedAdmissionMapper.contains(
+                "guard let site = error as? " +
+                    "PrimeValidationSwiftPMBuildInventoryAdmissionRejectionSite " +
+                    "else { return nil }"
+            )
+        )
+        var mapperCursor = admissionMapperSource.startIndex
+        for (siteName, statusName, _) in admissionSiteStatuses {
+            let siteRange = try XCTUnwrap(
+                admissionMapperSource.range(
+                    of: "case .\(siteName):",
+                    range: mapperCursor ..< admissionMapperSource.endIndex
+                )
+            )
+            let statusRange = try XCTUnwrap(
+                admissionMapperSource.range(
+                    of: ".\(statusName)",
+                    range:
+                        siteRange.upperBound ..<
+                        admissionMapperSource.endIndex
+                )
+            )
+            XCTAssertLessThan(siteRange.lowerBound, statusRange.lowerBound)
+            mapperCursor = statusRange.upperBound
+        }
+        XCTAssertFalse(admissionMapperSource.contains("String(describing:"))
+        XCTAssertFalse(admissionMapperSource.contains("localizedDescription"))
+        XCTAssertFalse(admissionMapperSource.contains("NSError"))
+        XCTAssertFalse(admissionMapperSource.contains("errno"))
+        let admissionCatchSource = try slice(
+            supervisorSource,
+            from: "        let admission:",
+            through: "        let prerequisite:"
+        )
+        let normalizedAdmissionCatch = admissionCatchSource
+            .split(whereSeparator: { $0.isWhitespace })
+            .joined(separator: " ")
+        let normalizedCatchStart = try XCTUnwrap(
+            normalizedAdmissionCatch.range(
+                of: "} catch {",
+                options: .backwards
+            )
+        ).lowerBound
+        XCTAssertEqual(
+            String(normalizedAdmissionCatch[normalizedCatchStart...]),
+            "} catch { let status = " +
+                "prerequisiteAdmissionExitStatus( for: error ) ?? " +
+                "PrimeValidationDriverV2SupervisorExitStatus " +
+                ".prerequisiteAdmission Darwin._exit( status ) }"
+        )
+        XCTAssertEqual(
+            admissionCatchSource.components(
+                separatedBy: "prerequisiteAdmissionExitStatus("
+            ).count - 1,
+            1
+        )
+        XCTAssertEqual(
+            admissionCatchSource.components(
+                separatedBy: ".prerequisiteAdmission"
+            ).count - 1,
+            1
+        )
+        XCTAssertEqual(
+            admissionCatchSource.components(
+                separatedBy: "Darwin._exit("
+            ).count - 1,
+            1
+        )
+        XCTAssertTrue(
+            admissionCatchSource.contains(
+                "Darwin._exit(\n                status\n            )"
+            )
+        )
         let exitReferenceSequence = [
             ".transport",
             ".developerDirectory",

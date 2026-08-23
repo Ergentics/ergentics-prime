@@ -14,6 +14,23 @@ private enum PrimeValidationDriverV2SupervisorExitStatus {
     static let transport: Int32 = 65
     static let developerDirectory: Int32 = 66
     static let prerequisiteAdmission: Int32 = 71
+    static let admissionCompanionDeclaration: Int32 = 74
+    static let admissionPrimeRepository: Int32 = 75
+    static let admissionWorkspaceRoot: Int32 = 76
+    static let admissionWorkspacePrivateAndEmpty: Int32 = 77
+    static let admissionEvidenceRoot: Int32 = 78
+    static let admissionEvidencePrivateAndEmpty: Int32 = 79
+    static let admissionCompanionRepository: Int32 = 80
+    static let admissionLeaseDirectory: Int32 = 81
+    static let admissionLeasePrivateAndEmpty: Int32 = 82
+    static let admissionRootTopology: Int32 = 83
+    static let admissionExclusiveLease: Int32 = 84
+    static let admissionPostLeaseDirectory: Int32 = 85
+    static let admissionSourceSnapshot: Int32 = 86
+    static let admissionPackageResolvedBinding: Int32 = 87
+    static let admissionPrimeSourceIdentitySnapshot: Int32 = 88
+    static let admissionCompanionContentSnapshot: Int32 = 89
+    static let admissionHeldToolchain: Int32 = 90
     static let prerequisiteConsume: Int32 = 72
     static let guardPreparation: Int32 = 73
     static let supervisorImage: Int32 = 67
@@ -95,9 +112,12 @@ private struct PrimeValidationWorkflowDriverV2Supervisor {
                     developerDirectoryURL: developerDirectoryURL
                 )
         } catch {
+            let status = prerequisiteAdmissionExitStatus(
+                for: error
+            ) ?? PrimeValidationDriverV2SupervisorExitStatus
+                .prerequisiteAdmission
             Darwin._exit(
-                PrimeValidationDriverV2SupervisorExitStatus
-                    .prerequisiteAdmission
+                status
             )
         }
 
@@ -163,6 +183,69 @@ private struct PrimeValidationWorkflowDriverV2Supervisor {
             Darwin._exit(
                 PrimeValidationDriverV2SupervisorExitStatus.finalRevalidation
             )
+        }
+    }
+
+    private static func prerequisiteAdmissionExitStatus(
+        for error: Error
+    ) -> Int32? {
+        guard let site = error as?
+                PrimeValidationSwiftPMBuildInventoryAdmissionRejectionSite
+        else {
+            return nil
+        }
+        switch site {
+        case .companionDeclaration:
+            return PrimeValidationDriverV2SupervisorExitStatus
+                .admissionCompanionDeclaration
+        case .primeRepository:
+            return PrimeValidationDriverV2SupervisorExitStatus
+                .admissionPrimeRepository
+        case .workspaceRoot:
+            return PrimeValidationDriverV2SupervisorExitStatus
+                .admissionWorkspaceRoot
+        case .workspacePrivateAndEmpty:
+            return PrimeValidationDriverV2SupervisorExitStatus
+                .admissionWorkspacePrivateAndEmpty
+        case .evidenceRoot:
+            return PrimeValidationDriverV2SupervisorExitStatus
+                .admissionEvidenceRoot
+        case .evidencePrivateAndEmpty:
+            return PrimeValidationDriverV2SupervisorExitStatus
+                .admissionEvidencePrivateAndEmpty
+        case .companionRepository:
+            return PrimeValidationDriverV2SupervisorExitStatus
+                .admissionCompanionRepository
+        case .leaseDirectory:
+            return PrimeValidationDriverV2SupervisorExitStatus
+                .admissionLeaseDirectory
+        case .leasePrivateAndEmpty:
+            return PrimeValidationDriverV2SupervisorExitStatus
+                .admissionLeasePrivateAndEmpty
+        case .rootTopology:
+            return PrimeValidationDriverV2SupervisorExitStatus
+                .admissionRootTopology
+        case .exclusiveLease:
+            return PrimeValidationDriverV2SupervisorExitStatus
+                .admissionExclusiveLease
+        case .postLeaseDirectory:
+            return PrimeValidationDriverV2SupervisorExitStatus
+                .admissionPostLeaseDirectory
+        case .sourceSnapshot:
+            return PrimeValidationDriverV2SupervisorExitStatus
+                .admissionSourceSnapshot
+        case .packageResolvedBinding:
+            return PrimeValidationDriverV2SupervisorExitStatus
+                .admissionPackageResolvedBinding
+        case .primeSourceIdentitySnapshot:
+            return PrimeValidationDriverV2SupervisorExitStatus
+                .admissionPrimeSourceIdentitySnapshot
+        case .companionContentSnapshot:
+            return PrimeValidationDriverV2SupervisorExitStatus
+                .admissionCompanionContentSnapshot
+        case .heldToolchain:
+            return PrimeValidationDriverV2SupervisorExitStatus
+                .admissionHeldToolchain
         }
     }
 

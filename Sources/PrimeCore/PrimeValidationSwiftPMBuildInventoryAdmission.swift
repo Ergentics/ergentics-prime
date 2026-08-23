@@ -16,6 +16,34 @@ public enum PrimeValidationSwiftPMBuildInventoryAdmissionError:
     case guardedPreExecutorTransferred
 }
 
+/// Closed observation of the top-level prerequisite-admission operation that
+/// rejected. The underlying error and all associated process or filesystem
+/// values are deliberately erased.
+@frozen
+public enum PrimeValidationSwiftPMBuildInventoryAdmissionRejectionSite:
+    Error,
+    Equatable,
+    Sendable
+{
+    case companionDeclaration
+    case primeRepository
+    case workspaceRoot
+    case workspacePrivateAndEmpty
+    case evidenceRoot
+    case evidencePrivateAndEmpty
+    case companionRepository
+    case leaseDirectory
+    case leasePrivateAndEmpty
+    case rootTopology
+    case exclusiveLease
+    case postLeaseDirectory
+    case sourceSnapshot
+    case packageResolvedBinding
+    case primeSourceIdentitySnapshot
+    case companionContentSnapshot
+    case heldToolchain
+}
+
 extension PrimeValidationSwiftPMBuildInventoryAdmissionError:
     LocalizedError
 {
@@ -1060,6 +1088,18 @@ public enum PrimeValidationSwiftPMBuildInventoryAdmission {
     private static let leaseLeafName =
         "prime-validation-swiftpm-build-inventory.lock"
 
+    private static func atRejectionSite<Value>(
+        _ site:
+            PrimeValidationSwiftPMBuildInventoryAdmissionRejectionSite,
+        _ operation: () throws -> Value
+    ) throws -> Value {
+        do {
+            return try operation()
+        } catch {
+            throw site
+        }
+    }
+
     /// Admits only live prerequisites. The declared companion state is
     /// checked for exact internal consistency, but remains caller-declared;
     /// the missing process observation is explicit on the returned token.
@@ -1103,106 +1143,138 @@ public enum PrimeValidationSwiftPMBuildInventoryAdmission {
     ) throws
         -> PrimeValidationSwiftPMBuildInventoryAdmissionCapability
     {
-        try validateCompanionDeclaration(companionDeclaration)
+        try atRejectionSite(.companionDeclaration) {
+            try validateCompanionDeclaration(companionDeclaration)
+        }
 
-        let primeRepository = try PrimeValidationSwiftPMHeldUserDirectory(
-            url: primeRepositoryURL
-        )
-        let workspaceRoot = try PrimeValidationSwiftPMHeldUserDirectory(
-            url: workspaceRootURL
-        )
-        try workspaceRoot.requirePrivateAndEmpty()
-        let evidenceRoot = try PrimeValidationSwiftPMHeldUserDirectory(
-            url: evidenceRootURL
-        )
-        try evidenceRoot.requirePrivateAndEmpty()
-        let companionRepository =
+        let primeRepository = try atRejectionSite(.primeRepository) {
+            try PrimeValidationSwiftPMHeldUserDirectory(
+                url: primeRepositoryURL
+            )
+        }
+        let workspaceRoot = try atRejectionSite(.workspaceRoot) {
+            try PrimeValidationSwiftPMHeldUserDirectory(
+                url: workspaceRootURL
+            )
+        }
+        try atRejectionSite(.workspacePrivateAndEmpty) {
+            try workspaceRoot.requirePrivateAndEmpty()
+        }
+        let evidenceRoot = try atRejectionSite(.evidenceRoot) {
+            try PrimeValidationSwiftPMHeldUserDirectory(
+                url: evidenceRootURL
+            )
+        }
+        try atRejectionSite(.evidencePrivateAndEmpty) {
+            try evidenceRoot.requirePrivateAndEmpty()
+        }
+        let companionRepository = try atRejectionSite(
+            .companionRepository
+        ) {
             try PrimeValidationSwiftPMHeldUserDirectory(
                 url: companionRepositoryURL
             )
-        let initialLeaseDirectory =
+        }
+        let initialLeaseDirectory = try atRejectionSite(
+            .leaseDirectory
+        ) {
             try PrimeValidationSwiftPMHeldUserDirectory(
                 url: leaseDirectoryURL
             )
-        try initialLeaseDirectory.requirePrivateAndEmpty()
+        }
+        try atRejectionSite(.leasePrivateAndEmpty) {
+            try initialLeaseDirectory.requirePrivateAndEmpty()
+        }
 
-        try requireDisjointAndNonNested([
-            primeRepository.observation,
-            workspaceRoot.observation,
-            evidenceRoot.observation,
-            companionRepository.observation,
-            initialLeaseDirectory.observation,
-        ])
+        try atRejectionSite(.rootTopology) {
+            try requireDisjointAndNonNested([
+                primeRepository.observation,
+                workspaceRoot.observation,
+                evidenceRoot.observation,
+                companionRepository.observation,
+                initialLeaseDirectory.observation,
+            ])
+        }
 
         let leaseURL = leaseDirectoryURL.appendingPathComponent(
             leaseLeafName,
             isDirectory: false
         )
-        let lease = try PrimeMetalDeviceLease.acquire(at: leaseURL)
-        let leaseDirectory =
+        let lease = try atRejectionSite(.exclusiveLease) {
+            try PrimeMetalDeviceLease.acquire(at: leaseURL)
+        }
+        let leaseDirectory = try atRejectionSite(
+            .postLeaseDirectory
+        ) {
             try PrimeValidationSwiftPMHeldUserDirectory(
                 url: leaseDirectoryURL
             )
+        }
 
-        let sourceSnapshot: PrimeSwiftSourceSnapshot
-        if let sourceExpectation {
-            sourceSnapshot = try PrimeSwiftSourceProvenance.capture(
-                at: primeRepositoryURL,
-                requiredRelativePaths: requiredPrimeSourcePaths,
-                expectation: sourceExpectation
-            )
-        } else {
-            sourceSnapshot = try PrimeSwiftSourceProvenance.capture(
+        let sourceSnapshot: PrimeSwiftSourceSnapshot = try atRejectionSite(
+            .sourceSnapshot
+        ) {
+            if let sourceExpectation {
+                return try PrimeSwiftSourceProvenance.capture(
+                    at: primeRepositoryURL,
+                    requiredRelativePaths: requiredPrimeSourcePaths,
+                    expectation: sourceExpectation
+                )
+            }
+            return try PrimeSwiftSourceProvenance.capture(
                 at: primeRepositoryURL,
                 requiredRelativePaths: requiredPrimeSourcePaths
             )
         }
-        guard let packageResolved = sourceSnapshot.files.first(where: {
-            $0.relativePath == "Package.resolved"
-        }) else {
-            throw rejected("package_resolved_missing")
-        }
-        let packageResolvedBinding = PrimeArtifactBinding(
-            relativePath: packageResolved.relativePath,
-            sha256: packageResolved.sha256,
-            byteCount: packageResolved.byteCount,
-            purpose: .immutableData
-        )
-        try packageResolvedBinding.validateDeclaration()
+        let packageResolvedBinding: PrimeArtifactBinding =
+            try atRejectionSite(.packageResolvedBinding) {
+                guard let packageResolved =
+                        sourceSnapshot.files.first(where: {
+                            $0.relativePath == "Package.resolved"
+                        }) else {
+                    throw rejected("package_resolved_missing")
+                }
+                let binding = PrimeArtifactBinding(
+                    relativePath: packageResolved.relativePath,
+                    sha256: packageResolved.sha256,
+                    byteCount: packageResolved.byteCount,
+                    purpose: .immutableData
+                )
+                try binding.validateDeclaration()
+                return binding
+            }
 
-        let primeRootDescriptor =
-            try primeRepository.root
-            .duplicateTrustedRootDescriptorForInventory()
         let primeSourceIdentitySnapshot:
-            PrimeSecureHeldLegacySourceIdentitySnapshot
-        do {
-            defer { _ = Darwin.close(primeRootDescriptor) }
-            primeSourceIdentitySnapshot = try
-                PrimeSecureHeldWorkingTreeSnapshot
-                .captureLegacyPrimeSourceIdentity(
-                    rootDescriptor: primeRootDescriptor,
-                    sourceSnapshot: sourceSnapshot
-                )
-        }
+            PrimeSecureHeldLegacySourceIdentitySnapshot =
+                try atRejectionSite(.primeSourceIdentitySnapshot) {
+                    let descriptor = try primeRepository.root
+                        .duplicateTrustedRootDescriptorForInventory()
+                    defer { _ = Darwin.close(descriptor) }
+                    return try PrimeSecureHeldWorkingTreeSnapshot
+                        .captureLegacyPrimeSourceIdentity(
+                            rootDescriptor: descriptor,
+                            sourceSnapshot: sourceSnapshot
+                        )
+                }
 
-        let companionRootDescriptor =
-            try companionRepository.root
-            .duplicateTrustedRootDescriptorForInventory()
         let companionContentSnapshot:
-            PrimeSecureHeldWorkingTreeSnapshot
-        do {
-            defer { _ = Darwin.close(companionRootDescriptor) }
-            companionContentSnapshot = try
-                PrimeSecureHeldWorkingTreeSnapshot.capture(
-                    rootDescriptor: companionRootDescriptor
-                )
-        }
+            PrimeSecureHeldWorkingTreeSnapshot =
+                try atRejectionSite(.companionContentSnapshot) {
+                    let descriptor = try companionRepository.root
+                        .duplicateTrustedRootDescriptorForInventory()
+                    defer { _ = Darwin.close(descriptor) }
+                    return try PrimeSecureHeldWorkingTreeSnapshot.capture(
+                        rootDescriptor: descriptor
+                    )
+                }
 
-        let toolchain = try PrimeValidationSwiftPMHeldToolchain(
-            developerDirectoryURL: developerDirectoryURL,
-            workspaceRootPath:
-                workspaceRoot.observation.canonicalAbsolutePath
-        )
+        let toolchain = try atRejectionSite(.heldToolchain) {
+            try PrimeValidationSwiftPMHeldToolchain(
+                developerDirectoryURL: developerDirectoryURL,
+                workspaceRootPath:
+                    workspaceRoot.observation.canonicalAbsolutePath
+            )
+        }
 
         let retained = PrimeValidationSwiftPMRetainedAdmissionState(
             primeRepository: primeRepository,
