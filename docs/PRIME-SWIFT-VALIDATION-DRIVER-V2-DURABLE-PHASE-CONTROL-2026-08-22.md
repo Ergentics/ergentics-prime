@@ -2849,3 +2849,81 @@ fixed status plus durable journal prefix, and consumes that candidate-bound
 root. No GitHub, network, fetch, broad test, 904 inventory, build/list role,
 or Gate F source is authorized. This recovery freeze is prose rank 4 and
 cannot certify a run or scientific outcome.
+
+## Gate E1 candidate checkpoint — consumed incomplete at admission/guards
+
+| Field | Observed value |
+| --- | --- |
+| Measured XCTest interval | `2026-08-23T00:16:18.849Z` through `2026-08-23T00:16:19.821Z` |
+| Scientific outcome | `INCOMPLETE` |
+| Exact cause | `ABSTAIN` within the frozen status-66 phase |
+| Source commit | `aba540a3009c4218b75fc065188dddce330f4b50` |
+| Source tree | `ee13a67abb0853e15e2da7745bc6def11cae5f6f` |
+| Source parent | `781e38f82a774b5583ca4254196773b0400c220d` |
+| Embedded/source identity | `afb3c46461736ddf7b275d797d054000d260eeebc0c6c50a7a94451ef1c97a19` |
+| Durable-control predecessor | `79b70c7c538e85082c723d0d6dfb1bf7d24098ce` / tree `734e79ab8527cb4485405140e34bc6c8200b435f` |
+| Prime standalone commit/tree | `aba540a3009c4218b75fc065188dddce330f4b50` / `ee13a67abb0853e15e2da7745bc6def11cae5f6f` |
+| Companion standalone commit/tree | `163fc100710ece48119bc25954452d10f6a84f7f` / `9009daa4f8a07fbd5897e00b9571cef44ec292db` |
+| Pre-shot status bytes | source `0`; Prime clone `0`; companion clone `0` |
+| Pre-shot Release supervisor metadata | regular; UID `501`; mode `0755`; link count `1`; `47,675,784` bytes |
+| Post-shot Release supervisor SHA-256 | `09fb981b6350e630443998024eba11e4877e633bc5ff2f87b90d6513d75ff909` |
+| Executed-image authentication | not established; status `66` preceded supervisor-image binding |
+| Candidate root before shot | absent |
+| Measured invocation count | `1` |
+| Selected test count | `1` |
+| Selected method | `testGateEReleaseSupervisorRequiresLiveFourAuthorityBindingBeforeExit` |
+| XCTest result | `1` executed / `1` unexpected failure / `0` pass |
+| Measured test elapsed | `0.972` seconds |
+| Supervisor termination | normal exit `66` (`admission_and_guards`) |
+| Supervisor stdout/stderr | `0` / `0` bytes |
+| Journal | link count `2`; `0` leaves; no prestart |
+| Lease/workspace/evidence entries | `0` / `0` / `0` |
+| Post-shot status bytes | source `0`; Prime clone `0`; companion clone `0` |
+| Dedicated supervisor launches | `1` |
+| Fixed-probe child processes | `0` |
+| Retry authorization | `false`; this source identity is consumed |
+| Gate E closure | `false` |
+| Gate F authorization | `false` |
+
+The exact preserved root is
+`/private/tmp/prime-driver-v2-gate-e-release-afb3c46461736ddf7b275d797d054000d260eeebc0c6c50a7a94451ef1c97a19`.
+It is a caller-owned APFS directory at device `16777231`, inode `17321558`,
+mode `0700`, UID `501`, link count `8`. Its two retained regular captures are
+mode `0600`, link count `1`, and SHA-256
+`e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`.
+The empty workspace, evidence, lease, and journal directories are mode `0700`,
+UID `501`, link count `2`; the root plus its six children remain in place.
+
+The root compile-only gate used `swift build --target PrimeCore` with
+`--disable-automatic-resolution --disable-sandbox`; it exited `0` after a
+9.99-second build. The nested `Tests/PrimeValidationWorkflow` compile-only
+gate used `swift build --build-tests` with the same two flags; it exited `0`
+after a 10.47-second build. Both used separate module caches under
+`/private/tmp`; neither ran a test or child. The seven
+frozen Debug Gate E methods then passed separately, one selected test per
+invocation, with elapsed test times `0.031`, `0.978`, `1.305`, `5.770`,
+`2.242`, `4.440`, and `3.432` seconds. The one-test Release embedded-source
+admission proof passed in `2.766` seconds. That proof re-admitted the exact
+545-file/544-record identity and the previously frozen 2,157-watch topology;
+it launched no Gate E child.
+
+Status `66` proves that the canonical Gate A request frame and intent
+validation completed. Because the status-66 lexical phase contains
+developer-directory derivation, prerequisite admission, prerequisite consume,
+and guarded-pre-executor preparation, the retained empty lease and journal do
+not identify one exact rejecting operation. No supervisor-image bind, Gate E
+facade transfer, Git process, Swift process, semantic binding, or final
+revalidation occurred. No retry, cleanup, source repair, Gate F work, GitHub
+operation, network request, dependency fetch, or remote publication follows
+from this record. A successor requires a new source identity and a separately
+frozen, non-executing discrimination plan; prose may not promote this
+incomplete observation to a Gate E conclusion.
+
+A post-shot read-only metadata audit observed canonical paths equal to every
+declared Prime, companion, workspace, evidence, and lease path. All five
+device/inode pairs were distinct and stable across two reads; Prime and
+companion were UID `501`, mode `0755`, and the three private roots were UID
+`501`, mode `0700`. The inspected roots had no ACL and only the permitted
+`com.apple.provenance` extended attribute. Those later observations make an
+ordinary visible root-metadata rejection less likely, but cannot reconstruct
+the exact in-process failure or exclude a transient pre-leaf lease error.
