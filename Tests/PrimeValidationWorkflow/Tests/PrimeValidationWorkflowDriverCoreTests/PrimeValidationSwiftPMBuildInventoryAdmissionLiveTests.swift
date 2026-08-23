@@ -3885,7 +3885,10 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
         )
         let phaseStatuses = [
             "static let transport: Int32 = 65",
-            "static let admission: Int32 = 66",
+            "static let developerDirectory: Int32 = 66",
+            "static let prerequisiteAdmission: Int32 = 71",
+            "static let prerequisiteConsume: Int32 = 72",
+            "static let guardPreparation: Int32 = 73",
             "static let supervisorImage: Int32 = 67",
             "static let fixedProbes: Int32 = 68",
             "static let finalRevalidation: Int32 = 69",
@@ -3902,7 +3905,10 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
         XCTAssertEqual(phaseStatusOffsets, phaseStatusOffsets.sorted())
         let phaseBoundaries = [
             "request = try requestFromStandardInput()",
-            "let guarded:",
+            "developerDirectoryURL = try developerDirectory(",
+            "admission = try",
+            "prerequisite = try admission.consumePrerequisites()",
+            "guarded = try prerequisite.prepareGuardedPreExecutor()",
             "let bound: PrimeValidationDriverV2SupervisorImageCapability",
             "guard #available(macOS 26.0, *)",
             "try fixedProbeBinding.revalidate()",
@@ -3916,7 +3922,10 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
         )
         for (reference, count) in [
             (".transport", 1),
-            (".admission", 1),
+            (".developerDirectory", 1),
+            (".prerequisiteAdmission", 1),
+            (".prerequisiteConsume", 1),
+            (".guardPreparation", 1),
             (".supervisorImage", 1),
             (".fixedProbes", 2),
             (".finalRevalidation", 1),
@@ -3931,7 +3940,10 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
         }
         let exitReferenceSequence = [
             ".transport",
-            ".admission",
+            ".developerDirectory",
+            ".prerequisiteAdmission",
+            ".prerequisiteConsume",
+            ".guardPreparation",
             ".supervisorImage",
             ".fixedProbes",
             ".fixedProbes",
@@ -3959,6 +3971,18 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
             ).count - 1,
             exitReferenceSequence.count
         )
+        XCTAssertEqual(
+            supervisorSource.components(
+                separatedBy: "} catch {"
+            ).count - 1,
+            8
+        )
+        XCTAssertEqual(
+            supervisorSource.components(
+                separatedBy: "catch"
+            ).count - 1,
+            8
+        )
         XCTAssertLessThan(phaseBoundaryOffsets[0], exitReferenceOffsets[0])
         XCTAssertLessThan(exitReferenceOffsets[0], phaseBoundaryOffsets[1])
         XCTAssertLessThan(phaseBoundaryOffsets[1], exitReferenceOffsets[1])
@@ -3966,9 +3990,15 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
         XCTAssertLessThan(phaseBoundaryOffsets[2], exitReferenceOffsets[2])
         XCTAssertLessThan(exitReferenceOffsets[2], phaseBoundaryOffsets[3])
         XCTAssertLessThan(phaseBoundaryOffsets[3], exitReferenceOffsets[3])
-        XCTAssertLessThan(exitReferenceOffsets[3], exitReferenceOffsets[4])
-        XCTAssertLessThan(exitReferenceOffsets[4], phaseBoundaryOffsets[4])
-        XCTAssertLessThan(phaseBoundaryOffsets[4], exitReferenceOffsets[5])
+        XCTAssertLessThan(exitReferenceOffsets[3], phaseBoundaryOffsets[4])
+        XCTAssertLessThan(phaseBoundaryOffsets[4], exitReferenceOffsets[4])
+        XCTAssertLessThan(exitReferenceOffsets[4], phaseBoundaryOffsets[5])
+        XCTAssertLessThan(phaseBoundaryOffsets[5], exitReferenceOffsets[5])
+        XCTAssertLessThan(exitReferenceOffsets[5], phaseBoundaryOffsets[6])
+        XCTAssertLessThan(phaseBoundaryOffsets[6], exitReferenceOffsets[6])
+        XCTAssertLessThan(exitReferenceOffsets[6], exitReferenceOffsets[7])
+        XCTAssertLessThan(exitReferenceOffsets[7], phaseBoundaryOffsets[7])
+        XCTAssertLessThan(phaseBoundaryOffsets[7], exitReferenceOffsets[8])
         for conserved in [
             "guard CommandLine.arguments.count == 1",
             "private static let maximumRequestByteCount = 256 * 1024",
@@ -3989,6 +4019,8 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
         XCTAssertFalse(supervisorSource.contains("ProcessInfo"))
         XCTAssertFalse(supervisorSource.contains(".environment"))
         XCTAssertFalse(supervisorSource.contains("print("))
+        XCTAssertFalse(supervisorSource.contains("String(describing:"))
+        XCTAssertFalse(supervisorSource.contains("catch let"))
     }
 
     func testGateEReleaseSupervisorRequiresLiveFourAuthorityBindingBeforeExit()
@@ -4262,7 +4294,10 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
     private func gateEReleasePhaseLabel(_ exitStatus: Int32) -> String {
         switch exitStatus {
         case 65: "transport"
-        case 66: "admission_and_guards"
+        case 66: "developer_directory"
+        case 71: "admit_prerequisites"
+        case 72: "consume_prerequisites"
+        case 73: "prepare_guarded_pre_executor"
         case 67: "supervisor_image"
         case 68: "fixed_probes_and_semantic_binding"
         case 69: "final_binding_revalidation"

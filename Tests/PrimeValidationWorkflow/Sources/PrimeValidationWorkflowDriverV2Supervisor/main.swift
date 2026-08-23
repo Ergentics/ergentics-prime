@@ -12,7 +12,10 @@ private enum PrimeValidationDriverV2SupervisorMainError: Error {
 
 private enum PrimeValidationDriverV2SupervisorExitStatus {
     static let transport: Int32 = 65
-    static let admission: Int32 = 66
+    static let developerDirectory: Int32 = 66
+    static let prerequisiteAdmission: Int32 = 71
+    static let prerequisiteConsume: Int32 = 72
+    static let guardPreparation: Int32 = 73
     static let supervisorImage: Int32 = 67
     static let fixedProbes: Int32 = 68
     static let finalRevalidation: Int32 = 69
@@ -38,14 +41,23 @@ private struct PrimeValidationWorkflowDriverV2Supervisor {
         }
         let intent = request.intent
 
-        let guarded:
-            PrimeValidationSwiftPMBuildInventoryGuardedPreExecutor
+        let developerDirectoryURL: URL
         do {
-            let developerDirectory = try developerDirectory(
+            developerDirectoryURL = try developerDirectory(
                 swiftExecutableAbsolutePath:
                     intent.swiftExecutable.absolutePath
             )
-            let admission = try
+        } catch {
+            Darwin._exit(
+                PrimeValidationDriverV2SupervisorExitStatus
+                    .developerDirectory
+            )
+        }
+
+        let admission:
+            PrimeValidationSwiftPMBuildInventoryAdmissionCapability
+        do {
+            admission = try
                 PrimeValidationSwiftPMBuildInventoryAdmission
                 .admitPrerequisites(
                     primeRepositoryURL: URL(
@@ -80,14 +92,34 @@ private struct PrimeValidationWorkflowDriverV2Supervisor {
                         declaredObservedHEAD: intent.companionCommit,
                         declaredPorcelainV2Status: Data()
                     ),
-                    developerDirectoryURL: developerDirectory
+                    developerDirectoryURL: developerDirectoryURL
                 )
-            guarded = try admission
-                .consumePrerequisites()
-                .prepareGuardedPreExecutor()
         } catch {
             Darwin._exit(
-                PrimeValidationDriverV2SupervisorExitStatus.admission
+                PrimeValidationDriverV2SupervisorExitStatus
+                    .prerequisiteAdmission
+            )
+        }
+
+        let prerequisite:
+            PrimeValidationSwiftPMBuildInventoryPrerequisite
+        do {
+            prerequisite = try admission.consumePrerequisites()
+        } catch {
+            Darwin._exit(
+                PrimeValidationDriverV2SupervisorExitStatus
+                    .prerequisiteConsume
+            )
+        }
+
+        let guarded:
+            PrimeValidationSwiftPMBuildInventoryGuardedPreExecutor
+        do {
+            guarded = try prerequisite.prepareGuardedPreExecutor()
+        } catch {
+            Darwin._exit(
+                PrimeValidationDriverV2SupervisorExitStatus
+                    .guardPreparation
             )
         }
 
