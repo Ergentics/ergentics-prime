@@ -9820,3 +9820,31 @@ gate_E_clearance_granted = 0
 Any later Release assessment requires a separate committed readiness freeze,
 a fresh disjoint epoch, freshly measured artifact preimages, and exactly one
 newly authorized local command. This freeze authorizes no such run.
+
+### R13 precision amendment
+
+The following rules remove implementation ambiguity without expanding scope:
+
+- A full BSD result whose `pbi_pid` is not the requested PID is a hard reject.
+  Only start-second/start-microsecond mismatch between two full records that
+  both name the requested PID enters that PID's four-attempt local retry.
+- A first BSD query returning no record with exact `ESRCH` is also a local
+  tombstone. Zero with errno `0`, short positive data, and every non-`ESRCH`
+  failure reject. A tombstone is sample-relative evidence that the sampled
+  generation vanished; it is not standalone global-emptiness evidence. The
+  unchanged two separately completed joined scans remain the empty predicate.
+- A full A/B mismatch proves that B names a live replacement generation, so it
+  may not be omitted. It must be joined by the local retry or fail with
+  `session_census_nonconvergent_query`.
+- Stop and kill actuation use only PGIDs in the current complete joined live-
+  member scan. Cumulative captured PGIDs, including any group whose member has
+  since vanished, are proof-only; numeric reuse therefore fails the final
+  absence probe instead of receiving a signal. The retired supervisor PGID is
+  governed by the same rule.
+- Existing guard/defer calls that continue post-reap conservation after a
+  post-reap failure are fail-stop containment continuation, not a second
+  exact-reap transition or a scientific retry. They may not add a watcher,
+  waitpid, shot identifier, evidence claim, or execution authority.
+- Normal end-of-region behavior in optional mapped-image telemetry remains
+  `nil`; deadline charging cannot promote missing telemetry into membership or
+  authority.
