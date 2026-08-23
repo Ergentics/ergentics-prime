@@ -9864,3 +9864,152 @@ Two independent post-edit audits add these implementation requirements:
 - Every full final captured-generation BSD query must also name its requested
   PID. A full mismatched `pbi_pid` is the same hard rejection specified for
   census A/B; it cannot be treated as generation absence.
+
+## Gate E1.4-R13 result — committed static census/reap repair
+
+| Coordinate | Observed value |
+| --- | --- |
+| Status | `COMMITTED_STATIC_REPAIR_NOT_EXECUTED` |
+| Final durable-control authority | `e0ff5829ad4c4e99a08797e3371191c16ab4402c` / tree `83c2c324082b253ae9b8616c5ff5f5fcee2ce7ca` |
+| Source predecessor | clean `b7eefedd33baa9238f93bf92659636d2e15ce20c` / tree `2416b4281d39f85b349d77f8b052ff1f1845a045` |
+| Predecessor source identity | `d388fa32da538cd40b88d21308fd3d55be1a916d505761b37f891f9e804b1128` |
+| Source successor | clean `befc632485930a9cca7f618d3704292b5465f911` / tree `7d1a3bf302fe358f9e42dc1ed2bf54ed3d22982e` |
+| Successor source identity | `b501ad0d7ab1b6c54cbf30f9a79d75c54fe1d3783c516e10ad73fdd5fb4df397` |
+| Exact changed paths | `3`; the R13 allowlist only |
+| Add / delete / mode change | `0 / 0 / 0` |
+| Commit delta | `+1,175 / -246` |
+| Binary patch SHA-256 | `1c98fa2e9db322cea160116fe3b008b9535f0d52bf8027d00569e6841820bab8` |
+| SwiftPM / build / test / target launch / production | `0 / 0 / 0 / 0 / 0` |
+| Authority vector / Gate-E outcome / clearance | `00000000 / ABSTAIN / 0` |
+
+The exact successor file measurements are:
+
+| Path | Lines / bytes | SHA-256 | Git blob |
+| --- | --- | --- | --- |
+| `Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift` | `13 / 546` | `d40401a8115f608998cb88727b63cfbafdfac9cd5b9a91a29ecd6526988fe534` | `cab732f0faf20825341d77b98c959ca8f4e86e57` |
+| `Tests/PrimeValidationWorkflow/Sources/PrimeValidationWorkflowDriverV2ShotGovernorCore/PrimeValidationDriverV2ShotGovernor.swift` | `6,513 / 250,152` | `f9efbf6e87bfe67891ef685464c71eec1e7b5968c9500d1dcdbdb594fa5cc4a0` | `0684d1f93e5fdfa4995dba0d0a788fd9dba8c72f` |
+| `Tests/PrimeValidationWorkflow/Tests/PrimeValidationWorkflowDriverCoreTests/PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests.swift` | `7,903 / 289,586` | `5c6922b83fdf8c2f68aeb0693bc935b8b9bf304de8e8f896b09da137a59bc264` | `f48707c8f62d5ac381f32e3287cc223a74de70bb` |
+
+The functional deltas are `+531 / -242` in GovernorCore and `+643 / -3`
+inside the one existing selected XCTest method. Provenance changes one digest
+line only. The selected source still contains exactly `52` XCTest method
+declarations, the same count as the predecessor, and the method pins its own
+split-string declaration exactly once without counting the assertion literal.
+No package- or public-visible declaration, package product, target, manifest,
+lock, role, process surface, watcher, wait owner, schema, publisher, leaf,
+root, executable, or test identifier was added.
+
+### Independently joined source identity
+
+Python and Ruby independently enumerated the final tree with the existing
+Prime admission policy and agreed before and after the provenance reseal:
+
+```text
+admitted_files = 548
+identity_records = 547
+canonical_identity_bytes = 112279
+aggregate_admitted_bytes = 22558327
+enumerated_directories = 146
+held_directories = 155
+prime_watchers = 703
+combined_watchers = 2163
+source_identity_sha256 = b501ad0d7ab1b6c54cbf30f9a79d75c54fe1d3783c516e10ad73fdd5fb4df397
+```
+
+The excluded provenance source is the exact canonical thirteen-line,
+`546`-byte template and embeds that same digest. The identity cardinalities,
+canonical byte count, directory topology, and watch arithmetic are unchanged;
+only aggregate source bytes and the identity digest move with the R13 source.
+
+The four manifest/lock inputs remain byte-exact and have no diff:
+
+```text
+root Package.swift = fa68f463ca31a4ca25af6b14eb19b139df0c8ef8259a6348bb40e97c2dcdeb81
+root Package.resolved = bd7a18ec5b8def3b453d7eb86ba43a2f277c2308c9da806845b69ca5f76cd375
+nested Package.swift = 753f42251e768faaee3686da38e6f6bf7de048526199445f0e11c088af53dada
+nested Package.resolved = d70a43567cbd3be75083ab147020b86b055513020d95632f8286f60913c9374a
+```
+
+### Static repair facts
+
+The committed Governor source now has one `proc_listpids` call per raw scan.
+Each sampled positive PID is handled by the same-deadline
+`A BSD -> SID -> conditional PGID -> optional mapped telemetry -> B BSD`
+join. The four retries are local to a full A/B start-generation mismatch for
+that PID. Exact `ESRCH` at the specified stages is a local tombstone; short
+results, wrong full `pbi_pid`, invalid groups, other errno values, duplicate
+PIDs, and exhausted local convergence fail closed. Mapping remains optional,
+deadline-charged telemetry. Every production raw scan is reached through the
+single retained-state `recordedScan` budget.
+
+Exactly two private lifecycle-state instances are created, one per existing
+production or fixture spawn. Each retains the supervisor PID, monotone first-
+seen generation map, cumulative proof-only group set initialized with the
+retired supervisor PGID, and total completed-scan count. The same instance is
+carried through normal, guard/defer, suspended-join, orphan, and post-reap
+continuations. Only local fixed-point and consecutive-empty counters reset;
+the captured evidence and `256`-scan budget do not.
+
+Watcher-true entry and exact `ESRCH` plus watcher-true after a live stop route
+to the one exact reap before census. `EPERM`, `EINVAL`, and every other stop
+failure remain containment uncertainty. After `waitpid` returns the exact PID,
+the nonthrowing exact-reap latch changes before the preserved deadline check
+and any scan. The suspended-join catch carries the same real latch and retained
+state; there is no default/no-op exact-reap callback.
+
+After reap, stop/kill actuation is derived only from process groups in current
+complete joined live-member scans. The cumulative group set—including the
+retired supervisor group—is proof-only. Conservation still requires joined
+stopped fixed point, late-member capture and actuation, two complete empty
+scans, absence of each captured PID/start generation, and exact `ESRCH` for
+every proof group. `EPERM` is nowhere accepted as absence or success.
+
+The existing selected-method assertions statically pin these joins, ordering
+relations, counts, state-sharing continuations, and exclusions. The exact
+`git diff --check`, allowlist/mode, manifest/lock, and method-count audits,
+two independent identity calculations, and an independent read-only semantic
+review all pass.
+
+### Boundary and retained evidence
+
+This is source evidence only. No Swift tool, compiler, linker, XCTest, target,
+fixture, governor, or production supervisor was invoked, so compilation and
+runtime behavior remain unverified. Census completeness remains relative to
+one sampled PID list plus generation joins; it is not an atomic process-table
+claim. The unchanged R11 v2 causal schema still cannot encode a later post-
+reap failure, so preserving it is schema continuity rather than expanded live
+failure coverage.
+
+Read-only inventory still finds exactly sixteen retained admission roots with
+the full sorted-path SHA-256
+`6185ea35d684b2a50529aa79f1455bae789eda056e298f5509e7c5127423abd5`,
+zero public-admission roots, and the R12 epoch at
+`16777231/17395708` with its nine children. The frozen R12 five-root delta hash
+remains
+`01a4067f853f513dcdcdfdda45b2579c5f17abfb590ceceb7a5b4ea1cf7323de`.
+R13 created, removed, or mutated none of those retained paths and made no
+write under `/private/tmp`.
+
+The terminal vector is therefore:
+
+```text
+R13_static_repair = PASS
+R13_independent_source_identity = PASS
+R13_compile = NOT_RUN
+R13_runtime = NOT_RUN
+R13_swiftpm_commands = 0
+R13_builds = 0
+R13_tests = 0
+R13_target_launches = 0
+R13_production_attempts = 0
+outer_journal_authority_vector = 00000000
+gate_E_scientific_outcome = ABSTAIN
+gate_E_clearance_granted = 0
+```
+
+R13 is complete as its authorized static repair checkpoint. It consumes no
+execution shot and closes none of the eight process-derived authorities. The
+only supported successor is a separately committed readiness freeze on
+`befc632485930a9cca7f618d3704292b5465f911` /
+`7d1a3bf302fe358f9e42dc1ed2bf54ed3d22982e` with a fresh disjoint epoch and
+fresh artifact preimages. This record authorizes no Release command.
