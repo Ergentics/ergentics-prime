@@ -554,6 +554,58 @@ private enum PrimeValidationDriverV2GovernorIO {
         return canonical
     }
 
+    static func pathForDescriptor(
+        _ descriptor: Int32,
+        coordinate: String
+    ) throws -> String {
+        var information = vnode_fdinfowithpath()
+        let expected = MemoryLayout<vnode_fdinfowithpath>.size
+        let returned = withUnsafeMutablePointer(to: &information) {
+            proc_pidfdinfo(
+                getpid(),
+                descriptor,
+                PROC_PIDFDVNODEPATHINFO,
+                $0,
+                Int32(expected)
+            )
+        }
+        var storage = information.pvip.vip_path
+        let value: String? = withUnsafeBytes(of: &storage) { bytes in
+            guard let terminator = bytes.firstIndex(of: 0),
+                  terminator > bytes.startIndex,
+                  terminator < bytes.endIndex
+            else { return nil }
+            return String(
+                bytes: bytes[..<terminator],
+                encoding: .utf8
+            )
+        }
+        guard returned == Int32(expected),
+              let value,
+              PrimeValidationDriverV2ShotCapsuleV1
+                .isSafeAbsolutePath(value)
+        else {
+            throw governorRejected(
+                PrimeValidationDriverV2ShotGovernorStatus.admission,
+                coordinate
+            )
+        }
+        do {
+            guard try canonicalPath(value) == value else {
+                throw governorRejected(
+                    PrimeValidationDriverV2ShotGovernorStatus.admission,
+                    coordinate
+                )
+            }
+        } catch {
+            throw governorRejected(
+                PrimeValidationDriverV2ShotGovernorStatus.admission,
+                coordinate
+            )
+        }
+        return value
+    }
+
     static func inventory(
         directory descriptor: Int32,
         coordinate: String
@@ -777,25 +829,11 @@ private final class PrimeValidationDriverV2GovernorHeldDirectory {
             )
         }
         do {
-            var path = [CChar](repeating: 0, count: Int(PATH_MAX))
-            let pathResult = path.withUnsafeMutableBufferPointer {
-                fcntl(descriptor, F_GETPATH, $0.baseAddress)
-            }
-            let decoded = path.withUnsafeBufferPointer {
-                guard let base = $0.baseAddress else { return nil }
-                return String(validatingUTF8: base)
-            }
-            guard pathResult == 0,
-                  let decoded,
-                  PrimeValidationDriverV2ShotCapsuleV1
-                    .isSafeAbsolutePath(decoded)
-            else {
-                throw governorRejected(
-                    PrimeValidationDriverV2ShotGovernorStatus.admission,
-                    coordinate + "_path"
+            absolutePath = try PrimeValidationDriverV2GovernorIO
+                .pathForDescriptor(
+                    descriptor,
+                    coordinate: coordinate + "_path"
                 )
-            }
-            absolutePath = decoded
             var status = stat()
             guard fstat(descriptor, &status) == 0,
                   status.st_mode & mode_t(S_IFMT) == mode_t(S_IFDIR),
@@ -979,7 +1017,11 @@ private final class PrimeValidationDriverV2GovernorHeldExecutable {
             )
         }
         do {
-            absolutePath = try Self.pathForDescriptor(descriptor)
+            absolutePath = try PrimeValidationDriverV2GovernorIO
+                .pathForDescriptor(
+                    descriptor,
+                    coordinate: "held_test_image_path"
+                )
             guard URL(fileURLWithPath: absolutePath).lastPathComponent
                     == requiredLeaf
             else {
@@ -1114,36 +1156,6 @@ private final class PrimeValidationDriverV2GovernorHeldExecutable {
         return executable
     }
 
-    private static func pathForDescriptor(_ descriptor: Int32) throws
-        -> String
-    {
-        var information = vnode_fdinfowithpath()
-        let expected = MemoryLayout<vnode_fdinfowithpath>.size
-        let returned = withUnsafeMutablePointer(to: &information) {
-            proc_pidfdinfo(
-                getpid(),
-                descriptor,
-                PROC_PIDFDVNODEPATHINFO,
-                $0,
-                Int32(expected)
-            )
-        }
-        var storage = information.pvip.vip_path
-        let value = withUnsafeBytes(of: &storage) {
-            String(bytes: $0.prefix { $0 != 0 }, encoding: .utf8)
-        }
-        guard returned == Int32(expected),
-              let value,
-              try PrimeValidationDriverV2GovernorIO.canonicalPath(value)
-                == value
-        else {
-            throw governorRejected(
-                PrimeValidationDriverV2ShotGovernorStatus.admission,
-                "held_test_image_path"
-            )
-        }
-        return value
-    }
 }
 
 private struct PrimeValidationDriverV2GovernorVnodeRecord:
@@ -1492,16 +1504,26 @@ private final class PrimeValidationDriverV2GovernorJournal {
             var status = stat()
             guard fstat(opened, &status) == 0,
                   try PrimeValidationDriverV2GovernorMetadata(status)
-                    == authority.metadata,
-                  try PrimeValidationDriverV2GovernorIO.readExact(
-                      descriptor: opened,
-                      byteCount: Int(authority.binding.byteCount),
-                      coordinate: "request_input"
-                  ) == try PrimeValidationDriverV2GovernorIO.readExact(
-                      descriptor: authority.descriptor,
-                      byteCount: Int(authority.binding.byteCount),
-                      coordinate: "request_authority"
-                  ),
+                    == authority.metadata
+            else {
+                throw governorRejected(
+                    PrimeValidationDriverV2ShotGovernorStatus.durableBoundary,
+                    "request_input_join"
+                )
+            }
+            let requestBytes = try PrimeValidationDriverV2GovernorIO
+                .readExact(
+                    descriptor: opened,
+                    byteCount: Int(authority.binding.byteCount),
+                    coordinate: "request_input"
+                )
+            let authorityBytes = try PrimeValidationDriverV2GovernorIO
+                .readExact(
+                    descriptor: authority.descriptor,
+                    byteCount: Int(authority.binding.byteCount),
+                    coordinate: "request_authority"
+                )
+            guard requestBytes == authorityBytes,
                   lseek(opened, 0, SEEK_SET) == 0,
                   lseek(opened, 0, SEEK_CUR) == 0
             else {
@@ -3383,6 +3405,23 @@ private final class PrimeValidationDriverV2GovernorSpawnContainmentGuard {
     }
 }
 
+private func primeDriverV2GovernorAddWorkingDirectoryAction(
+    _ actions: UnsafeMutablePointer<posix_spawn_file_actions_t?>,
+    descriptor: Int32
+) -> Int32 {
+    if #available(macOS 26.0, *) {
+        return posix_spawn_file_actions_addfchdir(
+            actions,
+            descriptor
+        )
+    } else {
+        return posix_spawn_file_actions_addfchdir_np(
+            actions,
+            descriptor
+        )
+    }
+}
+
 private enum PrimeValidationDriverV2GovernorSpawner {
     static let supervisorFlags: UInt16 = 0x448c
     static let supervisorArgumentZero =
@@ -3464,9 +3503,9 @@ private enum PrimeValidationDriverV2GovernorSpawner {
                 &actions,
                 workingDirectory.descriptor
             ),
-            posix_spawn_file_actions_addfchdir(
+            primeDriverV2GovernorAddWorkingDirectoryAction(
                 &actions,
-                workingDirectory.descriptor
+                descriptor: workingDirectory.descriptor
             ),
             posix_spawn_file_actions_addclose(
                 &actions,
@@ -5192,9 +5231,9 @@ package extension PrimeValidationDriverV2ShotGovernor {
                 &actions,
                 workingDescriptor
             ),
-            posix_spawn_file_actions_addfchdir(
+            primeDriverV2GovernorAddWorkingDirectoryAction(
                 &actions,
-                workingDescriptor
+                descriptor: workingDescriptor
             ),
             posix_spawn_file_actions_addclose(
                 &actions,
