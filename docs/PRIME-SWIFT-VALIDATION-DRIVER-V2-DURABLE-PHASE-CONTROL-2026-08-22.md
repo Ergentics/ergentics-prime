@@ -4799,3 +4799,192 @@ Git, SwiftPM, compiler, test, containment, or production result. The current
 freeze is spent and authorizes no continuation. A successor must use a new
 identity-bound epoch name and freeze a holder primitive that has already
 opened the retained directory successfully before any new namespace mutation.
+
+## Gate E1.3 readiness successor freeze — closed `r2` holder
+
+| Field | Exact value |
+| --- | --- |
+| Status | `FROZEN_NOT_EXECUTED` |
+| Direct durable-control predecessor | `b3a8bf83e22bf9940a9ed228a4f246f79afcd2fe` / tree `b9231afb36128b4e5d3e7f7430d5550061836c5d` |
+| Spent historical freeze | `c8ddd1933d2a1ddec297db3cc032d982a586e57d` / tree `93bdf254fcf95d02e60cd0c46a09cf6c9780ba8d`; never continued, retried, cleaned, or reused |
+| Permitted successor delta | exactly this control path plus `docs/tools/prime-driver-v2-e13-readiness-holder.rb` |
+| Source commit/tree | clean `2d705a71dc1827cf4fe6f0f9f3bc8255063e1dd3` / `0077ac10f1dbba50680502a31084f7280c2c2f65` |
+| Source identity/cardinality | unconsumed `474008bdffccf4102566c98088abf2799ad3a4934edadb8c0357c23190c71a52`; `545 / 544 / 111,620` |
+| Terminal old epoch | `/private/tmp/gate-e1-3-readiness-474008bdffccf410`; directory `16777231/17350005`, `501/0`, mode `0700`, nlink `2`, flags `0`, empty; immutable evidence, not an input |
+| Successor epoch `R2` | `/private/tmp/gate-e1-3-readiness-r2-474008bdffccf410`; absent before this freeze and before the successor commit |
+| Holder source | mode `100644`; `13,989` bytes; Git blob `0051aba1b5ddf2f292b07ac9767756daf1b6e477`; SHA-256 `3afc1642328529c658075fc07a46ed85b775a4de753fc590eac2bbcd8b872e20` |
+| Holder invocation count | at most `1`; success requires exactly `1` |
+| Holder direct child multiset | exactly `7 x /bin/mkdir`, `21 x /bin/ls`, `1 x /usr/bin/env -> Xcode Git`; `29` direct spawns total |
+| Readiness SwiftPM counts | ordered `0 -> 1 -> 2`; success requires exactly one Release build and one Release test |
+| Production method 8 / supervisor / fixed child | `0 / 0 / 0` |
+| Network / dependency fetch / GitHub / Gate F / Gate G | `0 / 0 / 0 / 0 / 0` |
+
+The tables, finite vectors, hashes, identities, counters, and equalities in
+this section are controlling data. A narrative statement cannot promote a
+failed predicate, widen a set, or turn an unobserved fact into a pass.
+
+### Root transform and trace algebra
+
+Let `R0 = /private/tmp/gate-e1-3-readiness-474008bdffccf410` and
+`R2 = /private/tmp/gate-e1-3-readiness-r2-474008bdffccf410`. Define the sole
+readiness-command transform:
+
+`rho(p) = R2 || suffix` when `p = R0 || suffix`, including the empty suffix;
+otherwise `rho(p) = p`.
+
+`rho` is applied byte-for-byte only to the environment/path occurrences in
+the exact command-1 and command-2 blocks frozen at `c8ddd193...`. No source,
+companion, selector, argv option, environment key, environment value outside
+`R0`, cwd, tool image, reserved production root, or shot-cache byte changes.
+The transformed raw command blocks, excluding Markdown fences, are:
+
+| Vector | Bytes | SHA-256 |
+| --- | ---: | --- |
+| Release command 1 | `2,181` | `9ee50ccac372989bb654eb9eb5446a2d1f0b28ce612a5ecf1ccf352ee48d0894` |
+| Release command 2 | `4,522` | `f620f372015ab748f6f0f9dc0ecee66e9ed4c0a3b94a838a26f9c42779667139` |
+
+Clone preparation deliberately uses a stronger vector than `rho` alone. The
+holder first enters the already-held `prime` directory with `fchdir(2)` and
+the clone destination is the single byte `.`. Canonical compact JSON for the
+holder's exact `/usr/bin/env` argument vector has `55` elements, `38`
+environment assignments, `2,013` bytes, and SHA-256
+`b1c2da4ee8d18fb925a4b911b639b56477d25f40a53587b05a13fbd49a165a59`.
+Its source is the frozen source path; its branch is
+`agent/prime-validation-driver-v2-gate-c`; its only protocol is `file`; and
+its exact Git options remain `--local --no-hardlinks --no-tags
+--single-branch --origin=origin --no-recurse-submodules --reject-shallow
+--ref-format=files --no-progress --`.
+
+Let the spent counters be `q = (holder, command1, command2)`. The only
+nonterminal trace is:
+
+`S0(0,0,0) -> S1(1,0,0) -> S2(1,1,0) -> S3(1,1,1)`.
+
+Every other transition enters terminal `STOP`. `STOP` has no outgoing edge.
+No failed or interrupted holder, clone admission, build, test, equality, or
+selector check may be retried under `R2`.
+
+| State | Necessary data predicate |
+| --- | --- |
+| `S0` | clean successor commit is a direct child of `b3a8bf83...`; `R2` and the three reserved production/shot paths are absent; all six `A0` hashes below are exact; non-epoch base projection is recorded |
+| `S1` | holder exits `0`; exact success JSON says only `holder_complete_pending_outer_clone_admission`; all seven held `R2` vnodes rejoin; an independent outer admission proves clone commit/tree/source identity/config/remote/ref/index/object state/cleanliness and all exclusions; all `A0` hashes remain exact |
+| `S2` | command 1 exits `0`; non-epoch base and admitted `R2` input equal `B_before`; the three assigned objects and supervisor are recorded as `A1`; live-test object and XCTest retain `A0` |
+| `S3` | command 2 exits `0`; `B_after = B_between = B_before`; exact `Sigma` multiset passes; live-test object and XCTest are replaced and admitted as `A2`; any later replacement of an `A1` object is transcript-named and re-admitted |
+
+The epoch coordinate changes from absent to admitted between `S0` and `S1`,
+so whole-state equality is neither claimed nor desired there. Define `pi` as
+the projection that removes only the new epoch object. The conservation laws
+are `pi(B_S0) = pi(B_S1)` and then
+`B_before = B_between = B_after` for `S1 -> S2 -> S3`. `B` includes the
+successor control commit/tree, holder and runtime closure, source/control Git
+joins, manifests, locks, workspace state, dependency stores, toolchain, Git
+helper root, companion, terminal old epoch, admitted `R2` vnodes/clone, prior
+retained roots/caches, and continued absence of the three reserved paths.
+
+The exact `A0` SHA-256 vector is:
+
+| Ordinal | Artifact | SHA-256 |
+| ---: | --- | --- |
+| 1 | stale supervisor | `fda8ab7c8f06a94c4f957f879312a6911d7e32015a344ea5b9ad63bbd04215ff` |
+| 2 | stale XCTest | `b3cf7e6aee0a73b05b493ff279b435f7b81b73c24c24b1731986d0adc0f534d5` |
+| 3 | provenance object | `886c9db18bf95f4c3a3d09531c725c5cfaff9b16ef72d0f0761ea1a016a3866c` |
+| 4 | admission object | `7db95394ff9dcf33686b7a43b902490e50a8f9e28946623b0a00e8f2c0b89c0a` |
+| 5 | supervisor-main object | `0de811c5c8cb03a73a8c6edc4811e6e91563acd1b9aeb3b2f46c31b956da2a73` |
+| 6 | live-test object | `6b8ea82c637e9f8eabe735f66507226d3bde184eb7b2647ed389cd8d15a259b7` |
+
+### Closed holder primitive
+
+The sole launcher, from the clean successor control root with umask `077`,
+stdin `/dev/null`, and no script arguments, is:
+
+```sh
+umask 077
+/usr/bin/env -i LANG=C.UTF-8 LC_ALL=C.UTF-8 TZ=UTC PATH=/usr/bin:/bin __CF_USER_TEXT_ENCODING=0x1F5:0x0:0x0 /usr/bin/ruby --disable-gems /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/docs/tools/prime-driver-v2-e13-readiness-holder.rb </dev/null
+```
+
+Canonical compact JSON for the ordered five-field holder environment is
+`113` bytes with SHA-256
+`c90afaf77dc9e0269394c660acf86a34c283274003da9c248b253bafc68ea219`.
+The script checks `ARGV == []` and exact environment equality before loading
+JSON or Fiddle. `/usr/bin/ruby` is vnode
+`16777231/1152921500312572705`, root-owned mode `0555`, `135,200` bytes,
+SHA-256 `9d6ff3e289c7d908e3c785e0bedd6692d1d6a3377965c88c04d847104b7c892c`,
+arm64e UUID `EB2540B7-E132-36BE-B719-619D0FBF7203`. Its exact loaded JSON/Fiddle
+closure is `17` files / `509,985` bytes with framed continuity SHA-256
+`cf9b0cd59961fd4f7c9df824e278e2253b121cc3c7d8aacbbe557120b4a8ca9d`;
+the frame is sorted absolute path bytes, with unsigned big-endian 64-bit path
+length, path, unsigned big-endian 64-bit file length, and raw 32-byte file
+SHA-256 for every entry.
+
+The admitted SDK `sys/fcntl.h` is vnode `16777231/932281`, root-owned mode
+`0644`, `26,949` bytes, SHA-256
+`805fd8c695f8e5e1c327b6852382cc5533738bbfd8f18bc11f850531166e4fe8`.
+The directory-open mask is exact `0x21100000 = O_RDONLY |
+O_DIRECTORY(0x00100000) | O_CLOEXEC(0x01000000) |
+O_NOFOLLOW_ANY(0x20000000)`. A read-only preflight opened and rejoined
+`/private`, `/private/tmp`, the retained old epoch, and the source with this
+mask. The holder pins `/private` to `16777231/773652` and `/private/tmp` to
+`16777231/774813`, opens and retains every new child plus source
+`16777231/17154421`, and rechecks name/vnode joins around every child process.
+
+`/bin/ls` is the sole extended-metadata observer: vnode
+`16777231/1152921500312571414`, root-owned mode `0755`, `154,624` bytes,
+SHA-256 `a97c50d34f912a5ada66959c231897ec2144e3c9cb922cd8150e4f2b0c9470e7`,
+arm64e UUID `51D16815-0591-3D8E-BC5A-43870D773ED3`. Each of its `21` bounded
+observations requires directory mode `0700`, UID/GID `501/0`, flags `0`, no
+ACL entry, and exact xattr-name set `{com.apple.provenance}`. The seven
+creations still use the already-admitted `/bin/mkdir`; clone uses the
+already-admitted Xcode Git and helper-root commitments from `c8ddd193...`.
+
+Every child starts in a fresh process group with `close_others`, stdin
+`/dev/null`, null output, and umask `077`. HUP, INT, QUIT, and TERM set a
+terminal interruption flag, kill the active group, reap its exact leader, and
+require group-empty; a normal leader exit also requires group-empty. There is
+no finite timeout or error return while a process group is still observed:
+the holder continues KILL-and-join until the group is empty. Before success
+publication it restores all four signals to their default terminating action,
+then performs one final interruption check. This
+claims the exact `29` direct spawns only. It does not claim Git creates no
+short-lived helpers; their executable authority remains the frozen Xcode Git
+helper-root commitment. A no-write signal preflight obtained
+`holder-interrupted:TERM` and an empty active-child slot.
+
+The outer launcher captures stdout and stderr independently with a `65,536`
+byte cap each. Success requires exit `0`, empty stderr, and exactly one
+LF-terminated stdout JSON object with ordered key set
+`{status, epoch, children, prime}` and no other byte. `status` is exactly
+`holder_complete_pending_outer_clone_admission`; `epoch` and `prime` are
+three-integer arrays; `children` is exactly six arrays in frozen `CHILDREN`
+order, each `[leaf, device, inode]`. Every emitted device is `16777231`; every
+emitted inode and link count must equal independent descriptor/path
+observations. A caught failure before publication emits empty stdout and one
+bounded stderr JSON object with exact key set `{status, error_class, error}`.
+A default signal during final publication may instead leave only a success
+prefix; any nonzero exit is terminal regardless of its output bytes.
+
+From first `R2` creation through the holder's terminal JSON, the workstation
+admits no concurrent same-UID mutation of the source, `R2`, or its children.
+This is an execution exclusion premise, not a substitute for the held
+descriptors and joins. Any observed persistent or transient contention is
+terminal. The holder's exit `0` and JSON are never clone admission. Before any
+Swift command, independent outer checks must prove the exact clone
+commit/tree/identity, one local origin and one selected-branch refspec, clean
+porcelain-v2 status, real `.git`, config/ref/index/object-root identities, and
+absence of alternates, HTTP alternates, shallow/promisor, replace/graft,
+submodule, hook, extra-remote, fetch, and network state. A failure retains all
+`R2` objects and authorizes no Swift command.
+
+### Conserved Release acceptance
+
+After `S1` and only after a full `B_before` capture, command 1 and command 2
+are the exact `rho`-transformed blocks hashed above. The `Sigma` set remains
+the exact 15 canonical XCTest identifiers frozen in `c8ddd193...`; acceptance
+is exact multiset equality, `15` executions, `15` passes, zero skips, zero
+failures, one XCTest runner, zero Swift Testing runners, and zero production
+launches. Method 8 remains outside `Sigma`.
+
+Any nonpass is terminal and retains the epoch, clone, caches, build outputs,
+and observations. Even `S3` authorizes only a separate clean result
+checkpoint with status `READY_PENDING_SEPARATE_SHOT_FREEZE`. It does not
+authorize the reserved production root, either reserved shot cache, method 8,
+a Driver V2 production child, Gate F, or Gate G.
