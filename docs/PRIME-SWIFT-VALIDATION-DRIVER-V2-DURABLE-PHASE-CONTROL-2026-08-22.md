@@ -9473,3 +9473,155 @@ gate_E_clearance_granted = 0
 A valid v2 datum may support only a separately frozen containment assessment.
 Normal return, malformed data, or compile/link failure does not authorize a
 semantic repair or a retry.
+
+## Gate E1.4-R12 result — fresh causal fail-stop datum
+
+| Coordinate | Observed value |
+| --- | --- |
+| Status | `CONSUMED_VALID_CAUSAL_FAIL_STOP_RECORD` |
+| Durable-control freeze | `2c9c8e0a7641fc8af0241f8173d68bc5d13fe2ff` / tree `80423cc1a7a73b08d8c55a081989ee04078baa53` |
+| Source commit/tree/identity | clean `b7eefedd33baa9238f93bf92659636d2e15ce20c` / `2416b4281d39f85b349d77f8b052ff1f1845a045` / `d388fa32da538cd40b88d21308fd3d55be1a916d505761b37f891f9e804b1128` |
+| Authorized / consumed SwiftPM commands | `1 / 1`; no retry |
+| Integer command interval | inclusive `1787515406...1787515611`; `205` seconds; no ceiling or outer interruption |
+| Release build | `PASS`; `Build complete! (190.94s)` |
+| Selected XCTest | started; no case, suite, or SwiftPM test terminal |
+| Outer Swift command | exit `1`; not an observed inner status `70` |
+| Corrected fresh build/link chain | `PASS` |
+| New admission roots / public roots | exact `5 / 0` |
+| Causal v2 record | `PASS` |
+| Mixed test-host mechanics | `ABSTAIN` |
+| Production attempts / authority vector / Gate-E clearance | `0 / 00000000 / 0` |
+
+The command reached the exact selected method after a fresh Release compile
+and link, then ended with the missing-XCTest-terminal shape. The corrected
+freshness frontier is complete:
+
+| Artifact | Exact R12 successor |
+| --- | --- |
+| Provenance object | `16777231/17396189`; `12,760` bytes; mtime/ctime `1787515566/1787515566`; SHA-256 `b74698c1837ad5867e3b3f980d225492d82b291edb11b153ed58ccfb7074b11b` |
+| PrimeCore module | `16777231/17396170`; `22,992,744` bytes; `1787515475/1787515475`; SHA-256 `c8a3335ad36831355a1f339ae9133714c6597dcecad0594d0b844a5f4c3a9fd8` |
+| GovernorCore object | `16777231/17396257`; `2,395,248` bytes; `1787515591/1787515591`; SHA-256 `d45190a17222afe5c842ff0b0172d49b5b124a90e3bf519fe6f410a3b751f59c` |
+| GovernorCore module | `16777231/17396252`; `302,880` bytes; `1787515587/1787515587`; SHA-256 `f85cfc299220ec7131294d883cff6e750335d4a8b9d9f12d5ff92bce7f1c5f3f` |
+| LiveTests object | `16777231/17396279`; `3,122,848` bytes; `1787515599/1787515599`; SHA-256 `9142a65fc56f5d748d4c21f9a9ff486fa398ac428bc8797fc7bca7e0dabb65ea` |
+| DriverCoreTests module | recorded successor `16777231/17396275`; `218,828` bytes; `1787515594/1787515594`; SHA-256 `9b32946a1ef5231d50e833c7c3b1751978eb3b8eecf2f3026e5e95566d11b31d` |
+| XCTest executable | `16777231/17396299`; `58,000,576` bytes; `1787515600/1787515600`; SHA-256 `a24bae4883c04ca75b59138360e33535f05eb82471a763a065db850401a76932`; UUID `1598470C-6455-385E-A15D-3EC43FEFE0A1` |
+
+All mandatory object/module hashes differ from their frozen preimages, every
+required timestamp lies inside the exact inclusive integer interval, and the
+XCTest hash and UUID both changed. The unchanged link list remains the exact
+joined `16777231/17245302`, `37,443`-byte topology record with SHA-256
+`3c391a8010b60fec9df881e16a7d8af228acd60a61e88751e63958206e27ef12`;
+it names the provenance, GovernorCore, and LiveTests object paths once each.
+The final arm64 XCTest contains the R11 identity once, the R8 identity zero
+times, and the selected-method substring on exactly one strings record. Each
+recorded object/module/image is regular, one-link, flags `0`, and has only the
+`com.apple.provenance` xattr.
+
+The exact five-root delta has sorted path-set SHA-256
+`01a4067f853f513dcdcdfdda45b2579c5f17abfb590ceceb7a5b4ea1cf7323de`:
+
+| Role | Retained R12 root and exact residue |
+| --- | --- |
+| Main | `/private/tmp/prime-validation-admission-tests-F55EA3E4-764C-4947-A93F-520528350D21`; vnode `16777231/17396305`; `66 / 32` files/directories; direct/link `13 / 15`; terminal SHA-256 `a0ba02c142f2d57ef315b6047cdc6ea9bb64dea503d69d5ea1c77b7ac81ff99d`; sole v2 leaf |
+| First-leaf collision | `/private/tmp/prime-validation-admission-tests-840C469F-37D2-43CB-B7D1-8248664F6DC8`; `16777231/17396393`; `26 / 29`; `7 / 9`; exact `collision\n` SHA-256 `591e7ef56458a393c1831cddcecd0a3415848deb290b6ebac689d0656293e48f` |
+| Concurrent winner | `/private/tmp/prime-validation-admission-tests-CCED7CE7-63EF-461D-84CE-7FEC4F225B36`; `16777231/17396620`; `31 / 30`; `10 / 12`; canonical terminal SHA-256 `5e42bdf06f183693bf946d0f0e6d32ca8121d590a30c75cb54a54b9a907bb955` |
+| Terminal collision | `/private/tmp/prime-validation-admission-tests-D95EDB07-8144-4EA0-B0AD-1DB46A8F73E3`; `16777231/17396681`; `31 / 30`; `10 / 12`; deliberate empty terminal SHA-256 `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` |
+| Same-bytes rebound | `/private/tmp/prime-validation-admission-tests-5F7F6943-0EC7-4A37-928E-F33916AB043D`; `16777231/17396742`; `31 / 30`; `10 / 12`; canonical rebound terminal SHA-256 `2f67b173a260298ecdeddc6a5789c293a98a5f4b41820ad301b513669baec5f9` |
+
+Every root is UID/GID `501/0`, mode `0700`, flags `0`. The complete sixteen-
+root sorted path set has SHA-256
+`6185ea35d684b2a50529aa79f1455bae789eda056e298f5509e7c5127423abd5`.
+The journal names, canonical schemas, chain relations, permissions, and role
+residues pass; there is no sixth new scoped root or public-admission root.
+
+The exact new causal leaf is:
+
+```text
+/private/tmp/prime-validation-admission-tests-F55EA3E4-764C-4947-A93F-520528350D21/gate-e-session-fixture-fail-stop.json
+```
+
+It is the final joined regular vnode `16777231/17396808`, UID/GID `501/0`,
+mode `0400`, one link, flags `0`, and `752` bytes, with SHA-256
+`4225c8076f4799835cbce78d026f5c85e66d693ea1db44f923f1a392bbf3a693`.
+Its parent is `16777231/17396305`, UID/GID `501/0`, mode `0700`. The leaf has
+no extended ACL and exactly one `11`-byte `com.apple.provenance` xattr with
+SHA-256 `b01372585adb6c87881e5cf3e1d7472972cdec3ef5ecd45f86d42498a2df536a`.
+
+Independent decoding proves compact sorted canonical JSON, no trailing line
+feed, exactly twenty keys, exact scalar types, decode/re-encode byte equality,
+and every R11 relation. Its complete causal payload is:
+
+```text
+admittedDeviceID = 16777231
+admittedInode = 17396808
+containmentState = armed
+containmentStopAttemptSequence = 1
+containmentStopDeathEventCheckPerformed = false
+containmentStopDeathEventObserved = false
+containmentStopErrno = 1
+containmentStopReturn = -1
+deadlineExpired = false
+deathEventObservedAtContainmentFailure = true
+deathWaitReturned = true
+executionPhase = orphan_initial_census
+failureCoordinate = supervisor_stop
+failureStatus = 70
+fixedFailStopStatus = 70
+fixtureMode = orphan_transition
+initiatingFailureCoordinate = session_census_nonconvergent_query
+initiatingFailureStatus = 70
+schema = prime_driver_v2_session_fixture_fail_stop_v2
+sourceIdentitySHA256 = d388fa32da538cd40b88d21308fd3d55be1a916d505761b37f891f9e804b1128
+```
+
+This is a causal join, not a prose inference. The orphan death wait returned
+and the later snapshot of the same monotonic watcher remained true. The body
+failed to complete a census pass in each of the function's four bounded
+attempts, then threw `session_census_nonconvergent_query`. During the function-
+level unwind, stop attempt `1` called the frozen negative supervisor-group
+target and returned `-1 / EPERM`; because the errno was not `ESRCH`, no stop
+death-event check was performed and the defer failed at `supervisor_stop`.
+
+The record does not identify which PID or query stage caused each census retry.
+Source inspection bounds each retry to `getsid < 0 / ESRCH`; first BSD-info
+`<= 0 / ESRCH`; `getpgid < 0 / ESRCH`; any non-full second BSD-info return,
+including its `ESRCH` case; or a first/second PID/start-generation mismatch.
+The current algorithm makes each such per-PID disappearance, query ambiguity,
+or generation race abort the entire all-PID pass, so completion requires at
+least one bounded attempt without any of those enumerated conditions across
+the sampled all-PID list. It also queries `getsid` before its first generation
+snapshot, leaving a PID-reuse join gap. Increasing the four-pass count would
+not add a monotone progress measure.
+
+The R12 epoch remains the joined root `16777231/17395708`, UID/GID `501/0`,
+mode `0700`, with its original nine child vnodes; the Git template remains
+empty. The source worktree, all four manifest/lock hashes, workspace state,
+and both clean dependency commit/trees remain exact. The control worktree
+stayed clean at the frozen commit through the postmortem until this result was
+appended. The reserved R11 production root remains absent. No prior retained
+root was cleaned or mutated; every R12 output remains unchanged after its
+read-only observation.
+
+The terminal vector is:
+
+```text
+R12_release_test_compile = PASS
+R12_fresh_chain = PASS
+R12_selected_xctest = STARTED_NO_TERMINAL
+R12_mixed_test_host_mechanics = ABSTAIN
+R12_causal_fail_stop_diagnostic = PASS
+R12_initiating_failure = session_census_nonconvergent_query
+R12_containment_failure = supervisor_stop_return_-1_errno_1_EPERM
+R12_inner_exit_70 = NOT_OBSERVED
+R12_containment_completion = NOT_PROVED
+outer_journal_authority_vector = 00000000
+production_attempt_count = 0
+gate_E_scientific_outcome = ABSTAIN
+gate_E_clearance_granted = 0
+```
+
+R12 is consumed. Its epoch and all five new roots are retained. The supported
+next action is a separate no-execution repair freeze for a generation-joined,
+per-PID census with deadline charging and a death-aware exact-reap transition;
+`EPERM` must not become acceptable merely because death was observed. No R12
+retry, cleanup, production launch, or Gate-E promotion is authorized.
