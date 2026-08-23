@@ -9848,3 +9848,19 @@ The following rules remove implementation ambiguity without expanding scope:
 - Normal end-of-region behavior in optional mapped-image telemetry remains
   `nil`; deadline charging cannot promote missing telemetry into membership or
   authority.
+
+Two independent post-edit audits add these implementation requirements:
+
+- Successful exact `waitpid` is an irreversible ownership transition. No
+  throwing deadline check may occur between `waitpid == supervisorPID` and the
+  caller's existing `onExactReap` state change. The next census or proof still
+  charges the same deadline and fails closed if time has expired.
+- Post-reap continuation must share one private retained state containing the
+  monotone captured generation map, cumulative proof-only PGID set, and total
+  completed-scan count. A continuation may reset only local fixed-point/empty
+  comparison counters; it may not forget evidence or reset the `256`-scan
+  budget. This state is internal lifecycle memory, not a public/package seam,
+  callback, command input, receipt, or authority surface.
+- Every full final captured-generation BSD query must also name its requested
+  PID. A full mismatched `pbi_pid` is the same hard rejection specified for
+  census A/B; it cannot be treated as generation absence.
