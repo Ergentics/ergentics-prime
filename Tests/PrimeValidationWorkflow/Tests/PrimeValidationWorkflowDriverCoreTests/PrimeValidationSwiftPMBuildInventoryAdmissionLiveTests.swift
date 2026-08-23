@@ -3878,6 +3878,117 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
                 seam
             )
         }
+
+        let supervisorSource = try gateEProductionSource(
+            "Tests/PrimeValidationWorkflow/Sources/" +
+                "PrimeValidationWorkflowDriverV2Supervisor/main.swift"
+        )
+        let phaseStatuses = [
+            "static let transport: Int32 = 65",
+            "static let admission: Int32 = 66",
+            "static let supervisorImage: Int32 = 67",
+            "static let fixedProbes: Int32 = 68",
+            "static let finalRevalidation: Int32 = 69",
+        ]
+        let phaseStatusOffsets = try phaseStatuses.map { value in
+            XCTAssertEqual(
+                supervisorSource.components(separatedBy: value).count - 1,
+                1,
+                value
+            )
+            return try XCTUnwrap(supervisorSource.range(of: value))
+                .lowerBound
+        }
+        XCTAssertEqual(phaseStatusOffsets, phaseStatusOffsets.sorted())
+        let phaseBoundaries = [
+            "request = try requestFromStandardInput()",
+            "let guarded:",
+            "let bound: PrimeValidationDriverV2SupervisorImageCapability",
+            "guard #available(macOS 26.0, *)",
+            "try fixedProbeBinding.revalidate()",
+        ]
+        let phaseBoundaryOffsets = try phaseBoundaries.map {
+            try XCTUnwrap(supervisorSource.range(of: $0)).lowerBound
+        }
+        XCTAssertEqual(
+            phaseBoundaryOffsets,
+            phaseBoundaryOffsets.sorted()
+        )
+        for (reference, count) in [
+            (".transport", 1),
+            (".admission", 1),
+            (".supervisorImage", 1),
+            (".fixedProbes", 2),
+            (".finalRevalidation", 1),
+        ] {
+            XCTAssertEqual(
+                supervisorSource.components(
+                    separatedBy: reference
+                ).count - 1,
+                count,
+                reference
+            )
+        }
+        let exitReferenceSequence = [
+            ".transport",
+            ".admission",
+            ".supervisorImage",
+            ".fixedProbes",
+            ".fixedProbes",
+            ".finalRevalidation",
+        ]
+        var exitReferenceCursor = supervisorSource.startIndex
+        let exitReferenceOffsets = try exitReferenceSequence.map {
+            reference in
+            let range = try XCTUnwrap(
+                supervisorSource.range(
+                    of: reference,
+                    range: exitReferenceCursor ..< supervisorSource.endIndex
+                )
+            )
+            exitReferenceCursor = range.upperBound
+            return range.lowerBound
+        }
+        XCTAssertEqual(
+            exitReferenceOffsets,
+            exitReferenceOffsets.sorted()
+        )
+        XCTAssertEqual(
+            supervisorSource.components(
+                separatedBy: "Darwin._exit("
+            ).count - 1,
+            exitReferenceSequence.count
+        )
+        XCTAssertLessThan(phaseBoundaryOffsets[0], exitReferenceOffsets[0])
+        XCTAssertLessThan(exitReferenceOffsets[0], phaseBoundaryOffsets[1])
+        XCTAssertLessThan(phaseBoundaryOffsets[1], exitReferenceOffsets[1])
+        XCTAssertLessThan(exitReferenceOffsets[1], phaseBoundaryOffsets[2])
+        XCTAssertLessThan(phaseBoundaryOffsets[2], exitReferenceOffsets[2])
+        XCTAssertLessThan(exitReferenceOffsets[2], phaseBoundaryOffsets[3])
+        XCTAssertLessThan(phaseBoundaryOffsets[3], exitReferenceOffsets[3])
+        XCTAssertLessThan(exitReferenceOffsets[3], exitReferenceOffsets[4])
+        XCTAssertLessThan(exitReferenceOffsets[4], phaseBoundaryOffsets[4])
+        XCTAssertLessThan(phaseBoundaryOffsets[4], exitReferenceOffsets[5])
+        for conserved in [
+            "guard CommandLine.arguments.count == 1",
+            "private static let maximumRequestByteCount = 256 * 1024",
+            "UInt64 = 5_000_000_000",
+            "let requestData = try readCanonicalRequest()",
+            "PrimeCanonicalJSON.decode(",
+            "try request.validate()",
+            "STDIN_FILENO",
+            "if count == 0 { break }",
+            "guard data.count <= maximumRequestByteCount - count",
+        ] {
+            XCTAssertTrue(supervisorSource.contains(conserved), conserved)
+        }
+        XCTAssertFalse(supervisorSource.contains("Darwin._exit(70)"))
+        XCTAssertFalse(supervisorSource.contains("Darwin._exit(0)"))
+        XCTAssertFalse(supervisorSource.contains("STDOUT_FILENO"))
+        XCTAssertFalse(supervisorSource.contains("STDERR_FILENO"))
+        XCTAssertFalse(supervisorSource.contains("ProcessInfo"))
+        XCTAssertFalse(supervisorSource.contains(".environment"))
+        XCTAssertFalse(supervisorSource.contains("print("))
     }
 
     func testGateEReleaseSupervisorRequiresLiveFourAuthorityBindingBeforeExit()
@@ -3905,6 +4016,16 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
                 fileURLWithPath: companionPath,
                 isDirectory: true
             ).resolvingSymlinksInPath().standardizedFileURL
+            let snapshot = try PrimeSwiftSourceProvenance.capture(
+                at: prime,
+                requiredRelativePaths: [
+                    "Sources/PrimeCore/" +
+                        "PrimeValidationDriverV2FixedProbeExecutor.swift",
+                    "Tests/PrimeValidationWorkflow/Sources/" +
+                        "PrimeValidationWorkflowDriverCore/" +
+                        "PrimeValidationDriverV2FixedProbeBinding.swift",
+                ]
+            )
 
             var nestedRoot = URL(fileURLWithPath: #filePath)
             for _ in 0 ..< 3 { nestedRoot.deleteLastPathComponent() }
@@ -3920,10 +4041,30 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
             let base = URL(
                 fileURLWithPath:
                     "/private/tmp/prime-driver-v2-gate-e-release-" +
-                    UUID().uuidString,
+                    snapshot.sourceIdentitySHA256,
                 isDirectory: true
             )
-            defer { try? FileManager.default.removeItem(at: base) }
+            if Darwin.mkdir(base.path, mode_t(0o700)) != 0 {
+                let creationError = errno
+                let disposition = creationError == EEXIST
+                    ? "occupied"
+                    : "create_" + String(creationError)
+                throw FixtureError.invalid(
+                    "gate_e_release_root_" + disposition +
+                        "_base_" + base.path
+                )
+            }
+            var baseStatus = stat()
+            guard lstat(base.path, &baseStatus) == 0,
+                  baseStatus.st_mode & mode_t(S_IFMT)
+                    == mode_t(S_IFDIR),
+                  baseStatus.st_mode & mode_t(0o7777) == 0o700,
+                  baseStatus.st_uid == Darwin.geteuid(),
+                  baseStatus.st_nlink == 2 else {
+                throw FixtureError.invalid(
+                    "gate_e_release_root_metadata_base_" + base.path
+                )
+            }
             let workspace = base.appendingPathComponent(
                 "workspace",
                 isDirectory: true
@@ -3941,7 +4082,7 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
                     workspace.path + ".driver-v2-gate-e-journal",
                 isDirectory: true
             )
-            for directory in [base, workspace, evidence, lease, journal] {
+            for directory in [workspace, evidence, lease, journal] {
                 try makePrivateDirectory(directory)
             }
 
@@ -3959,16 +4100,6 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
                 swiftPMModuleCacheRelativePath: "swiftpm-module-cache",
                 temporaryRelativePath: "temporary",
                 outputRelativePath: "output"
-            )
-            let snapshot = try PrimeSwiftSourceProvenance.capture(
-                at: prime,
-                requiredRelativePaths: [
-                    "Sources/PrimeCore/" +
-                        "PrimeValidationDriverV2FixedProbeExecutor.swift",
-                    "Tests/PrimeValidationWorkflow/Sources/" +
-                        "PrimeValidationWorkflowDriverCore/" +
-                        "PrimeValidationDriverV2FixedProbeBinding.swift",
-                ]
             )
             let sourceData = try PrimeCanonicalJSON.encode(snapshot)
             let packageLockData = try Data(
@@ -4023,51 +4154,82 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
             )
             try request.validate()
             let requestData = try PrimeCanonicalJSON.encode(request)
-            XCTAssertLessThanOrEqual(requestData.count, 256 * 1024)
+            guard requestData.count <= 256 * 1024 else {
+                throw FixtureError.invalid(
+                    "gate_e_release_request_size_base_" + base.path
+                )
+            }
 
-            let launch = try gateELaunchReleaseSupervisor(
-                executable: supervisor,
-                request: requestData,
-                captureRoot: base
-            )
-            XCTAssertEqual(launch.exitStatus, 0)
-            XCTAssertTrue(launch.standardOutput.isEmpty)
-            XCTAssertTrue(launch.standardError.isEmpty)
+            let launch: GateEReleaseLaunchObservation
+            do {
+                launch = try gateELaunchReleaseSupervisor(
+                    executable: supervisor,
+                    request: requestData,
+                    captureRoot: base
+                )
+            } catch {
+                throw FixtureError.invalid(
+                    "gate_e_release_outer_launch_base_" + base.path +
+                        "_error_" + String(describing: error)
+                )
+            }
+            guard launch.exitStatus == 0 else {
+                throw FixtureError.invalid(
+                    "gate_e_release_supervisor_exit_" +
+                        String(launch.exitStatus) + "_phase_" +
+                        gateEReleasePhaseLabel(launch.exitStatus) +
+                        "_base_" + base.path
+                )
+            }
+            guard launch.standardOutput.isEmpty,
+                  launch.standardError.isEmpty else {
+                throw FixtureError.invalid(
+                    "gate_e_release_supervisor_stdio_base_" + base.path
+                )
+            }
 
             let leaves = try FileManager.default.contentsOfDirectory(
                 atPath: journal.path
             ).sorted()
-            XCTAssertEqual(leaves, gateEExpectedJournalLeaves().sorted())
+            guard leaves == gateEExpectedJournalLeaves().sorted() else {
+                throw FixtureError.invalid(
+                    "gate_e_release_journal_inventory_base_" + base.path
+                )
+            }
             var journalStatus = stat()
-            XCTAssertEqual(lstat(journal.path, &journalStatus), 0)
-            XCTAssertEqual(journalStatus.st_nlink, 36)
+            guard lstat(journal.path, &journalStatus) == 0,
+                  journalStatus.st_nlink == 36 else {
+                throw FixtureError.invalid(
+                    "gate_e_release_journal_metadata_base_" + base.path
+                )
+            }
             for leaf in leaves {
                 let url = journal.appendingPathComponent(leaf)
                 let data = try Data(contentsOf: url)
                 var status = stat()
-                XCTAssertEqual(lstat(url.path, &status), 0, leaf)
-                XCTAssertEqual(
-                    status.st_mode & mode_t(S_IFMT),
-                    mode_t(S_IFREG),
-                    leaf
-                )
-                XCTAssertEqual(status.st_mode & mode_t(0o7777), 0o400, leaf)
-                XCTAssertEqual(status.st_nlink, 1, leaf)
-                XCTAssertLessThanOrEqual(data.count, 64 * 1024, leaf)
-                XCTAssertEqual(data.last, 0x0a, leaf)
+                guard lstat(url.path, &status) == 0,
+                      status.st_mode & mode_t(S_IFMT)
+                        == mode_t(S_IFREG),
+                      status.st_mode & mode_t(0o7777) == 0o400,
+                      status.st_nlink == 1,
+                      data.count <= 64 * 1024,
+                      data.last == 0x0a else {
+                    throw FixtureError.invalid(
+                        "gate_e_release_journal_leaf_" + leaf +
+                            "_base_" + base.path
+                    )
+                }
             }
-            XCTAssertEqual(
-                try FileManager.default.contentsOfDirectory(
+            guard try FileManager.default.contentsOfDirectory(
                     atPath: workspace.path
-                ),
-                []
-            )
-            XCTAssertEqual(
-                try FileManager.default.contentsOfDirectory(
+                  ).isEmpty,
+                  try FileManager.default.contentsOfDirectory(
                     atPath: evidence.path
-                ),
-                []
-            )
+                  ).isEmpty else {
+                throw FixtureError.invalid(
+                    "gate_e_release_nonempty_root_base_" + base.path
+                )
+            }
         #endif
     }
 
@@ -4095,6 +4257,18 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
         let exitStatus: Int32
         let standardOutput: Data
         let standardError: Data
+    }
+
+    private func gateEReleasePhaseLabel(_ exitStatus: Int32) -> String {
+        switch exitStatus {
+        case 65: "transport"
+        case 66: "admission_and_guards"
+        case 67: "supervisor_image"
+        case 68: "fixed_probes_and_semantic_binding"
+        case 69: "final_binding_revalidation"
+        case 70: "containment_fail_stop"
+        default: "unknown"
+        }
     }
 
     private struct GateEJournalMechanicsRecord:

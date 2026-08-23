@@ -10,6 +10,14 @@ private enum PrimeValidationDriverV2SupervisorMainError: Error {
     case rejected
 }
 
+private enum PrimeValidationDriverV2SupervisorExitStatus {
+    static let transport: Int32 = 65
+    static let admission: Int32 = 66
+    static let supervisorImage: Int32 = 67
+    static let fixedProbes: Int32 = 68
+    static let finalRevalidation: Int32 = 69
+}
+
 /// Gate A's transport remains one closed canonical typed intent frame. After
 /// this process binds that intent to its mapped image, Gate E unconditionally
 /// runs the facade's zero-argument fixed Git and Swift probe transition.
@@ -20,14 +28,115 @@ private struct PrimeValidationWorkflowDriverV2Supervisor {
         UInt64 = 5_000_000_000
 
     static func main() {
+        let request: PrimeValidationDriverV2SupervisorLaunchRequestV1
         do {
-            try run()
+            request = try requestFromStandardInput()
         } catch {
-            Darwin._exit(65)
+            Darwin._exit(
+                PrimeValidationDriverV2SupervisorExitStatus.transport
+            )
+        }
+        let intent = request.intent
+
+        let guarded:
+            PrimeValidationSwiftPMBuildInventoryGuardedPreExecutor
+        do {
+            let developerDirectory = try developerDirectory(
+                swiftExecutableAbsolutePath:
+                    intent.swiftExecutable.absolutePath
+            )
+            let admission = try
+                PrimeValidationSwiftPMBuildInventoryAdmission
+                .admitPrerequisites(
+                    primeRepositoryURL: URL(
+                        fileURLWithPath:
+                            intent.roots.repositoryRoot.absolutePath,
+                        isDirectory: true
+                    ),
+                    workspaceRootURL: URL(
+                        fileURLWithPath:
+                            intent.roots.workspaceRoot.absolutePath,
+                        isDirectory: true
+                    ),
+                    evidenceRootURL: URL(
+                        fileURLWithPath:
+                            intent.roots.evidenceRoot.absolutePath,
+                        isDirectory: true
+                    ),
+                    leaseDirectoryURL: URL(
+                        fileURLWithPath:
+                            request.leaseDirectoryAbsolutePath,
+                        isDirectory: true
+                    ),
+                    companionRepositoryURL: URL(
+                        fileURLWithPath:
+                            intent.roots.companionRoot.absolutePath,
+                        isDirectory: true
+                    ),
+                    companionDeclaration: .init(
+                        expectedPinnedHEAD:
+                            PrimeValidationRunIntentV2
+                            .requiredCompanionCommit,
+                        declaredObservedHEAD: intent.companionCommit,
+                        declaredPorcelainV2Status: Data()
+                    ),
+                    developerDirectoryURL: developerDirectory
+                )
+            guarded = try admission
+                .consumePrerequisites()
+                .prepareGuardedPreExecutor()
+        } catch {
+            Darwin._exit(
+                PrimeValidationDriverV2SupervisorExitStatus.admission
+            )
+        }
+
+        let bound: PrimeValidationDriverV2SupervisorImageCapability
+        do {
+            bound = try PrimeValidationDriverV2SupervisorImageBridge.bind(
+                intent: intent,
+                guardedPreExecutor: guarded
+            )
+            try bound.revalidate()
+        } catch {
+            Darwin._exit(
+                PrimeValidationDriverV2SupervisorExitStatus.supervisorImage
+            )
+        }
+
+        guard #available(macOS 26.0, *) else {
+            Darwin._exit(
+                PrimeValidationDriverV2SupervisorExitStatus.fixedProbes
+            )
+        }
+        let fixedProbeBinding: PrimeValidationDriverV2FixedProbeBinding
+        do {
+            fixedProbeBinding = try
+                PrimeValidationDriverV2FixedProbeBindingBridge.bind(
+                    intent: intent,
+                    supervisorImage: bound
+                )
+        } catch {
+            Darwin._exit(
+                PrimeValidationDriverV2SupervisorExitStatus.fixedProbes
+            )
+        }
+
+        do {
+            // Revalidation requires the exact four-authority remainder before
+            // its final retained-lifetime deadline and continuity accept.
+            try fixedProbeBinding.revalidate()
+            withExtendedLifetime(fixedProbeBinding) {}
+        } catch {
+            Darwin._exit(
+                PrimeValidationDriverV2SupervisorExitStatus.finalRevalidation
+            )
         }
     }
 
-    private static func run() throws {
+    private static func requestFromStandardInput() throws
+        -> PrimeValidationDriverV2SupervisorLaunchRequestV1
+    {
         guard CommandLine.arguments.count == 1 else {
             throw PrimeValidationDriverV2SupervisorMainError.rejected
         }
@@ -38,70 +147,7 @@ private struct PrimeValidationWorkflowDriverV2Supervisor {
             artifact: "driver_v2_supervisor_launch_request"
         )
         try request.validate()
-        let intent = request.intent
-        let developerDirectory = try developerDirectory(
-            swiftExecutableAbsolutePath:
-                intent.swiftExecutable.absolutePath
-        )
-
-        let admission = try
-            PrimeValidationSwiftPMBuildInventoryAdmission
-            .admitPrerequisites(
-                primeRepositoryURL: URL(
-                    fileURLWithPath:
-                        intent.roots.repositoryRoot.absolutePath,
-                    isDirectory: true
-                ),
-                workspaceRootURL: URL(
-                    fileURLWithPath:
-                        intent.roots.workspaceRoot.absolutePath,
-                    isDirectory: true
-                ),
-                evidenceRootURL: URL(
-                    fileURLWithPath:
-                        intent.roots.evidenceRoot.absolutePath,
-                    isDirectory: true
-                ),
-                leaseDirectoryURL: URL(
-                    fileURLWithPath:
-                        request.leaseDirectoryAbsolutePath,
-                    isDirectory: true
-                ),
-                companionRepositoryURL: URL(
-                    fileURLWithPath:
-                        intent.roots.companionRoot.absolutePath,
-                    isDirectory: true
-                ),
-                companionDeclaration: .init(
-                    expectedPinnedHEAD:
-                        PrimeValidationRunIntentV2
-                        .requiredCompanionCommit,
-                    declaredObservedHEAD: intent.companionCommit,
-                    declaredPorcelainV2Status: Data()
-                ),
-                developerDirectoryURL: developerDirectory
-            )
-        let guarded = try admission
-            .consumePrerequisites()
-            .prepareGuardedPreExecutor()
-        let bound = try
-            PrimeValidationDriverV2SupervisorImageBridge.bind(
-                intent: intent,
-                guardedPreExecutor: guarded
-            )
-        try bound.revalidate()
-        guard #available(macOS 26.0, *) else {
-            throw PrimeValidationDriverV2SupervisorMainError.rejected
-        }
-        let fixedProbeBinding = try
-            PrimeValidationDriverV2FixedProbeBindingBridge.bind(
-                intent: intent,
-                supervisorImage: bound
-            )
-        // Revalidation requires the exact four-authority remainder before its
-        // final retained-lifetime deadline and continuity accept.
-        try fixedProbeBinding.revalidate()
-        withExtendedLifetime(fixedProbeBinding) {}
+        return request
     }
 
     private static func developerDirectory(
