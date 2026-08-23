@@ -4054,3 +4054,134 @@ freeze/result authorizes only this clean control checkpoint and read-only
 retained-evidence analysis; the consumed identity itself grants no authority.
 Any future production work requires separately governed authorization, a new
 source identity, and a new freeze; it cannot reuse or reinterpret this shot.
+
+## Gate E1.3 recovery freeze — typed prerequisite-admission rejection site
+
+| Field | Frozen value |
+| --- | --- |
+| Status | `FROZEN_SOURCE_EDIT_NOT_IMPLEMENTED` |
+| Durable-control predecessor | `49686576043fdade64c5e58a090dedf59d51fa0e` / tree `adfec0eb7f4cd01ac0f722518a3b04805a911b59` |
+| Source predecessor | clean `1d341a529c442e63369c361b1e5ac95ca464fdf7` / tree `e787b3573bd44259606536860dc980720d73d64f` |
+| Consumed predecessor identity | `194cf7141172ee06b5f9734af2e9c3df498547a2f718698ccd421ef7ae961d0f`; permanently no-retry |
+| Authorized successor source commits | exactly `1`, a direct child of the source predecessor |
+| Authorized source paths | exactly `4` |
+| New child/process/role/command surface | `0` / `0` / `0` / `0` |
+| Production supervisor or method-8 invocation | `0` in this source-edit slice |
+| Gate F/G authorization | `false` / `false` |
+
+The four-path mutation allowlist is:
+
+1. `Sources/PrimeCore/PrimeValidationSwiftPMBuildInventoryAdmission.swift` —
+   one closed payload-free rejection-site observation seam around the existing
+   top-level prerequisite-admission operations in the existing sole public
+   admission entry; no new observation-specific overload, flag, callback, or
+   second entry;
+2. `Tests/PrimeValidationWorkflow/Sources/PrimeValidationWorkflowDriverV2Supervisor/main.swift` —
+   one private exhaustive rejection-site-to-status projection in the existing
+   prerequisite-admission catch; generic status `71` remains fail-closed;
+3. `Tests/PrimeValidationWorkflow/Tests/PrimeValidationWorkflowDriverCoreTests/PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests.swift` —
+   focused mechanics and structural assertions inside the nine exact existing
+   methods frozen below; no new or renamed test identifier or inventory entry;
+   and
+4. `Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift` — canonical source
+   identity reseal only after the first three paths are final.
+
+The new PrimeCore observation is an `@frozen`, ordinary public, non-raw,
+non-Codable `Error & Equatable & Sendable` enum with no associated value and no
+public initializer beyond its closed cases. The existing public
+`admitPrerequisites` remains the sole production admission entry and always
+replaces an underlying failure at one of the listed top-level operations with
+that operation's site. The existing internal synthetic-source seam follows the
+same site projection. No observation-enabled flag, new observation-specific
+overload, callback, SPI admission entry, or new capability-returning path is
+permitted. The
+pre-existing internal `sourceExpectation` overload remains the sole synthetic
+test seam and gains no caller-selectable observation policy. The site value is
+failure evidence only: it contains no descriptor, lease, watch, capability,
+path, errno, string, UID, mode, or retry authority.
+
+| Status | Rejection site entered |
+| ---: | --- |
+| `74` | companion declaration validation |
+| `75` | Prime repository hold |
+| `76` | workspace-root hold |
+| `77` | workspace private-and-empty check |
+| `78` | evidence-root hold |
+| `79` | evidence private-and-empty check |
+| `80` | companion repository hold |
+| `81` | lease-directory hold |
+| `82` | lease private-and-empty check |
+| `83` | root disjointness and non-nesting check |
+| `84` | exclusive lease acquisition |
+| `85` | post-lease directory rebind |
+| `86` | Prime source snapshot capture |
+| `87` | `Package.resolved` binding |
+| `88` | Prime held source-identity snapshot |
+| `89` | companion held-content snapshot |
+| `90` | held toolchain admission |
+
+Status `71` remains `admit_prerequisites_unclassified`. Statuses `74...90`
+mean only that every preceding top-level operation returned and the named
+operation entered and threw. They do not expose or prove the underlying guard,
+associated value, errno, or source line. In particular, status `84` plus an
+absent never-unlinked lease leaf means failure at or before successful lease
+file creation only when the separately frozen pre-shot absence and
+no-other-mutator/root-conservation evidence also hold; it does not identify a
+lease subguard. Statuses `85...90` prove that lease acquisition returned and
+the fixed name existed then. Post-observation retention additionally requires
+the separately recorded no-other-mutator evidence.
+
+The supervisor must remain silent and keep the Gate A stdin frame, argc-one
+rule, canonical request schema, 256-KiB cap, five-second EOF deadline,
+developer-directory derivation, zero-argument facade transition, role order,
+deadlines, environment tables, roots, journal, image bind, final revalidation,
+and every process policy unchanged. It may not inspect raw error text,
+associated values, errno, paths, `NSError`, `localizedDescription`, stdout,
+stderr, a request field, environment variable, callback, file descriptor, or
+child state. It must retain eight lexical catches and nine `_exit` calls; the
+existing admission catch performs the only typed site projection and otherwise
+exits `71`.
+
+Only these nine existing XCTest identifiers may change inside the sole test
+path; the frozen inventory remains exactly `892` XCTest / `12` Swift Testing:
+
+1. `testAdmissionRequiresEveryGateCPrimeCoreSource`;
+2. `testCanonicalAliasAndAncestorOverlapAreRejected`;
+3. `testCompanionCaptureRejectsSymlinkFIFORootGitFile`;
+4. `testCompanionTopologyLimitsAreFrozenAndRejectDepthAndFileBytes`;
+5. `testCallerDeclaredGitMismatchIsRejectedBeforeAdmission`;
+6. `testConsumedPrerequisiteRetainsExclusiveLease`;
+7. `testGateEXCTestHostCannotConstructProductionFixedProbeBinding`;
+8. `testCapabilitySurfaceHasNoCodecPublicInitializerOrSpawn`; and
+9. `testPublicReleaseAdmissionUsesEmbeddedSourceAuthority`.
+
+Focused mechanics may use the internal synthetic-source seam to prove that
+representative real failures become their entered site while an observed
+success returns the same one-shot descriptor/lease-retaining capability and
+exposes no process authority. Static assertions must bind all 17 unique
+statuses, their order, generic `71`, silence, frame conservation, and absence
+of codec, arbitrary input, spawn, process, or retry surfaces. The Release-only
+method must require an absolute `PRIME_DRIVER_V2_GATE_E_PRIME_ROOT`, fail if it
+is missing, and use that exact future production-clone root instead of deriving
+Prime from `#filePath`; `PRIME_PMHNP_COMPANION_ROOT` remains the exact companion
+input. These are test-harness inputs only and do not enter the dedicated
+supervisor environment. XCTest remains production-ineligible and cannot close
+`supervisor_executable_image` or any Gate E authority.
+
+This source-edit freeze authorizes only the four allowlisted edits, two
+independent read-only calculations of the complete canonical source identity,
+the exact canonical provenance reseal, and one clean source commit. Source
+cardinality must remain `545` admitted files / `544` identity records and the
+watch baseline remains `2,157`; any count change is a hard stop. No Swift
+build, test, production supervisor, method 8, Git/Swift fixed probe, network,
+GitHub, dependency fetch, root/cache cleanup, or consumed-evidence mutation is
+authorized by this slice.
+
+After the clean source commit exists, a separate clean control checkpoint must
+bind its exact commit/tree, four-path diff, predecessor exclusion, identity,
+cardinality, and canonical-template equality before any build or test. A later
+readiness freeze must separately bind fresh cache leaves, exact focused
+selectors, the production clone, Release images, absent identity-bound root,
+and one-shot accounting before a replacement Gate E invocation can be
+authorized. Gate F build/staging and Gate G inventory remain missing and
+forbidden even if that later Gate E invocation succeeds.
