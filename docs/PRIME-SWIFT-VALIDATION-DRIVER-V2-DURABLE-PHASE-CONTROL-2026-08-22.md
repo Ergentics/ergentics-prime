@@ -10431,3 +10431,146 @@ artifact/root preimages. It must not change Prime source, DriverCore, Swift
 argv, or any scientific predicate.
 
 No R15 launch is authorized by this result.
+
+## Gate E1.4-R15 freeze — cause-specific guardian repair
+
+| Coordinate | Frozen value |
+| --- | --- |
+| Status | `FROZEN_NOT_EXECUTED` |
+| Durable-control predecessor | R14 result `bbdb026d126e353319feda2fab72821d3cead279` / tree `6bb6ff2c10906fc3a31f716341408a3daa8089e8` |
+| Source commit/tree/identity | clean `befc632485930a9cca7f618d3704292b5465f911` / `7d1a3bf302fe358f9e42dc1ed2bf54ed3d22982e` / `b501ad0d7ab1b6c54cbf30f9a79d75c54fe1d3783c516e10ad73fdd5fb4df397` |
+| R15 guardian | `docs/tools/prime-driver-v2-r15-guardian.rb`; mode `0644`; `1,089` lines / `35,787` bytes; SHA-256 `4e1fafce16076af63e210feeeb978b3bfa2b1c1d47e52081028d66d049e9c120`; Git blob `e8451c45f307f71f2c3e597482e4a4b8d7cf24f6` |
+| Archived R14 guardian | unchanged SHA-256 `ff96247d84c77762cad4f7b52813bc2f3233f2b2a34d6f73de5df0e459717450`; blob `b00c5c17b752ab2ca1947a86f925a97d4bb5be63` |
+| R15 epoch | `/private/tmp/gate-e1-4-mechanics-r15-befc6324-b501ad0d7ab1b6c5`; absent at freeze |
+| Predecessor mechanics epochs | exactly `8`; sorted path-set SHA-256 `bbbcb2b291e034d8bc533735f05c232e4be93495135938d6b2e84c35131deb8e` |
+| Retained R14 epoch | vnode `16777231/17401180`; UID/GID `501/0`; mode `0700`; exact nine empty mode-`0700` children; no terminal |
+| Post-create mechanics expectation | exactly `9`; sorted path-set SHA-256 `6eaaa969baeacdc99301684ff2c2edbeb6bab47afacd2e091c2143d0e17c2253` |
+| Admission/public roots | exact `16 / 0`; admission path-set SHA-256 `6185ea35d684b2a50529aa79f1455bae789eda056e298f5509e7c5127423abd5` |
+| Production-root inventory | exact `2` historical roots; sorted path-set SHA-256 `d9fb0ee3c491f455ce32f685ddbe54bae92dbde6bf46ff420b3f1cc9e73c7f25`; current reserved `b501ad0d...f4df397` root absent |
+| Prospective target envelope | at most one R15 guardian and its at-most-one direct incremental Release `swift test`; no preliminary build, `--skip-build`, retry, or second command |
+| Time/process policy | ordinary cutoff `840` seconds; containment horizon `900` seconds; unchanged proof-driven containment after the horizon |
+| Production attempts / authority vector | `0 / 00000000` |
+| Fetch / network / GitHub | `0 / 0 / 0` |
+| Freeze mutation allowlist | this control file plus the new R15 guardian only; R14 evidence, Prime source, DriverCore, manifests, locks, dependencies, `.github`, and build artifacts unchanged |
+
+R15 is not a retry or reinterpretation of R14. R14's guardian envelope is
+retired; its empty epoch and failed bytes remain retained. R15 is a new local
+operational envelope on the same unexecuted scientific target, scoped only
+to repair the proven Ruby lexical defect before the already-frozen safety and
+mechanics assessment. It changes no scientific predicate or roadmap authority.
+
+### Closed delta and build-free proof
+
+Deleting the sole new line
+
+```ruby
+chunk = nil
+```
+
+then normalizing the R15 epoch, terminal leaf, and four status labels back to
+R14 makes the R15 file byte-for-byte equal to the archived R14 guardian. The
+complete concrete diff is therefore:
+
+1. `mechanics-r14` to `mechanics-r15` in the one epoch path;
+2. `r14-guardian-terminal.json` to the exact sibling
+   `r15-guardian-terminal.json`;
+3. the four `R14_GUARDIAN_*` result labels to their `R15_GUARDIAN_*`
+   counterparts; and
+4. `chunk = nil` immediately before the otherwise unchanged modifier loop.
+
+There are zero `R14` / `r14` hits in R15, exactly one `Process.spawn`, the same
+two `Process.kill` call sites, and no `system`, `popen`, `fork`, `exec`,
+internal shell, or generic execution input. The exact forty-key Swift
+environment, Swift argv,
+source/build/Fixture/XCTest paths, frozen Fixture identity/hash, authority
+vector, timers, libproc joins, workspace nonce, containment algorithm, and
+terminal framing are otherwise byte-identical.
+
+The candidate was not loaded as a program. Ruby `2.6.10` Ripper parsed the
+extracted `held_sha256` method and classified the modifier-body `chunk` as
+`var_ref`, not R14's `vcall`; `ruby -wc` separately parsed the full file
+without executing its top level. Independent isolated checks passed twice at exact
+payload sizes `0`, `1`, `65,535`, `65,536`, `65,537`, `131,072`, and `131,073`,
+with correct SHA-256 and descriptor offset restored to zero. Held-vnode unlink
+and atomic replacement checks retained and hashed the old descriptor bytes
+while the new named vnode hashed differently. That proves descriptor
+retention, not named-path continuity; the unchanged `rejoin` remains the
+authority that rejects named replacement. Two held reads of the frozen
+SessionFixture joined `16777231/17382060`, `53,072` bytes, SHA-256
+`177a18c20bc42486c77b52af4c472be222dec1baabf8973ece7b2d44ea92756e`,
+and offset zero. Syntax, normalized-byte equivalence, and `git diff --check`
+pass. Isolated Ruby validator processes ran; they launched no guardian, Swift,
+assessment target child, candidate `Process.spawn`, or signal.
+
+### Conserved predecessor and fresh namespace
+
+All R14 freeze preimages remain the R15 preimages by exact equality: the four
+manifest/lock hashes, workspace-state vnode/bytes/hash, clean MLX and Numerics
+commits/trees, three source vnode/time/hash tuples, nine Release artifact
+vnode/time/hash tuples and UUIDs, R12 causal leaf, Swift frontend/SDK, bootstrap
+binaries, five-key bootstrap map, and the `23`-row Ruby loaded-feature closure.
+Their complete values remain in the committed R14 freeze and R14 postflight
+tables immediately above; R15 does not reseal or weaken them. The reserved
+production root for source identity `b501ad0d...f4df397` remains absent.
+
+After this freeze is committed, and only before an explicitly approved R15
+launch, create the R15 epoch exactly once. Its root and exact nine children
+`home`, `config`, `tmp`, `git-template`, `swiftpm-cache`, `swiftpm-config`,
+`swiftpm-security`, `clang-module-cache`, and `swiftpm-module-cache` must be
+UID-owned mode `0700`, descriptor-held, rejoined, and initially empty. The
+terminal leaf is frozen exactly as `r15-guardian-terminal.json`, direct under
+that held epoch. Do not modify, clean, or reuse R14's epoch.
+
+The R15 guardian repeats the two complete joined preflight scans. Any ambient
+Fixture/XCTest survivor, root drift, preimage change, R15 epoch malformation,
+or unavailable process safety stops before target spawn. A prelaunch guardian
+failure retires the one guardian envelope; starting its sole Swift command
+separately consumes the R15 target shot. Neither shape permits same-epoch or
+same-guardian rerun.
+
+### Exact R15 command envelope
+
+Run at most once, only after fresh explicit approval:
+
+```zsh
+/bin/zsh -f -c '
+unsetopt BG_NICE
+umask 077
+/usr/bin/env -i \
+  LANG=C.UTF-8 \
+  LC_ALL=C.UTF-8 \
+  TZ=UTC \
+  PATH=/usr/bin:/bin \
+  __CF_USER_TEXT_ENCODING=0x1F5:0x0:0x0 \
+  /usr/bin/ruby --disable-gems \
+  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/docs/tools/prime-driver-v2-r15-guardian.rb \
+  </dev/null &
+r15_guardian_pid=$!
+wait $r15_guardian_pid
+'
+```
+
+The natural/abnormal predicates are the exact R14 predicates with only the
+R15 guardian/epoch/status substitutions. In particular, a `PASS` still
+requires a complete fresh object/link chain, R15 natural terminal, Swift exit
+`0`, elapsed below `840` seconds, zero signals/containment/unsafe history,
+two empty scans plus captured-generation/group absence, exact selected XCTest
+terminal, root delta `0`, conserved inputs, and independent postflight. Every
+other result remains `ABSTAIN`. No XCTest success can close production
+supervisor identity or any of Gate E's eight process-derived authorities.
+
+This freeze does not authorize the R15 launch. The earlier R14 process-signal
+approval is not inherited. A fresh explicit approval must cover the same
+bounded actuation risk: the guardian may STOP/KILL process groups it classifies
+inside the captured assessment domain and may remain in containment until it
+can prove conservation.
+
+Every R15 outcome retains:
+
+```text
+R15_swiftpm_commands <= 1
+R15_production_attempts = 0
+outer_journal_authority_vector = 00000000
+gate_E_scientific_outcome = ABSTAIN
+gate_E_clearance_granted = 0
+```
