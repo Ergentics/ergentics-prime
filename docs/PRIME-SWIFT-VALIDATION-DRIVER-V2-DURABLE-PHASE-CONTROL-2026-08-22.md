@@ -5060,3 +5060,116 @@ Any successor must use a new epoch and a separately frozen metadata primitive.
 It must not repair the `/bin/ls` regular expression. Extended metadata should
 be read from held descriptors through typed Darwin APIs so flags, ACL count,
 and xattr-name bytes are data fields rather than human-formatted columns.
+
+## Gate E1.3 readiness successor freeze — typed descriptor metadata
+
+| Field | Exact value |
+| --- | --- |
+| Status | `FROZEN_NOT_EXECUTED` |
+| Direct durable-control predecessor | `f62f23cf03df800281f0a417e89e07312d33f6ab` / tree `4a0014dd7535d7386da64283067d61a62479936d` |
+| Permitted successor delta | exactly this control path plus `docs/tools/prime-driver-v2-e13-readiness-holder.rb` |
+| Source commit/tree/identity | clean `2d705a71dc1827cf4fe6f0f9f3bc8255063e1dd3` / `0077ac10f1dbba50680502a31084f7280c2c2f65` / `474008bdffccf4102566c98088abf2799ad3a4934edadb8c0357c23190c71a52` |
+| Source cardinality | `545 / 544 / 111,620` |
+| Terminal epochs | original epoch `16777231/17350005`; `R2` epoch `16777231/17351796` plus its exact six children; immutable read-only canaries only |
+| Successor epoch `R3` | `/private/tmp/gate-e1-3-readiness-r3-474008bdffccf410`; absent before this freeze |
+| Holder source | mode `100644`; `502` lines; `16,442` bytes; Git blob `95c9bc515a21088f889be494669d0c0274c3b8e4`; SHA-256 `55da8d5cb08798eb0a633706c612bcb3ee6b03da86f01fb11bf7fe7dca5f5d83` |
+| Holder invocation count | at most `1`; success requires exactly `1` |
+| Holder direct child multiset | exactly `7 x /bin/mkdir + 1 x /usr/bin/env -> Xcode Git`; `8` total |
+| `/bin/ls` / shell metadata parsers | `0 / 0` |
+| SwiftPM readiness commands | ordered `0 -> 1 -> 2`; success requires exactly one Release build plus one Release test |
+| Production method 8 / supervisor / fixed child | `0 / 0 / 0` |
+| Network / dependency fetch / GitHub / Gate F / Gate G | `0 / 0 / 0 / 0 / 0` |
+
+The controlling form remains finite data. No prose can relax a byte vector,
+identity, count, equality, transition, or rejection below.
+
+### Typed observer contract
+
+The holder retains its exact zero-argument, five-field `env -i`, system Ruby
+`--disable-gems`, JSON/Fiddle runtime, `O_NOFOLLOW_ANY`, held-vnode,
+`fchdir`, process-group, interruption, and publication contracts from
+`eaf857cb...`. The only instrumentation replacement is the removal of every
+`/bin/ls` child and human-text parser. Each accepted metadata observation now
+takes one already-held `IO` and requires this descriptor tuple:
+
+| Coordinate | Exact typed operation and accepted value |
+| --- | --- |
+| BSD flags | `fgetattrlist(fd, attrlist, out8, 8, 0) == 0`; native output `[length, flags] == [8, 0]` |
+| ACL | `acl_get_fd_np(fd, ACL_TYPE_EXTENDED)` returns `NULL` and immediate `errno == ENOENT == 2` |
+| caller-visible xattr names | ordered size/read pair `flistxattr(fd, NULL, 0, XATTR_SHOWCOMPRESSION) == 21 -> flistxattr(fd, buffer, 21, XATTR_SHOWCOMPRESSION) == 21`; exact bytes `636f6d2e6170706c652e70726f76656e616e636500` |
+| join | descriptor device/inode and nlink equal the frozen expectation before and after all three coordinates; the named path rejoins the same descriptor |
+
+The `attrlist` is exactly `24` bytes under native Ruby pack template
+`S!S!I!I!I!I!I!`: bitmap count `5`, reserved `0`, common bitmap
+`ATTR_CMN_FLAGS == 0x00040000`, and four zero group bitmaps. Output uses native
+`I!I!`. `ATTR_CMN_RETURNED_ATTRS` is not requested. Xattr options are exact
+`XATTR_SHOWCOMPRESSION == 0x20`; the claim is explicitly limited to names
+visible to this admitted caller. Any non-NULL ACL object is freed exactly once
+and rejected. Every relevant native return captures `Fiddle.last_error`
+immediately; no pathname-only xattr or ACL API is admitted.
+
+The exact admitted SDK header commitments are:
+
+| Header | SHA-256 |
+| --- | --- |
+| `sys/attr.h` | `5118b9245bc932bc32dcc60084b1e40d70bb5479a360b31cdbf188ef866deefe` |
+| `sys/acl.h` | `9511f84f0abe1e108e10979900d4fea8567534aef78f0984f7050c49f6c29ff7` |
+| `sys/xattr.h` | `60e1518429a9df2501dbec28b09642cc3a67cf1508bef0c6d8e9c1de3e1ef408` |
+| `sys/errno.h` | `109ace10e79b9467dee3b8c7890f1d5bea1102d982c521922e9d372ab9863c97` |
+| `unistd.h` | `8d535079658f063bcef358ef4c1c1b52b8e88dacfc22cbf4db0f6bf8abe40637` |
+
+Before testing `R3` absence or launching its first `mkdir`, the holder opens,
+holds, rejoins, and applies the exact typed observer to all eight terminal
+canaries: the empty original epoch, the `R2` parent, and all six `R2`
+children. It requires their recorded identities, modes, links, inventories,
+flags, ACL absence, and caller-visible xattr bytes. They never become home,
+cache, template, clone, cwd, or output roots. `/private` is a positive flags
+control and must return exact `[8, 1,081,344]`, not zero.
+
+A no-write preflight against those same eight canaries passed with exact
+result `8|24|636f6d2e6170706c652e70726f76656e616e636500|native_r3_preflight_pass`.
+The positive flags control returned `1,081,344`; the ACL-bearing
+`/Users/ergentics` control produced a non-NULL ACL and the expected
+`descriptor-acl-present` rejection. Syntax passed. No `R3` path was created.
+
+There are `29` successful-path descriptor metadata observations: `8`
+terminal canaries plus the prior `21` new-epoch checkpoints. Including the
+single `/private` positive control, the exact descriptor-metadata native call
+counts are `30 x fgetattrlist`, `58 x flistxattr`, and
+`29 x acl_get_fd_np`; successful ACL-free execution calls `acl_free` zero
+times. The existing cwd/vnode join adds exactly `2 x fchdir` on the successful
+holder path. The direct process count is independently `8`, not `29`.
+
+### Exact vectors and transition
+
+Let `rho3` replace only the old readiness-root byte string
+`/private/tmp/gate-e1-3-readiness-474008bdffccf410` with
+`/private/tmp/gate-e1-3-readiness-r3-474008bdffccf410` in the exact two
+Release command blocks from `c8ddd193...`. No other byte changes.
+
+| Vector | Elements / bytes | SHA-256 |
+| --- | ---: | --- |
+| holder clone argv JSON | `55 / 2,013` | `5f5f5b8372c4bc922ee5c74f5d57e7c27068eb4e1b1bb481e5b8a38f688e90d4` |
+| Release command 1 raw block | `2,181` bytes | `f20663c81ae917029ea7161f90805b622ac7d335b73de5aecb2dc930e3b3ac86` |
+| Release command 2 raw block | `4,522` bytes | `97d76d72196c3ae33d92cd9404270bc15cb8ab34961cfd50aff37c196b3fe3b8` |
+
+Clone still enters the held `R3/prime` vnode with `fchdir` and uses destination
+`.`. Its exact `38`-assignment scrubbed environment, local-file source,
+branch, Git options, and outer full clone-admission boundary are unchanged.
+
+The sole accepted counter trace remains
+`S0(0,0,0) -> S1(1,0,0) -> S2(1,1,0) -> S3(1,1,1)`. Any other transition
+enters terminal `STOP`, which has no outgoing edge. `S0` requires a clean
+successor commit directly on `f62f23cf...`, exact `A0`, exact non-epoch `B`,
+and absence of `R3` plus all three reserved production/shot paths. `S1`
+requires holder exit `0`, exact one-line success framing, all `R3` vnode joins,
+and independent full clone admission; holder success alone is insufficient.
+`S2/S3`, the six-object `A0 -> A1 -> A2` rules, the exact 15-member `Sigma`
+multiset, and `B_before = B_between = B_after` are unchanged from the prior
+freeze except for `rho3` and the admitted `R3` object.
+
+Any native preflight, holder, metadata, namespace, process, clone-admission,
+`A`, `B`, command, or selector mismatch is terminal: retain `R3`, do not
+clean, repair, continue, or retry. Even `S3` authorizes only a separate result
+checkpoint. It authorizes no reserved production root, shot cache, method 8,
+Driver V2 production child, Gate F, or Gate G.

@@ -16,7 +16,7 @@ end
 require "json"
 require "fiddle/import"
 
-EPOCH = "/private/tmp/gate-e1-3-readiness-r2-474008bdffccf410"
+EPOCH = "/private/tmp/gate-e1-3-readiness-r3-474008bdffccf410"
 SOURCE = "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.driver-v2-gate-c-staging"
 CHILDREN = %w[
   home
@@ -33,13 +33,28 @@ EXPECTED_GID = 0
 PRIVATE_IDENTITY = [16_777_231, 773_652].freeze
 TMP_ROOT_IDENTITY = [16_777_231, 774_813].freeze
 SOURCE_IDENTITY = [16_777_231, 17_154_421].freeze
-LS_IMAGE = "/bin/ls"
 TERMINATION_SIGNALS = %w[HUP INT QUIT TERM].freeze
+TERMINAL_OLD_EPOCH = "/private/tmp/gate-e1-3-readiness-474008bdffccf410"
+TERMINAL_R2_EPOCH = "/private/tmp/gate-e1-3-readiness-r2-474008bdffccf410"
+TERMINAL_CANARIES = [
+  [TERMINAL_OLD_EPOCH, [16_777_231, 17_350_005], 2, true],
+  [TERMINAL_R2_EPOCH, [16_777_231, 17_351_796], 8, false],
+  ["#{TERMINAL_R2_EPOCH}/home", [16_777_231, 17_351_797], 2, true],
+  ["#{TERMINAL_R2_EPOCH}/tmp", [16_777_231, 17_351_798], 2, true],
+  ["#{TERMINAL_R2_EPOCH}/git-template", [16_777_231, 17_351_799], 2, true],
+  ["#{TERMINAL_R2_EPOCH}/clang-module-cache", [16_777_231, 17_351_800], 2, true],
+  ["#{TERMINAL_R2_EPOCH}/swiftpm-module-cache", [16_777_231, 17_351_801], 2, true],
+  ["#{TERMINAL_R2_EPOCH}/prime", [16_777_231, 17_351_802], 2, true],
+].freeze
 
 module DarwinLibC
   extend Fiddle::Importer
   dlload Fiddle.dlopen(nil)
   extern "int fchdir(int)"
+  extern "int fgetattrlist(int, void*, void*, size_t, unsigned int)"
+  extern "ssize_t flistxattr(int, void*, size_t, int)"
+  extern "void* acl_get_fd_np(int, int)"
+  extern "int acl_free(void*)"
 end
 
 # Darwin fcntl.h values from the admitted MacOSX SDK.
@@ -49,6 +64,23 @@ O_DIRECTORY = 0x00100000
 O_CLOEXEC = 0x01000000
 O_NOFOLLOW_ANY = 0x20000000
 DIRECTORY_OPEN_FLAGS = O_RDONLY | O_DIRECTORY | O_CLOEXEC | O_NOFOLLOW_ANY
+
+# Typed descriptor metadata constants from the admitted Darwin SDK.
+ATTR_BIT_MAP_COUNT = 5
+ATTR_CMN_FLAGS = 0x00040000
+ACL_TYPE_EXTENDED = 0x00000100
+XATTR_SHOWCOMPRESSION = 0x00000020
+NO_ACL_ERRNO = Errno::ENOENT::Errno
+EXPECTED_XATTR_BYTES = "com.apple.provenance\0".b.freeze
+ATTR_LIST_BYTES = [
+  ATTR_BIT_MAP_COUNT,
+  0,
+  ATTR_CMN_FLAGS,
+  0,
+  0,
+  0,
+  0,
+].pack("S!S!I!I!I!I!I!").freeze
 
 def missing?(path)
   File.lstat(path)
@@ -158,62 +190,90 @@ def require_uninterrupted
   raise "holder-interrupted:#{$interrupted_signal}" if $interrupted_signal
 end
 
-def capture_extended_metadata(path)
-  require_uninterrupted
-  reader, writer = IO.pipe
-  pid = Process.spawn(
-    LS_IMAGE,
-    "-ldneO@",
-    "--",
-    path,
-    in: File::NULL,
-    out: writer,
-    err: File::NULL,
-    umask: 0o077,
-    pgroup: true,
-    close_others: true
+def descriptor_flags(io)
+  raise "attr-list-layout" unless ATTR_LIST_BYTES.bytesize == 24
+  buffer = "\0" * 8
+  Fiddle.last_error = 0
+  result = DarwinLibC.fgetattrlist(
+    io.fileno,
+    ATTR_LIST_BYTES,
+    buffer,
+    buffer.bytesize,
+    0
   )
-  $active_child_pid = pid
-  kill_process_group(pid) if $interrupted_signal
-  output = +""
-  overflow = false
-  begin
-    writer.close
-    while (chunk = reader.read(4096))
-      if output.bytesize + chunk.bytesize <= 65_536
-        output << chunk
-      else
-        overflow = true
-      end
-    end
-    reader.close
-    status = wait_exact(pid)
-  rescue Exception
-    contain_reap_and_join(pid)
-    raise
-  ensure
-    writer.close unless writer.closed?
-    reader.close unless reader.closed?
-    $active_child_pid = nil if $active_child_pid == pid
+  error = Fiddle.last_error
+  raise "descriptor-flags-read:#{error}" unless result == 0
+  returned_bytes, flags = buffer.unpack("I!I!")
+  raise "descriptor-flags-frame" unless returned_bytes == 8
+  flags
+end
+
+def descriptor_xattr_bytes(io)
+  Fiddle.last_error = 0
+  required = DarwinLibC.flistxattr(io.fileno, nil, 0, XATTR_SHOWCOMPRESSION)
+  size_error = Fiddle.last_error
+  raise "descriptor-xattr-size:#{size_error}" unless required == EXPECTED_XATTR_BYTES.bytesize
+  buffer = "\0" * required
+  Fiddle.last_error = 0
+  returned = DarwinLibC.flistxattr(
+    io.fileno,
+    buffer,
+    buffer.bytesize,
+    XATTR_SHOWCOMPRESSION
+  )
+  read_error = Fiddle.last_error
+  raise "descriptor-xattr-read:#{read_error}" unless returned == required
+  buffer
+end
+
+def require_descriptor_acl_free(io)
+  Fiddle.last_error = 0
+  acl = DarwinLibC.acl_get_fd_np(io.fileno, ACL_TYPE_EXTENDED)
+  error = Fiddle.last_error
+  unless acl.null?
+    Fiddle.last_error = 0
+    freed = DarwinLibC.acl_free(acl)
+    free_error = Fiddle.last_error
+    raise "descriptor-acl-free:#{free_error}" unless freed == 0
+    raise "descriptor-acl-present"
   end
-  raise "metadata-observer-nonzero:#{path}" unless status.success?
-  raise "metadata-observer-overflow:#{path}" if overflow
-  output
+  raise "descriptor-acl-read" unless error == NO_ACL_ERRNO
 end
 
 def require_extended_security(path, io:, expected_identity:, expected_nlink:)
+  require_uninterrupted
   rejoin!(path, io)
-  before = File.lstat(path)
+  before = io.stat
   raise "extended-identity-before:#{path}" unless [before.dev, before.ino] == expected_identity
-  lines = capture_extended_metadata(path).lines
-  fields = lines.fetch(0, "").split
-  expected_prefix = ["drwx------@", expected_nlink.to_s, "501", "0", "-"]
-  raise "extended-metadata:#{path}" unless fields.first(5) == expected_prefix
-  raise "extended-metadata:#{path}" unless lines.length == 2
-  raise "extended-metadata:#{path}" unless lines[1].match?(/\A\tcom\.apple\.provenance\t[0-9]+ ?\n?\z/)
-  after = File.lstat(path)
+  raise "extended-link-count:#{path}" unless before.nlink == expected_nlink
+  raise "extended-flags:#{path}" unless descriptor_flags(io) == 0
+  require_descriptor_acl_free(io)
+  raise "extended-xattrs:#{path}" unless descriptor_xattr_bytes(io) == EXPECTED_XATTR_BYTES
+  after = io.stat
   raise "extended-identity-after:#{path}" unless [after.dev, after.ino] == expected_identity
+  raise "extended-link-count-after:#{path}" unless after.nlink == expected_nlink
   rejoin!(path, io)
+end
+
+def require_terminal_canaries
+  held = TERMINAL_CANARIES.map do |path, identity, nlink, empty|
+    io = open_directory(path)
+    require_secure_directory(
+      path,
+      expected_nlink: nlink,
+      expected_identity: identity,
+      empty: empty
+    )
+    require_extended_security(
+      path,
+      io: io,
+      expected_identity: identity,
+      expected_nlink: nlink
+    )
+    io
+  end
+  raise "terminal-r2-inventory" unless Dir.children(TERMINAL_R2_EPOCH).sort == CHILDREN.sort
+  held
 end
 
 def run_exact(*argv)
@@ -309,11 +369,14 @@ begin
   source_root = open_directory(SOURCE)
   require_ancestor("/private", private_root, PRIVATE_IDENTITY, 0o755)
   require_ancestor("/private/tmp", tmp_root, TMP_ROOT_IDENTITY, 0o1777)
+  raise "descriptor-flags-positive-control" unless descriptor_flags(private_root) == 1_081_344
   source_stat = File.lstat(SOURCE)
   raise "source-security" unless source_stat.directory?
   raise "source-security" unless [source_stat.dev, source_stat.ino] == SOURCE_IDENTITY
   raise "source-security" unless [source_stat.uid, source_stat.gid, source_stat.mode & 0o7777] == [501, 20, 0o755]
   rejoin!(SOURCE, source_root)
+  terminal_canaries = require_terminal_canaries
+  raise "terminal-canary-cardinality" unless terminal_canaries.length == 8
   raise "epoch-present" unless missing?(EPOCH)
 
   run_exact("/bin/mkdir", "-m", "0700", EPOCH)
