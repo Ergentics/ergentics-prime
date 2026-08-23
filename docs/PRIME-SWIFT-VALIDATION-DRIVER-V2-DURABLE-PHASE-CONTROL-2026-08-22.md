@@ -4242,3 +4242,502 @@ cache leaves, exact selectors, production-clone and companion roots, Release
 image replacement and predecessor-identity exclusion, an absent fresh
 identity-bound shot root, and one-shot accounting. Until that freeze is cleanly
 committed, every Swift or production invocation remains forbidden.
+
+## Gate E1.3 readiness freeze — finite Release proof set
+
+| Field | Frozen value |
+| --- | --- |
+| Status | `FROZEN_NOT_EXECUTED` |
+| Durable-control predecessor | `b13ecb9fac9701da5e415501717ea1076f6b2b79` / tree `b99155cbfdffb1612a73d7bc1679b3addf5d60af` |
+| Permitted control delta | this freeze only, in this one durable-control path |
+| Source commit/tree | clean `2d705a71dc1827cf4fe6f0f9f3bc8255063e1dd3` / `0077ac10f1dbba50680502a31084f7280c2c2f65` |
+| Source identity/cardinality | unconsumed `474008bdffccf4102566c98088abf2799ad3a4934edadb8c0357c23190c71a52`; `545` files / `544` records / `111,620` canonical bytes |
+| Authorized local clone commands | exactly `1` |
+| Authorized namespace preparation | exactly `7` ordered exclusive `mkdir` operations under one absent identity-bound epoch root |
+| Authorized cache creations | exactly `2` absent leaves inside that epoch root, one exclusive creation each |
+| Authorized SwiftPM readiness commands | at most `2`, ordered; success requires exactly `2` |
+| Selected XCTest methods | exact finite set `15`; Release; one runner |
+| Production method 8 / supervisor / fixed children | `0 / 0 / 0` |
+| Source edits / dependency resolution or fetch / network / GitHub | `0 / 0 / 0 / 0` |
+| Gate F / Gate G authorization | `false / false` |
+
+Data precedence is explicit: the finite sets, hashes, vnode tuples,
+cardinalities, command/environment maps, and equality predicates below are the
+authority. Prose may explain them but cannot relax, replace, or reinterpret a
+mismatch; any data/prose contradiction is a hard stop.
+
+This freeze explicitly supersedes only the E1.2 readiness instrumentation
+rules that required Debug configuration, two Debug compile-only commands, and
+one SwiftPM process per focused method. Those were rank-4 attribution policy,
+not a live authority invariant. It conserves every prior Gate E regression
+method and every E1.3 changed method, moves their proof to the production
+configuration, and leaves production method 8 separately isolated. No source,
+role, capability, process policy, or roadmap authority is amended.
+
+Define the exact accepted method-name set as
+`Sigma = Sigma_E1.2 union Sigma_E1.3`, where `|Sigma_E1.2| = 7`,
+`|Sigma_E1.3| = 9`, their sole overlap is
+`testGateEXCTestHostCannotConstructProductionFixedProbeBinding`, and therefore
+`|Sigma| = 7 + 9 - 1 = 15`. The authoritative acceptance predicate is:
+
+`multiset(observed XCTest method names) = Sigma`, exactly `15` executions,
+exactly `15` passes, zero skips, zero failures, one XCTest runner, zero Swift
+Testing runners, and zero production-product launches. A filter match claim or
+suite summary without the exact observed-name equality is insufficient.
+
+| Ordinal | Exact canonical XCTest identifier |
+| ---: | --- |
+| 1 | `PrimeValidationWorkflowDriverCoreTests.PrimeValidationDriverV2AdmissionTests/testGateEPrimeScopeAndFixedPolicyAreExact` |
+| 2 | `PrimeValidationWorkflowDriverCoreTests.PrimeValidationDriverV2AdmissionTests/testGateERawParsersAndPartialBindingsAreClosed` |
+| 3 | `PrimeValidationWorkflowDriverCoreTests.PrimeValidationDriverV2AdmissionTests/testGateERejectsEveryRawProcessAndRepositoryMutation` |
+| 4 | `PrimeValidationWorkflowDriverCoreTests.PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests/testGateEJournalChainOneWinnerAndPoisonAreExact` |
+| 5 | `PrimeValidationWorkflowDriverCoreTests.PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests/testGateEHeldProjectionRejectsSetSymlinkGitlinkAndVnodeDrift` |
+| 6 | `PrimeValidationWorkflowDriverCoreTests.PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests/testGateELightweightContinuityPoisonsOnEitherRootMutation` |
+| 7 | `PrimeValidationWorkflowDriverCoreTests.PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests/testGateEXCTestHostCannotConstructProductionFixedProbeBinding` |
+| 8 | `PrimeValidationWorkflowDriverCoreTests.PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests/testAdmissionRequiresEveryGateCPrimeCoreSource` |
+| 9 | `PrimeValidationWorkflowDriverCoreTests.PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests/testCanonicalAliasAndAncestorOverlapAreRejected` |
+| 10 | `PrimeValidationWorkflowDriverCoreTests.PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests/testCompanionCaptureRejectsSymlinkFIFORootGitFile` |
+| 11 | `PrimeValidationWorkflowDriverCoreTests.PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests/testCompanionTopologyLimitsAreFrozenAndRejectDepthAndFileBytes` |
+| 12 | `PrimeValidationWorkflowDriverCoreTests.PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests/testCallerDeclaredGitMismatchIsRejectedBeforeAdmission` |
+| 13 | `PrimeValidationWorkflowDriverCoreTests.PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests/testConsumedPrerequisiteRetainsExclusiveLease` |
+| 14 | `PrimeValidationWorkflowDriverCoreTests.PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests/testCapabilitySurfaceHasNoCodecPublicInitializerOrSpawn` |
+| 15 | `PrimeValidationWorkflowDriverCoreTests.PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests/testPublicReleaseAdmissionUsesEmbeddedSourceAuthority` |
+
+All 14 configuration-independent bodies have no Debug-only branch. The one
+configuration-gated member is the public-admission proof, whose live branch is
+Release. The production method
+`testGateEReleaseSupervisorRequiresLiveFourAuthorityBindingBeforeExit` is not
+in `Sigma` and must not be selected, entered, or launched during readiness.
+
+### Frozen preparation roots and cache epoch
+
+| Item | Frozen value |
+| --- | --- |
+| Readiness epoch root | `/private/tmp/gate-e1-3-readiness-474008bdffccf410`; absent by no-follow `lstat` before this freeze |
+| Fresh production Prime clone | `/private/tmp/gate-e1-3-readiness-474008bdffccf410/prime`; absent because the epoch root is absent |
+| Clone source | exact clean source worktree above; local file transport only |
+| Pinned companion input | `/private/tmp/gate-e-companion-measure.pMGSXT/companion`; device/inode `16777231` / `17279918`; clean `163fc100710ece48119bc25954452d10f6a84f7f` / tree `9009daa4f8a07fbd5897e00b9571cef44ec292db` |
+| Isolated home | `/private/tmp/gate-e1-3-readiness-474008bdffccf410/home`; absent with the epoch root |
+| Isolated temporary root | `/private/tmp/gate-e1-3-readiness-474008bdffccf410/tmp`; absent with the epoch root |
+| Empty Git template/hooks root | `/private/tmp/gate-e1-3-readiness-474008bdffccf410/git-template`; absent with the epoch root |
+| Readiness Clang cache | `/private/tmp/gate-e1-3-readiness-474008bdffccf410/clang-module-cache`; absent with the epoch root |
+| Readiness SwiftPM cache | `/private/tmp/gate-e1-3-readiness-474008bdffccf410/swiftpm-module-cache`; absent with the epoch root |
+| Reserved production root | `/private/tmp/prime-driver-v2-gate-e-release-474008bdffccf4102566c98088abf2799ad3a4934edadb8c0357c23190c71a52`; absent and forbidden throughout readiness |
+| Reserved shot Clang cache | `/private/tmp/gate-e1-3-final-shot-clang-module-cache-474008bdffccf410`; absent and forbidden throughout readiness |
+| Reserved shot SwiftPM cache | `/private/tmp/gate-e1-3-final-shot-swiftpm-module-cache-474008bdffccf410`; absent and forbidden throughout readiness |
+
+The clone source is a linked worktree and is admitted as such, not as a path
+string. Its canonical root is directory vnode `16777231/17154421`; its `.git`
+is regular vnode `16777231/17154423`, `146` bytes, SHA-256
+`2bf2c672f62ce5b46ed4a2befa9c421caf871e9c8ca77277ab37b6a936f9386d`.
+That file names exact worktree Git directory
+`/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.stage6-retirement-staging/.git/worktrees/-driver-v2-gate-c-staging`,
+directory vnode `16777231/17154419`. Its `gitdir` backlink is regular vnode
+`16777231/17154422`, `101` bytes, SHA-256
+`69d2a94ba3ca0dd77f540c9c80ebc2f8234ec2dbb3a11232fb3e16b92c6ae721`.
+Its `HEAD` is a `56`-byte regular file with SHA-256
+`a86308744aebc9d6f2ab7bf2521be7e6995040de2642875656f8aaac489ee58d`;
+its six-byte `commondir` has SHA-256
+`340ddcb67a6204f742cd1e28e5b462622dde7daaa8ee36001897196aacdc6d47`.
+Its current index is regular vnode `16777231/17347639`, `115,271` bytes,
+SHA-256
+`ffe5131d4789668336944aa1c99b99f523377e28a6aff3e6fd8664a97eb2c3b7`;
+that dynamic index fact is re-recorded after the freeze commit. The resolved
+common Git root is directory vnode `16777231/15175114`. The common config is
+regular vnode `16777231/17066134`, `4,154` bytes,
+SHA-256
+`123369fa4a5cf94653a1da3d298c97113f4aa8d9b601202843f35c89b2afd109`;
+the selected branch-ref file is regular vnode `16777231/17347671`, `41`
+bytes, SHA-256
+`0559d479da9baefaf50900dd9c2b9047bb796756cc30b46cf8cca5a14305d65d`
+and contains exactly source commit
+`2d705a71dc1827cf4fe6f0f9f3bc8255063e1dd3`. The common object root is
+directory vnode `16777231/15175142`. Common `packed-refs` is a `46`-byte
+regular file with SHA-256
+`6110899c7adc374885f9552bddfb76a28a7f7ca3c05fb8b74471a457e1e57c8`.
+Repository/object/ref formats are exact SHA-1/files. Source alternates, HTTP alternates,
+shallow state, promisor state, replacement/graft state, worktree config,
+config-include closure, tracked `.gitattributes`, and `.gitmodules` are all
+absent. Before clone, run strict no-lazy-fetch reachable-object validation for
+the selected commit and require source/ref/config/index/object-root quiescence
+through clone completion. The common config's
+GitHub remote is not destination authority and must not be copied as a second
+destination remote. Because committing this self-excluding freeze appends
+objects to the common store, re-record all source Git-path joins and the object
+root metadata after that commit; those post-commit observations enter
+`B_before`.
+
+After this freeze is committed, run these seven `mkdir` commands in exact
+order. Each target must be absent by a no-follow parent-relative lookup, each
+`mkdir` must be the sole successful creator of its leaf, and any nonzero result
+is a permanent readiness stop. Retain every created directory.
+
+```sh
+/bin/mkdir -m 0700 /private/tmp/gate-e1-3-readiness-474008bdffccf410
+/bin/mkdir -m 0700 /private/tmp/gate-e1-3-readiness-474008bdffccf410/home
+/bin/mkdir -m 0700 /private/tmp/gate-e1-3-readiness-474008bdffccf410/tmp
+/bin/mkdir -m 0700 /private/tmp/gate-e1-3-readiness-474008bdffccf410/git-template
+/bin/mkdir -m 0700 /private/tmp/gate-e1-3-readiness-474008bdffccf410/clang-module-cache
+/bin/mkdir -m 0700 /private/tmp/gate-e1-3-readiness-474008bdffccf410/swiftpm-module-cache
+/bin/mkdir -m 0700 /private/tmp/gate-e1-3-readiness-474008bdffccf410/prime
+```
+
+Immediately after the first `mkdir`, require the epoch parent to be a held,
+canonical, non-symlinked directory on local APFS device `16777231`, owned
+`501/0`, mode `0700`, nlink `2`, flags `0`, empty, ACL-free, and with exact
+xattr set `{com.apple.provenance}`. Open it
+`O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC`. Create and rejoin each child relative to
+that parent; each child must initially be nlink `2` and empty. After all six
+children exist, require parent nlink `8` and exact direct inventory
+`{clang-module-cache, git-template, home, prime, swiftpm-module-cache, tmp}`.
+Hold the parent and `prime` directory descriptors and rejoin their
+path/device/inode tuples before and after every absolute-path creation and the
+clone. No concurrent same-UID namespace mutation is permitted from the first
+parent creation through post-clone admission. The parent and all child
+directory device/inode values are recorded after creation and rejoined before
+every later operation. The pre-created `prime` directory is the exclusive
+destination primitive: Git may populate that exact held empty vnode, not
+choose or create a destination name. The outer clone launcher has umask `077`,
+stdin `/dev/null`, and exact cwd
+`/private/tmp/gate-e1-3-readiness-474008bdffccf410`.
+
+Create the production clone exactly once with the following completely
+scrubbed environment and the admitted Xcode Git image. The empty template path
+is both the clone template and the only hooks path; the only admitted transport
+protocol is `file`.
+
+```sh
+umask 077
+/usr/bin/env -i \
+  HOME=/private/tmp/gate-e1-3-readiness-474008bdffccf410/home \
+  CFFIXED_USER_HOME=/private/tmp/gate-e1-3-readiness-474008bdffccf410/home \
+  XDG_CONFIG_HOME=/private/tmp/gate-e1-3-readiness-474008bdffccf410/home \
+  TMPDIR=/private/tmp/gate-e1-3-readiness-474008bdffccf410/tmp/ \
+  USER=ergentics LOGNAME=ergentics LANG=C.UTF-8 LC_ALL=C.UTF-8 \
+  TZ=UTC TERM=dumb NO_COLOR=1 \
+  PATH=/Applications/Xcode.app/Contents/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin:/usr/bin:/bin \
+  DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer \
+  SDKROOT=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk \
+  GIT_EXEC_PATH=/Applications/Xcode.app/Contents/Developer/usr/libexec/git-core \
+  GIT_CONFIG_NOSYSTEM=1 GIT_CONFIG_GLOBAL=/dev/null GIT_ATTR_NOSYSTEM=1 \
+  GIT_CONFIG_COUNT=6 \
+  GIT_CONFIG_KEY_0=core.hooksPath GIT_CONFIG_VALUE_0=/private/tmp/gate-e1-3-readiness-474008bdffccf410/git-template \
+  GIT_CONFIG_KEY_1=init.templateDir GIT_CONFIG_VALUE_1=/private/tmp/gate-e1-3-readiness-474008bdffccf410/git-template \
+  GIT_CONFIG_KEY_2=core.attributesFile GIT_CONFIG_VALUE_2=/dev/null \
+  GIT_CONFIG_KEY_3=checkout.workers GIT_CONFIG_VALUE_3=1 \
+  GIT_CONFIG_KEY_4=maintenance.auto GIT_CONFIG_VALUE_4=false \
+  GIT_CONFIG_KEY_5=gc.auto GIT_CONFIG_VALUE_5=0 \
+  GIT_ALLOW_PROTOCOL=file GIT_PROTOCOL_FROM_USER=0 GIT_OPTIONAL_LOCKS=0 \
+  GIT_TERMINAL_PROMPT=0 GIT_LFS_SKIP_SMUDGE=1 \
+  GIT_NO_LAZY_FETCH=1 GIT_NO_REPLACE_OBJECTS=1 \
+  /Applications/Xcode.app/Contents/Developer/usr/bin/git clone \
+  --local --no-hardlinks --no-tags --single-branch \
+  --branch=agent/prime-validation-driver-v2-gate-c --origin=origin \
+  --template=/private/tmp/gate-e1-3-readiness-474008bdffccf410/git-template \
+  --no-recurse-submodules --reject-shallow --ref-format=files --no-progress \
+  -- \
+  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.driver-v2-gate-c-staging \
+  /private/tmp/gate-e1-3-readiness-474008bdffccf410/prime </dev/null
+```
+
+Any clone failure, a different commit/tree, a non-directory `.git`, an object
+alternate, a symlinked path component, dirty porcelain-v2 state,
+source-identity mismatch, template/hook mutation, or network/fetch marker is a
+permanent readiness hard stop. After clone completion, record and bind the
+canonical clone root and real `.git` directory path/device/inode,
+UID/GID/mode/nlink/flags, ACL, and xattr tuples. The accepted clone is retained
+and must measure the exact `545 / 544 / 111,620` identity above. Clone
+configuration must expose exactly one remote named `origin`, whose URL is the
+exact canonical local source-worktree path and whose only fetch refspec is the
+selected branch; no GitHub URL, extra remote, alternate, HTTP alternate,
+shallow/promisor state, replace ref, graft, submodule, hook, or nonempty
+template entry may exist. The clone's branch/HEAD/commit/tree, clean
+porcelain-v2 status, source identity, `.git` vnode, config bytes, selected ref,
+index, and object-root vnode are recorded after clone and then immutable.
+Clone
+preparation is outer workstation mechanics and closes no Gate E Git authority.
+Every prior Prime clone remains retained, unchanged, and ineligible as an
+E1.3 command input.
+
+The empty home, temporary, template, and cache leaves are already exclusively
+created by the ordered namespace preparation. Rejoin each no-follow path to
+its recorded directory device/inode before, between, and after the two SwiftPM
+commands. This single fresh cache pair is authorized only as the shared
+non-authority cache epoch for the exact ordered sequence. Retain the entire
+epoch after the sequence and never reuse any child for a later readiness
+command or production shot.
+
+### Frozen manifests and dependency-store admission
+
+The four source manifest/lock inputs are exact regular, one-link, mode `0644`,
+flags-`0`, ACL-free, provenance-xattr-only vnodes on device `16777231`, owned
+`501/20`:
+
+| Path | inode / bytes | Git blob / SHA-256 |
+| --- | --- | --- |
+| `Package.swift` | `17154460` / `32,843` | `8e14c10aded588b3902a042341bca7acc842bcc6` / `fa68f463ca31a4ca25af6b14eb19b139df0c8ef8259a6348bb40e97c2dcdeb81` |
+| `Package.resolved` | `17154459` / `645` | `14d804bb4291720477240c27e24de6fbdc876b3b` / `bd7a18ec5b8def3b453d7eb86ba43a2f277c2308c9da806845b69ca5f76cd375` |
+| `Tests/PrimeValidationWorkflow/Package.swift` | `17155065` / `3,668` | `b8c29f2530efa863b99f0ddc7b32a363e7b525ed` / `8dc77c80ee6a13d5ce184d1c7886701b3d317c07abda0f7ab38d21ef7eef8d35` |
+| `Tests/PrimeValidationWorkflow/Package.resolved` | `17155064` / `645` | `69919288b1a5da256ff408a4d65106b23abc8f89` / `d70a43567cbd3be75083ab147020b86b055513020d95632f8286f60913c9374a` |
+
+The nested `Package.resolved` origin hash is
+`99354cfc3da2d75ac960d1c704257656eec563bc17344d694678626ae9c1f518`.
+It selects only MLX revision `d37885a278f1c37484a94d0f401a418735e66519`
+and swift-numerics revision
+`0c0290ff6b24942dadb83a929ffaaa1481df04a2`. Automatic resolution is
+disabled; any manifest/lock drift or resolution/fetch attempt stops the epoch.
+The existing `.build/workspace-state.json` is a separate immutable input:
+regular vnode `16777231/17182550`, owned `501/20`, mode `0644`, one link,
+flags `0`, `1,704` bytes, mtime/ctime `1787423069/1787423069`, SHA-256
+`8eeb391d590b20e5eec603ab9d078757f2106a29467a7ff079194278bba921bf`.
+It names exactly the source worktree and the two revisions above. It is
+excluded from the mutable `.build` partition and must remain byte- and
+vnode-identical.
+
+The existing nested dependency store is input authority, not an undifferenced
+`.build` output. Its exact admitted roots are:
+
+| Kind / path | Frozen identity |
+| --- | --- |
+| MLX checkout `.build/checkouts/ergentics-mlx-swift` | root `16777231/17179559`, real `.git` `16777231/17179560`; clean commit/tree `d37885a278f1c37484a94d0f401a418735e66519` / `5310749549cca107fc1bb07d82dacf043bc02b9e`; alternate-file SHA-256 `bf4e1b8a9f7ed6d872e06349fcdc0900733d12cb72d8e6c246a68e640530b78c` |
+| numerics checkout `.build/checkouts/swift-numerics` | root `16777231/17182551`, real `.git` `16777231/17182552`; clean commit/tree `0c0290ff6b24942dadb83a929ffaaa1481df04a2` / `4560bfb65f2c26cbd159c3e1a9cbf01600bace1b`; alternate-file SHA-256 `53a3fd5c98ba9221ccfa6c7a44534b7161cfb8e2f62f1d080157cffec898a2c7` |
+| MLX object store `.build/repositories/ergentics-mlx-swift-4670e397` | root `16777231/17179430`; no alternate; full strict fsck passes; contains the admitted MLX commit/tree |
+| numerics object store `.build/repositories/swift-numerics-d936ec6c` | root `16777231/17179521`; no alternate; full strict fsck passes; contains the admitted numerics commit/tree |
+
+All six checkout/object-store roots are directories owned `501/20`, mode
+`0755`, flags `0`, ACL-free, and provenance-xattr-only. In addition to the Git
+identities, bind these whole-tree continuity commitments before command 1 and
+require exact equality between and after the commands:
+
+| Root | entry count / continuity SHA-256 |
+| --- | --- |
+| MLX checkout | `2,089` / `7f9d0bcaa4f6f949cc32682bbaf0dc49f0451334ec9aeef5674bda3fa92aa433` |
+| numerics checkout | `129` / `54bb366aea88fef2a17dc9925277b25f8c3b38c896ccd2a0ed7a87a3c478fda3` |
+| MLX object store | `88` / `cd21b849d5ae60048adfe423148b54b6ae0349f4f60ea72f54a2d7b45649b63d` |
+| numerics object store | `38` / `0db4dd07e6d79e3c8a22837e42fd560346f52ff4a6bd1742f6b7d4f50adb1108` |
+
+The commitment is SHA-256 over every root and descendant sorted by raw
+relative-path bytes. Each entry frame is an unsigned 64-bit big-endian path
+length, raw path, one kind byte, eleven unsigned 64-bit big-endian values
+`(device, inode, uid, gid, mode, nlink, size, mtime seconds, mtime
+nanoseconds, ctime seconds, ctime nanoseconds)`, then 32 bytes: SHA-256 of
+regular-file bytes, SHA-256 of the symlink target, or zeroes for a directory.
+The root path is `.` and is included. Thus same bytes on a replacement vnode do
+not satisfy continuity. `GIT_OPTIONAL_LOCKS=0` is mandatory for every outer
+status observation so observation cannot refresh an index.
+
+The readiness base-continuity tuple is:
+
+`B = (committed control commit/tree, control/source root and Git-link vnodes,
+source commit/tree/identity, four manifest/lock vnode+blob+byte identities,
+workspace-state vnode+bytes,
+admitted Git/Swift/toolchain/SDK images, epoch and child root vnodes,
+production-clone root+.git security tuples and commit/tree/identity, companion
+root+.git security tuples and commit/tree, four dependency-store commitments,
+reserved-path absences)`.
+
+Record the self-excluding control commit/tree after this freeze is committed,
+then require `B_before = B_between = B_after`. The only admitted mutation
+regions are: each cache subtree including root metadata and descendants; the
+isolated home and temporary subtrees including root metadata and descendants;
+the existing nested `.build` output partition excluding the four immutable
+checkout/object-store roots above; and, during command 2 only, exact canonical
+UUID leaves under `/private/tmp/prime-validation-public-admission-` and
+`/private/tmp/prime-validation-admission-tests-`. Require the two prefix
+inventories before command 2 to equal their post-command inventories exactly,
+with no newly retained canonical-UUID root. The existing unrelated
+`/private/tmp/prime-validation-admission-tests-20260803-c` vnode
+`16777231/11306865` is conserved. The epoch parent and all child root
+path/device/inode joins remain stable; the Git template stays empty. Cache,
+home, temporary, and `.build` mutations are outputs, not scientific authority.
+The production clone is immutable after clone admission. The reserved
+production root and two reserved shot-cache paths are rechecked absent before
+command 1, between commands, and after command 2.
+
+No observer may inspect clone, image, dependency, or root state concurrently
+with a live SwiftPM/XCTest hierarchy; perform joins only before, between, and
+after complete process termination.
+
+Mutable build artifacts are deliberately outside equality-conserved `B` and
+follow a separate ordered transition relation. `A0` is the exact stale
+supervisor, XCTest, and four object preimages frozen below. Command 1 must
+produce `A1`: all three command-1 objects and the Release supervisor are
+replaced inside that command's measured interval, while the live-test object
+and XCTest image remain `A0` unless the transcript proves an otherwise
+authorized test build (which command 1 does not request). Command 2 must
+produce `A2`: the live-test object and XCTest image are replaced inside its
+interval; every command-1 artifact either retains its admitted `A1` identity
+or has a later compile/relink explicitly named by the complete command-2
+transcript and is re-admitted. Formally, acceptance requires exactly
+`A0 --command1--> A1 --command2--> A2`; artifact equality across these states
+is a failure, not continuity. No artifact transition outside its owning live
+command interval is authorized.
+
+### Frozen tool and stale-artifact preimages
+
+| Item | Frozen preimage |
+| --- | --- |
+| Environment scrubber `/usr/bin/env` | device/inode `16777231/1152921500312571972`; UID/GID `0/0`; mode `0755`; nlink `1`; flags `524320`; size `102,368`; UUIDs `50197F43-49AC-365C-B80F-BB43B6ACC0E1` / `06C17BB1-EC06-36E0-B820-C066F5791770`; SHA-256 `6e506aec3c0cff703ac1e66cedc6f1945354ad41339a38db4425c7c88227128f` |
+| Exclusive creator `/bin/mkdir` | device/inode `16777231/1152921500312571416`; UID/GID `0/0`; mode `0755`; nlink `1`; flags `524320`; size `101,472`; UUIDs `CC05F45B-1B8B-36A2-9FE4-E6A862E056F0` / `D38EAF6F-D883-343D-BAD9-5FA846104514`; SHA-256 `08a20adeeff9bea14bae05c0a7f3c77c638b2b83fc3ab37e1c646e047bac7002` |
+| Name-bound developer-tool dispatcher | `/usr/bin/git` and `/usr/bin/swift` are hard links to device/inode `16777231/1152921500312571585`; UID/GID `0/0`; mode `0755`; nlink `78`; flags `524320`; size `118,928`; UUIDs `091206DD-5D8E-3B10-A6BE-B9CE23E2C670` / `108866E5-077A-3BE9-8E2C-0DADD00E2F09`; SHA-256 `179301dcb41ea78accc3fa0048a7e6f6710d891945a751a34addd622020c1818`. Exact commands use direct Xcode paths; any explicit fallback through the dispatcher is admitted only with the frozen `DEVELOPER_DIR` and must resolve to the same images below. |
+| Admitted Xcode Git | `/Applications/Xcode.app/Contents/Developer/usr/bin/git`; device/inode `16777231/928699`; UID/GID `0/0`; mode `0755`; nlink `1`; flags `32`; size `3,704,880`; mtime/ctime `1781596690/1784881438`; arm64 UUID `E3C74406-2163-3D84-B409-1D2A20A35F27`; SHA-256 `10f9c1df894525ae4c7454258febab6d3d25071062b42cb48dbb1842cdffd2a9` |
+| Admitted Git helper root | `/Applications/Xcode.app/Contents/Developer/usr/libexec/git-core`; directory vnode `16777231/928717`, owned `0/0`, mode `0755`, nlink `174`, flags `0`; `197` entries; continuity SHA-256 `2492a25a6d248e78c3d7716c96a55e1248628fda2c405368f9bfcfbf164ee31d` under the same raw framed algorithm used for dependency roots |
+| Admitted Xcode Swift launcher | `/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift`; symlink vnode `16777231/1118417`, UID/GID `0/0`, mode `0755`, flags `0`, exact target `swift-frontend`; target is the next row |
+| Xcode `swift-frontend` | `/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-frontend`; device/inode `16777231/1118375`; UID/GID `0/0`; mode `0755`; nlink `1`; flags `32`; size `171,036,592`; arm64 UUID `9A364091-58FE-3AAD-A4D9-9454EF63DDBF`; SHA-256 `2ed38571e92c0283091838c1649e27650ad9c99950288e883c7b2dc6c4ce89fb` |
+| Developer/SDK roots | canonical Developer directory `16777231/928517`; `SDKROOT` is canonical directory `/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk`, vnode `16777231/1009705`; the versioned `MacOSX26.5.sdk` link is not an input |
+| Stale Release supervisor | absolute path `/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.driver-v2-gate-c-staging/Tests/PrimeValidationWorkflow/.build/arm64-apple-macosx/release/PrimeValidationWorkflowDriverV2Supervisor`; regular arm64 executable; device/inode `16777231/17337418`; UID/GID `501/20`; mode `0755`; nlink `1`; flags `0`; size `47,675,784`; mtime/ctime `1787449777/1787449777`; UUID `6A097D4D-B7F2-32FD-B77C-012BE54EDD0E`; SHA-256 `fda8ab7c8f06a94c4f957f879312a6911d7e32015a344ea5b9ad63bbd04215ff` |
+| Stale Release XCTest | absolute path `/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.driver-v2-gate-c-staging/Tests/PrimeValidationWorkflow/.build/arm64-apple-macosx/release/PrimeValidationWorkflowPackageTests.xctest/Contents/MacOS/PrimeValidationWorkflowPackageTests`; regular arm64 Mach-O bundle; device/inode `16777231/17337446`; UID/GID `501/20`; mode `0755`; nlink `1`; flags `0`; size `56,490,080`; mtime/ctime `1787449784/1787449784`; UUID `B65DABC8-28A9-3EE9-ABCC-4DB026D7FC39`; SHA-256 `b3cf7e6aee0a73b05b493ff279b435f7b81b73c24c24b1731986d0adc0f534d5` |
+| Stale image membership | each stale image contains consumed identity `194cf7141172ee06b5f9734af2e9c3df498547a2f718698ccd421ef7ae961d0f` exactly once and new identity `474008bdffccf4102566c98088abf2799ad3a4934edadb8c0357c23190c71a52` zero times |
+
+All admitted tools and final-image/object preimages are ACL-free and have no
+xattr other than `com.apple.provenance`. Every listed path is joined component
+by component without following an unexpected symlink; the one allowed final
+symlink is the frozen Xcode `swift -> swift-frontend` edge. Because `/usr/bin`
+is later in the exact `PATH`, the developer-tool shim is not the Git or Swift
+image selected by these commands. `env -i` makes all `DYLD_*`, `LD_*`, proxy,
+credential-agent, SSH-agent, toolchain-override, and ambient user-configuration
+variables absent.
+
+Both stale final images and these four unambiguous absolute Release objects
+must be replaced by data, not inferred from a successful command:
+
+| Command owner | Absolute object path | Frozen preimage |
+| --- | --- | --- |
+| command 1 | `/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.driver-v2-gate-c-staging/Tests/PrimeValidationWorkflow/.build/arm64-apple-macosx/release/PrimeCore.build/PrimeEmbeddedBuildProvenance.swift.o` | device/inode `16777231/17334921`; `501/20`; mode `0644`; nlink `1`; flags `0`; `12,816` bytes; mtime/ctime `1787447795/1787447795`; SHA-256 `886c9db18bf95f4c3a3d09531c725c5cfaff9b16ef72d0f0761ea1a016a3866c` |
+| command 1 | `/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.driver-v2-gate-c-staging/Tests/PrimeValidationWorkflow/.build/arm64-apple-macosx/release/PrimeCore.build/PrimeValidationSwiftPMBuildInventoryAdmission.swift.o` | device/inode `16777231/17337350`; `501/20`; mode `0644`; nlink `1`; flags `0`; `730,080` bytes; mtime/ctime `1787449759/1787449759`; SHA-256 `7db95394ff9dcf33686b7a43b902490e50a8f9e28946623b0a00e8f2c0b89c0a` |
+| command 1 | `/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.driver-v2-gate-c-staging/Tests/PrimeValidationWorkflow/.build/arm64-apple-macosx/release/PrimeValidationWorkflowDriverV2Supervisor.build/main.swift.o` | device/inode `16777231/17337413`; `501/20`; mode `0644`; nlink `1`; flags `0`; `67,240` bytes; mtime/ctime `1787449777/1787449777`; SHA-256 `0de811c5c8cb03a73a8c6edc4811e6e91563acd1b9aeb3b2f46c31b956da2a73` |
+| command 2 | `/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.driver-v2-gate-c-staging/Tests/PrimeValidationWorkflow/.build/arm64-apple-macosx/release/PrimeValidationWorkflowDriverCoreTests.build/PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests.swift.o` | device/inode `16777231/17337428`; `501/20`; mode `0644`; nlink `1`; flags `0`; `2,496,096` bytes; mtime/ctime `1787449784/1787449784`; SHA-256 `6b8ea82c637e9f8eabe735f66507226d3bde184eb7b2647ed389cd8d15a259b7` |
+
+Each successor object must have a different hash and mtime/ctime inside its
+assigned command interval. A later command-2 replacement of a command-1 object
+is accepted only when the complete build transcript names that later compile
+and the post-command object is re-admitted; otherwise it is unexplained drift.
+
+### Exact ordered readiness commands
+
+Use exact working directory
+`/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.driver-v2-gate-c-staging`.
+Command 2 is forbidden unless command 1 exits `0` and all between-command base
+joins pass. Run command 1 exactly once:
+
+```sh
+umask 077
+/usr/bin/env -i \
+  HOME=/private/tmp/gate-e1-3-readiness-474008bdffccf410/home \
+  CFFIXED_USER_HOME=/private/tmp/gate-e1-3-readiness-474008bdffccf410/home \
+  XDG_CONFIG_HOME=/private/tmp/gate-e1-3-readiness-474008bdffccf410/home \
+  TMPDIR=/private/tmp/gate-e1-3-readiness-474008bdffccf410/tmp/ \
+  USER=ergentics LOGNAME=ergentics LANG=C.UTF-8 LC_ALL=C.UTF-8 \
+  TZ=UTC TERM=dumb NO_COLOR=1 \
+  PATH=/Applications/Xcode.app/Contents/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin:/usr/bin:/bin \
+  DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer \
+  SDKROOT=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk \
+  GIT_EXEC_PATH=/Applications/Xcode.app/Contents/Developer/usr/libexec/git-core \
+  GIT_CONFIG_NOSYSTEM=1 GIT_CONFIG_GLOBAL=/dev/null GIT_ATTR_NOSYSTEM=1 \
+  GIT_CONFIG_COUNT=6 \
+  GIT_CONFIG_KEY_0=core.hooksPath GIT_CONFIG_VALUE_0=/private/tmp/gate-e1-3-readiness-474008bdffccf410/git-template \
+  GIT_CONFIG_KEY_1=init.templateDir GIT_CONFIG_VALUE_1=/private/tmp/gate-e1-3-readiness-474008bdffccf410/git-template \
+  GIT_CONFIG_KEY_2=core.attributesFile GIT_CONFIG_VALUE_2=/dev/null \
+  GIT_CONFIG_KEY_3=checkout.workers GIT_CONFIG_VALUE_3=1 \
+  GIT_CONFIG_KEY_4=maintenance.auto GIT_CONFIG_VALUE_4=false \
+  GIT_CONFIG_KEY_5=gc.auto GIT_CONFIG_VALUE_5=0 \
+  GIT_ALLOW_PROTOCOL=file GIT_PROTOCOL_FROM_USER=0 GIT_OPTIONAL_LOCKS=0 \
+  GIT_TERMINAL_PROMPT=0 GIT_LFS_SKIP_SMUDGE=1 \
+  GIT_NO_LAZY_FETCH=1 GIT_NO_REPLACE_OBJECTS=1 \
+  CLANG_MODULE_CACHE_PATH=/private/tmp/gate-e1-3-readiness-474008bdffccf410/clang-module-cache \
+  SWIFTPM_MODULECACHE_OVERRIDE=/private/tmp/gate-e1-3-readiness-474008bdffccf410/swiftpm-module-cache \
+  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift build \
+  --package-path /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.driver-v2-gate-c-staging/Tests/PrimeValidationWorkflow \
+  --configuration release --disable-automatic-resolution --disable-sandbox \
+  --product PrimeValidationWorkflowDriverV2Supervisor </dev/null
+```
+
+Then run command 2 exactly once with this exact anchored filter:
+
+```sh
+umask 077
+/usr/bin/env -i \
+  HOME=/private/tmp/gate-e1-3-readiness-474008bdffccf410/home \
+  CFFIXED_USER_HOME=/private/tmp/gate-e1-3-readiness-474008bdffccf410/home \
+  XDG_CONFIG_HOME=/private/tmp/gate-e1-3-readiness-474008bdffccf410/home \
+  TMPDIR=/private/tmp/gate-e1-3-readiness-474008bdffccf410/tmp/ \
+  USER=ergentics LOGNAME=ergentics LANG=C.UTF-8 LC_ALL=C.UTF-8 \
+  TZ=UTC TERM=dumb NO_COLOR=1 \
+  PATH=/Applications/Xcode.app/Contents/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin:/usr/bin:/bin \
+  DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer \
+  SDKROOT=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk \
+  GIT_EXEC_PATH=/Applications/Xcode.app/Contents/Developer/usr/libexec/git-core \
+  GIT_CONFIG_NOSYSTEM=1 GIT_CONFIG_GLOBAL=/dev/null GIT_ATTR_NOSYSTEM=1 \
+  GIT_CONFIG_COUNT=6 \
+  GIT_CONFIG_KEY_0=core.hooksPath GIT_CONFIG_VALUE_0=/private/tmp/gate-e1-3-readiness-474008bdffccf410/git-template \
+  GIT_CONFIG_KEY_1=init.templateDir GIT_CONFIG_VALUE_1=/private/tmp/gate-e1-3-readiness-474008bdffccf410/git-template \
+  GIT_CONFIG_KEY_2=core.attributesFile GIT_CONFIG_VALUE_2=/dev/null \
+  GIT_CONFIG_KEY_3=checkout.workers GIT_CONFIG_VALUE_3=1 \
+  GIT_CONFIG_KEY_4=maintenance.auto GIT_CONFIG_VALUE_4=false \
+  GIT_CONFIG_KEY_5=gc.auto GIT_CONFIG_VALUE_5=0 \
+  GIT_ALLOW_PROTOCOL=file GIT_PROTOCOL_FROM_USER=0 GIT_OPTIONAL_LOCKS=0 \
+  GIT_TERMINAL_PROMPT=0 GIT_LFS_SKIP_SMUDGE=1 \
+  GIT_NO_LAZY_FETCH=1 GIT_NO_REPLACE_OBJECTS=1 \
+  CLANG_MODULE_CACHE_PATH=/private/tmp/gate-e1-3-readiness-474008bdffccf410/clang-module-cache \
+  SWIFTPM_MODULECACHE_OVERRIDE=/private/tmp/gate-e1-3-readiness-474008bdffccf410/swiftpm-module-cache \
+  PRIME_DRIVER_V2_GATE_E_PRIME_ROOT=/private/tmp/gate-e1-3-readiness-474008bdffccf410/prime \
+  PRIME_PMHNP_COMPANION_ROOT=/private/tmp/gate-e-companion-measure.pMGSXT/companion \
+  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift test \
+  --package-path /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.driver-v2-gate-c-staging/Tests/PrimeValidationWorkflow \
+  --configuration release --disable-automatic-resolution --disable-sandbox \
+  --disable-swift-testing \
+  --filter '^(PrimeValidationWorkflowDriverCoreTests\.PrimeValidationDriverV2AdmissionTests/testGateEPrimeScopeAndFixedPolicyAreExact|PrimeValidationWorkflowDriverCoreTests\.PrimeValidationDriverV2AdmissionTests/testGateERawParsersAndPartialBindingsAreClosed|PrimeValidationWorkflowDriverCoreTests\.PrimeValidationDriverV2AdmissionTests/testGateERejectsEveryRawProcessAndRepositoryMutation|PrimeValidationWorkflowDriverCoreTests\.PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests/testGateEJournalChainOneWinnerAndPoisonAreExact|PrimeValidationWorkflowDriverCoreTests\.PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests/testGateEHeldProjectionRejectsSetSymlinkGitlinkAndVnodeDrift|PrimeValidationWorkflowDriverCoreTests\.PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests/testGateELightweightContinuityPoisonsOnEitherRootMutation|PrimeValidationWorkflowDriverCoreTests\.PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests/testGateEXCTestHostCannotConstructProductionFixedProbeBinding|PrimeValidationWorkflowDriverCoreTests\.PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests/testAdmissionRequiresEveryGateCPrimeCoreSource|PrimeValidationWorkflowDriverCoreTests\.PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests/testCanonicalAliasAndAncestorOverlapAreRejected|PrimeValidationWorkflowDriverCoreTests\.PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests/testCompanionCaptureRejectsSymlinkFIFORootGitFile|PrimeValidationWorkflowDriverCoreTests\.PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests/testCompanionTopologyLimitsAreFrozenAndRejectDepthAndFileBytes|PrimeValidationWorkflowDriverCoreTests\.PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests/testCallerDeclaredGitMismatchIsRejectedBeforeAdmission|PrimeValidationWorkflowDriverCoreTests\.PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests/testConsumedPrerequisiteRetainsExclusiveLease|PrimeValidationWorkflowDriverCoreTests\.PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests/testCapabilitySurfaceHasNoCodecPublicInitializerOrSpawn|PrimeValidationWorkflowDriverCoreTests\.PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests/testPublicReleaseAdmissionUsesEmbeddedSourceAuthority)$' \
+  </dev/null
+```
+
+These command environments are exact finite maps created by `env -i`; no other
+environment assignment or CLI argument is permitted. In particular there is
+no ambient home/configuration, loader override, proxy, credential/SSH agent,
+scratch path, other Prime/companion input, or Driver V2 request variable. The
+public-admission environment values are outer test-harness inputs only and
+never enter a dedicated supervisor; no dedicated supervisor is authorized
+here.
+
+### Readiness acceptance and failure disposition
+
+A pass requires both shell exits `0`; exact `Sigma` set equality and `15/15`
+passes; the public admission's exact `2,157` watcher proof; zero method-8,
+supervisor, fixed-role, fixture-child, secure-child, or spawn-canary launches;
+clean control/source/Prime/companion states; the reserved three paths absent at
+all three checkpoints; exact pre/post equality of both selected-test temporary
+prefix inventories; and unchanged manifests, locks, dependency-store
+commitments, tool images, consumed roots, prior clones, and retained prior
+caches. The epoch root and every child root must remain at its admitted vnode;
+the template remains empty; the home, temporary, cache, and `.build` mutations
+are completely inventoried as non-authority outputs.
+
+After command 2, admit the final supervisor and XCTest images by no-follow held
+descriptor/path joins, stable descriptor hashes, regular Mach-O type, arm64
+architecture, UUID, ownership, mode, link count, flags, ACL, and xattrs. Each
+must contain new identity `474008bdffccf4102566c98088abf2799ad3a4934edadb8c0357c23190c71a52`
+exactly once and exclude consumed identities
+`194cf7141172ee06b5f9734af2e9c3df498547a2f718698ccd421ef7ae961d0f`
+and `afb3c46461736ddf7b275d797d054000d260eeebc0c6c50a7a94451ef1c97a19`.
+The XCTest image must contain the exact source-worktree `#filePath` and all 15
+selected method names; final facts, not the intermediate product-build image,
+govern the later shot.
+
+Starting either SwiftPM command permanently spends that command's readiness
+budget. An ordinary assertion failure may let the already-live single XCTest
+runner finish its selected finite set so the result remains attributable. Any
+forbidden production launch, extra child, containment failure, root escape, or
+authority mutation instead requires immediate contain-or-fail-stop handling;
+it is never permitted merely to finish the aggregate. After either nonpass
+returns, no later readiness command, build, test, or shot is authorized under
+this freeze. Retain the clone, entire epoch, build outputs, and all
+observations; no cleanup or same-freeze retry is authorized. The production
+identity may be recorded unconsumed after a failure only when postchecks prove
+both that method 8 was never entered and that the identity-bound production
+root remained absent throughout. If those postchecks cannot complete, the
+consumption state is `ABSTAIN`, not “unconsumed.”
+
+Even a complete readiness pass authorizes zero production action. Record it in
+a separate clean result checkpoint with status
+`READY_PENDING_SEPARATE_SHOT_FREEZE`. Only a later clean direct-child control
+freeze may create the reserved final-shot caches and authorize one exact
+`--skip-build` production method-8 command. Gate F and Gate G remain forbidden.
