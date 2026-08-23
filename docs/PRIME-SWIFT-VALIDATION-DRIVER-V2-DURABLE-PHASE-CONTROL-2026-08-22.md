@@ -6342,3 +6342,46 @@ authority bit, topology, or watcher count. Any implementation retaining
 `capsule.swiftExecutable == capsule.intent.swiftExecutable`, comparing a
 Swift-role image hash with intent `/swift` bytes, or accepting a vnode-only
 frontend expectation is a hard stop. All C2 predicates remain required.
+
+## Gate E1.4-C4 correction — logical path, shared target bytes
+
+| Coordinate | Frozen value |
+| --- | --- |
+| Status | `FROZEN_SOURCE_EDIT_NOT_CHECKPOINTED` |
+| Durable-control predecessor | `d31a0b05bb4cddda080ff857fcd0f8208665a58b` / tree `9125d204e6d2ed34e3b2b7644b5baef8e00f188c` |
+| Source/path/topology/process ceilings | unchanged from C3 |
+
+This data correction supersedes only C3's statements that the logical
+intent's content is not authority for the physical frontend bytes and that
+comparing those contents is forbidden. The admitted local toolchain and the
+existing admission model establish instead:
+
+```text
+lstat(.../usr/bin/swift)       = symlink -> swift-frontend
+path(I_swift)                  != path(P_swift)
+content(I_swift)               = bytes resolved through the admitted symlink
+content(P_swift)               = bytes read from the held physical target
+required byte join             = content(I_swift) == content(P_swift)
+required physical image join   = mapped vnode == held P_swift vnode
+```
+
+Therefore complete binding equality remains false because the absolute paths
+differ. Content equality is required, but it is not vnode authority and does
+not replace the independently opened no-follow physical binding. Capsule
+validation requires the exact derived `/swift-frontend` path and content equal
+to the intent's admitted target-byte pin. The governor must still hold,
+mapped-vnode join, hash, and rejoin `P_swift`. DriverCore must receive the
+complete physical binding plus its descriptor-derived vnode and require both
+the content equality and every inner Swift image record to match that physical
+binding.
+
+Thus the corrected hard stops are:
+
+```text
+capsule.swiftExecutable == capsule.intent.swiftExecutable         // false: path
+capsule.swiftExecutable.content != intent.swiftExecutable.content // false: bytes
+physical frontend accepted without held/mapped vnode join         // false
+```
+
+All other C2/C3 predicates remain required. Prose cannot turn either the path
+inequality or the content equality into the other.
