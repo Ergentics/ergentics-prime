@@ -9231,3 +9231,245 @@ and source assertions have not been compiled or executed. A future Release
 diagnostic requires a separately committed readiness freeze, a fresh disjoint
 epoch, corrected implementation-artifact freshness predicates, and exactly one
 authorized selected test command. No R9 root, command, or epoch may be reused.
+
+## Gate E1.4-R12 freeze — one causal Release diagnostic
+
+| Coordinate | Frozen value |
+| --- | --- |
+| Status | `FROZEN_NOT_EXECUTED` |
+| Durable-control predecessor | R11 result `5363c231aa1ecfc456bd0c0146ea0d118bc8fa89` / tree `ba994bf041b05125c8e40f91d8cae1cb1d76e98a` |
+| Source commit/tree/identity | clean `b7eefedd33baa9238f93bf92659636d2e15ce20c` / `2416b4281d39f85b349d77f8b052ff1f1845a045` / `d388fa32da538cd40b88d21308fd3d55be1a916d505761b37f891f9e804b1128` |
+| R12 epoch | `/private/tmp/gate-e1-4-mechanics-r12-b7eefedd-d388fa32da538cd4`; absent before this freeze |
+| Authorized SwiftPM commands | exactly `1`: one Release `swift test`; no `--skip-build` |
+| Selected XCTest methods | exactly the existing anchored identifier |
+| Overall wall ceiling | `900` seconds |
+| Process credentials / initial cwd | effective UID/GID `501 / 20`; exact clean source worktree root |
+| Existing admission roots | exactly `11`; sorted path-set SHA-256 `4b7a0c36a26fa051bd58703538b60f3762b73a94e109a9b960abc743d7e66216` |
+| Production attempts / authority vector | `0 / 00000000` |
+| Fetch / network / GitHub | `0 / 0 / 0` |
+
+R12 is the first execution of the R11 source identity. It is not an R9 retry,
+a containment repair, or a production shot. Starting its sole Swift command
+consumes R12 for every result. No retry, same-epoch reuse, cleanup, authority
+promotion, or automatic successor is authorized.
+
+### Fresh namespace and conserved inputs
+
+After this freeze is committed, create the R12 epoch exactly once and require
+its no-follow root to be UID-owned mode `0700`. Its inventory must equal
+exactly the nine UID-owned mode-`0700` children `home`, `config`, `tmp`,
+`git-template`, `swiftpm-cache`, `swiftpm-config`, `swiftpm-security`,
+`clang-module-cache`, and `swiftpm-module-cache`. Record and rejoin every
+path/device/inode, conserve each admitted GID without requiring it to equal the
+process EGID, require all nine children initially empty, and retain the whole
+epoch after the command. All prior epochs and all eleven admission roots are
+immutable non-input canaries and remain forbidden for reuse or cleanup.
+
+The reserved production root
+`/private/tmp/prime-driver-v2-gate-e-release-d388fa32da538cd40b88d21308fd3d55be1a916d505761b37f891f9e804b1128`
+and the public-admission inventory are both absent. They must remain absent.
+The existing package build root is
+`Tests/PrimeValidationWorkflow/.build`, device/inode `16777231/17179422`;
+no fresh or external scratch path is permitted.
+
+The joined build inputs are:
+
+| Input | Exact R12 value |
+| --- | --- |
+| Root manifest / lock | `fa68f463ca31a4ca25af6b14eb19b139df0c8ef8259a6348bb40e97c2dcdeb81` / `bd7a18ec5b8def3b453d7eb86ba43a2f277c2308c9da806845b69ca5f76cd375` |
+| Nested manifest / lock | `753f42251e768faaee3686da38e6f6bf7de048526199445f0e11c088af53dada` / `d70a43567cbd3be75083ab147020b86b055513020d95632f8286f60913c9374a` |
+| Workspace state | device/inode `16777231/17182550`; `1,704` bytes; SHA-256 `8eeb391d590b20e5eec603ab9d078757f2106a29467a7ff079194278bba921bf` |
+| MLX checkout | clean `d37885a278f1c37484a94d0f401a418735e66519` / tree `5310749549cca107fc1bb07d82dacf043bc02b9e` |
+| Numerics checkout | clean `0c0290ff6b24942dadb83a929ffaaa1481df04a2` / tree `4560bfb65f2c26cbd159c3e1a9cbf01600bace1b` |
+| Provenance source | `546` bytes; mtime/ctime `1787513767/1787513767`; SHA-256 `31a09226702b2fe41a72e4e3eaa5c42ccf308e9894c8bed17c886905b87eb62a` |
+| GovernorCore source | `238,520` bytes; mtime/ctime `1787513186/1787513186`; SHA-256 `1f2875701698d59b22a445e8f3be44401a925ad1981e5af9f670e86789376b08` |
+| LiveTests source | `263,762` bytes; mtime/ctime `1787513663/1787513663`; SHA-256 `b308ecf10a3dac62794530f3fcd1126ea955ac0e87e85a0eeed61de6469e1ced` |
+
+Every changed source timestamp is later than its corresponding frozen build
+preimage. The exact relevant preimages are:
+
+| Artifact | Device/inode; bytes; SHA-256 |
+| --- | --- |
+| Provenance object | `16777231/17392418`; `12,760`; `9baacd40eca8c61e91e795ea32b10a18577ff6db037ffb0b255ad14ebf27dcc5` |
+| PrimeCore module | `16777231/17392356`; `22,992,744`; `61d9617eaa9f9b565ff0b31bbb2732e151aef0483687d82b0bce105afb071970` |
+| GovernorCore object | `16777231/17390652`; `2,344,520`; `0c1a79690124aff8fa8b05505d559d091751d3d880a6b0b31e21d4b35e01bd9c` |
+| GovernorCore module | `16777231/17390645`; `293,820`; `f2699a9e6e90e2429556cfe481f180f792440a8d53901f3095207654ec934b6b` |
+| LiveTests object | `16777231/17392517`; `2,838,280`; `9260a773322426ce328d24babb746d44d128c6979d0edaa438e70aebc99811ed` |
+| DriverCoreTests module | `16777231/17390678`; `209,764`; `b77b99c13294628437d3d6d2f8e9add5eaa1ea9beccae2b67d6c316bf7a2de4b` |
+| XCTest executable | `16777231/17392529`; `57,901,248`; `4e0230361dda9fb23a8e66c751512cd10b330adae0a1e45a95ef91ccd9e95d9c`; UUID `4E968865-6BD0-3420-992B-BB777AD6CAC9` |
+| XCTest link-file list | `16777231/17245302`; `37,443`; `3c391a8010b60fec9df881e16a7d8af228acd60a61e88751e63958206e27ef12` |
+
+The object/module preimages are regular mode-`0600`, one-link, flags-`0`
+files; the XCTest is a regular mode-`0700`, one-link, flags-`0` arm64 Mach-O.
+Each has exactly the sole `com.apple.provenance` xattr. The link list names the
+provenance, GovernorCore, and LiveTests object paths exactly once each. The
+preimage XCTest contains the R8 identity once, the R11 identity zero times,
+the v1 schema record once, the v2 schema record zero times, and the selected-
+method substring on exactly one strings record.
+
+### Exact one-command envelope
+
+Define `rho12` as replacement of the sole R9 epoch string
+
+```text
+/private/tmp/gate-e1-4-mechanics-r9-1bd9b9e2-e458c197935662e8
+```
+
+with
+
+```text
+/private/tmp/gate-e1-4-mechanics-r12-b7eefedd-d388fa32da538cd4
+```
+
+throughout R9's exact finite `env -i` map and its cache/config/security CLI
+paths. Every other key and value, `umask 077`, stdin `/dev/null`, cwd, Xcode
+Swift/toolchain/SDK paths, offline Git map, package path, existing default
+scratch path, and SwiftPM flag remains byte-for-byte unchanged. A shell may
+load `zsh/datetime` and use only shell builtins to capture integer
+`EPOCHSECONDS` immediately before the Swift child starts and immediately after
+its wait returns. Artifact `stat` times use the same integer-seconds domain;
+the frozen comparison is inclusive:
+`start <= mtime AND mtime <= end AND start <= ctime AND ctime <= end`.
+The shell prints both bounds and the
+immediately captured Swift status. This is outer timing, not a second executor
+or authority.
+
+The displayed block fixes only the Swift argv and stdin redirection. It is
+authorized only as the direct child of `umask 077` and the fully resolved
+`rho12` finite `env -i` map; ambient-environment execution is forbidden. The
+outer command runner enforces the `900`-second ceiling without adding a target
+child.
+
+Run exactly once:
+
+```sh
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift test \
+  --package-path /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.driver-v2-gate-c-staging/Tests/PrimeValidationWorkflow \
+  --configuration release \
+  --scratch-path /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.driver-v2-gate-c-staging/Tests/PrimeValidationWorkflow/.build \
+  --cache-path /private/tmp/gate-e1-4-mechanics-r12-b7eefedd-d388fa32da538cd4/swiftpm-cache \
+  --config-path /private/tmp/gate-e1-4-mechanics-r12-b7eefedd-d388fa32da538cd4/swiftpm-config \
+  --security-path /private/tmp/gate-e1-4-mechanics-r12-b7eefedd-d388fa32da538cd4/swiftpm-security \
+  --disable-netrc --disable-keychain --force-resolved-versions \
+  --disable-automatic-resolution --disable-sandbox --disable-swift-testing \
+  --filter '^PrimeValidationWorkflowDriverCoreTests\.PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests/testGateEJournalChainOneWinnerAndPoisonAreExact$' \
+  </dev/null
+```
+
+Normal SwiftPM compilation and linkage are harness telemetry. No target image
+other than the XCTest runner and the two test-held SessionFixture supervisors
+plus their two passive SessionFixture children may launch. ShotGovernor,
+production Supervisor, fixed Git/Swift roles, SpawnCanary, FixtureChild, and
+SecureChildIntegration launch counts remain zero.
+
+### Corrected build/link predicate
+
+No non-`ABSTAIN` runtime classification is permitted unless
+
+```text
+R12_fresh_chain =
+    exact_R11_source
+    AND conserved_inputs
+    AND fresh_provenance_object
+    AND fresh_governor_object
+    AND fresh_governor_module
+    AND fresh_livetests_object
+    AND neutral_joined_primecore_module
+    AND neutral_joined_drivercoretests_module
+    AND fresh_linked_xctest
+```
+
+`conserved_inputs` requires the committed R12 control freeze, all four
+manifest/lock hashes, workspace state, dependency commit/trees and clean
+statuses, admitted epoch vnodes, empty Git template, pre-existing eleven-root
+inventory, and reserved-root/public-inventory absence to remain exact through
+the post-command observation.
+
+The three required objects and GovernorCore module must be final no-follow
+joined regular files whose SHA-256 differs from the frozen preimage and whose
+mtime/ctime falls inside the one command interval. GovernorCore's module is
+mandatory because R11 adds the sole package-visible zero-argument data seam
+consumed by the test target. Record inode transitions, but a changed byte hash
+and interval timestamp—not replacement-inode prose—is the freshness fact.
+
+The PrimeCore module may be either its exact admitted preimage or a fully
+recorded named-joined command-interval successor because the embedded value's
+declaration shape is unchanged; the changed provenance object plus final
+identity-bearing link is affirmative evidence. The DriverCoreTests module may
+likewise be either its exact admitted preimage or a fully recorded named-joined
+successor. R11's LiveTests delta changes only an existing test body, a local
+helper, and one nested `private` mirror type; it changes no import, test
+identifier, access level, or module-visible declaration. Either module is
+neutral and cannot substitute for its required fresh object. Missing joins or
+unknown third states reject the chain.
+
+The final XCTest must be a fresh no-follow joined regular arm64 Mach-O with
+SHA-256 and UUID both different from its R9 preimage, mtime/ctime inside the
+command interval and not earlier than the three required final objects. Its
+strings must contain the R11 identity exactly once, the R8 identity zero
+times, and the selected-method substring on exactly one record. The final link
+list may retain identical bytes, but it must still name each required object
+path exactly once. It is link topology, not freshness authority.
+
+### Disjoint outcome predicates
+
+1. `R12_fresh_chain = true`, exact outer Swift-command exit `0`, exact XCTest
+   case and suite terminals, exactly one selected test passed with zero failure
+   or skip, and exact admission-root delta `0` may set
+   `R12_mixed_test_host_mechanics = PASS`. No causal record is expected; the R9
+   failure is not thereby repaired or erased.
+2. `R12_fresh_chain = true`, the selected test started but has no XCTest
+   terminal, the `900`-second ceiling did not fire, no outer termination or
+   interruption occurred, exact admission-root delta `5`, and exactly one
+   fixed leaf in the main new root may set
+   `R12_causal_fail_stop_diagnostic = PASS` only if that leaf passes the
+   complete R11 v2 byte, type, closed-enum, closed-census, stop-tuple,
+   monotonic-watcher, sequence, status, source-identity, and causal relation
+   predicates.
+3. A compile/link failure, timeout, ordinary XCTest failure, stale build/link
+   fact, wrong root delta, or missing/empty/v1/noncanonical/unjoined/otherwise
+   invalid v2 leaf leaves mechanics and causal diagnostic `ABSTAIN`.
+
+Outcome 2 requires a unique five-role residue, not merely five arbitrary
+roots. Relative to the frozen eleven-root baseline, the five pairwise-disjoint
+new roots must admit exactly this unchanged selected-method topology:
+
+| Role | Exact durable shape |
+| --- | --- |
+| Main | `66` files / `32` directories; direct-entry/link arithmetic `13 / 15`; the sole fixed v2 fail-stop leaf plus the canonical main journal residues |
+| First-leaf collision | `26` files / `29` directories; direct-entry/link arithmetic `7 / 9`; the sole `10`-byte `collision\n` leaf with SHA-256 `591e7ef56458a393c1831cddcecd0a3415848deb290b6ebac689d0656293e48f`; no accepted outer terminal |
+| Concurrent winner | `31` files / `30` directories; direct-entry/link arithmetic `10 / 12`; one complete canonical four-leaf outer journal satisfying one-winner/permanent-poison relations |
+| Terminal collision | `31` files / `30` directories; direct-entry/link arithmetic `10 / 12`; the four fixed journal names with deliberate empty `03-outer-terminal.json`, SHA-256 `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` |
+| Same-bytes rebound | `31` files / `30` directories; direct-entry/link arithmetic `10 / 12`; one complete canonical four-leaf outer journal satisfying the retained-terminal rebound rejection relations |
+
+There may be no sixth scoped root and no public-admission root. Terminal JSON
+hashes that embed fresh vnode/path data are recorded after execution and are
+not guessed in this freeze; their canonical schemas, key sets, chain hashes,
+fixed names, permissions, and role relations remain mandatory.
+
+For outcome 2, the leaf must be compact sorted canonical JSON, no trailing
+line feed, at most `1,024` bytes, and have exactly R11's twenty keys with no
+unknowns. It must carry the v2 schema and R11 source identity, nonzero admitted
+device/inode, `orphan_transition / orphan_initial_census / armed`, one true
+death wait, stop attempt `1`, initiating status `70` plus an exact closed census
+coordinate, containment status/coordinate `70 / supervisor_stop`, fixed status
+`70`, and every frozen return/errno/check/observed relation. Its admitted
+device/inode must join the final fixed named mode-`0400`, UID-owned, one-link,
+flags-`0` regular vnode; final GID must equal the held parent GID; the parent
+must remain a UID-owned mode-`0700` root; and ACL/xattr/content bounds remain
+the exact R11 contract. Preserve every abnormal root without mutation.
+
+Even an exact causal record proves neither internal postimage return nor
+containment/reap/group-empty completion. The outer shell's exit is not an
+observed inner `_exit(70)` status. Every R12 path retains:
+
+```text
+outer_journal_authority_vector = 00000000
+production_attempt_count = 0
+gate_E_scientific_outcome = ABSTAIN
+gate_E_clearance_granted = 0
+```
+
+A valid v2 datum may support only a separately frozen containment assessment.
+Normal return, malformed data, or compile/link failure does not authorize a
+semantic repair or a retry.
