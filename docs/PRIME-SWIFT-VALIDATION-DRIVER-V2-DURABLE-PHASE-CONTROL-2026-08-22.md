@@ -3292,3 +3292,137 @@ root, consumed-root mutation, or nonzero build result is a hard stop. It
 authorizes neither another build attempt nor method 8. A passing build must be
 recorded with its exact product metadata and hash before the remaining
 pre-shot floor may be declared ready.
+
+## Gate E1.2 source-worktree Release supervisor build result
+
+| Field | Observed value |
+| --- | --- |
+| Result | `PASS_COMPILE_ONLY_NON_AUTHORITY` |
+| Durable-control predecessor | `542839d36a8d710613cc1883d03ced0f4ab5b86c` / tree `bd24fa9abba7569d99b2fc9a95af4ac378119185` |
+| Source commit/tree | clean `1d341a529c442e63369c361b1e5ac95ca464fdf7` / `e787b3573bd44259606536860dc980720d73d64f` |
+| Build start | `2026-08-23T01:13:54Z`; epoch `1787447634` |
+| SwiftPM result | exit `0`; `185.16` seconds |
+| Transcript | PrimeCore and supervisor compilation; supervisor relink; no XCTest/Swift-Testing marker |
+| Build-cache pre-admission | device `16777231`; inodes `17334168` / `17334169`; UID `501`; mode `0700`; link count `2`; empty; ACL-free |
+| Build-cache post-state | same inodes; link counts `3` / `10`; retained |
+| Supervisor device/inode | `16777231` / `17335100`; descriptor/path joined and stable |
+| Supervisor owner/mode/link count | UID `501`; GID `20`; `0755`; `1` |
+| Supervisor bytes/time/flags | `45,596,744`; mtime/ctime `1787447820`; flags `0` |
+| Supervisor SHA-256 | `342cd64bcb2e01ce4d037293ef11cc64386bfa0e5a9f05e6ba05292eca3b1b53` |
+| Supervisor image | regular arm64 Mach-O; ACL-free; only `com.apple.provenance` xattr |
+| Embedded identity | current `194cf714…` present; predecessor `afb3c464…` absent |
+| Post-build statuses | source, production Prime clone, diagnostic Prime clone, companion, and control: `0` bytes |
+| Production method-8 invocations | `0` |
+| Successor root | absent |
+| Prior consumed root | unchanged at device `16777231`, inode `17321558`, mtime `1787444179`, link count `8` |
+| Candidate consumption | `false` |
+| Gate E outcome | `NOT_RUN`; no authority |
+
+The exact product build replaced only ignored build output and populated its
+two frozen module caches. It did not run XCTest, launch the supervisor, bind
+its image, create a production root, or close any Gate E authority.
+
+The required source-worktree Release XCTest executable remained stale after
+that product-only command:
+
+| Field | Observed preimage |
+| --- | --- |
+| XCTest executable | `Tests/PrimeValidationWorkflow/.build/arm64-apple-macosx/release/PrimeValidationWorkflowPackageTests.xctest/Contents/MacOS/PrimeValidationWorkflowPackageTests` |
+| Device/inode | `16777231` / `17321182`; descriptor/path joined |
+| Owner/mode/link count | UID `501`; GID `20`; `0755`; `1` |
+| Byte count | `56,482,224` |
+| mtime/ctime/flags | `1787444108` / `1787444108` / `0` |
+| Image metadata | regular arm64 Mach-O bundle executable; ACL-free; only `com.apple.provenance` xattr |
+| SHA-256 | `6ac8a09f4d6df5b1fef612e631b90c770e848ba44e4bed68a925222b2302d73d` |
+| Embedded identity | predecessor `afb3c464…` present; current `194cf714…` absent |
+
+That XCTest executable is ineligible to run method 8.
+
+## Gate E1.2 freeze — one compile-only Release test-bundle build
+
+| Field | Frozen value |
+| --- | --- |
+| Status | `FROZEN_NOT_EXECUTED` |
+| Durable-control predecessor | `542839d36a8d710613cc1883d03ced0f4ab5b86c` / tree `bd24fa9abba7569d99b2fc9a95af4ac378119185` |
+| Source commit/tree | clean `1d341a529c442e63369c361b1e5ac95ca464fdf7` / `e787b3573bd44259606536860dc980720d73d64f` |
+| Production-proof Prime clone | `/private/tmp/gate-e-prime-proof.lJ0uQj/prime`; same clean commit/tree |
+| Companion clone | `/private/tmp/gate-e-companion-measure.pMGSXT/companion`; clean `163fc100710ece48119bc25954452d10f6a84f7f` / `9009daa4f8a07fbd5897e00b9571cef44ec292db` |
+| Authorized build commands | exactly `1` |
+| Authorized XCTest executions / built-product launches | `0` / `0` |
+| Source edits / commits | `0` / `0` |
+| Production method-8 invocations | `0` |
+| Gate F authorization | `false` |
+
+This result and freeze must first exist in a clean control commit directly
+descended from `542839d36a8d710613cc1883d03ced0f4ab5b86c`. Before
+that commit, cache creation or the command is forbidden.
+
+Create exactly once with exclusive `mkdir` these currently absent leaves:
+
+- `CLANG_MODULE_CACHE_PATH=/private/tmp/gate-e1-2-source-release-build-tests-clang-module-cache-194cf7141172ee06`
+- `SWIFTPM_MODULECACHE_OVERRIDE=/private/tmp/gate-e1-2-source-release-build-tests-swiftpm-module-cache-194cf7141172ee06`
+
+`EEXIST` is a hard stop. Apply the same no-follow descriptor/path join, UID
+`501`, mode `0700`, empty/link-count-two, ACL-free, and APFS device
+`16777231` checks frozen for the product build. These fresh leaves may be
+populated only by the exact command below and must remain retained afterward;
+later reuse, if any, requires a separate final-shot-readiness freeze.
+
+Immediately before the command, require source and both production clones
+clean at their exact commits/trees; canonical identity `194cf714…`; the
+supervisor preimage exactly at SHA-256 `342cd64b…` with its recorded
+metadata; the XCTest preimage exactly at SHA-256 `6ac8a09f…` with its
+recorded metadata; the successor production root absent; and the prior
+consumed root unchanged.
+
+Use exact working directory
+`/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.driver-v2-gate-c-staging`
+and run exactly once:
+
+```sh
+CLANG_MODULE_CACHE_PATH=/private/tmp/gate-e1-2-source-release-build-tests-clang-module-cache-194cf7141172ee06 SWIFTPM_MODULECACHE_OVERRIDE=/private/tmp/gate-e1-2-source-release-build-tests-swiftpm-module-cache-194cf7141172ee06 swift build --package-path /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.driver-v2-gate-c-staging/Tests/PrimeValidationWorkflow --configuration release --build-tests --disable-automatic-resolution --disable-sandbox
+```
+
+No extra or missing argument or inline environment assignment is permitted.
+Do not set `HOME`, companion input, or external scratch path.
+
+A pass requires shell exit `0`; explicit compilation of the changed live
+test target and relinking of
+`PrimeValidationWorkflowPackageTests.xctest`; no XCTest/Swift-Testing runner
+marker; and no execution of either the exact XCTest bundle executable or
+`PrimeValidationWorkflowDriverV2Supervisor`. Manifest, compiler, and linker
+subprocesses are expected and non-authoritative. A no-op test-bundle build is
+a hard stop. Record the build-start epoch and require the XCTest executable's
+mtime/ctime to advance beyond it.
+
+Walk every XCTest bundle path component no-follow and reject any symlink or
+rebound directory. Open the final executable
+`O_RDONLY|O_NOFOLLOW|O_CLOEXEC`, join descriptor/path device and inode before
+and after a stable read, and require a regular arm64 Mach-O bundle executable,
+UID `501`, GID `20`, mode `0755`, link count `1`, flags `0`, no ACL,
+only the permitted `com.apple.provenance` xattr, and stable nonzero bytes.
+Its SHA-256 must differ from `6ac8a09f…`; current identity `194cf714…` and
+the exact source-worktree `#filePath` must be present; predecessor identity
+`afb3c464…` must be absent.
+
+The exact command may leave the supervisor untouched or rebuild/relink it as
+a dependency. Walk its path components no-follow, reopen the final supervisor,
+and repeat every prior vnode, stable-read, regular arm64 Mach-O, UID `501`,
+GID `20`, mode, link-count, flags, ACL, xattr,
+current-identity-present, and predecessor-identity-absent check.
+If its inode, timestamps, or bytes changed, require the mutation within the
+measured build interval and a matching supervisor compile/relink transcript.
+Any unexplained mutation is a hard stop.
+
+All tracked statuses must remain clean; manifests and `Package.resolved`
+must remain unchanged; the successor root must remain absent; and the prior
+root must remain unchanged. Any failure, no-op, dependency fetch, network
+access, runner marker, built-product execution, cache mismatch, unexpected
+artifact mutation, identity mismatch, root drift, or extra invocation forbids
+another build and method 8.
+
+Even a passing `--build-tests` command authorizes no production launch. Its
+exact result, final XCTest hash/metadata, final supervisor hash/metadata,
+complete pre-shot floor, clean statuses, and both root states must be recorded
+in a separate clean final-shot-readiness checkpoint before any later freeze
+may authorize the first method-8 invocation.
