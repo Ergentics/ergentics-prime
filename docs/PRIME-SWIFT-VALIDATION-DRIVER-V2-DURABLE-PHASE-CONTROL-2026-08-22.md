@@ -6385,3 +6385,143 @@ physical frontend accepted without held/mapped vnode join         // false
 
 All other C2/C3 predicates remain required. Prose cannot turn either the path
 inequality or the content equality into the other.
+
+## Gate E1.4 source checkpoint — conserved-session shot governor
+
+| Coordinate | Checkpoint value |
+| --- | --- |
+| Record date | `2026-08-23` |
+| Status | `SOURCE_CHECKPOINTED_STATIC_ONLY_NOT_EXECUTED` |
+| Durable-control predecessor | `051a1af77db8b0e869e735e1787abfb09f660b2e` / tree `6b39ca269c5eece03af1f4cf40dba0a2ce9b7ee3` |
+| Source predecessor | `2d705a71dc1827cf4fe6f0f9f3bc8255063e1dd3` / tree `0077ac10f1dbba50680502a31084f7280c2c2f65` |
+| Source checkpoint | `4735739b10a699ebc1ef3b4dc87a209fb5189834` / tree `c44c7ae54cffa95a9d2c705191c542fa1ceda5db` |
+| Source-parent relation | exactly one direct child; parent count `1` |
+| Source delta | exactly `13` paths: `10` modified + `3` added, all mode `100644` |
+| Swift build / test / executable launch | `0 / 0 / 0` |
+| Supervisor / child / Git / Swift process count | `0 / 0 / 0 / 0` |
+| Dependency resolution / fetch / network / GitHub | `0 / 0 / 0 / 0` |
+| Current authority vector, with no E receipt | `00000000` |
+| Runtime E scientific outcome | `ABSTAIN` — no execution evidence exists |
+| Gate-E clearance granted | `0` |
+
+The exact source delta is:
+
+```text
+M  Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift
+M  Sources/PrimeCore/PrimeSecureChildDarwinSubstrate.swift
+M  Sources/PrimeCore/PrimeSecureChildLifecycle.swift
+M  Sources/PrimeCore/PrimeSecureChildSupervision.swift
+M  Sources/PrimeCore/PrimeValidationDriverV2FixedProbeExecutor.swift
+M  Sources/PrimeCore/PrimeValidationSwiftPMBuildInventoryAdmission.swift
+M  Tests/PrimeValidationWorkflow/Package.swift
+M  Tests/PrimeValidationWorkflow/Sources/PrimeValidationWorkflowDriverCore/PrimeValidationDriverV2FixedProbeBinding.swift
+A  Tests/PrimeValidationWorkflow/Sources/PrimeValidationWorkflowDriverV2SessionFixture/main.swift
+A  Tests/PrimeValidationWorkflow/Sources/PrimeValidationWorkflowDriverV2ShotGovernor/main.swift
+A  Tests/PrimeValidationWorkflow/Sources/PrimeValidationWorkflowDriverV2ShotGovernorCore/PrimeValidationDriverV2ShotGovernor.swift
+M  Tests/PrimeValidationWorkflow/Tests/PrimeValidationWorkflowDriverCoreTests/PrimeValidationDriverV2AdmissionTests.swift
+M  Tests/PrimeValidationWorkflow/Tests/PrimeValidationWorkflowDriverCoreTests/PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests.swift
+```
+
+No other tracked, untracked, staged, or unstaged source path remained after
+the checkpoint. The existing production supervisor `main.swift` is unchanged
+from the predecessor; both bytes have SHA-256
+`a6ee17b234abcd789d839abadd5f5a551ecabe99d731186c566422f46e6276d2`.
+
+### Measured source identity and topology
+
+Two independent implementations, Python and Ruby, traversed the frozen Prime
+allowlist and independently emitted the same canonical identity data:
+
+| Quantity | Python | Ruby | Required equality |
+| --- | ---: | ---: | ---: |
+| Admitted files | `548` | `548` | `548` |
+| Identity records, excluding provenance | `547` | `547` | `547` |
+| Canonical record bytes | `112,279` | `112,279` | `112,279` |
+| Aggregate admitted source bytes | `22,457,455` | `22,457,455` | equal |
+| Source identity SHA-256 | `74354d4581835d12f0624d0455e8167a4d608a5eecb8427debbe894a88a16ad2` | same | same |
+| Held Prime authority directories | `155` | `155` | `155` |
+| Prime watchers | `548 + 155 = 703` | same | `703` |
+| Combined watchers | `703 + 1,460 = 2,163` | same | `< 4,096` |
+
+Only after both identity calculations agreed was embedded provenance resealed.
+Its exact canonical template is `546` bytes with SHA-256
+`24362ede89c59ed536287c81755de5f9811d4c40279f2c5a38d87afcf90233a0`.
+Both implementations rechecked the identity after reseal; the digest is
+unchanged because the provenance file is the sole excluded record.
+
+### Static closure vector
+
+The source checkpoint and an E execution are separate mathematical objects:
+
+```text
+S_scope_identity      = 1
+S_process_primitives  = 1
+S_outer_continuity    = 1
+S_receipt_join        = 1
+S_zero_process_tests  = 1
+S_reap_lifecycle      = 1
+
+source_checkpoint = product(S_*) = 1
+
+R_outer_terminal = ABSTAIN
+R_one_deadline    = ABSTAIN
+R_exact_wait      = ABSTAIN
+R_inner_receipt   = ABSTAIN
+R_self_image      = ABSTAIN
+R_empty_env       = ABSTAIN
+R_capsule         = ABSTAIN
+R_absence         = ABSTAIN
+R_ordinary        = ABSTAIN
+R_kernel_absence  = ABSTAIN
+R_mechanics       = ABSTAIN
+
+gate_E_scientific_outcome = ABSTAIN
+gate_E_clearance_granted  = 0
+```
+
+Independent static audits found no remaining source blocker. In particular:
+
+- Prime and companion continuity are owned by the governor independently of
+  the supervisor and remain retained through the outer-terminal join.
+- DriverCore receives value-only retained inner-journal data and cannot open a
+  path or recover a process, facade, role, argv, environment, cwd, timeout,
+  session, group, or command capability.
+- The logical `swift` path and physical held `swift-frontend` path remain
+  unequal while their admitted target bytes must be equal; mapped-image
+  authority remains the held physical frontend vnode.
+- The production guard is the four-state transition
+  `armed -> exactReapCompleted -> conservationCompleted -> drainsCompleted`.
+  The sole exact `waitpid(S, ..., 0)` marks exact reap immediately. A later
+  failure enters a separate no-wait SID/group containment pass, then completes
+  both drains under the original deadline. It cannot wait for `S` twice.
+- The no-wait pass stops a stable `SID == S` fixed point, kills every captured
+  group including `S`, requires two empty scans, and accepts only `ESRCH` for
+  captured-generation and group absence. The session fixture has the same
+  armed/exact-reaped/conservation-complete split.
+- The existing mechanics XCTest identifier contains all seven frozen
+  zero-process cases. Its observation fixes spawned/probe counts to zero,
+  production eligibility false, and authority vector `00000000`. The retired
+  production XCTest still skips before any root or process is created.
+
+The final lifecycle audit anchors are:
+
+```text
+GovernorCore SHA-256 = 0c8f41eea642ce63895e8810641ab674de1c2530da4a9a6d2142efc155b44811
+LiveTests SHA-256    = 4a1b89ca13afe168719acb91f5c45e58b377cd7f3bf5375bb429d8cdbf4f5d35
+```
+
+### Authority boundary and next transition
+
+This record checkpoints source bytes only. It is not a Gate-E receipt, does
+not make XCTest a production supervisor, and closes none of the eight
+process-derived roadmap authorities. No governor, supervisor, session
+fixture, Git probe, Swift probe, or child was launched. GitHub is neither an
+actor nor a venue in this checkpoint.
+
+The only next transition supported by this record is a separately frozen,
+local, bounded readiness slice on source `4735739b10a699ebc1ef3b4dc87a209fb5189834`
+and tree `c44c7ae54cffa95a9d2c705191c542fa1ceda5db`: first compile and run the
+mechanics-only proof, then assess production Release-shot readiness. That
+later authority must name its roots, binaries, capsule, journal leaf, deadline,
+and one-shot policy before execution. It must not infer E clearance from this
+source commit, and it must not use GitHub as the scientific executor.
