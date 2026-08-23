@@ -7907,3 +7907,93 @@ a base/leaf GID mismatch, or later GID drift is rejection.
 This correction changes no leaf name, record field, process, deadline, census,
 containment, durability, topology, source allowlist, or authority vector. It
 authorizes no Swift command and must precede the R6 source checkpoint.
+
+## Gate E1.4-R6 source checkpoint — held-vnode fail-stop diagnostic
+
+| Coordinate | Checkpoint value |
+| --- | --- |
+| Status | `SOURCE_CHECKPOINTED_STATIC_ONLY_NOT_EXECUTED` |
+| Durable-control freeze | R6 `07742fedda3c9f24acc212e1fe89c792b7ac332b` / tree `93546cf6329507e23d92cd80465664e10c54c98e`; inherited-GID correction `93bc44f13340905fba35e5090321cf37bb1ad201` / tree `f17962ee2626fe0640dcc39b4781a75b5b518d80` |
+| Source predecessor | `7fbd52386283295d6312b57dbcb3acd97b1b5bce` / tree `dd45c962af0683db73c1e2785e7232b243d628d9` |
+| Source checkpoint | `d408680dec3bebe64251903c0d7526d98efab2d7` / tree `894ba2b82614a19e094a2124f1e8f936c5b7f2d5` |
+| Parent relation | exactly one parent, the frozen source predecessor |
+| Source delta | exactly `3` modified mode-`100644` paths; `790` insertions / `5` deletions |
+| Swift build / test / executable launch | `0 / 0 / 0` |
+| Dependency resolution / fetch / network / GitHub | `0 / 0 / 0 / 0` |
+| Production attempts / authority vector / Gate-E clearance | `0 / 00000000 / 0` |
+
+The exact successor files are:
+
+| Path | Lines / bytes | Blob / SHA-256 |
+| --- | ---: | --- |
+| `Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift` | `13 / 546` | `9ea686a51515f4ed9d5519a2dfb51b411a1385a2` / `87d8b9a6719d420340bdc7501cbc8c0353b4bd4789a6dcfc90ebb3b5267c8a87` |
+| `Tests/PrimeValidationWorkflow/Sources/PrimeValidationWorkflowDriverV2ShotGovernorCore/PrimeValidationDriverV2ShotGovernor.swift` | `5,894 / 225,620` | `da5f4c593f60f14d0d951a0d5c737d05e89b3438` / `0eaf7c7d94a073b550cdd130f968f54d5344508fea251893114fdcc9c4a125a5` |
+| `Tests/PrimeValidationWorkflow/Tests/PrimeValidationWorkflowDriverCoreTests/PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests.swift` | `6,760 / 243,977` | `53cc3cc5cb16966435384cf6483dd8715971c95a` / `66a4c527b09a3f0bfb0dbed354c8a61e7474b413ea770bb8a39608f883200af7` |
+
+Independent Python and Ruby calculators each reproduced the R6 predecessor
+identity from its immutable Git tree and then agreed on the successor before
+and after the excluded provenance reseal:
+
+| Quantity | R6 predecessor | R6 successor |
+| --- | ---: | ---: |
+| Admitted files | `548` | `548` |
+| Identity records | `547` | `547` |
+| Canonical record bytes | `112,279` | `112,279` |
+| Aggregate admitted bytes | `22,458,595` | `22,488,186` |
+| Capture-enumerator directories | `146` | `146` |
+| Held authority directories | `155` | `155` |
+| Prime / combined watchers | `703 / 2,163` | `703 / 2,163` |
+| Source identity SHA-256 | `77d5cfa3d9b9fc7054a40b0651940641d0da1d52afee197ce178b3c480446b76` | `9a46327485eb257fb835bda48758267324c090731fe9ce7e2a3074b8afc4687d` |
+
+The pinned companion independently remains clean at
+`163fc100710ece48119bc25954452d10f6a84f7f` / tree
+`9009daa4f8a07fbd5897e00b9571cef44ec292db`, with `1,306` held files,
+`154` held directories comprising the working-tree root plus `153`
+non-`.git` directories, and `1,460` watchers. The root `.git` directory is a
+separately recorded and joined entry in the held root inventory; it is not a
+held directory or watcher, and its descendants remain excluded. The combined
+count therefore remains `2,163 / 4,096`. The provenance file equals the
+canonical excluded template byte-for-byte and contains the successor digest
+exactly once.
+
+Static implementation predicates are:
+
+```text
+changed_paths = 3
+session_fixture_test_seam_definitions/call_sites = 1/2
+new_held_diagnostic_argument_definitions/call_sites = 1/2
+fixed_leaf_literals = 2
+test_empty_conservation_checks = 3
+positioned_write_definitions/call_sites = 1/1
+best_effort_publication_definitions/call_sites = 1/1
+canonical_record_fields = 11
+new_Process/new_CommandLine/new_posix_spawn/new_Darwin_exit = 0/0/0/0
+```
+
+LiveTests creates the one exact leaf by exclusive descriptor-relative open
+after the retained rebound case and immediately before the first SessionFixture
+call. It freezes the held base and leaf, requires UID ownership, binds the leaf
+GID to the observed held-base GID, and rejoins the exact named vnode. The same
+held `O_CLOEXEC` leaf enters both package-test calls; a normal return from each
+must leave the full empty mode-`0600` preimage unchanged.
+
+GovernorCore duplicates and immediately constrains that held descriptor before
+spawn. It records the closed fixture mode, last body phase, containment state,
+deadline-expiry bit, status-70 internal coordinate, admitted device/inode, and
+fixed source-level fail-stop status. Only the existing defer-containment catch
+may attempt one canonical publication. Its explicit-offset write, full sync,
+mode-`0400` freeze, exact reread/decode, descriptor-state conservation, and
+held/named vnode join all precede the unchanged lexical `_exit(70)`. Every
+thrown publication error is caught only so the fail-stop follows; missing or
+invalid data remains `ABSTAIN`.
+
+Two independent static implementation reviews found no compile-shape blocker
+after the measured inherited-GID correction. That is static source evidence,
+not a compile or runtime claim. No manifest, SessionFixture source, production
+`main.swift`, DriverCore, planner, role, capsule, journal, test identifier,
+GitHub path, or Gate D/F/G/H surface changed. R5's epoch and five forensic roots
+remain retained and unmodified.
+
+This checkpoint authorizes no execution. A later diagnostic requires a
+separately committed R7 readiness freeze on this exact source commit, tree, and
+identity, a fresh private epoch, and one exact Release selected-test command.
