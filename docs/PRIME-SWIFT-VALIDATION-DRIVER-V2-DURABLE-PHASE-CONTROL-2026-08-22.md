@@ -7272,3 +7272,172 @@ R3 authorizes no production root, capsule, journal, Governor invocation,
 fixed Git/Swift role, Gate F/G action, GitHub action, retry, or cleanup. A
 clean pass permits only a separately frozen production-shot readiness
 assessment.
+
+## Gate E1.4-R3 result — initializer compile stop before XCTest
+
+| Coordinate | Observed value |
+| --- | --- |
+| Executed freeze | `733098935d2deaf8c85edc31cf705e63d02ce692` / tree `300cd6287ffb83a15c874c96aafe20ca1b95ce51` |
+| Status | `STOPPED_RELEASE_SWIFT_TEST_COMPILE_FAILURE_BEFORE_XCTEST` |
+| Authorized / attempted SwiftPM commands | `1 / 1` |
+| Command exit | `1` |
+| Observed bounding interval | `2026-08-23T16:42:52Z` through `2026-08-23T16:46:33Z`; at most `221` seconds |
+| Frozen selector count / executed / passed / failed / skipped XTests | `1 / 0 / 0 / 0 / 0` |
+| XCTest / Swift Testing runners | `0 / 0` |
+| SessionFixture supervisors / passive children launched | `0 / 0` |
+| Production governor / supervisor / fixed-role launches | `0 / 0 / 0` |
+| Compiler/linker process census | `ABSTAIN`; build transcript and terminal only |
+| Dependency fetch / network / GitHub | `0 / 0 / 0` |
+
+R3's sole Release `swift test` invocation cleared every R1 diagnostic and
+continued to the held-executable initializer. Compilation then stopped at the
+first Swift definite-initialization violation:
+
+```text
+PrimeValidationDriverV2ShotGovernor.swift:939:32: error:
+'self' captured by a closure before all members were initialized
+guard requiredLeaf.map({
+    URL(fileURLWithPath: absolutePath).lastPathComponent == $0
+}) ?? true
+```
+
+The compiler notes identify `descriptor`, `identity`, and `xattrs` as still
+uninitialized. The `Optional.map` closure reads the stored `absolutePath` and
+therefore captures partially initialized `self`; the canonical-path value and
+leaf predicate themselves were not rejected. The retained diagnostic at
+`Tests/PrimeValidationWorkflow/.build/arm64-apple-macosx/release/PrimeValidationWorkflowDriverV2ShotGovernorCore.build/PrimeValidationWorkflowDriverV2ShotGovernorCore.dia`
+is `800` bytes with SHA-256
+`f0824e54f78b9ccb053a4cc2094b1fc4307d52c3a6644f508d3405cf9fe92456`.
+The final terminal was `error: fatalError`.
+
+ShotGovernorCore emitted no object or module, ShotGovernor remained absent,
+and the XCTest executable remained the stale preimage. Thus no XCTest,
+SessionFixture, or package product ran. Those zero launch counts derive from
+the stopped SwiftPM build graph and absence of XCTest or product-launch
+markers; they are not a complete host-process census.
+
+### R3 artifact and conservation data
+
+| Image | Exact terminal fact |
+| --- | --- |
+| SessionFixture | retained device/inode `16777231/17382060`; `53,072` bytes; SHA-256 `177a18c20bc42486c77b52af4c472be222dec1baabf8973ece7b2d44ea92756e`; UUID `2EBB880A-D28B-32FF-9B7E-EB868AF5D9B6`; no R3 relink |
+| ShotGovernor | absent; its core did not compile |
+| DriverV2Supervisor | R3 preimage device/inode `16777231/17383408`, SHA-256 `679a05556327e3cb624da7dc2b27b90d43e5520adbbd3059272c3e3ca78b7e97` -> device/inode `16777231/17385380`; `48,029,880` bytes; SHA-256 `48f9c33813d9a20e5c9830af20263ee2d05188a06b2383d894aa09dec767fc43`; UUID `B8B64364-6315-37FD-81BA-E937BB1AB169`; mtime/ctime `1787503583/1787503583` |
+| SecureChildIntegration | R3 preimage device/inode `16777231/17383340`, SHA-256 `48ca1e187e6ecfc4eb9af0abadb4b16141ce799b2191f230afc7f3d8aa374f1b` -> device/inode `16777231/17385350`; `51,271,120` bytes; SHA-256 `e458f164f0f43e2e164d6f9439b815c92e16a9225ea46b1fd3a82c04ccd2f367`; UUID `47E50C9E-7F35-3861-85CF-0DE1899A8BB5`; mtime/ctime `1787503570/1787503570` |
+| XCTest bundle executable | retained device/inode `16777231/17361530`; `56,562,128` bytes; SHA-256 `c3427b8c8c659a3be3e526f47adf2d5d6ed332b665ff9b967b0132e49187e712`; UUID `F62F4215-B00C-30C0-B7B2-43BF6924B73D`; stale identity once, R3 identity zero times, selected-method substring once |
+
+Both R3-relinked images contain source identity
+`689807021fe36551afcda7d65e1bfc66e12092abcb9feb097e5d53a343e9ca3b`
+once and the stale and intermediate identities zero times. All recorded
+present images remain regular arm64 Mach-O objects, mode `0700`, one link, no
+flags or ACL, and with only the `com.apple.provenance` xattr. Build-image
+replacement is compilation telemetry, not execution authority.
+
+The fresh R3 epoch is retained at device/inode `16777231/17384688`, mode
+`0700`, link count `11`, with the exact nine child inodes
+`17384689...17384697` in the frozen order. The Git template remains empty.
+The scoped admission inventory remains only
+`/private/tmp/prime-validation-admission-tests-20260803-c`; the scoped public
+inventory remains empty. The exact R3 reserved production root remains absent,
+while the two separately named historical production roots remain retained.
+
+Source stayed clean at `22ae3332aa75dad68e12660d43e8822f03a871a3` /
+tree `4ed3c124be29e5b0d194009bc0617ca2ae5ca24b`. All four manifest/lock
+digests, the `1,704`-byte workspace-state digest, admitted-source hashes, both
+dependency commit/tree pairs, and both clean dependency worktrees remained
+exact. No R3 root or historical root was rebound or removed.
+
+The only valid R3 vector is:
+
+```text
+R3_release_test_compile = FAIL
+R3_selected_xctest = NOT_STARTED
+R3_mixed_test_host_mechanics = ABSTAIN
+outer_journal_authority_vector = 00000000
+production_attempt_count = 0
+gate_E_scientific_outcome = ABSTAIN
+gate_E_clearance_granted = 0
+```
+
+R3's epoch and command are consumed. This result is a compiler stop, not a
+GitHub result, containment result, fixture result, or Gate-E scientific
+outcome. It authorizes neither a same-source retry nor a production action.
+
+## Gate E1.4-R4 freeze — held-executable initialization repair
+
+| Coordinate | Frozen value |
+| --- | --- |
+| Status | `FROZEN_SOURCE_REPAIR_NOT_IMPLEMENTED` |
+| Durable-control predecessor | R3 readiness `733098935d2deaf8c85edc31cf705e63d02ce692` / tree `300cd6287ffb83a15c874c96aafe20ca1b95ce51` plus the exact R3 result above |
+| Source predecessor | clean `22ae3332aa75dad68e12660d43e8822f03a871a3` / tree `4ed3c124be29e5b0d194009bc0617ca2ae5ca24b` |
+| Authorized successor source commits | exactly `1`, a direct child of the source predecessor |
+| Authorized source paths | exactly `2` |
+| Swift build / test / executable launch in this slice | `0 / 0 / 0` |
+| Root / cache / capsule / journal creation | `0 / 0 / 0 / 0` |
+| Dependency resolution / fetch / network / GitHub | `0 / 0 / 0 / 0` |
+| Authority vector before / after | `00000000 / 00000000` |
+
+The exact two-path allowlist is:
+
+1. `Tests/PrimeValidationWorkflow/Sources/PrimeValidationWorkflowDriverV2ShotGovernorCore/PrimeValidationDriverV2ShotGovernor.swift` — one initializer hunk only; and
+2. `Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift` — only the final source-identity digest reseal after path 1 is final.
+
+Their frozen preimages are:
+
+| Path | Lines / bytes | Blob / SHA-256 |
+| --- | ---: | --- |
+| ShotGovernor core | `5,469 / 209,036` | `b460519eedd325b190f92bfd34874d4efe483017` / `a10477265e56e36513b2f643fef342f1b5f2839b1c35ce3f0c2c9019c88c1ac9` |
+| Embedded provenance | `13 / 546` | `06ab44fda46c03f3a00f84f9d5510a848eb4a73b` / `6ce0e7bc6699639103ef26ddf9daa14b844562018858ae33545175c8b716c547` |
+
+The authorized repair is exact. After `binding.validate()` and
+`self.binding = binding`, bind the canonical path to a local
+`canonicalAbsolutePath`. If `requiredLeaf` is nonnil, compare it directly to
+`URL(fileURLWithPath: canonicalAbsolutePath).lastPathComponent` and retain the
+same `coordinate + "_leaf"` rejection. Only after that check passes assign
+`absolutePath = canonicalAbsolutePath`; then continue into the existing single
+`Darwin.open` unchanged. The leaf check must use only the local canonical
+value: it may not capture `self` or read the stored `absolutePath`. No closure
+may capture partially initialized `self`.
+
+The repair must preserve `binding.validate`, canonical-path admission, the
+single `O_RDONLY | O_NOFOLLOW_ANY | O_CLOEXEC` open, held-versus-named
+device/inode equality, link/mode/flag/xattr/content-hash checks, descriptor
+rewind, and all later revalidation. The descriptor-only test initializer at
+the neighboring site is unchanged. No process, spawn, environment, cwd,
+deadline, drain, reap, process-group, continuity, poison, journal, role, API,
+receipt, or exit-70 surface changes.
+
+Static successor acceptance is:
+
+```text
+changed_paths = 2
+initializer_hunks = 1
+requiredLeaf.map_sites = 0
+local_canonical_binding_path_values = 1
+nonclosure_optional_leaf_checks = 1
+stored_absolutePath_assignment_before_existing_open = 1
+binding_initializer_definitions/call_sites = 1/4
+descriptor_test_initializer_definitions/call_sites = 1/1
+leaf_rejection_sites = 2
+frozen_executable_leaf_literals = 5
+```
+
+An independent whole-file initializer scan found no other partially
+initialized-`self` closure: journal closures capture only parameters and
+static constants; capture initialization closes only over local inputs; and
+the death watcher installs its weak-self handler only after all of its stored
+properties are initialized. R4 does not authorize speculative changes at
+those sites.
+
+Topology must remain exactly `548` admitted files, `547` identity records,
+`112,279` canonical-record bytes, `155` held Prime authority directories,
+`703` Prime watchers, and `2,163 / 4,096` combined watchers. After the single
+initializer hunk is final, independent Python and Ruby calculators must agree
+on the new aggregate admitted bytes and source-identity SHA-256 as well as
+those invariant counts. Only then may the excluded provenance file receive
+that digest, after which both calculators must reproduce it again.
+
+The R4 terminal is one clean two-path source commit. It may be followed only
+by a separately committed static source checkpoint and then a separately
+committed R5 readiness freeze with a fresh epoch. R4 authorizes no Swift
+command, no R3 retry, no production Gate-E action, and no cleanup.
