@@ -6525,3 +6525,233 @@ mechanics-only proof, then assess production Release-shot readiness. That
 later authority must name its roots, binaries, capsule, journal leaf, deadline,
 and one-shot policy before execution. It must not infer E clearance from this
 source commit, and it must not use GitHub as the scientific executor.
+
+## Gate E1.4-R0 freeze — mixed Release mechanics readiness
+
+| Coordinate | Frozen value |
+| --- | --- |
+| Status | `FROZEN_NOT_EXECUTED` |
+| Durable-control predecessor | `b67601afd8d4392d96306e63113ab2476ed9f57d` / tree `94eda07cbc6e2fb12543827f7c935e3984b04a70` |
+| Permitted control delta | this section only, in this one durable-control path |
+| Source commit/tree | clean `4735739b10a699ebc1ef3b4dc87a209fb5189834` / `c44c7ae54cffa95a9d2c705191c542fa1ceda5db` |
+| Source identity/cardinality | `74354d4581835d12f0624d0455e8167a4d608a5eecb8427debbe894a88a16ad2`; `548 / 547 / 112,279` |
+| Source watcher arithmetic | `703 + 1,460 = 2,163 / 4,096` |
+| Configuration/platform | Release / arm64 / macOS `26.5.2` build `25F84` |
+| Authorized SwiftPM commands | exactly `2`, ordered `build-tests -> skip-build test`; one attempt each |
+| Selected XCTest methods | exactly `1`; one XCTest runner; zero Swift Testing runners |
+| Production governor/supervisor/fixed-role attempts | `0 / 0 / 0` |
+| Dependency resolution/fetch/network/GitHub | `0 / 0 / 0 / 0` |
+| Overall outer readiness ceiling | `5,400` seconds; build at most `4,800`, test at most `600` |
+| Production Gate-E outcome before/after this readiness slice | `ABSTAIN / ABSTAIN` |
+
+Data precedence is exact. In particular, the selected XCTest method is not
+process-free. Its outer-journal observation is zero-process, but the enclosing
+method also runs two test-only conserved-session fixture modes. The accepted
+runtime topology is:
+
+```text
+SwiftPM build invocation                         = 1
+SwiftPM test invocation                          = 1
+XCTest runner                                    = 1
+SessionFixture supervisor image instances        = 2
+SessionFixture passive child image instances     = 2
+
+production ShotGovernor launches                 = 0
+production DriverV2Supervisor launches           = 0
+Gate-E fixed Git/Swift role launches              = 0
+DriverV2SpawnCanary launches                      = 0
+FixtureChild launches                             = 0
+SecureChildIntegration launches                   = 0
+network/fetch/GitHub operations                   = 0
+```
+
+Each of the two fixture-seam calls performs one `posix_spawn` of a supervisor.
+Each supervisor performs one `posix_spawn` of the same held image as a passive
+zero-argument child in a dedicated process group. A successful full method
+therefore creates exactly two fixture supervisors plus two children. Every
+successfully returned `PrimeValidationDriverV2OuterJournalMechanicsObservation`
+must report `spawned_process_count = 0`, `git_or_swift_probe_count = 0`,
+`production_status_eligible = false`, and `authority_vector = 00000000`.
+Rejection, collision, and rebound cases throw and return no observation; they
+must not be described as reporting those fields.
+The XCTest runner and SwiftPM infrastructure are harness processes, never
+Gate-E roles. SwiftPM may invoke the admitted Xcode Git helper for read-only
+local package planning against the pinned existing stores; that is harness
+telemetry, not a Gate-E Git role. Fetch, network, and repository mutation
+remain forbidden. Any prose calling the whole method zero-process is false.
+
+### Frozen inputs, epoch, and build preimages
+
+| Item | Exact frozen value |
+| --- | --- |
+| Readiness epoch | `/private/tmp/gate-e1-4-mechanics-4735739b-74354d4581835d12`; absent before this freeze |
+| Epoch children | `home`, `config`, `tmp`, `git-template`, `swiftpm-cache`, `swiftpm-config`, `swiftpm-security`, `clang-module-cache`, `swiftpm-module-cache`; all absent with the epoch |
+| Reserved production root | `/private/tmp/prime-driver-v2-gate-e-release-74354d4581835d12f0624d0455e8167a4d608a5eecb8427debbe894a88a16ad2`; absent and forbidden |
+| Package build root | existing default `Tests/PrimeValidationWorkflow/.build`; device/inode `16777231/17179422` |
+| Workspace state | `1,704` bytes; SHA-256 `8eeb391d590b20e5eec603ab9d078757f2106a29467a7ff079194278bba921bf` |
+| Release SessionFixture preimage | absent |
+| Release XCTest preimage | `56,562,128` bytes; device/inode `16777231/17361530`; SHA-256 `c3427b8c8c659a3be3e526f47adf2d5d6ed332b665ff9b967b0132e49187e712` |
+| Root manifest/lock SHA-256 | `fa68f463ca31a4ca25af6b14eb19b139df0c8ef8259a6348bb40e97c2dcdeb81` / `bd7a18ec5b8def3b453d7eb86ba43a2f277c2308c9da806845b69ca5f76cd375` |
+| Nested manifest/lock SHA-256 | `753f42251e768faaee3686da38e6f6bf7de048526199445f0e11c088af53dada` / `d70a43567cbd3be75083ab147020b86b055513020d95632f8286f60913c9374a` |
+| MLX checkout | clean `d37885a278f1c37484a94d0f401a418735e66519` / tree `5310749549cca107fc1bb07d82dacf043bc02b9e` |
+| Numerics checkout | clean `0c0290ff6b24942dadb83a929ffaaa1481df04a2` / tree `4560bfb65f2c26cbd159c3e1a9cbf01600bace1b` |
+| SessionFixture source SHA-256 | `c42e91519d8a792145a7478963e56ec92ddb7bdbf709a960b363241fd88305ab` |
+| LiveTests source SHA-256 | `4a1b89ca13afe168719acb91f5c45e58b377cd7f3bf5375bb429d8cdbf4f5d35` |
+| GovernorCore source SHA-256 | `0c8f41eea642ce63895e8810641ab674de1c2530da4a9a6d2142efc155b44811` |
+
+The Xcode Swift launcher is the exact symlink
+`.../usr/bin/swift -> swift-frontend`. The physical frontend is device/inode
+`16777231/1118375`, `171,036,592` bytes, SHA-256
+`2ed38571e92c0283091838c1649e27650ad9c99950288e883c7b2dc6c4ce89fb`.
+The developer directory is `/Applications/Xcode.app/Contents/Developer`; the
+SDK is the canonical directory
+`/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk`,
+device/inode `16777231/1009705`.
+
+No external or fresh scratch path is permitted. The explicit scratch path must
+equal the package's existing default `Tests/PrimeValidationWorkflow/.build`.
+The XCTest source deliberately resolves the held SessionFixture image beneath
+that exact `.build/arm64-apple-macosx/release` path. Command 1 must create the
+previously absent image and a fresh test bundle before command 2. The existing
+checkout and repository stores are retained inputs; automatic resolution is
+disabled, and any fetch marker, lock drift, checkout drift, or workspace-state
+drift is a hard stop.
+
+Before command 1, create the epoch and nine children exactly once with mode
+`0700`, rejoin their no-follow path/device/inode identities, and require the
+Git template empty. The pre-existing unrelated temporary root
+`/private/tmp/prime-validation-admission-tests-20260803-c` is retained. Record
+the exact inventories of `/private/tmp/prime-validation-admission-tests-*`
+and `/private/tmp/prime-validation-public-admission-*` before and after the
+test; the method's eight UUID fixture roots must all be removed before return.
+No production capsule, production journal, production clone, companion root,
+or production evidence root is an input or authorized output here.
+
+### Exact ordered command environment
+
+Both commands run from the clean source worktree with `umask 077`, stdin
+`/dev/null`, and this exact finite `env -i` map:
+
+```text
+HOME=/private/tmp/gate-e1-4-mechanics-4735739b-74354d4581835d12/home
+CFFIXED_USER_HOME=/private/tmp/gate-e1-4-mechanics-4735739b-74354d4581835d12/home
+XDG_CONFIG_HOME=/private/tmp/gate-e1-4-mechanics-4735739b-74354d4581835d12/config
+TMPDIR=/private/tmp/gate-e1-4-mechanics-4735739b-74354d4581835d12/tmp/
+USER=ergentics
+LOGNAME=ergentics
+LANG=C.UTF-8
+LC_ALL=C.UTF-8
+TZ=UTC
+TERM=dumb
+NO_COLOR=1
+PATH=/Applications/Xcode.app/Contents/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin:/usr/bin:/bin
+DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer
+SDKROOT=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk
+GIT_EXEC_PATH=/Applications/Xcode.app/Contents/Developer/usr/libexec/git-core
+GIT_CONFIG_NOSYSTEM=1
+GIT_CONFIG_GLOBAL=/dev/null
+GIT_ATTR_NOSYSTEM=1
+GIT_CONFIG_COUNT=6
+GIT_CONFIG_KEY_0=core.hooksPath
+GIT_CONFIG_VALUE_0=/private/tmp/gate-e1-4-mechanics-4735739b-74354d4581835d12/git-template
+GIT_CONFIG_KEY_1=init.templateDir
+GIT_CONFIG_VALUE_1=/private/tmp/gate-e1-4-mechanics-4735739b-74354d4581835d12/git-template
+GIT_CONFIG_KEY_2=core.attributesFile
+GIT_CONFIG_VALUE_2=/dev/null
+GIT_CONFIG_KEY_3=checkout.workers
+GIT_CONFIG_VALUE_3=1
+GIT_CONFIG_KEY_4=maintenance.auto
+GIT_CONFIG_VALUE_4=false
+GIT_CONFIG_KEY_5=gc.auto
+GIT_CONFIG_VALUE_5=0
+GIT_ALLOW_PROTOCOL=file
+GIT_PROTOCOL_FROM_USER=0
+GIT_OPTIONAL_LOCKS=0
+GIT_TERMINAL_PROMPT=0
+GIT_LFS_SKIP_SMUDGE=1
+GIT_NO_LAZY_FETCH=1
+GIT_NO_REPLACE_OBJECTS=1
+CLANG_MODULE_CACHE_PATH=/private/tmp/gate-e1-4-mechanics-4735739b-74354d4581835d12/clang-module-cache
+SWIFTPM_MODULECACHE_OVERRIDE=/private/tmp/gate-e1-4-mechanics-4735739b-74354d4581835d12/swiftpm-module-cache
+```
+
+Run command 1 exactly once:
+
+```sh
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift build \
+  --package-path /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.driver-v2-gate-c-staging/Tests/PrimeValidationWorkflow \
+  --configuration release --build-tests \
+  --scratch-path /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.driver-v2-gate-c-staging/Tests/PrimeValidationWorkflow/.build \
+  --cache-path /private/tmp/gate-e1-4-mechanics-4735739b-74354d4581835d12/swiftpm-cache \
+  --config-path /private/tmp/gate-e1-4-mechanics-4735739b-74354d4581835d12/swiftpm-config \
+  --security-path /private/tmp/gate-e1-4-mechanics-4735739b-74354d4581835d12/swiftpm-security \
+  --disable-netrc --disable-keychain --force-resolved-versions \
+  --disable-automatic-resolution --disable-sandbox </dev/null
+```
+
+Command 2 is forbidden unless command 1 exits `0`, the Release
+SessionFixture and XCTest bundle exist as newly built regular arm64 Mach-O
+images, and all frozen inputs remain joined and unchanged. SessionFixture must
+make the frozen `absent -> present` transition; the XCTest hash must differ
+from `c3427b8c8c659a3be3e526f47adf2d5d6ed332b665ff9b967b0132e49187e712`,
+and both images' mtimes/ctimes must fall inside command 1's measured interval.
+Then run command 2 exactly once:
+
+```sh
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift test \
+  --package-path /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.driver-v2-gate-c-staging/Tests/PrimeValidationWorkflow \
+  --configuration release --skip-build \
+  --scratch-path /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.driver-v2-gate-c-staging/Tests/PrimeValidationWorkflow/.build \
+  --cache-path /private/tmp/gate-e1-4-mechanics-4735739b-74354d4581835d12/swiftpm-cache \
+  --config-path /private/tmp/gate-e1-4-mechanics-4735739b-74354d4581835d12/swiftpm-config \
+  --security-path /private/tmp/gate-e1-4-mechanics-4735739b-74354d4581835d12/swiftpm-security \
+  --disable-netrc --disable-keychain --force-resolved-versions \
+  --disable-automatic-resolution --disable-sandbox --disable-swift-testing \
+  --filter '^PrimeValidationWorkflowDriverCoreTests\.PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests/testGateEJournalChainOneWinnerAndPoisonAreExact$' \
+  </dev/null
+```
+
+The build may compile and link all six package executable products; none may
+be launched by command 1. Command 2 may evaluate the plugin-free manifests but
+must contain no package-target compile or link marker. Starting either command
+consumes that command's attempt. A nonzero exit, timeout, or hard-stop fact
+forbids the later command or any same-epoch retry. Retain the epoch and build
+outputs after any result.
+
+### Acceptance and claim ceiling
+
+Command 2 acceptance requires shell exit `0`; exact observed method multiset
+equal to the one frozen identifier; `1` executed, `1` passed, zero failures,
+zero skips; zero Swift Testing runner; 34 immutable inner leaves with root
+nlink `36`; four immutable outer leaves with root nlink `6`; finite request
+EOF; stdout `0`; independently drained capped stderr `65,536` with overflow
+and EOF; permanent one-shot poison; same-byte/new-inode rejection; and both
+fixture modes proving mapped image, held cwd, exact supervisor reap, final
+session emptiness, and final captured-group absence.
+
+After command 1 and command 2, record the SessionFixture, ShotGovernor,
+DriverV2Supervisor, and XCTest images by no-follow path/device/inode join,
+byte count, SHA-256, Mach-O architecture, UUID/load commands, ownership, mode,
+link count, flags, ACL, and xattrs. Record all other rebuilt products as build
+telemetry. Require source/control worktrees and both dependency checkouts
+clean; exact manifest, lock, workspace-state, source, tool, and reserved-root
+facts unchanged; the epoch roots rejoined; Git template empty; and temporary
+prefix inventories restored exactly.
+
+Only the following result transition is available after a clean pass:
+
+```text
+R_mixed_test_host_mechanics = PASS
+outer_journal_authority_vector = 00000000
+production_attempt_count = 0
+gate_E_scientific_outcome = ABSTAIN
+gate_E_clearance_granted = 0
+```
+
+It establishes Release compilation plus test-host journal and conserved-
+session mechanics. It does not establish the production governor self-image,
+empty environment, capsule transport, production deadline, outer production
+terminal, sixteen fixed-role receipts, Git/Swift observations, or any roadmap
+authority bit. Its only possible successor is a separate production
+Release-shot readiness assessment and freeze; this R0 record authorizes no
+production invocation.
