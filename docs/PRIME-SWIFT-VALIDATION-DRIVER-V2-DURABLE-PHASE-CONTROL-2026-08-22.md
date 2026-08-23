@@ -7147,3 +7147,128 @@ environment, cwd, timeout, retry, or process surface changed.
 This checkpoint closes only the four R1 compiler constructs by static source
 inspection. It makes no compilation, XCTest, fixture, production-image, or
 Gate-E claim.
+
+## Gate E1.4-R3 readiness freeze — repaired Release mechanics
+
+| Coordinate | Frozen value |
+| --- | --- |
+| Status | `FROZEN_NOT_EXECUTED` |
+| Durable-control predecessor | R2 checkpoint `bd16ec70b5197d3866317ab26557a269618c4445` / tree `a4316729eb50f7e3e33d3e7332d8db63edcfbb9d` |
+| Source commit/tree/identity | clean `22ae3332aa75dad68e12660d43e8822f03a871a3` / `4ed3c124be29e5b0d194009bc0617ca2ae5ca24b` / `689807021fe36551afcda7d65e1bfc66e12092abcb9feb097e5d53a343e9ca3b` |
+| R3 epoch | `/private/tmp/gate-e1-4-mechanics-r3-22ae3332-689807021fe36551`; absent before freeze |
+| Authorized SwiftPM commands | exactly `1`: one Release `swift test`; no `--skip-build` |
+| Selected XCTest methods | exactly the existing one anchored identifier |
+| Overall wall ceiling | `5,400` seconds |
+| Production attempts | `0` |
+| Fetch / network / GitHub | `0 / 0 / 0` |
+| Authority vector before / pass / nonpass | `00000000 / 00000000 / 00000000` |
+
+R3 is a new readiness proof on a new source identity, not an R1 retry. Create
+the fresh epoch and exact nine private `0700` children `home`, `config`,
+`tmp`, `git-template`, `swiftpm-cache`, `swiftpm-config`,
+`swiftpm-security`, `clang-module-cache`, and `swiftpm-module-cache` once.
+Rejoin every no-follow path/device/inode and require the Git template empty.
+
+Define `rho3` as replacement of the sole R1 root string
+
+```text
+/private/tmp/gate-e1-4-mechanics-r1-4735739b-74354d4581835d12
+```
+
+with
+
+```text
+/private/tmp/gate-e1-4-mechanics-r3-22ae3332-689807021fe36551
+```
+
+throughout R1's exact finite `env -i` map and cache/config/security CLI paths.
+Every other key and value, `umask 077`, stdin `/dev/null`, package path,
+existing default `.build` scratch path, Xcode tool/SDK path, offline Git map,
+and SwiftPM flags remain byte-for-byte unchanged.
+
+The frozen build inputs and preimages are:
+
+| Input | Exact R3 preimage |
+| --- | --- |
+| Root manifest / lock | `fa68f463ca31a4ca25af6b14eb19b139df0c8ef8259a6348bb40e97c2dcdeb81` / `bd7a18ec5b8def3b453d7eb86ba43a2f277c2308c9da806845b69ca5f76cd375` |
+| Nested manifest / lock | `753f42251e768faaee3686da38e6f6bf7de048526199445f0e11c088af53dada` / `d70a43567cbd3be75083ab147020b86b055513020d95632f8286f60913c9374a` |
+| Workspace state | `1,704` bytes; SHA-256 `8eeb391d590b20e5eec603ab9d078757f2106a29467a7ff079194278bba921bf` |
+| MLX checkout | clean `d37885a278f1c37484a94d0f401a418735e66519` / tree `5310749549cca107fc1bb07d82dacf043bc02b9e` |
+| Numerics checkout | clean `0c0290ff6b24942dadb83a929ffaaa1481df04a2` / tree `4560bfb65f2c26cbd159c3e1a9cbf01600bace1b` |
+| SessionFixture | device/inode `16777231/17382060`; `53,072` bytes; SHA-256 `177a18c20bc42486c77b52af4c472be222dec1baabf8973ece7b2d44ea92756e` |
+| ShotGovernor | absent |
+| DriverV2Supervisor | device/inode `16777231/17383408`; `48,029,880` bytes; SHA-256 `679a05556327e3cb624da7dc2b27b90d43e5520adbbd3059272c3e3ca78b7e97` |
+| XCTest bundle executable | device/inode `16777231/17361530`; `56,562,128` bytes; SHA-256 `c3427b8c8c659a3be3e526f47adf2d5d6ed332b665ff9b967b0132e49187e712`; embeds stale identity `474008bdffccf4102566c98088abf2799ad3a4934edadb8c0357c23190c71a52` once, predecessor `74354d4581835d12f0624d0455e8167a4d608a5eecb8427debbe894a88a16ad2` zero times, R3 identity zero times, and the selected-method substring once |
+
+The exact reserved production root
+`/private/tmp/prime-driver-v2-gate-e-release-689807021fe36551afcda7d65e1bfc66e12092abcb9feb097e5d53a343e9ca3b`
+is absent and forbidden. The two historical production roots remain retained
+and are not R3 inputs. R0 and R1 epochs are retained and forbidden for reuse.
+
+Run exactly once:
+
+```sh
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift test \
+  --package-path /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.driver-v2-gate-c-staging/Tests/PrimeValidationWorkflow \
+  --configuration release \
+  --scratch-path /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.driver-v2-gate-c-staging/Tests/PrimeValidationWorkflow/.build \
+  --cache-path /private/tmp/gate-e1-4-mechanics-r3-22ae3332-689807021fe36551/swiftpm-cache \
+  --config-path /private/tmp/gate-e1-4-mechanics-r3-22ae3332-689807021fe36551/swiftpm-config \
+  --security-path /private/tmp/gate-e1-4-mechanics-r3-22ae3332-689807021fe36551/swiftpm-security \
+  --disable-netrc --disable-keychain --force-resolved-versions \
+  --disable-automatic-resolution --disable-sandbox --disable-swift-testing \
+  --filter '^PrimeValidationWorkflowDriverCoreTests\.PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests/testGateEJournalChainOneWinnerAndPoisonAreExact$' \
+  </dev/null
+```
+
+Normal `swift test` may compile or relink package products as build telemetry.
+SessionFixture and XCTest preimages are not launch authority; the method opens
+the final fixture image `O_NOFOLLOW_ANY`, holds and validates its descriptor,
+spawns suspended, and joins its mapped image before resume. Record all final
+image transitions after the complete command. ShotGovernor may make the
+authorized build transition absent-to-present but must not launch.
+
+A successful method has exactly one XCTest runner, two SessionFixture
+supervisors, and two passive SessionFixture children. It launches zero
+production Governor, production Supervisor, fixed Git/Swift role,
+SpawnCanary, FixtureChild, or SecureChildIntegration products. SwiftPM
+compiler/linker and read-only local package-planning helpers remain harness
+processes, not Gate-E roles; no claim of a complete host process census is
+available.
+
+Acceptance requires exit `0`; the exact frozen method multiset; `1` XCTest
+executed and passed with zero failures/skips; zero Swift Testing runner; all
+outer journal and conserved-session predicates frozen by R0; source/control,
+manifests, locks, workspace state, tools, checkouts, roots, and images joined;
+Git template empty; scoped temporary-prefix inventories restored; and the
+reserved production root still absent. The final XCTest executable must be a
+regular no-follow successor with a different device/inode and SHA-256 from
+the frozen
+`c3427b8c8c659a3be3e526f47adf2d5d6ed332b665ff9b967b0132e49187e712`
+preimage, with its held descriptor joined to the named vnode. Its strings
+must contain the R3 identity
+`689807021fe36551afcda7d65e1bfc66e12092abcb9feb097e5d53a343e9ca3b`
+exactly once and the selected-method substring exactly once, while containing
+the stale
+`474008bdffccf4102566c98088abf2799ad3a4934edadb8c0357c23190c71a52`
+and intermediate
+`74354d4581835d12f0624d0455e8167a4d608a5eecb8427debbe894a88a16ad2`
+identities zero times. Any compile failure, stale XCTest image, test failure,
+timeout, hard stop, or missing terminal consumes R3 and remains `ABSTAIN`.
+
+The maximum pass transition is:
+
+```text
+R3_release_test_compile = PASS
+R3_selected_xctest = PASS
+R3_mixed_test_host_mechanics = PASS
+outer_journal_authority_vector = 00000000
+production_attempt_count = 0
+gate_E_scientific_outcome = ABSTAIN
+gate_E_clearance_granted = 0
+```
+
+R3 authorizes no production root, capsule, journal, Governor invocation,
+fixed Git/Swift role, Gate F/G action, GitHub action, retry, or cleanup. A
+clean pass permits only a separately frozen production-shot readiness
+assessment.
