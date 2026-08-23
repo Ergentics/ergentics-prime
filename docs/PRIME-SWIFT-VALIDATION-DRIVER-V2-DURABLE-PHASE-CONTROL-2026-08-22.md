@@ -5173,3 +5173,138 @@ Any native preflight, holder, metadata, namespace, process, clone-admission,
 clean, repair, continue, or retry. Even `S3` authorizes only a separate result
 checkpoint. It authorizes no reserved production root, shot cache, method 8,
 Driver V2 production child, Gate F, or Gate G.
+
+## Gate E1.3 readiness R3 result — local typed execution
+
+| Coordinate | Exact result |
+| --- | --- |
+| Status | `READY_PENDING_SEPARATE_SHOT_FREEZE` |
+| Direct result predecessor | `62bca101e4e33e3aacd65400b2a508b3376f9557` / tree `5c1e68dc3960275155e02d401a8c5daec32f20d6` |
+| Result mutation | this control path only; source and holder bytes unchanged |
+| Accepted trace | `(0,0,0) -> (1,0,0) -> (1,1,0) -> (1,1,1)` |
+| Frozen invocation counts | holder `1`; clone `1`; Release build `1`; Release test `1` |
+| Production counts | method 8 `0`; supervisor launch `0`; fixed-role launch `0`; SpawnCanary / FixtureChild / SecureChildIntegration launch `0 / 0 / 0` |
+| External transport | network `0`; dependency fetch `0`; GitHub `0` |
+| Production identity | `474008bdffccf4102566c98088abf2799ad3a4934edadb8c0357c23190c71a52`; `UNCONSUMED_PROVEN` |
+
+The four counters above are the complete readiness execution. Compilation or
+linking of test dependencies is not a product launch. The selected XCTest
+multiset excludes the production method, and all three reserved paths remained
+absent before, between, and after the two Swift commands.
+
+### Holder and clone result
+
+| Coordinate | Exact result |
+| --- | --- |
+| Holder | exit `0`; stdout `333` bytes / SHA-256 `8905b7e27be925e0750637998b6baeb4a0ad17cd8d43b7c5a8395a69bd75e13d`; stderr `0` bytes / SHA-256 `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` |
+| Retained outer capture | `/private/tmp/gate-e13-r3-holder-capture.sIxqW6`; root `16777231/17353269`; stdout `17353270`; stderr `17353271`; `501/0`; root `0700`, files `0600` |
+| Epoch | `/private/tmp/gate-e1-3-readiness-r3-474008bdffccf410`; `16777231/17353272`; `501/0`; `0700`; nlink `8` |
+| Six children | `home=17353273`, `tmp=17353274`, `git-template=17353275`, `clang-module-cache=17353276`, `swiftpm-module-cache=17353277`, `prime=17353278` |
+| Successful holder primitive vector | descriptor metadata `30 / 58 / 29 / 0` (`fgetattrlist / flistxattr / acl_get_fd_np / acl_free`); `2 x fchdir`; direct children `7 x mkdir + 1 x env->Git` |
+| Clone root | `16777231/17353278`; `501/0`; `0700`; nlink `15`; flags `0`; ACL-free; exact provenance xattr |
+| Clone `.git` / object root | `16777231/17353279`, nlink `9` / `16777231/17353289`, nlink `260`; both `501/0`, `0700`, flags `0`, ACL-free, provenance-xattr-only |
+| Clone source authority | `545` files / `544` records / `111,620` canonical bytes / `474008bdffccf4102566c98088abf2799ad3a4934edadb8c0357c23190c71a52` |
+| Clone Git authority | clean `2d705a71dc1827cf4fe6f0f9f3bc8255063e1dd3` / tree `0077ac10f1dbba50680502a31084f7280c2c2f65`; branch `refs/heads/agent/prime-validation-driver-v2-gate-c`; SHA-1 / files |
+| Origin | one remote `origin`; exact local source URL; one selected-branch fetch refspec; `--no-tags` |
+
+The clone has no alternates, HTTP alternates, shallow/promisor state, replace
+refs, grafts, gitlinks, submodules, hooks, extra remote, configuration include,
+or worktree configuration. Strict full Git fsck passed. Its exact admitted
+Git-file coordinates are:
+
+| File | Device/inode / bytes | SHA-256 |
+| --- | --- | --- |
+| `.git/config` | `16777231/17358443` / `527` | `c979a560863c0b45b8f7b64eaa0f7f595ca3b06f2a04dbf4237221deb4a206cd` |
+| `.git/HEAD` | `16777231/17358431` / `56` | `a86308744aebc9d6f2ab7bf2521be7e6995040de2642875656f8aaac489ee58d` |
+| `.git/index` | `16777231/17358444` / `115,271` | `7624444769b265677facd7929e53bab0b5d2dcc64d25484071ccc37ab1b39b37` |
+| `.git/packed-refs` | `16777231/17358430` / `147` | `33f78c188613ab501a1e31e7ed0d6a76573f3bf1a0108649571160c012e67de5` |
+| selected loose local ref | `16777231/17358434` / `41` | `0559d479da9baefaf50900dd9c2b9047bb796756cc30b46cf8cca5a14305d65d` |
+
+### Readiness command results
+
+| Step | Exact vector | Exit / observation |
+| --- | --- | --- |
+| Command 1 | `2,181` bytes / `f20663c81ae917029ea7161f90805b622ac7d335b73de5aecb2dc930e3b3ac86` | exit `0`; product build `184.01` seconds |
+| Command 2 | `4,522` bytes / `97d76d72196c3ae33d92cd9404270bc15cb8ab34961cfd50aff37c196b3fe3b8` | exit `0`; test build `197.66` seconds; selected tests `20.181` seconds |
+| Observed `Sigma` | sorted canonical JSON `15` elements / `2,180` bytes / `0d52e3bc5b7ab2f88b88e880dbfef2bc33629acf933cc5edc0196da759e217a9` | `15` starts / `15` passes / `0` skips / `0` failures; one XCTest runner; zero Swift Testing runners |
+| Release public admission | exact selected method passed in `2.690` seconds | source asserts and observed pass closes `2,157` combined watchers while `supervisor_executable_image` remains missing |
+
+Command 1 explicitly compiled PrimeCore, DriverCore, and supervisor main and
+linked the supervisor. Command 2 explicitly compiled PrimeCore, DriverCore,
+supervisor main, DriverCoreTests, and the XCTest runner and relinked both final
+images. Therefore every later replacement below belongs to a named live
+command interval; an unchanged coordinate is explicitly marked retained.
+
+### Artifact transition `A0 -> A1 -> A2`
+
+Each cell is `SHA-256 / inode / bytes`.
+
+| Artifact | `A0` | `A1` after command 1 | `A2` after command 2 |
+| --- | --- | --- | --- |
+| Release supervisor | `fda8ab7c8f06a94c4f957f879312a6911d7e32015a344ea5b9ad63bbd04215ff / 17337418 / 47,675,784` | `7b52f4967d64f634fead4541496fe1e7a050757a7f586fb85e25c3b40e5bd0e1 / 17360425 / 45,600,920` | `57bae5845d7b2ad108309d623902bd7a68688c7882e1649ca23f8a93764dfafe / 17361435 / 47,679,960` |
+| Release XCTest | `b3cf7e6aee0a73b05b493ff279b435f7b81b73c24c24b1731986d0adc0f534d5 / 17337446 / 56,490,080` | retained `A0` | `c3427b8c8c659a3be3e526f47adf2d5d6ed332b665ff9b967b0132e49187e712 / 17361530 / 56,562,128` |
+| provenance object | `886c9db18bf95f4c3a3d09531c725c5cfaff9b16ef72d0f0761ea1a016a3866c / 17334921 / 12,816` | `7c12dc4287c934b6180c9cd62da6be130c9ee39603efc1cb95fe062def768f6e / 17360243 / 12,760` | retained `A1` |
+| admission object | `7db95394ff9dcf33686b7a43b902490e50a8f9e28946623b0a00e8f2c0b89c0a / 17337350 / 730,080` | `53a6c302bc6edf9a3c206fc5426ba64f148019697a99a99eafcd1639e5d79e0a / 17360381 / 697,632` | `ff6148c9cab8a3b24cf54bdb4c64450d9eb991276e8c033cabe049f0b9389659 / 17361015 / 754,480` |
+| supervisor-main object | `0de811c5c8cb03a73a8c6edc4811e6e91563acd1b9aeb3b2f46c31b956da2a73 / 17337413 / 67,240` | `0ab783b73aff6b9ba809a2c818a42d3e629b5f05d2343c2778f014ba7ccfe258 / 17360420 / 68,120` | `a6aaafd2b64a9832a0c55c8ff3d04c6e342999de01fd8e8436076376c0b4e10e / 17361430 / 69,120` |
+| live-test object | `6b8ea82c637e9f8eabe735f66507226d3bde184eb7b2647ed389cd8d15a259b7 / 17337428 / 2,496,096` | retained `A0` | `0fa3803576279a873568c33c7df793f3d3e3b81e655e62448223b985d34f2913 / 17361446 / 2,690,784` |
+
+All `A2` paths were reopened with `O_NOFOLLOW_ANY`, held, joined to the named
+device/inode before and after two stable reads, and matched the hashes above.
+The two images are owner-executable mode `0700`; the four objects are mode
+`0600`. All are `501/20`, regular, one-link, flags `0`, ACL-free, and
+provenance-xattr-only. These modes are the exact consequence of the frozen
+`umask 077`, not equality to stale preimage modes.
+
+The final supervisor is arm64 `MH_EXECUTE`, UUID
+`02CCEC13-5745-3245-AF0F-E2A49D4A68C4`; the final XCTest image is arm64
+`MH_BUNDLE`, UUID `F62F4215-B00C-30C0-B7B2-43BF6924B73D`. Each contains the
+current identity exactly once and both consumed identities zero times. The
+XCTest image contains the exact live-test source-worktree `#filePath` once and
+all fifteen selected method names.
+
+### Conserved base result
+
+`B_before = B_between = B_after` passed coordinate-by-coordinate:
+
+| Conserved coordinate | Exact terminal result |
+| --- | --- |
+| Repositories | control `62bca101.../5c1e68dc...`; source `2d705a71.../0077ac10...`; companion `163fc100.../9009daa4...`; all porcelain-v2 streams empty |
+| Manifest/lock/workspace inputs | all five original vnode and SHA-256 tuples exact |
+| Dependency inputs | `2,089 / 7f9d0bc...a433`; `129 / 54bb366...fda3`; `88 / cd21b849...b63d`; `38 / 0db4dd0...1108` |
+| Git helper closure | `197 / 2492a25a6d248e78c3d7716c96a55e1248628fda2c405368f9bfcfbf164ee31d` |
+| Prior retained roots | all `15 / 15` exact |
+| R3 held roots | parent and all six child device/inodes unchanged; clone Git coordinates and source identity unchanged; Git template empty |
+| Selected-test prefix inventory | before = after = sole preexisting `/private/tmp/prime-validation-admission-tests-20260803-c`, vnode `16777231/11306865` |
+| Tool/header commitments | all admitted image, helper-root, holder, and five typed-header hashes exact |
+| Reserved paths | production root absent; shot Clang cache absent; shot SwiftPM cache absent |
+
+Home, temporary, module-cache, and `.build` output mutations remain explicitly
+outside conserved `B`; their root device/inodes remained joined. The source
+worktree Git link, gitdir/backlink, HEAD, commondir, index, common config,
+selected ref, object-root vnode, and packed-refs bytes remained exact through
+both commands.
+
+### Rank-5 observer residuals
+
+Two read-only workstation helpers made extra assumptions that are not members
+of the frozen admission relation:
+
+| Helper-only assumption | Observed data | Authority classification |
+| --- | --- | --- |
+| Prime admitted-directory count guessed as `145` | frozen source tuple was already exact; non-authority directory observation was `143` | `NOT_IN_PREDICATE` |
+| remote-tracking ref guessed to be a loose file | exact ref resolved at the selected commit in `.git/packed-refs`; local selected ref remained loose and exact | `NOT_IN_PREDICATE` |
+
+Both helpers were read-only and changed no namespace, vnode, counter, command,
+or frozen byte vector. A rank-5 observer cannot add an authority coordinate or
+negate the exact source/Git data. They were not retries of the holder, clone,
+build, or test; each of those frozen invocations remained exactly one.
+
+### Disposition
+
+Retain R3, the capture root, caches, home, temporary outputs, clone, and build
+artifacts unchanged. This result checkpoint authorizes no production root,
+shot cache, `--skip-build` command, method 8, supervisor child, Gate F, or Gate
+G. The next possible action is a separately reviewed clean freeze that names
+the exact final A2 images and one production-shot command. Until that new
+authority exists, readiness is complete and production execution remains
+closed.
