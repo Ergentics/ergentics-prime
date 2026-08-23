@@ -2915,9 +2915,9 @@ not identify one exact rejecting operation. No supervisor-image bind, Gate E
 facade transfer, Git process, Swift process, semantic binding, or final
 revalidation occurred. No retry, cleanup, source repair, Gate F work, GitHub
 operation, network request, dependency fetch, or remote publication follows
-from this record. A successor requires a new source identity and a separately
-frozen, non-executing discrimination plan; prose may not promote this
-incomplete observation to a Gate E conclusion.
+from this record. A production successor requires a new source identity; any
+non-executing diagnostic requires a separate freeze. Prose may not promote
+this incomplete observation to a Gate E conclusion.
 
 A post-shot read-only metadata audit observed canonical paths equal to every
 declared Prime, companion, workspace, evidence, and lease path. All five
@@ -2927,3 +2927,42 @@ companion were UID `501`, mode `0755`, and the three private roots were UID
 `com.apple.provenance` extended attribute. Those later observations make an
 ordinary visible root-metadata rejection less likely, but cannot reconstruct
 the exact in-process failure or exclude a transient pre-leaf lease error.
+
+## Gate E1.1 freeze — standalone admission discrimination only
+
+| Field | Frozen value |
+| --- | --- |
+| Status | `FROZEN_NOT_EXECUTED` |
+| Durable-control predecessor | `04242ec9c957b8c2afef445bfc8fdbf01a2deac5` / tree `69dfc47e709e6fc338d143f5be2b2d85d58f605b` |
+| Source commit/tree | `aba540a3009c4218b75fc065188dddce330f4b50` / `ee13a67abb0853e15e2da7745bc6def11cae5f6f` |
+| Source identity | consumed `afb3c46461736ddf7b275d797d054000d260eeebc0c6c50a7a94451ef1c97a19`; no relaunch |
+| Diagnostic Prime clone | `/private/tmp/gate-e-preflight-prime.IBJAfD/prime` |
+| Companion clone | `/private/tmp/gate-e-companion-measure.pMGSXT/companion` at `163fc100710ece48119bc25954452d10f6a84f7f` / tree `9009daa4f8a07fbd5897e00b9571cef44ec292db` |
+| Selected method | `testPublicReleaseAdmissionUsesEmbeddedSourceAuthority` |
+| Authorized selected-test invocations | `1` |
+| Production supervisor invocations | `0` |
+| Fixed-probe child processes | `0` |
+| Source edits/commits | `0` |
+
+The disposable diagnostic clone may be updated by a local-only Git fetch and
+detached checkout to the exact source commit above. Its existing ignored
+SwiftPM checkouts and repositories may be reused. The clone and companion
+must be clean immediately before the selected test. With separate module
+caches under `/private/tmp`, run exactly:
+
+`swift test -c release --filter testPublicReleaseAdmissionUsesEmbeddedSourceAuthority --disable-automatic-resolution --disable-sandbox`
+
+Set only `PRIME_PMHNP_COMPANION_ROOT` for test input. No network access,
+dependency fetch, method 8, dedicated supervisor launch, fixed Git/Swift
+probe, consumed-root mutation, broad suite, Gate F role, or cleanup of the
+preserved incomplete root is authorized.
+
+The existing Release test may admit and consume the public prerequisite,
+prepare and revalidate 2,157 watchers, and prove its fresh lease mechanics on
+a standalone clone. Its current-process image capture uses the explicit
+XCTest-only seam, and its developer directory is supplied directly from the
+frozen fixture. A pass therefore cannot close `supervisor_executable_image`,
+cannot exercise the supervisor's private developer-directory derivation, and
+cannot reproduce the exact consumed workspace/evidence/lease inodes. It only
+discriminates whether the same source tree and a standalone clone can pass
+the shared public admission/consume/guard path without a production child.
