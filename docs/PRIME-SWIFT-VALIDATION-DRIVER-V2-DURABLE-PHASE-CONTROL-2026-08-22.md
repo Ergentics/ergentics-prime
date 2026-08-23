@@ -7876,3 +7876,34 @@ executable launch, cleanup, or R5-root mutation. It may be followed only by a
 separate static source checkpoint and then a separately frozen fresh-epoch
 Release diagnostic. No execution is authorized by this freeze or by its
 implementation commit.
+
+## Gate E1.4-R6-C1 correction — inherited fixture group binding
+
+| Coordinate | Corrected value |
+| --- | --- |
+| Status | `FROZEN_CONTROL_CORRECTION_NO_SOURCE_EXECUTION` |
+| Durable-control predecessor | R5 result / R6 freeze `07742fedda3c9f24acc212e1fe89c792b7ac332b` / tree `93546cf6329507e23d92cd80465664e10c54c98e` |
+| Measured process identity | effective UID/GID `501 / 20` |
+| Retained R5 fixture identity | base and published files UID/GID `501 / 0` |
+| Correct owner rule | base and leaf UID equals effective UID; leaf GID equals the held base's admitted GID; that exact GID is conserved |
+| Source allowlist / commands / launches | unchanged three paths / `0` / `0` |
+
+R6's phrase “current uid and gid” meant the current admitted vnode fields, not
+an assertion that a newly created file's group equals `getegid()`. The retained
+R5 APFS data makes that distinction material: the XCTest process has effective
+GID `20`, while its private `/private/tmp` Fixture bases and files inherit GID
+`0`. Requiring `st_gid == getegid()` would reject the measured fixture policy
+before the diagnostic child interval and would replace data with an incorrect
+process-identity assumption.
+
+The corrected admission is exact, not permissive. LiveTests requires the held
+base to be a UID-owned mode-`0700` directory, captures its GID, creates the leaf
+relative to that descriptor, and requires the leaf GID to equal the captured
+base GID. GovernorCore captures that admitted leaf GID and requires the held
+and named preimages to agree. Both owners then conserve the exact captured GID
+across every normal-return or frozen-postimage revalidation. An arbitrary GID,
+a base/leaf GID mismatch, or later GID drift is rejection.
+
+This correction changes no leaf name, record field, process, deadline, census,
+containment, durability, topology, source allowlist, or authority vector. It
+authorizes no Swift command and must precede the R6 source checkpoint.
