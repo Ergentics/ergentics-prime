@@ -25,16 +25,35 @@ package enum PrimeValidationDriverV2ShotGovernorStatus {
     package static let terminalPublication: Int32 = 72
 }
 
+private struct PrimeValidationDriverV2PreliminarySupervisorStopObservation:
+    Equatable,
+    Sendable
+{
+    let returnValue: Int32
+    let errorNumber: Int32
+    let deathEventCheckPerformed: Bool
+    let deathEventObserved: Bool
+}
+
 private struct PrimeValidationDriverV2ShotGovernorFailure: Error {
     let status: Int32
     let coordinate: String
+    let preliminarySupervisorStopObservation:
+        PrimeValidationDriverV2PreliminarySupervisorStopObservation?
 }
 
 private func governorRejected(
     _ status: Int32,
-    _ coordinate: String
+    _ coordinate: String,
+    preliminarySupervisorStopObservation:
+        PrimeValidationDriverV2PreliminarySupervisorStopObservation? = nil
 ) -> PrimeValidationDriverV2ShotGovernorFailure {
-    .init(status: status, coordinate: coordinate)
+    .init(
+        status: status,
+        coordinate: coordinate,
+        preliminarySupervisorStopObservation:
+            preliminarySupervisorStopObservation
+    )
 }
 
 /// Canonical data only. Decoding this value cannot recover a descriptor,
@@ -2898,12 +2917,30 @@ private enum PrimeValidationDriverV2GovernorSessionCensus {
         var captured = [String: PrimeValidationDriverV2GovernorSessionMember]()
         var groups = Set<Int32>([supervisorPID])
 
+        let stopTarget = -supervisorPID
         errno = 0
-        if Darwin.kill(-supervisorPID, SIGSTOP) != 0 {
-            guard errno == ESRCH, deathWatcher.hasObservedExit() else {
+        let stopReturn = Darwin.kill(stopTarget, SIGSTOP)
+        let stopErrno = errno
+        let deathEventCheckPerformed: Bool
+        let deathEventObserved: Bool
+        if stopReturn == -1, stopErrno == ESRCH {
+            deathEventCheckPerformed = true
+            deathEventObserved = deathWatcher.hasObservedExit()
+        } else {
+            deathEventCheckPerformed = false
+            deathEventObserved = false
+        }
+        if stopReturn != 0 {
+            guard stopErrno == ESRCH, deathEventObserved else {
                 throw governorRejected(
                     PrimeValidationDriverV2ShotGovernorStatus.containmentUncertain,
-                    "supervisor_stop"
+                    "supervisor_stop",
+                    preliminarySupervisorStopObservation: .init(
+                        returnValue: stopReturn,
+                        errorNumber: stopErrno,
+                        deathEventCheckPerformed: deathEventCheckPerformed,
+                        deathEventObserved: deathEventObserved
+                    )
                 )
             }
         }
@@ -5192,31 +5229,48 @@ private enum PrimeValidationDriverV2SessionFixtureContainmentState:
     case conservationComplete = "conservation_complete"
 }
 
-private struct PrimeValidationDriverV2SessionFixtureFailStopV1:
+private struct PrimeValidationDriverV2SessionFixtureInitiatingFailure:
+    Equatable,
+    Sendable
+{
+    let status: Int32
+    let coordinate: String
+}
+
+private struct PrimeValidationDriverV2SessionFixtureFailStopV2:
     Codable,
     Equatable
 {
     static let requiredLeaf =
         "gate-e-session-fixture-fail-stop.json"
     static let schemaValue =
-        "prime_driver_v2_session_fixture_fail_stop_v1"
+        "prime_driver_v2_session_fixture_fail_stop_v2"
     static let maximumByteCount = 1_024
-    static let maximumCoordinateByteCount = 256
+    static let maximumCoordinateByteCount = 128
 
-    let schema: String
-    let sourceIdentitySHA256: String
-    let fixtureMode:
-        PrimeValidationDriverV2SessionFixtureDiagnosticMode
-    let executionPhase:
-        PrimeValidationDriverV2SessionFixtureExecutionPhase
-    let containmentState:
-        PrimeValidationDriverV2SessionFixtureContainmentState
-    let deadlineExpired: Bool
-    let failureStatus: Int32
-    let failureCoordinate: String
     let admittedDeviceID: UInt64
     let admittedInode: UInt64
+    let containmentState:
+        PrimeValidationDriverV2SessionFixtureContainmentState
+    let containmentStopAttemptSequence: UInt64
+    let containmentStopDeathEventCheckPerformed: Bool
+    let containmentStopDeathEventObserved: Bool
+    let containmentStopErrno: Int32
+    let containmentStopReturn: Int32
+    let deadlineExpired: Bool
+    let deathEventObservedAtContainmentFailure: Bool
+    let deathWaitReturned: Bool
+    let executionPhase:
+        PrimeValidationDriverV2SessionFixtureExecutionPhase
+    let failureCoordinate: String
+    let failureStatus: Int32
     let fixedFailStopStatus: Int32
+    let fixtureMode:
+        PrimeValidationDriverV2SessionFixtureDiagnosticMode
+    let initiatingFailureCoordinate: String
+    let initiatingFailureStatus: Int32
+    let schema: String
+    let sourceIdentitySHA256: String
 
     init(
         fixtureMode:
@@ -5226,41 +5280,137 @@ private struct PrimeValidationDriverV2SessionFixtureFailStopV1:
         containmentState:
             PrimeValidationDriverV2SessionFixtureContainmentState,
         deadlineExpired: Bool,
-        failure: PrimeValidationDriverV2ShotGovernorFailure,
+        deathWaitReturned: Bool,
+        initiatingFailure:
+            PrimeValidationDriverV2SessionFixtureInitiatingFailure,
+        containmentFailure: PrimeValidationDriverV2ShotGovernorFailure,
+        containmentStopAttemptSequence: UInt64,
+        deathEventObservedAtContainmentFailure: Bool,
         admittedDeviceID: UInt64,
         admittedInode: UInt64
     ) throws {
-        guard failure.status
+        guard let stop = containmentFailure
+                .preliminarySupervisorStopObservation,
+              admittedDeviceID > 0,
+              admittedInode > 0,
+              fixtureMode == .orphanTransition,
+              executionPhase == .orphanInitialCensus,
+              containmentState == .armed,
+              deathWaitReturned,
+              containmentStopAttemptSequence == 1,
+              containmentFailure.status
                 == PrimeValidationDriverV2ShotGovernorStatus
                     .containmentUncertain,
-              !failure.coordinate.isEmpty,
-              failure.coordinate.utf8.count
-                <= Self.maximumCoordinateByteCount,
-              failure.coordinate.utf8.allSatisfy({ byte in
-                  (byte >= 97 && byte <= 122)
-                    || (byte >= 48 && byte <= 57)
-                    || byte == 95
-              })
+              containmentFailure.coordinate == "supervisor_stop",
+              initiatingFailure.status
+                == PrimeValidationDriverV2ShotGovernorStatus
+                    .containmentUncertain,
+              Self.coordinateIsBounded(containmentFailure.coordinate),
+              Self.coordinateIsBounded(initiatingFailure.coordinate),
+              Self.initiatingCoordinateIsClosedCensus(
+                  initiatingFailure.coordinate
+              ),
+              stop.returnValue == 0 || stop.returnValue == -1,
+              (stop.returnValue == 0) == (stop.errorNumber == 0),
+              (stop.returnValue == -1)
+                == (stop.errorNumber >= 1),
+              stop.deathEventCheckPerformed
+                == (
+                    stop.returnValue == -1
+                        && stop.errorNumber == ESRCH
+                ),
+              stop.deathEventCheckPerformed
+                || !stop.deathEventObserved,
+              deathEventObservedAtContainmentFailure,
+              !deathWaitReturned
+                || deathEventObservedAtContainmentFailure,
+              !stop.deathEventObserved
+                || deathEventObservedAtContainmentFailure,
+              !(deathWaitReturned && stop.deathEventCheckPerformed)
+                || stop.deathEventObserved,
+              (containmentFailure.coordinate == "supervisor_stop")
+                == (
+                    stop.returnValue == -1
+                        && !(
+                            stop.errorNumber == ESRCH
+                                && stop.deathEventCheckPerformed
+                                && stop.deathEventObserved
+                        )
+                )
         else {
             throw governorRejected(
                 PrimeValidationDriverV2ShotGovernorStatus.durableBoundary,
-                "session_fixture_fail_stop_coordinate"
+                "session_fixture_fail_stop_v2"
             )
         }
-        schema = Self.schemaValue
-        sourceIdentitySHA256 =
-            PrimeEmbeddedBuildProvenance.sourceIdentitySHA256
-        self.fixtureMode = fixtureMode
-        self.executionPhase = executionPhase
-        self.containmentState = containmentState
-        self.deadlineExpired = deadlineExpired
-        failureStatus = failure.status
-        failureCoordinate = failure.coordinate
         self.admittedDeviceID = admittedDeviceID
         self.admittedInode = admittedInode
+        self.containmentState = containmentState
+        self.containmentStopAttemptSequence =
+            containmentStopAttemptSequence
+        containmentStopDeathEventCheckPerformed =
+            stop.deathEventCheckPerformed
+        containmentStopDeathEventObserved = stop.deathEventObserved
+        containmentStopErrno = stop.errorNumber
+        containmentStopReturn = stop.returnValue
+        self.deadlineExpired = deadlineExpired
+        self.deathEventObservedAtContainmentFailure =
+            deathEventObservedAtContainmentFailure
+        self.deathWaitReturned = deathWaitReturned
+        self.executionPhase = executionPhase
+        failureCoordinate = containmentFailure.coordinate
+        failureStatus = containmentFailure.status
         fixedFailStopStatus =
             PrimeValidationDriverV2ShotGovernorStatus
                 .containmentUncertain
+        self.fixtureMode = fixtureMode
+        initiatingFailureCoordinate = initiatingFailure.coordinate
+        initiatingFailureStatus = initiatingFailure.status
+        schema = Self.schemaValue
+        sourceIdentitySHA256 =
+            PrimeEmbeddedBuildProvenance.sourceIdentitySHA256
+    }
+
+    static func initiatingCoordinateIsClosedCensus(
+        _ coordinate: String
+    ) -> Bool {
+        switch coordinate {
+        case "session_census_capacity",
+             "session_census_duplicate_pid",
+             "session_census_duplicate_generation",
+             "session_census_nonconvergent_query":
+            return true
+        default:
+            break
+        }
+        let families: [(prefix: String, excludesESRCH: Bool)] = [
+            ("session_census_getsid_", true),
+            ("session_census_bsdinfo_", false),
+            ("session_census_getpgid_", true),
+        ]
+        for family in families where coordinate.hasPrefix(family.prefix) {
+            let suffix = coordinate.dropFirst(family.prefix.count)
+            let suffixBytes = suffix.utf8
+            guard !suffixBytes.isEmpty,
+                  suffixBytes.allSatisfy({ $0 >= 48 && $0 <= 57 }),
+                  suffixBytes.count == 1 || suffixBytes.first != 48,
+                  let value = Int32(String(suffix)),
+                  value >= 0,
+                  !family.excludesESRCH || value != ESRCH
+            else { return false }
+            return true
+        }
+        return false
+    }
+
+    private static func coordinateIsBounded(_ coordinate: String) -> Bool {
+        !coordinate.isEmpty
+            && coordinate.utf8.count <= maximumCoordinateByteCount
+            && coordinate.utf8.allSatisfy { byte in
+                (byte >= 97 && byte <= 122)
+                    || (byte >= 48 && byte <= 57)
+                    || byte == 95
+            }
     }
 }
 
@@ -5300,7 +5450,7 @@ private final class PrimeValidationDriverV2SessionFixtureFailStopLeaf {
                     coordinate: "session_fixture_fail_stop_path"
                 )
             guard URL(fileURLWithPath: absolutePath).lastPathComponent
-                    == PrimeValidationDriverV2SessionFixtureFailStopV1
+                    == PrimeValidationDriverV2SessionFixtureFailStopV2
                         .requiredLeaf,
                   Self.descriptorPolicyIsExact(descriptor)
             else {
@@ -5398,35 +5548,43 @@ private final class PrimeValidationDriverV2SessionFixtureFailStopLeaf {
     }
 
     func publishBestEffort(
-        caughtError: Error,
+        containmentFailure: PrimeValidationDriverV2ShotGovernorFailure,
+        initiatingFailure:
+            PrimeValidationDriverV2SessionFixtureInitiatingFailure?,
         fixtureMode:
             PrimeValidationDriverV2SessionFixtureDiagnosticMode,
         executionPhase:
             PrimeValidationDriverV2SessionFixtureExecutionPhase,
         containmentState:
             PrimeValidationDriverV2SessionFixtureContainmentState,
-        deadlineExpired: Bool
+        deadlineExpired: Bool,
+        deathWaitReturned: Bool,
+        deathEventObservedAtContainmentFailure: Bool
     ) {
         do {
-            guard let failure = caughtError
-                    as? PrimeValidationDriverV2ShotGovernorFailure,
-                  failure.status
+            guard let initiatingFailure,
+                  containmentFailure.status
                     == PrimeValidationDriverV2ShotGovernorStatus
                         .containmentUncertain
             else { return }
-            let record = try PrimeValidationDriverV2SessionFixtureFailStopV1(
+            let record = try PrimeValidationDriverV2SessionFixtureFailStopV2(
                 fixtureMode: fixtureMode,
                 executionPhase: executionPhase,
                 containmentState: containmentState,
                 deadlineExpired: deadlineExpired,
-                failure: failure,
+                deathWaitReturned: deathWaitReturned,
+                initiatingFailure: initiatingFailure,
+                containmentFailure: containmentFailure,
+                containmentStopAttemptSequence: 1,
+                deathEventObservedAtContainmentFailure:
+                    deathEventObservedAtContainmentFailure,
                 admittedDeviceID: admittedMetadata.deviceID,
                 admittedInode: admittedMetadata.inode
             )
             let canonical = try PrimeCanonicalJSON.encode(record)
             guard !canonical.isEmpty,
                   canonical.count
-                    <= PrimeValidationDriverV2SessionFixtureFailStopV1
+                    <= PrimeValidationDriverV2SessionFixtureFailStopV2
                         .maximumByteCount,
                   canonical.last != 0x0a
             else {
@@ -5471,7 +5629,7 @@ private final class PrimeValidationDriverV2SessionFixtureFailStopLeaf {
     }
 
     private func revalidatePostimage(
-        record: PrimeValidationDriverV2SessionFixtureFailStopV1,
+        record: PrimeValidationDriverV2SessionFixtureFailStopV2,
         canonical: Data
     ) throws {
         var held = stat()
@@ -5507,7 +5665,7 @@ private final class PrimeValidationDriverV2SessionFixtureFailStopLeaf {
                   coordinate: "session_fixture_fail_stop"
               ) == canonical,
               try PrimeCanonicalJSON.decode(
-                  PrimeValidationDriverV2SessionFixtureFailStopV1.self,
+                  PrimeValidationDriverV2SessionFixtureFailStopV2.self,
                   from: canonical
               ) == record,
               record.admittedDeviceID == admittedMetadata.deviceID,
@@ -5563,8 +5721,155 @@ package struct PrimeValidationDriverV2SessionFixtureWaitObservation:
 }
 
 package extension PrimeValidationDriverV2ShotGovernor {
-    /// Package-internal mechanics only. All capabilities enter as already
-    /// held descriptors; this seam has no path loader and cannot be reached by
+    static func sessionFixtureCausalFailStopV2CanonicalFixtureForTesting()
+        throws -> Data
+    {
+        func makeRecord(
+            initiatingCoordinate: String =
+                "session_census_nonconvergent_query",
+            stopAttemptSequence: UInt64 = 1,
+            stopReturn: Int32 = -1,
+            stopErrno: Int32 = 1,
+            stopDeathEventCheckPerformed: Bool = false,
+            stopDeathEventObserved: Bool = false,
+            deathWaitReturned: Bool = true,
+            deathEventObservedAtContainmentFailure: Bool = true
+        ) throws -> PrimeValidationDriverV2SessionFixtureFailStopV2 {
+            let containmentFailure = governorRejected(
+                PrimeValidationDriverV2ShotGovernorStatus
+                    .containmentUncertain,
+                "supervisor_stop",
+                preliminarySupervisorStopObservation: .init(
+                    returnValue: stopReturn,
+                    errorNumber: stopErrno,
+                    deathEventCheckPerformed:
+                        stopDeathEventCheckPerformed,
+                    deathEventObserved: stopDeathEventObserved
+                )
+            )
+            return try .init(
+                fixtureMode: .orphanTransition,
+                executionPhase: .orphanInitialCensus,
+                containmentState: .armed,
+                deadlineExpired: false,
+                deathWaitReturned: deathWaitReturned,
+                initiatingFailure: .init(
+                    status: PrimeValidationDriverV2ShotGovernorStatus
+                        .containmentUncertain,
+                    coordinate: initiatingCoordinate
+                ),
+                containmentFailure: containmentFailure,
+                containmentStopAttemptSequence: stopAttemptSequence,
+                deathEventObservedAtContainmentFailure:
+                    deathEventObservedAtContainmentFailure,
+                admittedDeviceID: 1,
+                admittedInode: 2
+            )
+        }
+
+        func requireRejected(
+            _ operation: () throws
+                -> PrimeValidationDriverV2SessionFixtureFailStopV2
+        ) throws {
+            do {
+                _ = try operation()
+            } catch {
+                return
+            }
+            throw governorRejected(
+                PrimeValidationDriverV2ShotGovernorStatus.durableBoundary,
+                "session_fixture_fail_stop_v2_self_check"
+            )
+        }
+
+        try requireRejected { try makeRecord(stopAttemptSequence: 0) }
+        try requireRejected { try makeRecord(stopAttemptSequence: 2) }
+        try requireRejected {
+            try makeRecord(stopReturn: 0, stopErrno: 1)
+        }
+        try requireRejected {
+            try makeRecord(stopReturn: -1, stopErrno: 0)
+        }
+        try requireRejected {
+            try makeRecord(stopDeathEventObserved: true)
+        }
+        try requireRejected {
+            try makeRecord(
+                stopDeathEventCheckPerformed: true,
+                stopDeathEventObserved: true
+            )
+        }
+        try requireRejected {
+            try makeRecord(
+                stopErrno: ESRCH,
+                stopDeathEventCheckPerformed: false
+            )
+        }
+        try requireRejected {
+            try makeRecord(
+                stopErrno: ESRCH,
+                stopDeathEventCheckPerformed: true,
+                stopDeathEventObserved: true
+            )
+        }
+        try requireRejected {
+            try makeRecord(
+                deathEventObservedAtContainmentFailure: false
+            )
+        }
+        try requireRejected {
+            try makeRecord(
+                stopErrno: ESRCH,
+                stopDeathEventCheckPerformed: true,
+                stopDeathEventObserved: false
+            )
+        }
+        try requireRejected {
+            try makeRecord(
+                stopErrno: ESRCH,
+                stopDeathEventCheckPerformed: true,
+                stopDeathEventObserved: true,
+                deathWaitReturned: false,
+                deathEventObservedAtContainmentFailure: false
+            )
+        }
+        for coordinate in [
+            "session_census_unknown",
+            "session_census_getsid_",
+            "session_census_bsdinfo_-1",
+            "session_census_getpgid_03",
+            "session_census_getsid_x",
+            "session_census_bsdinfo_2147483648",
+            "session_census_getsid_3",
+            "session_census_getpgid_3",
+        ] {
+            try requireRejected {
+                try makeRecord(initiatingCoordinate: coordinate)
+            }
+        }
+
+        let record = try makeRecord()
+        let canonical = try PrimeCanonicalJSON.encode(record)
+        guard !canonical.isEmpty,
+              canonical.count
+                <= PrimeValidationDriverV2SessionFixtureFailStopV2
+                    .maximumByteCount,
+              canonical.last != 0x0a,
+              try PrimeCanonicalJSON.decode(
+                  PrimeValidationDriverV2SessionFixtureFailStopV2.self,
+                  from: canonical
+              ) == record
+        else {
+            throw governorRejected(
+                PrimeValidationDriverV2ShotGovernorStatus.durableBoundary,
+                "session_fixture_fail_stop_v2_fixture"
+            )
+        }
+        return canonical
+    }
+
+    /// Package-internal mechanics only. Every input is already held; this seam
+    /// has no path loader and cannot be reached by
     /// the production capsule entry.
     static func exerciseSessionFixtureForTesting(
         heldSessionFixtureDescriptor: Int32,
@@ -5735,6 +6040,9 @@ package extension PrimeValidationDriverV2ShotGovernor {
         let deathWatcher = PrimeValidationDriverV2GovernorDeathWatcher(pid: pid)
         var containmentState:
             PrimeValidationDriverV2SessionFixtureContainmentState = .armed
+        var initiatingFailure:
+            PrimeValidationDriverV2SessionFixtureInitiatingFailure? = nil
+        var deathWaitReturned = false
         defer {
             do {
                 switch containmentState {
@@ -5775,19 +6083,28 @@ package extension PrimeValidationDriverV2ShotGovernor {
                 let deadlineExpired =
                     DispatchTime.now().uptimeNanoseconds
                         >= deadline.expiresAt
-                failStopDiagnostic.publishBestEffort(
-                    caughtError: error,
-                    fixtureMode: diagnosticMode,
-                    executionPhase: executionPhase,
-                    containmentState: containmentState,
-                    deadlineExpired: deadlineExpired
-                )
+                if let containmentFailure = error
+                    as? PrimeValidationDriverV2ShotGovernorFailure
+                {
+                    failStopDiagnostic.publishBestEffort(
+                        containmentFailure: containmentFailure,
+                        initiatingFailure: initiatingFailure,
+                        fixtureMode: diagnosticMode,
+                        executionPhase: executionPhase,
+                        containmentState: containmentState,
+                        deadlineExpired: deadlineExpired,
+                        deathWaitReturned: deathWaitReturned,
+                        deathEventObservedAtContainmentFailure:
+                            deathWatcher.hasObservedExit()
+                    )
+                }
                 Darwin._exit(
                     PrimeValidationDriverV2ShotGovernorStatus
                         .containmentUncertain
                 )
             }
         }
+        do {
         guard Darwin.getpgid(pid) == pid,
               Darwin.getsid(pid) == pid
         else {
@@ -5837,7 +6154,9 @@ package extension PrimeValidationDriverV2ShotGovernor {
             }
         case .orphanTransition:
             executionPhase = .orphanDeathWait
-            guard deathWatcher.wait(deadline: deadline) else {
+            let waitReturned = deathWatcher.wait(deadline: deadline)
+            deathWaitReturned = waitReturned
+            guard waitReturned else {
                 throw governorRejected(
                     PrimeValidationDriverV2ShotGovernorStatus
                         .containmentUncertain,
@@ -5890,5 +6209,16 @@ package extension PrimeValidationDriverV2ShotGovernor {
             finalGroupsEmpty:
                 resultObservation.conservation.capturedGroupsAbsent
         )
+        } catch {
+            if let failure = error
+                as? PrimeValidationDriverV2ShotGovernorFailure
+            {
+                initiatingFailure = .init(
+                    status: failure.status,
+                    coordinate: failure.coordinate
+                )
+            }
+            throw error
+        }
     }
 }

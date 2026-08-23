@@ -3544,6 +3544,19 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
             "Sources/PrimeCore/" +
                 "PrimeValidationDriverV2FixedProbeExecutor.swift"
         )
+        let governor = try gateEProductionSource(
+            "Tests/PrimeValidationWorkflow/Sources/" +
+                "PrimeValidationWorkflowDriverV2ShotGovernorCore/" +
+                "PrimeValidationDriverV2ShotGovernor.swift"
+        )
+        let governorMain = try gateEProductionSource(
+            "Tests/PrimeValidationWorkflow/Sources/" +
+                "PrimeValidationWorkflowDriverV2ShotGovernor/main.swift"
+        )
+        let liveTestsSource = try String(
+            contentsOf: URL(fileURLWithPath: #filePath),
+            encoding: .utf8
+        )
         let expectedLeaves = gateEExpectedJournalLeaves()
         XCTAssertEqual(expectedLeaves.count, 34)
         XCTAssertEqual(Set(expectedLeaves).count, 34)
@@ -3574,6 +3587,419 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
         XCTAssertEqual(
             resumeOrderPositions,
             resumeOrderPositions.sorted()
+        )
+
+        let causalFixtureBytes = try PrimeValidationDriverV2ShotGovernor
+            .sessionFixtureCausalFailStopV2CanonicalFixtureForTesting()
+        let expectedCausalJSON = [
+            "{\"admittedDeviceID\":1",
+            ",\"admittedInode\":2",
+            ",\"containmentState\":\"armed\"",
+            ",\"containmentStopAttemptSequence\":1",
+            ",\"containmentStopDeathEventCheckPerformed\":false",
+            ",\"containmentStopDeathEventObserved\":false",
+            ",\"containmentStopErrno\":1",
+            ",\"containmentStopReturn\":-1",
+            ",\"deadlineExpired\":false",
+            ",\"deathEventObservedAtContainmentFailure\":true",
+            ",\"deathWaitReturned\":true",
+            ",\"executionPhase\":\"orphan_initial_census\"",
+            ",\"failureCoordinate\":\"supervisor_stop\"",
+            ",\"failureStatus\":70",
+            ",\"fixedFailStopStatus\":70",
+            ",\"fixtureMode\":\"orphan_transition\"",
+            ",\"initiatingFailureCoordinate\":" +
+                "\"session_census_nonconvergent_query\"",
+            ",\"initiatingFailureStatus\":70",
+            ",\"schema\":" +
+                "\"prime_driver_v2_session_fixture_fail_stop_v2\"",
+            ",\"sourceIdentitySHA256\":\"" +
+                PrimeEmbeddedBuildProvenance.sourceIdentitySHA256 +
+                "\"}",
+        ].joined()
+        let expectedCausalBytes = Data(expectedCausalJSON.utf8)
+        XCTAssertEqual(causalFixtureBytes, expectedCausalBytes)
+        XCTAssertFalse(causalFixtureBytes.isEmpty)
+        XCTAssertEqual(causalFixtureBytes.count, 738)
+        XCTAssertLessThanOrEqual(causalFixtureBytes.count, 1_024)
+        XCTAssertNotEqual(causalFixtureBytes.last, 0x0a)
+        let causalFixture = try PrimeCanonicalJSON.decode(
+            GateESessionFixtureCausalFailStopV2Record.self,
+            from: causalFixtureBytes
+        )
+        XCTAssertEqual(
+            try PrimeCanonicalJSON.encode(causalFixture),
+            causalFixtureBytes
+        )
+        let causalObject = try XCTUnwrap(
+            JSONSerialization.jsonObject(with: causalFixtureBytes)
+                as? [String: Any]
+        )
+        XCTAssertEqual(
+            Set(causalObject.keys),
+            Set([
+                "admittedDeviceID",
+                "admittedInode",
+                "containmentState",
+                "containmentStopAttemptSequence",
+                "containmentStopDeathEventCheckPerformed",
+                "containmentStopDeathEventObserved",
+                "containmentStopErrno",
+                "containmentStopReturn",
+                "deadlineExpired",
+                "deathEventObservedAtContainmentFailure",
+                "deathWaitReturned",
+                "executionPhase",
+                "failureCoordinate",
+                "failureStatus",
+                "fixedFailStopStatus",
+                "fixtureMode",
+                "initiatingFailureCoordinate",
+                "initiatingFailureStatus",
+                "schema",
+                "sourceIdentitySHA256",
+            ])
+        )
+        XCTAssertEqual(causalObject.count, 20)
+        XCTAssertEqual(causalFixture.admittedDeviceID, 1)
+        XCTAssertEqual(causalFixture.admittedInode, 2)
+        XCTAssertEqual(causalFixture.containmentState, "armed")
+        XCTAssertEqual(causalFixture.containmentStopAttemptSequence, 1)
+        XCTAssertFalse(
+            causalFixture.containmentStopDeathEventCheckPerformed
+        )
+        XCTAssertFalse(causalFixture.containmentStopDeathEventObserved)
+        XCTAssertEqual(causalFixture.containmentStopErrno, 1)
+        XCTAssertEqual(causalFixture.containmentStopReturn, -1)
+        XCTAssertFalse(causalFixture.deadlineExpired)
+        XCTAssertTrue(
+            causalFixture.deathEventObservedAtContainmentFailure
+        )
+        XCTAssertTrue(causalFixture.deathWaitReturned)
+        XCTAssertEqual(
+            causalFixture.executionPhase,
+            "orphan_initial_census"
+        )
+        XCTAssertEqual(
+            causalFixture.failureCoordinate,
+            "supervisor_stop"
+        )
+        XCTAssertEqual(causalFixture.failureStatus, 70)
+        XCTAssertEqual(causalFixture.fixedFailStopStatus, 70)
+        XCTAssertEqual(causalFixture.fixtureMode, "orphan_transition")
+        XCTAssertEqual(
+            causalFixture.initiatingFailureCoordinate,
+            "session_census_nonconvergent_query"
+        )
+        XCTAssertEqual(causalFixture.initiatingFailureStatus, 70)
+        XCTAssertEqual(
+            causalFixture.schema,
+            "prime_driver_v2_session_fixture_fail_stop_v2"
+        )
+        XCTAssertEqual(
+            causalFixture.sourceIdentitySHA256,
+            PrimeEmbeddedBuildProvenance.sourceIdentitySHA256
+        )
+        XCTAssertTrue(
+            !causalFixture.deathWaitReturned ||
+                causalFixture.deathEventObservedAtContainmentFailure
+        )
+        XCTAssertTrue(
+            !causalFixture.containmentStopDeathEventObserved ||
+                causalFixture.deathEventObservedAtContainmentFailure
+        )
+        XCTAssertTrue(
+            !(causalFixture.deathWaitReturned &&
+                causalFixture
+                    .containmentStopDeathEventCheckPerformed) ||
+                causalFixture.containmentStopDeathEventObserved
+        )
+        XCTAssertEqual(
+            causalFixture.failureCoordinate == "supervisor_stop",
+            causalFixture.containmentStopReturn == -1 &&
+                !(causalFixture.containmentStopErrno == ESRCH &&
+                    causalFixture
+                        .containmentStopDeathEventCheckPerformed &&
+                    causalFixture.containmentStopDeathEventObserved)
+        )
+
+        let causalSeamName =
+            "sessionFixtureCausalFailStopV2CanonicalFixture" +
+            "ForTesting"
+        XCTAssertEqual(
+            governor.components(separatedBy: causalSeamName).count - 1,
+            1
+        )
+        XCTAssertEqual(
+            liveTestsSource.components(
+                separatedBy: causalSeamName
+            ).count - 1,
+            1
+        )
+        XCTAssertFalse(governorMain.contains(causalSeamName))
+        let normalizedGovernor = governor
+            .split(whereSeparator: { $0.isWhitespace })
+            .joined(separator: " ")
+        XCTAssertTrue(
+            normalizedGovernor.contains(
+                "package extension " +
+                    "PrimeValidationDriverV2ShotGovernor { " +
+                    "static func " + causalSeamName +
+                    "() throws -> Data"
+            )
+        )
+        let causalPackageExtensionPrefix = try slice(
+            governor,
+            from:
+                "package extension " +
+                "PrimeValidationDriverV2ShotGovernor {",
+            through: causalSeamName + "()"
+        )
+        XCTAssertTrue(
+            causalPackageExtensionPrefix.contains(
+                "package extension " +
+                    "PrimeValidationDriverV2ShotGovernor {"
+            )
+        )
+        XCTAssertFalse(
+            governor.contains("public static func " + causalSeamName)
+        )
+        XCTAssertTrue(
+            liveTestsSource.contains("." + causalSeamName + "()")
+        )
+        let causalSeamSource = try slice(
+            governor,
+            from: causalSeamName + "()",
+            through: "static func exerciseSessionFixtureForTesting("
+        )
+        for forbidden in [
+            "Darwin.open(",
+            "openat(",
+            "posix_spawn(",
+            "Process(",
+            "Darwin.kill(",
+            "waitpid(",
+            "DispatchSource",
+            "FileManager",
+            "URL(",
+            "CommandLine",
+            "descriptor",
+            "absolutePath",
+            "argv",
+            "environment",
+            "callback",
+            "timeout",
+            "publishBestEffort(",
+            "consume(",
+            "execute(",
+        ] {
+            XCTAssertFalse(causalSeamSource.contains(forbidden), forbidden)
+        }
+        let normalizedCausalSeam = causalSeamSource
+            .split(whereSeparator: { $0.isWhitespace })
+            .joined(separator: " ")
+        for required in [
+            "try requireRejected { try makeRecord(" +
+                "stopAttemptSequence: 0) }",
+            "try requireRejected { try makeRecord(" +
+                "stopAttemptSequence: 2) }",
+            "try makeRecord(stopReturn: 0, stopErrno: 1)",
+            "try makeRecord(stopReturn: -1, stopErrno: 0)",
+            "try makeRecord(stopDeathEventObserved: true)",
+            "stopDeathEventCheckPerformed: true, " +
+                "stopDeathEventObserved: true",
+            "stopErrno: ESRCH, " +
+                "stopDeathEventCheckPerformed: false",
+            "stopErrno: ESRCH, " +
+                "stopDeathEventCheckPerformed: true, " +
+                "stopDeathEventObserved: true",
+            "try makeRecord( " +
+                "deathEventObservedAtContainmentFailure: false )",
+            "stopErrno: ESRCH, " +
+                "stopDeathEventCheckPerformed: true, " +
+                "stopDeathEventObserved: true, " +
+                "deathWaitReturned: false, " +
+                "deathEventObservedAtContainmentFailure: false",
+            "\"session_census_unknown\"",
+            "\"session_census_getsid_\"",
+            "\"session_census_bsdinfo_-1\"",
+            "\"session_census_getpgid_03\"",
+            "\"session_census_getsid_x\"",
+            "\"session_census_bsdinfo_2147483648\"",
+            "\"session_census_getsid_3\"",
+            "\"session_census_getpgid_3\"",
+            "let canonical = try PrimeCanonicalJSON.encode(record)",
+            "PrimeCanonicalJSON.decode( " +
+                "PrimeValidationDriverV2SessionFixtureFailStopV2.self",
+        ] {
+            XCTAssertTrue(
+                normalizedCausalSeam.contains(required),
+                required
+            )
+        }
+        let causalRecordSource = try slice(
+            governor,
+            from:
+                "private struct " +
+                "PrimeValidationDriverV2SessionFixtureFailStopV2:",
+            through:
+                "private final class " +
+                "PrimeValidationDriverV2SessionFixtureFailStopLeaf"
+        )
+        let normalizedCausalRecord = causalRecordSource
+            .split(whereSeparator: { $0.isWhitespace })
+            .joined(separator: " ")
+        XCTAssertEqual(
+            governor.components(
+                separatedBy:
+                    "prime_driver_v2_session_fixture_fail_stop_v2"
+            ).count - 1,
+            1
+        )
+        XCTAssertFalse(
+            governor.contains(
+                "prime_driver_v2_session_fixture_fail_stop_v1"
+            )
+        )
+        for required in [
+            "static let maximumByteCount = 1_024",
+            "static let maximumCoordinateByteCount = 128",
+            "fixtureMode == .orphanTransition",
+            "executionPhase == .orphanInitialCensus",
+            "containmentState == .armed",
+            "deathWaitReturned",
+            "containmentStopAttemptSequence == 1",
+            "containmentFailure.coordinate == \"supervisor_stop\"",
+            "Self.initiatingCoordinateIsClosedCensus( " +
+                "initiatingFailure.coordinate )",
+            "stop.deathEventCheckPerformed == ( " +
+                "stop.returnValue == -1 && stop.errorNumber == ESRCH )",
+            "stop.deathEventCheckPerformed || " +
+                "!stop.deathEventObserved",
+            "!deathWaitReturned || " +
+                "deathEventObservedAtContainmentFailure",
+            "!stop.deathEventObserved || " +
+                "deathEventObservedAtContainmentFailure",
+            "!(deathWaitReturned && " +
+                "stop.deathEventCheckPerformed) || " +
+                "stop.deathEventObserved",
+            "(containmentFailure.coordinate == \"supervisor_stop\") " +
+                "== ( stop.returnValue == -1",
+            "sourceIdentitySHA256 = " +
+                "PrimeEmbeddedBuildProvenance.sourceIdentitySHA256",
+        ] {
+            XCTAssertTrue(
+                normalizedCausalRecord.contains(required),
+                required
+            )
+        }
+        func requireSourceOrder(
+            _ markers: [String],
+            in source: String,
+            coordinate: String
+        ) throws {
+            var cursor = source.startIndex
+            for marker in markers {
+                guard let range = source.range(
+                    of: marker,
+                    range: cursor ..< source.endIndex
+                ) else {
+                    throw FixtureError.invalid(
+                        coordinate + "_" + marker
+                    )
+                }
+                cursor = range.upperBound
+            }
+        }
+        let preliminaryStopSource = try slice(
+            governor,
+            from: "let stopTarget = -supervisorPID",
+            through:
+                "var previous: " +
+                "[PrimeValidationDriverV2GovernorSessionMember]?"
+        )
+        let normalizedPreliminaryStop = preliminaryStopSource
+            .split(whereSeparator: { $0.isWhitespace })
+            .joined(separator: " ")
+        try requireSourceOrder(
+            [
+                "let stopTarget = -supervisorPID",
+                "errno = 0",
+                "let stopReturn = Darwin.kill(stopTarget, SIGSTOP)",
+                "let stopErrno = errno",
+                "if stopReturn == -1, stopErrno == ESRCH",
+                "deathEventCheckPerformed = true",
+                "deathEventObserved = deathWatcher.hasObservedExit()",
+                "if stopReturn != 0",
+                "guard stopErrno == ESRCH, deathEventObserved else",
+                "preliminarySupervisorStopObservation: .init(",
+                "returnValue: stopReturn",
+                "errorNumber: stopErrno",
+                "deathEventCheckPerformed: deathEventCheckPerformed",
+                "deathEventObserved: deathEventObserved",
+            ],
+            in: normalizedPreliminaryStop,
+            coordinate: "causal_stop_order"
+        )
+        let exerciseMarker =
+            "static func exerciseSessionFixtureForTesting("
+        let exerciseStart = try XCTUnwrap(
+            governor.range(of: exerciseMarker)?.lowerBound
+        )
+        let sessionExerciseSource = String(governor[exerciseStart...])
+        let normalizedSessionExercise = sessionExerciseSource
+            .split(whereSeparator: { $0.isWhitespace })
+            .joined(separator: " ")
+        try requireSourceOrder(
+            [
+                "var initiatingFailure: " +
+                    "PrimeValidationDriverV2SessionFixtureInitiatingFailure?",
+                "var deathWaitReturned = false",
+                "defer { do { switch containmentState",
+                "if let containmentFailure = error as? " +
+                    "PrimeValidationDriverV2ShotGovernorFailure",
+                "failStopDiagnostic.publishBestEffort(",
+                "containmentFailure: containmentFailure",
+                "initiatingFailure: initiatingFailure",
+                "deathWaitReturned: deathWaitReturned",
+                "deathEventObservedAtContainmentFailure: " +
+                    "deathWatcher.hasObservedExit()",
+                "Darwin._exit(",
+                "do { guard Darwin.getpgid(pid) == pid",
+                "let waitReturned = deathWatcher.wait(deadline: deadline)",
+                "deathWaitReturned = waitReturned",
+                "guard waitReturned else",
+                "executionPhase = .orphanInitialCensus",
+                "firstMembers = try " +
+                    "PrimeValidationDriverV2GovernorSessionCensus .scan(",
+                "executionPhase = .primaryContainment",
+                "} catch { if let failure = error as? " +
+                    "PrimeValidationDriverV2ShotGovernorFailure",
+                "initiatingFailure = .init(",
+                "status: failure.status",
+                "coordinate: failure.coordinate",
+                "throw error",
+            ],
+            in: normalizedSessionExercise,
+            coordinate: "causal_session_order"
+        )
+        let orphanCaptureSource = try slice(
+            sessionExerciseSource,
+            from: "executionPhase = .orphanDeathWait",
+            through: "executionPhase = .primaryContainment"
+        )
+        XCTAssertFalse(orphanCaptureSource.contains("hasObservedExit()"))
+        XCTAssertEqual(
+            sessionExerciseSource.components(
+                separatedBy:
+                    "PrimeValidationDriverV2GovernorDeathWatcher(pid: pid)"
+            ).count - 1,
+            1
+        )
+        XCTAssertFalse(
+            sessionExerciseSource.contains(
+                "DispatchSource.makeProcessSource"
+            )
         )
 
         let fixture = try Fixture()
@@ -3775,11 +4201,6 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
             ["gate-e-prestart.json"]
         )
 
-        let governor = try gateEProductionSource(
-            "Tests/PrimeValidationWorkflow/Sources/" +
-                "PrimeValidationWorkflowDriverV2ShotGovernorCore/" +
-                "PrimeValidationDriverV2ShotGovernor.swift"
-        )
         for required in [
             "prime_driver_v2_gate_e_shot_capsule_v1",
             "prime_driver_v2_gate_e_outer_start_v1",
@@ -5171,6 +5592,32 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
         let ordinal: Int
         let leaf: String
         let predecessorSHA256: String
+    }
+
+    private struct GateESessionFixtureCausalFailStopV2Record:
+        Codable,
+        Equatable
+    {
+        let admittedDeviceID: UInt64
+        let admittedInode: UInt64
+        let containmentState: String
+        let containmentStopAttemptSequence: UInt64
+        let containmentStopDeathEventCheckPerformed: Bool
+        let containmentStopDeathEventObserved: Bool
+        let containmentStopErrno: Int32
+        let containmentStopReturn: Int32
+        let deadlineExpired: Bool
+        let deathEventObservedAtContainmentFailure: Bool
+        let deathWaitReturned: Bool
+        let executionPhase: String
+        let failureCoordinate: String
+        let failureStatus: Int32
+        let fixedFailStopStatus: Int32
+        let fixtureMode: String
+        let initiatingFailureCoordinate: String
+        let initiatingFailureStatus: Int32
+        let schema: String
+        let sourceIdentitySHA256: String
     }
 
     private func gateELaunchReleaseSupervisor(
