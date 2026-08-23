@@ -10331,3 +10331,103 @@ outer_journal_authority_vector = 00000000
 gate_E_scientific_outcome = ABSTAIN
 gate_E_clearance_granted = 0
 ```
+
+## Gate E1.4-R14 result — retired before target spawn
+
+| Coordinate | Observed result |
+| --- | --- |
+| Frozen control | `f48de95b5c3ca5b3738911c13415f60d5c62f29a` / tree `4654842d7c78b772e977c6a9f74e70a04e7c85dd` |
+| Frozen guardian | `1,088` lines / `35,773` bytes; SHA-256 `ff96247d84c77762cad4f7b52813bc2f3233f2b2a34d6f73de5df0e459717450`; blob `b00c5c17b752ab2ca1947a86f925a97d4bb5be63` |
+| Guardian envelope | invoked `1 / 1`; outer exit `70`; no second invocation authorized |
+| Guardian status | `R14_GUARDIAN_PRELAUNCH_FAILED` |
+| Target assessment | assessment clock `null`; child start/end/status `null`; `Process.spawn = 0`; SwiftPM commands `0 / 1` |
+| Process instrumentation | complete scans `0`; captured process/Fixture generations `0 / 0`; STOP/KILL signals `0 / 0`; containment not entered |
+| Operational terminal | absent; the guardian publishes a terminal only after a spawned child has been conserved |
+| Standard streams | stdout `0` bytes / SHA-256 `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`; stderr `1,133` bytes / SHA-256 `3953e00d3bcbd15d7ff65bbf0d4193f5be6b992bc397312f4a29272fa69eac2c` |
+| Disposition | `RETIRED_PRELAUNCH`; target shot not exercised; same-R14 rerun and epoch reuse forbidden |
+| Scientific result | mixed test-host mechanics `ABSTAIN`; Gate E `ABSTAIN`; authority vector `00000000`; production attempts `0` |
+
+The exact one-line stderr frame, including its final LF in the byte count and
+digest above, was:
+
+```json
+{"assessment_elapsed_ns":null,"assessment_start_monotonic_ns":null,"authority_vector":"00000000","captured_fixture_generations":0,"captured_process_generations":0,"child_ended_at":null,"child_exit_status":null,"child_raw_status":null,"child_reaped_elapsed_ns":null,"child_started_at":null,"child_term_signal":null,"complete_scan_count":0,"containment_fault_count":0,"containment_horizon_ns":900000000000,"containment_started":false,"containment_started_elapsed_ns":null,"error":"NameError:undefined local variable or method `chunk' for main:Object","final_empty_scans":0,"fixture_replacement_seen":false,"gate_e_outcome":"ABSTAIN","hard_deadline_crossed":false,"held_workspace_count":0,"interrupted_signal":null,"kill_signals_sent":0,"ordinary_cutoff_ns":840000000000,"orphan_attribution_residual_count":0,"process_containment_complete":false,"proof_groups":[],"status":"R14_GUARDIAN_PRELAUNCH_FAILED","stop_signals_sent":0,"timed_out":false,"unexpected_nested_session_seen":false,"unsafe_process_count":0,"unsafe_process_history_count":0,"workspace_baseline_count":0,"workspace_baseline_sha256":null,"workspace_rebound_seen":false}
+```
+
+### Causal adjudication
+
+The failure is entirely before the process experiment. `verify_fixture` opened
+the held SessionFixture and called `held_sha256`; Ruby `2.6.10` then raised at
+guardian line `204`:
+
+```ruby
+digest.update(chunk) while (chunk = io.read(65_536))
+```
+
+In a modifier `while`, Ruby parses the body before the trailing assignment has
+introduced `chunk` as a local, so the body's `chunk` is a zero-argument method
+call (`vcall`). The first nonempty read therefore enters the body and raises
+`NameError`. The file contains no second condition-side modifier assignment.
+The exception occurred before `Process.setsid`, `WorkspaceRegistry`, `Tracker`,
+the two preflight censuses, the assessment clock, and the sole
+`Process.spawn`. Consequently no Swift, compiler, linker, XCTest, Fixture,
+production Supervisor, or fixed-role process was launched by R14, and no
+process was signaled.
+
+This separates the two one-shot coordinates without weakening either. The
+scientific target-consumption event (starting the sole Swift command) did not
+occur. The exact guardian envelope did occur once, however, so R14 is closed
+and non-reusable. Retrying the pinned guardian, editing it in place, or reusing
+its epoch would violate the exact-once/no-retry freeze.
+
+### Postflight conservation
+
+Before this durable-result edit, both worktrees remained clean at the exact
+frozen source
+`befc632485930a9cca7f618d3704292b5465f911` / tree
+`7d1a3bf302fe358f9e42dc1ed2bf54ed3d22982e` and frozen control above. MLX and
+Numerics remained clean at `d37885a278f1c37484a94d0f401a418735e66519`
+/ `5310749549cca107fc1bb07d82dacf043bc02b9e` and
+`0c0290ff6b24942dadb83a929ffaaa1481df04a2` /
+`4560bfb65f2c26cbd159c3e1a9cbf01600bace1b`. All four manifest/lock hashes,
+the workspace-state identity/hash, the three source preimages, and every one
+of the nine frozen Release artifact identities, metadata tuples, and hashes
+equal their R14 preimages. No frozen build-root coordinate or artifact
+preimage changed; no complete build-root inventory comparison is claimed.
+
+The R14 epoch remains the retained root vnode `16777231/17401180`, UID/GID
+`501/0`, mode `0700`, with exactly the same nine empty mode-`0700` child
+directories and no terminal. Admission roots remain exactly `16` with path-set
+SHA-256 `6185ea35d684b2a50529aa79f1455bae789eda056e298f5509e7c5127423abd5`;
+the mechanics-epoch inventory is now exactly `8`, with the retained R14 epoch
+as its sole intentional delta from the frozen seven-entry baseline;
+public roots remain `0`; the reserved production root remains absent. A
+postflight `lsof` observation found no open descriptor on the Fixture, XCTest,
+or guardian image. The Workstation sandbox did not provide `pgrep`/`ps`, so no
+ambient-process census is claimed; that missing observation cannot become a
+positive result. The program-order proof of zero R14 target launches does not
+depend on an ambient census.
+
+### Only supported successor
+
+The minimal successor is a separately frozen R15 on this result and the same
+clean R13 source checkpoint, with a fresh disjoint epoch and a newly pinned
+guardian. The cause-specific code delta is one lexical declaration immediately
+before the otherwise unchanged loop:
+
+```ruby
+chunk = nil
+digest.update(chunk) while (chunk = io.read(65_536))
+```
+
+An isolated, guardian-free Ruby `2.6.10` check already hashed the held nonempty
+SessionFixture twice to the exact frozen
+`177a18c20bc42486c77b52af4c472be222dec1baabf8973ece7b2d44ea92756e`
+and restored the descriptor offset to zero. Before any R15 authorization, the
+new freeze must additionally pin boundary sizes around `65,536`, held-vnode
+replacement/unlink behavior, Ripper `var_ref` rather than `vcall`, the exact
+new guardian bytes, unchanged spawn/signal surface, fresh epoch, and current
+artifact/root preimages. It must not change Prime source, DriverCore, Swift
+argv, or any scientific predicate.
+
+No R15 launch is authorized by this result.
