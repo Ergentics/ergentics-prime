@@ -4741,3 +4741,61 @@ a separate clean result checkpoint with status
 `READY_PENDING_SEPARATE_SHOT_FREEZE`. Only a later clean direct-child control
 freeze may create the reserved final-shot caches and authorize one exact
 `--skip-build` production method-8 command. Gate F and Gate G remain forbidden.
+
+## Gate E1.3 readiness interruption — holder flag namespace
+
+| Field | Observed value |
+| --- | --- |
+| Status | `STOPPED_BEFORE_CLONE_OR_SWIFT` |
+| Executed freeze | `c8ddd1933d2a1ddec297db3cc032d982a586e57d` / tree `93bdf254fcf95d02e60cd0c46a09cf6c9780ba8d` |
+| Source | clean `2d705a71dc1827cf4fe6f0f9f3bc8255063e1dd3` / tree `0077ac10f1dbba50680502a31084f7280c2c2f65` |
+| Successful namespace operations | exactly `1`: epoch-parent `mkdir` |
+| Failed outer observation | holder's composite flag guard rejected before opening the parent: `File::NOFOLLOW` exists, but `File::CLOEXEC` does not; the emitted `nofollow-unavailable` label was imprecise |
+| Child-directory creations | `0` |
+| Clone / Swift build / Swift test | `0 / 0 / 0` |
+| XCTest / method 8 / production supervisor / fixed children | `0 / 0 / 0 / 0` |
+| Source edits / dependency resolution or fetch / network / GitHub | `0 / 0 / 0 / 0` |
+| Production consumption | `UNCONSUMED_PROVEN` |
+
+The exact retained epoch parent is
+`/private/tmp/gate-e1-3-readiness-474008bdffccf410`, directory vnode
+`16777231/17350005`, owned `501/0`, mode `0700`, nlink `2`, flags `0`, size
+`64`, mtime/ctime `1787460245/1787460245`, ACL-free, with exact xattr
+`{com.apple.provenance}` and empty inventory. It is retained permanently and
+is ineligible for cleanup, reuse, continuation, or a successor epoch.
+
+The exact outer error was:
+
+```text
+-e:22:in `<main>': nofollow-unavailable (RuntimeError)
+```
+
+The controller stopped after validating the new parent and before the first
+child `mkdir`. Therefore no clone target, home, temporary root, template,
+module cache, or Git repository was created. The reserved production root and
+both reserved final-shot caches remained absent. The identity-bound production
+method was never selected or entered, so production identity
+`474008bdffccf4102566c98088abf2799ad3a4934edadb8c0357c23190c71a52`
+is proven unconsumed rather than `ABSTAIN`.
+
+Every stored non-epoch `B` component compared byte-for-byte equal after the
+stop: the three clean repository commit/tree/status tuples, five
+manifest/lock/workspace-state vnodes and hashes, all four dependency-store
+continuity commitments, admitted tool hashes/helper commitment, ten retained
+E1.2 cache-root tuples, two consumed roots, two prior Prime clones, and the
+pinned companion root. All six `A0` hashes also remained exact:
+
+| Artifact | Unchanged SHA-256 |
+| --- | --- |
+| stale supervisor | `fda8ab7c8f06a94c4f957f879312a6911d7e32015a344ea5b9ad63bbd04215ff` |
+| stale XCTest | `b3cf7e6aee0a73b05b493ff279b435f7b81b73c24c24b1731986d0adc0f534d5` |
+| provenance object | `886c9db18bf95f4c3a3d09531c725c5cfaff9b16ef72d0f0761ea1a016a3866c` |
+| admission object | `7db95394ff9dcf33686b7a43b902490e50a8f9e28946623b0a00e8f2c0b89c0a` |
+| supervisor-main object | `0de811c5c8cb03a73a8c6edc4811e6e91563acd1b9aeb3b2f46c31b956da2a73` |
+| live-test object | `6b8ea82c637e9f8eabe735f66507226d3bde184eb7b2647ed389cd8d15a259b7` |
+
+This was an outer instrumentation namespace error, not a Prime, Driver V2,
+Git, SwiftPM, compiler, test, containment, or production result. The current
+freeze is spent and authorizes no continuation. A successor must use a new
+identity-bound epoch name and freeze a holder primitive that has already
+opened the retained directory successfully before any new namespace mutation.
