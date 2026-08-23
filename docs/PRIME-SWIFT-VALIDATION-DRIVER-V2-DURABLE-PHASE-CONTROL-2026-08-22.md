@@ -10013,3 +10013,321 @@ only supported successor is a separately committed readiness freeze on
 `befc632485930a9cca7f618d3704292b5465f911` /
 `7d1a3bf302fe358f9e42dc1ed2bf54ed3d22982e` with a fresh disjoint epoch and
 fresh artifact preimages. This record authorizes no Release command.
+
+## Gate E1.4-R14 freeze — one local Release mechanics assessment
+
+| Coordinate | Frozen value |
+| --- | --- |
+| Status | `FROZEN_NOT_EXECUTED` |
+| Durable-control predecessor | R13 result `5cffa7922d1a9306b43416a67d754fc2dd8319f9` / tree `465728c6f3e44b86c688dff03d3c8fb7cedfd37b` |
+| Source commit/tree/identity | clean `befc632485930a9cca7f618d3704292b5465f911` / `7d1a3bf302fe358f9e42dc1ed2bf54ed3d22982e` / `b501ad0d7ab1b6c54cbf30f9a79d75c54fe1d3783c516e10ad73fdd5fb4df397` |
+| Guardian | `docs/tools/prime-driver-v2-r14-guardian.rb`; mode `0644`; `1,088` lines / `35,773` bytes; SHA-256 `ff96247d84c77762cad4f7b52813bc2f3233f2b2a34d6f73de5df0e459717450`; Git blob `b00c5c17b752ab2ca1947a86f925a97d4bb5be63` |
+| R14 epoch | `/private/tmp/gate-e1-4-mechanics-r14-befc6324-b501ad0d7ab1b6c5`; absent before this freeze |
+| Authorized target command | exactly `1`: the guardian's one direct incremental Release `swift test`; no preliminary build and no `--skip-build` |
+| Selected XCTest methods | exactly the existing anchored identifier |
+| Time coordinates | ordinary assessment cutoff `840` seconds; containment horizon `900` seconds; after `900`, containment-only continues without an external kill until conservation proof |
+| Process credentials / initial cwd | effective UID/GID `501 / 20`; exact clean source worktree root |
+| Existing admission roots | exactly `16`; sorted path-set SHA-256 `6185ea35d684b2a50529aa79f1455bae789eda056e298f5509e7c5127423abd5` |
+| Existing mechanics epochs | exactly `7`; sorted path-set SHA-256 `5c4e48aee94efa5af6b240aa61e69159303494b589b93c9307eaf31ad2025cf5` |
+| Production attempts / authority vector | `0 / 00000000` |
+| Fetch / network / GitHub | `0 / 0 / 0` |
+| Freeze mutation allowlist | this control file plus the one guardian file only; Prime source, DriverCore, manifests, locks, dependencies, `.github`, and existing evidence remain unchanged |
+
+R14 is a new local assessment of the R13 source checkpoint. It is not an R12
+retry, production shot, role execution, or Gate-E clearance attempt. Starting
+the sole Swift command consumes R14 for every outcome. There is no retry,
+same-epoch reuse, post-shot cleanup, automatic successor, or authority
+promotion.
+
+### Safety admission and fresh namespace
+
+R12 ended without containment proof, so a surviving old fixture process is a
+hard safety blocker rather than ambient state. The guardian performs two
+complete generation-joined libproc censuses before arming and requires zero
+SessionFixture images, zero package-test runners, and the exact sixteen-root
+admission baseline. The preflight-to-arm-to-spawn interval is closed by the
+frozen operational exclusion: no concurrent launch of the exact Fixture or
+package-test image and no concurrent writer against the package `.build`.
+External `pgrep` / `ps` observations are corroboration only and are not signal
+authority.
+
+The guardian first creates a new POSIX session, then launches Swift in a
+distinct process group. Every ordinary descendant is joined by
+`PID/start -> SID -> PGID -> PID/start`. A detached SessionFixture is a safety
+candidate only when its executable mapping is the exact frozen path and its
+kernel cwd device/inode joins a descriptor-held, UID-`501`, mode-`0700`
+`workspace` under a novel UUID-shaped admission root absent from both
+preflight scans. Root and workspace GIDs are observed and conserved rather
+than assumed. This descriptor-held workspace is an invocation nonce for
+containment, not mapped-image or scientific authority. A replacement Fixture
+image is containable only through that same nonce and makes the assessment
+abnormal; it can never satisfy the natural-result predicate.
+
+After this freeze is committed, create the R14 epoch exactly once and require
+its no-follow root to be UID-owned mode `0700`. Its inventory must equal the
+exact nine initially empty UID-owned mode-`0700` children `home`, `config`,
+`tmp`, `git-template`, `swiftpm-cache`, `swiftpm-config`,
+`swiftpm-security`, `clang-module-cache`, and `swiftpm-module-cache`. Record
+and rejoin every path/device/inode, preserve each admitted GID, and retain the
+complete epoch for every result. No predecessor epoch is an input or cleanup
+target.
+
+The exact operational terminal leaf is
+`r14-guardian-terminal.json` directly under the held R14 epoch. It must be
+absent through preflight. Only after process conservation may the guardian
+create it descriptor-relative with `openat`, exclusive no-replace,
+no-follow, mode `0400`, file `fsync`, epoch rejoin, and directory `fsync`.
+Its compact sorted-key JSON is at most `16,384` bytes and ends in exactly one
+LF. `payload_sha256` hashes the compact sorted-key JSON before the digest field
+is attached and before the LF; it is not a self-hash of the final bytes. A
+missing terminal after target spawn is incomplete `ABSTAIN`, never retry
+authority.
+
+The reserved production root
+`/private/tmp/prime-driver-v2-gate-e-release-b501ad0d7ab1b6c54cbf30f9a79d75c54fe1d3783c516e10ad73fdd5fb4df397`
+and the public-admission inventory are both absent and must remain absent. The
+sixteen retained admission roots are immutable. In particular, the R12 causal
+leaf remains the joined vnode `16777231/17396808`, `752` bytes, SHA-256
+`4225c8076f4799835cbce78d026f5c85e66d693ea1db44f923f1a392bbf3a693`.
+
+### Conserved inputs and exact preimages
+
+| Input | Exact R14 preimage |
+| --- | --- |
+| Package build root | existing default `Tests/PrimeValidationWorkflow/.build`; device/inode `16777231/17179422` |
+| Root manifest / lock | `fa68f463ca31a4ca25af6b14eb19b139df0c8ef8259a6348bb40e97c2dcdeb81` / `bd7a18ec5b8def3b453d7eb86ba43a2f277c2308c9da806845b69ca5f76cd375` |
+| Nested manifest / lock | `753f42251e768faaee3686da38e6f6bf7de048526199445f0e11c088af53dada` / `d70a43567cbd3be75083ab147020b86b055513020d95632f8286f60913c9374a` |
+| Workspace state | device/inode `16777231/17182550`; `1,704` bytes; SHA-256 `8eeb391d590b20e5eec603ab9d078757f2106a29467a7ff079194278bba921bf` |
+| MLX checkout | clean `d37885a278f1c37484a94d0f401a418735e66519` / tree `5310749549cca107fc1bb07d82dacf043bc02b9e` |
+| Numerics checkout | clean `0c0290ff6b24942dadb83a929ffaaa1481df04a2` / tree `4560bfb65f2c26cbd159c3e1a9cbf01600bace1b` |
+| Provenance source | device/inode `16777231/17154473`; `546` bytes; mtime/ctime `1787520021/1787520021`; SHA-256 `d40401a8115f608998cb88727b63cfbafdfac9cd5b9a91a29ecd6526988fe534` |
+| GovernorCore source | device/inode `16777231/17376128`; `250,152` bytes; mtime/ctime `1787518893/1787518893`; SHA-256 `f9efbf6e87bfe67891ef685464c71eec1e7b5968c9500d1dcdbdb594fa5cc4a0` |
+| LiveTests source | device/inode `16777231/17155088`; `289,586` bytes; mtime/ctime `1787519991/1787519991`; SHA-256 `5c6922b83fdf8c2f68aeb0693bc935b8b9bf304de8e8f896b09da137a59bc264` |
+
+The exact current Release artifact preimages are:
+
+| Artifact | Device/inode; bytes; mtime/ctime; SHA-256 |
+| --- | --- |
+| Provenance object | `16777231/17396189`; `12,760`; `1787515566/1787515566`; `b74698c1837ad5867e3b3f980d225492d82b291edb11b153ed58ccfb7074b11b` |
+| PrimeCore module | `16777231/17396170`; `22,992,744`; `1787515475/1787515475`; `c8a3335ad36831355a1f339ae9133714c6597dcecad0594d0b844a5f4c3a9fd8` |
+| GovernorCore object | `16777231/17396257`; `2,395,248`; `1787515591/1787515591`; `d45190a17222afe5c842ff0b0172d49b5b124a90e3bf519fe6f410a3b751f59c` |
+| GovernorCore module | `16777231/17396252`; `302,880`; `1787515587/1787515587`; `f85cfc299220ec7131294d883cff6e750335d4a8b9d9f12d5ff92bce7f1c5f3f` |
+| LiveTests object | `16777231/17396279`; `3,122,848`; `1787515599/1787515599`; `9142a65fc56f5d748d4c21f9a9ff486fa398ac428bc8797fc7bca7e0dabb65ea` |
+| DriverCoreTests module | `16777231/17396275`; `218,828`; `1787515594/1787515594`; `9b32946a1ef5231d50e833c7c3b1751978eb3b8eecf2f3026e5e95566d11b31d` |
+| XCTest executable | `16777231/17396299`; `58,000,576`; `1787515600/1787515600`; `a24bae4883c04ca75b59138360e33535f05eb82471a763a065db850401a76932`; UUID `1598470C-6455-385E-A15D-3EC43FEFE0A1` |
+| XCTest link list | `16777231/17245302`; `37,443`; `1787505183/1787505183`; `3c391a8010b60fec9df881e16a7d8af228acd60a61e88751e63958206e27ef12` |
+| SessionFixture image | `16777231/17382060`; `53,072`; `1787500441/1787500441`; `177a18c20bc42486c77b52af4c472be222dec1baabf8973ece7b2d44ea92756e`; UUID `2EBB880A-D28B-32FF-9B7E-EB868AF5D9B6` |
+
+All artifact preimages are regular, one-link, flags-`0` files. Objects and
+modules are mode `0600`; executable images are mode `0700`; each has only the
+`com.apple.provenance` xattr. The link list names the provenance, GovernorCore,
+and LiveTests object paths exactly once. The preimage XCTest contains the R13
+identity zero times, the R11 identity once, and the selected-method substring
+on exactly one strings record. The Xcode Swift frontend and SDK remain the
+previously joined `16777231/1118375` / SHA-256
+`2ed38571e92c0283091838c1649e27650ad9c99950288e883c7b2dc6c4ce89fb`
+and SDK directory `16777231/1009705`.
+
+### Guardian bootstrap and Ruby closure
+
+| Input | Frozen value |
+| --- | --- |
+| Bootstrap environment | exact insertion-ordered compact JSON `113` bytes; SHA-256 `c90afaf77dc9e0269394c660acf86a34c283274003da9c248b253bafc68ea219`; keys `LANG`, `LC_ALL`, `TZ`, `PATH`, `__CF_USER_TEXT_ENCODING` only |
+| `/bin/zsh` | `16777231/1152921500312571448`; `1,361,216` bytes; mtime/ctime `1782354543/1782354543`; SHA-256 `1f473d234dd65157f530b4f676686517ec97fe9aa64c76d82f2611674cc44314`; arm64e UUID `BF5C55BB-57B3-3BF6-88FD-76A935389E55` |
+| `/usr/bin/env` | `16777231/1152921500312571972`; `102,368` bytes; mtime/ctime `1782354543/1782354543`; SHA-256 `6e506aec3c0cff703ac1e66cedc6f1945354ad41339a38db4425c7c88227128f`; arm64e UUID `06C17BB1-EC06-36E0-B820-C066F5791770` |
+| `/usr/bin/ruby` | `16777231/1152921500312572705`; `135,200` bytes; mtime/ctime `1782354543/1782354543`; SHA-256 `9d6ff3e289c7d908e3c785e0bedd6692d1d6a3377965c88c04d847104b7c892c`; arm64e UUID `EB2540B7-E132-36BE-B719-619D0FBF7203`; `ruby 2.6.10p210` |
+| Absolute loaded-feature closure | `23` rows; canonical compact-JSON bytes `6,705`; SHA-256 `3815aa5bad63805028129b4e52651afc02b6b1644b4e07224d164fb8efa93f1d` |
+| Built-in feature names | compact JSON `56` bytes; SHA-256 `05a659d2b9431c78807ded9b41aea9d33cdeb16b8e338a2627485a3d1a9376ee`; exact `complex.so`, `enumerator.so`, `rational.so`, `thread.rb` |
+
+The closure probe used `--disable-gems`, required `digest`, `fiddle/import`,
+`json`, and `set`, forced one `Digest::SHA256` operation, then sorted
+`$LOADED_FEATURES`. Each canonical row contains full path, device, inode,
+bytes, mtime, ctime, mode, and SHA-256. All absolute rows are on device
+`16777231` with mtime/ctime `1782354543/1782354543`; `.rb` rows are mode
+`0644` and `.bundle` rows mode `0755`. Paths in the compact table resolve
+under `/System/Library/Frameworks/Ruby.framework/Versions/2.6/usr/lib/ruby/2.6.0/`.
+
+```text
+digest.rb|1152921500312165331|2894|eae3ead98eab5aba9c41030d7827b7225b223968a8f7e921c2dca72e72f7abcc
+fiddle.rb|1152921500312165368|1722|d9f8894c029a2217fc368cb6fe26e11ea32270bdc98a68f4a0b33b8d1b55696a
+fiddle/closure.rb|1152921500312165370|1241|762b117a58851789e4a5f3871bee97f453e04a1afe64e91c1937737427f418f5
+fiddle/cparser.rb|1152921500312165372|6200|7dfbb2e84e823cca56990b43a9ac0ff2a04726d28d04d5a04aef90c11874bf42
+fiddle/function.rb|1152921500312165374|323|65524bcf2d69e3f7053aa476286f011f0523c6efe0ea6f5f3c373d9a9a2de5aa
+fiddle/import.rb|1152921500312165376|9025|503d19010cacff71ecaf0789a8e24db7c87900b829829a20f24273df3950d829
+fiddle/pack.rb|1152921500312165378|3207|134df1991cffe2ef273501001dfa077a7f6cae38f44b05d8aeeb2ce79f0c83c5
+fiddle/struct.rb|1152921500312165380|6501|429f8525491e40c710b91ede8230aa7e1647f9d7eb66ace9d9e6a6c7532b6e7b
+fiddle/value.rb|1152921500312165384|2936|af87eaf3c40a33c856d86bbbbc5faa8adcff5d68efb0850125b44579c54dcd90
+json.rb|1152921500312165493|1809|c8be18a279705593f35a9078773710a5e09bb715a2b5d08503b8f0620a6d7c26
+json/common.rb|1152921500312165522|15340|f27e766b87230f32ba84202148da1f5436ff0d20189a5109e0e029e2f7a5a75b
+json/ext.rb|1152921500312165524|391|6759cf47337135c9954218820995d1f1337395906a1881264bba6c0cdb5d61cb
+json/generic_object.rb|1152921500312165526|1428|74244c827f6c26ac278dbfcd819fb0bde8572650a525de9b390ff5f672feb0f2
+json/version.rb|1152921500312165528|302|3f0180bfd061cf17032d613c0a275dcf02b48b51a323dd103e43010c37dae1d7
+ostruct.rb|1152921500312165628|10904|917f9c5043db84d650c35f2f79b4f9624b06d73935357378663fea6dfbbcd655
+set.rb|1152921500312166671|24645|3c4f97d950d545c1e4a38e5aec91cd7c02d321ba99621be28daa0818185314a5
+universal-darwin25/digest.bundle|1152921500312166741|119856|8f31b081eae113575110e4f416e10954a97ac00a033aef13718a14ee848dd251
+universal-darwin25/digest/sha2.bundle|1152921500312166751|101440|45e9f55cf9f644755930d6c4c8e6e0094bafc3d2b657ab256816e547aa94be96
+universal-darwin25/enc/encdb.bundle|1152921500312166760|117504|de95c352f6ff9788452c890ee7889e6d8912830a88d8b681eb2f371fad0e4510
+universal-darwin25/enc/trans/transdb.bundle|1152921500312166845|117136|8d8ed5a500287b21d9652cb3b44fe67dffe2352993adb10320743ca68557e87f
+universal-darwin25/fiddle.bundle|1152921500312166879|157824|1a725212be5725514f665f6b142ce6ac4c5aaf94401601ffd8631e9449638df8
+universal-darwin25/json/ext/generator.bundle|1152921500312166890|153776|89db2ec238dfd75a7a274dec10d88de73fd41d234b18de1dba97a69f8a5ea842
+universal-darwin25/json/ext/parser.bundle|1152921500312166892|137056|63c193186b7bc8833f27b38a15481a5a08c1f8bb8abfaee4570be2296cc94278
+```
+
+### Exact one-command envelope
+
+Define `rho14` as replacement of the sole R12 epoch string
+
+```text
+/private/tmp/gate-e1-4-mechanics-r12-b7eefedd-d388fa32da538cd4
+```
+
+with
+
+```text
+/private/tmp/gate-e1-4-mechanics-r14-befc6324-b501ad0d7ab1b6c5
+```
+
+throughout R12's exact forty-key finite child map and the cache, config, and
+security CLI paths. Every other key and value, `umask 077`, stdin `/dev/null`,
+cwd, Xcode Swift/toolchain/SDK paths, offline Git map, package path, existing
+default scratch path, and SwiftPM flag remains byte-for-byte unchanged.
+
+The outer zsh is a bootstrap/wait shell only. Background launch is mandatory:
+the tested foreground-`exec` shape makes Ruby a process-group leader and
+`setsid` returns `EPERM`, while the frozen background shape joined
+`PID == PGID == SID` in its Ruby child. `BG_NICE` is disabled, `umask` is
+`077`, and the shell performs one exact builtin wait. It must not be killed at
+the `900`-second assessment horizon; the Ruby guardian may continue
+containment-only until it can publish conservation or remain without a
+terminal.
+
+Run exactly once:
+
+```zsh
+/bin/zsh -f -c '
+unsetopt BG_NICE
+umask 077
+/usr/bin/env -i \
+  LANG=C.UTF-8 \
+  LC_ALL=C.UTF-8 \
+  TZ=UTC \
+  PATH=/usr/bin:/bin \
+  __CF_USER_TEXT_ENCODING=0x1F5:0x0:0x0 \
+  /usr/bin/ruby --disable-gems \
+  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/docs/tools/prime-driver-v2-r14-guardian.rb \
+  </dev/null &
+r14_guardian_pid=$!
+wait $r14_guardian_pid
+'
+```
+
+The guardian has zero arguments after Ruby consumes the script path. It calls
+`Process.spawn` exactly once, with no shell, to launch the frozen Swift argv
+and exact forty-key replacement environment. It launches no `ps`, `pgrep`,
+`env`, clock, timeout, or cleanup child. The only target process is that Swift
+child; compiler/linker and XCTest descendants remain inside the guardian's
+fresh session unless the exact SessionFixture deliberately creates its closed
+detached test sessions.
+
+Normal SwiftPM compiler/linker descendants are harness telemetry. Expected
+target topology is one XCTest runner and two sequential SessionFixture
+supervisors with their two passive same-image children: four SessionFixture
+launches total and at most two concurrently. ShotGovernor, production
+Supervisor, fixed Git/Swift roles, SpawnCanary, FixtureChild, and
+SecureChildIntegration launch counts remain zero.
+
+### Fresh-chain and disjoint outcome predicates
+
+No non-`ABSTAIN` mechanics classification is permitted unless
+
+```text
+R14_fresh_chain =
+    exact_R13_source
+    AND conserved_inputs
+    AND zero_preflight_survivors
+    AND fresh_provenance_object
+    AND fresh_governor_object
+    AND fresh_livetests_object
+    AND admitted_primecore_module
+    AND admitted_governor_module
+    AND admitted_drivercoretests_module
+    AND fresh_linked_xctest
+    AND admitted_sessionfixture_image
+```
+
+Each mandatory fresh object must be a final no-follow joined regular file with
+a SHA-256 different from its frozen preimage and mtime/ctime inside the
+inclusive command interval. Each module may be its exact preimage or a fully
+recorded named-joined interval successor because R13 added no module-visible
+declaration; module neutrality cannot substitute for mandatory object
+freshness. Natural guardian completion requires SessionFixture to remain the
+exact joined arm64 preimage; any interval successor is containment-only and
+forces `ABSTAIN`. The final XCTest must have a new SHA-256 and UUID,
+be linked no earlier than the three mandatory objects, contain the R13 identity
+once, the R11 identity zero times, and the selected-method substring on one
+strings record. Its link list retains exact bytes and names all three required
+objects once.
+
+The only `PASS` predicate is:
+
+1. `R14_fresh_chain = true`; a valid exclusive guardian terminal with status
+   `R14_GUARDIAN_NATURAL_EXIT`; exact Swift exit `0`; elapsed time below the
+   `840`-second cutoff; zero guardian STOP/KILL signals; no containment phase;
+   two real empty scans; captured-generation absence; proof-group `ESRCH`;
+   sticky unsafe-process count `0`; exact admission baseline `16` /
+   `6185ea35d684b2a50529aa79f1455bae789eda056e298f5509e7c5127423abd5`;
+   no Fixture replacement, workspace rebound, or unexpected nested session;
+   exact selected case, suite, and SwiftPM terminals; exactly one test passed
+   and zero failed or skipped; exact admission-root delta `0`; no new R14
+   fail-stop residue; conserved epoch/inputs; and independent postflight zero
+   SessionFixture/XCTest processes. Only this conjunction may set
+   `R14_mixed_test_host_mechanics = PASS`.
+
+A passing observation proves on this invocation that R13 compiled and linked,
+the structural assertions executed, prepublication live-member containment
+closed, and orphan exact reap was followed by either member-derived
+containment or two complete joined empty scans, including exact PID waits and
+final captured-generation/group absence. The XCTest observation does not
+publish which orphan subpath closed. It proves no production supervisor
+identity, atomic process-table snapshot, universal PID/PGID-race safety, or
+process-derived role authority. Guardian fields prove only its captured
+operational process domain; manifest/lock/dependency/source conservation,
+artifact freshness, root deltas, exact launch multiset, and zero production
+launch remain independent postmortem predicates.
+
+Every abnormal outcome remains disjoint:
+
+2. A complete fresh chain, selected-test start with no XCTest terminal,
+   nonzero outer status, no outer timeout/interruption, and the exact five
+   retained selected-method role roots may be recorded only as
+   `R14_UNCLASSIFIED_FAIL_STOP_SHAPE`. Mechanics and causal diagnosis remain
+   `ABSTAIN`. R13 moved orphan census after exact reap, while the unchanged v2
+   publisher represents only the old pre-reap
+   `armed / orphan_initial_census / supervisor_stop` relation. The new held
+   diagnostic leaf is therefore expected to remain empty when publication
+   declines. A nonempty apparently valid R13-identity v2 record is
+   contradictory evidence and a hard stop, not a causal `PASS`.
+3. Guardian intervention, nonzero child status, compile/link failure,
+   ordinary XCTest failure, timeout, stale/incomplete chain, wrong root delta,
+   survivor, Fixture successor, workspace rebound, sticky unsafe observation,
+   malformed residue, unavailable census, missing/malformed guardian terminal,
+   or any other shape leaves mechanics and causal diagnosis `ABSTAIN`.
+
+Any prelaunch predecessor/preimage drift, dirty source/control/dependency,
+manifest/lock/workspace change, existing or malformed R14 epoch, retained-root
+mutation, public/production-root appearance, resolution/fetch/network attempt,
+ambient environment, altered argv/cwd, second Swift command, `--skip-build`,
+unexpected target image, or unavailable outer containment stops before
+launch. After launch every result consumes R14. The frozen guardian alone may
+signal its currently joined private domain; no manual/post-shot signal is
+authorized. Retain all evidence and do not retry or clean anything.
+
+Every outcome retains:
+
+```text
+R14_swiftpm_commands <= 1
+R14_production_attempts = 0
+outer_journal_authority_vector = 00000000
+gate_E_scientific_outcome = ABSTAIN
+gate_E_clearance_granted = 0
+```
