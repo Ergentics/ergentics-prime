@@ -8389,3 +8389,153 @@ callback, role, timeout, writer, or second authority surface was added.
 This checkpoint authorizes no execution. Any R9 command must be separately
 frozen on this exact source commit, tree, and identity and must use a new
 private epoch. R7 remains consumed and is not retried.
+
+## Gate E1.4-R9 freeze — repaired held-vnode Release diagnostic
+
+| Coordinate | Frozen value |
+| --- | --- |
+| Status | `FROZEN_NOT_EXECUTED` |
+| Durable-control predecessor | R8 source checkpoint `727c562b4dc38eb7f771edc5c96bdd699e9dc0f1` / tree `aee169d3dadfb6dcc405ee6c0ae991d967310ff3` |
+| Source commit/tree/identity | clean `1bd9b9e2f30dc17e7983cb6f9bf0ae4831851efd` / `a2aff7d040c97c379161eec3ea0459f336cd9205` / `e458c197935662e827596db947b5b432cf21a3001fb8b2478f8ac49d2737e128` |
+| R9 epoch | `/private/tmp/gate-e1-4-mechanics-r9-1bd9b9e2-e458c197935662e8`; absent before this freeze |
+| Authorized SwiftPM commands | exactly `1`: one Release `swift test`; no `--skip-build` |
+| Selected XCTest methods | exactly the existing anchored identifier |
+| Overall wall ceiling | `900` seconds |
+| Process credentials / initial cwd | effective UID/GID `501 / 20`; exact clean source worktree root |
+| Production attempts / authority vector | `0 / 00000000` |
+| Fetch / network / GitHub | `0 / 0 / 0` |
+
+R9 is a new diagnostic on the R8 source identity, not a retry of R7. After this
+freeze is committed, create the exact R9 root once, require it UID-owned mode
+`0700`, and no-follow join its path/device/inode. Its inventory must then equal
+exactly the nine UID-owned mode-`0700` children `home`, `config`, `tmp`,
+`git-template`, `swiftpm-cache`, `swiftpm-config`, `swiftpm-security`,
+`clang-module-cache`, and `swiftpm-module-cache`; no-follow join every child and
+require each child initially empty. All prior epochs and the five R5 forensic
+roots remain retained and forbidden for reuse or cleanup.
+
+Define `rho9` as replacement of the sole R7 root string
+
+```text
+/private/tmp/gate-e1-4-mechanics-r7-d408680d-9a46327485eb257f
+```
+
+with
+
+```text
+/private/tmp/gate-e1-4-mechanics-r9-1bd9b9e2-e458c197935662e8
+```
+
+throughout R7's exact finite `env -i` map and cache/config/security CLI paths.
+Every other key and value, `umask 077`, stdin `/dev/null`, package path,
+existing default `.build` scratch path, Xcode tool/SDK path, offline Git map,
+and SwiftPM flag remains byte-for-byte unchanged. Timing adds no observer
+process or `date` invocation and does not change the one SwiftPM command count.
+
+The frozen inputs and R7 build preimages are:
+
+| Input | Exact R9 preimage |
+| --- | --- |
+| Package build root | device/inode `16777231/17179422`; existing default `.build` only |
+| Root manifest / lock | `fa68f463ca31a4ca25af6b14eb19b139df0c8ef8259a6348bb40e97c2dcdeb81` / `bd7a18ec5b8def3b453d7eb86ba43a2f277c2308c9da806845b69ca5f76cd375` |
+| Nested manifest / lock | `753f42251e768faaee3686da38e6f6bf7de048526199445f0e11c088af53dada` / `d70a43567cbd3be75083ab147020b86b055513020d95632f8286f60913c9374a` |
+| Workspace state | device/inode `16777231/17182550`; `1,704` bytes; SHA-256 `8eeb391d590b20e5eec603ab9d078757f2106a29467a7ff079194278bba921bf` |
+| MLX checkout | clean `d37885a278f1c37484a94d0f401a418735e66519` / tree `5310749549cca107fc1bb07d82dacf043bc02b9e` |
+| Numerics checkout | clean `0c0290ff6b24942dadb83a929ffaaa1481df04a2` / tree `4560bfb65f2c26cbd159c3e1a9cbf01600bace1b` |
+| Provenance source / R7 object / R7 PrimeCore module | source SHA-256 `a52048db1a099ee0e7bedfc545211d3dc664579bfac36c4dec9a1b0e54e39840`; object `16777231/17390573`, `12,760` bytes, SHA-256 `0b4ccd026e72c1cf68d2e680c75e1aed2d10d0294f9916f370c5dac8911532d7`; module `16777231/17390522`, `22,992,744` bytes, SHA-256 `285a7d8a177a835aa720b9a9de3cdf6900735fd41c90abe7d4d31dcda3f6997b` |
+| LiveTests source / R7 object / R7 module | source SHA-256 `df2e6803106d28d76d91b76a24d0d76bf887b40085c0a1936f384d3517eb73f2`; object `16777231/17390684`, `2,834,488` bytes, SHA-256 `1b93706d86179fed9867c542e38b6e0722c16b9f1df95de2bc18ffce0273707f`; module `16777231/17390678`, `209,764` bytes, SHA-256 `b77b99c13294628437d3d6d2f8e9add5eaa1ea9beccae2b67d6c316bf7a2de4b` |
+| GovernorCore source / R7 object / R7 module | source SHA-256 `0eaf7c7d94a073b550cdd130f968f54d5344508fea251893114fdcc9c4a125a5`; object `16777231/17390652`, `2,344,520` bytes, SHA-256 `0c1a79690124aff8fa8b05505d559d091751d3d880a6b0b31e21d4b35e01bd9c`; module `16777231/17390645`, `293,820` bytes, SHA-256 `f2699a9e6e90e2429556cfe481f180f792440a8d53901f3095207654ec934b6b` |
+| SessionFixture | `16777231/17382060`; `53,072` bytes; SHA-256 `177a18c20bc42486c77b52af4c472be222dec1baabf8973ece7b2d44ea92756e`; UUID `2EBB880A-D28B-32FF-9B7E-EB868AF5D9B6` |
+| ShotGovernor | `16777231/17390669`; `48,754,152` bytes; SHA-256 `d9497cb0abd861b6499dd44a515e0fb375c34a0c70cfb65edc71653b9585b8af`; UUID `43060858-C987-3561-950B-4AC702221DEC` |
+| DriverV2Supervisor | `16777231/17390643`; `48,029,880` bytes; SHA-256 `10d5ae4ba0618e91c1d46d8301a14e9878f4dfcb9ca1295e7338fa209682bf19`; UUID `A4FCB560-D340-38B4-96C1-23DCA83215FB` |
+| SecureChildIntegration | `16777231/17390603`; `51,271,120` bytes; SHA-256 `8c1d8e2cae0553bde916b9b2cf0d8afbc7222d98fc3405262a9b9ffe3b762ff2`; UUID `49CD8DBD-62B8-3CBF-AA5F-6CF7ADEA9517` |
+| XCTest executable | `16777231/17390704`; `57,901,248` bytes; SHA-256 `9e98531150d3f4b79eec44e129493cf938aa03a6b47ad046fc98bd779f3e2fec`; UUID `1F69E202-7FCC-317A-9761-266D1A51DEF8`; R7 identity once, R8 identity zero times, selected-method record once |
+| Compiler diagnostics | PrimeCore and GovernorCore each `268` clean bytes / SHA-256 `2c72d5afff8cce441f2f8299a18215b0bf79605aa7eb05839e38f7949b46c0e2`; DriverCoreTests `592` bytes / SHA-256 `3a659c49947fa1ef3f236f4f60b2097b163d7076127510e4a7ab0122e3781dd8` |
+
+Every listed object, module, and image is a one-link flags-`0` regular file
+with only `com.apple.provenance`; images are arm64 mode `0700`, objects/modules
+mode `0600`. They are build preimages, not launch authority. The scoped
+admission set is exactly the historical `20260803-c` root plus the five R5
+roots, the public-admission inventory is empty, and the exact R8 production
+root
+`/private/tmp/prime-driver-v2-gate-e-release-e458c197935662e827596db947b5b432cf21a3001fb8b2478f8ac49d2737e128`
+is absent and forbidden.
+
+Run exactly once:
+
+```sh
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift test \
+  --package-path /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.driver-v2-gate-c-staging/Tests/PrimeValidationWorkflow \
+  --configuration release \
+  --scratch-path /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.driver-v2-gate-c-staging/Tests/PrimeValidationWorkflow/.build \
+  --cache-path /private/tmp/gate-e1-4-mechanics-r9-1bd9b9e2-e458c197935662e8/swiftpm-cache \
+  --config-path /private/tmp/gate-e1-4-mechanics-r9-1bd9b9e2-e458c197935662e8/swiftpm-config \
+  --security-path /private/tmp/gate-e1-4-mechanics-r9-1bd9b9e2-e458c197935662e8/swiftpm-security \
+  --disable-netrc --disable-keychain --force-resolved-versions \
+  --disable-automatic-resolution --disable-sandbox --disable-swift-testing \
+  --filter '^PrimeValidationWorkflowDriverCoreTests\.PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests/testGateEJournalChainOneWinnerAndPoisonAreExact$' \
+  </dev/null
+```
+
+The command must be the child of `umask 077` and the exact resolved `rho9`
+finite `env -i` map. Starting it consumes R9. No second Swift command, retry,
+same-epoch reuse, cleanup, production root, or authority promotion is allowed.
+Normal SwiftPM compiler/linker processes are harness telemetry. No target
+executable other than the XCTest runner and the test-held SessionFixture
+children may launch; ShotGovernor, production Supervisor, fixed Git/Swift
+roles, SpawnCanary, FixtureChild, and SecureChildIntegration launch counts stay
+zero.
+
+Every non-`ABSTAIN` result requires a fresh R8 build frontier. The final
+provenance object, PrimeCore module, LiveTests object, DriverCoreTests module,
+and XCTest must be no-follow joined successors with timestamps inside the R9
+interval and different hashes from the frozen R7 preimages. The final XCTest
+must contain the R8 identity exactly once, the R7 identity zero times, and the
+selected-method substring on exactly one strings record. GovernorCore and the
+unchanged target images may remain exact or rebuild; record either transition.
+
+R9 inherits R7's three disjoint outcome rules and exact postmortem predicates,
+with R8 source identity
+`e458c197935662e827596db947b5b432cf21a3001fb8b2478f8ac49d2737e128`
+and the exact R9 epoch substituted. Normal exit `0`, one passed selected test,
+no failure/skip, exact admission-root delta `0`, and all mechanics predicates
+yields `R9_mixed_test_host_mechanics = PASS`. A missing XCTest terminal can
+yield `R9_fail_stop_diagnostic = PASS` only for exact new-root delta `5`,
+exactly one fixed mode-`0400` leaf in the main root, and an exact canonical R6
+eleven-field record carrying that R8 source identity whose admitted
+device/inode joins the final named vnode. Any compile failure, timeout,
+ordinary test failure, wrong root delta, or invalid/missing record leaves both
+mechanics and diagnostic `ABSTAIN`.
+
+All new roots are retained. Record source/control and dependency cleanliness,
+manifests, locks, workspace state, epoch inventory, Git-template emptiness,
+reserved-root absence, build transitions, complete root delta, diagnostic
+postimage if present, and the available post-command process/handle snapshot.
+No R9 outcome can set an outer journal bit, authorize production, or grant
+Gate-E clearance.
+
+The maximum transitions are:
+
+```text
+normal return:
+R9_release_test_compile = PASS
+R9_selected_xctest = PASS
+R9_mixed_test_host_mechanics = PASS
+R9_fail_stop_diagnostic = NOT_PUBLISHED_NORMAL_RETURN
+
+durable fail-stop datum:
+R9_release_test_compile = PASS
+R9_selected_xctest = STARTED_NO_TERMINAL
+R9_mixed_test_host_mechanics = ABSTAIN
+R9_fail_stop_diagnostic = PASS
+
+ordinary failure or invalid postmortem:
+R9_mixed_test_host_mechanics = ABSTAIN
+R9_fail_stop_diagnostic = ABSTAIN
+
+all paths:
+outer_journal_authority_vector = 00000000
+production_attempt_count = 0
+gate_E_scientific_outcome = ABSTAIN
+gate_E_clearance_granted = 0
+```
