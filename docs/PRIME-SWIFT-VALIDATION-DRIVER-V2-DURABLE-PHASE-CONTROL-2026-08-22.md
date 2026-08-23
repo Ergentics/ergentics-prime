@@ -2966,3 +2966,42 @@ cannot exercise the supervisor's private developer-directory derivation, and
 cannot reproduce the exact consumed workspace/evidence/lease inodes. It only
 discriminates whether the same source tree and a standalone clone can pass
 the shared public admission/consume/guard path without a production child.
+
+## Gate E1.1 result — standalone admission passed without authority
+
+| Field | Observed value |
+| --- | --- |
+| Result | `PASS_DIAGNOSTIC_NON_AUTHORITY` |
+| Durable-control predecessor | `f5b9eeb58d35aea6a666c86b4d9357219ca1be02` / tree `796647bb6c1c044adb59efefc42d4db5da1a9561` |
+| Measured XCTest interval | `2026-08-23T00:34:32.341Z` through `2026-08-23T00:34:35.055Z` |
+| Diagnostic Prime commit/tree | `aba540a3009c4218b75fc065188dddce330f4b50` / `ee13a67abb0853e15e2da7745bc6def11cae5f6f` |
+| Diagnostic Prime status bytes before/after | `0` / `0` |
+| Companion status bytes before/after | `0` / `0` |
+| Release build | exit `0`; `187.37` seconds |
+| Selected XCTest | `1` executed / `1` pass / `0` failures; `2.714` seconds |
+| Combined watcher descriptors | `2,157` |
+| Production supervisor invocations | `0` |
+| Fixed-probe child processes | `0` |
+| Consumed Gate E root mutation | none; inode `17321558`, mtime `1787444179`, link count `8` unchanged |
+| Consumed lease/journal entries after diagnostic | `0` / `0` |
+
+This exact-tree standalone test passed the current public
+`admitPrerequisites`, prerequisite consume, dual-root watch preparation, and
+guard revalidation with fresh lease acquisition under the XCTest-only
+current-image seam. It shows that those shared mechanics can pass for this
+exact source tree on this standalone clone under the XCTest-only image seam;
+it does not rule out clone-, root-, filesystem-, or invocation-specific
+rejection. It does not replay the consumed root inodes, the supervisor's
+private developer-directory derivation, or production running-image capture,
+and it closes no Gate E authority.
+
+The source bytes of `developerDirectory(swiftExecutableAbsolutePath:)` have
+SHA-256
+`902d48325db710ef48447fc1746c8606d0ec1dbf320ed20f2db51d47aeaa1351`
+at both the passing Gate A candidate `8bfb27f2475ed336e4343150cd02dffb5cc0cc9d`
+and the consumed Gate E candidate. Gate A's exact Release image/request canary
+exited `0` and retained one lease entry. That conserved historical pass makes
+a systematic developer-path regression less likely, but it cannot identify
+what the later process observed. The exact Gate E1 rejection remains
+`ABSTAIN`; the residual is an invocation-specific developer-path or early
+admission/lease-prefix failure.
