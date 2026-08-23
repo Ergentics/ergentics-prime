@@ -3918,3 +3918,139 @@ Even fully verified exit `0` authorizes no Gate F execution. A separate clean
 Gate E result checkpoint must bind this freeze commit/tree and all retained
 evidence before any later Gate F proposal. SwiftPM build, artifact staging,
 XCTest inventory, and Swift-Testing inventory remain missing and forbidden.
+
+## Gate E1.2 result — spent and incomplete at prerequisite admission
+
+| Field | Observed value |
+| --- | --- |
+| Result | `INCOMPLETE_GATE_E_STATUS_71` |
+| Scientific cause | `ABSTAIN_WITHIN_ADMIT_PREREQUISITES_BEFORE_SUCCESSFUL_LEASE_LEAF_OPEN` |
+| Shot-freeze predecessor | `f77422bb9ba63645a8a061ef1acb1ae2f55a5ec8` / tree `d68b8d1817b9dc2e53a2a5aaf4051a347730363b` |
+| Source commit/tree | clean `1d341a529c442e63369c361b1e5ac95ca464fdf7` / `e787b3573bd44259606536860dc980720d73d64f` |
+| Source identity | consumed `194cf7141172ee06b5f9734af2e9c3df498547a2f718698ccd421ef7ae961d0f` |
+| Pre-invocation observation boundary | `2026-08-23T02:20:41Z`; epoch `1787451641` |
+| Exact XCTest interval | `2026-08-23T02:20:58.005Z` through `2026-08-23T02:20:58.906Z`; `0.901` seconds |
+| Post-invocation observation boundary | `2026-08-23T02:21:12Z`; epoch `1787451672` |
+| SwiftPM command execution elapsed | `3.342625959` seconds |
+| Exact frozen SwiftPM commands | `1`; budget permanently exhausted |
+| Shell result | exit `1` |
+| Selected XCTest | exactly `1` started / `0` passed / `1` unexpected failure |
+| Exact method-8 executions | `1` |
+| Dedicated supervisor launches | `1` |
+| Supervisor termination | normal exit `71`; fixed phase `admit_prerequisites`; no signal or timeout |
+| Supervisor stdout/stderr | `0` / `0` bytes |
+| Fixed-probe children | `0` |
+| Journal leaves | `0`; journal nlink `2` |
+| Package-target compiles/relinks | `0` / `0`; transcript contained `[0/1] Planning build` only |
+| Other tests or runners | `0`; Swift Testing disabled |
+| Gate E closure | `false` |
+| Gate F authorization | `false` |
+| Retry/relaunch/repair/rebuild/cleanup | permanently `false` |
+
+The exact frozen command was the command embedded in the predecessor freeze,
+with no extra or missing inline environment assignment or argument. The
+selected test reported this exact error payload at
+`PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests.swift:4209`:
+
+```text
+invalid("gate_e_release_supervisor_exit_71_phase_admit_prerequisites_base_/private/tmp/prime-driver-v2-gate-e-release-194cf7141172ee06b5f9734af2e9c3df498547a2f718698ccd421ef7ae961d0f")
+```
+
+The observation boundaries enclose the invocation but are not represented as
+exact command start and stop times. The XCTest timestamps and measured SwiftPM
+execution elapsed are the narrower process observations.
+
+### Retained consumed root
+
+| Item | Observed value |
+| --- | --- |
+| Base | `/private/tmp/prime-driver-v2-gate-e-release-194cf7141172ee06b5f9734af2e9c3df498547a2f718698ccd421ef7ae961d0f` |
+| Base vnode | device `16777231`; inode `17338584`; UID/GID `501`/`0`; mode `0700`; nlink `8`; flags `0`; size `256`; mtime/ctime `1787451658` |
+| Direct inventory | exactly `workspace`, `evidence`, `lease`, `workspace.driver-v2-gate-e-journal`, `outer-supervisor-stdout.bin`, `outer-supervisor-stderr.bin` |
+| Workspace | inode `17338585`; mode `0700`; nlink `2`; empty |
+| Evidence | inode `17338586`; mode `0700`; nlink `2`; empty |
+| Lease | inode `17338587`; mode `0700`; nlink `2`; empty; fixed lease leaf absent |
+| Journal | inode `17338588`; mode `0700`; nlink `2`; empty; `0/34` frozen leaves |
+| Supervisor stdout capture | inode `17338589`; mode `0600`; nlink `1`; zero bytes; SHA-256 `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` |
+| Supervisor stderr capture | inode `17338590`; mode `0600`; nlink `1`; zero bytes; same empty SHA-256 |
+
+The base and all six children are on device `16777231`, have UID/GID
+`501`/`0`, flags `0`, mtime/ctime `1787451658`, are ACL-free and
+provenance-xattr-only, and remain retained. Exclusive creation of the base
+permanently consumed the source identity. No root, child, or capture cleanup is
+authorized.
+
+### Retained final-shot caches
+
+| Cache | Retained poststate |
+| --- | --- |
+| Clang | `/private/tmp/gate-e1-2-final-shot-clang-module-cache-194cf7141172ee06`; device/inode `16777231`/`17338343`; UID/GID `501`/`0`; mode `0700`; nlink `2`; flags `0`; size `64`; mtime/ctime `1787451543`; empty |
+| SwiftPM | `/private/tmp/gate-e1-2-final-shot-swiftpm-module-cache-194cf7141172ee06`; device/inode `16777231`/`17338345`; UID/GID `501`/`0`; mode `0700`; nlink `10`; flags `0`; size `320`; mtime/ctime `1787451655`; eight top-level entries |
+
+The SwiftPM cache's exact retained top-level inventory is
+`3T5H2677C6X26`, `JFWOF8FH7S6X`,
+`PackageDescription-1ZB4AC7ND68BU.swiftmodule`,
+`Swift-1IEYM950OGIQC.swiftmodule`,
+`SwiftOnoneSupport-1TBU3EV6ADR6U.swiftmodule`,
+`_Concurrency-2ADZMZE46FIUY.swiftmodule`,
+`_StringProcessing-1FL9YJ9FR6ZV0.swiftmodule`, and `modules.timestamp`.
+Both cache leaves are ACL-free and provenance-xattr-only. They remain retained
+and are ineligible for cleanup or reuse.
+
+### Conserved harness, artifacts, repositories, and predecessor evidence
+
+| Item | Post-shot observation |
+| --- | --- |
+| Outer Swift harness | unchanged device/inode `16777231`/`1152921500312571585`; SHA-256 `179301dcb41ea78accc3fa0048a7e6f6710d891945a751a34addd622020c1818`; universal UUIDs `091206DD-5D8E-3B10-A6BE-B9CE23E2C670` / `108866E5-077A-3BE9-8E2C-0DADD00E2F09` |
+| Supervisor image | unchanged device/inode `16777231`/`17337418`; SHA-256 `fda8ab7c8f06a94c4f957f879312a6911d7e32015a344ea5b9ad63bbd04215ff`; UUID `6A097D4D-B7F2-32FD-B77C-012BE54EDD0E` |
+| XCTest image | unchanged device/inode `16777231`/`17337446`; SHA-256 `b3cf7e6aee0a73b05b493ff279b435f7b81b73c24c24b1731986d0adc0f534d5`; UUID `B65DABC8-28A9-3EE9-ABCC-4DB026D7FC39` |
+| Control before this result | clean shot-freeze predecessor commit/tree above |
+| Source, production Prime, diagnostic Prime | each clean at `1d341a529c442e63369c361b1e5ac95ca464fdf7` / `e787b3573bd44259606536860dc980720d73d64f` |
+| Companion | clean `163fc100710ece48119bc25954452d10f6a84f7f` / `9009daa4f8a07fbd5897e00b9571cef44ec292db` |
+| Prior consumed root | unchanged device/inode `16777231`/`17321558`; mtime `1787444179`; nlink `8`; exact six-entry empty inventory retained |
+| Eight predecessor cache leaves | all retained with every checkpointed inode, nlink, mtime, and ctime unchanged |
+| Manifests and `Package.resolved` | unchanged |
+| GitHub/dependency-fetch commands or transcript markers | `0` / `0`; no network marker or effect observed; direct network census not claimed |
+
+### Causal boundary and remaining roadmap state
+
+| Supported boundary | Result |
+| --- | --- |
+| Canonical request transport | completed before status `71` |
+| Private developer-directory derivation | completed before status `71` |
+| `admitPrerequisites` | entered and threw before returning a capability |
+| Persistent lease-leaf creation | did not complete successfully; fixed lease directory remains empty |
+| Admission capability / guarded owner / production image bind | not reached |
+| Journal prestart / fixed Git or Swift child | not reached; zero leaves and zero children |
+| Exact rejecting guard or errno | `ABSTAIN` |
+
+`PrimeMetalDeviceLease` does not unlink the fixed lease leaf after a successful
+`openat(O_CREAT)` return. Its absence therefore bounds the failure to the
+admission prefix at or before a successful lease-file open. It does not prove
+that the lease parent was never opened or locked, and it does not distinguish
+companion declaration validation, held-directory admission, private/empty or
+disjointness checks, lease-parent validation/locking, or the lease-file open.
+No errno, rejected guard, associated error, or narrower source location crossed
+the silent status boundary. The earlier standalone XCTest-seam admission pass
+does not resolve this production-invocation-specific rejection.
+
+| Still-missing authority | Gate |
+| --- | --- |
+| `prime_git_head_and_clean_process_observation` | E |
+| `companion_git_head_and_clean_process_observation` | E |
+| `swift_version_process_observation` | E |
+| `swift_target_info_process_observation` | E |
+| `swiftpm_build_execution` | F |
+| `artifact_staging` | F |
+| `xctest_inventory_execution` | G |
+| `swift_testing_inventory_execution` | G |
+
+The durable roadmap ledger still records the same eight authorities as
+unclosed. The terminated status-71 process left no live capability, binding,
+watch, lease, or authority token; its status, retained root, and captures are
+historical evidence only. Gate E is not closed; Gates F and G remain forbidden.
+The command budget and source identity are independently spent. This spent
+freeze/result authorizes only this clean control checkpoint and read-only
+retained-evidence analysis; the consumed identity itself grants no authority.
+Any future production work requires separately governed authorization, a new
+source identity, and a new freeze; it cannot reuse or reinterpret this shot.
