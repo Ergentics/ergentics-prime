@@ -3586,3 +3586,115 @@ final XCTest and supervisor hashes/metadata, complete floor, clean statuses,
 and root states must be committed in a separate final-shot-readiness
 checkpoint before the candidate's first method-8 invocation can be
 authorized.
+
+## Gate E1.2 structural-recovery result and final-shot readiness checkpoint
+
+| Field | Observed value |
+| --- | --- |
+| Result | `PASS_TEST_ENABLED_STRUCTURAL_RECOVERY_NON_AUTHORITY` |
+| Checkpoint disposition | `READY_PENDING_SEPARATE_SHOT_FREEZE` |
+| Durable-control predecessor | `4eb757fb9d1246f57e334dc41fbb8ea9b5d8ca22` / tree `f3915baa1c6818c30ad111b7d42be7614f875bad` |
+| Source commit/tree | clean `1d341a529c442e63369c361b1e5ac95ca464fdf7` / `e787b3573bd44259606536860dc980720d73d64f` |
+| Source identity | unconsumed `194cf7141172ee06b5f9734af2e9c3df498547a2f718698ccd421ef7ae961d0f` |
+| Measured interval | `2026-08-23T01:46:16Z` / epoch `1787449576` through `2026-08-23T01:49:53Z` / epoch `1787449793` |
+| SwiftPM result | exit `0`; build complete in `193.37` seconds |
+| Exact selector | `PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests.testCapabilitySurfaceHasNoCodecPublicInitializerOrSpawn` |
+| Selected XCTest | exactly `1` execution / `1` pass / `0` failures or unexpected failures; case `0.016` seconds; selected suite `0.017` seconds |
+| Swift Testing | disabled; no Swift-Testing runner |
+| Production supervisor / fixed-probe launch markers and effects | `0` / `0`; direct process census `ABSTAIN` |
+| Production method-8 invocations | `0` |
+| Candidate consumption | `false` |
+| Gate E outcome | `NOT_RUN`; no new authority or scientific conclusion |
+| Authorized next production action | `0`; only a later control-only shot freeze may be authored |
+| Gate F authorization | `false` |
+
+The Release transcript crossed the earlier Contracts testability stop, then
+compiled DriverCoreTests and relinked both definitive artifacts. The exact
+selected method read only the four committed source/manifest inputs and
+constructed no fixture, capability, request, process, root, lease, watch, or
+journal. Build products including SpawnCanary, FixtureChild,
+SecureChildIntegration, and the supervisor were compiled or linked but not
+selected; the exact transcript and closed selector contain no
+non-whitelisted launch marker or launch path.
+
+| Final supervisor fact | Observed value |
+| --- | --- |
+| Absolute path | `/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.driver-v2-gate-c-staging/Tests/PrimeValidationWorkflow/.build/arm64-apple-macosx/release/PrimeValidationWorkflowDriverV2Supervisor` |
+| Device/inode | `16777231` / `17337418`; descriptor/path joined before and after stable read |
+| UID/GID/mode/nlink/flags | `501` / `20` / `0755` / `1` / `0` |
+| Size; mtime/ctime | `47,675,784`; `1787449777` / `1787449777` |
+| Image | regular arm64 `MH_EXECUTE`; UUID `6A097D4D-B7F2-32FD-B77C-012BE54EDD0E`; ACL-free; only `com.apple.provenance` xattr |
+| SHA-256 | `fda8ab7c8f06a94c4f957f879312a6911d7e32015a344ea5b9ad63bbd04215ff` |
+| Identity membership | current identity exactly once; predecessor identity absent |
+
+| Final XCTest executable fact | Observed value |
+| --- | --- |
+| Absolute path | `/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.driver-v2-gate-c-staging/Tests/PrimeValidationWorkflow/.build/arm64-apple-macosx/release/PrimeValidationWorkflowPackageTests.xctest/Contents/MacOS/PrimeValidationWorkflowPackageTests` |
+| Device/inode | `16777231` / `17337446`; descriptor/path joined before and after stable read |
+| UID/GID/mode/nlink/flags | `501` / `20` / `0755` / `1` / `0` |
+| Size; mtime/ctime | `56,490,080`; `1787449784` / `1787449784` |
+| Image | regular arm64 `MH_BUNDLE`; UUID `B65DABC8-28A9-3EE9-ABCC-4DB026D7FC39`; ACL-free; only `com.apple.provenance` xattr |
+| SHA-256 | `b3cf7e6aee0a73b05b493ff279b435f7b81b73c24c24b1731986d0adc0f534d5` |
+| Identity/path membership | current identity exactly once; predecessor identity absent; exact source-worktree `#filePath` exactly once |
+| Test-build evidence | DriverCoreTests module mtime `1787449779`; selected live-test object mtime `1787449784` |
+
+The complete pre-shot floor is now data-closed:
+
+| Floor item | Observed value |
+| --- | --- |
+| Canonical source reseal | `545` admitted files / `544` identity records; identity `194cf7141172ee06b5f9734af2e9c3df498547a2f718698ccd421ef7ae961d0f` |
+| Root / nested compile-only gates | exit `0` / `0`; `9.359` / `12.413` seconds |
+| Seven frozen Debug selectors | `7` executions / `7` passes / `0` failures; each exactly one XCTest |
+| Debug elapsed seconds | `0.030`, `1.004`, `1.388`, `5.756`, `2.239`, `4.432`, `3.458` |
+| Release public-admission proof | exactly `1` execution / `1` pass / `0` failures; `2.751` seconds; `2,157` watchers; XCTest-only image seam |
+| Release test-enabled structural recovery | exactly `1` execution / `1` pass / `0` failures; both final artifacts refreshed and re-admitted |
+| Nested manifest | plugin-free; tracked bytes unchanged |
+| Root and nested `Package.resolved` / manifests | tracked bytes unchanged |
+| Production method 8 | not invoked |
+
+All eight retained module-cache leaves remain on device `16777231`, UID
+`501`, mode `0700`, ACL-free, and provenance-xattr-only:
+
+| Cache role and exact leaf | Inode / nlink | mtime / ctime |
+| --- | --- | --- |
+| Release admission clang `/private/tmp/gate-e1-2-release-admission-clang-module-cache-194cf7141172ee06` | `17325697` / `3` | `1787446879` / `1787446879` |
+| Release admission SwiftPM `/private/tmp/gate-e1-2-release-admission-swiftpm-module-cache-194cf7141172ee06` | `17325698` / `10` | `1787446876` / `1787446876` |
+| Product build clang `/private/tmp/gate-e1-2-source-release-supervisor-clang-module-cache-194cf7141172ee06` | `17334168` / `3` | `1787447637` / `1787447637` |
+| Product build SwiftPM `/private/tmp/gate-e1-2-source-release-supervisor-swiftpm-module-cache-194cf7141172ee06` | `17334169` / `10` | `1787447635` / `1787447635` |
+| Failed test build clang `/private/tmp/gate-e1-2-source-release-build-tests-clang-module-cache-194cf7141172ee06` | `17335574` / `3` | `1787448577` / `1787448577` |
+| Failed test build SwiftPM `/private/tmp/gate-e1-2-source-release-build-tests-swiftpm-module-cache-194cf7141172ee06` | `17335575` / `10` | `1787448574` / `1787448574` |
+| Structural recovery clang `/private/tmp/gate-e1-2-source-release-structural-test-clang-module-cache-194cf7141172ee06` | `17336716` / `3` | `1787449594` / `1787449594` |
+| Structural recovery SwiftPM `/private/tmp/gate-e1-2-source-release-structural-test-swiftpm-module-cache-194cf7141172ee06` | `17336718` / `10` | `1787449591` / `1787449591` |
+
+The six predecessor-leaf mtimes/ctimes predate recovery start. The structural
+recovery leaf mtimes/ctimes `1787449594` and `1787449591` fall within the
+measured interval after their exclusive empty admission. Those leaves were the
+only cache inputs authorized for the exact command; the timestamps do not
+independently attribute every contained write to a process. None is authorized
+as a later command input by this checkpoint.
+
+| Conserved repository/root fact | Observed value |
+| --- | --- |
+| Control before this checkpoint | clean `4eb757fb9d1246f57e334dc41fbb8ea9b5d8ca22` / `f3915baa1c6818c30ad111b7d42be7614f875bad` |
+| Source worktree | clean `1d341a529c442e63369c361b1e5ac95ca464fdf7` / `e787b3573bd44259606536860dc980720d73d64f` |
+| Production Prime clone | `/private/tmp/gate-e-prime-proof.lJ0uQj/prime`; same clean source commit/tree |
+| Diagnostic Prime clone | `/private/tmp/gate-e-preflight-prime.IBJAfD/prime`; same clean source commit/tree |
+| Companion clone | `/private/tmp/gate-e-companion-measure.pMGSXT/companion`; clean `163fc100710ece48119bc25954452d10f6a84f7f` / `9009daa4f8a07fbd5897e00b9571cef44ec292db` |
+| Successor production root | `/private/tmp/prime-driver-v2-gate-e-release-194cf7141172ee06b5f9734af2e9c3df498547a2f718698ccd421ef7ae961d0f`; absent |
+| Prior consumed root | device `16777231`; inode `17321558`; UID `501`; mode `0700`; nlink `8`; mtime `1787444179`; unchanged |
+
+The post-command process census is `ABSTAIN`: `/bin/ps` was sandbox-denied,
+and a later census could not prove absence of already-reaped children anyway.
+The bounded evidence is the exact source-only selector, plugin-free manifest,
+disabled Swift Testing, one XCTest execution/pass, exact build transcript,
+zero production-root or journal creation, and no supervisor or fixed-probe
+launch marker or closed-selector launch path.
+Disposition:
+`NO_NON_WHITELISTED_LAUNCH_EVIDENCED; POST_RUN_PS_UNAVAILABLE_SANDBOX_DENIED`.
+
+This checkpoint authorizes no production launch, no cache reuse, no retry of
+any prior command, no source edit, no GitHub or network operation, and no Gate
+F work. A later clean direct-child control commit must bind this checkpoint's
+commit/tree, both final artifact hashes and vnodes, exact roots, one explicit
+cache policy, one exact method-8 command/environment, and permanent no-retry
+terms before the first production invocation is authorized.
