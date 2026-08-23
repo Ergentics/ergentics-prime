@@ -8838,3 +8838,322 @@ semantic repair requires a separately committed source freeze. The next freeze
 must preserve the R9 fact that the monotonic death event was observed before
 `orphan_initial_census` and preserve the semantic distinction between an
 initiating body failure and a defer-containment failure. R10 selects no repair.
+
+## Gate E1.4-R11 causal fail-stop freeze — diagnostic source only
+
+| Coordinate | Frozen value |
+| --- | --- |
+| Status | `FROZEN_SOURCE_DIAGNOSTIC_ONLY_NOT_IMPLEMENTED` |
+| Durable-control predecessor | clean `7539d97914134d3547fde37f62064262ea2ccdcd` / tree `fc0a0e1dcc6609d86c73a8f1980c2cbc2731aba6` |
+| Source predecessor | clean `1bd9b9e2f30dc17e7983cb6f9bf0ae4831851efd` / tree `a2aff7d040c97c379161eec3ea0459f336cd9205` / identity `e458c197935662e827596db947b5b432cf21a3001fb8b2478f8ac49d2737e128` |
+| SwiftPM / build / test / XCTest or target launch / production attempt | `0 / 0 / 0 / 0 / 0` |
+| New epoch / root / leaf | `0 / 0 / 0` |
+| Retained-root mutation / cleanup | `0 / 0` |
+| Authority vector before / after | `00000000 / 00000000` |
+| Gate-E scientific outcome / clearance | `ABSTAIN / 0` |
+
+R11 exists only to preserve two causally distinct failures that R9 collapsed:
+the initiating `orphan_initial_census` rejection and the later defer-containment
+`supervisor_stop`. It records the immediate return/errno and the exact existing
+death-watcher checks around that stop. It does not repair, accept, retry, or
+reorder either operation.
+
+### Retained predecessor boundary
+
+The eleven admission roots remain present. Their newline-delimited sorted
+path-set SHA-256 is
+`4b7a0c36a26fa051bd58703538b60f3762b73a94e109a9b960abc743d7e66216`.
+The R9 leaf remains the named vnode `16777231/17393034`, UID/GID `501/0`, mode
+`0400`, one link, flags `0`, `408` bytes, SHA-256
+`72a4c0ab6b88c3d4deda001dcc444812245d946b91b0b968391b354606a7368d`:
+
+```text
+/private/tmp/prime-validation-admission-tests-BFD21FC0-9AEA-4E76-A7ED-66BDD4FDCD14/gate-e-session-fixture-fail-stop.json
+```
+
+Its parent remains `16777231/17392535`, UID/GID `501/0`, mode `0700`; its sole
+`11`-byte provenance xattr still has SHA-256
+`b01372585adb6c87881e5cf3e1d7472972cdec3ef5ecd45f86d42498a2df536a`.
+The reserved R8 production root
+`/private/tmp/prime-driver-v2-gate-e-release-e458c197935662e827596db947b5b432cf21a3001fb8b2478f8ac49d2737e128`
+remains absent and public admission inventory remains empty. R11 does not touch
+any of these retained facts.
+
+### Exact source allowlist
+
+Exactly one direct source successor may change exactly these three paths:
+
+1. `Tests/PrimeValidationWorkflow/Sources/PrimeValidationWorkflowDriverV2ShotGovernorCore/PrimeValidationDriverV2ShotGovernor.swift` — private scalar causal capture, private v2 encoding, and a zero-argument value-only test fixture;
+2. `Tests/PrimeValidationWorkflow/Tests/PrimeValidationWorkflowDriverCoreTests/PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests.swift` — assertions folded into the existing selected method only;
+3. `Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift` — canonical source-identity reseal only, after the first two paths are final.
+
+The existing package method signature, selected XCTest identifier, fixture
+modes, SessionFixture binary, role table, facade, DriverCore, PrimeCore process
+substrate, supervisor `main.swift`, manifests, locks, products, targets, Git and
+Swift roles, production harness, and `.github/**` remain unchanged. The sole
+new package symbol is the exact zero-argument, `Data`-only test seam frozen
+below. No new XCTest method, path loader, caller input, callback, command
+surface, or process capability is permitted.
+
+### Exact private v2 record
+
+The fixed leaf name remains
+`gate-e-session-fixture-fail-stop.json`. A future fresh fixture may contain only
+the private schema
+`prime_driver_v2_session_fixture_fail_stop_v2`. The v1 R9 leaf remains retained
+as historical evidence; the successor source has no live v1 publisher and no
+dual-schema acceptance path.
+
+V2 has exactly these twenty keys:
+
+```text
+admittedDeviceID: UInt64
+admittedInode: UInt64
+containmentState: closed existing enum
+containmentStopAttemptSequence: UInt64
+containmentStopDeathEventCheckPerformed: Bool
+containmentStopDeathEventObserved: Bool
+containmentStopErrno: Int32
+containmentStopReturn: Int32
+deadlineExpired: Bool
+deathEventObservedAtContainmentFailure: Bool
+deathWaitReturned: Bool
+executionPhase: closed existing enum
+failureCoordinate: String
+failureStatus: Int32
+fixedFailStopStatus: Int32
+fixtureMode: closed existing enum
+initiatingFailureCoordinate: String
+initiatingFailureStatus: Int32
+schema: String
+sourceIdentitySHA256: String
+```
+
+`failureStatus` and `failureCoordinate` preserve their v1 meaning: the caught
+defer-containment failure. The two `initiating*` fields hold the typed body
+failure captured immediately before the same error is rethrown unchanged.
+
+The byte contract is compact sorted canonical JSON, no trailing line feed,
+exact keys with no unknowns, and at most `1,024` bytes. Both coordinates are
+nonempty ASCII `[a-z0-9_]+`, each at most `128` bytes. With the longest closed
+enum literals, two `128`-byte coordinates, maximum admitted identifiers and
+errno, sequence `2`, and longest Boolean encodings, the frozen maximum
+canonical frame is `1,021` bytes. Any encoding outside that bound is rejected
+before publication.
+
+The `1,021`-byte value is the closed codec envelope, not permission for a
+broader scientific result. An accepted R11 causal datum additionally requires:
+
+```text
+fixtureMode = orphan_transition
+executionPhase = orphan_initial_census
+containmentState = armed
+deathWaitReturned = true
+containmentStopAttemptSequence = 1
+failureStatus = 70
+failureCoordinate = supervisor_stop
+initiatingFailureStatus = 70
+initiatingFailureCoordinate is in the closed census grammar below
+fixedFailStopStatus = 70
+deathEventObservedAtContainmentFailure = true
+```
+
+The closed initiating-coordinate grammar is exactly:
+
+```text
+session_census_capacity
+session_census_duplicate_pid
+session_census_duplicate_generation
+session_census_nonconvergent_query
+session_census_getsid_<errno>
+session_census_bsdinfo_<errno>
+session_census_getpgid_<errno>
+```
+
+Each `<errno>` is canonical unsigned decimal in `0...Int32.max`, with no sign
+and no leading zero except the single byte `0`. `ESRCH` (`3`) is excluded from
+the `getsid` and `getpgid` families because those exact source branches retry
+instead of throwing. The `bsdinfo` family retains the full range because a
+positive short return can reach its rejection independently of the
+nonpositive-`ESRCH` retry. No other `session_census_*` value is valid.
+
+Admitted device/inode are nonzero and source identity is the new exact embedded
+identity. Other well-formed v2 shapes are not R11 causal data and remain
+`ABSTAIN`; the implementation may fail closed by declining their publication.
+The v2 constructor enforces the stop and monotonic relations:
+
+```text
+containmentStopAttemptSequence == 1
+containmentStopReturn in {0, -1}
+containmentStopReturn == 0  <->  containmentStopErrno == 0
+containmentStopReturn == -1 <->  containmentStopErrno in 1...Int32.max
+containmentStopDeathEventCheckPerformed
+    <-> containmentStopReturn == -1 AND containmentStopErrno == ESRCH
+NOT containmentStopDeathEventCheckPerformed
+    -> NOT containmentStopDeathEventObserved
+failureCoordinate == supervisor_stop
+    <-> containmentStopReturn == -1
+        AND NOT (
+            containmentStopErrno == ESRCH
+            AND containmentStopDeathEventCheckPerformed
+            AND containmentStopDeathEventObserved
+        )
+deathWaitReturned -> deathEventObservedAtContainmentFailure
+containmentStopDeathEventObserved
+    -> deathEventObservedAtContainmentFailure
+deathWaitReturned AND containmentStopDeathEventCheckPerformed
+    -> containmentStopDeathEventObserved
+executionPhase == orphan_initial_census
+    -> fixtureMode == orphan_transition AND deathWaitReturned
+```
+
+`deathEventObservedAtContainmentFailure` is a later value-only snapshot of the
+same existing death watcher. It records chronology only and cannot participate
+in the stop guard, containment, retry, or exit decision. It may only reject an
+internally contradictory diagnostic record. A death-event sequence is
+intentionally omitted as redundant for this narrow slice: the existing watcher
+has one false-to-true transition, and `deathWaitReturned` plus the later snapshot
+bind the two relevant points. `containmentStopAttemptSequence` is a stop-attempt
+coordinate, not a death-event sequence.
+
+### Causal capture and attempt join
+
+Add local value-only `initiatingFailure` and `deathWaitReturned` scalars to the
+existing session-fixture exercise. After the already-registered function-level
+defer, place the unchanged post-spawn body inside one lexical `do/catch`. On
+throw, the catch copies status/coordinate from a typed private governor failure
+and rethrows the identical error. Only then does the existing function defer
+run, in the same order and with the same containment state. The caught `Error`
+itself is never retained. An untyped initiating error makes v2 publication
+ineligible; it does not acquire a synthetic coordinate.
+
+In the orphan branch, evaluate the existing `deathWatcher.wait` exactly once
+into a local Boolean, assign that exact value to `deathWaitReturned`, and apply
+the unchanged guard to the same local. Do not call `hasObservedExit()` to
+synthesize this value.
+
+Do not change the private `SessionCensus.contain` signature. Extend the existing
+private thrown governor failure with an optional value-only preliminary-stop
+observation. At the existing stop, instrumentation must perform exactly:
+
+```text
+target = -supervisorPID                  # existing pid > 0 makes this representable
+errno = 0
+stopReturn = kill(target, SIGSTOP)
+stopErrno = errno                       # immediate, before any lock/call
+if stopReturn == -1 AND stopErrno == ESRCH:
+    deathCheckPerformed = true
+    deathObserved = existingDeathWatcher.hasObservedExit()
+else:
+    deathCheckPerformed = false
+    deathObserved = false
+apply the existing acceptance guard using only these captured locals
+```
+
+No errno read after telemetry or locking may affect the guard. No `EPERM`,
+`EINVAL`, or other non-`ESRCH` result becomes acceptable. The stop target local
+must flow directly to the existing `kill`; the return and immediate errno plus
+the existing short-circuit watcher-check results attach to the thrown
+`supervisor_stop` failure. The negative target is intentionally not retained in
+the twenty-key record; its derivation is certified by the exact source identity
+and static flow, not asserted as runtime telemetry.
+
+The exact accepted phase/state proves the initiating failure occurred before
+the first body containment call; therefore the caught armed defer invocation is
+stop attempt `1`. Any body-containment attempt would advance phase to
+`primary_containment` and make the R11 record ineligible. This source-flow join,
+the attached stop tuple, and fixed sequence `1` prevent an earlier attempt from
+being relabeled as the defer failure without adding a mutable parameter to the
+production-shared containment function.
+
+The defer catch snapshots the same watcher's observed bit for record validation,
+then passes the initiating scalars and the caught typed status-70 containment
+failure to the existing held-leaf publisher. Best-effort publication remains
+immediately before the lexical, unconditional `_exit(70)`.
+
+The stop target, signal, scans, retry bounds, deadlines, wait path, reaping,
+containment decisions, leaf path, descriptor admission, positioned write,
+sync/full-sync, mode transition to `0400`, named-vnode join, xattr conservation,
+and fixed exit remain semantically unchanged.
+
+### Existing-method assertions and zero-capability seam
+
+Add one zero-argument package test-data method on the existing governor type,
+named
+`sessionFixtureCausalFailStopV2CanonicalFixtureForTesting()`. It returns only
+canonical `Data` for a fixed synthetic v2 value and accepts no status,
+coordinate, descriptor, path, PID, argv, environment, role, timeout, callback,
+or input bytes. It cannot open, write, spawn, signal, wait, publish, consume, or
+restore a capability. It is unreachable from capsule decoding and production
+entry.
+
+The fixed synthetic datum is:
+
+```text
+admittedDeviceID / admittedInode = 1 / 2
+fixtureMode / executionPhase / containmentState
+    = orphan_transition / orphan_initial_census / armed
+deadlineExpired = false
+deathWaitReturned = true
+initiatingFailureStatus / coordinate
+    = 70 / session_census_nonconvergent_query
+failureStatus / coordinate = 70 / supervisor_stop
+containmentStopAttemptSequence = 1
+containmentStopReturn / errno = -1 / 1
+containmentStopDeathEventCheckPerformed / observed = false / false
+deathEventObservedAtContainmentFailure = true
+fixedFailStopStatus = 70
+sourceIdentitySHA256 = current embedded identity
+```
+
+The method internally requires rejection of these fixed malformed values before
+returning the one valid datum: stop sequence `0` and `2`; return `0` with
+nonzero errno; return `-1` with zero errno; observed-without-check; check with a
+non-`ESRCH` failure; `ESRCH` without the check; `supervisor_stop` paired with an
+accepted `ESRCH` plus observed death; `deathWaitReturned=true` with a later
+false death snapshot; death-wait-returned=true with a performed-but-false stop
+death check; and stop-check-observed=true with a later false death snapshot. It
+also rejects an unknown census name, a missing errno suffix, a
+signed suffix, a leading-zero suffix, a nondecimal suffix, numeric overflow,
+`session_census_getsid_3`, and `session_census_getpgid_3`. This is a fixed
+internal self-check bundle, not an arbitrary-input validation API and not
+exhaustive proof of every constructor rejection.
+
+The existing
+`testGateEJournalChainOneWinnerAndPoisonAreExact` method, and no new identifier,
+uses an independent private mirror to require exact canonical bytes, twenty
+keys, scalar types/values, no line feed, decode/re-encode equality, and the
+`1...1,024` bound. It also statically proves that the fixture method is
+the package-scoped `static func ...() throws -> Data` inside the existing
+`package extension`, appears exactly once as a GovernorCore definition and once
+as a LiveTests call, has no process or filesystem primitive, and has zero
+reference from governor main/capsule paths.
+The method proves only that the fixed self-check bundle completed and the valid
+fixture matched. Source slice/order assertions—not runtime semantic proof—bind
+the lexical primary catch/rethrow, the same target local flowing to `kill`,
+immediate errno capture, exact armed/phase join, defer publication, and following
+`_exit(70)`.
+
+### Static checkpoint and hard stops
+
+R11 itself authorizes source editing, independent canonical identity
+calculations, provenance resealing, read-only diff/static audits, and one clean
+source checkpoint only. It authorizes no Swift command, build, test, child,
+fixture, governor, supervisor, target binary, new root, production process, or
+cleanup. The successor remains `548 / 547` files/identity records, `146 / 155`
+enumerated/authority directories, `703 / 2,163` Prime/combined watchers, with
+unchanged manifests, locks, dependency trees, and test identifiers.
+
+Hard stops are any containment/death/signal/deadline/reap semantic change; a
+second watcher or death owner; record-driven control; a parameterized encoder
+or callback; a second diagnostic leaf, journal, receipt, root, or schema
+publisher; a new test identifier or executable; stdout/stderr/prose fallback;
+an API returning a live capability; a source path outside the three-path
+allowlist; any R9 retry/waiver/cleanup; or any authority-vector, production, or
+Gate-E promotion.
+
+After implementation, a clean source checkpoint must bind the exact three-path
+diff and independently recomputed source identity. Any later Release build or
+selected diagnostic requires a new readiness freeze and a fresh epoch. A
+missing, malformed, or causally unjoined v2 record remains `ABSTAIN`; it never
+authorizes an automatic retry.
