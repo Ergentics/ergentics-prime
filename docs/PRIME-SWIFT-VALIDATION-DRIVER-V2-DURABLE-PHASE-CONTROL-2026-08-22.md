@@ -13683,3 +13683,106 @@ gate_E_mechanics_outcome = ABSTAIN
 gate_E_scientific_outcome = ABSTAIN
 gate_E_clearance_granted = 0
 ```
+
+## Gate E1.4-R19 constructor result — epoch ready, guardian uninvoked
+
+This EOF result is the current live ledger. It supersedes the immediately
+preceding R19 readiness checkpoint only for constructor execution status,
+the retained R19 namespace, and R19 counters. It does not authorize the
+guardian or promote any mechanics or scientific authority.
+
+| Coordinate | Observed value |
+| --- | --- |
+| Status | `R19_EPOCH_CONSTRUCTION_COMPLETE` |
+| Readiness predecessor | `d91488f63c79373431a6be60a70d00dba03279a6` / tree `afb377c79bad5081e93ba3f64df09e5fb88bbd7d` |
+| Implementation | `df73633c787a81c0c0c921b117c6ae18b631e757` / tree `c4567849eb473242a2ecea63a0bbae70f42209f2`; direct child of freeze `8c93e369a437a9c0ccd571fb2190dcc86adcf96e` / tree `219bbc5f07b2e19536bd20d951f42578000d1d11` |
+| Constructor identity | `docs/tools/prime-driver-v2-r19-epoch-constructor.rb`; blob `b8ea04d9763ce5de6c755086aef5d3e25b7b934b`; SHA-256 `8fb21cf715d6f7de1b9249029deefde7732c6a7c37b0717317370e6ff4c23ec0`; launch device/inode `16777231/17444939`; `15,877` bytes / `476` lines |
+| Invocation | exact approved frozen transport `1 / 1`, permanently consumed; outer exit `0`; no retry |
+| Transport result | exactly one canonical LF-terminated success frame; payload `2,046` bytes / SHA-256 `4d7e376bf065653ea6356b2dbd01d6505c0435fdb52aff96b65f7f916266a924`; frame `2,131` bytes / SHA-256 `abebd2ad63ecb18cc47a981308fece3ecc18245bd743910521876bdd9d1eda06`; no other captured bytes |
+| Final root | `/private/tmp/gate-e1-4-mechanics-r19-befc6324-b501ad0d7ab1b6c5`; device/inode `16777231/17445748`; UID/GID `501/0`; mode `0700`; nlink `11`; size `352`; mtime/ctime `1787590282/1787590282`; flags `0` |
+| Children | exactly nine fixed empty directories; device `16777231`; inodes `17445749` through `17445757` in receipt order; UID/GID `501/0`; mode `0700`; nlink `2`; size `64`; common mtime/ctime `1787590282/1787590282`; flags `0` |
+| Publication | root `mkdirat = 1`; child `mkdirat = 9`; exclusive no-replace publication true; staging absent; guardian terminal and terminal-staging leaves absent |
+| Mechanics topology | `13 / 043ab46066a30c11bac6adfb431829117e5cafb05a43db7388d1806b5945e0c9` |
+| Filesystem corroboration | every R19 directory has no ACL and only the ordinary `com.apple.provenance` xattr of `11` bytes; `/private/tmp` remained `16777231/774813`, UID/GID `0/0`, mode `01777` |
+| Admission conservation | prefix baseline unchanged `21 / 0c2e05f41db17c352678ad54b3bbcbaa1ce8eaec87175848e9a236a3a6dfd9bf`; constructor created no admission root |
+| Source/fixture conservation | source clean `befc632485930a9cca7f618d3704292b5465f911` / tree `7d1a3bf302fe358f9e42dc1ed2bf54ed3d22982e`; root `16777231/17154421`; fixture `16777231/17382060`, `53,072` bytes, SHA-256 `177a18c20bc42486c77b52af4c472be222dec1baabf8973ece7b2d44ea92756e` |
+| Prior retained state | R18 epoch rejoined `16777231/17419092`; stopped-adoption marker rejoined empty `16777231/17443295`; neither was changed |
+| Operation surface | constructor-internal process spawns/signals `0/0`; no guardian, Swift, SwiftPM, cleanup, deletion, retry, signal, Git evidence, energy, or scientific action |
+| Authority | namespace construction only; scientific authorities closed `0`; vector `00000000`; Gate-E mechanics/science `ABSTAIN`; clearance `0` |
+
+### Exact transport-visible receipt
+
+<!-- R19_EPOCH_CONSTRUCTOR_RECEIPT_BEGIN -->
+```json
+{"child_mkdirat_count":9,"children":[{"dev":16777231,"ino":17445749,"uid":501,"gid":0,"mode":"0700","nlink":2,"size":64,"mtime":1787590282,"ctime":1787590282,"flags":0,"leaf":"home"},{"dev":16777231,"ino":17445750,"uid":501,"gid":0,"mode":"0700","nlink":2,"size":64,"mtime":1787590282,"ctime":1787590282,"flags":0,"leaf":"config"},{"dev":16777231,"ino":17445751,"uid":501,"gid":0,"mode":"0700","nlink":2,"size":64,"mtime":1787590282,"ctime":1787590282,"flags":0,"leaf":"tmp"},{"dev":16777231,"ino":17445752,"uid":501,"gid":0,"mode":"0700","nlink":2,"size":64,"mtime":1787590282,"ctime":1787590282,"flags":0,"leaf":"git-template"},{"dev":16777231,"ino":17445753,"uid":501,"gid":0,"mode":"0700","nlink":2,"size":64,"mtime":1787590282,"ctime":1787590282,"flags":0,"leaf":"swiftpm-cache"},{"dev":16777231,"ino":17445754,"uid":501,"gid":0,"mode":"0700","nlink":2,"size":64,"mtime":1787590282,"ctime":1787590282,"flags":0,"leaf":"swiftpm-config"},{"dev":16777231,"ino":17445755,"uid":501,"gid":0,"mode":"0700","nlink":2,"size":64,"mtime":1787590282,"ctime":1787590282,"flags":0,"leaf":"swiftpm-security"},{"dev":16777231,"ino":17445756,"uid":501,"gid":0,"mode":"0700","nlink":2,"size":64,"mtime":1787590282,"ctime":1787590282,"flags":0,"leaf":"clang-module-cache"},{"dev":16777231,"ino":17445757,"uid":501,"gid":0,"mode":"0700","nlink":2,"size":64,"mtime":1787590282,"ctime":1787590282,"flags":0,"leaf":"swiftpm-module-cache"}],"constructor_process_spawn_calls":0,"constructor_signals":0,"final_path":"/private/tmp/gate-e1-4-mechanics-r19-befc6324-b501ad0d7ab1b6c5","guardian_terminal_present":false,"mechanics_count":13,"mechanics_sha256":"043ab46066a30c11bac6adfb431829117e5cafb05a43db7388d1806b5945e0c9","payload_sha256":"4d7e376bf065653ea6356b2dbd01d6505c0435fdb52aff96b65f7f916266a924","published_no_replace":true,"root":{"dev":16777231,"ino":17445748,"uid":501,"gid":0,"mode":"0700","nlink":11,"size":352,"mtime":1787590282,"ctime":1787590282,"flags":0},"root_mkdirat_count":1,"staging_absent":true,"staging_path":"/private/tmp/gate-e1-4-mechanics-r19-staging-befc6324-b501ad0d7ab1b6c5","status":"R19_EPOCH_CONSTRUCTION_COMPLETE"}
+```
+<!-- R19_EPOCH_CONSTRUCTOR_RECEIPT_END -->
+
+Removing only `payload_sha256` from the top-level key-sorted payload, while
+nested root and child receipts retained constructor insertion order,
+independently reproduced `2,046` bytes and SHA-256
+`4d7e376bf065653ea6356b2dbd01d6505c0435fdb52aff96b65f7f916266a924`.
+Reattaching it reproduced the exact `2,131`-byte LF frame and SHA-256
+`abebd2ad63ecb18cc47a981308fece3ecc18245bd743910521876bdd9d1eda06`.
+A fresh read-only reconstruction from the retained vnode state matched that
+frame exactly.
+
+One auxiliary read-only preflight command initially addressed the fixture
+relative to the control repository and therefore returned `ENOENT`. It
+did not enter the constructor transport, consume the identity, or mutate any
+state. Before launch, the same stat/hash check was rerun from the exact source
+repository and rejoined the frozen source and fixture identities above. The
+constructor SHA, mechanics/admission inventories, R18 retained objects, and
+both absent R19 roots had already passed their exact preflight.
+
+The named script snapshot-to-Ruby-open interval remains the accepted userspace
+race. The success frame, exclusive publication, and postflight do not erase
+that residual. They do establish that the retained result matches the exact
+frozen R19 constructor bytes and namespace contract. No constructor process
+survivor is possible from the artifact's own surface because it spawned none;
+the approved outer zsh/env/Ruby exec transport returned with exit `0`.
+
+### Boundary and next permitted direction
+
+This result consumes the R19 constructor permanently. It cannot be rerun,
+cleaned, repaired, or reinterpreted. Constructor PASS does not authorize the
+R19 guardian, fixed Swift assessment, any signal, evidence interpretation,
+authority closure, or Gate-E promotion.
+
+The next permitted change is one control-only guardian-readiness freeze based
+on this constructor result. It must re-pin the committed result SHA/tree, R19
+guardian blob/SHA and named-path identity, exact root and nine child vnodes,
+source/fixture/admission preimages, fixed Swift argv and environment, one-spawn
+and bounded STOP/KILL envelope, terminal maximum, named userspace races,
+potentially indefinite post-spawn containment, and all retained-state
+conservation. It must be committed before any guardian approval or launch.
+No Swift, SwiftPM, guardian, signal, cleanup, energy O1/O2/O3, or source change
+may occur in that freeze.
+
+```text
+R19_implementation_freezes = 1
+R19_constructor_implementations = 1
+R19_guardian_implementations = 1
+R19_epoch_constructor_invocations = 1_consumed_terminal_pass
+R19_epoch_constructor_passes = 1
+R19_epoch_roots_created = 1
+R19_epoch_complete = 1
+R19_guardian_invocations = 0
+R19_swiftpm_commands = 0
+R19_production_spawn_calls = 0
+R19_production_stop_call_entries = 0
+R19_production_kill_call_entries = 0
+R19_production_attempts = 0
+R19_constructor_namespace_mutation_calls = 11_entered_successful
+R19_retained_state_mutations = 1_epoch_construction_transition
+R19_retained_epoch_publications = 1_exclusive_no_replace
+R19_retained_directories_created = 10
+R19_cleanup_performed = 0
+energy_O1_implementations = 0
+energy_O2_invocations = 0
+energy_O3_measurements = 0
+outer_journal_authority_vector = 00000000
+gate_E_mechanics_outcome = ABSTAIN
+gate_E_scientific_outcome = ABSTAIN
+gate_E_clearance_granted = 0
+```
