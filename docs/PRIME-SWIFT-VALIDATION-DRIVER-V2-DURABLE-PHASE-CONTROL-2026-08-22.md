@@ -15268,3 +15268,69 @@ gate_E_mechanics_outcome = ABSTAIN
 gate_E_scientific_outcome = ABSTAIN
 gate_E_clearance_granted = 0
 ```
+
+## R19 native-leaf admission auditor — compile failure retained, repair pair frozen
+
+The first authorized compiler entry failed before producing an executable.
+The four diagnostics reduce to two source defects: the SDK does not import
+`_NSGetEnviron` into Swift scope, and the line-broken `..<` expression was
+parsed as a postfix operator. The merged Codex transport did not preserve a
+stdout/stderr partition or sealed transcript; this record therefore retains
+the exact structured diagnostics and marks stream bytes/hash unavailable
+instead of inventing them.
+
+Build A is consumed and permanently retained with its populated module cache.
+Build B was created but never compiled; its unused authority is permanently
+retired. It cannot become half of a corrected pair because the repaired source
+must have a different blob and HEAD/tree. Neither old root may be cleaned,
+reused, or retried. No executable exists in either root, no resulting image ran,
+and the exact canary namespace remains untouched.
+
+The repair is one modified source path and only two semantic changes: add the
+repo-proven fixed `@_silgen_name("_NSGetEnviron")` pointer binding and use it;
+precompute the already-bounded identifier slice endpoints so the range operator
+is lexically unambiguous. `ProcessInfo`, dynamic lookup, generic environment
+APIs, parser/frame changes, Mach-O-policy changes, and FD/output-policy changes
+remain outside the allowlist. The reviewed worktree candidate is `1,049` lines,
+`39,324` bytes, SHA-256
+`38006a0d9ea6472d3b3a6a6daecf093f8d35ddcbd7eab2eac1bcc29857e30701`.
+
+A separately named repair pair is authorized at the two exact absent roots in
+the canonical record. Each root may be created once with only mode-`0700`
+`tmp/` and `module-cache/`. Repair A precedes repair B. If repair A does not
+exit exactly `0` with its output leaf present, both roots are retained and the
+process stops without entering repair B. Otherwise repair B may enter once.
+The compiler, toolchain, cwd, umask, source path, arguments, eight-entry
+replacement environment, stable committed-blob checks, analyzer-only boundary,
+and no-execution rule are unchanged apart from the root-derived coordinates.
+There is no third repair compile or alternate root.
+
+Canonical failure/repair-freeze record metrics:
+
+```text
+frame_bytes = 7651
+frame_sha256 = ba41f65e45767c42253028e79543605e513e092a614898afd42609e1e487c426
+```
+
+```json
+{"authority":{"authority_closure_authorized":false,"authority_vector":"00000000","canary_execution_authorized":false,"gate_e_clearance":0,"gate_e_mechanics_outcome":"ABSTAIN","gate_e_promotion_authorized":false,"gate_e_scientific_outcome":"ABSTAIN","repair_implementation_authorized":true,"repair_pair_compile_count_authorized":2,"resulting_image_execution_authorized":false,"scientific_authorities_closed":0},"control":{"predecessor_commit":"c414eac5ec6288a498f4ab2e13c9da3334881f35","predecessor_tree":"a4eba679048c1e60d4477ec23685e4026d52b6e5","repair_commit_parent":"THIS_FAILURE_RETIREMENT_AND_REPAIR_FREEZE_CHECKPOINT","tracked_delta":"EXACT_ONE_CONTROL_DOCUMENT_PATH"},"failed_build":{"compile_entries":1,"compiler_exit_status":1,"diagnostics":[{"column":64,"line":865,"message":"expected ',' separator"},{"column":33,"line":295,"message":"cannot find '_NSGetEnviron' in scope"},{"column":61,"line":865,"message":"'..<' is not a postfix unary operator"},{"column":15,"line":865,"message":"the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions"}],"elapsed_seconds":3.4,"output_executable_present":false,"root":"/private/tmp/prime-driver-v2-r19-native-leaf-admission-build-a-b851a782","source_blob":"9bd5d84f356b047c4949617d5776481a53cff2a0","source_commit":"c414eac5ec6288a498f4ab2e13c9da3334881f35","source_sha256":"350db0527cefc848d8341224c15b30f7af4ccc9a4905c41d154d62523f8d1915","stream_partition":"UNAVAILABLE_MERGED_CODEX_EXEC_OUTPUT","stream_sha256":null,"stream_total_bytes":null},"old_envelope":{"build_a_compile_entries":1,"build_b_compile_entries":0,"build_b_unspent_authority":"PERMANENTLY_RETIRED","classification":"CONSUMED_DETERMINISTIC_SOURCE_COMPILE_FAILURE_NO_PAIR","cleanup_authorized":false,"retry_authorized":false,"reuse_authorized":false,"roots_created":2},"operations":{"auditor_binary_executions":0,"canary_binary_executions":0,"canary_root_accesses":0,"cleanup_calls":0,"energy_actions":0,"gate_e_promotions":0,"repair_compilations":0,"signals":0,"swift_compilation_entries_total":1,"swiftpm_commands":0},"repair_build":{"builds":[{"compiler_argv":["/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc","-swift-version","6","-O","-whole-module-optimization","-parse-as-library","-emit-executable","-target","arm64-apple-macosx14.0","-sdk","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk","-module-name","PrimeDriverV2R19NativeLeafAdmission","-module-cache-path","/private/tmp/prime-driver-v2-r19-native-leaf-admission-repair1-build-a-c414eac5/module-cache","/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/docs/tools/prime-driver-v2-r19-native-leaf-admission.swift","-o","/private/tmp/prime-driver-v2-r19-native-leaf-admission-repair1-build-a-c414eac5/PrimeDriverV2R19NativeLeafAdmission"],"environment_sorted":["DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer","LANG=C.UTF-8","LC_ALL=C.UTF-8","PATH=/usr/bin:/bin","SDKROOT=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk","TMPDIR=/private/tmp/prime-driver-v2-r19-native-leaf-admission-repair1-build-a-c414eac5/tmp/","TZ=UTC","__CF_USER_TEXT_ENCODING=0x1F5:0x0:0x0"],"initial_state":"ABSENT_READ_ONLY_OBSERVED","path":"/private/tmp/prime-driver-v2-r19-native-leaf-admission-repair1-build-a-c414eac5"},{"compiler_argv":["/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc","-swift-version","6","-O","-whole-module-optimization","-parse-as-library","-emit-executable","-target","arm64-apple-macosx14.0","-sdk","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk","-module-name","PrimeDriverV2R19NativeLeafAdmission","-module-cache-path","/private/tmp/prime-driver-v2-r19-native-leaf-admission-repair1-build-b-c414eac5/module-cache","/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/docs/tools/prime-driver-v2-r19-native-leaf-admission.swift","-o","/private/tmp/prime-driver-v2-r19-native-leaf-admission-repair1-build-b-c414eac5/PrimeDriverV2R19NativeLeafAdmission"],"environment_sorted":["DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer","LANG=C.UTF-8","LC_ALL=C.UTF-8","PATH=/usr/bin:/bin","SDKROOT=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk","TMPDIR=/private/tmp/prime-driver-v2-r19-native-leaf-admission-repair1-build-b-c414eac5/tmp/","TZ=UTC","__CF_USER_TEXT_ENCODING=0x1F5:0x0:0x0"],"initial_state":"ABSENT_READ_ONLY_OBSERVED","path":"/private/tmp/prime-driver-v2-r19-native-leaf-admission-repair1-build-b-c414eac5"}],"cleanup_authorized":false,"compile_order":["REPAIR_A","REPAIR_B"],"cwd":"/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging","failure_policy":"IF_REPAIR_A_FAILS_RETAIN_BOTH_AND_STOP_WITHOUT_REPAIR_B","head_tree_stable_across_pair":true,"repair_b_precondition":"REPAIR_A_EXACT_EXIT_0_AND_OUTPUT_LEAF_PRESENT","root_creation_authorized":true,"root_mode":"0700","sequential":true,"sole_initial_children":["module-cache","tmp"],"third_repair_compile_authorized":false,"umask":"0077"},"repair_source":{"allowed_changed_paths":["docs/tools/prime-driver-v2-r19-native-leaf-admission.swift"],"candidate_bytes":39324,"candidate_lines":1049,"candidate_sha256":"38006a0d9ea6472d3b3a6a6daecf093f8d35ddcbd7eab2eac1bcc29857e30701","changes":["ADD_FIXED_SILGEN_NSGETENVIRON_BINDING_AND_USE","PRECOMPUTE_BOUNDED_IDENTIFIER_RANGE"],"forbidden_alternatives":["PROCESSINFO_ENVIRONMENT","DLSYM_OR_DLOPEN","GENERIC_ENVIRONMENT_API","PARSER_OR_FRAME_CHANGE","MACHO_POLICY_CHANGE","FD_OR_OUTPUT_POLICY_CHANGE"],"implementation_delta":"EXACT_ONE_MODIFIED_SOURCE_PATH","state":"WORKTREE_CANDIDATE_NOT_COMMITTED_NOT_COMPILED"},"retained_roots":[{"compile_entries":1,"descendant_directories":3,"descendant_files":54,"device":16777231,"gid":0,"inode":17457634,"inventory_rows_sha256":"f8d54c8371312960ff8311dfd51178cb3d9a8eed8c58efe944991c247587b067","mode":"0700","nlink":4,"output_present":false,"path":"/private/tmp/prime-driver-v2-r19-native-leaf-admission-build-a-b851a782","provenance_xattr_hex":"01020049b5cb684f79583c","retention":"PERMANENT_NO_CLEANUP_NO_REUSE","tmp_empty":true,"uid":501},{"compile_entries":0,"descendant_directories":2,"descendant_files":0,"device":16777231,"gid":0,"inode":17457637,"inventory_rows_sha256":"dcb2c0263d625655ed68fb9ca87ceb33899bccf33e96aae6dea5ce7a95cf5341","mode":"0700","nlink":4,"output_present":false,"path":"/private/tmp/prime-driver-v2-r19-native-leaf-admission-build-b-b851a782","provenance_xattr_hex":"01020049b5cb684f79583c","retention":"PERMANENT_NO_CLEANUP_NO_REUSE","tmp_empty":true,"uid":501}],"schema":"prime_driver_v2_r19_native_leaf_admission_compile_failure_repair_freeze_v1","status":"R19_NATIVE_LEAF_ADMISSION_COMPILE_FAILURE_RETAINED_FRESH_REPAIR_PAIR_AUTHORIZED","toolchain":{"clang_sha256":"7def90dd8829726686213a747fc5bff1583df933dae5edc55d755479e0bfe00a","host":"macOS_26.5.2_25F84_arm64","ld_sha256":"5897b275efd93b201b6df5832dd541262b3f20f290859ba78f2200a6a66ef38b","sdk":"MacOSX_26.5","sdk_settings_sha256":"f8d005f09381389167f9e0aeaa169bc9e7dff162ef22ca2fd8e98df7ff1acafe","swift_driver_sha256":"fead52ebe00ec6ec700ecbb4be30f0b6204dd0506cb271dda72ac257261bd64b","swift_frontend_sha256":"2ed38571e92c0283091838c1649e27650ad9c99950288e883c7b2dc6c4ce89fb","swift_version":"6.3.3","xcode":"26.6_17F113"}}
+```
+
+```text
+R19_native_leaf_admission_original_compile_entries = 1
+R19_native_leaf_admission_original_compile_failures = 1
+R19_native_leaf_admission_original_build_A_products = 0
+R19_native_leaf_admission_original_build_B_compile_entries = 0_retired
+R19_native_leaf_admission_original_roots_retained = 2
+R19_native_leaf_admission_repair_implementations = 0
+R19_native_leaf_admission_repair_compile_entries = 0
+R19_native_leaf_admission_repair_roots_created = 0
+R19_native_leaf_admission_auditor_binary_executions = 0
+R19_native_leaf_primitive_binary_invocations = 0
+R19_native_leaf_admission_canary_root_accesses = 0
+R19_native_leaf_admission_cleanup_calls = 0
+outer_journal_authority_vector = 00000000
+gate_E_mechanics_outcome = ABSTAIN
+gate_E_scientific_outcome = ABSTAIN
+gate_E_clearance_granted = 0
+```
