@@ -15334,3 +15334,55 @@ gate_E_mechanics_outcome = ABSTAIN
 gate_E_scientific_outcome = ABSTAIN
 gate_E_clearance_granted = 0
 ```
+## R19 native-leaf admission auditor — repaired build pair identical, unexecuted
+
+Both fresh compiles exited `0` with empty combined output. Their products are
+raw-byte identical. Independent checkpoint, implementation, and threat reviews
+all passed. This closes only the deterministic build preimage: neither product
+nor the canary ran, the canary namespace was not accessed, and Gate E remains
+`ABSTAIN`.
+
+The analyzer pass was read-only. `nm` created no artifact and granted no runtime
+authority or later effect. One earlier analyzer command named absent
+`/usr/bin/ls` and failed before its intended analyzer entered; it changed no
+file or product. The four build roots remain permanently retained without
+cleanup or reuse.
+Opaque inventory byte/hash measurements are excluded because their row
+serialization was not frozen; verified top entries and counts remain.
+
+The products still have unexercised dyld, Swift, Foundation, and CryptoKit
+pre-main behavior. Runtime self-`PROC_PIDLISTFDS` eligibility and the outer
+held/mapped auditor-image join are unobserved. Therefore this record is not a
+launch freeze. Any readiness freeze and any later execution remain separate
+successors.
+
+Canonical build-result record metrics:
+
+```text
+frame_bytes = 7438
+frame_sha256 = aa9357d7fafdfb144a128690577164553fe95d82996be06c43e58e0ebdcac676
+```
+
+```json
+{"authority":{"auditor_binary_execution_authorized":false,"authority_closure_authorized":false,"authority_vector":"00000000","canary_execution_authorized":false,"gate_e_clearance":0,"gate_e_mechanics_outcome":"ABSTAIN","gate_e_promotion_authorized":false,"gate_e_scientific_outcome":"ABSTAIN","launch_approval_eligible":false,"scientific_authorities_closed":0},"build_results":{"comparison":{"raw_byte_identical":true,"raw_cmp_exit_status":0},"repair_a":{"combined_output_bytes":0,"combined_output_sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","elapsed_seconds":3.8,"exit_status":0,"output_present":true},"repair_b":{"combined_output_bytes":0,"combined_output_sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","elapsed_seconds":4.0,"exit_status":0,"output_present":true},"sequence":["REPAIR_A","REPAIR_B"]},"control":{"failure_repair_freeze_commit":"6afd9295fb9d05238d7bfd8da9384d14f63dae49","failure_repair_freeze_tree":"426c13f6cbeb36d90b6c90db90c2a5786f409d27","implementation_commit":"10676f3559de2b92cc7a7f46db53a21cac910c84","implementation_tree":"8199d1cfdb315a245022e96884311079f3767b15","source_repo_commit":"befc632485930a9cca7f618d3704292b5465f911","source_repo_tree":"7d1a3bf302fe358f9e42dc1ed2bf54ed3d22982e","tracked_result_delta":"EXACT_ONE_CONTROL_DOCUMENT_PATH"},"operations":{"analyzer_command_failures":1,"analyzer_failure_effect":"NO_INTENDED_ANALYZER_ENTERED_NO_FILE_OR_PRODUCT_MUTATION","analyzer_failure_reason":"/usr/bin/ls_ABSENT","analyzer_output_files_created":0,"auditor_binary_executions":0,"canary_binary_executions":0,"canary_root_accesses":0,"cleanup_calls":0,"energy_actions":0,"gate_e_promotions":0,"nm_count_cutoff":"FINAL_RECORD_RESEAL_BEFORE_CONTROL_COMMIT_NO_FURTHER_NM","nm_invocation_breakdown":{"checkpoint_audit":2,"implementation_audit":6,"primary_executor":1,"threat_review":3},"nm_invocations":12,"nm_role":"READ_ONLY_WORKSTATION_ANALYZER_NO_RUNTIME_AUTHORITY_NO_LATER_EFFECT","process_actuation_calls":0,"signals":0,"swift_compilation_entries_original":1,"swift_compilation_entries_repair":2,"swift_compilation_entries_total":3,"swift_compilation_failures":1,"swift_compilation_successes":2,"swiftpm_commands":0},"product":{"architecture":"arm64","build_version":{"ld":"1267.0","minimum_macos":"14.0","sdk":"26.5"},"code_directory":{"code_slots":28,"full_sha256":"3cc3b1ad0ea7e76167c747907cb3f75846d4dbced10f8a9cdf360787e364b87e","page_bytes":4096,"signing":"AD_HOC_LINKER_SIGNED","size_bytes":1020,"version_hex":"0x20400"},"entryoff":5008,"filetype":"MH_EXECUTE","lc_code_signature":{"offset":113344,"size":1040},"linked_images":{"count":11,"strong":["libSystem","CryptoKit","Foundation","swiftCore","swiftDarwin","swift_Concurrency"],"weak":["CoreFoundation","Dispatch","IOKit","ObjectiveC","XPC"]},"load_command_count":29,"load_commands_size_bytes":3080,"pie":true,"raw_sha256":"aee14f52c66378c4fd27b2d0fe70c62ca8f3ddb7837acda9d49ff7b960f9f8a2","size_bytes":114384,"strict_codesign_verified_a":true,"strict_codesign_verified_b":true,"uuid":"A18BE2E3-3DE0-3795-96BE-1EA931C3F64B"},"product_instances":[{"device":16777231,"flags":0,"gid":0,"inode":17459126,"mode":"0700","nlink":1,"path":"/private/tmp/prime-driver-v2-r19-native-leaf-admission-repair1-build-a-c414eac5/PrimeDriverV2R19NativeLeafAdmission","provenance_xattr_hex":"01020049b5cb684f79583c","role":"DEFINITIVE_CANDIDATE_PENDING_SEPARATE_READINESS_FREEZE","uid":501},{"device":16777231,"flags":0,"gid":0,"inode":17459396,"mode":"0700","nlink":1,"path":"/private/tmp/prime-driver-v2-r19-native-leaf-admission-repair1-build-b-c414eac5/PrimeDriverV2R19NativeLeafAdmission","provenance_xattr_hex":"01020049b5cb684f79583c","role":"REPRODUCIBILITY_WITNESS_NOT_LAUNCH_IMAGE","uid":501}],"retained_root_inventory":{"digest_measurements_excluded":true,"digest_status":"ABSTAIN","independently_verified_fields":["top_entries","descendant_directories","descendant_files","descendant_symlinks","tmp_empty"],"reason":"ROW_PREIMAGE_SERIALIZATION_NOT_FROZEN"},"retained_roots":[{"compile_entries":1,"descendant_directories":3,"descendant_files":54,"descendant_symlinks":0,"device":16777231,"inode":17457634,"mode":"0700","output_present":false,"path":"/private/tmp/prime-driver-v2-r19-native-leaf-admission-build-a-b851a782","retention":"PERMANENT_NO_CLEANUP_NO_REUSE","state":"ORIGINAL_FAILED_A","tmp_empty":true,"top_entries":["module-cache","tmp"]},{"compile_entries":0,"descendant_directories":2,"descendant_files":0,"descendant_symlinks":0,"device":16777231,"inode":17457637,"mode":"0700","output_present":false,"path":"/private/tmp/prime-driver-v2-r19-native-leaf-admission-build-b-b851a782","retention":"PERMANENT_NO_CLEANUP_NO_REUSE","state":"ORIGINAL_RETIRED_B","tmp_empty":true,"top_entries":["module-cache","tmp"]},{"compile_entries":1,"descendant_directories":3,"descendant_files":55,"descendant_symlinks":0,"device":16777231,"flags":0,"gid":0,"inode":17458990,"mode":"0700","nlink":5,"path":"/private/tmp/prime-driver-v2-r19-native-leaf-admission-repair1-build-a-c414eac5","provenance_xattr_hex":"01020049b5cb684f79583c","retention":"PERMANENT_NO_CLEANUP_NO_REUSE","tmp_empty":true,"top_entries":["PrimeDriverV2R19NativeLeafAdmission","module-cache","tmp"],"uid":501},{"compile_entries":1,"descendant_directories":3,"descendant_files":55,"descendant_symlinks":0,"device":16777231,"flags":0,"gid":0,"inode":17458993,"mode":"0700","nlink":5,"path":"/private/tmp/prime-driver-v2-r19-native-leaf-admission-repair1-build-b-c414eac5","provenance_xattr_hex":"01020049b5cb684f79583c","retention":"PERMANENT_NO_CLEANUP_NO_REUSE","tmp_empty":true,"top_entries":["PrimeDriverV2R19NativeLeafAdmission","module-cache","tmp"],"uid":501}],"reviews":{"checkpoint_audit":"PASS","implementation_audit":"PASS","threat_review":"PASS"},"runtime":{"auditor_image_runtime_observation":"UNOBSERVED","canary_observation":"UNOBSERVED","dynamic_loader_pre_main_residual":"UNEXERCISED","launch_readiness":"NOT_ESTABLISHED","self_proc_pidlistfds_runtime_eligibility":"UNOBSERVED","system_runtime_images_pinned":false},"schema":"prime_driver_v2_r19_native_leaf_admission_repair_build_only_v1","source":{"blob":"dd8ce876663fe64f874f823e218214d19a8348c3","bytes":39324,"lines":1049,"path":"docs/tools/prime-driver-v2-r19-native-leaf-admission.swift","sha256":"38006a0d9ea6472d3b3a6a6daecf093f8d35ddcbd7eab2eac1bcc29857e30701"},"static_surface":{"descriptor_admission_symbols":["fcntl","isatty"],"environment_entry_symbols":{"__NSGetEnviron":1},"filesystem_mutation_symbols":0,"process_actuation_symbols":0,"read_only_filesystem_symbols":["close","closedir","fdopendir","fpathconf","fstat","fstatat","fstatfs","getcwd","open","openat","pread","readdir"],"self_process_observation_symbols":{"proc_pidinfo":1},"source_concurrency_api_calls":0,"stdout_write_symbols":{"write":1}},"status":"R19_NATIVE_LEAF_ADMISSION_REPAIR_BUILD_IDENTICAL_UNEXECUTED_NOT_LAUNCH_READY","toolchain":{"clang_sha256":"7def90dd8829726686213a747fc5bff1583df933dae5edc55d755479e0bfe00a","host":"macOS_26.5.2_25F84_arm64","ld_sha256":"5897b275efd93b201b6df5832dd541262b3f20f290859ba78f2200a6a66ef38b","sdk":"MacOSX_26.5","sdk_settings_sha256":"f8d005f09381389167f9e0aeaa169bc9e7dff162ef22ca2fd8e98df7ff1acafe","swift_driver_sha256":"fead52ebe00ec6ec700ecbb4be30f0b6204dd0506cb271dda72ac257261bd64b","swift_frontend_sha256":"2ed38571e92c0283091838c1649e27650ad9c99950288e883c7b2dc6c4ce89fb","swift_version":"6.3.3","xcode":"26.6_17F113"}}
+```
+
+```text
+R19_native_leaf_admission_original_compile_entries = 1
+R19_native_leaf_admission_original_compile_failures = 1
+R19_native_leaf_admission_repair_compile_entries = 2
+R19_native_leaf_admission_repair_compile_successes = 2
+R19_native_leaf_admission_raw_identical_pairs = 1
+R19_native_leaf_admission_retained_roots = 4
+R19_native_leaf_admission_auditor_binary_executions = 0
+R19_native_leaf_primitive_binary_invocations = 0
+R19_native_leaf_admission_canary_root_accesses = 0
+R19_native_leaf_admission_cleanup_calls = 0
+R19_native_leaf_admission_analyzer_command_failures = 1
+R19_native_leaf_admission_nm_read_only_invocations = 12
+R19_native_leaf_admission_nm_runtime_authority_effects = 0
+outer_journal_authority_vector = 00000000
+gate_E_mechanics_outcome = ABSTAIN
+gate_E_scientific_outcome = ABSTAIN
+gate_E_clearance_granted = 0
+```
