@@ -12252,3 +12252,196 @@ gate_E_clearance_granted = 0
 All eight authorities remain missing: Prime Git, companion Git, Swift
 version, Swift target-info, SwiftPM build, artifact staging, XCTest inventory,
 and Swift Testing inventory.
+
+## Gate E1.4-R18 nonterminal recovery checkpoint — guardian externally retired
+
+This EOF checkpoint is the current live ledger. R18 was invoked exactly once,
+spawned its one fixed Swift command, produced no guardian terminal, and was
+consumed nonterminal. Two separately approved external recovery actions then
+removed one exact retained stopped Fixture group and the exact nonterminating
+guardian. The epoch and every build/admission artifact remain retained. No
+R18 retry, cleanup, repair, second Swift command, scientific interpretation,
+authority closure, or Gate-E promotion occurred.
+
+| Coordinate | Observed value |
+| --- | --- |
+| Status | `R18_GUARDIAN_CONSUMED_NONTERMINAL_EXTERNALLY_CONSERVED_ABSTAIN` |
+| Control predecessor | guardian-readiness freeze `fb3e6a492b2cf321b7034df415e229766e3ea5cf` / tree `f225210754413dcd164cd8238347c300432d012e`; this checkpoint changes only this control ledger |
+| Constructor predecessor | result `d3966a23d5ab5b6f91a49142f451f5eaab3d51a7` / tree `51d6bf95c7d6fa79fc4b41b5e8aed8ef2043f01f`; constructor frame `2,131 / 706f4c32e0ff6683f12bb4097c72b6839bb392130f149d04a190d0081f817069`; payload `2,046 / 30e99509ebd7735c459e3a2dad2ad0a19f629fe0417018c06ac3e4624ae7d181` |
+| Invoked guardian | implementation `4ebe75202f9f689fc774c90901ab22cda218ee0e` / tree `6417f8314ef5616c305170ebeed612a6fb8016d5`; blob `3d98ff458c3b79d0f427a4feee7dad894caf142b`; SHA-256 `a0bbebc545e4b5e3c2b996ba31b14f06bcb6f1b16a4e99e97ff16b04f6dfb6b0` |
+| Guardian generation | PID/uniqueid/idversion `68551 / 8877990 / 17312483`; parent PID/uniqueid `68549 / 8877988`; SID/PGID `68551/68551`; UUID `eb2540b7e13236beb719619d0fbf7203`; exact `/usr/bin/ruby --disable-gems docs/tools/prime-driver-v2-r18-guardian.rb`; kernel start `2026-08-24T06:09:37.662013Z` |
+| Fixed Swift command | exact frozen `Process.spawn` site entered once; Release build completed in `211.54 s`; the selected XCTest emitted an assertion at `PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests.swift:4870`; that mixed child stream is not a guardian terminal or scientific evidence |
+| Original transport | outer Codex wait remained non-EOF beyond the `840 s` cutoff and `900 s` horizon; its complete mixed prefix bytes/hash were not retained as a bounded receipt and remain `ABSTAIN`; after guardian retirement the outer wait closed with exit `137` and no additional bytes |
+| Guardian terminal | final `r18-guardian-terminal.json` absent; matching staging leaves `0`; no authoritative guardian status, actuation receipt, child wait record, conservation receipt, or error receipt exists |
+| Consumed boundary | guardian invocation `1 / 1`; fixed Swift spawn `1 / 1`; R18 production attempt `1 / 1`; no retry exists |
+| Authority | nonterminal safety-mechanics observation only; authority vector `00000000`; scientific authorities closed `0`; mechanics/science `ABSTAIN`; Gate-E clearance `0` |
+
+### Retained stopped Fixture and closed implementation defect
+
+The bounded post-horizon census found one exact assessment Fixture outside the
+guardian session:
+
+| Field | Exact observation |
+| --- | --- |
+| Lifetime | PID/uniqueid/idversion `68855 / 8878291 / 17313288`; parent uniqueid/original-parent-idversion `8878286 / 17313276`; current PPID `1` |
+| Domain/state | SID/PGID `68855/68855`; singleton process group on repeated joined snapshots; short-BSD status `4` (`SSTOP`) |
+| Credentials | UID/GID/RUID/RGID/SVUID/SVGID `501/20/501/20/501/20` |
+| Logical image | exact argv `prime-validation-driver-v2-session-fixture --driver-v2-shared-session-prepublication-held` |
+| Physical image | mapped and named Fixture device/inode `16777231/17382060`; mode `0700`; nlink `1`; `53,072` bytes; SHA-256 `177a18c20bc42486c77b52af4c472be222dec1baabf8973ece7b2d44ea92756e` |
+| Working directory | `/private/tmp/prime-validation-admission-tests-5E858B43-E478-4661-96C6-627B207BAC9D/workspace`; mapped/named device/inode `16777231/17420925`; mode `0700` |
+| Guardian session | the only live member of SID `68551` was guardian PID `68551`; no same-session assessment child remained |
+
+The frozen guardian has no transition for a first-seen exact-owned stopped
+group. STOP admission accepts only statuses `2/3`; a status-`4` group raises a
+pre-call `stop-state-ineligible` fault before stopped-group state exists. KILL
+iterates only groups with a prior STOP delivered by that same actuator. Thus
+an already-stopped exact-owned group cannot advance to KILL, while the nonempty
+owned set prevents containment completion. The unpublished guardian state
+cannot prove which internal branch was active, so event-specific causality and
+the guardian's total private STOP/KILL ledger remain `ABSTAIN`. The missing
+transition is nevertheless a closed implementation defect and must be repaired
+before any successor epoch or guardian identity may be frozen.
+
+The selected XCTest assertion is not assigned as the cause. The guardian did
+not parse child output, and no terminal transported its internal fault.
+
+### External recovery and conservation
+
+The first separately approved recovery bound the exact stopped Fixture
+generation, two singleton status-`4` group snapshots, the mapped/named image,
+the admitted cwd, credentials, SID/PGID, and terminal absence. It authorized no
+STOP, CONT, guardian signal, Swift command, cleanup, or retry. Exactly one
+`SIGKILL` call was entered against negative PGID `-68855`; the call returned
+success. Two flavor-17 `ESRCH` observations and two empty-group plus signal-zero
+`ESRCH` observations then closed external conservation. The guardian remained
+nonterminal for the fixed `120 s` observer horizon.
+
+The second separately approved recovery rejoined exact guardian generation
+`(68551, 8877990, 17312483)`, confirmed its singleton SID/PGID twice, confirmed
+the retained Fixture generation absent and the terminal namespace empty, and
+entered exactly one positive-PID `SIGKILL` call. The call returned success.
+Two flavor-17 `ESRCH` observations and two empty-group plus signal-zero `ESRCH`
+observations closed guardian conservation; parent wait shell generation
+`(68549, 8877988)` then disappeared. Darwin exposes no atomic
+generation-bound signal primitive, so both final joined-snapshot-to-numeric-
+signal intervals remain named userspace races.
+
+| Recovery datum | Exact value |
+| --- | --- |
+| Fixture start payload | `844` bytes / `10c7204a13a80553fdd7dc29d57bb7ea9fd2f7b9e8a8a7003508e94b4f53acb0`; LF frame `928 / d89dbe6a51a941c8a96b004d7ceca1bd4f8eff62bd5cb5f125655d46dc2b7dcf` |
+| Fixture recovery payload | `758` bytes / `2ebb4552567843eaed3f3aa6c20d031fe79835967abb88f3c22b109412c3902f`; LF frame `842 / 486863f9a680f222fe65125f9c330f5e4ccd27255e51924573baf24e9f54beb2` |
+| Guardian-retirement start payload | `580` bytes / `b36fe81937111b2c6e4c218dc00a086d8156cce4b467a1a7d3e56388fe056c33`; LF frame `664 / eee391dc8d1f1a5b279fb81c9c45d2548ac641ecaa54071d7f712421bba114ff` |
+| Guardian-retirement payload | `856` bytes / `d62efebc6ee924849c55e0a7c7d8a3d006bb1b800d4fa65bffe2de171552960f`; LF frame `940 / d152a1f12f31cdf85a5979ab0bc9d2a312b06413905f6d079ec739f7ed781cc6` |
+| External actuation | STOP `0`; CONT `0`; KILL commitments/calls/deliveries `2/2/2`; no retry |
+| External conservation | flavor-17 `ESRCH` `4`; empty-group observations `4`; signal-zero `ESRCH` `4` |
+| Guardian actuation | no external call is credited to the guardian; its unpublished aggregate STOP/KILL counters remain `ABSTAIN` |
+| Final process state | Fixture generation gone; guardian generation gone; both numeric groups empty with exact signal-zero `ESRCH`; outer wait closed |
+
+The exact recovery frames were:
+
+```json
+{"schema":"r18-prestopped-fixture-recovery-start/v1","status":"RECOVERY_SIGNAL_COMMITMENT_ENTERING","observed_at_utc":"2026-08-24T13:54:57.018656Z","action":"SIGKILL","signal":9,"numeric_target":-68855,"target_pid":68855,"target_uniqueid":8878291,"target_idversion":17313288,"target_sid":68855,"target_pgid":68855,"target_status":4,"singleton_group_snapshots":2,"mapped_fixture_identity":[16777231,17382060],"mapped_fixture_sha256":"177a18c20bc42486c77b52af4c472be222dec1baabf8973ece7b2d44ea92756e","workspace":"/private/tmp/prime-validation-admission-tests-5E858B43-E478-4661-96C6-627B207BAC9D/workspace","guardian_pid":68551,"guardian_uniqueid":8877990,"terminal_absent":true,"stop_calls_authorized":0,"kill_calls_authorized":1,"guardian_signals_authorized":0,"retry_authorized":false,"authority_vector":"00000000","gate_e_outcome":"ABSTAIN","record_sha256":"10c7204a13a80553fdd7dc29d57bb7ea9fd2f7b9e8a8a7003508e94b4f53acb0"}
+{"schema":"r18-prestopped-fixture-recovery-terminal/v1","status":"RECOVERY_TARGET_CONSERVED_GUARDIAN_NONTERMINAL","observed_at_utc":"2026-08-24T13:56:57.063185Z","start_record_sha256":"10c7204a13a80553fdd7dc29d57bb7ea9fd2f7b9e8a8a7003508e94b4f53acb0","kill_call_entered":true,"kill_call_delivered":true,"kill_result":0,"kill_errno_after_success_ignored":true,"generation_esrch_observations":[{"returned":0,"errno":3},{"returned":0,"errno":3}],"group_absence_observations":[{"pids":[],"signal_zero_result":-1,"signal_zero_errno":3},{"pids":[],"signal_zero_result":-1,"signal_zero_errno":3}],"signal_zero_calls":2,"guardian_gone":false,"terminal":null,"retry_authorized":false,"cleanup_performed":false,"authority_vector":"00000000","gate_e_outcome":"ABSTAIN","record_sha256":"2ebb4552567843eaed3f3aa6c20d031fe79835967abb88f3c22b109412c3902f"}
+{"schema":"r18-nonterminal-guardian-retirement-start/v1","status":"GUARDIAN_SIGKILL_COMMITMENT_ENTERING","observed_at_utc":"2026-08-24T14:01:52.868336Z","action":"SIGKILL","signal":9,"numeric_target_pid":68551,"guardian_uniqueid":8877990,"guardian_idversion":17312483,"guardian_sid":68551,"guardian_pgid":68551,"singleton_group_snapshots":2,"retired_fixture_generation_absent":true,"terminal_absent":true,"kill_calls_authorized":1,"retry_authorized":false,"cleanup_authorized":false,"r18_disposition":"NONTERMINAL_ABSTAIN","authority_vector":"00000000","gate_e_outcome":"ABSTAIN","record_sha256":"b36fe81937111b2c6e4c218dc00a086d8156cce4b467a1a7d3e56388fe056c33"}
+{"schema":"r18-nonterminal-guardian-retirement-terminal/v1","status":"GUARDIAN_RETIRED_NONTERMINAL_ABSTAIN","observed_at_utc":"2026-08-24T14:01:52.901746Z","start_record_sha256":"b36fe81937111b2c6e4c218dc00a086d8156cce4b467a1a7d3e56388fe056c33","kill_call_entered":true,"kill_call_delivered":true,"kill_result":0,"kill_errno_after_success_ignored":true,"guardian_generation_esrch_observations":[{"returned":0,"errno":3},{"returned":0,"errno":3}],"guardian_group_absence_observations":[{"pids":[],"signal_zero_result":-1,"signal_zero_errno":3},{"pids":[],"signal_zero_result":-1,"signal_zero_errno":3}],"signal_zero_calls":2,"parent_shell_gone":true,"terminal_final_exists":false,"terminal_staging_leaves":[],"cleanup_performed":false,"retry_authorized":false,"r18_disposition":"NONTERMINAL_ABSTAIN","authority_vector":"00000000","gate_e_outcome":"ABSTAIN","record_sha256":"d62efebc6ee924849c55e0a7c7d8a3d006bb1b800d4fa65bffe2de171552960f"}
+```
+
+### Retained filesystem and post-recovery process state
+
+The bounded read-only retained-state inventory at
+`2026-08-24T14:06:50.419544000Z` produced record SHA-256
+`a1015471f8283434a7d237ea082fb838b575b13b9ff50579c7bcbced2b887014`.
+
+| Root | Exact retained data |
+| --- | --- |
+| R18 epoch | root device/inode `16777231/17419092`, UID/GID `501/0`, mode `0700`, nlink `11`; recursive entries `56` = directories/files/symlinks `26/27/3`; regular bytes `735,798`; path-set SHA-256 `df3c99c4cb5eb169c80cdcbc9cbffb7c1dab8e2a1cd01e63d0319a956972f76b`; metadata SHA-256 `908e61dcfd34f1d5bd00eb76b99445dac44f992c5ec71c59667169037e30c7d8`; complete content-row SHA-256 `1633eee4fc3468a28a2cf3090903678dca30ffa3ac5e8d03dcef4eaeb8d6ba1f` |
+| R18 admission root | `/private/tmp/prime-validation-admission-tests-5E858B43-E478-4661-96C6-627B207BAC9D`; root `16777231/17420923`, UID/GID `501/0`, mode `0700`; entries `97` = directories/files `31/66`; regular bytes `90,133`; path-set `5360720b95d9e0c06da6c79cf3a96e39910cea9c314c512c753cdcf67b008bd4`; metadata `8a12e6cb80ef5fcf8dd343f53ed9e519abb63d181c7b20e5ea1aca7315b91fa4`; complete content-row `9efd2ff4abcff388bb19a49de2427518f75fc690ad196de6c4e88db58c9926a6` |
+| Ignored `.build` | root device/inode `16777231/17179422`; entries `10,995` = directories/files/symlinks `2,709/8,284/2`; regular bytes `1,821,161,805`; path-set `a21bea5a4386f1ff4b32d20c12ccf5a4766b9a589b12684656fd81befd526c91`; metadata `b2405fcf0b6e59ae97290379126339c2397cb6dee2b896f60c4e8c0c5a68a0b2`; content hash intentionally not computed because the bounded `512 MiB` content cap was exceeded |
+| Admission namespace | matching root count `20`; sorted-name SHA-256 `94301d76e1ee23515fda4bf848d551fc9783f31850849e89258412b471d2b538`; the R18 root above is present; no root is attributed to R18 without its exact held admission |
+| Terminal namespace | final absent; matching staging leaves `0`; epoch top level remains the exact nine role directories |
+
+Two complete post-Fixture-recovery RUID-501 projections at
+`2026-08-24T13:58:24.828664Z` and `13:58:25.101388Z` each joined `586`
+non-observer processes with `0` unknowns and the same identity-row SHA-256
+`e4ed8a3f286ae1fc6fbf7010433ca6490af84c5f3e255320639448646e58fdfe`.
+They found no Fixture or test-runner image and no R18 procargs footprint. The
+only source-cwd matches were ambient Git/awk generations `8667993/8668003`,
+which predated guardian generation `8877990`; they are not assigned to R18.
+The projection record SHA-256 is
+`87f844034fa7546999610853c83b1a9be8fa5134df1b6b248126c1cbd7ef87d9`.
+Exact post-action generation/group observations then removed the guardian
+itself. No cleanup followed.
+
+Source remained clean at
+`befc632485930a9cca7f618d3704292b5465f911` / tree
+`7d1a3bf302fe358f9e42dc1ed2bf54ed3d22982e`; this checkpoint does not
+change it. The ignored build and private retained roots are execution state,
+not released product truth.
+
+### Counters and terminal disposition
+
+```text
+R18_terminal_canary_invocations = 1
+R18_terminal_canary_passes = 1
+R18_generation_canary_invocations = 1
+R18_generation_canary_passes = 1
+R18_actuation_canary_invocations = 1
+R18_actuation_canary_passes = 1
+R18_epoch_constructor_invocations = 1
+R18_epoch_constructor_passes = 1
+R18_epoch_complete = 1
+R18_guardian_invocations = 1
+R18_guardian_terminal_publications = 0
+R18_swiftpm_commands = 1
+R18_production_spawn_calls = 1
+R18_production_attempts = 1_consumed_nonterminal
+R18_guardian_stop_call_entries = ABSTAIN_UNPUBLISHED
+R18_guardian_kill_call_entries = ABSTAIN_UNPUBLISHED
+R18_external_recovery_stop_calls = 0
+R18_external_recovery_cont_calls = 0
+R18_external_recovery_kill_call_entries = 2
+R18_external_recovery_kill_calls_delivered = 2
+R18_external_recovery_generation_esrch_observations = 4
+R18_external_recovery_group_empty_observations = 4
+R18_external_recovery_signal_zero_esrch_observations = 4
+R18_live_assessment_processes_after_recovery = 0
+R18_live_guardian_processes_after_recovery = 0
+R18_retry_authorized = 0
+R18_cleanup_performed = 0
+outer_journal_authority_vector = 00000000
+gate_E_mechanics_outcome = ABSTAIN
+gate_E_scientific_outcome = ABSTAIN
+gate_E_clearance_granted = 0
+```
+
+R18 is terminal as a consumed nonterminal attempt. Its epoch, ignored build,
+admission roots, and all earlier canary states remain retained. A later code
+repair cannot reinterpret this attempt, create its missing guardian terminal,
+or reuse this epoch as a new shot.
+
+### Next permitted direction — unlaunched stopped-adoption implementation
+
+The next permitted change is control/guardian implementation only. It must add
+a distinct non-signal certificate for a first-seen exact-owned singleton
+status-`4` group. Adoption must consume no STOP budget, must not claim a STOP
+was delivered, and must bind two equal joined group snapshots, exact complete
+lifetime set, SID/PGID, six credentials, singleton cardinality, and stopped
+state. A fresh ordinary KILL certificate remains the sole authority for one
+negative-PGID call; the existing late-member, SID, generation, status,
+certificate-age, call-budget, no-retry, and conservation checks remain.
+
+The terminal receipt must distinguish `stopped_adopted` from
+`stop_delivered`, report adoption count/hash without placing adoption in the
+signal ledger, and require every KILL group to have exactly one of those two
+bases. Empty, active, initializing, zombie, multi-member, ambient, UNKNOWN,
+credential-drifted, rebound, or changing groups remain ineligible. The
+snapshot-to-signal residual remains named.
+
+Required verification before any later launch is Ruby-2.6 syntax/Ripper,
+static one-spawn/one-signal-site conservation, a pure model covering both the
+ordinary STOP-to-KILL and adopted-SSTOP-to-KILL paths plus all denial cases,
+and a recomputed worst-case terminal bound below `16,384` bytes. No production
+guardian, epoch constructor, Swift command, signal, or retained-root mutation
+is authorized by this checkpoint. Any disposable live canary, successor epoch,
+or successor guardian launch requires a new identity, a separate freeze, and
+fresh explicit approval; it cannot be an R18 retry.
