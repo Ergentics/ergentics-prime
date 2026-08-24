@@ -11178,3 +11178,131 @@ outer_journal_authority_vector = 00000000
 gate_E_scientific_outcome = ABSTAIN
 gate_E_clearance_granted = 0
 ```
+
+## Gate E1.4-R17 disposition — contained, terminal publication failed
+
+| Coordinate | Observed value |
+| --- | --- |
+| Status | `CONSUMED_ABSTAIN_GUARDIAN_TERMINAL_PUBLICATION_FAILED` |
+| Ledger predecessor | constructor-result checkpoint `49b30ee68f1eadb5ae24d3e25c0ed0eaa0747f3f` / tree `978221d32e4ffbae0e80740ec31f5996c70fb629` |
+| Guardian implementation | `1d7bd897bcd4ce0e801528687933f397f770167d` / tree `2a7eaa6110e2e11a73742ceed7f3bfae58baf6c1`; blob `1e86926f3d163b85c0651c3a7ce64a74a494ca32`; SHA-256 `d4ce68b898d78d4d1b03b1396f07345b269e7b15298097fe9363f8e972f347e8`; `1,270` lines / `42,627` bytes |
+| Guardian envelope | exact frozen command invoked `1 / 1`; outer exit `70`; no second invocation or R17 reuse permitted |
+| Swift shot | one frozen SwiftPM command and one guardian `Process.spawn`; child start/end `1787533984 / 1787534083`; no observed Fixture generation and no scientific result |
+| Operational fault | `RuntimeError:bsdinfo-33110-1` after `99.214379` seconds; a PID returned by the real-UID-`501` census returned `EPERM` from `PROC_PIDTBSDINFO` before its identity could be joined, so natural mechanics failed closed |
+| Child terminal status | raw status `9`; term signal `9`; exit status `null`; exact reap at `99.416555` seconds |
+| Containment | entered; STOP `6`; KILL `3`; captured process/Fixture generations `27 / 0`; proof groups `23`; final empty scans `2`; process conservation complete; hard horizon not crossed |
+| Containment residual | one recovered `RuntimeError:group-proof-32907-1`; unsafe current/history `0 / 0`; orphan residual `0`; Fixture replacement, unexpected nested session, and workspace rebound all false |
+| Guardian-emitted status | `R17_GUARDIAN_TERMINAL_FAILED`; terminal error `RuntimeError:terminal-metadata` |
+| Operational terminal | valid terminals `0`; exclusive invalid residue `1`; frozen write order reconstructs an attempted `R17_GUARDIAN_CONTAINED_ABNORMAL` frame of matching size, but retained bytes are unreadable and not a contract-valid terminal |
+| Invalid leaf | `r17-guardian-terminal.json`; device/inode `16777231/17408854`; UID/GID `501/0`; mode `0000` instead of required `0400`; nlink `1`; size `1,579`; birth/mtime/ctime `1787534083`; flags `0` |
+| R17 root | device/inode `16777231/17408018`; UID/GID `501/0`; mode `0700`; nlink `12`; size `384`; birth `1787532842`; mtime/ctime `1787534083`; flags `0`; exact nine role directories plus invalid terminal |
+| Immediate inventory | exact `10`; sorted LF absolute-path SHA-256 `a611456a39d09fc51f7936a96a5028cc54ab7301a3a91acc221f482bdad82ac9` |
+| Role residue | recursive observed entry counts, including each named root: clang cache `2`, config `5`, Git template `1`, home `7`, SwiftPM cache/config/module/security `5 / 1 / 13 / 1`, tmp `26`; no product or scientific authority |
+| Mechanics inventory | staging absent; exact `11`; sorted LF path-set SHA-256 `60a77281aa70f709c30ebcf76b4b10d2e14a8f9618ca4282d44817a1b0ef72e1`; R15 and R16 unchanged |
+| Source conservation | tracked worktree clean at `befc632485930a9cca7f618d3704292b5465f911` / tree `7d1a3bf302fe358f9e42dc1ed2bf54ed3d22982e`; ignored build residue changed; Fixture remains exact device/inode `16777231/17382060`, size `53,072`, times `1787500441`, SHA-256 `177a18c20bc42486c77b52af4c472be222dec1baabf8973ece7b2d44ea92756e` |
+| Process conservation | two independent complete all-PID projections found zero members in all `23` proof groups, PID `33110` absent, and zero PrimeValidation/Fixture/XCTest survivors; same-UID scans were `585 / 585` with zero join errors |
+| Authority | containment mechanics observed; contract mechanics `ABSTAIN`; scientific `ABSTAIN`; vector `00000000`; Gate-E clearance `0`; production attempts `0` |
+
+The execution transport exposed one additive combined stream rather than
+separately tagged stdout and stderr. Before the final guardian frame it
+captured exactly these `118` progress bytes (SHA-256
+`5642ead2404a15706b06e7d8c5e486537cabe22a7e8640b298c1ac5e895af164`):
+
+```text
+[0/1] Planning build
+Building for production...
+[0/11] Write sources
+[3/11] Write swift-version--58304C5D6DBC2206.txt
+```
+
+The frozen terminal-failure path then wrote this canonical `1,542`-byte,
+LF-terminated frame to stderr (SHA-256
+`b2d2f45b7cb9d192111bf0ce5806233ef115961a62138efb7bad3daa24715aea`):
+
+```json
+{"assessment_elapsed_ns":99416560000,"assessment_start_monotonic_ns":2659939212030000,"authority_vector":"00000000","captured_fixture_generations":0,"captured_process_generations":27,"child_ended_at":1787534083,"child_exit_status":null,"child_raw_status":9,"child_reaped_elapsed_ns":99416555000,"child_started_at":1787533984,"child_term_signal":9,"complete_scan_count":1695,"containment_fault_count":1,"containment_horizon_ns":900000000000,"containment_started":true,"containment_started_elapsed_ns":99214379000,"error":"RuntimeError:bsdinfo-33110-1","final_empty_scans":2,"fixture_replacement_seen":false,"gate_e_outcome":"ABSTAIN","global_session_projection_count":1640,"hard_deadline_crossed":false,"held_workspace_count":0,"interrupted_signal":null,"kill_signals_sent":3,"last_containment_fault":"RuntimeError:group-proof-32907-1","ordinary_cutoff_ns":840000000000,"orphan_attribution_residual_count":0,"process_census_scope":"ruid:501+global-session-projection","process_containment_complete":true,"proof_groups":[32851,32854,32859,32860,32861,32862,32863,32868,32875,32876,32877,32882,32883,32884,32885,32889,32892,32893,32895,32900,32905,32906,32907],"status":"R17_GUARDIAN_TERMINAL_FAILED","stop_signals_sent":6,"terminal_error":"RuntimeError:terminal-metadata","timed_out":false,"unexpected_nested_session_seen":false,"unsafe_process_count":0,"unsafe_process_history_count":0,"workspace_baseline_count":16,"workspace_baseline_sha256":"6185ea35d684b2a50529aa79f1455bae789eda056e298f5509e7c5127423abd5","workspace_rebound_seen":false}
+```
+
+The complete `1,660` transport-visible bytes have SHA-256
+`b63e1af3cac92db5168ab3e610627eca11289f17b183e3fa2c2e2353b29adcef`.
+Program structure identifies the final frame as guardian stderr, but the four
+progress lines are not independently channel-tagged.
+
+### Terminal-order adjudication
+
+`persist_terminal` first constructed a
+`R17_GUARDIAN_CONTAINED_ABNORMAL` report, calculated a digest over canonical
+report bytes without a digest field, attached that digest, opened the final
+leaf with exclusive no-replace, checked a full `1,579`-byte write, and called
+file `fsync`. The next held/named metadata check observed mode
+`0000`, not `0400`, and raised before terminal byte readback, parent rejoin and
+`fsync`, return to the caller, or stdout publication. The rescue then changed
+only the in-memory status to `R17_GUARDIAN_TERMINAL_FAILED`, attached
+`terminal_error`, emitted the exact frame above, and exited `70`.
+
+Removing those two rescue-only changes from the emitted data reconstructs a
+canonical `1,494`-byte attempted payload with SHA-256
+`a38db43bb7bc9c8f6f057ff0283102d395c7770785086de0ca489c7910ad4298`
+and a `1,579`-byte LF-terminated frame with SHA-256
+`1166f37201be6d2b065376d87f2ae47f1ad0289acf7825f829cd8ca47fec42d6`.
+The reconstructed length equals the retained inode size. These are
+code/data-derived reconstruction values, not a direct hash of the mode-`0000`
+inode: ordinary owner read returns `EACCES`, and no permission or evidence
+mutation was performed. Size equality cannot promote the residue to a valid
+terminal.
+
+The exact terminal failure is the observed mode mismatch. A high-confidence,
+still inferential lower-level cause is the frozen Fiddle declaration of
+variadic Darwin `openat` as a fixed four-argument function on Apple arm64;
+the constructor preflight exercised descriptor opens but never an `O_CREAT`
+mode argument. The result does not rely on that causal inference.
+
+### Conservation and no-repair boundary
+
+The operational `bsdinfo` failure caused containment rather than acceptance.
+The guardian STOPped the captured domain to a fixed point, sent three KILL
+signals to generation-rejoined groups, reaped the exact Swift leader,
+recovered from the temporary group-proof
+`EPERM`, completed two empty scans, proved captured generations absent, and
+marked process conservation complete before attempting publication. Two later
+read-only all-PID projections independently found all `23` proof PGIDs empty
+and PID `33110` absent; two real-UID scans found no PrimeValidation, Fixture,
+or XCTest candidate. Containment safety is therefore observed within the
+frozen real-UID plus global-session/captured-generation scope even though
+terminal and mechanics authority are unavailable.
+
+R17 is terminal. Do not chmod, delete, rename, clean, repair, reinterpret, or
+reuse its invalid leaf, role residue, or epoch; do not rerun its guardian or
+Swift command. A privileged read-only observation, if separately available,
+could only corroborate retained bytes and could not repair the invalid mode.
+
+Any successor is a separately frozen R18 with a new disjoint epoch and fresh
+one-shot authority. Before authorization it must exercise the actual terminal
+creation path in a disposable root. The minimal stronger primitive is a pinned
+ABI-correct native/compiled descriptor-relative creation wrapper—never the
+current fixed-signature Fiddle `openat` binding—creating mode `0000`, followed
+immediately by held-descriptor `fstat` of regular type, owner, group, mode,
+and nlink; non-variadic `fchmod(0400)`; revalidation; write/readback; file sync;
+named-vnode rejoin; and parent sync. PID domain filtering may omit a BSD read
+only after stable fail-closed proof that the PID generation lies outside both
+the live supervisor SID and every captured or actuation lineage. Unknown,
+unjoined, transition-racing, and detached candidates must still fault rather
+than become false-negative exclusions.
+
+```text
+R17_epoch_constructor_invocations = 1
+R17_epoch_complete = 1
+R17_guardian_invocations = 1
+R17_swiftpm_commands = 1
+R17_process_spawn_calls = 1
+R17_child_exact_reaps = 1
+R17_stop_signals = 6
+R17_kill_signals = 3
+R17_valid_guardian_terminals = 0
+R17_invalid_terminal_residues = 1
+R17_production_attempts = 0
+outer_journal_authority_vector = 00000000
+gate_E_mechanics_outcome = ABSTAIN
+gate_E_scientific_outcome = ABSTAIN
+gate_E_clearance_granted = 0
+```
