@@ -12850,3 +12850,438 @@ gate_E_clearance_granted = 0
 Here, `R18_successor_retained_state_mutations = 0` refers to the prior
 R18/successor epoch state. The consumed canary marker is the sole new retained
 object and is counted separately above.
+
+## Gate E1.4-Energy-O0 design freeze — direct-task CPU energy only
+
+This EOF record is design-only. It depends on the durable stopped-adoption
+canary result and authorizes no observer implementation, ABI probe,
+eligibility child, process query, energy sample, or scientific measurement.
+
+| Coordinate | Exact value |
+| --- | --- |
+| Status | `ENERGY_O0_DESIGN_FROZEN_UNIMPLEMENTED_UNINVOKED` |
+| Direct predecessor | stopped-adoption canary result `07c7ed62e11e13c7c56b0478c93b9d33b25054c2` / tree `78663897498d55fb878cee05081a5b5ce094934f` |
+| O0 mutation allowlist | this control ledger only; observer/source implementation paths `0` |
+| Source conservation | clean and unchanged `befc632485930a9cca7f618d3704292b5465f911` / tree `7d1a3bf302fe358f9e42dc1ed2bf54ed3d22982e` |
+| Implementations / invocations | `0 / 0` |
+| Live rusage / waitid calls | `0 / 0` |
+| Eligibility / scientific intervals | `0 / 0` |
+| Process operations | spawn/fork/exec/signal/wait/reap `0/0/0/0/0/0` |
+| Retained energy state | `0` bytes / mutations `0` |
+| Authority | supplemental unpublished in-owner telemetry only; scientific authorities closed `0`; vector `00000000`; Gate-E mechanics/science `ABSTAIN`; clearance `0` |
+
+### Primary ABI and semantics pins
+
+The executable ABI reference is the local macOS 26.5 SDK. O0 records its
+identity but does not compile against it or query a process.
+
+| Local SDK input | Exact observation |
+| --- | --- |
+| `sys/resource.h` | `/Library/Developer/CommandLineTools/SDKs/MacOSX26.5.sdk/usr/include/sys/resource.h`; device/inode `16777231/656371`; UID/GID `0/0`; mode `0444`; nlink `1`; `20,152` bytes; SHA-256 `7d16930e6b75f11ba203238faa5580d31d48fcd4230f2b3f604aaa5fd7e86b58`; defines `RUSAGE_INFO_V6 = 6` and fields `ri_energy_nj` / `ri_penergy_nj` |
+| `libproc.h` | `/Library/Developer/CommandLineTools/SDKs/MacOSX26.5.sdk/usr/include/libproc.h`; device/inode `16777231/655326`; UID/GID `0/0`; mode `0644`; nlink `1`; `7,575` bytes; SHA-256 `246d87709fc6b9157ce5cf3c475656ac48e0e1ae8bbdc46cf45acd34294448cd`; declares `proc_pid_rusage` for a live process or zombie |
+| `sys/wait.h` | `/Library/Developer/CommandLineTools/SDKs/MacOSX26.5.sdk/usr/include/sys/wait.h`; device/inode `16777231/656431`; UID/GID `0/0`; mode `0444`; nlink `1`; `10,352` bytes; SHA-256 `b77f7dd6f592eba8b0d51c15c7b975472fdad50c12ea296f74f062cbf98dcbf7`; `P_PID = 1`; `WNOHANG = 0x1`; `WEXITED = 0x4`; `WNOWAIT = 0x20`; declares `int waitid(idtype_t, id_t, siginfo_t *, int)`; defines `WIFEXITED` / `WEXITSTATUS` |
+| `sys/signal.h` | `/Library/Developer/CommandLineTools/SDKs/MacOSX26.5.sdk/usr/include/sys/signal.h`; device/inode `16777231/656380`; UID/GID `0/0`; mode `0444`; nlink `1`; `16,829` bytes; SHA-256 `319fbc4555c1d39c95d8a5e3034956bfe8e0e1bd9142df95ab71ad3ac8bb1f54`; defines `CLD_EXITED = 1` and `siginfo_t` fields `si_pid`, `si_code`, and `si_status` |
+
+Apple's primary XNU Recount documentation classifies the rusage interface as
+entity `task`, target `pid`, with energy support. It states that ARM64 task
+and thread energy is kernel-attributed CPU energy accumulated at context
+switches and scaled to nanojoules; it is not split into user, kernel, or secure
+energy. The same interface returns an overall value and a separate P-core-only
+value. The semantic reference is
+[Apple XNU Recount](https://github.com/apple-oss-distributions/xnu/blob/f6217f891ac0bb64f3d375211650a4c1ff8ca1ea/doc/observability/recount.md)
+at XNU commit `f6217f891ac0bb64f3d375211650a4c1ff8ca1ea`, Git blob
+`1fb6f6ebc5ab36d090e649e1430129f27a4cab27`, `9,336` bytes, SHA-256
+`48e6cac3cafbdaeb413316725b70d0337e8699e4af063dcf584ee248ed6d839a`.
+It is informative source provenance, not an execution identity or scientific
+authority.
+
+Header presence does not prove runtime availability, counter resolution,
+zombie readability, monotonicity, or correct ABI layout. Those remain O2
+eligibility questions.
+
+V1 reuses the exact owner's existing retained generation join:
+`PROC_PIDUNIQIDENTIFIERINFO = 17` / `56` bytes and
+`PROC_PIDT_SHORTBSDINFO = 13` / `64` bytes, pinned to the existing
+`xnu-12377.1.9` private-header family. O1 may not open a second numeric-PID
+owner or implement a parallel ownership classifier.
+
+### Frozen metric and exact units
+
+V1's sole primary metric is the delta of `ri_energy_nj` for one exact,
+generation-joined task after its final exec. This is
+`kernel_attributed_direct_task_cpu_energy_nj`.
+
+The task includes its threads. It excludes descendants, a process group,
+coalition, supervisor, whole machine, GPU, ANE, memory, storage, display,
+network, external devices, wall-socket input, and calorimetric work. The V6
+child fields contain child time, wakeup, and page-in counters but no
+child-energy accumulator. No descendant or process-tree energy may be inferred.
+
+`ri_penergy_nj` is retained only as the raw P-core subset diagnostic. It is
+never added to `ri_energy_nj`, and `ri_energy_nj - ri_penergy_nj` is not
+named E-core energy without a later topology proof. `ri_billed_energy` and
+`ri_serviced_energy` are separate attribution accounts and are excluded.
+
+Exact conversions are:
+
+```text
+delta_energy_nj = after.ri_energy_nj - before.ri_energy_nj
+
+energy_J    = delta_energy_nj / 1,000,000,000
+energy_erg  = delta_energy_nj / 100
+
+1 J        = 10,000,000 erg
+1 nJ       = 0.01 erg
+1 nJ / ns  = 1 W
+```
+
+Raw unsigned integers are authoritative. Joules and ergs are exact rational
+projections. Decimal rendering is non-authoritative and must name its rounding
+rule. Binary floating point never enters the canonical supplemental record.
+
+### Sampling-time uncertainty and power
+
+Each rusage call is bracketed by monotonic integer nanoseconds:
+
+```text
+pre_before_ns
+  -> initial proc_pid_rusage
+pre_after_ns
+
+post_before_ns
+  -> terminal proc_pid_rusage
+post_after_ns
+
+dt_min_ns = post_before_ns - pre_after_ns
+dt_max_ns = post_after_ns  - pre_before_ns
+```
+
+Require `dt_min_ns > 0`. Because the kernel sample instant lies somewhere
+inside each call interval, interval-average power is bounded, not
+instantaneous:
+
+```text
+power_lower_W = delta_energy_nj / dt_max_ns
+power_upper_W = delta_energy_nj / dt_min_ns
+```
+
+The two reduced rational bounds are primary. A midpoint or decimal watt value
+is an explicitly labeled estimate, never authority. If a future
+implementation retains Mach ticks instead, it must bind the timebase,
+gcd-cancel, and use checked integer arithmetic before multiplication.
+
+### Swift ownership and zero-extra-process topology
+
+V1 is a Swift-owned, in-process, read-only primitive inside the exact
+supervisor that owns the direct child and its retained lifecycle state. It is
+not an executable, sidecar, package product, DriverCore bridge, IPC consumer,
+or additional process.
+
+The primitive accepts only the owner's opaque retained exact-child capability.
+It accepts no scalar PID, path, argv, environment, cwd, timeout, callback,
+role identifier, or command input and cannot manufacture or discover a child
+capability.
+
+```text
+additional process / IPC channel          = none
+spawn / fork / exec / shell authority     = none
+signal / STOP / CONT / KILL authority     = none
+independent wait / reap ownership         = none
+competing waiter / reaper                  = none
+process-table enumeration                 = none
+filesystem / evidence publication         = none
+DriverCore / public API surface            = none
+Git / SwiftPM / role-selection authority  = none
+```
+
+The exact Swift supervisor remains Prime evidence owner. Observation cannot
+change containment, suppress exact reap, independently persist evidence, or
+close an authority bit. Observer work can perturb scheduling; “unperturbed”
+is forbidden even though the supervisor's energy is not charged to the target
+task counter.
+
+### Direct-child and endpoint contract
+
+V1 applies only to a direct child whose complete birth-to-terminal execution
+is structurally incapable of creating descendants. A newly created child
+starts suspended in its final held image before any child-controlled
+instruction. Its complete reachable role, image, transitive dependencies, and
+input surface have no fork, vfork, posix_spawn, exec, system, popen, shell,
+`Process`, dynamic-plugin, or equivalent descendant-creation route.
+
+If any bootstrap or pre-final-image code can run, it is inside the same
+birth-to-terminal structural proof. Build, test, Git, SwiftPM,
+compiler-driver, and other process-producing roles are outside V1.
+
+Zero descendants is structural, not inferred by polling. If the closed image
+and role cannot prove that property, raw task telemetry may be retained as
+diagnostic data but workload-energy interpretation is `ABSTAIN`.
+
+The future lifecycle is:
+
+```text
+exact owner retains suspended post-final-exec direct child
+  -> generation + domain + mapped-image/vnode sandwich around initial RUSAGE_INFO_V6
+  -> owner resumes the child
+  -> owner bounded-polls waitid(
+       P_PID, id_t(exact_pid), &siginfo,
+       WEXITED | WNOWAIT | WNOHANG
+     )
+  -> require exact terminal identity without consuming wait status
+  -> generation + domain sandwich around zombie RUSAGE_INFO_V6
+  -> owner performs exact waitpid for the same PID
+  -> require waitid/waitpid terminal-status agreement
+  -> existing conservation continues unchanged
+```
+
+The initial sandwich is:
+
+```text
+flavor-17 unique generation
+  -> short-BSD + SID + PGID + credentials + mapped-image/vnode join
+  -> monotonic before
+  -> numeric-PID RUSAGE_INFO_V6
+  -> monotonic after
+  -> short-BSD + SID + PGID + credentials + mapped-image/vnode join
+  -> flavor-17 unique generation
+```
+
+The terminal zombie sandwich uses the same sequence without claiming a live
+mapped VM/vnode join. It requires the generation, domain, unique-information
+UUID, V6 UUID, unchanged idversion, and `ri_proc_start_abstime` to remain
+exact. A stronger zombie image query may be tested diagnostically in O2 but is
+not a PASS dependency.
+
+At most four local convergence attempts are allowed per endpoint. Across
+endpoints, PID, unique ID, ID version, unique-information UUID, V6 UUID,
+parent generation, credentials, SID, PGID, and `ri_proc_start_abstime`
+must remain exact. Initial mapped-image/vnode identity is frozen separately.
+Initial `ri_proc_exit_abstime` is zero and terminal is nonzero. Any later
+exec is rejected. The numeric-PID rusage call is not generation-bound, so both
+join-to-rusage intervals remain named races.
+
+The non-consuming `waitid`, zombie read, and subsequent exact `waitpid` are
+future eligibility requirements, not authority granted by O0. The owner is
+the sole waiter and reaper for this child and admits no competing wait
+consumer. It zero-initializes `siginfo_t`; a nonblocking poll with no event
+must return `si_pid = 0`, while a terminal row must have
+`si_pid = exact_pid`. The finite deadline bounds polls and retries; it cannot
+preempt an already-entered kernel call. O2 must prove:
+
+- exact child and normal-exit disposition are reported with
+  `si_code = CLD_EXITED`;
+- `WNOWAIT` leaves the zombie waitable;
+- the strong generation/domain join and V6 remain readable on the zombie;
+- exact `waitpid` consumes that same child once;
+- `WIFEXITED(waitpid_raw_status)` is true and
+  `WEXITSTATUS(waitpid_raw_status) = si_status`.
+
+Signal/core terminal dispositions may be retained diagnostically but remain
+energy `ABSTAIN` until a later schema freezes their exact status mapping.
+
+Energy observation has a separately frozen finite deadline. An initial-sample
+error returns energy `ABSTAIN` to the exact owner, which must follow its
+already-frozen single-resume normal lifecycle or existing containment path
+before exact reap and conservation. A preterminal/no-event deadline likewise
+returns `ABSTAIN` to that existing lifecycle because the child may still be
+live. Only after an exact `si_pid = exact_pid`, `si_code = CLD_EXITED`
+terminal row may a zombie-sample error yield `ABSTAIN` and proceed immediately
+to exact `waitpid` reap. The observer gains no resume, signal, wait, or reap
+authority. Energy can never create indefinite containment or delay safety
+beyond that bound. No sample after reap is attributable.
+
+### Canonical interval
+
+A future interval is recursively key-sorted compact JSON plus one LF. Its
+sealed cap is `4,096` bytes. `record_sha256` covers canonical bytes that
+exclude that field and is attached afterward.
+
+Raw fields include:
+
+```text
+schema / status / metric_scope
+run_identity_sha256 / intent_sha256 / ordinal
+target:
+  pid / uniqueid / idversion / uuid_hex
+  puniqueid / orig_ppidversion
+  proc_start_abstime / sid / pgid / six credentials
+before and after:
+  call_before_monotonic_ns / call_after_monotonic_ns
+  ri_uuid_hex
+  ri_proc_start_abstime / ri_proc_exit_abstime
+  ri_energy_nj / ri_penergy_nj
+  ri_user_time / ri_system_time
+  ri_instructions / ri_cycles
+  joined_observation_sha256
+terminal_waitid:
+  idtype = P_PID
+  options = WEXITED | WNOWAIT | WNOHANG
+  si_pid = exact_pid
+  si_code = CLD_EXITED / si_status
+  wait_status_consumed = false
+exact_reap:
+  waitpid_pid / waitpid_raw_status
+  waitpid_wifexited / waitpid_exitstatus
+  waitid_waitpid_status_joined
+delta_energy_nj / delta_penergy_nj
+dt_min_ns / dt_max_ns
+direct_descendants_proven_zero
+coverage_complete
+record_sha256
+```
+
+No path, prose, wall timestamp, binary float, inferred tree value, or
+whole-machine value enters the canonical supplemental record. The interval
+cannot PASS unless `si_pid = exact_pid`, `si_code = CLD_EXITED`,
+`WIFEXITED` is true, and the exact owner
+later confirms equal `si_status` / `WEXITSTATUS` plus
+`waitid_waitpid_status_joined = true`.
+
+A series terminal is capped at `16,384` bytes and contains at most `32`
+ordered interval-digest rows. Total policy capacity is:
+
+```text
+32 * 4,096 + 16,384 = 147,456 bytes
+```
+
+These are policy caps, not proof that an unimplemented schema fits. O1 must
+prove exact structural maxima before any invocation.
+
+### ABSTAIN rules
+
+The energy assessment is `ABSTAIN` on any:
+
+- unavailable V6, ABI mismatch, partial read, permission failure, unexpected
+  `ESRCH`, or already-reaped target;
+- four-attempt nonconvergence or an observed generation mismatch during
+  either numeric-PID rusage sandwich; the inherent unobserved
+  join-to-rusage interval remains a named residual;
+- lifetime, generation, UUID, parent, image, start-abstime, credential, SID,
+  or PGID mismatch;
+- post-initial exec or descendant-capable role;
+- unsupported, partial, wrong-PID, or failed
+  `waitid(P_PID, id_t(exact_pid), &siginfo,
+  WEXITED | WNOWAIT | WNOHANG)`;
+- wrong no-event `si_pid`, non-`CLD_EXITED` terminal disposition,
+  unavailable strong zombie generation/domain join, or unavailable terminal
+  V6 sample;
+- energy deadline before a complete terminal sample;
+- exact `waitpid` PID/disposition disagreement with `waitid`;
+- counter regression, `ri_penergy_nj > ri_energy_nj`, attempted unsigned
+  wrap recovery, nonpositive time bound, or checked-arithmetic overflow;
+- canonicality, digest, field, order, interval-count, or byte-cap failure;
+- interpretation as descendant, process-tree, whole-machine, GPU, ANE, or
+  electrical-input energy;
+- known CPU-positive eligibility work without a monotone supported energy
+  counter;
+- any design in which energy failure can postpone reap beyond the frozen
+  bound.
+
+A zero delta is retained as zero only after O2 establishes counter support and
+resolution on the same exact eligibility fingerprint: hardware model, OS
+build/kernel, V6/header identity, and energy-primitive implementation
+identity. Missing support is never measured zero.
+
+### Matched controls and unpublished inference
+
+Raw energy-to-completion is primary. Control subtraction is a secondary
+direct-task comparison, not whole-machine baseline correction.
+
+A matched control uses the same closed wrapper, lifecycle, image class,
+admission conditions, host, OS build, power source, QoS, and fresh
+cache/workspace stratum, differing only by replacement of measured work with
+its frozen no-op control. Control and work must both satisfy the no-descendant
+contract.
+
+Exploration may retain three matched pairs but cannot claim an interval
+estimate. An unpublished internal estimate requires at least six pairs in the
+pre-frozen balanced order:
+
+```text
+AB, BA, AB, BA, AB, BA
+A = matched no-op control
+B = measured work
+```
+
+For each pair, retain the signed integer difference:
+
+```text
+d_i = B_energy_nj_i - A_energy_nj_i
+paired_mean_nj = sum(d_i) / n
+```
+
+The intended unpublished two-sided Student-t `95%` construction is:
+
+```text
+mean = sum(d_i) / n
+s_squared = sum((d_i - mean)^2) / (n - 1)
+CI = mean +/- t_(0.975, n - 1) * sqrt(s_squared / n)
+```
+
+Only the raw signed integer differences and frozen pair order are
+authoritative at O0. A numeric interval remains non-authoritative unpublished
+inference until O3 pins the quantile source and version, deterministic
+arithmetic, precision, and rounding; O0 freezes no numeric quantile. Never
+clamp a negative difference. Cold and warm cache strata remain separate.
+Average power is reported per raw interval; no control-subtracted watt value
+exists without a later equal-duration design. Thermal, power-source, QoS,
+cache, order, or admission drift invalidates comparative inference but does
+not erase retained raw intervals.
+
+### Required successor authorities
+
+O0 creates three disjoint later decisions:
+
+1. **O1 implementation:** add only the internal Swift read-only primitive to
+   the exact owner; pin V6 and `siginfo_t` size/offset/layout, the exact
+   wait-status macros, and exact receipt maxima; use static and signal-free
+   models only; no live query or new executable.
+2. **O2 eligibility:** separately freeze and launch a disposable,
+   structurally no-descendant child to prove suspended initial sampling,
+   non-consuming `waitid`, strong zombie sampling, exact subsequent
+   `waitpid`, normal-exit status agreement, monotone energy, initial-failure
+   return-to-owner behavior, preterminal-deadline return-to-owner behavior,
+   and post-terminal zombie-sample-failure immediate reap.
+3. **O3 measurement:** name the exact Swift implementation, fixed scientific
+   direct-child role, matched control, pair count/order, deadlines, roots,
+   environmental strata, and evidence bounds.
+
+None authorizes another. Eligibility proves host capability, not scientific
+energy. Implementation proves mechanics, not eligibility. Measurement remains
+supplemental and cannot promote Gate E.
+
+This supplemental roadmap does not displace the mainline. Gate D remains a
+completed, conserved integrity predecessor; the pre-O0 live ledger remains
+the sole source of the next permitted mainline change. All eight
+process-derived authorities remain missing, and `frozenPlannerV2` remains
+unchanged. Energy O0 authorizes and closes none of Gate D, E, F, G, H, or
+`904`, and it cannot reorder their predecessor chain.
+
+The completed `113.78 ms` stopped-adoption canary cannot be measured
+retroactively. O0 records no joule, erg, or watt observation.
+
+```text
+energy_O0_design_freezes = 1
+energy_observer_implementations = 0
+energy_observer_invocations = 0
+energy_proc_pid_rusage_calls = 0
+energy_waitid_calls = 0
+energy_waitpid_calls = 0
+energy_exact_reaps = 0
+energy_process_samples = 0
+energy_target_tasks = 0
+energy_children_spawned = 0
+energy_signals = 0
+energy_joules_observed = ABSTAIN
+energy_ergs_observed = ABSTAIN
+energy_watts_observed = ABSTAIN
+energy_process_tree_measurements = 0
+energy_whole_machine_measurements = 0
+energy_GPU_measurements = 0
+energy_ANE_measurements = 0
+energy_retained_state_mutations = 0
+outer_journal_authority_vector = 00000000
+gate_E_mechanics_outcome = ABSTAIN
+gate_E_scientific_outcome = ABSTAIN
+gate_E_clearance_granted = 0
+```
