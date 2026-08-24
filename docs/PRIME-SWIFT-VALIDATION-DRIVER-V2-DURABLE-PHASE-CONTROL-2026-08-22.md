@@ -15207,3 +15207,64 @@ gate_E_mechanics_outcome = ABSTAIN
 gate_E_scientific_outcome = ABSTAIN
 gate_E_clearance_granted = 0
 ```
+
+## R19 native-leaf admission auditor — exact self-FD snapshot amendment
+
+Independent review found one authority mismatch before compilation. The
+stronger descriptor-closure primitive uses `proc_pidinfo` against `getpid()`
+with `PROC_PIDLISTFDS`, while the older auditor contract prohibited every
+process observation. Treating this as implicitly allowed would let prose lag
+the actual primitive. This control-only successor therefore supersedes that
+prohibition for one exact self-descriptor-table read and nothing else.
+
+The fixed buffer holds four eight-byte `proc_fdinfo` entries. XNU caps the
+enumeration to that capacity, holds `proc_fdlock` while walking live
+fileprocs, and returns the number of bytes actually copied. Exact return `24`
+plus sorted descriptors `0,1,2` admits the transport. Any settled fourth
+descriptor returns `32` and rejects, including a high-numbered descriptor
+that survived a historical limit reduction. Denial, malformed layout, any
+other return, or any other descriptor set fails silently with exit `70` if
+the auditor is later invoked.
+
+This is descriptor transport admission, not an ambient process census. PID
+discovery, other PIDs, other flavors, generation/session/group/child facts,
+creation, actuation, and signals remain zero. The snapshot grants no process
+or scientific authority. A concurrent self-FD mutator is not authorized; the
+closed source creates no thread before the call. Future runtime denial remains
+a launch-readiness hard stop, not evidence.
+
+The implementation parent is now this amendment checkpoint, superseding only
+the predecessor's direct-child pin. The exact A/B roots, compiler argv,
+eight-entry environments, two-compilation ceiling, retention policy, affine
+output contract, and analyzer-only boundary remain unchanged. The reviewed
+source preimage is the sole untracked path: `1,042` lines, `39,079` bytes,
+SHA-256 `350db0527cefc848d8341224c15b30f7af4ccc9a4905c41d154d62523f8d1915`.
+Neither it nor the canary has executed, and the exact canary namespace remains
+untouched.
+
+Canonical amendment record metrics:
+
+```text
+frame_bytes = 3211
+frame_sha256 = d5016c3900b33891fd03b48e5f66394a37c44b04f2cbf04af48e56291f2d0cdf
+```
+
+```json
+{"authority":{"auditor_implementation_authorized":true,"auditor_resulting_image_execution_authorized":false,"authority_closure_authorized":false,"authority_vector":"00000000","canary_execution_authorized":false,"gate_e_clearance":0,"gate_e_mechanics_outcome":"ABSTAIN","gate_e_promotion_authorized":false,"gate_e_scientific_outcome":"ABSTAIN","launch_approval_eligible":false,"scientific_authorities_closed":0,"self_fd_snapshot_call_count_authorized":1,"self_fd_snapshot_read_authorized":true,"swift_compilation_authorized":true},"build":{"cleanup_authorized":false,"compile_count_authorized":2,"envelope_unchanged_from_predecessor":true,"head_tree_stable_across_builds":true,"roots":["/private/tmp/prime-driver-v2-r19-native-leaf-admission-build-a-b851a782","/private/tmp/prime-driver-v2-r19-native-leaf-admission-build-b-b851a782"],"sequential":true,"third_compile_authorized":false},"control":{"amendment_delta":"EXACT_ONE_CONTROL_DOCUMENT_PATH","implementation_commit_parent":"THIS_SELF_FD_AMENDMENT_CHECKPOINT","predecessor_commit":"a3dc78741147e26f7a0938810cb1e18c8bc826bd","predecessor_tree":"54fb28d662ed1186956bcd50f2a9c6130a4a8169","prior_direct_child_pin_superseded":true},"descriptor_closure":{"accepted_fds":[0,1,2],"accepted_returned_bytes":24,"arg":0,"buffer_bytes":32,"buffer_capacity_entries":4,"call_count":1,"classification":"SELF_DESCRIPTOR_TRANSPORT_ADMISSION_NOT_AMBIENT_PROCESS_CENSUS_NOT_AUTHORITY","concurrent_self_fd_mutator_authorized":false,"denial_or_malformed_result_policy":"SOURCE_SILENT_EXIT_70","entry_size_bytes":8,"entry_stride_bytes":8,"flavor":"PROC_PIDLISTFDS","fourth_or_later_settled_fd_policy":"RETURNED_BYTES_32_REJECT","generation_observations":0,"group_observations":0,"historical_high_numbered_fd_policy":"ENUMERATED_AND_REJECTED_INDEPENDENT_OF_CURRENT_LIMIT","kernel_iteration_lock":"proc_fdlock","libproc_calls":1,"other_flavor_calls":0,"other_pid_calls":0,"pid":"getpid()","pid_discovery_calls":0,"process_actuation_calls":0,"process_creation_calls":0,"process_external_census_calls":0,"session_observations":0,"signal_calls":0,"target":"SELF_DESCRIPTOR_TABLE_ONLY"},"operations":{"auditor_binary_executions":0,"auditor_compilations":0,"auditor_self_fd_snapshot_calls":0,"canary_binary_executions":0,"canary_root_accesses":0,"cleanup_calls":0,"energy_actions":0,"gate_e_promotions":0,"process_external_censuses":0,"signals":0,"swiftpm_commands":0},"schema":"prime_driver_v2_r19_native_leaf_admission_self_fd_snapshot_amendment_v1","scope_correction":{"all_other_process_observation_remains_prohibited":true,"former_process_observation_zero_literal":"SUPERSEDED_ONLY_FOR_EXACT_SELF_FD_SNAPSHOT","future_runtime_self_query_denial":"FAIL_CLOSED_NOT_LAUNCH_READINESS","no_process_authority_derived":true,"no_runtime_invocation_authorized":true},"source":{"candidate_bytes":39079,"candidate_lines":1042,"candidate_sha256":"350db0527cefc848d8341224c15b30f7af4ccc9a4905c41d154d62523f8d1915","implementation_commit_delta":"EXACT_ONE_ADDED_SOURCE_PATH","path":"docs/tools/prime-driver-v2-r19-native-leaf-admission.swift","state":"UNTRACKED_REVIEWED_NOT_COMMITTED_NOT_COMPILED"},"status":"R19_NATIVE_LEAF_ADMISSION_SELF_FD_SNAPSHOT_AMENDED_BUILD_AUTHORITY_UNIMPLEMENTED"}
+```
+
+```text
+R19_native_leaf_admission_self_fd_snapshot_amendments = 1
+R19_native_leaf_admission_self_fd_snapshot_calls = 0
+R19_native_leaf_admission_external_process_censuses = 0
+R19_native_leaf_admission_auditor_implementations = 0
+R19_native_leaf_admission_auditor_compilations = 0
+R19_native_leaf_admission_auditor_binary_executions = 0
+R19_native_leaf_primitive_binary_invocations = 0
+R19_native_leaf_admission_build_roots_created = 0
+R19_native_leaf_admission_cleanup_calls = 0
+outer_journal_authority_vector = 00000000
+gate_E_mechanics_outcome = ABSTAIN
+gate_E_scientific_outcome = ABSTAIN
+gate_E_clearance_granted = 0
+```
