@@ -244,8 +244,12 @@ private enum PrimeR19NativeLeafPrimitive {
     }
 
     private static func requireCloseOnExec(_ descriptor: Int32) throws {
-        guard descriptor >= 3,
-              fcntl(descriptor, F_GETFD) & FD_CLOEXEC != 0
+        guard descriptor >= 3 else {
+            throw PrimeR19NativeLeafFailure.rejected
+        }
+        let flags = fcntl(descriptor, F_GETFD)
+        guard flags >= 0,
+              flags & FD_CLOEXEC != 0
         else {
             throw PrimeR19NativeLeafFailure.rejected
         }
