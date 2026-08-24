@@ -1170,6 +1170,39 @@ def issue_actuation_certificate(
   }
 end
 
+def issue_stopped_adoption_certificate(
+  tracker, group, sid, deadline, expected_lifetimes:
+)
+  raise "stopped-adoption-target" unless group > 1 && sid > 0
+  members = double_group_snapshot(tracker, group, sid, deadline)
+  return nil if members.empty?
+  return nil if members.all? do |member|
+    [2, 3].include?(member.fetch("status"))
+  end
+  raise "stopped-adoption-cardinality-#{group}" unless members.length == 1
+  member = members.first
+  lifetimes = members.map { |entry| receipt_lifetime_key(entry) }
+  raise "stopped-adoption-lifetime-#{group}" unless
+    lifetimes.to_set == expected_lifetimes &&
+      lifetimes.uniq.length == lifetimes.length
+  raise "stopped-adoption-member-binding-#{group}" unless
+    member.fetch("classification") == "owned" &&
+      member.fetch("sid") == sid && member.fetch("pgid") == group &&
+      member.fetch("status") == 4 &&
+      member.fetch("credentials") == [
+        EXPECTED_UID, EXPECTED_GID, EXPECTED_UID, EXPECTED_GID,
+        EXPECTED_UID, EXPECTED_GID,
+      ]
+  {
+    "kind" => "STOPPED_ADOPTION",
+    "group" => group,
+    "sid" => sid,
+    "members" => members,
+    "members_sha256" => Digest::SHA256.hexdigest(canonical_json(members)),
+    "issued_monotonic_ns" => monotonic,
+  }
+end
+
 ACTUATION_CERTIFICATE_KEYS = %w[
   action consumed group issued_monotonic_ns members members_sha256 sid
   signal_call_entered signal_delivered
@@ -1275,13 +1308,14 @@ end
 
 class GroupActuator
   attr_reader :signal_ledger, :call_budget, :stopped_groups,
-              :poisoned, :disabled, :fault_count
+              :adoption_certificates, :poisoned, :disabled, :fault_count
 
   def initialize(tracker)
     @tracker = tracker
     @signal_ledger = []
     @call_budget = {}
     @stopped_groups = {}
+    @adoption_certificates = []
     @poisoned = false
     @disabled = false
     @fault_count = 0
@@ -1316,6 +1350,20 @@ class GroupActuator
     signaling_disabled?
   end
 
+  def retain_rejected_adoption!(group, sid, lifetimes)
+    @stopped_groups[group] = {
+      "sid" => sid,
+      "lifetimes" => lifetimes,
+      "stop_certificate" => nil,
+      "stop_delivered" => false,
+      "stopped_adopted" => false,
+      "adoption_certificate" => nil,
+      "kill_delivered" => false,
+      "empty_without_kill" => false,
+      "invalid" => true,
+    }
+  end
+
   def stop_current_groups!(owned, deadline)
     groups = owned.group_by do |member|
       [member.fetch("sid"), member.fetch("pgid")]
@@ -1323,6 +1371,7 @@ class GroupActuator
     groups.keys.sort_by { |sid, group| [group, sid] }.each do |sid, group|
       state = @stopped_groups[group]
       if state
+        next if state["invalid"]
         begin
           raise "stopped-group-sid-rebound-#{group}" unless state["sid"] == sid
           current = groups.fetch([sid, group]).map do |member|
@@ -1340,7 +1389,29 @@ class GroupActuator
       expected_lifetimes = groups.fetch([sid, group]).map do |member|
         lifetime_key(member)
       end.to_set
+      fault_action = "ADOPT_STOPPED"
       begin
+        adoption = issue_stopped_adoption_certificate(
+          @tracker, group, sid, deadline,
+          expected_lifetimes: expected_lifetimes
+        )
+        if adoption
+          raise "stopped-adoption-cap" if
+            @adoption_certificates.length >= PROOF_GROUP_CAP
+          @stopped_groups[group] = {
+            "sid" => sid,
+            "lifetimes" => expected_lifetimes,
+            "stop_certificate" => nil,
+            "stop_delivered" => false,
+            "stopped_adopted" => true,
+            "adoption_certificate" => adoption,
+            "kill_delivered" => false,
+            "empty_without_kill" => false,
+          }
+          @adoption_certificates << adoption
+          next
+        end
+        fault_action = "STOP"
         certificate = issue_actuation_certificate(
           @tracker, "STOP", group, sid, deadline
         )
@@ -1350,6 +1421,7 @@ class GroupActuator
           "lifetimes" => expected_lifetimes,
           "stop_certificate" => certificate,
           "stop_delivered" => false,
+          "stopped_adopted" => false,
           "kill_delivered" => false,
           "empty_without_kill" => false,
         }
@@ -1361,11 +1433,19 @@ class GroupActuator
         )
         state["stop_delivered"] = true
       rescue GuardianDeadline
-        @stopped_groups.delete(group) if @call_budget[["STOP", group]].nil?
+        if fault_action == "ADOPT_STOPPED"
+          retain_rejected_adoption!(group, sid, expected_lifetimes)
+        else
+          @stopped_groups.delete(group) if @call_budget[["STOP", group]].nil?
+        end
         raise
       rescue StandardError => error
-        record_fault("STOP", group, error)
-        @stopped_groups.delete(group) if @call_budget[["STOP", group]].nil?
+        record_fault(fault_action, group, error)
+        if fault_action == "ADOPT_STOPPED"
+          retain_rejected_adoption!(group, sid, expected_lifetimes)
+        else
+          @stopped_groups.delete(group) if @call_budget[["STOP", group]].nil?
+        end
       end
     end
   end
@@ -1375,10 +1455,15 @@ class GroupActuator
       state = @stopped_groups.fetch(group)
       next if state["kill_delivered"] || state["empty_without_kill"]
       next if state["invalid"]
-      next unless state["stop_delivered"]
+      next unless state["stop_delivered"] || state["stopped_adopted"]
       next if state.dig("kill_certificate", "signal_call_entered")
       next if signaling_disabled?
       begin
+        bases = [state["stop_delivered"], state["stopped_adopted"]].count(true)
+        unless bases == 1
+          state["invalid"] = true
+          raise "kill-basis-partition-#{group}"
+        end
         members = double_group_snapshot(
           @tracker, group, state.fetch("sid"), deadline
         )
@@ -1418,6 +1503,28 @@ class GroupActuator
 
   def receipt
     ledger = @signal_ledger.sort_by { |entry| entry["sequence"] }
+    adoptions = @adoption_certificates.sort_by do |certificate|
+      certificate.fetch("group")
+    end
+    raise "stopped-adoption-receipt-cap" if
+      adoptions.length > PROOF_GROUP_CAP
+    adoption_groups = adoptions.map { |certificate| certificate.fetch("group") }
+    raise "stopped-adoption-receipt-duplicate" unless
+      adoption_groups.uniq.length == adoption_groups.length
+    adoption_rows = adoptions.map do |certificate|
+      certificate.reject { |field, _| field == "issued_monotonic_ns" }
+    end
+    kill_groups = ledger.select do |entry|
+      entry.fetch("action") == "KILL"
+    end.map { |entry| entry.fetch("group") }
+    delivered_stop_groups = ledger.select do |entry|
+      entry.fetch("action") == "STOP" && entry.fetch("delivered")
+    end.map { |entry| entry.fetch("group") }
+    kill_groups.each do |group|
+      bases = (delivered_stop_groups.include?(group) ? 1 : 0) +
+        (adoption_groups.include?(group) ? 1 : 0)
+      raise "kill-basis-partition-#{group}" unless bases == 1
+    end
     columns = %w[
       sequence action group sid member_count certificate_sha256
       call_entered delivered
@@ -1431,6 +1538,10 @@ class GroupActuator
         ledger.count { |entry| entry["action"] == "STOP" },
       "kill_calls" =>
         ledger.count { |entry| entry["action"] == "KILL" },
+      "adopted_stopped_group_count" => adoptions.length,
+      "adopted_stopped_groups" => adoption_groups,
+      "adopted_stopped_certificates_sha256" =>
+        Digest::SHA256.hexdigest(canonical_json(adoption_rows)),
       "signal_ledger_columns" => columns,
       "signal_ledger_rows" => rows,
       "signal_ledger_sha256" =>
