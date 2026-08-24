@@ -11818,3 +11818,131 @@ gate_E_mechanics_outcome = ABSTAIN
 gate_E_scientific_outcome = ABSTAIN
 gate_E_clearance_granted = 0
 ```
+
+## Gate E1.4-R18 production implementation freeze — constructor and guardian unlaunched
+
+This EOF checkpoint is the current live ledger. It freezes the production R18
+constructor and guardian source after the three disposable R18 primitives
+passed. It authorizes no constructor, guardian, Swift, Git, signal, cleanup,
+retry, evidence interpretation, or Gate-E promotion. The implementation commit
+is data rank 3; this control-only successor is rank 4. Production execution
+remains a separately named one-shot transition.
+
+| Coordinate | Frozen value |
+| --- | --- |
+| Durable predecessor | actuation-canary result `ade5219570f90e5ccd58de73283366f50af7ed25` / tree `e5cffc4c2e63c9b67b122b6ba4bcc8a0eca80e74` |
+| Implementation | `4ebe75202f9f689fc774c90901ab22cda218ee0e` / tree `6417f8314ef5616c305170ebeed612a6fb8016d5`; direct parent is the predecessor above; exactly two added files / `2,580` insertions; no other path changed |
+| Constructor | `docs/tools/prime-driver-v2-r18-epoch-constructor.rb`; mode `100644`; blob `6815173f97203f58eab44ff7250b56ef024bc9c6`; SHA-256 `d22b640d992d5ff0f0eeb429952e9309054fbd44a307407fe1766d15684383ab`; `476` lines / `15,877` bytes |
+| Guardian | `docs/tools/prime-driver-v2-r18-guardian.rb`; mode `100644`; blob `3d98ff458c3b79d0f427a4feee7dad894caf142b`; SHA-256 `a0bbebc545e4b5e3c2b996ba31b14f06bcb6f1b16a4e99e97ff16b04f6dfb6b0`; `2,104` lines / `72,678` bytes |
+| Production leaves | staging `/private/tmp/gate-e1-4-mechanics-r18-staging-befc6324-b501ad0d7ab1b6c5`; final `/private/tmp/gate-e1-4-mechanics-r18-befc6324-b501ad0d7ab1b6c5`; terminal `r18-guardian-terminal.json`; both roots absent at freeze |
+| Constructor topology | exact nine empty `0700` children: `home`, `config`, `tmp`, `git-template`, `swiftpm-cache`, `swiftpm-config`, `swiftpm-security`, `clang-module-cache`, `swiftpm-module-cache`; root nlink `11`; terminal absent |
+| Mechanics topology | observed baseline `11 / 60a77281aa70f709c30ebcf76b4b10d2e14a8f9618ca4282d44817a1b0ef72e1`; modeled staging `12 / 248ab55bc59bc9390d0ea684ed977bbaa3ebcf8aed457ec40b90e6c4824114ce`; modeled published final `12 / f5b32198b79756a580471065094208d1fa8a451f5eaaa29d0454cc95d85263f0` |
+| Constructor mutation surface | empty argv; exact five-key bootstrap; one descriptor-relative staging-root `mkdirat`, nine child `mkdirat` calls, one exclusive/no-follow `renameatx_np`; held/named vnode joins; child, epoch-root, and parent directory `fsync`; parent `F_FULLFSYNC`; no process, signal, shell, terminal file, delete, cleanup, or retry surface |
+| Guardian command surface | empty argv; exact five-key bootstrap; exact inherited R17 40-entry replacement Swift environment and exact fixed Swift argv/filter; one `Process.spawn`; one centralized certificate-consuming `Process.kill(action, -pgid)` site; one distinct libc `kill(-pgid, 0)` absence site; no fork, exec, shell, dynamic command, cleanup, or second spawn |
+| Runtime/private ABI | exact Ruby `2.6.10p210`, platform `universal.arm64e-darwin25`, 64-bit little-endian; exact sysctls macOS `26.5.2 / 25F84`, Darwin `25.5.0`, `xnu-12377.121.10~1`, `arm64`; PID-1 full-BSD flavor `3` must be exact `EPERM`; process authority uses flavor `17 / 56` plus short-BSD flavor `13 / 64`, not flavor-3 process data |
+| Census and lineage | merged RUID-501 and guardian-session census; stable flavor-17/short-BSD/SID/PGID sandwich; lifetime `(pid, uniqueid)`; epoch `(uniqueid, idversion)`; parent epoch `(puniqueid, orig_ppidversion)`; two ambient baseline sweeps; owned/ambient collision and every terminal UNKNOWN poison permanently |
+| Image/workspace join | source and fixture held before spawn; fixture path, mapped image device/inode, held fixture device/inode, and admitted workspace cwd device/inode all join; each dynamic admission root and workspace is rejoined by named path to its held descriptor; disappearance or rebound poisons |
+| Capacity | PID list `131,072`; captured lifetimes `4,096`; proof groups `32`; at most `64` action/PGID call commitments; novel admission roots `64`; terminal `16,384` bytes; error prefix `128` raw bytes encoded as hex plus complete SHA-256 |
+| Actuation certificate | two equal generation-joined group snapshots; exact caller intent binds action, PGID, SID, exact lifetime set, and KILL permission set; unique PID/lifetime rows; credentials `501/20` in all six slots; STOP admits only status `2/3`; KILL only status `4`; certificate age `< 50 ms`; call budget is consumed before the only signal call |
+| Fault partition | a pre-call fault consumes no call and may obtain a new snapshot; an entered call can never retry; an entered KILL cannot starve later PGIDs; ordinary certificate/syscall faults stay local to action/PGID; sticky classification or UNKNOWN disables every later signal globally; unresolved containment remains nonterminal |
+| Exact conservation | exact direct-child `waitpid2` reap; two final empty owned scans; two exact flavor-17 `ESRCH` observations per captured lifetime; two empty group projections plus libc signal-zero `ESRCH` per proof PGID; terminal authority is unreachable until all conservation returns |
+| Lifecycle time | `child_started_at` is set only after successful spawn return; wall and monotonic reap coordinates are captured at the exact successful `waitpid2`; conservation latency is not misreported as child lifetime |
+| Terminal publication | descriptor-relative `mkostempsat_np`; generated fixed-pattern sibling; `0600 -> 0400` via fixed `fchmod`; recursive canonical digest-free payload hash; full write/readback/hash/vnode joins; file and parent full sync; exclusive/no-follow rename; postcommit uncertainty cannot emit a contradictory second terminal; stdout is corroborative/best-effort only |
+| Terminal bound | independent conservative maximum populated every optional field, all `32` proof groups, all `64` complete columnar signal rows, maximum-width coordinates, all three simultaneous binary-safe error receipts, exact sysctls, conservation and publication data: payload `13,514` bytes; LF frame `13,599 / 16,384`; headroom `2,785` bytes |
+| Static/model proof | both files exact Ruby-2.6 syntax PASS; Ripper parse PASS; no trailing whitespace; generation model remains `17 / 17` with SHA-256 `59f94fa446316f0bf656ba28c1669c247807e6a37e7c90e5adacf1548ca8d788`; actuation model remains `13 / 13` with SHA-256 `761d4b2a3371b233c9d2f9be69e70b4836e5b55f4980e56d226719ca53590acf`; neither production artifact was loaded or run |
+| Source/fixture conservation | source clean `befc632485930a9cca7f618d3704292b5465f911` / tree `7d1a3bf302fe358f9e42dc1ed2bf54ed3d22982e`; embedded identity `b501ad0d7ab1b6c54cbf30f9a79d75c54fe1d3783c516e10ad73fdd5fb4df397`; source device/inode `16777231/17154421`; fixture device/inode `16777231/17382060`, `53,072` bytes, SHA-256 `177a18c20bc42486c77b52af4c472be222dec1baabf8973ece7b2d44ea92756e` |
+| Retained-state conservation | admission baseline exact `16 / 6185ea35d684b2a50529aa79f1455bae789eda056e298f5509e7c5127423abd5`; R17 invalid terminal unchanged at device/inode `16777231/17408854`, mode `0000`, size `1,579`; R18 terminal-canary inventory exact `12 / 71502c95976f2ce2516d55a2062878b9ab9731108755b7fd6875b154d913c9d0`; generation and actuation markers exact empty inventories; no cleanup |
+| Excluded | Prime source, provenance, `Package.swift`, DriverCore, `main.swift`, manifests, locks, dependencies, `.build`, `.github`, evidence, R17, all three consumed R18 canaries, and every retained root are unchanged |
+| Authority | implementation-only source freeze; constructor `0`; epoch complete `0`; guardian `0`; production Swift `0`; production spawn `0`; production STOP/KILL `0`; all eight roadmap authorities missing; vector `00000000`; mechanics/science `ABSTAIN`; Gate-E clearance `0` |
+
+The guardian remains safety-only Workstation instrumentation. It may contain
+the one exact assessment command, but it does not interpret the assessment or
+close a scientific authority bit. Darwin still supplies no atomic
+generation-bound group-signal primitive: the final joined snapshot to numeric
+group-signal interval remains a named residual. A call commitment is therefore
+charged before entry, may never be retried, and remains valid only for the
+exact certificate and one action/PGID.
+
+### Next separately authorized transition — one R18 constructor
+
+The constructor is the next transition. The guardian is not next. The
+constructor command has no outer timeout and may create only the exact R18
+staging namespace, its nine children, and the exact atomic final publication.
+Any invocation consumes the constructor even when it fails before mutation,
+leaves only staging state, or produces no receipt. A non-complete result
+authorizes no retry, cleanup, guardian, Swift command, or signal.
+
+Exact cwd:
+
+```text
+/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging
+```
+
+Exact command:
+
+```sh
+/bin/zsh -f -c '
+  umask 077
+  exec /usr/bin/env -i \
+    LANG=C.UTF-8 LC_ALL=C.UTF-8 TZ=UTC PATH=/usr/bin:/bin \
+    __CF_USER_TEXT_ENCODING=0x1F5:0x0:0x0 \
+    /usr/bin/ruby --disable-gems "$1" </dev/null
+' r18-epoch-constructor \
+  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/docs/tools/prime-driver-v2-r18-epoch-constructor.rb
+```
+
+Generic recommendation authorization covered implementation, read-only
+checks, and this freeze. It does **not** spend the newly frozen constructor
+identity. Before the command may run, fresh explicit approval must state:
+
+> I approve the single R18 epoch-constructor invocation from implementation
+> commit `4ebe75202f9f689fc774c90901ab22cda218ee0e`, including creation of only
+> its exact staging root and nine empty children, exclusive publication to its
+> exact final root, retention of every success or failure state, and no retry,
+> cleanup, guardian, Swift command, or signal.
+
+A successful constructor must be checkpointed in a separate result commit
+with the exact stdout frame, root/child device-inode metadata, complete final
+inventory, staging absence, mechanics `12 / f5b32198b79756a580471065094208d1fa8a451f5eaaa29d0454cc95d85263f0`,
+and terminal absence. Constructor success still will not authorize the
+guardian. The guardian will require a later result-based freeze and its own
+fresh approval.
+
+```text
+R18_terminal_canary_invocations = 1
+R18_terminal_canary_passes = 1
+R18_generation_canary_invocations = 1
+R18_generation_canary_passes = 1
+R18_generation_canary_forks = 2
+R18_generation_canary_execs = 1
+R18_generation_canary_external_signals = 0
+R18_actuation_canary_invocations = 1
+R18_actuation_canary_passes = 1
+R18_actuation_canary_marker_creations = 1
+R18_actuation_canary_forks = 1
+R18_actuation_canary_execs = 1
+R18_actuation_canary_stop_call_entries = 1
+R18_actuation_canary_kill_call_entries = 1
+R18_actuation_canary_stop_signals_sent = 1
+R18_actuation_canary_kill_signals_sent = 1
+R18_actuation_canary_exact_reaps = 1
+R18_actuation_canary_generation_esrch_observations = 2
+R18_actuation_canary_group_empty_observations = 2
+R18_actuation_canary_signal_zero_esrch_observations = 2
+R18_epoch_constructor_invocations = 0
+R18_epoch_complete = 0
+R18_guardian_invocations = 0
+R18_swiftpm_commands = 0
+R18_production_spawn_calls = 0
+R18_production_stop_call_entries = 0
+R18_production_kill_call_entries = 0
+R18_production_attempts = 0
+outer_journal_authority_vector = 00000000
+gate_E_mechanics_outcome = ABSTAIN
+gate_E_scientific_outcome = ABSTAIN
+gate_E_clearance_granted = 0
+```
+
+All eight authorities remain missing: Prime Git, companion Git, Swift
+version, Swift target-info, SwiftPM build, artifact staging, XCTest inventory,
+and Swift Testing inventory.
