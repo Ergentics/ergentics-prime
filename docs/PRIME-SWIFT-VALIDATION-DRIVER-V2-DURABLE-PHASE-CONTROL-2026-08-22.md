@@ -13509,3 +13509,177 @@ gate_E_mechanics_outcome = ABSTAIN
 gate_E_scientific_outcome = ABSTAIN
 gate_E_clearance_granted = 0
 ```
+
+## Gate E1.4-R19 implementation checkpoint — constructor ready, uninvoked
+
+This EOF checkpoint records the complete bounded implementation authorized by
+the immediately preceding R19 freeze. Neither production artifact's top-level
+code was evaluated or invoked. No R19 namespace, artifact-created child
+process, signal, Swift command, evidence, or energy state was created.
+
+| Coordinate | Exact value |
+| --- | --- |
+| Status | `R19_IMPLEMENTED_VERIFIED_CONSTRUCTOR_UNINVOKED` |
+| Direct predecessor | R19 implementation freeze `8c93e369a437a9c0ccd571fb2190dcc86adcf96e` / tree `219bbc5f07b2e19536bd20d951f42578000d1d11` |
+| Implementation | direct child `df73633c787a81c0c0c921b117c6ae18b631e757` / tree `c4567849eb473242a2ecea63a0bbae70f42209f2` |
+| Constructor | `docs/tools/prime-driver-v2-r19-epoch-constructor.rb`; blob `b8ea04d9763ce5de6c755086aef5d3e25b7b934b`; SHA-256 `8fb21cf715d6f7de1b9249029deefde7732c6a7c37b0717317370e6ff4c23ec0`; device/inode `16777231/17444939`; UID/GID `501/20`; mode `0644`; nlink `1`; `15,877` bytes / `476` lines |
+| Guardian | `docs/tools/prime-driver-v2-r19-guardian.rb`; blob `e24ef87d9db8be272a23c6fc8f847045e45d1875`; SHA-256 `263e5514dc3e42713af77698c430f684d9ce45af7aa6e284a7f59ac96319492f`; device/inode `16777231/17444940`; UID/GID `501/20`; mode `0644`; nlink `1`; `76,970` bytes / `2,215` lines |
+| Source conservation | clean and unchanged `befc632485930a9cca7f618d3704292b5465f911` / tree `7d1a3bf302fe358f9e42dc1ed2bf54ed3d22982e`; root device/inode `16777231/17154421`; embedded identity `b501ad0d7ab1b6c54cbf30f9a79d75c54fe1d3783c516e10ad73fdd5fb4df397` |
+| Execution | constructor/guardian/Swift/spawn/STOP/KILL `0/0/0/0/0/0`; retained R19 mutations `0` |
+| Authority | constructor implementation eligible for a later exact one-shot approval only; guardian and every process/evidence/scientific authority remain closed; vector `00000000`; mechanics/science `ABSTAIN`; clearance `0` |
+
+### Exact implementation delta and build-free verification
+
+Both files are new mode-`100644` paths. The two R18 files, canary, source
+repository, `.build`, and all retained roots remain unchanged.
+
+The R19 constructor is byte-identical to the R18 constructor after only:
+
+- equal-width `R18/r18 -> R19/r19` namespace, module, status, and terminal
+  substitutions;
+- baseline `12 / f5b32198b79756a580471065094208d1fa8a451f5eaaa29d0454cc95d85263f0`;
+- staged `13 / ac8beb68ecb27595efb3ab924351a177c9cf3f8cfe7e7f19d744a14b9b5b8bd5`;
+- final `13 / 043ab46066a30c11bac6adfb431829117e5cafb05a43db7388d1806b5945e0c9`.
+
+The R19 guardian is byte-identical to corrected guardian input `a550c1b`
+after only equal-width R19 namespace/schema/status substitutions and admission
+baseline replacement with
+`21 / 0c2e05f41db17c352678ad54b3bbcbaa1ce8eaec87175848e9a236a3a6dfd9bf`.
+No `R18` or `r18` token remains in either R19 file.
+
+| Check | Exact result |
+| --- | --- |
+| Ruby parser | Apple Ruby `2.6.10p210`; both files `Syntax OK` |
+| Ripper | both complete files return non-nil `sexp_raw`; target top levels not evaluated |
+| Normalized equality | constructor and guardian each equal their frozen input after exactly the substitutions above |
+| Whitespace/scope | `git diff --check` PASS; implementation commit adds exactly the two allowlisted files |
+| Constructor process surface | no `Process.spawn`, fork, exec, signal, shell, Swift, Git, delete, cleanup, or retry path; its future script invocation is not counted as implementation verification |
+| Guardian process surface | exactly one fixed `Process.spawn` at line `1985`, one centralized certificate-consuming `Process.kill` at line `1275`, and one distinct `DarwinProcess.kill(-group, 0)` absence probe at line `1590`; no generic command input or second spawn |
+| Actuation region | offset `38,586`; `6,680` bytes; SHA-256 `cef63a1dddc35d57aa5c00f88b9d3de893c9d3a9e3238a1a6953e090062139f4` |
+| Actuator region | offset `45,863`; `8,944` bytes; SHA-256 `00cb0692997ae16f9a512f7362c37c15eb60b0f74927a20bc0d993e587b9ca1d` |
+| Existing signal-free mechanics | generation `17 / 17 PASS`, SHA-256 `59f94fa446316f0bf656ba28c1669c247807e6a37e7c90e5adacf1548ca8d788`; stopped adoption `36 / 36 PASS`, SHA-256 `4a1bd17791e4b4cf5b90d84d06ff3c1cdc61d36f40d1e98d01602ba0b82da404`; exact tested regions unchanged |
+
+No Swift build, test, guardian, constructor, assessment/containment child,
+process census, rusage query, waitid, or signal occurred during implementation
+or verification. Ruby `-c`, Ripper, normalized byte comparison, hashes, and
+receipt models were read-only parser/data operations.
+
+### Receipt bounds and retained preimages
+
+The constructor cap remains `16,384` bytes. A direct schema model populated
+every variable success integer at unsigned-64 width while the two structurally
+fixed operation counters remained literal zero; payload/frame were
+`3,460 / 3,545` bytes, leaving `12,839`. A failure model populated all four
+simultaneously possible `512`-byte diagnostics with worst-case six-byte JSON
+escaping and every variable integer at unsigned-64 width while those same two
+operation counters remained zero; payload/frame were `12,744 / 12,829`,
+leaving `3,555`. The fixed minimal fallback frame is `43` bytes. All named
+constructor shapes therefore fit without relying on a successful live run.
+
+The whole R19 guardian's terminal maximum was recomputed by normalized shape
+equivalence. Its only changed strings are equal-width R19 substitutions;
+admission counts `16 -> 21` are both two bytes and both digests are `64`
+bytes. The corrected predecessor's independently populated base maximum is
+`13,599` LF-framed bytes, and the stopped-adoption fields add exactly `517`:
+
+```text
+13,599 + 517 = 14,116 bytes
+16,384 - 14,116 = 2,268 bytes headroom
+```
+
+The canary-tested regions and every receipt-shape producer are otherwise
+byte-exact. R19 does not inherit the number merely by name; the normalized
+whole-file comparison proves zero width or shape delta.
+
+Immediately before this checkpoint, both R19 roots and both R19 terminal
+forms were absent. `/private/tmp` remained device/inode `16777231/774813`,
+UID/GID `0/0`, mode `01777`. The complete mechanics and admission inventories
+reproduced the frozen `12 / f5b32198...` and `21 / 0c2e05f4...` values. The
+retained R18 epoch rejoined at `16777231/17419092`; the stopped-adoption marker
+rejoined empty at `16777231/17443295`. No object was removed, populated,
+renamed, repaired, or reinterpreted.
+
+The fixed fixture still rejoined at device/inode `16777231/17382060`,
+UID/GID `501/20`, mode `0700`, nlink `1`, `53,072` bytes, mtime/ctime
+`1787500441/1787500441`, SHA-256
+`177a18c20bc42486c77b52af4c472be222dec1baabf8973ece7b2d44ea92756e`.
+
+### Next separately approved transition — one R19 constructor
+
+The constructor is next; the guardian is not. This checkpoint freezes no
+constructor invocation by itself. The exact future cwd is:
+
+```text
+/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging
+```
+
+The sole candidate transport is:
+
+```sh
+/bin/zsh -f -c '
+  umask 077
+  exec /usr/bin/env -i \
+    LANG=C.UTF-8 LC_ALL=C.UTF-8 TZ=UTC PATH=/usr/bin:/bin \
+    __CF_USER_TEXT_ENCODING=0x1F5:0x0:0x0 \
+    /usr/bin/ruby --disable-gems "$1" </dev/null
+' r19-epoch-constructor \
+  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/docs/tools/prime-driver-v2-r19-epoch-constructor.rb
+```
+
+The Ruby target sees empty `ARGV`, exactly the five frozen environment keys,
+stdin `/dev/null`, and umask `0077`. The outer frame supplies no generic
+constructor input: its sole `$1` is the frozen script path. The script path is
+interpreted named-path input rather than a descriptor-mapped executable; the
+final snapshot-to-Ruby-open interval remains a named userspace race and must
+be revalidated immediately before launch.
+
+If later exactly approved, one invocation may exclusively create only:
+
+```text
+/private/tmp/gate-e1-4-mechanics-r19-staging-befc6324-b501ad0d7ab1b6c5
+  + nine fixed empty children
+  -> exclusive no-replace publication as
+/private/tmp/gate-e1-4-mechanics-r19-befc6324-b501ad0d7ab1b6c5
+```
+
+It may retain any success or failure state permanently. It may not retry,
+clean, delete, repair, run the guardian, run Swift, invoke Git, or signal a
+process. The invocation is consumed even if it fails before root creation or
+publishes no receipt. There is no outer abandonment timeout.
+
+Fresh approval must name the committed checkpoint SHA/tree measured after
+this section is committed, implementation `df73633c787a81c0c0c921b117c6ae18b631e757`
+/ tree `c4567849eb473242a2ecea63a0bbae70f42209f2`, constructor SHA-256
+`8fb21cf715d6f7de1b9249029deefde7732c6a7c37b0717317370e6ff4c23ec0`,
+both exact roots, nine children, retain-all-outcomes rule, and every zero
+authority above. Generic recommendation authorization predating those exact
+checkpoint values cannot spend this one-shot identity.
+
+A complete constructor result must be recorded separately with the exact
+stdout frame, root and child vnode metadata, complete inventory, staging and
+terminal absence, final mechanics
+`13 / 043ab46066a30c11bac6adfb431829117e5cafb05a43db7388d1806b5945e0c9`,
+and source/fixture/admission conservation. Constructor success still does not
+authorize the guardian; guardian readiness and launch each remain separate.
+
+```text
+R19_implementation_freezes = 1
+R19_constructor_implementations = 1
+R19_guardian_implementations = 1
+R19_epoch_constructor_invocations = 0
+R19_epoch_roots_created = 0
+R19_guardian_invocations = 0
+R19_swiftpm_commands = 0
+R19_production_spawn_calls = 0
+R19_production_stop_call_entries = 0
+R19_production_kill_call_entries = 0
+R19_production_attempts = 0
+R19_retained_state_mutations = 0
+energy_O1_implementations = 0
+energy_O2_invocations = 0
+energy_O3_measurements = 0
+outer_journal_authority_vector = 00000000
+gate_E_mechanics_outcome = ABSTAIN
+gate_E_scientific_outcome = ABSTAIN
+gate_E_clearance_granted = 0
+```
