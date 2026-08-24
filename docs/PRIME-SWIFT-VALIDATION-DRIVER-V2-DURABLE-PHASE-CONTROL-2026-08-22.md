@@ -10811,3 +10811,25 @@ outer_journal_authority_vector = 00000000
 gate_E_scientific_outcome = ABSTAIN
 gate_E_clearance_granted = 0
 ```
+
+## Gate E1.4-R16 committed-freeze checkpoint
+
+| Coordinate | Pinned value |
+| --- | --- |
+| Status | `FROZEN_NOT_EXECUTED` |
+| Freeze implementation commit | `ea5c64195e26c932ef7602ed27da5c4fbeb49ef6` |
+| Freeze implementation tree | `2d93ce8aea53d2401638ad3c4fe346d3e8eeacd3` |
+| Source commit/tree/identity | clean `befc632485930a9cca7f618d3704292b5465f911` / `7d1a3bf302fe358f9e42dc1ed2bf54ed3d22982e` / `b501ad0d7ab1b6c54cbf30f9a79d75c54fe1d3783c516e10ad73fdd5fb4df397` |
+| R16 guardian identity | mode `100644`; blob `23d7b4faba1a91879c86426267b430b1801feff0`; SHA-256 `eb23ede3411d8e7a2c2ada6c6625ed9d4c95a100e615f46589d2ef1d480b3095`; `1,270` lines / `42,627` bytes |
+| R15 disposition | `WITHDRAWN_UNINVOKED`; retained epoch unchanged; guardian/Swift/spawn/signal counts all zero |
+| R16 namespace | epoch absent; guardian/Swift/production-attempt counts all zero |
+| Scientific authority | `ABSTAIN`; vector `00000000`; Gate-E clearance `0` |
+
+The execution predecessor for any separately approved R16 epoch creation and
+single guardian launch is the freeze implementation commit/tree above, not
+this rank-4 prose-only record successor. The implementation tree contains the
+R15 withdrawal, the exact R16 guardian, and the complete frozen envelope.
+This checkpoint creates no epoch, invokes no guardian or Swift command, and
+transfers no R15 signal authority. R16 remains ineligible until a fresh
+approval names the one guardian launch and its bounded generation-joined
+containment authority.
