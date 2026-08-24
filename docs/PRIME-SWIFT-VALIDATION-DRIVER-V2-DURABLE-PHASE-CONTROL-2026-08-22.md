@@ -14265,3 +14265,298 @@ gate_E_clearance_granted = 0
 All eight authorities remain missing: Prime Git, companion Git, Swift
 version, Swift target-info, SwiftPM build, artifact staging, XCTest inventory,
 and Swift Testing inventory.
+
+## R18/R19 failure reconciliation and R19 coordinated-disposal predecessor freeze — unimplemented, uninvoked
+
+This control-only freeze changes only this ledger. It creates no controller,
+journal, process, signal, Swift/SwiftPM command, retained-state mutation,
+cleanup, interpretation, authority closure, or Gate-E promotion.
+
+### Failure data
+
+| Datum | Observation | Classification |
+| --- | --- | --- |
+| First visible R18 mixed-stream failure | `XCTAssertTrue failed - PrimeValidationDriverV2GovernorSessionCensus.contain(` at `PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests.swift:4870` | `IDENTIFIED_NONFATAL_SOURCE_TEXT_ASSERTION_DEFECT`: the test required a contiguous spelling; the valid call is split across `PrimeValidationDriverV2GovernorSessionCensus` and `.contain(`. Both shapes entered source commit `4735739b`. This did not prove a missing containment call. |
+| R18 guardian initiating error | no final guardian terminal, complete bounded stream, or actuator receipt | `ABSTAIN`: do not import R12's `session_census_nonconvergent_query / supervisor_stop / EPERM`. |
+| Original R18 stopped adoption | first-seen exact-owned status-`4` group could not obtain the original STOP certificate; KILL required guardian-owned `stop_delivered` | `IDENTIFIED_CLOSED_R18_STATE_MACHINE_DEFECT`: successor `a550c1b` added `STOPPED_ADOPTION`; its isolated canary passed. |
+| R19 stopped singleton | stopped-adoption regions are byte-identical to the corrected input, but the successor census observed a status-`4` singleton | `NONTERMINAL_OPERATIONAL_RESIDUE; CAUSE_ABSTAIN`: this is not evidence that the closed R18 defect recurred. |
+| Current Swift fixture deadline | one `10 s` deadline spans spawn, STOP, KILL, deferred containment, and conservation; failure can reach `_exit(70)` | `IDENTIFIED_PROSPECTIVE_LIFETIME_DEFECT`: expiry after STOP and before KILL can strand a child. Repair after R19 conservation; do not retroactively assign it to R18/R19. |
+
+The redundant raw string assertion may later be removed while the normalized
+source-order assertions remain. Source repair is outside this disposal slice.
+
+### Frozen coordinates and ceiling
+
+| Coordinate | Value |
+| --- | --- |
+| Status | `R19_COORDINATED_OPERATIONAL_DISPOSAL_PREDECESSOR_FROZEN_UNIMPLEMENTED` |
+| Direct control predecessor | `11a5dce6b892a46438c57959f76e0f301f600af8` / tree `1c30b304da80c20a0c432a01bcdc0c864b915457` |
+| Frozen source | `befc632485930a9cca7f618d3704292b5465f911` / tree `7d1a3bf302fe358f9e42dc1ed2bf54ed3d22982e`; unchanged |
+| R19 | guardian/Swift permanently consumed nonterminal; terminal absent at last authorized census; mechanics/science `ABSTAIN`; vector `00000000`; clearance `0` |
+| Proposed controller | `docs/tools/prime-driver-v2-r19-coordinated-disposal.rb` |
+| Invocation shape | one no-argument Apple-Ruby process; zero child/fork/exec/spawn/wait/Swift/SwiftPM/Git/energy/cleanup calls |
+| Ordering | guardian retirement and conservation -> discard old Fixture observations -> fresh Fixture admission |
+| Signal ceiling | STOP `0`; CONT `0`; guardian positive-PID KILL commitments/calls `<= 1/1`; Fixture negative-PGID KILL commitments/calls `<= 1/1`; total KILL `<= 2/2`; no retry |
+| Signal-zero ceiling | one non-actuating call site and a separate entered-call counter; exactly two pre-actuation probes per already-absent proof; after a successful KILL, no finite retry cap until two `ESRCH` observations; a completed conservation leaf retains the final count, while prefix interruption leaves the exact count `UNPROVEN` |
+| Authority | operational disposal only; no R19 terminal fabrication or interpretation |
+
+```text
+control cwd =
+/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging
+
+controller =
+/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/docs/tools/prime-driver-v2-r19-coordinated-disposal.rb
+
+disposal root =
+/private/tmp/gate-e1-4-r19-coordinated-disposal-11a5dce6-8930176-8930235
+
+R19 epoch =
+/private/tmp/gate-e1-4-mechanics-r19-befc6324-b501ad0d7ab1b6c5
+
+R19 guardian final =
+/private/tmp/gate-e1-4-mechanics-r19-befc6324-b501ad0d7ab1b6c5/r19-guardian-terminal.json
+
+R19 guardian staging pattern =
+r19-guardian-terminal.[A-Za-z0-9]{6}.staging
+
+Fixture image =
+/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.driver-v2-gate-c-staging/Tests/PrimeValidationWorkflow/.build/arm64-apple-macosx/release/PrimeValidationWorkflowDriverV2SessionFixture
+
+Fixture cwd =
+/private/tmp/prime-validation-admission-tests-369E97E5-AAF3-4267-B810-BA92ADB20BD1/workspace
+
+post-conservation fail-stop leaf =
+/private/tmp/prime-validation-admission-tests-369E97E5-AAF3-4267-B810-BA92ADB20BD1/gate-e-session-fixture-fail-stop.json
+```
+
+The disposal root is an exact leaf, not a runtime-derived prefix. Its absence
+must be sealed at readiness and rejoined immediately before invocation;
+otherwise eligibility ends and no alternate root is used. Draft-time absence
+is not readiness authority.
+
+Last-census values are stale equality inputs, never signal authority:
+
+| Process | Tuple |
+| --- | --- |
+| Guardian | PID/uniqueid/idversion `21601/8930176/17456018`; PPID `21600`; parent uniqueid/idversion `8930175/17456015`; SID/PGID `21601/21601`; status `2/2`; credentials `[501,20,501,20,501,20]`; Ruby UUID `eb2540b7e13236beb719619d0fbf7203`; cwd vnode `16777231/17077237` |
+| Fixture | PID/uniqueid/idversion `21660/8930235/17456153`; PPID `1`; original parent uniqueid/idversion `8930233/17456148`; SID/PGID `21660/21660`; status `4/4`; credentials `[501,20,501,20,501,20]`; Fixture UUID `2ebb880ad28b32ff9b7eeb868af5d9b6`; cwd vnode `16777231/17447047` |
+
+Runtime authority requires two new complete flavor-17 joins plus stable
+domain, credential, mapped-image, cwd, and membership observations. Any
+rebound or drift rejects; it never selects a replacement target.
+The controller addresses only frozen PIDs `21601` and `21660`; it never scans
+for a replacement Ruby or Fixture by resemblance. It joins and excludes its
+own generation before any global/session cardinality projection.
+
+| Required frozen preimage | Readiness identity to rejoin at runtime |
+| --- | --- |
+| Fixture | device/inode `16777231/17382060`; `53,072` bytes; mode `0700`; nlink `1`; SHA-256 `177a18c20bc42486c77b52af4c472be222dec1baabf8973ece7b2d44ea92756e`; UUID `2ebb880ad28b32ff9b7eeb868af5d9b6`. The census proved path/UUID, not current mapped device/inode; runtime mapped/named/held equality is required. |
+| Apple Ruby | device/inode `16777231/1152921500312572705`; `135,200` bytes; SHA-256 `9d6ff3e289c7d908e3c785e0bedd6692d1d6a3377965c88c04d847104b7c892c`; UUID `eb2540b7e13236beb719619d0fbf7203` |
+
+### Journal and state machine
+
+The controller first holds and rejoins `/private/tmp` at device/inode
+`16777231/774813`, UID/GID `0/0`, mode `01777`, on local APFS. It may create
+the exact root once only with descriptor-relative `mkdirat`, open it with
+`openat(O_DIRECTORY | O_NOFOLLOW | O_CLOEXEC)`, require the named/held vnode
+join and mode `0700`, and synchronize parent and root. `EEXIST` consumes
+eligibility; no alternate root is selected. The root is retained permanently.
+Only this ordered subsequence is permitted:
+
+```text
+00-start.json
+01-prestate.json
+02-guardian-kill-commitment.json
+03-guardian-kill-result.json
+04-guardian-conservation.json
+05-fixture-prestate.json
+06-fixture-kill-commitment.json
+07-fixture-kill-result.json
+08-fixture-conservation.json
+09-disposal-terminal.json
+```
+
+Each leaf is fixed-name, regular, `O_RDWR | O_CREAT | O_EXCL | O_NOFOLLOW |
+O_CLOEXEC`, mode `0400`, nlink `1`, at most `16,384` bytes, canonical sorted
+JSON plus one LF, and full-write/readback/vnode/hash verified. File and held
+parent are synchronized before transition. Maximum: `10` files, `163,840`
+aggregate bytes. No staging, rename, replace, truncate, unlink, repair,
+cleanup, or alternate name.
+
+Each record hashes the preceding published record. Its `record_sha256` hashes
+canonical bytes excluding that field and is attached afterward. A commitment
+is durable before its possible syscall. Missing result after commitment means
+the call may have entered and never permits retry. On early rejection, `09`
+may follow the last actual leaf; missing numbered leaves remain absent.
+
+```text
+start published
+  -> R19 final/staging namespace rejoined absent
+  -> guardian freshly joined | guardian twice absent
+  -> guardian commitment -> <=1 positive-PID KILL | no call
+  -> guardian generation/session/group conserved
+  -> discard all prior Fixture observations
+  -> Fixture freshly joined stopped singleton | Fixture twice absent
+  -> Fixture commitment -> <=1 negative-PGID KILL | no call
+  -> Fixture generation/group conserved
+  -> fail-stop leaf observed once read-only
+  -> disposal terminal
+```
+
+Before either commitment, rejoin the R19 final and staging namespace. Any
+final entry causes no actuation. An exact regular, held-to-named joined final
+with mode `0400`, nlink `1`, size at most `16,384`, one canonical LF-framed
+R19 terminal schema/status, and a valid digest yields
+`DISPOSAL_DEFERRED_R19_TERMINAL_APPEARED` without scientific interpretation.
+Any staged, symlink, invalid, rebound, oversized, noncanonical, unrecognized,
+or multiple terminal candidate yields retained pre-actuation rejection.
+
+Guardian admission excludes controller self and requires two equal complete
+joins of the exact old generation, credentials, parent epoch, SID/PGID,
+singleton session/group, mapped/named Ruby identity, control cwd, and frozen
+invocation framing. If absent, require two generation-`ESRCH`, two empty
+domain projections, and two group signal-zero `ESRCH` observations. If
+present, persist commitment, take a new double snapshot, recheck terminal
+absence, and enter at most one positive-PID KILL only while that certificate
+is younger than `50,000,000 ns`. The guardian joined-snapshot-to-positive-PID
+interval is a named Darwin race. No return is retried. After success,
+observation may remain
+indefinite until conservation; Fixture admission cannot begin first.
+
+The old outer wait-owner generation `8930175/17456015` is optional telemetry.
+It is never signaled, and its continued existence neither authorizes nor
+blocks Fixture admission: exact guardian-generation absence plus empty
+guardian session/group conservation closes the retained actuation owner.
+
+Fixture admission is wholly fresh after guardian conservation. Actionable
+state is only the old generation with PPID `1`, unchanged original parent,
+credentials, SID = PGID = PID, stable status `4/4`, mapped image joined to the
+held frozen image, cwd joined to the held admitted cwd, and two equal
+singleton group snapshots. Any running/zombie/initializing/multi-member/
+rebound/late-member/drift state rejects. Persist commitment, resnapshot, then
+rejoin the R19 final and staging namespace immediately before the call. Any
+entry consumes the commitment without a signal. Only continued exact absence
+and a new matching double snapshot permit at most one negative-PGID KILL while
+the certificate is younger than `50,000,000 ns`. The Fixture singleton-
+snapshot-to-negative-PGID interval, including late-member and group-reuse
+exposure, is a separately named Darwin race. After success require two flavor-17
+generation-absence observations, two empty-group projections, and two group
+signal-zero `ESRCH` observations. This is external conservation, not exact
+`waitpid` reap, because the controller is not the Fixture's parent.
+
+Caps: PID list `131,072`; joined lifetimes `4,096`; guardian candidates `0|1`;
+Fixture candidates `0|1`; target groups `<=2`; actionable members `1`; KILL
+calls `<=2`; STOP/CONT `0/0`; process waits `0`. `Process.wait*`, `waitpid`,
+`waitid`, and child-ownership calls are forbidden; bounded passive sleep/poll
+is allowed before actuation.
+The single signal-zero site is separate from KILL accounting. A no-actuation
+absence proof enters exactly two probes; a post-success conservation loop may
+enter an unbounded number until two `ESRCH` observations. A completed
+conservation record retains the final count; a crash/prefix interruption
+retains only `UNPROVEN`, never a reconstructed number or permission to retry.
+Conservation after a successful KILL has no abandonment deadline.
+
+Allowed disposal terminal states:
+
+```text
+DISPOSAL_NOOP_ALREADY_CONSERVED
+DISPOSAL_DEFERRED_R19_TERMINAL_APPEARED
+DISPOSAL_PREACTUATION_REJECTED
+DISPOSAL_GUARDIAN_RETIRED_FIXTURE_ABSENT
+DISPOSAL_COMPLETE_EXTERNAL_CONSERVATION
+DISPOSAL_GUARDIAN_SIGNAL_ENTERED_NONTERMINAL
+DISPOSAL_FIXTURE_SIGNAL_ENTERED_NONTERMINAL
+```
+
+Every one is mechanics-only `ABSTAIN` and is not the R19 terminal.
+The two `*_SIGNAL_ENTERED_NONTERMINAL` states are permitted only when an
+entered syscall returned failure and cannot be retried. A successful KILL
+cannot publish either state; the controller remains until conservation.
+
+### Fail-stop and Koine boundaries
+
+The R19 fail-stop leaf remains unopened until
+`04-guardian-conservation.json` and `08-fixture-conservation.json` are durable.
+Then one read-only no-follow descriptor observation requires held size at most
+`1,024`, reads exactly that size, performs one additional read returning zero,
+and rejoins held/named vnode before and after. Exact bytes/hash are retained.
+
+| Observation | Classification |
+| --- | --- |
+| absent | `ABSENT_ABSTAIN` |
+| rebound | `INVALID_OR_REBOUND_RETAINED_ABSTAIN` |
+| held empty preimage | `EMPTY_PREIMAGE_ABSTAIN` |
+| exact canonical `prime_driver_v2_session_fixture_fail_stop_v2` record | `VALID_CANONICAL_V2_DIAGNOSTIC_RETAINED` |
+| partial/oversized/malformed/noncanonical/identity mismatch | `INVALID_OR_PARTIAL_RETAINED_ABSTAIN` |
+
+Empty/absent does not rule out deadline or prepublication failure. The datum
+cannot authorize actuation, retry, repair, closure, or promotion.
+
+Design-review conclusion: concurrent Swift/Ruby ownership has no value here.
+Ruby adds no unique kernel primitive and a live shadow with actuation or veto
+would recreate two owners. They did find later value in a one-way differential
+oracle: Swift Release alone owns spawn, STOP/KILL, exact reap, conservation,
+and canonical trace; only after the Swift owner and every captured generation
+and process group are conserved and its immutable canonical trace is durably
+published may Ruby/Koine read that trace and evaluate a pure state/hash model
+into a disjoint report.
+That later oracle has zero libproc, spawn, wait, signal, poll, merged terminal,
+or authority. It is excluded from disposal and the critical repair path.
+
+### Implementation and readiness boundary
+
+The implementation commit may add exactly:
+
+```text
+docs/tools/prime-driver-v2-r19-coordinated-disposal.rb
+```
+
+Out: this ledger; all `.swift`/`Package.swift`; R18/R19 constructor/guardian;
+`.github`; `.build`; epoch/admission/workspace/fail-stop/terminal state; energy;
+Koine. Top-level controller code remains unexecuted during implementation.
+
+A later control-only readiness checkpoint must pin the freeze and
+implementation commit/tree; controller blob, bytes, lines, mode, vnode,
+UID/GID, nlink, SHA-256, timestamp; Apple Ruby 2.6 syntax and Ripper parse
+without top-level evaluation; exact Ruby preimage; exact five-entry
+environment, no-argument transport, `/dev/null` stdin, umask `0077`, control
+cwd; absent exact disposal root; zero spawn/fork/exec/wait/Swift/Git/energy/
+cleanup paths; call sites/caps; commitment-before-call and guardian-first
+order; post-commit double snapshots and the fixed `50,000,000 ns` certificate
+maximum age; fail-stop-open order; journal bounds; and pure no-process models for
+present, absent, rebound, terminal-present, non-singleton, late-member,
+image/cwd drift, signal failure, and prefix interruption.
+
+This freeze authorizes no controller invocation. Only its later readiness
+checkpoint may request exact approval for one invocation.
+
+```text
+R19_coordinated_disposal_predecessor_freezes = 1
+R19_coordinated_disposal_implementations = 0
+R19_coordinated_disposal_readiness_freezes = 0
+R19_coordinated_disposal_invocations = 0
+R19_coordinated_disposal_roots_created = 0
+R19_coordinated_disposal_guardian_kill_commitments = 0
+R19_coordinated_disposal_guardian_kill_entries = 0
+R19_coordinated_disposal_fixture_kill_commitments = 0
+R19_coordinated_disposal_fixture_kill_entries = 0
+R19_coordinated_disposal_stop_entries = 0
+R19_coordinated_disposal_cont_entries = 0
+R19_coordinated_disposal_signal_zero_entries = 0
+R19_coordinated_disposal_swift_commands = 0
+R19_coordinated_disposal_git_commands = 0
+R19_coordinated_disposal_cleanup_calls = 0
+R19_coordinated_disposal_fail_stop_reads = 0
+R19_retry_authorized = 0
+koine_live_observer_invocations = 0
+koine_live_actuation_calls = 0
+koine_offline_oracle_implementations = 0
+outer_journal_authority_vector = 00000000
+gate_E_mechanics_outcome = ABSTAIN
+gate_E_scientific_outcome = ABSTAIN
+gate_E_clearance_granted = 0
+```
+
+All eight authorities remain missing: Prime Git, companion Git, Swift
+version, Swift target-info, SwiftPM build, artifact staging, XCTest inventory,
+and Swift Testing inventory.
