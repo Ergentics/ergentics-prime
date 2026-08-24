@@ -11306,3 +11306,55 @@ gate_E_mechanics_outcome = ABSTAIN
 gate_E_scientific_outcome = ABSTAIN
 gate_E_clearance_granted = 0
 ```
+
+## Gate E1.4-R18 terminal-publication canary freeze
+
+| Coordinate | Frozen value |
+| --- | --- |
+| Status | `FROZEN_NOT_EXECUTED` |
+| Durable predecessor | R17 disposition `b5fb7d0443eedd71bc3e8d9883d8e6b13eae1334` / tree `4d0b80b930124076b6093f19bf8882c51cc9e839` |
+| Source conservation | clean `befc632485930a9cca7f618d3704292b5465f911` / tree `7d1a3bf302fe358f9e42dc1ed2bf54ed3d22982e`; embedded identity `b501ad0d7ab1b6c54cbf30f9a79d75c54fe1d3783c516e10ad73fdd5fb4df397` |
+| Canary | `docs/tools/prime-driver-v2-r18-terminal-publication-canary.rb`; mode `0644`; `550` lines / `18,331` bytes; SHA-256 `ff389cb4c59d8da4647cfc53af3a5d2972f2331ba34ddd13b6e0179a72cd3c2f`; prospective Git blob `fc1068fd0b6510aa1c551ec1721cb43e05558443` |
+| Disjoint one-shot root | `/private/tmp/prime-driver-v2-r18-terminal-canary-befc6324-b501ad0d7ab1b6c5`; absent at freeze; not a mechanics prefix and never reusable |
+| Production R18 names | both `/private/tmp/gate-e1-4-mechanics-r18-staging-befc6324-b501ad0d7ab1b6c5` and `/private/tmp/gate-e1-4-mechanics-r18-befc6324-b501ad0d7ab1b6c5` remain absent and out of this invocation |
+| Primitive | one fixed-signature `mkostempsat_np(dirfd, mutable-template, 8, O_CLOEXEC)` per staged inode; generated leaf is canonical data; native held-descriptor `chmod(0400)`; exact write/readback; file and parent `fsync` plus `F_FULLFSYNC`; `renameatx_np` with `RENAME_EXCL | RENAME_NOFOLLOW_ANY` |
+| Cases | success; existing-final collision preserving both vnodes and bytes; held-parent rename plus pathname replacement; retained post-create and post-write staging states, both explicitly non-authoritative |
+| Exact one-shot invocation | from this control worktree: `/bin/zsh -f -c 'umask 077; exec /usr/bin/env -i LANG=C.UTF-8 LC_ALL=C.UTF-8 TZ=UTC PATH=/usr/bin:/bin __CF_USER_TEXT_ENCODING=0x1F5:0x0:0x0 /usr/bin/ruby --disable-gems "$1" </dev/null' r18-terminal-canary docs/tools/prime-driver-v2-r18-terminal-publication-canary.rb` |
+| Hard boundary | no Swift, SwiftPM, Git, guardian, constructor, child process, signal, source mutation, R17 read/repair, scientific evidence, or Gate-E promotion |
+
+This freeze tests the exact mode-sensitive filesystem transaction that failed
+in R17 without importing a dylib, executable helper, loader identity, or
+another process into the trusted boundary. `mkostempsat_np` is a fixed Darwin
+libc ABI: it creates a descriptor-relative regular file at mode `0600`; the
+held descriptor is immediately joined and checked before native `fchmod`
+seals it to `0400`. The final name is never opened for creation. Exclusive
+rename publishes the already-synced inode or leaves the generated staging
+name as permanent, detectable residue.
+
+The canary root is deliberately durable. There is no cleanup path. A passing
+run retains its success, collision, rebound, post-create, and post-write
+fixtures; any failed run retains the exact partial state and consumes this
+canary. Neither result authorizes or constructs R18. A later R18 implementation
+freeze may use the primitive only after this committed canary is exercised and
+its receipt is separately checkpointed.
+
+The user's authorization of the recommendations is interpreted narrowly as
+one invocation of that exact command only after this two-path freeze is
+committed. It does not authorize an R18 constructor, guardian, Swift command,
+signal, cleanup, repair, or second canary invocation. Success requires exit
+`0` and the sole transport-visible frame
+`R18_TERMINAL_CANARY_PASS`; any other result consumes the canary.
+
+```text
+R18_terminal_canary_invocations = 0
+R18_epoch_constructor_invocations = 0
+R18_guardian_invocations = 0
+R18_swiftpm_commands = 0
+R18_process_spawn_calls = 0
+R18_signals = 0
+R18_production_attempts = 0
+outer_journal_authority_vector = 00000000
+gate_E_mechanics_outcome = ABSTAIN
+gate_E_scientific_outcome = ABSTAIN
+gate_E_clearance_granted = 0
+```
