@@ -12445,3 +12445,111 @@ guardian, epoch constructor, Swift command, signal, or retained-root mutation
 is authorized by this checkpoint. Any disposable live canary, successor epoch,
 or successor guardian launch requires a new identity, a separate freeze, and
 fresh explicit approval; it cannot be an R18 retry.
+
+## Gate E1.4-R18 successor guardian correction — implemented, unlaunched
+
+| Coordinate | Exact value |
+| --- | --- |
+| Status | `STOPPED_ADOPTION_IMPLEMENTED_VERIFIED_UNLAUNCHED` |
+| Direct predecessor | nonterminal recovery checkpoint `de5305c0379faac707f82932307030bdaf57ca03` / tree `f3154511752af02b6ec8c64a1b58ce7456b253b2` |
+| Implementation | `a550c1b166bb94b0ae674202b144a1bfc071ffc0` / tree `14a7b38a524e9c19cbf848452124beceaec8dedd` |
+| Changed path | only `docs/tools/prime-driver-v2-r18-guardian.rb`; `116` insertions / `5` deletions |
+| Guardian identity | Git blob `35596488986fcf98aa792c0c2d0a558c59109aed`; `76,970` bytes; `2,215` lines; SHA-256 `33d54336a8cfd5427f52a27e0f3ccec965f7b3eb43720e46dfbcfdd349894aa2` |
+| Superseded invoked identity | implementation `4ebe75202f9f689fc774c90901ab22cda218ee0e` / tree `6417f8314ef5616c305170ebeed612a6fb8016d5`; guardian SHA-256 `a0bbebc545e4b5e3c2b996ba31b14f06bcb6f1b16a4e99e97ff16b04f6dfb6b0`; consumed R18 result remains nonterminal `ABSTAIN` |
+| Source product | unchanged and clean at `befc632485930a9cca7f618d3704292b5465f911` / tree `7d1a3bf302fe358f9e42dc1ed2bf54ed3d22982e` |
+| Execution | epoch constructors `0`; guardian launches `0`; Swift commands `0`; spawn calls `0`; STOP/KILL calls `0/0`; retained-state mutations `0` under this successor identity |
+| Authority | mechanics implementation only; authority vector `00000000`; mechanics/science `ABSTAIN`; Gate-E clearance `0` |
+
+### Closed transition
+
+```text
+first_seen_exact_owned_group
+  + two_equal_joined_group_snapshots
+  + exact_original_lifetime_set
+  + singleton
+  + status == SSTOP(4)
+  + credentials == 501/20/501/20/501/20
+  + exact SID/PGID
+  -> STOPPED_ADOPTION certificate
+  -> STOP budget/calls/ledger entries = 0/0/0
+  -> stopped_adopted = true
+  -> fresh existing KILL certificate remains required
+```
+
+The certificate binds the complete member row and its canonical SHA-256 plus
+an issuance coordinate. Its terminal digest omits only that monotonic
+coordinate. It has no consumed/call-entered/delivered claim and cannot enter
+the signal ledger. Status `2/3` still takes the ordinary STOP path.
+
+Any first-seen adoption deadline or eligibility failure retains an invalid
+group state bound to the original SID and lifetime set. Both STOP and KILL
+processing skip that state before observation or actuation. A rejected
+multi-member or mixed group therefore cannot shrink and later acquire
+adoption. Before KILL certification, exactly one basis must hold:
+`stop_delivered XOR stopped_adopted`. A dual basis is permanently invalidated
+before a snapshot, certificate, call-budget entry, ledger entry, or signal.
+The receipt repeats this partition check for every entered KILL row.
+
+Compact terminal fields are:
+
+```text
+adopted_stopped_group_count
+adopted_stopped_groups
+adopted_stopped_certificates_sha256
+```
+
+### Verification data
+
+| Check | Result |
+| --- | --- |
+| Runtime/parser | Apple Ruby `2.6.10p210`; syntax `PASS`; Ripper AST `PASS`; `git diff --check` `PASS` |
+| Pure signal-free policy model | `28 / 28 PASS`; exact final-class verifier SHA-256 `4664cd90c7ecf1c52c01cd572550e974db7fb27ffd3d32dc688a6c0f1a433bc1` |
+| Adoption allow | exact owned singleton status `4`; STOP budget/ledger remain zero; one fresh modeled KILL commitment allowed |
+| Ordinary allow | active status `2/3` routes through the unchanged modeled STOP-to-KILL path |
+| Adoption denials | empty, multi/mixed, initializing `1`, zombie `5`, ambient, UNKNOWN, wrong credentials, snapshot/lifetime/SID/PGID drift |
+| State denials | late member, rejected-group shrink, zero/dual KILL basis, entered KILL failure retry, and post-adoption disappearance |
+| Dual-basis first/second pass | first: `invalid=true`, faults `1`, snapshots/certificates/calls/ledger/budgets `0/0/0/0/0`; second: identical, no retry |
+| Static process surface | one top-level `Process.spawn`; one `Process.kill` only in `consume_actuation_certificate`; one `DarwinProcess.kill` only for signal-zero group-absence proof; no bare fork/exec/system/spawn/kill or xstring |
+| Adoption authority surface | helper contains no process call and no call-budget or signal-ledger mutation |
+
+The certified predecessor terminal maximum was `13,599` LF-framed bytes.
+For all `32` adoption groups, using ten-digit positive signed-`pid_t` PGIDs,
+the exact canonical merge cost of the three fields is `517` bytes:
+
+```text
+13,599 + 517 = 14,116 bytes
+16,384 - 14,116 = 2,268 bytes headroom
+```
+
+This remains conservative with the predecessor's impossible-but-safe maximum
+of all `64` signal rows populated simultaneously.
+
+### Boundary and residuals
+
+This correction was not loaded by, and cannot repair or reinterpret, the
+consumed R18 invocation. It does not create a guardian terminal or close any
+of the eight scientific authorities. Adoption proves exact ownership and
+stopped state, not who stopped the process or why. The final fresh joined-
+snapshot-to-negative-PGID signal interval remains non-atomic. A failed sole
+KILL remains non-retryable and may remain nonterminal.
+
+No existing epoch may be reused. A disposable self-stop canary, successor
+epoch constructor, or production guardian invocation requires its own new
+identity, control freeze, exact risk envelope, and fresh explicit approval.
+This checkpoint authorizes none of them.
+
+```text
+R18_guardian_invocations = 1_consumed_nonterminal
+R18_successor_guardian_implementations = 1
+R18_successor_guardian_launches = 0
+R18_successor_epoch_constructors = 0
+R18_successor_swiftpm_commands = 0
+R18_successor_spawn_calls = 0
+R18_successor_stop_call_entries = 0
+R18_successor_kill_call_entries = 0
+R18_successor_retained_state_mutations = 0
+outer_journal_authority_vector = 00000000
+gate_E_mechanics_outcome = ABSTAIN
+gate_E_scientific_outcome = ABSTAIN
+gate_E_clearance_granted = 0
+```
