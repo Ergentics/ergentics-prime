@@ -5,6 +5,12 @@ import CryptoKit
 import Darwin
 import Foundation
 
+@_silgen_name("_NSGetEnviron")
+private func primeR19NativeLeafAdmissionNSGetEnviron()
+    -> UnsafeMutablePointer<
+        UnsafeMutablePointer<UnsafeMutablePointer<CChar>?>?
+    >
+
 private enum PrimeR19NativeLeafAdmissionFailure: Error {
     case rejected
 }
@@ -292,7 +298,8 @@ private enum PrimeR19NativeLeafAdmission {
     }
 
     private static func requireEmptyEnvironment() throws {
-        guard let environment = _NSGetEnviron().pointee,
+        guard let environment =
+                primeR19NativeLeafAdmissionNSGetEnviron().pointee,
               environment.pointee == nil
         else {
             throw PrimeR19NativeLeafAdmissionFailure.rejected
@@ -860,11 +867,11 @@ private enum PrimeR19NativeLeafAdmission {
         )
         let expectedIdentifier =
             Data("PrimeDriverV2R19NativeLeafPrimitiveCanary\0".utf8)
+        let identifierStart = codeDirectoryOffset + identifierOffset
+        let identifierEnd = identifierStart + expectedIdentifier.count
         guard identifierOffset >= 0,
               identifierOffset <= codeDirectoryLength - expectedIdentifier.count,
-              bytes[(codeDirectoryOffset + identifierOffset)..<
-                    (codeDirectoryOffset + identifierOffset +
-                     expectedIdentifier.count)] == expectedIdentifier,
+              bytes[identifierStart ..< identifierEnd] == expectedIdentifier,
               hashOffset >= 0,
               hashOffset <= codeDirectoryLength - (22 * 32)
         else {
