@@ -12030,3 +12030,225 @@ gate_E_clearance_granted = 0
 All eight authorities remain missing: Prime Git, companion Git, Swift
 version, Swift target-info, SwiftPM build, artifact staging, XCTest inventory,
 and Swift Testing inventory.
+
+## Gate E1.4-R18 guardian readiness freeze — epoch ready, guardian uninvoked
+
+| Coordinate | Frozen value |
+| --- | --- |
+| Status | `EPOCH_READY_GUARDIAN_FROZEN_NOT_INVOKED` |
+| State/ledger predecessor | constructor result `d3966a23d5ab5b6f91a49142f451f5eaab3d51a7` / tree `51d6bf95c7d6fa79fc4b41b5e8aed8ef2043f01f` |
+| Code predecessor | implementation `4ebe75202f9f689fc774c90901ab22cda218ee0e` / tree `6417f8314ef5616c305170ebeed612a6fb8016d5`; this control-only successor changes no implementation byte |
+| Guardian identity | `docs/tools/prime-driver-v2-r18-guardian.rb`; mode `100644`; blob `3d98ff458c3b79d0f427a4feee7dad894caf142b`; SHA-256 `a0bbebc545e4b5e3c2b996ba31b14f06bcb6f1b16a4e99e97ff16b04f6dfb6b0`; `2,104` lines / `72,678` bytes; Ruby 2.6 syntax PASS; no top-level load or guardian invocation |
+| Source/Fixture preimage | source clean `befc632485930a9cca7f618d3704292b5465f911` / tree `7d1a3bf302fe358f9e42dc1ed2bf54ed3d22982e` / vnode `16777231/17154421`; embedded `b501ad0d7ab1b6c54cbf30f9a79d75c54fe1d3783c516e10ad73fdd5fb4df397`; Fixture `16777231/17382060`, mode `0700`, nlink `1`, `53,072` bytes, mtime/ctime `1787500441`, SHA-256 `177a18c20bc42486c77b52af4c472be222dec1baabf8973ece7b2d44ea92756e` |
+| Epoch preimage | root `16777231/17419092`, UID/GID `501/0`, mode `0700`, nlink `11`, size `352`; exact nine empty child vnodes `17419093...17419101`; inner inventory `9 / 60c33ef7519387016b72ac80565cbe1ba19fa6deb2ca5ebb702fe352cd562744`; staging and `r18-guardian-terminal.json` absent |
+| Constructor receipt | exact LF frame `2,131 / 706f4c32e0ff6683f12bb4097c72b6839bb392130f149d04a190d0081f817069`; digest-free payload `2,046 / 30e99509ebd7735c459e3a2dad2ad0a19f629fe0417018c06ac3e4624ae7d181` |
+| Current topology | mechanics `12 / f5b32198b79756a580471065094208d1fa8a451f5eaaa29d0454cc95d85263f0`; admission roots `16 / 6185ea35d684b2a50529aa79f1455bae789eda056e298f5509e7c5127423abd5`; prior retained R17 and all three R18 canary states exact; no cleanup |
+| Runtime join | UID/GID `501/20` and exact 16-group set; Ruby `2.6.10p210` / `universal.arm64e-darwin25` / 64-bit little-endian; macOS `26.5.2 / 25F84`, Darwin `25.5.0`, `xnu-12377.121.10~1`, `arm64` |
+| PID-1 ABI preflight | read-only probe PASS: full-BSD flavor `3 / 136` returned exact `EPERM`; short-BSD flavor `13 / 64` and unique flavor `17 / 56` returned their expected byte counts; SID/PGID `1/1`; guardian repeats the complete frame checks inside its one-shot envelope |
+| Fixed assessment | one lexical `Process.spawn` site; exact 40-entry replacement environment and fixed Release `swift test` argv/filter; source cwd; child stdin `/dev/null`; `pgroup: true`, `close_others: true`, `unsetenv_others: true`, umask `0077`; no caller argv, env, cwd, role, timeout, or command input |
+| Process cardinality | guardian envelope `1 / 1`; direct Swift spawn site `0 / 1` before launch; SwiftPM/compiler/linker/XCTest/Fixture descendants are not numerically limited to one, but must remain inside the joined assessment domain or an explicitly admitted Fixture session |
+| Timing | preflight `15 s`; ordinary assessment cutoff `840 s`; hard-horizon coordinate `900 s`; tracking `50 ms`; containment loop `10 ms`; proof `StandardError` backoff `10 ms`; the 900-second coordinate removes the deadline and is not abandonment authority |
+| Actuation | proof groups `<= 32`; at most one STOP and one KILL commitment per PGID; at most `64` entered calls total; STOP admits only joined states `2/3`, KILL requires a prior delivered STOP and a fresh all-state-`4` certificate; call budget charged before syscall; entered calls never retry |
+| Certificate | two equal generation/domain/credential/status snapshots; exact action, positive PGID, SID, and lifetime set; the syscall target is the corresponding negative PGID; six credentials `[501,20,501,20,501,20]`; consumed certificate age nonfuture and `< 50 ms`; captured lifetime cap `4,096`; PID capacity `131,072`; novel admission-root cap `64` |
+| Join/error framing | process join at most `4` attempts with `1 ms` between attempts; error receipts retain complete byte length and SHA-256 plus the first `128` raw bytes encoded as hex |
+| Named actuation residual | Darwin supplies no atomic generation-bound process-group signal; the final joined snapshot to numeric negative-PGID `Process.kill` interval remains a userspace race. Classification poison or sticky UNKNOWN disables all later signals globally |
+| Conservation | exact direct-child `waitpid2`; two empty owned scans; two flavor-17 `ESRCH` observations per captured lifetime; for every proof PGID, two empty group projections and two libc signal-zero `ESRCH` observations; no terminal authority before the conjunction closes |
+| Terminal transport | descriptor-relative `mkostempsat_np` sibling; `0600 -> 0400`; canonical digest-free payload; full write/readback/hash/vnode joins; file and parent full sync; exclusive/no-follow rename to `r18-guardian-terminal.json`; `16,384`-byte cap; modeled maximum `13,599`; headroom `2,785`; no unlink, repair, cleanup, or contradictory second publication |
+| Expected filesystem effects | the fixed child may mutate package `.build` and entries within any of the nine epoch role directories, and may create new `/private/tmp/prime-validation-admission-tests-<UUID>` roots; the guardian may add one terminal staging/final leaf. These are observed/rejoined regions, not a kernel-enforced exhaustive write allowlist: SwiftPM's `--disable-sandbox` disables only its own sandbox |
+| Prelaunch counters | constructor `1 / 1`; epoch complete `1`; guardian `0 / 1`; Swift `0 / 1`; production spawn/STOP/KILL/signals/attempts all `0` |
+| Authority | guardian is safety-only Workstation instrumentation; mechanics/science `ABSTAIN`; authority vector `00000000`; scientific authorities closed `0`; Gate-E clearance `0` |
+
+The actuation budget is the closed finite set
+
+```text
+N_guardian = 1
+N_swift_spawn <= 1
+|G_proof| <= 32
+for every g in G_proof:
+  N_STOP(g) <= 1
+  N_KILL(g) <= 1
+sum_g (N_STOP(g) + N_KILL(g)) <= 64
+for every entered call:
+  0 <= consumed_certificate_age < 50 ms
+```
+
+and terminal reachability requires
+
+```text
+C =
+  exact_waitpid2(direct_child)
+  AND two_empty_owned_scans
+  AND for_every_captured_lifetime(two_flavor17_ESRCH)
+  AND for_every_proof_PGID(
+        two_empty_group_projections
+        AND two_signal_zero_ESRCH
+      )
+
+process_proof =
+  direct_generation_joined
+  AND classification_poisoned == false
+  AND unknown_count == 0
+  AND C
+
+terminal_authority_reachable = spawn_committed AND process_proof
+```
+
+The snapshot-to-signal residual is not erased by these equations. The
+certificate narrows the interval and binds all observed members, but Darwin's
+numeric process-group signal does not consume a kernel-held generation token.
+This result must therefore remain safety/mechanics data and cannot promote an
+authority bit.
+
+### Exact fixed assessment argv
+
+The guardian supplies this fixed argv from its exact source blob:
+
+```text
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift
+test
+--package-path /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.driver-v2-gate-c-staging/Tests/PrimeValidationWorkflow
+--configuration release
+--scratch-path /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.driver-v2-gate-c-staging/Tests/PrimeValidationWorkflow/.build
+--cache-path /private/tmp/gate-e1-4-mechanics-r18-befc6324-b501ad0d7ab1b6c5/swiftpm-cache
+--config-path /private/tmp/gate-e1-4-mechanics-r18-befc6324-b501ad0d7ab1b6c5/swiftpm-config
+--security-path /private/tmp/gate-e1-4-mechanics-r18-befc6324-b501ad0d7ab1b6c5/swiftpm-security
+--disable-netrc
+--disable-keychain
+--force-resolved-versions
+--disable-automatic-resolution
+--disable-sandbox
+--disable-swift-testing
+--filter ^PrimeValidationWorkflowDriverCoreTests\.PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests/testGateEJournalChainOneWinnerAndPoisonAreExact$
+```
+
+The exact replacement environment is the frozen 40-entry `SWIFT_ENV` map in
+the guardian blob. It admits only local Git transport, disables automatic
+resolution and credential prompts, and redirects home, config, temporary,
+SwiftPM, and module-cache state into the R18 epoch. The caller supplies none
+of these values.
+
+### Fault and terminal partition
+
+| State | Terminal/exit consequence |
+| --- | --- |
+| bootstrap rejection | unexpected guardian argv or environment emits the fixed LF-terminated stderr frame `{"status":"failed","error":"unexpected-bootstrap"}`; no guardian-authoritative terminal; outer exit `70`; envelope consumed |
+| `R18_GUARDIAN_NATURAL_EXIT` | process conservation proved and every natural predicate true; immutable final terminal; outer exit `0` |
+| `R18_GUARDIAN_CONTAINED_ABNORMAL` | process conservation proved but at least one natural predicate false; immutable final terminal; outer exit `70` |
+| `R18_GUARDIAN_PRELAUNCH_FAILED` | failure before a committed spawn; stderr diagnostic only; no guardian-authoritative terminal; outer exit `70` |
+| `R18_GUARDIAN_TERMINAL_FAILED` | process proof complete but terminal publication failed before confirmed successful exclusive rename, including rename-call failure; stderr diagnostic; staging residue may remain; outer exit `70` |
+| `R18_GUARDIAN_TERMINAL_POSTCOMMIT_UNCERTAIN` | exclusive rename returned success/committed but postcommit proof failed; best-effort stderr diagnostic; final may remain but cannot promote; no contradictory second terminal; outer exit `70` |
+| unresolved join/containment/conservation | potentially nonterminating; no terminal, no retry, and no outer abandonment authority |
+
+If spawn returns but the guardian cannot join the exact direct generation and
+original parent epoch, it intentionally remains alive without signaling or
+publishing. A numeric PID alone never acquires actuation or terminal
+authority. After the 900-second horizon, containment and conservation continue
+without a deadline. A catchable `HUP/INT/QUIT/TERM` observed by the final
+pre-spawn check produces prelaunch failure; one arriving after that check may
+race with and permit spawn, after which the retained flag requests
+containment. Guardian `SIGSTOP`, `SIGKILL`, host loss, and fatal runtime loss
+remain uncatchable residuals.
+
+Swift/toolchain progress inherits stdout/stderr, guardian diagnostics use
+stderr, and the terminal frame's stdout copy is best-effort. A combined
+execution stream is not the terminal authority and must not be parsed as
+scientific evidence. Only the descriptor-published final file may be
+independently rejoined, metadata-checked, read back, canonically hashed, and
+then checkpointed. Even a natural terminal retains `00000000 / ABSTAIN` until
+a later result record interprets the data.
+
+### Exact one-command envelope
+
+Exact cwd:
+
+```text
+/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging
+```
+
+Run at most once, only after a fresh approval names the committed SHA/tree of
+this guardian-readiness freeze:
+
+```zsh
+/bin/zsh -f -c '
+unsetopt BG_NICE
+umask 077
+/usr/bin/env -i \
+  LANG=C.UTF-8 \
+  LC_ALL=C.UTF-8 \
+  TZ=UTC \
+  PATH=/usr/bin:/bin \
+  __CF_USER_TEXT_ENCODING=0x1F5:0x0:0x0 \
+  /usr/bin/ruby --disable-gems \
+  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/docs/tools/prime-driver-v2-r18-guardian.rb \
+  </dev/null &
+r18_guardian_pid=$!
+wait $r18_guardian_pid
+'
+```
+
+The outer zsh is only the fixed bootstrap and exact wait owner. Backgrounding
+must remain: a foreground `exec` shape can make Ruby a process-group leader
+and cause `Process.setsid` to fail. The guardian receives empty argv and
+exactly the five bootstrap environment keys. There is no outer timeout. The
+shell must wait through containment and conservation, even after the
+900-second coordinate.
+
+Any guardian invocation consumes the guardian envelope, including a bootstrap
+or prelaunch failure and a nonterminal hang. A successful `Process.spawn`
+separately consumes the Swift shot. An entered STOP/KILL call consumes that
+exact action/PGID budget before the syscall. Every final, staged, failed, or
+nonterminal state is retained. No retry, cleanup, repair, manual/post-shot
+signal, second Swift command, evidence reinterpretation, scientific-authority
+closure, or Gate-E promotion follows automatically.
+
+Generic recommendation authorization covers this read-only and control-only
+freeze. It does not authorize the guardian command or its signal risk. The
+fresh launch approval must name the committed freeze SHA/tree, its constructor
+result predecessor `d3966a23d5ab5b6f91a49142f451f5eaab3d51a7` /
+`51d6bf95c7d6fa79fc4b41b5e8aed8ef2043f01f`, and guardian SHA-256
+`a0bbebc545e4b5e3c2b996ba31b14f06bcb6f1b16a4e99e97ff16b04f6dfb6b0`.
+It must explicitly accept the one fixed Swift spawn, the `32 / 64` bounded
+actuation surface, the non-atomic PGID residual, the expected but not
+kernel-confined write surface, and potentially indefinite proof-driven
+containment. The handoff after this commit supplies the noncircular exact
+approval sentence.
+
+```text
+R18_terminal_canary_invocations = 1
+R18_terminal_canary_passes = 1
+R18_generation_canary_invocations = 1
+R18_generation_canary_passes = 1
+R18_generation_canary_forks = 2
+R18_generation_canary_execs = 1
+R18_generation_canary_external_signals = 0
+R18_actuation_canary_invocations = 1
+R18_actuation_canary_passes = 1
+R18_actuation_canary_marker_creations = 1
+R18_actuation_canary_forks = 1
+R18_actuation_canary_execs = 1
+R18_actuation_canary_stop_call_entries = 1
+R18_actuation_canary_kill_call_entries = 1
+R18_actuation_canary_stop_signals_sent = 1
+R18_actuation_canary_kill_signals_sent = 1
+R18_actuation_canary_exact_reaps = 1
+R18_actuation_canary_generation_esrch_observations = 2
+R18_actuation_canary_group_empty_observations = 2
+R18_actuation_canary_signal_zero_esrch_observations = 2
+R18_epoch_constructor_invocations = 1
+R18_epoch_constructor_passes = 1
+R18_epoch_complete = 1
+R18_guardian_invocations = 0
+R18_swiftpm_commands = 0
+R18_production_spawn_calls = 0
+R18_production_stop_call_entries = 0
+R18_production_kill_call_entries = 0
+R18_production_attempts = 0
+outer_journal_authority_vector = 00000000
+gate_E_mechanics_outcome = ABSTAIN
+gate_E_scientific_outcome = ABSTAIN
+gate_E_clearance_granted = 0
+```
+
+All eight authorities remain missing: Prime Git, companion Git, Swift
+version, Swift target-info, SwiftPM build, artifact staging, XCTest inventory,
+and Swift Testing inventory.
