@@ -13786,3 +13786,351 @@ gate_E_mechanics_outcome = ABSTAIN
 gate_E_scientific_outcome = ABSTAIN
 gate_E_clearance_granted = 0
 ```
+## Gate E1.4-R19 guardian readiness freeze — epoch ready, guardian uninvoked
+
+This EOF control-only successor freezes the complete input and risk envelope
+for a separately approved R19 guardian launch. It changes only this ledger.
+It does not invoke the guardian, Swift, SwiftPM, a signal or signal-zero call,
+cleanup, an energy observer, or any scientific authority.
+
+| Coordinate | Frozen value |
+| --- | --- |
+| Status | `R19_EPOCH_READY_GUARDIAN_FROZEN_UNINVOKED` |
+| State/ledger predecessor | constructor result `f3285e08c6970b5efbfdf6bff5669ec6e3454bbe` / tree `aae8f8ae7adfefdd8f9b56046f02a376ff1dc076` |
+| Code predecessor | implementation `df73633c787a81c0c0c921b117c6ae18b631e757` / tree `c4567849eb473242a2ecea63a0bbae70f42209f2`, direct child of freeze `8c93e369a437a9c0ccd571fb2190dcc86adcf96e` / tree `219bbc5f07b2e19536bd20d951f42578000d1d11`; this successor changes no implementation byte |
+| Guardian identity | `docs/tools/prime-driver-v2-r19-guardian.rb`; mode `100644`; blob `e24ef87d9db8be272a23c6fc8f847045e45d1875`; SHA-256 `263e5514dc3e42713af77698c430f684d9ce45af7aa6e284a7f59ac96319492f`; named device/inode `16777231/17444940`; UID/GID `501/20`; mode `0644`; nlink `1`; `76,970` bytes / `2,215` lines; mtime/ctime `1787589453/1787589453` |
+| Guardian parser/static surface | Apple Ruby 2.6 syntax and Ripper PASS with top level unevaluated; one fixed `Process.spawn` at line `1985`; one centralized certificate-consuming `Process.kill` at line `1275`; one distinct conservation-only `DarwinProcess.kill(-group, 0)` at line `1590`; no generic input or second spawn |
+| Corrected regions | actuation offset `38,586`, length `6,680`, SHA-256 `cef63a1dddc35d57aa5c00f88b9d3de893c9d3a9e3238a1a6953e090062139f4`; actuator offset `45,863`, length `8,944`, SHA-256 `00cb0692997ae16f9a512f7362c37c15eb60b0f74927a20bc0d993e587b9ca1d`; generation model `17 / 17 PASS`, SHA-256 `59f94fa446316f0bf656ba28c1669c247807e6a37e7c90e5adacf1548ca8d788`; stopped-adoption model `36 / 36 PASS`, SHA-256 `4a1bd17791e4b4cf5b90d84d06ff3c1cdc61d36f40d1e98d01602ba0b82da404` |
+| Source preimage | readiness-instant clean and unchanged `befc632485930a9cca7f618d3704292b5465f911` / tree `7d1a3bf302fe358f9e42dc1ed2bf54ed3d22982e`; root device/inode `16777231/17154421`; embedded identity `b501ad0d7ab1b6c54cbf30f9a79d75c54fe1d3783c516e10ad73fdd5fb4df397` |
+| Fixture preimage | device/inode `16777231/17382060`; UID/GID `501/20`; mode `0700`; nlink `1`; `53,072` bytes; mtime/ctime `1787500441/1787500441`; SHA-256 `177a18c20bc42486c77b52af4c472be222dec1baabf8973ece7b2d44ea92756e` |
+| Epoch preimage | `/private/tmp/gate-e1-4-mechanics-r19-befc6324-b501ad0d7ab1b6c5`; device/inode `16777231/17445748`; UID/GID `501/0`; mode `0700`; nlink `11`; size `352`; mtime/ctime `1787590282/1787590282`; flags `0` |
+| Exact children | receipt order `home, config, tmp, git-template, swiftpm-cache, swiftpm-config, swiftpm-security, clang-module-cache, swiftpm-module-cache`; device `16777231`; inodes `17445749...17445757`; UID/GID `501/0`; mode `0700`; nlink `2`; size `64`; common mtime/ctime `1787590282/1787590282`; flags `0`; every child empty |
+| Epoch topology | sorted inner inventory `9 / 60c33ef7519387016b72ac80565cbe1ba19fa6deb2ca5ebb702fe352cd562744`; root and children have no ACL and only ordinary `com.apple.provenance` xattr, `11` bytes; constructor staging, final terminal, and matching terminal-staging leaves absent |
+| Constructor receipt | digest-free payload `2,046 / 4d7e376bf065653ea6356b2dbd01d6505c0435fdb52aff96b65f7f916266a924`; exact LF frame `2,131 / abebd2ad63ecb18cc47a981308fece3ecc18245bd743910521876bdd9d1eda06` |
+| Current topology | mechanics absolute-path LF set `13 / 043ab46066a30c11bac6adfb431829117e5cafb05a43db7388d1806b5945e0c9`; admission-prefix absolute-path LF set `21 / 0c2e05f41db17c352678ad54b3bbcbaa1ce8eaec87175848e9a236a3a6dfd9bf`; `/private/tmp` device/inode `16777231/774813`, UID/GID `0/0`, mode `01777` |
+| Prior retained state | R18 epoch rejoined at `16777231/17419092`; stopped-adoption marker rejoined empty at `16777231/17443295`; neither is reused, populated, removed, repaired, or cleaned |
+| Runtime join | UID/GID/effective UID/GID `501/20/501/20`; exact groups `[12,20,33,61,79,80,81,98,100,204,250,395,398,399,400,701]`; Ruby `2.6.10p210` / `universal.arm64e-darwin25` / 64-bit little-endian |
+| Ruby image | `/usr/bin/ruby`; device/inode `16777231/1152921500312572705`; UID/GID `0/0`; mode `0555`; nlink `1`; `135,200` bytes; SHA-256 `9d6ff3e289c7d908e3c785e0bedd6692d1d6a3377965c88c04d847104b7c892c`; selected arm64e UUID `eb2540b7e13236beb719619d0fbf7203` |
+| Host | macOS `26.5.2 / 25F84`; Darwin `25.5.0`; kernel `xnu-12377.121.10~1`; `arm64` |
+| PID-1 ABI preflight | read-only sandwich PASS: full-BSD flavor `3 / 136` returned `0 / EPERM`; short-BSD flavor `13 / 64` returned exactly `64` twice and remained byte-stable; unique flavor `17 / 56` returned exactly `56` twice and remained byte-stable; uniqueid/idversion `1/740`; SID/PGID `1/1`; guardian repeats the complete frame checks inside its one-shot envelope |
+| Fixed assessment | one lexical Swift spawn only; exact 40-entry replacement environment and fixed Release `swift test` argv/filter below; source cwd; stdin `/dev/null`; `pgroup: true`, `close_others: true`, `unsetenv_others: true`, guardian umask `0077`; caller supplies no argv, env, cwd, role, timeout, command, or path |
+| Named Swift executable preimage | frozen argv[0] names root-owned symlink `.../usr/bin/swift -> swift-frontend`: named device/inode `16777231/1118417`, mode `0755`, size `14`; resolved device/inode `16777231/1118375`, mode `0755`, size `171,036,592`; resolved SHA-256 `2ed38571e92c0283091838c1649e27650ad9c99950288e883c7b2dc6c4ce89fb`; arm64 UUID `9a36409158fe3aada4d99454ef63ddbf`. The guardian fixes the string but does not pre-open or mapped-vnode-join this image |
+| Process cardinality | guardian envelope `0 / 1` before launch; fixed Swift spawn `0 / 1`; SwiftPM/compiler/linker/XCTest/Fixture descendants are not numerically limited to one, but every assessment generation must remain in the joined guardian ownership domain or an exact held Fixture image in a descriptor-held admitted workspace |
+| Timing | preflight `15 s`; ordinary assessment cutoff `840 s`; hard-horizon coordinate `900 s`; tracking `50 ms`; join `4` attempts with `1 ms` spacing; containment/error backoff `10 ms`; certificate age nonfuture and `< 50 ms`; the 900-second coordinate removes the deadline and never grants abandonment authority |
+| Bounded actuation | proof groups `<= 32`; at most one STOP and one KILL entered commitment per PGID; STOP plus KILL entries `<= 64`; call budget and retained ledger row precede the syscall; no entered call retries; PID capacity `131,072`; captured lifetime cap `4,096`; novel admission-root cap `64` |
+| Stopped adoption | an exact first-seen owned singleton already in status `4` may receive one `STOPPED_ADOPTION` certificate with STOP call/delivery/budget/ledger all `0`; adoption binds two equal generation/domain/credential/status snapshots and proves stopped state plus ownership, not who stopped it; KILL requires exactly one basis, `stop_delivered XOR stopped_adopted` |
+| Conservation | exact direct-child `waitpid2`; two empty owned scans; two flavor-17 `ESRCH` observations for every captured lifetime; for every proof PGID, two empty group projections plus two successful `libc kill(-PGID, 0)` `ESRCH` observations. At most `64` successful signal-zero observations can be retained across `32` groups, but the source places no finite cap on entered signal-zero existence probes that do not return `ESRCH`; those non-actuating retries remain separate from the `64` STOP/KILL commitment cap |
+| Terminal transport | descriptor-relative `mkostempsat_np`; exact sibling template `r19-guardian-terminal.XXXXXX.staging`; `0600 -> 0400`; recursively canonical digest-free payload; full write/readback/hash/vnode joins; file and parent full sync; exclusive/no-follow rename to `r19-guardian-terminal.json`; `16,384`-byte cap; static normalized maximum `14,116`; headroom `2,268`; no unlink, repair, cleanup, or contradictory second publication |
+| Expected filesystem effects | the fixed child may mutate package `.build`, any of the nine R19 role directories, and newly created `/private/tmp/prime-validation-admission-tests-<UUID>` roots/workspaces; the guardian may add one terminal staging/final leaf. These are observed and rejoined regions, not a kernel-enforced write allowlist; SwiftPM's `--disable-sandbox` disables only SwiftPM's sandbox |
+| Energy boundary | Energy O0 remains a conserved rank-4 ancestor, not this slice's data predecessor; Energy O1/O2/O3 remain excluded. The guardian's existing `waitpid2(WNOHANG)` lifecycle is unchanged; no `waitid(WNOWAIT)`, rusage sample, target task, joule/erg/watt observation, or energy mutation occurs here |
+| Prelaunch counters | constructor invocation/pass/root/complete `1/1/1/1`; guardian `0 / 1`; Swift `0 / 1`; production spawn/STOP/KILL/signal-zero/attempt entries all `0`; cumulative retained R19 mutation remains exactly `1_epoch_construction_transition` |
+| Authority | guardian is safety-only Workstation instrumentation and is ready only for a separate exact approval; mechanics/science `ABSTAIN`; authority vector `00000000`; all eight scientific authorities missing; Gate-E clearance `0` |
+
+The PID-1 probe interprets `errno` only when a call fails. Apple Ruby's Fiddle
+may retain a stale `last_error` after a successful fixed-size call; the
+authoritative success predicates for flavors 13 and 17 are their exact byte
+counts and stable sandwich bytes. No process census, wait, signal, or rusage
+call was part of the readiness probe.
+
+### Exact fixed assessment argv and environment
+
+The guardian's only spawn supplies this exact argv:
+
+```text
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift
+test
+--package-path /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.driver-v2-gate-c-staging/Tests/PrimeValidationWorkflow
+--configuration release
+--scratch-path /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.driver-v2-gate-c-staging/Tests/PrimeValidationWorkflow/.build
+--cache-path /private/tmp/gate-e1-4-mechanics-r19-befc6324-b501ad0d7ab1b6c5/swiftpm-cache
+--config-path /private/tmp/gate-e1-4-mechanics-r19-befc6324-b501ad0d7ab1b6c5/swiftpm-config
+--security-path /private/tmp/gate-e1-4-mechanics-r19-befc6324-b501ad0d7ab1b6c5/swiftpm-security
+--disable-netrc
+--disable-keychain
+--force-resolved-versions
+--disable-automatic-resolution
+--disable-sandbox
+--disable-swift-testing
+--filter ^PrimeValidationWorkflowDriverCoreTests\.PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests/testGateEJournalChainOneWinnerAndPoisonAreExact$
+```
+
+The exact replacement `SWIFT_ENV` contains these 40 entries; the caller
+supplies none of them:
+
+```text
+HOME=/private/tmp/gate-e1-4-mechanics-r19-befc6324-b501ad0d7ab1b6c5/home
+CFFIXED_USER_HOME=/private/tmp/gate-e1-4-mechanics-r19-befc6324-b501ad0d7ab1b6c5/home
+XDG_CONFIG_HOME=/private/tmp/gate-e1-4-mechanics-r19-befc6324-b501ad0d7ab1b6c5/config
+TMPDIR=/private/tmp/gate-e1-4-mechanics-r19-befc6324-b501ad0d7ab1b6c5/tmp/
+USER=ergentics
+LOGNAME=ergentics
+LANG=C.UTF-8
+LC_ALL=C.UTF-8
+TZ=UTC
+TERM=dumb
+NO_COLOR=1
+PATH=/Applications/Xcode.app/Contents/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin:/usr/bin:/bin
+DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer
+SDKROOT=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk
+GIT_EXEC_PATH=/Applications/Xcode.app/Contents/Developer/usr/libexec/git-core
+GIT_CONFIG_NOSYSTEM=1
+GIT_CONFIG_GLOBAL=/dev/null
+GIT_ATTR_NOSYSTEM=1
+GIT_CONFIG_COUNT=6
+GIT_CONFIG_KEY_0=core.hooksPath
+GIT_CONFIG_VALUE_0=/private/tmp/gate-e1-4-mechanics-r19-befc6324-b501ad0d7ab1b6c5/git-template
+GIT_CONFIG_KEY_1=init.templateDir
+GIT_CONFIG_VALUE_1=/private/tmp/gate-e1-4-mechanics-r19-befc6324-b501ad0d7ab1b6c5/git-template
+GIT_CONFIG_KEY_2=core.attributesFile
+GIT_CONFIG_VALUE_2=/dev/null
+GIT_CONFIG_KEY_3=checkout.workers
+GIT_CONFIG_VALUE_3=1
+GIT_CONFIG_KEY_4=maintenance.auto
+GIT_CONFIG_VALUE_4=false
+GIT_CONFIG_KEY_5=gc.auto
+GIT_CONFIG_VALUE_5=0
+GIT_ALLOW_PROTOCOL=file
+GIT_PROTOCOL_FROM_USER=0
+GIT_OPTIONAL_LOCKS=0
+GIT_TERMINAL_PROMPT=0
+GIT_LFS_SKIP_SMUDGE=1
+GIT_NO_LAZY_FETCH=1
+GIT_NO_REPLACE_OBJECTS=1
+CLANG_MODULE_CACHE_PATH=/private/tmp/gate-e1-4-mechanics-r19-befc6324-b501ad0d7ab1b6c5/clang-module-cache
+SWIFTPM_MODULECACHE_OVERRIDE=/private/tmp/gate-e1-4-mechanics-r19-befc6324-b501ad0d7ab1b6c5/swiftpm-module-cache
+```
+
+The fixed local Git transport and disabled automatic resolution/credential
+prompts do not make Git an authority. The child is the named SwiftPM
+assessment only. Its output remains untrusted mechanics data until a later
+result checkpoint; it cannot close Gate E from this freeze or from its own
+terminal.
+
+### Ownership, actuation, and conservation equations
+
+The bounded actuation set and terminal conservation requirements are:
+
+```text
+N_guardian <= 1
+N_swift_spawn <= 1
+|G_proof| <= 32
+
+for every g in G_proof:
+  N_STOP(g) <= 1
+  N_KILL(g) <= 1
+  0 <= N_signal_zero_ESRCH_observations(g) <= 2
+  N_signal_zero_entered_calls(g) >= N_signal_zero_ESRCH_observations(g)
+  N_signal_zero_entered_calls(g) has no finite upper bound while unresolved
+  terminal requires N_signal_zero_ESRCH_observations(g) = 2
+  terminal implies N_signal_zero_entered_calls(g) >= 2
+
+sum_g (N_STOP(g) + N_KILL(g)) <= 64
+sum_g N_signal_zero_ESRCH_observations(g) <= 64
+
+ordinary_active_path(g):
+  joined_statuses in {2,3}
+  -> one STOP certificate/call at most
+  -> fresh all-status-4 KILL certificate/call at most
+
+stopped_adoption_path(g):
+  first_seen_exact_owned_singleton_status == 4
+  -> one STOPPED_ADOPTION certificate
+  -> STOP calls/deliveries/budget/ledger == 0
+  -> fresh status-4 KILL certificate/call at most
+
+KILL_basis(g) = exactly_one(stop_delivered, stopped_adopted)
+```
+
+Every STOP/KILL certificate is formed from two equal snapshots over the full
+generation, SID, PGID, lifetime set, credentials, and status domain. The six
+credentials must equal `[501,20,501,20,501,20]`. Empty, multiple-member, mixed,
+ambient, late-member, rebound, UNKNOWN, credential drift, generation drift,
+domain drift, rejected-group shrink, or dual-basis state is poison or
+ineligible. Sticky UNKNOWN/classification poison disables all later
+actuation. A failed entered KILL cannot retry and may leave the guardian
+nonterminal.
+
+Darwin exposes no atomic generation-token-bound process-group signal. The
+last joined snapshot to numeric negative-PGID STOP/KILL interval remains a
+named userspace race. The two signal-zero observations per proof group are
+also numeric-PGID calls, but carry signal number zero and confer no actuation
+authority. If an empty group projection races with a non-`ESRCH` signal-zero
+result, the conservation loop sleeps and repeats; after the horizon its
+entered existence probes therefore have no finite call cap. The future
+approval must accept both the bounded actuation surface and this potentially
+indefinite non-actuating query surface explicitly.
+
+Terminal reachability remains the conjunction:
+
+```text
+C =
+  exact_waitpid2(direct_child)
+  AND two_empty_owned_scans
+  AND for_every_captured_lifetime(two_flavor17_ESRCH)
+  AND for_every_proof_PGID(
+        two_empty_group_projections
+        AND two_signal_zero_ESRCH
+      )
+
+process_proof =
+  direct_generation_joined
+  AND classification_poisoned == false
+  AND unknown_count == 0
+  AND C
+
+terminal_authority_reachable = spawn_committed AND process_proof
+```
+
+This is process conservation, not scientific authority. If spawn commits but
+the direct generation and original-parent epoch cannot join, the guardian
+retains indefinitely without numeric-PID actuation or terminal publication.
+After the 900-second coordinate, containment and proof continue without a
+deadline. No outer timeout, manual signal, cleanup, or abandonment belongs to
+the envelope.
+
+### Fault and terminal partition
+
+| State | Terminal/exit consequence |
+| --- | --- |
+| bootstrap rejection | fixed LF stderr `{"status":"failed","error":"unexpected-bootstrap"}`; no authoritative terminal; outer exit `70`; guardian envelope consumed |
+| `R19_GUARDIAN_NATURAL_EXIT` | process conservation proved and every natural predicate true; immutable terminal; outer exit `0` |
+| `R19_GUARDIAN_CONTAINED_ABNORMAL` | process conservation proved but at least one natural predicate false; immutable terminal; outer exit `70` |
+| `R19_GUARDIAN_PRELAUNCH_FAILED` | failure before committed spawn; stderr diagnostic only; no authoritative terminal; outer exit `70` |
+| `R19_GUARDIAN_TERMINAL_FAILED` | process proof complete but terminal publication failed before confirmed exclusive rename; staging residue may remain; outer exit `70` |
+| `R19_GUARDIAN_TERMINAL_POSTCOMMIT_UNCERTAIN` | exclusive rename returned success but postcommit proof failed; final may remain but cannot promote; no contradictory second terminal; outer exit `70` |
+| unresolved join/containment/conservation | potentially nonterminating; no terminal, retry, cleanup, or outer abandonment authority |
+
+Swift/toolchain progress inherits stdout/stderr, guardian diagnostics use
+stderr, and a terminal stdout copy is best-effort corroboration only. A
+combined execution stream is not terminal authority. Only the retained
+descriptor-published final may later be rejoined and checkpointed. Every
+terminal still carries `00000000 / ABSTAIN`; no terminal result closes any of
+the eight missing authorities without a later separately authorized data
+interpretation.
+
+### Exact one-command envelope — frozen, not authorized here
+
+Exact future cwd:
+
+```text
+/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging
+```
+
+The sole candidate transport is:
+
+```zsh
+/bin/zsh -f -c '
+unsetopt BG_NICE
+umask 077
+/usr/bin/env -i \
+  LANG=C.UTF-8 \
+  LC_ALL=C.UTF-8 \
+  TZ=UTC \
+  PATH=/usr/bin:/bin \
+  __CF_USER_TEXT_ENCODING=0x1F5:0x0:0x0 \
+  /usr/bin/ruby --disable-gems \
+  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/docs/tools/prime-driver-v2-r19-guardian.rb \
+  </dev/null &
+r19_guardian_pid=$!
+wait $r19_guardian_pid
+'
+```
+
+The outer zsh is only the fixed bootstrap and exact wait owner. Backgrounding
+is required so Ruby is not already a process-group leader before `setsid`.
+The guardian receives empty `ARGV`, exactly the five bootstrap environment
+keys, stdin `/dev/null`, and umask `0077`. There is no outer timeout. The shell
+must wait through potentially indefinite containment and conservation.
+
+The exact guardian named-path snapshot to Ruby's later open is not atomic and
+remains a named userspace race. The Swift argv[0] symlink is likewise resolved
+by `Process.spawn` without a held executable descriptor or mapped-vnode
+expectation, and later SwiftPM/toolchain descendant images are lineage-tracked
+rather than image-pinned. The fixed source cwd is descriptor-held and rejoined
+before and after the child interval, but the guardian does not join the
+child's mapped cwd vnode after `chdir`; its final pre-spawn rejoin to named
+`Process.spawn(chdir: SOURCE)` interval is another non-atomic path race. The
+held source descriptor pins only the root directory vnode: it does not hold or
+hash `Package.swift`, `Package.resolved`, Sources, Tests, or the rest of the
+subtree that SwiftPM resolves by name after spawn, and the guardian performs
+no recursive source-tree/Git rejoin after reap. The readiness-instant clean
+commit and measured root-owned executable preimage narrow but do not erase
+those residuals. Any Gate-C/test-internal continuity data remains assessment
+output, not a substitute for this outer input join. Immediately before any
+future launch, the committed guardian blob/SHA, named vnode, Swift
+named/resolved preimage, epoch/child preimages, inventories, source/Fixture,
+runtime, and PID-1 ABI must all rejoin. Any drift is a hard stop, not a repair
+or rebaseline.
+
+Any guardian invocation consumes the guardian envelope, including bootstrap
+or prelaunch failure and nonterminal retention. An entered fixed Swift spawn
+separately consumes the Swift shot. An entered STOP/KILL commitment consumes
+that action/PGID budget before its syscall. Every final, staged, failed, or
+nonterminal outcome is retained permanently. No retry, cleanup, repair,
+manual/post-shot signal, second Swift command, evidence reinterpretation,
+authority closure, or Gate-E promotion follows automatically.
+
+This freeze authorizes none of those actions. A future approval must name the
+committed SHA/tree of this readiness freeze, constructor-result predecessor
+`f3285e08c6970b5efbfdf6bff5669ec6e3454bbe` / tree
+`aae8f8ae7adfefdd8f9b56046f02a376ff1dc076`, and guardian SHA-256
+`263e5514dc3e42713af77698c430f684d9ce45af7aa6e284a7f59ac96319492f`.
+It must explicitly accept the one fixed SwiftPM spawn, expected but not
+kernel-confined write surface, stopped-adoption and ordinary STOP paths,
+`32 / 64` STOP/KILL envelope, two successful signal-zero `ESRCH`
+observations per proof group plus potentially uncapped failed/repeated
+existence probes, the numeric-PGID signal residual, the guardian/Swift named
+path residuals, the named source-cwd interval, and the unheld source-subtree
+input interval, `840 / 900` timing, potentially indefinite containment, and
+retain-all-outcomes rule.
+
+Energy O1 remains later. The assessment is descendant-producing and retains
+the guardian's byte-frozen `waitpid2(WNOHANG)` owner, so it is not an Energy
+O1 no-descendant role, an O2 eligibility run, or an O3 measurement. Energy
+work requires a separately frozen Swift-owned role after a conserved R19
+result; it cannot overlap or displace this guardian.
+
+```text
+R19_implementation_freezes = 1
+R19_constructor_implementations = 1
+R19_guardian_implementations = 1
+R19_guardian_readiness_freezes = 1
+R19_epoch_constructor_invocations = 1_consumed_terminal_pass
+R19_epoch_constructor_passes = 1
+R19_epoch_roots_created = 1
+R19_epoch_complete = 1
+R19_guardian_invocations = 0
+R19_swiftpm_commands = 0
+R19_production_spawn_calls = 0
+R19_production_stop_call_entries = 0
+R19_production_kill_call_entries = 0
+R19_production_signal_zero_calls = 0
+R19_production_attempts = 0
+R19_constructor_namespace_mutation_calls = 11_entered_successful
+R19_retained_state_mutations = 1_epoch_construction_transition
+R19_readiness_freeze_retained_state_mutations = 0
+R19_retained_epoch_publications = 1_exclusive_no_replace
+R19_retained_directories_created = 10
+R19_cleanup_performed = 0
+energy_O1_implementations = 0
+energy_O2_invocations = 0
+energy_O3_measurements = 0
+energy_proc_pid_rusage_calls = 0
+energy_waitid_calls = 0
+energy_waitpid_calls = 0
+energy_process_samples = 0
+energy_target_tasks = 0
+energy_joules_observed = ABSTAIN
+energy_ergs_observed = ABSTAIN
+energy_watts_observed = ABSTAIN
+energy_retained_state_mutations = 0
+outer_journal_authority_vector = 00000000
+gate_E_mechanics_outcome = ABSTAIN
+gate_E_scientific_outcome = ABSTAIN
+gate_E_clearance_granted = 0
+```
+
+All eight authorities remain missing: Prime Git, companion Git, Swift
+version, Swift target-info, SwiftPM build, artifact staging, XCTest inventory,
+and Swift Testing inventory. R19 is ready for separate exact approval and
+remains uninvoked.
