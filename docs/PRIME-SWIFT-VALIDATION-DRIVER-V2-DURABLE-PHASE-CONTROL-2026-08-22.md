@@ -12553,3 +12553,198 @@ gate_E_mechanics_outcome = ABSTAIN
 gate_E_scientific_outcome = ABSTAIN
 gate_E_clearance_granted = 0
 ```
+
+## Gate E1.4-R18 successor stopped-adoption canary freeze — implemented, uninvoked
+
+This EOF record is the live ledger. Commit ancestry and measured identities
+govern; older R18 counters remain historical. This slice is a disposable
+mechanics canary, not an R18 retry, successor epoch, production guardian,
+Gate-E authority, or scientific executor.
+
+| Coordinate | Exact value |
+| --- | --- |
+| Status | `STOPPED_ADOPTION_CANARY_IMPLEMENTED_VERIFIED_UNINVOKED` |
+| Direct predecessor | stopped-adoption correction freeze `be1b2af174ae4dd3dc50997f3cad56cce2193c8c` / tree `7ae1cdd083f04ba545a2c7ec9d69ecc592d7e190` |
+| Implementation | `e73668fa654477ca2bccc91b354cdaa06a8e9b93` / tree `961a6bca5b407d95423aa7ec1a51decd26aeca24`; direct child of the predecessor |
+| Changed path | only `docs/tools/prime-driver-v2-r18-successor-stopped-adoption-canary.rb`; `2,494` lines / `94,020` bytes; Git mode `100644` |
+| Canary identity | Git blob `c59d7bf98972dccbfe4e8c76c114b2fdf0bd3229`; SHA-256 `f12c59853252d97bdae99816e04b220b6c77fb34f4f5812d395a5334348aa238`; device/inode `16777231/17441512`; UID/GID `501/20`; nlink `1` |
+| Source conservation | clean and unchanged `befc632485930a9cca7f618d3704292b5465f911` / tree `7d1a3bf302fe358f9e42dc1ed2bf54ed3d22982e` |
+| Execution | invocations `0`; marker creations `0`; forks/execs `0/0`; self-STOP/KILL/signal-zero calls `0/0/0`; children `0` |
+| Authority | disposable mechanics proof only; authority vector `00000000`; scientific authorities closed `0`; mechanics/science `ABSTAIN`; Gate-E clearance `0` |
+
+### Exact guardian code under test
+
+The canary does not load guardian top-level code. It descriptor-holds and
+verifies the complete corrected guardian, then selectively executes only two
+hash-pinned regions.
+
+| Pin | Exact value |
+| --- | --- |
+| Guardian | implementation `a550c1b166bb94b0ae674202b144a1bfc071ffc0`; tree `14a7b38a524e9c19cbf848452124beceaec8dedd`; blob `35596488986fcf98aa792c0c2d0a558c59109aed`; `76,970` bytes; SHA-256 `33d54336a8cfd5427f52a27e0f3ccec965f7b3eb43720e46dfbcfdd349894aa2`; device/inode `16777231/17416984` |
+| Actuation region | offset `38,586`; `6,680` bytes / `177` lines; SHA-256 `cef63a1dddc35d57aa5c00f88b9d3de893c9d3a9e3238a1a6953e090062139f4`; starts `def group_member_receipt(member)` and ends before `class ChildLifecycle` |
+| Actuator region | offset `45,863`; `8,944` bytes / `254` lines; SHA-256 `00cb0692997ae16f9a512f7362c37c15eb60b0f74927a20bc0d993e587b9ca1d`; starts `class GroupActuator` and ends before `def wait_generation_absence` |
+| Routing pin | stopped-adoption call offset `2,386` within the actuator region precedes ordinary STOP call offset `3,136` |
+
+The closed tracker admits only the exact generation-joined direct-child
+singleton in status `SSTOP = 4`. Status `2/3` poisons and disables the
+adapter, so it cannot fall through to the guardian's ordinary STOP route.
+
+### Verification data
+
+| Check | Result |
+| --- | --- |
+| Parser/source | Apple Ruby 2.6 syntax `PASS`; full-file Ripper `PASS`; whitespace check `PASS` |
+| Static canary surface | `Process.fork = 1`; `Process.exec = 1`; `Process.spawn = 0`; direct `Process.kill = 0`; fixed libc `raise(SIGSTOP)` site `1`; libc signal-zero group-absence site `1` in a fixed two-observation loop; marker `mkdirat = 1`; selective `eval = 1` for exactly two pinned regions; shell/system/popen/backticks/delete/unlink/rename/file-write/Swift/Git surfaces `0` |
+| Exact guardian signal surface | loaded actuation region contains one centralized `Process.kill`; loaded actuator region contains no process call; adoption route precedes ordinary STOP route |
+| Generation model | signal-free `17 / 17 PASS`; cases SHA-256 `59f94fa446316f0bf656ba28c1669c247807e6a37e7c90e5adacf1548ca8d788` |
+| Stopped-adoption model | signal-free `36 / 36 PASS`; cases SHA-256 `4a1bd17791e4b4cf5b90d84d06ff3c1cdc61d36f40d1e98d01602ba0b82da404` |
+| Exact-region signal-free harness | stopped case: adoptions `1`, STOP `0`, mocked KILL `1` against `-70`; active case: STOP/KILL `0/0`, poisoned; actual signals/children `0/0`; result SHA-256 `bf2aefc1460bf74f1eb1546a9155d74d3f11ae7fe1ebb9b32c5e05984d824a2c` |
+| Fake wait-status harness | terminal-before-SSTOP and SSTOP receipts both retained; signals/children `0/0`; result SHA-256 `6c0469e80ef669b7d300cdabbade64dbb009abc5a41edd5588baeae8bcf9e603` |
+
+### Frozen live envelope
+
+The sole eligible transport is frozen as follows. The executor working
+directory is exactly
+`/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging`.
+The script sees empty `ARGV`, stdin `/dev/null`, umask `0077`, and exactly
+the six replacement-environment entries shown below. There is no outer
+abandonment timeout.
+
+```zsh
+/bin/zsh -f -c '
+umask 077
+exec /usr/bin/env -i \
+  LANG=C.UTF-8 \
+  LC_ALL=C.UTF-8 \
+  TZ=UTC \
+  PATH=/usr/bin:/bin \
+  __CF_USER_TEXT_ENCODING=0x1F5:0x0:0x0 \
+  R18_SUCCESSOR_STOPPED_ADOPTION_CANARY_ROLE=controller \
+  /usr/bin/ruby --disable-gems \
+  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/docs/tools/prime-driver-v2-r18-successor-stopped-adoption-canary.rb \
+  </dev/null
+'
+```
+
+```text
+one controller invocation
+  -> one fixed same-Ruby fork
+  -> one fixed same-Ruby exec using the frozen script path
+  -> child creates private singleton SID == PGID == PID
+  -> child publishes self-stop intent
+  -> one child-local libc raise(SIGSTOP) site
+  -> exact WUNTRACED SSTOP observation
+  -> two equal generation-joined singleton group snapshots
+  -> STOPPED_ADOPTION
+  -> guardian STOP entered calls = 0
+  -> one fresh guardian KILL certificate
+  -> at most one imported Process.kill("KILL", -PGID) call entry and possible delivery
+  -> exact child reap
+  -> generation ESRCH x2
+  -> empty group + signal-zero ESRCH x2
+```
+
+The worker's actual self-STOP entry remains `UNPROVEN`. The data prove one
+fixed call site, an intent frame, and a later exact SSTOP wait observation;
+they cannot prove the call entered or that no external STOP landed in that
+interval. The receipt names that origin race.
+
+The final joined-snapshot-to-numeric-PGID KILL interval remains non-atomic.
+The held script snapshot-to-child-exec interval is also named because the
+script is interpreted by path, not mapped as the held executable. A fault
+after fork never authorizes a guardian-region STOP, any CONT, a second KILL,
+retry, cleanup, or abandonment; containment may remain nonterminal
+indefinitely until exact reap and conservation are established.
+
+No shell child or shell-controlled command enters the canary process topology;
+the frozen outer zsh transport performs only `umask` followed by `exec` into
+`env`/Ruby. The canary invokes no Swift, SwiftPM, Git, production guardian,
+epoch constructor, old R18 root, or scientific role.
+
+### Marker and receipt bounds
+
+The one-shot marker is
+`/private/tmp/gate-e1-4-r18-successor-stopped-adoption-canary-be1b2af-a550c1b`.
+It is absent at freeze. If marker construction is reached and succeeds, it
+must be born empty at mode `0700`, descriptor-held, synchronized with its
+held `/private/tmp` parent, never used as cwd, and retained thereafter. It is
+never deleted, populated, reused, or reconstructed. An invocation can be
+consumed before marker creation; the invocation/control record, not marker
+existence alone, establishes consumption.
+
+Receipts are recursively canonical JSON plus one LF. SHA-256 covers the
+canonical payload without `payload_sha256`; that digest is attached
+afterward.
+
+| Named bound fixture | Exact data |
+| --- | --- |
+| Success | payload SHA-256 `ea77eaaf992dbbb917ddf37dd28d2571a247428e44ec0326953f60904a563c7c`; unsealed/sealed `10,229 / 10,314` bytes; numeric-width structural bound `11,785`; policy headroom `503`; hard-cap headroom `4,599` |
+| Failure enumeration | `120` named shapes; rows SHA-256 `60d57e8eec155b6b3469b70101c72358a7e5e3381f341938770a2337edcd0d86` |
+| Largest named failure | `unknown / kill_entered_undelivered / full / TERM / fault`; payload SHA-256 `041f62d0b69859f9271322e2595596be6be6540654e25acecc57790e2908123f`; sealed `4,184`; structural bound `4,376`; policy/hard headroom `7,912 / 12,008` |
+| Caps | policy `12,288`; hard `16,384` |
+
+These are named fixtures, not universal maxima. Runtime computes a
+non-shrinking numeric-width bound over the actual receipt shape and fails
+closed above policy. Full, compact, and minimal failure shapes are
+independently rebound before publication.
+
+### Launch boundary
+
+This checkpoint authorizes no invocation. The marker remains absent and every
+canary process/signal counter remains zero.
+
+The control-only freeze commit and tree can be measured only after this
+section is committed. Fresh approval must quote those measured values; no
+provisional or self-referential identifier is accepted.
+
+Any launch requires fresh exact approval naming this control-freeze commit and
+tree, implementation `e73668fa654477ca2bccc91b354cdaa06a8e9b93` / tree
+`961a6bca5b407d95423aa7ec1a51decd26aeca24`, canary SHA-256
+`f12c59853252d97bdae99816e04b220b6c77fb34f4f5812d395a5334348aa238`,
+and the exact marker leaf. Approval must explicitly accept one fixed same-Ruby
+fork/exec child; the child's entry into at most one fixed libc
+`raise(SIGSTOP)` call, with entry and origin attribution remaining unproven
+in the receipt; exclusive creation and permanent retention of the exact marker
+directory; at most one entered imported `Process.kill("KILL", -PGID)` call
+commitment and possible delivery against only its double-snapshotted,
+generation-joined direct-child private group; guardian-region STOP entries
+and deliveries fixed at zero; every CONT entry fixed at zero; two
+`libc kill(-PGID, 0)` absence probes; the named userspace races; the exact
+controller transport above; and potentially indefinite proof-driven
+containment with no outer abandonment timeout.
+
+Any invocation consumes this canary. No retry, cleanup, repair, CONT, manual
+signal, production guardian launch, successor epoch, Swift command, evidence
+reinterpretation, authority closure, or Gate-E promotion follows
+automatically. Only a canonical PASS frame, exit `0`, empty stderr, retained
+empty marker, exact operation counts, and complete conservation may record
+canary PASS. Every other outcome remains retained `ABSTAIN`.
+
+```text
+R18_consumed_guardian_invocations = 1_nonterminal
+R18_successor_guardian_implementations = 1
+R18_successor_guardian_launches = 0
+R18_successor_epoch_constructor_invocations = 0
+R18_successor_stopped_adoption_canary_implementations = 1
+R18_successor_stopped_adoption_canary_invocations = 0
+R18_successor_stopped_adoption_canary_marker_creations = 0
+R18_successor_stopped_adoption_canary_forks = 0
+R18_successor_stopped_adoption_canary_execs = 0
+R18_successor_stopped_adoption_canary_self_stop_intents = 0
+R18_successor_stopped_adoption_canary_self_stop_entered_calls = 0
+R18_successor_stopped_adoption_canary_guardian_stop_entries = 0
+R18_successor_stopped_adoption_canary_guardian_kill_entries = 0
+R18_successor_stopped_adoption_canary_signal_zero_calls = 0
+R18_successor_stopped_adoption_canary_exact_reaps = 0
+R18_successor_stopped_adoption_canary_conservation_proofs = 0
+R18_successor_swiftpm_commands = 0
+R18_successor_retained_state_mutations = 0
+outer_journal_authority_vector = 00000000
+gate_E_mechanics_outcome = ABSTAIN
+gate_E_scientific_outcome = ABSTAIN
+gate_E_clearance_granted = 0
+```
+
+The supplemental direct-task CPU-energy observer remains a later, separately
+frozen slice. It may not change this canary's process topology or timing and
+cannot begin until this canary has a durable conserved result.
