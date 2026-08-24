@@ -14560,3 +14560,84 @@ gate_E_clearance_granted = 0
 All eight authorities remain missing: Prime Git, companion Git, Swift
 version, Swift target-info, SwiftPM build, artifact staging, XCTest inventory,
 and Swift Testing inventory.
+## R19 coordinated-disposal implementation and readiness checkpoint — eligible, uninvoked
+
+This control-only checkpoint records the implementation and read-only
+readiness assessment. It did not evaluate the controller top level, create the
+disposal root, inspect an R19 process, enter a signal call, read retained R19
+state other than the exact root's absence, run Swift/SwiftPM, perform energy
+work, close authority, or promote Gate E.
+
+| Coordinate | Value |
+| --- | --- |
+| Status | `R19_COORDINATED_DISPOSAL_IMPLEMENTED_VERIFIED_UNINVOKED` |
+| Predecessor freeze | `c3b155f648b6abcaca734eb34d6a38837d150571` / tree `2280af710cbb54acbf751496ef35d032c6dddd6f` |
+| Implementation | `984f1a6a089b9c2be6392a580bb0ebbcb69b8d35` / tree `b2b1f3a6877a56a2757a664aa9e225adaf046f47` |
+| Implementation delta | exactly `A docs/tools/prime-driver-v2-r19-coordinated-disposal.rb`; `2,039` lines; `72,657` bytes |
+| Controller identity | blob `7f2cef7ff309b1b814ed8c797dd6aa46c5b7b4b1`; SHA-256 `804cb207705c4bf0b6a92869ff0a93308a640f8417697fa689365d58ac98184e` |
+| Source | unchanged at `befc632485930a9cca7f618d3704292b5465f911` / tree `7d1a3bf302fe358f9e42dc1ed2bf54ed3d22982e` |
+| Parsers | Apple Ruby 2.6 syntax `PASS`; Ripper sexp/lex `PASS`; controller top-level evaluations `0` |
+| Pure model | `71 / 71`; cases SHA-256 `3f96d13d66b217891e4e9c36cdc2ca8772a50c2b430c907e7f72ca10ac7a5f39` |
+| Exact root | descriptor-relative `ENOENT` twice, before and after the identity/parser/static/model audit |
+| Signal surface | one fixed signal-zero call site plus one typed fixed KILL call site; STOP/CONT/wait `0/0/0` |
+| Invocation status | eligible only for a later separately approved exact invocation; invocations `0` |
+
+Static and independent threat review corrected five fail-closed edges before
+the implementation was sealed: guardian status is exactly `2`; an empty group
+projection requires `errno == 0`; the controller's SID and PGID must be
+disjoint from both target domains; the KILL certificate age is resampled at
+the pre-entry boundary; and every signal-zero entry is counted before the
+native call. The fail-stop validator also now mirrors the Swift v2 death-wait
+relation and classifies malformed content as partial/invalid rather than as a
+vnode rebound.
+
+The accepted residuals remain the named Darwin snapshot-to-numeric-target and
+terminal-namespace-to-signal races, plus fatal process or host termination
+that can retain only an immutable commitment prefix. A successful or
+possibly-entered KILL cannot return through a Ruby exception path before
+external conservation.
+
+Canonical readiness record metrics:
+
+```text
+payload_sha256 = 777e2bf1e1d8d5a1305349d20a44247988e1174290ef2cd6067b356089e91f8b
+frame_bytes = 11260
+frame_sha256 = cd39be7649d60c2a14f3d68aede61273c4336d947d5c53fc3e25fb455f80e56c
+```
+
+```json
+{"authority":{"authority_vector":"00000000","controller_eligible_for_separate_exact_approval":true,"controller_invocations":0,"gate_e_clearance":0,"gate_e_mechanics_outcome":"ABSTAIN","gate_e_scientific_outcome":"ABSTAIN","koine_included":false,"retry_authorized":false,"scientific_authorities_closed":0},"freeze":{"changed_path_count":1,"changed_paths":["docs/tools/prime-driver-v2-r19-coordinated-disposal.rb"],"commit":"c3b155f648b6abcaca734eb34d6a38837d150571","implementation_commit":"984f1a6a089b9c2be6392a580bb0ebbcb69b8d35","implementation_parent":"c3b155f648b6abcaca734eb34d6a38837d150571","implementation_parent_exact":true,"implementation_tree":"b2b1f3a6877a56a2757a664aa9e225adaf046f47","source_commit_unchanged":"befc632485930a9cca7f618d3704292b5465f911","source_tree_unchanged":"7d1a3bf302fe358f9e42dc1ed2bf54ed3d22982e","tree":"2280af710cbb54acbf751496ef35d032c6dddd6f"},"implementation":{"acl_present":false,"blob":"7f2cef7ff309b1b814ed8c797dd6aa46c5b7b4b1","bytes":72657,"committed_blob_equals_named_bytes":true,"ctime_unix_seconds":1787600921,"device":16777231,"filesystem_mode":"0644","flags":0,"gid":20,"git_mode":"100644","identity_stable_across_audit":true,"inode":17451501,"lf_only":true,"lines":2039,"mtime_unix_seconds":1787600921,"nlink":1,"nul_count":0,"path":"/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/docs/tools/prime-driver-v2-r19-coordinated-disposal.rb","sha256":"804cb207705c4bf0b6a92869ff0a93308a640f8417697fa689365d58ac98184e","terminal_lf":true,"uid":501,"utf8":true,"xattrs":[{"bytes":11,"hex":"01020049b5cb684f79583c","name":"com.apple.provenance"}]},"journal_bounds":{"actual_sparse_predecessor_chain":true,"aggregate_structural_ceiling":163840,"canonical_one_lf":true,"cap_precedes_leaf_open":true,"cleanup_calls":0,"digest_free_hash_then_attach":true,"exclusive_no_follow_creation":true,"full_readback_vnode_file_parent_sync":true,"leaf_count":10,"leaf_creation_call_sites":1,"leaves":["00-start.json","01-prestate.json","02-guardian-kill-commitment.json","03-guardian-kill-result.json","04-guardian-conservation.json","05-fixture-prestate.json","06-fixture-kill-commitment.json","07-fixture-kill-result.json","08-fixture-conservation.json","09-disposal-terminal.json"],"mode_0400_nlink_1":true,"per_leaf_cap":16384,"poison_on_publication_entry":true,"replacement_calls":0,"root_creation_call_sites":1,"schema":"prime_driver_v2_r19_disposal_journal_bounds_v1"},"models":{"case_count":71,"case_names":["01_valid_terminal_defers_without_signal","02_invalid_terminal_rejects_without_signal","03_staged_terminal_rejects_without_signal","04_rebound_terminal_rejects_without_signal","05_guardian_absent_uses_exact_two_probes","06_guardian_exact_success_conserves_before_fixture","07_guardian_rebound_rejects","08_guardian_parent_drift_rejects","09_guardian_domain_drift_rejects","10_guardian_credential_drift_rejects","11_guardian_image_drift_rejects","12_guardian_cwd_drift_rejects","13_guardian_non_singleton_rejects","14_guardian_status_drift_rejects","15_guardian_commitment_interrupt_retains_prefix","16_guardian_certificate_expiry_never_calls","17_guardian_terminal_after_commitment_records_no_call","18_guardian_invalid_terminal_after_commitment_retains_prefix","19_guardian_esrch_requires_two_absence_probes","20_guardian_esrch_failed_proof_is_nonterminal","21_guardian_other_signal_failure_no_retry","22_guardian_may_have_entered_conserves_before_return","23_guardian_result_publication_fault_still_conserves","24_guardian_conservation_publication_fault_blocks_fixture","25_prior_fixture_observations_explicitly_discarded","26_fixture_absent_uses_exact_two_probes","27_fixture_exact_stopped_success_conserves","28_fixture_active_rejects","29_fixture_zombie_rejects","30_fixture_initializing_rejects","31_fixture_rebound_rejects","32_fixture_late_member_rejects","33_fixture_group_reuse_rejects","34_fixture_image_mismatch_rejects","35_fixture_cwd_mismatch_rejects","36_fixture_non_singleton_rejects","37_fixture_commitment_interrupt_retains_prefix","38_fixture_certificate_expiry_never_calls","39_fixture_terminal_after_commitment_records_no_call","40_fixture_esrch_requires_two_absence_probes","41_fixture_esrch_failed_proof_is_nonterminal","42_fixture_other_signal_failure_no_retry","43_fixture_may_have_entered_conserves_before_return","44_fixture_result_publication_fault_still_conserves","45_fixture_conservation_publication_fault_has_no_terminal","46_post_success_loop_requires_two_consecutive_esrch","47_post_success_loop_has_no_finite_abandonment","48_fail_stop_read_only_after_leaf08","49_successful_guardian_kill_no_terminal_before_conservation","50_successful_fixture_kill_no_terminal_before_conservation","51_koine_path_absent","52_swift_git_energy_paths_absent","53_crash_prefix_00_retained_no_repair","54_crash_prefix_01_retained_no_repair","55_crash_prefix_02_retained_no_repair","56_crash_prefix_03_retained_no_repair","57_crash_prefix_04_retained_no_repair","58_crash_prefix_05_retained_no_repair","59_crash_prefix_06_retained_no_repair","60_crash_prefix_07_retained_no_repair","61_crash_prefix_08_retained_no_repair","62_crash_prefix_09_retained_no_repair","63_sparse_chain_01_strictly_increasing","64_sparse_chain_02_strictly_increasing","65_sparse_chain_03_strictly_increasing","66_sparse_chain_04_strictly_increasing","67_sparse_chain_05_strictly_increasing","68_sparse_chain_06_strictly_increasing","69_sparse_chain_07_strictly_increasing","70_sparse_chain_08_strictly_increasing","71_sparse_chain_09_strictly_increasing"],"cases_sha256":"3f96d13d66b217891e4e9c36cdc2ca8772a50c2b430c907e7f72ca10ac7a5f39","passed_count":71,"performed_energy_operations":false,"performed_filesystem_mutations":false,"performed_git_operations":false,"performed_process_operations":false,"performed_signal_operations":false,"version":"r19-coordinated-disposal-readiness-model-v1"},"parser":{"controller_eval_calls":0,"controller_invocations":0,"controller_load_calls":0,"ripper_lex_pass":true,"ripper_sexp_pass":true,"ripper_token_count":20480,"ripper_token_sha256":"18a1c63040f88ec07b4eb97dccd1aa08cf85c5774e99af179cd52ac4c2a244f6","ruby":{"arm64e_uuid":"eb2540b7e13236beb719619d0fbf7203","bytes":135200,"device":16777231,"inode":1152921500312572705,"patchlevel":210,"path":"/usr/bin/ruby","platform":"universal.arm64e-darwin25","sha256":"9d6ff3e289c7d908e3c785e0bedd6692d1d6a3377965c88c04d847104b7c892c","version":"2.6.10"},"syntax_pass":true,"top_level_evaluated":false},"payload_sha256":"777e2bf1e1d8d5a1305349d20a44247988e1174290ef2cd6067b356089e91f8b","presentation":{"authoritative_format":"canonical_json","derived_formats_implemented":false,"derived_formats_may_feed_live_authority":false,"parquet":"DEFERRED_DERIVED_READ_ONLY_ANALYTICS_ONLY","sqlite":"DEFERRED_DERIVED_READ_ONLY_INDEX_ONLY"},"readiness_operations":{"controller_invocations":0,"controller_process_exec_calls":0,"controller_process_fork_calls":0,"controller_process_spawn_calls":0,"controller_process_wait_calls":0,"controller_signal_calls":0,"controller_top_level_evaluations":0,"energy_calls":0,"filesystem_mutation_calls":0,"git_mutation_commands":0,"live_process_censuses":0,"pure_model_processes":1,"retained_state_mutations":0,"root_absence_probe_processes":2,"sealed_ripper_parser_processes":1,"sealed_syntax_parser_processes":1,"swift_commands":0,"swiftpm_commands":0},"root_absence":{"absent_twice":true,"filesystem_mutation_calls":0,"leaf":"gate-e1-4-r19-coordinated-disposal-11a5dce6-8930176-8930235","observations":[{"absent":true,"errno":2,"observed_at_unix_seconds":1787601071,"ordinal":1,"return":-1},{"absent":true,"errno":2,"observed_at_unix_seconds":1787601330,"ordinal":2,"return":-1}],"parent":{"device":16777231,"filesystem":"apfs","gid":0,"held_named_joined":true,"inode":774813,"local":true,"mode":"01777","path":"/private/tmp","uid":0},"schema":"prime_driver_v2_r19_disposal_root_absence_v1","separated_by_identity_parser_static_model_audit":true},"schema":"prime_driver_v2_r19_coordinated_disposal_readiness_v1","source_audit":{"accepted_residuals":["darwin_snapshot_to_numeric_target_race","terminal_namespace_to_signal_race","fatal_process_or_host_termination_retains_only_prefix"],"argv_token_lines":[155],"certificate_age_preentry_max_ns":50000000,"cont_runtime_budget":0,"empty_group_requires_errno_zero":true,"env_token_lines":[155],"fixed_kill_callers":["guardian_positive_pid","fixture_negative_pgid"],"guardian_status_exact":2,"independent_final_threat_review":"PASS","kill_runtime_budget":2,"native_signal_call_site_count":2,"native_signal_call_sites":[{"byte_offset":29568,"column":11,"fixed_signal":0,"label":"signal_zero","line":861,"normalized_token_sha256":"b3b010b7ded002885a322328e1c3fd2652d10846a37a76ec72a1b25865200a18","target_shape":"negative_fixed_pgid_signal_zero"},{"byte_offset":48904,"column":11,"fixed_signal":9,"label":"centralized_kill","line":1362,"normalized_token_sha256":"3bf1d1b9e38b9bdebf475d6b73996bb6892605aca68b1b18ad5fc4c8d6dec024","target_shape":"typed_positive_pid_or_negative_pgid_fixed_kill"}],"process_wait_budget":0,"required_library_count":3,"ripper_ast_forbidden_call_hits":[],"schema":"prime_driver_v2_r19_disposal_static_audit_v1","self_sid_pgid_target_domain_collision_rejected":true,"signal_zero_preentry_accounting":true,"source_order":{"labels":["create_exact_root","publish_start","hold_fixed_preimages","join_controller_self","reject_self_target_domains","inspect_terminal_before_guardian","observe_guardian","publish_prestate","guardian_commitment","guardian_postcommit_double_snapshot","guardian_terminal_recheck","guardian_kill_entry","guardian_result","guardian_primary_conservation_branch","guardian_conservation","guardian_conservation_leaf","fresh_fixture_observation","fixture_prestate","fixture_commitment","fixture_postcommit_double_snapshot","fixture_terminal_recheck","fixture_kill_entry","fixture_result","fixture_primary_conservation","fixture_conservation_leaf","post_conservation_fail_stop_read","disposal_terminal"],"ordered_anchor_count":27,"ordered_anchors_sha256":"ad9119dfe615f3e57b395a7a46f3e70c5238533703353901c909bda412d90694","strictly_increasing":true},"source_sha256":"804cb207705c4bf0b6a92869ff0a93308a640f8417697fa689365d58ac98184e","stop_runtime_budget":0,"successful_or_may_have_entered_kill_conserves_before_return":true,"xstring_count":0},"status":"R19_COORDINATED_DISPOSAL_IMPLEMENTED_VERIFIED_UNINVOKED","transport":{"application_argv_count":0,"caller_supplied_capabilities":0,"cwd":"/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging","environment_count":5,"environment_sha256":"767ddf82c05e5df3fa5bc093563d5e95f3629b987592a23a5c7d65a6902505bc","environment_sorted":["LANG=C.UTF-8","LC_ALL=C.UTF-8","PATH=/usr/bin:/bin","TZ=UTC","__CF_USER_TEXT_ENCODING=0x1F5:0x0:0x0"],"interpreter_argv":["/usr/bin/ruby","--disable-gems","/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/docs/tools/prime-driver-v2-r19-coordinated-disposal.rb"],"outer_timeout":null,"stdin":"/dev/null","stdin_character_device":true,"stdin_device":-458678049,"stdin_inode":336,"stdin_rdevice":50331650,"stdin_tty":false,"umask":"0077"}}
+```
+
+JSON remains the sole live journal authority. SQLite may later be generated as
+a read-only interactive index, and Parquet as a read-only comparison/energy
+analytics projection, only from immutable canonical receipts. Neither format
+may feed the controller, alter an outcome, or become an authority. No such
+derived format is implemented in this checkpoint.
+
+```text
+R19_coordinated_disposal_predecessor_freezes = 1
+R19_coordinated_disposal_implementations = 1
+R19_coordinated_disposal_readiness_freezes = 1
+R19_coordinated_disposal_invocations = 0
+R19_coordinated_disposal_roots_created = 0
+R19_coordinated_disposal_guardian_kill_commitments = 0
+R19_coordinated_disposal_guardian_kill_entries = 0
+R19_coordinated_disposal_fixture_kill_commitments = 0
+R19_coordinated_disposal_fixture_kill_entries = 0
+R19_coordinated_disposal_stop_entries = 0
+R19_coordinated_disposal_cont_entries = 0
+R19_coordinated_disposal_signal_zero_entries = 0
+R19_coordinated_disposal_swift_commands = 0
+R19_coordinated_disposal_git_commands = 0
+R19_coordinated_disposal_cleanup_calls = 0
+R19_coordinated_disposal_fail_stop_reads = 0
+R19_retry_authorized = 0
+koine_live_observer_invocations = 0
+koine_live_actuation_calls = 0
+koine_offline_oracle_implementations = 0
+outer_journal_authority_vector = 00000000
+gate_E_mechanics_outcome = ABSTAIN
+gate_E_scientific_outcome = ABSTAIN
+gate_E_clearance_granted = 0
+```
