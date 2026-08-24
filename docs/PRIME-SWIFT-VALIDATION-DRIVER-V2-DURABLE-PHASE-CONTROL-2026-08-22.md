@@ -14641,3 +14641,117 @@ gate_E_mechanics_outcome = ABSTAIN
 gate_E_scientific_outcome = ABSTAIN
 gate_E_clearance_granted = 0
 ```
+
+## R19 coordinated-disposal consumed result and native-leaf predecessor freeze — failed closed
+
+The single readiness-authorized invocation was consumed. It exited `70` at
+the initial journal-leaf metadata check, before any R19 target-process
+observation, commitment, signal, fail-stop read, or terminal publication.
+This control-only successor record retains the outcome and freezes—but does
+not implement or invoke—the next native leaf-creation primitive.
+
+| Coordinate | Value |
+| --- | --- |
+| Control parent | readiness `3a46a037bcf41be10c9bed7fcb98cb6db2e822db` / tree `2db55cefd09cbeea8619c3623511921b5cc6d21b` |
+| Invocation | exactly `1`; exit `70`; retry `false` |
+| Stderr | `395` canonical bytes; SHA-256 `33765b7e2b97f7a62eda592fd6ca1f5c1b4e42ff541b73311643d05896ca1583` |
+| Failure | `DisposalFailure:journal-initial-00-start.json`; SHA-256 `1dcc87d45e0c0f447eb8b8e89d554c52c0800271474e1916223495433d39c3ef` |
+| Retained root | `/private/tmp/gate-e1-4-r19-coordinated-disposal-11a5dce6-8930176-8930235`; vnode `16777231/17452839`; mode `0700` |
+| Retained leaf | exact sole entry `00-start.json`; vnode `16777231/17452840`; regular; size `0`; mode `0000`; unpublished |
+| R19 interaction | target observations `0`; KILL/STOP/CONT/signal-zero `0/0/0/0`; fail-stop reads `0` |
+| Classification | `IDENTIFIED_FAIL_CLOSED_VARIADIC_OPENAT_ABI_DEFECT`; confidence `990,000 / 1,000,000` |
+| Authority | mechanics/science `ABSTAIN/ABSTAIN`; vector `00000000`; clearance `0` |
+
+Darwin declares `openat(int, const char *, int, ...)`; the controller declared
+it to Fiddle as fixed
+`openat(int, const char *, int, unsigned int)`. On Apple arm64e the unnamed
+variadic mode uses a different calling convention from a fourth fixed
+argument. The evidence is specific: fixed-arity `mkdirat` created the root as
+requested at `0700`; the variadic `openat` created a regular leaf at `0000`;
+the verified `0077` umask cannot transform requested `0400` into `0000`; and
+metadata validation preceded `write_all`, leaving size exactly zero. This is
+a journal-ABI failure, not a governor, signal, or R19-process result.
+
+The consumed root and mode-`0000` leaf remain permanently retained. They may
+not be chmodded, opened through a repair capability, removed, reused, or
+reinterpreted as a published `00-start` record. R19 live state was not
+observed by this invocation and remains `ABSTAIN`.
+
+### Frozen successor primitive — unimplemented and uninvoked
+
+The next slice is only an isolated, non-actuating native leaf canary:
+
+```text
+canary root =
+/private/tmp/gate-e1-4-r19-native-leaf-primitive-canary-3a46a037-17452840
+
+fixed leaf =
+00-native-leaf-canary.json
+```
+
+One closed native Swift executable owns the descriptor table. A fixed-arity C
+wrapper is compiled into the same Mach-O image; no dylib or helper process is
+introduced. The wrapper exposes only
+`createExclusivePoisonedLeaf(dirfd, fixedLeaf) -> fd` and internally calls
+native compiler-emitted `openat` with fixed flags and intentional mode
+`0000`. Generic Fiddle `O_CREAT` is structurally forbidden.
+
+The held descriptor sequence is fixed: exclusive descriptor-relative create;
+validate regular/owner/device/inode/nlink/flags/mode; canonical write; held-FD
+readback and SHA-256; file sync; held `fchmod(0400)` as the publication
+transition; postimage revalidation; file sync; held-parent sync. Maximum file
+size is `16,384` bytes. There is no staging, rename, unlink, cleanup, child,
+process census, or signal. Failure retains a mode-`0000` poisoned prefix and
+consumes the canary. Two disjoint builds must match raw bytes and Mach-O
+identity before the executable can be embedded or invoked.
+
+The successor disposal root remains unassigned until this canary passes.
+SQLite, Parquet, and Koine remain outside the primitive and repair path.
+
+Canonical consumed-result record metrics:
+
+```text
+payload_sha256 = 96f35af0ae8752ce78b39f270a8a8d172e05edbe261b2bcbf7c45027982d86ee
+frame_bytes = 5261
+frame_sha256 = bc1897de90d6071dd6d7af0eb1f5b34f71b938574ec242a9213312ab3701042f
+```
+
+```json
+{"authority":{"authority_vector":"00000000","gate_e_clearance":0,"gate_e_mechanics_outcome":"ABSTAIN","gate_e_scientific_outcome":"ABSTAIN","r19_retry_authorized":false,"scientific_authorities_closed":0,"successor_implementation_authorized":false,"successor_invocation_authorized":false},"control_parent":{"implementation_commit":"984f1a6a089b9c2be6392a580bb0ebbcb69b8d35","implementation_tree":"b2b1f3a6877a56a2757a664aa9e225adaf046f47","predecessor_freeze_commit":"c3b155f648b6abcaca734eb34d6a38837d150571","readiness_commit":"3a46a037bcf41be10c9bed7fcb98cb6db2e822db","readiness_tree":"2db55cefd09cbeea8619c3623511921b5cc6d21b"},"controller":{"invocation_count":1,"path":"/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/docs/tools/prime-driver-v2-r19-coordinated-disposal.rb","retry_authorized":false,"sha256":"804cb207705c4bf0b6a92869ff0a93308a640f8417697fa689365d58ac98184e"},"diagnosis":{"classification":"IDENTIFIED_FAIL_CLOSED_VARIADIC_OPENAT_ABI_DEFECT","confidence_parts_per_million":990000,"darwin_declaration":"int openat(int,const char*,int,...)","evidence":["fixed_arity_mkdirat_created_root_mode_0700","variadic_openat_created_regular_leaf_mode_0000","verified_umask_0077_cannot_mask_requested_0400_to_0000","metadata_validation_preceded_write_all_so_leaf_remained_size_zero"],"fiddle_declaration":"int openat(int,const char*,int,unsigned int)","not_a_governor_or_signal_failure":true,"not_r19_process_evidence":true,"platform":"universal.arm64e-darwin25"},"invocation":{"application_argv_count":0,"environment_count":5,"environment_sha256":"767ddf82c05e5df3fa5bc093563d5e95f3629b987592a23a5c7d65a6902505bc","exit_status":70,"outer_timeout":null,"stderr":{"bytes":395,"record":{"authority_vector":"00000000","error":{"bytes":45,"prefix_hex":"446973706f73616c4661696c7572653a6a6f75726e616c2d696e697469616c2d30302d73746172742e6a736f6e","sha256":"1dcc87d45e0c0f447eb8b8e89d554c52c0800271474e1916223495433d39c3ef"},"gate_e_outcome":"ABSTAIN","retry_authorized":false,"schema":"prime-driver-v2-r19-coordinated-disposal/v1","status":"PREJOURNAL_OR_TERMINAL_PUBLICATION_FAILED"},"sha256":"33765b7e2b97f7a62eda592fd6ca1f5c1b4e42ff541b73311643d05896ca1583"},"stdin":"/dev/null","stdout_bytes":0,"umask":"0077"},"operations":{"cleanup_calls":0,"cont_entries":0,"disposal_root_creations":1,"disposal_terminal_publications":0,"energy_actions":0,"fail_stop_reads":0,"fixture_kill_commitments":0,"fixture_kill_entries":0,"guardian_kill_commitments":0,"guardian_kill_entries":0,"journal_leaf_creations":1,"journal_leaf_publications":0,"r19_target_process_observations":0,"repair_calls":0,"signal_zero_entries":0,"stop_entries":0,"swift_commands":0,"swiftpm_commands":0},"payload_sha256":"96f35af0ae8752ce78b39f270a8a8d172e05edbe261b2bcbf7c45027982d86ee","presentation_boundary":{"canonical_json_authority":true,"koine_in_repair_path":false,"parquet_in_repair_path":false,"sqlite_in_repair_path":false},"retained_prefix":{"leaf":{"content_hash":null,"content_read_after_process_exit":false,"ctime_unix_seconds":1787601983,"device":16777231,"empty_by_held_postfailure_stat":true,"flags":0,"gid":0,"inode":17452840,"mode":"0000","mtime_unix_seconds":1787601983,"nlink":1,"path":"/private/tmp/gate-e1-4-r19-coordinated-disposal-11a5dce6-8930176-8930235/00-start.json","permanently_retained":true,"published_record":false,"size":0,"uid":501,"xattr_observation":"UNAVAILABLE_EACCES_MODE_0000"},"root":{"ctime_unix_seconds":1787601983,"device":16777231,"flags":0,"gid":0,"inode":17452839,"inventory":["00-start.json"],"inventory_count":1,"mode":"0700","mtime_unix_seconds":1787601983,"nlink":3,"path":"/private/tmp/gate-e1-4-r19-coordinated-disposal-11a5dce6-8930176-8930235","permanently_retained":true,"size":96,"uid":501}},"schema":"prime_driver_v2_r19_disposal_consumed_failure_v1","status":"R19_COORDINATED_DISPOSAL_CONSUMED_PREOBSERVATION_JOURNAL_FAILURE","successor_primitive_freeze":{"caller_arguments":0,"canary_leaf":"00-native-leaf-canary.json","canary_root":"/private/tmp/gate-e1-4-r19-native-leaf-primitive-canary-3a46a037-17452840","child_processes":0,"consumed_disposal_root_reusable":false,"dynamic_library_images":0,"failure_policy":"retain_mode_0000_poisoned_prefix_no_retry_no_cleanup","file_cap_bytes":16384,"generic_fiddle_openat_create_calls":0,"implementation_authorized":false,"initial_mode":"0000","invocation_authorized":false,"native_boundary":"in_image_fixed_arity_c_wrapper","native_call":"openat(dirfd,fixed_leaf,O_RDWR|O_CREAT|O_EXCL|O_NOFOLLOW|O_CLOEXEC,(mode_t)0000)","owner":"one_closed_native_swift_process","process_censuses":0,"publication_mode":"0400","publication_order":["exclusive_descriptor_relative_create","held_regular_owner_device_inode_nlink_flags_mode_validation","canonical_write","held_descriptor_readback_and_sha256","file_sync","held_fchmod_0400","postimage_revalidation","file_sync","held_parent_sync"],"rename_calls":0,"signals":0,"staging_files":0,"status":"R19_NATIVE_FIXED_ARITY_LEAF_PRIMITIVE_FROZEN_UNIMPLEMENTED_UNINVOKED","successor_disposal_root":"UNASSIGNED_UNTIL_CANARY_PASS","two_disjoint_build_identity_compare_required_before_embedding":true,"unlink_calls":0,"wrapper_shape":"createExclusivePoisonedLeaf(dirfd,fixed_leaf)->fd"}}
+```
+
+```text
+R19_coordinated_disposal_predecessor_freezes = 1
+R19_coordinated_disposal_implementations = 1
+R19_coordinated_disposal_readiness_freezes = 1
+R19_coordinated_disposal_invocations = 1
+R19_coordinated_disposal_roots_created = 1
+R19_coordinated_disposal_journal_leaf_creations = 1
+R19_coordinated_disposal_journal_leaf_publications = 0
+R19_coordinated_disposal_terminal_publications = 0
+R19_coordinated_disposal_target_process_observations = 0
+R19_coordinated_disposal_guardian_kill_commitments = 0
+R19_coordinated_disposal_guardian_kill_entries = 0
+R19_coordinated_disposal_fixture_kill_commitments = 0
+R19_coordinated_disposal_fixture_kill_entries = 0
+R19_coordinated_disposal_stop_entries = 0
+R19_coordinated_disposal_cont_entries = 0
+R19_coordinated_disposal_signal_zero_entries = 0
+R19_coordinated_disposal_swift_commands = 0
+R19_coordinated_disposal_swiftpm_commands = 0
+R19_coordinated_disposal_cleanup_calls = 0
+R19_coordinated_disposal_repair_calls = 0
+R19_coordinated_disposal_fail_stop_reads = 0
+R19_retry_authorized = 0
+R19_native_leaf_primitive_freezes = 1
+R19_native_leaf_primitive_implementations = 0
+R19_native_leaf_primitive_invocations = 0
+R19_native_leaf_primitive_roots_created = 0
+koine_live_observer_invocations = 0
+koine_live_actuation_calls = 0
+koine_offline_oracle_implementations = 0
+outer_journal_authority_vector = 00000000
+gate_E_mechanics_outcome = ABSTAIN
+gate_E_scientific_outcome = ABSTAIN
+gate_E_clearance_granted = 0
+```
