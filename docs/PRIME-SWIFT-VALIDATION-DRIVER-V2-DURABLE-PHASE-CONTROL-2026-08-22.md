@@ -14134,3 +14134,134 @@ All eight authorities remain missing: Prime Git, companion Git, Swift
 version, Swift target-info, SwiftPM build, artifact staging, XCTest inventory,
 and Swift Testing inventory. R19 is ready for separate exact approval and
 remains uninvoked.
+
+## Gate E1.4-R19 nonterminal census checkpoint — stopped singleton retained
+
+This EOF checkpoint is the current live ledger. It supersedes the preceding
+readiness freeze only for the consumed guardian/Swift invocation and the two
+consumed read-only census observations. It records no guardian terminal,
+recovery action, evidence interpretation, authority closure, or Gate-E
+promotion.
+
+| Coordinate | Observed value |
+| --- | --- |
+| Status | `R19_GUARDIAN_CONSUMED_NONTERMINAL_STOPPED_SINGLETON_OBSERVED_ABSTAIN` |
+| Readiness predecessor | `4c9653940c7c836ea292b1f88f0ee0289bd32072` / tree `429401604a93958659c0957c92b94a421711e185`; this checkpoint changes only this control ledger |
+| Constructor predecessor | `f3285e08c6970b5efbfdf6bff5669ec6e3454bbe` / tree `aae8f8ae7adfefdd8f9b56046f02a376ff1dc076` |
+| Guardian identity | SHA-256 `263e5514dc3e42713af77698c430f684d9ce45af7aa6e284a7f59ac96319492f`; approved invocation `1 / 1`, permanently consumed |
+| Assessment observation | exactly one fixed SwiftPM spawn entered; Release build completed; selected XCTest emitted an assertion failure at `PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests.swift:4870` in the textual `PrimeValidationDriverV2GovernorSessionCensus.contain(` check; stream text is not terminal authority |
+| Attached wait observation | the guardian shell remained live and silent beyond both its `840 s` cutoff and `900 s` horizon; empty Codex stream polls only asked the existing exec-session broker for buffered pipe output and made no write to guardian stdin, signal, census, process actuation, or retained-state mutation |
+| First census | one authorized process, PID `25008`, recorded at Unix second `1787595306`; consumed failure `guardian-candidate-count-2`; its selector did not exclude its own Ruby process; internal spawn/wait/signal/Git/energy/filesystem mutations all `0` |
+| Successor census | one authorized process, PID `25180`, recorded at Unix second `1787595532`; self PID excluded before selection; exactly one guardian candidate; internal spawn/wait/sleep/signal/Git/energy/filesystem mutations all `0` |
+| Guardian observation | PID `21601`; uniqueid/idversion `8930176/17456018`; PPID `21600`; parent uniqueid/idversion `8930175/17456015`; SID/PGID `21601/21601`; stable status pair `2/2`; credentials `[501,20,501,20,501,20]`; Ruby UUID `eb2540b7e13236beb719619d0fbf7203`; exact control cwd; guardian session member count `1` |
+| Direct child observation | `0` live direct children; this one-time census does not by itself prove the direct child's exact reap |
+| Stopped Fixture observation | PID `21660`; uniqueid/idversion `8930235/17456153`; PPID `1`; current parent uniqueid/idversion `8930233/17456148`; SID/PGID `21660/21660`; stable status pair `4/4`; credentials `[501,20,501,20,501,20]`; Fixture UUID `2ebb880ad28b32ff9b7eeb868af5d9b6` |
+| Fixture image/cwd | exact named `PrimeValidationWorkflowDriverV2SessionFixture` path; admitted cwd `/private/tmp/prime-validation-admission-tests-369E97E5-AAF3-4267-B810-BA92ADB20BD1/workspace`, device/inode `16777231/17447047`; census path/cwd observations are read-only named observations, not a fresh mapped-image actuation certificate |
+| Group projection | exactly one group, PGID `21660`; exactly one listed and generation-rejoined member, PID `21660`; no group join errors; the census made no signal-zero or other signal call |
+| RUID/global projection | RUID input `595` including census self, `594` after self exclusion, all `594` joined, zero join errors, rows SHA-256 `2090ceef085203c162b3e50999d3653a425e7068174c35ec52e0d1536515801b`; global PID count `923`, zero session-domain errors |
+| Epoch observation | root remained `16777231/17445748`; exact nine top-level role directories before/after; recursive metadata inventory stable, uncapped, error-free, `56 / 6a6910d1d78c7de0cb198073e0790276bd36721b31945cc4bea7b9c5e8200759` |
+| Terminal observation | `r19-guardian-terminal.json` absent; matching terminal-staging leaves absent |
+| Embedded census-frame seals | first payload `403 B / 4ef1e313c033b450ca1c29a173df6af09690ce77190498998fcf138fb7790587`; successor payload `7030 B / 50f2c92669cd80b0bdbbf37e21c27b2030b3609a5bc14ed07df4fc4a2f7eb96d`; SHA-256 covers exactly the UTF-8 JSON bytes between each marker's fence newlines, excluding Markdown and a transport terminal LF |
+| Authority | retained nonterminal mechanics only; guardian actuation ledger and exact direct reap are unobserved; mechanics/science `ABSTAIN`; vector `00000000`; clearance `0` |
+
+### Polling and census-harness boundary
+
+The failed first census was a defect in that read-only selector, not in the
+guardian transport: it counted two matching Ruby leaders before excluding
+its own PID. The successor explicitly removed `Process.pid` before selection
+and observed one exact guardian. Neither census joined the guardian's stdin,
+stdout, control flow, or signal surface.
+
+Codex `write_stdin` polls did not write bytes to the guardian; an empty poll
+asks the existing exec-session broker to wait for or return buffered pipe
+output. A pause or end to active polling neither sends `SIGSTOP` nor otherwise
+pauses the `setsid` guardian. If the guardian later closes conservation, it
+may publish its descriptor-held terminal file without a polling harness. If
+the exec session is still retained, a later separately authorized read may
+also recover buffered stdout, subject to broker/session retention and buffer
+limits. The terminal file is authoritative transport; any stdout copy remains
+best-effort. Conversely, elapsed silence, the assertion text, and the census
+cannot be substituted for that missing terminal.
+
+At the successful census coordinate, terminal reachability still required
+the stopped singleton group to become absent plus every remaining reap,
+generation, group, and signal-zero conservation predicate. The census does
+not reveal whether the guardian retained an unused internal actuation
+certificate or had already consumed/disabled that path. No autonomous future
+terminal is therefore promised or denied by this checkpoint.
+
+### Exact consumed census frames
+
+<!-- R19_FIRST_NONTERMINAL_CENSUS_FRAME_BEGIN -->
+```json
+{"census_process_pid":25008,"energy_calls":0,"error":{"backtrace":["-:440:in `<main>'"],"class":"RuntimeError","message":"guardian-candidate-count-2"},"filesystem_mutation_calls":0,"git_calls":0,"process_spawn_calls":0,"recorded_at_unix_seconds":1787595306,"schema":"prime_driver_v2_r19_read_only_nonterminal_census_v1","signal_calls":0,"status":"R19_READ_ONLY_NONTERMINAL_CENSUS_FAILED","wait_calls":0}
+```
+<!-- R19_FIRST_NONTERMINAL_CENSUS_FRAME_END -->
+
+<!-- R19_SUCCESSOR_NONTERMINAL_CENSUS_FRAME_BEGIN -->
+```json
+{"all_pid_projection":{"guardian_session_pid_count":1,"pid_count":923,"returned_bytes":3696,"session_domain_error_count":0,"session_domain_errors":[]},"census_process_pid":25180,"direct_child_count":0,"direct_children":[],"energy_calls":0,"epoch":{"entries_after":["clang-module-cache","config","git-template","home","swiftpm-cache","swiftpm-config","swiftpm-module-cache","swiftpm-security","tmp"],"entries_before":["clang-module-cache","config","git-template","home","swiftpm-cache","swiftpm-config","swiftpm-module-cache","swiftpm-security","tmp"],"entries_stable":true,"inventory":{"capped":false,"count":56,"error_count":0,"errors":[],"rows_sha256":"6a6910d1d78c7de0cb198073e0790276bd36721b31945cc4bea7b9c5e8200759"},"per_child":{"clang-module-cache":{"count":2,"rows_sha256":"d5eb8cd674709862ad376e6ac6ada2580f2334db4f00b2b1780a5fba59c6ab09"},"config":{"count":5,"rows_sha256":"d5f6a0e44f8a42c6d8a8da6be82b1afaad096022c6ed1ee586eb7f68276a5efd"},"git-template":{"count":1,"rows_sha256":"b6520f766b4e497f2ecafd9e7dae1e28c4a3d0369881287158696cfb1a9cc287"},"home":{"count":7,"rows_sha256":"cb5216ebff25642c0e5a6f3ef17667003002cca294aa9fb98b620fda64daff60"},"swiftpm-cache":{"count":5,"rows_sha256":"7e4c81aebce40925d7bc881db80696633a097f1f6a728279ff0e5a5cf967c625"},"swiftpm-config":{"count":1,"rows_sha256":"1ac0fc54b315e0b07ff64e374bb3ff3546f1d7240ea4f01d39611c9a2bc19223"},"swiftpm-module-cache":{"count":13,"rows_sha256":"b20d4c48ad0adeaa7db031d1521b65bea665ad7eb0bbfb8ec90cfc159e70ab7e"},"swiftpm-security":{"count":1,"rows_sha256":"1333975d16e79c62333707afd6fdc4c6a4546ad26d2375aff27743dbf2de10a4"},"tmp":{"count":21,"rows_sha256":"0721fd73d71ee29e949010a4972c90d3c25f670c6e5edd00998ed62658f38ab2"}},"root_after":{"ctime":1787590282,"device":16777231,"gid":0,"inode":17445748,"mode":"0700","mtime":1787590282,"nlink":11,"path":"/private/tmp/gate-e1-4-mechanics-r19-befc6324-b501ad0d7ab1b6c5","size":352,"type":"directory","uid":501},"root_before":{"ctime":1787590282,"device":16777231,"gid":0,"inode":17445748,"mode":"0700","mtime":1787590282,"nlink":11,"path":"/private/tmp/gate-e1-4-mechanics-r19-befc6324-b501ad0d7ab1b6c5","size":352,"type":"directory","uid":501},"root_stable":true},"filesystem_mutation_calls":0,"git_calls":0,"group_projection_count":1,"group_projections":[{"join_error_count":0,"join_errors":[],"joined_rows":[{"comm":"PrimeValidation","comm_hex":"5072696d6556616c69646174696f6e00","credentials":[501,20,501,20,501,20],"idversion":17456153,"orig_ppidversion":17456148,"path_observation":{"kind":"joined","path":"/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.driver-v2-gate-c-staging/Tests/PrimeValidationWorkflow/.build/arm64-apple-macosx/release/PrimeValidationWorkflowDriverV2SessionFixture","returned":205},"pgid":21660,"pid":21660,"post_observation_join_kind":"joined","post_observation_same_epoch":true,"ppid":1,"puniqueid":8930233,"sid":21660,"status":4,"status_pair":[4,4],"status_stable":true,"uniqueid":8930235,"uuid_hex":"2ebb880ad28b32ff9b7eeb868af5d9b6"}],"listed_pids":[21660],"pgid":21660,"returned_bytes":4}],"guardian":{"comm":"ruby","comm_hex":"727562790000540000736b0000000000","credentials":[501,20,501,20,501,20],"cwd_observation":{"device":16777231,"inode":17077237,"kind":"joined","path":"/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging"},"idversion":17456018,"orig_ppidversion":17456015,"path_observation":{"kind":"joined","path":"/usr/bin/ruby","returned":13},"pgid":21601,"pid":21601,"post_observation_same_epoch":true,"ppid":21600,"puniqueid":8930175,"sid":21601,"status":2,"status_pair":[2,2],"status_stable":true,"uniqueid":8930176,"uuid_hex":"eb2540b7e13236beb719619d0fbf7203"},"guardian_candidate_count":1,"guardian_candidates":[{"comm":"ruby","comm_hex":"727562790000540000736b0000000000","credentials":[501,20,501,20,501,20],"cwd_observation":{"device":16777231,"inode":17077237,"kind":"joined","path":"/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging"},"idversion":17456018,"orig_ppidversion":17456015,"path_observation":{"kind":"joined","path":"/usr/bin/ruby","returned":13},"pgid":21601,"pid":21601,"post_observation_join_kind":"joined","post_observation_same_epoch":true,"ppid":21600,"puniqueid":8930175,"sid":21601,"status":2,"status_pair":[2,2],"status_stable":true,"uniqueid":8930176,"uuid_hex":"eb2540b7e13236beb719619d0fbf7203"}],"lineage_candidate_count":0,"process_spawn_calls":0,"process_wait_calls":0,"recorded_at_unix_seconds":1787595532,"ruid_projection":{"candidate_input_pid_count":594,"join_error_count":0,"join_errors":[],"joined_count":594,"joined_rows_sha256":"2090ceef085203c162b3e50999d3653a425e7068174c35ec52e0d1536515801b","pid_count_including_self":595,"returned_bytes":2380,"self_was_listed":true},"schema":"prime_driver_v2_r19_successor_read_only_nonterminal_census_v1","selected_process_count":2,"selected_processes":[{"comm":"ruby","comm_hex":"727562790000540000736b0000000000","credentials":[501,20,501,20,501,20],"current_parent_epoch":[8930175,17456015],"cwd_observation":{"device":16777231,"inode":17077237,"kind":"joined","path":"/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging"},"idversion":17456018,"in_guardian_session":true,"orig_ppidversion":17456015,"path_observation":{"kind":"joined","path":"/usr/bin/ruby","returned":13},"pgid":21601,"pid":21601,"post_observation_join_kind":"joined","post_observation_same_epoch":true,"ppid":21600,"puniqueid":8930175,"sid":21601,"status":2,"status_pair":[2,2],"status_stable":true,"uniqueid":8930176,"uuid_hex":"eb2540b7e13236beb719619d0fbf7203"},{"comm":"PrimeValidation","comm_hex":"5072696d6556616c69646174696f6e00","credentials":[501,20,501,20,501,20],"current_parent_epoch":[8930233,17456148],"cwd_observation":{"device":16777231,"inode":17447047,"kind":"joined","path":"/private/tmp/prime-validation-admission-tests-369E97E5-AAF3-4267-B810-BA92ADB20BD1/workspace"},"idversion":17456153,"in_guardian_session":false,"orig_ppidversion":17456148,"path_observation":{"kind":"joined","path":"/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.driver-v2-gate-c-staging/Tests/PrimeValidationWorkflow/.build/arm64-apple-macosx/release/PrimeValidationWorkflowDriverV2SessionFixture","returned":205},"pgid":21660,"pid":21660,"post_observation_join_kind":"joined","post_observation_same_epoch":true,"ppid":1,"puniqueid":8930233,"sid":21660,"status":4,"status_pair":[4,4],"status_stable":true,"uniqueid":8930235,"uuid_hex":"2ebb880ad28b32ff9b7eeb868af5d9b6"}],"self_excluded_before_guardian_selection":true,"session_join_error_count":0,"session_join_errors":[],"signal_calls":0,"sleep_calls":0,"special_candidate_count":1,"status":"R19_SUCCESSOR_READ_ONLY_NONTERMINAL_CENSUS_RECORDED","terminal":{"path":"/private/tmp/gate-e1-4-mechanics-r19-befc6324-b501ad0d7ab1b6c5/r19-guardian-terminal.json","present":false},"terminal_staging":[]}
+```
+<!-- R19_SUCCESSOR_NONTERMINAL_CENSUS_FRAME_END -->
+
+Both frames were emitted once on stdout by their separately authorized
+read-only census processes. The first frame is a consumed harness failure;
+the second is the complete successful mechanics observation. Neither is a
+guardian terminal or scientific receipt.
+
+### Boundary and next permitted direction
+
+No recovery action is authorized by this checkpoint. A later action against
+the stopped singleton would require a separately frozen controller, a fresh
+double generation/domain/credential/status join, held/mapped Fixture and cwd
+admission proof, a separately approved bounded signal commitment, and
+post-action exact reap/group/generation conservation. These census identities
+are stale observations and cannot themselves authorize a signal.
+
+Do not manually signal PID `21660` or PGID `21660`, signal guardian PID
+`21601`, clean the admission workspace or epoch, retry R19, or reinterpret
+the missing terminal. A future control/implementation freeze must retain this
+nonterminal state and every expected `.build`, epoch, admission, and terminal
+residue.
+
+```text
+R19_implementation_freezes = 1
+R19_constructor_implementations = 1
+R19_guardian_implementations = 1
+R19_guardian_readiness_freezes = 1
+R19_epoch_constructor_invocations = 1_consumed_terminal_pass
+R19_epoch_complete = 1
+R19_guardian_invocations = 1_consumed_nonterminal
+R19_swiftpm_commands = 1_consumed
+R19_production_spawn_calls = 1
+R19_production_stop_call_entries = UNOBSERVED_NONTERMINAL
+R19_production_kill_call_entries = UNOBSERVED_NONTERMINAL
+R19_production_signal_zero_calls = UNOBSERVED_NONTERMINAL
+R19_production_attempts = 1
+R19_guardian_terminal_publications = 0_observed_at_successor_census
+R19_nonterminal_census_processes = 2_consumed
+R19_nonterminal_census_failures = 1_self_selection_defect
+R19_nonterminal_census_passes = 1
+R19_retained_state_mutations = 1_epoch_construction_transition
+R19_cleanup_performed = 0
+energy_O1_implementations = 0
+energy_O2_invocations = 0
+energy_O3_measurements = 0
+energy_proc_pid_rusage_calls = 0
+energy_waitid_calls = 0
+energy_waitpid_calls = 0
+energy_process_samples = 0
+energy_target_tasks = 0
+energy_joules_observed = ABSTAIN
+energy_ergs_observed = ABSTAIN
+energy_watts_observed = ABSTAIN
+energy_retained_state_mutations = 0
+outer_journal_authority_vector = 00000000
+gate_E_mechanics_outcome = ABSTAIN
+gate_E_scientific_outcome = ABSTAIN
+gate_E_clearance_granted = 0
+```
+
+All eight authorities remain missing: Prime Git, companion Git, Swift
+version, Swift target-info, SwiftPM build, artifact staging, XCTest inventory,
+and Swift Testing inventory.
