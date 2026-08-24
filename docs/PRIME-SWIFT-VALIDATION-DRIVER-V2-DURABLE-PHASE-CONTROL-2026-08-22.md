@@ -11946,3 +11946,87 @@ gate_E_clearance_granted = 0
 All eight authorities remain missing: Prime Git, companion Git, Swift
 version, Swift target-info, SwiftPM build, artifact staging, XCTest inventory,
 and Swift Testing inventory.
+
+## Gate E1.4-R18 constructor result — epoch ready, guardian uninvoked
+
+| Coordinate | Observed value |
+| --- | --- |
+| Status | `EPOCH_READY_GUARDIAN_NOT_INVOKED` |
+| Constructor-emitted status | `R18_EPOCH_CONSTRUCTION_COMPLETE` |
+| Ledger predecessor | R18 committed-freeze checkpoint `c5db5ad0fbc777c9230d181eb39ecafbfb20a02d` / tree `e3cb8ff4a0320015ecb67b1fc4784e1297314ed9` |
+| Constructor implementation | `4ebe75202f9f689fc774c90901ab22cda218ee0e` / tree `6417f8314ef5616c305170ebeed612a6fb8016d5`; constructor blob `6815173f97203f58eab44ff7250b56ef024bc9c6`; SHA-256 `d22b640d992d5ff0f0eeb429952e9309054fbd44a307407fe1766d15684383ab` |
+| Constructor invocation | exact frozen envelope `1 / 1`; exit `0`; root timestamp `1787550000` (`2026-08-24T05:40:00Z`) |
+| Captured receipt | one LF-terminated canonical frame; `2,131` bytes; SHA-256 `706f4c32e0ff6683f12bb4097c72b6839bb392130f149d04a190d0081f817069`; payload `2,046` bytes; payload SHA-256 `30e99509ebd7735c459e3a2dad2ad0a19f629fe0417018c06ac3e4624ae7d181` |
+| Stream conservation | transport returned exactly the `2,131` receipt bytes with no truncation or additional bytes; frozen success path checked the complete stdout write and exited `0`; stderr was not independently channel-tagged |
+| Publication | staging absent; `published_no_replace = true`; root `mkdirat = 1`; child `mkdirat = 9`; no retry or cleanup |
+| Final root | `/private/tmp/gate-e1-4-mechanics-r18-befc6324-b501ad0d7ab1b6c5`; device/inode `16777231/17419092`; UID/GID `501/0`; mode `0700`; nlink `11`; size `352`; mtime/ctime `1787550000`; flags `0` |
+| Children | exact frozen order, inodes `17419093...17419101`; device `16777231`; UID/GID `501/0`; mode `0700`; nlink `2`; size `64`; mtime/ctime `1787550000`; flags `0`; all empty; all ten named-to-held joins exact |
+| Metadata corroboration | root and children have no ACL; sole xattr is the ordinary `com.apple.provenance` (`11` bytes), also present on predecessor epochs and outside the constructor receipt schema |
+| Guardian terminal | `r18-guardian-terminal.json` absent |
+| Epoch inner inventory | exact `9`; sorted LF relative-path-set SHA-256 `60c33ef7519387016b72ac80565cbe1ba19fa6deb2ca5ebb702fe352cd562744` |
+| Mechanics inventory | exact `12`; sorted LF path-set SHA-256 `f5b32198b79756a580471065094208d1fa8a451f5eaaa29d0454cc95d85263f0` |
+| Conservation | source clean `befc632485930a9cca7f618d3704292b5465f911` / tree `7d1a3bf302fe358f9e42dc1ed2bf54ed3d22982e`, embedded `b501ad0d7ab1b6c54cbf30f9a79d75c54fe1d3783c516e10ad73fdd5fb4df397`; fixture exact; R17 retained state unchanged; admission baseline exact `16 / 6185ea35d684b2a50529aa79f1455bae789eda056e298f5509e7c5127423abd5`; terminal canary exact `12 / 71502c95976f2ce2516d55a2062878b9ab9731108755b7fd6875b154d913c9d0`; generation and actuation markers remain exact empty inventories; no constructor process survivor; no cleanup |
+| Counters | constructor `1 / 1`; epoch complete `1`; guardian `0 / 1`; Swift `0 / 1`; production spawn `0`; production STOP/KILL `0 / 0`; production signals `0`; production attempts `0` |
+| Authority | namespace preparation closed; guardian mechanics unobserved `ABSTAIN`; scientific `ABSTAIN`; vector `00000000`; Gate-E clearance `0` |
+
+The exact captured success frame was:
+
+```json
+{"child_mkdirat_count":9,"children":[{"dev":16777231,"ino":17419093,"uid":501,"gid":0,"mode":"0700","nlink":2,"size":64,"mtime":1787550000,"ctime":1787550000,"flags":0,"leaf":"home"},{"dev":16777231,"ino":17419094,"uid":501,"gid":0,"mode":"0700","nlink":2,"size":64,"mtime":1787550000,"ctime":1787550000,"flags":0,"leaf":"config"},{"dev":16777231,"ino":17419095,"uid":501,"gid":0,"mode":"0700","nlink":2,"size":64,"mtime":1787550000,"ctime":1787550000,"flags":0,"leaf":"tmp"},{"dev":16777231,"ino":17419096,"uid":501,"gid":0,"mode":"0700","nlink":2,"size":64,"mtime":1787550000,"ctime":1787550000,"flags":0,"leaf":"git-template"},{"dev":16777231,"ino":17419097,"uid":501,"gid":0,"mode":"0700","nlink":2,"size":64,"mtime":1787550000,"ctime":1787550000,"flags":0,"leaf":"swiftpm-cache"},{"dev":16777231,"ino":17419098,"uid":501,"gid":0,"mode":"0700","nlink":2,"size":64,"mtime":1787550000,"ctime":1787550000,"flags":0,"leaf":"swiftpm-config"},{"dev":16777231,"ino":17419099,"uid":501,"gid":0,"mode":"0700","nlink":2,"size":64,"mtime":1787550000,"ctime":1787550000,"flags":0,"leaf":"swiftpm-security"},{"dev":16777231,"ino":17419100,"uid":501,"gid":0,"mode":"0700","nlink":2,"size":64,"mtime":1787550000,"ctime":1787550000,"flags":0,"leaf":"clang-module-cache"},{"dev":16777231,"ino":17419101,"uid":501,"gid":0,"mode":"0700","nlink":2,"size":64,"mtime":1787550000,"ctime":1787550000,"flags":0,"leaf":"swiftpm-module-cache"}],"constructor_process_spawn_calls":0,"constructor_signals":0,"final_path":"/private/tmp/gate-e1-4-mechanics-r18-befc6324-b501ad0d7ab1b6c5","guardian_terminal_present":false,"mechanics_count":12,"mechanics_sha256":"f5b32198b79756a580471065094208d1fa8a451f5eaaa29d0454cc95d85263f0","payload_sha256":"30e99509ebd7735c459e3a2dad2ad0a19f629fe0417018c06ac3e4624ae7d181","published_no_replace":true,"root":{"dev":16777231,"ino":17419092,"uid":501,"gid":0,"mode":"0700","nlink":11,"size":352,"mtime":1787550000,"ctime":1787550000,"flags":0},"root_mkdirat_count":1,"staging_absent":true,"staging_path":"/private/tmp/gate-e1-4-mechanics-r18-staging-befc6324-b501ad0d7ab1b6c5","status":"R18_EPOCH_CONSTRUCTION_COMPLETE"}
+```
+
+Independent descriptor-held reconstruction reproduced the exact frame length,
+receipt hash, and payload hash from the published vnodes. The execution tool
+exposed one additive combined output field rather than separately tagged
+stdout/stderr channels. Because the frozen exit-`0` path wrote and checked all
+`2,131` receipt bytes on stdout, failure paths write stderr and exit `70`, and
+the complete untruncated combined field equaled exactly that canonical frame,
+there were no additional transport-visible bytes. This is sufficient for the
+narrow constructor-success boundary without claiming a separately captured
+empty-stderr channel.
+
+The constructor envelope is terminal and must never run again. This checkpoint
+closes only the exact R18 namespace preparation. It does not invoke or
+authorize the guardian, its `STOP/KILL` containment authority, Swift, or any
+scientific role. A result-based guardian freeze and separate fresh approval
+must precede any guardian launch.
+
+```text
+R18_terminal_canary_invocations = 1
+R18_terminal_canary_passes = 1
+R18_generation_canary_invocations = 1
+R18_generation_canary_passes = 1
+R18_generation_canary_forks = 2
+R18_generation_canary_execs = 1
+R18_generation_canary_external_signals = 0
+R18_actuation_canary_invocations = 1
+R18_actuation_canary_passes = 1
+R18_actuation_canary_marker_creations = 1
+R18_actuation_canary_forks = 1
+R18_actuation_canary_execs = 1
+R18_actuation_canary_stop_call_entries = 1
+R18_actuation_canary_kill_call_entries = 1
+R18_actuation_canary_stop_signals_sent = 1
+R18_actuation_canary_kill_signals_sent = 1
+R18_actuation_canary_exact_reaps = 1
+R18_actuation_canary_generation_esrch_observations = 2
+R18_actuation_canary_group_empty_observations = 2
+R18_actuation_canary_signal_zero_esrch_observations = 2
+R18_epoch_constructor_invocations = 1
+R18_epoch_constructor_passes = 1
+R18_epoch_complete = 1
+R18_guardian_invocations = 0
+R18_swiftpm_commands = 0
+R18_production_spawn_calls = 0
+R18_production_stop_call_entries = 0
+R18_production_kill_call_entries = 0
+R18_production_attempts = 0
+outer_journal_authority_vector = 00000000
+gate_E_mechanics_outcome = ABSTAIN
+gate_E_scientific_outcome = ABSTAIN
+gate_E_clearance_granted = 0
+```
+
+All eight authorities remain missing: Prime Git, companion Git, Swift
+version, Swift target-info, SwiftPM build, artifact staging, XCTest inventory,
+and Swift Testing inventory.
