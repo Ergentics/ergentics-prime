@@ -10902,3 +10902,199 @@ outer_journal_authority_vector = 00000000
 gate_E_scientific_outcome = ABSTAIN
 gate_E_clearance_granted = 0
 ```
+
+## Gate E1.4-R17 freeze — atomic epoch publication and normalized guardian
+
+| Coordinate | Frozen value |
+| --- | --- |
+| Status | `FROZEN_NOT_EXECUTED` |
+| Durable-control predecessor | R16 constructor disposition `6b392feef4f0b346a05ad0888b6fd61695ff53db` / tree `57b067d1c271f216c8b9f3e4e135fcf53eb403dc` |
+| Source commit/tree/identity | clean `befc632485930a9cca7f618d3704292b5465f911` / `7d1a3bf302fe358f9e42dc1ed2bf54ed3d22982e` / `b501ad0d7ab1b6c54cbf30f9a79d75c54fe1d3783c516e10ad73fdd5fb4df397` |
+| R17 constructor | `docs/tools/prime-driver-v2-r17-epoch-constructor.rb`; mode `0644`; `476` lines / `15,877` bytes; SHA-256 `550b86447ed169384c038aece5ea3ed31a6950846ad6e7d3889a53ad2e4200cf`; prospective Git blob `cc77fe31fcbea4793e48ffce7f5ea590e1e13896` |
+| R17 guardian | `docs/tools/prime-driver-v2-r17-guardian.rb`; mode `0644`; `1,270` lines / `42,627` bytes; SHA-256 `d4ce68b898d78d4d1b03b1396f07345b269e7b15298097fe9363f8e972f347e8`; prospective Git blob `1e86926f3d163b85c0651c3a7ce64a74a494ca32` |
+| Constructor staging | `/private/tmp/gate-e1-4-mechanics-r17-staging-befc6324-b501ad0d7ab1b6c5`; absent at freeze |
+| Final R17 epoch | `/private/tmp/gate-e1-4-mechanics-r17-befc6324-b501ad0d7ab1b6c5`; absent at freeze |
+| Mechanics baseline | exact `10`; sorted LF-framed path-set SHA-256 `20e9803fc0181470d1773f0eda6811b4fd50deb0ae170cda28fa21245720ad51` |
+| Staged state | exact `11`; SHA-256 `9e6b46b3ee49824b1654c65d2cc55c5fa5a9be17d0e27240c4bb49e09c1b0f4d` |
+| Published state | exact `11`; SHA-256 `60a77281aa70f709c30ebcf76b4b10d2e14a8f9618ca4282d44817a1b0ef72e1` |
+| Impossible/contended both-name state | exact `12`; SHA-256 `20908d0500f6c250ffab309be49deb4b067c86ab98dda851db9fbb0665aebaff`; hard stop |
+| Retained R16 residue | exact empty root device/inode `16777231/17406738`, UID/GID `501/0`, mode `0700`, nlink `2`; never a valid epoch and never cleaned or reused |
+| Runtime/volume | Ruby `2.6.10p210`, `universal.arm64e-darwin25`, 64-bit little-endian; `/private/tmp` device/inode `16777231/774813`, UID/GID `0/0`, mode `01777`; APFS exclusive rename and full-sync probes required before mutation |
+| Constructor / guardian / Swift counters | `0 / 0 / 0`; production attempts `0`; vector `00000000` |
+| Freeze mutation allowlist | this control file, the new closed R17 constructor, and the normalized R17 guardian only |
+
+R17 is a fresh successor, not an R16 continuation or retry. R15 and R16
+tools, epochs, and records remain immutable. Prime source, DriverCore,
+manifests, locks, dependencies, `.build`, `.github`, and scientific evidence
+are outside this freeze mutation set.
+
+### Closed constructor and atomic publication
+
+The constructor has zero argv, accepts only the exact five-key bootstrap
+environment, consumes stdin as `/dev/null`, and exposes no path or command
+input. It has no `Process.spawn`, signal, shell, Swift, Git, deletion, cleanup,
+or retry surface. Constructor source identity is pinned externally above; it
+does not contain a circular self-digest.
+
+Before the first namespace mutation it verifies exact credentials and
+supplementary groups, incoming umask `0077`, Ruby/platform/pointer/endian ABI,
+the held and named `/private/tmp` vnode, current mechanics inventory, absent
+staging and final names, JSON/digest framing, descriptor `openat`, directory
+`fsync`, and `F_FULLFSYNC`. Descriptor `fgetattrlist` replaces the unavailable
+Ruby `File::Stat#flags`; it requires flags `0` and the volume's valid
+`VOL_CAP_INT_RENAME_EXCL` capability while rejecting
+`VOL_CAP_INT_RENAME_OPENFAIL` for the held-open publication claim.
+
+Mutation is one-way and finite:
+
+```text
+mkdirat(tmpfd, exact_staging, 0700) exactly once
+  -> hold/rejoin staging root
+  -> mkdirat/openat/hold the nine exact empty children, once each
+  -> revalidate device/inode + UID/GID + mode + nlink + flags + inventory
+  -> fsync(children, staging, tmpfd) + F_FULLFSYNC(tmpfd)
+  -> revalidate staged tree and exact staged path-set hash
+  -> renameatx_np(tmpfd, staging, tmpfd, final,
+                  RENAME_EXCL | RENAME_NOFOLLOW_ANY) exactly once
+  -> staging absent + final name joined to held staging vnode
+  -> rejoin all nine held child vnodes and exact empty inventory
+  -> fsync(final, tmpfd) + F_FULLFSYNC(tmpfd)
+  -> final revalidation + exact published path-set hash
+  -> one canonical LF JSON receipt, exact write, empty stderr, exit 0
+```
+
+`renameatx_np` is atomic exclusive namespace publication; it is not a
+compare-and-rename operation on the held source inode. The claim therefore
+requires local execution exclusion: while the constructor runs, no concurrent
+actor may exercise same-UID authority to mutate `/private/tmp`, either R17
+name, or the staged children. Held descriptors and pre/post joins detect
+rebound, but do not turn a pathname rename into source-inode CAS.
+
+Every mutator is called at most once. `EINTR` is not retried. A fault before
+publication retains the partial or complete staging tree with final absent.
+A rename error retains whichever names the kernel exposes. A crash, nonzero
+exit, missing/truncated/malformed receipt, or fault after rename—even if the
+final tree looks complete—leaves R17 `ABSTAIN` and ineligible. `ensure` closes
+descriptors only. It never deletes, completes, renames again, or cleans.
+
+The success receipt hashes canonical JSON bytes that omit `payload_sha256`,
+then attaches that digest and one trailing LF. Success requires both the exact
+captured receipt and exit `0` after post-rename parent `F_FULLFSYNC`; filesystem
+shape alone cannot substitute for the receipt.
+
+### Guardian normalization and retained process policy
+
+The R17 guardian is the R16 guardian with exactly five logical substitutions:
+the epoch path, terminal leaf, prelaunch status, natural/contained status pair,
+and terminal-failure status. Normalization retains `1,270` lines and `42,627`
+bytes. Swift argv/environment, source/Fixture/XCTest identities, admission
+roots, timers, RUID census, global-session projection, generation joins,
+detached attribution, typed actuation, containment, proof groups, terminal
+framing, and authority interpretation are otherwise byte-identical to R16.
+
+The guardian never constructs or repairs the epoch. It is eligible only after
+a separately committed constructor-success checkpoint proves the exact final
+root, exact nine empty children, absent staging, absent guardian terminal,
+exact receipt, and `11 / 60a77281...72e1` mechanics inventory.
+
+### Build-free validation
+
+Ruby syntax and bytecode compilation pass for both artifacts. An exact-prefix
+constructor probe loaded the final source, exercised the frozen ABI,
+`fgetattrlist`, `openat`, `fsync`, `F_FULLFSYNC`, framing, baseline, and
+absence predicates without reaching `File.umask` or a namespace mutator:
+
+```text
+R17_CONSTRUCTOR_EXACT_PREFLIGHT_PASS baseline=10 flags=0
+```
+
+That line is `57` bytes, SHA-256
+`6a937516c79ddb8f9c314d7550844f540f8291e6c598a28d475c248095df254a`.
+
+The exact final constructor source was then dynamically sealed to one
+disjoint `mktemp` parent and exercised through all ten `mkdirat` operations,
+held-vnode validation, staged hash, `0x14` publication, post-publication joins,
+full sync, and canonical success receipt. The validator captured a `2,238`-
+byte receipt (SHA-256
+`bac3da6b8fcbff272e0dcb22a78b9e498ac3b6139cef2edf32792e91c6949cf1`,
+payload SHA-256
+`50fa31d9fdfdd479ac61631de43d6adadaf3ee086752684802775af0007353d7`),
+validated it, and removed only its explicit disjoint canary tree. Its final
+summary was `298` bytes, SHA-256
+`64102ac64ee2c02bb65c5b46ea72d08d6dd690bed581a90917bbca57c48b3454`.
+Both frozen R17 names remained absent. This validator is instrumentation, not
+an R17 constructor invocation or scientific result.
+
+The normalized guardian is `d4ce68b8...347e8` / blob `1e86926f...ca32`; a
+word diff contains only the five frozen R16-to-R17 substitutions. Independent
+security, census, and roadmap audits found no remaining false-success or
+namespace-publication blocker under the named exclusion premise. No R17
+constructor, guardian, Swift command, assessment child, signal, or production
+attempt ran during this freeze.
+
+### Separate future execution envelopes
+
+After the implementation commit/tree and its prose-only checkpoint are
+durably pinned, a fresh approval may authorize exactly one constructor:
+
+```zsh
+/bin/zsh -f -c '
+umask 077
+/usr/bin/env -i \
+  LANG=C.UTF-8 \
+  LC_ALL=C.UTF-8 \
+  TZ=UTC \
+  PATH=/usr/bin:/bin \
+  __CF_USER_TEXT_ENCODING=0x1F5:0x0:0x0 \
+  /usr/bin/ruby --disable-gems \
+  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/docs/tools/prime-driver-v2-r17-epoch-constructor.rb \
+  </dev/null
+'
+```
+
+A successful constructor must be checkpointed as
+`EPOCH_READY_GUARDIAN_NOT_INVOKED` before any guardian approval. Only then may
+a second fresh approval authorize the one R17 guardian, including its bounded
+generation/domain-rejoined `STOP/KILL` authority and proof-driven containment:
+
+```zsh
+/bin/zsh -f -c '
+unsetopt BG_NICE
+umask 077
+/usr/bin/env -i \
+  LANG=C.UTF-8 \
+  LC_ALL=C.UTF-8 \
+  TZ=UTC \
+  PATH=/usr/bin:/bin \
+  __CF_USER_TEXT_ENCODING=0x1F5:0x0:0x0 \
+  /usr/bin/ruby --disable-gems \
+  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/docs/tools/prime-driver-v2-r17-guardian.rb \
+  </dev/null &
+r17_guardian_pid=$!
+wait $r17_guardian_pid
+'
+```
+
+Constructor invocation consumes its one envelope regardless of mutation or
+exit. Constructor failure withdraws R17 before guardian. Guardian invocation
+then consumes its separate envelope; its `Process.spawn` separately consumes
+the Swift shot. Only an exact natural guardian terminal plus every frozen
+predicate can produce mechanics `PASS`. Every other shape is mechanics
+`ABSTAIN`. Scientific outcome remains `ABSTAIN`, authority vector `00000000`,
+and Gate-E clearance `0` in every R17 shape.
+
+The current authorization covers this implementation/freeze only. It creates
+neither R17 name and authorizes neither future envelope.
+
+```text
+R17_epoch_constructor_invocations = 0
+R17_epoch_complete = 0
+R17_guardian_invocations = 0
+R17_swiftpm_commands = 0
+R17_process_spawn_calls = 0
+R17_signals = 0
+R17_production_attempts = 0
+outer_journal_authority_vector = 00000000
+gate_E_scientific_outcome = ABSTAIN
+gate_E_clearance_granted = 0
+```
