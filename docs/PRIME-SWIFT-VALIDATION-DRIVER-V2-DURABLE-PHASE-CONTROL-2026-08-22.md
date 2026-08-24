@@ -10574,3 +10574,240 @@ outer_journal_authority_vector = 00000000
 gate_E_scientific_outcome = ABSTAIN
 gate_E_clearance_granted = 0
 ```
+
+## Gate E1.4-R15 disposition — withdrawn uninvoked
+
+| Coordinate | Observed value |
+| --- | --- |
+| Status | `WITHDRAWN_UNINVOKED` |
+| Frozen-control base | `0b7bc796c91de13f49304002b167f492313ceada` / tree `cfe71c95db1c562be17804f661480abccf73cad0` |
+| Source commit/tree/identity | clean `befc632485930a9cca7f618d3704292b5465f911` / `7d1a3bf302fe358f9e42dc1ed2bf54ed3d22982e` / `b501ad0d7ab1b6c54cbf30f9a79d75c54fe1d3783c516e10ad73fdd5fb4df397` |
+| Frozen guardian | unchanged `35,787` bytes; SHA-256 `4e1fafce16076af63e210feeeb978b3bfa2b1c1d47e52081028d66d049e9c120`; blob `e8451c45f307f71f2c3e597482e4a4b8d7cf24f6` |
+| Weak external probe | `proc_pidpath(1)` exit `0`; exact output `30` bytes; SHA-256 `bcc275c504afd24fe55f435593ff55aba6ffe80cc1118ab9211495896c1ca399` |
+| Guardian-equivalent external probe | `proc_pidinfo(1, PROC_PIDTBSDINFO, ...)` exit `77`; `0 / 136` bytes; `EPERM`; exact output `62` bytes; SHA-256 `70826cccd869cf43f95ae3e916ed6c0b95d857abeb52b221e217f1cad5cb3281` |
+| Invocation conservation | guardian `0 / 1`; Swift target `0 / 1`; guardian `Process.spawn` calls `0`; guardian signals `0` |
+| Result conservation | no guardian stdout/stderr, terminal, containment, target result, or scientific observation |
+| Authority | `ABSTAIN`; vector `00000000`; Gate-E clearance `0` |
+
+The successful path probe did not exercise R15's required process primitive.
+The frozen guardian lists `PROC_ALL_PIDS`, then calls the exact 136-byte
+`PROC_PIDTBSDINFO` operation before its UID/name/domain filter. The exact
+external probe therefore proved a deterministic first-preflight rejection
+without invoking the guardian. Corroborating read-only samples found hundreds
+of protected all-PID BSD records, not a PID-1 exception; no rule may convert
+`EPERM` to absence or silently omit those records inside frozen R15.
+
+This is not `R15_GUARDIAN_PRELAUNCH_FAILED` or a target-shot result. Neither
+one-shot counter advanced. The disposition withdraws an operationally
+inadmissible envelope before invocation; after this record no R15 launch is
+permitted despite both counters remaining zero. `sudo` is not a successor:
+it is outside the exact command envelope, changes the guardian and child
+credentials, and cannot satisfy the UID-`501` terminal predicate.
+
+The retained R15 epoch remains
+`/private/tmp/gate-e1-4-mechanics-r15-befc6324-b501ad0d7ab1b6c5`, vnode
+`16777231/17402229`, UID/GID `501/0`, mode `0700`, with exact child inodes
+`17402231...17402239`, all nine children empty and mode `0700`, and no
+terminal leaf. Epoch creation reserved a namespace; it did not invoke an
+envelope. The epoch must remain unchanged and is ineligible for R16.
+
+```text
+R15_guardian_invocations = 0
+R15_swiftpm_commands = 0
+R15_process_spawn_calls = 0
+R15_signals = 0
+R15_production_attempts = 0
+outer_journal_authority_vector = 00000000
+gate_E_scientific_outcome = ABSTAIN
+gate_E_clearance_granted = 0
+```
+
+## Gate E1.4-R16 freeze — bounded process-domain repair
+
+| Coordinate | Frozen value |
+| --- | --- |
+| Status | `FROZEN_NOT_EXECUTED` |
+| Durable-control predecessor | R15 freeze `0b7bc796c91de13f49304002b167f492313ceada` / tree `cfe71c95db1c562be17804f661480abccf73cad0`, plus the immediately preceding in-tree `WITHDRAWN_UNINVOKED` disposition |
+| Source commit/tree/identity | clean `befc632485930a9cca7f618d3704292b5465f911` / `7d1a3bf302fe358f9e42dc1ed2bf54ed3d22982e` / `b501ad0d7ab1b6c54cbf30f9a79d75c54fe1d3783c516e10ad73fdd5fb4df397` |
+| R16 guardian | `docs/tools/prime-driver-v2-r16-guardian.rb`; mode `0644`; `1,270` lines / `42,627` bytes; SHA-256 `eb23ede3411d8e7a2c2ada6c6625ed9d4c95a100e615f46589d2ef1d480b3095`; prospective Git blob `23d7b4faba1a91879c86426267b430b1801feff0` |
+| Archived R15 guardian | unchanged SHA-256 `4e1fafce16076af63e210feeeb978b3bfa2b1c1d47e52081028d66d049e9c120`; blob `e8451c45f307f71f2c3e597482e4a4b8d7cf24f6` |
+| R16 epoch | `/private/tmp/gate-e1-4-mechanics-r16-befc6324-b501ad0d7ab1b6c5`; absent at freeze |
+| Predecessor mechanics epochs | exactly `9`; sorted path-set SHA-256 `6eaaa969baeacdc99301684ff2c2edbeb6bab47afacd2e091c2143d0e17c2253` |
+| Post-create mechanics expectation | exactly `10`; sorted path-set SHA-256 `20e9803fc0181470d1773f0eda6811b4fd50deb0ae170cda28fa21245720ad51` |
+| Admission/public roots | exact `16 / 0`; admission path-set SHA-256 `6185ea35d684b2a50529aa79f1455bae789eda056e298f5509e7c5127423abd5` |
+| Process domain | complete generation-bearing `PROC_RUID_ONLY(501)` census plus all-PID identity-light guardian-SID projection and targeted generation rejoin |
+| Guardian credentials | real/effective UID `501/501`; real/effective GID `20/20`; supplementary groups `[12,20,33,61,79,80,81,98,100,204,250,395,398,399,400,701]` |
+| Prospective target envelope | at most one R16 guardian and its at-most-one direct incremental Release `swift test`; no preliminary build, `--skip-build`, retry, or second command |
+| Time/process policy | ordinary cutoff `840` seconds; containment horizon `900` seconds; proof-driven containment continues after the horizon |
+| Production attempts / authority vector | `0 / 00000000` |
+| Fetch / network / GitHub | `0 / 0 / 0` |
+| Freeze mutation allowlist | this control file plus the new R16 guardian only; R15 evidence/epoch, Prime source, DriverCore, manifests, locks, dependencies, `.github`, and build artifacts unchanged |
+
+R16 is not a retry, result reinterpretation, or venue change. It is a new
+local Workstation safety envelope on the same unexecuted R13 scientific
+target. It replaces an impossible universal BSD-metadata dependency with a
+kernel-filtered process domain that contains every process generation the
+fixed non-set-ID toolchain is authorized to create. Relative to R15, the child
+environment keeps the same schema and changes only values derived from the
+required R16 epoch path. Swift argv, source, artifact predicates, test
+selector, timers, authority bits, and scientific interpretation are unchanged.
+
+### Process-domain equations and actuation boundary
+
+For observation time `t`, define:
+
+```text
+R(t) = generation-joined PROC_RUID_ONLY(real_uid = 501)
+S(t) = { pid -> pgid | pid is in guardian SID by all-PID getsid/getpgid }
+J(t) = R(t) after every member of S(t) is targeted-rejoined by PID/start/SID/PGID
+
+owned(t) = guardian-session(J(t))
+         union exact captured generations
+         union current generation-joined detached-leader/parent chains
+         union exact Fixture image + descriptor-held workspace nonce
+```
+
+Every PID returned by the RUID or process-group selector must join an exact
+136-byte BSD record with real UID `501`; selector/join mismatch, `EPERM`,
+generation rebound, credential drift, or an unjoined known detached SID is
+uncertainty and cannot become absence. Each globally projected guardian-SID
+PID is rejoined after the projection. A same-generation `setsid` transition is
+captured before detached classification. A different generation or an
+unjoined transition is a hard stop.
+
+Detached actuation is never authorized by numeric SID alone. It requires an
+exact previously captured generation, a current leader generation recorded
+from the guardian session, a current parent chain rooted in such a generation,
+or the exact held Fixture/workspace nonce. A known SID with an unauthorized
+generation raises `detached-session-generation-uncertain`; it is neither
+ignored nor signaled. This closes R15's latent SID-reuse signal authority.
+
+The direct child PGID is typed as guardian-session state immediately after
+spawn and before the post-spawn SID/PGID joins. Every later signal still
+rescans the current process group, rejoins its RUID/generation/domain, and
+rejects domain rebound before calling `kill(-pgid, signal)`. If ordinary
+observation fails during containment, the guardian attempts joined
+`STOP -> KILL` against each typed known group, then continues proof-only
+containment. It never signals a raw or prose-derived PID/PGID.
+
+Final process conservation requires:
+
+```text
+two complete empty J(t) observations
+AND no captured generation in the final joined RUID domain
+AND kill(0, -proof_group) == ESRCH for every typed proof group
+AND exact direct-child reap
+AND no sticky unsafe, credential, SID-generation, or orphan uncertainty
+```
+
+The former direct `bsd_record(captured_pid)` after domain closure is removed.
+A recycled PID owned by a protected different real UID must not recreate the
+same all-PID `EPERM` blocker. R16 instead freezes the narrower invariant that
+every assessment generation retains real UID `501`. The fixed Swift/XCTest/
+SessionFixture chain is admitted only under a no-set-ID execution premise;
+R16 authorizes no credential transition.
+
+### Explicit residuals and stronger ABSTAIN edge
+
+| Residual | Frozen treatment |
+| --- | --- |
+| First-seen child after an unobserved `fork -> setsid -> parent exit` interval | polling cannot prove lineage; never universalized; `ABSTAIN` / containment uncertainty |
+| First-seen orphan Fixture lacking an exact captured generation or current parent/leader join | sticky orphan residual; natural result forbidden even if image/workspace nonce is exact |
+| Real-UID or privileged supplementary-group transition | outside the fixed non-set-ID target premise; real/effective/saved primary IDs fail closed when observed; descendant supplementary vectors are not exposed by this BSD frame, so only the guardian baseline is pinned and no universal credential-transition claim is made |
+| Persistent workspace/libproc/join invariant failure | no terminal and no conservation claim; guardian remains fail-closed while attempting typed known-group containment |
+| Non-atomic process-table sampling | named residual retained from R14/R15; no atomic or universal process-table claim |
+
+The first-seen-orphan rule is intentionally stricter than R15. It may turn a
+mechanically successful test into `ABSTAIN`; no prose may waive the missing
+generation relation to obtain `PASS`.
+
+### Build-free validation and conserved execution surface
+
+Ruby `2.6.10` syntax, Ripper, and bytecode compilation pass without loading
+the guardian top level. An isolated prefix validator used the exact frozen
+five-key bootstrap environment, held and verified the existing Fixture, made
+itself a fresh session, and completed two empty Tracker observations with
+`scans = 2` and `global_session_projection_count = 2`; it did not verify or
+create R16's epoch and did not call the guardian or Swift. A pure synthetic
+state validator passed current-leader/child propagation, numeric-SID reuse
+uncertainty, captured-generation escape, exact Fixture nonce, and unknown
+detached rejection.
+
+The concrete execution surface remains exactly one `Process.spawn` and two
+`Process.kill` lexical sites (one signal, one `kill(0)` proof). There is no
+`system`, `popen`, `fork`, `exec`, shell child, generic command input, or R15
+label in R16. The forty-key Swift environment and Swift argv are source-text
+identical to R15, with only the value of the already-frozen `EPOCH` constant
+moving from the R15 namespace to R16. Source/build/Fixture/XCTest paths, fixed
+hashes, authority vector, timers, workspace nonce shape, terminal framing, and
+artifact predicates otherwise remain the R15 values.
+
+The isolated validator transcripts are:
+
+| Validator | Exact successful stdout |
+| --- | --- |
+| Preflight | `r16_preflight_validator=PASS scans=2 projections=2\n`; `51` bytes; SHA-256 `063eae02367921d96051f52b0ddb51574cb8f6a0bf1e9982796e77824b425be6` |
+| Detached state | `r16_detached_state_validator=PASS\n`; `34` bytes; SHA-256 `3bdb1622ff1ce67d6326263cd374110589fcfc4b6ba81d0c15478f6c07979000` |
+
+All R15/R14 manifest, lock, workspace-state, dependency, source, artifact,
+toolchain, bootstrap-binary, loaded-feature, and root preimages remain the R16
+preimages by exact equality. Their complete values remain in the committed
+R14/R15 tables and are not resealed or weakened here. No target Swift, build,
+test, dependency resolution, fetch, Git operation, GitHub action, signal,
+guardian top level, or candidate `Process.spawn` ran during this freeze;
+read-only Workstation Git status/diff/hash diagnostics are not target roles.
+
+### Fresh namespace and exact R16 command envelope
+
+After the freeze implementation commit/tree is pinned, and only before a
+separately and explicitly approved R16 launch, create the R16 epoch exactly
+once. Its root and exact nine children `home`, `config`, `tmp`, `git-template`,
+`swiftpm-cache`, `swiftpm-config`, `swiftpm-security`, `clang-module-cache`,
+and `swiftpm-module-cache` must be UID-owned mode `0700`, descriptor-held,
+rejoined, and initially empty. Its exact terminal leaf is
+`r16-guardian-terminal.json`. Do not modify, reuse, or clean R15's epoch.
+
+Run at most once, only after that fresh explicit approval:
+
+```zsh
+/bin/zsh -f -c '
+unsetopt BG_NICE
+umask 077
+/usr/bin/env -i \
+  LANG=C.UTF-8 \
+  LC_ALL=C.UTF-8 \
+  TZ=UTC \
+  PATH=/usr/bin:/bin \
+  __CF_USER_TEXT_ENCODING=0x1F5:0x0:0x0 \
+  /usr/bin/ruby --disable-gems \
+  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/docs/tools/prime-driver-v2-r16-guardian.rb \
+  </dev/null &
+r16_guardian_pid=$!
+wait $r16_guardian_pid
+'
+```
+
+The R15 signal approval does not transfer. A fresh approval must cover the
+single R16 guardian launch, its authority to `STOP/KILL` only generation- and
+domain-rejoined assessment process groups, and its authority to remain in
+containment until conservation proof.
+
+R16 natural completion retains every R15 fresh-chain, selected-test, artifact,
+root, and postflight predicate and additionally requires exact census scope
+`ruid:501+global-session-projection`,
+`global_session_projection_count == complete_scan_count`, zero sticky orphan
+residuals, exact guardian credentials/groups, and the R16 natural terminal.
+Every other shape remains `ABSTAIN`. No mechanics result closes production
+supervisor identity or any of Gate E's eight process-derived authorities.
+
+This freeze authorizes no R16 launch and no epoch creation before the exact
+freeze implementation commit/tree is durably pinned.
+
+```text
+R16_guardian_invocations = 0
+R16_swiftpm_commands = 0
+R16_production_attempts = 0
+outer_journal_authority_vector = 00000000
+gate_E_scientific_outcome = ABSTAIN
+gate_E_clearance_granted = 0
+```
