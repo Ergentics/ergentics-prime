@@ -10833,3 +10833,72 @@ This checkpoint creates no epoch, invokes no guardian or Swift command, and
 transfers no R15 signal authority. R16 remains ineligible until a fresh
 approval names the one guardian launch and its bounded generation-joined
 containment authority.
+
+## Gate E1.4-R16 disposition — epoch constructor failed before guardian
+
+| Coordinate | Observed value |
+| --- | --- |
+| Status | `WITHDRAWN_UNINVOKED` |
+| Constructor-emitted status | `R16_EPOCH_CREATION_FAILED` |
+| Ledger predecessor | checkpoint `ef734cdcd7188e7b24d8688f29c08dcbbaebd6d8` / tree `8ba339d18d93f25bcb9df972a18e28e28d19ce76` |
+| Eligible implementation | `ea5c64195e26c932ef7602ed27da5c4fbeb49ef6` / tree `2d93ce8aea53d2401638ad3c4fe346d3e8eeacd3` |
+| Source commit/tree/identity | clean `befc632485930a9cca7f618d3704292b5465f911` / `7d1a3bf302fe358f9e42dc1ed2bf54ed3d22982e` / `b501ad0d7ab1b6c54cbf30f9a79d75c54fe1d3783c516e10ad73fdd5fb4df397` |
+| Authorization admitted | one R16 epoch construction and one conditional guardian launch, including bounded generation-joined containment; no R15 authority transfer |
+| Constructor result | exit `70`; stdout `0` bytes / SHA-256 `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`; stderr `140` bytes / SHA-256 `1a79e7dbccc7c5429f36a56f68aa327d469486ebe4bc869c090337d365749f2e` |
+| Successful mutation | exactly one root `mkdirat`; zero child `mkdirat`; no rename, cleanup, retry, terminal write, guardian, Swift, assessment spawn, or signal |
+| Retained R16 root | `/private/tmp/gate-e1-4-mechanics-r16-befc6324-b501ad0d7ab1b6c5`; device/inode `16777231/17406738`; UID/GID `501/0`; mode `0700`; nlink `2`; flags `0`; size `64`; birth/mtime/ctime `1787530709` (`2026-08-24T00:18:29Z`) |
+| R16 root inventory | exactly empty; zero children; no `r16-guardian-terminal.json`; no ACL; sole xattr `com.apple.provenance` (`11` bytes) |
+| Mechanics inventory | exactly `10`; sorted path-set SHA-256 `20e9803fc0181470d1773f0eda6811b4fd50deb0ae170cda28fa21245720ad51`; this is a path count, not a complete-epoch claim |
+| Retained R15 | unchanged device/inode `16777231/17402229`, UID/GID `501/0`, mode `0700`, nlink `11`, exact nine empty children, no terminal |
+| Post-event conservation | two complete joined real-UID-`501` scans, `589 / 589` records each, zero Fixture/XCTest assessment survivors and zero Swift processes; Fixture preimage exact |
+| Invocation conservation | guardian `0 / 1`; Swift `0 / 1`; guardian `Process.spawn` calls `0`; signals `0`; production attempts `0` |
+| Authority | mechanics `ABSTAIN`; scientific `ABSTAIN`; vector `00000000`; Gate-E clearance `0` |
+
+The descriptor-relative constructor opened and held `/private/tmp`, performed
+the single successful root `mkdirat`, opened and rejoined that new root, and
+then evaluated a metadata assertion containing `File::Stat#flags`. The frozen
+Ruby `2.6.10` runtime does not expose that method, so it raised
+`NoMethodError` before the first child `mkdirat`.
+
+Exact stderr, including its runtime object token, was:
+
+```json
+{"created":true,"error":"NoMethodError:undefined method `flags' for #<File::Stat:0x0000000afd021b58>","status":"R16_EPOCH_CREATION_FAILED"}
+```
+
+The inline constructor was not itself a committed frozen artifact and its
+complete command-source byte receipt was not persisted before mutation. This
+record therefore does not reconstruct or promote those missing bytes. The
+exact exit stream, filesystem transition, retained vnode, inventories, and
+post-event process conservation above are the available data; missing source
+evidence remains `ABSTAIN`.
+
+R16's namespace-preparation transition is consumed even though both guardian
+and Swift counters remain zero. Adding the nine children would continue a
+failed constructor; deleting the root would clean it; rerunning would reuse
+the namespace. All three are forbidden by the predeclared partial-fault rule.
+The retained empty root also fails the guardian's first `verify_epoch`
+inventory predicate before `setsid`, `Process.spawn`, or signal code, but no
+hypothetical invocation is authorized to demonstrate that fact.
+
+No R16 repair, completion, cleanup, guardian launch, or retry is permitted.
+An eligible successor requires a separately committed R17 freeze, a fresh
+disjoint epoch, a constructor whose complete source and runtime capability
+checks are pinned before its first mutation, and fresh constructor plus
+guardian/containment approval. The current predecessor mechanics inventory is
+`10` / `20e9803f...ad51`; adding only the prospective R17 root would produce
+`11` / `60a77281aa70f709c30ebcf76b4b10d2e14a8f9618ca4282d44817a1b0ef72e1`.
+No R17 epoch or execution is frozen or authorized by this disposition.
+
+```text
+R16_epoch_constructor_transitions = 1
+R16_epoch_complete = 0
+R16_guardian_invocations = 0
+R16_swiftpm_commands = 0
+R16_process_spawn_calls = 0
+R16_signals = 0
+R16_production_attempts = 0
+outer_journal_authority_vector = 00000000
+gate_E_scientific_outcome = ABSTAIN
+gate_E_clearance_granted = 0
+```
