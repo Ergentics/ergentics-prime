@@ -6801,6 +6801,108 @@ gate_E_scientific_outcome = ABSTAIN
 gate_E_clearance_granted = 0
 ```
 
+## Gate E1.4-R18 process-generation canary freeze
+
+| Coordinate | Frozen value |
+| --- | --- |
+| Status | `FROZEN_NOT_EXECUTED` |
+| Durable predecessor | terminal-canary result `d27a846b91fd2b7a1397f93ce8c67a100601f889` / tree `3c0fc67e162c6e0ea3212b1397338c7a0a5adc8e` |
+| Implementation checkpoint | direct child `f9ffa00a1b14337056560f9dce326073776ce90c` / tree `22f7279ca3469911db2529595bc7bd395a8d5332`; implementation-only delta |
+| Canary | `docs/tools/prime-driver-v2-r18-process-generation-canary.rb`; mode `0644`; `1,637` lines / `61,240` bytes; SHA-256 `f8a6d9324c1e2d217401b95df43349644b9c5e06f1cdbb9623618b1416c31fed`; Git blob `4ac022622fc0d4faea55d4e80b9a6a3840785da5` |
+| Exact cwd | `/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging` in controller, parent, pre-exec worker, and post-exec worker |
+| Exact stdin | `/dev/null`; held/name-joined character device: signed Ruby device `-458678049`, inode `336`, rdevice `50331650`, UID/GID `0/0`, mode `0666`, not a tty |
+| Controller environment | exact six entries: `LANG=C.UTF-8`, `LC_ALL=C.UTF-8`, `TZ=UTC`, `PATH=/usr/bin:/bin`, `__CF_USER_TEXT_ENCODING=0x1F5:0x0:0x0`, `R18_PROCESS_GENERATION_CANARY_ROLE=controller`; empty Ruby `ARGV`; incoming umask `0077` |
+| Runtime kernel | macOS `26.5.2`, build `25F84`, Darwin `25.5.0`, `xnu-12377.121.10~1`, `arm64` |
+| Published private ABI source | `apple-oss-distributions/xnu@xnu-12377.1.9/bsd/sys/proc_info_private.h`; runtime behavior remains bound to the exact OS build |
+| Ruby runtime | `ruby 2.6.10p210`, `universal.arm64e-darwin25`; `/usr/bin/ruby` device/inode `16777231/1152921500312572705`, UID/GID `0/0`, mode `0555`, nlink `1`, size `135200`, SHA-256 `9d6ff3e289c7d908e3c785e0bedd6692d1d6a3377965c88c04d847104b7c892c`, selected UUID `eb2540b7e13236beb719619d0fbf7203` |
+| Disposable marker | `/private/tmp/gate-e1-4-r18-process-generation-canary-d27a846b-befc6324-b501ad0d7ab1b6c5`; absent at freeze; retained empty forever after any creation; empty inventory SHA-256 `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` |
+| Marker parent | held/name-joined `/private/tmp`: device/inode `16777231/774813`, UID/GID `0/0`, mode `01777`; marker must be UID/GID `501/0`, mode `0700`, nlink `2`; held marker `fsync + F_FULLFSYNC` precedes held parent `fsync + F_FULLFSYNC` |
+| Process surface | exactly two `Process.fork` sites, one fixed `/usr/bin/ruby` `Process.exec`, zero `Process.spawn`, shell, external signal, Swift, SwiftPM, or Git calls |
+| Live cases | PID-1 flavor-3 exact `EPERM` control; flavor-17 plus short-BSD stable join; two pre- and two post-RUID-501 sweeps; controller -> parent -> gated worker -> same-image exec -> parent exact reap -> worker reparent -> two exact worker `ESRCH` observations |
+| Pure cases | exact `17 / 17`; no process operation inside the model |
+| Deadlines | helper `20s`, controller `30s`, ordinary conservation `30s`; liveness only, never abandonment authority |
+| Failure conservation | parent exit `70` certifies no worker PID was created; parent exit `71` is reachable only after exact worker reap; otherwise two generation-matched `ESRCH` observations are required; an unproven generation holds nonterminal indefinitely and emits no receipt |
+| Receipt | canonical recursively sorted JSON; one trailing LF; SHA-256 covers canonical payload without its digest field; cap `32,768` bytes; PASS requires exact full stdout write, flush, exit `0`, status `R18_PROCESS_GENERATION_CANARY_PASS`, and no other transport bytes |
+| Exact invocation | from the exact cwd: `/bin/zsh -f -c 'umask 077; exec /usr/bin/env -i LANG=C.UTF-8 LC_ALL=C.UTF-8 TZ=UTC PATH=/usr/bin:/bin __CF_USER_TEXT_ENCODING=0x1F5:0x0:0x0 R18_PROCESS_GENERATION_CANARY_ROLE=controller /usr/bin/ruby --disable-gems "$1" </dev/null' r18-process-generation-canary docs/tools/prime-driver-v2-r18-process-generation-canary.rb` |
+| Source conservation | clean `befc632485930a9cca7f618d3704292b5465f911` / tree `7d1a3bf302fe358f9e42dc1ed2bf54ed3d22982e`; embedded identity `b501ad0d7ab1b6c54cbf30f9a79d75c54fe1d3783c516e10ad73fdd5fb4df397` |
+| Retained-state conservation | R17 invalid terminal unchanged at device/inode `16777231/17408854`, mode `0000`, size `1579`; terminal canary retained at exact inventory `12 / 71502c95976f2ce2516d55a2062878b9ab9731108755b7fd6875b154d913c9d0`; mechanics exact `11 / 60a77281aa70f709c30ebcf76b4b10d2e14a8f9618ca4282d44817a1b0ef72e1` |
+| Production namespaces | both `/private/tmp/gate-e1-4-mechanics-r18-staging-befc6324-b501ad0d7ab1b6c5` and `/private/tmp/gate-e1-4-mechanics-r18-befc6324-b501ad0d7ab1b6c5` absent at freeze |
+| Static audit | Ruby syntax `PASS`; instruction-sequence compile `PASS`; whitespace `PASS`; exact call surface `2 fork / 1 exec / 0 spawn / 0 external signal`; independent process and freeze audits `PASS` |
+| Hard boundary | no R18 production root, constructor, guardian, signal, Swift/SwiftPM/Git command, mechanics/scientific evidence, cleanup, retry, or Gate-E promotion |
+
+### State and identity equations
+
+```text
+process_lifetime       = (pid, uniqueid)
+exec_epoch             = (uniqueid, idversion)
+original_parent_epoch  = (puniqueid, orig_ppidversion)
+
+flavor17_size = 56
+uuid@0 + uniqueid@16 + puniqueid@24 + idversion@32
+  + orig_ppidversion@36 + reserve2@40 + reserve3@48
+
+PASS = stable_ABI_join
+     * exact_two_forks
+     * exact_one_same_Ruby_exec
+     * idversion_changed
+     * uniqueid_unchanged
+     * parent_exact_reaped
+     * reparent_observed
+     * ESRCH_1
+     * ESRCH_2
+     * four_RUID_sweeps_without_UNKNOWN
+     * marker_joined_empty_durable
+     * exact_canonical_receipt
+
+authority_vector = 00000000
+scientific_outcome = ABSTAIN
+```
+
+Successful syscall return values make `errno` undefined and therefore absent
+from evidence. `errno` is interpreted only after a failed return. The PID-1
+flavor-3 `EPERM` is a deliberate failed-call control, not a successful-call
+residue.
+
+The Ruby file descriptor/hash plus post-fork process UUID join is an
+OS-pinned disposable-canary check. It does not claim production mapped-vnode
+closure: the held descriptor is closed after hashing and the fixed exec is by
+name. Any mismatch rejects and the failure path conserves before terminal.
+
+The marker is created only after read-only bootstrap, runtime, image, stdin,
+cwd, credential, sysctl, and pure-model admission. Therefore marker absence
+does not mean the command was never invoked. Every launch consumes the
+one-shot, including an early loader/bootstrap rejection or a post-`mkdirat`
+failure before `marker_state` returns. A partial marker is retained for
+external reconstruction. There is no cleanup and no retry.
+
+Static validation before this checkpoint was build-free: Ruby syntax parse
+`PASS`, instruction-sequence compile `PASS`, whitespace check `PASS`, exact
+source call counts `2 fork / 1 exec / 0 spawn / 0 signal`, and two independent
+read-only audits `PASS`. The script itself and its helper roles were not run.
+
+The user's current authorization of recommendations is interpreted narrowly
+as one invocation of the exact committed command after this control-only
+checkpoint and a final read-only conservation preflight. It does not authorize
+an R18 constructor, guardian, signal, Swift command, cleanup, or second canary
+invocation. Any outcome other than the exact PASS tuple consumes the canary
+without roadmap promotion.
+
+```text
+R18_terminal_canary_invocations = 1
+R18_terminal_canary_passes = 1
+R18_process_generation_canary_invocations = 0
+R18_process_generation_canary_passes = 0
+R18_epoch_constructor_invocations = 0
+R18_guardian_invocations = 0
+R18_swiftpm_commands = 0
+R18_external_signals = 0
+R18_production_attempts = 0
+outer_journal_authority_vector = 00000000
+gate_E_mechanics_outcome = ABSTAIN
+gate_E_scientific_outcome = ABSTAIN
+gate_E_clearance_granted = 0
+```
+
 It establishes Release compilation plus test-host journal and conserved-
 session mechanics. It does not establish the production governor self-image,
 empty environment, capsule transport, production deadline, outer production
