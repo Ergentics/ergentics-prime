@@ -11098,3 +11098,26 @@ outer_journal_authority_vector = 00000000
 gate_E_scientific_outcome = ABSTAIN
 gate_E_clearance_granted = 0
 ```
+
+## Gate E1.4-R17 committed-freeze checkpoint
+
+| Coordinate | Pinned value |
+| --- | --- |
+| Status | `FROZEN_NOT_EXECUTED` |
+| Freeze implementation commit | `1d7bd897bcd4ce0e801528687933f397f770167d` |
+| Freeze implementation tree | `2a7eaa6110e2e11a73742ceed7f3bfae58baf6c1` |
+| Durable predecessor | R16 disposition `6b392feef4f0b346a05ad0888b6fd61695ff53db` / tree `57b067d1c271f216c8b9f3e4e135fcf53eb403dc` |
+| Constructor identity | mode `100644`; blob `cc77fe31fcbea4793e48ffce7f5ea590e1e13896`; SHA-256 `550b86447ed169384c038aece5ea3ed31a6950846ad6e7d3889a53ad2e4200cf`; `476` lines / `15,877` bytes |
+| Guardian identity | mode `100644`; blob `1e86926f3d163b85c0651c3a7ce64a74a494ca32`; SHA-256 `d4ce68b898d78d4d1b03b1396f07345b269e7b15298097fe9363f8e972f347e8`; `1,270` lines / `42,627` bytes |
+| Source commit/tree/identity | clean `befc632485930a9cca7f618d3704292b5465f911` / `7d1a3bf302fe358f9e42dc1ed2bf54ed3d22982e` / `b501ad0d7ab1b6c54cbf30f9a79d75c54fe1d3783c516e10ad73fdd5fb4df397` |
+| Namespace conservation | R17 staging absent; R17 final absent; mechanics exact `10 / 20e9803f...ad51`; retained R15/R16 unchanged |
+| Execution conservation | constructor `0`; guardian `0`; Swift `0`; spawn `0`; signals `0`; production attempts `0` |
+| Authority | scientific `ABSTAIN`; vector `00000000`; Gate-E clearance `0` |
+
+The constructor and guardian code predecessor for future R17 work is the
+implementation commit/tree above, not this rank-4 prose-only successor. A
+separate fresh approval must first name the one constructor invocation. Even
+constructor success authorizes no guardian: its exact receipt and epoch must
+be committed as `EPOCH_READY_GUARDIAN_NOT_INVOKED`, followed by a second fresh
+guardian/containment approval. This checkpoint creates no namespace, invokes
+no frozen artifact, and transfers no R16 authority.
