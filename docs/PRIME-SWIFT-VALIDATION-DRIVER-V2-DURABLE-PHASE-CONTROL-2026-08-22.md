@@ -11121,3 +11121,60 @@ constructor success authorizes no guardian: its exact receipt and epoch must
 be committed as `EPOCH_READY_GUARDIAN_NOT_INVOKED`, followed by a second fresh
 guardian/containment approval. This checkpoint creates no namespace, invokes
 no frozen artifact, and transfers no R16 authority.
+
+## Gate E1.4-R17 constructor result — epoch ready, guardian uninvoked
+
+| Coordinate | Observed value |
+| --- | --- |
+| Status | `EPOCH_READY_GUARDIAN_NOT_INVOKED` |
+| Constructor-emitted status | `R17_EPOCH_CONSTRUCTION_COMPLETE` |
+| Ledger predecessor | R17 committed-freeze checkpoint `624f60e3e4322e98f7407cd2a79b53c410b4bf60` / tree `3d5851454fa876320f115357143a82567f2c3940` |
+| Constructor implementation | `1d7bd897bcd4ce0e801528687933f397f770167d` / tree `2a7eaa6110e2e11a73742ceed7f3bfae58baf6c1`; constructor blob `cc77fe31fcbea4793e48ffce7f5ea590e1e13896`; SHA-256 `550b86447ed169384c038aece5ea3ed31a6950846ad6e7d3889a53ad2e4200cf` |
+| Constructor invocation | exact frozen envelope `1 / 1`; exit `0`; root timestamp `1787532842` (`2026-08-24T00:54:02Z`) |
+| Captured receipt | one LF-terminated canonical frame; `2,131` bytes; SHA-256 `6eb4fd3a41dcff239705e4aaf2167d830dcd581890bfb7443121c22d39c50bd6`; payload `2,046` bytes; payload SHA-256 `ea898912a68430a67f7b14185e9db901605f08599937e210edf24b4de910aba1` |
+| Stream conservation | transport returned exactly the `2,131` receipt bytes with no truncation or additional bytes; frozen success path checked the complete stdout write and exited `0`; stderr was not independently channel-tagged |
+| Publication | staging absent; `published_no_replace = true`; root `mkdirat = 1`; child `mkdirat = 9`; no retry or cleanup |
+| Final root | device/inode `16777231/17408018`; UID/GID `501/0`; mode `0700`; nlink `11`; size `352`; birth/mtime/ctime `1787532842`; flags `0` |
+| Children | exact frozen order, inodes `17408019...17408027`; device `16777231`; UID/GID `501/0`; mode `0700`; nlink `2`; size `64`; birth/mtime/ctime `1787532842`; flags `0`; all empty |
+| Metadata corroboration | root and children have no ACL; sole xattr is the ordinary `com.apple.provenance` (`11` bytes), also present on predecessor epochs and outside the constructor receipt schema |
+| Guardian terminal | `r17-guardian-terminal.json` absent |
+| Mechanics inventory | exact `11`; sorted LF path-set SHA-256 `60a77281aa70f709c30ebcf76b4b10d2e14a8f9618ca4282d44817a1b0ef72e1` |
+| Conservation | R15 unchanged; retained empty R16 unchanged; source/Fixture exact; control and source worktrees clean; no constructor, guardian, Swift, Fixture, or XCTest survivor |
+| Counters | constructor `1 / 1`; epoch complete `1`; guardian `0 / 1`; Swift `0 / 1`; guardian spawn `0`; signals `0`; production attempts `0` |
+| Authority | namespace preparation closed; guardian mechanics unobserved `ABSTAIN`; scientific `ABSTAIN`; vector `00000000`; Gate-E clearance `0` |
+
+The exact captured success frame was:
+
+```json
+{"child_mkdirat_count":9,"children":[{"dev":16777231,"ino":17408019,"uid":501,"gid":0,"mode":"0700","nlink":2,"size":64,"mtime":1787532842,"ctime":1787532842,"flags":0,"leaf":"home"},{"dev":16777231,"ino":17408020,"uid":501,"gid":0,"mode":"0700","nlink":2,"size":64,"mtime":1787532842,"ctime":1787532842,"flags":0,"leaf":"config"},{"dev":16777231,"ino":17408021,"uid":501,"gid":0,"mode":"0700","nlink":2,"size":64,"mtime":1787532842,"ctime":1787532842,"flags":0,"leaf":"tmp"},{"dev":16777231,"ino":17408022,"uid":501,"gid":0,"mode":"0700","nlink":2,"size":64,"mtime":1787532842,"ctime":1787532842,"flags":0,"leaf":"git-template"},{"dev":16777231,"ino":17408023,"uid":501,"gid":0,"mode":"0700","nlink":2,"size":64,"mtime":1787532842,"ctime":1787532842,"flags":0,"leaf":"swiftpm-cache"},{"dev":16777231,"ino":17408024,"uid":501,"gid":0,"mode":"0700","nlink":2,"size":64,"mtime":1787532842,"ctime":1787532842,"flags":0,"leaf":"swiftpm-config"},{"dev":16777231,"ino":17408025,"uid":501,"gid":0,"mode":"0700","nlink":2,"size":64,"mtime":1787532842,"ctime":1787532842,"flags":0,"leaf":"swiftpm-security"},{"dev":16777231,"ino":17408026,"uid":501,"gid":0,"mode":"0700","nlink":2,"size":64,"mtime":1787532842,"ctime":1787532842,"flags":0,"leaf":"clang-module-cache"},{"dev":16777231,"ino":17408027,"uid":501,"gid":0,"mode":"0700","nlink":2,"size":64,"mtime":1787532842,"ctime":1787532842,"flags":0,"leaf":"swiftpm-module-cache"}],"constructor_process_spawn_calls":0,"constructor_signals":0,"final_path":"/private/tmp/gate-e1-4-mechanics-r17-befc6324-b501ad0d7ab1b6c5","guardian_terminal_present":false,"mechanics_count":11,"mechanics_sha256":"60a77281aa70f709c30ebcf76b4b10d2e14a8f9618ca4282d44817a1b0ef72e1","payload_sha256":"ea898912a68430a67f7b14185e9db901605f08599937e210edf24b4de910aba1","published_no_replace":true,"root":{"dev":16777231,"ino":17408018,"uid":501,"gid":0,"mode":"0700","nlink":11,"size":352,"mtime":1787532842,"ctime":1787532842,"flags":0},"root_mkdirat_count":1,"staging_absent":true,"staging_path":"/private/tmp/gate-e1-4-mechanics-r17-staging-befc6324-b501ad0d7ab1b6c5","status":"R17_EPOCH_CONSTRUCTION_COMPLETE"}
+```
+
+Independent descriptor-held reconstruction reproduced the exact frame length,
+receipt hash, and payload hash from the published vnodes. The execution tool
+exposed one additive combined output field rather than separately tagged
+stdout/stderr channels. Because the frozen exit-`0` path wrote and checked all
+`2,131` receipt bytes on stdout, failure paths write stderr and exit `70`, and
+the complete untruncated combined field equaled exactly that canonical frame,
+there were no additional transport-visible bytes. This is sufficient for the
+narrow constructor-success boundary without claiming a separately captured
+empty-stderr channel.
+
+The constructor envelope is terminal and must never run again. This checkpoint
+closes only the exact R17 namespace preparation. It does not invoke or
+authorize the guardian, its `STOP/KILL` containment authority, Swift, or any
+scientific role. After this result is committed, a separate fresh approval may
+name the single R17 guardian plus bounded generation/domain-rejoined
+containment. No guardian launch is permitted before that approval.
+
+```text
+R17_epoch_constructor_invocations = 1
+R17_epoch_complete = 1
+R17_guardian_invocations = 0
+R17_swiftpm_commands = 0
+R17_process_spawn_calls = 0
+R17_signals = 0
+R17_production_attempts = 0
+outer_journal_authority_vector = 00000000
+gate_E_scientific_outcome = ABSTAIN
+gate_E_clearance_granted = 0
+```
