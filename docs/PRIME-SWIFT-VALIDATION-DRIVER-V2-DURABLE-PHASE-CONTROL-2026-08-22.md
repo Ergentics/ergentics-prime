@@ -14855,3 +14855,274 @@ gate_E_mechanics_outcome = ABSTAIN
 gate_E_scientific_outcome = ABSTAIN
 gate_E_clearance_granted = 0
 ```
+
+## R19 native fixed-arity leaf primitive — prelaunch specification frozen, auditor unimplemented
+
+This control-only successor freezes the candidate direct launch, the mandatory
+monotone-veto admission algorithm, and the two defects found by independent
+review. It does not declare launch readiness: the read-only admission owner
+has no source/image preimage yet, and the candidate `zsh` transport has a
+pre-`env -i` startup surface. It does not execute either build image, inspect
+or create the exact canary namespace, or authorize the shot. The definitive A
+image is the only candidate executable; B remains a build-identity witness and
+the two superseded images remain ineligible.
+
+| Coordinate | Frozen value |
+| --- | --- |
+| Control predecessor | `ba8287fb66fa7d9b527ba6db210d3d05d7d9227c` / tree `dc471db1b9b720915c6b0fcd784a6784bea621c2` |
+| Implementation | `3b694bcbc2e6ea64d6474066ad52a7b49ef021b5` / tree `0cd3c02e8f2f268b581a3035cda4d094e1662409` |
+| Definitive image | A `sdk26_5_fdflags/PrimeDriverV2R19NativeLeafPrimitiveCanary`; `89,976` bytes; SHA-256 `e826ff9251906e2ff92921fcbaa8b27eff32e227838ce217c62017c9461b10d3` |
+| Image identity | vnode `16777231/17454586`; UUID `250D80B3-E19B-3B12-AC3A-D225B5FF5BEB`; full CDHash `f4e81281906a06354b1cd604d178102337b47360c5cc298f6ebc2109cccc045d`; macOS min/SDK `14.0/26.5` |
+| Status | `R19_NATIVE_FIXED_ARITY_LEAF_ADMISSION_ALGORITHM_FROZEN_AUDITOR_UNIMPLEMENTED_UNREADY` |
+| Invocation | count `0`; launch approval ineligible; retry `false` |
+| Authority | vector `00000000`; mechanics/science `ABSTAIN/ABSTAIN`; Gate-E clearance `0` |
+
+### Candidate transport — not yet launch-eligible
+
+The frozen candidate invocation is one non-PTY Codex exec session with shell
+`/bin/zsh`, login disabled, working directory `/`, and this exact two-line
+command:
+
+```zsh
+umask 077
+exec /usr/bin/env -i /private/tmp/prime-driver-v2-r19-native-leaf-build-a-e9b6f7bd/sdk26_5_fdflags/PrimeDriverV2R19NativeLeafPrimitiveCanary </dev/null
+```
+
+The application receives `argc == 1`, no application arguments, and an empty
+replacement environment. Its logical `argv[0]` is the exact A-image path.
+Standard input is `/dev/null`; stdout and stderr are non-TTY capture pipes and
+must jointly contain zero bytes for PASS. Because the Codex transport exposes
+their merged presentation, empty merged output proves both are empty; any
+nonempty byte rejects without assigning it to a stream. The observation yield
+is not a timeout. If the exec call returns a live session, only that same
+session may be passively awaited. No relaunch, guardian, signal, active
+timeout, census, or concurrent namespace read is permitted. A future frozen
+auditor would be a second, strictly sequential process after exact termination,
+never a concurrent helper.
+
+No exec call is authorized by this checkpoint. A successor readiness freeze
+may set consumption to begin when the sole exec call is entered after final
+preflight. Under that future envelope, shell, `env`, loader, or image failure;
+lost or unknown wait status; terminal loss; signal exit; or any exit other
+than exact normal `0` consumes the shot. No physical namespace is required
+for consumption, and no outcome is repairable or reusable.
+
+### Final preflight and hard stops
+
+Immediately before that future exec call, a read-only preflight must establish
+all of the following or stop without consuming the invocation:
+
+1. Control HEAD/tree equal the readiness coordinates named by the future
+   exact approval; that checkpoint has the predecessor above as its sole
+   parent and this document as its only delta. Both control and source
+   worktrees are clean, and the source repository remains
+   `befc632485930a9cca7f618d3704292b5465f911` / tree
+   `7d1a3bf302fe358f9e42dc1ed2bf54ed3d22982e`.
+2. Host remains macOS `26.5.2` build `25F84`, `arm64`; `/`, `/private`, and
+   held `/private/tmp` resolve to local APFS. `/private/tmp` remains the joined
+   root-owned mode-`01777` directory at vnode `16777231/774813`.
+3. The exact canary root
+   `/private/tmp/gate-e1-4-r19-native-leaf-primitive-canary-3a46a037-17452840`
+   is absent by descriptor-relative, no-follow `ENOENT`, repeated immediately
+   before launch. A present or unclassifiable entry is a hard stop, never
+   reuse.
+4. The A build root and `sdk26_5_fdflags` directory remain joined, no-follow,
+   owner/group `501/0`, mode `0700`, flags `0`, ACL-free, at vnodes
+   `16777231/17453507` and `16777231/17454452`. Their exact xattr set remains
+   the eleven-byte `com.apple.provenance` value
+   `01020049b5cb684f79583c`.
+5. The definitive image remains a joined regular file at vnode
+   `16777231/17454586`, owner/group `501/0`, mode `0755`, nlink `1`, flags `0`,
+   `89,976` bytes, ACL-free, with the same provenance xattr, SHA-256, UUID,
+   full CDHash, architecture, load-command identity, and strict signature
+   named above. No fallback to B or a superseded image is allowed.
+6. `/bin/zsh` remains vnode `16777231/1152921500312571448`, SHA-256
+   `1f473d234dd65157f530b4f676686517ec97fe9aa64c76d82f2611674cc44314`;
+   `/usr/bin/env` remains vnode `16777231/1152921500312571972`, SHA-256
+   `6e506aec3c0cff703ac1e66cedc6f1945354ad41339a38db4425c7c88227128f`;
+   and `/dev/null` remains character device vnode
+   `3836289247/336`, rdev `50331650`, owner/group `0/0`, mode `0666`.
+7. The actual Codex launch is native noninteractive/nonlogin `zsh`; inherited
+   `ZDOTDIR` is absent and `HOME` is exactly `/Users/ergentics`. The compiled
+   global candidates `/etc/zshenv` and `/etc/zsh/zshenv`, and resolved user
+   candidate `/Users/ergentics/.zshenv`, are each descriptor-relatively
+   no-follow absent immediately before shell start. This was the observed
+   preimage in this arc, not a closure: `env -i` occurs only after startup,
+   and the same-UID absence-to-shell-start race must remain explicit.
+8. A closed zero-argument, read-only Swift admission owner with committed
+   source, two-build identity, pinned image/hash, fixed transport, fixed
+   canonical result frame, and no mutation/actuation surface is available.
+   It is not implemented in this checkpoint. This is the controlling hard
+   stop: the canary may not launch until a successor freezes that preimage.
+
+The final preflight owner does not survive the direct `exec`; the canary itself
+holds `/private/tmp` through its create/write/publication sequence and the
+future outer observer would reopen it after exact reap. The residual same-UID
+named-image, namespace, and `.zshenv` races across that boundary must be
+explicitly accepted in a later readiness freeze. A mapped-image supervisor
+would reduce the image race but would add a new helper/authority outside this
+frozen primitive.
+
+### Mandatory sequential post-exit monotone veto — algorithm only
+
+The canary emits only a candidate. The following admission must run after
+exact termination and can only veto it. It cannot replace wait status, repair
+the namespace, mint scientific authority, or reinterpret a physical prefix.
+This checkpoint freezes the predicate but has no executable admission owner;
+therefore none of these conjuncts can presently derive PASS.
+
+```text
+R19_NATIVE_FIXED_ARITY_LEAF_CANARY_PASS =
+  pinned_A_image
+  AND exact_normal_exit_0
+  AND captured_output_bytes_0
+  AND private_tmp_readmission
+  AND exact_root_admission
+  AND exact_leaf_admission
+  AND exact_frame_reconstruction_equality
+  AND stable_postread_revalidation
+```
+
+The fixed admission is descriptor-held, no-follow, and read-only:
+
+1. Freeze the exact wait result and captured-output byte count/hash. Missing
+   status is `ABSTAIN`; it cannot be reconstructed from a leaf.
+2. Re-admit the A image to its exact vnode, bytes, SHA-256, UUID, CDHash,
+   signature, and load-command identity. Re-admit `/private/tmp` to the joined
+   local-APFS parent named above.
+3. Open the exact root relative to that parent; require held/named join,
+   directory type, same device, nonzero inode, owner/group `501/0`, mode
+   `0700`, flags `0`, and raw-byte inventory exactly
+   `00-native-leaf-canary.json`.
+4. Open that exact leaf relative to the held root; require held/named join,
+   regular type, same device, nonzero inode, owner/group `501/0`, nlink `1`,
+   flags `0`, mode `0400`, close-on-exec, and size `1...16,384`.
+5. Stable-read the exact size plus EOF. From frozen literals and the externally
+   observed root/leaf device and inode values, reconstruct the canonical
+   digest-free payload in source key order, compute its lowercase SHA-256,
+   attach it in the exact outer frame, and require byte-for-byte equality with
+   one trailing LF. This rejects extra/duplicate/reordered keys without making
+   a generic JSON parser authoritative. Record the outer frame byte count and
+   SHA-256 separately.
+6. Repeat leaf held/named identity and full metadata, root held/named identity,
+   and exact inventory after the read. The observed vnode values embedded in
+   the payload must equal the outer observations.
+
+The reconstructed payload must retain exactly: candidate status; schema;
+fixed root, leaf, cap, modes, and native boundary; outer-admission requirement;
+authority vector `00000000`; mechanics/science `ABSTAIN/ABSTAIN`; clearance
+`0`; scientific-authorities-closed `0`; and promotion/closure authorization
+`false`. Even full PASS closes only this native leaf-mechanics canary. It does
+not close a scientific authority, assign the successor disposal root, alter
+Gate E, or authorize another invocation.
+
+| Exact wait / retained state | Classification |
+| --- | --- |
+| Exit `0`, empty output, every conjunct passes under a later frozen auditor | `R19_NATIVE_FIXED_ARITY_LEAF_CANARY_PASS`; Gate E still `ABSTAIN` |
+| Exit `0`, any admission conjunct rejects | `EXIT_ZERO_POSTCONDITION_CONTRADICTION`; consumed, mechanics `ABSTAIN` |
+| Exit `70` or other known nonzero | consumed incomplete; classify only the physical retained region |
+| Signal, missing wait, terminal loss, or nonterminal stall | consumed unknown/nonterminal; mechanics `ABSTAIN` |
+| Root absent | before-root physical region; no namespace evidence |
+| Safe mode-`0700` root, leaf absent | root-created/leaf-absent incomplete region |
+| Exact mode-`0000` leaf | prepublication poison; never open, chmod, or infer whether bytes are complete |
+| Exact mode-`0400` leaf failing any predicate | incomplete publication candidate; mode is not success |
+| Rebound/unsafe type/wrong mode/extra inventory | namespace or metadata drift; no causal inference |
+
+There is no cleanup, chmod, repair, reuse, retry, guardian, timeout signal,
+process census, SwiftPM, Git, energy, Koine, authority closure, or Gate-E
+promotion in this specification. A later readiness freeze must accept or
+eliminate the same-UID final-preflight-to-exec image race, same-UID transient
+namespace add/remove between joins, same-UID `.zshenv` absence-to-start race,
+ambient pre-`env -i` shell/loader environment, system runtime images not
+independently pinned, and fatal process/host/terminal loss leaving only a
+physical prefix. A kernel/APFS stall may remain nonterminal indefinitely;
+disposal would require a new, separately frozen authority.
+
+The next bounded slice is frozen but not authorized. It is implementation-only
+and build-only: one closed zero-argument Swift admission executable, fixed to
+the A image and exact root/leaf, that performs only the descriptor-held
+read-only predicate above. It must be compiled twice in disjoint scratch roots
+and pinned by raw bytes and Mach-O identity; neither auditor build nor the
+canary may execute in that slice. Its successor may then freeze the sequential
+auditor transport and revisit launch readiness.
+
+### Frozen auditor successor contract — unimplemented and unauthorized
+
+The sole new source is
+`docs/tools/prime-driver-v2-r19-native-leaf-admission.swift`; the fixed image
+leaf is `PrimeDriverV2R19NativeLeafAdmission`. It accepts no application
+arguments, environment, stdin data, path, mode, role, wait status, or caller
+capability. Cwd is `/`; stdin is `/dev/null`. It performs no filesystem
+mutation, process creation/observation/actuation, signal, timeout, Git,
+SwiftPM, energy, Koine, cleanup, or repair. It opens only the pinned A image,
+`/private/tmp`, exact canary root, and exact leaf, all descriptor-relatively
+and no-follow, after the canary has terminated.
+
+On full admission it writes exactly one canonical LF-terminated frame to
+stdout, at most `4,096` bytes, writes zero stderr bytes, and exits `0`. The
+payload is hashed before the digest is attached. Its exact key order is:
+
+```text
+authority_vector
+canary_frame_bytes
+canary_frame_sha256
+canary_root
+definitive_image_sha256
+gate_e_clearance
+gate_e_mechanics_outcome
+gate_e_scientific_outcome
+leaf_device
+leaf_inode
+root_device
+root_inode
+schema
+scientific_authorities_closed
+status
+```
+
+The literals are vector `00000000`, the frozen root and A-image SHA-256,
+clearance `0`, Gate-E mechanics/science `ABSTAIN/ABSTAIN`, schema
+`prime_driver_v2_r19_native_leaf_admission_candidate_v1`, authorities closed
+`0`, and status `R19_NATIVE_FIXED_ARITY_LEAF_ADMISSION_PASS_CANDIDATE`.
+Frame byte count/hash and the four vnode values are the only dynamic fields.
+The outer frame is exactly
+`{"payload":<payload>,"payload_sha256":"<lowercase SHA256(payload)>"}\n`.
+
+Any rejected predicate, output failure, or internal failure produces zero
+stdout/stderr bytes and exact exit `70`; it cannot emit a partial or negative
+authority record. The later Workstation conjunction must still retain the
+canary's exact wait status separately: auditor exit `0` cannot reconstruct or
+replace it. Implementation authorization, Swift compilation, both auditor
+executions, canary launch, and readiness remain false in this checkpoint.
+
+Canonical prelaunch-specification record metrics:
+
+```text
+frame_bytes = 9872
+frame_sha256 = 622f929bce1ec733a027e54d5ed83459685d58c9b563c996bfb1207463d1b3e9
+```
+
+```json
+{"authority":{"auditor_implementation_authorized":false,"authority_closure_authorized":false,"authority_vector":"00000000","gate_e_clearance":0,"gate_e_mechanics_outcome":"ABSTAIN","gate_e_promotion_authorized":false,"gate_e_scientific_outcome":"ABSTAIN","invocation_authorized":false,"invocation_count":0,"launch_approval_eligible":false,"retry_authorized":false,"scientific_authorities_closed":0},"control":{"control_predecessor_commit":"ba8287fb66fa7d9b527ba6db210d3d05d7d9227c","control_predecessor_tree":"dc471db1b9b720915c6b0fcd784a6784bea621c2","implementation_commit":"3b694bcbc2e6ea64d6474066ad52a7b49ef021b5","implementation_tree":"0cd3c02e8f2f268b581a3035cda4d094e1662409","source_commit_unchanged":"befc632485930a9cca7f618d3704292b5465f911","source_tree_unchanged":"7d1a3bf302fe358f9e42dc1ed2bf54ed3d22982e"},"definitive_image":{"acl_present":false,"adhoc_cdhash_full_sha256":"f4e81281906a06354b1cd604d178102337b47360c5cc298f6ebc2109cccc045d","build_root":{"device":16777231,"gid":0,"inode":17453507,"mode":"0700","provenance_xattr_hex":"01020049b5cb684f79583c","uid":501},"bytes":89976,"device":16777231,"flags":0,"gid":0,"image_executions":0,"inode":17454586,"lc_build_version":{"minimum_os":"14.0","platform":"macOS","sdk":"26.5"},"mach_o_uuid":"250D80B3-E19B-3B12-AC3A-D225B5FF5BEB","mode":"0755","nlink":1,"path":"/private/tmp/prime-driver-v2-r19-native-leaf-build-a-e9b6f7bd/sdk26_5_fdflags/PrimeDriverV2R19NativeLeafPrimitiveCanary","provenance_xattr_hex":"01020049b5cb684f79583c","sdk_directory":{"device":16777231,"gid":0,"inode":17454452,"mode":"0700","provenance_xattr_hex":"01020049b5cb684f79583c","uid":501},"sha256":"e826ff9251906e2ff92921fcbaa8b27eff32e227838ce217c62017c9461b10d3","signature_strict_pass":true,"uid":501},"failure_policy":{"cleanup_authorized":false,"mode_0000_leaf_policy":"STAT_ONLY_DO_NOT_OPEN_CHMOD_OR_REPAIR","mode_0400_without_full_conjunction":"INCOMPLETE_CANDIDATE_ABSTAIN","nonterminal_kernel_or_apfs_stall":"REQUIRES_NEW_DISPOSAL_AUTHORITY","physical_regions":["NO_ROOT","MODE_0700_EMPTY_ROOT","MODE_0000_POISON","MODE_0400_INCOMPLETE_CANDIDATE","UNSAFE_OR_REBOUND_NAMESPACE"],"repair_authorized":false,"reuse_authorized":false},"host":{"architecture":"arm64","build":"25F84","os":"macOS","version":"26.5.2"},"operations":{"canary_binary_invocations":0,"canary_leaf_creations":0,"canary_root_creations":0,"censuses":0,"cleanup_calls":0,"energy_actions":0,"gate_e_promotions":0,"guardians":0,"repairs":0,"signals":0,"swift_commands":0,"swiftpm_commands":0},"post_exit_admission":{"algorithm_frozen":true,"auditor_image":null,"auditor_output_contract_frozen":true,"auditor_source":null,"concurrent_namespace_reads":0,"dynamic_payload_fields":["leaf_device","leaf_inode","root_device","root_inode"],"expected_payload_key_order":["authority_closure_authorized","authority_vector","canary_root","file_cap_bytes","fixed_leaf","gate_e_clearance","gate_e_mechanics_outcome","gate_e_promotion_authorized","gate_e_scientific_outcome","initial_mode","leaf_device","leaf_inode","native_boundary","outer_admission_required","publication_mode","root_device","root_inode","schema","scientific_authorities_closed","status"],"expected_payload_literals":{"authority_closure_authorized":false,"authority_vector":"00000000","canary_root":"/private/tmp/gate-e1-4-r19-native-leaf-primitive-canary-3a46a037-17452840","file_cap_bytes":16384,"fixed_leaf":"00-native-leaf-canary.json","gate_e_clearance":0,"gate_e_mechanics_outcome":"ABSTAIN","gate_e_promotion_authorized":false,"gate_e_scientific_outcome":"ABSTAIN","initial_mode":"0000","native_boundary":"in_image_fixed_arity_c_wrapper","outer_admission_required":true,"publication_mode":"0400","schema":"prime_driver_v2_r19_native_leaf_primitive_canary_v1","scientific_authorities_closed":0,"status":"R19_NATIVE_FIXED_ARITY_LEAF_PRIMITIVE_CANDIDATE"},"generic_json_parser_authoritative":false,"implementation_status":"UNIMPLEMENTED_UNHASHED","mechanics_pass_conjunction":["PINNED_A_IMAGE","EXACT_NORMAL_EXIT_0","CAPTURED_OUTPUT_BYTES_0","PRIVATE_TMP_READMISSION","EXACT_ROOT_ADMISSION","EXACT_LEAF_ADMISSION","EXACT_FRAME_RECONSTRUCTION_EQUALITY","STABLE_POSTREAD_REVALIDATION"],"mode_0400_alone_proves_success":false,"observed_vnodes_must_equal_embedded_values":true,"pass_derivation_currently_available":false,"runs_only_after_exact_termination":true,"scientific_authority_effect":"NONE","sequential_read_only_admissions_authorized_with_separate_shot":0,"wait_status_reconstructible_from_leaf":false},"preflight":{"exact_root_absence_required_immediately_before_launch":true,"failed_preflight_consumes_invocation":false,"held_private_tmp":{"device":16777231,"filesystem":"apfs","gid":0,"inode":774813,"local":true,"mode":"01777","uid":0},"image_fallback_authorized":false,"private_tmp_descriptor_survives_exec":false,"worktrees_clean_required":true,"zsh_startup":{"actual_mode":"NATIVE_NONINTERACTIVE_NONLOGIN","ambient_environment_scrubbed_before_start":false,"global_zshenv_candidates":["/etc/zshenv","/etc/zsh/zshenv"],"home":"/Users/ergentics","observed_candidate_state":"ALL_NOFOLLOW_ABSENT","required_revalidation":"IMMEDIATELY_BEFORE_FUTURE_SHELL_START","user_zshenv_candidate":"/Users/ergentics/.zshenv","zdotdir_present":false}},"residuals":{"ambient_pre_env_i_shell_and_loader_environment":true,"fatal_host_process_or_terminal_loss_may_leave_only_physical_prefix":true,"same_uid_final_preflight_to_exec_image_race":true,"same_uid_transient_namespace_add_remove_between_joins":true,"same_uid_zshenv_absence_to_shell_start_race":true,"system_runtime_images_independently_pinned":false},"review":{"independent_read_only_review_count":3,"launch_boundary":"BLOCKED_PENDING_CLOSED_AUDITOR_PREIMAGE","outer_admission":"ALGORITHM_PASS_IMPLEMENTATION_MISSING","procedure_deviation":{"canary_root_accessed":false,"file_created":false,"image_executed":false,"operation":"process_local_stderr_routing_during_metadata_review","retained_state_mutated":false},"threat_model":"PASS"},"schema":"prime_driver_v2_r19_native_leaf_primitive_prelaunch_specification_v1","status":"R19_NATIVE_FIXED_ARITY_LEAF_ADMISSION_ALGORITHM_FROZEN_AUDITOR_UNIMPLEMENTED_UNREADY","successor_required":{"auditor_application_argument_count":0,"auditor_build_executions_authorized":false,"auditor_canary_execution_authorized":false,"auditor_cwd":"/","auditor_environment_count":0,"auditor_fixed_image_leaf":"PrimeDriverV2R19NativeLeafAdmission","auditor_implementation_authorized":false,"auditor_mutation_calls":0,"auditor_process_actuation_calls":0,"auditor_resulting_image_executions_authorized":false,"auditor_signal_calls":0,"auditor_source_path":"docs/tools/prime-driver-v2-r19-native-leaf-admission.swift","auditor_stdin":"/dev/null","build_roots":"TWO_DISJOINT_SCRATCH_ROOTS","canonical_outer_frame":"{\"payload\":<payload>,\"payload_sha256\":\"<lowercase_sha256_payload>\"}\\n","canonical_output_cap_bytes":4096,"canonical_output_digest_rule":"SHA256_CANONICAL_PAYLOAD_WITHOUT_DIGEST_THEN_ATTACH_DIGEST","canonical_output_dynamic_fields":["canary_frame_bytes","canary_frame_sha256","leaf_device","leaf_inode","root_device","root_inode"],"canonical_output_key_order":["authority_vector","canary_frame_bytes","canary_frame_sha256","canary_root","definitive_image_sha256","gate_e_clearance","gate_e_mechanics_outcome","gate_e_scientific_outcome","leaf_device","leaf_inode","root_device","root_inode","schema","scientific_authorities_closed","status"],"canonical_output_literals":{"authority_vector":"00000000","canary_root":"/private/tmp/gate-e1-4-r19-native-leaf-primitive-canary-3a46a037-17452840","definitive_image_sha256":"e826ff9251906e2ff92921fcbaa8b27eff32e227838ce217c62017c9461b10d3","gate_e_clearance":0,"gate_e_mechanics_outcome":"ABSTAIN","gate_e_scientific_outcome":"ABSTAIN","schema":"prime_driver_v2_r19_native_leaf_admission_candidate_v1","scientific_authorities_closed":0,"status":"R19_NATIVE_FIXED_ARITY_LEAF_ADMISSION_PASS_CANDIDATE"},"deterministic_raw_and_mach_o_identity_required":true,"fixed_image":"/private/tmp/prime-driver-v2-r19-native-leaf-build-a-e9b6f7bd/sdk26_5_fdflags/PrimeDriverV2R19NativeLeafPrimitiveCanary","fixed_leaf":"00-native-leaf-canary.json","fixed_root":"/private/tmp/gate-e1-4-r19-native-leaf-primitive-canary-3a46a037-17452840","implementation_language":"SWIFT","output":"ONE_CANONICAL_READ_ONLY_ADMISSION_CANDIDATE","reject_contract":"ZERO_STDOUT_ZERO_STDERR_EXIT_70_NO_PARTIAL_OR_NEGATIVE_AUTHORITY_RECORD","slice":"IMPLEMENTATION_ONLY_BUILD_ONLY_NO_RESULTING_BINARY_EXECUTION","success_contract":"ONE_CANONICAL_LF_FRAME_STDOUT_ZERO_STDERR_EXIT_0","swift_compilation_authorized":false},"transport":{"application_argument_count":0,"canary_environment_count":0,"canary_root":"/private/tmp/gate-e1-4-r19-native-leaf-primitive-canary-3a46a037-17452840","candidate_only":true,"captured_output_required_bytes":0,"command_lines":["umask 077","exec /usr/bin/env -i /private/tmp/prime-driver-v2-r19-native-leaf-build-a-e9b6f7bd/sdk26_5_fdflags/PrimeDriverV2R19NativeLeafPrimitiveCanary </dev/null"],"consumption_point":"FUTURE_SUCCESSOR_ONLY_SOLE_CODEX_EXEC_CALL_ENTRY_AFTER_FINAL_PREFLIGHT","cwd":"/","definitive_image_only":true,"env":{"device":16777231,"inode":"1152921500312571972","path":"/usr/bin/env","sha256":"6e506aec3c0cff703ac1e66cedc6f1945354ad41339a38db4425c7c88227128f"},"launch_approval_eligible":false,"logical_argv0":"/private/tmp/prime-driver-v2-r19-native-leaf-build-a-e9b6f7bd/sdk26_5_fdflags/PrimeDriverV2R19NativeLeafPrimitiveCanary","outer_timeout":null,"passive_same_session_wait_only":true,"shell":{"device":16777231,"inode":"1152921500312571448","login":false,"path":"/bin/zsh","sha256":"1f473d234dd65157f530b4f676686517ec97fe9aa64c76d82f2611674cc44314"},"startup_environment_scrubbed_before_zsh":false,"stdin":{"device":3836289247,"gid":0,"inode":336,"mode":"0666","path":"/dev/null","rdevice":50331650,"type":"character","uid":0},"tty":false}}
+```
+
+```text
+R19_native_leaf_primitive_prelaunch_specification_freezes = 1
+R19_native_leaf_primitive_readiness_freezes = 0
+R19_native_leaf_admission_auditor_implementations = 0
+R19_native_leaf_admission_auditor_build_pairs = 0
+R19_native_leaf_admission_auditor_invocations = 0
+R19_native_leaf_primitive_binary_invocations = 0
+R19_native_leaf_primitive_roots_created = 0
+R19_native_leaf_primitive_leaves_created = 0
+R19_native_leaf_primitive_guardians = 0
+R19_native_leaf_primitive_timeout_signals = 0
+R19_native_leaf_primitive_censuses = 0
+R19_native_leaf_primitive_cleanup_calls = 0
+R19_native_leaf_primitive_repair_calls = 0
+R19_native_leaf_primitive_gate_E_promotions = 0
+outer_journal_authority_vector = 00000000
+gate_E_mechanics_outcome = ABSTAIN
+gate_E_scientific_outcome = ABSTAIN
+gate_E_clearance_granted = 0
+```
