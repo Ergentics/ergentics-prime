@@ -11573,3 +11573,170 @@ gate_E_mechanics_outcome = ABSTAIN
 gate_E_scientific_outcome = ABSTAIN
 gate_E_clearance_granted = 0
 ```
+
+## Gate E1.4-R18 process-actuation composition canary freeze — live ledger
+
+This EOF record is the current live ledger. Commit ancestry and the measured
+data below govern; the physical position of older historical zero-counter
+blocks does not override the committed R18 terminal-publication and
+process-generation results or this successor freeze.
+
+| Coordinate | Frozen value |
+| --- | --- |
+| Status | `FROZEN_NOT_EXECUTED_EXPLICIT_SIGNAL_APPROVAL_REQUIRED` |
+| Durable data predecessor | clean `237713eba73353586883f81a7454063b2ea562e6` / tree `9f043ce2b2defea0c74e74d3bb4e1a6c8ee943e4`; terminal canary and generation canary each already `1 / 1 PASS` |
+| Implementation commit/tree | `b63bd16745439a22af7a55cbba4d7d9686952158` / `a627d25d9c97f972ae45df25cde92dfd970ca27f`; direct child of the data predecessor; adds the canary path only |
+| Canary identity | `docs/tools/prime-driver-v2-r18-process-actuation-canary.rb`; Git mode `100644`; blob `4aa4afa7a236661dd8842e4991a48b5cc2524300`; SHA-256 `2f8b712d67760ee6515ee8040cb8d7a04daccd21733299ee21d3ff8197344253`; `1,862` lines / `70,460` bytes |
+| Source conservation | clean `befc632485930a9cca7f618d3704292b5465f911` / tree `7d1a3bf302fe358f9e42dc1ed2bf54ed3d22982e`; embedded identity `b501ad0d7ab1b6c54cbf30f9a79d75c54fe1d3783c516e10ad73fdd5fb4df397` |
+| Disjoint marker | `/private/tmp/gate-e1-4-r18-process-actuation-canary-237713eb-befc6324-b501ad0d7ab1b6c5`; absent at freeze; fixed empty `0700` descriptor-held directory if invoked; never cwd; never reusable or removable |
+| Production R18 namespace | both `/private/tmp/gate-e1-4-mechanics-r18-staging-befc6324-b501ad0d7ab1b6c5` and `/private/tmp/gate-e1-4-mechanics-r18-befc6324-b501ad0d7ab1b6c5` absent and forbidden to this canary |
+| Mechanics conservation | exact current `11`; sorted LF path-set SHA-256 `60a77281aa70f709c30ebcf76b4b10d2e14a8f9618ca4282d44817a1b0ef72e1` |
+| Static call surface | exactly one internal `Process.fork`, one fixed same-Ruby `Process.exec`, one centralized budgeted `Process.kill` site, and one side-effect-free libc `kill(-pgid, 0)` absence site; zero `Process.spawn`, shell, Swift, Git, constructor, guardian, deletion, or cleanup; read joins may retry, but STOP/KILL call budgets cannot |
+| XNU/runtime join | published `apple-oss-distributions/xnu@xnu-12377.1.9/bsd/sys/proc_info_private.h`; exact runtime `macOS 26.5.2 / 25F84`, Darwin `25.5.0`, `xnu-12377.121.10~1`, arm64; flavor `17 / 56` bytes plus short-BSD flavor `13 / 64` bytes |
+| Read-only preflight | `R18_PROCESS_ACTUATION_READ_ONLY_PREFLIGHT_PASS`; one canonical LF frame, `4,732` bytes, SHA-256 `d062e27bedbd80ac9b615258b8d3f2ce7212ecd48748149c06ac50785deac6cd`; two RUID-501 sweeps `585 / 585 / 0 gone / 0 UNKNOWN / 0 retries`; generation model `17 / 17`, actuation model `13 / 13`; marker/fork/exec/signal counts all zero |
+| Freeze mutation allowlist | implementation commit: the new canary only; this successor: this control file only; R17, both consumed R18 canaries, Prime source, DriverCore, `main.swift`, package files, manifests, locks, dependencies, `.build`, `.github`, and evidence are unchanged |
+
+### Exact bounded process and actuation contract
+
+The canary is a disposable composition proof for the new R18 process join and
+the old containment actuation substrate. It is not the R18 guardian, a Swift
+role, Gate E, or scientific execution.
+
+The controller holds the fixed empty marker, pins Ruby, its executable vnode
+and UUID, stdin `/dev/null`, cwd, credentials, umask, OS/XNU ABI, and performs
+two complete RUID-501 joins. It then creates exactly one direct child. The
+child calls `setsid`, becomes a one-member private session/process group,
+publishes a bounded pre-exec event, and performs the sole fixed exec back into
+the same held Ruby/script identity. The controller proves unchanged lifetime,
+changed exec epoch, exact PPID, `puniqueid`, `orig_ppidversion`, SID, PGID,
+credentials, executable UUID, and two identical process-group snapshots.
+
+STOP eligibility is exact Darwin state `SRUN = 2` or `SSLEEP = 3`. The sole
+STOP call is admitted only by a sealed certificate binding action, PID,
+`uniqueid`, `idversion`, SID, PGID, credentials, member set, and canonical
+member digest. KILL receives a new certificate only after two identical joins
+show exact `SSTOP = 4`; `SIDL = 1`, zombie `5`, unknown/out-of-domain states,
+membership change, PID/epoch rebound, ambient/unknown class, domain change, or
+credential drift deny actuation. STOP and KILL each have a monotone one-entry
+language-level syscall budget across success and failure. No rescue retries a
+spent call.
+
+Catchable `HUP`, `INT`, `QUIT`, and `TERM` on the controller become failure and
+containment; the fork child resets the inherited handlers to defaults. Before
+STOP, failure blocks for the child's bounded natural exit. After STOP call
+entry, the controller may spend the still-unused single KILL budget only after
+a fresh stopped certificate, then remains nonterminal until conservation. A
+failed sole KILL after STOP cannot be retried and therefore intentionally
+leaves the controller live and nonterminal rather than publishing false proof.
+
+No success or failure frame is reachable after a committed fork until all of
+these are monotone facts:
+
+```text
+exact direct-child waitpid
+  × two flavor-17 ESRCH observations for the captured PID/uniqueid
+  × two empty PROC_PGRP_ONLY projections for the captured PGID
+  × two side-effect-free libc kill(-pgid, 0) == ESRCH observations
+  × retained empty marker rejoin
+```
+
+Signal zero is an absence probe and is not a STOP/KILL delivery. Successful
+libc-call errno is ignored; errno is interpreted only on failure. Deadlines
+are liveness observations before containment, never abandonment authority.
+
+The canary names two irreducible limits. Darwin group signaling is not
+generation-bound: the two-snapshot certificate and private session bound, but
+cannot atomically eliminate, the userspace snapshot-to-`kill(-pgid)` race.
+Controller `SIGKILL`, controller `SIGSTOP`, and fatal process loss are not
+catchable in userspace. These limits forbid promotion to atomic production
+signal authority; they do not create a false canary PASS.
+
+### Build-free validation data
+
+Ruby syntax/bytecode compilation passed. Static audits found one fork site,
+one exec site, one centralized STOP/KILL site, no alternative target, and no
+terminal-before-conservation path. The read-only validator loaded only the
+source prefix preceding `controller_main`; it ran runtime/image checks, the
+PID-1 ABI control, two complete RUID sweeps, and both pure models. It did not
+create the marker, fork, exec, or signal. Its exact captured frame is:
+
+```json
+{"actuation_model":{"case_count":13,"cases":[{"name":"01_owned_active_double_snapshot_allows_stop","pass":true},{"name":"02_owned_stopped_double_snapshot_allows_kill","pass":true},{"name":"03_epoch_change_between_snapshots_denies","pass":true},{"name":"04_membership_change_denies","pass":true},{"name":"05_unknown_denies","pass":true},{"name":"06_ambient_denies","pass":true},{"name":"07_pid_rebound_denies","pass":true},{"name":"08_domain_rebound_denies","pass":true},{"name":"09_credential_drift_denies","pass":true},{"name":"10_active_member_denies_kill","pass":true},{"name":"11_zombie_member_denies_kill","pass":true},{"name":"12_initializing_member_denies_stop","pass":true},{"name":"13_out_of_domain_status_denies_stop","pass":true}],"cases_sha256":"761d4b2a3371b233c9d2f9be69e70b4836e5b55f4980e56d226719ca53590acf","passed_count":13,"performed_process_operations":false,"version":"r18-generation-bound-actuation-model-v1"},"controller":{"attempts":1,"comm_hex":"727562790000540000736b0000000000","idversion":17273473,"orig_ppidversion":17273439,"pgid":52684,"pid":52698,"ppid":52684,"puniqueid":8862172,"ruid":501,"sid":52684,"status":2,"uniqueid":8862186,"uuid_hex":"eb2540b7e13236beb719619d0fbf7203"},"generation_model":{"case_count":17,"cases":[{"name":"01_supervisor_session_epoch_owned","pass":true},{"name":"02_captured_actuation_descendant_owned","pass":true},{"name":"03_reparented_actuation_descendant_retains_parent_epoch","pass":true},{"name":"04_baseline_epoch_ambient","pass":true},{"name":"05_ambient_descendant_stays_ambient","pass":true},{"name":"06_unjoined_parent_is_unknown","pass":true},{"name":"07_pid_reuse_does_not_inherit_owner","pass":true},{"name":"08_exec_epoch_inherits_owned_lifetime","pass":true},{"name":"09_historical_parent_epoch_survives_exec","pass":true},{"name":"10_wrong_orig_ppidversion_is_unknown","pass":true},{"name":"11_closed_fixture_identity_is_owned","pass":true},{"name":"12_path_only_fixture_is_unknown","pass":true},{"name":"13_owned_ambient_epoch_collision_is_hard_stop","pass":true},{"name":"14_detached_fixture_workspace_remains_visible_owned","pass":true},{"name":"15_stop_and_kill_require_closed_owned_group","pass":true},{"name":"16_unknown_group_member_denies_stop_and_kill","pass":true},{"name":"17_generation_or_domain_rebound_denies_stop_and_kill","pass":true}],"cases_sha256":"59f94fa446316f0bf656ba28c1669c247807e6a37e7c90e5adacf1548ca8d788","passed_count":17,"performed_process_operations":false,"version":"r18-generation-domain-model-v1"},"performed_execs":0,"performed_forks":0,"performed_marker_mutations":0,"performed_signals":0,"pid1_probe":{"domain":{"pgid":1,"sid":1},"full_bsd":{"errno":1,"expected":"EPERM","flavor":3,"requested_bytes":136,"returned_bytes":0},"join_attempts":1,"short_bsd":{"flavor":13,"returned_bytes":64},"unique_identifier":{"flavor":17,"idversion":740,"orig_ppidversion":0,"returned_bytes":56,"uniqueid":1,"uuid_hex":"3dcaf70018d5354295b36eb9e5facf76"}},"runtime":{"credentials":{"egid":20,"euid":501,"gid":20,"groups":[12,20,33,61,79,80,81,98,100,204,250,395,398,399,400,701],"uid":501},"cwd":"/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging","incoming_umask":"0077","ruby":{"engine":"ruby","patchlevel":210,"platform":"universal.arm64e-darwin25","version":"2.6.10"},"ruby_image":{"arm64e_uuid_hex":"eb2540b7e13236beb719619d0fbf7203","device":16777231,"gid":0,"inode":1152921500312572705,"mode":365,"nlink":1,"sha256":"9d6ff3e289c7d908e3c785e0bedd6692d1d6a3377965c88c04d847104b7c892c","size":135200,"uid":0},"script_image":{"device":16777231,"gid":0,"inode":17415002,"mode":420,"nlink":1,"sha256":"2f8b712d67760ee6515ee8040cb8d7a04daccd21733299ee21d3ff8197344253","size":70460,"uid":501},"stdin":{"character_device":true,"device":-458678049,"gid":0,"inode":336,"mode":438,"path":"/dev/null","rdevice":50331650,"tty":false,"uid":0},"sysctls":{"hw.machine":"arm64","kern.osproductversion":"26.5.2","kern.osrelease":"25.5.0","kern.osversion":"25F84","kern.version":"Darwin Kernel Version 25.5.0: Tue Jun  9 22:28:34 PDT 2026; root:xnu-12377.121.10~1/RELEASE_ARM64_T6050"}},"status":"R18_PROCESS_ACTUATION_READ_ONLY_PREFLIGHT_PASS","sweeps":[{"gone_count":0,"joined_count":585,"label":"preflight_1","listed_count":585,"retry_count":0,"rows_sha256":"4b241975e7b3aadcb03e3401137100c2325b8535690004facf318448fcb58ad4","selector":{"kind":"RUID","value":501},"sticky_unknown_count":0,"sticky_unknowns":[]},{"gone_count":0,"joined_count":585,"label":"preflight_2","listed_count":585,"retry_count":0,"rows_sha256":"4b241975e7b3aadcb03e3401137100c2325b8535690004facf318448fcb58ad4","selector":{"kind":"RUID","value":501},"sticky_unknown_count":0,"sticky_unknowns":[]}]}
+```
+
+### Exact future invocation and approval boundary
+
+The only eligible launch command, from the clean control worktree and with no
+outer timeout or abandonment mechanism, is:
+
+```zsh
+/bin/zsh -f -c '
+umask 077
+exec /usr/bin/env -i \
+  LANG=C.UTF-8 \
+  LC_ALL=C.UTF-8 \
+  TZ=UTC \
+  PATH=/usr/bin:/bin \
+  __CF_USER_TEXT_ENCODING=0x1F5:0x0:0x0 \
+  R18_PROCESS_ACTUATION_CANARY_ROLE=controller \
+  /usr/bin/ruby --disable-gems \
+  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/docs/tools/prime-driver-v2-r18-process-actuation-canary.rb \
+  </dev/null
+'
+```
+
+Generic authorization of recommendations covers the implementation commit,
+build-free/read-only checks, and this control-only freeze. It does **not**
+transfer the identity-scoped R14/R15 signal approvals or authorize this first
+new deliberate STOP/KILL launch. Before the command may run, fresh explicit
+approval must state:
+
+> I approve the single R18 process-actuation canary launch, including its one
+> fixed same-Ruby fork/exec child, at most one STOP and at most one KILL call
+> commitment against only its double-snapshotted generation-joined direct-child
+> private group, and authority to remain in containment until exact reap and
+> generation/group conservation proof.
+
+Any invocation consumes the canary even if the marker is absent, execution
+fails before mutation, a signal is not delivered, or the controller remains
+nonterminal. A non-PASS shape authorizes no retry, cleanup, manual/post-shot
+signal, production R18 root, constructor, guardian, Swift command, or
+reinterpretation. Exact PASS requires one canonical LF stdout frame with
+`R18_PROCESS_ACTUATION_CANARY_PASS`, empty stderr, exit `0`, one retained empty
+marker, one internal fork, one internal exec, one confirmed STOP delivery, one
+confirmed KILL delivery, exact SIGKILL reap, two generation ESRCH observations,
+and two group-empty plus signal-zero ESRCH observations.
+
+```text
+R18_terminal_canary_invocations = 1
+R18_terminal_canary_passes = 1
+R18_generation_canary_invocations = 1
+R18_generation_canary_passes = 1
+R18_generation_canary_forks = 2
+R18_generation_canary_execs = 1
+R18_generation_canary_external_signals = 0
+R18_actuation_canary_invocations = 0
+R18_actuation_canary_passes = 0
+R18_actuation_canary_marker_creations = 0
+R18_actuation_canary_forks = 0
+R18_actuation_canary_execs = 0
+R18_actuation_canary_stop_call_entries = 0
+R18_actuation_canary_kill_call_entries = 0
+R18_actuation_canary_exact_reaps = 0
+R18_epoch_constructor_invocations = 0
+R18_epoch_complete = 0
+R18_guardian_invocations = 0
+R18_swiftpm_commands = 0
+R18_production_attempts = 0
+outer_journal_authority_vector = 00000000
+gate_E_mechanics_outcome = ABSTAIN
+gate_E_scientific_outcome = ABSTAIN
+gate_E_clearance_granted = 0
+```
+
+This prerequisite closes none of the eight missing authorities: Prime Git,
+companion Git, Swift version, Swift target-info, SwiftPM build, artifact
+staging, XCTest inventory, and Swift Testing inventory all remain missing.
+Only after a committed canary PASS may a new implementation-only R18
+constructor/guardian freeze import the three proven primitives. Production
+constructor, guardian, Swift, and signal authority remain zero here.
