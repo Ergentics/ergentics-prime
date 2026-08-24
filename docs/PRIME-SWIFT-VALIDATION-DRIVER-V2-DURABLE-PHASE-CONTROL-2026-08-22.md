@@ -6748,6 +6748,59 @@ gate_E_scientific_outcome = ABSTAIN
 gate_E_clearance_granted = 0
 ```
 
+## Gate E1.4-R18 terminal-publication canary result
+
+| Coordinate | Observed value |
+| --- | --- |
+| Status | `R18_TERMINAL_CANARY_PASS` |
+| Frozen implementation | `37232636e1d4ce8c1de720eaad5e384da58b0490` / tree `0b5d4e40cc58672e29db0a5f805df54e43ec1e58`; canary SHA-256 `ff389cb4c59d8da4647cfc53af3a5d2972f2331ba34ddd13b6e0179a72cd3c2f` |
+| Invocation | exact frozen command `1 / 1`; inherited umask `0077`; stdin `/dev/null`; zero Ruby arguments; outer exit `0`; no retry permitted |
+| Transport | one canonical LF-terminated `3,324`-byte PASS frame; SHA-256 `6dc1c733b735fcac9cd0b6f6cb23b7ff5f4b5a8423a9c01677e41cf12e75e625`; payload SHA-256 `dd077254aaae8eb3d0ac9ebb488fdf77d76f2b7ac8210def4ed83b976b6b308d`; no progress bytes; no failure frame |
+| Root | `/private/tmp/prime-driver-v2-r18-terminal-canary-befc6324-b501ad0d7ab1b6c5`; device/inode `16777231/17410394`; UID/GID `501/0`; mode `0700`; nlink `8`; size `256` |
+| Retained inventory | exact `12` relative children; sorted LF SHA-256 `71502c95976f2ce2516d55a2062878b9ab9731108755b7fd6875b154d913c9d0` |
+| Success publication | generated `r18-guardian-terminal.rguK5P.staging`; final inode `17410396`; mode `0400`; nlink `1`; `245` bytes; SHA-256 `0b8ada52d562c64b8398dc87ff37caafbae597aef2b42f732430a68e1a6dd0dc` |
+| Collision | existing final inode `17410398` and retained source inode `17410399` remained distinct, mode `0400`, nlink `1`, exact bytes; exclusive rename returned `EEXIST (17)` |
+| Held-parent rebound | held directory was renamed to `rebound-held`, its original path was replaced by a new empty directory, and publication joined inode `17410402` only under the held directory |
+| Non-authoritative residues | post-create inode `17410404`, mode `0600`, size `0`; post-write inode `17410406`, mode `0400`, size `258`; both generated names retained and both final names absent |
+| Independent reconstruction | exact inventory and all six file identities/hashes reproduced read-only; every nonempty canonical file self-hash passed; collision inodes distinct; replacement empty |
+| Production namespace | both R18 mechanics names absent; mechanics remains exact `11 / 60a77281aa70f709c30ebcf76b4b10d2e14a8f9618ca4282d44817a1b0ef72e1` |
+| Conservation | source clean at `befc632485930a9cca7f618d3704292b5465f911` / tree `7d1a3bf302fe358f9e42dc1ed2bf54ed3d22982e`; R17 root and invalid terminal unchanged; no child, signal, Swift, Git, constructor, guardian, cleanup, or scientific evidence |
+| Authority | terminal primitive canary only; R18 epoch not constructed; mechanics and science remain `ABSTAIN`; vector `00000000`; Gate-E clearance `0` |
+
+The exact transport-visible frame was:
+
+<!-- R18_TERMINAL_CANARY_RECEIPT_BEGIN -->
+```json
+{"authority_vector":"00000000","canary_root":"/private/tmp/prime-driver-v2-r18-terminal-canary-befc6324-b501ad0d7ab1b6c5","cases":{"success":{"generated_staging_leaf":"r18-guardian-terminal.rguK5P.staging","published_leaf":"r18-guardian-terminal.json","file":{"dev":16777231,"ino":17410396,"uid":501,"gid":0,"mode":"0400","nlink":1,"size":245},"bytes":245,"sha256":"0b8ada52d562c64b8398dc87ff37caafbae597aef2b42f732430a68e1a6dd0dc","rename_errno":0,"parent_sync":{"fsync":true,"fullfsync":true},"initial":{"dev":16777231,"ino":17410396,"uid":501,"gid":0,"mode":"0600","nlink":1,"size":0},"file_sync":{"fsync":true,"fullfsync":true},"prepublish_parent_sync":{"fsync":true,"fullfsync":true}},"collision":{"destination":{"generated_staging_leaf":"r18-guardian-terminal.reUIFy.staging","published_leaf":"r18-guardian-terminal.json","file":{"dev":16777231,"ino":17410398,"uid":501,"gid":0,"mode":"0400","nlink":1,"size":259},"bytes":259,"sha256":"344d261eb84663551f2132b7a3be1a3303438882cab46470242f91b722976185","rename_errno":0,"parent_sync":{"fsync":true,"fullfsync":true}},"source_generated_staging_leaf":"r18-guardian-terminal.i6MClL.staging","source":{"dev":16777231,"ino":17410399,"uid":501,"gid":0,"mode":"0400","nlink":1,"size":254},"source_sha256":"a6e96e307dbd8d02b35ef5c2d8c4e1911fbaf49a801181b159e32a41e5521fb8","rename_errno":17,"destination_unchanged":true,"source_unchanged":true},"held_parent_rebound":{"generated_staging_leaf":"r18-guardian-terminal.1r2wqw.staging","published_leaf":"r18-guardian-terminal.json","file":{"dev":16777231,"ino":17410402,"uid":501,"gid":0,"mode":"0400","nlink":1,"size":257},"bytes":257,"sha256":"1bde71c584262a3fb576c2f52adf3fd5fe06b7ed9e2c88b25b354486f1a7eb5b","rename_errno":0,"parent_sync":{"fsync":true,"fullfsync":true},"original_path_replaced":true,"held_path":"/private/tmp/prime-driver-v2-r18-terminal-canary-befc6324-b501ad0d7ab1b6c5/rebound-held","replacement_inventory":[],"directory_rename_errno":25},"residual_created":{"authoritative":false,"generated_staging_leaf":"r18-guardian-terminal.y33NCk.staging","final_absent":true,"file":{"dev":16777231,"ino":17410404,"uid":501,"gid":0,"mode":"0600","nlink":1,"size":0}},"residual_written":{"authoritative":false,"generated_staging_leaf":"r18-guardian-terminal.WaZCOO.staging","final_absent":true,"file":{"dev":16777231,"ino":17410406,"uid":501,"gid":0,"mode":"0400","nlink":1,"size":258},"sha256":"8e71c92ecbe0610d47fb34ab15ed6c22a1d651e2ca0142f039061540819fe9b3"}},"gate_e_clearance":0,"git_commands":0,"incoming_umask":"0077","inventory":["collision","collision/r18-guardian-terminal.i6MClL.staging","collision/r18-guardian-terminal.json","rebound-held","rebound-held/r18-guardian-terminal.json","rebound-original","residual-created","residual-created/r18-guardian-terminal.y33NCk.staging","residual-written","residual-written/r18-guardian-terminal.WaZCOO.staging","success","success/r18-guardian-terminal.json"],"inventory_count":12,"inventory_sha256":"71502c95976f2ce2516d55a2062878b9ab9731108755b7fd6875b154d913c9d0","payload_sha256":"dd077254aaae8eb3d0ac9ebb488fdf77d76f2b7ac8210def4ed83b976b6b308d","process_spawn_calls":0,"root":{"dev":16777231,"ino":17410394,"uid":501,"gid":0,"mode":"0700","nlink":8,"size":256},"scientific_outcome":"ABSTAIN","signals":0,"status":"R18_TERMINAL_CANARY_PASS","swift_commands":0}
+```
+<!-- R18_TERMINAL_CANARY_RECEIPT_END -->
+
+The `directory_rename_errno: 25` field followed a successful
+`renameatx_np` return of `0`. Darwin does not define `errno` after a
+successful call; the named/held directory join, empty replacement, and final
+inode prove the successful rebound case. It is not a failure coordinate.
+Production R18 must record an errno only when a libc call reports failure,
+avoiding transport of undefined successful-call residue.
+
+This result consumes only the terminal-publication canary. The retained root
+must not be deleted, repaired, or reused. It does not construct or authorize
+R18, and it does not validate the process-generation primitive.
+
+```text
+R18_terminal_canary_invocations = 1
+R18_terminal_canary_passes = 1
+R18_epoch_constructor_invocations = 0
+R18_guardian_invocations = 0
+R18_swiftpm_commands = 0
+R18_process_spawn_calls = 0
+R18_signals = 0
+R18_production_attempts = 0
+outer_journal_authority_vector = 00000000
+gate_E_mechanics_outcome = ABSTAIN
+gate_E_scientific_outcome = ABSTAIN
+gate_E_clearance_granted = 0
+```
+
 It establishes Release compilation plus test-host journal and conserved-
 session mechanics. It does not establish the production governor self-image,
 empty environment, capsule transport, production deadline, outer production
