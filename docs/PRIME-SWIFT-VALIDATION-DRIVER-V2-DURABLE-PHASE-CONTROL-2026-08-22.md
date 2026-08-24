@@ -12748,3 +12748,105 @@ gate_E_clearance_granted = 0
 The supplemental direct-task CPU-energy observer remains a later, separately
 frozen slice. It may not change this canary's process topology or timing and
 cannot begin until this canary has a durable conserved result.
+
+## Gate E1.4-R18 successor stopped-adoption canary result — live ledger
+
+This EOF result is the current live ledger. It supersedes the immediately
+preceding stopped-adoption freeze only for execution status and this canary's
+counters. Commit ancestry, the exact retained transport frame, and the
+read-only retained-marker postflight govern; older zero-counter blocks remain
+historical. No Gate-E or scientific authority is promoted.
+
+| Coordinate | Observed value |
+| --- | --- |
+| Status | `R18_SUCCESSOR_STOPPED_ADOPTION_CANARY_PASS` |
+| Frozen lineage | implementation/data predecessor `be1b2af174ae4dd3dc50997f3cad56cce2193c8c` / tree `7ae1cdd083f04ba545a2c7ec9d69ecc592d7e190`; implementation `e73668fa654477ca2bccc91b354cdaa06a8e9b93` / tree `961a6bca5b407d95423aa7ec1a51decd26aeca24`; launch-authority freeze `5bcbde859f990c142432ea2994a168e325c72477` / tree `7db559d7607fdcdbdf451b8edc42645b01d0eef9` |
+| Canary identity | `docs/tools/prime-driver-v2-r18-successor-stopped-adoption-canary.rb`; mode `100644`; blob `c59d7bf98972dccbfe4e8c76c114b2fdf0bd3229`; SHA-256 `f12c59853252d97bdae99816e04b220b6c77fb34f4f5812d395a5334348aa238`; `94,020` bytes / `2,494` lines; receipt device/inode `16777231/17441512` |
+| Invocation | exact frozen command `1 / 1`; approved signal envelope spent once; started `2026-08-24T15:45:48.422562Z`; duration `113.78 ms`; outer exit `0`; no retry permitted |
+| Transport | one canonical LF-terminated `10,293`-byte PASS frame; SHA-256 `bd97b6b9d34ed42d6f4b3035417b00212a35cd82f49f091aa9261c8517a249cc`; digest-free canonical payload `10,208` bytes / SHA-256 `0622529d6386cf62e68b97607f8bd230a1e724dd8171a40ecf5c95ca4ad02638`; complete combined capture was exactly this frame with no other bytes |
+| Receipt bound | actual-shape numeric-width structural bound `11,777`; policy/hard caps `12,288 / 16,384`; headroom `511 / 4,607`; this is the runtime bound for this receipt shape, not a universal maximum |
+| Runtime and PID-1 | cwd unchanged; stdin exact `/dev/null`; umask `0077`; Ruby device/inode `16777231/1152921500312572705`, SHA-256 `9d6ff3e289c7d908e3c785e0bedd6692d1d6a3377965c88c04d847104b7c892c`, UUID `eb2540b7e13236beb719619d0fbf7203`; macOS `26.5.2 / 25F84`, Darwin `25.5.0`; PID-1 flavor `3` exact `EPERM`, flavor `17 / 56`, short-BSD `13 / 64` |
+| Controller | PID `10844`; uniqueid/idversion `8919441/17428689`; puniqueid/orig-ppidversion `8693210/16866101`; PPID `81821`; SID/PGID `10844/10844`; exact Ruby UUID |
+| Child lifetime | PID/uniqueid `10845/8919442`; idversion `17428690 -> 17428691` across the fixed Ruby/path exec; PPID `10844`; parent epoch `8919441/17428689`; private SID/PGID `10845/10845`; stopped status `SSTOP = 4`; exact credentials and Ruby UUID |
+| Stopped adoption | exact one-member generation-joined group `10845`; member SHA-256 `62ad31518df16272a71caaf00581f38a0c99596d4bbf0e67f3686a5fb2494a01`; adoption certificate SHA-256 `5f30a064cfa4dfe57fe37464d62d68f7281436959df2b64e60c6663a8015daea`; adopted-count `1`; guardian-region STOP entries/deliveries `0/0`; controller CONT entries `0` |
+| Self-stop observation | one fixed libc-raise call site and one intent event; exact WUNTRACED raw status `4479`, SIGSTOP `17`; actual raise entry and causal stop origin remain `UNPROVEN`; `self_stop_origin_race_named = true` |
+| KILL certificate | newly joined exact stopped singleton; certificate SHA-256 `c3fc4aebea70f73932571fbbfed11637a5fc7df9e9bf90ab91b8a3cf859e6363`; consumed; imported guardian-region `Process.kill("KILL", -10845)` entered and delivered exactly once; signal-ledger SHA-256 `15c373c818beb95594c6b58dfff46504b1eec2c4346d835b93476569a31d129b` |
+| Reap and conservation | exact direct-child SIGKILL reap, raw status `9`; two flavor-17 `ESRCH` observations for PID/uniqueid `10845/8919442`; two empty group projections; two libc signal-zero `ESRCH(3)` observations; conservation completed without abandonment |
+| Protocol | events `worker_preexec_ready`, `worker_postexec_ready`, `worker_self_stop_entering`; FDs `8/9`; transcript SHA-256 `1177b5e754d14a0cb054fe466e6cb700eb9744677441e49fee82026dfc74bafa` |
+| RUID sweeps | `pre_1`, `pre_2`, `post_1`, and `post_2` each listed/joined/gone/sticky-UNKNOWN/retry `585/585/0/0/0`; each row SHA-256 `babd668a46105da1228925947aa5699cf48de20fbc68deb121088ec6e4a8bda5`; aggregate rows SHA-256 `1b8d4f29e064ae00ebb6eebd02876b1ce391a233fe5541086a859d98d3670137` |
+| Models | generation `17 / 17 PASS`, SHA-256 `59f94fa446316f0bf656ba28c1669c247807e6a37e7c90e5adacf1548ca8d788`; stopped-adoption `36 / 36 PASS`, SHA-256 `4a1bd17791e4b4cf5b90d84d06ff3c1cdc61d36f40d1e98d01602ba0b82da404`; process operations `0` in both models |
+| Guardian regions | corrected guardian `a550c1b166bb94b0ae674202b144a1bfc071ffc0` / tree `14a7b38a524e9c19cbf848452124beceaec8dedd`; exact two pinned regions selectively executed; guardian top level and production tracker not loaded |
+| Marker | retained `/private/tmp/gate-e1-4-r18-successor-stopped-adoption-canary-be1b2af-a550c1b`; device/inode `16777231/17443295`; UID/GID `501/0`; mode `0700`; nlink `2`; postflight size `64`; exact empty inventory `0 / e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`; marker and parent each fsync/fullfsync; never cwd; the canary performed no delete, populate, recreate, or reuse; the retained marker remains empty and every such future action is forbidden |
+| Source conservation | source clean `befc632485930a9cca7f618d3704292b5465f911` / tree `7d1a3bf302fe358f9e42dc1ed2bf54ed3d22982e`; canary and guardian bytes unchanged |
+| Canary-internal operation surface | invocation/marker/fork/exec/self-stop-intent/KILL/reap/conservation `1/1/1/1/1/1/1/1`; guardian STOP `0`; CONT `0`; signal-zero `2`; spawn/shell/Swift/SwiftPM/Git/constructor/production-guardian `0`; cleanup/deletion/retry/manual signal `0`; the frozen outer zsh performed only `umask` plus `exec` |
+| Authority | disposable stopped-adoption mechanics canary only; scientific authorities closed `0`; Gate-E mechanics/science `ABSTAIN`; vector `00000000`; Gate-E clearance `0` |
+
+The exact transport-visible frame was:
+
+<!-- R18_SUCCESSOR_STOPPED_ADOPTION_CANARY_RECEIPT_BEGIN -->
+```json
+{"abi":{"flavor_17_size":56,"join_attempts":4,"published_private_header_pin":"apple-oss-distributions/xnu@xnu-12377.1.9/bsd/sys/proc_info_private.h","short_bsd_size":64,"successful_call_errno":"ignored_and_not_recorded","xnu_family":"12377"},"actuation":{"atomic_generation_bound_signal_available":false,"controller_cont_entered_calls":0,"guardian_actuator_receipt":{"adopted_stopped_certificates_sha256":"18f3c2e38a250703c0f392ed5e6e7a62942c50a7f3d479945590a7bd12c851fa","adopted_stopped_group_count":1,"adopted_stopped_groups":[10845],"atomic_generation_bound_signal_available":false,"disabled":false,"fault_count":0,"fault_receipts_retained":0,"fault_receipts_sha256":"4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945","fault_receipts_truncated":false,"kill_calls":1,"last_fault":null,"poisoned":false,"signal_calls":1,"signal_ledger_columns":["sequence","action","group","sid","member_count","certificate_sha256","call_entered","delivered"],"signal_ledger_rows":[[1,"KILL",10845,10845,1,"d8a55b5d46e3f3aa1f2982018b681fc32f5ab44b02cc04756cdf7e872aa00956",true,true]],"signal_ledger_sha256":"15c373c818beb95594c6b58dfff46504b1eec2c4346d835b93476569a31d129b","stop_calls":0,"userspace_snapshot_signal_race_named":true},"guardian_region_kill_entered_calls":1,"guardian_region_stop_entered_calls":0,"kill_certificate":{"action":"KILL","certificate_sha256":"c3fc4aebea70f73932571fbbfed11637a5fc7df9e9bf90ab91b8a3cf859e6363","consumed":true,"group":10845,"kind":null,"member_count":1,"members_sha256":"62ad31518df16272a71caaf00581f38a0c99596d4bbf0e67f3686a5fb2494a01","sid":10845,"signal_call_entered":true,"signal_delivered":true},"private_process_group":10845,"private_session":10845,"self_stop_origin_race_named":true,"signal_target_scope":"exact_direct_child_private_group","signal_zero_absence_probes":2,"stopped_adoption_certificate":{"action":null,"certificate_sha256":"5f30a064cfa4dfe57fe37464d62d68f7281436959df2b64e60c6663a8015daea","group":10845,"kind":"STOPPED_ADOPTION","member_count":1,"members_sha256":"62ad31518df16272a71caaf00581f38a0c99596d4bbf0e67f3686a5fb2494a01","sid":10845},"stopped_member":{"classification":"owned","credentials":[501,20,501,20,501,20],"idversion":17428691,"orig_ppidversion":17428689,"pgid":10845,"pid":10845,"puniqueid":8919441,"sid":10845,"status":4,"uniqueid":8919442},"userspace_snapshot_signal_race_named":true,"worker_libc_raise_call_sites":1,"worker_self_stop_entered_calls":"UNPROVEN","worker_self_stop_intent_observed":true,"worker_sigstop_wait_observed":true},"authority_vector":"00000000","cwd":{"marker_used_as_cwd":false,"path":"/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging","unchanged":true},"duration_milliseconds":113.78,"guardian_regions":{"blob":"35596488986fcf98aa792c0c2d0a558c59109aed","bytes":76970,"commit":"a550c1b166bb94b0ae674202b144a1bfc071ffc0","executed_exact_regions":true,"identity":{"device":16777231,"gid":20,"inode":17416984,"mode":420,"nlink":1,"uid":501},"path":"/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/docs/tools/prime-driver-v2-r18-guardian.rb","regions":[{"bytes":6680,"label":"actuation","lines":177,"offset":38586,"sha256":"cef63a1dddc35d57aa5c00f88b9d3de893c9d3a9e3238a1a6953e090062139f4"},{"bytes":8944,"label":"actuator","lines":254,"offset":45863,"sha256":"00cb0692997ae16f9a512f7362c37c15eb60b0f74927a20bc0d993e587b9ca1d"}],"sha256":"33d54336a8cfd5427f52a27e0f3ccec965f7b3eb43720e46dfbcfdd349894aa2","tree":"14a7b38a524e9c19cbf848452124beceaec8dedd"},"lineage":{"controller_epoch_at_fork":{"idversion":17428689,"orig_ppidversion":16866101,"puniqueid":8693210,"reserve2":0,"reserve3":0,"uniqueid":8919441,"uuid_hex":"eb2540b7e13236beb719619d0fbf7203"},"group_absence":[{"group":10845,"pids":[],"process_list_observation":"EMPTY","signal_zero_errno":3,"signal_zero_observation":"ESRCH"},{"group":10845,"pids":[],"process_list_observation":"EMPTY","signal_zero_errno":3,"signal_zero_observation":"ESRCH"}],"joined_processes":{"columns":["label","pid","attempts","uuid_hex","uniqueid","puniqueid","idversion","orig_ppidversion","ppid","pgid","sid","ruid","status","comm_hex"],"rows":[["controller",10844,1,"eb2540b7e13236beb719619d0fbf7203",8919441,8693210,17428689,16866101,81821,10844,10844,501,2,"727562790000540000736b0000000000"],["worker_preexec",10845,1,"eb2540b7e13236beb719619d0fbf7203",8919442,8919441,17428690,17428689,10844,10845,10845,501,2,"727562790000540000736b0000000000"],["worker_postexec",10845,1,"eb2540b7e13236beb719619d0fbf7203",8919442,8919441,17428691,17428689,10844,10845,10845,501,2,"727562790000540000736b0000000000"],["worker_self_stopped",10845,1,"eb2540b7e13236beb719619d0fbf7203",8919442,8919441,17428691,17428689,10844,10845,10845,501,4,"727562790000540000736b0000000000"]],"rows_sha256":"b77235b9c7d7f7e3ed6a2a54a5a4704d141d0f396fd510fb18ffe1576f95ac6c"},"worker_exact_reap":{"exit_status":null,"exited":false,"pid":10845,"raw_status":9,"signaled":true,"term_signal":9},"worker_generation_absence":[{"generation":8919442,"observation":"ESRCH","pid":10845},{"generation":8919442,"observation":"ESRCH","pid":10845}],"worker_stop_observation":{"pid":10845,"raw_status":4479,"stop_signal":17,"stopped":true}},"marker":{"created_once":true,"empty_inventory_sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","entry_count":0,"kept_after_outcome":true,"leaf":"gate-e1-4-r18-successor-stopped-adoption-canary-be1b2af-a550c1b","marker_identity":{"device":16777231,"gid":0,"inode":17443295,"mode":448,"nlink":2,"uid":501},"marker_sync":{"fsync":true,"fullfsync":true},"parent_identity":{"device":16777231,"gid":0,"inode":774813,"mode":1023,"nlink":2098,"uid":0},"parent_sync":{"fsync":true,"fullfsync":true},"path":"/private/tmp/gate-e1-4-r18-successor-stopped-adoption-canary-be1b2af-a550c1b","used_as_cwd":false},"operations":{"constructor_calls":0,"controller_cont_entered_calls":0,"exec_calls":1,"failure_terminal_requires_blocking_conservation":true,"fork_calls":1,"git_calls":0,"guardian_region_kill_entered_calls":1,"guardian_region_process_kill_call_sites":1,"guardian_region_stop_entered_calls":0,"named_script_snapshot_to_exec_race_named":true,"production_guardian_invocations":0,"script_is_held_mapped_executable":false,"script_transport":"named_path_to_pinned_ruby_interpreter","selectively_executed_guardian_regions":2,"shell_calls":0,"signal_zero_call_sites":1,"signal_zero_entered_calls":2,"spawn_calls":0,"swift_calls":0,"timeout_authority":"liveness_only_never_abandonment","worker_libc_raise_call_sites":1,"worker_self_stop_entered_calls":"UNPROVEN"},"payload_sha256":"0622529d6386cf62e68b97607f8bd230a1e724dd8171a40ecf5c95ca4ad02638","pid1_probe":{"domain":{"pgid":1,"sid":1},"full_bsd":{"errno":1,"expected":"EPERM","flavor":3,"requested_bytes":136,"returned_bytes":0},"join_attempts":1,"short_bsd":{"flavor":13,"returned_bytes":64},"unique_identifier":{"flavor":17,"idversion":740,"orig_ppidversion":0,"returned_bytes":56,"uniqueid":1,"uuid_hex":"3dcaf70018d5354295b36eb9e5facf76"}},"predecessor_commit":"be1b2af174ae4dd3dc50997f3cad56cce2193c8c","protocol":{"command_fd":8,"event_count":3,"event_fd":9,"events":["worker_preexec_ready","worker_postexec_ready","worker_self_stop_entering"],"frame_cap_bytes":256,"transcript_sha256":"1177b5e754d14a0cb054fe466e6cb700eb9744677441e49fee82026dfc74bafa"},"pure_actuation_model":{"case_count":36,"cases_sha256":"4a1bd17791e4b4cf5b90d84d06ff3c1cdc61d36f40d1e98d01602ba0b82da404","passed_count":36,"performed_process_operations":false,"version":"r18-stopped-adoption-model-v1"},"pure_generation_model":{"case_count":17,"cases_sha256":"59f94fa446316f0bf656ba28c1669c247807e6a37e7c90e5adacf1548ca8d788","passed_count":17,"performed_process_operations":false,"version":"r18-generation-domain-model-v1"},"receipt_bounds":{"hard_cap_bytes":16384,"numeric_width_structural_upper_bound_bytes":11777,"policy_max_bytes":12288},"ruid_sweeps":{"columns":["label","selector_kind","selector_value","listed_count","joined_count","gone_count","sticky_unknown_count","retry_count","rows_sha256"],"rows":[["pre_1","RUID",501,585,585,0,0,0,"babd668a46105da1228925947aa5699cf48de20fbc68deb121088ec6e4a8bda5"],["pre_2","RUID",501,585,585,0,0,0,"babd668a46105da1228925947aa5699cf48de20fbc68deb121088ec6e4a8bda5"],["post_1","RUID",501,585,585,0,0,0,"babd668a46105da1228925947aa5699cf48de20fbc68deb121088ec6e4a8bda5"],["post_2","RUID",501,585,585,0,0,0,"babd668a46105da1228925947aa5699cf48de20fbc68deb121088ec6e4a8bda5"]],"rows_sha256":"1b8d4f29e064ae00ebb6eebd02876b1ce391a233fe5541086a859d98d3670137"},"runtime":{"credentials":{"egid":20,"euid":501,"gid":20,"groups":[12,20,33,61,79,80,81,98,100,204,250,395,398,399,400,701],"uid":501},"cwd":"/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging","incoming_umask":"0077","ruby":{"engine":"ruby","patchlevel":210,"platform":"universal.arm64e-darwin25","version":"2.6.10"},"ruby_image":{"arm64e_uuid_hex":"eb2540b7e13236beb719619d0fbf7203","device":16777231,"gid":0,"inode":1152921500312572705,"mode":365,"nlink":1,"sha256":"9d6ff3e289c7d908e3c785e0bedd6692d1d6a3377965c88c04d847104b7c892c","size":135200,"uid":0},"script_image":{"device":16777231,"gid":20,"inode":17441512,"mode":420,"nlink":1,"sha256":"f12c59853252d97bdae99816e04b220b6c77fb34f4f5812d395a5334348aa238","size":94020,"uid":501},"script_surface":{"direct_process_kill_call_sites":0,"process_exec_call_sites":1,"process_fork_call_sites":1,"process_spawn_call_sites":0,"selective_eval_call_sites":1,"signal_zero_call_sites":1,"worker_libc_raise_call_sites":1},"stdin":{"character_device":true,"device":-458678049,"gid":0,"inode":336,"mode":438,"path":"/dev/null","rdevice":50331650,"tty":false,"uid":0},"sysctls":{"hw.machine":"arm64","kern.osproductversion":"26.5.2","kern.osrelease":"25.5.0","kern.osversion":"25F84","kern.version":"Darwin Kernel Version 25.5.0: Tue Jun  9 22:28:34 PDT 2026; root:xnu-12377.121.10~1/RELEASE_ARM64_T6050"}},"schema":"prime-driver-v2-r18-successor-stopped-adoption-canary/v1","scientific_authorities_closed":0,"scientific_outcome":"ABSTAIN","started_at":"2026-08-24T15:45:48.422562Z","status":"R18_SUCCESSOR_STOPPED_ADOPTION_CANARY_PASS"}
+```
+<!-- R18_SUCCESSOR_STOPPED_ADOPTION_CANARY_RECEIPT_END -->
+
+Removing only `payload_sha256` from the recursively canonical payload
+independently reproduced the exact `10,208` bytes and SHA-256 recorded above;
+reattaching it reproduced the `10,293`-byte frame and full-frame SHA-256.
+The retained marker independently rejoined after the controller returned and
+remained empty at the exact receipt device/inode and metadata.
+
+This PASS closes only the disposable stopped-adoption mechanics question: the
+corrected guardian regions adopted a first-seen, exact stopped direct child
+without entering the ordinary STOP route, then used one fresh KILL certificate
+and completed exact reap plus generation/group conservation. It does not
+repair or reinterpret the consumed nonterminal R18 guardian, construct a
+successor epoch, invoke the production guardian, run Swift/Git evidence, prove
+an executor, close an authority bit, or promote Gate E.
+
+The receipt does not prove that the child-local `raise(SIGSTOP)` call entered
+or caused the stop. The self-stop-origin interval remains named. Darwin still
+provides no atomic generation-bound group-signal primitive, so the final
+joined-snapshot-to-numeric-negative-PGID KILL interval remains a named
+userspace race. The script remained interpreted named-path input rather than a
+held mapped executable, so the held-snapshot-to-path-exec interval remains
+named. PASS erases none of these residuals.
+
+The `113.78 ms` duration is wall-clock timing only. No task-energy counter,
+joule, erg, watt, whole-machine, GPU, ANE, or process-tree energy measurement
+was made. The separately designed direct-task CPU-energy observer remains
+unimplemented and uninvoked.
+
+The canary identity is consumed permanently. This result authorizes no rerun,
+cleanup, reinterpretation, energy observation, successor constructor,
+corrected production guardian, Swift command, signal, authority closure, or
+Gate-E promotion. A successor epoch or guardian requires a new namespace,
+new identity, separate freeze, and fresh exact approval.
+
+```text
+R18_consumed_guardian_invocations = 1_nonterminal
+R18_successor_guardian_implementations = 1
+R18_successor_guardian_launches = 0
+R18_successor_epoch_constructor_invocations = 0
+R18_successor_stopped_adoption_canary_implementations = 1
+R18_successor_stopped_adoption_canary_invocations = 1_consumed_terminal_pass
+R18_successor_stopped_adoption_canary_marker_creations = 1
+R18_successor_stopped_adoption_canary_forks = 1
+R18_successor_stopped_adoption_canary_execs = 1
+R18_successor_stopped_adoption_canary_self_stop_intents = 1
+R18_successor_stopped_adoption_canary_self_stop_entered_calls = UNPROVEN
+R18_successor_stopped_adoption_canary_guardian_stop_entries = 0
+R18_successor_stopped_adoption_canary_guardian_kill_entries = 1_entered_delivered
+R18_successor_stopped_adoption_canary_signal_zero_calls = 2
+R18_successor_stopped_adoption_canary_exact_reaps = 1_SIGKILL
+R18_successor_stopped_adoption_canary_conservation_proofs = 1
+R18_successor_swiftpm_commands = 0
+R18_successor_retained_state_mutations = 0
+outer_journal_authority_vector = 00000000
+gate_E_mechanics_outcome = ABSTAIN
+gate_E_scientific_outcome = ABSTAIN
+gate_E_clearance_granted = 0
+```
+
+Here, `R18_successor_retained_state_mutations = 0` refers to the prior
+R18/successor epoch state. The consumed canary marker is the sole new retained
+object and is counted separately above.
