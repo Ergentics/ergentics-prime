@@ -14755,3 +14755,103 @@ gate_E_mechanics_outcome = ABSTAIN
 gate_E_scientific_outcome = ABSTAIN
 gate_E_clearance_granted = 0
 ```
+
+## R19 native fixed-arity leaf primitive — implemented, build-identical, uninvoked
+
+| Coordinate | Exact result |
+| --- | --- |
+| Authorized predecessor | `e9b6f7bd4340106543994b9de52dc56c441f4ec4` / tree `12b2332044fbd534d50b3065f104b0fdf501ea36` |
+| Initial implementation | `f9eb5ba56dab385631b07d89ccf294414f64c73c` / tree `5d14ef5fa4481978c41f508b357c96b436dea3c9` |
+| Fail-closed hardening | `3b694bcbc2e6ea64d6474066ad52a7b49ef021b5` / tree `0cd3c02e8f2f268b581a3035cda4d094e1662409` |
+| Source delta | exact three new paths; the hardening successor changes only the `F_GETFD >= 0` check |
+| Definitive pair | raw binary and C-object equality `PASS` in the two retained build roots |
+| Definitive image | arm64 Mach-O; `89,976` bytes; SHA-256 `e826ff9251906e2ff92921fcbaa8b27eff32e227838ce217c62017c9461b10d3` |
+| Mach-O identity | UUID `250D80B3-E19B-3B12-AC3A-D225B5FF5BEB`; macOS `14.0`; SDK `26.5` |
+| Signature | linker-signed ad hoc; full CDHash `f4e81281906a06354b1cd604d178102337b47360c5cc298f6ebc2109cccc045d` |
+| Runtime | resulting-image executions `0`; mapped-image set `UNOBSERVED_NOT_EXECUTED` |
+| Canary namespace | creations `0`; five read-only checks observed the exact root absent; corroboration, not runtime proof |
+| Authority | mechanics/science `ABSTAIN/ABSTAIN`; vector `00000000`; clearance `0` |
+
+### Exact source and ABI surface
+
+| Path | Bytes | Blob | SHA-256 |
+| --- | ---: | --- | --- |
+| `docs/tools/prime-driver-v2-r19-native-leaf-fixed-openat.c` | 762 | `9f6ce61b50d0b4e7e583a97d63c536dd0554308e` | `1c95eb6aa821af43d9d80363e913e536c963cee1382c652e8e9e91458d3e62e4` |
+| `docs/tools/prime-driver-v2-r19-native-leaf-fixed-openat.h` | 423 | `ca2d6ee3e97b4e000f53639d552760ce9e23941d` | `39e9303290338cf5a3c35e2bd37147e0e53e3782ba5d34a19e68744feeea12ea` |
+| `docs/tools/prime-driver-v2-r19-native-leaf-primitive.swift` | 15,033 | `18f5469834bad0192cdef2cfbdab37f0b5640810` | `beb22befbf23ad095dad1efb4cdcf2399ad078ae9d9277399ecab8b36c36f421` |
+
+| Datum | Result |
+| --- | --- |
+| C boundary | one hidden in-image `createExclusivePoisonedLeaf(dirfd,fixedLeaf)` symbol |
+| Sole create call | native `_openat`; fixed flags `0x01000b02`; Apple-arm64 variadic mode `0000` emitted as `str xzr,[sp]` |
+| Caller surface | zero application arguments; fixed root, leaf, flags, mode, cap, and ordering |
+| Generic/process surface | Fiddle/dlsym/dlopen/fork/exec/spawn/wait/kill/signal/libproc `0` |
+| Namespace surface | rename/unlink/staging/helper/custom-dylib products `0` |
+| System linkage | five strong plus five weak system load commands; runtime loading unobserved |
+| Static residual | same-UID transient add/remove between inventory/vnode joins is not eliminated without watcher or lease |
+
+### Physical failure regions
+
+The earlier blanket mode-`0000` failure sentence cannot hold after the affine
+`fchmod(0400)` transition. Readiness must use these states; none ran here.
+
+| Region | Retained interpretation |
+| --- | --- |
+| Before root creation | no canary namespace |
+| Root created, leaf absent | private mode-`0700` empty root; consumed/incomplete |
+| Leaf created, before publication | mode-`0000` zero/partial/complete poison |
+| Publication entered | mode-`0400` incomplete candidate may remain; still `ABSTAIN` without all postchecks/syncs, exit `0`, and outer re-admission |
+
+No rollback, repair, cleanup, reuse, or inference from mode alone is allowed.
+
+### Retained build diagnostics
+
+| Pair | Classification | SHA-256 | UUID | SDK |
+| --- | --- | --- | --- | --- |
+| build-root output | superseded unversioned-SDK handoff | `30a9f6f644c88ac041d75b4e536e17974d990d12d5cda1d32705af02c51e673a` | `2662D885-71CD-3A8D-AFC9-B939D46F731F` | `14.0` |
+| `sdk26_5/` | superseded before `F_GETFD` hardening | `78fd325bff90c83b857fe8fc31b73016b0e2cba8dc725072df337b0692fedbe5` | `09E9E5C1-E57F-34B2-B8F7-DC6D5A8379C4` | `26.5` |
+| `sdk26_5_fdflags/` | definitive build-only identity | `e826ff9251906e2ff92921fcbaa8b27eff32e227838ce217c62017c9461b10d3` | `250D80B3-E19B-3B12-AC3A-D225B5FF5BEB` | `26.5` |
+
+The two mode-`0700` build roots remain retained:
+
+```text
+/private/tmp/prime-driver-v2-r19-native-leaf-build-a-e9b6f7bd
+/private/tmp/prime-driver-v2-r19-native-leaf-build-b-e9b6f7bd
+```
+
+A subagent accidentally redirected the undefined-symbol transcript to
+`/tmp/r19-native-a-undefined-symbols-audit.txt`: mode `0644`, `4,071`
+bytes, SHA-256 `343a834ed82ce3529ab4635b2fd6f69f1a3991f69b1391b06abe4521e31ffe0d`.
+It is inert non-evidence, referenced by no source or image, and remains
+retained because cleanup was not authorized.
+
+Canonical build-only record metrics:
+
+```text
+frame_bytes = 5712
+frame_sha256 = 4faa3a692f0138df9bd84a9cc61be0e0aca250c966daba20e9e7ea2e703ad616
+```
+
+```json
+{"audit_incident":{"bytes":4071,"classification":"INCIDENTAL_OUT_OF_SCOPE_READ_ONLY_TRANSCRIPT_LEAF_RETAINED","cleanup_performed":false,"mode":"0644","path":"/tmp/r19-native-a-undefined-symbols-audit.txt","repo_or_canary_mutation":false,"sha256":"343a834ed82ce3529ab4635b2fd6f69f1a3991f69b1391b06abe4521e31ffe0d"},"authority":{"authority_vector":"00000000","gate_e_clearance":0,"gate_e_mechanics_outcome":"ABSTAIN","gate_e_scientific_outcome":"ABSTAIN","scientific_authorities_closed":0},"build_verification":{"architecture":"arm64","build_roots":["/private/tmp/prime-driver-v2-r19-native-leaf-build-a-e9b6f7bd","/private/tmp/prime-driver-v2-r19-native-leaf-build-b-e9b6f7bd"],"definitive_identity":{"adhoc_cdhash_full_sha256":"f4e81281906a06354b1cd604d178102337b47360c5cc298f6ebc2109cccc045d","bytes":89976,"lc_build_version":{"minimum_os":"14.0","platform":"macOS","sdk":"26.5"},"mach_o_uuid":"250D80B3-E19B-3B12-AC3A-D225B5FF5BEB","sha256":"e826ff9251906e2ff92921fcbaa8b27eff32e227838ce217c62017c9461b10d3"},"definitive_output_relative_path":"sdk26_5_fdflags/PrimeDriverV2R19NativeLeafPrimitiveCanary","definitive_pair_raw_equal":true,"image_executions":0,"retained_superseded_identities":[{"classification":"SUPERSEDED_UNVERSIONED_SDK_LINKER_HANDOFF","lc_sdk":"14.0","mach_o_uuid":"2662D885-71CD-3A8D-AFC9-B939D46F731F","output_relative_path":"PrimeDriverV2R19NativeLeafPrimitiveCanary","sha256":"30a9f6f644c88ac041d75b4e536e17974d990d12d5cda1d32705af02c51e673a"},{"classification":"SUPERSEDED_PRE_FGETFD_FAIL_CLOSED_HARDENING","lc_sdk":"26.5","mach_o_uuid":"09E9E5C1-E57F-34B2-B8F7-DC6D5A8379C4","output_relative_path":"sdk26_5/PrimeDriverV2R19NativeLeafPrimitiveCanary","sha256":"78fd325bff90c83b857fe8fc31b73016b0e2cba8dc725072df337b0692fedbe5"}],"runtime_image_set":"UNOBSERVED_NOT_EXECUTED","scratch_roots_retained":true,"system_load_commands":{"strong":5,"weak":5},"transcript_sha256":{"codesign_without_executable_path":"1dc6f16a3681b2b251512a3c85311f361d0fd4a873ec67a421531dc5fb332833","defined_wrapper_disassembly":"3f95982b47c0f63d2e486ddf4c2722c4eae5e4d1176b8d169faa8ce040d55896","linked_images":"e7117556b21378ccded277c6d0b733418b457deba3f5653c0cbc74e63d366b5b","load_commands":"272b84ae394ad25291608f4e27a8810278392a34bfa4c7c8db1dd41566f211ea","mach_header":"b91eec123a0ec501402c20217ed44bba7c77558163bfcfb91383fed75efc22a1","undefined_symbols":"343a834ed82ce3529ab4635b2fd6f69f1a3991f69b1391b06abe4521e31ffe0d","vtool_build":"52c8e8d0f39bbba7e86a6cea3ab000b2ad22d891ff3d882edb8c0ce77ce94eae"},"wrapper_object":{"bytes":992,"pair_raw_equal":true,"sha256":"cfabd6493d43ccc79d7f18b9ea95ade0e764923e6cc81b879822a6a7f4bb00ba"}},"failure_regions":{"before_root_creation":"NO_CANARY_NAMESPACE","leaf_created_before_publication":"MODE_0000_ZERO_PARTIAL_OR_COMPLETE_POISON_RETAINED","publication_entered":"MODE_0400_INCOMPLETE_CANDIDATE_ABSTAIN_UNLESS_FULL_POSTCHECKS_SYNCS_EXIT0_AND_OUTER_ADMISSION","readiness_acceptance_required_before_invocation":true,"rollback_or_repair_authorized":false,"root_created_before_leaf":"MODE_0700_EMPTY_ROOT_RETAINED"},"implementation":{"authorized_predecessor":{"commit":"e9b6f7bd4340106543994b9de52dc56c441f4ec4","tree":"12b2332044fbd534d50b3065f104b0fdf501ea36"},"hardening_commit":{"commit":"3b694bcbc2e6ea64d6474066ad52a7b49ef021b5","tree":"0cd3c02e8f2f268b581a3035cda4d094e1662409"},"initial_commit":{"commit":"f9eb5ba56dab385631b07d89ccf294414f64c73c","tree":"5d14ef5fa4481978c41f508b357c96b436dea3c9"},"paths":[{"blob":"9f6ce61b50d0b4e7e583a97d63c536dd0554308e","bytes":762,"path":"docs/tools/prime-driver-v2-r19-native-leaf-fixed-openat.c","sha256":"1c95eb6aa821af43d9d80363e913e536c963cee1382c652e8e9e91458d3e62e4"},{"blob":"ca2d6ee3e97b4e000f53639d552760ce9e23941d","bytes":423,"path":"docs/tools/prime-driver-v2-r19-native-leaf-fixed-openat.h","sha256":"39e9303290338cf5a3c35e2bd37147e0e53e3782ba5d34a19e68744feeea12ea"},{"blob":"18f5469834bad0192cdef2cfbdab37f0b5640810","bytes":15033,"path":"docs/tools/prime-driver-v2-r19-native-leaf-primitive.swift","sha256":"beb22befbf23ad095dad1efb4cdcf2399ad078ae9d9277399ecab8b36c36f421"}],"static_contract":{"application_arguments":0,"canonical_digest_rule":"SHA256_CANONICAL_PAYLOAD_WITHOUT_DIGEST_THEN_ATTACH_DIGEST","custom_dynamic_library_images":0,"fixed_leaf":"00-native-leaf-canary.json","fixed_root":"/private/tmp/gate-e1-4-r19-native-leaf-primitive-canary-3a46a037-17452840","generic_fiddle_openat_create_calls":0,"helper_processes":0,"in_image_hidden_c_wrappers":1,"native_openat_create_calls":1,"openat_flags_hex":"0x01000b02","openat_initial_mode":"0000","process_actuation_undefined_symbols":0,"publication_fchmod_calls":1,"rename_calls":0,"unlink_calls":0}},"operations":{"canary_leaf_creations":0,"canary_root_creations":0,"canary_root_read_only_path_check_result":"ABSENT_AT_EACH_CHECK_NOT_RUNTIME_EVIDENCE","canary_root_read_only_path_checks":5,"censuses":0,"cleanup_calls":0,"energy_actions":0,"gate_e_promotions":0,"repairs":0,"signals":0,"source_repo_mutations":0},"residuals":{"same_uid_transient_namespace_add_remove_between_inventory_joins":"NOT_ELIMINATED_WITHOUT_WATCHER_OR_LEASE","system_runtime_image_set":"UNOBSERVED_NOT_EXECUTED"},"schema":"prime_driver_v2_r19_native_leaf_primitive_build_only_v1","status":"R19_NATIVE_FIXED_ARITY_LEAF_PRIMITIVE_IMPLEMENTED_BUILD_IDENTICAL_UNINVOKED","toolchain":{"clang_sha256":"7def90dd8829726686213a747fc5bff1583df933dae5edc55d755479e0bfe00a","ld_sha256":"5897b275efd93b201b6df5832dd541262b3f20f290859ba78f2200a6a66ef38b","sdk_settings_sha256":"f8d005f09381389167f9e0aeaa169bc9e7dff162ef22ca2fd8e98df7ff1acafe","sdk_version":"26.5","swift_driver_sha256":"fead52ebe00ec6ec700ecbb4be30f0b6204dd0506cb271dda72ac257261bd64b","swift_version":"6.3.3"}}
+```
+
+```text
+R19_native_leaf_primitive_freezes = 1
+R19_native_leaf_primitive_initial_implementations = 1
+R19_native_leaf_primitive_fail_closed_hardening_commits = 1
+R19_native_leaf_primitive_definitive_build_pairs = 1
+R19_native_leaf_primitive_superseded_build_pairs_retained = 2
+R19_native_leaf_primitive_binary_invocations = 0
+R19_native_leaf_primitive_roots_created = 0
+R19_native_leaf_primitive_leaves_created = 0
+R19_native_leaf_primitive_censuses = 0
+R19_native_leaf_primitive_signals = 0
+R19_native_leaf_primitive_cleanup_calls = 0
+R19_native_leaf_primitive_repair_calls = 0
+R19_native_leaf_primitive_gate_E_promotions = 0
+outer_journal_authority_vector = 00000000
+gate_E_mechanics_outcome = ABSTAIN
+gate_E_scientific_outcome = ABSTAIN
+gate_E_clearance_granted = 0
+```
