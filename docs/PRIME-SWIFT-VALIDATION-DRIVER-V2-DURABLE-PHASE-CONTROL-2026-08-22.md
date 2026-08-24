@@ -15126,3 +15126,84 @@ gate_E_mechanics_outcome = ABSTAIN
 gate_E_scientific_outcome = ABSTAIN
 gate_E_clearance_granted = 0
 ```
+
+## R19 native-leaf admission auditor — affine-output correction and build authority
+
+Independent source review found that the prior universal zero-output rejection
+contract was not physically realizable. The frozen candidate frame is about
+`799` bytes at maximal vnode width, while Darwin reports `PIPE_BUF = 512`.
+Once a write larger than that atomic bound is entered, a positive short prefix
+cannot be retracted. Source must follow the corrected affine publication below
+before either compiler is invoked.
+
+| Coordinate | Frozen value |
+| --- | --- |
+| Control predecessor | `b851a782d3fc122f32d4290c50755f7a833a8e9e` / tree `e6a1ba230ff74f1d3bbc445b7b74b6c60244f124` |
+| Source | sole new path `docs/tools/prime-driver-v2-r19-native-leaf-admission.swift` |
+| Product | `PrimeDriverV2R19NativeLeafAdmission` |
+| Build roots | exact A/B roots ending `...build-a-b851a782` and `...build-b-b851a782`; both observed absent |
+| Authority | implementation and exactly two sequential compilations `true`; auditor/canary execution `false` |
+| Gate E | vector `00000000`; mechanics/science `ABSTAIN/ABSTAIN`; clearance `0` |
+
+### Corrected stdout publication
+
+- After source `main` is entered, every source-controlled rejection before
+  publication entry performs no stdout/stderr write and exits `70`. Earlier
+  loader/runtime diagnostics or missing status are possible and always veto.
+- After every admission predicate and the complete frame are in memory, set
+  `F_SETNOSIGPIPE` on stdout, then enter at most one `Darwin.write` call.
+- A failed or positive short write exits `70` without retry. A partial prefix
+  is retained transport data but is never a record or authority.
+- A full frame followed by signal, terminal loss, or missing/nonzero status is
+  also non-authoritative. Only byte-exact canonical frame plus exact normal
+  exit `0` produces the auditor PASS candidate.
+- The auditor source has zero stderr-write calls. Captured stderr must be empty
+  for PASS; any loader/runtime stderr byte rejects. No `print`, buffering
+  facade, second write, repair, or reinterpretation is permitted.
+
+This is the same affine distinction used for the mode-`0000` to mode-`0400`
+leaf transition: entry can create an irreversible prefix, while acceptance
+requires the complete terminal conjunction.
+
+### Authorized implementation/build boundary
+
+After this control correction is committed, one implementation commit may add
+only the frozen Swift source. The two exact mode-`0700` scratch roots may then
+be created once, each initially with only mode-`0700` `tmp/` and
+`module-cache/` children. The implementation commit must be the sole child of
+this correction checkpoint with an exact one-path delta. Before A and again
+before B, the worktree must be clean and the named source bytes must equal the
+committed blob; HEAD/tree remain unchanged through both compiles. Compile A
+then B with the canonical record's exact argv and eight-entry replacement
+environment. Every failure is retained; there is no cleanup, third compile,
+alternate root, SwiftPM, or product execution. Analyzer-only comparison may
+read the resulting files with
+`cmp`, SHA-256, `dwarfdump`, `otool`, `codesign`, `nm`, `vtool`, and metadata
+tools. The exact canary namespace remains untouched.
+
+Canonical correction record metrics:
+
+```text
+frame_bytes = 6340
+frame_sha256 = 415e4cf5c1005fd9b3a927e127622c40d98f9a6d6e09ef155cfab4a96c19acf3
+```
+
+```json
+{"authority":{"auditor_implementation_authorized":true,"auditor_resulting_image_execution_authorized":false,"authority_closure_authorized":false,"authority_vector":"00000000","canary_execution_authorized":false,"gate_e_clearance":0,"gate_e_mechanics_outcome":"ABSTAIN","gate_e_promotion_authorized":false,"gate_e_scientific_outcome":"ABSTAIN","launch_approval_eligible":false,"retry_authorized":false,"scientific_authorities_closed":0,"swift_compilation_authorized":true},"build":{"cleanup_authorized":false,"compile_count_authorized":2,"cwd":"/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging","failure_policy":"RETAIN_EVERY_OUTCOME_NO_THIRD_COMPILE_NO_ALTERNATE_ROOT","head_tree_stable_across_a_b":true,"root_creation_authorized":true,"root_initial_state":"ABSENT_READ_ONLY_OBSERVED","root_mode":"0700","roots":[{"compiler_argv":["/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc","-swift-version","6","-O","-whole-module-optimization","-parse-as-library","-emit-executable","-target","arm64-apple-macosx14.0","-sdk","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk","-module-name","PrimeDriverV2R19NativeLeafAdmission","-module-cache-path","/private/tmp/prime-driver-v2-r19-native-leaf-admission-build-a-b851a782/module-cache","/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/docs/tools/prime-driver-v2-r19-native-leaf-admission.swift","-o","/private/tmp/prime-driver-v2-r19-native-leaf-admission-build-a-b851a782/PrimeDriverV2R19NativeLeafAdmission"],"environment_sorted":["DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer","LANG=C.UTF-8","LC_ALL=C.UTF-8","PATH=/usr/bin:/bin","SDKROOT=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk","TMPDIR=/private/tmp/prime-driver-v2-r19-native-leaf-admission-build-a-b851a782/tmp/","TZ=UTC","__CF_USER_TEXT_ENCODING=0x1F5:0x0:0x0"],"path":"/private/tmp/prime-driver-v2-r19-native-leaf-admission-build-a-b851a782"},{"compiler_argv":["/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc","-swift-version","6","-O","-whole-module-optimization","-parse-as-library","-emit-executable","-target","arm64-apple-macosx14.0","-sdk","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk","-module-name","PrimeDriverV2R19NativeLeafAdmission","-module-cache-path","/private/tmp/prime-driver-v2-r19-native-leaf-admission-build-b-b851a782/module-cache","/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/docs/tools/prime-driver-v2-r19-native-leaf-admission.swift","-o","/private/tmp/prime-driver-v2-r19-native-leaf-admission-build-b-b851a782/PrimeDriverV2R19NativeLeafAdmission"],"environment_sorted":["DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer","LANG=C.UTF-8","LC_ALL=C.UTF-8","PATH=/usr/bin:/bin","SDKROOT=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk","TMPDIR=/private/tmp/prime-driver-v2-r19-native-leaf-admission-build-b-b851a782/tmp/","TZ=UTC","__CF_USER_TEXT_ENCODING=0x1F5:0x0:0x0"],"path":"/private/tmp/prime-driver-v2-r19-native-leaf-admission-build-b-b851a782"}],"sequential":true,"sole_initial_children":["module-cache","tmp"],"umask":"0077"},"control":{"predecessor_commit":"b851a782d3fc122f32d4290c50755f7a833a8e9e","predecessor_tree":"e6a1ba230ff74f1d3bbc445b7b74b6c60244f124","source_parent":"THIS_CONTROL_CORRECTION_CHECKPOINT"},"correction":{"accepted_postentry_states":["ZERO_PREFIX_WRITE_FAILURE_EXIT70","PARTIAL_PREFIX_NONAUTHORITY","FULL_FRAME_WITHOUT_EXACT_EXIT0_NONAUTHORITY","OUTPUT_WRITE_NONTERMINAL","EXACT_FRAME_AND_EXACT_EXIT0_PASS_CANDIDATE"],"auditor_source_stderr_write_calls":0,"broken_pipe_policy":"F_SETNOSIGPIPE_BEFORE_PUBLICATION_ENTRY","captured_stderr_required_bytes_for_pass":0,"fatal_gap_after_full_write":"FULL_CANDIDATE_WITH_MISSING_STATUS_ABSTAIN","frozen_frame_cap_bytes":4096,"frozen_frame_maximal_example_bytes":799,"output_entry_budget":1,"output_retry_authorized":false,"pipe_buf_bytes":512,"preentry_failure_contract":"SOURCE_CONTROLLED_ZERO_STDOUT_ZERO_STDERR_WRITES_EXIT70","prior_universal_zero_output_failure_contract_valid":false,"publication_call":"ONE_DARWIN_WRITE_TO_STDOUT_AFTER_ALL_PREDICATES","runtime_or_loader_diagnostic_policy":"ANY_CAPTURED_STDERR_BYTE_REJECTS_ABSTAIN","short_or_failed_write_exit":70,"success_contract":"EXACT_CANONICAL_FRAME_AND_EXACT_EXIT0","universal_zero_after_output_entry_guaranteed":false},"operations":{"auditor_binary_executions":0,"auditor_build_root_creations":0,"auditor_compilations":0,"canary_binary_executions":0,"canary_root_accesses":0,"cleanup_calls":0,"gate_e_promotions":0,"signals":0,"swiftpm_commands":0},"schema":"prime_driver_v2_r19_native_leaf_admission_output_affine_build_authority_v1","source":{"allowed_changed_paths":["docs/tools/prime-driver-v2-r19-native-leaf-admission.swift"],"committed_blob_equals_named_bytes_before_each_compile":true,"compiler_source_must_equal_committed_blob":true,"head_tree_stable_across_builds":true,"implementation_commit_delta":"EXACT_ONE_ADDED_SOURCE_PATH","implementation_commit_parent":"THIS_CONTROL_CORRECTION_CHECKPOINT","implementation_commit_parent_exact":true,"output_frame_contract":"CORRECTED_AFFINE_STDOUT_PUBLICATION","path":"docs/tools/prime-driver-v2-r19-native-leaf-admission.swift","product_leaf":"PrimeDriverV2R19NativeLeafAdmission","sole_source":true,"worktree_clean_before_each_compile":true},"status":"R19_NATIVE_LEAF_ADMISSION_OUTPUT_AFFINE_BUILD_SLICE_AUTHORIZED_UNIMPLEMENTED","toolchain":{"clang_sha256":"7def90dd8829726686213a747fc5bff1583df933dae5edc55d755479e0bfe00a","host":"macOS_26.5.2_25F84_arm64","ld_sha256":"5897b275efd93b201b6df5832dd541262b3f20f290859ba78f2200a6a66ef38b","sdk":"MacOSX_26.5","sdk_settings_sha256":"f8d005f09381389167f9e0aeaa169bc9e7dff162ef22ca2fd8e98df7ff1acafe","swift_driver_sha256":"fead52ebe00ec6ec700ecbb4be30f0b6204dd0506cb271dda72ac257261bd64b","swift_frontend_sha256":"2ed38571e92c0283091838c1649e27650ad9c99950288e883c7b2dc6c4ce89fb","swift_version":"6.3.3","xcode":"26.6_17F113"}}
+```
+
+```text
+R19_native_leaf_admission_output_contract_corrections = 1
+R19_native_leaf_admission_auditor_implementations = 0
+R19_native_leaf_admission_auditor_compilations = 0
+R19_native_leaf_admission_auditor_binary_executions = 0
+R19_native_leaf_primitive_binary_invocations = 0
+R19_native_leaf_admission_build_roots_created = 0
+R19_native_leaf_admission_output_entries = 0
+R19_native_leaf_admission_partial_prefixes = 0
+R19_native_leaf_admission_cleanup_calls = 0
+outer_journal_authority_vector = 00000000
+gate_E_mechanics_outcome = ABSTAIN
+gate_E_scientific_outcome = ABSTAIN
+gate_E_clearance_granted = 0
+```
