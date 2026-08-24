@@ -13285,3 +13285,227 @@ gate_E_mechanics_outcome = ABSTAIN
 gate_E_scientific_outcome = ABSTAIN
 gate_E_clearance_granted = 0
 ```
+
+## Gate E1.4-R19 successor implementation predecessor freeze — fresh namespace, unimplemented, uninvoked
+
+This EOF record resumes the mainline after the supplemental Energy-O0 design
+freeze. It authorizes one implementation slice only. It authorizes no epoch
+construction, guardian launch, Swift or SwiftPM command, Git observation,
+process actuation, signal, retained-root mutation, energy work, evidence
+interpretation, authority closure, or Gate-E promotion.
+
+| Coordinate | Exact value |
+| --- | --- |
+| Status | `R19_SUCCESSOR_IMPLEMENTATION_FROZEN_UNIMPLEMENTED_UNINVOKED` |
+| Control parent | Energy-O0 control record `03f2011e20f14c99b6e24dffa1bf1ba6d77b0d69` / tree `cc4ba28066627ac926e19370bc836f45c12d918a` |
+| Governing process/data predecessor | stopped-adoption canary PASS `07c7ed62e11e13c7c56b0478c93b9d33b25054c2` / tree `78663897498d55fb878cee05081a5b5ce094934f` |
+| Source predecessor | clean and unchanged `befc632485930a9cca7f618d3704292b5465f911` / tree `7d1a3bf302fe358f9e42dc1ed2bf54ed3d22982e`; root device/inode `16777231/17154421`; embedded identity `b501ad0d7ab1b6c54cbf30f9a79d75c54fe1d3783c516e10ad73fdd5fb4df397` |
+| Corrected guardian input | `a550c1b166bb94b0ae674202b144a1bfc071ffc0` / tree `14a7b38a524e9c19cbf848452124beceaec8dedd`; blob `35596488986fcf98aa792c0c2d0a558c59109aed`; SHA-256 `33d54336a8cfd5427f52a27e0f3ccec965f7b3eb43720e46dfbcfdd349894aa2`; `76,970` bytes / `2,215` lines |
+| Mechanics proof | canary implementation `e73668fa654477ca2bccc91b354cdaa06a8e9b93` / tree `961a6bca5b407d95423aa7ec1a51decd26aeca24`; PASS result is the governing predecessor above |
+| Fixture preimage | device/inode `16777231/17382060`; UID/GID `501/20`; mode `0700`; nlink `1`; `53,072` bytes; mtime/ctime `1787500441/1787500441`; SHA-256 `177a18c20bc42486c77b52af4c472be222dec1baabf8973ece7b2d44ea92756e` |
+| Execution counters | constructor/guardian/Swift/spawn/STOP/KILL `0/0/0/0/0/0` under R19 |
+| Authority | bounded R19 implementation only; no constructor, guardian, process, retained-state, evidence, or scientific authority; vector `00000000`; eight process-derived authorities remain missing; mechanics/science `ABSTAIN`; clearance `0` |
+
+Energy-O0 is an intervening rank-4 supplemental design record only. It
+changed only this ledger and created no source, lifecycle, process, evidence,
+or scientific authority. It is the Git parent of this record but not the
+mainline process/data predecessor. Energy O1, O2, and O3 remain unauthorized
+and are absent from this allowlist. R19 neither implements nor invalidates
+Energy-O0.
+
+### Why R18 cannot be launched again
+
+The stopped-adoption canary proved the two hash-pinned corrected regions with
+guardian STOP entries `0`, one fresh KILL commitment, exact reap, and process
+conservation. It did not load the production guardian top level or tracker.
+The corrected file still hard-pins:
+
+```text
+/private/tmp/gate-e1-4-mechanics-r18-befc6324-b501ad0d7ab1b6c5
+r18-guardian-terminal.json
+prime-driver-v2-r18-guardian/v1
+admission baseline 16 / 6185ea35d684b2a50529aa79f1455bae789eda056e298f5509e7c5127423abd5
+```
+
+That epoch and invocation are consumed and retained. The current admission
+baseline is not `16`, and the UUID-shaped subset recorded during recovery is
+not the guardian's prefix inventory. Invoking either R18 script, using the old
+root, or publishing the old terminal would be a forbidden retry. R19 must be
+a new whole-file identity and namespace.
+
+### Frozen R19 namespace and measured inventories
+
+The only candidate R19 namespace is:
+
+```text
+staging = /private/tmp/gate-e1-4-mechanics-r19-staging-befc6324-b501ad0d7ab1b6c5
+final   = /private/tmp/gate-e1-4-mechanics-r19-befc6324-b501ad0d7ab1b6c5
+terminal leaf = r19-guardian-terminal.json
+terminal staging template = r19-guardian-terminal.XXXXXX.staging
+terminal staging suffix length = 8
+terminal staging regex = /\Ar19-guardian-terminal\.[A-Za-z0-9]{6}\.staging\z/
+```
+
+Both candidate roots were absent during this freeze. `/private/tmp` rejoined
+at device/inode `16777231/774813`, UID/GID `0/0`, mode `01777`. The exact
+sorted `gate-e1-4-mechanics-` baseline has count `12` and SHA-256
+`f5b32198b79756a580471065094208d1fa8a451f5eaaa29d0454cc95d85263f0`:
+
+```text
+gate-e1-4-mechanics-4735739b-74354d4581835d12
+gate-e1-4-mechanics-r1-4735739b-74354d4581835d12
+gate-e1-4-mechanics-r12-b7eefedd-d388fa32da538cd4
+gate-e1-4-mechanics-r14-befc6324-b501ad0d7ab1b6c5
+gate-e1-4-mechanics-r15-befc6324-b501ad0d7ab1b6c5
+gate-e1-4-mechanics-r16-befc6324-b501ad0d7ab1b6c5
+gate-e1-4-mechanics-r17-befc6324-b501ad0d7ab1b6c5
+gate-e1-4-mechanics-r18-befc6324-b501ad0d7ab1b6c5
+gate-e1-4-mechanics-r3-22ae3332-689807021fe36551
+gate-e1-4-mechanics-r5-7fbd5238-77d5cfa3d9b9fc70
+gate-e1-4-mechanics-r7-d408680d-9a46327485eb257f
+gate-e1-4-mechanics-r9-1bd9b9e2-e458c197935662e8
+```
+
+Adding only the staging path models count/hash
+`13 / ac8beb68ecb27595efb3ab924351a177c9cf3f8cfe7e7f19d744a14b9b5b8bd5`.
+Replacing it with only the final path models
+`13 / 043ab46066a30c11bac6adfb431829117e5cafb05a43db7388d1806b5945e0c9`.
+The implementation and any later constructor readiness checkpoint must
+remeasure these values; drift is a hard stop, never a reason to skip or clean
+an entry.
+
+The guardian's exact sorted `prime-validation-admission-tests-` prefix
+baseline has count `21` and SHA-256
+`0c2e05f41db17c352678ad54b3bbcbaa1ce8eaec87175848e9a236a3a6dfd9bf`:
+
+```text
+prime-validation-admission-tests-04CB7182-E6AC-46BC-BC8E-98DCA27BA43E
+prime-validation-admission-tests-20260803-c
+prime-validation-admission-tests-27939ACC-14D5-4C63-B420-DB1D75DDE491
+prime-validation-admission-tests-29D60937-15FB-4364-96F1-7EBCDA198BDF
+prime-validation-admission-tests-54A24D44-4193-4278-9319-8BFB3A3827A3
+prime-validation-admission-tests-5E858B43-E478-4661-96C6-627B207BAC9D
+prime-validation-admission-tests-5F7F6943-0EC7-4A37-928E-F33916AB043D
+prime-validation-admission-tests-65D30551-8F83-404C-856B-556A3C65FA95
+prime-validation-admission-tests-74F5E773-3A1C-473B-BDEE-B3B3F7ABE846
+prime-validation-admission-tests-840C469F-37D2-43CB-B7D1-8248664F6DC8
+prime-validation-admission-tests-8A2BF5AF-A7F9-4E9E-85B8-C015643928CE
+prime-validation-admission-tests-9B0C29D5-BFE6-4983-A1D8-9376FB249C69
+prime-validation-admission-tests-B1E8F17E-29F0-4736-8F8E-22C5D57E0020
+prime-validation-admission-tests-BCC9224B-7E9F-4A3D-9985-12E6AF9D0E0B
+prime-validation-admission-tests-BFD21FC0-9AEA-4E76-A7ED-66BDD4FDCD14
+prime-validation-admission-tests-C5AECB28-860A-46E3-AA8B-255A2353DE8B
+prime-validation-admission-tests-CCED7CE7-63EF-461D-84CE-7FEC4F225B36
+prime-validation-admission-tests-D95EDB07-8144-4EA0-B0AD-1DB46A8F73E3
+prime-validation-admission-tests-E2FE16A0-6601-4261-BDD3-8A31F77A082C
+prime-validation-admission-tests-F4D5BEA9-7A8A-4592-A01B-5C851D54135E
+prime-validation-admission-tests-F55EA3E4-764C-4947-A93F-520528350D21
+```
+
+The legacy non-UUID leaf `prime-validation-admission-tests-20260803-c` is
+part of the prefix baseline. Recording it does not admit it as a novel
+workspace. Every novel root must still satisfy the existing exact UUID leaf,
+metadata, held-root, and held-workspace joins.
+
+### Follow-on implementation allowlist
+
+The direct child of this control freeze may add exactly two files:
+
+1. `docs/tools/prime-driver-v2-r19-epoch-constructor.rb`
+2. `docs/tools/prime-driver-v2-r19-guardian.rb`
+
+Both R18 files and the stopped-adoption canary remain byte-exact and
+immutable. No source-repository path, `.github` path, Swift package,
+`main.swift`, DriverCore, admission root, epoch root, marker, energy path, or
+other retained-state path is in the implementation allowlist.
+
+The constructor is a closed R19 reseal of the existing constructor mechanics:
+
+- zero argv and the exact five-entry bootstrap environment;
+- exact new staging/final/terminal names above;
+- one exact staging-root `mkdirat`, nine fixed empty child directories,
+  descriptor-relative nofollow opens, held vnode joins, fsync/fullfsync, and
+  exclusive no-replace publication;
+- current baseline, staged, and final counts/hashes above;
+- retain every success or failure state; no retry, cleanup, deletion, repair,
+  process launch, signal, Swift, Git, shell, or evidence interpretation.
+
+The guardian is a closed R19 reseal of corrected guardian input `a550c1b`:
+
+- exact R19 epoch, terminal, schema, and status tokens only;
+- exact current admission count/hash above;
+- unchanged fixed Swift environment, argv, source, package, build path,
+  fixture image, time bounds, process census, generation/domain joins,
+  workspace holding, actuation budgets, containment, exact reap,
+  conservation, and terminal-publication mechanics;
+- unchanged canary-tested actuation region SHA-256
+  `cef63a1dddc35d57aa5c00f88b9d3de893c9d3a9e3238a1a6953e090062139f4`
+  and actuator region SHA-256
+  `00cb0692997ae16f9a512f7362c37c15eb60b0f74927a20bc0d993e587b9ca1d`;
+- no caller-supplied path, argv, environment, cwd, timeout, role, PID, PGID,
+  callback, or command surface.
+
+If either corrected region changes by one byte, this allowlist fails and a
+new mechanics proof must be separately frozen. The whole R19 guardian still
+requires a new blob, SHA-256, byte/line count, syntax/Ripper result, normalized
+diff, static process surface, signal-free model conservation, and recomputed
+terminal maximum. The prior `14,116`-byte estimate may be a check input but
+is not inherited as R19 proof.
+
+### Required order and invocation boundary
+
+The only permitted order is:
+
+1. commit this control-only predecessor freeze;
+2. add the two allowlisted R19 files in one implementation commit, without
+   invoking either file;
+3. commit a separate implementation and constructor-readiness checkpoint
+   naming exact R19 commit/tree/blob/SHA identities, static verification,
+   receipt bounds, reconfirmed namespace absence, and conserved inputs;
+4. obtain fresh exact approval for one R19 constructor invocation only;
+5. retain and checkpoint its result; any non-complete result consumes R19 and
+   authorizes no guardian;
+6. after a complete result, independently rejoin the exact epoch and nine
+   empty children and commit a separate guardian-readiness freeze;
+7. obtain fresh exact approval for one R19 guardian invocation; constructor
+   approval cannot authorize the guardian;
+8. retain and checkpoint the guardian result without retry or automatic
+   scientific interpretation.
+
+No constructor or guardian invocation is presently eligible. The future
+constructor is one-shot even if it fails before root creation. The future
+guardian is one-shot even if it fails before its fixed Swift spawn. Any
+post-spawn uncertainty remains in proof-driven containment until exact reap
+and generation/group conservation; no outer abandonment timeout exists.
+
+Hard stops are any root preexistence or inventory drift; overlap, reuse,
+deletion, population, or cleanup of retained R18 root
+`16777231/17419092` or stopped-adoption marker `16777231/17443295`; reuse of
+an R18 command, terminal leaf, attempt, approval, or receipt; stale admission
+baseline `16` or UUID-only subset `20`; changed corrected regions; generic
+execution inputs; constructor process/signal activity; source/build/admission
+mutation before separately frozen execution; Energy O1/O2/O3 overlap; or any
+claim that the disposable canary proved production eligibility or closed an
+authority.
+
+```text
+R19_implementation_freezes = 1
+R19_constructor_implementations = 0
+R19_guardian_implementations = 0
+R19_epoch_constructor_invocations = 0
+R19_epoch_roots_created = 0
+R19_guardian_invocations = 0
+R19_swiftpm_commands = 0
+R19_production_spawn_calls = 0
+R19_production_stop_call_entries = 0
+R19_production_kill_call_entries = 0
+R19_production_attempts = 0
+R19_retained_state_mutations = 0
+energy_O1_implementations = 0
+energy_O2_invocations = 0
+energy_O3_measurements = 0
+outer_journal_authority_vector = 00000000
+gate_E_mechanics_outcome = ABSTAIN
+gate_E_scientific_outcome = ABSTAIN
+gate_E_clearance_granted = 0
+```
