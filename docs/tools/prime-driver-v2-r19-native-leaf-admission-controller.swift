@@ -304,7 +304,7 @@ private final class PrimeR19HeldAuthorities {
         }
         var owned: [Int32] = [root]
         do {
-            let rootMetadata = try requireRoot(root)
+            _ = try requireRoot(root)
             let privateTmp = Darwin.open(
                 privateTmpPath,
                 O_RDONLY | O_DIRECTORY | O_NOFOLLOW_ANY | O_CLOEXEC
@@ -1260,7 +1260,7 @@ private final class PrimeR19ChildOwner {
         }
         let status = raw.pvi_cdir.vip_vi.vi_stat
         guard returned == 2_352,
-              UInt32(bitPattern: status.vst_dev) ==
+              status.vst_dev ==
                 UInt32(bitPattern: PrimeR19HeldAuthorities.rootDevice),
               status.vst_ino == UInt64(PrimeR19HeldAuthorities.rootInode),
               status.vst_mode & UInt16(S_IFMT) == UInt16(S_IFDIR)
