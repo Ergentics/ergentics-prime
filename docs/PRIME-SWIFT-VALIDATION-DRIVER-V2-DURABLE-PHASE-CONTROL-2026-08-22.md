@@ -15566,3 +15566,20 @@ gate_E_mechanics_outcome = ABSTAIN
 gate_E_scientific_outcome = ABSTAIN
 gate_E_clearance_granted = 0
 ```
+
+## R19-NL-CRS0.1 — process-identity schema correction
+
+The earlier `start_time` members had no frozen source or units. They are
+redundant to the admitted flavor-17/flavor-13 generation join and are removed;
+no flavor-3 read or type-correct surrogate is introduced.
+
+```text
+payload_bytes = 2900
+payload_sha256 = 0e78ab595190891242a683e5a6d9a519e7a0f7fddebbe93998329a83e8f32113
+frame_bytes = 3245
+frame_sha256 = 5d78b8af975204bfc5711496620e4810a5e1ac5bb280cfb475ec3926edc0147d
+```
+
+```json
+{"payload":{"authority":{"authority_closure_authorized":false,"authority_vector":"00000000","controller_binary_executions_authorized":0,"gate_e_clearance":0,"gate_e_mechanics_outcome":"ABSTAIN","gate_e_promotion_authorized":false,"gate_e_scientific_outcome":"ABSTAIN","journal_creation_authorized":false,"process_actuation_authorized":false,"scientific_authorities_closed":0,"signal_entries_authorized":0,"supervisor_binary_executions_authorized":0,"supervisor_compiler_entries_authorized":4,"supervisor_implementation_authorized":true,"supervisor_product_builds_authorized":2,"swiftpm_commands_authorized":0},"control":{"control_record_delta":"EXACT_ONE_CONTROL_DOCUMENT_APPEND","implementation_commit_parent":"THIS_CRS0_1_CONTROL_CHECKPOINT","predecessor_commit":"faf6f35500f487efffc816a4d598a511ebecfb91","predecessor_tree":"18991ef5e0cb6a70a844236de7e3270917f7ce94","superseded_crs0_payload_sha256":"3615aed2becc6e94c3189ab8415c6fee1156a04c823a1873ac34df1359cc64d5"},"correction":{"all_other_crs0_contract_fields":"SEMANTICALLY_UNCHANGED","child_identity_exact_keys":["direct_parent","idversion","parent_pid","pgid","pid","sid","status","unique_id"],"generation_join_unchanged":["PROC_PIDUNIQIDENTIFIERINFO_FLAVOR_17_56_BYTES","PROC_PIDT_SHORTBSDINFO_FLAVOR_13_64_BYTES","GETSID_GETPGID_SANDWICH"],"prohibited_substitutions":["PROC_PIDTBSDINFO_FLAVOR_3","UNIQUE_ID_AS_START_TIME","IDVERSION_AS_START_TIME","OBSERVATION_UPTIME_AS_START_TIME"],"reason":"START_TIME_SOURCE_AND_UNITS_WERE_UNFROZEN_REDUNDANT_TELEMETRY_NOT_GENERATION_AUTHORITY","removed_fields":["runtime_contract_not_authorized.journal.leaf_schema_contracts.00-intent.json.nested_exact_keys.supervisor_process_identity.start_time","runtime_contract_not_authorized.journal.leaf_schema_contracts.00-intent.json.nested_field_types.supervisor_process_identity.start_time","runtime_contract_not_authorized.journal.leaf_schema_contracts.01-start.json.nested_exact_keys.child_identity.start_time","runtime_contract_not_authorized.journal.leaf_schema_contracts.01-start.json.nested_field_types.child_identity.start_time"],"supervisor_process_identity_exact_keys":["idversion","pgid","pid","sid","unique_id"]},"implementation_lineage":{"allowed_added_paths":["docs/tools/prime-driver-v2-r19-native-leaf-controller-runtime-supervisor.swift","docs/tools/prime-driver-v2-r19-native-leaf-controller-runtime-supervisor-fixed-openat.c","docs/tools/prime-driver-v2-r19-native-leaf-controller-runtime-supervisor-fixed-openat.h"],"build_contract_fingerprint_unchanged":"36bacb3cd285de3e94f871d3596fa28492ebdced843754fa5dda1043b1541ce8","implementation_delta":"EXACT_THREE_ADDED_SOURCE_PATHS","runtime_contract_authorized":false},"operations_at_correction":{"compiler_entries":0,"controller_binary_executions":0,"journal_roots_created":0,"process_actuation_calls":0,"signals":0,"supervisor_binary_executions":0,"supervisor_product_builds":0,"swiftpm_commands":0}},"payload_hash_rule":"SHA256_COMPACT_RECURSIVE_LEXICOGRAPHIC_KEYS_UTF8_NO_TRAILING_LF","payload_sha256":"0e78ab595190891242a683e5a6d9a519e7a0f7fddebbe93998329a83e8f32113","schema":"prime_driver_v2_r19_native_leaf_controller_runtime_supervisor_process_identity_correction_v1","status":"FROZEN_IMPLEMENTATION_AND_BUILD_ONLY_NO_LAUNCH"}
+```
