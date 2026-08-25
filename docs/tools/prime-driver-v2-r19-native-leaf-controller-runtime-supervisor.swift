@@ -1526,7 +1526,7 @@ private final class PrimeR19StickyExecutableVnodeWatcher {
     /// Returns true when the event belonged to this watcher. Receipt/error
     /// events are never accepted as runtime mutation observations.
     @discardableResult
-    func consume(_ event: DarwinKevent) throws -> Bool {
+    func consume(_ event: Darwin.kevent) throws -> Bool {
         guard event.filter == Int16(EVFILT_VNODE) else { return false }
         guard event.flags & UInt16(EV_ERROR) == 0,
               event.fflags & ~Self.noteMask == 0,
