@@ -15,7 +15,7 @@ static const char prime_r19_split_owner_private_tmp[] =
 static const char prime_r19_split_owner_dev_null[] =
     "/dev/null";
 static const char prime_r19_split_owner_owner_a_image[] =
-    "/private/tmp/prime-driver-v2-r19-native-leaf-split-stream-owner-build-a-6a015c11/PrimeDriverV2R19NativeLeafSplitStreamOwner";
+    "/private/tmp/prime-driver-v2-r19-native-leaf-split-stream-owner-repair1-build-a-28835567/PrimeDriverV2R19NativeLeafSplitStreamOwner";
 static const char prime_r19_split_owner_primitive_a_image[] =
     "/private/tmp/prime-driver-v2-r19-native-leaf-build-a-e9b6f7bd/sdk26_5_fdflags/PrimeDriverV2R19NativeLeafPrimitiveCanary";
 static const char prime_r19_split_owner_supervisor_a_image[] =

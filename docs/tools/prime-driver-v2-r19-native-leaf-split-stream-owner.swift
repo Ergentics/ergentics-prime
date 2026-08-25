@@ -18,7 +18,7 @@ private enum PrimeR19SplitFailure: Error {
 
 private enum PrimeR19SplitConstants {
     static let ownerPath =
-        "/private/tmp/prime-driver-v2-r19-native-leaf-split-stream-owner-build-a-6a015c11/PrimeDriverV2R19NativeLeafSplitStreamOwner"
+        "/private/tmp/prime-driver-v2-r19-native-leaf-split-stream-owner-repair1-build-a-28835567/PrimeDriverV2R19NativeLeafSplitStreamOwner"
     static let primitivePath =
         "/private/tmp/prime-driver-v2-r19-native-leaf-build-a-e9b6f7bd/sdk26_5_fdflags/PrimeDriverV2R19NativeLeafPrimitiveCanary"
     static let supervisorPath =
@@ -1167,7 +1167,7 @@ private enum PrimeR19SplitParentChain {
     {
         var value = stat()
         let path =
-            "/private/tmp/prime-driver-v2-r19-native-leaf-split-stream-owner-build-a-6a015c11"
+            "/private/tmp/prime-driver-v2-r19-native-leaf-split-stream-owner-repair1-build-a-28835567"
         guard path.withCString({
             fstatat(AT_FDCWD, $0, &value, AT_SYMLINK_NOFOLLOW)
         }) == 0 else {
@@ -2286,14 +2286,14 @@ private final class PrimeR19SplitJournal {
                       AT_SYMLINK_NOFOLLOW
                   )
               }) == 0,
-              validRoot(held, permissions: 0o700),
-              validRoot(named, permissions: 0o700),
+              Self.validRoot(held, permissions: 0o700),
+              Self.validRoot(named, permissions: 0o700),
               held.st_dev == named.st_dev,
               held.st_ino == named.st_ino,
               held.st_dev == parentMetadata.st_dev,
-              try inventory(root.rawValue).isEmpty,
-              synchronize(root.rawValue),
-              synchronize(privateTmp.rawValue)
+              try Self.inventory(root.rawValue).isEmpty,
+              Self.synchronize(root.rawValue),
+              Self.synchronize(privateTmp.rawValue)
         else {
             throw PrimeR19SplitFailure.rejected
         }
@@ -2333,8 +2333,8 @@ private final class PrimeR19SplitJournal {
                   leafName.withCString({
                     fstatat(root.rawValue, $0, &initialNamed, AT_SYMLINK_NOFOLLOW)
                   }) == 0,
-                  validPoisonedLeaf(initialHeld),
-                  validPoisonedLeaf(initialNamed),
+                  Self.validPoisonedLeaf(initialHeld),
+                  Self.validPoisonedLeaf(initialNamed),
                   initialHeld.st_dev == initialNamed.st_dev,
                   initialHeld.st_ino == initialNamed.st_ino
             else {
@@ -2352,7 +2352,7 @@ private final class PrimeR19SplitJournal {
             guard frame.count <= PrimeR19SplitConstants.frameCap else {
                 throw PrimeR19SplitFailure.rejected
             }
-            try writeAndReadBack(frame, descriptor: leaf.rawValue)
+            try Self.writeAndReadBack(frame, descriptor: leaf.rawValue)
             guard prime_driver_v2_r19_split_owner_full_fsync(
                     leaf.rawValue
                   ) == 0,
@@ -2360,7 +2360,7 @@ private final class PrimeR19SplitJournal {
             else {
                 throw PrimeR19SplitFailure.rejected
             }
-            try readBackExact(frame, descriptor: leaf.rawValue)
+            try Self.readBackExact(frame, descriptor: leaf.rawValue)
             var heldMetadata = stat()
             var namedMetadata = stat()
             guard fstat(leaf.rawValue, &heldMetadata) == 0,
@@ -2372,15 +2372,15 @@ private final class PrimeR19SplitJournal {
                           AT_SYMLINK_NOFOLLOW
                       )
                   }) == 0,
-                  validLeaf(heldMetadata),
-                  validLeaf(namedMetadata),
+                  Self.validLeaf(heldMetadata),
+                  Self.validLeaf(namedMetadata),
                   heldMetadata.st_dev == namedMetadata.st_dev,
                   heldMetadata.st_ino == namedMetadata.st_ino,
                   prime_driver_v2_r19_split_owner_full_fsync(
                     leaf.rawValue
                   ) == 0,
-                  synchronize(root.rawValue),
-                  synchronize(parent.rawValue),
+                  Self.synchronize(root.rawValue),
+                  Self.synchronize(parent.rawValue),
                   try validHeldAndNamedRoot(permissions: 0o700)
             else {
                 throw PrimeR19SplitFailure.rejected
@@ -2397,7 +2397,7 @@ private final class PrimeR19SplitJournal {
         guard !poisoned,
               nextOrdinal == 9,
               leafDescriptors.count == 9,
-              try inventory(root.rawValue) ==
+              try Self.inventory(root.rawValue) ==
                 PrimeR19SplitConstants.journalLeaves.sorted()
         else {
             poisoned = true
@@ -2411,9 +2411,9 @@ private final class PrimeR19SplitJournal {
             guard leafName.withCString({
                 fstatat(root.rawValue, $0, &named, AT_SYMLINK_NOFOLLOW)
             }) == 0,
-                  validLeaf(named),
+                  Self.validLeaf(named),
                   fstat(leafDescriptors[index].rawValue, &held) == 0,
-                  validLeaf(held),
+                  Self.validLeaf(held),
                   held.st_dev == named.st_dev,
                   held.st_ino == named.st_ino
             else {
@@ -2423,7 +2423,7 @@ private final class PrimeR19SplitJournal {
         }
         guard fchmod(root.rawValue, mode_t(0o500)) == 0,
               try validHeldAndNamedRoot(permissions: 0o500),
-              try inventory(root.rawValue) ==
+              try Self.inventory(root.rawValue) ==
                 PrimeR19SplitConstants.journalLeaves.sorted()
         else {
             poisoned = true
@@ -2438,8 +2438,8 @@ private final class PrimeR19SplitJournal {
                 fstatat(root.rawValue, $0, &named, AT_SYMLINK_NOFOLLOW)
             }) == 0,
                   fstat(leafDescriptors[index].rawValue, &held) == 0,
-                  validLeaf(named),
-                  validLeaf(held),
+                  Self.validLeaf(named),
+                  Self.validLeaf(held),
                   held.st_dev == named.st_dev,
                   held.st_ino == named.st_ino
             else {
@@ -2447,8 +2447,8 @@ private final class PrimeR19SplitJournal {
                 throw PrimeR19SplitFailure.rejected
             }
         }
-        guard synchronize(root.rawValue),
-              synchronize(parent.rawValue),
+        guard Self.synchronize(root.rawValue),
+              Self.synchronize(parent.rawValue),
               try validHeldAndNamedRoot(permissions: 0o500)
         else {
             poisoned = true
@@ -2543,7 +2543,7 @@ private final class PrimeR19SplitJournal {
             var nameField = entry.pointee.d_name
             let name = withUnsafePointer(to: &nameField) {
                 $0.withMemoryRebound(to: CChar.self, capacity: 1) {
-                    String(validatingUTF8: $0)
+                    String(validatingCString: $0)
                 }
             }
             guard let name else { throw PrimeR19SplitFailure.rejected }
