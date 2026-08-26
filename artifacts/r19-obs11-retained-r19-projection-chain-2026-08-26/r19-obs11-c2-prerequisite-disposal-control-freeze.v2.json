@@ -1,0 +1,227 @@
+{
+  "schema": "ergentics-r19-obs11-c2-prerequisite-disposal-control-freeze-v2",
+  "status": "SUCCESSOR_CONTROL_FREEZE_DATA_LED_OUTCOME_SENTINEL_SELF_IMAGE_AUTHORITY_ACTUATION_ABSTAIN",
+  "rank": "CONTROL_ONLY_SUCCESSOR_FREEZE",
+  "authorization_basis": "USER_AUTHORIZED_START_TO_END_AND_WILL_NOT_INTERVENE_IN_THIS_PROCESS",
+  "predecessor": {
+    "commit": "1cb03c1494b33a2635420e6a99afad10ebc4c5d3",
+    "tree": "e9cc1aebcd48f4317dc313ec32428313a020f2b6",
+    "v1_freeze_path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-control-freeze.v1.json",
+    "v1_freeze_sha256": "6f54ee2b9f88e5c7db87e4fde9157b35ee6ebdda40aa952d47099087764f280a"
+  },
+  "supersession": {
+    "v1_build_and_actuation_authority": "SUPERSEDED_BEFORE_ANY_BUILD_OR_ACTUATION",
+    "v1_namespaces_created": false,
+    "v1_binaries_built": 0,
+    "v1_controller_invocations": 0,
+    "v1_signals_entered": 0,
+    "reason": [
+      "V1_DID_NOT_BIND_RUNNING_BUILD_A_TO_EXTERNAL_EXPECTED_CONTENT_AUTHORITY",
+      "V1_COULD_DROP_DESCRIPTOR_LIFETIME_OR_WRITABLE_IMAGE_CONTENT_CONTINUITY",
+      "V1_ORDINARY_PARTIAL_PUBLICATION_COULD_SUPPRESS_FAILURE_EVIDENCE",
+      "V1_OVERSTATED_ALL_PROCESS_ENTRY_OUTCOMES_AS_PERMANENTLY_RETAINED",
+      "V1_MODE_SEALS_WERE_NOT_POST_FFULLFSYNC_POWER_LOSS_PROOF"
+    ]
+  },
+  "purpose": {
+    "classification": "EXTERNAL_MECHANICS_CONSERVATION_PREREQUISITE_NOT_C2_NOT_GATE_E",
+    "reason": "EXACT_RETAINED_GENERATIONS_BLOCK_C2_BOOTSTRAP_AND_TWO_CONSUME_CPU",
+    "scientific_interpretation": false,
+    "authority_vector": "00000000",
+    "gate_e": "ABSTAIN"
+  },
+  "review_convergence": [
+    {
+      "review": "SELF_IMAGE_AUTHORITY",
+      "result": "HOLD_AND_HASH_FIXED_A_AND_B_COMPARE_TO_EXTERNAL_READINESS_AND_JOIN_IN_IMAGE_ANCHOR_TO_A_MAPPED_VNODE"
+    },
+    {
+      "review": "ENTRY_AND_PUBLICATION_DURABILITY",
+      "result": "EXPLICIT_JOURNAL_PHASES_NO_ORDINARY_POISON_AFTER_UNCERTAIN_EXCLUSIVE_CREATE"
+    },
+    {
+      "review": "COMBINED_ARCHITECTURE",
+      "result": "PREARMED_INDEPENDENT_OUTCOME_STREAM_PRESERVES_RECOVERY_EVIDENCE_ACROSS_PARTIAL_ORDINARY_LEAF"
+    }
+  ],
+  "source_allowlist": [
+    "docs/tools/ergentics-r19-c2-prerequisite-disposal.swift",
+    "docs/tools/ergentics-r19-c2-prerequisite-disposal-fixed.c",
+    "docs/tools/ergentics-r19-c2-prerequisite-disposal-fixed.h"
+  ],
+  "control_allowlist": [
+    "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-control-freeze.v2.json",
+    "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-implementation-checkpoint.v2.json",
+    "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-readiness.v2.frame",
+    "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-readiness.v2.json",
+    "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-result.v2.json"
+  ],
+  "namespaces": {
+    "build_a_root": "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-a-1cb03c1-v2",
+    "build_a_image": "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-a-1cb03c1-v2/ErgenticsR19C2PrerequisiteDisposal",
+    "build_b_root": "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-b-1cb03c1-v2",
+    "build_b_image": "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-b-1cb03c1-v2/ErgenticsR19C2PrerequisiteDisposal",
+    "journal_root": "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-1cb03c1-8930176-8930235-8668003-v2",
+    "authority_record": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-readiness.v2.frame",
+    "all_observed_absent_at_freeze": true,
+    "all_created_states_permanently_retained": true,
+    "cleanup_repair_reuse": false
+  },
+  "fixed_targets_in_order": [
+    {
+      "role": "R19_GUARDIAN",
+      "actuation": "kill(21601,SIGKILL)",
+      "pid": 21601,
+      "uniqueid": 8930176,
+      "idversion": 17456018,
+      "sid": 21601,
+      "pgid": 21601,
+      "image_sha256": "9d6ff3e289c7d908e3c785e0bedd6692d1d6a3377965c88c04d847104b7c892c",
+      "mapped_text_file_offset": 65536
+    },
+    {
+      "role": "R19_STOPPED_FIXTURE",
+      "actuation": "kill(-21660,SIGKILL)",
+      "pid": 21660,
+      "uniqueid": 8930235,
+      "idversion": 17456153,
+      "sid": 21660,
+      "pgid": 21660,
+      "image_sha256": "177a18c20bc42486c77b52af4c472be222dec1baabf8973ece7b2d44ea92756e",
+      "mapped_text_file_offset": 0
+    },
+    {
+      "role": "GATE_C_AWK",
+      "actuation": "kill(56518,SIGKILL)",
+      "pid": 56518,
+      "uniqueid": 8668003,
+      "idversion": 16806376,
+      "sid": 56508,
+      "pgid": 56508,
+      "image_sha256": "3693175058d0be720f941a8e9c645756f7d38848f3457abd938d8e27ba35f8ab",
+      "mapped_text_file_offset": 147456,
+      "shared_shell": "OBSERVE_ONLY_NEVER_SIGNAL_56508"
+    }
+  ],
+  "entry_lattice": {
+    "process_entry": "CONSUMED_NO_RETRY_POLICY_WITHOUT_LOCAL_DURABLE_EVIDENCE",
+    "preflight": "NO_NEW_FD_CAPTURE_OF_ARGV_ENV_FD_0_1_2_STDIO_CWD_CREDS_GROUPS_SESSION_GROUP_AND_CONTAINMENT_INSTALL",
+    "root_claimed": "EXCLUSIVE_MKDIRAT_THEN_PARENT_FFULLFSYNC_IS_FIRST_LOCAL_DURABLE_CONSUMPTION_MARKER",
+    "outcome_armed": "INDEPENDENT_99_OUTCOME_STREAM_INITIAL_FRAME_DURABLE_BEFORE_FULL_ADMISSION",
+    "ordinary_idle": "EXACT_SEALED_CONTIGUOUS_PREFIX_PLUS_HELD_OUTCOME_STREAM",
+    "ordinary_creating": "EXCLUSIVE_CREATE_MAY_OR_MAY_NOT_HAVE_MUTATED_NAMESPACE",
+    "ordinary_materialized": "EXACT_ONE_OPAQUE_0000_IN_FLIGHT_TAIL_MAY_EXIST",
+    "failure_terminal": "OUTCOME_STREAM_DURABLY_RECORDS_CATEGORY_AND_ANY_POST_SIGNAL_RECOVERY_ROOT_REMAINS_0700",
+    "success_candidate": "ORDINARY_00_THROUGH_14_COMPLETE_OUTCOME_CANDIDATE_DURABLE",
+    "success_terminal": "ROOT_MODE_0500_POST_FFULLFSYNC_AND_FINAL_OUTCOME_PASS_FRAME_POST_FFULLFSYNC",
+    "irreducible_pre_root_residual": "PROCESS_ENTRY_THROUGH_SYNCED_ROOT_AND_ARMED_OUTCOME_CANNOT_BE_DURABLY_PROVED_BY_THE_ACTUATOR_ITSELF"
+  },
+  "outcome_stream": {
+    "leaf": "99-outcome.jsonl",
+    "exclusive_precreation": true,
+    "initial_mode": "0600",
+    "initial_status": "ARMED_INCOMPLETE_UNLESS_EXACT_TERMINAL",
+    "canonical_frames": "SORTED_KEY_UTF8_JSON_WITH_LF_SHA256_ANCESTRY",
+    "independent_of_ordinary_inventory": true,
+    "failure_fields": [
+      "fixed_coordinate",
+      "ordinary_phase",
+      "last_complete_mask",
+      "last_complete_frame_sha256",
+      "in_flight_ordinal",
+      "kill_commitments",
+      "kill_calls",
+      "pending_target",
+      "recovery_conservation"
+    ],
+    "post_signal_outcome_write_failure": "CONTAIN_FOREVER",
+    "arbitrary_error_descriptions": false
+  },
+  "self_image_authority": {
+    "external_expected_content_authority": "LOCAL_CONTENT_ADDRESSED_READINESS_RECORD_FROM_EXACT_TWO_BUILD_RAW_EQUALITY",
+    "signature": "NOT_REQUIRED_LOCAL_CONTROL_COMMIT_IS_THE_ACCEPTED_MECHANICS_TRUST_ROOT",
+    "held_inputs": [
+      "BUILD_A_IMAGE",
+      "BUILD_B_IMAGE",
+      "READINESS_RECORD",
+      "LAUNCH_CWD",
+      "CURRENT_TARGET_IMAGE_AND_CWD",
+      "ZSH_WITNESS"
+    ],
+    "build_a_checks": [
+      "O_NOFOLLOW_ANY_RDONLY_HELD_NAMED_JOIN",
+      "FULL_SHA256_AND_SIZE_AGAINST_READINESS_RECORD",
+      "PROC_PIDPATH_EXACT_FIXED_A",
+      "IN_IMAGE_NOINLINE_USED_C_ANCHOR_REGION_EXECUTABLE",
+      "ANCHOR_MAPPED_DEVICE_INODE_EQUALS_HELD_A",
+      "PROCESS_UUID_EQUALS_PARSED_A_MACHO_UUID"
+    ],
+    "build_b_checks": [
+      "O_NOFOLLOW_ANY_RDONLY_HELD_NAMED_JOIN",
+      "FULL_SHA256_AND_SIZE_AGAINST_READINESS_RECORD",
+      "RAW_A_B_BYTES_EQUAL",
+      "DISTINCT_VNODES",
+      "PARSED_UUID_EQUAL"
+    ],
+    "revalidation": "BEFORE_EVERY_TARGET_COMMITMENT_AND_IN_POST_COMMIT_FINAL_CAPTURE",
+    "same_uid_in_place_mutation": "NAMED_RESIDUAL_REDUCED_BY_BEFORE_AFTER_FSTAT_AND_REHASH"
+  },
+  "actuation": {
+    "stop_calls": 0,
+    "cont_calls": 0,
+    "kill_commitment_ceiling": 3,
+    "kill_call_ceiling": 3,
+    "per_target_c_atomic_once_latch": true,
+    "target_arm": "ONLY_AFTER_EXACT_COMMITMENT_LEAF_IS_DURABLE",
+    "pending_release": "ONLY_AFTER_CONSERVATION_IS_DURABLE_IN_ORDINARY_OR_OUTCOME_STREAM",
+    "retry": false,
+    "outer_timeout": false,
+    "outer_signal_authority": false,
+    "potentially_indefinite_after_entered_signal": true
+  },
+  "build_only_verification": {
+    "controller_language": "SWIFT_WITH_IN_IMAGE_FIXED_C_WRAPPER",
+    "target": "arm64-apple-macosx14.0",
+    "configuration": "OPTIMIZED_NO_DEBUG_TOP_LEVEL_EXECUTABLE_NO_PARSE_AS_LIBRARY",
+    "two_disjoint_roots": true,
+    "compare": [
+      "RAW_EXECUTABLE_BYTES",
+      "SHA256",
+      "MACHO_UUID",
+      "LOAD_COMMANDS",
+      "SIZE",
+      "C_OBJECT_BYTES"
+    ],
+    "built_binary_execution_authorized": false,
+    "build_a_final_mode": "0500",
+    "build_b_final_mode": "0400",
+    "roots_permanently_retained": true
+  },
+  "toolchain": {
+    "developer_directory": "/Applications/Xcode.app/Contents/Developer",
+    "sdk": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+    "swift_frontend_sha256": "2ed38571e92c0283091838c1649e27650ad9c99950288e883c7b2dc6c4ce89fb",
+    "clang_sha256": "7def90dd8829726686213a747fc5bff1583df933dae5edc55d755479e0bfe00a"
+  },
+  "forbidden_until_successor_readiness": [
+    "DISPOSAL_BINARY_EXECUTION",
+    "SIGNAL_ENTRY",
+    "C2_CONTROLLER_EXECUTION",
+    "SWIFTPM_OR_PRODUCT_EXECUTION",
+    "CLEANUP_REPAIR_REUSE",
+    "AUTHORITY_CLOSURE",
+    "GATE_E_PROMOTION",
+    "GITHUB_OR_NETWORK_ACTION"
+  ],
+  "operations_at_this_freeze": {
+    "source_files_committed": 0,
+    "builds": 0,
+    "controller_invocations": 0,
+    "journal_roots_created": 0,
+    "signals_entered": 0,
+    "processes_disposed": 0,
+    "c2_invocations": 0,
+    "gate_e_promotions": 0
+  },
+  "next": "IMPLEMENT_EXACT_THREE_SOURCE_FILES_THEN_STATIC_REVIEW_BEFORE_ANY_BUILD"
+}
