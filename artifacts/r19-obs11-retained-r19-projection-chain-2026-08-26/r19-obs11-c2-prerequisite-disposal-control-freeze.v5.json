@@ -1,0 +1,170 @@
+{
+  "schema": "ergentics-r19-obs11-c2-prerequisite-disposal-control-freeze-v5",
+  "status": "FRESH_SUCCESSOR_AFTER_V4_CONSUMED_ROOT_NLINK_FAILURE_ACTUATION_ABSTAIN",
+  "rank": "CONTROL_ONLY_SUCCESSOR_FREEZE",
+  "authority_vector": "00000000",
+  "gate_e": "ABSTAIN",
+  "authorization_basis": "USER_AUTHORIZED_START_TO_END_WILL_NOT_INTERVENE_AND_CONFIRMED_AUTHORIZATION_REMAINS",
+  "ancestry": {
+    "v4_readiness_commit": "b6725345258e6a6436848059b6fcdc838eb992d4",
+    "v4_readiness_tree": "4f51e02520417fcd317eac047722d7cfbe0238a6",
+    "v4_readiness_frame_sha256": "ee02d73121c9323c966259e9c7824aaa0c3950294a0d0ceb6479c4569815ed7d",
+    "v4_readiness_record_sha256": "e886b71f43df7ddf4db2f623077ce9aaf65b436fbb174da86214dc1028c8d440",
+    "v4_result_path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-result.v4.json",
+    "v4_result_bytes": 6694,
+    "v4_result_sha256": "84c8c6bee84f9eaf768be80e31025c7be0a6e9fd6e1e8232461fd03f66bc3203"
+  },
+  "v4_consumed_disposition": {
+    "journal_root": "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-b5afcd7-8930176-8930235-8668003-v4",
+    "outcome_sha256": "f7f6990c7085e15ceb85a2078bc9ae67ee9fa4b9520e07cf13e3adf34fc5ae3e",
+    "fixed_coordinate": "journal-prefix-before-1",
+    "candidate_entries": 1,
+    "kill_commitments": 0,
+    "kill_calls": 0,
+    "signals_entered": 0,
+    "processes_disposed": 0,
+    "retention": "PERMANENT_NO_RETRY_NO_REUSE_NO_CLEANUP"
+  },
+  "measured_apfs_invariant": {
+    "probe_root": "/private/tmp/ergentics-r19-disposer-root-nlink-probe-b672534",
+    "probe_entry_counts": "0_THROUGH_16_INCLUSIVE",
+    "observed_nlinks": "2_THROUGH_18_INCLUSIVE",
+    "formula": "ST_NLINK_EQUALS_2_PLUS_EXACT_IMMEDIATE_ENTRY_COUNT",
+    "v4_failure_join": "OUTCOME_ONLY_ENTRY_COUNT_1_EXPECTED_NLINK_3_V4_HARDCODED_2",
+    "retention": "PERMANENT"
+  },
+  "source_allowlist": [
+    "docs/tools/ergentics-r19-c2-prerequisite-disposal.swift",
+    "docs/tools/ergentics-r19-c2-prerequisite-disposal-fixed.c",
+    "docs/tools/ergentics-r19-c2-prerequisite-disposal-fixed.h"
+  ],
+  "combined_root_primitive": {
+    "new_symbol": "ergentics_r19_disposal_validate_root",
+    "signature": "INT32_PARENT_INT32_ROOT_UINT32_MODE_UINT32_FULL_ENTRY_MASK_INT32_ERROR_POINTER",
+    "remove_old_symbols": [
+      "ergentics_r19_disposal_root_rejoin",
+      "ergentics_r19_disposal_root_inventory"
+    ],
+    "reason_for_new_symbol": "STALE_V4_OBJECT_MUST_FAIL_LINK_NOT_RESOLVE_AN_INCOMPATIBLE_ABI",
+    "entry_mask": {
+      "ordinary_leaf_bits": "0_THROUGH_14",
+      "outcome_leaf_bit": 15,
+      "initial_empty": "0000",
+      "outcome_only": "8000",
+      "normal": "8000_BITWISE_OR_ORDINARY_MASK",
+      "terminal": "ffff",
+      "upper_bits_authorized": false
+    },
+    "derived_link_count": "2_PLUS_POPCOUNT16_FULL_ENTRY_MASK",
+    "mode_policy": {
+      "0700": "ANY_ADMITTED_PHASE_MASK",
+      "0500": "ONLY_MASK_FFFF_AND_NLINK_18"
+    },
+    "fresh_scan": "OPENAT_PARENT_EXACT_ROOT_LEAF_O_RDONLY_DIRECTORY_CLOEXEC_NOFOLLOW_ANY_NEW_OPEN_DESCRIPTION",
+    "forbidden_scan": "F_DUPFD_OR_DUP_OF_HELD_DIRECTORY_DESCRIPTION_WITH_SHARED_OFFSET",
+    "pre_scan_checks": [
+      "NAMED_HELD_AND_FRESH_SCAN_ARE_DIRECTORIES",
+      "DEVICE_INODE_UID_GID_MODE_NLINK_FLAGS_EXACT",
+      "ALL_THREE_IDENTITIES_JOIN",
+      "NLINK_EQUALS_DERIVED_VALUE"
+    ],
+    "scan_check": "EVERY_ENTRY_IS_ONE_UNIQUE_FROZEN_LEAF_AND_SEEN_MASK_EQUALS_EXPECTED_FULL_MASK",
+    "post_scan_checks": [
+      "FRESH_SCAN_DESCRIPTOR_IDENTITY_STABLE_BEFORE_CLOSE",
+      "NAMED_AND_HELD_IDENTITY_RESTATED",
+      "DEVICE_INODE_UID_GID_MODE_NLINK_FLAGS_STABLE",
+      "NLINK_STILL_EQUALS_DERIVED_VALUE"
+    ],
+    "whole_struct_stat_memcmp": false,
+    "sequential_not_atomic_residual": "ACCEPTED_NO_CONCURRENT_SAME_EUID_MUTATOR_ASSUMPTION_REMAINS"
+  },
+  "phase_boundaries": [
+    "POST_OPEN_PRE_OUTCOME_MODE_0700_MASK_0000_NLINK_2",
+    "POST_OUTCOME_PREARM_MODE_0700_MASK_8000_NLINK_3",
+    "PRE_PUBLISH_MODE_0700_MASK_8000_OR_ORDINARY_MASK",
+    "FAILED_CREATE_RECOVERY_MODE_0700_MASK_8000_OR_CURRENT_ORDINARY_MASK",
+    "POST_MATERIALIZE_MODE_0700_MASK_8000_OR_NEXT_MASK_NOT_CURRENT_MASK",
+    "TERMINAL_PREFIX_MODE_0700_MASK_FFFF_NLINK_18",
+    "POST_OUTCOME_SEAL_PRE_ROOT_SEAL_MODE_0700_MASK_FFFF_NLINK_18",
+    "POST_ROOT_SEAL_MODE_0500_MASK_FFFF_NLINK_18"
+  ],
+  "failure_path_policy": {
+    "record_failure_and_append_outcome_must_not_call_combined_root_primitive": true,
+    "creating_phase_namespace_count": "INTENTIONALLY_AMBIGUOUS_OLD_OR_NEXT_MASK",
+    "independent_outcome_must_remain_WRITABLE": true,
+    "materialized_or_mode_sealed_tail": "RETAIN_AND_RECORD_PHASE_AND_HELD_IDENTITY"
+  },
+  "inherited_without_semantic_change": [
+    "EXACT_SINGLE_HOST_ENVIRONMENT_VECTOR",
+    "ENTRY_PREFLIGHT_AND_CONSUMPTION_LATTICE",
+    "INDEPENDENT_OUTCOME_STREAM_AND_POWER_LOSS_ORDER",
+    "SELF_IMAGE_AND_TARGET_CONTINUITY",
+    "EXACT_THREE_TARGET_GENERATIONS_AND_ORDER",
+    "FINAL_COMPACT_ACTUATION_GATE",
+    "EXACT_THREE_FIXED_C_SIGKILL_WRAPPERS_AND_SIGNAL_ZERO_PROBES",
+    "POST_SIGNAL_DURABLE_CONSERVATION_OR_LOW_POWER_CONTAINMENT",
+    "TRUSTED_OUTER_READINESS_TRANSFER_BOUNDARY_AND_ALL_NAMED_RESIDUALS",
+    "NO_RETRY_NO_CLEANUP_NO_AUTHORITY_CLOSURE_NO_GATE_E_PROMOTION"
+  ],
+  "source_corrections_only": [
+    "ADD_NEW_COMBINED_FULL_ENTRY_MASK_ROOT_VALIDATION_SYMBOL",
+    "REMOVE_OLD_SPLIT_ROOT_REJOIN_AND_SHARED_OFFSET_INVENTORY_SYMBOLS",
+    "WIRE_EIGHT_EXACT_SWIFT_PHASE_BOUNDARIES",
+    "REPOINT_FIXED_BUILD_READINESS_JOURNAL_CONTROL_AND_SCHEMA_IDENTITIES_TO_V5"
+  ],
+  "namespaces": {
+    "build_a_root": "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-a-b672534-v5",
+    "build_a_image": "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-a-b672534-v5/ErgenticsR19C2PrerequisiteDisposal",
+    "build_b_root": "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-b-b672534-v5",
+    "build_b_image": "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-b-b672534-v5/ErgenticsR19C2PrerequisiteDisposal",
+    "journal_root": "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-b672534-8930176-8930235-8668003-v5",
+    "readiness_frame": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-readiness.v5.frame",
+    "readiness_json": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-readiness.v5.json",
+    "implementation_checkpoint": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-implementation-checkpoint.v5.json",
+    "result": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-result.v5.json",
+    "all_observed_absent_at_freeze": true,
+    "all_created_states_permanently_retained": true
+  },
+  "build_only_verification": {
+    "target": "arm64-apple-macosx14.0",
+    "two_disjoint_roots": true,
+    "raw_product_and_c_object_equality_required": true,
+    "warnings_as_errors": true,
+    "build_a_final_mode": "0500",
+    "build_b_final_mode": "0400",
+    "binary_execution_authorized_before_readiness_commit": false,
+    "compiler_diagnostics_required": "ZERO_CAPTURED_BYTES"
+  },
+  "language_and_harness_policy": {
+    "python": "FORBIDDEN_FROM_THIS_V5_FREEZE_FORWARD",
+    "historical_python_entries_observed": 3,
+    "historical_python_deviation": "THREE_READ_ONLY_SUBAGENT_PROBES_ONE_PID_4306_TWO_PIDS_NOT_RETAINED_NO_MUTATION_NO_SIGNAL",
+    "v5_python_entries": 0,
+    "preferred": ["SWIFT", "C", "APPLE_RUBY_FOR_NON_AUTHORITY_READ_ONLY_CHECKS"],
+    "ruby_fd3_through_fd7_pipe_deviation": "CATALOGED_UNSUITABLE_AS_SWIFT_FD_DOMAIN_PROXY",
+    "native_swift_envelope_probe": "PASS_FDS_0_1_2"
+  },
+  "transition_predicates": [
+    "V4_RESULT_AND_THIS_V5_FREEZE_COMMITTED_BEFORE_SOURCE_EDIT",
+    "EXACT_SOURCE_ALLOWLIST_ONLY",
+    "THREE_STATIC_REVIEWS_BEFORE_ANY_V5_COMPILER_ENTRY",
+    "V5_BUILD_A_COMPLETE_ADMISSION_BEFORE_V5_BUILD_B_CREATION",
+    "TWO_BUILD_RAW_EQUALITY_AND_READINESS_COMMIT_BEFORE_BINARY_EXECUTION",
+    "FRESH_LIVE_GENERATION_AND_ABSENT_JOURNAL_REVALIDATION_IMMEDIATELY_BEFORE_EXEC"
+  ],
+  "operations_at_freeze": {
+    "v5_source_edits": 0,
+    "v5_compiler_entries": 0,
+    "v5_build_roots_created": 0,
+    "v5_binary_entries": 0,
+    "v5_journal_roots_created": 0,
+    "all_v5_signals_entered": 0,
+    "processes_disposed": 0,
+    "c2_invocations": 0,
+    "historical_python_entries_observed": 3,
+    "v5_python_entries": 0,
+    "authority_closures": 0,
+    "gate_e_promotions": 0
+  },
+  "next": "COMMIT_V4_RESULT_AND_THIS_V5_FREEZE_THEN_IMPLEMENT_ONLY_THE_FROZEN_COMBINED_ROOT_PRIMITIVE_AND_NAMESPACE_REPOINTS"
+}

@@ -1,0 +1,156 @@
+{
+  "schema": "ergentics-r19-obs11-c2-prerequisite-disposal-result-v4",
+  "status": "FAIL_CONSUMED_NO_RETRY_NO_SIGNALS_ROOT_NLINK_PHASE_MISMATCH",
+  "rank": "LOCAL_DURABLE_MECHANICS_RESULT",
+  "authority_vector": "00000000",
+  "gate_e": "ABSTAIN",
+  "readiness": {
+    "commit": "b6725345258e6a6436848059b6fcdc838eb992d4",
+    "tree": "4f51e02520417fcd317eac047722d7cfbe0238a6",
+    "frame_sha256": "ee02d73121c9323c966259e9c7824aaa0c3950294a0d0ceb6479c4569815ed7d",
+    "record_sha256": "e886b71f43df7ddf4db2f623077ce9aaf65b436fbb174da86214dc1028c8d440",
+    "build_product_sha256": "c63925c3aab59312c6cfd3c9c74751bdb301b3d9c1dcf45459b855182e02a211",
+    "build_product_uuid": "33C9480E-E127-34E1-8CC6-0A724FA6E6FD"
+  },
+  "invocation": {
+    "candidate": "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-a-b5afcd7-v4/ErgenticsR19C2PrerequisiteDisposal",
+    "candidate_entries": 1,
+    "candidate_pid": 4329,
+    "candidate_sid": 4329,
+    "candidate_pgid": 4329,
+    "exit": 70,
+    "captured_stdout_bytes": 0,
+    "captured_stderr_bytes": 0,
+    "retry": false,
+    "journal_reuse": false
+  },
+  "entry_preflight": {
+    "status": "PASS_NO_NEW_FD_PREFLIGHT",
+    "argc": 1,
+    "argument_count_excluding_argv0": 0,
+    "environment_vector": ["__CF_USER_TEXT_ENCODING=0x1F5:0x0:0x0"],
+    "cwd": "/private/var/empty",
+    "descriptor_domain_start": [0, 1, 2],
+    "descriptor_domain_end": [0, 1, 2],
+    "stdio_credentials_groups_and_domain": "PASS"
+  },
+  "durable_root": {
+    "path": "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-b5afcd7-8930176-8930235-8668003-v4",
+    "identity": "16777231:17953372:501:0:0700:3:0",
+    "birth_epoch_seconds_non_authoritative": 1787763660,
+    "inventory": ["99-outcome.jsonl"],
+    "retention": "PERMANENT_NO_RETRY_NO_REUSE_NO_CLEANUP"
+  },
+  "outcome_stream": {
+    "path": "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-b5afcd7-8930176-8930235-8668003-v4/99-outcome.jsonl",
+    "identity": "16777231:17953374:501:0:0600:1:0:2204",
+    "sha256": "f7f6990c7085e15ceb85a2078bc9ae67ee9fa4b9520e07cf13e3adf34fc5ae3e",
+    "frame_count": 2,
+    "frame_0_status": "ARMED_INCOMPLETE_UNLESS_EXACT_TERMINAL",
+    "frame_0_payload_sha256": "067ccfcdf79703339c47647f835b15389148dc6b041d76f3e7722e5335d7db6f",
+    "frame_0_sha256": "e935e075ed17f9bbc2a3bf83bf875d152efbb3a72fbb85acb1927855547fc2b5",
+    "frame_1_status": "FAILURE_TERMINAL",
+    "frame_1_payload_sha256": "0a87b77323c3066e623a6e8b4785230f4b65828bb810a45755c6d2d8b51791a6",
+    "frame_1_sha256": "c80cccc1b0e8a7efe5a70715b845588fe68c94a71cd8f46c773253366d3f8fe0",
+    "ancestry_recomputed": true,
+    "payload_hashes_recomputed": true
+  },
+  "failure": {
+    "fixed_coordinate": "journal-prefix-before-1",
+    "ordinary_phase": "IDLE_EXACT_COMPLETE_PREFIX",
+    "ordinary_mask": 0,
+    "in_flight_ordinal": null,
+    "last_complete_frame_sha256": null,
+    "kill_commitments": 0,
+    "kill_calls": 0,
+    "target_arm_count": 0,
+    "armed_target_ordinal": null,
+    "pending_target": null,
+    "recovery_conservation": null
+  },
+  "diagnosis": {
+    "coordinate_errno": 1,
+    "coordinate_errno_name": "EPERM",
+    "source_primitive": "ergentics_r19_disposal_root_rejoin",
+    "source_defect": "HARD_CODED_ROOT_ST_NLINK_EQ_2_AFTER_OUTCOME_ENTRY_EXISTS",
+    "observed_root_nlink_before_outcome": 2,
+    "observed_root_nlink_after_outcome": 3,
+    "result": "DETERMINISTIC_PRE_LEAF_REJECTION_BEFORE_ANY_ACTUATION"
+  },
+  "apfs_nlink_measurement": {
+    "root": "/private/tmp/ergentics-r19-disposer-root-nlink-probe-b672534",
+    "identity_after_16_entries": "16777231:17953517:501:0:0700:18",
+    "entry_count_to_nlink": [
+      "0:2", "1:3", "2:4", "3:5", "4:6", "5:7", "6:8", "7:9",
+      "8:10", "9:11", "10:12", "11:13", "12:14", "13:15", "14:16",
+      "15:17", "16:18"
+    ],
+    "formula": "ROOT_NLINK_EQUALS_2_PLUS_IMMEDIATE_ENTRY_COUNT_ON_THIS_PINNED_APFS_HOST",
+    "retention": "PERMANENT"
+  },
+  "launch_harness_observations": {
+    "python_entries": 3,
+    "python_policy": "THREE_READ_ONLY_SUBAGENT_POLICY_DEVIATIONS_RECORDED_THEN_FORBIDDEN",
+    "python_deviations": [
+      {
+        "path": "/usr/bin/python3",
+        "pid": 4306,
+        "transport": "USR_BIN_ENV_I_EXACT_HOST_ENTRY_PYTHON3_C",
+        "cwd": "/private/var/empty",
+        "stdin": "/dev/null",
+        "purpose": "READ_ONLY_CTYPES_LIBPROC_AND_LAUNCH_ENVELOPE_PROBE",
+        "file_mutations": 0,
+        "signals": 0,
+        "candidate_entries": 0
+      },
+      {
+        "path": "/usr/bin/python3",
+        "pid": null,
+        "pid_retention": "NOT_RETAINED_DO_NOT_SPECULATE",
+        "purpose": "READ_ONLY_LIBPROC_DOUBLE_JOIN_OF_THREE_TARGET_GENERATIONS_PATHS_DOMAINS_AND_CREDENTIALS",
+        "file_mutations": 0,
+        "signals": 0,
+        "candidate_entries": 0
+      },
+      {
+        "path": "/usr/bin/python3",
+        "pid": null,
+        "pid_retention": "NOT_RETAINED_DO_NOT_SPECULATE",
+        "purpose": "READ_ONLY_PROC_LISTPIDS_GROUP_AND_SESSION_MEMBERSHIP_CENSUS",
+        "file_mutations": 0,
+        "signals": 0,
+        "candidate_entries": 0
+      }
+    ],
+    "apple_ruby_proxy_result": "UNSUITABLE_RUNTIME_PROXY_RETAINED_FDS_3_THROUGH_7",
+    "apple_ruby_extra_fd_types": ["3:PIPE", "4:PIPE", "5:PIPE", "6:PIPE", "7:PIPE"],
+    "apple_ruby_exact_subsystem_origin": "UNRESOLVED_NOT_USED_AS_AUTHORITY",
+    "same_import_native_swift_probe_root": "/private/tmp/ergentics-r19-disposer-v4-envelope-probe-b672534",
+    "same_import_native_swift_probe_source_sha256": "c1c9050093009371829dfa22e9b5b081a692636c65b24a86ee57d2138dc31c70",
+    "same_import_native_swift_probe_image_sha256": "5e9fa9dc5612627e6d718dfe6d7b97b77a871b95333fe54d4372131083094e89",
+    "same_import_native_swift_probe_result": "PASS_ENV_1_FDS_0_1_2_CWD_STDIO_CREDENTIALS_DOMAIN",
+    "retention": "PERMANENT"
+  },
+  "post_failure_targets": [
+    "21601:8930176:17456018:21600:21601:21601:2",
+    "21660:8930235:17456153:1:21660:21660:4",
+    "56518:8668003:16806376:56508:56508:56508:2"
+  ],
+  "post_failure_target_result": "ALL_THREE_EXACT_GENERATIONS_UNCHANGED_ZERO_SIGNALS",
+  "operations": {
+    "v4_candidate_build_roots_created": 2,
+    "v4_candidate_build_compiler_entries": 4,
+    "v4_candidate_binary_entries": 1,
+    "v4_journal_roots_created": 1,
+    "v4_kill_commitments": 0,
+    "v4_kill_calls": 0,
+    "processes_disposed": 0,
+    "c2_invocations": 0,
+    "native_swift_envelope_probe_compiler_entries": 1,
+    "native_swift_envelope_probe_binary_entries": 1,
+    "python_entries": 3,
+    "authority_closures": 0,
+    "gate_e_promotions": 0
+  },
+  "next": "COMMIT_THIS_CONSUMED_RESULT_AND_FREEZE_FRESH_V5_PHASE_AWARE_ROOT_NLINK_AUTHORITY_BEFORE_SOURCE_EDIT"
+}
