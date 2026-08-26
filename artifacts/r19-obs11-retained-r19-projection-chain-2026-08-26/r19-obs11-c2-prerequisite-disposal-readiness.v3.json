@@ -1,0 +1,135 @@
+{
+  "schema": "ergentics-r19-obs11-c2-prerequisite-disposal-readiness-record-v3",
+  "status": "TWO_BUILD_STATIC_PASS_EXECUTION_NOT_STARTED_ACTUATION_ABSTAIN",
+  "rank": "LOCAL_CONTENT_ADDRESSED_READINESS",
+  "authority_vector": "00000000",
+  "gate_e": "ABSTAIN",
+  "ancestry": {
+    "control_freeze_commit": "5c43b071c5f80963509ef5ec11520a8b0c8bdfe6",
+    "control_freeze_tree": "d8c4719038755c8247a14521f0a76b7756f4856e",
+    "control_freeze_sha256": "af465c9f1a5f57dab1e87107ec0010c53dfa50bbf6c94230c1cc4e646ae9b08b",
+    "implementation_commit": "6161b8a8afb87c8b5fb543d50b98b289c5c5b502",
+    "implementation_tree": "d762522d1cf6496c971cd4f4c0120ef675f7e105",
+    "implementation_checkpoint_commit": "40c3d3cb7cdb1dc7fb27399edb2d03038f955612",
+    "implementation_checkpoint_tree": "61347f7cb40ec8cd903bf0fc2f1c379c7d02f3ae",
+    "v2_failure_record_sha256": "bab4628c684099e7c520fac8120ba277d0f3098e4599108a7878049f3f9ccdf5"
+  },
+  "readiness_frame": {
+    "path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-readiness.v3.frame",
+    "bytes": 1889,
+    "lf_count": 24,
+    "payload_sha256": "94733bd746541cbd08be7acb49f7a3e911a0c3109bdc64daced2c05d7ae3315b",
+    "full_frame_sha256": "e53a06a82b98f8b6d8e36ca804e661d6cca7636cbf6d4d40a8fbb6f115dbe1db"
+  },
+  "sources": [
+    {
+      "path": "docs/tools/ergentics-r19-c2-prerequisite-disposal.swift",
+      "bytes": 101967,
+      "sha256": "da7fa85358eca16f9b9d99d78f5ced8fde4603876ac4477497e99d6e584af1db",
+      "git_blob": "67a412f43afde034bb34a586c2d70a8edb99d49c"
+    },
+    {
+      "path": "docs/tools/ergentics-r19-c2-prerequisite-disposal-fixed.c",
+      "bytes": 22971,
+      "sha256": "bfb12f4a1bc4c1b5a252487d13304e84a3590ae8ee49278c4e0c935f59dc6711",
+      "git_blob": "ae8cdeff0d6c6782b4fc34783bce0b93d06b5c00"
+    },
+    {
+      "path": "docs/tools/ergentics-r19-c2-prerequisite-disposal-fixed.h",
+      "bytes": 5187,
+      "sha256": "188a21ecae2ccc8b95e86d61891a9eb753806a8214526e75cf1c7a3982feb3cd",
+      "git_blob": "92eb605ed7a708d7c36fabf2dcaa599a1e58e649"
+    }
+  ],
+  "build_contract": {
+    "target": "arm64-apple-macosx14.0",
+    "sdk": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+    "clang_sha256": "7def90dd8829726686213a747fc5bff1583df933dae5edc55d755479e0bfe00a",
+    "swiftc_sha256": "2ed38571e92c0283091838c1649e27650ad9c99950288e883c7b2dc6c4ce89fb",
+    "configuration": "O_WMO_GNONE_XFRONTEND_NO_SERIALIZE_DEBUGGING_OPTIONS_WARNINGS_AS_ERRORS",
+    "clang_entries": 2,
+    "swiftc_entries": 2,
+    "compiler_stdout_bytes": 0,
+    "compiler_stderr_bytes": 0,
+    "binary_entries": 0
+  },
+  "product_identity": {
+    "raw_build_a_build_b_equal": true,
+    "bytes": 420912,
+    "sha256": "6899ac3e1f4ed13119d6de612a8c8b555c050e835b364321f95cd4c0b2b828b6",
+    "macho": "MH_MAGIC_64_ARM64_EXECUTE_NOUNDEFS_DYLDLINK_TWOLEVEL_PIE",
+    "macho_uuid": "B6FF2D5C-2194-3878-AEC7-75CDF947AFF6",
+    "load_commands_sha256": "5d5a2413a55426613937664672be1242ddf36fca5d36d426d101a781e54d223b",
+    "nm_sha256": "91ea2b534e240ee75b30e1b1ed51929ac8273851f6331990128fd4215babe802",
+    "undefined_symbols_sha256": "6bcfff9e7f4c21697efcb2ebfaebbda8545baccf48303e6a0ed98d45de8f227a",
+    "dependency_table_sha256": "ce3be8653a2a9c24afd3122fd6a8f8e43b273f72990134ab26e88b05f82962b5",
+    "rpath": "/usr/lib/swift",
+    "module_cache_path_embedded": false,
+    "forbidden_fork_exec_spawn_system_imports": false,
+    "code_signature": {
+      "kind": "ADHOC_LINKER_SIGNED",
+      "identifier": "ErgenticsR19C2PrerequisiteDisposal",
+      "cdhash_sha256_truncated": "906a14c6433e7c44bbbfd8f7bd0c670a79d5d67c",
+      "strict_verify": "PASS"
+    },
+    "xattrs_not_scientific_authority": [
+      "com.apple.provenance"
+    ]
+  },
+  "c_object_identity": {
+    "raw_build_a_build_b_equal": true,
+    "bytes": 16848,
+    "sha256": "add6cab4277d8ca95ffb05e682e427d8acfd7612c8e8cb70f65f22096bb416d2",
+    "load_commands_sha256": "affa4ecf2e04d6ae73d9a9bf46cad0ae6accce40b6a36fd012f101445274901b",
+    "nm_sha256": "fde5d6f8085da45d9b12ca1d1cd44e832b251ee8122dd2d8e274e5bf2aacb2c2"
+  },
+  "builds": [
+    {
+      "role": "A_RUNNING_CANDIDATE",
+      "root": "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-a-2a26c70-v3",
+      "root_identity": "16777231:17950806:501:0:0700:11:0",
+      "product_identity": "16777231:17950941:501:20:0500:1:0",
+      "object_identity": "16777231:17950811:501:0:0600:1:0",
+      "regular_file_count": 61,
+      "directory_count": 4,
+      "allocated_kibibytes": 31100
+    },
+    {
+      "role": "B_READ_ONLY_DIVERSITY_WITNESS",
+      "root": "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-b-2a26c70-v3",
+      "root_identity": "16777231:17950984:501:0:0700:11:0",
+      "product_identity": "16777231:17951118:501:20:0400:1:0",
+      "object_identity": "16777231:17950989:501:0:0600:1:0",
+      "regular_file_count": 61,
+      "directory_count": 4,
+      "allocated_kibibytes": 31100
+    }
+  ],
+  "target_plan": {
+    "algorithm": "SHA256_DOMAIN_SEPARATED_U64BE_LENGTH_FRAMED_BINARY_MERKLE_V2",
+    "leaf_count": 3,
+    "root_sha256": "c2b5f0e4477bae767be6bc4d40e471eb47c90763d5838b29b5944c02403ff2c7"
+  },
+  "execution_gate": {
+    "readiness_commit_required": true,
+    "trusted_outer_exact_commit_tree_frame_and_build_revalidation_required": true,
+    "fresh_exact_live_target_generation_revalidation_required": true,
+    "journal_root_must_remain_absent": true,
+    "no_concurrent_same_euid_mutator_assumption": true,
+    "named_same_euid_substitution_residual": true,
+    "binary_execution_authorized_by_this_record": false
+  },
+  "operations": {
+    "v3_build_roots_created": 2,
+    "v3_compiler_entries": 4,
+    "v3_binary_entries": 0,
+    "journal_roots_created": 0,
+    "controller_invocations": 0,
+    "signals_entered": 0,
+    "processes_disposed": 0,
+    "c2_invocations": 0,
+    "authority_closures": 0,
+    "gate_e_promotions": 0
+  },
+  "next": "COMMIT_FRAME_AND_THIS_RECORD_THEN_EXACT_TRUSTED_OUTER_PREFLIGHT_AND_ONE_BUILD_A_INVOCATION"
+}
