@@ -1,0 +1,203 @@
+{
+  "schema": "ergentics-r19-obs11-c2-controller-tree-frame-order-correction-freeze-v3",
+  "status": "C2_TREE_FRAME_ORDER_CORRECTION_FROZEN_SOURCE_EDIT_ONLY_CONTROLLER_UNCONSUMED",
+  "rank": "CONTROL_ONLY_PRELAUNCH_CORRECTION_FREEZE",
+  "predecessor": {
+    "current_commit": "864b2a28d863cb75d08ce61e148b8bf1704cc352",
+    "current_tree": "d8c66e0e765ce54efc6ab294d9d8bcfa3e6b430d",
+    "mapped_image_implementation_commit": "8369b38cc1c7c078cd6ca621804b4e81079b52e6",
+    "mapped_image_implementation_tree": "69e101fbe58202d9794c74668c7894199467f222",
+    "mapped_image_checkpoint": {
+      "path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-controller-mapped-image-correction-implementation-checkpoint.v2.json",
+      "bytes": 7085,
+      "lines": 185,
+      "sha256": "b86f2a65fe32238810b7f883690fdae6a074eed4d9c19a09a79b28805c811971",
+      "git_blob": "457701f19ea64c7d3f3ad041dc1c0159d8097a5e"
+    },
+    "mapped_image_freeze": {
+      "commit": "39c8e86156a0663c4b938276cf7ee2fb717a3ed5",
+      "tree": "f26cdbf9df6c8e5e79624e9952b0103ea60eb10d",
+      "path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-controller-mapped-image-correction-freeze.v2.json",
+      "bytes": 9355,
+      "sha256": "ee573a3a90ff2cacc38a4a68368b0b48428908fd001680aa730de06053f65214",
+      "git_blob": "e31edf141ebdd59ac1e74295f2fdba0490feef1d"
+    }
+  },
+  "source_before_correction": {
+    "path": "docs/tools/ergentics-r19-obs11-c2-build-controller.rb",
+    "commit": "8369b38cc1c7c078cd6ca621804b4e81079b52e6",
+    "tree": "69e101fbe58202d9794c74668c7894199467f222",
+    "device": 16777231,
+    "inode": 17945704,
+    "uid": 501,
+    "gid": 20,
+    "mode": "0644",
+    "nlink": 1,
+    "flags": 0,
+    "bytes": 149497,
+    "lines": 4016,
+    "sha256": "8efe9e038bde5491ef1155226206514fef721152bbfe67bbfa404655cbe219ea",
+    "git_blob": "a7797a4768bb2723e53e1d0e2fb7c828a3e9dd5d"
+  },
+  "defect": {
+    "class": "TreeSnapshot",
+    "site": "initialize",
+    "expression_before": "@frames.sort",
+    "element_type": "Hash",
+    "runtime": "/usr/bin/ruby 2.6.10p210",
+    "cause": "HASH_DOES_NOT_DEFINE_TOTAL_COMPARISON_FOR_ARRAY_SORT",
+    "deterministic_effect": "ARGUMENT_ERROR_BEFORE_TREE_RECEIPT",
+    "c2_effect": "BOOTSTRAP_DOT_BUILD_SNAPSHOT_FAILS_BEFORE_CONSUMPTION",
+    "controller_invocation_consumed": false,
+    "output_namespace_created": false,
+    "authority_effect": "NONE"
+  },
+  "exact_runtime_probe": {
+    "program": "p [{\"a\"=>1},{\"a\"=>2}].sort",
+    "runtime": "/usr/bin/ruby --disable-gems -e",
+    "environment": "EMPTY_REPLACEMENT",
+    "cwd": "/private/var/empty",
+    "exit": 1,
+    "signaled": false,
+    "stdout_bytes": 0,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_bytes": 91,
+    "stderr_sha256": "77b35b727ccb61bc161b5d69639c78bde965472e92e5df932386d60416bf441c",
+    "diagnostic": "comparison of Hash with Hash failed (ArgumentError)",
+    "interpretation": "TYPE_SYSTEM_MEASUREMENT_NOT_C2_EXECUTION"
+  },
+  "frozen_correction": {
+    "semantic_region": "TreeSnapshot.initialize_POST_WALK_FRAME_ORDER_AND_ENCODING",
+    "relative_path_vector": "@frames.map_FETCH_RELATIVE",
+    "relative_path_type": "String",
+    "relative_path_uniqueness": "REQUIRED_EXACTLY_ONE_FRAME_PER_RAW_RELATIVE_PATH_BYTE_STRING",
+    "ordering": "IN_PLACE_LEXICOGRAPHIC_ASCENDING_RAW_RELATIVE_PATH_BYTES",
+    "ordering_expression": "@frames.sort_by! { |frame| frame.fetch(\"relative\").b }",
+    "encoding_expression": "@frames.map { |frame| canonical_json(frame) + \"\\n\" }.join",
+    "manifest": "SHA256_EXACT_ORDERED_CANONICAL_JSON_FRAME_BYTES",
+    "root_relative_path": "",
+    "secondary_sort_key": null,
+    "reason_secondary_key_absent": "RAW_RELATIVE_PATH_BYTES_ARE_REQUIRED_UNIQUE",
+    "failure_codes": [
+      "TREE_FRAME_RELATIVE_SHAPE",
+      "TREE_FRAME_RELATIVE_DUPLICATE"
+    ],
+    "unchanged_invariants": [
+      "FRAME_CONTENT_UNCHANGED",
+      "CANONICAL_JSON_KEY_ORDER_UNCHANGED",
+      "TREE_WALK_ADMISSION_AND_CAPS_UNCHANGED",
+      "FILE_CONTENT_HASHING_UNCHANGED",
+      "HELD_VNODE_AND_NAMED_REJOIN_UNCHANGED",
+      "MAPPED_IMAGE_V2_CORRECTION_UNCHANGED",
+      "SPAWN_WAIT_SIGNAL_AND_CONTAINMENT_SURFACE_UNCHANGED",
+      "OUTPUT_NAMESPACES_UNCHANGED",
+      "BUILD_INPUTS_AND_PRODUCT_EXECUTION_COUNT_UNCHANGED",
+      "AUTHORITY_VECTOR_UNCHANGED"
+    ]
+  },
+  "readiness_audit_measurements": {
+    "output_namespaces": {
+      "/private/tmp/ergentics-r19-obs11-chain-runner-296d32da-build-a-v1": "ABSENT",
+      "/private/tmp/ergentics-r19-obs11-chain-runner-296d32da-build-b-v1": "ABSENT",
+      "/private/tmp/ergentics-r19-obs11-chain-runner-296d32da-execution-closure-v1": "ABSENT",
+      "/private/tmp/ergentics-r19-obs11-chain-runner-296d32da-build-b-witness-closure-v1": "ABSENT",
+      "/private/tmp/ergentics-r19-obs11-c2-build-control-8405636a-v1": "ABSENT"
+    },
+    "source_local_dot_build": {
+      "root_identity": "16777231:17661999:501:20:0755:14:0:448",
+      "directories": 1182,
+      "regular_files": 3348,
+      "symlinks": 2,
+      "other_nodes": 0,
+      "aggregate_file_bytes": 457185791,
+      "directory_cap": 4096,
+      "file_cap": 4096,
+      "symlink_cap": 4096,
+      "aggregate_byte_cap": 536870912,
+      "aggregate_byte_margin": 79685121,
+      "status_after_order_correction": "WITHIN_FROZEN_CAPS_NOT_YET_LIVE_SNAPSHOTTED"
+    },
+    "exact_singleton_environment_libproc_probe": {
+      "pid": 11324,
+      "cwd": "/private/var/empty",
+      "argv_count": 0,
+      "environment": {
+        "__CF_USER_TEXT_ENCODING": "0x1F5:0x0:0x0"
+      },
+      "ruby_uuid_hex": "eb2540b7e13236beb719619d0fbf7203",
+      "mapped_device": 16777231,
+      "mapped_inode": 1152921500312572705,
+      "mapped_absolute_file_offset": 65536,
+      "region_queries": 1,
+      "disposed_target_pids_esrch": [
+        21601,
+        21660,
+        56518
+      ],
+      "status": "PASS_READ_ONLY"
+    }
+  },
+  "source_allowlist": [
+    "docs/tools/ergentics-r19-obs11-c2-build-controller.rb"
+  ],
+  "semantic_allowlist": [
+    "TreeSnapshot.initialize_POST_WALK_FRAME_ORDER_AND_ENCODING"
+  ],
+  "successor_control_allowlist": [
+    "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-controller-tree-frame-order-correction-implementation-checkpoint.v3.json"
+  ],
+  "hard_stops": [
+    "ORDER_KEY_NOT_EXACT_RELATIVE_PATH",
+    "RELATIVE_PATH_NOT_STRING_OR_NOT_UNIQUE",
+    "CANONICAL_FRAME_BYTES_CHANGED_BEYOND_ORDER",
+    "GENERIC_HASH_COMPARISON_RETAINED",
+    "TREE_ADMISSION_OR_CAP_CHANGE",
+    "MAPPED_IMAGE_V2_DELTA",
+    "SPAWN_WAIT_SIGNAL_OR_CONTAINMENT_DELTA",
+    "OUTPUT_NAMESPACE_CREATION",
+    "CONTROLLER_SWIFTPM_COMPILER_OR_PRODUCT_EXECUTION",
+    "SIGNAL_CLEANUP_REPAIR_OR_RETRY",
+    "PYTHON_ENTRY",
+    "AUTHORITY_CLOSURE_OR_GATE_E_PROMOTION"
+  ],
+  "correction_slice_operations": {
+    "source_edits_at_freeze": 0,
+    "read_only_ruby_measurement_entries": 4,
+    "c2_controller_invocations": 0,
+    "c2_controller_process_entries": 0,
+    "swiftpm_spawns": 0,
+    "compiler_entries": 0,
+    "builds": 0,
+    "product_executions": 0,
+    "output_roots_created": 0,
+    "signals": 0,
+    "cleanup_actions": 0,
+    "network_actions": 0,
+    "github_actions": 0,
+    "python_entries": 0,
+    "authority_closures": 0,
+    "gate_e_promotions": 0
+  },
+  "authority": {
+    "authority_vector": "00000000",
+    "authoritative": false,
+    "gate_e": "ABSTAIN",
+    "scientific_outcome": "ABSTAIN",
+    "prose_may_supply_fact": false,
+    "controller_invocation_authorized_by_this_record": false,
+    "build_authorized_by_this_record": false,
+    "authority_closure_authorized": false
+  },
+  "next": {
+    "step": "SOURCE_ONLY_EXACT_FRAME_ORDER_CORRECTION_THEN_THREE_INDEPENDENT_STATIC_REVIEWS",
+    "requires": [
+      "RUBY_2_6_PARSE_WITHOUT_TOP_LEVEL_SOURCE_EVALUATION",
+      "MICROTEST_NONEMPTY_ROOT_AND_MULTIPLE_FRAME_ORDER",
+      "EXACT_DIFF_SOURCE_HASH_AND_GIT_BLOB",
+      "NO_OTHER_RAW_HASH_SORT",
+      "SEPARATE_IMPLEMENTATION_CHECKPOINT",
+      "RESTART_LAUNCH_READINESS_FROM_THE_SUCCESSOR_CHECKPOINT"
+    ]
+  },
+  "artifact_addressing": "THIS_RECORD_IS_CONTENT_ADDRESSED_BY_ITS_SUCCESSOR_GIT_COMMIT_TREE_AND_DOES_NOT_SELF_EMBED_A_DIGEST"
+}
