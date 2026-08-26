@@ -143,6 +143,17 @@ SDK_SETTINGS_PLIST = "#{SDK_RESOLVED}/SDKSettings.plist"
 XCODE_VERSION_PLIST = "/Applications/Xcode.app/Contents/version.plist"
 XCODE_INFO_PLIST = "/Applications/Xcode.app/Contents/Info.plist"
 
+MAPPED_EXECUTABLE_EXPECTED = {
+  "/usr/bin/ruby" => {
+    "absolute_file_offset" => 65_536,
+    "uuid_hex" => "eb2540b7e13236beb719619d0fbf7203".freeze,
+  }.freeze,
+  SWIFT_PACKAGE => {
+    "absolute_file_offset" => 0,
+    "uuid_hex" => "561f67557606396f9382b01d5cc7edfb".freeze,
+  }.freeze,
+}.freeze
+
 TOOL_EXPECTED = {
   "/usr/bin/ruby" => [135_200,
     "9d6ff3e289c7d908e3c785e0bedd6692d1d6a3377965c88c04d847104b7c892c",
@@ -1762,7 +1773,14 @@ def process_cwd(pid)
   }
 end
 
-def mapped_image_identity(pid, expected_path)
+def mapped_image_identity(pid, expected_path, observed_uuid_hex)
+  c2_fail("MAPPED_IMAGE_EXPECTATION_CARDINALITY") unless
+    MAPPED_EXECUTABLE_EXPECTED.length == 2
+  expectation = MAPPED_EXECUTABLE_EXPECTED[expected_path]
+  c2_fail("MAPPED_IMAGE_EXPECTATION_PATH:#{expected_path}") unless expectation
+  c2_fail("MAPPED_IMAGE_EXPECTATION_UUID:#{expected_path}") unless
+    observed_uuid_hex == expectation.fetch("uuid_hex")
+  expected_file_offset = expectation.fetch("absolute_file_offset")
   address = 0
   256.times do
     bytes = "\0" * REGION_SIZE
@@ -1784,9 +1802,18 @@ def mapped_image_identity(pid, expected_path)
       region_address < address || region_size.zero?
     following = region_address + region_size
     c2_fail("PROC_REGION_OVERFLOW:#{pid}") if following > 0xffff_ffff_ffff_ffff
-    if protection & VM_PROT_EXECUTE != 0 && file_offset.zero?
+    if protection & VM_PROT_EXECUTE != 0 &&
+        file_offset == expected_file_offset
       path = bytes.byteslice(248, 1_024).split("\0", 2).first
-      return [device, inode] if path == expected_path
+      if path == expected_path
+        return {
+          "device" => device,
+          "file_offset" => file_offset,
+          "inode" => inode,
+          "path" => path,
+          "uuid_hex" => observed_uuid_hex,
+        }
+      end
     end
     address = following
   end
@@ -1947,10 +1974,13 @@ class GroupTracker
     path = process_path(pid)
     c2_fail("DIRECT_CHILD_PATH_GONE") if path == :gone
     c2_fail("DIRECT_CHILD_PATH") unless path == expected_image_path
-    mapped = mapped_image_identity(pid, expected_image_path)
+    mapped = mapped_image_identity(
+      pid, expected_image_path, member.dig("unique", "uuid_hex")
+    )
     c2_fail("DIRECT_CHILD_MAPPED_GONE") if mapped == :gone
     c2_fail("DIRECT_CHILD_MAPPED_IMAGE") unless
-      mapped == [expected_image_io.stat.dev, expected_image_io.stat.ino]
+      mapped && mapped.fetch("device") == expected_image_io.stat.dev &&
+        mapped.fetch("inode") == expected_image_io.stat.ino
     cwd = process_cwd(pid)
     c2_fail("DIRECT_CHILD_CWD_GONE") if cwd == :gone
     c2_fail("DIRECT_CHILD_CWD") unless
@@ -1967,7 +1997,7 @@ class GroupTracker
     capture!(after)
     process_receipt(after).merge(
       "cwd" => cwd,
-      "mapped_device" => mapped.first, "mapped_inode" => mapped.last,
+      "mapped_image" => mapped,
       "path" => path
     )
   end
@@ -3791,9 +3821,13 @@ def bootstrap_preflight
   observed_path = process_path(Process.pid)
   c2_fail("CONTROLLER_IMAGE_PATH", consumed: false) unless
     observed_path == "/usr/bin/ruby"
-  mapped = mapped_image_identity(Process.pid, "/usr/bin/ruby")
+  mapped = mapped_image_identity(
+    Process.pid, "/usr/bin/ruby",
+    controller_join.dig("unique", "uuid_hex")
+  )
   c2_fail("CONTROLLER_IMAGE_MAP", consumed: false) unless
-    mapped == [ruby_node.io.stat.dev, ruby_node.io.stat.ino]
+    mapped && mapped.fetch("device") == ruby_node.io.stat.dev &&
+      mapped.fetch("inode") == ruby_node.io.stat.ino
   ALL_FROZEN_ROOTS.each { |path| require_absent(path, "IMMEDIATE_ROOT") }
   {
     "controller_join" => controller_join,
