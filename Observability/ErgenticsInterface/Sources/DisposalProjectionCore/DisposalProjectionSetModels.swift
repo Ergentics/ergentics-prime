@@ -1,19 +1,35 @@
 import Foundation
 
+public struct DisposalProjectionPredecessorReference: Equatable, Sendable {
+    public let rootPath: String
+    public let expectedSealSHA256: String
+
+    public init(rootPath: String, expectedSealSHA256: String) {
+        self.rootPath = rootPath
+        self.expectedSealSHA256 = expectedSealSHA256
+    }
+}
+
 public struct DisposalProjectionSetRequest: Equatable, Sendable {
     public let journal: Data
     public let journalLogicalPath: String
-    public let predecessorProjectionID: String?
+    public let predecessor: DisposalProjectionPredecessorReference?
 
     public init(
         journal: Data,
         journalLogicalPath: String,
-        predecessorProjectionID: String? = nil
+        predecessor: DisposalProjectionPredecessorReference? = nil
     ) {
         self.journal = journal
         self.journalLogicalPath = journalLogicalPath
-        self.predecessorProjectionID = predecessorProjectionID
+        self.predecessor = predecessor
     }
+}
+
+struct DisposalProjectionMaterialRequest {
+    let journal: Data
+    let journalLogicalPath: String
+    let recordedPredecessorProjectionID: String?
 }
 
 public struct DisposalProjectionSetReport: Equatable, Sendable {
@@ -31,7 +47,9 @@ public struct DisposalProjectionSetReport: Equatable, Sendable {
     public let metricsBytes: Int
     public let graphBytes: Int
     public let frameCount: Int
+    public let sourceSealed: Bool
     public let terminal: Bool
+    public let status: String
     public let authorityVector: String
 }
 
@@ -49,7 +67,10 @@ struct DisposalProjectionSetMaterial: Sendable {
     let graphSHA256: String
     let sealSHA256: String
     let frameCount: Int
+    let sourceSealed: Bool
     let terminal: Bool
+    let invocationID: String
+    let epochLabel: String
 }
 
 struct DisposalEvidenceMaterial: Sendable {

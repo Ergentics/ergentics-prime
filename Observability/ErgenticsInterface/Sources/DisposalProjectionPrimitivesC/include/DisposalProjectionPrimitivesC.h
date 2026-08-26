@@ -16,4 +16,9 @@ int32_t disposal_projection_openat_create_exclusive_private(
     const char *leaf,
     uint32_t mode);
 
+int32_t disposal_projection_renameat_exclusive(
+    int32_t parent_descriptor,
+    const char *staging_leaf,
+    const char *final_leaf);
+
 #endif

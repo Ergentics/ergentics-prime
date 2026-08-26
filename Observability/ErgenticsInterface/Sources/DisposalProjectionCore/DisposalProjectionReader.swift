@@ -26,13 +26,9 @@ public enum DisposalProjectionReader {
         expectedSealSHA256: String
     ) -> DisposalProjectionAvailability {
         do {
-            try disposalRequireProjection(
-                disposalIsLowerHex(expectedSealSHA256, count: 64),
-                "DISPOSAL_READER_EXPECTED_SEAL_SHA256")
-            let held = try DisposalHeldProjectionSet(
+            return .admitted(try validateExact(
                 rootPath: rootPath,
-                expectedSealSHA256: expectedSealSHA256)
-            return .admitted(try disposalDecodeProjection(held))
+                expectedSealSHA256: expectedSealSHA256).snapshot)
         } catch is DisposalProjectionMissing {
             return .empty
         } catch let rejection as DisposalProjectionRejection {
@@ -48,9 +44,34 @@ public enum DisposalProjectionReader {
                 detail: String(describing: error)))
         }
     }
+
+    static func validateExact(
+        rootPath: String,
+        expectedSealSHA256: String
+    ) throws -> DisposalValidatedProjection {
+        try disposalRequireProjection(
+            disposalIsLowerHex(expectedSealSHA256, count: 64),
+            "DISPOSAL_READER_EXPECTED_SEAL_SHA256")
+        let held = try DisposalHeldProjectionSet(
+            rootPath: rootPath,
+            expectedSealSHA256: expectedSealSHA256)
+        let validated = try disposalDecodeProjection(held)
+        try held.revalidate()
+        return validated
+    }
 }
 
-private struct DisposalProjectionMissing: Error {}
+struct DisposalProjectionMissing: Error {}
+
+struct DisposalValidatedProjection {
+    let held: DisposalHeldProjectionSet
+    let snapshot: DisposalProjectionSnapshot
+    let reconstructed: DisposalProjectionSetMaterial
+    let journal: DisposalDecodedJournal
+    let logicalPath: String
+    let highWaterFrameLFSHA256: String
+    let identity: DisposalProjectionSourceIdentity
+}
 
 private struct DisposalSidecarDatabase {
     let applicationID: Int64
@@ -62,7 +83,7 @@ private struct DisposalSidecarDatabase {
 
 private func disposalDecodeProjection(
     _ held: DisposalHeldProjectionSet
-) throws -> DisposalProjectionSnapshot {
+) throws -> DisposalValidatedProjection {
     var parser = DisposalCanonicalJSONParser(
         data: held.seal,
         frameOrdinal: -1,
@@ -107,13 +128,18 @@ private func disposalDecodeProjection(
     let sourceSHA256 = try disposalReaderLowerSHA(source, "sha256")
     let sourceBytes = try disposalReaderInt(source, "bytes")
     let frameCount = try disposalReaderInt(source, "frame_count")
+    let highWaterFrameLFSHA256 = try disposalReaderLowerSHA(
+        source, "high_water_frame_sha256")
     let sourceSealed = try disposalReaderBoolean(source, "is_source_sealed")
     let terminal = try disposalReaderBoolean(source, "is_terminal")
     let sourceKind = try disposalReaderString(source, "source_kind")
     let logicalPath = try disposalReaderString(source, "logical_path")
+    let expectedStatus = DisposalProjectionSetV1.status(
+        sourceSealed: sourceSealed,
+        terminal: terminal)
     try disposalRequireProjection(
-        terminal == (status == "PASS_NONAUTHORITATIVE_TERMINAL_PROJECTION"),
-        "DISPOSAL_READER_STATUS_TERMINAL_JOIN")
+        status == expectedStatus,
+        "DISPOSAL_READER_STATUS_SOURCE_JOIN")
 
     let databases = try disposalReaderObject(sidecar, "databases")
     let evidenceSidecar = try disposalReaderDatabase(databases, role: "evidence")
@@ -167,10 +193,18 @@ private func disposalDecodeProjection(
             disposalSHA256(journal) == sourceSHA256,
         "DISPOSAL_READER_SOURCE_JOIN")
 
-    let reconstructed = try DisposalProjectionSetBuilder.makeMaterial(request: .init(
-        journal: journal,
-        journalLogicalPath: logicalPath,
-        predecessorProjectionID: predecessor))
+    let decodedJournal = try DisposalProjectionSourceAdapter.decode(journal)
+    try disposalRequireProjection(
+        decodedJournal.frames.count == frameCount &&
+            decodedJournal.frames.last?.rawWithLFSHA256 == highWaterFrameLFSHA256,
+        "DISPOSAL_READER_SOURCE_HIGH_WATER_JOIN")
+    let identity = try DisposalProjectionSourceAdapter.identity(of: decodedJournal)
+    let reconstructed = try DisposalProjectionSetBuilder.makeMaterial(
+        request: .init(
+            journal: journal,
+            journalLogicalPath: logicalPath,
+            recordedPredecessorProjectionID: predecessor),
+        decodedJournal: decodedJournal)
     try disposalRequireProjection(
         reconstructed.projectionID == projectionID,
         "DISPOSAL_READER_PROJECTION_RECONSTRUCTED_ID")
@@ -187,8 +221,14 @@ private func disposalDecodeProjection(
         reconstructed.seal == held.seal,
         "DISPOSAL_READER_SEAL_RECONSTRUCTED_BYTES")
     try disposalRequireProjection(
-        reconstructed.frameCount == frameCount && reconstructed.terminal == terminal,
+        reconstructed.frameCount == frameCount &&
+            reconstructed.sourceSealed == sourceSealed &&
+            reconstructed.terminal == terminal,
         "DISPOSAL_READER_SOURCE_RECONSTRUCTED_COUNTS")
+    try disposalRequireProjection(
+        reconstructed.invocationID == identity.invocationID &&
+            reconstructed.epochLabel == identity.epochLabel,
+        "DISPOSAL_READER_SOURCE_RECONSTRUCTED_IDENTITY")
 
     try disposalRequireProjection(
         try metrics.scalarText(
@@ -202,7 +242,6 @@ private func disposalDecodeProjection(
                 "(database_role='METRICS' AND database_sha256='\(metricsSidecar.sha256)')") == 2,
         "DISPOSAL_READER_GRAPH_INPUT_JOIN")
 
-    let decodedJournal = try DisposalProjectionSourceAdapter.decode(journal)
     try disposalRequireProjection(
         decodedJournal.sourceKind.rawValue == sourceKind &&
             decodedJournal.sourceSealed == sourceSealed &&
@@ -235,7 +274,7 @@ private func disposalDecodeProjection(
         })
     let sampleCount = Int(try metrics.scalarInt("SELECT count(*) FROM rusage_samples"))
 
-    return .init(
+    let snapshot = DisposalProjectionSnapshot(
         metadata: .init(
             projectionID: projectionID,
             sourceSHA256: sourceSHA256,
@@ -289,6 +328,14 @@ private func disposalDecodeProjection(
         sourceConservationMemberships: sourceConservationMemberships,
         sourceConservationProofNodes: sourceConservationProofNodes,
         sourceConservationMappings: sourceConservationMappings)
+    return .init(
+        held: held,
+        snapshot: snapshot,
+        reconstructed: reconstructed,
+        journal: decodedJournal,
+        logicalPath: logicalPath,
+        highWaterFrameLFSHA256: highWaterFrameLFSHA256,
+        identity: identity)
 }
 
 private func disposalValidateSidecarDatabase(
@@ -1068,217 +1115,4 @@ private func disposalReaderRequiredText(
         throw DisposalProjectionRejection(code: "DISPOSAL_READER_\(code)")
     }
     return value
-}
-
-private final class DisposalHeldProjectionSet {
-    let rootDescriptor: Int32
-    let evidence: Data
-    let metrics: Data
-    let graph: Data
-    let seal: Data
-
-    init(rootPath: String, expectedSealSHA256: String) throws {
-        try disposalRequireProjection(
-            rootPath.hasPrefix("/private/tmp/"),
-            "DISPOSAL_READER_ROOT_SCOPE")
-        var resolved = [CChar](repeating: 0, count: Int(PATH_MAX))
-        errno = 0
-        if realpath(rootPath, &resolved) == nil && errno == ENOENT {
-            throw DisposalProjectionMissing()
-        }
-        guard resolved.first != 0 else {
-            throw DisposalProjectionRejection(
-                code: "DISPOSAL_READER_ROOT_REALPATH",
-                detail: String(cString: strerror(errno)))
-        }
-        let resolvedPath = String(
-            decoding: resolved.prefix { $0 != 0 }.map { UInt8(bitPattern: $0) },
-            as: UTF8.self)
-        try disposalRequireProjection(
-            resolvedPath == rootPath,
-            "DISPOSAL_READER_ROOT_ALIAS")
-        let openedRoot = Darwin.open(
-            rootPath,
-            O_RDONLY | O_DIRECTORY | O_CLOEXEC | O_NOFOLLOW_ANY)
-        guard openedRoot >= 0 else {
-            throw DisposalProjectionRejection(
-                code: "DISPOSAL_READER_ROOT_OPEN",
-                detail: String(cString: strerror(errno)))
-        }
-        var closeOnFailure = true
-        defer { if closeOnFailure { _ = Darwin.close(openedRoot) } }
-        var before = stat()
-        guard fstat(openedRoot, &before) == 0 else {
-            throw DisposalProjectionRejection(code: "DISPOSAL_READER_ROOT_FSTAT")
-        }
-        try disposalRequireProjection(
-            (before.st_mode & S_IFMT) == S_IFDIR,
-            "DISPOSAL_READER_ROOT_TYPE")
-        try disposalRequireProjection(
-            (before.st_mode & 0o7777) == 0o500,
-            "DISPOSAL_READER_ROOT_MODE")
-        try disposalRequireProjection(
-            before.st_uid == geteuid(),
-            "DISPOSAL_READER_ROOT_OWNER")
-        let expectedLeaves = [
-            DisposalProjectionSetV1.evidenceLeaf,
-            DisposalProjectionSetV1.metricsLeaf,
-            DisposalProjectionSetV1.graphLeaf,
-            DisposalProjectionSetV1.sealLeaf,
-        ].sorted()
-        let initialInventory = try disposalReaderDirectoryEntries(openedRoot).sorted()
-        try disposalRequireProjection(
-            initialInventory == expectedLeaves,
-            "DISPOSAL_READER_ROOT_INVENTORY")
-        evidence = try disposalReaderHeldLeaf(
-            root: openedRoot,
-            leaf: DisposalProjectionSetV1.evidenceLeaf,
-            maximumBytes: 128 * 1_024 * 1_024)
-        metrics = try disposalReaderHeldLeaf(
-            root: openedRoot,
-            leaf: DisposalProjectionSetV1.metricsLeaf,
-            maximumBytes: 128 * 1_024 * 1_024)
-        graph = try disposalReaderHeldLeaf(
-            root: openedRoot,
-            leaf: DisposalProjectionSetV1.graphLeaf,
-            maximumBytes: 128 * 1_024 * 1_024)
-        seal = try disposalReaderHeldLeaf(
-            root: openedRoot,
-            leaf: DisposalProjectionSetV1.sealLeaf,
-            maximumBytes: 1 * 1_024 * 1_024)
-        try disposalRequireProjection(
-            disposalSHA256(seal) == expectedSealSHA256,
-            "DISPOSAL_READER_SEAL_SHA256")
-        var after = stat()
-        var named = stat()
-        guard fstat(openedRoot, &after) == 0, lstat(rootPath, &named) == 0 else {
-            throw DisposalProjectionRejection(code: "DISPOSAL_READER_ROOT_REVALIDATE")
-        }
-        try disposalRequireProjection(
-            disposalReaderSameState(before, after),
-            "DISPOSAL_READER_ROOT_DRIFT")
-        try disposalRequireProjection(
-            disposalReaderSameState(after, named),
-            "DISPOSAL_READER_ROOT_REBOUND")
-        try disposalRequireProjection(
-            try disposalReaderDirectoryEntries(openedRoot).sorted() == initialInventory,
-            "DISPOSAL_READER_ROOT_INVENTORY_DRIFT")
-        rootDescriptor = openedRoot
-        closeOnFailure = false
-    }
-
-    deinit { _ = Darwin.close(rootDescriptor) }
-}
-
-private func disposalReaderHeldLeaf(
-    root: Int32,
-    leaf: String,
-    maximumBytes: Int
-) throws -> Data {
-    let descriptor = leaf.withCString {
-        disposal_projection_openat_readonly_no_follow(root, $0)
-    }
-    guard descriptor >= 0 else {
-        throw DisposalProjectionRejection(
-            code: "DISPOSAL_READER_LEAF_OPEN", detail: leaf)
-    }
-    defer { _ = Darwin.close(descriptor) }
-    var before = stat()
-    guard fstat(descriptor, &before) == 0 else {
-        throw DisposalProjectionRejection(
-            code: "DISPOSAL_READER_LEAF_FSTAT", detail: leaf)
-    }
-    try disposalRequireProjection(
-        (before.st_mode & S_IFMT) == S_IFREG,
-        "DISPOSAL_READER_LEAF_TYPE",
-        detail: leaf)
-    try disposalRequireProjection(
-        (before.st_mode & 0o7777) == 0o400,
-        "DISPOSAL_READER_LEAF_MODE",
-        detail: leaf)
-    try disposalRequireProjection(
-        before.st_uid == geteuid() && before.st_nlink == 1,
-        "DISPOSAL_READER_LEAF_IDENTITY",
-        detail: leaf)
-    try disposalRequireProjection(
-        before.st_size > 0 && before.st_size <= off_t(maximumBytes),
-        "DISPOSAL_READER_LEAF_SIZE",
-        detail: leaf)
-    let bytes = try disposalReaderPread(
-        descriptor: descriptor,
-        count: Int(before.st_size))
-    var after = stat()
-    var named = stat()
-    guard fstat(descriptor, &after) == 0,
-          fstatat(root, leaf, &named, AT_SYMLINK_NOFOLLOW) == 0
-    else {
-        throw DisposalProjectionRejection(
-            code: "DISPOSAL_READER_LEAF_REVALIDATE", detail: leaf)
-    }
-    try disposalRequireProjection(
-        disposalReaderSameState(before, after),
-        "DISPOSAL_READER_LEAF_DRIFT",
-        detail: leaf)
-    try disposalRequireProjection(
-        disposalReaderSameState(after, named),
-        "DISPOSAL_READER_LEAF_REBOUND",
-        detail: leaf)
-    return bytes
-}
-
-private func disposalReaderPread(descriptor: Int32, count: Int) throws -> Data {
-    var data = Data(count: count)
-    var offset = 0
-    while offset < count {
-        let result = data.withUnsafeMutableBytes { raw -> Int in
-            guard let base = raw.baseAddress else { return -1 }
-            return pread(
-                descriptor,
-                base.advanced(by: offset),
-                count - offset,
-                off_t(offset))
-        }
-        if result > 0 { offset += result }
-        else if result < 0 && errno == EINTR { continue }
-        else {
-            throw DisposalProjectionRejection(code: "DISPOSAL_READER_PREAD")
-        }
-    }
-    return data
-}
-
-private func disposalReaderDirectoryEntries(_ descriptor: Int32) throws -> [String] {
-    let copied = dup(descriptor)
-    guard copied >= 0, let directory = fdopendir(copied) else {
-        if copied >= 0 { _ = Darwin.close(copied) }
-        throw DisposalProjectionRejection(code: "DISPOSAL_READER_FDOPENDIR")
-    }
-    defer { closedir(directory) }
-    rewinddir(directory)
-    var result: [String] = []
-    errno = 0
-    while let entry = readdir(directory) {
-        let name = withUnsafePointer(to: &entry.pointee.d_name) {
-            $0.withMemoryRebound(to: CChar.self, capacity: Int(NAME_MAX) + 1) {
-                String(cString: $0)
-            }
-        }
-        if name != "." && name != ".." { result.append(name) }
-        errno = 0
-    }
-    try disposalRequireProjection(
-        errno == 0,
-        "DISPOSAL_READER_READDIR")
-    return result
-}
-
-private func disposalReaderSameState(_ lhs: stat, _ rhs: stat) -> Bool {
-    lhs.st_dev == rhs.st_dev && lhs.st_ino == rhs.st_ino &&
-        lhs.st_mode == rhs.st_mode && lhs.st_nlink == rhs.st_nlink &&
-        lhs.st_uid == rhs.st_uid && lhs.st_gid == rhs.st_gid &&
-        lhs.st_size == rhs.st_size && lhs.st_gen == rhs.st_gen &&
-        lhs.st_mtimespec.tv_sec == rhs.st_mtimespec.tv_sec &&
-        lhs.st_mtimespec.tv_nsec == rhs.st_mtimespec.tv_nsec &&
-        lhs.st_ctimespec.tv_sec == rhs.st_ctimespec.tv_sec &&
-        lhs.st_ctimespec.tv_nsec == rhs.st_ctimespec.tv_nsec
 }

@@ -1,6 +1,7 @@
 #include "DisposalProjectionPrimitivesC.h"
 
 #include <fcntl.h>
+#include <stdio.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
@@ -38,4 +39,18 @@ disposal_projection_openat_create_exclusive_private(
         leaf,
         O_RDWR | O_CREAT | O_EXCL | O_CLOEXEC | O_NOFOLLOW_ANY,
         (mode_t)mode);
+}
+
+int32_t
+disposal_projection_renameat_exclusive(
+    int32_t parent_descriptor,
+    const char *staging_leaf,
+    const char *final_leaf)
+{
+    return (int32_t)renameatx_np(
+        parent_descriptor,
+        staging_leaf,
+        parent_descriptor,
+        final_leaf,
+        RENAME_EXCL);
 }

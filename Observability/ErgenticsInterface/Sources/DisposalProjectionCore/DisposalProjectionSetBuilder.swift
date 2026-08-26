@@ -6,6 +6,19 @@ public enum DisposalProjectionSetV1 {
     public static let graphLeaf = "disposal-graph.v1.sqlite3"
     public static let sealLeaf = "disposal-set.v1.seal.json"
     public static let authorityVector = "00000000"
+
+    public static func status(sourceSealed: Bool, terminal: Bool) -> String {
+        terminal
+            ? "PASS_NONAUTHORITATIVE_TERMINAL_PROJECTION"
+            : (sourceSealed
+                ? "ABSTAIN_SEALED_SOURCE_NO_DISPOSAL_TERMINAL"
+                : "ABSTAIN_NONTERMINAL_PREFIX_PROJECTION")
+    }
+}
+
+struct DisposalProjectionBuildTestingHooks {
+    let afterPredecessorAdmission: (() throws -> Void)?
+    let beforeSuccessorPublication: (() throws -> Void)?
 }
 
 public enum DisposalProjectionSetBuilder {
@@ -13,8 +26,49 @@ public enum DisposalProjectionSetBuilder {
         request: DisposalProjectionSetRequest,
         outputRootPath: String
     ) throws -> DisposalProjectionSetReport {
+        try build(
+            request: request,
+            outputRootPath: outputRootPath,
+            testingHooks: .init(
+                afterPredecessorAdmission: nil,
+                beforeSuccessorPublication: nil))
+    }
+
+    static func buildForTesting(
+        request: DisposalProjectionSetRequest,
+        outputRootPath: String,
+        testingHooks: DisposalProjectionBuildTestingHooks
+    ) throws -> DisposalProjectionSetReport {
+        try build(
+            request: request,
+            outputRootPath: outputRootPath,
+            testingHooks: testingHooks)
+    }
+
+    private static func build(
+        request: DisposalProjectionSetRequest,
+        outputRootPath: String,
+        testingHooks: DisposalProjectionBuildTestingHooks
+    ) throws -> DisposalProjectionSetReport {
         do {
-            let material = try makeMaterial(request: request)
+            let journal = try DisposalProjectionSourceAdapter.decode(request.journal)
+            let predecessor = try request.predecessor.map {
+                try DisposalAdmittedPredecessor(
+                    reference: $0,
+                    successorJournal: journal,
+                    successorLogicalPath: request.journalLogicalPath)
+            }
+            try testingHooks.afterPredecessorAdmission?()
+            try predecessor?.revalidate()
+            let materialRequest = DisposalProjectionMaterialRequest(
+                journal: request.journal,
+                journalLogicalPath: request.journalLogicalPath,
+                recordedPredecessorProjectionID: predecessor?.projectionID)
+            let material = try makeMaterial(
+                request: materialRequest,
+                decodedJournal: journal)
+            try predecessor?.validateMachinePrefix(successorGraph: material.graph)
+            try predecessor?.revalidate()
             let root = try DisposalSealedArtifactSet(path: outputRootPath)
             _ = try root.writeExclusive(
                 leaf: DisposalProjectionSetV1.evidenceLeaf,
@@ -28,12 +82,16 @@ public enum DisposalProjectionSetBuilder {
             _ = try root.writeExclusive(
                 leaf: DisposalProjectionSetV1.sealLeaf,
                 data: material.seal)
-            try root.seal(expectedLeaves: [
+            try root.prepareForPublication(expectedLeaves: [
                 DisposalProjectionSetV1.evidenceLeaf,
                 DisposalProjectionSetV1.metricsLeaf,
                 DisposalProjectionSetV1.graphLeaf,
                 DisposalProjectionSetV1.sealLeaf,
             ])
+            try testingHooks.beforeSuccessorPublication?()
+            try root.publish(afterPreparedOutputRevalidation: {
+                try predecessor?.revalidate()
+            })
             return .init(
                 outputRootPath: outputRootPath,
                 evidencePath: outputRootPath + "/" + DisposalProjectionSetV1.evidenceLeaf,
@@ -49,7 +107,11 @@ public enum DisposalProjectionSetBuilder {
                 metricsBytes: material.metrics.count,
                 graphBytes: material.graph.count,
                 frameCount: material.frameCount,
+                sourceSealed: material.sourceSealed,
                 terminal: material.terminal,
+                status: DisposalProjectionSetV1.status(
+                    sourceSealed: material.sourceSealed,
+                    terminal: material.terminal),
                 authorityVector: "00000000")
         } catch let failure as DisposalSQLiteFailure {
             switch failure {
@@ -62,7 +124,22 @@ public enum DisposalProjectionSetBuilder {
     static func makeMaterial(
         request: DisposalProjectionSetRequest
     ) throws -> DisposalProjectionSetMaterial {
+        try disposalRequireProjection(
+            request.predecessor == nil,
+            "PREDECESSOR_REQUIRES_HELD_BUILD_ADMISSION")
         let journal = try DisposalProjectionSourceAdapter.decode(request.journal)
+        return try makeMaterial(
+            request: .init(
+                journal: request.journal,
+                journalLogicalPath: request.journalLogicalPath,
+                recordedPredecessorProjectionID: nil),
+            decodedJournal: journal)
+    }
+
+    static func makeMaterial(
+        request: DisposalProjectionMaterialRequest,
+        decodedJournal journal: DisposalDecodedJournal
+    ) throws -> DisposalProjectionSetMaterial {
         let evidence = try buildDisposalEvidence(request: request, journal: journal)
         let metrics = try buildDisposalMetrics(journal: journal, evidence: evidence)
         let graph = try buildDisposalGraph(
@@ -78,7 +155,7 @@ public enum DisposalProjectionSetBuilder {
                 metrics.databaseSHA256,
                 graph.projectionID,
                 graph.databaseSHA256,
-                request.predecessorProjectionID ?? "ABSENT",
+                request.recordedPredecessorProjectionID ?? "ABSENT",
             ])
         let seal = disposalProjectionSidecar(
             request: request,
@@ -101,12 +178,15 @@ public enum DisposalProjectionSetBuilder {
             graphSHA256: graph.databaseSHA256,
             sealSHA256: disposalSHA256(seal),
             frameCount: journal.frames.count,
-            terminal: journal.isTerminal)
+            sourceSealed: journal.sourceSealed,
+            terminal: journal.isTerminal,
+            invocationID: evidence.invocationID,
+            epochLabel: evidence.epochLabel)
     }
 }
 
 private func disposalProjectionSidecar(
-    request: DisposalProjectionSetRequest,
+    request: DisposalProjectionMaterialRequest,
     journal: DisposalDecodedJournal,
     evidence: DisposalEvidenceMaterial,
     metrics: DisposalMetricsMaterial,
@@ -159,18 +239,15 @@ private func disposalProjectionSidecar(
         "databases": databaseObject,
         "may_feed_controller": disposalJSONBoolean(false),
         "predecessor_projection_id": disposalJSONOptionalString(
-            request.predecessorProjectionID),
+            request.recordedPredecessorProjectionID),
         "projection_id": disposalJSONString(projectionID),
         "prose_may_supply_fact": disposalJSONBoolean(false),
         "rules": rulesObject,
         "schema": disposalJSONString("ergentics_disposal_projection_set_sidecar_v1"),
         "source": sourceObject,
-        "status": disposalJSONString(
-            journal.isTerminal
-                ? "PASS_NONAUTHORITATIVE_TERMINAL_PROJECTION"
-                : (journal.sourceSealed
-                    ? "ABSTAIN_SEALED_SOURCE_NO_DISPOSAL_TERMINAL"
-                    : "ABSTAIN_NONTERMINAL_PREFIX_PROJECTION")),
+        "status": disposalJSONString(DisposalProjectionSetV1.status(
+            sourceSealed: journal.sourceSealed,
+            terminal: journal.isTerminal)),
         "unavailable_behavior": disposalJSONString(
             "EMPTY_OR_EXPLICIT_ABSTAIN_NO_STALE_FALLBACK"),
     ])

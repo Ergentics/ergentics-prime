@@ -1,5 +1,19 @@
 import Foundation
 
+struct DisposalProjectionSourceIdentity: Equatable, Sendable {
+    let invocationID: String
+    let arcLabel: String
+    let epochLabel: String
+    let consumptionState: String
+    let retryAuthorized: Bool
+    let controlCommit: String?
+    let controlTree: String?
+    let implementationCommit: String?
+    let implementationTree: String?
+    let artifactRole: String
+    let streamKind: String
+}
+
 enum DisposalProjectionSourceAdapter {
     static func decode(_ source: Data) throws -> DisposalDecodedJournal {
         try decode(
@@ -16,6 +30,49 @@ enum DisposalProjectionSourceAdapter {
                 r19MaximumTotalNodes <= DisposalEventJournal.maximumTotalNodes,
             "R19_TEST_TOTAL_NODE_LIMIT")
         return try decode(source, r19MaximumTotalNodes: r19MaximumTotalNodes)
+    }
+
+    static func identity(
+        of journal: DisposalDecodedJournal
+    ) throws -> DisposalProjectionSourceIdentity {
+        guard let start = journal.frames.first else {
+            throw DisposalProjectionRejection(code: "SOURCE_IDENTITY_EMPTY")
+        }
+        switch journal.sourceKind {
+        case .disposalEvent:
+            return .init(
+                invocationID: try start.requiredString(at: "/payload/invocation_id"),
+                arcLabel: try start.requiredString(at: "/payload/arc_label"),
+                epochLabel: try start.requiredString(at: "/payload/epoch_label"),
+                consumptionState: try start.requiredString(at: "/payload/consumption_state"),
+                retryAuthorized: try start.requiredBoolean(at: "/payload/retry_authorized"),
+                controlCommit: try start.optionalString(at: "/payload/control_commit"),
+                controlTree: try start.optionalString(at: "/payload/control_tree"),
+                implementationCommit: try start.optionalString(
+                    at: "/payload/implementation_commit"),
+                implementationTree: try start.optionalString(
+                    at: "/payload/implementation_tree"),
+                artifactRole: "DISPOSAL_JOURNAL",
+                streamKind: "DISPOSAL_JOURNAL")
+        case .r19Observability:
+            let sessionID = try start.requiredString(at: "/session_id")
+            let controlCommit = try start.requiredString(at: "/payload/control_commit")
+            let controlTree = try start.requiredString(at: "/payload/control_tree")
+            return .init(
+                invocationID: disposalLengthFramedID(
+                    "ergentics-r19-observability-invocation-v1",
+                    [sessionID, start.rawWithLFSHA256, controlCommit, controlTree]),
+                arcLabel: "R19_OBSERVABILITY_PRESENTATION",
+                epochLabel: sessionID,
+                consumptionState: "ABSTAIN_NOT_RECORDED",
+                retryAuthorized: false,
+                controlCommit: controlCommit,
+                controlTree: controlTree,
+                implementationCommit: nil,
+                implementationTree: nil,
+                artifactRole: "OBSERVABILITY_JOURNAL",
+                streamKind: "OBSERVABILITY")
+        }
     }
 
     private static func decode(

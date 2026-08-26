@@ -13,11 +13,25 @@ struct ErgenticsDisposalProjectorMain {
             "ERGENTICS_DISPOSAL_OUTPUT_ROOT",
         ]
         guard keys.allSatisfy({ environment[$0] != nil }) else { _exit(64) }
+        guard environment["ERGENTICS_DISPOSAL_PREDECESSOR_PROJECTION_ID"] == nil else {
+            _exit(64)
+        }
+        let predecessor: DisposalProjectionPredecessorReference?
+        switch (
+            environment["ERGENTICS_DISPOSAL_PREDECESSOR_ROOT"],
+            environment["ERGENTICS_DISPOSAL_PREDECESSOR_SEAL_SHA256"]
+        ) {
+        case (nil, nil):
+            predecessor = nil
+        case (.some(let root), .some(let seal)) where !root.isEmpty && !seal.isEmpty:
+            predecessor = .init(rootPath: root, expectedSealSHA256: seal)
+        default:
+            _exit(64)
+        }
         do {
             let journalPath = environment[keys[0]]!
             let expectedSHA256 = environment[keys[1]]!
             let outputRoot = environment[keys[2]]!
-            let predecessor = environment["ERGENTICS_DISPOSAL_PREDECESSOR_PROJECTION_ID"]
             let journal = try DisposalJournalAdmission.readExact(
                 path: journalPath,
                 expectedSHA256: expectedSHA256)
@@ -25,7 +39,7 @@ struct ErgenticsDisposalProjectorMain {
                 request: .init(
                     journal: journal,
                     journalLogicalPath: journalPath,
-                    predecessorProjectionID: predecessor),
+                    predecessor: predecessor),
                 outputRootPath: outputRoot)
             let line = "{" + [
                 "\"authority_vector\":\"00000000\"",
@@ -35,7 +49,7 @@ struct ErgenticsDisposalProjectorMain {
                 "\"metrics_sha256\":\"\(report.metricsSHA256)\"",
                 "\"projection_id\":\"\(report.projectionID)\"",
                 "\"seal_sha256\":\"\(report.sealSHA256)\"",
-                "\"status\":\"\(report.terminal ? "PASS_NONAUTHORITATIVE_TERMINAL_PROJECTION" : "ABSTAIN_NONTERMINAL_PREFIX_PROJECTION")\"",
+                "\"status\":\"\(report.status)\"",
             ].joined(separator: ",") + "}\n"
             FileHandle.standardOutput.write(Data(line.utf8))
             _exit(0)

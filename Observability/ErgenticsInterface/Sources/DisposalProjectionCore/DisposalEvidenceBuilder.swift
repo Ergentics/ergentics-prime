@@ -7,6 +7,8 @@ frames=terminal-lf;ordinal-contiguous;lf-frame-sha-chain;payload-sha-exact
 json=rfc8259;duplicate-keys-rejected;number-lexeme-preserved
 authority=00000000;authoritative=0;may-feed-controller=0;prose-may-supply-fact=0
 completion=incomplete-prefix-explicit;no-pass-inference
+identity=artifact-content-addressed;stream=invocation-epoch-kind-logical-path-stable;frame=stream-ordinal-lf-sha-prefix-stable
+missing-evidence-id=invocation-kind-target-frame-reason-scope-content-addressed
 reap=external-processes-none-not-parent
 typed-process-evidence=exact-event-type-plus-adapter-schema-plus-json-pointer-only
 unknown-schema=raw-only;missing-held-artifact-bytes=abstain;no-inference
@@ -24,74 +26,21 @@ conservation-set-temporal=explicit-prior-frame-only;exact-invocation-epoch-purpo
 conservation-set-resolution=explicit-obligation-membership-to-same-generation-conservation-mapping-only
 """
 
-private struct DisposalJournalIdentity {
-    let invocationID: String
-    let arcLabel: String
-    let epochLabel: String
-    let consumptionState: String
-    let retryAuthorized: Bool
-    let controlCommit: String?
-    let controlTree: String?
-    let implementationCommit: String?
-    let implementationTree: String?
-    let artifactRole: String
-    let streamKind: String
-}
-
-private func disposalJournalIdentity(
-    _ journal: DisposalDecodedJournal
-) throws -> DisposalJournalIdentity {
-    let start = journal.frames[0]
-    switch journal.sourceKind {
-    case .disposalEvent:
-        return .init(
-            invocationID: try start.requiredString(at: "/payload/invocation_id"),
-            arcLabel: try start.requiredString(at: "/payload/arc_label"),
-            epochLabel: try start.requiredString(at: "/payload/epoch_label"),
-            consumptionState: try start.requiredString(at: "/payload/consumption_state"),
-            retryAuthorized: try start.requiredBoolean(at: "/payload/retry_authorized"),
-            controlCommit: try start.optionalString(at: "/payload/control_commit"),
-            controlTree: try start.optionalString(at: "/payload/control_tree"),
-            implementationCommit: try start.optionalString(at: "/payload/implementation_commit"),
-            implementationTree: try start.optionalString(at: "/payload/implementation_tree"),
-            artifactRole: "DISPOSAL_JOURNAL",
-            streamKind: "DISPOSAL_JOURNAL")
-    case .r19Observability:
-        let sessionID = try start.requiredString(at: "/session_id")
-        let controlCommit = try start.requiredString(at: "/payload/control_commit")
-        let controlTree = try start.requiredString(at: "/payload/control_tree")
-        return .init(
-            invocationID: disposalLengthFramedID(
-                "ergentics-r19-observability-invocation-v1",
-                [sessionID, start.rawWithLFSHA256, controlCommit, controlTree]),
-            arcLabel: "R19_OBSERVABILITY_PRESENTATION",
-            epochLabel: sessionID,
-            consumptionState: "ABSTAIN_NOT_RECORDED",
-            retryAuthorized: false,
-            controlCommit: controlCommit,
-            controlTree: controlTree,
-            implementationCommit: nil,
-            implementationTree: nil,
-            artifactRole: "OBSERVABILITY_JOURNAL",
-            streamKind: "OBSERVABILITY")
-    }
-}
-
 func buildDisposalEvidence(
-    request: DisposalProjectionSetRequest,
+    request: DisposalProjectionMaterialRequest,
     journal: DisposalDecodedJournal
 ) throws -> DisposalEvidenceMaterial {
     try disposalRequireProjection(!journal.frames.isEmpty, "EVIDENCE_EMPTY_JOURNAL")
     try disposalRequireProjection(
         !request.journalLogicalPath.isEmpty,
         "EVIDENCE_LOGICAL_PATH_EMPTY")
-    if let predecessor = request.predecessorProjectionID {
+    if let predecessor = request.recordedPredecessorProjectionID {
         try disposalRequireProjection(
             disposalIsLowerHex(predecessor, count: 64),
             "EVIDENCE_PREDECESSOR_ID")
     }
 
-    let identity = try disposalJournalIdentity(journal)
+    let identity = try DisposalProjectionSourceAdapter.identity(of: journal)
     let invocationID = identity.invocationID
     try disposalRequireProjection(
         disposalIsLowerHex(invocationID, count: 64),
@@ -142,8 +91,8 @@ func buildDisposalEvidence(
         "disposal-input-artifact-v1",
         [identity.artifactRole, request.journalLogicalPath, journal.sourceSHA256])
     let streamID = disposalID(
-        "disposal-stream-v1",
-        [invocationID, artifactID, journal.sourceSHA256])
+        "disposal-prefix-stable-stream-v1",
+        [invocationID, epochLabel, identity.streamKind, request.journalLogicalPath])
     let frameIDs = journal.frames.map {
         disposalID(
             "disposal-frame-v1",
@@ -167,7 +116,7 @@ func buildDisposalEvidence(
             latticeSHA256,
             extractorSHA256,
             relationalExportSHA256,
-            request.predecessorProjectionID ?? "ABSENT",
+            request.recordedPredecessorProjectionID ?? "ABSENT",
         ])
 
     let database = try DisposalSQLiteConnection()
@@ -324,7 +273,7 @@ func buildDisposalEvidence(
                 String(repeating: "?,", count: 27) + "?)")
         try seal.bind(1, int: 1)
         try seal.bind(2, text: projectionID)
-        try seal.bind(3, text: request.predecessorProjectionID)
+        try seal.bind(3, text: request.recordedPredecessorProjectionID)
         try seal.bind(4, text: inputInventorySHA256)
         try seal.bind(5, text: ddlSHA256)
         try seal.bind(6, text: adapterSHA256)
@@ -538,10 +487,11 @@ private func insertDisposalMissingEvidence(
     })
     let statement = try database.prepare(
         "INSERT INTO missing_evidence VALUES(?,?,?,?,?,?,?,?)")
-    for (index, row) in rows.enumerated() {
+    for row in rows {
+        let scope = row.2 == nil ? "PROJECTION_GLOBAL_NON_PREFIX" : "FRAME_PREFIX"
         let missingID = disposalID(
-            "disposal-missing-evidence-v1",
-            [invocationID, String(index), row.0, row.3])
+            "disposal-missing-evidence-v2",
+            [invocationID, row.0, row.1 ?? "NO_TARGET", row.2 ?? "NO_FRAME", row.3, scope])
         statement.reset()
         try statement.bind(1, text: missingID)
         try statement.bind(2, text: invocationID)
@@ -552,7 +502,7 @@ private func insertDisposalMissingEvidence(
         try statement.bind(7, text: "ABSTAIN")
         try statement.bind(
             8,
-            text: row.2 == nil ? "PROJECTION_GLOBAL_NON_PREFIX" : "FRAME_PREFIX")
+            text: scope)
         try statement.stepDone()
     }
     return rows.count
