@@ -15,7 +15,9 @@ final class R19OBS11ProjectionChainStaticSurfaceTests: XCTestCase {
         let coreRoot = packageRoot.appendingPathComponent("Sources/DisposalProjectionCore")
         let coreNames = [
             "DisposalDurableReceiptJournal.swift",
+            "DisposalExecutableRelativeResourceRoot.swift",
             "DisposalHeldR19Source.swift",
+            "DisposalProjectionEmbeddedResources.swift",
             "DisposalProjectionRuleResources.swift",
             "DisposalR19OBS11HeldNamespacePair.swift",
             "DisposalR19OBS11ProjectionChain.swift",
@@ -76,6 +78,7 @@ final class R19OBS11ProjectionChainStaticSurfaceTests: XCTestCase {
             "libproc", "proc_pid", "PROC_PID",
             "URLSession", "NWConnection", "socket(", "connect(", "getaddrinfo(",
             "/usr/bin/git", "swift-package", "swift build", "swift test", "SwiftPM",
+            "Bundle.module",
             "GATE_E", "Gate E", "roleID", "roleId", "timeout", "deadline",
         ]
         for token in forbidden {
@@ -112,6 +115,59 @@ final class R19OBS11ProjectionChainStaticSurfaceTests: XCTestCase {
         """
         XCTAssertTrue(manifest.contains(targetDeclaration))
         XCTAssertFalse(manifest.contains("R19OBS11ProjectionChainCore"))
+        let disposalTargetDeclaration = """
+        .target(
+                    name: "DisposalProjectionCore",
+                    dependencies: ["DisposalProjectionPrimitivesC"],
+                    exclude: ["Resources"],
+                    linkerSettings: [.linkedLibrary("sqlite3")]
+                )
+        """
+        XCTAssertTrue(manifest.contains(disposalTargetDeclaration))
+    }
+
+    func testFrozenResourcesUseOnlyCanonicalExecutableRelativeClosure() throws {
+        let packageRoot = URL(fileURLWithPath: #filePath)
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+        let coreRoot = packageRoot.appendingPathComponent("Sources/DisposalProjectionCore")
+        let location = try String(
+            contentsOf: coreRoot.appendingPathComponent(
+                "DisposalExecutableRelativeResourceRoot.swift"),
+            encoding: .utf8)
+        let resources = try String(
+            contentsOf: coreRoot.appendingPathComponent(
+                "DisposalProjectionRuleResources.swift"),
+            encoding: .utf8)
+        let utilities = try String(
+            contentsOf: coreRoot.appendingPathComponent(
+                "DisposalProjectionUtilities.swift"),
+            encoding: .utf8)
+
+        XCTAssertEqual(occurrences(of: "_NSGetExecutablePath", in: location), 2)
+        XCTAssertTrue(location.contains("private static let closureParentPath = \"/private/tmp\""))
+        XCTAssertTrue(location.contains(
+            "\"ergentics-r19-obs11-chain-runner-296d32da-execution-closure-v1\""))
+        XCTAssertTrue(location.contains("observedClosureRootLeaf == closureRootLeaf"))
+        XCTAssertTrue(location.contains("closureRootPath == expectedClosureRootPath"))
+        XCTAssertTrue(location.contains(
+            "static let executableLeaf = \"ErgenticsR19OBS11ProjectionChain\""))
+        XCTAssertTrue(location.contains(
+            "static let resourceRootLeaf = \"ErgenticsR19OBS11ProjectionChain.resources.v1\""))
+        for forbidden in [
+            "CommandLine", "ProcessInfo", "getenv(", "Bundle", "FileManager",
+            "currentDirectoryPath", "libproc", "proc_pid", "URLSession",
+        ] {
+            XCTAssertFalse(location.contains(forbidden), forbidden)
+        }
+        XCTAssertFalse(resources.contains("Bundle.module"))
+        XCTAssertFalse(utilities.contains("Bundle.module"))
+        XCTAssertTrue(resources.contains("RULE_RESOURCE_EXTERNAL_EMBEDDED_JOIN"))
+        XCTAssertTrue(resources.contains("expectedInventory: [location.executableLeaf"))
+        XCTAssertTrue(resources.contains("expectedMode: 0o500"))
+        XCTAssertTrue(resources.contains("expectedMode: 0o400"))
+        XCTAssertTrue(resources.contains("try Self.revalidateFile("))
     }
 
     func testFailureNamespaceRequiresBuilderOriginAndFinalRevalidation() throws {

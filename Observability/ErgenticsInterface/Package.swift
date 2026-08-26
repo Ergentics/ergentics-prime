@@ -33,7 +33,7 @@ let package = Package(
         .target(
             name: "DisposalProjectionCore",
             dependencies: ["DisposalProjectionPrimitivesC"],
-            resources: [.process("Resources")],
+            exclude: ["Resources"],
             linkerSettings: [.linkedLibrary("sqlite3")]
         ),
         .executableTarget(

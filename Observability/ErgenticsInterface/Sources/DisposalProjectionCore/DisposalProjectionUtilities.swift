@@ -3,16 +3,7 @@ import Foundation
 let disposalZeroSpan = DisposalJSONSpan(lowerBound: 0, upperBound: 0)
 
 func disposalResourceData(_ name: String, extension extensionName: String) throws -> Data {
-    guard let url = Bundle.module.url(forResource: name, withExtension: extensionName) else {
-        throw DisposalProjectionRejection(code: "RESOURCE_ABSENT", detail: "\(name).\(extensionName)")
-    }
-    do {
-        return try Data(contentsOf: url, options: [.mappedIfSafe])
-    } catch {
-        throw DisposalProjectionRejection(
-            code: "RESOURCE_READ",
-            detail: "\(name).\(extensionName):\(error)")
-    }
+    try DisposalProjectionEmbeddedResources.data(name, extension: extensionName)
 }
 
 func disposalID(_ domain: String, _ components: [String]) -> String {

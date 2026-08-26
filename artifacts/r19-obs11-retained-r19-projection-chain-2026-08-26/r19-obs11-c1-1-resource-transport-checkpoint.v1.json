@@ -1,0 +1,234 @@
+{
+  "schema": "ergentics-r19-obs11-c1-1-resource-transport-checkpoint-v1",
+  "status": "C1_1_SOURCE_CORRECTION_STATIC_AUDITED_COMPILER_BUILD_TEST_RUN_ABSTAIN",
+  "predecessor": {
+    "commit": "489b21a81592e4c1fcce0926deecfe384e67978a",
+    "tree": "6275565beaff74eeb6fc56c51efef3f53b964818",
+    "checkpoint": "R19_OBS11_C1_SOURCE_IMPLEMENTATION",
+    "artifact_path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c1-source-checkpoint.v1.json",
+    "artifact_bytes": 11799,
+    "artifact_sha256": "3be6da7ecd7879d45d4c0b97aec89ec581d523b1cd84654d4520d2547a4b2a95",
+    "artifact_git_blob": "aea0684484a02dfd449a96f87ab9c349336c966d"
+  },
+  "authority": {
+    "authority_vector": "00000000",
+    "authoritative": false,
+    "gate_e": "ABSTAIN",
+    "may_feed_controller": false,
+    "prose_may_supply_fact": false,
+    "scientific_outcome": "ABSTAIN",
+    "supervisor_image_authority_closed": false
+  },
+  "operations": {
+    "swift_commands": 0,
+    "compiler_commands": 0,
+    "build_commands": 0,
+    "test_commands": 0,
+    "runner_executions": 0,
+    "projection_roots_created": 0,
+    "receipt_roots_created": 0,
+    "signals": 0,
+    "network_actions": 0,
+    "github_actions": 0,
+    "cleanup_actions": 0
+  },
+  "host_measurement": {
+    "os": "macOS",
+    "version": "26.5.2",
+    "build": "25F84",
+    "architecture": "arm64",
+    "private_tmp_volume": "/dev/disk3s5",
+    "private_tmp_filesystem": "apfs",
+    "private_tmp": {
+      "device": 16777231,
+      "inode": 774813,
+      "mode": "01777",
+      "uid": 0,
+      "gid": 0,
+      "link_count_at_measurement": 2083
+    },
+    "apfs_directory_link_count_rule": "TWO_PLUS_COMPLETE_IMMEDIATE_ENTRY_COUNT_ON_THIS_PINNED_HOST",
+    "apfs_examples": [
+      {
+        "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/r19-observability-eaf9b76-v1",
+        "immediate_entries": 2,
+        "link_count": 4,
+        "mode": "0500"
+      },
+      {
+        "path": "Observability/ErgenticsInterface/Sources/DisposalProjectionCore/Resources",
+        "immediate_entries": 5,
+        "regular_file_entries": 5,
+        "subdirectory_entries": 0,
+        "link_count": 7,
+        "mode": "0755"
+      }
+    ],
+    "portability_policy": "REMEASURE_AND_RESEAL_FOR_DIFFERENT_FILESYSTEM_OR_OS; CURRENT_MISMATCH_FAILS_CLOSED"
+  },
+  "c2_preflight_diagnostic": {
+    "status": "DETERMINISTIC_PATH_TAINT_IDENTIFIED_BEFORE_ANY_C2_BUILD",
+    "inference": "SWIFTPM_DISPOSALPROJECTIONCORE_RESOURCE_DECLARATION_GENERATES_A_BUILD_ROOT_LITERAL_AND_LINKS_IT_INTO_TRANSITIVE_PRODUCTS",
+    "diagnostic_authority": "NONE_STALE_PRE_C1_1_BUILD_OUTPUT_READ_ONLY",
+    "observed_generated_accessor": {
+      "path": "Observability/ErgenticsInterface/.build/arm64-apple-macosx/release/DisposalProjectionCore.build/DerivedSources/resource_bundle_accessor.swift",
+      "bytes": 862,
+      "sha256": "92b5d5e63dc5a1675c176b6a0e2d5c269dcebb3e9e7271c65ae0e8a448274b78",
+      "contains_absolute_dot_build_path": true
+    },
+    "observed_stale_linked_product": {
+      "path": "Observability/ErgenticsInterface/.build/arm64-apple-macosx/release/ErgenticsDisposalProjector",
+      "bytes": 1928792,
+      "sha256": "f35d22072374ecd0dada1adac9e98f126fa041af1155e61261790fc21a5dbb30",
+      "macho_uuid": "25F73B4F-02AA-3448-BF1E-5EA7740B1C5D",
+      "contains_absolute_dot_build_path": true,
+      "contains_resource_bundle_fatal_text": true,
+      "same_product_as_obs11_runner": false
+    },
+    "builds_spent": 0,
+    "build_b_admitted": false
+  },
+  "correction": {
+    "swiftpm_disposal_core_resource_processing": "REMOVED",
+    "package_manifest_rule": "DISPOSAL_PROJECTION_CORE_EXCLUDES_CHECKED_IN_REFERENCE_RESOURCES",
+    "public_and_default_resource_reads": "EXACT_EMBEDDED_PACK",
+    "frozen_obs11_resource_witness": "EXACT_DESCRIPTOR_HELD_EXECUTABLE_RELATIVE_EXTERNAL_SIBLING_CLOSURE",
+    "external_witness_may_replace_embedded_authority": false,
+    "resource_reference_files_modified": 0,
+    "bundle_module_references_in_runner_transitive_source": 0,
+    "generated_accessor_source_expected_in_runner_build": false,
+    "runner_main_modified": false,
+    "projection_chain_modified": false,
+    "receipt_machine_semantics_modified": false
+  },
+  "embedded_pack": {
+    "domain": "ergentics-disposal-embedded-rule-resource-pack-v1",
+    "commitment_algorithm": "ERGENTICS_DISPOSAL_LENGTH_FRAMED_ID_V1_SHA256",
+    "commitment_sha256": "a35466c0d654c9d9c8c3da3b86fb886d1d01ce4f4487d84bdd57b46031f70f51",
+    "component_order": "LEAF_BYTES_DECIMAL_SHA256_FOR_EACH_SPECIFICATION_IN_DECLARATION_ORDER",
+    "self_hashing": false,
+    "strict_base64_decode": true,
+    "canonical_base64_reencode_join": true,
+    "resources": [
+      {"leaf":"001-evidence.sql","bytes":50706,"sha256":"f3e003136aa4f9a12308d310ffa6bc92d71bccb99a7a50656c32231b79a435c7","base64_chunks":705},
+      {"leaf":"001-graph.sql","bytes":41517,"sha256":"f65eb702e528f851bfd3bcce2817258dfdc5779132bba780964c82c0d752009e","base64_chunks":577},
+      {"leaf":"001-metrics.sql","bytes":12119,"sha256":"eda615d5bc71246c54d7335679f641646e11c8938ef01a459cf168be2aa5ce61","base64_chunks":169},
+      {"leaf":"disposal-adapters.v1.json","bytes":4610,"sha256":"68e09200dd29a47fcbe49e083df41fe55ead950198edf75300ab6e302b61be1b","base64_chunks":65},
+      {"leaf":"disposal-lattice.v1.json","bytes":1937,"sha256":"c99361cb2052032e176b1ab5cd22898a67231b98bdea8c972388bdeab12ba022","base64_chunks":27}
+    ],
+    "static_round_trip": "PASS_EXACT_ALL_FIVE_REFERENCE_FILES_AND_PACK_COMMITMENT"
+  },
+  "external_witness_closure": {
+    "location_source": "NSGETEXECUTABLEPATH_THEN_REALPATH",
+    "closure_parent": "/private/tmp",
+    "closure_root_leaf": "ergentics-r19-obs11-chain-runner-296d32da-execution-closure-v1",
+    "closure_root": "/private/tmp/ergentics-r19-obs11-chain-runner-296d32da-execution-closure-v1",
+    "closure_root_shape": "EXACT_C0_FROZEN_DIRECT_CHILD_OF_CANONICAL_PARENT",
+    "executable_leaf": "ErgenticsR19OBS11ProjectionChain",
+    "resource_root_leaf": "ErgenticsR19OBS11ProjectionChain.resources.v1",
+    "closure_inventory": [
+      "ErgenticsR19OBS11ProjectionChain",
+      "ErgenticsR19OBS11ProjectionChain.resources.v1"
+    ],
+    "closure_mode": "0500",
+    "executable_mode": "0500",
+    "resource_root_mode": "0500",
+    "resource_leaf_mode": "0400",
+    "resource_leaf_link_count": 1,
+    "caller_paths": 0,
+    "caller_argv": 0,
+    "caller_environment": 0,
+    "caller_cwd": 0,
+    "descriptor_lifetime": "FULL_RUN",
+    "named_descriptor_identity_and_state_revalidation": "BEFORE_USE_AND_REPEATED_FULL_LIFETIME",
+    "external_embedded_join": "EXACT_BYTES_SIZE_SHA256_FOR_ALL_FIVE",
+    "mapped_running_image_vnode_join": "ABSTAIN_LATER_LAUNCH_ADMISSION"
+  },
+  "static_verification": {
+    "git_diff_check": "PASS",
+    "swift_lexical_delimiter_files": 7,
+    "swift_lexical_delimiter_status": "PASS",
+    "changed_source_allowlist_entries": 7,
+    "changed_source_allowlist_bytes": 218862,
+    "changed_source_manifest_sha256": "afb9c45c2781f446e72be9589d06fbb3be4410ee2997f58047a832f50b24b060",
+    "embedded_reference_round_trip": "PASS_EXACT",
+    "embedded_pack_recomputation": "PASS_EXACT",
+    "bundle_module_runner_transitive_source_scan": "PASS_ZERO",
+    "new_public_or_package_api_in_production_correction": "PASS_ZERO",
+    "new_process_network_git_or_gate_e_surface_in_production_correction": "PASS_ZERO",
+    "disposal_core_resource_declaration": "ABSENT",
+    "remaining_manifest_resource_declarations": "LEDGER_CORE_AND_TEST_ONLY_NOT_RUNNER_TRANSITIVE",
+    "tracked_build_output_changes": "ABSENT",
+    "compiler": "ABSTAIN_NOT_INVOKED",
+    "build": "ABSTAIN_NOT_INVOKED",
+    "test": "ABSTAIN_NOT_INVOKED",
+    "run": "ABSTAIN_NOT_INVOKED"
+  },
+  "independent_reviews": [
+    {
+      "scope": "HELD_DESCRIPTOR_IDENTITY_INVENTORY_MODE_LIFETIME_AND_FAILURE_CLEANUP",
+      "status": "NO_BLOCKER",
+      "residual": "APFS_LINK_COUNT_SEMANTICS_HOST_SPECIFIC_REMEASURE_ON_OTHER_SUBSTRATE"
+    },
+    {
+      "scope": "MACHINE_PREFIX_RESOURCE_PACK_AND_C2_RAW_IDENTITY_HARD_STOPS",
+      "status": "NO_BLOCKER",
+      "residual": "MAPPED_IMAGE_VNODE_JOIN_AND_EXECUTABLE_COMMITMENT_REMAIN_LATER_LAUNCH_ADMISSION"
+    },
+    {
+      "scope": "ALLOWLIST_API_AUTHORITY_AND_STATIC_COMPILE_LIKENESS",
+      "status": "NO_BLOCKER",
+      "residual": "SWIFT_6_2_TYPECHECK_BUILD_TEST_AND_RUNTIME_REMAIN_ABSTAIN"
+    }
+  ],
+  "residuals": [
+    "COMPILER_BUILD_TEST_AND_RUN_NOT_EXECUTED",
+    "MAPPED_RUNNING_IMAGE_VNODE_JOIN_NOT_PROVEN",
+    "EXECUTABLE_SHA256_NOT_YET_JOINED_TO_A_FROZEN_C2_BUILD_COMMITMENT",
+    "APFS_DIRECTORY_LINK_COUNT_RULE_REQUIRES_REMEASUREMENT_ON_ANOTHER_FILESYSTEM_OR_OS",
+    "FINAL_CHECK_TO_RENAME_EXCL_SAME_UID_RACE_REMAINS_NAMED",
+    "CRASH_AFTER_EXCLUSIVE_RECEIPT_RENAME_IS_FINAL_OR_STAGING_ABSTAIN"
+  ],
+  "next": {
+    "checkpoint": "R19_OBS11_C2_BUILD_ONLY_IDENTITY_ADMISSION",
+    "requires_separate_readiness_freeze": true,
+    "build_a_hard_stops_before_build_b": [
+      "FRESH_DISJOINT_SCRATCH_ROOT_AND_EXACT_PRODUCT_ONLY",
+      "ZERO_GENERATED_RESOURCE_BUNDLE_ACCESSOR_SOURCE_OBJECT_OR_SYMBOL",
+      "ZERO_DISPOSAL_CORE_RESOURCE_COPY_OR_BUNDLE_ACTION",
+      "ZERO_LEDGER_OR_TEST_TARGET_LINK_INPUT",
+      "ZERO_BUILD_A_SCRATCH_DOT_BUILD_SWIFTPM_ACCESSOR_OR_RESOURCE_BUNDLE_FATAL_PATH_TAINT_IN_PRODUCT_STRINGS_SYMBOLS_LOAD_COMMANDS_DEBUG_OR_CODE_SIGNATURE_DATA",
+      "EXACT_PACKAGED_CLOSURE_TOPOLOGY_MODES_INVENTORIES_AND_FIVE_EXTERNAL_EMBEDDED_JOINS"
+    ],
+    "build_b_postconditions": [
+      "SYMMETRIC_ZERO_PATH_TAINT_AND_CLOSURE_CHECKS",
+      "STRICT_RAW_EXECUTABLE_SIZE_BYTES_AND_SHA256_EQUALITY",
+      "MACH_O_UUID_LOAD_COMMAND_RPATH_MINIMUM_OS_SDK_AND_CODE_IDENTITY_EQUALITY",
+      "STRICT_SIBLING_RESOURCE_CLOSURE_EQUALITY"
+    ],
+    "allowed": [
+      "TWO_DISJOINT_RELEASE_BUILDS_ONLY_AFTER_EXACT_C2_FREEZE",
+      "READ_ONLY_BUILD_PLAN_BINARY_MACH_O_SYMBOL_STRING_AND_RESOURCE_INSPECTION",
+      "BUILD_A_CLOSURE_PACKAGING_WITH_NO_EXECUTION"
+    ],
+    "forbidden": [
+      "RUNNER_EXECUTION",
+      "PROJECTION_OR_RECEIPT_ROOT_CREATION",
+      "MAPPED_IMAGE_AUTHORITY_CLOSURE",
+      "GATE_E_PROMOTION",
+      "GITHUB",
+      "NETWORK",
+      "CLEANUP_RETRY_OR_THIRD_BUILD"
+    ]
+  },
+  "content_manifest": [
+    {"path":"Observability/ErgenticsInterface/Package.swift","bytes":2177,"sha256":"c9cd9e7d8f96ca326dfa6e90947ae35b4a0fa84fcd3024f2c602a1cf2174d835","git_blob":"b2b1e472f87d6195d7b9280a51ca7f118d23c62a"},
+    {"path":"Observability/ErgenticsInterface/Sources/DisposalProjectionCore/DisposalExecutableRelativeResourceRoot.swift","bytes":3929,"sha256":"5d7ba6889ac88d3ee0df170938da508cba608dcaac1b0e56c5a3a44c0ae59c67","git_blob":"b34a28aec806da7740c06e492eac68662d66d034"},
+    {"path":"Observability/ErgenticsInterface/Sources/DisposalProjectionCore/DisposalProjectionEmbeddedResources.swift","bytes":171165,"sha256":"0fa14ffd865aaa37b6f4608401d90b503991b9de039189628e1705619f582c7d","git_blob":"5bbe2baa5a92a4b0f1a54244fb3ed1a634036567"},
+    {"path":"Observability/ErgenticsInterface/Sources/DisposalProjectionCore/DisposalProjectionRuleResources.swift","bytes":22374,"sha256":"c69e337288323cfc08f595d82ba4445ec941ac8dabdce97ea2f1164ffdd44968","git_blob":"5a5ecce1ec5cc83437113f72ed16b929735543ed"},
+    {"path":"Observability/ErgenticsInterface/Sources/DisposalProjectionCore/DisposalProjectionUtilities.swift","bytes":6173,"sha256":"0806521bd82330edb5f723205500eed4a79ed960c5cbb25313218dd9ddfd6b80","git_blob":"25f2971d989c347ef8d64eec5a2bb1d9d6e5adf4"},
+    {"path":"Observability/ErgenticsInterface/Tests/DisposalProjectionCoreTests/DisposalProjectionEmbeddedResourceTests.swift","bytes":2079,"sha256":"7434c69d5269a3ecbacd44a95348de1ebd06a0cb78290a7b8dd16ca684e19047","git_blob":"698a034f8dca32a3eaa2a6bd1eb797bb5356fda1"},
+    {"path":"Observability/ErgenticsInterface/Tests/DisposalProjectionCoreTests/R19OBS11ProjectionChainStaticSurfaceTests.swift","bytes":10965,"sha256":"5bad0be309961ed765c3b4bfba6f5310d5f024b49f122553323c4bd71965abeb","git_blob":"e99de4d2c10f1e6d155aa99d587f4aea5c7ec60a"}
+  ],
+  "artifact_addressing": "THIS_RECORD_IS_CONTENT_ADDRESSED_BY_ITS_SUCCESSOR_GIT_COMMIT_TREE_AND_DOES_NOT_SELF_EMBED_A_DIGEST"
+}

@@ -10,141 +10,89 @@ struct DisposalProjectionRuleResources: Sendable {
     let lattice: Data
 
     static func bundleDefault() throws -> Self {
-        .init(
-            evidenceDDL: try disposalResourceData("001-evidence", extension: "sql"),
-            graphDDL: try disposalResourceData("001-graph", extension: "sql"),
-            metricsDDL: try disposalResourceData("001-metrics", extension: "sql"),
-            adapters: try disposalResourceData("disposal-adapters.v1", extension: "json"),
-            lattice: try disposalResourceData("disposal-lattice.v1", extension: "json"))
+        try DisposalProjectionEmbeddedResources.exact()
+    }
+
+    func orderedValues() -> [Data] {
+        [evidenceDDL, graphDDL, metricsDDL, adapters, lattice]
     }
 }
 
 final class DisposalHeldProjectionRuleResources {
-    private struct Specification: Sendable {
-        let leaf: String
-        let bytes: Int
-        let sha256: String
-    }
-
-    private struct HeldLeaf {
+    private struct HeldFile {
         let descriptor: Int32
         let admittedState: stat
         let bytes: Data
         let sha256: String
     }
 
-    private static let specifications: [Specification] = [
-        .init(
-            leaf: "001-evidence.sql",
-            bytes: 50_706,
-            sha256: "f3e003136aa4f9a12308d310ffa6bc92d71bccb99a7a50656c32231b79a435c7"),
-        .init(
-            leaf: "001-graph.sql",
-            bytes: 41_517,
-            sha256: "f65eb702e528f851bfd3bcce2817258dfdc5779132bba780964c82c0d752009e"),
-        .init(
-            leaf: "001-metrics.sql",
-            bytes: 12_119,
-            sha256: "eda615d5bc71246c54d7335679f641646e11c8938ef01a459cf168be2aa5ce61"),
-        .init(
-            leaf: "disposal-adapters.v1.json",
-            bytes: 4_610,
-            sha256: "68e09200dd29a47fcbe49e083df41fe55ead950198edf75300ab6e302b61be1b"),
-        .init(
-            leaf: "disposal-lattice.v1.json",
-            bytes: 1_937,
-            sha256: "c99361cb2052032e176b1ab5cd22898a67231b98bdea8c972388bdeab12ba022"),
-    ]
+    private static let maximumExecutableBytes = 64 * 1_024 * 1_024
 
     let resources: DisposalProjectionRuleResources
+    let executableSHA256: String
 
-    private let parentPath: String
-    private let rootPath: String
-    private let rootLeaf: String
+    private let location: DisposalExecutableRelativeResourceLocation
     private let parentDescriptor: Int32
-    private let rootDescriptor: Int32
+    private let closureDescriptor: Int32
+    private let resourceRootDescriptor: Int32
     private let admittedParentState: stat
-    private let admittedRootState: stat
-    private let heldLeaves: [String: HeldLeaf]
+    private let admittedClosureState: stat
+    private let admittedResourceRootState: stat
+    private let heldExecutable: HeldFile
+    private let heldResourceLeaves: [String: HeldFile]
 
     static func admitFrozen() throws -> DisposalHeldProjectionRuleResources {
-        var resolvedPaths: [String: String] = [:]
-        for specification in specifications {
-            let url = URL(fileURLWithPath: specification.leaf)
-            let resourceName = url.deletingPathExtension().lastPathComponent
-            let resourceExtension = url.pathExtension
-            guard let resourceURL = Bundle.module.url(
-                forResource: resourceName,
-                withExtension: resourceExtension)
-            else {
-                throw DisposalProjectionRejection(
-                    code: "RULE_RESOURCE_ABSENT",
-                    detail: specification.leaf)
-            }
-            resolvedPaths[specification.leaf] = resourceURL.path
-        }
-        let parents = Set(resolvedPaths.values.map {
-            URL(fileURLWithPath: $0).deletingLastPathComponent().path
-        })
-        try disposalRequireProjection(
-            parents.count == 1,
-            "RULE_RESOURCE_COMMON_PARENT")
-        guard let rootPath = parents.first else {
-            throw DisposalProjectionRejection(code: "RULE_RESOURCE_ROOT_ABSENT")
-        }
-        for specification in specifications {
-            try disposalRequireProjection(
-                resolvedPaths[specification.leaf] == rootPath + "/" + specification.leaf,
-                "RULE_RESOURCE_PATH_JOIN",
-                detail: specification.leaf)
-        }
-        return try DisposalHeldProjectionRuleResources(rootPath: rootPath)
+        let embedded = try DisposalProjectionEmbeddedResources.exact()
+        return try DisposalHeldProjectionRuleResources(
+            location: DisposalExecutableRelativeResourceRoot.resolveFrozen(),
+            embedded: embedded)
     }
 
-    private init(rootPath: String) throws {
-        self.rootPath = rootPath
-        try disposalRequireProjection(
-            rootPath.hasPrefix("/") && !rootPath.utf8.contains(0),
-            "RULE_RESOURCE_ROOT_PATH")
-        let rootURL = URL(fileURLWithPath: rootPath)
-        parentPath = rootURL.deletingLastPathComponent().path
-        rootLeaf = rootURL.lastPathComponent
-        try disposalRequireProjection(
-            !rootLeaf.isEmpty && rootLeaf != "." && rootLeaf != ".." &&
-                !rootLeaf.contains("/") && parentPath + "/" + rootLeaf == rootPath,
-            "RULE_RESOURCE_ROOT_PATH")
+    private init(
+        location: DisposalExecutableRelativeResourceLocation,
+        embedded: DisposalProjectionRuleResources
+    ) throws {
+        try DisposalProjectionEmbeddedResources.validate(embedded)
+        self.location = location
 
         var resolvedParent = [CChar](repeating: 0, count: Int(PATH_MAX))
-        guard realpath(parentPath, &resolvedParent) != nil else {
+        guard realpath(location.closureParentPath, &resolvedParent) != nil else {
             throw DisposalProjectionRejection(
-                code: "RULE_RESOURCE_PARENT_REALPATH",
+                code: "RULE_CLOSURE_PARENT_REALPATH",
                 detail: String(cString: strerror(errno)))
         }
         try disposalRequireProjection(
-            disposalRuleResourcePath(resolvedParent) == parentPath,
-            "RULE_RESOURCE_PARENT_ALIAS")
-
+            disposalRuleResourcePath(resolvedParent) == location.closureParentPath,
+            "RULE_CLOSURE_PARENT_ALIAS")
         var namedParent = stat()
-        guard lstat(parentPath, &namedParent) == 0 else {
+        guard lstat(location.closureParentPath, &namedParent) == 0 else {
             throw DisposalProjectionRejection(
-                code: "RULE_RESOURCE_PARENT_LSTAT",
+                code: "RULE_CLOSURE_PARENT_LSTAT",
                 detail: String(cString: strerror(errno)))
         }
         let openedParent = Darwin.open(
-            parentPath,
+            location.closureParentPath,
             O_RDONLY | O_DIRECTORY | O_CLOEXEC | O_NOFOLLOW_ANY)
         guard openedParent >= 0 else {
             throw DisposalProjectionRejection(
-                code: "RULE_RESOURCE_PARENT_OPEN",
+                code: "RULE_CLOSURE_PARENT_OPEN",
                 detail: String(cString: strerror(errno)))
         }
-        var openedRoot: Int32 = -1
-        var openedLeaves: [Int32] = []
+        var openedClosure: Int32 = -1
+        var openedResourceRoot: Int32 = -1
+        var capturedExecutable: HeldFile?
+        var capturedResources: [String: HeldFile] = [:]
         var retainDescriptors = false
         defer {
             if !retainDescriptors {
-                for descriptor in openedLeaves { _ = Darwin.close(descriptor) }
-                if openedRoot >= 0 { _ = Darwin.close(openedRoot) }
+                if let capturedExecutable {
+                    _ = Darwin.close(capturedExecutable.descriptor)
+                }
+                for held in capturedResources.values {
+                    _ = Darwin.close(held.descriptor)
+                }
+                if openedResourceRoot >= 0 { _ = Darwin.close(openedResourceRoot) }
+                if openedClosure >= 0 { _ = Darwin.close(openedClosure) }
                 _ = Darwin.close(openedParent)
             }
         }
@@ -152,235 +100,363 @@ final class DisposalHeldProjectionRuleResources {
         var parentState = stat()
         guard fstat(openedParent, &parentState) == 0 else {
             throw DisposalProjectionRejection(
-                code: "RULE_RESOURCE_PARENT_FSTAT",
+                code: "RULE_CLOSURE_PARENT_FSTAT",
                 detail: String(cString: strerror(errno)))
         }
         try disposalRequireProjection(
             disposalRuleResourceSameIdentity(namedParent, parentState) &&
                 (parentState.st_mode & S_IFMT) == S_IFDIR &&
-                parentState.st_uid == geteuid() &&
-                (parentState.st_mode & 0o022) == 0,
-            "RULE_RESOURCE_PARENT_POLICY")
+                (parentState.st_mode & 0o7777) == 0o1777 &&
+                parentState.st_uid == 0 && parentState.st_gid == 0,
+            "RULE_CLOSURE_PARENT_POLICY")
 
-        var namedRoot = stat()
-        guard fstatat(openedParent, rootLeaf, &namedRoot, AT_SYMLINK_NOFOLLOW) == 0 else {
+        var namedClosure = stat()
+        guard fstatat(
+            openedParent,
+            location.closureRootLeaf,
+            &namedClosure,
+            AT_SYMLINK_NOFOLLOW) == 0
+        else {
+            throw DisposalProjectionRejection(
+                code: "RULE_CLOSURE_ROOT_LSTAT",
+                detail: String(cString: strerror(errno)))
+        }
+        openedClosure = location.closureRootLeaf.withCString {
+            disposal_projection_openat_directory_no_follow(openedParent, $0)
+        }
+        guard openedClosure >= 0 else {
+            throw DisposalProjectionRejection(
+                code: "RULE_CLOSURE_ROOT_OPEN",
+                detail: String(cString: strerror(errno)))
+        }
+        var closureState = stat()
+        guard fstat(openedClosure, &closureState) == 0 else {
+            throw DisposalProjectionRejection(
+                code: "RULE_CLOSURE_ROOT_FSTAT",
+                detail: String(cString: strerror(errno)))
+        }
+        let closureInventory = [location.executableLeaf, location.resourceRootLeaf].sorted()
+        let observedClosureInventory = try disposalRuleResourceDirectoryEntries(
+            openedClosure).sorted()
+        // The pinned APFS substrate reports a directory link count of two plus
+        // its complete immediate-entry inventory, including regular files.
+        try disposalRequireProjection(
+            disposalRuleResourceSameState(namedClosure, closureState) &&
+                (closureState.st_mode & S_IFMT) == S_IFDIR &&
+                (closureState.st_mode & 0o7777) == 0o500 &&
+                closureState.st_uid == geteuid() && closureState.st_gid == getegid() &&
+                closureState.st_nlink == nlink_t(2 + closureInventory.count) &&
+                observedClosureInventory == closureInventory,
+            "RULE_CLOSURE_ROOT_POLICY")
+
+        capturedExecutable = try Self.captureFile(
+            parentDescriptor: openedClosure,
+            leaf: location.executableLeaf,
+            expectedMode: 0o500,
+            maximumBytes: Self.maximumExecutableBytes,
+            expectedBytes: nil)
+
+        var namedResourceRoot = stat()
+        guard fstatat(
+            openedClosure,
+            location.resourceRootLeaf,
+            &namedResourceRoot,
+            AT_SYMLINK_NOFOLLOW) == 0
+        else {
             throw DisposalProjectionRejection(
                 code: "RULE_RESOURCE_ROOT_LSTAT",
                 detail: String(cString: strerror(errno)))
         }
-        openedRoot = rootLeaf.withCString {
-            disposal_projection_openat_directory_no_follow(openedParent, $0)
+        openedResourceRoot = location.resourceRootLeaf.withCString {
+            disposal_projection_openat_directory_no_follow(openedClosure, $0)
         }
-        guard openedRoot >= 0 else {
+        guard openedResourceRoot >= 0 else {
             throw DisposalProjectionRejection(
                 code: "RULE_RESOURCE_ROOT_OPEN",
                 detail: String(cString: strerror(errno)))
         }
-        var rootState = stat()
-        guard fstat(openedRoot, &rootState) == 0 else {
+        var resourceRootState = stat()
+        guard fstat(openedResourceRoot, &resourceRootState) == 0 else {
             throw DisposalProjectionRejection(
                 code: "RULE_RESOURCE_ROOT_FSTAT",
                 detail: String(cString: strerror(errno)))
         }
+        let specifications = DisposalProjectionEmbeddedResources.specifications
+        let expectedInventory = specifications.map(\.leaf).sorted()
+        let observedResourceInventory = try disposalRuleResourceDirectoryEntries(
+            openedResourceRoot).sorted()
         try disposalRequireProjection(
-            disposalRuleResourceSameState(namedRoot, rootState) &&
-                (rootState.st_mode & S_IFMT) == S_IFDIR &&
-                (rootState.st_mode & 0o7777) == 0o500 &&
-                rootState.st_uid == geteuid() &&
-                rootState.st_nlink == nlink_t(2 + Self.specifications.count),
+            disposalRuleResourceSameState(namedResourceRoot, resourceRootState) &&
+                (resourceRootState.st_mode & S_IFMT) == S_IFDIR &&
+                (resourceRootState.st_mode & 0o7777) == 0o500 &&
+                resourceRootState.st_uid == geteuid() &&
+                resourceRootState.st_gid == getegid() &&
+                resourceRootState.st_nlink == nlink_t(2 + specifications.count) &&
+                observedResourceInventory == expectedInventory,
             "RULE_RESOURCE_ROOT_POLICY")
-        try disposalRequireProjection(
-            try disposalRuleResourceDirectoryEntries(openedRoot).sorted() ==
-                Self.specifications.map(\.leaf).sorted(),
-            "RULE_RESOURCE_INVENTORY")
 
-        var leaves: [String: HeldLeaf] = [:]
-        for specification in Self.specifications {
-            let descriptor = specification.leaf.withCString {
-                disposal_projection_openat_readonly_no_follow(openedRoot, $0)
-            }
-            guard descriptor >= 0 else {
-                throw DisposalProjectionRejection(
-                    code: "RULE_RESOURCE_LEAF_OPEN",
-                    detail: specification.leaf + ":" + String(cString: strerror(errno)))
-            }
-            openedLeaves.append(descriptor)
-            var before = stat()
-            guard fstat(descriptor, &before) == 0 else {
-                throw DisposalProjectionRejection(
-                    code: "RULE_RESOURCE_LEAF_FSTAT",
-                    detail: specification.leaf + ":" + String(cString: strerror(errno)))
-            }
+        let embeddedValues = embedded.orderedValues()
+        for (specification, expectedBytes) in zip(specifications, embeddedValues) {
+            let held = try Self.captureFile(
+                parentDescriptor: openedResourceRoot,
+                leaf: specification.leaf,
+                expectedMode: 0o400,
+                maximumBytes: specification.bytes,
+                expectedBytes: expectedBytes)
+            // Transfer descriptor ownership before any subsequent throwing check.
+            capturedResources[specification.leaf] = held
             try disposalRequireProjection(
-                (before.st_mode & S_IFMT) == S_IFREG &&
-                    (before.st_mode & 0o7777) == 0o400 &&
-                    before.st_uid == geteuid() && before.st_nlink == 1 &&
-                    before.st_size == off_t(specification.bytes),
-                "RULE_RESOURCE_LEAF_POLICY",
+                held.bytes.count == specification.bytes &&
+                    held.sha256 == specification.sha256,
+                "RULE_RESOURCE_EXTERNAL_EMBEDDED_JOIN",
                 detail: specification.leaf)
-            let bytes = try disposalRuleResourcePread(
-                descriptor: descriptor,
-                count: specification.bytes,
-                leaf: specification.leaf)
-            var after = stat()
-            var named = stat()
-            guard fstat(descriptor, &after) == 0,
-                  fstatat(openedRoot, specification.leaf, &named, AT_SYMLINK_NOFOLLOW) == 0
-            else {
-                throw DisposalProjectionRejection(
-                    code: "RULE_RESOURCE_LEAF_REVALIDATE",
-                    detail: specification.leaf + ":" + String(cString: strerror(errno)))
-            }
-            try disposalRequireProjection(
-                disposalRuleResourceSameState(before, after) &&
-                    disposalRuleResourceSameState(after, named),
-                "RULE_RESOURCE_LEAF_JOIN",
-                detail: specification.leaf)
-            let digest = disposalSHA256(bytes)
-            try disposalRequireProjection(
-                digest == specification.sha256,
-                "RULE_RESOURCE_LEAF_SHA256",
-                detail: specification.leaf)
-            leaves[specification.leaf] = .init(
-                descriptor: descriptor,
-                admittedState: after,
-                bytes: bytes,
-                sha256: digest)
+        }
+        guard let capturedExecutable else {
+            throw DisposalProjectionRejection(code: "RULE_EXECUTABLE_CAPTURE_ABSENT")
         }
 
-        guard let evidenceDDL = leaves["001-evidence.sql"]?.bytes,
-              let graphDDL = leaves["001-graph.sql"]?.bytes,
-              let metricsDDL = leaves["001-metrics.sql"]?.bytes,
-              let adapters = leaves["disposal-adapters.v1.json"]?.bytes,
-              let lattice = leaves["disposal-lattice.v1.json"]?.bytes
-        else {
-            throw DisposalProjectionRejection(code: "RULE_RESOURCE_HELD_INVENTORY")
-        }
         parentDescriptor = openedParent
-        rootDescriptor = openedRoot
+        closureDescriptor = openedClosure
+        resourceRootDescriptor = openedResourceRoot
         admittedParentState = parentState
-        admittedRootState = rootState
-        heldLeaves = leaves
-        resources = .init(
-            evidenceDDL: evidenceDDL,
-            graphDDL: graphDDL,
-            metricsDDL: metricsDDL,
-            adapters: adapters,
-            lattice: lattice)
+        admittedClosureState = closureState
+        admittedResourceRootState = resourceRootState
+        heldExecutable = capturedExecutable
+        heldResourceLeaves = capturedResources
+        resources = embedded
+        executableSHA256 = capturedExecutable.sha256
         try revalidate()
         retainDescriptors = true
     }
 
     deinit {
-        for leaf in heldLeaves.values { _ = Darwin.close(leaf.descriptor) }
-        _ = Darwin.close(rootDescriptor)
+        _ = Darwin.close(heldExecutable.descriptor)
+        for held in heldResourceLeaves.values { _ = Darwin.close(held.descriptor) }
+        _ = Darwin.close(resourceRootDescriptor)
+        _ = Darwin.close(closureDescriptor)
         _ = Darwin.close(parentDescriptor)
     }
 
     func revalidate() throws {
-        try revalidateParentAndRoot()
-        let expectedInventory = Self.specifications.map(\.leaf).sorted()
+        let freshLocation = try DisposalExecutableRelativeResourceRoot.resolveFrozen()
         try disposalRequireProjection(
-            try disposalRuleResourceDirectoryEntries(rootDescriptor).sorted() == expectedInventory &&
-                heldLeaves.keys.sorted() == expectedInventory,
-            "RULE_RESOURCE_INVENTORY_DRIFT")
+            freshLocation == location,
+            "RULE_EXECUTABLE_RELATIVE_LOCATION_DRIFT")
+        try revalidateParent()
+        try revalidateDirectory(
+            descriptor: closureDescriptor,
+            admittedState: admittedClosureState,
+            parentDescriptor: parentDescriptor,
+            leaf: location.closureRootLeaf,
+            expectedMode: 0o500,
+            expectedInventory: [location.executableLeaf, location.resourceRootLeaf])
+        try Self.revalidateFile(
+            heldExecutable,
+            parentDescriptor: closureDescriptor,
+            leaf: location.executableLeaf)
+        try revalidateDirectory(
+            descriptor: resourceRootDescriptor,
+            admittedState: admittedResourceRootState,
+            parentDescriptor: closureDescriptor,
+            leaf: location.resourceRootLeaf,
+            expectedMode: 0o500,
+            expectedInventory: DisposalProjectionEmbeddedResources.specifications.map(\.leaf))
 
-        for specification in Self.specifications {
-            guard let held = heldLeaves[specification.leaf] else {
+        let freshEmbedded = try DisposalProjectionEmbeddedResources.exact()
+        try disposalRequireProjection(
+            freshEmbedded.orderedValues() == resources.orderedValues(),
+            "RULE_EMBEDDED_RESOURCE_DRIFT")
+        for (specification, embeddedBytes) in zip(
+            DisposalProjectionEmbeddedResources.specifications,
+            resources.orderedValues())
+        {
+            guard let held = heldResourceLeaves[specification.leaf] else {
                 throw DisposalProjectionRejection(
                     code: "RULE_RESOURCE_HELD_LEAF_ABSENT",
                     detail: specification.leaf)
             }
-            var before = stat()
-            var namedBefore = stat()
-            guard fstat(held.descriptor, &before) == 0,
-                  fstatat(
-                    rootDescriptor,
-                    specification.leaf,
-                    &namedBefore,
-                    AT_SYMLINK_NOFOLLOW) == 0
-            else {
-                throw DisposalProjectionRejection(
-                    code: "RULE_RESOURCE_LEAF_REVALIDATE",
-                    detail: specification.leaf + ":" + String(cString: strerror(errno)))
-            }
-            try disposalRequireProjection(
-                disposalRuleResourceSameState(held.admittedState, before) &&
-                    disposalRuleResourceSameState(before, namedBefore),
-                "RULE_RESOURCE_LEAF_DRIFT",
-                detail: specification.leaf)
-            let fresh = try disposalRuleResourcePread(
-                descriptor: held.descriptor,
-                count: specification.bytes,
+            try Self.revalidateFile(
+                held,
+                parentDescriptor: resourceRootDescriptor,
                 leaf: specification.leaf)
-            var after = stat()
-            var namedAfter = stat()
-            guard fstat(held.descriptor, &after) == 0,
-                  fstatat(
-                    rootDescriptor,
-                    specification.leaf,
-                    &namedAfter,
-                    AT_SYMLINK_NOFOLLOW) == 0
-            else {
-                throw DisposalProjectionRejection(
-                    code: "RULE_RESOURCE_LEAF_POSTREAD_REVALIDATE",
-                    detail: specification.leaf + ":" + String(cString: strerror(errno)))
-            }
             try disposalRequireProjection(
-                disposalRuleResourceSameState(before, after) &&
-                    disposalRuleResourceSameState(after, namedAfter) &&
-                    fresh == held.bytes && disposalSHA256(fresh) == held.sha256,
-                "RULE_RESOURCE_LEAF_POSTREAD_DRIFT",
+                held.bytes == embeddedBytes && held.sha256 == specification.sha256,
+                "RULE_RESOURCE_REVALIDATED_EMBEDDED_JOIN",
                 detail: specification.leaf)
         }
-        try disposalRequireProjection(
-            try disposalRuleResourceDirectoryEntries(rootDescriptor).sorted() == expectedInventory,
-            "RULE_RESOURCE_POSTREAD_INVENTORY_DRIFT")
-        try revalidateParentAndRoot()
+        try revalidateDirectory(
+            descriptor: resourceRootDescriptor,
+            admittedState: admittedResourceRootState,
+            parentDescriptor: closureDescriptor,
+            leaf: location.resourceRootLeaf,
+            expectedMode: 0o500,
+            expectedInventory: DisposalProjectionEmbeddedResources.specifications.map(\.leaf))
+        try revalidateDirectory(
+            descriptor: closureDescriptor,
+            admittedState: admittedClosureState,
+            parentDescriptor: parentDescriptor,
+            leaf: location.closureRootLeaf,
+            expectedMode: 0o500,
+            expectedInventory: [location.executableLeaf, location.resourceRootLeaf])
+        try revalidateParent()
     }
 
-    private func revalidateParentAndRoot() throws {
+    private func revalidateParent() throws {
         var resolvedParent = [CChar](repeating: 0, count: Int(PATH_MAX))
-        guard realpath(parentPath, &resolvedParent) != nil else {
+        guard realpath(location.closureParentPath, &resolvedParent) != nil else {
             throw DisposalProjectionRejection(
-                code: "RULE_RESOURCE_PARENT_REALPATH_REVALIDATE",
+                code: "RULE_CLOSURE_PARENT_REALPATH_REVALIDATE",
                 detail: String(cString: strerror(errno)))
         }
         try disposalRequireProjection(
-            disposalRuleResourcePath(resolvedParent) == parentPath,
-            "RULE_RESOURCE_PARENT_ALIAS_DRIFT")
-
-        var heldParent = stat()
-        var namedParent = stat()
-        guard fstat(parentDescriptor, &heldParent) == 0,
-              lstat(parentPath, &namedParent) == 0
+            disposalRuleResourcePath(resolvedParent) == location.closureParentPath,
+            "RULE_CLOSURE_PARENT_ALIAS_DRIFT")
+        var held = stat()
+        var named = stat()
+        guard fstat(parentDescriptor, &held) == 0,
+              lstat(location.closureParentPath, &named) == 0
         else {
             throw DisposalProjectionRejection(
-                code: "RULE_RESOURCE_PARENT_REVALIDATE",
+                code: "RULE_CLOSURE_PARENT_REVALIDATE",
                 detail: String(cString: strerror(errno)))
         }
         try disposalRequireProjection(
-            disposalRuleResourceSameState(admittedParentState, heldParent),
-            "RULE_RESOURCE_PARENT_DRIFT")
-        try disposalRequireProjection(
-            disposalRuleResourceSameState(heldParent, namedParent),
-            "RULE_RESOURCE_PARENT_REBOUND")
+            disposalRuleResourceSameIdentity(admittedParentState, held) &&
+                disposalRuleResourceSameIdentity(held, named),
+            "RULE_CLOSURE_PARENT_REBOUND")
+    }
 
-        var heldRoot = stat()
-        var namedRoot = stat()
-        guard fstat(rootDescriptor, &heldRoot) == 0,
-              fstatat(parentDescriptor, rootLeaf, &namedRoot, AT_SYMLINK_NOFOLLOW) == 0
+    private func revalidateDirectory(
+        descriptor: Int32,
+        admittedState: stat,
+        parentDescriptor: Int32,
+        leaf: String,
+        expectedMode: mode_t,
+        expectedInventory: [String]
+    ) throws {
+        var held = stat()
+        var named = stat()
+        guard fstat(descriptor, &held) == 0,
+              fstatat(parentDescriptor, leaf, &named, AT_SYMLINK_NOFOLLOW) == 0
         else {
             throw DisposalProjectionRejection(
-                code: "RULE_RESOURCE_ROOT_REVALIDATE",
-                detail: String(cString: strerror(errno)))
+                code: "RULE_DIRECTORY_REVALIDATE",
+                detail: leaf + ":" + String(cString: strerror(errno)))
+        }
+        let inventory = try disposalRuleResourceDirectoryEntries(descriptor).sorted()
+        try disposalRequireProjection(
+            disposalRuleResourceSameState(admittedState, held) &&
+                disposalRuleResourceSameState(held, named) &&
+                (held.st_mode & S_IFMT) == S_IFDIR &&
+                (held.st_mode & 0o7777) == expectedMode &&
+                inventory == expectedInventory.sorted(),
+            "RULE_DIRECTORY_DRIFT",
+            detail: leaf)
+    }
+
+    private static func captureFile(
+        parentDescriptor: Int32,
+        leaf: String,
+        expectedMode: mode_t,
+        maximumBytes: Int,
+        expectedBytes: Data?
+    ) throws -> HeldFile {
+        var namedBefore = stat()
+        guard fstatat(parentDescriptor, leaf, &namedBefore, AT_SYMLINK_NOFOLLOW) == 0 else {
+            throw DisposalProjectionRejection(
+                code: "RULE_FILE_LSTAT",
+                detail: leaf + ":" + String(cString: strerror(errno)))
+        }
+        let descriptor = leaf.withCString {
+            disposal_projection_openat_readonly_no_follow(parentDescriptor, $0)
+        }
+        guard descriptor >= 0 else {
+            throw DisposalProjectionRejection(
+                code: "RULE_FILE_OPEN",
+                detail: leaf + ":" + String(cString: strerror(errno)))
+        }
+        var retainDescriptor = false
+        defer { if !retainDescriptor { _ = Darwin.close(descriptor) } }
+        var before = stat()
+        guard fstat(descriptor, &before) == 0 else {
+            throw DisposalProjectionRejection(
+                code: "RULE_FILE_FSTAT",
+                detail: leaf + ":" + String(cString: strerror(errno)))
         }
         try disposalRequireProjection(
-            disposalRuleResourceSameState(admittedRootState, heldRoot),
-            "RULE_RESOURCE_ROOT_DRIFT")
+            disposalRuleResourceSameState(namedBefore, before) &&
+                (before.st_mode & S_IFMT) == S_IFREG &&
+                (before.st_mode & 0o7777) == expectedMode &&
+                before.st_uid == geteuid() && before.st_gid == getegid() &&
+                before.st_nlink == 1 && before.st_size > 0 &&
+                before.st_size <= off_t(maximumBytes),
+            "RULE_FILE_POLICY",
+            detail: leaf)
+        let bytes = try disposalRuleResourcePread(
+            descriptor: descriptor,
+            count: Int(before.st_size),
+            leaf: leaf)
+        var after = stat()
+        var namedAfter = stat()
+        guard fstat(descriptor, &after) == 0,
+              fstatat(parentDescriptor, leaf, &namedAfter, AT_SYMLINK_NOFOLLOW) == 0
+        else {
+            throw DisposalProjectionRejection(
+                code: "RULE_FILE_CAPTURE_REVALIDATE",
+                detail: leaf + ":" + String(cString: strerror(errno)))
+        }
         try disposalRequireProjection(
-            disposalRuleResourceSameState(heldRoot, namedRoot),
-            "RULE_RESOURCE_ROOT_REBOUND")
+            disposalRuleResourceSameState(before, after) &&
+                disposalRuleResourceSameState(after, namedAfter) &&
+                expectedBytes.map { $0 == bytes } ?? true,
+            "RULE_FILE_CAPTURE_DRIFT",
+            detail: leaf)
+        retainDescriptor = true
+        return .init(
+            descriptor: descriptor,
+            admittedState: after,
+            bytes: bytes,
+            sha256: disposalSHA256(bytes))
+    }
+
+    private static func revalidateFile(
+        _ heldFile: HeldFile,
+        parentDescriptor: Int32,
+        leaf: String
+    ) throws {
+        var before = stat()
+        var namedBefore = stat()
+        guard fstat(heldFile.descriptor, &before) == 0,
+              fstatat(parentDescriptor, leaf, &namedBefore, AT_SYMLINK_NOFOLLOW) == 0
+        else {
+            throw DisposalProjectionRejection(
+                code: "RULE_FILE_REVALIDATE",
+                detail: leaf + ":" + String(cString: strerror(errno)))
+        }
+        try disposalRequireProjection(
+            disposalRuleResourceSameState(heldFile.admittedState, before) &&
+                disposalRuleResourceSameState(before, namedBefore),
+            "RULE_FILE_DRIFT",
+            detail: leaf)
+        let fresh = try disposalRuleResourcePread(
+            descriptor: heldFile.descriptor,
+            count: heldFile.bytes.count,
+            leaf: leaf)
+        var after = stat()
+        var namedAfter = stat()
+        guard fstat(heldFile.descriptor, &after) == 0,
+              fstatat(parentDescriptor, leaf, &namedAfter, AT_SYMLINK_NOFOLLOW) == 0
+        else {
+            throw DisposalProjectionRejection(
+                code: "RULE_FILE_POSTREAD_REVALIDATE",
+                detail: leaf + ":" + String(cString: strerror(errno)))
+        }
+        try disposalRequireProjection(
+            disposalRuleResourceSameState(before, after) &&
+                disposalRuleResourceSameState(after, namedAfter) &&
+                fresh == heldFile.bytes && disposalSHA256(fresh) == heldFile.sha256,
+            "RULE_FILE_POSTREAD_DRIFT",
+            detail: leaf)
     }
 }
 
@@ -412,7 +488,7 @@ private func disposalRuleResourcePread(
             continue
         } else {
             throw DisposalProjectionRejection(
-                code: "RULE_RESOURCE_PREAD",
+                code: "RULE_FILE_PREAD",
                 detail: leaf + ":" + String(cString: strerror(errno)))
         }
     }
@@ -423,13 +499,13 @@ private func disposalRuleResourceDirectoryEntries(_ descriptor: Int32) throws ->
     let copied = dup(descriptor)
     guard copied >= 0 else {
         throw DisposalProjectionRejection(
-            code: "RULE_RESOURCE_ROOT_DUP",
+            code: "RULE_DIRECTORY_DUP",
             detail: String(cString: strerror(errno)))
     }
     guard let directory = fdopendir(copied) else {
         _ = Darwin.close(copied)
         throw DisposalProjectionRejection(
-            code: "RULE_RESOURCE_ROOT_FDOPENDIR",
+            code: "RULE_DIRECTORY_FDOPENDIR",
             detail: String(cString: strerror(errno)))
     }
     defer { closedir(directory) }
@@ -447,7 +523,7 @@ private func disposalRuleResourceDirectoryEntries(_ descriptor: Int32) throws ->
     }
     guard errno == 0 else {
         throw DisposalProjectionRejection(
-            code: "RULE_RESOURCE_ROOT_READDIR",
+            code: "RULE_DIRECTORY_READDIR",
             detail: String(cString: strerror(errno)))
     }
     return entries
