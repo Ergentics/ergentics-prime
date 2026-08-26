@@ -129,13 +129,13 @@ private func failureCoordinate(_ error: Error) -> String {
 }
 
 private enum Fixed {
-    static let freezeCommit = "e947ae9be8a4614a6bf79e34d7ff3ab9ad4379b3"
-    static let freezeTree = "cd23ce34f280fe5f80761883e56205f9a443f57b"
-    static let freezeFrameHash = "98b96fa84a3c30fca0c953e160317e235db34ffb2db48543c2232fcb558700c1"
-    static let journalRoot = "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-b672534-8930176-8930235-8668003-v5"
-    static let buildAPath = "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-a-b672534-v5/ErgenticsR19C2PrerequisiteDisposal"
-    static let buildBPath = "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-b-b672534-v5/ErgenticsR19C2PrerequisiteDisposal"
-    static let readinessPath = "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-readiness.v5.frame"
+    static let freezeCommit = "a896d645bb7225df9f3031189ac7eb9492801589"
+    static let freezeTree = "645d3ef7a0655cb91de02c3dec588a8d1591da4d"
+    static let freezeFrameHash = "de78d3ca7e12cf3beb102c958b6095c20176317b8d255e6732fc5b267a8323bf"
+    static let journalRoot = "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-7e65192-8930176-8930235-8668003-v6"
+    static let buildAPath = "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-a-7e65192-v6/ErgenticsR19C2PrerequisiteDisposal"
+    static let buildBPath = "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-b-7e65192-v6/ErgenticsR19C2PrerequisiteDisposal"
+    static let readinessPath = "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-readiness.v6.frame"
     static let hostEnvironmentEntry = "__CF_USER_TEXT_ENCODING=0x1F5:0x0:0x0"
     static let guardianCWD = "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging"
     static let launchCWD = "/private/var/empty"
@@ -149,8 +149,8 @@ private enum Fixed {
         "11-awk-kill-result.json", "12-awk-conservation.json",
         "13-natural-exit-observers.json", "14-terminal.json", "99-outcome.jsonl",
     ]
-    static let receiptSchema = "ergentics-r19-obs11-c2-prerequisite-disposal-journal-v5"
-    static let outcomeSchema = "ergentics-r19-obs11-c2-prerequisite-disposal-outcome-v5"
+    static let receiptSchema = "ergentics-r19-obs11-c2-prerequisite-disposal-journal-v6"
+    static let outcomeSchema = "ergentics-r19-obs11-c2-prerequisite-disposal-outcome-v6"
     static let outcomeEntryBit: UInt32 = 1 << 15
     static let merkleDomain = Data("ERGENTICS-R19-C2-PREREQUISITE-DISPOSAL-PRESTATE-MERKLE-V2".utf8)
     static let fileCap = 131_072
@@ -952,12 +952,12 @@ private func parseReadiness(_ data: Data) throws -> ReadinessFrame {
         }
         values.append(parts[1])
     }
-    let controlPath = "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-control-freeze.v5.json"
-    let cObjectA = "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-a-b672534-v5/ergentics-r19-c2-prerequisite-disposal-fixed.o"
-    let cObjectB = "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-b-b672534-v5/ergentics-r19-c2-prerequisite-disposal-fixed.o"
-    guard values[0] == "ergentics-r19-obs11-c2-prerequisite-disposal-readiness-v5",
+    let controlPath = "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-control-freeze.v6.json"
+    let cObjectA = "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-a-7e65192-v6/ergentics-r19-c2-prerequisite-disposal-fixed.o"
+    let cObjectB = "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-b-7e65192-v6/ergentics-r19-c2-prerequisite-disposal-fixed.o"
+    guard values[0] == "ergentics-r19-obs11-c2-prerequisite-disposal-readiness-v6",
           values[1] == Substring(Fixed.freezeCommit), values[2] == Substring(Fixed.freezeTree),
-          values[3] == Substring(controlPath), values[4] == "8833",
+          values[3] == Substring(controlPath), values[4] == "6625",
           values[5] == Substring(Fixed.freezeFrameHash),
           values[6] == Substring(Fixed.buildAPath), values[7] == Substring(Fixed.buildBPath),
           values[8] == "1", values[12] == Substring(cObjectA),

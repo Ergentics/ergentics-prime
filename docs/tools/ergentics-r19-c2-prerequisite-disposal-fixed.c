@@ -18,7 +18,7 @@
 #include <unistd.h>
 
 static const char *const disposal_root_leaf =
-    "ergentics-r19-obs11-c2-prerequisite-disposal-b672534-8930176-8930235-8668003-v5";
+    "ergentics-r19-obs11-c2-prerequisite-disposal-7e65192-8930176-8930235-8668003-v6";
 
 static const char *const disposal_leaves[] = {
     "00-start.json",
@@ -44,9 +44,9 @@ static const char *const disposal_images[] = {
     "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.driver-v2-gate-c-staging/Tests/PrimeValidationWorkflow/.build/arm64-apple-macosx/release/PrimeValidationWorkflowDriverV2SessionFixture",
     "/usr/bin/awk",
     "/bin/zsh",
-    "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-a-b672534-v5/ErgenticsR19C2PrerequisiteDisposal",
-    "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-b-b672534-v5/ErgenticsR19C2PrerequisiteDisposal",
-    "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-readiness.v5.frame",
+    "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-a-7e65192-v6/ErgenticsR19C2PrerequisiteDisposal",
+    "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-b-7e65192-v6/ErgenticsR19C2PrerequisiteDisposal",
+    "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-readiness.v6.frame",
 };
 
 static const char *const disposal_cwds[] = {
