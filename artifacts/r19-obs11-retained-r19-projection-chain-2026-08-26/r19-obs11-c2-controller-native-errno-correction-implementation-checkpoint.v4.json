@@ -1,0 +1,251 @@
+{
+  "schema": "ergentics-r19-obs11-c2-controller-native-errno-correction-implementation-checkpoint-v4",
+  "status": "C2_NATIVE_ERRNO_CORRECTION_IMPLEMENTED_EXACT_STATIC_AUDITED_LAUNCH_ABSTAIN",
+  "rank": "CONTROL_ONLY_IMPLEMENTATION_CHECKPOINT",
+  "scientific_predecessor": {
+    "kind": "SOURCE_IMPLEMENTATION_COMMIT_NOT_THIS_CONTROL_RECORD",
+    "commit": "91d2481795cb3a210b461813dd7efcd6d2740fd8",
+    "tree": "8e7971e27849298a02ba2271f9f2135f619a9248",
+    "parent_commit": "0cf7c61f6d4fd25b130047ea3767dc194e1b9834",
+    "parent_tree": "410d429d5802541b9f8d3e727f2a8b7a7b676298"
+  },
+  "correction_freeze": {
+    "commit": "0cf7c61f6d4fd25b130047ea3767dc194e1b9834",
+    "tree": "410d429d5802541b9f8d3e727f2a8b7a7b676298",
+    "path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-controller-native-errno-correction-freeze.v4.json",
+    "bytes": 10849,
+    "lines": 253,
+    "sha256": "e7f97ca343986524ec716351e4a9aaa9c98efec5c5774259d80b26c422bc6bc3",
+    "git_blob": "6637bc568420d24763276f11efe17f3274d7354f"
+  },
+  "tree_frame_predecessor": {
+    "implementation_commit": "495132e036084a05d2dc7282ed4b36f85940c6df",
+    "implementation_tree": "6ee09f99a0634debcc7d60649108a502dbe2c2be",
+    "checkpoint_commit": "6fbfc7043dc6e4b05ecaf69e3d608e68ab8dcc40",
+    "checkpoint_tree": "ad11fcee6456a4c02932f42914635bd80fd15714",
+    "checkpoint": {
+      "path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-controller-tree-frame-order-correction-implementation-checkpoint.v3.json",
+      "bytes": 7031,
+      "lines": 186,
+      "sha256": "10b0c601be88b9dd8559fcfc09bb4206ae1c2357317a7153f47f9ff846b99a43",
+      "git_blob": "ed7cf9d25056e750d01cd947ec5a96ba5a6335e0"
+    },
+    "status": "UNCHANGED_RETAINED_IN_SOURCE"
+  },
+  "mapped_image_predecessor": {
+    "implementation_commit": "8369b38cc1c7c078cd6ca621804b4e81079b52e6",
+    "implementation_tree": "69e101fbe58202d9794c74668c7894199467f222",
+    "checkpoint_commit": "864b2a28d863cb75d08ce61e148b8bf1704cc352",
+    "checkpoint_tree": "d8c66e0e765ce54efc6ab294d9d8bcfa3e6b430d",
+    "checkpoint_sha256": "b86f2a65fe32238810b7f883690fdae6a074eed4d9c19a09a79b28805c811971",
+    "status": "UNCHANGED_RETAINED_IN_SOURCE"
+  },
+  "implementation": {
+    "path": "docs/tools/ergentics-r19-obs11-c2-build-controller.rb",
+    "git_mode": "100644",
+    "device": 16777231,
+    "inode": 17945704,
+    "uid": 501,
+    "gid": 20,
+    "mode": "0644",
+    "nlink": 1,
+    "flags": 0,
+    "bytes": 150718,
+    "lines": 4054,
+    "sha256": "bcbe4ab65fb87568593e0442a657f7b9e736900b923e9985d99e01aefca56967",
+    "git_blob": "24b1b274d97755d268f57e2157013c8a4735cfe8",
+    "language_runtime": "/usr/bin/ruby 2.6.10p210",
+    "source_evaluations_in_this_checkpoint": 0
+  },
+  "implemented_native_errno_primitive": {
+    "darwin_binding": "extern_void_pointer___error_zero_arguments",
+    "wrapper": "call_with_native_errno_ZERO_ARGUMENT_BLOCK_ONLY",
+    "pointer_scope": "REACQUIRE_CURRENT_THREAD___error_POINTER_PER_CALL_NO_GLOBAL_CACHE",
+    "pointer_null": "FAIL_CLOSED",
+    "native_int_format": "pack_i_bang_AND_RAW_ZERO_BYTE_READBACK",
+    "native_int_bytes": 4,
+    "native_int_width_mismatch": "FAIL_CLOSED",
+    "exact_order": [
+      "SET_Fiddle_SAVED_ERROR_TO_ZERO",
+      "WRITE_NATIVE_ERRNO_ZERO",
+      "READBACK_NATIVE_ZERO",
+      "WRITE_NATIVE_ERRNO_ZERO_AGAIN_IMMEDIATELY_BEFORE_YIELD",
+      "YIELD_TO_EXACT_TARGET_CALL",
+      "READ_Fiddle_LAST_ERROR_IMMEDIATELY_AFTER_RETURN",
+      "REQUIRE_SAVED_ERROR_IS_Integer",
+      "RETURN_TWO_ELEMENT_ARRAY_RESULT_AND_EXACT_SAVED_ERRNO"
+    ],
+    "external_caller_parameters": 0,
+    "generic_command_surface": false
+  },
+  "application_scope": {
+    "wrapper_callsites": 28,
+    "decision_bearing_target_alternatives": 29,
+    "shared_conditional_target_alternatives": [
+      "getsid",
+      "getpgid"
+    ],
+    "best_effort_rescue_only_closedir_calls_unwrapped": 1,
+    "Fiddle_last_error_references_after": 2,
+    "Fiddle_last_error_role_after": "INSIDE_NATIVE_WRAPPER_ONLY_SET_ZERO_THEN_IMMEDIATE_POST_CALL_READ",
+    "required_semantic_sites": [
+      "READDIR_EOF_VERSUS_ERROR",
+      "PROC_LISTPIDS_EMPTY_VERSUS_ERROR",
+      "PROC_PIDREGIONPATHINFO_END_VERSUS_GONE_VERSUS_ERROR",
+      "PROC_PIDINFO_UNIQUE_SHORT_AND_CWD_GONE_VERSUS_UNKNOWN",
+      "PROC_PIDPATH_GONE_VERSUS_UNKNOWN"
+    ],
+    "descriptor_cloexec_correction": {
+      "before": "fcntl_F_GETFD_result_bitmask_without_negative_check",
+      "defect": "NEGATIVE_ONE_BIT_AND_FD_CLOEXEC_EQUALS_FD_CLOEXEC",
+      "after": "WRAPPED_FCNTL_THEN_NEGATIVE_HARD_STOP_THEN_BIT_TEST"
+    },
+    "readdir_classification": [
+      "NON_NULL_POINTER_EQUALS_ENTRY_IGNORE_SAVED_ERRNO",
+      "NULL_AND_SAVED_ERRNO_ZERO_EQUALS_EOF",
+      "NULL_AND_SAVED_ERRNO_NONZERO_EQUALS_FAILURE_WITH_EXACT_ERRNO"
+    ]
+  },
+  "static_verification": {
+    "source_sha256_join": "PASS",
+    "source_git_blob_join": "PASS",
+    "git_diff_check": "PASS",
+    "ruby_2_6_warning_syntax": "PASS_SYNTAX_OK",
+    "top_level_source_evaluated": false,
+    "source_files_changed": 1,
+    "source_insertions": 126,
+    "source_deletions": 95,
+    "semantic_regions_changed": "NATIVE_ERRNO_WRAPPER_AND_MECHANICAL_CALLSITE_APPLICATION_ONLY",
+    "decision_bearing_target_alternatives_wrapped": 29,
+    "process_surface_delta": 0,
+    "signal_surface_delta": 0,
+    "wait_surface_delta": 0,
+    "namespace_delta": 0,
+    "mapped_image_v2_delta": 0,
+    "tree_frame_v3_delta": 0,
+    "build_input_delta": 0,
+    "authority_bit_delta": 0
+  },
+  "microtests": [
+    {
+      "scope": "STANDALONE_EXACT_WRAPPER_READDIR_AND_FCNTL",
+      "status": "PASS",
+      "directory_entry_count_including_dot_and_dotdot": 2,
+      "terminal_readdir_saved_errno": 0,
+      "closedir_return": 0,
+      "bad_fd_fcntl_result": -1,
+      "bad_fd_errno": 9,
+      "legacy_negative_bit_test_false_positive": true,
+      "classification_vector": [
+        "ENTRY",
+        "EOF",
+        "FAIL:5"
+      ]
+    },
+    {
+      "scope": "FINAL_EXACT_V4_SOURCE_PREFIX_PRIMITIVE",
+      "status": "PASS_FINAL_EXACT_V4_PREFIX_PRIMITIVE_MICROTEST",
+      "source_bytes": 150718,
+      "source_sha256": "bcbe4ab65fb87568593e0442a657f7b9e736900b923e9985d99e01aefca56967",
+      "evaluated_prefix_bytes": 143920,
+      "evaluated_prefix_sha256": "4215239f13fe8e48d8efcb340f09189ed4ec5e3d147bacc0b06f06c426ad1ae0",
+      "directory_entries": [],
+      "bad_fd_fcntl_result": -1,
+      "bad_fd_errno": 9,
+      "classification_vector": [
+        "ENTRY",
+        "EOF",
+        "FAIL:5"
+      ],
+      "exit": 0,
+      "stdout_lines": 1,
+      "stderr_bytes": 0,
+      "controller_bottom_evaluated": false
+    }
+  ],
+  "independent_reviews": [
+    {
+      "scope": "SOURCE_IDENTITY_FREEZE_JOIN_HELPER_ORDER_AND_OPERATION_COUNTS",
+      "source_sha256": "bcbe4ab65fb87568593e0442a657f7b9e736900b923e9985d99e01aefca56967",
+      "status": "PASS_NO_BLOCKER"
+    },
+    {
+      "scope": "NATIVE_ERRNO_JOURNAL_DECISIONS_WRAPPER_COVERAGE_AND_FCNTL",
+      "source_sha256": "bcbe4ab65fb87568593e0442a657f7b9e736900b923e9985d99e01aefca56967",
+      "status": "PASS_NO_BLOCKER"
+    },
+    {
+      "scope": "RUBY_2_6_FIDDLE_ABI_PROCESS_SURFACE_AND_EXACT_DIFF",
+      "source_sha256": "bcbe4ab65fb87568593e0442a657f7b9e736900b923e9985d99e01aefca56967",
+      "status": "PASS_NO_BLOCKER"
+    }
+  ],
+  "unchanged_invariants": [
+    "NO_ENOTTY_OR_OTHER_ERRNO_ALLOWLIST",
+    "NO_RETRY_OR_ERROR_REINTERPRETATION",
+    "MAPPED_IMAGE_V2_CORRECTION_UNCHANGED",
+    "TREE_FRAME_ORDER_V3_CORRECTION_UNCHANGED",
+    "SOURCE_BUILD_INPUT_TOOL_AND_NAMESPACE_IDENTITIES_UNCHANGED",
+    "SPAWN_WAIT_SIGNAL_CUTOFF_HORIZON_AND_CONTAINMENT_POLICY_UNCHANGED",
+    "PRODUCT_EXECUTION_COUNT_ZERO_UNCHANGED",
+    "AUTHORITY_VECTOR_UNCHANGED"
+  ],
+  "named_residuals": [
+    "THE_FULL_EXACT_PRECONSUMPTION_BOOTSTRAP_PREFLIGHT_HAS_NOT_YET_RUN_AGAINST_THIS_CORRECTED_SOURCE",
+    "A_FUTURE_NON_ASCII_ASCII_8BIT_RELATIVE_PATH_CAN_FAIL_JSON_ENCODING_AND_THEREFORE_FAILS_CLOSED",
+    "CURRENT_MEASURED_DOT_BUILD_TREE_HAS_ZERO_NON_ASCII_PATHS",
+    "TREE_SNAPSHOT_IS_PRE_POST_NOT_A_LIVE_DESCENDANT_WATCH",
+    "ALL_PROCESS_CONTAINMENT_FD_AND_TRANSITIVE_TOOLCHAIN_RESIDUALS_FROM_V1_REMAIN"
+  ],
+  "correction_slice_operations": {
+    "source_files_edited": 1,
+    "read_only_ruby_microtest_entries_minimum": 2,
+    "full_corrected_prefix_preflight_evaluations": 0,
+    "c2_bottom_entry_evaluations": 0,
+    "c2_controller_invocations": 0,
+    "c2_controller_process_entries": 0,
+    "swiftpm_spawns": 0,
+    "compiler_entries": 0,
+    "builds": 0,
+    "product_executions": 0,
+    "output_roots_created": 0,
+    "signals": 0,
+    "cleanup_actions": 0,
+    "network_actions": 0,
+    "github_actions": 0,
+    "python_entries": 0,
+    "authority_closures": 0,
+    "gate_e_promotions": 0
+  },
+  "output_namespaces": {
+    "/private/tmp/ergentics-r19-obs11-chain-runner-296d32da-build-a-v1": "ABSENT",
+    "/private/tmp/ergentics-r19-obs11-chain-runner-296d32da-build-b-v1": "ABSENT",
+    "/private/tmp/ergentics-r19-obs11-chain-runner-296d32da-execution-closure-v1": "ABSENT",
+    "/private/tmp/ergentics-r19-obs11-chain-runner-296d32da-build-b-witness-closure-v1": "ABSENT",
+    "/private/tmp/ergentics-r19-obs11-c2-build-control-8405636a-v1": "ABSENT"
+  },
+  "authority": {
+    "authority_vector": "00000000",
+    "authoritative": false,
+    "gate_e": "ABSTAIN",
+    "scientific_outcome": "ABSTAIN",
+    "prose_may_supply_fact": false,
+    "controller_invocation_authorized_by_this_checkpoint": false,
+    "build_authorized_by_this_checkpoint": false
+  },
+  "next": {
+    "slice": "RUN_EXACT_NONCONSUMING_PRECONSUMPTION_PREFIX_HARNESS_THEN_SEPARATELY_FREEZE_C2_READINESS",
+    "scientific_predecessor_commit": "91d2481795cb3a210b461813dd7efcd6d2740fd8",
+    "scientific_predecessor_tree": "8e7971e27849298a02ba2271f9f2135f619a9248",
+    "requires": [
+      "THIS_CHECKPOINT_COMMIT_TREE_BYTES_SHA256_AND_GIT_BLOB",
+      "EXACT_SOURCE_SHA256_AND_UNIQUE_BOTTOM_MARKER_JOIN",
+      "EXACT_SINGLETON_ENVIRONMENT_CWD_AND_STDIN",
+      "BOOTSTRAP_PREFLIGHT_AND_POST_PREFLIGHT_CONTINUITY_REVALIDATION",
+      "DOT_BUILD_PRE_POST_SNAPSHOT_EQUALITY",
+      "ALL_FIVE_OUTPUT_NAMESPACES_REMAIN_ABSENT",
+      "ZERO_BOTTOM_ENTRY_CONTROLLER_CONSUMPTION_SPAWN_SIGNAL_AND_PYTHON"
+    ]
+  },
+  "artifact_addressing": "THIS_CONTROL_ONLY_RECORD_IS_CONTENT_ADDRESSED_BY_ITS_SUCCESSOR_GIT_COMMIT_TREE_AND_DOES_NOT_SELF_EMBED_A_DIGEST"
+}
