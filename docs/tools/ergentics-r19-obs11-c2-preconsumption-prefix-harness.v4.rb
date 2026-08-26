@@ -17,23 +17,23 @@ HARNESS_SOURCE =
   ".phase-a-v2-fixture-identity-restore-only-staging/docs/tools/" \
   "ergentics-r19-obs11-c2-build-controller.rb"
 HARNESS_SOURCE_EXPECTED = {
-  "bytes" => 150_718,
+  "bytes" => 150_714,
   "device" => 16_777_231,
   "gid" => 20,
   "inode" => 17_945_704,
   "mode" => "0644",
   "nlink" => 1,
   "sha256" =>
-    "bcbe4ab65fb87568593e0442a657f7b9e736900b923e9985d99e01aefca56967",
+    "2f1568b11f715a007cda4e74e65bd205fc330e4a9a7556d0adcfa8296aa5a9d7",
   "uid" => 501,
 }.freeze
 HARNESS_PREFIX_MARKER =
   "\njournal = nil\nstate = C2StateMachine.new\n".b.freeze
 HARNESS_PREFIX_EXPECTED = {
-  "bytes" => 143_920,
+  "bytes" => 143_916,
   "lines" => 3_879,
   "sha256" =>
-    "4215239f13fe8e48d8efcb340f09189ed4ec5e3d147bacc0b06f06c426ad1ae0",
+    "3328e81448266ad8a63dbeca72fba580e9f91556aaede391f92e30c37084e8b4",
 }.freeze
 HARNESS_FROZEN_ROOTS = [
   "/private/tmp/ergentics-r19-obs11-chain-runner-296d32da-build-a-v1",

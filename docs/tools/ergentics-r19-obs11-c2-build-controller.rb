@@ -612,7 +612,7 @@ def held_bytes(io, cap, label)
   c2_fail("#{label}:SIZE_NEGATIVE") if stat.size.negative?
   c2_fail("#{label}:SIZE_CAP") if stat.size > cap
   io.rewind
-  bytes = io.read(stat.size + 1)
+  bytes = io.read(stat.size)
   c2_fail("#{label}:READ_SIZE") unless bytes && bytes.bytesize == stat.size
   c2_fail("#{label}:READ_OVERFLOW") unless io.read(1).nil?
   io.rewind
