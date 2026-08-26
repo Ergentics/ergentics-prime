@@ -1,0 +1,95 @@
+{
+  "schema": "ergentics-r19-obs11-c2-prerequisite-disposal-implementation-checkpoint-v6",
+  "status": "THREE_STATIC_PASS_FRESH_V6_BUILD_NOT_STARTED_ACTUATION_ABSTAIN",
+  "rank": "LOCAL_CONTROL_ONLY_IMPLEMENTATION_CHECKPOINT",
+  "authority_vector": "00000000",
+  "gate_e": "ABSTAIN",
+  "control_freeze": {
+    "commit": "a896d645bb7225df9f3031189ac7eb9492801589",
+    "tree": "645d3ef7a0655cb91de02c3dec588a8d1591da4d",
+    "path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-control-freeze.v6.json",
+    "bytes": 6625,
+    "lf_count": 123,
+    "sha256": "de78d3ca7e12cf3beb102c958b6095c20176317b8d255e6732fc5b267a8323bf"
+  },
+  "implementation": {
+    "commit": "41798d06f49fd8b94b7cdcec914d3f16d0a93cae",
+    "tree": "7713120b9cbc171cc65afd315641bf1d6266a17f",
+    "semantic_parent": "c3ba073fe33fb6cb24ba6070c3889148bac72485",
+    "semantic_delta": "V6_NAMESPACE_SCHEMA_AND_CONTROL_IDENTITY_LITERALS_ONLY",
+    "sources": [
+      {
+        "path": "docs/tools/ergentics-r19-c2-prerequisite-disposal.swift",
+        "bytes": 102482,
+        "lf_count": 2201,
+        "sha256": "7633fddbdcc3a3a4e378e2c3d15abc0a9636ad3219d76b1468193de7b55d6b80",
+        "git_blob": "9bcd74e6392ff0efa7db98a5a5dd4d73b552e53a"
+      },
+      {
+        "path": "docs/tools/ergentics-r19-c2-prerequisite-disposal-fixed.c",
+        "bytes": 24972,
+        "lf_count": 847,
+        "sha256": "c7989b3dfe66bdaae4c6140bf9865d564ba56c0308040eac3edd028ee7c3ad92",
+        "git_blob": "53e2eed735099481c456cc40a4d8493ee18e8177"
+      },
+      {
+        "path": "docs/tools/ergentics-r19-c2-prerequisite-disposal-fixed.h",
+        "bytes": 5070,
+        "lf_count": 203,
+        "sha256": "6bdea3ac307226d06aee9ef4dc6ae902415aca5a2446571ee4170a64922bdc26",
+        "git_blob": "14879287bd084cd7e6e9b7fa3444b964a491688e"
+      }
+    ]
+  },
+  "v5_failure_ancestry": {
+    "record_path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-build-a-failure.v5.json",
+    "record_sha256": "536d005acecf71d58e455ea017fc68c81d9c858a86488f4062d1df655f5df8b2",
+    "causal_flag": "-parse-as-library",
+    "product": "ABSENT",
+    "binary_entries": 0,
+    "signals_entered": 0,
+    "retained_root_reuse": false
+  },
+  "static_review_convergence": [
+    "IDENTITY_NAMESPACE_SCHEMA_ABSENCE_AND_LITERAL_ONLY_DELTA_PASS",
+    "JOURNAL_EIGHT_BOUNDARIES_AND_V5_FAILURE_DISPOSITION_PASS",
+    "SWIFT_TOP_LEVEL_EXECUTABLE_BUILD_VECTOR_AND_ABI_PASS"
+  ],
+  "build_vector": {
+    "target": "arm64-apple-macosx14.0",
+    "optimization": "-O_WHOLE_MODULE_OPTIMIZATION",
+    "debug": "-gnone_XFRONTEND_NO_SERIALIZE_DEBUGGING_OPTIONS",
+    "warnings": "-warnings-as-errors",
+    "emit": "-emit-executable",
+    "parse_as_library_entries": 0,
+    "top_level_controller_required": true,
+    "zero_captured_diagnostic_bytes_required": true
+  },
+  "fresh_namespace_admission": {
+    "build_a_root": "ABSENT",
+    "build_b_root": "ABSENT",
+    "journal_root": "ABSENT",
+    "readiness_frame": "ABSENT",
+    "readiness_json": "ABSENT",
+    "result_json": "ABSENT"
+  },
+  "language_and_fd_policy": {
+    "python": "FORBIDDEN",
+    "v6_python_entries": 0,
+    "ruby_fd3_through_fd7": "CATALOGED_RUNTIME_DEVIATION_NOT_AUTHORITY",
+    "native_swift_envelope_expected_fds": [0, 1, 2]
+  },
+  "operations": {
+    "v6_compiler_entries": 0,
+    "v6_build_roots_created": 0,
+    "v6_binary_entries": 0,
+    "v6_journal_roots_created": 0,
+    "all_v6_signals_entered": 0,
+    "processes_disposed": 0,
+    "c2_invocations": 0,
+    "v6_python_entries": 0,
+    "authority_closures": 0,
+    "gate_e_promotions": 0
+  },
+  "next": "COMMIT_THIS_CHECKPOINT_THEN_FRESH_V6_BUILD_A_WITH_EXACT_NO_PARSE_AS_LIBRARY_VECTOR_AND_FULL_STATIC_ADMISSION"
+}
