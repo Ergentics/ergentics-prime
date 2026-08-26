@@ -1290,7 +1290,14 @@ class TreeSnapshot
     @symlinks = 0
     @bytes = 0
     walk
-    encoded = @frames.sort.map { |frame| canonical_json(frame) + "\n" }.join
+    relative_paths = @frames.map { |frame| frame.fetch("relative") }
+    c2_fail("TREE_FRAME_RELATIVE_SHAPE:#{@root}") unless
+      relative_paths.all? { |relative| relative.is_a?(String) }
+    binary_relative_paths = relative_paths.map { |relative| relative.b }
+    c2_fail("TREE_FRAME_RELATIVE_DUPLICATE:#{@root}") unless
+      binary_relative_paths.uniq.length == binary_relative_paths.length
+    @frames.sort_by! { |frame| frame.fetch("relative").b }
+    encoded = @frames.map { |frame| canonical_json(frame) + "\n" }.join
     @receipt = {
       "aggregate_file_bytes" => @bytes,
       "directories" => @directories,
