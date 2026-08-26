@@ -1,0 +1,449 @@
+{
+  "schema": "ergentics-r19-obs11-c2-controller-control-freeze-v1",
+  "status": "C2_CONTROL_FROZEN_CONTROLLER_IMPLEMENTATION_ELIGIBLE_BUILD_UNAUTHORIZED",
+  "predecessor": {
+    "c1_1_commit": "8405636a81927402d681564362c59b292023a9cd",
+    "c1_1_tree": "c2181c02b983dca99198c196055745ed56379b69",
+    "c1_commit": "489b21a81592e4c1fcce0926deecfe384e67978a",
+    "c1_1_artifact_path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c1-1-resource-transport-checkpoint.v1.json",
+    "c1_1_artifact_bytes": 12208,
+    "c1_1_artifact_sha256": "53cdc1eae05e6fcd656b9f569c28beaf143af9ae2f095ef22cf83804005ac927",
+    "c1_1_artifact_git_blob": "342e5d0f47a21d2d7df8dec2ed3e64654976b4f5",
+    "c0_artifact_path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c0-readiness.v1.json"
+  },
+  "authority": {
+    "authority_vector": "00000000",
+    "authoritative": false,
+    "gate_e": "ABSTAIN",
+    "scientific_outcome": "ABSTAIN",
+    "may_feed_controller": false,
+    "prose_may_supply_fact": false,
+    "build_authorized": false,
+    "controller_invocation_authorized": false,
+    "runner_execution_authorized": false,
+    "authority_closure_authorized": false
+  },
+  "operations": {
+    "controller_invocations": 0,
+    "swiftpm_builds": 0,
+    "compiler_commands": 0,
+    "product_executions": 0,
+    "test_commands": 0,
+    "projection_roots_created": 0,
+    "obs11_receipt_roots_created": 0,
+    "c2_journal_roots_created": 0,
+    "signals": 0,
+    "network_actions": 0,
+    "github_actions": 0,
+    "cleanup_actions": 0,
+    "energy_actions": 0
+  },
+  "source_identity": {
+    "repository_commit": "8405636a81927402d681564362c59b292023a9cd",
+    "repository_tree": "c2181c02b983dca99198c196055745ed56379b69",
+    "package_tree": "ff18e48162b2a6eabd68c7547d3d3471a60e506f",
+    "core_tree": "fdd94c3a6aef3b5ad4fd6a3775a2828abe55cc02",
+    "c_primitives_tree": "257248333be0de416595a9d0f49719eb0d5e6b95",
+    "runner_tree": "eafba3adda710c917d82b07247456aeb1d0004bd",
+    "package_manifest_blob": "b2b1e472f87d6195d7b9280a51ca7f118d23c62a",
+    "production_and_external_resource_closure_files": 37,
+    "production_and_external_resource_closure_bytes": 1028302,
+    "manifest_equation": "FOR_EACH_SELECTED_GIT_PATH_IN_ASCII_PATH_ORDER_PATH_TAB_BYTES_DECIMAL_TAB_SHA256_LOWERHEX_LF",
+    "manifest_sha256": "c70113ab48c0018680ed2d217767eea1790f41c567661ee28beaa11b8532fd35",
+    "selection": [
+      "PACKAGE_SWIFT",
+      "ALL_SWIFT_FILES_DIRECTLY_UNDER_DISPOSAL_PROJECTION_CORE",
+      "ALL_FIVE_TRACKED_DISPOSAL_PROJECTION_CORE_RESOURCE_FILES",
+      "ALL_TRACKED_DISPOSAL_PROJECTION_PRIMITIVES_C_FILES",
+      "ALL_TRACKED_ERGENTICS_R19_OBS11_PROJECTION_CHAIN_FILES"
+    ],
+    "package_resolved": "ABSENT",
+    "external_package_dependencies": 0,
+    "worktree_at_freeze": "CLEAN",
+    "ignored_package_dot_build": "PRESENT_STALE_DIAGNOSTIC_NOT_AN_INPUT"
+  },
+  "host": {
+    "os": "macOS",
+    "version": "26.5.2",
+    "build": "25F84",
+    "architecture": "arm64",
+    "c2_architectures": ["arm64"],
+    "macos_14_15_cross_host_comparison": "DEFERRED_NOT_C2_CURRENT_HOST",
+    "x86_64_and_rosetta": "DEFERRED_NOT_C2"
+  },
+  "toolchain": {
+    "developer_directory": "/Applications/Xcode.app/Contents/Developer",
+    "xcode_short_version": "26.6",
+    "xcode_product_build_version": "17F113",
+    "xcode_info_dtxcode_build": "17F112",
+    "xcode_version_plist_sha256": "951ddf34d65d84d57684bd083ca7deebf8d5722eefb074f3cdf00f8304d5f511",
+    "swift_build_symlink": {
+      "path": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-build",
+      "device": 16777231,
+      "inode": 1118475,
+      "target": "swift-package"
+    },
+    "swift_package": {
+      "path": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-package",
+      "device": 16777231,
+      "inode": 1118471,
+      "bytes": 23293616,
+      "sha256": "dc1a5f5bd4f05be81b8cc4a4bc6e0fd8846210e4cb829062d0fed3d03f79b753",
+      "macho_uuid": "561F6755-7606-396F-9382-B01D5CC7EDFB",
+      "cdhash": "17192820b8d434a4bf384caf966435288af5c609"
+    },
+    "swift_frontend": {
+      "path": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-frontend",
+      "bytes": 171036592,
+      "sha256": "2ed38571e92c0283091838c1649e27650ad9c99950288e883c7b2dc6c4ce89fb",
+      "macho_uuid": "9A364091-58FE-3AAD-A4D9-9454EF63DDBF"
+    },
+    "swift_driver": {
+      "path": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-driver",
+      "bytes": 3011968,
+      "sha256": "fead52ebe00ec6ec700ecbb4be30f0b6204dd0506cb271dda72ac257261bd64b",
+      "macho_uuid": "636936C2-6D7D-3886-B42D-E499215AE22F"
+    },
+    "clang": {
+      "path": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang",
+      "sha256": "7def90dd8829726686213a747fc5bff1583df933dae5edc55d755479e0bfe00a",
+      "macho_uuid": "777BDC46-ED30-3304-BE16-8999AD75C762"
+    },
+    "ld": {
+      "path": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld",
+      "sha256": "5897b275efd93b201b6df5832dd541262b3f20f290859ba78f2200a6a66ef38b",
+      "macho_uuid": "E310E66B-3781-3A4A-9F37-730B97BF6DE7"
+    },
+    "sdk": {
+      "named_path": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+      "symlink_inode": 1082900,
+      "symlink_target": "MacOSX.sdk",
+      "resolved_root_inode": 1009705,
+      "canonical_name": "macosx26.5",
+      "version": "26.5",
+      "sdk_settings_json_sha256": "f8d005f09381389167f9e0aeaa169bc9e7dff162ef22ca2fd8e98df7ff1acafe",
+      "sdk_settings_plist_sha256": "e5c7c40b8c5dc1a9f99f8b9fa51870f8fe180421225b8201d0c4c826aad11bdc"
+    }
+  },
+  "namespaces": {
+    "build_a_root": "/private/tmp/ergentics-r19-obs11-chain-runner-296d32da-build-a-v1",
+    "build_b_root": "/private/tmp/ergentics-r19-obs11-chain-runner-296d32da-build-b-v1",
+    "execution_closure_root": "/private/tmp/ergentics-r19-obs11-chain-runner-296d32da-execution-closure-v1",
+    "build_b_witness_closure_root": "/private/tmp/ergentics-r19-obs11-chain-runner-296d32da-build-b-witness-closure-v1",
+    "controller_journal_root": "/private/tmp/ergentics-r19-obs11-c2-build-control-8405636a-v1",
+    "all_observed_absent": true,
+    "all_success_or_failure_states_permanently_retained": true,
+    "cleanup_repair_reuse": false,
+    "build_root_initial_mode": "0700",
+    "build_root_initial_children": [
+      "cache",
+      "clang-module-cache",
+      "config",
+      "home",
+      "scratch",
+      "security",
+      "swiftpm-module-cache",
+      "tmp"
+    ]
+  },
+  "controller_freeze": {
+    "implementation_path": "docs/tools/ergentics-r19-obs11-c2-build-controller.rb",
+    "implementation_present": false,
+    "language": "APPLE_SYSTEM_RUBY_WITH_FIXED_DARWIN_PRIMITIVES",
+    "application_arguments": 0,
+    "caller_supplied_paths_roles_environments_timeouts": 0,
+    "outer_transport": "SEPARATELY_FREEZE_ENV_I_TO_PINNED_APPLE_RUBY_AND_EXACT_COMMITTED_SOURCE",
+    "source_continuity": "HOLD_ALL_37_FILES_AND_REQUIRED_DIRECTORIES_ARM_KQUEUE_BEFORE_FIRST_BUILD_THROUGH_FINAL_COMPARE_WITH_BOUNDARY_HASH_VNODE_INVENTORY_AND_NAMED_REVALIDATION",
+    "swiftpm_groups": 2,
+    "swiftpm_groups_sequential": true,
+    "build_b_conditional_on_complete_build_a_admission": true,
+    "jobs": 1,
+    "stdout_cap_bytes_per_build": 16777216,
+    "stderr_cap_bytes_per_build": 16777216,
+    "independent_drain_threads": true,
+    "cutoff_seconds_per_build": 840,
+    "containment_horizon_seconds_per_build": 900,
+    "stop_commitments_per_group": 0,
+    "term_commitments_per_group": 1,
+    "kill_commitments_per_group": 1,
+    "signal_target": "DOUBLE_SNAPSHOTTED_GENERATION_JOINED_DIRECT_CHILD_PRIVATE_PROCESS_GROUP_ONLY",
+    "exact_direct_reap": true,
+    "post_reap_group_conservation": true,
+    "containment_after_entered_signal": "POTENTIALLY_INDEFINITE_UNTIL_EXACT_REAP_AND_GROUP_CONSERVATION",
+    "outer_timeout": false,
+    "network_kernel_confinement": "ABSENT_NAMED_RESIDUAL",
+    "swiftpm_default_sandbox": "RETAINED",
+    "controller_source_and_launch_readiness": "NOT_YET_IMPLEMENTED_OR_AUTHORIZED"
+  },
+  "build_transport": {
+    "physical_executable": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-package",
+    "logical_argv0": "swift-build",
+    "cwd": "/private/var/empty",
+    "stdin": "/dev/null",
+    "umask": "0077",
+    "environment_inheritance": "EMPTY_REPLACEMENT",
+    "environment_template_ordered": [
+      "CFFIXED_USER_HOME=<ROOT>/home",
+      "CLANG_MODULE_CACHE_PATH=<ROOT>/clang-module-cache",
+      "DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer",
+      "HOME=<ROOT>/home",
+      "LANG=C.UTF-8",
+      "LC_ALL=C.UTF-8",
+      "MACOSX_DEPLOYMENT_TARGET=14.0",
+      "PATH=/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin:/usr/bin:/bin",
+      "SDKROOT=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+      "SOURCE_DATE_EPOCH=0",
+      "SWIFTPM_MODULECACHE_OVERRIDE=<ROOT>/swiftpm-module-cache",
+      "TERM=dumb",
+      "TMPDIR=<ROOT>/tmp/",
+      "TZ=UTC",
+      "XDG_CACHE_HOME=<ROOT>/cache",
+      "XDG_CONFIG_HOME=<ROOT>/config",
+      "__CF_USER_TEXT_ENCODING=0x1F5:0x0:0x0"
+    ],
+    "argv_template": [
+      "--package-path",
+      "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/Observability/ErgenticsInterface",
+      "--scratch-path",
+      "<ROOT>/scratch",
+      "--cache-path",
+      "<ROOT>/cache",
+      "--config-path",
+      "<ROOT>/config",
+      "--security-path",
+      "<ROOT>/security",
+      "--configuration",
+      "release",
+      "--product",
+      "ErgenticsR19OBS11ProjectionChain",
+      "--jobs",
+      "1",
+      "--disable-automatic-resolution",
+      "-Xswiftc",
+      "-gnone",
+      "-Xswiftc",
+      "-no-serialize-debugging-options",
+      "-Xcc",
+      "-g0",
+      "-Xlinker",
+      "-S"
+    ],
+    "a_b_difference": "ONLY_EXACT_ROOT_SUBSTITUTION",
+    "compile_time_path_elision_requested": true,
+    "compile_time_path_elision_observed": "ABSTAIN_NO_BUILD",
+    "post_build_strip_normalize_resign": false
+  },
+  "diagnostic_basis": {
+    "authority": "NONE_READ_ONLY_STALE_PRE_C1_1_BUILD_OUTPUT",
+    "release_plan_path": "Observability/ErgenticsInterface/.build/release.yaml",
+    "release_plan_bytes": 175136,
+    "release_plan_sha256": "a9d87f3a75f8730631a2f3a9dfda172d75c739477cdc2af9695bd6c4f7e9366f",
+    "observed_swift_debug_flag": "-g",
+    "observed_clang_debug_flag": "-Xcc_-g",
+    "stale_product_contains_absolute_dot_build_or_resource_accessor_needles": true,
+    "plain_release_build_eligible": false,
+    "correction": "BUILD_NATIVE_EFFECTIVE_GNONE_NO_SERIALIZED_DEBUG_OPTIONS_G0_AND_LINKER_S_THEN_REJECT_ANY_REMAINING_TAINT"
+  },
+  "build_a_hard_stop_before_b": [
+    "EXACT_NORMAL_EXIT_ZERO_AND_COMPLETE_BOUNDED_CAPTURES",
+    "EFFECTIVE_SWIFT_COMPILE_PLAN_ENDS_IN_GNONE_AND_NO_SERIALIZE_DEBUGGING_OPTIONS",
+    "EFFECTIVE_C_COMPILE_PLAN_ENDS_IN_G0",
+    "LINK_PLAN_CONTAINS_LINKER_S",
+    "EXACT_TRANSITIVE_TARGETS_RUNNER_DISPOSAL_PROJECTION_CORE_AND_DISPOSAL_PROJECTION_PRIMITIVES_C_ONLY",
+    "ZERO_GENERATED_RESOURCE_BUNDLE_ACCESSOR_SOURCE_OBJECT_SYMBOL_OR_LINK_INPUT",
+    "ZERO_DISPOSAL_CORE_RESOURCE_COPY_OR_BUNDLE_ACTION",
+    "ZERO_LEDGER_TEST_OR_OTHER_EXECUTABLE_LINK_INPUT",
+    "ZERO_A_OR_B_BUILD_ROOT_STAGING_WORKTREE_PACKAGE_DOT_BUILD_RESOURCE_ACCESSOR_RESOURCE_BUNDLE_FATAL_OR_SWIFTPM_MODULE_BUNDLE_BYTE_NEEDLES_IN_PRODUCT",
+    "VALID_THIN_ARM64_MH_EXECUTE_LC_MAIN_MACOS_14_SDK_26_5_AND_VALID_ADHOC_CODE_DIRECTORY",
+    "HELD_PRODUCT_VNODE_SIZE_BYTES_SHA256_STABLE_ACROSS_ALL_ANALYZERS",
+    "SOURCE_TOOL_SDK_WORKTREE_AND_NAMED_HELD_ROOT_CONTINUITY_REVALIDATED",
+    "EXACT_BUILD_A_EXECUTION_CLOSURE_PACKAGED_DURABLY_FROM_HELD_PRODUCT_AND_FIVE_HELD_REFERENCE_RESOURCES"
+  ],
+  "intentional_path_allowlist": [
+    "/private/tmp",
+    "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/r19-observability-eaf9b76-v1",
+    "/private/tmp/ergentics-r19-obs11-chain-runner-296d32da-execution-closure-v1"
+  ],
+  "binary_identity": {
+    "raw_requirements": [
+      "DISTINCT_A_B_VNODES",
+      "EQUAL_SIZE",
+      "EQUAL_SHA256",
+      "EQUAL_EVERY_RAW_BYTE"
+    ],
+    "diagnostic_requirements": [
+      "EQUAL_COMPLETE_MACHO_HEADER",
+      "EQUAL_ORDERED_LOAD_COMMAND_INDEX_COMMAND_SIZE_AND_RAW_COMMAND_SHA256",
+      "EXACTLY_ONE_EQUAL_LC_UUID",
+      "EQUAL_LC_MAIN_SEGMENTS_SECTIONS_DYLIBS_RPATHS_BUILD_VERSION_MINIMUM_OS_SDK_AND_TOOL_VERSIONS",
+      "EQUAL_LC_CODE_SIGNATURE_RAW_SUPERBLOB_CODEDIRECTORY_AND_CDHASH",
+      "RECOMPUTED_CODE_SLOT_SHA256_MATCHES_EACH_ACTUAL_CODE_PAGE",
+      "EQUAL_LINKED_IMAGES_AND_UNDEFINED_SYMBOL_SET",
+      "CODESIGN_VERIFY_STRICT_READ_ONLY_CORROBORATION"
+    ],
+    "raw_equality_precedes_semantic_projection": true,
+    "semantic_projection_may_not_rescue_raw_inequality": true
+  },
+  "resource_closures": {
+    "a_root": "/private/tmp/ergentics-r19-obs11-chain-runner-296d32da-execution-closure-v1",
+    "b_root": "/private/tmp/ergentics-r19-obs11-chain-runner-296d32da-build-b-witness-closure-v1",
+    "root_mode": "0500",
+    "root_inventory_count": 2,
+    "root_apfs_link_count": 4,
+    "executable_leaf": "ErgenticsR19OBS11ProjectionChain",
+    "executable_mode": "0500",
+    "resource_root_leaf": "ErgenticsR19OBS11ProjectionChain.resources.v1",
+    "resource_root_mode": "0500",
+    "resource_inventory_count": 5,
+    "resource_root_apfs_link_count": 7,
+    "resource_leaf_mode": "0400",
+    "resource_leaf_link_count": 1,
+    "resource_pack_commitment_sha256": "a35466c0d654c9d9c8c3da3b86fb886d1d01ce4f4487d84bdd57b46031f70f51",
+    "resource_origin": "FIVE_CHECKED_IN_REFERENCE_FILES_HELD_AND_JOINED_TO_EMBEDDED_PACK_NOT_SYNTHESIZED_FROM_EMBEDDED_BYTES",
+    "a_executable_join": "COPIED_BYTES_EQUAL_HELD_BUILD_A_PRODUCT",
+    "b_executable_join": "COPIED_BYTES_EQUAL_HELD_BUILD_B_PRODUCT",
+    "a_b_closure_join": "DISTINCT_VNODES_EQUAL_TOPOLOGY_MODES_SIZES_SHA256_AND_EVERY_RAW_LEAF_BYTE",
+    "execution_in_c2": false
+  },
+  "journal": {
+    "root": "/private/tmp/ergentics-r19-obs11-c2-build-control-8405636a-v1",
+    "root_mode_nonterminal": "0700",
+    "root_mode_terminal": "0500",
+    "leaf_mode": "0400",
+    "leaves": [
+      "00-start.json",
+      "01-build-a-commitment.json",
+      "02-build-a-result.json",
+      "03-build-a-admission.json",
+      "04-closure-a-result.json",
+      "05-build-b-commitment.json",
+      "06-build-b-result.json",
+      "07-build-b-admission.json",
+      "08-compare-result.json",
+      "99-terminal.json"
+    ],
+    "frame_rule": "DIGEST_FREE_CANONICAL_PAYLOAD_SHA256_THEN_ATTACH_DIGEST_AND_CHAIN_TO_IMMEDIATE_PREVIOUS_FRAME_WITH_LF_SHA256",
+    "creation": "EXCLUSIVE_NO_REPLACE_NOFOLLOW_READBACK_VNODE_JOIN_FILE_AND_DIRECTORY_FULL_SYNC",
+    "failure_inventory": "EXACT_CONTIGUOUS_ORDINARY_PREFIX_OPTIONALLY_FOLLOWED_BY_99_TERMINAL",
+    "missing_terminal": "ABSTAIN_INCOMPLETE_RETAINED_NO_REINTERPRETATION",
+    "retention": "PERMANENT_ALL_PREFIXES_OUTPUTS_AND_ROOTS",
+    "driver_v2_evidence_ledger": "UNTOUCHED"
+  },
+  "result_lattice": {
+    "preflight_rejection": {
+      "status": "ABSTAIN_NOT_CONSUMED",
+      "created_roots": 0,
+      "builds": 0
+    },
+    "post_controller_entry": {
+      "consumption": "CONSUMED_NO_RETRY",
+      "retention": "PERMANENT_PREFIX",
+      "mechanics_outcome": "PENDING_VALID_TERMINAL_OR_ABSTAIN_INCOMPLETE",
+      "authority_vector": "00000000",
+      "gate_e": "ABSTAIN"
+    },
+    "durable_failure_terminal": {
+      "status": "FAIL_CONSUMED_RETAINED_PREFIX_NO_RETRY",
+      "authority_vector": "00000000",
+      "gate_e": "ABSTAIN"
+    },
+    "missing_terminal": {
+      "consumption": "CONSUMED_NO_RETRY",
+      "mechanics_outcome": "ABSTAIN_INCOMPLETE",
+      "retention": "PERMANENT_PREFIX_NO_REINTERPRETATION",
+      "authority_vector": "00000000",
+      "gate_e": "ABSTAIN"
+    },
+    "exact_success": {
+      "status": "PASS_EXACT_LOCAL_BUILD_IDENTITY_ONLY",
+      "authority_vector": "00000000",
+      "gate_e": "ABSTAIN",
+      "scientific_outcome": "ABSTAIN",
+      "runner_executions": 0,
+      "execution_closure_launch_eligible_only_after_separate_l1": true
+    }
+  },
+  "live_process_interference": {
+    "observation_scope": "READ_ONLY_POINT_IN_TIME_PLUS_PRIOR_HASHED_LEDGER_FACTS",
+    "observed_at_utc_non_authoritative": "2026-08-26T12:26:23Z",
+    "r19_guardian": {
+      "pid": 21601,
+      "pgid": 21601,
+      "uniqueid": 8930176,
+      "idversion": 17456018,
+      "current_state": "SLEEPING_OR_RUNNING",
+      "current_cpu_percent_approx": 68.7,
+      "prior_interval_cpu_percent_approx": "67.348797958928",
+      "prior_task_attributed_power_watts_estimate": "4.107529079282"
+    },
+    "gate_c_awk": {
+      "pid": 56518,
+      "pgid": 56508,
+      "uniqueid": 8668003,
+      "idversion": 16806376,
+      "current_state": "RUNNING",
+      "current_cpu_percent_approx": 98.3,
+      "prior_interval_cpu_percent_approx": "99.911723631496",
+      "prior_task_attributed_power_watts_estimate": "7.475850643581"
+    },
+    "combined_prior_task_attributed_power_watts_estimate": "11.583379722863",
+    "qualification": "KERNEL_RUSAGE_V6_TASK_ATTRIBUTED_ESTIMATE_NOT_WALL_PLUG_PACKAGE_GPU_OR_ANE",
+    "raw_binary_identity_input": false,
+    "thermal_scheduling_timeout_risk": true,
+    "c2_energy_wall_time_and_performance_interpretation": "ABSTAIN",
+    "launch_default": "HARD_STOP_UNTIL_FRESH_LIBPROC_GENERATION_SESSION_GROUP_REVALIDATION_PROVES_BOTH_CPU_BURNING_GENERATIONS_ABSENT",
+    "disposal_or_signal_authorized_by_c2": false,
+    "explicit_acceptance_alternative": "REQUIRES_SEPARATE_FREEZE_AND_CAN_ONLY_PRESERVE_RAW_IDENTITY_PASS_WITH_ALL_ENERGY_PERFORMANCE_FIELDS_ABSTAIN"
+  },
+  "independent_reviews": [
+    {
+      "scope": "TOOLCHAIN_ENVIRONMENT_ARGV_PROCESS_BOUNDS_AND_RETENTION",
+      "status": "CONTROL_FREEZE_ELIGIBLE_BUILD_LAUNCH_BLOCKED_PENDING_EXACT_CONTROLLER"
+    },
+    {
+      "scope": "RAW_BINARY_MACHO_CODEDIRECTORY_RESOURCE_CLOSURE_AND_PATH_TAINT",
+      "status": "CONTROL_FREEZE_ELIGIBLE_DEFAULT_RELEASE_BUILD_REJECTED"
+    },
+    {
+      "scope": "ROADMAP_AUTHORITY_TOCTOU_LIVE_PROCESS_AND_FAILURE_LATTICE",
+      "status": "CONTROL_FREEZE_ELIGIBLE_BUILD_LAUNCH_BLOCKED_PENDING_CONTROLLER_AND_QUIET_HOST"
+    }
+  ],
+  "residuals": [
+    "CONTROLLER_SOURCE_AND_EXACT_TRANSPORT_NOT_IMPLEMENTED_OR_FROZEN",
+    "SOURCE_WATCH_AND_DESCRIPTOR_CONTINUITY_NOT_IMPLEMENTED",
+    "SWIFTPM_COMPILER_READS_REMAIN_PATH_BASED_EVEN_WHEN_CONTROLLER_HOLDS_SOURCE_DESCRIPTORS",
+    "SAME_UID_EVENT_TO_NAMED_PATH_AND_ABA_RACES_REMAIN",
+    "NETWORK_EXCLUDED_BY_PACKAGE_ENVIRONMENT_AND_POLICY_NOT_KERNEL_CONFINED",
+    "TWO_RETAINED_CPU_BURNING_GENERATIONS_CURRENTLY_BLOCK_DEFAULT_LAUNCH",
+    "ENTERED_SIGNAL_MAY_REQUIRE_POTENTIALLY_INDEFINITE_CONTAINMENT",
+    "MAPPED_RUNNING_IMAGE_VNODE_AUTHORITY_REMAINS_L1",
+    "MACOS_14_15_CROSS_HOST_X86_64_ROSETTA_AND_ENERGY_COMPARISONS_DEFERRED"
+  ],
+  "next": {
+    "step": "IMPLEMENT_SOURCE_ONLY_CLOSED_C2_CONTROLLER",
+    "allowed_paths": [
+      "docs/tools/ergentics-r19-obs11-c2-build-controller.rb",
+      "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-controller-implementation-checkpoint.v1.json"
+    ],
+    "allowed_operations": [
+      "SOURCE_EDIT",
+      "RUBY_RIPPER_PARSE_WITHOUT_TOP_LEVEL_EVALUATION",
+      "STATIC_MODEL_AND_HASH_AUDIT",
+      "READ_ONLY_GIT_SOURCE_TOOL_NAMESPACE_AND_PROCESS_CHECKS"
+    ],
+    "forbidden_operations": [
+      "CONTROLLER_INVOCATION",
+      "SWIFTPM_OR_COMPILER_COMMAND",
+      "BUILD_ROOT_OR_CLOSURE_OR_JOURNAL_CREATION",
+      "SIGNAL_OR_DISPOSAL",
+      "RUNNER_EXECUTION",
+      "TEST_EXECUTION",
+      "NETWORK",
+      "CLEANUP_REPAIR_RETRY",
+      "AUTHORITY_CLOSURE_OR_GATE_E_PROMOTION"
+    ],
+    "after_implementation": "INDEPENDENT_STATIC_AUDIT_THEN_READINESS_ONLY_FREEZE_THEN_SEPARATE_EXACT_LAUNCH_APPROVAL"
+  },
+  "artifact_addressing": "THIS_RECORD_IS_CONTENT_ADDRESSED_BY_ITS_SUCCESSOR_GIT_COMMIT_TREE_AND_DOES_NOT_SELF_EMBED_A_DIGEST"
+}
