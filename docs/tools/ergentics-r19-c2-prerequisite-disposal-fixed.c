@@ -18,7 +18,7 @@
 #include <unistd.h>
 
 static const char *const disposal_root_leaf =
-    "ergentics-r19-obs11-c2-prerequisite-disposal-b5afcd7-8930176-8930235-8668003-v4";
+    "ergentics-r19-obs11-c2-prerequisite-disposal-b672534-8930176-8930235-8668003-v5";
 
 static const char *const disposal_leaves[] = {
     "00-start.json",
@@ -44,9 +44,9 @@ static const char *const disposal_images[] = {
     "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.driver-v2-gate-c-staging/Tests/PrimeValidationWorkflow/.build/arm64-apple-macosx/release/PrimeValidationWorkflowDriverV2SessionFixture",
     "/usr/bin/awk",
     "/bin/zsh",
-    "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-a-b5afcd7-v4/ErgenticsR19C2PrerequisiteDisposal",
-    "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-b-b5afcd7-v4/ErgenticsR19C2PrerequisiteDisposal",
-    "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-readiness.v4.frame",
+    "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-a-b672534-v5/ErgenticsR19C2PrerequisiteDisposal",
+    "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-b-b672534-v5/ErgenticsR19C2PrerequisiteDisposal",
+    "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-readiness.v5.frame",
 };
 
 static const char *const disposal_cwds[] = {
@@ -174,64 +174,100 @@ ergentics_r19_disposal_open_root(int32_t parent_fd, int32_t *out_errno) {
     return checked_fd(descriptor, operation_errno, out_errno);
 }
 
-int32_t
-ergentics_r19_disposal_root_rejoin(
-    int32_t parent_fd,
-    int32_t root_fd,
+static int
+root_stat_admitted(
+    const struct stat *value,
     uint32_t expected_mode,
-    int32_t *out_errno
+    nlink_t expected_nlink
 ) {
-    struct stat named;
-    struct stat held;
-    if (parent_fd < 3 || root_fd < 3 || out_errno == NULL ||
-        (expected_mode != 0700u && expected_mode != 0500u)) {
-        return invalid_argument(out_errno);
-    }
-    if (fstatat(parent_fd, disposal_root_leaf, &named, AT_SYMLINK_NOFOLLOW) == -1 ||
-        fstat(root_fd, &held) == -1) {
-        *out_errno = errno;
-        return -1;
-    }
-    if (!S_ISDIR(named.st_mode) || !S_ISDIR(held.st_mode) ||
-        named.st_dev != held.st_dev || named.st_ino != held.st_ino ||
-        named.st_uid != 501 || held.st_uid != 501 ||
-        named.st_gid != 0 || held.st_gid != 0 ||
-        named.st_nlink != 2 || held.st_nlink != 2 ||
-        named.st_flags != 0 || held.st_flags != 0 ||
-        (named.st_mode & 07777) != expected_mode ||
-        (held.st_mode & 07777) != expected_mode) {
-        *out_errno = EPERM;
-        errno = EPERM;
-        return -1;
-    }
-    *out_errno = 0;
-    return 0;
+    return S_ISDIR(value->st_mode) && value->st_uid == 501 &&
+        value->st_gid == 0 && value->st_nlink == expected_nlink &&
+        value->st_flags == 0 &&
+        (value->st_mode & 07777) == (mode_t)expected_mode;
+}
+
+static int
+same_root_identity(const struct stat *left, const struct stat *right) {
+    return left->st_dev == right->st_dev && left->st_ino == right->st_ino &&
+        left->st_uid == right->st_uid && left->st_gid == right->st_gid &&
+        left->st_nlink == right->st_nlink &&
+        left->st_flags == right->st_flags &&
+        (left->st_mode & (S_IFMT | 07777)) ==
+            (right->st_mode & (S_IFMT | 07777));
 }
 
 int32_t
-ergentics_r19_disposal_root_inventory(
+ergentics_r19_disposal_validate_root(
+    int32_t parent_fd,
     int32_t root_fd,
-    uint32_t expected_mask,
+    uint32_t expected_mode,
+    uint32_t expected_entry_mask,
     int32_t *out_errno
 ) {
     DIR *directory;
     struct dirent *entry;
+    struct stat named_before;
+    struct stat held_before;
+    struct stat scan_before;
+    struct stat scan_after;
+    struct stat named_after;
+    struct stat held_after;
     uint32_t seen = 0;
-    int duplicate;
+    nlink_t expected_nlink;
+    int scan_fd;
+    int operation_errno;
     unsigned int index;
-    int outcome_seen = 0;
-    if (root_fd < 3 || out_errno == NULL || (expected_mask & ~0x7fffu) != 0) {
+    if (parent_fd < 3 || root_fd < 3 || out_errno == NULL ||
+        (expected_mode != 0700u && expected_mode != 0500u) ||
+        (expected_entry_mask & ~0xffffu) != 0 ||
+        (expected_entry_mask != 0 &&
+            (expected_entry_mask & 0x8000u) == 0) ||
+        (expected_mode == 0500u && expected_entry_mask != 0xffffu)) {
         return invalid_argument(out_errno);
     }
-    duplicate = fcntl(root_fd, F_DUPFD_CLOEXEC, 3);
-    if (duplicate == -1) {
+    expected_nlink = (nlink_t)(2u + (unsigned int)__builtin_popcount(
+        (unsigned int)expected_entry_mask
+    ));
+    if (fstatat(
+            parent_fd, disposal_root_leaf, &named_before, AT_SYMLINK_NOFOLLOW
+        ) == -1 || fstat(root_fd, &held_before) == -1) {
         *out_errno = errno;
         return -1;
     }
-    directory = fdopendir(duplicate);
+    if (!root_stat_admitted(&named_before, expected_mode, expected_nlink) ||
+        !root_stat_admitted(&held_before, expected_mode, expected_nlink) ||
+        !same_root_identity(&named_before, &held_before)) {
+        *out_errno = EPERM;
+        errno = EPERM;
+        return -1;
+    }
+    scan_fd = openat(
+        parent_fd, disposal_root_leaf,
+        O_RDONLY | O_DIRECTORY | O_CLOEXEC | O_NOFOLLOW_ANY
+    );
+    operation_errno = errno;
+    scan_fd = checked_fd(scan_fd, operation_errno, out_errno);
+    if (scan_fd == -1) {
+        return -1;
+    }
+    if (fstat(scan_fd, &scan_before) == -1) {
+        operation_errno = errno;
+        (void)close(scan_fd);
+        *out_errno = operation_errno;
+        errno = operation_errno;
+        return -1;
+    }
+    if (!root_stat_admitted(&scan_before, expected_mode, expected_nlink) ||
+        !same_root_identity(&named_before, &scan_before)) {
+        (void)close(scan_fd);
+        *out_errno = EPERM;
+        errno = EPERM;
+        return -1;
+    }
+    directory = fdopendir(scan_fd);
     if (directory == NULL) {
-        int operation_errno = errno;
-        (void)close(duplicate);
+        operation_errno = errno;
+        (void)close(scan_fd);
         *out_errno = operation_errno;
         errno = operation_errno;
         return -1;
@@ -246,20 +282,17 @@ ergentics_r19_disposal_root_inventory(
                 break;
             }
         }
-        if (index == 16u ||
-            (index == 15u && outcome_seen) ||
-            (index < 15u && (seen & (1u << index)) != 0)) {
+        if (index == 16u || (seen & (1u << index)) != 0) {
             errno = EPERM;
             break;
         }
-        if (index == 15u) {
-            outcome_seen = 1;
-        } else {
-            seen |= 1u << index;
-        }
+        seen |= 1u << index;
     }
-    if (errno != 0 || seen != expected_mask) {
-        int operation_errno = errno != 0 ? errno : EPERM;
+    if (errno != 0 || seen != expected_entry_mask ||
+        fstat(dirfd(directory), &scan_after) == -1 ||
+        !root_stat_admitted(&scan_after, expected_mode, expected_nlink) ||
+        !same_root_identity(&scan_before, &scan_after)) {
+        operation_errno = errno != 0 ? errno : EPERM;
         (void)closedir(directory);
         *out_errno = operation_errno;
         errno = operation_errno;
@@ -267,6 +300,21 @@ ergentics_r19_disposal_root_inventory(
     }
     if (closedir(directory) == -1) {
         *out_errno = errno;
+        return -1;
+    }
+    if (fstatat(
+            parent_fd, disposal_root_leaf, &named_after, AT_SYMLINK_NOFOLLOW
+        ) == -1 || fstat(root_fd, &held_after) == -1) {
+        *out_errno = errno;
+        return -1;
+    }
+    if (!root_stat_admitted(&named_after, expected_mode, expected_nlink) ||
+        !root_stat_admitted(&held_after, expected_mode, expected_nlink) ||
+        !same_root_identity(&named_before, &named_after) ||
+        !same_root_identity(&held_before, &held_after) ||
+        !same_root_identity(&named_after, &held_after)) {
+        *out_errno = EPERM;
+        errno = EPERM;
         return -1;
     }
     *out_errno = 0;

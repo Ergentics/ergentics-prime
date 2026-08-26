@@ -28,17 +28,11 @@ ERGENTICS_R19_DISPOSAL_RESULT
 int32_t ergentics_r19_disposal_open_root(int32_t parent_fd, int32_t *out_errno);
 
 ERGENTICS_R19_DISPOSAL_RESULT
-int32_t ergentics_r19_disposal_root_rejoin(
+int32_t ergentics_r19_disposal_validate_root(
     int32_t parent_fd,
     int32_t root_fd,
     uint32_t expected_mode,
-    int32_t *out_errno
-);
-
-ERGENTICS_R19_DISPOSAL_RESULT
-int32_t ergentics_r19_disposal_root_inventory(
-    int32_t root_fd,
-    uint32_t expected_mask,
+    uint32_t expected_entry_mask,
     int32_t *out_errno
 );
 

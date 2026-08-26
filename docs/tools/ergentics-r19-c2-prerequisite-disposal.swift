@@ -17,14 +17,10 @@ private func cOpenPrivateTmp(_ error: UnsafeMutablePointer<Int32>) -> Int32
 private func cCreateRoot(_ parent: Int32, _ error: UnsafeMutablePointer<Int32>) -> Int32
 @_silgen_name("ergentics_r19_disposal_open_root")
 private func cOpenRoot(_ parent: Int32, _ error: UnsafeMutablePointer<Int32>) -> Int32
-@_silgen_name("ergentics_r19_disposal_root_rejoin")
-private func cRootRejoin(
-    _ parent: Int32, _ root: Int32, _ mode: UInt32,
+@_silgen_name("ergentics_r19_disposal_validate_root")
+private func cValidateRoot(
+    _ parent: Int32, _ root: Int32, _ mode: UInt32, _ entryMask: UInt32,
     _ error: UnsafeMutablePointer<Int32>
-) -> Int32
-@_silgen_name("ergentics_r19_disposal_root_inventory")
-private func cRootInventory(
-    _ root: Int32, _ mask: UInt32, _ error: UnsafeMutablePointer<Int32>
 ) -> Int32
 @_silgen_name("ergentics_r19_disposal_create_leaf")
 private func cCreateLeaf(
@@ -133,13 +129,13 @@ private func failureCoordinate(_ error: Error) -> String {
 }
 
 private enum Fixed {
-    static let freezeCommit = "ef45a0313ef51f1297f4df9bf717223960eb0ff0"
-    static let freezeTree = "c63cf04b8f81a619ac4073ac808226914dac825a"
-    static let freezeFrameHash = "09abe8a4d53c155a6bcad0d076bc41b61bf93bc13bec96f84af032f6aee185ce"
-    static let journalRoot = "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-b5afcd7-8930176-8930235-8668003-v4"
-    static let buildAPath = "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-a-b5afcd7-v4/ErgenticsR19C2PrerequisiteDisposal"
-    static let buildBPath = "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-b-b5afcd7-v4/ErgenticsR19C2PrerequisiteDisposal"
-    static let readinessPath = "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-readiness.v4.frame"
+    static let freezeCommit = "e947ae9be8a4614a6bf79e34d7ff3ab9ad4379b3"
+    static let freezeTree = "cd23ce34f280fe5f80761883e56205f9a443f57b"
+    static let freezeFrameHash = "98b96fa84a3c30fca0c953e160317e235db34ffb2db48543c2232fcb558700c1"
+    static let journalRoot = "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-b672534-8930176-8930235-8668003-v5"
+    static let buildAPath = "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-a-b672534-v5/ErgenticsR19C2PrerequisiteDisposal"
+    static let buildBPath = "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-b-b672534-v5/ErgenticsR19C2PrerequisiteDisposal"
+    static let readinessPath = "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-readiness.v5.frame"
     static let hostEnvironmentEntry = "__CF_USER_TEXT_ENCODING=0x1F5:0x0:0x0"
     static let guardianCWD = "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging"
     static let launchCWD = "/private/var/empty"
@@ -153,8 +149,9 @@ private enum Fixed {
         "11-awk-kill-result.json", "12-awk-conservation.json",
         "13-natural-exit-observers.json", "14-terminal.json", "99-outcome.jsonl",
     ]
-    static let receiptSchema = "ergentics-r19-obs11-c2-prerequisite-disposal-journal-v4"
-    static let outcomeSchema = "ergentics-r19-obs11-c2-prerequisite-disposal-outcome-v4"
+    static let receiptSchema = "ergentics-r19-obs11-c2-prerequisite-disposal-journal-v5"
+    static let outcomeSchema = "ergentics-r19-obs11-c2-prerequisite-disposal-outcome-v5"
+    static let outcomeEntryBit: UInt32 = 1 << 15
     static let merkleDomain = Data("ERGENTICS-R19-C2-PREREQUISITE-DISPOSAL-PRESTATE-MERKLE-V2".utf8)
     static let fileCap = 131_072
     static let outcomeCap = 524_288
@@ -955,12 +952,12 @@ private func parseReadiness(_ data: Data) throws -> ReadinessFrame {
         }
         values.append(parts[1])
     }
-    let controlPath = "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-control-freeze.v4.json"
-    let cObjectA = "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-a-b5afcd7-v4/ergentics-r19-c2-prerequisite-disposal-fixed.o"
-    let cObjectB = "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-b-b5afcd7-v4/ergentics-r19-c2-prerequisite-disposal-fixed.o"
-    guard values[0] == "ergentics-r19-obs11-c2-prerequisite-disposal-readiness-v4",
+    let controlPath = "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-control-freeze.v5.json"
+    let cObjectA = "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-a-b672534-v5/ergentics-r19-c2-prerequisite-disposal-fixed.o"
+    let cObjectB = "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-b-b672534-v5/ergentics-r19-c2-prerequisite-disposal-fixed.o"
+    guard values[0] == "ergentics-r19-obs11-c2-prerequisite-disposal-readiness-v5",
           values[1] == Substring(Fixed.freezeCommit), values[2] == Substring(Fixed.freezeTree),
-          values[3] == Substring(controlPath), values[4] == "7890",
+          values[3] == Substring(controlPath), values[4] == "8833",
           values[5] == Substring(Fixed.freezeFrameHash),
           values[6] == Substring(Fixed.buildAPath), values[7] == Substring(Fixed.buildBPath),
           values[8] == "1", values[12] == Substring(cObjectA),
@@ -1320,15 +1317,16 @@ private final class Journal {
         // explicitly frozen pre-root residual.
         try fullSync(parent.raw, "exclusive-root-claimed")
         let root = try FD(cOpenRoot(parent.raw, &error))
-        guard cRootRejoin(parent.raw, root.raw, 0o700, &error) == 0,
-              cRootInventory(root.raw, 0, &error) == 0 else {
+        guard cValidateRoot(parent.raw, root.raw, 0o700, 0, &error) == 0 else {
             throw Failure.rejected("root-admission-\(error)")
         }
         try fullSync(root.raw, "admitted-empty-root")
         try fullSync(parent.raw, "admitted-empty-root-parent")
         let outcome = try FD(cPrecreateOutcome(root.raw, &error))
         guard cOutcomeRejoin(root.raw, outcome.raw, 0, 0o600, &error) == 0,
-              cRootInventory(root.raw, 0, &error) == 0 else {
+              cValidateRoot(
+                parent.raw, root.raw, 0o700, Fixed.outcomeEntryBit, &error
+              ) == 0 else {
             throw Failure.rejected("outcome-prearm-\(error)")
         }
         let journal = Journal(parent: parent, root: root, outcome: outcome)
@@ -1517,8 +1515,10 @@ private final class Journal {
         var bytes = try record.encoded(); bytes.append(0x0a)
         guard bytes.count <= Fixed.fileCap else { throw Failure.rejected("journal-cap") }
         var error: Int32 = 0
-        guard cRootRejoin(parent.raw, root.raw, 0o700, &error) == 0,
-              cRootInventory(root.raw, ordinaryMask, &error) == 0,
+        guard cValidateRoot(
+                parent.raw, root.raw, 0o700,
+                Fixed.outcomeEntryBit | ordinaryMask, &error
+              ) == 0,
               cOutcomeRejoin(
                 root.raw, outcome.raw, UInt64(outcomeBytes.count), outcomeMode, &error
               ) == 0 else {
@@ -1527,9 +1527,12 @@ private final class Journal {
         phase = .creating(ordinal)
         let leafRaw = cCreateLeaf(root.raw, ordinal, &error)
         guard leafRaw >= 3 else {
-            if cRootInventory(root.raw, ordinaryMask, &error) == 0,
-               cOutcomeRejoin(
+            if cOutcomeRejoin(
                 root.raw, outcome.raw, UInt64(outcomeBytes.count), outcomeMode, &error
+               ) == 0,
+               cValidateRoot(
+                parent.raw, root.raw, 0o700,
+                Fixed.outcomeEntryBit | ordinaryMask, &error
                ) == 0 {
                 phase = .idle
             }
@@ -1574,8 +1577,10 @@ private final class Journal {
         try fullSync(leafFD.raw, "journal-leaf-mode-\(leaf)")
         try fullSync(root.raw, "root-after-materialize-\(leaf)")
         try fullSync(parent.raw, "parent-after-materialize-\(leaf)")
-        guard cRootRejoin(parent.raw, root.raw, 0o700, &error) == 0,
-              cRootInventory(root.raw, nextMask, &error) == 0,
+        guard cValidateRoot(
+                parent.raw, root.raw, 0o700,
+                Fixed.outcomeEntryBit | nextMask, &error
+              ) == 0,
               cSealedLeafRejoin(
                 root.raw, leafFD.raw, ordinal, UInt64(bytes.count), &error
               ) == 0,
@@ -1601,11 +1606,10 @@ private final class Journal {
         }
         var error: Int32 = 0
         try revalidateSealedPrefix(expectedMode: 0o400)
-        guard cRootInventory(root.raw, 0x7fff, &error) == 0,
+        guard cValidateRoot(parent.raw, root.raw, 0o700, 0xffff, &error) == 0,
               cOutcomeRejoin(
                 root.raw, outcome.raw, UInt64(outcomeBytes.count), outcomeMode, &error
-              ) == 0,
-              cRootRejoin(parent.raw, root.raw, 0o700, &error) == 0 else {
+              ) == 0 else {
             throw Failure.rejected("terminal-prefix-rejoin-\(error)")
         }
         try appendOutcome(status: "SUCCESS_CANDIDATE", payload: object(
@@ -1623,7 +1627,7 @@ private final class Journal {
         guard cOutcomeRejoin(
                 root.raw, outcome.raw, UInt64(outcomeBytes.count), outcomeMode, &error
               ) == 0,
-              cRootInventory(root.raw, 0x7fff, &error) == 0 else {
+              cValidateRoot(parent.raw, root.raw, 0o700, 0xffff, &error) == 0 else {
             throw Failure.rejected("terminal-all-leaves-sealed-\(error)")
         }
         guard cSealRoot(root.raw, &error) == 0 else {
@@ -1635,8 +1639,7 @@ private final class Journal {
         do {
             try fullSync(root.raw, "terminal-root-mode")
             try fullSync(parent.raw, "terminal-root-mode-parent")
-            guard cRootRejoin(parent.raw, root.raw, 0o500, &error) == 0,
-                  cRootInventory(root.raw, 0x7fff, &error) == 0 else {
+            guard cValidateRoot(parent.raw, root.raw, 0o500, 0xffff, &error) == 0 else {
                 throw Failure.rejected("terminal-root-mode-rejoin-\(error)")
             }
             try appendOutcome(status: "SUCCESS_DURABLE", payload: object(
