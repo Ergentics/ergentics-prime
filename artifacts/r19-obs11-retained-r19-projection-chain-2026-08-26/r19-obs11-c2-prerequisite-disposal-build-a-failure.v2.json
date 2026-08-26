@@ -1,0 +1,81 @@
+{
+  "schema": "ergentics-r19-obs11-c2-prerequisite-disposal-build-a-failure-v2",
+  "status": "BUILD_A_COMPILE_FAILURE_CONSUMED_RETAINED_NO_EXECUTABLE_NO_REUSE",
+  "rank": "LOCAL_BUILD_MECHANICS_FAILURE",
+  "authority_vector": "00000000",
+  "gate_e": "ABSTAIN",
+  "predecessor": {
+    "implementation_checkpoint_commit": "2a26c708a43852d63794e5fda24cfa31d9c2f88d",
+    "implementation_checkpoint_tree": "20b7c49dd812255d3bb9abb13b3d7613552820ab",
+    "implementation_commit": "32763b1b95b3f1d8f14c93808bc5ca057bd76541",
+    "implementation_tree": "a2ae278e18188f3c0a3bfe4cb54c0c461714d45d"
+  },
+  "invocation": {
+    "classification": "BUILD_ONLY_NO_BINARY_EXECUTION",
+    "build_root": "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-a-1cb03c1-v2",
+    "environment": "EXACT_ENV_I_DEVELOPER_DIR_LANG_LC_ALL_PATH_SDKROOT_TMPDIR_TZ_CF_ENCODING",
+    "cwd": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging",
+    "umask": "0077",
+    "clang_entries": 1,
+    "swiftc_entries": 1,
+    "binary_entries": 0,
+    "signals_entered": 0
+  },
+  "clang_result": {
+    "exit": 0,
+    "object_path": "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-a-1cb03c1-v2/ergentics-r19-c2-prerequisite-disposal-fixed.o",
+    "bytes": 16848,
+    "sha256": "96015a1c0d4a7caa8a39928601ef51e6bbf5ddb4e650a7c50c75200f563069a1",
+    "mode": "0600",
+    "uid": 501,
+    "gid": 0,
+    "device": 16777231,
+    "inode": 17950387,
+    "nlink": 1,
+    "flags": 0
+  },
+  "swiftc_result": {
+    "exit": 1,
+    "product": "ABSENT",
+    "error": {
+      "path": "docs/tools/ergentics-r19-c2-prerequisite-disposal.swift",
+      "line": 1090,
+      "coordinate": "MISSING_TRY_ON_THROWING_PROCESS_PATH_CALL"
+    },
+    "warnings": [
+      "UNKNOWN_DRIVER_FLAG_NO_SERIALIZE_DEBUGGING_OPTIONS_FORWARDED_TO_FRONTEND",
+      "STRING_CSTRING_INITIALIZER_DEPRECATED",
+      "TRAILING_CLOSURE_IN_GUARD_MAP_CONFUSABLE"
+    ],
+    "diagnostic_capture": "CODEX_EXEC_TRANSCRIPT_STRUCTURED_HERE_NOT_REPLAYED"
+  },
+  "retained_root": {
+    "path": "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-a-1cb03c1-v2",
+    "mode": "0700",
+    "uid": 501,
+    "gid": 0,
+    "device": 16777231,
+    "inode": 17950384,
+    "nlink": 5,
+    "flags": 0,
+    "regular_file_count": 55,
+    "directory_count": 4,
+    "allocated_kibibytes": 30680,
+    "retention": "PERMANENT_NO_CLEANUP_NO_REUSE"
+  },
+  "unentered_v2_state": {
+    "build_b_root": "ABSENT",
+    "readiness_frame": "ABSENT",
+    "journal_root": "ABSENT",
+    "controller_invocations": 0,
+    "kill_calls": 0,
+    "signals_entered": 0,
+    "processes_disposed": 0
+  },
+  "disposition": {
+    "v2_build_equality": "NOT_ESTABLISHED",
+    "v2_execution_authority": "SUPERSEDED_BEFORE_ANY_BINARY_EXISTED",
+    "retry_or_reuse": false,
+    "next": "FREEZE_FRESH_V3_NAMESPACES_THEN_SOURCE_ONLY_CORRECTION_AND_STATIC_REVIEW"
+  }
+}
