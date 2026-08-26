@@ -1,0 +1,134 @@
+{
+  "schema": "ergentics-r19-obs11-c2-prefix-capture-runner-implementation-checkpoint-v6",
+  "status": "IMPLEMENTATION_STATIC_GO_CHECKPOINTED_NO_ENTRY",
+  "rank": "CONTROL_ONLY_PRELAUNCH_IMPLEMENTATION_CHECKPOINT",
+  "predecessor": {
+    "correction_freeze_commit": "f3e073ee13e93623d5b4f3e77b677afc584c1154",
+    "correction_freeze_tree": "805376d885d84d08d6197692a1ed1a386a03e563",
+    "correction_freeze_path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prefix-capture-runner-correction-freeze.v6.json",
+    "correction_freeze_sha256": "81a2a03144ed12aeeb0867c619bba62d61f10b8616a79912d333d917ce6c570b"
+  },
+  "implementation": {
+    "commit": "48fc5a29ab5ad7c44afdf5cfa603a3cdea2d7662",
+    "tree": "10c2a2b86c7008974bce4a1ee35a2e0fb4dbc6c1",
+    "parent_commit": "f3e073ee13e93623d5b4f3e77b677afc584c1154",
+    "parent_tree": "805376d885d84d08d6197692a1ed1a386a03e563",
+    "changed_paths": [
+      "docs/tools/ergentics-r19-obs11-c2-prefix-capture-runner.v6.rb"
+    ]
+  },
+  "runner_source": {
+    "path": "docs/tools/ergentics-r19-obs11-c2-prefix-capture-runner.v6.rb",
+    "sha256": "7a84a99a0e9f77dace2d102f1e4058316762512f51e5ccb0c8e3a72e71f918c2",
+    "git_blob": "4dd0e5eb80780d2de03e2dfd2b2b118ba959fcb8",
+    "bytes": 51062,
+    "lf_count": 1495,
+    "device": 16777231,
+    "inode": 17959168,
+    "uid": 501,
+    "gid": 20,
+    "mode": "0644",
+    "nlink": 1,
+    "flags": 0,
+    "language": "APPLE_RUBY_2_6_WITH_FIXED_ARITY_DARWIN_PRIMITIVES",
+    "syntax_check": "PASS_RUBY_DISABLE_GEMS_WC",
+    "diff_check": "PASS",
+    "source_was_not_loaded_or_evaluated": true
+  },
+  "static_reviews": [
+    {
+      "review": "IDENTITY_NAMESPACE_TOPOLOGY",
+      "decision": "GO",
+      "exact_source_sha256": "7a84a99a0e9f77dace2d102f1e4058316762512f51e5ccb0c8e3a72e71f918c2",
+      "start_end_rehash_equal": true,
+      "blockers": [],
+      "verified": [
+        "PARENT_ROOT_LEAF_DESCRIPTOR_AND_NAMED_JOINS",
+        "POST_READ_FSTATAT_REJOINS",
+        "ROOT_AND_PAIRWISE_LEAF_INODE_EXCLUSION",
+        "APFS_NLINK_2_PLUS_ENTRY_COUNT",
+        "SORTED_RAW_INVENTORY_AND_MANIFEST",
+        "FOUR_LEAF_SCIENTIFIC_FAIL_AND_FIVE_LEAF_PASS_TOPOLOGY",
+        "CREATED_ROOT_OUTER_STATE_TOTALITY"
+      ]
+    },
+    {
+      "review": "JOURNAL_DATA_FIDELITY",
+      "decision": "GO",
+      "exact_source_sha256": "7a84a99a0e9f77dace2d102f1e4058316762512f51e5ccb0c8e3a72e71f918c2",
+      "start_end_rehash_equal": true,
+      "blockers": [],
+      "verified": [
+        "TOTAL_UNSTARTED_UNAVAILABLE_PARTIAL_AND_EOF_CHANNEL_STATES",
+        "RAW_PUBLICATION_BEFORE_REVALIDATION_OR_INTERPRETATION",
+        "INDEPENDENT_STDOUT_AND_STDERR_PUBLICATION_STATE",
+        "ACYCLIC_00_03_04_99_AND_OUTER_REFERENCES",
+        "NO_SELF_HASH",
+        "99_SEAL_PENDING_FACT_IS_PRESENT_TENSE_TRUE",
+        "NO_ORDINARY_PATH_FALSE_PASS"
+      ]
+    },
+    {
+      "review": "DARWIN_RUBY_PROCESS_DURABILITY",
+      "decision": "GO",
+      "exact_source_sha256": "7a84a99a0e9f77dace2d102f1e4058316762512f51e5ccb0c8e3a72e71f918c2",
+      "start_end_rehash_equal": true,
+      "blockers": [],
+      "verified": [
+        "APPLE_RUBY_FIDDLE_SAVED_ERRNO_CLASSIFICATION_WITH_ACTUAL_ERRNO_ZERO_READBACK",
+        "FIXED_ARITY_NONCREATING_OPENAT_AND_NATIVE_LEAF_CREATION",
+        "FDOPENDIR_SINGLE_OWNER_CHECKED_CLOSE",
+        "HELD_REWOUND_FD3_HARNESS_TRANSPORT",
+        "EXACTLY_ONE_PROCESS_SPAWN_SURFACE",
+        "CONCURRENT_BOUNDED_DRAINS_AND_EXACT_PID_EINTR_ONLY_REAP",
+        "FSYNC_AND_F_FULLFSYNC_DURABILITY_ORDER",
+        "ZERO_SIGNAL_AND_TIMEOUT_SURFACE"
+      ]
+    }
+  ],
+  "static_surface": {
+    "runner_process_entries": 0,
+    "child_process_spawns": 0,
+    "source_process_spawn_occurrences": 1,
+    "source_process_kill_occurrences": 0,
+    "source_shell_or_popen_occurrences": 0,
+    "signals": 0,
+    "timeouts": 0,
+    "network_actions": 0,
+    "github_actions": 0,
+    "python_entries": 0,
+    "controller_bottom_entries": 0,
+    "swiftpm_spawns": 0,
+    "builds": 0,
+    "product_executions": 0,
+    "cleanup_actions": 0
+  },
+  "capture_namespace": {
+    "root": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-preconsumption-prefix-capture.v6",
+    "symlink_aware_state_after_implementation_commit": "ABSENT",
+    "absence_authorizes_entry": false,
+    "absence_after_any_future_launch_attempt_authorizes_retry": false
+  },
+  "readiness": {
+    "final_readiness_path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-preconsumption-prefix-harness-readiness.v6.json",
+    "state": "ABSENT_NOT_YET_FROZEN",
+    "runner_entry_authorized_by_this_checkpoint": false,
+    "three_exact_readiness_reviews_required": true,
+    "readiness_commit_required": true
+  },
+  "authority": {
+    "authority_vector": "00000000",
+    "authoritative": false,
+    "gate_e": "ABSTAIN",
+    "scientific_outcome": "ABSTAIN",
+    "prose_may_supply_fact": false,
+    "controller_or_build_authorized": false,
+    "runner_entry_authorized": false
+  },
+  "next": {
+    "step": "COMMIT_THIS_CHECKPOINT_THEN_FREEZE_AND_REVIEW_FINAL_V6_READINESS",
+    "outer_launch_attempts_before_final_readiness_commit": 0,
+    "capture_root_creations_before_final_readiness_commit": 0
+  },
+  "artifact_addressing": "NO_RECORD_EMBEDS_ITS_OWN_HASH;SUCCESSOR_GIT_COMMIT_AND_TREE_CONTENT_ADDRESS_THIS_CHECKPOINT"
+}
