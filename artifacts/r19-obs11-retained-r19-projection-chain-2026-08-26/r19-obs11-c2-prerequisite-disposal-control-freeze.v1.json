@@ -1,0 +1,253 @@
+{
+  "schema": "ergentics-r19-obs11-c2-prerequisite-disposal-control-freeze-v1",
+  "status": "CONTROL_ONLY_DISPOSAL_SOURCE_AND_TWO_BUILD_VERIFICATION_FROZEN_ACTUATION_ABSTAIN",
+  "rank": "CONTROL_ONLY_FREEZE",
+  "authorization_basis": "USER_AUTHORIZED_START_TO_END_AND_WILL_NOT_INTERVENE_IN_THIS_PROCESS",
+  "predecessor": {
+    "commit": "1c4a3b5346725c9d7248662c6342b179033cbd66",
+    "tree": "dd704b7feb2767818e4e42dc5d9e0382ea36a016",
+    "worktree": "CLEAN"
+  },
+  "purpose": {
+    "classification": "EXTERNAL_MECHANICS_CONSERVATION_PREREQUISITE_NOT_C2_NOT_GATE_E",
+    "reason": "EXACT_RETAINED_GENERATIONS_BLOCK_C2_BOOTSTRAP_AND_TWO_CONSUME_CPU",
+    "fold_into_c2": false,
+    "scientific_interpretation": false,
+    "authority_vector": "00000000",
+    "gate_e": "ABSTAIN"
+  },
+  "source_allowlist": [
+    "docs/tools/ergentics-r19-c2-prerequisite-disposal.swift",
+    "docs/tools/ergentics-r19-c2-prerequisite-disposal-fixed.c",
+    "docs/tools/ergentics-r19-c2-prerequisite-disposal-fixed.h"
+  ],
+  "control_allowlist": [
+    "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-control-freeze.v1.json",
+    "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-implementation-checkpoint.v1.json",
+    "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-readiness.v1.json",
+    "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-result.v1.json"
+  ],
+  "namespaces": {
+    "build_a_root": "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-a-1c4a3b5-v1",
+    "build_b_root": "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-b-1c4a3b5-v1",
+    "journal_root": "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-1c4a3b5-8930176-8930235-8668003-v1",
+    "all_observed_absent": true,
+    "all_outcomes_permanently_retained": true,
+    "cleanup_repair_reuse": false
+  },
+  "fixed_targets_in_order": [
+    {
+      "role": "R19_GUARDIAN",
+      "actuation_target": 21601,
+      "actuation_form": "POSITIVE_PID_KILL",
+      "pid": 21601,
+      "uniqueid": 8930176,
+      "idversion": 17456018,
+      "ppid": 21600,
+      "puniqueid": 8930175,
+      "orig_ppidversion": 17456015,
+      "sid": 21601,
+      "pgid": 21601,
+      "status": 2,
+      "group_members": [21601],
+      "image": {
+        "path": "/usr/bin/ruby",
+        "device": 16777231,
+        "inode": 1152921500312572705,
+        "bytes": 135200,
+        "sha256": "9d6ff3e289c7d908e3c785e0bedd6692d1d6a3377965c88c04d847104b7c892c",
+        "uuid_hex": "eb2540b7e13236beb719619d0fbf7203",
+        "mapped_text_file_offset": 65536
+      },
+      "cwd": {
+        "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging",
+        "device": 16777231,
+        "inode": 17077237
+      }
+    },
+    {
+      "role": "R19_STOPPED_FIXTURE",
+      "actuation_target": -21660,
+      "actuation_form": "NEGATIVE_SINGLETON_PGID_KILL",
+      "pid": 21660,
+      "uniqueid": 8930235,
+      "idversion": 17456153,
+      "ppid": 1,
+      "puniqueid": 8930233,
+      "orig_ppidversion": 17456148,
+      "sid": 21660,
+      "pgid": 21660,
+      "status": 4,
+      "group_members": [21660],
+      "image": {
+        "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.driver-v2-gate-c-staging/Tests/PrimeValidationWorkflow/.build/arm64-apple-macosx/release/PrimeValidationWorkflowDriverV2SessionFixture",
+        "device": 16777231,
+        "inode": 17382060,
+        "mode": "0700",
+        "uid": 501,
+        "gid": 20,
+        "nlink": 1,
+        "bytes": 53072,
+        "sha256": "177a18c20bc42486c77b52af4c472be222dec1baabf8973ece7b2d44ea92756e",
+        "uuid_hex": "2ebb880ad28b32ff9b7eeb868af5d9b6",
+        "mapped_text_file_offset": 0
+      },
+      "cwd": {
+        "path": "/private/tmp/prime-validation-admission-tests-369E97E5-AAF3-4267-B810-BA92ADB20BD1/workspace",
+        "device": 16777231,
+        "inode": 17447047
+      }
+    },
+    {
+      "role": "GATE_C_AWK",
+      "actuation_target": 56518,
+      "actuation_form": "POSITIVE_PID_KILL_ONLY_NEVER_SHARED_NEGATIVE_PGID",
+      "pid": 56518,
+      "uniqueid": 8668003,
+      "idversion": 16806376,
+      "ppid": 56508,
+      "puniqueid": 8667993,
+      "orig_ppidversion": 16806357,
+      "sid": 56508,
+      "pgid": 56508,
+      "status": 2,
+      "group_members": [56508, 56518],
+      "image": {
+        "path": "/usr/bin/awk",
+        "device": 16777231,
+        "inode": 1152921500312571675,
+        "bytes": 302368,
+        "sha256": "3693175058d0be720f941a8e9c645756f7d38848f3457abd938d8e27ba35f8ab",
+        "uuid_hex": "b7af4730d19e35939e156bbcaafc626b",
+        "mapped_text_file_offset": 147456
+      },
+      "cwd": {
+        "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.driver-v2-gate-c-staging",
+        "device": 16777231,
+        "inode": 17154421
+      },
+      "shared_group_parent": {
+        "pid": 56508,
+        "uniqueid": 8667993,
+        "idversion": 16806357,
+        "ppid": 1,
+        "sid": 56508,
+        "pgid": 56508,
+        "image_path": "/bin/zsh",
+        "image_uuid_hex": "bf5c55bb57b33bf688fd76a935389e55",
+        "mapped_text_file_offset": 671744,
+        "policy": "OBSERVE_NATURAL_EXIT_ONLY_NEVER_SIGNAL"
+      }
+    }
+  ],
+  "admission": {
+    "two_complete_generation_snapshots_before_each_commitment": true,
+    "snapshot_fields": [
+      "pid",
+      "uniqueid",
+      "idversion",
+      "ppid",
+      "puniqueid",
+      "orig_ppidversion",
+      "sid",
+      "pgid",
+      "status",
+      "credentials",
+      "image_path",
+      "image_uuid",
+      "mapped_device_inode_offset",
+      "cwd_path_device_inode",
+      "group_members",
+      "session_members"
+    ],
+    "same_generation_absent_before_commitment": "NO_SIGNAL_AND_CONSERVATION_ONLY",
+    "rebound_or_unknown": "POISON_NO_SIGNAL",
+    "controller_target_domain_collision": "POISON_NO_SIGNAL",
+    "journal_precondition": "EXCLUSIVE_DESCRIPTOR_ROOTED_MODE_0700_EMPTY_ROOT"
+  },
+  "actuation": {
+    "signal": "SIGKILL",
+    "stop_calls": 0,
+    "cont_calls": 0,
+    "kill_commitment_ceiling": 3,
+    "kill_call_ceiling": 3,
+    "per_target_kill_call_ceiling": 1,
+    "retry": false,
+    "outer_timeout": false,
+    "outer_signal_authority": false,
+    "potentially_indefinite_after_entered_signal": true,
+    "snapshot_to_numeric_pid_or_pgid_race": "NAMED_RESIDUAL"
+  },
+  "conservation": {
+    "target_generation": "TWO_ESRCH_ROUNDS",
+    "target_group": "EXACT_POSTSTATE_WITH_TARGET_GENERATION_ABSENT",
+    "target_session": "EXACT_POSTSTATE_WITH_TARGET_GENERATION_ABSENT",
+    "negative_singleton_group": "TWO_SIGNAL_ZERO_ESRCH_ROUNDS",
+    "positive_pid_targets": "NO_NEGATIVE_GROUP_SIGNAL_ZERO_REQUIRED",
+    "guardian_parent_21600": "OBSERVE_NATURAL_EXIT_ONLY",
+    "gate_c_shell_56508": "OBSERVE_NATURAL_EXIT_ONLY_AFTER_AWK_CONSERVATION",
+    "terminal": "ONLY_AFTER_ALL_THREE_TARGET_GENERATIONS_CONSERVED"
+  },
+  "journal": {
+    "root_mode_incomplete": "0700",
+    "root_mode_complete": "0500",
+    "leaf_mode": "0400",
+    "exclusive_no_replace": true,
+    "fixed_arity_c_leaf_primitive": true,
+    "canonical_json": "SWIFT_SORTED_KEYS_WITHOUT_SLASH_ESCAPING_UTF8_WITH_LF",
+    "hash_chain": "DIGEST_FREE_CANONICAL_PAYLOAD_THEN_ATTACH_SHA256_AND_PREVIOUS_FRAME_SHA256",
+    "missing_result_after_commitment": "CALL_MAY_HAVE_ENTERED_REMAIN_IN_CONTAINMENT",
+    "all_prefixes_retained": true
+  },
+  "build_only_verification": {
+    "controller_language": "SWIFT_WITH_IN_IMAGE_FIXED_C_WRAPPER",
+    "target": "arm64-apple-macosx14.0",
+    "configuration": "OPTIMIZED_NO_DEBUG",
+    "two_disjoint_roots": true,
+    "compare": [
+      "RAW_EXECUTABLE_BYTES",
+      "SHA256",
+      "MACHO_UUID",
+      "LOAD_COMMANDS",
+      "SIZE",
+      "C_OBJECT_BYTES"
+    ],
+    "built_binary_execution_authorized": false,
+    "build_a_final_mode": "0500",
+    "build_b_final_mode": "0400",
+    "build_roots_permanently_retained": true
+  },
+  "toolchain": {
+    "developer_directory": "/Applications/Xcode.app/Contents/Developer",
+    "sdk": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+    "sdk_resolved_inode": 1009705,
+    "swiftc_path": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+    "swiftc_symlink_inode": 1118435,
+    "swiftc_target": "swift-frontend",
+    "swift_frontend_sha256": "2ed38571e92c0283091838c1649e27650ad9c99950288e883c7b2dc6c4ce89fb",
+    "clang_path": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang",
+    "clang_inode": 1118318,
+    "clang_sha256": "7def90dd8829726686213a747fc5bff1583df933dae5edc55d755479e0bfe00a"
+  },
+  "operations_at_this_freeze": {
+    "source_files_created": 0,
+    "builds": 0,
+    "controller_invocations": 0,
+    "journal_roots_created": 0,
+    "signals_entered": 0,
+    "processes_disposed": 0,
+    "c2_invocations": 0,
+    "gate_e_promotions": 0
+  },
+  "forbidden_until_successor_readiness": [
+    "DISPOSAL_BINARY_EXECUTION",
+    "SIGNAL_ENTRY",
+    "C2_CONTROLLER_EXECUTION",
+    "SWIFTPM_OR_PRODUCT_EXECUTION",
+    "CLEANUP_REPAIR_REUSE",
+    "AUTHORITY_CLOSURE",
+    "GATE_E_PROMOTION",
+    "GITHUB_OR_NETWORK_ACTION"
+  ],
+  "next": "IMPLEMENT_THREE_EXACT_SOURCE_FILES_AND_VERIFY_TWO_DISJOINT_NONEXECUTED_BUILDS"
+}
