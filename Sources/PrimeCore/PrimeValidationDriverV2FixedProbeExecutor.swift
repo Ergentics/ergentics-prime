@@ -117,14 +117,14 @@ public final class PrimeValidationDriverV2OuterSourceContinuity:
         "Sources/PrimeCore/" +
             "PrimeValidationDriverV2FixedProbeExecutor.swift",
     ]
-    private static let requiredPrimeAdmittedFileCount = 548
-    private static let requiredPrimeSourceIdentityRecordCount = 547
-    private static let requiredPrimeAuthorityDirectoryCount = 155
+    private static let requiredPrimeAdmittedFileCount = 587
+    private static let requiredPrimeSourceIdentityRecordCount = 586
+    private static let requiredPrimeAuthorityDirectoryCount = 156
     private static let requiredCompanionFileCount = 1_306
     private static let requiredCompanionDirectoryCount = 154
-    private static let requiredPrimeWatcherDescriptorCount = 703
+    private static let requiredPrimeWatcherDescriptorCount = 743
     private static let requiredCompanionWatcherDescriptorCount = 1_460
-    private static let requiredCombinedWatcherDescriptorCount = 2_163
+    private static let requiredCombinedWatcherDescriptorCount = 2_203
 
     public let observation:
         PrimeValidationDriverV2OuterSourceContinuityObservation
@@ -2132,7 +2132,7 @@ enum PrimeValidationDriverV2FixedProbeExecutor {
             )
         let orderedRoleNames = frozenPolicies.map { $0.role.rawValue }
         guard orderedRoleNames.count == 16,
-              retainedState.combinedSourceWatcherDescriptorCount == 2_163
+              retainedState.combinedSourceWatcherDescriptorCount == 2_203
         else {
             throw primeValidationDriverV2FixedProbeRejected(
                 "frozen_topology_or_role_order"
@@ -3125,7 +3125,7 @@ enum PrimeValidationDriverV2FixedProbeExecutor {
         let admission = retainedState.admission
         let expectedWatcherDescriptorCount =
             retainedState.productionSupervisorImageEligible
-            ? 2_163
+            ? 2_203
             : 45
         try retainedState.fixedProbeCheckpointNoPendingEvents()
         guard admission.lease.isHeld,

@@ -812,8 +812,8 @@ package final class PrimeValidationDriverV2FixedProbeBinding:
               missingAuthorities == Self.exactMissingAuthorities,
               rawObservation.productionSupervisorImageEligible,
               boundLifetime.productionSupervisorImageEligible,
-              rawObservation.combinedSourceWatcherDescriptorCount == 2_163,
-              boundLifetime.combinedSourceWatcherDescriptorCount == 2_163,
+              rawObservation.combinedSourceWatcherDescriptorCount == 2_203,
+              boundLifetime.combinedSourceWatcherDescriptorCount == 2_203,
               rawObservation.supervisorProcessIdentifier > 0,
               rawObservation.supervisorSessionIdentifier
                 == rawObservation.supervisorProcessIdentifier,
@@ -1308,7 +1308,7 @@ private enum PrimeValidationDriverV2FixedProbeSemanticValidator {
         let deadline = raw.deadlineStartedAtUptimeNanoseconds
             .addingReportingOverflow(30_000_000_000)
         guard raw.productionSupervisorImageEligible,
-              raw.combinedSourceWatcherDescriptorCount == 2_163,
+              raw.combinedSourceWatcherDescriptorCount == 2_203,
               raw.supervisorProcessIdentifier > 0,
               raw.supervisorSessionIdentifier
                 == raw.supervisorProcessIdentifier,
@@ -3281,7 +3281,7 @@ private extension PrimeValidationDriverV2FixedProbeSemanticValidator {
               value.deadlineExpiresAtUptimeNanoseconds
                 <= expectation.outerDeadlineExpiresAtUptimeNanoseconds,
               value.orderedRoles == roles.map(\.rawValue),
-              value.combinedSourceWatcherDescriptorCount == 2_163
+              value.combinedSourceWatcherDescriptorCount == 2_203
         else {
             throw durableJournalRejection("prestart")
         }
