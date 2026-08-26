@@ -21151,3 +21151,1659 @@ frame_with_lf_sha256=ccd56bf923a4cfdb81844497b6c6510a15151e844fa1a4a7b9a0796c315
 ```json
 {"payload":{"approval_and_scope":{"authorization_basis":"USER_AUTHORIZED_THROUGH_ARC_PLUS_INDEPENDENT_REVIEWS","checkpoint_kind":"CONTROL_ONLY_CONSUMED_BUILD_FAILURE_RESULT","compiler_linker_analyzer_or_build_entries_authorized":0,"control_append_and_commit_authorized":1,"github_network_authority_closure_or_gate_e_promotion_authorized":false,"root_directory_journal_or_archive_creations_authorized":0,"signal_timeout_cleanup_retry_repair_or_reinterpretation_authorized":0,"source_edits_authorized":0,"source_object_product_or_target_controller_executions_authorized":0,"successor_launch_authorized":0,"successor_readiness_design_eligible":1},"child_conservation":{"all_normal_exit_zero":true,"analyzer_children_decimal":"10","b_root_or_child_entries_decimal":"0","capture_error_count_decimal":"0","capture_overflow_count_decimal":"0","child_entry_commitment_count_decimal":"12","child_terminal_count_decimal":"12","child_terminals":[{"exit_status_decimal":"0","exited":true,"label":"A:compiler-c","pid_decimal":"24121","signaled":false,"stderr":{"bytes_decimal":"0","capture_error":null,"overflow":false,"prefix_bytes_decimal":"0","sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"},"stdout":{"bytes_decimal":"0","capture_error":null,"overflow":false,"prefix_bytes_decimal":"0","sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"},"termsig_decimal":null},{"exit_status_decimal":"0","exited":true,"label":"A:compiler-swift-link","pid_decimal":"24123","signaled":false,"stderr":{"bytes_decimal":"0","capture_error":null,"overflow":false,"prefix_bytes_decimal":"0","sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"},"stdout":{"bytes_decimal":"0","capture_error":null,"overflow":false,"prefix_bytes_decimal":"0","sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"},"termsig_decimal":null},{"exit_status_decimal":"0","exited":true,"label":"A:object-defined","pid_decimal":"24131","signaled":false,"stderr":{"bytes_decimal":"0","capture_error":null,"overflow":false,"prefix_bytes_decimal":"0","sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"},"stdout":{"bytes_decimal":"685","capture_error":null,"overflow":false,"prefix_bytes_decimal":"685","sha256":"e75921760106572af315279a3ab7be394f72d26d249f32d17ad109176e01065a"},"termsig_decimal":null},{"exit_status_decimal":"0","exited":true,"label":"A:object-undefined","pid_decimal":"24132","signaled":false,"stderr":{"bytes_decimal":"0","capture_error":null,"overflow":false,"prefix_bytes_decimal":"0","sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"},"stdout":{"bytes_decimal":"111","capture_error":null,"overflow":false,"prefix_bytes_decimal":"111","sha256":"938a682de9b6c3a618fa5f89af3b66dcb343b12ddc9c3509791c808c25e778dd"},"termsig_decimal":null},{"exit_status_decimal":"0","exited":true,"label":"A:product-file","pid_decimal":"24133","signaled":false,"stderr":{"bytes_decimal":"0","capture_error":null,"overflow":false,"prefix_bytes_decimal":"0","sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"},"stdout":{"bytes_decimal":"31","capture_error":null,"overflow":false,"prefix_bytes_decimal":"31","sha256":"643cc5d2dac8a288bdceeae0d8057fecf55ce5eb10dd5ea30d2d48cc957c662b"},"termsig_decimal":null},{"exit_status_decimal":"0","exited":true,"label":"A:product-otool-header","pid_decimal":"24134","signaled":false,"stderr":{"bytes_decimal":"0","capture_error":null,"overflow":false,"prefix_bytes_decimal":"0","sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"},"stdout":{"bytes_decimal":"336","capture_error":null,"overflow":false,"prefix_bytes_decimal":"336","sha256":"5845376c7ec2c0192bb461e9cdaa88bf2a0262b9e5ec276869a8bd5049f26b44"},"termsig_decimal":null},{"exit_status_decimal":"0","exited":true,"label":"A:product-otool-load-commands","pid_decimal":"24138","signaled":false,"stderr":{"bytes_decimal":"0","capture_error":null,"overflow":false,"prefix_bytes_decimal":"0","sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"},"stdout":{"bytes_decimal":"11669","capture_error":null,"overflow":false,"prefix_bytes_decimal":"11669","sha256":"1cd2f5437b52f41b3289ffb965e7bd24828c829c05fda498c75901bf29ff834d"},"termsig_decimal":null},{"exit_status_decimal":"0","exited":true,"label":"A:product-otool-linked-images","pid_decimal":"24140","signaled":false,"stderr":{"bytes_decimal":"0","capture_error":null,"overflow":false,"prefix_bytes_decimal":"0","sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"},"stdout":{"bytes_decimal":"1256","capture_error":null,"overflow":false,"prefix_bytes_decimal":"1256","sha256":"f50cb70d82d35e06732bb54607d98e129b1bf1d2249c225e7a9e23d8ab2405d2"},"termsig_decimal":null},{"exit_status_decimal":"0","exited":true,"label":"A:product-codesign-verify","pid_decimal":"24142","signaled":false,"stderr":{"bytes_decimal":"343","capture_error":null,"overflow":false,"prefix_bytes_decimal":"343","sha256":"56c109a2d256d69dc68a2ab39e6070ec7ca1930c4d3cc0281657c9dac6232330"},"stdout":{"bytes_decimal":"0","capture_error":null,"overflow":false,"prefix_bytes_decimal":"0","sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"},"termsig_decimal":null},{"exit_status_decimal":"0","exited":true,"label":"A:product-codesign-display","pid_decimal":"24143","signaled":false,"stderr":{"bytes_decimal":"946","capture_error":null,"overflow":false,"prefix_bytes_decimal":"946","sha256":"dcb04a30be25bc96fb496f917bca255063639478be40d07821f35d78e9765f7e"},"stdout":{"bytes_decimal":"0","capture_error":null,"overflow":false,"prefix_bytes_decimal":"0","sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"},"termsig_decimal":null},{"exit_status_decimal":"0","exited":true,"label":"A:product-xattrs","pid_decimal":"24144","signaled":false,"stderr":{"bytes_decimal":"0","capture_error":null,"overflow":false,"prefix_bytes_decimal":"0","sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"},"stdout":{"bytes_decimal":"25","capture_error":null,"overflow":false,"prefix_bytes_decimal":"25","sha256":"ab30a6750b1ca1f42777f995a2c098d82a2fe7469c552b9bc6639b1236955f61"},"termsig_decimal":null},{"exit_status_decimal":"0","exited":true,"label":"A:product-undefined","pid_decimal":"24145","signaled":false,"stderr":{"bytes_decimal":"0","capture_error":null,"overflow":false,"prefix_bytes_decimal":"0","sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"},"stdout":{"bytes_decimal":"5207","capture_error":null,"overflow":false,"prefix_bytes_decimal":"5207","sha256":"db0b7e35c1f2abae5e474f0d546fed45b8f937e7e52c9eedb8d32f16039bed64"},"termsig_decimal":null}],"compiler_link_children_decimal":"2","compiler_streams_exact_empty":true,"descendant_process_group_conservation":"ABSTAIN_NOT_INSTRUMENTED_OR_CENSUSED","exact_direct_child_terminal_join":"12_OF_12_JOURNALED_AFTER_WAIT2_EXACT_PID","signal_entries_decimal":"0","target_object_or_product_executions_decimal":"0"},"energy":{"average_watts":"ABSTAIN_NOT_MEASURED","cpu_time":"ABSTAIN_NOT_CAPTURED_BY_OUTER_TRANSPORT","ergs":"ABSTAIN_NOT_MEASURED","joules":"ABSTAIN_NOT_MEASURED","wall_time_seconds_non_authoritative":"7.021457416"},"failure_evidence":{"committed_source_direct_xpc_lexical_hits_decimal":"0","committed_swift_imports":["CryptoKit","Darwin"],"compile_or_link_failure":false,"controller_terminal":{"error_class":"BuildFailure","error_code":"PRODUCT_FORBIDDEN_SYMBOLS","interpretation":"REQUIRES_EXACT_OUTER_EXIT_AND_SUCCESSOR_CHAIN_VALIDATION","status":"FAIL_CANDIDATE","type":"CONTROLLER_TERMINAL"},"diagnosis":"STATIC_POLICY_CATEGORY_OVERMATCH_FORCE_LOAD_LINK_ANCHOR_WAS_TREATED_AS_DIRECT_XPC_API","diagnosis_evidence_kind":"LOCAL_RETAINED_BYTES_PLUS_PINNED_SDK_TBD_INFERENCE","direct_xpc_api_symbols":[],"failing_policy_clause":"RUBY_REGEXP_/XPC/","failure_phase":"A_STATIC_SURFACE_AFTER_ALL_TEN_ANALYZERS_BEFORE_BUILD_STATIC_ADMISSION_PASS","libswift_xpc_tbd":{"bytes_decimal":"50416","device_decimal":"16777231","force_load_export_line_decimal":"390","force_load_export_occurrences_decimal":"1","gid_decimal":"0","inode_decimal":"1019890","mode":"0644","nlink_decimal":"1","path":"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib/swift/libswiftXPC.tbd","sha256":"1658d0ff91184eabfb7a448ca4f9da20ddf69223a07bac6db290ee69d7e3da19","type":"REGULAR","uid_decimal":"0"},"linked_images":["/usr/lib/libSystem.B.dylib","/System/Library/Frameworks/CryptoKit.framework/Versions/A/CryptoKit","/System/Library/Frameworks/Foundation.framework/Versions/C/Foundation","/usr/lib/libobjc.A.dylib","/usr/lib/swift/libswiftCore.dylib","/usr/lib/swift/libswiftCoreFoundation.dylib","/usr/lib/swift/libswiftDarwin.dylib","/usr/lib/swift/libswiftDispatch.dylib","/usr/lib/swift/libswiftIOKit.dylib","/usr/lib/swift/libswiftObjectiveC.dylib","/usr/lib/swift/libswiftXPC.dylib"],"linked_images_capture_sha256":"f50cb70d82d35e06732bb54607d98e129b1bf1d2249c225e7a9e23d8ab2405d2","literal_forbidden_intersection":[],"nstask_symbols":[],"outer_exit_status_decimal":"70","prior_fail_reinterpreted":false,"process_control_exact_frozen_sixteen_match":true,"process_control_symbols":["_kill","_posix_spawn","_posix_spawn_file_actions_addclose","_posix_spawn_file_actions_adddup2","_posix_spawn_file_actions_addfchdir_np","_posix_spawn_file_actions_addinherit_np","_posix_spawn_file_actions_destroy","_posix_spawn_file_actions_init","_posix_spawnattr_destroy","_posix_spawnattr_init","_posix_spawnattr_setflags","_posix_spawnattr_setsigdefault","_posix_spawnattr_setsigmask","_sigemptyset","_sigfillset","_waitpid"],"product_undefined_capture":{"bytes_decimal":"5207","capture_error":null,"complete":true,"overflow":false,"prefix_base64":"XyRzNkRhcndpbjRvcGVueXM1SW50MzJWU1B5czRJbnQ4VkdfQUR0RgpfJHM2RGFyd2luNWVycm5vczVJbnQzMlZ2ZwpfJHM2RGFyd2luNWVycm5vczVJbnQzMlZ2cwpfJHM2RGFyd2luNWZjbnRseXM1SW50MzJWQURfQTJEdEYKXyRzNkRhcndpbjVmY250bHlzNUludDMyVkFEX0FEdEYKXyRzNkRhcndpbjZTX0lGTVRzNlVJbnQxNlZ2ZwpfJHM2RGFyd2luN1NfSUZESVJzNlVJbnQxNlZ2ZwpfJHM2RGFyd2luN1NfSUZJRk9zNlVJbnQxNlZ2ZwpfJHM2RGFyd2luN1NfSUZSRUdzNlVJbnQxNlZ2ZwpfJHM4UmF3VmFsdWVTWVRsCl8kczlDcnlwdG9LaXQxMlNIQTI1NkRpZ2VzdFZNYQpfJHM5Q3J5cHRvS2l0MTJTSEEyNTZEaWdlc3RWU1RBQU1jCl8kczlDcnlwdG9LaXQ2U0hBMjU2VjZ1cGRhdGUxM2J1ZmZlclBvaW50ZXJ5U1dfdEYKXyRzOUNyeXB0b0tpdDZTSEEyNTZWOGZpbmFsaXplQUEwQzZEaWdlc3RWeUYKXyRzOUNyeXB0b0tpdDZTSEEyNTZWQUN5Y2ZDCl8kczlDcnlwdG9LaXQ2U0hBMjU2Vk1hCl8kczlDcnlwdG9LaXQ2U0hBMjU2Vk1uCl8kc0JiV1YKXyRzQmk2NF9XVgpfJHNCb1dWCl8kc1NIMTNfcmF3SGFzaFZhbHVlNHNlZWRTMmlfdEZUcQpfJHNTSDRoYXNoNGludG95czZIYXNoZXJWel90RlRxCl8kc1NIOWhhc2hWYWx1ZVNpdmdUcQpfJHNTSE1wCl8kc1NIU1FUYgpfJHNTUTJlZW9peVNieF94dEZaVHEKXyRzU1FNcApfJHNTUzExdXRmOENTdHJpbmdzMTVDb250aWd1b3VzQXJyYXlWeXM0SW50OFZHdmcKXyRzU1MxOF9mcm9tVVRGOFJlcGFpcmluZ3lTUzZyZXN1bHRfU2IxMXJlcGFpcnNNYWRldFNSeXM1VUludDhWR0ZaCl8kc1NTNGhhc2g0aW50b3lzNkhhc2hlclZ6X3RGCl8kc1NTNWNvdW50U2l2ZwpfJHNTUzhVVEY4Vmlld1YxM19mb3JlaWduQ291bnRTaXlGCl8kc1NTOFVURjhWaWV3VjEzX2ZvcmVpZ25JbmRleDVhZnRlclNTMEQwVkFGX3RGCl8kc1NTOFVURjhWaWV3VjEzX2ZvcmVpZ25JbmRleF84b2Zmc2V0QnlTUzBEMFZBRl9TaXRGCl8kc1NTOFVURjhWaWV3VjE3X2ZvcmVpZ25TdWJzY3JpcHQ4cG9zaXRpb25zNVVJbnQ4VlNTNUluZGV4Vl90RgpfJHNTUzlVVEYxNlZpZXdWNWluZGV4XzhvZmZzZXRCeVNTNUluZGV4VkFGX1NpdEYKXyRzU1NOCl8kc1NTU0hzV1AKXyRzU1QyMl9jb3B5VG9Db250aWd1b3VzQXJyYXlzMGNEMFZ5N0VsZW1lbnRRekd5RlRqCl8kc1NZOHJhd1ZhbHVlMDNSYXdCMFF6dmdUcQpfJHNTWThyYXdWYWx1ZXhTZzAzUmF3QjBRel90Y2ZDVHEKXyRzU1lNcApfJHNTYTI4X2FsbG9jYXRlQnVmZmVyVW5pbml0aWFsaXplZDE1bWluaW11bUNhcGFjaXR5czA2X0FycmF5QjBWeXhHU2lfdEZaCl8kc1NoMTVtaW5pbXVtQ2FwYWNpdHlTaHl4R1NpX3RjZkMKXyRzczExQ29tbWFuZExpbmVPNGFyZ2NzNUludDMyVnZnWgpfJHNzMTFfU2V0U3RvcmFnZUM0Y29weThvcmlnaW5hbEFCeXhHczA1X19SYXdhQjBDX3RGWgpfJHNzMTFfU2V0U3RvcmFnZUM2cmVzaXplOG9yaWdpbmFsOGNhcGFjaXR5NG1vdmVBQnl4R3MwNV9fUmF3YUIwQ19TaVNidEZaCl8kc3MxMV9TZXRTdG9yYWdlQ01uCl8kc3MxMV9TdHJpbmdHdXRzVjE2X2ZvcmVpZ25Db3B5VVRGODRpbnRvU2lTZ1NyeXM1VUludDhWR190RgpfJHNzMTFfU3RyaW5nR3V0c1YxNl9zbG93V2l0aENTdHJpbmd5eHhTUHlzNEludDhWR0tYRUtsRgpfJHNzMTFfU3RyaW5nR3V0c1Y4Y29weVVURjg0aW50b1NpU2dTcnlzNVVJbnQ4VkdfdEYKXyRzczEyU3RhdGljU3RyaW5nVk1uCl8kc3MxM19TdHJpbmdPYmplY3RWMTBzaGFyZWRVVEY4U1J5czVVSW50OFZHdmcKXyRzczE1Q29udGlndW91c0FycmF5VjI4X2FsbG9jYXRlQnVmZmVyVW5pbml0aWFsaXplZDE1bWluaW11bUNhcGFjaXR5czAxX2FiRDBWeXhHU2lfdEZaCl8kc3MyMV9maW5kU3RyaW5nU3dpdGNoQ2FzZTVjYXNlczZzdHJpbmdTaVNheXMwNlN0YXRpY0IwVkdfU1N0RgpfJHNzMjJfbWluaW11bU1lcmdlUnVuTGVuZ3RoeVMyaUYKXyRzczIzQ3VzdG9tU3RyaW5nQ29udmVydGlibGVQMTFkZXNjcmlwdGlvblNTdmdUagpfJHNzMjNfQ29udGlndW91c0FycmF5U3RvcmFnZUNNbgpfJHNzMjdfc3RyaW5nQ29tcGFyZVdpdGhTbW9sQ2hlY2tfXzlleHBlY3RpbmdTYnMxMV9TdHJpbmdHdXRzVl9BRHMwMV9HMTZDb21wYXJpc29uUmVzdWx0T3RGCl8kc3MyOF9fQ29udGlndW91c0FycmF5U3RvcmFnZUJhc2VDTWEKXyRzczRJbnQ4Vk1uCl8kc3M0SW50OFZOCl8kc3M1MEVMRU1FTlRfVFlQRV9PRl9TRVRfVklPTEFURVNfSEFTSEFCTEVfUkVRVUlSRU1FTlRTeXM1TmV2ZXJPeXBYcEYKXyRzczVFcnJvck1wCl8kc3M1RXJyb3JQMTlfZ2V0RW1iZWRkZWROU0Vycm9yeVhsU2d5RlRxCl8kc3M1RXJyb3JQNV9jb2RlU2l2Z1RxCl8kc3M1RXJyb3JQN19kb21haW5TU3ZnVHEKXyRzczVFcnJvclA5X3VzZXJJbmZveVhsU2d2Z1RxCl8kc3M1RXJyb3JQc0UxOV9nZXRFbWJlZGRlZE5TRXJyb3J5WGxTZ3lGCl8kc3M1RXJyb3JQc0U1X2NvZGVTaXZnCl8kc3M1RXJyb3JQc0U3X2RvbWFpblNTdmcKXyRzczVFcnJvclBzRTlfdXNlckluZm95WGxTZ3ZnCl8kc3M1SW50MTZWTW4KXyRzczVJbnQzMlZNbgpfJHNzNUludDMyVk4KXyRzczVJbnQzMlZTSHNXUApfJHNzNUludDY0Vk1uCl8kc3M1SW50NjRWTgpfJHNzNUludDY0VnMyM0N1c3RvbVN0cmluZ0NvbnZlcnRpYmxlc1dQCl8kc3M1VUludDhWTW4KXyRzczVVSW50OFZOCl8kc3M2SGFzaGVyVjVfaGFzaDRzZWVkNWJ5dGVzNWNvdW50UzJpX3M2VUludDY0VlNpdEZaCl8kc3M2SGFzaGVyVjVfaGFzaDRzZWVkX1MyaV9zNlVJbnQ2NFZ0RloKXyRzczZIYXNoZXJWNV9zZWVkQUJTaV90Y2ZDCl8kc3M2SGFzaGVyVjhfY29tYmluZXl5U3VGCl8kc3M2SGFzaGVyVjlfZmluYWxpemVTaXlGCl8kc3M2VUludDE2Vk1uCl8kc3M2VUludDMyVk1uCl8kc3M2VUludDMyVk4KXyRzczZVSW50NjRWTW4KXyRzczZVSW50NjRWTgpfJHNzNlVJbnQ2NFZTSHNXUApfJHNzNlVJbnQ2NFZzMjNDdXN0b21TdHJpbmdDb252ZXJ0aWJsZXNXUApfT0JKQ19DTEFTU18kX19UdENzMTJfU3dpZnRPYmplY3QKX09CSkNfTUVUQUNMQVNTXyRfX1R0Q3MxMl9Td2lmdE9iamVjdApfX05TR2V0RW52aXJvbgpfX19jaGtzdGtfZGFyd2luCl9fX2Vycm9yCl9fX3N0YWNrX2Noa19mYWlsCl9fX3N0YWNrX2Noa19ndWFyZApfX2V4aXQKX19vYmpjX2VtcHR5X2NhY2hlCl9fc3dpZnRFbXB0eUFycmF5U3RvcmFnZQpfX3N3aWZ0RW1wdHlTZXRTaW5nbGV0b24KX19zd2lmdF9GT1JDRV9MT0FEXyRfc3dpZnRDb3JlRm91bmRhdGlvbgpfX3N3aWZ0X0ZPUkNFX0xPQURfJF9zd2lmdERpc3BhdGNoCl9fc3dpZnRfRk9SQ0VfTE9BRF8kX3N3aWZ0Rm91bmRhdGlvbgpfX3N3aWZ0X0ZPUkNFX0xPQURfJF9zd2lmdElPS2l0Cl9fc3dpZnRfRk9SQ0VfTE9BRF8kX3N3aWZ0T2JqZWN0aXZlQwpfX3N3aWZ0X0ZPUkNFX0xPQURfJF9zd2lmdFhQQwpfX3N3aWZ0X0ZPUkNFX0xPQURfJF9zd2lmdF9CdWlsdGluX2Zsb2F0Cl9iemVybwpfY2xvc2UKX2ZjaG1vZApfZmNudGwKX2ZzdGF0Cl9mc3RhdGF0Cl9mc3luYwpfZ2V0YXR0cmxpc3RidWxrCl9nZXRjd2QKX2dldGVnaWQKX2dldGV1aWQKX2dldHBnaWQKX2dldHBpZApfZ2V0c2lkCl9rZXZlbnQKX2tpbGwKX2txdWV1ZQpfbHNlZWsKX21hY2hfYWJzb2x1dGVfdGltZQpfbWFjaF90aW1lYmFzZV9pbmZvCl9tYWxsb2Nfc2l6ZQpfbWVtY3B5Cl9tZW1tb3ZlCl9ta2RpcmF0Cl9ta2ZpZm9hdApfb2JqY19vcHRfc2VsZgpfb3Blbgpfb3BlbmF0Cl9waXBlCl9wb3NpeF9zcGF3bgpfcG9zaXhfc3Bhd25fZmlsZV9hY3Rpb25zX2FkZGNsb3NlCl9wb3NpeF9zcGF3bl9maWxlX2FjdGlvbnNfYWRkZHVwMgpfcG9zaXhfc3Bhd25fZmlsZV9hY3Rpb25zX2FkZGZjaGRpcl9ucApfcG9zaXhfc3Bhd25fZmlsZV9hY3Rpb25zX2FkZGluaGVyaXRfbnAKX3Bvc2l4X3NwYXduX2ZpbGVfYWN0aW9uc19kZXN0cm95Cl9wb3NpeF9zcGF3bl9maWxlX2FjdGlvbnNfaW5pdApfcG9zaXhfc3Bhd25hdHRyX2Rlc3Ryb3kKX3Bvc2l4X3NwYXduYXR0cl9pbml0Cl9wb3NpeF9zcGF3bmF0dHJfc2V0ZmxhZ3MKX3Bvc2l4X3NwYXduYXR0cl9zZXRzaWdkZWZhdWx0Cl9wb3NpeF9zcGF3bmF0dHJfc2V0c2lnbWFzawpfcHJlYWQKX3Byb2NfbGlzdHBpZHMKX3Byb2NfcGlkX3J1c2FnZQpfcHJvY19waWRmZGluZm8KX3Byb2NfcGlkaW5mbwpfcmVhZApfc2lnZW1wdHlzZXQKX3NpZ2ZpbGxzZXQKX3N3aWZ0X2FsbG9jRXJyb3IKX3N3aWZ0X2FsbG9jT2JqZWN0Cl9zd2lmdF9hcnJheURlc3Ryb3kKX3N3aWZ0X2FycmF5SW5pdFdpdGhDb3B5Cl9zd2lmdF9iZWdpbkFjY2Vzcwpfc3dpZnRfYnJpZGdlT2JqZWN0UmVsZWFzZQpfc3dpZnRfYnJpZGdlT2JqZWN0UmVsZWFzZV9uCl9zd2lmdF9icmlkZ2VPYmplY3RSZXRhaW4KX3N3aWZ0X2JyaWRnZU9iamVjdFJldGFpbl9uCl9zd2lmdF9kZWFsbG9jQ2xhc3NJbnN0YW5jZQpfc3dpZnRfZGVhbGxvY09iamVjdApfc3dpZnRfZGVhbGxvY1BhcnRpYWxDbGFzc0luc3RhbmNlCl9zd2lmdF9kZWFsbG9jVW5pbml0aWFsaXplZE9iamVjdApfc3dpZnRfZGVsZXRlZE1ldGhvZEVycm9yCl9zd2lmdF9keW5hbWljQ2FzdENsYXNzCl9zd2lmdF9lbmRBY2Nlc3MKX3N3aWZ0X2Vycm9yUmVsZWFzZQpfc3dpZnRfZ2V0RW51bVRhZ1NpbmdsZVBheWxvYWRHZW5lcmljCl9zd2lmdF9nZXRGb3JlaWduVHlwZU1ldGFkYXRhCl9zd2lmdF9nZXRTaW5nbGV0b25NZXRhZGF0YQpfc3dpZnRfZ2V0VHlwZUJ5TWFuZ2xlZE5hbWVJbkNvbnRleHQyCl9zd2lmdF9nZXRXaXRuZXNzVGFibGUKX3N3aWZ0X2luaXRTdGFja09iamVjdApfc3dpZnRfaW5pdFN0YXRpY09iamVjdApfc3dpZnRfaW5pdFN0cnVjdE1ldGFkYXRhCl9zd2lmdF9pc1VuaXF1ZWx5UmVmZXJlbmNlZF9ub25OdWxsX25hdGl2ZQpfc3dpZnRfb25jZQpfc3dpZnRfcmVsZWFzZQpfc3dpZnRfcmV0YWluCl9zd2lmdF9zZXREZWFsbG9jYXRpbmcKX3N3aWZ0X3Nsb3dBbGxvYwpfc3dpZnRfc2xvd0RlYWxsb2MKX3N3aWZ0X3N0b3JlRW51bVRhZ1NpbmdsZVBheWxvYWRHZW5lcmljCl9zd2lmdF91bmtub3duT2JqZWN0UmVsZWFzZQpfc3dpZnRfdW5rbm93bk9iamVjdFJlbGVhc2Vfbgpfc3dpZnRfdW5rbm93bk9iamVjdFJldGFpbl9uCl9zd2lmdF91cGRhdGVDbGFzc01ldGFkYXRhMgpfc3dpZnRfd2lsbFRocm93Cl9zeXNjdGxieW5hbWUKX3VtYXNrCl93YWl0cGlkCl93cml0ZQo=","prefix_bytes_decimal":"5207","sha256":"db0b7e35c1f2abae5e474f0d546fed45b8f937e7e52c9eedb8d32f16039bed64","symbol_count_decimal":"202"},"rename_family_symbols":[],"runtime_failure":false,"sole_forbidden_pattern_offender":["__swift_FORCE_LOAD_$_swiftXPC"],"toctou_failure":false,"weak_libswift_xpc_image_was_already_allowed":true,"xpc_named_symbols":["__swift_FORCE_LOAD_$_swiftXPC"]},"outer_observation":{"captured_output_bytes_decimal":"0","captured_output_sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","chunk_id":"839bb9","consumption":"CONSUMED_AT_OUTER_ZSH_PROCESS_ENTRY","exec_session_id":"ABSENT_COMPLETED_DURING_INITIAL_YIELD","exit_status_decimal":"70","invocation_count_decimal":"1","original_token_count_decimal":"0","retry_cleanup_signal_or_timeout_count_decimal":"0","stream_attribution":"MERGED_EXECUTOR_CAPTURE_ZERO_BYTES_NOT_INDEPENDENT_STDOUT_STDERR_PROOF","terminal_kind":"NORMAL_EXIT","wall_time_authoritative":false,"wall_time_seconds":"7.021457416"},"predecessor":{"crs29_commit":"194cd5c88f6b25d7e6973e9bf3d7df30bc6c9f61","crs29_frame_sha256":"f8a60ef397c8a435a175b0d701ef5dfc005a640a3adbe21a3d75c3c348ca34ef","crs29_frame_with_lf_sha256":"fdf92c385c17de7540ab3b5f5399b5e73bc0b45db0d6e1ddf24011187349babb","crs29_ledger_blob":"066213a7ab9fd1f29854f0ea759d75e88ae204d6","crs29_ledger_bytes":2114649,"crs29_ledger_lines":21136,"crs29_ledger_sha256":"03f506f01a32ce85bfdb7272b865708fff5409420f08ac677ed5c89c38e2c0ee","crs29_outer_wrapper_sha256":"a01d4286cac778c1cee0b28f36babb923a0e52002ae74bda6972e29ac166c8c2","crs29_parent":"22641e2bf8d7e5eb495822a76b78ea383a371f68","crs29_payload_sha256":"783e8edd788339bdf2d4230dbf9c54c918ecabc2c1b81c89bb20f4a957395cd4","crs29_program_payload_sha256":"0a2cfee05d9a190a13cfa9497899c4b3aa8b3a4b544220cd6f310ef9736350cd","crs29_program_raw_sha256":"0b3fe3610985e773ff9cfda833c722c4e91c0de5435353333f0fb43b316caadb","crs29_subject":"Freeze R19 outer supervisor two-build readiness","crs29_tree":"072dc727988be3d27bfeefff979437ae45ca2974","implementation_commit":"22641e2bf8d7e5eb495822a76b78ea383a371f68","implementation_tree":"5a40f8a4a02d44da2d847371be793fc04f4be094","postcommit_preflight":"PASS","worktree_index_untracked_before_invocation":"CLEAN"},"result_lattice":{"a_artifact_durability":"PASS_SUBSTAGE","a_b_determinism":"ABSTAIN_NOT_RUN","a_c_compile":"PASS_SUBSTAGE","a_candidate":"UNADMITTED_RETAINED_ONLY","a_static_admission":"FAIL_PRODUCT_FORBIDDEN_SYMBOLS","a_swift_link":"PASS_SUBSTAGE","a_ten_analyzers":"PASS_SUBSTAGE","authority_vector":"00000000","b_build":"ABSTAIN_NOT_CREATED","crs29_overall":"FAIL_CONSUMED","gate_e_mechanics":"ABSTAIN","gate_e_promotion":false,"gate_e_scientific":"ABSTAIN","outer_controller":"FAIL_NORMAL_EXIT70","runtime_fifo_archive":"ABSTAIN_UNENTERED","supervisor_product_execution":"ABSTAIN_UNEXECUTED","target_controller":"ABSTAIN_UNEXECUTED","whole_invocation_order":"ABSTAIN_UNPROVEN_ABSORBING"},"retained_a":{"artifact_event":{"label":"A","object":{"bytes_decimal":"5696","device_decimal":"16777231","gid_decimal":"0","inode_decimal":"17570736","mode":"0600","nlink_decimal":"1","sha256":"55922326f4e2414d1f5979714e6442770b4ff60025da93cebee51bfbce292214","uid_decimal":"501"},"product":{"bytes_decimal":"328576","device_decimal":"16777231","gid_decimal":"0","inode_decimal":"17570870","mode":"0700","nlink_decimal":"1","sha256":"36258ec0719d8960640ff402ea83469f44c7b8358071b70b4d4665d65085a1bd","uid_decimal":"501"},"type":"BUILD_ARTIFACTS_DURABLE"},"candidate_status":"RETAINED_UNADMITTED_INPUT_NOT_EXECUTABLE_AUTHORITY","code_directory_full_sha256":"cdcd7ff502820c1cd271aa9393ad148931e6f5aeaea3f68b7605f9dbd109e47b","journal":{"append_chmod_repair_or_reuse_authorized":false,"artifact_record_sequence_decimal":"10","artifact_record_sha256":"51edf16855a770d58fbf38cb20f0ae2ad0311ea816249f1dbea35a09daa9a32a","canonical_chain_valid":true,"decisive_product_undefined_record_sequence_decimal":"30","decisive_product_undefined_record_sha256":"d3ea7f8731a24133722dcbc72ba3b3fc62ca3fdb8ca50198a575c17fe8787b0e","identity":{"bytes_decimal":"52996","device_decimal":"16777231","gid_decimal":"0","inode_decimal":"17570733","mode":"0400","nlink_decimal":"1","path":"/private/tmp/prime-driver-v2-r19-local-archive-build-outer-supervisor-build-a-4e7d6406-861da2f4/00-supervisor-build-controller.v1.jsonl","sha256":"6785078ef7d8118f13a2ce3d090e7b68c263c92bf50749fe411a7440bfad1b61","type":"REGULAR","uid_decimal":"501"},"initial_predecessor_sha256":"0000000000000000000000000000000000000000000000000000000000000000","record_count_decimal":"32","sequence_range_decimal":"0..31","tail_record_sha256":"0b08b54ed5fd1d003db1f74e1347311511f0333867263caa3f422bb81de3d7a1","terminal_event":{"error_class":"BuildFailure","error_code":"PRODUCT_FORBIDDEN_SYMBOLS","interpretation":"REQUIRES_EXACT_OUTER_EXIT_AND_SUCCESSOR_CHAIN_VALIDATION","status":"FAIL_CANDIDATE","type":"CONTROLLER_TERMINAL"},"terminal_lf":true,"terminal_record_sequence_decimal":"31","terminal_record_sha256":"0b08b54ed5fd1d003db1f74e1347311511f0333867263caa3f422bb81de3d7a1"},"macho_uuid":"73978239-AE8D-3F79-A1C1-6589E84E544E","object_current":{"bytes_decimal":"5696","device_decimal":"16777231","gid_decimal":"0","inode_decimal":"17570736","mode":"0600","nlink_decimal":"1","path":"/private/tmp/prime-driver-v2-r19-local-archive-build-outer-supervisor-build-a-4e7d6406-861da2f4/prime-driver-v2-r19-local-archive-build-outer-supervisor-fixed-openat.o","sha256":"55922326f4e2414d1f5979714e6442770b4ff60025da93cebee51bfbce292214","type":"REGULAR","uid_decimal":"501"},"product_current":{"bytes_decimal":"328576","device_decimal":"16777231","gid_decimal":"0","inode_decimal":"17570870","mode":"0700","nlink_decimal":"1","path":"/private/tmp/prime-driver-v2-r19-local-archive-build-outer-supervisor-build-a-4e7d6406-861da2f4/PrimeDriverV2R19LocalArchiveBuildOuterSupervisor","sha256":"36258ec0719d8960640ff402ea83469f44c7b8358071b70b4d4665d65085a1bd","type":"REGULAR","uid_decimal":"501"},"root_identity":{"device_decimal":"16777231","gid_decimal":"0","inode_decimal":"17570732","mode":"0700","nlink_decimal":"7","path":"/private/tmp/prime-driver-v2-r19-local-archive-build-outer-supervisor-build-a-4e7d6406-861da2f4","type":"DIRECTORY","uid_decimal":"501"},"root_inventory":{"aggregate_file_bytes_decimal":"31865527","directories_decimal":"3","files_decimal":"58","unsupported_nodes":[]},"root_top_level_entries":["00-supervisor-build-controller.v1.jsonl","PrimeDriverV2R19LocalArchiveBuildOuterSupervisor","module-cache","prime-driver-v2-r19-local-archive-build-outer-supervisor-fixed-openat.o","tmp"],"same_uid_post_observation_mutation_residual":true,"static_admission_pass_event_count_decimal":"0"},"retained_namespace_state":{"archive_final":"ABSENT_ENOENT","archive_staging":"ABSENT_ENOENT","future_publisher_a":"ABSENT_ENOENT","future_publisher_b":"ABSENT_ENOENT","future_runtime":"ABSENT_ENOENT","observation_time":"POST_OUTER_EXIT70_READ_ONLY_ASSESSMENT","old_b":"ABSENT_ENOENT","old_b_path":"/private/tmp/prime-driver-v2-r19-local-archive-build-outer-supervisor-build-b-4e7d6406-861da2f4"},"retention_and_next":{"crs29_rerun_retry_alternate_or_old_b_action_authorized":false,"evidence_reinterpretation_authorized":false,"next":"FREEZE_AND_AUDIT_CRS31_SUCCESSOR_READINESS_NO_LAUNCH","original_a_root_journal_object_product_retained_permanently":true,"original_a_write_append_chmod_cleanup_repair_or_execution_authorized":false,"original_crs29_result_remains_fail_permanently":true,"source_edit_recommended":false,"successor_design_recommended":"CRS31_NEW_ONE_SHOT_RETAINED_A_READ_ONLY_ADOPTION_PLUS_ONE_FRESH_DISJOINT_WITNESS","successor_launch_authorized_by_this_record":false,"successor_launch_requires_separate_exact_approval":true,"successor_policy":"XPC_NAMED_INTERSECTION_EXACTLY_SINGLE_SWIFT_FORCE_LOAD_ANCHOR_DIRECT_XPC_EMPTY_ALL_OTHER_DENIES_PRESERVED","successor_requires_new_disjoint_witness_root":true,"successor_requires_new_evidence_journal_root":true}},"payload_hash_rule":"SHA256_COMPACT_RECURSIVE_LEXICOGRAPHIC_KEYS_UTF8_NO_TRAILING_LF","payload_sha256":"41503261ba143b4523c49b12d130a12328b3af5005c4a695c9a7147c1ab6b4d4","schema":"prime_driver_v2_r19_crs30_consumed_supervisor_build_failure_result_v1","status":"RECORDED_CONSUMED_FAIL_STATIC_POLICY_FORCE_LOAD_CATEGORY_OVERMATCH_NO_REINTERPRETATION"}
 ```
+
+## CRS31 — retained-A successor static admission plus fresh B2 witness readiness
+
+Data status: `READY_EXACT_ONE_POSTCOMMIT_CRS31_SUCCESSOR_LAUNCH_AUTHORIZED`.
+
+- Predecessor: `de27f2c70152f632aaabb1c80b6d323ab6d5462c` / `81239fad952854aa59410524e7e8dd5db6f5a253`.
+- Exact child ceiling: `22 = 10 retained-A analyzers + 1 B2 Clang + 1 B2 swiftc/link + 10 B2 analyzers`.
+- Controller credentials are exact `ruid/euid/rgid/egid = 501/501/20/20`; retained-A analyzers rejoin held root-owned `/private/var/empty/` and require it effectively non-writable before every entry and after replay; retained A has zero authorized writes.
+- Outer `zsh → env -i → Apple Ruby` images, startup absences, wrapper preimage, workdir, and ordered nonconsuming preflight are frozen below.
+- Persistent invariant: `CRS29 = FAIL_CONSUMED_PRESERVED`; `authority_vector = 00000000`; Gate E and science remain `ABSTAIN`.
+- Projection boundary: SQLite/graph is deferred until after the durable CRS31 result and cannot feed this controller or verdict.
+
+```ruby
+require "base64"
+require "digest"
+require "fcntl"
+require "json"
+
+Thread.abort_on_exception = false
+
+class BuildFailure < StandardError
+  attr_reader :code
+
+  def initialize(code)
+    @code = code
+    super(code)
+  end
+end
+
+F_FULLFSYNC = 51
+O_NOFOLLOW_ANY = 0x20000000
+O_DIRECTORY = 0x00100000
+O_CLOEXEC = 0x01000000
+JOURNAL_MAX_BYTES = 67_108_864
+JOURNAL_TERMINAL_RESERVE_BYTES = 1_048_576
+CONTROLLER_PAYLOAD_SHA256 = "881dbe9d81ef7af827ff8dc0323ebf86b6a7ecd970a35d3bcead1e4853a26eb0"
+CONTROLLER_ENVIRONMENT = {"__CF_USER_TEXT_ENCODING"=>"0x1F5:0x0:0x0"}.freeze
+
+REPO = "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging"
+SOURCE_CONTROLLER = "#{REPO}/docs/tools/prime-driver-v2-r19-local-archive-build-controller.rb"
+SOURCE_C = "#{REPO}/docs/tools/prime-driver-v2-r19-local-archive-build-outer-supervisor-fixed-openat.c"
+SOURCE_H = "#{REPO}/docs/tools/prime-driver-v2-r19-local-archive-build-outer-supervisor-fixed-openat.h"
+SOURCE_SWIFT = "#{REPO}/docs/tools/prime-driver-v2-r19-local-archive-build-outer-supervisor.swift"
+
+TMP_PARENT = "/private/tmp"
+READONLY_ANALYZER_TMP = "/private/var/empty"
+A_ROOT = "/private/tmp/prime-driver-v2-r19-local-archive-build-outer-supervisor-build-a-4e7d6406-861da2f4"
+OLD_B_ROOT = "/private/tmp/prime-driver-v2-r19-local-archive-build-outer-supervisor-build-b-4e7d6406-861da2f4"
+EVIDENCE_ROOT = "/private/tmp/prime-driver-v2-r19-crs31-retained-a-adoption-evidence-36258ec0-55922326"
+B_ROOT = "/private/tmp/prime-driver-v2-r19-crs31-outer-supervisor-witness-b2-36258ec0-55922326"
+ORIGINAL_JOURNAL_LEAF = "00-supervisor-build-controller.v1.jsonl"
+JOURNAL_LEAF = "00-crs31-retained-a-adoption-and-b2-witness.v1.jsonl"
+OBJECT_LEAF = "prime-driver-v2-r19-local-archive-build-outer-supervisor-fixed-openat.o"
+PRODUCT_LEAF = "PrimeDriverV2R19LocalArchiveBuildOuterSupervisor"
+A_PRODUCT_PATH = "#{A_ROOT}/#{PRODUCT_LEAF}"
+FUTURE_RUNTIME_ROOT = "/private/tmp/r19-local-archive-build-outer-supervisor-4e7d6406-861da2f4"
+FUTURE_PUBLISHER_A = "/private/tmp/prime-driver-v2-r19-local-archive-publisher-source-repair1-build-a-a9129484-d2f23691"
+FUTURE_PUBLISHER_B = "/private/tmp/prime-driver-v2-r19-local-archive-publisher-source-repair1-build-b-a9129484-d2f23691"
+
+ARCHIVE_PARENT = "/Users/ergentics/Documents"
+ARCHIVE_STAGING = "#{ARCHIVE_PARENT}/.PrimeValidationLocalArchive-R19-ce8e584e-f6a03155d136-staging"
+ARCHIVE_FINAL = "#{ARCHIVE_PARENT}/PrimeValidationLocalArchive-R19-ce8e584e-f6a03155d136"
+
+SDK = "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk"
+SDK_SETTINGS = "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/SDKSettings.json"
+CLANG = "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang"
+SWIFTC = "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+SWIFT_DRIVER = "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-driver"
+SWIFT_FRONTEND = "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-frontend"
+LD = "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld"
+LLVM_NM = "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-nm"
+FILE_TOOL = "/usr/bin/file"
+OTOOL = "/usr/bin/otool"
+CODESIGN = "/usr/bin/codesign"
+XATTR = "/usr/bin/xattr"
+XPC_TBD = "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib/swift/libswiftXPC.tbd"
+
+SOURCE_EXPECTED = {
+  SOURCE_CONTROLLER => {"bytes_decimal"=>"55263", "device_decimal"=>"16777231", "inode_decimal"=>"17564607", "uid_decimal"=>"501", "gid_decimal"=>"20", "mode"=>"0644", "nlink_decimal"=>"1", "sha256"=>"8b85f6320621bc6a5b9c755d983ffcecabf11ea87610b3c5aeaf4359dd194009"},
+  SOURCE_C => {"bytes_decimal"=>"15196", "device_decimal"=>"16777231", "inode_decimal"=>"17564649", "uid_decimal"=>"501", "gid_decimal"=>"20", "mode"=>"0644", "nlink_decimal"=>"1", "sha256"=>"9a8eb551fb15ab5401af15bb163aaf6bd70baa4ae2a74c077ec2016b88704572"},
+  SOURCE_H => {"bytes_decimal"=>"3266", "device_decimal"=>"16777231", "inode_decimal"=>"17564648", "uid_decimal"=>"501", "gid_decimal"=>"20", "mode"=>"0644", "nlink_decimal"=>"1", "sha256"=>"ca014528763c2b4274e7c395f8945e980725662db8d1fa0924e2c0a1a35fd5a7"},
+  SOURCE_SWIFT => {"bytes_decimal"=>"144480", "device_decimal"=>"16777231", "inode_decimal"=>"17564751", "uid_decimal"=>"501", "gid_decimal"=>"20", "mode"=>"0644", "nlink_decimal"=>"1", "sha256"=>"929bfd562a5f4defa3ccf722d549a0ffda21551203b81d7953d53baaed8345f0"}
+}.freeze
+
+HEADER_EXPECTED = {
+  "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/21/include/stdint.h" => {"bytes_decimal"=>"27519", "device_decimal"=>"16777231", "inode_decimal"=>"1119361", "uid_decimal"=>"0", "gid_decimal"=>"0", "mode"=>"0644", "nlink_decimal"=>"3", "sha256"=>"f43783466c93f77a6464274ebf18f9e4cc46f0d90770ddee2993c6cf39f7514f"},
+  "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/types.h" => {"bytes_decimal"=>"8391", "device_decimal"=>"16777231", "inode_decimal"=>"932189", "uid_decimal"=>"0", "gid_decimal"=>"0", "mode"=>"0644", "nlink_decimal"=>"9", "sha256"=>"82111e1f1d0262bee191b4679842e5ff51de57310ce4da9f48d39af0d8e10284"},
+  "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/errno.h" => {"bytes_decimal"=>"1003", "device_decimal"=>"16777231", "inode_decimal"=>"1017410", "uid_decimal"=>"0", "gid_decimal"=>"0", "mode"=>"0644", "nlink_decimal"=>"1", "sha256"=>"ff95a158e0799dcf0622e83882e64d88f1783b98a91d9b206bcba2a12f8425e6"},
+  "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/fcntl.h" => {"bytes_decimal"=>"1002", "device_decimal"=>"16777231", "inode_decimal"=>"1014632", "uid_decimal"=>"0", "gid_decimal"=>"0", "mode"=>"0644", "nlink_decimal"=>"1", "sha256"=>"289f3be20c07d8eae5589f43994cfdb5fb33b3b099a6aee67f63e00d90039a8f"},
+  "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/libproc.h" => {"bytes_decimal"=>"7575", "device_decimal"=>"16777231", "inode_decimal"=>"1014230", "uid_decimal"=>"0", "gid_decimal"=>"0", "mode"=>"0644", "nlink_decimal"=>"1", "sha256"=>"246d87709fc6b9157ce5cf3c475656ac48e0e1ae8bbdc46cf45acd34294448cd"},
+  "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/21/include/stddef.h" => {"bytes_decimal"=>"5178", "device_decimal"=>"16777231", "inode_decimal"=>"1119128", "uid_decimal"=>"0", "gid_decimal"=>"0", "mode"=>"0644", "nlink_decimal"=>"3", "sha256"=>"e8d92dad1b380f2f2130fd7aa446bcb4fc923f7062a41c7c35beb4913093a8f5"},
+  "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/string.h" => {"bytes_decimal"=>"2975", "device_decimal"=>"16777231", "inode_decimal"=>"1018388", "uid_decimal"=>"0", "gid_decimal"=>"0", "mode"=>"0644", "nlink_decimal"=>"1", "sha256"=>"4b1b9c05bfe370d423d7a6bf9e74b189bcc7f59c1cd97f23d6d94f2f3df6a4bc"},
+  "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/attr.h" => {"bytes_decimal"=>"27496", "device_decimal"=>"16777231", "inode_decimal"=>"932177", "uid_decimal"=>"0", "gid_decimal"=>"0", "mode"=>"0644", "nlink_decimal"=>"9", "sha256"=>"5118b9245bc932bc32dcc60084b1e40d70bb5479a360b31cdbf188ef866deefe"},
+  "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/resource.h" => {"bytes_decimal"=>"20152", "device_decimal"=>"16777231", "inode_decimal"=>"932324", "uid_decimal"=>"0", "gid_decimal"=>"0", "mode"=>"0644", "nlink_decimal"=>"9", "sha256"=>"7d16930e6b75f11ba203238faa5580d31d48fcd4230f2b3f604aaa5fd7e86b58"},
+  "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/stat.h" => {"bytes_decimal"=>"20575", "device_decimal"=>"16777231", "inode_decimal"=>"932286", "uid_decimal"=>"0", "gid_decimal"=>"0", "mode"=>"0644", "nlink_decimal"=>"9", "sha256"=>"31c8f252b05785343ca577c007657c0fbab45a182b60fc5b73994c621dc318d4"},
+  "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/sysctl.h" => {"bytes_decimal"=>"37626", "device_decimal"=>"16777231", "inode_decimal"=>"932320", "uid_decimal"=>"0", "gid_decimal"=>"0", "mode"=>"0644", "nlink_decimal"=>"9", "sha256"=>"4a77c53e0ee4035ca1c9e6a910aeddbc8f6163ccb8415940bbe7e398013f3764"},
+  "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/unistd.h" => {"bytes_decimal"=>"31225", "device_decimal"=>"16777231", "inode_decimal"=>"931973", "uid_decimal"=>"0", "gid_decimal"=>"0", "mode"=>"0644", "nlink_decimal"=>"7", "sha256"=>"8d535079658f063bcef358ef4c1c1b52b8e88dacfc22cbf4db0f6bf8abe40637"}
+}.freeze
+
+TOOL_EXPECTED = {
+  "/usr/bin/ruby" => {"bytes_decimal"=>"135200", "device_decimal"=>"16777231", "inode_decimal"=>"1152921500312572705", "uid_decimal"=>"0", "gid_decimal"=>"0", "mode"=>"0555", "nlink_decimal"=>"1", "sha256"=>"9d6ff3e289c7d908e3c785e0bedd6692d1d6a3377965c88c04d847104b7c892c"},
+  CLANG => {"bytes_decimal"=>"141373024", "device_decimal"=>"16777231", "inode_decimal"=>"1118318", "uid_decimal"=>"0", "gid_decimal"=>"0", "mode"=>"0755", "nlink_decimal"=>"1", "sha256"=>"7def90dd8829726686213a747fc5bff1583df933dae5edc55d755479e0bfe00a"},
+  SWIFT_DRIVER => {"bytes_decimal"=>"3011968", "device_decimal"=>"16777231", "inode_decimal"=>"1118459", "uid_decimal"=>"0", "gid_decimal"=>"0", "mode"=>"0755", "nlink_decimal"=>"1", "sha256"=>"fead52ebe00ec6ec700ecbb4be30f0b6204dd0506cb271dda72ac257261bd64b"},
+  SWIFT_FRONTEND => {"bytes_decimal"=>"171036592", "device_decimal"=>"16777231", "inode_decimal"=>"1118375", "uid_decimal"=>"0", "gid_decimal"=>"0", "mode"=>"0755", "nlink_decimal"=>"1", "sha256"=>"2ed38571e92c0283091838c1649e27650ad9c99950288e883c7b2dc6c4ce89fb"},
+  LD => {"bytes_decimal"=>"2331792", "device_decimal"=>"16777231", "inode_decimal"=>"1118358", "uid_decimal"=>"0", "gid_decimal"=>"0", "mode"=>"0755", "nlink_decimal"=>"1", "sha256"=>"5897b275efd93b201b6df5832dd541262b3f20f290859ba78f2200a6a66ef38b"},
+  LLVM_NM => {"bytes_decimal"=>"16380560", "device_decimal"=>"16777231", "inode_decimal"=>"1118384", "uid_decimal"=>"0", "gid_decimal"=>"0", "mode"=>"0755", "nlink_decimal"=>"1", "sha256"=>"d910f3acb104791e5475254000ede2aa129aa1a42eafcc7f5bdb27afffc642dc"},
+  FILE_TOOL => {"bytes_decimal"=>"534480", "device_decimal"=>"16777231", "inode_decimal"=>"1152921500312572000", "uid_decimal"=>"0", "gid_decimal"=>"0", "mode"=>"0755", "nlink_decimal"=>"1", "sha256"=>"a4ba66d26a9cfdc70637c78cdacef920f94147f6aa45ccc73858e493589ef94d"},
+  OTOOL => {"bytes_decimal"=>"118928", "device_decimal"=>"16777231", "inode_decimal"=>"1152921500312571585", "uid_decimal"=>"0", "gid_decimal"=>"0", "mode"=>"0755", "nlink_decimal"=>"78", "sha256"=>"179301dcb41ea78accc3fa0048a7e6f6710d891945a751a34addd622020c1818"},
+  CODESIGN => {"bytes_decimal"=>"459824", "device_decimal"=>"16777231", "inode_decimal"=>"1152921500312571780", "uid_decimal"=>"0", "gid_decimal"=>"0", "mode"=>"0755", "nlink_decimal"=>"1", "sha256"=>"214d455584d19abc0d74d02b9cbc7d3da6bdcb0596c235e6156dd9ed2f4e1ba7"},
+  XATTR => {"bytes_decimal"=>"118896", "device_decimal"=>"16777231", "inode_decimal"=>"1152921500312573128", "uid_decimal"=>"0", "gid_decimal"=>"0", "mode"=>"0755", "nlink_decimal"=>"1", "sha256"=>"3cc7308e9dfd687b0b7f4778a6101633aa9dce5ccdd012cf17cd858848295162"},
+  SDK_SETTINGS => {"bytes_decimal"=>"7774", "device_decimal"=>"16777231", "inode_decimal"=>"1082899", "uid_decimal"=>"0", "gid_decimal"=>"0", "mode"=>"0644", "nlink_decimal"=>"1", "sha256"=>"f8d005f09381389167f9e0aeaa169bc9e7dff162ef22ca2fd8e98df7ff1acafe"}
+}.freeze
+
+POLICY_INPUT_EXPECTED = {
+  XPC_TBD => {"bytes_decimal"=>"50416", "device_decimal"=>"16777231", "inode_decimal"=>"1019890", "uid_decimal"=>"0", "gid_decimal"=>"0", "mode"=>"0644", "nlink_decimal"=>"1", "sha256"=>"1658d0ff91184eabfb7a448ca4f9da20ddf69223a07bac6db290ee69d7e3da19"}
+}.freeze
+
+DEFINED_C_SYMBOLS = %w[
+  _prime_r19_capture_boot_session_uuid_v1
+  _prime_r19_capture_runtime_root_inventory_raw_v1
+  _prime_r19_capture_rusage_v6_v1
+  _prime_r19_create_fifo_at_v1
+  _prime_r19_create_journal_at_v1
+  _prime_r19_fullfsync_v1
+  _prime_r19_mkdir_runtime_root_at_v1
+  _prime_r19_open_controller_source_v1
+  _prime_r19_open_cwd_root_v1
+  _prime_r19_open_fifo_read_at_v1
+  _prime_r19_open_ruby_image_v1
+  _prime_r19_open_runtime_parent_v1
+  _prime_r19_open_runtime_root_at_v1
+].sort.freeze
+
+OBJECT_UNDEFINED_FORBIDDEN = %w[
+  _accept _accept4 _bind _connect _dlopen _dlsym _execv _execve _execvp
+  _execvP _fork _kill _killpg _listen _popen _posix_spawn _posix_spawnp
+  _pthread_kill _raise _recv _recvfrom _recvmsg _rename _renameat
+  _renameatx_np _renamex_np _send _sendmsg _sendto _setpgid _setsid
+  _sigaction _signal
+  _socket _socketpair _system _vfork _wait _wait3 _wait4 _waitid _waitpid
+].freeze
+
+OBJECT_UNDEFINED_FORBIDDEN_PATTERNS = [
+  /\A_(?:posix_spawn.*|wait.*|kill.*|raise|pthread_kill|setpgid|setsid|sig.*)\z/,
+  /\A_rename.*\z/,
+  /\A_xpc_/,
+  /XPC/
+].freeze
+
+ALLOWED_PROCESS_CONTROL_SYMBOLS = %w[
+  _kill
+  _posix_spawn
+  _posix_spawn_file_actions_addclose
+  _posix_spawn_file_actions_adddup2
+  _posix_spawn_file_actions_addfchdir_np
+  _posix_spawn_file_actions_addinherit_np
+  _posix_spawn_file_actions_destroy
+  _posix_spawn_file_actions_init
+  _posix_spawnattr_destroy
+  _posix_spawnattr_init
+  _posix_spawnattr_setflags
+  _posix_spawnattr_setsigdefault
+  _posix_spawnattr_setsigmask
+  _sigemptyset
+  _sigfillset
+  _waitpid
+].sort.freeze
+
+PROCESS_CONTROL_SYMBOL_PATTERNS = [
+  /\A_(?:posix_spawn.*|wait.*|kill.*|raise|pthread_kill|setpgid|setsid|sig.*)\z/
+].freeze
+
+FORBIDDEN_PRODUCT_SYMBOLS = %w[
+  _accept _accept4 _bind _connect _copyfile _dlclose _dlopen _dlsym _execv
+  _execve _execvp _execvP _fclonefileat _fork _fremovexattr _fsetxattr
+  _killpg _link _linkat _listen _popen _posix_spawnp _pthread_kill _raise
+  _recv _recvfrom _recvmsg _removexattr _remove _rename _renameat
+  _renameatx_np _renamex_np _rmdir _send _sendmsg _sendto _setpgid _setsid
+  _setxattr
+  _sigaction _signal _socket _socketpair _symlink _symlinkat _system _unlink
+  _unlinkat _vfork _wait _wait3 _wait4 _waitid
+].freeze
+
+FORBIDDEN_PRODUCT_SYMBOL_PATTERNS = [
+  /\A_(?:fork|vfork|exec.*|killpg|system|popen|dlopen|dlsym|dlclose)\z/,
+  /\A_(?:accept.*|bind|connect|listen|socket.*|send.*|recv.*|getaddrinfo|freeaddrinfo|gethostbyname.*)\z/,
+  /\A_(?:copyfile.*|clonefile.*|fclonefileat|link|linkat|symlink|symlinkat|unlink|unlinkat|remove|rmdir)\z/,
+  /\A_rename.*\z/,
+  /\A_(?:setxattr|fsetxattr|removexattr|fremovexattr)\z/,
+  /\A_xpc_/,
+  /NSTask/
+].freeze
+
+ALLOWED_LINKED_IMAGES = %w[
+  /usr/lib/libSystem.B.dylib
+  /System/Library/Frameworks/CryptoKit.framework/Versions/A/CryptoKit
+  /System/Library/Frameworks/Foundation.framework/Versions/C/Foundation
+  /usr/lib/libobjc.A.dylib
+  /usr/lib/swift/libswiftCore.dylib
+  /usr/lib/swift/libswiftCoreFoundation.dylib
+  /usr/lib/swift/libswiftDarwin.dylib
+  /usr/lib/swift/libswiftDispatch.dylib
+  /usr/lib/swift/libswiftIOKit.dylib
+  /usr/lib/swift/libswiftObjectiveC.dylib
+  /usr/lib/swift/libswiftXPC.dylib
+  /usr/lib/swift/libswift_Concurrency.dylib
+  /usr/lib/swift/libswift_Builtin_float.dylib
+  /usr/lib/swift/libswift_errno.dylib
+].freeze
+
+
+EXPECTED_LINKED_IMAGES = [
+  "/usr/lib/libSystem.B.dylib",
+  "/System/Library/Frameworks/CryptoKit.framework/Versions/A/CryptoKit",
+  "/System/Library/Frameworks/Foundation.framework/Versions/C/Foundation",
+  "/usr/lib/libobjc.A.dylib",
+  "/usr/lib/swift/libswiftCore.dylib",
+  "/usr/lib/swift/libswiftCoreFoundation.dylib",
+  "/usr/lib/swift/libswiftDarwin.dylib",
+  "/usr/lib/swift/libswiftDispatch.dylib",
+  "/usr/lib/swift/libswiftIOKit.dylib",
+  "/usr/lib/swift/libswiftObjectiveC.dylib",
+  "/usr/lib/swift/libswiftXPC.dylib"
+].freeze
+
+XPC_FORCE_LOAD_ANCHOR = "__swift_FORCE_LOAD_$_swiftXPC"
+MAX_CHILD_ENTRIES = 22
+
+A_ROOT_EXPECTED = {
+  "device_decimal"=>"16777231", "gid_decimal"=>"0", "inode_decimal"=>"17570732",
+  "mode"=>"0700", "nlink_decimal"=>"7", "uid_decimal"=>"501"
+}.freeze
+
+A_JOURNAL_EXPECTED = {
+  "bytes_decimal"=>"52996", "device_decimal"=>"16777231", "gid_decimal"=>"0",
+  "inode_decimal"=>"17570733", "mode"=>"0400", "nlink_decimal"=>"1",
+  "sha256"=>"6785078ef7d8118f13a2ce3d090e7b68c263c92bf50749fe411a7440bfad1b61",
+  "uid_decimal"=>"501"
+}.freeze
+
+A_OBJECT_EXPECTED = {
+  "bytes_decimal"=>"5696", "device_decimal"=>"16777231", "gid_decimal"=>"0",
+  "inode_decimal"=>"17570736", "mode"=>"0600", "nlink_decimal"=>"1",
+  "sha256"=>"55922326f4e2414d1f5979714e6442770b4ff60025da93cebee51bfbce292214",
+  "uid_decimal"=>"501"
+}.freeze
+
+A_PRODUCT_EXPECTED = {
+  "bytes_decimal"=>"328576", "device_decimal"=>"16777231", "gid_decimal"=>"0",
+  "inode_decimal"=>"17570870", "mode"=>"0700", "nlink_decimal"=>"1",
+  "sha256"=>"36258ec0719d8960640ff402ea83469f44c7b8358071b70b4d4665d65085a1bd",
+  "uid_decimal"=>"501"
+}.freeze
+
+A_TOPOLOGY_EXPECTED = {
+  "aggregate_file_bytes_decimal"=>"31865527",
+  "canonical_bytes_decimal"=>"18290",
+  "canonical_sha256"=>"748cd7e6f9c376d3575d21dd95d9909c79a15247e108c82a5659fa0e210c559e",
+  "directories_decimal"=>"3",
+  "entries_decimal"=>"61",
+  "files_decimal"=>"58"
+}.freeze
+
+ORIGINAL_JOURNAL_RECORD_COUNT = 32
+ORIGINAL_JOURNAL_ARTIFACT_RECORD_SHA256 = "51edf16855a770d58fbf38cb20f0ae2ad0311ea816249f1dbea35a09daa9a32a"
+ORIGINAL_JOURNAL_DECISIVE_RECORD_SHA256 = "d3ea7f8731a24133722dcbc72ba3b3fc62ca3fdb8ca50198a575c17fe8787b0e"
+ORIGINAL_JOURNAL_TAIL_SHA256 = "0b08b54ed5fd1d003db1f74e1347311511f0333867263caa3f422bb81de3d7a1"
+
+def fail_build(code)
+  raise BuildFailure, code
+end
+
+def deep_sort(value)
+  case value
+  when Hash
+    value.keys.sort.each_with_object({}) { |key, out| out[key] = deep_sort(value.fetch(key)) }
+  when Array
+    value.map { |item| deep_sort(item) }
+  else
+    value
+  end
+end
+
+def canonical_json(value)
+  JSON.generate(deep_sort(value))
+end
+
+def mode_string(stat)
+  format("%04o", stat.mode & 0o7777)
+end
+
+def read_all_from_descriptor(io)
+  digest = Digest::SHA256.new
+  total = 0
+  io.rewind
+  loop do
+    chunk = io.read(65_536)
+    break if chunk.nil? || chunk.empty?
+    digest.update(chunk)
+    total += chunk.bytesize
+  end
+  io.rewind
+  [total.to_s, digest.hexdigest]
+end
+
+def identity_from_held(io)
+  stat = io.stat
+  fail_build("HELD_NOT_REGULAR") unless stat.file?
+  bytes, sha = read_all_from_descriptor(io)
+  {
+    "bytes_decimal"=>bytes,
+    "device_decimal"=>stat.dev.to_s,
+    "inode_decimal"=>stat.ino.to_s,
+    "uid_decimal"=>stat.uid.to_s,
+    "gid_decimal"=>stat.gid.to_s,
+    "mode"=>mode_string(stat),
+    "nlink_decimal"=>stat.nlink.to_s,
+    "sha256"=>sha
+  }
+end
+
+def held_regular(path)
+  fd = IO.sysopen(path, File::RDONLY | O_NOFOLLOW_ANY | O_CLOEXEC)
+  io = File.new(fd, "rb")
+  stat = io.stat
+  fail_build("NOT_REGULAR:#{path}") unless stat.file?
+  bytes, sha = read_all_from_descriptor(io)
+  identity = {
+    "bytes_decimal"=>bytes,
+    "device_decimal"=>stat.dev.to_s,
+    "inode_decimal"=>stat.ino.to_s,
+    "uid_decimal"=>stat.uid.to_s,
+    "gid_decimal"=>stat.gid.to_s,
+    "mode"=>mode_string(stat),
+    "nlink_decimal"=>stat.nlink.to_s,
+    "sha256"=>sha
+  }
+  [io, identity]
+rescue StandardError
+  io.close if defined?(io) && io && !io.closed?
+  raise
+end
+
+def require_identity(path, expected)
+  io, observed = held_regular(path)
+  fail_build("IDENTITY_MISMATCH:#{path}") unless observed == expected
+  close_error = safe_close(io)
+  fail_build("IDENTITY_CLOSE_FAILED:#{path}") if close_error
+  observed
+end
+
+def require_named_join(path, io)
+  named_fd = IO.sysopen(path, File::RDONLY | O_NOFOLLOW_ANY | O_CLOEXEC)
+  named = File.new(named_fd, "rb")
+  a = io.stat
+  b = named.stat
+  fail_build("NAMED_JOIN_MISMATCH:#{path}") unless a.dev == b.dev && a.ino == b.ino
+  named.close
+  true
+rescue StandardError
+  named.close if defined?(named) && named && !named.closed?
+  raise
+end
+
+def require_held_identity(path, io, expected)
+  require_named_join(path, io)
+  observed = identity_from_held(io)
+  fail_build("HELD_IDENTITY_DRIFT:#{path}") unless observed == expected
+  observed
+end
+
+def open_directory(path)
+  fd = IO.sysopen(path, File::RDONLY | O_NOFOLLOW_ANY | O_DIRECTORY | O_CLOEXEC)
+  io = File.new(fd, "r")
+  fail_build("NOT_DIRECTORY:#{path}") unless io.stat.directory?
+  io
+end
+
+def require_directory_join(path, io, expected_mode)
+  named = open_directory(path)
+  held_stat = io.stat
+  named_stat = named.stat
+  fail_build("DIRECTORY_JOIN_MISMATCH:#{path}") unless held_stat.dev == named_stat.dev && held_stat.ino == named_stat.ino
+  [held_stat, named_stat].each do |stat|
+    fail_build("DIRECTORY_TYPE_DRIFT:#{path}") unless stat.directory?
+    fail_build("DIRECTORY_MODE_DRIFT:#{path}") unless mode_string(stat) == expected_mode
+  end
+  fail_build("DIRECTORY_UID_DRIFT:#{path}") unless held_stat.uid == named_stat.uid
+  fail_build("DIRECTORY_GID_DRIFT:#{path}") unless held_stat.gid == named_stat.gid
+  result = {
+    "device_decimal"=>held_stat.dev.to_s,
+    "gid_decimal"=>held_stat.gid.to_s,
+    "inode_decimal"=>held_stat.ino.to_s,
+    "mode"=>mode_string(held_stat),
+    "nlink_decimal"=>held_stat.nlink.to_s,
+    "uid_decimal"=>held_stat.uid.to_s
+  }
+  named.close
+  result
+rescue StandardError
+  named.close if defined?(named) && named && !named.closed?
+  raise
+end
+
+def durable_sync(io, code)
+  fail_build("FSYNC_FAILED:#{code}") unless io.fsync == 0
+  fail_build("FULLFSYNC_FAILED:#{code}") unless io.fcntl(F_FULLFSYNC, 0) == 0
+end
+
+def require_absent(path, code)
+  File.lstat(path)
+  fail_build("EXPECTED_ABSENT:#{code}")
+rescue Errno::ENOENT
+  true
+end
+
+def require_parent_identity(path, expected)
+  stat = File.lstat(path)
+  observed = {
+    "device_decimal"=>stat.dev.to_s,
+    "inode_decimal"=>stat.ino.to_s,
+    "uid_decimal"=>stat.uid.to_s,
+    "gid_decimal"=>stat.gid.to_s,
+    "mode"=>mode_string(stat),
+    "type"=>(stat.directory? ? "DIRECTORY" : "OTHER")
+  }
+  fail_build("PARENT_IDENTITY_MISMATCH:#{path}") unless observed == expected
+  observed
+end
+
+class DurableJournal
+  attr_reader :sealed
+
+  def initialize(root, root_io, parent_io)
+    @root = root
+    @root_io = root_io
+    @parent_io = parent_io
+    @path = "#{root}/#{JOURNAL_LEAF}"
+    flags = File::WRONLY | File::CREAT | File::EXCL | File::APPEND | O_NOFOLLOW_ANY | O_CLOEXEC
+    fd = IO.sysopen(@path, flags, 0o400)
+    @io = File.new(fd, "ab")
+    @sequence = 0
+    @previous = "0" * 64
+    @bytes = 0
+    @append_failed = false
+    @terminal_started = false
+    @sealed = false
+    verify_named
+  end
+
+  def writable?
+    !@sealed && !@append_failed && !@terminal_started
+  end
+
+  def verify_named
+    fail_build("JOURNAL_HELD_NOT_REGULAR") unless @io.stat.file?
+    fail_build("JOURNAL_HELD_MODE") unless mode_string(@io.stat) == "0400"
+    fail_build("JOURNAL_HELD_NLINK") unless @io.stat.nlink == 1
+    fail_build("JOURNAL_HELD_UID") unless @io.stat.uid == 501
+    fail_build("JOURNAL_HELD_GID") unless @io.stat.gid == 20
+    named_fd = IO.sysopen(@path, File::RDONLY | O_NOFOLLOW_ANY | O_CLOEXEC)
+    named = File.new(named_fd, "rb")
+    fail_build("JOURNAL_NAMED_NOT_REGULAR") unless named.stat.file?
+    fail_build("JOURNAL_NAMED_JOIN") unless named.stat.dev == @io.stat.dev && named.stat.ino == @io.stat.ino
+    fail_build("JOURNAL_NAMED_MODE") unless mode_string(named.stat) == "0400"
+    fail_build("JOURNAL_NAMED_NLINK") unless named.stat.nlink == 1
+    fail_build("JOURNAL_NAMED_UID") unless named.stat.uid == 501
+    fail_build("JOURNAL_NAMED_GID") unless named.stat.gid == 20
+    fail_build("JOURNAL_NAMED_SIZE") unless named.stat.size == @bytes
+    named.close
+    require_directory_join(@root, @root_io, "0700")
+    require_directory_join(TMP_PARENT, @parent_io, "1777")
+    true
+  rescue StandardError
+    named.close if defined?(named) && named && !named.closed?
+    raise
+  end
+
+  def append(event, terminal=false)
+    fail_build("JOURNAL_ALREADY_SEALED") if @sealed
+    fail_build("JOURNAL_APPEND_POISONED") if @append_failed
+    fail_build("JOURNAL_TERMINAL_ALREADY_STARTED") if @terminal_started && !terminal
+    verify_named
+    core = {
+      "event"=>event,
+      "predecessor_record_sha256"=>@previous,
+      "sequence_decimal"=>@sequence.to_s
+    }
+    digest = Digest::SHA256.hexdigest(canonical_json(core))
+    frame = core.merge("record_sha256"=>digest)
+    bytes = canonical_json(frame) + "\n"
+    limit = terminal ? JOURNAL_MAX_BYTES : JOURNAL_MAX_BYTES - JOURNAL_TERMINAL_RESERVE_BYTES
+    fail_build("JOURNAL_BYTE_CAP") if @bytes + bytes.bytesize > limit
+    @append_failed = true
+    offset = 0
+    while offset < bytes.bytesize
+      written = @io.write(bytes.byteslice(offset, bytes.bytesize - offset))
+      fail_build("JOURNAL_SHORT_WRITE") unless written && written > 0
+      offset += written
+    end
+    @io.flush
+    durable_sync(@io, "JOURNAL_APPEND")
+    @bytes += bytes.bytesize
+    verify_named
+    @previous = digest
+    @sequence += 1
+    @append_failed = false
+    digest
+  end
+
+  def validate_readback
+    named_fd = IO.sysopen(@path, File::RDONLY | O_NOFOLLOW_ANY | O_CLOEXEC)
+    named = File.new(named_fd, "rb")
+    bytes = named.read(JOURNAL_MAX_BYTES + 1)
+    fail_build("JOURNAL_READBACK_CAP") if bytes.bytesize > JOURNAL_MAX_BYTES
+    fail_build("JOURNAL_READBACK_SIZE") unless bytes.bytesize == @bytes
+    fail_build("JOURNAL_READBACK_LF") unless bytes.empty? || bytes.end_with?("\n")
+    previous = "0" * 64
+    count = 0
+    bytes.lines.each do |line|
+      fail_build("JOURNAL_READBACK_FRAME_LF") unless line.end_with?("\n")
+      frame = JSON.parse(line.byteslice(0, line.bytesize - 1))
+      digest = frame.fetch("record_sha256")
+      core = frame.reject { |key, _| key == "record_sha256" }
+      fail_build("JOURNAL_READBACK_SEQUENCE") unless core.fetch("sequence_decimal") == count.to_s
+      fail_build("JOURNAL_READBACK_PREDECESSOR") unless core.fetch("predecessor_record_sha256") == previous
+      fail_build("JOURNAL_READBACK_CANONICAL") unless canonical_json(frame) + "\n" == line
+      fail_build("JOURNAL_READBACK_DIGEST") unless Digest::SHA256.hexdigest(canonical_json(core)) == digest
+      previous = digest
+      count += 1
+    end
+    fail_build("JOURNAL_READBACK_COUNT") unless count == @sequence
+    fail_build("JOURNAL_READBACK_TAIL") unless previous == @previous
+    named.close
+    true
+  rescue StandardError
+    named.close if defined?(named) && named && !named.closed?
+    raise
+  end
+
+  def append_terminal_and_seal(event)
+    fail_build("JOURNAL_NOT_TERMINAL_READY") unless writable?
+    @terminal_started = true
+    verify_named
+    validate_readback
+    fail_build("JOURNAL_FCHMOD_FAILED") unless @io.chmod(0o400) == 0
+    durable_sync(@io, "JOURNAL_PRETERMINAL")
+    durable_sync(@root_io, "A_ROOT_PRETERMINAL")
+    durable_sync(@parent_io, "TMP_PARENT_PRETERMINAL")
+    verify_named
+    validate_readback
+    append(event, true)
+    @sealed = true
+  end
+
+  def retain_prefix_unchecked
+    @io.chmod(0o400)
+    @io.fsync
+    @io.fcntl(F_FULLFSYNC, 0)
+    @root_io.fsync
+    @root_io.fcntl(F_FULLFSYNC, 0)
+    @parent_io.fsync
+    @parent_io.fcntl(F_FULLFSYNC, 0)
+  rescue StandardError
+  end
+
+  def close_unchecked
+    @io.close unless @io.closed?
+  rescue StandardError
+  end
+end
+
+def stream_capture_blocking(io, cap)
+  digest = Digest::SHA256.new
+  prefix = "".b
+  total = 0
+  capture_error = nil
+  loop do
+    begin
+      chunk = io.readpartial(65_536)
+    rescue Errno::EINTR
+      next
+    rescue EOFError
+      break
+    rescue StandardError => error
+      capture_error = error.class.name
+      break
+    end
+    digest.update(chunk)
+    total += chunk.bytesize
+    if prefix.bytesize < cap
+      take = [cap - prefix.bytesize, chunk.bytesize].min
+      prefix << chunk.byteslice(0, take)
+    end
+  end
+  close_error = safe_close(io)
+  capture_error ||= close_error
+  {
+    "bytes_decimal"=>total.to_s,
+    "capture_error"=>capture_error,
+    "overflow"=>total > cap,
+    "prefix_base64"=>Base64.strict_encode64(prefix),
+    "prefix_bytes_decimal"=>prefix.bytesize.to_s,
+    "sha256"=>digest.hexdigest,
+    "raw"=>prefix
+  }
+end
+
+def safe_close(io)
+  return nil if io.nil? || io.closed?
+  io.close
+  nil
+rescue Errno::EINTR
+  retry
+rescue StandardError
+  "CLOSE_UNKNOWN"
+end
+
+def remain_in_reap_containment
+  loop { sleep(3600) }
+end
+
+def public_capture(capture)
+  capture.reject { |key, _| key == "raw" }
+end
+
+def require_held_devnull(io)
+  stat = io.stat
+  fail_build("DEVNULL_NOT_CHARACTER") unless stat.chardev?
+  fail_build("DEVNULL_MODE") unless mode_string(stat) == "0666"
+  flags = io.fcntl(Fcntl::F_GETFL, 0)
+  fail_build("DEVNULL_ACCESS_MODE") unless (flags & Fcntl::O_ACCMODE) == Fcntl::O_RDONLY
+  named_fd = IO.sysopen("/dev/null", File::RDONLY | O_NOFOLLOW_ANY | O_CLOEXEC)
+  named = File.new(named_fd, "rb")
+  fail_build("DEVNULL_NAMED_JOIN") unless named.stat.dev == stat.dev && named.stat.ino == stat.ino && named.stat.chardev?
+  named.close
+  true
+rescue StandardError
+  named.close if defined?(named) && named && !named.closed?
+  raise
+end
+
+def child_environment(root)
+  {
+    "DEVELOPER_DIR"=>"/Applications/Xcode.app/Contents/Developer",
+    "LANG"=>"C.UTF-8",
+    "LC_ALL"=>"C.UTF-8",
+    "PATH"=>"/usr/bin:/bin",
+    "SDKROOT"=>SDK,
+    "TMPDIR"=>"#{root}/tmp/",
+    "TZ"=>"UTC",
+    "__CF_USER_TEXT_ENCODING"=>"0x1F5:0x0:0x0"
+  }
+end
+
+def run_child(journal, label, argv, environment, cap)
+  $child_entries ||= 0
+  fail_build("CHILD_ENTRY_CAP") if $child_entries >= MAX_CHILD_ENTRIES
+  $child_entries += 1
+  journal.append({
+    "argv"=>argv,
+    "capture_cap_bytes_decimal"=>cap.to_s,
+    "child_entry_index_decimal"=>$child_entries.to_s,
+    "cwd"=>"/",
+    "environment_sorted"=>environment.keys.sort.map { |key| "#{key}=#{environment.fetch(key)}" },
+    "label"=>label,
+    "type"=>"CHILD_ENTRY_COMMITMENT"
+  })
+
+  pid = nil
+  begin
+    stdout_r, stdout_w = IO.pipe
+    stderr_r, stderr_w = IO.pipe
+    stdout_thread = Thread.new { stream_capture_blocking(stdout_r, cap) }
+    stderr_thread = Thread.new { stream_capture_blocking(stderr_r, cap) }
+    stdout_thread.report_on_exception = false if stdout_thread.respond_to?(:report_on_exception=)
+    stderr_thread.report_on_exception = false if stderr_thread.respond_to?(:report_on_exception=)
+    devnull_fd = IO.sysopen("/dev/null", File::RDONLY | O_NOFOLLOW_ANY | O_CLOEXEC)
+    devnull = File.new(devnull_fd, "rb")
+    require_held_devnull(devnull)
+    pid = Process.spawn(
+      environment,
+      [argv.fetch(0), argv.fetch(0)],
+      *argv.drop(1),
+      :chdir=>"/",
+      :in=>devnull,
+      :out=>stdout_w,
+      :err=>stderr_w,
+      :close_others=>true,
+      :unsetenv_others=>true
+    )
+  rescue StandardError
+    safe_close(stdout_w) if defined?(stdout_w)
+    safe_close(stderr_w) if defined?(stderr_w)
+    safe_close(devnull) if defined?(devnull)
+    stdout_thread.value if defined?(stdout_thread) && stdout_thread
+    stderr_thread.value if defined?(stderr_thread) && stderr_thread
+    safe_close(stdout_r) if defined?(stdout_r)
+    safe_close(stderr_r) if defined?(stderr_r)
+    raise
+  end
+
+  close_errors = [safe_close(stdout_w), safe_close(stderr_w), safe_close(devnull)].compact
+  begin
+    waited_pid, status = Process.wait2(pid)
+  rescue Errno::EINTR
+    retry
+  rescue StandardError
+    remain_in_reap_containment
+  end
+  remain_in_reap_containment unless waited_pid == pid
+  journal.append({
+    "child_entry_index_decimal"=>$child_entries.to_s,
+    "exited"=>status.exited?,
+    "exit_status_decimal"=>(status.exited? ? status.exitstatus.to_s : nil),
+    "label"=>label,
+    "pid_decimal"=>pid.to_s,
+    "signaled"=>status.signaled?,
+    "termsig_decimal"=>(status.signaled? ? status.termsig.to_s : nil),
+    "type"=>"EXACT_DIRECT_REAP"
+  })
+
+  stdout_capture = stdout_thread.value
+  stderr_capture = stderr_thread.value
+  result = {
+    "exited"=>status.exited?,
+    "exit_status_decimal"=>(status.exited? ? status.exitstatus.to_s : nil),
+    "label"=>label,
+    "pid_decimal"=>pid.to_s,
+    "signaled"=>status.signaled?,
+    "termsig_decimal"=>(status.signaled? ? status.termsig.to_s : nil),
+    "stdout"=>public_capture(stdout_capture),
+    "stderr"=>public_capture(stderr_capture),
+    "type"=>"CHILD_TERMINAL"
+  }
+  journal.append(result)
+  fail_build("POST_SPAWN_CLOSE_FAILURE:#{label}") unless close_errors.empty?
+  result.merge("stdout_raw"=>stdout_capture.fetch("raw"), "stderr_raw"=>stderr_capture.fetch("raw"))
+end
+
+def require_normal_zero(result, code, require_silent)
+  fail_build("#{code}:NOT_NORMAL_ZERO") unless result.fetch("exited") && result.fetch("exit_status_decimal") == "0" && !result.fetch("signaled")
+  fail_build("#{code}:STDOUT_OVERFLOW") if result.fetch("stdout").fetch("overflow")
+  fail_build("#{code}:STDERR_OVERFLOW") if result.fetch("stderr").fetch("overflow")
+  fail_build("#{code}:STDOUT_CAPTURE_ERROR") if result.fetch("stdout").fetch("capture_error")
+  fail_build("#{code}:STDERR_CAPTURE_ERROR") if result.fetch("stderr").fetch("capture_error")
+  if require_silent
+    fail_build("#{code}:STDOUT_NOT_EMPTY") unless result.fetch("stdout").fetch("bytes_decimal") == "0"
+    fail_build("#{code}:STDERR_NOT_EMPTY") unless result.fetch("stderr").fetch("bytes_decimal") == "0"
+  end
+  true
+end
+
+def retained_a_analyzer_environment
+  child_environment(A_ROOT).merge("TMPDIR"=>"#{READONLY_ANALYZER_TMP}/")
+end
+
+def compiler_argv(root)
+  object = "#{root}/#{OBJECT_LEAF}"
+  product = "#{root}/#{PRODUCT_LEAF}"
+  c = [
+    CLANG, "-target", "arm64-apple-macosx14.0", "-isysroot", SDK,
+    "-std=c17", "-O2", "-fvisibility=hidden", "-fno-common", "-Wall",
+    "-Wextra", "-Werror", "-fno-modules", "-fno-implicit-modules",
+    "-c", SOURCE_C, "-o", object
+  ]
+  swift = [
+    SWIFTC, "-swift-version", "6", "-O", "-whole-module-optimization",
+    "-parse-as-library", "-emit-executable", "-target", "arm64-apple-macosx14.0",
+    "-sdk", SDK, "-module-name", "PrimeDriverV2R19LocalArchiveBuildOuterSupervisor",
+    "-module-cache-path", "#{root}/module-cache", "-import-objc-header", SOURCE_H,
+    SOURCE_SWIFT, object, "-o", product
+  ]
+  [c, swift]
+end
+
+def analyzer_argv(root)
+  object = "#{root}/#{OBJECT_LEAF}"
+  product = "#{root}/#{PRODUCT_LEAF}"
+  [
+    ["object-defined", [LLVM_NM, "--defined-only", "--extern-only", object]],
+    ["object-undefined", [LLVM_NM, "-u", object]],
+    ["product-file", [FILE_TOOL, "-b", product]],
+    ["product-otool-header", [OTOOL, "-hv", product]],
+    ["product-otool-load-commands", [OTOOL, "-l", product]],
+    ["product-otool-linked-images", [OTOOL, "-L", product]],
+    ["product-codesign-verify", [CODESIGN, "--verify", "--strict", "--verbose=4", product]],
+    ["product-codesign-display", [CODESIGN, "-d", "--verbose=4", product]],
+    ["product-xattrs", [XATTR, "-l", product]],
+    ["product-undefined", [LLVM_NM, "-u", product]]
+  ]
+end
+
+def extract_nm_symbols(bytes)
+  bytes.lines.map { |line| line.strip.split(/\s+/).last }.compact.reject(&:empty?).sort
+end
+
+def parse_macho(io)
+  file_size = io.stat.size
+  io.rewind
+  header = io.read(32)
+  fail_build("MACHO_HEADER_SHORT") unless header && header.bytesize == 32
+  values = header.unpack("L<8")
+  magic, cpu_type, cpu_subtype, file_type, command_count, command_bytes, flags, reserved = values
+  fail_build("MACHO_MAGIC") unless magic == 0xfeedfacf
+  fail_build("MACHO_CPU") unless cpu_type == 0x0100000c
+  fail_build("MACHO_CPU_SUBTYPE") unless (cpu_subtype & 0x00ffffff) == 0
+  fail_build("MACHO_FILETYPE") unless file_type == 2
+  fail_build("MACHO_FLAGS") unless flags == 0x00200085
+  fail_build("MACHO_RESERVED") unless reserved == 0
+  fail_build("MACHO_COMMAND_CAP") unless command_count <= 128 && command_bytes <= 1_048_576
+  fail_build("MACHO_COMMAND_FILE_BOUNDS") if 32 + command_bytes > file_size
+
+  commands = io.read(command_bytes)
+  fail_build("MACHO_COMMANDS_SHORT") unless commands && commands.bytesize == command_bytes
+  offset = 0
+  uuid = nil
+  build = nil
+  main = nil
+  signature = nil
+  command_digests = []
+  seen = Hash.new(0)
+  command_count.times do
+    fail_build("MACHO_COMMAND_HEADER") if offset + 8 > commands.bytesize
+    command, size = commands.byteslice(offset, 8).unpack("L<2")
+    fail_build("MACHO_COMMAND_SIZE") if size < 8 || (size % 8) != 0 || offset + size > commands.bytesize
+    bytes = commands.byteslice(offset, size)
+    command_digests << {"command_hex"=>format("0x%08x", command), "sha256"=>Digest::SHA256.hexdigest(bytes), "size_decimal"=>size.to_s}
+    case command
+    when 0x1b
+      seen["uuid"] += 1
+      fail_build("MACHO_UUID_SIZE") unless size == 24
+      raw = bytes.byteslice(8, 16).unpack("C16")
+      hex = raw.map { |value| format("%02X", value) }.join
+      uuid = "#{hex[0,8]}-#{hex[8,4]}-#{hex[12,4]}-#{hex[16,4]}-#{hex[20,12]}"
+    when 0x32
+      seen["build"] += 1
+      fail_build("MACHO_BUILD_SIZE") unless size >= 24
+      platform, minimum, sdk, tools = bytes.byteslice(8, 16).unpack("L<4")
+      fail_build("MACHO_BUILD_TOOL_CAP") if tools > 16
+      fail_build("MACHO_BUILD_TOOL_BOUNDS") unless size == 24 + tools * 8
+      build = {"minimum_hex"=>format("0x%08x", minimum), "platform_decimal"=>platform.to_s, "sdk_hex"=>format("0x%08x", sdk), "tool_count_decimal"=>tools.to_s}
+    when 0x80000028
+      seen["main"] += 1
+      fail_build("MACHO_MAIN_SIZE") unless size == 24
+      entry, stack = bytes.byteslice(8, 16).unpack("Q<2")
+      main = {"entryoff_decimal"=>entry.to_s, "stacksize_decimal"=>stack.to_s}
+    when 0x1d
+      seen["signature"] += 1
+      fail_build("MACHO_SIGNATURE_SIZE") unless size == 16
+      data_offset, data_size = bytes.byteslice(8, 8).unpack("L<2")
+      signature = {"offset_decimal"=>data_offset.to_s, "size_decimal"=>data_size.to_s}
+    end
+    offset += size
+  end
+  fail_build("MACHO_COMMAND_COUNT_JOIN") unless offset == commands.bytesize
+  %w[uuid build main signature].each { |kind| fail_build("MACHO_#{kind.upcase}_COUNT") unless seen[kind] == 1 }
+  fail_build("MACHO_UUID_MISSING") unless uuid
+  fail_build("MACHO_BUILD_MISSING") unless build
+  fail_build("MACHO_BUILD_PLATFORM") unless build.fetch("platform_decimal") == "1"
+  fail_build("MACHO_BUILD_MINIMUM") unless build.fetch("minimum_hex") == "0x000e0000"
+  fail_build("MACHO_BUILD_SDK") unless build.fetch("sdk_hex") == "0x001a0500"
+  fail_build("MACHO_MAIN_MISSING") unless main
+  fail_build("MACHO_SIGNATURE_MISSING") unless signature
+
+  signature_offset = Integer(signature.fetch("offset_decimal"), 10)
+  signature_size = Integer(signature.fetch("size_decimal"), 10)
+  fail_build("MACHO_SIGNATURE_OFFSET_ALIGNMENT") unless (signature_offset % 16) == 0
+  fail_build("MACHO_SIGNATURE_SIZE_CAP") if signature_size < 20 || signature_size > 1_048_576
+  fail_build("MACHO_SIGNATURE_BEFORE_COMMANDS") if signature_offset < 32 + command_bytes
+  fail_build("MACHO_SIGNATURE_FILE_END") unless signature_offset + signature_size == file_size
+  fail_build("MACHO_MAIN_ENTRY_BOUNDS") unless Integer(main.fetch("entryoff_decimal"), 10) < signature_offset
+  io.rewind
+  io.seek(signature_offset)
+  signature_bytes = io.read(signature_size)
+  fail_build("MACHO_SIGNATURE_SHORT") unless signature_bytes && signature_bytes.bytesize == signature_size
+  code_directory = parse_code_directory(signature_bytes, signature_offset)
+  io.rewind
+  {
+    "build_version"=>build,
+    "code_directory"=>code_directory,
+    "command_count_decimal"=>command_count.to_s,
+    "command_digests"=>command_digests,
+    "commands_size_decimal"=>command_bytes.to_s,
+    "cpu_subtype_hex"=>format("0x%08x", cpu_subtype),
+    "header_flags_hex"=>format("0x%08x", flags),
+    "lc_code_signature"=>signature,
+    "lc_main"=>main,
+    "uuid"=>uuid
+  }
+end
+
+def parse_code_directory(signature_bytes, signature_offset)
+  fail_build("SUPERBLOB_HEADER_SHORT") if signature_bytes.bytesize < 12
+  magic, length, count = signature_bytes.byteslice(0, 12).unpack("N3")
+  fail_build("SUPERBLOB_MAGIC") unless magic == 0xfade0cc0
+  fail_build("SUPERBLOB_LENGTH") if length < 20 || length > signature_bytes.bytesize
+  fail_build("SUPERBLOB_PADDING") unless signature_bytes.byteslice(length, signature_bytes.bytesize - length).bytes.all?(&:zero?)
+  fail_build("SUPERBLOB_COUNT") unless count == 1
+  index_end = 12 + count * 8
+  fail_build("SUPERBLOB_INDEX_BOUNDS") if index_end > length
+  candidates = []
+  observed_slots = {}
+  count.times do |index|
+    slot_type, offset = signature_bytes.byteslice(12 + index * 8, 8).unpack("N2")
+    fail_build("SUPERBLOB_DUPLICATE_SLOT") if observed_slots.key?(slot_type)
+    observed_slots[slot_type] = true
+    fail_build("SUPERBLOB_BLOB_OFFSET") if offset < index_end || (offset % 4) != 0 || offset + 8 > length
+    blob_magic, blob_length = signature_bytes.byteslice(offset, 8).unpack("N2")
+    next unless blob_magic == 0xfade0c02
+    fail_build("CODEDIRECTORY_LENGTH") if blob_length < 44 || offset + blob_length > length
+    candidates << [slot_type, offset, signature_bytes.byteslice(offset, blob_length)]
+  end
+  primary = candidates.select { |entry| entry[0] == 0 }
+  fail_build("PRIMARY_CODEDIRECTORY_COUNT") unless primary.length == 1
+  slot_type, blob_offset, bytes = primary.first
+  version, flags = bytes.byteslice(8, 8).unpack("N2")
+  hash_offset, ident_offset = bytes.byteslice(16, 8).unpack("N2")
+  n_special, n_code, code_limit = bytes.byteslice(24, 12).unpack("N3")
+  hash_size, hash_type, platform, page_size = bytes.byteslice(36, 4).unpack("C4")
+  fail_build("CODEDIRECTORY_VERSION") unless version == 0x20400
+  fail_build("CODEDIRECTORY_FLAGS") unless flags == 0x20002
+  fail_build("CODEDIRECTORY_SPECIAL_SLOTS") unless n_special == 0
+  fail_build("CODEDIRECTORY_HASH_ALGORITHM") unless hash_size == 32 && hash_type == 2
+  fail_build("CODEDIRECTORY_PLATFORM") unless platform == 0
+  fail_build("CODEDIRECTORY_PAGE_SIZE") unless page_size == 12
+  fail_build("CODEDIRECTORY_CODE_LIMIT") unless code_limit == signature_offset
+  fail_build("CODEDIRECTORY_CODE_SLOT_COUNT") unless n_code == (code_limit + 4095) / 4096
+  fail_build("CODEDIRECTORY_IDENT_OFFSET") if ident_offset < 88 || ident_offset >= bytes.bytesize
+  ident_tail = bytes.byteslice(ident_offset, bytes.bytesize - ident_offset)
+  terminator = ident_tail.index("\0")
+  fail_build("CODEDIRECTORY_IDENTIFIER_TERMINATOR") unless terminator
+  identifier = ident_tail.byteslice(0, terminator)
+  fail_build("CODEDIRECTORY_IDENTIFIER") unless identifier == PRODUCT_LEAF
+  fail_build("CODEDIRECTORY_HASH_OFFSET") if hash_offset <= ident_offset + terminator || hash_offset > bytes.bytesize
+  fail_build("CODEDIRECTORY_HASH_BOUNDS") unless hash_offset + n_code * hash_size == bytes.bytesize
+  fail_build("CODEDIRECTORY_BLOB_JOIN") unless blob_offset + bytes.bytesize == length
+  result = {
+    "code_limit_decimal"=>code_limit.to_s,
+    "code_slots_decimal"=>n_code.to_s,
+    "flags_hex"=>format("0x%08x", flags),
+    "full_sha256"=>Digest::SHA256.hexdigest(bytes),
+    "hash_size_decimal"=>hash_size.to_s,
+    "hash_type_decimal"=>hash_type.to_s,
+    "identifier"=>identifier,
+    "page_size_exponent_decimal"=>page_size.to_s,
+    "size_decimal"=>bytes.bytesize.to_s,
+    "slot_type_decimal"=>slot_type.to_s,
+    "special_slots_decimal"=>n_special.to_s,
+    "version_hex"=>format("0x%08x", version)
+  }
+  fail_build("CODEDIRECTORY_EXEC_FIELDS") if bytes.bytesize < 88
+  base, limit, exec_flags = bytes.byteslice(64, 24).unpack("Q>3")
+  fail_build("CODEDIRECTORY_EXEC_BASE") unless base == 0
+  fail_build("CODEDIRECTORY_EXEC_LIMIT") if limit == 0 || limit > code_limit
+  fail_build("CODEDIRECTORY_EXEC_FLAGS") unless exec_flags == 1
+  result["executable_segment_base_decimal"] = base.to_s
+  result["executable_segment_flags_hex"] = format("0x%x", exec_flags)
+  result["executable_segment_limit_decimal"] = limit.to_s
+  result
+end
+
+def root_inventory(root)
+  files = 0
+  directories = 0
+  bytes = 0
+  byte_cap = root == A_ROOT ? 133_169_152 : 134_217_728
+  stack = [root]
+  until stack.empty?
+    current = stack.pop
+    entries = Dir.children(current).sort
+    entries.each do |leaf|
+      path = "#{current}/#{leaf}"
+      stat = File.lstat(path)
+      if stat.directory?
+        directories += 1
+        fail_build("ROOT_DIRECTORY_CAP") if directories > 4096
+        stack << path
+      elsif stat.file?
+        files += 1
+        bytes += stat.size
+        fail_build("ROOT_FILE_CAP") if files > 4096
+        fail_build("ROOT_BYTE_CAP") if bytes > byte_cap
+      else
+        fail_build("ROOT_UNSUPPORTED_NODE")
+      end
+    end
+  end
+  {"aggregate_file_bytes_decimal"=>bytes.to_s, "directories_decimal"=>directories.to_s, "files_decimal"=>files.to_s}
+end
+
+def complete_topology(root)
+  entries = []
+  walk = nil
+  walk = lambda do |current, relative|
+    Dir.children(current).sort.each do |leaf|
+      path = "#{current}/#{leaf}"
+      relative_path = relative.empty? ? leaf : "#{relative}/#{leaf}"
+      stat = File.lstat(path)
+      base = {
+        "device_decimal"=>stat.dev.to_s,
+        "gid_decimal"=>stat.gid.to_s,
+        "inode_decimal"=>stat.ino.to_s,
+        "mode"=>mode_string(stat),
+        "nlink_decimal"=>stat.nlink.to_s,
+        "path"=>relative_path,
+        "uid_decimal"=>stat.uid.to_s
+      }
+      if stat.directory?
+        entries << base.merge("type"=>"DIRECTORY")
+        walk.call(path, relative_path)
+      elsif stat.file?
+        io, identity = held_regular(path)
+        fail_build("TOPOLOGY_FILE_JOIN:#{relative_path}") unless identity.fetch("device_decimal") == stat.dev.to_s && identity.fetch("inode_decimal") == stat.ino.to_s
+        entries << base.merge(
+          "bytes_decimal"=>identity.fetch("bytes_decimal"),
+          "sha256"=>identity.fetch("sha256"),
+          "type"=>"FILE"
+        )
+        close_error = safe_close(io)
+        fail_build("TOPOLOGY_FILE_CLOSE:#{relative_path}") if close_error
+      else
+        fail_build("TOPOLOGY_UNSUPPORTED_NODE:#{relative_path}")
+      end
+    end
+  end
+  walk.call(root, "")
+  canonical = canonical_json(entries)
+  {
+    "aggregate_file_bytes_decimal"=>entries.select { |entry| entry.fetch("type") == "FILE" }.sum { |entry| Integer(entry.fetch("bytes_decimal"), 10) }.to_s,
+    "canonical_bytes_decimal"=>canonical.bytesize.to_s,
+    "canonical_sha256"=>Digest::SHA256.hexdigest(canonical),
+    "directories_decimal"=>entries.count { |entry| entry.fetch("type") == "DIRECTORY" }.to_s,
+    "entries_decimal"=>entries.length.to_s,
+    "files_decimal"=>entries.count { |entry| entry.fetch("type") == "FILE" }.to_s
+  }
+end
+
+def require_a_topology
+  observed = complete_topology(A_ROOT)
+  fail_build("A_TOPOLOGY_DRIFT") unless observed == A_TOPOLOGY_EXPECTED
+  observed
+end
+
+def validate_static_surface(build)
+  analyzers = build.fetch("analyzers")
+  defined = extract_nm_symbols(analyzers.fetch("object-defined").fetch("stdout_raw"))
+  fail_build("OBJECT_DEFINED_SYMBOLS") unless defined == DEFINED_C_SYMBOLS
+  undefined_object = extract_nm_symbols(analyzers.fetch("object-undefined").fetch("stdout_raw"))
+  forbidden_object = undefined_object & OBJECT_UNDEFINED_FORBIDDEN
+  forbidden_object.concat(undefined_object.select { |symbol| OBJECT_UNDEFINED_FORBIDDEN_PATTERNS.any? { |pattern| pattern.match?(symbol) } })
+  fail_build("OBJECT_FORBIDDEN_UNDEFINED_SYMBOLS") unless forbidden_object.empty?
+
+  file_text = analyzers.fetch("product-file").fetch("stdout_raw")
+  fail_build("PRODUCT_FILE_TYPE") unless file_text.include?("Mach-O 64-bit executable arm64")
+  header_text = analyzers.fetch("product-otool-header").fetch("stdout_raw")
+  fail_build("PRODUCT_OTOOL_HEADER") unless header_text.include?("ARM64") && header_text.include?("EXECUTE")
+  codesign_text = analyzers.fetch("product-codesign-display").fetch("stderr_raw")
+  fail_build("PRODUCT_CODESIGN_ADHOC") unless codesign_text.include?("Signature=adhoc")
+
+  library_text = analyzers.fetch("product-otool-linked-images").fetch("stdout_raw")
+  libraries = library_text.lines.drop(1).map { |line| line.strip.sub(/ \(compatibility version.*\z/, "") }.reject(&:empty?)
+  fail_build("PRODUCT_LINKED_IMAGES_EMPTY") if libraries.empty?
+  fail_build("PRODUCT_LINKED_IMAGE_DUPLICATE") unless libraries.uniq == libraries
+  fail_build("PRODUCT_LINKED_IMAGES_EXACT") unless libraries == EXPECTED_LINKED_IMAGES
+  fail_build("PRODUCT_LINKED_IMAGE_FORBIDDEN") unless (libraries - ALLOWED_LINKED_IMAGES).empty?
+
+  undefined_product = extract_nm_symbols(analyzers.fetch("product-undefined").fetch("stdout_raw"))
+  fail_build("PRODUCT_UNDEFINED_SYMBOL_COUNT") unless undefined_product.length == 202
+  process_control_symbols = undefined_product.select { |symbol| PROCESS_CONTROL_SYMBOL_PATTERNS.any? { |pattern| pattern.match?(symbol) } }.sort
+  fail_build("PRODUCT_PROCESS_CONTROL_SYMBOLS") unless process_control_symbols == ALLOWED_PROCESS_CONTROL_SYMBOLS
+  direct_xpc = undefined_product.select { |symbol| symbol.start_with?("_xpc_") }.sort
+  xpc_named = undefined_product.select { |symbol| symbol.include?("XPC") }.sort
+  nstask = undefined_product.select { |symbol| symbol.include?("NSTask") }.sort
+  rename_family = undefined_product.select { |symbol| /\A_rename.*/.match?(symbol) }.sort
+  fail_build("PRODUCT_DIRECT_XPC_SYMBOLS") unless direct_xpc.empty?
+  fail_build("PRODUCT_XPC_NAMED_SYMBOLS") unless xpc_named == [XPC_FORCE_LOAD_ANCHOR]
+  fail_build("PRODUCT_NSTASK_SYMBOLS") unless nstask.empty?
+  fail_build("PRODUCT_RENAME_SYMBOLS") unless rename_family.empty?
+  forbidden = undefined_product & FORBIDDEN_PRODUCT_SYMBOLS
+  forbidden.concat(undefined_product.select { |symbol| FORBIDDEN_PRODUCT_SYMBOL_PATTERNS.any? { |pattern| pattern.match?(symbol) } })
+  fail_build("PRODUCT_FORBIDDEN_SYMBOLS_CRS31") unless forbidden.uniq.empty?
+  xattr_bytes = analyzers.fetch("product-xattrs").fetch("stdout_raw")
+  xattr_names = xattr_bytes.lines.map { |line| match = /\A([^:\n]+):/.match(line); match && match[1] }.compact
+  fail_build("PRODUCT_XATTR_DUPLICATE") unless xattr_names.uniq == xattr_names
+  fail_build("PRODUCT_XATTR_FORBIDDEN") unless (xattr_names - ["com.apple.provenance"]).empty?
+  {
+    "c_defined_symbols"=>defined,
+    "c_undefined_symbols"=>undefined_object,
+    "direct_xpc_api_symbols"=>direct_xpc,
+    "linked_images"=>libraries,
+    "nstask_symbols"=>nstask,
+    "process_control_symbols"=>process_control_symbols,
+    "product_undefined_symbols"=>undefined_product,
+    "rename_family_symbols"=>rename_family,
+    "xpc_named_symbols"=>xpc_named,
+    "product_xattr_names"=>xattr_names,
+    "product_xattr_stdout_sha256"=>Digest::SHA256.hexdigest(xattr_bytes)
+  }
+end
+
+def normalize_capture(bytes, root, analyzer_label)
+  product = "#{root}/#{PRODUCT_LEAF}"
+  escaped = Regexp.escape(product)
+  case analyzer_label
+  when "product-otool-header", "product-otool-load-commands", "product-otool-linked-images"
+    bytes.sub(/\A#{escaped}(?=:?\n|\z)/, "<PRODUCT>")
+  when "product-codesign-verify", "product-xattrs"
+    bytes.gsub(/^#{escaped}(?=:)/, "<PRODUCT>")
+  when "product-codesign-display"
+    bytes.gsub(/^Executable=#{escaped}$/, "Executable=<PRODUCT>")
+  else
+    bytes
+  end
+end
+
+def compare_held(left, right)
+  left.rewind
+  right.rewind
+  loop do
+    a = left.read(65_536)
+    b = right.read(65_536)
+    return true if (a.nil? || a.empty?) && (b.nil? || b.empty?)
+    return false unless a == b
+  end
+ensure
+  left.rewind
+  right.rewind
+end
+
+def verify_swiftc_link
+  stat = File.lstat(SWIFTC)
+  fail_build("SWIFTC_NOT_SYMLINK") unless stat.symlink?
+  expected_lstat = {"device_decimal"=>"16777231", "inode_decimal"=>"1118435", "uid_decimal"=>"0", "gid_decimal"=>"0", "mode"=>"0755", "nlink_decimal"=>"1", "bytes_decimal"=>"14"}
+  observed_lstat = {"device_decimal"=>stat.dev.to_s, "inode_decimal"=>stat.ino.to_s, "uid_decimal"=>stat.uid.to_s, "gid_decimal"=>stat.gid.to_s, "mode"=>mode_string(stat), "nlink_decimal"=>stat.nlink.to_s, "bytes_decimal"=>stat.size.to_s}
+  fail_build("SWIFTC_LSTAT_MISMATCH") unless observed_lstat == expected_lstat
+  fail_build("SWIFTC_TARGET_MISMATCH") unless File.readlink(SWIFTC) == "swift-frontend"
+  fail_build("SWIFTC_REALPATH_MISMATCH") unless File.realpath(SWIFTC) == SWIFT_FRONTEND
+  require_identity(SWIFT_FRONTEND, TOOL_EXPECTED.fetch(SWIFT_FRONTEND))
+end
+
+def verify_sdk
+  sdk_stat = File.lstat(SDK)
+  fail_build("SDK_NOT_SYMLINK") unless sdk_stat.symlink?
+  expected_lstat = {"device_decimal"=>"16777231", "inode_decimal"=>"1082900", "uid_decimal"=>"0", "gid_decimal"=>"0", "mode"=>"0755", "nlink_decimal"=>"1", "bytes_decimal"=>"10"}
+  observed_lstat = {"device_decimal"=>sdk_stat.dev.to_s, "inode_decimal"=>sdk_stat.ino.to_s, "uid_decimal"=>sdk_stat.uid.to_s, "gid_decimal"=>sdk_stat.gid.to_s, "mode"=>mode_string(sdk_stat), "nlink_decimal"=>sdk_stat.nlink.to_s, "bytes_decimal"=>sdk_stat.size.to_s}
+  fail_build("SDK_LSTAT_MISMATCH") unless observed_lstat == expected_lstat
+  fail_build("SDK_TARGET_MISMATCH") unless File.readlink(SDK) == "MacOSX.sdk"
+  fail_build("SDK_REALPATH_MISMATCH") unless File.realpath(SDK) == "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk"
+  require_identity(SDK_SETTINGS, TOOL_EXPECTED.fetch(SDK_SETTINGS))
+end
+
+def verify_fixed_inputs
+  SOURCE_EXPECTED.each { |path, expected| require_identity(path, expected) }
+  HEADER_EXPECTED.each { |path, expected| require_identity(path, expected) }
+  TOOL_EXPECTED.each { |path, expected| require_identity(path, expected) }
+  POLICY_INPUT_EXPECTED.each { |path, expected| require_identity(path, expected) }
+  require_parent_identity(READONLY_ANALYZER_TMP, {"device_decimal"=>"16777231", "inode_decimal"=>"774080", "uid_decimal"=>"0", "gid_decimal"=>"3", "mode"=>"0755", "type"=>"DIRECTORY"})
+  verify_swiftc_link
+  verify_sdk
+  swift_io, swift_identity = held_regular(SOURCE_SWIFT)
+  fail_build("SOURCE_SWIFT_IDENTITY_REJOIN") unless swift_identity == SOURCE_EXPECTED.fetch(SOURCE_SWIFT)
+  swift_bytes = swift_io.read
+  swift_io.rewind
+  fail_build("SOURCE_SWIFT_A_PRODUCT_LITERAL_COUNT") unless swift_bytes.scan(A_PRODUCT_PATH).length == 1
+  fail_build("SOURCE_SWIFT_B2_LITERAL_PRESENT") if swift_bytes.include?(B_ROOT)
+  close_error = safe_close(swift_io)
+  fail_build("SOURCE_SWIFT_CLOSE") if close_error
+  true
+end
+
+def require_readonly_analyzer_tmp(readonly_tmp_io)
+  observed = require_directory_join(READONLY_ANALYZER_TMP, readonly_tmp_io, "0755")
+  expected = {
+    "device_decimal"=>"16777231",
+    "gid_decimal"=>"3",
+    "inode_decimal"=>"774080",
+    "mode"=>"0755",
+    "nlink_decimal"=>"2",
+    "uid_decimal"=>"0"
+  }
+  fail_build("READONLY_ANALYZER_TMP_DRIFT") unless observed == expected
+  fail_build("READONLY_ANALYZER_TMP_EFFECTIVE_WRITABLE") if File.writable?(READONLY_ANALYZER_TMP)
+  observed
+end
+
+def verify_protected_conjunction(tmp_parent_io, archive_parent_io, stage, evidence_root_io, b_root_io=nil)
+  require_directory_join(TMP_PARENT, tmp_parent_io, "1777")
+  require_directory_join(ARCHIVE_PARENT, archive_parent_io, "0700")
+  evidence_identity = require_directory_join(EVIDENCE_ROOT, evidence_root_io, "0700")
+  fail_build("EVIDENCE_ROOT_OWNER:#{stage}") unless evidence_identity.fetch("uid_decimal") == "501" && evidence_identity.fetch("gid_decimal") == "20"
+  require_absent(OLD_B_ROOT, "#{stage}:OLD_B_ROOT")
+  if b_root_io
+    b_identity = require_directory_join(B_ROOT, b_root_io, "0700")
+    fail_build("B2_ROOT_OWNER:#{stage}") unless b_identity.fetch("uid_decimal") == "501" && b_identity.fetch("gid_decimal") == "20"
+  else
+    require_absent(B_ROOT, "#{stage}:B2_ROOT")
+  end
+  require_absent(ARCHIVE_STAGING, "#{stage}:ARCHIVE_STAGING")
+  require_absent(ARCHIVE_FINAL, "#{stage}:ARCHIVE_FINAL")
+  [FUTURE_RUNTIME_ROOT, FUTURE_PUBLISHER_A, FUTURE_PUBLISHER_B].each_with_index do |path, index|
+    require_absent(path, "#{stage}:FUTURE_NAMESPACE_#{index + 1}")
+  end
+  true
+end
+
+def create_directory_step(journal, root, root_io, leaf, label)
+  path = "#{root}/#{leaf}"
+  require_directory_join(root, root_io, "0700")
+  require_absent(path, "#{label}:PRE")
+  journal.append({"label"=>label, "path"=>path, "type"=>"DIRECTORY_CREATE_COMMITMENT"})
+  Dir.mkdir(path, 0o700)
+  child = open_directory(path)
+  fail_build("DIRECTORY_MODE:#{label}") unless mode_string(child.stat) == "0700"
+  fail_build("DIRECTORY_UID:#{label}") unless child.stat.uid == 501
+  fail_build("DIRECTORY_GID:#{label}") unless child.stat.gid == 20
+  durable_sync(child, "#{label}:CHILD")
+  durable_sync(root_io, "#{label}:ROOT")
+  require_directory_join(root, root_io, "0700")
+  journal.append({"identity"=>{"device_decimal"=>child.stat.dev.to_s, "inode_decimal"=>child.stat.ino.to_s, "mode"=>mode_string(child.stat)}, "label"=>label, "type"=>"DIRECTORY_CREATED"})
+  child.close
+end
+
+def capture_raw(public_capture, label)
+  fail_build("HISTORICAL_CAPTURE_OVERFLOW:#{label}") if public_capture.fetch("overflow")
+  fail_build("HISTORICAL_CAPTURE_ERROR:#{label}") if public_capture.fetch("capture_error")
+  fail_build("HISTORICAL_CAPTURE_INCOMPLETE:#{label}") unless public_capture.fetch("bytes_decimal") == public_capture.fetch("prefix_bytes_decimal")
+  raw = Base64.strict_decode64(public_capture.fetch("prefix_base64"))
+  fail_build("HISTORICAL_CAPTURE_BYTES:#{label}") unless raw.bytesize.to_s == public_capture.fetch("bytes_decimal")
+  fail_build("HISTORICAL_CAPTURE_SHA:#{label}") unless Digest::SHA256.hexdigest(raw) == public_capture.fetch("sha256")
+  raw
+rescue ArgumentError
+  fail_build("HISTORICAL_CAPTURE_BASE64:#{label}")
+end
+
+def validate_original_journal(journal_io)
+  require_held_identity("#{A_ROOT}/#{ORIGINAL_JOURNAL_LEAF}", journal_io, A_JOURNAL_EXPECTED)
+  journal_io.rewind
+  bytes = journal_io.read(JOURNAL_MAX_BYTES + 1)
+  journal_io.rewind
+  fail_build("ORIGINAL_JOURNAL_BYTE_CAP") if bytes.bytesize > JOURNAL_MAX_BYTES
+  fail_build("ORIGINAL_JOURNAL_BYTES") unless bytes.bytesize.to_s == A_JOURNAL_EXPECTED.fetch("bytes_decimal")
+  fail_build("ORIGINAL_JOURNAL_LF") unless bytes.end_with?("\n")
+  lines = bytes.lines
+  fail_build("ORIGINAL_JOURNAL_RECORD_COUNT") unless lines.length == ORIGINAL_JOURNAL_RECORD_COUNT
+  previous = "0" * 64
+  frames = lines.each_with_index.map do |line, index|
+    fail_build("ORIGINAL_JOURNAL_FRAME_LF") unless line.end_with?("\n")
+    frame = JSON.parse(line.byteslice(0, line.bytesize - 1))
+    fail_build("ORIGINAL_JOURNAL_CANONICAL") unless canonical_json(frame) + "\n" == line
+    digest = frame.fetch("record_sha256")
+    core = frame.reject { |key, _| key == "record_sha256" }
+    fail_build("ORIGINAL_JOURNAL_SEQUENCE") unless core.fetch("sequence_decimal") == index.to_s
+    fail_build("ORIGINAL_JOURNAL_PREDECESSOR") unless core.fetch("predecessor_record_sha256") == previous
+    fail_build("ORIGINAL_JOURNAL_RECORD_DIGEST") unless Digest::SHA256.hexdigest(canonical_json(core)) == digest
+    previous = digest
+    frame
+  end
+  fail_build("ORIGINAL_JOURNAL_TAIL") unless previous == ORIGINAL_JOURNAL_TAIL_SHA256
+  fail_build("ORIGINAL_JOURNAL_ARTIFACT_RECORD") unless frames.fetch(10).fetch("record_sha256") == ORIGINAL_JOURNAL_ARTIFACT_RECORD_SHA256
+  artifact = frames.fetch(10).fetch("event")
+  fail_build("ORIGINAL_JOURNAL_ARTIFACT_TYPE") unless artifact.fetch("type") == "BUILD_ARTIFACTS_DURABLE" && artifact.fetch("label") == "A"
+  fail_build("ORIGINAL_JOURNAL_ARTIFACT_OBJECT") unless artifact.fetch("object") == A_OBJECT_EXPECTED
+  fail_build("ORIGINAL_JOURNAL_ARTIFACT_PRODUCT") unless artifact.fetch("product") == A_PRODUCT_EXPECTED
+  fail_build("ORIGINAL_JOURNAL_DECISIVE_RECORD") unless frames.fetch(30).fetch("record_sha256") == ORIGINAL_JOURNAL_DECISIVE_RECORD_SHA256
+  terminal = frames.fetch(31).fetch("event")
+  fail_build("ORIGINAL_JOURNAL_TERMINAL") unless terminal == {
+    "error_class"=>"BuildFailure",
+    "error_code"=>"PRODUCT_FORBIDDEN_SYMBOLS",
+    "interpretation"=>"REQUIRES_EXACT_OUTER_EXIT_AND_SUCCESSOR_CHAIN_VALIDATION",
+    "status"=>"FAIL_CANDIDATE",
+    "type"=>"CONTROLLER_TERMINAL"
+  }
+  fail_build("ORIGINAL_JOURNAL_STATIC_PASS_PRESENT") unless frames.count { |frame| frame.fetch("event").fetch("type") == "BUILD_STATIC_ADMISSION_PASS" } == 0
+
+  expected = {}
+  analyzer_argv(A_ROOT).each do |analyzer_label, _|
+    label = "A:#{analyzer_label}"
+    matches = frames.select { |frame| frame.fetch("event").fetch("type") == "CHILD_TERMINAL" && frame.fetch("event")["label"] == label }
+    fail_build("ORIGINAL_ANALYZER_TERMINAL_COUNT:#{analyzer_label}") unless matches.length == 1
+    event = matches.first.fetch("event")
+    fail_build("ORIGINAL_ANALYZER_STATUS:#{analyzer_label}") unless event.fetch("exited") && event.fetch("exit_status_decimal") == "0" && !event.fetch("signaled") && event.fetch("termsig_decimal").nil?
+    expected[analyzer_label] = {
+      "event"=>event,
+      "stdout_raw"=>capture_raw(event.fetch("stdout"), "#{analyzer_label}:stdout"),
+      "stderr_raw"=>capture_raw(event.fetch("stderr"), "#{analyzer_label}:stderr")
+    }
+  end
+  fail_build("ORIGINAL_DECISIVE_CAPTURE_SHA") unless expected.fetch("product-undefined").fetch("stdout_raw").bytesize == 5207 && Digest::SHA256.hexdigest(expected.fetch("product-undefined").fetch("stdout_raw")) == "db0b7e35c1f2abae5e474f0d546fed45b8f937e7e52c9eedb8d32f16039bed64"
+  expected
+rescue JSON::ParserError, KeyError
+  fail_build("ORIGINAL_JOURNAL_SCHEMA")
+end
+
+def require_a_conjunction(a_root_io, a_journal_io, a_object_io, a_product_io)
+  root_identity = require_directory_join(A_ROOT, a_root_io, "0700")
+  fail_build("A_ROOT_IDENTITY_DRIFT") unless root_identity == A_ROOT_EXPECTED
+  require_held_identity("#{A_ROOT}/#{ORIGINAL_JOURNAL_LEAF}", a_journal_io, A_JOURNAL_EXPECTED)
+  require_held_identity("#{A_ROOT}/#{OBJECT_LEAF}", a_object_io, A_OBJECT_EXPECTED)
+  require_held_identity("#{A_ROOT}/#{PRODUCT_LEAF}", a_product_io, A_PRODUCT_EXPECTED)
+  require_a_topology
+end
+
+def analyze_retained_a(journal, a_root_io, a_journal_io, a_object_io, a_product_io, historical, tmp_parent_io, archive_parent_io, evidence_root_io, readonly_tmp_io)
+  environment = retained_a_analyzer_environment
+  analyzers = {}
+  analyzer_argv(A_ROOT).each_with_index do |(analyzer_label, argv), index|
+    require_readonly_analyzer_tmp(readonly_tmp_io)
+    require_identity(argv.first, TOOL_EXPECTED.fetch(argv.first))
+    require_directory_join(A_ROOT, a_root_io, "0700")
+    require_held_identity("#{A_ROOT}/#{ORIGINAL_JOURNAL_LEAF}", a_journal_io, A_JOURNAL_EXPECTED)
+    require_held_identity("#{A_ROOT}/#{OBJECT_LEAF}", a_object_io, A_OBJECT_EXPECTED)
+    require_held_identity("#{A_ROOT}/#{PRODUCT_LEAF}", a_product_io, A_PRODUCT_EXPECTED)
+    result = run_child(journal, "A-REPLAY:#{analyzer_label}", argv, environment, 4_194_304)
+    require_normal_zero(result, "A-REPLAY:#{analyzer_label}", false)
+    expected = historical.fetch(analyzer_label)
+    expected_event = expected.fetch("event")
+    fail_build("A_REPLAY_EXIT_DRIFT:#{analyzer_label}") unless result.fetch("exit_status_decimal") == expected_event.fetch("exit_status_decimal") && result.fetch("exited") == expected_event.fetch("exited") && result.fetch("signaled") == expected_event.fetch("signaled") && result.fetch("termsig_decimal") == expected_event.fetch("termsig_decimal")
+    fail_build("A_REPLAY_STDOUT_METADATA_DRIFT:#{analyzer_label}") unless result.fetch("stdout") == expected_event.fetch("stdout")
+    fail_build("A_REPLAY_STDERR_METADATA_DRIFT:#{analyzer_label}") unless result.fetch("stderr") == expected_event.fetch("stderr")
+    fail_build("A_REPLAY_STDOUT_RAW_DRIFT:#{analyzer_label}") unless result.fetch("stdout_raw") == expected.fetch("stdout_raw")
+    fail_build("A_REPLAY_STDERR_RAW_DRIFT:#{analyzer_label}") unless result.fetch("stderr_raw") == expected.fetch("stderr_raw")
+    journal.append({"analyzer_index_decimal"=>(index + 1).to_s, "label"=>analyzer_label, "type"=>"RETAINED_A_HISTORICAL_ANALYZER_RAW_EQUAL"})
+    analyzers[analyzer_label] = result
+  end
+  verify_fixed_inputs
+  require_readonly_analyzer_tmp(readonly_tmp_io)
+  verify_protected_conjunction(tmp_parent_io, archive_parent_io, "A_REPLAY_POST", evidence_root_io)
+  require_a_conjunction(a_root_io, a_journal_io, a_object_io, a_product_io)
+  macho = parse_macho(a_product_io)
+  surface = validate_static_surface({"analyzers"=>analyzers})
+  journal.append({
+    "artifact_identities"=>{"object"=>A_OBJECT_EXPECTED, "product"=>A_PRODUCT_EXPECTED},
+    "corrected_policy"=>"XPC_NAMED_EXACT_SINGLE_SWIFT_FORCE_LOAD_ANCHOR_DIRECT_XPC_EMPTY_ALL_OTHER_DENIES_PRESERVED",
+    "crs29_static_pass"=>false,
+    "historical_raw_analyzer_equal_count_decimal"=>"10",
+    "macho"=>macho,
+    "surface"=>surface,
+    "type"=>"RETAINED_A_SUCCESSOR_STATIC_ADMISSION"
+  })
+  {"analyzers"=>analyzers, "macho"=>macho, "object_identity"=>A_OBJECT_EXPECTED, "object_io"=>a_object_io, "product_identity"=>A_PRODUCT_EXPECTED, "product_io"=>a_product_io, "surface"=>surface}
+end
+
+def build_b2(journal, root, root_io, tmp_parent_io, archive_parent_io, evidence_root_io)
+  environment = child_environment(root)
+  c_argv, swift_argv = compiler_argv(root)
+  require_directory_join(root, root_io, "0700")
+  verify_fixed_inputs
+  c_result = run_child(journal, "B2:compiler-c", c_argv, environment, 1_048_576)
+  require_normal_zero(c_result, "B2:COMPILER_C", true)
+  require_directory_join(root, root_io, "0700")
+
+  verify_fixed_inputs
+  swift_result = run_child(journal, "B2:compiler-swift-link", swift_argv, environment, 1_048_576)
+  require_normal_zero(swift_result, "B2:COMPILER_SWIFT", true)
+  require_directory_join(root, root_io, "0700")
+
+  object_io, object_identity = held_regular("#{root}/#{OBJECT_LEAF}")
+  product_io, product_preseal_identity = held_regular("#{root}/#{PRODUCT_LEAF}")
+  fail_build("B2:OBJECT_MODE") unless object_identity.fetch("mode") == "0600"
+  fail_build("B2:OBJECT_NLINK") unless object_identity.fetch("nlink_decimal") == "1"
+  fail_build("B2:OBJECT_UID") unless object_identity.fetch("uid_decimal") == "501"
+  fail_build("B2:OBJECT_GID") unless object_identity.fetch("gid_decimal") == "20"
+  fail_build("B2:OBJECT_CAP") if Integer(object_identity.fetch("bytes_decimal"), 10) > 4_194_304
+  fail_build("B2:PRODUCT_PRESEAL_MODE") unless product_preseal_identity.fetch("mode") == "0700"
+  fail_build("B2:PRODUCT_NLINK") unless product_preseal_identity.fetch("nlink_decimal") == "1"
+  fail_build("B2:PRODUCT_UID") unless product_preseal_identity.fetch("uid_decimal") == "501"
+  fail_build("B2:PRODUCT_GID") unless product_preseal_identity.fetch("gid_decimal") == "20"
+  fail_build("B2:PRODUCT_CAP") if Integer(product_preseal_identity.fetch("bytes_decimal"), 10) > 16_777_216
+  fail_build("B2:OBJECT_PRODUCT_VNODE_ALIAS") if object_identity.fetch("device_decimal") == product_preseal_identity.fetch("device_decimal") && object_identity.fetch("inode_decimal") == product_preseal_identity.fetch("inode_decimal")
+
+  durable_sync(object_io, "B2:OBJECT")
+  durable_sync(product_io, "B2:PRODUCT_PRESEAL")
+  durable_sync(root_io, "B2:ARTIFACT_ROOT_PRESEAL")
+  journal.append({"label"=>"B2", "object"=>object_identity, "product_preseal"=>product_preseal_identity, "type"=>"BUILD_ARTIFACTS_DURABLE_PRESEAL"})
+
+  fail_build("B2:PRODUCT_FCHMOD") unless product_io.chmod(0o400) == 0
+  durable_sync(product_io, "B2:PRODUCT_POSTSEAL")
+  durable_sync(root_io, "B2:ARTIFACT_ROOT_POSTSEAL")
+  product_identity = identity_from_held(product_io)
+  expected_postseal = product_preseal_identity.merge("mode"=>"0400")
+  fail_build("B2:PRODUCT_POSTSEAL_IDENTITY") unless product_identity == expected_postseal
+  require_held_identity("#{root}/#{PRODUCT_LEAF}", product_io, product_identity)
+  journal.append({"product_postseal"=>product_identity, "product_preseal"=>product_preseal_identity, "type"=>"B2_PRODUCT_DESCRIPTOR_MODE_SEALED_0400"})
+
+  macho = parse_macho(product_io)
+  analyzers = {}
+  analyzer_argv(root).each do |analyzer_label, argv|
+    require_identity(argv.first, TOOL_EXPECTED.fetch(argv.first))
+    require_named_join("#{root}/#{OBJECT_LEAF}", object_io)
+    require_named_join("#{root}/#{PRODUCT_LEAF}", product_io)
+    require_directory_join(root, root_io, "0700")
+    result = run_child(journal, "B2:#{analyzer_label}", argv, environment, 4_194_304)
+    require_normal_zero(result, "B2:#{analyzer_label}", false)
+    require_directory_join(root, root_io, "0700")
+    analyzers[analyzer_label] = result
+  end
+
+  require_held_identity("#{root}/#{OBJECT_LEAF}", object_io, object_identity)
+  require_held_identity("#{root}/#{PRODUCT_LEAF}", product_io, product_identity)
+  surface = validate_static_surface({"analyzers"=>analyzers})
+  inventory = root_inventory(root)
+  verify_fixed_inputs
+  verify_protected_conjunction(tmp_parent_io, archive_parent_io, "B2_POST_ANALYZER", evidence_root_io, root_io)
+  require_held_identity("#{root}/#{OBJECT_LEAF}", object_io, object_identity)
+  require_held_identity("#{root}/#{PRODUCT_LEAF}", product_io, product_identity)
+  require_directory_join(root, root_io, "0700")
+  journal.append({"artifact_identities"=>{"object"=>object_identity, "product"=>product_identity}, "label"=>"B2", "macho"=>macho, "root_inventory"=>inventory, "surface"=>surface, "type"=>"B2_STATIC_ADMISSION_PASS"})
+  {"analyzers"=>analyzers, "macho"=>macho, "object_identity"=>object_identity, "object_io"=>object_io, "product_identity"=>product_identity, "product_io"=>product_io, "surface"=>surface}
+rescue StandardError
+  object_io.close if defined?(object_io) && object_io && !object_io.closed?
+  product_io.close if defined?(product_io) && product_io && !product_io.closed?
+  raise
+end
+
+journal = nil
+tmp_parent_io = nil
+archive_parent_io = nil
+evidence_root_io = nil
+readonly_tmp_io = nil
+a_root_io = nil
+a_journal_io = nil
+a_object_io = nil
+a_product_io = nil
+b_root_io = nil
+a_build = nil
+b_build = nil
+$child_entries = 0
+
+begin
+  fail_build("ARGV_NOT_EMPTY") unless ARGV.empty?
+  fail_build("ENV_MISMATCH") unless ENV.to_h == CONTROLLER_ENVIRONMENT
+  fail_build("CWD_NOT_ROOT") unless Dir.pwd == "/"
+  fail_build("REAL_UID_MISMATCH") unless Process.uid == 501
+  fail_build("EFFECTIVE_UID_MISMATCH") unless Process.euid == 501
+  fail_build("REAL_GID_MISMATCH") unless Process.gid == 20
+  fail_build("EFFECTIVE_GID_MISMATCH") unless Process.egid == 20
+  File.umask(0o077)
+
+  require_parent_identity(TMP_PARENT, {"device_decimal"=>"16777231", "inode_decimal"=>"774813", "uid_decimal"=>"0", "gid_decimal"=>"0", "mode"=>"1777", "type"=>"DIRECTORY"})
+  require_parent_identity(ARCHIVE_PARENT, {"device_decimal"=>"16777231", "inode_decimal"=>"341832", "uid_decimal"=>"501", "gid_decimal"=>"20", "mode"=>"0700", "type"=>"DIRECTORY"})
+  require_absent(EVIDENCE_ROOT, "EVIDENCE_ROOT_INITIAL")
+  require_absent(B_ROOT, "B2_ROOT_INITIAL")
+  require_absent(OLD_B_ROOT, "OLD_B_ROOT_INITIAL")
+  require_absent(ARCHIVE_STAGING, "ARCHIVE_STAGING_INITIAL")
+  require_absent(ARCHIVE_FINAL, "ARCHIVE_FINAL_INITIAL")
+  [FUTURE_RUNTIME_ROOT, FUTURE_PUBLISHER_A, FUTURE_PUBLISHER_B].each_with_index { |path, index| require_absent(path, "FUTURE_NAMESPACE_INITIAL_#{index + 1}") }
+  verify_fixed_inputs
+
+  tmp_parent_io = open_directory(TMP_PARENT)
+  tmp_identity = require_directory_join(TMP_PARENT, tmp_parent_io, "1777")
+  fail_build("TMP_PARENT_HELD_IDENTITY") unless tmp_identity.fetch("device_decimal") == "16777231" && tmp_identity.fetch("inode_decimal") == "774813" && tmp_identity.fetch("uid_decimal") == "0" && tmp_identity.fetch("gid_decimal") == "0"
+  archive_parent_io = open_directory(ARCHIVE_PARENT)
+  archive_identity = require_directory_join(ARCHIVE_PARENT, archive_parent_io, "0700")
+  fail_build("ARCHIVE_PARENT_HELD_IDENTITY") unless archive_identity.fetch("device_decimal") == "16777231" && archive_identity.fetch("inode_decimal") == "341832" && archive_identity.fetch("uid_decimal") == "501" && archive_identity.fetch("gid_decimal") == "20"
+  readonly_tmp_io = open_directory(READONLY_ANALYZER_TMP)
+  require_readonly_analyzer_tmp(readonly_tmp_io)
+
+  preexisting_a_root_io = open_directory(A_ROOT)
+  preexisting_a_root_identity = require_directory_join(A_ROOT, preexisting_a_root_io, "0700")
+  fail_build("A_ROOT_PREFLIGHT_IDENTITY") unless preexisting_a_root_identity == A_ROOT_EXPECTED
+  preexisting_a_root_close_error = safe_close(preexisting_a_root_io)
+  fail_build("A_ROOT_PREFLIGHT_CLOSE") if preexisting_a_root_close_error
+  require_a_topology
+  require_absent(EVIDENCE_ROOT, "EVIDENCE_ROOT_IMMEDIATE")
+  require_directory_join(TMP_PARENT, tmp_parent_io, "1777")
+  Dir.mkdir(EVIDENCE_ROOT, 0o700)
+  evidence_root_io = open_directory(EVIDENCE_ROOT)
+  fail_build("EVIDENCE_ROOT_MODE") unless mode_string(evidence_root_io.stat) == "0700"
+  evidence_root_identity = require_directory_join(EVIDENCE_ROOT, evidence_root_io, "0700")
+  fail_build("EVIDENCE_ROOT_UID") unless evidence_root_identity.fetch("uid_decimal") == "501"
+  fail_build("EVIDENCE_ROOT_GID") unless evidence_root_identity.fetch("gid_decimal") == "20"
+  journal = DurableJournal.new(EVIDENCE_ROOT, evidence_root_io, tmp_parent_io)
+  journal.append({
+    "authorization_basis"=>"USER_POST_CRS30_POST_DISCLOSURE_EXPLICIT_AUTHORIZED_TO_CONTINUE_ARC",
+    "child_entry_ceiling_decimal"=>MAX_CHILD_ENTRIES.to_s,
+    "controller_payload_sha256"=>CONTROLLER_PAYLOAD_SHA256,
+    "crs29_fail_preserved"=>true,
+    "evidence_root_identity"=>evidence_root_identity,
+    "implementation_predecessor_commit"=>"de27f2c70152f632aaabb1c80b6d323ab6d5462c",
+    "implementation_predecessor_tree"=>"81239fad952854aa59410524e7e8dd5db6f5a253",
+    "ruby_visible_environment_pairs"=>ENV.keys.sort.map { |key| [key, ENV.fetch(key)] },
+    "type"=>"CRS31_CONTROLLER_START"
+  })
+  durable_sync(evidence_root_io, "EVIDENCE_ROOT_INITIAL")
+  durable_sync(tmp_parent_io, "TMP_PARENT_AFTER_EVIDENCE")
+  journal.append({"type"=>"CRS31_EVIDENCE_ROOT_AND_JOURNAL_DURABLE"})
+
+  a_root_io = open_directory(A_ROOT)
+  a_journal_io, a_journal_identity = held_regular("#{A_ROOT}/#{ORIGINAL_JOURNAL_LEAF}")
+  fail_build("A_JOURNAL_INITIAL_IDENTITY") unless a_journal_identity == A_JOURNAL_EXPECTED
+  a_object_io, a_object_identity = held_regular("#{A_ROOT}/#{OBJECT_LEAF}")
+  fail_build("A_OBJECT_INITIAL_IDENTITY") unless a_object_identity == A_OBJECT_EXPECTED
+  a_product_io, a_product_identity = held_regular("#{A_ROOT}/#{PRODUCT_LEAF}")
+  fail_build("A_PRODUCT_INITIAL_IDENTITY") unless a_product_identity == A_PRODUCT_EXPECTED
+  historical = validate_original_journal(a_journal_io)
+  require_a_conjunction(a_root_io, a_journal_io, a_object_io, a_product_io)
+  verify_protected_conjunction(tmp_parent_io, archive_parent_io, "A_INITIAL", evidence_root_io)
+  journal.append({
+    "historical_analyzer_count_decimal"=>historical.length.to_s,
+    "original_journal_identity"=>a_journal_identity,
+    "original_journal_tail_sha256"=>ORIGINAL_JOURNAL_TAIL_SHA256,
+    "retained_a_object"=>a_object_identity,
+    "retained_a_product"=>a_product_identity,
+    "retained_a_topology"=>A_TOPOLOGY_EXPECTED,
+    "type"=>"RETAINED_A_EXACT_READ_ONLY_ADMISSION_INPUT"
+  })
+
+  a_build = analyze_retained_a(journal, a_root_io, a_journal_io, a_object_io, a_product_io, historical, tmp_parent_io, archive_parent_io, evidence_root_io, readonly_tmp_io)
+
+  verify_fixed_inputs
+  verify_protected_conjunction(tmp_parent_io, archive_parent_io, "A_ADMITTED_PRE_B2", evidence_root_io)
+  require_a_conjunction(a_root_io, a_journal_io, a_object_io, a_product_io)
+  require_absent(B_ROOT, "B2_ROOT_IMMEDIATE")
+  journal.append({"path"=>B_ROOT, "type"=>"B2_ROOT_CREATE_COMMITMENT"})
+  Dir.mkdir(B_ROOT, 0o700)
+  b_root_io = open_directory(B_ROOT)
+  fail_build("B2_ROOT_MODE") unless mode_string(b_root_io.stat) == "0700"
+  b_root_identity = require_directory_join(B_ROOT, b_root_io, "0700")
+  fail_build("B2_ROOT_UID") unless b_root_identity.fetch("uid_decimal") == "501"
+  fail_build("B2_ROOT_GID") unless b_root_identity.fetch("gid_decimal") == "20"
+  durable_sync(b_root_io, "B2_ROOT_INITIAL")
+  durable_sync(tmp_parent_io, "TMP_PARENT_AFTER_B2")
+  journal.append({"b2_root_identity"=>b_root_identity, "type"=>"B2_ROOT_CREATED_DURABLE"})
+  create_directory_step(journal, B_ROOT, b_root_io, "module-cache", "B2:MODULE_CACHE")
+  create_directory_step(journal, B_ROOT, b_root_io, "tmp", "B2:TMP")
+
+  b_build = build_b2(journal, B_ROOT, b_root_io, tmp_parent_io, archive_parent_io, evidence_root_io)
+
+  fail_build("A_B2_OBJECT_VNODE_ALIAS") if A_OBJECT_EXPECTED.fetch("device_decimal") == b_build.fetch("object_identity").fetch("device_decimal") && A_OBJECT_EXPECTED.fetch("inode_decimal") == b_build.fetch("object_identity").fetch("inode_decimal")
+  fail_build("A_B2_PRODUCT_VNODE_ALIAS") if A_PRODUCT_EXPECTED.fetch("device_decimal") == b_build.fetch("product_identity").fetch("device_decimal") && A_PRODUCT_EXPECTED.fetch("inode_decimal") == b_build.fetch("product_identity").fetch("inode_decimal")
+
+  require_a_conjunction(a_root_io, a_journal_io, a_object_io, a_product_io)
+  require_directory_join(B_ROOT, b_root_io, "0700")
+  require_named_join("#{A_ROOT}/#{OBJECT_LEAF}", a_object_io)
+  require_named_join("#{B_ROOT}/#{OBJECT_LEAF}", b_build.fetch("object_io"))
+  journal.append({"type"=>"A_B2_RAW_OBJECT_COMPARISON_ENTRY"})
+  fail_build("A_B2_RAW_OBJECT_MISMATCH") unless compare_held(a_object_io, b_build.fetch("object_io"))
+  fail_build("A_B2_OBJECT_HASH_MISMATCH") unless A_OBJECT_EXPECTED.fetch("sha256") == b_build.fetch("object_identity").fetch("sha256")
+  journal.append({"sha256"=>A_OBJECT_EXPECTED.fetch("sha256"), "type"=>"A_B2_RAW_OBJECT_EQUAL"})
+
+  require_named_join("#{A_ROOT}/#{PRODUCT_LEAF}", a_product_io)
+  require_named_join("#{B_ROOT}/#{PRODUCT_LEAF}", b_build.fetch("product_io"))
+  journal.append({"type"=>"A_B2_RAW_PRODUCT_COMPARISON_ENTRY"})
+  fail_build("A_B2_RAW_PRODUCT_MISMATCH") unless compare_held(a_product_io, b_build.fetch("product_io"))
+  fail_build("A_B2_PRODUCT_HASH_MISMATCH") unless A_PRODUCT_EXPECTED.fetch("sha256") == b_build.fetch("product_identity").fetch("sha256")
+  journal.append({"sha256"=>A_PRODUCT_EXPECTED.fetch("sha256"), "type"=>"A_B2_RAW_PRODUCT_EQUAL"})
+
+  analyzer_argv(A_ROOT).each_with_index do |(analyzer_label, _), index|
+    a_result = a_build.fetch("analyzers").fetch(analyzer_label)
+    b_result = b_build.fetch("analyzers").fetch(analyzer_label)
+    fail_build("ANALYZER_EXIT_DRIFT:#{analyzer_label}") unless a_result.fetch("exit_status_decimal") == b_result.fetch("exit_status_decimal") && a_result.fetch("exited") == b_result.fetch("exited") && a_result.fetch("signaled") == b_result.fetch("signaled") && a_result.fetch("termsig_decimal") == b_result.fetch("termsig_decimal")
+    a_stdout = normalize_capture(a_result.fetch("stdout_raw"), A_ROOT, analyzer_label)
+    b_stdout = normalize_capture(b_result.fetch("stdout_raw"), B_ROOT, analyzer_label)
+    a_stderr = normalize_capture(a_result.fetch("stderr_raw"), A_ROOT, analyzer_label)
+    b_stderr = normalize_capture(b_result.fetch("stderr_raw"), B_ROOT, analyzer_label)
+    fail_build("ANALYZER_STDOUT_DRIFT:#{analyzer_label}") unless a_stdout == b_stdout
+    fail_build("ANALYZER_STDERR_DRIFT:#{analyzer_label}") unless a_stderr == b_stderr
+    journal.append({"analyzer_index_decimal"=>(index + 1).to_s, "label"=>analyzer_label, "type"=>"A_B2_NORMALIZED_ANALYZER_PAIR_EQUAL"})
+  end
+
+  fail_build("MACHO_METADATA_DRIFT") unless a_build.fetch("macho") == b_build.fetch("macho")
+  fail_build("STATIC_SURFACE_DRIFT") unless a_build.fetch("surface") == b_build.fetch("surface")
+  fail_build("CHILD_ENTRY_COUNT_FINAL") unless $child_entries == MAX_CHILD_ENTRIES
+
+  verify_fixed_inputs
+  verify_protected_conjunction(tmp_parent_io, archive_parent_io, "FINAL", evidence_root_io, b_root_io)
+  require_readonly_analyzer_tmp(readonly_tmp_io)
+  require_a_conjunction(a_root_io, a_journal_io, a_object_io, a_product_io)
+  require_held_identity("#{B_ROOT}/#{OBJECT_LEAF}", b_build.fetch("object_io"), b_build.fetch("object_identity"))
+  require_held_identity("#{B_ROOT}/#{PRODUCT_LEAF}", b_build.fetch("product_io"), b_build.fetch("product_identity"))
+  fail_build("B2_FINAL_PRODUCT_MODE") unless b_build.fetch("product_identity").fetch("mode") == "0400"
+  preterminal_b_inventory = root_inventory(B_ROOT)
+
+  close_errors = [
+    safe_close(a_journal_io),
+    safe_close(a_object_io),
+    safe_close(a_product_io),
+    safe_close(a_root_io),
+    safe_close(b_build.fetch("object_io")),
+    safe_close(b_build.fetch("product_io")),
+    safe_close(b_root_io),
+    safe_close(archive_parent_io),
+    safe_close(readonly_tmp_io)
+  ].compact
+  fail_build("PRETERMINAL_CLOSE_FAILURE") unless close_errors.empty?
+
+  journal.append_terminal_and_seal({
+    "a_b2_object_raw_determinism"=>"PASS",
+    "a_b2_product_raw_determinism"=>"PASS",
+    "authority_vector"=>"00000000",
+    "b2_inventory_preterminal"=>preterminal_b_inventory,
+    "b2_product_final_mode"=>"0400",
+    "child_entries_decimal"=>$child_entries.to_s,
+    "crs29_overall"=>"FAIL_CONSUMED_PRESERVED",
+    "gate_e_mechanics"=>"ABSTAIN",
+    "gate_e_scientific"=>"ABSTAIN",
+    "interpretation"=>"PASS_ONLY_WITH_EXACT_OUTER_NORMAL_EXIT_0_AND_CRS32_JOURNAL_VALIDATION",
+    "retained_a_future_status"=>"CRS31_STATIC_ADMITTED_RETAINED_A_SOLE_FUTURE_RUNTIME_CANDIDATE_UNEXECUTED",
+    "status"=>"PASS_CANDIDATE_LOCAL_STATIC_BUILD_MECHANICS_ONLY",
+    "supervisor_product_executions_decimal"=>"0",
+    "type"=>"CRS31_CONTROLLER_TERMINAL"
+  })
+  journal.close_unchecked
+  safe_close(evidence_root_io)
+  safe_close(tmp_parent_io)
+  exit!(0)
+rescue StandardError => error
+  if journal && !journal.sealed
+    begin
+      event = {
+        "authority_vector"=>"00000000",
+        "child_entries_decimal"=>$child_entries.to_s,
+        "crs29_overall"=>"FAIL_CONSUMED_PRESERVED",
+        "error_class"=>error.class.name,
+        "gate_e_mechanics"=>"ABSTAIN",
+        "gate_e_scientific"=>"ABSTAIN",
+        "interpretation"=>"REQUIRES_EXACT_OUTER_EXIT_AND_SUCCESSOR_CHAIN_VALIDATION",
+        "status"=>"FAIL_CANDIDATE_CONSUMED",
+        "type"=>"CRS31_CONTROLLER_TERMINAL"
+      }
+      event["error_code"] = error.code if error.is_a?(BuildFailure)
+      event["errno_decimal"] = error.errno.to_s if error.is_a?(SystemCallError)
+      if journal.writable?
+        journal.append_terminal_and_seal(event)
+      else
+        journal.retain_prefix_unchecked
+      end
+    rescue StandardError
+      journal.retain_prefix_unchecked
+    end
+  end
+  journal.close_unchecked if journal
+  exit!(70)
+end
+```
+
+```text
+program_bytes=82256
+program_lines=1622
+program_payload_sha256=881dbe9d81ef7af827ff8dc0323ebf86b6a7ecd970a35d3bcead1e4853a26eb0
+program_raw_sha256=114d98983029162af2c2de3c3a78922e1638b4a21a9e2977cf24ce676ae60bb3
+outer_wrapper_bytes=82408
+outer_wrapper_lines=1624
+outer_wrapper_sha256=66782ee43b4ee79cb2416d6fddebaaeda91ffa2adf94c0b9d6f4a83c621e9b88
+payload_bytes=23788
+payload_sha256=9e43e3a866ba7083fa57bd1a8c62d9d04f3130b052fff5af8cf912914c73f321
+frame_bytes=24127
+frame_sha256=6644fb9a8a6a75d66c98ffb1495f66ce2ed22aacfdf6480ce8956cd0b2cb4716
+frame_with_lf_bytes=24128
+frame_with_lf_sha256=500025389d2654185623282bd36cd74c4cbdbc9d67d943f0a35b24a05ff6ad80
+```
+
+```json
+{"payload":{"approval_and_scope":{"authorization_basis":"USER_POST_CRS30_POST_DISCLOSURE_EXPLICIT_AUTHORIZED_TO_CONTINUE_ARC","checkpoint_kind":"CONTROL_ONLY_CRS31_SUCCESSOR_READINESS_WITH_EXACT_ONE_POSTCOMMIT_LAUNCH","consumption":"CONSUMED_AT_OUTER_ZSH_TRANSPORT_PROCESS_ENTRY","launch_authorized_after_committed_exact_readiness_and_clean_postcommit_preflight":true,"launch_requires_additional_user_turn":false,"material_change_requires_fresh_user_approval":true,"no_retry_cleanup_repair_or_reinterpretation":true,"outer_orchestrator_invocations_authorized":1,"sqlite_or_graph_work_inside_envelope_authorized":false},"authority":{"authority_vector":"00000000","clang_compiler_entries_decimal":"1","controller_git_commands_decimal":"0","energy_entries_decimal":"0","gate_e_clearance_decimal":"0","gate_e_mechanics":"ABSTAIN","gate_e_promotion_authorized":false,"gate_e_scientific":"ABSTAIN","github_or_network_entries_decimal":"0","postcommit_preflight_read_only_git_checks_authorized":true,"runtime_controller_fifo_archive_publisher_entries_decimal":"0","scientific_authorities_closed_decimal":"0","signals_timeouts_cleanup_retry_entries_decimal":"0","swift_cli_or_swiftpm_role_commands_decimal":"0","swiftc_compiler_entries_decimal":"1"},"build_contract":{"a_build_count_decimal":"0","a_product_mode_must_remain":"0700","analyzer_capture_cap_bytes_per_stream_decimal":"4194304","analyzer_labels_in_order":["object-defined","object-undefined","product-file","product-otool-header","product-otool-load-commands","product-otool-linked-images","product-codesign-verify","product-codesign-display","product-xattrs","product-undefined"],"b2_analyzer_entries_decimal":"10","b2_c_argv":["/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang","-target","arm64-apple-macosx14.0","-isysroot","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk","-std=c17","-O2","-fvisibility=hidden","-fno-common","-Wall","-Wextra","-Werror","-fno-modules","-fno-implicit-modules","-c","/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/docs/tools/prime-driver-v2-r19-local-archive-build-outer-supervisor-fixed-openat.c","-o","/private/tmp/prime-driver-v2-r19-crs31-outer-supervisor-witness-b2-36258ec0-55922326/prime-driver-v2-r19-local-archive-build-outer-supervisor-fixed-openat.o"],"b2_compiler_link_entries_decimal":"2","b2_environment":{"DEVELOPER_DIR":"/Applications/Xcode.app/Contents/Developer","LANG":"C.UTF-8","LC_ALL":"C.UTF-8","PATH":"/usr/bin:/bin","SDKROOT":"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk","TMPDIR":"/private/tmp/prime-driver-v2-r19-crs31-outer-supervisor-witness-b2-36258ec0-55922326/tmp/","TZ":"UTC","__CF_USER_TEXT_ENCODING":"0x1F5:0x0:0x0"},"b2_product_descriptor_fchmod_entries_decimal":"1","b2_product_mode_transition":"0700_TO_0400_BEFORE_ANALYZERS","b2_swift_link_argv":["/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc","-swift-version","6","-O","-whole-module-optimization","-parse-as-library","-emit-executable","-target","arm64-apple-macosx14.0","-sdk","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk","-module-name","PrimeDriverV2R19LocalArchiveBuildOuterSupervisor","-module-cache-path","/private/tmp/prime-driver-v2-r19-crs31-outer-supervisor-witness-b2-36258ec0-55922326/module-cache","-import-objc-header","/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/docs/tools/prime-driver-v2-r19-local-archive-build-outer-supervisor-fixed-openat.h","/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/docs/tools/prime-driver-v2-r19-local-archive-build-outer-supervisor.swift","/private/tmp/prime-driver-v2-r19-crs31-outer-supervisor-witness-b2-36258ec0-55922326/prime-driver-v2-r19-local-archive-build-outer-supervisor-fixed-openat.o","-o","/private/tmp/prime-driver-v2-r19-crs31-outer-supervisor-witness-b2-36258ec0-55922326/PrimeDriverV2R19LocalArchiveBuildOuterSupervisor"],"build_count_decimal":"1","child_entries_ceiling_decimal":"22","child_order_exact":["A-REPLAY:object-defined","A-REPLAY:object-undefined","A-REPLAY:product-file","A-REPLAY:product-otool-header","A-REPLAY:product-otool-load-commands","A-REPLAY:product-otool-linked-images","A-REPLAY:product-codesign-verify","A-REPLAY:product-codesign-display","A-REPLAY:product-xattrs","A-REPLAY:product-undefined","B2:compiler-c","B2:compiler-swift-link","B2:object-defined","B2:object-undefined","B2:product-file","B2:product-otool-header","B2:product-otool-load-commands","B2:product-otool-linked-images","B2:product-codesign-verify","B2:product-codesign-display","B2:product-xattrs","B2:product-undefined"],"comparison_requirements":["distinct object vnodes","distinct product vnodes","raw object bytes and SHA equal","raw product bytes and SHA equal","normalized analyzer exit/stdout/stderr equal","Mach-O metadata equal","corrected static surface equal"],"compiler_capture_cap_bytes_per_stream_decimal":"1048576","fresh_b2_build_count_decimal":"1","output_candidate":"RETAINED_A_ONLY_IF_EXACT_SUCCESS_B2_WITNESS_NEVER_CANDIDATE","raw_comparison_order":["A_B2_OBJECT","A_B2_PRODUCT"],"retained_a_analyzer_entries_decimal":"10","target_product_or_controller_executions_decimal":"0"},"child_supervision":{"capture_eof_required":true,"descendant_held_pipe_residual":true,"descendant_process_group_conservation":"ABSTAIN_NOT_INSTRUMENTED_OR_CENSUSED","exact_direct_reap_event_fields":["child_entry_index_decimal","pid_decimal","label","exited","exit_status_decimal","signaled","termsig_decimal"],"exact_direct_reap_required":true,"exact_reap_recorded_before_eof_drain_join":true,"order":"START_BOUNDED_DRAIN_THREADS_THEN_SPAWN_THEN_CLOSE_PARENT_WRITERS_THEN_WAIT2_EXACT_PID_WHILE_DRAINS_RUN_THEN_RECORD_EXACT_REAP_THEN_JOIN_DRAINS","outer_timeout":false,"potentially_indefinite_after_entered_child":true,"signals_decimal":"0","spawn":"RUBY_PROCESS_SPAWN_DIRECT_NO_SHELL_CLOSE_OTHERS_UNSETENV_OTHERS","timeouts_decimal":"0"},"controller":{"argv_count_decimal":"0","controller_visible_environment":{"__CF_USER_TEXT_ENCODING":"0x1F5:0x0:0x0"},"cwd":"/","fresh_node_ownership_exact":{"gid_decimal":"20","uid_decimal":"501"},"heredoc_delimiter":"CRS31_RETAINED_A_B2_881DBE9D","language":"APPLE_SYSTEM_RUBY","lexical_counts":{"file_rename_call_sites_decimal":"0","file_unlink_call_sites_decimal":"0","file_writable_predicate_call_sites_decimal":"1","process_egid_call_sites_decimal":"1","process_euid_call_sites_decimal":"1","process_gid_call_sites_decimal":"1","process_kill_call_sites_decimal":"0","process_spawn_call_sites_decimal":"1","process_uid_call_sites_decimal":"1","process_wait2_call_sites_decimal":"1"},"outer_transport":"LOCAL_ZSH_EXEC_TO_ENV_I_TO_/usr/bin/ruby_--disable-gems_STDIN_HEREDOC","outer_wrapper_bytes_decimal":"82408","outer_wrapper_lines_decimal":"1624","outer_wrapper_sha256":"66782ee43b4ee79cb2416d6fddebaaeda91ffa2adf94c0b9d6f4a83c621e9b88","process_credentials_exact":{"effective_gid_decimal":"20","effective_uid_decimal":"501","real_gid_decimal":"20","real_uid_decimal":"501"},"program_bytes_decimal":"82256","program_lines_decimal":"1622","program_payload_sha256":"881dbe9d81ef7af827ff8dc0323ebf86b6a7ecd970a35d3bcead1e4853a26eb0","program_raw_sha256":"114d98983029162af2c2de3c3a78922e1638b4a21a9e2977cf24ce676ae60bb3","ripper_parse":"PASS","self_hash_rule":"SHA256_PROGRAM_WITH_SINGLE_EMBEDDED_64_HEX_DIGEST_REPLACED_BY_64_ASCII_ZERO_BYTES"},"corrected_static_policy":{"direct_xpc_api_symbols_exact":[],"libswift_xpc_tbd":{"bytes_decimal":"50416","device_decimal":"16777231","force_load_export_occurrences_decimal":"1","gid_decimal":"0","inode_decimal":"1019890","mode":"0644","nlink_decimal":"1","path":"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib/swift/libswiftXPC.tbd","sha256":"1658d0ff91184eabfb7a448ca4f9da20ddf69223a07bac6db290ee69d7e3da19","uid_decimal":"0"},"linked_images_exact":["/usr/lib/libSystem.B.dylib","/System/Library/Frameworks/CryptoKit.framework/Versions/A/CryptoKit","/System/Library/Frameworks/Foundation.framework/Versions/C/Foundation","/usr/lib/libobjc.A.dylib","/usr/lib/swift/libswiftCore.dylib","/usr/lib/swift/libswiftCoreFoundation.dylib","/usr/lib/swift/libswiftDarwin.dylib","/usr/lib/swift/libswiftDispatch.dylib","/usr/lib/swift/libswiftIOKit.dylib","/usr/lib/swift/libswiftObjectiveC.dylib","/usr/lib/swift/libswiftXPC.dylib"],"nstask_symbols_exact":[],"preserved_denies":["direct _xpc_*","NSTask","all other XPC-named symbols","rename family","network/socket","shell/system/popen","dynamic loader","cleanup/link/symlink/unlink/remove/rmdir","xattr mutation","generic exec/fork/vfork","unexpected process-control symbols"],"process_control_symbols_exact":["_kill","_posix_spawn","_posix_spawn_file_actions_addclose","_posix_spawn_file_actions_adddup2","_posix_spawn_file_actions_addfchdir_np","_posix_spawn_file_actions_addinherit_np","_posix_spawn_file_actions_destroy","_posix_spawn_file_actions_init","_posix_spawnattr_destroy","_posix_spawnattr_init","_posix_spawnattr_setflags","_posix_spawnattr_setsigdefault","_posix_spawnattr_setsigmask","_sigemptyset","_sigfillset","_waitpid"],"product_undefined_symbol_count_decimal":"202","rename_family_symbols_exact":[],"scope":"CRS31_SUCCESSOR_CLASSIFICATION_ONLY_CRS29_FAIL_NOT_REINTERPRETED","xattr_names_allowed":["com.apple.provenance"],"xpc_named_intersection_exact":["__swift_FORCE_LOAD_$_swiftXPC"]},"exact_namespaces":{"b2_module_cache":"/private/tmp/prime-driver-v2-r19-crs31-outer-supervisor-witness-b2-36258ec0-55922326/module-cache","b2_object":"/private/tmp/prime-driver-v2-r19-crs31-outer-supervisor-witness-b2-36258ec0-55922326/prime-driver-v2-r19-local-archive-build-outer-supervisor-fixed-openat.o","b2_product":"/private/tmp/prime-driver-v2-r19-crs31-outer-supervisor-witness-b2-36258ec0-55922326/PrimeDriverV2R19LocalArchiveBuildOuterSupervisor","b2_tmp":"/private/tmp/prime-driver-v2-r19-crs31-outer-supervisor-witness-b2-36258ec0-55922326/tmp","fresh_b2_root":"/private/tmp/prime-driver-v2-r19-crs31-outer-supervisor-witness-b2-36258ec0-55922326","fresh_created_node_ownership_exact":{"gid_decimal":"20","uid_decimal":"501"},"initial_requirements":{"fresh_b2":"ABSENT_ENOENT","old_b":"ABSENT_ENOENT","retained_a":"PRESENT_EXACT","successor_evidence":"ABSENT_ENOENT"},"new_journal_leaf_creations_decimal":"1","original_a_journal":"/private/tmp/prime-driver-v2-r19-local-archive-build-outer-supervisor-build-a-4e7d6406-861da2f4/00-supervisor-build-controller.v1.jsonl","original_old_b_root":"/private/tmp/prime-driver-v2-r19-local-archive-build-outer-supervisor-build-b-4e7d6406-861da2f4","retained_a_root":"/private/tmp/prime-driver-v2-r19-local-archive-build-outer-supervisor-build-a-4e7d6406-861da2f4","successful_direct_mkdir_entries_decimal":"4","successful_direct_mkdir_order":["/private/tmp/prime-driver-v2-r19-crs31-retained-a-adoption-evidence-36258ec0-55922326","/private/tmp/prime-driver-v2-r19-crs31-outer-supervisor-witness-b2-36258ec0-55922326","/private/tmp/prime-driver-v2-r19-crs31-outer-supervisor-witness-b2-36258ec0-55922326/module-cache","/private/tmp/prime-driver-v2-r19-crs31-outer-supervisor-witness-b2-36258ec0-55922326/tmp"],"successor_evidence_root":"/private/tmp/prime-driver-v2-r19-crs31-retained-a-adoption-evidence-36258ec0-55922326","successor_journal":"/private/tmp/prime-driver-v2-r19-crs31-retained-a-adoption-evidence-36258ec0-55922326/00-crs31-retained-a-adoption-and-b2-witness.v1.jsonl"},"next":"COMMIT_THIS_CORRECTED_READINESS_THEN_RUN_THE_FROZEN_ORDERED_NONCONSUMING_POSTCOMMIT_PREFLIGHT_THEN_ONE_AUTHORIZED_CRS31_LAUNCH","outer_transport":{"consumption_edge":"OUTER_ZSH_PROCESS_ENTRY_AFTER_COMPLETE_NONCONSUMING_POSTCOMMIT_PREFLIGHT","controller_process_credentials_exact":{"effective_gid_decimal":"20","effective_uid_decimal":"501","real_gid_decimal":"20","real_uid_decimal":"501"},"delimiter":"CRS31_RETAINED_A_B2_881DBE9D","env_image":{"bytes_decimal":"102368","device_decimal":"16777231","gid_decimal":"0","inode_decimal":"1152921500312571972","mode":"0755","nlink_decimal":"1","path":"/usr/bin/env","sha256":"6e506aec3c0cff703ac1e66cedc6f1945354ad41339a38db4425c7c88227128f","type":"REGULAR","uid_decimal":"0"},"environment_after_env_i":{"__CF_USER_TEXT_ENCODING":"0x1F5:0x0:0x0"},"exact_wrapper_bytes_decimal":"82408","exact_wrapper_lines_decimal":"1624","exact_wrapper_sha256":"66782ee43b4ee79cb2416d6fddebaaeda91ffa2adf94c0b9d6f4a83c621e9b88","exact_wrapper_terminal_lf":true,"executor_capture":"MERGED_STDOUT_STDERR_EXPECT_EXACT_ZERO_BYTES_ON_SUCCESS","heredoc_pre_env_i_materialization":"POSSIBLE_UNJOURNALED_LOCAL_ZSH_TEMPORARY_FILE_ACCEPTED_RESIDUAL","independent_outer_stream_attribution":false,"login":false,"outer_ambient_environment":"UNSEALED_LOCAL_EXECUTOR_RESIDUAL_BEFORE_ENV_I","outer_timeout":false,"ruby_image":{"bytes_decimal":"135200","device_decimal":"16777231","gid_decimal":"0","inode_decimal":"1152921500312572705","mode":"0555","nlink_decimal":"1","path":"/usr/bin/ruby","sha256":"9d6ff3e289c7d908e3c785e0bedd6692d1d6a3377965c88c04d847104b7c892c","type":"REGULAR","uid_decimal":"0"},"shell":"/bin/zsh","shell_image":{"bytes_decimal":"1361216","device_decimal":"16777231","gid_decimal":"0","inode_decimal":"1152921500312571448","mode":"0755","nlink_decimal":"1","path":"/bin/zsh","sha256":"1f473d234dd65157f530b4f676686517ec97fe9aa64c76d82f2611674cc44314","type":"REGULAR","uid_decimal":"0"},"shell_startup_admission":{"/Users/ergentics/.zshenv":"ABSENT_ENOENT","/etc/zsh/zshenv":"ABSENT_ENOENT","/etc/zshenv":"ABSENT_ENOENT","HOME":"EXACT_/Users/ergentics","ZDOTDIR":"ABSENT_IN_OUTER_AMBIENT_ENVIRONMENT_AT_FREEZE_AND_REQUIRED_ABSENT_AT_PREFLIGHT"},"tty":false,"workdir":"/","wrapper_preimage_rule":"ASCII_PREFIX_EXEC_ENV_I_SINGLE_ENV_RUBY_DISABLE_GEMS_STDIN_QUOTED_DELIMITER_LF_PLUS_EXACT_PROGRAM_BYTES_PLUS_DELIMITER_PLUS_LF"},"postcommit_launch_preflight":{"checks_in_order":["HEAD_PARENT_EQUALS_DE27F2C70152F632AAABB1C80B6D323AB6D5462C","HEAD_SUBJECT_EQUALS_FREEZE_R19_CRS31_RETAINED_A_ADOPTION_AND_B2_WITNESS_READINESS","HEAD_DIFF_IS_EXACT_SINGLE_LEDGER_EOF_APPEND_WITH_PREDECESSOR_PREFIX_UNCHANGED_AND_NO_OTHER_PATH","INDEX_WORKTREE_AND_UNTRACKED_SET_CLEAN","EXTRACT_FINAL_CRS31_PROGRAM_AND_RECOMPUTE_RAW_MASKED_SELF_HASH_RIPPER_AND_WRAPPER_IDENTITIES","RECOMPUTE_FINAL_CRS31_CANONICAL_PAYLOAD_FRAME_AND_LEDGER_IDENTITIES","REJOIN_EXACT_RETAINED_A_ROOT_32_FRAME_JOURNAL_OBJECT_PRODUCT_COMPLETE_61_ENTRY_TOPOLOGY_AND_PRESERVED_FAIL","REJOIN_EXACT_FOUR_SOURCES_ELEVEN_TOOLS_TWELVE_HEADERS_XPC_TBD_SDK_AND_SWIFTC_SYMLINKS","REJOIN_PRIVATE_TMP_DOCUMENTS_AND_HELD_PRIVATE_VAR_EMPTY_PARENT_IDENTITIES","REJOIN_ZSH_ENV_RUBY_IDENTITIES_HOME_EXACT_THREE_ZSHENV_ABSENCES_ZDOTDIR_ABSENCE_PROCESS_CREDENTIALS_501_501_20_20_AND_PRIVATE_VAR_EMPTY_EFFECTIVE_NONWRITABLE","REQUIRE_OLD_B_SUCCESSOR_EVIDENCE_B2_RUNTIME_TWO_PUBLISHER_AND_TWO_ARCHIVE_NAMESPACES_ABSENT_ENOENT","REJOIN_EXACT_WRAPPER_PREIMAGE_WORKDIR_SLASH_SHELL_ZSH_LOGIN_FALSE_TTY_FALSE_AND_NO_OUTER_TIMEOUT","IMMEDIATELY_RECHECK_GIT_CLEAN_FRESH_NAMESPACES_ABSENT_AND_RETAINED_A_CRITICAL_IDENTITIES"],"commit_tree_self_identity_rule":"POSTCOMMIT_OBSERVATION_NOT_SELF_EMBEDDED_TO_AVOID_CIRCULAR_IDENTITY_CONTENT_BOUND_BY_EXACT_PARENT_SUBJECT_SINGLE_EOF_APPEND_PREFIX_PROGRAM_FRAME_AND_CLEAN_STATE","compiler_analyzer_product_or_controller_entries_decimal":"0","exact_order_required":true,"failure":"NONCONSUMING_STOP_WITH_ZERO_AUTHORIZED_CRS31_OUTER_TRANSPORT_ENTRY","filesystem_mutations_decimal":"0","launch_only_after_all_checks":true,"outer_transport_entries_decimal":"0","preflight_failure_consumes_launch":false,"read_only_git_checks_authorized":true},"precommit_read_only_audits":{"controller_process_credentials_observed":"REAL_UID_501_EFFECTIVE_UID_501_REAL_GID_20_EFFECTIVE_GID_20","corrected_static_policy_on_retained_historical_bytes":"PASS","exact_reap_event_includes_wait_disposition":true,"historical_analyzer_count_decimal":"10","historical_macho_uuid":"73978239-AE8D-3F79-A1C1-6589E84E544E","historical_process_control_count_decimal":"16","historical_xpc_named_exact":["__swift_FORCE_LOAD_$_swiftXPC"],"independent_build_contract_review":"GO","independent_projection_review":"DEFER_PROJECTION_UNTIL_AFTER_CRS31_RESULT","independent_roadmap_authority_review":"GO","retained_a_complete_topology_exact":true,"retained_a_readonly_tmp_held_join":"/private/var/empty EXACT 16777231/774080 ROOT_OWNED_0755 EFFECTIVE_UID_NONWRITABLE","retained_journal_chain_and_historical_capture_decode_exact":true,"ripper_parse":true},"predecessor":{"commit":"de27f2c70152f632aaabb1c80b6d323ab6d5462c","crs29_fail_must_remain":"FAIL_CONSUMED_PRESERVED","crs30_frame_sha256":"96fa9d468764e455de5aa5e7b1d10d97e537671046ed0c3c88659bc40d4f903f","crs30_payload_sha256":"41503261ba143b4523c49b12d130a12328b3af5005c4a695c9a7147c1ab6b4d4","ledger_blob":"d48c9e4ca7d7ffb4d3b096707f2afa8b36d961e4","ledger_bytes_decimal":"2140415","ledger_lines_decimal":"21153","ledger_path":"docs/PRIME-SWIFT-VALIDATION-DRIVER-V2-DURABLE-PHASE-CONTROL-2026-08-22.md","ledger_sha256":"a594293c0dfc85c49e70690b11ceb80349a0593e1f25802c5526cf8b4f71d865","subject":"Record consumed R19 supervisor build failure","tree":"81239fad952854aa59410524e7e8dd5db6f5a253"},"presentation_projection":{"authoritative":false,"canonical_ledger_replaced":false,"decision":"DEFER_UNTIL_AFTER_COMMITTED_CRS31_RESULT_AND_NO_LIVE_ONE_SHOT","existing_r19_observability_assets":"RETAINED_REFERENCE_PATTERNS_NOT_TO_BE_REUSED_OR_OVERWRITTEN","graph_edges":"ONLY_EXACT_HASH_JOINED_REFERENCES","may_feed_controller":false,"parquet":"DEFER","recommended_format":"STANDALONE_SWIFT_PLUS_SYSTEM_SQLITE3_DIGEST_KEYED_REBUILDABLE_CACHE"},"residuals_and_hard_stops":{"absorbing_hard_stops":["predecessor or worktree drift","controller real/effective UID or GID drift, or /private/var/empty effective writability","retained A root/journal/object/product/topology drift","original journal not exactly 32 canonical chained frames ending in preserved FAIL","any original static PASS frame","old B present","fresh evidence or B2 namespace preexists","A write/chmod/rebuild/execute","B2 created before successor A admission","XPC exception broader than sole force-load anchor","any direct XPC/NSTask/rename/network/shell/cleanup/process-control drift","23rd child or changed order","second fresh build","product/controller/source execution","signal/timeout/cleanup/retry","B2 product not descriptor-sealed 0400 before analyzers","vnode alias or raw equality failure","SQLite/graph/controller feed","authority closure or Gate-E promotion"],"named_residuals":["same-UID named-path replacement/ABA between point joins","outer zsh exists briefly before env-i and inherits ambient local environment with only HOME and ZDOTDIR startup-relevant fields admitted","zsh heredoc may materialize an unjournaled local temporary file before env-i exec","descendant-held stdout/stderr descriptor may delay EOF after exact direct reap","compiler-created B2 subtree writes are expected but not separately kernel-confined","no descendant process-group census","failure between B2 link and descriptor fchmod may permanently retain an unadmitted mode-0700 partial witness; no execution, repair, cleanup, or candidate status follows"]},"result_lattice":{"any_failure":{"authority_vector":"00000000","b2_state":"RETAIN_EXACT_PREFIX_MAY_BE_ABSENT_PARTIAL_OR_PRESEAL_0700_NOT_CANDIDATE","completed_substages":"RETAIN_AS_FACTUAL","crs29_overall":"FAIL_CONSUMED_PRESERVED","crs31_overall":"FAIL_CONSUMED_NO_RETRY","failure_retention":"OUTER_OBSERVATION_REQUIRED; SUCCESSOR_ROOT_AND_JOURNAL_IF_CREATION_REACHED; B2_PREFIX_PERMANENT_IF_REACHED","gate_e":"ABSTAIN","retained_a_candidate":"UNADMITTED","science":"ABSTAIN","unentered_substages":"ABSTAIN_NOT_REACHED"},"before_launch":{"authority_vector":"00000000","b2":"ABSTAIN_NOT_CREATED","crs29_overall":"FAIL_CONSUMED_PRESERVED","crs31_invocation":"ABSTAIN_NOT_RUN","crs31_readiness":"PASS_STATIC_CONTROL_AFTER_COMMIT_AND_POSTCOMMIT_PREFLIGHT","determinism":"ABSTAIN_NOT_RUN","gate_e":"ABSTAIN","retained_a_candidate":"UNADMITTED_RETAINED_ONLY","science":"ABSTAIN"},"exact_success":{"a_b2_object_raw_determinism":"PASS","a_b2_product_raw_determinism":"PASS","authority_vector":"00000000","b2_candidate":"NON_EXECUTABLE_WITNESS_ONLY_MODE_0400","b2_compile_link_and_static_admission":"PASS_SUBSTAGE","crs29_overall":"FAIL_CONSUMED_PRESERVED","crs31_local_static_build_mechanics":"PASS","gate_e":"ABSTAIN","retained_a_candidate":"CRS31_STATIC_ADMITTED_RETAINED_A_SOLE_FUTURE_RUNTIME_CANDIDATE_UNEXECUTED","retained_a_corrected_static_policy":"PASS_SUBSTAGE_CRS31_ONLY","retained_a_identity_rejoin":"PASS_SUBSTAGE","runtime_archive_publication":"ABSTAIN_UNENTERED","science":"ABSTAIN","supervisor_execution":"ABSTAIN_UNEXECUTED"}},"retained_a":{"analyzer_replay_count_decimal":"10","complete_topology":{"aggregate_file_bytes_decimal":"31865527","canonical_bytes_decimal":"18290","canonical_sha256":"748cd7e6f9c376d3575d21dd95d9909c79a15247e108c82a5659fa0e210c559e","directories_decimal":"3","entries_decimal":"61","files_decimal":"58"},"execution_entries_authorized_decimal":"0","journal_identity":{"bytes_decimal":"52996","device_decimal":"16777231","gid_decimal":"0","inode_decimal":"17570733","mode":"0400","nlink_decimal":"1","record_count_decimal":"32","sha256":"6785078ef7d8118f13a2ce3d090e7b68c263c92bf50749fe411a7440bfad1b61","tail_record_sha256":"0b08b54ed5fd1d003db1f74e1347311511f0333867263caa3f422bb81de3d7a1","uid_decimal":"501"},"mutation_entries_authorized_decimal":"0","object_identity":{"bytes_decimal":"5696","device_decimal":"16777231","gid_decimal":"0","inode_decimal":"17570736","mode":"0600","nlink_decimal":"1","sha256":"55922326f4e2414d1f5979714e6442770b4ff60025da93cebee51bfbce292214","uid_decimal":"501"},"original_artifact_record_sha256":"51edf16855a770d58fbf38cb20f0ae2ad0311ea816249f1dbea35a09daa9a32a","original_decisive_record_sha256":"d3ea7f8731a24133722dcbc72ba3b3fc62ca3fdb8ca50198a575c17fe8787b0e","original_static_pass_event_count_decimal":"0","original_terminal_error":"PRODUCT_FORBIDDEN_SYMBOLS","product_identity":{"bytes_decimal":"328576","code_directory_full_sha256":"cdcd7ff502820c1cd271aa9393ad148931e6f5aeaea3f68b7605f9dbd109e47b","device_decimal":"16777231","gid_decimal":"0","inode_decimal":"17570870","macho_uuid":"73978239-AE8D-3F79-A1C1-6589E84E544E","mode":"0700","nlink_decimal":"1","sha256":"36258ec0719d8960640ff402ea83469f44c7b8358071b70b4d4665d65085a1bd","uid_decimal":"501"},"read_only_analyzer_environment":{"DEVELOPER_DIR":"/Applications/Xcode.app/Contents/Developer","LANG":"C.UTF-8","LC_ALL":"C.UTF-8","PATH":"/usr/bin:/bin","SDKROOT":"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk","TMPDIR":"/private/var/empty/","TZ":"UTC","__CF_USER_TEXT_ENCODING":"0x1F5:0x0:0x0"},"read_only_tmp_identity":{"device_decimal":"16777231","effective_credential_check":"BEFORE_EVERY_RETAINED_A_ANALYZER_AND_AFTER_REPLAY","effective_uid_writable":false,"gid_decimal":"3","held_named_join":"BEFORE_EVERY_RETAINED_A_ANALYZER_AND_AFTER_REPLAY","inode_decimal":"774080","mode":"0755","nlink_decimal":"2","path":"/private/var/empty","type":"DIRECTORY","uid_decimal":"0"},"rebuild_entries_authorized_decimal":"0","replay_requirement":"RAW_STDOUT_STDERR_AND_PUBLIC_CAPTURE_METADATA_EXACTLY_EQUAL_ORIGINAL_32_FRAME_JOURNAL_EXCLUDING_PID_AND_EXPECTED_A_TO_A_REPLAY_LABEL_TRANSITION","root_identity":{"device_decimal":"16777231","gid_decimal":"0","inode_decimal":"17570732","mode":"0700","nlink_decimal":"7","uid_decimal":"501"}}},"payload_hash_rule":"SHA256_COMPACT_RECURSIVE_LEXICOGRAPHIC_KEYS_UTF8_NO_TRAILING_LF","payload_sha256":"9e43e3a866ba7083fa57bd1a8c62d9d04f3130b052fff5af8cf912914c73f321","schema":"prime_driver_v2_r19_crs31_retained_a_adoption_and_b2_witness_readiness_v3","status":"READY_EXACT_ONE_POSTCOMMIT_CRS31_SUCCESSOR_LAUNCH_AUTHORIZED"}
+```
