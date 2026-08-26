@@ -1,0 +1,221 @@
+{
+  "schema": "ergentics-r19-obs11-c2-prefix-capture-runner-result-v6",
+  "status": "CONSUMED_INFRASTRUCTURE_INCOMPLETE_NO_RETRY",
+  "scientific_outcome": "ABSTAIN",
+  "readiness_identity": {
+    "commit": "e56a988f478d3b8d895f53ebfe424530e371f3ce",
+    "tree": "9c3a90a9e5f2473ee133fe9113a8127e9a96ac5d",
+    "path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-preconsumption-prefix-harness-readiness.v6.json",
+    "sha256": "ae12c21bcda2422daf0c437ac1c3f5dfb3daac770d171991d4ab08fd135adacf",
+    "git_blob": "3de6298ed8188985f5d923c09504d70ea57705a1",
+    "runner_sha256": "7a84a99a0e9f77dace2d102f1e4058316762512f51e5ccb0c8e3a72e71f918c2",
+    "runner_git_blob": "4dd0e5eb80780d2de03e2dfd2b2b118ba959fcb8"
+  },
+  "attempt_and_consumption": {
+    "trusted_outer_dispatch_attempts": 1,
+    "runner_process_entries": 1,
+    "normal_exit": true,
+    "exit_status": 70,
+    "exec_session_id": null,
+    "codex_chunk_id": "fd1124",
+    "codex_reported_wall_time_seconds": 0.000005916,
+    "codex_reported_wall_time_authoritative": false,
+    "codex_original_token_count_metadata": 247,
+    "consumption_boundary": "TRUSTED_OUTER_DISPATCH",
+    "consumed": true,
+    "retry": false,
+    "cleanup": false,
+    "repair": false,
+    "manual_signal": false
+  },
+  "combined_outer_observation": {
+    "channel_attribution": null,
+    "codex_transport": "COMBINED_UNATTRIBUTED_OUTPUT",
+    "path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prefix-capture-runner-failure.v6.combined.jsonl",
+    "bytes": 987,
+    "lf_count": 1,
+    "sha256": "881b198f8e50d0e256f8f2f60c30ba245641acdde88f1ec510f99637b36a9ef3",
+    "git_blob": "d10e14b6ac7aa345aa43491fca0b07ff657dfb8c",
+    "canonical_json_plus_lf": true,
+    "schema": "ergentics-r19-obs11-c2-prefix-capture-outer-failure-v6",
+    "runner_status": "FAIL_CAPTURE_RUNNER_CONSUMED_NO_RETRY",
+    "intended_outer_receipt_join": "PASS_EXACT_BYTES_LF_SHA256_EXIT70",
+    "stdout_stderr_split_inferred": false
+  },
+  "retained_root_observation": {
+    "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-preconsumption-prefix-capture.v6",
+    "realpath_equals_frozen_path": true,
+    "device": 16777231,
+    "inode": 17960636,
+    "uid": 501,
+    "gid": 20,
+    "mode": "0700",
+    "nlink": 3,
+    "bytes": 96,
+    "flags": 0,
+    "named_held_start_end_join": "PASS",
+    "inventory": [
+      "c2-prefix-capture.tmp.Z6GsWi"
+    ],
+    "inventory_count": 1,
+    "apfs_nlink_equation": "3_EQUALS_2_PLUS_1",
+    "manifest_sha256": "6b1746f46a72ea4a775436454be0f97de595e2c99d89bef9e436fab7c1b2868e",
+    "terminal": false,
+    "sealed": false,
+    "permanently_retained": true
+  },
+  "staging_leaf_observation": {
+    "relative_path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-preconsumption-prefix-capture.v6/c2-prefix-capture.tmp.Z6GsWi",
+    "leaf": "c2-prefix-capture.tmp.Z6GsWi",
+    "device": 16777231,
+    "inode": 17960637,
+    "uid": 501,
+    "gid": 20,
+    "mode": "0600",
+    "nlink": 1,
+    "bytes": 2597,
+    "lf_count": 1,
+    "flags": 0,
+    "sha256": "5ec08e5067584fb0b9ba1a43434f47e36509a228b99a9ad5809f1f29d41b8c7f",
+    "git_blob": "ce1fadbbb0739188c73eb85c174e5b26b24165fc",
+    "git_tree_mode_when_archived": "100644",
+    "git_preserves_live_mode_0600": false,
+    "named_held_start_end_join": "PASS",
+    "same_device_as_root": true,
+    "inode_distinct_from_root": true,
+    "canonical_json_plus_lf": true,
+    "embedded_schema": "ergentics-r19-obs11-c2-prefix-capture-incomplete-v6",
+    "embedded_status": "CONSUMED_INCOMPLETE_NO_RETRY",
+    "source_orders_content_sync_before_mode_transition": true,
+    "content_fsync_and_f_fullfsync_outcome": "UNAVAILABLE_NOT_PRESERVED_IN_RETAINED_ARTIFACTS",
+    "directory_entry_durability_established_by_runner": false,
+    "published_as_99_incomplete": false,
+    "fixed_leaf": false,
+    "sealed": false,
+    "retained_staging_evidence_only": true
+  },
+  "journal_interpretation": {
+    "embedded_pre99_inventory": {
+      "names": [],
+      "manifest_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "root_inode": 17960636,
+      "root_mode": "0700",
+      "root_nlink": 2,
+      "root_bytes": 64,
+      "time_scope": "BEFORE_STAGING_LEAF_CREATION"
+    },
+    "final_external_inventory": {
+      "names": [
+        "c2-prefix-capture.tmp.Z6GsWi"
+      ],
+      "root_inode": 17960636,
+      "root_mode": "0700",
+      "root_nlink": 3,
+      "root_bytes": 96,
+      "time_scope": "AFTER_RUNNER_EXIT"
+    },
+    "generated_staging_names_empty_field_time_scope": "AT_99_CONSTRUCTION_BEFORE_PUBLISH_LEAF_CREATED_THE_STAGING_NAME",
+    "fixed_00_through_04_present": false,
+    "fixed_99_present": false,
+    "99_durable": false,
+    "root_terminal": false,
+    "scientific_pass": false,
+    "scientific_fail": false,
+    "infrastructure_incomplete": true
+  },
+  "primary_failure": {
+    "phase": "ROOT_CREATION",
+    "error_class": "NoMethodError",
+    "error_message_bytes": 43,
+    "error_message_prefix_hex": "756e646566696e6564206d6574686f64206063686d6f642720666f7220233c494f3a28636c6f736564293e",
+    "error_message_sha256": "c19a628595d0a397813674a764b9dec3f8bdddd00f82a4917c4fb60a33167ca1",
+    "decoded_message": "undefined method `chmod' for #<IO:(closed)>",
+    "deterministic_source_defect": "IO_NEW_RETURNS_IO_AND_APPLE_RUBY_2_6_IO_HAS_NO_CHMOD_METHOD",
+    "affected_source_lines": [
+      455,
+      536,
+      705
+    ],
+    "affected_transitions": [
+      "LEAF_0600_TO_0400",
+      "ROOT_INITIAL_0700_ASSERTION",
+      "ROOT_0700_TO_0500_TERMINAL_SEAL"
+    ],
+    "closed_receiver_rendering_reason": "CREATE_ROOT_RESCUE_CLOSED_RECEIVER_BEFORE_OUTER_FAILURE_DIAGNOSTIC_MATERIALIZED_MESSAGE"
+  },
+  "operation_scope_and_counts": {
+    "scope": "THIS_EXACT_C2_OUTER_ATTEMPT_RUNNER_CHILD_AND_RESULT_ONLY",
+    "historical_operations_reinterpreted": false,
+    "postexec_observer_processes_are_not_target_operation_entries": true,
+    "capture_runner_outer_attempts": 1,
+    "capture_runner_entries": 1,
+    "capture_root_mkdirat_successes": 1,
+    "containment_staging_leaf_creations": 1,
+    "prefix_harness_entries": 0,
+    "child_process_spawns": 0,
+    "channel_capture_starts": 0,
+    "controller_bottom_entries": 0,
+    "controller_full_invocations": 0,
+    "swiftpm_spawns": 0,
+    "compiler_entries": 0,
+    "builds": 0,
+    "product_executions": 0,
+    "signals": 0,
+    "timeouts": 0,
+    "cleanup_actions": 0,
+    "network_actions": 0,
+    "github_actions": 0,
+    "python_entries": 0,
+    "active_matching_processes_after_exit": 0
+  },
+  "evidence_limits": [
+    "CODEX_OUTER_OUTPUT_IS_COMBINED_AND_HAS_NO_STDOUT_STDERR_ATTRIBUTION",
+    "STAGING_LEAF_IS_NOT_A_PUBLISHED_FIXED_99_LEAF",
+    "STAGING_CONTENT_SYNC_COMPLETION_IS_NOT_RETAINED_OR_OBSERVED",
+    "GIT_ARCHIVES_EXACT_STAGING_BYTES_BUT_NOT_THE_LIVE_0600_PERMISSION_BITS",
+    "ROOT_AND_STAGING_LEAF_WERE_NOT_TERMINALLY_SEALED",
+    "RUNNER_DID_NOT_ESTABLISH_DIRECTORY_ENTRY_DURABILITY_FOR_THE_STAGING_NAME",
+    "EMBEDDED_PRE99_INVENTORY_IS_NOT_FINAL_TOPOLOGY",
+    "NO_SCIENTIFIC_OUTCOME_WAS_REACHED",
+    "NO_AUTHORITY_WAS_CLOSED"
+  ],
+  "independent_postmortem_reviews": [
+    {
+      "scope": "RETAINED_IDENTITY_TOPOLOGY_AND_TEMPORAL_JOIN",
+      "decision": "GO_CONTROL_ONLY_RESULT_COMMIT"
+    },
+    {
+      "scope": "DARWIN_RUBY_DYNAMIC_RECEIVER_AND_NATIVE_PRIMITIVE_DIAGNOSIS",
+      "decision": "GO_DETERMINISTIC_SOURCE_DEFECT_CONFIRMED"
+    },
+    {
+      "scope": "JOURNAL_CONSUMPTION_RESULT_LATTICE_AND_SUCCESSOR_BOUNDARY",
+      "decision": "GO_CONSUMED_INFRASTRUCTURE_INCOMPLETE_NO_RETRY"
+    }
+  ],
+  "same_commit_evidence_equation": [
+    "THIS_RESULT_JSON",
+    "EXACT_987_BYTE_COMBINED_JSONL",
+    "EXACT_2597_BYTE_RETAINED_STAGING_LEAF"
+  ],
+  "successor_boundary": {
+    "v6_namespace_reusable": false,
+    "v6_runner_retry_authorized": false,
+    "v6_root_cleanup_repair_chmod_rename_or_seal_authorized": false,
+    "fresh_runner_version_and_capture_namespace_required": true,
+    "recommended_primitive": "FIXED_ARITY_DARWIN_FCHMOD_ON_HELD_DESCRIPTOR",
+    "named_path_file_chmod_forbidden": true,
+    "successor_implementation_or_entry_authorized_by_this_result": false,
+    "successor_requires_separate_control_freeze": true
+  },
+  "authority": {
+    "authority_vector": "00000000",
+    "authoritative": false,
+    "gate_e": "ABSTAIN",
+    "scientific_outcome": "ABSTAIN_CONSUMED_INFRASTRUCTURE_INCOMPLETE_NO_RETRY",
+    "prose_may_supply_fact": false,
+    "controller_or_build_authorized": false,
+    "authority_closure_authorized": false
+  },
+  "artifact_addressing": "RAW_OUTER_AND_STAGING_BYTES_HAVE_EXPLICIT_HASHES;THIS_RESULT_RECORD_IS_CONTENT_ADDRESSED_BY_ITS_SUCCESSOR_GIT_COMMIT_AND_TREE_AND_DOES_NOT_EMBED_ITS_OWN_HASH"
+}
