@@ -46,7 +46,8 @@ let package = Package(
         ),
         .testTarget(
             name: "DisposalProjectionCoreTests",
-            dependencies: ["DisposalProjectionCore"]
+            dependencies: ["DisposalProjectionCore"],
+            resources: [.copy("Fixtures")]
         ),
     ]
 )

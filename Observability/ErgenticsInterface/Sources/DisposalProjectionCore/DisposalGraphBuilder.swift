@@ -1406,6 +1406,7 @@ private func disposalMachineInputs(
     prefixOrdinal: Int,
     facts: [DisposalMachineFact],
     inputSetAdmitted: Bool,
+    operationalValuesKnown: Bool,
     temporalMerkle: DisposalTemporalMerkleQualification
 ) -> DisposalLatticeInputs {
     let visible = facts.filter { $0.visibleOrdinal <= prefixOrdinal }
@@ -1540,7 +1541,7 @@ private func disposalMachineInputs(
     ]
     return DisposalLatticeInputs(
         inputSetAdmitted: inputSetAdmitted,
-        operationalValuesKnown: true,
+        operationalValuesKnown: operationalValuesKnown,
         predicateKnowledge: predicateKnowledge,
         preflightSnapshotCount: snapshots.count,
         commitmentCount: commitments.count,
@@ -1566,14 +1567,11 @@ private func disposalMachineOverlay(
     try disposalRequireProjection(
         frameNodes.count == journal.frames.count,
         "GRAPH_MACHINE_FRAME_INVENTORY")
-    guard let startFrame = journal.frames.first else {
+    guard !journal.frames.isEmpty else {
         throw DisposalProjectionRejection(code: "GRAPH_MACHINE_EMPTY_JOURNAL")
     }
-    let sourceInvocationID = try startFrame.requiredString(at: "/payload/invocation_id")
-    let sourceEpochLabel = try startFrame.requiredString(at: "/payload/epoch_label")
-    try disposalRequireProjection(
-        sourceInvocationID == evidence.invocationID,
-        "GRAPH_MACHINE_SOURCE_INVOCATION_JOIN")
+    let sourceInvocationID = evidence.invocationID
+    let sourceEpochLabel = evidence.epochLabel
     let semanticScopeSHA256 = disposalMachineID(
         "disposal-machine-semantic-scope-v1",
         [sourceInvocationID, sourceEpochLabel])
@@ -1621,6 +1619,7 @@ private func disposalMachineOverlay(
         prefixOrdinal: -1,
         facts: [],
         inputSetAdmitted: false,
+        operationalValuesKnown: journal.sourceKind == .disposalEvent,
         temporalMerkle: .init(
             exactCommitment: false,
             allCommittedObligationsConserved: false,
@@ -1664,17 +1663,24 @@ private func disposalMachineOverlay(
             .sorted { ($0.normalizedFactSHA256, $0.id) < ($1.normalizedFactSHA256, $1.id) }
         let merkle = try disposalDerivedPostHocMerkleRoot(
             normalizedFactSHA256s: visibleWitnesses.map(\.normalizedFactSHA256))
-        let temporalMerkle = try disposalTemporalMerkleQualification(
+        let extractedTemporalMerkle = try disposalTemporalMerkleQualification(
             prefixOrdinal: prefixOrdinal,
             facts: facts,
             sourceInvocationID: sourceInvocationID,
             sourceEpochLabel: sourceEpochLabel)
+        let temporalMerkle = journal.sourceKind == .disposalEvent
+            ? extractedTemporalMerkle
+            : DisposalTemporalMerkleQualification(
+                exactCommitment: nil,
+                allCommittedObligationsConserved: nil,
+                commitmentNormalizedFactSHA256: nil)
         let decision = try disposalEvaluateLattice(
             rules: rules,
             inputs: disposalMachineInputs(
                 prefixOrdinal: prefixOrdinal,
                 facts: facts,
                 inputSetAdmitted: true,
+                operationalValuesKnown: journal.sourceKind == .disposalEvent,
                 temporalMerkle: temporalMerkle))
         let frameHash = journal.frames[prefixOrdinal].rawWithLFSHA256
         let ancestry = disposalMachineID(
@@ -2782,13 +2788,19 @@ func buildDisposalGraph(
     let invocationNode = appendNode(
         kind: "INVOCATION",
         key: "invocation:\(evidence.invocationID)",
-        label: "Disposal invocation",
+        label: journal.sourceKind == .disposalEvent
+            ? "Disposal invocation"
+            : "R19 observability presentation",
         role: "EVIDENCE",
         row: evidence.invocationID)
     let streamNode = appendNode(
         kind: "STREAM",
         key: "stream:\(evidence.streamID)",
-        label: journal.isTerminal ? "Complete disposal journal" : "Nonterminal disposal prefix",
+        label: journal.isTerminal
+            ? "Complete disposal journal"
+            : (journal.sourceSealed
+                ? "Sealed observability source; disposal outcome absent"
+                : "Unsealed source prefix"),
         role: "EVIDENCE",
         row: evidence.streamID)
     var frameNodes: [String] = []
@@ -2796,7 +2808,7 @@ func buildDisposalGraph(
         let node = appendNode(
             kind: "FRAME",
             key: "frame:\(evidence.frameIDs[frame.ordinal])",
-            label: "\(frame.ordinal):\(frame.eventType.rawValue)",
+            label: "\(frame.ordinal):\(frame.sourceFrameKind.rawValue)",
             role: "EVIDENCE",
             row: evidence.frameIDs[frame.ordinal])
         frameNodes.append(node)
@@ -2866,10 +2878,12 @@ func buildDisposalGraph(
     var joinedSampleIDs: [String] = []
     do {
         let sampleJoin = try metricsDatabase.prepare(
-            "SELECT sample_id,source_frame_id FROM rusage_samples ORDER BY sample_id")
+            "SELECT sample_id,source_frame_id,source_target_id " +
+                "FROM rusage_samples ORDER BY sample_id")
         while try sampleJoin.step() {
             guard let sampleID = sampleJoin.optionalText(0),
                   let sourceFrameID = sampleJoin.optionalText(1),
+                  let targetID = sampleJoin.optionalText(2),
                   let sampleNode = sampleNodes[sampleID],
                   let frameOrdinal = evidence.frameIDs.firstIndex(of: sourceFrameID)
             else {
@@ -2882,8 +2896,27 @@ func buildDisposalGraph(
                 to: sampleNode,
                 role: "METRICS",
                 row: sampleID,
-                pointer: "/payload/resource_sample",
+                pointer: journal.frames[frameOrdinal].sourceFrameKind == .r19ObservabilitySample
+                    ? "/payload/rusage_v6"
+                    : "/payload/resource_sample",
                 grade: "LEXICAL_EQUALITY_ONLY")
+            if journal.frames[frameOrdinal].sourceFrameKind == .r19ObservabilitySample {
+                guard evidence.typedEvidenceIDs.targetIDs.contains(targetID),
+                      let targetNode = typedEvidenceRows.nodes.first(where: {
+                          $0.kind == "TARGET" && $0.sourceRowID == targetID
+                      })?.id
+                else {
+                    throw DisposalProjectionRejection(code: "GRAPH_R19_SAMPLE_TARGET_JOIN")
+                }
+                appendEdge(
+                    from: sampleNode,
+                    predicate: "ENTITY_REFERENCES_TARGET",
+                    to: targetNode,
+                    role: "METRICS",
+                    row: sampleID,
+                    pointer: "/rusage_samples/source_target_id",
+                    grade: "SOURCE_POINTER_EXACT")
+            }
         }
     }
     try disposalRequireProjection(

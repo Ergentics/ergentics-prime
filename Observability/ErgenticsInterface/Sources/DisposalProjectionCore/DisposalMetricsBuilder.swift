@@ -73,6 +73,13 @@ func buildDisposalMetrics(
     let rationalMathSHA256 = disposalSHA256(Data(disposalRationalMathSemantics.utf8))
     let samples = try journal.frames.compactMap { frame -> DisposalRusageSample? in
         guard frame.eventType == .resource else { return nil }
+        if frame.sourceFrameKind == .r19ObservabilitySample {
+            return try decodeR19ObservabilityRusageSample(
+                frame: frame,
+                frameID: evidence.frameIDs[frame.ordinal],
+                invocationID: evidence.invocationID)
+        }
+        guard frame.sourceFrameKind == .disposalEvent else { return nil }
         return try decodeDisposalRusageSample(
             frame: frame,
             frameID: evidence.frameIDs[frame.ordinal])
@@ -80,6 +87,12 @@ func buildDisposalMetrics(
         if $0.label != $1.label { return $0.label < $1.label }
         if $0.round != $1.round { return $0.round < $1.round }
         return $0.sampleID < $1.sampleID
+    }
+    let sampleTargetIDs = Set(samples.map(\.targetID))
+    if journal.sourceKind == .r19Observability {
+        try disposalRequireProjection(
+            sampleTargetIDs == Set(evidence.typedEvidenceIDs.targetIDs),
+            "R19_METRICS_COMPLETE_TARGET_EVIDENCE_JOIN")
     }
     let intervals = try buildDisposalIntervals(samples: samples)
     let relationalExportSHA256 = disposalMetricsRelationalExport(
@@ -460,6 +473,112 @@ private func decodeDisposalRusageSample(
         fields: fields)
 }
 
+private func decodeR19ObservabilityRusageSample(
+    frame: DisposalDecodedFrame,
+    frameID: String,
+    invocationID: String
+) throws -> DisposalRusageSample {
+    let payload = try frame.payloadValue()
+    try disposalRequireProjection(
+        payload.member("schema")?.stringValue() ==
+            "prime_driver_v2_r19_process_energy_observation_v1",
+        "R19_METRICS_SCHEMA",
+        frameOrdinal: frame.ordinal)
+    let label = try disposalObjectString(payload, "label", frame: frame)
+    let role: String
+    switch label {
+    case "wrapper": role = "R19_WAIT_WRAPPER"
+    case "guardian": role = "R19_GUARDIAN"
+    case "fixture": role = "R19_FIXTURE"
+    default:
+        throw DisposalProjectionRejection(
+            code: "R19_METRICS_TARGET_LABEL",
+            frameOrdinal: frame.ordinal,
+            detail: label)
+    }
+    let round = try disposalObjectInt(payload, "round", frame: frame)
+    let pid = try disposalObjectInt(payload, "pid", frame: frame)
+    guard let process = payload.member("process"), case .object = process,
+          let rusage = payload.member("rusage_v6"), case .object = rusage
+    else {
+        throw DisposalProjectionRejection(
+            code: "R19_METRICS_PROCESS_OR_RUSAGE",
+            frameOrdinal: frame.ordinal)
+    }
+    let uniqueID = try disposalObjectUInt(process, "unique_id", frame: frame)
+    let idVersion = try disposalObjectUInt(process, "idversion", frame: frame)
+    let sid = try disposalObjectInt(process, "sid", frame: frame)
+    let pgid = try disposalObjectInt(process, "pgid", frame: frame)
+    let processUUID = try disposalObjectString(process, "uuid_hex", frame: frame)
+    let rusageUUID = try disposalObjectString(rusage, "uuid_hex", frame: frame)
+    try disposalRequireProjection(
+        processUUID == rusageUUID && disposalIsLowerHex(processUUID, count: 32),
+        "R19_METRICS_UUID_JOIN",
+        frameOrdinal: frame.ordinal)
+    let processStart = try disposalObjectUInt(
+        rusage,
+        "process_start_abstime",
+        frame: frame)
+    let targetID = disposalTargetID(
+        invocationID: invocationID,
+        role: role,
+        label: label,
+        pid: pid,
+        uniqueID: uniqueID,
+        idVersion: idVersion)
+    let fieldNames = [
+        "cycles", "energy_nj", "instructions", "pcycles", "penergy_nj",
+        "physical_footprint_bytes", "pinstructions", "process_exit_abstime",
+        "process_start_abstime", "runnable_time", "system_ptime", "system_time",
+        "user_ptime", "user_time",
+    ]
+    let fields = try fieldNames.map { name -> DisposalRusageField in
+        let unit: String
+        switch name {
+        case "energy_nj", "penergy_nj": unit = "nanojoules"
+        case "physical_footprint_bytes": unit = "bytes"
+        case "cycles", "pcycles": unit = "cycles"
+        case "instructions", "pinstructions": unit = "instructions"
+        default: unit = "source_reported_counter_units_unadjudicated"
+        }
+        return .init(
+            name: name,
+            offset: nil,
+            width: nil,
+            value: try disposalObjectUInt(rusage, name, frame: frame),
+            unit: unit,
+            grade: "PARSED_SOURCE_FIELD_ONLY",
+            sourcePointer: "/payload/rusage_v6/" + name)
+    }
+    let sampleID = disposalID(
+        "disposal-rusage-sample-v1",
+        [frameID, label, String(round), "RAW_ABSENT"])
+    return .init(
+        sampleID: sampleID,
+        frameID: frameID,
+        frameSHA256: frame.rawWithLFSHA256,
+        targetID: targetID,
+        label: label,
+        round: round,
+        pid: pid,
+        uniqueID: uniqueID,
+        idVersion: idVersion,
+        sid: sid,
+        pgid: pgid,
+        processUUID: processUUID,
+        rusageUUID: rusageUUID,
+        processStart: processStart,
+        rawState: "PARSED_FIELDS_ONLY_RAW_ABSENT",
+        rawSHA256: nil,
+        raw: nil,
+        joinState: "PARTIAL_JOIN",
+        entryNS: try disposalObjectUInt(payload, "monotonic_before_ns", frame: frame),
+        returnNS: try disposalObjectUInt(payload, "monotonic_after_ns", frame: frame),
+        timebaseNumerator: nil,
+        timebaseDenominator: nil,
+        fields: fields)
+}
+
 private func disposalDecodeRusageFields(
     sample: DisposalJSONValue,
     frame: DisposalDecodedFrame,
@@ -533,15 +652,18 @@ private func buildDisposalIntervals(samples: [DisposalRusageSample]) throws -> [
             let before = ordered[index - 1]
             let after = ordered[index]
             guard after.round == before.round + 1 else { continue }
-            let join = before.pid == after.pid &&
+            let generationFieldsMatch = before.pid == after.pid &&
                 before.uniqueID != nil && before.uniqueID == after.uniqueID &&
                 before.idVersion != nil && before.idVersion == after.idVersion &&
                 before.sid != nil && before.sid == after.sid &&
                 before.pgid != nil && before.pgid == after.pgid &&
                 before.rusageUUID != nil && before.rusageUUID == after.rusageUUID &&
-                before.processStart != nil && before.processStart == after.processStart &&
+                before.processStart != nil && before.processStart == after.processStart
+            let join = generationFieldsMatch &&
                 before.joinState == "EXACT_GENERATION_SESSION_GROUP_UUID_START_JOIN" &&
                 after.joinState == "EXACT_GENERATION_SESSION_GROUP_UUID_START_JOIN"
+            let partialJoin = generationFieldsMatch &&
+                before.joinState == "PARTIAL_JOIN" && after.joinState == "PARTIAL_JOIN"
             let timebaseMatch = before.timebaseNumerator != nil &&
                 before.timebaseNumerator == after.timebaseNumerator &&
                 before.timebaseDenominator != nil &&
@@ -587,7 +709,7 @@ private func buildDisposalIntervals(samples: [DisposalRusageSample]) throws -> [
                 } else {
                     state = "INVALID_TIME_BOUND_ORDER"
                 }
-            } else if !join {
+            } else if !join && !partialJoin {
                 state = "INVALID_GENERATION_JOIN"
             }
             result.append(.init(
@@ -598,7 +720,7 @@ private func buildDisposalIntervals(samples: [DisposalRusageSample]) throws -> [
                 after: after,
                 joinState: join
                     ? "EXACT_GENERATION_SESSION_GROUP_UUID_START_JOIN"
-                    : "DRIFT",
+                    : (partialJoin ? "ABSTAIN" : "DRIFT"),
                 timebaseNumerator: timebaseMatch ? before.timebaseNumerator : nil,
                 timebaseDenominator: timebaseMatch ? before.timebaseDenominator : nil,
                 elapsedMinimum: elapsedMinimum,
@@ -705,6 +827,23 @@ private func disposalObjectInt(
     else {
         throw DisposalProjectionRejection(
             code: "RESOURCE_REQUIRED_INT",
+            frameOrdinal: frame.ordinal,
+            detail: key)
+    }
+    return value
+}
+
+private func disposalObjectUInt(
+    _ object: DisposalJSONValue,
+    _ key: String,
+    frame: DisposalDecodedFrame
+) throws -> UInt64 {
+    guard let lexeme = object.member(key)?.numberLexeme(),
+          let value = UInt64(lexeme),
+          String(value) == lexeme
+    else {
+        throw DisposalProjectionRejection(
+            code: "RESOURCE_REQUIRED_UINT",
             frameOrdinal: frame.ordinal,
             detail: key)
     }

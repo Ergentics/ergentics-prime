@@ -33,6 +33,8 @@ public struct DisposalProjectionMetadata: Equatable, Sendable {
     public let sourceSHA256: String
     public let sourceBytes: Int
     public let frameCount: Int
+    public let sourceKind: String
+    public let sourceSealed: Bool
     public let terminal: Bool
     public let status: String
     public let evidenceSHA256: String

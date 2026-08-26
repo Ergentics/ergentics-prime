@@ -58,6 +58,7 @@ struct DisposalEvidenceMaterial: Sendable {
     let projectionID: String
     let relationalExportSHA256: String
     let invocationID: String
+    let epochLabel: String
     let streamID: String
     let artifactID: String
     let frameIDs: [String]

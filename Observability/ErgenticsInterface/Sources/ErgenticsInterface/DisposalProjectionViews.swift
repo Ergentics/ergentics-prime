@@ -132,7 +132,11 @@ private struct DisposalOverview: View {
                 GroupBox("Exact admission identities") {
                     Grid(alignment: .leading, horizontalSpacing: 16, verticalSpacing: 8) {
                         DisposalGridRow("Projection", snapshot.metadata.projectionID)
-                        DisposalGridRow("Journal SHA-256", snapshot.metadata.sourceSHA256)
+                        DisposalGridRow("Source kind", snapshot.metadata.sourceKind)
+                        DisposalGridRow(
+                            "Source sealed",
+                            snapshot.metadata.sourceSealed ? "true" : "false")
+                        DisposalGridRow("Source SHA-256", snapshot.metadata.sourceSHA256)
                         DisposalGridRow("Evidence SHA-256", snapshot.metadata.evidenceSHA256)
                         DisposalGridRow("Metrics SHA-256", snapshot.metadata.metricsSHA256)
                         DisposalGridRow("Graph SHA-256", snapshot.metadata.graphSHA256)

@@ -2,7 +2,7 @@ import Foundation
 
 private let disposalEvidenceExtractorSemantics = """
 ergentics-disposal-evidence-v1
-source=exact-canonical-jsonl-prefix
+source=exact-canonical-jsonl-prefix-or-exact-r19-observability-jsonl-prefix
 frames=terminal-lf;ordinal-contiguous;lf-frame-sha-chain;payload-sha-exact
 json=rfc8259;duplicate-keys-rejected;number-lexeme-preserved
 authority=00000000;authoritative=0;may-feed-controller=0;prose-may-supply-fact=0
@@ -11,6 +11,8 @@ reap=external-processes-none-not-parent
 typed-process-evidence=exact-event-type-plus-adapter-schema-plus-json-pointer-only
 unknown-schema=raw-only;missing-held-artifact-bytes=abstain;no-inference
 adapter-coverage=one-row-per-frame;unknown-lifecycle=frame-prefix-abstain
+legacy-r19-observability=sealed-presentation-source-not-disposal-terminal;direct-exact-byte-adapter;no-synthetic-events
+legacy-r19-energy=parsed-counters-only;source-cpu-derived-fields-not-promoted;raw-rusage-buffers-unavailable
 target-provenance=exact-first-source-frame-and-ordinal
 conservation-set-schema=ergentics-disposal-conservation-set-commitment-v1
 conservation-set-hash=sha256;magic=ERGENTICS_DISPOSAL_MERKLE_ID_V1;domain-length-u64be;component-count-u64be;component-length-u64be
@@ -21,6 +23,59 @@ conservation-set-tree=rfc6962-largest-power-of-two-split-only;ergentics-length-f
 conservation-set-temporal=explicit-prior-frame-only;exact-invocation-epoch-purpose-scope-root-count-policy
 conservation-set-resolution=explicit-obligation-membership-to-same-generation-conservation-mapping-only
 """
+
+private struct DisposalJournalIdentity {
+    let invocationID: String
+    let arcLabel: String
+    let epochLabel: String
+    let consumptionState: String
+    let retryAuthorized: Bool
+    let controlCommit: String?
+    let controlTree: String?
+    let implementationCommit: String?
+    let implementationTree: String?
+    let artifactRole: String
+    let streamKind: String
+}
+
+private func disposalJournalIdentity(
+    _ journal: DisposalDecodedJournal
+) throws -> DisposalJournalIdentity {
+    let start = journal.frames[0]
+    switch journal.sourceKind {
+    case .disposalEvent:
+        return .init(
+            invocationID: try start.requiredString(at: "/payload/invocation_id"),
+            arcLabel: try start.requiredString(at: "/payload/arc_label"),
+            epochLabel: try start.requiredString(at: "/payload/epoch_label"),
+            consumptionState: try start.requiredString(at: "/payload/consumption_state"),
+            retryAuthorized: try start.requiredBoolean(at: "/payload/retry_authorized"),
+            controlCommit: try start.optionalString(at: "/payload/control_commit"),
+            controlTree: try start.optionalString(at: "/payload/control_tree"),
+            implementationCommit: try start.optionalString(at: "/payload/implementation_commit"),
+            implementationTree: try start.optionalString(at: "/payload/implementation_tree"),
+            artifactRole: "DISPOSAL_JOURNAL",
+            streamKind: "DISPOSAL_JOURNAL")
+    case .r19Observability:
+        let sessionID = try start.requiredString(at: "/session_id")
+        let controlCommit = try start.requiredString(at: "/payload/control_commit")
+        let controlTree = try start.requiredString(at: "/payload/control_tree")
+        return .init(
+            invocationID: disposalLengthFramedID(
+                "ergentics-r19-observability-invocation-v1",
+                [sessionID, start.rawWithLFSHA256, controlCommit, controlTree]),
+            arcLabel: "R19_OBSERVABILITY_PRESENTATION",
+            epochLabel: sessionID,
+            consumptionState: "ABSTAIN_NOT_RECORDED",
+            retryAuthorized: false,
+            controlCommit: controlCommit,
+            controlTree: controlTree,
+            implementationCommit: nil,
+            implementationTree: nil,
+            artifactRole: "OBSERVABILITY_JOURNAL",
+            streamKind: "OBSERVABILITY")
+    }
+}
 
 func buildDisposalEvidence(
     request: DisposalProjectionSetRequest,
@@ -36,30 +91,30 @@ func buildDisposalEvidence(
             "EVIDENCE_PREDECESSOR_ID")
     }
 
-    let start = journal.frames[0]
-    let invocationID = try start.requiredString(at: "/payload/invocation_id")
+    let identity = try disposalJournalIdentity(journal)
+    let invocationID = identity.invocationID
     try disposalRequireProjection(
         disposalIsLowerHex(invocationID, count: 64),
         "EVIDENCE_INVOCATION_ID",
         frameOrdinal: 0)
-    let arcLabel = try start.requiredString(at: "/payload/arc_label")
-    let epochLabel = try start.requiredString(at: "/payload/epoch_label")
-    let consumptionState = try start.requiredString(at: "/payload/consumption_state")
+    let arcLabel = identity.arcLabel
+    let epochLabel = identity.epochLabel
+    let consumptionState = identity.consumptionState
     try disposalRequireProjection(
         ["UNCONSUMED", "CONSUMED_SOURCE_DECLARED", "ABSTAIN_NOT_RECORDED"]
             .contains(consumptionState),
         "EVIDENCE_CONSUMPTION_STATE",
         frameOrdinal: 0)
-    let retryAuthorized = try start.requiredBoolean(at: "/payload/retry_authorized")
+    let retryAuthorized = identity.retryAuthorized
     try disposalRequireProjection(
         retryAuthorized == false,
         "EVIDENCE_RETRY_AUTHORIZED",
         frameOrdinal: 0)
 
-    let controlCommit = try start.optionalString(at: "/payload/control_commit")
-    let controlTree = try start.optionalString(at: "/payload/control_tree")
-    let implementationCommit = try start.optionalString(at: "/payload/implementation_commit")
-    let implementationTree = try start.optionalString(at: "/payload/implementation_tree")
+    let controlCommit = identity.controlCommit
+    let controlTree = identity.controlTree
+    let implementationCommit = identity.implementationCommit
+    let implementationTree = identity.implementationTree
     for (value, code) in [
         (controlCommit, "EVIDENCE_CONTROL_COMMIT"),
         (controlTree, "EVIDENCE_CONTROL_TREE"),
@@ -85,7 +140,7 @@ func buildDisposalEvidence(
     let extractorSHA256 = disposalSHA256(Data(disposalEvidenceExtractorSemantics.utf8))
     let artifactID = disposalID(
         "disposal-input-artifact-v1",
-        ["DISPOSAL_JOURNAL", request.journalLogicalPath, journal.sourceSHA256])
+        [identity.artifactRole, request.journalLogicalPath, journal.sourceSHA256])
     let streamID = disposalID(
         "disposal-stream-v1",
         [invocationID, artifactID, journal.sourceSHA256])
@@ -144,7 +199,7 @@ func buildDisposalEvidence(
             "INSERT INTO input_artifacts VALUES(" +
                 String(repeating: "?,", count: 14) + "?)")
         try artifact.bind(1, text: artifactID)
-        try artifact.bind(2, text: "DISPOSAL_JOURNAL")
+        try artifact.bind(2, text: identity.artifactRole)
         try artifact.bind(3, text: request.journalLogicalPath)
         try artifact.bind(4, text: "LEDGER_EMBEDDED_COPY")
         try artifact.bind(5, text: "CANONICAL_JOURNAL_FRAME_EXACT")
@@ -182,10 +237,10 @@ func buildDisposalEvidence(
         try streamExact.bind(1, text: streamID)
         try streamExact.bind(2, text: invocationID)
         try streamExact.bind(3, text: artifactID)
-        try streamExact.bind(4, text: "DISPOSAL_JOURNAL")
+        try streamExact.bind(4, text: identity.streamKind)
         try streamExact.bind(
             5,
-            text: journal.isTerminal ? "COMPLETE_SEALED" : "RETAINED_PREFIX_NONTERMINAL")
+            text: journal.sourceSealed ? "COMPLETE_SEALED" : "RETAINED_PREFIX_NONTERMINAL")
         try streamExact.bind(6, text: journal.sourceSHA256)
         try streamExact.bind(7, int: journal.source.count)
         try streamExact.stepDone()
@@ -316,6 +371,7 @@ func buildDisposalEvidence(
             projectionID: projectionID,
             relationalExportSHA256: relationalExportSHA256,
             invocationID: invocationID,
+            epochLabel: epochLabel,
             streamID: streamID,
             artifactID: artifactID,
             frameIDs: frameIDs,
@@ -425,17 +481,48 @@ private func insertDisposalMissingEvidence(
 ) throws -> Int {
     var rows: [(String, String?, String?, String)] = []
     if !journal.isTerminal {
-        rows.append(("TERMINAL_FRAME", nil, nil, "JOURNAL_PREFIX_NONTERMINAL"))
+        let reason: String
+        switch journal.sourceKind {
+        case .disposalEvent:
+            reason = "JOURNAL_PREFIX_NONTERMINAL"
+        case .r19Observability:
+            reason = journal.sourceSealed
+                ? "SEALED_OBSERVABILITY_SOURCE_HAS_NO_DISPOSAL_TERMINAL"
+                : "OBSERVABILITY_PREFIX_HAS_NO_DISPOSAL_TERMINAL"
+        }
+        rows.append(("TERMINAL_FRAME", nil, nil, reason))
     }
     for frame in journal.frames where frame.eventType == .resource {
-        let rawState = try frame.optionalString(at: "/payload/resource_sample/raw_buffer_state")
-        if rawState != "RAW_464_VERIFIED" {
+        if frame.sourceFrameKind == .r19ObservabilitySample {
             rows.append((
                 "RAW_RUSAGE_INFO_V6_464",
                 frame.targetLabel,
                 frameIDs[frame.ordinal],
-                rawState == nil ? "RESOURCE_RAW_BUFFER_STATE_ABSENT" : "RESOURCE_RAW_BUFFER_NOT_VERIFIED"))
+                "LEGACY_OBSERVABILITY_RAW_464_NOT_RETAINED"))
+        } else if frame.sourceFrameKind == .disposalEvent {
+            let rawState = try frame.optionalString(at: "/payload/resource_sample/raw_buffer_state")
+            if rawState != "RAW_464_VERIFIED" {
+                rows.append((
+                    "RAW_RUSAGE_INFO_V6_464",
+                    frame.targetLabel,
+                    frameIDs[frame.ordinal],
+                    rawState == nil ? "RESOURCE_RAW_BUFFER_STATE_ABSENT" : "RESOURCE_RAW_BUFFER_NOT_VERIFIED"))
+            }
         }
+    }
+    if journal.sourceKind == .r19Observability {
+        rows.append((
+            "DISPOSAL_LIFECYCLE_TERMINAL",
+            nil,
+            nil,
+            journal.sourceSealed
+                ? "OBSERVABILITY_SEAL_IS_NOT_DISPOSAL_TERMINAL"
+                : "OBSERVABILITY_PREFIX_HAS_NO_DISPOSAL_TERMINAL"))
+        rows.append((
+            "SOURCE_RETRY_AUTHORIZATION",
+            nil,
+            nil,
+            "OBSERVABILITY_SOURCE_DOES_NOT_RECORD_RETRY_AUTHORIZATION"))
     }
     if journal.frames.contains(where: { $0.eventType == .signalCall }) &&
         !journal.frames.contains(where: { $0.eventType == .conservation })

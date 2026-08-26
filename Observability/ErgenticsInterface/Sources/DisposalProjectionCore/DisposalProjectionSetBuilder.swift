@@ -62,7 +62,7 @@ public enum DisposalProjectionSetBuilder {
     static func makeMaterial(
         request: DisposalProjectionSetRequest
     ) throws -> DisposalProjectionSetMaterial {
-        let journal = try DisposalEventJournal.decode(request.journal)
+        let journal = try DisposalProjectionSourceAdapter.decode(request.journal)
         let evidence = try buildDisposalEvidence(request: request, journal: journal)
         let metrics = try buildDisposalMetrics(journal: journal, evidence: evidence)
         let graph = try buildDisposalGraph(
@@ -147,9 +147,11 @@ private func disposalProjectionSidecar(
         .init(key: "frame_count", value: disposalJSONNumber(journal.frames.count)),
         .init(key: "high_water_frame_sha256", value: disposalJSONOptionalString(
             journal.frames.last?.rawWithLFSHA256)),
+        .init(key: "is_source_sealed", value: disposalJSONBoolean(journal.sourceSealed)),
         .init(key: "is_terminal", value: disposalJSONBoolean(journal.isTerminal)),
         .init(key: "logical_path", value: disposalJSONString(request.journalLogicalPath)),
         .init(key: "sha256", value: disposalJSONString(journal.sourceSHA256)),
+        .init(key: "source_kind", value: disposalJSONString(journal.sourceKind.rawValue)),
     ], disposalZeroSpan)
     return disposalCanonicalObject([
         "authoritative": disposalJSONBoolean(false),
@@ -166,7 +168,9 @@ private func disposalProjectionSidecar(
         "status": disposalJSONString(
             journal.isTerminal
                 ? "PASS_NONAUTHORITATIVE_TERMINAL_PROJECTION"
-                : "ABSTAIN_NONTERMINAL_PREFIX_PROJECTION"),
+                : (journal.sourceSealed
+                    ? "ABSTAIN_SEALED_SOURCE_NO_DISPOSAL_TERMINAL"
+                    : "ABSTAIN_NONTERMINAL_PREFIX_PROJECTION")),
         "unavailable_behavior": disposalJSONString(
             "EMPTY_OR_EXPLICIT_ABSTAIN_NO_STALE_FALLBACK"),
     ])

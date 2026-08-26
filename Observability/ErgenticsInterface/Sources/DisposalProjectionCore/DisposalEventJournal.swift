@@ -34,6 +34,8 @@ public enum DisposalEventJournal {
                 source: source,
                 sourceSHA256: sourceSHA256,
                 frames: [],
+                sourceKind: .disposalEvent,
+                sourceSealed: false,
                 isTerminal: false,
                 completion: .incomplete(.emptySource))
         }
@@ -111,6 +113,8 @@ public enum DisposalEventJournal {
                 source: source,
                 sourceSHA256: sourceSHA256,
                 frames: frames,
+                sourceKind: .disposalEvent,
+                sourceSealed: true,
                 isTerminal: true,
                 completion: .terminalFramePresent(ordinal: last.ordinal, exactStatus: status))
         }
@@ -118,6 +122,8 @@ public enum DisposalEventJournal {
             source: source,
             sourceSHA256: sourceSHA256,
             frames: frames,
+            sourceKind: .disposalEvent,
+            sourceSealed: false,
             isTerminal: false,
             completion: .incomplete(.prefixEndingAtOrdinal(last.ordinal)))
     }
@@ -329,6 +335,7 @@ public enum DisposalEventJournal {
             schema: schema,
             ordinal: ordinal,
             eventType: eventType,
+            sourceFrameKind: .disposalEvent,
             phase: phase,
             targetLabel: targetLabel,
             status: status,

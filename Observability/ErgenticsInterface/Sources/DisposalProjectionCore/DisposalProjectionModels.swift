@@ -81,12 +81,26 @@ public enum DisposalIncompleteReason: Equatable, Sendable {
 public enum DisposalJournalCompletion: Equatable, Sendable {
     case incomplete(DisposalIncompleteReason)
     case terminalFramePresent(ordinal: Int, exactStatus: String)
+    case sealedPresentationSource(ordinal: Int, exactStatus: String)
+}
+
+public enum DisposalJournalSourceKind: String, Equatable, Sendable {
+    case disposalEvent = "DISPOSAL_EVENT_JOURNAL"
+    case r19Observability = "R19_OBSERVABILITY_JOURNAL"
+}
+
+public enum DisposalSourceFrameKind: String, Equatable, Sendable {
+    case disposalEvent = "DISPOSAL_EVENT"
+    case r19ObservabilitySession = "R19_OBSERVABILITY_SESSION"
+    case r19ObservabilitySample = "R19_OBSERVABILITY_SAMPLE"
+    case r19ObservabilitySeal = "R19_OBSERVABILITY_SEAL"
 }
 
 public struct DisposalDecodedFrame: Equatable, Sendable {
     public let schema: String
     public let ordinal: Int
     public let eventType: DisposalEventType
+    public let sourceFrameKind: DisposalSourceFrameKind
     public let phase: String?
     public let targetLabel: String?
     public let status: String?
@@ -120,6 +134,8 @@ public struct DisposalDecodedJournal: Equatable, Sendable {
     public let source: Data
     public let sourceSHA256: String
     public let frames: [DisposalDecodedFrame]
+    public let sourceKind: DisposalJournalSourceKind
+    public let sourceSealed: Bool
     public let isTerminal: Bool
     public let completion: DisposalJournalCompletion
 }

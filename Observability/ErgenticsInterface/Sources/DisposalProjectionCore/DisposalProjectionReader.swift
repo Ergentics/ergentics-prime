@@ -80,6 +80,7 @@ private func disposalDecodeProjection(
         [
             "PASS_NONAUTHORITATIVE_TERMINAL_PROJECTION",
             "ABSTAIN_NONTERMINAL_PREFIX_PROJECTION",
+            "ABSTAIN_SEALED_SOURCE_NO_DISPOSAL_TERMINAL",
         ].contains(status),
         "DISPOSAL_READER_SEAL_STATUS")
     try disposalRequireProjection(
@@ -106,7 +107,9 @@ private func disposalDecodeProjection(
     let sourceSHA256 = try disposalReaderLowerSHA(source, "sha256")
     let sourceBytes = try disposalReaderInt(source, "bytes")
     let frameCount = try disposalReaderInt(source, "frame_count")
+    let sourceSealed = try disposalReaderBoolean(source, "is_source_sealed")
     let terminal = try disposalReaderBoolean(source, "is_terminal")
+    let sourceKind = try disposalReaderString(source, "source_kind")
     let logicalPath = try disposalReaderString(source, "logical_path")
     try disposalRequireProjection(
         terminal == (status == "PASS_NONAUTHORITATIVE_TERMINAL_PROJECTION"),
@@ -146,8 +149,8 @@ private func disposalDecodeProjection(
         projectionID: graphSidecar.projectionID)
 
     let artifact = try evidence.prepare(
-        "SELECT logical_path,byte_count,raw_sha256,raw_bytes FROM input_artifacts " +
-            "WHERE artifact_role='DISPOSAL_JOURNAL'")
+        "SELECT a.logical_path,a.byte_count,a.raw_sha256,a.raw_bytes " +
+            "FROM input_artifacts a JOIN invocations i ON i.source_artifact_id=a.artifact_id")
     try disposalRequireProjection(
         try artifact.step(), "DISPOSAL_READER_SOURCE_ARTIFACT_ABSENT")
     let embeddedLogicalPath = try disposalReaderRequiredText(artifact, 0, "SOURCE_LOGICAL_PATH")
@@ -199,7 +202,12 @@ private func disposalDecodeProjection(
                 "(database_role='METRICS' AND database_sha256='\(metricsSidecar.sha256)')") == 2,
         "DISPOSAL_READER_GRAPH_INPUT_JOIN")
 
-    let decodedJournal = try DisposalEventJournal.decode(journal)
+    let decodedJournal = try DisposalProjectionSourceAdapter.decode(journal)
+    try disposalRequireProjection(
+        decodedJournal.sourceKind.rawValue == sourceKind &&
+            decodedJournal.sourceSealed == sourceSealed &&
+            decodedJournal.isTerminal == terminal,
+        "DISPOSAL_READER_SOURCE_KIND_SEAL_TERMINAL_JOIN")
     let frames = try disposalReadFrames(evidence, decoded: decodedJournal)
     let processRows = try disposalReadProcessRows(evidence)
     let riskWindows = try disposalReadRiskWindows(evidence)
@@ -233,6 +241,8 @@ private func disposalDecodeProjection(
             sourceSHA256: sourceSHA256,
             sourceBytes: sourceBytes,
             frameCount: frameCount,
+            sourceKind: sourceKind,
+            sourceSealed: sourceSealed,
             terminal: terminal,
             status: status,
             evidenceSHA256: evidenceSidecar.sha256,

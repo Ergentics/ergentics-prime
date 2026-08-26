@@ -179,10 +179,15 @@ private final class Extractor {
             case "prime_driver_v2_r19_observability_frame_v1":
                 try requireEvent(frame, .resource, schema)
                 try insertObservabilityFrame(frame)
+            case "prime_driver_v2_r19_process_energy_observation_v1":
+                try requireEvent(frame, .resource, schema)
+                try insertDirectObservabilityFrame(frame)
             case "prime-driver-v2-r18-process-actuation-canary/v1":
                 try requireEvent(frame, .terminal, schema)
                 try insertR18Terminal(frame)
             case "prime-driver-v2-r19-coordinated-disposal/v1",
+                 "prime_driver_v2_r19_observability_session_v1",
+                 "prime_driver_v2_r19_observability_seal_v1",
                  "prime_driver_v2_r19_observability_cpu_overlay_frame_v1",
                  "prime_driver_v2_r19_observability_cpu_overlay_interval_v1":
                 // These known schemas carry terminal or derived presentation facts,
@@ -252,6 +257,7 @@ private final class Extractor {
             "prime-driver-v2-r19-guardian-conservation/v1",
             "prime-driver-v2-r19-fixture-conservation/v1",
             "prime_driver_v2_r19_observability_frame_v1",
+            "prime_driver_v2_r19_process_energy_observation_v1",
             DisposalConservationSetMerkle.schema,
         ]
     }
@@ -259,6 +265,8 @@ private final class Extractor {
     private var knownNoProcessAdapterSchemas: Set<String> {
         [
             "prime-driver-v2-r19-coordinated-disposal/v1",
+            "prime_driver_v2_r19_observability_session_v1",
+            "prime_driver_v2_r19_observability_seal_v1",
             "prime_driver_v2_r19_observability_cpu_overlay_frame_v1",
             "prime_driver_v2_r19_observability_cpu_overlay_interval_v1",
         ]
@@ -304,6 +312,35 @@ private final class Extractor {
             Set(merkleMembers.map(\.key)) == Set(expectedMerkle.keys) &&
                 expectedMerkle.allSatisfy { merkle.member($0.key)?.stringValue() == $0.value },
             "TYPED_ADAPTER_MERKLE_CONTRACT")
+        guard let sourceRules = root.member("source_decoder_rules"),
+              case .object(let sourceRuleMembers, _) = sourceRules
+        else { throw DisposalProjectionRejection(code: "TYPED_ADAPTER_SOURCE_RULES") }
+        let expectedSourceRules: [String: String] = [
+            "collapsed_evidence_certificate":
+                "DOMAIN_SEPARATED_FRAME_LF_AVAILABILITY_PROCESS_MONOTONIC_BOUNDS",
+            "cpu_derived_field_promotion": "RAW_JSON_ONLY_NOT_PROMOTED",
+            "legacy_exact_outer_keys":
+                "frame_kind,ordinal,payload,payload_hash_rule,payload_sha256," +
+                "previous_frame_sha256,schema,session_id",
+            "legacy_frame_schema": "prime_driver_v2_r19_observability_frame_v1",
+            "legacy_hash_chain":
+                "PREVIOUS_FRAME_SHA256_EQUALS_PRIOR_RAW_WITH_LF_SHA256",
+            "legacy_payload_hash_rule":
+                "SHA256_COMPACT_RECURSIVE_LEXICOGRAPHIC_KEYS_UTF8_NO_TRAILING_LF",
+            "legacy_sequence":
+                "SESSION_THEN_UP_TO_SIX_ROUND_ORDERED_SAMPLES_THEN_OPTIONAL_POSITION_7_SEAL",
+            "legacy_session_join":
+                "EVERY_FRAME_OUTER_SESSION_ID_EQUALS_ORDINAL_ZERO",
+            "legacy_source_completion":
+                "SEAL_MEANS_SOURCE_SEALED_NOT_DISPOSAL_TERMINAL",
+            "promotion": "DIRECT_EXACT_BYTES_NO_SYNTHETIC_EVENTS",
+        ]
+        try disposalRequireProjection(
+            Set(sourceRuleMembers.map(\.key)) == Set(expectedSourceRules.keys) &&
+                expectedSourceRules.allSatisfy {
+                    sourceRules.member($0.key)?.stringValue() == $0.value
+                },
+            "TYPED_ADAPTER_SOURCE_RULE_CONTRACT")
         guard let rules = root.member("decoder_rules"), case .array(let values, _) = rules else {
             throw DisposalProjectionRejection(code: "TYPED_ADAPTER_RULES_ARRAY")
         }
@@ -1275,9 +1312,31 @@ private final class Extractor {
         guard try optionalString(nested, "schema", frame, "/payload/payload") ==
             "prime_driver_v2_r19_process_energy_observation_v1"
         else { return }
-        let label = try requiredString(nested, "label", frame, "/payload/payload")
-        let pid = try requiredInt(nested, "pid", frame, "/payload/payload")
-        let process = try requiredMember(nested, "process", frame, "/payload/payload")
+        try insertObservabilityPayload(
+            frame: frame,
+            payload: nested,
+            payloadPointer: "/payload/payload",
+            sourceAssertedSandwich: false)
+    }
+
+    private func insertDirectObservabilityFrame(_ frame: DisposalDecodedFrame) throws {
+        try insertObservabilityPayload(
+            frame: frame,
+            payload: frame.payloadValue(),
+            payloadPointer: "/payload",
+            sourceAssertedSandwich: true)
+    }
+
+    private func insertObservabilityPayload(
+        frame: DisposalDecodedFrame,
+        payload: DisposalJSONValue,
+        payloadPointer: String,
+        sourceAssertedSandwich: Bool
+    ) throws {
+        let label = try requiredString(payload, "label", frame, payloadPointer)
+        let pid = try requiredInt(payload, "pid", frame, payloadPointer)
+        let processPointer = payloadPointer + "/process"
+        let process = try requiredMember(payload, "process", frame, payloadPointer)
         let targetRole: String
         switch label {
         case "wrapper": targetRole = "R19_WAIT_WRAPPER"
@@ -1301,19 +1360,19 @@ private final class Extractor {
                 parentIDVersion: nil,
                 uid: nil,
                 gid: nil)
-            try insertObservationSnapshot(
+            _ = try insertObservationSnapshot(
                 frame: frame,
                 target: target,
                 receiptID: nil,
                 kind: "UNKNOWN",
-                pointer: "/payload/payload/process")
+                pointer: processPointer)
             return
         }
-        let uniqueID = try requiredUnsigned(process, "unique_id", frame, "/payload/payload/process")
-        let idVersion = try requiredUnsigned(process, "idversion", frame, "/payload/payload/process")
-        let sid = try requiredInt(process, "sid", frame, "/payload/payload/process")
-        let pgid = try requiredInt(process, "pgid", frame, "/payload/payload/process")
-        let uuid = try requiredString(process, "uuid_hex", frame, "/payload/payload/process")
+        let uniqueID = try requiredUnsigned(process, "unique_id", frame, processPointer)
+        let idVersion = try requiredUnsigned(process, "idversion", frame, processPointer)
+        let sid = try requiredInt(process, "sid", frame, processPointer)
+        let pgid = try requiredInt(process, "pgid", frame, processPointer)
+        let uuid = try requiredString(process, "uuid_hex", frame, processPointer)
         let target = try ensureTarget(
             sourceFrame: frame,
             label: label,
@@ -1325,21 +1384,28 @@ private final class Extractor {
             sid: sid,
             pgid: pgid,
             uuidHex: uuid,
-            parentUniqueID: try optionalUnsigned(process, "parent_unique_id", frame, "/payload/payload/process"),
+            parentUniqueID: try optionalUnsigned(process, "parent_unique_id", frame, processPointer),
             parentIDVersion: nil,
-            uid: try optionalInt(process, "uid", frame, "/payload/payload/process"),
-            gid: try optionalInt(process, "gid", frame, "/payload/payload/process"))
+            uid: try optionalInt(process, "uid", frame, processPointer),
+            gid: try optionalInt(process, "gid", frame, processPointer))
         let receiptID = try insertObservabilityReceipt(
             frame: frame,
             value: process,
-            pointer: "/payload/payload/process",
+            pointer: processPointer,
             target: target)
-        try insertObservationSnapshot(
+        let snapshotID = try insertObservationSnapshot(
             frame: frame,
             target: target,
             receiptID: receiptID,
             kind: "PRESENT",
-            pointer: "/payload/payload/process")
+            pointer: processPointer)
+        if sourceAssertedSandwich {
+            try insertCollapsedObservationPair(
+                frame: frame,
+                target: target,
+                snapshotID: snapshotID,
+                payloadPointer: payloadPointer)
+        }
     }
 
     private func insertObservationSnapshot(
@@ -1348,7 +1414,7 @@ private final class Extractor {
         receiptID: String?,
         kind: String,
         pointer: String
-    ) throws {
+    ) throws -> String {
         let sha = try rawSHA256(frame: frame, pointer: pointer)
         let id = disposalID(
             "disposal-target-snapshot-v1",
@@ -1367,6 +1433,52 @@ private final class Extractor {
         try statement.bind(11, text: sha)
         try statement.stepDone()
         targetSnapshotIDs.append(id)
+        return id
+    }
+
+    private func insertCollapsedObservationPair(
+        frame: DisposalDecodedFrame,
+        target: TargetContext,
+        snapshotID: String,
+        payloadPointer: String
+    ) throws {
+        guard let availability = frame.node(at: payloadPointer + "/availability"),
+              let process = frame.node(at: payloadPointer + "/process"),
+              let before = frame.node(at: payloadPointer + "/monotonic_before_ns"),
+              let after = frame.node(at: payloadPointer + "/monotonic_after_ns")
+        else {
+            throw rejection("TYPED_OBSERVABILITY_COLLAPSED_CERTIFICATE", frame)
+        }
+        let certificateSHA256 = disposalLengthFramedID(
+            "disposal-source-asserted-collapsed-sandwich-v1",
+            [
+                frame.rawWithLFSHA256,
+                availability.rawSHA256,
+                process.rawSHA256,
+                String(decoding: before.raw, as: UTF8.self),
+                String(decoding: after.raw, as: UTF8.self),
+            ])
+        let pairID = disposalID(
+            "disposal-snapshot-pair-v1",
+            [
+                frameIDs[frame.ordinal], target.id, "POSTCALL_DOUBLE",
+                "SOURCE_ASSERTED_EQUAL_COLLAPSED", certificateSHA256,
+            ])
+        let statement = try database.prepare(
+            "INSERT INTO snapshot_pairs VALUES(?,?,?,?,?,?,?,?,?,?,?)")
+        try statement.bind(1, text: pairID)
+        try statement.bind(2, text: frameIDs[frame.ordinal])
+        try statement.bind(3, text: target.id)
+        try statement.bind(4, text: "POSTCALL_DOUBLE")
+        try statement.bind(5, text: snapshotID)
+        try statement.bind(6, text: nil)
+        try statement.bind(7, text: "EQUAL")
+        try statement.bind(8, text: "SOURCE_ASSERTED_EQUAL_COLLAPSED")
+        try statement.bind(9, text: certificateSHA256)
+        try statement.bind(10, text: nil)
+        try statement.bind(11, text: nil)
+        try statement.stepDone()
+        snapshotPairIDs.append(pairID)
     }
 
     private func insertR18Terminal(_ frame: DisposalDecodedFrame) throws {
@@ -1498,7 +1610,9 @@ private final class Extractor {
             try disposalRequireProjection(
                 existing.pid == pid &&
                     (uniqueID == nil || existing.uniqueID == nil || existing.uniqueID == uniqueID) &&
-                    (idVersion == nil || existing.idVersion == nil || existing.idVersion == idVersion),
+                    (idVersion == nil || existing.idVersion == nil || existing.idVersion == idVersion) &&
+                    (sid == nil || existing.sid == nil || existing.sid == sid) &&
+                    (pgid == nil || existing.pgid == nil || existing.pgid == pgid),
                 "TYPED_TARGET_DRIFT",
                 detail: label)
             return existing
@@ -1509,9 +1623,13 @@ private final class Extractor {
                 "TYPED_TARGET_UUID",
                 detail: label)
         }
-        let id = disposalID(
-            "disposal-target-v1",
-            [invocationID, role, label, String(pid), uniqueID.map(String.init) ?? "NULL", idVersion.map(String.init) ?? "NULL"])
+        let id = disposalTargetID(
+            invocationID: invocationID,
+            role: role,
+            label: label,
+            pid: pid,
+            uniqueID: uniqueID,
+            idVersion: idVersion)
         let statement = try database.prepare("INSERT INTO targets VALUES(" + String(repeating: "?,", count: 15) + "?)")
         try statement.bind(1, text: id)
         try statement.bind(2, text: invocationID)

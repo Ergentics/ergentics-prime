@@ -24,6 +24,43 @@ func disposalID(_ domain: String, _ components: [String]) -> String {
     return disposalSHA256(bytes)
 }
 
+func disposalLengthFramedID(_ domain: String, _ components: [String]) -> String {
+    var bytes = Data("ERGENTICS_DISPOSAL_LENGTH_FRAMED_ID_V1".utf8)
+    disposalAppendUInt64BE(UInt64(domain.utf8.count), to: &bytes)
+    bytes.append(contentsOf: domain.utf8)
+    disposalAppendUInt64BE(UInt64(components.count), to: &bytes)
+    for component in components {
+        disposalAppendUInt64BE(UInt64(component.utf8.count), to: &bytes)
+        bytes.append(contentsOf: component.utf8)
+    }
+    return disposalSHA256(bytes)
+}
+
+func disposalTargetID(
+    invocationID: String,
+    role: String,
+    label: String,
+    pid: Int,
+    uniqueID: UInt64?,
+    idVersion: UInt64?
+) -> String {
+    disposalID(
+        "disposal-target-v1",
+        [
+            invocationID,
+            role,
+            label,
+            String(pid),
+            uniqueID.map(String.init) ?? "NULL",
+            idVersion.map(String.init) ?? "NULL",
+        ])
+}
+
+private func disposalAppendUInt64BE(_ value: UInt64, to data: inout Data) {
+    var encoded = value.bigEndian
+    withUnsafeBytes(of: &encoded) { data.append(contentsOf: $0) }
+}
+
 func disposalIsLowerHex(_ value: String, count: Int) -> Bool {
     value.utf8.count == count && value.utf8.allSatisfy {
         (0x30...0x39).contains($0) || (0x61...0x66).contains($0)
