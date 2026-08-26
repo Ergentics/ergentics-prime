@@ -173,9 +173,9 @@ private func disposalLatticeStrings(
 }
 
 private func disposalValidatedLattice(
+    resource: Data,
     expectedSHA256: String
 ) throws -> [DisposalLatticeRule] {
-    let resource = try disposalResourceData("disposal-lattice.v1", extension: "json")
     try disposalRequireProjection(resource.last == 0x0a, "GRAPH_LATTICE_LF")
     try disposalRequireProjection(
         disposalSHA256(resource) == expectedSHA256,
@@ -519,7 +519,9 @@ func disposalGraphEvaluateForTesting(
     _ input: DisposalGraphLatticeTestInput
 ) throws -> (ruleID: String, stateClass: String, predicateVectorSHA256: String) {
     let lattice = try disposalResourceData("disposal-lattice.v1", extension: "json")
-    let rules = try disposalValidatedLattice(expectedSHA256: disposalSHA256(lattice))
+    let rules = try disposalValidatedLattice(
+        resource: lattice,
+        expectedSHA256: disposalSHA256(lattice))
     let keys = [
         "preflight_snapshot_count", "commitment_count", "actuation_obligation_count",
         "commitment_vs_signal_result", "entered_signal_without_complete_conservation",
@@ -1560,9 +1562,12 @@ private func disposalMachineOverlay(
     journal: DisposalDecodedJournal,
     evidence: DisposalEvidenceMaterial,
     invocationNode: String,
-    frameNodes: [String]
+    frameNodes: [String],
+    lattice: Data
 ) throws -> DisposalMachineOverlay {
-    let rules = try disposalValidatedLattice(expectedSHA256: evidence.latticeSHA256)
+    let rules = try disposalValidatedLattice(
+        resource: lattice,
+        expectedSHA256: evidence.latticeSHA256)
     let facts = try disposalMachineFacts(journal: journal, evidence: evidence)
     try disposalRequireProjection(
         frameNodes.count == journal.frames.count,
@@ -2737,9 +2742,10 @@ private func disposalTypedEvidenceGraphRows(
 func buildDisposalGraph(
     journal: DisposalDecodedJournal,
     evidence: DisposalEvidenceMaterial,
-    metrics: DisposalMetricsMaterial
+    metrics: DisposalMetricsMaterial,
+    resources: DisposalProjectionRuleResources
 ) throws -> DisposalGraphMaterial {
-    let ddl = try disposalResourceData("001-graph", extension: "sql")
+    let ddl = resources.graphDDL
     let ddlSHA256 = disposalSHA256(ddl)
     var nodes: [DisposalGraphNodeRow] = []
     var edges: [DisposalGraphEdgeRow] = []
@@ -2980,7 +2986,8 @@ func buildDisposalGraph(
         journal: journal,
         evidence: evidence,
         invocationNode: invocationNode,
-        frameNodes: frameNodes)
+        frameNodes: frameNodes,
+        lattice: resources.lattice)
     guard let finalState = machine.states.last else {
         throw DisposalProjectionRejection(code: "GRAPH_MACHINE_FINAL_STATE")
     }

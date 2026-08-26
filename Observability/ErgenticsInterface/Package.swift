@@ -10,6 +10,10 @@ let package = Package(
         .library(name: "DisposalProjectionCore", targets: ["DisposalProjectionCore"]),
         .executable(name: "ErgenticsLedgerProjector", targets: ["ErgenticsLedgerProjector"]),
         .executable(name: "ErgenticsDisposalProjector", targets: ["ErgenticsDisposalProjector"]),
+        .executable(
+            name: "ErgenticsR19OBS11ProjectionChain",
+            targets: ["ErgenticsR19OBS11ProjectionChain"]
+        ),
         .executable(name: "ErgenticsInterface", targets: ["ErgenticsInterface"]),
     ],
     targets: [
@@ -34,6 +38,10 @@ let package = Package(
         ),
         .executableTarget(
             name: "ErgenticsDisposalProjector",
+            dependencies: ["DisposalProjectionCore"]
+        ),
+        .executableTarget(
+            name: "ErgenticsR19OBS11ProjectionChain",
             dependencies: ["DisposalProjectionCore"]
         ),
         .executableTarget(

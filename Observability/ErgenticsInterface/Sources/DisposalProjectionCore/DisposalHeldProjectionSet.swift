@@ -300,6 +300,19 @@ final class DisposalHeldProjectionSet {
     }
 
     private func revalidateParentIdentity() throws {
+        var resolvedParent = [CChar](repeating: 0, count: Int(PATH_MAX))
+        guard realpath(parentPath, &resolvedParent) != nil else {
+            throw DisposalProjectionRejection(
+                code: "DISPOSAL_READER_PARENT_REALPATH_REVALIDATE",
+                detail: String(cString: strerror(errno)))
+        }
+        let canonicalParentPath = String(
+            decoding: resolvedParent.prefix { $0 != 0 }.map { UInt8(bitPattern: $0) },
+            as: UTF8.self)
+        try disposalRequireProjection(
+            canonicalParentPath == parentPath,
+            "DISPOSAL_READER_PARENT_ALIAS_DRIFT")
+
         var heldParent = stat()
         var namedParent = stat()
         guard fstat(parentDescriptor, &heldParent) == 0,

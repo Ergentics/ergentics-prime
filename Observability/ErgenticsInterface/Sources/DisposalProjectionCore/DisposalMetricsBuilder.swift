@@ -66,9 +66,10 @@ private struct DisposalMetricRow: Sendable {
 
 func buildDisposalMetrics(
     journal: DisposalDecodedJournal,
-    evidence: DisposalEvidenceMaterial
+    evidence: DisposalEvidenceMaterial,
+    resources: DisposalProjectionRuleResources
 ) throws -> DisposalMetricsMaterial {
-    let ddl = try disposalResourceData("001-metrics", extension: "sql")
+    let ddl = resources.metricsDDL
     let ddlSHA256 = disposalSHA256(ddl)
     let rationalMathSHA256 = disposalSHA256(Data(disposalRationalMathSemantics.utf8))
     let samples = try journal.frames.compactMap { frame -> DisposalRusageSample? in

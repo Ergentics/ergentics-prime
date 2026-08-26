@@ -28,7 +28,8 @@ conservation-set-resolution=explicit-obligation-membership-to-same-generation-co
 
 func buildDisposalEvidence(
     request: DisposalProjectionMaterialRequest,
-    journal: DisposalDecodedJournal
+    journal: DisposalDecodedJournal,
+    resources: DisposalProjectionRuleResources
 ) throws -> DisposalEvidenceMaterial {
     try disposalRequireProjection(!journal.frames.isEmpty, "EVIDENCE_EMPTY_JOURNAL")
     try disposalRequireProjection(
@@ -78,9 +79,9 @@ func buildDisposalEvidence(
         }
     }
 
-    let ddl = try disposalResourceData("001-evidence", extension: "sql")
-    let adapters = try disposalResourceData("disposal-adapters.v1", extension: "json")
-    let lattice = try disposalResourceData("disposal-lattice.v1", extension: "json")
+    let ddl = resources.evidenceDDL
+    let adapters = resources.adapters
+    let lattice = resources.lattice
     try disposalRequireProjection(adapters.last == 0x0a, "EVIDENCE_ADAPTER_LF")
     try disposalRequireProjection(lattice.last == 0x0a, "EVIDENCE_LATTICE_LF")
     let ddlSHA256 = disposalSHA256(ddl)
@@ -242,6 +243,7 @@ func buildDisposalEvidence(
             invocationID: invocationID,
             epochLabel: epochLabel,
             adapterManifestSHA256: adapterSHA256,
+            adapterManifest: adapters,
             frameIDs: frameIDs)
         let riskWindowIDs = try insertDisposalRiskWindows(
             database: database,

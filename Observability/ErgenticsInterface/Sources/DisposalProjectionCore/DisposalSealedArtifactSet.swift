@@ -13,6 +13,33 @@ struct DisposalPublishedArtifact: Equatable, Sendable {
     let linkCount: UInt64
 }
 
+final class DisposalOutputNamespaceOwnership {
+    let finalPath: String
+    let stagingPath: String
+    private let revalidateBody: (_ finalPresent: Bool, _ stagingPresent: Bool) throws -> Void
+    private let proveDurableBody: (_ finalPresent: Bool, _ stagingPresent: Bool) throws -> Void
+
+    fileprivate init(
+        finalPath: String,
+        stagingPath: String,
+        revalidate: @escaping (_ finalPresent: Bool, _ stagingPresent: Bool) throws -> Void,
+        proveDurable: @escaping (_ finalPresent: Bool, _ stagingPresent: Bool) throws -> Void
+    ) {
+        self.finalPath = finalPath
+        self.stagingPath = stagingPath
+        revalidateBody = revalidate
+        proveDurableBody = proveDurable
+    }
+
+    func revalidate(finalPresent: Bool, stagingPresent: Bool) throws {
+        try revalidateBody(finalPresent, stagingPresent)
+    }
+
+    func proveDurable(finalPresent: Bool, stagingPresent: Bool) throws {
+        try proveDurableBody(finalPresent, stagingPresent)
+    }
+}
+
 final class DisposalSealedArtifactSet {
     static let stagingLeafPrefix = ".ergentics-disposal-staging-"
 
@@ -152,6 +179,22 @@ final class DisposalSealedArtifactSet {
         for value in heldLeaves.values { _ = Darwin.close(value.descriptor) }
         _ = Darwin.close(rootDescriptor)
         _ = Darwin.close(parentDescriptor)
+    }
+
+    func ownershipToken() -> DisposalOutputNamespaceOwnership {
+        DisposalOutputNamespaceOwnership(
+            finalPath: path,
+            stagingPath: stagingPath,
+            revalidate: { [self] finalPresent, stagingPresent in
+                try revalidateOwnedRoot(
+                    finalPresent: finalPresent,
+                    stagingPresent: stagingPresent)
+            },
+            proveDurable: { [self] finalPresent, stagingPresent in
+                try proveDurableOwnedRoot(
+                    finalPresent: finalPresent,
+                    stagingPresent: stagingPresent)
+            })
     }
 
     func writeExclusive(leaf: String, data: Data) throws -> DisposalPublishedArtifact {
@@ -396,6 +439,115 @@ final class DisposalSealedArtifactSet {
         try disposalRequire(
             disposalSameIdentity(heldParent, namedParent),
             "OUTPUT_PARENT_REBOUND")
+    }
+
+    private func revalidateOwnedRoot(
+        finalPresent: Bool,
+        stagingPresent: Bool
+    ) throws {
+        try disposalRequire(
+            finalPresent != stagingPresent && finalPresent == published,
+            "OUTPUT_OWNERSHIP_NAMESPACE_STATE")
+        try revalidateParentIdentity()
+        var held = stat()
+        var named = stat()
+        let expectedLeaf = finalPresent ? finalLeaf : stagingLeaf
+        guard fstat(rootDescriptor, &held) == 0,
+              fstatat(
+                parentDescriptor,
+                expectedLeaf,
+                &named,
+                AT_SYMLINK_NOFOLLOW) == 0
+        else {
+            throw DisposalSQLiteFailure.rejected(
+                "OUTPUT_OWNERSHIP_REVALIDATE",
+                String(cString: strerror(errno)))
+        }
+        try disposalRequire(
+            held.st_dev == initialRootState.st_dev &&
+                held.st_ino == initialRootState.st_ino &&
+                held.st_gen == initialRootState.st_gen &&
+                disposalSameState(held, named),
+            "OUTPUT_OWNERSHIP_REBOUND")
+        let unexpectedLeaf = finalPresent ? stagingLeaf : finalLeaf
+        var unexpected = stat()
+        errno = 0
+        let unexpectedStatus = fstatat(
+            parentDescriptor,
+            unexpectedLeaf,
+            &unexpected,
+            AT_SYMLINK_NOFOLLOW)
+        try disposalRequire(
+            unexpectedStatus != 0 && errno == ENOENT,
+            "OUTPUT_OWNERSHIP_SECOND_NAME_PRESENT")
+        try revalidateParentIdentity()
+    }
+
+    private func proveDurableOwnedRoot(
+        finalPresent: Bool,
+        stagingPresent: Bool
+    ) throws {
+        try revalidateOwnedRoot(
+            finalPresent: finalPresent,
+            stagingPresent: stagingPresent)
+        guard publicationPrepared,
+              let expectedLeaves = preparedLeaves,
+              let expectedRoot = preparedRootState
+        else {
+            throw DisposalSQLiteFailure.rejected(
+                "OUTPUT_FAILURE_SNAPSHOT_NOT_DURABLY_PREPARED", "")
+        }
+        try disposalRequire(
+            expectedLeaves.sorted() == [
+                DisposalProjectionSetV1.evidenceLeaf,
+                DisposalProjectionSetV1.graphLeaf,
+                DisposalProjectionSetV1.metricsLeaf,
+                DisposalProjectionSetV1.sealLeaf,
+            ].sorted(),
+            "OUTPUT_FAILURE_SNAPSHOT_LEAF_SET")
+        try revalidateLeaves(expectedLeaves)
+        var heldBefore = stat()
+        var namedBefore = stat()
+        let expectedLeaf = finalPresent ? finalLeaf : stagingLeaf
+        guard fstat(rootDescriptor, &heldBefore) == 0,
+              fstatat(
+                parentDescriptor,
+                expectedLeaf,
+                &namedBefore,
+                AT_SYMLINK_NOFOLLOW) == 0
+        else {
+            throw DisposalSQLiteFailure.rejected(
+                "OUTPUT_FAILURE_SNAPSHOT_PREBARRIER_REVALIDATE",
+                String(cString: strerror(errno)))
+        }
+        try disposalRequire(
+            disposalSameState(expectedRoot, heldBefore) &&
+                disposalSameState(heldBefore, namedBefore) &&
+                (heldBefore.st_mode & 0o7777) == 0o500,
+            "OUTPUT_FAILURE_SNAPSHOT_PREBARRIER_STATE")
+        try disposalSyncDirectory(rootDescriptor)
+        try disposalSyncDirectory(parentDescriptor)
+        try revalidateLeaves(expectedLeaves)
+        var heldAfter = stat()
+        var namedAfter = stat()
+        guard fstat(rootDescriptor, &heldAfter) == 0,
+              fstatat(
+                parentDescriptor,
+                expectedLeaf,
+                &namedAfter,
+                AT_SYMLINK_NOFOLLOW) == 0
+        else {
+            throw DisposalSQLiteFailure.rejected(
+                "OUTPUT_FAILURE_SNAPSHOT_POSTBARRIER_REVALIDATE",
+                String(cString: strerror(errno)))
+        }
+        try disposalRequire(
+            disposalSameState(heldBefore, heldAfter) &&
+                disposalSameState(heldAfter, namedAfter),
+            "OUTPUT_FAILURE_SNAPSHOT_POSTBARRIER_STATE")
+        try revalidateOwnedRoot(
+            finalPresent: finalPresent,
+            stagingPresent: stagingPresent)
     }
 
     private func revalidateLeaves(_ expectedLeaves: [String]) throws {

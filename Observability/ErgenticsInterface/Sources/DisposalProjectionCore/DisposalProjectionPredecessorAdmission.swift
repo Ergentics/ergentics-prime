@@ -8,12 +8,14 @@ final class DisposalAdmittedPredecessor {
     init(
         reference: DisposalProjectionPredecessorReference,
         successorJournal: DisposalDecodedJournal,
-        successorLogicalPath: String
+        successorLogicalPath: String,
+        resources: DisposalProjectionRuleResources
     ) throws {
         do {
             validated = try DisposalProjectionReader.validateExact(
                 rootPath: reference.rootPath,
-                expectedSealSHA256: reference.expectedSealSHA256)
+                expectedSealSHA256: reference.expectedSealSHA256,
+                resources: resources)
         } catch is DisposalProjectionMissing {
             throw DisposalProjectionRejection(code: "PREDECESSOR_ROOT_MISSING")
         }

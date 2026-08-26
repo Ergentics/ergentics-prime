@@ -49,13 +49,24 @@ public enum DisposalProjectionReader {
         rootPath: String,
         expectedSealSHA256: String
     ) throws -> DisposalValidatedProjection {
+        try validateExact(
+            rootPath: rootPath,
+            expectedSealSHA256: expectedSealSHA256,
+            resources: DisposalProjectionRuleResources.bundleDefault())
+    }
+
+    static func validateExact(
+        rootPath: String,
+        expectedSealSHA256: String,
+        resources: DisposalProjectionRuleResources
+    ) throws -> DisposalValidatedProjection {
         try disposalRequireProjection(
             disposalIsLowerHex(expectedSealSHA256, count: 64),
             "DISPOSAL_READER_EXPECTED_SEAL_SHA256")
         let held = try DisposalHeldProjectionSet(
             rootPath: rootPath,
             expectedSealSHA256: expectedSealSHA256)
-        let validated = try disposalDecodeProjection(held)
+        let validated = try disposalDecodeProjection(held, resources: resources)
         try held.revalidate()
         return validated
     }
@@ -82,7 +93,8 @@ private struct DisposalSidecarDatabase {
 }
 
 private func disposalDecodeProjection(
-    _ held: DisposalHeldProjectionSet
+    _ held: DisposalHeldProjectionSet,
+    resources: DisposalProjectionRuleResources
 ) throws -> DisposalValidatedProjection {
     var parser = DisposalCanonicalJSONParser(
         data: held.seal,
@@ -204,7 +216,8 @@ private func disposalDecodeProjection(
             journal: journal,
             journalLogicalPath: logicalPath,
             recordedPredecessorProjectionID: predecessor),
-        decodedJournal: decodedJournal)
+        decodedJournal: decodedJournal,
+        resources: resources)
     try disposalRequireProjection(
         reconstructed.projectionID == projectionID,
         "DISPOSAL_READER_PROJECTION_RECONSTRUCTED_ID")

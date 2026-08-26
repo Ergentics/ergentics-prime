@@ -26,9 +26,28 @@ public enum DisposalProjectionSetBuilder {
         request: DisposalProjectionSetRequest,
         outputRootPath: String
     ) throws -> DisposalProjectionSetReport {
+        let resources = try DisposalProjectionRuleResources.bundleDefault()
+        return try build(
+            request: request,
+            outputRootPath: outputRootPath,
+            resources: resources,
+            outputAdmission: nil,
+            testingHooks: .init(
+                afterPredecessorAdmission: nil,
+                beforeSuccessorPublication: nil))
+    }
+
+    static func buildFrozen(
+        request: DisposalProjectionSetRequest,
+        outputRootPath: String,
+        resources: DisposalProjectionRuleResources,
+        outputAdmission: @escaping (DisposalOutputNamespaceOwnership) -> Void
+    ) throws -> DisposalProjectionSetReport {
         try build(
             request: request,
             outputRootPath: outputRootPath,
+            resources: resources,
+            outputAdmission: outputAdmission,
             testingHooks: .init(
                 afterPredecessorAdmission: nil,
                 beforeSuccessorPublication: nil))
@@ -39,15 +58,20 @@ public enum DisposalProjectionSetBuilder {
         outputRootPath: String,
         testingHooks: DisposalProjectionBuildTestingHooks
     ) throws -> DisposalProjectionSetReport {
-        try build(
+        let resources = try DisposalProjectionRuleResources.bundleDefault()
+        return try build(
             request: request,
             outputRootPath: outputRootPath,
+            resources: resources,
+            outputAdmission: nil,
             testingHooks: testingHooks)
     }
 
     private static func build(
         request: DisposalProjectionSetRequest,
         outputRootPath: String,
+        resources: DisposalProjectionRuleResources,
+        outputAdmission: ((DisposalOutputNamespaceOwnership) -> Void)?,
         testingHooks: DisposalProjectionBuildTestingHooks
     ) throws -> DisposalProjectionSetReport {
         do {
@@ -56,7 +80,8 @@ public enum DisposalProjectionSetBuilder {
                 try DisposalAdmittedPredecessor(
                     reference: $0,
                     successorJournal: journal,
-                    successorLogicalPath: request.journalLogicalPath)
+                    successorLogicalPath: request.journalLogicalPath,
+                    resources: resources)
             }
             try testingHooks.afterPredecessorAdmission?()
             try predecessor?.revalidate()
@@ -66,10 +91,12 @@ public enum DisposalProjectionSetBuilder {
                 recordedPredecessorProjectionID: predecessor?.projectionID)
             let material = try makeMaterial(
                 request: materialRequest,
-                decodedJournal: journal)
+                decodedJournal: journal,
+                resources: resources)
             try predecessor?.validateMachinePrefix(successorGraph: material.graph)
             try predecessor?.revalidate()
             let root = try DisposalSealedArtifactSet(path: outputRootPath)
+            outputAdmission?(root.ownershipToken())
             _ = try root.writeExclusive(
                 leaf: DisposalProjectionSetV1.evidenceLeaf,
                 data: material.evidence)
@@ -128,24 +155,34 @@ public enum DisposalProjectionSetBuilder {
             request.predecessor == nil,
             "PREDECESSOR_REQUIRES_HELD_BUILD_ADMISSION")
         let journal = try DisposalProjectionSourceAdapter.decode(request.journal)
+        let resources = try DisposalProjectionRuleResources.bundleDefault()
         return try makeMaterial(
             request: .init(
                 journal: request.journal,
                 journalLogicalPath: request.journalLogicalPath,
                 recordedPredecessorProjectionID: nil),
-            decodedJournal: journal)
+            decodedJournal: journal,
+            resources: resources)
     }
 
     static func makeMaterial(
         request: DisposalProjectionMaterialRequest,
-        decodedJournal journal: DisposalDecodedJournal
+        decodedJournal journal: DisposalDecodedJournal,
+        resources: DisposalProjectionRuleResources
     ) throws -> DisposalProjectionSetMaterial {
-        let evidence = try buildDisposalEvidence(request: request, journal: journal)
-        let metrics = try buildDisposalMetrics(journal: journal, evidence: evidence)
+        let evidence = try buildDisposalEvidence(
+            request: request,
+            journal: journal,
+            resources: resources)
+        let metrics = try buildDisposalMetrics(
+            journal: journal,
+            evidence: evidence,
+            resources: resources)
         let graph = try buildDisposalGraph(
             journal: journal,
             evidence: evidence,
-            metrics: metrics)
+            metrics: metrics,
+            resources: resources)
         let projectionID = disposalID(
             "ergentics-disposal-projection-set-v1",
             [

@@ -23,12 +23,34 @@ enum DisposalTypedProcessEvidence {
         adapterManifestSHA256: String,
         frameIDs: [String]
     ) throws -> DisposalTypedEvidenceInsertion {
+        try insert(
+            database: database,
+            journal: journal,
+            invocationID: invocationID,
+            epochLabel: epochLabel,
+            adapterManifestSHA256: adapterManifestSHA256,
+            adapterManifest: try disposalResourceData(
+                "disposal-adapters.v1",
+                extension: "json"),
+            frameIDs: frameIDs)
+    }
+
+    static func insert(
+        database: DisposalSQLiteConnection,
+        journal: DisposalDecodedJournal,
+        invocationID: String,
+        epochLabel: String,
+        adapterManifestSHA256: String,
+        adapterManifest: Data,
+        frameIDs: [String]
+    ) throws -> DisposalTypedEvidenceInsertion {
         let extractor = Extractor(
             database: database,
             journal: journal,
             invocationID: invocationID,
             epochLabel: epochLabel,
             adapterManifestSHA256: adapterManifestSHA256,
+            adapterManifest: adapterManifest,
             frameIDs: frameIDs)
         return try extractor.run()
     }
@@ -88,6 +110,7 @@ private final class Extractor {
     private let invocationID: String
     private let epochLabel: String
     private let adapterManifestSHA256: String
+    private let adapterManifest: Data
     private let frameIDs: [String]
     private var targets: [String: TargetContext] = [:]
     private var prestatePairs: [String: PairContext] = [:]
@@ -123,6 +146,7 @@ private final class Extractor {
         invocationID: String,
         epochLabel: String,
         adapterManifestSHA256: String,
+        adapterManifest: Data,
         frameIDs: [String]
     ) {
         self.database = database
@@ -130,6 +154,7 @@ private final class Extractor {
         self.invocationID = invocationID
         self.epochLabel = epochLabel
         self.adapterManifestSHA256 = adapterManifestSHA256
+        self.adapterManifest = adapterManifest
         self.frameIDs = frameIDs
     }
 
@@ -273,7 +298,7 @@ private final class Extractor {
     }
 
     private func validateAdapterManifestInventory() throws {
-        let bytes = try disposalResourceData("disposal-adapters.v1", extension: "json")
+        let bytes = adapterManifest
         try disposalRequireProjection(
             bytes.last == 0x0a && disposalSHA256(bytes) == adapterManifestSHA256,
             "TYPED_ADAPTER_MANIFEST_IDENTITY")
