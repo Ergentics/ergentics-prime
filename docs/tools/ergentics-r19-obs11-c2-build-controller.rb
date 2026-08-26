@@ -469,6 +469,7 @@ module C2Darwin
   extern "int getpgid(int)"
   extern "int kill(int, int)"
   extern "long flistxattr(int, void*, unsigned long, int)"
+  extern "void* __error()"
 end
 
 module C2Security
@@ -479,6 +480,26 @@ module C2Security
   extern "void CFRelease(void*)"
   extern "int SecStaticCodeCreateWithPath(void*, unsigned int, void*)"
   extern "int SecStaticCodeCheckValidity(void*, unsigned int, void*)"
+end
+
+NATIVE_ERRNO_ZERO = [0].pack("i!").freeze
+
+def call_with_native_errno
+  c2_fail("NATIVE_ERRNO_WIDTH") unless
+    Fiddle::SIZEOF_INT == 4 &&
+      NATIVE_ERRNO_ZERO.bytesize == Fiddle::SIZEOF_INT
+  address = C2Darwin.__error().to_i
+  c2_fail("NATIVE_ERRNO_POINTER") if address.zero?
+  pointer = Fiddle::Pointer.new(address)
+  Fiddle.last_error = 0
+  pointer[0, Fiddle::SIZEOF_INT] = NATIVE_ERRNO_ZERO
+  c2_fail("NATIVE_ERRNO_READBACK") unless
+    pointer[0, Fiddle::SIZEOF_INT] == NATIVE_ERRNO_ZERO
+  pointer[0, Fiddle::SIZEOF_INT] = NATIVE_ERRNO_ZERO
+  result = yield
+  error = Fiddle.last_error
+  c2_fail("NATIVE_ERRNO_CAPTURE") unless error.is_a?(Integer)
+  [result, error]
 end
 
 def monotonic_ns
@@ -517,14 +538,18 @@ rescue StandardError => error
 end
 
 def descriptor_cloexec?(io)
-  C2Darwin.fcntl(io.fileno, F_GETFD) & FD_CLOEXEC == FD_CLOEXEC
+  flags, error = call_with_native_errno do
+    C2Darwin.fcntl(io.fileno, F_GETFD)
+  end
+  c2_fail("FCNTL_GETFD:#{io.fileno}:#{error}") if flags.negative?
+  flags & FD_CLOEXEC == FD_CLOEXEC
 end
 
 def full_sync(io, label)
   c2_fail("#{label}:FSYNC") unless io.fsync == 0
-  Fiddle.last_error = 0
-  result = C2Darwin.fcntl(io.fileno, F_FULLFSYNC)
-  error = Fiddle.last_error
+  result, error = call_with_native_errno do
+    C2Darwin.fcntl(io.fileno, F_FULLFSYNC)
+  end
   c2_fail("#{label}:FULLFSYNC:#{error}") unless result == 0
   true
 end
@@ -536,9 +561,9 @@ def openat_io(parent, leaf, flags, directory: false)
   flags |= O_DIRECTORY if directory
   allowed = O_RDONLY | O_DIRECTORY | O_NOFOLLOW_ANY
   c2_fail("OPENAT_FLAGS:#{leaf}") unless flags & ~allowed == 0
-  Fiddle.last_error = 0
-  descriptor = C2Darwin.openat(parent.fileno, leaf, flags | O_CLOEXEC)
-  error = Fiddle.last_error
+  descriptor, error = call_with_native_errno do
+    C2Darwin.openat(parent.fileno, leaf, flags | O_CLOEXEC)
+  end
   c2_fail("OPENAT:#{leaf}:#{error}") if descriptor < 3
   io = IO.new(descriptor)
   c2_fail("OPENAT_CLOEXEC:#{leaf}") unless descriptor_cloexec?(io)
@@ -658,21 +683,23 @@ rescue StandardError
 end
 
 def directory_entries(io, label)
-  duplicate = C2Darwin.dup(io.fileno)
-  error = Fiddle.last_error
+  duplicate, error = call_with_native_errno do
+    C2Darwin.dup(io.fileno)
+  end
   c2_fail("#{label}:DUP:#{error}") if duplicate < 3
-  directory = C2Darwin.fdopendir(duplicate)
+  directory, error = call_with_native_errno do
+    C2Darwin.fdopendir(duplicate)
+  end
   if directory.to_i == 0
-    error = Fiddle.last_error
     IO.new(duplicate).close rescue nil
     c2_fail("#{label}:FDOPENDIR:#{error}")
   end
   entries = []
   loop do
-    Fiddle.last_error = 0
-    pointer = C2Darwin.readdir(directory)
+    pointer, error = call_with_native_errno do
+      C2Darwin.readdir(directory)
+    end
     if pointer.to_i == 0
-      error = Fiddle.last_error
       c2_fail("#{label}:READDIR:#{error}") unless error == 0
       break
     end
@@ -684,9 +711,11 @@ def directory_entries(io, label)
       name.empty? || name.include?("\0") || name.include?("/")
     entries << name unless name == "." || name == ".."
   end
-  close_result = C2Darwin.closedir(directory)
+  close_result, error = call_with_native_errno do
+    C2Darwin.closedir(directory)
+  end
   directory = nil
-  c2_fail("#{label}:CLOSEDIR") unless close_result == 0
+  c2_fail("#{label}:CLOSEDIR:#{error}") unless close_result == 0
   c2_fail("#{label}:DUPLICATE") unless entries.uniq.length == entries.length
   entries.sort
 rescue StandardError
@@ -744,23 +773,23 @@ rescue Errno::ENOENT
 end
 
 def create_directory_at(parent, leaf, mode:, uid:, gid:, label:)
-  Fiddle.last_error = 0
-  result = C2Darwin.mkdirat(parent.fileno, leaf, mode)
-  error = Fiddle.last_error
+  result, error = call_with_native_errno do
+    C2Darwin.mkdirat(parent.fileno, leaf, mode)
+  end
   c2_fail("#{label}:MKDIRAT:#{error}") unless result == 0
   full_sync(parent, "#{label}:INSERTED_PARENT")
   child = openat_io(parent, leaf, O_RDONLY | O_NOFOLLOW_ANY, directory: true)
   stat = child.stat
   c2_fail("#{label}:INITIAL_OWNER") unless stat.uid == uid
   if stat.gid != gid
-    Fiddle.last_error = 0
-    changed = C2Darwin.fchown(child.fileno, -1, gid)
-    error = Fiddle.last_error
+    changed, error = call_with_native_errno do
+      C2Darwin.fchown(child.fileno, -1, gid)
+    end
     c2_fail("#{label}:FCHOWN:#{error}") unless changed == 0
   end
-  Fiddle.last_error = 0
-  changed = C2Darwin.fchmod(child.fileno, mode)
-  error = Fiddle.last_error
+  changed, error = call_with_native_errno do
+    C2Darwin.fchmod(child.fileno, mode)
+  end
   c2_fail("#{label}:FCHMOD:#{error}") unless changed == 0
   full_sync(child, "#{label}:CHILD")
   full_sync(parent, "#{label}:PARENT")
@@ -783,11 +812,11 @@ def publish_bytes(
   retain_writable: false
 )
   template = staging_template(final_leaf).dup
-  Fiddle.last_error = 0
-  descriptor = C2Darwin.mkostempsat_np(
-    parent.fileno, template, ".staging".bytesize, O_CLOEXEC
-  )
-  error = Fiddle.last_error
+  descriptor, error = call_with_native_errno do
+    C2Darwin.mkostempsat_np(
+      parent.fileno, template, ".staging".bytesize, O_CLOEXEC
+    )
+  end
   c2_fail("#{label}:MKOSTEMPSAT:#{error}") if descriptor < 3
   io = IO.new(descriptor, "w+b")
   staged_leaf = template.split("\0", 2).first
@@ -801,25 +830,25 @@ def publish_bytes(
   end
   io.flush
   full_sync(io, "#{label}:CONTENT")
-  Fiddle.last_error = 0
-  changed = C2Darwin.fchown(io.fileno, uid, gid)
-  error = Fiddle.last_error
+  changed, error = call_with_native_errno do
+    C2Darwin.fchown(io.fileno, uid, gid)
+  end
   c2_fail("#{label}:FCHOWN:#{error}") unless changed == 0
-  Fiddle.last_error = 0
-  changed = C2Darwin.fchmod(io.fileno, mode)
-  error = Fiddle.last_error
+  changed, error = call_with_native_errno do
+    C2Darwin.fchmod(io.fileno, mode)
+  end
   c2_fail("#{label}:FCHMOD:#{error}") unless changed == 0
   full_sync(io, "#{label}:SEALED")
   staged = openat_io(parent, staged_leaf, O_RDONLY | O_NOFOLLOW_ANY)
   c2_fail("#{label}:STAGING_JOIN") unless
     [staged.stat.dev, staged.stat.ino] == [io.stat.dev, io.stat.ino]
   safe_close(staged)
-  Fiddle.last_error = 0
-  renamed = C2Darwin.renameatx_np(
-    parent.fileno, staged_leaf, parent.fileno, final_leaf,
-    RENAME_EXCL | RENAME_NOFOLLOW_ANY
-  )
-  error = Fiddle.last_error
+  renamed, error = call_with_native_errno do
+    C2Darwin.renameatx_np(
+      parent.fileno, staged_leaf, parent.fileno, final_leaf,
+      RENAME_EXCL | RENAME_NOFOLLOW_ANY
+    )
+  end
   c2_fail("#{label}:RENAME_EXCL:#{error}") unless renamed == 0
   full_sync(parent, "#{label}:PUBLISHED_PARENT")
   named = openat_io(parent, final_leaf, O_RDONLY | O_NOFOLLOW_ANY)
@@ -899,9 +928,9 @@ class DurableLeafJournal
       @root, @root_io, mode: "0700", uid: EXPECTED_UID,
       gid: BUILD_ROOT_GID, inventory: expected_inventory
     )
-    Fiddle.last_error = 0
-    changed = C2Darwin.fchmod(@root_io.fileno, 0o500)
-    error = Fiddle.last_error
+    changed, error = call_with_native_errno do
+      C2Darwin.fchmod(@root_io.fileno, 0o500)
+    end
     c2_fail("JOURNAL_TERMINAL_FCHMOD:#{error}") unless changed == 0
     @terminal = true
   end
@@ -1191,8 +1220,9 @@ class VnodeContinuity
 
   def arm!
     c2_fail("VNODE_ALREADY_ARMED") if @armed
-    descriptor = C2Darwin.kqueue
-    error = Fiddle.last_error
+    descriptor, error = call_with_native_errno do
+      C2Darwin.kqueue
+    end
     c2_fail("KQUEUE_CREATE:#{error}") if descriptor < 3
     @kqueue = IO.new(descriptor)
     @kqueue.close_on_exec = true
@@ -1204,11 +1234,11 @@ class VnodeContinuity
       ].pack("Q<s<S<L<q<Q<")
       event = "\0" * KEVENT_BYTES
       timeout = [0, 0].pack("q<q<")
-      Fiddle.last_error = 0
-      returned = C2Darwin.kevent(
-        @kqueue.fileno, change, 1, event, 1, timeout
-      )
-      error = Fiddle.last_error
+      returned, error = call_with_native_errno do
+        C2Darwin.kevent(
+          @kqueue.fileno, change, 1, event, 1, timeout
+        )
+      end
       c2_fail("KQUEUE_REGISTER:#{index}:#{error}") unless returned == 1
       ident, filter, flags, _fflags, data, udata =
         event.unpack("Q<s<S<L<q<Q<")
@@ -1228,11 +1258,11 @@ class VnodeContinuity
     event_bytes = "\0" * (KEVENT_BYTES * 128)
     timeout = [timeout_ns / 1_000_000_000,
       timeout_ns % 1_000_000_000].pack("q<q<")
-    Fiddle.last_error = 0
-    returned = C2Darwin.kevent(
-      @kqueue.fileno, nil, 0, event_bytes, 128, timeout
-    )
-    error = Fiddle.last_error
+    returned, error = call_with_native_errno do
+      C2Darwin.kevent(
+        @kqueue.fileno, nil, 0, event_bytes, 128, timeout
+      )
+    end
     c2_fail("KQUEUE_POLL:#{label}:#{error}") if returned.negative?
     returned.times do |index|
       ident, filter, flags, fflags, data, udata =
@@ -1552,9 +1582,10 @@ end
 
 def read_pid_info(pid, flavor, size)
   buffer = "\0" * size
-  Fiddle.last_error = 0
-  returned = C2Darwin.proc_pidinfo(pid, flavor, 0, buffer, buffer.bytesize)
-  [returned, Fiddle.last_error, buffer]
+  returned, error = call_with_native_errno do
+    C2Darwin.proc_pidinfo(pid, flavor, 0, buffer, buffer.bytesize)
+  end
+  [returned, error, buffer]
 end
 
 def parse_unique_info(buffer)
@@ -1620,9 +1651,9 @@ def read_short(pid)
 end
 
 def read_domain(pid, kind)
-  Fiddle.last_error = 0
-  value = kind == :sid ? C2Darwin.getsid(pid) : C2Darwin.getpgid(pid)
-  error = Fiddle.last_error
+  value, error = call_with_native_errno do
+    kind == :sid ? C2Darwin.getsid(pid) : C2Darwin.getpgid(pid)
+  end
   return [:joined, value] if value >= 0
   return [:gone, nil] if error == ERRNO_ESRCH
   c2_fail("PROC_DOMAIN:#{kind}:#{pid}:#{error}")
@@ -1695,11 +1726,11 @@ end
 
 def listed_pids(list_type, type_info, allow_empty: false)
   bytes = "\0" * (PID_CAPACITY * 4)
-  Fiddle.last_error = 0
-  returned = C2Darwin.proc_listpids(
-    list_type, type_info, bytes, bytes.bytesize
-  )
-  error = Fiddle.last_error
+  returned, error = call_with_native_errno do
+    C2Darwin.proc_listpids(
+      list_type, type_info, bytes, bytes.bytesize
+    )
+  end
   return [] if allow_empty && returned.zero? && error.zero?
   c2_fail("PROC_LIST:#{list_type}:#{type_info}:#{error}") unless
     returned.positive? && returned < bytes.bytesize && returned % 4 == 0
@@ -1752,9 +1783,9 @@ end
 
 def process_path(pid)
   buffer = "\0" * PATH_SIZE
-  Fiddle.last_error = 0
-  returned = C2Darwin.proc_pidpath(pid, buffer, buffer.bytesize)
-  error = Fiddle.last_error
+  returned, error = call_with_native_errno do
+    C2Darwin.proc_pidpath(pid, buffer, buffer.bytesize)
+  end
   return :gone if returned <= 0 && error == ERRNO_ESRCH
   c2_fail("PROC_PIDPATH:#{pid}:#{error}") if returned <= 0
   c2_fail("PROC_PIDPATH_FRAME:#{pid}") if returned >= buffer.bytesize
@@ -1763,11 +1794,11 @@ end
 
 def process_cwd(pid)
   bytes = "\0" * VNODE_PATHS_SIZE
-  Fiddle.last_error = 0
-  returned = C2Darwin.proc_pidinfo(
-    pid, PROC_PIDVNODEPATHINFO, 0, bytes, bytes.bytesize
-  )
-  error = Fiddle.last_error
+  returned, error = call_with_native_errno do
+    C2Darwin.proc_pidinfo(
+      pid, PROC_PIDVNODEPATHINFO, 0, bytes, bytes.bytesize
+    )
+  end
   return :gone if returned <= 0 && error == ERRNO_ESRCH
   c2_fail("PROC_CWD:#{pid}:#{returned}:#{error}") unless
     returned == VNODE_PATHS_SIZE
@@ -1791,11 +1822,11 @@ def mapped_image_identity(pid, expected_path, observed_uuid_hex)
   address = 0
   256.times do
     bytes = "\0" * REGION_SIZE
-    Fiddle.last_error = 0
-    returned = C2Darwin.proc_pidinfo(
-      pid, PROC_PIDREGIONPATHINFO, address, bytes, bytes.bytesize
-    )
-    error = Fiddle.last_error
+    returned, error = call_with_native_errno do
+      C2Darwin.proc_pidinfo(
+        pid, PROC_PIDREGIONPATHINFO, address, bytes, bytes.bytesize
+      )
+    end
     return :gone if returned <= 0 && error == ERRNO_ESRCH
     return nil if returned <= 0 && error.zero?
     c2_fail("PROC_REGION:#{pid}:#{error}") unless returned == REGION_SIZE
@@ -2684,9 +2715,9 @@ class OwnedChildRun
           "#{@namespace.label}:#{label}:GROUP_DRAIN") rescue nil
         next
       end
-      Fiddle.last_error = 0
-      result = C2Darwin.kill(-tracker.direct_group, 0)
-      error = Fiddle.last_error
+      result, error = call_with_native_errno do
+        C2Darwin.kill(-tracker.direct_group, 0)
+      end
       if result == -1 && error == ERRNO_ESRCH
         observations << {
           "group" => tracker.direct_group,
@@ -2793,18 +2824,18 @@ ensure
 end
 
 def held_xattr_names(io)
-  Fiddle.last_error = 0
-  required = C2Darwin.flistxattr(io.fileno, nil, 0, 0)
-  error = Fiddle.last_error
+  required, error = call_with_native_errno do
+    C2Darwin.flistxattr(io.fileno, nil, 0, 0)
+  end
   c2_fail("FLISTXATTR_SIZE:#{error}") if required.negative?
   return [] if required.zero?
   c2_fail("FLISTXATTR_CAP") if required > 65_536
   buffer = "\0" * required
-  Fiddle.last_error = 0
-  observed = C2Darwin.flistxattr(
-    io.fileno, buffer, buffer.bytesize, 0
-  )
-  error = Fiddle.last_error
+  observed, error = call_with_native_errno do
+    C2Darwin.flistxattr(
+      io.fileno, buffer, buffer.bytesize, 0
+    )
+  end
   c2_fail("FLISTXATTR_READ:#{error}") unless observed == required
   c2_fail("FLISTXATTR_TERMINATOR") unless buffer.end_with?("\0")
   names = buffer.split("\0", -1)
@@ -3636,9 +3667,9 @@ class RuntimeClosure
   end
 
   def seal_directory(io, mode, label)
-    Fiddle.last_error = 0
-    result = C2Darwin.fchmod(io.fileno, mode)
-    error = Fiddle.last_error
+    result, error = call_with_native_errno do
+      C2Darwin.fchmod(io.fileno, mode)
+    end
     c2_fail("#{label}:FCHMOD:#{error}") unless result == 0
     full_sync(io, label)
   end
