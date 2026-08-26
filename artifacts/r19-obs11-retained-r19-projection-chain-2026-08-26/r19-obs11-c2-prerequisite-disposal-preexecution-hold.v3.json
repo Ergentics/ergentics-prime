@@ -1,0 +1,65 @@
+{
+  "schema": "ergentics-r19-obs11-c2-prerequisite-disposal-preexecution-hold-v3",
+  "status": "READINESS_STATIC_PASS_EXECUTION_HOLD_HOST_INJECTED_ENVIRONMENT_NO_BINARY_ENTRY",
+  "rank": "LOCAL_PREEXECUTION_BLOCKER",
+  "authority_vector": "00000000",
+  "gate_e": "ABSTAIN",
+  "readiness": {
+    "commit": "b5afcd7a60be25439c59a4b2dc4c175550b5f6ad",
+    "tree": "c28b4fc66f78252d18ffee148e679030b6a81f7e",
+    "frame_sha256": "e53a06a82b98f8b6d8e36ca804e661d6cca7636cbf6d4d40a8fbb6f115dbe1db",
+    "record_sha256": "73512eee5ee41c832428eef0c6721e8c0a88eedbe70134574fc45db184abd049",
+    "build_products_sha256": "6899ac3e1f4ed13119d6de612a8c8b555c050e835b364321f95cd4c0b2b828b6",
+    "c_objects_sha256": "add6cab4277d8ca95ffb05e682e427d8acfd7612c8e8cb70f65f22096bb416d2",
+    "static_result": "PASS_NOT_EXECUTION_AUTHORIZATION"
+  },
+  "blocker": {
+    "source_contract": "ZERO_ENVIRONMENT_ENTRIES",
+    "host_runtime_observation": "EXACTLY_ONE_FOUNDATION_INJECTED_ENTRY",
+    "entry": "__CF_USER_TEXT_ENCODING=0x1F5:0x0:0x0",
+    "outer_probe": "ENV_I_APPLE_RUBY_FOUNDATION_LINKED_NSGETENVIRON",
+    "probe_entry_count": 1,
+    "probe_result": "PASS_REPRODUCED_READ_ONLY",
+    "risk": "ENTRY_REJECTION_WOULD_STILL_EXCLUSIVE_CREATE_AND_CONSUME_V3_JOURNAL_BEFORE_ZERO_SIGNALS",
+    "disposition": "DO_NOT_EXECUTE_V3_BUILD_A"
+  },
+  "v3_retention": {
+    "build_a_root": "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-a-2a26c70-v3",
+    "build_b_root": "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-b-2a26c70-v3",
+    "build_a_mode": "0500",
+    "build_b_mode": "0400",
+    "binary_entries": 0,
+    "journal_root": "ABSENT",
+    "result_json": "ABSENT",
+    "retention": "PERMANENT_NO_REUSE_NO_CLEANUP"
+  },
+  "fresh_live_census": [
+    "21601:8930176:17456018:21601:21601:R19_GUARDIAN",
+    "21660:8930235:17456153:21660:21660:R19_STOPPED_FIXTURE",
+    "56518:8668003:16806376:56508:56508:GATE_C_AWK"
+  ],
+  "read_only_harness_deviations": [
+    "LIPO_ARCHS_MULTIPLE_INPUT_USAGE_ERROR_CORRECTED_WITH_SEPARATE_READS_NO_STATE_CHANGE",
+    "UNFROZEN_LC_RPATH_ABSENCE_ASSUMPTION_REJECTED_STANDARD_EXACT_USR_LIB_SWIFT_RPATH_NO_STATE_CHANGE"
+  ],
+  "result_reader_lattice": [
+    "EXIT70_WITH_ABSENT_ROOT",
+    "CONSUMED_ROOT_WITHOUT_OUTCOME",
+    "ARMED_ONLY_OUTCOME",
+    "DURABLE_FAILURE_TERMINAL",
+    "SUCCESS_DURABLE"
+  ],
+  "operations": {
+    "v3_compiler_entries": 4,
+    "v3_build_roots_created": 2,
+    "v3_binary_entries": 0,
+    "v3_journal_roots_created": 0,
+    "all_controller_invocations": 0,
+    "all_signals_entered": 0,
+    "processes_disposed": 0,
+    "c2_invocations": 0,
+    "authority_closures": 0,
+    "gate_e_promotions": 0
+  },
+  "next": "FREEZE_FRESH_V4_NAMESPACES_AND_EXACT_SINGLE_HOST_ENVIRONMENT_ADMISSION_THEN_REBUILD_NO_V3_EXECUTION"
+}
