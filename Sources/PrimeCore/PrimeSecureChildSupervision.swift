@@ -312,6 +312,42 @@ final class PrimeSecureChildSupervisionCapability {
             .establishIsolatedSessionAndDedicatedGroup()
     }
 
+    /// Establishes Gate E's fixed kernel relation. The current process must be
+    /// the leader of its own session and process group. The suspended child
+    /// must share that session while leading a distinct dedicated group.
+    /// Returning the derived supervisor session identifier does not expose a
+    /// caller-selectable session or group policy.
+    func establishDriverV2DedicatedGroupWithinSupervisorSession()
+        -> Int32?
+    {
+        let supervisorSessionIdentifier = Darwin.getpid()
+        guard activeOperationsAreAuthorized,
+              case .suspended = executionState,
+              supervisorSessionIdentifier > 0,
+              supervisorSessionIdentifier != processIdentifier,
+              getsid(supervisorSessionIdentifier)
+                == supervisorSessionIdentifier,
+              getpgid(supervisorSessionIdentifier)
+                == supervisorSessionIdentifier,
+              getsid(processIdentifier)
+                == supervisorSessionIdentifier,
+              getpgid(processIdentifier)
+                == processIdentifier
+        else {
+            return nil
+        }
+        spawn
+            .recordDedicatedProcessGroupWithinSupervisorSessionAuthority()
+        guard lifecycle
+            .establishDedicatedProcessGroupWithinSupervisorSession(
+                supervisorSessionIdentifier
+            )
+        else {
+            return nil
+        }
+        return supervisorSessionIdentifier
+    }
+
     /// SIGCONT is authorized only by the retained phase deadline and the last
     /// caller-observed pre-resume checkpoint. Deadline arithmetic failures are
     /// thrown rather than collapsed into ordinary expiry.

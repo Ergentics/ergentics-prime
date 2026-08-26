@@ -12,6 +12,11 @@ import Foundation
 /// lifecycle, or evidence claim. Closed callers must establish and retain
 /// those authorities before invoking it and must contain the returned child.
 enum PrimeSecureChildDarwinSubstrate {
+    private enum ProcessGroupPolicy {
+        case isolatedSessionAndDedicatedGroup
+        case dedicatedProcessGroupWithinSupervisorSession
+    }
+
     enum Rejection: Error, Equatable, Sendable {
         case rejected(String)
 
@@ -46,6 +51,61 @@ enum PrimeSecureChildDarwinSubstrate {
         exactArguments: [String],
         orderedEnvironment: [(String, String)]
     ) throws -> PrimeSecureChildSpawnHandle {
+        try spawnSuspendedWithFrozenPolicy(
+            executableAbsolutePath:
+                executableAbsolutePath,
+            argumentZero: argumentZero,
+            workingDirectoryDescriptor:
+                workingDirectoryDescriptor,
+            exactArguments: exactArguments,
+            orderedEnvironment: orderedEnvironment,
+            processGroupPolicy:
+                .isolatedSessionAndDedicatedGroup
+        )
+    }
+
+    /// Gate-E-only suspended transport. The caller cannot select a session or
+    /// process-group policy: the child inherits the dedicated Driver V2
+    /// supervisor session and becomes the leader of its own process group.
+    @available(macOS 26.0, *)
+    static func spawnDriverV2FixedProbeSuspended(
+        executableAbsolutePath: String,
+        argumentZero: String,
+        workingDirectoryDescriptor: Int32,
+        exactArguments: [String],
+        orderedEnvironment: [(String, String)]
+    ) throws -> PrimeSecureChildSpawnHandle {
+        let supervisorProcessIdentifier = Darwin.getpid()
+        guard supervisorProcessIdentifier > 0,
+              Darwin.getpgrp() == supervisorProcessIdentifier,
+              Darwin.getsid(0) == supervisorProcessIdentifier
+        else {
+            throw Rejection.rejected(
+                "spawn_driver_v2_supervisor_session"
+            )
+        }
+        return try spawnSuspendedWithFrozenPolicy(
+            executableAbsolutePath:
+                executableAbsolutePath,
+            argumentZero: argumentZero,
+            workingDirectoryDescriptor:
+                workingDirectoryDescriptor,
+            exactArguments: exactArguments,
+            orderedEnvironment: orderedEnvironment,
+            processGroupPolicy:
+                .dedicatedProcessGroupWithinSupervisorSession
+        )
+    }
+
+    @available(macOS 26.0, *)
+    private static func spawnSuspendedWithFrozenPolicy(
+        executableAbsolutePath: String,
+        argumentZero: String,
+        workingDirectoryDescriptor: Int32,
+        exactArguments: [String],
+        orderedEnvironment: [(String, String)],
+        processGroupPolicy: ProcessGroupPolicy
+    ) throws -> PrimeSecureChildSpawnHandle {
         try requireArgumentZero(argumentZero)
 
         let stdoutPipe = try RawPipe()
@@ -68,7 +128,9 @@ enum PrimeSecureChildDarwinSubstrate {
                 orderedEnvironment:
                     orderedEnvironment,
                 exactExecutableAbsolutePath:
-                    executableAbsolutePath
+                    executableAbsolutePath,
+                processGroupPolicy:
+                    processGroupPolicy
             )
             stdoutPipe.closeWriteEnd()
             stderrPipe.closeWriteEnd()
@@ -102,7 +164,8 @@ enum PrimeSecureChildDarwinSubstrate {
         exactArguments: [String],
         orderedEnvironment:
             [(String, String)],
-        exactExecutableAbsolutePath: String
+        exactExecutableAbsolutePath: String,
+        processGroupPolicy: ProcessGroupPolicy
     ) throws -> SpawnResult {
         var actions:
             posix_spawn_file_actions_t?
@@ -242,20 +305,43 @@ enum PrimeSecureChildDarwinSubstrate {
             )
         }
 
-        let flags =
-            UInt16(POSIX_SPAWN_START_SUSPENDED)
-            | UInt16(
-                POSIX_SPAWN_CLOEXEC_DEFAULT
-            )
-            | UInt16(POSIX_SPAWN_SETSID)
-            | UInt16(POSIX_SPAWN_SETSIGDEF)
-            | UInt16(POSIX_SPAWN_SETSIGMASK)
-        guard flags == 0x448c,
-              posix_spawnattr_setflags(
-                  &attributes,
-                  Int16(bitPattern: flags)
-              ) == 0
-        else {
+        let flags: UInt16
+        switch processGroupPolicy {
+        case .isolatedSessionAndDedicatedGroup:
+            flags =
+                UInt16(POSIX_SPAWN_START_SUSPENDED)
+                | UInt16(
+                    POSIX_SPAWN_CLOEXEC_DEFAULT
+                )
+                | UInt16(POSIX_SPAWN_SETSID)
+                | UInt16(POSIX_SPAWN_SETSIGDEF)
+                | UInt16(POSIX_SPAWN_SETSIGMASK)
+            guard flags == 0x448c else {
+                throw rejected("spawn_flags")
+            }
+        case .dedicatedProcessGroupWithinSupervisorSession:
+            guard posix_spawnattr_setpgroup(
+                &attributes,
+                0
+            ) == 0 else {
+                throw rejected("spawn_process_group")
+            }
+            flags =
+                UInt16(POSIX_SPAWN_START_SUSPENDED)
+                | UInt16(
+                    POSIX_SPAWN_CLOEXEC_DEFAULT
+                )
+                | UInt16(POSIX_SPAWN_SETPGROUP)
+                | UInt16(POSIX_SPAWN_SETSIGDEF)
+                | UInt16(POSIX_SPAWN_SETSIGMASK)
+            guard flags == 0x408e else {
+                throw rejected("spawn_flags")
+            }
+        }
+        guard posix_spawnattr_setflags(
+            &attributes,
+            Int16(bitPattern: flags)
+        ) == 0 else {
             throw rejected("spawn_flags")
         }
 
@@ -604,6 +690,16 @@ final class PrimeSecureChildSpawnHandle {
     /// Before this transition, emergency abandonment may signal only the exact
     /// PID because process-group authority has not yet been established.
     func recordIsolatedSessionAndDedicatedGroupAuthority() {
+        recordDedicatedProcessGroupAuthority()
+    }
+
+    /// Records the Gate E relation after supervision proves that the child is
+    /// a dedicated process-group leader inside the supervisor's session.
+    func recordDedicatedProcessGroupWithinSupervisorSessionAuthority() {
+        recordDedicatedProcessGroupAuthority()
+    }
+
+    private func recordDedicatedProcessGroupAuthority() {
         childObligationLock.lock()
         if ownsLiveChildObligation {
             dedicatedProcessGroupAuthorityEstablished = true

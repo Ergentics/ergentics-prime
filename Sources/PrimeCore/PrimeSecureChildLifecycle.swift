@@ -11,6 +11,17 @@ enum PrimeSecureChildAuthority:
 {
     case directPIDOnly
     case isolatedSessionAndDedicatedGroup
+    case dedicatedProcessGroupWithinSupervisorSession(Int32)
+
+    var hasDedicatedProcessGroupAuthority: Bool {
+        switch self {
+        case .directPIDOnly:
+            false
+        case .isolatedSessionAndDedicatedGroup,
+             .dedicatedProcessGroupWithinSupervisorSession:
+            true
+        }
+    }
 }
 
 enum PrimeSecureChildSignal:
@@ -266,9 +277,27 @@ final class PrimeSecureChildLifecycle {
     }
 
     @discardableResult
+    func establishDedicatedProcessGroupWithinSupervisorSession(
+        _ sessionIdentifier: Int32
+    ) -> Bool {
+        guard authority == .directPIDOnly,
+              sessionIdentifier > 0,
+              sessionIdentifier != processIdentifier,
+              !resumed,
+              !hasReaped
+        else {
+            return false
+        }
+        authority =
+            .dedicatedProcessGroupWithinSupervisorSession(
+                sessionIdentifier
+            )
+        return true
+    }
+
+    @discardableResult
     func markResumed() -> Bool {
-        guard authority
-                == .isolatedSessionAndDedicatedGroup,
+        guard authority.hasDedicatedProcessGroupAuthority,
               !resumed,
               !hasReaped
         else {
@@ -349,8 +378,7 @@ final class PrimeSecureChildLifecycle {
     func processGroupMemberIdentifiers()
         -> [Int32]?
     {
-        guard authority
-                == .isolatedSessionAndDedicatedGroup,
+        guard authority.hasDedicatedProcessGroupAuthority,
               !hasReaped
         else {
             return nil
@@ -456,9 +484,7 @@ final class PrimeSecureChildLifecycle {
             )
         }
 
-        if authority
-            == .isolatedSessionAndDedicatedGroup
-        {
+        if authority.hasDedicatedProcessGroupAuthority {
             let members =
                 requireOnlyDirectChildBeforeReap(
                     using: timeline
@@ -539,7 +565,8 @@ final class PrimeSecureChildLifecycle {
                 .directPID(
                     processIdentifier
                 )
-        case .isolatedSessionAndDedicatedGroup:
+        case .isolatedSessionAndDedicatedGroup,
+             .dedicatedProcessGroupWithinSupervisorSession:
             target =
                 .processGroup(
                     processIdentifier
@@ -562,8 +589,7 @@ final class PrimeSecureChildLifecycle {
     )
         -> Bool
     {
-        guard authority
-                == .isolatedSessionAndDedicatedGroup,
+        guard authority.hasDedicatedProcessGroupAuthority,
               !hasReaped
         else {
             return false
@@ -717,8 +743,7 @@ final class PrimeSecureChildLifecycle {
                 }
                 hasReaped = true
                 operations.cancelDeathObservation()
-                if authority
-                    == .isolatedSessionAndDedicatedGroup,
+                if authority.hasDedicatedProcessGroupAuthority,
                    !operations
                     .processGroupIsEmpty()
                 {
