@@ -1,3 +1,4 @@
+import DisposalProjectionCore
 import LedgerProjectionCore
 import SwiftUI
 
@@ -25,12 +26,22 @@ enum InterfaceDestination: String, CaseIterable, Identifiable {
 
 struct InterfaceShell: View {
     let availability: LedgerProjectionAvailability
+    let disposalAvailability: DisposalProjectionAvailability
 
     var body: some View {
         VStack(spacing: 0) {
-            NonAuthorityBanner(metadata: admittedSnapshot?.metadata)
+            NonAuthorityBanner(projectionIDs: admittedProjectionIDs)
             Divider()
-            content
+            TabView {
+                content
+                    .tabItem {
+                        Label("Roadmap ledger", systemImage: "doc.text.magnifyingglass")
+                    }
+                DisposalProjectionRootView(availability: disposalAvailability)
+                    .tabItem {
+                        Label("Process evidence", systemImage: "waveform.path.ecg.rectangle")
+                    }
+            }
         }
         .frame(minWidth: 980, minHeight: 680)
         .background(Color(nsColor: .windowBackgroundColor))
@@ -59,10 +70,19 @@ struct InterfaceShell: View {
         guard case .admitted(let snapshot) = availability else { return nil }
         return snapshot
     }
+
+    private var admittedProjectionIDs: [String] {
+        var values: [String] = []
+        if let admittedSnapshot { values.append(admittedSnapshot.metadata.projectionID) }
+        if case .admitted(let snapshot) = disposalAvailability {
+            values.append(snapshot.metadata.projectionID)
+        }
+        return values
+    }
 }
 
 private struct NonAuthorityBanner: View {
-    let metadata: LedgerProjectionMetadata?
+    let projectionIDs: [String]
 
     var body: some View {
         HStack(spacing: 12) {
@@ -76,11 +96,11 @@ private struct NonAuthorityBanner: View {
                     .foregroundStyle(.secondary)
             }
             Spacer()
-            if let metadata {
+            if !projectionIDs.isEmpty {
                 VStack(alignment: .trailing, spacing: 2) {
-                    Text("Projection admitted")
+                    Text("\(projectionIDs.count) projection\(projectionIDs.count == 1 ? "" : "s") admitted")
                         .font(.subheadline.weight(.semibold))
-                    Text(metadata.projectionID)
+                    Text(projectionIDs.joined(separator: " · "))
                         .font(.caption2.monospaced())
                         .foregroundStyle(.secondary)
                         .lineLimit(1)
