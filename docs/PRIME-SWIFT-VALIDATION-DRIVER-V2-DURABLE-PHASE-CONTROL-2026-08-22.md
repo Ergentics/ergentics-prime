@@ -19862,3 +19862,1275 @@ frame_with_lf_sha256=f178bcce8de29e9418dded2e4c57883a1f9734bd4b588850b854154e473
 ```json
 {"payload":{"approval_and_scope":{"authorization_basis":"USER_AUTHORIZED_RECOMMENDED_DURABLE_ARC_AND_GOOD_CALL_AUTHORIZED","checkpoint_kind":"CONTROL_ONLY_EXACT_SOURCE_COMMIT_READINESS","compiler_preprocessor_linker_analyzer_or_build_entries_authorized":0,"control_commit_entries_authorized":1,"exact_source_commit_entries_authorized_after_control":1,"exact_source_paths_authorized":4,"github_network_authority_closure_or_gate_e_promotion_authorized":false,"root_fifo_journal_archive_cleanup_repair_or_retry_entries_authorized":0,"source_edits_or_staging_by_this_checkpoint":0,"source_or_product_executions_authorized":0,"target_runtime_process_spawn_wait_reap_or_signal_entries_authorized":0},"authority":{"archive_entries_authorized":0,"authority_vector":"00000000","build_entries_authorized":0,"gate_e_mechanics":"ABSTAIN","gate_e_promotion_authorized":false,"gate_e_scientific":"ABSTAIN","runtime_entries_authorized":0,"signals_authorized":0,"source_commit_entries_authorized":1,"source_paths_authorized":4},"corrected_sources":{"all_observed_identities_equal":true,"controller_byte_immutable":true,"corrections_closed":["FILEID_RECORD_OFFSET_36","OWNER_REAL_EFFECTIVE_SAVED_CREDENTIAL_JOIN","SIGCONT_IMMEDIATE_PHASE_EDGE","PRIVATE_NOTE_EXIT_TERMINAL_EVIDENCE_CANDIDATE_RELAXATION_WITH_CANONICAL_THREE_PHASES_UNCHANGED","ABSORBING_JOURNAL_POISON_CONTINUES_EOF_EXACT_REAP_AND_TWO_SNAPSHOT_CAPTURES_WITHOUT_RETRY","HEALTHY_CANDIDATE_MISMATCH_DURABLE_SEALED_FAIL"],"git_attributes":{"content_filters":"NONE","controller_c_h":"NONE","swift":"DIFF_SWIFT_ONLY"},"git_blob_rule":"SHA1_LITERAL_BLOB_SPACE_DECIMAL_BYTE_COUNT_NUL_RAW_BYTES;CROSSCHECK_GIT_HASH_OBJECT_NO_FILTERS_NO_WRITE","identity_array_order":["docs/tools/prime-driver-v2-r19-local-archive-build-controller.rb","docs/tools/prime-driver-v2-r19-local-archive-build-outer-supervisor-fixed-openat.c","docs/tools/prime-driver-v2-r19-local-archive-build-outer-supervisor-fixed-openat.h","docs/tools/prime-driver-v2-r19-local-archive-build-outer-supervisor.swift"],"identity_object_fields_exact":["bytes","device","filesystem_mode","filesystem_type","gid","git_blob_no_filters","inode","lines","nlink","path","prospective_git_mode","sha256","terminal_lf","uid"],"relevant_git_config_overrides_observed":[],"source_identity_set_canonical_bytes":1692,"source_identity_set_encoding":"CANONICAL_COMPACT_JSON_RECURSIVE_LEXICOGRAPHIC_OBJECT_KEYS_ARRAY_ORDER_PRESERVED_UTF8_NO_TRAILING_LF","source_identity_set_sha256":"81ac2f518b6f5ce69c7ea7a4e17e174a708a43c1a717b23e25bf896d519cfcdb","sources":[{"bytes":55263,"device":16777231,"filesystem_mode":"0644","filesystem_type":"REGULAR","gid":20,"git_blob_no_filters":"1fda387bfca873fa3e06fd70c42eae7f6e58da6a","inode":17564607,"lines":1175,"nlink":1,"path":"docs/tools/prime-driver-v2-r19-local-archive-build-controller.rb","prospective_git_mode":"100644","sha256":"8b85f6320621bc6a5b9c755d983ffcecabf11ea87610b3c5aeaf4359dd194009","terminal_lf":true,"uid":501},{"bytes":15196,"device":16777231,"filesystem_mode":"0644","filesystem_type":"REGULAR","gid":20,"git_blob_no_filters":"40e222fb44cdee4e7ddbcd14fa3a69aba5c206f7","inode":17564649,"lines":492,"nlink":1,"path":"docs/tools/prime-driver-v2-r19-local-archive-build-outer-supervisor-fixed-openat.c","prospective_git_mode":"100644","sha256":"9a8eb551fb15ab5401af15bb163aaf6bd70baa4ae2a74c077ec2016b88704572","terminal_lf":true,"uid":501},{"bytes":3266,"device":16777231,"filesystem_mode":"0644","filesystem_type":"REGULAR","gid":20,"git_blob_no_filters":"9966cdbbd4b686f9469f6d2b998cb8330c1e19d2","inode":17564648,"lines":133,"nlink":1,"path":"docs/tools/prime-driver-v2-r19-local-archive-build-outer-supervisor-fixed-openat.h","prospective_git_mode":"100644","sha256":"ca014528763c2b4274e7c395f8945e980725662db8d1fa0924e2c0a1a35fd5a7","terminal_lf":true,"uid":501},{"bytes":144480,"device":16777231,"filesystem_mode":"0644","filesystem_type":"REGULAR","gid":20,"git_blob_no_filters":"c10a40f91b916413b8208bbafa0ffccfeaa27752","inode":17564751,"lines":3671,"nlink":1,"path":"docs/tools/prime-driver-v2-r19-local-archive-build-outer-supervisor.swift","prospective_git_mode":"100644","sha256":"929bfd562a5f4defa3ccf722d549a0ffda21551203b81d7953d53baaed8345f0","terminal_lf":true,"uid":501}],"stable_pre_and_post_audit_observations":2,"swift_embedded_crs27":{"commit":"4ec07e1bc123b7918ef6cbe14144f9a072b770c8","frame_with_lf_sha256":"ac64f2f42331a718b5dfc2aff1fe3ac6def6a5ef5b82ad945ee2be640b8d10b6","tree":"16aa44548abec28216cd32bf75903f10a3ce304b"},"swift_must_not_embed_crs28":true},"final_static_audit":{"all_results":"GO","build_or_syntax_claim":"ABSTAIN_UNVERIFIED","compiler_or_preprocessor_used":false,"independent_reviews_exact":3,"reviews":[{"result":"GO","review":"SWIFT_LIFECYCLE_ORDER","scope":"PHASE_OWNERSHIP_NOTE_EXIT_EOF_EXACT_REAP_TWO_SNAPSHOTS_TERMINAL_FAIL_LITERAL_EXITS"},{"result":"GO","review":"ADVERSARIAL_DATA_CONTINUITY","scope":"RAW_PREIMAGES_DURABLE_TOKENS_JOURNAL_POISON_CANDIDATE_VS_INVARIANT_TOCTOU"},{"result":"GO","review":"CROSS_FILE_FIXED_ABI","scope":"THIRTEEN_EXPORTS_LAYOUTS_ORDINALS_FILEID_PLUS36_FORBIDDEN_SURFACE_EXACT_DELTA"}],"source_identity_set_sha256":"81ac2f518b6f5ce69c7ea7a4e17e174a708a43c1a717b23e25bf896d519cfcdb","source_or_product_executed":false,"static_disposition":"GO_EXACT_SOURCE_COMMIT_READINESS_ONLY","static_review_tool_processes":"READ_ONLY_HOST_TOOLS_NONSCIENTIFIC_NONAUTHORITY","target_runtime_process_signal_wait_or_filesystem_artifact_action":false},"predecessor":{"commit":"4ec07e1bc123b7918ef6cbe14144f9a072b770c8","crs27_frame_with_lf_sha256":"ac64f2f42331a718b5dfc2aff1fe3ac6def6a5ef5b82ad945ee2be640b8d10b6","ledger_blob":"5fc67f346331343d12eed1b83c86bd41c7941948","ledger_bytes":1999545,"ledger_lines":19847,"ledger_sha256":"53445c3cb32db2f9cd97f1eca7d7c78f3aee580aac8de1607a12d99e2ffe220f","parent":"93dcab56aa6934b70a629e24264bd8de5453bb6a","subject":"Freeze R19 supervisor static corrections","tracked_delta":"EXACT_ONE_CANONICAL_CONTROL_DOCUMENT_EOF_APPEND","tracked_index_clean":true,"tracked_worktree_clean":true,"tree":"16aa44548abec28216cd32bf75903f10a3ce304b","untracked_paths_exact":["docs/tools/prime-driver-v2-r19-local-archive-build-controller.rb","docs/tools/prime-driver-v2-r19-local-archive-build-outer-supervisor-fixed-openat.c","docs/tools/prime-driver-v2-r19-local-archive-build-outer-supervisor-fixed-openat.h","docs/tools/prime-driver-v2-r19-local-archive-build-outer-supervisor.swift"],"untracked_paths_exact_count":4},"rejected_intermediate_static_set":{"blocking_defects":["DARWIN_GETATTRLISTBULK_FILEID_DECODED_AT_RECORD_PLUS40_INSTEAD_OF_DOCUMENTED_FOUR_BYTE_ALIGNED_PLUS36","OWNER_REAL_EFFECTIVE_SAVED_UID_GID_JOIN_INCOMPLETE","EFFECTS_TRANSITION_PRECEDED_EXTRA_CLOCK_WORK_BEFORE_SIGCONT_ENTRY","POST_NOTE_EXIT_TERMINAL_PUBLICATION_FAILURE_COULD_SKIP_EOF_REAP_OR_BOTH_PGID_SNAPSHOTS","POSTREAP_JOURNAL_POISON_COULD_SUPPRESS_DURABLE_TERMINAL_FAIL","CONTROLLER_OFFSET_RANGE_AND_ARCHIVE_ABSENCE_CANDIDATES_REMAINED_APPEND_INVARIANTS_AFTER_NOTE_EXIT"],"disposition":"STOP_REJECTED_NOT_STAGED_NOT_COMMITTED","other_swift_identity_fields_equal_final":true,"other_three_identity_objects_equal_final":true,"rejected_swift":{"bytes":139230,"git_blob_no_filters":"62dd90d4a3ecf98e4d616f0fe2d196f25d45a451","lines":3522,"sha256":"63e905f98f4be496364410fa8f970644bda6eaa720c1353279951185bd7e1c5f"},"retained_exactly":"IDENTITIES_REVIEW_OUTCOMES_AND_BLOCKING_DATA_ONLY","review_results":[{"result":"GO","review":"CROSS_FILE_FIXED_ABI"},{"result":"STOP","review":"SWIFT_LIFECYCLE_ORDER"},{"result":"STOP","review":"ADVERSARIAL_DATA_CONTINUITY"}],"source_identity_set_canonical_bytes":1692,"source_identity_set_encoding":"SAME_AS_CORRECTED_SOURCES","source_identity_set_sha256":"7f00de086a7e382a0c37ac888aed79ff2ae6bc0f68bc07f76728672440d54d97","source_preimage_committed":false,"source_preimage_reconstructible_from_git":false},"residuals":{"bootstrap_and_whole_invocation_order":"ABSTAIN_UNPROVEN_ABSORBING","build_link_and_runtime_semantics":"ABSTAIN_UNVERIFIED","descendant_and_session_universality":"ABSTAIN_UNPROVEN","external_supervisor_termination_can_orphan_owned_child":true,"numeric_pgid_reuse_between_terminal_snapshots":true,"path_to_mapped_image_race":true,"rejected_intermediate_source_bytes":"NOT_COMMITTED_NOT_RECONSTRUCTIBLE_ONLY_IDENTITIES_AND_DEFECTS_RETAINED","same_uid_discretionary_mutability":true,"true_journal_poison":"RETAINS_LAST_DURABLE_PREFIX_CONTINUES_EOF_EXACT_REAP_TWO_SNAPSHOT_CAPTURES_IN_MEMORY_THEN_LITERAL_EXIT70_NO_FABRICATED_TERMINAL_DURABILITY"},"result":{"authority_vector":"00000000","build":"NOT_AUTHORIZED_BY_THIS_CHECKPOINT","corrected_source_static_result":"GO","data_precedence":"CANONICAL_HASHED_FIELDS_CONTROL_PROSE","gate_e":"ABSTAIN_NO_PROMOTION","next":"EXACT_FOUR_PATH_SOURCE_COMMIT_THEN_SEPARATELY_FROZEN_TWO_DISJOINT_BUILD_READINESS","runtime":"NOT_AUTHORIZED","source_commit":"AUTHORIZED_EXACTLY_ONE_AFTER_THIS_CONTROL_COMMIT","status":"FROZEN_EXACT_FOUR_PATH_SOURCE_COMMIT_ONLY_NO_BUILD_NO_RUNTIME"},"source_commit_contract":{"build_after_source_commit":"REQUIRES_SEPARATE_SUCCESSOR_BUILD_READINESS","commit_subject":"Add corrected R19 local archive supervisor sources","commit_transport":"NONINTERACTIVE_UNSIGNED_CORE_HOOKSPATH_DEV_NULL_NO_VERIFY_NO_AMEND_NO_MERGE_NO_TAG_NO_PUSH","delta":"EXACT_FOUR_NEW_REGULAR_BLOBS_NO_MODIFICATION_NO_DELETION","exact_git_mode_by_path":{"docs/tools/prime-driver-v2-r19-local-archive-build-controller.rb":"100644","docs/tools/prime-driver-v2-r19-local-archive-build-outer-supervisor-fixed-openat.c":"100644","docs/tools/prime-driver-v2-r19-local-archive-build-outer-supervisor-fixed-openat.h":"100644","docs/tools/prime-driver-v2-r19-local-archive-build-outer-supervisor.swift":"100644"},"exact_paths":["docs/tools/prime-driver-v2-r19-local-archive-build-controller.rb","docs/tools/prime-driver-v2-r19-local-archive-build-outer-supervisor-fixed-openat.c","docs/tools/prime-driver-v2-r19-local-archive-build-outer-supervisor-fixed-openat.h","docs/tools/prime-driver-v2-r19-local-archive-build-outer-supervisor.swift"],"failure":"CONSUME_ATTEMPT_RETAIN_INDEX_AND_WORKTREE_NO_RESET_REPAIR_RETRY_OR_ALTERNATE_COMMIT","fifth_path_manifest_driver_core_main_or_package_change_authorized":false,"filter_transformation_authorized":false,"index_blobs_must_equal_recorded_git_blob_no_filters":true,"ledger_delta_in_source_commit":false,"post_crs28_source_edits_authorized":0,"source_commit_count":1,"source_commit_parent":"THIS_CRS28_CONTROL_COMMIT","staging_preflight":"REMEASURE_RAW_SHA_BLOB_STAT_AND_EXACT_UNTRACKED_SET;GIT_ADD_EXACT_PATHS;VERIFY_INDEX_EXACT_FOUR_100644_BLOBS","success_postflight":"DIFF_TREE_EXACT_FOUR_ADDITIONS_AND_REMEASURE_TREE_BLOBS;TRACKED_AND_UNTRACKED_CLEAN"},"supersession":{"corrected_swift_embedded_control_identity":"REMAINS_CRS27_TO_AVOID_CIRCULAR_SELF_IDENTITY","crs27_correction_edit_authority":"CONSUMED_BY_FINAL_SWIFT_C_H_CORRECTIONS","crs27_prospective_direct_parent_rule":"SUPERSEDED_BECAUSE_CRS28_CONTROL_COMMIT_INTERVENES","crs27_source_commit_authority":"ABSENT_UNEXERCISED","final_source_commit_parent_rule":"THIS_CRS28_CONTROL_COMMIT"}},"payload_hash_rule":"SHA256_COMPACT_RECURSIVE_LEXICOGRAPHIC_KEYS_UTF8_NO_TRAILING_LF","payload_sha256":"2fbddd26b5946aff44687340c1fc85ae2d2339c1bdbba8955edba83d3e26df72","schema":"prime_driver_v2_r19_crs28_corrected_supervisor_source_commit_readiness_v1","status":"FROZEN_EXACT_FOUR_PATH_SOURCE_COMMIT_ONLY_NO_BUILD_NO_RUNTIME"}
 ```
+
+## R19-NL-CRS29 -- corrected supervisor two-disjoint-build readiness
+
+The canonical hashed record controls this checkpoint. It freezes and authorizes one local build-only orchestration over the corrected outer supervisor after a complete nonconsuming postcommit preflight. Build A must close its full input, parent, protected-namespace, artifact, and static conjunction before Build B exists; the target controller, supervisor products, runtime root, FIFO, publisher builds, and archives remain unexecuted.
+
+```ruby
+require "base64"
+require "digest"
+require "fcntl"
+require "json"
+
+Thread.abort_on_exception = false
+
+class BuildFailure < StandardError
+  attr_reader :code
+
+  def initialize(code)
+    @code = code
+    super(code)
+  end
+end
+
+F_FULLFSYNC = 51
+O_NOFOLLOW_ANY = 0x20000000
+O_DIRECTORY = 0x00100000
+O_CLOEXEC = 0x01000000
+JOURNAL_MAX_BYTES = 67_108_864
+JOURNAL_TERMINAL_RESERVE_BYTES = 1_048_576
+CONTROLLER_PAYLOAD_SHA256 = "0a2cfee05d9a190a13cfa9497899c4b3aa8b3a4b544220cd6f310ef9736350cd"
+CONTROLLER_ENVIRONMENT = {"__CF_USER_TEXT_ENCODING"=>"0x1F5:0x0:0x0"}.freeze
+
+REPO = "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging"
+SOURCE_CONTROLLER = "#{REPO}/docs/tools/prime-driver-v2-r19-local-archive-build-controller.rb"
+SOURCE_C = "#{REPO}/docs/tools/prime-driver-v2-r19-local-archive-build-outer-supervisor-fixed-openat.c"
+SOURCE_H = "#{REPO}/docs/tools/prime-driver-v2-r19-local-archive-build-outer-supervisor-fixed-openat.h"
+SOURCE_SWIFT = "#{REPO}/docs/tools/prime-driver-v2-r19-local-archive-build-outer-supervisor.swift"
+
+TMP_PARENT = "/private/tmp"
+A_ROOT = "/private/tmp/prime-driver-v2-r19-local-archive-build-outer-supervisor-build-a-4e7d6406-861da2f4"
+B_ROOT = "/private/tmp/prime-driver-v2-r19-local-archive-build-outer-supervisor-build-b-4e7d6406-861da2f4"
+JOURNAL_LEAF = "00-supervisor-build-controller.v1.jsonl"
+OBJECT_LEAF = "prime-driver-v2-r19-local-archive-build-outer-supervisor-fixed-openat.o"
+PRODUCT_LEAF = "PrimeDriverV2R19LocalArchiveBuildOuterSupervisor"
+FUTURE_RUNTIME_ROOT = "/private/tmp/r19-local-archive-build-outer-supervisor-4e7d6406-861da2f4"
+FUTURE_PUBLISHER_A = "/private/tmp/prime-driver-v2-r19-local-archive-publisher-source-repair1-build-a-a9129484-d2f23691"
+FUTURE_PUBLISHER_B = "/private/tmp/prime-driver-v2-r19-local-archive-publisher-source-repair1-build-b-a9129484-d2f23691"
+
+ARCHIVE_PARENT = "/Users/ergentics/Documents"
+ARCHIVE_STAGING = "#{ARCHIVE_PARENT}/.PrimeValidationLocalArchive-R19-ce8e584e-f6a03155d136-staging"
+ARCHIVE_FINAL = "#{ARCHIVE_PARENT}/PrimeValidationLocalArchive-R19-ce8e584e-f6a03155d136"
+
+SDK = "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk"
+SDK_SETTINGS = "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/SDKSettings.json"
+CLANG = "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang"
+SWIFTC = "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+SWIFT_DRIVER = "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-driver"
+SWIFT_FRONTEND = "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-frontend"
+LD = "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld"
+LLVM_NM = "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-nm"
+FILE_TOOL = "/usr/bin/file"
+OTOOL = "/usr/bin/otool"
+CODESIGN = "/usr/bin/codesign"
+XATTR = "/usr/bin/xattr"
+
+SOURCE_EXPECTED = {
+  SOURCE_CONTROLLER => {"bytes_decimal"=>"55263", "device_decimal"=>"16777231", "inode_decimal"=>"17564607", "uid_decimal"=>"501", "gid_decimal"=>"20", "mode"=>"0644", "nlink_decimal"=>"1", "sha256"=>"8b85f6320621bc6a5b9c755d983ffcecabf11ea87610b3c5aeaf4359dd194009"},
+  SOURCE_C => {"bytes_decimal"=>"15196", "device_decimal"=>"16777231", "inode_decimal"=>"17564649", "uid_decimal"=>"501", "gid_decimal"=>"20", "mode"=>"0644", "nlink_decimal"=>"1", "sha256"=>"9a8eb551fb15ab5401af15bb163aaf6bd70baa4ae2a74c077ec2016b88704572"},
+  SOURCE_H => {"bytes_decimal"=>"3266", "device_decimal"=>"16777231", "inode_decimal"=>"17564648", "uid_decimal"=>"501", "gid_decimal"=>"20", "mode"=>"0644", "nlink_decimal"=>"1", "sha256"=>"ca014528763c2b4274e7c395f8945e980725662db8d1fa0924e2c0a1a35fd5a7"},
+  SOURCE_SWIFT => {"bytes_decimal"=>"144480", "device_decimal"=>"16777231", "inode_decimal"=>"17564751", "uid_decimal"=>"501", "gid_decimal"=>"20", "mode"=>"0644", "nlink_decimal"=>"1", "sha256"=>"929bfd562a5f4defa3ccf722d549a0ffda21551203b81d7953d53baaed8345f0"}
+}.freeze
+
+HEADER_EXPECTED = {
+  "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/21/include/stdint.h" => {"bytes_decimal"=>"27519", "device_decimal"=>"16777231", "inode_decimal"=>"1119361", "uid_decimal"=>"0", "gid_decimal"=>"0", "mode"=>"0644", "nlink_decimal"=>"3", "sha256"=>"f43783466c93f77a6464274ebf18f9e4cc46f0d90770ddee2993c6cf39f7514f"},
+  "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/types.h" => {"bytes_decimal"=>"8391", "device_decimal"=>"16777231", "inode_decimal"=>"932189", "uid_decimal"=>"0", "gid_decimal"=>"0", "mode"=>"0644", "nlink_decimal"=>"9", "sha256"=>"82111e1f1d0262bee191b4679842e5ff51de57310ce4da9f48d39af0d8e10284"},
+  "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/errno.h" => {"bytes_decimal"=>"1003", "device_decimal"=>"16777231", "inode_decimal"=>"1017410", "uid_decimal"=>"0", "gid_decimal"=>"0", "mode"=>"0644", "nlink_decimal"=>"1", "sha256"=>"ff95a158e0799dcf0622e83882e64d88f1783b98a91d9b206bcba2a12f8425e6"},
+  "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/fcntl.h" => {"bytes_decimal"=>"1002", "device_decimal"=>"16777231", "inode_decimal"=>"1014632", "uid_decimal"=>"0", "gid_decimal"=>"0", "mode"=>"0644", "nlink_decimal"=>"1", "sha256"=>"289f3be20c07d8eae5589f43994cfdb5fb33b3b099a6aee67f63e00d90039a8f"},
+  "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/libproc.h" => {"bytes_decimal"=>"7575", "device_decimal"=>"16777231", "inode_decimal"=>"1014230", "uid_decimal"=>"0", "gid_decimal"=>"0", "mode"=>"0644", "nlink_decimal"=>"1", "sha256"=>"246d87709fc6b9157ce5cf3c475656ac48e0e1ae8bbdc46cf45acd34294448cd"},
+  "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/21/include/stddef.h" => {"bytes_decimal"=>"5178", "device_decimal"=>"16777231", "inode_decimal"=>"1119128", "uid_decimal"=>"0", "gid_decimal"=>"0", "mode"=>"0644", "nlink_decimal"=>"3", "sha256"=>"e8d92dad1b380f2f2130fd7aa446bcb4fc923f7062a41c7c35beb4913093a8f5"},
+  "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/string.h" => {"bytes_decimal"=>"2975", "device_decimal"=>"16777231", "inode_decimal"=>"1018388", "uid_decimal"=>"0", "gid_decimal"=>"0", "mode"=>"0644", "nlink_decimal"=>"1", "sha256"=>"4b1b9c05bfe370d423d7a6bf9e74b189bcc7f59c1cd97f23d6d94f2f3df6a4bc"},
+  "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/attr.h" => {"bytes_decimal"=>"27496", "device_decimal"=>"16777231", "inode_decimal"=>"932177", "uid_decimal"=>"0", "gid_decimal"=>"0", "mode"=>"0644", "nlink_decimal"=>"9", "sha256"=>"5118b9245bc932bc32dcc60084b1e40d70bb5479a360b31cdbf188ef866deefe"},
+  "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/resource.h" => {"bytes_decimal"=>"20152", "device_decimal"=>"16777231", "inode_decimal"=>"932324", "uid_decimal"=>"0", "gid_decimal"=>"0", "mode"=>"0644", "nlink_decimal"=>"9", "sha256"=>"7d16930e6b75f11ba203238faa5580d31d48fcd4230f2b3f604aaa5fd7e86b58"},
+  "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/stat.h" => {"bytes_decimal"=>"20575", "device_decimal"=>"16777231", "inode_decimal"=>"932286", "uid_decimal"=>"0", "gid_decimal"=>"0", "mode"=>"0644", "nlink_decimal"=>"9", "sha256"=>"31c8f252b05785343ca577c007657c0fbab45a182b60fc5b73994c621dc318d4"},
+  "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/sysctl.h" => {"bytes_decimal"=>"37626", "device_decimal"=>"16777231", "inode_decimal"=>"932320", "uid_decimal"=>"0", "gid_decimal"=>"0", "mode"=>"0644", "nlink_decimal"=>"9", "sha256"=>"4a77c53e0ee4035ca1c9e6a910aeddbc8f6163ccb8415940bbe7e398013f3764"},
+  "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/unistd.h" => {"bytes_decimal"=>"31225", "device_decimal"=>"16777231", "inode_decimal"=>"931973", "uid_decimal"=>"0", "gid_decimal"=>"0", "mode"=>"0644", "nlink_decimal"=>"7", "sha256"=>"8d535079658f063bcef358ef4c1c1b52b8e88dacfc22cbf4db0f6bf8abe40637"}
+}.freeze
+
+TOOL_EXPECTED = {
+  "/usr/bin/ruby" => {"bytes_decimal"=>"135200", "device_decimal"=>"16777231", "inode_decimal"=>"1152921500312572705", "uid_decimal"=>"0", "gid_decimal"=>"0", "mode"=>"0555", "nlink_decimal"=>"1", "sha256"=>"9d6ff3e289c7d908e3c785e0bedd6692d1d6a3377965c88c04d847104b7c892c"},
+  CLANG => {"bytes_decimal"=>"141373024", "device_decimal"=>"16777231", "inode_decimal"=>"1118318", "uid_decimal"=>"0", "gid_decimal"=>"0", "mode"=>"0755", "nlink_decimal"=>"1", "sha256"=>"7def90dd8829726686213a747fc5bff1583df933dae5edc55d755479e0bfe00a"},
+  SWIFT_DRIVER => {"bytes_decimal"=>"3011968", "device_decimal"=>"16777231", "inode_decimal"=>"1118459", "uid_decimal"=>"0", "gid_decimal"=>"0", "mode"=>"0755", "nlink_decimal"=>"1", "sha256"=>"fead52ebe00ec6ec700ecbb4be30f0b6204dd0506cb271dda72ac257261bd64b"},
+  SWIFT_FRONTEND => {"bytes_decimal"=>"171036592", "device_decimal"=>"16777231", "inode_decimal"=>"1118375", "uid_decimal"=>"0", "gid_decimal"=>"0", "mode"=>"0755", "nlink_decimal"=>"1", "sha256"=>"2ed38571e92c0283091838c1649e27650ad9c99950288e883c7b2dc6c4ce89fb"},
+  LD => {"bytes_decimal"=>"2331792", "device_decimal"=>"16777231", "inode_decimal"=>"1118358", "uid_decimal"=>"0", "gid_decimal"=>"0", "mode"=>"0755", "nlink_decimal"=>"1", "sha256"=>"5897b275efd93b201b6df5832dd541262b3f20f290859ba78f2200a6a66ef38b"},
+  LLVM_NM => {"bytes_decimal"=>"16380560", "device_decimal"=>"16777231", "inode_decimal"=>"1118384", "uid_decimal"=>"0", "gid_decimal"=>"0", "mode"=>"0755", "nlink_decimal"=>"1", "sha256"=>"d910f3acb104791e5475254000ede2aa129aa1a42eafcc7f5bdb27afffc642dc"},
+  FILE_TOOL => {"bytes_decimal"=>"534480", "device_decimal"=>"16777231", "inode_decimal"=>"1152921500312572000", "uid_decimal"=>"0", "gid_decimal"=>"0", "mode"=>"0755", "nlink_decimal"=>"1", "sha256"=>"a4ba66d26a9cfdc70637c78cdacef920f94147f6aa45ccc73858e493589ef94d"},
+  OTOOL => {"bytes_decimal"=>"118928", "device_decimal"=>"16777231", "inode_decimal"=>"1152921500312571585", "uid_decimal"=>"0", "gid_decimal"=>"0", "mode"=>"0755", "nlink_decimal"=>"78", "sha256"=>"179301dcb41ea78accc3fa0048a7e6f6710d891945a751a34addd622020c1818"},
+  CODESIGN => {"bytes_decimal"=>"459824", "device_decimal"=>"16777231", "inode_decimal"=>"1152921500312571780", "uid_decimal"=>"0", "gid_decimal"=>"0", "mode"=>"0755", "nlink_decimal"=>"1", "sha256"=>"214d455584d19abc0d74d02b9cbc7d3da6bdcb0596c235e6156dd9ed2f4e1ba7"},
+  XATTR => {"bytes_decimal"=>"118896", "device_decimal"=>"16777231", "inode_decimal"=>"1152921500312573128", "uid_decimal"=>"0", "gid_decimal"=>"0", "mode"=>"0755", "nlink_decimal"=>"1", "sha256"=>"3cc7308e9dfd687b0b7f4778a6101633aa9dce5ccdd012cf17cd858848295162"},
+  SDK_SETTINGS => {"bytes_decimal"=>"7774", "device_decimal"=>"16777231", "inode_decimal"=>"1082899", "uid_decimal"=>"0", "gid_decimal"=>"0", "mode"=>"0644", "nlink_decimal"=>"1", "sha256"=>"f8d005f09381389167f9e0aeaa169bc9e7dff162ef22ca2fd8e98df7ff1acafe"}
+}.freeze
+
+DEFINED_C_SYMBOLS = %w[
+  _prime_r19_capture_boot_session_uuid_v1
+  _prime_r19_capture_runtime_root_inventory_raw_v1
+  _prime_r19_capture_rusage_v6_v1
+  _prime_r19_create_fifo_at_v1
+  _prime_r19_create_journal_at_v1
+  _prime_r19_fullfsync_v1
+  _prime_r19_mkdir_runtime_root_at_v1
+  _prime_r19_open_controller_source_v1
+  _prime_r19_open_cwd_root_v1
+  _prime_r19_open_fifo_read_at_v1
+  _prime_r19_open_ruby_image_v1
+  _prime_r19_open_runtime_parent_v1
+  _prime_r19_open_runtime_root_at_v1
+].sort.freeze
+
+OBJECT_UNDEFINED_FORBIDDEN = %w[
+  _accept _accept4 _bind _connect _dlopen _dlsym _execv _execve _execvp
+  _execvP _fork _kill _killpg _listen _popen _posix_spawn _posix_spawnp
+  _pthread_kill _raise _recv _recvfrom _recvmsg _rename _renameat
+  _renameatx_np _renamex_np _send _sendmsg _sendto _setpgid _setsid
+  _sigaction _signal
+  _socket _socketpair _system _vfork _wait _wait3 _wait4 _waitid _waitpid
+].freeze
+
+OBJECT_UNDEFINED_FORBIDDEN_PATTERNS = [
+  /\A_(?:posix_spawn.*|wait.*|kill.*|raise|pthread_kill|setpgid|setsid|sig.*)\z/,
+  /\A_rename.*\z/,
+  /\A_xpc_/,
+  /XPC/
+].freeze
+
+ALLOWED_PROCESS_CONTROL_SYMBOLS = %w[
+  _kill
+  _posix_spawn
+  _posix_spawn_file_actions_addclose
+  _posix_spawn_file_actions_adddup2
+  _posix_spawn_file_actions_addfchdir_np
+  _posix_spawn_file_actions_addinherit_np
+  _posix_spawn_file_actions_destroy
+  _posix_spawn_file_actions_init
+  _posix_spawnattr_destroy
+  _posix_spawnattr_init
+  _posix_spawnattr_setflags
+  _posix_spawnattr_setsigdefault
+  _posix_spawnattr_setsigmask
+  _sigemptyset
+  _sigfillset
+  _waitpid
+].sort.freeze
+
+PROCESS_CONTROL_SYMBOL_PATTERNS = [
+  /\A_(?:posix_spawn.*|wait.*|kill.*|raise|pthread_kill|setpgid|setsid|sig.*)\z/
+].freeze
+
+FORBIDDEN_PRODUCT_SYMBOLS = %w[
+  _accept _accept4 _bind _connect _copyfile _dlclose _dlopen _dlsym _execv
+  _execve _execvp _execvP _fclonefileat _fork _fremovexattr _fsetxattr
+  _killpg _link _linkat _listen _popen _posix_spawnp _pthread_kill _raise
+  _recv _recvfrom _recvmsg _removexattr _remove _rename _renameat
+  _renameatx_np _renamex_np _rmdir _send _sendmsg _sendto _setpgid _setsid
+  _setxattr
+  _sigaction _signal _socket _socketpair _symlink _symlinkat _system _unlink
+  _unlinkat _vfork _wait _wait3 _wait4 _waitid
+].freeze
+
+FORBIDDEN_PRODUCT_SYMBOL_PATTERNS = [
+  /\A_(?:fork|vfork|exec.*|killpg|system|popen|dlopen|dlsym|dlclose)\z/,
+  /\A_(?:accept.*|bind|connect|listen|socket.*|send.*|recv.*|getaddrinfo|freeaddrinfo|gethostbyname.*)\z/,
+  /\A_(?:copyfile.*|clonefile.*|fclonefileat|link|linkat|symlink|symlinkat|unlink|unlinkat|remove|rmdir)\z/,
+  /\A_rename.*\z/,
+  /\A_(?:setxattr|fsetxattr|removexattr|fremovexattr)\z/,
+  /\A_xpc_/,
+  /NSTask/,
+  /XPC/
+].freeze
+
+ALLOWED_LINKED_IMAGES = %w[
+  /usr/lib/libSystem.B.dylib
+  /System/Library/Frameworks/CryptoKit.framework/Versions/A/CryptoKit
+  /System/Library/Frameworks/Foundation.framework/Versions/C/Foundation
+  /usr/lib/libobjc.A.dylib
+  /usr/lib/swift/libswiftCore.dylib
+  /usr/lib/swift/libswiftCoreFoundation.dylib
+  /usr/lib/swift/libswiftDarwin.dylib
+  /usr/lib/swift/libswiftDispatch.dylib
+  /usr/lib/swift/libswiftIOKit.dylib
+  /usr/lib/swift/libswiftObjectiveC.dylib
+  /usr/lib/swift/libswiftXPC.dylib
+  /usr/lib/swift/libswift_Concurrency.dylib
+  /usr/lib/swift/libswift_Builtin_float.dylib
+  /usr/lib/swift/libswift_errno.dylib
+].freeze
+
+def fail_build(code)
+  raise BuildFailure, code
+end
+
+def deep_sort(value)
+  case value
+  when Hash
+    value.keys.sort.each_with_object({}) { |key, out| out[key] = deep_sort(value.fetch(key)) }
+  when Array
+    value.map { |item| deep_sort(item) }
+  else
+    value
+  end
+end
+
+def canonical_json(value)
+  JSON.generate(deep_sort(value))
+end
+
+def mode_string(stat)
+  format("%04o", stat.mode & 0o7777)
+end
+
+def read_all_from_descriptor(io)
+  digest = Digest::SHA256.new
+  total = 0
+  io.rewind
+  loop do
+    chunk = io.read(65_536)
+    break if chunk.nil? || chunk.empty?
+    digest.update(chunk)
+    total += chunk.bytesize
+  end
+  io.rewind
+  [total.to_s, digest.hexdigest]
+end
+
+def identity_from_held(io)
+  stat = io.stat
+  fail_build("HELD_NOT_REGULAR") unless stat.file?
+  bytes, sha = read_all_from_descriptor(io)
+  {
+    "bytes_decimal"=>bytes,
+    "device_decimal"=>stat.dev.to_s,
+    "inode_decimal"=>stat.ino.to_s,
+    "uid_decimal"=>stat.uid.to_s,
+    "gid_decimal"=>stat.gid.to_s,
+    "mode"=>mode_string(stat),
+    "nlink_decimal"=>stat.nlink.to_s,
+    "sha256"=>sha
+  }
+end
+
+def held_regular(path)
+  fd = IO.sysopen(path, File::RDONLY | O_NOFOLLOW_ANY | O_CLOEXEC)
+  io = File.new(fd, "rb")
+  stat = io.stat
+  fail_build("NOT_REGULAR:#{path}") unless stat.file?
+  bytes, sha = read_all_from_descriptor(io)
+  identity = {
+    "bytes_decimal"=>bytes,
+    "device_decimal"=>stat.dev.to_s,
+    "inode_decimal"=>stat.ino.to_s,
+    "uid_decimal"=>stat.uid.to_s,
+    "gid_decimal"=>stat.gid.to_s,
+    "mode"=>mode_string(stat),
+    "nlink_decimal"=>stat.nlink.to_s,
+    "sha256"=>sha
+  }
+  [io, identity]
+rescue StandardError
+  io.close if defined?(io) && io && !io.closed?
+  raise
+end
+
+def require_identity(path, expected)
+  io, observed = held_regular(path)
+  fail_build("IDENTITY_MISMATCH:#{path}") unless observed == expected
+  close_error = safe_close(io)
+  fail_build("IDENTITY_CLOSE_FAILED:#{path}") if close_error
+  observed
+end
+
+def require_named_join(path, io)
+  named_fd = IO.sysopen(path, File::RDONLY | O_NOFOLLOW_ANY | O_CLOEXEC)
+  named = File.new(named_fd, "rb")
+  a = io.stat
+  b = named.stat
+  fail_build("NAMED_JOIN_MISMATCH:#{path}") unless a.dev == b.dev && a.ino == b.ino
+  named.close
+  true
+rescue StandardError
+  named.close if defined?(named) && named && !named.closed?
+  raise
+end
+
+def require_held_identity(path, io, expected)
+  require_named_join(path, io)
+  observed = identity_from_held(io)
+  fail_build("HELD_IDENTITY_DRIFT:#{path}") unless observed == expected
+  observed
+end
+
+def open_directory(path)
+  fd = IO.sysopen(path, File::RDONLY | O_NOFOLLOW_ANY | O_DIRECTORY | O_CLOEXEC)
+  io = File.new(fd, "r")
+  fail_build("NOT_DIRECTORY:#{path}") unless io.stat.directory?
+  io
+end
+
+def require_directory_join(path, io, expected_mode)
+  named = open_directory(path)
+  held_stat = io.stat
+  named_stat = named.stat
+  fail_build("DIRECTORY_JOIN_MISMATCH:#{path}") unless held_stat.dev == named_stat.dev && held_stat.ino == named_stat.ino
+  [held_stat, named_stat].each do |stat|
+    fail_build("DIRECTORY_TYPE_DRIFT:#{path}") unless stat.directory?
+    fail_build("DIRECTORY_MODE_DRIFT:#{path}") unless mode_string(stat) == expected_mode
+  end
+  fail_build("DIRECTORY_UID_DRIFT:#{path}") unless held_stat.uid == named_stat.uid
+  fail_build("DIRECTORY_GID_DRIFT:#{path}") unless held_stat.gid == named_stat.gid
+  result = {
+    "device_decimal"=>held_stat.dev.to_s,
+    "gid_decimal"=>held_stat.gid.to_s,
+    "inode_decimal"=>held_stat.ino.to_s,
+    "mode"=>mode_string(held_stat),
+    "nlink_decimal"=>held_stat.nlink.to_s,
+    "uid_decimal"=>held_stat.uid.to_s
+  }
+  named.close
+  result
+rescue StandardError
+  named.close if defined?(named) && named && !named.closed?
+  raise
+end
+
+def durable_sync(io, code)
+  fail_build("FSYNC_FAILED:#{code}") unless io.fsync == 0
+  fail_build("FULLFSYNC_FAILED:#{code}") unless io.fcntl(F_FULLFSYNC, 0) == 0
+end
+
+def require_absent(path, code)
+  File.lstat(path)
+  fail_build("EXPECTED_ABSENT:#{code}")
+rescue Errno::ENOENT
+  true
+end
+
+def require_parent_identity(path, expected)
+  stat = File.lstat(path)
+  observed = {
+    "device_decimal"=>stat.dev.to_s,
+    "inode_decimal"=>stat.ino.to_s,
+    "uid_decimal"=>stat.uid.to_s,
+    "gid_decimal"=>stat.gid.to_s,
+    "mode"=>mode_string(stat),
+    "type"=>(stat.directory? ? "DIRECTORY" : "OTHER")
+  }
+  fail_build("PARENT_IDENTITY_MISMATCH:#{path}") unless observed == expected
+  observed
+end
+
+class DurableJournal
+  attr_reader :sealed
+
+  def initialize(root, root_io, parent_io)
+    @root = root
+    @root_io = root_io
+    @parent_io = parent_io
+    @path = "#{root}/#{JOURNAL_LEAF}"
+    flags = File::WRONLY | File::CREAT | File::EXCL | File::APPEND | O_NOFOLLOW_ANY | O_CLOEXEC
+    fd = IO.sysopen(@path, flags, 0o400)
+    @io = File.new(fd, "ab")
+    @sequence = 0
+    @previous = "0" * 64
+    @bytes = 0
+    @append_failed = false
+    @terminal_started = false
+    @sealed = false
+    verify_named
+  end
+
+  def writable?
+    !@sealed && !@append_failed && !@terminal_started
+  end
+
+  def verify_named
+    fail_build("JOURNAL_HELD_NOT_REGULAR") unless @io.stat.file?
+    fail_build("JOURNAL_HELD_MODE") unless mode_string(@io.stat) == "0400"
+    fail_build("JOURNAL_HELD_NLINK") unless @io.stat.nlink == 1
+    named_fd = IO.sysopen(@path, File::RDONLY | O_NOFOLLOW_ANY | O_CLOEXEC)
+    named = File.new(named_fd, "rb")
+    fail_build("JOURNAL_NAMED_NOT_REGULAR") unless named.stat.file?
+    fail_build("JOURNAL_NAMED_JOIN") unless named.stat.dev == @io.stat.dev && named.stat.ino == @io.stat.ino
+    fail_build("JOURNAL_NAMED_MODE") unless mode_string(named.stat) == "0400"
+    fail_build("JOURNAL_NAMED_NLINK") unless named.stat.nlink == 1
+    fail_build("JOURNAL_NAMED_SIZE") unless named.stat.size == @bytes
+    named.close
+    require_directory_join(@root, @root_io, "0700")
+    require_directory_join(TMP_PARENT, @parent_io, "1777")
+    true
+  rescue StandardError
+    named.close if defined?(named) && named && !named.closed?
+    raise
+  end
+
+  def append(event, terminal=false)
+    fail_build("JOURNAL_ALREADY_SEALED") if @sealed
+    fail_build("JOURNAL_APPEND_POISONED") if @append_failed
+    fail_build("JOURNAL_TERMINAL_ALREADY_STARTED") if @terminal_started && !terminal
+    verify_named
+    core = {
+      "event"=>event,
+      "predecessor_record_sha256"=>@previous,
+      "sequence_decimal"=>@sequence.to_s
+    }
+    digest = Digest::SHA256.hexdigest(canonical_json(core))
+    frame = core.merge("record_sha256"=>digest)
+    bytes = canonical_json(frame) + "\n"
+    limit = terminal ? JOURNAL_MAX_BYTES : JOURNAL_MAX_BYTES - JOURNAL_TERMINAL_RESERVE_BYTES
+    fail_build("JOURNAL_BYTE_CAP") if @bytes + bytes.bytesize > limit
+    @append_failed = true
+    offset = 0
+    while offset < bytes.bytesize
+      written = @io.write(bytes.byteslice(offset, bytes.bytesize - offset))
+      fail_build("JOURNAL_SHORT_WRITE") unless written && written > 0
+      offset += written
+    end
+    @io.flush
+    durable_sync(@io, "JOURNAL_APPEND")
+    @bytes += bytes.bytesize
+    verify_named
+    @previous = digest
+    @sequence += 1
+    @append_failed = false
+    digest
+  end
+
+  def validate_readback
+    named_fd = IO.sysopen(@path, File::RDONLY | O_NOFOLLOW_ANY | O_CLOEXEC)
+    named = File.new(named_fd, "rb")
+    bytes = named.read(JOURNAL_MAX_BYTES + 1)
+    fail_build("JOURNAL_READBACK_CAP") if bytes.bytesize > JOURNAL_MAX_BYTES
+    fail_build("JOURNAL_READBACK_SIZE") unless bytes.bytesize == @bytes
+    fail_build("JOURNAL_READBACK_LF") unless bytes.empty? || bytes.end_with?("\n")
+    previous = "0" * 64
+    count = 0
+    bytes.lines.each do |line|
+      fail_build("JOURNAL_READBACK_FRAME_LF") unless line.end_with?("\n")
+      frame = JSON.parse(line.byteslice(0, line.bytesize - 1))
+      digest = frame.fetch("record_sha256")
+      core = frame.reject { |key, _| key == "record_sha256" }
+      fail_build("JOURNAL_READBACK_SEQUENCE") unless core.fetch("sequence_decimal") == count.to_s
+      fail_build("JOURNAL_READBACK_PREDECESSOR") unless core.fetch("predecessor_record_sha256") == previous
+      fail_build("JOURNAL_READBACK_CANONICAL") unless canonical_json(frame) + "\n" == line
+      fail_build("JOURNAL_READBACK_DIGEST") unless Digest::SHA256.hexdigest(canonical_json(core)) == digest
+      previous = digest
+      count += 1
+    end
+    fail_build("JOURNAL_READBACK_COUNT") unless count == @sequence
+    fail_build("JOURNAL_READBACK_TAIL") unless previous == @previous
+    named.close
+    true
+  rescue StandardError
+    named.close if defined?(named) && named && !named.closed?
+    raise
+  end
+
+  def append_terminal_and_seal(event)
+    fail_build("JOURNAL_NOT_TERMINAL_READY") unless writable?
+    @terminal_started = true
+    verify_named
+    validate_readback
+    fail_build("JOURNAL_FCHMOD_FAILED") unless @io.chmod(0o400) == 0
+    durable_sync(@io, "JOURNAL_PRETERMINAL")
+    durable_sync(@root_io, "A_ROOT_PRETERMINAL")
+    durable_sync(@parent_io, "TMP_PARENT_PRETERMINAL")
+    verify_named
+    validate_readback
+    append(event, true)
+    @sealed = true
+  end
+
+  def retain_prefix_unchecked
+    @io.chmod(0o400)
+    @io.fsync
+    @io.fcntl(F_FULLFSYNC, 0)
+    @root_io.fsync
+    @root_io.fcntl(F_FULLFSYNC, 0)
+    @parent_io.fsync
+    @parent_io.fcntl(F_FULLFSYNC, 0)
+  rescue StandardError
+  end
+
+  def close_unchecked
+    @io.close unless @io.closed?
+  rescue StandardError
+  end
+end
+
+def stream_capture_blocking(io, cap)
+  digest = Digest::SHA256.new
+  prefix = "".b
+  total = 0
+  capture_error = nil
+  loop do
+    begin
+      chunk = io.readpartial(65_536)
+    rescue Errno::EINTR
+      next
+    rescue EOFError
+      break
+    rescue StandardError => error
+      capture_error = error.class.name
+      break
+    end
+    digest.update(chunk)
+    total += chunk.bytesize
+    if prefix.bytesize < cap
+      take = [cap - prefix.bytesize, chunk.bytesize].min
+      prefix << chunk.byteslice(0, take)
+    end
+  end
+  close_error = safe_close(io)
+  capture_error ||= close_error
+  {
+    "bytes_decimal"=>total.to_s,
+    "capture_error"=>capture_error,
+    "overflow"=>total > cap,
+    "prefix_base64"=>Base64.strict_encode64(prefix),
+    "prefix_bytes_decimal"=>prefix.bytesize.to_s,
+    "sha256"=>digest.hexdigest,
+    "raw"=>prefix
+  }
+end
+
+def safe_close(io)
+  return nil if io.nil? || io.closed?
+  io.close
+  nil
+rescue Errno::EINTR
+  retry
+rescue StandardError
+  "CLOSE_UNKNOWN"
+end
+
+def remain_in_reap_containment
+  loop { sleep(3600) }
+end
+
+def public_capture(capture)
+  capture.reject { |key, _| key == "raw" }
+end
+
+def require_held_devnull(io)
+  stat = io.stat
+  fail_build("DEVNULL_NOT_CHARACTER") unless stat.chardev?
+  fail_build("DEVNULL_MODE") unless mode_string(stat) == "0666"
+  flags = io.fcntl(Fcntl::F_GETFL, 0)
+  fail_build("DEVNULL_ACCESS_MODE") unless (flags & Fcntl::O_ACCMODE) == Fcntl::O_RDONLY
+  named_fd = IO.sysopen("/dev/null", File::RDONLY | O_NOFOLLOW_ANY | O_CLOEXEC)
+  named = File.new(named_fd, "rb")
+  fail_build("DEVNULL_NAMED_JOIN") unless named.stat.dev == stat.dev && named.stat.ino == stat.ino && named.stat.chardev?
+  named.close
+  true
+rescue StandardError
+  named.close if defined?(named) && named && !named.closed?
+  raise
+end
+
+def child_environment(root)
+  {
+    "DEVELOPER_DIR"=>"/Applications/Xcode.app/Contents/Developer",
+    "LANG"=>"C.UTF-8",
+    "LC_ALL"=>"C.UTF-8",
+    "PATH"=>"/usr/bin:/bin",
+    "SDKROOT"=>SDK,
+    "TMPDIR"=>"#{root}/tmp/",
+    "TZ"=>"UTC",
+    "__CF_USER_TEXT_ENCODING"=>"0x1F5:0x0:0x0"
+  }
+end
+
+def run_child(journal, label, argv, environment, cap)
+  journal.append({
+    "argv"=>argv,
+    "capture_cap_bytes_decimal"=>cap.to_s,
+    "cwd"=>"/",
+    "environment_sorted"=>environment.keys.sort.map { |key| "#{key}=#{environment.fetch(key)}" },
+    "label"=>label,
+    "type"=>"CHILD_ENTRY_COMMITMENT"
+  })
+
+  pid = nil
+  begin
+    stdout_r, stdout_w = IO.pipe
+    stderr_r, stderr_w = IO.pipe
+    stdout_thread = Thread.new { stream_capture_blocking(stdout_r, cap) }
+    stderr_thread = Thread.new { stream_capture_blocking(stderr_r, cap) }
+    stdout_thread.report_on_exception = false if stdout_thread.respond_to?(:report_on_exception=)
+    stderr_thread.report_on_exception = false if stderr_thread.respond_to?(:report_on_exception=)
+    devnull_fd = IO.sysopen("/dev/null", File::RDONLY | O_NOFOLLOW_ANY | O_CLOEXEC)
+    devnull = File.new(devnull_fd, "rb")
+    require_held_devnull(devnull)
+    pid = Process.spawn(
+      environment,
+      [argv.fetch(0), argv.fetch(0)],
+      *argv.drop(1),
+      :chdir=>"/",
+      :in=>devnull,
+      :out=>stdout_w,
+      :err=>stderr_w,
+      :close_others=>true,
+      :unsetenv_others=>true
+    )
+  rescue StandardError
+    safe_close(stdout_w) if defined?(stdout_w)
+    safe_close(stderr_w) if defined?(stderr_w)
+    safe_close(devnull) if defined?(devnull)
+    stdout_thread.value if defined?(stdout_thread) && stdout_thread
+    stderr_thread.value if defined?(stderr_thread) && stderr_thread
+    safe_close(stdout_r) if defined?(stdout_r)
+    safe_close(stderr_r) if defined?(stderr_r)
+    raise
+  end
+
+  close_errors = [safe_close(stdout_w), safe_close(stderr_w), safe_close(devnull)].compact
+  stdout_capture = stdout_thread.value
+  stderr_capture = stderr_thread.value
+  begin
+    waited_pid, status = Process.wait2(pid)
+  rescue Errno::EINTR
+    retry
+  rescue StandardError
+    remain_in_reap_containment
+  end
+  remain_in_reap_containment unless waited_pid == pid
+  fail_build("POST_SPAWN_CLOSE_FAILURE:#{label}") unless close_errors.empty?
+  result = {
+    "exited"=>status.exited?,
+    "exit_status_decimal"=>(status.exited? ? status.exitstatus.to_s : nil),
+    "label"=>label,
+    "pid_decimal"=>pid.to_s,
+    "signaled"=>status.signaled?,
+    "termsig_decimal"=>(status.signaled? ? status.termsig.to_s : nil),
+    "stdout"=>public_capture(stdout_capture),
+    "stderr"=>public_capture(stderr_capture),
+    "type"=>"CHILD_TERMINAL"
+  }
+  journal.append(result)
+  result.merge("stdout_raw"=>stdout_capture.fetch("raw"), "stderr_raw"=>stderr_capture.fetch("raw"))
+end
+
+def require_normal_zero(result, code, require_silent)
+  fail_build("#{code}:NOT_NORMAL_ZERO") unless result.fetch("exited") && result.fetch("exit_status_decimal") == "0" && !result.fetch("signaled")
+  fail_build("#{code}:STDOUT_OVERFLOW") if result.fetch("stdout").fetch("overflow")
+  fail_build("#{code}:STDERR_OVERFLOW") if result.fetch("stderr").fetch("overflow")
+  fail_build("#{code}:STDOUT_CAPTURE_ERROR") if result.fetch("stdout").fetch("capture_error")
+  fail_build("#{code}:STDERR_CAPTURE_ERROR") if result.fetch("stderr").fetch("capture_error")
+  if require_silent
+    fail_build("#{code}:STDOUT_NOT_EMPTY") unless result.fetch("stdout").fetch("bytes_decimal") == "0"
+    fail_build("#{code}:STDERR_NOT_EMPTY") unless result.fetch("stderr").fetch("bytes_decimal") == "0"
+  end
+  true
+end
+
+def compiler_argv(root)
+  object = "#{root}/#{OBJECT_LEAF}"
+  product = "#{root}/#{PRODUCT_LEAF}"
+  c = [
+    CLANG, "-target", "arm64-apple-macosx14.0", "-isysroot", SDK,
+    "-std=c17", "-O2", "-fvisibility=hidden", "-fno-common", "-Wall",
+    "-Wextra", "-Werror", "-fno-modules", "-fno-implicit-modules",
+    "-c", SOURCE_C, "-o", object
+  ]
+  swift = [
+    SWIFTC, "-swift-version", "6", "-O", "-whole-module-optimization",
+    "-parse-as-library", "-emit-executable", "-target", "arm64-apple-macosx14.0",
+    "-sdk", SDK, "-module-name", "PrimeDriverV2R19LocalArchiveBuildOuterSupervisor",
+    "-module-cache-path", "#{root}/module-cache", "-import-objc-header", SOURCE_H,
+    SOURCE_SWIFT, object, "-o", product
+  ]
+  [c, swift]
+end
+
+def analyzer_argv(root)
+  object = "#{root}/#{OBJECT_LEAF}"
+  product = "#{root}/#{PRODUCT_LEAF}"
+  [
+    ["object-defined", [LLVM_NM, "--defined-only", "--extern-only", object]],
+    ["object-undefined", [LLVM_NM, "-u", object]],
+    ["product-file", [FILE_TOOL, "-b", product]],
+    ["product-otool-header", [OTOOL, "-hv", product]],
+    ["product-otool-load-commands", [OTOOL, "-l", product]],
+    ["product-otool-linked-images", [OTOOL, "-L", product]],
+    ["product-codesign-verify", [CODESIGN, "--verify", "--strict", "--verbose=4", product]],
+    ["product-codesign-display", [CODESIGN, "-d", "--verbose=4", product]],
+    ["product-xattrs", [XATTR, "-l", product]],
+    ["product-undefined", [LLVM_NM, "-u", product]]
+  ]
+end
+
+def extract_nm_symbols(bytes)
+  bytes.lines.map { |line| line.strip.split(/\s+/).last }.compact.reject(&:empty?).sort
+end
+
+def parse_macho(io)
+  file_size = io.stat.size
+  io.rewind
+  header = io.read(32)
+  fail_build("MACHO_HEADER_SHORT") unless header && header.bytesize == 32
+  values = header.unpack("L<8")
+  magic, cpu_type, cpu_subtype, file_type, command_count, command_bytes, flags, reserved = values
+  fail_build("MACHO_MAGIC") unless magic == 0xfeedfacf
+  fail_build("MACHO_CPU") unless cpu_type == 0x0100000c
+  fail_build("MACHO_CPU_SUBTYPE") unless (cpu_subtype & 0x00ffffff) == 0
+  fail_build("MACHO_FILETYPE") unless file_type == 2
+  fail_build("MACHO_FLAGS") unless flags == 0x00200085
+  fail_build("MACHO_RESERVED") unless reserved == 0
+  fail_build("MACHO_COMMAND_CAP") unless command_count <= 128 && command_bytes <= 1_048_576
+  fail_build("MACHO_COMMAND_FILE_BOUNDS") if 32 + command_bytes > file_size
+
+  commands = io.read(command_bytes)
+  fail_build("MACHO_COMMANDS_SHORT") unless commands && commands.bytesize == command_bytes
+  offset = 0
+  uuid = nil
+  build = nil
+  main = nil
+  signature = nil
+  command_digests = []
+  seen = Hash.new(0)
+  command_count.times do
+    fail_build("MACHO_COMMAND_HEADER") if offset + 8 > commands.bytesize
+    command, size = commands.byteslice(offset, 8).unpack("L<2")
+    fail_build("MACHO_COMMAND_SIZE") if size < 8 || (size % 8) != 0 || offset + size > commands.bytesize
+    bytes = commands.byteslice(offset, size)
+    command_digests << {"command_hex"=>format("0x%08x", command), "sha256"=>Digest::SHA256.hexdigest(bytes), "size_decimal"=>size.to_s}
+    case command
+    when 0x1b
+      seen["uuid"] += 1
+      fail_build("MACHO_UUID_SIZE") unless size == 24
+      raw = bytes.byteslice(8, 16).unpack("C16")
+      hex = raw.map { |value| format("%02X", value) }.join
+      uuid = "#{hex[0,8]}-#{hex[8,4]}-#{hex[12,4]}-#{hex[16,4]}-#{hex[20,12]}"
+    when 0x32
+      seen["build"] += 1
+      fail_build("MACHO_BUILD_SIZE") unless size >= 24
+      platform, minimum, sdk, tools = bytes.byteslice(8, 16).unpack("L<4")
+      fail_build("MACHO_BUILD_TOOL_CAP") if tools > 16
+      fail_build("MACHO_BUILD_TOOL_BOUNDS") unless size == 24 + tools * 8
+      build = {"minimum_hex"=>format("0x%08x", minimum), "platform_decimal"=>platform.to_s, "sdk_hex"=>format("0x%08x", sdk), "tool_count_decimal"=>tools.to_s}
+    when 0x80000028
+      seen["main"] += 1
+      fail_build("MACHO_MAIN_SIZE") unless size == 24
+      entry, stack = bytes.byteslice(8, 16).unpack("Q<2")
+      main = {"entryoff_decimal"=>entry.to_s, "stacksize_decimal"=>stack.to_s}
+    when 0x1d
+      seen["signature"] += 1
+      fail_build("MACHO_SIGNATURE_SIZE") unless size == 16
+      data_offset, data_size = bytes.byteslice(8, 8).unpack("L<2")
+      signature = {"offset_decimal"=>data_offset.to_s, "size_decimal"=>data_size.to_s}
+    end
+    offset += size
+  end
+  fail_build("MACHO_COMMAND_COUNT_JOIN") unless offset == commands.bytesize
+  %w[uuid build main signature].each { |kind| fail_build("MACHO_#{kind.upcase}_COUNT") unless seen[kind] == 1 }
+  fail_build("MACHO_UUID_MISSING") unless uuid
+  fail_build("MACHO_BUILD_MISSING") unless build
+  fail_build("MACHO_BUILD_PLATFORM") unless build.fetch("platform_decimal") == "1"
+  fail_build("MACHO_BUILD_MINIMUM") unless build.fetch("minimum_hex") == "0x000e0000"
+  fail_build("MACHO_BUILD_SDK") unless build.fetch("sdk_hex") == "0x001a0500"
+  fail_build("MACHO_MAIN_MISSING") unless main
+  fail_build("MACHO_SIGNATURE_MISSING") unless signature
+
+  signature_offset = Integer(signature.fetch("offset_decimal"), 10)
+  signature_size = Integer(signature.fetch("size_decimal"), 10)
+  fail_build("MACHO_SIGNATURE_OFFSET_ALIGNMENT") unless (signature_offset % 16) == 0
+  fail_build("MACHO_SIGNATURE_SIZE_CAP") if signature_size < 20 || signature_size > 1_048_576
+  fail_build("MACHO_SIGNATURE_BEFORE_COMMANDS") if signature_offset < 32 + command_bytes
+  fail_build("MACHO_SIGNATURE_FILE_END") unless signature_offset + signature_size == file_size
+  fail_build("MACHO_MAIN_ENTRY_BOUNDS") unless Integer(main.fetch("entryoff_decimal"), 10) < signature_offset
+  io.rewind
+  io.seek(signature_offset)
+  signature_bytes = io.read(signature_size)
+  fail_build("MACHO_SIGNATURE_SHORT") unless signature_bytes && signature_bytes.bytesize == signature_size
+  code_directory = parse_code_directory(signature_bytes, signature_offset)
+  io.rewind
+  {
+    "build_version"=>build,
+    "code_directory"=>code_directory,
+    "command_count_decimal"=>command_count.to_s,
+    "command_digests"=>command_digests,
+    "commands_size_decimal"=>command_bytes.to_s,
+    "cpu_subtype_hex"=>format("0x%08x", cpu_subtype),
+    "header_flags_hex"=>format("0x%08x", flags),
+    "lc_code_signature"=>signature,
+    "lc_main"=>main,
+    "uuid"=>uuid
+  }
+end
+
+def parse_code_directory(signature_bytes, signature_offset)
+  fail_build("SUPERBLOB_HEADER_SHORT") if signature_bytes.bytesize < 12
+  magic, length, count = signature_bytes.byteslice(0, 12).unpack("N3")
+  fail_build("SUPERBLOB_MAGIC") unless magic == 0xfade0cc0
+  fail_build("SUPERBLOB_LENGTH") if length < 20 || length > signature_bytes.bytesize
+  fail_build("SUPERBLOB_PADDING") unless signature_bytes.byteslice(length, signature_bytes.bytesize - length).bytes.all?(&:zero?)
+  fail_build("SUPERBLOB_COUNT") unless count == 1
+  index_end = 12 + count * 8
+  fail_build("SUPERBLOB_INDEX_BOUNDS") if index_end > length
+  candidates = []
+  observed_slots = {}
+  count.times do |index|
+    slot_type, offset = signature_bytes.byteslice(12 + index * 8, 8).unpack("N2")
+    fail_build("SUPERBLOB_DUPLICATE_SLOT") if observed_slots.key?(slot_type)
+    observed_slots[slot_type] = true
+    fail_build("SUPERBLOB_BLOB_OFFSET") if offset < index_end || (offset % 4) != 0 || offset + 8 > length
+    blob_magic, blob_length = signature_bytes.byteslice(offset, 8).unpack("N2")
+    next unless blob_magic == 0xfade0c02
+    fail_build("CODEDIRECTORY_LENGTH") if blob_length < 44 || offset + blob_length > length
+    candidates << [slot_type, offset, signature_bytes.byteslice(offset, blob_length)]
+  end
+  primary = candidates.select { |entry| entry[0] == 0 }
+  fail_build("PRIMARY_CODEDIRECTORY_COUNT") unless primary.length == 1
+  slot_type, blob_offset, bytes = primary.first
+  version, flags = bytes.byteslice(8, 8).unpack("N2")
+  hash_offset, ident_offset = bytes.byteslice(16, 8).unpack("N2")
+  n_special, n_code, code_limit = bytes.byteslice(24, 12).unpack("N3")
+  hash_size, hash_type, platform, page_size = bytes.byteslice(36, 4).unpack("C4")
+  fail_build("CODEDIRECTORY_VERSION") unless version == 0x20400
+  fail_build("CODEDIRECTORY_FLAGS") unless flags == 0x20002
+  fail_build("CODEDIRECTORY_SPECIAL_SLOTS") unless n_special == 0
+  fail_build("CODEDIRECTORY_HASH_ALGORITHM") unless hash_size == 32 && hash_type == 2
+  fail_build("CODEDIRECTORY_PLATFORM") unless platform == 0
+  fail_build("CODEDIRECTORY_PAGE_SIZE") unless page_size == 12
+  fail_build("CODEDIRECTORY_CODE_LIMIT") unless code_limit == signature_offset
+  fail_build("CODEDIRECTORY_CODE_SLOT_COUNT") unless n_code == (code_limit + 4095) / 4096
+  fail_build("CODEDIRECTORY_IDENT_OFFSET") if ident_offset < 88 || ident_offset >= bytes.bytesize
+  ident_tail = bytes.byteslice(ident_offset, bytes.bytesize - ident_offset)
+  terminator = ident_tail.index("\0")
+  fail_build("CODEDIRECTORY_IDENTIFIER_TERMINATOR") unless terminator
+  identifier = ident_tail.byteslice(0, terminator)
+  fail_build("CODEDIRECTORY_IDENTIFIER") unless identifier == PRODUCT_LEAF
+  fail_build("CODEDIRECTORY_HASH_OFFSET") if hash_offset <= ident_offset + terminator || hash_offset > bytes.bytesize
+  fail_build("CODEDIRECTORY_HASH_BOUNDS") unless hash_offset + n_code * hash_size == bytes.bytesize
+  fail_build("CODEDIRECTORY_BLOB_JOIN") unless blob_offset + bytes.bytesize == length
+  result = {
+    "code_limit_decimal"=>code_limit.to_s,
+    "code_slots_decimal"=>n_code.to_s,
+    "flags_hex"=>format("0x%08x", flags),
+    "full_sha256"=>Digest::SHA256.hexdigest(bytes),
+    "hash_size_decimal"=>hash_size.to_s,
+    "hash_type_decimal"=>hash_type.to_s,
+    "identifier"=>identifier,
+    "page_size_exponent_decimal"=>page_size.to_s,
+    "size_decimal"=>bytes.bytesize.to_s,
+    "slot_type_decimal"=>slot_type.to_s,
+    "special_slots_decimal"=>n_special.to_s,
+    "version_hex"=>format("0x%08x", version)
+  }
+  fail_build("CODEDIRECTORY_EXEC_FIELDS") if bytes.bytesize < 88
+  base, limit, exec_flags = bytes.byteslice(64, 24).unpack("Q>3")
+  fail_build("CODEDIRECTORY_EXEC_BASE") unless base == 0
+  fail_build("CODEDIRECTORY_EXEC_LIMIT") if limit == 0 || limit > code_limit
+  fail_build("CODEDIRECTORY_EXEC_FLAGS") unless exec_flags == 1
+  result["executable_segment_base_decimal"] = base.to_s
+  result["executable_segment_flags_hex"] = format("0x%x", exec_flags)
+  result["executable_segment_limit_decimal"] = limit.to_s
+  result
+end
+
+def root_inventory(root)
+  files = 0
+  directories = 0
+  bytes = 0
+  byte_cap = root == A_ROOT ? 133_169_152 : 134_217_728
+  stack = [root]
+  until stack.empty?
+    current = stack.pop
+    entries = Dir.children(current).sort
+    entries.each do |leaf|
+      path = "#{current}/#{leaf}"
+      stat = File.lstat(path)
+      if stat.directory?
+        directories += 1
+        fail_build("ROOT_DIRECTORY_CAP") if directories > 4096
+        stack << path
+      elsif stat.file?
+        files += 1
+        bytes += stat.size
+        fail_build("ROOT_FILE_CAP") if files > 4096
+        fail_build("ROOT_BYTE_CAP") if bytes > byte_cap
+      else
+        fail_build("ROOT_UNSUPPORTED_NODE")
+      end
+    end
+  end
+  {"aggregate_file_bytes_decimal"=>bytes.to_s, "directories_decimal"=>directories.to_s, "files_decimal"=>files.to_s}
+end
+
+def validate_static_surface(build)
+  analyzers = build.fetch("analyzers")
+  defined = extract_nm_symbols(analyzers.fetch("object-defined").fetch("stdout_raw"))
+  fail_build("OBJECT_DEFINED_SYMBOLS") unless defined == DEFINED_C_SYMBOLS
+  undefined_object = extract_nm_symbols(analyzers.fetch("object-undefined").fetch("stdout_raw"))
+  forbidden_object = undefined_object & OBJECT_UNDEFINED_FORBIDDEN
+  forbidden_object.concat(undefined_object.select { |symbol| OBJECT_UNDEFINED_FORBIDDEN_PATTERNS.any? { |pattern| pattern.match?(symbol) } })
+  fail_build("OBJECT_FORBIDDEN_UNDEFINED_SYMBOLS") unless forbidden_object.empty?
+
+  file_text = analyzers.fetch("product-file").fetch("stdout_raw")
+  fail_build("PRODUCT_FILE_TYPE") unless file_text.include?("Mach-O 64-bit executable arm64")
+  header_text = analyzers.fetch("product-otool-header").fetch("stdout_raw")
+  fail_build("PRODUCT_OTOOL_HEADER") unless header_text.include?("ARM64") && header_text.include?("EXECUTE")
+  codesign_text = analyzers.fetch("product-codesign-display").fetch("stderr_raw")
+  fail_build("PRODUCT_CODESIGN_ADHOC") unless codesign_text.include?("Signature=adhoc")
+
+  library_text = analyzers.fetch("product-otool-linked-images").fetch("stdout_raw")
+  libraries = library_text.lines.drop(1).map { |line| line.strip.sub(/ \(compatibility version.*\z/, "") }.reject(&:empty?)
+  fail_build("PRODUCT_LINKED_IMAGES_EMPTY") if libraries.empty?
+  fail_build("PRODUCT_LINKED_IMAGE_DUPLICATE") unless libraries.uniq == libraries
+  fail_build("PRODUCT_LINKED_IMAGE_FORBIDDEN") unless (libraries - ALLOWED_LINKED_IMAGES).empty?
+
+  undefined_product = extract_nm_symbols(analyzers.fetch("product-undefined").fetch("stdout_raw"))
+  process_control_symbols = undefined_product.select { |symbol| PROCESS_CONTROL_SYMBOL_PATTERNS.any? { |pattern| pattern.match?(symbol) } }.sort
+  fail_build("PRODUCT_PROCESS_CONTROL_SYMBOLS") unless process_control_symbols == ALLOWED_PROCESS_CONTROL_SYMBOLS
+  forbidden = undefined_product & FORBIDDEN_PRODUCT_SYMBOLS
+  forbidden.concat(undefined_product.select { |symbol| FORBIDDEN_PRODUCT_SYMBOL_PATTERNS.any? { |pattern| pattern.match?(symbol) } })
+  fail_build("PRODUCT_FORBIDDEN_SYMBOLS") unless forbidden.empty?
+  xattr_bytes = analyzers.fetch("product-xattrs").fetch("stdout_raw")
+  xattr_names = xattr_bytes.lines.map { |line| match = /\A([^:\n]+):/.match(line); match && match[1] }.compact
+  fail_build("PRODUCT_XATTR_DUPLICATE") unless xattr_names.uniq == xattr_names
+  fail_build("PRODUCT_XATTR_FORBIDDEN") unless (xattr_names - ["com.apple.provenance"]).empty?
+  {
+    "c_defined_symbols"=>defined,
+    "c_undefined_symbols"=>undefined_object,
+    "linked_images"=>libraries,
+    "process_control_symbols"=>process_control_symbols,
+    "product_undefined_symbols"=>undefined_product,
+    "product_xattr_names"=>xattr_names,
+    "product_xattr_stdout_sha256"=>Digest::SHA256.hexdigest(xattr_bytes)
+  }
+end
+
+def normalize_capture(bytes, root, analyzer_label)
+  product = "#{root}/#{PRODUCT_LEAF}"
+  escaped = Regexp.escape(product)
+  case analyzer_label
+  when "product-otool-header", "product-otool-load-commands", "product-otool-linked-images"
+    bytes.sub(/\A#{escaped}(?=:?\n|\z)/, "<PRODUCT>")
+  when "product-codesign-verify", "product-xattrs"
+    bytes.gsub(/^#{escaped}(?=:)/, "<PRODUCT>")
+  when "product-codesign-display"
+    bytes.gsub(/^Executable=#{escaped}$/, "Executable=<PRODUCT>")
+  else
+    bytes
+  end
+end
+
+def compare_held(left, right)
+  left.rewind
+  right.rewind
+  loop do
+    a = left.read(65_536)
+    b = right.read(65_536)
+    return true if (a.nil? || a.empty?) && (b.nil? || b.empty?)
+    return false unless a == b
+  end
+ensure
+  left.rewind
+  right.rewind
+end
+
+def verify_swiftc_link
+  stat = File.lstat(SWIFTC)
+  fail_build("SWIFTC_NOT_SYMLINK") unless stat.symlink?
+  expected_lstat = {"device_decimal"=>"16777231", "inode_decimal"=>"1118435", "uid_decimal"=>"0", "gid_decimal"=>"0", "mode"=>"0755", "nlink_decimal"=>"1", "bytes_decimal"=>"14"}
+  observed_lstat = {"device_decimal"=>stat.dev.to_s, "inode_decimal"=>stat.ino.to_s, "uid_decimal"=>stat.uid.to_s, "gid_decimal"=>stat.gid.to_s, "mode"=>mode_string(stat), "nlink_decimal"=>stat.nlink.to_s, "bytes_decimal"=>stat.size.to_s}
+  fail_build("SWIFTC_LSTAT_MISMATCH") unless observed_lstat == expected_lstat
+  fail_build("SWIFTC_TARGET_MISMATCH") unless File.readlink(SWIFTC) == "swift-frontend"
+  fail_build("SWIFTC_REALPATH_MISMATCH") unless File.realpath(SWIFTC) == SWIFT_FRONTEND
+  require_identity(SWIFT_FRONTEND, TOOL_EXPECTED.fetch(SWIFT_FRONTEND))
+end
+
+def verify_sdk
+  sdk_stat = File.lstat(SDK)
+  fail_build("SDK_NOT_SYMLINK") unless sdk_stat.symlink?
+  expected_lstat = {"device_decimal"=>"16777231", "inode_decimal"=>"1082900", "uid_decimal"=>"0", "gid_decimal"=>"0", "mode"=>"0755", "nlink_decimal"=>"1", "bytes_decimal"=>"10"}
+  observed_lstat = {"device_decimal"=>sdk_stat.dev.to_s, "inode_decimal"=>sdk_stat.ino.to_s, "uid_decimal"=>sdk_stat.uid.to_s, "gid_decimal"=>sdk_stat.gid.to_s, "mode"=>mode_string(sdk_stat), "nlink_decimal"=>sdk_stat.nlink.to_s, "bytes_decimal"=>sdk_stat.size.to_s}
+  fail_build("SDK_LSTAT_MISMATCH") unless observed_lstat == expected_lstat
+  fail_build("SDK_TARGET_MISMATCH") unless File.readlink(SDK) == "MacOSX.sdk"
+  fail_build("SDK_REALPATH_MISMATCH") unless File.realpath(SDK) == "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk"
+  require_identity(SDK_SETTINGS, TOOL_EXPECTED.fetch(SDK_SETTINGS))
+end
+
+def verify_fixed_inputs
+  SOURCE_EXPECTED.each { |path, expected| require_identity(path, expected) }
+  HEADER_EXPECTED.each { |path, expected| require_identity(path, expected) }
+  TOOL_EXPECTED.each { |path, expected| require_identity(path, expected) }
+  verify_swiftc_link
+  verify_sdk
+  true
+end
+
+def verify_protected_conjunction(tmp_parent_io, archive_parent_io, stage, require_b_absent)
+  require_directory_join(TMP_PARENT, tmp_parent_io, "1777")
+  require_directory_join(ARCHIVE_PARENT, archive_parent_io, "0700")
+  require_absent(B_ROOT, "#{stage}:B_ROOT") if require_b_absent
+  require_absent(ARCHIVE_STAGING, "#{stage}:ARCHIVE_STAGING")
+  require_absent(ARCHIVE_FINAL, "#{stage}:ARCHIVE_FINAL")
+  [FUTURE_RUNTIME_ROOT, FUTURE_PUBLISHER_A, FUTURE_PUBLISHER_B].each_with_index do |path, index|
+    require_absent(path, "#{stage}:FUTURE_NAMESPACE_#{index + 1}")
+  end
+  true
+end
+
+def create_directory_step(journal, root, root_io, leaf, label)
+  path = "#{root}/#{leaf}"
+  require_directory_join(root, root_io, "0700")
+  require_absent(path, "#{label}:PRE")
+  journal.append({"label"=>label, "path"=>path, "type"=>"DIRECTORY_CREATE_COMMITMENT"})
+  Dir.mkdir(path, 0o700)
+  child = open_directory(path)
+  fail_build("DIRECTORY_MODE:#{label}") unless mode_string(child.stat) == "0700"
+  durable_sync(child, "#{label}:CHILD")
+  durable_sync(root_io, "#{label}:ROOT")
+  require_directory_join(root, root_io, "0700")
+  journal.append({"identity"=>{"device_decimal"=>child.stat.dev.to_s, "inode_decimal"=>child.stat.ino.to_s, "mode"=>mode_string(child.stat)}, "label"=>label, "type"=>"DIRECTORY_CREATED"})
+  child.close
+end
+
+def build_one(journal, label, root, root_io, tmp_parent_io, archive_parent_io)
+  environment = child_environment(root)
+  c_argv, swift_argv = compiler_argv(root)
+  require_directory_join(root, root_io, "0700")
+  verify_fixed_inputs
+  c_result = run_child(journal, "#{label}:compiler-c", c_argv, environment, 1_048_576)
+  require_normal_zero(c_result, "#{label}:COMPILER_C", true)
+  require_directory_join(root, root_io, "0700")
+
+  verify_fixed_inputs
+  swift_result = run_child(journal, "#{label}:compiler-swift-link", swift_argv, environment, 1_048_576)
+  require_normal_zero(swift_result, "#{label}:COMPILER_SWIFT", true)
+  require_directory_join(root, root_io, "0700")
+
+  object_io, object_identity = held_regular("#{root}/#{OBJECT_LEAF}")
+  product_io, product_identity = held_regular("#{root}/#{PRODUCT_LEAF}")
+  fail_build("#{label}:OBJECT_MODE") unless object_identity.fetch("mode") == "0600"
+  fail_build("#{label}:OBJECT_NLINK") unless object_identity.fetch("nlink_decimal") == "1"
+  fail_build("#{label}:OBJECT_CAP") if Integer(object_identity.fetch("bytes_decimal"), 10) > 4_194_304
+  fail_build("#{label}:PRODUCT_MODE") unless product_identity.fetch("mode") == "0700"
+  fail_build("#{label}:PRODUCT_NLINK") unless product_identity.fetch("nlink_decimal") == "1"
+  fail_build("#{label}:PRODUCT_CAP") if Integer(product_identity.fetch("bytes_decimal"), 10) > 16_777_216
+  fail_build("#{label}:OBJECT_PRODUCT_VNODE_ALIAS") if object_identity.fetch("device_decimal") == product_identity.fetch("device_decimal") && object_identity.fetch("inode_decimal") == product_identity.fetch("inode_decimal")
+
+  durable_sync(object_io, "#{label}:OBJECT")
+  durable_sync(product_io, "#{label}:PRODUCT")
+  durable_sync(root_io, "#{label}:ARTIFACT_ROOT")
+  require_directory_join(root, root_io, "0700")
+  journal.append({"label"=>label, "object"=>object_identity, "product"=>product_identity, "type"=>"BUILD_ARTIFACTS_DURABLE"})
+
+  macho = parse_macho(product_io)
+  analyzers = {}
+  analyzer_argv(root).each do |analyzer_label, argv|
+    require_identity(argv.first, TOOL_EXPECTED.fetch(argv.first))
+    require_named_join("#{root}/#{OBJECT_LEAF}", object_io)
+    require_named_join("#{root}/#{PRODUCT_LEAF}", product_io)
+    require_directory_join(root, root_io, "0700")
+    result = run_child(journal, "#{label}:#{analyzer_label}", argv, environment, 4_194_304)
+    require_normal_zero(result, "#{label}:#{analyzer_label}", false)
+    require_directory_join(root, root_io, "0700")
+    analyzers[analyzer_label] = result
+  end
+
+  require_held_identity("#{root}/#{OBJECT_LEAF}", object_io, object_identity)
+  require_held_identity("#{root}/#{PRODUCT_LEAF}", product_io, product_identity)
+  surface = validate_static_surface({"analyzers"=>analyzers})
+  inventory = root_inventory(root)
+  verify_fixed_inputs
+  verify_protected_conjunction(tmp_parent_io, archive_parent_io, "#{label}:POST_ANALYZER", label == "A")
+  require_held_identity("#{root}/#{OBJECT_LEAF}", object_io, object_identity)
+  require_held_identity("#{root}/#{PRODUCT_LEAF}", product_io, product_identity)
+  require_directory_join(root, root_io, "0700")
+  journal.append({"artifact_identities"=>{"object"=>object_identity, "product"=>product_identity}, "label"=>label, "macho"=>macho, "root_inventory"=>inventory, "surface"=>surface, "type"=>"BUILD_STATIC_ADMISSION_PASS"})
+  {"analyzers"=>analyzers, "macho"=>macho, "object_identity"=>object_identity, "object_io"=>object_io, "product_identity"=>product_identity, "product_io"=>product_io, "surface"=>surface}
+rescue StandardError
+  object_io.close if defined?(object_io) && object_io && !object_io.closed?
+  product_io.close if defined?(product_io) && product_io && !product_io.closed?
+  raise
+end
+
+journal = nil
+tmp_parent_io = nil
+archive_parent_io = nil
+a_root_io = nil
+b_root_io = nil
+a_build = nil
+b_build = nil
+
+begin
+  fail_build("ARGV_NOT_EMPTY") unless ARGV.empty?
+  fail_build("ENV_MISMATCH") unless ENV.to_h == CONTROLLER_ENVIRONMENT
+  fail_build("CWD_NOT_ROOT") unless Dir.pwd == "/"
+  File.umask(0o077)
+
+  require_parent_identity(TMP_PARENT, {"device_decimal"=>"16777231", "inode_decimal"=>"774813", "uid_decimal"=>"0", "gid_decimal"=>"0", "mode"=>"1777", "type"=>"DIRECTORY"})
+  require_parent_identity(ARCHIVE_PARENT, {"device_decimal"=>"16777231", "inode_decimal"=>"341832", "uid_decimal"=>"501", "gid_decimal"=>"20", "mode"=>"0700", "type"=>"DIRECTORY"})
+  require_absent(A_ROOT, "A_ROOT_INITIAL")
+  require_absent(B_ROOT, "B_ROOT_INITIAL")
+  require_absent(ARCHIVE_STAGING, "ARCHIVE_STAGING_INITIAL")
+  require_absent(ARCHIVE_FINAL, "ARCHIVE_FINAL_INITIAL")
+  [FUTURE_RUNTIME_ROOT, FUTURE_PUBLISHER_A, FUTURE_PUBLISHER_B].each_with_index { |path, index| require_absent(path, "FUTURE_NAMESPACE_INITIAL_#{index + 1}") }
+  verify_fixed_inputs
+
+  tmp_parent_io = open_directory(TMP_PARENT)
+  tmp_identity = require_directory_join(TMP_PARENT, tmp_parent_io, "1777")
+  fail_build("TMP_PARENT_HELD_IDENTITY") unless tmp_identity.fetch("device_decimal") == "16777231" && tmp_identity.fetch("inode_decimal") == "774813" && tmp_identity.fetch("uid_decimal") == "0" && tmp_identity.fetch("gid_decimal") == "0"
+  archive_parent_io = open_directory(ARCHIVE_PARENT)
+  archive_identity = require_directory_join(ARCHIVE_PARENT, archive_parent_io, "0700")
+  fail_build("ARCHIVE_PARENT_HELD_IDENTITY") unless archive_identity.fetch("device_decimal") == "16777231" && archive_identity.fetch("inode_decimal") == "341832" && archive_identity.fetch("uid_decimal") == "501" && archive_identity.fetch("gid_decimal") == "20"
+  require_absent(A_ROOT, "A_ROOT_IMMEDIATE")
+  require_directory_join(TMP_PARENT, tmp_parent_io, "1777")
+  Dir.mkdir(A_ROOT, 0o700)
+  a_root_io = open_directory(A_ROOT)
+  fail_build("A_ROOT_MODE") unless mode_string(a_root_io.stat) == "0700"
+  journal = DurableJournal.new(A_ROOT, a_root_io, tmp_parent_io)
+  journal.append({"a_root_identity"=>{"device_decimal"=>a_root_io.stat.dev.to_s, "inode_decimal"=>a_root_io.stat.ino.to_s, "mode"=>mode_string(a_root_io.stat)}, "controller_payload_sha256"=>CONTROLLER_PAYLOAD_SHA256, "implementation_commit"=>"22641e2bf8d7e5eb495822a76b78ea383a371f68", "implementation_tree"=>"5a40f8a4a02d44da2d847371be793fc04f4be094", "ruby_visible_environment_pairs"=>ENV.keys.sort.map { |key| [key, ENV.fetch(key)] }, "type"=>"CONTROLLER_START"})
+  durable_sync(a_root_io, "A_ROOT_INITIAL")
+  durable_sync(tmp_parent_io, "TMP_PARENT_AFTER_A")
+  journal.append({"type"=>"A_ROOT_AND_JOURNAL_DURABLE"})
+  create_directory_step(journal, A_ROOT, a_root_io, "module-cache", "A:MODULE_CACHE")
+  create_directory_step(journal, A_ROOT, a_root_io, "tmp", "A:TMP")
+
+  a_build = build_one(journal, "A", A_ROOT, a_root_io, tmp_parent_io, archive_parent_io)
+
+  verify_fixed_inputs
+  verify_protected_conjunction(tmp_parent_io, archive_parent_io, "A:PRE_B_COMMITMENT", true)
+  require_held_identity("#{A_ROOT}/#{OBJECT_LEAF}", a_build.fetch("object_io"), a_build.fetch("object_identity"))
+  require_held_identity("#{A_ROOT}/#{PRODUCT_LEAF}", a_build.fetch("product_io"), a_build.fetch("product_identity"))
+  require_directory_join(A_ROOT, a_root_io, "0700")
+  require_absent(B_ROOT, "B_ROOT_IMMEDIATE")
+  journal.append({"path"=>B_ROOT, "type"=>"B_ROOT_CREATE_COMMITMENT"})
+  Dir.mkdir(B_ROOT, 0o700)
+  b_root_io = open_directory(B_ROOT)
+  fail_build("B_ROOT_MODE") unless mode_string(b_root_io.stat) == "0700"
+  require_directory_join(B_ROOT, b_root_io, "0700")
+  durable_sync(b_root_io, "B_ROOT_INITIAL")
+  durable_sync(tmp_parent_io, "TMP_PARENT_AFTER_B")
+  journal.append({"b_root_identity"=>{"device_decimal"=>b_root_io.stat.dev.to_s, "inode_decimal"=>b_root_io.stat.ino.to_s, "mode"=>mode_string(b_root_io.stat)}, "type"=>"B_ROOT_CREATED_DURABLE"})
+  create_directory_step(journal, B_ROOT, b_root_io, "module-cache", "B:MODULE_CACHE")
+  create_directory_step(journal, B_ROOT, b_root_io, "tmp", "B:TMP")
+
+  b_build = build_one(journal, "B", B_ROOT, b_root_io, tmp_parent_io, archive_parent_io)
+
+  fail_build("A_B_OBJECT_VNODE_ALIAS") if a_build.fetch("object_identity").fetch("device_decimal") == b_build.fetch("object_identity").fetch("device_decimal") && a_build.fetch("object_identity").fetch("inode_decimal") == b_build.fetch("object_identity").fetch("inode_decimal")
+  fail_build("A_B_PRODUCT_VNODE_ALIAS") if a_build.fetch("product_identity").fetch("device_decimal") == b_build.fetch("product_identity").fetch("device_decimal") && a_build.fetch("product_identity").fetch("inode_decimal") == b_build.fetch("product_identity").fetch("inode_decimal")
+
+  require_directory_join(A_ROOT, a_root_io, "0700")
+  require_directory_join(B_ROOT, b_root_io, "0700")
+  require_named_join("#{A_ROOT}/#{OBJECT_LEAF}", a_build.fetch("object_io"))
+  require_named_join("#{B_ROOT}/#{OBJECT_LEAF}", b_build.fetch("object_io"))
+  journal.append({"type"=>"RAW_OBJECT_COMPARISON_ENTRY"})
+  fail_build("RAW_OBJECT_MISMATCH") unless compare_held(a_build.fetch("object_io"), b_build.fetch("object_io"))
+  journal.append({"sha256"=>a_build.fetch("object_identity").fetch("sha256"), "type"=>"RAW_OBJECT_EQUAL"})
+
+  require_named_join("#{A_ROOT}/#{PRODUCT_LEAF}", a_build.fetch("product_io"))
+  require_named_join("#{B_ROOT}/#{PRODUCT_LEAF}", b_build.fetch("product_io"))
+  journal.append({"type"=>"RAW_PRODUCT_COMPARISON_ENTRY"})
+  fail_build("RAW_PRODUCT_MISMATCH") unless compare_held(a_build.fetch("product_io"), b_build.fetch("product_io"))
+  journal.append({"sha256"=>a_build.fetch("product_identity").fetch("sha256"), "type"=>"RAW_PRODUCT_EQUAL"})
+  require_held_identity("#{A_ROOT}/#{OBJECT_LEAF}", a_build.fetch("object_io"), a_build.fetch("object_identity"))
+  require_held_identity("#{B_ROOT}/#{OBJECT_LEAF}", b_build.fetch("object_io"), b_build.fetch("object_identity"))
+  require_held_identity("#{A_ROOT}/#{PRODUCT_LEAF}", a_build.fetch("product_io"), a_build.fetch("product_identity"))
+  require_held_identity("#{B_ROOT}/#{PRODUCT_LEAF}", b_build.fetch("product_io"), b_build.fetch("product_identity"))
+  require_directory_join(A_ROOT, a_root_io, "0700")
+  require_directory_join(B_ROOT, b_root_io, "0700")
+
+  analyzer_argv(A_ROOT).each_with_index do |(analyzer_label, _), index|
+    a_result = a_build.fetch("analyzers").fetch(analyzer_label)
+    b_result = b_build.fetch("analyzers").fetch(analyzer_label)
+    fail_build("ANALYZER_EXIT_DRIFT:#{analyzer_label}") unless a_result.fetch("exit_status_decimal") == b_result.fetch("exit_status_decimal") && a_result.fetch("exited") == b_result.fetch("exited") && a_result.fetch("signaled") == b_result.fetch("signaled")
+    a_stdout = normalize_capture(a_result.fetch("stdout_raw"), A_ROOT, analyzer_label)
+    b_stdout = normalize_capture(b_result.fetch("stdout_raw"), B_ROOT, analyzer_label)
+    a_stderr = normalize_capture(a_result.fetch("stderr_raw"), A_ROOT, analyzer_label)
+    b_stderr = normalize_capture(b_result.fetch("stderr_raw"), B_ROOT, analyzer_label)
+    fail_build("ANALYZER_STDOUT_DRIFT:#{analyzer_label}") unless a_stdout == b_stdout
+    fail_build("ANALYZER_STDERR_DRIFT:#{analyzer_label}") unless a_stderr == b_stderr
+    journal.append({"analyzer_index_decimal"=>(index + 1).to_s, "label"=>analyzer_label, "type"=>"NORMALIZED_ANALYZER_PAIR_EQUAL"})
+  end
+
+  fail_build("MACHO_METADATA_DRIFT") unless a_build.fetch("macho") == b_build.fetch("macho")
+  fail_build("STATIC_SURFACE_DRIFT") unless a_build.fetch("surface") == b_build.fetch("surface")
+
+  verify_fixed_inputs
+  require_held_identity("#{A_ROOT}/#{OBJECT_LEAF}", a_build.fetch("object_io"), a_build.fetch("object_identity"))
+  require_held_identity("#{B_ROOT}/#{OBJECT_LEAF}", b_build.fetch("object_io"), b_build.fetch("object_identity"))
+  require_held_identity("#{A_ROOT}/#{PRODUCT_LEAF}", a_build.fetch("product_io"), a_build.fetch("product_identity"))
+  require_held_identity("#{B_ROOT}/#{PRODUCT_LEAF}", b_build.fetch("product_io"), b_build.fetch("product_identity"))
+  require_directory_join(A_ROOT, a_root_io, "0700")
+  require_directory_join(B_ROOT, b_root_io, "0700")
+  require_directory_join(TMP_PARENT, tmp_parent_io, "1777")
+  require_directory_join(ARCHIVE_PARENT, archive_parent_io, "0700")
+  require_absent(ARCHIVE_STAGING, "ARCHIVE_STAGING_FINAL")
+  require_absent(ARCHIVE_FINAL, "ARCHIVE_FINAL_FINAL")
+  [FUTURE_RUNTIME_ROOT, FUTURE_PUBLISHER_A, FUTURE_PUBLISHER_B].each_with_index { |path, index| require_absent(path, "FUTURE_NAMESPACE_FINAL_#{index + 1}") }
+  preterminal_a_inventory = root_inventory(A_ROOT)
+  preterminal_b_inventory = root_inventory(B_ROOT)
+  require_held_identity("#{A_ROOT}/#{OBJECT_LEAF}", a_build.fetch("object_io"), a_build.fetch("object_identity"))
+  require_held_identity("#{B_ROOT}/#{OBJECT_LEAF}", b_build.fetch("object_io"), b_build.fetch("object_identity"))
+  require_held_identity("#{A_ROOT}/#{PRODUCT_LEAF}", a_build.fetch("product_io"), a_build.fetch("product_identity"))
+  require_held_identity("#{B_ROOT}/#{PRODUCT_LEAF}", b_build.fetch("product_io"), b_build.fetch("product_identity"))
+  require_directory_join(A_ROOT, a_root_io, "0700")
+  require_directory_join(B_ROOT, b_root_io, "0700")
+  require_directory_join(TMP_PARENT, tmp_parent_io, "1777")
+  require_directory_join(ARCHIVE_PARENT, archive_parent_io, "0700")
+
+  close_errors = [
+    safe_close(a_build.fetch("object_io")),
+    safe_close(a_build.fetch("product_io")),
+    safe_close(b_build.fetch("object_io")),
+    safe_close(b_build.fetch("product_io")),
+    safe_close(b_root_io),
+    safe_close(archive_parent_io)
+  ].compact
+  fail_build("PRETERMINAL_CLOSE_FAILURE") unless close_errors.empty?
+
+  journal.append_terminal_and_seal({
+    "archive_final_absent"=>true,
+    "archive_staging_absent"=>true,
+    "build_a_inventory_preterminal"=>preterminal_a_inventory,
+    "build_b_inventory_preterminal"=>preterminal_b_inventory,
+    "object_sha256"=>a_build.fetch("object_identity").fetch("sha256"),
+    "product_sha256"=>a_build.fetch("product_identity").fetch("sha256"),
+    "supervisor_product_executions_decimal"=>"0",
+    "interpretation"=>"PASS_ONLY_WITH_EXACT_OUTER_NORMAL_EXIT_0_AND_CRS30_JOURNAL_VALIDATION",
+    "status"=>"PASS_CANDIDATE",
+    "type"=>"CONTROLLER_TERMINAL"
+  })
+  journal.close_unchecked
+  exit!(0)
+rescue StandardError => error
+  if journal && !journal.sealed
+    begin
+      event = {"error_class"=>error.class.name, "interpretation"=>"REQUIRES_EXACT_OUTER_EXIT_AND_SUCCESSOR_CHAIN_VALIDATION", "status"=>"FAIL_CANDIDATE", "type"=>"CONTROLLER_TERMINAL"}
+      event["error_code"] = error.code if error.is_a?(BuildFailure)
+      event["errno_decimal"] = error.errno.to_s if error.is_a?(SystemCallError)
+      if journal.writable?
+        journal.append_terminal_and_seal(event)
+      else
+        journal.retain_prefix_unchecked
+      end
+    rescue StandardError
+      journal.retain_prefix_unchecked
+    end
+  end
+  journal.close_unchecked if journal
+  exit!(70)
+end
+```
+
+```text
+program_bytes=62694
+program_lines=1245
+program_payload_sha256=0a2cfee05d9a190a13cfa9497899c4b3aa8b3a4b544220cd6f310ef9736350cd
+program_raw_sha256=0b3fe3610985e773ff9cfda833c722c4e91c0de5435353333f0fb43b316caadb
+outer_wrapper_bytes=62856
+outer_wrapper_lines=1247
+outer_wrapper_sha256=a01d4286cac778c1cee0b28f36babb923a0e52002ae74bda6972e29ac166c8c2
+payload_bytes=38773
+payload_sha256=783e8edd788339bdf2d4230dbf9c54c918ecabc2c1b81c89bb20f4a957395cd4
+frame_bytes=39132
+frame_sha256=f8a60ef397c8a435a175b0d701ef5dfc005a640a3adbe21a3d75c3c348ca34ef
+frame_with_lf_bytes=39133
+frame_with_lf_sha256=fdf92c385c17de7540ab3b5f5399b5e73bc0b45db0d6e1ddf24011187349babb
+```
+
+```json
+{"payload":{"approval_and_scope":{"authorization_basis":"USER_POST_CRS28_EXPLICIT_AUTHORIZED_THROUGH_ARC","build_invocation_authorized_after_this_control_commit":true,"build_journal_leaf_creations_authorized":1,"build_orchestrator_invocations_authorized":1,"checkpoint_kind":"CONTROL_ONLY_EXACT_ONE_POSTCOMMIT_SUPERVISOR_TWO_BUILD_AUTHORIZATION","compiler_linker_entries_authorized":4,"control_commit_entries_authorized":1,"controller_child_directory_creations_authorized":4,"launch_requires_additional_user_turn":false,"outer_transport_entries_authorized":1,"read_only_analyzer_entries_authorized":20,"target_runtime_root_fifo_controller_archive_or_publication_entries_authorized":0,"target_source_or_compiled_product_executions_authorized":0,"timeout_or_signal_entries_authorized":0,"top_level_build_root_creations_authorized":2,"total_direct_mkdir_entries_authorized":6},"authority":{"archive_entries_authorized":0,"authority_closure_authorized":false,"authority_vector":"00000000","build_orchestrator_child_entries_authorized":24,"build_pair_count":1,"builds_authorized":2,"clang_compiler_entries_authorized":2,"gate_e_clearance":0,"gate_e_mechanics":"ABSTAIN","gate_e_promotion_authorized":false,"gate_e_scientific":"ABSTAIN","object_or_product_executions_authorized":0,"runtime_entries_authorized":0,"signals_authorized":0,"swift_cli_or_swiftpm_role_commands_authorized":0,"swiftc_compiler_entries_authorized":2,"target_controller_executions_authorized":0},"build_contract":{"analyzer_capture_cap_bytes_per_stream":4194304,"builds":[{"analyzer_argv_in_order":[["object-defined",["/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-nm","--defined-only","--extern-only","/private/tmp/prime-driver-v2-r19-local-archive-build-outer-supervisor-build-a-4e7d6406-861da2f4/prime-driver-v2-r19-local-archive-build-outer-supervisor-fixed-openat.o"]],["object-undefined",["/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-nm","-u","/private/tmp/prime-driver-v2-r19-local-archive-build-outer-supervisor-build-a-4e7d6406-861da2f4/prime-driver-v2-r19-local-archive-build-outer-supervisor-fixed-openat.o"]],["product-file",["/usr/bin/file","-b","/private/tmp/prime-driver-v2-r19-local-archive-build-outer-supervisor-build-a-4e7d6406-861da2f4/PrimeDriverV2R19LocalArchiveBuildOuterSupervisor"]],["product-otool-header",["/usr/bin/otool","-hv","/private/tmp/prime-driver-v2-r19-local-archive-build-outer-supervisor-build-a-4e7d6406-861da2f4/PrimeDriverV2R19LocalArchiveBuildOuterSupervisor"]],["product-otool-load-commands",["/usr/bin/otool","-l","/private/tmp/prime-driver-v2-r19-local-archive-build-outer-supervisor-build-a-4e7d6406-861da2f4/PrimeDriverV2R19LocalArchiveBuildOuterSupervisor"]],["product-otool-linked-images",["/usr/bin/otool","-L","/private/tmp/prime-driver-v2-r19-local-archive-build-outer-supervisor-build-a-4e7d6406-861da2f4/PrimeDriverV2R19LocalArchiveBuildOuterSupervisor"]],["product-codesign-verify",["/usr/bin/codesign","--verify","--strict","--verbose=4","/private/tmp/prime-driver-v2-r19-local-archive-build-outer-supervisor-build-a-4e7d6406-861da2f4/PrimeDriverV2R19LocalArchiveBuildOuterSupervisor"]],["product-codesign-display",["/usr/bin/codesign","-d","--verbose=4","/private/tmp/prime-driver-v2-r19-local-archive-build-outer-supervisor-build-a-4e7d6406-861da2f4/PrimeDriverV2R19LocalArchiveBuildOuterSupervisor"]],["product-xattrs",["/usr/bin/xattr","-l","/private/tmp/prime-driver-v2-r19-local-archive-build-outer-supervisor-build-a-4e7d6406-861da2f4/PrimeDriverV2R19LocalArchiveBuildOuterSupervisor"]],["product-undefined",["/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-nm","-u","/private/tmp/prime-driver-v2-r19-local-archive-build-outer-supervisor-build-a-4e7d6406-861da2f4/PrimeDriverV2R19LocalArchiveBuildOuterSupervisor"]]],"compiler_argv":{"c_argv":["/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang","-target","arm64-apple-macosx14.0","-isysroot","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk","-std=c17","-O2","-fvisibility=hidden","-fno-common","-Wall","-Wextra","-Werror","-fno-modules","-fno-implicit-modules","-c","/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/docs/tools/prime-driver-v2-r19-local-archive-build-outer-supervisor-fixed-openat.c","-o","/private/tmp/prime-driver-v2-r19-local-archive-build-outer-supervisor-build-a-4e7d6406-861da2f4/prime-driver-v2-r19-local-archive-build-outer-supervisor-fixed-openat.o"],"swift_argv":["/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc","-swift-version","6","-O","-whole-module-optimization","-parse-as-library","-emit-executable","-target","arm64-apple-macosx14.0","-sdk","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk","-module-name","PrimeDriverV2R19LocalArchiveBuildOuterSupervisor","-module-cache-path","/private/tmp/prime-driver-v2-r19-local-archive-build-outer-supervisor-build-a-4e7d6406-861da2f4/module-cache","-import-objc-header","/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/docs/tools/prime-driver-v2-r19-local-archive-build-outer-supervisor-fixed-openat.h","/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/docs/tools/prime-driver-v2-r19-local-archive-build-outer-supervisor.swift","/private/tmp/prime-driver-v2-r19-local-archive-build-outer-supervisor-build-a-4e7d6406-861da2f4/prime-driver-v2-r19-local-archive-build-outer-supervisor-fixed-openat.o","-o","/private/tmp/prime-driver-v2-r19-local-archive-build-outer-supervisor-build-a-4e7d6406-861da2f4/PrimeDriverV2R19LocalArchiveBuildOuterSupervisor"]},"environment":{"DEVELOPER_DIR":"/Applications/Xcode.app/Contents/Developer","LANG":"C.UTF-8","LC_ALL":"C.UTF-8","PATH":"/usr/bin:/bin","SDKROOT":"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk","TMPDIR":"/private/tmp/prime-driver-v2-r19-local-archive-build-outer-supervisor-build-a-4e7d6406-861da2f4/tmp/","TZ":"UTC","__CF_USER_TEXT_ENCODING":"0x1F5:0x0:0x0"},"label":"A","module_cache":"/private/tmp/prime-driver-v2-r19-local-archive-build-outer-supervisor-build-a-4e7d6406-861da2f4/module-cache","object":"/private/tmp/prime-driver-v2-r19-local-archive-build-outer-supervisor-build-a-4e7d6406-861da2f4/prime-driver-v2-r19-local-archive-build-outer-supervisor-fixed-openat.o","product":"/private/tmp/prime-driver-v2-r19-local-archive-build-outer-supervisor-build-a-4e7d6406-861da2f4/PrimeDriverV2R19LocalArchiveBuildOuterSupervisor","root":"/private/tmp/prime-driver-v2-r19-local-archive-build-outer-supervisor-build-a-4e7d6406-861da2f4","tmp":"/private/tmp/prime-driver-v2-r19-local-archive-build-outer-supervisor-build-a-4e7d6406-861da2f4/tmp"},{"analyzer_argv_in_order":[["object-defined",["/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-nm","--defined-only","--extern-only","/private/tmp/prime-driver-v2-r19-local-archive-build-outer-supervisor-build-b-4e7d6406-861da2f4/prime-driver-v2-r19-local-archive-build-outer-supervisor-fixed-openat.o"]],["object-undefined",["/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-nm","-u","/private/tmp/prime-driver-v2-r19-local-archive-build-outer-supervisor-build-b-4e7d6406-861da2f4/prime-driver-v2-r19-local-archive-build-outer-supervisor-fixed-openat.o"]],["product-file",["/usr/bin/file","-b","/private/tmp/prime-driver-v2-r19-local-archive-build-outer-supervisor-build-b-4e7d6406-861da2f4/PrimeDriverV2R19LocalArchiveBuildOuterSupervisor"]],["product-otool-header",["/usr/bin/otool","-hv","/private/tmp/prime-driver-v2-r19-local-archive-build-outer-supervisor-build-b-4e7d6406-861da2f4/PrimeDriverV2R19LocalArchiveBuildOuterSupervisor"]],["product-otool-load-commands",["/usr/bin/otool","-l","/private/tmp/prime-driver-v2-r19-local-archive-build-outer-supervisor-build-b-4e7d6406-861da2f4/PrimeDriverV2R19LocalArchiveBuildOuterSupervisor"]],["product-otool-linked-images",["/usr/bin/otool","-L","/private/tmp/prime-driver-v2-r19-local-archive-build-outer-supervisor-build-b-4e7d6406-861da2f4/PrimeDriverV2R19LocalArchiveBuildOuterSupervisor"]],["product-codesign-verify",["/usr/bin/codesign","--verify","--strict","--verbose=4","/private/tmp/prime-driver-v2-r19-local-archive-build-outer-supervisor-build-b-4e7d6406-861da2f4/PrimeDriverV2R19LocalArchiveBuildOuterSupervisor"]],["product-codesign-display",["/usr/bin/codesign","-d","--verbose=4","/private/tmp/prime-driver-v2-r19-local-archive-build-outer-supervisor-build-b-4e7d6406-861da2f4/PrimeDriverV2R19LocalArchiveBuildOuterSupervisor"]],["product-xattrs",["/usr/bin/xattr","-l","/private/tmp/prime-driver-v2-r19-local-archive-build-outer-supervisor-build-b-4e7d6406-861da2f4/PrimeDriverV2R19LocalArchiveBuildOuterSupervisor"]],["product-undefined",["/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-nm","-u","/private/tmp/prime-driver-v2-r19-local-archive-build-outer-supervisor-build-b-4e7d6406-861da2f4/PrimeDriverV2R19LocalArchiveBuildOuterSupervisor"]]],"compiler_argv":{"c_argv":["/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang","-target","arm64-apple-macosx14.0","-isysroot","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk","-std=c17","-O2","-fvisibility=hidden","-fno-common","-Wall","-Wextra","-Werror","-fno-modules","-fno-implicit-modules","-c","/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/docs/tools/prime-driver-v2-r19-local-archive-build-outer-supervisor-fixed-openat.c","-o","/private/tmp/prime-driver-v2-r19-local-archive-build-outer-supervisor-build-b-4e7d6406-861da2f4/prime-driver-v2-r19-local-archive-build-outer-supervisor-fixed-openat.o"],"swift_argv":["/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc","-swift-version","6","-O","-whole-module-optimization","-parse-as-library","-emit-executable","-target","arm64-apple-macosx14.0","-sdk","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk","-module-name","PrimeDriverV2R19LocalArchiveBuildOuterSupervisor","-module-cache-path","/private/tmp/prime-driver-v2-r19-local-archive-build-outer-supervisor-build-b-4e7d6406-861da2f4/module-cache","-import-objc-header","/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/docs/tools/prime-driver-v2-r19-local-archive-build-outer-supervisor-fixed-openat.h","/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/docs/tools/prime-driver-v2-r19-local-archive-build-outer-supervisor.swift","/private/tmp/prime-driver-v2-r19-local-archive-build-outer-supervisor-build-b-4e7d6406-861da2f4/prime-driver-v2-r19-local-archive-build-outer-supervisor-fixed-openat.o","-o","/private/tmp/prime-driver-v2-r19-local-archive-build-outer-supervisor-build-b-4e7d6406-861da2f4/PrimeDriverV2R19LocalArchiveBuildOuterSupervisor"]},"environment":{"DEVELOPER_DIR":"/Applications/Xcode.app/Contents/Developer","LANG":"C.UTF-8","LC_ALL":"C.UTF-8","PATH":"/usr/bin:/bin","SDKROOT":"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk","TMPDIR":"/private/tmp/prime-driver-v2-r19-local-archive-build-outer-supervisor-build-b-4e7d6406-861da2f4/tmp/","TZ":"UTC","__CF_USER_TEXT_ENCODING":"0x1F5:0x0:0x0"},"label":"B","module_cache":"/private/tmp/prime-driver-v2-r19-local-archive-build-outer-supervisor-build-b-4e7d6406-861da2f4/module-cache","object":"/private/tmp/prime-driver-v2-r19-local-archive-build-outer-supervisor-build-b-4e7d6406-861da2f4/prime-driver-v2-r19-local-archive-build-outer-supervisor-fixed-openat.o","product":"/private/tmp/prime-driver-v2-r19-local-archive-build-outer-supervisor-build-b-4e7d6406-861da2f4/PrimeDriverV2R19LocalArchiveBuildOuterSupervisor","root":"/private/tmp/prime-driver-v2-r19-local-archive-build-outer-supervisor-build-b-4e7d6406-861da2f4","tmp":"/private/tmp/prime-driver-v2-r19-local-archive-build-outer-supervisor-build-b-4e7d6406-861da2f4/tmp"}],"c_frontend_module_policy":{"implicit_modules_disabled":true,"modules_disabled":true,"scope":"TWO_DIRECT_CLANG_C_ENTRIES_ONLY"},"child_entry_budget":{"analyzer_entries":20,"clang_entries":2,"swiftc_link_entries":2,"total":24},"compile_order":["A_EXCLUSIVE_ROOT_AND_JOURNAL","A_MODULE_CACHE_AND_TMP","A_C","A_SWIFT_LINK","A_TEN_ANALYZERS_AND_POST_REJOIN","B_EXCLUSIVE_ROOT_ONLY_AFTER_A_ADMISSION","B_MODULE_CACHE_AND_TMP","B_C","B_SWIFT_LINK","B_TEN_ANALYZERS_AND_POST_REJOIN","RAW_OBJECT_COMPARISON_COMPLETES","RAW_PRODUCT_COMPARISON_ENTERS_AND_COMPLETES","FINAL_INPUT_NAMESPACE_AND_ARTIFACT_REJOIN","TERMINAL_CANDIDATE_AND_SEAL"],"compiler_capture_cap_bytes_per_stream":1048576,"compiler_success":"EXACT_NORMAL_EXIT_0_INDEPENDENT_STDOUT_STDERR_ZERO_BYTES_BOTH_EOF_EXACT_WAIT2_PID","cwd":"/","defined_c_symbols_exact":["_prime_r19_capture_boot_session_uuid_v1","_prime_r19_capture_runtime_root_inventory_raw_v1","_prime_r19_capture_rusage_v6_v1","_prime_r19_create_fifo_at_v1","_prime_r19_create_journal_at_v1","_prime_r19_fullfsync_v1","_prime_r19_mkdir_runtime_root_at_v1","_prime_r19_open_controller_source_v1","_prime_r19_open_cwd_root_v1","_prime_r19_open_fifo_read_at_v1","_prime_r19_open_ruby_image_v1","_prime_r19_open_runtime_parent_v1","_prime_r19_open_runtime_root_at_v1"],"direct_controller_mutations":{"build_journal_leaf_creations":1,"child_directory_creations":4,"top_level_build_root_creations":2,"total_dir_mkdir_entries":6},"journal":{"canonical_hash_chained_fullfsync_readback":true,"leaf":"00-supervisor-build-controller.v1.jsonl","max_bytes":67108864,"permanent":true,"terminal_reserve_bytes":1048576},"object_cap_bytes":4194304,"object_mode":"0600","process_control_undefined_symbols_exact":["_kill","_posix_spawn","_posix_spawn_file_actions_addclose","_posix_spawn_file_actions_adddup2","_posix_spawn_file_actions_addfchdir_np","_posix_spawn_file_actions_addinherit_np","_posix_spawn_file_actions_destroy","_posix_spawn_file_actions_init","_posix_spawnattr_destroy","_posix_spawnattr_init","_posix_spawnattr_setflags","_posix_spawnattr_setsigdefault","_posix_spawnattr_setsigmask","_sigemptyset","_sigfillset","_waitpid"],"process_surface_rule":"SELECT_ALL_UNDEFINED_POSIX_SPAWN_WAIT_KILL_RAISE_PTHREAD_KILL_SETPGID_SETSID_SIG_FAMILY_SYMBOLS_AND_REQUIRE_EXACT_ARRAY;SEPARATELY_REJECT_RENAME_WILDCARD_XPC_NETWORK_SHELL_CLEANUP_AND_GENERIC_EXEC_FAMILIES","product_cap_bytes":16777216,"product_mode":"0700","root_caps":{"aggregate_bytes":134217728,"directories":4096,"files":4096},"root_mode":"0700","serial":true,"umask":"0077"},"determinism_conjunction":["A_FULL_STATIC_INPUT_PARENT_PROTECTED_NAMESPACE_AND_ARTIFACT_ADMISSION_BEFORE_B_ROOT_CREATION","FOUR_COMPILER_ENTRIES_NORMAL_ZERO_SILENT_EOF_EXACT_REAP","SOURCE_TOOL_SDK_DIRECT_HEADER_REVALIDATED_BEFORE_EACH_COMPILER_AFTER_EACH_BUILD_AND_IMMEDIATELY_BEFORE_B_COMMITMENT","SDK_SYMLINK_FULL_LSTAT_TARGET_REALPATH_AND_SETTINGS_JOIN","A_B_OBJECT_RAW_BYTES_SHA256_EQUAL_AND_DISTINCT_VNODES","RAW_OBJECT_COMPARISON_COMPLETES_BEFORE_RAW_PRODUCT_COMPARISON_ENTRY","A_B_PRODUCT_RAW_BYTES_SHA256_EQUAL_AND_DISTINCT_VNODES","NORMALIZED_ANALYZER_EXIT_STDOUT_STDERR_EQUAL","MACHO_ARM64_MH_EXECUTE_MIN_MACOS_14_SDK_26_5_UUID_ENTRY_LOAD_COMMANDS_CODE_SIGNATURE_CODEDIRECTORY_EQUAL","EXACT_PROCESS_CONTROL_UNDEFINED_SYMBOL_INTERSECTION_AND_EXPANDED_RENAME_WILDCARD_XPC_SIGNAL_WAIT_SPAWN_DENY","LINKED_IMAGES_UNDEFINED_SYMBOLS_XATTRS_EQUAL","STRICT_CODESIGN_PASS_BOTH","POST_ANALYZER_ARTIFACT_BYTES_EQUAL_PREADMITTED_BYTES"],"energy":{"energy_ergs":"ABSTAIN_NOT_MEASURED","energy_joules":"ABSTAIN_NOT_MEASURED","power_watts":"ABSTAIN_NOT_MEASURED"},"fresh_namespaces":{"absence_observation_rounds":2,"all_absent_enonent":true,"archive_final":"/Users/ergentics/Documents/PrimeValidationLocalArchive-R19-ce8e584e-f6a03155d136","archive_staging":"/Users/ergentics/Documents/.PrimeValidationLocalArchive-R19-ce8e584e-f6a03155d136-staging","build_a":"/private/tmp/prime-driver-v2-r19-local-archive-build-outer-supervisor-build-a-4e7d6406-861da2f4","build_a_path_is_compiled_self_image_admission":true,"build_b":"/private/tmp/prime-driver-v2-r19-local-archive-build-outer-supervisor-build-b-4e7d6406-861da2f4","build_b_role":"PERMANENT_REPRODUCIBILITY_WITNESS_NEVER_EXECUTABLE","future_publisher_build_a":"/private/tmp/prime-driver-v2-r19-local-archive-publisher-source-repair1-build-a-a9129484-d2f23691","future_publisher_build_b":"/private/tmp/prime-driver-v2-r19-local-archive-publisher-source-repair1-build-b-a9129484-d2f23691","future_runtime_root":"/private/tmp/r19-local-archive-build-outer-supervisor-4e7d6406-861da2f4","old_suffixes_are_protocol_namespace_identifiers_not_current_commit_claims":true},"hard_stops":["ANY_USE_OR_EXECUTION_OF_COMMITTED_TARGET_CONTROLLER_AS_SUPERVISOR_BUILD_ORCHESTRATOR","ANY_SOURCE_TOOL_SDK_HEADER_PREDECESSOR_ZSH_ENV_OR_ZSHENV_DRIFT","ANY_PREEXISTING_A_OR_B_ROOT","ANY_B_ROOT_OR_COMPILER_ENTRY_BEFORE_COMPLETE_A_FULL_INPUT_PARENT_NAMESPACE_ARTIFACT_ADMISSION","ANY_FIFTH_COMPILER_OR_TWENTY_FIRST_ANALYZER_ENTRY","ANY_PARALLEL_OBJECT_AND_PRODUCT_COMPARISON_OR_MISSING_COMPLETION_BARRIER","ANY_PRODUCT_SOURCE_OR_TARGET_CONTROLLER_EXECUTION","ANY_RUNTIME_ROOT_FIFO_ARCHIVE_STAGING_FINAL_OR_PUBLISHER_BUILD_ROOT_CREATION","ANY_SIGNAL_TIMEOUT_CLEANUP_RETRY_REPAIR_ALTERNATE_OR_THIRD_BUILD","ANY_BUILD_B_EXECUTION_OR_SUBSTITUTION_FOR_BUILD_A","ANY_PROCESS_CONTROL_SYMBOL_OUTSIDE_EXACT_FROZEN_INTERSECTION","ANY_AUTHORITY_CLOSURE_GATE_E_PROMOTION_OR_RUNTIME_PASS_CLAIM"],"orchestrator_program":{"argv":["/usr/bin/ruby","--disable-gems","-"],"controller_environment":{"__CF_USER_TEXT_ENCODING":"0x1F5:0x0:0x0"},"cwd":"/","final_lf":true,"lines":1245,"payload_hash_rule":"SHA256_EXACT_PROGRAM_BYTES_WITH_SINGLE_EMBEDDED_PROGRAM_PAYLOAD_SHA256_REPLACED_BY_64_ASCII_ZEROES","payload_sha256":"0a2cfee05d9a190a13cfa9497899c4b3aa8b3a4b544220cd6f310ef9736350cd","raw_bytes":62694,"raw_sha256":"0b3fe3610985e773ff9cfda833c722c4e91c0de5435353333f0fb43b316caadb","ripper_sexp":"PASS","source":"IMMEDIATELY_PRECEDING_RUBY_FENCE_EXACT_BODY_PLUS_TERMINAL_LF","stderr_success_bytes":0,"stdin":"EXACT_PROGRAM_BYTES_THEN_EOF","stdout_success_bytes":0,"target_controller_executions":0,"target_controller_source_raw_sha256":"8b85f6320621bc6a5b9c755d983ffcecabf11ea87610b3c5aeaf4359dd194009","transformations":["OUTER_C_H_SWIFT_INPUTS","EXACT_OUTER_A_B_ROOTS_OBJECT_AND_PRODUCT","FOUR_SOURCE_INPUT_REJOINS","TWELVE_CANONICAL_DIRECT_HEADER_REJOINS","FULL_FIXED_INPUT_REVALIDATION_BEFORE_EACH_COMPILER_AFTER_EACH_BUILD_AND_BEFORE_B_COMMITMENT","SDK_SYMLINK_LSTAT_TARGET_AND_REALPATH_JOIN","THIRTEEN_C_EXPORT_POLICY","EXACT_SUPERVISOR_PROCESS_CONTROL_SYMBOL_INTERSECTION_AND_EXPANDED_DENY_POLICY_INCLUDING_COMPLETE_RENAME_FAMILY","CURRENT_SOURCE_COMMIT_TREE","FUTURE_RUNTIME_PUBLISHER_AND_ARCHIVE_ABSENCE","SERIAL_OBJECT_THEN_PRODUCT_COMPARISON","PROGRAM_SELF_HASH_RESEAL"],"transport":"EXACT_CODEX_LOCAL_NONLOGIN_ZSH_EXEC_ENV_I_APPLE_RUBY_STDIN_HEREDOC","transport_environment_after_env_i":{"__CF_USER_TEXT_ENCODING":"0x1F5:0x0:0x0"}},"outer_transport":{"consumption_edge":"OUTER_ZSH_PROCESS_ENTRY_AFTER_COMPLETE_NONCONSUMING_PREFLIGHT","delimiter":"CRS29_BUILD_ORCHESTRATOR_0A2CFEE0","env_image":{"bytes_decimal":"102368","device_decimal":"16777231","gid_decimal":"0","inode_decimal":"1152921500312571972","mode":"0755","nlink_decimal":"1","path":"/usr/bin/env","sha256":"6e506aec3c0cff703ac1e66cedc6f1945354ad41339a38db4425c7c88227128f","type":"REGULAR","uid_decimal":"0"},"environment_after_env_i":{"__CF_USER_TEXT_ENCODING":"0x1F5:0x0:0x0"},"exact_wrapper_bytes":62856,"exact_wrapper_lines":1247,"exact_wrapper_sha256":"a01d4286cac778c1cee0b28f36babb923a0e52002ae74bda6972e29ac166c8c2","exact_wrapper_terminal_lf":true,"heredoc_pre_env_i_materialization":"POSSIBLE_UNJOURNALED_LOCAL_ZSH_TEMPORARY_FILE_ACCEPTED_RESIDUAL","login":false,"outer_ambient_environment":"UNSEALED_LOCAL_EXECUTOR_RESIDUAL_BEFORE_ENV_I","shell_image":{"bytes_decimal":"1361216","device_decimal":"16777231","gid_decimal":"0","inode_decimal":"1152921500312571448","mode":"0755","nlink_decimal":"1","path":"/bin/zsh","sha256":"1f473d234dd65157f530b4f676686517ec97fe9aa64c76d82f2611674cc44314","type":"REGULAR","uid_decimal":"0"},"shell_startup_admission":{"etc_zshenv":"ABSENT_ENOENT","user_zshenv":"ABSENT_ENOENT:/Users/ergentics/.zshenv","zdotdir_environment_key":"ABSENT_AT_FREEZE_AND_REQUIRED_ABSENT_AT_PREFLIGHT"},"stderr_capture":"CODEX_EXECUTOR_PIPE_EXPECT_EXACT_ZERO_BYTES_ON_SUCCESS","stdout_capture":"CODEX_EXECUTOR_PIPE_EXPECT_EXACT_ZERO_BYTES_ON_SUCCESS","workdir":"/","wrapper_preimage_rule":"ASCII_PREFIX_EXEC_ENV_I_SINGLE_ENV_RUBY_DISABLE_GEMS_STDIN_QUOTED_DELIMITER_LF_PLUS_EXACT_PROGRAM_BYTES_PLUS_DELIMITER_PLUS_LF"},"postcommit_launch_preflight":{"checks_in_order":["HEAD_PARENT_EQUALS_22641E2BF8D7E5EB495822A76B78EA383A371F68","HEAD_SUBJECT_EQUALS_FREEZE_R19_OUTER_SUPERVISOR_TWO_BUILD_READINESS","HEAD_DIFF_IS_EXACT_SINGLE_LEDGER_EOF_APPEND_WITH_NO_OTHER_PATH_OR_PREFIX_CHANGE","INDEX_WORKTREE_AND_UNTRACKED_SET_CLEAN","EXTRACT_FINAL_CRS29_PROGRAM_AND_RECOMPUTE_RAW_PAYLOAD_RIPPER_AND_WRAPPER_IDENTITIES","RECOMPUTE_FINAL_CRS29_CANONICAL_PAYLOAD_FRAME_AND_LEDGER_IDENTITIES","REJOIN_EXACT_FOUR_SOURCES_ELEVEN_TOOLS_TWELVE_DIRECT_HEADERS_SDK_AND_SWIFTC_SYMLINKS","REJOIN_PRIVATE_TMP_AND_DOCUMENTS_PARENT_IDENTITIES","REJOIN_ZSH_ENV_IDENTITIES_ZDOTDIR_ABSENCE_AND_ZSHENV_ABSENCES","REQUIRE_ALL_SEVEN_BUILD_RUNTIME_PUBLISHER_ARCHIVE_NAMESPACES_ABSENT_ENOENT"],"commit_tree_self_identity_rule":"POSTCOMMIT_OBSERVATION_NOT_SELF_EMBEDDED_TO_AVOID_CIRCULAR_IDENTITY;CONTENT_BOUND_BY_EXACT_PARENT_SUBJECT_SINGLE_APPEND_PREFIX_PROGRAM_FRAME_AND_CLEAN_STATE","compiler_analyzer_root_or_journal_entries":0,"failure":"NONCONSUMING_STOP_WITH_ZERO_OUTER_TRANSPORT_ENTRY","launch_only_after_all_checks":true,"outer_transport_entries":0,"source_product_or_target_controller_executions":0},"predecessor":{"commit":"22641e2bf8d7e5eb495822a76b78ea383a371f68","crs28_control_commit":"ecdf1d384c6e0a24b683757e20b6f6efb712665a","crs28_control_tree":"a4448ff88e886d07ef9f3b455ba3e72540e62cff","crs28_frame_with_lf_sha256":"f178bcce8de29e9418dded2e4c57883a1f9734bd4b588850b854154e473a5891","ledger_blob":"a0251f3d489710268f06c71fdf25fc1c97c902e2","ledger_bytes":2011619,"ledger_lines":19864,"ledger_sha256":"b577ef46a7f58b26c34e84825915e1a612a21166b853761ac8b88f3722dfd79f","parent":"ecdf1d384c6e0a24b683757e20b6f6efb712665a","subject":"Add corrected R19 local archive supervisor sources","tracked_index_clean":true,"tracked_worktree_clean":true,"tree":"5a40f8a4a02d44da2d847371be793fc04f4be094","untracked_clean":true},"residuals":["EXACT_LOCAL_NONLOGIN_ZSH_EXISTS_BEFORE_ENV_I_WITH_UNSEALED_AMBIENT_ENVIRONMENT","ZSH_HEREDOC_MAY_CREATE_AN_UNJOURNALED_TEMPORARY_FILE_BEFORE_ENV_I_EXEC","OUTER_EXECUTOR_TERMINATION_CAN_ORPHAN_COMPILER_DESCENDANTS","DIRECT_CHILD_EXIT_WITH_DESCENDANT_HELD_CAPTURE_FD_CAN_BLOCK_EOF_BEFORE_WAIT2_INDEFINITELY","POST_SPAWN_CAPTURE_THREAD_OR_RESOURCE_FAILURE_CAN_BYPASS_WAIT2_WITH_NO_SIGNAL_OWNER","NO_SIGNAL_OR_TIMEOUT_MEANS_COMPILER_OR_ANALYZER_HANG_CAN_REMAIN_INDEFINITE","NAMED_PATH_TO_COMPILER_READ_TOCTOU","DIRECT_HEADER_AND_SDK_SETTINGS_PINS_DO_NOT_CLOSE_ALL_TRANSITIVE_SDK_OR_SWIFTMODULE_BYTES","SAME_UID_CAN_MUTATE_REPLACE_OR_ABA_SOURCES_TOOLS_ROOTS_OR_ARTIFACTS_BETWEEN_POINT_JOINS","BUILD_PASS_CANNOT_PROVE_SUPERVISOR_RUNTIME_CONTROLLER_PUBLISHER_CONTAINMENT_WHOLE_ORDER_OR_SCIENTIFIC_AUTHORITY"],"result":{"authority_vector":"00000000","build_invocation":"AUTHORIZED_EXACTLY_ONE_AFTER_THIS_CONTROL_COMMIT_AND_COMPLETE_NONCONSUMING_PREFLIGHT","build_result":"ABSTAIN_UNINVOKED","controller_semantics":"ABSTAIN_UNEXECUTED","data_precedence":"CANONICAL_HASHED_FIELDS_CONTROL_PROSE","gate_e":"ABSTAIN_NO_PROMOTION","next":"RUN_EXACT_ONE_FROZEN_BUILD_ORCHESTRATOR_THEN_CRS30_CONTROL_ONLY_RESULT_BUILD_A_IDENTITY_BUILD_B_WITNESS","runtime":"ABSTAIN_UNEXECUTED","scientific_authority":"ABSTAIN","status":"FROZEN_EXACT_ONE_SUPERVISOR_TWO_BUILD_INVOCATION_AUTHORIZED_AFTER_CONTROL_NO_RUNTIME","whole_invocation_order":"ABSTAIN_UNPROVEN_ABSORBING"},"retention_and_failure":{"build_a_attempt_consumed_on":"OUTER_ZSH_PROCESS_ENTRY_AFTER_COMPLETE_NONCONSUMING_PREFLIGHT","build_b_eligible_only_after":"COMPLETE_A_COMPILER_STATIC_POST_ANALYZER_FULL_INPUT_PARENT_PROTECTED_NAMESPACE_AND_ARTIFACT_CONJUNCTION","drain_before_wait_residual":"DIRECT_CHILD_CAN_EXIT_WHILE_DESCENDANT_RETAINS_CAPTURE_FD_CAUSING_INDEFINITE_EOF_BLOCK_AND_DELAYED_EXACT_REAP","failure":"RETAIN_EVERY_ROOT_JOURNAL_AND_PREFIX_NO_RETRY_NO_CLEANUP_NO_REPAIR_NO_ALTERNATE_NO_THIRD_BUILD","outer_timeout":false,"post_spawn_thread_or_resource_failure":"MAY_BYPASS_WAIT2_AND_IS_ACCEPTED_NO_SIGNAL_INDEFINITE_RESIDUAL","process_spawn_raise_before_returned_pid":"FAIL_NO_RETURNED_OWNED_PID_NO_SIGNAL_AND_NOT_CLASSIFIED_AS_INDEFINITE_CONTAINMENT","signal_sites":0,"uncertain_reap_after_returned_pid":"POTENTIALLY_INDEFINITE_NO_SIGNAL_CONTAINMENT"},"source_inputs":{"compiled_paths":["/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/docs/tools/prime-driver-v2-r19-local-archive-build-outer-supervisor-fixed-openat.c","/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/docs/tools/prime-driver-v2-r19-local-archive-build-outer-supervisor-fixed-openat.h","/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/docs/tools/prime-driver-v2-r19-local-archive-build-outer-supervisor.swift"],"controller_role":"FUTURE_HELD_CHILD_PAYLOAD_RUNTIME_DEPENDENCY_NOT_THIS_BUILD_ORCHESTRATOR","crs28_source_identity_set_sha256":"81ac2f518b6f5ce69c7ea7a4e17e174a708a43c1a717b23e25bf896d519cfcdb","embedded_supervisor_control":{"commit":"4ec07e1bc123b7918ef6cbe14144f9a072b770c8","disposition":"INTENTIONAL_CRS27_BINDING_NOT_CURRENT_CONTROL_IDENTITY","frame_with_lf_sha256":"ac64f2f42331a718b5dfc2aff1fe3ac6def6a5ef5b82ad945ee2be640b8d10b6","tree":"16aa44548abec28216cd32bf75903f10a3ce304b"},"runtime_dependency_paths":["/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/docs/tools/prime-driver-v2-r19-local-archive-build-controller.rb"],"sources":[{"bytes":55263,"device":16777231,"filesystem_mode":"0644","filesystem_type":"REGULAR","gid":20,"git_blob_no_filters":"1fda387bfca873fa3e06fd70c42eae7f6e58da6a","inode":17564607,"lines":1175,"nlink":1,"path":"docs/tools/prime-driver-v2-r19-local-archive-build-controller.rb","prospective_git_mode":"100644","sha256":"8b85f6320621bc6a5b9c755d983ffcecabf11ea87610b3c5aeaf4359dd194009","terminal_lf":true,"uid":501},{"bytes":15196,"device":16777231,"filesystem_mode":"0644","filesystem_type":"REGULAR","gid":20,"git_blob_no_filters":"40e222fb44cdee4e7ddbcd14fa3a69aba5c206f7","inode":17564649,"lines":492,"nlink":1,"path":"docs/tools/prime-driver-v2-r19-local-archive-build-outer-supervisor-fixed-openat.c","prospective_git_mode":"100644","sha256":"9a8eb551fb15ab5401af15bb163aaf6bd70baa4ae2a74c077ec2016b88704572","terminal_lf":true,"uid":501},{"bytes":3266,"device":16777231,"filesystem_mode":"0644","filesystem_type":"REGULAR","gid":20,"git_blob_no_filters":"9966cdbbd4b686f9469f6d2b998cb8330c1e19d2","inode":17564648,"lines":133,"nlink":1,"path":"docs/tools/prime-driver-v2-r19-local-archive-build-outer-supervisor-fixed-openat.h","prospective_git_mode":"100644","sha256":"ca014528763c2b4274e7c395f8945e980725662db8d1fa0924e2c0a1a35fd5a7","terminal_lf":true,"uid":501},{"bytes":144480,"device":16777231,"filesystem_mode":"0644","filesystem_type":"REGULAR","gid":20,"git_blob_no_filters":"c10a40f91b916413b8208bbafa0ffccfeaa27752","inode":17564751,"lines":3671,"nlink":1,"path":"docs/tools/prime-driver-v2-r19-local-archive-build-outer-supervisor.swift","prospective_git_mode":"100644","sha256":"929bfd562a5f4defa3ccf722d549a0ffda21551203b81d7953d53baaed8345f0","terminal_lf":true,"uid":501}]},"supersession":{"crs23_direct_launch_envelope":"NOT_REUSABLE","crs23_ruby_bytes_and_future_child_contract":"RETAINED","crs24_launch_stop":"HISTORICAL","crs25_observational_snapshot":"NOT_ACTUATION_AUTHORITY","crs26_source_parent_rule":"SUPERSEDED","crs27_edit_authority":"CONSUMED","crs28_source_commit_authority":"CONSUMED_BY_PREDECESSOR_HEAD","retired_stage1_through7_and_existing_guardians_driver_v2_governor_split_owner":"NOT_USABLE_FOR_THIS_ROLE"},"tool_sdk_header_inputs":{"direct_header_count":12,"direct_header_set_canonical_bytes":4415,"direct_header_set_sha256":"29b08ad3755c6a5eb37342904b06099be8ef0824fcc6942268789b316d624d96","direct_headers":[{"bytes_decimal":"27519","device_decimal":"16777231","gid_decimal":"0","inode_decimal":"1119361","mode":"0644","nlink_decimal":"3","path":"/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/21/include/stdint.h","sha256":"f43783466c93f77a6464274ebf18f9e4cc46f0d90770ddee2993c6cf39f7514f","type":"REGULAR","uid_decimal":"0"},{"bytes_decimal":"8391","device_decimal":"16777231","gid_decimal":"0","inode_decimal":"932189","mode":"0644","nlink_decimal":"9","path":"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/types.h","sha256":"82111e1f1d0262bee191b4679842e5ff51de57310ce4da9f48d39af0d8e10284","type":"REGULAR","uid_decimal":"0"},{"bytes_decimal":"1003","device_decimal":"16777231","gid_decimal":"0","inode_decimal":"1017410","mode":"0644","nlink_decimal":"1","path":"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/errno.h","sha256":"ff95a158e0799dcf0622e83882e64d88f1783b98a91d9b206bcba2a12f8425e6","type":"REGULAR","uid_decimal":"0"},{"bytes_decimal":"1002","device_decimal":"16777231","gid_decimal":"0","inode_decimal":"1014632","mode":"0644","nlink_decimal":"1","path":"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/fcntl.h","sha256":"289f3be20c07d8eae5589f43994cfdb5fb33b3b099a6aee67f63e00d90039a8f","type":"REGULAR","uid_decimal":"0"},{"bytes_decimal":"7575","device_decimal":"16777231","gid_decimal":"0","inode_decimal":"1014230","mode":"0644","nlink_decimal":"1","path":"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/libproc.h","sha256":"246d87709fc6b9157ce5cf3c475656ac48e0e1ae8bbdc46cf45acd34294448cd","type":"REGULAR","uid_decimal":"0"},{"bytes_decimal":"5178","device_decimal":"16777231","gid_decimal":"0","inode_decimal":"1119128","mode":"0644","nlink_decimal":"3","path":"/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/21/include/stddef.h","sha256":"e8d92dad1b380f2f2130fd7aa446bcb4fc923f7062a41c7c35beb4913093a8f5","type":"REGULAR","uid_decimal":"0"},{"bytes_decimal":"2975","device_decimal":"16777231","gid_decimal":"0","inode_decimal":"1018388","mode":"0644","nlink_decimal":"1","path":"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/string.h","sha256":"4b1b9c05bfe370d423d7a6bf9e74b189bcc7f59c1cd97f23d6d94f2f3df6a4bc","type":"REGULAR","uid_decimal":"0"},{"bytes_decimal":"27496","device_decimal":"16777231","gid_decimal":"0","inode_decimal":"932177","mode":"0644","nlink_decimal":"9","path":"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/attr.h","sha256":"5118b9245bc932bc32dcc60084b1e40d70bb5479a360b31cdbf188ef866deefe","type":"REGULAR","uid_decimal":"0"},{"bytes_decimal":"20152","device_decimal":"16777231","gid_decimal":"0","inode_decimal":"932324","mode":"0644","nlink_decimal":"9","path":"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/resource.h","sha256":"7d16930e6b75f11ba203238faa5580d31d48fcd4230f2b3f604aaa5fd7e86b58","type":"REGULAR","uid_decimal":"0"},{"bytes_decimal":"20575","device_decimal":"16777231","gid_decimal":"0","inode_decimal":"932286","mode":"0644","nlink_decimal":"9","path":"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/stat.h","sha256":"31c8f252b05785343ca577c007657c0fbab45a182b60fc5b73994c621dc318d4","type":"REGULAR","uid_decimal":"0"},{"bytes_decimal":"37626","device_decimal":"16777231","gid_decimal":"0","inode_decimal":"932320","mode":"0644","nlink_decimal":"9","path":"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/sysctl.h","sha256":"4a77c53e0ee4035ca1c9e6a910aeddbc8f6163ccb8415940bbe7e398013f3764","type":"REGULAR","uid_decimal":"0"},{"bytes_decimal":"31225","device_decimal":"16777231","gid_decimal":"0","inode_decimal":"931973","mode":"0644","nlink_decimal":"7","path":"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/unistd.h","sha256":"8d535079658f063bcef358ef4c1c1b52b8e88dacfc22cbf4db0f6bf8abe40637","type":"REGULAR","uid_decimal":"0"}],"header_paths_use_canonical_sdk_root":true,"named_sdk_symlink":{"bytes_decimal":"10","device_decimal":"16777231","gid_decimal":"0","inode_decimal":"1082900","mode":"0755","nlink_decimal":"1","path":"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk","realpath":"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk","target":"MacOSX.sdk","type":"SYMLINK","uid_decimal":"0"},"sdk_compiler_argv_path":"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk","sdk_settings":{"bytes_decimal":"7774","device_decimal":"16777231","gid_decimal":"0","inode_decimal":"1082899","mode":"0644","nlink_decimal":"1","path":"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/SDKSettings.json","sha256":"f8d005f09381389167f9e0aeaa169bc9e7dff162ef22ca2fd8e98df7ff1acafe","type":"REGULAR","uid_decimal":"0"},"swiftc_symlink":{"bytes_decimal":"14","device_decimal":"16777231","gid_decimal":"0","inode_decimal":"1118435","mode":"0755","nlink_decimal":"1","path":"/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc","realpath":"/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-frontend","target":"swift-frontend","type":"SYMLINK","uid_decimal":"0"},"target":"arm64-apple-macosx14.0","tool_count":11,"tool_set_canonical_bytes":3521,"tool_set_sha256":"8ad7da430fb7c59cf2ed03c254b684f57e0c999a76513518bbc69c7eae3b4b7b","tools":[{"bytes_decimal":"135200","device_decimal":"16777231","gid_decimal":"0","inode_decimal":"1152921500312572705","mode":"0555","nlink_decimal":"1","path":"/usr/bin/ruby","sha256":"9d6ff3e289c7d908e3c785e0bedd6692d1d6a3377965c88c04d847104b7c892c","type":"REGULAR","uid_decimal":"0"},{"bytes_decimal":"141373024","device_decimal":"16777231","gid_decimal":"0","inode_decimal":"1118318","mode":"0755","nlink_decimal":"1","path":"/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang","sha256":"7def90dd8829726686213a747fc5bff1583df933dae5edc55d755479e0bfe00a","type":"REGULAR","uid_decimal":"0"},{"bytes_decimal":"3011968","device_decimal":"16777231","gid_decimal":"0","inode_decimal":"1118459","mode":"0755","nlink_decimal":"1","path":"/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-driver","sha256":"fead52ebe00ec6ec700ecbb4be30f0b6204dd0506cb271dda72ac257261bd64b","type":"REGULAR","uid_decimal":"0"},{"bytes_decimal":"171036592","device_decimal":"16777231","gid_decimal":"0","inode_decimal":"1118375","mode":"0755","nlink_decimal":"1","path":"/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-frontend","sha256":"2ed38571e92c0283091838c1649e27650ad9c99950288e883c7b2dc6c4ce89fb","type":"REGULAR","uid_decimal":"0"},{"bytes_decimal":"2331792","device_decimal":"16777231","gid_decimal":"0","inode_decimal":"1118358","mode":"0755","nlink_decimal":"1","path":"/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld","sha256":"5897b275efd93b201b6df5832dd541262b3f20f290859ba78f2200a6a66ef38b","type":"REGULAR","uid_decimal":"0"},{"bytes_decimal":"16380560","device_decimal":"16777231","gid_decimal":"0","inode_decimal":"1118384","mode":"0755","nlink_decimal":"1","path":"/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-nm","sha256":"d910f3acb104791e5475254000ede2aa129aa1a42eafcc7f5bdb27afffc642dc","type":"REGULAR","uid_decimal":"0"},{"bytes_decimal":"534480","device_decimal":"16777231","gid_decimal":"0","inode_decimal":"1152921500312572000","mode":"0755","nlink_decimal":"1","path":"/usr/bin/file","sha256":"a4ba66d26a9cfdc70637c78cdacef920f94147f6aa45ccc73858e493589ef94d","type":"REGULAR","uid_decimal":"0"},{"bytes_decimal":"118928","device_decimal":"16777231","gid_decimal":"0","inode_decimal":"1152921500312571585","mode":"0755","nlink_decimal":"78","path":"/usr/bin/otool","sha256":"179301dcb41ea78accc3fa0048a7e6f6710d891945a751a34addd622020c1818","type":"REGULAR","uid_decimal":"0"},{"bytes_decimal":"459824","device_decimal":"16777231","gid_decimal":"0","inode_decimal":"1152921500312571780","mode":"0755","nlink_decimal":"1","path":"/usr/bin/codesign","sha256":"214d455584d19abc0d74d02b9cbc7d3da6bdcb0596c235e6156dd9ed2f4e1ba7","type":"REGULAR","uid_decimal":"0"},{"bytes_decimal":"118896","device_decimal":"16777231","gid_decimal":"0","inode_decimal":"1152921500312573128","mode":"0755","nlink_decimal":"1","path":"/usr/bin/xattr","sha256":"3cc7308e9dfd687b0b7f4778a6101633aa9dce5ccdd012cf17cd858848295162","type":"REGULAR","uid_decimal":"0"},{"bytes_decimal":"7774","device_decimal":"16777231","gid_decimal":"0","inode_decimal":"1082899","mode":"0644","nlink_decimal":"1","path":"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/SDKSettings.json","sha256":"f8d005f09381389167f9e0aeaa169bc9e7dff162ef22ca2fd8e98df7ff1acafe","type":"REGULAR","uid_decimal":"0"}],"transitive_sdk_swiftmodule_closure":"UNSEALED_NAMED_RESIDUAL_REPEATED_FIXED_INPUT_JOINS_AND_RAW_A_B_EQUALITY_FAIL_CLOSED"}},"payload_hash_rule":"SHA256_COMPACT_RECURSIVE_LEXICOGRAPHIC_KEYS_UTF8_NO_TRAILING_LF","payload_sha256":"783e8edd788339bdf2d4230dbf9c54c918ecabc2c1b81c89bb20f4a957395cd4","schema":"prime_driver_v2_r19_crs29_corrected_supervisor_two_build_readiness_v1","status":"FROZEN_EXACT_ONE_SUPERVISOR_TWO_BUILD_INVOCATION_AUTHORIZED_AFTER_CONTROL_NO_RUNTIME"}
+```
