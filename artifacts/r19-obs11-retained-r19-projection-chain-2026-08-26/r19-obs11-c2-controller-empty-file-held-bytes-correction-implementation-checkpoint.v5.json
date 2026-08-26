@@ -1,0 +1,284 @@
+{
+  "schema": "ergentics-r19-obs11-c2-controller-empty-file-held-bytes-correction-implementation-checkpoint-v5",
+  "status": "C2_EMPTY_FILE_HELD_BYTES_CORRECTION_IMPLEMENTED_EXACT_STATIC_AND_MICROTEST_AUDITED_LAUNCH_ABSTAIN",
+  "rank": "CONTROL_ONLY_IMPLEMENTATION_CHECKPOINT",
+  "scientific_predecessor": {
+    "kind": "SOURCE_AND_HARNESS_IDENTITY_IMPLEMENTATION_COMMIT_NOT_THIS_CONTROL_RECORD",
+    "commit": "f3cfb57ffbc50199bcc37a0c55197de9e0a02780",
+    "tree": "fb89a536da59154b0b1ba0458e0eb54572a855d0",
+    "parent_commit": "43919b72e889ba268022d899eaa8fb4a7432f075",
+    "parent_tree": "6897f11e34437091616f186696a1621abf114566"
+  },
+  "correction_freeze": {
+    "commit": "43919b72e889ba268022d899eaa8fb4a7432f075",
+    "tree": "6897f11e34437091616f186696a1621abf114566",
+    "path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-controller-empty-file-held-bytes-correction-freeze.v5.json",
+    "bytes": 11462,
+    "lines": 263,
+    "sha256": "820cf7f4f895ff2dec344099cf708f25d8738eea992ccdc599893116f5ab8c98",
+    "git_blob": "7b05aaed35278887cc0c7a29ed3e8ca8fc930057"
+  },
+  "retained_failure_predecessor": {
+    "commit": "500a6f6aace5b1fdc5765ed4b581e643271a5dfb",
+    "tree": "66da8bc538d32f1594c1fada240772450bc168a3",
+    "result": {
+      "path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-preconsumption-prefix-harness-result.v4.json",
+      "bytes": 10216,
+      "lines": 230,
+      "sha256": "180a90fb509e2d8e6daf58e30bdcda2cf56ecdcdec4a7a46711573ae08a318cf",
+      "git_blob": "f97d69e24ee0a767ea0dce39f31ec257a15d12b3"
+    },
+    "raw_failure": {
+      "path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-preconsumption-prefix-harness-failure.v4.stderr.jsonl",
+      "bytes": 1465,
+      "lines": 1,
+      "sha256": "8bbceeb55adf2605b55f32a92af9fb7e97aaebfb9f1ec1dc8171d10572e660cf",
+      "git_blob": "a20c1b4fd04be3d3351b60f55472393b459da460"
+    },
+    "readiness_v4_consumed": true,
+    "controller_consumed": false
+  },
+  "controller_implementation": {
+    "path": "docs/tools/ergentics-r19-obs11-c2-build-controller.rb",
+    "git_mode": "100644",
+    "device": 16777231,
+    "inode": 17945704,
+    "uid": 501,
+    "gid": 20,
+    "mode": "0644",
+    "nlink": 1,
+    "flags": 0,
+    "bytes": 150714,
+    "lines": 4054,
+    "sha256": "2f1568b11f715a007cda4e74e65bd205fc330e4a9a7556d0adcfa8296aa5a9d7",
+    "git_blob": "92a5821533e6a9039abf97c6bf84ca4c11c10577",
+    "language_runtime": "/usr/bin/ruby 2.6.10p210",
+    "top_level_source_evaluated_by_syntax_check": false
+  },
+  "harness_implementation": {
+    "path": "docs/tools/ergentics-r19-obs11-c2-preconsumption-prefix-harness.v4.rb",
+    "git_mode": "100644",
+    "device": 16777231,
+    "inode": 17956974,
+    "uid": 501,
+    "gid": 20,
+    "mode": "0644",
+    "nlink": 1,
+    "flags": 0,
+    "bytes": 9474,
+    "lines": 271,
+    "sha256": "5615b14b24e68644c6ef5cfb379e415160f465af987a3aa74d1908fca8ada39e",
+    "git_blob": "b9db5bc6594143df2f9118ad4b7814b42e988deb",
+    "prefix_bytes": 143916,
+    "prefix_lines": 3879,
+    "prefix_sha256": "3328e81448266ad8a63dbeca72fba580e9f91556aaede391f92e30c37084e8b4",
+    "marker_occurrences": 1,
+    "bottom_entry_excluded": true
+  },
+  "exact_diff": {
+    "files_changed": 2,
+    "insertions": 5,
+    "deletions": 5,
+    "controller": {
+      "insertions": 1,
+      "deletions": 1,
+      "old": "bytes_equals_io_read_stat_size_plus_one",
+      "new": "bytes_equals_io_read_exact_stat_size",
+      "removed_ascii": "SPACE_PLUS_SPACE_ONE",
+      "other_controller_deltas": 0
+    },
+    "harness": {
+      "insertions": 4,
+      "deletions": 4,
+      "changed_literals": [
+        "HARNESS_SOURCE_EXPECTED_bytes",
+        "HARNESS_SOURCE_EXPECTED_sha256",
+        "HARNESS_PREFIX_EXPECTED_bytes",
+        "HARNESS_PREFIX_EXPECTED_sha256"
+      ],
+      "other_harness_deltas": 0
+    }
+  },
+  "implemented_equation": {
+    "steps": [
+      "CAPTURE_HELD_STAT",
+      "REJECT_NEGATIVE_OR_OVER_CAP_SIZE",
+      "REWIND",
+      "READ_EXACTLY_HELD_STAT_SIZE_BYTES",
+      "REQUIRE_NON_NIL_AND_EXACT_BYTE_COUNT",
+      "READ_ONE_ADDITIONAL_BYTE_AND_REQUIRE_EOF",
+      "REWIND",
+      "RETURN_EXACT_BYTES"
+    ],
+    "zero_length_result": "EMPTY_ASCII_8BIT_STRING",
+    "zero_length_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "positive_short_read": "READ_SIZE",
+    "growth_beyond_pre_read_size": "READ_OVERFLOW",
+    "admission_delta": 0,
+    "frame_omission": false,
+    "retry": false
+  },
+  "static_verification": {
+    "controller_source_sha256_join": "PASS",
+    "controller_source_git_blob_join": "PASS",
+    "harness_source_sha256_join": "PASS",
+    "harness_source_git_blob_join": "PASS",
+    "prefix_sha256_join": "PASS",
+    "git_diff_check": "PASS",
+    "ruby_2_6_controller_warning_syntax": "PASS_SYNTAX_OK",
+    "ruby_2_6_harness_warning_syntax": "PASS_SYNTAX_OK",
+    "controller_top_level_evaluated_by_syntax_check": false,
+    "harness_executed_after_edit": false,
+    "full_bootstrap_preflight_executed_after_edit": false,
+    "process_surface_delta": 0,
+    "namespace_delta": 0,
+    "tree_snapshot_schema_delta": 0,
+    "tree_snapshot_path_or_frame_delta": 0,
+    "authority_bit_delta": 0
+  },
+  "microtest_transcripts": {
+    "superseded": {
+      "path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-empty-file-held-bytes-microtest-superseded.v5.jsonl",
+      "bytes": 611,
+      "lines": 1,
+      "sha256": "7b03e62ae339c4423d94c9ef91b5e94c819edcb700eea96081ba3bb90790924c",
+      "git_blob": "2cc2babce79712bc59383a5f99524203ebb5c236",
+      "transport_exit": 0,
+      "reported_status": "PASS_FINAL_EXACT_V5_HELD_BYTES_MICROTEST",
+      "growth_code": "MICRO_GROWTH:SIZE_CAP",
+      "semantic_status": "FAIL_SUPERSEDED_TEST_DESIGN_FALSE_PASS_LABEL",
+      "reason": "PRELOADED_PIPE_REPORTED_SIZE_ONE_SO_CAP_REJECTED_BEFORE_THE_OVERFLOW_PATH",
+      "overflow_path_evidence": false,
+      "controller_defect": false,
+      "retained_not_rewritten": true
+    },
+    "corrected": {
+      "path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-empty-file-held-bytes-microtest-corrected.v5.jsonl",
+      "bytes": 616,
+      "lines": 1,
+      "sha256": "4b4a2bcdfc3f458ffe8d0f13397495fcb584c648ab25f3adf0a7a5556c6306e4",
+      "git_blob": "d648217daa35876081ba397d227969344f2802b7",
+      "transport_exit": 0,
+      "reported_status": "PASS_FINAL_EXACT_V5_HELD_BYTES_MICROTEST",
+      "empty_bytes": 0,
+      "empty_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "nonempty_bytes": 150714,
+      "nonempty_sha256": "2f1568b11f715a007cda4e74e65bd205fc330e4a9a7556d0adcfa8296aa5a9d7",
+      "positive_short_code": "MICRO_SHORT:READ_SIZE",
+      "growth_code": "MICRO_GROWTH:READ_OVERFLOW",
+      "assertions_before_pass": [
+        "growth_code_exact_equality",
+        "positive_short_code_exact_equality"
+      ],
+      "semantic_status": "PASS_DATA_AND_LABEL_ALIGNED"
+    }
+  },
+  "independent_reviews": [
+    {
+      "scope": "FREEZE_DIFF_SOURCE_HARNESS_PREFIX_IDENTITIES_AND_MICROTEST_QUALIFICATION",
+      "controller_sha256": "2f1568b11f715a007cda4e74e65bd205fc330e4a9a7556d0adcfa8296aa5a9d7",
+      "status": "GO"
+    },
+    {
+      "scope": "HELD_BYTES_ZERO_SHORT_OVERFLOW_REWIND_CAP_SEMANTICS_AND_TEST_DISCRIMINATORS",
+      "controller_sha256": "2f1568b11f715a007cda4e74e65bd205fc330e4a9a7556d0adcfa8296aa5a9d7",
+      "status": "GO"
+    },
+    {
+      "scope": "RUBY_2_6_HARNESS_BOUNDARY_FULL_DOT_BUILD_PROCESS_NAMESPACE_AND_AUTHORITY_SURFACES",
+      "controller_sha256": "2f1568b11f715a007cda4e74e65bd205fc330e4a9a7556d0adcfa8296aa5a9d7",
+      "status": "GO"
+    }
+  ],
+  "current_source_local_dot_build": {
+    "role": "PRESENT_STALE_DIAGNOSTIC_NOT_AN_INPUT_AND_FULL_NEGATIVE_CONTROL_SNAPSHOT",
+    "directories": 1182,
+    "regular_files": 3348,
+    "symlinks": 2,
+    "other_nodes": 0,
+    "aggregate_file_bytes": 457185791,
+    "zero_length_regular_files": 2,
+    "within_frozen_caps": true,
+    "deleted_moved_or_rebased": false
+  },
+  "unchanged_invariants": [
+    "FULL_SOURCE_LOCAL_DOT_BUILD_PATH_AND_FRAME_INCLUSION",
+    "TREE_SNAPSHOT_ORDER_IDENTITIES_CAPS_ROOT_AND_LEAF_DRIFT_CHECKS",
+    "BOOTSTRAP_BUILD_A_BUILD_B_AND_FINAL_SNAPSHOT_BOUNDARIES",
+    "ALL_HELD_BYTES_CALLS_CAPS_NEGATIVE_SIZE_CHECKS_REWINDS_AND_POST_READ_DRIFT_CHECKS",
+    "NO_ZERO_FILL_TRUNCATION_RETRY_OMISSION_OR_EXCLUSION",
+    "SOURCE_TOOL_BUILD_INPUT_SCRATCH_CLOSURE_AND_NAMESPACE_IDENTITIES",
+    "PROCESS_SPAWN_WAIT_CUTOFF_HORIZON_SIGNAL_CONTAINMENT_JOURNAL_AND_TERMINAL_CONTRACTS",
+    "CONTROL_RECORD_V1_LITERALS",
+    "MAPPED_IMAGE_V2_TREE_ORDER_V3_NATIVE_ERRNO_V4_CORRECTIONS",
+    "PRODUCT_EXECUTION_ZERO_AND_AUTHORITY_VECTOR_00000000"
+  ],
+  "named_residuals": [
+    "THE_V4_FAILURE_DID_NOT_RETAIN_ITS_FAILURE_TIME_HELD_STAT_SO_CONCURRENT_WRITER_OR_TOCTOU_AT_THAT_TIME_REMAINS_ABSTAIN",
+    "THE_SUPERSEDED_MICROTEST_PASS_LABEL_IS_FALSE_BY_ITS_OWN_SIZE_CAP_DATA_AND_CARRIES_NO_OVERFLOW_EVIDENCE",
+    "SOURCE_LOCAL_DOT_BUILD_IS_A_457185791_BYTE_PRE_POST_NEGATIVE_CONTROL_NOT_A_PROOF_OF_NO_READS",
+    "A_FUTURE_SEPARATE_DESTRUCTIVE_SCOPE_COULD_MAKE_SOURCE_LOCAL_DOT_BUILD_ABSENT_BUT_IS_NOT_THIS_CORRECTION",
+    "THE_FULL_EXACT_BOOTSTRAP_PREFLIGHT_HAS_NOT_YET_RUN_AGAINST_THE_V5_CORRECTED_SOURCE",
+    "ALL_PROCESS_CONTAINMENT_FD_AND_TRANSITIVE_TOOLCHAIN_RESIDUALS_FROM_V1_REMAIN"
+  ],
+  "implementation_slice_operations": {
+    "source_files_edited": 2,
+    "post_edit_source_prefix_evaluations": 2,
+    "post_edit_held_bytes_microtest_entries": 2,
+    "in_process_pipe_pairs": 1,
+    "bootstrap_preflight_entries": 0,
+    "controller_bottom_entries": 0,
+    "controller_full_invocations": 0,
+    "state_machine_constructor_entries": 0,
+    "journal_constructor_entries": 0,
+    "filesystem_creation_call_entries": 0,
+    "output_roots_created": 0,
+    "swiftpm_spawns": 0,
+    "compiler_entries": 0,
+    "builds": 0,
+    "product_executions": 0,
+    "signals": 0,
+    "filesystem_cleanup_actions": 0,
+    "network_actions": 0,
+    "github_actions": 0,
+    "python_entries": 0,
+    "authority_closures": 0,
+    "gate_e_promotions": 0
+  },
+  "output_namespaces": {
+    "/private/tmp/ergentics-r19-obs11-chain-runner-296d32da-build-a-v1": "ABSENT",
+    "/private/tmp/ergentics-r19-obs11-chain-runner-296d32da-build-b-v1": "ABSENT",
+    "/private/tmp/ergentics-r19-obs11-chain-runner-296d32da-execution-closure-v1": "ABSENT",
+    "/private/tmp/ergentics-r19-obs11-chain-runner-296d32da-build-b-witness-closure-v1": "ABSENT",
+    "/private/tmp/ergentics-r19-obs11-c2-build-control-8405636a-v1": "ABSENT"
+  },
+  "language_and_fd_policy": {
+    "python": "FORBIDDEN",
+    "python_entries": 0,
+    "ruby_fd3_through_fd7_pipe_deviation": "CATALOGED_UNSUITABLE_AS_SWIFT_FD_DOMAIN_PROXY",
+    "swift_fd_domain_inference_from_microtests": false
+  },
+  "authority": {
+    "authority_vector": "00000000",
+    "authoritative": false,
+    "gate_e": "ABSTAIN",
+    "scientific_outcome": "ABSTAIN",
+    "prose_may_supply_fact": false,
+    "controller_invocation_authorized_by_this_checkpoint": false,
+    "build_authorized_by_this_checkpoint": false
+  },
+  "next": {
+    "slice": "CREATE_A_SEPARATE_V5_EXACT_PREFIX_HARNESS_READINESS_BOUND_TO_THIS_CHECKPOINT_THEN_ENTER_ONCE",
+    "scientific_predecessor_commit": "f3cfb57ffbc50199bcc37a0c55197de9e0a02780",
+    "scientific_predecessor_tree": "fb89a536da59154b0b1ba0458e0eb54572a855d0",
+    "requires": [
+      "THIS_CHECKPOINT_COMMIT_TREE_BYTES_SHA256_AND_GIT_BLOB",
+      "EXACT_CORRECTED_CONTROLLER_AND_HARNESS_IDENTITIES",
+      "FRESH_OUTPUT_NAMESPACE_SOURCE_TOOL_PROCESS_AND_DOT_BUILD_ADMISSION",
+      "EXACT_OUTER_TRANSPORT_AND_NO_PYTHON",
+      "NO_REUSE_OF_CONSUMED_V4_READINESS",
+      "ZERO_CONTROLLER_BOTTOM_SPAWN_SIGNAL_AND_PRODUCT_ENTRY"
+    ]
+  },
+  "artifact_addressing": "THIS_CONTROL_ONLY_RECORD_IS_CONTENT_ADDRESSED_BY_ITS_SUCCESSOR_GIT_COMMIT_TREE_AND_DOES_NOT_SELF_EMBED_A_DIGEST"
+}
