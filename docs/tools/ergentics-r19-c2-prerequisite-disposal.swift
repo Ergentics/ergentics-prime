@@ -133,13 +133,13 @@ private func failureCoordinate(_ error: Error) -> String {
 }
 
 private enum Fixed {
-    static let freezeCommit = "d7ecc1dab5d9bd8e2d7ae2354de10292113dd0f8"
-    static let freezeTree = "3bc7b2840a1eb11806ed83be0d3c56e421ab4c4f"
-    static let freezeFrameHash = "71a5e61d38b9e20e7d2c907376f63dd1b92c9ce9d6fe5b9408c54dfdcf7ce656"
-    static let journalRoot = "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-1cb03c1-8930176-8930235-8668003-v2"
-    static let buildAPath = "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-a-1cb03c1-v2/ErgenticsR19C2PrerequisiteDisposal"
-    static let buildBPath = "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-b-1cb03c1-v2/ErgenticsR19C2PrerequisiteDisposal"
-    static let readinessPath = "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-readiness.v2.frame"
+    static let freezeCommit = "5c43b071c5f80963509ef5ec11520a8b0c8bdfe6"
+    static let freezeTree = "d8c4719038755c8247a14521f0a76b7756f4856e"
+    static let freezeFrameHash = "af465c9f1a5f57dab1e87107ec0010c53dfa50bbf6c94230c1cc4e646ae9b08b"
+    static let journalRoot = "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-2a26c70-8930176-8930235-8668003-v3"
+    static let buildAPath = "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-a-2a26c70-v3/ErgenticsR19C2PrerequisiteDisposal"
+    static let buildBPath = "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-b-2a26c70-v3/ErgenticsR19C2PrerequisiteDisposal"
+    static let readinessPath = "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-readiness.v3.frame"
     static let guardianCWD = "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging"
     static let launchCWD = "/private/var/empty"
     static let leafNames = [
@@ -152,8 +152,8 @@ private enum Fixed {
         "11-awk-kill-result.json", "12-awk-conservation.json",
         "13-natural-exit-observers.json", "14-terminal.json", "99-outcome.jsonl",
     ]
-    static let receiptSchema = "ergentics-r19-obs11-c2-prerequisite-disposal-journal-v2"
-    static let outcomeSchema = "ergentics-r19-obs11-c2-prerequisite-disposal-outcome-v2"
+    static let receiptSchema = "ergentics-r19-obs11-c2-prerequisite-disposal-journal-v3"
+    static let outcomeSchema = "ergentics-r19-obs11-c2-prerequisite-disposal-outcome-v3"
     static let merkleDomain = Data("ERGENTICS-R19-C2-PREREQUISITE-DISPOSAL-PRESTATE-MERKLE-V2".utf8)
     static let fileCap = 131_072
     static let outcomeCap = 524_288
@@ -954,12 +954,12 @@ private func parseReadiness(_ data: Data) throws -> ReadinessFrame {
         }
         values.append(parts[1])
     }
-    let controlPath = "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-control-freeze.v2.json"
-    let cObjectA = "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-a-1cb03c1-v2/ergentics-r19-c2-prerequisite-disposal-fixed.o"
-    let cObjectB = "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-b-1cb03c1-v2/ergentics-r19-c2-prerequisite-disposal-fixed.o"
-    guard values[0] == "ergentics-r19-obs11-c2-prerequisite-disposal-readiness-v2",
+    let controlPath = "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-control-freeze.v3.json"
+    let cObjectA = "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-a-2a26c70-v3/ergentics-r19-c2-prerequisite-disposal-fixed.o"
+    let cObjectB = "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-b-2a26c70-v3/ergentics-r19-c2-prerequisite-disposal-fixed.o"
+    guard values[0] == "ergentics-r19-obs11-c2-prerequisite-disposal-readiness-v3",
           values[1] == Substring(Fixed.freezeCommit), values[2] == Substring(Fixed.freezeTree),
-          values[3] == Substring(controlPath), values[4] == "12111",
+          values[3] == Substring(controlPath), values[4] == "6487",
           values[5] == Substring(Fixed.freezeFrameHash),
           values[6] == Substring(Fixed.buildAPath), values[7] == Substring(Fixed.buildBPath),
           values[8] == "1", values[12] == Substring(cObjectA),
@@ -1087,7 +1087,7 @@ private final class SelfAuthority {
             throw Failure.rejected("self-content-authority")
         }
         let pid = getpid()
-        guard processPath(pid) == Fixed.buildAPath,
+        guard try processPath(pid) == Fixed.buildAPath,
               case .present(let before) = try readUnique(pid) else {
             throw Failure.rejected("self-process-path-generation")
         }
@@ -1988,8 +1988,15 @@ private func checkedEntryPreflight() throws -> J {
     let cwdResult = cwdBytes.withUnsafeMutableBufferPointer {
         getcwd($0.baseAddress, $0.count)
     }
+    guard let cwdTerminator = cwdBytes.firstIndex(of: 0) else {
+        throw Failure.rejected("controller-cwd-frame")
+    }
+    let cwd = String(
+        decoding: cwdBytes[..<cwdTerminator].map { UInt8(bitPattern: $0) },
+        as: UTF8.self
+    )
     guard cwdResult != nil,
-          String(cString: cwdBytes) == Fixed.launchCWD,
+          cwd == Fixed.launchCWD,
           getuid() == 501, geteuid() == 501, getgid() == 20, getegid() == 20 else {
         throw Failure.rejected("controller-static-ingress")
     }
@@ -2005,7 +2012,7 @@ private func checkedEntryPreflight() throws -> J {
         getgroups(groupCount, $0.baseAddress)
     }
     guard populatedGroups == groupCount,
-          groups.map { UInt32($0) }.sorted() == expectedGroups else {
+          groups.map({ UInt32($0) }).sorted() == expectedGroups else {
         throw Failure.rejected("controller-groups")
     }
     var sidError: Int32 = 0, pgidError: Int32 = 0
