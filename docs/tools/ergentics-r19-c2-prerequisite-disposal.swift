@@ -133,13 +133,14 @@ private func failureCoordinate(_ error: Error) -> String {
 }
 
 private enum Fixed {
-    static let freezeCommit = "5c43b071c5f80963509ef5ec11520a8b0c8bdfe6"
-    static let freezeTree = "d8c4719038755c8247a14521f0a76b7756f4856e"
-    static let freezeFrameHash = "af465c9f1a5f57dab1e87107ec0010c53dfa50bbf6c94230c1cc4e646ae9b08b"
-    static let journalRoot = "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-2a26c70-8930176-8930235-8668003-v3"
-    static let buildAPath = "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-a-2a26c70-v3/ErgenticsR19C2PrerequisiteDisposal"
-    static let buildBPath = "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-b-2a26c70-v3/ErgenticsR19C2PrerequisiteDisposal"
-    static let readinessPath = "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-readiness.v3.frame"
+    static let freezeCommit = "ef45a0313ef51f1297f4df9bf717223960eb0ff0"
+    static let freezeTree = "c63cf04b8f81a619ac4073ac808226914dac825a"
+    static let freezeFrameHash = "09abe8a4d53c155a6bcad0d076bc41b61bf93bc13bec96f84af032f6aee185ce"
+    static let journalRoot = "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-b5afcd7-8930176-8930235-8668003-v4"
+    static let buildAPath = "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-a-b5afcd7-v4/ErgenticsR19C2PrerequisiteDisposal"
+    static let buildBPath = "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-b-b5afcd7-v4/ErgenticsR19C2PrerequisiteDisposal"
+    static let readinessPath = "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-readiness.v4.frame"
+    static let hostEnvironmentEntry = "__CF_USER_TEXT_ENCODING=0x1F5:0x0:0x0"
     static let guardianCWD = "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging"
     static let launchCWD = "/private/var/empty"
     static let leafNames = [
@@ -152,8 +153,8 @@ private enum Fixed {
         "11-awk-kill-result.json", "12-awk-conservation.json",
         "13-natural-exit-observers.json", "14-terminal.json", "99-outcome.jsonl",
     ]
-    static let receiptSchema = "ergentics-r19-obs11-c2-prerequisite-disposal-journal-v3"
-    static let outcomeSchema = "ergentics-r19-obs11-c2-prerequisite-disposal-outcome-v3"
+    static let receiptSchema = "ergentics-r19-obs11-c2-prerequisite-disposal-journal-v4"
+    static let outcomeSchema = "ergentics-r19-obs11-c2-prerequisite-disposal-outcome-v4"
     static let merkleDomain = Data("ERGENTICS-R19-C2-PREREQUISITE-DISPOSAL-PRESTATE-MERKLE-V2".utf8)
     static let fileCap = 131_072
     static let outcomeCap = 524_288
@@ -954,12 +955,12 @@ private func parseReadiness(_ data: Data) throws -> ReadinessFrame {
         }
         values.append(parts[1])
     }
-    let controlPath = "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-control-freeze.v3.json"
-    let cObjectA = "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-a-2a26c70-v3/ergentics-r19-c2-prerequisite-disposal-fixed.o"
-    let cObjectB = "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-b-2a26c70-v3/ergentics-r19-c2-prerequisite-disposal-fixed.o"
-    guard values[0] == "ergentics-r19-obs11-c2-prerequisite-disposal-readiness-v3",
+    let controlPath = "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-control-freeze.v4.json"
+    let cObjectA = "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-a-b5afcd7-v4/ergentics-r19-c2-prerequisite-disposal-fixed.o"
+    let cObjectB = "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-b-b5afcd7-v4/ergentics-r19-c2-prerequisite-disposal-fixed.o"
+    guard values[0] == "ergentics-r19-obs11-c2-prerequisite-disposal-readiness-v4",
           values[1] == Substring(Fixed.freezeCommit), values[2] == Substring(Fixed.freezeTree),
-          values[3] == Substring(controlPath), values[4] == "6487",
+          values[3] == Substring(controlPath), values[4] == "7890",
           values[5] == Substring(Fixed.freezeFrameHash),
           values[6] == Substring(Fixed.buildAPath), values[7] == Substring(Fixed.buildBPath),
           values[8] == "1", values[12] == Substring(cObjectA),
@@ -1956,9 +1957,17 @@ private func descriptorDomain() throws -> [Int32] {
 private func checkedEntryPreflight() throws -> J {
     guard cInstallContainment() == 0 else { throw Failure.rejected("containment-install") }
     let arguments = CommandLine.arguments
+    let environmentEntry = Fixed.hostEnvironmentEntry
+    let environmentLength = environmentEntry.utf8.count
     guard CommandLine.argc == 1, arguments == [Fixed.buildAPath],
-          let environment = disposalEnviron().pointee, environment.pointee == nil else {
-        throw Failure.rejected("closed-zero-argument-empty-environment")
+          let environment = disposalEnviron().pointee,
+          let firstEnvironmentEntry = environment[0],
+          environment[1] == nil,
+          strnlen(firstEnvironmentEntry, environmentLength + 1) == environmentLength,
+          environmentEntry.withCString({
+              memcmp(firstEnvironmentEntry, $0, environmentLength) == 0
+          }) else {
+        throw Failure.rejected("closed-zero-argument-exact-single-environment")
     }
     let selfPID = getpid()
     let initialFDs = try descriptorDomain()
@@ -2032,7 +2041,9 @@ private func checkedEntryPreflight() throws -> J {
         ("cwd", .string(Fixed.launchCWD)),
         ("descriptor_domain_at_start_of_no_new_fd_preflight", .array(initialFDs.map { .signed(Int64($0)) })),
         ("descriptor_domain_at_end_of_no_new_fd_preflight", .array(finalFDs.map { .signed(Int64($0)) })),
-        ("environment_entries", .unsigned(0)), ("pgid", .signed(Int64(pgid))),
+        ("environment_entries", .unsigned(1)),
+        ("environment_vector", .array([.string(environmentEntry)])),
+        ("pgid", .signed(Int64(pgid))),
         ("pid", .signed(Int64(selfPID))), ("sid", .signed(Int64(sid))),
         ("status", .string("PASS_NO_NEW_FD_PREFLIGHT"))
     )
