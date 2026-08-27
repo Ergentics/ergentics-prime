@@ -1,0 +1,342 @@
+{
+  "schema": "ergentics-r19-obs11-c2-prefix-capture-runner-correction-freeze-v9",
+  "status": "V8_BUILD_CONSUMED_V9_FRESH_SUPERBLOB_FRAME_SUCCESSOR_FROZEN_NO_ENTRY",
+  "rank": "CONTROL_ONLY_IMPLEMENTATION_AND_BUILD",
+  "predecessor": {
+    "commit": "79e421186d38c3665afc1341c894302754b592f0",
+    "tree": "a0c3ce2ae7950b20348b08d68a57c6fdd077b81a",
+    "subject": "Record consumed V8 parser-admission failure"
+  },
+  "consumed_v8": {
+    "retry_authorized": false,
+    "cleanup_repair_rename_chmod_or_reuse_authorized": false,
+    "result": {
+      "path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-fchmod-bundle-build-result.v8.json",
+      "sha256": "00e9242efaef8158465ebeefefca5eb2f57c31e49f02ddde4290b2263df050fa",
+      "git_blob": "c72c724fd1d929428effacb64c10b8c27a07b9bc",
+      "bytes": 14718,
+      "lf_count": 1,
+      "status": "FAIL_CONSUMED_NO_RETRY"
+    },
+    "outer_observation": {
+      "path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-fchmod-bundle-build-outer-observation.v8.json",
+      "sha256": "9ceecf3f301b5674c264c9c59a0a2a5d3a3d1216a9d9dd2a3795dc3ef60a25d1",
+      "git_blob": "38347f7e5ed6c9fbe9d0f1382783fe7e95ee2f00",
+      "bytes": 7093,
+      "lf_count": 199,
+      "status": "FAIL_CONSUMED_NO_RETRY"
+    },
+    "ordered_prefix": {
+      "completed": ["COMPILE_A", "LINK_A", "COMPILE_B", "LINK_B"],
+      "failed_phase": "ARTIFACT_ADMISSION",
+      "failed_ordered_label": null,
+      "first_unentered_label": "CMP_A_B_OBJECT",
+      "first_unentered_ordinal_one_based": 5
+    },
+    "operations": {
+      "compiler_attempts": 4,
+      "compiler_entries": 4,
+      "analyzer_attempts": 0,
+      "analyzer_entries": 0,
+      "build_root_creations": 2,
+      "receipt_creation_attempts": 1,
+      "bundle_executions": 0,
+      "runner_executions": 0,
+      "signals": 0,
+      "python_entries": 0
+    },
+    "retained_paths_historical_only": [
+      "/private/tmp/ergentics-r19-obs11-c2-fchmod-bundle-v8-build-a-74450e4-3762b511",
+      "/private/tmp/ergentics-r19-obs11-c2-fchmod-bundle-v8-build-b-74450e4-3762b511",
+      "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-fchmod-bundle-build-result.v8.json",
+      "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-fchmod-bundle-build-outer-observation.v8.json"
+    ],
+    "retained_v8_artifact_runtime_input_entries_in_v9": 0
+  },
+  "failure_evidence": {
+    "compiler_linker_conjunction": {
+      "entries": 4,
+      "all_exit_zero": true,
+      "all_captured_bytes_zero": true,
+      "a_b_object_bytes_equal": true,
+      "a_b_bundle_bytes_equal": true,
+      "bundle_bytes": 33496,
+      "bundle_sha256": "09b8f7d5cb6104e13e2cbc0d3731e81031287f1d6e3436c14e0ef3937d5a0c71"
+    },
+    "parser_witness": {
+      "macho_ncmds": 14,
+      "lc_code_signature_dataoff": 33056,
+      "lc_code_signature_datasize": 440,
+      "signature_region_sha256": "370663a8ffe2452bde1e32d751852fde6defc1d047d841075fa4f5ae08f58cf2",
+      "superblob_magic_hex": "fade0cc0",
+      "declared_superblob_length": 439,
+      "index_count": 1,
+      "code_directory_offset": 20,
+      "code_directory_length": 419,
+      "code_directory_end": 439,
+      "lc_suffix_bytes": 1,
+      "lc_suffix_hex": "00"
+    },
+    "failed_predicate": "DECLARED_SUPERBLOB_LENGTH_EQUALS_LC_CODE_SIGNATURE_DATASIZE",
+    "diagnosis": "NESTED_SUPERBLOB_LENGTH_WAS_INCORRECTLY_REQUIRED_TO_EQUAL_THE_CONTAINING_LC_FILE_REGION_SIZE",
+    "toctou_evidence": "NONE_IN_RETAINED_FAILURE"
+  },
+  "local_format_evidence": {
+    "format_headers_role": "CONTROL_ONLY_HISTORICAL_SEMANTIC_WITNESS",
+    "runtime_header_admission_entries": 0,
+    "v8_tool_admission_contract_changed": false,
+    "loader_header": {
+      "path": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/mach-o/loader.h",
+      "sha256": "5862aeb7fbf183453080bc887c0d502fe25a86ff5bd81291bbcc408bd7fe6e74",
+      "bytes": 74809,
+      "relevant_lines_one_based": [1243, 1244, 1245, 1247, 1256, 1257],
+      "fact": "LC_CODE_SIGNATURE_DATASIZE_IS_FILE_SIZE_OF_DATA_IN_LINKEDIT_SEGMENT"
+    },
+    "code_signing_header": {
+      "path": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Kernel.framework/Versions/A/Headers/kern/cs_blobs.h",
+      "sha256": "71179676100bab2b321abd888237d4a6eda0088489f9930a77559c517d8c7c80",
+      "bytes": 14256,
+      "relevant_lines_one_based": [267, 270, 274, 276, 278, 280, 282, 283, 286, 288, 291],
+      "facts": [
+        "CS_SUPERBLOB_LENGTH_IS_TOTAL_LENGTH_OF_SUPERBLOB",
+        "BLOB_INDEX_SUPERBLOB_AND_GENERIC_BLOB_HAVE_ALIGNED_1_ATTRIBUTES"
+      ]
+    },
+    "proven_scope": "THE_TWO_LENGTH_FIELDS_HAVE_DIFFERENT_SCOPES",
+    "not_proven": [
+      "UNIVERSAL_ZERO_SUFFIX_PERMISSION",
+      "EIGHT_BYTE_OR_SIXTEEN_BYTE_SUFFIX_ALIGNMENT_RULE",
+      "PERMISSION_FOR_TWO_OR_MORE_SUFFIX_BYTES"
+    ]
+  },
+  "review_convergence": {
+    "independent_reviews": 3,
+    "agreed_parser_layer": "SUFFIX_LENGTH_ZERO_OR_ONE_AND_ANY_PRESENT_SUFFIX_BYTE_IS_ZERO",
+    "agreed_fresh_artifact_layer": "EACH_NEW_V9_ARTIFACT_MUST_OBSERVE_DECLARED_439_LC_DATASIZE_440_SUFFIX_ONE_HEX_00",
+    "agreed_inner_bound": "EVERY_INDEX_BLOB_OFFSET_AND_LENGTH_IS_BOUNDED_BY_DECLARED_SUPERBLOB_LENGTH_NOT_LC_DATASIZE",
+    "signature_region_hash_policy": "RECORD_AND_COMPARE_A_B_BUT_DO_NOT_GATE_AGAINST_RETAINED_V8_HASH",
+    "retained_v8_runtime_reads": 0
+  },
+  "hypothesis_registration": {
+    "hypothesis": "V8_COMPILATION_AND_LINKING_SUCCEEDED_AND_THE_ONLY_BLOCKER_WAS_THE_INVALID_EQUAL_LENGTH_PARSER_PREDICATE",
+    "intervention": "PARSE_DECLARED_SUPERBLOB_SEPARATELY_FROM_AN_EXACTLY_BOUNDED_LC_SUFFIX",
+    "held_constant": [
+      "C_HEADER_AND_ABI_BYTES",
+      "CLANG_LD_SDK_ANALYZER_AND_LINKER_POLICY_IDENTITIES",
+      "ALL_FOUR_COMPILER_ARGV_EXCEPT_FRESH_V9_OUTPUT_ROOT_REPOINTS",
+      "ALL_EIGHTEEN_ANALYZER_ARGV_EXCEPT_FRESH_V9_ROOT_REPOINTS",
+      "STREAM_CAPS_HELD_ARTIFACT_CHECKS_RECEIPT_MECHANICS_AND_OPERATION_BUDGETS"
+    ],
+    "predicted_observation": "BOTH_FRESH_BUILDS_OBSERVE_439_440_00_ALL_EIGHTEEN_ANALYZERS_PASS_AND_PASS_RECEIPT_IS_PUBLISHED",
+    "falsifiers": [
+      "ANY_COMPILER_OR_ANALYZER_NONZERO_EXIT",
+      "ANY_NONEMPTY_COMPILER_CAPTURE",
+      "ANY_STRUCTURAL_SUPERBLOB_PREDICATE_FAILURE",
+      "ANY_FRESH_V9_439_440_00_WITNESS_MISMATCH",
+      "ANY_A_B_BYTE_MACH_O_OR_SIGNATURE_REGION_MISMATCH",
+      "ANY_EXPORT_IMPORT_LINKED_IMAGE_CODESIGN_OR_LOAD_COMMAND_MISMATCH",
+      "ANY_ROOT_ARTIFACT_OR_RECEIPT_CONSERVATION_FAILURE"
+    ],
+    "result_status_before_entry": "UNKNOWN_ABSTAIN"
+  },
+  "immutable_native_inputs": {
+    "source": {
+      "path": "docs/tools/ergentics-r19-obs11-c2-fchmod-v7.c",
+      "sha256": "4cd4d953a49e2fce77598a5357fa587f2c6ee257b8fa4ea2129cdc739e42c014",
+      "git_blob": "ddf34cdb8357a26048e55ca1bc115766416c3c10",
+      "bytes": 1172,
+      "lf_count": 41
+    },
+    "header": {
+      "path": "docs/tools/ergentics-r19-obs11-c2-fchmod-v7.h",
+      "sha256": "3722ddef385bb7e9b078a22dcee5e1351f4fde6055a21f0a47825e8bb7bd0ef2",
+      "git_blob": "f5da3053b301dcb30623db3f16fac271a92749b0",
+      "bytes": 262,
+      "lf_count": 12
+    },
+    "exported_symbol": "_ergentics_r19_obs11_c2_v7_fchmod",
+    "reuse_classification": "IMMUTABLE_SOURCE_INPUT_RECOMPILATION_NOT_RETAINED_V8_ARTIFACT_REUSE"
+  },
+  "successor_identity": {
+    "version": "v9",
+    "controller_relative_path": "docs/tools/ergentics-r19-obs11-c2-fchmod-bundle-build-controller.v9.rb",
+    "freeze_relative_path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prefix-capture-runner-correction-freeze.v9.json",
+    "build_a_root": "/private/tmp/ergentics-r19-obs11-c2-fchmod-bundle-v9-build-a-79e4211-00e9242e",
+    "build_b_root": "/private/tmp/ergentics-r19-obs11-c2-fchmod-bundle-v9-build-b-79e4211-00e9242e",
+    "object_leaf": "ergentics-r19-obs11-c2-fchmod-v7.o",
+    "bundle_leaf": "libergentics-r19-obs11-c2-fchmod-v7.bundle",
+    "build_receipt_relative_path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-fchmod-bundle-build-result.v9.json",
+    "outer_observation_relative_path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-fchmod-bundle-build-outer-observation.v9.json",
+    "later_capture_root_relative_path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-preconsumption-prefix-capture.v9",
+    "all_paths_fresh": true
+  },
+  "parser_policy": {
+    "structural_predicates": [
+      "SIGNATURE_REGION_FILE_BOUNDED",
+      "DECLARED_LENGTH_AT_LEAST_12_PLUS_COUNT_TIMES_8",
+      "DECLARED_LENGTH_AT_MOST_LC_DATASIZE",
+      "LC_SUFFIX_LENGTH_IN_SET_0_1",
+      "EVERY_LC_SUFFIX_BYTE_ZERO",
+      "ALL_INDEX_BLOB_AND_CODEDIRECTORY_RANGES_OVERFLOW_SAFE_AND_BOUNDED_BY_DECLARED_LENGTH"
+    ],
+    "fresh_v9_expected_witness": {
+      "declared_superblob_length": 439,
+      "lc_code_signature_datasize": 440,
+      "lc_suffix_length": 1,
+      "lc_suffix_hex": "00"
+    },
+    "record_for_each_artifact": [
+      "LC_DATASIZE",
+      "DECLARED_SUPERBLOB_LENGTH",
+      "DECLARED_SUPERBLOB_SHA256",
+      "LC_SUFFIX_LENGTH",
+      "LC_SUFFIX_HEX",
+      "LC_SUFFIX_SHA256",
+      "SIGNATURE_REGION_SHA256",
+      "CODE_DIRECTORY_OFFSET",
+      "CODE_DIRECTORY_LENGTH",
+      "CODE_DIRECTORY_SHA256",
+      "STRUCTURAL_PREDICATE_RESULT",
+      "FRESH_EXPECTED_WITNESS_RESULT"
+    ],
+    "compare_a_b": [
+      "ENTIRE_OBJECT_BYTES",
+      "ENTIRE_BUNDLE_BYTES",
+      "ENTIRE_PARSED_MACHO_RESULT_INCLUDING_SIGNATURE_REGION_AND_SUFFIX_HASHES"
+    ],
+    "names": {
+      "suffix": "LC_SUFFIX_NOT_ALIGNMENT_PADDING",
+      "structural_failure": "MACHO_SUPERBLOB_STRUCTURAL_ADMISSION",
+      "fresh_witness_failure": "FRESH_V9_SUPERBLOB_WITNESS_MISMATCH"
+    }
+  },
+  "controller_delta_allowlist": [
+    "COPY_EXACT_V8_CONTROLLER_TO_FRESH_V9_PATH",
+    "REPOINT_FREEZE_CONTROLLER_RECEIPT_BUILD_ROOT_SCHEMA_AND_LATER_CAPTURE_NAMESPACES_V8_TO_V9",
+    "BIND_V9_FREEZE_COMMIT_TREE_AND_HASH_AFTER_CONTROL_COMMIT",
+    "SEPARATE_DECLARED_SUPERBLOB_BYTES_FROM_ZERO_OR_ONE_BYTE_LC_SUFFIX",
+    "BOUND_ALL_NESTED_CODE_SIGNATURE_PARSING_TO_DECLARED_SUPERBLOB_LENGTH",
+    "REQUIRE_EXACT_FRESH_V9_439_440_00_WITNESS_FOR_BOTH_ARTIFACTS",
+    "RECORD_DECLARED_SUPERBLOB_LC_SUFFIX_SIGNATURE_REGION_AND_CODEDIRECTORY_BOUNDS_AND_HASHES"
+  ],
+  "controller_delta_out_of_scope": [
+    "ANY_CHANGE_TO_NATIVE_C_HEADER_OR_ABI",
+    "ANY_COMPILER_LINKER_OR_ANALYZER_ARGV_CHANGE_OTHER_THAN_FRESH_V9_ROOT_REPOINTS",
+    "ANY_TOOL_SDK_OR_ANALYZER_IDENTITY_CHANGE",
+    "ANY_RECEIPT_PIPE_WAIT_DESCRIPTOR_INVENTORY_OR_DURABILITY_CHANGE",
+    "ANY_V8_RETAINED_ARTIFACT_RUNTIME_READ_STAT_HASH_SCAN_COPY_COMPARE_RENAME_CHMOD_OR_CLEANUP",
+    "ANY_RETAINED_V8_FULL_BUNDLE_OR_SIGNATURE_REGION_HASH_GATE",
+    "ANY_BUNDLE_OR_RUNNER_EXECUTION",
+    "ANY_SIGNAL_TIMEOUT_NETWORK_GITHUB_SWIFTPM_OR_PYTHON_ENTRY"
+  ],
+  "compiler_entries": {
+    "exact_order": ["COMPILE_A", "LINK_A", "COMPILE_B", "LINK_B"],
+    "count_maximum": 4,
+    "count_on_success_exact": 4,
+    "argv_policy": "BYTE_IDENTICAL_TO_V8_EXCEPT_FRESH_V9_ROOT_REPOINTS",
+    "v8_freeze_sha256": "e55605f70d0f7d6cc231827281d67e0ab934596d2d6b2294ba81293d1559006f",
+    "fatal_warnings_retained": true,
+    "explicit_undefined_policy_argument_count": 0
+  },
+  "analyzer_contract": {
+    "exact_order": [
+      "CMP_A_B_OBJECT", "CMP_A_B_BUNDLE",
+      "NM_DEFINED_A", "NM_DEFINED_B", "NM_UNDEFINED_A", "NM_UNDEFINED_B",
+      "OTOOL_LOAD_COMMANDS_A", "OTOOL_LOAD_COMMANDS_B",
+      "OTOOL_LINKED_IMAGES_A", "OTOOL_LINKED_IMAGES_B",
+      "DWARFDUMP_UUID_A", "DWARFDUMP_UUID_B",
+      "CODESIGN_DISPLAY_A", "CODESIGN_DISPLAY_B",
+      "CODESIGN_VERIFY_A", "CODESIGN_VERIFY_B", "FILE_A", "FILE_B"
+    ],
+    "count_maximum": 18,
+    "count_on_success_exact": 18,
+    "required_defined_exports": ["_ergentics_r19_obs11_c2_v7_fchmod"],
+    "required_undefined_imports": ["___error", "_fchmod"],
+    "required_linked_images": ["/usr/lib/libSystem.B.dylib"],
+    "all_argv_caps_raw_retention_and_admission": "BYTE_IDENTICAL_TO_V8_EXCEPT_FRESH_V9_ROOT_PATH_REPOINTS"
+  },
+  "fresh_namespace_admission": {
+    "twice_nofollow_lstat_enoent_before_entry": [
+      "/private/tmp/ergentics-r19-obs11-c2-fchmod-bundle-v9-build-a-79e4211-00e9242e",
+      "/private/tmp/ergentics-r19-obs11-c2-fchmod-bundle-v9-build-b-79e4211-00e9242e",
+      "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-fchmod-bundle-build-result.v9.json",
+      "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-fchmod-bundle-build-outer-observation.v9.json",
+      "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-preconsumption-prefix-capture.v9"
+    ],
+    "v8_paths_are_not_absence_inputs": true,
+    "any_v9_prior_occupant_effect": "STOP_NONCONSUMING_BEFORE_OUTER_ENTRY_OR_FAIL_CONSUMED_AFTER_ENTRY"
+  },
+  "build_controller_contract": {
+    "outer_transport": {
+      "shell": "/bin/zsh",
+      "login": false,
+      "command": "exec /usr/bin/env -i __CF_USER_TEXT_ENCODING=0x1F5:0x0:0x0 /usr/bin/ruby --disable-gems /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/docs/tools/ergentics-r19-obs11-c2-fchmod-bundle-build-controller.v9.rb",
+      "workdir": "/private/var/empty",
+      "outer_timeout": null,
+      "outer_signals": 0
+    },
+    "consumption_boundary": "OUTER_ZSH_PROCESS_ENTRY_AFTER_COMPLETE_POSTCOMMIT_PREFLIGHT",
+    "invocations_maximum": 1,
+    "receipt_creation_maximum": 1,
+    "success_status": "PASS_TWO_BUILD_NATIVE_BUNDLE_IDENTICAL_UNEXECUTED",
+    "failure_status": "FAIL_CONSUMED_NO_RETRY",
+    "mandatory_postinvoke_outer_observation": true,
+    "retain_every_outcome": true,
+    "retry_cleanup_repair_or_reuse": false
+  },
+  "postcommit_build_preflight": {
+    "checks_in_order": [
+      "HEAD_IS_SINGLE_CONTROLLER_SOURCE_COMMIT_DESCENDED_FROM_THIS_FREEZE_COMMIT",
+      "DIFF_FROM_FREEZE_IS_EXACT_ONE_NEW_V9_CONTROLLER_FILE",
+      "INDEX_WORKTREE_AND_UNTRACKED_SET_CLEAN",
+      "REHASH_V9_FREEZE_CONTROLLER_V8_CONTROLLER_V7_C_V7_HEADER_AND_ALL_PINNED_TOOLS_WITHOUT_READING_V8_RETAINED_ROOTS_OR_ARTIFACTS",
+      "STATIC_DIFF_IS_ONLY_FROZEN_NAMESPACE_AND_PARSER_POLICY_CLASSES",
+      "THREE_EXACT_HASH_STATIC_GO_REVIEWS",
+      "ONE_POSTCOMMIT_RUBY_SYNTAX_ENTRY_EXIT_ZERO_EXPECTED_STDOUT_SYNTAX_OK_LF_AND_ZERO_STDERR",
+      "REJOIN_CLANG_LD_SDK_SETTINGS_ANALYZERS_ZSH_ENV_AND_RUBY_IDENTITIES",
+      "V9_RECEIPT_OUTER_OBSERVATION_ROOT_A_ROOT_B_AND_CAPTURE_ROOT_ABSENT_TWICE",
+      "PROCESS_CREDENTIALS_501_501_20_20_AND_PRIVATE_VAR_EMPTY_CWD_ADMISSIBLE",
+      "IMMEDIATELY_RECHECK_HEAD_CLEAN_HASHES_AND_ALL_FIVE_ABSENCES"
+    ],
+    "failure_effect": "STOP_NONCONSUMING_ZERO_V9_OUTER_BUILD_TRANSPORT_ENTRIES"
+  },
+  "operation_budgets": {
+    "freeze_json_creations": 1,
+    "new_controller_source_files": 1,
+    "controller_syntax_entries_maximum": 1,
+    "outer_transport_entries_maximum": 1,
+    "controller_invocations_maximum": 1,
+    "build_root_creations_maximum": 2,
+    "receipt_leaf_creations_maximum": 1,
+    "receipt_presence_after_consumed_entry": "ZERO_OR_ONE_COMMIT_EXACT_BYTES_IF_PRESENT_NEVER_SYNTHESIZE_MISSING_RECEIPT",
+    "outer_observation_file_creations_maximum": 1,
+    "outer_observation_file_creations_after_consumed_entry_exact": 1,
+    "outer_observation_file_creations_after_nonconsuming_preflight_stop_exact": 0,
+    "compiler_entries_maximum": 4,
+    "compiler_entries_on_success_exact": 4,
+    "analyzer_entries_maximum": 18,
+    "analyzer_entries_on_success_exact": 18,
+    "bundle_runner_or_live_entries": 0,
+    "signals_timeouts_cleanup_repair_network_github_swiftpm_or_python_entries": 0
+  },
+  "commit_sequence": [
+    "COMMIT_THIS_V9_CONTROL_FREEZE_ONLY",
+    "CREATE_V9_CONTROLLER_BY_EXACT_V8_COPY_THEN_APPLY_ONLY_FROZEN_DELTA",
+    "OBTAIN_THREE_EXACT_HASH_STATIC_GO_REVIEWS",
+    "COMMIT_V9_CONTROLLER_SOURCE_ONLY",
+    "RUN_ONE_POSTCOMMIT_RUBY_SYNTAX_ADMISSION",
+    "RUN_COMPLETE_READ_ONLY_POSTCOMMIT_PREFLIGHT",
+    "CONSUME_AT_MOST_ONE_V9_OUTER_BUILD_ENTRY",
+    "AFTER_A_CONSUMED_OUTER_ENTRY_CREATE_AND_COMMIT_MANDATORY_V9_OUTER_OBSERVATION_AND_EXACT_RECEIPT_BYTES_IFF_PRESENT",
+    "ONLY_AFTER_COMMITTED_V9_PASS_FREEZE_AND_IMPLEMENT_THE_IDENTITY_BOUND_RUNNER",
+    "ON_ANY_V9_FAILURE_STOP_WITHOUT_RETRY_AND_REQUIRE_SEPARATELY_FROZEN_V10"
+  ],
+  "authority": {
+    "authority_vector": "00000000",
+    "gate_e": "ABSTAIN",
+    "scientific_outcome": "ABSTAIN",
+    "bundle_execution_entries": 0,
+    "runner_execution_entries": 0,
+    "authority_closure": false
+  }
+}
