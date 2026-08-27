@@ -1,0 +1,482 @@
+{
+  "schema": "ergentics-r19-obs11-c2-prefix-capture-runner-live-freeze-v9",
+  "status": "V9_STATIC_BUNDLE_PASS_RUNNER_SOURCE_IMPLEMENTATION_FROZEN_NO_LOAD_NO_CALL_NO_LIVE_ENTRY",
+  "rank": "CONTROL_ONLY_RUNNER_SOURCE_FREEZE",
+  "predecessor": {
+    "commit": "5bc551c41f5f435765b433566aba53df772d4736",
+    "tree": "4cde0ea436ec92767b2b2b02bdfa5d0a864500a6",
+    "subject": "Record successful V9 native bundle build",
+    "worktree_required_clean": true
+  },
+  "normative_basis": {
+    "selected_candidate": "D3_IN_PROCESS_FIXED_C_FCHMOD_WRAPPER",
+    "postmortem_path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-koine-synthesis-delta-postmortem.v1.json",
+    "postmortem_sha256": "ac9f44203101c6168042ccf2d69b7dfc1dc72892ed453e12107df8c097daeec5",
+    "prior_d3_freeze_path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prefix-capture-runner-correction-freeze.v7.json",
+    "prior_d3_freeze_sha256": "e9aebb182bef6faa4807d3f4c8a2198b4a82899af78fe76c2c63cf7b3d387441",
+    "prior_d3_freeze_git_blob": "983183bb3f6e013d5043d61f626c7280739292a1",
+    "prior_d3_freeze_bytes": 37346,
+    "prior_d3_freeze_lf_count": 558,
+    "historical_v7_or_v8_execution_authority_reused": false
+  },
+  "static_bundle_predecessor": {
+    "build_freeze_path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prefix-capture-runner-correction-freeze.v9.json",
+    "build_freeze_commit": "84a5cc9e65b0bb0daf2eacc9c72551cefb9ca000",
+    "build_freeze_tree": "d77b9bf7e691dcf85ad5e3f41ba8ee2000c6d0dd",
+    "build_freeze_sha256": "e6981dd65c8725d15a3cae11e0bc38e9b001aeaf388261370c011e4bdee533da",
+    "build_freeze_git_blob": "3cd6d943166bc40849a5ec4709b4674b55075d29",
+    "build_freeze_bytes": 17080,
+    "build_freeze_lf_count": 342,
+    "controller_commit": "838aa8591cd9ef4b8f908d755e16e9de13c8a816",
+    "controller_tree": "64fc2a492e141811b6ab0ad7c2e9191ec443e0c8",
+    "controller_sha256": "4d10d2f4d6a45b4a94f2301583e4a3c86d14da77fb2ad5f37cdbcf3d4aec344d",
+    "build_result_path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-fchmod-bundle-build-result.v9.json",
+    "build_result_commit": "5bc551c41f5f435765b433566aba53df772d4736",
+    "build_result_sha256": "ebaf82a0d4b08cbf6d6d15331e13246ec01942fde2e881c965eb3fe9746d0bda",
+    "build_result_git_blob": "33f3e3d26a99515b06c384f1d9707fec3e659b3a",
+    "build_result_bytes": 64339,
+    "build_result_lf_count": 1,
+    "build_result_status": "PASS_TWO_BUILD_NATIVE_BUNDLE_IDENTICAL_UNEXECUTED",
+    "outer_observation_path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-fchmod-bundle-build-outer-observation.v9.json",
+    "outer_observation_sha256": "617d9a7be5f75d717a5bde89c6b8086078dd472925fc267a1d82c212107a7e94",
+    "outer_observation_git_blob": "6562989069c8f7d9c82b54cb6b81e3a9e6a924fa",
+    "outer_observation_bytes": 10038,
+    "outer_observation_lf_count": 284,
+    "static_build_consumed": true,
+    "static_build_retry_cleanup_repair_or_namespace_reuse_authorized": false,
+    "bundle_execution_entries": 0,
+    "runner_execution_entries": 0
+  },
+  "successor_identity": {
+    "version": "v9",
+    "repository_absolute_path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging",
+    "runner_relative_path": "docs/tools/ergentics-r19-obs11-c2-prefix-capture-runner.v9.rb",
+    "runner_absolute_path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/docs/tools/ergentics-r19-obs11-c2-prefix-capture-runner.v9.rb",
+    "implementation_checkpoint_relative_path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prefix-capture-runner-implementation-checkpoint.v9.json",
+    "capture_root_leaf": "r19-obs11-c2-preconsumption-prefix-capture.v9",
+    "capture_root_relative_path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-preconsumption-prefix-capture.v9",
+    "capture_root_absolute_path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-preconsumption-prefix-capture.v9",
+    "later_readiness_relative_path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prefix-harness-readiness.v9.json",
+    "later_raw_outer_relative_path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-runner-outer-combined.v9.bin",
+    "later_outer_observation_relative_path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-runner-outer-observation.v9.json",
+    "later_canonical_result_relative_path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-runner-result.v9.json",
+    "all_successor_names_observed_absent_before_this_freeze": true,
+    "absence_observation_is_not_attempt_authority": true,
+    "any_prior_occupant_consumes_the_later_live_namespace": true
+  },
+  "v6_immutable_baseline": {
+    "runner_path": "docs/tools/ergentics-r19-obs11-c2-prefix-capture-runner.v6.rb",
+    "sha256": "7a84a99a0e9f77dace2d102f1e4058316762512f51e5ccb0c8e3a72e71f918c2",
+    "git_blob": "4dd0e5eb80780d2de03e2dfd2b2b118ba959fcb8",
+    "bytes": 51062,
+    "lf_count": 1495,
+    "consumed_result_status": "CONSUMED_INFRASTRUCTURE_INCOMPLETE_NO_RETRY",
+    "defect": "APPLE_RUBY_2_6_IO_HAS_NO_CHMOD_METHOD",
+    "failing_call": "PUBLISH_LEAF_IO_CHMOD_0400",
+    "capture_root_retained": true,
+    "retry_cleanup_repair_rename_seal_or_reuse_authorized": false
+  },
+  "unchanged_dependencies": {
+    "harness": {
+      "path": "docs/tools/ergentics-r19-obs11-c2-preconsumption-prefix-harness.v4.rb",
+      "sha256": "5615b14b24e68644c6ef5cfb379e415160f465af987a3aa74d1908fca8ada39e",
+      "git_blob": "b9db5bc6594143df2f9118ad4b7814b42e988deb",
+      "bytes": 9474,
+      "lf_count": 271
+    },
+    "controller_source": {
+      "path": "docs/tools/ergentics-r19-obs11-c2-build-controller.rb",
+      "sha256": "2f1568b11f715a007cda4e74e65bd205fc330e4a9a7556d0adcfa8296aa5a9d7",
+      "git_blob": "92a5821533e6a9039abf97c6bf84ca4c11c10577",
+      "bytes": 150714,
+      "lf_count": 4054
+    },
+    "native_header": {
+      "path": "docs/tools/ergentics-r19-obs11-c2-fchmod-v7.h",
+      "sha256": "3722ddef385bb7e9b078a22dcee5e1351f4fde6055a21f0a47825e8bb7bd0ef2",
+      "git_blob": "f5da3053b301dcb30623db3f16fac271a92749b0",
+      "bytes": 262,
+      "lf_count": 12
+    },
+    "native_source": {
+      "path": "docs/tools/ergentics-r19-obs11-c2-fchmod-v7.c",
+      "sha256": "4cd4d953a49e2fce77598a5357fa587f2c6ee257b8fa4ea2129cdc739e42c014",
+      "git_blob": "ddf34cdb8357a26048e55ca1bc115766416c3c10",
+      "bytes": 1172,
+      "lf_count": 41
+    }
+  },
+  "source_delta": {
+    "allowed_paths_exact": [
+      "docs/tools/ergentics-r19-obs11-c2-prefix-capture-runner.v9.rb"
+    ],
+    "v6_source_is_immutable_baseline": true,
+    "all_v6_raw_first_journal_failure_routing_child_containment_and_terminal_semantics_carried": true,
+    "allowed_change_classes_exact": [
+      "V6_TO_V9_PATH_SCHEMA_AND_COMMITTED_IDENTITY_REPOINTS",
+      "DELETE_REDUNDANT_POST_MKDIRAT_ROOT_IO_CHMOD_0700",
+      "ADD_BUILD_A_DESCRIPTOR_ROOTED_EXACT_INVENTORY_HELD_BYTES_VNODE_MACH_O_AND_MAPPED_REGION_ADMISSION",
+      "LOAD_BUILD_A_ONLY_WITH_EXACT_DARWIN_RTLD_MODE_AND_NO_DLCLOSE",
+      "REPLACE_PUBLISH_LEAF_IO_CHMOD_0400_WITH_FIXED_NATIVE_HELPER",
+      "REPLACE_SEAL_ROOT_IO_CHMOD_0500_WITH_FIXED_NATIVE_HELPER",
+      "ADD_CALL_ATTEMPT_RETURN_ERRNO_IMMEDIATE_AND_POST_SYNC_REJOIN_EVIDENCE",
+      "ADD_NATIVE_HELPER_AND_LOADER_COUNTS_TO_DURABLE_AND_OUTER_RECORDS",
+      "MOVE_INFRASTRUCTURE_OUTER_SUMMARY_CONSTRUCTION_AFTER_99_AND_CONTAINMENT_ROOT_ATTEMPTS"
+    ],
+    "deleted_redundant_transition": "POST_MKDIRAT_ROOT_IO_CHMOD_0700",
+    "replaced_transition_sites_exact": [
+      {
+        "site": "PUBLISH_LEAF_AFTER_DATA_FULLFSYNC_BEFORE_SEALED_FULLFSYNC",
+        "target": "ALREADY_HELD_STAGING_LEAF_DESCRIPTOR",
+        "from": "0600",
+        "to": "0400"
+      },
+      {
+        "site": "SEAL_ROOT_BEFORE_ROOT_AND_PARENT_FULLFSYNC",
+        "target": "ALREADY_HELD_CAPTURE_ROOT_DESCRIPTOR",
+        "from": "0700",
+        "to": "0500"
+      }
+    ],
+    "static_native_helper_call_sites_exact": 2,
+    "ruby_io_chmod_call_count": 0,
+    "ruby_file_chmod_call_count": 0,
+    "caller_supplied_path_argv_environment_cwd_timeout_or_role_count": 0,
+    "new_helper_process_count": 0,
+    "new_spawn_call_count": 0,
+    "live_state_owner_count": 1,
+    "canonical_timing_added_to_runner": false,
+    "timing_owner_is_later_separate_slice": true
+  },
+  "build_a_admission": {
+    "sole_runtime_candidate": true,
+    "root_path": "/private/tmp/ergentics-r19-obs11-c2-fchmod-bundle-v9-build-a-79e4211-00e9242e",
+    "root_expected": {
+      "device": 16777231,
+      "inode": 18009932,
+      "uid": 501,
+      "gid": 0,
+      "mode": "0700",
+      "nlink": 4,
+      "bytes": 128,
+      "flags": 0,
+      "type": "DIRECTORY"
+    },
+    "exact_sorted_names": [
+      "ergentics-r19-obs11-c2-fchmod-v7.o",
+      "libergentics-r19-obs11-c2-fchmod-v7.bundle"
+    ],
+    "object": {
+      "leaf": "ergentics-r19-obs11-c2-fchmod-v7.o",
+      "device": 16777231,
+      "inode": 18009934,
+      "uid": 501,
+      "gid": 0,
+      "mode": "0400",
+      "nlink": 1,
+      "bytes": 728,
+      "flags": 0,
+      "type": "REGULAR",
+      "sha256": "20502bf5d7958d9367712a01ba30c305840d65574d5bdd9f0c12d70a6d37a728"
+    },
+    "bundle": {
+      "leaf": "libergentics-r19-obs11-c2-fchmod-v7.bundle",
+      "absolute_path": "/private/tmp/ergentics-r19-obs11-c2-fchmod-bundle-v9-build-a-79e4211-00e9242e/libergentics-r19-obs11-c2-fchmod-v7.bundle",
+      "device": 16777231,
+      "inode": 18009935,
+      "uid": 501,
+      "gid": 0,
+      "mode": "0400",
+      "nlink": 1,
+      "bytes": 33496,
+      "flags": 0,
+      "type": "REGULAR",
+      "sha256": "09b8f7d5cb6104e13e2cbc0d3731e81031287f1d6e3436c14e0ef3937d5a0c71"
+    },
+    "root_object_bundle_pairwise_distinct_vnodes": true,
+    "parent_tmp_expected": {
+      "path": "/private/tmp",
+      "device": 16777231,
+      "inode": 774813,
+      "uid": 0,
+      "gid": 0,
+      "mode": "1777",
+      "flags": 0,
+      "nlink_and_size": "OBSERVATIONAL_NOT_PINNED"
+    },
+    "required_open_order_before_capture_root_mutation": [
+      "OPEN_PRIVATE_TMP_DIRECTORY_NOFOLLOW_ANY_CLOEXEC",
+      "OPEN_BUILD_A_ROOT_RELATIVE_NOFOLLOW_ANY_CLOEXEC",
+      "OPEN_BUILD_A_OBJECT_RELATIVE_NOFOLLOW_ANY_CLOEXEC",
+      "OPEN_BUILD_A_BUNDLE_RELATIVE_NOFOLLOW_ANY_CLOEXEC",
+      "JOIN_HELD_RELATIVE_AND_NAMED_IDENTITIES",
+      "READ_AND_HASH_COMPLETE_OBJECT_AND_BUNDLE_BYTES",
+      "SCAN_BUILD_A_ROOT_VIA_DUPLICATE_DESCRIPTOR_FDOPENDIR_READDIR_CLOSEDIR",
+      "REQUIRE_EXACT_SORTED_TWO_NAME_INVENTORY_AND_STABLE_ROOT_JOIN",
+      "PARSE_AND_REQUIRE_EXACT_THIN_MACH_O_IDENTITY",
+      "FINAL_REJOIN_IMMEDIATELY_BEFORE_DLOPEN"
+    ],
+    "descriptor_rooted_inventory_is_authoritative": true,
+    "nlink_four_equals_two_plus_two_is_corroborating_only": true,
+    "descriptor_lifetime": "HELD_FROM_PRE_MUTATION_ADMISSION_THROUGH_FINAL_TERMINAL_OR_CONTAINMENT_REJOIN",
+    "close_on_exec_required": true
+  },
+  "build_b_runtime_policy": {
+    "path": "/private/tmp/ergentics-r19-obs11-c2-fchmod-bundle-v9-build-b-79e4211-00e9242e",
+    "bound_only_by_committed_v9_result_and_outer_observation": true,
+    "runner_runtime_open_stat_scan_map_load_or_execute_count": 0,
+    "purpose": "STATIC_REPRODUCIBILITY_WITNESS_ONLY"
+  },
+  "macho_and_loader_contract": {
+    "format": "THIN_MACH_O_BUNDLE_ARM64",
+    "filetype": "MH_BUNDLE",
+    "bytes": 33496,
+    "uuid": "0371C336-3A6F-338E-9CD4-9349603C9F44",
+    "load_commands": [25, 25, 25, 2147483700, 2147483699, 2, 11, 27, 50, 42, 12, 38, 41, 29],
+    "code_signature": {
+      "dataoff": 33056,
+      "datasize": 440,
+      "signature_region_sha256": "370663a8ffe2452bde1e32d751852fde6defc1d047d841075fa4f5ae08f58cf2",
+      "superblob_bytes": 439,
+      "superblob_count": 1,
+      "superblob_sha256": "0fb2ce1e730c318301416493a95f112c5758c371b60319a13ad996120ae2ddff",
+      "code_directory_offset": 20,
+      "code_directory_bytes": 419,
+      "code_directory_sha256": "aff7772ee4414e612b62b5bf4a8576527d33f285a22e97edd85a0f332e4eed03",
+      "cdhash": "aff7772ee4414e612b62b5bf4a8576527d33f285",
+      "suffix_bytes": 1,
+      "suffix_hex": "00",
+      "suffix_sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "defined_macho_symbol": "_ergentics_r19_obs11_c2_v7_fchmod",
+    "dlsym_c_source_name": "ergentics_r19_obs11_c2_v7_fchmod",
+    "undefined_symbols_exact": ["___error", "_fchmod"],
+    "linked_images_exact": ["/usr/lib/libSystem.B.dylib"],
+    "darwin_loader_constants": {
+      "RTLD_NOW": 2,
+      "RTLD_LOCAL": 4,
+      "combined_mode": 6,
+      "fiddle_exposes_rtld_local": false,
+      "implementation": "Fiddle::Handle.new(FIXED_BUILD_A_BUNDLE_PATH,6)",
+      "require_fiddle_rtld_now_equals_two": true
+    },
+    "local_header_witness": {
+      "path": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/dlfcn.h",
+      "sha256": "04294faa7f4d8f08cef5b11c0813595ba0e87aa345677576ff62423aefa77e33",
+      "bytes": 3218,
+      "lf_count": 106,
+      "device": 16777231,
+      "inode": 1015439
+    },
+    "local_fiddle_witness": {
+      "path": "/System/Library/Frameworks/Ruby.framework/Versions/2.6/usr/lib/ruby/2.6.0/fiddle.rb",
+      "sha256": "d9f8894c029a2217fc368cb6fe26e11ea32270bdc98a68f4a0b33b8d1b55696a",
+      "bytes": 1722,
+      "lf_count": 56,
+      "device": 16777231,
+      "inode": 1152921500312165368
+    },
+    "function_abi": {
+      "constructor": "Fiddle::Function.new(SYMBOL_ADDRESS,[Fiddle::TYPE_INT,Fiddle::TYPE_INT,Fiddle::TYPE_VOIDP],Fiddle::TYPE_INT)",
+      "fd": "SIGNED_32_BIT_INTEGER_AT_LEAST_THREE",
+      "mode": "POSITIVE_SIGNED_32_BIT_INTEGER_BIT_IDENTICAL_TO_C_UINT32_T_EXACTLY_0400_OR_0500",
+      "errno_pointer": "FOUR_BYTE_ALIGNED_FIDDLE_POINTER_INITIALIZED_TO_ZERO",
+      "required_success_return": 0,
+      "required_success_errno": 0,
+      "ruby_fiddle_last_error_is_evidence": false
+    },
+    "handle_lifetime": {
+      "strong_reference_retained_until_process_exit": true,
+      "disable_close_called_once_after_successful_load": true,
+      "close_enabled_required_false": true,
+      "dlclose_entries": 0
+    }
+  },
+  "mapped_image_join": {
+    "api": "proc_pidinfo",
+    "flavor": "PROC_PIDREGIONPATHINFO",
+    "flavor_value": 8,
+    "buffer_bytes": 1272,
+    "required_return_bytes": 1272,
+    "address": "RESOLVED_SYMBOL_ADDRESS",
+    "decode_offsets": {
+      "protection_u32_le": 0,
+      "file_offset_u64_le": 16,
+      "region_address_u64_le": 80,
+      "region_size_u64_le": 88,
+      "device_u32_le": 96,
+      "inode_u64_le": 104,
+      "path_nul_bounded_utf8": [248, 1024]
+    },
+    "required_predicates": [
+      "REGION_ADDRESS_LE_SYMBOL_ADDRESS_LT_REGION_ADDRESS_PLUS_REGION_SIZE_WITH_NO_U64_OVERFLOW",
+      "VM_PROT_EXECUTE_BIT_SET",
+      "FILE_OFFSET_EQUALS_ZERO",
+      "PATH_BYTES_ARE_VALID_UTF8_AND_EQUAL_FIXED_BUILD_A_BUNDLE_ABSOLUTE_PATH",
+      "DEVICE_AND_INODE_EQUAL_HELD_BUILD_A_BUNDLE",
+      "HELD_BUNDLE_SIZE_SHA256_AND_UUID_EQUAL_COMMITTED_V9_IDENTITY"
+    ],
+    "attempts_maximum": 2,
+    "normal_pass_or_scientific_terminal_completed_exact": 2,
+    "failure_receipt_attempted_range": [0, 2],
+    "failure_receipt_completed_range": [0, 2],
+    "first_check": "AFTER_DLSYM_BEFORE_CAPTURE_ROOT_MUTATION",
+    "second_check": "AFTER_TERMINAL_OR_CONTAINMENT_REJOIN_BEFORE_DESCRIPTOR_RELEASE",
+    "post_first_check_containment_attempts_second_check_before_descriptor_release": true,
+    "mapping_check_failure_is_fail_closed": true
+  },
+  "native_call_contract": {
+    "entry_receipt_order": [
+      "ALLOCATE_MONOTONIC_ORDINAL",
+      "RECORD_TARGET_ROLE_FD_AND_REQUESTED_MODE",
+      "REJOIN_HELD_RELATIVE_AND_NAMED_TARGET_BEFORE_CALL",
+      "APPEND_IN_MEMORY_CALL_ATTEMPT_RECEIPT",
+      "ZERO_FOUR_BYTE_ERRNO_OUT",
+      "ENTER_FIXED_BUNDLE_FUNCTION_ONCE",
+      "READ_RETURN_AND_ERRNO_OUT_IMMEDIATELY",
+      "UPDATE_THE_SAME_RECEIPT_WITH_HELPER_RETURN_ERRNO_OUT_AND_NATIVE_FCHMOD_REACHED_BY_VALIDATED_CONTRACT",
+      "REQUIRE_RETURN_ZERO_AND_ERRNO_ZERO",
+      "REJOIN_HELD_RELATIVE_AND_NAMED_TARGET_IMMEDIATELY",
+      "FSYNC_AND_F_FULLFSYNC_TARGET",
+      "REJOIN_HELD_RELATIVE_AND_NAMED_TARGET_AFTER_SYNC"
+    ],
+    "published_leaf_target_is_staging_name_before_exclusive_rename": true,
+    "named_absolute_join_added_to_v6_held_and_relative_join": true,
+    "success_order_exact": [
+      "00-start.json:0400",
+      "01-stdout.bin:0400",
+      "02-stderr.bin:0400",
+      "03-result.json:0400",
+      "04-closure.json:0400",
+      "CAPTURE_ROOT:0500"
+    ],
+    "scientific_failure_order_exact": [
+      "00-start.json:0400",
+      "01-stdout.bin:0400",
+      "02-stderr.bin:0400",
+      "03-result.json:0400",
+      "CAPTURE_ROOT:0500"
+    ],
+    "static_helper_call_sites_exact": 2,
+    "success_helper_entries_exact": 6,
+    "scientific_failure_helper_entries_exact": 5,
+    "infrastructure_helper_entries_maximum": 8,
+    "ordinary_leaf_helper_entries_maximum": 5,
+    "incomplete_99_helper_entries_maximum": 1,
+    "root_helper_entries_maximum": 2,
+    "failed_helper_entries_maximum": 4,
+    "helper_call_entries_definition": "EVERY_RUBY_TO_BUNDLE_ENTRY_INCLUDING_WRAPPER_VALIDATION_FAILURE",
+    "native_fchmod_call_entries_definition": "ONLY_HELPER_ENTRIES_REACHING_LIBC_FCHMOD",
+    "second_root_entry_is_containment_not_live_retry": true,
+    "attempt_publication_prevents_leaf_retry": true,
+    "second_outer_or_runner_attempt_authorized": false
+  },
+  "receipt_non_self_inclusion": {
+    "axiom": "A_MODE_CALL_RESULT_OCCURS_AFTER_THE_BYTES_OF_ITS_TARGET_LEAF_HAVE_BEEN_SYNCED_AND_CANNOT_BE_SELF_INCLUDED",
+    "leaf_00_receipt_eligible_downstream": ["03-result.json", "04-closure.json", "99-incomplete.json", "OUTER"],
+    "leaf_01_and_02_receipts_first_eligible_structured_leaf": "03-result.json",
+    "leaf_03_receipt_on_pass_first_eligible": "04-closure.json",
+    "leaf_03_receipt_on_scientific_failure_first_eligible": "OUTER",
+    "leaf_04_receipt_on_pass_first_eligible": "OUTER",
+    "leaf_04_receipt_on_later_infrastructure_failure_first_eligible": "99_IF_CONSTRUCTED_ELSE_OUTER",
+    "failed_ordinary_leaf_receipt_first_eligible": "99_IF_CONSTRUCTIBLE_ELSE_OUTER",
+    "failed_primary_root_receipt_first_eligible": "99_IF_CONSTRUCTIBLE_ELSE_OUTER",
+    "leaf_99_receipt_first_eligible": "OUTER",
+    "containment_root_receipt_first_eligible": "OUTER",
+    "failed_primary_root_receipt_may_enter_99_if_root_remains_0700_and_99_is_constructible": true,
+    "successful_terminal_or_containment_root_receipt_requires_outer_evidence": true,
+    "outer_owner_must_retain_post_terminal_summary": true,
+    "incomplete_99_must_describe_own_publication_and_root_seal_as_pending_or_unobserved": true,
+    "later_canonical_result_binds_raw_outer_evidence": true
+  },
+  "runner_entry_and_order": {
+    "runtime_input": {
+      "application_arguments": 0,
+      "environment": {"__CF_USER_TEXT_ENCODING": "0x1F5:0x0:0x0"},
+      "cwd": "/private/var/empty",
+      "stdin": "/dev/null"
+    },
+    "bundle_load_order": [
+      "VERIFY_ZERO_ARGUMENTS_EXACT_ENVIRONMENT_CWD_RUBY_ABI_UID_GID_GROUPS",
+      "ADMIT_AND_HOLD_BUILD_A_ROOT_OBJECT_AND_BUNDLE",
+      "PARSE_EXACT_MACH_O_IDENTITY",
+      "DLOPEN_BUILD_A_ONCE_WITH_MODE_6",
+      "DISABLE_HANDLE_CLOSE_AND_VERIFY_DISABLED",
+      "DLSYM_C_SOURCE_NAME_ONCE",
+      "VERIFY_MAPPED_IMAGE_JOIN",
+      "FINAL_REHASH_AND_REJOIN_BUILD_A",
+      "ONLY_THEN_ADMIT_CAPTURE_PARENT_AND_TEST_CAPTURE_ROOT_ABSENCE",
+      "ONLY_THEN_ENTER_EXISTING_ROOT_CREATION_AND_HARNESS_FLOW"
+    ],
+    "dlopen_attempts_maximum": 1,
+    "dlsym_attempts_maximum": 1,
+    "bundle_load_before_capture_root_mutation": true,
+    "bundle_validation_or_load_failure_before_capture_root_creation": "OUTER_EXIT_70_NO_CAPTURE_ROOT_MUTATION",
+    "infrastructure_outer_summary_order": [
+      "ATTEMPT_99_IF_ROOT_REMAINS_WRITABLE",
+      "ATTEMPT_CONTAINMENT_ROOT_SEAL",
+      "RECORD_BOTH_OUTCOMES_IN_MEMORY",
+      "CONSTRUCT_POST_TERMINAL_OUTER_SUMMARY",
+      "WRITE_OUTER_SUMMARY"
+    ],
+    "bundle_execution_is_live_and_requires_later_final_readiness": true,
+    "child_harness_spawn_entries_maximum": 1,
+    "signals": 0,
+    "outer_timeout_or_signal_authority": false,
+    "runner_does_not_own_canonical_timing": true
+  },
+  "static_verification": {
+    "implementation_steps": [
+      "COPY_V6_BYTES_TO_FRESH_V9_SOURCE_PATH_MECHANICALLY",
+      "APPLY_ONLY_FROZEN_SEMANTIC_DELTA",
+      "THREE_INDEPENDENT_EXACT_HASH_SOURCE_REVIEWS",
+      "COMMIT_RUNNER_SOURCE",
+      "ONE_POSTCOMMIT_RUBY_C_SYNTAX_ENTRY_ONLY",
+      "REVALIDATE_COMMIT_TREE_SOURCE_HASH_AND_ALL_ZERO_LIVE_COUNTS",
+      "PUBLISH_AND_COMMIT_IMPLEMENTATION_CHECKPOINT"
+    ],
+    "ruby_c_semantics": "PARSE_ONLY_TOP_LEVEL_NOT_EVALUATED_NO_REQUIRE_DLOPEN_DLSYM_NATIVE_CALL_ROOT_CREATION_OR_CHILD_SPAWN",
+    "ruby_c_expected_exit": 0,
+    "ruby_c_expected_stdout": "Syntax OK\n",
+    "ruby_c_expected_stderr_bytes": 0,
+    "ruby_c_entry_count_exact": 1,
+    "before_source_commit_ruby_entries": 0,
+    "bundle_load_entries": 0,
+    "bundle_helper_entries": 0,
+    "native_fchmod_call_entries": 0,
+    "capture_root_creation_entries": 0,
+    "harness_entries": 0,
+    "child_spawn_entries": 0,
+    "signals": 0
+  },
+  "scope_limits": {
+    "no_bundle_load_or_function_call_in_this_slice": true,
+    "no_runner_or_harness_execution_in_this_slice": true,
+    "no_capture_root_creation": true,
+    "no_timing_owner_execution": true,
+    "no_swift_swiftpm_git_subprocess_network_signal_cleanup_repair_or_reuse": true,
+    "git_control_commits_only": true,
+    "python": "FORBIDDEN",
+    "no_github": true,
+    "no_authority_closure_or_gate_e_promotion": true,
+    "historical_operations_reinterpreted": false
+  },
+  "checkpoint_sequence": [
+    "COMMIT_THIS_CONTROL_ONLY_FREEZE",
+    "IMPLEMENT_AND_COMMIT_V9_RUNNER_SOURCE_ONLY",
+    "RUN_ONE_POSTCOMMIT_RUBY_C_SYNTAX_ADMISSION_AND_COMMIT_CHECKPOINT",
+    "FREEZE_SEPARATE_OUTER_TIMING_OWNER_AND_FINAL_LIVE_READINESS",
+    "ONLY_A_SEPARATELY_FROZEN_FINAL_LIVE_ENTRY_MAY_LOAD_OR_CALL_BUILD_A"
+  ],
+  "authority": {
+    "authority_vector": "00000000",
+    "gate_e": "ABSTAIN",
+    "scientific_outcome": "ABSTAIN",
+    "bundle_execution_entries": 0,
+    "runner_execution_entries": 0,
+    "harness_entries": 0,
+    "native_helper_entries": 0,
+    "native_fchmod_call_entries": 0,
+    "freeze_promotes_authority": false
+  }
+}
