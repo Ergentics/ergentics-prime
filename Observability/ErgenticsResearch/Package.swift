@@ -14,6 +14,14 @@ let package = Package(
             name: "ErgenticsShotHypothesisChecker",
             targets: ["ErgenticsShotHypothesisChecker"]
         ),
+        .executable(
+            name: "ErgenticsShotAttemptSupervisor",
+            targets: ["ErgenticsShotAttemptSupervisor"]
+        ),
+        .executable(
+            name: "ErgenticsShotHypothesisResultComparator",
+            targets: ["ErgenticsShotHypothesisResultComparator"]
+        ),
     ],
     targets: [
         .target(
@@ -30,9 +38,35 @@ let package = Package(
                 ),
             ]
         ),
+        .target(
+            name: "ErgenticsShotAttemptSupervisorSupport"
+        ),
+        .executableTarget(
+            name: "ErgenticsShotAttemptSupervisor",
+            dependencies: ["ErgenticsShotAttemptSupervisorSupport"],
+            linkerSettings: [
+                .unsafeFlags(
+                    ["-Xlinker", "-S"],
+                    .when(configuration: .release)
+                ),
+            ]
+        ),
+        .executableTarget(
+            name: "ErgenticsShotHypothesisResultComparator",
+            dependencies: ["ErgenticsShotResearchCore"],
+            linkerSettings: [
+                .unsafeFlags(
+                    ["-Xlinker", "-S"],
+                    .when(configuration: .release)
+                ),
+            ]
+        ),
         .testTarget(
             name: "ErgenticsShotResearchCoreTests",
-            dependencies: ["ErgenticsShotResearchCore"]
+            dependencies: [
+                "ErgenticsShotResearchCore",
+                "ErgenticsShotAttemptSupervisorSupport",
+            ]
         ),
     ]
 )
