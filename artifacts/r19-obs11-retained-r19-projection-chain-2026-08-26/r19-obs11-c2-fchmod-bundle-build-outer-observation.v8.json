@@ -1,0 +1,199 @@
+{
+  "schema": "ergentics-r19-obs11-c2-fchmod-bundle-build-outer-observation-v8",
+  "status": "FAIL_CONSUMED_NO_RETRY",
+  "classification": "FAIL_CONSUMED_NO_RETRY",
+  "control": {
+    "freeze_commit": "1dc906e9745efa57d61de84abf176cb483b12847",
+    "freeze_tree": "78f6b22290485715286b5bc3dc01290311ca0073",
+    "freeze_sha256": "e55605f70d0f7d6cc231827281d67e0ab934596d2d6b2294ba81293d1559006f",
+    "implementation_commit": "c9854601b260923cac1daaf2d9d1de7fe8e0bcf2",
+    "implementation_tree": "9f4b7d95c6e3f1d7f866ebebb39ea06dd2fd7956",
+    "controller_sha256": "225112a9afafdbac642079af6898cad901b12705e441aef601f18e65050413d8"
+  },
+  "outer_transport": {
+    "entries": 1,
+    "exit": {
+      "exited": true,
+      "exitstatus": 70,
+      "signaled": false,
+      "termsig": null
+    },
+    "merged_capture": {
+      "bytes": 499,
+      "lf_count": 1,
+      "sha256": "b3fae722e0afd7dc0368c0f8fb9d082df66d2d657871a316b83430788527be50",
+      "raw_hex": "7b226661696c757265223a7b22636c617373223a2244334275696c644661696c757265222c226d6573736167655f6279746573223a33322c226d6573736167655f7072656669785f686578223a2234313532353434393436343134333534356634313361346434313433343834663361353335353530343535323432346334663432356634363532343134643435222c226d6573736167655f7072656669785f7472756e6361746564223a66616c73652c226d6573736167655f736861323536223a2235323436396564633431343530346663313633386534363338393330393932363639386536343739363231623966363636623565666632363139643736626563222c227068617365223a2241525449464143545f41444d495353494f4e227d2c2272656365697074223a7b226279746573223a31343731382c22736861323536223a2230306539323432656661656638313538343635656265656665666361356562326635376333316534396630326464646534323930623232363364663035306661227d2c22736368656d61223a22657267656e746963732d7231392d6f627331312d63322d6663686d6f642d62756e646c652d6275696c642d6f757465722d6661696c7572652d7638222c22737461747573223a224641494c5f434f4e53554d45445f4e4f5f5245545259227d0a"
+    }
+  },
+  "controller_receipt": {
+    "path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-fchmod-bundle-build-result.v8.json",
+    "presence": "COMPLETE",
+    "bytes": 14718,
+    "lf_count": 1,
+    "sha256": "00e9242efaef8158465ebeefefca5eb2f57c31e49f02ddde4290b2263df050fa",
+    "identity": {
+      "device": 16777231,
+      "inode": 18009122,
+      "uid": 501,
+      "gid": 20,
+      "mode": "0400",
+      "nlink": 1,
+      "flags": 0,
+      "type": "REGULAR"
+    },
+    "parsed_status": "FAIL_CONSUMED_NO_RETRY",
+    "completed_ordered_labels": [
+      "COMPILE_A",
+      "LINK_A",
+      "COMPILE_B",
+      "LINK_B"
+    ],
+    "first_unentered_label": "CMP_A_B_OBJECT",
+    "first_unentered_ordinal_one_based": 5,
+    "failure_position": {
+      "phase": "ARTIFACT_ADMISSION",
+      "attempted_label": null,
+      "attempted_ordinal_one_based": null,
+      "entered_label": null,
+      "entered_ordinal_one_based": null,
+      "failed_ordered_label": null,
+      "failed_ordered_ordinal_one_based": null,
+      "process_entry_observed": false
+    },
+    "operations": {
+      "compiler_attempts": 4,
+      "compiler_entries": 4,
+      "analyzer_attempts": 0,
+      "analyzer_entries": 0,
+      "build_root_creations": 2,
+      "receipt_creation_attempts": 1,
+      "bundle_executions": 0,
+      "runner_executions": 0,
+      "signals": 0,
+      "python_entries": 0
+    }
+  },
+  "compiler_prefix": [
+    {
+      "label": "COMPILE_A",
+      "pid": 45074,
+      "exitstatus": 0,
+      "stdout_bytes": 0,
+      "stderr_bytes": 0
+    },
+    {
+      "label": "LINK_A",
+      "pid": 45076,
+      "exitstatus": 0,
+      "stdout_bytes": 0,
+      "stderr_bytes": 0
+    },
+    {
+      "label": "COMPILE_B",
+      "pid": 45078,
+      "exitstatus": 0,
+      "stdout_bytes": 0,
+      "stderr_bytes": 0
+    },
+    {
+      "label": "LINK_B",
+      "pid": 45080,
+      "exitstatus": 0,
+      "stdout_bytes": 0,
+      "stderr_bytes": 0
+    }
+  ],
+  "retained_prefix": {
+    "build_a_root": {
+      "path": "/private/tmp/ergentics-r19-obs11-c2-fchmod-bundle-v8-build-a-74450e4-3762b511",
+      "device": 16777231,
+      "inode": 18009116,
+      "uid": 501,
+      "gid": 0,
+      "mode": "0700",
+      "nlink": 4,
+      "bytes": 128,
+      "flags": 0,
+      "object": {
+        "device": 16777231,
+        "inode": 18009118,
+        "mode": "0400",
+        "bytes": 728,
+        "sha256": "20502bf5d7958d9367712a01ba30c305840d65574d5bdd9f0c12d70a6d37a728"
+      },
+      "bundle": {
+        "device": 16777231,
+        "inode": 18009119,
+        "mode": "0400",
+        "bytes": 33496,
+        "sha256": "09b8f7d5cb6104e13e2cbc0d3731e81031287f1d6e3436c14e0ef3937d5a0c71"
+      }
+    },
+    "build_b_root": {
+      "path": "/private/tmp/ergentics-r19-obs11-c2-fchmod-bundle-v8-build-b-74450e4-3762b511",
+      "device": 16777231,
+      "inode": 18009117,
+      "uid": 501,
+      "gid": 0,
+      "mode": "0700",
+      "nlink": 4,
+      "bytes": 128,
+      "flags": 0,
+      "object": {
+        "device": 16777231,
+        "inode": 18009120,
+        "mode": "0400",
+        "bytes": 728,
+        "sha256": "20502bf5d7958d9367712a01ba30c305840d65574d5bdd9f0c12d70a6d37a728"
+      },
+      "bundle": {
+        "device": 16777231,
+        "inode": 18009121,
+        "mode": "0400",
+        "bytes": 33496,
+        "sha256": "09b8f7d5cb6104e13e2cbc0d3731e81031287f1d6e3436c14e0ef3937d5a0c71"
+      }
+    },
+    "a_b_object_bytes_equal": true,
+    "a_b_bundle_bytes_equal": true,
+    "cleanup_entries": 0,
+    "retention": "PERMANENT_NO_RETRY_NO_CLEANUP"
+  },
+  "parser_witness": {
+    "source": "READ_ONLY_HELD_V8_BUILD_A_BUNDLE_BYTES_AFTER_CONSUMPTION",
+    "bundle_sha256": "09b8f7d5cb6104e13e2cbc0d3731e81031287f1d6e3436c14e0ef3937d5a0c71",
+    "bundle_bytes": 33496,
+    "macho_ncmds": 14,
+    "lc_code_signature": {
+      "dataoff": 33056,
+      "datasize": 440
+    },
+    "signature_region": {
+      "actual_bytes": 440,
+      "sha256": "370663a8ffe2452bde1e32d751852fde6defc1d047d841075fa4f5ae08f58cf2",
+      "magic_hex": "fade0cc0",
+      "declared_superblob_length_be": 439,
+      "count_be": 1,
+      "trailing_after_declared_bytes": 1,
+      "trailing_hex": "00"
+    },
+    "failed_controller_predicate": "DECLARED_SUPERBLOB_LENGTH_EQUALS_LC_CODE_SIGNATURE_DATASIZE",
+    "observed_predicate": "DECLARED_SUPERBLOB_LENGTH_PLUS_ONE_ZERO_PADDING_BYTE_EQUALS_LC_CODE_SIGNATURE_DATASIZE"
+  },
+  "diagnosis": {
+    "class": "MACH_O_SUPERBLOB_LENGTH_VERSUS_LC_PADDING_PARSER_MISMATCH",
+    "linker_correction_result": "ALL_FOUR_COMPILER_LINKER_ENTRIES_EXITED_ZERO_SILENTLY",
+    "analyzer_result": "UNENTERED_UNKNOWN",
+    "toctou_classification": "NO_TOCTOU_EVIDENCE_IN_RETAINED_FAILURE",
+    "successor_hypothesis": "PARSE_DECLARED_SUPERBLOB_BYTES_SEPARATELY_FROM_BOUNDED_ZERO_LC_PADDING",
+    "successor_effect": "REQUIRES_NEW_FREEZE_AND_FRESH_NAMESPACES; THIS_ATTEMPT_CANNOT_BE_RETRIED"
+  },
+  "authority": {
+    "authority_vector": "00000000",
+    "gate_e": "ABSTAIN",
+    "scientific_outcome": "ABSTAIN",
+    "bundle_execution_entries": 0,
+    "runner_execution_entries": 0,
+    "authority_closure": false
+  }
+}
