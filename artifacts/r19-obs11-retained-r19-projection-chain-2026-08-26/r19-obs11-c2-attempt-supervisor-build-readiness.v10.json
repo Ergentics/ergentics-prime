@@ -1,0 +1,624 @@
+{
+  "schema": "ergentics-r19-obs11-c2-attempt-supervisor-build-readiness-v10",
+  "status": "HOLD_REVIEWED_UNENTERED_NO_ROOT_NO_PROCESS",
+  "rank": "CONTROL_ONLY_REJECTED_PREENTRY_BUILD_READINESS",
+  "frozen_at_utc_display_only": "2026-08-27T06:54:25Z",
+  "reviewed_candidate_identity": {
+    "sha256": "9574c4cc8b3ffed15ca9c4732d6ae769beddab061632b9d1ade573d487b455c6",
+    "bytes": 29366,
+    "lf_count": 589,
+    "terminal_lf": true
+  },
+  "review_disposition": {
+    "verdicts": [
+      "BUILD_TRANSPORT_HOLD",
+      "ANALYZER_IMPLEMENTATION_HOLD",
+      "EPISTEMIC_CLOSURE_HOLD"
+    ],
+    "converged": true,
+    "blocking_predicates": [
+      "R00_EXACT_TRANSPORT_ABSENT",
+      "SWIFTPM_FULLY_EXPANDED_QUOTING_ABSENT",
+      "INTER_OPERATION_CAPTURE_ADMISSION_ABSENT",
+      "CAPTURE_VNODE_REJOIN_AND_HASH_ABSENT",
+      "RAW_MACHO_AND_SIGNATURE_PARSER_ABSENT",
+      "ANALYZER_ENV_CWD_STDIN_CAPTURE_TRANSPORT_ABSENT",
+      "ANALYZER_ARGV_AND_STDIN_BINDINGS_INCOMPLETE",
+      "SEMANTIC_NORMALIZER_AND_COMPARATOR_IMPLEMENTATION_ABSENT",
+      "TERMINAL_SUCCESS_AND_FAILURE_PREFIX_OBSERVER_ABSENT",
+      "RESULT_AND_OUTER_OBSERVATION_PUBLICATION_BINDING_ABSENT",
+      "TRANSITIVE_SWIFTPM_TOOL_CLOSURE_ABSENT",
+      "POSTCOMMIT_READINESS_PROVENANCE_BINDING_ABSENT"
+    ],
+    "data_consequence": "PROMISED_RESULT_FACTS_EXCEED_FROZEN_OBSERVATION_SURFACE",
+    "prose_repair_permitted": false,
+    "attempt_consumed": false,
+    "root_constructor_entries": 0,
+    "swiftpm_entries": 0,
+    "analyzer_entries": 0,
+    "product_entries": 0
+  },
+  "predecessor": {
+    "checkpoint_commit": "3283e5cec85616bfe311f8912479df2c895b1f5f",
+    "checkpoint_tree": "8d8e5e058e976f07f9f0c492be9867d6f84462ee",
+    "checkpoint_path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-attempt-supervisor-implementation-checkpoint.v10.json",
+    "checkpoint_sha256": "aef2c19d921b2b39cfd7765ae2f31aea39ea5f3bbf3e56dedc68a47ab9f68d97",
+    "checkpoint_git_blob": "a95e1b609b872d4ec262ae6a3e7172478dfa281d",
+    "checkpoint_bytes": 9860,
+    "checkpoint_lf_count": 225,
+    "source_commit": "58caaf0c73ec374ca62363c660d96a5fc8a2bc2b",
+    "source_tree": "fa5328832dedddc6eb27b11fc455538ffc031ce6",
+    "source_commit_epoch": 1787811884,
+    "source_package_tree": "d3ad81434b6d7b4d3953fe4d4aa4815a9b41443d",
+    "source_package_tracked_files": 10,
+    "source_package_tracked_bytes": 323043,
+    "package_resolved": "ABSENT",
+    "worktree_before_readiness": "CLEAN"
+  },
+  "source_package_closure": [
+    {
+      "path": "Observability/ErgenticsResearch/Package.swift",
+      "git_blob": "19a142ebfccba839c0ed8c66d3e9baae196f0d66",
+      "bytes": 2190,
+      "sha256": "ccbc253b2e0b3b2070da026fef9b256e654a43c73c48a751dafc711c92553b3b"
+    },
+    {
+      "path": "Observability/ErgenticsResearch/Sources/ErgenticsShotAttemptSupervisor/main.swift",
+      "git_blob": "b489162d65749045f622efcf5064a465e725f9fc",
+      "bytes": 177722,
+      "sha256": "00b6179022c46001d46d88771802fc823282df587a466d6d073f0e78d20f9111"
+    },
+    {
+      "path": "Observability/ErgenticsResearch/Sources/ErgenticsShotAttemptSupervisorSupport/AttemptSupervisorSupport.swift",
+      "git_blob": "3ef04bc57b4e413f0a45932ba65bf6faaadf89fa",
+      "bytes": 15852,
+      "sha256": "3c490b5803226313c62f70d2e6ff0154dca324618e1c39119eeb9a03505bca5b"
+    },
+    {
+      "path": "Observability/ErgenticsResearch/Sources/ErgenticsShotHypothesisChecker/main.swift",
+      "git_blob": "e1c618422a1d666b2a1abe3fd9a83bd6f0b2e2d7",
+      "bytes": 7006,
+      "sha256": "eeaa295dc725b2377669b39793767d848e2a50493697af7c5213c6ef7049f432"
+    },
+    {
+      "path": "Observability/ErgenticsResearch/Sources/ErgenticsShotHypothesisResultComparator/main.swift",
+      "git_blob": "44c3e00f78f9056b7bf5e41af297f1a6c35401fe",
+      "bytes": 10411,
+      "sha256": "11940119c2fd0e4a6afdc44926530a7a1624fbe7eaa17d01aabae41cb70e4f22"
+    },
+    {
+      "path": "Observability/ErgenticsResearch/Sources/ErgenticsShotResearchCore/DisposalShotResearchLattice.swift",
+      "git_blob": "2061d00d6522469160f5fc4aea61c33d60926451",
+      "bytes": 61325,
+      "sha256": "cd2cdafc690f7a6e51a016073f6625951ae436c346d9aa625d76f36be081a5ee"
+    },
+    {
+      "path": "Observability/ErgenticsResearch/Sources/ErgenticsShotResearchCore/DisposalShotResearchPrimitives.swift",
+      "git_blob": "bdd04c7f6865ce9138678ab25959103dd20d0319",
+      "bytes": 15691,
+      "sha256": "d51902279bf6027cfd12f47c79a70652b9c8fe0b162b5b7cbf9eec1587217b8d"
+    },
+    {
+      "path": "Observability/ErgenticsResearch/Sources/ErgenticsShotResearchCore/Resources/disposal-hypothesis-lattice.v1.json",
+      "git_blob": "1bfb4f3416f6e8c9b347bbf21cfb821ace9c35e1",
+      "bytes": 917,
+      "sha256": "9284a87263a28b4a5e33b5629d672cb020b8d5f47bf319fdfc36ec56f8fd89fd"
+    },
+    {
+      "path": "Observability/ErgenticsResearch/Tests/ErgenticsShotResearchCoreTests/C2V9TimingSupervisorTests.swift",
+      "git_blob": "c1e7d024d6e358bf2fa48c6db01c2729aeda17f2",
+      "bytes": 8760,
+      "sha256": "4a0dbe29580401c2789089c4639c008601364882a93ded3bf0255b5250c87e1b"
+    },
+    {
+      "path": "Observability/ErgenticsResearch/Tests/ErgenticsShotResearchCoreTests/DisposalShotResearchLatticeTests.swift",
+      "git_blob": "8c49b28cb6878a24811d34c66b8da817729e96e6",
+      "bytes": 23169,
+      "sha256": "d57ed527551bb11a2cae6f4855a2697547c47efb5099121c08475d504d3f65ce"
+    }
+  ],
+  "host": {
+    "execution_venue": "LOCAL_PINNED_APPLE_SILICON_HOST",
+    "model": "Mac17,7",
+    "processor": "Apple M5 Max",
+    "logical_cpu_count": 18,
+    "memory_bytes": 137438953472,
+    "architecture": "arm64",
+    "macos_product_version": "26.5.2",
+    "macos_build": "25F84",
+    "darwin_release": "25.5.0",
+    "xcode_version": "26.6",
+    "xcode_build": "17F113",
+    "macos_14_physical_host_execution": "DEFERRED_NOT_CLAIMED",
+    "macos_15_physical_host_execution": "DEFERRED_NOT_CLAIMED",
+    "deployment_target_14_is_not_a_macos_14_host_execution": true
+  },
+  "fixed_filesystem_authorities": {
+    "private_tmp": {
+      "path": "/private/tmp",
+      "device": 16777231,
+      "inode": 774813,
+      "uid": 0,
+      "gid": 0,
+      "mode": "1777",
+      "nlink_and_size": "OBSERVATIONAL_NOT_PINNED"
+    },
+    "cwd": {
+      "path": "/private/var/empty",
+      "device": 16777231,
+      "inode": 774080,
+      "uid": 0,
+      "gid": 3,
+      "mode": "0755"
+    },
+    "stdin": {
+      "path": "/dev/null",
+      "device": -458678049,
+      "inode": 336,
+      "uid": 0,
+      "gid": 0,
+      "mode": "0666",
+      "rdev": 50331650,
+      "type": "CHARACTER"
+    },
+    "package": {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/Observability/ErgenticsResearch",
+      "device": 16777231,
+      "inode": 17996559,
+      "uid": 501,
+      "gid": 20,
+      "mode": "0755"
+    }
+  },
+  "toolchain": {
+    "developer_dir": "/Applications/Xcode.app/Contents/Developer",
+    "sdk": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+    "sdk_symlink_target": "MacOSX.sdk",
+    "sdk_settings_json_sha256": "f8d005f09381389167f9e0aeaa169bc9e7dff162ef22ca2fd8e98df7ff1acafe",
+    "sdk_settings_plist_sha256": "e5c7c40b8c5dc1a9f99f8b9fa51870f8fe180421225b8201d0c4c826aad11bdc",
+    "xcode_version_plist_sha256": "951ddf34d65d84d57684bd083ca7deebf8d5722eefb074f3cdf00f8304d5f511",
+    "xcode_info_plist_sha256": "224c27a718df1d8b4e785d29d06259e0a9326c424e70d30efab9c587463f719a",
+    "swift_package": {
+      "path": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-package",
+      "sha256": "dc1a5f5bd4f05be81b8cc4a4bc6e0fd8846210e4cb829062d0fed3d03f79b753",
+      "bytes": 23293616,
+      "device": 16777231,
+      "inode": 1118471,
+      "uid": 0,
+      "gid": 0,
+      "mode": "0755",
+      "uuid": "561F6755-7606-396F-9382-B01D5CC7EDFB",
+      "cdhash": "17192820b8d434a4bf384caf966435288af5c609"
+    },
+    "swift_test": {
+      "path": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-test",
+      "type": "SYMLINK",
+      "target": "swift-package",
+      "device": 16777231,
+      "inode": 1118421
+    },
+    "swift_build": {
+      "path": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-build",
+      "type": "SYMLINK",
+      "target": "swift-package",
+      "device": 16777231,
+      "inode": 1118475
+    }
+  },
+  "transport_tools": [
+    {"path":"/usr/bin/env","bytes":102368,"device":16777231,"inode":1152921500312571972,"sha256":"6e506aec3c0cff703ac1e66cedc6f1945354ad41339a38db4425c7c88227128f"},
+    {"path":"/bin/zsh","bytes":1361216,"device":16777231,"inode":1152921500312571448,"sha256":"1f473d234dd65157f530b4f676686517ec97fe9aa64c76d82f2611674cc44314"},
+    {"path":"/bin/mkdir","bytes":101472,"device":16777231,"inode":1152921500312571416,"sha256":"08a20adeeff9bea14bae05c0a7f3c77c638b2b83fc3ab37e1c646e047bac7002"}
+  ],
+  "analyzer_tools": [
+    {"path":"/usr/bin/stat","bytes":118768,"device":16777231,"inode":1152921500312572687,"sha256":"934656def5cfb8e85b2e4d983bb59ba97479cec49b63b4ea2fa42d067c569242"},
+    {"path":"/usr/bin/cmp","bytes":102304,"device":16777231,"inode":1152921500312571775,"sha256":"0f5da62f0875e924e5774371a954828b7e88143597bd38d9863ad223d886fd7b"},
+    {"path":"/usr/bin/shasum","bytes":9979,"device":16777231,"inode":1152921500312572764,"sha256":"0812595f981a26f813d98dc380af14d4af427626c9339eda29eb849ae13de1e3"},
+    {"path":"/usr/bin/file","bytes":534480,"device":16777231,"inode":1152921500312572000,"sha256":"a4ba66d26a9cfdc70637c78cdacef920f94147f6aa45ccc73858e493589ef94d"},
+    {"path":"/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-nm","bytes":16380560,"device":16777231,"inode":1118384,"sha256":"d910f3acb104791e5475254000ede2aa129aa1a42eafcc7f5bdb27afffc642dc"},
+    {"path":"/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-otool","bytes":72672,"device":16777231,"inode":1118360,"sha256":"be184bb7054565eae25193e45e4235ea2d372c1eb6288ce900b2fad6d9dcc3f3"},
+    {"path":"/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-dwarfdump","bytes":13099568,"device":16777231,"inode":1118436,"sha256":"e49099fc871e88f10cd7865dfbde5a8f574da31d03f197a70fcad1daaff4e32d"},
+    {"path":"/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-size","bytes":4494240,"device":16777231,"inode":1118393,"sha256":"acd76d8088120e1b5c24ca9fb33af7ea56bc75abf0be46af162cd738a66416ed"},
+    {"path":"/usr/bin/codesign","bytes":459824,"device":16777231,"inode":1152921500312571780,"sha256":"214d455584d19abc0d74d02b9cbc7d3da6bdcb0596c235e6156dd9ed2f4e1ba7"},
+    {"path":"/usr/bin/strings","bytes":118928,"device":16777231,"inode":1152921500312571585,"sha256":"179301dcb41ea78accc3fa0048a7e6f6710d891945a751a34addd622020c1818"},
+    {"path":"/usr/bin/grep","bytes":153760,"device":16777231,"inode":1152921500312571728,"sha256":"569588bf23c56895f046b63b029285217e442d46bec1b18498b58fefb50d8f1f"},
+    {"path":"/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-objdump","bytes":18272848,"device":16777231,"inode":1118338,"sha256":"3cccdd0dad838d2130d7fc6237aa176c8c13a593a56b79c64fd980ddb89c670c"},
+    {"path":"/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-demangle","bytes":1197264,"device":16777231,"inode":1118329,"sha256":"86ab42170ae98b99a935c521160352e598263c62a41e66fc7d1e44e3f9d814ef"}
+  ],
+  "sdk_constant_witnesses": {
+    "headers": [
+      {"path":"usr/include/libproc.h","bytes":7575,"sha256":"246d87709fc6b9157ce5cf3c475656ac48e0e1ae8bbdc46cf45acd34294448cd"},
+      {"path":"usr/include/sys/proc_info.h","bytes":31262,"sha256":"e427fa96b348537b21552b9de71e01039410bcad2cedee5584c5e5fddafd70fc"},
+      {"path":"usr/include/sys/fcntl.h","bytes":26949,"sha256":"805fd8c695f8e5e1c327b6852382cc5533738bbfd8f18bc11f850531166e4fe8"},
+      {"path":"usr/include/sys/spawn.h","bytes":3492,"sha256":"8e73a88c3f63dae77ebf831737942e82ee7c78a7af1446fdbb1ee7ac6804a7e4"}
+    ],
+    "PROC_PIDTBSDINFO": 3,
+    "PROC_PIDTBSDINFO_BYTES": 136,
+    "PROC_PIDREGIONPATHINFO": 8,
+    "PROC_PIDREGIONPATHINFO_BYTES": 1272,
+    "PROC_PIDPATHINFO_MAXSIZE": 4096,
+    "REGION_PROTECTION_OFFSET": 0,
+    "REGION_FILE_OFFSET_OFFSET": 16,
+    "REGION_ADDRESS_OFFSET": 80,
+    "REGION_SIZE_OFFSET": 88,
+    "REGION_DEVICE_OFFSET": 96,
+    "REGION_INODE_OFFSET": 104,
+    "REGION_PATH_OFFSET": 248,
+    "REGION_PATH_BYTES": 1024,
+    "VM_PROT_EXECUTE": 4,
+    "O_CLOEXEC": "0x01000000",
+    "F_GETFD": 1,
+    "F_SETFD": 2,
+    "FD_CLOEXEC": 1,
+    "POSIX_SPAWN_CLOEXEC_DEFAULT": "0x4000"
+  },
+  "attempt": {
+    "attempt_id": "R19_OBS11_C2_V10_BUILD_58CAAF0C_FA532883",
+    "consumption_boundary": "ENTRY_OF_R00_ROOT_CONSTRUCTOR_OUTER_TRANSPORT",
+    "shell_env_or_exec_failure_after_boundary_consumes": true,
+    "single_reserved_sequence": true,
+    "later_operations_are_bounded_continuations_not_retries": true,
+    "stop_at_first_failure": true,
+    "retain_every_prefix_and_outcome": true,
+    "retry": false,
+    "cleanup": false,
+    "repair": false,
+    "root_reuse": false,
+    "timeout": false,
+    "signals": false,
+    "network": false,
+    "python": false
+  },
+  "roots": {
+    "test": "/private/tmp/ergentics-r19-obs11-c2-attempt-supervisor-58caaf0c-fa532883-test-v10",
+    "build_a": "/private/tmp/ergentics-r19-obs11-c2-attempt-supervisor-58caaf0c-fa532883-build-a-v10",
+    "build_b": "/private/tmp/ergentics-r19-obs11-c2-attempt-supervisor-58caaf0c-fa532883-build-b-v10",
+    "first_named_absence_observation": "PASS_2026-08-27T06:54:25Z",
+    "second_named_absence_observation": "REQUIRED_IMMEDIATELY_BEFORE_R00",
+    "mode": "0700",
+    "uid": 501,
+    "gid": 0,
+    "umask": "0077",
+    "children_exact_sorted": [
+      "cache",
+      "captures",
+      "clang-module-cache",
+      "config",
+      "home",
+      "scratch",
+      "security",
+      "swiftpm-module-cache",
+      "tmp"
+    ],
+    "children_count": 9,
+    "children_initial_mode": "0700",
+    "children_initial_uid": 501,
+    "children_initial_gid": 0,
+    "creation": "R00_ONE_ENV_I_ZSH_F_CONSTRUCTOR_MKDIR_NO_P_NO_REPLACE",
+    "partial_creation_failure": "CONSUMED_RETAIN_EXACT_PREFIX_STOP",
+    "permanent_retention": true
+  },
+  "swiftpm_transport": {
+    "outer_prefix": [
+      "/usr/bin/env",
+      "-i",
+      "PATH=/usr/bin:/bin",
+      "/bin/zsh",
+      "-f",
+      "-c"
+    ],
+    "outer_payload_prefix": "setopt NO_CLOBBER; umask 0077; exec /usr/bin/env -i <EXACT_16_ENV> <LOGICAL_SYMLINK_PATH> <ARGV> </dev/null >EXCLUSIVE_STDOUT 2>EXCLUSIVE_STDERR",
+    "second_env_i_removes_zsh_home_logname_pwd_oldpwd_shlvl_and_underscore": true,
+    "direct_env_i_witness_command": ["/usr/bin/env","-i","A=B","/usr/bin/env"],
+    "direct_env_i_witness_stdout_exact": "A=B\n",
+    "physical_executable_after_symlink_resolution": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-package",
+    "test_logical_argv0_path": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-test",
+    "build_logical_argv0_path": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-build",
+    "literal_test_or_build_subcommand_arguments": 0,
+    "cwd": "/private/var/empty",
+    "stdin": "/dev/null",
+    "stdout_stderr": "TWO_DISTINCT_EXCLUSIVE_REGULAR_FILES_NO_PIPE_NO_PIPE_DEADLOCK",
+    "capture_initial_mode": "0600",
+    "capture_postexit_limit_bytes_each": 16777216,
+    "capture_limit_enforcement": "POSTEXIT_ADMISSION_ONLY_NOT_RUNTIME_TRUNCATION",
+    "capture_overflow": "RETAIN_COMPLETE_FILE_FAIL_CLOSED_STOP_NO_RETRY",
+    "unbounded_output_residual": "DISK_GROWTH_OR_EXHAUSTION_BEFORE_POSTEXIT_CAP_CHECK_NOT_KERNEL_CONFINED",
+    "outer_timeout": false,
+    "signals": 0
+  },
+  "swiftpm_environment_template_ordered": [
+    "CFFIXED_USER_HOME=<ROOT>/home",
+    "CLANG_MODULE_CACHE_PATH=<ROOT>/clang-module-cache",
+    "DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer",
+    "LANG=C.UTF-8",
+    "LC_ALL=C.UTF-8",
+    "MACOSX_DEPLOYMENT_TARGET=14.0",
+    "PATH=/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin:/usr/bin:/bin",
+    "SDKROOT=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+    "SOURCE_DATE_EPOCH=1787811884",
+    "SWIFTPM_MODULECACHE_OVERRIDE=<ROOT>/swiftpm-module-cache",
+    "TERM=dumb",
+    "TMPDIR=<ROOT>/tmp/",
+    "TZ=UTC",
+    "XDG_CACHE_HOME=<ROOT>/cache",
+    "XDG_CONFIG_HOME=<ROOT>/config",
+    "__CF_USER_TEXT_ENCODING=0x1F5:0x0:0x0"
+  ],
+  "swiftpm_environment_count_exact": 16,
+  "swiftpm_home_variable_present": false,
+  "swiftpm_underscore_variable_present": false,
+  "swiftpm_common_argv_template": [
+    "--package-path",
+    "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/Observability/ErgenticsResearch",
+    "--scratch-path",
+    "<ROOT>/scratch",
+    "--cache-path",
+    "<ROOT>/cache",
+    "--config-path",
+    "<ROOT>/config",
+    "--security-path",
+    "<ROOT>/security",
+    "--configuration",
+    "release",
+    "--triple",
+    "arm64-apple-macosx14.0",
+    "--jobs",
+    "1",
+    "--disable-automatic-resolution",
+    "--disable-sandbox",
+    "-Xswiftc",
+    "-gnone",
+    "-Xswiftc",
+    "-no-serialize-debugging-options",
+    "-Xcc",
+    "-g0"
+  ],
+  "operation_order": [
+    "R00_ROOT_CONSTRUCTOR",
+    "T01_SUPPORT_AND_COMPARATOR_API",
+    "B01_BUILD_A_HYPOTHESIS_RESULT_COMPARATOR",
+    "B02_BUILD_A_ATTEMPT_SUPERVISOR",
+    "B03_BUILD_B_HYPOTHESIS_RESULT_COMPARATOR",
+    "B04_BUILD_B_ATTEMPT_SUPERVISOR",
+    "M00_PRODUCT_AND_OBJECT_LSTAT_ONLY",
+    "A01_CMP_COMPARATOR_AB",
+    "A02_CMP_SUPERVISOR_AB",
+    "A03_SHA256_PRODUCTS_AND_SUPERVISOR_OBJECTS",
+    "A04_FILE_CA","A05_NM_DEFINED_CA","A06_NM_UNDEFINED_CA","A07_OTOOL_HEADER_CA","A08_OTOOL_LOAD_CA","A09_OTOOL_LIBS_CA","A10_DWARF_UUID_CA","A11_SIZE_CA","A12_CODESIGN_DISPLAY_CA","A13_CODESIGN_VERIFY_CA","A14_STRINGS_CA",
+    "A15_FILE_CB","A16_NM_DEFINED_CB","A17_NM_UNDEFINED_CB","A18_OTOOL_HEADER_CB","A19_OTOOL_LOAD_CB","A20_OTOOL_LIBS_CB","A21_DWARF_UUID_CB","A22_SIZE_CB","A23_CODESIGN_DISPLAY_CB","A24_CODESIGN_VERIFY_CB","A25_STRINGS_CB",
+    "A26_FILE_SA","A27_NM_DEFINED_SA","A28_NM_UNDEFINED_SA","A29_OTOOL_HEADER_SA","A30_OTOOL_LOAD_SA","A31_OTOOL_LIBS_SA","A32_DWARF_UUID_SA","A33_SIZE_SA","A34_CODESIGN_DISPLAY_SA","A35_CODESIGN_VERIFY_SA","A36_STRINGS_SA",
+    "A37_FILE_SB","A38_NM_DEFINED_SB","A39_NM_UNDEFINED_SB","A40_OTOOL_HEADER_SB","A41_OTOOL_LOAD_SB","A42_OTOOL_LIBS_SB","A43_DWARF_UUID_SB","A44_SIZE_SB","A45_CODESIGN_DISPLAY_SB","A46_CODESIGN_VERIFY_SB","A47_STRINGS_SB",
+    "A48_RAW_NEEDLE_CA","A49_RAW_NEEDLE_CB","A50_RAW_NEEDLE_SA","A51_RAW_NEEDLE_SB",
+    "A52_OBJECT_NM_OA","A53_OBJECT_NM_OB","A54_DEMANGLE_OA","A55_DEMANGLE_OB","A56_OBJDUMP_OA","A57_OBJDUMP_OB"
+  ],
+  "swiftpm_operations": {
+    "T01_SUPPORT_AND_COMPARATOR_API": {
+      "root": "test",
+      "logical_argv0": "swift-test",
+      "appended_argv": [
+        "--filter",
+        "C2V9TimingSupervisorTests|DisposalShotResearchLatticeTests.*(resultDelta|resultRequiresAdmittedPrecheck|timingJoin)"
+      ],
+      "expected_test_count": 7,
+      "executed_test_groups": {
+        "C2V9TimingSupervisorTests": 4,
+        "pure_in_memory_comparator_api": ["resultDelta","resultRequiresAdmittedPrecheck","timingJoin"]
+      },
+      "excluded_test": "checkerExecutableRoundTrip",
+      "test_build_subset": "ALL_INCLUDING_TESTS",
+      "expected_unexecuted_executable_byproducts": [
+        "ErgenticsShotHypothesisChecker",
+        "ErgenticsShotAttemptSupervisor",
+        "ErgenticsShotHypothesisResultComparator"
+      ],
+      "test_root_checker_later_offline_candidate": true,
+      "test_root_supervisor_and_comparator_permanently_disqualified": true,
+      "test_root_product_copy_hardlink_rename_or_ab_substitution": false,
+      "stdout_leaf": "captures/00-test-stdout.bin",
+      "stderr_leaf": "captures/00-test-stderr.bin"
+    },
+    "B01_BUILD_A_HYPOTHESIS_RESULT_COMPARATOR": {
+      "root": "build_a",
+      "logical_argv0": "swift-build",
+      "appended_argv": ["--product","ErgenticsShotHypothesisResultComparator"],
+      "stdout_leaf": "captures/00-comparator-stdout.bin",
+      "stderr_leaf": "captures/00-comparator-stderr.bin"
+    },
+    "B02_BUILD_A_ATTEMPT_SUPERVISOR": {
+      "root": "build_a",
+      "logical_argv0": "swift-build",
+      "appended_argv": ["--product","ErgenticsShotAttemptSupervisor"],
+      "stdout_leaf": "captures/01-supervisor-stdout.bin",
+      "stderr_leaf": "captures/01-supervisor-stderr.bin"
+    },
+    "B03_BUILD_B_HYPOTHESIS_RESULT_COMPARATOR": {
+      "root": "build_b",
+      "logical_argv0": "swift-build",
+      "appended_argv": ["--product","ErgenticsShotHypothesisResultComparator"],
+      "stdout_leaf": "captures/00-comparator-stdout.bin",
+      "stderr_leaf": "captures/00-comparator-stderr.bin"
+    },
+    "B04_BUILD_B_ATTEMPT_SUPERVISOR": {
+      "root": "build_b",
+      "logical_argv0": "swift-build",
+      "appended_argv": ["--product","ErgenticsShotAttemptSupervisor"],
+      "stdout_leaf": "captures/01-supervisor-stdout.bin",
+      "stderr_leaf": "captures/01-supervisor-stderr.bin"
+    }
+  },
+  "fixed_outputs": {
+    "release_relative": "scratch/arm64-apple-macosx/release",
+    "test_checker": "<TEST>/scratch/arm64-apple-macosx/release/ErgenticsShotHypothesisChecker",
+    "comparator_a": "<A>/scratch/arm64-apple-macosx/release/ErgenticsShotHypothesisResultComparator",
+    "supervisor_a": "<A>/scratch/arm64-apple-macosx/release/ErgenticsShotAttemptSupervisor",
+    "comparator_b": "<B>/scratch/arm64-apple-macosx/release/ErgenticsShotHypothesisResultComparator",
+    "supervisor_b": "<B>/scratch/arm64-apple-macosx/release/ErgenticsShotAttemptSupervisor",
+    "supervisor_object_a": "<A>/scratch/arm64-apple-macosx/release/ErgenticsShotAttemptSupervisor.build/main.swift.o",
+    "supervisor_object_b": "<B>/scratch/arm64-apple-macosx/release/ErgenticsShotAttemptSupervisor.build/main.swift.o"
+  },
+  "analyzer_contract": {
+    "metadata_outer_entries": 1,
+    "content_analyzer_outer_entries_exact_on_success": 57,
+    "total_postbuild_observer_outer_entries_exact_on_success": 58,
+    "first_content_operations_exact": ["A01_CMP_COMPARATOR_AB","A02_CMP_SUPERVISOR_AB"],
+    "semantic_analyzers_before_both_cmps_pass": 0,
+    "product_order": ["CA","CB","SA","SB"],
+    "per_product_tool_argv_templates": [
+      ["/usr/bin/file","-b","<X>"],
+      ["<TC>/llvm-nm","--defined-only","--extern-only","<X>"],
+      ["<TC>/llvm-nm","-u","<X>"],
+      ["<TC>/llvm-otool","-hv","<X>"],
+      ["<TC>/llvm-otool","-l","<X>"],
+      ["<TC>/llvm-otool","-L","<X>"],
+      ["<TC>/llvm-dwarfdump","--uuid","<X>"],
+      ["<TC>/llvm-size","-m","<X>"],
+      ["/usr/bin/codesign","-d","--verbose=4","<X>"],
+      ["/usr/bin/codesign","--verify","--strict","--verbose=4","<X>"],
+      ["/usr/bin/strings","-a","-n","4","--","<X>"]
+    ],
+    "raw_needle_scan_tool": "/usr/bin/grep -a -F -q WITH_FIVE_EXACT_E_PATTERNS",
+    "raw_needle_patterns": [
+      "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging",
+      "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/Observability/ErgenticsResearch",
+      "/private/tmp/ergentics-r19-obs11-c2-attempt-supervisor-58caaf0c-fa532883-test-v10",
+      "/private/tmp/ergentics-r19-obs11-c2-attempt-supervisor-58caaf0c-fa532883-build-a-v10",
+      "/private/tmp/ergentics-r19-obs11-c2-attempt-supervisor-58caaf0c-fa532883-build-b-v10"
+    ],
+    "raw_needle_expected_exit": 1,
+    "raw_needle_expected_output_bytes": 0,
+    "object_nm_argv": ["<TC>/llvm-nm","--defined-only","--numeric-sort","<O>"],
+    "demangle_argv": ["<TC>/swift-demangle","--compact"],
+    "objdump_argv": ["<TC>/llvm-objdump","--macho","--disassemble","--reloc","--no-show-raw-insn","--print-imm-hex","<O>"],
+    "captures": "EXACT_OPERATION_ID_DOT_STDOUT_BIN_AND_DOT_STDERR_BIN_UNDER_BUILD_A_CAPTURES",
+    "postexit_caps": {
+      "cmp_each_channel": 4096,
+      "file_nm_otool_dwarfdump_size_codesign_each_channel": 4194304,
+      "strings_each_channel": 16777216,
+      "object_nm_and_demangle_each_channel": 8388608,
+      "objdump_each_channel": 67108864,
+      "product_or_object_raw_bytes": 67108864
+    }
+  },
+  "build_acceptance": {
+    "swiftpm_test_exit": 0,
+    "test_count_exact": 7,
+    "swiftpm_build_exits": [0,0,0,0],
+    "captures_complete_and_within_postexit_caps": true,
+    "source_head_tree_and_package_closure_unchanged": true,
+    "products_regular_non_symlink_uid": 501,
+    "products_expected_gid": 0,
+    "products_expected_mode": "0755",
+    "products_nlink": 1,
+    "products_flags": 0,
+    "objects_expected_mode": "0644",
+    "a_b_product_vnodes_distinct": true,
+    "raw_comparator_a_b_equal": true,
+    "raw_supervisor_a_b_equal": true,
+    "format": "THIN_ARM64_MH_EXECUTE",
+    "minimum_macos": "14.0",
+    "sdk": "26.5",
+    "lc_uuid_exactly_one": true,
+    "lc_build_version_exactly_one": true,
+    "lc_main_exactly_one": true,
+    "lc_code_signature_exactly_one": true,
+    "codesign_strict_verify": true,
+    "code_directory_hash_type": "SHA256",
+    "a_b_normalization": "ONLY_EXACT_PATH_FRAMING_FIELDS_NEVER_SEMANTIC_BODY_UUID_CDHASH_SIGNATURE_COMMANDS_SYMBOLS_OR_SIZES",
+    "system_only_linked_images": true,
+    "raw_root_path_needle_occurrences": 0,
+    "supervisor_required_strings": ["/usr/bin/ruby","--disable-gems","/dev/fd/3","__CF_USER_TEXT_ENCODING=0x1F5:0x0:0x0"],
+    "supervisor_object_raw_a_b_equality_required": false,
+    "supervisor_object_normalized_disassembly_a_b_equal": true,
+    "start_boundary": "MACH_CONTINUOUS_TIME_THEN_FIRST_FOLLOWING_CALL_OR_BRANCH_TARGET_MKDIRAT_NO_INTERVENING_BRANCH_CALL_RUNTIME_ALLOCATION_EXCLUSIVITY_OR_SYSCALL",
+    "end_boundary": "FINAL_CAPTURE_ROOT_REJOIN_COMPARISON_SUCCESS_PATH_FIRST_SUBSEQUENT_CALL_MACH_CONTINUOUS_TIME_NO_INTERVENING_CALL_RUNTIME_ALLOCATION_OR_EXCLUSIVITY",
+    "supervisor_callsite_counts": {
+      "posix_spawn": 1,
+      "waitpid": 1,
+      "mach_continuous_time": 2,
+      "mkdirat": 1,
+      "posix_spawn_file_actions_adddup2": 4,
+      "posix_spawn_file_actions_addclose": 1,
+      "posix_spawnattr_setflags": 1
+    },
+    "child_dup_destinations_exact": [0,1,2,3],
+    "runner_source_destination_fd": 3,
+    "forbidden_imports": ["kill","signal","alarm","setitimer","fork","execve","system","popen","socket","connect"],
+    "comparator_forbidden_imports": ["proc_pidinfo","proc_pidpath","posix_spawn","waitpid","mkdirat"]
+  },
+  "mode_disposition": {
+    "build_a_supervisor_postbuild_mode": "0755",
+    "classification": "BUILD_REPRODUCIBLE_RUNTIME_INELIGIBLE_MODE_0755",
+    "supervisor_entry_authorized": false,
+    "required_successor_before_final_live_readiness": "SEPARATELY_FROZEN_DESCRIPTOR_ROOTED_0755_TO_0500_SEAL_SYNC_NAMED_HELD_REJOIN_REHASH_MACHO_AND_SIGNATURE_REVALIDATION",
+    "named_path_chmod_is_not_authorized": true,
+    "mode_seal_hidden_inside_analyzer_phase": false
+  },
+  "timing_and_hypothesis_deferral": {
+    "build_timing": "NONAUTHORITATIVE_METADATA_ONLY",
+    "canonical_live_clock": "mach_continuous_time",
+    "canonical_live_duration": "EXACT_REDUCED_RATIONAL_NANOSECONDS_FROM_END_TICK_MINUS_START_TICK_TIMES_TIMEBASE_NUMERATOR_OVER_DENOMINATOR",
+    "utc_role": "DISPLAY_ONLY",
+    "missing_endpoint_timebase_eof_reap_raw_or_conservation": "NO_CANONICAL_MEASUREMENT_ABSTAIN_NO_RETRY",
+    "hypothesis_registration": "PENDING_AFTER_COMMITTED_SUCCESSFUL_BUILD_RESULT_AND_MODE_SEAL",
+    "hypothesis_report": "PENDING",
+    "merkle_root_and_leaf_count": "PENDING",
+    "checker_offline_entry": "PENDING_MAXIMUM_ONE_FROM_RETAINED_TEST_ROOT_AFTER_BUILD_CHECKPOINT",
+    "result_delta_merkle": "PENDING_UNTIL_ACTUAL_LIVE_RESULT",
+    "sqlite_graph_and_koine_controller_feed": false,
+    "energy_measurement": "DEFERRED_NO_ENERGY_ACTION_IN_THIS_SLICE"
+  },
+  "result_and_outer_observation": {
+    "result_path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-attempt-supervisor-build-result.v10.json",
+    "outer_observation_path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-attempt-supervisor-build-outer-observation.v10.json",
+    "result_must_record": [
+      "ATTEMPTS_ENTRIES_EXITS_AND_FIRST_FAILED_OR_UNENTERED_OPERATION",
+      "EXACT_ROOT_AND_CAPTURE_INVENTORIES_VNODES_BYTES_HASHES_AND_MODES",
+      "FULL_TEST_BUILD_AND_ANALYZER_CAPTURE_HASHES",
+      "TEST_CHECKER_BUILD_A_COMPARATOR_AND_A_B_SUPERVISOR_IDENTITIES",
+      "RAW_A_B_COMPARISONS_AND_NARROW_NORMALIZED_ANALYZER_COMPARISONS",
+      "OBJECT_BOUNDARY_DISASSEMBLY_AND_CALLSITE_PREDICATES",
+      "SOURCE_TOOL_SDK_AND_POSTFLIGHT_CONSERVATION",
+      "ZERO_LIVE_PRODUCT_ENTRIES_AND_AUTHORITY_VECTOR"
+    ],
+    "missing_result_or_outer_observation": "INCOMPLETE_NOT_PASS_NO_PROSE_REPAIR"
+  },
+  "entries_before_this_readiness_commit": {
+    "root_constructor_entries": 0,
+    "swiftpm_test_entries": 0,
+    "swiftpm_build_entries": 0,
+    "analyzer_entries": 0,
+    "test_executable_entries": 0,
+    "checker_entries": 0,
+    "supervisor_entries": 0,
+    "comparator_entries": 0,
+    "runner_entries": 0,
+    "bundle_entries": 0,
+    "signals": 0,
+    "timeouts": 0,
+    "cleanup": 0,
+    "python": 0,
+    "network": 0,
+    "github": 0,
+    "energy": 0
+  },
+  "authority": {
+    "authority_vector": "00000000",
+    "authoritative": false,
+    "gate_e": "ABSTAIN",
+    "scientific_outcome": "ABSTAIN",
+    "prose_may_supply_fact": false,
+    "may_feed_controller": false,
+    "this_readiness_authorizes_only_the_single_build_only_sequence": false,
+    "live_attempt_authorized": false,
+    "supervisor_entry_authorized": false,
+    "comparator_entry_authorized": false,
+    "runner_entry_authorized": false,
+    "bundle_entry_authorized": false,
+    "checker_entry_authorized_before_build_checkpoint": false
+  },
+  "next": {
+    "step": "DURABLY_RECORD_HOLD_THEN_FREEZE_IMPLEMENT_AND_REVIEW_A_CLOSED_ZERO_ARGUMENT_BUILD_AND_ANALYZER_CONTROLLER_BEFORE_ANY_ROOT_OR_PROCESS_ENTRY",
+    "no_entry_if_any_hash_path_identity_environment_argv_order_root_or_authority_fact_differs": true
+  },
+  "artifact_addressing": "NO_RECORD_EMBEDS_ITS_OWN_HASH_OR_CONTAINING_COMMIT;SUCCESSOR_GIT_COMMIT_AND_TREE_CONTENT_ADDRESS_THIS_READINESS"
+}
