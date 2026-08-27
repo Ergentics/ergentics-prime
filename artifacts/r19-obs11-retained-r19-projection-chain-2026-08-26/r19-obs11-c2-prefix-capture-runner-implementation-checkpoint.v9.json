@@ -1,0 +1,207 @@
+{
+  "schema": "ergentics-r19-obs11-c2-prefix-capture-runner-implementation-checkpoint-v9",
+  "status": "V9_IMPLEMENTATION_AND_SINGLE_PARSE_ADMISSION_PASS_NO_LIVE_ENTRY",
+  "rank": "CONTROL_ONLY_PRELAUNCH_IMPLEMENTATION_CHECKPOINT",
+  "predecessor": {
+    "live_freeze_commit": "c91859792277df5581fc3f9ee754d3774ee5289e",
+    "live_freeze_tree": "c3302539ac2403d043a82bac3e2bcd93d433cd7a",
+    "live_freeze_path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prefix-capture-runner-live-freeze.v9.json",
+    "live_freeze_sha256": "b6b52b5af55c5997c43e2186771ccefd844b28ccca8a1ba4b776d9943632a3c2",
+    "live_freeze_git_blob": "a103c529ca7ce4b393041dcc1ac6855443d78814"
+  },
+  "implementation": {
+    "commit": "0a30a62187f810e5d1de18a596e9c96672c3b348",
+    "tree": "0b0f88713dfb71ee590f098df97200bd3bf947d8",
+    "parent_commit": "c91859792277df5581fc3f9ee754d3774ee5289e",
+    "parent_tree": "c3302539ac2403d043a82bac3e2bcd93d433cd7a",
+    "changed_paths": [
+      "docs/tools/ergentics-r19-obs11-c2-prefix-capture-runner.v9.rb"
+    ]
+  },
+  "runner_source": {
+    "path": "docs/tools/ergentics-r19-obs11-c2-prefix-capture-runner.v9.rb",
+    "sha256": "ef865cca24d43e8d354a6cd247b17c1573c87b8a80496e91590551f5bf94e0d8",
+    "git_blob": "6fd46406f4a37f9dd62a703e80ef6857578941e9",
+    "bytes": 136351,
+    "lf_count": 3671,
+    "device": 16777231,
+    "inode": 18010932,
+    "uid": 501,
+    "gid": 20,
+    "mode": "0644",
+    "nlink": 1,
+    "flags": 0,
+    "language": "APPLE_RUBY_2_6_WITH_FIXED_ARITY_DARWIN_PRIMITIVES",
+    "diff_check": "PASS",
+    "source_was_not_loaded_or_evaluated": true
+  },
+  "single_postcommit_parse_admission": {
+    "command": [
+      "/usr/bin/ruby",
+      "--disable-gems",
+      "-c",
+      "docs/tools/ergentics-r19-obs11-c2-prefix-capture-runner.v9.rb"
+    ],
+    "implementation_commit_was_head_before_entry": true,
+    "ruby_parse_only_entries_exact": 1,
+    "exit": 0,
+    "stdout_utf8": "Syntax OK\n",
+    "stdout_bytes": 10,
+    "stderr_bytes": 0,
+    "top_level_evaluated": false,
+    "requires_loaded": false,
+    "bundle_load_entries": 0,
+    "native_helper_entries": 0,
+    "capture_root_creation_entries": 0,
+    "harness_entries": 0,
+    "child_spawn_entries": 0,
+    "canonical_wall_time": "NOT_ASSIGNED_PARSE_ONLY_METADATA_EXCLUDED"
+  },
+  "static_reviews": [
+    {
+      "review": "BUILD_A_IDENTITY_LOADER_MAPPING_AND_NATIVE_ACCOUNTING",
+      "decision": "GO",
+      "exact_source_sha256": "ef865cca24d43e8d354a6cd247b17c1573c87b8a80496e91590551f5bf94e0d8",
+      "exact_source_bytes": 136351,
+      "exact_source_lf_count": 3671,
+      "exact_source_git_blob": "6fd46406f4a37f9dd62a703e80ef6857578941e9",
+      "start_end_rehash_equal": true,
+      "blockers": []
+    },
+    {
+      "review": "RAW_JOURNAL_DURABILITY_AND_FAILURE_TOTALITY",
+      "decision": "GO",
+      "exact_source_sha256": "ef865cca24d43e8d354a6cd247b17c1573c87b8a80496e91590551f5bf94e0d8",
+      "exact_source_bytes": 136351,
+      "exact_source_lf_count": 3671,
+      "exact_source_git_blob": "6fd46406f4a37f9dd62a703e80ef6857578941e9",
+      "start_end_rehash_equal": true,
+      "blockers": []
+    },
+    {
+      "review": "RUBY_2_6_GRAMMAR_DESCRIPTOR_OWNERSHIP_AND_STATIC_SURFACE",
+      "decision": "GO",
+      "exact_source_sha256": "ef865cca24d43e8d354a6cd247b17c1573c87b8a80496e91590551f5bf94e0d8",
+      "exact_source_bytes": 136351,
+      "exact_source_lf_count": 3671,
+      "exact_source_git_blob": "6fd46406f4a37f9dd62a703e80ef6857578941e9",
+      "start_end_rehash_equal": true,
+      "blockers": []
+    }
+  ],
+  "native_and_journal_invariants": {
+    "static_native_transition_call_sites": 2,
+    "static_fiddle_function_call_sites": 1,
+    "helper_attempt_recorded_immediately_before_call": true,
+    "return_and_errno_out_read_adjacent_before_bookkeeping": true,
+    "helper_entry_requires_normal_fixed_wrapper_return": true,
+    "normal_return_minus_one_is_proven_libc_fchmod_reach_after_prevalidation_but_not_success": true,
+    "normal_return_zero_and_errno_zero_required_for_success": true,
+    "no_return_is_unproven_helper_entry_and_unproven_native_reach": true,
+    "success_helper_attempts_entries_reaches_and_successes_exact": 6,
+    "scientific_failure_helper_attempts_entries_reaches_and_successes_exact": 5,
+    "infrastructure_helper_attempts_maximum": 8,
+    "failed_helper_entries_maximum": 4,
+    "failed_helper_entries_maximum_control_flow_basis": {
+      "failed_or_unverified_00_prevents_child_and_raw_entries": true,
+      "branch_with_both_raw_failures_requires_verified_00": true,
+      "maximum_sequence": [
+        "01-stdout.bin",
+        "02-stderr.bin",
+        "99-incomplete.json",
+        "CONTAINMENT_ROOT"
+      ]
+    },
+    "durability_proof_stage": "FINAL_NAME_VNODE_JOIN_THEN_ROOT_FSYNC_AND_FULLFSYNC",
+    "late_reopen_read_close_and_rejoin_is_separate_verification": true,
+    "late_verification_failure_preserves_durable_identity": true,
+    "late_verification_failure_blocks_normal_forward_progress": true,
+    "raw_descriptor_ownership_fallbacks_complete": true,
+    "no_leaf_retry": true,
+    "outer_summary_cap": 16384,
+    "outer_failure_additive_max": 16384,
+    "outer_pass_additive_max": 16384,
+    "absolute_emergency_bytes": 865,
+    "absolute_emergency_lf_count": 1,
+    "absolute_emergency_sha256": "4d7cfa0376d71e215a68f5351ae523f67bd2b7d33f8784724f74a7444ce3ba5a",
+    "absolute_emergency_authority": "ABSTAIN",
+    "absolute_emergency_journal_contract": "UNSATISFIED_OUTER_ONLY_RECEIPT_RETENTION"
+  },
+  "build_a_static_binding": {
+    "root": "/private/tmp/ergentics-r19-obs11-c2-fchmod-bundle-v9-build-a-79e4211-00e9242e",
+    "object_sha256": "20502bf5d7958d9367712a01ba30c305840d65574d5bdd9f0c12d70a6d37a728",
+    "bundle_sha256": "09b8f7d5cb6104e13e2cbc0d3731e81031287f1d6e3436c14e0ef3937d5a0c71",
+    "bundle_uuid": "0371C336-3A6F-338E-9CD4-9349603C9F44",
+    "bundle_build_result": {
+      "commit": "5bc551c41f5f435765b433566aba53df772d4736",
+      "tree": "4cde0ea436ec92767b2b2b02bdfa5d0a864500a6",
+      "path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-fchmod-bundle-build-result.v9.json",
+      "sha256": "ebaf82a0d4b08cbf6d6d15331e13246ec01942fde2e881c965eb3fe9746d0bda",
+      "git_blob": "33f3e3d26a99515b06c384f1d9707fec3e659b3a",
+      "status": "PASS_TWO_BUILD_NATIVE_BUNDLE_IDENTICAL_UNEXECUTED"
+    },
+    "bundle_execution_entries_in_this_slice": 0,
+    "build_b_runtime_access": 0
+  },
+  "named_path_dlopen_toctou_residual": {
+    "status": "OPEN_NAMED_RESIDUAL_EXPLICITLY_CARRIED",
+    "fixed_bundle_path": "/private/tmp/ergentics-r19-obs11-c2-fchmod-bundle-v9-build-a-79e4211-00e9242e/libergentics-r19-obs11-c2-fchmod-v7.bundle",
+    "preload_held_descriptor_vnode_bytes_hash_and_macho_admission": true,
+    "loader_primitive": "Fiddle::Handle.new(FIXED_BUILD_A_BUNDLE_PATH,6)",
+    "kernel_confined_descriptor_load": false,
+    "race_window": "AFTER_PRELOAD_NAMED_HELD_REVALIDATION_BEFORE_DYLD_NAMED_PATH_OPEN",
+    "postload_detection": "DLSYM_SYMBOL_REGION_PATH_DEVICE_INODE_EXECUTE_PROTECTION_AND_ZERO_FILE_OFFSET_JOIN",
+    "postload_detection_is_not_preload_execution_confinement": true,
+    "possible_pre_detection_initializer_execution": true,
+    "disposition": "INHERITED_FROM_COMMITTED_FREEZE_AND_MUST_BE_RESTATED_IN_FINAL_READINESS",
+    "closed_by_this_checkpoint": false
+  },
+  "static_surface": {
+    "runner_top_level_entries": 0,
+    "ruby_parse_only_entries": 1,
+    "source_process_spawn_occurrences": 1,
+    "child_process_spawns": 0,
+    "source_process_kill_occurrences": 0,
+    "source_shell_or_popen_occurrences": 0,
+    "ruby_chmod_occurrences": 0,
+    "signals": 0,
+    "timeouts": 0,
+    "network_actions": 0,
+    "github_actions": 0,
+    "python_entries": 0,
+    "controller_bottom_entries": 0,
+    "swiftpm_spawns": 0,
+    "builds": 0,
+    "product_executions": 0,
+    "cleanup_actions": 0
+  },
+  "capture_namespace": {
+    "root": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-preconsumption-prefix-capture.v9",
+    "symlink_aware_state_after_parse_admission": "ABSENT",
+    "absence_authorizes_entry": false,
+    "absence_after_any_future_launch_attempt_authorizes_retry": false
+  },
+  "readiness": {
+    "final_readiness_path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prefix-harness-readiness.v9.json",
+    "state": "ABSENT_NOT_YET_FROZEN",
+    "timing_owner_state": "NOT_YET_FROZEN",
+    "runner_entry_authorized_by_this_checkpoint": false,
+    "three_exact_readiness_reviews_required": true,
+    "readiness_commit_required": true
+  },
+  "authority": {
+    "authority_vector": "00000000",
+    "authoritative": false,
+    "gate_e": "ABSTAIN",
+    "scientific_outcome": "ABSTAIN",
+    "prose_may_supply_fact": false,
+    "controller_or_build_authorized": false,
+    "runner_entry_authorized": false
+  },
+  "next": {
+    "step": "COMMIT_THIS_CHECKPOINT_THEN_FREEZE_SEPARATE_TIMING_OWNER_AND_FINAL_V9_READINESS",
+    "runner_entries_before_final_readiness_commit": 0,
+    "capture_root_creations_before_final_readiness_commit": 0
+  },
+  "artifact_addressing": "NO_RECORD_EMBEDS_ITS_OWN_HASH;SUCCESSOR_GIT_COMMIT_AND_TREE_CONTENT_ADDRESS_THIS_CHECKPOINT"
+}
