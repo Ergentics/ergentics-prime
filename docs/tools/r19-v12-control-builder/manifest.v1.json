@@ -1,0 +1,288 @@
+{
+  "schema": "ergentics.r19.v12-control-builder-manifest.v1",
+  "status": "PASS_EXACT_REPRODUCIBLE_CONTROL_CANDIDATE_PUBLICATION_ELIGIBLE",
+  "generated_at_utc_display_only": "2026-08-28T03:07:02Z",
+  "predecessor": {
+    "git_head": "77d2c2a7756c868ec71952ed8cf3e01f4eca4287",
+    "git_tree": "cfa14875c897c47cbadb2281f5ca79cc4eacb5ac",
+    "tracked_v11_path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-build-owner-correction-freeze.v11.json",
+    "tracked_v11_git_blob": "c0019234f447dd9d56c950b786332c3adfb1a66b",
+    "tracked_v11_sha256": "9ad4a9b9a3c40caec4ed7ff8f814d3a9cc2e4f589df0675dc9858636df7e513e",
+    "tracked_v11_bytes_uint": 79363,
+    "prepublication_v12_input_path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-build-owner-correction-freeze.v12.json",
+    "prepublication_v12_input_sha256": "e961c8cd7b8a5460166dbd251e895e15ad57bac483099858e5fdfe62baf7dc54",
+    "prepublication_v12_input_bytes_uint": 2291302,
+    "prepublication_v12_input_git_state": "IGNORED_UNTRACKED_UNTIL_THIS_PUBLICATION",
+    "retention_rule": "ATOMIC_PUBLISHER_RETAINS_BOTH_THE_ORIGINAL_TARGET_VNODE_AT_THE_EXCHANGE_LEAF_AND_AN_INDEPENDENT_HELD_DESCRIPTOR_CONTENT_CLONE"
+  },
+  "output": {
+    "candidate_sha256": "ad982343cd2c92cdf47eb6066147c824025da4f5c8f41be7e4563506c61a9255",
+    "candidate_bytes_uint": 50685975,
+    "candidate_terminal_lf_bool": true,
+    "canonical_target_path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-build-owner-correction-freeze.v12.json",
+    "publication_journal_path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-build-owner-correction-v12-publication.v1.jsonl",
+    "retained_exchange_leaf": ".r19-obs11-c2-build-owner-correction-freeze.v12.json.ad982343cd2c92cd.exchange-retained",
+    "retained_predecessor_content_leaf": ".r19-obs11-c2-build-owner-correction-freeze.v12.json.e961c8cd7b8a5460.predecessor-content-retained"
+  },
+  "builder": {
+    "runtime": "/usr/bin/ruby --disable-gems",
+    "runtime_family": "APPLE_RUBY_2_6",
+    "ambient_environment_dependency_count_uint": 0,
+    "replacement_environment_exact": {
+      "LANG": "C.UTF-8",
+      "LC_ALL": "C.UTF-8",
+      "PATH": "/usr/bin:/bin",
+      "TZ": "UTC"
+    },
+    "steps_exact_order": [
+      {
+        "ordinal_uint": 0,
+        "operation_enum": "COPY_EXACT_PREPUBLICATION_INPUT_TO_FRESH_OUTPUT",
+        "input_sha256": "e961c8cd7b8a5460166dbd251e895e15ad57bac483099858e5fdfe62baf7dc54",
+        "input_bytes_uint": 2291302
+      },
+      {
+        "ordinal_uint": 1,
+        "operation_enum": "BUILD_CUSTOM",
+        "environment_delta_exact": {
+          "V12_CUSTOM_WRITE": "1"
+        },
+        "argv_template_exact": [
+          "/usr/bin/ruby",
+          "--disable-gems",
+          "docs/tools/r19-v12-control-builder/build-custom.rb",
+          "<FRESH_OUTPUT_PATH>"
+        ],
+        "stdout_bytes_uint": 0,
+        "stderr_bytes_uint": 0
+      },
+      {
+        "ordinal_uint": 2,
+        "operation_enum": "FINALIZE_CONTROL",
+        "environment_delta_exact": {
+          "V12_FINAL_WRITE": "1"
+        },
+        "argv_template_exact": [
+          "/usr/bin/ruby",
+          "--disable-gems",
+          "docs/tools/r19-v12-control-builder/finalize-control.rb",
+          "<FRESH_OUTPUT_PATH>"
+        ],
+        "stdout_bytes_uint": 0,
+        "stderr_bytes_uint": 0
+      },
+      {
+        "ordinal_uint": 3,
+        "operation_enum": "AUDIT_CANDIDATE",
+        "environment_delta_exact": {},
+        "argv_template_exact": [
+          "/usr/bin/ruby",
+          "--disable-gems",
+          "docs/tools/r19-v12-control-builder/audit-candidate.rb",
+          "<FRESH_OUTPUT_PATH>"
+        ],
+        "expected_result_enum": "PASS",
+        "stderr_bytes_uint": 0
+      }
+    ],
+    "source_inventory_encoding": "COMPACT_RFC8259_JSON_ARRAY_IN_LISTED_ORDER_WITH_OBJECT_KEY_ORDER_path_bytes_uint_sha256_NO_TRAILING_LF",
+    "source_inventory_sha256": "77ccd45d4294e2754b20836a8c63bd751476bbb5b6b506faecad1782cf780741",
+    "sources_exact_order": [
+      {
+        "path": "docs/tools/r19-v12-control-builder/audit-candidate.rb",
+        "bytes_uint": 9846,
+        "sha256": "1a45d5757231109716f90ff27f5de7548bb808329711b4b56e6480155cb8ace0"
+      },
+      {
+        "path": "docs/tools/r19-v12-control-builder/base-carriers.rb",
+        "bytes_uint": 29876,
+        "sha256": "1f212abe0c2caf020cc08107f429ae1523d9fcefa722f455036f260bdd471644"
+      },
+      {
+        "path": "docs/tools/r19-v12-control-builder/build-custom.rb",
+        "bytes_uint": 134114,
+        "sha256": "98d6c9b575637b9428ed78f311cd0a56d5c926a7229701ee21687f4dc2626b0d"
+      },
+      {
+        "path": "docs/tools/r19-v12-control-builder/c3-carrier-v2.rb",
+        "bytes_uint": 20544,
+        "sha256": "5e0150ade3b2253f8f8b808fa04924a3508ac4cf68fa5d4488b6ab621dac9961"
+      },
+      {
+        "path": "docs/tools/r19-v12-control-builder/c3-static-model-v2.rb",
+        "bytes_uint": 55928,
+        "sha256": "b827e1fc417647542ce88bc598b3ba519943ce520bad48a3838d0020a3f32203"
+      },
+      {
+        "path": "docs/tools/r19-v12-control-builder/custom-projection-carriers.rb",
+        "bytes_uint": 44357,
+        "sha256": "4a1ab5eb48f29c622b73c482305966844843ac562f442840ba524ce4422fe6df"
+      },
+      {
+        "path": "docs/tools/r19-v12-control-builder/custom-projection-static-routes.rb",
+        "bytes_uint": 30217,
+        "sha256": "48db28bf3ab95f7c81a8221c8967b78b562fc510564d61ed0aab1e78aa87403a"
+      },
+      {
+        "path": "docs/tools/r19-v12-control-builder/finalize-control.rb",
+        "bytes_uint": 104235,
+        "sha256": "5cde5e1d4aabd9d758a352da23e5e25d63e05b257c65fdfb5f18441e5d553978"
+      },
+      {
+        "path": "docs/tools/r19-v12-control-builder/outer-carrier-v2.rb",
+        "bytes_uint": 86803,
+        "sha256": "ebc918bf22e23f5237cf8dc0a9caa503ddfdd4252f27101183609670e1a58b20"
+      },
+      {
+        "path": "docs/tools/r19-v12-control-builder/production-journal-boundary-overlay.rb",
+        "bytes_uint": 9459,
+        "sha256": "e5ffe5beb5270e056f69fa5c0418aa7c33bdf78b8c3100476970eda6268376ed"
+      },
+      {
+        "path": "docs/tools/r19-v12-control-builder/production-journal-conformance-fixtures.rb",
+        "bytes_uint": 47746,
+        "sha256": "d8d69cb2fa72ed4a4f2c7c7351f2257fdf9c052db0588bc7156912ace58574dc"
+      },
+      {
+        "path": "docs/tools/r19-v12-control-builder/production-journal-incomplete-body-builder.rb",
+        "bytes_uint": 6957,
+        "sha256": "77a99716b4653f66e77db8f6acc17881cff1a49aa9591253a932c8dbb6afcea2"
+      },
+      {
+        "path": "docs/tools/r19-v12-control-builder/production-operation-frame.rb",
+        "bytes_uint": 30782,
+        "sha256": "e0623293ccca899c1f770a2a6b921b94946ae278e30c9a39cb87bd5b3fe8aa7b"
+      },
+      {
+        "path": "docs/tools/r19-v12-control-builder/publish-candidate.rb",
+        "bytes_uint": 19895,
+        "sha256": "769cc93e09032fef979e11bb53a0f65f738bc458340f287ff47161fab94c4244"
+      }
+    ]
+  },
+  "determinism": {
+    "fresh_rebuilds_uint": 2,
+    "fresh_rebuild_a_path_display_only": "/private/tmp/v12-durable-rebuild-a.BQlJR1/control.json",
+    "fresh_rebuild_b_path_display_only": "/private/tmp/v12-durable-rebuild-b.9f5C4p/control.json",
+    "prior_durable_candidate_path_display_only": "/private/tmp/v12-durable-path.nFPMeA/control.json",
+    "all_three_byte_equal_bool": true,
+    "all_three_sha256": "ad982343cd2c92cdf47eb6066147c824025da4f5c8f41be7e4563506c61a9255",
+    "all_three_bytes_uint": 50685975,
+    "fresh_rebuild_a_audit_result_enum": "PASS",
+    "fresh_rebuild_b_audit_result_enum": "PASS"
+  },
+  "mathematical_closure": {
+    "family_counts_exact": {
+      "STATIC_CONTROL": 61,
+      "PRIMITIVE_WRAPPER": 32,
+      "CUSTOM_OPERATOR": 259,
+      "TIMING": 88,
+      "OBSERVATION_INTEGRITY": 135,
+      "STATUS_SELECTION": 109,
+      "TOTAL": 684
+    },
+    "dependency_counts_exact": {
+      "STATIC_CONTROL": 50,
+      "CUSTOM_OPERATOR": 35,
+      "TIMING": 28,
+      "OBSERVATION_INTEGRITY": 54
+    },
+    "boundary_source_fixture_count_uint": 604,
+    "boundary_source_fixture_sha256": "24ed1ec32e0ad52f4bb656cc45e37c9fb49a956038b8562465d5a48be0ac82c5",
+    "static_entry_count_uint": 6,
+    "static_edge_count_uint": 5,
+    "static_catalog_sha256": "b2a6c89d900feadc8de0b3230b5aaaf772fa65c03c8dbc84aad2cf5bb310c6f5",
+    "domain_separated_merkle_root_sha256": "fc7212aa8105156e201cde039da21e5f4769ef6026f104059490a62772fede0f"
+  },
+  "publication": {
+    "publisher_sha256": "769cc93e09032fef979e11bb53a0f65f738bc458340f287ff47161fab94c4244",
+    "publisher_primitive_exact": [
+      "HELD_PARENT_FCHDIR",
+      "HELD_SOURCE_FCLONEFILEAT_PREDECESSOR_CONTENT",
+      "HELD_SOURCE_FCLONEFILEAT_CANDIDATE_EXCHANGE",
+      "RENAMEATX_NP_RENAME_SWAP_RENAME_NOFOLLOW_ANY",
+      "PARENT_FSYNC",
+      "POSTSWAP_VNODE_AND_CONTENT_JOINS"
+    ],
+    "same_device_prerequisite_required_bool": true,
+    "journal_first_record_before_publication_mutation_bool": true,
+    "journal_self_hash_rule": "SHA256_OF_CANONICAL_FRAME_WITHOUT_frame_without_self_digest_sha256_THEN_ATTACH_DIGEST",
+    "journal_ancestry_rule": "SUCCESSOR_previous_frame_with_lf_sha256_or_null_EQUALS_SHA256_OF_COMPLETE_PREDECESSOR_FRAME_WITH_ONE_LF",
+    "publisher_test_positive_root_display_only": "/private/tmp/v12-publisher-v2-final-positive.aZf6oi",
+    "publisher_test_target_sha256": "ad982343cd2c92cdf47eb6066147c824025da4f5c8f41be7e4563506c61a9255",
+    "publisher_test_exchange_sha256": "e961c8cd7b8a5460166dbd251e895e15ad57bac483099858e5fdfe62baf7dc54",
+    "publisher_test_predecessor_content_sha256": "e961c8cd7b8a5460166dbd251e895e15ad57bac483099858e5fdfe62baf7dc54",
+    "publisher_test_journal_sha256": "84ae3cfc1d507ea4e791cb15cbfdb2b88a29d222940412ccd690f7da9fc4ff7d",
+    "publisher_test_journal_frames_uint": 2,
+    "publisher_test_stderr_bytes_uint": 0,
+    "canonical_publication_state_enum": "ELIGIBLE_ALL_THREE_INDEPENDENT_REVIEWS_PASS"
+  },
+  "review_requirements": {
+    "independent_review_count_required_uint": 3,
+    "required_axes_exact": [
+      "SCHEMA_HASH_MERKLE_REPRODUCIBILITY",
+      "PRODUCTION_AUTHORITY_TYPE_BARRIER",
+      "ATOMIC_PUBLICATION_RETENTION"
+    ],
+    "canonical_publication_allowed_only_if_all_three_pass_bool": true
+  },
+  "review_results": [
+    {
+      "axis_enum": "SCHEMA_HASH_MERKLE_REPRODUCIBILITY",
+      "result_enum": "PASS",
+      "candidate_sha256": "ad982343cd2c92cdf47eb6066147c824025da4f5c8f41be7e4563506c61a9255",
+      "strict_parse_and_exact_byte_roundtrip_bool": true,
+      "content_addressed_fixture_count_uint": 621,
+      "binding_row_count_uint": 26,
+      "dependency_join_count_uint": 167,
+      "combined_case_count_uint": 684,
+      "boundary_source_count_uint": 604,
+      "merkle_root_sha256": "fc7212aa8105156e201cde039da21e5f4769ef6026f104059490a62772fede0f"
+    },
+    {
+      "axis_enum": "PRODUCTION_AUTHORITY_TYPE_BARRIER",
+      "result_enum": "PASS",
+      "candidate_sha256": "ad982343cd2c92cdf47eb6066147c824025da4f5c8f41be7e4563506c61a9255",
+      "production_start_dependency_state_enum": "MISSING_TYPED_DEPENDENCY",
+      "required_start_dependency_type_id": "HELD_RECORD_FRAME",
+      "production_body_emissions_uint": 0,
+      "production_frame_emissions_uint": 0,
+      "production_catalog_emissions_uint": 0,
+      "assessed_source_count_uint": 604,
+      "static_entry_count_uint": 6,
+      "static_edge_count_uint": 5,
+      "static_typed_hole_count_uint": 148,
+      "normalized_production_inputs_emitted_uint": 0,
+      "authority_vector": "00000000",
+      "gate_e_enum": "ABSTAIN"
+    },
+    {
+      "axis_enum": "ATOMIC_PUBLICATION_RETENTION",
+      "result_enum": "PASS",
+      "publisher_sha256": "769cc93e09032fef979e11bb53a0f65f738bc458340f287ff47161fab94c4244",
+      "independent_test_root_display_only": "/private/tmp/v12-review3-publisher-v2.w0fuy1",
+      "published_sha256": "ad982343cd2c92cdf47eb6066147c824025da4f5c8f41be7e4563506c61a9255",
+      "retained_exchange_sha256": "e961c8cd7b8a5460166dbd251e895e15ad57bac483099858e5fdfe62baf7dc54",
+      "retained_content_clone_sha256": "e961c8cd7b8a5460166dbd251e895e15ad57bac483099858e5fdfe62baf7dc54",
+      "journal_frame_count_uint": 2,
+      "journal_sha256_prefix8": "fbea0294",
+      "prior_publisher_blockers_resolved_uint": 3,
+      "bounded_fail_closed_residuals_exact": [
+        "PRESTART_REJECTION_MAY_HAVE_NO_NEW_JOURNAL",
+        "INTERRUPTED_APPEND_MAY_RETAIN_ONLY_LONGEST_AVAILABLE_PREFIX",
+        "MUTATION_AFTER_FINAL_OBSERVATION_IS_OUTSIDE_PUBLICATION_INTERVAL"
+      ]
+    }
+  ],
+  "authority": {
+    "authority_vector": "00000000",
+    "authoritative_bool": false,
+    "gate_e_enum": "ABSTAIN",
+    "scientific_outcome_enum": "ABSTAIN",
+    "production_start_state_enum": "MISSING_TYPED_DEPENDENCY",
+    "may_feed_controller_bool": false,
+    "prose_may_supply_fact_bool": false,
+    "live_process_or_compiler_actions_uint": 0,
+    "authority_closures_uint": 0
+  }
+}
