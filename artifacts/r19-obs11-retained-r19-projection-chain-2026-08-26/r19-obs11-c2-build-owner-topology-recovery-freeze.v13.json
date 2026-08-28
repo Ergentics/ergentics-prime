@@ -1,0 +1,1203 @@
+{
+  "schema": "ergentics.r19.obs11.c2.build-owner-topology-start-owner-recovery-freeze.v13",
+  "status": "FROZEN_TOPOLOGY_RECOVERY_SWIFT_START_OWNER_SELECTED_NO_ENTRY",
+  "rank": "CONTROL_ONLY_LOCAL_NONAUTHORITY",
+  "frozen_at_utc_display_only": "2026-08-28T03:50:03Z",
+  "review_subject_canonicalization": {
+    "algorithm": "RECURSIVE_LEXICOGRAPHIC_UTF8_OBJECT_KEYS_COMPACT_RFC8259_JSON",
+    "excluded_top_level_keys_exact": [
+      "review_convergence"
+    ],
+    "terminal_lf_included_bool": false,
+    "digest": "SHA256"
+  },
+  "predecessor": {
+    "commit": "1d8c49b638988653922d9b7a8f529002319594d1",
+    "tree": "d2aa0b4ebbc833a821666e0a8ac43fad89968c79",
+    "parent_commit": "77d2c2a7756c868ec71952ed8cf3e01f4eca4287",
+    "parent_tree": "cfa14875c897c47cbadb2281f5ca79cc4eacb5ac",
+    "required_worktree_condition": "TRACKED_TREE_CLEAN_UNRELATED_UNTRACKED_PATHS_EXCLUDED",
+    "recovery_commit_parent_exact": "1d8c49b638988653922d9b7a8f529002319594d1",
+    "recovery_commit_changed_paths_exact": [
+      "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-build-owner-topology-recovery-freeze.v13.json"
+    ],
+    "recovery_commit_containing_identity": "EXTERNAL_POSTCOMMIT_READ_ONLY_OBSERVATION_REQUIRED",
+    "on_mismatch": "HOLD_NO_SOURCE_BUILD_OR_ENTRY"
+  },
+  "topology_defect": {
+    "predicate_id": "FUTURE_COMMIT_TOPOLOGY_AND_PATH_DELTA_CLOSURE",
+    "v12_required_control_parent": "77d2c2a7756c868ec71952ed8cf3e01f4eca4287",
+    "v12_required_changed_path_count_uint": 1,
+    "v12_required_changed_paths_exact": [
+      "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-build-owner-correction-freeze.v12.json"
+    ],
+    "observed_parent_matches_bool": true,
+    "observed_changed_path_count_uint": 20,
+    "observed_changed_paths_match_bool": false,
+    "predicate_state_enum": "NOT_PROVED",
+    "v12_control_commit_conformance_enum": "NOT_CONFORMING_RETAINED_CONTROL_PUBLICATION_BUNDLE",
+    "v12_topology_deviation_action_observed": "HOLD_NO_FURTHER_COMMIT_OR_ENTRY",
+    "manifest_or_publication_result_typed_amendment_bool": false,
+    "manifest_or_publication_result_may_supply_missing_topology_bool": false,
+    "prose_may_supply_missing_topology_bool": false,
+    "recovery_rule": "ONLY_THIS_SEPARATE_ONE_PATH_TYPED_SUCCESSOR_MAY_RESEAL_FUTURE_TOPOLOGY"
+  },
+  "actual_predecessor_delta": {
+    "commit": "1d8c49b638988653922d9b7a8f529002319594d1",
+    "parent": "77d2c2a7756c868ec71952ed8cf3e01f4eca4287",
+    "row_count_uint": 20,
+    "serialization": "ROWS_SORTED_BY_PATH_UTF8_EACH_AS_STATUS_TAB_MODE_TAB_GIT_BLOB_OID_TAB_BYTE_COUNT_TAB_SHA256_TAB_PATH_LF",
+    "serialization_bytes_uint": 4001,
+    "serialization_sha256": "cea9fe9bc2589be1ad9ea241ef7b17d143819715ba791bc8bbca587db11d5df1",
+    "rows": [
+      {
+        "status": "A",
+        "mode": "100644",
+        "git_blob_oid": "ecd90abef151a4ced6f8b586f26f5d70219891bb",
+        "bytes_uint": 2291302,
+        "sha256": "e961c8cd7b8a5460166dbd251e895e15ad57bac483099858e5fdfe62baf7dc54",
+        "path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/.r19-obs11-c2-build-owner-correction-freeze.v12.json.ad982343cd2c92cd.exchange-retained"
+      },
+      {
+        "status": "A",
+        "mode": "100644",
+        "git_blob_oid": "ecd90abef151a4ced6f8b586f26f5d70219891bb",
+        "bytes_uint": 2291302,
+        "sha256": "e961c8cd7b8a5460166dbd251e895e15ad57bac483099858e5fdfe62baf7dc54",
+        "path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/.r19-obs11-c2-build-owner-correction-freeze.v12.json.e961c8cd7b8a5460.predecessor-content-retained"
+      },
+      {
+        "status": "A",
+        "mode": "100644",
+        "git_blob_oid": "3e4c2f039b7b7f010f69fd99288e12827dd74089",
+        "bytes_uint": 50685975,
+        "sha256": "ad982343cd2c92cdf47eb6066147c824025da4f5c8f41be7e4563506c61a9255",
+        "path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-build-owner-correction-freeze.v12.json"
+      },
+      {
+        "status": "A",
+        "mode": "100644",
+        "git_blob_oid": "e1b5bbb1204d7d0a05cdd13b526ea18ade6c40ef",
+        "bytes_uint": 4347,
+        "sha256": "5d4e8789dca9605033aa0b2d4feb248774e48aebceb366ab3844099c6566f56b",
+        "path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-build-owner-correction-v12-publication.v1.jsonl"
+      },
+      {
+        "status": "A",
+        "mode": "100644",
+        "git_blob_oid": "0b7caa86f14963b607632e7ed33a36913d1e2065",
+        "bytes_uint": 6625,
+        "sha256": "ca3496bd9933a37871a47fd921828537d86badc983b4d6d358929e4e7ba8fd4a",
+        "path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-build-owner-correction-v12-result.v1.json"
+      },
+      {
+        "status": "A",
+        "mode": "100644",
+        "git_blob_oid": "f4874b37b4659c53d784697940d23a38cbbdeec2",
+        "bytes_uint": 9846,
+        "sha256": "1a45d5757231109716f90ff27f5de7548bb808329711b4b56e6480155cb8ace0",
+        "path": "docs/tools/r19-v12-control-builder/audit-candidate.rb"
+      },
+      {
+        "status": "A",
+        "mode": "100644",
+        "git_blob_oid": "66265ff00ce47234901197a8de584b3b90357d9d",
+        "bytes_uint": 29876,
+        "sha256": "1f212abe0c2caf020cc08107f429ae1523d9fcefa722f455036f260bdd471644",
+        "path": "docs/tools/r19-v12-control-builder/base-carriers.rb"
+      },
+      {
+        "status": "A",
+        "mode": "100644",
+        "git_blob_oid": "9b935bbf56ce498bf29af04f596cd3c4eb3a95b2",
+        "bytes_uint": 134114,
+        "sha256": "98d6c9b575637b9428ed78f311cd0a56d5c926a7229701ee21687f4dc2626b0d",
+        "path": "docs/tools/r19-v12-control-builder/build-custom.rb"
+      },
+      {
+        "status": "A",
+        "mode": "100644",
+        "git_blob_oid": "42dce24b2e78713079dac726591915427498de93",
+        "bytes_uint": 20544,
+        "sha256": "5e0150ade3b2253f8f8b808fa04924a3508ac4cf68fa5d4488b6ab621dac9961",
+        "path": "docs/tools/r19-v12-control-builder/c3-carrier-v2.rb"
+      },
+      {
+        "status": "A",
+        "mode": "100644",
+        "git_blob_oid": "05fca509dbeba709cda1c198aee877943daa08f5",
+        "bytes_uint": 55928,
+        "sha256": "b827e1fc417647542ce88bc598b3ba519943ce520bad48a3838d0020a3f32203",
+        "path": "docs/tools/r19-v12-control-builder/c3-static-model-v2.rb"
+      },
+      {
+        "status": "A",
+        "mode": "100644",
+        "git_blob_oid": "f04ceead81e4099337c4b18c410a06ad23f2a9ef",
+        "bytes_uint": 44357,
+        "sha256": "4a1ab5eb48f29c622b73c482305966844843ac562f442840ba524ce4422fe6df",
+        "path": "docs/tools/r19-v12-control-builder/custom-projection-carriers.rb"
+      },
+      {
+        "status": "A",
+        "mode": "100644",
+        "git_blob_oid": "3704735b2a03c8da79a7f95d9a22af11d82dcba3",
+        "bytes_uint": 30217,
+        "sha256": "48db28bf3ab95f7c81a8221c8967b78b562fc510564d61ed0aab1e78aa87403a",
+        "path": "docs/tools/r19-v12-control-builder/custom-projection-static-routes.rb"
+      },
+      {
+        "status": "A",
+        "mode": "100644",
+        "git_blob_oid": "d2ec7b576b3b0adbc3490ffe2c809e164b4c7e35",
+        "bytes_uint": 104235,
+        "sha256": "5cde5e1d4aabd9d758a352da23e5e25d63e05b257c65fdfb5f18441e5d553978",
+        "path": "docs/tools/r19-v12-control-builder/finalize-control.rb"
+      },
+      {
+        "status": "A",
+        "mode": "100644",
+        "git_blob_oid": "3964dcfacf60fe90b7a5f304ea10a3a2685bb023",
+        "bytes_uint": 13016,
+        "sha256": "dd4263709771a844466384902840e51c4fe90e69107d14c7977ebedad5da9f32",
+        "path": "docs/tools/r19-v12-control-builder/manifest.v1.json"
+      },
+      {
+        "status": "A",
+        "mode": "100644",
+        "git_blob_oid": "b645f85198fbedb0da3c2f3715a890e86a069c86",
+        "bytes_uint": 86803,
+        "sha256": "ebc918bf22e23f5237cf8dc0a9caa503ddfdd4252f27101183609670e1a58b20",
+        "path": "docs/tools/r19-v12-control-builder/outer-carrier-v2.rb"
+      },
+      {
+        "status": "A",
+        "mode": "100644",
+        "git_blob_oid": "efbbef945ad2db03e5e5b85d23fea3e53f705833",
+        "bytes_uint": 9459,
+        "sha256": "e5ffe5beb5270e056f69fa5c0418aa7c33bdf78b8c3100476970eda6268376ed",
+        "path": "docs/tools/r19-v12-control-builder/production-journal-boundary-overlay.rb"
+      },
+      {
+        "status": "A",
+        "mode": "100644",
+        "git_blob_oid": "f9d5cdccf270842974228e98b8e96550b6c8f653",
+        "bytes_uint": 47746,
+        "sha256": "d8d69cb2fa72ed4a4f2c7c7351f2257fdf9c052db0588bc7156912ace58574dc",
+        "path": "docs/tools/r19-v12-control-builder/production-journal-conformance-fixtures.rb"
+      },
+      {
+        "status": "A",
+        "mode": "100644",
+        "git_blob_oid": "a411c3a28c3c41665ea9d2dc313de245a96d2596",
+        "bytes_uint": 6957,
+        "sha256": "77a99716b4653f66e77db8f6acc17881cff1a49aa9591253a932c8dbb6afcea2",
+        "path": "docs/tools/r19-v12-control-builder/production-journal-incomplete-body-builder.rb"
+      },
+      {
+        "status": "A",
+        "mode": "100644",
+        "git_blob_oid": "92559f25005752d019dff5cb91e15a4e53443562",
+        "bytes_uint": 30782,
+        "sha256": "e0623293ccca899c1f770a2a6b921b94946ae278e30c9a39cb87bd5b3fe8aa7b",
+        "path": "docs/tools/r19-v12-control-builder/production-operation-frame.rb"
+      },
+      {
+        "status": "A",
+        "mode": "100644",
+        "git_blob_oid": "66ba0eafb33779620342b358cb9e771bccc32293",
+        "bytes_uint": 19895,
+        "sha256": "769cc93e09032fef979e11bb53a0f65f738bc458340f287ff47161fab94c4244",
+        "path": "docs/tools/r19-v12-control-builder/publish-candidate.rb"
+      }
+    ]
+  },
+  "retained_v12_closure": {
+    "classification": "VALID_STATIC_CONFORMANCE_AND_ATOMIC_PUBLICATION_DATA_NONAUTHORITATIVE_FOR_START",
+    "canonical_control": {
+      "path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-build-owner-correction-freeze.v12.json",
+      "git_blob_oid": "3e4c2f039b7b7f010f69fd99288e12827dd74089",
+      "sha256": "ad982343cd2c92cdf47eb6066147c824025da4f5c8f41be7e4563506c61a9255",
+      "bytes_uint": 50685975,
+      "terminal_lf_bool": true
+    },
+    "manifest": {
+      "path": "docs/tools/r19-v12-control-builder/manifest.v1.json",
+      "sha256": "dd4263709771a844466384902840e51c4fe90e69107d14c7977ebedad5da9f32",
+      "bytes_uint": 13016,
+      "source_count_uint": 14,
+      "source_inventory_sha256": "77ccd45d4294e2754b20836a8c63bd751476bbb5b6b506faecad1782cf780741"
+    },
+    "publication_journal": {
+      "path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-build-owner-correction-v12-publication.v1.jsonl",
+      "sha256": "5d4e8789dca9605033aa0b2d4feb248774e48aebceb366ab3844099c6566f56b",
+      "bytes_uint": 4347,
+      "events_exact": [
+        "START",
+        "PASS"
+      ]
+    },
+    "publication_result": {
+      "path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-build-owner-correction-v12-result.v1.json",
+      "sha256": "ca3496bd9933a37871a47fd921828537d86badc983b4d6d358929e4e7ba8fd4a",
+      "bytes_uint": 6625,
+      "status": "PASS_EXACT_CONTROL_PUBLICATION_PREDECESSOR_RETAINED_AUTHORITY_ABSTAIN"
+    },
+    "candidate_data": {
+      "fixture_count_uint": 604,
+      "combined_case_count_uint": 684,
+      "static_entry_count_uint": 6,
+      "static_edge_count_uint": 5,
+      "static_typed_hole_count_uint": 148,
+      "domain_separated_merkle_root_sha256": "fc7212aa8105156e201cde039da21e5f4769ef6026f104059490a62772fede0f",
+      "production_body_emissions_uint": 0,
+      "production_frame_emissions_uint": 0,
+      "production_catalog_emissions_uint": 0
+    },
+    "canonical_section_digests": {
+      "serialization": "RECURSIVE_LEXICOGRAPHIC_UTF8_OBJECT_KEYS_COMPACT_RFC8259_JSON_WITHOUT_LF",
+      "future_commit_topology": {
+        "bytes_uint": 4936,
+        "sha256": "820307af5e31e5cb622c8bcd1a1704c5a6b42cef01ef487f956d18761e88c754"
+      },
+      "start_record_boundary_contract": {
+        "bytes_uint": 1563,
+        "sha256": "ae50370374b6ddafd91374bd3161a15fcad6d43a492e8ef892171acfc8b6e13d"
+      },
+      "exact_timing_contract": {
+        "bytes_uint": 4199,
+        "sha256": "f14fd25ed3702f3637b479a6b7f383dca34789c0bf059a985687adde2ddcf9bb"
+      },
+      "exact_record_schema_v12": {
+        "bytes_uint": 48522606,
+        "sha256": "81fe2ea8f73537dba1816082fb129596f118cd759f6580abcb68cbd5ccdef076"
+      },
+      "authority": {
+        "bytes_uint": 1050,
+        "sha256": "5ebc6b0d3229c0aca39f9c3c13a04b237d6ab2bef3d64b28839a24bf69c81d48"
+      },
+      "source_static_review_and_syntax_binding_v12": {
+        "bytes_uint": 1505,
+        "sha256": "123fc6bd4a0af24aa3603365029dc714772f0bc95725e1df933ddcdfb413be04"
+      }
+    },
+    "reused_without_reinterpretation_exact": [
+      "CANONICAL_BYTE_AND_FRAME_SCHEMAS",
+      "HELD_RECORD_FRAME_DEPENDENCY_AND_BINDING_TYPES",
+      "CUSTOM_ROUTE_AND_RECEIPT_TYPED_SCHEMAS",
+      "ORDER_TOKENS_ORDINAL_STATUS_AND_TERMINAL_MAPS",
+      "HASH_CHAIN_MERKLE_AND_INDEX_RULES",
+      "604_FIXTURES_AND_684_CONFORMANCE_CASES",
+      "STATIC_REGISTRY_AND_DEPENDENCY_JOINS",
+      "EXACT_RATIONAL_TIMING_FIELDS_AND_START_ONLY_TIMING_PROFILE_EXCEPT_EXPLICIT_V13_INITIAL_ORDER_OVERLAY",
+      "START_FRAME_SCHEMA_DIGEST_MAXIMUM_FINAL_METADATA_PUBLICATION_STAGING_ADMISSION_AND_CONSUMPTION_EPISTEMICS"
+    ],
+    "not_reused_as_authority_exact": [
+      "V12_FUTURE_COMMIT_TOPOLOGY",
+      "RUBY_BUILD_OWNER_LAUNCH_AUTHORIZATION",
+      "V12_CONTROLLER_INITIAL_TIMING_ORDER_CONSTRUCT_BODY_BEFORE_STAGING_CREATE",
+      "STATIC_START_LIKE_FIXTURES_AS_HELD_RECORD_FRAME",
+      "PUBLICATION_RESULT_AS_PRODUCTION_START"
+    ]
+  },
+  "supersession_and_typed_routing": {
+    "v12_bytes_mutated_bool": false,
+    "v12_static_conformance_data_invalidated_bool": false,
+    "v12_execution_topology_state": "SUPERSEDED_BY_V13_BEFORE_ANY_V12_SYNTAX_OR_ENTRY",
+    "v13_record_kind": "TOPOLOGY_AND_START_OWNER_RECOVERY_CONTROL_V13",
+    "v13_is_v12_control_commit_bool": false,
+    "future_action_control_predecessor_kind": "TOPOLOGY_AND_START_OWNER_RECOVERY_CONTROL_V13",
+    "future_action_control_predecessor_path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-build-owner-topology-recovery-freeze.v13.json",
+    "future_records_must_bind_exact_v13_blob_sha256_bytes_and_containing_commit_tree_bool": true,
+    "v12_schema_reference_rule": "REFERENCE_ONLY_BY_CANONICAL_V12_PATH_SHA256_BYTES_AND_EXACT_SECTION_DIGEST;DO_NOT_TREAT_V12_CONTROL_COMMIT_PREDICATE_AS_SATISFIED",
+    "publication_successor_join_rule": "V13_SUCCESSORS_USE_V13_RECORD_KINDS_AND_EXPLICIT_V13_PREDECESSOR_JOINS;NO_V1_MANIFEST_RESULT_OR_PROSE_SUBSTITUTION",
+    "on_missing_or_ambiguous_v13_join": "ABSTAIN_AND_HOLD"
+  },
+  "option_a_ruby_chain_disposition": {
+    "decision_enum": "HOLD_HISTORICAL_REFERENCE_ONLY",
+    "outer_observer_path": "docs/tools/ergentics-r19-obs11-c2-attempt-supervisor-build-outer-observer.v11.rb",
+    "outer_observer_state": "ABSENT",
+    "owner_path": "docs/tools/ergentics-r19-obs11-c2-attempt-supervisor-build-owner.v11.rb",
+    "owner_git_state": "UNTRACKED_EXCLUDED_FROM_AUTHORITY",
+    "owner_observed_sha256": "89935eabfb54030c7a80e085a1a2a69195570578cdc6f06922b7606347d4f017",
+    "owner_observed_bytes_uint": 42280,
+    "owner_observed_lines_uint": 1175,
+    "owner_binds_obsolete_commit": "77d2c2a7756c868ec71952ed8cf3e01f4eca4287",
+    "owner_binds_obsolete_tree": "cfa14875c897c47cbadb2281f5ca79cc4eacb5ac",
+    "top_level_entry_present_bool": false,
+    "start_publication_present_bool": false,
+    "script_path_is_kernel_mapped_executable_image_bool": false,
+    "held_bytes_eval_may_close_scientific_owner_bool": false,
+    "launch_authority_bool": false,
+    "mutation_authorized_bool": false
+  },
+  "existing_driver_v2_qualification": {
+    "pre_probe_supervisor_image_and_facade_lifetime_exists_bool": true,
+    "claim_no_preprobe_lifetime_at_all_rejected_bool": true,
+    "production_main_unconditionally_calls": "PrimeValidationDriverV2FixedProbeBindingBridge.bind",
+    "bridge_unconditionally_calls": "facade.observeFixedGitAndSwiftProbes",
+    "fixed_git_swift_process_observation_count_uint": 16,
+    "semantically_bound_lifetime_created_after_fixed_probes_bool": true,
+    "pre_probe_production_start_owner_surface_present_bool": false,
+    "retrofit_effect": "WOULD_COUPLE_START_TO_RETIRED_OR_LATER_GATE_E_FIXED_PROBE_ORDER",
+    "decision_enum": "DO_NOT_RETROFIT_FROZEN_DRIVER_V2_EXECUTABLE"
+  },
+  "selected_start_owner_architecture": {
+    "decision_enum": "DEDICATED_CLOSED_SWIFT_EXECUTABLE_WITH_IN_IMAGE_FIXED_ARITY_C_DARWIN_SHIM",
+    "product_name": "ErgenticsPrimeStartOwner",
+    "package_path": "Observability/ErgenticsResearch",
+    "caller_argument_count_uint": 0,
+    "caller_environment_entry_count_uint": 0,
+    "caller_cwd_count_uint": 0,
+    "caller_role_id_count_uint": 0,
+    "caller_path_count_uint": 0,
+    "stdin_protocol_present_bool": false,
+    "command_language_present_bool": false,
+    "generic_spawn_surface_present_bool": false,
+    "foundation_process_allowed_bool": false,
+    "fixed_darwin_posix_spawn_allowed_bool": true,
+    "shell_owned_evidence_bool": false,
+    "ruby_owned_evidence_bool": false,
+    "c_owned_prime_predicates_bool": false,
+    "swift_owns_prime_predicates_state_and_receipts_bool": true,
+    "must_retain_lifetime_after_start_bool": true,
+    "exit_after_start_is_success_bool": false
+  },
+  "implementation_source_freeze": {
+    "implementation_commit_parent_kind": "START_OWNER_FIXED_SEQUENCE_FREEZE_V13",
+    "implementation_requires_prior_complete_fixed_sequence_transport_ownership_and_conservation_freeze_bool": true,
+    "changed_paths_exact": [
+      "Observability/ErgenticsResearch/Package.swift",
+      "Observability/ErgenticsResearch/Sources/ErgenticsPrimeStartOwner/main.swift",
+      "Observability/ErgenticsResearch/Sources/ErgenticsPrimeStartOwnerCore/PrimeStartOwner.swift",
+      "Observability/ErgenticsResearch/Sources/ErgenticsPrimeStartOwnerCore/PrimeStartOwnerAdmission.swift",
+      "Observability/ErgenticsResearch/Sources/ErgenticsPrimeStartOwnerCore/PrimeStartOwnerCanonicalSchemas.swift",
+      "Observability/ErgenticsResearch/Sources/ErgenticsPrimeStartOwnerCore/PrimeStartOwnerFixedProcessContainment.swift",
+      "Observability/ErgenticsResearch/Sources/ErgenticsPrimeStartOwnerCore/PrimeStartOwnerJournal.swift",
+      "Observability/ErgenticsResearch/Sources/ErgenticsPrimeStartOwnerCore/PrimeStartOwnerStateMachine.swift",
+      "Observability/ErgenticsResearch/Sources/ErgenticsPrimeStartOwnerCore/PrimeStartOwnerTiming.swift",
+      "Observability/ErgenticsResearch/Sources/ErgenticsPrimeStartOwnerDarwin/PrimeStartOwnerDarwin.c",
+      "Observability/ErgenticsResearch/Sources/ErgenticsPrimeStartOwnerDarwin/include/PrimeStartOwnerDarwin.h",
+      "Observability/ErgenticsResearch/Tests/ErgenticsPrimeStartOwnerCoreTests/PrimeStartOwnerAdmissionTests.swift",
+      "Observability/ErgenticsResearch/Tests/ErgenticsPrimeStartOwnerCoreTests/PrimeStartOwnerCanonicalSchemasTests.swift",
+      "Observability/ErgenticsResearch/Tests/ErgenticsPrimeStartOwnerCoreTests/PrimeStartOwnerCoreTests.swift",
+      "Observability/ErgenticsResearch/Tests/ErgenticsPrimeStartOwnerCoreTests/PrimeStartOwnerFixedProcessContainmentTests.swift",
+      "Observability/ErgenticsResearch/Tests/ErgenticsPrimeStartOwnerCoreTests/PrimeStartOwnerJournalTests.swift",
+      "Observability/ErgenticsResearch/Tests/ErgenticsPrimeStartOwnerCoreTests/PrimeStartOwnerStateMachineTests.swift",
+      "Observability/ErgenticsResearch/Tests/ErgenticsPrimeStartOwnerCoreTests/PrimeStartOwnerTimingTests.swift",
+      "Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift"
+    ],
+    "changed_path_count_uint": 19,
+    "modularity_contract_exact": "ONE_EXECUTABLE_PRODUCT_ONE_ZERO_ARGUMENT_PUBLIC_ENTRY;PrimeStartOwner.swift_ONLY_COMPOSES_AND_RETAINS_OWNER;ALL_OTHER_CORE_TYPES_INTERNAL;PrimeStartOwnerCoreTests.swift_IS_CROSS_DOMAIN_INVARIANT_TEST",
+    "target_graph_exact": [
+      "ErgenticsPrimeStartOwner_EXECUTABLE_DEPENDS_ErgenticsPrimeStartOwnerCore",
+      "ErgenticsPrimeStartOwnerCore_SWIFT_TARGET_DEPENDS_ErgenticsPrimeStartOwnerDarwin",
+      "ErgenticsPrimeStartOwnerDarwin_C_TARGET_HAS_PUBLIC_HEADER",
+      "ErgenticsPrimeStartOwnerCoreTests_TEST_TARGET_DEPENDS_ErgenticsPrimeStartOwnerCore"
+    ],
+    "source_semantics_required": [
+      "ZERO_INPUT_FIXED_CONFIGURATION",
+      "ONE_WINNER_SEQUENTIAL_AND_CONCURRENT",
+      "FAILURE_POISONS_PERMANENTLY",
+      "DESCRIPTOR_HELD_CONTROL_SOURCE_IMAGE_ROOTS_AND_JOURNAL",
+      "NOFOLLOW_FULL_HASH_PRE_POST_FSTAT_AND_NAMED_VNODE_REJOIN",
+      "LOADED_MAIN_IMAGE_DEVICE_INODE_JOIN",
+      "WATCHES_ARMED_BEFORE_FIRST_WRITE_AND_REVALIDATED_AFTER_PUBLICATION",
+      "PrimeEmbeddedBuildProvenance_RESEALED_TO_a7c2e83f7db3a6ef3cc6adee33743c2ca512e445fe7271755086ca0f4073aac7_WITH_EXACT_CANONICAL_TEMPLATE",
+      "CANONICAL_TYPED_START_PUBLICATION_RETURNS_RETAINED_HELD_RECORD_FRAME",
+      "NO_GIT_SWIFTPM_OR_ASSESSMENT_CHILD_BEFORE_START",
+      "HELD_RECORD_FRAME_IMMEDIATELY_CONSUMED_ONCE_INTO_FIVE_ROLE_FIXED_GATE_E_SEQUENCE",
+      "NO_INDEFINITE_PARK_EXTERNAL_ADVANCE_OR_GENERIC_COMMAND_SURFACE",
+      "POSIX_SPAWN_CONTAIN_DRAIN_EXACT_REAP_GROUP_EMPTY_AND_TERMINAL_REJOIN"
+    ],
+    "out_of_scope_exact": [
+      "RUBY_SOURCE_COMPLETION_OR_EVAL",
+      "EXISTING_DRIVER_V2_MAIN_OR_PROBE_ORDER_MUTATION",
+      "ANY_GIT_OR_SWIFTPM_CHILD_BEFORE_START_OR_OUTSIDE_THE_FIVE_FROZEN_POST_START_ROLES",
+      "GATE_E_AUTHORITY_CLOSURE",
+      "SCIENTIFIC_RESULT_INTERPRETATION",
+      "SQLITE_OR_GRAPH_AS_EVIDENCE_SOURCE",
+      "ENERGY_MEASUREMENT",
+      "GITHUB_OR_NETWORK"
+    ],
+    "implementation_commit_authorizes_execution_bool": false,
+    "implementation_commit_authorizes_build_bool": false,
+    "implementation_commit_authorizes_source_and_static_review_only_bool": true,
+    "recovery_control_alone_authorizes_implementation_bool": false,
+    "implementation_requires_immediate_parent_fixed_sequence_freeze_with_complete_typed_transport_ownership_and_conservation_contract_bool": true
+  },
+  "fixed_arity_c_shim_contract": {
+    "purpose": "DARWIN_ABI_ONLY_SWIFT_RETAINS_ALL_POLICY_AND_PREDICATE_OWNERSHIP",
+    "signatures_scope": "START_ADMISSION_PUBLICATION_WATCH_TIMING_MAPPED_SELF_AND_BUILD_SELECTED_PUBLICATION_ONLY",
+    "post_start_process_containment_signatures_frozen_bool": false,
+    "post_start_process_containment_signature_rule": "THE_IMMEDIATE_FIXED_SEQUENCE_CONTROL_MUST_FREEZE_EVERY_ADDITIONAL_POSIX_SPAWN_PIPE_PROC_PIDVNODEPATHINFO_PROCESS_GENERATION_WAIT_SIGNAL_AND_CONSERVATION_ABI_BEFORE_THE_SHARED_C_AND_SWIFT_SOURCE_COMMIT",
+    "darwin_constants_required_exact": {
+      "O_RDWR_hex": "0x00000002",
+      "O_CREAT_hex": "0x00000200",
+      "O_EXCL_hex": "0x00000800",
+      "O_CLOEXEC_hex": "0x01000000",
+      "O_CLOEXEC_decimal": 16777216,
+      "O_DIRECTORY_hex": "0x00100000",
+      "O_NOFOLLOW_ANY_hex": "0x20000000",
+      "O_RDWR_OR_CREAT_OR_EXCL_OR_CLOEXEC_OR_NOFOLLOW_ANY_hex": "0x21000a02",
+      "AT_SYMLINK_NOFOLLOW_hex": "0x00000020",
+      "AT_SYMLINK_NOFOLLOW_ANY_hex": "0x00000800",
+      "RENAME_EXCL_hex": "0x00000004",
+      "RENAME_NOFOLLOW_ANY_hex": "0x00000010",
+      "RENAME_EXCL_OR_NOFOLLOW_ANY_hex": "0x00000014",
+      "F_GETFD_decimal": 1,
+      "F_SETFD_decimal": 2,
+      "FD_CLOEXEC_decimal": 1,
+      "F_FULLFSYNC_decimal": 51,
+      "EVFILT_VNODE_int16": -4,
+      "EV_ADD_OR_ENABLE_OR_CLEAR_hex": "0x0025",
+      "VNODE_FFLAGS_GATE_C_EXACT_hex": "0x0000007f"
+    },
+    "signatures_frozen": [
+      "int eps_openat_nomode(int dirfd,const char*path,int flags,int*errno_out)",
+      "int eps_openat_mode(int dirfd,const char*path,int flags,unsigned short mode,int*errno_out)",
+      "int eps_mkdirat(int dirfd,const char*path,unsigned short mode,int*errno_out)",
+      "int eps_mkostempsat_np(int dirfd,char*template_bytes,int suffix_length,int flags,int*errno_out)",
+      "int eps_fcntl_getfd(int fd,int*flags_out,int*errno_out)",
+      "int eps_fstat_projection(int fd,struct eps_stat_projection_v1*out,int*errno_out)",
+      "int eps_fstatat_projection(int dirfd,const char*path,int flags,struct eps_stat_projection_v1*out,int*errno_out)",
+      "unsigned int eps_stat_projection_abi_version(void)",
+      "unsigned long eps_stat_projection_size(void)",
+      "int eps_renameatx_np(int fromfd,const char*from,int tofd,const char*to,unsigned int flags,int*errno_out)",
+      "int eps_fchmod(int fd,unsigned short mode,int*errno_out)",
+      "int eps_fsync(int fd,int*errno_out)",
+      "int eps_fullfsync(int fd,int*errno_out)",
+      "int eps_proc_pidpath(int pid,void*buffer,unsigned int bytes,int*errno_out)",
+      "int eps_main_image_header_address(unsigned long long*address_out,int*errno_out)",
+      "int eps_proc_region_projection(int pid,unsigned long long address,struct eps_mapped_image_projection_v1*out,int*errno_out)",
+      "unsigned int eps_mapped_image_projection_abi_version(void)",
+      "unsigned long eps_mapped_image_projection_size(void)",
+      "int eps_kqueue_cloexec(int*fd_out,int*errno_out)",
+      "int eps_kevent_register_vnode(int kq,int fd,unsigned int fflags,int*errno_out)",
+      "int eps_kevent_poll_zero(int kq,struct eps_kevent_projection_v1*out,unsigned int capacity,unsigned int*count_out,int*errno_out)",
+      "unsigned int eps_kevent_projection_abi_version(void)",
+      "unsigned long eps_kevent_projection_size(void)",
+      "unsigned long eps_kevent_projection_offset_ident(void)",
+      "unsigned long eps_kevent_projection_offset_filter(void)",
+      "unsigned long eps_kevent_projection_offset_flags(void)",
+      "unsigned long eps_kevent_projection_offset_fflags(void)",
+      "unsigned long eps_kevent_projection_offset_data(void)",
+      "unsigned long eps_kevent_projection_offset_token(void)",
+      "unsigned long long eps_mach_continuous_time(void)",
+      "int eps_mach_timebase(unsigned int*numer,unsigned int*denom)",
+      "int eps_clock_realtime(long long*seconds,int*nanoseconds,int*errno_out)"
+    ],
+    "stat_projection_v1": {
+      "abi_version_uint": 1,
+      "fields_exact_order": [
+        "device_int64",
+        "inode_uint64",
+        "mode_uint32",
+        "nlink_uint32",
+        "uid_uint32",
+        "gid_uint32",
+        "size_int64",
+        "mtime_seconds_int64",
+        "mtime_nanoseconds_int64",
+        "ctime_seconds_int64",
+        "ctime_nanoseconds_int64",
+        "generation_uint32",
+        "flags_uint32"
+      ],
+      "copy_rule": "C_ZERO_INITIALIZES_PLAIN_STRUCT_THEN_EXPLICITLY_WIDENS_EACH_DARWIN_STAT_FIELD_WITH_RANGE_CHECKS_NO_MEMCPY_OF_STRUCT_STAT",
+      "swift_allocation_rule": "ONLY_IMPORTED_PLAIN_STRUCT_TYPE_AFTER_ABI_VERSION_AND_SIZE_MATCH_FROZEN_HEADER",
+      "required_fields_complete_for_vnode_join_bool": true
+    },
+    "kevent_projection_v1": {
+      "abi_version_uint": 1,
+      "fields_exact_order": [
+        "ident_uint64",
+        "filter_int16",
+        "flags_uint16",
+        "fflags_uint32",
+        "data_int64",
+        "token_uint64"
+      ],
+      "poll_timeout": "ZERO_TIMESPEC",
+      "maximum_projection_count_uint": 64,
+      "registration_does_not_imply_zero_pending_bool": true,
+      "zero_pending_requires_poll_count_zero_bool": true,
+      "every_nonzero_event_must_be_projected_without_pointer_DEREFERENCE_bool": true,
+      "repeat_poll_available_for_postpublication_revalidation_bool": true
+    },
+    "mapped_image_projection_v1": {
+      "abi_version_uint": 1,
+      "address_source": "C_WRAPPER_CALLS_DYLD_GET_IMAGE_HEADER_INDEX_ZERO_AND_RETURNS_NONZERO_UINT64",
+      "libproc_source": "PROC_PIDREGIONPATHINFO_AT_EXACT_MAIN_IMAGE_HEADER_ADDRESS",
+      "fields_exact_order": [
+        "device_uint64",
+        "inode_uint64",
+        "file_offset_uint64",
+        "region_start_uint64",
+        "region_end_uint64",
+        "protection_uint32",
+        "path_length_uint32",
+        "path_raw_bytes_4096"
+      ],
+      "copy_rule": "C_ZERO_INITIALIZES_PLAIN_STRUCT_AND_COPIES_FIELDS_EXPLICITLY;PATH_LENGTH_EXCLUDES_NUL_AND_MUST_BE_1_THROUGH_4095;RAW_PATH_BYTES_ARE_RETAINED_WITHOUT_STRING_NORMALIZATION",
+      "swift_allocation_rule": "ONLY_IMPORTED_PLAIN_STRUCT_TYPE_AFTER_ABI_VERSION_AND_SIZE_MATCH_FROZEN_HEADER",
+      "required_main_mapping_predicates": [
+        "ADDRESS_NONZERO",
+        "REGION_START_LE_ADDRESS_LT_REGION_END",
+        "PROTECTION_INCLUDES_EXECUTE",
+        "FILE_OFFSET_MATCHES_FROZEN_MAIN_TEXT_MAPPING_OFFSET",
+        "DEVICE_EQUALS_HELD_SELF_DEVICE",
+        "INODE_EQUALS_HELD_SELF_INODE",
+        "PATH_BYTES_CANONICALIZE_AND_NAMED_REJOIN_HELD_SELF_VNODE"
+      ],
+      "proc_pidpath_string_equality_alone_sufficient_bool": false
+    },
+    "variadic_calls_from_swift_bool": false,
+    "fcntl_getfd_wrapper_rule": "C_CALLS_fcntl_fd_F_GETFD_WITH_NO_THIRD_ARGUMENT_CAPTURES_ERRNO_AND_RETURNS_FLAGS_THROUGH_NON_NULL_OUT_PARAMETER;SWIFT_REQUIRES_RETURN_ZERO_FLAGS_EXACTLY_1_AND_FD_CLOEXEC_BIT_SET_BEFORE_ACCEPTING_ANY_DESCRIPTOR_WHOSE_TYPED_RECEIPT_SERIALIZES_RETURNED_FD_FLAGS",
+    "c_json_or_policy_logic_bool": false,
+    "c_process_spawn_bool": false,
+    "c_signal_bool": false,
+    "errno_rule": "WRAPPER_CAPTURES_ERRNO_IMMEDIATELY_ON_FAILURE_AND_WRITES_IT_TO_NON_NULL_OUT_PARAMETER;SUCCESS_WRITES_ZERO",
+    "struct_rule": "C_ZERO_INITIALIZES_AND_EXPLICITLY_COPIES_DARWIN_STRUCTS_INTO_THE_THREE_FROZEN_PLAIN_V1_PROJECTIONS;ABI_VERSION_AND_SIZE_MUST_MATCH_BEFORE_SWIFT_READS_ANY_FIELD;SWIFT_MUST_NOT_ALLOCATE_OR_DECODE_RAW_DARWIN_STAT_KEVENT_OR_PROC_REGION_LAYOUT"
+  },
+  "watch_contract_v13": {
+    "kqueue_creation": "ONE_eps_kqueue_cloexec_CALL_INTERNALLY_CALLS_kqueue_REQUIRES_FD_GE3_CALLS_fcntl_F_SETFD_FD_CLOEXEC_THEN_fcntl_F_GETFD_AND_REQUIRES_FD_CLOEXEC;ANY_FAILURE_CLOSES_NEW_FD_AND_POISONS",
+    "filter_int16": -4,
+    "registration_flags_hex": "0x0025",
+    "registration_flags_exact": [
+      "EV_ADD_0x0001",
+      "EV_ENABLE_0x0004",
+      "EV_CLEAR_0x0020"
+    ],
+    "vnode_fflags_hex": "0x0000007f",
+    "vnode_fflags_exact": [
+      "NOTE_DELETE_0x0001",
+      "NOTE_WRITE_0x0002",
+      "NOTE_EXTEND_0x0004",
+      "NOTE_ATTRIB_0x0008",
+      "NOTE_LINK_0x0010",
+      "NOTE_RENAME_0x0020",
+      "NOTE_REVOKE_0x0040"
+    ],
+    "note_attrib_registered_bool": true,
+    "note_attrib_ordering_rule": "COMPLETE_ALL_ADMISSION_HASH_AND_METADATA_READS_BEFORE_ARMING;AFTER_ARMING_ANY_NOTE_ATTRIB_EVENT_POISONS_WITHOUT_PROSE_OVERRIDE",
+    "registration_change_fields_exact": "ident=held_fd;filter=-4;flags=0x0025;fflags=0x0000007f;data=0;token=0",
+    "registration_call": "ONE_CHANGE_PER_HELD_DESCRIPTOR_IN_FROZEN_ORDER_RETRY_ONLY_EINTR_REQUIRE_ZERO",
+    "poll_call": "ZERO_CHANGE_ZERO_TIMESPEC_UP_TO_64_PLAIN_PROJECTIONS_RETRY_ONLY_EINTR",
+    "poll_continuation_predicate": "RETURNED_COUNT_EXACTLY_ZERO",
+    "any_projected_event_action": "POISON_RETAIN_NO_NEXT_CHILD_NO_RETRY",
+    "event_buffer_capacity_uint": 64,
+    "base_gate_c_binding": {
+      "classification": "HISTORICAL_POLICY_AND_COUNT_ANCHOR_REQUIRING_CURRENT_PREDECESSOR_OVERLAY_NOT_A_CURRENT_SOURCE_IDENTITY",
+      "topology_reseal_commit": "59c201d667f5235231fb5b72df956abb1db5dbe1",
+      "topology_reseal_tree": "ecdc37f0c624a7ab1437e74d71a8e57737427b08",
+      "fixed_probe_executor_git_blob": "a372eddf90e52b98cd32e08d8a4a008299179673",
+      "fixed_probe_executor_sha256": "f6d30782f059ca3ad1efdb292187b18a677c121482d05f922a2cef113c6aedce",
+      "embedded_provenance_git_blob": "02fe06b919b8c7b87be6c783e76642f9ed039c09",
+      "embedded_provenance_sha256": "3abb42d19a9bc9e58c749594796a16387e621fbdab45c640a1bc701347d6dbe2",
+      "source_identity_sha256": "bdcb224285ccabb6d166923f9ae6da6864de7c74c753745f6ce2516058242e59",
+      "current_head_preserves_both_bound_git_blobs_bool": true,
+      "current_head_preserves_historical_source_identity_bool": false,
+      "prime_admitted_file_count_exact_uint": 587,
+      "prime_source_identity_record_count_exact_uint": 586,
+      "prime_authority_directory_count_exact_uint": 156,
+      "prime_watch_count_exact_uint": 743,
+      "companion_file_count_exact_uint": 1306,
+      "companion_directory_count_exact_uint": 154,
+      "companion_watch_count_exact_uint": 1460,
+      "combined_watch_count_exact_uint": 2203,
+      "runtime_rule": "DO_NOT_REUSE_THE_59c201d_ROW_SET_AS_CURRENT;APPLY_THE_EXACT_CURRENT_PREDECESSOR_OVERLAY_THEN_REBUILD_THE_FULL_ORDERED_IDENTITY_TABLE_FROM_HELD_ROOTS_AND_REQUIRE_COUNTS_SOURCE_IDENTITY_AND_EVERY_ROW_JOIN"
+    },
+    "current_predecessor_prime_overlay": {
+      "commit": "1d8c49b638988653922d9b7a8f529002319594d1",
+      "tree": "d2aa0b4ebbc833a821666e0a8ac43fad89968c79",
+      "enumeration_basis": "EXACT_GIT_TREE_REGULAR_BLOBS_UNDER_PrimeSwiftSourceProvenance_FIXED_PATHS_AND_NONHIDDEN_Sources_Tests_docs;IDENTITY_EXCLUDES_ONLY_PrimeEmbeddedBuildProvenance.swift",
+      "prime_admitted_file_count_exact_uint": 615,
+      "prime_source_identity_record_count_exact_uint": 614,
+      "prime_authority_directory_count_exact_uint": 157,
+      "prime_watch_count_exact_uint": 772,
+      "source_identity_canonical_record_bytes_uint": 124126,
+      "source_identity_sha256": "a7c2e83f7db3a6ef3cc6adee33743c2ca512e445fe7271755086ca0f4073aac7",
+      "delta_from_59c201d_exact": "PLUS_28_ADMITTED_FILES_PLUS_1_AUTHORITY_DIRECTORY_PLUS_29_WATCHES",
+      "embedded_provenance_current_value_sha256": "bdcb224285ccabb6d166923f9ae6da6864de7c74c753745f6ce2516058242e59",
+      "embedded_provenance_matches_current_identity_bool": false,
+      "implementation_must_reseal_embedded_provenance_to_current_identity_bool": true,
+      "resealed_embedded_provenance_relative_path": "Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift",
+      "resealed_embedded_provenance_bytes_uint": 546,
+      "resealed_embedded_provenance_sha256": "860b5e271316f4c8724a38ba192fe2fd4be2da2434e10a9eabd6c58bc2650329",
+      "resealed_embedded_provenance_terminal_lf_bool": true,
+      "reseal_does_not_change_source_identity_because_that_ONE_FILE_IS_EXCLUDED_bool": true
+    },
+    "runtime_prime_root_cleanliness_contract": {
+      "required_state": "EXACT_TRACKED_TREE_ADMITTED_SET_NO_ADDITIONAL_NONHIDDEN_ADMITTED_WORKTREE_ENTRY",
+      "current_nonhidden_untracked_admitted_paths_exact": [
+        "docs/tools/ergentics-r19-obs11-c2-attempt-supervisor-build-owner.v11.rb"
+      ],
+      "current_worktree_prime_admitted_file_count_observed_uint": 616,
+      "current_worktree_prime_source_identity_record_count_observed_uint": 615,
+      "current_worktree_prime_authority_directory_count_observed_uint": 157,
+      "current_worktree_prime_watch_count_observed_uint": 773,
+      "current_worktree_source_identity_canonical_record_bytes_observed_uint": 124313,
+      "current_worktree_source_identity_observed_sha256": "00db506d1d22bb41e0f1fa9946473679b227b1dbf9c3b2b8a60f8715fb342b32",
+      "current_worktree_satisfies_runtime_prime_root_cleanliness_bool": false,
+      "cleanup_move_or_alternate_root_authorized_by_this_freeze_bool": false,
+      "runtime_readiness_action": "REQUIRE_THIS_PATH_ABSENT_OR_REQUIRE_A_SEPARATELY_FROZEN_COMPLETE_CLEAN_PRIME_ROOT;OTHERWISE_HOLD_NO_ENTRY"
+    },
+    "runtime_prime_watch_count_exact_uint": 772,
+    "runtime_companion_watch_count_exact_uint": 1460,
+    "runtime_prime_and_companion_watch_count_exact_uint": 2232,
+    "v13_extension_watch_count_exact_uint": 81,
+    "combined_watch_count_exact_uint": 2313,
+    "combined_watch_ceiling_uint": 4096,
+    "v13_extension_category_counts_exact": {
+      "CONTROL_AND_BOUND_FRAMES": 7,
+      "SOURCE_PACKAGE_ROOT_BUILD_ENTRY_FILES_AND_DIRECTORIES": 43,
+      "PRIMARY_TOOLS_WITH_SELF_IMAGE_REPLACING_RUBY": 10,
+      "SDK_ALIAS_PHYSICAL_SETTINGS_XCODE_AND_ABI_HEADERS": 21
+    },
+    "count_derivation": "772_CURRENT_PRIME_PLUS_1460_COMPANION_EQUALS_2232;2232_PLUS_81_EQUALS_2313;81_EQUALS_7_CONTROL_AND_BOUND_FRAMES_PLUS_43_SOURCE_PACKAGE_ROLES_PLUS_10_PRIMARY_TOOL_ROLES_PLUS_21_SDK_AND_ABI_ROLES;43_EQUALS_1_PACKAGE_ROOT_PLUS_1_BUILD_ENTRY_PLUS_27_SOURCE_FILES_PLUS_14_SOURCE_DIRECTORIES",
+    "v13_extension_role_order_exact": [
+      "V13_CONTROL",
+      "FIXED_SEQUENCE_CONTROL",
+      "V12_CONTROL",
+      "BUILD_READINESS_FRAME",
+      "BUILD_IDENTITY_FRAME",
+      "RUNTIME_READINESS_FRAME",
+      "LAUNCH_BINDING_FRAME",
+      "SOURCE_PACKAGE_ROOT",
+      "SOURCE_ROOT_BUILD_ENTRY",
+      "SOURCE_FILES_UTF8_PATH_ORDER_27",
+      "SOURCE_DIRECTORIES_PREORDER_14",
+      "PRIMARY_TOOLS_FROZEN_ORDER_WITH_HELD_SELF_IMAGE_REPLACING_RUBY_10",
+      "SDK_ALIAS_PHYSICAL_SETTINGS_XCODE_AND_ABI_HEADERS_FROZEN_ORDER_21"
+    ],
+    "base_then_extension_order_bool": true,
+    "base_and_extension_device_inode_sets_must_be_disjoint_bool": true,
+    "embedded_provenance_implementation_path_watch_class": "CURRENT_PRIME_BASE_ONLY_NOT_AN_EXTENSION_DUPLICATE",
+    "readiness_must_bind_all_2313_ordered_identity_rows_bool": true,
+    "count_or_order_or_disjointness_mismatch": "HOLD_SUCCESSOR_CONTROL_REQUIRED_NO_ENTRY",
+    "arm_gap_closure_order": "ADMIT_COMPLETE_HELD_SET_REGISTER_ALL_2313_REVALIDATE_COMPLETE_SET_ZERO_TIME_POLL_REQUIRE_ZERO_THEN_SAMPLE_TIME_AND_ENTER_START_STAGING_CREATE",
+    "watch_lifetime": "FROM_BEFORE_FIRST_REGISTRATION_THROUGH_START_FIXED_GATE_E_SEQUENCE_TERMINAL_OR_CONTAINED_FAILURE_FINAL_REJOIN_AND_PROCESS_EXIT",
+    "child_before_all_watches_armed_revalidated_and_zero_polled_bool": false
+  },
+  "prewrite_admission_order": {
+    "first_mutation": "SUCCESSFUL_FIXED_ARITY_MKOSTEMPSAT_NP_START_STAGING_LEAF_CREATION",
+    "required_before_first_mutation_predicates_exact": [
+      "P00_ARGC_EXACTLY_ONE_AND_EMPTY_REPLACEMENT_ENVIRONMENT",
+      "P01_FIXED_UID_GID_UMASK_CWD_AND_FD_TABLE_MATCH_READINESS",
+      "P02_SELF_NAMED_PATH_OPEN_O_RDONLY_O_NOFOLLOW_ANY_O_CLOEXEC",
+      "P03_SELF_HELD_FSTAT_REGULAR_MODE_NLINK_SIZE_DEVICE_INODE_VALID",
+      "P04_SELF_HELD_BYTES_SHA256_AND_MACHO_ARCH_UUID_LOAD_COMMANDS_SIGNATURE_MATCH_BUILD_IDENTITY",
+      "P05_SELF_POSTHASH_FSTAT_UNCHANGED_AND_NAMED_PATH_REJOINS_HELD_DEVICE_INODE",
+      "P06_LOADED_MAIN_IMAGE_PATH_DEVICE_INODE_JOINS_HELD_SELF_VNODE",
+      "P07_V13_FIXED_SEQUENCE_V12_IMPLEMENTATION_BUILD_IDENTITY_RUNTIME_READINESS_AND_LAUNCH_BINDING_FRAMES_HELD_HASHED_AND_REJOINED",
+      "P08_PRIME_AND_COMPANION_CONTENT_CLOSURES_DESCRIPTOR_HELD_AND_WATCHES_ARMED_WITH_ZERO_PENDING_EVENTS",
+      "P09_EPOCH_PARENT_AND_ALL_FINAL_STAGING_LEAF_ABSENCE_PREDICATES_PROVED",
+      "P10_EXACT_TIMEBASE_REALTIME_AND_CONTINUOUS_START_OBSERVATIONS_RETAINED",
+      "P11_ALL_NEGATIVE_AND_AMBIGUOUS_STATES_POISON_BEFORE_STAGING_CREATE"
+    ],
+    "first_mutation_transition_exact": "P12_ENTER_FIXED_ARITY_MKOSTEMPSAT_NP_AND_CONSUME_ONLY_IF_A_DESCRIPTOR_IS_RETURNED",
+    "required_after_create_before_first_body_write_exact": [
+      "P13_CAPTURE_MUTATED_TEMPLATE_STAGING_NAME_RETURNED_FD_FD_CLOEXEC_SLOT_HELD_VNODE_NAMED_VNODE_AND_THREE_WAY_IDENTITY_JOIN_IN_PublicationStagingAdmissionV12",
+      "P14_CONSTRUCT_COMPLETE_CANONICAL_DIGESTED_START_BODY_FROM_RUNTIME_FACTS_INCLUDING_P13_IN_MEMORY",
+      "P15_SELECT_POSTSTATUS_PUBLICATION_OPERATOR_AND_REQUIRE_TYPED_VALUE_TRUE"
+    ],
+    "all_required_before_first_mutation_bool": true,
+    "body_complete_before_staging_creation_bool": false,
+    "body_complete_before_first_body_write_bool": true,
+    "failure_before_first_mutation": "POISON_NO_START_NO_RETRY_ABSTAIN",
+    "failure_after_first_mutation": "RETAIN_LONGEST_JOURNAL_PREFIX_POISON_NO_RETRY_ABSTAIN",
+    "named_path_only_sufficient_bool": false,
+    "same_bytes_new_inode_sufficient_bool": false
+  },
+  "start_publication_and_capability": {
+    "required_production_dependency_type_id": "HELD_RECORD_FRAME",
+    "body_owner": "SWIFT_START_OWNER",
+    "body_derivation": "RUNTIME_FACTS_ONLY_NO_PREBUILT_BODY_FROM_ARGV_STDIN_ENV_OR_FILE_LOADER",
+    "canonicalization": "V12_CANONICAL_TYPED_FRAME_RULES_BY_BOUND_SECTION_DIGEST",
+    "v12_start_boundary_projection": {
+      "start_record_boundary_contract_canonical_bytes_uint": 1563,
+      "start_record_boundary_contract_canonical_sha256": "ae50370374b6ddafd91374bd3161a15fcad6d43a492e8ef892171acfc8b6e13d",
+      "PublicationStagingAdmissionV12_canonical_bytes_uint": 1260,
+      "PublicationStagingAdmissionV12_canonical_sha256": "26f27cea3a1ccf2c8512edcf526ce24b156f001e0d1645c03b4a63c0dee70f01",
+      "native_filesystem_primitives_canonical_bytes_uint": 8034,
+      "native_filesystem_primitives_canonical_sha256": "a7aaa3bdc41b48493a0fc7dd33ec5a1adcd9d86a49f0246321084b4c270dec94",
+      "reused_exact": [
+        "SCHEMA_ergentics-r19-obs11-c2-build-owner-start-v12",
+        "CANONICAL_JSON_WITH_ONE_LF",
+        "DIGEST_FREE_PAYLOAD_SHA256_THEN_ATTACH",
+        "MAXIMUM_BYTES_1048576",
+        "FINAL_MODE0400_UID501_GID20_NLINK1_FLAGS0",
+        "CONSUMED_ONLY_AFTER_SUCCESSFUL_STAGING_DESCRIPTOR_ACQUISITION",
+        "RETAIN_STAGING_OR_FINAL_ON_CONSUMED_FAILURE",
+        "NO_ROOT_OR_JOURNAL_MUTATION_BEFORE_COMPLETE_FINAL_REJOIN",
+        "PublicationStagingAdmissionV12_KEYS_TYPES_CONSTANTS_AND_SUCCESS_RULE",
+        "FIXED_ARITY_MKOSTEMPSAT_NP_TEMPLATE_SUFFIX_LENGTH_8_FLAGS_O_CLOEXEC"
+      ],
+      "superseded_exact": "ONLY_V12_TIMING_controller_initial_order_exact_CONSTRUCT_START_PAYLOAD_BEFORE_FIRST_PUBLICATION_CALL_IS_REORDERED_BY_V13_TO_CREATE_AND_ADMIT_THE_TYPED_STAGING_RECEIPT_BEFORE_BODY_CONSTRUCTION",
+      "v12_publication_staging_schema_claimed_byte_equal_bool": true,
+      "v12_controller_initial_order_claimed_byte_equal_bool": false
+    },
+    "self_hash_rule": "HASH_CANONICAL_BODY_BYTES_WITHOUT_DIGEST_FIELD_THEN_ATTACH_DIGEST",
+    "frame_hash_rule": "DOMAIN_SEPARATED_LENGTH_FRAMED_HASH_OVER_FINAL_CANONICAL_BODY_AND_FROZEN_SCHEMA_KIND",
+    "maximum_frame_bytes_uint": 1048576,
+    "publication_root": "DESCRIPTOR_HELD_PRIVATE_ROOT_BOUND_IN_READINESS",
+    "template_before_call_exact_derivation": "DOT_PLUS_EXACT_FINAL_BASENAME_PLUS_DOT_XXXXXX_DOT_STAGING",
+    "template_six_mutable_bytes_exact": "THE_SIX_ASCII_X_BYTES_IMMEDIATELY_BEFORE_THE_EIGHT_BYTE_DOT_STAGING_SUFFIX",
+    "staging_suffix_length_uint": 8,
+    "mkostempsat_flags_uint": 16777216,
+    "staging_leaf": "RUNTIME_MUTATED_TEMPLATE_NAME_CAPTURED_AS_InventoryNameV12_AND_REQUIRED_TO_MATCH_DOT_FINAL_BASENAME_DOT_SIX_ALPHANUMERIC_BYTES_DOT_STAGING",
+    "final_leaf": "EXACT_LITERAL_BOUND_IN_READINESS_REQUIRED_ABSENT_BEFORE_START",
+    "precall_namespace_predicate": "FINAL_ABSENT_AND_ZERO_NAMES_MATCHING_DOT_FINAL_BASENAME_DOT_XXXXXX_DOT_STAGING",
+    "consumed_exactly_when": "eps_mkostempsat_np_SUCCESSFULLY_RETURNS_A_DESCRIPTOR_FOR_THE_START_STAGING_LEAF",
+    "failed_call_without_created_staging_state": "UNCONSUMED_NAMESPACE_POISON_NO_REUSE",
+    "publication_staging_admission_type_id": "PublicationStagingAdmissionV12",
+    "publication_staging_admission_constants_exact": {
+      "profile_enum": "START_RECORD",
+      "suffix_length_uint": 8,
+      "mkostempsat_flags_uint": 16777216,
+      "mkostempsat_entered_bool": true,
+      "returned_fd_flags_int": 1,
+      "returned_fd_cloexec_bool": true,
+      "complete_bool": true
+    },
+    "expected_final_metadata": {
+      "mode_octal4": "0400",
+      "uid_uint": 501,
+      "gid_uint": 20,
+      "nlink_uint": 1,
+      "flags_uint": 0,
+      "type": "REGULAR_FILE"
+    },
+    "publication_flags_exact": "RENAME_EXCL_BITWISE_OR_RENAME_NOFOLLOW_ANY",
+    "publication_order_exact": [
+      "MKOSTEMPSAT_NP_TEMPLATE_DOT_FINAL_BASENAME_DOT_XXXXXX_DOT_STAGING_SUFFIX_LENGTH_8_FLAGS_O_CLOEXEC_UNDER_HELD_PARENT",
+      "REQUIRE_STAGING_REGULAR_UID501_GID20_MODE0600_NLINK1_FLAGS0_SIZE0_RETURNED_FD_CLOEXEC",
+      "CAPTURE_COMPLETE_PublicationStagingAdmissionV12_WITH_MUTATED_NAME_SLOT_HELD_NAMED_AND_IDENTITY_JOIN",
+      "CONSTRUCT_COMPLETE_CANONICAL_DIGESTED_START_BODY_FROM_ALL_RUNTIME_FACTS_INCLUDING_STAGING_ADMISSION",
+      "REQUIRE_TYPED_POSTSTATUS_PUBLICATION_OPERATOR_VALUE_TRUE",
+      "WRITE_COMPLETE_CANONICAL_FRAME_WITH_CHECKED_SHORT_WRITE_LOOP",
+      "READ_BACK_STAGING_FROM_HELD_DESCRIPTOR_AND_MATCH_BYTES_SHA256",
+      "FSYNC_STAGING_FILE",
+      "F_FULLFSYNC_STAGING_FILE",
+      "FCHMOD_STAGING_0400",
+      "FSTAT_STAGING_REQUIRE_REGULAR_UID501_GID20_MODE0400_NLINK1_FLAGS0_BYTES_SHA256",
+      "SECOND_FSYNC_STAGING_FILE",
+      "SECOND_F_FULLFSYNC_STAGING_FILE",
+      "RENAMEATX_NP_STAGING_TO_FINAL_WITH_RENAME_EXCL_OR_RENAME_NOFOLLOW_ANY",
+      "FSYNC_HELD_PARENT_DIRECTORY",
+      "F_FULLFSYNC_HELD_PARENT_DIRECTORY",
+      "HELD_FINAL_DESCRIPTOR_FSTAT_BYTES_SHA256_DEVICE_INODE_UID_GID_MODE_NLINK_FLAGS_SIZE_JOIN",
+      "NAMED_FINAL_OPEN_O_RDONLY_O_CLOEXEC_O_NOFOLLOW_ANY_AND_COMPLETE_DEVICE_INODE_METADATA_JOIN",
+      "ALL_BOUND_CONTENT_CONTINUITY_WATCHES_ZERO_AND_ALL_CONTINUITY_REVALIDATION"
+    ],
+    "post_rename_failure_rule": "RETAIN_FINAL_AND_ALL_JOURNAL_PREFIXES_POISON_NO_CLEANUP_NO_RETRY_ABSTAIN",
+    "pre_rename_failure_rule": "RETAIN_STAGING_AND_ALL_JOURNAL_PREFIXES_POISON_NO_CLEANUP_NO_RETRY_ABSTAIN",
+    "postpublication_join": "HELD_FINAL_DESCRIPTOR_BYTES_HASH_DEVICE_INODE_NAMED_REJOIN_PUBLICATION_PARENT_STABLE_PROJECTION_TARGET_SLOT_STATE_AND_ALL_BOUND_CONTENT_CONTINUITY_WATCHES_ZERO",
+    "returned_capability": "OPAQUE_HELD_RECORD_FRAME",
+    "capability_retains_exact": [
+      "FINAL_FRAME_DESCRIPTOR",
+      "FRAME_BYTES_SHA256_AND_DOMAIN_HASH",
+      "FINAL_DEVICE_INODE_UID_GID_MODE_NLINK_FLAGS_SIZE",
+      "LEASE_AND_WATCH_LIFETIME",
+      "V13_V12_AND_RUNTIME_INPUT_DESCRIPTORS",
+      "POISON_AND_ONE_WINNER_STATE"
+    ],
+    "capability_exposes_path_loader_bool": false,
+    "capability_exposes_generic_command_bool": false,
+    "start_self_witnessing_bool": false,
+    "outer_descriptor_observation_required_before_later_interpretation_bool": true
+  },
+  "post_start_sequence_successor_freeze_boundary": {
+    "freeze_state_enum": "MISSING_COMPLETE_TYPED_TRANSPORT_OWNERSHIP_AND_CONSERVATION_CONTRACT",
+    "start_held_state": "START_PUBLISHED_HELD_RECORD_FRAME_LIVE",
+    "intended_next_transition_after_successor_freeze": "INTERNAL_ZERO_ARGUMENT_consumeFixedGateESequence_EXACTLY_ONCE",
+    "required_successor_control_kind": "START_OWNER_FIXED_SEQUENCE_FREEZE_V13",
+    "required_successor_control_path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prime-start-owner-fixed-sequence-freeze.v13.json",
+    "external_advance_api_present_bool": false,
+    "stdin_or_socket_protocol_present_bool": false,
+    "signal_driven_advance_present_bool": false,
+    "indefinite_park_present_bool": false,
+    "caller_supplied_role_or_path_or_argv_or_env_or_cwd_or_timeout_present_bool": false,
+    "fixed_role_order_exact": [
+      "T01_SUPPORT_AND_COMPARATOR_API",
+      "B01_BUILD_A_HYPOTHESIS_RESULT_COMPARATOR",
+      "B02_BUILD_A_ATTEMPT_SUPERVISOR",
+      "B03_BUILD_B_HYPOTHESIS_RESULT_COMPARATOR",
+      "B04_BUILD_B_ATTEMPT_SUPERVISOR"
+    ],
+    "maximum_child_count_uint": 5,
+    "child_before_start_final_rejoin_bool": false,
+    "child_spawn_primitive": "DARWIN_POSIX_SPAWN_ONLY_NO_Process_NO_SHELL",
+    "v12_values_eligible_for_exact_successor_reuse_only": [
+      "swiftpm_operations_ordered_ROLE_LABEL_ROOT_LOGICAL_ARGV0_APPENDED_ARGV_AND_CAPTURE_LEAVES",
+      "swiftpm_common_argv_ordered",
+      "swiftpm_environment_template_ordered_WITH_EXPLICIT_V13_ROOT_RESEAL",
+      "swiftpm_child_contract_PHYSICAL_EXECUTABLE_CWD_STDIN_CAPTURE_METADATA_AND_CAPS",
+      "roots_EXACT_ROOT_AND_CHILD_NAMES_AFTER_V13_READINESS_RESEAL"
+    ],
+    "v12_canonical_section_bindings_for_successor_exact": [
+      { "pointer": "/swiftpm_environment_template_ordered", "bytes_uint": 659, "sha256": "7277fdabeb714de8732f6d8e8e180cbe789a522fcd607eff31271fbdb2d824c4" },
+      { "pointer": "/swiftpm_common_argv_ordered", "bytes_uint": 512, "sha256": "55201a6c5f61cea0e46c0ba1e143ce70720fc78c40bc3b0f34805c7ca3f8a830" },
+      { "pointer": "/swiftpm_operations_ordered", "bytes_uint": 3267, "sha256": "a81047541d7f1e1622d7a56c6516bdbb80b0b7faaec87cc9a4c577c9f015904f" },
+      { "pointer": "/swiftpm_child_contract", "bytes_uint": 1810, "sha256": "6610577e6400cec401cece5f7bdd2466a5822ac6d6eb65382aee6ae2ac497f5b" },
+      { "pointer": "/roots", "bytes_uint": 1221, "sha256": "fbe75ed7acc1944672b1eac8bef422a6303bf1e4b35fef2b35c49f7ce296232b" },
+      { "pointer": "/controller_initial_fd_contract_v12", "bytes_uint": 326, "sha256": "7e8d60b938f575860adcafb4d9d8e30f78255f7d0a7d8194369be0f505184e31" },
+      { "pointer": "/swiftpm_child_fd_contract_v12", "bytes_uint": 241, "sha256": "cd05c30e7bdeac23e7c51835ac37a479c9b751ebf41f06ad7ec8a03990b4498d" },
+      { "pointer": "/exact_timing_contract", "bytes_uint": 4199, "sha256": "f14fd25ed3702f3637b479a6b7f383dca34789c0bf059a985687adde2ddcf9bb" },
+      { "pointer": "/continuation_predicate", "bytes_uint": 406, "sha256": "a45a39a3acb2eeb2ddfb2b7159bc1b976066ddc1f8e535c88bfeb8feb7807e47" },
+      { "pointer": "/controller_continuity_watch_contract", "bytes_uint": 3144, "sha256": "4867249033b4c35458f9e64d68558c15a525972368ae905b297c575960a6f030" },
+      { "pointer": "/exact_record_schema_v12/reusable_objects/ProcessObservationV12", "bytes_uint": 3205, "sha256": "fcd421a04be4e5e84ebbe8bdfade0d64ccd54c9f006c9a534797f251668a254d" },
+      { "pointer": "/exact_record_schema_v12/records/journal/body_schemas/OPERATION", "bytes_uint": 2058, "sha256": "feeb13a158a8f1cfe23e99e38e3e40fbd41cffc8f6d1da630c55c426a4bdaa38" }
+    ],
+    "v12_process_fields_forbidden_to_inherit_as_v13_containment": [
+      "Process.spawn_CALL_FORM",
+      "process_group_FALSE",
+      "timeout_FALSE",
+      "signals_FALSE",
+      "POST_SPAWN_PRE_WAIT_NONE_WITHOUT_SUSPENDED_IMAGE_CWD_JOIN"
+    ],
+    "successor_must_freeze_exact_before_any_source_edit": [
+      "PER_ROLE_PHYSICAL_IMAGE_LOGICAL_ARGV0_COMMON_AND_APPENDED_ARGV_BYTE_VECTORS",
+      "PER_ROLE_EXACT_16_ENTRY_REPLACEMENT_ENVIRONMENT_AND_ROOT_SUBSTITUTION",
+      "PER_ROLE_HELD_CWD_STDIN_STDOUT_STDERR_FD_MAP_CLOSE_POLICY_AND_UMASK",
+      "PER_ROLE_INTEGER_DEADLINE_VALUE_CLOCK_DOMAIN_AND_PRESPAWN_ARMING_ORDER",
+      "PER_ROLE_STDOUT_STDERR_CAPS_DRAIN_OWNERSHIP_EOF_AND_OVERFLOW_ACTION",
+      "POSIX_SPAWN_FILE_ACTIONS_AND_ATTRIBUTE_FLAGS_INCLUDING_SUSPENDED_START_AND_PRIVATE_PGROUP_CREATION",
+      "PARENT_PRESPAWN_AND_CHILD_PRESUME_MAPPED_CWD_AND_IMAGE_DEVICE_INODE_GENERATION_JOINS",
+      "DIRECT_CHILD_PID_STARTTIME_SESSION_PGID_AND_GENERATION_DOUBLE_SNAPSHOT_OWNERSHIP",
+      "EXACT_WAITPID_OPTIONS_EINTR_RULE_STATUS_DECODING_AND_REAP_PREDICATE",
+      "PER_GROUP_STOP_CONT_KILL_AND_SIGNAL_ZERO_ENTRY_BUDGETS_WITH_COMMITMENT_POINTS",
+      "ABANDON_TIMEOUT_AND_POSTSPAWN_REJECT_CONTAINMENT_STATE_MACHINE",
+      "TWO_ESRCH_OR_STRONGER_ABSENCE_PROOF_AND_PROCESS_GROUP_CONSERVATION",
+      "WATCH_SOURCE_ROOT_AND_NAMED_PATH_REVALIDATION_BEFORE_SPAWN_BEFORE_RESUME_AFTER_REAP_AND_BEFORE_NEXT_ROLE",
+      "FAILURE_PREFIX_TERMINAL_PUBLICATION_AND_RETAINED_DESCRIPTOR_LIFETIMES",
+      "SUCCESS_TERMINAL_ORDER_TIMEBASE_EQUALITY_CONTINUOUS_END_AND_FINAL_REJOINS",
+      "OUTER_CAPTURE_EOF_EXACT_REAP_AND_DESCRIPTOR_OBSERVATION_ORDER"
+    ],
+    "successor_control_authorizes_execution_bool": false,
+    "successor_control_authorizes_build_bool": false,
+    "recovery_control_authorizes_source_implementation_bool": false,
+    "source_implementation_authorized_only_after_complete_successor_freeze_commit_bool": true,
+    "failure_to_freeze_every_named_field": "HOLD_NO_SOURCE_BUILD_OR_ENTRY",
+    "process_exit_zero_meaning": "LOCAL_FIXED_SEQUENCE_MECHANICS_TERMINAL_ONLY_NOT_AUTHORITY_CLOSURE_NOT_GATE_E_PROMOTION",
+    "held_record_frame_lifetime_end": "ONLY_AFTER_FIXED_SEQUENCE_TERMINAL_OR_CONTAINED_FAILURE_FINAL_REJOIN_IMMEDIATELY_BEFORE_PROCESS_EXIT",
+    "launch_authorized_by_this_freeze_bool": false
+  },
+  "timing_contract_reuse": {
+    "v12_exact_timing_section_canonical_json_sha256": "f14fd25ed3702f3637b479a6b7f383dca34789c0bf059a985687adde2ddcf9bb",
+    "start_timing_profile": "START_ONLY",
+    "v12_controller_initial_order_disposition": "SUPERSEDED_ONLY_FOR_TYPED_STAGING_FACT_CAUSALITY;ALL_CLOCK_TYPES_ENDPOINT_MEANINGS_AND_ARITHMETIC_RETAINED",
+    "start_order_exact": [
+      "DIRECT_BASELINE_JOINS_RETURNED",
+      "ADMISSION_WATCH_ZERO_CONFIRMED",
+      "MACH_TIMEBASE_INFO",
+      "CLOCK_REALTIME_RAW",
+      "MACH_CONTINUOUS_TIME_START",
+      "FIRST_START_PUBLICATION_CALL_eps_mkostempsat_np_STAGING_CREATION",
+      "CAPTURE_AND_VALIDATE_PublicationStagingAdmissionV12",
+      "START_BODY_CONSTRUCTION_INCLUDING_STAGING_ADMISSION",
+      "FIRST_START_BODY_WRITE"
+    ],
+    "start_tick_state": "OBSERVED_U64",
+    "end_tick_state": "NULL_NOT_SAMPLED_AT_START",
+    "elapsed_rational_state": "NULL_NOT_AVAILABLE_AT_START",
+    "later_interval_arithmetic_exact": {
+      "preconditions": [
+        "TIMEBASE_NUMERATOR_UINT32_GREATER_THAN_ZERO",
+        "TIMEBASE_DENOMINATOR_UINT32_GREATER_THAN_ZERO",
+        "END_TICK_UINT64_GREATER_THAN_OR_EQUAL_START_TICK_UINT64"
+      ],
+      "delta": "CHECKED_UINT64_SUBTRACTION_END_MINUS_START",
+      "product": "EXACT_UINT64_BY_UINT32_TO_UINT96_MULTIPLICATION_DELTA_TIMES_NUMERATOR",
+      "division": "EXACT_UINT96_DIVMOD_UINT32_DENOMINATOR_YIELDS_QUOTIENT_UINT96_AND_REMAINDER_UINT32",
+      "division_identity": "PRODUCT_EQUALS_QUOTIENT_TIMES_DENOMINATOR_PLUS_REMAINDER_AND_REMAINDER_LESS_THAN_DENOMINATOR",
+      "gcd": "EXACT_GCD_UINT96_AND_UINT32_OF_PRODUCT_AND_DENOMINATOR",
+      "reduced_numerator": "PRODUCT_DIVIDED_BY_GCD",
+      "reduced_denominator": "DENOMINATOR_DIVIDED_BY_GCD",
+      "reduced_predicates": "REDUCED_DENOMINATOR_GREATER_THAN_ZERO_AND_GCD_REDUCED_NUMERATOR_REDUCED_DENOMINATOR_EQUALS_ONE",
+      "serialization": "UNBOUNDED_UNSIGNED_DECIMAL_JSON_INTEGER_TEXT_WITHOUT_LEADING_ZERO",
+      "on_overflow_underflow_ZERO_DENOMINATOR_OR_IDENTITY_MISMATCH": "POISON_ABSTAIN"
+    },
+    "floating_point_allowed_bool": false,
+    "integer_nanosecond_truncation_allowed_bool": false,
+    "phase_rhythm_meter_and_rfc3339_may_supply_predicate_bool": false,
+    "graph_or_display_may_supply_predicate_bool": false
+  },
+  "build_identity_contract": {
+    "build_execution_authorized_by_this_freeze_bool": false,
+    "requires_separate_build_controller_and_exact_transport_bool": true,
+    "required_prebuild_record_kind": "START_OWNER_BUILD_READINESS_V13",
+    "required_prebuild_record_path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prime-start-owner-build-readiness.v13.json",
+    "required_prebuild_bindings_exact": [
+      "V13_RECOVERY_COMMIT_TREE_AND_CONTROL_BLOB_SHA256_BYTES_LF",
+      "FIXED_SEQUENCE_CONTROL_COMMIT_TREE_AND_CONTROL_BLOB_SHA256_BYTES_LF",
+      "IMPLEMENTATION_COMMIT_TREE_AND_ALL_NINETEEN_CHANGED_BLOBS_SHA256_BYTES_LF",
+      "TWO_EXACT_FRESH_SCRATCH_ROOTS_AND_REQUIRED_INITIAL_ABSENCE",
+      "PINNED_SWIFTC_CLANG_LINKER_SDK_ARCH_AND_ALL_ARGUMENTS_IN_ORDER",
+      "EMPTY_REPLACEMENT_ENVIRONMENT_EXCEPT_EXACT_FROZEN_BUILD_TABLE",
+      "OUTPUT_CAPTURE_CAPS_NO_OUTER_TIMEOUT_NO_SIGNALS_AND_PERMANENT_RETENTION",
+      "AT_MOST_ONE_BUILD_CONTROLLER_ENTRY_AND_ZERO_RESULT_BINARY_ENTRIES"
+    ],
+    "build_count_uint": 2,
+    "scratch_roots": "TWO_FRESH_DISJOINT_PRIVATE_ROOTS_BOUND_IN_BUILD_CONTROLLER",
+    "source_commit_required": "EXACT_IMPLEMENTATION_COMMIT_AND_TREE",
+    "network_calls_uint": 0,
+    "dependency_fetches_uint": 0,
+    "result_binary_execution_uint": 0,
+    "required_equalities": [
+      "RAW_EXECUTABLE_BYTES",
+      "SHA256",
+      "BYTE_COUNT",
+      "MACHO_ARCHITECTURE",
+      "MACHO_UUID",
+      "MACHO_LOAD_COMMAND_SEQUENCE_AND_BYTES",
+      "CODE_SIGNATURE_IDENTITY_AND_CDHASH_OR_EXPLICIT_UNSIGNED_STATE",
+      "LINKED_DYLIB_LOAD_PATHS",
+      "MINIMUM_OS_AND_SDK_IDENTITY"
+    ],
+    "selected_image_publication": {
+      "source": "BUILD_A_ONLY_AFTER_ALL_A_B_EQUALITIES_PROVED",
+      "held_creation_parent_absolute_path": "/private/tmp",
+      "held_creation_parent_admission": "OPEN_O_RDONLY_O_DIRECTORY_O_CLOEXEC_O_NOFOLLOW_ANY_HOLD_FSTAT_AND_NAMED_REJOIN_TYPE_DEVICE_INODE_GENERATION_UID_GID_MODE_FLAGS;DO_NOT_JOIN_MUTABLE_NLINK_SIZE_OR_TIMESTAMPS_AFTER_CHILD_CREATION",
+      "held_creation_parent_inventory_scope": "TARGET_LEAF_ONLY_NO_UNRELATED_NAME_OBSERVATION_OR_COMPLETE_INVENTORY",
+      "root_absolute_path": "/private/tmp/ergentics-r19-obs11-c2-prime-start-owner-v13-build-selected",
+      "root_leaf_exact": "ergentics-r19-obs11-c2-prime-start-owner-v13-build-selected",
+      "root_initial_state": "ABSENT",
+      "root_creation": "FSTATAT_HELD_PRIVATE_TMP_TARGET_AT_SYMLINK_NOFOLLOW_REQUIRE_ENOENT_THEN_eps_mkdirat_MODE0700_THEN_OPEN_O_RDONLY_O_DIRECTORY_O_CLOEXEC_O_NOFOLLOW_ANY_AND_REQUIRE_UID501_GID0_MODE0700_NLINK2_FLAGS0",
+      "root_creation_durability_order_exact": [
+        "FSTATAT_HELD_PRIVATE_TMP_TARGET_AT_SYMLINK_NOFOLLOW_REQUIRE_MINUS1_ENOENT",
+        "ENTER_ONE_eps_mkdirat_HELD_PRIVATE_TMP_ROOT_LEAF_MODE0700_REQUIRE_ZERO",
+        "OPEN_AND_HOLD_NEW_ROOT_O_RDONLY_O_DIRECTORY_O_CLOEXEC_O_NOFOLLOW_ANY",
+        "FSTAT_HELD_NEW_ROOT_REQUIRE_DIRECTORY_UID501_GID0_MODE0700_NLINK2_FLAGS0",
+        "FSYNC_HELD_PRIVATE_TMP_PARENT",
+        "F_FULLFSYNC_HELD_PRIVATE_TMP_PARENT",
+        "FSTATAT_NAMED_NEW_ROOT_REQUIRE_COMPLETE_HELD_VNODE_JOIN",
+        "RETAIN_PRIVATE_TMP_PARENT_AND_NEW_ROOT_DESCRIPTORS"
+      ],
+      "root_creation_consumed_exactly_when": "eps_mkdirat_RETURNS_ZERO",
+      "root_creation_failure_rule": "RETAIN_ANY_CREATED_ROOT_AND_ALL_BUILD_JOURNAL_PREFIXES_NO_CLEANUP_NO_RETRY",
+      "staging_leaf_exact": ".ErgenticsPrimeStartOwner.v13.staging",
+      "final_leaf_exact": "ErgenticsPrimeStartOwner.v13",
+      "staging_and_final_initial_state": "ABSENT",
+      "staging_open_flags_hex": "0x21000a02",
+      "staging_initial_mode_octal4": "0600",
+      "final_metadata_exact": {
+        "mode_octal4": "0700",
+        "uid_uint": 501,
+        "gid_uint": 0,
+        "nlink_uint": 1,
+        "flags_uint": 0,
+        "type": "REGULAR_FILE"
+      },
+      "order_exact": [
+        "HELD_BUILD_A_POSTBUILD_FSTAT_AND_SHA256_REVALIDATION",
+        "CREATE_STAGING_O_RDWR_O_CREAT_O_EXCL_O_CLOEXEC_O_NOFOLLOW_ANY_MODE_0600",
+        "COPY_COMPLETE_BYTES_WITH_CHECKED_SHORT_READ_AND_WRITE_LOOPS",
+        "READ_BACK_STAGING_AND_MATCH_BUILD_A_BYTES_SHA256",
+        "FSYNC_STAGING",
+        "F_FULLFSYNC_STAGING",
+        "FCHMOD_STAGING_0700",
+        "FSTAT_STAGING_REQUIRE_REGULAR_UID501_GID0_MODE0700_NLINK1_FLAGS0_SIZE_SHA256",
+        "SECOND_FSYNC_STAGING",
+        "SECOND_F_FULLFSYNC_STAGING",
+        "RENAMEATX_NP_STAGING_TO_FINAL_WITH_FLAGS_0x00000014",
+        "FSYNC_HELD_ROOT_DIRECTORY",
+        "F_FULLFSYNC_HELD_ROOT_DIRECTORY",
+        "FSTAT_HELD_PRIVATE_TMP_PARENT_AND_NAMED_REJOIN_STABLE_PROJECTION",
+        "FSTATAT_NAMED_ROOT_AND_HELD_ROOT_COMPLETE_DEVICE_INODE_METADATA_JOIN",
+        "HELD_FINAL_DESCRIPTOR_COMPLETE_METADATA_BYTES_SHA256_MACHO_AND_CODESIGN_REJOIN",
+        "NAMED_FINAL_OPEN_O_RDONLY_O_CLOEXEC_O_NOFOLLOW_ANY_AND_DEVICE_INODE_JOIN"
+      ],
+      "pre_rename_failure_rule": "RETAIN_ROOT_STAGING_BOTH_BUILD_ROOTS_AND_ALL_JOURNAL_PREFIXES_NO_CLEANUP_NO_RETRY",
+      "post_rename_failure_rule": "RETAIN_ROOT_FINAL_BOTH_BUILD_ROOTS_AND_ALL_JOURNAL_PREFIXES_NO_CLEANUP_NO_RETRY",
+      "success_retention": "ROOT_FINAL_AND_BOTH_BUILD_ROOTS_PERMANENT_UNTIL_SEPARATE_EXPLICIT_CLEANUP_AUTHORITY",
+      "binary_execution_count_uint": 0
+    },
+    "on_any_difference": "FAIL_CONSUMED_RETAIN_BOTH_BUILDS_NO_EXECUTION_NO_RETRY_SUCCESSOR_CONTROL_REQUIRED"
+  },
+  "outer_entry_boundary": {
+    "purpose": "NONAUTHORITATIVE_LAUNCH_AND_FINAL_FRAME_OBSERVATION_ONLY",
+    "shell_transport_if_unavoidable": "ABSOLUTE_BIN_ZSH_F_IMMEDIATE_EXEC_USR_BIN_ENV_I_WITH_EXACT_CWD_DEV_NULL_AND_CAPTURE",
+    "shell_or_env_may_supply_predicate_bool": false,
+    "ambient_shell_lifetime_erased_by_env_i_bool": false,
+    "start_owned_by_outer_process_bool": false,
+    "outer_may_construct_start_body_bool": false,
+    "outer_may_reinterpret_missing_start_bool": false,
+    "outer_may_signal_or_spawn_second_child_bool": false,
+    "missing_final_start_observation": "INCOMPLETE_ABSTAIN_NO_RETRY_UNDER_SAME_LAUNCH_ID"
+  },
+  "future_commit_topology_v13": {
+    "ordered": [
+      "V13_RECOVERY_CONTROL_COMMIT",
+      "START_OWNER_FIXED_SEQUENCE_CONTROL_COMMIT",
+      "START_OWNER_IMPLEMENTATION_COMMIT",
+      "START_OWNER_BUILD_READINESS_COMMIT",
+      "START_OWNER_BUILD_IDENTITY_COMMIT",
+      "START_OWNER_READINESS_COMMIT",
+      "START_OWNER_LAUNCH_BINDING_COMMIT",
+      "POSTINVOCATION_START_OBSERVATION_COMMIT"
+    ],
+    "v13_recovery_control_commit_parent": "1d8c49b638988653922d9b7a8f529002319594d1",
+    "v13_recovery_control_commit_changed_paths_exact": [
+      "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-build-owner-topology-recovery-freeze.v13.json"
+    ],
+    "start_owner_fixed_sequence_control_commit_parent": "V13_RECOVERY_CONTROL_COMMIT",
+    "start_owner_fixed_sequence_control_commit_changed_paths_exact": [
+      "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prime-start-owner-fixed-sequence-freeze.v13.json"
+    ],
+    "start_owner_fixed_sequence_control_authorizes_source_only_after_all_named_transport_ownership_and_conservation_fields_are_complete_bool": true,
+    "start_owner_fixed_sequence_control_authorizes_build_or_entry_bool": false,
+    "start_owner_implementation_commit_parent": "START_OWNER_FIXED_SEQUENCE_CONTROL_COMMIT",
+    "start_owner_implementation_commit_changed_paths_exact": [
+      "Observability/ErgenticsResearch/Package.swift",
+      "Observability/ErgenticsResearch/Sources/ErgenticsPrimeStartOwner/main.swift",
+      "Observability/ErgenticsResearch/Sources/ErgenticsPrimeStartOwnerCore/PrimeStartOwner.swift",
+      "Observability/ErgenticsResearch/Sources/ErgenticsPrimeStartOwnerCore/PrimeStartOwnerAdmission.swift",
+      "Observability/ErgenticsResearch/Sources/ErgenticsPrimeStartOwnerCore/PrimeStartOwnerCanonicalSchemas.swift",
+      "Observability/ErgenticsResearch/Sources/ErgenticsPrimeStartOwnerCore/PrimeStartOwnerFixedProcessContainment.swift",
+      "Observability/ErgenticsResearch/Sources/ErgenticsPrimeStartOwnerCore/PrimeStartOwnerJournal.swift",
+      "Observability/ErgenticsResearch/Sources/ErgenticsPrimeStartOwnerCore/PrimeStartOwnerStateMachine.swift",
+      "Observability/ErgenticsResearch/Sources/ErgenticsPrimeStartOwnerCore/PrimeStartOwnerTiming.swift",
+      "Observability/ErgenticsResearch/Sources/ErgenticsPrimeStartOwnerDarwin/PrimeStartOwnerDarwin.c",
+      "Observability/ErgenticsResearch/Sources/ErgenticsPrimeStartOwnerDarwin/include/PrimeStartOwnerDarwin.h",
+      "Observability/ErgenticsResearch/Tests/ErgenticsPrimeStartOwnerCoreTests/PrimeStartOwnerAdmissionTests.swift",
+      "Observability/ErgenticsResearch/Tests/ErgenticsPrimeStartOwnerCoreTests/PrimeStartOwnerCanonicalSchemasTests.swift",
+      "Observability/ErgenticsResearch/Tests/ErgenticsPrimeStartOwnerCoreTests/PrimeStartOwnerCoreTests.swift",
+      "Observability/ErgenticsResearch/Tests/ErgenticsPrimeStartOwnerCoreTests/PrimeStartOwnerFixedProcessContainmentTests.swift",
+      "Observability/ErgenticsResearch/Tests/ErgenticsPrimeStartOwnerCoreTests/PrimeStartOwnerJournalTests.swift",
+      "Observability/ErgenticsResearch/Tests/ErgenticsPrimeStartOwnerCoreTests/PrimeStartOwnerStateMachineTests.swift",
+      "Observability/ErgenticsResearch/Tests/ErgenticsPrimeStartOwnerCoreTests/PrimeStartOwnerTimingTests.swift",
+      "Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift"
+    ],
+    "start_owner_build_readiness_commit_parent": "START_OWNER_IMPLEMENTATION_COMMIT",
+    "start_owner_build_readiness_commit_changed_paths_exact": [
+      "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prime-start-owner-build-readiness.v13.json"
+    ],
+    "start_owner_build_readiness_authorizes_at_most_one_build_controller_entry_bool": true,
+    "start_owner_build_identity_commit_parent": "START_OWNER_BUILD_READINESS_COMMIT",
+    "start_owner_build_identity_commit_changed_paths_exact": [
+      "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prime-start-owner-build-identity.v13.json"
+    ],
+    "start_owner_readiness_commit_parent": "START_OWNER_BUILD_IDENTITY_COMMIT",
+    "start_owner_readiness_commit_changed_paths_exact": [
+      "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prime-start-owner-readiness.v13.json"
+    ],
+    "start_owner_launch_binding_commit_parent": "START_OWNER_READINESS_COMMIT",
+    "start_owner_launch_binding_commit_changed_paths_exact": [
+      "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prime-start-owner-launch-binding.v13.json"
+    ],
+    "postinvocation_start_observation_commit_parent": "START_OWNER_LAUNCH_BINDING_COMMIT",
+    "postinvocation_start_observation_commit_changed_paths_exact": [
+      "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prime-start-owner-entry-observation.v13.json"
+    ],
+    "successful_chain_commit_path_counts_exact": [
+      1,
+      1,
+      19,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "successful_chain_commit_count_from_v13_through_observation_uint": 8,
+    "successful_chain_new_commits_after_v13_uint": 7,
+    "each_changed_paths_exact_means_parent_to_commit_delta_bool": true,
+    "implementation_or_build_failure_alternative": "ONE_EXACT_FAILURE_RECEIPT_PATH_ONLY_THEN_HOLD_NO_RETRY_SUCCESSOR_CONTROL_REQUIRED",
+    "readiness_authorizes_entry_bool": false,
+    "launch_binding_authorizes_at_most_one_entry_bool": true,
+    "entry_observation_may_close_gate_e_bool": false,
+    "topology_deviation": "HOLD_NO_FURTHER_COMMIT_BUILD_OR_ENTRY"
+  },
+  "current_predicate_state": {
+    "v12_static_conformance_data_retained": "PROVED",
+    "v12_atomic_publication_retained": "PROVED",
+    "v12_control_commit_topology": "NOT_PROVED",
+    "v13_recovery_control_candidate": "EXACT_REVIEW_SUBJECT_FROZEN_CONTAINING_COMMIT_REQUIRES_EXTERNAL_POSTCOMMIT_OBSERVATION",
+    "swift_start_owner_fixed_sequence_control": "MISSING_COMPLETE_TYPED_TRANSPORT_OWNERSHIP_AND_CONSERVATION_CONTRACT",
+    "swift_start_owner_source": "MISSING",
+    "swift_start_owner_build_identity": "MISSING",
+    "swift_start_owner_readiness": "MISSING",
+    "swift_start_owner_launch_binding": "MISSING",
+    "production_start_held_record_frame": "MISSING_TYPED_DEPENDENCY",
+    "authority_vector": "00000000",
+    "gate_e": "ABSTAIN",
+    "scientific_outcome": "ABSTAIN"
+  },
+  "authorization_envelope": {
+    "this_slice_mutation_paths_exact": [
+      "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-build-owner-topology-recovery-freeze.v13.json"
+    ],
+    "this_slice_git_commit_maximum_uint": 1,
+    "read_only_git_checks_authorized_bool": true,
+    "source_edits_authorized_in_this_slice_bool": false,
+    "compiler_or_swiftpm_commands_uint": 0,
+    "swift_executable_entries_uint": 0,
+    "ruby_source_entries_uint": 0,
+    "observer_or_controller_entries_uint": 0,
+    "epoch_or_journal_creations_uint": 0,
+    "signals_uint": 0,
+    "network_calls_uint": 0,
+    "github_actions_uint": 0,
+    "python_commands_uint": 0,
+    "cleanup_or_repair_actions_uint": 0,
+    "authority_closures_uint": 0,
+    "gate_e_promotions_uint": 0,
+    "after_valid_recovery_commit_authorizes": "ONLY_THE_ONE_PATH_START_OWNER_FIXED_SEQUENCE_CONTROL_COMMIT_AND_READ_ONLY_REVIEWS;SOURCE_BUILD_AND_ENTRY_REMAIN_UNAUTHORIZED_UNTIL_THEIR_FROZEN_PREDECESSORS"
+  },
+  "named_residuals": [
+    "INITIAL_EXECVE_IS_PATHNAME_BASED_AND_SELF_ADMISSION_OCCURS_AFTER_INITIAL_INSTRUCTIONS;ALL_PREADMISSION_CODE_MUST_BE_SIDE_EFFECT_FREE",
+    "DYLD_AND_SYSTEM_LIBRARIES_LOAD_BEFORE_MAIN;MAIN_IMAGE_JOIN_DOES_NOT_ATTEST_EVERY_SHARED_LIBRARY;READINESS_MUST_BIND_OS_BUILD_DYLD_SHARED_CACHE_AND_CODESIGN_IDENTITY",
+    "ENV_I_CLEARS_ONLY_THE_FINAL_IMAGE_ENVIRONMENT_AND_DOES_NOT_ERASE_THE_TRANSIENT_OUTER_SHELL_AMBIENT_LIFETIME",
+    "SAME_USER_WRITERS_WITH_ALREADY_OPEN_DESCRIPTORS_ARE_DETECTED_BY_HELD_DESCRIPTORS_WATCHES_AND_POSTCHECKS_NOT_KERNEL_EXCLUDED",
+    "MAPPED_IMAGE_OBSERVATION_PROVES_IDENTITY_AT_ITS_OBSERVATION_CUT_NOT INDEFINITE FUTURE_IMMUTABILITY",
+    "START_IS_NOT_SELF_WITNESSING_AND_REQUIRES_AN_OUTER_DESCRIPTOR_JOIN_BEFORE_LATER_INTERPRETATION",
+    "V12_STATIC_FIXTURES_AND_MERKLE_ROOT_PROVE_SCHEMA_CONFORMANCE_NOT A_PRODUCTION_HELD_RECORD_FRAME",
+    "CURRENT_WORKTREE_HAS_ONE_NONHIDDEN_UNTRACKED_docs_ENTRY_AND_CANNOT_BE_THE_RUNTIME_PRIME_ROOT_UNLESS_THAT_ENTRY_IS_ABSENT_OR_A_SEPARATELY_FROZEN_CLEAN_ROOT_IS_SELECTED",
+    "POST_START_FIVE_CHILD_TRANSPORT_PROCESS_GENERATION_SIGNAL_DEADLINE_DRAIN_REAP_AND_CONSERVATION_FIELDS_REQUIRE_THE_SEPARATE_FIXED_SEQUENCE_CONTROL_BEFORE_SOURCE",
+    "THIS_RECOVERY_FREEZE_DOES_NOT PROVE_BUILD_REPRODUCIBILITY_READINESS_ENTRY_START_GATE_E_OR_SCIENTIFIC_OUTCOME"
+  ],
+  "review_convergence": {
+    "review_subject_sha256": "d5d02538a76428d75c60fb9bfcbecd7dde96e05e6b77b10543adc8f76eaba51a",
+    "review_subject_bytes_uint": 61126,
+    "independent_review_count_uint": 3,
+    "all_pass_bool": true,
+    "reviews": [
+      {
+        "reviewer_id": "v12_start_fixture_boundary",
+        "review_kind": "GIT_TOPOLOGY_AND_TYPED_SUPERSESSION",
+        "subject_sha256": "d5d02538a76428d75c60fb9bfcbecd7dde96e05e6b77b10543adc8f76eaba51a",
+        "subject_bytes_uint": 61126,
+        "verdict": "PASS"
+      },
+      {
+        "reviewer_id": "v12_review_repro_atomicity",
+        "review_kind": "NATIVE_ABI_ATOMICITY_DURABILITY_AND_CONTAINMENT_DEFERRAL",
+        "subject_sha256": "d5d02538a76428d75c60fb9bfcbecd7dde96e05e6b77b10543adc8f76eaba51a",
+        "subject_bytes_uint": 61126,
+        "verdict": "PASS"
+      },
+      {
+        "reviewer_id": "v12_review_hash_schema",
+        "review_kind": "HASH_SCHEMA_AUTHORITY_AND_DATA_PRECEDENCE",
+        "subject_sha256": "d5d02538a76428d75c60fb9bfcbecd7dde96e05e6b77b10543adc8f76eaba51a",
+        "subject_bytes_uint": 61126,
+        "verdict": "PASS"
+      }
+    ]
+  },
+  "authority": {
+    "authority_vector": "00000000",
+    "authoritative_bool": false,
+    "production_start_dependency_state_enum": "MISSING_TYPED_DEPENDENCY",
+    "production_start_required_type_id": "HELD_RECORD_FRAME",
+    "gate_e_enum": "ABSTAIN",
+    "scientific_outcome_enum": "ABSTAIN",
+    "may_feed_controller_bool": false,
+    "prose_may_supply_fact_bool": false,
+    "github_is_scientific_executor_bool": false,
+    "local_swift_supervisor_required_bool": true
+  },
+  "next": "AFTER_THREE_INDEPENDENT_EXACT_REVIEW_SUBJECT_PASSES_AND_ONE_PATH_RECOVERY_COMMIT_TOPOLOGY_VERIFICATION_FREEZE_ONLY_THE_COMPLETE_TYPED_FIXED_SEQUENCE_TRANSPORT_OWNERSHIP_AND_CONSERVATION_CONTROL;DO_NOT_EDIT_SOURCE_BUILD_OR_ENTER"
+}
