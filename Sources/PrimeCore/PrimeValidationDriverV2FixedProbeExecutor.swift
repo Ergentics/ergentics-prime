@@ -117,14 +117,16 @@ public final class PrimeValidationDriverV2OuterSourceContinuity:
         "Sources/PrimeCore/" +
             "PrimeValidationDriverV2FixedProbeExecutor.swift",
     ]
-    private static let requiredPrimeAdmittedFileCount = 587
-    private static let requiredPrimeSourceIdentityRecordCount = 586
-    private static let requiredPrimeAuthorityDirectoryCount = 156
+    // Clean-source topology: 615 held files + 157 held ancestor directories
+    // = 772 Prime watches; 772 + 1,460 companion watches = 2,232.
+    private static let requiredPrimeAdmittedFileCount = 615
+    private static let requiredPrimeSourceIdentityRecordCount = 614
+    private static let requiredPrimeAuthorityDirectoryCount = 157
     private static let requiredCompanionFileCount = 1_306
     private static let requiredCompanionDirectoryCount = 154
-    private static let requiredPrimeWatcherDescriptorCount = 743
+    private static let requiredPrimeWatcherDescriptorCount = 772
     private static let requiredCompanionWatcherDescriptorCount = 1_460
-    private static let requiredCombinedWatcherDescriptorCount = 2_203
+    private static let requiredCombinedWatcherDescriptorCount = 2_232
 
     public let observation:
         PrimeValidationDriverV2OuterSourceContinuityObservation
@@ -2132,7 +2134,7 @@ enum PrimeValidationDriverV2FixedProbeExecutor {
             )
         let orderedRoleNames = frozenPolicies.map { $0.role.rawValue }
         guard orderedRoleNames.count == 16,
-              retainedState.combinedSourceWatcherDescriptorCount == 2_203
+              retainedState.combinedSourceWatcherDescriptorCount == 2_232
         else {
             throw primeValidationDriverV2FixedProbeRejected(
                 "frozen_topology_or_role_order"
@@ -3125,7 +3127,7 @@ enum PrimeValidationDriverV2FixedProbeExecutor {
         let admission = retainedState.admission
         let expectedWatcherDescriptorCount =
             retainedState.productionSupervisorImageEligible
-            ? 2_203
+            ? 2_232
             : 45
         try retainedState.fixedProbeCheckpointNoPendingEvents()
         guard admission.lease.isHeld,

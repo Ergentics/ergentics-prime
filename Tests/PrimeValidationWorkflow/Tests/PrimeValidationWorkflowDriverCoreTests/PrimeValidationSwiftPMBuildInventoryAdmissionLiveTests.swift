@@ -111,7 +111,7 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
             XCTAssertTrue(guarded.companionSourceWatchWindowArmed)
             XCTAssertEqual(
                 guarded.combinedSourceWatcherDescriptorCount,
-                2_203
+                2_232
             )
             XCTAssertTrue(
                 guarded.missingAuthorities.contains(
