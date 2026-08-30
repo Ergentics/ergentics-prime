@@ -1,0 +1,352 @@
+{
+  "schema": "ergentics.gate-e.static.release-build-freeze.v1",
+  "status": "FROZEN_BUILD_ONLY_NO_PRODUCT_ENTRY",
+  "authorization_basis": [
+    "leave them as is and can cont on plan"
+  ],
+  "source": {
+    "commit": "04c5324ccfc6984ad7c407e93238cc44f9ce22dd",
+    "tree": "10615a2d66720b70ecafa891ab26e96ac9ee812e",
+    "package_relative": "Observability/ErgenticsGateEStaticControl",
+    "prime_identity_sha256": "2c25246de1b50148d8193167880828815b17c80e8ee66a09dec45b1430178fc1",
+    "package_outside_prime_enumeration": true,
+    "file_count": 13,
+    "total_bytes": 169207,
+    "files": [
+      {
+        "path": "Control/gate-e-static-graph-registry.v1.json",
+        "bytes": 3113,
+        "sha256": "d398b19918a779a2504a3a04ae72cd574da6caca6a8b27316b6b7f2dc3d89938",
+        "mode": "0644"
+      },
+      {
+        "path": "Package.swift",
+        "bytes": 1627,
+        "sha256": "1cb536ecee3fbc6d2864047ec9db5d7af78921167ba25083c8831ac0cc7baa86",
+        "mode": "0644"
+      },
+      {
+        "path": "Sources/ErgenticsGateECBORProjector/main.swift",
+        "bytes": 2109,
+        "sha256": "d56a0b567bc9095f18997c7416735de8c1c9957889230154a20c57543c838a3f",
+        "mode": "0644"
+      },
+      {
+        "path": "Sources/ErgenticsGateEDualGraphJoin/main.swift",
+        "bytes": 2388,
+        "sha256": "5951953af6dc787a49216fdc942b116fc4ad8c76ded39a75a4d71265d19d720f",
+        "mode": "0644"
+      },
+      {
+        "path": "Sources/ErgenticsGateEJSONProjector/main.swift",
+        "bytes": 2109,
+        "sha256": "981c3e840f39859706571127ab4394b43ec409d57686c7acfbf20ffcf13c92ad",
+        "mode": "0644"
+      },
+      {
+        "path": "Sources/GateECBORAuthority/GateECBORAuthority.swift",
+        "bytes": 27841,
+        "sha256": "af84527ab2696131f36da89aaa2ec61d97368cb01c130783492eae4227319f82",
+        "mode": "0644"
+      },
+      {
+        "path": "Sources/GateECBORAuthority/GateECBORReconstructor.swift",
+        "bytes": 30591,
+        "sha256": "f600e1d2a412f761a2119d43b2421ed8368ac84de3825b44137d8588cf61d93e",
+        "mode": "0644"
+      },
+      {
+        "path": "Sources/GateEDualGraphJoin/GateEDualGraphJoin.swift",
+        "bytes": 32655,
+        "sha256": "32702cf823fdeb36eb348fbd82e0aa1620bd1e2efc06ee679717f039a53deae8",
+        "mode": "0644"
+      },
+      {
+        "path": "Sources/GateEJSONAuthority/GateEJSONAuthority.swift",
+        "bytes": 27750,
+        "sha256": "85802f3c91199f8726b504ee5bc1162efdefeea627e984e17e96bbe5b979b4dd",
+        "mode": "0644"
+      },
+      {
+        "path": "Sources/GateEJSONAuthority/GateEJSONReconstructor.swift",
+        "bytes": 12741,
+        "sha256": "1f6f180aa117afc998ac944185256dd8f4c2fe91c05f56e9f8b5098f25d84f83",
+        "mode": "0644"
+      },
+      {
+        "path": "Tests/GateECBORAuthorityTests/GateECBORAuthorityTests.swift",
+        "bytes": 15541,
+        "sha256": "8949257abdd6797cfc73933d775a05586ea47ab434bfc8d705835297463731b7",
+        "mode": "0644"
+      },
+      {
+        "path": "Tests/GateEDualGraphJoinTests/GateEDualGraphJoinTests.swift",
+        "bytes": 6494,
+        "sha256": "2cc93d881b4aaf369d1755cff215b46c41f07728421bb0db258cb0b36d048322",
+        "mode": "0644"
+      },
+      {
+        "path": "Tests/GateEJSONAuthorityTests/GateEJSONAuthorityTests.swift",
+        "bytes": 4248,
+        "sha256": "798cef57134d3a61fd098b1ac69e32e283c35c2ad570f8ff30cb3a15edc7ecc3",
+        "mode": "0644"
+      }
+    ]
+  },
+  "projection": {
+    "command": [
+      "git",
+      "-c",
+      "tar.umask=0022",
+      "archive",
+      "--format=tar",
+      "04c5324ccfc6984ad7c407e93238cc44f9ce22dd",
+      "Observability/ErgenticsGateEStaticControl"
+    ],
+    "archive_leaf": "committed-package.tar",
+    "extract": "tar -xpf committed-package.tar -C each_exact_source_root",
+    "require_exact_inventory_pre_and_post": true,
+    "dirty_worktree_input": false,
+    "source_is_not_this_control_successor_tree": true
+  },
+  "build_root": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1",
+  "creation": {
+    "root_and_children": "Create only if absent; private outer/A/B roots mode0700; all outputs retained",
+    "children_per_build": [
+      "source",
+      "home",
+      "tmp",
+      "scratch",
+      "cache",
+      "config",
+      "security",
+      "module-cache",
+      "module-cache/clang",
+      "module-cache/swiftpm"
+    ]
+  },
+  "host": {
+    "os": "macOS 26.5.2",
+    "os_build": "25F84",
+    "architecture": "arm64",
+    "xcode_build": "17F113",
+    "swift": "Apple Swift 6.3.3 (swiftlang-6.3.3.1.3 clang-2100.1.1.101)",
+    "deployment_target": "14.0",
+    "sdk_version": "26.5",
+    "sdk_path": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk",
+    "sdk_directory_device": 16777231,
+    "sdk_directory_inode": 1009705,
+    "sdk_settings_sha256": "f8d005f09381389167f9e0aeaa169bc9e7dff162ef22ca2fd8e98df7ff1acafe"
+  },
+  "tool_identities": {
+    "directory": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin",
+    "logical_build_leaf": "swift-build",
+    "physical_build_leaf": "swift-package",
+    "required_alias_joins": {
+      "swift-build": "swift-package",
+      "swiftc": "swift-frontend"
+    },
+    "sha256": {
+      "swift-package": "dc1a5f5bd4f05be81b8cc4a4bc6e0fd8846210e4cb829062d0fed3d03f79b753",
+      "swift-frontend": "2ed38571e92c0283091838c1649e27650ad9c99950288e883c7b2dc6c4ce89fb",
+      "swift-driver": "fead52ebe00ec6ec700ecbb4be30f0b6204dd0506cb271dda72ac257261bd64b",
+      "clang": "7def90dd8829726686213a747fc5bff1583df933dae5edc55d755479e0bfe00a",
+      "ld": "5897b275efd93b201b6df5832dd541262b3f20f290859ba78f2200a6a66ef38b",
+      "otool": "be184bb7054565eae25193e45e4235ea2d372c1eb6288ce900b2fad6d9dcc3f3",
+      "dwarfdump": "e49099fc871e88f10cd7865dfbde5a8f574da31d03f197a70fcad1daaff4e32d",
+      "lipo": "661f3514be6992bb66346e3e48d974fc0ce5b9be5eab55321eabf4818fb3bf28"
+    },
+    "require_pre_post_byte_identity": true
+  },
+  "builds": [
+    {
+      "label": "A",
+      "root": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A",
+      "source_root": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/source",
+      "package_path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/source/Observability/ErgenticsGateEStaticControl",
+      "environment": {
+        "PATH": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin:/usr/bin:/bin",
+        "HOME": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/home",
+        "TMPDIR": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/tmp/",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "TZ": "UTC",
+        "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer",
+        "SDKROOT": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk",
+        "SWIFT_EXEC": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+        "CLANG_MODULE_CACHE_PATH": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/module-cache/clang",
+        "SWIFTPM_MODULECACHE_OVERRIDE": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/module-cache/swiftpm"
+      },
+      "executable": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-build",
+      "argv": [
+        "--package-path",
+        "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/source/Observability/ErgenticsGateEStaticControl",
+        "--scratch-path",
+        "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/scratch",
+        "--cache-path",
+        "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/cache",
+        "--config-path",
+        "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/config",
+        "--security-path",
+        "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/security",
+        "--configuration",
+        "release",
+        "--triple",
+        "arm64-apple-macosx14.0",
+        "--sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk",
+        "--jobs",
+        "1",
+        "--disable-sandbox",
+        "--disable-automatic-resolution",
+        "--skip-update",
+        "--disable-prefetching",
+        "--manifest-cache",
+        "local",
+        "--disable-index-store",
+        "-debug-info-format",
+        "none",
+        "-Xswiftc",
+        "-no-serialize-debugging-options",
+        "-Xswiftc",
+        "-file-prefix-map",
+        "-Xswiftc",
+        "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A=/ergentics/gate-e-build",
+        "--verbose"
+      ],
+      "stdin": "/dev/null",
+      "stdout": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/build.stdout.log",
+      "stderr": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/build.stderr.log",
+      "expected_product_directory": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/scratch/arm64-apple-macosx/release"
+    },
+    {
+      "label": "B",
+      "root": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/B",
+      "source_root": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/B/source",
+      "package_path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/B/source/Observability/ErgenticsGateEStaticControl",
+      "environment": {
+        "PATH": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin:/usr/bin:/bin",
+        "HOME": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/B/home",
+        "TMPDIR": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/B/tmp/",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "TZ": "UTC",
+        "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer",
+        "SDKROOT": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk",
+        "SWIFT_EXEC": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+        "CLANG_MODULE_CACHE_PATH": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/B/module-cache/clang",
+        "SWIFTPM_MODULECACHE_OVERRIDE": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/B/module-cache/swiftpm"
+      },
+      "executable": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-build",
+      "argv": [
+        "--package-path",
+        "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/B/source/Observability/ErgenticsGateEStaticControl",
+        "--scratch-path",
+        "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/B/scratch",
+        "--cache-path",
+        "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/B/cache",
+        "--config-path",
+        "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/B/config",
+        "--security-path",
+        "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/B/security",
+        "--configuration",
+        "release",
+        "--triple",
+        "arm64-apple-macosx14.0",
+        "--sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk",
+        "--jobs",
+        "1",
+        "--disable-sandbox",
+        "--disable-automatic-resolution",
+        "--skip-update",
+        "--disable-prefetching",
+        "--manifest-cache",
+        "local",
+        "--disable-index-store",
+        "-debug-info-format",
+        "none",
+        "-Xswiftc",
+        "-no-serialize-debugging-options",
+        "-Xswiftc",
+        "-file-prefix-map",
+        "-Xswiftc",
+        "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/B=/ergentics/gate-e-build",
+        "--verbose"
+      ],
+      "stdin": "/dev/null",
+      "stdout": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/B/build.stdout.log",
+      "stderr": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/B/build.stderr.log",
+      "expected_product_directory": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/B/scratch/arm64-apple-macosx/release"
+    }
+  ],
+  "sequencing": {
+    "swiftpm_build_entries_maximum": 2,
+    "order": [
+      "A",
+      "B"
+    ],
+    "B_requires": "A normal exit0 and complete unmodified source inventory",
+    "compiler_subprocess_count": "Not fixed; manifest evaluation/compiler/linker work is permitted and verbose output retained",
+    "transport": "Non-login local zsh; exec env -i with exact per-build environment; output redirection only; no outer timeout or entered signals",
+    "failure": "Stop on build failure or comparison mismatch; retain all outcomes; no retry, repair, stripping, signing, relinking, source edit, or binary normalization in this phase"
+  },
+  "products": [
+    "ErgenticsGateEJSONProjector",
+    "ErgenticsGateECBORProjector",
+    "ErgenticsGateEDualGraphJoin"
+  ],
+  "comparison": {
+    "regular_files": true,
+    "expected_architecture": "arm64",
+    "expected_min_os": "14.0",
+    "expected_sdk": "26.5",
+    "raw_cmp_required": true,
+    "sha256_and_size_required": true,
+    "uuid_required": true,
+    "load_commands_required": true,
+    "analyzers": [
+      [
+        "lipo",
+        "-archs"
+      ],
+      [
+        "dwarfdump",
+        "--uuid"
+      ],
+      [
+        "otool",
+        "-l"
+      ]
+    ],
+    "raw_analyzer_outputs_retained": true,
+    "diagnostic_comparison_rule": "UUID compare its UUID and architecture fields only; load-command comparison omits only each raw output's first path heading. Never normalize the executable.",
+    "binary_execution_count": 0
+  },
+  "residuals": [
+    "env -i replaces environment; it is not filesystem, process, or network confinement.",
+    "--disable-sandbox disables only SwiftPM's nested sandbox. Codex sandbox remains active.",
+    "Toolchain and SDK observations are pre/post named-file snapshots, not a held execution closure; transitive SDK/runtime bytes are not exhaustively hashed.",
+    "Both builds share the local compiler/SDK/host; equality proves this pair's path stability, not compiler independence or runtime correctness.",
+    "arm64 minimum macOS14 is not execution on macOS14 or macOS15.",
+    "Timing is observer UTC/wall metadata only, not CPU, energy, or exact scientific timing. Old process state is unobserved.",
+    "The graph registry is declarative; this build does not embed or add registry-byte admission.",
+    "Original dirty files remain untouched at their named paths; only committed package bytes are compiler inputs."
+  ],
+  "scope": {
+    "product_entries": 0,
+    "gate_e_role_entries": 0,
+    "tests": 0,
+    "signals": 0,
+    "process_census": 0,
+    "energy_work": 0,
+    "github": 0,
+    "dependency_fetch": 0,
+    "python": 0,
+    "ruby": 0,
+    "cleanup": 0,
+    "authority_vector": "00000000",
+    "gate_e": "ABSTAIN"
+  },
+  "digest_rule": "This document contains no self digest. Address its complete file bytes externally by SHA256 and its selective Git commit/tree."
+}
