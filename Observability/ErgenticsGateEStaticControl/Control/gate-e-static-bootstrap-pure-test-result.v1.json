@@ -1,0 +1,248 @@
+{
+  "schema": "ergentics.gate-e.static.bootstrap.pure-test-result.v1",
+  "status": "PASS_30_OF_30_PURE_MECHANICS",
+  "predecessor": {
+    "freeze_commit": "bcb0d2e8c6ab763b0d0e33ab4af5bd7510ff17ae",
+    "freeze_tree": "9d49d18a5d09001dd26e871bc88455fd890c0198",
+    "freeze_sha256": "738435cb88bb2c26962a63f1b34233bc081492a6151afc199b54d8a303af65ce",
+    "prior_release_build_result_commit": "07930f030e4e32bc8c4c7aaed6efd02df736d0e6"
+  },
+  "source": {
+    "commit": "fa442554c4209881c6a33bfaaa6070190624e113",
+    "tree": "50b20fc1896a7bad22fc23aedd4415d8e948ef8a",
+    "package_relative": "Observability/ErgenticsGateEStaticBootstrap",
+    "file_count": 6,
+    "total_bytes": 138918,
+    "files": [
+      {
+        "path": "Package.swift",
+        "bytes": 689,
+        "sha256": "f291fc7afe1264cf4801f226f17a2a44354421471cbe30d8bf9e8a8ef7716b69",
+        "mode": "0644"
+      },
+      {
+        "path": "Sources/ErgenticsGateEStaticBootstrap/main.swift",
+        "bytes": 549,
+        "sha256": "ba0cc66f043b690fa5a108261cca55b2ede95a704b97eda2507bf7598bd499d0",
+        "mode": "0644"
+      },
+      {
+        "path": "Sources/GateEStaticBootstrapCore/GateEStaticBootstrap.swift",
+        "bytes": 86142,
+        "sha256": "f92dedb49537d470094bd74ce1da28d9d2be8bdd9c95f11c8c5dd914e59b0299",
+        "mode": "0644"
+      },
+      {
+        "path": "Sources/GateEStaticBootstrapPrimitives/BootstrapPrimitives.c",
+        "bytes": 20123,
+        "sha256": "bc730cd1973b44c5872d1d2edc926f7741e961f16d6259a139dfaf933b10a16b",
+        "mode": "0644"
+      },
+      {
+        "path": "Sources/GateEStaticBootstrapPrimitives/include/BootstrapPrimitives.h",
+        "bytes": 4904,
+        "sha256": "5f5f37a819cfa941ea7218767d7ff682ede2cb7827274bcc82f6668c5d2e7c24",
+        "mode": "0644"
+      },
+      {
+        "path": "Tests/GateEStaticBootstrapCoreTests/GateEStaticBootstrapCoreTests.swift",
+        "bytes": 26511,
+        "sha256": "3cedf5fa63b9f177834a4b954127026830072dfdc3b90c185342dd8e0f63e046",
+        "mode": "0644"
+      }
+    ],
+    "source_edits": 0,
+    "dirty_worktree_input": false,
+    "prime_identity_unchanged": "2c25246de1b50148d8193167880828815b17c80e8ee66a09dec45b1430178fc1"
+  },
+  "retained_root": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-pure-tests-fa44255-2026-08-30-r1",
+  "compilation": {
+    "entries": 1,
+    "normal_exit_code": 0,
+    "exec_session": 68394,
+    "session_completed": true,
+    "configuration": "debug",
+    "source_and_tests": true,
+    "swift_testing": true,
+    "xctest": false,
+    "observer_start_utc": "2026-08-30T17:14:23.050Z",
+    "observer_return_utc": "2026-08-30T17:14:31.116Z",
+    "reported_seconds": "4.20",
+    "stdout_bytes": 72314,
+    "stderr_bytes": 4199
+  },
+  "test_execution": {
+    "entries": 1,
+    "normal_exit_code": 0,
+    "exec_returned_without_pending_session": true,
+    "skip_build": true,
+    "observer_start_utc": "2026-08-30T17:15:32.673Z",
+    "observer_return_utc": "2026-08-30T17:15:33.442Z",
+    "framework_reported_seconds": "0.020",
+    "expected": 30,
+    "started": 30,
+    "passed": 30,
+    "failed": 0,
+    "skipped": 0,
+    "unknown": 0,
+    "duplicate": 0,
+    "suites": 1,
+    "checks": {
+      "normal_exit_zero": true,
+      "thirty_unique_tests": true,
+      "sixty_start_pass_events": true,
+      "each_started_passed_once": true,
+      "no_unknown_tests": true,
+      "summary_matches": true,
+      "no_failure_or_skip_events": true,
+      "no_package_compile_in_test_logs": true
+    },
+    "environment_banner": [
+      "↳ Swift Standard Library Version: 6.3",
+      "↳ Swift Compiler Version: 6.3.3",
+      "↳ Testing Library Version: 1902",
+      "↳ Target Platform: arm64e-apple-macos14.0",
+      "↳ OS Version: 26.5.2 (25F84)"
+    ],
+    "stdout_bytes": 7786,
+    "stderr_bytes": 64
+  },
+  "admission_order": {
+    "source_preflight_sha256": "3496e9512f678dccb5f2cdb0ced627abec66849af7adb92cd13f6df641ddd8c1",
+    "pretest_admission_sha256": "64f645679bc4099182590c9c25efab437f82ac5407f7bd87f0897a0242724285",
+    "postflight_sha256": "d2055008f001ad3b79543413e8d8c710805a3f0d32c7aa010fb3586133fd1f14",
+    "test_result_sha256": "a135f153cb713f9734ac13f7065937d52b1eb3bb77dbfb3e3f7916d1373e965a",
+    "pretest_admission_persisted_before_test_command": true,
+    "build_normal_exit_before_admission": true,
+    "source_full_metadata_inventory_hashes_equal": true,
+    "tool_alias_metadata_hashes_sdk_equal": true,
+    "test_image_full_identity_equal": true,
+    "generated_runner_full_metadata_hash_equal": true,
+    "runtime_root_absent": true,
+    "temporal_evidence": "Tool-call chronology plus retained pretest receipt establishes admission before test entry; file timestamps alone do not prove ordering.",
+    "residual": "Named-file pre/post observations, not a held execution closure; inter-observation mutate/restore remains possible."
+  },
+  "test_image": {
+    "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-pure-tests-fa44255-2026-08-30-r1/T/scratch/arm64-apple-macosx/debug/ErgenticsGateEStaticBootstrapPackageTests.xctest/Contents/MacOS/ErgenticsGateEStaticBootstrapPackageTests",
+    "sha256": "e394cabf91e2407d8b2658694fa6c07c1fbbfe50f5a2fda5ab2afe8a0b103a65",
+    "bytes": "1027080",
+    "raw_metadata_before_hash": "16777231|18346072|100755|501|20|1|1027080|1788110071.099454848|1788110071.099454848|/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-pure-tests-fa44255-2026-08-30-r1/T/scratch/arm64-apple-macosx/debug/ErgenticsGateEStaticBootstrapPackageTests.xctest/Contents/MacOS/ErgenticsGateEStaticBootstrapPackageTests\n",
+    "raw_sha256": "e394cabf91e2407d8b2658694fa6c07c1fbbfe50f5a2fda5ab2afe8a0b103a65  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-pure-tests-fa44255-2026-08-30-r1/T/scratch/arm64-apple-macosx/debug/ErgenticsGateEStaticBootstrapPackageTests.xctest/Contents/MacOS/ErgenticsGateEStaticBootstrapPackageTests\n",
+    "raw_metadata_after_hash": "16777231|18346072|100755|501|20|1|1027080|1788110071.099454848|1788110071.099454848|/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-pure-tests-fa44255-2026-08-30-r1/T/scratch/arm64-apple-macosx/debug/ErgenticsGateEStaticBootstrapPackageTests.xctest/Contents/MacOS/ErgenticsGateEStaticBootstrapPackageTests\n",
+    "role": "SwiftPM-generated Swift Testing test bundle; not production supervisor or worker",
+    "executed_via": "frozen swift-test --skip-build",
+    "postflight_unchanged": true
+  },
+  "coverage": [
+    "Canonical JSON/CBOR input hashes and semantic anchor",
+    "Strict verifier/reconstruction receipt grammars and external joins",
+    "Dual graph byte equality, Merkle agreement, zero authority/write masks",
+    "Exact source/image completeness counts",
+    "Sequential and concurrent one-shot ownership",
+    "Synthetic child/reap/lost-ownership/kill-commit states without syscall",
+    "Exact wide rational deadline comparisons including125/3 and1/3",
+    "Descriptor/vnode-map value predicates",
+    "JSON then CBOR then JOIN order and permanent rejection"
+  ],
+  "diagnostic_qualifications": [
+    "Compilation stderr contains the verbose manifest compile/link command under a warning prefix; no package-source compiler warning/error diagnostic observed.",
+    "SwiftPM Debug build automatically ad-hoc signed its emitted bootstrap executable. That executable was never entered and is not the retained paired Release binary.",
+    "Test stderr says Planning build and using Package.resolved as lock file. Exact argv used --skip-build; no compiler/package-source command was observed, and admitted test-image bytes/metadata stayed unchanged.",
+    "Generated runner has XCTest sections compiled out with #if false. Its .xctest bundle filename does not mean Apple XCTest is scientific proof.",
+    "Testing banner reports arm64e-apple-macos14.0; compile arguments target arm64-apple-macosx14.0. Retained as separate reported metadata, not an additional architecture or OS execution result.",
+    "Core exposes public run() and native primitives are linked. Exact frozen test bodies do not reach them; no claim that the test image is incapable of actuation or kernel-confined.",
+    "Pure tests use synthetic receipts/vnodes/PIDs/statuses; they do not measure mapped-image admission, live spawn, exact reap, process-group conservation, live projector reconstruction, or production supervisor identity.",
+    "Durations are SwiftPM/Testing display strings and observer UTC metadata, not CPU time, energy, ergs, exact elapsed science or a sum of individual rounded test durations.",
+    "Full roots and final artifacts retained; normal compiler/SwiftPM internal temporary-file lifecycle is not permanent retention of every internal scratch temporary."
+  ],
+  "historical": {
+    "worker_build_pre_B_metadata": "FAIL_PRE_B_METADATA_CHECK_OMITTED remains historical; no retrospective repair",
+    "release_pair_identity": "Prior raw-byte/UUID/Mach-O PASS remains recorded at07930f0; Debug tests are not a new Release identity proof",
+    "old_processes": "NOT_OBSERVED_OR_ACTUATED"
+  },
+  "artifacts": {
+    "count": 11,
+    "total_manifested_bytes": 1436945,
+    "files": [
+      {
+        "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-pure-tests-fa44255-2026-08-30-r1/committed-package.tar",
+        "bytes": 153600,
+        "sha256": "23090c85a1c96b2f9c1f34152bb86a7c24cd6e3d401722ab8304a2a99520d507"
+      },
+      {
+        "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-pure-tests-fa44255-2026-08-30-r1/source-preflight.json",
+        "bytes": 40752,
+        "sha256": "3496e9512f678dccb5f2cdb0ced627abec66849af7adb92cd13f6df641ddd8c1"
+      },
+      {
+        "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-pure-tests-fa44255-2026-08-30-r1/build-postflight-test-admission.json",
+        "bytes": 62011,
+        "sha256": "64f645679bc4099182590c9c25efab437f82ac5407f7bd87f0897a0242724285"
+      },
+      {
+        "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-pure-tests-fa44255-2026-08-30-r1/source-postflight.json",
+        "bytes": 42322,
+        "sha256": "d2055008f001ad3b79543413e8d8c710805a3f0d32c7aa010fb3586133fd1f14"
+      },
+      {
+        "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-pure-tests-fa44255-2026-08-30-r1/test-result.json",
+        "bytes": 10270,
+        "sha256": "a135f153cb713f9734ac13f7065937d52b1eb3bb77dbfb3e3f7916d1373e965a"
+      },
+      {
+        "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-pure-tests-fa44255-2026-08-30-r1/T/build.stdout.log",
+        "bytes": 72314,
+        "sha256": "f79a9561c22c3c4b0523db2ee955a62aeeca057ba10b25855dd0acc29aa0380d"
+      },
+      {
+        "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-pure-tests-fa44255-2026-08-30-r1/T/build.stderr.log",
+        "bytes": 4199,
+        "sha256": "5547c9c3bc889bea8b078bb323e8ed17c2d0bb83d6684ab008736f65cdf9b841"
+      },
+      {
+        "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-pure-tests-fa44255-2026-08-30-r1/T/tests.stdout.log",
+        "bytes": 7786,
+        "sha256": "5ef3357a6e28022148269afc1c663e04bd5a0406dfdf02c7371503b852cfcf0f"
+      },
+      {
+        "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-pure-tests-fa44255-2026-08-30-r1/T/tests.stderr.log",
+        "bytes": 64,
+        "sha256": "a055af18a7580a565a8e06bb1b87bc5856f4ca180c82698bc50d0215304667ab"
+      },
+      {
+        "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-pure-tests-fa44255-2026-08-30-r1/T/scratch/arm64-apple-macosx/debug/ErgenticsGateEStaticBootstrapPackageTests.derived/runner.swift",
+        "bytes": 16547,
+        "sha256": "f58845ce35092b2018cdbbfb3efc6388dcdf3bdaf5ab7b25128cf24867216c0a"
+      },
+      {
+        "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-pure-tests-fa44255-2026-08-30-r1/T/scratch/arm64-apple-macosx/debug/ErgenticsGateEStaticBootstrapPackageTests.xctest/Contents/MacOS/ErgenticsGateEStaticBootstrapPackageTests",
+        "bytes": 1027080,
+        "sha256": "e394cabf91e2407d8b2658694fa6c07c1fbbfe50f5a2fda5ab2afe8a0b103a65"
+      }
+    ],
+    "full_scratch_retained": true,
+    "self_digest_excluded": true
+  },
+  "scope": {
+    "bootstrap_entries": 0,
+    "worker_entries": 0,
+    "gate_e_role_entries": 0,
+    "process_census": 0,
+    "signals": 0,
+    "cleanup": 0,
+    "python": 0,
+    "ruby": 0,
+    "energy_work": 0,
+    "github": 0,
+    "dependency_fetch": 0,
+    "source_edits": 0,
+    "authority_vector": "00000000",
+    "gate_e": "ABSTAIN",
+    "test_bodies_executed": 30,
+    "bootstrap_runtime_root_created": false,
+    "original_dirty_draft_count": 23,
+    "original_dirty_draft_bytes_unchanged": true
+  },
+  "next_recommendation": "Prepare a fresh static-bootstrap runtime-admission freeze using the retained Release identity and current source/image/root observations. Bootstrap and worker launch are not authorized by this test result; Gate E remains ABSTAIN.",
+  "digest_rule": "This result contains no self digest; pin full file bytes externally and commit only this control file."
+}
