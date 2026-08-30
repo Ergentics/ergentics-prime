@@ -1,0 +1,453 @@
+{
+  "schema": "ergentics.gate-e.static.release-build-result.v1",
+  "status": "BUILD_IDENTITY_PASS_WITH_FROZEN_ORDER_DEVIATION",
+  "predecessor": {
+    "freeze_commit": "5ab1a3f0da9e24470357efcc2e4257b73c50005a",
+    "freeze_tree": "db62069428388b5994a61a1164d94ce482a5d416",
+    "freeze_sha256": "639adecefafcac01eb7eefee3792715d600e347ad21d1a70ae8ef1836612653d",
+    "implementation_commit": "04c5324ccfc6984ad7c407e93238cc44f9ce22dd",
+    "implementation_tree": "10615a2d66720b70ecafa891ab26e96ac9ee812e"
+  },
+  "outcomes": {
+    "compile_pair": "PASS",
+    "raw_binary_identity_pair": "PASS_3_OF_3",
+    "mach_o_identity_pair": "PASS_3_OF_3",
+    "pre_B_A_source_paths_and_bytes": "PASS_13_OF_13",
+    "pre_B_A_source_metadata_sample": "MISSING",
+    "post_pair_source_metadata": "PASS_26_OF_26",
+    "frozen_sequence_conformance": "FAIL_PRE_B_METADATA_CHECK_OMITTED",
+    "tool_sdk_settings_and_alias_postflight": "PASS_11_HASHES_AND_2_ALIASES"
+  },
+  "sequencing_deviation": {
+    "observed": "A exited0, then its 13 byte hashes and exact path set were checked and A/result.json was written; B then entered. The full source type/mode/nlink/size/device/inode restat occurred after B entry and both builds had exited, and matched all preflight values.",
+    "missing": "No full A source metadata restat was recorded between A exit and B entry.",
+    "rule": "The pre-B metadata state is UNOBSERVED. A matching post-pair sample does not retrospectively prove it. Raw binary byte identity and successful compiler exits remain PASS.",
+    "repair_or_rerun_performed": false,
+    "launch_consequence": "Artifacts are build-identical candidates, not automatic launch-ready authority. Any later launch freeze must carry this qualification and freshly admit current source/images without claiming the missing historical observation."
+  },
+  "build_root": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1",
+  "retained_reference_sha256": "eb5a588a7739f5be3e8a6febff47451f370db0b411dd02651a54b29f9dcb3f22  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/preflight.json\n6745be3fe7697423aa42db14d5268c74c6e8903e488d3c37d93830709dac4659  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/result.json\n9191272dc246f9c6ee4185c8214d9cb81e97aaaad915d0021e99814984da0fa4  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/B/result.json\n003b75bf2ea07aee8e6264c895c22964d7c488023ac28738472e3afd5249b159  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/committed-package.tar\n",
+  "build_results": [
+    {
+      "schema": "ergentics.gate-e.static.single-build-result.v1",
+      "build": "A",
+      "exec_session": 98582,
+      "normal_exit_code": 0,
+      "source_byte_and_namespace_postflight": "PASS_13_OF_13",
+      "observer_postexit_utc_and_log_sha256": "2026-08-30T15:53:28Z\nbc419909d87e68fec01e02df7b7ffce3089831dd401c3054f736230b02e9cc5f  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/build.stdout.log\n96fd485e257c705b005e02638dcefe9c202b441191bc3a0aa31ccc004086c964  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/build.stderr.log\n",
+      "build_log_completion_text": "Build complete! (8.79s)",
+      "timing_qualification": "Compiler-reported elapsed text and postexit observer UTC only; no CPU/energy or exact timing claim.",
+      "products_executed": 0,
+      "scope": "BUILD_ONLY",
+      "gate_e": "ABSTAIN",
+      "authority_vector": "00000000"
+    },
+    {
+      "schema": "ergentics.gate-e.static.single-build-result.v1",
+      "build": "B",
+      "exec_session": 14834,
+      "normal_exit_code": 0,
+      "source_byte_and_namespace_postflight": "PASS_13_OF_13",
+      "source_metadata_postflight": "PASS_TYPE_MODE_NLINK_SIZE_DEVICE_INODE",
+      "observer_postpair_utc": "2026-08-30T15:56:17Z",
+      "raw_build_logs_sha256": "d4c5f53fb3eec8dd3723a37ffa57f48c2a15db3663a37cb82588fa55ab443b99  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/B/build.stdout.log\n96b1a2a781a008d6db94267dd6b2921dcbf66b8f20c424319111d2689517c55b  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/B/build.stderr.log\n",
+      "build_log_completion_text": "Build complete! (8.77s)",
+      "timing_qualification": "Compiler-reported elapsed text and postexit observer UTC only; no CPU/energy or exact timing claim.",
+      "products_executed": 0,
+      "scope": "BUILD_ONLY",
+      "gate_e": "ABSTAIN",
+      "authority_vector": "00000000"
+    }
+  ],
+  "products": [
+    {
+      "build": "A",
+      "products": [
+        {
+          "product": "ErgenticsGateEJSONProjector",
+          "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/scratch/arm64-apple-macosx/release/ErgenticsGateEJSONProjector",
+          "sha256": "f77159f150e3704b26db5490c1750a0f2ace1332360eac6da7763a63b5ef90cb",
+          "mode": "755",
+          "nlink": 1,
+          "bytes": 185864,
+          "device": 16777231,
+          "inode": 18341869
+        },
+        {
+          "product": "ErgenticsGateECBORProjector",
+          "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/scratch/arm64-apple-macosx/release/ErgenticsGateECBORProjector",
+          "sha256": "9d6b2e218682070f6053a51f180f39892111e60081b4e4c9197b62bc03cd058b",
+          "mode": "755",
+          "nlink": 1,
+          "bytes": 290136,
+          "device": 16777231,
+          "inode": 18341895
+        },
+        {
+          "product": "ErgenticsGateEDualGraphJoin",
+          "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/scratch/arm64-apple-macosx/release/ErgenticsGateEDualGraphJoin",
+          "sha256": "8ae0dfe19edf1c8583b097ce110cf785abf2ec92dcd0cde085745bc10829b7f2",
+          "mode": "755",
+          "nlink": 1,
+          "bytes": 160888,
+          "device": 16777231,
+          "inode": 18341877
+        }
+      ]
+    },
+    {
+      "build": "B",
+      "products": [
+        {
+          "product": "ErgenticsGateEJSONProjector",
+          "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/B/scratch/arm64-apple-macosx/release/ErgenticsGateEJSONProjector",
+          "sha256": "f77159f150e3704b26db5490c1750a0f2ace1332360eac6da7763a63b5ef90cb",
+          "mode": "755",
+          "nlink": 1,
+          "bytes": 185864,
+          "device": 16777231,
+          "inode": 18342285
+        },
+        {
+          "product": "ErgenticsGateECBORProjector",
+          "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/B/scratch/arm64-apple-macosx/release/ErgenticsGateECBORProjector",
+          "sha256": "9d6b2e218682070f6053a51f180f39892111e60081b4e4c9197b62bc03cd058b",
+          "mode": "755",
+          "nlink": 1,
+          "bytes": 290136,
+          "device": 16777231,
+          "inode": 18342311
+        },
+        {
+          "product": "ErgenticsGateEDualGraphJoin",
+          "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/B/scratch/arm64-apple-macosx/release/ErgenticsGateEDualGraphJoin",
+          "sha256": "8ae0dfe19edf1c8583b097ce110cf785abf2ec92dcd0cde085745bc10829b7f2",
+          "mode": "755",
+          "nlink": 1,
+          "bytes": 160888,
+          "device": 16777231,
+          "inode": 18342293
+        }
+      ]
+    }
+  ],
+  "raw_comparisons": [
+    {
+      "product": "ErgenticsGateEJSONProjector",
+      "cmp_exit_code": 0,
+      "cmp_output": "",
+      "sha256_equal": true,
+      "bytes_equal": true
+    },
+    {
+      "product": "ErgenticsGateECBORProjector",
+      "cmp_exit_code": 0,
+      "cmp_output": "",
+      "sha256_equal": true,
+      "bytes_equal": true
+    },
+    {
+      "product": "ErgenticsGateEDualGraphJoin",
+      "cmp_exit_code": 0,
+      "cmp_output": "",
+      "sha256_equal": true,
+      "bytes_equal": true
+    }
+  ],
+  "mach_o_comparisons": [
+    {
+      "product": "ErgenticsGateEJSONProjector",
+      "architecture": "arm64",
+      "uuid": "1239EC62-146B-32FA-8812-19575C52E622",
+      "load_command_comparison_exit": 0,
+      "load_command_comparison_excludes_only_path_heading": true,
+      "minimum_macos": "14.0",
+      "sdk": "26.5",
+      "raw_analyzer_log_sha256": "c1669e1d8edca98769c37d494b76442a1d6e5ffffd7b4da1fb63aef8ebaf6f01  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/ErgenticsGateEJSONProjector.architecture.txt\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/ErgenticsGateEJSONProjector.architecture.stderr.txt\n43ef9c90394602ce1a291946f924214154eabaf9fbed2eb5a8207fa02c46326c  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/ErgenticsGateEJSONProjector.uuid.txt\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/ErgenticsGateEJSONProjector.uuid.stderr.txt\n398e34505b9264b55d59e044d4254a1efa1b13f4538d7519fad3d8095071350c  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/ErgenticsGateEJSONProjector.load_commands.txt\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/ErgenticsGateEJSONProjector.load_commands.stderr.txt\nc1669e1d8edca98769c37d494b76442a1d6e5ffffd7b4da1fb63aef8ebaf6f01  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/B/ErgenticsGateEJSONProjector.architecture.txt\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/B/ErgenticsGateEJSONProjector.architecture.stderr.txt\n16453b8ee822f12e356e7c3d7adcdbec09e0fd438f53c47bf1036a15f785e1b9  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/B/ErgenticsGateEJSONProjector.uuid.txt\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/B/ErgenticsGateEJSONProjector.uuid.stderr.txt\n8c74197aeabb20a68164ebe86da25b8b09cbf41000cc579018dee3a20a00e6f6  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/B/ErgenticsGateEJSONProjector.load_commands.txt\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/B/ErgenticsGateEJSONProjector.load_commands.stderr.txt\n"
+    },
+    {
+      "product": "ErgenticsGateECBORProjector",
+      "architecture": "arm64",
+      "uuid": "AA3035CD-FE4D-3B97-9401-E5360CCF15DD",
+      "load_command_comparison_exit": 0,
+      "load_command_comparison_excludes_only_path_heading": true,
+      "minimum_macos": "14.0",
+      "sdk": "26.5",
+      "raw_analyzer_log_sha256": "c1669e1d8edca98769c37d494b76442a1d6e5ffffd7b4da1fb63aef8ebaf6f01  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/ErgenticsGateECBORProjector.architecture.txt\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/ErgenticsGateECBORProjector.architecture.stderr.txt\n9003e56218db38e5e191e37d80aa8c8650ac166ac94ec119ff1fc73ff59600a8  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/ErgenticsGateECBORProjector.uuid.txt\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/ErgenticsGateECBORProjector.uuid.stderr.txt\n4f08d0a758097fd93ece73329c1bb82978ff154a2533349cdd7c0120f5d3743a  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/ErgenticsGateECBORProjector.load_commands.txt\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/ErgenticsGateECBORProjector.load_commands.stderr.txt\nc1669e1d8edca98769c37d494b76442a1d6e5ffffd7b4da1fb63aef8ebaf6f01  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/B/ErgenticsGateECBORProjector.architecture.txt\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/B/ErgenticsGateECBORProjector.architecture.stderr.txt\nfed71fa0b2cfd9a105c12d6f1d2141a99e54e72d65f2b8ac9a34bbe18f9dcf38  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/B/ErgenticsGateECBORProjector.uuid.txt\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/B/ErgenticsGateECBORProjector.uuid.stderr.txt\nd058d0d72873bf7aaec56b029bfc2cde20e5f47f4dc9ee67f56101d98e60fae0  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/B/ErgenticsGateECBORProjector.load_commands.txt\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/B/ErgenticsGateECBORProjector.load_commands.stderr.txt\n"
+    },
+    {
+      "product": "ErgenticsGateEDualGraphJoin",
+      "architecture": "arm64",
+      "uuid": "71E66C53-B98C-3BCF-A0E8-12FB026C78F2",
+      "load_command_comparison_exit": 0,
+      "load_command_comparison_excludes_only_path_heading": true,
+      "minimum_macos": "14.0",
+      "sdk": "26.5",
+      "raw_analyzer_log_sha256": "c1669e1d8edca98769c37d494b76442a1d6e5ffffd7b4da1fb63aef8ebaf6f01  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/ErgenticsGateEDualGraphJoin.architecture.txt\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/ErgenticsGateEDualGraphJoin.architecture.stderr.txt\n41780f814870bb697b2b96b25dcafbccd105b7a44895420249d2706eb5b34681  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/ErgenticsGateEDualGraphJoin.uuid.txt\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/ErgenticsGateEDualGraphJoin.uuid.stderr.txt\na479fda3c33d653012a01c2936b1a82966c0927cbcdff525f93dc9cacd02a7c9  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/ErgenticsGateEDualGraphJoin.load_commands.txt\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/ErgenticsGateEDualGraphJoin.load_commands.stderr.txt\nc1669e1d8edca98769c37d494b76442a1d6e5ffffd7b4da1fb63aef8ebaf6f01  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/B/ErgenticsGateEDualGraphJoin.architecture.txt\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/B/ErgenticsGateEDualGraphJoin.architecture.stderr.txt\ndbdff96da6b1429ce82d02fa58f926da1c6aecc85afe68b2b15ae3bf8e5ebfff  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/B/ErgenticsGateEDualGraphJoin.uuid.txt\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/B/ErgenticsGateEDualGraphJoin.uuid.stderr.txt\nc4512be0102177a9408a7de626a4f1e8857c39fa90a50e1e23456357650d5fe4  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/B/ErgenticsGateEDualGraphJoin.load_commands.txt\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/B/ErgenticsGateEDualGraphJoin.load_commands.stderr.txt\n"
+    }
+  ],
+  "source_metadata_type_observation": {
+    "stat_format": "%HT|%Lp|%l|%z|%d|%i|%N",
+    "required_and_observed_type": "Regular File",
+    "checked_row_count": 26,
+    "timing": "POST_PAIR_NOT_PRE_B",
+    "evidence": "The post-pair orchestration rejected any row whose %HT field was not Regular File, then returned 26/26 SAME_TYPE_MODE_NLINK_SIZE_DEVICE_INODE. The rows below retain the remaining checked fields.",
+    "raw_stat_lines_separately_retained": false
+  },
+  "source_metadata_postflight": [
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/source/Observability/ErgenticsGateEStaticControl/Control/gate-e-static-graph-registry.v1.json",
+      "mode": "0644",
+      "nlink": 1,
+      "bytes": 3113,
+      "device": 16777231,
+      "inode": 18341422
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/source/Observability/ErgenticsGateEStaticControl/Package.swift",
+      "mode": "0644",
+      "nlink": 1,
+      "bytes": 1627,
+      "device": 16777231,
+      "inode": 18341423
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/source/Observability/ErgenticsGateEStaticControl/Sources/ErgenticsGateECBORProjector/main.swift",
+      "mode": "0644",
+      "nlink": 1,
+      "bytes": 2109,
+      "device": 16777231,
+      "inode": 18341426
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/source/Observability/ErgenticsGateEStaticControl/Sources/ErgenticsGateEDualGraphJoin/main.swift",
+      "mode": "0644",
+      "nlink": 1,
+      "bytes": 2388,
+      "device": 16777231,
+      "inode": 18341428
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/source/Observability/ErgenticsGateEStaticControl/Sources/ErgenticsGateEJSONProjector/main.swift",
+      "mode": "0644",
+      "nlink": 1,
+      "bytes": 2109,
+      "device": 16777231,
+      "inode": 18341430
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/source/Observability/ErgenticsGateEStaticControl/Sources/GateECBORAuthority/GateECBORAuthority.swift",
+      "mode": "0644",
+      "nlink": 1,
+      "bytes": 27841,
+      "device": 16777231,
+      "inode": 18341432
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/source/Observability/ErgenticsGateEStaticControl/Sources/GateECBORAuthority/GateECBORReconstructor.swift",
+      "mode": "0644",
+      "nlink": 1,
+      "bytes": 30591,
+      "device": 16777231,
+      "inode": 18341433
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/source/Observability/ErgenticsGateEStaticControl/Sources/GateEDualGraphJoin/GateEDualGraphJoin.swift",
+      "mode": "0644",
+      "nlink": 1,
+      "bytes": 32655,
+      "device": 16777231,
+      "inode": 18341435
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/source/Observability/ErgenticsGateEStaticControl/Sources/GateEJSONAuthority/GateEJSONAuthority.swift",
+      "mode": "0644",
+      "nlink": 1,
+      "bytes": 27750,
+      "device": 16777231,
+      "inode": 18341437
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/source/Observability/ErgenticsGateEStaticControl/Sources/GateEJSONAuthority/GateEJSONReconstructor.swift",
+      "mode": "0644",
+      "nlink": 1,
+      "bytes": 12741,
+      "device": 16777231,
+      "inode": 18341438
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/source/Observability/ErgenticsGateEStaticControl/Tests/GateECBORAuthorityTests/GateECBORAuthorityTests.swift",
+      "mode": "0644",
+      "nlink": 1,
+      "bytes": 15541,
+      "device": 16777231,
+      "inode": 18341441
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/source/Observability/ErgenticsGateEStaticControl/Tests/GateEDualGraphJoinTests/GateEDualGraphJoinTests.swift",
+      "mode": "0644",
+      "nlink": 1,
+      "bytes": 6494,
+      "device": 16777231,
+      "inode": 18341443
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/source/Observability/ErgenticsGateEStaticControl/Tests/GateEJSONAuthorityTests/GateEJSONAuthorityTests.swift",
+      "mode": "0644",
+      "nlink": 1,
+      "bytes": 4248,
+      "device": 16777231,
+      "inode": 18341445
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/B/source/Observability/ErgenticsGateEStaticControl/Control/gate-e-static-graph-registry.v1.json",
+      "mode": "0644",
+      "nlink": 1,
+      "bytes": 3113,
+      "device": 16777231,
+      "inode": 18341449
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/B/source/Observability/ErgenticsGateEStaticControl/Package.swift",
+      "mode": "0644",
+      "nlink": 1,
+      "bytes": 1627,
+      "device": 16777231,
+      "inode": 18341450
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/B/source/Observability/ErgenticsGateEStaticControl/Sources/ErgenticsGateECBORProjector/main.swift",
+      "mode": "0644",
+      "nlink": 1,
+      "bytes": 2109,
+      "device": 16777231,
+      "inode": 18341453
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/B/source/Observability/ErgenticsGateEStaticControl/Sources/ErgenticsGateEDualGraphJoin/main.swift",
+      "mode": "0644",
+      "nlink": 1,
+      "bytes": 2388,
+      "device": 16777231,
+      "inode": 18341455
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/B/source/Observability/ErgenticsGateEStaticControl/Sources/ErgenticsGateEJSONProjector/main.swift",
+      "mode": "0644",
+      "nlink": 1,
+      "bytes": 2109,
+      "device": 16777231,
+      "inode": 18341457
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/B/source/Observability/ErgenticsGateEStaticControl/Sources/GateECBORAuthority/GateECBORAuthority.swift",
+      "mode": "0644",
+      "nlink": 1,
+      "bytes": 27841,
+      "device": 16777231,
+      "inode": 18341459
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/B/source/Observability/ErgenticsGateEStaticControl/Sources/GateECBORAuthority/GateECBORReconstructor.swift",
+      "mode": "0644",
+      "nlink": 1,
+      "bytes": 30591,
+      "device": 16777231,
+      "inode": 18341460
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/B/source/Observability/ErgenticsGateEStaticControl/Sources/GateEDualGraphJoin/GateEDualGraphJoin.swift",
+      "mode": "0644",
+      "nlink": 1,
+      "bytes": 32655,
+      "device": 16777231,
+      "inode": 18341462
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/B/source/Observability/ErgenticsGateEStaticControl/Sources/GateEJSONAuthority/GateEJSONAuthority.swift",
+      "mode": "0644",
+      "nlink": 1,
+      "bytes": 27750,
+      "device": 16777231,
+      "inode": 18341464
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/B/source/Observability/ErgenticsGateEStaticControl/Sources/GateEJSONAuthority/GateEJSONReconstructor.swift",
+      "mode": "0644",
+      "nlink": 1,
+      "bytes": 12741,
+      "device": 16777231,
+      "inode": 18341465
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/B/source/Observability/ErgenticsGateEStaticControl/Tests/GateECBORAuthorityTests/GateECBORAuthorityTests.swift",
+      "mode": "0644",
+      "nlink": 1,
+      "bytes": 15541,
+      "device": 16777231,
+      "inode": 18341468
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/B/source/Observability/ErgenticsGateEStaticControl/Tests/GateEDualGraphJoinTests/GateEDualGraphJoinTests.swift",
+      "mode": "0644",
+      "nlink": 1,
+      "bytes": 6494,
+      "device": 16777231,
+      "inode": 18341470
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/B/source/Observability/ErgenticsGateEStaticControl/Tests/GateEJSONAuthorityTests/GateEJSONAuthorityTests.swift",
+      "mode": "0644",
+      "nlink": 1,
+      "bytes": 4248,
+      "device": 16777231,
+      "inode": 18341472
+    }
+  ],
+  "tool_postflight": "dc1a5f5bd4f05be81b8cc4a4bc6e0fd8846210e4cb829062d0fed3d03f79b753  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-package\n2ed38571e92c0283091838c1649e27650ad9c99950288e883c7b2dc6c4ce89fb  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-frontend\nfead52ebe00ec6ec700ecbb4be30f0b6204dd0506cb271dda72ac257261bd64b  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-driver\n7def90dd8829726686213a747fc5bff1583df933dae5edc55d755479e0bfe00a  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang\n5897b275efd93b201b6df5832dd541262b3f20f290859ba78f2200a6a66ef38b  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld\nbe184bb7054565eae25193e45e4235ea2d372c1eb6288ce900b2fad6d9dcc3f3  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/otool\ne49099fc871e88f10cd7865dfbde5a8f574da31d03f197a70fcad1daaff4e32d  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/dwarfdump\n661f3514be6992bb66346e3e48d974fc0ce5b9be5eab55321eabf4818fb3bf28  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/lipo\ndc1a5f5bd4f05be81b8cc4a4bc6e0fd8846210e4cb829062d0fed3d03f79b753  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-build\n2ed38571e92c0283091838c1649e27650ad9c99950288e883c7b2dc6c4ce89fb  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc\nf8d005f09381389167f9e0aeaa169bc9e7dff162ef22ca2fd8e98df7ff1acafe  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/SDKSettings.json\nswift-package\nswift-frontend\n2026-08-30T15:56:17Z\n",
+  "source_identity": {
+    "prime_sha256": "2c25246de1b50148d8193167880828815b17c80e8ee66a09dec45b1430178fc1",
+    "static_package_outside_prime_enumeration": true,
+    "dirty_source_hashed_into_prime": false,
+    "source_file_count_per_build": 13,
+    "source_bytes_per_build": 169207
+  },
+  "action_accounting": {
+    "swiftpm_build_entries": 2,
+    "product_entries": 0,
+    "gate_e_role_entries": 0,
+    "tests_run": 0,
+    "analyzer_entries": 18,
+    "signals_entered_by_orchestrator": 0,
+    "process_census": 0,
+    "python": 0,
+    "ruby": 0,
+    "github_or_network_tool_actions": 0,
+    "repair_retry_strip_sign_relink_normalize": 0,
+    "original_draft_edits_moves_deletes": 0
+  },
+  "qualifications": [
+    "SwiftPM evaluated Package.swift and ran compiler/linker subprocesses; these are build mechanics, not product execution.",
+    "The ordinary SwiftPM/compiler temporary-file lifecycle is not intercepted. Retention covers the final A/B roots, surviving files, source projections, products, and captured stdout/stderr, not every ephemeral compiler temporary file.",
+    "The --skip-update deprecation warning is retained; no flag was changed and no build was rerun.",
+    "The driver warning for -no-serialize-debugging-options is retained: the driver forwarded the option to the frontend. Both builds completed; the option was not removed and no build was rerun.",
+    "Source/tool pre/post observations are named-file snapshots, not held live continuity or kernel confinement.",
+    "No dynamic process census or process-conservation claim is made for this compiler-only phase.",
+    "Runtime behavior on any macOS version is untested. arm64/minimum14/SDK26.5 are Mach-O metadata.",
+    "Timing remains compiler text and observer UTC metadata; no CPU/energy/erg measurement is asserted."
+  ],
+  "cleanup_disposition": {
+    "originals": "LEFT_AS_IS_USER_DIRECTED",
+    "byte_reverification": "23_OF_23_UNCHANGED",
+    "backup_root": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/retained-uncommitted-gate-e-04c5324-2026-08-30",
+    "backup_tar_sha256": "e17f7374091be3bfb91dd3e165791331d2ccd8dc34ae573525eeb27267f8ce42",
+    "backup_is_not_launch_authority": true
+  },
+  "authority": {
+    "vector": "00000000",
+    "gate_e": "ABSTAIN",
+    "production_launch_ready": false
+  },
+  "next_boundary": "A separately frozen fixed-FD static bootstrap admission using these exact candidates and the recorded qualification; no output image entry is authorized by this result.",
+  "digest_rule": "No self digest is embedded; address complete file bytes externally by SHA256 and Git commit/tree."
+}
