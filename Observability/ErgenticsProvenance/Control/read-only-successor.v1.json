@@ -1,0 +1,56 @@
+{
+  "schema": "ergentics.provenance.read-only-successor.v1",
+  "predecessor_commit": "9bf68a4221b769bd755d5437c43f3a4ed5735970",
+  "predecessor_tree": "3906cc03e6bdcff43ef18c7404477e7fcecf0d90",
+  "application": "Ergentics Provenance",
+  "bundle_identifier": "com.ergentics.provenance",
+  "scope": "Separate read-only native app; no automatic computation or historical run creation",
+  "source_allowlist": ["Observability/ErgenticsProvenance/**"],
+  "signing": {
+    "development_identity": "Apple Development",
+    "team": "ZCQ435U8JP",
+    "organization": "Ergentics, LLC",
+    "public_certificate_sha256": "729cd479e76970ac6ada6d49dbef619724d623f4481adb2755a07dfde86c2d26",
+    "team_evidence": "Host-access security find-identity: one valid Apple Development identity; public certificate subject OU=ZCQ435U8JP. Restricted identity listing returned zero, not an account-absence proof.",
+    "bundle_registration": "NOT_VERIFIED",
+    "ad_hoc_fallback": false,
+    "runtime_admission": "Valid Apple-anchored self signature, exact configured nonempty Team ID, exact bundle ID, Hardened Runtime flag and minimal effective entitlement allowlist",
+    "hardened_runtime_requested": true,
+    "effective_signature_verified": false
+  },
+  "historical_receipts": {
+    "run_id": "native-static-177403f-r1",
+    "original_bundle_id": "com.ergentics.PrivateCompute",
+    "terminal_sha256": "1a4c92297c28f9e686bbe9930b54453d909a2102e3cde1d95dee9f1556e24568",
+    "selection": "Explicit user-selected directory grant; read-only held-descriptor snapshot; no hardcoded path fallback",
+    "originals": "Untouched; no move, copy, chmod, repair, resign or identity relabeling",
+    "validation": "Pinned terminal bytes, exact 12-leaf inventory, every size/hash, retained graph byte equality, historical identity and rational clock joins",
+    "meaning": "Historical receipt integrity, not new projector execution or a live source admission"
+  },
+  "apple_vm": {
+    "direction": "User-selected Hypervisor.framework first; separate from Virtualization.framework and Private Cloud Compute services",
+    "current_state": "NOT_CONFIGURED_NOT_STARTED",
+    "virtualization_entitlement_in_this_slice": false,
+    "hypervisor_entitlement_in_this_slice": true,
+    "read_only_queries": ["sysctlbyname kern.hv_support", "hv_vm_get_max_vcpu_count", "hv_vm_config_get_max_ipa_size"],
+    "query_predicate": "Self Apple signature, actual expected Team, Hardened Runtime and exact entitlement set admitted; hv outputs are observed only on HV_SUCCESS",
+    "vm_creations": 0,
+    "guest_memory_maps": 0,
+    "vcpus_created": 0,
+    "guest_entries": 0,
+    "guest_image_and_configuration": "USER_SELECTION_REQUIRED",
+    "future_policy": "Disjoint retained guest storage; no guest networking, host writable directory sharing, clipboard or socket control channel by default; separately verify guest configuration and limits before launch"
+  },
+  "local_repository": {
+    "requested_name": "ergentics-prime",
+    "path": "USER_SELECTION_REQUIRED",
+    "integration_in_this_slice": "Plan only; no Git process, remote fetch, package resolution or guest mount",
+    "future_policy": "Explicit read-only snapshot with commit/tree/content joins; name/path alone is not admission"
+  },
+  "writes": "Build products only during verification. App has no evidence writer; macOS may create its sandbox container and ordinary framework metadata.",
+  "excluded": ["new projector/reconstructor execution", "VM boot", "guest OS download", "PCC requests", "network", "Git", "SwiftPM", "process census", "signals", "cleanup", "receipt migration", "energy collection"],
+  "gate_e": "ABSTAIN",
+  "authority_vector": "00000000",
+  "energy_ergs": null,
+  "no_self_digest": true
+}

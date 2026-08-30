@@ -1,0 +1,206 @@
+{
+  "schema": "ergentics.provenance.hypervisor-read-only-result.v1",
+  "predecessor_commit": "9bf68a4221b769bd755d5437c43f3a4ed5735970",
+  "result": "DEVELOPER_SIGNED_READ_ONLY_APP_BUILT_AND_OPENED",
+  "bundle_id": "com.ergentics.provenance",
+  "team_id": "ZCQ435U8JP",
+  "organization": "Ergentics, LLC",
+  "source_manifest": [
+    {
+      "path": "Observability/ErgenticsProvenance/.gitignore",
+      "sha256": "0fc8e721d57cce7b021fbdd63b3da88dc3d723ddfa3d26c50d65a2a54f84b90a"
+    },
+    {
+      "path": "Observability/ErgenticsProvenance/Control/hypervisor-genesis-design.v1.md",
+      "sha256": "b80854c8fa2b51307b1c75433f7a7c584dc61a9dd6d7a218364997cf4d904319"
+    },
+    {
+      "path": "Observability/ErgenticsProvenance/Control/read-only-successor.v1.json",
+      "sha256": "ccdf97b4c785abf1619a0bd27400e3657227a8b71490f3ddaf58577ed201f7e6"
+    },
+    {
+      "path": "Observability/ErgenticsProvenance/Entitlements.plist",
+      "sha256": "ffab5dd538d1fc0aefa6b0e7facf2dcc4f0927845db0806b2bec82a617b2dcf2"
+    },
+    {
+      "path": "Observability/ErgenticsProvenance/ErgenticsProvenance.xcodeproj/project.pbxproj",
+      "sha256": "29f3f08b012c09a49b6b2a9a4e3daf61bd25cf22b51e5c9d3b48cd3ba03bda8e"
+    },
+    {
+      "path": "Observability/ErgenticsProvenance/ErgenticsProvenance.xcodeproj/xcshareddata/xcschemes/ErgenticsProvenance.xcscheme",
+      "sha256": "3a34c15f9ecb369fd18956ee671fa3b67d83414d6af35c4a9a486bcca1df4666"
+    },
+    {
+      "path": "Observability/ErgenticsProvenance/Info.plist",
+      "sha256": "4ef0a6ae37ed02f5dfdf7f8fe469a2026993b204be47d4f8aefe572e582790b1"
+    },
+    {
+      "path": "Observability/ErgenticsProvenance/README.md",
+      "sha256": "242060e81410a3aae279a4528385fdcc3a0331b543cfb0e5712af7ec4322c690"
+    },
+    {
+      "path": "Observability/ErgenticsProvenance/Sources/ProvenanceApp.swift",
+      "sha256": "c2970708a9dc0a008a83b66718c51a7a2698ed45efc27f6147bb3c3e004e1b82"
+    },
+    {
+      "path": "Observability/ErgenticsProvenance/Sources/ProvenanceModel.swift",
+      "sha256": "d9a2f31b41b81095f1ea338d7cdadb629c37a59c69bdc6f63115eb2b2dcae248"
+    },
+    {
+      "path": "Observability/ErgenticsProvenance/Sources/ProvenanceReadOnly.c",
+      "sha256": "78c4d4e2e8e4b50ee81b5a671b127dfb2fdad2ec812b67314bf6553af37fd0c6"
+    },
+    {
+      "path": "Observability/ErgenticsProvenance/Sources/ProvenanceReadOnly.h",
+      "sha256": "872a67106d795da2261517131f121cd3bdeea588f599cad1f3d3d84e530c5e28"
+    },
+    {
+      "path": "Observability/ErgenticsProvenance/Sources/ProvenanceView.swift",
+      "sha256": "530ec11b94da3d024d8262cd36e706dac44f42a14d8c49837298101ff2903d8a"
+    },
+    {
+      "path": "Observability/ErgenticsProvenance/Sources/ReceiptVerifier.swift",
+      "sha256": "1841a06b5429a49e25f7a0b67174554f62e721c9218fffa4527c98c769376fbe"
+    },
+    {
+      "path": "Observability/ErgenticsProvenance/Tests/ReceiptVerifierTests.swift",
+      "sha256": "46fdca41c7eb9db0e0791c8905ffaabc1d6299075f671aef6b989c907143a8f5"
+    }
+  ],
+  "build_root": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/ergentics-provenance-builds.Wb18M0",
+  "verification": {
+    "pure_test_build_exit": 0,
+    "pure_tests": 13,
+    "pure_test_failures": 0,
+    "pure_test_exit": 0,
+    "pure_test_scope": "Synthetic in-memory verifier kernels only; no native reader, app or historical-directory execution",
+    "unsigned_app_build_exit": 0,
+    "developer_signed_build_exit": 0,
+    "signed_build_policy": "Existing exact identity C0CBEC8DDAC4C1ABF4F2780D2E7170A828101CAF; command-only Manual signing; no provisioning-update/registration flags; no certificate creation/private-key export",
+    "source_compile_errors": 0,
+    "host_codesign_verification_exit": 0,
+    "host_codesign_verification": "valid on disk; satisfies Designated Requirement",
+    "signature_team": "ZCQ435U8JP",
+    "hardened_runtime_flag": "0x10000",
+    "signed_entitlements": {
+      "com.apple.security.app-sandbox": true,
+      "com.apple.security.files.user-selected.read-only": true,
+      "com.apple.security.hypervisor": true
+    },
+    "developer_id_distribution": false,
+    "notarization": false,
+    "diagnostics": [
+      "Restricted identity query returned0; host query returned1 valid Apple Development identity",
+      "Restricted codesign inspection reported trust/entitlement failures; host inspection verified the same unmodified signed image and exact entitlement blob",
+      "plutil -lint rejected the JSON control; jq parsed and verified its selected fields",
+      "Unsigned Xcode verification emitted unavailable CoreSimulator-service diagnostics; native app/test builds succeeded",
+      "AppIntents metadata extraction skipped: no AppIntents dependency",
+      "Unsigned build warned about validatingUTF8 deprecation; final signed source uses validatingCString"
+    ]
+  },
+  "image": {
+    "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/ergentics-provenance-builds.Wb18M0/DeveloperSigned/Build/Products/Debug/Ergentics Provenance.app/Contents/MacOS/Ergentics Provenance",
+    "sha256": "354ee807753d55fffd0a0ab5fa7c00fc8b727b2db77da86a686b81846b1b135c",
+    "uuid": "3DB1217D-68E4-3381-991D-6F96D1148B61",
+    "code_directory_sha256": "87b9254f694e1cb3457409c3eb2e992b32dd0fb9862e461f498f5d0cefb023c3",
+    "bytes": 994480,
+    "device": 16777231,
+    "inode": 18386323,
+    "mode": "0755",
+    "uid": 501,
+    "gid": 20,
+    "nlink": 1,
+    "observation_limit": "Named build image/signature inspection, not a production mapped-vnode bind"
+  },
+  "launch": {
+    "requests": 1,
+    "open_exit": 0,
+    "xcode_project_open_exit": 0,
+    "app_pid_observed": 31647,
+    "window_id_observed": 13381,
+    "window_bounds": {
+      "x": 196,
+      "y": 89,
+      "width": 1120,
+      "height": 780
+    },
+    "existing_window_activated_without_relaunch": true,
+    "observer": "JXA scoped to com.ergentics.provenance app/window only; not an execution controller",
+    "observer_correction": "First JXA comparison rejected boxed NSNumber count1; Number() conversion produced exact singleton/window observation",
+    "screenshot_status": "UNAVAILABLE",
+    "screenshot_error": "could not create image from window",
+    "pixels_verified": false,
+    "runtime_hypervisor_values": "NOT_CAPTURED_EXTERNALLY; app exposes raw values/status in memory/UI only. No value invented from initialization.",
+    "old_receipt_selection": 0,
+    "local_repository_selection": 0
+  },
+  "hypervisor": {
+    "architecture": "arm64",
+    "minimum_macos": "14.0",
+    "framework": "Hypervisor.framework",
+    "source_imported_queries": [
+      "sysctlbyname kern.hv_support",
+      "hv_vm_get_max_vcpu_count",
+      "hv_vm_config_get_max_ipa_size"
+    ],
+    "imported_mutating_hypervisor_apis": [],
+    "capability_entry": "After exact self-signature/Team/HardenedRuntime/signed-and-SecTask-entitlement admission",
+    "vm_created": 0,
+    "guest_memory_maps": 0,
+    "vcpus_created": 0,
+    "guest_entries": 0,
+    "qualification": "Capability-query source and signed app, not VM readiness or isolation proof"
+  },
+  "merkle_genesis": {
+    "status": "DESIGN_ONLY_NOT_IMPLEMENTED_OR_PRODUCED",
+    "path": "Control/hypervisor-genesis-design.v1.md",
+    "new_root": null,
+    "independent_historical_parent": true
+  },
+  "preserved": {
+    "original_result_sha256": "03e305168a1c5d4a08a1ec0acebc09a66eba3cb4b077f952d847d6c08657a0cb",
+    "original_terminal_sha256": "1a4c92297c28f9e686bbe9930b54453d909a2102e3cde1d95dee9f1556e24568",
+    "original_app_sha256": "e2e55968f9d7e9778af58f015f2904430e869868a2d44aae342d09ea6de6f65a",
+    "original_app_and_prime_tracked_diff": "EMPTY",
+    "dirty_draft_hashes_unchanged": 23,
+    "current_branch_unchanged": true,
+    "old_assessment_processes": "UNOBSERVED_UNACTUATED",
+    "historical_receipts": "UNMODIFIED_UNMIGRATED",
+    "prime_reseal": false
+  },
+  "gate_e": "ABSTAIN",
+  "authority_vector": "00000000",
+  "energy_ergs": null,
+  "logs": [
+    {
+      "name": "build-for-testing.log",
+      "sha256": "1219bd08e794e1d62e6462f9e227401b411c2445535e57329dfea6cd88250a51"
+    },
+    {
+      "name": "pure-tests.log",
+      "sha256": "96f4e7db6ee15cee60d5dc858b7ec77aec59266691fd1d195506445e14f7dc0b"
+    },
+    {
+      "name": "app-build-unsigned.log",
+      "sha256": "c6039c99324049f79bac359ad173166c82d222bf1c4468d534a2c36dd291dd65"
+    },
+    {
+      "name": "app-build-developer-signed.log",
+      "sha256": "6112e943e406341cea749e5feaafce8fb6afb3947a99e3f7972bfed7061ef5fb"
+    }
+  ],
+  "reviews": {
+    "identity_integration": "PASS",
+    "roadmap": "PASS after two corrections",
+    "native_security": "PASS with documented nontransactional snapshot residual; SDK cast corrected"
+  },
+  "limitations": [
+    "Read-only application behavior does not mean macOS/frameworks create zero container metadata",
+    "No positive native-reader or full historical receipt import test performed in this slice",
+    "Snapshot observations are not continuous source watches or ancestor-held admission",
+    "No App ID portal registration verified; local code-signing identity was verified",
+    "No cloud or guest is running because of this app",
+    "No secure archival backup or energy measurement is established"
+  ],
+  "no_self_digest": true
+}
