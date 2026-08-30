@@ -1,0 +1,114 @@
+{
+  "schema": "ergentics.private-compute.native-app-scope.v1",
+  "status": "SOURCE_AND_BUILD_SCOPE_FROZEN_BEFORE_IMPLEMENTATION",
+  "predecessor_commit": "177403fb4a9e9cd726a53da1d85a6266c7a1604a",
+  "predecessor_tree": "28908696c870197af6a1b49d2e6f4df96433a443",
+  "user_authorization": "Create an actual Xcode application for this Mac and run the new offline application.",
+  "application": {
+    "name": "Ergentics Private Compute",
+    "bundle_id": "com.ergentics.PrivateCompute",
+    "venue": "LOCAL_NATIVE_MACOS_NOT_REMOTE_CLOUD_OR_VM",
+    "minimum_macos": "14.0",
+    "host": "macOS26.5.2 arm64; Xcode26.6",
+    "current_branch_unchanged": true,
+    "build_system": "Explicit native Xcode targets, no package resolution, no external dependencies or run-script phases",
+    "sandbox": "App Sandbox true; no networking, iCloud, app groups, user-selected-file access or temporary exceptions; built effective signature checked before entry"
+  },
+  "source_allowlist": {
+    "new_root": "Observability/ErgenticsPrivateCompute",
+    "existing_sources_read_only": [
+      "Observability/ErgenticsGateEStaticControl/Sources/GateEJSONAuthority/GateEJSONAuthority.swift",
+      "Observability/ErgenticsGateEStaticControl/Sources/GateEJSONAuthority/GateEJSONReconstructor.swift",
+      "Observability/ErgenticsGateEStaticControl/Sources/GateECBORAuthority/GateECBORAuthority.swift",
+      "Observability/ErgenticsGateEStaticControl/Sources/GateECBORAuthority/GateECBORReconstructor.swift",
+      "Observability/ErgenticsGateEStaticControl/Sources/GateEDualGraphJoin/GateEDualGraphJoin.swift"
+    ],
+    "excluded": "All executable mains, bootstrap, production Prime/DriverCore, dirty research drafts and original package manifests"
+  },
+  "inputs": {
+    "JSON": {
+      "bytes": 1405,
+      "sha256": "cda57fec7b6ee67d308eddc1f19d6a844d7f72f7d02aea487ee73e265039961e",
+      "carrier": "../ErgenticsGateEStaticControl/Control/gate-e-static-bootstrap-json-input.v1.hex"
+    },
+    "CBOR": {
+      "bytes": 1239,
+      "sha256": "c7242f65b69d16f05c67425241297e4e5d598eecc4155aca01c73e40af817636",
+      "carrier": "../ErgenticsGateEStaticControl/Control/gate-e-static-bootstrap-cbor-input.v1.hex"
+    },
+    "carrier_policy": "Bundle both existing hex carriers independently; decode/size/hash-check before projection. Never synthesize CBOR from JSON.",
+    "subject_commit": "04c5324ccfc6984ad7c407e93238cc44f9ce22dd",
+    "subject_tree": "10615a2d66720b70ecafa891ab26e96ac9ee812e",
+    "subject_identity": "2c25246de1b50148d8193167880828815b17c80e8ee66a09dec45b1430178fc1",
+    "expected_semantic_root": "093b6e90214704a3e8fdf28cf430a8c4cd106d695e621887b77db489fc5cd9bb"
+  },
+  "execution": {
+    "kind": "New static in-process application computation",
+    "sequence": [
+      "JSON projectAndVerify",
+      "JSON reconstructAndReceipt",
+      "CBOR projectAndVerify",
+      "CBOR reconstructAndReceipt",
+      "DualGraphJoin.join",
+      "validate pinned candidate/semantic roots, graph equality and ABSTAIN prestate",
+      "persist all raw bytes and terminal manifest"
+    ],
+    "independence": "Three separate library modules/algorithms and two separate carriers; not separate processes or address spaces.",
+    "process_spawns": 0,
+    "signals": 0,
+    "process_census": 0,
+    "live_Gate_E_roles": 0,
+    "environment": "Normal native GUI environment; record only count and known CF-key presence, never values. No environment-isEmpty predicate or env clearing.",
+    "once": "One app-owned state and one exclusive fixed run leaf. Existing leaf prevents recomputation or write retry; reopening may display validated retained bytes only.",
+    "run_leaf": "native-static-177403f-r1"
+  },
+  "persistence": {
+    "base": "User-domain Application Support URL supplied by FileManager inside the app sandbox; private ErgenticsPrivateCompute directory",
+    "run_leaf_mode": "0700",
+    "leaf_mode": "0600",
+    "fixed_leaves": [
+      "00-start.json",
+      "candidate-json.bin",
+      "candidate-cbor.bin",
+      "10-json-verifier.json",
+      "11-json-graph.json",
+      "12-json-roundtrip.json",
+      "20-cbor-verifier.json",
+      "21-cbor-graph.json",
+      "22-cbor-roundtrip.json",
+      "30-join-receipt.json",
+      "31-authoritative-graph.json",
+      "90-terminal.json"
+    ],
+    "primitive": "Fixed-arity native C openat O_EXCL|O_NOFOLLOW, exact allowlisted names, mode/vnode/link checks, bounded write/readback comparison, checked file and directory sync. No cleanup/replacement/repair.",
+    "start": "Persist before pure computation",
+    "terminal": "Written last; includes hashes/byte counts of every earlier raw leaf; does not contain its own digest",
+    "failure": "Retain prefix; surface exact stage/error; mathematical PASS and persistence success are separate. No automatic rerun.",
+    "limits": "Local retained data, not remote archive, encryption, VM isolation or unconditional power-loss proof; filesystem I/O may block even though there is no child-containment loop."
+  },
+  "display": {
+    "graph": "Only joined authoritativeGraph; decode for display after validation. Show actual state/witness/relation IDs and predicates.",
+    "status": "STATIC PASS only on mathematical verification; saved receipt status separately; Gate E ABSTAIN / vector00000000 always",
+    "timing": "Record UTC start/end plus mach_absolute_time ticks and integer numerator/denominator; rational duration kept exact; approximate UI duration labeled.",
+    "energy_ergs": null,
+    "energy_reason": "Not measured; no CPU time relabeling as energy."
+  },
+  "build_and_launch": {
+    "build_outputs": "Fresh retained workspace build directory outside admitted source roots; ordinary app build and pure unit tests, not legacy one-shot envelopes.",
+    "launch": "Open signed sandboxed app via LaunchServices only after source/build/signature and three independent reviews. No reuse of consumed bootstrap or its roots. User request authorizes the new bounded app launch.",
+    "tests": "Pure fixed-input positive/negative tests; not app receipt creation or old subprocess tests."
+  },
+  "reviews_before_source": {
+    "identity_integration": "PASS with Xcode library targets instead of manifest edits",
+    "security": "PASS subject to built entitlements/exclusive persistence/once-state checks",
+    "roadmap": "PASS new local static scope only"
+  },
+  "unchanged": {
+    "dirty_drafts": 23,
+    "old_processes": "UNOBSERVED_UNACTUATED",
+    "consumed_bootstrap": "FAIL_RETAINED_NO_RETRY",
+    "authority_vector": "00000000",
+    "gate_e": "ABSTAIN"
+  },
+  "no_self_digest": true
+}
