@@ -1,0 +1,223 @@
+{
+  "schema": "ergentics.gate-e.static.bootstrap.launch-result.v1",
+  "status": "FAIL_CONSUMED_EXIT70_NO_INTERNAL_DIAGNOSTIC",
+  "predecessor": {
+    "commit": "2a79c9c8ca0d2a115acc0561d69a3b20d85b2885",
+    "tree": "f15abce92f598b253971309ae801f99e98d208c1",
+    "readiness_file": "gate-e-static-bootstrap-runtime-readiness.v1.json",
+    "readiness_sha256": "b1108a76cbb0bbc8a21b8e8dd93c3fe23b1d89a877044b167a6bd296dfbb55dc"
+  },
+  "authorization": {
+    "user_message": "cant just run in cloud branch so not stuck on device if so? any blockers from the live run? go",
+    "interpretation": "One frozen local static bootstrap launch after present preflight. The cloud question did not change venue, create a branch, or authorize an alternate image.",
+    "transport_entries": 1,
+    "consumed": true,
+    "consumption_boundary": "Outer frozen transport entry after successful fresh preflight; consumption does not depend on runtime root creation.",
+    "retry_authorized": false
+  },
+  "input_identity": {
+    "selected_bootstrap": {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-builds-fa44255-2026-08-30-r1/A/scratch/arm64-apple-macosx/release/ErgenticsGateEStaticBootstrap",
+      "argv_after_argv0": [],
+      "environment": {},
+      "bytes": 338736,
+      "sha256": "fe27a38d4a45669bc2b6b8f94dd2a8107ccbd696250c7f83f1dbe19169b21d2d",
+      "uuid": "DE930321-67E5-3512-B030-0A06AE04210A",
+      "device": "16777231",
+      "inode": "18344695",
+      "mode": "0755",
+      "uid": "501",
+      "gid": "20",
+      "nlink": "1",
+      "architecture": "arm64",
+      "minimum_macos": "14.0",
+      "sdk": "26.5",
+      "selection": "Release Build A only; B is a retained identity witness, never fallback",
+      "self_identity_limit": "main checks argc1 and empty environment, not its own mapped image. Outer fresh named-image admission must match this pin; exec-path race remains."
+    },
+    "embedded_control": {
+      "commit": "568d22bf35c37ffc165580631bfd0da97701d61f",
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/Observability/ErgenticsGateEStaticControl/Control/gate-e-static-bootstrap-admission-control.v1.json",
+      "bytes": 28799,
+      "sha256": "35a9a5c01d98bf42dbbfc394f1ca2c6a6b6f93194682977906d5a60f192ca2d1",
+      "unchanged": true,
+      "meaning": "Runtime journals intentionally bind this compiled design control; the external readiness/launch/result chain joins it to this newer checkpoint. No claim that this readiness file is embedded in the existing executable."
+    },
+    "worker_source_commit": "04c5324ccfc6984ad7c407e93238cc44f9ce22dd",
+    "worker_source_tree": "10615a2d66720b70ecafa891ab26e96ac9ee812e"
+  },
+  "artifacts": [
+    {
+      "file": "gate-e-static-bootstrap-launch-preflight.0f669f0.v1.json",
+      "sha256": "8588dccf6390c60520002ca869128c4784abfb9ea9ead6143ef5ad07b4011a00",
+      "status": "PASS_BEFORE_SINGLE_APPROVED_ENTRY",
+      "scope": "Published before outer entry. Named snapshot admission only; not a live owner or execution receipt."
+    },
+    {
+      "file": "gate-e-static-bootstrap-launch-postflight.0f669f0.v1.json",
+      "sha256": "de0ca41702c8d4fd67d65099d4ac0a4551e41a14983d3feaadf4210cf39225e1",
+      "status": "PASS_IDENTITY_AFTER_EXIT70_NO_INTERNAL_RECEIPT",
+      "scope": "Raw stat/hash/stat, source inventories, capture inspection and transport result. Identity PASS does not override exit70."
+    }
+  ],
+  "transport": {
+    "shell": "/bin/zsh",
+    "login": false,
+    "cwd": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45",
+    "command": "set -e\nset -C\numask 077\n/bin/mkdir -m 0700 '/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-launch-capture-0f669f0-r1'\nexec /usr/bin/env -i '/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-builds-fa44255-2026-08-30-r1/A/scratch/arm64-apple-macosx/release/ErgenticsGateEStaticBootstrap' < /dev/null > '/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-launch-capture-0f669f0-r1/bootstrap.stdout.log' 2> '/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-launch-capture-0f669f0-r1/bootstrap.stderr.log'",
+    "capture_root": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-launch-capture-0f669f0-r1",
+    "stdout": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-launch-capture-0f669f0-r1/bootstrap.stdout.log",
+    "stderr": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-launch-capture-0f669f0-r1/bootstrap.stderr.log",
+    "tools": {
+      "/bin/zsh": "1f473d234dd65157f530b4f676686517ec97fe9aa64c76d82f2611674cc44314",
+      "/usr/bin/env": "6e506aec3c0cff703ac1e66cedc6f1945354ad41339a38db4425c7c88227128f",
+      "/bin/mkdir": "08a20adeeff9bea14bae05c0a7f3c77c638b2b83fc3ab37e1c646e047bac7002"
+    },
+    "environment_limit": "env -i is local environment replacement, not cloud/offline isolation, filesystem sandbox, network confinement or authority. Non-login zsh briefly inherits ambient local environment; transitive tool/runtime state remains outside exhaustive admission.",
+    "command_executed_once": true,
+    "observer_utc_start": "2026-08-30T17:36:24.041Z",
+    "observer_utc_end": "2026-08-30T17:36:24.446Z",
+    "raw_tool_return": {
+      "chunk_id": "902e1b",
+      "wall_time_seconds": 0.191725292,
+      "exit_code": 70,
+      "original_token_count": 0,
+      "output": ""
+    },
+    "pending_exec_session_returned": false,
+    "exact_bootstrap_exec_entry_independently_observed": false,
+    "entry_qualification": "The observer entered the exact frozen transport and received exit70. No separate exec-entry event or mapped-image receipt was emitted.",
+    "timeout_and_signals": "No outer timeout or signal used. The single invocation completed, so no pending session was polled."
+  },
+  "observed_outcome": {
+    "exit_code": 70,
+    "outer_stdout_bytes": 0,
+    "outer_stderr_bytes": 0,
+    "empty_capture_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "capture_root": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-launch-capture-0f669f0-r1",
+    "capture_root_retained": true,
+    "capture_inventory": [
+      "bootstrap.stderr.log",
+      "bootstrap.stdout.log"
+    ],
+    "capture_raw_metadata": "16777231|18346668|40700|501|20|4|128|1788111384.113869287|1788111384.113869287|/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-launch-capture-0f669f0-r1\n16777231|18346669|100600|501|20|1|0|1788111384.113826745|1788111384.113844495|/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-launch-capture-0f669f0-r1/bootstrap.stdout.log\n16777231|18346670|100600|501|20|1|0|1788111384.113868287|1788111384.113886287|/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-launch-capture-0f669f0-r1/bootstrap.stderr.log\n",
+    "capture_raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-launch-capture-0f669f0-r1/bootstrap.stdout.log\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-launch-capture-0f669f0-r1/bootstrap.stderr.log\n",
+    "internal_runtime_root": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-c51f796-r1",
+    "internal_runtime_root_absent_including_dangling_symlink": true,
+    "internal_journals_observed": 0,
+    "worker_output_leaves_observed": 0,
+    "exact_failed_operation": "UNIDENTIFIED",
+    "raw_worker_entry_count": null,
+    "raw_entered_signal_count": null,
+    "raw_child_conservation": "UNOBSERVED",
+    "count_qualification": "Missing root/journals are not independent syscall counters. Authorized budgets are not actual call observations.",
+    "this_transport_pending": false,
+    "old_R18_R19_process_state": "UNOBSERVED_UNACTUATED",
+    "no_new_indefinite_wait_observed": "This tool invocation completed promptly with exit70 and no pending exec session. This is not a whole-host process census or an independent descendant-conservation proof."
+  },
+  "postflight_identity": {
+    "all24_pinned_file_hashes_match": true,
+    "all70_required_metadata_rows_match": true,
+    "worker_subtree_entries": 26,
+    "bootstrap_subtree_entries": 14,
+    "transport_tools_match": 4,
+    "source_or_image_repair_performed": false,
+    "qualification": "Only identity fields frozen for mutable ancestor directories are required unchanged; their timestamps/entry counts can change when authorized control/capture leaves are added. Exact immutable source topology and file metadata remain checked."
+  },
+  "evidence_interpretation": {
+    "whole_invocation_success": false,
+    "static_graph_join": "NOT_OBSERVED",
+    "semantic_and_merkle_execution_receipts": "ABSENT",
+    "proven_source_property": "Bootstrap main rejects its argc/environment predicate silently. Core Run.fail returns without a diagnostic when journal is absent, and run returns70 on any caught failure. Distinct early errors therefore collapse into the same observable status.",
+    "source_order_inference": {
+      "status": "CONDITIONAL_SOURCE_INFERENCE_NOT_RAW_TELEMETRY",
+      "premise": "The frozen selected implementation executed and the retained root was not externally removed.",
+      "conclusion": "Failure occurred before or at exclusive runtime-root creation; every worker spawn is later than successful root creation and start publication.",
+      "candidate_rejects": [
+        "main argc/environment predicate",
+        "embedded input hashes or semantic commitment",
+        "held source/image/control descriptor and metadata admission",
+        "Mach-O identity parse",
+        "source inventory admission",
+        "SIGCHLD configuration",
+        "runtime-root parent admission or exclusive mkdirat"
+      ],
+      "not_concluded": [
+        "the exact rejecting check",
+        "kernel-observed zero spawn/signal calls",
+        "cloud or UI interference",
+        "a TOCTOU event",
+        "JSON/CBOR/projector/graph failure"
+      ]
+    },
+    "environment_hypothesis": {
+      "status": "PRIMARY_SOURCE_SUPPORTED_MECHANISM_NOT_RUN_SPECIFIC_DIAGNOSIS",
+      "local_source": "Bootstrap main and each of the three worker mains inspect ProcessInfo.processInfo.environment.isEmpty after importing Foundation.",
+      "mechanism": "Published Apple CoreFoundation initialization invokes a user-encoding routine that may set __CF_USER_TEXT_ENCODING. An empty replacement exec environment therefore need not stay empty through Foundation initialization.",
+      "sources": [
+        "https://github.com/apple-oss-distributions/CF/blob/main/CFRuntime.c#L864-L866",
+        "https://github.com/apple-oss-distributions/CF/blob/main/CFStringEncodings.c#L829-L884",
+        "https://github.com/apple-oss-distributions/CF/blob/main/CFStringDefaultEncoding.h#L41"
+      ],
+      "limits": "These are historical published Apple sources, not a byte-match of the installed runtime. No environment snapshot or diagnostic from this consumed invocation proves that mutation occurred. No variable was whitelisted, removed or added; no probe or repair was run."
+    }
+  },
+  "timing": {
+    "observer_UTC_is_external_metadata": true,
+    "tool_wall_seconds": 0.191725292,
+    "internal_raw_clock_samples": null,
+    "derived_scientific_duration": null,
+    "cpu_attribution": null,
+    "energy_ergs": null,
+    "qualification": "Tool wall time and observer UTC are not internal execution timestamps, CPU time, calibrated energy, or an exact rational kernel-clock duration."
+  },
+  "venue": {
+    "actual": "Existing local arm64 macOS host and exact named local files",
+    "branch_changed": false,
+    "cloud_task_created": false,
+    "cloud_question_answer": "A separate cloud task checks out a repository into a container. A branch alone does not migrate local processes or descriptor/vnode identity. This Mach-O/Darwin implementation and absolute saved local identities cannot be moved unchanged; another compatible host would require a separate venue/build/admission.",
+    "official_reference": "https://learn.chatgpt.com/docs/environments/cloud-environment",
+    "documentation_network_only": "Official product and primary Apple source reads were used outside the frozen runtime. No cloud execution, repository push, runtime network action or dependency fetch was initiated by the observer."
+  },
+  "preservation": {
+    "capture_root_and_empty_logs": "Permanently retained; no cleanup or repair",
+    "internal_runtime_root": "Not created by observer, remains absent",
+    "selected_images_and_sources": "Unchanged",
+    "original_dirty_drafts": 23,
+    "dirty_drafts_staged": false,
+    "Prime_identity": "2c25246de1b50148d8193167880828815b17c80e8ee66a09dec45b1430178fc1",
+    "historical_worker_pre_B_metadata_omission": "Remains FAIL/UNOBSERVED; present identity admission does not repair history"
+  },
+  "phase_limits": {
+    "retry": 0,
+    "alternate_image": 0,
+    "subsequent_bootstrap_or_worker_launch": 0,
+    "compiler_or_test_launch": 0,
+    "observer_process_census": 0,
+    "observer_signal": 0,
+    "old_process_action": 0,
+    "cleanup": 0,
+    "repair": 0,
+    "python": 0,
+    "ruby": 0,
+    "energy_action": 0,
+    "production_source_changes": 0,
+    "authority_vector": "00000000",
+    "projection_write_mask": "00000000",
+    "gate_e": "ABSTAIN",
+    "live_Gate_E_roles_executed_as_this_static_sequence": false
+  },
+  "next_recommendation": {
+    "priority": "A narrowly frozen early-entry/admission diagnostic, not another full bootstrap run.",
+    "requirements": [
+      "First preserve this result and obtain independent result reviews.",
+      "Keep empty exec-boundary environment distinct from Foundation post-initialization state; do not declare the environment hypothesis proven or silently weaken admission.",
+      "A proposed Swift/C diagnostic must produce a bounded first-failure observation outside the not-yet-created runtime journal, stop before runtime-root creation, SIGCHLD changes or any child spawn, and disclose any runtime/library side effects.",
+      "Any successor implementation/build/diagnostic execution requires its own exact scope and must not reuse this consumed envelope or capture root.",
+      "No full sequence successor until observed cause and source-level correction are independently reviewed; JSON/CBOR/JOIN would still be static, not live Gate E."
+    ],
+    "new_launch_implied": false
+  },
+  "review_policy": "Three independent bounded reviews of this result against raw retained artifacts and pinned source before selective control-only commit. Review outcomes are external commit metadata, not a self-hash.",
+  "digest_rule": "No self digest, self commit, or self tree. Hash complete file bytes externally and join by selective commit/tree."
+}
