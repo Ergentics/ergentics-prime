@@ -1,0 +1,506 @@
+{
+  "schema": "ergentics.gate-e.static.bootstrap.pure-test-freeze.v1",
+  "status": "FROZEN_BUILD_THEN_PURE_TEST_ONLY",
+  "authorization_basis": "User go after 07930f0: separately freeze and run the 30 pure mechanics tests before considering bootstrap execution.",
+  "predecessor": {
+    "commit": "07930f030e4e32bc8c4c7aaed6efd02df736d0e6",
+    "tree": "eca32ac76ef6c3a8e1610a902a6eca590ecaa4d6",
+    "build_result_sha256": "1b575cf8c958576384f47e157341a9258392bad0b20e223e549d1b498c1bd5d5"
+  },
+  "source": {
+    "commit": "fa442554c4209881c6a33bfaaa6070190624e113",
+    "tree": "50b20fc1896a7bad22fc23aedd4415d8e948ef8a",
+    "package_relative": "Observability/ErgenticsGateEStaticBootstrap",
+    "package_outside_prime_enumeration": true,
+    "prime_identity_sha256": "2c25246de1b50148d8193167880828815b17c80e8ee66a09dec45b1430178fc1",
+    "prime_identity_scope": "Inherited committed subject only; no dirty-tree hash or new live source closure",
+    "file_count": 6,
+    "total_bytes": 138918,
+    "files": [
+      {
+        "path": "Package.swift",
+        "bytes": 689,
+        "sha256": "f291fc7afe1264cf4801f226f17a2a44354421471cbe30d8bf9e8a8ef7716b69",
+        "mode": "0644"
+      },
+      {
+        "path": "Sources/ErgenticsGateEStaticBootstrap/main.swift",
+        "bytes": 549,
+        "sha256": "ba0cc66f043b690fa5a108261cca55b2ede95a704b97eda2507bf7598bd499d0",
+        "mode": "0644"
+      },
+      {
+        "path": "Sources/GateEStaticBootstrapCore/GateEStaticBootstrap.swift",
+        "bytes": 86142,
+        "sha256": "f92dedb49537d470094bd74ce1da28d9d2be8bdd9c95f11c8c5dd914e59b0299",
+        "mode": "0644"
+      },
+      {
+        "path": "Sources/GateEStaticBootstrapPrimitives/BootstrapPrimitives.c",
+        "bytes": 20123,
+        "sha256": "bc730cd1973b44c5872d1d2edc926f7741e961f16d6259a139dfaf933b10a16b",
+        "mode": "0644"
+      },
+      {
+        "path": "Sources/GateEStaticBootstrapPrimitives/include/BootstrapPrimitives.h",
+        "bytes": 4904,
+        "sha256": "5f5f37a819cfa941ea7218767d7ff682ede2cb7827274bcc82f6668c5d2e7c24",
+        "mode": "0644"
+      },
+      {
+        "path": "Tests/GateEStaticBootstrapCoreTests/GateEStaticBootstrapCoreTests.swift",
+        "bytes": 26511,
+        "sha256": "3cedf5fa63b9f177834a4b954127026830072dfdc3b90c185342dd8e0f63e046",
+        "mode": "0644"
+      }
+    ]
+  },
+  "projection": {
+    "command": [
+      "/usr/bin/git",
+      "-c",
+      "tar.umask=0022",
+      "archive",
+      "--format=tar",
+      "fa442554c4209881c6a33bfaaa6070190624e113",
+      "Observability/ErgenticsGateEStaticBootstrap"
+    ],
+    "archive_leaf": "committed-package.tar",
+    "extract": "tar -xpf committed-package.tar -C each_exact_source_root",
+    "require_exact_inventory_pre_and_post": true,
+    "dirty_worktree_input": false,
+    "source_is_not_this_control_successor_tree": true
+  },
+  "host": {
+    "os": "macOS 26.5.2",
+    "os_build": "25F84",
+    "architecture": "arm64",
+    "xcode_build": "17F113",
+    "swift": "Apple Swift 6.3.3 (swiftlang-6.3.3.1.3 clang-2100.1.1.101)",
+    "deployment_target": "14.0",
+    "sdk_version": "26.5",
+    "sdk_path": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk",
+    "sdk_directory_device": 16777231,
+    "sdk_directory_inode": 1009705,
+    "sdk_settings_sha256": "f8d005f09381389167f9e0aeaa169bc9e7dff162ef22ca2fd8e98df7ff1acafe"
+  },
+  "tool_identities": {
+    "directory": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin",
+    "logical_build_leaf": "swift-build",
+    "physical_build_leaf": "swift-package",
+    "required_alias_joins": {
+      "swift-build": "swift-package",
+      "swiftc": "swift-frontend",
+      "otool": "llvm-otool",
+      "dwarfdump": "llvm-dwarfdump",
+      "swift-test": "swift-package"
+    },
+    "sha256": {
+      "swift-package": "dc1a5f5bd4f05be81b8cc4a4bc6e0fd8846210e4cb829062d0fed3d03f79b753",
+      "swift-frontend": "2ed38571e92c0283091838c1649e27650ad9c99950288e883c7b2dc6c4ce89fb",
+      "swift-driver": "fead52ebe00ec6ec700ecbb4be30f0b6204dd0506cb271dda72ac257261bd64b",
+      "clang": "7def90dd8829726686213a747fc5bff1583df933dae5edc55d755479e0bfe00a",
+      "ld": "5897b275efd93b201b6df5832dd541262b3f20f290859ba78f2200a6a66ef38b",
+      "otool": "be184bb7054565eae25193e45e4235ea2d372c1eb6288ce900b2fad6d9dcc3f3",
+      "dwarfdump": "e49099fc871e88f10cd7865dfbde5a8f574da31d03f197a70fcad1daaff4e32d",
+      "lipo": "661f3514be6992bb66346e3e48d974fc0ce5b9be5eab55321eabf4818fb3bf28"
+    },
+    "require_pre_post_byte_identity": true,
+    "snapshot_scope": "Physical target bytes and named/target metadata, aliases and SDK root/settings before compilation, before tests, and after tests. Not a held execution closure."
+  },
+  "metadata": {
+    "namespace": "All sixteen entries under each source root: six files and ten directories including source and Observability ancestors; no symlinks, extra files or empty extra directories.",
+    "stat_executable": "/usr/bin/stat",
+    "stat_format": "%d|%i|%p|%u|%g|%l|%z|%.9Fm|%.9Fc|%N",
+    "fields": [
+      "device",
+      "inode",
+      "raw_octal_type_and_mode",
+      "uid",
+      "gid",
+      "nlink",
+      "size",
+      "mtime_decimal_seconds_9_fraction_digits",
+      "ctime_decimal_seconds_9_fraction_digits",
+      "path"
+    ],
+    "decimal_handling": "Retain raw strings; split integer seconds and nine-digit fractional nanoseconds as decimal strings, never through JavaScript Number/Double.",
+    "formatter_reference": "https://github.com/apple-oss-distributions/file_cmds/blob/file_cmds-479/stat/stat.c",
+    "formatter_qualification": "Published Apple file_cmds-479 FLOAT precision9 implementation formats integer seconds and nanoseconds, corresponding to installed stat's declared project string. This is source-version correspondence, not a reproducible binary build proof; pin installed stat hash and retain raw output strings.",
+    "double_snapshot_rule": "Metadata before hashing must equal metadata after hashing, and the full corresponding preflight/postflight tuples must match. Byte-only checks cannot satisfy the barrier.",
+    "limitation": "Named-file observations with detection before/after, not an atomic held descriptor closure; mutation and restore entirely between observations can escape detection.",
+    "stat_sha256": "934656def5cfb8e85b2e4d983bb59ba97479cec49b63b4ea2fa42d067c569242",
+    "stat_declared_project": "file_cmds-479"
+  },
+  "build_root": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-pure-tests-fa44255-2026-08-30-r1",
+  "creation": {
+    "root_and_children": "Require fresh absent root; exclusive mkdir, private mode0700 outer/T roots and child directories. No reuse, cleanup or deletion.",
+    "children_per_build": [
+      "source",
+      "home",
+      "tmp",
+      "scratch",
+      "cache",
+      "config",
+      "security",
+      "module-cache",
+      "module-cache/clang",
+      "module-cache/swiftpm"
+    ],
+    "archive_leaf": "committed-package.tar",
+    "expected_archive_sha256": "23090c85a1c96b2f9c1f34152bb86a7c24cd6e3d401722ab8304a2a99520d507",
+    "observation_leaves": [
+      "source-preflight.json",
+      "build-postflight-test-admission.json",
+      "source-postflight.json",
+      "test-result.json"
+    ],
+    "permanent_retention": true
+  },
+  "builds": [
+    {
+      "label": "T",
+      "root": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-pure-tests-fa44255-2026-08-30-r1/T",
+      "source_root": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-pure-tests-fa44255-2026-08-30-r1/T/source",
+      "package_path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-pure-tests-fa44255-2026-08-30-r1/T/source/Observability/ErgenticsGateEStaticBootstrap",
+      "environment": {
+        "PATH": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin:/usr/bin:/bin",
+        "HOME": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-pure-tests-fa44255-2026-08-30-r1/T/home",
+        "TMPDIR": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-pure-tests-fa44255-2026-08-30-r1/T/tmp/",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "TZ": "UTC",
+        "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer",
+        "SDKROOT": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk",
+        "SWIFT_EXEC": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+        "CLANG_MODULE_CACHE_PATH": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-pure-tests-fa44255-2026-08-30-r1/T/module-cache/clang",
+        "SWIFTPM_MODULECACHE_OVERRIDE": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-pure-tests-fa44255-2026-08-30-r1/T/module-cache/swiftpm"
+      },
+      "executable": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-build",
+      "argv": [
+        "--package-path",
+        "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-pure-tests-fa44255-2026-08-30-r1/T/source/Observability/ErgenticsGateEStaticBootstrap",
+        "--scratch-path",
+        "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-pure-tests-fa44255-2026-08-30-r1/T/scratch",
+        "--cache-path",
+        "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-pure-tests-fa44255-2026-08-30-r1/T/cache",
+        "--config-path",
+        "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-pure-tests-fa44255-2026-08-30-r1/T/config",
+        "--security-path",
+        "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-pure-tests-fa44255-2026-08-30-r1/T/security",
+        "--configuration",
+        "debug",
+        "--triple",
+        "arm64-apple-macosx14.0",
+        "--sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk",
+        "--jobs",
+        "1",
+        "--disable-sandbox",
+        "--disable-automatic-resolution",
+        "--disable-prefetching",
+        "--manifest-cache",
+        "local",
+        "--disable-index-store",
+        "-debug-info-format",
+        "none",
+        "-Xswiftc",
+        "-Xfrontend",
+        "-Xswiftc",
+        "-no-serialize-debugging-options",
+        "-Xswiftc",
+        "-file-prefix-map",
+        "-Xswiftc",
+        "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-pure-tests-fa44255-2026-08-30-r1/T=/ergentics/gate-e-static-bootstrap-pure-tests",
+        "-Xcc",
+        "-g0",
+        "-Xcc",
+        "-ffile-prefix-map=/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-pure-tests-fa44255-2026-08-30-r1/T=/ergentics/gate-e-static-bootstrap-pure-tests",
+        "--disable-xctest",
+        "--enable-swift-testing",
+        "--build-tests",
+        "--verbose"
+      ],
+      "stdin": "/dev/null",
+      "stdout": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-pure-tests-fa44255-2026-08-30-r1/T/build.stdout.log",
+      "stderr": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-pure-tests-fa44255-2026-08-30-r1/T/build.stderr.log",
+      "expected_product_directory": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-pure-tests-fa44255-2026-08-30-r1/T/scratch/arm64-apple-macosx/debug",
+      "transport": "Non-login /bin/zsh, exec /usr/bin/env -i with the exact replacement environment and swift-build argv; stdin/dev/null, exclusive separate stdout/stderr logs, no outer timeout or signals"
+    }
+  ],
+  "test": {
+    "label": "T",
+    "root": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-pure-tests-fa44255-2026-08-30-r1/T",
+    "source_root": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-pure-tests-fa44255-2026-08-30-r1/T/source",
+    "package_path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-pure-tests-fa44255-2026-08-30-r1/T/source/Observability/ErgenticsGateEStaticBootstrap",
+    "environment": {
+      "PATH": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin:/usr/bin:/bin",
+      "HOME": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-pure-tests-fa44255-2026-08-30-r1/T/home",
+      "TMPDIR": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-pure-tests-fa44255-2026-08-30-r1/T/tmp/",
+      "LANG": "C",
+      "LC_ALL": "C",
+      "TZ": "UTC",
+      "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer",
+      "SDKROOT": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk",
+      "SWIFT_EXEC": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "CLANG_MODULE_CACHE_PATH": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-pure-tests-fa44255-2026-08-30-r1/T/module-cache/clang",
+      "SWIFTPM_MODULECACHE_OVERRIDE": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-pure-tests-fa44255-2026-08-30-r1/T/module-cache/swiftpm"
+    },
+    "executable": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-test",
+    "argv": [
+      "--package-path",
+      "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-pure-tests-fa44255-2026-08-30-r1/T/source/Observability/ErgenticsGateEStaticBootstrap",
+      "--scratch-path",
+      "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-pure-tests-fa44255-2026-08-30-r1/T/scratch",
+      "--cache-path",
+      "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-pure-tests-fa44255-2026-08-30-r1/T/cache",
+      "--config-path",
+      "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-pure-tests-fa44255-2026-08-30-r1/T/config",
+      "--security-path",
+      "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-pure-tests-fa44255-2026-08-30-r1/T/security",
+      "--configuration",
+      "debug",
+      "--triple",
+      "arm64-apple-macosx14.0",
+      "--sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk",
+      "--jobs",
+      "1",
+      "--disable-sandbox",
+      "--disable-automatic-resolution",
+      "--disable-prefetching",
+      "--manifest-cache",
+      "local",
+      "--disable-index-store",
+      "-debug-info-format",
+      "none",
+      "-Xswiftc",
+      "-Xfrontend",
+      "-Xswiftc",
+      "-no-serialize-debugging-options",
+      "-Xswiftc",
+      "-file-prefix-map",
+      "-Xswiftc",
+      "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-pure-tests-fa44255-2026-08-30-r1/T=/ergentics/gate-e-static-bootstrap-pure-tests",
+      "-Xcc",
+      "-g0",
+      "-Xcc",
+      "-ffile-prefix-map=/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-pure-tests-fa44255-2026-08-30-r1/T=/ergentics/gate-e-static-bootstrap-pure-tests",
+      "--disable-xctest",
+      "--enable-swift-testing",
+      "--skip-build",
+      "--no-parallel",
+      "--verbose"
+    ],
+    "stdin": "/dev/null",
+    "stdout": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-pure-tests-fa44255-2026-08-30-r1/T/tests.stdout.log",
+    "stderr": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-pure-tests-fa44255-2026-08-30-r1/T/tests.stderr.log",
+    "expected_product_directory": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-pure-tests-fa44255-2026-08-30-r1/T/scratch/arm64-apple-macosx/debug",
+    "transport": "Non-login /bin/zsh, exec /usr/bin/env -i with the exact replacement environment and swift-test argv; stdin/dev/null, exclusive separate stdout/stderr logs, no outer timeout or signals"
+  },
+  "test_scope": {
+    "framework": "Swift Testing",
+    "suite": "GateEStaticBootstrapCoreTests",
+    "expected_test_count": 30,
+    "expected_tests": [
+      {
+        "function": "frozenCandidateAnchors",
+        "display_name": "frozen independent candidate streams retain exact bytes and anchors"
+      },
+      {
+        "function": "hashKnownAnswers",
+        "display_name": "SHA256 is checked against independently fixed known answers"
+      },
+      {
+        "function": "canonicalProjectorBindings",
+        "display_name": "each codec binds canonical verifier and independent reconstruction"
+      },
+      {
+        "function": "projectorVerifierFieldMutations",
+        "display_name": "projector verifier binds every external anchor and fixed literal"
+      },
+      {
+        "function": "roundTripFieldMutations",
+        "display_name": "roundtrip independently binds original and reconstructed identities"
+      },
+      {
+        "function": "canonicalReceiptGrammar",
+        "display_name": "receipt canonical grammar rejects whitespace and structural drift"
+      },
+      {
+        "function": "digestGrammar",
+        "display_name": "receipt digest grammar is exactly lowercase hexadecimal"
+      },
+      {
+        "function": "absentOrReboundOutput",
+        "display_name": "missing receipts and changed graph bytes cannot be rebound"
+      },
+      {
+        "function": "canonicalDualJoin",
+        "display_name": "dual join preserves distinct carrier identities and identical graphs"
+      },
+      {
+        "function": "dualJoinFieldMutations",
+        "display_name": "dual join binds every field and cannot write an authority bit"
+      },
+      {
+        "function": "dualJoinGraphByteEquality",
+        "display_name": "join rejects changed output or either changed input graph"
+      },
+      {
+        "function": "dualJoinMerkleDisagreement",
+        "display_name": "individually well-formed roots still must agree at the join"
+      },
+      {
+        "function": "boundaryCompleteness",
+        "display_name": "full-boundary completeness is exact rather than a lower bound"
+      },
+      {
+        "function": "sequentialOneShot",
+        "display_name": "one-shot latch has exactly one sequential winner"
+      },
+      {
+        "function": "concurrentOneShot",
+        "display_name": "one-shot latch has exactly one concurrent winner"
+      },
+      {
+        "function": "positiveChildIdentity",
+        "display_name": "child ownership accepts only a positive direct-child identifier"
+      },
+      {
+        "function": "interruptedWaitRetainsOwnership",
+        "display_name": "running and interruption do not spend exact-child ownership"
+      },
+      {
+        "function": "exactReapWithoutKill",
+        "display_name": "natural exact reap removes all later actuation eligibility"
+      },
+      {
+        "function": "rawWaitStatusAndTerminalReap",
+        "display_name": "raw wait status is retained exactly and reap is terminal"
+      },
+      {
+        "function": "lostChildOwnership",
+        "display_name": "lost child ownership never permits a numeric-PID kill"
+      },
+      {
+        "function": "exactDeadlineBoundary",
+        "display_name": "deadline is exact at the five-second boundary"
+      },
+      {
+        "function": "rationalDeadlineBoundary",
+        "display_name": "rational ticks are compared without nanosecond rounding"
+      },
+      {
+        "function": "wideDeadlineArithmetic",
+        "display_name": "wide products do not overflow or truncate fractional time"
+      },
+      {
+        "function": "invalidDeadlineInputs",
+        "display_name": "invalid clocks and timebases reject instead of disabling a deadline"
+      },
+      {
+        "function": "inputEndpointAdmission",
+        "display_name": "input endpoint requires read-only offset-zero parked descriptor"
+      },
+      {
+        "function": "endpointVnodeDisjointness",
+        "display_name": "endpoint vnode equality is device and inode, not pathname"
+      },
+      {
+        "function": "frozenEndpointMaps",
+        "display_name": "each stage has only its frozen descriptor-target map"
+      },
+      {
+        "function": "endpointMapMutations",
+        "display_name": "missing extra aliased and unparked descriptors reject per stage"
+      },
+      {
+        "function": "fixedStageOrder",
+        "display_name": "stage order is JSON then CBOR then join exactly once"
+      },
+      {
+        "function": "stageRejection",
+        "display_name": "wrong order and explicit rejection cannot advance later stages"
+      }
+    ],
+    "filter": null,
+    "xctest_enabled": false,
+    "test_parallelism": "--no-parallel; the one-shot concurrency case deliberately starts 64 bounded Swift tasks, not processes",
+    "configuration": "debug with @testable core",
+    "build_scope": "Build source and test targets plus SwiftPM-generated test runner; bootstrap executable may be compiled/linked but must never be executed. No worker source/target is included.",
+    "pure_reachability": "Exact test bodies call receipt/anchor/SHA, completeness, latch, synthetic child-state, rational deadline, endpoint and sequencer functions only. They never call public GateEStaticBootstrap.run(), native gebs_ primitives or live Run.",
+    "capability_qualification": "Core and native primitives remain linked and public run() exists. Purity is an exact-source call-path property, not an inability of the test image to actuate and not a kernel sandbox.",
+    "synthetic_child_semantics": "commitKill returns a synthetic positive PID in memory; no kill syscall, child, waitpid, process observation or conservation proof is exercised."
+  },
+  "sequencing": {
+    "entries": {
+      "compilation": 1,
+      "test_command": 1,
+      "rerun": 0
+    },
+    "order": [
+      "source and tool preflight persisted",
+      "compile all tests",
+      "normal build exit0",
+      "full source/tool revalidation plus generated runner/test image admission persisted",
+      "swift-test --skip-build",
+      "normal test exit0 and all30 expected tests pass",
+      "complete source/tool/test-image postflight and durable result"
+    ],
+    "test_requires": [
+      "Build normal exit0",
+      "Full 16-entry source metadata and inventory before/after hash match preflight",
+      "Six source hashes match committed source pins",
+      "Tool/SDK observations match preflight",
+      "Generated test image has one regular nlink1 executable at the SwiftPM output, SHA256 and full before/after metadata retained",
+      "Generated test-runner source retained and hashed; no unexpected package test suite or runtime entry",
+      "build-postflight-test-admission.json persisted before test transport entry"
+    ],
+    "generated_image_selection": "Inspect the single generated ErgenticsGateEStaticBootstrapPackageTests image under the exact scratch/debug directory (flat executable or standard .xctest/Contents/MacOS layout). Require exactly one; SwiftPM --skip-build selects its built runner, no direct alternate path launch.",
+    "transport": "Each stage is a non-login /bin/zsh exec /usr/bin/env -i with exact argv/environment, stdin /dev/null, exclusive regular stdout/stderr captures. No outer timeout, signals, retry or cleanup. Standard native tools and local JS orchestration only.",
+    "compiler_scope": "Manifest/compiler/plugin macro/linker processes required by Swift/Testing compilation are permitted; no external dependency or package plugin. --jobs1 is build scheduling, not a single-thread or CPU bound.",
+    "test_runtime_scope": "One SwiftPM test-command entry, only the generated Swift Testing runner for this one package. --skip-build forbids rebuilding package source/test products. Loading/evaluating the package manifest, including a cache-miss manifest compiler helper, is permitted and must be reported if observed; it is not a second package-source build.",
+    "failure": "Stop on any failed compilation/admission/test/predicate. Retain diagnostics; no source repair, binary rewrite or retry in this frozen phase.",
+    "historical": "Prior worker-build pre-B omission stays historical FAIL/UNOBSERVED; this test phase does not repair it."
+  },
+  "success_predicates": [
+    "Compilation and test command both normal exit0",
+    "Exactly all 30 expected tests start and pass once; zero failures/issues/skips/unknown/missing/duplicate tests; final Swift Testing summary reports30",
+    "No bootstrap or worker invocation in frozen test bodies or retained command logs",
+    "All required full pre/mid/post source and tool snapshots match",
+    "Test image bytes and full metadata unchanged through test interval",
+    "Frozen bootstrap runtime root absent before and after",
+    "All retained artifacts hashed in result"
+  ],
+  "forbidden_runtime_root": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-c51f796-r1",
+  "residuals": [
+    "env -i is replacement environment, not filesystem/process/network confinement; non-login zsh briefly inherits ambient local environment.",
+    "--disable-sandbox disables SwiftPM nested sandbox only; Codex sandbox remains active.",
+    "Source/tool/image pre/post checks are named observations, not held descriptor joins; an inter-observation mutate/restore can evade them.",
+    "Transitive SDK, system Testing/runtime libraries and compiler execution closure are not exhaustively admitted.",
+    "macOS26.5.2 arm64 execution with minimum14 target is not a macOS14/15 or x86_64 runtime test.",
+    "Synthetic PASS receipts, vnode tuples and child statuses are fixtures, never production evidence.",
+    "Debug tests validate source mechanics, not execution of the paired Release binary.",
+    "Capture command-entry/return UTC and tool durations as wall metadata only; no exact CPU, energy, ergs or old-process observation.",
+    "The frozen pure test loops are bounded, but compiler, Testing runtime or kernel hangs have no guaranteed finite completion. No outer timeout signal or manual containment action is authorized."
+  ],
+  "scope": {
+    "bootstrap_entries": 0,
+    "worker_entries": 0,
+    "gate_e_role_entries": 0,
+    "process_census": 0,
+    "signals": 0,
+    "cleanup": 0,
+    "python": 0,
+    "ruby": 0,
+    "energy_work": 0,
+    "github": 0,
+    "dependency_fetch": 0,
+    "source_edits": 0,
+    "authority_vector": "00000000",
+    "gate_e": "ABSTAIN"
+  },
+  "next": "If all mechanics pass, prepare a fresh bootstrap runtime-admission freeze. No bootstrap or worker launch is included here.",
+  "digest_rule": "No self digest. Address exact file bytes externally by SHA256 and its selective Git commit/tree."
+}
