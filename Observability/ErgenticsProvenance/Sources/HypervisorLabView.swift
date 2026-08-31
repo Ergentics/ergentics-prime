@@ -24,8 +24,8 @@ struct HypervisorLabView: View {
                 if lab.busy { Button("Request cancellation") { lab.cancel() } }
             }
             Text(lab.phase).foregroundStyle(lab.busy ? .orange : .secondary)
-            Text("No macOS installer, virtual disk, network, host mounts or guest OS. One vCPU runs a bundled freestanding image, exits at a fixed doorbell, and is torn down. The watchdog requests vCPU exit after two seconds; it does not signal processes.")
-                .foregroundStyle(.secondary)
+            Text("Idle until Run. No virtual NIC, network, guest disk or background watchdog.")
+                .font(.callout).foregroundStyle(.secondary)
             if let result = lab.result { resultView(result) }
             if let error = lab.error { Text(error).foregroundStyle(.red).textSelection(.enabled) }
             Divider()
@@ -47,8 +47,12 @@ struct HypervisorLabView: View {
                     }
                 }
             }
-            Text("PASS means local guest/transport mechanics only. This is the future ΔPU test environment, not a ΔPU performance result, GPU replacement proof, hardware attestation or Gate E closure. Energy remains unmeasured (ergs).")
-                .font(.caption).foregroundStyle(.secondary)
+            DisclosureGroup("Runtime bounds and evidence scope") {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("One vCPU runs the bundled image once and exits at its MMIO doorbell. A temporary sleeping watchdog requests vCPU exit after two seconds and is joined before completion; kernel acknowledgment has no guaranteed time bound. No process signal is used.")
+                    Text("PASS means local guest/transport mechanics, not ΔPU acceleration, hardware attestation or scientific Gate E closure. Gate E remains ABSTAIN; authority vector 00000000. Energy is unmeasured (ergs).")
+                }.font(.caption).foregroundStyle(.secondary)
+            }
         }
         .padding(20).frame(maxWidth: .infinity, alignment: .leading)
         .background(Color.white.opacity(0.035)).clipShape(RoundedRectangle(cornerRadius: 12))

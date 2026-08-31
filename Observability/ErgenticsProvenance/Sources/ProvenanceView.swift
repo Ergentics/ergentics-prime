@@ -4,7 +4,7 @@ import SwiftUI
 struct ProvenanceView: View {
     @ObservedObject var model: ProvenanceModel
     @ObservedObject var lab: HypervisorModel
-    @State private var selection = "Overview"
+    @State private var selection = "Hypervisor lab"
     private let accent = Color(red: 0.36, green: 0.86, blue: 0.76)
     private let sections = ["Overview", "Hypervisor lab", "Historical receipts", "Graph bytes", "VM & repository"]
 
@@ -24,9 +24,7 @@ struct ProvenanceView: View {
                 }
                 Spacer()
                 Label("Local development", systemImage: "lock.shield")
-                Text("GATE E · ABSTAIN\n00000000")
-                    .font(.system(.caption, design: .monospaced)).foregroundStyle(.orange)
-                Text("Fixed guest · offline\nHistorical receipts read-only")
+                Text("No virtual NIC\nNo network entitlements")
                     .font(.caption).foregroundStyle(.secondary)
             }
             .padding(24).frame(width: 225)
@@ -42,7 +40,7 @@ struct ProvenanceView: View {
                                 .font(.largeTitle.weight(.semibold))
                         }
                         Spacer()
-                        Image(systemName: "doc.text.magnifyingglass").font(.largeTitle).foregroundStyle(accent)
+                        Image(systemName: selection == "Hypervisor lab" ? "cpu" : "doc.text.magnifyingglass").font(.largeTitle).foregroundStyle(accent)
                     }
                     if selection == "Overview" {
                         identityPanel
@@ -60,8 +58,10 @@ struct ProvenanceView: View {
                         vmPanel
                         repositoryPanel
                     }
-                    Text("Viewer identity ≠ historical producer identity. No authority is transferred by opening these files.")
-                        .font(.caption).foregroundStyle(.secondary)
+                    if selection != "Hypervisor lab" {
+                        Text("Viewer identity ≠ historical producer identity. No authority is transferred by opening these files.")
+                            .font(.caption).foregroundStyle(.secondary)
+                    }
                 }.padding(28).frame(maxWidth: 1180, alignment: .leading)
             }
         }

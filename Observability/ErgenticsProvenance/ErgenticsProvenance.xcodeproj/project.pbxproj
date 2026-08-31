@@ -35,9 +35,13 @@
 		B20000000000000000000053 = {isa = PBXBuildFile; fileRef = B10000000000000000000037; };
 		B20000000000000000000060 = {isa = PBXBuildFile; fileRef = B10000000000000000000060; };
 		B20000000000000000000061 = {isa = PBXBuildFile; fileRef = B10000000000000000000060; };
+		B20000000000000000000070 = {isa = PBXBuildFile; fileRef = B10000000000000000000070; };
+		B20000000000000000000071 = {isa = PBXBuildFile; fileRef = B10000000000000000000071; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B10000000000000000000070 = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B10000000000000000000071 = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		B10000000000000000000001 /* ProvenanceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProvenanceApp.swift; sourceTree = "<group>"; };
 		B10000000000000000000002 /* ProvenanceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProvenanceModel.swift; sourceTree = "<group>"; };
 		B10000000000000000000003 /* ProvenanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProvenanceView.swift; sourceTree = "<group>"; };
@@ -103,6 +107,8 @@
 				B30000000000000000000004 /* Control */,
 				B10000000000000000000008 /* Info.plist */,
 				B10000000000000000000009 /* Entitlements.plist */,
+				B10000000000000000000070 /* Assets.xcassets */,
+				B10000000000000000000071 /* PrivacyInfo.xcprivacy */,
 				B30000000000000000000005 /* Frameworks */,
 				B30000000000000000000006 /* Products */,
 			);
@@ -235,7 +241,7 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		B50000000000000000000003 /* Resources */ = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+		B50000000000000000000003 /* Resources */ = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (B20000000000000000000070, B20000000000000000000071); runOnlyForDeploymentPostprocessing = 0; };
 		B50000000000000000000006 /* Resources */ = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
 /* End PBXResourcesBuildPhase section */
 
@@ -330,6 +336,7 @@
 		B60000000000000000000003 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
@@ -358,6 +365,7 @@
 		B60000000000000000000004 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;

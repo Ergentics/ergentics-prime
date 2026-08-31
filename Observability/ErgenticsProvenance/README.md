@@ -27,6 +27,11 @@ access are requested. There are no network, app-group, iCloud, broad-file-access
 Virtualization-framework or PCC entitlements. Signing does not substitute for backup or
 scientific authority. No credentials belong in source or chat.
 
+The app now has a native AppIcon, bundled required-reason privacy manifest and
+an app-only Release archive path. See `Distribution/README.md` for TestFlight
+preparation and the remaining distribution-signature/account checks. A local
+development archive is not an uploaded or validated TestFlight build.
+
 ## Normal launch does not enter a guest
 
 Startup inspects the viewer's own signing identity, native `kern.hv_support`,
