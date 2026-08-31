@@ -18,6 +18,23 @@
 		B2000000000000000000000A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B10000000000000000000012 /* Security.framework */; };
 		B2000000000000000000000B /* Hypervisor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B10000000000000000000013 /* Hypervisor.framework */; };
 		B2000000000000000000000C /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B10000000000000000000014 /* XCTest.framework */; };
+		B20000000000000000000030 /* GuestContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000030; };
+		B20000000000000000000031 /* GuestJournal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000031; };
+		B20000000000000000000032 /* HypervisorGuest.c in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000032; };
+		B20000000000000000000034 /* HypervisorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000034; };
+		B20000000000000000000035 /* HypervisorLabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000035; };
+		B20000000000000000000036 /* MerkleGenesis.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000036; };
+		B20000000000000000000037 /* GuestResultVerifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000037; };
+		B20000000000000000000040 /* GuestJournalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000040; };
+		B20000000000000000000041 /* HypervisorContractTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000041; };
+		B20000000000000000000042 /* MerkleGenesisTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000042; };
+		B20000000000000000000043 /* GuestResultVerifierTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000043; };
+		B20000000000000000000050 = {isa = PBXBuildFile; fileRef = B10000000000000000000030; };
+		B20000000000000000000051 = {isa = PBXBuildFile; fileRef = B10000000000000000000031; };
+		B20000000000000000000052 = {isa = PBXBuildFile; fileRef = B10000000000000000000036; };
+		B20000000000000000000053 = {isa = PBXBuildFile; fileRef = B10000000000000000000037; };
+		B20000000000000000000060 = {isa = PBXBuildFile; fileRef = B10000000000000000000060; };
+		B20000000000000000000061 = {isa = PBXBuildFile; fileRef = B10000000000000000000060; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +55,19 @@
 		B10000000000000000000014 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/MacOSX.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		B10000000000000000000020 /* Ergentics Provenance.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ergentics Provenance.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B10000000000000000000021 /* ProvenanceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ProvenanceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B10000000000000000000030 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestContract.swift; sourceTree = "<group>"; };
+		B10000000000000000000031 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestJournal.swift; sourceTree = "<group>"; };
+		B10000000000000000000032 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = HypervisorGuest.c; sourceTree = "<group>"; };
+		B10000000000000000000033 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HypervisorGuest.h; sourceTree = "<group>"; };
+		B10000000000000000000034 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypervisorModel.swift; sourceTree = "<group>"; };
+		B10000000000000000000035 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypervisorLabView.swift; sourceTree = "<group>"; };
+		B10000000000000000000036 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerkleGenesis.swift; sourceTree = "<group>"; };
+		B10000000000000000000037 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestResultVerifier.swift; sourceTree = "<group>"; };
+		B10000000000000000000040 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestJournalTests.swift; sourceTree = "<group>"; };
+		B10000000000000000000041 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypervisorContractTests.swift; sourceTree = "<group>"; };
+		B10000000000000000000042 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerkleGenesisTests.swift; sourceTree = "<group>"; };
+		B10000000000000000000043 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestResultVerifierTests.swift; sourceTree = "<group>"; };
+		B10000000000000000000060 = {isa = PBXFileReference; lastKnownFileType = sourcecode.text-based-dylib-definition; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,6 +79,7 @@
 				B20000000000000000000009 /* AppKit.framework in Frameworks */,
 				B2000000000000000000000A /* Security.framework in Frameworks */,
 				B2000000000000000000000B /* Hypervisor.framework in Frameworks */,
+				B20000000000000000000060,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -57,6 +88,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B2000000000000000000000C /* XCTest.framework in Frameworks */,
+				B20000000000000000000061,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,6 +117,14 @@
 				B10000000000000000000004 /* ReceiptVerifier.swift */,
 				B10000000000000000000005 /* ProvenanceReadOnly.c */,
 				B10000000000000000000006 /* ProvenanceReadOnly.h */,
+				B10000000000000000000030,
+				B10000000000000000000031,
+				B10000000000000000000032,
+				B10000000000000000000033,
+				B10000000000000000000034,
+				B10000000000000000000035,
+				B10000000000000000000036,
+				B10000000000000000000037,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -93,6 +133,10 @@
 			isa = PBXGroup;
 			children = (
 				B10000000000000000000007 /* ReceiptVerifierTests.swift */,
+				B10000000000000000000040,
+				B10000000000000000000041,
+				B10000000000000000000042,
+				B10000000000000000000043,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -113,6 +157,7 @@
 				B10000000000000000000012 /* Security.framework */,
 				B10000000000000000000013 /* Hypervisor.framework */,
 				B10000000000000000000014 /* XCTest.framework */,
+				B10000000000000000000060,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -204,6 +249,13 @@
 				B20000000000000000000003 /* ProvenanceView.swift in Sources */,
 				B20000000000000000000004 /* ReceiptVerifier.swift in Sources */,
 				B20000000000000000000005 /* ProvenanceReadOnly.c in Sources */,
+				B20000000000000000000030,
+				B20000000000000000000031,
+				B20000000000000000000032,
+				B20000000000000000000034,
+				B20000000000000000000035,
+				B20000000000000000000036,
+				B20000000000000000000037,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -213,6 +265,14 @@
 			files = (
 				B20000000000000000000006 /* ReceiptVerifier.swift in Sources */,
 				B20000000000000000000007 /* ReceiptVerifierTests.swift in Sources */,
+				B20000000000000000000040,
+				B20000000000000000000041,
+				B20000000000000000000042,
+				B20000000000000000000043,
+				B20000000000000000000050,
+				B20000000000000000000051,
+				B20000000000000000000052,
+				B20000000000000000000053,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

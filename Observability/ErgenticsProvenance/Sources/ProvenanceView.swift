@@ -3,9 +3,10 @@ import SwiftUI
 @MainActor
 struct ProvenanceView: View {
     @ObservedObject var model: ProvenanceModel
+    @ObservedObject var lab: HypervisorModel
     @State private var selection = "Overview"
     private let accent = Color(red: 0.36, green: 0.86, blue: 0.76)
-    private let sections = ["Overview", "Historical receipts", "Graph bytes", "VM & repository"]
+    private let sections = ["Overview", "Hypervisor lab", "Historical receipts", "Graph bytes", "VM & repository"]
 
     var body: some View {
         HStack(spacing: 0) {
@@ -22,10 +23,10 @@ struct ProvenanceView: View {
                     }.buttonStyle(.plain)
                 }
                 Spacer()
-                Label("Read-only", systemImage: "lock.shield")
+                Label("Local development", systemImage: "lock.shield")
                 Text("GATE E · ABSTAIN\n00000000")
                     .font(.system(.caption, design: .monospaced)).foregroundStyle(.orange)
-                Text("No new projectors, VM boot,\nnetwork or Git commands.")
+                Text("Fixed guest · offline\nHistorical receipts read-only")
                     .font(.caption).foregroundStyle(.secondary)
             }
             .padding(24).frame(width: 225)
@@ -35,7 +36,7 @@ struct ProvenanceView: View {
                 VStack(alignment: .leading, spacing: 20) {
                     HStack {
                         VStack(alignment: .leading, spacing: 6) {
-                            Text("LOCAL / OFFLINE / READ-ONLY")
+                            Text("LOCAL / OFFLINE / DEVELOPMENT")
                                 .font(.caption).tracking(2).foregroundStyle(accent)
                             Text(selection == "Overview" ? "Ergentics Provenance" : selection)
                                 .font(.largeTitle.weight(.semibold))
@@ -45,7 +46,10 @@ struct ProvenanceView: View {
                     }
                     if selection == "Overview" {
                         identityPanel
+                        HypervisorLabView(lab: lab, admitted: model.admitted)
                         historyPanel
+                    } else if selection == "Hypervisor lab" {
+                        HypervisorLabView(lab: lab, admitted: model.admitted)
                         vmPanel
                     } else if selection == "Historical receipts" {
                         historyPanel
@@ -70,7 +74,7 @@ struct ProvenanceView: View {
             Text("com.ergentics.provenance").font(.system(.title3, design: .monospaced))
             Text(model.signingStatus).foregroundStyle(model.admitted ? accent : .orange)
             Text("Configured developer team: \(model.team)").font(.caption).textSelection(.enabled)
-            Text("App Sandbox + explicit user-selected read-only access. No automatic evidence discovery, run creation, or receipt writer.")
+            Text("App Sandbox + explicit user-selected read-only history access. New development runs are retained separately by the host; no network entitlement or historical evidence mutation.")
                 .foregroundStyle(.secondary)
         }
     }
@@ -115,9 +119,9 @@ struct ProvenanceView: View {
                 Text("vCPU limit: " + (capability.queries_entered == 2 && capability.vcpu_status == 0 ? String(capability.max_vcpus) : "unobserved") + " · return " + (capability.queries_entered == 2 ? String(format: "0x%08x", UInt32(bitPattern: capability.vcpu_status)) : "not entered"))
                 Text("Maximum IPA width: " + (capability.queries_entered == 2 && capability.ipa_status == 0 ? "\(capability.max_ipa_bits) bits" : "unobserved") + " · return " + (capability.queries_entered == 2 ? String(format: "0x%08x", UInt32(bitPattern: capability.ipa_status)) : "not entered"))
             } else { Text("No Hypervisor capability query has been admitted.") }
-            Text("VM instances created: 0 · guest memory mappings: 0 · vCPUs created: 0 · guest execution: 0")
+            Text("These are support/limit queries, not execution counters. The Hypervisor lab separately records each fixed guest run.")
                 .font(.system(.caption, design: .monospaced)).lineSpacing(5)
-            Text("Hypervisor is the lower-level foundation. A vCPU limit is not a created CPU; IPA width is not allocated or available RAM. No VM/configuration object, guest disk, network adapter or installer is created.")
+            Text("A vCPU limit is not a created CPU; IPA width is not allocated RAM. The fixed guest has no OS disk, network adapter or installer.")
                 .foregroundStyle(.secondary)
             Text("Apple Private Cloud Compute is a separate service. Account entitlements are not proof that this app is running a VM or using PCC.")
                 .font(.caption).foregroundStyle(.secondary)

@@ -15,8 +15,8 @@ final class ProvenanceModel: ObservableObject {
     @Published private(set) var error: String?
     private var inspected = false
 
-    // Startup only admits this viewer's identity and queries Hypervisor limits. There
-    // is no filesystem creation, old-run discovery or automatic evidence read.
+    // This model only admits identity/capabilities and explicitly selected history.
+    // The separate HypervisorModel owns new development runs and their journal.
     func inspectHost() {
         guard !inspected else { return }
         inspected = true
@@ -34,7 +34,7 @@ final class ProvenanceModel: ObservableObject {
             return
         }
         admitted = true
-        signingStatus = "Signature, Team and read-only entitlement set admitted"
+        signingStatus = "Signature, Team and minimal Hypervisor entitlement set admitted"
         hypervisor = epr_hypervisor_capabilities()
     }
 

@@ -3,6 +3,7 @@
 
 #include <stddef.h>
 #include <stdint.h>
+#include "HypervisorGuest.h"
 
 #ifdef __cplusplus
 extern "C" {
