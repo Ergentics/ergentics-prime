@@ -1073,6 +1073,7 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
         }
 
         let commonArguments = [
+            "-Xswiftc", "-enable-testing",
             "--package-path", context.repositoryRootAbsolutePath,
             "--scratch-path", context.scratchAbsolutePath,
             "--cache-path", context.cacheAbsolutePath,

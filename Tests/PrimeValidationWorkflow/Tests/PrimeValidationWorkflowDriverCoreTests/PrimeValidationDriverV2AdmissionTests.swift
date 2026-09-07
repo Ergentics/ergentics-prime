@@ -250,6 +250,24 @@ final class PrimeValidationDriverV2AdmissionTests: XCTestCase {
         let valid = try fixture.receipt()
         var launches = valid.launchPlan.launches
         let build = launches[0]
+        for launch in launches {
+            let logicalBody = Array(launch.logicalInvocation.arguments.dropFirst())
+            XCTAssertFalse(logicalBody.contains("-enable-testing"))
+            XCTAssertEqual(launch.physicalArguments, ["-Xswiftc", "-enable-testing"] + logicalBody)
+            for changedArguments in [
+                logicalBody,
+                ["-Xswiftc", "-enable-testing", "-Xswiftc", "-enable-testing"] + logicalBody,
+                ["-Xswiftc", "-disable-access-control"] + logicalBody,
+            ] {
+                let changed = PrimeValidationSwiftPackageAdmissionLaunchV2(
+                    role: launch.role, logicalInvocation: launch.logicalInvocation,
+                    physicalExecutable: launch.physicalExecutable, argumentZero: launch.argumentZero,
+                    physicalArguments: changedArguments,
+                    orderedCompleteReplacementEnvironment: launch.orderedCompleteReplacementEnvironment,
+                    physicalWorkingDirectoryAbsolutePath: launch.physicalWorkingDirectoryAbsolutePath)
+                XCTAssertThrowsError(try changed.validate(intent: valid.intent, toolchain: valid.toolchain))
+            }
+        }
         let buildControls = [
             "--jobs", "2",
             "--disable-build-manifest-caching",

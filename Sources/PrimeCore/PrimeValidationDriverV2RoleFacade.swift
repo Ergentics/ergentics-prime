@@ -830,6 +830,14 @@ public final class PrimeValidationDriverV2RoleFacade:
     }
 }
 
+/// Fixed physical SwiftPM lowering for the Release validation workload.
+/// The original logical planner remains unchanged; actual argv records bind
+/// this prefix so build and skip-build consumers share testable modules.
+@_spi(PrimeValidationDriverV2RoleFacade)
+public enum PrimeValidationDriverV2SwiftPMPhysicalArguments {
+    public static let testabilityPrefix = ["-Xswiftc", "-enable-testing"]
+}
+
 struct PrimeValidationDriverV2ClosedRolePolicy {
     static let streamMaximumByteCount: UInt64 = 16 * 1024 * 1024
     static let chunkByteCount = 64 * 1024
@@ -901,7 +909,7 @@ struct PrimeValidationDriverV2ClosedRolePolicy {
             maximumWallNanoseconds = 300 * 1_000_000_000
             primaryResult = .standardOutput
         }
-        let arguments = [
+        let arguments = PrimeValidationDriverV2SwiftPMPhysicalArguments.testabilityPrefix + [
             "--package-path", context.repositoryRootAbsolutePath,
             "--scratch-path", context.scratchAbsolutePath,
             "--cache-path", context.cacheAbsolutePath,

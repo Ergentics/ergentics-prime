@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: LicenseRef-Ergentics-Proprietary
 
 import Foundation
-import PrimeCore
+@_spi(PrimeValidationDriverV2RoleFacade) import PrimeCore
 import PrimeValidationWorkflowContracts
 
 /// Durable admission declarations are mechanics-only. They can bind what a
@@ -936,7 +936,8 @@ public struct PrimeValidationSwiftPackageAdmissionLaunchV2:
                 == toolchain.swiftPackageExecutable.content,
               argumentZero == personality.argumentZero,
               physicalArguments
-                == Array(logicalInvocation.arguments.dropFirst()),
+                == PrimeValidationDriverV2SwiftPMPhysicalArguments.testabilityPrefix
+                    + Array(logicalInvocation.arguments.dropFirst()),
               orderedCompleteReplacementEnvironment
                 == expectedEnvironment,
               physicalWorkingDirectoryAbsolutePath
@@ -1001,7 +1002,8 @@ public struct PrimeValidationSwiftPackageAdmissionLaunchPlanV2:
                     logicalInvocation: invocation,
                     physicalExecutable: physical,
                     argumentZero: personality.argumentZero,
-                    physicalArguments: Array(invocation.arguments.dropFirst()),
+                    physicalArguments: PrimeValidationDriverV2SwiftPMPhysicalArguments.testabilityPrefix
+                        + Array(invocation.arguments.dropFirst()),
                     orderedCompleteReplacementEnvironment:
                         try completeReplacementEnvironment(
                             intent: intent,
