@@ -3755,6 +3755,12 @@ private final class PrimeValidationDriverV2GovernorSpawnContainmentGuard {
                 }
                 _ = try spawned.finishBothDrains(deadline: deadline)
             } catch {
+                PrimeValidationDriverV2ShotGovernor.reportFailure(
+                    status: PrimeValidationDriverV2ShotGovernorStatus
+                        .containmentUncertain,
+                    coordinate: "spawn_containment_guard:"
+                        + String(reflecting: error)
+                )
                 Darwin._exit(
                     PrimeValidationDriverV2ShotGovernorStatus
                         .containmentUncertain
@@ -4285,19 +4291,31 @@ package enum PrimeValidationDriverV2ShotGovernor {
             do {
                 return try admitCapsuleAndExecute()
             } catch let failure as PrimeValidationDriverV2ShotGovernorFailure {
-                reportAdmissionFailure(failure)
+                reportFailure(
+                    status: failure.status,
+                    coordinate: "run_closed:" + failure.coordinate
+                )
                 throw failure
+            } catch {
+                reportFailure(
+                    status: PrimeValidationDriverV2ShotGovernorStatus
+                        .containmentUncertain,
+                    coordinate: "run_closed_generic:"
+                        + String(reflecting: error)
+                )
+                throw error
             }
         }
     }
 
-    private static func reportAdmissionFailure(
-        _ failure: PrimeValidationDriverV2ShotGovernorFailure
+    fileprivate static func reportFailure(
+        status: Int32,
+        coordinate: String
     ) {
-        guard failure.status == PrimeValidationDriverV2ShotGovernorStatus
-                .capsuleTransport
-                || failure.status == PrimeValidationDriverV2ShotGovernorStatus
-                    .admission
+        guard status >= PrimeValidationDriverV2ShotGovernorStatus
+                .capsuleTransport,
+              status <= PrimeValidationDriverV2ShotGovernorStatus
+                .terminalPublication
         else { return }
         var metadata = stat()
         let flags = fcntl(STDERR_FILENO, F_GETFL)
@@ -4306,10 +4324,10 @@ package enum PrimeValidationDriverV2ShotGovernor {
                 || metadata.st_mode & mode_t(S_IFMT) == mode_t(S_IFREG)
         else { return }
         guard fcntl(STDERR_FILENO, F_SETNOSIGPIPE, 1) == 0 else { return }
-        let coordinate = failure.coordinate.utf8.prefix(256).map { byte in
+        let coordinate = coordinate.utf8.prefix(256).map { byte in
             (byte >= 0x21 && byte <= 0x7e) ? byte : UInt8(0x5f)
         }
-        let message = Array("gate_e_rejected status=\(failure.status) coordinate=".utf8)
+        let message = Array("gate_e_rejected status=\(status) coordinate=".utf8)
             + coordinate + [UInt8(0x0a)]
         // Diagnostic only: one bounded write with SIGPIPE suppressed, without
         // retry, authority promotion, or a change to the returned failure.

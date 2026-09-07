@@ -8,6 +8,11 @@ import Foundation
 /// but callers cannot inject it into the public capture result or construct a
 /// trusted child-capture capability from it.
 final class PrimeNativeNeuralGateHeldSourceClosure {
+    enum ReadAccessTimePolicy {
+        case strict
+        case validationMetadataStable
+    }
+
     private typealias DarwinKevent =
         Darwin.kevent
 
@@ -15,6 +20,12 @@ final class PrimeNativeNeuralGateHeldSourceClosure {
         let relativePath: String
         let isDirectory: Bool
         let noteMask: UInt32
+    }
+
+    private struct PendingVnodeEvent {
+        let value: VnodeEvent
+        let descriptor: Int32
+        let flags: UInt16
     }
 
     private struct LocalAPFSFilesystemIdentity:
@@ -97,6 +108,9 @@ final class PrimeNativeNeuralGateHeldSourceClosure {
         UInt64 = 1_000_000_000
     private static let readChunkByteCount =
         64 * 1024
+    private static let maximumReadAccessTimeEventsPerPoll = 4_096
+    private static let maximumReadAccessTimePollNanoseconds:
+        UInt64 = 1_000_000_000
 
     private let sourceSnapshotSHA256: String
     private let aggregateFileByteCount: UInt64
@@ -110,6 +124,7 @@ final class PrimeNativeNeuralGateHeldSourceClosure {
     private let rootFilesystemIdentity:
         LocalAPFSFilesystemIdentity
     private let topologyPolicy: TopologyPolicy
+    private let readAccessTimePolicy: ReadAccessTimePolicy
     private var queueDescriptor: Int32 = -1
     private var directoryDescriptors:
         [String: Int32] = [:]
@@ -120,6 +135,8 @@ final class PrimeNativeNeuralGateHeldSourceClosure {
     private var fileRecords: [HeldFile] = []
     private var watcherPathByDescriptor:
         [Int32: (relativePath: String, isDirectory: Bool)] = [:]
+    private var watcherInitialStatusByDescriptor: [Int32: stat] = [:]
+    private(set) var acceptedReadAccessTimeEventCount: UInt64 = 0
     private var registrationReceiptCount = 0
     private var registrationReceiptErrorCount = 0
     private var watchersArmedMonotonicNanoseconds:
@@ -147,7 +164,8 @@ final class PrimeNativeNeuralGateHeldSourceClosure {
         sourceAdmissionMaximumSeconds:
             UInt64,
         admissionIdentitySnapshot:
-            PrimeSecureHeldLegacySourceIdentitySnapshot? = nil
+            PrimeSecureHeldLegacySourceIdentitySnapshot? = nil,
+        readAccessTimePolicy: ReadAccessTimePolicy = .strict
     ) throws {
         let snapshotData =
             try PrimeCanonicalJSON.encode(
@@ -179,7 +197,8 @@ final class PrimeNativeNeuralGateHeldSourceClosure {
             sourceAdmissionStartedMonotonicNanoseconds:
                 sourceAdmissionStartedMonotonicNanoseconds,
             sourceAdmissionMaximumSeconds:
-                sourceAdmissionMaximumSeconds
+                sourceAdmissionMaximumSeconds,
+            readAccessTimePolicy: readAccessTimePolicy
         )
     }
 
@@ -198,7 +217,8 @@ final class PrimeNativeNeuralGateHeldSourceClosure {
         expectedFileIdentities:
             [String: PrimeSecureHeldNodeIdentity],
         snapshotIdentitySHA256: String,
-        maximumFileByteCount: UInt64
+        maximumFileByteCount: UInt64,
+        readAccessTimePolicy: ReadAccessTimePolicy = .strict
     ) throws {
         let expectedEntryNames =
             try Self.completeTopologyExpectedEntryNames(
@@ -241,7 +261,8 @@ final class PrimeNativeNeuralGateHeldSourceClosure {
                 ),
             sourceAdmissionStartedMonotonicNanoseconds:
                 Self.monotonicNanoseconds(),
-            sourceAdmissionMaximumSeconds: 30
+            sourceAdmissionMaximumSeconds: 30,
+            readAccessTimePolicy: readAccessTimePolicy
         )
     }
 
@@ -257,7 +278,8 @@ final class PrimeNativeNeuralGateHeldSourceClosure {
         sourceAdmissionStartedMonotonicNanoseconds:
             UInt64,
         sourceAdmissionMaximumSeconds:
-            UInt64
+            UInt64,
+        readAccessTimePolicy: ReadAccessTimePolicy
     ) throws {
         try Self.requireCalibratedKqueueABI()
         guard sourceAdmissionStartedMonotonicNanoseconds
@@ -304,6 +326,7 @@ final class PrimeNativeNeuralGateHeldSourceClosure {
         self.rootFilesystemIdentity =
             rootFilesystemIdentity
         self.topologyPolicy = topologyPolicy
+        self.readAccessTimePolicy = readAccessTimePolicy
         do {
             queueDescriptor =
                 try Self.normalizedDescriptor(
@@ -952,7 +975,7 @@ final class PrimeNativeNeuralGateHeldSourceClosure {
                 break
             }
             events.append(
-                contentsOf: batch
+                contentsOf: batch.map(\.value)
             )
         }
         if !events.isEmpty {
@@ -996,6 +1019,7 @@ final class PrimeNativeNeuralGateHeldSourceClosure {
         watcherPathByDescriptor.removeAll(
             keepingCapacity: false
         )
+        watcherInitialStatusByDescriptor.removeAll(keepingCapacity: false)
     }
 
     private func admitDirectory(
@@ -1051,7 +1075,8 @@ final class PrimeNativeNeuralGateHeldSourceClosure {
             try registerWatcher(
                 descriptor: descriptor,
                 relativePath: relativePath,
-                isDirectory: true
+                isDirectory: true,
+                initialStatus: status
             )
             directoryDescriptors[
                 relativePath
@@ -1123,7 +1148,8 @@ final class PrimeNativeNeuralGateHeldSourceClosure {
                 descriptor: descriptor,
                 relativePath:
                     snapshot.relativePath,
-                isDirectory: false
+                isDirectory: false,
+                initialStatus: status
             )
             fileRecords.append(
                 HeldFile(
@@ -1143,7 +1169,8 @@ final class PrimeNativeNeuralGateHeldSourceClosure {
     private func registerWatcher(
         descriptor: Int32,
         relativePath: String,
-        isDirectory: Bool
+        isDirectory: Bool,
+        initialStatus: stat
     ) throws {
         guard queueDescriptor >= 3,
               watcherPathByDescriptor[
@@ -1207,6 +1234,7 @@ final class PrimeNativeNeuralGateHeldSourceClosure {
             relativePath,
             isDirectory
         )
+        watcherInitialStatusByDescriptor[descriptor] = initialStatus
         let pending =
             try pollFirstPendingEvent()
         guard pending == nil else {
@@ -1879,6 +1907,14 @@ final class PrimeNativeNeuralGateHeldSourceClosure {
     private func pollFirstPendingEvent()
         throws -> VnodeEvent?
     {
+        if case .validationMetadataStable = readAccessTimePolicy {
+            do {
+                return try pollFirstPendingValidationEvent()
+            } catch {
+                poisoned = true
+                throw error
+            }
+        }
         let events =
             try pollPendingEventBatch(
                 maximumEventCount:
@@ -1898,13 +1934,135 @@ final class PrimeNativeNeuralGateHeldSourceClosure {
             return nil
         }
         poisoned = true
-        return event
+        return event.value
+    }
+
+    /// Validation reads can update APFS atime and enqueue NOTE_ATTRIB. Keep
+    /// the original byte/metadata baseline and every mutation subscription;
+    /// only an exact access-time-only stat transition is compatible here.
+    private func pollFirstPendingValidationEvent() throws -> VnodeEvent? {
+        let started = Self.monotonicNanoseconds()
+        let deadline = started.addingReportingOverflow(
+            Self.maximumReadAccessTimePollNanoseconds
+        )
+        guard !deadline.overflow else {
+            throw Self.rejected("source_read_access_time_poll_deadline")
+        }
+        let eventLimit = min(
+            Self.maximumReadAccessTimeEventsPerPoll,
+            watcherPathByDescriptor.count * 2
+        )
+        var accepted = 0
+        while true {
+            let before = Self.monotonicNanoseconds()
+            guard before >= started, before <= deadline.partialValue else {
+                throw Self.rejected("source_read_access_time_poll_deadline")
+            }
+            let events = try pollPendingEventBatch(
+                maximumEventCount: Self.productionPendingEventMaximumCount,
+                maximumAttemptCount: Self.maximumProductionPollAttemptCount
+            )
+            let after = Self.monotonicNanoseconds()
+            guard after >= before, after <= deadline.partialValue else {
+                throw Self.rejected("source_read_access_time_poll_deadline")
+            }
+            guard events.count <= 1 else {
+                throw Self.rejected("source_kqueue_production_event_bound")
+            }
+            guard let event = events.first else { return nil }
+            guard accepted < eventLimit else {
+                throw Self.rejected("source_read_access_time_event_bound")
+            }
+            guard try isReadAccessTimeOnly(event) else {
+                poisoned = true
+                return event.value
+            }
+            let count = acceptedReadAccessTimeEventCount
+                .addingReportingOverflow(1)
+            guard !count.overflow else {
+                throw Self.rejected("source_read_access_time_count_overflow")
+            }
+            acceptedReadAccessTimeEventCount = count.partialValue
+            accepted += 1
+        }
+    }
+
+    private func isReadAccessTimeOnly(
+        _ event: PendingVnodeEvent
+    ) throws -> Bool {
+        guard event.value.noteMask == UInt32(NOTE_ATTRIB),
+              event.flags & UInt16(EV_ERROR | EV_EOF) == 0,
+              let original = watcherInitialStatusByDescriptor[event.descriptor],
+              let path = watcherPathByDescriptor[event.descriptor],
+              path.relativePath == event.value.relativePath,
+              path.isDirectory == event.value.isDirectory,
+              event.descriptor >= 3,
+              fcntl(event.descriptor, F_GETFD) & FD_CLOEXEC != 0
+        else { return false }
+        try Self.requireFilesystemIdentity(
+            descriptor: event.descriptor,
+            expected: rootFilesystemIdentity,
+            context: "source_read_access_time_filesystem"
+        )
+        var held = stat()
+        var named = stat()
+        var finalHeld = stat()
+        guard fstat(event.descriptor, &held) == 0,
+              Self.sameProtectedReadAccessTimeIdentity(original, held),
+              !Self.sameAccessTime(original, held)
+        else { return false }
+        let parent: Int32
+        let leaf: String
+        if path.relativePath.isEmpty {
+            parent = event.descriptor
+            leaf = "."
+        } else {
+            let parentPath = Self.parentRelativePath(of: path.relativePath) ?? ""
+            guard let retainedParent = directoryDescriptors[parentPath],
+                  let parentOriginal = watcherInitialStatusByDescriptor[retainedParent]
+            else { return false }
+            var parentHeld = stat()
+            guard fstat(retainedParent, &parentHeld) == 0,
+                  Self.sameProtectedReadAccessTimeIdentity(parentOriginal, parentHeld)
+            else { return false }
+            parent = retainedParent
+            leaf = Self.leafName(of: path.relativePath)
+        }
+        guard leaf.withCString({
+            fstatat(parent, $0, &named, AT_SYMLINK_NOFOLLOW)
+        }) == 0,
+              fstat(event.descriptor, &finalHeld) == 0,
+              Self.sameProtectedReadAccessTimeIdentity(original, named),
+              Self.sameProtectedReadAccessTimeIdentity(original, finalHeld),
+              Self.sameAccessTime(held, named),
+              Self.sameAccessTime(held, finalHeld)
+        else { return false }
+        return true
+    }
+
+    private static func sameAccessTime(_ lhs: stat, _ rhs: stat) -> Bool {
+        lhs.st_atimespec.tv_sec == rhs.st_atimespec.tv_sec
+            && lhs.st_atimespec.tv_nsec == rhs.st_atimespec.tv_nsec
+    }
+
+    private static func sameProtectedReadAccessTimeIdentity(
+        _ lhs: stat,
+        _ rhs: stat
+    ) -> Bool {
+        sameRegularFileIdentity(lhs, rhs)
+            && lhs.st_flags == rhs.st_flags
+            && lhs.st_gen == rhs.st_gen
+            && lhs.st_rdev == rhs.st_rdev
+            && lhs.st_blocks == rhs.st_blocks
+            && lhs.st_blksize == rhs.st_blksize
+            && lhs.st_birthtimespec.tv_sec == rhs.st_birthtimespec.tv_sec
+            && lhs.st_birthtimespec.tv_nsec == rhs.st_birthtimespec.tv_nsec
     }
 
     private func pollPendingEventBatch(
         maximumEventCount: Int,
         maximumAttemptCount: Int
-    ) throws -> [VnodeEvent] {
+    ) throws -> [PendingVnodeEvent] {
         guard queueDescriptor >= 3,
               !closed,
               maximumEventCount > 0,
@@ -1966,7 +2124,7 @@ final class PrimeNativeNeuralGateHeldSourceClosure {
             guard returned > 0 else {
                 return []
             }
-            var result: [VnodeEvent] = []
+            var result: [PendingVnodeEvent] = []
             result.reserveCapacity(
                 Int(returned)
             )
@@ -1996,13 +2154,14 @@ final class PrimeNativeNeuralGateHeldSourceClosure {
                     )
                 }
                 result.append(
-                    VnodeEvent(
-                        relativePath:
-                            path.relativePath,
-                        isDirectory:
-                            path.isDirectory,
-                        noteMask:
-                            event.fflags
+                    PendingVnodeEvent(
+                        value: VnodeEvent(
+                            relativePath: path.relativePath,
+                            isDirectory: path.isDirectory,
+                            noteMask: event.fflags
+                        ),
+                        descriptor: descriptor,
+                        flags: event.flags
                     )
                 )
             }

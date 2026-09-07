@@ -1010,7 +1010,8 @@ final class PrimeSecureHeldSourceWatch {
                     DispatchTime.now().uptimeNanoseconds,
                 sourceAdmissionMaximumSeconds: 30,
                 admissionIdentitySnapshot:
-                    admissionIdentitySnapshot
+                    admissionIdentitySnapshot,
+                readAccessTimePolicy: .validationMetadataStable
             )
     }
 
@@ -1063,7 +1064,8 @@ final class PrimeSecureHeldSourceWatch {
                     completeWorkingTreeSnapshot.identitySHA256,
                 maximumFileByteCount:
                     PrimeSecureHeldWorkingTreeSnapshot
-                    .maximumFileByteCount
+                    .maximumFileByteCount,
+                readAccessTimePolicy: .validationMetadataStable
             )
     }
 
@@ -1083,5 +1085,9 @@ final class PrimeSecureHeldSourceWatch {
 
     var heldWatcherDescriptorCount: Int {
         implementation.heldWatcherDescriptorCount
+    }
+
+    var acceptedReadAccessTimeEventCount: UInt64 {
+        implementation.acceptedReadAccessTimeEventCount
     }
 }
