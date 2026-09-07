@@ -95,13 +95,8 @@ final class PrimeValidationDriverV2ExecutionPhaseWriter {
             _ = try HJSON.object(Data(lastData.dropLast()))
             guard let identity = record["journalIdentity"] as? [String: Any] else { throw hRejected("phase_E_root_record") }
             let observed = try root.verifiedRootIdentity()
-            guard (identity["deviceID"] as? NSNumber)?.uint64Value == observed.deviceID,
-                  (identity["inode"] as? NSNumber)?.uint64Value == observed.inode,
-                  (identity["ownerUserID"] as? NSNumber)?.uint32Value == observed.ownerUserID,
-                  (identity["ownerGroupID"] as? NSNumber)?.uint32Value == observed.ownerGroupID,
-                  (identity["permissionMode"] as? NSNumber)?.uint16Value == observed.actualMode,
-                  (identity["linkCount"] as? NSNumber)?.uint64Value == observed.linkCount,
-                  (identity["absolutePath"] as? String) == root.directoryURL.path else { throw hRejected("phase_E_root_join") }
+            try Self.validateCompletedEJournalRoot(identity: identity, observed: observed,
+                absolutePath: root.directoryURL.path)
             self.eRoot = root; self.eFiles = [first]
             for expected in expectedLeaves.dropFirst().dropLast() {
                 try self.planningTime()
@@ -174,6 +169,21 @@ final class PrimeValidationDriverV2ExecutionPhaseWriter {
                 terminal: self.scope(lastTerminal, "execution"), outputs: acceptances.map { self.scope($0, "execution") },
                 started: startedAt, ended: completedAt)
         }
+    }
+
+    /// Gate E records the empty private root before publication. Its exact
+    /// completed namespace has 34 immutable regular leaves (links 2 -> 36).
+    /// The caller independently acquires all 34 exact names and content joins.
+    static func validateCompletedEJournalRoot(identity: [String: Any],
+        observed: PrimeArtifactRootIdentity, absolutePath: String) throws {
+        guard (identity["deviceID"] as? NSNumber)?.uint64Value == observed.deviceID,
+              (identity["inode"] as? NSNumber)?.uint64Value == observed.inode,
+              (identity["ownerUserID"] as? NSNumber)?.uint32Value == observed.ownerUserID,
+              (identity["ownerGroupID"] as? NSNumber)?.uint32Value == observed.ownerGroupID,
+              (identity["permissionMode"] as? NSNumber)?.uint16Value == observed.actualMode,
+              (identity["linkCount"] as? NSNumber)?.uint64Value == 2,
+              observed.linkCount == 2 + 34,
+              (identity["absolutePath"] as? String) == absolutePath else { throw hRejected("phase_E_root_join") }
     }
 
     func beginReconciliation() throws { try begin(6) }
@@ -269,7 +279,9 @@ final class PrimeValidationDriverV2ExecutionPhaseWriter {
         do { try revalidate(); try body(); try revalidate() } catch { poisoned = true; throw error }
     }
 
-    private final class HeldPredecessorFile {
+    // Internal read-only witness permits producer/consumer filesystem tests;
+    // it cannot construct a phase owner or authorize any execution.
+    final class HeldPredecessorFile {
         let rootFD: Int32
         let fd: Int32
         let expected: PrimeValidationDriverV2FixedProbeJournalLeafObservation
@@ -284,7 +296,7 @@ final class PrimeValidationDriverV2ExecutionPhaseWriter {
             do {
                 guard fstat(opened, &value) == 0, UInt64(value.st_dev) == expected.deviceID,
                       UInt64(value.st_ino) == expected.inode, value.st_mode & S_IFMT == S_IFREG,
-                      value.st_mode & 0o7777 == 0o444, value.st_nlink == 1,
+                      value.st_mode & 0o7777 == 0o400, value.st_nlink == 1,
                       value.st_uid == geteuid(), value.st_flags == 0, value.st_size >= 0,
                       UInt64(value.st_size) == expected.byteCount else { throw hRejected("phase_E_identity") }
                 try PrimeArtifactRoot.requireTrustedInventoryArtifactDescriptor(opened, path: expected.leaf)

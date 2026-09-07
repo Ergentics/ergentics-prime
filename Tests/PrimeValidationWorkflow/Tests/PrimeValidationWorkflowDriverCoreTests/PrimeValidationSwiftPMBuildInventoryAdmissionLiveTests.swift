@@ -13,6 +13,114 @@ import XCTest
 final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
     XCTestCase
 {
+    func testHReadsExactNativeEJournalModesAndRootPublicationEvolution() throws {
+        guard #available(macOS 26.0, *) else { throw XCTSkip("native admission requires macOS 26") }
+        try withHPredecessorJournalFixture { journal, produced, initial in
+            let root = try PrimeArtifactRoot(directoryURL: journal)
+            let completed = try root.verifiedRootIdentity()
+            let fd = Darwin.open(journal.path, O_RDONLY | O_DIRECTORY | O_NOFOLLOW_ANY | O_CLOEXEC)
+            guard fd >= 3 else { throw FixtureError.invalid("H_E_root_open") }
+            defer { _ = Darwin.close(fd) }
+            XCTAssertEqual(initial.linkCount, 2)
+            XCTAssertEqual(completed.linkCount, 36)
+            XCTAssertEqual(produced.orderedLeaves.count, 34)
+            XCTAssertEqual(produced.spawnedChildCount, 0)
+            XCTAssertEqual(produced.leafPermissionModes, Array(repeating: 0o400, count: 34))
+            let identity: [String: Any] = ["absolutePath": journal.path,
+                "deviceID": initial.deviceID, "inode": initial.inode,
+                "ownerUserID": initial.ownerUserID, "ownerGroupID": initial.ownerGroupID,
+                "permissionMode": initial.actualMode, "linkCount": initial.linkCount]
+            try PrimeValidationDriverV2ExecutionPhaseWriter.validateCompletedEJournalRoot(
+                identity: identity, observed: completed, absolutePath: journal.path)
+            XCTAssertThrowsError(try PrimeValidationDriverV2ExecutionPhaseWriter.validateCompletedEJournalRoot(
+                identity: identity, observed: initial, absolutePath: journal.path))
+            let mutations: [(String, Any)] = [("absolutePath", journal.path + "-other"),
+                                 ("deviceID", initial.deviceID + 1), ("inode", initial.inode + 1),
+                                 ("ownerUserID", initial.ownerUserID + 1), ("ownerGroupID", initial.ownerGroupID + 1),
+                                 ("permissionMode", UInt16(0o755)), ("linkCount", UInt64(36))]
+            for (key, value) in mutations {
+                var changed = identity; changed[key] = value
+                XCTAssertThrowsError(try PrimeValidationDriverV2ExecutionPhaseWriter.validateCompletedEJournalRoot(
+                    identity: changed, observed: completed, absolutePath: journal.path), key)
+            }
+            for expected in produced.orderedLeaves {
+                let held = try PrimeValidationDriverV2ExecutionPhaseWriter.HeldPredecessorFile(parent: fd, expected: expected)
+                let data = try held.read()
+                XCTAssertEqual(data, try Data(contentsOf: journal.appendingPathComponent(expected.leaf)))
+                XCTAssertEqual(data.last, 0x0a)
+                XCTAssertEqual(PrimeSHA256.hexDigest(of: data), expected.sha256)
+                try held.revalidateMetadata()
+            }
+        }
+    }
+
+    func testHEJournalReadbackRejectsWrongModesReplacementLinkAndContentDrift() throws {
+        guard #available(macOS 26.0, *) else { throw XCTSkip("native admission requires macOS 26") }
+        try withHPredecessorJournalFixture { journal, produced, _ in
+            let fd = Darwin.open(journal.path, O_RDONLY | O_DIRECTORY | O_NOFOLLOW_ANY | O_CLOEXEC)
+            guard fd >= 3 else { throw FixtureError.invalid("H_E_root_open") }
+            defer { _ = Darwin.close(fd) }
+            let expected = try XCTUnwrap(produced.orderedLeaves.first)
+            let url = journal.appendingPathComponent(expected.leaf)
+            let original = try Data(contentsOf: url)
+            for mode in [mode_t(0o444), mode_t(0o600)] {
+                let held = try PrimeValidationDriverV2ExecutionPhaseWriter.HeldPredecessorFile(parent: fd, expected: expected)
+                XCTAssertEqual(Darwin.chmod(url.path, mode), 0)
+                XCTAssertThrowsError(try held.read())
+                XCTAssertThrowsError(try PrimeValidationDriverV2ExecutionPhaseWriter.HeldPredecessorFile(parent: fd, expected: expected))
+                XCTAssertEqual(Darwin.chmod(url.path, 0o400), 0)
+            }
+            do {
+                let held = try PrimeValidationDriverV2ExecutionPhaseWriter.HeldPredecessorFile(parent: fd, expected: expected)
+                let alias = journal.appendingPathComponent("unexpected-hard-link")
+                XCTAssertEqual(Darwin.link(url.path, alias.path), 0)
+                XCTAssertThrowsError(try held.read())
+                XCTAssertThrowsError(try PrimeValidationDriverV2ExecutionPhaseWriter.HeldPredecessorFile(parent: fd, expected: expected))
+                XCTAssertEqual(Darwin.unlink(alias.path), 0)
+            }
+            do {
+                let held = try PrimeValidationDriverV2ExecutionPhaseWriter.HeldPredecessorFile(parent: fd, expected: expected)
+                let moved = journal.appendingPathComponent("original-moved")
+                XCTAssertEqual(Darwin.rename(url.path, moved.path), 0)
+                try original.write(to: url); XCTAssertEqual(Darwin.chmod(url.path, 0o400), 0)
+                XCTAssertThrowsError(try held.read())
+                XCTAssertThrowsError(try PrimeValidationDriverV2ExecutionPhaseWriter.HeldPredecessorFile(parent: fd, expected: expected))
+                XCTAssertEqual(Darwin.unlink(url.path), 0)
+                XCTAssertEqual(Darwin.rename(moved.path, url.path), 0)
+            }
+            do {
+                let held = try PrimeValidationDriverV2ExecutionPhaseWriter.HeldPredecessorFile(parent: fd, expected: expected)
+                XCTAssertEqual(Darwin.chmod(url.path, 0o600), 0)
+                let writable = Darwin.open(url.path, O_WRONLY | O_NOFOLLOW | O_CLOEXEC)
+                guard writable >= 3 else { throw FixtureError.invalid("H_E_content_fixture") }
+                var byte: UInt8 = original[0] ^ 1
+                XCTAssertEqual(Darwin.pwrite(writable, &byte, 1, 0), 1)
+                XCTAssertEqual(Darwin.close(writable), 0)
+                XCTAssertEqual(Darwin.chmod(url.path, 0o400), 0)
+                XCTAssertThrowsError(try held.read())
+                let rebound = try PrimeValidationDriverV2ExecutionPhaseWriter.HeldPredecessorFile(parent: fd, expected: expected)
+                XCTAssertThrowsError(try rebound.read())
+            }
+        }
+    }
+
+    @available(macOS 26.0, *)
+    private func withHPredecessorJournalFixture(_ body: (URL,
+        PrimeValidationDriverV2FixedProbeJournalMechanicsTestObservation, PrimeArtifactRootIdentity) throws -> Void) throws {
+        let fixture = try Fixture()
+        defer { fixture.cleanup() }
+        let journal = URL(fileURLWithPath: fixture.workspace.path + ".driver-v2-gate-e-journal", isDirectory: true)
+        try makePrivateDirectory(journal)
+        let initial = try PrimeArtifactRoot(directoryURL: journal).verifiedRootIdentity()
+        let guarded = try preparedGuard(for: fixture)
+        let image = try boundTestImage(for: guarded)
+        XCTAssertFalse(image.productionSupervisorImageEligible)
+        let transfer = try roleTransferInputs(fixture: fixture, guarded: guarded)
+        let facade = try image.transferDriverV2RoleFacade(context: transfer.context)
+        let produced = try facade.exerciseFixedProbeJournalMechanicsForTesting()
+        try body(journal, produced, initial)
+    }
+
     func testBuildAndInventoryOuterJournalsUseExplicitGateAndRetainExactLeaves() throws {
         guard #available(macOS 26.0, *) else { throw XCTSkip("native admission requires macOS 26") }
         for (gate, journalName) in [
