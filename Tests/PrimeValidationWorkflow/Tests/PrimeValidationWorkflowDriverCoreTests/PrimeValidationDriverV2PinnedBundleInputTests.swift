@@ -64,6 +64,72 @@ final class PrimeValidationDriverV2PinnedBundleInputTests: XCTestCase {
         XCTAssertEqual(try Data(contentsOf: f.outside), f.outsideBytes)
     }
 
+    func testOwnedScratchPlanningMutationsPreservePinnedAndArtifactOwners() throws {
+        let f = try Fixture(ownedScratch: true); defer { f.cleanup() }
+        let scratch = try XCTUnwrap(f.scratchOwner)
+        let input = try f.capture()
+        let staged = try input.stage(into: f.workspaceRoot, deadlineNanoseconds: f.deadline,
+                                    swiftPMScratchOwner: scratch)
+        let artifacts = try captureArtifacts(f, scratch: scratch)
+        let directory = f.workspace.appendingPathComponent("root-release-build")
+        let before = try FileManager.default.attributesOfItem(atPath: directory.path)
+        // Reproduce SwiftPM planning's scratch-only entry updates. No tool,
+        // compiler, model or test executable is launched by this fixture.
+        try Data("lock generation 1".utf8).write(to: directory.appendingPathComponent(".lock"))
+        try FileManager.default.removeItem(at: directory.appendingPathComponent(".lock"))
+        try Data("lock generation 2".utf8).write(to: directory.appendingPathComponent(".lock"))
+        try Data("planning".utf8).write(to: directory.appendingPathComponent("release.yaml"))
+        let journal = directory.appendingPathComponent("build.db-journal")
+        try Data("transient database journal".utf8).write(to: journal)
+        try FileManager.default.removeItem(at: journal)
+        let after = try FileManager.default.attributesOfItem(atPath: directory.path)
+        XCTAssertEqual(before[.systemFileNumber] as? NSNumber, after[.systemFileNumber] as? NSNumber)
+        XCTAssertNoThrow(try input.revalidateAfterBuild(deadlineNanoseconds: f.deadline))
+        XCTAssertNoThrow(try artifacts.revalidateAfterBuild(deadlineNanoseconds: f.deadline))
+        for file in staged.destinations {
+            let bytes = try Data(contentsOf: f.workspace.appendingPathComponent(file.relativePath))
+            XCTAssertEqual(PrimeSHA256.hexDigest(of: bytes), file.sha256)
+        }
+    }
+
+    func testOwnedScratchDoesNotPermitAncestorReplacementOrPayloadMetadataDrift() throws {
+        for mutation in ["scratch_replace", "scratch_mode", "resource_metadata"] {
+            let f = try Fixture(ownedScratch: true); defer { f.cleanup() }
+            let scratch = try XCTUnwrap(f.scratchOwner)
+            let input = try f.capture()
+            _ = try input.stage(into: f.workspaceRoot, deadlineNanoseconds: f.deadline,
+                                swiftPMScratchOwner: scratch)
+            let artifacts = try captureArtifacts(f, scratch: scratch)
+            let directory = f.workspace.appendingPathComponent("root-release-build")
+            switch mutation {
+            case "scratch_replace":
+                try FileManager.default.moveItem(at: directory,
+                    to: f.workspace.appendingPathComponent("retained-original-scratch"))
+                try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: false,
+                    attributes: [.posixPermissions: NSNumber(value: 0o700)])
+            case "scratch_mode":
+                XCTAssertEqual(chmod(directory.path, 0o755), 0)
+            default:
+                let file = f.testResource.appendingPathComponent("Contents/Info.plist")
+                XCTAssertEqual(chmod(file.path, 0o600), 0)
+                XCTAssertEqual(chmod(file.path, 0o444), 0)
+                XCTAssertEqual(try Data(contentsOf: file), f.plist)
+            }
+            XCTAssertThrowsError(try input.revalidateAfterBuild(deadlineNanoseconds: f.deadline), mutation)
+            XCTAssertThrowsError(try artifacts.revalidateAfterBuild(deadlineNanoseconds: f.deadline), mutation)
+        }
+    }
+
+    private func captureArtifacts(_ f: Fixture, scratch: PrimeValidationDriverV2BuildStaging.Directory)
+        throws -> PrimeValidationDriverV2BuildArtifacts {
+        try .capture(workspaceRoot: f.workspaceRoot, scratchRelativePath: "root-release-build",
+            testBundleRelativePath: PrimeValidationDriverV2PinnedBundleInput.testBundle,
+            metallibRelativePath: PrimeValidationDriverV2PinnedBundleInput.cliBundle + "/Contents/Resources/default.metallib",
+            expectedMetallibByteCount: PrimePinnedMLXMetallib.expectedByteCount,
+            expectedMetallibSHA256: PrimePinnedMLXMetallib.expectedSHA256,
+            artifactRoot: f.artifactRoot, deadlineNanoseconds: f.deadline, swiftPMScratchOwner: scratch)
+    }
+
     func testMissingTrackedMetallibRejects() throws {
         let f = try Fixture(); defer { f.cleanup() }
         try FileManager.default.removeItem(at: f.sourceMetallib)
@@ -171,6 +237,8 @@ final class PrimeValidationDriverV2PinnedBundleInputTests: XCTestCase {
         let primeRoot: PrimeArtifactRoot
         let workspaceRoot: PrimeArtifactRoot
         let artifactRoot: PrimeArtifactRoot
+        let scratchOwner: PrimeValidationDriverV2BuildStaging.Directory?
+        private var scratchParentDescriptor: Int32 = -1
         let sourceMetallib: URL
         let sourcePlist: URL
         let executable: URL
@@ -182,7 +250,7 @@ final class PrimeValidationDriverV2PinnedBundleInputTests: XCTestCase {
         var cli: URL { workspace.appendingPathComponent(PrimeValidationDriverV2PinnedBundleInput.cliBundle) }
         var testResource: URL { workspace.appendingPathComponent(PrimeValidationDriverV2PinnedBundleInput.testResourceBundle) }
 
-        init() throws {
+        init(ownedScratch: Bool = false) throws {
             var repo = URL(fileURLWithPath: #filePath)
             for _ in 0..<5 { repo.deleteLastPathComponent() }
             metallib = try Data(contentsOf: repo.appendingPathComponent(PrimeValidationDriverV2PinnedBundleInput.sourceMetallib))
@@ -202,6 +270,16 @@ final class PrimeValidationDriverV2PinnedBundleInputTests: XCTestCase {
             sourcePlist = prime.appendingPathComponent(PrimeValidationDriverV2PinnedBundleInput.sourceInfoPlist)
             executable = workspace.appendingPathComponent(PrimeValidationDriverV2PinnedBundleInput.testExecutable)
             let artifacts = base.appendingPathComponent("captured-artifacts")
+            if ownedScratch {
+                try FileManager.default.createDirectory(at: workspace, withIntermediateDirectories: false,
+                    attributes: [.posixPermissions: NSNumber(value: 0o700)])
+                let fd = open(workspace.path, O_RDONLY | O_DIRECTORY | O_NOFOLLOW | O_CLOEXEC)
+                guard fd >= 3 else { throw POSIXError(.EIO) }
+                scratchParentDescriptor = fd
+                scratchOwner = try PrimeValidationDriverV2BuildStaging.Directory.create(
+                    parent: fd, leaf: "root-release-build", path: workspace.path + "/root-release-build")
+            } else { scratchOwner = nil }
+
             do {
                 for directory in [sourceMetallib.deletingLastPathComponent(), executable.deletingLastPathComponent(), artifacts] {
                     try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true,
@@ -220,6 +298,9 @@ final class PrimeValidationDriverV2PinnedBundleInputTests: XCTestCase {
         func capture() throws -> PrimeValidationDriverV2PinnedBundleInput {
             try .capture(primeRoot: primeRoot, deadlineNanoseconds: deadline)
         }
-        func cleanup() { try? FileManager.default.removeItem(at: base) }
+        func cleanup() {
+            try? FileManager.default.removeItem(at: base)
+            if scratchParentDescriptor >= 3 { close(scratchParentDescriptor); scratchParentDescriptor = -1 }
+        }
     }
 }

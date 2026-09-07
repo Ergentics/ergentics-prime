@@ -97,8 +97,9 @@ final class PrimeValidationDriverV2PinnedBundleInput: @unchecked Sendable {
         deinit { _ = close(value) }
     }
 
-    /// Exact protected metadata omits only access time. The fixed parent
-    /// chains are retained, including the caller's duplicated root descriptor.
+    /// Exact payload/source metadata omits only access time. The mutable
+    /// SwiftPM scratch ancestor may instead retain its original staging owner;
+    /// every fixed parent and descriptor identity remains joined.
     private final class Node {
         let descriptor: FD
         let path: String
@@ -107,9 +108,13 @@ final class PrimeValidationDriverV2PinnedBundleInput: @unchecked Sendable {
         let metadata: Metadata
         let provenance: Data?
         let filesystem: String
+        private let swiftPMScratchOwner: PrimeValidationDriverV2BuildStaging.Directory?
 
-        init(fd: Int32, path: String, parent: Node?, leaf: String?) throws {
+        init(fd: Int32, path: String, parent: Node?, leaf: String?,
+             swiftPMScratchOwner: PrimeValidationDriverV2BuildStaging.Directory? = nil) throws {
             descriptor = FD(fd); self.path = path; self.parent = parent; self.leaf = leaf
+            self.swiftPMScratchOwner = swiftPMScratchOwner
+            guard swiftPMScratchOwner == nil || path == "root-release-build" else { throw rejected("scratch_owner_path") }
             let s = try status(fd)
             metadata = Metadata(s)
             provenance = try requireMetadata(fd, s, path: path)
@@ -122,22 +127,27 @@ final class PrimeValidationDriverV2PinnedBundleInput: @unchecked Sendable {
 
         func revalidate() throws {
             let value = try status(descriptor.value)
-            guard Metadata(value) == metadata,
+            guard try matchesMetadata(Metadata(value)),
                   try requireMetadata(descriptor.value, value, path: path) == provenance,
                   try filesystemIdentity(descriptor.value, value) == filesystem else {
                 throw rejected("held_metadata")
             }
             if let parent, let leaf {
-                guard try Metadata(status(parent.descriptor.value)) == parent.metadata else {
+                guard try parent.matchesMetadata(Metadata(status(parent.descriptor.value))) else {
                     throw rejected("parent_metadata")
                 }
                 var named = stat()
                 guard fstatat(parent.descriptor.value, leaf, &named, AT_SYMLINK_NOFOLLOW) == 0,
-                      Metadata(named) == metadata else { throw rejected("named_rejoin") }
+                      try matchesMetadata(Metadata(named)) else { throw rejected("named_rejoin") }
             }
-            guard try Metadata(status(descriptor.value)) == metadata else {
+            guard try matchesMetadata(Metadata(status(descriptor.value))) else {
                 throw rejected("final_held_metadata")
             }
+        }
+        private func matchesMetadata(_ value: Metadata) throws -> Bool {
+            guard let swiftPMScratchOwner else { return value == metadata }
+            return value == Metadata(try swiftPMScratchOwner
+                .revalidateBorrowedScratchDescriptor(descriptor.value))
         }
     }
 
@@ -149,7 +159,7 @@ final class PrimeValidationDriverV2PinnedBundleInput: @unchecked Sendable {
 
         init(rootDescriptor: Int32, specifications: [(String, UInt64, String)],
              exactDirectories: [String: [String]] = [:], immutable: Bool,
-             deadline: UInt64) throws {
+             deadline: UInt64, swiftPMScratchOwner: PrimeValidationDriverV2BuildStaging.Directory? = nil) throws {
             let root = try Node(fd: duplicate(rootDescriptor), path: "", parent: nil, leaf: nil)
             var nodes = [root]
             var index = ["": root]
@@ -167,7 +177,8 @@ final class PrimeValidationDriverV2PinnedBundleInput: @unchecked Sendable {
                     let isFile = offset == parts.count - 1
                     let fd = try opened(openat(parent.descriptor.value, leaf,
                         O_RDONLY | O_NOFOLLOW | O_CLOEXEC | O_NONBLOCK | (isFile ? 0 : O_DIRECTORY)))
-                    let node = try Node(fd: fd, path: prefix, parent: parent, leaf: leaf)
+                    let node = try Node(fd: fd, path: prefix, parent: parent, leaf: leaf,
+                        swiftPMScratchOwner: prefix == "root-release-build" ? swiftPMScratchOwner : nil)
                     guard isFile
                         ? node.metadata.mode & UInt32(S_IFMT) == UInt32(S_IFREG)
                         : node.metadata.mode & UInt32(S_IFMT) == UInt32(S_IFDIR) else {
@@ -261,7 +272,8 @@ final class PrimeValidationDriverV2PinnedBundleInput: @unchecked Sendable {
         } catch { poisoned = true; throw error }
     }
 
-    func stage(into workspaceRoot: PrimeArtifactRoot, deadlineNanoseconds: UInt64) throws
+    func stage(into workspaceRoot: PrimeArtifactRoot, deadlineNanoseconds: UInt64,
+               swiftPMScratchOwner: PrimeValidationDriverV2BuildStaging.Directory? = nil) throws
         -> PrimeValidationDriverV2PinnedBundleStagingObservation {
         lock.lock(); defer { lock.unlock() }
         guard !poisoned, !stagingAttempted else { throw Self.rejected("stage_consumed") }
@@ -284,6 +296,10 @@ final class PrimeValidationDriverV2PinnedBundleInput: @unchecked Sendable {
                 createLeaf: false, directories: &directories, identities: &identities, deadline: deadline)
             _ = try Self.directory(Self.testBundle + "/Contents/MacOS", under: workspaceFD.value,
                 createLeaf: false, directories: &directories, identities: &identities, deadline: deadline)
+            if let swiftPMScratchOwner {
+                guard let scratch = directories["root-release-build"] else { throw Self.rejected("scratch_owner_directory") }
+                _ = try swiftPMScratchOwner.revalidateBorrowedScratchDescriptor(scratch.value)
+            }
             let executableFD = FD(try Self.opened(openat(
                 directories[Self.testBundle + "/Contents/MacOS"]!.value,
                 "ErgenticsPrimePackageTests", O_RDONLY | O_NOFOLLOW | O_NONBLOCK | O_CLOEXEC)))
@@ -348,7 +364,8 @@ final class PrimeValidationDriverV2PinnedBundleInput: @unchecked Sendable {
             }
             let staged = try Tree(rootDescriptor: workspaceFD.value,
                 specifications: Self.destinationSpecifications,
-                exactDirectories: Self.resourceDirectories, immutable: true, deadline: deadline)
+                exactDirectories: Self.resourceDirectories, immutable: true, deadline: deadline,
+                swiftPMScratchOwner: swiftPMScratchOwner)
             for value in staged.observations {
                 guard let created = publishedInodes[value.relativePath],
                       created.0 == value.metadata.deviceID, created.1 == value.metadata.inode else {

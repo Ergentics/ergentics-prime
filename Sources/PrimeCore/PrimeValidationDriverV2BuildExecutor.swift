@@ -279,9 +279,11 @@ enum PrimeValidationDriverV2BuildExecutor {
         // The root validation suite consumes the retained calibration bundle.
         // Its historical bytes are authenticated and copied after SwiftPM has
         // finished; this transition does not claim a new shader compilation.
+        let scratchOwner = try staging.retainedSwiftPMScratchDirectory()
         let pinnedBundle = try state.pinnedBundleInput.stage(
             into: staging.workspaceRoot,
-            deadlineNanoseconds: state.deadline.expiresAtUptimeNanoseconds
+            deadlineNanoseconds: state.deadline.expiresAtUptimeNanoseconds,
+            swiftPMScratchOwner: scratchOwner
         )
         try owner.revalidateContinuity(staging: staging)
         let artifacts = try PrimeValidationDriverV2BuildArtifacts.capture(
@@ -293,7 +295,8 @@ enum PrimeValidationDriverV2BuildExecutor {
             expectedMetallibByteCount: state.context.requiredPinnedMetallibByteCount,
             expectedMetallibSHA256: state.context.requiredPinnedMetallibSHA256,
             artifactRoot: staging.artifactRoot,
-            deadlineNanoseconds: state.deadline.expiresAtUptimeNanoseconds
+            deadlineNanoseconds: state.deadline.expiresAtUptimeNanoseconds,
+            swiftPMScratchOwner: scratchOwner
         )
         try staging.freezeCapturedArtifactRoot(artifacts.observation)
         try owner.revalidateContinuity(staging: staging)

@@ -250,17 +250,23 @@ final class PrimeValidationDriverV2BuildArtifacts: @unchecked Sendable {
         let filesystem: Filesystem
         let provenance: Data?
         let children: [String]?
+        private let swiftPMScratchOwner: PrimeValidationDriverV2BuildStaging.Directory?
         var directory: Bool {
             metadata.mode & UInt32(S_IFMT) == UInt32(S_IFDIR)
         }
         var executable: Bool { metadata.mode & 0o100 != 0 }
 
         init(descriptor: Int32, path: String, name: String?, parent: Node?,
-             enumerate: Bool, deadline: UInt64) throws {
+             enumerate: Bool, deadline: UInt64,
+             swiftPMScratchOwner: PrimeValidationDriverV2BuildStaging.Directory? = nil) throws {
             heldDescriptor = Descriptor(descriptor)
             self.path = path
             self.name = name
             self.parent = parent
+            self.swiftPMScratchOwner = swiftPMScratchOwner
+            guard swiftPMScratchOwner == nil || path == "root-release-build" else {
+                throw PrimeValidationDriverV2BuildArtifacts.invalid("scratch_owner_path")
+            }
             let value = try Self.status(descriptor)
             metadata = Metadata(value)
             filesystem = try PrimeValidationDriverV2BuildArtifacts
@@ -280,7 +286,7 @@ final class PrimeValidationDriverV2BuildArtifacts: @unchecked Sendable {
         }
 
         func rejoin() throws {
-            guard try Metadata(Self.status(descriptor)) == metadata,
+            guard try matchesMetadata(Metadata(Self.status(descriptor))),
                   try PrimeValidationDriverV2BuildArtifacts.filesystem(
                     descriptor, Self.status(descriptor)) == filesystem,
                   try PrimeValidationDriverV2BuildArtifacts.requireMetadata(
@@ -289,23 +295,29 @@ final class PrimeValidationDriverV2BuildArtifacts: @unchecked Sendable {
                 throw PrimeValidationDriverV2BuildArtifacts.invalid("held_metadata")
             }
             if let parent, let name {
-                guard try Metadata(Self.status(parent.descriptor))
-                    == parent.metadata else {
+                guard try parent.matchesMetadata(Metadata(Self.status(parent.descriptor))) else {
                     throw PrimeValidationDriverV2BuildArtifacts.invalid("parent_metadata")
                 }
                 var named = stat()
                 guard name.withCString({
                     fstatat(parent.descriptor, $0, &named, AT_SYMLINK_NOFOLLOW)
-                }) == 0, Metadata(named) == metadata else {
+                }) == 0, try matchesMetadata(Metadata(named)) else {
                     throw PrimeValidationDriverV2BuildArtifacts.invalid("named_rejoin")
                 }
             }
-            guard try Metadata(Self.status(descriptor)) == metadata else {
+            guard try matchesMetadata(Metadata(Self.status(descriptor))) else {
                 throw PrimeValidationDriverV2BuildArtifacts.invalid("held_final_rejoin")
             }
         }
 
+        private func matchesMetadata(_ value: Metadata) throws -> Bool {
+            guard let swiftPMScratchOwner else { return value == metadata }
+            return value == Metadata(try swiftPMScratchOwner
+                .revalidateBorrowedScratchDescriptor(descriptor))
+        }
+
         private static func status(_ descriptor: Int32) throws -> stat {
+
             var value = stat()
             guard fstat(descriptor, &value) == 0 else {
                 throw PrimeValidationDriverV2BuildArtifacts.invalid("fstat")
@@ -351,7 +363,8 @@ final class PrimeValidationDriverV2BuildArtifacts: @unchecked Sendable {
         expectedMetallibByteCount: UInt64,
         expectedMetallibSHA256: String,
         artifactRoot: PrimeArtifactRoot,
-        deadlineNanoseconds: UInt64
+        deadlineNanoseconds: UInt64,
+        swiftPMScratchOwner: PrimeValidationDriverV2BuildStaging.Directory? = nil
     ) throws -> PrimeValidationDriverV2BuildArtifacts {
         let started = DispatchTime.now().uptimeNanoseconds
         let deadline = try operationDeadline(deadlineNanoseconds)
@@ -381,7 +394,7 @@ final class PrimeValidationDriverV2BuildArtifacts: @unchecked Sendable {
         var indexed: [String: Node] = ["": workspace]
         let bundle = try openPath(testBundleRelativePath, root: workspace,
             nodes: &sources, indexed: &indexed, enumerateLeaf: true,
-            deadline: deadline)
+            deadline: deadline, swiftPMScratchOwner: swiftPMScratchOwner)
         guard bundle.directory else { throw invalid("bundle_type") }
         var bundleNodes = [Node]()
         var fileCount = 0
@@ -399,7 +412,7 @@ final class PrimeValidationDriverV2BuildArtifacts: @unchecked Sendable {
               }) else { throw invalid("bundle_executable") }
         let metallib = try openPath(metallibRelativePath, root: workspace,
             nodes: &sources, indexed: &indexed, enumerateLeaf: false,
-            deadline: deadline)
+            deadline: deadline, swiftPMScratchOwner: swiftPMScratchOwner)
         guard !metallib.directory, !metallib.executable,
               metallib.metadata.byteCount == Int64(expectedMetallibByteCount),
               sources.allSatisfy({
@@ -575,7 +588,8 @@ final class PrimeValidationDriverV2BuildArtifacts: @unchecked Sendable {
 
     private static func openPath(
         _ path: String, root: Node, nodes: inout [Node],
-        indexed: inout [String: Node], enumerateLeaf: Bool, deadline: UInt64
+        indexed: inout [String: Node], enumerateLeaf: Bool, deadline: UInt64,
+        swiftPMScratchOwner: PrimeValidationDriverV2BuildStaging.Directory? = nil
     ) throws -> Node {
         let parts = try components(path)
         var parent = root
@@ -589,7 +603,8 @@ final class PrimeValidationDriverV2BuildArtifacts: @unchecked Sendable {
             let leaf = index == parts.count - 1
             let node = try openChild(parent, name: part, path: prefix,
                 requireDirectory: !leaf || enumerateLeaf,
-                enumerate: leaf && enumerateLeaf, deadline: deadline)
+                enumerate: leaf && enumerateLeaf, deadline: deadline,
+                swiftPMScratchOwner: prefix == "root-release-build" ? swiftPMScratchOwner : nil)
             nodes.append(node)
             indexed[prefix] = node
             parent = node
@@ -599,7 +614,8 @@ final class PrimeValidationDriverV2BuildArtifacts: @unchecked Sendable {
 
     private static func openChild(
         _ parent: Node, name: String, path: String, requireDirectory: Bool,
-        enumerate: Bool, deadline: UInt64
+        enumerate: Bool, deadline: UInt64,
+        swiftPMScratchOwner: PrimeValidationDriverV2BuildStaging.Directory? = nil
     ) throws -> Node {
         try check(deadline)
         try parent.rejoin()
@@ -616,7 +632,7 @@ final class PrimeValidationDriverV2BuildArtifacts: @unchecked Sendable {
                 | O_NONBLOCK | (type == mode_t(S_IFDIR) ? O_DIRECTORY : 0))
         })
         let node = try Node(descriptor: descriptor, path: path, name: name,
-            parent: parent, enumerate: enumerate, deadline: deadline)
+            parent: parent, enumerate: enumerate, deadline: deadline, swiftPMScratchOwner: swiftPMScratchOwner)
         guard node.metadata == Metadata(named) else { throw invalid("open_race") }
         try parent.rejoin()
         return node

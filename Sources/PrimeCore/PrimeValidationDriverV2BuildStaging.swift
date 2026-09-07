@@ -134,6 +134,16 @@ final class PrimeValidationDriverV2BuildStaging {
         close(evidenceDescriptor)
     }
 
+    /// Only the original staging owner can supply this mutable SwiftPM
+    /// ancestor. No pathname or decoded metadata constructs the capability.
+    func retainedSwiftPMScratchDirectory() throws -> Directory {
+        try revalidate(against: admission)
+        guard let scratch = directories["root-release-build"] else {
+            throw Self.rejected("missing_owned_scratch")
+        }
+        return scratch
+    }
+
     func revalidate(
         against candidate: PrimeValidationSwiftPMRetainedAdmissionState
     ) throws {
@@ -429,6 +439,30 @@ final class PrimeValidationDriverV2BuildStaging {
                 }
             }
         }
+        /// Return a current snapshot only after rejoining the retained owner,
+        /// its original named parent, and the borrowing descriptor. SwiftPM
+        /// owns descendant entries; directory content size/link/time changes
+        /// do not replace vnode, ownership, permissions, birth or generation.
+        func revalidateBorrowedScratchDescriptor(_ borrowed: Int32) throws -> stat {
+            guard leaf == "root-release-build" else { throw rejected("scratch_owner_leaf") }
+            try revalidate()
+            var held = stat(); var other = stat()
+            guard fstat(descriptor, &held) == 0, fstat(borrowed, &other) == 0,
+                  sameProtectedMetadata(held, other),
+                  held.st_dev == original.st_dev, held.st_ino == original.st_ino,
+                  held.st_mode == original.st_mode, held.st_mode == (mode_t(S_IFDIR) | mode_t(0o700)),
+                  held.st_uid == original.st_uid, held.st_gid == original.st_gid,
+                  held.st_rdev == original.st_rdev, held.st_flags == original.st_flags,
+                  held.st_gen == original.st_gen, held.st_blksize == original.st_blksize,
+                  held.st_birthtimespec.tv_sec == original.st_birthtimespec.tv_sec,
+                  held.st_birthtimespec.tv_nsec == original.st_birthtimespec.tv_nsec,
+                  held.st_nlink >= 2, held.st_size >= 0, held.st_blocks >= 0,
+                  fcntl(borrowed, F_GETFD) & FD_CLOEXEC != 0 else {
+                throw rejected("scratch_owner_descriptor")
+            }
+            return held
+        }
+
         func freezeMetadata() throws {
             var value = stat()
             guard fstat(descriptor, &value) == 0 else { throw rejected("directory_freeze") }
