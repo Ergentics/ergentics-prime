@@ -5,6 +5,13 @@ import Foundation
 @_spi(PrimeValidationDriverV2RoleFacade) import PrimeCore
 import PrimeValidationWorkflowContracts
 
+package enum PrimeValidationDriverV2TerminalGate:
+    String, Codable, Equatable, Sendable
+{
+    case gateE = "E"
+    case gateF = "F"
+}
+
 /// Canonical, bounded transport for the dedicated Gate A process. This outer
 /// envelope is not a new run-intent or authority schema: decoding it never
 /// restores or constructs live authority, and the process discards it at exit.
@@ -21,15 +28,45 @@ package struct PrimeValidationDriverV2SupervisorLaunchRequestV1:
     package let artifactKind: String
     package let intent: PrimeValidationRunIntentV2
     package let leaseDirectoryAbsolutePath: String
+    package let terminalGate: PrimeValidationDriverV2TerminalGate
 
     package init(
         intent: PrimeValidationRunIntentV2,
-        leaseDirectoryAbsolutePath: String
+        leaseDirectoryAbsolutePath: String,
+        terminalGate: PrimeValidationDriverV2TerminalGate = .gateE
     ) {
         schemaVersion = Self.schemaVersion
         artifactKind = Self.artifactKind
         self.intent = intent
         self.leaseDirectoryAbsolutePath = leaseDirectoryAbsolutePath
+        self.terminalGate = terminalGate
+    }
+
+    package init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        schemaVersion = try container.decode(Int.self, forKey: .schemaVersion)
+        artifactKind = try container.decode(String.self, forKey: .artifactKind)
+        intent = try container.decode(PrimeValidationRunIntentV2.self,
+                                      forKey: .intent)
+        leaseDirectoryAbsolutePath = try container.decode(
+            String.self, forKey: .leaseDirectoryAbsolutePath
+        )
+        terminalGate = try container.decodeIfPresent(
+            PrimeValidationDriverV2TerminalGate.self, forKey: .terminalGate
+        ) ?? .gateE
+    }
+
+    package func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(schemaVersion, forKey: .schemaVersion)
+        try container.encode(artifactKind, forKey: .artifactKind)
+        try container.encode(intent, forKey: .intent)
+        try container.encode(leaseDirectoryAbsolutePath,
+                             forKey: .leaseDirectoryAbsolutePath)
+        // Preserve the exact old E envelope. F must be explicit.
+        if terminalGate == .gateF {
+            try container.encode(terminalGate, forKey: .terminalGate)
+        }
     }
 
     package func validate() throws {
@@ -66,6 +103,7 @@ package struct PrimeValidationDriverV2SupervisorLaunchRequestV1:
         case intent
         case leaseDirectoryAbsolutePath =
             "lease_directory_absolute_path"
+        case terminalGate = "terminal_gate"
     }
 }
 

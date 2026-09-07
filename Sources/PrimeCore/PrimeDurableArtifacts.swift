@@ -257,6 +257,23 @@ public final class PrimeArtifactRoot: @unchecked Sendable {
         _ = close(descriptor)
     }
 
+    /// Derives a child artifact capability from an already-held, no-follow
+    /// directory. The URL is telemetry and is never opened by this initializer.
+    init(heldDirectoryDescriptor: Int32, displayURL: URL) throws {
+        let duplicate = fcntl(heldDirectoryDescriptor, F_DUPFD_CLOEXEC, 3)
+        guard duplicate >= 3 else {
+            throw Self.posix("duplicate held artifact directory", displayURL.path)
+        }
+        do {
+            try Self.requireTrustedDirectory(duplicate, path: displayURL.path)
+        } catch {
+            _ = close(duplicate)
+            throw error
+        }
+        descriptor = duplicate
+        directoryURL = displayURL
+    }
+
     /// Returns the stable identity of the held root descriptor without
     /// reopening `directoryURL` or exposing the descriptor itself.
     public func verifiedRootIdentity() throws

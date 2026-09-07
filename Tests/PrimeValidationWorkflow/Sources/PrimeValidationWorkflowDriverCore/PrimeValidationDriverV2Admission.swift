@@ -640,7 +640,7 @@ public struct PrimeValidationSwiftPackagePersonalityV2:
               symlinkInode > 0,
               symlinkOwnerUserID == 0,
               symlinkOwnerGroupID == 0,
-              symlinkMode == 0o777,
+              symlinkMode == 0o755,
               symlinkLinkCount > 0,
               resolvedExecutableAbsolutePath
                 == physicalSwiftPackage.canonicalAbsolutePath,

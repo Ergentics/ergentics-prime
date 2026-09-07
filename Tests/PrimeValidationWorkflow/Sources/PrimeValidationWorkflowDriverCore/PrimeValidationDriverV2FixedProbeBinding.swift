@@ -221,6 +221,107 @@ package struct PrimeValidationDriverV2PartialToolchainProbeBinding {
         )
     }
 
+    package func completeToolchain(
+        buildObservation observation: PrimeValidationDriverV2BuildRawObservation
+    ) throws -> PrimeValidationToolchainAdmissionReceiptV2 {
+        try validate()
+        let current = observation.toolchain
+        let packageImage = current.swiftPackageExecutable
+        guard try PrimeCanonicalJSON.encode(FileProjection(packageImage))
+                == PrimeCanonicalJSON.encode(FileProjection(unmappedSwiftPackage)),
+              try PrimeCanonicalJSON.encode(FileProjection(current.xcodeVersionPlist))
+                == PrimeCanonicalJSON.encode(FileProjection(xcodeVersionPlist)),
+              try PrimeCanonicalJSON.encode(FileProjection(current.sdkSettingsPlist))
+                == PrimeCanonicalJSON.encode(FileProjection(sdkSettingsPlist)),
+              Self.directory(current.developerDirectory, role: .developerDirectory)
+                == developerDirectory,
+              Self.directory(current.sdkRoot, role: .sdkRoot) == sdkRoot,
+              UInt64(observation.swiftPackageExecutableData.count) == packageImage.byteCount,
+              PrimeSHA256.hexDigest(of: observation.swiftPackageExecutableData)
+                == packageImage.sha256,
+              observation.swiftPackageDescriptorJoined,
+              observation.swiftPackageNamedPathJoined,
+              observation.process.mappedImageJoined,
+              observation.process.executableAbsolutePath == packageImage.canonicalAbsolutePath,
+              observation.process.executableDeviceID == packageImage.deviceID,
+              observation.process.executableInode == packageImage.inode,
+              observation.process.executableByteCount == packageImage.byteCount,
+              observation.process.executableSHA256 == packageImage.sha256
+        else { throw PrimeValidationDriverV2Error.invalidBinding("build_toolchain_continuity") }
+        let executable = PrimeValidationHeldExecutableObservationV2(
+            requestedAbsolutePath: packageImage.canonicalAbsolutePath,
+            canonicalAbsolutePath: packageImage.canonicalAbsolutePath,
+            requestedSymlinkTarget: nil,
+            content: .init(data: observation.swiftPackageExecutableData),
+            deviceID: packageImage.deviceID, inode: packageImage.inode,
+            ownerUserID: packageImage.ownerUserID, ownerGroupID: packageImage.ownerGroupID,
+            mode: packageImage.permissionMode, linkCount: packageImage.linkCount,
+            fileByteCount: packageImage.byteCount,
+            modificationTimeSeconds: packageImage.modificationSeconds,
+            modificationTimeNanoseconds: packageImage.modificationNanoseconds,
+            statusChangeTimeSeconds: packageImage.statusChangeSeconds,
+            statusChangeTimeNanoseconds: packageImage.statusChangeNanoseconds,
+            mappedExecutableAbsolutePath: observation.process.executableAbsolutePath,
+            descriptorJoined: observation.swiftPackageDescriptorJoined,
+            pathIdentityJoined: observation.swiftPackageNamedPathJoined,
+            mappedExecutableJoined: observation.process.mappedImageJoined
+        )
+        func personality(
+            _ role: PrimeValidationSwiftPackagePersonalityRoleV2,
+            path: PrimeValidationSwiftPMPersonalityObservation,
+            identity: PrimeValidationDriverV2FixedProbePersonalityIdentityObservation,
+            readlink: Bool, resolved: Bool
+        ) throws -> PrimeValidationSwiftPackagePersonalityV2 {
+            guard identity.mode == UInt32(S_IFLNK) | 0o755,
+                  identity.linkCount == 1,
+                  identity.byteCount == Int64("swift-package".utf8.count),
+                  identity.modificationSeconds >= 0,
+                  (0..<1_000_000_000).contains(identity.modificationNanoseconds),
+                  identity.statusChangeSeconds >= 0,
+                  (0..<1_000_000_000).contains(identity.statusChangeNanoseconds)
+            else { throw PrimeValidationDriverV2Error.invalidBinding("build_personality_metadata") }
+            let value = PrimeValidationSwiftPackagePersonalityV2(
+                role: role, requestedAbsolutePath: path.requestedAbsolutePath,
+                requestedSymlinkTarget: path.symbolicLinkTarget,
+                symlinkDeviceID: identity.deviceID, symlinkInode: identity.inode,
+                symlinkOwnerUserID: identity.ownerUserID,
+                symlinkOwnerGroupID: identity.ownerGroupID,
+                symlinkMode: UInt16(identity.mode & 0o7777),
+                symlinkLinkCount: identity.linkCount,
+                resolvedExecutableAbsolutePath: path.canonicalExecutableAbsolutePath,
+                argumentZero: role == .build ? "swift-build" : "swift-test",
+                noFollowMetadataObserved: identity.mode & UInt32(S_IFMT) == UInt32(S_IFLNK),
+                readlinkTargetObserved: readlink,
+                resolvedExecutableJoined: resolved
+            )
+            try value.validate(physicalSwiftPackage: executable)
+            return value
+        }
+        let personalities = try [
+            personality(.build, path: current.swiftBuildPersonality,
+                        identity: observation.swiftBuildPersonalityIdentity,
+                        readlink: observation.swiftBuildPersonalityReadlinkObserved,
+                        resolved: observation.swiftBuildPersonalityResolvedExecutableJoined),
+            personality(.test, path: current.swiftTestPersonality,
+                        identity: observation.swiftTestPersonalityIdentity,
+                        readlink: observation.swiftTestPersonalityReadlinkObserved,
+                        resolved: observation.swiftTestPersonalityResolvedExecutableJoined),
+        ]
+        let result = PrimeValidationToolchainAdmissionReceiptV2(
+            developerDirectory: developerDirectory, sdkRoot: sdkRoot,
+            swiftExecutable: swiftExecutable, swiftCompilerExecutable: swiftCompilerExecutable,
+            swiftPackageExecutable: executable, swiftPackagePersonalities: personalities,
+            xcodeVersionOutput: xcodeVersionOutput, sdkPathOutput: sdkPathOutput,
+            sdkVersionOutput: sdkVersionOutput, swiftVersionOutput: swiftVersionOutput,
+            swiftTargetInfoOutput: swiftTargetInfoOutput,
+            xcodeVersion: xcodeVersion, xcodeBuildVersion: xcodeBuildVersion,
+            sdkVersion: sdkVersion, swiftDriverVersion: swiftDriverVersion,
+            targetInfo: targetInfo, orderedProbeEnvironment: orderedProbeEnvironment
+        )
+        try result.validate()
+        return result
+    }
+
     package func validate() throws {
         try Self.validateFields(
             developerDirectory: developerDirectory,
@@ -811,8 +912,8 @@ package final class PrimeValidationDriverV2FixedProbeBinding:
               missingAuthorities == Self.exactMissingAuthorities,
               rawObservation.productionSupervisorImageEligible,
               boundLifetime.productionSupervisorImageEligible,
-              rawObservation.combinedSourceWatcherDescriptorCount == 2_232,
-              boundLifetime.combinedSourceWatcherDescriptorCount == 2_232,
+              rawObservation.combinedSourceWatcherDescriptorCount == 2_238,
+              boundLifetime.combinedSourceWatcherDescriptorCount == 2_238,
               rawObservation.supervisorProcessIdentifier > 0,
               rawObservation.supervisorSessionIdentifier
                 == rawObservation.supervisorProcessIdentifier,
@@ -844,6 +945,22 @@ package final class PrimeValidationDriverV2FixedProbeBinding:
         // owner and the deadline/continuity accept after all semantic work.
         withExtendedLifetime(consumedFacade) {}
         try boundLifetime.revalidateContinuity()
+    }
+
+    /// Continues from the same live four-authority binding exactly once.
+    /// Gate E observations remain evidence after the owner is transferred.
+    @available(macOS 26.0, *)
+    package func executeBuild() throws -> PrimeValidationDriverV2BuildBinding {
+        try revalidate()
+        let owner = try boundLifetime.consumeForBuild()
+        let raw = try owner.executeBuild()
+        return try PrimeValidationDriverV2BuildBinding(
+            raw: raw,
+            intent: intent,
+            predecessorSupervisorPID: rawObservation.supervisorProcessIdentifier,
+            predecessorRawTerminalSHA256: rawObservation.rawTerminalLeaf.sha256,
+            partialToolchain: partialToolchain
+        )
     }
 
     fileprivate static func semanticIdentity(
@@ -980,6 +1097,7 @@ package struct PrimeValidationDriverV2FixedProbeJournalReceiptExpectationV2:
     package let supervisorProcessIdentifier: Int32
     package let outerDeadlineStartedAtUptimeNanoseconds: UInt64
     package let outerDeadlineExpiresAtUptimeNanoseconds: UInt64
+    package let terminalGate: PrimeValidationDriverV2TerminalGate
 
     package init(
         intent: PrimeValidationRunIntentV2,
@@ -997,7 +1115,8 @@ package struct PrimeValidationDriverV2FixedProbeJournalReceiptExpectationV2:
             PrimeValidationDriverV2FixedProbeJournalVnodeV2,
         supervisorProcessIdentifier: Int32,
         outerDeadlineStartedAtUptimeNanoseconds: UInt64,
-        outerDeadlineExpiresAtUptimeNanoseconds: UInt64
+        outerDeadlineExpiresAtUptimeNanoseconds: UInt64,
+        terminalGate: PrimeValidationDriverV2TerminalGate = .gateE
     ) {
         self.intent = intent
         self.repositoryCommit = repositoryCommit
@@ -1014,6 +1133,7 @@ package struct PrimeValidationDriverV2FixedProbeJournalReceiptExpectationV2:
             outerDeadlineStartedAtUptimeNanoseconds
         self.outerDeadlineExpiresAtUptimeNanoseconds =
             outerDeadlineExpiresAtUptimeNanoseconds
+        self.terminalGate = terminalGate
     }
 }
 
@@ -1307,7 +1427,7 @@ private enum PrimeValidationDriverV2FixedProbeSemanticValidator {
         let deadline = raw.deadlineStartedAtUptimeNanoseconds
             .addingReportingOverflow(30_000_000_000)
         guard raw.productionSupervisorImageEligible,
-              raw.combinedSourceWatcherDescriptorCount == 2_232,
+              raw.combinedSourceWatcherDescriptorCount == 2_238,
               raw.supervisorProcessIdentifier > 0,
               raw.supervisorSessionIdentifier
                 == raw.supervisorProcessIdentifier,
@@ -3022,8 +3142,9 @@ private extension PrimeValidationDriverV2FixedProbeSemanticValidator {
         }
         let receiptIdentity = try PrimeValidationDriverV2Validation.identity(
             PrimeValidationDriverV2DurableReceiptIdentityProjectionV2(
-                schema:
-                    "prime_driver_v2_gate_e_durable_journal_receipt_v2",
+                schema: expectation.terminalGate == .gateF
+                    ? "prime_driver_v2_gate_f_predecessor_durable_journal_receipt_v1"
+                    : "prime_driver_v2_gate_e_durable_journal_receipt_v2",
                 intentIdentitySHA256:
                     try expectation.intent.identitySHA256(),
                 repositoryCommit: expectation.repositoryCommit,
@@ -3070,8 +3191,9 @@ private extension PrimeValidationDriverV2FixedProbeSemanticValidator {
                 orderedChildProcessGroupIdentifiers:
                     orderedChildProcessGroupIdentifiers,
                 rawTerminalSHA256: rawTerminalSHA256,
-                supervisorExitContract:
-                    "binding_bridge_then_final_revalidation_normal_zero_v1"
+                supervisorExitContract: expectation.terminalGate == .gateF
+                    ? "binding_bridge_then_gate_f_build_binding_final_revalidation_normal_zero_v1"
+                    : "binding_bridge_then_final_revalidation_normal_zero_v1"
             )
         )
         try PrimeValidationDriverV2Validation.requireSHA256(receiptIdentity)
@@ -3107,7 +3229,8 @@ private extension PrimeValidationDriverV2FixedProbeSemanticValidator {
             durableSwiftFrontendAbsolutePath(expectation.intent)
         let outerDeadline = expectation
             .outerDeadlineStartedAtUptimeNanoseconds
-            .addingReportingOverflow(durableOuterDeadlineNanoseconds)
+            .addingReportingOverflow(expectation.terminalGate == .gateF
+                ? 960_000_000_000 : durableOuterDeadlineNanoseconds)
         let imageVnodes = [
             expectation.supervisorExecutableVnode,
             expectation.gitExecutableVnode,
@@ -3296,7 +3419,7 @@ private extension PrimeValidationDriverV2FixedProbeSemanticValidator {
               value.deadlineExpiresAtUptimeNanoseconds
                 <= expectation.outerDeadlineExpiresAtUptimeNanoseconds,
               value.orderedRoles == roles.map(\.rawValue),
-              value.combinedSourceWatcherDescriptorCount == 2_232
+              value.combinedSourceWatcherDescriptorCount == 2_238
         else {
             throw durableJournalRejection("prestart")
         }

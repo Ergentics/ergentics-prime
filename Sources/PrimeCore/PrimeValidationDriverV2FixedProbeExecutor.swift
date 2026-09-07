@@ -117,16 +117,16 @@ public final class PrimeValidationDriverV2OuterSourceContinuity:
         "Sources/PrimeCore/" +
             "PrimeValidationDriverV2FixedProbeExecutor.swift",
     ]
-    // Clean-source topology: 615 held files + 157 held ancestor directories
+    // Clean-source topology: 621 held files + 157 held ancestor directories
     // = 772 Prime watches; 772 + 1,460 companion watches = 2,232.
-    private static let requiredPrimeAdmittedFileCount = 615
-    private static let requiredPrimeSourceIdentityRecordCount = 614
+    private static let requiredPrimeAdmittedFileCount = 621
+    private static let requiredPrimeSourceIdentityRecordCount = 620
     private static let requiredPrimeAuthorityDirectoryCount = 157
     private static let requiredCompanionFileCount = 1_306
     private static let requiredCompanionDirectoryCount = 154
     private static let requiredPrimeWatcherDescriptorCount = 772
     private static let requiredCompanionWatcherDescriptorCount = 1_460
-    private static let requiredCombinedWatcherDescriptorCount = 2_232
+    private static let requiredCombinedWatcherDescriptorCount = 2_238
 
     public let observation:
         PrimeValidationDriverV2OuterSourceContinuityObservation
@@ -429,7 +429,7 @@ public struct PrimeValidationDriverV2FixedProbePersonalityIdentityObservation:
     public let statusChangeSeconds: Int64
     public let statusChangeNanoseconds: Int64
 
-    fileprivate init(_ value: PrimeValidationSwiftPMPersonalityIdentity) {
+    init(_ value: PrimeValidationSwiftPMPersonalityIdentity) {
         deviceID = value.deviceID
         inode = value.inode
         ownerUserID = value.ownerUserID
@@ -586,6 +586,8 @@ public final class PrimeValidationDriverV2FixedProbeBoundLifetime:
         PrimeValidationSwiftPMRetainedGuardedPreExecutorState?
     private let deadline: PrimeSecureChildPhaseDeadline
     private var lastObservedUptimeNanoseconds: UInt64
+    private let context: PrimeValidationDriverV2RoleContext
+    private let buildPolicy: PrimeValidationDriverV2ClosedRolePolicy
 
     public let productionSupervisorImageEligible: Bool
 
@@ -599,11 +601,15 @@ public final class PrimeValidationDriverV2FixedProbeBoundLifetime:
         retainedState:
             PrimeValidationSwiftPMRetainedGuardedPreExecutorState,
         deadline: PrimeSecureChildPhaseDeadline,
-        lastObservedUptimeNanoseconds: UInt64
+        lastObservedUptimeNanoseconds: UInt64,
+        context: PrimeValidationDriverV2RoleContext,
+        buildPolicy: PrimeValidationDriverV2ClosedRolePolicy
     ) {
         self.retainedState = retainedState
         self.deadline = deadline
         self.lastObservedUptimeNanoseconds = lastObservedUptimeNanoseconds
+        self.context = context
+        self.buildPolicy = buildPolicy
         productionSupervisorImageEligible =
             retainedState.productionSupervisorImageEligible
     }
@@ -644,6 +650,179 @@ public final class PrimeValidationDriverV2FixedProbeBoundLifetime:
             throw error
         }
     }
+
+    /// Consumes the live Gate E owner before its original deadline. The new
+    /// deadline governs only Gate F; it never extends or revives Gate E.
+    public func consumeForBuild() throws -> PrimeValidationDriverV2BuildOwner {
+        lock.lock()
+        defer { lock.unlock() }
+        guard let retainedState else {
+            throw primeValidationDriverV2FixedProbeRejected(
+                "bound_lifetime_released"
+            )
+        }
+        // Consumption is permanent even when a final checkpoint rejects.
+        self.retainedState = nil
+        let before = DispatchTime.now().uptimeNanoseconds
+        guard retainedState.productionSupervisorImageEligible,
+              buildPolicy.role == .build,
+              buildPolicy.maximumWallNanoseconds == 900_000_000_000,
+              try deadline.authorizesNewWork(
+                  observedAtUptimeNanoseconds: before,
+                  notBeforeUptimeNanoseconds: lastObservedUptimeNanoseconds
+              )
+        else {
+            throw primeValidationDriverV2FixedProbeRejected(
+                "build_transfer_precondition"
+            )
+        }
+        try retainedState.fixedProbeRevalidateTransferredContinuity()
+        let consumedAt = DispatchTime.now().uptimeNanoseconds
+        guard try deadline.authorizesNewWork(
+            observedAtUptimeNanoseconds: consumedAt,
+            notBeforeUptimeNanoseconds: before
+        ) else {
+            throw primeValidationDriverV2FixedProbeRejected(
+                "build_transfer_deadline"
+            )
+        }
+        let buildDeadline = try PrimeSecureChildPhaseDeadline(
+            startUptimeNanoseconds: consumedAt,
+            durationNanoseconds: 900_000_000_000
+        )
+        return PrimeValidationDriverV2BuildOwner(
+            retainedState: retainedState,
+            context: context,
+            buildPolicy: buildPolicy,
+            deadline: buildDeadline
+        )
+    }
+}
+
+/// Internal inputs from the unique Gate E handoff. Only the opaque build
+/// owner can construct this value; declarations or journal bytes cannot.
+struct PrimeValidationDriverV2BuildExecutionState {
+    let retainedState: PrimeValidationSwiftPMRetainedGuardedPreExecutorState
+    let context: PrimeValidationDriverV2RoleContext
+    let buildPolicy: PrimeValidationDriverV2ClosedRolePolicy
+    let deadline: PrimeSecureChildPhaseDeadline
+
+    fileprivate init(
+        retainedState: PrimeValidationSwiftPMRetainedGuardedPreExecutorState,
+        context: PrimeValidationDriverV2RoleContext,
+        buildPolicy: PrimeValidationDriverV2ClosedRolePolicy,
+        deadline: PrimeSecureChildPhaseDeadline
+    ) {
+        self.retainedState = retainedState
+        self.context = context
+        self.buildPolicy = buildPolicy
+        self.deadline = deadline
+    }
+}
+
+/// Opaque, one-shot ownership of the next fixed build. Process and staging
+/// operations remain internal to the closed executor.
+@_spi(PrimeValidationDriverV2RoleFacade)
+public final class PrimeValidationDriverV2BuildOwner: @unchecked Sendable {
+    private let lock = NSLock()
+    private var state: PrimeValidationDriverV2BuildExecutionState?
+    private var executionStarted = false
+    private var lastObservedUptimeNanoseconds: UInt64
+
+    fileprivate init(
+        retainedState: PrimeValidationSwiftPMRetainedGuardedPreExecutorState,
+        context: PrimeValidationDriverV2RoleContext,
+        buildPolicy: PrimeValidationDriverV2ClosedRolePolicy,
+        deadline: PrimeSecureChildPhaseDeadline
+    ) {
+        state = PrimeValidationDriverV2BuildExecutionState(
+            retainedState: retainedState,
+            context: context,
+            buildPolicy: buildPolicy,
+            deadline: deadline
+        )
+        lastObservedUptimeNanoseconds = deadline.startUptimeNanoseconds
+    }
+
+    func beginExecution() throws -> PrimeValidationDriverV2BuildExecutionState {
+        lock.lock()
+        defer { lock.unlock() }
+        guard let state, !executionStarted else {
+            throw primeValidationDriverV2FixedProbeRejected(
+                "build_owner_consumed"
+            )
+        }
+        executionStarted = true
+        do {
+            let before = DispatchTime.now().uptimeNanoseconds
+            try requireTime(before, state: state, startsNewWork: true)
+            try state.retainedState.fixedProbeRevalidateTransferredContinuity()
+            let after = DispatchTime.now().uptimeNanoseconds
+            lastObservedUptimeNanoseconds = before
+            try requireTime(after, state: state, startsNewWork: true)
+            lastObservedUptimeNanoseconds = after
+            return state
+        } catch {
+            self.state = nil
+            throw error
+        }
+    }
+
+    func revalidateContinuity(
+        staging: PrimeValidationDriverV2BuildStaging
+    ) throws {
+        lock.lock()
+        defer { lock.unlock() }
+        guard let state, executionStarted else {
+            throw primeValidationDriverV2FixedProbeRejected(
+                "build_owner_unavailable"
+            )
+        }
+        do {
+            let before = DispatchTime.now().uptimeNanoseconds
+            try requireTime(before, state: state, startsNewWork: false)
+            try state.retainedState.buildRevalidateTransferredContinuity(
+                staging: staging
+            )
+            let after = DispatchTime.now().uptimeNanoseconds
+            lastObservedUptimeNanoseconds = before
+            try requireTime(after, state: state, startsNewWork: false)
+            lastObservedUptimeNanoseconds = after
+        } catch {
+            self.state = nil
+            throw error
+        }
+    }
+
+    func poison() {
+        lock.lock()
+        state = nil
+        lock.unlock()
+    }
+
+    private func requireTime(
+        _ observed: UInt64,
+        state: PrimeValidationDriverV2BuildExecutionState,
+        startsNewWork: Bool
+    ) throws {
+        let timely: Bool
+        if startsNewWork {
+            timely = try state.deadline.authorizesNewWork(
+                observedAtUptimeNanoseconds: observed,
+                notBeforeUptimeNanoseconds: lastObservedUptimeNanoseconds
+            )
+        } else {
+            timely = try state.deadline.acceptsCompletion(
+                observedAtUptimeNanoseconds: observed,
+                notBeforeUptimeNanoseconds: lastObservedUptimeNanoseconds
+            )
+        }
+        guard timely else {
+            throw primeValidationDriverV2FixedProbeRejected(
+                "build_owner_deadline"
+            )
+        }
+    }
 }
 
 @_spi(PrimeValidationDriverV2RoleFacade)
@@ -663,10 +842,14 @@ public final class PrimeValidationDriverV2FixedProbeRawCapability:
     public let observation: PrimeValidationDriverV2FixedProbeRawObservation
     private let lock = NSLock()
     private var state: State
+    private let context: PrimeValidationDriverV2RoleContext
+    private let buildPolicy: PrimeValidationDriverV2ClosedRolePolicy
 
     init(
         retainedState:
             PrimeValidationSwiftPMRetainedGuardedPreExecutorState,
+        context: PrimeValidationDriverV2RoleContext,
+        buildPolicy: PrimeValidationDriverV2ClosedRolePolicy,
         deadline: PrimeSecureChildPhaseDeadline,
         lastObservedUptimeNanoseconds: UInt64,
         observation: PrimeValidationDriverV2FixedProbeRawObservation
@@ -677,6 +860,8 @@ public final class PrimeValidationDriverV2FixedProbeRawCapability:
             lastObservedUptimeNanoseconds
         )
         self.observation = observation
+        self.context = context
+        self.buildPolicy = buildPolicy
     }
 
     deinit {
@@ -706,7 +891,9 @@ public final class PrimeValidationDriverV2FixedProbeRawCapability:
             return PrimeValidationDriverV2FixedProbeBoundLifetime(
                 retainedState: retainedState,
                 deadline: deadline,
-                lastObservedUptimeNanoseconds: now
+                lastObservedUptimeNanoseconds: now,
+                context: context,
+                buildPolicy: buildPolicy
             )
         case .transferred:
             throw PrimeValidationSwiftPMBuildInventoryAdmissionError
@@ -2142,7 +2329,7 @@ enum PrimeValidationDriverV2FixedProbeExecutor {
             )
         let orderedRoleNames = frozenPolicies.map { $0.role.rawValue }
         guard orderedRoleNames.count == 16,
-              retainedState.combinedSourceWatcherDescriptorCount == 2_232
+              retainedState.combinedSourceWatcherDescriptorCount == 2_238
         else {
             throw primeValidationDriverV2FixedProbeRejected(
                 "frozen_topology_or_role_order"
@@ -3135,7 +3322,7 @@ enum PrimeValidationDriverV2FixedProbeExecutor {
         let admission = retainedState.admission
         let expectedWatcherDescriptorCount =
             retainedState.productionSupervisorImageEligible
-            ? 2_232
+            ? 2_238
             : 45
         try retainedState.fixedProbeCheckpointNoPendingEvents()
         guard admission.lease.isHeld,

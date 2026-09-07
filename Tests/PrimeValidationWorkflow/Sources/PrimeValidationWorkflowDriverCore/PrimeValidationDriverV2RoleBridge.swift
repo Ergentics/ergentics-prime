@@ -35,7 +35,12 @@ package enum PrimeValidationDriverV2RoleBridge {
                 PrimeValidationDriverV2Validation.appending(
                     intent.requiredPinnedMetallib.relativePath,
                     to: roots.workspaceRoot.absolutePath
-                )
+                ),
+            evidenceRunID: intent.runID,
+            requiredPinnedMetallibByteCount:
+                intent.requiredPinnedMetallib.content.byteCount,
+            requiredPinnedMetallibSHA256:
+                intent.requiredPinnedMetallib.content.sha256
         )
     }
 

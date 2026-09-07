@@ -234,6 +234,95 @@ final class PrimeValidationDriverV2AdmissionTests: XCTestCase {
         let valid = try fixture.receipt()
         var launches = valid.launchPlan.launches
         let build = launches[0]
+        let buildControls = [
+            "--jobs", "2",
+            "--disable-build-manifest-caching",
+            "-Xswiftc", "-num-threads", "-Xswiftc", "2",
+        ]
+        XCTAssertEqual(
+            Array(build.physicalArguments.suffix(buildControls.count)),
+            buildControls
+        )
+        let buildPrefix = Array(
+            build.physicalArguments.dropLast(buildControls.count)
+        )
+        var changedJobs = buildControls
+        changedJobs[1] = "3"
+        var changedThreads = buildControls
+        changedThreads[changedThreads.count - 1] = "3"
+        for (name, controls) in [
+            ("missing_jobs", Array(buildControls.dropFirst(2))),
+            ("changed_jobs", changedJobs),
+            (
+                "manifest_caching_not_disabled",
+                buildControls.filter {
+                    $0 != "--disable-build-manifest-caching"
+                }
+            ),
+            ("missing_optimizer_threads", Array(buildControls.prefix(3))),
+            ("changed_optimizer_threads", changedThreads),
+            ("duplicate_jobs", buildControls + ["--jobs", "2"]),
+        ] {
+            let changed = PrimeValidationSwiftPackageAdmissionLaunchV2(
+                role: build.role,
+                logicalInvocation: build.logicalInvocation,
+                physicalExecutable: build.physicalExecutable,
+                argumentZero: build.argumentZero,
+                physicalArguments: buildPrefix + controls,
+                orderedCompleteReplacementEnvironment:
+                    build.orderedCompleteReplacementEnvironment,
+                physicalWorkingDirectoryAbsolutePath:
+                    build.physicalWorkingDirectoryAbsolutePath
+            )
+            XCTAssertThrowsError(
+                try changed.validate(
+                    intent: valid.intent,
+                    toolchain: valid.toolchain
+                ),
+                name
+            )
+        }
+        for personality in valid.toolchain.swiftPackagePersonalities {
+            XCTAssertEqual(personality.symlinkMode, 0o755)
+            XCTAssertNoThrow(
+                try personality.validate(
+                    physicalSwiftPackage:
+                        valid.toolchain.swiftPackageExecutable
+                )
+            )
+            for mode in [UInt16(0o777), 0o775, 0o700, 0o644, 0o4755] {
+                let changed = PrimeValidationSwiftPackagePersonalityV2(
+                    role: personality.role,
+                    requestedAbsolutePath: personality.requestedAbsolutePath,
+                    requestedSymlinkTarget: personality.requestedSymlinkTarget,
+                    symlinkDeviceID: personality.symlinkDeviceID,
+                    symlinkInode: personality.symlinkInode,
+                    symlinkOwnerUserID: personality.symlinkOwnerUserID,
+                    symlinkOwnerGroupID: personality.symlinkOwnerGroupID,
+                    symlinkMode: mode,
+                    symlinkLinkCount: personality.symlinkLinkCount,
+                    resolvedExecutableAbsolutePath:
+                        personality.resolvedExecutableAbsolutePath,
+                    argumentZero: personality.argumentZero,
+                    noFollowMetadataObserved:
+                        personality.noFollowMetadataObserved,
+                    readlinkTargetObserved: personality.readlinkTargetObserved,
+                    resolvedExecutableJoined:
+                        personality.resolvedExecutableJoined
+                )
+                XCTAssertThrowsError(
+                    try changed.validate(
+                        physicalSwiftPackage:
+                            valid.toolchain.swiftPackageExecutable
+                    )
+                ) { error in
+                    XCTAssertEqual(
+                        error as? PrimeValidationDriverV2Error,
+                        .invalidBinding(personality.argumentZero)
+                    )
+                }
+            }
+        }
         XCTAssertEqual(
             build.orderedCompleteReplacementEnvironment.map(\.key),
             [
@@ -1681,7 +1770,7 @@ final class PrimeValidationDriverV2AdmissionTests: XCTestCase {
                     symlinkInode: UInt64(104 + index),
                     symlinkOwnerUserID: 0,
                     symlinkOwnerGroupID: 0,
-                    symlinkMode: 0o777,
+                    symlinkMode: 0o755,
                     symlinkLinkCount: 1,
                     resolvedExecutableAbsolutePath: swiftPackagePath,
                     argumentZero:

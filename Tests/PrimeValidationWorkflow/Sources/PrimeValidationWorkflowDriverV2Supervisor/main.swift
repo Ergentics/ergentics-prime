@@ -36,6 +36,7 @@ private enum PrimeValidationDriverV2SupervisorExitStatus {
     static let supervisorImage: Int32 = 67
     static let fixedProbes: Int32 = 68
     static let finalRevalidation: Int32 = 69
+    static let fixedBuild: Int32 = 91
 }
 
 /// Gate A's transport remains one closed canonical typed intent frame. After
@@ -178,6 +179,22 @@ private struct PrimeValidationWorkflowDriverV2Supervisor {
             )
         }
 
+        if request.terminalGate == .gateF {
+            do {
+                let buildBinding = try fixedProbeBinding.executeBuild()
+                try buildBinding.revalidate()
+                withExtendedLifetime(buildBinding) {}
+            } catch {
+                reportProbeFailure(
+                    error,
+                    status: PrimeValidationDriverV2SupervisorExitStatus.fixedBuild,
+                    terminalGate: .gateF
+                )
+                Darwin._exit(PrimeValidationDriverV2SupervisorExitStatus.fixedBuild)
+            }
+            return
+        }
+
         do {
             // Revalidation requires the exact four-authority remainder before
             // its final retained-lifetime deadline and continuity accept.
@@ -195,7 +212,11 @@ private struct PrimeValidationWorkflowDriverV2Supervisor {
         }
     }
 
-    private static func reportProbeFailure(_ error: Error, status: Int32) {
+    private static func reportProbeFailure(
+        _ error: Error,
+        status: Int32,
+        terminalGate: PrimeValidationDriverV2TerminalGate = .gateE
+    ) {
         let flags = fcntl(STDERR_FILENO, F_GETFL)
         guard flags >= 0,
               fcntl(STDERR_FILENO, F_SETFL, flags | O_NONBLOCK) == 0,
@@ -204,7 +225,8 @@ private struct PrimeValidationWorkflowDriverV2Supervisor {
         let detail = String(reflecting: error).utf8.prefix(384).map { byte in
             (byte >= 0x21 && byte <= 0x7e) ? byte : UInt8(0x5f)
         }
-        let message = Array("gate_e_probe_rejected status=\(status) detail=".utf8)
+        let gate = terminalGate == .gateF ? "f" : "e"
+        let message = Array("gate_\(gate)_probe_rejected status=\(status) detail=".utf8)
             + detail + [UInt8(0x0a)]
         // Observational stderr only, after the binding unwinds its cleanup.
         // One bounded write cannot block on a pipe or replace the exit status.

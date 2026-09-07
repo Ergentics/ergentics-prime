@@ -1592,7 +1592,7 @@ final class PrimeValidationSwiftPMRetainedGuardedPreExecutorState:
     func fixedProbeRevalidateTransferredContinuity() throws {
         try fixedProbeCheckpointNoPendingEvents()
         guard admission.lease.isHeld,
-              combinedSourceWatcherDescriptorCount == 2_232
+              combinedSourceWatcherDescriptorCount == 2_238
         else {
             throw PrimeValidationSwiftPMBuildInventoryAdmissionError
                 .rejected("fixed probe transferred continuity")
@@ -1604,6 +1604,32 @@ final class PrimeValidationSwiftPMRetainedGuardedPreExecutorState:
         try admission.leaseDirectory.revalidate()
         try admission.toolchain.fixedProbeRevalidateAdmissionHeldSet()
         try currentProcessImage.revalidateIdentityOnly()
+        try fixedProbeCheckpointNoPendingEvents()
+    }
+
+    /// Gate F alone permits output-root metadata changes, and only while
+    /// the same retained staging owner proves its exact created namespace.
+    /// Source, toolchain, lease, and supervisor guards retain their original
+    /// baselines; the Gate E empty-root checkpoint above is unchanged.
+    func buildRevalidateTransferredContinuity(
+        staging: PrimeValidationDriverV2BuildStaging
+    ) throws {
+        try fixedProbeCheckpointNoPendingEvents()
+        try staging.revalidate(against: admission)
+        guard admission.lease.isHeld,
+              productionSupervisorImageEligible,
+              combinedSourceWatcherDescriptorCount == 2_238
+        else {
+            throw rejected("build transferred continuity")
+        }
+        try admission.primeRepository.revalidate()
+        try admission.companionRepository.revalidate()
+        try admission.workspaceRoot.buildRevalidateHeldRootCapability()
+        try admission.evidenceRoot.buildRevalidateHeldRootCapability()
+        try admission.leaseDirectory.revalidate()
+        try admission.toolchain.fixedProbeRevalidateAdmissionHeldSet()
+        try currentProcessImage.revalidateIdentityOnly()
+        try staging.revalidate(against: admission)
         try fixedProbeCheckpointNoPendingEvents()
     }
 
@@ -1663,6 +1689,64 @@ final class PrimeValidationSwiftPMHeldUserDirectory:
     func requirePrivateAndEmpty() throws {
         try root.requirePrivateRootMode()
         try root.requireEmpty()
+    }
+
+    /// Does not accept child writes by itself. The Gate F caller must also
+    /// validate its retained staging owner and exact expected entry ledger.
+    fileprivate func buildRevalidateHeldRootCapability() throws {
+        let descriptor = try root.duplicateTrustedRootDescriptorForInventory()
+        defer { _ = Darwin.close(descriptor) }
+        let current = try root.verifiedRootIdentity()
+        guard try primeValidationCanonicalPath(url)
+                == observation.canonicalAbsolutePath
+        else {
+            throw rejected("build_output_root_name")
+        }
+        var held = stat()
+        var named = stat()
+        guard fstat(descriptor, &held) == 0,
+              url.path.withCString({ lstat($0, &named) }) == 0,
+              current.deviceID == identity.deviceID,
+              current.inode == identity.inode,
+              current.ownerUserID == identity.ownerUserID,
+              current.ownerGroupID == identity.ownerGroupID,
+              current.actualMode == identity.actualMode,
+              current.actualMode == 0o700,
+              UInt64(bitPattern: Int64(held.st_dev)) == identity.deviceID,
+              UInt64(held.st_ino) == identity.inode,
+              held.st_mode & mode_t(S_IFMT) == mode_t(S_IFDIR),
+              held.st_uid == identity.ownerUserID,
+              held.st_gid == identity.ownerGroupID,
+              held.st_uid == geteuid(),
+              held.st_mode & mode_t(0o7777) == mode_t(0o700),
+              held.st_flags == 0,
+              named.st_dev == held.st_dev,
+              named.st_ino == held.st_ino,
+              named.st_mode == held.st_mode,
+              named.st_uid == held.st_uid,
+              named.st_gid == held.st_gid,
+              named.st_flags == held.st_flags,
+              named.st_nlink == held.st_nlink,
+              named.st_mtimespec.tv_sec == held.st_mtimespec.tv_sec,
+              named.st_mtimespec.tv_nsec == held.st_mtimespec.tv_nsec,
+              named.st_ctimespec.tv_sec == held.st_ctimespec.tv_sec,
+              named.st_ctimespec.tv_nsec == held.st_ctimespec.tv_nsec,
+              fcntl(descriptor, F_GETFD) & FD_CLOEXEC != 0
+        else {
+            throw rejected("build_output_root_identity")
+        }
+        try primeValidationRequireNoACLOrUnknownXattrs(descriptor)
+        let filesystem = try primeValidationFilesystemObservation(
+            descriptor: descriptor
+        )
+        guard filesystem.type == observation.filesystemType,
+              filesystem.type == "apfs",
+              filesystem.local,
+              filesystem.idWord0 == observation.filesystemIDWord0,
+              filesystem.idWord1 == observation.filesystemIDWord1
+        else {
+            throw rejected("build_output_root_filesystem")
+        }
     }
 
     func revalidate(

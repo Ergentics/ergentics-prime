@@ -1036,6 +1036,9 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
                     "--configuration", "release",
                     "--build-tests",
                     "--force-resolved-versions",
+                    "--jobs", "2",
+                    "--disable-build-manifest-caching",
+                    "-Xswiftc", "-num-threads", "-Xswiftc", "2",
                 ],
                 commonArguments + [
                     "--configuration", "release",
@@ -2185,7 +2188,7 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
             coreSource,
             from: "public final class PrimeValidationDriverV2RoleFacade",
             through:
-                "fileprivate struct PrimeValidationDriverV2ClosedRolePolicy"
+                "struct PrimeValidationDriverV2ClosedRolePolicy"
         )
         XCTAssertFalse(facadeSource.contains("public init("))
         XCTAssertFalse(facadeSource.contains("package init("))

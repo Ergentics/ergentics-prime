@@ -66,6 +66,9 @@ public struct PrimeValidationDriverV2RoleContext:
     public let swiftPMModuleCacheAbsolutePath: String
     public let temporaryAbsolutePath: String
     public let requiredPinnedMetallibAbsolutePath: String
+    public let evidenceRunID: String
+    public let requiredPinnedMetallibByteCount: UInt64
+    public let requiredPinnedMetallibSHA256: String
 
     public var repositoryRootAbsolutePath: String {
         repositoryRoot.absolutePath
@@ -97,7 +100,10 @@ public struct PrimeValidationDriverV2RoleContext:
         homeAbsolutePath: String,
         swiftPMModuleCacheAbsolutePath: String,
         temporaryAbsolutePath: String,
-        requiredPinnedMetallibAbsolutePath: String
+        requiredPinnedMetallibAbsolutePath: String,
+        evidenceRunID: String = "",
+        requiredPinnedMetallibByteCount: UInt64 = 0,
+        requiredPinnedMetallibSHA256: String = ""
     ) {
         self.repositoryRoot = repositoryRoot
         self.companionRoot = companionRoot
@@ -114,6 +120,9 @@ public struct PrimeValidationDriverV2RoleContext:
         self.temporaryAbsolutePath = temporaryAbsolutePath
         self.requiredPinnedMetallibAbsolutePath =
             requiredPinnedMetallibAbsolutePath
+        self.evidenceRunID = evidenceRunID
+        self.requiredPinnedMetallibByteCount = requiredPinnedMetallibByteCount
+        self.requiredPinnedMetallibSHA256 = requiredPinnedMetallibSHA256
     }
 
     fileprivate func validate(
@@ -794,6 +803,8 @@ public final class PrimeValidationDriverV2RoleFacade:
                 .execute(retainedState: retainedState)
             let capability = PrimeValidationDriverV2FixedProbeRawCapability(
                 retainedState: retainedState,
+                context: context,
+                buildPolicy: fixedPolicies[0],
                 deadline: result.deadline,
                 lastObservedUptimeNanoseconds:
                     result.lastObservedUptimeNanoseconds,
@@ -819,7 +830,7 @@ public final class PrimeValidationDriverV2RoleFacade:
     }
 }
 
-fileprivate struct PrimeValidationDriverV2ClosedRolePolicy {
+struct PrimeValidationDriverV2ClosedRolePolicy {
     static let streamMaximumByteCount: UInt64 = 16 * 1024 * 1024
     static let chunkByteCount = 64 * 1024
 
@@ -863,6 +874,9 @@ fileprivate struct PrimeValidationDriverV2ClosedRolePolicy {
                 "--configuration", "release",
                 "--build-tests",
                 "--force-resolved-versions",
+                "--jobs", "2",
+                "--disable-build-manifest-caching",
+                "-Xswiftc", "-num-threads", "-Xswiftc", "2",
             ]
             maximumWallNanoseconds = 900 * 1_000_000_000
             primaryResult = .none

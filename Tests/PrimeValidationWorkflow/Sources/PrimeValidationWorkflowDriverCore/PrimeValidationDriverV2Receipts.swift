@@ -415,6 +415,7 @@ public struct PrimeValidationProcessAuditV2:
     public let standardOutput: PrimeValidationStreamAuditV2
     public let standardError: PrimeValidationStreamAuditV2
     public let matchedTestCount: Int
+    public let supervisorSessionIdentifier: Int32?
 
     public init(
         processIdentifier: Int32,
@@ -430,7 +431,8 @@ public struct PrimeValidationProcessAuditV2:
         processGroupEmptyAfterReap: Bool,
         standardOutput: PrimeValidationStreamAuditV2,
         standardError: PrimeValidationStreamAuditV2,
-        matchedTestCount: Int
+        matchedTestCount: Int,
+        supervisorSessionIdentifier: Int32? = nil
     ) {
         self.processIdentifier = processIdentifier
         self.sessionIdentifier = sessionIdentifier
@@ -446,6 +448,7 @@ public struct PrimeValidationProcessAuditV2:
         self.standardOutput = standardOutput
         self.standardError = standardError
         self.matchedTestCount = matchedTestCount
+        self.supervisorSessionIdentifier = supervisorSessionIdentifier
     }
 
     public func validate(
@@ -456,6 +459,14 @@ public struct PrimeValidationProcessAuditV2:
         try standardError.validate(content: standardErrorContent)
         try sigtermDelivery.validate(expectedSignal: 15)
         try sigkillDelivery.validate(expectedSignal: 9)
+        if let supervisorSessionIdentifier {
+            guard supervisorSessionIdentifier > 0,
+                  supervisorSessionIdentifier != processIdentifier,
+                  supervisorSessionIdentifier == sessionIdentifier
+            else {
+                throw PrimeValidationDriverV2Error.invalidShardReceipt
+            }
+        }
         guard processIdentifier > 0,
               sessionIdentifier > 0,
               processGroupIdentifier > 0,
@@ -512,7 +523,9 @@ public struct PrimeValidationProcessAuditV2:
 
     public var completeSafetyObserved: Bool {
         deadlineDisposition == .completed
-            && sessionIdentifier == processIdentifier
+            && (supervisorSessionIdentifier.map {
+                $0 > 0 && $0 != processIdentifier && $0 == sessionIdentifier
+            } ?? (sessionIdentifier == processIdentifier))
             && processGroupIdentifier == processIdentifier
             && preReapProcessGroupMembers.contains(processIdentifier)
             && exactReturnedProcessIdentifier == processIdentifier
@@ -577,6 +590,7 @@ public struct PrimeValidationObservedChildReceiptV2:
         maximumActiveNanoseconds: UInt64
     ) throws {
         guard invocation == expectedInvocation,
+              process.supervisorSessionIdentifier == nil || invocation.role == .build,
               activeNanoseconds > 0,
               activeNanoseconds <= maximumActiveNanoseconds,
               standardOutputArtifact.name == "standard_output",
