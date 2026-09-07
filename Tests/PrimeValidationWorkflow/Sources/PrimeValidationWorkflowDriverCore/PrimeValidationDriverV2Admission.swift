@@ -769,8 +769,7 @@ public struct PrimeValidationToolchainAdmissionReceiptV2:
         let expectedSDKVersion = Data((sdkVersion + "\n").utf8)
         let expectedSwiftVersion = Data(
             (
-                "swift-driver version: \(swiftDriverVersion) "
-                    + targetInfo.compilerVersion
+                targetInfo.compilerVersion
                     + "\nTarget: \(targetInfo.triple)\n"
             ).utf8
         )

@@ -1408,6 +1408,15 @@ final class PrimeValidationDriverV2AdmissionTests: XCTestCase {
                 )
             ),
             (
+                "swift_version_combined_streams",
+                toolchain(
+                    intent: fixture.intent,
+                    swiftVersionOutputData:
+                        Data("swift-driver version: 1.148.6 ".utf8)
+                            + fixture.toolchain.swiftVersionOutput.data
+                )
+            ),
+            (
                 "swift_target_info",
                 toolchain(
                     intent: fixture.intent,
@@ -1422,7 +1431,7 @@ final class PrimeValidationDriverV2AdmissionTests: XCTestCase {
             "ordered_role", "role", "ordinal", "logical_argument_zero",
             "arguments", "ordered_environment", "working_directory",
             "executable_image", "standard_output_cap",
-            "standard_error_empty", "process_identifier",
+            "standard_error_policy", "process_identifier",
             "process_identifier_differs_from_supervisor",
             "process_identifier_unique", "spawn_flags",
             "spawn_return_code", "spawn_after_deadline_start",
@@ -1723,8 +1732,7 @@ final class PrimeValidationDriverV2AdmissionTests: XCTestCase {
                 name: "swift_version",
                 data: swiftVersionOutputData ?? Data(
                     (
-                        "swift-driver version: 1.148.6 "
-                            + target.compilerVersion
+                        target.compilerVersion
                             + "\nTarget: arm64-apple-macosx26.0\n"
                     ).utf8
                 )

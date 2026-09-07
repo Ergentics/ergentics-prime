@@ -510,8 +510,7 @@ private extension PrimeValidationDriverV2PartialToolchainProbeBinding {
             + "/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk"
         let expectedSwiftVersion = Data(
             (
-                "swift-driver version: \(swiftDriverVersion) "
-                    + targetInfo.compilerVersion
+                targetInfo.compilerVersion
                     + "\nTarget: \(targetInfo.triple)\n"
             ).utf8
         )
@@ -1180,7 +1179,7 @@ private enum PrimeValidationDriverV2FixedProbeSemanticValidator {
         var workingDirectoryMatches: Bool
         var executableImageMatches: Bool
         var standardOutputWithinCap: Bool
-        var standardErrorEmpty: Bool
+        var standardErrorMatchesPolicy: Bool
         var processIdentifierPositive: Bool
         var processIdentifierDiffersFromSupervisor: Bool
         var processIdentifierUnique: Bool
@@ -1624,6 +1623,7 @@ private extension PrimeValidationDriverV2FixedProbeSemanticValidator {
                 companionHEAD: companionHEAD
             )
             let expectedOutputCap = outputCap(role)
+            let expectedStandardError = standardError(for: role)
             let processIdentifierUnique = childProcessIdentifiers.insert(
                 value.processIdentifier
             ).inserted
@@ -1674,7 +1674,8 @@ private extension PrimeValidationDriverV2FixedProbeSemanticValidator {
                         value.executable == expectedExecutable,
                     standardOutputWithinCap:
                         value.standardOutput.count <= expectedOutputCap,
-                    standardErrorEmpty: value.standardError.isEmpty,
+                    standardErrorMatchesPolicy:
+                        value.standardError == expectedStandardError,
                     processIdentifierPositive:
                         value.processIdentifier > 0,
                     processIdentifierDiffersFromSupervisor:
@@ -1792,7 +1793,8 @@ private extension PrimeValidationDriverV2FixedProbeSemanticValidator {
                     standardErrorReachedEOF:
                         value.standardErrorReachedEOF,
                     standardErrorTotalByteCountMatches:
-                        value.standardErrorTotalByteCount == 0,
+                        value.standardErrorTotalByteCount
+                            == UInt64(expectedStandardError.count),
                     standardErrorTerminalReasonMatches:
                         value.standardErrorTerminalReason
                             == "end_of_file",
@@ -1881,7 +1883,7 @@ private extension PrimeValidationDriverV2FixedProbeSemanticValidator {
               value.workingDirectoryMatches,
               value.executableImageMatches,
               value.standardOutputWithinCap,
-              value.standardErrorEmpty,
+              value.standardErrorMatchesPolicy,
               value.processIdentifierPositive,
               value.processIdentifierDiffersFromSupervisor,
               value.processIdentifierUnique,
@@ -1957,7 +1959,7 @@ private extension PrimeValidationDriverV2FixedProbeSemanticValidator {
         workingDirectoryMatches: true,
         executableImageMatches: true,
         standardOutputWithinCap: true,
-        standardErrorEmpty: true,
+        standardErrorMatchesPolicy: true,
         processIdentifierPositive: true,
         processIdentifierDiffersFromSupervisor: true,
         processIdentifierUnique: true,
@@ -2045,7 +2047,10 @@ private extension PrimeValidationDriverV2FixedProbeSemanticValidator {
             fact: "standard_output_cap",
             keyPath: \.standardOutputWithinCap
         ),
-        .init(fact: "standard_error_empty", keyPath: \.standardErrorEmpty),
+        .init(
+            fact: "standard_error_policy",
+            keyPath: \.standardErrorMatchesPolicy
+        ),
         .init(
             fact: "process_identifier",
             keyPath: \.processIdentifierPositive
@@ -2278,6 +2283,16 @@ private extension PrimeValidationDriverV2FixedProbeSemanticValidator {
             return ["-print-target-info"]
         }
         return gitPrefix + suffix
+    }
+
+    static func standardError(
+        for role: PrimeValidationDriverV2FixedProbeRole
+    ) -> Data {
+        // The pinned Swift driver writes this version prefix to stderr,
+        // without a newline. Compiler and target details remain on stdout.
+        role == .swiftVersion
+            ? Data("swift-driver version: 1.148.6 ".utf8)
+            : Data()
     }
 
     static func outputCap(
@@ -3536,6 +3551,7 @@ private extension PrimeValidationDriverV2FixedProbeSemanticValidator {
             let ordinal = index + 1
             let start = starts[index]
             let terminal = terminals[index]
+            let expectedStandardError = standardError(for: role)
             let expectedRoot = durableRootBinding(
                 for: role,
                 intent: expectation.intent
@@ -3709,8 +3725,10 @@ private extension PrimeValidationDriverV2FixedProbeSemanticValidator {
                   terminal.standardOutputFinalizationErrorNumber == 0,
                   terminal.standardOutputCloseErrorNumber == 0,
                   terminal.standardOutputDescriptorsClosed,
-                  terminal.standardErrorByteCount == 0,
-                  terminal.standardErrorSHA256 == durableEmptySHA256,
+                  terminal.standardErrorByteCount
+                    == UInt64(expectedStandardError.count),
+                  terminal.standardErrorSHA256
+                    == PrimeSHA256.hexDigest(of: expectedStandardError),
                   terminal.standardErrorReachedEOF,
                   terminal.standardErrorTerminalReason == "end_of_file",
                   !terminal.standardErrorOverflowed,

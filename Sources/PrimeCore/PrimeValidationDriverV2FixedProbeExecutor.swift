@@ -880,6 +880,14 @@ private struct PrimeValidationDriverV2FixedProbePolicy {
     let arguments: [String]
     let standardOutputMaximumByteCount: UInt64
 
+    var expectedStandardError: Data {
+        // This pinned Swift driver reports its version on stderr, without a
+        // newline. Preserve the two raw streams and reject any other text.
+        role == .swiftVersion
+            ? Data("swift-driver version: 1.148.6 ".utf8)
+            : Data()
+    }
+
     var leafBase: String {
         String(format: "%02d-%@", ordinal, role.rawValue.replacingOccurrences(
             of: "_", with: "-"
@@ -2891,7 +2899,7 @@ enum PrimeValidationDriverV2FixedProbeExecutor {
             }
             guard cleanEOF(stdout),
                   cleanEOF(stderr),
-                  stderr.data.isEmpty,
+                  stderr.data == policy.expectedStandardError,
                   exactWait.requestedProcessIdentifier == pid,
                   exactWait.returnedProcessIdentifier == pid,
                   exactWait.waitOptions == 0,
