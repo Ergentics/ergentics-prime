@@ -19,6 +19,8 @@ public struct PrimeValidationDriverV2ExecutionPrestartV1: Codable, Equatable, Se
     public let executableAbsolutePath: String
     public let executableSHA256: String
     public let logicalArgumentZero: String
+    /// Absent in historical records; new native records bind the exact syscall argv[0].
+    public let physicalArgumentZero: String?
     public let arguments: [String]
     public let orderedEnvironment: [[String]]
     public let workingDirectoryAbsolutePath: String
@@ -50,6 +52,7 @@ enum PrimeValidationDriverV2ShardExecutor {
             executableAbsolutePath: policy.physicalExecutableAbsolutePath,
             executableSHA256: executable.observation.sha256,
             logicalArgumentZero: policy.logicalArgumentZero,
+            physicalArgumentZero: policy.physicalArgumentZero,
             arguments: policy.physicalArguments,
             orderedEnvironment: policy.completeReplacementEnvironment.map { [$0.0, $0.1] },
             workingDirectoryAbsolutePath: policy.physicalWorkingDirectoryAbsolutePath
@@ -63,7 +66,7 @@ enum PrimeValidationDriverV2ShardExecutor {
             try owner.revalidateContinuity()
             spawn = try PrimeSecureChildDarwinSubstrate.spawnDriverV2FixedProbeSuspended(
                 executableAbsolutePath: policy.physicalExecutableAbsolutePath,
-                argumentZero: policy.logicalArgumentZero,
+                argumentZero: policy.physicalArgumentZero,
                 workingDirectoryDescriptor: cwd.descriptor,
                 exactArguments: policy.physicalArguments,
                 orderedEnvironment: policy.completeReplacementEnvironment
@@ -139,6 +142,7 @@ enum PrimeValidationDriverV2ShardExecutor {
             try owner.revalidateContinuity()
             let process = PrimeValidationDriverV2BuildProcessObservation(
                 logicalArgumentZero: policy.logicalArgumentZero,
+                physicalArgumentZero: policy.physicalArgumentZero,
                 arguments: policy.physicalArguments,
                 orderedEnvironment: policy.completeReplacementEnvironment.map { [$0.0, $0.1] },
                 workingDirectoryAbsolutePath: policy.physicalWorkingDirectoryAbsolutePath,

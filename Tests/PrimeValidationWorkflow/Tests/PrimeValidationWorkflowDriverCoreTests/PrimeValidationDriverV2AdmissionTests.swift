@@ -243,6 +243,29 @@ final class PrimeValidationDriverV2AdmissionTests: XCTestCase {
         }
     }
 
+    func testPhysicalSwiftPackageArgumentZeroIsClosedAndLogicalLaunchBytesAreUnchanged() throws {
+        let fixture = try makeFixture()
+        let receipt = try fixture.receipt()
+        for launch in receipt.launchPlan.launches {
+            try launch.validate(intent: fixture.intent, toolchain: receipt.toolchain)
+            let expectedLogical = launch.role == .build ? "swift-build" : "swift-test"
+            XCTAssertEqual(launch.argumentZero, expectedLogical)
+            XCTAssertEqual(try launch.physicalArgumentZero(),
+                String(launch.physicalExecutable.absolutePath.dropLast("swift-package".count)) + expectedLogical)
+            let object = try XCTUnwrap(JSONSerialization.jsonObject(with: PrimeCanonicalJSON.encode(launch)) as? [String: Any])
+            XCTAssertEqual(object["argumentZero"] as? String, expectedLogical)
+            XCTAssertNil(object["physicalArgumentZero"])
+        }
+        let derive = PrimeValidationDriverV2SwiftPMPhysicalArguments.argumentZero
+        for badRole in ["swift", "swift-package", "swiftc", "test", "/fixture/swift-test", "../swift-test", "swift-test\u{0}"] {
+            XCTAssertThrowsError(try derive("/fixture/swift-package", badRole), badRole)
+        }
+        for badPath in ["swift-package", "/swift-package", "/fixture/swift-test", "/fixture/../swift-package",
+                        "/fixture/./swift-package", "/fixture//swift-package", "/fixture/swift-package/", "/fixture/\n/swift-package"] {
+            XCTAssertThrowsError(try derive(badPath, "swift-test"), badPath)
+        }
+    }
+
     func testPhysicalSwiftPackageTransformationAndFrozenPolicyRejectDrift()
         throws
     {

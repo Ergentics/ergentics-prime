@@ -291,6 +291,7 @@ struct PrimeValidationDriverV2RolePolicyObservation:
     let role: PrimeValidationDriverV2FixedRole
     let physicalExecutableAbsolutePath: String
     let logicalArgumentZero: String
+    let physicalArgumentZero: String
     let physicalArguments: [String]
     let completeReplacementEnvironment:
         [PrimeValidationDriverV2RoleEnvironmentEntry]
@@ -310,6 +311,7 @@ struct PrimeValidationDriverV2RolePolicyObservation:
         physicalExecutableAbsolutePath =
             policy.physicalExecutableAbsolutePath
         logicalArgumentZero = policy.logicalArgumentZero
+        physicalArgumentZero = policy.physicalArgumentZero
         physicalArguments = policy.physicalArguments
         completeReplacementEnvironment =
             policy.completeReplacementEnvironment.map {
@@ -845,6 +847,22 @@ public final class PrimeValidationDriverV2RoleFacade:
 @_spi(PrimeValidationDriverV2RoleFacade)
 public enum PrimeValidationDriverV2SwiftPMPhysicalArguments {
     public static let testabilityPrefix = ["-Xswiftc", "-enable-testing"]
+
+    /// Value-only closed lowering. Callers still join the derived sibling to
+    /// the already retained personality; this does not open or admit a path.
+    public static func argumentZero(
+        executableAbsolutePath: String, logicalArgumentZero: String
+    ) throws -> String {
+        let components = executableAbsolutePath.split(separator: "/", omittingEmptySubsequences: false)
+        guard ["swift-build", "swift-test"].contains(logicalArgumentZero),
+              components.first == "", components.last == "swift-package",
+              components.count > 2,
+              components.dropFirst().allSatisfy({ !$0.isEmpty && $0 != "." && $0 != ".." }),
+              executableAbsolutePath.utf8.allSatisfy({ $0 >= 0x20 && $0 != 0x7f }) else {
+            throw PrimeValidationSwiftPMBuildInventoryAdmissionError.rejected("driver_v2_physical_argument_zero")
+        }
+        return String(executableAbsolutePath.dropLast("swift-package".count)) + logicalArgumentZero
+    }
 }
 
 struct PrimeValidationDriverV2ClosedRolePolicy {
@@ -854,6 +872,7 @@ struct PrimeValidationDriverV2ClosedRolePolicy {
     let role: PrimeValidationDriverV2FixedRole
     let physicalExecutableAbsolutePath: String
     let logicalArgumentZero: String
+    let physicalArgumentZero: String
     let physicalArguments: [String]
     let completeReplacementEnvironment: [(String, String)]
     let physicalWorkingDirectoryAbsolutePath: String
@@ -941,11 +960,21 @@ struct PrimeValidationDriverV2ClosedRolePolicy {
             throw PrimeValidationSwiftPMBuildInventoryAdmissionError
                 .rejected("driver_v2_role_arguments")
         }
+        let personality = role == .build ? toolchain.swiftBuildPersonality : toolchain.swiftTestPersonality
+        let physicalArgumentZero = try PrimeValidationDriverV2SwiftPMPhysicalArguments.argumentZero(
+            executableAbsolutePath: toolchain.swiftPackageExecutable.canonicalAbsolutePath,
+            logicalArgumentZero: argumentZero)
+        guard personality.requestedAbsolutePath == physicalArgumentZero,
+              personality.symbolicLinkTarget == "swift-package",
+              personality.canonicalExecutableAbsolutePath == toolchain.swiftPackageExecutable.canonicalAbsolutePath else {
+            throw PrimeValidationSwiftPMBuildInventoryAdmissionError.rejected("driver_v2_physical_personality_join")
+        }
         return Self(
             role: role,
             physicalExecutableAbsolutePath:
                 toolchain.swiftPackageExecutable.canonicalAbsolutePath,
             logicalArgumentZero: argumentZero,
+            physicalArgumentZero: physicalArgumentZero,
             physicalArguments: arguments,
             completeReplacementEnvironment: environment,
             physicalWorkingDirectoryAbsolutePath:

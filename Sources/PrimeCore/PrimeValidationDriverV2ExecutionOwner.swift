@@ -36,6 +36,7 @@ public struct PrimeValidationDriverV2ExecutionPlanObservation: Codable, Equatabl
 struct PrimeValidationDriverV2ClosedExecutionPolicy {
     let physicalExecutableAbsolutePath: String
     let logicalArgumentZero = "swift-test"
+    let physicalArgumentZero: String
     let physicalArguments: [String]
     let completeReplacementEnvironment: [(String, String)]
     let physicalWorkingDirectoryAbsolutePath: String
@@ -153,6 +154,7 @@ public final class PrimeValidationDriverV2ExecutionPlanRawCapability: @unchecked
             if shard.arm == "candidate" { arguments += ["--filter", shard.filterPattern] }
             if shard.requiresXUnit { arguments += ["--xunit-output", state.context.outputAbsolutePath + "/" + shard.relativeRoot + "/result.xml"] }
             nativePolicies.append(.init(physicalExecutableAbsolutePath: policy.physicalExecutableAbsolutePath,
+                physicalArgumentZero: policy.physicalArgumentZero,
                 physicalArguments: arguments, completeReplacementEnvironment: policy.completeReplacementEnvironment,
                 physicalWorkingDirectoryAbsolutePath: policy.physicalWorkingDirectoryAbsolutePath))
             let shardObject = try HJSON.object(shard.canonicalPlanData)

@@ -12,6 +12,70 @@ import XCTest
 final class PrimeValidationDriverV2InventoryBindingTests: XCTestCase {
     private typealias Envelope = PrimeValidationDriverV2InventoryDurableBindingEnvelopeV1
 
+    func testHistoricalPhysicalArgumentZeroIsAbsentAndCannotAuthorizeNewNativeProcess() throws {
+        let old = try process()
+        XCTAssertNil(old.physicalArgumentZero)
+        XCTAssertThrowsError(try old.validatePhysicalArgumentZero())
+        let encoded = try PrimeCanonicalJSON.encode(old)
+        let object = try XCTUnwrap(JSONSerialization.jsonObject(with: encoded) as? [String: Any])
+        XCTAssertNil(object["physicalArgumentZero"])
+        XCTAssertEqual(try PrimeCanonicalJSON.encode(PrimeCanonicalJSON.decode(
+            PrimeValidationDriverV2BuildProcessObservation.self, from: encoded)), encoded)
+        // Exact old canonical prestart bytes remain valid for historical
+        // decoding/re-encoding; absence is never inferred as a new argv[0].
+        let historical = Data(#"{"arguments":[],"deadlineExpiresAtUptimeNanoseconds":2,"deadlineStartedAtUptimeNanoseconds":1,"executableAbsolutePath":"/fixture/swift-package","executableSHA256":"a","logicalArgumentZero":"swift-test","orderedEnvironment":[],"ordinal":1,"predecessorSHA256":"b","role":"list_xctest","runID":"r","schema":"s","workingDirectoryAbsolutePath":"/fixture"}"#.utf8)
+        let prestart = try PrimeCanonicalJSON.decode(PrimeValidationDriverV2InventoryPrestartV1.self, from: historical)
+        XCTAssertNil(prestart.physicalArgumentZero)
+        XCTAssertEqual(try PrimeCanonicalJSON.encode(prestart), historical)
+    }
+
+    func testNativePhysicalArgumentZeroRequiresExactClosedAliasAndBindsTerminalBytes() throws {
+        for logical in ["swift-build", "swift-test"] {
+            var fields = processFields()
+            fields["logicalArgumentZero"] = logical
+            fields["physicalArgumentZero"] = "/fixture/" + logical
+            let good = try decode(fields)
+            try good.validatePhysicalArgumentZero()
+            let canonical = try PrimeCanonicalJSON.encode(good)
+            XCTAssertEqual(try PrimeCanonicalJSON.decode(PrimeValidationDriverV2BuildProcessObservation.self,
+                from: canonical).physicalArgumentZero, "/fixture/" + logical)
+            for alternate in [logical, "/fixture/swift-package", "/wrong/" + logical,
+                              "/fixture/./" + logical, "/fixture/" + logical + "/",
+                              "/fixture/" + (logical == "swift-build" ? "swift-test" : "swift-build"), ""] {
+                var changed = fields; changed["physicalArgumentZero"] = alternate
+                let invalid = try decode(changed)
+                XCTAssertThrowsError(try invalid.validatePhysicalArgumentZero(), alternate)
+                XCTAssertNotEqual(try PrimeCanonicalJSON.encode(invalid), canonical)
+            }
+            for missing in [NSNull() as Any] {
+                var changed = fields; changed["physicalArgumentZero"] = missing
+                XCTAssertThrowsError(try decode(changed).validatePhysicalArgumentZero())
+            }
+        }
+    }
+
+    func testPhysicalArgumentZeroIsPartOfNativePrestartBinding() throws {
+        var fields: [String: Any] = ["schema": "prime_driver_v2_gate_g_inventory_prestart_v1",
+            "runID": "r", "ordinal": 1, "role": "list_xctest", "predecessorSHA256": "b",
+            "deadlineStartedAtUptimeNanoseconds": 1, "deadlineExpiresAtUptimeNanoseconds": 2,
+            "executableAbsolutePath": "/fixture/swift-package", "executableSHA256": "a",
+            "logicalArgumentZero": "swift-test", "physicalArgumentZero": "/fixture/swift-test",
+            "arguments": [], "orderedEnvironment": [], "workingDirectoryAbsolutePath": "/fixture"]
+        let value = try JSONDecoder().decode(PrimeValidationDriverV2InventoryPrestartV1.self,
+            from: JSONSerialization.data(withJSONObject: fields))
+        let bytes = try PrimeCanonicalJSON.encode(value)
+        let binding = PrimeArtifactBinding(relativePath: "01-xctest-prestart.json",
+            sha256: PrimeSHA256.hexDigest(of: bytes), byteCount: UInt64(bytes.count), purpose: .immutableData)
+        try Envelope.validateJournalBinding(binding, path: binding.relativePath,
+            type: PrimeValidationDriverV2InventoryPrestartV1.self, object: fields)
+        fields["physicalArgumentZero"] = "swift-test"
+        XCTAssertThrowsError(try Envelope.validateJournalBinding(binding, path: binding.relativePath,
+            type: PrimeValidationDriverV2InventoryPrestartV1.self, object: fields))
+        fields.removeValue(forKey: "physicalArgumentZero")
+        XCTAssertThrowsError(try Envelope.validateJournalBinding(binding, path: binding.relativePath,
+            type: PrimeValidationDriverV2InventoryPrestartV1.self, object: fields))
+    }
+
     func testInventoryJournalBindingUsesNativeTypedEncoderBytes() throws {
         let fields: [String: Any] = [
             "schema": "prime_driver_v2_gate_g_inventory_child_terminal_v1",

@@ -4242,6 +4242,7 @@ private final class PrimeValidationDriverV2GovernorBuildSnapshot {
         let executableAbsolutePath: String
         let executableSHA256: String
         let logicalArgumentZero: String
+        let physicalArgumentZero: String?
         let arguments: [String]
         let orderedEnvironment: [[String]]
         let workingDirectoryAbsolutePath: String
@@ -4485,6 +4486,7 @@ private final class PrimeValidationDriverV2GovernorBuildSnapshot {
               prestart.executableAbsolutePath == p.executableAbsolutePath,
               prestart.executableSHA256 == p.executableSHA256,
               prestart.logicalArgumentZero == p.logicalArgumentZero,
+              prestart.physicalArgumentZero == p.physicalArgumentZero,
               prestart.arguments == p.arguments,
               prestart.orderedEnvironment == p.orderedEnvironment,
               prestart.workingDirectoryAbsolutePath == p.workingDirectoryAbsolutePath,
@@ -4689,6 +4691,7 @@ private final class PrimeValidationDriverV2GovernorInventorySnapshot {
                   pre.executableAbsolutePath == p.executableAbsolutePath,
                   pre.executableSHA256 == p.executableSHA256,
                   pre.logicalArgumentZero == p.logicalArgumentZero,
+                  pre.physicalArgumentZero == p.physicalArgumentZero,
                   pre.arguments == p.arguments, pre.orderedEnvironment == p.orderedEnvironment,
                   pre.workingDirectoryAbsolutePath == p.workingDirectoryAbsolutePath,
                   start.schema == "prime_driver_v2_gate_g_inventory_start_v1",

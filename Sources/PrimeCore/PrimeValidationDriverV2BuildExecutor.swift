@@ -59,6 +59,17 @@ public struct PrimeValidationDriverV2BuildStreamObservation: Codable, Equatable,
 @_spi(PrimeValidationDriverV2RoleFacade)
 public struct PrimeValidationDriverV2BuildProcessObservation: Codable, Equatable, Sendable {
     public let logicalArgumentZero: String
+    /// Absent in historical records; new native records bind the exact syscall argv[0].
+    public let physicalArgumentZero: String?
+    /// Rejects historical absence and alternate spellings at a new native
+    /// admission boundary. Full binders separately join the executable/alias
+    /// to the retained toolchain before any successor is authorized.
+    public func validatePhysicalArgumentZero() throws {
+        guard physicalArgumentZero == (try PrimeValidationDriverV2SwiftPMPhysicalArguments.argumentZero(
+            executableAbsolutePath: executableAbsolutePath, logicalArgumentZero: logicalArgumentZero)) else {
+            throw PrimeValidationSwiftPMBuildInventoryAdmissionError.rejected("driver_v2_physical_argument_zero")
+        }
+    }
     public let arguments: [String]
     public let orderedEnvironment: [[String]]
     public let workingDirectoryAbsolutePath: String
@@ -223,6 +234,7 @@ private struct BuildPrestart: Encodable {
     let executableAbsolutePath: String
     let executableSHA256: String
     let logicalArgumentZero: String
+    let physicalArgumentZero: String?
     let arguments: [String]
     let orderedEnvironment: [[String]]
     let workingDirectoryAbsolutePath: String
@@ -260,6 +272,7 @@ enum PrimeValidationDriverV2BuildExecutor {
               policy.physicalExecutableAbsolutePath
                 == executable.observation.canonicalAbsolutePath,
               policy.logicalArgumentZero == "swift-build",
+              policy.physicalArgumentZero == state.retainedState.admission.toolchain.swiftBuildPersonality.observation.requestedAbsolutePath,
               policy.maximumWallNanoseconds == 900_000_000_000
         else { throw buildRejected("policy") }
         let process = try executeChild(
@@ -360,6 +373,7 @@ enum PrimeValidationDriverV2BuildExecutor {
             executableAbsolutePath: policy.physicalExecutableAbsolutePath,
             executableSHA256: executable.observation.sha256,
             logicalArgumentZero: policy.logicalArgumentZero,
+            physicalArgumentZero: policy.physicalArgumentZero,
             arguments: policy.physicalArguments,
             orderedEnvironment: policy.completeReplacementEnvironment.map { [$0.0, $0.1] },
             workingDirectoryAbsolutePath: policy.physicalWorkingDirectoryAbsolutePath
@@ -373,7 +387,7 @@ enum PrimeValidationDriverV2BuildExecutor {
             try owner.revalidateContinuity(staging: staging)
             spawn = try PrimeSecureChildDarwinSubstrate.spawnDriverV2FixedProbeSuspended(
                 executableAbsolutePath: policy.physicalExecutableAbsolutePath,
-                argumentZero: policy.logicalArgumentZero,
+                argumentZero: policy.physicalArgumentZero,
                 workingDirectoryDescriptor: cwd.descriptor,
                 exactArguments: policy.physicalArguments,
                 orderedEnvironment: policy.completeReplacementEnvironment
@@ -448,6 +462,7 @@ enum PrimeValidationDriverV2BuildExecutor {
             try owner.revalidateContinuity(staging: staging)
             let process = PrimeValidationDriverV2BuildProcessObservation(
                 logicalArgumentZero: policy.logicalArgumentZero,
+                physicalArgumentZero: policy.physicalArgumentZero,
                 arguments: policy.physicalArguments,
                 orderedEnvironment: policy.completeReplacementEnvironment.map { [$0.0, $0.1] },
                 workingDirectoryAbsolutePath: policy.physicalWorkingDirectoryAbsolutePath,

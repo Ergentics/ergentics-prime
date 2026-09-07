@@ -890,6 +890,14 @@ public struct PrimeValidationSwiftPackageAdmissionLaunchV2:
             physicalWorkingDirectoryAbsolutePath
     }
 
+    /// Physical argv[0] is derived separately from the unchanged logical
+    /// personality name. This computed value adds no field to old launch bytes.
+    public func physicalArgumentZero() throws -> String {
+        try PrimeValidationDriverV2SwiftPMPhysicalArguments.argumentZero(
+            executableAbsolutePath: physicalExecutable.absolutePath,
+            logicalArgumentZero: argumentZero)
+    }
+
     public func validate(
         intent: PrimeValidationRunIntentV2,
         toolchain: PrimeValidationToolchainAdmissionReceiptV2
@@ -935,6 +943,7 @@ public struct PrimeValidationSwiftPackageAdmissionLaunchV2:
               physicalExecutable.content
                 == toolchain.swiftPackageExecutable.content,
               argumentZero == personality.argumentZero,
+              try physicalArgumentZero() == personality.requestedAbsolutePath,
               physicalArguments
                 == PrimeValidationDriverV2SwiftPMPhysicalArguments.testabilityPrefix
                     + Array(logicalInvocation.arguments.dropFirst()),

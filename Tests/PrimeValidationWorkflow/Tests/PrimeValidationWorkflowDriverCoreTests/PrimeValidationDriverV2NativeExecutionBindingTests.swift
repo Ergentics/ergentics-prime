@@ -150,12 +150,20 @@ final class PrimeValidationDriverV2NativeExecutionBindingTests: XCTestCase {
             "deadlineStartedAtUptimeNanoseconds": p.deadlineStartedAtUptimeNanoseconds,
             "deadlineExpiresAtUptimeNanoseconds": p.deadlineExpiresAtUptimeNanoseconds,
             "executableAbsolutePath": p.executableAbsolutePath, "executableSHA256": p.executableSHA256,
-            "logicalArgumentZero": p.logicalArgumentZero, "arguments": p.arguments,
+            "logicalArgumentZero": p.logicalArgumentZero, "physicalArgumentZero": try XCTUnwrap(p.physicalArgumentZero), "arguments": p.arguments,
             "orderedEnvironment": p.orderedEnvironment, "workingDirectoryAbsolutePath": p.workingDirectoryAbsolutePath]
         let prestart: PrimeValidationDriverV2ExecutionPrestartV1 = try decode(fields)
         let binding = artifact("shards/fixture/prestart.json", try PrimeCanonicalJSON.encode(prestart))
         try PrimeValidationDriverV2InventoryDurableBindingEnvelopeV1.validateJournalBinding(binding,
             path: binding.relativePath, type: PrimeValidationDriverV2ExecutionPrestartV1.self, object: fields)
+        for alternate in ["swift-test", "/fixture/swift-build", ""] {
+            var changed = fields; changed["physicalArgumentZero"] = alternate
+            XCTAssertThrowsError(try PrimeValidationDriverV2InventoryDurableBindingEnvelopeV1.validateJournalBinding(binding,
+                path: binding.relativePath, type: PrimeValidationDriverV2ExecutionPrestartV1.self, object: changed))
+        }
+        var missing = fields; missing.removeValue(forKey: "physicalArgumentZero")
+        XCTAssertThrowsError(try PrimeValidationDriverV2InventoryDurableBindingEnvelopeV1.validateJournalBinding(binding,
+            path: binding.relativePath, type: PrimeValidationDriverV2ExecutionPrestartV1.self, object: missing))
         var changed = fields; changed["predecessorSHA256"] = String(repeating: "c", count: 64)
         XCTAssertThrowsError(try PrimeValidationDriverV2InventoryDurableBindingEnvelopeV1.validateJournalBinding(binding,
             path: binding.relativePath, type: PrimeValidationDriverV2ExecutionPrestartV1.self, object: changed))
@@ -199,7 +207,7 @@ final class PrimeValidationDriverV2NativeExecutionBindingTests: XCTestCase {
              "totalByteCount": 0, "capturedByteCount": 0, "outputByteCount": 0,
              "outputSHA256": PrimeSHA256.hexDigest(of: Data()), "terminalReason": "end_of_file"]
         }
-        return ["logicalArgumentZero": "swift-test", "arguments": PrimeValidationDriverV2SwiftPMPhysicalArguments.testabilityPrefix + ["--skip-build"], "orderedEnvironment": [],
+        return ["logicalArgumentZero": "swift-test", "physicalArgumentZero": "/fixture/swift-test", "arguments": PrimeValidationDriverV2SwiftPMPhysicalArguments.testabilityPrefix + ["--skip-build"], "orderedEnvironment": [],
             "workingDirectoryAbsolutePath": "/fixture/repository", "workingDirectoryDeviceID": 1, "workingDirectoryInode": 10,
             "executableAbsolutePath": "/fixture/swift-package", "executableDeviceID": 1, "executableInode": 11,
             "executableByteCount": 1, "executableSHA256": PrimeSHA256.hexDigest(of: Data([1])),

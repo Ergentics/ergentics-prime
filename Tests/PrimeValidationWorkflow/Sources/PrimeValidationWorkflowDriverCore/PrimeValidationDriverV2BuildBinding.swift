@@ -70,6 +70,10 @@ package struct PrimeValidationDriverV2BuildDurableBindingEnvelopeV1: Codable {
             physicalWorkingDirectoryAbsolutePath: p.workingDirectoryAbsolutePath
         )
         try launch.validate(intent: intent, toolchain: toolchain)
+        try p.validatePhysicalArgumentZero()
+        guard p.physicalArgumentZero == (try launch.physicalArgumentZero()) else {
+            throw PrimeValidationDriverV2Error.invalidBuildReceipt
+        }
         let flags = UInt16(POSIX_SPAWN_START_SUSPENDED)
             | UInt16(POSIX_SPAWN_CLOEXEC_DEFAULT)
             | UInt16(POSIX_SPAWN_SETPGROUP)

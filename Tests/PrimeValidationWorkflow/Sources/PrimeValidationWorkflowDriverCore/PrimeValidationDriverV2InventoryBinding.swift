@@ -95,6 +95,11 @@ package struct PrimeValidationDriverV2InventoryDurableBindingEnvelopeV1: Codable
                     .init(key: $0[0], value: $0[1])
                 }, physicalWorkingDirectoryAbsolutePath: p.workingDirectoryAbsolutePath)
             try launch.validate(intent: intent, toolchain: build.toolchain)
+            try p.validatePhysicalArgumentZero()
+            guard let physicalArgumentZero = p.physicalArgumentZero,
+                  physicalArgumentZero == (try launch.physicalArgumentZero()) else {
+                throw PrimeValidationDriverV2Error.invalidInventoryReceipt
+            }
             let prefix = index == 0 ? "01-xctest" : "02-swift-testing"
             let streamPrefix = index == 0 ? "xctest-list" : "swift-testing-list"
             try validateStreamBinding(child.standardOutputBinding,
@@ -108,7 +113,7 @@ package struct PrimeValidationDriverV2InventoryDurableBindingEnvelopeV1: Codable
                 "deadlineStartedAtUptimeNanoseconds": p.deadlineStartedAtUptimeNanoseconds,
                 "deadlineExpiresAtUptimeNanoseconds": p.deadlineExpiresAtUptimeNanoseconds,
                 "executableAbsolutePath": p.executableAbsolutePath, "executableSHA256": p.executableSHA256,
-                "logicalArgumentZero": p.logicalArgumentZero, "arguments": p.arguments,
+                "logicalArgumentZero": p.logicalArgumentZero, "physicalArgumentZero": physicalArgumentZero, "arguments": p.arguments,
                 "orderedEnvironment": p.orderedEnvironment,
                 "workingDirectoryAbsolutePath": p.workingDirectoryAbsolutePath,
             ])

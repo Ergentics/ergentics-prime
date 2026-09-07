@@ -278,7 +278,10 @@ package enum PrimeValidationDriverV2NativeExecutionValidation {
         let physical = build.toolchain.swiftPackageExecutable
         let expectedLaunch = try PrimeValidationSwiftPackageAdmissionLaunchPlanV2.make(
             intent: intent, toolchain: build.toolchain).launches[1]
-        guard raw.executionPlanSHA256 == planHash, invocation.role == .shard,
+        try p.validatePhysicalArgumentZero()
+        guard let physicalArgumentZero = p.physicalArgumentZero,
+              physicalArgumentZero == (try expectedLaunch.physicalArgumentZero()),
+              raw.executionPlanSHA256 == planHash, invocation.role == .shard,
               invocation.arguments.first == "test", p.logicalArgumentZero == "swift-test",
               p.arguments == PrimeValidationDriverV2SwiftPMPhysicalArguments.testabilityPrefix + Array(invocation.arguments.dropFirst()),
               p.orderedEnvironment == expectedLaunch.orderedCompleteReplacementEnvironment.map({ [$0.key, $0.value] }),
@@ -328,7 +331,7 @@ package enum PrimeValidationDriverV2NativeExecutionValidation {
             "deadlineStartedAtUptimeNanoseconds": p.deadlineStartedAtUptimeNanoseconds,
             "deadlineExpiresAtUptimeNanoseconds": p.deadlineExpiresAtUptimeNanoseconds,
             "executableAbsolutePath": p.executableAbsolutePath, "executableSHA256": p.executableSHA256,
-            "logicalArgumentZero": p.logicalArgumentZero, "arguments": p.arguments,
+            "logicalArgumentZero": p.logicalArgumentZero, "physicalArgumentZero": physicalArgumentZero, "arguments": p.arguments,
             "orderedEnvironment": p.orderedEnvironment, "workingDirectoryAbsolutePath": p.workingDirectoryAbsolutePath]
         try PrimeValidationDriverV2InventoryDurableBindingEnvelopeV1.validateJournalBinding(
             raw.prestartBinding, path: root + "/prestart.json",
