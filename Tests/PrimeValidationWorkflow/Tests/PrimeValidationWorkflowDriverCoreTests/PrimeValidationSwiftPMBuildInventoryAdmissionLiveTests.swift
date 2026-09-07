@@ -13,6 +13,56 @@ import XCTest
 final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
     XCTestCase
 {
+    func testBuildAndInventoryOuterJournalsUseExplicitGateAndRetainExactLeaves() throws {
+        guard #available(macOS 26.0, *) else { throw XCTSkip("native admission requires macOS 26") }
+        for (gate, journalName) in [
+            (PrimeValidationDriverV2TerminalGate.gateF, "gate-f-shot-governor-journal"),
+            (.gateG, "gate-g-shot-governor-journal"),
+        ] {
+            let fixture = try Fixture()
+            defer { fixture.cleanup() }
+            let guarded = try preparedGuard(for: fixture)
+            let transfer = try roleTransferInputs(fixture: fixture, guarded: guarded)
+            let working = try fixture.makeDirectory("outer-explicit-gate-working")
+            let baseFD = Darwin.open(fixture.base.path,
+                O_RDONLY | O_DIRECTORY | O_NOFOLLOW_ANY | O_CLOEXEC)
+            guard baseFD >= 3 else { throw FixtureError.invalid("gate_journal_base_open") }
+            defer { _ = Darwin.close(baseFD) }
+            let workingFD = Darwin.open(working.path,
+                O_RDONLY | O_DIRECTORY | O_NOFOLLOW_ANY | O_CLOEXEC)
+            guard workingFD >= 3 else { throw FixtureError.invalid("gate_journal_working_open") }
+            defer { _ = Darwin.close(workingFD) }
+            let facade = try PrimeValidationDriverV2OuterJournalMechanicsFacade(
+                heldBaseDirectoryDescriptor: baseFD,
+                heldWorkingDirectoryDescriptor: workingFD,
+                intent: transfer.intent,
+                terminalGate: gate)
+            let observed = try facade.consume()
+            let journal = fixture.base.appendingPathComponent(journalName)
+            XCTAssertEqual(try FileManager.default.contentsOfDirectory(atPath: journal.path).sorted(),
+                observed.orderedLeaves.map(\.leaf).sorted())
+            let requestData = try Data(contentsOf: journal.appendingPathComponent("01-supervisor-request.json"))
+            let request = try PrimeCanonicalJSON.decode(PrimeValidationDriverV2SupervisorLaunchRequestV1.self,
+                from: requestData, artifact: "explicit_gate_journal_test")
+            XCTAssertEqual(request.terminalGate, gate)
+            for leaf in observed.orderedLeaves {
+                let path = journal.appendingPathComponent(leaf.leaf).path
+                let data = try Data(contentsOf: URL(fileURLWithPath: path))
+                var metadata = stat()
+                XCTAssertEqual(lstat(path, &metadata), 0)
+                XCTAssertEqual(UInt64(metadata.st_ino), leaf.inode)
+                XCTAssertEqual(metadata.st_mode & 0o7777, 0o400)
+                XCTAssertEqual(UInt64(data.count), leaf.byteCount)
+                XCTAssertEqual(PrimeSHA256.hexDigest(of: data), leaf.sha256)
+            }
+            XCTAssertEqual(observed.spawnedProcessCount, 0)
+            XCTAssertFalse(observed.productionStatusEligible)
+            try facade.revalidateRetainedTerminal()
+            XCTAssertThrowsError(try facade.consume())
+            try facade.revalidateRetainedTerminal()
+        }
+    }
+
     func testPublicReleaseAdmissionUsesEmbeddedSourceAuthority()
         throws
     {

@@ -1440,6 +1440,7 @@ private final class PrimeValidationDriverV2GovernorJournal {
     ) throws {
         guard rootLeaf == Self.rootLeaf
                 || rootLeaf == "gate-f-shot-governor-journal"
+                || rootLeaf == "gate-g-shot-governor-journal"
         else {
             throw governorRejected(
                 PrimeValidationDriverV2ShotGovernorStatus.admission,
@@ -6071,6 +6072,7 @@ package final class PrimeValidationDriverV2OuterJournalMechanicsFacade:
         heldBaseDirectoryDescriptor: Int32,
         heldWorkingDirectoryDescriptor: Int32,
         intent: PrimeValidationRunIntentV2,
+        terminalGate: PrimeValidationDriverV2TerminalGate = .gateE,
         mutation: PrimeValidationDriverV2OuterJournalMechanicsMutation
             = .canonical
     ) throws {
@@ -6089,21 +6091,30 @@ package final class PrimeValidationDriverV2OuterJournalMechanicsFacade:
         )
         let swiftDirectory = (intent.swiftExecutable.absolutePath as NSString)
             .deletingLastPathComponent
+        let runsBuild = terminalGate != .gateE
+        let runsInventory = terminalGate == .gateG
+        let journalLeaf = runsInventory ? "gate-g-shot-governor-journal"
+            : runsBuild ? "gate-f-shot-governor-journal"
+            : PrimeValidationDriverV2GovernorJournal.rootLeaf
         let capsule = PrimeValidationDriverV2ShotCapsuleV1(
             schemaVersion: PrimeValidationDriverV2ShotCapsuleV1.schemaVersion,
-            artifactKind: PrimeValidationDriverV2ShotCapsuleV1.artifactKind,
+            artifactKind: runsInventory
+                ? PrimeValidationDriverV2ShotCapsuleV1.inventoryArtifactKind
+                : runsBuild ? PrimeValidationDriverV2ShotCapsuleV1.buildArtifactKind
+                : PrimeValidationDriverV2ShotCapsuleV1.artifactKind,
             attempt: 1,
             rerunAuthorized: false,
             localOnly: true,
-            networkOperationCount: 0,
-            dependencyFetchCount: 0,
-            githubOperationCount: 0,
+            networkOperationCount: runsBuild ? nil : 0,
+            dependencyFetchCount: runsBuild ? nil : 0,
+            githubOperationCount: runsBuild ? nil : 0,
+            dependencyResolutionPolicy: runsBuild ? "locked_package_resolved" : nil,
             fixtureExecutionCount: 0,
-            swiftPMBuildExecutionCount: 0,
-            artifactStagingExecutionCount: 0,
-            inventoryExecutionCount: 0,
-            gateFAuthorized: false,
-            gateGAuthorized: false,
+            swiftPMBuildExecutionCount: runsBuild ? 1 : 0,
+            artifactStagingExecutionCount: runsBuild ? 1 : 0,
+            inventoryExecutionCount: runsInventory ? 2 : 0,
+            gateFAuthorized: runsBuild,
+            gateGAuthorized: runsInventory,
             controlCommit: String(repeating: "1", count: 40),
             controlTree: String(repeating: "2", count: 40),
             sourceCommit: String(repeating: "3", count: 40),
@@ -6132,7 +6143,7 @@ package final class PrimeValidationDriverV2OuterJournalMechanicsFacade:
             privateWorkingDirectory: working.binding,
             leaseDirectoryAbsolutePath: base.absolutePath + "/lease",
             forbiddenAbsentAbsolutePaths: [
-                base.absolutePath + "/gate-e-shot-governor-journal",
+                base.absolutePath + "/" + journalLeaf,
                 base.absolutePath + "/outer-supervisor-stderr.bin",
                 base.absolutePath + "/outer-supervisor-stdout.bin",
             ].sorted(),
@@ -6236,7 +6247,8 @@ package final class PrimeValidationDriverV2OuterJournalMechanicsFacade:
             .decodeCanonicalCapsule(exactBytes: exactCapsuleBytes)
         let request = PrimeValidationDriverV2SupervisorLaunchRequestV1(
             intent: capsule.intent,
-            leaseDirectoryAbsolutePath: capsule.leaseDirectoryAbsolutePath
+            leaseDirectoryAbsolutePath: capsule.leaseDirectoryAbsolutePath,
+            terminalGate: capsule.terminalGate
         )
         try request.validate()
         let requestBytes = try PrimeCanonicalJSON.encode(request)
@@ -6263,7 +6275,8 @@ package final class PrimeValidationDriverV2OuterJournalMechanicsFacade:
             )
         let journal = try PrimeValidationDriverV2GovernorJournal(
             base: base,
-            filesystem: filesystem
+            filesystem: filesystem,
+            rootLeaf: capsule.outerJournalLeaf
         )
         let capsuleLeaf = try journal.publishExact(
             exactCapsuleBytes,
