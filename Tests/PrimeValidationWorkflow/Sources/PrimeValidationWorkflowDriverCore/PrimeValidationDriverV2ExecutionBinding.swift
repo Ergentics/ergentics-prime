@@ -37,6 +37,7 @@ package struct PrimeValidationDriverV2ParsedRawResults {
     package static func parse(
         lane: PrimeValidationExecutionLane,
         expectedIDs: [PrimeValidationTestID],
+        selectionMode: PrimeValidationShardSelectionModeV2 = .allInventory,
         raw: PrimeValidationDriverV2BoundRawArtifact
     ) throws -> Self {
         let framework: PrimeValidationFramework = lane == .swiftTesting ? .swiftTesting : .xctest
@@ -63,7 +64,8 @@ package struct PrimeValidationDriverV2ParsedRawResults {
                 try PrimeValidationTestID.parse($0, framework: .xctest)
             })
         case .sequentialXCTest:
-            let parsed = try PrimeValidationSequentialXCTestObservation.parse(raw.data)
+            let parsed = try PrimeValidationSequentialXCTestObservation.parse(raw.data,
+                expectedTopLevelSuite: selectionMode == .allInventory ? .allTests : .selectedTests)
             try parsed.validate()
             observed = parsed.observedRawIDs; content = parsed.contentBinding
             for id in parsed.failedRawIDs { terminals[id] = .failed }
@@ -197,7 +199,8 @@ package final class PrimeValidationDriverV2ExecutionBinding {
             standardOutputContent: standardOutput.binding.content,
             standardErrorContent: standardError.binding.content)
         let parsed = try PrimeValidationDriverV2ParsedRawResults.parse(
-            lane: start.shard.key.lane, expectedIDs: start.shard.testIDs, raw: result)
+            lane: start.shard.key.lane, expectedIDs: start.shard.testIDs,
+            selectionMode: start.shard.selectionMode, raw: result)
         let receipt = PrimeValidationShardReceiptV2(
             runID: plan.runID, executionPlanSHA256: planSHA256,
             shardStartSHA256: try start.identitySHA256(
@@ -316,7 +319,7 @@ package final class PrimeValidationDriverV2ExecutionBinding {
         _ = try validateStart(value.evidence.start)
         let reparsed = try PrimeValidationDriverV2ParsedRawResults.parse(
             lane: value.evidence.key.lane, expectedIDs: value.evidence.start.shard.testIDs,
-            raw: value.parsed.raw)
+            selectionMode: value.evidence.start.shard.selectionMode, raw: value.parsed.raw)
         guard reparsed.results == value.evidence.receipt.semanticResults,
               reparsed.explicitParallelSkips == value.parsed.explicitParallelSkips,
               value.parsed.raw.binding == value.evidence.receipt.resultArtifact,

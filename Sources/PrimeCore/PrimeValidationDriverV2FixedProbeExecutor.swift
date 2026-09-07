@@ -94,7 +94,7 @@ public struct PrimeValidationDriverV2OuterSourceContinuityObservation:
 /// readback, and the governor. Values describe this exact source closure.
 @_spi(PrimeValidationDriverV2RoleFacade)
 public enum PrimeValidationDriverV2SealedSourceTopology {
-    public static let primeAdmittedFileCount = 657
+    public static let primeAdmittedFileCount = 661
     public static let sourceIdentityRecordCount = primeAdmittedFileCount - 1
     public static let primeAuthorityDirectoryCount = 170
     public static let combinedWatcherDescriptorCount =

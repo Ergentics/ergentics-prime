@@ -289,7 +289,7 @@ final class PrimeValidationDriverV2PublicationBindingTests: XCTestCase {
         let shard = f.plan.shards[index], invocation = f.plan.shardInvocations[index]
         let ids = shard.testIDs.map(\.rawValue)
         let data = shard.key.lane == .sequentialXCTest
-            ? transcript(ids, failing: failing, skipping: skipping, reason: reason)
+            ? transcript(ids, failing: failing, skipping: skipping, reason: reason, selected: shard.selectionMode == .exactFilter)
             : xml(ids, failures: failing.map { Set([$0]) } ?? [], skips: skipping.map { [$0: reason] } ?? [:])
         let stdout = shard.key.lane == .sequentialXCTest ? data : Data("bounded transcript\n".utf8)
         let child = observed(invocation, stdout: stdout, result: data,
@@ -396,8 +396,9 @@ final class PrimeValidationDriverV2PublicationBindingTests: XCTestCase {
         }.joined()
         return Data("<testsuites><testsuite name=\"TestResults\" tests=\"\(ids.count)\" failures=\"\(failures.count)\" errors=\"0\" skipped=\"\(skips.count)\" time=\"0.001\">\(rows)</testsuite></testsuites>".utf8)
     }
-    private func transcript(_ ids: [String], failing: String? = nil, skipping: String? = nil, reason: String = "") -> Data {
-        var lines = ["Test Suite 'All tests' started at 2026-09-07 00:00:00.000"]
+    private func transcript(_ ids: [String], failing: String? = nil, skipping: String? = nil, reason: String = "", selected: Bool = false) -> Data {
+        let suite = selected ? "Selected tests" : "All tests"
+        var lines = ["Test Suite '\(suite)' started at 2026-09-07 00:00:00.000"]
         for id in ids {
             let parts = id.split(separator: "/", maxSplits: 1)
             let prefix = "Test Case '-[\(parts[0]) \(parts[1])]'"
@@ -405,7 +406,7 @@ final class PrimeValidationDriverV2PublicationBindingTests: XCTestCase {
             if id == skipping { lines.append("/fixture/Test.swift:1: -[\(parts[0]) \(parts[1])] : Test skipped - " + reason) }
             lines.append(prefix + " \(id == failing ? "failed" : id == skipping ? "skipped" : "passed") (0.001 seconds).")
         }
-        lines.append("Test Suite 'All tests' \(failing == nil ? "passed" : "failed") at 2026-09-07 00:00:01.000")
+        lines.append("Test Suite '\(suite)' \(failing == nil ? "passed" : "failed") at 2026-09-07 00:00:01.000")
         lines.append("Executed \(ids.count) tests, with \(skipping == nil ? 0 : 1) tests skipped and \(failing == nil ? 0 : 1) failures (0 unexpected) in 0.001 (0.001) seconds")
         return Data((lines.joined(separator: "\n") + "\n").utf8)
     }

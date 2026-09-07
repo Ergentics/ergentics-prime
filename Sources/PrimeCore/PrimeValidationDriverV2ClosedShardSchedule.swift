@@ -5,6 +5,85 @@
 import Foundation
 import CoreFoundation
 
+/// Closed inventory pairs. The six baseline fields, not this descriptive name,
+/// are their serialized identity. Values cannot be assembled by SPI callers.
+@_spi(PrimeValidationDriverV2RoleFacade)
+public struct PrimeValidationDriverV2InventoryProfile: Equatable, Sendable {
+    public let identifier: String
+    public let expectedXCTestCount: Int
+    public let expectedSwiftTestingCount: Int
+    public let expectedXCTestListByteCount: UInt64
+    public let expectedXCTestListSHA256: String
+    public let expectedSwiftTestingListByteCount: UInt64
+    public let expectedSwiftTestingListSHA256: String
+
+    private init(identifier: String, expectedXCTestCount: Int,
+        expectedSwiftTestingCount: Int, expectedXCTestListByteCount: UInt64,
+        expectedXCTestListSHA256: String, expectedSwiftTestingListByteCount: UInt64,
+        expectedSwiftTestingListSHA256: String) {
+        self.identifier = identifier
+        self.expectedXCTestCount = expectedXCTestCount
+        self.expectedSwiftTestingCount = expectedSwiftTestingCount
+        self.expectedXCTestListByteCount = expectedXCTestListByteCount
+        self.expectedXCTestListSHA256 = expectedXCTestListSHA256
+        self.expectedSwiftTestingListByteCount = expectedSwiftTestingListByteCount
+        self.expectedSwiftTestingListSHA256 = expectedSwiftTestingListSHA256
+    }
+
+    public static let historical904 = Self(identifier: "historical_904_v1",
+        expectedXCTestCount: 892, expectedSwiftTestingCount: 12,
+        expectedXCTestListByteCount: 114_186,
+        expectedXCTestListSHA256: "93ccc091a0343ac4fed35b208447d7460eae27668ddec3e931f54b9a7769212b",
+        expectedSwiftTestingListByteCount: 1_287,
+        expectedSwiftTestingListSHA256: "487c601e9693d6a0fbc31d1b683ffd342ba0d10007c780f315af1113d825e8a3")
+
+    // Both lists were captured together by native G on 3c952463 and replayed
+    // by the independent Swift parser. Selection still requires the exact
+    // retained intent; see the separate current-source-inventory-v1 reseal.
+    public static let currentSourceInventoryV1 = Self(identifier: "current_source_inventory_v1",
+        expectedXCTestCount: 1_068, expectedSwiftTestingCount: 12,
+        expectedXCTestListByteCount: 139_244,
+        expectedXCTestListSHA256: "7428f3e1ebc8e76eb312c54feac209d0c70d8d741e1eb38cbab8b1d5b815ece2",
+        expectedSwiftTestingListByteCount: 1_287,
+        expectedSwiftTestingListSHA256: "487c601e9693d6a0fbc31d1b683ffd342ba0d10007c780f315af1113d825e8a3")
+
+    private static let profiles: [Self] = [.historical904, .currentSourceInventoryV1]
+
+    public static func resolve(expectedXCTestCount: Int, expectedSwiftTestingCount: Int,
+        expectedXCTestListByteCount: UInt64, expectedXCTestListSHA256: String,
+        expectedSwiftTestingListByteCount: UInt64,
+        expectedSwiftTestingListSHA256: String) -> Self? {
+        profiles.first {
+            $0.expectedXCTestCount == expectedXCTestCount
+                && $0.expectedSwiftTestingCount == expectedSwiftTestingCount
+                && $0.expectedXCTestListByteCount == expectedXCTestListByteCount
+                && $0.expectedXCTestListSHA256 == expectedXCTestListSHA256
+                && $0.expectedSwiftTestingListByteCount == expectedSwiftTestingListByteCount
+                && $0.expectedSwiftTestingListSHA256 == expectedSwiftTestingListSHA256
+        }
+    }
+
+    /// The native owner resolves only the exact object retained in its intent.
+    /// Canonical equality rejects extra keys and numeric coercion/truncation.
+    static func resolve(canonicalBaselineData: Data) throws -> Self? {
+        for profile in profiles {
+            if try HJSON.encode(profile.baselineObject) == canonicalBaselineData {
+                return profile
+            }
+        }
+        return nil
+    }
+
+    private var baselineObject: [String: Any] {
+        ["expectedXCTestCount": expectedXCTestCount,
+         "expectedSwiftTestingCount": expectedSwiftTestingCount,
+         "expectedXCTestListByteCount": expectedXCTestListByteCount,
+         "expectedXCTestListSHA256": expectedXCTestListSHA256,
+         "expectedSwiftTestingListByteCount": expectedSwiftTestingListByteCount,
+         "expectedSwiftTestingListSHA256": expectedSwiftTestingListSHA256]
+    }
+}
+
 @_spi(PrimeValidationDriverV2RoleFacade)
 public struct PrimeValidationDriverV2ClosedShardObservation: Codable, Equatable, Sendable {
     public let ordinal: Int
@@ -31,25 +110,24 @@ public struct PrimeValidationDriverV2ClosedScheduleObservation: Codable, Equatab
 /// lower-layer mirror preserves the original Planner's hashes and JSON schema.
 @_spi(PrimeValidationDriverV2RoleFacade)
 public enum PrimeValidationDriverV2ClosedShardSchedule {
-    static let xCount = 892, swiftCount = 12
-    static let xBytes = 114_186, swiftBytes = 1_287
-    static let xSHA = "93ccc091a0343ac4fed35b208447d7460eae27668ddec3e931f54b9a7769212b"
-    static let swiftSHA = "487c601e9693d6a0fbc31d1b683ffd342ba0d10007c780f315af1113d825e8a3"
     static let slowSuite = "PrimeCoreTests.PrimeNativeNeuralGateHistoricalWorkerExportedEvidenceProjectionDecodeCompositionDesignContractTests"
 
     public static func observeFrozenLists(runID: String, xctestData: Data,
-        swiftTestingData: Data) throws -> PrimeValidationDriverV2ClosedScheduleObservation {
+        swiftTestingData: Data, profile: PrimeValidationDriverV2InventoryProfile = .historical904)
+        throws -> PrimeValidationDriverV2ClosedScheduleObservation {
         guard !runID.isEmpty, runID.utf8.count <= 128,
               runID.utf8.allSatisfy({ (48...57).contains($0) || (65...90).contains($0)
                   || (97...122).contains($0) || $0 == 45 || $0 == 95 }),
-              xctestData.count == xBytes, swiftTestingData.count == swiftBytes,
-              PrimeSHA256.hexDigest(of: xctestData) == xSHA,
-              PrimeSHA256.hexDigest(of: swiftTestingData) == swiftSHA else {
+              UInt64(xctestData.count) == profile.expectedXCTestListByteCount,
+              UInt64(swiftTestingData.count) == profile.expectedSwiftTestingListByteCount,
+              PrimeSHA256.hexDigest(of: xctestData) == profile.expectedXCTestListSHA256,
+              PrimeSHA256.hexDigest(of: swiftTestingData) == profile.expectedSwiftTestingListSHA256 else {
             throw hRejected("frozen_inventory_bytes")
         }
         let x = try identifiers(xctestData, swift: false)
         let s = try identifiers(swiftTestingData, swift: true)
-        guard x.count == xCount, s.count == swiftCount, Set(x).isDisjoint(with: s) else {
+        guard x.count == profile.expectedXCTestCount,
+              s.count == profile.expectedSwiftTestingCount, Set(x).isDisjoint(with: s) else {
             throw hRejected("frozen_inventory_identifiers")
         }
         let xp = try partitions(x, swift: false), sp = try partitions(s, swift: true)
@@ -80,8 +158,10 @@ public enum PrimeValidationDriverV2ClosedShardSchedule {
             }
         }
         let inventory: [String: Any] = [
-            "xctestListBinding": ["byteCount": xBytes, "sha256": xSHA],
-            "swiftTestingListBinding": ["byteCount": swiftBytes, "sha256": swiftSHA],
+            "xctestListBinding": ["byteCount": profile.expectedXCTestListByteCount,
+                "sha256": profile.expectedXCTestListSHA256],
+            "swiftTestingListBinding": ["byteCount": profile.expectedSwiftTestingListByteCount,
+                "sha256": profile.expectedSwiftTestingListSHA256],
             "xctestIDs": x.map { ["framework": "xctest", "rawValue": $0] },
             "swiftTestingIDs": s.map { ["framework": "swift_testing", "rawValue": $0] },
         ]

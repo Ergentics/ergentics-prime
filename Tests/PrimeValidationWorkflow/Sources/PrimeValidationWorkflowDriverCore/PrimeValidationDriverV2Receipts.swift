@@ -1599,9 +1599,9 @@ public enum PrimeValidationPairedSemanticComparatorV2 {
             executionPlanSHA256: executionPlanSHA256,
             inventorySHA256: executionPlan.inventorySHA256,
             expectedXCTestCount:
-                PrimeValidationBaselineAnchorV2.xctestCount,
+                executionPlan.baseline.expectedXCTestCount,
             expectedSwiftTestingCount:
-                PrimeValidationBaselineAnchorV2.swiftTestingCount,
+                executionPlan.baseline.expectedSwiftTestingCount,
             referenceAggregateSHA256:
                 try PrimeValidationDriverV2Validation.identity(reference),
             candidateAggregateSHA256:

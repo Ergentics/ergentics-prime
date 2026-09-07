@@ -9,6 +9,70 @@ final class PrimeValidationWorkflowContractsTests: XCTestCase {
     private let xPass = "PrimeCoreTests.AlphaTests/testPasses"
     private let swiftPass = "PrimeCoreTests.SwiftSuite/passes()"
 
+    func testSequentialSelectedSuiteRequiresExplicitModeAndPreservesRawBinding() throws {
+        let original = transcript([
+            event(xPass, "started."), event(xPass, "passed (0.001 seconds)."),
+            "Executed 1 test, with 0 failures (0 unexpected) in 0.001 (0.001) seconds",
+        ])
+        // The exact selected-suite spelling is present in retained installed
+        // Xcode output (development-validation/attempt-01/test13/stdout.bin,
+        // lines 1 and 290); this reduced document remains a value fixture.
+        let selected = Data(String(decoding: original, as: UTF8.self)
+            .replacingOccurrences(of: "Test Suite 'All tests'", with: "Test Suite 'Selected tests'").utf8)
+        let parsed = try PrimeValidationSequentialXCTestObservation.parse(selected, expectedTopLevelSuite: .selectedTests)
+        XCTAssertEqual(parsed.observedRawIDs, [xPass])
+        XCTAssertEqual(parsed.contentBinding, .init(data: selected))
+        XCTAssertThrowsError(try PrimeValidationSequentialXCTestObservation.parse(selected))
+        XCTAssertThrowsError(try PrimeValidationSequentialXCTestObservation.parse(original, expectedTopLevelSuite: .selectedTests))
+        XCTAssertEqual(try PrimeValidationSequentialXCTestObservation.parse(original),
+            try PrimeValidationSequentialXCTestObservation.parse(original, expectedTopLevelSuite: .allTests))
+        let source = String(decoding: selected, as: UTF8.self)
+        for mutated in [
+            source.replacingOccurrences(of: "Selected tests", with: "Other tests"),
+            source.replacingOccurrences(of: "Selected tests' passed", with: "All tests' passed"),
+            "Test Suite 'All tests' started at now\n" + source,
+            source + "Test Suite 'Selected tests' passed at now\n",
+        ] {
+            XCTAssertThrowsError(try PrimeValidationSequentialXCTestObservation.parse(Data(mutated.utf8),
+                expectedTopLevelSuite: .selectedTests))
+        }
+    }
+
+    func testXUnitAcceptsFiniteNonnegativeExponentDurationsWithoutChangingBindings() throws {
+        // Matching SwiftPM/Swift Testing source interpolates Double seconds.
+        // Testing this expression also proves the toolchain's exponent shape.
+        let emitted = String(Double(84_375) / 1_000_000_000)
+        XCTAssertTrue(emitted.contains("e-") || emitted.contains("E-"))
+        for time in [emitted, "1e0", "1E+2", "2.5e-3", "0e0", "0.0", ".5", "1.", "5e-324"] {
+            for (id, swift) in [(xPass, false), (swiftPass, true)] {
+                let fixture = xunit(cases: [(id, .passed)], failures: 0, errors: 0, skipped: 0)
+                let bytes = Data(String(decoding: fixture, as: UTF8.self)
+                    .replacingOccurrences(of: "time=\"0.001\"", with: "time=\"\(time)\"").utf8)
+                if swift {
+                    let parsed = try PrimeValidationSwiftTestingXUnitObservation.parse(bytes)
+                    XCTAssertEqual(parsed.observedRawIDs, [id]); XCTAssertEqual(parsed.contentBinding, .init(data: bytes))
+                } else {
+                    let parsed = try PrimeValidationParallelXCTestXUnitObservation.parse(bytes)
+                    XCTAssertEqual(parsed.observedRawIDs, [id]); XCTAssertEqual(parsed.contentBinding, .init(data: bytes))
+                }
+            }
+        }
+    }
+
+    func testXUnitRejectsNonfiniteNegativeMalformedOverflowAndUnderflowDurations() {
+        for time in ["NaN", "nan", "Infinity", "inf", "+1", "-0", "-1e-3", "1e", "1e+", "1ee2", "1e--2",
+                     ".", "1.2.3", "0x1p2", "1,5", " 1", "1 ", "1\n", "1e309", "1e9999", "1e-9999",
+                     String(repeating: "1", count: 65)] {
+            for (id, swift) in [(xPass, false), (swiftPass, true)] {
+                let fixture = xunit(cases: [(id, .passed)], failures: 0, errors: 0, skipped: 0)
+                let bytes = Data(String(decoding: fixture, as: UTF8.self)
+                    .replacingOccurrences(of: "time=\"0.001\"", with: "time=\"\(time)\"").utf8)
+                if swift { XCTAssertThrowsError(try PrimeValidationSwiftTestingXUnitObservation.parse(bytes), time) }
+                else { XCTAssertThrowsError(try PrimeValidationParallelXCTestXUnitObservation.parse(bytes), time) }
+            }
+        }
+    }
+
     func testSequentialTranscriptParsesExactPassPartition() throws {
         let observation = try PrimeValidationSequentialXCTestObservation.parse(
             transcript([

@@ -836,17 +836,20 @@ private final class PrimeValidationXUnitParserDelegate:
     }
 
     private func isNonnegativeDecimal(_ raw: String) -> Bool {
-        guard !raw.isEmpty,
-              raw.utf8.count <= 64,
-              raw.utf8.allSatisfy({ ($0 >= 48 && $0 <= 57) || $0 == 46 }),
-              raw.utf8.filter({ $0 == 46 }).count <= 1,
-              raw != ".",
-              let value = Decimal(
-                string: raw,
-                locale: Locale(identifier: "en_US_POSIX")
-              ),
-              value >= 0
-        else { return false }
+        // SwiftPM and Swift Testing interpolate Double seconds, including
+        // scientific notation for fast tests. Accept only its finite,
+        // nonnegative numeric grammar; timing never supplies process facts.
+        guard !raw.isEmpty, raw.utf8.count <= 64,
+              let range = raw.range(of: #"^(?:[0-9]+(?:\.[0-9]*)?|\.[0-9]+)(?:[eE][+-]?[0-9]+)?$"#,
+                                    options: .regularExpression),
+              range == raw.startIndex..<raw.endIndex,
+              let value = Double(raw), value.isFinite, value >= 0 else { return false }
+        if value == 0 {
+            // Reject underflow instead of silently converting a nonzero time
+            // to zero. Zero with an exponent remains an exact zero.
+            let mantissa = raw.split(whereSeparator: { $0 == "e" || $0 == "E" })[0]
+            guard !mantissa.contains(where: { $0 >= "1" && $0 <= "9" }) else { return false }
+        }
         return true
     }
 

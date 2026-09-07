@@ -114,9 +114,14 @@ public final class PrimeValidationDriverV2ExecutionPlanRawCapability: @unchecked
         let s = try root.bindExisting(at: "swift-testing-list.stdout.log", purpose: .immutableData, maximumByteCount: 16 * 1024 * 1024)
         let xd = try root.readVerified(x, maximumByteCount: 16 * 1024 * 1024)
         let sd = try root.readVerified(s, maximumByteCount: 16 * 1024 * 1024)
-        let schedule = try PrimeValidationDriverV2ClosedShardSchedule.observeFrozenLists(
-            runID: state.context.evidenceRunID, xctestData: xd, swiftTestingData: sd)
         let intent = try HJSON.object(state.context.canonicalExecutionIntentData)
+        guard let baseline = intent["baseline"],
+              let inventoryProfile = try PrimeValidationDriverV2InventoryProfile.resolve(
+                canonicalBaselineData: HJSON.encode(baseline))
+        else { throw hRejected("intent_inventory_profile") }
+        let schedule = try PrimeValidationDriverV2ClosedShardSchedule.observeFrozenLists(
+            runID: state.context.evidenceRunID, xctestData: xd, swiftTestingData: sd,
+            profile: inventoryProfile)
         let inventoryEnvelope = try HJSON.object(root.readVerified(previous, maximumByteCount: 16 * 1024 * 1024))
         let buildBinding = try state.buildStaging.buildRoot.bindExisting(at: "binding.json", purpose: .immutableData, maximumByteCount: 16 * 1024 * 1024)
         let buildEnvelope = try HJSON.object(state.buildStaging.buildRoot.readVerified(buildBinding, maximumByteCount: 16 * 1024 * 1024))
@@ -133,7 +138,7 @@ public final class PrimeValidationDriverV2ExecutionPlanRawCapability: @unchecked
               let phases = intent["phaseBudgets"] as? [[String: Any]],
               let environment = intent["environmentPolicy"] as? [String: Any],
               let logicalEnvironment = environment["orderedEntries"], let swift = intent["swiftExecutable"],
-              let baseline = intent["baseline"], let iReceipt = inventoryEnvelope["receipt"], let bReceipt = buildEnvelope["receipt"]
+              let iReceipt = inventoryEnvelope["receipt"], let bReceipt = buildEnvelope["receipt"]
         else { throw hRejected("intent_or_retained_scope") }
         for (phase, duration) in [("execution_plan", UInt64(30_000_000_000)),
                                   ("reference_execution", UInt64(1_800_000_000_000)),

@@ -154,6 +154,8 @@ let package = Package(
             resources: [
                 .copy("Resources/xctest.list"),
                 .copy("Resources/swift-testing.list"),
+                .copy("Resources/current-source-inventory-v1-xctest.list"),
+                .copy("Resources/current-source-inventory-v1-swift-testing.list"),
             ]
         ),
     ]

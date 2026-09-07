@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: LicenseRef-Ergentics-Proprietary
 
 import Foundation
-import PrimeCore
+@_spi(PrimeValidationDriverV2RoleFacade) import PrimeCore
 import PrimeValidationWorkflowContracts
 
 public enum PrimeValidationDriverV2Error:
@@ -800,15 +800,27 @@ public struct PrimeValidationBaselineAnchorV2:
         self.expectedSwiftTestingListSHA256 = expectedSwiftTestingListSHA256
     }
 
+    /// Explicit opt-in; the historical default and six encoded fields remain
+    /// unchanged. This separately resealed pair comes from both native G
+    /// captures and their independent raw-record and Swift-parser checks.
+    public static var currentSourceInventoryV1: Self {
+        let profile = PrimeValidationDriverV2InventoryProfile.currentSourceInventoryV1
+        return Self(expectedXCTestCount: profile.expectedXCTestCount,
+            expectedSwiftTestingCount: profile.expectedSwiftTestingCount,
+            expectedXCTestListByteCount: profile.expectedXCTestListByteCount,
+            expectedXCTestListSHA256: profile.expectedXCTestListSHA256,
+            expectedSwiftTestingListByteCount: profile.expectedSwiftTestingListByteCount,
+            expectedSwiftTestingListSHA256: profile.expectedSwiftTestingListSHA256)
+    }
+
     public func validate() throws {
-        guard expectedXCTestCount == Self.xctestCount,
-              expectedSwiftTestingCount == Self.swiftTestingCount,
-              expectedXCTestListByteCount == Self.xctestListByteCount,
-              expectedXCTestListSHA256 == Self.xctestListSHA256,
-              expectedSwiftTestingListByteCount
-                == Self.swiftTestingListByteCount,
-              expectedSwiftTestingListSHA256
-                == Self.swiftTestingListSHA256
+        guard PrimeValidationDriverV2InventoryProfile.resolve(
+            expectedXCTestCount: expectedXCTestCount,
+            expectedSwiftTestingCount: expectedSwiftTestingCount,
+            expectedXCTestListByteCount: expectedXCTestListByteCount,
+            expectedXCTestListSHA256: expectedXCTestListSHA256,
+            expectedSwiftTestingListByteCount: expectedSwiftTestingListByteCount,
+            expectedSwiftTestingListSHA256: expectedSwiftTestingListSHA256) != nil
         else {
             throw PrimeValidationDriverV2Error.invalidBaseline
         }
