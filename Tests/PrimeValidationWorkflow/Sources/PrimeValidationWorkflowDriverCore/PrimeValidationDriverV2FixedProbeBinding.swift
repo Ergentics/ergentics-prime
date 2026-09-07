@@ -912,8 +912,10 @@ package final class PrimeValidationDriverV2FixedProbeBinding:
               missingAuthorities == Self.exactMissingAuthorities,
               rawObservation.productionSupervisorImageEligible,
               boundLifetime.productionSupervisorImageEligible,
-              rawObservation.combinedSourceWatcherDescriptorCount == 2_240,
-              boundLifetime.combinedSourceWatcherDescriptorCount == 2_240,
+              rawObservation.combinedSourceWatcherDescriptorCount
+                == PrimeValidationDriverV2SealedSourceTopology.combinedWatcherDescriptorCount,
+              boundLifetime.combinedSourceWatcherDescriptorCount
+                == PrimeValidationDriverV2SealedSourceTopology.combinedWatcherDescriptorCount,
               rawObservation.supervisorProcessIdentifier > 0,
               rawObservation.supervisorSessionIdentifier
                 == rawObservation.supervisorProcessIdentifier,
@@ -1427,7 +1429,8 @@ private enum PrimeValidationDriverV2FixedProbeSemanticValidator {
         let deadline = raw.deadlineStartedAtUptimeNanoseconds
             .addingReportingOverflow(30_000_000_000)
         guard raw.productionSupervisorImageEligible,
-              raw.combinedSourceWatcherDescriptorCount == 2_240,
+              raw.combinedSourceWatcherDescriptorCount
+                == PrimeValidationDriverV2SealedSourceTopology.combinedWatcherDescriptorCount,
               raw.supervisorProcessIdentifier > 0,
               raw.supervisorSessionIdentifier
                 == raw.supervisorProcessIdentifier,
@@ -3424,7 +3427,8 @@ private extension PrimeValidationDriverV2FixedProbeSemanticValidator {
               value.deadlineExpiresAtUptimeNanoseconds
                 <= expectation.outerDeadlineExpiresAtUptimeNanoseconds,
               value.orderedRoles == roles.map(\.rawValue),
-              value.combinedSourceWatcherDescriptorCount == 2_240
+              value.combinedSourceWatcherDescriptorCount
+                == PrimeValidationDriverV2SealedSourceTopology.combinedWatcherDescriptorCount
         else {
             throw durableJournalRejection("prestart")
         }

@@ -90,6 +90,17 @@ public struct PrimeValidationDriverV2OuterSourceContinuityObservation:
     }
 }
 
+/// Source-sealed counts shared by native admission, retained checks, typed
+/// readback, and the governor. Values describe this exact source closure.
+@_spi(PrimeValidationDriverV2RoleFacade)
+public enum PrimeValidationDriverV2SealedSourceTopology {
+    public static let primeAdmittedFileCount = 644
+    public static let sourceIdentityRecordCount = primeAdmittedFileCount - 1
+    public static let primeAuthorityDirectoryCount = 170
+    public static let combinedWatcherDescriptorCount =
+        primeAdmittedFileCount + primeAuthorityDirectoryCount + 1_306 + 154
+}
+
 /// Independent outer-process owner of the two Gate C source closures.
 ///
 /// The Governor supplies only already-held root descriptors and Prime's
@@ -117,11 +128,12 @@ public final class PrimeValidationDriverV2OuterSourceContinuity:
         "Sources/PrimeCore/" +
             "PrimeValidationDriverV2FixedProbeExecutor.swift",
     ]
-    // Clean-source topology: 623 held files + 157 held ancestor directories
-    // = 780 Prime watches; 780 + 1,460 companion watches = 2,240.
-    private static let requiredPrimeAdmittedFileCount = 623
-    private static let requiredPrimeSourceIdentityRecordCount = 622
-    private static let requiredPrimeAuthorityDirectoryCount = 157
+    private static let requiredPrimeAdmittedFileCount =
+        PrimeValidationDriverV2SealedSourceTopology.primeAdmittedFileCount
+    private static let requiredPrimeSourceIdentityRecordCount =
+        PrimeValidationDriverV2SealedSourceTopology.sourceIdentityRecordCount
+    private static let requiredPrimeAuthorityDirectoryCount =
+        PrimeValidationDriverV2SealedSourceTopology.primeAuthorityDirectoryCount
     private static let requiredCompanionFileCount = 1_306
     private static let requiredCompanionDirectoryCount = 154
     private static let requiredPrimeWatcherDescriptorCount =
@@ -2380,7 +2392,8 @@ enum PrimeValidationDriverV2FixedProbeExecutor {
             )
         let orderedRoleNames = frozenPolicies.map { $0.role.rawValue }
         guard orderedRoleNames.count == 16,
-              retainedState.combinedSourceWatcherDescriptorCount == 2_240
+              retainedState.combinedSourceWatcherDescriptorCount
+                == PrimeValidationDriverV2SealedSourceTopology.combinedWatcherDescriptorCount
         else {
             throw primeValidationDriverV2FixedProbeRejected(
                 "frozen_topology_or_role_order"
@@ -3373,7 +3386,7 @@ enum PrimeValidationDriverV2FixedProbeExecutor {
         let admission = retainedState.admission
         let expectedWatcherDescriptorCount =
             retainedState.productionSupervisorImageEligible
-            ? 2_240
+            ? PrimeValidationDriverV2SealedSourceTopology.combinedWatcherDescriptorCount
             : 45
         try retainedState.fixedProbeCheckpointNoPendingEvents()
         guard admission.lease.isHeld,

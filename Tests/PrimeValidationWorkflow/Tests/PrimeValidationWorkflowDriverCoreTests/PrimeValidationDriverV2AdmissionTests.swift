@@ -2,12 +2,28 @@
 // SPDX-License-Identifier: LicenseRef-Ergentics-Proprietary
 
 import Foundation
-@testable import PrimeCore
+@_spi(PrimeValidationDriverV2RoleFacade) @testable import PrimeCore
 import PrimeValidationWorkflowContracts
 @testable import PrimeValidationWorkflowDriverCore
 import XCTest
 
 final class PrimeValidationDriverV2AdmissionTests: XCTestCase {
+    func testSealedTopologyMatchesActualSourceClosure() throws {
+        let files = try Self.sourceFixtureResult.get().snapshot.files
+        let header = PrimeSwiftSourceProvenance.embeddedProvenanceRelativePath
+        XCTAssertEqual(files.count, PrimeValidationDriverV2SealedSourceTopology.primeAdmittedFileCount)
+        XCTAssertEqual(files.filter { $0.relativePath != header }.count,
+            PrimeValidationDriverV2SealedSourceTopology.sourceIdentityRecordCount)
+        var directories = Set([""])
+        for file in files {
+            let components = file.relativePath.split(separator: "/")
+            for count in 1..<components.count { directories.insert(components.prefix(count).joined(separator: "/")) }
+        }
+        XCTAssertEqual(directories.count, PrimeValidationDriverV2SealedSourceTopology.primeAuthorityDirectoryCount)
+        XCTAssertEqual(files.count + directories.count + 1_306 + 154,
+            PrimeValidationDriverV2SealedSourceTopology.combinedWatcherDescriptorCount)
+    }
+
     private struct SourceFixture {
         let snapshot: PrimeSwiftSourceSnapshot
         let data: Data
