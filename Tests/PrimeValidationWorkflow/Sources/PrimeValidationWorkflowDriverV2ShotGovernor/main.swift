@@ -4,9 +4,10 @@
 import Darwin
 import PrimeValidationWorkflowDriverV2ShotGovernorCore
 
-/// The production governor is deliberately silent. The only transport is the
-/// one canonical capsule on standard input; the core returns one frozen status
-/// and this target adds no command, path, role, or environment surface.
+/// Success is silent. Transport/admission failures may emit one bounded
+/// diagnostic when stderr cannot block on a pipe. The only input transport is
+/// one canonical capsule on stdin; the core returns one frozen status and this
+/// target adds no command, path, role, or environment surface.
 @main
 private struct PrimeValidationWorkflowDriverV2ShotGovernorMain {
     static func main() {

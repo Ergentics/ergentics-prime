@@ -7,8 +7,11 @@ import Foundation
 @_spi(PrimeValidationDriverV2OuterContinuity) import PrimeCore
 import PrimeValidationWorkflowDriverCore
 
-@_silgen_name("_NSGetEnviron")
-private func primeDriverV2GovernorNSGetEnviron()
+@_silgen_name("_NSGetArgc")
+private func primeDriverV2GovernorNSGetArgc() -> UnsafeMutablePointer<Int32>
+
+@_silgen_name("_NSGetArgv")
+private func primeDriverV2GovernorNSGetArgv()
     -> UnsafeMutablePointer<
         UnsafeMutablePointer<UnsafeMutablePointer<CChar>?>?
     >
@@ -967,6 +970,24 @@ private final class PrimeValidationDriverV2GovernorHeldDirectory {
 }
 
 private final class PrimeValidationDriverV2GovernorHeldExecutable {
+    private enum MetadataPolicy {
+        case processImage
+        case systemTool
+
+        func admits(_ status: stat) -> Bool {
+            switch self {
+            case .processImage:
+                return status.st_flags == 0
+            case .systemTool:
+                // Xcode can ship transparently compressed executables. Keep
+                // their exact flags in the retained metadata and reject drift.
+                return status.st_uid == 0 && status.st_gid == 0
+                    && (status.st_flags == 0
+                        || status.st_flags == UInt32(UF_COMPRESSED))
+            }
+        }
+    }
+
     let binding: PrimeValidationExecutableBindingV2
     let absolutePath: String
     private(set) var descriptor: Int32
@@ -976,7 +997,8 @@ private final class PrimeValidationDriverV2GovernorHeldExecutable {
     init(
         binding: PrimeValidationExecutableBindingV2,
         requiredLeaf: String?,
-        coordinate: String
+        coordinate: String,
+        systemTool: Bool = false
     ) throws {
         try binding.validate()
         self.binding = binding
@@ -1015,7 +1037,8 @@ private final class PrimeValidationDriverV2GovernorHeldExecutable {
                   status.st_ino == named.st_ino,
                   status.st_nlink == 1,
                   status.st_size > 0,
-                  status.st_flags == 0,
+                  (systemTool ? MetadataPolicy.systemTool : .processImage)
+                    .admits(status),
                   status.st_mode & mode_t(0o022) == 0,
                   status.st_mode & mode_t(0o111) != 0,
                   fcntl(descriptor, F_GETFD) & FD_CLOEXEC != 0
@@ -4240,18 +4263,65 @@ package enum PrimeValidationDriverV2ShotGovernor {
 
     package static func runClosedFromStandardInput() -> Int32 {
         oneShot.consume {
-            if let environment = primeDriverV2GovernorNSGetEnviron().pointee,
-               environment.pointee != nil
-            {
-                throw governorRejected(
-                    PrimeValidationDriverV2ShotGovernorStatus.capsuleTransport,
-                    "capsule_environment"
-                )
+            do {
+                return try admitCapsuleAndExecute()
+            } catch let failure as PrimeValidationDriverV2ShotGovernorFailure {
+                reportAdmissionFailure(failure)
+                throw failure
             }
-            let bytes = try readCanonicalCapsuleFromStandardInput()
-            let capsule = try decodeCanonicalCapsule(exactBytes: bytes)
-            return try execute(capsule: capsule, capsuleBytes: bytes)
         }
+    }
+
+    private static func reportAdmissionFailure(
+        _ failure: PrimeValidationDriverV2ShotGovernorFailure
+    ) {
+        guard failure.status == PrimeValidationDriverV2ShotGovernorStatus
+                .capsuleTransport
+                || failure.status == PrimeValidationDriverV2ShotGovernorStatus
+                    .admission
+        else { return }
+        var metadata = stat()
+        let flags = fcntl(STDERR_FILENO, F_GETFL)
+        guard flags >= 0, fstat(STDERR_FILENO, &metadata) == 0,
+              flags & O_NONBLOCK != 0
+                || metadata.st_mode & mode_t(S_IFMT) == mode_t(S_IFREG)
+        else { return }
+        guard fcntl(STDERR_FILENO, F_SETNOSIGPIPE, 1) == 0 else { return }
+        let coordinate = failure.coordinate.utf8.prefix(256).map { byte in
+            (byte >= 0x21 && byte <= 0x7e) ? byte : UInt8(0x5f)
+        }
+        let message = Array("gate_e_rejected status=\(failure.status) coordinate=".utf8)
+            + coordinate + [UInt8(0x0a)]
+        // Diagnostic only: one bounded write with SIGPIPE suppressed, without
+        // retry, authority promotion, or a change to the returned failure.
+        _ = message.withUnsafeBytes {
+            Darwin.write(STDERR_FILENO, $0.baseAddress, $0.count)
+        }
+    }
+
+    private static func admitCapsuleAndExecute() throws -> Int32 {
+        // Darwin places the startup envp after the argv terminator.
+        // Foundation can replace the current environ during initialization;
+        // inspect the launch vector without exempting any supplied key.
+        guard primeDriverV2GovernorNSGetArgc().pointee == 1,
+              let arguments = primeDriverV2GovernorNSGetArgv().pointee,
+              arguments[0] != nil,
+              arguments[1] == nil
+        else {
+            throw governorRejected(
+                PrimeValidationDriverV2ShotGovernorStatus.capsuleTransport,
+                "capsule_argc"
+            )
+        }
+        if arguments[2] != nil {
+            throw governorRejected(
+                PrimeValidationDriverV2ShotGovernorStatus.capsuleTransport,
+                "capsule_environment"
+            )
+        }
+        let bytes = try readCanonicalCapsuleFromStandardInput()
+        let capsule = try decodeCanonicalCapsule(exactBytes: bytes)
+        return try execute(capsule: capsule, capsuleBytes: bytes)
     }
 
     fileprivate static func decodeCanonicalCapsule(
@@ -4490,12 +4560,14 @@ package enum PrimeValidationDriverV2ShotGovernor {
         let gitImage = try PrimeValidationDriverV2GovernorHeldExecutable(
             binding: capsule.gitExecutable,
             requiredLeaf: "git",
-            coordinate: "git_image"
+            coordinate: "git_image",
+            systemTool: true
         )
         let swiftImage = try PrimeValidationDriverV2GovernorHeldExecutable(
             binding: capsule.swiftExecutable,
             requiredLeaf: "swift-frontend",
-            coordinate: "swift_frontend_image"
+            coordinate: "swift_frontend_image",
+            systemTool: true
         )
 
         let request = PrimeValidationDriverV2SupervisorLaunchRequestV1(
