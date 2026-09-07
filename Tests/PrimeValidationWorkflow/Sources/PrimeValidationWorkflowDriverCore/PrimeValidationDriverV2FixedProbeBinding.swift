@@ -636,7 +636,7 @@ private extension PrimeValidationDriverV2PartialToolchainProbeBinding {
               identity.ownerUserID == 0,
               identity.ownerGroupID == 0,
               identity.mode & UInt32(S_IFMT) == UInt32(S_IFLNK),
-              identity.mode & 0o777 == 0o777,
+              identity.mode & 0o777 == 0o755,
               identity.linkCount == 1,
               identity.byteCount == Int64("swift-frontend".utf8.count),
               identity.modificationSeconds >= 0,
