@@ -350,12 +350,10 @@ final class PrimeValidationDriverV2InventoryStaging {
         guard leaves == Self.streamLeaves.union(Self.recordLeaves),
               streams.count == 4, streams.values.allSatisfy({ $0.binding != nil }),
               !data.isEmpty, data.count <= 16 * 1024 * 1024,
-              data.first == 0x7b, data.last == 0x7d,
-              let object = try JSONSerialization.jsonObject(with: data) as? [String: Any],
-              try JSONSerialization.data(withJSONObject: object,
-                  options: [.sortedKeys, .withoutEscapingSlashes]) == data else {
+              data.first == 0x7b, data.last == 0x7d else {
             throw inventoryRejected("binding_frame")
         }
+        try PrimeValidationDriverV2CanonicalBindingFrame.validate(data)
         try revalidate()
         let binding = try root.publishGeneratedFile(at: "binding.json", purpose: .immutableData,
                                                     maximumByteCount: UInt64(data.count)) { fd in

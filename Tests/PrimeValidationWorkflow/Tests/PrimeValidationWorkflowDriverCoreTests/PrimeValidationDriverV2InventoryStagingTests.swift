@@ -9,6 +9,25 @@ import XCTest
 /// Exercises actual private directories and files only. A staging utility and
 /// these fixture journal bytes do not construct a native inventory owner.
 final class PrimeValidationDriverV2InventoryStagingTests: XCTestCase {
+    func testBindingFrameUsesProductionKeyOrderAndExactUnsignedIntegers() throws {
+        struct Frame: Encodable {
+            let exitStatus: Int = 0
+            let exitedNormally: Bool = true
+            let highest: UInt64 = .max
+            let nested: [String: String] = ["key10": "ten", "key2": "two", "path": "/private/tmp"]
+        }
+        let canonical = try PrimeCanonicalJSON.encode(Frame())
+        XCTAssertNoThrow(try PrimeValidationDriverV2CanonicalBindingFrame.validate(canonical))
+        let object = try JSONSerialization.jsonObject(with: canonical)
+        let alternate = try JSONSerialization.data(withJSONObject: object,
+            options: [.sortedKeys, .withoutEscapingSlashes])
+        XCTAssertNotEqual(alternate, canonical, "Regresses the two Foundation encoders' different key collation")
+        for bytes in [alternate, canonical + Data([0x0a]), Data("{\"x\":1,\"x\":2}".utf8),
+                      Data("[]".utf8), Data("{\"value\":1.5}".utf8)] {
+            XCTAssertThrowsError(try PrimeValidationDriverV2CanonicalBindingFrame.validate(bytes))
+        }
+    }
+
     func testExactLeavesAreExclusiveAndTraversalCannotTouchOutsideFile() throws {
         let fixture = try Fixture()
         defer { fixture.cleanup() }

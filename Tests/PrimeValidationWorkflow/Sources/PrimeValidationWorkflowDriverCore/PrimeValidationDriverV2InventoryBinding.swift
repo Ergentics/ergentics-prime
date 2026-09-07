@@ -34,7 +34,8 @@ package struct PrimeValidationDriverV2InventoryDurableBindingEnvelopeV1: Codable
             swiftTestingData: receipt.swiftTestingListData, supervisorPID: expectedSupervisorPID)
         guard receipt == expected else { throw rejected }
         try receipt.validate(intent: intent, buildReceipt: build.receipt)
-        try Self.validateJournalBinding(terminalBinding, path: "terminal.json", object: [
+        try Self.validateJournalBinding(terminalBinding, path: "terminal.json",
+            type: PrimeValidationDriverV2InventorySequenceTerminalV1.self, object: [
             "schema": "prime_driver_v2_gate_g_inventory_terminal_v1",
             "runID": intent.runID,
             "predecessorBuildBindingSHA256": predecessorBuildBinding.sha256,
@@ -100,7 +101,8 @@ package struct PrimeValidationDriverV2InventoryDurableBindingEnvelopeV1: Codable
                 stream: p.standardOutput, path: streamPrefix + ".stdout.log")
             try validateStreamBinding(child.standardErrorBinding,
                 stream: p.standardError, path: streamPrefix + ".stderr.log")
-            try validateJournalBinding(child.prestartBinding, path: prefix + "-prestart.json", object: [
+            try validateJournalBinding(child.prestartBinding, path: prefix + "-prestart.json",
+                type: PrimeValidationDriverV2InventoryPrestartV1.self, object: [
                 "schema": "prime_driver_v2_gate_g_inventory_prestart_v1", "runID": intent.runID,
                 "ordinal": index + 1, "role": child.role, "predecessorSHA256": predecessorHash,
                 "deadlineStartedAtUptimeNanoseconds": p.deadlineStartedAtUptimeNanoseconds,
@@ -110,7 +112,8 @@ package struct PrimeValidationDriverV2InventoryDurableBindingEnvelopeV1: Codable
                 "orderedEnvironment": p.orderedEnvironment,
                 "workingDirectoryAbsolutePath": p.workingDirectoryAbsolutePath,
             ])
-            try validateJournalBinding(child.startBinding, path: prefix + "-start.json", object: [
+            try validateJournalBinding(child.startBinding, path: prefix + "-start.json",
+                type: PrimeValidationDriverV2InventoryStartV1.self, object: [
                 "schema": "prime_driver_v2_gate_g_inventory_start_v1", "role": child.role,
                 "prestartSHA256": child.prestartBinding.sha256,
                 "processIdentifier": p.processIdentifier, "sessionIdentifier": p.sessionIdentifier,
@@ -119,7 +122,8 @@ package struct PrimeValidationDriverV2InventoryDurableBindingEnvelopeV1: Codable
                 "mappedExecutablePathTelemetry": p.executableAbsolutePath,
                 "exactSuspendedWorkingDirectoryJoin": p.exactSuspendedWorkingDirectoryJoin,
             ])
-            try validateJournalBinding(child.terminalBinding, path: prefix + "-terminal.json", object: [
+            try validateJournalBinding(child.terminalBinding, path: prefix + "-terminal.json",
+                type: PrimeValidationDriverV2InventoryTerminalV1.self, object: [
                 "schema": "prime_driver_v2_gate_g_inventory_child_terminal_v1", "role": child.role,
                 "startSHA256": child.startBinding.sha256,
                 "process": JSONSerialization.jsonObject(with: PrimeCanonicalJSON.encode(p)),
@@ -177,11 +181,12 @@ package struct PrimeValidationDriverV2InventoryDurableBindingEnvelopeV1: Codable
         }
     }
 
-    private static func validateJournalBinding(
-        _ binding: PrimeArtifactBinding, path: String, object: [String: Any]
+    static func validateJournalBinding<Value: Codable>(
+        _ binding: PrimeArtifactBinding, path: String, type: Value.Type, object: [String: Any]
     ) throws {
-        let data = try JSONSerialization.data(withJSONObject: object, options: [.sortedKeys, .withoutEscapingSlashes])
-        try validateArtifact(binding, path: path, data: data)
+        let fields = try JSONSerialization.data(withJSONObject: object)
+        let value = try JSONDecoder().decode(type, from: fields)
+        try validateArtifact(binding, path: path, data: PrimeCanonicalJSON.encode(value))
     }
 
     private static func validateStreamBinding(_ binding: PrimeArtifactBinding,

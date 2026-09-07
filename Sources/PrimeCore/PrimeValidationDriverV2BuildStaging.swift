@@ -4,6 +4,43 @@
 import Darwin
 import Foundation
 
+/// Format validation for the integer-valued F/G envelopes. This checks bytes
+/// only; it cannot decode a downstream receipt or mint an execution owner.
+enum PrimeValidationDriverV2CanonicalBindingFrame {
+    static func validate(_ data: Data) throws {
+        _ = try PrimeCanonicalJSON.decode([String: Value].self, from: data)
+    }
+
+    private indirect enum Value: Codable {
+        case null, boolean(Bool), signed(Int64), unsigned(UInt64), string(String)
+        case array([Value]), object([String: Value])
+
+        init(from decoder: Decoder) throws {
+            let c = try decoder.singleValueContainer()
+            if c.decodeNil() { self = .null }
+            else if let v = try? c.decode(Bool.self) { self = .boolean(v) }
+            else if let v = try? c.decode(Int64.self) { self = .signed(v) }
+            else if let v = try? c.decode(UInt64.self) { self = .unsigned(v) }
+            else if let v = try? c.decode(String.self) { self = .string(v) }
+            else if let v = try? c.decode([Value].self) { self = .array(v) }
+            else { self = .object(try c.decode([String: Value].self)) }
+        }
+
+        func encode(to encoder: Encoder) throws {
+            var c = encoder.singleValueContainer()
+            switch self {
+            case .null: try c.encodeNil()
+            case let .boolean(v): try c.encode(v)
+            case let .signed(v): try c.encode(v)
+            case let .unsigned(v): try c.encode(v)
+            case let .string(v): try c.encode(v)
+            case let .array(v): try c.encode(v)
+            case let .object(v): try c.encode(v)
+            }
+        }
+    }
+}
+
 /// A namespace derived exclusively from the roots retained through Gate E.
 /// SwiftPM may change descendants of its nine directories. It may never
 /// replace those directories or add entries to either admitted root.
@@ -228,13 +265,9 @@ final class PrimeValidationDriverV2BuildStaging {
     func publishBindingData(_ data: Data) throws {
         guard !data.isEmpty, data.count <= 16 * 1024 * 1024,
               data.first == 0x7b, data.last == 0x7d,
-              !buildLeaves.contains("binding.json"),
-              let object = try JSONSerialization.jsonObject(with: data)
-                as? [String: Any],
-              try JSONSerialization.data(
-                withJSONObject: object, options: [.sortedKeys, .withoutEscapingSlashes]
-              ) == data
+              !buildLeaves.contains("binding.json")
         else { throw Self.rejected("binding_frame") }
+        try PrimeValidationDriverV2CanonicalBindingFrame.validate(data)
         try revalidate(against: admission)
         _ = try buildRoot.publishGeneratedFile(
             at: "binding.json", purpose: .immutableData,

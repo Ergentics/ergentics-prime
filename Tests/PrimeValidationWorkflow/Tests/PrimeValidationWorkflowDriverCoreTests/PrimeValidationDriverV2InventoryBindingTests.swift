@@ -12,6 +12,31 @@ import XCTest
 final class PrimeValidationDriverV2InventoryBindingTests: XCTestCase {
     private typealias Envelope = PrimeValidationDriverV2InventoryDurableBindingEnvelopeV1
 
+    func testInventoryJournalBindingUsesNativeTypedEncoderBytes() throws {
+        let fields: [String: Any] = [
+            "schema": "prime_driver_v2_gate_g_inventory_child_terminal_v1",
+            "role": "list_xctest", "startSHA256": String(repeating: "a", count: 64),
+            "process": processFields(),
+        ]
+        let value = try JSONDecoder().decode(PrimeValidationDriverV2InventoryTerminalV1.self,
+            from: JSONSerialization.data(withJSONObject: fields))
+        let native = try PrimeCanonicalJSON.encode(value)
+        let binding = PrimeArtifactBinding(relativePath: "01-xctest-terminal.json",
+            sha256: PrimeSHA256.hexDigest(of: native), byteCount: UInt64(native.count), purpose: .immutableData)
+        let alternate = try JSONSerialization.data(withJSONObject: fields,
+            options: [.sortedKeys, .withoutEscapingSlashes])
+        XCTAssertNotEqual(native, alternate)
+        try Envelope.validateJournalBinding(binding, path: binding.relativePath,
+            type: PrimeValidationDriverV2InventoryTerminalV1.self, object: fields)
+        var mutation = fields
+        var changedProcess = processFields(); changedProcess["exitStatus"] = 1
+        mutation["process"] = changedProcess
+        XCTAssertThrowsError(try Envelope.validateJournalBinding(binding, path: binding.relativePath,
+            type: PrimeValidationDriverV2InventoryTerminalV1.self, object: mutation))
+        XCTAssertThrowsError(try Envelope.validateJournalBinding(binding, path: "02-swift-testing-terminal.json",
+            type: PrimeValidationDriverV2InventoryTerminalV1.self, object: fields))
+    }
+
     func testInventoryNativeLifecycleRequiresExactSharedBudgetAndReap() throws {
         try Envelope.validateNativeProcess(process(), supervisorPID: 99)
         let mutations: [(String, Any)] = [
