@@ -1592,7 +1592,7 @@ final class PrimeValidationSwiftPMRetainedGuardedPreExecutorState:
     func fixedProbeRevalidateTransferredContinuity() throws {
         try fixedProbeCheckpointNoPendingEvents()
         guard admission.lease.isHeld,
-              combinedSourceWatcherDescriptorCount == 2_238
+              combinedSourceWatcherDescriptorCount == 2_240
         else {
             throw PrimeValidationSwiftPMBuildInventoryAdmissionError
                 .rejected("fixed probe transferred continuity")
@@ -1618,7 +1618,7 @@ final class PrimeValidationSwiftPMRetainedGuardedPreExecutorState:
         try staging.revalidate(against: admission)
         guard admission.lease.isHeld,
               productionSupervisorImageEligible,
-              combinedSourceWatcherDescriptorCount == 2_238
+              combinedSourceWatcherDescriptorCount == 2_240
         else {
             throw rejected("build transferred continuity")
         }

@@ -117,16 +117,19 @@ public final class PrimeValidationDriverV2OuterSourceContinuity:
         "Sources/PrimeCore/" +
             "PrimeValidationDriverV2FixedProbeExecutor.swift",
     ]
-    // Clean-source topology: 621 held files + 157 held ancestor directories
-    // = 772 Prime watches; 772 + 1,460 companion watches = 2,232.
-    private static let requiredPrimeAdmittedFileCount = 621
-    private static let requiredPrimeSourceIdentityRecordCount = 620
+    // Clean-source topology: 623 held files + 157 held ancestor directories
+    // = 780 Prime watches; 780 + 1,460 companion watches = 2,240.
+    private static let requiredPrimeAdmittedFileCount = 623
+    private static let requiredPrimeSourceIdentityRecordCount = 622
     private static let requiredPrimeAuthorityDirectoryCount = 157
     private static let requiredCompanionFileCount = 1_306
     private static let requiredCompanionDirectoryCount = 154
-    private static let requiredPrimeWatcherDescriptorCount = 772
-    private static let requiredCompanionWatcherDescriptorCount = 1_460
-    private static let requiredCombinedWatcherDescriptorCount = 2_238
+    private static let requiredPrimeWatcherDescriptorCount =
+        requiredPrimeAdmittedFileCount + requiredPrimeAuthorityDirectoryCount
+    private static let requiredCompanionWatcherDescriptorCount =
+        requiredCompanionFileCount + requiredCompanionDirectoryCount
+    private static let requiredCombinedWatcherDescriptorCount =
+        requiredPrimeWatcherDescriptorCount + requiredCompanionWatcherDescriptorCount
 
     public let observation:
         PrimeValidationDriverV2OuterSourceContinuityObservation
@@ -690,7 +693,7 @@ public final class PrimeValidationDriverV2FixedProbeBoundLifetime:
             startUptimeNanoseconds: consumedAt,
             durationNanoseconds: 900_000_000_000
         )
-        return PrimeValidationDriverV2BuildOwner(
+        return try PrimeValidationDriverV2BuildOwner(
             retainedState: retainedState,
             context: context,
             buildPolicy: buildPolicy,
@@ -706,17 +709,31 @@ struct PrimeValidationDriverV2BuildExecutionState {
     let context: PrimeValidationDriverV2RoleContext
     let buildPolicy: PrimeValidationDriverV2ClosedRolePolicy
     let deadline: PrimeSecureChildPhaseDeadline
+    let pinnedBundleInput: PrimeValidationDriverV2PinnedBundleInput
 
     fileprivate init(
         retainedState: PrimeValidationSwiftPMRetainedGuardedPreExecutorState,
         context: PrimeValidationDriverV2RoleContext,
         buildPolicy: PrimeValidationDriverV2ClosedRolePolicy,
         deadline: PrimeSecureChildPhaseDeadline
-    ) {
+    ) throws {
+        guard context.requiredPinnedMetallibByteCount
+                == PrimePinnedMLXMetallib.expectedByteCount,
+              context.requiredPinnedMetallibSHA256
+                == PrimePinnedMLXMetallib.expectedSHA256
+        else {
+            throw primeValidationDriverV2FixedProbeRejected(
+                "build_calibration_bundle_pin"
+            )
+        }
         self.retainedState = retainedState
         self.context = context
         self.buildPolicy = buildPolicy
         self.deadline = deadline
+        pinnedBundleInput = try PrimeValidationDriverV2PinnedBundleInput.capture(
+            primeRoot: retainedState.admission.primeRepository.root,
+            deadlineNanoseconds: deadline.expiresAtUptimeNanoseconds
+        )
     }
 }
 
@@ -734,8 +751,8 @@ public final class PrimeValidationDriverV2BuildOwner: @unchecked Sendable {
         context: PrimeValidationDriverV2RoleContext,
         buildPolicy: PrimeValidationDriverV2ClosedRolePolicy,
         deadline: PrimeSecureChildPhaseDeadline
-    ) {
-        state = PrimeValidationDriverV2BuildExecutionState(
+    ) throws {
+        state = try PrimeValidationDriverV2BuildExecutionState(
             retainedState: retainedState,
             context: context,
             buildPolicy: buildPolicy,
@@ -757,6 +774,7 @@ public final class PrimeValidationDriverV2BuildOwner: @unchecked Sendable {
             let before = DispatchTime.now().uptimeNanoseconds
             try requireTime(before, state: state, startsNewWork: true)
             try state.retainedState.fixedProbeRevalidateTransferredContinuity()
+            try state.pinnedBundleInput.revalidate()
             let after = DispatchTime.now().uptimeNanoseconds
             lastObservedUptimeNanoseconds = before
             try requireTime(after, state: state, startsNewWork: true)
@@ -784,6 +802,7 @@ public final class PrimeValidationDriverV2BuildOwner: @unchecked Sendable {
             try state.retainedState.buildRevalidateTransferredContinuity(
                 staging: staging
             )
+            try state.pinnedBundleInput.revalidate()
             let after = DispatchTime.now().uptimeNanoseconds
             lastObservedUptimeNanoseconds = before
             try requireTime(after, state: state, startsNewWork: false)
@@ -2329,7 +2348,7 @@ enum PrimeValidationDriverV2FixedProbeExecutor {
             )
         let orderedRoleNames = frozenPolicies.map { $0.role.rawValue }
         guard orderedRoleNames.count == 16,
-              retainedState.combinedSourceWatcherDescriptorCount == 2_238
+              retainedState.combinedSourceWatcherDescriptorCount == 2_240
         else {
             throw primeValidationDriverV2FixedProbeRejected(
                 "frozen_topology_or_role_order"
@@ -3322,7 +3341,7 @@ enum PrimeValidationDriverV2FixedProbeExecutor {
         let admission = retainedState.admission
         let expectedWatcherDescriptorCount =
             retainedState.productionSupervisorImageEligible
-            ? 2_238
+            ? 2_240
             : 45
         try retainedState.fixedProbeCheckpointNoPendingEvents()
         guard admission.lease.isHeld,

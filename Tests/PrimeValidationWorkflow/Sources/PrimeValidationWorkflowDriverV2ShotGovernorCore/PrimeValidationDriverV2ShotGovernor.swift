@@ -148,10 +148,10 @@ package struct PrimeValidationDriverV2ShotCapsuleV1:
               fixtureExecutionCount == 0,
               inventoryExecutionCount == 0,
               !gateGAuthorized,
-              primeAdmittedFileCount == 621,
-              sourceIdentityRecordCount == 620,
+              primeAdmittedFileCount == 623,
+              sourceIdentityRecordCount == 622,
               primeAuthorityDirectoryCount == 157,
-              combinedWatcherDescriptorCount == 2_238,
+              combinedWatcherDescriptorCount == 2_240,
               exactCanonicalBytes.count <= 262_144,
               exactCanonicalBytes.last != 0x0a,
               try PrimeCanonicalJSON.encode(self) == exactCanonicalBytes,
@@ -4287,6 +4287,7 @@ private final class PrimeValidationDriverV2GovernorBuildSnapshot {
         }
     }
 
+    private let prime: PrimeValidationDriverV2GovernorHeldDirectory
     private let workspace: PrimeValidationDriverV2GovernorHeldDirectory
     private let evidence: PrimeValidationDriverV2GovernorHeldDirectory
     private let swiftPackageImage: PrimeValidationDriverV2GovernorHeldExecutable
@@ -4294,6 +4295,8 @@ private final class PrimeValidationDriverV2GovernorBuildSnapshot {
     private let directories: [Node]
     private let files: [Node]
     private let artifacts: PrimeValidationDriverV2BuildArtifactsReadback
+    private let pinnedBundle: PrimeValidationDriverV2PinnedBundleReadback
+    private let pinnedBundleInput: PrimeValidationDriverV2PinnedBundleInputReadback
     let envelope: PrimeValidationDriverV2BuildDurableBindingEnvelopeV1
     let bindingSHA256: String
     let leaves: [PrimeValidationDriverV2GovernorInnerLeaf]
@@ -4307,18 +4310,23 @@ private final class PrimeValidationDriverV2GovernorBuildSnapshot {
         "terminal.json",
     ]
 
-    init(workspace: PrimeValidationDriverV2GovernorHeldDirectory,
+    init(prime: PrimeValidationDriverV2GovernorHeldDirectory,
+         workspace: PrimeValidationDriverV2GovernorHeldDirectory,
          evidence: PrimeValidationDriverV2GovernorHeldDirectory,
          swiftPackageImage: PrimeValidationDriverV2GovernorHeldExecutable,
+         pinnedBundleInput: PrimeValidationDriverV2PinnedBundleInputReadback,
          intent: PrimeValidationRunIntentV2,
          supervisorPID: Int32, supervisorWaitUptime: UInt64,
          predecessor: PrimeValidationDriverV2GovernorInnerSnapshot,
          deadline: PrimeValidationDriverV2GovernorDeadline) throws {
+        self.prime = prime
         self.workspace = workspace; self.evidence = evidence; self.runID = intent.runID
         self.swiftPackageImage = swiftPackageImage
+        self.pinnedBundleInput = pinnedBundleInput
         guard predecessor.complete, predecessor.durableFrames.count == 34,
               let rawTerminalSHA256 = predecessor.rawTerminalSHA256
         else { throw Self.rejected("predecessor") }
+        try prime.revalidate(coordinate: "build_prime")
         try workspace.revalidate(coordinate: "build_workspace")
         try evidence.revalidate(coordinate: "build_evidence")
         try Self.requireRootEntries(workspace: workspace, evidence: evidence, runID: runID)
@@ -4361,6 +4369,8 @@ private final class PrimeValidationDriverV2GovernorBuildSnapshot {
             PrimeValidationDriverV2BuildDurableBindingEnvelopeV1.self, from: bindingData)
         try envelope.validate(intent: intent, expectedSupervisorPID: supervisorPID,
                               expectedPredecessorRawTerminalSHA256: rawTerminalSHA256)
+        guard try pinnedBundleInput.revalidate() == envelope.pinnedBundle.input
+        else { throw Self.rejected("pinned_bundle_prelaunch_input_join") }
         let prestart = try PrimeCanonicalJSON.decode(Prestart.self,
             from: byName["prestart.json"]!.data!)
         let start = try PrimeCanonicalJSON.decode(Start.self, from: byName["start.json"]!.data!)
@@ -4428,6 +4438,9 @@ private final class PrimeValidationDriverV2GovernorBuildSnapshot {
         }
         self.vnodes = heldFiles.map { .init($0.metadata) }
         self.directories = heldDirectories; self.files = heldFiles
+        self.pinnedBundle = try PrimeValidationDriverV2PinnedBundleReadback.capture(
+            primeRootDescriptor: prime.descriptor, workspaceRootDescriptor: workspace.descriptor,
+            expected: envelope.pinnedBundle, deadlineNanoseconds: deadline.expiresAt)
         self.artifacts = try PrimeValidationDriverV2BuildArtifactsReadback.capture(
             workspaceRootDescriptor: workspace.descriptor,
             artifactRootDescriptor: artifactRoot.descriptor,
@@ -4436,15 +4449,25 @@ private final class PrimeValidationDriverV2GovernorBuildSnapshot {
     }
 
     func revalidate() throws {
+        try prime.revalidate(coordinate: "build_prime_after")
         try swiftPackageImage.revalidate(coordinate: "swift_package_build_readback")
         try workspace.revalidate(coordinate: "build_workspace_after")
         try evidence.revalidate(coordinate: "build_evidence_after")
         try Self.requireRootEntries(workspace: workspace, evidence: evidence, runID: runID)
         for directory in directories { try directory.revalidate() }
         for file in files { try file.revalidate() }
+        guard try pinnedBundleInput.revalidate() == envelope.pinnedBundle.input
+        else { throw Self.rejected("pinned_bundle_input_changed") }
+        guard try pinnedBundle.revalidate() == envelope.pinnedBundle
+        else { throw Self.rejected("pinned_bundle_changed") }
         guard try artifacts.revalidate() == envelope.artifacts
         else { throw Self.rejected("artifacts_changed") }
         for directory in directories { try directory.revalidate() }
+        guard try pinnedBundle.revalidate() == envelope.pinnedBundle
+        else { throw Self.rejected("pinned_bundle_changed_after_artifacts") }
+        guard try pinnedBundleInput.revalidate() == envelope.pinnedBundle.input
+        else { throw Self.rejected("pinned_bundle_input_changed_after_artifacts") }
+        try prime.revalidate(coordinate: "build_prime_final")
     }
 
     private static func requireRootEntries(
@@ -5121,6 +5144,13 @@ package enum PrimeValidationDriverV2ShotGovernor {
                 ? 960_000_000_000
                 : PrimeValidationDriverV2GovernorDeadline.durationNanoseconds
         )
+        let pinnedBundleInput: PrimeValidationDriverV2PinnedBundleInputReadback?
+        if capsule.terminalGate == .gateF {
+            pinnedBundleInput = try PrimeValidationDriverV2PinnedBundleInputReadback.capture(
+                primeRootDescriptor: primeRoot.descriptor, deadlineNanoseconds: deadline.expiresAt)
+        } else {
+            pinnedBundleInput = nil
+        }
         let spawned = try PrimeValidationDriverV2GovernorSpawner
             .spawnSupervisor(
                 executable: supervisorImage,
@@ -5190,6 +5220,7 @@ package enum PrimeValidationDriverV2ShotGovernor {
             coordinate: "private_working_directory_pre_resume"
         )
         try outerContinuity.revalidateContinuity()
+        _ = try pinnedBundleInput?.revalidate()
         let startPublishedAt = DispatchTime.now().uptimeNanoseconds
         try deadline.requireTime("supervisor_resume_deadline")
         guard Darwin.kill(spawned.processIdentifier, SIGCONT) == 0,
@@ -5326,15 +5357,15 @@ package enum PrimeValidationDriverV2ShotGovernor {
                 durableReceiptJournalVnodes = inner.durableVnodes
                 innerReceiptValidated = true
                 if capsule.terminalGate == .gateF {
-                    guard let swiftPackageImage else {
+                    guard let swiftPackageImage, let pinnedBundleInput else {
                         throw governorRejected(
                             PrimeValidationDriverV2ShotGovernorStatus.postReapRejection,
                             "swift_package_missing_owner")
                     }
                     do {
                         buildSnapshot = try PrimeValidationDriverV2GovernorBuildSnapshot(
-                            workspace: workspaceRoot, evidence: evidenceRoot,
-                            swiftPackageImage: swiftPackageImage,
+                            prime: primeRoot, workspace: workspaceRoot, evidence: evidenceRoot,
+                            swiftPackageImage: swiftPackageImage, pinnedBundleInput: pinnedBundleInput,
                             intent: capsule.intent,
                             supervisorPID: spawned.processIdentifier,
                             supervisorWaitUptime: processResult.wait.returnedAtUptimeNanoseconds,
@@ -5366,6 +5397,7 @@ package enum PrimeValidationDriverV2ShotGovernor {
                 try swiftPackageImage.revalidate(coordinate: "swift_package_image_after")
                 swiftPackageImageRejoined = true
             }
+            _ = try pinnedBundleInput?.revalidate()
             try primeRoot.revalidate(coordinate: "prime_root_after")
             try companionRoot.revalidate(coordinate: "companion_root_after")
             if capsule.terminalGate == .gateE {
@@ -5738,10 +5770,10 @@ package final class PrimeValidationDriverV2OuterJournalMechanicsFacade:
             companionTree: String(repeating: "5", count: 40),
             sourceIdentitySHA256:
                 PrimeEmbeddedBuildProvenance.sourceIdentitySHA256,
-            primeAdmittedFileCount: 621,
-            sourceIdentityRecordCount: 620,
+            primeAdmittedFileCount: 623,
+            sourceIdentityRecordCount: 622,
             primeAuthorityDirectoryCount: 157,
-            combinedWatcherDescriptorCount: 2_238,
+            combinedWatcherDescriptorCount: 2_240,
             governorExecutable: intent.driverExecutable,
             supervisorExecutable: intent.driverExecutable,
             gitExecutable: intent.driverExecutable,

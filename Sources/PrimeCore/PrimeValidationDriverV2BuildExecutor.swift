@@ -103,6 +103,7 @@ public struct PrimeValidationDriverV2BuildProcessObservation: Codable, Equatable
 public struct PrimeValidationDriverV2BuildRawObservation {
     public let process: PrimeValidationDriverV2BuildProcessObservation
     public let artifacts: PrimeValidationDriverV2BuildArtifactsObservation
+    public let pinnedBundle: PrimeValidationDriverV2PinnedBundleStagingObservation
     public let toolchain: PrimeValidationSwiftPMToolchainObservation
     public let swiftPackageExecutableData: Data
     public let swiftBuildPersonalityIdentity:
@@ -265,6 +266,14 @@ enum PrimeValidationDriverV2BuildExecutor {
         let prefix = state.context.workspaceRootAbsolutePath + "/"
         let metallib = state.context.requiredPinnedMetallibAbsolutePath
         guard metallib.hasPrefix(prefix) else { throw buildRejected("metallib_path") }
+        // The root validation suite consumes the retained calibration bundle.
+        // Its historical bytes are authenticated and copied after SwiftPM has
+        // finished; this transition does not claim a new shader compilation.
+        let pinnedBundle = try state.pinnedBundleInput.stage(
+            into: staging.workspaceRoot,
+            deadlineNanoseconds: state.deadline.expiresAtUptimeNanoseconds
+        )
+        try owner.revalidateContinuity(staging: staging)
         let artifacts = try PrimeValidationDriverV2BuildArtifacts.capture(
             workspaceRoot: staging.workspaceRoot,
             scratchRelativePath: "root-release-build",
@@ -292,6 +301,7 @@ enum PrimeValidationDriverV2BuildExecutor {
         else { throw buildRejected("package_personality_join") }
         let observation = PrimeValidationDriverV2BuildRawObservation(
             process: process, artifacts: artifacts.observation,
+            pinnedBundle: pinnedBundle,
             toolchain: admission.toolchain.observation,
             swiftPackageExecutableData: executable.data,
             swiftBuildPersonalityIdentity:

@@ -15,6 +15,8 @@ package struct PrimeValidationDriverV2BuildDurableBindingEnvelopeV1: Codable {
     package let toolchain: PrimeValidationToolchainAdmissionReceiptV2
     package let process: PrimeValidationDriverV2BuildProcessObservation
     package let artifacts: PrimeValidationDriverV2BuildArtifactsObservation
+    /// Preserved calibration input and its copies; this records no Metal compilation.
+    package let pinnedBundle: PrimeValidationDriverV2PinnedBundleStagingObservation
 
     package func validate(
         intent: PrimeValidationRunIntentV2,
@@ -31,6 +33,9 @@ package struct PrimeValidationDriverV2BuildDurableBindingEnvelopeV1: Codable {
         try Self.validateProcess(process, intent: intent, toolchain: toolchain,
                                  supervisorPID: expectedSupervisorPID)
         try Self.validateArtifacts(artifacts, intent: intent, process: process)
+        try Self.validatePinnedBundle(pinnedBundle, intent: intent,
+            childWaitUptimeNanoseconds: process.waitReturnedUptimeNanoseconds,
+            artifacts: artifacts, deadlineExpiresAtUptimeNanoseconds: process.deadlineExpiresAtUptimeNanoseconds)
         let expected = try Self.makeReceipt(
             intent: intent, process: process, artifacts: artifacts,
             source: receipt.sourceSnapshotAfterBuild,
@@ -195,6 +200,102 @@ package struct PrimeValidationDriverV2BuildDurableBindingEnvelopeV1: Codable {
         else { throw PrimeValidationDriverV2Error.invalidBuildReceipt }
     }
 
+    package static func validatePinnedBundle(
+        _ value: PrimeValidationDriverV2PinnedBundleStagingObservation,
+        intent: PrimeValidationRunIntentV2,
+        childWaitUptimeNanoseconds: UInt64,
+        artifacts: PrimeValidationDriverV2BuildArtifactsObservation,
+        deadlineExpiresAtUptimeNanoseconds: UInt64
+    ) throws {
+        let source = "artifacts/optimizer-restore-gate-865073a-20260729T183341Z/"
+        let release = "root-release-build/arm64-apple-macosx/release/"
+        let test = release + "ErgenticsPrimePackageTests.xctest/"
+        let resource = "Contents/Resources/"
+        let metal = PrimePinnedMLXMetallib.sourceBundleRelativePath
+        let plist = PrimePinnedMLXMetallib.infoPlistSourceRelativePath
+        let sourcePaths = [source + metal, source + plist].sorted()
+        let destinationPaths = [release + metal, release + plist,
+                                test + resource + metal, test + resource + plist].sorted()
+        guard intent.requiredPinnedMetallib.relativePath == release + metal,
+              intent.requiredPinnedMetallib.content.byteCount == PrimePinnedMLXMetallib.expectedByteCount,
+              intent.requiredPinnedMetallib.content.sha256 == PrimePinnedMLXMetallib.expectedSHA256,
+              value.input.files.map(\.relativePath) == sourcePaths,
+              value.destinations.map(\.relativePath) == destinationPaths,
+              value.exclusivePublicationObserved, value.durableSynchronizationObserved,
+              childWaitUptimeNanoseconds > 0,
+              value.stagingStartedAtUptimeNanoseconds >= childWaitUptimeNanoseconds,
+              value.stagingCompletedAtUptimeNanoseconds > value.stagingStartedAtUptimeNanoseconds,
+              value.stagingCompletedAtUptimeNanoseconds <= artifacts.captureStartedAtUptimeNanoseconds,
+              artifacts.captureStartedAtUptimeNanoseconds < deadlineExpiresAtUptimeNanoseconds,
+              intent.roots.repositoryRoot.deviceID == intent.roots.workspaceRoot.deviceID
+        else { throw PrimeValidationDriverV2Error.invalidBuildReceipt }
+        let allFiles = value.input.files + value.destinations
+        let identities = allFiles.map { "\($0.metadata.deviceID):\($0.metadata.inode)" }
+        guard Set(identities).count == allFiles.count else {
+            throw PrimeValidationDriverV2Error.invalidBuildReceipt
+        }
+        for (index, file) in allFiles.enumerated() {
+            let isMetal = file.relativePath.hasSuffix("/" + metal)
+            let count = isMetal ? PrimePinnedMLXMetallib.expectedByteCount
+                : PrimePinnedMLXMetallib.expectedInfoPlistByteCount
+            let hash = isMetal ? PrimePinnedMLXMetallib.expectedSHA256
+                : PrimePinnedMLXMetallib.expectedInfoPlistSHA256
+            let m = file.metadata
+            guard file.byteCount == count, file.sha256 == hash,
+                  m.deviceID == intent.roots.repositoryRoot.deviceID,
+                  m.inode > 0, m.ownerUserID == intent.roots.repositoryRoot.ownerUserID,
+                  m.byteCount >= 0, UInt64(m.byteCount) == count,
+                  m.mode & UInt32(S_IFMT) == UInt32(S_IFREG),
+                  m.mode & 0o7133 == 0, m.mode & 0o400 != 0,
+                  m.linkCount == 1, m.flags == 0, m.specialDeviceID == 0,
+                  m.allocatedBlocks >= 0, m.blockSize > 0,
+                  (0..<1_000_000_000).contains(m.modificationNanoseconds),
+                  (0..<1_000_000_000).contains(m.statusChangeNanoseconds),
+                  (0..<1_000_000_000).contains(m.birthNanoseconds),
+                  index < value.input.files.count || m.mode & 0o7777 == 0o444
+            else { throw PrimeValidationDriverV2Error.invalidBuildReceipt }
+        }
+        let destinations = Dictionary(uniqueKeysWithValues: value.destinations.map { ($0.relativePath, $0) })
+        guard let cliMetal = destinations[release + metal],
+              artifacts.metallibRelativePath == cliMetal.relativePath,
+              artifacts.metallibByteCount == cliMetal.byteCount,
+              artifacts.metallibSHA256 == cliMetal.sha256,
+              metadataMatches(cliMetal.metadata, artifacts.metallibMetadata)
+        else { throw PrimeValidationDriverV2Error.invalidBuildReceipt }
+        for suffix in [metal, plist] {
+            guard let file = destinations[test + resource + suffix],
+                  let entry = artifacts.bundleEntries.first(where: { $0.relativePath == resource + suffix }),
+                  entry.kind == "regular_file", entry.mode == 0o444,
+                  entry.byteCount == file.byteCount, entry.sha256 == file.sha256,
+                  metadataMatches(file.metadata, entry.sourceMetadata)
+            else { throw PrimeValidationDriverV2Error.invalidBuildReceipt }
+        }
+        // The artifact copier must create additional inodes, never aliases of
+        // the retained source files or the four workspace publications.
+        let capturedIdentities = artifacts.capturedArtifactMetadata.values.map {
+            "\($0.deviceID):\($0.inode)"
+        }
+        guard Set(identities).isDisjoint(with: capturedIdentities) else {
+            throw PrimeValidationDriverV2Error.invalidBuildReceipt
+        }
+    }
+
+    private static func metadataMatches(
+        _ a: PrimeValidationDriverV2PinnedBundleMetadataObservation,
+        _ b: PrimeValidationDriverV2BuildArtifactMetadataObservation
+    ) -> Bool {
+        a.deviceID == b.deviceID && a.inode == b.inode && a.mode == b.mode
+            && a.ownerUserID == b.ownerUserID && a.ownerGroupID == b.ownerGroupID
+            && a.linkCount == b.linkCount && a.specialDeviceID == b.specialDeviceID
+            && a.byteCount == b.byteCount && a.allocatedBlocks == b.allocatedBlocks
+            && a.blockSize == b.blockSize && a.flags == b.flags && a.generation == b.generation
+            && a.modificationSeconds == b.modificationSeconds
+            && a.modificationNanoseconds == b.modificationNanoseconds
+            && a.statusChangeSeconds == b.statusChangeSeconds
+            && a.statusChangeNanoseconds == b.statusChangeNanoseconds
+            && a.birthSeconds == b.birthSeconds && a.birthNanoseconds == b.birthNanoseconds
+    }
+
     fileprivate static func makeReceipt(
         intent: PrimeValidationRunIntentV2,
         process p: PrimeValidationDriverV2BuildProcessObservation,
@@ -308,7 +409,7 @@ package final class PrimeValidationDriverV2BuildBinding: @unchecked Sendable {
             schemaVersion: 1, predecessorRawTerminalSHA256: predecessorRawTerminalSHA256,
             predecessorSupervisorPID: predecessorSupervisorPID,
             receipt: receipt, toolchain: toolchain,
-            process: observation.process, artifacts: observation.artifacts)
+            process: observation.process, artifacts: observation.artifacts, pinnedBundle: observation.pinnedBundle)
         try envelope.validate(intent: intent, expectedSupervisorPID: predecessorSupervisorPID,
                               expectedPredecessorRawTerminalSHA256: predecessorRawTerminalSHA256)
         let bytes = try PrimeCanonicalJSON.encode(envelope)
