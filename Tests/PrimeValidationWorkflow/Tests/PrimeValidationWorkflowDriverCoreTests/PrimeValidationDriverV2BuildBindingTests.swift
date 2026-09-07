@@ -91,6 +91,51 @@ final class PrimeValidationDriverV2BuildBindingTests: XCTestCase {
             try supervised.requireCompleteSuccess(expectedMatchedTestCount: 0)
             XCTAssertFalse(child(audit(session: 99)).process.completeSafetyObserved)
         }
+        // Retain this existing test identifier. H extends the supervised
+        // data-role set to shards; identity/session joins still reject drift.
+        let testID = try PrimeValidationTestID.parse(
+            "PrimeCoreTests.ExampleTests/testOne", framework: .xctest)
+        func plan(_ index: Int) throws -> PrimeValidationShardPlanV2 {
+            try .make(key: .init(runID: "run-session-policy", arm: .reference,
+                lane: .sequentialXCTest, index: index), selectionMode: .allInventory,
+                testIDs: [testID], filterPattern: "")
+        }
+        func shardInvocation(_ plan: PrimeValidationShardPlanV2,
+                             arguments: [String] = ["test", "--skip-build"])
+            -> PrimeValidationInvocationV2 {
+            .init(runID: plan.key.runID, role: .shard, shardKey: plan.key, shardID: plan.shardID,
+                executable: .init(absolutePath: "/fixture/swift", content: .init(data: Data([1]))),
+                arguments: arguments, orderedEnvironment: [],
+                workingDirectoryAbsolutePath: "/fixture/repository", primaryResult: .standardOutput,
+                standardOutputRelativePath: "shards/stdout.log", standardErrorRelativePath: "shards/stderr.log")
+        }
+        let planned = try plan(0), invocation = shardInvocation(planned)
+        try invocation.validate()
+        func shardChild(_ process: PrimeValidationProcessAuditV2) -> PrimeValidationObservedChildReceiptV2 {
+            .init(invocation: invocation, primaryResult: .standardOutput,
+                standardOutputArtifact: .init(name: "standard_output",
+                    relativePath: invocation.standardOutputRelativePath, content: empty),
+                standardErrorArtifact: .init(name: "standard_error",
+                    relativePath: invocation.standardErrorRelativePath, content: empty),
+                process: process, activeNanoseconds: 1)
+        }
+        let supervised = shardChild(audit(session: 99, supervisor: 99))
+        try supervised.validate(expectedInvocation: invocation, maximumActiveNanoseconds: 10)
+        XCTAssertThrowsError(try shardChild(audit(session: 99, supervisor: 98))
+            .validate(expectedInvocation: invocation, maximumActiveNanoseconds: 10)) { error in
+            XCTAssertEqual(error as? PrimeValidationDriverV2Error, .invalidShardReceipt)
+        }
+        let wrongInvocation = shardInvocation(planned, arguments: ["test", "--filter", ".*"])
+        let wrongPlan = shardInvocation(try plan(1))
+        for changed in [wrongInvocation, wrongPlan] {
+            try changed.validate()
+            XCTAssertThrowsError(try supervised.validate(expectedInvocation: changed,
+                maximumActiveNanoseconds: 10)) { error in
+                XCTAssertEqual(error as? PrimeValidationDriverV2Error, .invalidBinding("observed_child"))
+            }
+        }
+        // This verifies a recorded process/invocation projection only. It
+        // neither parses selected test results nor authorizes completion.
     }
 
     func testSupervisorRequestPreservesLegacyEBytesAndRequiresExplicitF() throws {
@@ -114,7 +159,7 @@ final class PrimeValidationDriverV2BuildBindingTests: XCTestCase {
         try f.validate()
         let fBytes = try PrimeCanonicalJSON.encode(f)
         XCTAssertNotEqual(bytes, fBytes)
-        var fObject = try XCTUnwrap(JSONSerialization.jsonObject(with: fBytes) as? [String: Any])
+        let fObject = try XCTUnwrap(JSONSerialization.jsonObject(with: fBytes) as? [String: Any])
         XCTAssertEqual(fObject["terminal_gate"] as? String, "F")
         XCTAssertEqual(try PrimeCanonicalJSON.decode(
             PrimeValidationDriverV2SupervisorLaunchRequestV1.self, from: fBytes), f)
@@ -129,10 +174,24 @@ final class PrimeValidationDriverV2BuildBindingTests: XCTestCase {
         XCTAssertNotEqual(gBytes, fBytes)
         XCTAssertEqual(try PrimeCanonicalJSON.decode(
             PrimeValidationDriverV2SupervisorLaunchRequestV1.self, from: gBytes), g)
-        fObject["terminal_gate"] = "H"
+        // H is now an explicitly admitted gate. Change only the enum token
+        // in already-canonical F bytes; JSONSerialization key collation must
+        // not be the reason this unknown-gate case is rejected.
+        let unknown = Data(String(decoding: fBytes, as: UTF8.self)
+            .replacingOccurrences(of: "\"terminal_gate\":\"F\"",
+                                  with: "\"terminal_gate\":\"X\"").utf8)
+        XCTAssertNotEqual(unknown, fBytes)
+        XCTAssertEqual(unknown.count, fBytes.count)
+        XCTAssertThrowsError(try JSONDecoder().decode(
+            PrimeValidationDriverV2SupervisorLaunchRequestV1.self, from: unknown
+        )) { error in
+            guard case DecodingError.dataCorrupted(let context) = error else {
+                return XCTFail("Expected unknown terminal_gate enum rejection, got \(error)")
+            }
+            XCTAssertEqual(context.codingPath.map(\.stringValue), ["terminal_gate"])
+        }
         XCTAssertThrowsError(try PrimeCanonicalJSON.decode(
-            PrimeValidationDriverV2SupervisorLaunchRequestV1.self,
-            from: JSONSerialization.data(withJSONObject: fObject, options: [.sortedKeys, .withoutEscapingSlashes])))
+            PrimeValidationDriverV2SupervisorLaunchRequestV1.self, from: unknown))
     }
 
     func testDurableOuterBudgetRequiresExplicitFBeforeLeafValidation() throws {

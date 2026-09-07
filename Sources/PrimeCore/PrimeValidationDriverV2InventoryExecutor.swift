@@ -82,6 +82,7 @@ struct PrimeValidationDriverV2InventoryExecutionState {
     let pinnedBundleInput: PrimeValidationDriverV2PinnedBundleInput
     let buildStaging: PrimeValidationDriverV2BuildStaging
     let artifacts: PrimeValidationDriverV2BuildArtifacts
+    let executionPredecessorObservation: PrimeValidationDriverV2FixedProbeRawObservation?
 }
 
 @_spi(PrimeValidationDriverV2RoleFacade)
@@ -110,7 +111,8 @@ public final class PrimeValidationDriverV2InventoryOwner: @unchecked Sendable {
         state = .init(retainedState: buildState.retainedState,
             context: buildState.context, policies: policies, deadline: deadline,
             pinnedBundleInput: buildState.pinnedBundleInput,
-            buildStaging: staging, artifacts: artifacts)
+            buildStaging: staging, artifacts: artifacts,
+            executionPredecessorObservation: buildState.executionPredecessorObservation)
         lastObservedUptimeNanoseconds = deadline.startUptimeNanoseconds
     }
 
@@ -148,6 +150,19 @@ public final class PrimeValidationDriverV2InventoryOwner: @unchecked Sendable {
         authorizedChildCount += 1
         do { try checkpoint(state, startsNewWork: true) }
         catch { self.state = nil; throw error }
+    }
+
+    func consumeForExecution(staging: PrimeValidationDriverV2InventoryStaging) throws
+        -> PrimeValidationDriverV2ExecutionPlanRawCapability {
+        lock.lock(); defer { lock.unlock() }
+        guard let state, executionStarted, authorizedChildCount == 2,
+              inventoryStaging === staging, state.context.executionAuthorized else {
+            self.state = nil; throw inventoryRejected("H_transfer_precondition")
+        }
+        self.state = nil
+        try checkpoint(state, startsNewWork: true)
+        try staging.requireCompleteValidatedInventory()
+        return try .init(state: state, inventoryStaging: staging)
     }
 
     private func checkpoint(_ state: PrimeValidationDriverV2InventoryExecutionState,
@@ -222,13 +237,26 @@ public final class PrimeValidationDriverV2InventoryRawCapability: @unchecked Sen
 
 @_spi(PrimeValidationDriverV2RoleFacade)
 public final class PrimeValidationDriverV2InventoryBoundLifetime: @unchecked Sendable {
+    private let transferLock = NSLock()
+    private var transferred = false
     private let owner: PrimeValidationDriverV2InventoryOwner
     private let staging: PrimeValidationDriverV2InventoryStaging
     fileprivate init(owner: PrimeValidationDriverV2InventoryOwner,
                      staging: PrimeValidationDriverV2InventoryStaging) {
         self.owner = owner; self.staging = staging
     }
-    public func revalidateContinuity() throws { try owner.revalidateContinuity() }
+    public func revalidateContinuity() throws {
+        transferLock.lock(); defer { transferLock.unlock() }
+        guard !transferred else { throw inventoryRejected("bound_transferred") }
+        try owner.revalidateContinuity()
+    }
+    public func consumeForExecution() throws -> PrimeValidationDriverV2ExecutionPlanRawCapability {
+        transferLock.lock(); defer { transferLock.unlock() }
+        guard !transferred else { throw inventoryRejected("bound_transferred") }
+        transferred = true
+        return try owner.consumeForExecution(staging: staging)
+    }
+
     fileprivate func poison() { owner.poison() }
     fileprivate func publishBindingData(_ data: Data) throws {
         do {
@@ -292,6 +320,13 @@ final class PrimeValidationDriverV2InventoryStaging {
             if let binding = stream.binding { try root.verify(binding) }
         }
         for binding in immutableBindings { try root.verify(binding) }
+    }
+    func requireCompleteValidatedInventory() throws {
+        guard leaves == Self.streamLeaves.union(Self.recordLeaves).union(["binding.json"]),
+              streams.count == 4, streams.values.allSatisfy({ $0.binding != nil }) else {
+            throw inventoryRejected("validated_inventory_required")
+        }
+        try revalidate()
     }
     func createStream(_ leaf: String) throws -> Int32 {
         guard Self.streamLeaves.contains(leaf), !leaves.contains(leaf) else {

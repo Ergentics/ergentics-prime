@@ -3145,7 +3145,9 @@ private extension PrimeValidationDriverV2FixedProbeSemanticValidator {
         }
         let receiptIdentity = try PrimeValidationDriverV2Validation.identity(
             PrimeValidationDriverV2DurableReceiptIdentityProjectionV2(
-                schema: expectation.terminalGate == .gateG
+                schema: expectation.terminalGate == .gateH
+                    ? "prime_driver_v2_gate_h_predecessor_durable_journal_receipt_v1"
+                    : expectation.terminalGate == .gateG
                     ? "prime_driver_v2_gate_g_predecessor_durable_journal_receipt_v1"
                     : expectation.terminalGate == .gateF
                     ? "prime_driver_v2_gate_f_predecessor_durable_journal_receipt_v1"
@@ -3196,7 +3198,9 @@ private extension PrimeValidationDriverV2FixedProbeSemanticValidator {
                 orderedChildProcessGroupIdentifiers:
                     orderedChildProcessGroupIdentifiers,
                 rawTerminalSHA256: rawTerminalSHA256,
-                supervisorExitContract: expectation.terminalGate == .gateG
+                supervisorExitContract: expectation.terminalGate == .gateH
+                    ? "binding_bridge_then_gate_h_publication_final_revalidation_normal_zero_v1"
+                    : expectation.terminalGate == .gateG
                     ? "binding_bridge_then_gate_g_inventory_binding_final_revalidation_normal_zero_v1"
                     : expectation.terminalGate == .gateF
                     ? "binding_bridge_then_gate_f_build_binding_final_revalidation_normal_zero_v1"
@@ -3236,7 +3240,9 @@ private extension PrimeValidationDriverV2FixedProbeSemanticValidator {
             durableSwiftFrontendAbsolutePath(expectation.intent)
         let outerDeadline = expectation
             .outerDeadlineStartedAtUptimeNanoseconds
-            .addingReportingOverflow(expectation.terminalGate == .gateG
+            .addingReportingOverflow(expectation.terminalGate == .gateH
+                ? PrimeValidationDriverV2TerminalGate.gateHOuterDurationNanoseconds
+                : expectation.terminalGate == .gateG
                 ? 1_260_000_000_000 : expectation.terminalGate == .gateF
                     ? 960_000_000_000 : durableOuterDeadlineNanoseconds)
         let imageVnodes = [

@@ -125,11 +125,23 @@ final class PrimeValidationDriverV2InventoryBindingTests: XCTestCase {
     }
 
     func testSupervisedInventoryReceiptDoesNotAdmitShardRole() throws {
-        let shard = invocation(.shard)
-        let child = try Envelope.makeChild(invocation: shard, process: process(),
-            intervalStartedAt: 1000, matchedCount: 0, supervisorPID: 99)
-        XCTAssertThrowsError(try child.validate(expectedInvocation: shard, maximumActiveNanoseconds: 300_000_000_000)) { error in
-            XCTAssertEqual(error as? PrimeValidationDriverV2Error, .invalidBinding("observed_child"))
+        let base = invocation(.listXCTest)
+        let plan = try PrimeValidationShardPlanV2.make(
+            key: .init(runID: base.runID, arm: .reference, lane: .sequentialXCTest, index: 0),
+            selectionMode: .allInventory,
+            testIDs: [.parse("PrimeCoreTests.ExampleTests/testOne", framework: .xctest)],
+            filterPattern: "")
+        let shard = PrimeValidationInvocationV2(runID: base.runID, role: .shard,
+            shardKey: plan.key, shardID: plan.shardID, executable: base.executable,
+            arguments: ["test", "--skip-build"], orderedEnvironment: base.orderedEnvironment,
+            workingDirectoryAbsolutePath: base.workingDirectoryAbsolutePath,
+            primaryResult: .standardOutput,
+            standardOutputRelativePath: "shards/stdout.log",
+            standardErrorRelativePath: "shards/stderr.log")
+        try shard.validate()
+        XCTAssertThrowsError(try Envelope.makeChild(invocation: shard, process: process(),
+            intervalStartedAt: 1000, matchedCount: 0, supervisorPID: 99)) { error in
+            XCTAssertEqual(error as? PrimeValidationDriverV2Error, .invalidInventoryReceipt)
         }
     }
 

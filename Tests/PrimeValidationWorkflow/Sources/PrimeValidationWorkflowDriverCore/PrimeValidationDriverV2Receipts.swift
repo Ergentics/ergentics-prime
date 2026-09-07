@@ -591,7 +591,7 @@ public struct PrimeValidationObservedChildReceiptV2:
     ) throws {
         guard invocation == expectedInvocation,
               process.supervisorSessionIdentifier == nil
-                || [.build, .listXCTest, .listSwiftTesting].contains(invocation.role),
+                || [.build, .listXCTest, .listSwiftTesting, .shard].contains(invocation.role),
               activeNanoseconds > 0,
               activeNanoseconds <= maximumActiveNanoseconds,
               standardOutputArtifact.name == "standard_output",

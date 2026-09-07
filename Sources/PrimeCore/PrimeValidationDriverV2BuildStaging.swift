@@ -55,6 +55,7 @@ final class PrimeValidationDriverV2BuildStaging {
     private let buildDirectory: Directory
     private let artifactsDirectory: Directory
     private var inventoryDirectory: Directory?
+    private var executionDirectory: Directory?
     let context: PrimeValidationDriverV2RoleContext
     let artifactRoot: PrimeArtifactRoot
     let buildRoot: PrimeArtifactRoot
@@ -145,7 +146,7 @@ final class PrimeValidationDriverV2BuildStaging {
               try Self.entries(runDirectory.descriptor)
                 == (inventoryDirectory == nil
                     ? Set(["artifacts", "build"])
-                    : Set(["artifacts", "build", "inventory"])),
+                    : Set(executionDirectory == nil ? ["artifacts", "build", "inventory"] : ["artifacts", "build", "inventory", "execution"])),
               try Self.entries(buildDirectory.descriptor) == buildLeaves
         else { throw Self.rejected("root_ledger") }
         for directory in directories.values { try directory.revalidate() }
@@ -153,6 +154,7 @@ final class PrimeValidationDriverV2BuildStaging {
         try buildDirectory.revalidate()
         try artifactsDirectory.revalidate()
         try inventoryDirectory?.revalidate()
+        try executionDirectory?.revalidate()
         try lockedDependencies.revalidate()
         for (leaf, stream) in streams {
             try stream.revalidate(parent: buildDirectory.descriptor, leaf: leaf)
@@ -178,6 +180,19 @@ final class PrimeValidationDriverV2BuildStaging {
         try Self.synchronize(runDirectory.descriptor)
         try runDirectory.freezeMetadata()
         try directory.freezeMetadata()
+        try revalidate(against: admission)
+        return directory
+    }
+
+    func createExecutionDirectory() throws -> Directory {
+        guard executionDirectory == nil, inventoryDirectory != nil,
+              context.executionAuthorized else { throw Self.rejected("execution_transfer_precondition") }
+        try revalidate(against: admission)
+        let directory = try Directory.create(parent: runDirectory.descriptor,
+            leaf: "execution", path: runDirectory.path + "/execution")
+        executionDirectory = directory
+        try Self.synchronize(runDirectory.descriptor)
+        try runDirectory.freezeMetadata(); try directory.freezeMetadata()
         try revalidate(against: admission)
         return directory
     }

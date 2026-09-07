@@ -2289,7 +2289,7 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
         )
         XCTAssertEqual(
             driverImageSource.components(
-                separatedBy: ".roleContext(from: intent)"
+                separatedBy: ".roleContext(from: intent, terminalGate: terminalGate, executionGoScopeData: executionGoScopeData)"
             ).count - 1,
             1
         )

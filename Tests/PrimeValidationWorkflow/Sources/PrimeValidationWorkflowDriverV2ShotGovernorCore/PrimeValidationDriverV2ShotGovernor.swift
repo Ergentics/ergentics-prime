@@ -74,6 +74,8 @@ package struct PrimeValidationDriverV2ShotCapsuleV1:
         "prime_driver_v2_gate_f_shot_capsule_v1"
     package static let inventoryArtifactKind =
         "prime_driver_v2_gate_g_shot_capsule_v1"
+    package static let executionArtifactKind =
+        "prime_driver_v2_gate_h_shot_capsule_v1"
 
     package let schemaVersion: Int
     package let artifactKind: String
@@ -90,6 +92,8 @@ package struct PrimeValidationDriverV2ShotCapsuleV1:
     package let inventoryExecutionCount: Int
     package let gateFAuthorized: Bool
     package let gateGAuthorized: Bool
+    package var gateHAuthorized: Bool? = nil
+    package var executionGoScopeData: Data? = nil
     package let controlCommit: String
     package let controlTree: String
     package let sourceCommit: String
@@ -113,33 +117,38 @@ package struct PrimeValidationDriverV2ShotCapsuleV1:
     package let intent: PrimeValidationRunIntentV2
 
     package var terminalGate: PrimeValidationDriverV2TerminalGate {
+        if artifactKind == Self.executionArtifactKind { return .gateH }
         if artifactKind == Self.inventoryArtifactKind { return .gateG }
         return artifactKind == Self.buildArtifactKind ? .gateF : .gateE
     }
 
     fileprivate var outerJournalLeaf: String {
+        if terminalGate == .gateH { return "gate-h-shot-governor-journal" }
         if terminalGate == .gateG { return "gate-g-shot-governor-journal" }
         return terminalGate == .gateF ? "gate-f-shot-governor-journal"
             : PrimeValidationDriverV2GovernorJournal.rootLeaf
     }
 
     fileprivate var runsBuildAndStaging: Bool {
-        terminalGate == .gateF || terminalGate == .gateG
+        terminalGate == .gateF || terminalGate == .gateG || terminalGate == .gateH
     }
 
     fileprivate var outerDurationNanoseconds: UInt64 {
+        if terminalGate == .gateH { return PrimeValidationDriverV2TerminalGate.gateHOuterDurationNanoseconds }
         if terminalGate == .gateG { return 1_260_000_000_000 }
         return terminalGate == .gateF ? 960_000_000_000
             : PrimeValidationDriverV2GovernorDeadline.durationNanoseconds
     }
 
     fileprivate var outerStartSchema: String {
+        if terminalGate == .gateH { return "prime_driver_v2_gate_h_outer_start_v1" }
         if terminalGate == .gateG { return "prime_driver_v2_gate_g_outer_start_v1" }
         return terminalGate == .gateF ? "prime_driver_v2_gate_f_outer_start_v1"
             : "prime_driver_v2_gate_e_outer_start_v1"
     }
 
     fileprivate var outerTerminalSchema: String {
+        if terminalGate == .gateH { return "prime_driver_v2_gate_h_outer_terminal_v1" }
         if terminalGate == .gateG { return "prime_driver_v2_gate_g_outer_terminal_v1" }
         return terminalGate == .gateF ? "prime_driver_v2_gate_f_outer_terminal_v1"
             : "prime_driver_v2_gate_e_outer_terminal_v1"
@@ -147,7 +156,14 @@ package struct PrimeValidationDriverV2ShotCapsuleV1:
 
     package func validate(exactCanonicalBytes: Data) throws {
         let phaseFieldsMatch: Bool
-        if artifactKind == Self.inventoryArtifactKind {
+        if artifactKind == Self.executionArtifactKind {
+            phaseFieldsMatch = gateFAuthorized && gateGAuthorized && gateHAuthorized == true
+                && executionGoScopeData != nil
+                && swiftPMBuildExecutionCount == 1 && artifactStagingExecutionCount == 1
+                && inventoryExecutionCount == 2 && networkOperationCount == nil
+                && dependencyFetchCount == nil && githubOperationCount == nil
+                && dependencyResolutionPolicy == "locked_package_resolved"
+        } else if artifactKind == Self.inventoryArtifactKind {
             phaseFieldsMatch = gateFAuthorized && gateGAuthorized
                 && swiftPMBuildExecutionCount == 1
                 && artifactStagingExecutionCount == 1
@@ -180,6 +196,7 @@ package struct PrimeValidationDriverV2ShotCapsuleV1:
         }
         guard schemaVersion == Self.schemaVersion,
               phaseFieldsMatch,
+              terminalGate == .gateH || (gateHAuthorized == nil && executionGoScopeData == nil),
               attempt == 1,
               !rerunAuthorized,
               localOnly,
@@ -209,6 +226,22 @@ package struct PrimeValidationDriverV2ShotCapsuleV1:
             )
         }
         try intent.validate()
+        if terminalGate == .gateH {
+            guard let executionGoScopeData else {
+                throw governorRejected(PrimeValidationDriverV2ShotGovernorStatus.capsuleTransport, "H_missing_scope")
+            }
+            let declaredScope = try PrimeCanonicalJSON.decode(PrimeValidationDriverV2DeclaredExecutionScopeV1.self,
+                from: executionGoScopeData)
+            let expectedScope = try PrimeValidationDriverV2DeclaredExecutionScopeV1(
+                intent: intent, sourceCommit: sourceCommit, sourceTree: sourceTree,
+                sourceTreeReplaySHA256: declaredScope.sourceTreeReplaySHA256,
+                sourceIdentitySHA256: sourceIdentitySHA256, governorExecutable: governorExecutable,
+                supervisorExecutable: supervisorExecutable)
+            guard executionGoScopeData == (try PrimeCanonicalJSON.encode(expectedScope)) else {
+                throw governorRejected(PrimeValidationDriverV2ShotGovernorStatus.capsuleTransport,
+                    "H_declared_go_scope")
+            }
+        }
         try governorExecutable.validate()
         try supervisorExecutable.validate()
         try gitExecutable.validate()
@@ -332,6 +365,8 @@ package struct PrimeValidationDriverV2ShotCapsuleV1:
         case inventoryExecutionCount = "inventory_execution_count"
         case gateFAuthorized = "gate_f_authorized"
         case gateGAuthorized = "gate_g_authorized"
+        case gateHAuthorized = "gate_h_authorized"
+        case executionGoScopeData = "execution_go_scope_data"
         case controlCommit = "control_commit"
         case controlTree = "control_tree"
         case sourceCommit = "source_commit"
@@ -1425,6 +1460,7 @@ private final class PrimeValidationDriverV2GovernorJournal {
     private let baseDescriptor: Int32
     private let baseAbsolutePath: String
     private let selectedRootLeaf: String
+    private let publicationCaps: [Int]
     private(set) var descriptor: Int32 = -1
     private let rootDeviceID: UInt64
     private let rootInode: UInt64
@@ -1441,6 +1477,7 @@ private final class PrimeValidationDriverV2GovernorJournal {
         guard rootLeaf == Self.rootLeaf
                 || rootLeaf == "gate-f-shot-governor-journal"
                 || rootLeaf == "gate-g-shot-governor-journal"
+                || rootLeaf == "gate-h-shot-governor-journal"
         else {
             throw governorRejected(
                 PrimeValidationDriverV2ShotGovernorStatus.admission,
@@ -1448,6 +1485,9 @@ private final class PrimeValidationDriverV2GovernorJournal {
             )
         }
         selectedRootLeaf = rootLeaf
+        publicationCaps = rootLeaf == "gate-h-shot-governor-journal"
+            ? [Self.caps[0], Self.caps[1], Self.caps[2], PrimeValidationDriverV2TerminalGate.gateHOuterTerminalMaximumBytes]
+            : Self.caps
         baseDescriptor = base.descriptor
         baseAbsolutePath = base.absolutePath
         let result = selectedRootLeaf.withCString {
@@ -1546,7 +1586,7 @@ private final class PrimeValidationDriverV2GovernorJournal {
         guard ordinal < Self.orderedLeaves.count,
               Self.orderedLeaves[ordinal] == expectedLeaf,
               !data.isEmpty,
-              data.count <= Self.caps[ordinal],
+              data.count <= publicationCaps[ordinal],
               data.last != 0x0a
         else {
             throw governorRejected(
@@ -4365,7 +4405,7 @@ private final class PrimeValidationDriverV2GovernorBuildSnapshot {
         self.swiftPackageImage = swiftPackageImage
         self.pinnedBundleInput = pinnedBundleInput
         self.lockedDependencies = lockedDependencies
-        guard terminalGate == .gateF || terminalGate == .gateG,
+        guard terminalGate == .gateF || terminalGate == .gateG || terminalGate == .gateH,
               predecessor.complete, predecessor.durableFrames.count == 34,
               let rawTerminalSHA256 = predecessor.rawTerminalSHA256
         else { throw Self.rejected("predecessor") }
@@ -4381,8 +4421,8 @@ private final class PrimeValidationDriverV2GovernorBuildSnapshot {
         }
         let run = try Node(parent: evidence.descriptor, leaf: runID, directory: true,
                            owner: evidence.identity,
-                           entries: terminalGate == .gateG
-                            ? ["artifacts", "build", "inventory"] : ["artifacts", "build"],
+                           entries: terminalGate == .gateH ? ["artifacts", "build", "execution", "inventory"]
+                            : terminalGate == .gateG ? ["artifacts", "build", "inventory"] : ["artifacts", "build"],
                            deadline: deadline)
         heldDirectories.append(run)
         let build = try Node(parent: run.descriptor, leaf: "build", directory: true,
@@ -4566,13 +4606,15 @@ private final class PrimeValidationDriverV2GovernorInventorySnapshot {
          intent: PrimeValidationRunIntentV2,
          supervisorPID: Int32, supervisorWaitUptime: UInt64,
          predecessorProcessGroups: Set<Int32>,
+         terminalGate: PrimeValidationDriverV2TerminalGate = .gateG,
          deadline: PrimeValidationDriverV2GovernorDeadline) throws {
         self.evidence = evidence; self.build = build
         try build.revalidate()
         try evidence.revalidate(coordinate: "inventory_evidence")
         let run = try Node(parent: evidence.descriptor, leaf: intent.runID,
             directory: true, owner: evidence.identity,
-            entries: ["artifacts", "build", "inventory"], deadline: deadline)
+            entries: terminalGate == .gateH ? ["artifacts", "build", "execution", "inventory"]
+                : ["artifacts", "build", "inventory"], deadline: deadline)
         let inventory = try Node(parent: run.descriptor, leaf: "inventory",
             directory: true, owner: evidence.identity,
             entries: Self.inventoryLeaves, deadline: deadline)
@@ -4723,6 +4765,408 @@ private final class PrimeValidationDriverV2GovernorInventorySnapshot {
     private static func rejected(_ coordinate: String) -> PrimeValidationDriverV2ShotGovernorFailure {
         governorRejected(PrimeValidationDriverV2ShotGovernorStatus.postReapRejection,
                          "inventory_readback_" + coordinate)
+    }
+}
+
+/// Independent post-reap H observation. Every file is read relative to held
+/// roots; the original raw parsers run again, without reconstructing an owner.
+private final class PrimeValidationDriverV2GovernorExecutionSnapshot {
+    private typealias Node = PrimeValidationDriverV2GovernorBuildSnapshot.Node
+    private final class Tree {
+        let root: Node
+        let directories: [String: Node]
+        let files: [String: Node]
+        init(parent: Int32, leaf: String, paths: Set<String>, owner: PrimeValidationDriverV2GovernorMetadata,
+            deadline: PrimeValidationDriverV2GovernorDeadline) throws {
+            var directoryPaths = Set<String>()
+            for path in paths {
+                let parts = path.split(separator: "/")
+                for count in 1..<parts.count { directoryPaths.insert(parts.prefix(count).joined(separator: "/")) }
+            }
+            let all = paths.union(directoryPaths)
+            func children(_ parent: String) -> [String] {
+                all.filter { ($0 as NSString).deletingLastPathComponent == parent }
+                    .map { ($0 as NSString).lastPathComponent }.sorted()
+            }
+            let root = try Node(parent: parent, leaf: leaf, directory: true, owner: owner,
+                entries: children(""), deadline: deadline)
+            var directories: [String: Node] = [:]
+            for path in directoryPaths.sorted(by: { ($0.split(separator: "/").count, $0) < ($1.split(separator: "/").count, $1) }) {
+                let parentPath = (path as NSString).deletingLastPathComponent
+                directories[path] = try Node(parent: parentPath.isEmpty ? root.descriptor : directories[parentPath]!.descriptor,
+                    leaf: (path as NSString).lastPathComponent, directory: true, owner: owner,
+                    entries: children(path), deadline: deadline)
+            }
+            var files: [String: Node] = [:]
+            for path in paths.sorted() {
+                let parentPath = (path as NSString).deletingLastPathComponent
+                files[path] = try Node(parent: parentPath.isEmpty ? root.descriptor : directories[parentPath]!.descriptor,
+                    leaf: (path as NSString).lastPathComponent, directory: false, owner: owner,
+                    maximumBytes: 16 * 1024 * 1024, deadline: deadline)
+            }
+            self.root = root; self.directories = directories; self.files = files
+        }
+        func revalidate() throws {
+            try root.revalidate()
+            for node in directories.values { try node.revalidate() }
+            for node in files.values { try node.revalidate() }
+        }
+        func bytes(_ path: String) throws -> Data {
+            guard let data = files[path]?.data else { throw PrimeValidationDriverV2GovernorExecutionSnapshot.rejected("missing_" + path) }; return data
+        }
+        func binding(_ path: String, scoped: Bool = false) throws -> PrimeArtifactBinding {
+            let data = try bytes(path)
+            return .init(relativePath: (scoped ? "execution/" : "") + path,
+                sha256: PrimeSHA256.hexDigest(of: data), byteCount: UInt64(data.count), purpose: .immutableData)
+        }
+    }
+    private let evidence: PrimeValidationDriverV2GovernorHeldDirectory
+    private let build: PrimeValidationDriverV2GovernorBuildSnapshot
+    private let inventory: PrimeValidationDriverV2GovernorInventorySnapshot
+    private let run: Node
+    private let execution: Tree
+    private let outputs: Tree
+    private let namespace: PrimeValidationDriverV2PublicationNamespaceReadback
+    let envelope: PrimeValidationDriverV2OuterPublicationEnvelopeV1
+    let envelopeSHA256: String
+    let manifestSHA256: String
+    let recordedGroups: Set<Int32>
+    let immutablePrefixBindings: [PrimeArtifactBinding]
+    let observedStartBindings: [PrimeArtifactBinding]
+    let observedTerminalBindings: [PrimeArtifactBinding]
+    let leaves: [PrimeValidationDriverV2GovernorInnerLeaf]
+    let vnodes: [PrimeValidationDriverV2GovernorVnodeRecord]
+
+    init(evidence: PrimeValidationDriverV2GovernorHeldDirectory,
+        workspace: PrimeValidationDriverV2GovernorHeldDirectory,
+        build: PrimeValidationDriverV2GovernorBuildSnapshot,
+        inventory: PrimeValidationDriverV2GovernorInventorySnapshot,
+        predecessor: PrimeValidationDriverV2GovernorInnerSnapshot,
+        capsule: PrimeValidationDriverV2ShotCapsuleV1, capsuleSHA256: String,
+        swiftPackageImage: PrimeValidationDriverV2GovernorHeldExecutable,
+        supervisorPID: Int32, supervisorWaitUptime: UInt64,
+        deadline: PrimeValidationDriverV2GovernorDeadline) throws {
+        guard capsule.terminalGate == .gateH, let declaredScope = capsule.executionGoScopeData else { throw Self.rejected("scope") }
+        try build.revalidate(); try inventory.revalidate(); try predecessor.revalidate()
+        let plan = try PrimeValidationExecutionPlanV2.make(intent: capsule.intent,
+            buildReceipt: build.envelope.receipt, inventoryReceipt: inventory.envelope.receipt)
+        let run = try Node(parent: evidence.descriptor, leaf: capsule.intent.runID, directory: true,
+            owner: evidence.identity, entries: ["artifacts", "build", "execution", "inventory"], deadline: deadline)
+        var paths = Set(["plan.json", "go.json", "phase-04-start.json", "phase-04-terminal.json",
+            "predecessor-e-start.json", "predecessor-e-terminal.json", "predecessor-e-readback.json",
+            "phase-history.json", "evidence-manifest.json", "final-receipt.json", "publication-envelope.json"])
+        for ordinal in 1...8 { paths.insert(String(format: "phase-ledger-%02d.json", ordinal)) }
+        for ordinal in 7...8 { for suffix in ["start", "result", "terminal"] { paths.insert(String(format: "phase-%02d-%@.json", ordinal, suffix)) } }
+        var outputPaths = Set<String>()
+        for shard in plan.shards {
+            let root = PrimeValidationDriverV2NativeExecutionValidation.shardRoot(shard)
+            for name in ["prestart.json", "start.json", "terminal.json", "stdout.log", "stderr.log", "binding.json"] { paths.insert(root + "/" + name) }
+            if shard.key.lane != .sequentialXCTest { paths.insert(root + "/result.xml"); outputPaths.insert(root + "/result.xml") }
+        }
+        let execution = try Tree(parent: run.descriptor, leaf: "execution", paths: paths,
+            owner: evidence.identity, deadline: deadline)
+        let outputs = try Tree(parent: workspace.descriptor, leaf: "output", paths: outputPaths,
+            owner: workspace.identity, deadline: deadline)
+        let planning = try PrimeCanonicalJSON.decode(PrimeValidationDriverV2ExecutionPlanObservation.self,
+            from: execution.bytes("go.json"))
+        guard planning.declaredExecutionGoScopeData == declaredScope,
+              try execution.bytes("plan.json") == PrimeCanonicalJSON.encode(plan) else { throw Self.rejected("plan_bytes") }
+        try PrimeValidationDriverV2NativeExecutionValidation.validatePlan(planning,
+            intent: capsule.intent, build: build.envelope, inventory: inventory.envelope, plan: plan)
+        guard try execution.binding("phase-04-start.json") == planning.planningStartBinding else {
+            throw Self.rejected("planning_start_actual_binding")
+        }
+        try Self.validateEIdentity(predecessor, capsule: capsule)
+        guard try execution.bytes("predecessor-e-start.json") == predecessor.durableFrames[0].framedBytes,
+              try execution.bytes("predecessor-e-terminal.json") == predecessor.durableFrames[33].framedBytes else {
+            throw Self.rejected("E_copied_frames")
+        }
+        let parser = try PrimeValidationDriverV2ExecutionBinding(intent: capsule.intent,
+            build: build.envelope.receipt, inventory: inventory.envelope.receipt, plan: plan)
+        var parsed: [PrimeValidationDriverV2ParsedShardEvidence] = []
+        var rawShards: [PrimeValidationDriverV2ShardRawObservation] = []
+        var acceptanceBindings: [PrimeArtifactBinding] = []
+        var predecessorHash = PrimeSHA256.hexDigest(of: try execution.bytes("go.json"))
+        var groups = Set<Int32>()
+        for (index, shard) in plan.shards.enumerated() {
+            try deadline.requireTime("H_parser_readback")
+            let root = PrimeValidationDriverV2NativeExecutionValidation.shardRoot(shard)
+            let terminal = try PrimeCanonicalJSON.decode(PrimeValidationDriverV2InventoryTerminalV1.self,
+                from: execution.bytes(root + "/terminal.json"))
+            var fields: [String: Any] = ["shard": try Self.object(planning.schedule.shards[index]),
+                "executionPlanSHA256": parser.planSHA256, "process": try Self.object(terminal.process),
+                "prestartBinding": try Self.object(execution.binding(root + "/prestart.json")),
+                "startBinding": try Self.object(execution.binding(root + "/start.json")),
+                "terminalBinding": try Self.object(execution.binding(root + "/terminal.json")),
+                "standardOutputBinding": try Self.object(execution.binding(root + "/stdout.log")),
+                "standardErrorBinding": try Self.object(execution.binding(root + "/stderr.log")),
+                "standardOutputData": try execution.bytes(root + "/stdout.log").base64EncodedString(),
+                "standardErrorData": try execution.bytes(root + "/stderr.log").base64EncodedString()]
+            if shard.key.lane != .sequentialXCTest {
+                fields["resultBinding"] = try Self.object(execution.binding(root + "/result.xml"))
+                fields["resultData"] = try execution.bytes(root + "/result.xml").base64EncodedString()
+                guard try outputs.bytes(root + "/result.xml") == execution.bytes(root + "/result.xml"),
+                      (outputs.files[root + "/result.xml"]!.metadata.deviceID != execution.files[root + "/result.xml"]!.metadata.deviceID
+                        || outputs.files[root + "/result.xml"]!.metadata.inode != execution.files[root + "/result.xml"]!.metadata.inode)
+                else { throw Self.rejected("original_result_copy") }
+            }
+            let raw = try JSONDecoder().decode(PrimeValidationDriverV2ShardRawObservation.self,
+                from: JSONSerialization.data(withJSONObject: fields))
+            let child = try PrimeValidationDriverV2NativeExecutionValidation.validateShard(raw, index: index,
+                intent: capsule.intent, build: build.envelope, plan: plan, planning: planning,
+                previous: rawShards.last, predecessorSHA256: predecessorHash)
+            guard raw.process.waitReturnedUptimeNanoseconds <= supervisorWaitUptime else { throw Self.rejected("wait_before_supervisor") }
+            groups.insert(raw.process.processGroupIdentifier)
+            for (leaf, stream) in [("stdout.log", raw.process.standardOutput), ("stderr.log", raw.process.standardError)] {
+                let actual = execution.files[root + "/" + leaf]!.metadata
+                guard actual.deviceID == stream.outputDeviceID, actual.inode == stream.outputInode else { throw Self.rejected("stream_vnode") }
+            }
+            let stdout = try PrimeValidationDriverV2NativeExecutionValidation.bound(raw.standardOutputBinding,
+                name: "standard_output", path: root + "/stdout.log", data: raw.standardOutputData)
+            let stderr = try PrimeValidationDriverV2NativeExecutionValidation.bound(raw.standardErrorBinding,
+                name: "standard_error", path: root + "/stderr.log", data: raw.standardErrorData)
+            let result = try PrimeValidationDriverV2NativeExecutionValidation.bound(
+                raw.resultBinding ?? raw.standardOutputBinding, name: "result",
+                path: shard.key.lane == .sequentialXCTest ? root + "/stdout.log" : root + "/result.xml",
+                data: raw.resultData ?? raw.standardOutputData)
+            let accepted = try parser.admit(start: .init(runID: plan.runID, executionPlanSHA256: parser.planSHA256,
+                shard: shard), observedChild: child, result: result, standardOutput: stdout, standardError: stderr)
+            parsed.append(accepted)
+            let transition = try parser.transition(after: parsed)
+            guard transition != .stoppedAtFailedTerminal else { throw Self.rejected("failed_prefix") }
+            let expected = try PrimeValidationDriverV2NativeExecutionValidation.acceptance(raw, transition: transition,
+                nextOriginalShardID: index + 1 < plan.shards.count ? plan.shards[index + 1].shardID : "")
+            guard try execution.bytes(root + "/binding.json") == expected else { throw Self.rejected("parsed_acceptance") }
+            acceptanceBindings.append(try execution.binding(root + "/binding.json"))
+            rawShards.append(raw); predecessorHash = PrimeSHA256.hexDigest(of: expected)
+        }
+        let conclusion = try parser.conclude(parsed)
+        let history = try PrimeCanonicalJSON.decode(PrimeValidationDriverV2PublicationPhaseHistoryV1.self,
+            from: execution.bytes("phase-history.json"))
+        try history.validate(intent: capsule.intent, requireComplete: true)
+        try Self.validateHistory(history, execution: execution, raw: rawShards,
+            planning: planning, build: build, inventory: inventory, predecessor: predecessor,
+            conclusion: conclusion, supervisorWaitUptime: supervisorWaitUptime)
+        let innerData = try execution.bytes("final-receipt.json")
+        guard innerData == (try PrimeCanonicalJSON.encode(conclusion.finalReceipt)) else { throw Self.rejected("raw_final_receipt") }
+        let manifestData = try execution.bytes("evidence-manifest.json")
+        let envelopeData = try execution.bytes("publication-envelope.json")
+        let manifest = try PrimeCanonicalJSON.decode(PrimeValidationDriverV2EvidenceManifestV1.self, from: manifestData)
+        let envelope = try PrimeCanonicalJSON.decode(PrimeValidationDriverV2OuterPublicationEnvelopeV1.self, from: envelopeData)
+        let source = PrimeValidationDriverV2PublicationSourceV1(sourceCommit: capsule.sourceCommit,
+            sourceTree: capsule.sourceTree,
+            sourceTreeReplaySHA256: try PrimeCanonicalJSON.decode(PrimeValidationDriverV2DeclaredExecutionScopeV1.self,
+                from: declaredScope).sourceTreeReplaySHA256,
+            sourceIdentitySHA256: capsule.sourceIdentitySHA256,
+            sourceSnapshotSHA256: capsule.intent.sourceSnapshot.sha256,
+            governorExecutable: capsule.governorExecutable, supervisorExecutable: capsule.supervisorExecutable,
+            swiftPackageExecutable: swiftPackageImage.binding)
+        try source.validateDeclaredScope(declaredScope, intent: capsule.intent)
+        let excluded: Set<String> = ["phase-history.json", "evidence-manifest.json", "final-receipt.json", "publication-envelope.json"]
+        let originalBindings = try execution.files.keys.filter { !excluded.contains($0) }.sorted().map { try execution.binding($0) }
+        let identity = PrimeValidationDriverV2PublicationAdmissionIdentityV1(
+            intentSHA256: try capsule.intent.identitySHA256(), sourceSnapshotSHA256: capsule.intent.sourceSnapshot.sha256,
+            declaredExecutionGoScopeSHA256: PrimeSHA256.hexDigest(of: declaredScope),
+            packageResolvedBinding: planning.packageResolvedBinding, inventoryBinding: planning.predecessorInventoryBinding,
+            planBinding: try execution.binding("plan.json"), goBinding: try execution.binding("go.json"),
+            shardIdentifiers: plan.shards.map(\.shardID), terminalBindings: rawShards.map(\.terminalBinding),
+            acceptanceBindings: acceptanceBindings, artifactBindings: originalBindings,
+            phaseHistorySHA256: PrimeSHA256.hexDigest(of: try execution.bytes("phase-history.json")),
+            phasePrefixBindings: history.immutablePrefixBindings,
+            publicationStartedAt: envelope.publicationStartedAtUptimeNanoseconds)
+        try envelope.validate(intent: capsule.intent, build: build.envelope.receipt,
+            inventory: inventory.envelope.receipt, plan: plan, conclusion: conclusion,
+            history: history, manifest: manifest,
+            expectedLiveAdmissionIdentitySHA256: PrimeSHA256.hexDigest(of: PrimeCanonicalJSON.encode(identity)),
+            expectedAcceptedCapsuleSHA256: capsuleSHA256, expectedSource: source)
+        guard envelope.publicationDeadlineUptimeNanoseconds < deadline.expiresAt,
+              envelope.publicationStartedAtUptimeNanoseconds <= supervisorWaitUptime,
+              supervisorWaitUptime < envelope.publicationDeadlineUptimeNanoseconds else { throw Self.rejected("publication_wait_budget") }
+        let namespace = try PrimeValidationDriverV2PublicationNamespaceReadback.capture(
+            evidenceRootDescriptor: evidence.descriptor, runID: capsule.intent.runID,
+            manifestData: manifestData, outerEnvelopeData: envelopeData, deadlineNanoseconds: deadline.expiresAt)
+        guard Set(namespace.entries.map(\.relativePath)) == manifest.finalNamespacePaths else { throw Self.rejected("exact_manifest_namespace") }
+        self.evidence = evidence; self.build = build; self.inventory = inventory; self.run = run
+        self.execution = execution; self.outputs = outputs; self.namespace = namespace
+        self.envelope = envelope; envelopeSHA256 = PrimeSHA256.hexDigest(of: envelopeData)
+        manifestSHA256 = PrimeSHA256.hexDigest(of: manifestData); recordedGroups = groups
+        immutablePrefixBindings = history.immutablePrefixBindings
+        observedStartBindings = try rawShards.map { try execution.binding($0.startBinding.relativePath, scoped: true) }
+        observedTerminalBindings = try rawShards.map { try execution.binding($0.terminalBinding.relativePath, scoped: true) }
+        let ordered = execution.files.keys.sorted()
+        leaves = ordered.map { .init(leaf: "execution/" + $0, byteCount: execution.files[$0]!.metadata.byteCount,
+            sha256: PrimeSHA256.hexDigest(of: execution.files[$0]!.data!)) }
+        vnodes = ordered.map { .init(execution.files[$0]!.metadata) }
+        try revalidate()
+    }
+
+    func revalidate() throws {
+        try build.revalidate(); try inventory.revalidate(); try evidence.revalidate(coordinate: "H_evidence")
+        try run.revalidate(); try execution.revalidate(); try outputs.revalidate(); try namespace.revalidate()
+    }
+
+    private static func validateHistory(_ history: PrimeValidationDriverV2PublicationPhaseHistoryV1,
+        execution: Tree, raw: [PrimeValidationDriverV2ShardRawObservation],
+        planning: PrimeValidationDriverV2ExecutionPlanObservation,
+        build: PrimeValidationDriverV2GovernorBuildSnapshot,
+        inventory: PrimeValidationDriverV2GovernorInventorySnapshot,
+        predecessor: PrimeValidationDriverV2GovernorInnerSnapshot,
+        conclusion: PrimeValidationDriverV2ParsedExecutionConclusion,
+        supervisorWaitUptime: UInt64) throws {
+        struct EStart: Decodable { let deadlineStartedAtUptimeNanoseconds: UInt64 }
+        struct EEnd: Decodable { let executorTerminalUptimeNanoseconds: UInt64 }
+        struct EProjection: Codable {
+            struct Leaf: Codable {
+                let relativePath: String; let byteCount: UInt64; let sha256: String; let deviceID: UInt64; let inode: UInt64
+            }
+            let schema: String; let readbackAtUptimeNanoseconds: UInt64
+            let originalPrestartLeaf: Leaf; let originalTerminalLeaf: Leaf
+            let observedDeadlineStartedAtUptimeNanoseconds: UInt64
+            let observedExecutorTerminalUptimeNanoseconds: UInt64
+        }
+        struct PlanTerminal: Codable {
+            let schema: String; let phase: String; let startSHA256: String
+            let completedAtUptimeNanoseconds: UInt64; let planSHA256: String; let goSHA256: String; let disposition: String
+        }
+        struct Start: Codable {
+            let schema: String; let phase: String; let runID: String
+            let startedAtUptimeNanoseconds: UInt64; let expiresAtUptimeNanoseconds: UInt64; let predecessorPrefixSHA256: String
+        }
+        struct Terminal: Codable {
+            let schema: String; let phase: String; let startSHA256: String; let resultSHA256: String
+            let completedAtUptimeNanoseconds: UInt64; let disposition: String
+        }
+        struct Reconciliation: Codable { let reference: PrimeValidationArmAggregateV2; let candidate: PrimeValidationArmAggregateV2 }
+        struct Comparison: Codable { let comparison: PrimeValidationPairedComparisonReceiptV2; let finalReceipt: PrimeValidationDriverFinalReceiptV2 }
+        func binding(_ path: String, _ leaves: [PrimeValidationDriverV2GovernorInnerLeaf]) throws -> PrimeArtifactBinding {
+            let leaf = (path as NSString).lastPathComponent
+            guard let value = leaves.first(where: { $0.leaf == leaf }) else { throw rejected("history_predecessor_leaf") }
+            return .init(relativePath: path, sha256: value.sha256, byteCount: value.byteCount, purpose: .immutableData)
+        }
+        let firstFrame = predecessor.durableFrames[0], lastFrame = predecessor.durableFrames[33]
+        let eStart = try JSONDecoder().decode(EStart.self, from: firstFrame.framedBytes).deadlineStartedAtUptimeNanoseconds
+        let eEnd = try JSONDecoder().decode(EEnd.self, from: lastFrame.framedBytes).executorTerminalUptimeNanoseconds
+        let readback = try PrimeCanonicalJSON.decode(EProjection.self, from: execution.bytes("predecessor-e-readback.json"))
+        for (projection, frame) in [(readback.originalPrestartLeaf, firstFrame), (readback.originalTerminalLeaf, lastFrame)] {
+            guard projection.relativePath == frame.leaf, projection.byteCount == frame.framedBytes.count,
+                  projection.sha256 == PrimeSHA256.hexDigest(of: frame.framedBytes),
+                  projection.deviceID == frame.vnode.deviceID, projection.inode == frame.vnode.inode else { throw rejected("history_E_vnode") }
+        }
+        guard readback.schema == "prime_driver_v2_gate_h_predecessor_e_readback_v1",
+              readback.observedDeadlineStartedAtUptimeNanoseconds == eStart,
+              readback.observedExecutorTerminalUptimeNanoseconds == eEnd,
+              readback.readbackAtUptimeNanoseconds >= planning.planningStartedAtUptimeNanoseconds,
+              readback.readbackAtUptimeNanoseconds <= history.prefixes[0].recordedAtUptimeNanoseconds else { throw rejected("history_E_projection") }
+        let entries = history.prefixes.last!.entries
+        func join(_ ordinal: Int, start: PrimeArtifactBinding, terminal: PrimeArtifactBinding,
+            outputs: [PrimeArtifactBinding], started: UInt64, ended: UInt64) throws {
+            let entry = entries[ordinal]
+            guard ended > started, entry.start == start, entry.terminal == terminal,
+                  entry.acceptedOutputBindings == outputs.sorted(by: { $0.relativePath < $1.relativePath }),
+                  entry.activeNanoseconds == ended - started,
+                  ended <= history.prefixes[ordinal].recordedAtUptimeNanoseconds,
+                  history.prefixes[ordinal].recordedAtUptimeNanoseconds <= supervisorWaitUptime else { throw rejected("history_interval_\(ordinal)") }
+        }
+        try join(0, start: execution.binding("predecessor-e-start.json", scoped: true),
+            terminal: execution.binding("predecessor-e-terminal.json", scoped: true),
+            outputs: [execution.binding("predecessor-e-readback.json", scoped: true)], started: eStart, ended: eEnd)
+        try join(1, start: binding("build/start.json", build.leaves), terminal: binding("build/terminal.json", build.leaves),
+            outputs: [binding("build/binding.json", build.leaves)],
+            started: build.envelope.process.deadlineStartedAtUptimeNanoseconds,
+            ended: build.envelope.process.waitReturnedUptimeNanoseconds)
+        try join(2, start: binding("inventory/01-xctest-start.json", inventory.leaves),
+            terminal: binding("inventory/terminal.json", inventory.leaves),
+            outputs: [binding("inventory/binding.json", inventory.leaves)],
+            started: inventory.envelope.children[0].process.deadlineStartedAtUptimeNanoseconds,
+            ended: inventory.envelope.children[1].process.waitReturnedUptimeNanoseconds)
+        let planTerminal = try PrimeCanonicalJSON.decode(PlanTerminal.self, from: execution.bytes("phase-04-terminal.json"))
+        guard planTerminal.schema == "prime_driver_v2_gate_h_phase_terminal_v1", planTerminal.phase == "execution_plan",
+              planTerminal.startSHA256 == (try execution.binding("phase-04-start.json").sha256),
+              planTerminal.planSHA256 == (try execution.binding("plan.json").sha256),
+              planTerminal.goSHA256 == (try execution.binding("go.json").sha256), planTerminal.disposition == "succeeded",
+              planTerminal.completedAtUptimeNanoseconds < planning.planningExpiresAtUptimeNanoseconds,
+              planTerminal.completedAtUptimeNanoseconds <= raw[0].process.deadlineStartedAtUptimeNanoseconds else { throw rejected("history_plan") }
+        try join(3, start: execution.binding("phase-04-start.json", scoped: true),
+            terminal: execution.binding("phase-04-terminal.json", scoped: true),
+            outputs: [execution.binding("go.json", scoped: true), execution.binding("plan.json", scoped: true)],
+            started: planning.planningStartedAtUptimeNanoseconds, ended: planTerminal.completedAtUptimeNanoseconds)
+        for (ordinal, arm) in [(4, "reference"), (5, "candidate")] {
+            let values = raw.filter { $0.shard.arm == arm }
+            guard let first = values.first, let last = values.last else { throw rejected("history_arm_empty") }
+            let started = first.process.deadlineStartedAtUptimeNanoseconds
+            let ended = started.addingReportingOverflow(entries[ordinal].activeNanoseconds)
+            guard !ended.overflow, ended.partialValue >= last.process.waitReturnedUptimeNanoseconds,
+                  ended.partialValue < first.process.deadlineExpiresAtUptimeNanoseconds else { throw rejected("history_arm_time") }
+            func scoped(_ value: PrimeArtifactBinding) -> PrimeArtifactBinding {
+                .init(relativePath: "execution/" + value.relativePath, sha256: value.sha256,
+                    byteCount: value.byteCount, purpose: value.purpose)
+            }
+            let outputs = try values.map { value in
+                try execution.binding(String(value.terminalBinding.relativePath.dropLast("terminal.json".count)) + "binding.json", scoped: true)
+            }
+            try join(ordinal, start: scoped(first.prestartBinding), terminal: scoped(last.terminalBinding),
+                outputs: outputs, started: started, ended: ended.partialValue)
+            if ordinal == 4 {
+                guard let candidate = raw.first(where: { $0.shard.arm == "candidate" }),
+                      candidate.process.deadlineStartedAtUptimeNanoseconds >= ended.partialValue else { throw rejected("history_arm_transfer") }
+            }
+        }
+        let reconciliation = Reconciliation(reference: conclusion.reference, candidate: conclusion.candidate)
+        let comparison = Comparison(comparison: conclusion.comparison, finalReceipt: conclusion.finalReceipt)
+        guard try execution.bytes("phase-07-result.json") == PrimeCanonicalJSON.encode(reconciliation),
+              try execution.bytes("phase-08-result.json") == PrimeCanonicalJSON.encode(comparison) else { throw rejected("history_semantic_results") }
+        for (ordinal, phase, duration) in [(6, "reconciliation", UInt64(120_000_000_000)), (7, "comparison", UInt64(60_000_000_000))] {
+            let prefix = String(format: "phase-%02d", ordinal + 1)
+            let start = try PrimeCanonicalJSON.decode(Start.self, from: execution.bytes(prefix + "-start.json"))
+            let terminal = try PrimeCanonicalJSON.decode(Terminal.self, from: execution.bytes(prefix + "-terminal.json"))
+            guard start.schema == "prime_driver_v2_gate_h_phase_start_v1", start.phase == phase,
+                  start.runID == history.runID, start.predecessorPrefixSHA256 == history.immutablePrefixBindings[ordinal - 1].sha256,
+                  start.startedAtUptimeNanoseconds >= history.prefixes[ordinal - 1].recordedAtUptimeNanoseconds,
+                  start.expiresAtUptimeNanoseconds > start.startedAtUptimeNanoseconds,
+                  start.expiresAtUptimeNanoseconds - start.startedAtUptimeNanoseconds == duration,
+                  terminal.schema == "prime_driver_v2_gate_h_phase_terminal_v1", terminal.phase == phase,
+                  terminal.startSHA256 == (try execution.binding(prefix + "-start.json").sha256),
+                  terminal.resultSHA256 == (try execution.binding(prefix + "-result.json").sha256),
+                  terminal.disposition == "succeeded", terminal.completedAtUptimeNanoseconds < start.expiresAtUptimeNanoseconds else { throw rejected("history_final_phase") }
+            try join(ordinal, start: execution.binding(prefix + "-start.json", scoped: true),
+                terminal: execution.binding(prefix + "-terminal.json", scoped: true),
+                outputs: [execution.binding(prefix + "-result.json", scoped: true)],
+                started: start.startedAtUptimeNanoseconds, ended: terminal.completedAtUptimeNanoseconds)
+        }
+        for (index, prefix) in history.prefixes.enumerated() {
+            guard try execution.binding(String(format: "phase-ledger-%02d.json", index + 1), scoped: true) == history.immutablePrefixBindings[index],
+                  try execution.bytes(String(format: "phase-ledger-%02d.json", index + 1)) == PrimeCanonicalJSON.encode(prefix) else { throw rejected("history_prefix_bytes") }
+        }
+    }
+
+    private static func validateEIdentity(_ snapshot: PrimeValidationDriverV2GovernorInnerSnapshot,
+        capsule: PrimeValidationDriverV2ShotCapsuleV1) throws {
+        struct Output: Decodable { let role: String; let standardOutputByteCount: UInt64; let standardOutputSHA256: String }
+        let expected = ["prime_head_pre": capsule.sourceCommit, "prime_head_post": capsule.sourceCommit,
+            "companion_head_pre": capsule.companionCommit, "companion_head_post": capsule.companionCommit]
+        guard let scopeData = capsule.executionGoScopeData else { throw rejected("missing_scope") }
+        let scope = try PrimeCanonicalJSON.decode(PrimeValidationDriverV2DeclaredExecutionScopeV1.self, from: scopeData)
+        var seen = Set<String>()
+        var treeCounts: [UInt64] = []
+        for index in stride(from: 2, through: 32, by: 2) {
+            let value = try JSONDecoder().decode(Output.self, from: snapshot.durableFrames[index].framedBytes)
+            if let object = expected[value.role] {
+                guard seen.insert(value.role).inserted, value.standardOutputByteCount == 41,
+                      value.standardOutputSHA256 == PrimeSHA256.hexDigest(of: Data((object + "\n").utf8)) else { throw rejected("E_git_tree_join") }
+            }
+            if ["prime_tree_discovery", "prime_tree_replay"].contains(value.role) {
+                guard value.standardOutputByteCount > 0,
+                      value.standardOutputSHA256 == scope.sourceTreeReplaySHA256 else { throw rejected("E_tree_replay_hash") }
+                treeCounts.append(value.standardOutputByteCount)
+            }
+        }
+        guard seen == Set(expected.keys), treeCounts.count == 2, treeCounts[0] == treeCounts[1] else { throw rejected("E_git_roles") }
+    }
+    private static func object<T: Encodable>(_ value: T) throws -> [String: Any] {
+        guard let fields = try JSONSerialization.jsonObject(with: PrimeCanonicalJSON.encode(value)) as? [String: Any] else { throw rejected("object") }; return fields
+    }
+    private static func rejected(_ reason: String) -> PrimeValidationDriverV2ShotGovernorFailure {
+        governorRejected(PrimeValidationDriverV2ShotGovernorStatus.postReapRejection, "H_readback_" + reason)
     }
 }
 
@@ -4919,10 +5363,34 @@ private struct PrimeValidationDriverV2GovernorInventorySuccessOutcome: Encodable
     }
 }
 
+private struct PrimeValidationDriverV2GovernorExecutionSuccessOutcome: Encodable {
+    let authorityVector = "11110000"
+    let completedGate = "H"
+    let publicationEnvelopeSHA256: String
+    let evidenceManifestSHA256: String
+    let executionPlanSHA256: String
+    let inventoryBindingSHA256: String
+    let innerFinalReceiptSHA256: String
+    let disposition: String
+    let executionJournal: [PrimeValidationDriverV2GovernorInnerLeaf]
+    let executionJournalVnodes: [PrimeValidationDriverV2GovernorVnodeRecord]
+    let recordedChildGroups: [Int32]
+    private enum CodingKeys: String, CodingKey {
+        case authorityVector = "authority_vector", completedGate = "completed_gate"
+        case publicationEnvelopeSHA256 = "publication_envelope_sha256", evidenceManifestSHA256 = "evidence_manifest_sha256"
+        case executionPlanSHA256 = "execution_plan_sha256", inventoryBindingSHA256 = "inventory_binding_sha256"
+        case innerFinalReceiptSHA256 = "inner_final_receipt_sha256", disposition
+        case executionJournal = "execution_journal", executionJournalVnodes = "execution_journal_vnodes"
+        case recordedChildGroups = "recorded_child_groups"
+    }
+}
+
 private enum PrimeValidationDriverV2GovernorTerminalOutcome: Encodable {
     case success(PrimeValidationDriverV2GovernorSuccessOutcome)
     case buildSuccess(PrimeValidationDriverV2GovernorBuildSuccessOutcome)
     case inventorySuccess(PrimeValidationDriverV2GovernorInventorySuccessOutcome)
+    case executionSuccess(PrimeValidationDriverV2GovernorExecutionSuccessOutcome)
+    case executionIncomplete(PrimeValidationDriverV2GovernorIncompleteObservationV1)
     case containedNonzero(PrimeValidationDriverV2GovernorNonzeroOutcome)
     case containedZeroSemanticRejection(
         PrimeValidationDriverV2GovernorZeroRejectionOutcome
@@ -4932,6 +5400,8 @@ private enum PrimeValidationDriverV2GovernorTerminalOutcome: Encodable {
         case success
         case buildSuccess = "build_success"
         case inventorySuccess = "inventory_success"
+        case executionSuccess = "execution_success"
+        case executionIncomplete = "execution_incomplete"
         case containedNonzero = "contained_nonzero"
         case containedZeroSemanticRejection =
             "contained_zero_semantic_rejection"
@@ -4946,6 +5416,10 @@ private enum PrimeValidationDriverV2GovernorTerminalOutcome: Encodable {
             try container.encode(value, forKey: .buildSuccess)
         case let .inventorySuccess(value):
             try container.encode(value, forKey: .inventorySuccess)
+        case let .executionSuccess(value):
+            try container.encode(value, forKey: .executionSuccess)
+        case let .executionIncomplete(value):
+            try container.encode(value, forKey: .executionIncomplete)
         case let .containedNonzero(value):
             try container.encode(value, forKey: .containedNonzero)
         case let .containedZeroSemanticRejection(value):
@@ -4973,6 +5447,7 @@ private struct PrimeValidationDriverV2GovernorTerminalRecordV1: Encodable {
     var swiftPackageImageRejoined: Bool? = nil
     let rootsRejoined: Bool
     let outerContinuityRevalidated: Bool
+    var executionFailureCoordinate: String? = nil
     let outcome: PrimeValidationDriverV2GovernorTerminalOutcome
 
     private enum CodingKeys: String, CodingKey {
@@ -4993,6 +5468,7 @@ private struct PrimeValidationDriverV2GovernorTerminalRecordV1: Encodable {
         case rootsRejoined = "roots_rejoined"
         case outerContinuityRevalidated =
             "outer_continuity_revalidated"
+        case executionFailureCoordinate = "execution_failure_coordinate"
         case outcome
     }
 }
@@ -5389,7 +5865,9 @@ package enum PrimeValidationDriverV2ShotGovernor {
         let request = PrimeValidationDriverV2SupervisorLaunchRequestV1(
             intent: capsule.intent,
             leaseDirectoryAbsolutePath: capsule.leaseDirectoryAbsolutePath,
-            terminalGate: capsule.terminalGate
+            terminalGate: capsule.terminalGate,
+            executionGoScopeData: capsule.executionGoScopeData,
+            acceptedCapsuleSHA256: capsule.terminalGate == .gateH ? PrimeSHA256.hexDigest(of: capsuleBytes) : nil
         )
         try request.validate()
         let requestBytes = try PrimeCanonicalJSON.encode(request)
@@ -5564,6 +6042,7 @@ package enum PrimeValidationDriverV2ShotGovernor {
         var innerReceiptValidated = false
         var buildSnapshot: PrimeValidationDriverV2GovernorBuildSnapshot?
         var inventorySnapshot: PrimeValidationDriverV2GovernorInventorySnapshot?
+        var executionSnapshot: PrimeValidationDriverV2GovernorExecutionSnapshot?
         var durableReceiptIdentitySHA256: String?
         var durableReceiptJournalVnodes:
             [PrimeValidationDriverV2GovernorVnodeRecord]?
@@ -5664,7 +6143,7 @@ package enum PrimeValidationDriverV2ShotGovernor {
                             supervisorPID: spawned.processIdentifier,
                             supervisorWaitUptime: processResult.wait.returnedAtUptimeNanoseconds,
                             predecessor: inner, terminalGate: capsule.terminalGate, deadline: deadline)
-                        if capsule.terminalGate == .gateG {
+                        if capsule.terminalGate == .gateG || capsule.terminalGate == .gateH {
                             guard let buildSnapshot else {
                                 throw governorRejected(
                                     PrimeValidationDriverV2ShotGovernorStatus.postReapRejection,
@@ -5675,7 +6154,19 @@ package enum PrimeValidationDriverV2ShotGovernor {
                                 supervisorPID: spawned.processIdentifier,
                                 supervisorWaitUptime: processResult.wait.returnedAtUptimeNanoseconds,
                                 predecessorProcessGroups: inner.recordedChildProcessGroups,
+                                terminalGate: capsule.terminalGate,
                                 deadline: deadline)
+                            if capsule.terminalGate == .gateH {
+                                guard let inventorySnapshot else {
+                                    throw governorRejected(PrimeValidationDriverV2ShotGovernorStatus.postReapRejection, "H_inventory_missing")
+                                }
+                                executionSnapshot = try PrimeValidationDriverV2GovernorExecutionSnapshot(
+                                    evidence: evidenceRoot, workspace: workspaceRoot,
+                                    build: buildSnapshot, inventory: inventorySnapshot, predecessor: inner,
+                                    capsule: capsule, capsuleSHA256: PrimeSHA256.hexDigest(of: capsuleBytes),
+                                    swiftPackageImage: swiftPackageImage, supervisorPID: spawned.processIdentifier,
+                                    supervisorWaitUptime: processResult.wait.returnedAtUptimeNanoseconds, deadline: deadline)
+                            }
                         }
                     } catch let failure as PrimeValidationDriverV2ShotGovernorFailure {
                         throw failure
@@ -5718,6 +6209,7 @@ package enum PrimeValidationDriverV2ShotGovernor {
                 // cannot enter buildSuccess. Zero requires the full readback.
                 try buildSnapshot?.revalidate()
                 try inventorySnapshot?.revalidate()
+            try executionSnapshot?.revalidate()
             }
             try leaseRoot.revalidate(coordinate: "lease_root_after")
             try workingDirectory.requireEmpty(
@@ -5777,6 +6269,7 @@ package enum PrimeValidationDriverV2ShotGovernor {
                 recordedGroups.insert(child.process.processGroupIdentifier)
             }
         }
+        if let executionSnapshot { recordedGroups.formUnion(executionSnapshot.recordedGroups) }
         let groupsEmpty = try requireGroupsEmpty(recordedGroups)
         if !groupsEmpty { semanticFailure = "inner_child_group_present" }
         if !stdout.reachedEOF || !stderr.reachedEOF {
@@ -5788,7 +6281,54 @@ package enum PrimeValidationDriverV2ShotGovernor {
 
         let outcome: PrimeValidationDriverV2GovernorTerminalOutcome
         let finalStatus: Int32
-        if !processResult.wait.exitedNormally
+        if capsule.terminalGate == .gateH,
+           processResult.wait.exitedNormally, processResult.wait.exitStatus == 0,
+           semanticFailure == nil, processResult.conservation.ordinaryExitPath,
+           inner.complete, innerReceiptValidated, outerContinuityRejoined, rootsRejoined,
+           governorImageRejoined, supervisorImageRejoined, gitImageRejoined, swiftImageRejoined,
+           swiftPackageImageRejoined == true, groupsEmpty,
+           let executionSnapshot, let inventorySnapshot,
+           stdout.byteCount == 0, stderr.byteCount == 0,
+           stdout.sha256 == emptySHA256, stderr.sha256 == emptySHA256 {
+            outcome = .executionSuccess(.init(
+                publicationEnvelopeSHA256: executionSnapshot.envelopeSHA256,
+                evidenceManifestSHA256: executionSnapshot.manifestSHA256,
+                executionPlanSHA256: executionSnapshot.envelope.executionPlanSHA256,
+                inventoryBindingSHA256: inventorySnapshot.bindingSHA256,
+                innerFinalReceiptSHA256: executionSnapshot.envelope.innerFinalReceiptSHA256,
+                disposition: executionSnapshot.envelope.disposition.rawValue,
+                executionJournal: executionSnapshot.leaves, executionJournalVnodes: executionSnapshot.vnodes,
+                recordedChildGroups: executionSnapshot.recordedGroups.sorted()))
+            finalStatus = PrimeValidationDriverV2ShotGovernorStatus.success
+        } else if capsule.terminalGate == .gateH {
+            // Preserve established readback identities even if a later join
+            // rejects publication. If construction failed, empty lists mean
+            // this reader did not establish those identities; they do not
+            // claim no H files exist. Partial namespace acquisition is not
+            // silently upgraded into a complete semantic readback.
+            let knownPrefixes = executionSnapshot?.immutablePrefixBindings ?? []
+            let knownStarts = executionSnapshot?.observedStartBindings ?? []
+            let knownTerminals = executionSnapshot?.observedTerminalBindings ?? []
+            let exitCode = processResult.wait.exitedNormally ? processResult.wait.exitStatus : nil
+            let reason: PrimeValidationDriverV2GovernorIncompleteObservationV1.Reason =
+                exitCode.map { $0 != 0 } == true ? .supervisorRejected : .publicationRejected
+            let observedAt = DispatchTime.now().uptimeNanoseconds
+            let incomplete = PrimeValidationDriverV2GovernorIncompleteObservationV1(
+                schemaVersion: 1, artifactKind: "prime_driver_v2_gate_h_governor_incomplete_observation_v1",
+                runID: capsule.intent.runID, intentSHA256: try capsule.intent.identitySHA256(),
+                acceptedCapsuleSHA256: PrimeSHA256.hexDigest(of: capsuleBytes), disposition: .incomplete,
+                reason: reason, immutablePrefixBindings: knownPrefixes, observedStartBindings: knownStarts, observedTerminalBindings: knownTerminals,
+                supervisorExitCode: exitCode, observedAtUptimeNanoseconds: observedAt, successorAuthorized: false)
+            try incomplete.validate(expectedRunID: capsule.intent.runID,
+                expectedIntentSHA256: capsule.intent.identitySHA256(),
+                expectedAcceptedCapsuleSHA256: PrimeSHA256.hexDigest(of: capsuleBytes),
+                actualPrefixBindings: knownPrefixes, actualStartBindings: knownStarts, actualTerminalBindings: knownTerminals,
+                actualSupervisorExitCode: exitCode, actualObservedAtUptimeNanoseconds: observedAt, actualReason: reason)
+            outcome = .executionIncomplete(incomplete)
+            finalStatus = processResult.wait.exitedNormally && processResult.wait.exitStatus == 0
+                ? PrimeValidationDriverV2ShotGovernorStatus.postReapRejection
+                : PrimeValidationDriverV2ShotGovernorStatus.containedNonzero
+        } else if !processResult.wait.exitedNormally
             || processResult.wait.exitStatus != 0
         {
             outcome = .containedNonzero(
@@ -5913,6 +6453,8 @@ package enum PrimeValidationDriverV2ShotGovernor {
                     rootsRejoined: rootsRejoined,
                     outerContinuityRevalidated:
                         outerContinuityRejoined,
+                    executionFailureCoordinate: capsule.terminalGate == .gateH && finalStatus != 0
+                        ? String((semanticFailure ?? "supervisor_terminal_rejected").prefix(128)) : nil,
                     outcome: outcome
                 ),
                 expectedLeaf:
@@ -5921,6 +6463,7 @@ package enum PrimeValidationDriverV2ShotGovernor {
             try inner.revalidate()
             try buildSnapshot?.revalidate()
             try inventorySnapshot?.revalidate()
+            try executionSnapshot?.revalidate()
             try swiftPackageImage?.revalidate(coordinate: "swift_package_after_publication")
             try outerContinuity.revalidateContinuity()
             try journal.revalidate()
@@ -6092,13 +6635,16 @@ package final class PrimeValidationDriverV2OuterJournalMechanicsFacade:
         let swiftDirectory = (intent.swiftExecutable.absolutePath as NSString)
             .deletingLastPathComponent
         let runsBuild = terminalGate != .gateE
-        let runsInventory = terminalGate == .gateG
-        let journalLeaf = runsInventory ? "gate-g-shot-governor-journal"
+        let runsInventory = terminalGate == .gateG || terminalGate == .gateH
+        let runsExecution = terminalGate == .gateH
+        let journalLeaf = runsExecution ? "gate-h-shot-governor-journal"
+            : runsInventory ? "gate-g-shot-governor-journal"
             : runsBuild ? "gate-f-shot-governor-journal"
             : PrimeValidationDriverV2GovernorJournal.rootLeaf
-        let capsule = PrimeValidationDriverV2ShotCapsuleV1(
+        var capsule = PrimeValidationDriverV2ShotCapsuleV1(
             schemaVersion: PrimeValidationDriverV2ShotCapsuleV1.schemaVersion,
-            artifactKind: runsInventory
+            artifactKind: runsExecution ? PrimeValidationDriverV2ShotCapsuleV1.executionArtifactKind
+                : runsInventory
                 ? PrimeValidationDriverV2ShotCapsuleV1.inventoryArtifactKind
                 : runsBuild ? PrimeValidationDriverV2ShotCapsuleV1.buildArtifactKind
                 : PrimeValidationDriverV2ShotCapsuleV1.artifactKind,
@@ -6149,6 +6695,13 @@ package final class PrimeValidationDriverV2OuterJournalMechanicsFacade:
             ].sorted(),
             intent: intent
         )
+        if runsExecution {
+            capsule.gateHAuthorized = true
+            capsule.executionGoScopeData = try PrimeCanonicalJSON.encode(PrimeValidationDriverV2DeclaredExecutionScopeV1(
+                intent: intent, sourceCommit: capsule.sourceCommit, sourceTree: capsule.sourceTree,
+                sourceTreeReplaySHA256: String(repeating: "a", count: 64), sourceIdentitySHA256: capsule.sourceIdentitySHA256,
+                governorExecutable: capsule.governorExecutable, supervisorExecutable: capsule.supervisorExecutable))
+        }
         let canonical = try PrimeCanonicalJSON.encode(capsule)
         try capsule.validate(exactCanonicalBytes: canonical)
         switch mutation {
@@ -6248,7 +6801,9 @@ package final class PrimeValidationDriverV2OuterJournalMechanicsFacade:
         let request = PrimeValidationDriverV2SupervisorLaunchRequestV1(
             intent: capsule.intent,
             leaseDirectoryAbsolutePath: capsule.leaseDirectoryAbsolutePath,
-            terminalGate: capsule.terminalGate
+            terminalGate: capsule.terminalGate,
+            executionGoScopeData: capsule.executionGoScopeData,
+            acceptedCapsuleSHA256: capsule.terminalGate == .gateH ? PrimeSHA256.hexDigest(of: exactCapsuleBytes) : nil
         )
         try request.validate()
         let requestBytes = try PrimeCanonicalJSON.encode(request)

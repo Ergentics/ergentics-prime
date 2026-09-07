@@ -67,6 +67,9 @@ public struct PrimeValidationDriverV2RoleContext:
     public let temporaryAbsolutePath: String
     public let requiredPinnedMetallibAbsolutePath: String
     public let evidenceRunID: String
+    public let executionGoScopeData: Data
+    public let canonicalExecutionIntentData: Data
+    public let executionAuthorized: Bool
     public let requiredPinnedMetallibByteCount: UInt64
     public let requiredPinnedMetallibSHA256: String
 
@@ -102,6 +105,9 @@ public struct PrimeValidationDriverV2RoleContext:
         temporaryAbsolutePath: String,
         requiredPinnedMetallibAbsolutePath: String,
         evidenceRunID: String = "",
+        executionGoScopeData: Data = Data(),
+        canonicalExecutionIntentData: Data = Data(),
+        executionAuthorized: Bool = false,
         requiredPinnedMetallibByteCount: UInt64 = 0,
         requiredPinnedMetallibSHA256: String = ""
     ) {
@@ -121,6 +127,9 @@ public struct PrimeValidationDriverV2RoleContext:
         self.requiredPinnedMetallibAbsolutePath =
             requiredPinnedMetallibAbsolutePath
         self.evidenceRunID = evidenceRunID
+        self.executionGoScopeData = executionGoScopeData
+        self.canonicalExecutionIntentData = canonicalExecutionIntentData
+        self.executionAuthorized = executionAuthorized
         self.requiredPinnedMetallibByteCount = requiredPinnedMetallibByteCount
         self.requiredPinnedMetallibSHA256 = requiredPinnedMetallibSHA256
     }

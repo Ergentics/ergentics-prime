@@ -200,6 +200,9 @@ package struct PrimeValidationDriverV2InventoryDurableBindingEnvelopeV1: Codable
         process p: PrimeValidationDriverV2BuildProcessObservation,
         intervalStartedAt: UInt64, matchedCount: Int, supervisorPID: Int32
     ) throws -> PrimeValidationObservedChildReceiptV2 {
+        guard invocation.role == .listXCTest || invocation.role == .listSwiftTesting else {
+            throw PrimeValidationDriverV2Error.invalidInventoryReceipt
+        }
         // Partition the one shared G interval at each exact wait. This includes
         // inter-child admission time once, rather than counting the first child twice.
         guard p.waitReturnedUptimeNanoseconds > intervalStartedAt,
@@ -264,6 +267,8 @@ package struct PrimeValidationDriverV2InventoryDurableBindingEnvelopeV1: Codable
 
 /// The only authority is the consumed, retained native lifetime.
 package final class PrimeValidationDriverV2InventoryBinding: @unchecked Sendable {
+    package let intent: PrimeValidationRunIntentV2
+    package let predecessor: PrimeValidationDriverV2BuildDurableBindingEnvelopeV1
     package let envelope: PrimeValidationDriverV2InventoryDurableBindingEnvelopeV1
     private let lifetime: PrimeValidationDriverV2InventoryBoundLifetime
 
@@ -283,10 +288,14 @@ package final class PrimeValidationDriverV2InventoryBinding: @unchecked Sendable
         try envelope.validate(intent: intent, expectedSupervisorPID: predecessor.predecessorSupervisorPID,
             build: predecessor, expectedBuildBinding: observed.predecessorBuildBinding)
         let bytes = try PrimeCanonicalJSON.encode(envelope)
+        self.intent = intent; self.predecessor = predecessor
         self.envelope = envelope
         lifetime = try raw.consumeValidatedBindingLifetime(bindingData: bytes)
         transferred = true
     }
 
     package func revalidate() throws { try lifetime.revalidateContinuity() }
+    package func prepareNativeExecutionPlan() throws -> PrimeValidationDriverV2ExecutionPlanRawCapability {
+        try lifetime.consumeForExecution()
+    }
 }

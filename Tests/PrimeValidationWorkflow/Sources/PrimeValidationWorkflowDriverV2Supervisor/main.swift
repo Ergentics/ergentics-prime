@@ -38,6 +38,7 @@ private enum PrimeValidationDriverV2SupervisorExitStatus {
     static let finalRevalidation: Int32 = 69
     static let fixedBuild: Int32 = 91
     static let fixedInventories: Int32 = 96
+    static let executionPublication: Int32 = 98
 }
 
 /// Gate A's transport remains one closed canonical typed intent frame. After
@@ -149,7 +150,9 @@ private struct PrimeValidationWorkflowDriverV2Supervisor {
         do {
             bound = try PrimeValidationDriverV2SupervisorImageBridge.bind(
                 intent: intent,
-                guardedPreExecutor: guarded
+                guardedPreExecutor: guarded,
+                terminalGate: request.terminalGate,
+                executionGoScopeData: request.executionGoScopeData ?? Data()
             )
             try bound.revalidate()
         } catch {
@@ -180,7 +183,7 @@ private struct PrimeValidationWorkflowDriverV2Supervisor {
             )
         }
 
-        if request.terminalGate == .gateF || request.terminalGate == .gateG {
+        if request.terminalGate == .gateF || request.terminalGate == .gateG || request.terminalGate == .gateH {
             let buildBinding: PrimeValidationDriverV2BuildBinding
             do {
                 buildBinding = try fixedProbeBinding.executeBuild()
@@ -193,10 +196,52 @@ private struct PrimeValidationWorkflowDriverV2Supervisor {
                 )
                 Darwin._exit(PrimeValidationDriverV2SupervisorExitStatus.fixedBuild)
             }
-            if request.terminalGate == .gateG {
+            if request.terminalGate == .gateG || request.terminalGate == .gateH {
                 do {
                     let inventoryBinding = try buildBinding.executeInventories()
                     try inventoryBinding.revalidate()
+                    if request.terminalGate == .gateH {
+                        do {
+                            let execution = try PrimeValidationDriverV2NativeExecutionBinding(inventoryBinding: inventoryBinding)
+                            var ready = false
+                            while !ready {
+                                switch try execution.executeNextShard() {
+                                case .nextShard: break
+                                case .readyForConclusion: ready = true
+                                case .stoppedAtFailedTerminal:
+                                    throw PrimeValidationDriverV2SupervisorMainError.rejected
+                                }
+                            }
+                            let proposal = try execution.consumeForPublication()
+                            guard let scopeData = request.executionGoScopeData,
+                                  let capsuleSHA = request.acceptedCapsuleSHA256 else {
+                                throw PrimeValidationDriverV2SupervisorMainError.rejected
+                            }
+                            let scope = try PrimeCanonicalJSON.decode(PrimeValidationDriverV2DeclaredExecutionScopeV1.self,
+                                from: scopeData)
+                            let physical = proposal.build.toolchain.swiftPackageExecutable
+                            let source = PrimeValidationDriverV2PublicationSourceV1(
+                                sourceCommit: scope.sourceCommit, sourceTree: scope.sourceTree,
+                                sourceTreeReplaySHA256: scope.sourceTreeReplaySHA256,
+                                sourceIdentitySHA256: scope.sourceIdentitySHA256,
+                                sourceSnapshotSHA256: intent.sourceSnapshot.sha256,
+                                governorExecutable: scope.governorExecutable,
+                                supervisorExecutable: scope.supervisorExecutable,
+                                swiftPackageExecutable: .init(absolutePath: physical.canonicalAbsolutePath, content: physical.content))
+                            let publication = try PrimeValidationDriverV2PublicationBinding.publish(
+                                permit: proposal.consumePermit(), intent: proposal.intent,
+                                build: proposal.build.receipt, inventory: proposal.inventory.receipt,
+                                plan: proposal.plan, conclusion: proposal.conclusion,
+                                history: proposal.history, source: source, acceptedCapsuleSHA256: capsuleSHA)
+                            try publication.revalidate()
+                            withExtendedLifetime(publication) {}
+                        } catch {
+                            reportProbeFailure(error,
+                                status: PrimeValidationDriverV2SupervisorExitStatus.executionPublication,
+                                terminalGate: .gateH)
+                            Darwin._exit(PrimeValidationDriverV2SupervisorExitStatus.executionPublication)
+                        }
+                    }
                     withExtendedLifetime(inventoryBinding) {}
                 } catch {
                     reportProbeFailure(error,

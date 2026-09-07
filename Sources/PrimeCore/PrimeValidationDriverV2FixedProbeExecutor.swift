@@ -94,7 +94,7 @@ public struct PrimeValidationDriverV2OuterSourceContinuityObservation:
 /// readback, and the governor. Values describe this exact source closure.
 @_spi(PrimeValidationDriverV2RoleFacade)
 public enum PrimeValidationDriverV2SealedSourceTopology {
-    public static let primeAdmittedFileCount = 644
+    public static let primeAdmittedFileCount = 657
     public static let sourceIdentityRecordCount = primeAdmittedFileCount - 1
     public static let primeAuthorityDirectoryCount = 170
     public static let combinedWatcherDescriptorCount =
@@ -603,6 +603,7 @@ public final class PrimeValidationDriverV2FixedProbeBoundLifetime:
     private var lastObservedUptimeNanoseconds: UInt64
     private let context: PrimeValidationDriverV2RoleContext
     private let buildPolicy: PrimeValidationDriverV2ClosedRolePolicy
+    private let executionPredecessorObservation: PrimeValidationDriverV2FixedProbeRawObservation?
 
     public let productionSupervisorImageEligible: Bool
 
@@ -618,13 +619,15 @@ public final class PrimeValidationDriverV2FixedProbeBoundLifetime:
         deadline: PrimeSecureChildPhaseDeadline,
         lastObservedUptimeNanoseconds: UInt64,
         context: PrimeValidationDriverV2RoleContext,
-        buildPolicy: PrimeValidationDriverV2ClosedRolePolicy
+        buildPolicy: PrimeValidationDriverV2ClosedRolePolicy,
+        executionPredecessorObservation: PrimeValidationDriverV2FixedProbeRawObservation? = nil
     ) {
         self.retainedState = retainedState
         self.deadline = deadline
         self.lastObservedUptimeNanoseconds = lastObservedUptimeNanoseconds
         self.context = context
         self.buildPolicy = buildPolicy
+        self.executionPredecessorObservation = executionPredecessorObservation
         productionSupervisorImageEligible =
             retainedState.productionSupervisorImageEligible
     }
@@ -709,7 +712,8 @@ public final class PrimeValidationDriverV2FixedProbeBoundLifetime:
             retainedState: retainedState,
             context: context,
             buildPolicy: buildPolicy,
-            deadline: buildDeadline
+            deadline: buildDeadline,
+            executionPredecessorObservation: executionPredecessorObservation
         )
     }
 }
@@ -722,12 +726,14 @@ struct PrimeValidationDriverV2BuildExecutionState {
     let buildPolicy: PrimeValidationDriverV2ClosedRolePolicy
     let deadline: PrimeSecureChildPhaseDeadline
     let pinnedBundleInput: PrimeValidationDriverV2PinnedBundleInput
+    let executionPredecessorObservation: PrimeValidationDriverV2FixedProbeRawObservation?
 
     fileprivate init(
         retainedState: PrimeValidationSwiftPMRetainedGuardedPreExecutorState,
         context: PrimeValidationDriverV2RoleContext,
         buildPolicy: PrimeValidationDriverV2ClosedRolePolicy,
-        deadline: PrimeSecureChildPhaseDeadline
+        deadline: PrimeSecureChildPhaseDeadline,
+        executionPredecessorObservation: PrimeValidationDriverV2FixedProbeRawObservation? = nil
     ) throws {
         guard context.requiredPinnedMetallibByteCount
                 == PrimePinnedMLXMetallib.expectedByteCount,
@@ -742,6 +748,7 @@ struct PrimeValidationDriverV2BuildExecutionState {
         self.context = context
         self.buildPolicy = buildPolicy
         self.deadline = deadline
+        self.executionPredecessorObservation = executionPredecessorObservation
         pinnedBundleInput = try PrimeValidationDriverV2PinnedBundleInput.capture(
             primeRoot: retainedState.admission.primeRepository.root,
             deadlineNanoseconds: deadline.expiresAtUptimeNanoseconds
@@ -762,13 +769,15 @@ public final class PrimeValidationDriverV2BuildOwner: @unchecked Sendable {
         retainedState: PrimeValidationSwiftPMRetainedGuardedPreExecutorState,
         context: PrimeValidationDriverV2RoleContext,
         buildPolicy: PrimeValidationDriverV2ClosedRolePolicy,
-        deadline: PrimeSecureChildPhaseDeadline
+        deadline: PrimeSecureChildPhaseDeadline,
+        executionPredecessorObservation: PrimeValidationDriverV2FixedProbeRawObservation? = nil
     ) throws {
         state = try PrimeValidationDriverV2BuildExecutionState(
             retainedState: retainedState,
             context: context,
             buildPolicy: buildPolicy,
-            deadline: deadline
+            deadline: deadline,
+            executionPredecessorObservation: executionPredecessorObservation
         )
         lastObservedUptimeNanoseconds = deadline.startUptimeNanoseconds
     }
@@ -956,7 +965,8 @@ public final class PrimeValidationDriverV2FixedProbeRawCapability:
                 deadline: deadline,
                 lastObservedUptimeNanoseconds: now,
                 context: context,
-                buildPolicy: buildPolicy
+                buildPolicy: buildPolicy,
+                executionPredecessorObservation: context.executionAuthorized ? observation : nil
             )
         case .transferred:
             throw PrimeValidationSwiftPMBuildInventoryAdmissionError
