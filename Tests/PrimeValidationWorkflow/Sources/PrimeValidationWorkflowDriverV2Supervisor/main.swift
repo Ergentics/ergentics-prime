@@ -169,6 +169,10 @@ private struct PrimeValidationWorkflowDriverV2Supervisor {
                     supervisorImage: bound
                 )
         } catch {
+            reportProbeFailure(
+                error,
+                status: PrimeValidationDriverV2SupervisorExitStatus.fixedProbes
+            )
             Darwin._exit(
                 PrimeValidationDriverV2SupervisorExitStatus.fixedProbes
             )
@@ -180,9 +184,32 @@ private struct PrimeValidationWorkflowDriverV2Supervisor {
             try fixedProbeBinding.revalidate()
             withExtendedLifetime(fixedProbeBinding) {}
         } catch {
+            reportProbeFailure(
+                error,
+                status: PrimeValidationDriverV2SupervisorExitStatus
+                    .finalRevalidation
+            )
             Darwin._exit(
                 PrimeValidationDriverV2SupervisorExitStatus.finalRevalidation
             )
+        }
+    }
+
+    private static func reportProbeFailure(_ error: Error, status: Int32) {
+        let flags = fcntl(STDERR_FILENO, F_GETFL)
+        guard flags >= 0,
+              fcntl(STDERR_FILENO, F_SETFL, flags | O_NONBLOCK) == 0,
+              fcntl(STDERR_FILENO, F_SETNOSIGPIPE, 1) == 0
+        else { return }
+        let detail = String(reflecting: error).utf8.prefix(384).map { byte in
+            (byte >= 0x21 && byte <= 0x7e) ? byte : UInt8(0x5f)
+        }
+        let message = Array("gate_e_probe_rejected status=\(status) detail=".utf8)
+            + detail + [UInt8(0x0a)]
+        // Observational stderr only, after the binding unwinds its cleanup.
+        // One bounded write cannot block on a pipe or replace the exit status.
+        _ = message.withUnsafeBytes {
+            Darwin.write(STDERR_FILENO, $0.baseAddress, $0.count)
         }
     }
 

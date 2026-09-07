@@ -2895,6 +2895,25 @@ private enum PrimeValidationDriverV2GovernorSessionCensus {
         sessionIdentifier: pid_t,
         deadline: PrimeValidationDriverV2GovernorDeadline
     ) throws -> PrimeValidationDriverV2GovernorSessionMember? {
+        // Exclude a positively identified foreign session before requesting
+        // protected process metadata. Target members still require the full
+        // generation, session, group and mapped-image joins below.
+        try deadline.requireTime("session_census_nonconvergent_query")
+        errno = 0
+        let preliminarySession = Darwin.getsid(pid)
+        let preliminarySessionErrno = errno
+        try deadline.requireTime("session_census_nonconvergent_query")
+        if preliminarySession < 0, preliminarySessionErrno == ESRCH {
+            return nil
+        }
+        guard preliminarySession >= 0 else {
+            throw governorRejected(
+                PrimeValidationDriverV2ShotGovernorStatus
+                    .containmentUncertain,
+                "session_census_getsid_\(preliminarySessionErrno)"
+            )
+        }
+        guard preliminarySession == sessionIdentifier else { return nil }
         let expected = MemoryLayout<proc_bsdinfo>.size
         for _ in 0 ..< 4 {
             try deadline.requireTime("session_census_nonconvergent_query")
