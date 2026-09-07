@@ -10,6 +10,7 @@ package enum PrimeValidationDriverV2TerminalGate:
 {
     case gateE = "E"
     case gateF = "F"
+    case gateG = "G"
 }
 
 /// Canonical, bounded transport for the dedicated Gate A process. This outer
@@ -63,8 +64,8 @@ package struct PrimeValidationDriverV2SupervisorLaunchRequestV1:
         try container.encode(intent, forKey: .intent)
         try container.encode(leaseDirectoryAbsolutePath,
                              forKey: .leaseDirectoryAbsolutePath)
-        // Preserve the exact old E envelope. F must be explicit.
-        if terminalGate == .gateF {
+        // Preserve the exact old E envelope. Later gates must be explicit.
+        if terminalGate != .gateE {
             try container.encode(terminalGate, forKey: .terminalGate)
         }
     }

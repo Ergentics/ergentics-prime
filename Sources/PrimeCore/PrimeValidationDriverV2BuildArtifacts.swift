@@ -543,6 +543,16 @@ final class PrimeValidationDriverV2BuildArtifacts: @unchecked Sendable {
     }
 
     func revalidate() throws {
+        try revalidateRetainedNodes(deadlineNanoseconds: deadlineNanoseconds)
+    }
+
+    /// Only the consumed F-to-G owner uses a later phase deadline. The held
+    /// descriptors, original metadata and content baselines never change.
+    func revalidateAfterBuild(deadlineNanoseconds: UInt64) throws {
+        try revalidateRetainedNodes(deadlineNanoseconds: deadlineNanoseconds)
+    }
+
+    private func revalidateRetainedNodes(deadlineNanoseconds: UInt64) throws {
         lock.lock()
         defer { lock.unlock() }
         guard !poisoned else { throw Self.invalid("owner_poisoned") }

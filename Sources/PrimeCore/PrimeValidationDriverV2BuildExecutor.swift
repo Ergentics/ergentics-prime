@@ -182,6 +182,16 @@ public final class PrimeValidationDriverV2BuildBoundLifetime: @unchecked Sendabl
             try owner.revalidateContinuity(staging: staging)
         } catch { valid = false; owner.poison(); throw error }
     }
+    /// Permanently consumes the validated build lifetime before its deadline.
+    /// No decoded receipt can call this constructor or reacquire its guards.
+    public func consumeForInventory() throws -> PrimeValidationDriverV2InventoryOwner {
+        lock.lock(); defer { lock.unlock() }
+        guard valid else { throw buildRejected("bound_poisoned") }
+        valid = false
+        do {
+            return try owner.consumeForInventory(staging: staging, artifacts: artifacts)
+        } catch { owner.poison(); throw error }
+    }
     fileprivate func poison() {
         lock.lock(); defer { lock.unlock() }
         valid = false; owner.poison()

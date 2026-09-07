@@ -17,12 +17,14 @@ final class PrimeValidationDriverV2BuildStaging {
     private let runDirectory: Directory
     private let buildDirectory: Directory
     private let artifactsDirectory: Directory
+    private var inventoryDirectory: Directory?
     let context: PrimeValidationDriverV2RoleContext
     let artifactRoot: PrimeArtifactRoot
     let buildRoot: PrimeArtifactRoot
     var workspaceRoot: PrimeArtifactRoot { admission.workspaceRoot.root }
     private var buildLeaves = Set<String>()
     private var streams: [String: Stream] = [:]
+    private let lockedDependencies: PrimeValidationDriverV2LockedDependencies
 
     init(state: PrimeValidationDriverV2BuildExecutionState) throws {
         admission = state.retainedState.admission
@@ -77,6 +79,9 @@ final class PrimeValidationDriverV2BuildStaging {
                 .verifiedRootIdentity()
             evidenceIdentity = try admission.evidenceRoot.root
                 .verifiedRootIdentity()
+            lockedDependencies = try PrimeValidationDriverV2LockedDependencies.prepare(
+                admission: admission, context: context,
+                workspaceRoot: admission.workspaceRoot.root)
         } catch {
             close(workspaceFD); close(evidenceFD)
             throw error
@@ -100,17 +105,44 @@ final class PrimeValidationDriverV2BuildStaging {
                 == evidenceIdentity,
               try Self.entries(workspaceDescriptor) == Set(Self.workspaceLeaves),
               try Self.entries(evidenceDescriptor) == [context.evidenceRunID],
-              try Self.entries(runDirectory.descriptor) == ["artifacts", "build"],
+              try Self.entries(runDirectory.descriptor)
+                == (inventoryDirectory == nil
+                    ? Set(["artifacts", "build"])
+                    : Set(["artifacts", "build", "inventory"])),
               try Self.entries(buildDirectory.descriptor) == buildLeaves
         else { throw Self.rejected("root_ledger") }
         for directory in directories.values { try directory.revalidate() }
         try runDirectory.revalidate()
         try buildDirectory.revalidate()
         try artifactsDirectory.revalidate()
+        try inventoryDirectory?.revalidate()
+        try lockedDependencies.revalidate()
         for (leaf, stream) in streams {
             try stream.revalidate(parent: buildDirectory.descriptor, leaf: leaf)
             if let binding = stream.binding { try buildRoot.verify(binding) }
         }
+    }
+
+    /// One exclusive next-phase namespace transition. Completed build and
+    /// copied artifact leaves remain immutable under their existing owners.
+    func createInventoryDirectory() throws -> Directory {
+        guard inventoryDirectory == nil,
+              buildLeaves == Set(["prestart.json", "start.json", "terminal.json",
+                                  "stdout.log", "stderr.log", "binding.json"]),
+              streams.count == 2,
+              streams.values.allSatisfy({ $0.binding != nil })
+        else { throw Self.rejected("inventory_transfer_precondition") }
+        try revalidate(against: admission)
+        let directory = try Directory.create(
+            parent: runDirectory.descriptor, leaf: "inventory",
+            path: runDirectory.path + "/inventory"
+        )
+        inventoryDirectory = directory
+        try Self.synchronize(runDirectory.descriptor)
+        try runDirectory.freezeMetadata()
+        try directory.freezeMetadata()
+        try revalidate(against: admission)
+        return directory
     }
 
     /// The drain becomes the sole descriptor owner on successful adoption.
@@ -356,7 +388,7 @@ final class PrimeValidationDriverV2BuildStaging {
         }
     }
 
-    private static func entries(_ fd: Int32) throws -> Set<String> {
+    static func entries(_ fd: Int32) throws -> Set<String> {
         let duplicate = openat(fd, ".", O_RDONLY | O_DIRECTORY | O_NOFOLLOW | O_CLOEXEC)
         guard duplicate >= 3 else {
             if duplicate >= 0 { close(duplicate) }
@@ -389,12 +421,12 @@ final class PrimeValidationDriverV2BuildStaging {
             && value.utf8.count <= Int(MAXNAMLEN)
             && value.utf8.allSatisfy { $0 >= 0x21 && $0 <= 0x7e && $0 != 47 && $0 != 92 }
     }
-    private static func synchronize(_ fd: Int32) throws {
+    static func synchronize(_ fd: Int32) throws {
         guard fsync(fd) == 0, fcntl(fd, F_FULLFSYNC) == 0 else {
             throw rejected("directory_sync")
         }
     }
-    private static func sameProtectedMetadata(_ a: stat, _ b: stat) -> Bool {
+    static func sameProtectedMetadata(_ a: stat, _ b: stat) -> Bool {
         a.st_dev == b.st_dev && a.st_ino == b.st_ino && a.st_mode == b.st_mode
             && a.st_uid == b.st_uid && a.st_gid == b.st_gid
             && a.st_nlink == b.st_nlink && a.st_flags == b.st_flags

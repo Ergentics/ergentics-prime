@@ -37,6 +37,7 @@ private enum PrimeValidationDriverV2SupervisorExitStatus {
     static let fixedProbes: Int32 = 68
     static let finalRevalidation: Int32 = 69
     static let fixedBuild: Int32 = 91
+    static let fixedInventories: Int32 = 96
 }
 
 /// Gate A's transport remains one closed canonical typed intent frame. After
@@ -179,11 +180,11 @@ private struct PrimeValidationWorkflowDriverV2Supervisor {
             )
         }
 
-        if request.terminalGate == .gateF {
+        if request.terminalGate == .gateF || request.terminalGate == .gateG {
+            let buildBinding: PrimeValidationDriverV2BuildBinding
             do {
-                let buildBinding = try fixedProbeBinding.executeBuild()
+                buildBinding = try fixedProbeBinding.executeBuild()
                 try buildBinding.revalidate()
-                withExtendedLifetime(buildBinding) {}
             } catch {
                 reportProbeFailure(
                     error,
@@ -192,6 +193,19 @@ private struct PrimeValidationWorkflowDriverV2Supervisor {
                 )
                 Darwin._exit(PrimeValidationDriverV2SupervisorExitStatus.fixedBuild)
             }
+            if request.terminalGate == .gateG {
+                do {
+                    let inventoryBinding = try buildBinding.executeInventories()
+                    try inventoryBinding.revalidate()
+                    withExtendedLifetime(inventoryBinding) {}
+                } catch {
+                    reportProbeFailure(error,
+                        status: PrimeValidationDriverV2SupervisorExitStatus.fixedInventories,
+                        terminalGate: .gateG)
+                    Darwin._exit(PrimeValidationDriverV2SupervisorExitStatus.fixedInventories)
+                }
+            }
+            withExtendedLifetime(buildBinding) {}
             return
         }
 
@@ -225,7 +239,7 @@ private struct PrimeValidationWorkflowDriverV2Supervisor {
         let detail = String(reflecting: error).utf8.prefix(384).map { byte in
             (byte >= 0x21 && byte <= 0x7e) ? byte : UInt8(0x5f)
         }
-        let gate = terminalGate == .gateF ? "f" : "e"
+        let gate = terminalGate.rawValue.lowercased()
         let message = Array("gate_\(gate)_probe_rejected status=\(status) detail=".utf8)
             + detail + [UInt8(0x0a)]
         // Observational stderr only, after the binding unwinds its cleanup.

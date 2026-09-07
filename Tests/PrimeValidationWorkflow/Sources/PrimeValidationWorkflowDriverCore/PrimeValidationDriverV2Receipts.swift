@@ -590,7 +590,8 @@ public struct PrimeValidationObservedChildReceiptV2:
         maximumActiveNanoseconds: UInt64
     ) throws {
         guard invocation == expectedInvocation,
-              process.supervisorSessionIdentifier == nil || invocation.role == .build,
+              process.supervisorSessionIdentifier == nil
+                || [.build, .listXCTest, .listSwiftTesting].contains(invocation.role),
               activeNanoseconds > 0,
               activeNanoseconds <= maximumActiveNanoseconds,
               standardOutputArtifact.name == "standard_output",

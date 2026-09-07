@@ -3142,7 +3142,9 @@ private extension PrimeValidationDriverV2FixedProbeSemanticValidator {
         }
         let receiptIdentity = try PrimeValidationDriverV2Validation.identity(
             PrimeValidationDriverV2DurableReceiptIdentityProjectionV2(
-                schema: expectation.terminalGate == .gateF
+                schema: expectation.terminalGate == .gateG
+                    ? "prime_driver_v2_gate_g_predecessor_durable_journal_receipt_v1"
+                    : expectation.terminalGate == .gateF
                     ? "prime_driver_v2_gate_f_predecessor_durable_journal_receipt_v1"
                     : "prime_driver_v2_gate_e_durable_journal_receipt_v2",
                 intentIdentitySHA256:
@@ -3191,7 +3193,9 @@ private extension PrimeValidationDriverV2FixedProbeSemanticValidator {
                 orderedChildProcessGroupIdentifiers:
                     orderedChildProcessGroupIdentifiers,
                 rawTerminalSHA256: rawTerminalSHA256,
-                supervisorExitContract: expectation.terminalGate == .gateF
+                supervisorExitContract: expectation.terminalGate == .gateG
+                    ? "binding_bridge_then_gate_g_inventory_binding_final_revalidation_normal_zero_v1"
+                    : expectation.terminalGate == .gateF
                     ? "binding_bridge_then_gate_f_build_binding_final_revalidation_normal_zero_v1"
                     : "binding_bridge_then_final_revalidation_normal_zero_v1"
             )
@@ -3229,8 +3233,9 @@ private extension PrimeValidationDriverV2FixedProbeSemanticValidator {
             durableSwiftFrontendAbsolutePath(expectation.intent)
         let outerDeadline = expectation
             .outerDeadlineStartedAtUptimeNanoseconds
-            .addingReportingOverflow(expectation.terminalGate == .gateF
-                ? 960_000_000_000 : durableOuterDeadlineNanoseconds)
+            .addingReportingOverflow(expectation.terminalGate == .gateG
+                ? 1_260_000_000_000 : expectation.terminalGate == .gateF
+                    ? 960_000_000_000 : durableOuterDeadlineNanoseconds)
         let imageVnodes = [
             expectation.supervisorExecutableVnode,
             expectation.gitExecutableVnode,

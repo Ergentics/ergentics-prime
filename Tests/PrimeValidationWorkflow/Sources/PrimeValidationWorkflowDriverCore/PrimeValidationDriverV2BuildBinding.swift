@@ -382,6 +382,7 @@ package struct PrimeValidationDriverV2BuildDurableBindingEnvelopeV1: Codable {
 /// Retains the one-shot native lifetime; the durable envelope carries no owner.
 package final class PrimeValidationDriverV2BuildBinding: @unchecked Sendable {
     package let envelope: PrimeValidationDriverV2BuildDurableBindingEnvelopeV1
+    private let intent: PrimeValidationRunIntentV2
     private let lifetime: PrimeValidationDriverV2BuildBoundLifetime
 
     package init(
@@ -414,9 +415,20 @@ package final class PrimeValidationDriverV2BuildBinding: @unchecked Sendable {
                               expectedPredecessorRawTerminalSHA256: predecessorRawTerminalSHA256)
         let bytes = try PrimeCanonicalJSON.encode(envelope)
         self.envelope = envelope
+        self.intent = intent
         lifetime = try raw.consumeValidatedBindingLifetime(bindingData: bytes)
         transferred = true
     }
 
     package func revalidate() throws { try lifetime.revalidateContinuity() }
+
+    /// Continues the same native owner exactly once. Neither the durable F
+    /// envelope nor a caller-created inventory declaration can enter Gate G.
+    @available(macOS 26.0, *)
+    package func executeInventories() throws -> PrimeValidationDriverV2InventoryBinding {
+        let owner = try lifetime.consumeForInventory()
+        let raw = try owner.executeInventories()
+        return try PrimeValidationDriverV2InventoryBinding(
+            raw: raw, intent: intent, predecessor: envelope)
+    }
 }

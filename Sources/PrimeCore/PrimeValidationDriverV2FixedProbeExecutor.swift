@@ -813,6 +813,38 @@ public final class PrimeValidationDriverV2BuildOwner: @unchecked Sendable {
         }
     }
 
+    /// Consumes F's retained state before expiry, then establishes the fixed
+    /// single G deadline. The same source, staging and artifact owners survive.
+    func consumeForInventory(
+        staging: PrimeValidationDriverV2BuildStaging,
+        artifacts: PrimeValidationDriverV2BuildArtifacts
+    ) throws -> PrimeValidationDriverV2InventoryOwner {
+        lock.lock()
+        defer { lock.unlock() }
+        guard let state, executionStarted else {
+            throw primeValidationDriverV2FixedProbeRejected("build_inventory_transfer_consumed")
+        }
+        self.state = nil
+        let before = DispatchTime.now().uptimeNanoseconds
+        try requireTime(before, state: state, startsNewWork: true)
+        try state.retainedState.buildRevalidateTransferredContinuity(staging: staging)
+        try state.pinnedBundleInput.revalidate()
+        try artifacts.revalidate()
+        let consumedAt = DispatchTime.now().uptimeNanoseconds
+        guard consumedAt >= before else {
+            throw primeValidationDriverV2FixedProbeRejected("build_inventory_transfer_clock")
+        }
+        try requireTime(consumedAt, state: state, startsNewWork: true)
+        let deadline = try PrimeSecureChildPhaseDeadline(
+            startUptimeNanoseconds: consumedAt,
+            durationNanoseconds: 300_000_000_000
+        )
+        return try PrimeValidationDriverV2InventoryOwner(
+            buildState: state, staging: staging, artifacts: artifacts,
+            deadline: deadline
+        )
+    }
+
     func poison() {
         lock.lock()
         state = nil

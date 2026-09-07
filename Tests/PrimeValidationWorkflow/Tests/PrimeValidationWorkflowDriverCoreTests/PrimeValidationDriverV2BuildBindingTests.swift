@@ -62,7 +62,7 @@ final class PrimeValidationDriverV2BuildBindingTests: XCTestCase {
         }
     }
 
-    func testSupervisedSessionCannotBroadenInventoryChildReceipt() throws {
+    func testSupervisedSessionAcceptsOnlyClosedBuildAndInventoryChildRoles() throws {
         let empty = PrimeValidationContentBinding(data: Data())
         for role in [PrimeValidationInvocationRoleV2.listXCTest, .listSwiftTesting] {
             let invocation = PrimeValidationInvocationV2(
@@ -86,11 +86,10 @@ final class PrimeValidationDriverV2BuildBindingTests: XCTestCase {
             let isolated = child(audit(session: 101))
             try isolated.validate(expectedInvocation: invocation, maximumActiveNanoseconds: 10)
             try isolated.requireCompleteSuccess(expectedMatchedTestCount: 0)
-            XCTAssertThrowsError(try child(audit(session: 99, supervisor: 99)).validate(
-                expectedInvocation: invocation, maximumActiveNanoseconds: 10
-            )) { error in
-                XCTAssertEqual(error as? PrimeValidationDriverV2Error, .invalidBinding("observed_child"))
-            }
+            let supervised = child(audit(session: 99, supervisor: 99))
+            try supervised.validate(expectedInvocation: invocation, maximumActiveNanoseconds: 10)
+            try supervised.requireCompleteSuccess(expectedMatchedTestCount: 0)
+            XCTAssertFalse(child(audit(session: 99)).process.completeSafetyObserved)
         }
     }
 
@@ -119,7 +118,18 @@ final class PrimeValidationDriverV2BuildBindingTests: XCTestCase {
         XCTAssertEqual(fObject["terminal_gate"] as? String, "F")
         XCTAssertEqual(try PrimeCanonicalJSON.decode(
             PrimeValidationDriverV2SupervisorLaunchRequestV1.self, from: fBytes), f)
-        fObject["terminal_gate"] = "G"
+        let g = PrimeValidationDriverV2SupervisorLaunchRequestV1(
+            intent: intent, leaseDirectoryAbsolutePath: "/private/tmp/prime-f-lease",
+            terminalGate: .gateG)
+        try g.validate()
+        let gBytes = try PrimeCanonicalJSON.encode(g)
+        let gObject = try XCTUnwrap(JSONSerialization.jsonObject(with: gBytes) as? [String: Any])
+        XCTAssertEqual(gObject["terminal_gate"] as? String, "G")
+        XCTAssertNotEqual(gBytes, bytes)
+        XCTAssertNotEqual(gBytes, fBytes)
+        XCTAssertEqual(try PrimeCanonicalJSON.decode(
+            PrimeValidationDriverV2SupervisorLaunchRequestV1.self, from: gBytes), g)
+        fObject["terminal_gate"] = "H"
         XCTAssertThrowsError(try PrimeCanonicalJSON.decode(
             PrimeValidationDriverV2SupervisorLaunchRequestV1.self,
             from: JSONSerialization.data(withJSONObject: fObject, options: [.sortedKeys, .withoutEscapingSlashes])))
@@ -170,6 +180,12 @@ final class PrimeValidationDriverV2BuildBindingTests: XCTestCase {
         try check(.gateF, duration: 60_000_000_000, waitOffset: 1, expected: "expectation_or_exit")
         try check(.gateF, duration: 960_000_000_000, waitOffset: 960_000_000_001, expected: "expectation_or_exit")
         try check(.gateF, duration: 960_000_000_000, waitOffset: 0,
+                  expected: "expectation_or_exit", started: UInt64.max)
+        try check(.gateG, duration: 1_260_000_000_000, waitOffset: 960_000_000_001, expected: "leaf_order")
+        try check(.gateF, duration: 1_260_000_000_000, waitOffset: 1, expected: "expectation_or_exit")
+        try check(.gateG, duration: 960_000_000_000, waitOffset: 1, expected: "expectation_or_exit")
+        try check(.gateG, duration: 1_260_000_000_000, waitOffset: 1_260_000_000_001, expected: "expectation_or_exit")
+        try check(.gateG, duration: 1_260_000_000_000, waitOffset: 0,
                   expected: "expectation_or_exit", started: UInt64.max)
     }
 

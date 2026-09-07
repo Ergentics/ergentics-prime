@@ -237,6 +237,20 @@ final class PrimeValidationDriverV2PinnedBundleInput: @unchecked Sendable {
     /// mandatory at input admission, staging, and final revalidate().
     func checkpointMetadata() throws { try validate(readContents: false) }
 
+    /// Read-only continuation of the same source and staged descriptors.
+    /// The live build owner must be consumed before this phase is reachable.
+    func revalidateAfterBuild(deadlineNanoseconds: UInt64) throws {
+        lock.lock(); defer { lock.unlock() }
+        guard !poisoned, stagingAttempted, let staged else {
+            throw Self.rejected("staged_continuation_unavailable")
+        }
+        do {
+            let deadline = try Self.operationDeadline(deadlineNanoseconds)
+            try source.revalidate(deadline: deadline, readContents: true)
+            try staged.revalidate(deadline: deadline, readContents: true)
+        } catch { poisoned = true; throw error }
+    }
+
     private func validate(readContents: Bool) throws {
         lock.lock(); defer { lock.unlock() }
         guard !poisoned else { throw Self.rejected("poisoned") }

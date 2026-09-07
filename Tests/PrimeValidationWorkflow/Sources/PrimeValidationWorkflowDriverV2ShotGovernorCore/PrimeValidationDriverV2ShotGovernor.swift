@@ -72,6 +72,8 @@ package struct PrimeValidationDriverV2ShotCapsuleV1:
         "prime_driver_v2_gate_e_shot_capsule_v1"
     package static let buildArtifactKind =
         "prime_driver_v2_gate_f_shot_capsule_v1"
+    package static let inventoryArtifactKind =
+        "prime_driver_v2_gate_g_shot_capsule_v1"
 
     package let schemaVersion: Int
     package let artifactKind: String
@@ -111,19 +113,53 @@ package struct PrimeValidationDriverV2ShotCapsuleV1:
     package let intent: PrimeValidationRunIntentV2
 
     package var terminalGate: PrimeValidationDriverV2TerminalGate {
-        artifactKind == Self.buildArtifactKind ? .gateF : .gateE
+        if artifactKind == Self.inventoryArtifactKind { return .gateG }
+        return artifactKind == Self.buildArtifactKind ? .gateF : .gateE
     }
 
     fileprivate var outerJournalLeaf: String {
-        terminalGate == .gateF
-            ? "gate-f-shot-governor-journal"
+        if terminalGate == .gateG { return "gate-g-shot-governor-journal" }
+        return terminalGate == .gateF ? "gate-f-shot-governor-journal"
             : PrimeValidationDriverV2GovernorJournal.rootLeaf
+    }
+
+    fileprivate var runsBuildAndStaging: Bool {
+        terminalGate == .gateF || terminalGate == .gateG
+    }
+
+    fileprivate var outerDurationNanoseconds: UInt64 {
+        if terminalGate == .gateG { return 1_260_000_000_000 }
+        return terminalGate == .gateF ? 960_000_000_000
+            : PrimeValidationDriverV2GovernorDeadline.durationNanoseconds
+    }
+
+    fileprivate var outerStartSchema: String {
+        if terminalGate == .gateG { return "prime_driver_v2_gate_g_outer_start_v1" }
+        return terminalGate == .gateF ? "prime_driver_v2_gate_f_outer_start_v1"
+            : "prime_driver_v2_gate_e_outer_start_v1"
+    }
+
+    fileprivate var outerTerminalSchema: String {
+        if terminalGate == .gateG { return "prime_driver_v2_gate_g_outer_terminal_v1" }
+        return terminalGate == .gateF ? "prime_driver_v2_gate_f_outer_terminal_v1"
+            : "prime_driver_v2_gate_e_outer_terminal_v1"
     }
 
     package func validate(exactCanonicalBytes: Data) throws {
         let phaseFieldsMatch: Bool
-        if artifactKind == Self.buildArtifactKind {
+        if artifactKind == Self.inventoryArtifactKind {
+            phaseFieldsMatch = gateFAuthorized && gateGAuthorized
+                && swiftPMBuildExecutionCount == 1
+                && artifactStagingExecutionCount == 1
+                && inventoryExecutionCount == 2
+                && networkOperationCount == nil
+                && dependencyFetchCount == nil
+                && githubOperationCount == nil
+                && dependencyResolutionPolicy == "locked_package_resolved"
+        } else if artifactKind == Self.buildArtifactKind {
             phaseFieldsMatch = gateFAuthorized
+                && !gateGAuthorized
+                && inventoryExecutionCount == 0
                 && swiftPMBuildExecutionCount == 1
                 && artifactStagingExecutionCount == 1
                 && networkOperationCount == nil
@@ -133,6 +169,8 @@ package struct PrimeValidationDriverV2ShotCapsuleV1:
         } else {
             phaseFieldsMatch = artifactKind == Self.artifactKind
                 && !gateFAuthorized
+                && !gateGAuthorized
+                && inventoryExecutionCount == 0
                 && swiftPMBuildExecutionCount == 0
                 && artifactStagingExecutionCount == 0
                 && networkOperationCount == 0
@@ -146,12 +184,10 @@ package struct PrimeValidationDriverV2ShotCapsuleV1:
               !rerunAuthorized,
               localOnly,
               fixtureExecutionCount == 0,
-              inventoryExecutionCount == 0,
-              !gateGAuthorized,
-              primeAdmittedFileCount == 623,
-              sourceIdentityRecordCount == 622,
-              primeAuthorityDirectoryCount == 157,
-              combinedWatcherDescriptorCount == 2_240,
+              primeAdmittedFileCount == 644,
+              sourceIdentityRecordCount == 643,
+              primeAuthorityDirectoryCount == 170,
+              combinedWatcherDescriptorCount == 2274,
               exactCanonicalBytes.count <= 262_144,
               exactCanonicalBytes.last != 0x0a,
               try PrimeCanonicalJSON.encode(self) == exactCanonicalBytes,
@@ -4194,7 +4230,7 @@ private final class PrimeValidationDriverV2GovernorBuildSnapshot {
         let waitReturnedUptimeNanoseconds: UInt64
     }
 
-    private final class Node {
+    fileprivate final class Node {
         private(set) var descriptor: Int32 = -1
         let parent: Int32
         let leaf: String
@@ -4297,8 +4333,10 @@ private final class PrimeValidationDriverV2GovernorBuildSnapshot {
     private let artifacts: PrimeValidationDriverV2BuildArtifactsReadback
     private let pinnedBundle: PrimeValidationDriverV2PinnedBundleReadback
     private let pinnedBundleInput: PrimeValidationDriverV2PinnedBundleInputReadback
+    private let lockedDependencies: PrimeValidationDriverV2LockedDependencyReadback
     let envelope: PrimeValidationDriverV2BuildDurableBindingEnvelopeV1
     let bindingSHA256: String
+    let binding: PrimeArtifactBinding
     let leaves: [PrimeValidationDriverV2GovernorInnerLeaf]
     let vnodes: [PrimeValidationDriverV2GovernorVnodeRecord]
     private static let workspaceLeaves = [
@@ -4315,15 +4353,19 @@ private final class PrimeValidationDriverV2GovernorBuildSnapshot {
          evidence: PrimeValidationDriverV2GovernorHeldDirectory,
          swiftPackageImage: PrimeValidationDriverV2GovernorHeldExecutable,
          pinnedBundleInput: PrimeValidationDriverV2PinnedBundleInputReadback,
+         lockedDependencies: PrimeValidationDriverV2LockedDependencyReadback,
          intent: PrimeValidationRunIntentV2,
          supervisorPID: Int32, supervisorWaitUptime: UInt64,
          predecessor: PrimeValidationDriverV2GovernorInnerSnapshot,
+         terminalGate: PrimeValidationDriverV2TerminalGate = .gateF,
          deadline: PrimeValidationDriverV2GovernorDeadline) throws {
         self.prime = prime
         self.workspace = workspace; self.evidence = evidence; self.runID = intent.runID
         self.swiftPackageImage = swiftPackageImage
         self.pinnedBundleInput = pinnedBundleInput
-        guard predecessor.complete, predecessor.durableFrames.count == 34,
+        self.lockedDependencies = lockedDependencies
+        guard terminalGate == .gateF || terminalGate == .gateG,
+              predecessor.complete, predecessor.durableFrames.count == 34,
               let rawTerminalSHA256 = predecessor.rawTerminalSHA256
         else { throw Self.rejected("predecessor") }
         try prime.revalidate(coordinate: "build_prime")
@@ -4337,7 +4379,9 @@ private final class PrimeValidationDriverV2GovernorBuildSnapshot {
                 owner: workspace.identity, deadline: deadline))
         }
         let run = try Node(parent: evidence.descriptor, leaf: runID, directory: true,
-                           owner: evidence.identity, entries: ["artifacts", "build"],
+                           owner: evidence.identity,
+                           entries: terminalGate == .gateG
+                            ? ["artifacts", "build", "inventory"] : ["artifacts", "build"],
                            deadline: deadline)
         heldDirectories.append(run)
         let build = try Node(parent: run.descriptor, leaf: "build", directory: true,
@@ -4432,6 +4476,9 @@ private final class PrimeValidationDriverV2GovernorBuildSnapshot {
         }
         self.envelope = envelope
         self.bindingSHA256 = PrimeSHA256.hexDigest(of: bindingData)
+        self.binding = .init(relativePath: "binding.json",
+            sha256: PrimeSHA256.hexDigest(of: bindingData),
+            byteCount: UInt64(bindingData.count), purpose: .immutableData)
         self.leaves = heldFiles.map {
             .init(leaf: $0.leaf, byteCount: $0.metadata.byteCount,
                   sha256: PrimeSHA256.hexDigest(of: $0.data!))
@@ -4441,6 +4488,9 @@ private final class PrimeValidationDriverV2GovernorBuildSnapshot {
         self.pinnedBundle = try PrimeValidationDriverV2PinnedBundleReadback.capture(
             primeRootDescriptor: prime.descriptor, workspaceRootDescriptor: workspace.descriptor,
             expected: envelope.pinnedBundle, deadlineNanoseconds: deadline.expiresAt)
+        // The inputs were held before the supervisor started. Join the one
+        // derived mirror file after F and keep that same owner through publication.
+        try lockedDependencies.bindExistingMirrors(workspaceRootDescriptor: workspace.descriptor)
         self.artifacts = try PrimeValidationDriverV2BuildArtifactsReadback.capture(
             workspaceRootDescriptor: workspace.descriptor,
             artifactRootDescriptor: artifactRoot.descriptor,
@@ -4456,6 +4506,7 @@ private final class PrimeValidationDriverV2GovernorBuildSnapshot {
         try Self.requireRootEntries(workspace: workspace, evidence: evidence, runID: runID)
         for directory in directories { try directory.revalidate() }
         for file in files { try file.revalidate() }
+        try lockedDependencies.revalidateBoundMirrors()
         guard try pinnedBundleInput.revalidate() == envelope.pinnedBundle.input
         else { throw Self.rejected("pinned_bundle_input_changed") }
         guard try pinnedBundle.revalidate() == envelope.pinnedBundle
@@ -4468,6 +4519,7 @@ private final class PrimeValidationDriverV2GovernorBuildSnapshot {
         guard try pinnedBundleInput.revalidate() == envelope.pinnedBundle.input
         else { throw Self.rejected("pinned_bundle_input_changed_after_artifacts") }
         try prime.revalidate(coordinate: "build_prime_final")
+        try lockedDependencies.revalidateBoundMirrors()
     }
 
     private static func requireRootEntries(
@@ -4485,6 +4537,191 @@ private final class PrimeValidationDriverV2GovernorBuildSnapshot {
         -> PrimeValidationDriverV2ShotGovernorFailure {
         governorRejected(PrimeValidationDriverV2ShotGovernorStatus.postReapRejection,
                          "build_readback_" + coordinate)
+    }
+}
+
+/// G observes the exact files below retained evidence descriptors after reap.
+/// The decoded inventory envelope cannot recreate an inventory or H owner.
+private final class PrimeValidationDriverV2GovernorInventorySnapshot {
+    private typealias Node = PrimeValidationDriverV2GovernorBuildSnapshot.Node
+    private let evidence: PrimeValidationDriverV2GovernorHeldDirectory
+    private let build: PrimeValidationDriverV2GovernorBuildSnapshot
+    private let directories: [Node]
+    private let files: [Node]
+    let envelope: PrimeValidationDriverV2InventoryDurableBindingEnvelopeV1
+    let bindingSHA256: String
+    let receiptIdentitySHA256: String
+    let leaves: [PrimeValidationDriverV2GovernorInnerLeaf]
+    let vnodes: [PrimeValidationDriverV2GovernorVnodeRecord]
+    private static let inventoryLeaves = [
+        "01-xctest-prestart.json", "01-xctest-start.json", "01-xctest-terminal.json",
+        "02-swift-testing-prestart.json", "02-swift-testing-start.json", "02-swift-testing-terminal.json",
+        "binding.json", "swift-testing-list.stderr.log", "swift-testing-list.stdout.log",
+        "terminal.json", "xctest-list.stderr.log", "xctest-list.stdout.log",
+    ]
+
+    init(evidence: PrimeValidationDriverV2GovernorHeldDirectory,
+         build: PrimeValidationDriverV2GovernorBuildSnapshot,
+         intent: PrimeValidationRunIntentV2,
+         supervisorPID: Int32, supervisorWaitUptime: UInt64,
+         predecessorProcessGroups: Set<Int32>,
+         deadline: PrimeValidationDriverV2GovernorDeadline) throws {
+        self.evidence = evidence; self.build = build
+        try build.revalidate()
+        try evidence.revalidate(coordinate: "inventory_evidence")
+        let run = try Node(parent: evidence.descriptor, leaf: intent.runID,
+            directory: true, owner: evidence.identity,
+            entries: ["artifacts", "build", "inventory"], deadline: deadline)
+        let inventory = try Node(parent: run.descriptor, leaf: "inventory",
+            directory: true, owner: evidence.identity,
+            entries: Self.inventoryLeaves, deadline: deadline)
+        let files = try Self.inventoryLeaves.map { leaf in
+            try Node(parent: inventory.descriptor, leaf: leaf, directory: false,
+                owner: evidence.identity,
+                maximumBytes: leaf == "binding.json" || leaf.hasSuffix(".log")
+                    ? 16 * 1024 * 1024 : 256 * 1024,
+                deadline: deadline)
+        }
+        guard Set(files.map { "\($0.metadata.deviceID):\($0.metadata.inode)" }).count == files.count,
+              run.metadata.inode != inventory.metadata.inode
+                || run.metadata.deviceID != inventory.metadata.deviceID
+        else { throw Self.rejected("aliased_nodes") }
+        let byName = Dictionary(uniqueKeysWithValues: files.map { ($0.leaf, $0) })
+        let bindingData = byName["binding.json"]!.data!
+        let envelope = try PrimeCanonicalJSON.decode(
+            PrimeValidationDriverV2InventoryDurableBindingEnvelopeV1.self, from: bindingData)
+        try envelope.validate(intent: intent, expectedSupervisorPID: supervisorPID,
+            build: build.envelope, expectedBuildBinding: build.binding)
+        guard envelope.children.count == 2,
+              envelope.children.map(\.role) == ["list_xctest", "list_swift_testing"],
+              envelope.predecessorBuildBinding == build.binding,
+              envelope.receipt.xctestListData == byName["xctest-list.stdout.log"]!.data!,
+              envelope.receipt.swiftTestingListData == byName["swift-testing-list.stdout.log"]!.data!
+        else { throw Self.rejected("envelope_joins") }
+        let sequence = try PrimeCanonicalJSON.decode(
+            PrimeValidationDriverV2InventorySequenceTerminalV1.self,
+            from: byName["terminal.json"]!.data!)
+        guard sequence.schema == "prime_driver_v2_gate_g_inventory_terminal_v1",
+              sequence.runID == intent.runID,
+              sequence.predecessorBuildBindingSHA256 == build.bindingSHA256,
+              sequence.orderedChildTerminalSHA256Values
+                == envelope.children.map { $0.terminalBinding.sha256 },
+              envelope.terminalBinding == Self.binding(byName["terminal.json"]!)
+        else { throw Self.rejected("sequence_terminal") }
+        var predecessorSHA256 = build.bindingSHA256
+        var previousWait = build.envelope.artifacts.captureCompletedAtUptimeNanoseconds
+        let first = envelope.children[0].process
+        guard first.deadlineStartedAtUptimeNanoseconds >= previousWait,
+              first.deadlineStartedAtUptimeNanoseconds
+                < build.envelope.process.deadlineExpiresAtUptimeNanoseconds,
+              first.deadlineExpiresAtUptimeNanoseconds > first.deadlineStartedAtUptimeNanoseconds,
+              first.deadlineExpiresAtUptimeNanoseconds - first.deadlineStartedAtUptimeNanoseconds
+                == 300_000_000_000,
+              first.deadlineExpiresAtUptimeNanoseconds < deadline.expiresAt
+        else { throw Self.rejected("transferred_phase_deadline") }
+        let childLayouts = [
+            ("01-xctest", "xctest-list"),
+            ("02-swift-testing", "swift-testing-list"),
+        ]
+        var groups = predecessorProcessGroups
+        groups.insert(build.envelope.process.processGroupIdentifier)
+        for (index, child) in envelope.children.enumerated() {
+            let (prefix, streamPrefix) = childLayouts[index]
+            let preNode = byName[prefix + "-prestart.json"]!
+            let startNode = byName[prefix + "-start.json"]!
+            let terminalNode = byName[prefix + "-terminal.json"]!
+            let pre = try PrimeCanonicalJSON.decode(PrimeValidationDriverV2InventoryPrestartV1.self,
+                from: preNode.data!)
+            let start = try PrimeCanonicalJSON.decode(PrimeValidationDriverV2InventoryStartV1.self,
+                from: startNode.data!)
+            let terminal = try PrimeCanonicalJSON.decode(PrimeValidationDriverV2InventoryTerminalV1.self,
+                from: terminalNode.data!)
+            let p = child.process
+            let executable = build.envelope.process
+            guard pre.schema == "prime_driver_v2_gate_g_inventory_prestart_v1",
+                  pre.runID == intent.runID, pre.ordinal == index + 1, pre.role == child.role,
+                  pre.predecessorSHA256 == predecessorSHA256,
+                  pre.deadlineStartedAtUptimeNanoseconds == p.deadlineStartedAtUptimeNanoseconds,
+                  pre.deadlineExpiresAtUptimeNanoseconds == p.deadlineExpiresAtUptimeNanoseconds,
+                  pre.executableAbsolutePath == p.executableAbsolutePath,
+                  pre.executableSHA256 == p.executableSHA256,
+                  pre.logicalArgumentZero == p.logicalArgumentZero,
+                  pre.arguments == p.arguments, pre.orderedEnvironment == p.orderedEnvironment,
+                  pre.workingDirectoryAbsolutePath == p.workingDirectoryAbsolutePath,
+                  start.schema == "prime_driver_v2_gate_g_inventory_start_v1",
+                  start.role == child.role,
+                  start.prestartSHA256 == PrimeSHA256.hexDigest(of: preNode.data!),
+                  start.processIdentifier == p.processIdentifier,
+                  start.sessionIdentifier == p.sessionIdentifier,
+                  start.processGroupIdentifier == p.processGroupIdentifier,
+                  start.appliedSpawnFlags == p.appliedSpawnFlags,
+                  start.spawnReturnedUptimeNanoseconds == p.spawnReturnedUptimeNanoseconds,
+                  start.mappedExecutablePathTelemetry == p.executableAbsolutePath,
+                  start.exactSuspendedWorkingDirectoryJoin == p.exactSuspendedWorkingDirectoryJoin,
+                  terminal.schema == "prime_driver_v2_gate_g_inventory_child_terminal_v1",
+                  terminal.role == child.role,
+                  terminal.startSHA256 == PrimeSHA256.hexDigest(of: startNode.data!),
+                  terminal.process == p,
+                  child.prestartBinding == Self.binding(preNode),
+                  child.startBinding == Self.binding(startNode),
+                  child.terminalBinding == Self.binding(terminalNode),
+                  p.executableAbsolutePath == executable.executableAbsolutePath,
+                  p.executableSHA256 == executable.executableSHA256,
+                  p.executableByteCount == executable.executableByteCount,
+                  p.executableDeviceID == executable.executableDeviceID,
+                  p.executableInode == executable.executableInode,
+                  p.sessionIdentifier == supervisorPID,
+                  p.parentProcessIdentifier == supervisorPID,
+                  p.deadlineStartedAtUptimeNanoseconds == first.deadlineStartedAtUptimeNanoseconds,
+                  p.deadlineExpiresAtUptimeNanoseconds == first.deadlineExpiresAtUptimeNanoseconds,
+                  p.spawnReturnedUptimeNanoseconds >= previousWait,
+                  p.waitReturnedUptimeNanoseconds <= supervisorWaitUptime,
+                  groups.insert(p.processGroupIdentifier).inserted
+            else { throw Self.rejected("child_journal_process_join_\(index + 1)") }
+            for (suffix, stream, declared) in [
+                ("stdout.log", p.standardOutput, child.standardOutputBinding),
+                ("stderr.log", p.standardError, child.standardErrorBinding),
+            ] {
+                let file = byName[streamPrefix + "." + suffix]!
+                guard declared == Self.binding(file),
+                      file.metadata.deviceID == stream.outputDeviceID,
+                      file.metadata.inode == stream.outputInode,
+                      file.metadata.byteCount == stream.outputByteCount,
+                      file.metadata.permissionMode == stream.outputPermissionMode,
+                      PrimeSHA256.hexDigest(of: file.data!) == stream.outputSHA256
+                else { throw Self.rejected("stream_join_" + file.leaf) }
+            }
+            predecessorSHA256 = child.terminalBinding.sha256
+            previousWait = p.waitReturnedUptimeNanoseconds
+        }
+        self.envelope = envelope
+        self.bindingSHA256 = PrimeSHA256.hexDigest(of: bindingData)
+        self.receiptIdentitySHA256 = try envelope.receipt.identitySHA256(
+            intent: intent, buildReceipt: build.envelope.receipt)
+        self.leaves = files.map { .init(leaf: $0.leaf, byteCount: $0.metadata.byteCount,
+            sha256: PrimeSHA256.hexDigest(of: $0.data!)) }
+        self.vnodes = files.map { .init($0.metadata) }
+        self.directories = [run, inventory]; self.files = files
+        try revalidate()
+    }
+
+    func revalidate() throws {
+        try build.revalidate()
+        try evidence.revalidate(coordinate: "inventory_evidence_after")
+        for directory in directories { try directory.revalidate() }
+        for file in files { try file.revalidate() }
+        try build.revalidate()
+        for directory in directories { try directory.revalidate() }
+    }
+
+    private static func binding(_ node: Node) -> PrimeArtifactBinding {
+        .init(relativePath: node.leaf, sha256: PrimeSHA256.hexDigest(of: node.data!),
+              byteCount: node.metadata.byteCount, purpose: .immutableData)
+    }
+
+    private static func rejected(_ coordinate: String) -> PrimeValidationDriverV2ShotGovernorFailure {
+        governorRejected(PrimeValidationDriverV2ShotGovernorStatus.postReapRejection,
+                         "inventory_readback_" + coordinate)
     }
 }
 
@@ -4635,9 +4872,56 @@ private struct PrimeValidationDriverV2GovernorZeroRejectionOutcome: Encodable {
     }
 }
 
+private struct PrimeValidationDriverV2GovernorInventorySuccessOutcome: Encodable {
+    // Native inventory admission does not promote the separately controlled
+    // authority vector or authorize any H child/publication route.
+    let authorityVector = "11110000"
+    let completedGate = "G"
+    let inventoryExecutionCount = 2
+    let gateHAuthorized = false
+    let predecessorJournal: [PrimeValidationDriverV2GovernorInnerLeaf]
+    let predecessorJournalVnodes: [PrimeValidationDriverV2GovernorVnodeRecord]
+    let predecessorDurableReceiptIdentitySHA256: String
+    let predecessorRawTerminalSHA256: String
+    let buildJournal: [PrimeValidationDriverV2GovernorInnerLeaf]
+    let buildJournalVnodes: [PrimeValidationDriverV2GovernorVnodeRecord]
+    let buildBindingSHA256: String
+    let buildProcessIdentifier: Int32
+    let buildProcessGroupIdentifier: Int32
+    let inventoryJournal: [PrimeValidationDriverV2GovernorInnerLeaf]
+    let inventoryJournalVnodes: [PrimeValidationDriverV2GovernorVnodeRecord]
+    let inventoryBindingSHA256: String
+    let inventoryReceiptIdentitySHA256: String
+    let inventoryProcessIdentifiers: [Int32]
+    let inventoryProcessGroupIdentifiers: [Int32]
+
+    private enum CodingKeys: String, CodingKey {
+        case authorityVector = "authority_vector"
+        case completedGate = "completed_gate"
+        case inventoryExecutionCount = "inventory_execution_count"
+        case gateHAuthorized = "gate_h_authorized"
+        case predecessorJournal = "predecessor_journal"
+        case predecessorJournalVnodes = "predecessor_journal_vnodes"
+        case predecessorDurableReceiptIdentitySHA256 = "predecessor_durable_receipt_identity_sha256"
+        case predecessorRawTerminalSHA256 = "predecessor_raw_terminal_sha256"
+        case buildJournal = "build_journal"
+        case buildJournalVnodes = "build_journal_vnodes"
+        case buildBindingSHA256 = "build_binding_sha256"
+        case buildProcessIdentifier = "build_process_identifier"
+        case buildProcessGroupIdentifier = "build_process_group_identifier"
+        case inventoryJournal = "inventory_journal"
+        case inventoryJournalVnodes = "inventory_journal_vnodes"
+        case inventoryBindingSHA256 = "inventory_binding_sha256"
+        case inventoryReceiptIdentitySHA256 = "inventory_receipt_identity_sha256"
+        case inventoryProcessIdentifiers = "inventory_process_identifiers"
+        case inventoryProcessGroupIdentifiers = "inventory_process_group_identifiers"
+    }
+}
+
 private enum PrimeValidationDriverV2GovernorTerminalOutcome: Encodable {
     case success(PrimeValidationDriverV2GovernorSuccessOutcome)
     case buildSuccess(PrimeValidationDriverV2GovernorBuildSuccessOutcome)
+    case inventorySuccess(PrimeValidationDriverV2GovernorInventorySuccessOutcome)
     case containedNonzero(PrimeValidationDriverV2GovernorNonzeroOutcome)
     case containedZeroSemanticRejection(
         PrimeValidationDriverV2GovernorZeroRejectionOutcome
@@ -4646,6 +4930,7 @@ private enum PrimeValidationDriverV2GovernorTerminalOutcome: Encodable {
     private enum CodingKeys: String, CodingKey {
         case success
         case buildSuccess = "build_success"
+        case inventorySuccess = "inventory_success"
         case containedNonzero = "contained_nonzero"
         case containedZeroSemanticRejection =
             "contained_zero_semantic_rejection"
@@ -4658,6 +4943,8 @@ private enum PrimeValidationDriverV2GovernorTerminalOutcome: Encodable {
             try container.encode(value, forKey: .success)
         case let .buildSuccess(value):
             try container.encode(value, forKey: .buildSuccess)
+        case let .inventorySuccess(value):
+            try container.encode(value, forKey: .inventorySuccess)
         case let .containedNonzero(value):
             try container.encode(value, forKey: .containedNonzero)
         case let .containedZeroSemanticRejection(value):
@@ -5091,7 +5378,7 @@ package enum PrimeValidationDriverV2ShotGovernor {
             systemTool: true
         )
         let swiftPackageImage: PrimeValidationDriverV2GovernorHeldExecutable?
-        if capsule.terminalGate == .gateF {
+        if capsule.runsBuildAndStaging {
             swiftPackageImage = try PrimeValidationDriverV2GovernorHeldExecutable
                 .fixedSwiftPackage(beside: swiftImage)
         } else {
@@ -5140,16 +5427,20 @@ package enum PrimeValidationDriverV2ShotGovernor {
             leaf: "outer-supervisor-stderr.bin"
         )
         let deadline = try PrimeValidationDriverV2GovernorDeadline(
-            durationNanoseconds: capsule.terminalGate == .gateF
-                ? 960_000_000_000
-                : PrimeValidationDriverV2GovernorDeadline.durationNanoseconds
+            durationNanoseconds: capsule.outerDurationNanoseconds
         )
         let pinnedBundleInput: PrimeValidationDriverV2PinnedBundleInputReadback?
-        if capsule.terminalGate == .gateF {
+        let lockedDependencies: PrimeValidationDriverV2LockedDependencyReadback?
+        if capsule.runsBuildAndStaging {
             pinnedBundleInput = try PrimeValidationDriverV2PinnedBundleInputReadback.capture(
                 primeRootDescriptor: primeRoot.descriptor, deadlineNanoseconds: deadline.expiresAt)
+            lockedDependencies = try PrimeValidationDriverV2LockedDependencyReadback.capture(
+                primeRootDescriptor: primeRoot.descriptor,
+                primeRootAbsolutePath: capsule.intent.roots.repositoryRoot.absolutePath,
+                deadlineNanoseconds: deadline.expiresAt)
         } else {
             pinnedBundleInput = nil
+            lockedDependencies = nil
         }
         let spawned = try PrimeValidationDriverV2GovernorSpawner
             .spawnSupervisor(
@@ -5162,6 +5453,7 @@ package enum PrimeValidationDriverV2ShotGovernor {
                 preSpawnContinuityCheckpoint: {
                     try outerContinuity.revalidateContinuity()
                     try swiftPackageImage?.revalidate(coordinate: "swift_package_before_spawn")
+                    try lockedDependencies?.checkpointMetadata()
                 }
             )
         let containmentGuard =
@@ -5176,9 +5468,7 @@ package enum PrimeValidationDriverV2ShotGovernor {
 
         let startLeaf = try journal.publishCanonical(
             PrimeValidationDriverV2GovernorStartRecordV1(
-                schema: capsule.terminalGate == .gateF
-                    ? "prime_driver_v2_gate_f_outer_start_v1"
-                    : "prime_driver_v2_gate_e_outer_start_v1",
+                schema: capsule.outerStartSchema,
                 capsuleSHA256: capsuleLeaf.sha256,
                 capsuleByteCount: capsuleLeaf.byteCount,
                 capsuleVnode: capsuleLeaf.vnode,
@@ -5221,6 +5511,7 @@ package enum PrimeValidationDriverV2ShotGovernor {
         )
         try outerContinuity.revalidateContinuity()
         _ = try pinnedBundleInput?.revalidate()
+        try lockedDependencies?.revalidate()
         let startPublishedAt = DispatchTime.now().uptimeNanoseconds
         try deadline.requireTime("supervisor_resume_deadline")
         guard Darwin.kill(spawned.processIdentifier, SIGCONT) == 0,
@@ -5266,11 +5557,12 @@ package enum PrimeValidationDriverV2ShotGovernor {
         var supervisorImageRejoined = false
         var gitImageRejoined = false
         var swiftImageRejoined = false
-        var swiftPackageImageRejoined: Bool? = capsule.terminalGate == .gateF ? false : nil
+        var swiftPackageImageRejoined: Bool? = capsule.runsBuildAndStaging ? false : nil
         var rootsRejoined = false
         var outerContinuityRejoined = false
         var innerReceiptValidated = false
         var buildSnapshot: PrimeValidationDriverV2GovernorBuildSnapshot?
+        var inventorySnapshot: PrimeValidationDriverV2GovernorInventorySnapshot?
         var durableReceiptIdentitySHA256: String?
         var durableReceiptJournalVnodes:
             [PrimeValidationDriverV2GovernorVnodeRecord]?
@@ -5356,8 +5648,8 @@ package enum PrimeValidationDriverV2ShotGovernor {
                     durableReceipt.identitySHA256
                 durableReceiptJournalVnodes = inner.durableVnodes
                 innerReceiptValidated = true
-                if capsule.terminalGate == .gateF {
-                    guard let swiftPackageImage, let pinnedBundleInput else {
+                if capsule.runsBuildAndStaging {
+                    guard let swiftPackageImage, let pinnedBundleInput, let lockedDependencies else {
                         throw governorRejected(
                             PrimeValidationDriverV2ShotGovernorStatus.postReapRejection,
                             "swift_package_missing_owner")
@@ -5366,10 +5658,24 @@ package enum PrimeValidationDriverV2ShotGovernor {
                         buildSnapshot = try PrimeValidationDriverV2GovernorBuildSnapshot(
                             prime: primeRoot, workspace: workspaceRoot, evidence: evidenceRoot,
                             swiftPackageImage: swiftPackageImage, pinnedBundleInput: pinnedBundleInput,
+                            lockedDependencies: lockedDependencies,
                             intent: capsule.intent,
                             supervisorPID: spawned.processIdentifier,
                             supervisorWaitUptime: processResult.wait.returnedAtUptimeNanoseconds,
-                            predecessor: inner, deadline: deadline)
+                            predecessor: inner, terminalGate: capsule.terminalGate, deadline: deadline)
+                        if capsule.terminalGate == .gateG {
+                            guard let buildSnapshot else {
+                                throw governorRejected(
+                                    PrimeValidationDriverV2ShotGovernorStatus.postReapRejection,
+                                    "inventory_missing_build_snapshot")
+                            }
+                            inventorySnapshot = try PrimeValidationDriverV2GovernorInventorySnapshot(
+                                evidence: evidenceRoot, build: buildSnapshot, intent: capsule.intent,
+                                supervisorPID: spawned.processIdentifier,
+                                supervisorWaitUptime: processResult.wait.returnedAtUptimeNanoseconds,
+                                predecessorProcessGroups: inner.recordedChildProcessGroups,
+                                deadline: deadline)
+                        }
                     } catch let failure as PrimeValidationDriverV2ShotGovernorFailure {
                         throw failure
                     } catch {
@@ -5398,6 +5704,7 @@ package enum PrimeValidationDriverV2ShotGovernor {
                 swiftPackageImageRejoined = true
             }
             _ = try pinnedBundleInput?.revalidate()
+            try lockedDependencies?.revalidate()
             try primeRoot.revalidate(coordinate: "prime_root_after")
             try companionRoot.revalidate(coordinate: "companion_root_after")
             if capsule.terminalGate == .gateE {
@@ -5409,6 +5716,7 @@ package enum PrimeValidationDriverV2ShotGovernor {
                 // A nonzero F exit may retain a partial known-write tree; it
                 // cannot enter buildSuccess. Zero requires the full readback.
                 try buildSnapshot?.revalidate()
+                try inventorySnapshot?.revalidate()
             }
             try leaseRoot.revalidate(coordinate: "lease_root_after")
             try workingDirectory.requireEmpty(
@@ -5454,14 +5762,19 @@ package enum PrimeValidationDriverV2ShotGovernor {
         } catch let failure as PrimeValidationDriverV2ShotGovernorFailure {
             semanticFailure = failure.coordinate
         } catch {
-            // Preserve E's existing boundary. A rejected F value projection
+            // Preserve E's existing boundary. A rejected F/G value projection
             // still permits a contained-zero rejection record after reap.
-            guard capsule.terminalGate == .gateF else { throw error }
+            guard capsule.runsBuildAndStaging else { throw error }
             semanticFailure = "build_post_reap_typed_\(String(describing: error))"
         }
         var recordedGroups = inner.recordedChildProcessGroups
         if let buildSnapshot {
             recordedGroups.insert(buildSnapshot.envelope.process.processGroupIdentifier)
+        }
+        if let inventorySnapshot {
+            for child in inventorySnapshot.envelope.children {
+                recordedGroups.insert(child.process.processGroupIdentifier)
+            }
         }
         let groupsEmpty = try requireGroupsEmpty(recordedGroups)
         if !groupsEmpty { semanticFailure = "inner_child_group_present" }
@@ -5513,6 +5826,36 @@ package enum PrimeValidationDriverV2ShotGovernor {
                 )
             )
             finalStatus = PrimeValidationDriverV2ShotGovernorStatus.success
+        } else if capsule.terminalGate == .gateG,
+                  semanticFailure == nil,
+                  processResult.conservation.ordinaryExitPath,
+                  inner.complete, innerReceiptValidated,
+                  outerContinuityRejoined, rootsRejoined,
+                  swiftPackageImageRejoined == true,
+                  let durableReceiptIdentitySHA256,
+                  let durableReceiptJournalVnodes,
+                  let rawTerminalSHA256 = inner.rawTerminalSHA256,
+                  let buildSnapshot, let inventorySnapshot,
+                  stdout.byteCount == 0, stderr.byteCount == 0,
+                  stdout.sha256 == emptySHA256, stderr.sha256 == emptySHA256
+        {
+            outcome = .inventorySuccess(.init(
+                predecessorJournal: inner.immutablePrefix,
+                predecessorJournalVnodes: durableReceiptJournalVnodes,
+                predecessorDurableReceiptIdentitySHA256: durableReceiptIdentitySHA256,
+                predecessorRawTerminalSHA256: rawTerminalSHA256,
+                buildJournal: buildSnapshot.leaves,
+                buildJournalVnodes: buildSnapshot.vnodes,
+                buildBindingSHA256: buildSnapshot.bindingSHA256,
+                buildProcessIdentifier: buildSnapshot.envelope.process.processIdentifier,
+                buildProcessGroupIdentifier: buildSnapshot.envelope.process.processGroupIdentifier,
+                inventoryJournal: inventorySnapshot.leaves,
+                inventoryJournalVnodes: inventorySnapshot.vnodes,
+                inventoryBindingSHA256: inventorySnapshot.bindingSHA256,
+                inventoryReceiptIdentitySHA256: inventorySnapshot.receiptIdentitySHA256,
+                inventoryProcessIdentifiers: inventorySnapshot.envelope.children.map { $0.process.processIdentifier },
+                inventoryProcessGroupIdentifiers: inventorySnapshot.envelope.children.map { $0.process.processGroupIdentifier }))
+            finalStatus = PrimeValidationDriverV2ShotGovernorStatus.success
         } else if capsule.terminalGate == .gateF,
                   semanticFailure == nil,
                   processResult.conservation.ordinaryExitPath,
@@ -5553,9 +5896,7 @@ package enum PrimeValidationDriverV2ShotGovernor {
             try outerContinuity.revalidateContinuity()
             _ = try journal.publishCanonical(
                 PrimeValidationDriverV2GovernorTerminalRecordV1(
-                    schema: capsule.terminalGate == .gateF
-                        ? "prime_driver_v2_gate_f_outer_terminal_v1"
-                        : "prime_driver_v2_gate_e_outer_terminal_v1",
+                    schema: capsule.outerTerminalSchema,
                     startSHA256: startLeaf.sha256,
                     supervisorWait: processResult.wait,
                     standardOutput: stdout,
@@ -5578,6 +5919,7 @@ package enum PrimeValidationDriverV2ShotGovernor {
             )
             try inner.revalidate()
             try buildSnapshot?.revalidate()
+            try inventorySnapshot?.revalidate()
             try swiftPackageImage?.revalidate(coordinate: "swift_package_after_publication")
             try outerContinuity.revalidateContinuity()
             try journal.revalidate()
@@ -5770,10 +6112,10 @@ package final class PrimeValidationDriverV2OuterJournalMechanicsFacade:
             companionTree: String(repeating: "5", count: 40),
             sourceIdentitySHA256:
                 PrimeEmbeddedBuildProvenance.sourceIdentitySHA256,
-            primeAdmittedFileCount: 623,
-            sourceIdentityRecordCount: 622,
-            primeAuthorityDirectoryCount: 157,
-            combinedWatcherDescriptorCount: 2_240,
+            primeAdmittedFileCount: 644,
+            sourceIdentityRecordCount: 643,
+            primeAuthorityDirectoryCount: 170,
+            combinedWatcherDescriptorCount: 2274,
             governorExecutable: intent.driverExecutable,
             supervisorExecutable: intent.driverExecutable,
             gitExecutable: intent.driverExecutable,
