@@ -16,6 +16,132 @@ final class PrimeValidationDriverV2PublicationBindingTests: XCTestCase {
     private typealias Entry = PrimeValidationDriverV2EvidenceManifestEntryV1
     private typealias Envelope = PrimeValidationDriverV2OuterPublicationEnvelopeV1
 
+    func testEHistoryUsesRetainedCompletionProjectionAndRejectsStaleEvidence() throws {
+        typealias Projection = PrimeValidationDriverV2PublicationEProjectionV1
+        typealias Frame = PrimeValidationDriverV2FixedProbeJournalLeafFrameV2
+        let eStart: UInt64 = 1_000_000_000, eExpiry: UInt64 = 31_000_000_000
+        let lastWait: UInt64 = 2_000_000_000, eEnd: UInt64 = 2_000_000_050
+        let fStart: UInt64 = 3_000_000_000, planning: UInt64 = 12_000_000_000
+        let readback = planning + 10, prefix = planning + 20, planExpiry = planning + 30_000_000_000
+        let supervisorWait = planning + 1_000
+        func data(_ fields: [String: Any]) throws -> Data {
+            try JSONSerialization.data(withJSONObject: fields, options: [.sortedKeys, .withoutEscapingSlashes])
+        }
+        func frame(_ leaf: String, _ fields: [String: Any], inode: UInt64) throws -> Frame {
+            var bytes = try data(fields); bytes.append(0x0a)
+            return .init(leaf: leaf, framedBytes: bytes, vnode: .init(deviceID: 7, inode: inode))
+        }
+        // These value-only fixtures exercise the supplemental history join;
+        // they do not replace the existing full E journal/lifecycle validator.
+        let prestart = try frame("gate-e-prestart.json", [
+            "schema": "prime_driver_v2_gate_e_prestart_v2", "stage": "GATE-E",
+            "deadlineStartedAtUptimeNanoseconds": eStart,
+            "deadlineExpiresAtUptimeNanoseconds": eExpiry], inode: 101)
+        let child = try frame("16-swift-target-info-terminal.json", [
+            "schema": "prime_driver_v2_gate_e_child_terminal_v2", "stage": "GATE-E",
+            "ordinal": 16, "role": "swift_target_info", "waitReturnedUptimeNanoseconds": lastWait], inode: 133)
+        let digest = String(repeating: "a", count: 64)
+        // Exact frozen raw-terminal field shape: publication completion is
+        // sampled later, so no timestamp may be invented in this E record.
+        let terminal = try frame("gate-e-raw-terminal.json", [
+            "schema": "prime_driver_v2_gate_e_raw_terminal_v2", "stage": "GATE-E",
+            "supervisorProcessIdentifier": 2000, "supervisorSessionIdentifier": 2000,
+            "supervisorProcessGroupIdentifier": 2000,
+            "orderedProcessIdentifiers": Array(2001...2016),
+            "orderedSessionIdentifiers": Array(repeating: 2000, count: 16),
+            "orderedProcessGroupIdentifiers": Array(2001...2016),
+            "orderedTerminalSHA256Values": Array(repeating: digest, count: 16),
+            "primeHEADAgreement": true, "companionHEADAgreement": true,
+            "primeStatusPreEmpty": true, "primeStatusPostEmpty": true,
+            "companionStatusPreEmpty": true, "companionStatusPostEmpty": true,
+            "primeObjectFormat": "sha1", "companionObjectFormat": "sha1",
+            "primeTreeReplayEqual": true, "companionTreeReplayEqual": true,
+            "primeHeldEntriesSHA256": digest, "companionHeldEntriesSHA256": digest,
+            "swiftVersionSHA256": digest, "swiftTargetInfoSHA256": digest], inode: 134)
+        func leaf(_ frame: Frame) -> Projection.Leaf {
+            .init(relativePath: frame.leaf, byteCount: UInt64(frame.framedBytes.count),
+                sha256: PrimeSHA256.hexDigest(of: frame.framedBytes), deviceID: frame.vnode.deviceID, inode: frame.vnode.inode)
+        }
+        func projection(_ first: Frame, _ last: Frame) -> Projection {
+            .init(schema: "prime_driver_v2_gate_h_predecessor_e_readback_v1", readbackAtUptimeNanoseconds: readback,
+                originalPrestartLeaf: leaf(first), originalTerminalLeaf: leaf(last),
+                observedDeadlineStartedAtUptimeNanoseconds: eStart,
+                observedExecutorTerminalUptimeNanoseconds: eEnd)
+        }
+        let valid = projection(prestart, terminal)
+        func validate(_ value: Projection, first: Frame? = nil, finalChild: Frame? = nil, last: Frame? = nil,
+            buildStart: UInt64? = nil, planStart: UInt64? = nil, planEnd: UInt64? = nil,
+            prefixTime: UInt64? = nil, wait: UInt64? = nil) throws -> Projection {
+            try Projection.validate(readbackData: PrimeCanonicalJSON.encode(value),
+                prestart: first ?? prestart, lastChildTerminal: finalChild ?? child, rawTerminal: last ?? terminal,
+                buildStartedAtUptimeNanoseconds: buildStart ?? fStart,
+                planningStartedAtUptimeNanoseconds: planStart ?? planning,
+                planningExpiresAtUptimeNanoseconds: planEnd ?? planExpiry,
+                prefixRecordedAtUptimeNanoseconds: prefixTime ?? prefix,
+                supervisorWaitUptimeNanoseconds: wait ?? supervisorWait)
+        }
+        XCTAssertEqual(try validate(valid), valid)
+        XCTAssertEqual(try validate(valid).observedExecutorTerminalUptimeNanoseconds, eEnd)
+        let equalWait: Projection = try mutated(valid) { $0["observedExecutorTerminalUptimeNanoseconds"] = lastWait }
+        XCTAssertNoThrow(try validate(equalWait))
+        XCTAssertNoThrow(try validate(valid, buildStart: eEnd, prefixTime: readback))
+        for (key, replacement) in [
+            ("schema", "stale_schema" as Any),
+            ("observedDeadlineStartedAtUptimeNanoseconds", eStart + 1 as Any),
+            ("observedExecutorTerminalUptimeNanoseconds", lastWait - 1 as Any),
+            ("observedExecutorTerminalUptimeNanoseconds", eExpiry as Any),
+            ("observedExecutorTerminalUptimeNanoseconds", fStart + 1 as Any),
+            ("observedExecutorTerminalUptimeNanoseconds", UInt64.max as Any),
+            ("readbackAtUptimeNanoseconds", planning - 1 as Any),
+            ("readbackAtUptimeNanoseconds", prefix + 1 as Any),
+        ] {
+            let changed: Projection = try mutated(valid) { $0[key] = replacement }
+            XCTAssertThrowsError(try validate(changed), key)
+        }
+        for path in ["originalPrestartLeaf", "originalTerminalLeaf"] {
+            for (key, replacement) in [("relativePath", "stale.json" as Any), ("byteCount", 1 as Any),
+                ("sha256", String(repeating: "0", count: 64) as Any), ("deviceID", 8 as Any), ("inode", 999 as Any)] {
+                let changed: Projection = try mutated(valid) { fields in
+                    var record = fields[path] as! [String: Any]; record[key] = replacement; fields[path] = record
+                }
+                XCTAssertThrowsError(try validate(changed), "\(path).\(key)")
+            }
+        }
+        XCTAssertThrowsError(try validate(valid, buildStart: eEnd - 1))
+        XCTAssertThrowsError(try validate(valid, buildStart: eExpiry))
+        XCTAssertThrowsError(try validate(valid, planStart: fStart - 1))
+        XCTAssertThrowsError(try validate(valid, planEnd: prefix))
+        XCTAssertThrowsError(try validate(valid, prefixTime: readback - 1))
+        XCTAssertThrowsError(try validate(valid, wait: prefix - 1))
+        func changed(_ original: Frame, key: String, value: Any) throws -> Frame {
+            var fields = try XCTUnwrap(JSONSerialization.jsonObject(with: original.framedBytes) as? [String: Any])
+            fields[key] = value
+            return try frame(original.leaf, fields, inode: original.vnode.inode)
+        }
+        for (key, value) in [("schema", "stale" as Any), ("stage", "GATE-F" as Any),
+            ("deadlineStartedAtUptimeNanoseconds", 0 as Any),
+            ("deadlineExpiresAtUptimeNanoseconds", eExpiry + 1 as Any)] {
+            let first = try changed(prestart, key: key, value: value)
+            XCTAssertThrowsError(try validate(projection(first, terminal), first: first), key)
+        }
+        for (key, value) in [("schema", "stale" as Any), ("role", "swift_version" as Any),
+            ("ordinal", 15 as Any), ("waitReturnedUptimeNanoseconds", eEnd + 1 as Any),
+            ("waitReturnedUptimeNanoseconds", eStart as Any)] {
+            XCTAssertThrowsError(try validate(valid, finalChild: changed(child, key: key, value: value)), key)
+        }
+        let wrongTerminal = try changed(terminal, key: "schema", value: "stale")
+        XCTAssertThrowsError(try validate(projection(prestart, wrongTerminal), last: wrongTerminal))
+        let missingLF = Frame(leaf: terminal.leaf, framedBytes: Data(terminal.framedBytes.dropLast()), vnode: terminal.vnode)
+        XCTAssertThrowsError(try validate(projection(prestart, missingLF), last: missingLF))
+        let extraLF = Frame(leaf: terminal.leaf, framedBytes: terminal.framedBytes + Data([0x0a]), vnode: terminal.vnode)
+        XCTAssertThrowsError(try validate(projection(prestart, extraLF), last: extraLF))
+        var nonCanonical = try PrimeCanonicalJSON.encode(valid); nonCanonical.append(0x0a)
+        XCTAssertThrowsError(try Projection.validate(readbackData: nonCanonical, prestart: prestart,
+            lastChildTerminal: child, rawTerminal: terminal, buildStartedAtUptimeNanoseconds: fStart,
+            planningStartedAtUptimeNanoseconds: planning, planningExpiresAtUptimeNanoseconds: planExpiry,
+            prefixRecordedAtUptimeNanoseconds: prefix, supervisorWaitUptimeNanoseconds: supervisorWait))
+    }
+
     func testPhaseHistoryRequiresExactOrderedImmutablePrefixes() throws {
         let f = try fixture(), history = try history(f.intent)
         XCTAssertNoThrow(try history.validate(intent: f.intent, requireComplete: true))

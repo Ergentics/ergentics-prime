@@ -5,6 +5,87 @@ import Foundation
 @_spi(PrimeValidationDriverV2RoleFacade) import PrimeCore
 import PrimeValidationWorkflowContracts
 
+/// H-entry readback of the retained E observation. E's immutable raw terminal
+/// deliberately has no completion timestamp: the executor samples completion
+/// after publishing it, and the native H phase writer preserves that sample.
+/// Callers must first validate the complete original E journal. These copied
+/// values join that journal and its observed vnodes; they confer no authority.
+package struct PrimeValidationDriverV2PublicationEProjectionV1: Codable, Equatable {
+    package struct Leaf: Codable, Equatable {
+        package let relativePath: String
+        package let byteCount: UInt64
+        package let sha256: String
+        package let deviceID: UInt64
+        package let inode: UInt64
+    }
+    package let schema: String
+    package let readbackAtUptimeNanoseconds: UInt64
+    package let originalPrestartLeaf: Leaf
+    package let originalTerminalLeaf: Leaf
+    package let observedDeadlineStartedAtUptimeNanoseconds: UInt64
+    package let observedExecutorTerminalUptimeNanoseconds: UInt64
+
+    package static func validate(readbackData: Data,
+        prestart: PrimeValidationDriverV2FixedProbeJournalLeafFrameV2,
+        lastChildTerminal: PrimeValidationDriverV2FixedProbeJournalLeafFrameV2,
+        rawTerminal: PrimeValidationDriverV2FixedProbeJournalLeafFrameV2,
+        buildStartedAtUptimeNanoseconds: UInt64,
+        planningStartedAtUptimeNanoseconds: UInt64,
+        planningExpiresAtUptimeNanoseconds: UInt64,
+        prefixRecordedAtUptimeNanoseconds: UInt64,
+        supervisorWaitUptimeNanoseconds: UInt64) throws -> Self {
+        struct Prestart: Decodable {
+            let schema: String; let stage: String
+            let deadlineStartedAtUptimeNanoseconds: UInt64
+            let deadlineExpiresAtUptimeNanoseconds: UInt64
+        }
+        struct LastChild: Decodable {
+            let schema: String; let stage: String; let ordinal: Int; let role: String
+            let waitReturnedUptimeNanoseconds: UInt64
+        }
+        struct RawTerminal: Decodable { let schema: String; let stage: String }
+        for frame in [prestart, lastChildTerminal, rawTerminal] {
+            guard frame.framedBytes.count > 1, frame.framedBytes.last == 0x0a,
+                  frame.framedBytes.dropLast().last != 0x0a else { throw publicationRejected("history_E_frame") }
+        }
+        let start = try JSONDecoder().decode(Prestart.self, from: prestart.framedBytes)
+        let child = try JSONDecoder().decode(LastChild.self, from: lastChildTerminal.framedBytes)
+        let terminal = try JSONDecoder().decode(RawTerminal.self, from: rawTerminal.framedBytes)
+        let value = try PrimeCanonicalJSON.decode(Self.self, from: readbackData)
+        guard value.schema == "prime_driver_v2_gate_h_predecessor_e_readback_v1",
+              prestart.leaf == "gate-e-prestart.json",
+              lastChildTerminal.leaf == "16-swift-target-info-terminal.json",
+              rawTerminal.leaf == "gate-e-raw-terminal.json",
+              start.schema == "prime_driver_v2_gate_e_prestart_v2", start.stage == "GATE-E",
+              child.schema == "prime_driver_v2_gate_e_child_terminal_v2", child.stage == "GATE-E",
+              child.ordinal == 16, child.role == "swift_target_info",
+              terminal.schema == "prime_driver_v2_gate_e_raw_terminal_v2", terminal.stage == "GATE-E"
+        else { throw publicationRejected("history_E_schema") }
+        for (projection, frame) in [(value.originalPrestartLeaf, prestart), (value.originalTerminalLeaf, rawTerminal)] {
+            guard projection.relativePath == frame.leaf,
+                  projection.byteCount == UInt64(frame.framedBytes.count),
+                  projection.sha256 == PrimeSHA256.hexDigest(of: frame.framedBytes),
+                  projection.deviceID == frame.vnode.deviceID, projection.inode == frame.vnode.inode
+            else { throw publicationRejected("history_E_vnode") }
+        }
+        let eStart = start.deadlineStartedAtUptimeNanoseconds
+        let eEnd = value.observedExecutorTerminalUptimeNanoseconds
+        let eExpiry = start.deadlineExpiresAtUptimeNanoseconds
+        guard eStart > 0, eExpiry > eStart, eExpiry - eStart == 30_000_000_000,
+              value.observedDeadlineStartedAtUptimeNanoseconds == eStart,
+              eStart < child.waitReturnedUptimeNanoseconds,
+              child.waitReturnedUptimeNanoseconds <= eEnd, eEnd < eExpiry,
+              eEnd <= buildStartedAtUptimeNanoseconds, buildStartedAtUptimeNanoseconds < eExpiry,
+              buildStartedAtUptimeNanoseconds <= planningStartedAtUptimeNanoseconds,
+              planningStartedAtUptimeNanoseconds <= value.readbackAtUptimeNanoseconds,
+              value.readbackAtUptimeNanoseconds <= prefixRecordedAtUptimeNanoseconds,
+              prefixRecordedAtUptimeNanoseconds < planningExpiresAtUptimeNanoseconds,
+              prefixRecordedAtUptimeNanoseconds <= supervisorWaitUptimeNanoseconds
+        else { throw publicationRejected("history_E_time") }
+        return value
+    }
+}
+
 /// Additive history of actual phase artifacts. These are content references,
 /// not retroactively manufactured frozen PhaseStartV2 receipts.
 package struct PrimeValidationDriverV2PublicationPhaseEntryV1: Codable, Equatable {

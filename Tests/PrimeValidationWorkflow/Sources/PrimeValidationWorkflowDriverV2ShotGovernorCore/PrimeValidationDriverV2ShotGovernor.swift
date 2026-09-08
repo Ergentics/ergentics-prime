@@ -5025,17 +5025,6 @@ private final class PrimeValidationDriverV2GovernorExecutionSnapshot {
         predecessor: PrimeValidationDriverV2GovernorInnerSnapshot,
         conclusion: PrimeValidationDriverV2ParsedExecutionConclusion,
         supervisorWaitUptime: UInt64) throws {
-        struct EStart: Decodable { let deadlineStartedAtUptimeNanoseconds: UInt64 }
-        struct EEnd: Decodable { let executorTerminalUptimeNanoseconds: UInt64 }
-        struct EProjection: Codable {
-            struct Leaf: Codable {
-                let relativePath: String; let byteCount: UInt64; let sha256: String; let deviceID: UInt64; let inode: UInt64
-            }
-            let schema: String; let readbackAtUptimeNanoseconds: UInt64
-            let originalPrestartLeaf: Leaf; let originalTerminalLeaf: Leaf
-            let observedDeadlineStartedAtUptimeNanoseconds: UInt64
-            let observedExecutorTerminalUptimeNanoseconds: UInt64
-        }
         struct PlanTerminal: Codable {
             let schema: String; let phase: String; let startSHA256: String
             let completedAtUptimeNanoseconds: UInt64; let planSHA256: String; let goSHA256: String; let disposition: String
@@ -5056,19 +5045,16 @@ private final class PrimeValidationDriverV2GovernorExecutionSnapshot {
             return .init(relativePath: path, sha256: value.sha256, byteCount: value.byteCount, purpose: .immutableData)
         }
         let firstFrame = predecessor.durableFrames[0], lastFrame = predecessor.durableFrames[33]
-        let eStart = try JSONDecoder().decode(EStart.self, from: firstFrame.framedBytes).deadlineStartedAtUptimeNanoseconds
-        let eEnd = try JSONDecoder().decode(EEnd.self, from: lastFrame.framedBytes).executorTerminalUptimeNanoseconds
-        let readback = try PrimeCanonicalJSON.decode(EProjection.self, from: execution.bytes("predecessor-e-readback.json"))
-        for (projection, frame) in [(readback.originalPrestartLeaf, firstFrame), (readback.originalTerminalLeaf, lastFrame)] {
-            guard projection.relativePath == frame.leaf, projection.byteCount == frame.framedBytes.count,
-                  projection.sha256 == PrimeSHA256.hexDigest(of: frame.framedBytes),
-                  projection.deviceID == frame.vnode.deviceID, projection.inode == frame.vnode.inode else { throw rejected("history_E_vnode") }
-        }
-        guard readback.schema == "prime_driver_v2_gate_h_predecessor_e_readback_v1",
-              readback.observedDeadlineStartedAtUptimeNanoseconds == eStart,
-              readback.observedExecutorTerminalUptimeNanoseconds == eEnd,
-              readback.readbackAtUptimeNanoseconds >= planning.planningStartedAtUptimeNanoseconds,
-              readback.readbackAtUptimeNanoseconds <= history.prefixes[0].recordedAtUptimeNanoseconds else { throw rejected("history_E_projection") }
+        let readback = try PrimeValidationDriverV2PublicationEProjectionV1.validate(
+            readbackData: execution.bytes("predecessor-e-readback.json"),
+            prestart: firstFrame, lastChildTerminal: predecessor.durableFrames[32], rawTerminal: lastFrame,
+            buildStartedAtUptimeNanoseconds: build.envelope.process.deadlineStartedAtUptimeNanoseconds,
+            planningStartedAtUptimeNanoseconds: planning.planningStartedAtUptimeNanoseconds,
+            planningExpiresAtUptimeNanoseconds: planning.planningExpiresAtUptimeNanoseconds,
+            prefixRecordedAtUptimeNanoseconds: history.prefixes[0].recordedAtUptimeNanoseconds,
+            supervisorWaitUptimeNanoseconds: supervisorWaitUptime)
+        let eStart = readback.observedDeadlineStartedAtUptimeNanoseconds
+        let eEnd = readback.observedExecutorTerminalUptimeNanoseconds
         let entries = history.prefixes.last!.entries
         func join(_ ordinal: Int, start: PrimeArtifactBinding, terminal: PrimeArtifactBinding,
             outputs: [PrimeArtifactBinding], started: UInt64, ended: UInt64) throws {
