@@ -1,0 +1,1329 @@
+{
+  "schema": "ergentics_retained_model_inventory_v1",
+  "observedDate": "2026-09-08",
+  "scope": "Read-only bounded inventory of prime-mlx-lab and pmhnp-companion-ergentics prime-runtime/content-staging. Safetensors headers and file metadata only; no weight payload hash, execution, training or app/user session logs. Later native English/Latin and Stage7 retained runs are inventoried separately by parent task.",
+  "repo": {
+    "path": "/Users/ergentics/pmhnp-companion-ergentics",
+    "head": "f7cfa6d59c906b9f2b9d458d592f12b029e227b9"
+  },
+  "languageCanaryDirectories": [
+    {
+      "path": "/Users/ergentics/prime-mlx-lab/native-language-canary-v2",
+      "reportCount": 9,
+      "safetensorsCount": 0,
+      "trials": [
+        {
+          "path": "/Users/ergentics/prime-mlx-lab/native-language-canary-v2/profile_probe/discovery/ergentics_prime_native_1b_gqa_v1/lr-0p0001/seed-1618/prime-native-language-ergentics_prime_native_1b_gqa_v1-discovery-lr0p0001-seed1618.json",
+          "profile_id": "ergentics_prime_native_1b_gqa_v1",
+          "observed_parameter_count": 1064404992,
+          "vocabulary_size": 512,
+          "completed_steps": 36,
+          "distinct_scheduled_row_count": 288,
+          "processed_padded_token_positions": 147456,
+          "persistence_policy": "profile_probe_no_resume",
+          "heldout_cross_entropy_before": 6.792737643237847,
+          "heldout_cross_entropy_after": 0.8770327621858109,
+          "generatedAnswerRows": 0
+        },
+        {
+          "path": "/Users/ergentics/prime-mlx-lab/native-language-canary-v2/profile_probe/discovery/ergentics_prime_native_1b_gqa_v1/lr-0p0003/seed-1618/prime-native-language-ergentics_prime_native_1b_gqa_v1-discovery-lr0p0003-seed1618.json",
+          "profile_id": "ergentics_prime_native_1b_gqa_v1",
+          "observed_parameter_count": 1064404992,
+          "vocabulary_size": 512,
+          "completed_steps": 36,
+          "distinct_scheduled_row_count": 288,
+          "processed_padded_token_positions": 147456,
+          "persistence_policy": "profile_probe_no_resume",
+          "heldout_cross_entropy_before": 6.792737643237847,
+          "heldout_cross_entropy_after": 3.183855538038676,
+          "generatedAnswerRows": 0
+        },
+        {
+          "path": "/Users/ergentics/prime-mlx-lab/native-language-canary-v2/profile_probe/discovery/ergentics_prime_native_1b_gqa_v1/lr-0p001/seed-1618/prime-native-language-ergentics_prime_native_1b_gqa_v1-discovery-lr0p001-seed1618.json",
+          "profile_id": "ergentics_prime_native_1b_gqa_v1",
+          "observed_parameter_count": 1064404992,
+          "vocabulary_size": 512,
+          "completed_steps": 36,
+          "distinct_scheduled_row_count": 288,
+          "processed_padded_token_positions": 147456,
+          "persistence_policy": "profile_probe_no_resume",
+          "heldout_cross_entropy_before": 6.792737643237847,
+          "heldout_cross_entropy_after": 7.230275459450962,
+          "generatedAnswerRows": 0
+        },
+        {
+          "path": "/Users/ergentics/prime-mlx-lab/native-language-canary-v2/profile_probe/discovery/ergentics_prime_native_300m_gqa_v1/lr-0p0001/seed-1618/prime-native-language-ergentics_prime_native_300m_gqa_v1-discovery-lr0p0001-seed1618.json",
+          "profile_id": "ergentics_prime_native_300m_gqa_v1",
+          "observed_parameter_count": 271107072,
+          "vocabulary_size": 512,
+          "completed_steps": 36,
+          "distinct_scheduled_row_count": 288,
+          "processed_padded_token_positions": 147456,
+          "persistence_policy": "profile_probe_no_resume",
+          "heldout_cross_entropy_before": 6.899539189143645,
+          "heldout_cross_entropy_after": 0.6040709978434532,
+          "generatedAnswerRows": 0
+        },
+        {
+          "path": "/Users/ergentics/prime-mlx-lab/native-language-canary-v2/profile_probe/discovery/ergentics_prime_native_300m_gqa_v1/lr-0p0003/seed-1618/prime-native-language-ergentics_prime_native_300m_gqa_v1-discovery-lr0p0003-seed1618.json",
+          "profile_id": "ergentics_prime_native_300m_gqa_v1",
+          "observed_parameter_count": 271107072,
+          "vocabulary_size": 512,
+          "completed_steps": 36,
+          "distinct_scheduled_row_count": 288,
+          "processed_padded_token_positions": 147456,
+          "persistence_policy": "profile_probe_no_resume",
+          "heldout_cross_entropy_before": 6.899539189143645,
+          "heldout_cross_entropy_after": 0.8139997472884121,
+          "generatedAnswerRows": 0
+        },
+        {
+          "path": "/Users/ergentics/prime-mlx-lab/native-language-canary-v2/profile_probe/discovery/ergentics_prime_native_300m_gqa_v1/lr-0p001/seed-1618/prime-native-language-ergentics_prime_native_300m_gqa_v1-discovery-lr0p001-seed1618.json",
+          "profile_id": "ergentics_prime_native_300m_gqa_v1",
+          "observed_parameter_count": 271107072,
+          "vocabulary_size": 512,
+          "completed_steps": 36,
+          "distinct_scheduled_row_count": 288,
+          "processed_padded_token_positions": 147456,
+          "persistence_policy": "profile_probe_no_resume",
+          "heldout_cross_entropy_before": 6.899539189143645,
+          "heldout_cross_entropy_after": 3.3358604339685693,
+          "generatedAnswerRows": 0
+        },
+        {
+          "path": "/Users/ergentics/prime-mlx-lab/native-language-canary-v2/profile_probe/discovery/ergentics_prime_native_3b_gqa_v1/lr-0p0001/seed-1618/prime-native-language-ergentics_prime_native_3b_gqa_v1-discovery-lr0p0001-seed1618.json",
+          "profile_id": "ergentics_prime_native_3b_gqa_v1",
+          "observed_parameter_count": 2820320256,
+          "vocabulary_size": 512,
+          "completed_steps": 36,
+          "distinct_scheduled_row_count": 288,
+          "processed_padded_token_positions": 147456,
+          "persistence_policy": "profile_probe_no_resume",
+          "heldout_cross_entropy_before": 6.918135120031359,
+          "heldout_cross_entropy_after": 2.923607978228958,
+          "generatedAnswerRows": 0
+        },
+        {
+          "path": "/Users/ergentics/prime-mlx-lab/native-language-canary-v2/profile_probe/discovery/ergentics_prime_native_3b_gqa_v1/lr-0p0003/seed-1618/prime-native-language-ergentics_prime_native_3b_gqa_v1-discovery-lr0p0003-seed1618.json",
+          "profile_id": "ergentics_prime_native_3b_gqa_v1",
+          "observed_parameter_count": 2820320256,
+          "vocabulary_size": 512,
+          "completed_steps": 36,
+          "distinct_scheduled_row_count": 288,
+          "processed_padded_token_positions": 147456,
+          "persistence_policy": "profile_probe_no_resume",
+          "heldout_cross_entropy_before": 6.918135120031359,
+          "heldout_cross_entropy_after": 2.938594257612995,
+          "generatedAnswerRows": 0
+        },
+        {
+          "path": "/Users/ergentics/prime-mlx-lab/native-language-canary-v2/profile_probe/discovery/ergentics_prime_native_3b_gqa_v1/lr-0p001/seed-1618/prime-native-language-ergentics_prime_native_3b_gqa_v1-discovery-lr0p001-seed1618.json",
+          "profile_id": "ergentics_prime_native_3b_gqa_v1",
+          "observed_parameter_count": 2820320256,
+          "vocabulary_size": 512,
+          "completed_steps": 36,
+          "distinct_scheduled_row_count": 288,
+          "processed_padded_token_positions": 147456,
+          "persistence_policy": "profile_probe_no_resume",
+          "heldout_cross_entropy_before": 6.918135120031359,
+          "heldout_cross_entropy_after": 10.220077885357382,
+          "generatedAnswerRows": 0
+        }
+      ],
+      "archiveTrialsSummarizedByOriginalCampaign": false
+    },
+    {
+      "path": "/Users/ergentics/prime-mlx-lab/native-language-canary-v3",
+      "reportCount": 6,
+      "safetensorsCount": 0,
+      "trials": [
+        {
+          "path": "/Users/ergentics/prime-mlx-lab/native-language-canary-v3/profile_probe/discovery/ergentics_prime_native_1b_gqa_v1/lr-0p0001/seed-1618/prime-native-language-ergentics_prime_native_1b_gqa_v1-discovery-lr0p0001-seed1618.json",
+          "profile_id": "ergentics_prime_native_1b_gqa_v1",
+          "observed_parameter_count": 1064404992,
+          "vocabulary_size": 512,
+          "completed_steps": 36,
+          "distinct_scheduled_row_count": 288,
+          "processed_padded_token_positions": 147456,
+          "persistence_policy": "profile_probe_no_resume",
+          "heldout_cross_entropy_before": 6.792737643237847,
+          "heldout_cross_entropy_after": 0.8770309102552062,
+          "generatedAnswerRows": 0
+        },
+        {
+          "path": "/Users/ergentics/prime-mlx-lab/native-language-canary-v3/profile_probe/discovery/ergentics_prime_native_1b_gqa_v1/lr-0p0003/seed-1618/prime-native-language-ergentics_prime_native_1b_gqa_v1-discovery-lr0p0003-seed1618.json",
+          "profile_id": "ergentics_prime_native_1b_gqa_v1",
+          "observed_parameter_count": 1064404992,
+          "vocabulary_size": 512,
+          "completed_steps": 36,
+          "distinct_scheduled_row_count": 288,
+          "processed_padded_token_positions": 147456,
+          "persistence_policy": "profile_probe_no_resume",
+          "heldout_cross_entropy_before": 6.792737643237847,
+          "heldout_cross_entropy_after": 3.183850779217288,
+          "generatedAnswerRows": 0
+        },
+        {
+          "path": "/Users/ergentics/prime-mlx-lab/native-language-canary-v3/profile_probe/discovery/ergentics_prime_native_1b_gqa_v1/lr-0p001/seed-1618/prime-native-language-ergentics_prime_native_1b_gqa_v1-discovery-lr0p001-seed1618.json",
+          "profile_id": "ergentics_prime_native_1b_gqa_v1",
+          "observed_parameter_count": 1064404992,
+          "vocabulary_size": 512,
+          "completed_steps": 36,
+          "distinct_scheduled_row_count": 288,
+          "processed_padded_token_positions": 147456,
+          "persistence_policy": "profile_probe_no_resume",
+          "heldout_cross_entropy_before": 6.792737643237847,
+          "heldout_cross_entropy_after": 7.3371273594951765,
+          "generatedAnswerRows": 0
+        },
+        {
+          "path": "/Users/ergentics/prime-mlx-lab/native-language-canary-v3/profile_probe/discovery/ergentics_prime_native_300m_gqa_v1/lr-0p0001/seed-1618/prime-native-language-ergentics_prime_native_300m_gqa_v1-discovery-lr0p0001-seed1618.json",
+          "profile_id": "ergentics_prime_native_300m_gqa_v1",
+          "observed_parameter_count": 271107072,
+          "vocabulary_size": 512,
+          "completed_steps": 36,
+          "distinct_scheduled_row_count": 288,
+          "processed_padded_token_positions": 147456,
+          "persistence_policy": "profile_probe_no_resume",
+          "heldout_cross_entropy_before": 6.899539189143645,
+          "heldout_cross_entropy_after": 0.6040696539562748,
+          "generatedAnswerRows": 0
+        },
+        {
+          "path": "/Users/ergentics/prime-mlx-lab/native-language-canary-v3/profile_probe/discovery/ergentics_prime_native_300m_gqa_v1/lr-0p0003/seed-1618/prime-native-language-ergentics_prime_native_300m_gqa_v1-discovery-lr0p0003-seed1618.json",
+          "profile_id": "ergentics_prime_native_300m_gqa_v1",
+          "observed_parameter_count": 271107072,
+          "vocabulary_size": 512,
+          "completed_steps": 36,
+          "distinct_scheduled_row_count": 288,
+          "processed_padded_token_positions": 147456,
+          "persistence_policy": "profile_probe_no_resume",
+          "heldout_cross_entropy_before": 6.899539189143645,
+          "heldout_cross_entropy_after": 0.8137082982298686,
+          "generatedAnswerRows": 0
+        },
+        {
+          "path": "/Users/ergentics/prime-mlx-lab/native-language-canary-v3/profile_probe/discovery/ergentics_prime_native_300m_gqa_v1/lr-0p001/seed-1618/prime-native-language-ergentics_prime_native_300m_gqa_v1-discovery-lr0p001-seed1618.json",
+          "profile_id": "ergentics_prime_native_300m_gqa_v1",
+          "observed_parameter_count": 271107072,
+          "vocabulary_size": 512,
+          "completed_steps": 36,
+          "distinct_scheduled_row_count": 288,
+          "processed_padded_token_positions": 147456,
+          "persistence_policy": "profile_probe_no_resume",
+          "heldout_cross_entropy_before": 6.899539189143645,
+          "heldout_cross_entropy_after": 3.335857594736204,
+          "generatedAnswerRows": 0
+        }
+      ],
+      "archiveTrialsSummarizedByOriginalCampaign": false
+    },
+    {
+      "path": "/Users/ergentics/prime-mlx-lab/native-language-canary-v3-immutable-archive-v1",
+      "reportCount": 6,
+      "safetensorsCount": 0,
+      "trials": [],
+      "archiveTrialsSummarizedByOriginalCampaign": true
+    },
+    {
+      "path": "/Users/ergentics/prime-mlx-lab/native-language-canary-v3-immutable-archive-v2",
+      "reportCount": 6,
+      "safetensorsCount": 0,
+      "trials": [],
+      "archiveTrialsSummarizedByOriginalCampaign": true
+    },
+    {
+      "path": "/Users/ergentics/prime-mlx-lab/native-language-canary-v3-immutable-archive-v2-failed-rebuild-3d9710ce",
+      "reportCount": 6,
+      "safetensorsCount": 0,
+      "trials": [],
+      "archiveTrialsSummarizedByOriginalCampaign": true
+    },
+    {
+      "path": "/Users/ergentics/prime-mlx-lab/native-language-canary-v4",
+      "reportCount": 15,
+      "safetensorsCount": 0,
+      "trials": [
+        {
+          "path": "/Users/ergentics/prime-mlx-lab/native-language-canary-v4/profile_probe/confirmation/ergentics_prime_native_1b_gqa_v1/lr-0p0001/seed-2718/prime-native-language-ergentics_prime_native_1b_gqa_v1-confirmation-lr0p0001-seed2718.json",
+          "profile_id": "ergentics_prime_native_1b_gqa_v1",
+          "observed_parameter_count": 1064404992,
+          "vocabulary_size": 512,
+          "completed_steps": 36,
+          "distinct_scheduled_row_count": 288,
+          "processed_padded_token_positions": 147456,
+          "persistence_policy": "profile_probe_no_resume",
+          "heldout_cross_entropy_before": 6.648713142540907,
+          "heldout_cross_entropy_after": 0.9601407146994183,
+          "generatedAnswerRows": 0
+        },
+        {
+          "path": "/Users/ergentics/prime-mlx-lab/native-language-canary-v4/profile_probe/confirmation/ergentics_prime_native_1b_gqa_v1/lr-0p0001/seed-3141/prime-native-language-ergentics_prime_native_1b_gqa_v1-confirmation-lr0p0001-seed3141.json",
+          "profile_id": "ergentics_prime_native_1b_gqa_v1",
+          "observed_parameter_count": 1064404992,
+          "vocabulary_size": 512,
+          "completed_steps": 36,
+          "distinct_scheduled_row_count": 288,
+          "processed_padded_token_positions": 147456,
+          "persistence_policy": "profile_probe_no_resume",
+          "heldout_cross_entropy_before": 6.722605156939115,
+          "heldout_cross_entropy_after": 1.1691085141467343,
+          "generatedAnswerRows": 0
+        },
+        {
+          "path": "/Users/ergentics/prime-mlx-lab/native-language-canary-v4/profile_probe/confirmation/ergentics_prime_native_300m_gqa_v1/lr-0p0001/seed-2718/prime-native-language-ergentics_prime_native_300m_gqa_v1-confirmation-lr0p0001-seed2718.json",
+          "profile_id": "ergentics_prime_native_300m_gqa_v1",
+          "observed_parameter_count": 271107072,
+          "vocabulary_size": 512,
+          "completed_steps": 36,
+          "distinct_scheduled_row_count": 288,
+          "processed_padded_token_positions": 147456,
+          "persistence_policy": "profile_probe_no_resume",
+          "heldout_cross_entropy_before": 6.548465940297157,
+          "heldout_cross_entropy_after": 0.6248239555034691,
+          "generatedAnswerRows": 0
+        },
+        {
+          "path": "/Users/ergentics/prime-mlx-lab/native-language-canary-v4/profile_probe/confirmation/ergentics_prime_native_300m_gqa_v1/lr-0p0001/seed-3141/prime-native-language-ergentics_prime_native_300m_gqa_v1-confirmation-lr0p0001-seed3141.json",
+          "profile_id": "ergentics_prime_native_300m_gqa_v1",
+          "observed_parameter_count": 271107072,
+          "vocabulary_size": 512,
+          "completed_steps": 36,
+          "distinct_scheduled_row_count": 288,
+          "processed_padded_token_positions": 147456,
+          "persistence_policy": "profile_probe_no_resume",
+          "heldout_cross_entropy_before": 6.80452937392062,
+          "heldout_cross_entropy_after": 0.7264987647973429,
+          "generatedAnswerRows": 0
+        },
+        {
+          "path": "/Users/ergentics/prime-mlx-lab/native-language-canary-v4/profile_probe/confirmation/ergentics_prime_native_3b_gqa_v1/lr-0p0001/seed-2718/prime-native-language-ergentics_prime_native_3b_gqa_v1-confirmation-lr0p0001-seed2718.json",
+          "profile_id": "ergentics_prime_native_3b_gqa_v1",
+          "observed_parameter_count": 2820320256,
+          "vocabulary_size": 512,
+          "completed_steps": 36,
+          "distinct_scheduled_row_count": 288,
+          "processed_padded_token_positions": 147456,
+          "persistence_policy": "profile_probe_no_resume",
+          "heldout_cross_entropy_before": 6.716953822506048,
+          "heldout_cross_entropy_after": 0.9162903591188425,
+          "generatedAnswerRows": 0
+        },
+        {
+          "path": "/Users/ergentics/prime-mlx-lab/native-language-canary-v4/profile_probe/confirmation/ergentics_prime_native_3b_gqa_v1/lr-0p0001/seed-3141/prime-native-language-ergentics_prime_native_3b_gqa_v1-confirmation-lr0p0001-seed3141.json",
+          "profile_id": "ergentics_prime_native_3b_gqa_v1",
+          "observed_parameter_count": 2820320256,
+          "vocabulary_size": 512,
+          "completed_steps": 36,
+          "distinct_scheduled_row_count": 288,
+          "processed_padded_token_positions": 147456,
+          "persistence_policy": "profile_probe_no_resume",
+          "heldout_cross_entropy_before": 6.65611571395079,
+          "heldout_cross_entropy_after": 2.7891700211605657,
+          "generatedAnswerRows": 0
+        },
+        {
+          "path": "/Users/ergentics/prime-mlx-lab/native-language-canary-v4/profile_probe/discovery/ergentics_prime_native_1b_gqa_v1/lr-0p0001/seed-1618/prime-native-language-ergentics_prime_native_1b_gqa_v1-discovery-lr0p0001-seed1618.json",
+          "profile_id": "ergentics_prime_native_1b_gqa_v1",
+          "observed_parameter_count": 1064404992,
+          "vocabulary_size": 512,
+          "completed_steps": 36,
+          "distinct_scheduled_row_count": 288,
+          "processed_padded_token_positions": 147456,
+          "persistence_policy": "profile_probe_no_resume",
+          "heldout_cross_entropy_before": 6.792737643237847,
+          "heldout_cross_entropy_after": 0.8770312458570989,
+          "generatedAnswerRows": 0
+        },
+        {
+          "path": "/Users/ergentics/prime-mlx-lab/native-language-canary-v4/profile_probe/discovery/ergentics_prime_native_1b_gqa_v1/lr-0p0003/seed-1618/prime-native-language-ergentics_prime_native_1b_gqa_v1-discovery-lr0p0003-seed1618.json",
+          "profile_id": "ergentics_prime_native_1b_gqa_v1",
+          "observed_parameter_count": 1064404992,
+          "vocabulary_size": 512,
+          "completed_steps": 36,
+          "distinct_scheduled_row_count": 288,
+          "processed_padded_token_positions": 147456,
+          "persistence_policy": "profile_probe_no_resume",
+          "heldout_cross_entropy_before": 6.792737643237847,
+          "heldout_cross_entropy_after": 3.183852327021288,
+          "generatedAnswerRows": 0
+        },
+        {
+          "path": "/Users/ergentics/prime-mlx-lab/native-language-canary-v4/profile_probe/discovery/ergentics_prime_native_1b_gqa_v1/lr-0p001/seed-1618/prime-native-language-ergentics_prime_native_1b_gqa_v1-discovery-lr0p001-seed1618.json",
+          "profile_id": "ergentics_prime_native_1b_gqa_v1",
+          "observed_parameter_count": 1064404992,
+          "vocabulary_size": 512,
+          "completed_steps": 36,
+          "distinct_scheduled_row_count": 288,
+          "processed_padded_token_positions": 147456,
+          "persistence_policy": "profile_probe_no_resume",
+          "heldout_cross_entropy_before": 6.792737643237847,
+          "heldout_cross_entropy_after": 7.286520882352283,
+          "generatedAnswerRows": 0
+        },
+        {
+          "path": "/Users/ergentics/prime-mlx-lab/native-language-canary-v4/profile_probe/discovery/ergentics_prime_native_300m_gqa_v1/lr-0p0001/seed-1618/prime-native-language-ergentics_prime_native_300m_gqa_v1-discovery-lr0p0001-seed1618.json",
+          "profile_id": "ergentics_prime_native_300m_gqa_v1",
+          "observed_parameter_count": 271107072,
+          "vocabulary_size": 512,
+          "completed_steps": 36,
+          "distinct_scheduled_row_count": 288,
+          "processed_padded_token_positions": 147456,
+          "persistence_policy": "profile_probe_no_resume",
+          "heldout_cross_entropy_before": 6.899539189143645,
+          "heldout_cross_entropy_after": 0.6040697329135136,
+          "generatedAnswerRows": 0
+        },
+        {
+          "path": "/Users/ergentics/prime-mlx-lab/native-language-canary-v4/profile_probe/discovery/ergentics_prime_native_300m_gqa_v1/lr-0p0003/seed-1618/prime-native-language-ergentics_prime_native_300m_gqa_v1-discovery-lr0p0003-seed1618.json",
+          "profile_id": "ergentics_prime_native_300m_gqa_v1",
+          "observed_parameter_count": 271107072,
+          "vocabulary_size": 512,
+          "completed_steps": 36,
+          "distinct_scheduled_row_count": 288,
+          "processed_padded_token_positions": 147456,
+          "persistence_policy": "profile_probe_no_resume",
+          "heldout_cross_entropy_before": 6.899539189143645,
+          "heldout_cross_entropy_after": 0.8137857001322113,
+          "generatedAnswerRows": 0
+        },
+        {
+          "path": "/Users/ergentics/prime-mlx-lab/native-language-canary-v4/profile_probe/discovery/ergentics_prime_native_300m_gqa_v1/lr-0p001/seed-1618/prime-native-language-ergentics_prime_native_300m_gqa_v1-discovery-lr0p001-seed1618.json",
+          "profile_id": "ergentics_prime_native_300m_gqa_v1",
+          "observed_parameter_count": 271107072,
+          "vocabulary_size": 512,
+          "completed_steps": 36,
+          "distinct_scheduled_row_count": 288,
+          "processed_padded_token_positions": 147456,
+          "persistence_policy": "profile_probe_no_resume",
+          "heldout_cross_entropy_before": 6.899539189143645,
+          "heldout_cross_entropy_after": 3.335854237910218,
+          "generatedAnswerRows": 0
+        },
+        {
+          "path": "/Users/ergentics/prime-mlx-lab/native-language-canary-v4/profile_probe/discovery/ergentics_prime_native_3b_gqa_v1/lr-0p0001/seed-1618/prime-native-language-ergentics_prime_native_3b_gqa_v1-discovery-lr0p0001-seed1618.json",
+          "profile_id": "ergentics_prime_native_3b_gqa_v1",
+          "observed_parameter_count": 2820320256,
+          "vocabulary_size": 512,
+          "completed_steps": 36,
+          "distinct_scheduled_row_count": 288,
+          "processed_padded_token_positions": 147456,
+          "persistence_policy": "profile_probe_no_resume",
+          "heldout_cross_entropy_before": 6.918135120031359,
+          "heldout_cross_entropy_after": 2.923586756217967,
+          "generatedAnswerRows": 0
+        },
+        {
+          "path": "/Users/ergentics/prime-mlx-lab/native-language-canary-v4/profile_probe/discovery/ergentics_prime_native_3b_gqa_v1/lr-0p0003/seed-1618/prime-native-language-ergentics_prime_native_3b_gqa_v1-discovery-lr0p0003-seed1618.json",
+          "profile_id": "ergentics_prime_native_3b_gqa_v1",
+          "observed_parameter_count": 2820320256,
+          "vocabulary_size": 512,
+          "completed_steps": 36,
+          "distinct_scheduled_row_count": 288,
+          "processed_padded_token_positions": 147456,
+          "persistence_policy": "profile_probe_no_resume",
+          "heldout_cross_entropy_before": 6.918135120031359,
+          "heldout_cross_entropy_after": 2.941093908882948,
+          "generatedAnswerRows": 0
+        },
+        {
+          "path": "/Users/ergentics/prime-mlx-lab/native-language-canary-v4/profile_probe/discovery/ergentics_prime_native_3b_gqa_v1/lr-0p001/seed-1618/prime-native-language-ergentics_prime_native_3b_gqa_v1-discovery-lr0p001-seed1618.json",
+          "profile_id": "ergentics_prime_native_3b_gqa_v1",
+          "observed_parameter_count": 2820320256,
+          "vocabulary_size": 512,
+          "completed_steps": 36,
+          "distinct_scheduled_row_count": 288,
+          "processed_padded_token_positions": 147456,
+          "persistence_policy": "profile_probe_no_resume",
+          "heldout_cross_entropy_before": 6.918135120031359,
+          "heldout_cross_entropy_after": 12.917190466747634,
+          "generatedAnswerRows": 0
+        }
+      ],
+      "archiveTrialsSummarizedByOriginalCampaign": false
+    }
+  ],
+  "languageV1NamedDirectoryPresent": false,
+  "correctedHistoricalScreen": {
+    "source": {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/content-staging/prime-native-language-schema6-profile-screen-audit.v1.json",
+      "byteCount": 38760,
+      "sha256": "4d7e696344770f57779cc72e1c6f58cb5ea6ce1b3ef0f86f1b571a3f10e84612"
+    },
+    "outcome": "ABSTAIN",
+    "next_action": "run_maintained_mlx_bfloat16_executor_feasibility_calibration",
+    "maximum_wall_clock_seconds": 43200,
+    "planned_training_token_presentations": 200097792,
+    "profile_screen_matrix_comparable": true,
+    "profile_comparison_grounded": false,
+    "functional_canary_authorized": false,
+    "comparison_prerequisite_ids": [
+      "increase_independent_confirmation_replicates_to_at_least_3",
+      "bind_calibrated_paired_seed_profile_comparison",
+      "separate_initialization_training_and_evaluation_seed_domains_for_factor_attribution",
+      "design_fixed_token_matched_compute_and_convergence_capped_executor_arms"
+    ],
+    "profiles": [
+      {
+        "parameter_count": 271107072,
+        "blocked_reason": "projected_training_wall_clock_exceeds_budget",
+        "confirmation_heldout_cross_entropy_after": 0.675661360150406,
+        "confirmation_heldout_cross_entropy_before": 6.6764976571088885,
+        "projected_canary_training_seconds": 111156.91978246938,
+        "measured_peak_memory_bytes": 15812096620,
+        "measured_tokens_per_second": 1800.13797064173,
+        "independent_confirmation_replicate_count": 2,
+        "current_functional_canary_eligible": false
+      },
+      {
+        "parameter_count": 1064404992,
+        "blocked_reason": "projected_training_wall_clock_exceeds_budget",
+        "confirmation_heldout_cross_entropy_after": 1.0646246144230762,
+        "confirmation_heldout_cross_entropy_before": 6.685659149740011,
+        "projected_canary_training_seconds": 510418.3605390127,
+        "measured_peak_memory_bytes": 36456632976,
+        "measured_tokens_per_second": 392.02702620002236,
+        "independent_confirmation_replicate_count": 2,
+        "current_functional_canary_eligible": false
+      },
+      {
+        "parameter_count": 2820320256,
+        "blocked_reason": "projected_training_wall_clock_exceeds_budget",
+        "confirmation_heldout_cross_entropy_after": 1.8527301901397042,
+        "confirmation_heldout_cross_entropy_before": 6.6865347682284195,
+        "projected_canary_training_seconds": 1670885.153953678,
+        "measured_peak_memory_bytes": 69202999904,
+        "measured_tokens_per_second": 119.75556280844621,
+        "independent_confirmation_replicate_count": 2,
+        "current_functional_canary_eligible": false
+      }
+    ]
+  },
+  "nativeCompositionalCorpus": {
+    "source": {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/content-staging/prime-native-text-corpus-manifest.v1.json",
+      "byteCount": 44803,
+      "sha256": "fbb7362ee63b5825d1914815e8ff93c26a2c9a7de8be19347ccec3e449de8031"
+    },
+    "corpus_id": "ergentics_prime_native_compositional_text_v1",
+    "ownership": "ergentics_first_party",
+    "license": "ergentics_first_party_controlled",
+    "product_authorization": "research_canary_only",
+    "model_vocabulary_size": 512,
+    "generator": {
+      "canonical_text_normalization": "NFC",
+      "entropy_primitive": "SHA256(generator_id|split|index|attempt|field)",
+      "external_text": false,
+      "full_rows_embedded": false,
+      "generator_id": "ergentics_prime_swift_sha256_procedural_v1",
+      "host_randomness": false,
+      "implementation_language": "swift",
+      "implementation_path": "prime-runtime/Sources/ErgenticsPrimeRuntime/ErgenticsPrimeNativeTextCorpus.swift",
+      "inherited_tokenizer": false,
+      "inherited_weights": false,
+      "lossless_replay": true,
+      "maximum_sequence_token_count": 512,
+      "sequence_construction": "BOS + NFC UTF-8 prompt + exact completion + EOS"
+    },
+    "interpretation": "Procedurally generated first-party compositional tasks, not an aggregate of all Ergentics repositories. Historical reports declare 135,168 training rows and 32,147,030 byte-token instances; each profile probe trained only 288 scheduled rows and 147,456 padded token positions over 36 steps. Corpus size is not actual training consumed."
+  },
+  "currentCompanionByteTokenizer": {
+    "source": {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/content-staging/prime-native-byte-tokenizer-manifest.v1.json",
+      "byteCount": 4931,
+      "sha256": "ec546cc58dd65bfada4afa52455f5d7c420d089a97f7f97acf4f86bc2f086c4d"
+    },
+    "tokenizer_id": "ergentics_prime_nfc_utf8_byte_v1",
+    "algorithm": "nfc_utf8_byte_offset",
+    "byte_token_base": 256,
+    "bound_model_vocabulary_size": 512,
+    "special_tokens": [
+      {
+        "name": "pad",
+        "token_id": 0
+      },
+      {
+        "name": "beginning_of_sequence",
+        "token_id": 1
+      },
+      {
+        "name": "completion_abstain",
+        "token_id": 2
+      },
+      {
+        "name": "completion_result",
+        "token_id": 3
+      },
+      {
+        "name": "end_of_sequence",
+        "token_id": 70
+      }
+    ],
+    "training_required": false,
+    "historicalBindingCaution": "Current manifest includes completion symbols 2/3 and EOS 70. Older canary report hashes identify historical manifests; do not replace those bindings using the shared tokenizer ID alone."
+  },
+  "savedSmallNativeWeights": [
+    {
+      "path": "/Users/ergentics/prime-mlx-lab/native-mechanics-canary/prime-native-mechanics-replay.safetensors",
+      "byteCount": 40919832,
+      "headerByteCount": 7952,
+      "headerSHA256": "c40e8e7365722fb93330da78d307c97bb52a16d1f51f8686eb2bdd8be835da5f",
+      "tensorCount": 74,
+      "storedElementCount": 10227968,
+      "dtypes": [
+        "F32"
+      ]
+    },
+    {
+      "path": "/Users/ergentics/prime-mlx-lab/native-mechanics-canary/prime-native-mechanics.safetensors",
+      "byteCount": 40919832,
+      "headerByteCount": 7952,
+      "headerSHA256": "c40e8e7365722fb93330da78d307c97bb52a16d1f51f8686eb2bdd8be835da5f",
+      "tensorCount": 74,
+      "storedElementCount": 10227968,
+      "dtypes": [
+        "F32"
+      ]
+    },
+    {
+      "path": "/Users/ergentics/prime-mlx-lab/native-mechanics-canary-b1/prime-native-mechanics-replay.safetensors",
+      "byteCount": 40919832,
+      "headerByteCount": 7952,
+      "headerSHA256": "c40e8e7365722fb93330da78d307c97bb52a16d1f51f8686eb2bdd8be835da5f",
+      "tensorCount": 74,
+      "storedElementCount": 10227968,
+      "dtypes": [
+        "F32"
+      ]
+    },
+    {
+      "path": "/Users/ergentics/prime-mlx-lab/native-mechanics-canary-b1/prime-native-mechanics.safetensors",
+      "byteCount": 40919832,
+      "headerByteCount": 7952,
+      "headerSHA256": "c40e8e7365722fb93330da78d307c97bb52a16d1f51f8686eb2bdd8be835da5f",
+      "tensorCount": 74,
+      "storedElementCount": 10227968,
+      "dtypes": [
+        "F32"
+      ]
+    },
+    {
+      "path": "/Users/ergentics/prime-mlx-lab/native-mechanics-swift-canary/prime-native-mechanics-swift-replay.safetensors",
+      "byteCount": 40919832,
+      "headerByteCount": 7952,
+      "headerSHA256": "11b7968a7166787ba2ed16810d604ff1bec073daabf6d4ae97d78463d74b082d",
+      "tensorCount": 74,
+      "storedElementCount": 10227968,
+      "dtypes": [
+        "F32"
+      ]
+    },
+    {
+      "path": "/Users/ergentics/prime-mlx-lab/native-mechanics-swift-canary/prime-native-mechanics-swift.safetensors",
+      "byteCount": 40919846,
+      "headerByteCount": 7966,
+      "headerSHA256": "6e3c704107db9a9b1ace8f270835938f9094282f58dc43c0128285b2f345bb1b",
+      "tensorCount": 74,
+      "storedElementCount": 10227968,
+      "dtypes": [
+        "F32"
+      ]
+    },
+    {
+      "path": "/Users/ergentics/prime-mlx-lab/native-mechanics-swift-canary-1200/prime-native-mechanics-swift-replay.safetensors",
+      "byteCount": 40919814,
+      "headerByteCount": 7934,
+      "headerSHA256": "90ef9401cf8a5e8e95c3e86fb450ed1c755223e0547e85c7a052c00af2acb2bb",
+      "tensorCount": 74,
+      "storedElementCount": 10227968,
+      "dtypes": [
+        "F32"
+      ]
+    },
+    {
+      "path": "/Users/ergentics/prime-mlx-lab/native-mechanics-swift-canary-1200/prime-native-mechanics-swift.safetensors",
+      "byteCount": 40919834,
+      "headerByteCount": 7954,
+      "headerSHA256": "23629ed1603246a34e337856da9e01383a4ed6398dd9e0ee03392d50ff58418f",
+      "tensorCount": 74,
+      "storedElementCount": 10227968,
+      "dtypes": [
+        "F32"
+      ]
+    },
+    {
+      "path": "/Users/ergentics/prime-mlx-lab/native-mechanics-swift-canary-1200-tail200/prime-native-mechanics-swift-replay.safetensors",
+      "byteCount": 40919838,
+      "headerByteCount": 7958,
+      "headerSHA256": "1037ea68e5e23879779566dcfa96aae7f8463140f92002cb53ce1b96cc18442a",
+      "tensorCount": 74,
+      "storedElementCount": 10227968,
+      "dtypes": [
+        "F32"
+      ]
+    },
+    {
+      "path": "/Users/ergentics/prime-mlx-lab/native-mechanics-swift-canary-1200-tail200/prime-native-mechanics-swift.safetensors",
+      "byteCount": 40919840,
+      "headerByteCount": 7960,
+      "headerSHA256": "cca9b332e0dfb05454cbe569a1697ac995bf0186a40a75d1b52d654c56458f2e",
+      "tensorCount": 74,
+      "storedElementCount": 10227968,
+      "dtypes": [
+        "F32"
+      ]
+    },
+    {
+      "path": "/Users/ergentics/prime-mlx-lab/native-mechanics-swift-canary-1200-w2/prime-native-mechanics-swift-replay.safetensors",
+      "byteCount": 40919840,
+      "headerByteCount": 7960,
+      "headerSHA256": "7d542d6a73166c053bcffb92fb98041d80f831838f4fa4dbc2d358e5f2466a25",
+      "tensorCount": 74,
+      "storedElementCount": 10227968,
+      "dtypes": [
+        "F32"
+      ]
+    },
+    {
+      "path": "/Users/ergentics/prime-mlx-lab/native-mechanics-swift-canary-1200-w2/prime-native-mechanics-swift.safetensors",
+      "byteCount": 40919838,
+      "headerByteCount": 7958,
+      "headerSHA256": "f95fd83f401354c48d109358841f66a2acd10cc9216ad333392adc2c19ca6f41",
+      "tensorCount": 74,
+      "storedElementCount": 10227968,
+      "dtypes": [
+        "F32"
+      ]
+    },
+    {
+      "path": "/Users/ergentics/prime-mlx-lab/native-trace-curriculum/prime-native-trace.safetensors",
+      "byteCount": 40919832,
+      "headerByteCount": 7952,
+      "headerSHA256": "c40e8e7365722fb93330da78d307c97bb52a16d1f51f8686eb2bdd8be835da5f",
+      "tensorCount": 74,
+      "storedElementCount": 10227968,
+      "dtypes": [
+        "F32"
+      ]
+    },
+    {
+      "path": "/Users/ergentics/prime-mlx-lab/native-variable-depth-seed1618-4000/prime-native-variable-depth-seed1618.safetensors",
+      "byteCount": 40919874,
+      "headerByteCount": 7994,
+      "headerSHA256": "b1a566ac488d69896a7bb59a9ee2f0e73d36777f56e6aaa293bf11f3fdb42e3e",
+      "tensorCount": 74,
+      "storedElementCount": 10227968,
+      "dtypes": [
+        "F32"
+      ]
+    },
+    {
+      "path": "/Users/ergentics/prime-mlx-lab/native-variable-depth-seed1618-4000-bindings-v2/prime-native-variable-depth-seed1618.safetensors",
+      "byteCount": 40919838,
+      "headerByteCount": 7958,
+      "headerSHA256": "171ef3e3dbe77ca45da9c264f87979e67636b55f42a9731240c7df2141f85c4e",
+      "tensorCount": 74,
+      "storedElementCount": 10227968,
+      "dtypes": [
+        "F32"
+      ]
+    },
+    {
+      "path": "/Users/ergentics/prime-mlx-lab/native-variable-depth-seed1618-8000-bindings-v2/prime-native-variable-depth-seed1618.safetensors",
+      "byteCount": 40919840,
+      "headerByteCount": 7960,
+      "headerSHA256": "454170f28fe54b70e8db6a4380ec76dcbf3ddfa03bf5d557b13703b6f47fb979",
+      "tensorCount": 74,
+      "storedElementCount": 10227968,
+      "dtypes": [
+        "F32"
+      ]
+    },
+    {
+      "path": "/Users/ergentics/prime-mlx-lab/native-variable-depth-seed1618-8000-v1/prime-native-variable-depth-seed1618.safetensors",
+      "byteCount": 40919834,
+      "headerByteCount": 7954,
+      "headerSHA256": "2dbe3470b767d22901da8a51373d80d60a196b68bf24e9e4473a6d03874a045f",
+      "tensorCount": 74,
+      "storedElementCount": 10227968,
+      "dtypes": [
+        "F32"
+      ]
+    },
+    {
+      "path": "/Users/ergentics/prime-mlx-lab/native-variable-depth-smoke-100/prime-native-variable-depth-seed1618.safetensors",
+      "byteCount": 40919832,
+      "headerByteCount": 7952,
+      "headerSHA256": "a7abf0b150c45b2f44e65360a6cdfe4c6b4deb289a2148a2bf743be30591b903",
+      "tensorCount": 74,
+      "storedElementCount": 10227968,
+      "dtypes": [
+        "F32"
+      ]
+    }
+  ],
+  "selectedSmallNativeResults": [
+    {
+      "source": {
+        "path": "/Users/ergentics/prime-mlx-lab/native-trace-curriculum/prime-native-trace-curriculum.json",
+        "byteCount": 45277,
+        "sha256": "45d815097127bb00a8431475381dfdb5a5aa6c3c0dabb23975536ca2a2f29b00"
+      },
+      "outcome": "GROUNDED",
+      "next_action": "run_prime_domain_trace_shadow_canary",
+      "functional_english_authorized": false,
+      "product_promotion_authorized": false,
+      "profile": {
+        "attention_heads": 4,
+        "feed_forward_dimension": 640,
+        "head_dimension": 64,
+        "layer_count": 8,
+        "model_dimension": 256,
+        "profile_id": "ergentics_prime_poc_10m_v1",
+        "rope_base": 10000.0,
+        "sequence_length_contract": 2048,
+        "vocab_size": 16384
+      },
+      "training": {
+        "completed_steps": 1200,
+        "elapsed_seconds": 10.0452755,
+        "embedding_delta_l2": 3.201383113861084,
+        "first_gradient_norm": 36.01402282714844,
+        "peak_memory_bytes": 325625880,
+        "requested_steps": 1200,
+        "tokens_per_second": 10829.369488173817
+      },
+      "evaluation": {
+        "direct_one_shot_holdout_accuracy": 0.0625,
+        "direct_one_shot_mutation_accuracy": 0.0625,
+        "engine_coupled_holdout_accuracy": 1.0,
+        "engine_coupled_primitive_accuracy": 1.0,
+        "final_loss": 0.07147436198734101,
+        "holdout_autoregressive_accuracy": 1.0,
+        "holdout_intermediate_accuracy": 1.0,
+        "holdout_teacher_accuracy": 1.0,
+        "initial_loss": 10.139817199891523,
+        "mutation_autoregressive_accuracy": 1.0,
+        "mutation_intermediate_accuracy": 1.0,
+        "mutation_teacher_accuracy": 1.0,
+        "validation_autoregressive_accuracy": 1.0,
+        "validation_intermediate_accuracy": 1.0,
+        "validation_teacher_accuracy": 1.0
+      },
+      "manifest": {
+        "base_manifest_sha256": "c88fdae20869e6acf39930b390d1b74f8f20bc194a406dac19a64b307d3e7a78",
+        "holdout_rows": 32,
+        "mutation_rows": 32,
+        "trace_holdout_sha256": "680f8340b2824efde5b0a93125e3291428d43ba23a4bae0c21ea146822dccae7",
+        "trace_language_id": "ergentics_prime_z8_trace_v1",
+        "trace_manifest_sha256": "21280c30a8dc04169a69b694e36bd2cf66c2a04c368cf7b7d93daf571eb4feb4",
+        "trace_mutation_sha256": "3e129bd1b059f98a424fe1c7b9ea27207c34406e0f29c883d419f465a9c63650",
+        "trace_train_sha256": "d16d1725bf3a7db0959c8edde10b84038d486ff78b79d8a4eb4601ef99804348",
+        "trace_validation_sha256": "38321b5d243b4f0ae77855ffe167872b2e8e43fc4e6de282918e80fc1ed48465",
+        "train_rows": 64,
+        "validation_rows": 8
+      },
+      "interpretation": "Saved random-init symbolic model and measured learning; not natural-language chat. No fresh inference performed."
+    },
+    {
+      "source": {
+        "path": "/Users/ergentics/prime-mlx-lab/native-variable-depth-seed1618-8000-bindings-v2/prime-native-variable-depth-seed1618.json",
+        "byteCount": 1701372,
+        "sha256": "39bbffa24d9eaf477055249881bb031db14827d3f2d765ae27b91abb29330e63"
+      },
+      "functional_english_authorized": false,
+      "product_promotion_authorized": false,
+      "training": {
+        "binding_examples_seen": 144,
+        "binding_presentations": 32000,
+        "completed_steps": 8000,
+        "embedding_delta_l2": 145.76536560058594,
+        "final_loss": 1.131827737725685,
+        "first_gradient_norm": 28.11614227294922,
+        "initial_loss": 10.1994187188933,
+        "peak_memory_bytes": 357419156,
+        "requested_steps": 8000,
+        "tokens_per_second": 13283.649245355786
+      },
+      "manifest": {
+        "binding_examples": 144,
+        "binding_examples_sha256": "7f21c5b933e97ff007374044ccc8ff37330a246b99de39838367925efd629f96",
+        "families_sha256": "58895d30f56d4b50212ab6f56b06fc77feabadb238ffbc4eda8cecb5c5de6073",
+        "holdout_rows": 160,
+        "manifest_sha256": "b0c7c9c64cfeddf9684eb770c74fcae252cf4dc3fadd7e3dd528fcee2f24cbeb",
+        "mutation_rows": 640,
+        "train_rows": 1504,
+        "validation_rows": 320
+      },
+      "aggregates": [
+        {
+          "axis": "base",
+          "depth": 3,
+          "direct_accuracy": 0.28125,
+          "full_trace_accuracy": 0.40625,
+          "row_count": 32,
+          "split": "holdout",
+          "stage_accuracy": 0.5833333333333334
+        },
+        {
+          "axis": "base",
+          "depth": 4,
+          "direct_accuracy": 0.140625,
+          "full_trace_accuracy": 0.3359375,
+          "row_count": 128,
+          "split": "holdout",
+          "stage_accuracy": 0.564453125
+        },
+        {
+          "axis": "alphabet_b",
+          "depth": 3,
+          "direct_accuracy": 0.15625,
+          "full_trace_accuracy": 0.3125,
+          "row_count": 32,
+          "split": "mutation",
+          "stage_accuracy": 0.53125
+        },
+        {
+          "axis": "alphabet_b",
+          "depth": 4,
+          "direct_accuracy": 0.171875,
+          "full_trace_accuracy": 0.296875,
+          "row_count": 128,
+          "split": "mutation",
+          "stage_accuracy": 0.466796875
+        },
+        {
+          "axis": "heldout_codebook",
+          "depth": 3,
+          "direct_accuracy": 0.1875,
+          "full_trace_accuracy": 0,
+          "row_count": 32,
+          "split": "mutation",
+          "stage_accuracy": 0.20833333333333334
+        },
+        {
+          "axis": "heldout_codebook",
+          "depth": 4,
+          "direct_accuracy": 0.15625,
+          "full_trace_accuracy": 0,
+          "row_count": 128,
+          "split": "mutation",
+          "stage_accuracy": 0.146484375
+        },
+        {
+          "axis": "joint_alphabet_b_codebook",
+          "depth": 3,
+          "direct_accuracy": 0.125,
+          "full_trace_accuracy": 0.03125,
+          "row_count": 32,
+          "split": "mutation",
+          "stage_accuracy": 0.3020833333333333
+        },
+        {
+          "axis": "joint_alphabet_b_codebook",
+          "depth": 4,
+          "direct_accuracy": 0.1484375,
+          "full_trace_accuracy": 0,
+          "row_count": 128,
+          "split": "mutation",
+          "stage_accuracy": 0.205078125
+        },
+        {
+          "axis": "neutral_context",
+          "depth": 3,
+          "direct_accuracy": 0.21875,
+          "full_trace_accuracy": 0.375,
+          "row_count": 32,
+          "split": "mutation",
+          "stage_accuracy": 0.5729166666666666
+        },
+        {
+          "axis": "neutral_context",
+          "depth": 4,
+          "direct_accuracy": 0.1484375,
+          "full_trace_accuracy": 0.3359375,
+          "row_count": 128,
+          "split": "mutation",
+          "stage_accuracy": 0.55859375
+        },
+        {
+          "axis": "base",
+          "depth": 3,
+          "direct_accuracy": 0.21875,
+          "full_trace_accuracy": 0.4375,
+          "row_count": 32,
+          "split": "validation",
+          "stage_accuracy": 0.5833333333333334
+        },
+        {
+          "axis": "base",
+          "depth": 4,
+          "direct_accuracy": 0.1640625,
+          "full_trace_accuracy": 0.359375,
+          "row_count": 128,
+          "split": "validation",
+          "stage_accuracy": 0.56640625
+        },
+        {
+          "axis": "validation_codebook",
+          "depth": 3,
+          "direct_accuracy": 0.21875,
+          "full_trace_accuracy": 0.03125,
+          "row_count": 32,
+          "split": "validation",
+          "stage_accuracy": 0.22916666666666666
+        },
+        {
+          "axis": "validation_codebook",
+          "depth": 4,
+          "direct_accuracy": 0.1875,
+          "full_trace_accuracy": 0.015625,
+          "row_count": 128,
+          "split": "validation",
+          "stage_accuracy": 0.271484375
+        }
+      ],
+      "interpretation": "Saved random-init symbolic model and measured learning; not natural-language chat. No fresh inference performed."
+    }
+  ],
+  "latestSmallMechanicsResult": {
+    "source": {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/content-staging/prime-native-metal-language-canary-report.latest.json",
+      "byteCount": 40833,
+      "sha256": "686bc619ca2019e0960a887b35a8e7dc853172b0d24d27cfbba01e5624c7360c"
+    },
+    "evaluation": {
+      "conservation_accuracy": 0.125,
+      "engine_coupled_holdout_accuracy": 1,
+      "engine_coupled_primitive_accuracy": 1,
+      "final_train_accuracy": 0.9910714285714286,
+      "final_train_loss": 0.010362735816410609,
+      "holdout_accuracy": 0.09375,
+      "holdout_loss": 10.026002794504166,
+      "initial_holdout_accuracy": 0,
+      "initial_holdout_loss": 10.242133051156998,
+      "initial_train_accuracy": 0,
+      "initial_train_loss": 10.37219385589872,
+      "mutation_accuracy": 0.09375,
+      "mutation_loss": 10.131172135472298,
+      "order_sensitive_accuracy": 0.0625,
+      "validation_accuracy": 0.125,
+      "validation_loss": 12.41991138458252
+    },
+    "gates": {
+      "compositional_outcome": "ABSTAIN",
+      "functional_english_authorized": false,
+      "mechanics_outcome": "GROUNDED",
+      "product_promotion_authorized": false
+    },
+    "language": {
+      "external_corpus": false,
+      "holdout_manifest_sha256": "b366a37de4e2f974f7b88dfd8e908b5ee229ecdea094656e44dba4a8b11f0752",
+      "holdout_rows": 32,
+      "language_id": "ergentics_prime_z8_composition_v1",
+      "manifest_sha256": "c88fdae20869e6acf39930b390d1b74f8f20bc194a406dac19a64b307d3e7a78",
+      "mutation_rows": 32,
+      "ownership": "ergentics_generated",
+      "tokenizer": "fixed_symbol_ids_no_text_tokenizer",
+      "train_manifest_sha256": "8e1a0885ff8845f5cfdb11fec66ec5e32dd9b40a44f6fd679d2743aef6a2ae85",
+      "train_rows": 112,
+      "validation_manifest_sha256": "27a5b8f3d428c098f20da12c0f87ea0448638e173f194c765955f505fd57839c",
+      "validation_rows": 8
+    },
+    "training": {
+      "batch_size": 16,
+      "completed_steps": 1200,
+      "elapsed_seconds": 23.362738966941833,
+      "embedding_delta_l2": 55.54861068725586,
+      "first_gradient_norm": 26.857542037963867,
+      "learning_rate": 0.0003000000142492354,
+      "peak_memory_bytes": 317824432,
+      "primitive_batch_weight": 2,
+      "requested_steps": 1200,
+      "sampled_final_loss": 0.00043070316314697266,
+      "sampled_first_loss": 10.29449462890625,
+      "seed": 1729,
+      "tokens_per_second": 4725.473334107593,
+      "weight_decay": 0.009999999776482582
+    },
+    "interpretation": "Engine-coupled 32/32 holdout differs from direct-neural 3/32 holdout; model training occurred on 112 fixed-symbol training rows."
+  },
+  "olderLlamaLineage": {
+    "sourceConfig": {
+      "path": "/Users/ergentics/prime-mlx-lab/runtime-bundle-3b-sft-loop-20260722-full/config.json",
+      "byteCount": 1122,
+      "sha256": "c546925585e48f43890d9dc5150df4fec73dd3780d92961c5ace451934cc4cd6"
+    },
+    "config": {
+      "architectures": [
+        "LlamaForCausalLM"
+      ],
+      "attention_bias": false,
+      "attention_dropout": 0.0,
+      "bos_token_id": 128000,
+      "eos_token_id": [
+        128001,
+        128008,
+        128009
+      ],
+      "head_dim": 128,
+      "hidden_act": "silu",
+      "hidden_size": 3072,
+      "initializer_range": 0.02,
+      "intermediate_size": 8192,
+      "max_position_embeddings": 131072,
+      "mlp_bias": false,
+      "model_type": "llama",
+      "num_attention_heads": 24,
+      "num_hidden_layers": 28,
+      "num_key_value_heads": 8,
+      "pretraining_tp": 1,
+      "quantization": {
+        "group_size": 64,
+        "bits": 4
+      },
+      "quantization_config": {
+        "group_size": 64,
+        "bits": 4
+      },
+      "rms_norm_eps": 1e-05,
+      "rope_scaling": {
+        "factor": 32.0,
+        "high_freq_factor": 4.0,
+        "low_freq_factor": 1.0,
+        "original_max_position_embeddings": 8192,
+        "rope_type": "llama3"
+      },
+      "rope_theta": 500000.0,
+      "tie_word_embeddings": true,
+      "torch_dtype": "bfloat16",
+      "transformers_version": "4.45.0.dev0",
+      "use_cache": true,
+      "vocab_size": 128256
+    },
+    "weights": {
+      "path": "/Users/ergentics/prime-mlx-lab/runtime-bundle-3b-sft-loop-20260722-full/model.safetensors",
+      "byteCount": 1807496278,
+      "headerByteCount": 72782,
+      "headerSHA256": "8a18a423bcad4c682b32b60f33972f19613bbbdff913164497427672cec558ef",
+      "tensorCount": 648,
+      "storedElementCount": 502139904,
+      "dtypes": [
+        "F16",
+        "U32"
+      ]
+    },
+    "hfDequantizedHeaders": [
+      {
+        "path": "/Users/ergentics/prime-mlx-lab/merged-hf-3b-20260722-full/model-00001-of-00002.safetensors",
+        "byteCount": 4965799096,
+        "headerByteCount": 21680,
+        "headerSHA256": "48bea735386a79849b314920a28485d8aa59eab8ee67f7a4bd25083cb55cca7c",
+        "tensorCount": 187,
+        "storedElementCount": 2482888704,
+        "dtypes": [
+          "BF16"
+        ]
+      },
+      {
+        "path": "/Users/ergentics/prime-mlx-lab/merged-hf-3b-20260722-full/model-00002-of-00002.safetensors",
+        "byteCount": 1459729952,
+        "headerByteCount": 7704,
+        "headerSHA256": "3362160bc1e9babdfc4d5069629a78bfef214caffd28f98e60187b08bc847565",
+        "tensorCount": 67,
+        "storedElementCount": 729861120,
+        "dtypes": [
+          "BF16"
+        ]
+      }
+    ],
+    "interpretation": "Llama 3.2-derived 3B with 128,256 vocabulary, distinct from the random-init native 512 byte-token model. Quantized storedElementCount counts packed arrays, not original model parameters. Prior task tested actual generation separately."
+  },
+  "largeCoreMLExport": {
+    "path": "/Users/ergentics/prime-mlx-lab/Prime-3b-20260722-full.mlpackage",
+    "fileCount": 16,
+    "totalFileBytes": 27279756829,
+    "modelFileBytes": 445735,
+    "exportMetadata": {
+      "graph_contract": "llama-single-shot-logits.v1",
+      "max_seq": 64,
+      "merged_hf": "/Users/ergentics/prime-mlx-lab/merged-hf-3b-20260722-full",
+      "coremltools": "9.0",
+      "torch": "2.7.0"
+    },
+    "runtimePlan": {
+      "forwardGraphFingerprint": "3491f38963e29692a5d92f4b9635d64fcc72987e15f0770ab0225f31ecfc144f",
+      "graphContractID": "llama-single-shot-logits.v1",
+      "hiddenSize": 3072,
+      "io": {
+        "inputDType": "int32",
+        "inputFeature": "input_ids",
+        "inputIDsShape": [
+          1,
+          64
+        ],
+        "logitsDType": "float32",
+        "logitsShape": [
+          1,
+          64,
+          128256
+        ],
+        "outputFeature": "logits"
+      },
+      "layerBlocksEmitted": 28,
+      "loadableModelRequired": false,
+      "maxSequenceLength": 64,
+      "runtimeFingerprint": "b7c0ee034ee2362a0f4e257cb93e523f869bd23da353f910937c06db8d2262ae",
+      "schemaID": "ergentics-mlprogram-runtime.v1",
+      "tailOpsIncluded": true,
+      "vocabSize": 128256,
+      "weightRefCount": 255
+    },
+    "nativeEmit": {
+      "emitFingerprint": "bbe8c57611af70daa1c7458a79dc623174cbd5e7e9e946ee734b051d73fe7e7e",
+      "emitTierID": "swift_mil_weight_v1",
+      "forwardGraphFingerprint": "3491f38963e29692a5d92f4b9635d64fcc72987e15f0770ab0225f31ecfc144f",
+      "milPlanFingerprint": "9c2edc13dc2479b01ebc65540343c1a21a42aaac0ed4447bc3d3a6f371eb4fd4",
+      "modelPayloadFingerprint": "575810bce7d60a72a0a563e04b1fb7390ada1801e2a5162b76d686e331ff385c",
+      "modelRelativePath": "Data/com.apple.CoreML/model.mlmodel",
+      "protobufPlanFingerprint": "8081ebef6c4a702ad4cd7d05413d703ead43d1602b008e817a73441d6e924dff",
+      "schemaID": "ergentics-mlprogram-native-emit.v1"
+    },
+    "interpretation": "A native Swift export pipeline for older Llama-based weights is not a new first-party model checkpoint. The 64-token CoreML single-shot export cap differs from the upstream 131,072-position config and later native 2,048 context. This audit did not load or compile this package and makes no current execution-readiness claim."
+  },
+  "zeroLogitProbe": {
+    "witness": {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/content-staging/prime-native-export-contract-probe-witness.latest.json",
+      "byteCount": 746,
+      "sha256": "26f833de47000ae3f0f6c0d67019451f5b53b78f573c6dd53c89e4ebd138e6b6"
+    },
+    "record": {
+      "witness_id": "L9_contract_io_probe_shell",
+      "generated_at": "2026-07-25T04:23:48Z",
+      "probe_tier": "zero_logits_v1",
+      "source_package": "/Users/ergentics/prime-mlx-lab/Prime-3b-20260722-full.mlpackage",
+      "probe_shell_package": "/var/folders/zv/5q6zw2k57698hn8q5hfy0wtm0000gn/T//ergentics-contract-probe.Tyye39/probe-shell.mlpackage",
+      "max_seq": 64,
+      "graph_contract_id": "llama-single-shot-logits.v1",
+      "graph_contract_fingerprint": "c93829ddda07df54de1922151e35f6fa38e9d364b9f7adb86d2e57718f789ba1",
+      "contract_probe_merged_on_shell_copy": true,
+      "ship_package_bytes_untouched": true,
+      "note": "Wire v2 L8 skips in-session L9 when mil_weight catalog sidecar exists; inspector still sets contract_graph_detected on ship graph."
+    },
+    "fixtureMetadata": {
+      "max_seq": 64,
+      "vocab": 128256,
+      "model_payload_fingerprint": "4fb680d0ca7a87d7c8ed5a67c7ee060e09558ca17e0a441a6ace7219dfc9b91e",
+      "bytes": 852
+    },
+    "routingSource": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/Sources/ErgenticsPrimeRuntime/ErgenticsCoreMLNativeMlProgramProtobufPlanEmitter.swift",
+    "routingLines": [
+      34,
+      65
+    ],
+    "interpretation": "An 852-byte zero-logit I/O test template exists. Emitter selects it for matching I/O when tail weights are incomplete. Recorded L9 witness used a shell copy and declared ship bytes untouched. This is not evidence that older fused MLX Llama generation or random-init native inference is hardcoded."
+  },
+  "historicalBaselines": {
+    "source": {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/content-staging/prime-native-model-baselines.v1.json",
+      "byteCount": 2914,
+      "sha256": "d3678a6b6b6d857d6e251a97dd55f7271d0b95663a7ef9871899f779cf2d3c2d"
+    },
+    "record": {
+      "schema_version": "1",
+      "baseline_id": "prime-native-model-entry-baselines.v1",
+      "comparison_rule": {
+        "same_evaluator_required_for_promotion": true,
+        "minimum_promotion_match_count": 183,
+        "promotion_sample_count": 250,
+        "frontier_earlier_shard_is_directional_only": true,
+        "engine_result_is_not_a_standalone_neural_comparator": true
+      },
+      "standalone_neural_baselines": [
+        {
+          "id": "owned_llama_3_2_3b_lora",
+          "role": "promotion_control",
+          "match_count": 180,
+          "sample_count": 250,
+          "match_rate": 0.72,
+          "evidence_path": "content-staging/prime-owned-mid-baseline-ref.json",
+          "evidence_sha256": "726fce908ddebf0ceda6683d87d07a341c8ee8296f9ee06ae6bc2c4aa5a352b9"
+        },
+        {
+          "id": "llama_3_2_1b_equal_curriculum",
+          "role": "smaller_adapted_reference",
+          "match_count": 161,
+          "sample_count": 250,
+          "match_rate": 0.644,
+          "evidence_path": "content-staging/prime-smaller-native-1b-8bit-benchmark.v1.json",
+          "evidence_sha256": "714641e76e770cbfd55b6d7a0b966d0929104e2ba6213c7100ecc451d05062b2"
+        },
+        {
+          "id": "qwen3_1_7b_untuned",
+          "role": "capacity_and_verbosity_reference",
+          "match_count": 218,
+          "sample_count": 250,
+          "match_rate": 0.872,
+          "mean_response_words": 152.0,
+          "evidence_path": "content-staging/prime-smaller-native-qwen17b-8bit-benchmark.v1.json",
+          "evidence_sha256": "ff51be758e51efe68071fe6577ccf115facae4910e36c80099863519fefd464b"
+        }
+      ],
+      "answer_budget_canaries": [
+        {
+          "id": "qwen3_1_7b",
+          "match_count": 12,
+          "sample_count": 25,
+          "match_rate": 0.48,
+          "evidence_path": "content-staging/prime-smaller-native-qwen-response-priority-canary.v1.json",
+          "evidence_sha256": "215c387d5ce79d1f36f36fcadce5992a1f1d2af427267ee54f13990a56e49b91"
+        },
+        {
+          "id": "gemma3_1b",
+          "match_count": 10,
+          "sample_count": 25,
+          "match_rate": 0.4,
+          "evidence_path": "content-staging/prime-smaller-native-gemma3-1b-8bit-canary.v1.json",
+          "evidence_sha256": "006d66893fa3afd6d24805d69edfa17557420f4ab1fe3f1790881ad180968f7b"
+        },
+        {
+          "id": "lfm2_5_1_2b",
+          "match_count": 12,
+          "sample_count": 25,
+          "match_rate": 0.48,
+          "evidence_path": "content-staging/prime-smaller-native-lfm25-12b-8bit-canary.v1.json",
+          "evidence_sha256": "fa41c9dc7090bd7ce8fe068cde1ed5dc4441bde5be49c1fe43e19bd7159f1f13"
+        }
+      ],
+      "directional_ceiling": {
+        "id": "gpt_4o",
+        "match_count": 230,
+        "sample_count": 240,
+        "match_rate": 0.9583333333333334,
+        "evidence_path": "content-staging/prime-frontier-ceiling-ref.json",
+        "evidence_sha256": "166d19aff5ad99cdef9b5db17e176f00afe58069c481fac7918d8d478ef1ab1b"
+      },
+      "product_engine_reference": {
+        "id": "prime_engine_expanded_route",
+        "match_count": 324,
+        "sample_count": 324,
+        "role": "product_verifier_reference_only"
+      }
+    },
+    "interpretation": "Some filenames call smaller adapted models native; their explicit IDs identify Llama and Qwen inheritance. Product verifier 324/324 is separately classified from neural 180/250 control. These are saved historical evaluator numbers, not new measurements."
+  },
+  "conclusions": [
+    "Actual retained work spans symbolic 10.23M checkpoints, native 300M/1B/3B short profile probes, and older Llama-derived 3B weights/exports. No universal percentage of missing work can be measured from these roots alone.",
+    "Native 300M label corresponds to 271,107,072 parameters at vocab 512; 1B and 3B profile parameters were also actually instantiated. A 300M target alone is not established as the cause of bad answers.",
+    "The corrected profile screen did not establish a model-size winner. Only 36 steps and two independent confirmation replicates; no saved weights or generated answers in this campaign. Corpus availability and measured profile optimization are different facts.",
+    "Positive symbolic results are real but method-specific: trace curriculum 100% held-out autoregressive versus 6.25% direct one-shot; latest mechanics 100% engine-coupled versus 9.375% direct neural.",
+    "Repository discovery alone does not bind artifacts into a tokenizer, checkpoint or app route. Preserve exact data/tokenizer/weights bindings and expose each route explicitly."
+  ],
+  "sourceLastChangeCommits": {
+    "prime-runtime/Sources/ErgenticsPrimeRuntime/ErgenticsNativeScaleEngineRecommend.swift": "8b5166730ce2b72e3e02a95f574af6656b300074 2026-07-29 Harden native profile decision audit authority",
+    "content-staging/prime-native-language-schema6-profile-screen-audit.v1.json": "a61ad86ff8caa0144a31047e238add61b577a7d0 2026-07-29 Publish native profile screen decision archive",
+    "content-staging/prime-native-byte-tokenizer-manifest.v1.json": "1975bf5f8612ae6d7c8627ad6a6e5087b8469670 2026-08-05 Reserve completion_abstain and completion_result in byte512 tokenizer.",
+    "prime-runtime/Sources/ErgenticsPrimeRuntime/ErgenticsCoreMLNativeMlProgramProtobufPlanEmitter.swift": "704da5328b3c21fe1368c390c995764bfc22f388 2026-07-25 Land native export + Swift quant v2 on main (unblock phase-b branch) (#89)",
+    "content-staging/prime-native-metal-language-canary-report.latest.json": "94dbef8dddc1ca13bc263283fe8f0d47a9eb2c0a 2026-07-28 add native Swift language pre-run authority (#129)"
+  }
+}

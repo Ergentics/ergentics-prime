@@ -1,0 +1,159 @@
+{
+  "schema": "prime_games_source_audit_v1",
+  "status": "connected_original_engine_references_and_all_source_bindings_verified",
+  "sources": [
+    {
+      "id": "ur-app",
+      "root": "/Users/ergentics/ur-app",
+      "revision": "838e00a013969ba92715b5c3044c540336786486",
+      "files": 79,
+      "bytes": 529757
+    },
+    {
+      "id": "backgammon-app",
+      "root": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-game-connection/backgammon-app",
+      "revision": "05f33345b6b5d38d8837c2b25acc772ee0ad033d",
+      "files": 71,
+      "bytes": 489238
+    },
+    {
+      "id": "ergentics-logic-game-exports",
+      "root": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-corpus-sources/ergentics-logic",
+      "revision": "97be84b2790b79ce79558d6bade846a532226540",
+      "files": 5,
+      "bytes": 240099
+    },
+    {
+      "id": "games-deterministic-reference",
+      "root": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-game-connection",
+      "revision": null,
+      "files": 7,
+      "bytes": 10983
+    }
+  ],
+  "existingLogicExports": [
+    {
+      "path": "ur.dice.jsonl",
+      "records": 5,
+      "familyCounts": {
+        "ur.dice.distribution": 5
+      },
+      "polarityCounts": {
+        "positive": 5
+      },
+      "recordedIndependentOracleCounts": {
+        "3": 5
+      }
+    },
+    {
+      "path": "ur.puzzle.jsonl",
+      "records": 27,
+      "familyCounts": {
+        "ur.puzzle.best_move": 27
+      },
+      "polarityCounts": {
+        "positive": 27
+      },
+      "recordedIndependentOracleCounts": {
+        "3": 27
+      }
+    },
+    {
+      "path": "backgammon.masteryfield.jsonl",
+      "records": 3,
+      "familyCounts": {
+        "tutor.masteryfield.harmonic_gradient": 2,
+        "tutor.masteryfield.signal_entropy_coupling": 1
+      },
+      "polarityCounts": {
+        "positive": 2,
+        "negative": 1
+      },
+      "recordedIndependentOracleCounts": {
+        "3": 2,
+        "2": 1
+      }
+    }
+  ],
+  "embeddedBanks": {
+    "urCuratedLiteralPuzzles": 82,
+    "urGeneratedLiteralPuzzles": 90,
+    "urGeneratedBankProvenance": "URGen settle-emit, two recorded oracle families; not a fresh three-oracle certification",
+    "backgammonAuthoredConceptDrills": 26,
+    "countMethod": "Unique literal record IDs in the committed Swift bank arrays; banks preserved as source, not silently rendered to training text"
+  },
+  "backgammonNeural": {
+    "inputFeatures": 196,
+    "defaultHiddenUnits": 80,
+    "outputWidths": [
+      1,
+      5
+    ],
+    "modelPurpose": "TD self-play board equity, not language generation",
+    "trainedWeightsFoundInGitTree": false,
+    "coreMLInput": "encoding[196]",
+    "coreMLOutput": "pWin[1]"
+  },
+  "masterySeams": [
+    "UrTutor.UrSubject supplies Taxonomy/UrContent to MasteryKit; UrLearningBridge folds game decisions into TutorSession.",
+    "BackgammonTutor.BackgammonSubject supplies the subject; LearningBridge folds ready tactic evidence into TutorSession.",
+    "BackgammonField harmonic potential/gradient is a distinct pure solver; imported logic examples include its negative linear-potential contrast."
+  ],
+  "historicalLimits": [
+    "Ur RULES.md retains its original pending-sign-off status; current engine behavior is what the reference run establishes.",
+    "Ur Harvest.swift header says two puzzle axioms, while its current method includes Monte Carlo as a third and retained logic records report3; preserve the historical text and audit, do not claim a fresh independence review.",
+    "Backgammon fields/drills and heuristic strategy examples are not newly certified by running the move-legalization references."
+  ],
+  "comparisonCases": [
+    {
+      "id": "ur-safe-rosette-entry",
+      "question": "Finkel Ur: you have one piece on 6 and six at home; your opponent has one on safe rosette 8 and six at home. You roll 2. List your legal moves.",
+      "promptUTF8Bytes": 143,
+      "expectedAnswer": "Only enter a home piece at path index 2. Advancing 6 to 8 is illegal because the opponent occupies the safe central rosette.",
+      "deterministicResultSHA256": "598d399d0b8146c3ec3332add54f4ff0ef8f44870105daa9ca12b999e4d0f17b"
+    },
+    {
+      "id": "backgammon-bar-entry-order",
+      "question": "Backgammon (your pip indices): you have 1 on bar 25 and 14 off; opponent has 2 on your 19-point and 13 off. Roll 6 and 3. List your legal turn.",
+      "promptUTF8Bytes": 143,
+      "expectedAnswer": "Enter 25 to 22 with the 3, then move 22 to 16 with the 6. Entry to 19 with the 6 is blocked.",
+      "deterministicResultSHA256": "cded663f1235b79d9910c791cbabfef51d165a224ca3366be3acf00abd73e6a3"
+    }
+  ],
+  "modelInferencePerformed": false,
+  "modelTrainingPerformed": false,
+  "upstreamMutations": false,
+  "registrySHA256": "9775c8f06f8a4d0ee6349f72521c27831be3dcc07f5dd0623542089a5de6afa5",
+  "connection": {
+    "schema": "prime_games_connection_review_v1",
+    "status": "pass",
+    "verifiedAtUTC": "2026-09-08T21:42:29.123233+00:00",
+    "output": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Connected-Candidate-2026-09-08/connections/games",
+    "copiedFiles": 162,
+    "copiedBytes": 1270077,
+    "originalAndCopiedSHA256Matched": true,
+    "metadataHashesMatched": true,
+    "sourceCounts": {
+      "ur-app": 79,
+      "backgammon-app": 71,
+      "ergentics-logic-game-exports": 5,
+      "games-deterministic-reference": 7
+    },
+    "rawJSONLRecords": 35,
+    "rawPositive": 34,
+    "rawNegative": 1,
+    "recordScope": "These 35 original logic game records already exist in the main candidate. This additive connection adds the game source/engine/history links, not 35 new unique training records.",
+    "deterministicReferenceHarnessesPassed": [
+      "ur-safe-rosette-entry",
+      "backgammon-bar-entry-order"
+    ],
+    "referenceScope": "Original deterministic engines only; legal move/turn checks. No neural inference or new training.",
+    "sourceRepositoryWrites": false,
+    "COMPLETE": {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Connected-Candidate-2026-09-08/connections/games/COMPLETE.json",
+      "byteCount": 1071,
+      "sha256": "821a98aec664df0d1977995576889070b123985727a27b9c21af031a2a38cb34"
+    },
+    "failures": []
+  }
+}

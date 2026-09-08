@@ -1,0 +1,272 @@
+{
+  "schema": "prime_expanded_runtime_static_review_v1",
+  "reviewedAtUTC": "2026-09-08T21:35:12.513324+00:00",
+  "status": "no_material_pre_run_blocker",
+  "sourceChecks": [
+    {
+      "check": "0001-pmhnp-native:reviewed_launcher",
+      "passed": true
+    },
+    {
+      "check": "0001-pmhnp-native:unchanged_base_BUILD",
+      "passed": true
+    },
+    {
+      "check": "0001-pmhnp-native:reviewed_native_source",
+      "passed": true
+    },
+    {
+      "check": "0001-pmhnp-native:canonical_model_lab",
+      "passed": true
+    },
+    {
+      "check": "0001-pmhnp-native:retained_controller",
+      "passed": true
+    },
+    {
+      "check": "0002-older-llama:reviewed_launcher",
+      "passed": true
+    },
+    {
+      "check": "0002-older-llama:unchanged_base_BUILD",
+      "passed": true
+    },
+    {
+      "check": "0002-older-llama:reviewed_llama_driver",
+      "passed": true
+    },
+    {
+      "check": "0002-older-llama:shared_python_path",
+      "passed": true
+    },
+    {
+      "check": "0002-older-llama:model_base_path",
+      "passed": true
+    },
+    {
+      "check": "0002-older-llama:retained_controller",
+      "passed": true
+    },
+    {
+      "check": "0003-native-llm-english:reviewed_launcher",
+      "passed": true
+    },
+    {
+      "check": "0003-native-llm-english:unchanged_base_BUILD",
+      "passed": true
+    },
+    {
+      "check": "0003-native-llm-english:reviewed_native_source",
+      "passed": true
+    },
+    {
+      "check": "0003-native-llm-english:canonical_model_lab",
+      "passed": true
+    },
+    {
+      "check": "0003-native-llm-english:retained_controller",
+      "passed": true
+    },
+    {
+      "check": "0004-native-llm-latin:reviewed_launcher",
+      "passed": true
+    },
+    {
+      "check": "0004-native-llm-latin:unchanged_base_BUILD",
+      "passed": true
+    },
+    {
+      "check": "0004-native-llm-latin:reviewed_native_source",
+      "passed": true
+    },
+    {
+      "check": "0004-native-llm-latin:canonical_model_lab",
+      "passed": true
+    },
+    {
+      "check": "0004-native-llm-latin:retained_controller",
+      "passed": true
+    }
+  ],
+  "findings": [
+    "Native requested output accepts1..512; effective output is min(requested,512\u2212full encoded prompt count). Complete prompt must fit with at least one generation slot; byte truncation is detected by exact byte-count guard.",
+    "Native BOS/SentencePiece and English Answer suffix remain profile-specific; EOS2 for learned SentencePiece and70 for byte512. A completed non-EOS output distinguishes contextLimit from tokenLimit.",
+    "The generation loop uses actual NativeTinyDecoder final-position logits and unrestricted finite greedy selection, with no oracle/answer inputs. Original weights and tokenizer guards remain intact.",
+    "Native explicit MTL device check precedes MLX model evaluation. Its110s internal deadline or120s alarm/controller can still interrupt before a final result; partial token events must not be graded as completed success.",
+    "The installed mlx_lm.stream_generate implementation yields each predicted token exactly once: it withholds the last capped/EOS item until the final GenerationResponse. Collecting token and text segment from every response correctly includes final detokenizer flush.",
+    "Llama uses original single-user chat template and seed0/temp0; its saved template starts with BOS, so no duplicate BOS is added. Exact input text is preserved, including literal escape characters rather than the earlier CLI escape expansion.",
+    "Llama asset hashes are captured before/after. The weights SHA is fixed; final readback must separately join returned sidecar file hashes to the sealed base BUILD manifest.",
+    "No extra model runtime/GPU invocation, training, compile, source modification or build-folder modification was performed for this review."
+  ],
+  "limitations": [
+    "Native512 is total context; Llama512 is requested output within its larger context. Same question text is not equal tokenization, equal compute or a standardized benchmark.",
+    "GPU/timeout failures are lifecycle outcomes, not wrong model answers. Actual completed evidence remains to be reviewed separately."
+  ],
+  "bindings": [
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-expanded-comparison/native-driver/main.swift",
+      "byteCount": 15133,
+      "sha256": "d11eaae5ffbe1ce1ec8d3f28af68d495b01b7a45485a39af87b2c357e16dcd59"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-expanded-comparison/run.rb",
+      "byteCount": 2760,
+      "sha256": "302d414304b999bceebc34911965058dfe55a56e4f675f9984e74163fec10a9b"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-expanded-comparison/llama-infer.py",
+      "byteCount": 3427,
+      "sha256": "83f74d31c8171c289671f9377e9a6573884e95c74d5dbc1e8acc28ed3cd3b320"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0001-pmhnp-native/Revisions/expanded-01/run.rb",
+      "byteCount": 2760,
+      "sha256": "302d414304b999bceebc34911965058dfe55a56e4f675f9984e74163fec10a9b"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0001-pmhnp-native/Revisions/expanded-01/REVISION.json",
+      "byteCount": 3240,
+      "sha256": "13490a1aadf819c92ab051a573816739adf0b0c48109dc20b21e8d0bd11bf4ac"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0001-pmhnp-native/BUILD.json",
+      "byteCount": 2822,
+      "sha256": "8f1f3d3bb8a1795e9f50738b3ea6fbb4da4d89f7fc8593219ca025edaee3cac5"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0001-pmhnp-native/Revisions/expanded-01/native-main.swift",
+      "byteCount": 15133,
+      "sha256": "d11eaae5ffbe1ce1ec8d3f28af68d495b01b7a45485a39af87b2c357e16dcd59"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0001-pmhnp-native/Revisions/expanded-01/Runtime/PrimeNativeCheckpointExperiment",
+      "byteCount": 48767968,
+      "sha256": "523e190b9d1b1c8db5292bc8762f5d5e5d94940a38197b12e837ffcfe8ec803b"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0001-pmhnp-native/Revisions/expanded-01/Runtime/controller.rb",
+      "byteCount": 8747,
+      "sha256": "fc0fd22db11fbcaef5985e3bf1388ea29ba69211edd2d892f97b60fd25581931"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0001-pmhnp-native/Runtime/controller.rb",
+      "byteCount": 8747,
+      "sha256": "fc0fd22db11fbcaef5985e3bf1388ea29ba69211edd2d892f97b60fd25581931"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0002-older-llama/Revisions/expanded-01/run.rb",
+      "byteCount": 2760,
+      "sha256": "302d414304b999bceebc34911965058dfe55a56e4f675f9984e74163fec10a9b"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0002-older-llama/Revisions/expanded-01/REVISION.json",
+      "byteCount": 396,
+      "sha256": "f2db667f1911b6bff1c3ec63ec25573496b07e4058ec41dc9146372e2efb03bf"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0002-older-llama/BUILD.json",
+      "byteCount": 2700,
+      "sha256": "e67e635ebbf11bb5242eab3143da77a8a6e6cd554001a00176cb6f1c54be2687"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0002-older-llama/Revisions/expanded-01/Runtime/llama-infer.py",
+      "byteCount": 3427,
+      "sha256": "83f74d31c8171c289671f9377e9a6573884e95c74d5dbc1e8acc28ed3cd3b320"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0002-older-llama/Revisions/expanded-01/Runtime/controller.rb",
+      "byteCount": 8747,
+      "sha256": "fc0fd22db11fbcaef5985e3bf1388ea29ba69211edd2d892f97b60fd25581931"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0002-older-llama/Runtime/controller.rb",
+      "byteCount": 8747,
+      "sha256": "fc0fd22db11fbcaef5985e3bf1388ea29ba69211edd2d892f97b60fd25581931"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0003-native-llm-english/Revisions/expanded-01/run.rb",
+      "byteCount": 2760,
+      "sha256": "302d414304b999bceebc34911965058dfe55a56e4f675f9984e74163fec10a9b"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0003-native-llm-english/Revisions/expanded-01/REVISION.json",
+      "byteCount": 2776,
+      "sha256": "1504a0919f2c1ee81ca5dd56f1f31b8514ef44dcc01975f1be5cde61f19bf554"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0003-native-llm-english/BUILD.json",
+      "byteCount": 2919,
+      "sha256": "943b932b0ff3aca14cb792411869b371fa059a093930ab0ac5a4512d7eb52d6e"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0003-native-llm-english/Revisions/expanded-01/native-main.swift",
+      "byteCount": 15133,
+      "sha256": "d11eaae5ffbe1ce1ec8d3f28af68d495b01b7a45485a39af87b2c357e16dcd59"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0003-native-llm-english/Revisions/expanded-01/Runtime/PrimeNativeCheckpointExperiment",
+      "byteCount": 48767968,
+      "sha256": "523e190b9d1b1c8db5292bc8762f5d5e5d94940a38197b12e837ffcfe8ec803b"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0003-native-llm-english/Revisions/expanded-01/Runtime/controller.rb",
+      "byteCount": 8747,
+      "sha256": "fc0fd22db11fbcaef5985e3bf1388ea29ba69211edd2d892f97b60fd25581931"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0003-native-llm-english/Runtime/controller.rb",
+      "byteCount": 8747,
+      "sha256": "fc0fd22db11fbcaef5985e3bf1388ea29ba69211edd2d892f97b60fd25581931"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0004-native-llm-latin/Revisions/expanded-01/run.rb",
+      "byteCount": 2760,
+      "sha256": "302d414304b999bceebc34911965058dfe55a56e4f675f9984e74163fec10a9b"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0004-native-llm-latin/Revisions/expanded-01/REVISION.json",
+      "byteCount": 3305,
+      "sha256": "1f664807381d0c74cfc6e951e972be27cf340c185284f64c81ba5904468b5dd0"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0004-native-llm-latin/BUILD.json",
+      "byteCount": 2845,
+      "sha256": "cd5854dfdecfe7bc80a2bc16e94163ea6c94a32cdc44c0fda331001008d6a5a7"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0004-native-llm-latin/Revisions/expanded-01/native-main.swift",
+      "byteCount": 15133,
+      "sha256": "d11eaae5ffbe1ce1ec8d3f28af68d495b01b7a45485a39af87b2c357e16dcd59"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0004-native-llm-latin/Revisions/expanded-01/Runtime/PrimeNativeCheckpointExperiment",
+      "byteCount": 48767968,
+      "sha256": "523e190b9d1b1c8db5292bc8762f5d5e5d94940a38197b12e837ffcfe8ec803b"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0004-native-llm-latin/Revisions/expanded-01/Runtime/controller.rb",
+      "byteCount": 8747,
+      "sha256": "fc0fd22db11fbcaef5985e3bf1388ea29ba69211edd2d892f97b60fd25581931"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0004-native-llm-latin/Runtime/controller.rb",
+      "byteCount": 8747,
+      "sha256": "fc0fd22db11fbcaef5985e3bf1388ea29ba69211edd2d892f97b60fd25581931"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/SharedRuntime/python/lib/python3.9/site-packages/mlx_lm/generate.py",
+      "byteCount": 49163,
+      "sha256": "a18cfea3eac2f2f52496ec29e40b2f330642fb9e69504a9bf7f7b5f9906b6bf4"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/SharedRuntime/python/lib/python3.9/site-packages/mlx_lm/tokenizer_utils.py",
+      "byteCount": 15088,
+      "sha256": "aad017caaa69f72c14243aa902b9f7690abe952ded73bde34e96afd3bfb6b454"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0002-older-llama/Runtime/model/chat_template.jinja",
+      "byteCount": 3827,
+      "sha256": "5816fce10444e03c2e9ee1ef8a4a1ea61ae7e69e438613f3b17b69d0426223a4"
+    }
+  ]
+}

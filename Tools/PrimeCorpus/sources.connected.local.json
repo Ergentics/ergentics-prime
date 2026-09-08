@@ -1,0 +1,1414 @@
+{
+  "schema": "prime_connected_sources_v1",
+  "sources": [
+    {
+      "id": "algebra-app",
+      "root": "/Users/ergentics/algebra-app",
+      "revision": "9bc3fa5710558c1bc4349c7708576c47a69de58b",
+      "controlState": "per-file tracked/blob status; unrelated work untouched",
+      "files": [
+        {
+          "path": "AGENTS.md",
+          "role": "evidence",
+          "byteCount": 3565,
+          "sha256": "65ae7c145092fda01742cfcb95593cfad52fe4b3bbc188fe07065654bc5aa68a",
+          "controlState": "tracked",
+          "gitBlob": "9db8dd0cae0cc9570b8d07943a709602d4a8223e",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "Package.swift",
+          "role": "implementation",
+          "byteCount": 3640,
+          "sha256": "4898bc1a207a1fd38f184e6e0d732ea2a851c9ca8333b6a3f6324df01ec5af5c",
+          "controlState": "tracked",
+          "gitBlob": "bdbb2117342cc7cf01cf0a82879ebf9297e14612",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "Sources/AlgStats/Harvest.swift",
+          "role": "implementation",
+          "byteCount": 73765,
+          "sha256": "53825d863e1ab2f61981b5ad01a6e714750549ab2872232421e7897b71106b0e",
+          "controlState": "tracked",
+          "gitBlob": "1fc3d9a51d75627a321e87b73c51d3ec5194c304",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "Sources/AlgStats/HarvestDeepen.swift",
+          "role": "implementation",
+          "byteCount": 65312,
+          "sha256": "8e8eb243e17063606ccc77bcc45028fbcd66d2630ac1e22ec52a85040ef23857",
+          "controlState": "tracked",
+          "gitBlob": "48087c428b145f1075c384fe4e8a0d065921bc24",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "Sources/AlgebraKit/Math.swift",
+          "role": "implementation",
+          "byteCount": 18119,
+          "sha256": "7734702e1a7d77ca513d29ee81952560f5c5fa0af3d39fb8e883ac818ed01134",
+          "controlState": "tracked",
+          "gitBlob": "20a4258107232f4e053a15f00f5072e9845e2ad0",
+          "matchesDeclaredGitBlob": true
+        }
+      ]
+    },
+    {
+      "id": "geometry-app",
+      "root": "/Users/ergentics/geometry-app",
+      "revision": "74906b86eeca4e655d31e6912a905ac390215443",
+      "controlState": "per-file tracked/blob status; unrelated work untouched",
+      "files": [
+        {
+          "path": "AGENTS.md",
+          "role": "evidence",
+          "byteCount": 1783,
+          "sha256": "0b98fa76c5ddabc892c95763498a47854c224dd4e0521a68cf9e479c4f89c06f",
+          "controlState": "tracked",
+          "gitBlob": "e9d3132cca5c55c470629f25dd2f48a9de554b51",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "Package.swift",
+          "role": "implementation",
+          "byteCount": 7076,
+          "sha256": "6f39a80a387598dabfc60936475737059647c8f11445c9bc62800c75331f03b0",
+          "controlState": "tracked",
+          "gitBlob": "0577e45551ce8f044c436e3085e87a7c4f79be41",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "Sources/GeometryStats/Harvest.swift",
+          "role": "implementation",
+          "byteCount": 221877,
+          "sha256": "4ac175972e50b35ad42fab145e9edc8b4e1c2256a26240bfba4ef737954299f1",
+          "controlState": "tracked",
+          "gitBlob": "56960457a482d70ac2f649e003139feac79e438e",
+          "matchesDeclaredGitBlob": true
+        }
+      ]
+    },
+    {
+      "id": "music-theory-app",
+      "root": "/Users/ergentics/music-theory-app",
+      "revision": "d9c80ba40cea43437d983eb14626f69d6e1af485",
+      "controlState": "per-file tracked/blob status; unrelated work untouched",
+      "files": [
+        {
+          "path": "AGENTS.md",
+          "role": "evidence",
+          "byteCount": 8933,
+          "sha256": "8198d5005898e16c285911de5037e3a187502b09a259ea7a8bd58246b9c921fb",
+          "controlState": "tracked",
+          "gitBlob": "59472fa66e5761aa3c948e98d789d9baf992b62f",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "Package.swift",
+          "role": "implementation",
+          "byteCount": 7775,
+          "sha256": "48fa43ef500324058d1ab94c64b0fcb9426dfaef9657762a8647b43b32802eba",
+          "controlState": "tracked",
+          "gitBlob": "1603b6f0c22d614617686f8b52bfee6995f85c6b",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "Sources/MusicStats/Harvest.swift",
+          "role": "implementation",
+          "byteCount": 287326,
+          "sha256": "2dc973e0b0faac54d4c1ccfcd090d58117ca2a0afeebec6fc61c96382b3cf966",
+          "controlState": "tracked",
+          "gitBlob": "d0932c112bcc31f311080c1ecf177363152d8690",
+          "matchesDeclaredGitBlob": true
+        }
+      ]
+    },
+    {
+      "id": "ergentics-logic",
+      "root": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-corpus-sources/ergentics-logic",
+      "revision": "97be84b2790b79ce79558d6bade846a532226540",
+      "controlState": "per-file tracked/blob status; unrelated work untouched",
+      "files": [
+        {
+          "path": "CLAUDE.md",
+          "role": "evidence",
+          "byteCount": 2892,
+          "sha256": "b71c5b45f594c5cd370efc0ced175345cafbece23f52d20aa322150acfe62823",
+          "controlState": "tracked",
+          "gitBlob": "128623cb46ab556ce7e6f579e624bd93a6617b4f",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "corpus/GATE-STATUS.md",
+          "role": "evidence",
+          "byteCount": 66052,
+          "sha256": "5efd01ea205b13076cd5a71f47cafb007dac12c21214ac32c6b61db9cf73158f",
+          "controlState": "tracked",
+          "gitBlob": "eaf8a6640399c605e5c05df11ff18665e99edad4",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "corpus/audits/algebra.audit.addendum-2026-07-11.json",
+          "role": "sidecar",
+          "byteCount": 19151,
+          "sha256": "440801e679023cc76202c6144313f7585f8902d46334f3b02e9c44addb5d8fe8",
+          "controlState": "tracked",
+          "gitBlob": "9689b5af0d829bed9e7ade1ddac3cee3012ebc3b",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "corpus/audits/algebra.audit.json",
+          "role": "sidecar",
+          "byteCount": 89223,
+          "sha256": "7d65d50cf10cbde7bdf704d90aa890caa127c144e3aff6f1bc073fc263d4fc7a",
+          "controlState": "tracked",
+          "gitBlob": "6afc2306d3bfbb230097e5677a8a894c7d43bb52",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "corpus/audits/geometry.audit.addendum-2026-07-11.json",
+          "role": "sidecar",
+          "byteCount": 19709,
+          "sha256": "2dc957a07fe346814fb9e1e35beffd074394ec17248e480b6bbae0dc9209031b",
+          "controlState": "tracked",
+          "gitBlob": "30c5825f575637f278cf0015f6d28bb3e85b893b",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "corpus/audits/geometry.audit.json",
+          "role": "sidecar",
+          "byteCount": 118712,
+          "sha256": "d63fa339a3488fd9c68a9095515bb18f849248dedafcabc4ac8763b13a30c35c",
+          "controlState": "tracked",
+          "gitBlob": "89b7aad0336fbcc7a986b58806d70ce7b2a085bf",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "corpus/audits/music.bowed.audit.json",
+          "role": "sidecar",
+          "byteCount": 23308,
+          "sha256": "f97e820d04b741be33a86344c2d66e828664c4fb78e82cc1f249c82600e00775",
+          "controlState": "tracked",
+          "gitBlob": "544d0e4fb377669845cab88863a5c3f80b1b96ca",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "corpus/audits/music.zeta.audit.json",
+          "role": "sidecar",
+          "byteCount": 39565,
+          "sha256": "349b54999ddfa02d31c69fd73f9fa6e296ce5988e7572f70e528b940b4a1d406",
+          "controlState": "tracked",
+          "gitBlob": "b38b21b32e6e36423f8c66f0e1e6c452b2aea4a7",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "corpus/audits/ur.audit.json",
+          "role": "sidecar",
+          "byteCount": 33100,
+          "sha256": "087b76d703332597795065e15f94f3156c5015f8c79a09ebf6c383d49a48afba",
+          "controlState": "tracked",
+          "gitBlob": "2f1722b4be676ea5c534b2cb4fde16c6770c3cae",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "corpus/exemplars/agentcraft.oracle_independence.jsonl",
+          "role": "corpus",
+          "byteCount": 880670,
+          "sha256": "1bd3098d1039bdcac0e0160ed74ba9253f61d52057e01b284c31c56c15fe547c",
+          "controlState": "tracked",
+          "gitBlob": "3a6897497c5f23162339a68617cc58eeb2a12d93",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "corpus/exemplars/algebra.exp.jsonl",
+          "role": "corpus",
+          "byteCount": 314570,
+          "sha256": "76112bbad04c4dd72baf41616c41f586a87c4c2e33e3d0a120132c413f3c9fce",
+          "controlState": "tracked",
+          "gitBlob": "28497859443dca170e5159d652d2d03b1585c86c",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "corpus/exemplars/algebra.factor.jsonl",
+          "role": "corpus",
+          "byteCount": 984909,
+          "sha256": "4216a3384bbb92b07c33489e9992f1cbf8cd800024c7570d7a8ee6b6fca94898",
+          "controlState": "tracked",
+          "gitBlob": "80af3d2b912ea2c238169eb5662b5441106c40d9",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "corpus/exemplars/algebra.inequality.jsonl",
+          "role": "corpus",
+          "byteCount": 2186414,
+          "sha256": "a0b429e1160145ee46916fbcfc6711984a8e835cb7c71605a7287fbfe962dd67",
+          "controlState": "tracked",
+          "gitBlob": "50b7934f66f442a0ccd5b2648e1d7673131aa77b",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "corpus/exemplars/algebra.pipeline-quality.jsonl",
+          "role": "corpus",
+          "byteCount": 58356,
+          "sha256": "1a74926774a52ff2e5f98df92fa5bce6499726a157dc2a37a5ac3af168311158",
+          "controlState": "tracked",
+          "gitBlob": "6417c0ddf88b19cab3285e70ebdce19262c1038f",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "corpus/exemplars/algebra.poolexpansion.jsonl",
+          "role": "corpus",
+          "byteCount": 47722,
+          "sha256": "69409bc8e73848554c2d58e455509184be1170e05aa207a98d15c30c1329072c",
+          "controlState": "tracked",
+          "gitBlob": "40dae167fbf07ddba30989788351df77c22a493e",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "corpus/exemplars/algebra.rational.jsonl",
+          "role": "corpus",
+          "byteCount": 2042523,
+          "sha256": "a49666d712651f60a67756100d4531e7e5a3d97d55fe5de90707d2f1c51ba818",
+          "controlState": "tracked",
+          "gitBlob": "a32deb6651cb39a610f2c59f8f4439391c461a67",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "corpus/exemplars/algebra.solve.jsonl",
+          "role": "corpus",
+          "byteCount": 1101044,
+          "sha256": "b85cdc98e71fb0bb05b6795db16f5db081d7ec23e8314a11ef49db3b79f2331e",
+          "controlState": "tracked",
+          "gitBlob": "b938cc26eaf384add625d216a0c484fab75f4241",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "corpus/exemplars/algebra.systems.jsonl",
+          "role": "corpus",
+          "byteCount": 6631559,
+          "sha256": "2631a1ce39a0e5abd7d4689c481e753306dd6a8422ada696a5f1fd1f5612b50c",
+          "controlState": "tracked",
+          "gitBlob": "d5d2539476c52559f60d89abe8ac2abdf17e87ac",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "corpus/exemplars/backgammon.masteryfield.jsonl",
+          "role": "corpus",
+          "byteCount": 10313,
+          "sha256": "130038b914a2eef5965688bf3192eb2a051a0e2eedcf44dab0188b4781e6f0ff",
+          "controlState": "tracked",
+          "gitBlob": "7aef9009f52961bb7303ba1a93fbae11536f4bb1",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "corpus/exemplars/barbershop.san_contact_time.jsonl",
+          "role": "corpus",
+          "byteCount": 615913,
+          "sha256": "b523e631c85546b855bad9582a5b5b9741985b4b0bba091244c10e56ab1ff538",
+          "controlState": "tracked",
+          "gitBlob": "15c65608906c14daec4c4a38378b600de2d00e83",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "corpus/exemplars/blueprint.retention.jsonl",
+          "role": "corpus",
+          "byteCount": 8813,
+          "sha256": "2b594f95ffc7e19549ead804de0bbfc80fc2620e4da12d767cd5703d3e16cd89",
+          "controlState": "tracked",
+          "gitBlob": "b4498a9bb9612a00815cebbb30cbc6efd3aae61e",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "corpus/exemplars/christoffel.jsonl",
+          "role": "corpus",
+          "byteCount": 19886,
+          "sha256": "25f6e657bd507f9d66219f2ce956db314863e937fc3708903e065ad3bf71019d",
+          "controlState": "tracked",
+          "gitBlob": "0e56a30761aa9d3520865d412901a3e118b8a8e4",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "corpus/exemplars/colorismath.design.jsonl",
+          "role": "corpus",
+          "byteCount": 5293,
+          "sha256": "b3823bb85338981a2259f6306a4b6421092bac3bfb9b2887622d80e64ad4cf77",
+          "controlState": "tracked",
+          "gitBlob": "fbd4f57cecbe3b37a249add79b12431ed0536507",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "corpus/exemplars/ergentics.coreml.deep.v1.jsonl",
+          "role": "corpus",
+          "byteCount": 5040,
+          "sha256": "7801d8e5a8fa62d81c73b40492bb5faa4730dbee924058052601d0d91b9c6861",
+          "controlState": "tracked",
+          "gitBlob": "e178058df39e83d7e2f2b4d726beae9488b978f7",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "corpus/exemplars/geometry.area.jsonl",
+          "role": "corpus",
+          "byteCount": 180624,
+          "sha256": "7e3c3f758120c923f0daa6228e6fb4e34cb272e57453a5a111cfbcc1dbcfd96d",
+          "controlState": "tracked",
+          "gitBlob": "de1cff91ca64cf52b0155f98a65100859c900489",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "corpus/exemplars/geometry.plausibility.jsonl",
+          "role": "corpus",
+          "byteCount": 64158,
+          "sha256": "d1411f1a431f2f2cb6c34603e5637858990546ad6ee1fa1fad0e0be4042464c5",
+          "controlState": "tracked",
+          "gitBlob": "4e9bcf1f1b22a996cace65cd1b04ee17d34c3eb6",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "corpus/exemplars/geometry.point_in_polygon.jsonl",
+          "role": "corpus",
+          "byteCount": 167311,
+          "sha256": "f57eae67cf6fa1b3cc1bdbf16963647ec3619efb2f0f31cf1879aaa7ba2bd6c8",
+          "controlState": "tracked",
+          "gitBlob": "087da32cd04d7b7bae4ca0619e813ddf182f7dd2",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "corpus/exemplars/geometry.pointintriangle.jsonl",
+          "role": "corpus",
+          "byteCount": 209593,
+          "sha256": "8b69625a5fcfe1ce3f00c71fd6e98e68d0c0c406bec82a8fdd12dd30702eb4c1",
+          "controlState": "tracked",
+          "gitBlob": "0308b8eea3a8ab606ff9ae040d6f945d1fff990a",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "corpus/exemplars/geometry.polygon_area.jsonl",
+          "role": "corpus",
+          "byteCount": 118332,
+          "sha256": "6b7081147965ce4aa2d659da5a5ee3d6356017827d9f1e50393ee6bd7bc2e95b",
+          "controlState": "tracked",
+          "gitBlob": "e3697c5618f09a7e3207220f7db77f996e2027a6",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "corpus/exemplars/logic.algo.jsonl",
+          "role": "corpus",
+          "byteCount": 76585,
+          "sha256": "f9df6650f96a4767b6a78ab7105ad55aa96f9c8167fd43b276cfff990932198f",
+          "controlState": "tracked",
+          "gitBlob": "d97279087e2bbd8deb6ca6782b439a165df43321",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "corpus/exemplars/logic.crypto.jsonl",
+          "role": "corpus",
+          "byteCount": 113597,
+          "sha256": "dac0b5f7e14701d7e9d5aa62bd3fb3740c663ce4bbeb72658a6a4d7f13a35fd7",
+          "controlState": "tracked",
+          "gitBlob": "4be83222112ceb2705f0ce049ab488d9621423c8",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "corpus/exemplars/logic.finance.jsonl",
+          "role": "corpus",
+          "byteCount": 137960,
+          "sha256": "2586f53c5b9fbef46f1b4fe390dc9d167c798712d9ce5ea0955040fab7be8393",
+          "controlState": "tracked",
+          "gitBlob": "50b2da7328e7aefb70daacc6c2356cf633faedf6",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "corpus/exemplars/logic.hardware.jsonl",
+          "role": "corpus",
+          "byteCount": 135645,
+          "sha256": "762346a54dabf69d76d6dd5b543eeb68b3ff0338a2d80f8d3272df3b2387baa5",
+          "controlState": "tracked",
+          "gitBlob": "d91b0c26d465d91270e0e34c48d4abcc8dc8703b",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "corpus/exemplars/logic.parsing.jsonl",
+          "role": "corpus",
+          "byteCount": 172717,
+          "sha256": "0e4925428774d7f16159508cbc9d397199d9f20c2e9e0a7bef7d6845cc506837",
+          "controlState": "tracked",
+          "gitBlob": "89554c945c5b0c9651389b048f8658b7684743a1",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "corpus/exemplars/logic.quantum.jsonl",
+          "role": "corpus",
+          "byteCount": 242929,
+          "sha256": "f6bd17bea86eeff65eb26716c1482acf2baadb2b89c63604f2dfe66c06f487f6",
+          "controlState": "tracked",
+          "gitBlob": "3ea111cebcc997977a5d2a36c807865074dc73df",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "corpus/exemplars/logic.stats.jsonl",
+          "role": "corpus",
+          "byteCount": 97663,
+          "sha256": "7cf260301d36dc489a1bd45a0ab51516bb5496266bbbdab4f3a6fea2fb55eff8",
+          "controlState": "tracked",
+          "gitBlob": "91fe7c3fcdf020283e1c031936597ed3375d157f",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "corpus/exemplars/masterykit.introbudget.jsonl",
+          "role": "corpus",
+          "byteCount": 73022,
+          "sha256": "b86a6a29a7f74641e5f6e6af859a0592c612beb5b7fa51004dcde8a8299c9594",
+          "controlState": "tracked",
+          "gitBlob": "5c467ad76790b9795b02c03a560ea5c98a8294c2",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "corpus/exemplars/music.bowed.jsonl",
+          "role": "corpus",
+          "byteCount": 88096,
+          "sha256": "8a0b2efe9eecd44d0d2b5d40a5c3c6847f0c1a28d4121f0b848a1b979183a9aa",
+          "controlState": "tracked",
+          "gitBlob": "8d28a21bf32a487e0f9921e364e0fe3f11984d54",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "corpus/exemplars/music.inversion.jsonl",
+          "role": "corpus",
+          "byteCount": 462192,
+          "sha256": "c1fb0e238f69f054d54812ac65dd52e2a79dce0a18be3e83c72e0f479dfe4630",
+          "controlState": "tracked",
+          "gitBlob": "de3615a9ac4b6464b7c41eef6dbf4ccf01b2b40f",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "corpus/exemplars/music.modes.jsonl",
+          "role": "corpus",
+          "byteCount": 1126891,
+          "sha256": "30e58c3cf4565519f533d633352924b2c8dded764d185fbc1f5a9ef16de8a571",
+          "controlState": "tracked",
+          "gitBlob": "1af2cd98d3ade7e4fdb3d3f1a06423d7d71877ca",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "corpus/exemplars/music.rhythm.jsonl",
+          "role": "corpus",
+          "byteCount": 1538610,
+          "sha256": "42f8c8c5b039151121dcfe07c0c117bc41364650f1e24e85163176737ec62902",
+          "controlState": "tracked",
+          "gitBlob": "77ff0e13ac55abb803e67c16a0d4de0213b0e001",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "corpus/exemplars/music.scales.jsonl",
+          "role": "corpus",
+          "byteCount": 313222,
+          "sha256": "ba3d70035b25537c00dc036cb7d4c4c1ec862f8b267829516b37594ac1d42d62",
+          "controlState": "tracked",
+          "gitBlob": "a6d17be494c03bec88274965739a6d8ca817c093",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "corpus/exemplars/music.setclass.jsonl",
+          "role": "corpus",
+          "byteCount": 1366266,
+          "sha256": "f4436f2b9923637bb9c2f5ced903cb9859de3125440fb02cf6531228bf93eb38",
+          "controlState": "tracked",
+          "gitBlob": "e48bfd3eab35a97f6d980d73155ad0dd098b1285",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "corpus/exemplars/music.seventh.jsonl",
+          "role": "corpus",
+          "byteCount": 148322,
+          "sha256": "a5b8e31b8d6bff74baa9b2dadcd081ac216669482b3d5c4484ef692b50f6191d",
+          "controlState": "tracked",
+          "gitBlob": "68638f43f80707700996a324fcfcc95d7e1b2a58",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "corpus/exemplars/music.theory.jsonl",
+          "role": "corpus",
+          "byteCount": 485973,
+          "sha256": "ac7440c62aa0f35ee6740c23b06494808721d40711c4e21c0a20b31578b88542",
+          "controlState": "tracked",
+          "gitBlob": "9987b994d7a01084a8815ebac937435b529e6cac",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "corpus/exemplars/music.zeta.jsonl",
+          "role": "corpus",
+          "byteCount": 180589,
+          "sha256": "f01475a1360722f2954205c1c2bf199f7c8ad827f26580d7de6883ad54a420f2",
+          "controlState": "tracked",
+          "gitBlob": "80aa09313a9304b0b4dcac397b895582c19835ac",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "corpus/exemplars/renderkit.ggx.jsonl",
+          "role": "corpus",
+          "byteCount": 32014,
+          "sha256": "7cf62371bdff6aae4e2e135d82a977dd42012161ce6afba8f5acfcc7483e5a57",
+          "controlState": "tracked",
+          "gitBlob": "2bcd202459dc3fdb977ff4f41cf3f77af1e62037",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "corpus/exemplars/renderkit.metal.coverage.jsonl",
+          "role": "corpus",
+          "byteCount": 8940,
+          "sha256": "0c6c3b704d0194c6bcd491871d95f7db58d2fa35115083d497b02a990a04795b",
+          "controlState": "tracked",
+          "gitBlob": "a68682727a2080a3d0a2079b8b4bbec8fb60db54",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "corpus/exemplars/renderkit.metal.jsonl",
+          "role": "corpus",
+          "byteCount": 2616,
+          "sha256": "97e6b0d42b5f544fab70bbfe54e78486fef469248e3e0157548e8dfac6227a5d",
+          "controlState": "tracked",
+          "gitBlob": "37df30fd8477265b03066d84bd66621057bae140",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "corpus/exemplars/renderkit.projection.jsonl",
+          "role": "corpus",
+          "byteCount": 8373,
+          "sha256": "780b181c1db9fb5525f2992d19ff44e2b641d7265dac655199e96deee4f0060e",
+          "controlState": "tracked",
+          "gitBlob": "20733eb668a08dc21c833c63ffeb523f1d77cfbd",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "corpus/exemplars/renderkit.projection.midpoint.jsonl",
+          "role": "corpus",
+          "byteCount": 19657,
+          "sha256": "af256e3f65d1200b7d4d4c9ff2a2d996eb08343e69831bfc0400392fa10e1762",
+          "controlState": "tracked",
+          "gitBlob": "a2e729801171fd8e97ba8778601a086a857ad34c",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "corpus/exemplars/renderkit.shading.jsonl",
+          "role": "corpus",
+          "byteCount": 1937,
+          "sha256": "ec3f2b185bdae34dcfc70b98b21a36f5f369844f85d8cc2598aa003e539186a7",
+          "controlState": "tracked",
+          "gitBlob": "e6bf061060976767b6c36cb348c37f5c519ef78a",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "corpus/exemplars/renderkit.shading.specular_peak.jsonl",
+          "role": "corpus",
+          "byteCount": 8001,
+          "sha256": "7e018e1013ba8c3ba5484fd70f10d3c3c98f70c66d9a0d28072dda8e57300387",
+          "controlState": "tracked",
+          "gitBlob": "aac7474b5bf7ca69aa70c7afe57aa645fc6a187d",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "corpus/exemplars/renderkit.shading.srgb.jsonl",
+          "role": "corpus",
+          "byteCount": 6734,
+          "sha256": "39e70ce35a2de6854cf5ca64c1c1def5b3267823b27b248371b63dfb18ee84cf",
+          "controlState": "tracked",
+          "gitBlob": "dad7881a4068fd314dcf1b45f9b7dd5462647001",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "corpus/exemplars/ur.dice.jsonl",
+          "role": "corpus",
+          "byteCount": 13633,
+          "sha256": "93210eb0c0924327534f036d45f50cb7c5c8a9704f325720c18435bd1715f1c7",
+          "controlState": "tracked",
+          "gitBlob": "9f22610ee5f8b41d638efdc3f2912bd02becdf9d",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "corpus/exemplars/ur.puzzle.jsonl",
+          "role": "corpus",
+          "byteCount": 117001,
+          "sha256": "02c40cd113f8e9c1fc5f6312d63d799779f7038b0cc36f4106513259f9effff7",
+          "controlState": "tracked",
+          "gitBlob": "b744b3243c72896a59b1ec191f091033f1410c74",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "decisions/ergenticslogic.method.decisions.jsonl",
+          "role": "sidecar",
+          "byteCount": 32472,
+          "sha256": "42b7729bcfb23b5054c0797e8fe426c5be6c3d54b0c94382ce75a8ccc8625a4f",
+          "controlState": "tracked",
+          "gitBlob": "8d0016ab8a82af91680fa24c5a1407c8cf9c8289",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "decisions/ergenticslogic.namespace.decisions.jsonl",
+          "role": "sidecar",
+          "byteCount": 6165,
+          "sha256": "c4f6d558d9bcf3c4f9f68bf8194ca71ac77b0450880f70033fd979a87967c288",
+          "controlState": "tracked",
+          "gitBlob": "cd5842983aff9943d3877667d1cc90d7b3200ac3",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "decisions/ergenticslogic.training.decisions.jsonl",
+          "role": "sidecar",
+          "byteCount": 29199,
+          "sha256": "ef585257029d4187ebc412679079b5c034927c2945f08a03c6ec89d58ea22ba3",
+          "controlState": "tracked",
+          "gitBlob": "0afaf51baefd75e597174322fbb6bb59ce84abd3",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "decisions/masterykit.introbudget.decisions.jsonl",
+          "role": "sidecar",
+          "byteCount": 19004,
+          "sha256": "af315b5b369418ccc4fdea7b88d80243a2cb6692a538edc5a6f6fd8496151c34",
+          "controlState": "tracked",
+          "gitBlob": "7fa70a42f36ee3818b9472038664b9b13d67dda2",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "decisions/masterykit.misconceptionloop.decisions.jsonl",
+          "role": "sidecar",
+          "byteCount": 71547,
+          "sha256": "b13cd7d9cbebc82e0b71c4d9696e36e993062d828108c9540a5b5e6479cc09b0",
+          "controlState": "tracked",
+          "gitBlob": "63b6356c025ae92e8672a1a45d171462de32daf9",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "decisions/music.bowed.decisions.jsonl",
+          "role": "sidecar",
+          "byteCount": 15900,
+          "sha256": "f9622024900db83731c37cb8cfdac61612fcf127d8fb929abc2d130849e4bf50",
+          "controlState": "tracked",
+          "gitBlob": "c8fbabf3d7e91085883c2ecdd88b61b9d9c76300",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "decisions/musictheory.bprime.decisions.jsonl",
+          "role": "sidecar",
+          "byteCount": 5032,
+          "sha256": "da3db41443a041cdab5602e254d081aa139b46453c79712081032f82c7aec3e1",
+          "controlState": "tracked",
+          "gitBlob": "979e00bda0b47ce76b628959925111ddedf52564",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "decisions/pmhnp.companion.decisions.jsonl",
+          "role": "sidecar",
+          "byteCount": 20194,
+          "sha256": "68791a1aa5c3bd7f32da2b8d3ecaf4cd1cd2a9cd748e425a981582c805e4abeb",
+          "controlState": "tracked",
+          "gitBlob": "c6c9cea65fd13efa611c41556cbea3161c1ce4a7",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "decisions/pmhnp.rebuild.decisions.jsonl",
+          "role": "sidecar",
+          "byteCount": 32693,
+          "sha256": "f1092a0b71b54c8f039f342288068f498a6ce55e1cc1735fdbf6ce9c74044fe8",
+          "controlState": "tracked",
+          "gitBlob": "78ecc05a01b396cc4a38d3fceb88e1783416550c",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "docs/LOGIC-CORPUS-SCHEMA.md",
+          "role": "evidence",
+          "byteCount": 9334,
+          "sha256": "ecca11fcdd2aa9a8e6f30ada99ce9e654efb7e4c529c1b1f814f06df1657dc7f",
+          "controlState": "tracked",
+          "gitBlob": "1f0de6c4236f5eb3be3eedc6539467d5d994de99",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "docs/corpus-incident-2026-07-03-findings.md",
+          "role": "evidence",
+          "byteCount": 11697,
+          "sha256": "48000328caa313c0cb79f021ff1fab2f66e6c1984da1884d87918df9d47dc405",
+          "controlState": "tracked",
+          "gitBlob": "e28effb3453a3642cffcb9eca31da75001c69b85",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "tools/build_leaveout_corpus.sh",
+          "role": "implementation",
+          "byteCount": 4318,
+          "sha256": "ff0b58ef4413f12dc0751e980973e52f87f55fafb8d504b6d465399ba5e368ba",
+          "controlState": "tracked",
+          "gitBlob": "f53aeecfc28e6c7487fbb262341002514134cc96",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "tools/build_unification_retest_corpus.sh",
+          "role": "implementation",
+          "byteCount": 7083,
+          "sha256": "83e2464621081f2ba9b99db12dcc8aee380c45a52bf22540b786d03e32bcedd9",
+          "controlState": "tracked",
+          "gitBlob": "be23668f47f60695727247542830ca88f079ea95",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "tools/decisions_to_text.py",
+          "role": "implementation",
+          "byteCount": 4911,
+          "sha256": "7cd453087e05f984c958c8210cbf42e4241daae01450968b212c7b9795db23d5",
+          "controlState": "tracked",
+          "gitBlob": "af7b7dbb65ee054f748d1882f307853ba22e5114",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "tools/exemplars_to_text.py",
+          "role": "implementation",
+          "byteCount": 4927,
+          "sha256": "f4d2ab3d62b0d1cf5e65ce4a20fc73d5823eea886a7afb024353706d759d72c0",
+          "controlState": "tracked",
+          "gitBlob": "3db19b020efc314f32e5db1ebac754605a94f245",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "tools/mbe_holdings_to_text.py",
+          "role": "implementation",
+          "byteCount": 18499,
+          "sha256": "d699e8db1ceaa2822f85a31cc6d65d7862e5413963f0aac46347e9668a3091c4",
+          "controlState": "tracked",
+          "gitBlob": "c950307030267a943cd4e07133f68b21d76837b2",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "tools/split_by_family.py",
+          "role": "implementation",
+          "byteCount": 11641,
+          "sha256": "50a0f780d7c0bb3dea28585d614e5a34dd5a366ad7aa449a4e5b354c4712551b",
+          "controlState": "tracked",
+          "gitBlob": "3c633da75babf0c869e556d6904f78c94d1abbd3",
+          "matchesDeclaredGitBlob": true
+        }
+      ]
+    },
+    {
+      "id": "agentcraft-app",
+      "root": "/Users/ergentics/agentcraft-app",
+      "revision": "e36e8b0ff607d853572c5d2d440d44b8980b6c3a",
+      "controlState": "tracked_at_declared_revision; git status porcelain empty",
+      "sourceRepo": "Ergentics/agentcraft-app",
+      "files": [
+        {
+          "path": "Sources/AgentcraftKit/Scaffolds/agentcraft.scaffolds.jsonl",
+          "byteCount": 2213,
+          "sha256": "8af978e4976352423ee10d1e063b27c4df2259f4e51fe4069d854204d8121214",
+          "role": "sidecar",
+          "artifactSchema": "MethodScaffold",
+          "recordCount": 3
+        },
+        {
+          "path": "New Harvest/christoffel.jsonl",
+          "byteCount": 2761779,
+          "sha256": "7602ab1fe9396230dc533e00ba2eb02421a2678f0042560694bf7c9942f1b62f",
+          "role": "corpus",
+          "artifactSchema": "logic-corpus-0.2",
+          "recordCount": 890
+        },
+        {
+          "path": "Direct Output/christoffel-traces.txt",
+          "byteCount": 55564,
+          "sha256": "c6b6f9b9546ed60ca5d07f76c8f6473dcd25dbc8e1177afe6c74674c7ea91561",
+          "role": "evidence"
+        },
+        {
+          "path": "Direct Output/christoffel-enginepropose.txt",
+          "byteCount": 2001,
+          "sha256": "2e1411fa72ce7df34ae91b3f0c8873c72bcb1d87e0cbbb6e53569d9b28c7ad64",
+          "role": "evidence"
+        },
+        {
+          "path": "Sources/AgentContractKit/OracleIndependenceHarvest.swift",
+          "byteCount": 14185,
+          "sha256": "263f2fb2399237f446555b4a42e3b5df82abf9e63c3b784a296ecc485d668fc3",
+          "role": "implementation"
+        },
+        {
+          "path": "Sources/CorpusHarvest/ChristoffelHarvest.swift",
+          "byteCount": 10402,
+          "sha256": "d5e3738cab79cfe4956dd17200be4aef8f3f5e1d475e1bd8f70c2c82183bf74d",
+          "role": "implementation"
+        },
+        {
+          "path": "Sources/CorpusHarvest/ChristoffelOracles.swift",
+          "byteCount": 5902,
+          "sha256": "efa8b80b564c75f95f7560364b638a9e716052b8d3d30bde01305d0601a4091a",
+          "role": "implementation"
+        },
+        {
+          "path": "Sources/CorpusHarvest/ChristoffelNoMut.swift",
+          "byteCount": 4230,
+          "sha256": "2b68c9fbe205a8687ff1db3da9aca08b1f89fa6b37b225ab680430185e79c217",
+          "role": "implementation"
+        },
+        {
+          "path": "Sources/CorpusHarvest/CorpusHarvestShared.swift",
+          "byteCount": 1375,
+          "sha256": "756407e57cf098b233c097c98e04abb07723b0dd900c383bc22e5bc6834140f6",
+          "role": "implementation"
+        },
+        {
+          "path": "Sources/CorpusHarvest/main.swift",
+          "byteCount": 2277,
+          "sha256": "cae4fea32a6d76b8d753cfa906b89ebec8a81d27690a0b5b59bfb505fadc14e8",
+          "role": "implementation"
+        },
+        {
+          "path": "Sources/HarvestDemo/main.swift",
+          "byteCount": 2181,
+          "sha256": "3a792272cb88e9c2ad664b6b34ee53bcdb1f89858ee7d258e35bade73cfd14fc",
+          "role": "implementation"
+        },
+        {
+          "path": "Sources/AgentContractKit/MethodScaffold.swift",
+          "byteCount": 5445,
+          "sha256": "7c82585c87f5bf08df8d65e1644733ef58af6eed7acc3e4079a510943540a97a",
+          "role": "implementation"
+        },
+        {
+          "path": "Sources/AgentcraftKit/ScaffoldStore.swift",
+          "byteCount": 1377,
+          "sha256": "82578c6b81d16aee7581b64131a5fbbf43564839adfed3234dcee41242129edf",
+          "role": "implementation"
+        },
+        {
+          "path": "Sources/AgentcraftKit/ScaffoldLibrary.swift",
+          "byteCount": 7975,
+          "sha256": "8f1325716b3a34fc49ba9ac97dc8b0943ae275468d31abb0ac2986c7cd4d5a20",
+          "role": "implementation"
+        },
+        {
+          "path": "Sources/AgentcraftMLX/MLXLearner.swift",
+          "byteCount": 4120,
+          "sha256": "3ba33360491382f0f5ed3830d1eb67f3d3fc7e242d9f2100071c185d345a5b88",
+          "role": "implementation"
+        },
+        {
+          "path": "Package.swift",
+          "byteCount": 7957,
+          "sha256": "ce7c3252c3b35e6ebce1ad896340f8f891ede7e256bbd5ecd1ccbefb27a7f469",
+          "role": "implementation"
+        },
+        {
+          "path": "docs/ORACLE-PLAN.md",
+          "byteCount": 6405,
+          "sha256": "d2f1dbf0f0627dc21811425b3bf08869c2182d09cab60e3daaaffe60307a3391",
+          "role": "evidence"
+        },
+        {
+          "path": "docs/ORACLE-POLICY.md",
+          "byteCount": 5990,
+          "sha256": "32bd60bf2562cb7979d1bf2599942ccf31fdb50f1133b3747dedef9ddc6228e6",
+          "role": "evidence"
+        },
+        {
+          "path": "docs/auditable-oracle-derivation.md",
+          "byteCount": 22958,
+          "sha256": "9d6fe88c47eefd60e1b7b62448b64c8e9b12aa03ceccee78bec6d1b884f19eee",
+          "role": "evidence"
+        },
+        {
+          "path": "docs/D2-PREREGISTRATION.md",
+          "byteCount": 23154,
+          "sha256": "c997357543d01199246bc4feae02148faa4e54873a7d15b29060eb07f3ee3d41",
+          "role": "evidence"
+        },
+        {
+          "path": "docs/batch2-sweep-results.md",
+          "byteCount": 5909,
+          "sha256": "27d599e3c3f4cc7daea607c79d4b8a514e3a590a95d32751ededd61243487ca0",
+          "role": "evidence"
+        }
+      ]
+    },
+    {
+      "id": "pmhnp-companion-ergentics",
+      "root": "/Users/ergentics/pmhnp-companion-ergentics",
+      "revision": "f7cfa6d59c906b9f2b9d458d592f12b029e227b9",
+      "controlState": "per-file tracked/blob status; unrelated work untouched",
+      "files": [
+        {
+          "path": "CLAUDE.md",
+          "role": "evidence",
+          "byteCount": 4188,
+          "sha256": "6ce377a63eeb16ffab659507d8a2544c8fe687f0ce3679d461092abd2586f903",
+          "controlState": "tracked",
+          "gitBlob": "df21846b75a3e232ad15f8297da4fc83303a5e89",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "content-staging/prime-lm0-holdout.jsonl",
+          "role": "corpus",
+          "byteCount": 209242,
+          "sha256": "8525798d2563d0ab5a1639acca5d0677975d68bd36d51ec2f2715364d0f68245",
+          "controlState": "tracked",
+          "gitBlob": "b22570076f5d7f2e7f1995758878ae5be81c08e7",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "content-staging/prime-lm0-split-index.json",
+          "role": "sidecar",
+          "byteCount": 1447776,
+          "sha256": "a7eecfb3a6eaec40a91bf7fa66808d70916cabd9aa83b4ee5b8907586aaa6bb5",
+          "controlState": "tracked",
+          "gitBlob": "f4e098901d1e20c404d6587b7029a6d7d6226a46",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "content-staging/prime-lm0-train.jsonl",
+          "role": "corpus",
+          "byteCount": 1577876,
+          "sha256": "0c07249494f308e48d88d925dc42f2fb7f4f93dd6faac7b3cfbde8547a49e549",
+          "controlState": "tracked",
+          "gitBlob": "4ec7dbf1913c5f3716a87f4342ccd4564f7ea87b",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "content-staging/prime-lm0-val.jsonl",
+          "role": "corpus",
+          "byteCount": 197533,
+          "sha256": "b7ddb344e6d3e9fc049c5853d93b0f0b20c72641da55bdc3be05f6e981a74a5b",
+          "controlState": "tracked",
+          "gitBlob": "4150725ad448fd9600bb6f7e41fe2615bbcf3914",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "content-staging/prime-native-byte-tokenizer-manifest.v1.json",
+          "role": "sidecar",
+          "byteCount": 4931,
+          "sha256": "ec546cc58dd65bfada4afa52455f5d7c420d089a97f7f97acf4f86bc2f086c4d",
+          "controlState": "tracked",
+          "gitBlob": "3cb9e22aa82f2543693837318e45bc63a9d20e7b",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "content-staging/prime-native-compositional-corpus-harvest.jsonl",
+          "role": "corpus",
+          "byteCount": 2463,
+          "sha256": "52c8abecded3208f946aa8112ec685533a13f5dbcef11e27babd90cd0cb06fab",
+          "controlState": "local_untracked"
+        },
+        {
+          "path": "content-staging/prime-native-compositional-corpus.jsonl",
+          "role": "corpus",
+          "byteCount": 25972728,
+          "sha256": "f7104ccebd397ad6fe29b4fb4d2a5e9ee9a17411e859c24c4924f4cfe272c1f0",
+          "controlState": "local_untracked"
+        },
+        {
+          "path": "content-staging/prime-native-compositional-probe.jsonl",
+          "role": "corpus",
+          "byteCount": 427670,
+          "sha256": "a53751d82a2718448afd51301d102043c7514a1ebc698a8d8372f51e97b860f1",
+          "controlState": "local_untracked"
+        },
+        {
+          "path": "content-staging/prime-native-language-schema6-profile-screen-audit.v1.json",
+          "role": "sidecar",
+          "byteCount": 38760,
+          "sha256": "4d7e696344770f57779cc72e1c6f58cb5ea6ce1b3ef0f86f1b571a3f10e84612",
+          "controlState": "tracked",
+          "gitBlob": "577a7ccbdddbc9c0d249b5fa1ec355c0319d0193",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "content-staging/prime-native-text-corpus-manifest.v1.json",
+          "role": "sidecar",
+          "byteCount": 44803,
+          "sha256": "fbb7362ee63b5825d1914815e8ff93c26a2c9a7de8be19347ccec3e449de8031",
+          "controlState": "tracked",
+          "gitBlob": "a01344ad4105d755cfd97324092b15a1b31dc542",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "content-staging/prime-pf0-data-card.json",
+          "role": "sidecar",
+          "byteCount": 2232,
+          "sha256": "0afb1f1d7463dc827a24e1ee79a3b2c1c156699dac500d96923a12425b0f5bf0",
+          "controlState": "tracked",
+          "gitBlob": "1d7b0ba43d049f87a41206949809e87b8a3c0b50",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "content-tools/Sources/ContentToolCore/LM0LanguageIOExport.swift",
+          "role": "implementation",
+          "byteCount": 5484,
+          "sha256": "dc9a9ed921d9e52d2e3a169c3a6cf6bbabf4b1221e7cc9ed75325c7ec11fb363",
+          "controlState": "tracked",
+          "gitBlob": "6e542b107f0294ac9300c397edafcc039dde7abb",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "content-tools/Sources/ContentToolCore/LM0SplitExport.swift",
+          "role": "implementation",
+          "byteCount": 15705,
+          "sha256": "2d819f475048a4826ec6535020cc6f74b72467bf99982e6142662dbd872a3c26",
+          "controlState": "tracked",
+          "gitBlob": "a5565e68810a472c3d6e289e82615e47bf27d936",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "docs/PRIME-ERGENTICS-INTEGRATION-PLAN.md",
+          "role": "evidence",
+          "byteCount": 19879,
+          "sha256": "5100f7a021b246b88d930d586f66d21b99680243d32f96d402110f6701b259ed",
+          "controlState": "tracked",
+          "gitBlob": "3145608221d9c1163dc56756377ce693fcc1ede8",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "prime-runtime/Sources/ErgenticsPrimeRuntime/ErgenticsPrimeNativeTextCorpus.swift",
+          "role": "implementation",
+          "byteCount": 182399,
+          "sha256": "1a9fd78df2ccfe49bf5ad8d383058871e89c7e845c35d880614e9c415339443b",
+          "controlState": "tracked",
+          "gitBlob": "8dcb65d2627f8e1a8d00b5769ff23a4c8a428542",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "prime-seat-kit/Sources/PrimeSeatKit/PrimeLanguageGates.swift",
+          "role": "implementation",
+          "byteCount": 669,
+          "sha256": "4faf0b6ab1b55c6b5772c5014d0cd74bd198f4cd7c83368cf751b6241f2de50f",
+          "controlState": "tracked",
+          "gitBlob": "d655beb242d917ae9444b3541f4224d59495cba7",
+          "matchesDeclaredGitBlob": true
+        }
+      ]
+    },
+    {
+      "id": "ergentics-llm",
+      "root": "/Users/ergentics/ergentics-llm",
+      "revision": "e827595b485cd95519cc7e5ece6178fa67cc5677",
+      "controlState": "per-file tracked/blob status; unrelated work untouched",
+      "files": [
+        {
+          "path": "Sources/ErgenticsLLM/NativeCompositionalProbeIO.swift",
+          "role": "implementation",
+          "byteCount": 18659,
+          "sha256": "349dd7c98af23ba2549490cc52fd34d4477e2a02698e46b885b87d7453feec7b",
+          "controlState": "tracked",
+          "gitBlob": "9ceba9377b8b6483b9bafed21f4715b4effe8a1d",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "Sources/ErgenticsLLM/NativeLabTrainProfile.swift",
+          "role": "implementation",
+          "byteCount": 5270,
+          "sha256": "4c0a1f3edfc10d4e5e5d4cac18727d223c1ae4569f557b59167387c60654c917",
+          "controlState": "tracked",
+          "gitBlob": "52b4cd947b835839f8c0d3edf9c70d2d554ce6f3",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "Sources/ErgenticsLLM/NativeLabTrainer.swift",
+          "role": "implementation",
+          "byteCount": 25682,
+          "sha256": "e8c142254a56e3cb42fb57df038f6f8773a3c87b27613ce36a7775a3a6382ebd",
+          "controlState": "tracked",
+          "gitBlob": "db67637f1f77b5c79cebb38feca524ef7d4a4cd3",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "Sources/ErgenticsLLM/NativeTinyDecoder.swift",
+          "role": "implementation",
+          "byteCount": 4947,
+          "sha256": "6cdc9647d633d60d64888746e61f21056b54d06a6f6089a6f214916d8b49796c",
+          "controlState": "tracked",
+          "gitBlob": "df84b8bd5625dbd528be06edc59fea495ef75d40",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "Sources/ErgenticsNativeLabTrain/main.swift",
+          "role": "implementation",
+          "byteCount": 2375,
+          "sha256": "e81714f69d037b609bfec0b17aa4761ad8aae4ab73019df5c8ce7b4b1c3c6a29",
+          "controlState": "tracked",
+          "gitBlob": "b4bfff9b2e5bb6a22b6f359555bda4d89d05f500",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "docs/PHASE-5-SPEC.md",
+          "role": "evidence",
+          "byteCount": 4251,
+          "sha256": "dc11910a8f09e949c09cb180f534a281a796418c2358954daf6b96dd66d569c2",
+          "controlState": "tracked",
+          "gitBlob": "be06ef28a3de589b29ab3937999c67155daaae2f",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "docs/PMHNP-MINIMAL-LAB-EXPORT.md",
+          "role": "evidence",
+          "byteCount": 1928,
+          "sha256": "d32e4f03f48ddbf71aa0a5f070759dc735038e544e367831ae2668a8bf53010d",
+          "controlState": "tracked",
+          "gitBlob": "732815ff933e8f84883e70314be4045d0978252e",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "scripts/prime-export-pmhnp-lab-minimal.sh",
+          "role": "implementation",
+          "byteCount": 3281,
+          "sha256": "167d128735142deb2c158af076b4a6086c531ad34251fe3313e49502ab0e4fd1",
+          "controlState": "tracked",
+          "gitBlob": "14e122547fb9850549e6d311fb51d13ed63969f4",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "scripts/prime-native-lm-train-lab.sh",
+          "role": "implementation",
+          "byteCount": 1155,
+          "sha256": "bbc887460886b975785de24d96e82f64e2e7827cb6e7b29bdc11d23f1480c7c2",
+          "controlState": "tracked",
+          "gitBlob": "152bbc5451a735384898846ba4477b042a5ac6b7",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "scripts/prime_corpus_lib.py",
+          "role": "implementation",
+          "byteCount": 3875,
+          "sha256": "66f55c13382ad02551b94e14e15ce3c42d3e93e5c28a683b0990c436d2a5f919",
+          "controlState": "tracked",
+          "gitBlob": "18f3dcf1fb8bc18adda1ae0f08ecb045b506f66e",
+          "matchesDeclaredGitBlob": true
+        }
+      ]
+    },
+    {
+      "id": "MasteryKit",
+      "root": "/Users/ergentics/MasteryKit",
+      "revision": "bf059b96692dc0123a161ac2bdd1f1adef2f0899",
+      "controlState": "per-file tracked/blob status; unrelated work untouched",
+      "files": [
+        {
+          "path": "AGENTS.md",
+          "role": "evidence",
+          "byteCount": 724,
+          "sha256": "42753a7185f44816bc29220c898bc58afd6bdfdd7f0c528aaf4e60638d2f0323",
+          "controlState": "tracked",
+          "gitBlob": "1e144529a27582bbbdf88d7f8a40673c2dbdcba2",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "Package.swift",
+          "role": "implementation",
+          "byteCount": 2651,
+          "sha256": "1775da96c572ddc4b7b63545e1c7e566defc0cb4146f484d61aab3574d5d67af",
+          "controlState": "tracked",
+          "gitBlob": "9db564de0553b9e8c138525bc080327abb9a05b1",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "Sources/MasteryKit/ContentProvider.swift",
+          "role": "implementation",
+          "byteCount": 4801,
+          "sha256": "c72d738cb9e7e70369f08383b6c6675bbac1896b29bea12e4f261487e520ca32",
+          "controlState": "tracked",
+          "gitBlob": "57dca33f621b30406f5491e81e75ba7e402c0404",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "Sources/MasteryKit/Engine/Aggregator.swift",
+          "role": "implementation",
+          "byteCount": 4846,
+          "sha256": "e4e7de8e92aabb6c2be8f839960f9de97523f89d63f1436846e57039994a1d12",
+          "controlState": "tracked",
+          "gitBlob": "79972d4472796c17ab7da96806ac7bc57d32febc",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "Sources/MasteryKit/Engine/AntiRedundancy.swift",
+          "role": "implementation",
+          "byteCount": 3115,
+          "sha256": "80d41f246cc1a1cf007fb0cfdb09f2f3422f9ae159db0474815f58a3bb870683",
+          "controlState": "tracked",
+          "gitBlob": "db4e373681e5aa52085ebff8ce52a802889b8888",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "Sources/MasteryKit/Engine/Calibration.swift",
+          "role": "implementation",
+          "byteCount": 10504,
+          "sha256": "7a646226eb0e604115f9b35497d789d670fbffed4e008c86705141861c515d4d",
+          "controlState": "tracked",
+          "gitBlob": "233b13ceb8a34b923772d7ae34c7dd0255a133ad",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "Sources/MasteryKit/Engine/CoupledRecall.swift",
+          "role": "implementation",
+          "byteCount": 3565,
+          "sha256": "86bd0bb80410d677d18af7c87abe61775b1b9ef2c9582095269bdcce316c1787",
+          "controlState": "tracked",
+          "gitBlob": "9816c0a2dafbfe67a662cac5d29bbe746f54c57b",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "Sources/MasteryKit/Engine/EngineConstants.swift",
+          "role": "implementation",
+          "byteCount": 3810,
+          "sha256": "7573dae4d066594f98dbeabec68393d4dced206a1b502c021a265f59fae44c0b",
+          "controlState": "tracked",
+          "gitBlob": "a268ab8983b0e1474573480046be58eebea7a389",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "Sources/MasteryKit/Engine/EngineV21.swift",
+          "role": "implementation",
+          "byteCount": 8602,
+          "sha256": "8d9cb14e538d14208aa029d437c9acefe7ac23ac1c21610bf19e1e72dc9625fa",
+          "controlState": "tracked",
+          "gitBlob": "24f595bbe05d3ce4cfb3406c48485a18056ebac4",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "Sources/MasteryKit/Engine/EventType.swift",
+          "role": "implementation",
+          "byteCount": 1200,
+          "sha256": "27be4ea2d341e9366f363d3d8dcdee55b3b8577d886acaeaf0c11a72d2d56174",
+          "controlState": "tracked",
+          "gitBlob": "c43c46b28f92541bf831a504dde376fbefbbcdb0",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "Sources/MasteryKit/Engine/Headroom.swift",
+          "role": "implementation",
+          "byteCount": 2575,
+          "sha256": "c9a3f6a85e41710171117d23b87adae6a5e11cfb90b70c82bc9e54fa72cdbe17",
+          "controlState": "tracked",
+          "gitBlob": "60de9dbe212698fde201037e0ccc0972d0fc9390",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "Sources/MasteryKit/Engine/LearnerCalibration.swift",
+          "role": "implementation",
+          "byteCount": 3688,
+          "sha256": "f099b807977951fb0a344e4aaef33d1aa4eabd1fa823ecef60eaa9155755287a",
+          "controlState": "tracked",
+          "gitBlob": "daee7d0feff09910e9b62b7f05c42cf75bc71312",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "Sources/MasteryKit/Engine/MatchScore.swift",
+          "role": "implementation",
+          "byteCount": 4923,
+          "sha256": "e585bbd85f15dafed29024be6a731788295d39b4e01c039f0d543cfecba4e521",
+          "controlState": "tracked",
+          "gitBlob": "3d0289e7f9c5b9cc12bffcf2e72f4afa7eb5c2cc",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "Sources/MasteryKit/Engine/PracticeEvent.swift",
+          "role": "implementation",
+          "byteCount": 3585,
+          "sha256": "68d772de08f129defd49aec0556980973d77c1773c47d65f856987d7975ca643",
+          "controlState": "tracked",
+          "gitBlob": "934f075bfc2732529ecef18e98397121b066c8e5",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "Sources/MasteryKit/Engine/Reading.swift",
+          "role": "implementation",
+          "byteCount": 1828,
+          "sha256": "e30c125d21afe28a5d77ea8b0150d15a0725c7c6c198ef0bbd5d812433ef702d",
+          "controlState": "tracked",
+          "gitBlob": "9871691695810ead79af26a8745f8d6afeba750d",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "Sources/MasteryKit/Engine/RecencyKernel.swift",
+          "role": "implementation",
+          "byteCount": 1767,
+          "sha256": "01a59e4670738f57e0a1d527b7ac03dbfdcbc3d0c6226c2c6e10b3ac6c579a0f",
+          "controlState": "tracked",
+          "gitBlob": "57c6364333f2ed0a4de5e7e47011826548aaa27c",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "Sources/MasteryKit/Engine/Recommendation.swift",
+          "role": "implementation",
+          "byteCount": 2625,
+          "sha256": "403fac367f730a0de99de5d9d6490de53e4e7bc858bb3e94e2ed05856d936b53",
+          "controlState": "tracked",
+          "gitBlob": "d7bbfd0516a7c69893aec5daeca09fcefb1efeea",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "Sources/MasteryKit/Engine/SelectionClass.swift",
+          "role": "implementation",
+          "byteCount": 1128,
+          "sha256": "6eff0d9273a0df5cff7e3e56fd72cc5ba3d66f5ef00e43610873f931e1d63c06",
+          "controlState": "tracked",
+          "gitBlob": "c72cdf0db0ae09220f50ac2d8e5599241ca8beeb",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "Sources/MasteryKit/Engine/SelectionClassifier.swift",
+          "role": "implementation",
+          "byteCount": 919,
+          "sha256": "1b4637aa6ee0d3bcf69d950ef822565e1389a4fc47ab06bef2ad3ff9b7f6c746",
+          "controlState": "tracked",
+          "gitBlob": "357c791941378f709d954158e39885fbb6606133",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "Sources/MasteryKit/Engine/Staleness.swift",
+          "role": "implementation",
+          "byteCount": 2409,
+          "sha256": "7c2aab7ce50b4c2aea6705ec95ad288bd095e4c4b059875041aaaca7419cb357",
+          "controlState": "tracked",
+          "gitBlob": "0578a46af4aff7fea33deeacb2fa1ed880ac5c00",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "Sources/MasteryKit/TutorSession.swift",
+          "role": "implementation",
+          "byteCount": 34351,
+          "sha256": "78ec21709fac58fc6ffcb75e96ff128f7e942713c4684d9f7dce86961b9773ee",
+          "controlState": "tracked",
+          "gitBlob": "4e2a605262288c0db25f58f11e8b1b9c050306d7",
+          "matchesDeclaredGitBlob": true
+        }
+      ]
+    },
+    {
+      "id": "pmhnp-rebuild",
+      "root": "/Users/ergentics/pmhnp-rebuild",
+      "revision": "09ff9aa1be27ae202aa841b78cd3d8dca050eefb",
+      "controlState": "per-file tracked/blob status; unrelated work untouched",
+      "files": [
+        {
+          "path": "Package.swift",
+          "role": "implementation",
+          "byteCount": 2461,
+          "sha256": "235110d15cc4699d6f1f198b8970c542daf2f51352c644ab588876a03ed6eb5d",
+          "controlState": "tracked",
+          "gitBlob": "5959ad510143b8b2732b7674fa4fdd820c5486c4",
+          "matchesDeclaredGitBlob": true
+        },
+        {
+          "path": "Sources/PMHNPKit/Resources/verified-items.json",
+          "role": "corpus",
+          "byteCount": 544735,
+          "sha256": "79fc6bc1cb0192ea8e3eba37ac5af718bb67467383055606a5379ce6d19230ba",
+          "controlState": "tracked",
+          "gitBlob": "878d2471d05b762d781f2b1b0d5e20e18e75fc60",
+          "matchesDeclaredGitBlob": true
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Source catalog preserves all retained selected source bytes; corpus labels do not imply common training-target semantics.",
+    "Logic historical leaveout/retest recipes are evidence only; no absent generated split sidecar is fabricated.",
+    "Native model families and prior results are linked in retained-model-inventory.json; weights are not copied by this connector.",
+    "No training, tokenizer replacement, model substitution or app change."
+  ]
+}

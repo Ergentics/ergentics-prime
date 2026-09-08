@@ -1,0 +1,32 @@
+{
+  "schema": "prime_games_connection_review_v1",
+  "status": "pass",
+  "verifiedAtUTC": "2026-09-08T21:42:29.123233+00:00",
+  "output": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Connected-Candidate-2026-09-08/connections/games",
+  "copiedFiles": 162,
+  "copiedBytes": 1270077,
+  "originalAndCopiedSHA256Matched": true,
+  "metadataHashesMatched": true,
+  "sourceCounts": {
+    "ur-app": 79,
+    "backgammon-app": 71,
+    "ergentics-logic-game-exports": 5,
+    "games-deterministic-reference": 7
+  },
+  "rawJSONLRecords": 35,
+  "rawPositive": 34,
+  "rawNegative": 1,
+  "recordScope": "These 35 original logic game records already exist in the main candidate. This additive connection adds the game source/engine/history links, not 35 new unique training records.",
+  "deterministicReferenceHarnessesPassed": [
+    "ur-safe-rosette-entry",
+    "backgammon-bar-entry-order"
+  ],
+  "referenceScope": "Original deterministic engines only; legal move/turn checks. No neural inference or new training.",
+  "sourceRepositoryWrites": false,
+  "COMPLETE": {
+    "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Connected-Candidate-2026-09-08/connections/games/COMPLETE.json",
+    "byteCount": 1071,
+    "sha256": "821a98aec664df0d1977995576889070b123985727a27b9c21af031a2a38cb34"
+  },
+  "failures": []
+}

@@ -1,0 +1,1341 @@
+{
+  "schema": "prime_connected_sources_v1",
+  "sources": [
+    {
+      "id": "ur-app",
+      "root": "/Users/ergentics/ur-app",
+      "revision": "838e00a013969ba92715b5c3044c540336786486",
+      "controlState": "Selected files exactly match declared Git blobs; unrelated changes preserved.",
+      "files": [
+        {
+          "path": "AGENTS.md",
+          "byteCount": 3561,
+          "sha256": "c40b69989286cefe1e24fd88cc181ca04a3f51e0b87cc0a134115eb842bb83b4",
+          "role": "evidence",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "d742bfb3974d12c3f7c3329336688fe246b0b7b7"
+        },
+        {
+          "path": "LICENSE",
+          "byteCount": 1095,
+          "sha256": "884b73d12faf0dba9a974ae777a51e5d8e802f8a7bf22a2f2ac698b599f08caf",
+          "role": "evidence",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "b6101bf2b5b345fad5b6a3ce554b08ae0975ae83"
+        },
+        {
+          "path": "LOCAL-SETUP.md",
+          "byteCount": 2188,
+          "sha256": "d0cc3dd47e2729afd00daab56658d3c18ca9b8041fce35f3aeb108696c465f64",
+          "role": "evidence",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "0c45a1b9761e111991f222de1b4a524841162b80"
+        },
+        {
+          "path": "NOTICE",
+          "byteCount": 911,
+          "sha256": "e201a5f9180709fe4c71aab3478e31c907595b1382e48c7ca95f36f93189639e",
+          "role": "evidence",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "e27f51ed937dafd7fbbaad5ee97ee10d14487220"
+        },
+        {
+          "path": "PROVENANCE.md",
+          "byteCount": 4910,
+          "sha256": "550cecf4f1c5d53325376eafe3ba3f460481758c1e47c42d800cfbea2aa01e0a",
+          "role": "evidence",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "bcc0a814b9be0f0aed37915230ce62ad9959ebe2"
+        },
+        {
+          "path": "Package.swift",
+          "byteCount": 5130,
+          "sha256": "ef928cbd77663e695c80adfbc8003e344bad238a098234914871738d9c1977e2",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "cd11b8d776e34265b37243c46c68c404e3b357d4"
+        },
+        {
+          "path": "RULES.md",
+          "byteCount": 4875,
+          "sha256": "d3f8f327c15a8da94a1f5a8527ca9886ee0ec9089eca0fe0f3a3b337fa2f47f1",
+          "role": "evidence",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "c1f2dbe882fb0d6837c690d9c373c3be1479afc1"
+        },
+        {
+          "path": "Sources/URGen/main.swift",
+          "byteCount": 7730,
+          "sha256": "49c79b6883bbfc09e8234b8f071e46666ef9fe62720eeb681abfc1bbf3f2f2e3",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "4b11b9857f3f1752db99b5a92a106dde996c32ed"
+        },
+        {
+          "path": "Sources/URStats/Harvest.swift",
+          "byteCount": 18085,
+          "sha256": "903d5a31abcb33abcd9f95b8852f378523405c8962d79d59497ecd254edd0046",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "9012881bf9678116f223ed9e6fef9afbec311c56"
+        },
+        {
+          "path": "Sources/UrKit/Board.swift",
+          "byteCount": 2297,
+          "sha256": "62a3c8e34bf6a62ddbc8a35c36bb375dccbdaddd21e357cacb9eddac556db14e",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "d9aa82da74814ba8412b42d7ef462f596b1b651a"
+        },
+        {
+          "path": "Sources/UrKit/CaptureExposure.swift",
+          "byteCount": 2648,
+          "sha256": "ca4ce20ad6a28e3aaca0a21594151bea198881a6fa0a4d854566920a90e4ea2b",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "bc9470db7947d829b211bc7445db1df48cf837bd"
+        },
+        {
+          "path": "Sources/UrKit/CrownRun.swift",
+          "byteCount": 19779,
+          "sha256": "31515c7d8d1693a6fcf8cdc76589191ba71c54d34e804856ebab52eedf12850a",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "884d1e7e565c7f2e7563f6157466fb36950cfc24"
+        },
+        {
+          "path": "Sources/UrKit/Dice.swift",
+          "byteCount": 976,
+          "sha256": "1f29868f8c64ca8289889877461d29f7b42e12e16e288e79608725d97408b437",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "1a439e4b59e798e52968db3a3da0647d1a0c1200"
+        },
+        {
+          "path": "Sources/UrKit/DiceOddsLab.swift",
+          "byteCount": 3201,
+          "sha256": "80e17ceebed200aae702de335c49126071468ad1e71142848c691dd8c7b6e6fa",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "7f032c8e714f250c4a565caa9e7c6112e5bbeb10"
+        },
+        {
+          "path": "Sources/UrKit/Difficulty.swift",
+          "byteCount": 2073,
+          "sha256": "e404fe063e0521ab56337f968f4829d34e300b4cb6e623596c8c7bdcac57e2da",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "13377bb8bd22af59840fe2e4d0ff940d0e270ab4"
+        },
+        {
+          "path": "Sources/UrKit/DrillBank.swift",
+          "byteCount": 21033,
+          "sha256": "809b99585c81123862fcec5b7e7c8f188af49f63dbbc09f9a62b39d7f42c3026",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "5bc84e20dadd2a8e306ce199fb096f95a2606b87"
+        },
+        {
+          "path": "Sources/UrKit/Evaluator.swift",
+          "byteCount": 3062,
+          "sha256": "d4e1bd86a045164c3efdc8f27d22381e2a77e4fa58f2d674a334e4538f7ff789",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "f28a1b6086d5215b7ef2b5a9672890dddb16b8ca"
+        },
+        {
+          "path": "Sources/UrKit/ExactOracle.swift",
+          "byteCount": 5088,
+          "sha256": "b5c2bb68eb130997a660347de33f978e3ff956dc2f3382f849eec3ee916f09bc",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "8d377fa35b85c58debaa64d6c0b5cab601be3c12"
+        },
+        {
+          "path": "Sources/UrKit/ExpectiminimaxAI.swift",
+          "byteCount": 3810,
+          "sha256": "8d0e258d109050dbdbfe422577308f704401648943aa5ba28e6cba25ab9842e5",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "67a786aa71efabb72ebd4b0328ad956f31229cfb"
+        },
+        {
+          "path": "Sources/UrKit/GameAnalyzer.swift",
+          "byteCount": 7663,
+          "sha256": "d35eab5f982912b83f289db971059498ceb98884b738362adbe4e74f96b7088e",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "840c5407354255603aa999f84e1bc92c2b5dfdaf"
+        },
+        {
+          "path": "Sources/UrKit/GameCoach.swift",
+          "byteCount": 16864,
+          "sha256": "b27d09d00bb52f0231a99dc7d2ea3f4fde94a3733a1eea28f3ec0fbfaa4fb845",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "0ea97def1533ed2938c70ca16b3f01c548a7282e"
+        },
+        {
+          "path": "Sources/UrKit/GameDriver.swift",
+          "byteCount": 2348,
+          "sha256": "abb276e227bd8ec1f6aa4df7fe60422a049ee480605e054e0a96c93288775446",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "3b59e4f5ed4b3bc46095d30b83ef7c8ecc0337da"
+        },
+        {
+          "path": "Sources/UrKit/GameRecord.swift",
+          "byteCount": 2960,
+          "sha256": "f1c21e7c5ffbe11214d6297ad1403c30a4ac958512612b5a1237621d287fb7db",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "f4a43ea455fd2eda6ff4ccc5f85fd0c002c82901"
+        },
+        {
+          "path": "Sources/UrKit/GameState.swift",
+          "byteCount": 3308,
+          "sha256": "2ac3a755369bd306913fae47cfead976daed1c69c1284a1b41a5eab0cfb4267d",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "c0d73a2228bb1e4789776c67aee98c81b30cfbdb"
+        },
+        {
+          "path": "Sources/UrKit/GeneratedPuzzleBank.swift",
+          "byteCount": 44849,
+          "sha256": "a182fa60bbd036ce78e68edee44bfb0989e7c1f8c5035961f953c42af0778840",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "7ec5fd088b0a9bd043836f2e49e10ccb1d9861c7"
+        },
+        {
+          "path": "Sources/UrKit/LearningLoopEvidence.swift",
+          "byteCount": 20710,
+          "sha256": "517e57b1ee8d8e6af925c71c92e7430cb393d3f62a3e6b7dffdc0927c443bf17",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "f759d034d00b44d0da9c71f0a948cab381a5b124"
+        },
+        {
+          "path": "Sources/UrKit/MatchProtocol.swift",
+          "byteCount": 25244,
+          "sha256": "96e48ff129459860a8c7a1403cd79895fef0659856702946e08a1c5cc0a1554c",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "5d2ef118e3f779cd157e4cf5e748847c951eea98"
+        },
+        {
+          "path": "Sources/UrKit/MisconceptionCategory.swift",
+          "byteCount": 1893,
+          "sha256": "796b8b3d42875d5f7ec63f33ec9eb2d9b08cda9c957502da5e6d58ca4b438a13",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "fe2ac4878db9ee2391d51266ea62b34fbb433561"
+        },
+        {
+          "path": "Sources/UrKit/Move.swift",
+          "byteCount": 1016,
+          "sha256": "455374f01ba5a52c6fd277b82e9f293a25e5d85fe8ed7f9bb6554e784f25271b",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "93f98d8d78b6dde5245373775ba501d86cdf788e"
+        },
+        {
+          "path": "Sources/UrKit/MoveGenerator.swift",
+          "byteCount": 1749,
+          "sha256": "708fc1671845433bf88dc59cd0cb220a4699543c354184a8dd6169090b96b5e4",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "ef8bc66fd2c63cdde851a8d065f641463998d634"
+        },
+        {
+          "path": "Sources/UrKit/Persistence.swift",
+          "byteCount": 3429,
+          "sha256": "e057076c5ed16a99b7b80d4f30fb07185e679db9891b95ff926a7ded5b2f72b6",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "c2a124107f26a2d37384c0b5b47702685bb10d06"
+        },
+        {
+          "path": "Sources/UrKit/PieceLedger.swift",
+          "byteCount": 9061,
+          "sha256": "fa5b0cc647174b265c29313e4d1ea323b23b40173d989c5affd61298db35a979",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "ee91b609d353b2b45a3e916401edb91e623eb427"
+        },
+        {
+          "path": "Sources/UrKit/PieceTracker.swift",
+          "byteCount": 2449,
+          "sha256": "1b985cb01004531f340d006525b364f24d9c5ade2f4010c7848f374ec4b2f6f5",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "538f02b893d2ede83f9f14cb87675963dfa83b43"
+        },
+        {
+          "path": "Sources/UrKit/PipRaceOracle.swift",
+          "byteCount": 3916,
+          "sha256": "913395fcca598058db2d1b8c872424782c9dfce0e9cf9110663904b775829d3e",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "7963d5163d8f03e370eb434ac243a950f99e3255"
+        },
+        {
+          "path": "Sources/UrKit/Player.swift",
+          "byteCount": 322,
+          "sha256": "b151ab40d797138e5ce5edfdf2870afbc5f30dda9a110fdf4792222c9a288076",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "89e847cff47f4d6d1c9381c9d87e9589ce2cdf91"
+        },
+        {
+          "path": "Sources/UrKit/PlayerStats.swift",
+          "byteCount": 1059,
+          "sha256": "43c32cbd0baf84e9fd905a8f0677c448f1cebf63720a46cc1a51d485102cc3ef",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "fa52c71e60dfbf9289187038960cb55dce835a35"
+        },
+        {
+          "path": "Sources/UrKit/PositionLab.swift",
+          "byteCount": 13391,
+          "sha256": "a28033806372f7e71e38b7dc30e315e70d3444e1d664061149b2231d78729c46",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "4e6fabd69fd66a015bcfa3004682c0d3991fb08e"
+        },
+        {
+          "path": "Sources/UrKit/PromptCopy.swift",
+          "byteCount": 1593,
+          "sha256": "5a89d6724232110ecf3a5eac373c06b8fe529aee1bf0642c88dda89b079f9484",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "d159c71b73dc6d8890e6fae3042145fa917b1d73"
+        },
+        {
+          "path": "Sources/UrKit/Puzzle.swift",
+          "byteCount": 45981,
+          "sha256": "a4f659f479a91c6568e565c74e21e310cc2dbd129addd6423a8ece4453866b38",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "f350aee9908a87583079174aedb228baf14a07cf"
+        },
+        {
+          "path": "Sources/UrKit/PuzzleGenerator.swift",
+          "byteCount": 6158,
+          "sha256": "794112d229df9213ccddf653e6d95dc65293bced07f1210ffa65c3177bbd04c8",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "6050593825ad888812b9edd57f980b474b4f87f2"
+        },
+        {
+          "path": "Sources/UrKit/PuzzleInvariants.swift",
+          "byteCount": 7364,
+          "sha256": "d3192cfe1a72b20c542bedd81989006878da5ee4a9d0cbf92659c76a22faf31d",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "fec4aac7dc523c4a941bc19d538e120756d62aed"
+        },
+        {
+          "path": "Sources/UrKit/ReviewMoment.swift",
+          "byteCount": 4028,
+          "sha256": "cc97e8aca253db97d7ea9cbb8952ed2f766df9375707c64e15fec319a551d118",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "9280d163104b6cf60b1b7d54e88c05d0ddddf38e"
+        },
+        {
+          "path": "Sources/UrKit/RolloutOracle.swift",
+          "byteCount": 2946,
+          "sha256": "0adcae5f42bbb517d3ad3dcb8c8a7055dc16efec123452c1d5d09d987705ea4c",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "fe3cba0203366a5b5a9b4b8d171c91ef23cd1265"
+        },
+        {
+          "path": "Sources/UrKit/RulesEngine.swift",
+          "byteCount": 2024,
+          "sha256": "b680e4598331bbc7770fffd8397662b3f91dfda07249eb53c7c2fa5247a1c293",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "9305b3462f4f736da939a70a78d70ac6dd728870"
+        },
+        {
+          "path": "Sources/UrKit/Scenario.swift",
+          "byteCount": 1341,
+          "sha256": "e3f22a08bfdc49f71d14132af97365003382fcade028aaad8229934312f83a2b",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "c9b507e8ef43e2203f67408c3226745771214bad"
+        },
+        {
+          "path": "Sources/UrKit/SeededRNG.swift",
+          "byteCount": 634,
+          "sha256": "abe8af6013a3ce10083a48ae337b5b2c1eb0828216fed493323242c103c608b2",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "8d4993ba790aa2a5932931014100b515f2b0a014"
+        },
+        {
+          "path": "Sources/UrKit/SelfPlay.swift",
+          "byteCount": 9238,
+          "sha256": "ba5c8713869fffe2461b4714ce1d508ae5a74b509d0e0cf1da2c3bee6159bda0",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "2d5d6a8b90fa7cc765f9e6e80e0d34f3e60c3a97"
+        },
+        {
+          "path": "Sources/UrKit/SolverReconciliation.swift",
+          "byteCount": 7217,
+          "sha256": "21c6f747d82a4018aa4846a6c27a6c028ea6be342cc5d9bc258691b8b912e143",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "d8f60003fb5c3453899be93465c23d0d82503900"
+        },
+        {
+          "path": "Sources/UrTutor/MasteryField.swift",
+          "byteCount": 6459,
+          "sha256": "e5f1f8b05947fdb7e0e40b7f4ad264f0c3960ab6c285913a4949fedd651df5bc",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "71bb75103784e2759e952f021a2e9b022b5048ff"
+        },
+        {
+          "path": "Sources/UrTutor/TeachingGate.swift",
+          "byteCount": 10319,
+          "sha256": "ea31a0fb2498d7bdb195c7134c89631732ec2ea9398b38334f83283815965caa",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "991cadd5af1c66e322f2c98fa6caa5f56af7f3c6"
+        },
+        {
+          "path": "Sources/UrTutor/UrClassCGenerators.swift",
+          "byteCount": 6182,
+          "sha256": "b69fb23143e77f632c316ac7946aba412f2c24aecc2093438945db79f7fb5f07",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "415c2c628d79d21a5da7f2ad290ca0f7392babf8"
+        },
+        {
+          "path": "Sources/UrTutor/UrContent.swift",
+          "byteCount": 11696,
+          "sha256": "53d77ceea2da54b2487d951868b73d9b77e53413b2a7ec77cdcc71d50cac522b",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "5ddc938f1ca883e27175275ac9a16236c3c7d70e"
+        },
+        {
+          "path": "Sources/UrTutor/UrLearningBridge.swift",
+          "byteCount": 1901,
+          "sha256": "4b6251f64a39e36c4b79ff9b3e3b209635078d7b95c4285606c175063f44b89f",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "426009d5becea877d1ee1b6f700971d09a10ebd0"
+        },
+        {
+          "path": "Sources/UrTutor/UrSubject.swift",
+          "byteCount": 262,
+          "sha256": "98512fe19eea72d8c038770ec45e7b2db6b3be46217c1d66bc259417714d36a0",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "feaa1553bc2ae7d5d253a809c72aa5f7ec4242eb"
+        },
+        {
+          "path": "Sources/UrTutor/UrTaxonomy.swift",
+          "byteCount": 2800,
+          "sha256": "07646f2d6a6fb44c96137283483c249c329623952faaab08d523a6ba7ed9501d",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "e457f0c52073c916e2ba3cd7d4d5ce8d58a1e710"
+        },
+        {
+          "path": "Sources/UrTutor/UrTeachingGate.swift",
+          "byteCount": 16690,
+          "sha256": "4fe22033ce943132eaa3833bf568d95e9dd41b60d4e4e084a4abe3fe37745a1a",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "38373523adc4a278eb9862c57fb0a7c739692d8a"
+        },
+        {
+          "path": "Tests/PrimeProbeTests/DisposeCheck.swift",
+          "byteCount": 7406,
+          "sha256": "eec128c97ac0dbe72b252b60fa1ebe583c7de7cfa5b5990bbf72db858fbd3d30",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "f7313bf10a2a1a7c7e2109f232472eb655b29c96"
+        },
+        {
+          "path": "Tests/PrimeProbeTests/IoPDD.swift",
+          "byteCount": 7557,
+          "sha256": "e01d03ac2f234ab2d00ad2d550205a1fbdca1b91a90b7873de5610c8bdbfe04d",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "037f9f8058e94a7e0648b458df8b078420723715"
+        },
+        {
+          "path": "Tests/PrimeProbeTests/PrimeProbe.swift",
+          "byteCount": 14053,
+          "sha256": "37b6a3de5761636ab4bde74bbcf9a9ea4e4b05052e973004adcc49bd15cb71ab",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "6da1ee04c0e9c5501d6cf812d6658ac7d900f51d"
+        },
+        {
+          "path": "Tests/UrKitTests/BearOffTests.swift",
+          "byteCount": 1782,
+          "sha256": "9743a06bedd0f16de461ae9c903b480a68e91e1711f01476e966877bf99d1ef3",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "882128953be2a6f35859d447ada33015976f7287"
+        },
+        {
+          "path": "Tests/UrKitTests/CaptureTests.swift",
+          "byteCount": 2404,
+          "sha256": "e5b19917e936266860c2d839e3e331a6d94d1a96e0397dd3f5793ea5a2c9ab8c",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "0e569ce42790ce044194dde3a465bc88ff452433"
+        },
+        {
+          "path": "Tests/UrKitTests/DiceTests.swift",
+          "byteCount": 1006,
+          "sha256": "2e886f92f39d487b0793510f93c4b688bd3df180c7de9f539913e931439e1aea",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "bb961199a55154496d47815433df74b41a88323f"
+        },
+        {
+          "path": "Tests/UrKitTests/EntryTests.swift",
+          "byteCount": 2130,
+          "sha256": "497793926f8ff445a38613beee74bf3b8717414974a4af5c609df61085c2b467",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "51d5377bc7559e17004789b8eb63aa14535bbdef"
+        },
+        {
+          "path": "Tests/UrKitTests/ExactOracleTests.swift",
+          "byteCount": 2491,
+          "sha256": "5cfff462b7cb267271c24491384956766c6f54c974510a03e96d0aea001888f8",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "799df9473849deda574034a454bf4b697b241c3f"
+        },
+        {
+          "path": "Tests/UrKitTests/GeneratedPuzzleBankTests.swift",
+          "byteCount": 2489,
+          "sha256": "c8a13791826180fe92083d6e0ada7202431b58e90ec44e43e100e0c009523505",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "33a7c6249c97255aa5b66f072f93b0b6570b4a13"
+        },
+        {
+          "path": "Tests/UrKitTests/LearningLoopEvidenceTests.swift",
+          "byteCount": 20001,
+          "sha256": "56ee6580f410530943d42667d3781ebc9ed9ea76a64a7b9773618191439193e3",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "52b2af13ad42370f196486c21b1dd3b461390b2e"
+        },
+        {
+          "path": "Tests/UrKitTests/MasteryFieldTests.swift",
+          "byteCount": 5293,
+          "sha256": "b9d5e6cb4b7a646bbc379b1aa0d622e03d10ccd342a25176cc4e3fc7bf1bb749",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "c4c150d57dc4d3aea254575288300366bbeac1d0"
+        },
+        {
+          "path": "Tests/UrKitTests/MovementTests.swift",
+          "byteCount": 2547,
+          "sha256": "8882bd32d87dc4eb204faba654b33ac0206dda009c425e4ad6e89c40f7113a45",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "31d3b8b7ca602ba86bda5b45c3ecc101518f9b49"
+        },
+        {
+          "path": "Tests/UrKitTests/PathTests.swift",
+          "byteCount": 2863,
+          "sha256": "3b3e5cca0a0657bb8fd00d730eb2d807958b77261eabf67a5041c0c4c58775f9",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "854631f0b6bd444fcb2734322ff3796826d5e60b"
+        },
+        {
+          "path": "Tests/UrKitTests/PuzzleGeneratorTests.swift",
+          "byteCount": 2278,
+          "sha256": "97cddc8a5bd46559e1a6045b7513836430ad8f63e3c99333d17f1fc4b28d15ec",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "294c8cb911bbc548c2fe8f6bcc5e68f24b5156ff"
+        },
+        {
+          "path": "Tests/UrKitTests/PuzzleGraderTests.swift",
+          "byteCount": 4855,
+          "sha256": "9621dd121f913f42a2c3fb865bceca959ad35a8d791d4ce55de93d80e07cbbb8",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "d267de510f9d571c97aef8099cf3859e1f7582ab"
+        },
+        {
+          "path": "Tests/UrKitTests/RosetteTests.swift",
+          "byteCount": 2179,
+          "sha256": "f36c209b3e914e9baef15bebdfe766426250cf803a899c1dd054f309ba677950",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "597deb7e5f3ca0ccfe349c9e2c2c4e15ecbbcde4"
+        },
+        {
+          "path": "Tests/UrKitTests/TestHelpers.swift",
+          "byteCount": 4128,
+          "sha256": "9a2f52e0907a7fd8a08782c72b745853d23cda513d2b13f86a89a74969efe87d",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "916ff98434b26378c3ebdf10af35333d18de2b38"
+        },
+        {
+          "path": "Tests/UrKitTests/TurnTests.swift",
+          "byteCount": 2092,
+          "sha256": "6966ec38eab10113da80e52e5492a630e4098456336b5f9aef1064c853a82573",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "1b01f4bdd0cfbda6c9269080e1ef53df99bdb08b"
+        },
+        {
+          "path": "Tests/UrKitTests/UrTutorEngineTests.swift",
+          "byteCount": 11477,
+          "sha256": "18b8300098e35bfa5c46835cfc532a9b8c422ecf0983ee995653eb77035ed5a9",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "e48bd7664def2513715b261556e02128c8766983"
+        },
+        {
+          "path": "Tests/UrKitTests/WinTests.swift",
+          "byteCount": 1021,
+          "sha256": "a1339df5b0be7bbc40e843bc99a2f833ffdf6eda8be6a97067b38a7918b40f5a",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "a7015a6dbca235968bbcb864b84b3fd408fec141"
+        },
+        {
+          "path": "agent-harvest.md",
+          "byteCount": 8146,
+          "sha256": "b15a72e9b3ac0a4918bfaec761d96f1cc8f7507864f4a065ed3bb0660ed87cc5",
+          "role": "evidence",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "dc2e407b1f99190d0799caf992adaa42257b54df"
+        },
+        {
+          "path": "docs/evidence/crown-run-v2.json",
+          "byteCount": 1765,
+          "sha256": "91b65c976f966934a29cbd473c53b9ecd4fa7ffa283a4f10b2d7326a0f1848cc",
+          "role": "evidence",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "63198a9bc8f4b0b4ebc4c196980ab0f4a10d81ec"
+        },
+        {
+          "path": "docs/evidence/learning-loop-v2-audit.json",
+          "byteCount": 278,
+          "sha256": "ec731ed8afa814f20de8a49ff4ca5721f8c95f5b74a925bcbb756320b5f954e5",
+          "role": "evidence",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "901db1a3dc2009219a086e643817238fdae742a7"
+        }
+      ],
+      "notes": [
+        "Finkel rules and pure game engine; curated/generated Swift puzzle banks retain distinct provenance. Local Xcode project/mockup changes are excluded."
+      ]
+    },
+    {
+      "id": "backgammon-app",
+      "root": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-game-connection/backgammon-app",
+      "revision": "05f33345b6b5d38d8837c2b25acc772ee0ad033d",
+      "controlState": "Selected files exactly match declared Git blobs; unrelated changes preserved.",
+      "files": [
+        {
+          "path": "FIELD-DESIGN.md",
+          "byteCount": 6302,
+          "sha256": "528e29689b778f97a56ff5e3b4395ad74e8dde1d3710adacc679dd95b5ed978e",
+          "role": "evidence",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "678740883c26b02cc0a946a3ccaad2f425024ae2"
+        },
+        {
+          "path": "LICENSE",
+          "byteCount": 2105,
+          "sha256": "f7f4acb902116e6314a35b9518255aaafb55af0fa215762b3b9dabef0c5d0c22",
+          "role": "evidence",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "70df0ff5c5b17d6a2b013005b83048584a70ff93"
+        },
+        {
+          "path": "MISCONCEPTION-CLASSIFIER.md",
+          "byteCount": 9751,
+          "sha256": "11bfb283a42d9ff21a44a01dc1a30c7f5629f651ad37abca2bc4e13f287bf22c",
+          "role": "evidence",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "f476bfdf993c4326a5dec08e6d187ec6b2f31daf"
+        },
+        {
+          "path": "NOTICE",
+          "byteCount": 2173,
+          "sha256": "67b0ade6e8ec35f942e5e10b80b125ae7a5584ef175aa01e56ad8231a0d6bb41",
+          "role": "evidence",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "b633d522c0ef9567d5626c1211763433b99f1430"
+        },
+        {
+          "path": "PROVENANCE.md",
+          "byteCount": 69707,
+          "sha256": "652c221a69bb06f61e043fb77ea34465240f5651f3712f32af7e7af66b1b2020",
+          "role": "evidence",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "8f79f22324bd65c7f4eec0273cd5e3ae13d30a5c"
+        },
+        {
+          "path": "Package.swift",
+          "byteCount": 6697,
+          "sha256": "755851888594124ad98ef417c40d644dd0c623b5f66df0cf16ab036fee8953ec",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "63f7e82636f927d7851e64d5cb5740d1bb6228c1"
+        },
+        {
+          "path": "RULES.md",
+          "byteCount": 9461,
+          "sha256": "c9d189ae895e65f43a8cf205b2b1f7600001fc794389ed7962f6e8a1e6a486b4",
+          "role": "evidence",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "4bf2aefe8ab2a8365bfb6eb7954650f55e50345f"
+        },
+        {
+          "path": "Sources/BGGen/main.swift",
+          "byteCount": 1647,
+          "sha256": "d3d351b522e47e39d2b0329a8cf7d2f351a773612608a080dd812e45ed2f9221",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "155cb2043b074edd47c22b3292b002f403454b9c"
+        },
+        {
+          "path": "Sources/BGStats/main.swift",
+          "byteCount": 17058,
+          "sha256": "a9ad33bf5d4bb7a7ee7e1a11f536b51c849365a97a3df02b9de3d9e5f5671433",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "302fddeb71c91bc93b310143de75e65f91bf8ee2"
+        },
+        {
+          "path": "Sources/BGTrain/main.swift",
+          "byteCount": 34543,
+          "sha256": "5ba432c2344e4b90ba2595003710cd13ad50c0d0dc9788c96f0331afc441d457",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "cc12323b0e03b6762c4035dfa6c9e7b89fa8e5e5"
+        },
+        {
+          "path": "Sources/BackgammonCoreML/CoreMLEvaluator.swift",
+          "byteCount": 6671,
+          "sha256": "d92a0b05336624f0230eaa4b55f948932817a88eefc60e8896691ff3c4e46b9a",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "136294bc214cf17d515ef225bccb199a7605f741"
+        },
+        {
+          "path": "Sources/BackgammonField/MasteryField.swift",
+          "byteCount": 10913,
+          "sha256": "784440b06aba23a30a782d9321414c047a77a88b5591a9378d007cb802ba97c4",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "a641931c2fec5c79ea2daa752a6f3dae29ca11a5"
+        },
+        {
+          "path": "Sources/BackgammonKit/Board.swift",
+          "byteCount": 2444,
+          "sha256": "9b83473a88093065fa90387ed457651f56d48cd8dd38ebacfd6e3caa86dbb641",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "f887d0117aac185acedada2b2e0249b3d9e3669b"
+        },
+        {
+          "path": "Sources/BackgammonKit/CubeAdvisor.swift",
+          "byteCount": 7047,
+          "sha256": "af488670dfd360164ec4a1a3478acca7c09ad5d5f9ad219de01c1f9032b71791",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "0e1ff35cbc59d8c6734c3db0b46f74211ec374cc"
+        },
+        {
+          "path": "Sources/BackgammonKit/CubeState.swift",
+          "byteCount": 1804,
+          "sha256": "b70febde9a89443a50bf394536d0eb6dfd0cb24317586bd1253c14c8ec8d2cd3",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "5a068796abd07761b6e49502e033d8c53b36262a"
+        },
+        {
+          "path": "Sources/BackgammonKit/Dice.swift",
+          "byteCount": 2063,
+          "sha256": "6e4a3df64daaf3dbea3a27fc1372a81f12f2465c53209ef69a75d4deb76c751d",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "d14c9f17fdddee46e4a27a652edc4104409fe854"
+        },
+        {
+          "path": "Sources/BackgammonKit/Difficulty.swift",
+          "byteCount": 2063,
+          "sha256": "72ee4b79471e70e95d7efd2a0cc840e157e71da5e5070ad5803d40a430939758",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "1bee660f586783dc7f7ca0b183a58b2c5b7c8b0b"
+        },
+        {
+          "path": "Sources/BackgammonKit/Evaluator.swift",
+          "byteCount": 5280,
+          "sha256": "4aa32f805b907983abe885cdc1aa0f353ae7b23b554e4dd4c854419a38e3e4cc",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "4d6d752159ede7663c8e75e237775437ba78094d"
+        },
+        {
+          "path": "Sources/BackgammonKit/ExpectiminimaxAI.swift",
+          "byteCount": 7934,
+          "sha256": "1bf1bd032dde6d6321b6ec9d4cc0968d4bd2ec1e7090f0046ba2a3b19fbdec08",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "f19e36039cff873285e0f325261eae08e7ea806b"
+        },
+        {
+          "path": "Sources/BackgammonKit/GameAnalyzer.swift",
+          "byteCount": 4503,
+          "sha256": "5dff5241cace43807f3fe9bc2c01af7d33e771ffa3663ca93a53d59d96c68ca6",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "5cf815e2b73c313628258261b5ea62b779a22645"
+        },
+        {
+          "path": "Sources/BackgammonKit/GameCoach.swift",
+          "byteCount": 2020,
+          "sha256": "9ffe60e05f904c798de9a64b82993d27cc17760542a41835fefb89c10ab0c5ac",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "1099b95fbc0653fc68b6c0778c5df82eaa4814a5"
+        },
+        {
+          "path": "Sources/BackgammonKit/GameDriver.swift",
+          "byteCount": 2036,
+          "sha256": "5b6960f8ceb538b70dccd9c068330d82fa82d574ec6e5caa147ddcda3d1ecfaa",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "04f50d1a5f3a37c801fdbcef3e2741ae5d47116a"
+        },
+        {
+          "path": "Sources/BackgammonKit/GameState.swift",
+          "byteCount": 5478,
+          "sha256": "1ee053f0376f357cc8924c90f9ca2be76e88bd099b3ebbdc327983cadb7361e0",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "ed282ff06b6785ce39f30a7b1474eabed7613d82"
+        },
+        {
+          "path": "Sources/BackgammonKit/Move.swift",
+          "byteCount": 2558,
+          "sha256": "0949aa290c63c74677bd6a59c471eb6e04983e89216c495b4909fb45c4713cfb",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "0dabf7d9309097fa892fe47b8e2165ab270cd0e0"
+        },
+        {
+          "path": "Sources/BackgammonKit/MoveGenerator.swift",
+          "byteCount": 8908,
+          "sha256": "8f0cdb3253ea206ae3d9f9e9421d336d7e81a2c8c3881bf860801842666ec1fb",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "fc4d19f6979379b1df7f6733de70416e8c4c70e8"
+        },
+        {
+          "path": "Sources/BackgammonKit/Player.swift",
+          "byteCount": 523,
+          "sha256": "764cd566e69df69ed120bdcca6cc2848eeec6928e79ca4def541081b8cb3a683",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "d410500d06234d3f9be715d237ef7dacf2718136"
+        },
+        {
+          "path": "Sources/BackgammonKit/Puzzle.swift",
+          "byteCount": 3606,
+          "sha256": "f5f6307bf63a0a539ae15d2e4471639dea3c1ef0e596de3130fc672309b8d19f",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "25e8bbc28173db6c42812b5b4cc9beffe1487752"
+        },
+        {
+          "path": "Sources/BackgammonKit/PuzzleGenerator.swift",
+          "byteCount": 4382,
+          "sha256": "bf29e66df9acfa31a24cbe6c0526613946ce6ad7aa928c360d4fac254f2c0604",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "4a3dfbc15c724c99d17d10ce8a5a8c61c2ececc2"
+        },
+        {
+          "path": "Sources/BackgammonKit/RaceEquity.swift",
+          "byteCount": 2725,
+          "sha256": "0bf8912c082d0d533cfa6b70ac994002e952d7dd225308abf23a0f588952e76a",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "0bf476f8fdba7e763d59edcf2c676aac8104883e"
+        },
+        {
+          "path": "Sources/BackgammonKit/RolloutEvaluator.swift",
+          "byteCount": 6842,
+          "sha256": "f8cda40993dc487d26daee59cd90d4015e467a39731fa45dbc958135433bdc3e",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "7a20d8d58ddf9deaaf54ee9f30604e521b7262e6"
+        },
+        {
+          "path": "Sources/BackgammonKit/RulesEngine.swift",
+          "byteCount": 1811,
+          "sha256": "cc378b4a7def068bcbe49f18d6db1a7b7208ba029a7aea79c8ccf33ae3c13e9d",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "97dce147d4753bac48a0ce474ab01e26e2174f7f"
+        },
+        {
+          "path": "Sources/BackgammonKit/Scoring.swift",
+          "byteCount": 1557,
+          "sha256": "c7d9ccb65e546996c0836822c317a24b444a6766173116c232d1a1a814acdbfa",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "a8e496617fcf9620264b68f3d82fb8d25986e322"
+        },
+        {
+          "path": "Sources/BackgammonKit/SeededRNG.swift",
+          "byteCount": 897,
+          "sha256": "ef7756ad22fe78852751314418b4a1ed7ecb044ac0a9022fef12d2377d362cf2",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "5312f57f2565c7f5b7a38fddcdc0e5a065cd1800"
+        },
+        {
+          "path": "Sources/BackgammonKit/SelfPlay.swift",
+          "byteCount": 9404,
+          "sha256": "d6c9c735d732c3a7dd7504739446b3a09f4d125dd88ef7aecad78cdc33051fa6",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "9ed3b8f497f203c09745ad8907888332c2ca3e40"
+        },
+        {
+          "path": "Sources/BackgammonNN/BackgammonNN.swift",
+          "byteCount": 381,
+          "sha256": "674b53cbe5e2ddfacb62be1ef5290c5ca9f4c75987d9dfc5f808f96521edecdb",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "e7e7b7267555247f70bd85ad7c1b1b7db0ef1f6c"
+        },
+        {
+          "path": "Sources/BackgammonNN/Encoding.swift",
+          "byteCount": 3015,
+          "sha256": "5ff887c78e45b6434ef641c088495e0d3ce307ec187f86ab94888fee1189512f",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "50a02697723f779acefe40595df49d80945c3dbd"
+        },
+        {
+          "path": "Sources/BackgammonNN/Gammon.swift",
+          "byteCount": 2222,
+          "sha256": "1fcc53e719c40dc286b27cb70326cd56ed77715d78c45bcc0747950b37e9c3cb",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "549ddcb28c7ad947d0d0be52af2dccf0a954350a"
+        },
+        {
+          "path": "Sources/BackgammonNN/PureForward.swift",
+          "byteCount": 5502,
+          "sha256": "f72a90e25302a9b72828bc2a487218a5c0e0d1836a3468a9bbdc28a860ad8b28",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "87dee28bac6c75e35b7b68ed237392cf82cfbb1b"
+        },
+        {
+          "path": "Sources/BackgammonNN/TDEvaluator.swift",
+          "byteCount": 2653,
+          "sha256": "9f31e8b3f37a9426b0b3cadd316640a3a8c2cb5cbb542f45ca1225bf28516a22",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "05f5ec004816983c07260a52f3e361d7058dbb6b"
+        },
+        {
+          "path": "Sources/BackgammonNN/TDNetwork.swift",
+          "byteCount": 3946,
+          "sha256": "2db0ad6f2e6221dfb25867a0d66824574012b7f5be2e09726a28356ccb08285e",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "4f1119f9d8064512e7ce2b914526ab7a70006441"
+        },
+        {
+          "path": "Sources/BackgammonNN/Training.swift",
+          "byteCount": 34477,
+          "sha256": "3dec3cd0a009b06023dad3ea67d219ab98769c0a538942e26a77a798f554e52f",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "4ee3ffd4428b020b50a532e9f309cb7f28ac1ad4"
+        },
+        {
+          "path": "Sources/BackgammonNN/Weights.swift",
+          "byteCount": 3383,
+          "sha256": "eb01adef3853b6cfe3e17de9e11e2c43d67e75214f51f35906ba0d82f664d208",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "d5fa4374f5b46412075d1d8df15e74c0c9b2a867"
+        },
+        {
+          "path": "Sources/BackgammonTutor/BackgammonContent.swift",
+          "byteCount": 12950,
+          "sha256": "da7374450d7ab13085ac6e8fb9ec6c086353f47b723aad1ab392f9d31e9e9806",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "1520ba144ae0750780e4dfacd84e487ab2be8557"
+        },
+        {
+          "path": "Sources/BackgammonTutor/BackgammonNotation.swift",
+          "byteCount": 1658,
+          "sha256": "e3bccf031b074d7a8dc86be28d7c898c25f5dc639a03467184a313e66d3e8497",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "a59fa4eeb941b24d4cb672c69895836230c21225"
+        },
+        {
+          "path": "Sources/BackgammonTutor/BackgammonSubject.swift",
+          "byteCount": 662,
+          "sha256": "c489a62509311dc1fb31f0b027e9939026bfd8a9aca3cc0c688d4c94181390a7",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "544bf59308e1237bf9d8a924ba382fbf79b3235a"
+        },
+        {
+          "path": "Sources/BackgammonTutor/BackgammonTaxonomy.swift",
+          "byteCount": 2019,
+          "sha256": "df0f7fa3628cb718f253fecbbc4985145ea623bac6140509694233456ae08f5c",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "57256fb936fc6d76389719327ec17f46a5098007"
+        },
+        {
+          "path": "Sources/BackgammonTutor/DrillBank.swift",
+          "byteCount": 29262,
+          "sha256": "70a54a6e18b867847fe9012e38b3f93f6bbbfa594a64e9d54aa991a55f347e36",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "b3bb31b4b0b13c4d581d4688386cc1a484887330"
+        },
+        {
+          "path": "Sources/BackgammonTutor/InGameMisconceptionClassifier.swift",
+          "byteCount": 13278,
+          "sha256": "706f8c18b12bab9b359a9f10e060fe99ac92e46c125477bdab43384b0e49bc76",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "5ec85384e4fd8fdeec01c8c9463f66f4916f653e"
+        },
+        {
+          "path": "Sources/BackgammonTutor/LearningBridge.swift",
+          "byteCount": 1922,
+          "sha256": "e38079df9bdae844b303ca19f172ac783c322b0d17eeff8c3a3a9fb2b8cbb6cd",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "0e23ce5a317c242a278db8fcebba3f6d8b100695"
+        },
+        {
+          "path": "Sources/BackgammonTutor/Misconception.swift",
+          "byteCount": 11599,
+          "sha256": "70868be679074b3c7434c202443085461db94c206f1e909a006cdc4e8e721ff2",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "32866ab2801a0f0faae3be9ee3e661a97ca2cb44"
+        },
+        {
+          "path": "Sources/BackgammonTutor/Rationalizer.swift",
+          "byteCount": 6452,
+          "sha256": "9289fdd865e43856749b254d9ae0a70fd610a6f499449dbdfb96a0ee0e9a731e",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "ddfab903ab606f581eb5ef3ef41a45d71b671331"
+        },
+        {
+          "path": "Sources/BackgammonTutor/RegisterTier.swift",
+          "byteCount": 1700,
+          "sha256": "4cf080f126ef7664530059eb8317ba6d13eed4bc69c90d5a18eebeaf73a3f137",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "9fc4e0743a24764e21aeb43ba46fdc33b896d00e"
+        },
+        {
+          "path": "TESTPLAN.md",
+          "byteCount": 5218,
+          "sha256": "da94fdbddc86f5c193ae21b14669bb35e928ea7e12ee525269aa9ce798617d11",
+          "role": "evidence",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "89c8cdaabe2516ec51248cb51e8ebbfff04b0a9d"
+        },
+        {
+          "path": "THIRD-PARTY-LICENSES.md",
+          "byteCount": 2423,
+          "sha256": "d8bac0a82e47d8c6172fdfd7f4a626245454baed06e82a9e45e173897dcf273b",
+          "role": "evidence",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "742660c3e86e62b94300f239b0d2f882955aeb80"
+        },
+        {
+          "path": "Tests/BackgammonFieldTests/FieldSolverOracleTests.swift",
+          "byteCount": 15886,
+          "sha256": "29fa3dcba9ed9cc159d572dae40391a2c0e0f36172c5763ac4ec0b0f73d93116",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "bd69bc42d2dd857ece171d3f605589bca91a1577"
+        },
+        {
+          "path": "Tests/BackgammonKitTests/BearOffTests.swift",
+          "byteCount": 2996,
+          "sha256": "99c50a386cffa42c20725cacd96d914a8a7b8f3952fc1a655ad13d7cf07767f7",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "50208a58783c7f904a3ca40e091281dd4a775323"
+        },
+        {
+          "path": "Tests/BackgammonKitTests/DiceTests.swift",
+          "byteCount": 1819,
+          "sha256": "669c2e431ac22c5a1dd360034dec7e6afbb5927b6a994ef08c9b76de936a48ed",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "ce8dcce0b1ea3df7b3e1c74fae5d56eb1fffc293"
+        },
+        {
+          "path": "Tests/BackgammonKitTests/InvariantFuzzTests.swift",
+          "byteCount": 3664,
+          "sha256": "de779c33b82018656b7bccca0661f3a754977fd77a05d211b982125c466f888a",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "b3794a864647bbfdfa3a0f324c31af0166806363"
+        },
+        {
+          "path": "Tests/BackgammonKitTests/MoveGenTests.swift",
+          "byteCount": 6351,
+          "sha256": "339ff1ddc23ad1cea3fe21424f8632b0814161511e3aa4b33141198b0597ab25",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "636565c66e4779a4fcecf2fdb4c6eb3b636ce57c"
+        },
+        {
+          "path": "Tests/BackgammonKitTests/PuzzleGeneratorTests.swift",
+          "byteCount": 2173,
+          "sha256": "8ffa145044c04e2ed34450ddd1410128316a141226fe388826ed380a76e4f375",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "cc7693bae06c14aaa0247da7ab6de623d096fb56"
+        },
+        {
+          "path": "Tests/BackgammonKitTests/PuzzleGraderTests.swift",
+          "byteCount": 2244,
+          "sha256": "dd67cf31cba34f606514ffc8a52b13f0a8a3c61de9312f3ea829c2f0b8e4cdb0",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "5ba14fbae8533f44a33561cbd055792ebe4c8d7e"
+        },
+        {
+          "path": "Tests/BackgammonKitTests/ScoringTests.swift",
+          "byteCount": 1583,
+          "sha256": "98fede44eb715ed92fdea2e95983d87c28baa63a4692b59decc89dcb271d906b",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "b3a31c25a92d56bc2f34564672a9e4fe717b733a"
+        },
+        {
+          "path": "Tests/BackgammonKitTests/SetupBoardTests.swift",
+          "byteCount": 2253,
+          "sha256": "63961eccaabfe0c7f920d49116361c05d88d97c665ba8272a14b0c5fbafe2b0f",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "04c6bf95e75e1f82f33fa0d2b795b36cb456f4b2"
+        },
+        {
+          "path": "Tests/BackgammonKitTests/TestHelpers.swift",
+          "byteCount": 4110,
+          "sha256": "a57eb4dab9fb3072dd454d7b3272a0553aa68715ddbffd8c99f42625ed3c856d",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "4425685c113affe54c29a328592b8304b0306399"
+        },
+        {
+          "path": "Tests/BackgammonNNTests/CoreMLEvaluatorParityTests.swift",
+          "byteCount": 8259,
+          "sha256": "1bb1ac5458ffc434d0626015608b8ca938e0aefdf5860d69ebd1555e7019e806",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "d44fd2473a8b551ef117088435e76bdf42db866e"
+        },
+        {
+          "path": "Tests/BackgammonNNTests/EncodingTests.swift",
+          "byteCount": 4206,
+          "sha256": "48897f38d71c8c9333482432d2765b55fd74c3f2b72883775b98b0c721fee2ac",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "d00c05159eccb73ba3c8c0b26a4a709936d416ae"
+        },
+        {
+          "path": "Tests/BackgammonNNTests/HeadlessRuntimeTests.swift",
+          "byteCount": 4108,
+          "sha256": "0ab9415c0784ec3972c973e2e55e84b04ec381cb0ddbf263f70930b8ffa78264",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "ef45d7499803dc1370dfdfdd8eaad2da87d585e0"
+        },
+        {
+          "path": "Tests/BackgammonNNTests/TDLambdaOracleTests.swift",
+          "byteCount": 10540,
+          "sha256": "ee71c00bd2948b781933f21006b58da19db8d62fc8e2994fe4acb9271c1088aa",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "7f6c69f90bee6686ad094f9da47794e7ccd06cb2"
+        },
+        {
+          "path": "Tests/BackgammonTutorTests/AcidTestTests.swift",
+          "byteCount": 2079,
+          "sha256": "5d02bef950105f9763d87142c678a3f0eef2942fd7881cd6f26c3f310617d780",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "cd86be8dcd59eae2af8df4dfd5f5dbca04970fcb"
+        },
+        {
+          "path": "Tests/BackgammonTutorTests/DrillContentTests.swift",
+          "byteCount": 7568,
+          "sha256": "83059fd15b100c9b6a43e035f574702624f632e5d9112e86802fe5255140994c",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "5ea5497c9af19964b7ed779b9d0742e6b7a27928"
+        },
+        {
+          "path": "Tests/BackgammonTutorTests/LearningBridgeTests.swift",
+          "byteCount": 1764,
+          "sha256": "e4096b0dde9a4df243df84a34ad62ffb7117b1a24d61b8be7fa1671b11857efa",
+          "role": "implementation",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "4fc5c02e436ae0ac83bdcdafb4ec0e58876a4c97"
+        }
+      ],
+      "notes": [
+        "Task-owned sparse checkout from https://github.com/Ergentics/backgammon-app at the retained revision; no AGENTS.md or CLAUDE.md in its Git tree. BackgammonNN predicts board equity from196 features; it is not a text LLM."
+      ]
+    },
+    {
+      "id": "ergentics-logic-game-exports",
+      "root": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-corpus-sources/ergentics-logic",
+      "revision": "97be84b2790b79ce79558d6bade846a532226540",
+      "controlState": "Selected files exactly match declared Git blobs; unrelated changes preserved.",
+      "files": [
+        {
+          "path": "corpus/GATE-STATUS.md",
+          "byteCount": 66052,
+          "sha256": "5efd01ea205b13076cd5a71f47cafb007dac12c21214ac32c6b61db9cf73158f",
+          "role": "evidence",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "eaf8a6640399c605e5c05df11ff18665e99edad4"
+        },
+        {
+          "path": "corpus/audits/ur.audit.json",
+          "byteCount": 33100,
+          "sha256": "087b76d703332597795065e15f94f3156c5015f8c79a09ebf6c383d49a48afba",
+          "role": "sidecar",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "2f1722b4be676ea5c534b2cb4fde16c6770c3cae"
+        },
+        {
+          "path": "corpus/exemplars/backgammon.masteryfield.jsonl",
+          "byteCount": 10313,
+          "sha256": "130038b914a2eef5965688bf3192eb2a051a0e2eedcf44dab0188b4781e6f0ff",
+          "role": "corpus",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "7aef9009f52961bb7303ba1a93fbae11536f4bb1"
+        },
+        {
+          "path": "corpus/exemplars/ur.dice.jsonl",
+          "byteCount": 13633,
+          "sha256": "93210eb0c0924327534f036d45f50cb7c5c8a9704f325720c18435bd1715f1c7",
+          "role": "corpus",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "9f22610ee5f8b41d638efdc3f2912bd02becdf9d"
+        },
+        {
+          "path": "corpus/exemplars/ur.puzzle.jsonl",
+          "byteCount": 117001,
+          "sha256": "02c40cd113f8e9c1fc5f6312d63d799779f7038b0cc36f4106513259f9effff7",
+          "role": "corpus",
+          "controlState": "tracked_exact_declared_revision",
+          "gitBlob": "b744b3243c72896a59b1ec191f091033f1410c74"
+        }
+      ],
+      "notes": [
+        "These35 JSONL records already exist in the main connected logic corpus; this connection does not create35 new unique records or change labels."
+      ]
+    },
+    {
+      "id": "games-deterministic-reference",
+      "root": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-game-connection",
+      "revision": null,
+      "controlState": "Task-owned new reference code and measured original-engine outputs, no neural model.",
+      "files": [
+        {
+          "path": "comparison-cases.json",
+          "byteCount": 2609,
+          "sha256": "a6313fc8e8363b5a3c2d7b92722f32f1652eab173d1dc00b17ae61c16aae3e15",
+          "role": "evidence",
+          "controlState": "task_owned_new_deterministic_reference"
+        },
+        {
+          "path": "ur-reference/main.swift",
+          "byteCount": 1651,
+          "sha256": "ff960b65ac6b28fb33d158a6da40e7d86564521d1c18212d8938862140883052",
+          "role": "implementation",
+          "controlState": "task_owned_new_deterministic_reference"
+        },
+        {
+          "path": "ur-reference/receipt.json",
+          "byteCount": 1642,
+          "sha256": "6e9a3fdb06367084adbbd3fc497481cacdac8ada8eb0bcf09826770644ab54f1",
+          "role": "evidence",
+          "controlState": "task_owned_new_deterministic_reference"
+        },
+        {
+          "path": "ur-reference/result.json",
+          "byteCount": 600,
+          "sha256": "598d399d0b8146c3ec3332add54f4ff0ef8f44870105daa9ca12b999e4d0f17b",
+          "role": "evidence",
+          "controlState": "task_owned_new_deterministic_reference"
+        },
+        {
+          "path": "backgammon-reference/main.swift",
+          "byteCount": 1476,
+          "sha256": "d58c39cef02a1b7749b59eff86921f484c4ee8c5b027f772c8a0cb2729bbf092",
+          "role": "implementation",
+          "controlState": "task_owned_new_deterministic_reference"
+        },
+        {
+          "path": "backgammon-reference/receipt.json",
+          "byteCount": 2378,
+          "sha256": "e2d449842f59674dd2b0b6d8757dcff97fe27b95283efcab9debc847b149de7d",
+          "role": "evidence",
+          "controlState": "task_owned_new_deterministic_reference"
+        },
+        {
+          "path": "backgammon-reference/result.json",
+          "byteCount": 627,
+          "sha256": "cded663f1235b79d9910c791cbabfef51d165a224ca3366be3acf00abd73e6a3",
+          "role": "evidence",
+          "controlState": "task_owned_new_deterministic_reference"
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Additive connection only; original model checkpoints, tokenizers and prior prepared corpora remain unchanged.",
+    "Do not promote heuristic-best puzzle answers, authored concept drills, exact legality and empirical mastery claims into one undifferentiated truth label.",
+    "The two new reference questions were exercised against original rule source; their expected answers are kept separate from model requests.",
+    "Game pedagogy remains board moments; this task creates an experiment connection, not an MCQ game UI."
+  ]
+}

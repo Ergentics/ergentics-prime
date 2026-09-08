@@ -1,0 +1,42 @@
+{
+  "schema": "prime_cross_domain_questions_v1",
+  "cases": [
+    {
+      "caseID": "01-algebra",
+      "question": "Solve the linear equation x + 4 = 6 for x.",
+      "questionSHA256": "900ae7730c91a45d297ffdfb0826c68b6976f962d17a1dc569360d02462a7aa2",
+      "questionUTF8ByteCount": 42,
+      "promptFile": "prompts/01-algebra.txt"
+    },
+    {
+      "caseID": "02-geometry",
+      "question": "Find the area of the triangle with vertices A=(0,0), B=(3,0), C=(0,4). (right triangle, legs 3,4)",
+      "questionSHA256": "cb7f76295a3d08c966b8287a515dc78d84c561e684f9fd4ecf2e0a465afbe752",
+      "questionUTF8ByteCount": 97,
+      "promptFile": "prompts/02-geometry.txt"
+    },
+    {
+      "caseID": "03-logic-parsing",
+      "question": "Evaluate the arithmetic expression  2 + 3 * 4  respecting standard operator precedence (× ÷ bind tighter than + −) and LEFT-associativity. (÷ is exact rational.)",
+      "questionSHA256": "69c010309b8b3b9bdf710cad219cfa93f463f4407a9377c71ca298a1383c594a",
+      "questionUTF8ByteCount": 166,
+      "promptFile": "prompts/03-logic-parsing.txt"
+    },
+    {
+      "caseID": "04-music",
+      "question": "Classify the quality of the chord with pitch classes {C, E, G} (pc set [0, 4, 7]): major, minor, diminished, or augmented?",
+      "questionSHA256": "46bed3aa67633ecea4f5908f043e7bc5aab4fc17310fbf8248c7b56c09a42567",
+      "questionUTF8ByteCount": 122,
+      "promptFile": "prompts/04-music.txt"
+    },
+    {
+      "caseID": "05-agentcraft-christoffel",
+      "question": "Derive the lower Christoffel word of slope 2/3 (a=East,b=North; length 5) and certify it by independent methods.",
+      "questionSHA256": "870d6283160bf5c85529a9eae7d8b8eef7585b9529357d63b432b6e6ccfa3037",
+      "questionUTF8ByteCount": 112,
+      "promptFile": "prompts/05-agentcraft-christoffel.txt"
+    }
+  ],
+  "sourceCaseSet": "cases.json",
+  "containsGoldAnswers": false
+}

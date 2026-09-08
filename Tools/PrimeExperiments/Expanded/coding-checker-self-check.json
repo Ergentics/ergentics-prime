@@ -1,0 +1,120 @@
+{
+  "schema": "prime_coding_checker_self_check_v1",
+  "passed": true,
+  "fixtures": [
+    {
+      "fixture": "first_good",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "passed": true,
+      "vectorCount": 15,
+      "cpythonWitnessPerformed": true
+    },
+    {
+      "fixture": "unique_good",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "passed": true,
+      "vectorCount": 12,
+      "cpythonWitnessPerformed": true
+    },
+    {
+      "fixture": "unique_enumerate_good",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "passed": true,
+      "vectorCount": 12,
+      "cpythonWitnessPerformed": true
+    },
+    {
+      "fixture": "always_wrong",
+      "expectedStatus": "wrong_answer",
+      "actualStatus": "wrong_answer",
+      "passed": true,
+      "vectorCount": 15,
+      "cpythonWitnessPerformed": true
+    },
+    {
+      "fixture": "alias_return",
+      "expectedStatus": "wrong_answer",
+      "actualStatus": "wrong_answer",
+      "passed": true,
+      "vectorCount": 12,
+      "cpythonWitnessPerformed": true
+    },
+    {
+      "fixture": "refuse_import",
+      "expectedStatus": "unsupported_grammar",
+      "actualStatus": "unsupported_grammar",
+      "passed": true,
+      "vectorCount": 0,
+      "cpythonWitnessPerformed": false
+    },
+    {
+      "fixture": "refuse_attribute",
+      "expectedStatus": "unsupported_grammar",
+      "actualStatus": "unsupported_grammar",
+      "passed": true,
+      "vectorCount": 0,
+      "cpythonWitnessPerformed": false
+    },
+    {
+      "fixture": "refuse_recursive_call",
+      "expectedStatus": "unsupported_grammar",
+      "actualStatus": "unsupported_grammar",
+      "passed": true,
+      "vectorCount": 0,
+      "cpythonWitnessPerformed": false
+    },
+    {
+      "fixture": "refuse_while",
+      "expectedStatus": "unsupported_grammar",
+      "actualStatus": "unsupported_grammar",
+      "passed": true,
+      "vectorCount": 0,
+      "cpythonWitnessPerformed": false
+    },
+    {
+      "fixture": "bounded_growth",
+      "expectedStatus": "resource_limit",
+      "actualStatus": "resource_limit",
+      "passed": true,
+      "vectorCount": 12,
+      "cpythonWitnessPerformed": false
+    },
+    {
+      "fixture": "bounded_range",
+      "expectedStatus": "resource_limit",
+      "actualStatus": "resource_limit",
+      "passed": true,
+      "vectorCount": 12,
+      "cpythonWitnessPerformed": false
+    },
+    {
+      "fixture": "bounded_fuel",
+      "expectedStatus": "resource_limit",
+      "actualStatus": "resource_limit",
+      "passed": true,
+      "vectorCount": 12,
+      "cpythonWitnessPerformed": false
+    },
+    {
+      "fixture": "bounded_enumerate_growth",
+      "expectedStatus": "resource_limit",
+      "actualStatus": "resource_limit",
+      "passed": true,
+      "vectorCount": 12,
+      "cpythonWitnessPerformed": true
+    },
+    {
+      "fixture": "fenced_good",
+      "expectedStatus": "passed",
+      "actualStatus": "passed",
+      "passed": true,
+      "vectorCount": 15,
+      "cpythonWitnessPerformed": true
+    }
+  ],
+  "modelOutputsEvaluated": false,
+  "checkerSHA256": "641e90c937d06b0620e5ed0f2fba3c3be1f270c2667d3c50775b92233072b79a"
+}

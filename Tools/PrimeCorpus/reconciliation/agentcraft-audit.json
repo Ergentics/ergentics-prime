@@ -1,0 +1,74 @@
+{
+  "schema": "prime_source_registration_v1",
+  "observedOn": "2026-09-08",
+  "scope": "Bounded read-only source and existing artifact audit. No harvesting, training, inference, oracle execution or source mutation.",
+  "source": {
+    "id": "agentcraft-app",
+    "root": "/Users/ergentics/agentcraft-app",
+    "revision": "e36e8b0ff607d853572c5d2d440d44b8980b6c3a",
+    "controlState": "tracked_at_declared_revision; git status porcelain empty",
+    "sourceRepo": "Ergentics/agentcraft-app",
+    "files": [
+      {"path":"Sources/AgentcraftKit/Scaffolds/agentcraft.scaffolds.jsonl","byteCount":2213,"sha256":"8af978e4976352423ee10d1e063b27c4df2259f4e51fe4069d854204d8121214","role":"sidecar","artifactSchema":"MethodScaffold","recordCount":3},
+      {"path":"New Harvest/christoffel.jsonl","byteCount":2761779,"sha256":"7602ab1fe9396230dc533e00ba2eb02421a2678f0042560694bf7c9942f1b62f","role":"corpus","artifactSchema":"logic-corpus-0.2","recordCount":890},
+      {"path":"Direct Output/christoffel-traces.txt","byteCount":55564,"sha256":"c6b6f9b9546ed60ca5d07f76c8f6473dcd25dbc8e1177afe6c74674c7ea91561","role":"evidence"},
+      {"path":"Direct Output/christoffel-enginepropose.txt","byteCount":2001,"sha256":"2e1411fa72ce7df34ae91b3f0c8873c72bcb1d87e0cbbb6e53569d9b28c7ad64","role":"evidence"},
+      {"path":"Sources/AgentContractKit/OracleIndependenceHarvest.swift","byteCount":14185,"sha256":"263f2fb2399237f446555b4a42e3b5df82abf9e63c3b784a296ecc485d668fc3","role":"implementation"},
+      {"path":"Sources/CorpusHarvest/ChristoffelHarvest.swift","byteCount":10402,"sha256":"d5e3738cab79cfe4956dd17200be4aef8f3f5e1d475e1bd8f70c2c82183bf74d","role":"implementation"},
+      {"path":"Sources/CorpusHarvest/ChristoffelOracles.swift","byteCount":5902,"sha256":"efa8b80b564c75f95f7560364b638a9e716052b8d3d30bde01305d0601a4091a","role":"implementation"},
+      {"path":"Sources/CorpusHarvest/ChristoffelNoMut.swift","byteCount":4230,"sha256":"2b68c9fbe205a8687ff1db3da9aca08b1f89fa6b37b225ab680430185e79c217","role":"implementation"},
+      {"path":"Sources/CorpusHarvest/CorpusHarvestShared.swift","byteCount":1375,"sha256":"756407e57cf098b233c097c98e04abb07723b0dd900c383bc22e5bc6834140f6","role":"implementation"},
+      {"path":"Sources/CorpusHarvest/main.swift","byteCount":2277,"sha256":"cae4fea32a6d76b8d753cfa906b89ebec8a81d27690a0b5b59bfb505fadc14e8","role":"implementation"},
+      {"path":"Sources/HarvestDemo/main.swift","byteCount":2181,"sha256":"3a792272cb88e9c2ad664b6b34ee53bcdb1f89858ee7d258e35bade73cfd14fc","role":"implementation"},
+      {"path":"Sources/AgentContractKit/MethodScaffold.swift","byteCount":5445,"sha256":"7c82585c87f5bf08df8d65e1644733ef58af6eed7acc3e4079a510943540a97a","role":"implementation"},
+      {"path":"Sources/AgentcraftKit/ScaffoldStore.swift","byteCount":1377,"sha256":"82578c6b81d16aee7581b64131a5fbbf43564839adfed3234dcee41242129edf","role":"implementation"},
+      {"path":"Sources/AgentcraftKit/ScaffoldLibrary.swift","byteCount":7975,"sha256":"8f1325716b3a34fc49ba9ac97dc8b0943ae275468d31abb0ac2986c7cd4d5a20","role":"implementation"},
+      {"path":"Sources/AgentcraftMLX/MLXLearner.swift","byteCount":4120,"sha256":"3ba33360491382f0f5ed3830d1eb67f3d3fc7e242d9f2100071c185d345a5b88","role":"implementation"},
+      {"path":"Package.swift","byteCount":7957,"sha256":"ce7c3252c3b35e6ebce1ad896340f8f891ede7e256bbd5ecd1ccbefb27a7f469","role":"implementation"},
+      {"path":"docs/ORACLE-PLAN.md","byteCount":6405,"sha256":"d2f1dbf0f0627dc21811425b3bf08869c2182d09cab60e3daaaffe60307a3391","role":"evidence"},
+      {"path":"docs/ORACLE-POLICY.md","byteCount":5990,"sha256":"32bd60bf2562cb7979d1bf2599942ccf31fdb50f1133b3747dedef9ddc6228e6","role":"evidence"},
+      {"path":"docs/auditable-oracle-derivation.md","byteCount":22958,"sha256":"9d6fe88c47eefd60e1b7b62448b64c8e9b12aa03ceccee78bec6d1b884f19eee","role":"evidence"},
+      {"path":"docs/D2-PREREGISTRATION.md","byteCount":23154,"sha256":"c997357543d01199246bc4feae02148faa4e54873a7d15b29060eb07f3ee3d41","role":"evidence"},
+      {"path":"docs/batch2-sweep-results.md","byteCount":5909,"sha256":"27d599e3c3f4cc7daea607c79d4b8a514e3a590a95d32751ededd61243487ca0","role":"evidence"}
+    ]
+  },
+  "artifacts": {
+    "christoffel": {
+      "state": "Full producer export and both associated evidence files are tracked in HEAD; distinct from the separately promoted ergentics-logic subset.",
+      "gitBlob": "19a739532463713debeb4249e71b17d2c4b77e34",
+      "family": "christoffel",
+      "rows": 890,
+      "positiveYes": 127,
+      "negativeNo": 763,
+      "sourceApp": "agentcraft",
+      "recordedIndependentOracleCount": 4,
+      "recordedOracleCount": 5,
+      "semantics": "Negative labels mark rejected candidate words. The recorded answer no is the correct classification for the question, not an intentionally wrong answer. Preserve all 763 no rows. Generic negative-to-WRONG-ANSWER rendering would corrupt this family's semantics.",
+      "eligibility": "Raw preservation now; any training projection must use an explicit family-specific classification adapter and separate split policy. This audit does not recertify oracle independence."
+    },
+    "methodScaffolds": {
+      "rows": 3,
+      "oracle-independence": {"recordedHarvestable": true, "recordedIndependentOracleCount": 3},
+      "cm-tiling": {"recordedHarvestable": false, "recordedIndependentOracleCount": 2},
+      "safety-class-basic": {"recordedHarvestable": false, "recordedIndependentOracleCount": 0},
+      "eligibility": "Existing retrieval sidecar with method notes, not question-answer training records. Do not fabricate questions or targets."
+    },
+    "oracleIndependenceEmitter": {
+      "family": "agentcraft.oracle_independence",
+      "schema": "0.2",
+      "tier": "Extended statistical, not Core exact",
+      "negativeSemantics": "Unlike Christoffel, negativeTrap intentionally proposes the wrong independent answer for coupled input.",
+      "localCorpusStagingPresent": false,
+      "promotedLogicArtifact": "corpus/exemplars/agentcraft.oracle_independence.jsonl",
+      "promotedArtifactInspected": false
+    }
+  },
+  "connections": [
+    "AgentcraftKit depends on the frozen local MasteryKit package; AgentContractKit remains a separate pure-predicate target.",
+    "ScaffoldStore retrieves the committed MethodScaffold JSONL. Applying notes to model context does not update model weights.",
+    "AgentcraftMLX uses a separate MLX/Hugging Face model and chat-template path; its default demo is Llama 3.2 1B. No compatible native Prime checkpoint or SentencePiece training output was found in this bounded repository inventory.",
+    "The documented circular-reasoner seam is a future verifier-model integration point. Its acid-test fixture-fitted stand-in is explicitly not a general learned detector.",
+    "Commit 37bcc4d, merged by current HEAD, retracts GeometryLock and GeometryMint stand-ins. Deleted stand-ins must not be revived as accepted mathematics."
+  ],
+  "recommendation": "Register corpus, sidecar, implementation and evidence as distinct file roles; retain original bytes and label semantics. Connect existing raw exports now, then select a reviewed, family-specific training projection later. Keep model weights and tokenizer unchanged."
+}

@@ -1,0 +1,32 @@
+{
+  "passed": true,
+  "toolSHA256": "a128286b6e8ef81bd9540891b232b8b8707b762ca858d6c9223e68fc26afbd33",
+  "actualCLIExit": 0,
+  "zeroArgumentExit": 1,
+  "sourceRecordCount": 3090,
+  "exactPairJoins": 2895,
+  "originalRows": {
+    "train": 2463,
+    "val": 303,
+    "holdout": 324
+  },
+  "selectedRows": {
+    "train": 2268,
+    "val": 303,
+    "holdout": 324
+  },
+  "removedTrainRows": 195,
+  "validationHoldoutOverlap": 9,
+  "originalExportExactReconstruction": true,
+  "originalPhysicalLines": 5695,
+  "recordedSteps": 85425,
+  "equivalentCurrentLinePasses": 15,
+  "originalInputHashesUnchanged": {
+    "train": "0c07249494f308e48d88d925dc42f2fb7f4f93dd6faac7b3cfbde8547a49e549",
+    "val": "b7ddb344e6d3e9fc049c5853d93b0f0b20c72641da55bdc3be05f6e981a74a5b",
+    "holdout": "8525798d2563d0ab5a1639acca5d0677975d68bd36d51ec2f2715364d0f68245"
+  },
+  "sourceTruncationRepairClaim": false,
+  "modelExecutionPerformed": false,
+  "clinicalValidationPerformed": false
+}

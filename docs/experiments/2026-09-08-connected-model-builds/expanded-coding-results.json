@@ -1,0 +1,1367 @@
+{
+  "results": [
+    {
+      "build": "0001-pmhnp-native",
+      "case": "coding-first-duplicate",
+      "result": {
+        "schema": "prime_coding_function_check_v1",
+        "caseID": "coding-first-duplicate",
+        "rawOutputSHA256": "49bfcca2d5b0075e4ea591e0f9650ec775387fff5dbe167083657c71ea1c2075",
+        "passed": false,
+        "tests": [],
+        "codeWasRewritten": false,
+        "execution": "restricted AST interpreter, then bounded CPython with explicit safe builtins when eligible",
+        "testVectorFileSHA256": "46c24af5116ef657066a04273200bc4ad8b4816224900b52602abece580121f6",
+        "extractedCode": "warning the most appropriate next step is the most appropriate diagnosis??? this clinical? response?? the most appropriate next? this?ADAen? treatment?0%?? and consider?eno than What is?? the most appropriate next What is? this is this this diagnosis?? this diagnosis? releAI?Ao? this? this? What is the most appropriate response?AI?line?ativeAI??pos? this diagnosis?ativeAI?itter?ps?ativeA2 appropriate treatment?ps?ps?TR? this diagnosis?ateTR?ps?A2 appropriate diagnosis?TR? this diagnosis?ativeA2 appropriate treatment?ativeA2 appropriate diagnosis?A2 appropriate diagnosis? this diagnosis? CYP2D2 appropriate treatment?ice? this is the most appropriate treatment? malignant? this diagnosis? this is the most appropriate response?A2D inhibition? this diagnosis?ativeA2 appropriate diagnosis?ativeA2 appropriate treatment?line?ps? inhibition?A2 appropriate treatment? STARo?AAA2 appropriate diagnosis?ativeA2D2DCo?A2DDC-line?AAAA22222222222DDCo? itself?A2222222222D receptor?ative action?iable?ice?iable?AAAAA222222222DC-line?ative action? the most appropriate recommendation?ative?ative?ation?A222222D receptor? this is the most appropriate recommendation? itself?AA22222222222DID?AAAAAAA222 appropriate recommendation?AADD receptor?A2222222222DDDDD2222222DDCo?A222222DCo?ative action? Frame? itself? Frame? itself?AAAAAAAAA2DDCo? this is the most appropriate recommendation?ation?AC? this is the most appropriate recommendation?",
+        "extraction": "none",
+        "codeOnlyCompliant": false,
+        "status": "syntax_error",
+        "syntaxValid": false,
+        "reason": "invalid syntax (<unknown>, line 1)",
+        "processLimits": {
+          "cpuSoftSeconds": 2,
+          "cpuHardSeconds": 3,
+          "addressSpaceBytes": 536870912,
+          "parentWallTimeoutSeconds": 4,
+          "addressLimitInstalled": false,
+          "addressLimitError": "ValueError: current limit exceeds maximum limit",
+          "addressLimitNote": "macOS may reject address-space rlimits; pure AST interpretation independently bounds source, collections, integers, depth and evaluation steps."
+        },
+        "workerExitCode": 0
+      }
+    },
+    {
+      "build": "0001-pmhnp-native",
+      "case": "coding-stable-unique",
+      "result": {
+        "schema": "prime_coding_function_check_v1",
+        "caseID": "coding-stable-unique",
+        "rawOutputSHA256": "406c7ff1a5b69048046c7788ea5996d5e49a7dd830e9f476cebbb85712508638",
+        "passed": false,
+        "tests": [],
+        "codeWasRewritten": false,
+        "execution": "restricted AST interpreter, then bounded CPython with explicit safe builtins when eligible",
+        "testVectorFileSHA256": "46c24af5116ef657066a04273200bc4ad8b4816224900b52602abece580121f6",
+        "extractedCode": "What is the most appropriate first-AD? the most appropriates?? treatment?? treatment-A receptor profile? the most appropriates? the most appropriate recommendation? the treatment? OAAA receptor? the most appropriates?? treatment? the most appropriates?I? profile? the the most appropriate recommendation? OAATR? this is the most appropriate recommendation? olanzapineA receptor?A receptor?A receptor?A receptor?TRA receptor? Frame?ADit?ADit?A receptor?2DA2D receptor?stA receptor?DitA receptor?ateTRA receptor?A receptor?less?A receptor?2DTRA2DADitA receptor?A receptor?A2D receptor?4A receptor?A2Dit?A receptor?A receptor?A receptor?A receptor?TRA receptorA receptor? anal?2D receptor?TRA receptor?A receptor?TRA receptor?ice?A2DitA receptor? Next?TRA2DTRA2DitA receptor?A receptor?A receptor?A receptor?A receptor?TRA receptor?1TRA receptor?A receptor?A receptorA receptor?A receptor?TRA receptorA receptor?ice?A2DitA receptor?not? OA receptor?tI?A receptorA receptor?1TRA receptor?A appropriate next step?t1TRADit1TRA receptorTRA receptorD receptor?TRAA receptor?ADAAAA receptorADAAA receptor?ttit?2Dit?ice?TRA receptorD receptorAA receptor?ature?less?TRA receptor?Iures treatment? receptor?less?ADA receptor?tI inhibition?TRADA receptorA receptor?A receptorADA receptor?ice?A receptor?A receptor?TRA receptor?A receptor? appropriate next-A2Dit?A receptor?A receptor? than D22DTRA receptor?A receptorA receptor?2D receptorA2DTRA22DA receptor?less?A receptor?A receptor?I?A receptor?AD",
+        "extraction": "none",
+        "codeOnlyCompliant": false,
+        "status": "syntax_error",
+        "syntaxValid": false,
+        "reason": "invalid syntax (<unknown>, line 1)",
+        "processLimits": {
+          "cpuSoftSeconds": 2,
+          "cpuHardSeconds": 3,
+          "addressSpaceBytes": 536870912,
+          "parentWallTimeoutSeconds": 4,
+          "addressLimitInstalled": false,
+          "addressLimitError": "ValueError: current limit exceeds maximum limit",
+          "addressLimitNote": "macOS may reject address-space rlimits; pure AST interpretation independently bounds source, collections, integers, depth and evaluation steps."
+        },
+        "workerExitCode": 0
+      }
+    },
+    {
+      "build": "0002-older-llama",
+      "case": "coding-first-duplicate",
+      "result": {
+        "schema": "prime_coding_function_check_v1",
+        "caseID": "coding-first-duplicate",
+        "rawOutputSHA256": "c2aef7a1017a2485256bb67516b6a8fc875a592297dbdcdd3f6a0d48bd7fa605",
+        "passed": true,
+        "tests": [
+          {
+            "vector": 1,
+            "input": [],
+            "expected": null,
+            "actual": null,
+            "inputUnchanged": true,
+            "newListRequirementPassed": true,
+            "passed": true,
+            "interpreterSteps": 7
+          },
+          {
+            "vector": 2,
+            "input": [
+              7
+            ],
+            "expected": null,
+            "actual": null,
+            "inputUnchanged": true,
+            "newListRequirementPassed": true,
+            "passed": true,
+            "interpreterSteps": 17
+          },
+          {
+            "vector": 3,
+            "input": [
+              1,
+              2,
+              3
+            ],
+            "expected": null,
+            "actual": null,
+            "inputUnchanged": true,
+            "newListRequirementPassed": true,
+            "passed": true,
+            "interpreterSteps": 37
+          },
+          {
+            "vector": 4,
+            "input": [
+              0,
+              0
+            ],
+            "expected": 0,
+            "actual": 0,
+            "inputUnchanged": true,
+            "newListRequirementPassed": true,
+            "passed": true,
+            "interpreterSteps": 23
+          },
+          {
+            "vector": 5,
+            "input": [
+              -1,
+              -2,
+              -1
+            ],
+            "expected": -1,
+            "actual": -1,
+            "inputUnchanged": true,
+            "newListRequirementPassed": true,
+            "passed": true,
+            "interpreterSteps": 33
+          },
+          {
+            "vector": 6,
+            "input": [
+              2,
+              1,
+              1,
+              2
+            ],
+            "expected": 1,
+            "actual": 1,
+            "inputUnchanged": true,
+            "newListRequirementPassed": true,
+            "passed": true,
+            "interpreterSteps": 33
+          },
+          {
+            "vector": 7,
+            "input": [
+              1,
+              2,
+              2,
+              1
+            ],
+            "expected": 2,
+            "actual": 2,
+            "inputUnchanged": true,
+            "newListRequirementPassed": true,
+            "passed": true,
+            "interpreterSteps": 33
+          },
+          {
+            "vector": 8,
+            "input": [
+              5,
+              5,
+              5
+            ],
+            "expected": 5,
+            "actual": 5,
+            "inputUnchanged": true,
+            "newListRequirementPassed": true,
+            "passed": true,
+            "interpreterSteps": 23
+          },
+          {
+            "vector": 9,
+            "input": [
+              0,
+              -1,
+              0,
+              -1
+            ],
+            "expected": 0,
+            "actual": 0,
+            "inputUnchanged": true,
+            "newListRequirementPassed": true,
+            "passed": true,
+            "interpreterSteps": 33
+          },
+          {
+            "vector": 10,
+            "input": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              3,
+              2
+            ],
+            "expected": 3,
+            "actual": 3,
+            "inputUnchanged": true,
+            "newListRequirementPassed": true,
+            "passed": true,
+            "interpreterSteps": 63
+          },
+          {
+            "vector": 11,
+            "input": [
+              1000000000000000000,
+              -1000000000000000000,
+              0,
+              1000000000000000000
+            ],
+            "expected": 1000000000000000000,
+            "actual": 1000000000000000000,
+            "inputUnchanged": true,
+            "newListRequirementPassed": true,
+            "passed": true,
+            "interpreterSteps": 43
+          },
+          {
+            "vector": 12,
+            "input": [
+              -1000000000000000000,
+              0,
+              -1000000000000000000
+            ],
+            "expected": -1000000000000000000,
+            "actual": -1000000000000000000,
+            "inputUnchanged": true,
+            "newListRequirementPassed": true,
+            "passed": true,
+            "interpreterSteps": 33
+          },
+          {
+            "vector": 13,
+            "input": [
+              3,
+              1,
+              2,
+              3,
+              1,
+              2
+            ],
+            "expected": 3,
+            "actual": 3,
+            "inputUnchanged": true,
+            "newListRequirementPassed": true,
+            "passed": true,
+            "interpreterSteps": 43
+          },
+          {
+            "vector": 14,
+            "input": [
+              9,
+              8,
+              7,
+              6,
+              5,
+              4,
+              3,
+              2,
+              1,
+              0
+            ],
+            "expected": null,
+            "actual": null,
+            "inputUnchanged": true,
+            "newListRequirementPassed": true,
+            "passed": true,
+            "interpreterSteps": 107
+          },
+          {
+            "vector": 15,
+            "input": [
+              0,
+              -3,
+              2,
+              -3,
+              0
+            ],
+            "expected": -3,
+            "actual": -3,
+            "inputUnchanged": true,
+            "newListRequirementPassed": true,
+            "passed": true,
+            "interpreterSteps": 43
+          }
+        ],
+        "codeWasRewritten": false,
+        "execution": "restricted AST interpreter, then bounded CPython with explicit safe builtins when eligible",
+        "testVectorFileSHA256": "46c24af5116ef657066a04273200bc4ad8b4816224900b52602abece580121f6",
+        "extractedCode": "def first_duplicate(nums):\n    seen = set()\n    for num in nums:\n        if num in seen:\n            return num\n        seen.add(num)\n    return None",
+        "extraction": "single_enclosing_python_fence",
+        "codeOnlyCompliant": false,
+        "syntaxValid": true,
+        "status": "passed",
+        "interpreterPassed": true,
+        "cpythonWitness": {
+          "performed": true,
+          "runtime": "3.9.6",
+          "safeBuiltins": [
+            "enumerate",
+            "len",
+            "list",
+            "range",
+            "set"
+          ],
+          "opcodeBudgetPerVector": 100000,
+          "localValuesCheckedAfterEveryOpcode": true,
+          "tests": [
+            {
+              "vector": 1,
+              "input": [],
+              "expected": null,
+              "actual": null,
+              "inputUnchanged": true,
+              "newListRequirementPassed": true,
+              "passed": true,
+              "interpreterParity": true,
+              "status": "passed",
+              "executedOpcodeCount": 8
+            },
+            {
+              "vector": 2,
+              "input": [
+                7
+              ],
+              "expected": null,
+              "actual": null,
+              "inputUnchanged": true,
+              "newListRequirementPassed": true,
+              "passed": true,
+              "interpreterParity": true,
+              "status": "passed",
+              "executedOpcodeCount": 20
+            },
+            {
+              "vector": 3,
+              "input": [
+                1,
+                2,
+                3
+              ],
+              "expected": null,
+              "actual": null,
+              "inputUnchanged": true,
+              "newListRequirementPassed": true,
+              "passed": true,
+              "interpreterParity": true,
+              "status": "passed",
+              "executedOpcodeCount": 44
+            },
+            {
+              "vector": 4,
+              "input": [
+                0,
+                0
+              ],
+              "expected": 0,
+              "actual": 0,
+              "inputUnchanged": true,
+              "newListRequirementPassed": true,
+              "passed": true,
+              "interpreterParity": true,
+              "status": "passed",
+              "executedOpcodeCount": 27
+            },
+            {
+              "vector": 5,
+              "input": [
+                -1,
+                -2,
+                -1
+              ],
+              "expected": -1,
+              "actual": -1,
+              "inputUnchanged": true,
+              "newListRequirementPassed": true,
+              "passed": true,
+              "interpreterParity": true,
+              "status": "passed",
+              "executedOpcodeCount": 39
+            },
+            {
+              "vector": 6,
+              "input": [
+                2,
+                1,
+                1,
+                2
+              ],
+              "expected": 1,
+              "actual": 1,
+              "inputUnchanged": true,
+              "newListRequirementPassed": true,
+              "passed": true,
+              "interpreterParity": true,
+              "status": "passed",
+              "executedOpcodeCount": 39
+            },
+            {
+              "vector": 7,
+              "input": [
+                1,
+                2,
+                2,
+                1
+              ],
+              "expected": 2,
+              "actual": 2,
+              "inputUnchanged": true,
+              "newListRequirementPassed": true,
+              "passed": true,
+              "interpreterParity": true,
+              "status": "passed",
+              "executedOpcodeCount": 39
+            },
+            {
+              "vector": 8,
+              "input": [
+                5,
+                5,
+                5
+              ],
+              "expected": 5,
+              "actual": 5,
+              "inputUnchanged": true,
+              "newListRequirementPassed": true,
+              "passed": true,
+              "interpreterParity": true,
+              "status": "passed",
+              "executedOpcodeCount": 27
+            },
+            {
+              "vector": 9,
+              "input": [
+                0,
+                -1,
+                0,
+                -1
+              ],
+              "expected": 0,
+              "actual": 0,
+              "inputUnchanged": true,
+              "newListRequirementPassed": true,
+              "passed": true,
+              "interpreterParity": true,
+              "status": "passed",
+              "executedOpcodeCount": 39
+            },
+            {
+              "vector": 10,
+              "input": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                3,
+                2
+              ],
+              "expected": 3,
+              "actual": 3,
+              "inputUnchanged": true,
+              "newListRequirementPassed": true,
+              "passed": true,
+              "interpreterParity": true,
+              "status": "passed",
+              "executedOpcodeCount": 75
+            },
+            {
+              "vector": 11,
+              "input": [
+                1000000000000000000,
+                -1000000000000000000,
+                0,
+                1000000000000000000
+              ],
+              "expected": 1000000000000000000,
+              "actual": 1000000000000000000,
+              "inputUnchanged": true,
+              "newListRequirementPassed": true,
+              "passed": true,
+              "interpreterParity": true,
+              "status": "passed",
+              "executedOpcodeCount": 51
+            },
+            {
+              "vector": 12,
+              "input": [
+                -1000000000000000000,
+                0,
+                -1000000000000000000
+              ],
+              "expected": -1000000000000000000,
+              "actual": -1000000000000000000,
+              "inputUnchanged": true,
+              "newListRequirementPassed": true,
+              "passed": true,
+              "interpreterParity": true,
+              "status": "passed",
+              "executedOpcodeCount": 39
+            },
+            {
+              "vector": 13,
+              "input": [
+                3,
+                1,
+                2,
+                3,
+                1,
+                2
+              ],
+              "expected": 3,
+              "actual": 3,
+              "inputUnchanged": true,
+              "newListRequirementPassed": true,
+              "passed": true,
+              "interpreterParity": true,
+              "status": "passed",
+              "executedOpcodeCount": 51
+            },
+            {
+              "vector": 14,
+              "input": [
+                9,
+                8,
+                7,
+                6,
+                5,
+                4,
+                3,
+                2,
+                1,
+                0
+              ],
+              "expected": null,
+              "actual": null,
+              "inputUnchanged": true,
+              "newListRequirementPassed": true,
+              "passed": true,
+              "interpreterParity": true,
+              "status": "passed",
+              "executedOpcodeCount": 128
+            },
+            {
+              "vector": 15,
+              "input": [
+                0,
+                -3,
+                2,
+                -3,
+                0
+              ],
+              "expected": -3,
+              "actual": -3,
+              "inputUnchanged": true,
+              "newListRequirementPassed": true,
+              "passed": true,
+              "interpreterParity": true,
+              "status": "passed",
+              "executedOpcodeCount": 51
+            }
+          ],
+          "passed": true,
+          "allInterpreterParity": true
+        },
+        "passScope": "restricted_ast_and_actual_cpython",
+        "processLimits": {
+          "cpuSoftSeconds": 2,
+          "cpuHardSeconds": 3,
+          "addressSpaceBytes": 536870912,
+          "parentWallTimeoutSeconds": 4,
+          "addressLimitInstalled": false,
+          "addressLimitError": "ValueError: current limit exceeds maximum limit",
+          "addressLimitNote": "macOS may reject address-space rlimits; pure AST interpretation independently bounds source, collections, integers, depth and evaluation steps."
+        },
+        "workerExitCode": 0
+      }
+    },
+    {
+      "build": "0002-older-llama",
+      "case": "coding-stable-unique",
+      "result": {
+        "schema": "prime_coding_function_check_v1",
+        "caseID": "coding-stable-unique",
+        "rawOutputSHA256": "3a4b9dd00d67b0fe3e1a6d2f7e7be482dce847d129aae87d369b2e7a1aa6e4ee",
+        "passed": true,
+        "tests": [
+          {
+            "vector": 1,
+            "input": [],
+            "expected": [],
+            "actual": [],
+            "inputUnchanged": true,
+            "newListRequirementPassed": true,
+            "passed": true,
+            "interpreterSteps": 10
+          },
+          {
+            "vector": 2,
+            "input": [
+              5
+            ],
+            "expected": [
+              5
+            ],
+            "actual": [
+              5
+            ],
+            "inputUnchanged": true,
+            "newListRequirementPassed": true,
+            "passed": true,
+            "interpreterSteps": 24
+          },
+          {
+            "vector": 3,
+            "input": [
+              1,
+              1,
+              1
+            ],
+            "expected": [
+              1
+            ],
+            "actual": [
+              1
+            ],
+            "inputUnchanged": true,
+            "newListRequirementPassed": true,
+            "passed": true,
+            "interpreterSteps": 36
+          },
+          {
+            "vector": 4,
+            "input": [
+              3,
+              1,
+              3,
+              2,
+              1,
+              2
+            ],
+            "expected": [
+              3,
+              1,
+              2
+            ],
+            "actual": [
+              3,
+              1,
+              2
+            ],
+            "inputUnchanged": true,
+            "newListRequirementPassed": true,
+            "passed": true,
+            "interpreterSteps": 70
+          },
+          {
+            "vector": 5,
+            "input": [
+              0,
+              -1,
+              0,
+              -2,
+              -1
+            ],
+            "expected": [
+              0,
+              -1,
+              -2
+            ],
+            "actual": [
+              0,
+              -1,
+              -2
+            ],
+            "inputUnchanged": true,
+            "newListRequirementPassed": true,
+            "passed": true,
+            "interpreterSteps": 64
+          },
+          {
+            "vector": 6,
+            "input": [
+              5,
+              4,
+              3,
+              2,
+              1
+            ],
+            "expected": [
+              5,
+              4,
+              3,
+              2,
+              1
+            ],
+            "actual": [
+              5,
+              4,
+              3,
+              2,
+              1
+            ],
+            "inputUnchanged": true,
+            "newListRequirementPassed": true,
+            "passed": true,
+            "interpreterSteps": 80
+          },
+          {
+            "vector": 7,
+            "input": [
+              -2,
+              -1,
+              -2,
+              0,
+              -1
+            ],
+            "expected": [
+              -2,
+              -1,
+              0
+            ],
+            "actual": [
+              -2,
+              -1,
+              0
+            ],
+            "inputUnchanged": true,
+            "newListRequirementPassed": true,
+            "passed": true,
+            "interpreterSteps": 64
+          },
+          {
+            "vector": 8,
+            "input": [
+              -1000000000000000000,
+              1000000000000000000,
+              -1000000000000000000
+            ],
+            "expected": [
+              -1000000000000000000,
+              1000000000000000000
+            ],
+            "actual": [
+              -1000000000000000000,
+              1000000000000000000
+            ],
+            "inputUnchanged": true,
+            "newListRequirementPassed": true,
+            "passed": true,
+            "interpreterSteps": 44
+          },
+          {
+            "vector": 9,
+            "input": [
+              0,
+              0,
+              0
+            ],
+            "expected": [
+              0
+            ],
+            "actual": [
+              0
+            ],
+            "inputUnchanged": true,
+            "newListRequirementPassed": true,
+            "passed": true,
+            "interpreterSteps": 36
+          },
+          {
+            "vector": 10,
+            "input": [
+              2,
+              1,
+              2,
+              1,
+              3,
+              1,
+              0
+            ],
+            "expected": [
+              2,
+              1,
+              3,
+              0
+            ],
+            "actual": [
+              2,
+              1,
+              3,
+              0
+            ],
+            "inputUnchanged": true,
+            "newListRequirementPassed": true,
+            "passed": true,
+            "interpreterSteps": 84
+          },
+          {
+            "vector": 11,
+            "input": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11
+            ],
+            "expected": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11
+            ],
+            "actual": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11
+            ],
+            "inputUnchanged": true,
+            "newListRequirementPassed": true,
+            "passed": true,
+            "interpreterSteps": 178
+          },
+          {
+            "vector": 12,
+            "input": [
+              4,
+              3,
+              4,
+              2,
+              3,
+              1,
+              2,
+              0
+            ],
+            "expected": [
+              4,
+              3,
+              2,
+              1,
+              0
+            ],
+            "actual": [
+              4,
+              3,
+              2,
+              1,
+              0
+            ],
+            "inputUnchanged": true,
+            "newListRequirementPassed": true,
+            "passed": true,
+            "interpreterSteps": 98
+          }
+        ],
+        "codeWasRewritten": false,
+        "execution": "restricted AST interpreter, then bounded CPython with explicit safe builtins when eligible",
+        "testVectorFileSHA256": "46c24af5116ef657066a04273200bc4ad8b4816224900b52602abece580121f6",
+        "extractedCode": "def stable_unique(nums):\n    seen = set()\n    result = []\n    for num in nums:\n        if num not in seen:\n            result.append(num)\n            seen.add(num)\n    return result",
+        "extraction": "single_enclosing_python_fence",
+        "codeOnlyCompliant": false,
+        "syntaxValid": true,
+        "status": "passed",
+        "interpreterPassed": true,
+        "cpythonWitness": {
+          "performed": true,
+          "runtime": "3.9.6",
+          "safeBuiltins": [
+            "enumerate",
+            "len",
+            "list",
+            "range",
+            "set"
+          ],
+          "opcodeBudgetPerVector": 100000,
+          "localValuesCheckedAfterEveryOpcode": true,
+          "tests": [
+            {
+              "vector": 1,
+              "input": [],
+              "expected": [],
+              "actual": [],
+              "inputUnchanged": true,
+              "newListRequirementPassed": true,
+              "passed": true,
+              "interpreterParity": true,
+              "status": "passed",
+              "executedOpcodeCount": 10
+            },
+            {
+              "vector": 2,
+              "input": [
+                5
+              ],
+              "expected": [
+                5
+              ],
+              "actual": [
+                5
+              ],
+              "inputUnchanged": true,
+              "newListRequirementPassed": true,
+              "passed": true,
+              "interpreterParity": true,
+              "status": "passed",
+              "executedOpcodeCount": 27
+            },
+            {
+              "vector": 3,
+              "input": [
+                1,
+                1,
+                1
+              ],
+              "expected": [
+                1
+              ],
+              "actual": [
+                1
+              ],
+              "inputUnchanged": true,
+              "newListRequirementPassed": true,
+              "passed": true,
+              "interpreterParity": true,
+              "status": "passed",
+              "executedOpcodeCount": 39
+            },
+            {
+              "vector": 4,
+              "input": [
+                3,
+                1,
+                3,
+                2,
+                1,
+                2
+              ],
+              "expected": [
+                3,
+                1,
+                2
+              ],
+              "actual": [
+                3,
+                1,
+                2
+              ],
+              "inputUnchanged": true,
+              "newListRequirementPassed": true,
+              "passed": true,
+              "interpreterParity": true,
+              "status": "passed",
+              "executedOpcodeCount": 79
+            },
+            {
+              "vector": 5,
+              "input": [
+                0,
+                -1,
+                0,
+                -2,
+                -1
+              ],
+              "expected": [
+                0,
+                -1,
+                -2
+              ],
+              "actual": [
+                0,
+                -1,
+                -2
+              ],
+              "inputUnchanged": true,
+              "newListRequirementPassed": true,
+              "passed": true,
+              "interpreterParity": true,
+              "status": "passed",
+              "executedOpcodeCount": 73
+            },
+            {
+              "vector": 6,
+              "input": [
+                5,
+                4,
+                3,
+                2,
+                1
+              ],
+              "expected": [
+                5,
+                4,
+                3,
+                2,
+                1
+              ],
+              "actual": [
+                5,
+                4,
+                3,
+                2,
+                1
+              ],
+              "inputUnchanged": true,
+              "newListRequirementPassed": true,
+              "passed": true,
+              "interpreterParity": true,
+              "status": "passed",
+              "executedOpcodeCount": 95
+            },
+            {
+              "vector": 7,
+              "input": [
+                -2,
+                -1,
+                -2,
+                0,
+                -1
+              ],
+              "expected": [
+                -2,
+                -1,
+                0
+              ],
+              "actual": [
+                -2,
+                -1,
+                0
+              ],
+              "inputUnchanged": true,
+              "newListRequirementPassed": true,
+              "passed": true,
+              "interpreterParity": true,
+              "status": "passed",
+              "executedOpcodeCount": 73
+            },
+            {
+              "vector": 8,
+              "input": [
+                -1000000000000000000,
+                1000000000000000000,
+                -1000000000000000000
+              ],
+              "expected": [
+                -1000000000000000000,
+                1000000000000000000
+              ],
+              "actual": [
+                -1000000000000000000,
+                1000000000000000000
+              ],
+              "inputUnchanged": true,
+              "newListRequirementPassed": true,
+              "passed": true,
+              "interpreterParity": true,
+              "status": "passed",
+              "executedOpcodeCount": 50
+            },
+            {
+              "vector": 9,
+              "input": [
+                0,
+                0,
+                0
+              ],
+              "expected": [
+                0
+              ],
+              "actual": [
+                0
+              ],
+              "inputUnchanged": true,
+              "newListRequirementPassed": true,
+              "passed": true,
+              "interpreterParity": true,
+              "status": "passed",
+              "executedOpcodeCount": 39
+            },
+            {
+              "vector": 10,
+              "input": [
+                2,
+                1,
+                2,
+                1,
+                3,
+                1,
+                0
+              ],
+              "expected": [
+                2,
+                1,
+                3,
+                0
+              ],
+              "actual": [
+                2,
+                1,
+                3,
+                0
+              ],
+              "inputUnchanged": true,
+              "newListRequirementPassed": true,
+              "passed": true,
+              "interpreterParity": true,
+              "status": "passed",
+              "executedOpcodeCount": 96
+            },
+            {
+              "vector": 11,
+              "input": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11
+              ],
+              "expected": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11
+              ],
+              "actual": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11
+              ],
+              "inputUnchanged": true,
+              "newListRequirementPassed": true,
+              "passed": true,
+              "interpreterParity": true,
+              "status": "passed",
+              "executedOpcodeCount": 214
+            },
+            {
+              "vector": 12,
+              "input": [
+                4,
+                3,
+                4,
+                2,
+                3,
+                1,
+                2,
+                0
+              ],
+              "expected": [
+                4,
+                3,
+                2,
+                1,
+                0
+              ],
+              "actual": [
+                4,
+                3,
+                2,
+                1,
+                0
+              ],
+              "inputUnchanged": true,
+              "newListRequirementPassed": true,
+              "passed": true,
+              "interpreterParity": true,
+              "status": "passed",
+              "executedOpcodeCount": 113
+            }
+          ],
+          "passed": true,
+          "allInterpreterParity": true
+        },
+        "passScope": "restricted_ast_and_actual_cpython",
+        "processLimits": {
+          "cpuSoftSeconds": 2,
+          "cpuHardSeconds": 3,
+          "addressSpaceBytes": 536870912,
+          "parentWallTimeoutSeconds": 4,
+          "addressLimitInstalled": false,
+          "addressLimitError": "ValueError: current limit exceeds maximum limit",
+          "addressLimitNote": "macOS may reject address-space rlimits; pure AST interpretation independently bounds source, collections, integers, depth and evaluation steps."
+        },
+        "workerExitCode": 0
+      }
+    },
+    {
+      "build": "0003-native-llm-english",
+      "case": "coding-first-duplicate",
+      "result": {
+        "schema": "prime_coding_function_check_v1",
+        "caseID": "coding-first-duplicate",
+        "rawOutputSHA256": "477aafdce32c85ef0904f7d67ac4ed3568a2fc360868020c4b7d1bdc87ca82fb",
+        "passed": false,
+        "tests": [],
+        "codeWasRewritten": false,
+        "execution": "restricted AST interpreter, then bounded CPython with explicit safe builtins when eligible",
+        "testVectorFileSHA256": "46c24af5116ef657066a04273200bc4ad8b4816224900b52602abece580121f6",
+        "extractedCode": "Result: -1.\n",
+        "extraction": "none",
+        "codeOnlyCompliant": false,
+        "status": "unsupported_grammar",
+        "syntaxValid": true,
+        "reason": "construct outside the restricted Python grammar",
+        "processLimits": {
+          "cpuSoftSeconds": 2,
+          "cpuHardSeconds": 3,
+          "addressSpaceBytes": 536870912,
+          "parentWallTimeoutSeconds": 4,
+          "addressLimitInstalled": false,
+          "addressLimitError": "ValueError: current limit exceeds maximum limit",
+          "addressLimitNote": "macOS may reject address-space rlimits; pure AST interpretation independently bounds source, collections, integers, depth and evaluation steps."
+        },
+        "workerExitCode": 0
+      }
+    },
+    {
+      "build": "0003-native-llm-english",
+      "case": "coding-stable-unique",
+      "result": {
+        "schema": "prime_coding_function_check_v1",
+        "caseID": "coding-stable-unique",
+        "rawOutputSHA256": "477aafdce32c85ef0904f7d67ac4ed3568a2fc360868020c4b7d1bdc87ca82fb",
+        "passed": false,
+        "tests": [],
+        "codeWasRewritten": false,
+        "execution": "restricted AST interpreter, then bounded CPython with explicit safe builtins when eligible",
+        "testVectorFileSHA256": "46c24af5116ef657066a04273200bc4ad8b4816224900b52602abece580121f6",
+        "extractedCode": "Result: -1.\n",
+        "extraction": "none",
+        "codeOnlyCompliant": false,
+        "status": "unsupported_grammar",
+        "syntaxValid": true,
+        "reason": "construct outside the restricted Python grammar",
+        "processLimits": {
+          "cpuSoftSeconds": 2,
+          "cpuHardSeconds": 3,
+          "addressSpaceBytes": 536870912,
+          "parentWallTimeoutSeconds": 4,
+          "addressLimitInstalled": false,
+          "addressLimitError": "ValueError: current limit exceeds maximum limit",
+          "addressLimitNote": "macOS may reject address-space rlimits; pure AST interpretation independently bounds source, collections, integers, depth and evaluation steps."
+        },
+        "workerExitCode": 0
+      }
+    },
+    {
+      "build": "0004-native-llm-latin",
+      "case": "coding-first-duplicate",
+      "result": {
+        "schema": "prime_coding_function_check_v1",
+        "caseID": "coding-first-duplicate",
+        "rawOutputSHA256": "d244b865d9be84be1369fe8215b4131f5d5ebc736bb04e394423f0706ba8601a",
+        "passed": false,
+        "tests": [],
+        "codeWasRewritten": false,
+        "execution": "restricted AST interpreter, then bounded CPython with explicit safe builtins when eligible",
+        "testVectorFileSHA256": "46c24af5116ef657066a04273200bc4ad8b4816224900b52602abece580121f6",
+        "extractedCode": "                                                                                                                                                                                                                                                                                                                                                                                                                                                       ",
+        "extraction": "none",
+        "codeOnlyCompliant": false,
+        "status": "unsupported_grammar",
+        "syntaxValid": true,
+        "reason": "expected exactly one function",
+        "processLimits": {
+          "cpuSoftSeconds": 2,
+          "cpuHardSeconds": 3,
+          "addressSpaceBytes": 536870912,
+          "parentWallTimeoutSeconds": 4,
+          "addressLimitInstalled": false,
+          "addressLimitError": "ValueError: current limit exceeds maximum limit",
+          "addressLimitNote": "macOS may reject address-space rlimits; pure AST interpretation independently bounds source, collections, integers, depth and evaluation steps."
+        },
+        "workerExitCode": 0
+      }
+    },
+    {
+      "build": "0004-native-llm-latin",
+      "case": "coding-stable-unique",
+      "result": {
+        "schema": "prime_coding_function_check_v1",
+        "caseID": "coding-stable-unique",
+        "rawOutputSHA256": "85de0641a65ec1e2454a839fa6a9f18cdeea77b49fbd0ad38b8b1c5c1b88e03e",
+        "passed": false,
+        "tests": [],
+        "codeWasRewritten": false,
+        "execution": "restricted AST interpreter, then bounded CPython with explicit safe builtins when eligible",
+        "testVectorFileSHA256": "46c24af5116ef657066a04273200bc4ad8b4816224900b52602abece580121f6",
+        "extractedCode": "                                                                                                                                                                                                                                                                                                                                                                                                                                                             ",
+        "extraction": "none",
+        "codeOnlyCompliant": false,
+        "status": "unsupported_grammar",
+        "syntaxValid": true,
+        "reason": "expected exactly one function",
+        "processLimits": {
+          "cpuSoftSeconds": 2,
+          "cpuHardSeconds": 3,
+          "addressSpaceBytes": 536870912,
+          "parentWallTimeoutSeconds": 4,
+          "addressLimitInstalled": false,
+          "addressLimitError": "ValueError: current limit exceeds maximum limit",
+          "addressLimitNote": "macOS may reject address-space rlimits; pure AST interpretation independently bounds source, collections, integers, depth and evaluation steps."
+        },
+        "workerExitCode": 0
+      }
+    }
+  ],
+  "modelOutputsRewritten": false,
+  "referencesSuppliedToModels": false,
+  "metadataCorrection": "Non-code syntax/grammar failures no longer report codeOnlyCompliant true. Prior check receipts retained."
+}

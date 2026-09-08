@@ -1,0 +1,49 @@
+{
+  "schema": "prime_local_model_build_registry_v1",
+  "buildCollection": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds",
+  "candidate": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Connected-Candidate-2026-09-08",
+  "runCount": 33,
+  "trainingPerformed": false,
+  "builds": [
+    {
+      "buildID": "EPM-20260908-0001-pmhnp-native",
+      "directory": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0001-pmhnp-native",
+      "profile": "pmhnp",
+      "runCount": 5,
+      "buildFileSHA256": "8f1f3d3bb8a1795e9f50738b3ea6fbb4da4d89f7fc8593219ca025edaee3cac5"
+    },
+    {
+      "buildID": "EPM-20260908-0002-older-llama",
+      "directory": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0002-older-llama",
+      "profile": "older_llama",
+      "runCount": 10,
+      "buildFileSHA256": "e67e635ebbf11bb5242eab3143da77a8a6e6cd554001a00176cb6f1c54be2687"
+    },
+    {
+      "buildID": "EPM-20260908-0003-native-llm-english",
+      "directory": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0003-native-llm-english",
+      "profile": "compositional_v2",
+      "runCount": 10,
+      "buildFileSHA256": "943b932b0ff3aca14cb792411869b371fa059a093930ab0ac5a4512d7eb52d6e"
+    },
+    {
+      "buildID": "EPM-20260908-0004-native-llm-latin",
+      "directory": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0004-native-llm-latin",
+      "profile": "latin",
+      "runCount": 5,
+      "buildFileSHA256": "cd5854dfdecfe7bc80a2bc16e94163ea6c94a32cdc44c0fda331001008d6a5a7"
+    },
+    {
+      "buildID": "EPM-20260908-0005-prime-symbolic",
+      "directory": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0005-prime-symbolic",
+      "profile": "prime_fixed_z8_symbols",
+      "runCount": 3,
+      "buildFileSHA256": "d5fb505ce92e72ff998893d1efee31ab3207d95f87e4c67b690770954b73eb70"
+    }
+  ],
+  "originalRunCount": 33,
+  "expandedRunCount": 36,
+  "totalRunCount": 69,
+  "expandedResult": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Expanded-01/README.md",
+  "primarySystemComparison": "Prime plus actual runtime/execution capabilities versus Llama remains open; hypervisor controller not invoked in checkpoint generation."
+}

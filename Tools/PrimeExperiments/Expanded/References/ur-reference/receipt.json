@@ -1,0 +1,44 @@
+{
+  "compileExit": 0,
+  "runExit": 0,
+  "compiledOriginalFiles": [
+    {
+      "path": "/Users/ergentics/ur-app/Sources/UrKit/Board.swift",
+      "bytes": 2297,
+      "sha256": "62a3c8e34bf6a62ddbc8a35c36bb375dccbdaddd21e357cacb9eddac556db14e"
+    },
+    {
+      "path": "/Users/ergentics/ur-app/Sources/UrKit/Player.swift",
+      "bytes": 322,
+      "sha256": "b151ab40d797138e5ce5edfdf2870afbc5f30dda9a110fdf4792222c9a288076"
+    },
+    {
+      "path": "/Users/ergentics/ur-app/Sources/UrKit/GameState.swift",
+      "bytes": 3308,
+      "sha256": "2ac3a755369bd306913fae47cfead976daed1c69c1284a1b41a5eab0cfb4267d"
+    },
+    {
+      "path": "/Users/ergentics/ur-app/Sources/UrKit/Dice.swift",
+      "bytes": 976,
+      "sha256": "1f29868f8c64ca8289889877461d29f7b42e12e16e288e79608725d97408b437"
+    },
+    {
+      "path": "/Users/ergentics/ur-app/Sources/UrKit/Move.swift",
+      "bytes": 1016,
+      "sha256": "455374f01ba5a52c6fd277b82e9f293a25e5d85fe8ed7f9bb6554e784f25271b"
+    },
+    {
+      "path": "/Users/ergentics/ur-app/Sources/UrKit/MoveGenerator.swift",
+      "bytes": 1749,
+      "sha256": "708fc1671845433bf88dc59cd0cb220a4699543c354184a8dd6169090b96b5e4"
+    },
+    {
+      "path": "/Users/ergentics/ur-app/Sources/UrKit/RulesEngine.swift",
+      "bytes": 2024,
+      "sha256": "b680e4598331bbc7770fffd8397662b3f91dfda07249eb53c7c2fa5247a1c293"
+    }
+  ],
+  "resultSHA256": "598d399d0b8146c3ec3332add54f4ff0ef8f44870105daa9ca12b999e4d0f17b",
+  "binarySHA256": "afb91711bdf1bea1cbd641fdd35ce811e04ffecd0d8bd9cdb07201ab225b1f6f",
+  "scope": "Deterministic engine reference only; no model, training, GPU, or upstream writes"
+}

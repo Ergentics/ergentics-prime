@@ -1,0 +1,200 @@
+{
+  "schema": "prime_corpus_source_registry_v1",
+  "sources": [
+    {
+      "id": "algebra-app",
+      "root": "/Users/ergentics/algebra-app",
+      "revision": "9bc3fa5710558c1bc4349c7708576c47a69de58b",
+      "files": [
+        {
+          "path": "Sources/AlgebraKit/Math.swift",
+          "byteCount": 18119,
+          "sha256": "7734702e1a7d77ca513d29ee81952560f5c5fa0af3d39fb8e883ac818ed01134",
+          "kind": "evidence"
+        },
+        {
+          "path": "Sources/AlgStats/Harvest.swift",
+          "byteCount": 73765,
+          "sha256": "53825d863e1ab2f61981b5ad01a6e714750549ab2872232421e7897b71106b0e",
+          "kind": "evidence"
+        },
+        {
+          "path": "Sources/AlgStats/HarvestDeepen.swift",
+          "kind": "evidence",
+          "byteCount": 65312,
+          "sha256": "8e8eb243e17063606ccc77bcc45028fbcd66d2630ac1e22ec52a85040ef23857"
+        }
+      ]
+    },
+    {
+      "id": "geometry-app",
+      "root": "/Users/ergentics/geometry-app",
+      "revision": "74906b86eeca4e655d31e6912a905ac390215443",
+      "files": [
+        {
+          "path": "AGENTS.md",
+          "byteCount": 1783,
+          "sha256": "0b98fa76c5ddabc892c95763498a47854c224dd4e0521a68cf9e479c4f89c06f",
+          "kind": "evidence"
+        },
+        {
+          "path": "Sources/GeometryStats/Harvest.swift",
+          "byteCount": 221877,
+          "sha256": "4ac175972e50b35ad42fab145e9edc8b4e1c2256a26240bfba4ef737954299f1",
+          "kind": "evidence"
+        }
+      ]
+    },
+    {
+      "id": "ergentics-logic",
+      "root": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-corpus-sources/ergentics-logic",
+      "revision": "97be84b2790b79ce79558d6bade846a532226540",
+      "files": [
+        {
+          "path": "corpus/GATE-STATUS.md",
+          "byteCount": 66052,
+          "sha256": "5efd01ea205b13076cd5a71f47cafb007dac12c21214ac32c6b61db9cf73158f",
+          "kind": "evidence"
+        },
+        {
+          "path": "docs/LOGIC-CORPUS-SCHEMA.md",
+          "byteCount": 9334,
+          "sha256": "ecca11fcdd2aa9a8e6f30ada99ce9e654efb7e4c529c1b1f814f06df1657dc7f",
+          "kind": "evidence"
+        },
+        {
+          "path": "tools/exemplars_to_text.py",
+          "byteCount": 4927,
+          "sha256": "f4d2ab3d62b0d1cf5e65ce4a20fc73d5823eea886a7afb024353706d759d72c0",
+          "kind": "evidence"
+        },
+        {
+          "path": "corpus/exemplars/algebra.exp.jsonl",
+          "byteCount": 314570,
+          "sha256": "76112bbad04c4dd72baf41616c41f586a87c4c2e33e3d0a120132c413f3c9fce",
+          "kind": "corpus"
+        },
+        {
+          "path": "corpus/exemplars/algebra.factor.jsonl",
+          "byteCount": 984909,
+          "sha256": "4216a3384bbb92b07c33489e9992f1cbf8cd800024c7570d7a8ee6b6fca94898",
+          "kind": "corpus"
+        },
+        {
+          "path": "corpus/exemplars/algebra.inequality.jsonl",
+          "byteCount": 2186414,
+          "sha256": "a0b429e1160145ee46916fbcfc6711984a8e835cb7c71605a7287fbfe962dd67",
+          "kind": "corpus"
+        },
+        {
+          "path": "corpus/exemplars/algebra.rational.jsonl",
+          "byteCount": 2042523,
+          "sha256": "a49666d712651f60a67756100d4531e7e5a3d97d55fe5de90707d2f1c51ba818",
+          "kind": "corpus"
+        },
+        {
+          "path": "corpus/exemplars/algebra.solve.jsonl",
+          "byteCount": 1101044,
+          "sha256": "b85cdc98e71fb0bb05b6795db16f5db081d7ec23e8314a11ef49db3b79f2331e",
+          "kind": "corpus"
+        },
+        {
+          "path": "corpus/exemplars/algebra.systems.jsonl",
+          "byteCount": 6631559,
+          "sha256": "2631a1ce39a0e5abd7d4689c481e753306dd6a8422ada696a5f1fd1f5612b50c",
+          "kind": "corpus"
+        },
+        {
+          "path": "corpus/exemplars/geometry.area.jsonl",
+          "byteCount": 180624,
+          "sha256": "7e3c3f758120c923f0daa6228e6fb4e34cb272e57453a5a111cfbcc1dbcfd96d",
+          "kind": "corpus"
+        },
+        {
+          "path": "corpus/exemplars/geometry.pointintriangle.jsonl",
+          "byteCount": 209593,
+          "sha256": "8b69625a5fcfe1ce3f00c71fd6e98e68d0c0c406bec82a8fdd12dd30702eb4c1",
+          "kind": "corpus"
+        },
+        {
+          "path": "corpus/exemplars/geometry.point_in_polygon.jsonl",
+          "byteCount": 167311,
+          "sha256": "f57eae67cf6fa1b3cc1bdbf16963647ec3619efb2f0f31cf1879aaa7ba2bd6c8",
+          "kind": "corpus"
+        },
+        {
+          "path": "corpus/exemplars/geometry.polygon_area.jsonl",
+          "byteCount": 118332,
+          "sha256": "6b7081147965ce4aa2d659da5a5ee3d6356017827d9f1e50393ee6bd7bc2e95b",
+          "kind": "corpus"
+        },
+        {
+          "path": "corpus/exemplars/renderkit.ggx.jsonl",
+          "byteCount": 32014,
+          "sha256": "7cf62371bdff6aae4e2e135d82a977dd42012161ce6afba8f5acfcc7483e5a57",
+          "kind": "corpus"
+        },
+        {
+          "path": "corpus/exemplars/renderkit.projection.midpoint.jsonl",
+          "byteCount": 19657,
+          "sha256": "af256e3f65d1200b7d4d4c9ff2a2d996eb08343e69831bfc0400392fa10e1762",
+          "kind": "corpus"
+        },
+        {
+          "path": "corpus/exemplars/renderkit.metal.coverage.jsonl",
+          "byteCount": 8940,
+          "sha256": "0c6c3b704d0194c6bcd491871d95f7db58d2fa35115083d497b02a990a04795b",
+          "kind": "corpus"
+        },
+        {
+          "path": "corpus/exemplars/renderkit.shading.specular_peak.jsonl",
+          "byteCount": 8001,
+          "sha256": "7e018e1013ba8c3ba5484fd70f10d3c3c98f70c66d9a0d28072dda8e57300387",
+          "kind": "corpus"
+        },
+        {
+          "path": "corpus/exemplars/logic.parsing.jsonl",
+          "byteCount": 172717,
+          "sha256": "0e4925428774d7f16159508cbc9d397199d9f20c2e9e0a7bef7d6845cc506837",
+          "kind": "corpus"
+        },
+        {
+          "path": "CLAUDE.md",
+          "kind": "evidence",
+          "byteCount": 2892,
+          "sha256": "b71c5b45f594c5cd370efc0ced175345cafbece23f52d20aa322150acfe62823"
+        }
+      ]
+    }
+  ],
+  "referenceModel": {
+    "modelID": "ergentics_native_lab_v2",
+    "root": "/Users/ergentics/ergentics-mlx-lab",
+    "files": [
+      {
+        "path": "models/ergentics_native_lab_v2/weights.safetensors",
+        "byteCount": 118566758,
+        "sha256": "ae60f5c1728639021718fb67b5080d523cc579c9e35eac32684fefb044b84d28",
+        "role": "weights"
+      },
+      {
+        "path": "models/ergentics_native_lab_v2/train_manifest.json",
+        "byteCount": 1067,
+        "sha256": "c6310be8d5f9e5fda12b18776be763bbccf7afee3cbe5c2a90406e3d5ee20266",
+        "role": "train_manifest"
+      },
+      {
+        "path": "tokenizer/prime_native_bpe_v1/manifest.json",
+        "byteCount": 536,
+        "sha256": "ce72705efd7e4d54dc4dd573eff8ef44788584ebb0d1633f44304e495aac0e1c",
+        "role": "tokenizer_manifest"
+      },
+      {
+        "path": "tokenizer/prime_native_bpe_v1/model.spm",
+        "byteCount": 374771,
+        "sha256": "2c47522f64827565c7e399a5d8dc14fff27568ea73c323f3aa82d898c447f430",
+        "role": "tokenizer_model"
+      }
+    ]
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "schema": "prime_source_derived_game_cases_v1",
+  "purpose": "Shared model comparison questions; expected answers and deterministic receipts are reference-only, never supplied as model input.",
+  "cases": [
+    {
+      "id": "ur-safe-rosette-entry",
+      "game": "Royal Game of Ur, Finkel baseline",
+      "question": "Finkel Ur: you have one piece on 6 and six at home; your opponent has one on safe rosette 8 and six at home. You roll 2. List your legal moves.",
+      "expectedAnswer": "Only enter a home piece at path index 2. Advancing 6 to 8 is illegal because the opponent occupies the safe central rosette.",
+      "expectedStructured": {
+        "legalMoves": [
+          {
+            "origin": 0,
+            "destination": 2
+          }
+        ]
+      },
+      "sourceRefs": [
+        {
+          "sourceID": "ur-app",
+          "path": "Sources/UrKit/MoveGenerator.swift",
+          "symbol": "legalMoves(in:roll:)"
+        },
+        {
+          "sourceID": "ur-app",
+          "path": "Tests/UrKitTests/MovementTests.swift",
+          "symbol": "testLegalMoveEnumerationComplete, case D"
+        }
+      ],
+      "deterministicResult": "ur-reference/result.json",
+      "promptUTF8Bytes": 143,
+      "deterministicResultSHA256": "598d399d0b8146c3ec3332add54f4ff0ef8f44870105daa9ca12b999e4d0f17b"
+    },
+    {
+      "id": "backgammon-bar-entry-order",
+      "game": "Standard Backgammon, money-game baseline",
+      "question": "Backgammon (your pip indices): you have 1 on bar 25 and 14 off; opponent has 2 on your 19-point and 13 off. Roll 6 and 3. List your legal turn.",
+      "expectedAnswer": "Enter 25 to 22 with the 3, then move 22 to 16 with the 6. Entry to 19 with the 6 is blocked.",
+      "expectedStructured": {
+        "legalTurns": [
+          [
+            {
+              "origin": 25,
+              "destination": 22,
+              "die": 3
+            },
+            {
+              "origin": 22,
+              "destination": 16,
+              "die": 6
+            }
+          ]
+        ]
+      },
+      "sourceRefs": [
+        {
+          "sourceID": "backgammon-app",
+          "path": "Sources/BackgammonKit/MoveGenerator.swift",
+          "symbol": "legalTurns(in:roll:)"
+        },
+        {
+          "sourceID": "backgammon-app",
+          "path": "Tests/BackgammonKitTests/MoveGenTests.swift",
+          "symbol": "testBarEntryFirst"
+        }
+      ],
+      "deterministicResult": "backgammon-reference/result.json",
+      "promptUTF8Bytes": 143,
+      "deterministicResultSHA256": "cded663f1235b79d9910c791cbabfef51d165a224ca3366be3acf00abd73e6a3"
+    }
+  ]
+}

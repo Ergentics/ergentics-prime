@@ -1,0 +1,41 @@
+{
+  "afterEntry" : {
+    "oneBoard" : [
+      2,
+      6
+    ],
+    "oneHome" : 5,
+    "opponentBoard" : [
+      8
+    ],
+    "turnPassed" : true
+  },
+  "exhaustiveFourDiceHistogram" : [
+    1,
+    4,
+    6,
+    4,
+    1
+  ],
+  "legalMoves" : [
+    {
+      "destination" : 2,
+      "origin" : 0
+    }
+  ],
+  "position" : {
+    "oneBoard" : [
+      6
+    ],
+    "oneHome" : 6,
+    "oneOff" : 0,
+    "roll" : 2,
+    "twoBoard" : [
+      8
+    ],
+    "twoHome" : 6,
+    "twoOff" : 0
+  },
+  "reference" : "Original UrKit rules, compiled without model or UI code",
+  "safeRosetteCaptureRejected" : true
+}
