@@ -115,6 +115,8 @@ public final class PrimeValidationDriverV2ExecutionPlanRawCapability: @unchecked
         let xd = try root.readVerified(x, maximumByteCount: 16 * 1024 * 1024)
         let sd = try root.readVerified(s, maximumByteCount: 16 * 1024 * 1024)
         let intent = try HJSON.object(state.context.canonicalExecutionIntentData)
+        let budgetProfile = try PrimeValidationDriverV2ExecutionBudgetProfile.resolve(
+            canonicalIntentData: state.context.canonicalExecutionIntentData)
         guard let baseline = intent["baseline"],
               let inventoryProfile = try PrimeValidationDriverV2InventoryProfile.resolve(
                 canonicalBaselineData: HJSON.encode(baseline))
@@ -135,17 +137,10 @@ public final class PrimeValidationDriverV2ExecutionPlanRawCapability: @unchecked
               let sourceBinding = intent["sourceSnapshot"], let lockBinding = intent["packageLock"],
               try HJSON.encode(sourceBinding) == HJSON.encode(["byteCount": source.count, "sha256": PrimeSHA256.hexDigest(of: source)]),
               try HJSON.encode(lockBinding) == HJSON.encode(["byteCount": resolved.byteCount, "sha256": resolved.sha256]),
-              let phases = intent["phaseBudgets"] as? [[String: Any]],
               let environment = intent["environmentPolicy"] as? [String: Any],
               let logicalEnvironment = environment["orderedEntries"], let swift = intent["swiftExecutable"],
               let iReceipt = inventoryEnvelope["receipt"], let bReceipt = buildEnvelope["receipt"]
         else { throw hRejected("intent_or_retained_scope") }
-        for (phase, duration) in [("execution_plan", UInt64(30_000_000_000)),
-                                  ("reference_execution", UInt64(1_800_000_000_000)),
-                                  ("candidate_execution", UInt64(1_800_000_000_000))] {
-            let entries = phases.filter { $0["phase"] as? String == phase }
-            guard entries.count == 1, (entries[0]["maximumActiveNanoseconds"] as? NSNumber)?.uint64Value == duration else { throw hRejected("frozen_phase_budget") }
-        }
         var nativePolicies: [PrimeValidationDriverV2ClosedExecutionPolicy] = []
         var invocations: [[String: Any]] = []
         for shard in schedule.shards {
@@ -177,8 +172,8 @@ public final class PrimeValidationDriverV2ExecutionPlanRawCapability: @unchecked
             "inventoryReceiptSHA256": PrimeSHA256.hexDigest(of: try HJSON.encode(iReceipt)),
             "baseline": baseline, "inventory": try HJSON.object(schedule.canonicalInventoryData),
             "inventorySHA256": PrimeSHA256.hexDigest(of: schedule.canonicalInventoryData),
-            "maximumReferenceShardActiveNanoseconds": UInt64(1_800_000_000_000),
-            "maximumCandidateShardActiveNanoseconds": UInt64(1_800_000_000_000),
+            "maximumReferenceShardActiveNanoseconds": budgetProfile.executionArmMaximumActiveNanoseconds,
+            "maximumCandidateShardActiveNanoseconds": budgetProfile.executionArmMaximumActiveNanoseconds,
             "shards": try JSONSerialization.jsonObject(with: schedule.canonicalShardsData), "shardInvocations": invocations]
         observation = .init(canonicalIntentData: state.context.canonicalExecutionIntentData,
             declaredExecutionGoScopeData: state.context.executionGoScopeData,
@@ -265,6 +260,7 @@ public final class PrimeValidationDriverV2ExecutionOwner: @unchecked Sendable {
     let observation: PrimeValidationDriverV2ExecutionPlanObservation
     let staging: PrimeValidationDriverV2ExecutionStaging
     private let policies: [PrimeValidationDriverV2ClosedExecutionPolicy]
+    private let budgetProfile: PrimeValidationDriverV2ExecutionBudgetProfile
     private var deadline: PrimeSecureChildPhaseDeadline
     private let phaseWriter: PrimeValidationDriverV2ExecutionPhaseWriter
     private var arm = "reference"
@@ -284,6 +280,7 @@ public final class PrimeValidationDriverV2ExecutionOwner: @unchecked Sendable {
         observation: PrimeValidationDriverV2ExecutionPlanObservation, policies: [PrimeValidationDriverV2ClosedExecutionPolicy],
         planningDeadline: PrimeSecureChildPhaseDeadline, staging: PrimeValidationDriverV2ExecutionStaging) throws {
         self.state = state; self.inventory = inventory; self.observation = observation; self.policies = policies
+        budgetProfile = try .resolve(canonicalIntentData: observation.canonicalIntentData)
         cursor = .init(count: policies.count)
         self.staging = staging
         deadline = planningDeadline
@@ -314,7 +311,7 @@ public final class PrimeValidationDriverV2ExecutionOwner: @unchecked Sendable {
                 guard (next == 1 && shard.arm == "reference") || (arm == "reference" && shard.arm == "candidate") else { throw hRejected("arm_transition") }
                 arm = shard.arm
                 deadline = try .init(startUptimeNanoseconds: DispatchTime.now().uptimeNanoseconds,
-                                     durationNanoseconds: 1_800_000_000_000)
+                                     durationNanoseconds: budgetProfile.executionArmMaximumActiveNanoseconds)
             }
             try checkpoint(state)
             try staging.beginShard(shard)

@@ -77,6 +77,7 @@ enum PrimeValidationDriverV2ShardExecutor {
             standardOutputDescriptor: stdoutFD, standardErrorDescriptor: stderrFD,
             maximumByteCount: policy.standardOutputMaximumByteCount
         )
+        var descendantCleanup: PrimeValidationDriverV2ShardDescendantCleanup?
         do {
             let pid = supervision.processIdentifier
             guard supervision.spawnReturnCode == 0,
@@ -91,6 +92,7 @@ enum PrimeValidationDriverV2ShardExecutor {
             guard bsdReturned == bsdSize, bsd.pbi_pid == UInt32(pid),
                   bsd.pbi_ppid == UInt32(sid), bsd.pbi_pgid == UInt32(pid)
             else { throw hRejected("parent_join") }
+            descendantCleanup = try .captureSuspendedLeader(processIdentifier: pid)
             let cwdProof = try PrimeSecureChildDarwinProcessProof.captureSuspendedWorkingDirectory(
                 processIdentifier: pid, heldDirectory: cwd
             )
@@ -191,11 +193,290 @@ enum PrimeValidationDriverV2ShardExecutor {
             succeeded = true
             return .init(observation: raw, owner: owner)
         } catch {
-            switch supervision.cleanupRejectedCapture() {
-            case .contained: break
-            case .mustFailStop: Darwin._exit(99)
+            if let descendantCleanup {
+                do {
+                    try descendantCleanup.contain(
+                        leaderAlreadyReaped: supervision.exactPIDWaitObservation != nil
+                    ) {
+                        switch supervision.cleanupRejectedCapture() {
+                        case .contained: return true
+                        case .mustFailStop: return false
+                        }
+                    }
+                } catch { Darwin._exit(99) }
+            } else {
+                // No descendant can have started before the suspended leader
+                // identity is retained above.
+                switch supervision.cleanupRejectedCapture() {
+                case .contained: break
+                case .mustFailStop: Darwin._exit(99)
+                }
             }
             throw error
         }
+    }
+}
+
+/// H rejection cleanup only. The ordinary child owner still owns exact wait
+/// and stream closure. This owner retains the separately grouped worker tree
+/// before stopping it, and never treats direct-PGID cleanup as a session proof.
+/// Internal operation injection permits pure generation/race regression tests;
+/// no public initializer or serialized value restores native authority.
+final class PrimeValidationDriverV2ShardDescendantCleanup {
+    struct Identity: Equatable {
+        let pid: Int32
+        let parent: Int32
+        let session: Int32
+        let group: Int32
+        let uid: UInt32
+        let startSeconds: UInt64
+        let startMicroseconds: UInt64
+        let status: UInt32
+
+        func sameGenerationAndRelation(as other: Self) -> Bool {
+            pid == other.pid && parent == other.parent && session == other.session
+                && group == other.group && uid == other.uid
+                && startSeconds == other.startSeconds && startMicroseconds == other.startMicroseconds
+        }
+        func sameGeneration(as other: Self) -> Bool {
+            pid == other.pid && startSeconds == other.startSeconds && startMicroseconds == other.startMicroseconds
+        }
+    }
+    struct Operations {
+        let now: () -> UInt64
+        let snapshot: (UInt64) throws -> [Identity]
+        let identity: (Int32, UInt64) throws -> Identity?
+        let signal: (Int32, Int32) -> Bool
+        let groupAbsent: (Int32) -> Bool
+        let pause: () -> Void
+    }
+    // One compound rejection-only allowance: at most 2s to freeze the tree,
+    // the unchanged native supervision callback's at-most-9s cleanup timeline,
+    // then at most 3s for generation/group settlement. No phase work is added.
+    private static let freezeNanoseconds: UInt64 = 2_000_000_000
+    private static let settlementNanoseconds: UInt64 = 3_000_000_000
+    private static let cleanupNanoseconds: UInt64 = 14_000_000_000
+    private static let maximumPolls = 4096
+    private let leader: Identity
+    private let operations: Operations
+    private var used = false
+    private(set) var captured: [Identity] = []
+
+    init(leader: Identity, operations: Operations) throws {
+        guard leader.pid > 0, leader.parent == leader.session, leader.session > 0,
+              leader.pid != leader.session, leader.group == leader.pid,
+              leader.startSeconds > 0, leader.startMicroseconds < 1_000_000,
+              leader.status == 4 else { throw Self.rejected("leader") }
+        self.leader = leader; self.operations = operations
+    }
+
+    func contain(leaderAlreadyReaped: Bool, cleanupLeader: () -> Bool) throws {
+        guard !used else { throw Self.rejected("one_shot") }
+        used = true
+        let began = operations.now()
+        let (expires, overflow) = began.addingReportingOverflow(Self.cleanupNanoseconds)
+        guard began > 0, !overflow else { throw Self.rejected("deadline") }
+        var stageDeadline = began + Self.freezeNanoseconds
+        var lastTime = began
+        func check() throws {
+            let now = operations.now()
+            guard now >= lastTime, now < stageDeadline, now < expires else { throw Self.rejected("deadline") }
+            lastTime = now
+        }
+        func signalJoined(_ expected: Identity, _ signal: Int32) throws {
+            try check()
+            guard let current = try operations.identity(expected.pid, stageDeadline) else { return }
+            guard expected.sameGenerationAndRelation(as: current), current.pid != leader.session else {
+                throw Self.rejected("signal_generation")
+            }
+            guard operations.signal(current.pid, signal) else { throw Self.rejected("signal") }
+            try check()
+        }
+        if !leaderAlreadyReaped {
+            // Pin the direct leader while it is still our unreaped child, then
+            // freeze every current descendant. Stopped ancestors cannot create
+            // an unseen replacement worker after the fixed point below.
+            try signalJoined(leader, SIGSTOP)
+            var previous: [Identity]?
+            var stopped: [Identity]?
+            for _ in 0..<Self.maximumPolls {
+                try check()
+                let members = try operations.snapshot(stageDeadline).sorted { $0.pid < $1.pid }
+                try validateOwnedTree(members, check: check)
+                for member in members where member.status != 5 {
+                    try signalJoined(member, SIGSTOP)
+                }
+                if members.allSatisfy({ $0.status == 4 || $0.status == 5 }), members == previous {
+                    stopped = members; break
+                }
+                previous = members
+                operations.pause()
+            }
+            guard let stopped else { throw Self.rejected("stopped_fixed_point") }
+            captured = stopped
+            // Workers may lead their own PGIDs (SwiftPM's XCTest runner does).
+            // Actuate exact joined PIDs, never a historical numeric worker PGID
+            // or the supervisor's own group. The leader cleanup follows them.
+            let byPID = Dictionary(uniqueKeysWithValues: stopped.map { ($0.pid, $0) })
+            var orderedWorkers: [(identity: Identity, depth: Int)] = []
+            for worker in stopped where worker.pid != leader.pid {
+                try check()
+                var parent = worker.parent
+                var depth = 1
+                while parent != leader.pid {
+                    try check()
+                    guard depth < stopped.count, let ancestor = byPID[parent] else { throw Self.rejected("kill_ancestry") }
+                    parent = ancestor.parent; depth += 1
+                }
+                orderedWorkers.append((identity: worker, depth: depth))
+            }
+            orderedWorkers.sort { first, second in
+                if first.depth == second.depth { return first.identity.pid < second.identity.pid }
+                return first.depth > second.depth
+            }
+            for (worker, _) in orderedWorkers where worker.status != 5 {
+                try signalJoined(worker, SIGKILL)
+            }
+        }
+        try check()
+        // At least 12s remain because the freeze stage is capped at 2s.
+        // The production callback is the existing bounded native supervision
+        // cleanup; an injected callback that overruns can never yield success.
+        stageDeadline = expires
+        guard cleanupLeader() else { throw Self.rejected("leader_cleanup") }
+        try check()
+        let settlementStart = operations.now()
+        let (settlementExpires, settlementOverflow) = settlementStart.addingReportingOverflow(Self.settlementNanoseconds)
+        guard !settlementOverflow else { throw Self.rejected("deadline") }
+        stageDeadline = min(expires, settlementExpires)
+        let capturedByPID = Dictionary(uniqueKeysWithValues: captured.map { ($0.pid, $0) })
+        var emptyCount = 0
+        for _ in 0..<Self.maximumPolls {
+            try check()
+            let members = try operations.snapshot(stageDeadline)
+            // No new authority is acquired after exact leader reap. Previously
+            // killed workers may briefly remain (including reparented zombies);
+            // wait for their actual disappearance, without signalling again.
+            for current in members {
+                try check()
+                guard let previous = capturedByPID[current.pid], previous.sameGeneration(as: current),
+                      previous.session == current.session, previous.group == current.group,
+                      previous.uid == current.uid else { throw Self.rejected("late_session_member") }
+            }
+            var allGone = members.isEmpty
+            for expected in captured {
+                try check()
+                if let current = try operations.identity(expected.pid, stageDeadline),
+                   current.sameGeneration(as: expected) { allGone = false }
+            }
+            for group in Set(captured.map(\.group) + [leader.group]) {
+                try check()
+                if !operations.groupAbsent(group) { allGone = false }
+            }
+            emptyCount = allGone ? emptyCount + 1 : 0
+            if emptyCount == 2 { try check(); return }
+            operations.pause()
+        }
+        throw Self.rejected("unsettled")
+    }
+
+    private func validateOwnedTree(_ members: [Identity], check: () throws -> Void) throws {
+        try check()
+        guard Set(members.map(\.pid)).count == members.count,
+              let currentLeader = members.first(where: { $0.pid == leader.pid }),
+              currentLeader.sameGenerationAndRelation(as: leader),
+              members.allSatisfy({ $0.pid != leader.session && $0.session == leader.session
+                  && $0.uid == leader.uid && $0.pid > 0 && $0.group > 0
+                  && $0.group != leader.session && $0.startSeconds > 0 && $0.startMicroseconds < 1_000_000 })
+        else { throw Self.rejected("tree_identity") }
+        let byPID = Dictionary(uniqueKeysWithValues: members.map { ($0.pid, $0) })
+        for member in members where member.pid != leader.pid {
+            try check()
+            var parent = member.parent
+            var seen = Set<Int32>()
+            while parent != leader.pid {
+                try check()
+                guard seen.insert(parent).inserted, let ancestor = byPID[parent] else {
+                    throw Self.rejected("tree_ancestry")
+                }
+                parent = ancestor.parent
+            }
+        }
+    }
+
+    static func captureSuspendedLeader(processIdentifier: Int32) throws -> PrimeValidationDriverV2ShardDescendantCleanup {
+        let session = getpid()
+        guard getsid(session) == session, getpgid(session) == session else { throw rejected("supervisor_session") }
+        let now = DispatchTime.now().uptimeNanoseconds
+        let (expires, overflow) = now.addingReportingOverflow(cleanupNanoseconds)
+        guard !overflow, let leader = try readIdentity(processIdentifier, deadline: expires),
+              leader.session == session, leader.uid == geteuid() else { throw rejected("capture_leader") }
+        let ops = Operations(now: { DispatchTime.now().uptimeNanoseconds }, snapshot: { deadline in
+            try snapshot(session: session, deadline: deadline)
+        }, identity: { pid, deadline in try readIdentity(pid, deadline: deadline) }, signal: { pid, signal in
+            errno = 0
+            return Darwin.kill(pid, signal) == 0 || errno == ESRCH
+        }, groupAbsent: { group in
+            errno = 0
+            return Darwin.kill(-group, 0) == -1 && errno == ESRCH
+        }, pause: { _ = Darwin.usleep(1_000) })
+        return try .init(leader: leader, operations: ops)
+    }
+
+    private static func requireTime(_ deadline: UInt64) throws {
+        guard DispatchTime.now().uptimeNanoseconds < deadline else { throw rejected("native_deadline") }
+    }
+    private static func readIdentity(_ pid: Int32, deadline: UInt64) throws -> Identity? {
+        try requireTime(deadline)
+        var first = proc_bsdinfo(), second = proc_bsdinfo()
+        let size = Int32(MemoryLayout<proc_bsdinfo>.size)
+        errno = 0
+        let count = withUnsafeMutablePointer(to: &first) { proc_pidinfo(pid, PROC_PIDTBSDINFO, 0, $0, size) }
+        if count <= 0 && errno == ESRCH { return nil }
+        guard count == size else { throw rejected("native_bsd") }
+        errno = 0
+        let session = getsid(pid)
+        if session < 0 && errno == ESRCH { return nil }
+        guard session > 0 else { throw rejected("native_sid") }
+        errno = 0
+        let repeated = withUnsafeMutablePointer(to: &second) { proc_pidinfo(pid, PROC_PIDTBSDINFO, 0, $0, size) }
+        if repeated <= 0 && errno == ESRCH { return nil }
+        guard repeated == size, first.pbi_pid == UInt32(pid), second.pbi_pid == first.pbi_pid,
+              first.pbi_ppid == second.pbi_ppid, first.pbi_pgid == second.pbi_pgid,
+              first.pbi_uid == second.pbi_uid, first.pbi_start_tvsec == second.pbi_start_tvsec,
+              first.pbi_start_tvusec == second.pbi_start_tvusec,
+              getsid(pid) == session else { throw rejected("native_generation") }
+        try requireTime(deadline)
+        return .init(pid: pid, parent: Int32(second.pbi_ppid), session: session,
+            group: Int32(second.pbi_pgid), uid: second.pbi_uid,
+            startSeconds: second.pbi_start_tvsec, startMicroseconds: second.pbi_start_tvusec,
+            status: second.pbi_status)
+    }
+    private static func snapshot(session: Int32, deadline: UInt64) throws -> [Identity] {
+        try requireTime(deadline)
+        var pids = [Int32](repeating: 0, count: 131_072)
+        let capacity = pids.count * MemoryLayout<Int32>.size
+        let bytes = pids.withUnsafeMutableBytes { proc_listpids(UInt32(PROC_ALL_PIDS), 0, $0.baseAddress, Int32($0.count)) }
+        guard bytes > 0, Int(bytes) < capacity, Int(bytes) % MemoryLayout<Int32>.size == 0 else { throw rejected("native_capacity") }
+        let selected = pids.prefix(Int(bytes) / MemoryLayout<Int32>.size).filter { $0 > 0 }
+        guard Set(selected).count == selected.count else { throw rejected("native_duplicate") }
+        var result: [Identity] = []
+        for pid in selected where pid != session {
+            try requireTime(deadline)
+            errno = 0
+            let sid = getsid(pid)
+            if sid < 0 && errno == ESRCH { continue }
+            guard sid >= 0 else { throw rejected("native_sid_prefilter") }
+            if sid != session { continue }
+            if let value = try readIdentity(pid, deadline: deadline) {
+                guard value.session == session else { throw rejected("native_sid_changed") }
+                result.append(value)
+            }
+        }
+        try requireTime(deadline)
+        return result
+    }
+    private static func rejected(_ reason: String) -> PrimeDurableArtifactError {
+        .invalidSemantics("driver_v2_gate_h_descendant_cleanup_" + reason)
     }
 }

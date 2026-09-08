@@ -1715,6 +1715,56 @@ public struct PrimeValidationExecutorAdmissionPolicyV2:
         ].sorted { $0.phase.rawValue < $1.phase.rawValue }
     )
 
+    public static let currentSourceExecutionV1 = Self(
+        scratchRelativePath: frozenV1.scratchRelativePath,
+        cacheRelativePath: frozenV1.cacheRelativePath,
+        configRelativePath: frozenV1.configRelativePath,
+        securityRelativePath: frozenV1.securityRelativePath,
+        clangModuleCacheRelativePath: frozenV1.clangModuleCacheRelativePath,
+        homeRelativePath: frozenV1.homeRelativePath,
+        swiftPMModuleCacheRelativePath: frozenV1.swiftPMModuleCacheRelativePath,
+        temporaryRelativePath: frozenV1.temporaryRelativePath,
+        outputRelativePath: frozenV1.outputRelativePath,
+        phaseBudgets: frozenV1.phaseBudgets.map { budget in
+            .init(phase: budget.phase, maximumActiveNanoseconds:
+                budget.phase == .referenceExecution || budget.phase == .candidateExecution
+                    ? PrimeValidationDriverV2ExecutionBudgetProfile.currentSourceExecutionV1.executionArmMaximumActiveNanoseconds
+                    : budget.maximumActiveNanoseconds)
+        })
+
+    package static func selected(for intent: PrimeValidationRunIntentV2) throws -> Self {
+        let profile = try budgetProfile(for: intent)
+        let policy: Self = profile == .frozenV1 ? .frozenV1 : .currentSourceExecutionV1
+        try policy.validate(intent: intent)
+        return policy
+    }
+
+    /// A semantic budget declaration does not admit a live staging layout.
+    /// The role bridge separately requires selected(for:) before execution.
+    package static func budgetProfile(for intent: PrimeValidationRunIntentV2) throws
+        -> PrimeValidationDriverV2ExecutionBudgetProfile {
+        try intent.validate()
+        return try knownBudgetProfile(intent)
+    }
+
+    private static func knownBudgetProfile(_ intent: PrimeValidationRunIntentV2) throws
+        -> PrimeValidationDriverV2ExecutionBudgetProfile {
+        let data = try PrimeCanonicalJSON.encode(intent)
+        guard let profile = try? PrimeValidationDriverV2ExecutionBudgetProfile.resolve(canonicalIntentData: data) else {
+            throw PrimeValidationDriverV2Error.invalidIntent
+        }
+        return profile
+    }
+
+    package var executionBudgetProfile: PrimeValidationDriverV2ExecutionBudgetProfile {
+        get throws {
+            guard self == .frozenV1 || self == .currentSourceExecutionV1 else {
+                throw PrimeValidationDriverV2Error.invalidIntent
+            }
+            return try .resolve(canonicalPhaseBudgetsData: PrimeCanonicalJSON.encode(phaseBudgets))
+        }
+    }
+
     public init(
         scratchRelativePath: String,
         cacheRelativePath: String,
@@ -1741,7 +1791,8 @@ public struct PrimeValidationExecutorAdmissionPolicyV2:
 
     public func validate(intent: PrimeValidationRunIntentV2) throws {
         try intent.validate()
-        guard self == .frozenV1,
+        let profile = try Self.knownBudgetProfile(intent)
+        guard self == (profile == .frozenV1 ? .frozenV1 : .currentSourceExecutionV1),
               intent.roots.scratchRelativePath == scratchRelativePath,
               intent.roots.cacheRelativePath == cacheRelativePath,
               intent.roots.configRelativePath == configRelativePath,
@@ -1902,7 +1953,7 @@ public struct PrimeValidationExecutorAdmissionReceiptV2:
         staging: PrimeValidationStagingLayoutReceiptV2
     ) throws -> Self {
         try intent.validate()
-        let policy = PrimeValidationExecutorAdmissionPolicyV2.frozenV1
+        let policy = try PrimeValidationExecutorAdmissionPolicyV2.selected(for: intent)
         try policy.validate(intent: intent)
         try supervisorExecutable.validate()
         let launchPlan = try PrimeValidationSwiftPackageAdmissionLaunchPlanV2
@@ -2040,7 +2091,7 @@ public struct PrimeValidationExecutorAdmissionReceiptV2:
               artifactKind == Self.artifactKind,
               intentSHA256 == (try intent.identitySHA256()),
               authority == .frozenPlannerV2,
-              policy == .frozenV1,
+              policy == (try PrimeValidationExecutorAdmissionPolicyV2.selected(for: intent)),
               supervisorExecutable.requestedAbsolutePath
                 == intent.driverExecutable.absolutePath,
               supervisorExecutable.content == intent.driverExecutable.content,

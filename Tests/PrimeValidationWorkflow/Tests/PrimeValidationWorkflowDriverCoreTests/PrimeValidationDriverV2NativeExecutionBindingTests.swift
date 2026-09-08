@@ -94,6 +94,25 @@ final class PrimeValidationDriverV2NativeExecutionBindingTests: XCTestCase {
         ] { XCTAssertThrowsError(try V.bound(changed, name: "result", path: binding.relativePath, data: bytes)) }
     }
 
+    func testNativeExecutionLifecycleRequiresTheExplicitWholeBudgetProfile() throws {
+        var fields = processFields()
+        let current = PrimeValidationDriverV2ExecutionBudgetProfile.currentSourceExecutionV1
+        fields["deadlineExpiresAtUptimeNanoseconds"] = current.executionArmMaximumActiveNanoseconds + 1000
+        fields["deathObservedUptimeNanoseconds"] = UInt64(1_800_000_002_000)
+        fields["waitReturnedUptimeNanoseconds"] = UInt64(1_800_000_002_100)
+        let longProcess: PrimeValidationDriverV2BuildProcessObservation = try decode(fields)
+        XCTAssertNoThrow(try V.validateNativeProcess(longProcess, supervisorPID: 99, budgetProfile: current))
+        XCTAssertThrowsError(try V.validateNativeProcess(longProcess, supervisorPID: 99))
+        XCTAssertThrowsError(try V.validateNativeProcess(process(), supervisorPID: 99, budgetProfile: current))
+        for expires in [current.executionArmMaximumActiveNanoseconds + 999,
+                        current.executionArmMaximumActiveNanoseconds + 1001, UInt64.max] {
+            var changed = fields; changed["deadlineExpiresAtUptimeNanoseconds"] = expires
+            XCTAssertThrowsError(try V.validateNativeProcess(decode(changed), supervisorPID: 99, budgetProfile: current))
+        }
+        fields["waitReturnedUptimeNanoseconds"] = current.executionArmMaximumActiveNanoseconds + 1000
+        XCTAssertThrowsError(try V.validateNativeProcess(decode(fields), supervisorPID: 99, budgetProfile: current))
+    }
+
     func testNativeExecutionSupervisedShardProjectionRetainsSIDAndExactInvocation() throws {
         let (shard, _) = try shard(), root = V.shardRoot(shard), empty = PrimeValidationContentBinding(data: Data())
         let invocation = PrimeValidationInvocationV2(runID: shard.key.runID, role: .shard,

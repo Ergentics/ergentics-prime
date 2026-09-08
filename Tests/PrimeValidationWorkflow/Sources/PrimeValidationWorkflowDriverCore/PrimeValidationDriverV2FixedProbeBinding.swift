@@ -3241,7 +3241,7 @@ private extension PrimeValidationDriverV2FixedProbeSemanticValidator {
         let outerDeadline = expectation
             .outerDeadlineStartedAtUptimeNanoseconds
             .addingReportingOverflow(expectation.terminalGate == .gateH
-                ? PrimeValidationDriverV2TerminalGate.gateHOuterDurationNanoseconds
+                ? try PrimeValidationDriverV2TerminalGate.gateHOuterDurationNanoseconds(intent: expectation.intent)
                 : expectation.terminalGate == .gateG
                 ? 1_260_000_000_000 : expectation.terminalGate == .gateF
                     ? 960_000_000_000 : durableOuterDeadlineNanoseconds)
@@ -3261,7 +3261,9 @@ private extension PrimeValidationDriverV2FixedProbeSemanticValidator {
             expectation.leaseRoot.absolutePath,
             expectation.journalRoot.absolutePath,
         ]
-        guard durableGitObjectName(expectation.repositoryCommit),
+        guard expectation.terminalGate == .gateH || expectation.intent.phaseBudgets
+                != PrimeValidationExecutorAdmissionPolicyV2.currentSourceExecutionV1.phaseBudgets,
+              durableGitObjectName(expectation.repositoryCommit),
               expectation.journalRoot.absolutePath
                 == expectation.intent.roots.workspaceRoot.absolutePath
                     + durableJournalSiblingSuffix,

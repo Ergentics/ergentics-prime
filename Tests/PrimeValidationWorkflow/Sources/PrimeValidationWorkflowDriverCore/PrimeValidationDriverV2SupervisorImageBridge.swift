@@ -22,6 +22,11 @@ package enum PrimeValidationDriverV2TerminalGate:
     package static let gateHOuterDurationNanoseconds: UInt64 =
         PrimeValidationExecutorAdmissionPolicyV2.frozenV1.phaseBudgets
             .reduce(UInt64(0)) { $0 + $1.maximumActiveNanoseconds } + 30_000_000_000
+
+    package static func gateHOuterDurationNanoseconds(intent: PrimeValidationRunIntentV2) throws -> UInt64 {
+        let profile = try PrimeValidationExecutorAdmissionPolicyV2.budgetProfile(for: intent)
+        return try profile.outerMaximumActiveNanoseconds
+    }
 }
 
 /// Canonical, bounded transport for the dedicated Gate A process. This outer
@@ -98,6 +103,12 @@ package struct PrimeValidationDriverV2SupervisorLaunchRequestV1:
             throw PrimeValidationDriverV2Error.authorityViolation
         }
         try intent.validate()
+        // Preserve historical declaration-only E/F/G envelope validation.
+        // Their live role bridge still requires the exact frozen policy.
+        guard terminalGate == .gateH || intent.phaseBudgets
+            != PrimeValidationExecutorAdmissionPolicyV2.currentSourceExecutionV1.phaseBudgets else {
+            throw PrimeValidationDriverV2Error.authorityViolation
+        }
         if terminalGate == .gateH {
             guard let executionGoScopeData, let acceptedCapsuleSHA256 else {
                 throw PrimeValidationDriverV2Error.authorityViolation
@@ -170,20 +181,22 @@ package struct PrimeValidationDriverV2DeclaredExecutionScopeV1: Codable, Equatab
         self.governorExecutable = governorExecutable; self.supervisorExecutable = supervisorExecutable
         referenceScopes = ["parallel_xctest", "sequential_xctest", "swift_testing"]
         candidateScope = "frozen_suite_contiguous_32_original_planner"
-        referenceMaximumActiveNanoseconds = 1_800_000_000_000
-        candidateMaximumActiveNanoseconds = 1_800_000_000_000
+        let profile = try PrimeValidationExecutorAdmissionPolicyV2.budgetProfile(for: intent)
+        referenceMaximumActiveNanoseconds = profile.executionArmMaximumActiveNanoseconds
+        candidateMaximumActiveNanoseconds = profile.executionArmMaximumActiveNanoseconds
         try validate(intent: intent)
     }
     package func validate(intent: PrimeValidationRunIntentV2) throws {
+        let profile = try PrimeValidationExecutorAdmissionPolicyV2.budgetProfile(for: intent)
         guard schema == "prime_driver_v2_gate_h_declared_execution_scope_v1",
               intentSHA256 == (try intent.identitySHA256()), supervisorExecutable == intent.driverExecutable,
               referenceScopes == ["parallel_xctest", "sequential_xctest", "swift_testing"],
               candidateScope == "frozen_suite_contiguous_32_original_planner",
-              referenceMaximumActiveNanoseconds == 1_800_000_000_000,
-              candidateMaximumActiveNanoseconds == 1_800_000_000_000,
+              referenceMaximumActiveNanoseconds == profile.executionArmMaximumActiveNanoseconds,
+              candidateMaximumActiveNanoseconds == profile.executionArmMaximumActiveNanoseconds,
               [sourceCommit, sourceTree].allSatisfy({ value in
                   value.utf8.count == 40 && value.utf8.allSatisfy({ (48...57).contains($0) || (97...102).contains($0) })
-              }), intent.phaseBudgets == PrimeValidationExecutorAdmissionPolicyV2.frozenV1.phaseBudgets else {
+              }) else {
             throw PrimeValidationDriverV2Error.authorityViolation
         }
         try PrimeValidationDriverV2Validation.requireSHA256(sourceIdentitySHA256)

@@ -243,13 +243,7 @@ package enum PrimeValidationDriverV2NativeExecutionValidation {
         }
         let go = try PrimeCanonicalJSON.decode(NativeExecutionGo.self, from: raw.declaredExecutionGoScopeData)
         try go.validate(intent: intent)
-        for (phase, bound) in [(PrimeValidationDriverPhaseV2.executionPlan, UInt64(30_000_000_000)),
-                              (.referenceExecution, UInt64(1_800_000_000_000)),
-                              (.candidateExecution, UInt64(1_800_000_000_000))] {
-            guard intent.phaseBudgets.first(where: { $0.phase == phase })?.maximumActiveNanoseconds == bound else {
-                throw nativeExecutionRejected("phase_budget")
-            }
-        }
+        _ = try PrimeValidationExecutorAdmissionPolicyV2.budgetProfile(for: intent)
     }
 
     package static func validateShardProjection(_ observed: PrimeValidationDriverV2ClosedShardObservation,
@@ -273,7 +267,8 @@ package enum PrimeValidationDriverV2NativeExecutionValidation {
         }
         let shard = plan.shards[index], invocation = plan.shardInvocations[index], p = raw.process
         try validateShardProjection(raw.shard, original: shard, index: index)
-        try validateNativeProcess(p, supervisorPID: build.predecessorSupervisorPID)
+        let budgetProfile = try PrimeValidationExecutorAdmissionPolicyV2.budgetProfile(for: intent)
+        try validateNativeProcess(p, supervisorPID: build.predecessorSupervisorPID, budgetProfile: budgetProfile)
         let planHash = PrimeSHA256.hexDigest(of: try PrimeCanonicalJSON.encode(plan))
         let physical = build.toolchain.swiftPackageExecutable
         let expectedLaunch = try PrimeValidationSwiftPackageAdmissionLaunchPlanV2.make(
@@ -379,13 +374,15 @@ package enum PrimeValidationDriverV2NativeExecutionValidation {
             expectedIDs: shard.testIDs, raw: resultRaw)
         let child = try makeChild(invocation: invocation, primary: primary, process: p,
             intervalStartedAt: intervalStart, matchedCount: shard.testIDs.count,
-            stdout: stdout.binding, stderr: stderr.binding, supervisorPID: build.predecessorSupervisorPID)
-        try child.validate(expectedInvocation: invocation, maximumActiveNanoseconds: 1_800_000_000_000)
+            stdout: stdout.binding, stderr: stderr.binding, supervisorPID: build.predecessorSupervisorPID,
+            budgetProfile: budgetProfile)
+        try child.validate(expectedInvocation: invocation,
+            maximumActiveNanoseconds: budgetProfile.executionArmMaximumActiveNanoseconds)
         return child
     }
 
     package static func validateNativeProcess(_ p: PrimeValidationDriverV2BuildProcessObservation,
-        supervisorPID: Int32) throws {
+        supervisorPID: Int32, budgetProfile: PrimeValidationDriverV2ExecutionBudgetProfile = .frozenV1) throws {
         let flags = UInt16(POSIX_SPAWN_START_SUSPENDED) | UInt16(POSIX_SPAWN_CLOEXEC_DEFAULT)
             | UInt16(POSIX_SPAWN_SETPGROUP) | UInt16(POSIX_SPAWN_SETSIGDEF) | UInt16(POSIX_SPAWN_SETSIGMASK)
         guard supervisorPID > 0, p.processIdentifier > 0, p.processIdentifier != supervisorPID,
@@ -395,7 +392,7 @@ package enum PrimeValidationDriverV2NativeExecutionValidation {
               p.appliedSpawnFlags == flags, p.spawnReturnCode == 0,
               p.deadlineStartedAtUptimeNanoseconds > 0,
               p.deadlineExpiresAtUptimeNanoseconds > p.deadlineStartedAtUptimeNanoseconds,
-              p.deadlineExpiresAtUptimeNanoseconds - p.deadlineStartedAtUptimeNanoseconds == 1_800_000_000_000,
+              p.deadlineExpiresAtUptimeNanoseconds - p.deadlineStartedAtUptimeNanoseconds == budgetProfile.executionArmMaximumActiveNanoseconds,
               p.spawnReturnedUptimeNanoseconds >= p.deadlineStartedAtUptimeNanoseconds,
               p.resumedAtUptimeNanoseconds >= p.spawnReturnedUptimeNanoseconds,
               p.deathObservedUptimeNanoseconds >= p.resumedAtUptimeNanoseconds,
@@ -417,8 +414,9 @@ package enum PrimeValidationDriverV2NativeExecutionValidation {
         primary: PrimeValidationObservedPrimaryResultV2, process p: PrimeValidationDriverV2BuildProcessObservation,
         intervalStartedAt: UInt64, matchedCount: Int,
         stdout: PrimeValidationDriverArtifactBindingV2, stderr: PrimeValidationDriverArtifactBindingV2,
-        supervisorPID: Int32) throws -> PrimeValidationObservedChildReceiptV2 {
-        try validateNativeProcess(p, supervisorPID: supervisorPID)
+        supervisorPID: Int32, budgetProfile: PrimeValidationDriverV2ExecutionBudgetProfile = .frozenV1)
+        throws -> PrimeValidationObservedChildReceiptV2 {
+        try validateNativeProcess(p, supervisorPID: supervisorPID, budgetProfile: budgetProfile)
         guard intervalStartedAt >= p.deadlineStartedAtUptimeNanoseconds,
               p.waitReturnedUptimeNanoseconds > intervalStartedAt,
               matchedCount >= 0 else { throw nativeExecutionRejected("active_interval") }
@@ -506,12 +504,13 @@ private struct NativeExecutionGo: Codable {
     let referenceMaximumActiveNanoseconds: UInt64
     let candidateMaximumActiveNanoseconds: UInt64
     func validate(intent: PrimeValidationRunIntentV2) throws {
+        let profile = try PrimeValidationExecutorAdmissionPolicyV2.budgetProfile(for: intent)
         guard schema == "prime_driver_v2_gate_h_declared_execution_scope_v1",
               intentSHA256 == (try intent.identitySHA256()), supervisorExecutable == intent.driverExecutable,
               referenceScopes == ["parallel_xctest", "sequential_xctest", "swift_testing"],
               candidateScope == "frozen_suite_contiguous_32_original_planner",
-              referenceMaximumActiveNanoseconds == 1_800_000_000_000,
-              candidateMaximumActiveNanoseconds == 1_800_000_000_000,
+              referenceMaximumActiveNanoseconds == profile.executionArmMaximumActiveNanoseconds,
+              candidateMaximumActiveNanoseconds == profile.executionArmMaximumActiveNanoseconds,
               [sourceCommit, sourceTree].allSatisfy({ value in
                   value.utf8.count == 40 && value.utf8.allSatisfy({ (48...57).contains($0) || (97...102).contains($0) })
               }) else { throw nativeExecutionRejected("declared_go") }

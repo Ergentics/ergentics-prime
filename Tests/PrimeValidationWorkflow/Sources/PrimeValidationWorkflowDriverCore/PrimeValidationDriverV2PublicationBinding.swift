@@ -157,6 +157,7 @@ package struct PrimeValidationDriverV2PublicationSourceV1: Codable, Equatable {
             let candidateMaximumActiveNanoseconds: UInt64
         }
         try validate()
+        let profile = try PrimeValidationExecutorAdmissionPolicyV2.budgetProfile(for: intent)
         let expected = Scope(schema: "prime_driver_v2_gate_h_declared_execution_scope_v1",
             intentSHA256: try intent.identitySHA256(), sourceCommit: sourceCommit, sourceTree: sourceTree,
             sourceTreeReplaySHA256: sourceTreeReplaySHA256,
@@ -164,8 +165,8 @@ package struct PrimeValidationDriverV2PublicationSourceV1: Codable, Equatable {
             supervisorExecutable: supervisorExecutable,
             referenceScopes: ["parallel_xctest", "sequential_xctest", "swift_testing"],
             candidateScope: "frozen_suite_contiguous_32_original_planner",
-            referenceMaximumActiveNanoseconds: 1_800_000_000_000,
-            candidateMaximumActiveNanoseconds: 1_800_000_000_000)
+            referenceMaximumActiveNanoseconds: profile.executionArmMaximumActiveNanoseconds,
+            candidateMaximumActiveNanoseconds: profile.executionArmMaximumActiveNanoseconds)
         guard try PrimeCanonicalJSON.encode(expected) == data,
               supervisorExecutable == intent.driverExecutable,
               sourceSnapshotSHA256 == intent.sourceSnapshot.sha256 else { throw publicationRejected("declared_scope") }

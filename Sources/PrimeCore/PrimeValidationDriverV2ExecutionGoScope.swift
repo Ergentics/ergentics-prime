@@ -3,6 +3,70 @@
 import Foundation
 import Darwin
 
+/// Closed declarations of complete H phase budgets. Selection never creates
+/// execution authority and never follows from observed inventory size.
+@_spi(PrimeValidationDriverV2RoleFacade)
+public enum PrimeValidationDriverV2ExecutionBudgetProfile: String, CaseIterable, Sendable {
+    case frozenV1 = "frozen_v1"
+    case currentSourceExecutionV1 = "current_source_execution_v1"
+
+    public var executionArmMaximumActiveNanoseconds: UInt64 {
+        self == .frozenV1 ? 1_800_000_000_000 : 10_800_000_000_000
+    }
+
+    public func maximumActiveNanoseconds(phase: String) throws -> UInt64 {
+        switch phase {
+        case "source_admission", "execution_plan", "publication": return 30_000_000_000
+        case "build": return 900_000_000_000
+        case "inventory": return 300_000_000_000
+        case "reference_execution", "candidate_execution": return executionArmMaximumActiveNanoseconds
+        case "reconciliation": return 120_000_000_000
+        case "comparison": return 60_000_000_000
+        default: throw hRejected("unknown_execution_budget_phase")
+        }
+    }
+
+    public var canonicalPhaseBudgetsData: Data {
+        get throws {
+            try HJSON.encode(Self.phases.sorted().map { phase in
+                ["phase": phase, "maximumActiveNanoseconds": try maximumActiveNanoseconds(phase: phase)] as [String: Any]
+            })
+        }
+    }
+
+    public var outerMaximumActiveNanoseconds: UInt64 {
+        get throws {
+            var total: UInt64 = 30_000_000_000
+            for phase in Self.phases {
+                let (next, overflow) = total.addingReportingOverflow(try maximumActiveNanoseconds(phase: phase))
+                guard !overflow else { throw hRejected("execution_budget_overflow") }
+                total = next
+            }
+            return total
+        }
+    }
+
+    public static func resolve(canonicalPhaseBudgetsData data: Data) throws -> Self {
+        for profile in allCases where try data == profile.canonicalPhaseBudgetsData { return profile }
+        throw hRejected("unknown_execution_budget_profile")
+    }
+
+    public static func resolve(canonicalIntentData data: Data) throws -> Self {
+        let intent = try HJSON.object(data)
+        guard let budgets = intent["phaseBudgets"] else { throw hRejected("missing_execution_budget_profile") }
+        let profile = try resolve(canonicalPhaseBudgetsData: HJSON.encode(budgets))
+        if profile == .currentSourceExecutionV1 {
+            guard let baseline = intent["baseline"],
+                  try PrimeValidationDriverV2InventoryProfile.resolve(canonicalBaselineData: HJSON.encode(baseline))
+                    == .currentSourceInventoryV1 else { throw hRejected("execution_budget_inventory_profile") }
+        }
+        return profile
+    }
+
+    private static let phases = ["source_admission", "build", "inventory", "execution_plan",
+        "reference_execution", "candidate_execution", "reconciliation", "comparison", "publication"]
+}
+
 /// Declared H scope, never an execution capability. Core joins both actual E
 /// HEAD values, its exact replayed tree-byte digest and retained source identity.
 /// The root-tree OID remains a capsule/source pin, not an E probe result. The
@@ -11,6 +75,7 @@ enum PrimeValidationDriverV2ExecutionGoScope {
     static func validate(_ data: Data, intentData: Data, retainedSourceIdentitySHA256: String) throws {
         let value = try HJSON.object(data)
         let intent = try HJSON.object(intentData)
+        let budgetProfile = try PrimeValidationDriverV2ExecutionBudgetProfile.resolve(canonicalIntentData: intentData)
         let keys: Set<String> = ["schema", "intentSHA256", "sourceCommit", "sourceTree", "sourceTreeReplaySHA256",
             "sourceIdentitySHA256", "governorExecutable", "supervisorExecutable",
             "referenceScopes", "candidateScope", "referenceMaximumActiveNanoseconds",
@@ -26,8 +91,8 @@ enum PrimeValidationDriverV2ExecutionGoScope {
               value["candidateScope"] as? String == "frozen_suite_contiguous_32_original_planner",
               let referenceBudget = value["referenceMaximumActiveNanoseconds"],
               let candidateBudget = value["candidateMaximumActiveNanoseconds"],
-              try HJSON.encode([referenceBudget]) == HJSON.encode([UInt64(1_800_000_000_000)]),
-              try HJSON.encode([candidateBudget]) == HJSON.encode([UInt64(1_800_000_000_000)]),
+              try HJSON.encode([referenceBudget]) == HJSON.encode([budgetProfile.executionArmMaximumActiveNanoseconds]),
+              try HJSON.encode([candidateBudget]) == HJSON.encode([budgetProfile.executionArmMaximumActiveNanoseconds]),
               let declaredSupervisor = value["supervisorExecutable"], let actualIntentSupervisor = intent["driverExecutable"],
               try HJSON.encode(declaredSupervisor) == HJSON.encode(actualIntentSupervisor)
         else { throw hRejected("declared_go_scope") }

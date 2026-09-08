@@ -37,7 +37,7 @@ final class PrimeValidationDriverV2ExecutionPhaseWriter {
     }
     private static let phases = ["source_admission", "build", "inventory", "execution_plan",
         "reference_execution", "candidate_execution", "reconciliation", "comparison"]
-    private static let limits: [UInt64] = [30, 900, 300, 30, 1800, 1800, 120, 60].map { $0 * 1_000_000_000 }
+    private let limits: [UInt64]
     private let staging: PrimeValidationDriverV2ExecutionStaging
     private let state: PrimeValidationDriverV2InventoryExecutionState
     private let inventory: PrimeValidationDriverV2InventoryStaging
@@ -53,14 +53,8 @@ final class PrimeValidationDriverV2ExecutionPhaseWriter {
     init(staging: PrimeValidationDriverV2ExecutionStaging, state: PrimeValidationDriverV2InventoryExecutionState,
          inventory: PrimeValidationDriverV2InventoryStaging, planObservation: PrimeValidationDriverV2ExecutionPlanObservation) throws {
         self.staging = staging; self.state = state; self.inventory = inventory; plan = planObservation
-        let intent = try HJSON.object(plan.canonicalIntentData)
-        guard let budgets = intent["phaseBudgets"] as? [[String: Any]],
-              budgets.count == 9 else { throw hRejected("phase_budgets") }
-        for (index, phase) in Self.phases.enumerated() {
-            let matches = budgets.filter { $0["phase"] as? String == phase }
-            guard matches.count == 1, let value = matches[0]["maximumActiveNanoseconds"],
-                  try HJSON.encode([value]) == HJSON.encode([Self.limits[index]]) else { throw hRejected("phase_budget_" + phase) }
-        }
+        let profile = try PrimeValidationDriverV2ExecutionBudgetProfile.resolve(canonicalIntentData: plan.canonicalIntentData)
+        limits = try Self.phases.map { try profile.maximumActiveNanoseconds(phase: $0) }
     }
 
     var historyData: Data {
@@ -211,7 +205,7 @@ final class PrimeValidationDriverV2ExecutionPhaseWriter {
         try operation {
             guard self.prefixes.count == ordinal, self.active == nil else { throw hRejected("phase_begin_order") }
             let deadline = try PrimeSecureChildPhaseDeadline(startUptimeNanoseconds: DispatchTime.now().uptimeNanoseconds,
-                durationNanoseconds: Self.limits[ordinal])
+                durationNanoseconds: self.limits[ordinal])
             let start = try self.staging.publishData(HJSON.encode([
                 "schema": "prime_driver_v2_gate_h_phase_start_v1", "phase": Self.phases[ordinal],
                 "runID": self.state.context.evidenceRunID,
@@ -242,7 +236,7 @@ final class PrimeValidationDriverV2ExecutionPhaseWriter {
     }
     private func append(ordinal: Int, start: PrimeArtifactBinding, terminal: PrimeArtifactBinding,
         outputs: [PrimeArtifactBinding], started: UInt64, ended: UInt64) throws {
-        guard prefixes.count == ordinal, started > 0, ended > started, ended - started <= Self.limits[ordinal],
+        guard prefixes.count == ordinal, started > 0, ended > started, ended - started <= limits[ordinal],
               DispatchTime.now().uptimeNanoseconds >= ended, !outputs.isEmpty else { throw hRejected("phase_interval") }
         let previous = orderedPrefixBindings.last?.sha256 ?? String(repeating: "0", count: 64)
         let entry = Entry(phase: Self.phases[ordinal], ordinal: ordinal,

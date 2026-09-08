@@ -134,10 +134,14 @@ package struct PrimeValidationDriverV2ShotCapsuleV1:
     }
 
     fileprivate var outerDurationNanoseconds: UInt64 {
-        if terminalGate == .gateH { return PrimeValidationDriverV2TerminalGate.gateHOuterDurationNanoseconds }
-        if terminalGate == .gateG { return 1_260_000_000_000 }
-        return terminalGate == .gateF ? 960_000_000_000
-            : PrimeValidationDriverV2GovernorDeadline.durationNanoseconds
+        get throws {
+            if terminalGate == .gateH {
+                return try PrimeValidationDriverV2TerminalGate.gateHOuterDurationNanoseconds(intent: intent)
+            }
+            if terminalGate == .gateG { return 1_260_000_000_000 }
+            return terminalGate == .gateF ? 960_000_000_000
+                : PrimeValidationDriverV2GovernorDeadline.durationNanoseconds
+        }
     }
 
     fileprivate var outerStartSchema: String {
@@ -226,6 +230,11 @@ package struct PrimeValidationDriverV2ShotCapsuleV1:
             )
         }
         try intent.validate()
+        guard terminalGate == .gateH || intent.phaseBudgets
+            != PrimeValidationExecutorAdmissionPolicyV2.currentSourceExecutionV1.phaseBudgets else {
+            throw governorRejected(PrimeValidationDriverV2ShotGovernorStatus.capsuleTransport,
+                "non_H_execution_budget")
+        }
         if terminalGate == .gateH {
             guard let executionGoScopeData else {
                 throw governorRejected(PrimeValidationDriverV2ShotGovernorStatus.capsuleTransport, "H_missing_scope")

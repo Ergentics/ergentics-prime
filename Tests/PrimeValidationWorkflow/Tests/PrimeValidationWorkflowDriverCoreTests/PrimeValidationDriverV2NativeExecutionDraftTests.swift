@@ -1,6 +1,7 @@
 // SPDX-FileCopyrightText: 2026 Ergentics, LLC
 // SPDX-License-Identifier: LicenseRef-Ergentics-Proprietary
 import Foundation
+import Darwin
 @_spi(PrimeValidationDriverV2RoleFacade) @testable import PrimeCore
 import PrimeValidationWorkflowContracts
 @testable import PrimeValidationWorkflowDriverCore
@@ -9,6 +10,77 @@ import XCTest
 /// Pure actual-source projections and owner cursor. No process or native
 /// capability is created, and no live Gate H execution is asserted.
 final class PrimeValidationDriverV2NativeExecutionDraftTests: XCTestCase {
+    func testHTimeoutCleanupKillsSeparateWorkerGroupsBeforeLeaderAndWaitsForReparentedZombies() throws {
+        let model = HCleanupModel()
+        let owner = try model.owner()
+        try owner.contain(leaderAlreadyReaped: false) {
+            model.events.append("leader_cleanup")
+            XCTAssertTrue(model.events.contains("signal:20:9"))
+            XCTAssertTrue(model.events.contains("signal:5:9"))
+            XCTAssertLessThan(model.events.firstIndex(of: "signal:5:9")!, model.events.firstIndex(of: "signal:20:9")!)
+            model.reapLeader()
+            return true
+        }
+        XCTAssertEqual(model.leaderReaps, 1)
+        XCTAssertGreaterThanOrEqual(model.settlingPauses, 2)
+        XCTAssertEqual(Set(owner.captured.map(\.pid)), [5, 10, 20])
+        XCTAssertFalse(model.events.contains(where: { $0.hasPrefix("signal:1:") }))
+        XCTAssertThrowsError(try owner.contain(leaderAlreadyReaped: true) { XCTFail("second cleanup"); return true })
+    }
+
+    func testHTimeoutCleanupRejectsUnownedAncestrySessionUIDAndDuplicatePIDBeforeWorkerSignals() throws {
+        typealias I = PrimeValidationDriverV2ShardDescendantCleanup.Identity
+        let mutations: [(I) -> I] = [
+            { HCleanupModel.changed($0, parent: 99) },
+            { HCleanupModel.changed($0, session: 99) },
+            { HCleanupModel.changed($0, uid: 0) },
+            { HCleanupModel.changed($0, group: 1) },
+            { HCleanupModel.changed($0, parent: 20) },
+        ]
+        for mutate in mutations {
+            let model = HCleanupModel()
+            model.members[20] = mutate(model.members[20]!)
+            let owner = try model.owner()
+            XCTAssertThrowsError(try owner.contain(leaderAlreadyReaped: false) { XCTFail("unowned tree reaped"); return true })
+            XCTAssertFalse(model.events.contains(where: { $0.hasPrefix("signal:20:") || $0.hasPrefix("signal:5:") }))
+        }
+        let duplicate = HCleanupModel(); duplicate.duplicatePID = true
+        XCTAssertThrowsError(try duplicate.owner().contain(leaderAlreadyReaped: false) { XCTFail("duplicate tree reaped"); return true })
+    }
+
+    func testHTimeoutCleanupRejectsGenerationOrParentChangeAtSignalWithoutActuatingReplacement() throws {
+        for change in ["generation", "parent", "session", "group", "uid"] {
+            let model = HCleanupModel(); model.identityMutation = change
+            XCTAssertThrowsError(try model.owner().contain(leaderAlreadyReaped: false) { XCTFail("replacement tree reaped"); return true })
+            XCTAssertFalse(model.events.contains(where: { $0.hasPrefix("signal:20:") }))
+        }
+    }
+
+    func testHTimeoutCleanupRequiresActualGroupDisappearanceAndFailsClosedWithinOwnDeadline() throws {
+        let model = HCleanupModel(); model.groupNeverDisappears = true; model.pauseStep = 100_000_000
+        XCTAssertThrowsError(try model.owner().contain(leaderAlreadyReaped: false) { model.reapLeader(); return true })
+        XCTAssertEqual(model.leaderReaps, 1)
+        XCTAssertLessThanOrEqual(model.time, 15_000_000_000)
+        let overrun = HCleanupModel()
+        XCTAssertThrowsError(try overrun.owner().contain(leaderAlreadyReaped: false) {
+            overrun.reapLeader(); overrun.time += 15_000_000_000; return true
+        })
+        let regression = HCleanupModel(); regression.regressClock = true
+        XCTAssertThrowsError(try regression.owner().contain(leaderAlreadyReaped: false) { XCTFail("clock regression"); return true })
+        let failed = HCleanupModel(); failed.failSignal = true
+        XCTAssertThrowsError(try failed.owner().contain(leaderAlreadyReaped: false) { XCTFail("failed stop"); return true })
+    }
+
+    func testHTimeoutCleanupAfterLeaderReapDoesNotSignalOrAcquireLateMemberAuthority() throws {
+        let empty = HCleanupModel(); empty.members = [:]
+        try empty.owner().contain(leaderAlreadyReaped: true) { empty.leaderReaps += 1; return true }
+        XCTAssertEqual(empty.leaderReaps, 1)
+        XCTAssertFalse(empty.events.contains(where: { $0.hasPrefix("signal:") }))
+        let late = HCleanupModel(); late.members.removeValue(forKey: 10)
+        XCTAssertThrowsError(try late.owner().contain(leaderAlreadyReaped: true) { true })
+        XCTAssertFalse(late.events.contains(where: { $0.hasPrefix("signal:") }))
+    }
+
     func testNativeScheduleExactlyMatchesOriginalPlannerEveryShardAndHash() throws {
         let (x, s) = try lists()
         let inventory = try PrimeValidationInventory.parse(xctestList: x, swiftTestingList: s)
@@ -120,7 +192,9 @@ final class PrimeValidationDriverV2NativeExecutionDraftTests: XCTestCase {
         let source = String(repeating: "a", count: 64)
         let image: [String: Any] = ["absolutePath": "/private/tmp/held-supervisor",
             "content": ["byteCount": UInt64(123), "sha256": String(repeating: "b", count: 64)]]
-        let intent = try HJSON.encode(["driverExecutable": image])
+        let intent = try HJSON.encode(["driverExecutable": image,
+            "phaseBudgets": JSONSerialization.jsonObject(with:
+                PrimeValidationDriverV2ExecutionBudgetProfile.frozenV1.canonicalPhaseBudgetsData)])
         let good: [String: Any] = ["schema": "prime_driver_v2_gate_h_declared_execution_scope_v1",
             "intentSHA256": PrimeSHA256.hexDigest(of: intent), "sourceCommit": String(repeating: "c", count: 40),
             "sourceTree": String(repeating: "d", count: 40), "sourceIdentitySHA256": source,
@@ -192,5 +266,84 @@ final class PrimeValidationDriverV2NativeExecutionDraftTests: XCTestCase {
     private func lists() throws -> (Data, Data) {
         (try Data(contentsOf: XCTUnwrap(Bundle.module.url(forResource: "xctest", withExtension: "list"))),
          try Data(contentsOf: XCTUnwrap(Bundle.module.url(forResource: "swift-testing", withExtension: "list"))))
+    }
+}
+
+private final class HCleanupModel {
+    typealias Owner = PrimeValidationDriverV2ShardDescendantCleanup
+    typealias I = Owner.Identity
+    let leader = I(pid: 10, parent: 1, session: 1, group: 10, uid: 501,
+        startSeconds: 100, startMicroseconds: 1, status: 4)
+    var members: [Int32: I] = [:]
+    var time: UInt64 = 1_000_000_000
+    var pauseStep: UInt64 = 1_000_000
+    var events: [String] = []
+    var leaderReaps = 0
+    var settlingPauses = 0
+    var duplicatePID = false
+    var identityMutation: String?
+    var groupNeverDisappears = false
+    var failSignal = false
+    var regressClock = false
+    private var clockReads = 0
+
+    init() {
+        members = [10: leader,
+            20: I(pid: 20, parent: 10, session: 1, group: 20, uid: 501,
+                startSeconds: 101, startMicroseconds: 2, status: 2),
+            5: I(pid: 5, parent: 20, session: 1, group: 5, uid: 501,
+                startSeconds: 102, startMicroseconds: 3, status: 2)]
+    }
+    static func changed(_ p: I, parent: Int32? = nil, session: Int32? = nil,
+        group: Int32? = nil, uid: UInt32? = nil, start: UInt64? = nil, status: UInt32? = nil) -> I {
+        I(pid: p.pid, parent: parent ?? p.parent, session: session ?? p.session,
+          group: group ?? p.group, uid: uid ?? p.uid, startSeconds: start ?? p.startSeconds,
+          startMicroseconds: p.startMicroseconds, status: status ?? p.status)
+    }
+    func owner() throws -> Owner {
+        try Owner(leader: leader, operations: .init(now: {
+            self.clockReads += 1
+            return self.regressClock && self.clockReads > 1 ? 0 : self.time
+        }, snapshot: { _ in
+            var result = Array(self.members.values)
+            if self.duplicatePID, let leader = self.members[10] { result.append(leader) }
+            return result
+        }, identity: { pid, _ in
+            guard let p = self.members[pid] else { return nil }
+            guard pid == 20 else { return p }
+            switch self.identityMutation {
+            case "generation": return Self.changed(p, start: p.startSeconds + 1)
+            case "parent": return Self.changed(p, parent: 1)
+            case "session": return Self.changed(p, session: 99)
+            case "group": return Self.changed(p, group: 99)
+            case "uid": return Self.changed(p, uid: 0)
+            default: return p
+            }
+        }, signal: { pid, signal in
+            self.events.append("signal:\(pid):\(signal)")
+            if self.failSignal { return false }
+            if let p = self.members[pid] {
+                self.members[pid] = Self.changed(p, status: signal == SIGSTOP ? 4 : 5)
+            }
+            if signal == SIGKILL {
+                for (child, p) in self.members where p.parent == pid {
+                    self.members[child] = Self.changed(p, parent: 1)
+                }
+            }
+            return true
+        }, groupAbsent: { group in
+            !self.groupNeverDisappears && !self.members.values.contains(where: { $0.group == group })
+        }, pause: {
+            self.time += self.pauseStep
+            if self.leaderReaps > 0 {
+                self.settlingPauses += 1
+                if self.settlingPauses >= 2 { self.members.removeAll() }
+            }
+        }))
+    }
+    func reapLeader() {
+        leaderReaps += 1
+        members.removeValue(forKey: 10)
+        for (pid, p) in members { members[pid] = Self.changed(p, parent: 1, status: 5) }
     }
 }

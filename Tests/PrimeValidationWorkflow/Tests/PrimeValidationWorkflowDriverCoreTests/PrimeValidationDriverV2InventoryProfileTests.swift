@@ -12,6 +12,8 @@ import XCTest
 final class PrimeValidationDriverV2InventoryProfileTests: XCTestCase {
     private typealias Raw = PrimeValidationDriverV2BoundRawArtifact
     private typealias Profile = PrimeValidationDriverV2InventoryProfile
+    private typealias BudgetProfile = PrimeValidationDriverV2ExecutionBudgetProfile
+    private typealias AdmissionPolicy = PrimeValidationExecutorAdmissionPolicyV2
 
     func testHistoricalDefaultBaselineBytesAndFullPlanRemainIdentical() throws {
         let baseline = PrimeValidationBaselineAnchorV2()
@@ -165,6 +167,353 @@ final class PrimeValidationDriverV2InventoryProfileTests: XCTestCase {
         }
     }
 
+    func testExecutionBudgetHistoricalBytesAndFixtureDefaultsRemainUnchanged() throws {
+        let expected = Data(#"[{"maximumActiveNanoseconds":900000000000,"phase":"build"},{"maximumActiveNanoseconds":1800000000000,"phase":"candidate_execution"},{"maximumActiveNanoseconds":60000000000,"phase":"comparison"},{"maximumActiveNanoseconds":30000000000,"phase":"execution_plan"},{"maximumActiveNanoseconds":300000000000,"phase":"inventory"},{"maximumActiveNanoseconds":30000000000,"phase":"publication"},{"maximumActiveNanoseconds":120000000000,"phase":"reconciliation"},{"maximumActiveNanoseconds":1800000000000,"phase":"reference_execution"},{"maximumActiveNanoseconds":30000000000,"phase":"source_admission"}]"#.utf8)
+        XCTAssertEqual(try PrimeCanonicalJSON.encode(AdmissionPolicy.frozenV1.phaseBudgets), expected)
+        XCTAssertEqual(try BudgetProfile.frozenV1.canonicalPhaseBudgetsData, expected)
+        XCTAssertEqual(try BudgetProfile.resolve(canonicalPhaseBudgetsData: expected), .frozenV1)
+        XCTAssertEqual(try AdmissionPolicy.frozenV1.executionBudgetProfile, .frozenV1)
+        XCTAssertEqual(try BudgetProfile.frozenV1.outerMaximumActiveNanoseconds, 5_100_000_000_000)
+        XCTAssertEqual(PrimeValidationDriverV2TerminalGate.gateHOuterDurationNanoseconds, 5_100_000_000_000)
+        let unchanged = try fixture()
+        XCTAssertEqual(unchanged.intent.baseline, .init())
+        XCTAssertTrue(unchanged.intent.phaseBudgets.allSatisfy { $0.maximumActiveNanoseconds == 1_000_000 })
+        XCTAssertEqual(unchanged.intent.roots.temporaryRelativePath, "tmp")
+        XCTAssertEqual(unchanged.intent.roots.outputRelativePath, "outputs")
+        XCTAssertEqual(unchanged.intent.swiftExecutable.absolutePath, "/usr/bin/swift")
+        let full = try fixture(admissionPolicy: .frozenV1)
+        XCTAssertEqual(try AdmissionPolicy.selected(for: full.intent), .frozenV1)
+        let implicit = PrimeValidationDriverV2SupervisorLaunchRequestV1(intent: full.intent,
+            leaseDirectoryAbsolutePath: "/private/tmp/h-budget-lease")
+        let explicit = PrimeValidationDriverV2SupervisorLaunchRequestV1(intent: full.intent,
+            leaseDirectoryAbsolutePath: "/private/tmp/h-budget-lease", terminalGate: .gateE)
+        try implicit.validate(); try explicit.validate()
+        XCTAssertEqual(try PrimeCanonicalJSON.encode(implicit), try PrimeCanonicalJSON.encode(explicit))
+        let request = try budgetObject(implicit)
+        XCTAssertNil(request["terminal_gate"])
+        XCTAssertNil(request["execution_go_scope_data"])
+        XCTAssertNil(request["accepted_capsule_sha256"])
+    }
+
+    func testExecutionBudgetProfilesRequireTheWholeNinePhaseTuple() throws {
+        XCTAssertEqual(BudgetProfile.allCases, [.frozenV1, .currentSourceExecutionV1])
+        for policy in [AdmissionPolicy.frozenV1, .currentSourceExecutionV1] {
+            let profile = try policy.executionBudgetProfile
+            let data = try PrimeCanonicalJSON.encode(policy.phaseBudgets)
+            XCTAssertEqual(policy.phaseBudgets.count, 9)
+            XCTAssertEqual(Set(policy.phaseBudgets.map(\.phase)), Set(PrimeValidationDriverPhaseV2.allCases))
+            XCTAssertEqual(data, try profile.canonicalPhaseBudgetsData)
+            XCTAssertEqual(try BudgetProfile.resolve(canonicalPhaseBudgetsData: data), profile)
+            for budget in policy.phaseBudgets {
+                XCTAssertEqual(try profile.maximumActiveNanoseconds(phase: budget.phase.rawValue), budget.maximumActiveNanoseconds)
+            }
+            for index in policy.phaseBudgets.indices {
+                for value in [UInt64(0), policy.phaseBudgets[index].maximumActiveNanoseconds + 1, UInt64.max] {
+                    var changed = policy.phaseBudgets
+                    changed[index] = .init(phase: changed[index].phase, maximumActiveNanoseconds: value)
+                    XCTAssertThrowsError(try BudgetProfile.resolve(canonicalPhaseBudgetsData: PrimeCanonicalJSON.encode(changed)))
+                }
+            }
+            for phase in [PrimeValidationDriverPhaseV2.referenceExecution, .candidateExecution] {
+                let mixed = policy.phaseBudgets.map { budget in
+                    PrimeValidationPhaseBudgetV2(phase: budget.phase, maximumActiveNanoseconds:
+                        budget.phase == phase ? (profile == .frozenV1 ? 10_800_000_000_000 : 1_800_000_000_000)
+                            : budget.maximumActiveNanoseconds)
+                }
+                XCTAssertThrowsError(try BudgetProfile.resolve(canonicalPhaseBudgetsData: PrimeCanonicalJSON.encode(mixed)))
+            }
+            XCTAssertThrowsError(try profile.maximumActiveNanoseconds(phase: "unknown"))
+        }
+        let old = AdmissionPolicy.frozenV1.phaseBudgets, current = AdmissionPolicy.currentSourceExecutionV1.phaseBudgets
+        XCTAssertEqual(zip(old, current).filter { $0.0 != $0.1 }.map { $0.0.phase }, [.candidateExecution, .referenceExecution])
+        XCTAssertEqual(try BudgetProfile.currentSourceExecutionV1.outerMaximumActiveNanoseconds, 23_100_000_000_000)
+    }
+
+    func testExecutionBudgetDecoderRejectsDuplicateUnknownNoncanonicalAndNonintegerValues() throws {
+        for profile in BudgetProfile.allCases {
+            let data = try profile.canonicalPhaseBudgetsData
+            let rows = try JSONDecoder().decode([PrimeValidationPhaseBudgetV2].self, from: data)
+            var duplicate = rows; duplicate[1] = duplicate[0]
+            for changed in [try PrimeCanonicalJSON.encode(duplicate),
+                            try PrimeCanonicalJSON.encode(Array(rows.dropLast())),
+                            try PrimeCanonicalJSON.encode(rows + [rows[0]]),
+                            try PrimeCanonicalJSON.encode(Array(rows.reversed())),
+                            Data([32]) + data, data + Data([10])] {
+                XCTAssertThrowsError(try BudgetProfile.resolve(canonicalPhaseBudgetsData: changed))
+            }
+            let text = String(decoding: data, as: UTF8.self)
+            let token = "\"maximumActiveNanoseconds\":900000000000"
+            for value in ["true", "false", "900000000000.0", "9e11", "-1", "18446744073709551615",
+                          "18446744073709551616", "\"900000000000\"", "null"] {
+                let changed = Data(text.replacingOccurrences(of: token, with: "\"maximumActiveNanoseconds\":" + value).utf8)
+                XCTAssertNotEqual(changed, data)
+                XCTAssertThrowsError(try BudgetProfile.resolve(canonicalPhaseBudgetsData: changed), value)
+            }
+            for replacement in ["\"phase\":\"unknown\"", "\"phase\":\"build\",\"phase\":\"build\"",
+                                "\"extra\":1,\"phase\":\"build\""] {
+                let changed = Data(text.replacingOccurrences(of: "\"phase\":\"build\"", with: replacement).utf8)
+                XCTAssertThrowsError(try BudgetProfile.resolve(canonicalPhaseBudgetsData: changed))
+            }
+        }
+    }
+
+    func testExecutionBudgetCurrentSelectionRequiresAnExplicitCurrentInventoryIntent() throws {
+        let old = try fixture(admissionPolicy: .frozenV1)
+        let currentListsOldBudget = try fixture(baseline: .currentSourceInventoryV1, currentLists: true, admissionPolicy: .frozenV1)
+        let current = try fixture(baseline: .currentSourceInventoryV1, currentLists: true, admissionPolicy: .currentSourceExecutionV1)
+        XCTAssertEqual(current.inventory.xctestListData, currentListsOldBudget.inventory.xctestListData)
+        XCTAssertEqual(current.inventory.swiftTestingListData, currentListsOldBudget.inventory.swiftTestingListData)
+        // Identical native-shaped list data never chooses a larger allowance.
+        for f in [old, currentListsOldBudget] {
+            XCTAssertEqual(try BudgetProfile.resolve(canonicalIntentData: PrimeCanonicalJSON.encode(f.intent)), .frozenV1)
+            XCTAssertEqual(try AdmissionPolicy.selected(for: f.intent), .frozenV1)
+        }
+        XCTAssertEqual(try BudgetProfile.resolve(canonicalIntentData: PrimeCanonicalJSON.encode(current.intent)), .currentSourceExecutionV1)
+        XCTAssertEqual(try AdmissionPolicy.selected(for: current.intent), .currentSourceExecutionV1)
+        XCTAssertThrowsError(try AdmissionPolicy.frozenV1.validate(intent: current.intent))
+        XCTAssertThrowsError(try AdmissionPolicy.currentSourceExecutionV1.validate(intent: currentListsOldBudget.intent))
+        var fields = try budgetObject(current.intent)
+        fields["baseline"] = try budgetObject(PrimeValidationBaselineAnchorV2())
+        let wrongInventory: PrimeValidationRunIntentV2 = try budgetDecode(fields)
+        XCTAssertThrowsError(try BudgetProfile.resolve(canonicalIntentData: PrimeCanonicalJSON.encode(wrongInventory)))
+        XCTAssertThrowsError(try AdmissionPolicy.selected(for: wrongInventory))
+        for key in ["baseline", "phaseBudgets"] {
+            var missing = try budgetObject(current.intent); missing.removeValue(forKey: key)
+            XCTAssertThrowsError(try BudgetProfile.resolve(canonicalIntentData: HJSON.encode(missing)))
+        }
+        let data = try PrimeCanonicalJSON.encode(current.intent)
+        let text = String(decoding: data, as: UTF8.self)
+        for value in ["true", "10800000000000.0", "1.08e13", "18446744073709551616"] {
+            let changed = Data(text.replacingOccurrences(of: "\"maximumActiveNanoseconds\":10800000000000",
+                with: "\"maximumActiveNanoseconds\":" + value).utf8)
+            XCTAssertNotEqual(changed, data)
+            XCTAssertThrowsError(try BudgetProfile.resolve(canonicalIntentData: changed), value)
+        }
+        XCTAssertThrowsError(try BudgetProfile.resolve(canonicalIntentData: data + Data([10])))
+    }
+
+    func testExecutionBudgetChangesOnlyPlanBindingsAndCapsNotShardsOrPhysicalInvocations() throws {
+        let old = try fixture(baseline: .currentSourceInventoryV1, currentLists: true, admissionPolicy: .frozenV1)
+        let current = try fixture(baseline: .currentSourceInventoryV1, currentLists: true, admissionPolicy: .currentSourceExecutionV1)
+        try old.plan.validate(intent: old.intent, buildReceipt: old.build, inventoryReceipt: old.inventory)
+        try current.plan.validate(intent: current.intent, buildReceipt: current.build, inventoryReceipt: current.inventory)
+        XCTAssertEqual(old.plan.shards, current.plan.shards)
+        XCTAssertEqual(old.plan.shardInvocations, current.plan.shardInvocations)
+        XCTAssertEqual(old.plan.inventory, current.plan.inventory)
+        XCTAssertEqual(current.plan.shards.filter { $0.key.arm == .reference }.count, 3)
+        XCTAssertEqual(current.plan.shards.filter { $0.key.arm == .candidate }.count, 81)
+        XCTAssertEqual(old.plan.maximumReferenceShardActiveNanoseconds, 1_800_000_000_000)
+        XCTAssertEqual(old.plan.maximumCandidateShardActiveNanoseconds, 1_800_000_000_000)
+        XCTAssertEqual(current.plan.maximumReferenceShardActiveNanoseconds, 10_800_000_000_000)
+        XCTAssertEqual(current.plan.maximumCandidateShardActiveNanoseconds, 10_800_000_000_000)
+        XCTAssertNotEqual(try old.intent.identitySHA256(), try current.intent.identitySHA256())
+        XCTAssertNotEqual(try PrimeCanonicalJSON.encode(old.plan), try PrimeCanonicalJSON.encode(current.plan))
+        let native = try PrimeValidationDriverV2ClosedShardSchedule.observeFrozenLists(runID: current.intent.runID,
+            xctestData: current.inventory.xctestListData, swiftTestingData: current.inventory.swiftTestingListData,
+            profile: .currentSourceInventoryV1)
+        XCTAssertEqual(native.canonicalShardsData, try PrimeCanonicalJSON.encode(current.plan.shards))
+        let prefix = PrimeValidationDriverV2SwiftPMPhysicalArguments.testabilityPrefix
+        for index in current.plan.shards.indices {
+            try PrimeValidationDriverV2NativeExecutionValidation.validateShardProjection(native.shards[index],
+                original: current.plan.shards[index], index: index)
+            let before = prefix + Array(old.plan.shardInvocations[index].arguments.dropFirst())
+            let after = prefix + Array(current.plan.shardInvocations[index].arguments.dropFirst())
+            XCTAssertEqual(before, after)
+            XCTAssertEqual(try PrimeValidationDriverV2ClosedExecutionPolicy.originalLogicalArguments(physical: after),
+                current.plan.shardInvocations[index].arguments)
+            XCTAssertThrowsError(try PrimeValidationDriverV2ClosedExecutionPolicy.originalLogicalArguments(
+                physical: Array(after.dropFirst(prefix.count))))
+        }
+        var oldFields = try budgetObject(old.plan), currentFields = try budgetObject(current.plan)
+        for key in ["intentSHA256", "buildReceiptSHA256", "inventoryReceiptSHA256",
+                    "maximumReferenceShardActiveNanoseconds", "maximumCandidateShardActiveNanoseconds"] {
+            XCTAssertNotEqual(try HJSON.encode([oldFields[key]!]), try HJSON.encode([currentFields[key]!]), key)
+            oldFields.removeValue(forKey: key); currentFields.removeValue(forKey: key)
+        }
+        XCTAssertEqual(try HJSON.encode(oldFields), try HJSON.encode(currentFields))
+    }
+
+    func testExecutionBudgetCurrentHScopeAndRequestAreExplicitAndEarlierGatesReject() throws {
+        let old = try fixture(baseline: .currentSourceInventoryV1, currentLists: true, admissionPolicy: .frozenV1)
+        let current = try fixture(baseline: .currentSourceInventoryV1, currentLists: true, admissionPolicy: .currentSourceExecutionV1)
+        for f in [old, current] {
+            let scope = try budgetScope(f.intent), data = try PrimeCanonicalJSON.encode(scope)
+            try scope.validate(intent: f.intent)
+            try PrimeValidationDriverV2ExecutionGoScope.validate(data, intentData: PrimeCanonicalJSON.encode(f.intent),
+                retainedSourceIdentitySHA256: String(repeating: "e", count: 64))
+            let request = PrimeValidationDriverV2SupervisorLaunchRequestV1(intent: f.intent,
+                leaseDirectoryAbsolutePath: "/private/tmp/h-budget-lease", terminalGate: .gateH,
+                executionGoScopeData: data, acceptedCapsuleSHA256: String(repeating: "c", count: 64))
+            try request.validate()
+            let roundTrip = try PrimeCanonicalJSON.decode(PrimeValidationDriverV2SupervisorLaunchRequestV1.self,
+                from: PrimeCanonicalJSON.encode(request))
+            XCTAssertEqual(roundTrip, request); try roundTrip.validate()
+        }
+        let currentScope = try budgetScope(current.intent)
+        XCTAssertEqual(currentScope.referenceMaximumActiveNanoseconds, 10_800_000_000_000)
+        XCTAssertEqual(currentScope.candidateMaximumActiveNanoseconds, 10_800_000_000_000)
+        XCTAssertThrowsError(try budgetScope(old.intent).validate(intent: current.intent))
+        for key in ["referenceMaximumActiveNanoseconds", "candidateMaximumActiveNanoseconds"] {
+            for value in [UInt64(1_800_000_000_000), 10_800_000_000_001, UInt64.max] {
+                var fields = try budgetObject(currentScope); fields[key] = value
+                let changed: PrimeValidationDriverV2DeclaredExecutionScopeV1 = try budgetDecode(fields)
+                XCTAssertThrowsError(try changed.validate(intent: current.intent))
+                XCTAssertThrowsError(try PrimeValidationDriverV2ExecutionGoScope.validate(PrimeCanonicalJSON.encode(changed),
+                    intentData: PrimeCanonicalJSON.encode(current.intent), retainedSourceIdentitySHA256: String(repeating: "e", count: 64)))
+            }
+        }
+        for gate in [PrimeValidationDriverV2TerminalGate.gateE, .gateF, .gateG] {
+            let earlier = PrimeValidationDriverV2SupervisorLaunchRequestV1(intent: old.intent,
+                leaseDirectoryAbsolutePath: "/private/tmp/h-budget-lease", terminalGate: gate)
+            XCTAssertNoThrow(try earlier.validate())
+            XCTAssertThrowsError(try PrimeValidationDriverV2SupervisorLaunchRequestV1(intent: current.intent,
+                leaseDirectoryAbsolutePath: "/private/tmp/h-budget-lease", terminalGate: gate).validate())
+        }
+        XCTAssertThrowsError(try PrimeValidationDriverV2SupervisorLaunchRequestV1(intent: current.intent,
+            leaseDirectoryAbsolutePath: "/private/tmp/h-budget-lease", terminalGate: .gateH).validate())
+        XCTAssertEqual(try PrimeValidationDriverV2TerminalGate.gateHOuterDurationNanoseconds(intent: old.intent), 5_100_000_000_000)
+        XCTAssertEqual(try PrimeValidationDriverV2TerminalGate.gateHOuterDurationNanoseconds(intent: current.intent), 23_100_000_000_000)
+    }
+
+    func testExecutionBudgetDurableHOuterBoundIsExactAndDoesNotRelaxEarlierGates() throws {
+        let intent = try fixture(baseline: .currentSourceInventoryV1, currentLists: true,
+            admissionPolicy: .currentSourceExecutionV1).intent
+        func check(_ gate: PrimeValidationDriverV2TerminalGate, duration: UInt64, waitOffset: UInt64,
+            admitted: Bool, start: UInt64 = 1000) throws {
+            let expectation = PrimeValidationDriverV2FixedProbeJournalReceiptExpectationV2(intent: intent,
+                repositoryCommit: String(repeating: "a", count: 40), sourceIdentitySHA256: String(repeating: "b", count: 64),
+                journalRoot: .init(absolutePath: intent.roots.workspaceRoot.absolutePath + ".driver-v2-gate-e-journal",
+                    deviceID: 1, inode: 50, ownerUserID: 501, mode: 0o700),
+                leaseRoot: .init(absolutePath: "/private/tmp/h-budget-lease", deviceID: 1, inode: 60, ownerUserID: 501, mode: 0o700),
+                gitExecutable: .init(absolutePath: "/usr/bin/git", content: .init(data: Data([1]))),
+                swiftFrontendExecutable: .init(
+                    absolutePath: "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-frontend",
+                    content: intent.swiftExecutable.content),
+                supervisorExecutableVnode: .init(deviceID: 1, inode: 100), gitExecutableVnode: .init(deviceID: 1, inode: 101),
+                swiftFrontendExecutableVnode: .init(deviceID: 1, inode: 102), supervisorProcessIdentifier: 99,
+                outerDeadlineStartedAtUptimeNanoseconds: start,
+                outerDeadlineExpiresAtUptimeNanoseconds: start.addingReportingOverflow(duration).partialValue,
+                terminalGate: gate)
+            let witness = PrimeValidationDriverV2FixedProbeSupervisorExitWitnessV2(requestedProcessIdentifier: 99,
+                returnedProcessIdentifier: 99, waitOptions: 0, rawWaitStatus: 0,
+                returnedAtUptimeNanoseconds: start.addingReportingOverflow(waitOffset).partialValue,
+                exitedNormally: true, exitStatus: 0, terminationSignal: 0, coreDumped: false)
+            // This checks only the actual expectation boundary. Empty leaves
+            // always fail; reaching leaf_order never claims a native pass.
+            XCTAssertThrowsError(try PrimeValidationDriverV2FixedProbeDurableJournalValidatorV2.validate(
+                orderedLeaves: [], expectation: expectation, supervisorExit: witness)) { error in
+                if admitted {
+                    XCTAssertEqual(error as? PrimeValidationDriverV2Error, .invalidBinding("fixed_probe_durable_journal_leaf_order"))
+                } else {
+                    XCTAssertNotEqual(error as? PrimeValidationDriverV2Error, .invalidBinding("fixed_probe_durable_journal_leaf_order"))
+                }
+            }
+        }
+        try check(.gateH, duration: 23_100_000_000_000, waitOffset: 5_100_000_000_001, admitted: true)
+        try check(.gateH, duration: 23_100_000_000_000, waitOffset: 23_100_000_000_000, admitted: true)
+        for duration in [UInt64(5_100_000_000_000), 23_099_999_999_999, 23_100_000_000_001] {
+            try check(.gateH, duration: duration, waitOffset: 1, admitted: false)
+        }
+        try check(.gateH, duration: 23_100_000_000_000, waitOffset: 23_100_000_000_001, admitted: false)
+        try check(.gateH, duration: 23_100_000_000_000, waitOffset: 0, admitted: false, start: UInt64.max)
+        for (gate, duration) in [(PrimeValidationDriverV2TerminalGate.gateE, UInt64(60_000_000_000)),
+            (.gateF, 960_000_000_000), (.gateG, 1_260_000_000_000)] {
+            try check(gate, duration: duration, waitOffset: 1, admitted: false)
+        }
+    }
+
+    func testExecutionBudgetSharedArmDeadlineCannotResetAtAShardBoundary() throws {
+        for profile in BudgetProfile.allCases {
+            let start: UInt64 = 1000, duration = profile.executionArmMaximumActiveNanoseconds
+            let deadline = try PrimeSecureChildPhaseDeadline(startUptimeNanoseconds: start, durationNanoseconds: duration)
+            let firstTerminal = start + duration / 2, secondTerminal = start + duration + 1
+            XCTAssertTrue(try deadline.authorizesNewWork(observedAtUptimeNanoseconds: start))
+            XCTAssertTrue(try deadline.acceptsCompletion(observedAtUptimeNanoseconds: firstTerminal))
+            XCTAssertTrue(try deadline.authorizesNewWork(observedAtUptimeNanoseconds: firstTerminal, notBeforeUptimeNanoseconds: start))
+            // Each interval fits individually; their shared arm interval does not.
+            XCTAssertLessThan(secondTerminal - firstTerminal, duration)
+            XCTAssertFalse(try deadline.acceptsCompletion(observedAtUptimeNanoseconds: secondTerminal,
+                notBeforeUptimeNanoseconds: firstTerminal))
+            XCTAssertEqual(deadline.startUptimeNanoseconds, start)
+            XCTAssertEqual(deadline.expiresAtUptimeNanoseconds, start + duration)
+            XCTAssertFalse(try deadline.authorizesNewWork(observedAtUptimeNanoseconds: start + duration))
+            XCTAssertTrue(try deadline.acceptsCompletion(observedAtUptimeNanoseconds: start + duration))
+            XCTAssertThrowsError(try deadline.authorizesNewWork(observedAtUptimeNanoseconds: firstTerminal - 1,
+                notBeforeUptimeNanoseconds: firstTerminal))
+            XCTAssertThrowsError(try PrimeSecureChildPhaseDeadline(startUptimeNanoseconds: UInt64.max - duration + 1,
+                durationNanoseconds: duration))
+            XCTAssertThrowsError(try PrimeSecureChildPhaseDeadline(startUptimeNanoseconds: UInt64.max - duration,
+                durationNanoseconds: duration))
+        }
+    }
+
+    func testExecutionBudgetCurrentChildProjectionRetainsSelectedProfileAndSharedOrigin() throws {
+        let f = try fixture(baseline: .currentSourceInventoryV1, currentLists: true, admissionPolicy: .currentSourceExecutionV1)
+        let invocation = f.plan.shardInvocations[1]
+        let profile = BudgetProfile.currentSourceExecutionV1
+        let fields = budgetProcessFields(invocation: invocation)
+        let process: PrimeValidationDriverV2BuildProcessObservation = try budgetDecode(fields)
+        let stdout = artifact("standard_output", invocation.standardOutputRelativePath, Data())
+        let stderr = artifact("standard_error", invocation.standardErrorRelativePath, Data())
+        let child = try PrimeValidationDriverV2NativeExecutionValidation.makeChild(invocation: invocation,
+            primary: .standardOutput, process: process, intervalStartedAt: 1000, matchedCount: 1068,
+            stdout: stdout, stderr: stderr, supervisorPID: 99, budgetProfile: profile)
+        XCTAssertGreaterThan(child.activeNanoseconds, BudgetProfile.frozenV1.executionArmMaximumActiveNanoseconds)
+        XCTAssertEqual(child.process.sessionIdentifier, 99)
+        XCTAssertEqual(child.process.supervisorSessionIdentifier, 99)
+        try child.validate(expectedInvocation: invocation, maximumActiveNanoseconds: profile.executionArmMaximumActiveNanoseconds)
+        XCTAssertThrowsError(try PrimeValidationDriverV2NativeExecutionValidation.makeChild(invocation: invocation,
+            primary: .standardOutput, process: process, intervalStartedAt: 1000, matchedCount: 1068,
+            stdout: stdout, stderr: stderr, supervisorPID: 99))
+        var expired = fields
+        expired["waitReturnedUptimeNanoseconds"] = process.deadlineExpiresAtUptimeNanoseconds
+        let expiredProcess: PrimeValidationDriverV2BuildProcessObservation = try budgetDecode(expired)
+        XCTAssertThrowsError(try PrimeValidationDriverV2NativeExecutionValidation.makeChild(invocation: invocation,
+            primary: .standardOutput, process: expiredProcess,
+            intervalStartedAt: process.deadlineExpiresAtUptimeNanoseconds - 100, matchedCount: 1068,
+            stdout: stdout, stderr: stderr, supervisorPID: 99, budgetProfile: profile))
+    }
+
+    private func budgetObject<T: Encodable>(_ value: T) throws -> [String: Any] {
+        try XCTUnwrap(JSONSerialization.jsonObject(with: PrimeCanonicalJSON.encode(value)) as? [String: Any])
+    }
+    private func budgetDecode<T: Codable>(_ fields: [String: Any]) throws -> T {
+        let value = try JSONDecoder().decode(T.self, from: HJSON.encode(fields))
+        return try PrimeCanonicalJSON.decode(T.self, from: PrimeCanonicalJSON.encode(value))
+    }
+    private func budgetScope(_ intent: PrimeValidationRunIntentV2) throws -> PrimeValidationDriverV2DeclaredExecutionScopeV1 {
+        try .init(intent: intent, sourceCommit: String(repeating: "a", count: 40), sourceTree: String(repeating: "b", count: 40),
+            sourceTreeReplaySHA256: String(repeating: "d", count: 64), sourceIdentitySHA256: String(repeating: "e", count: 64),
+            governorExecutable: .init(absolutePath: "/private/tmp/h-budget-governor", content: .init(data: Data("governor".utf8))),
+            supervisorExecutable: intent.driverExecutable)
+    }
+    private func budgetProcessFields(invocation: PrimeValidationInvocationV2) -> [String: Any] {
+        func stream(_ inode: UInt64) -> [String: Any] {
+            ["reachedEOF": true, "overflowed": false, "workerFinished": true, "descriptorsClosed": true,
+             "readErrorNumber": 0, "writeErrorNumber": 0, "finalizationErrorNumber": 0, "closeErrorNumber": 0,
+             "outputMetadataObserved": true, "outputPermissionMode": 0o444, "outputDeviceID": 1, "outputInode": inode,
+             "totalByteCount": 0, "capturedByteCount": 0, "outputByteCount": 0,
+             "outputSHA256": PrimeSHA256.hexDigest(of: Data()), "terminalReason": "end_of_file"]
+        }
+        return ["logicalArgumentZero": "swift-test",
+            "physicalArgumentZero": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-test",
+            "arguments": PrimeValidationDriverV2SwiftPMPhysicalArguments.testabilityPrefix + Array(invocation.arguments.dropFirst()),
+            "orderedEnvironment": invocation.orderedEnvironment.map { [$0.key, $0.value] },
+            "workingDirectoryAbsolutePath": invocation.workingDirectoryAbsolutePath, "workingDirectoryDeviceID": 1, "workingDirectoryInode": 10,
+            "executableAbsolutePath": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-package",
+            "executableDeviceID": 1, "executableInode": 11, "executableByteCount": 1, "executableSHA256": PrimeSHA256.hexDigest(of: Data([1])),
+            "mappedImageJoined": true, "exactSuspendedWorkingDirectoryJoin": true,
+            "processIdentifier": 101, "sessionIdentifier": 99, "parentProcessIdentifier": 99, "processGroupIdentifier": 101,
+            "appliedSpawnFlags": 16_526, "spawnReturnCode": 0,
+            "deadlineStartedAtUptimeNanoseconds": 1000, "deadlineExpiresAtUptimeNanoseconds": UInt64(10_800_000_001_000),
+            "spawnReturnedUptimeNanoseconds": 1100, "resumedAtUptimeNanoseconds": 1200,
+            "deathObservedUptimeNanoseconds": UInt64(1_800_000_002_000), "waitReturnedUptimeNanoseconds": UInt64(1_800_000_002_100),
+            "preReapProcessGroupMemberIdentifiers": [101], "requestedWaitProcessIdentifier": 101, "returnedWaitProcessIdentifier": 101,
+            "exactReapCount": 1, "cleanupInitiated": false, "waitOptions": 0, "rawWaitStatus": 0, "exitStatus": 0,
+            "terminationSignal": 0, "exitedNormally": true, "coreDumped": false, "processGroupEmptyAfterReap": true,
+            "standardOutput": stream(201), "standardError": stream(202)]
+    }
+
     private func resolve(_ b: PrimeValidationBaselineAnchorV2) -> Profile? {
         Profile.resolve(expectedXCTestCount: b.expectedXCTestCount,
             expectedSwiftTestingCount: b.expectedSwiftTestingCount,
@@ -228,7 +577,8 @@ final class PrimeValidationDriverV2InventoryProfileTests: XCTestCase {
             stderr: raw("standard_error", invocation.standardErrorRelativePath, Data()))
     }
 
-    private func fixture(baseline: PrimeValidationBaselineAnchorV2 = .init(), currentLists: Bool = false) throws -> Fixture {
+    private func fixture(baseline: PrimeValidationBaselineAnchorV2 = .init(), currentLists: Bool = false,
+        admissionPolicy: AdmissionPolicy? = nil) throws -> Fixture {
         func directory(_ name: String, _ inode: UInt64, _ mode: UInt16) -> PrimeValidationDirectoryBindingV2 {
             .init(absolutePath: "/private/tmp/h-parser-" + name, deviceID: 1, inode: inode, ownerUserID: 501, mode: mode)
         }
@@ -237,16 +587,20 @@ final class PrimeValidationDriverV2InventoryProfileTests: XCTestCase {
             evidenceRoot: directory("evidence", 40, 0o700), scratchRelativePath: "root-release-build",
             cacheRelativePath: "cache", configRelativePath: "config", securityRelativePath: "security",
             clangModuleCacheRelativePath: "clang-module-cache", homeRelativePath: "home",
-            swiftPMModuleCacheRelativePath: "swiftpm-module-cache", temporaryRelativePath: "tmp", outputRelativePath: "outputs")
+            swiftPMModuleCacheRelativePath: "swiftpm-module-cache",
+            temporaryRelativePath: admissionPolicy?.temporaryRelativePath ?? "tmp",
+            outputRelativePath: admissionPolicy?.outputRelativePath ?? "outputs")
         let metal = PrimeValidationRequiredMetallibV2(
             relativePath: "root-release-build/arm64-apple-macosx/release/mlx-swift_Cmlx.bundle/Contents/Resources/default.metallib",
             content: .init(data: Data("fixture metal".utf8)))
         let intent = PrimeValidationRunIntentV2(runID: "run-h-parser-fixture", roots: roots,
             sourceSnapshot: .init(data: Data("source".utf8)), packageLock: .init(data: Data("lock".utf8)),
             driverExecutable: .init(absolutePath: "/private/tmp/h-parser-driver", content: .init(data: Data("driver".utf8))),
-            swiftExecutable: .init(absolutePath: "/usr/bin/swift", content: .init(data: Data("swift".utf8))),
+            swiftExecutable: .init(absolutePath: admissionPolicy == nil ? "/usr/bin/swift"
+                : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift",
+                content: .init(data: Data("swift".utf8))),
             companionCommit: PrimeValidationRunIntentV2.requiredCompanionCommit, requiredPinnedMetallib: metal,
-            baseline: baseline, phaseBudgets: PrimeValidationDriverPhaseV2.allCases.map {
+            baseline: baseline, phaseBudgets: admissionPolicy?.phaseBudgets ?? PrimeValidationDriverPhaseV2.allCases.map {
                 .init(phase: $0, maximumActiveNanoseconds: 1_000_000)
             }, environmentPolicy: .make(roots: roots, pinnedMetallib: metal),
             optionalSkipPolicySHA256: try PrimeValidationOptionalSkipPolicy.identitySHA256())

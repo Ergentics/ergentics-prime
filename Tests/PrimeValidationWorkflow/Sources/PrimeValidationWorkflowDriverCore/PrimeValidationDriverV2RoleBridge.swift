@@ -14,9 +14,10 @@ package enum PrimeValidationDriverV2RoleBridge {
         terminalGate: PrimeValidationDriverV2TerminalGate = .gateE,
         executionGoScopeData: Data = Data()
     ) throws -> PrimeValidationDriverV2RoleContext {
-        try PrimeValidationExecutorAdmissionPolicyV2.frozenV1.validate(
-            intent: intent
-        )
+        let policy = try PrimeValidationExecutorAdmissionPolicyV2.selected(for: intent)
+        guard terminalGate == .gateH || policy == .frozenV1 else {
+            throw PrimeValidationDriverV2Error.invalidBinding("non_H_execution_budget")
+        }
         guard terminalGate == .gateH || executionGoScopeData.isEmpty else {
             throw PrimeValidationDriverV2Error.invalidBinding("non_H_execution_scope")
         }
