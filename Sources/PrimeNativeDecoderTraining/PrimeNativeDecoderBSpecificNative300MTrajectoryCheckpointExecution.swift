@@ -4357,6 +4357,27 @@ private final class TrajectoryOperationCounter {
         values["maximum_public_receipt_count"] = 1
     }
 
+    convenience init(scientificValues: [String: UInt64]) throws {
+        self.init()
+        let keys = Set(values.keys).subtracting(Self.transportKeys)
+        try trajectoryRequire(Set(scientificValues.keys) == keys,
+            "current local scientific counter keys")
+        for (key, value) in scientificValues {
+            try trajectoryRequire(value <= Execution.exactOperationCounts[key]!,
+                "current local scientific counter bound")
+            values[key] = value
+        }
+    }
+
+    private static let transportKeys: Set<String> = [
+        "worker_process_count", "supervisor_process_count",
+        "release_verifier_process_count", "maximum_public_receipt_count",
+    ]
+
+    var scientificValues: [String: UInt64] {
+        values.filter { !Self.transportKeys.contains($0.key) }
+    }
+
     func increment(_ key: String, by delta: UInt64 = 1) throws {
         guard let current = values[key],
               let maximum = Execution.exactOperationCounts[key]
@@ -4388,7 +4409,7 @@ private struct TrajectoryBatch {
     let tokenAndMaskSHA256: String
 }
 
-private struct TrajectoryPathDigest: Equatable {
+private struct TrajectoryPathDigest: Codable, Equatable {
     let path: String
     let shape: [Int]
     let dtype: String
@@ -4401,7 +4422,7 @@ private struct TrajectoryPathDigest: Equatable {
     let retainedLogicalBytes: Data?
 }
 
-private struct TrajectoryCatalogDigest: Equatable {
+private struct TrajectoryCatalogDigest: Codable, Equatable {
     let paths: [TrajectoryPathDigest]
     let structuralSHA256: String
     let logicalSHA256: String
@@ -4423,7 +4444,7 @@ private struct TrajectoryCatalogDigest: Equatable {
     }
 }
 
-private struct TrajectoryStepEvidence {
+private struct TrajectoryStepEvidence: Codable, Equatable {
     let lossBits: UInt32
     let perTargetLoss: TrajectoryCatalogDigest
     let wholeLogits: TrajectoryCatalogDigest
@@ -4442,7 +4463,7 @@ private struct TrajectoryStepEvidence {
     let batchBinding: Data
 }
 
-private struct TrajectorySnapshotEvidence: Equatable {
+private struct TrajectorySnapshotEvidence: Codable, Equatable {
     let weights: TrajectoryCatalogDigest
     let firstMoments: TrajectoryCatalogDigest
     let secondMoments: TrajectoryCatalogDigest
@@ -4450,12 +4471,14 @@ private struct TrajectorySnapshotEvidence: Equatable {
 }
 
 private final class TrajectoryScienceContext {
-    let bindings: TrajectoryLauncherBindings
-    let counter = TrajectoryOperationCounter()
+    let counter: TrajectoryOperationCounter
     let epoch: UInt64
     let metalDevice: any MTLDevice
     let configuredMemoryLimit: UInt64
     let artifactRoot: PrimeArtifactRoot
+    let phaseNames: [String]
+    let currentLocalLease: PrimeMetalDeviceLease?
+    let recordProgress: ((Data) throws -> Void)?
     var phases = [[String: Any]]()
     var comparisonDomains = [[String: Any]]()
     var baselineBinding:
@@ -4474,18 +4497,31 @@ private final class TrajectoryScienceContext {
     var cleanupEvidence:
         PrimeNativeDecoderNative300MTrajectoryCleanupV1?
 
-    init(
+    convenience init(
         bindings: TrajectoryLauncherBindings,
         epoch: UInt64,
         metalDevice: any MTLDevice,
         configuredMemoryLimit: UInt64,
         artifactRoot: PrimeArtifactRoot
     ) {
-        self.bindings = bindings
+        self.init(epoch: epoch, metalDevice: metalDevice,
+            configuredMemoryLimit: configuredMemoryLimit, artifactRoot: artifactRoot)
+    }
+
+    init(epoch: UInt64, metalDevice: any MTLDevice,
+         configuredMemoryLimit: UInt64, artifactRoot: PrimeArtifactRoot,
+         counter: TrajectoryOperationCounter = .init(),
+         phaseNames: [String] = PrimeNativeDecoderBSpecificNative300MTrajectoryCheckpointExecution.phaseNames,
+         currentLocalLease: PrimeMetalDeviceLease? = nil,
+         recordProgress: ((Data) throws -> Void)? = nil) {
+        self.counter = counter
         self.epoch = epoch
         self.metalDevice = metalDevice
         self.configuredMemoryLimit = configuredMemoryLimit
         self.artifactRoot = artifactRoot
+        self.phaseNames = phaseNames
+        self.currentLocalLease = currentLocalLease
+        self.recordProgress = recordProgress
     }
 }
 
@@ -4630,9 +4666,12 @@ private func trajectoryObserveResourcePhase(
     typealias Execution =
         PrimeNativeDecoderBSpecificNative300MTrajectoryCheckpointExecution
     try trajectoryRequire(
-        context.phases.count < Execution.phaseNames.count
-            && Execution.phaseNames[context.phases.count] == phaseID,
+        context.phases.count < context.phaseNames.count
+            && context.phaseNames[context.phases.count] == phaseID,
         "resource phase order")
+    if let lease = context.currentLocalLease {
+        try trajectoryRequire(lease.isHeld, "current local science lease held")
+    }
     StreamOrDevice.default.stream.synchronize()
     try context.counter.increment("resource_measurement_synchronize_count")
 
@@ -4659,7 +4698,7 @@ private func trajectoryObserveResourcePhase(
         "getrusage")
     var filesystem = statfs()
     try trajectoryRequire(
-        context.bindings.artifactRoot.withCString {
+        context.artifactRoot.directoryURL.path.withCString {
             statfs($0, &filesystem)
         } == 0,
         "artifact-root statfs")
@@ -4700,17 +4739,27 @@ private func trajectoryObserveResourcePhase(
         ],
         "filesystem_semantic_role": "artifact_root",
         "filesystem_path_sha256": PrimeSHA256.hexDigest(
-            of: Data(context.bindings.artifactRoot.utf8)),
+            of: Data(context.artifactRoot.directoryURL.path.utf8)),
         "filesystem_capacity_bytes": capacity.partialValue,
         "filesystem_available_bytes": available.partialValue,
         "verified_configured_memory_limit_copied_from_preflight_bytes":
             context.configuredMemoryLimit,
         "verified_configured_cache_limit_copied_from_preflight_bytes": 0,
     ])
+    if let recordProgress = context.recordProgress {
+        try recordProgress(trajectoryCanonicalJSONData([
+            "schema": "prime_current_local_native300m_resource_boundary_v1",
+            "worker_pid": getpid(), "phase_ordinal": context.phases.count,
+            "observation": context.phases.last!,
+        ]))
+    }
     let scienceTimeout = Execution.workerTimeoutSeconds
         .multipliedReportingOverflow(by: 1_000_000_000)
     try trajectoryRequire(!scienceTimeout.overflow, "science timeout interval")
     if elapsed.partialValue >= scienceTimeout.partialValue {
+        if context.currentLocalLease != nil {
+            throw TrajectoryExecutionError.contract("current local science deadline exceeded")
+        }
         throw TrajectoryExecutionError.classified(
             "ABSTAIN_RESOURCE",
             "worker_or_supervisor_timeout_with_complete_integrity_cleanup_and_verifier_closure")
@@ -6286,7 +6335,7 @@ private func trajectoryBuildCompleteComparisons(
     return results
 }
 
-private struct TrajectoryUninterruptedClosure {
+private struct TrajectoryUninterruptedClosure: Codable, Equatable {
     let snapshot: TrajectorySnapshotEvidence
     let successor: TrajectoryStepEvidence
 }
@@ -7125,5 +7174,483 @@ private func trajectoryRunWorkerProcess(workerEpoch: UInt64) -> Never {
     } catch {
         _ = Darwin.close(Execution.workerFrameDescriptor)
         _exit(71)
+    }
+}
+
+// MARK: - Current-local, retained, three-process science
+
+private struct CurrentLocalTrajectoryBaseline: Codable {
+    let schema: String
+    let status: String
+    let scienceStartedAt: UInt64
+    let completedAt: UInt64
+    let workerPID: Int32
+    let baseline: PrimeNativeDecoderNative300MTrajectoryExternalCommitBindingV1
+    let uninterrupted: PrimeNativeDecoderNative300MTrajectoryExternalCommitBindingV1
+    let evidence: TrajectoryUninterruptedClosure
+    let scientificOperationCounts: [String: UInt64]
+    let resourcePhases: Data
+    let device: Data
+    let artifactRootIdentity: Data
+}
+
+private struct CurrentLocalTrajectoryResult: Codable {
+    let schema: String
+    let status: String
+    let baselineRun: CurrentLocalTrajectoryBaseline
+    let resumed: PrimeNativeDecoderNative300MTrajectoryExternalCommitBindingV1
+    let resumeWorkerPID: Int32
+    let resumeWorkerStartedAt: UInt64
+    let completedAt: UInt64
+    let comparisonDomains: Data
+    let scientificOperationCounts: [String: UInt64]
+    let resourcePhases: Data
+    let device: Data
+    let artifactRootIdentity: Data
+    // The embedded V2 source hash is a historical compatibility identity.
+    // Current source/image identities are observed by the local controller.
+    let compatibilityIdentityScope: String
+}
+
+private let currentLocalTrajectoryPhaseNames: [String] = {
+    var names = PrimeNativeDecoderBSpecificNative300MTrajectoryCheckpointExecution.phaseNames
+    names[10] = "post_streaming_compare_retained_artifact_verification"
+    return names
+}()
+
+private func currentLocalRootIdentity(_ root: PrimeArtifactRoot) throws -> Data {
+    let value = try root.verifiedRootIdentity()
+    return try trajectoryCanonicalJSONData([
+        "device_id": value.deviceID, "inode": value.inode,
+        "owner_uid": value.ownerUserID, "owner_gid": value.ownerGroupID,
+        "mode": value.actualMode, "link_count": value.linkCount,
+        "mtime_seconds": value.modificationSeconds, "mtime_nanoseconds": value.modificationNanoseconds,
+        "ctime_seconds": value.statusChangeSeconds, "ctime_nanoseconds": value.statusChangeNanoseconds,
+    ])
+}
+
+private func currentLocalDeadline(_ epoch: UInt64, lease: PrimeMetalDeviceLease) throws {
+    let now = DispatchTime.now().uptimeNanoseconds
+    try trajectoryRequire(epoch > 0 && now >= epoch && now - epoch < 4_800_000_000_000,
+        "current local science deadline")
+    try trajectoryRequire(lease.isHeld, "current local science retained lease")
+}
+
+private func currentLocalEncode<T: Encodable>(_ value: T) throws -> Data {
+    let data = try PrimeCanonicalJSON.encode(value)
+    try trajectoryRequire(data.count <= PrimeNativeDecoderCurrentLocalNative300MExecution.maximumResultByteCount,
+        "current local result size")
+    return data
+}
+
+private func currentLocalDecode<T: Codable>(_ type: T.Type, _ data: Data) throws -> T {
+    try trajectoryRequire(!data.isEmpty && data.count <= PrimeNativeDecoderCurrentLocalNative300MExecution.maximumResultByteCount,
+        "current local input size")
+    return try PrimeCanonicalJSON.decode(type, from: data)
+}
+
+private func currentLocalValidateBaseline(_ value: CurrentLocalTrajectoryBaseline) throws {
+    try trajectoryRequire(value.schema == "prime_current_local_native300m_baseline_v1"
+        && value.status == "UNINTERRUPTED_RETAINED"
+        && value.workerPID > 0 && value.scienceStartedAt > 0
+        && value.completedAt > value.scienceStartedAt
+        && value.completedAt - value.scienceStartedAt < 4_800_000_000_000
+        && value.baseline.setRole == .baselineCheckpoint
+        && value.uninterrupted.setRole == .uninterruptedNPlus1Comparator
+        && value.evidence.snapshot.weights.totalElementCount == 271_107_072
+        && value.evidence.snapshot.weights.paths.count == 218
+        && value.evidence.snapshot.firstMoments.totalElementCount == 271_107_072
+        && value.evidence.snapshot.secondMoments.totalElementCount == 271_107_072,
+        "current local baseline identity")
+    try PrimeNativeDecoderNative300MTrajectoryCheckpointV1.validateExternalBinding(value.baseline)
+    try PrimeNativeDecoderNative300MTrajectoryCheckpointV1.validateExternalBinding(value.uninterrupted)
+    try currentLocalRequireBaselineControl(value.evidence.snapshot.control)
+    let phases = try trajectoryCanonicalJSONObject(value.resourcePhases) as? [[String: Any]]
+    try trajectoryRequire(phases?.compactMap { $0["phase_id"] as? String }
+        == Array(currentLocalTrajectoryPhaseNames.prefix(7)), "current local baseline phase prefix")
+    _ = try TrajectoryOperationCounter(scientificValues: value.scientificOperationCounts)
+    _ = try trajectoryCanonicalJSONObject(value.device)
+    _ = try trajectoryCanonicalJSONObject(value.artifactRootIdentity)
+}
+
+private func currentLocalValidateResult(_ value: CurrentLocalTrajectoryResult) throws {
+    try currentLocalValidateBaseline(value.baselineRun)
+    try PrimeNativeDecoderNative300MTrajectoryCheckpointV1.validateExternalBinding(value.resumed)
+    let domains = try trajectoryCanonicalJSONObject(value.comparisonDomains) as? [[String: Any]]
+    let phases = try trajectoryCanonicalJSONObject(value.resourcePhases) as? [[String: Any]]
+    let counts = try TrajectoryOperationCounter(scientificValues: value.scientificOperationCounts)
+    try counts.requireComplete()
+    try trajectoryRequire(value.schema == "prime_current_local_native300m_stage7_result_v1"
+        && ["PASS_EXACT", "MEASURED_EXACT_MISMATCH"].contains(value.status)
+        && value.resumeWorkerPID > 0 && value.resumeWorkerPID != value.baselineRun.workerPID
+        && value.resumeWorkerStartedAt >= value.baselineRun.completedAt
+        && value.completedAt > value.resumeWorkerStartedAt
+        && value.completedAt - value.baselineRun.scienceStartedAt < 4_800_000_000_000
+        && value.resumed.setRole == .resumedNPlus1Comparator
+        && value.device == value.baselineRun.device
+        && value.compatibilityIdentityScope == "historical_v2_compatibility_only_current_source_bound_by_controller"
+        && domains?.compactMap { $0["domain_id"] as? String }
+            == PrimeNativeDecoderBSpecificNative300MTrajectoryCheckpointExecution.comparisonDomainIDs
+        && phases?.compactMap { $0["phase_id"] as? String } == currentLocalTrajectoryPhaseNames,
+        "current local complete stage7 identity")
+    guard let domains else { throw TrajectoryExecutionError.contract("current local domains") }
+    for (index, domain) in domains.enumerated() {
+        try trajectoryRequire(trajectoryValidMeasuredComparisonDomain(domain, index: index),
+            "current local complete comparison domain")
+    }
+    try trajectoryRequire((value.status == "PASS_EXACT") == domains.allSatisfy { trajectoryExactBool($0["exact"]) == true },
+        "current local comparison disposition")
+    _ = try trajectoryCanonicalJSONObject(value.artifactRootIdentity)
+}
+
+private func currentLocalWithDevice<T>(
+    lease: PrimeMetalDeviceLease, epoch: UInt64,
+    body: (any MTLDevice, Device, UInt64) throws -> T
+) throws -> T {
+    try currentLocalDeadline(epoch, lease: lease)
+    try trajectoryRequire(ProcessInfo.processInfo.environment["MLX_ENABLE_TF32"] == "0",
+        "current local TF32 disabled")
+    let devices = MTLCopyAllDevices()
+    guard devices.count == 1, let metal = devices.first, let originalDefault = MTLCreateSystemDefaultDevice() else {
+        throw TrajectoryExecutionError.contract("current local singleton Metal topology")
+    }
+    try trajectoryRequire(metal.registryID == originalDefault.registryID
+        && metal.name == originalDefault.name && metal.hasUnifiedMemory
+        && metal.maxBufferLength > 0 && metal.recommendedMaxWorkingSetSize > 0,
+        "current local default unified Metal device")
+    let limit = min(UInt64(17_179_869_184), UInt64(metal.recommendedMaxWorkingSetSize))
+    try trajectoryRequire(limit >= 4_337_713_152 && limit <= UInt64(Int.max),
+        "current local native300m memory floor")
+    let execution = Device(.gpu, index: 0)
+    return try Device.withDefaultDevice(execution) {
+        MLX.Memory.memoryLimit = Int(limit)
+        MLX.Memory.cacheLimit = 0
+        MLX.Memory.peakMemory = 0
+        try trajectoryRequire(trajectoryPostflightIdentityEqual(metalDevice: metal,
+            executionDevice: execution, configuredMemoryLimit: limit), "current local GPU policy")
+        let result = try body(metal, execution, limit)
+        try trajectoryRequire(trajectoryPostflightIdentityEqual(metalDevice: metal,
+            executionDevice: execution, configuredMemoryLimit: limit), "current local GPU policy postflight")
+        try currentLocalDeadline(epoch, lease: lease)
+        return result
+    }
+}
+
+public extension PrimeNativeDecoderCurrentLocalNative300MExecution {
+    /// Support check only: exercises the actual host-evidence codec and
+    /// comparison/control guards without allocating any MLX model or tensor.
+    static func validatePureContractV1() throws {
+        let bytes = Data([0, 0, 128, 63, 1, 0, 192, 127])
+        let digest = PrimeSHA256.hexDigest(of: bytes)
+        let path = TrajectoryPathDigest(path: "serialization_fixture", shape: [1, 2], dtype: "float32",
+            elementCount: 2, logicalByteCount: 8, logicalSHA256: digest, retainedLogicalBytes: bytes)
+        let catalog = TrajectoryCatalogDigest(paths: [path], structuralSHA256: digest,
+            logicalSHA256: digest, totalElementCount: 2, totalLogicalByteCount: 8)
+        let control = try trajectoryBaselineControl()
+        let snapshot = TrajectorySnapshotEvidence(weights: catalog, firstMoments: catalog,
+            secondMoments: catalog, control: control)
+        let step = TrajectoryStepEvidence(lossBits: 0x7fc00001, perTargetLoss: catalog, wholeLogits: catalog,
+            rawGradients: catalog, clippedGradients: catalog, rawNormBits: UInt32.max,
+            clippedNormBits: 0x80000000, clipScaleBits: 0x3f800000,
+            postUpdateParameters: catalog, firstMoments: catalog, secondMoments: catalog,
+            evaluationPerTargetLoss: catalog, evaluationWholeLogits: catalog,
+            evaluationBinding: Data("{}".utf8), evaluationReadOnlyBinding: Data("{}".utf8), batchBinding: Data("{}".utf8))
+        let original = TrajectoryUninterruptedClosure(snapshot: snapshot, successor: step)
+        let encoded = try currentLocalEncode(original)
+        let decoded = try currentLocalDecode(TrajectoryUninterruptedClosure.self, encoded)
+        try trajectoryRequire(decoded == original, "current local host evidence exact codec roundtrip")
+        try currentLocalRequireBaselineControl(decoded.snapshot.control)
+        var wrongControl = try trajectoryJSONObjectDictionary(control, scope: "pure baseline control")
+        wrongControl["global_step"] = 2
+        let changedControl = try trajectoryCanonicalJSONData(wrongControl)
+        var rejected = false
+        do { try currentLocalRequireBaselineControl(changedControl) } catch { rejected = true }
+        try trajectoryRequire(rejected, "current local changed control rejected")
+        let left = try trajectoryMemberComparisonValue(object: ["raw_norm_float32_bits": UInt32(0x3f800000)],
+            orderedPaths: ["raw_norm_float32_bits"])
+        let right = try trajectoryMemberComparisonValue(object: ["raw_norm_float32_bits": UInt32(0x40000000)],
+            orderedPaths: ["raw_norm_float32_bits"])
+        let exact = try trajectoryComparisonResult(index: 8, left: left, right: left)
+        let mismatch = try trajectoryComparisonResult(index: 8, left: left, right: right)
+        try trajectoryRequire(trajectoryValidMeasuredComparisonDomain(exact, index: 8)
+            && trajectoryExactBool(exact["exact"]) == true
+            && trajectoryValidMeasuredComparisonDomain(mismatch, index: 8)
+            && trajectoryExactBool(mismatch["exact"]) == false,
+            "current local actual comparison accepts exact and records changed bits")
+        var falsePass = mismatch
+        falsePass["exact"] = true
+        try trajectoryRequire(!trajectoryValidMeasuredComparisonDomain(falsePass, index: 8),
+            "current local comparison false exact rejected")
+        var wrongDomain = exact
+        wrongDomain["domain_id"] = "snapshot_weights"
+        try trajectoryRequire(!trajectoryValidMeasuredComparisonDomain(wrongDomain, index: 8),
+            "current local wrong comparison domain rejected")
+        rejected = false
+        do { _ = try currentLocalDecode(TrajectoryUninterruptedClosure.self, encoded + Data([10])) } catch { rejected = true }
+        try trajectoryRequire(rejected, "current local noncanonical host evidence rejected")
+    }
+
+    /// First worker: initial model, baseline update/checkpoint, uninterrupted
+    /// successor and host-only comparison evidence. Nothing is deleted.
+    static func runStage7Baseline(
+        artifactRoot: PrimeArtifactRoot, lease: PrimeMetalDeviceLease,
+        workerEpochNanoseconds: UInt64, recordProgress: @escaping (Data) throws -> Void
+    ) throws -> Data {
+        try artifactRoot.requirePrivateRootMode()
+        try artifactRoot.requireEmpty()
+        return try currentLocalWithDevice(lease: lease, epoch: workerEpochNanoseconds) { metal, device, limit in
+            let context = TrajectoryScienceContext(epoch: workerEpochNanoseconds,
+                metalDevice: metal, configuredMemoryLimit: limit, artifactRoot: artifactRoot,
+                phaseNames: currentLocalTrajectoryPhaseNames, currentLocalLease: lease,
+                recordProgress: recordProgress)
+            try trajectoryObserveResourcePhase("preflight", context: context)
+            try trajectoryRequire((trajectoryExactUInt64(context.phases[0]["filesystem_available_bytes"]) ?? 0) >= 12_884_901_888,
+                "current local three-set filesystem floor")
+            let evidence = try trajectoryRunUninterruptedClosure(context: context)
+            guard let baseline = context.baselineBinding, let uninterrupted = context.uninterruptedBinding else {
+                throw TrajectoryExecutionError.contract("current local baseline publications")
+            }
+            // Both model and optimizer left the original lexical kernel.
+            MLX.Memory.clearCache()
+            try trajectoryObserveResourcePhase("post_uninterrupted_state_deallocation_and_cache_clear", context: context)
+            let retained = try PrimeCurrentLocalNative300MRetainedInventory(root: artifactRoot, bindings: [baseline, uninterrupted])
+            try retained.revalidate()
+            let value = CurrentLocalTrajectoryBaseline(schema: "prime_current_local_native300m_baseline_v1",
+                status: "UNINTERRUPTED_RETAINED", scienceStartedAt: workerEpochNanoseconds,
+                completedAt: DispatchTime.now().uptimeNanoseconds, workerPID: getpid(),
+                baseline: baseline, uninterrupted: uninterrupted, evidence: evidence,
+                scientificOperationCounts: context.counter.scientificValues,
+                resourcePhases: try trajectoryCanonicalJSONData(context.phases),
+                device: try trajectoryCanonicalJSONData(trajectoryDeviceDictionary(metalDevice: metal,
+                    configuredMemoryLimit: limit, prePostEqual: true)),
+                artifactRootIdentity: try currentLocalRootIdentity(artifactRoot))
+            try currentLocalValidateBaseline(value)
+            try currentLocalDeadline(workerEpochNanoseconds, lease: lease)
+            return try currentLocalEncode(value)
+        }
+    }
+
+    /// Second, distinct OS worker: reload the real baseline weights/control,
+    /// import real typed Adam moments, execute batch2, and compare all18 domains.
+    static func runStage7Resume(
+        artifactRoot: PrimeArtifactRoot, intermediateResult: Data,
+        lease: PrimeMetalDeviceLease, workerEpochNanoseconds: UInt64,
+        recordProgress: @escaping (Data) throws -> Void
+    ) throws -> Data {
+        let previous = try currentLocalDecode(CurrentLocalTrajectoryBaseline.self, intermediateResult)
+        try currentLocalValidateBaseline(previous)
+        try trajectoryRequire(getpid() != previous.workerPID
+            && workerEpochNanoseconds >= previous.completedAt
+            && workerEpochNanoseconds <= DispatchTime.now().uptimeNanoseconds,
+            "current local fresh resume process")
+        let initialRootIdentity = try currentLocalRootIdentity(artifactRoot)
+        try trajectoryRequire(initialRootIdentity == previous.artifactRootIdentity,
+            "current local baseline root continuity")
+        return try currentLocalWithDevice(lease: lease, epoch: previous.scienceStartedAt) { metal, device, limit in
+            let observedDevice = try trajectoryCanonicalJSONData(trajectoryDeviceDictionary(metalDevice: metal,
+                configuredMemoryLimit: limit, prePostEqual: true))
+            try trajectoryRequire(observedDevice == previous.device, "current local cross-process device equality")
+            do {
+                let held = try PrimeCurrentLocalNative300MRetainedInventory(root: artifactRoot,
+                    bindings: [previous.baseline, previous.uninterrupted])
+                try held.revalidate()
+            }
+            let context = TrajectoryScienceContext(epoch: previous.scienceStartedAt,
+                metalDevice: metal, configuredMemoryLimit: limit, artifactRoot: artifactRoot,
+                counter: try .init(scientificValues: previous.scientificOperationCounts),
+                phaseNames: currentLocalTrajectoryPhaseNames, currentLocalLease: lease,
+                recordProgress: recordProgress)
+            guard let priorPhases = try trajectoryCanonicalJSONObject(previous.resourcePhases) as? [[String: Any]] else {
+                throw TrajectoryExecutionError.contract("current local prior resource phases")
+            }
+            context.phases = priorPhases
+            context.baselineBinding = previous.baseline
+            context.uninterruptedBinding = previous.uninterrupted
+            try currentLocalDeadline(previous.scienceStartedAt, lease: lease)
+            let resumed = try trajectoryRunResumedClosure(context: context, baselineBinding: previous.baseline)
+            guard let resumedBinding = context.resumedBinding else {
+                throw TrajectoryExecutionError.contract("current local resumed publication")
+            }
+            MLX.Memory.clearCache()
+            let streamed = try PrimeNativeDecoderNative300MTrajectoryCheckpointV1.comparePrivateComparatorsStreaming(
+                root: artifactRoot, uninterrupted: previous.uninterrupted, resumed: resumedBinding)
+            let domains = try trajectoryBuildCompleteComparisons(snapshot: previous.evidence.snapshot,
+                restoredSnapshot: resumed.restoredSnapshot, uninterrupted: previous.evidence.successor,
+                resumed: resumed.successor, streamed: streamed)
+            let retained = try PrimeCurrentLocalNative300MRetainedInventory(root: artifactRoot,
+                bindings: [previous.baseline, previous.uninterrupted, resumedBinding])
+            try retained.revalidate()
+            try trajectoryObserveResourcePhase(currentLocalTrajectoryPhaseNames[10], context: context)
+            try trajectoryObserveResourcePhase("postflight", context: context)
+            try context.counter.requireComplete()
+            let value = CurrentLocalTrajectoryResult(schema: "prime_current_local_native300m_stage7_result_v1",
+                status: domains.allSatisfy { trajectoryExactBool($0["exact"]) == true } ? "PASS_EXACT" : "MEASURED_EXACT_MISMATCH",
+                baselineRun: previous, resumed: resumedBinding, resumeWorkerPID: getpid(),
+                resumeWorkerStartedAt: workerEpochNanoseconds, completedAt: DispatchTime.now().uptimeNanoseconds,
+                comparisonDomains: try trajectoryCanonicalJSONData(domains),
+                scientificOperationCounts: context.counter.scientificValues,
+                resourcePhases: try trajectoryCanonicalJSONData(context.phases), device: observedDevice,
+                artifactRootIdentity: try currentLocalRootIdentity(artifactRoot),
+                compatibilityIdentityScope: "historical_v2_compatibility_only_current_source_bound_by_controller")
+            try currentLocalValidateResult(value)
+            try currentLocalDeadline(previous.scienceStartedAt, lease: lease)
+            return try currentLocalEncode(value)
+        }
+    }
+
+    static func stage7Status(in data: Data) throws -> String {
+        let result = try currentLocalDecode(CurrentLocalTrajectoryResult.self, data)
+        try currentLocalValidateResult(result)
+        return result.status
+    }
+
+    /// Descriptor-free expected values only. The controller must verify each
+    /// binding against its retained native artifact root before publication.
+    static func retainedArtifactBindings(in data: Data) throws -> [PrimeArtifactBinding] {
+        let result = try currentLocalDecode(CurrentLocalTrajectoryResult.self, data)
+        try currentLocalValidateResult(result)
+        return [result.baselineRun.baseline, result.baselineRun.uninterrupted, result.resumed]
+            .flatMap { $0.orderedLeafBindings.map(\.artifact) }
+    }
+
+    static func baselineStatus(in data: Data) throws -> String {
+        let result = try currentLocalDecode(CurrentLocalTrajectoryBaseline.self, data)
+        try currentLocalValidateBaseline(result)
+        return result.status
+    }
+
+    static func stage8Status(in data: Data) throws -> String {
+        try trajectoryRequire(!data.isEmpty && data.count <= maximumResultByteCount,
+            "current local stage8 result size")
+        guard let value = try trajectoryCanonicalJSONObject(data) as? [String: Any],
+              Set(value.keys) == ["schema", "status", "worker_pid", "worker_started_at", "completed_at",
+                "stage7_result_byte_count", "stage7_result_sha256", "actual_model_parameter_count",
+                "model_weights_exact", "typed_adam_first_moments_exact", "typed_adam_second_moments_exact",
+                "canonical_control_exact", "retained_leaf_count", "retained_set_count",
+                "retained_artifacts_deleted", "additional_training_steps", "resource_phases", "device", "artifact_root_identity"],
+              value["schema"] as? String == "prime_current_local_native300m_stage8_retained_verification_v1",
+              value["status"] as? String == "PASS_RETAINED_RELOAD_EXACT",
+              let pid = trajectoryExactUInt64(value["worker_pid"]), pid > 0,
+              let start = trajectoryExactUInt64(value["worker_started_at"]), start > 0,
+              let end = trajectoryExactUInt64(value["completed_at"]), end > start,
+              end - start < 4_800_000_000_000,
+              let size = trajectoryExactUInt64(value["stage7_result_byte_count"]), size > 0, size <= maximumResultByteCount,
+              let hash = value["stage7_result_sha256"] as? String, trajectoryIsLowerHex(hash, count: 64),
+              trajectoryExactUInt64(value["actual_model_parameter_count"]) == parameterCount,
+              trajectoryExactUInt64(value["retained_leaf_count"]) == 12,
+              trajectoryExactUInt64(value["retained_set_count"]) == 3,
+              trajectoryExactUInt64(value["additional_training_steps"]) == 0,
+              trajectoryExactBool(value["retained_artifacts_deleted"]) == false,
+              ["model_weights_exact", "typed_adam_first_moments_exact", "typed_adam_second_moments_exact", "canonical_control_exact"]
+                .allSatisfy({ trajectoryExactBool(value[$0]) == true }),
+              let phases = value["resource_phases"] as? [[String: Any]],
+              phases.compactMap({ $0["phase_id"] as? String }) == ["stage8_preflight", "stage8_post_model_adam_control_reload",
+                "stage8_post_retained_comparator_verification", "stage8_postflight"],
+              let device = value["device"] as? [String: Any],
+              trajectoryValidCandidateDevice(device),
+              let identity = value["artifact_root_identity"] as? [String: Any],
+              trajectoryExactUInt64(identity["inode"]) != nil else {
+            throw TrajectoryExecutionError.contract("current local stage8 result identity")
+        }
+        return "PASS_RETAINED_RELOAD_EXACT"
+    }
+
+    /// Third OS worker: actual retained baseline model/control/moment reload,
+    /// typed Adam import, original snapshot equality, all12 file hashes and
+    /// the three persisted successor tensor domains. It runs no extra training.
+    static func verifyRetainedStage7(
+        artifactRoot: PrimeArtifactRoot, stage7Result: Data,
+        lease: PrimeMetalDeviceLease, workerEpochNanoseconds: UInt64,
+        recordProgress: @escaping (Data) throws -> Void
+    ) throws -> Data {
+        let prior = try currentLocalDecode(CurrentLocalTrajectoryResult.self, stage7Result)
+        try currentLocalValidateResult(prior)
+        try trajectoryRequire(prior.status == "PASS_EXACT"
+            && getpid() != prior.resumeWorkerPID && getpid() != prior.baselineRun.workerPID
+            && workerEpochNanoseconds >= prior.completedAt
+            && workerEpochNanoseconds <= DispatchTime.now().uptimeNanoseconds,
+            "current local retained verification requires exact prior and fresh process")
+        let initialRootIdentity = try currentLocalRootIdentity(artifactRoot)
+        try trajectoryRequire(initialRootIdentity == prior.artifactRootIdentity,
+            "current local retained root continuity")
+        return try currentLocalWithDevice(lease: lease, epoch: workerEpochNanoseconds) { metal, device, limit in
+            let observedDevice = try trajectoryCanonicalJSONData(trajectoryDeviceDictionary(metalDevice: metal,
+                configuredMemoryLimit: limit, prePostEqual: true))
+            try trajectoryRequire(observedDevice == prior.device, "current local verifier device equality")
+            let names = ["stage8_preflight", "stage8_post_model_adam_control_reload",
+                "stage8_post_retained_comparator_verification", "stage8_postflight"]
+            let context = TrajectoryScienceContext(epoch: workerEpochNanoseconds, metalDevice: metal,
+                configuredMemoryLimit: limit, artifactRoot: artifactRoot, phaseNames: names,
+                currentLocalLease: lease, recordProgress: recordProgress)
+            try trajectoryObserveResourcePhase(names[0], context: context)
+            let retained = try PrimeCurrentLocalNative300MRetainedInventory(root: artifactRoot,
+                bindings: [prior.baselineRun.baseline, prior.baselineRun.uninterrupted, prior.resumed])
+            let restoredSnapshot = try currentLocalReloadSnapshot(root: artifactRoot, binding: prior.baselineRun.baseline)
+            try trajectoryRequire(restoredSnapshot == prior.baselineRun.evidence.snapshot,
+                "current local independent model Adam control snapshot equality")
+            MLX.Memory.clearCache()
+            try trajectoryObserveResourcePhase(names[1], context: context)
+            let comparison = try PrimeNativeDecoderNative300MTrajectoryCheckpointV1.comparePrivateComparatorsStreaming(
+                root: artifactRoot, uninterrupted: prior.baselineRun.uninterrupted, resumed: prior.resumed)
+            try trajectoryRequire(comparison.controlSemanticExact && comparison.firstControlMismatchPath == nil,
+                "current local retained comparator control equality")
+            try currentLocalRequireStreamedEquality(comparison)
+            try retained.revalidate()
+            try trajectoryObserveResourcePhase(names[2], context: context)
+            try trajectoryObserveResourcePhase(names[3], context: context)
+            try currentLocalDeadline(workerEpochNanoseconds, lease: lease)
+            return try trajectoryCanonicalJSONData([
+                "schema": "prime_current_local_native300m_stage8_retained_verification_v1",
+                "status": "PASS_RETAINED_RELOAD_EXACT", "worker_pid": getpid(),
+                "worker_started_at": workerEpochNanoseconds,
+                "completed_at": DispatchTime.now().uptimeNanoseconds,
+                "stage7_result_byte_count": stage7Result.count,
+                "stage7_result_sha256": PrimeSHA256.hexDigest(of: stage7Result),
+                "actual_model_parameter_count": restoredSnapshot.weights.totalElementCount,
+                "model_weights_exact": true, "typed_adam_first_moments_exact": true,
+                "typed_adam_second_moments_exact": true, "canonical_control_exact": true,
+                "retained_leaf_count": 12, "retained_set_count": 3,
+                "retained_artifacts_deleted": false, "additional_training_steps": 0,
+                "resource_phases": context.phases,
+                "device": try trajectoryCanonicalJSONObject(observedDevice),
+                "artifact_root_identity": try trajectoryCanonicalJSONObject(currentLocalRootIdentity(artifactRoot)),
+            ])
+        }
+    }
+}
+
+private func currentLocalReloadSnapshot(
+    root: PrimeArtifactRoot,
+    binding: PrimeNativeDecoderNative300MTrajectoryExternalCommitBindingV1
+) throws -> TrajectorySnapshotEvidence {
+    let restored = try PrimeNativeDecoderNative300MTrajectoryCheckpointV1.loadAuthoritativeModelAndControl(
+        root: root, externalCommitBinding: binding)
+    try currentLocalRequireBaselineControl(restored.controlState)
+    restored.model.train(true)
+    let neutral = try PrimeNativeDecoderNative300MTrajectoryCheckpointV1.loadNeutralMomentCatalog(
+        root: root, externalCommitBinding: binding, matching: restored.model)
+    let typed = try PrimeNativeDecoderBSpecificNative300MTrajectoryCheckpointExecution.typedAdamState(
+        from: neutral, matching: restored.model.trainableParameters())
+    let optimizer = trajectoryMakeAdamW()
+    try optimizer.update(parameters: typed, matching: restored.model.trainableParameters())
+    try checkedEval(restored.model, optimizer)
+    return try trajectoryCaptureEvaluationState(model: restored.model, optimizer: optimizer, control: restored.controlState)
+}
+
+private func currentLocalRequireBaselineControl(_ data: Data) throws {
+    let expected = try trajectoryBaselineControl()
+    try trajectoryRequire(data == expected, "current local baseline control")
+}
+
+private func currentLocalRequireStreamedEquality(
+    _ comparison: PrimeNativeDecoderNative300MTrajectoryStreamingComparisonV1
+) throws {
+    // All actual catalogs are streamed by the original checkpoint reader;
+    // require exact per-tensor bytes, not container hash equality.
+    for catalog in [comparison.weights, comparison.firstMoments, comparison.secondMoments] {
+        try trajectoryRequire(catalog.exact && catalog.leftLogicalSHA256 == catalog.rightLogicalSHA256
+            && catalog.tensors.count == 218 && catalog.totalElementCount == 271_107_072
+            && catalog.tensors.allSatisfy({ $0.exact && $0.leftLogicalSHA256 == $0.rightLogicalSHA256 }),
+            "current local retained streamed tensor equality")
     }
 }

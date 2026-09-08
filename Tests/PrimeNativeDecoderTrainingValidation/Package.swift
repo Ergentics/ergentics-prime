@@ -7,6 +7,7 @@ let package = Package(
         .macOS(.v14),
     ],
     products: [
+        .executable(name: "PrimeNativeDecoderCurrentLocal300MExecution", targets: ["PrimeNativeDecoderCurrentLocal300MExecution"]),
         .executable(
             name:
                 "PrimeNativeDecoderBSpecificNative300MTrajectoryCheckpointExecution",
@@ -42,6 +43,16 @@ let package = Package(
         ),
     ],
     targets: [
+        .executableTarget(
+            name: "PrimeNativeDecoderCurrentLocal300MExecution",
+            dependencies: [
+                .product(name: "PrimeCore", package: "ergentics-prime"),
+                .product(name: "PrimeNativeDecoderRuntime", package: "ergentics-prime"),
+                .product(name: "PrimeNativeDecoderTraining", package: "ergentics-prime"),
+            ],
+            path: "Sources/PrimeNativeDecoderCurrentLocal300MExecution",
+            linkerSettings: [.linkedFramework("CoreGraphics"), .linkedFramework("Metal")]
+        ),
         .executableTarget(
             name:
                 "PrimeNativeDecoderBSpecificNative300MTrajectoryCheckpointExecution",
