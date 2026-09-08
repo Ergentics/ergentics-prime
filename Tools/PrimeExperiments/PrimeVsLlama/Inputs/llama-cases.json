@@ -1,0 +1,1642 @@
+[
+  {
+    "id": "holdout-base-canonical-train-a-d3-32-34-32-s0",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 16=0, 17=1, 18=2, 19=3, 20=4, 21=5, 22=6, 23=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 40=32, 41=34, 42=33. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 16,
+    "operationTokenIDs": [
+      40,
+      41,
+      40
+    ],
+    "valueTokenIDs": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ]
+  },
+  {
+    "id": "holdout-base-canonical-train-a-d3-32-34-32-s1",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 16=0, 17=1, 18=2, 19=3, 20=4, 21=5, 22=6, 23=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 40=32, 41=34, 42=33. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 17,
+    "operationTokenIDs": [
+      40,
+      41,
+      40
+    ],
+    "valueTokenIDs": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ]
+  },
+  {
+    "id": "holdout-base-canonical-train-a-d3-32-34-32-s2",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 16=0, 17=1, 18=2, 19=3, 20=4, 21=5, 22=6, 23=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 40=32, 41=34, 42=33. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 18,
+    "operationTokenIDs": [
+      40,
+      41,
+      40
+    ],
+    "valueTokenIDs": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ]
+  },
+  {
+    "id": "holdout-base-canonical-train-a-d3-32-34-32-s3",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 16=0, 17=1, 18=2, 19=3, 20=4, 21=5, 22=6, 23=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 40=32, 41=34, 42=33. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 19,
+    "operationTokenIDs": [
+      40,
+      41,
+      40
+    ],
+    "valueTokenIDs": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ]
+  },
+  {
+    "id": "holdout-base-canonical-train-a-d3-32-34-32-s4",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 16=0, 17=1, 18=2, 19=3, 20=4, 21=5, 22=6, 23=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 40=32, 41=34, 42=33. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 20,
+    "operationTokenIDs": [
+      40,
+      41,
+      40
+    ],
+    "valueTokenIDs": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ]
+  },
+  {
+    "id": "holdout-base-canonical-train-a-d3-32-34-32-s5",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 16=0, 17=1, 18=2, 19=3, 20=4, 21=5, 22=6, 23=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 40=32, 41=34, 42=33. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 21,
+    "operationTokenIDs": [
+      40,
+      41,
+      40
+    ],
+    "valueTokenIDs": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ]
+  },
+  {
+    "id": "holdout-base-canonical-train-a-d3-32-34-32-s6",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 16=0, 17=1, 18=2, 19=3, 20=4, 21=5, 22=6, 23=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 40=32, 41=34, 42=33. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 22,
+    "operationTokenIDs": [
+      40,
+      41,
+      40
+    ],
+    "valueTokenIDs": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ]
+  },
+  {
+    "id": "holdout-base-canonical-train-a-d3-32-34-32-s7",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 16=0, 17=1, 18=2, 19=3, 20=4, 21=5, 22=6, 23=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 40=32, 41=34, 42=33. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 23,
+    "operationTokenIDs": [
+      40,
+      41,
+      40
+    ],
+    "valueTokenIDs": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ]
+  },
+  {
+    "id": "holdout-base-canonical-train-a-d4-32-32-32-33-s0",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 16=0, 17=1, 18=2, 19=3, 20=4, 21=5, 22=6, 23=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 40=32, 41=34, 42=33. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 16,
+    "operationTokenIDs": [
+      40,
+      40,
+      40,
+      42
+    ],
+    "valueTokenIDs": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ]
+  },
+  {
+    "id": "holdout-base-canonical-train-a-d4-32-32-32-33-s1",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 16=0, 17=1, 18=2, 19=3, 20=4, 21=5, 22=6, 23=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 40=32, 41=34, 42=33. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 17,
+    "operationTokenIDs": [
+      40,
+      40,
+      40,
+      42
+    ],
+    "valueTokenIDs": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ]
+  },
+  {
+    "id": "holdout-base-canonical-train-a-d4-32-32-32-33-s2",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 16=0, 17=1, 18=2, 19=3, 20=4, 21=5, 22=6, 23=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 40=32, 41=34, 42=33. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 18,
+    "operationTokenIDs": [
+      40,
+      40,
+      40,
+      42
+    ],
+    "valueTokenIDs": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ]
+  },
+  {
+    "id": "holdout-base-canonical-train-a-d4-32-32-32-33-s3",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 16=0, 17=1, 18=2, 19=3, 20=4, 21=5, 22=6, 23=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 40=32, 41=34, 42=33. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 19,
+    "operationTokenIDs": [
+      40,
+      40,
+      40,
+      42
+    ],
+    "valueTokenIDs": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ]
+  },
+  {
+    "id": "holdout-base-canonical-train-a-d4-32-32-32-33-s4",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 16=0, 17=1, 18=2, 19=3, 20=4, 21=5, 22=6, 23=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 40=32, 41=34, 42=33. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 20,
+    "operationTokenIDs": [
+      40,
+      40,
+      40,
+      42
+    ],
+    "valueTokenIDs": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ]
+  },
+  {
+    "id": "holdout-base-canonical-train-a-d4-32-32-32-33-s5",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 16=0, 17=1, 18=2, 19=3, 20=4, 21=5, 22=6, 23=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 40=32, 41=34, 42=33. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 21,
+    "operationTokenIDs": [
+      40,
+      40,
+      40,
+      42
+    ],
+    "valueTokenIDs": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ]
+  },
+  {
+    "id": "holdout-base-canonical-train-a-d4-32-32-32-33-s6",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 16=0, 17=1, 18=2, 19=3, 20=4, 21=5, 22=6, 23=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 40=32, 41=34, 42=33. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 22,
+    "operationTokenIDs": [
+      40,
+      40,
+      40,
+      42
+    ],
+    "valueTokenIDs": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ]
+  },
+  {
+    "id": "holdout-base-canonical-train-a-d4-32-32-32-33-s7",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 16=0, 17=1, 18=2, 19=3, 20=4, 21=5, 22=6, 23=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 40=32, 41=34, 42=33. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 23,
+    "operationTokenIDs": [
+      40,
+      40,
+      40,
+      42
+    ],
+    "valueTokenIDs": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ]
+  },
+  {
+    "id": "mutation-alphabet_b-alphabet_b-train-a-d3-32-34-32-s0",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 67=0, 64=1, 70=2, 65=3, 71=4, 68=5, 66=6, 69=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 48=32, 49=34, 50=33. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 67,
+    "operationTokenIDs": [
+      48,
+      49,
+      48
+    ],
+    "valueTokenIDs": [
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71
+    ]
+  },
+  {
+    "id": "mutation-alphabet_b-alphabet_b-train-a-d3-32-34-32-s1",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 67=0, 64=1, 70=2, 65=3, 71=4, 68=5, 66=6, 69=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 48=32, 49=34, 50=33. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 64,
+    "operationTokenIDs": [
+      48,
+      49,
+      48
+    ],
+    "valueTokenIDs": [
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71
+    ]
+  },
+  {
+    "id": "mutation-alphabet_b-alphabet_b-train-a-d3-32-34-32-s2",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 67=0, 64=1, 70=2, 65=3, 71=4, 68=5, 66=6, 69=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 48=32, 49=34, 50=33. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 70,
+    "operationTokenIDs": [
+      48,
+      49,
+      48
+    ],
+    "valueTokenIDs": [
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71
+    ]
+  },
+  {
+    "id": "mutation-alphabet_b-alphabet_b-train-a-d3-32-34-32-s3",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 67=0, 64=1, 70=2, 65=3, 71=4, 68=5, 66=6, 69=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 48=32, 49=34, 50=33. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 65,
+    "operationTokenIDs": [
+      48,
+      49,
+      48
+    ],
+    "valueTokenIDs": [
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71
+    ]
+  },
+  {
+    "id": "mutation-alphabet_b-alphabet_b-train-a-d3-32-34-32-s4",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 67=0, 64=1, 70=2, 65=3, 71=4, 68=5, 66=6, 69=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 48=32, 49=34, 50=33. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 71,
+    "operationTokenIDs": [
+      48,
+      49,
+      48
+    ],
+    "valueTokenIDs": [
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71
+    ]
+  },
+  {
+    "id": "mutation-alphabet_b-alphabet_b-train-a-d3-32-34-32-s5",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 67=0, 64=1, 70=2, 65=3, 71=4, 68=5, 66=6, 69=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 48=32, 49=34, 50=33. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 68,
+    "operationTokenIDs": [
+      48,
+      49,
+      48
+    ],
+    "valueTokenIDs": [
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71
+    ]
+  },
+  {
+    "id": "mutation-alphabet_b-alphabet_b-train-a-d3-32-34-32-s6",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 67=0, 64=1, 70=2, 65=3, 71=4, 68=5, 66=6, 69=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 48=32, 49=34, 50=33. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 66,
+    "operationTokenIDs": [
+      48,
+      49,
+      48
+    ],
+    "valueTokenIDs": [
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71
+    ]
+  },
+  {
+    "id": "mutation-alphabet_b-alphabet_b-train-a-d3-32-34-32-s7",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 67=0, 64=1, 70=2, 65=3, 71=4, 68=5, 66=6, 69=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 48=32, 49=34, 50=33. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 69,
+    "operationTokenIDs": [
+      48,
+      49,
+      48
+    ],
+    "valueTokenIDs": [
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71
+    ]
+  },
+  {
+    "id": "mutation-alphabet_b-alphabet_b-train-a-d4-32-32-32-33-s0",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 67=0, 64=1, 70=2, 65=3, 71=4, 68=5, 66=6, 69=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 48=32, 49=34, 50=33. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 67,
+    "operationTokenIDs": [
+      48,
+      48,
+      48,
+      50
+    ],
+    "valueTokenIDs": [
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71
+    ]
+  },
+  {
+    "id": "mutation-alphabet_b-alphabet_b-train-a-d4-32-32-32-33-s1",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 67=0, 64=1, 70=2, 65=3, 71=4, 68=5, 66=6, 69=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 48=32, 49=34, 50=33. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 64,
+    "operationTokenIDs": [
+      48,
+      48,
+      48,
+      50
+    ],
+    "valueTokenIDs": [
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71
+    ]
+  },
+  {
+    "id": "mutation-alphabet_b-alphabet_b-train-a-d4-32-32-32-33-s2",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 67=0, 64=1, 70=2, 65=3, 71=4, 68=5, 66=6, 69=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 48=32, 49=34, 50=33. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 70,
+    "operationTokenIDs": [
+      48,
+      48,
+      48,
+      50
+    ],
+    "valueTokenIDs": [
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71
+    ]
+  },
+  {
+    "id": "mutation-alphabet_b-alphabet_b-train-a-d4-32-32-32-33-s3",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 67=0, 64=1, 70=2, 65=3, 71=4, 68=5, 66=6, 69=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 48=32, 49=34, 50=33. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 65,
+    "operationTokenIDs": [
+      48,
+      48,
+      48,
+      50
+    ],
+    "valueTokenIDs": [
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71
+    ]
+  },
+  {
+    "id": "mutation-alphabet_b-alphabet_b-train-a-d4-32-32-32-33-s4",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 67=0, 64=1, 70=2, 65=3, 71=4, 68=5, 66=6, 69=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 48=32, 49=34, 50=33. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 71,
+    "operationTokenIDs": [
+      48,
+      48,
+      48,
+      50
+    ],
+    "valueTokenIDs": [
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71
+    ]
+  },
+  {
+    "id": "mutation-alphabet_b-alphabet_b-train-a-d4-32-32-32-33-s5",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 67=0, 64=1, 70=2, 65=3, 71=4, 68=5, 66=6, 69=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 48=32, 49=34, 50=33. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 68,
+    "operationTokenIDs": [
+      48,
+      48,
+      48,
+      50
+    ],
+    "valueTokenIDs": [
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71
+    ]
+  },
+  {
+    "id": "mutation-alphabet_b-alphabet_b-train-a-d4-32-32-32-33-s6",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 67=0, 64=1, 70=2, 65=3, 71=4, 68=5, 66=6, 69=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 48=32, 49=34, 50=33. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 66,
+    "operationTokenIDs": [
+      48,
+      48,
+      48,
+      50
+    ],
+    "valueTokenIDs": [
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71
+    ]
+  },
+  {
+    "id": "mutation-alphabet_b-alphabet_b-train-a-d4-32-32-32-33-s7",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 67=0, 64=1, 70=2, 65=3, 71=4, 68=5, 66=6, 69=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 48=32, 49=34, 50=33. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 69,
+    "operationTokenIDs": [
+      48,
+      48,
+      48,
+      50
+    ],
+    "valueTokenIDs": [
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71
+    ]
+  },
+  {
+    "id": "mutation-heldout_codebook-canonical-holdout-d3-32-34-32-s0",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 16=0, 17=1, 18=2, 19=3, 20=4, 21=5, 22=6, 23=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 40=33, 41=34, 42=32. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 16,
+    "operationTokenIDs": [
+      42,
+      41,
+      42
+    ],
+    "valueTokenIDs": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ]
+  },
+  {
+    "id": "mutation-heldout_codebook-canonical-holdout-d3-32-34-32-s1",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 16=0, 17=1, 18=2, 19=3, 20=4, 21=5, 22=6, 23=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 40=33, 41=34, 42=32. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 17,
+    "operationTokenIDs": [
+      42,
+      41,
+      42
+    ],
+    "valueTokenIDs": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ]
+  },
+  {
+    "id": "mutation-heldout_codebook-canonical-holdout-d3-32-34-32-s2",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 16=0, 17=1, 18=2, 19=3, 20=4, 21=5, 22=6, 23=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 40=33, 41=34, 42=32. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 18,
+    "operationTokenIDs": [
+      42,
+      41,
+      42
+    ],
+    "valueTokenIDs": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ]
+  },
+  {
+    "id": "mutation-heldout_codebook-canonical-holdout-d3-32-34-32-s3",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 16=0, 17=1, 18=2, 19=3, 20=4, 21=5, 22=6, 23=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 40=33, 41=34, 42=32. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 19,
+    "operationTokenIDs": [
+      42,
+      41,
+      42
+    ],
+    "valueTokenIDs": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ]
+  },
+  {
+    "id": "mutation-heldout_codebook-canonical-holdout-d3-32-34-32-s4",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 16=0, 17=1, 18=2, 19=3, 20=4, 21=5, 22=6, 23=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 40=33, 41=34, 42=32. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 20,
+    "operationTokenIDs": [
+      42,
+      41,
+      42
+    ],
+    "valueTokenIDs": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ]
+  },
+  {
+    "id": "mutation-heldout_codebook-canonical-holdout-d3-32-34-32-s5",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 16=0, 17=1, 18=2, 19=3, 20=4, 21=5, 22=6, 23=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 40=33, 41=34, 42=32. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 21,
+    "operationTokenIDs": [
+      42,
+      41,
+      42
+    ],
+    "valueTokenIDs": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ]
+  },
+  {
+    "id": "mutation-heldout_codebook-canonical-holdout-d3-32-34-32-s6",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 16=0, 17=1, 18=2, 19=3, 20=4, 21=5, 22=6, 23=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 40=33, 41=34, 42=32. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 22,
+    "operationTokenIDs": [
+      42,
+      41,
+      42
+    ],
+    "valueTokenIDs": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ]
+  },
+  {
+    "id": "mutation-heldout_codebook-canonical-holdout-d3-32-34-32-s7",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 16=0, 17=1, 18=2, 19=3, 20=4, 21=5, 22=6, 23=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 40=33, 41=34, 42=32. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 23,
+    "operationTokenIDs": [
+      42,
+      41,
+      42
+    ],
+    "valueTokenIDs": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ]
+  },
+  {
+    "id": "mutation-heldout_codebook-canonical-holdout-d4-32-32-32-33-s0",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 16=0, 17=1, 18=2, 19=3, 20=4, 21=5, 22=6, 23=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 40=33, 41=34, 42=32. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 16,
+    "operationTokenIDs": [
+      42,
+      42,
+      42,
+      40
+    ],
+    "valueTokenIDs": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ]
+  },
+  {
+    "id": "mutation-heldout_codebook-canonical-holdout-d4-32-32-32-33-s1",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 16=0, 17=1, 18=2, 19=3, 20=4, 21=5, 22=6, 23=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 40=33, 41=34, 42=32. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 17,
+    "operationTokenIDs": [
+      42,
+      42,
+      42,
+      40
+    ],
+    "valueTokenIDs": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ]
+  },
+  {
+    "id": "mutation-heldout_codebook-canonical-holdout-d4-32-32-32-33-s2",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 16=0, 17=1, 18=2, 19=3, 20=4, 21=5, 22=6, 23=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 40=33, 41=34, 42=32. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 18,
+    "operationTokenIDs": [
+      42,
+      42,
+      42,
+      40
+    ],
+    "valueTokenIDs": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ]
+  },
+  {
+    "id": "mutation-heldout_codebook-canonical-holdout-d4-32-32-32-33-s3",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 16=0, 17=1, 18=2, 19=3, 20=4, 21=5, 22=6, 23=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 40=33, 41=34, 42=32. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 19,
+    "operationTokenIDs": [
+      42,
+      42,
+      42,
+      40
+    ],
+    "valueTokenIDs": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ]
+  },
+  {
+    "id": "mutation-heldout_codebook-canonical-holdout-d4-32-32-32-33-s4",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 16=0, 17=1, 18=2, 19=3, 20=4, 21=5, 22=6, 23=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 40=33, 41=34, 42=32. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 20,
+    "operationTokenIDs": [
+      42,
+      42,
+      42,
+      40
+    ],
+    "valueTokenIDs": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ]
+  },
+  {
+    "id": "mutation-heldout_codebook-canonical-holdout-d4-32-32-32-33-s5",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 16=0, 17=1, 18=2, 19=3, 20=4, 21=5, 22=6, 23=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 40=33, 41=34, 42=32. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 21,
+    "operationTokenIDs": [
+      42,
+      42,
+      42,
+      40
+    ],
+    "valueTokenIDs": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ]
+  },
+  {
+    "id": "mutation-heldout_codebook-canonical-holdout-d4-32-32-32-33-s6",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 16=0, 17=1, 18=2, 19=3, 20=4, 21=5, 22=6, 23=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 40=33, 41=34, 42=32. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 22,
+    "operationTokenIDs": [
+      42,
+      42,
+      42,
+      40
+    ],
+    "valueTokenIDs": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ]
+  },
+  {
+    "id": "mutation-heldout_codebook-canonical-holdout-d4-32-32-32-33-s7",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 16=0, 17=1, 18=2, 19=3, 20=4, 21=5, 22=6, 23=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 40=33, 41=34, 42=32. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 23,
+    "operationTokenIDs": [
+      42,
+      42,
+      42,
+      40
+    ],
+    "valueTokenIDs": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ]
+  },
+  {
+    "id": "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d3-32-34-32-s0",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 67=0, 64=1, 70=2, 65=3, 71=4, 68=5, 66=6, 69=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 48=33, 49=34, 50=32. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 67,
+    "operationTokenIDs": [
+      50,
+      49,
+      50
+    ],
+    "valueTokenIDs": [
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71
+    ]
+  },
+  {
+    "id": "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d3-32-34-32-s1",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 67=0, 64=1, 70=2, 65=3, 71=4, 68=5, 66=6, 69=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 48=33, 49=34, 50=32. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 64,
+    "operationTokenIDs": [
+      50,
+      49,
+      50
+    ],
+    "valueTokenIDs": [
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71
+    ]
+  },
+  {
+    "id": "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d3-32-34-32-s2",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 67=0, 64=1, 70=2, 65=3, 71=4, 68=5, 66=6, 69=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 48=33, 49=34, 50=32. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 70,
+    "operationTokenIDs": [
+      50,
+      49,
+      50
+    ],
+    "valueTokenIDs": [
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71
+    ]
+  },
+  {
+    "id": "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d3-32-34-32-s3",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 67=0, 64=1, 70=2, 65=3, 71=4, 68=5, 66=6, 69=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 48=33, 49=34, 50=32. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 65,
+    "operationTokenIDs": [
+      50,
+      49,
+      50
+    ],
+    "valueTokenIDs": [
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71
+    ]
+  },
+  {
+    "id": "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d3-32-34-32-s4",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 67=0, 64=1, 70=2, 65=3, 71=4, 68=5, 66=6, 69=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 48=33, 49=34, 50=32. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 71,
+    "operationTokenIDs": [
+      50,
+      49,
+      50
+    ],
+    "valueTokenIDs": [
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71
+    ]
+  },
+  {
+    "id": "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d3-32-34-32-s5",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 67=0, 64=1, 70=2, 65=3, 71=4, 68=5, 66=6, 69=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 48=33, 49=34, 50=32. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 68,
+    "operationTokenIDs": [
+      50,
+      49,
+      50
+    ],
+    "valueTokenIDs": [
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71
+    ]
+  },
+  {
+    "id": "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d3-32-34-32-s6",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 67=0, 64=1, 70=2, 65=3, 71=4, 68=5, 66=6, 69=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 48=33, 49=34, 50=32. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 66,
+    "operationTokenIDs": [
+      50,
+      49,
+      50
+    ],
+    "valueTokenIDs": [
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71
+    ]
+  },
+  {
+    "id": "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d3-32-34-32-s7",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 67=0, 64=1, 70=2, 65=3, 71=4, 68=5, 66=6, 69=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 48=33, 49=34, 50=32. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 69,
+    "operationTokenIDs": [
+      50,
+      49,
+      50
+    ],
+    "valueTokenIDs": [
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71
+    ]
+  },
+  {
+    "id": "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d4-32-32-32-33-s0",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 67=0, 64=1, 70=2, 65=3, 71=4, 68=5, 66=6, 69=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 48=33, 49=34, 50=32. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 67,
+    "operationTokenIDs": [
+      50,
+      50,
+      50,
+      48
+    ],
+    "valueTokenIDs": [
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71
+    ]
+  },
+  {
+    "id": "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d4-32-32-32-33-s1",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 67=0, 64=1, 70=2, 65=3, 71=4, 68=5, 66=6, 69=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 48=33, 49=34, 50=32. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 64,
+    "operationTokenIDs": [
+      50,
+      50,
+      50,
+      48
+    ],
+    "valueTokenIDs": [
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71
+    ]
+  },
+  {
+    "id": "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d4-32-32-32-33-s2",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 67=0, 64=1, 70=2, 65=3, 71=4, 68=5, 66=6, 69=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 48=33, 49=34, 50=32. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 70,
+    "operationTokenIDs": [
+      50,
+      50,
+      50,
+      48
+    ],
+    "valueTokenIDs": [
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71
+    ]
+  },
+  {
+    "id": "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d4-32-32-32-33-s3",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 67=0, 64=1, 70=2, 65=3, 71=4, 68=5, 66=6, 69=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 48=33, 49=34, 50=32. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 65,
+    "operationTokenIDs": [
+      50,
+      50,
+      50,
+      48
+    ],
+    "valueTokenIDs": [
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71
+    ]
+  },
+  {
+    "id": "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d4-32-32-32-33-s4",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 67=0, 64=1, 70=2, 65=3, 71=4, 68=5, 66=6, 69=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 48=33, 49=34, 50=32. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 71,
+    "operationTokenIDs": [
+      50,
+      50,
+      50,
+      48
+    ],
+    "valueTokenIDs": [
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71
+    ]
+  },
+  {
+    "id": "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d4-32-32-32-33-s5",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 67=0, 64=1, 70=2, 65=3, 71=4, 68=5, 66=6, 69=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 48=33, 49=34, 50=32. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 68,
+    "operationTokenIDs": [
+      50,
+      50,
+      50,
+      48
+    ],
+    "valueTokenIDs": [
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71
+    ]
+  },
+  {
+    "id": "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d4-32-32-32-33-s6",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 67=0, 64=1, 70=2, 65=3, 71=4, 68=5, 66=6, 69=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 48=33, 49=34, 50=32. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 66,
+    "operationTokenIDs": [
+      50,
+      50,
+      50,
+      48
+    ],
+    "valueTokenIDs": [
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71
+    ]
+  },
+  {
+    "id": "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d4-32-32-32-33-s7",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 67=0, 64=1, 70=2, 65=3, 71=4, 68=5, 66=6, 69=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 48=33, 49=34, 50=32. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 69,
+    "operationTokenIDs": [
+      50,
+      50,
+      50,
+      48
+    ],
+    "valueTokenIDs": [
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71
+    ]
+  },
+  {
+    "id": "mutation-neutral_context-canonical-train-a-d3-32-34-32-s0-context",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 16=0, 17=1, 18=2, 19=3, 20=4, 21=5, 22=6, 23=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 40=32, 41=34, 42=33. The neutral context marker 12 has no effect. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 16,
+    "operationTokenIDs": [
+      40,
+      41,
+      40
+    ],
+    "valueTokenIDs": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ]
+  },
+  {
+    "id": "mutation-neutral_context-canonical-train-a-d3-32-34-32-s1-context",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 16=0, 17=1, 18=2, 19=3, 20=4, 21=5, 22=6, 23=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 40=32, 41=34, 42=33. The neutral context marker 12 has no effect. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 17,
+    "operationTokenIDs": [
+      40,
+      41,
+      40
+    ],
+    "valueTokenIDs": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ]
+  },
+  {
+    "id": "mutation-neutral_context-canonical-train-a-d3-32-34-32-s2-context",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 16=0, 17=1, 18=2, 19=3, 20=4, 21=5, 22=6, 23=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 40=32, 41=34, 42=33. The neutral context marker 12 has no effect. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 18,
+    "operationTokenIDs": [
+      40,
+      41,
+      40
+    ],
+    "valueTokenIDs": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ]
+  },
+  {
+    "id": "mutation-neutral_context-canonical-train-a-d3-32-34-32-s3-context",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 16=0, 17=1, 18=2, 19=3, 20=4, 21=5, 22=6, 23=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 40=32, 41=34, 42=33. The neutral context marker 12 has no effect. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 19,
+    "operationTokenIDs": [
+      40,
+      41,
+      40
+    ],
+    "valueTokenIDs": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ]
+  },
+  {
+    "id": "mutation-neutral_context-canonical-train-a-d3-32-34-32-s4-context",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 16=0, 17=1, 18=2, 19=3, 20=4, 21=5, 22=6, 23=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 40=32, 41=34, 42=33. The neutral context marker 12 has no effect. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 20,
+    "operationTokenIDs": [
+      40,
+      41,
+      40
+    ],
+    "valueTokenIDs": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ]
+  },
+  {
+    "id": "mutation-neutral_context-canonical-train-a-d3-32-34-32-s5-context",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 16=0, 17=1, 18=2, 19=3, 20=4, 21=5, 22=6, 23=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 40=32, 41=34, 42=33. The neutral context marker 12 has no effect. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 21,
+    "operationTokenIDs": [
+      40,
+      41,
+      40
+    ],
+    "valueTokenIDs": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ]
+  },
+  {
+    "id": "mutation-neutral_context-canonical-train-a-d3-32-34-32-s6-context",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 16=0, 17=1, 18=2, 19=3, 20=4, 21=5, 22=6, 23=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 40=32, 41=34, 42=33. The neutral context marker 12 has no effect. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 22,
+    "operationTokenIDs": [
+      40,
+      41,
+      40
+    ],
+    "valueTokenIDs": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ]
+  },
+  {
+    "id": "mutation-neutral_context-canonical-train-a-d3-32-34-32-s7-context",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 16=0, 17=1, 18=2, 19=3, 20=4, 21=5, 22=6, 23=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 40=32, 41=34, 42=33. The neutral context marker 12 has no effect. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 23,
+    "operationTokenIDs": [
+      40,
+      41,
+      40
+    ],
+    "valueTokenIDs": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ]
+  },
+  {
+    "id": "mutation-neutral_context-canonical-train-a-d4-32-32-32-33-s0-context",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 16=0, 17=1, 18=2, 19=3, 20=4, 21=5, 22=6, 23=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 40=32, 41=34, 42=33. The neutral context marker 12 has no effect. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 16,
+    "operationTokenIDs": [
+      40,
+      40,
+      40,
+      42
+    ],
+    "valueTokenIDs": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ]
+  },
+  {
+    "id": "mutation-neutral_context-canonical-train-a-d4-32-32-32-33-s1-context",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 16=0, 17=1, 18=2, 19=3, 20=4, 21=5, 22=6, 23=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 40=32, 41=34, 42=33. The neutral context marker 12 has no effect. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 17,
+    "operationTokenIDs": [
+      40,
+      40,
+      40,
+      42
+    ],
+    "valueTokenIDs": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ]
+  },
+  {
+    "id": "mutation-neutral_context-canonical-train-a-d4-32-32-32-33-s2-context",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 16=0, 17=1, 18=2, 19=3, 20=4, 21=5, 22=6, 23=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 40=32, 41=34, 42=33. The neutral context marker 12 has no effect. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 18,
+    "operationTokenIDs": [
+      40,
+      40,
+      40,
+      42
+    ],
+    "valueTokenIDs": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ]
+  },
+  {
+    "id": "mutation-neutral_context-canonical-train-a-d4-32-32-32-33-s3-context",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 16=0, 17=1, 18=2, 19=3, 20=4, 21=5, 22=6, 23=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 40=32, 41=34, 42=33. The neutral context marker 12 has no effect. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 19,
+    "operationTokenIDs": [
+      40,
+      40,
+      40,
+      42
+    ],
+    "valueTokenIDs": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ]
+  },
+  {
+    "id": "mutation-neutral_context-canonical-train-a-d4-32-32-32-33-s4-context",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 16=0, 17=1, 18=2, 19=3, 20=4, 21=5, 22=6, 23=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 40=32, 41=34, 42=33. The neutral context marker 12 has no effect. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 20,
+    "operationTokenIDs": [
+      40,
+      40,
+      40,
+      42
+    ],
+    "valueTokenIDs": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ]
+  },
+  {
+    "id": "mutation-neutral_context-canonical-train-a-d4-32-32-32-33-s5-context",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 16=0, 17=1, 18=2, 19=3, 20=4, 21=5, 22=6, 23=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 40=32, 41=34, 42=33. The neutral context marker 12 has no effect. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 21,
+    "operationTokenIDs": [
+      40,
+      40,
+      40,
+      42
+    ],
+    "valueTokenIDs": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ]
+  },
+  {
+    "id": "mutation-neutral_context-canonical-train-a-d4-32-32-32-33-s6-context",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 16=0, 17=1, 18=2, 19=3, 20=4, 21=5, 22=6, 23=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 40=32, 41=34, 42=33. The neutral context marker 12 has no effect. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 22,
+    "operationTokenIDs": [
+      40,
+      40,
+      40,
+      42
+    ],
+    "valueTokenIDs": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ]
+  },
+  {
+    "id": "mutation-neutral_context-canonical-train-a-d4-32-32-32-33-s7-context",
+    "questionPrefix": "Use arithmetic modulo 8, with residues 0 through 7. Value-symbol IDs encode residues as follows: 16=0, 17=1, 18=2, 19=3, 20=4, 21=5, 22=6, 23=7. Primitive-operation IDs: 32 means add 1 modulo 8; 33 means subtract 1 modulo 8; 34 means negate modulo 8. Alias-operation IDs bind to primitive IDs as follows: 40=32, 41=34, 42=33. The neutral context marker 12 has no effect. These are task symbols, not your tokenizer IDs. Return exactly one decimal value-symbol ID and no other text.",
+    "startTokenID": 23,
+    "operationTokenIDs": [
+      40,
+      40,
+      40,
+      42
+    ],
+    "valueTokenIDs": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ]
+  }
+]

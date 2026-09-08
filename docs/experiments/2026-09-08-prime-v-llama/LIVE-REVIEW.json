@@ -1,0 +1,371 @@
+{
+  "schema": "prime_llama_live_independent_review_v1",
+  "recordedAtUTC": "2026-09-08T22:48:38.641611+00:00",
+  "status": "VERIFIED_LIVE_EXECUTION_AND_PREDICTION_FEEDBACK",
+  "failures": [],
+  "runComplete": {
+    "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Prime-v-Llama-01/RUN-COMPLETE.json",
+    "byteCount": 212,
+    "sha256": "9337ba8627de4a8199589c45c877089fc5b61202ace9d15a99d071f140f2035c"
+  },
+  "runtimeSources": [
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Prime-v-Llama-01/Runtime/controller.rb",
+      "byteCount": 8747,
+      "sha256": "fc0fd22db11fbcaef5985e3bf1388ea29ba69211edd2d892f97b60fd25581931"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Prime-v-Llama-01/Runtime/llama_symbol_compare.py",
+      "byteCount": 6958,
+      "sha256": "2ea192b0cd5feadb2a9b0c05cfada2c50d655581889c813281f78937f47f309d"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Prime-v-Llama-01/Runtime/run_comparison.py",
+      "byteCount": 6852,
+      "sha256": "146838c039395b89d332ae078251c812cd6896200757b4206856b11a3a00c762"
+    }
+  ],
+  "inputBindings": [
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Prime-v-Llama-01/Inputs/cases.json",
+      "byteCount": 374575,
+      "sha256": "a06c946aced5661c03b9785d36e2983edaaadd790fdebac5f1a67e57c463649f"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Prime-v-Llama-01/Inputs/llama-cases.json",
+      "byteCount": 60187,
+      "sha256": "513930dc7b83073be2221ad2da151e6b51e1b2cb77ffcda3dfec25682565b2cc"
+    }
+  ],
+  "native": {
+    "models": [
+      {
+        "buildID": "EPM-20260908-0006-prime-swift-variable-depth-4000",
+        "checkpoint": {
+          "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0006-prime-swift-variable-depth-4000/Runtime/weights.safetensors",
+          "byteCount": 40919874,
+          "sha256": "4ec25a1a577aee22d70bb44bff2caf7e4b9790322596a13135a69e642e8047bd"
+        },
+        "originalCheckpointHashStillMatches": true,
+        "predictionCount": 360,
+        "caseCount": 80,
+        "summary": {
+          "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Prime-v-Llama-01/Results/0006-summary.json",
+          "byteCount": 121140,
+          "sha256": "9389c7205d06a5c0532bce1c3a1ca0fc0ee0be54da2ed9d21642446c421c436d"
+        },
+        "directCorrect": 8,
+        "iterativeFinalCorrect": 54,
+        "fullTraceCorrect": 48
+      },
+      {
+        "buildID": "EPM-20260908-0007-prime-swift-variable-depth-8000",
+        "checkpoint": {
+          "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0007-prime-swift-variable-depth-8000/Runtime/weights.safetensors",
+          "byteCount": 40919834,
+          "sha256": "4baff383398b024661ff48fb7b5d283a3451950ee2702455eb3a3f7c52a54afb"
+        },
+        "originalCheckpointHashStillMatches": true,
+        "predictionCount": 360,
+        "caseCount": 80,
+        "summary": {
+          "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Prime-v-Llama-01/Results/0007-summary.json",
+          "byteCount": 121143,
+          "sha256": "63d1e28720a2fa9cc388f89993442eb0b244a7fe53d2b41a69cfae0f1a027eb9"
+        },
+        "directCorrect": 15,
+        "iterativeFinalCorrect": 61,
+        "fullTraceCorrect": 48
+      }
+    ],
+    "fullVocabularyLogitsIndependentlyHashedAndChecked": 720,
+    "logitsBytesRead": 47185920,
+    "actualPriorPredictionJoins": 400,
+    "allArgmaxAndFiniteAndProbabilityChecksPassed": true
+  },
+  "llama": {
+    "batches": 10,
+    "cases": 80,
+    "predictions": 189,
+    "actualPriorPredictionJoins": 29,
+    "rawInvalidResponsesRetained": 138,
+    "responseDeadlines": 0,
+    "allRequestsDerivedFromInputOnlyCases": true,
+    "allEightCurrentModelFilesStillMatchEveryBatchBinding": true,
+    "directCorrect": 5,
+    "iterativeFinalCorrect": 0,
+    "fullTraceCorrect": 0,
+    "tokenizerDecodeIndependentlyChecked": true,
+    "independentlyDecodedPredictionCount": 189,
+    "tokenizerDecodeMethod": "Saved Rust-backed tokenizers library only, no MLX/model import; every generated token sequence decoded and exactly compared to rawOutput, and every input sequence decoded to effectivePromptSHA256 and actual question.",
+    "tokenizerDecodeFailures": []
+  },
+  "processes": {
+    "phaseCount": 20,
+    "allNormalExitZero": true,
+    "allExactReapedOnce": true,
+    "allRecordedFinalGroupsEmpty": true,
+    "allCapturedStreamsEOFAndExactHashBound": true,
+    "phases": [
+      {
+        "phase": "0006-direct",
+        "pid": 21136,
+        "exitStatus": 0,
+        "exactReapCount": 1,
+        "elapsedSeconds": 0.2068250000011176,
+        "result": {
+          "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Prime-v-Llama-01/Results/0006-direct/controller/result.json",
+          "byteCount": 777,
+          "sha256": "d9b4ea156416ac4299b36bcd658168dae22d45f3465e42efd4ca93e7df3b7f55"
+        }
+      },
+      {
+        "phase": "0006-trace-0",
+        "pid": 21155,
+        "exitStatus": 0,
+        "exactReapCount": 1,
+        "elapsedSeconds": 0.1935580000281334,
+        "result": {
+          "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Prime-v-Llama-01/Results/0006-trace-0/controller/result.json",
+          "byteCount": 777,
+          "sha256": "270accba349ee3116a6828d8fc294fe51f643e14ef19b8ecb92b3b73f9a02982"
+        }
+      },
+      {
+        "phase": "0006-trace-1",
+        "pid": 21158,
+        "exitStatus": 0,
+        "exactReapCount": 1,
+        "elapsedSeconds": 0.19629799999529496,
+        "result": {
+          "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Prime-v-Llama-01/Results/0006-trace-1/controller/result.json",
+          "byteCount": 778,
+          "sha256": "75905ddc32d2a3a031841f1335d22d096a88c802e7010f16f2253538259a15cf"
+        }
+      },
+      {
+        "phase": "0006-trace-2",
+        "pid": 21161,
+        "exitStatus": 0,
+        "exactReapCount": 1,
+        "elapsedSeconds": 0.19667700002901256,
+        "result": {
+          "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Prime-v-Llama-01/Results/0006-trace-2/controller/result.json",
+          "byteCount": 778,
+          "sha256": "b315ea8eefa955c3abf64c5b879cb07fce841d9a543fab64c909654306795920"
+        }
+      },
+      {
+        "phase": "0006-trace-3",
+        "pid": 21164,
+        "exitStatus": 0,
+        "exactReapCount": 1,
+        "elapsedSeconds": 0.14380700001493096,
+        "result": {
+          "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Prime-v-Llama-01/Results/0006-trace-3/controller/result.json",
+          "byteCount": 778,
+          "sha256": "547580f80d393279dc59c83b1d4218691fff60ace42aa23574a3ed5b4b641547"
+        }
+      },
+      {
+        "phase": "0007-direct",
+        "pid": 21167,
+        "exitStatus": 0,
+        "exactReapCount": 1,
+        "elapsedSeconds": 0.7994709999766201,
+        "result": {
+          "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Prime-v-Llama-01/Results/0007-direct/controller/result.json",
+          "byteCount": 777,
+          "sha256": "9304831353e635bf395b7740d9a04ffed7cdfa3ee181a722f3348bb5583a1dcf"
+        }
+      },
+      {
+        "phase": "0007-trace-0",
+        "pid": 21170,
+        "exitStatus": 0,
+        "exactReapCount": 1,
+        "elapsedSeconds": 0.19457699998747557,
+        "result": {
+          "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Prime-v-Llama-01/Results/0007-trace-0/controller/result.json",
+          "byteCount": 778,
+          "sha256": "bc4c9e693e928cea528f1bf53623f51da0e02ccfb84bc0d8060e49456714c390"
+        }
+      },
+      {
+        "phase": "0007-trace-1",
+        "pid": 21173,
+        "exitStatus": 0,
+        "exactReapCount": 1,
+        "elapsedSeconds": 0.19520899996859953,
+        "result": {
+          "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Prime-v-Llama-01/Results/0007-trace-1/controller/result.json",
+          "byteCount": 778,
+          "sha256": "684eb789cd928ced81c4b0c6eae9edeac443a7dfd91dbebc4da7551a5d4561b7"
+        }
+      },
+      {
+        "phase": "0007-trace-2",
+        "pid": 21176,
+        "exitStatus": 0,
+        "exactReapCount": 1,
+        "elapsedSeconds": 0.1963419999810867,
+        "result": {
+          "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Prime-v-Llama-01/Results/0007-trace-2/controller/result.json",
+          "byteCount": 777,
+          "sha256": "454d50307e070f4e6a162c5776a6ba5475e7d059370b6ab235f4339f075b3f53"
+        }
+      },
+      {
+        "phase": "0007-trace-3",
+        "pid": 21179,
+        "exitStatus": 0,
+        "exactReapCount": 1,
+        "elapsedSeconds": 0.14110800001071766,
+        "result": {
+          "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Prime-v-Llama-01/Results/0007-trace-3/controller/result.json",
+          "byteCount": 778,
+          "sha256": "323424c0d2159a6224990359b3c4968379a2a232fd71e832ee3e45ac678a4bb0"
+        }
+      },
+      {
+        "phase": "llama-batch-00",
+        "pid": 21182,
+        "exitStatus": 0,
+        "exactReapCount": 1,
+        "elapsedSeconds": 8.928849999967497,
+        "result": {
+          "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Prime-v-Llama-01/Results/llama-batch-00/controller/result.json",
+          "byteCount": 780,
+          "sha256": "36fc4e50ce0090d80dcfeb3945b4611325c192be0cc21c16701f6df8c223c0df"
+        }
+      },
+      {
+        "phase": "llama-batch-01",
+        "pid": 21189,
+        "exitStatus": 0,
+        "exactReapCount": 1,
+        "elapsedSeconds": 9.023313999990933,
+        "result": {
+          "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Prime-v-Llama-01/Results/llama-batch-01/controller/result.json",
+          "byteCount": 780,
+          "sha256": "499b0fcda8aa33cdd753a3f0ad7b6f5e43fee44cc615e1338d5a98a5f42e450f"
+        }
+      },
+      {
+        "phase": "llama-batch-02",
+        "pid": 21196,
+        "exitStatus": 0,
+        "exactReapCount": 1,
+        "elapsedSeconds": 8.57889200001955,
+        "result": {
+          "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Prime-v-Llama-01/Results/llama-batch-02/controller/result.json",
+          "byteCount": 779,
+          "sha256": "c729e14872429e9658246df189462b946290261f965d39289a29251fe9695273"
+        }
+      },
+      {
+        "phase": "llama-batch-03",
+        "pid": 21205,
+        "exitStatus": 0,
+        "exactReapCount": 1,
+        "elapsedSeconds": 8.64142699999502,
+        "result": {
+          "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Prime-v-Llama-01/Results/llama-batch-03/controller/result.json",
+          "byteCount": 779,
+          "sha256": "1eee2454a527ee4b17ea5c70bde59c16c938eea28feec55b4558ba03f7f92082"
+        }
+      },
+      {
+        "phase": "llama-batch-04",
+        "pid": 21213,
+        "exitStatus": 0,
+        "exactReapCount": 1,
+        "elapsedSeconds": 9.271191000007093,
+        "result": {
+          "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Prime-v-Llama-01/Results/llama-batch-04/controller/result.json",
+          "byteCount": 780,
+          "sha256": "673bb594bd43237280e53f4ca1171d0263f2efe958047bd73088bd0f4e08dd54"
+        }
+      },
+      {
+        "phase": "llama-batch-05",
+        "pid": 21224,
+        "exitStatus": 0,
+        "exactReapCount": 1,
+        "elapsedSeconds": 9.397289000044111,
+        "result": {
+          "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Prime-v-Llama-01/Results/llama-batch-05/controller/result.json",
+          "byteCount": 780,
+          "sha256": "7da2a7589387bd220dae7ca1d13b13356c32c69eb1ef21298eef26384599a2ef"
+        }
+      },
+      {
+        "phase": "llama-batch-06",
+        "pid": 21231,
+        "exitStatus": 0,
+        "exactReapCount": 1,
+        "elapsedSeconds": 8.990615999966394,
+        "result": {
+          "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Prime-v-Llama-01/Results/llama-batch-06/controller/result.json",
+          "byteCount": 780,
+          "sha256": "a0ebd49aec6b68ccf184760e04b0743d5b585cd431c3b4023c690dc39975a8bd"
+        }
+      },
+      {
+        "phase": "llama-batch-07",
+        "pid": 21239,
+        "exitStatus": 0,
+        "exactReapCount": 1,
+        "elapsedSeconds": 8.844507000001613,
+        "result": {
+          "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Prime-v-Llama-01/Results/llama-batch-07/controller/result.json",
+          "byteCount": 780,
+          "sha256": "54a41dd087012fc995e1d85e7b242dc6cbc8b6220eadc767660c39d717f152e0"
+        }
+      },
+      {
+        "phase": "llama-batch-08",
+        "pid": 21245,
+        "exitStatus": 0,
+        "exactReapCount": 1,
+        "elapsedSeconds": 9.403769000025932,
+        "result": {
+          "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Prime-v-Llama-01/Results/llama-batch-08/controller/result.json",
+          "byteCount": 780,
+          "sha256": "973bd68f2ef68c5035b1fecdf75a179785e8d2ddf6f60b9806f2527b032e2648"
+        }
+      },
+      {
+        "phase": "llama-batch-09",
+        "pid": 21253,
+        "exitStatus": 0,
+        "exactReapCount": 1,
+        "elapsedSeconds": 9.483227000047918,
+        "result": {
+          "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Prime-v-Llama-01/Results/llama-batch-09/controller/result.json",
+          "byteCount": 780,
+          "sha256": "d75245f22b6d9f0a5b7997e722c9b290f34ed38c6d5f05dc652a47f6d2d1b83e"
+        }
+      }
+    ],
+    "liveProcessAbsenceResampledByThisReview": false,
+    "scope": "Audited actual retained controller receipts and source; no detached-session containment or kernel attestation claim."
+  },
+  "interpretation": {
+    "scope": "80 cases: two semantic programs, five axes, two depths and eight starts. Focused symbolic execution diagnostic, not a general language benchmark.",
+    "sameInvalidSymbolPolicy": true,
+    "nativeRawInvalidSymbolRetainedWhileSummaryIncludesIt": "Native summary retains raw invalid ID before stop; Llama summary excludes inadmissible ID but raw prediction event retains it. Both traceCompleted false and no subsequent call.",
+    "modelTrainingPerformed": false,
+    "hypervisorOrGuestRunEstablished": false,
+    "noGoldInInferenceRequests": true,
+    "originalWholeManifestReproduced": false,
+    "scoringReferenceReadOnlyByReviewerAfterRun": true
+  },
+  "actions": {
+    "modelRuns": 0,
+    "builds": 0,
+    "sourceEdits": 0,
+    "networkCalls": 0,
+    "postRunCheckpointHashPassesPerPath": 1
+  }
+}

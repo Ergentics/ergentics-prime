@@ -1,0 +1,666 @@
+{
+  "asOf": "2026-09-08",
+  "authoritativePrimeCheckout": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging",
+  "authoritativePrimeHEADAtAudit": "c60f2ab8997d63c5a68bf653f59686c22abfebb5",
+  "companionHEADAtAudit": "f7cfa6d59c906b9f2b9d458d592f12b029e227b9",
+  "companionSourceCheckout": "/Users/ergentics/pmhnp-companion-ergentics",
+  "domainTraceCapability": {
+    "actualAuthoritySource": "/Users/ergentics/pmhnp-companion-ergentics/recommender-seat/Sources/SeatEngine/Lab/ErgenticsPrimeDomainTraceShadowCanary.swift",
+    "appRouting": "Historical product guard keeps SeatEngine authoritative; default Prime challenger provider_not_configured. These retained canaries do not establish an installed app neural routing connection.",
+    "consensus": "ABSTAIN: all three seeds clear structural domain transfer, but only2/3 clear frozen five-percentage-point trace-over-direct gain threshold.",
+    "executorSource": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/tools/prime_mlx_domain_trace_shadow.py",
+    "futureSuiteStatus": "Original manifests and exact three checkpoints verified; 12-case domain selection deferred by parent in favor of80-case originalSwift variable-depth suite; no prepared domain inputs claimed.",
+    "historicalStatusDoc": "/Users/ergentics/pmhnp-companion-ergentics/docs/PMHNP-PRIME-DOMAIN-TRACE-SHADOW.md",
+    "nativeIO": "Candidate tokens encode domain/readiness/durability. Learned left/right candidate summary IDs feed live RESUME pair comparison; output predicts selected side/event or ABSTAIN. Direct pair path also exists.",
+    "policyGrounding": "Targets originate in real SeatEngine.Recommender.scoredCandidates and strict first-argmax, not PMHNP answer text.",
+    "seeds": [
+      {
+        "allF32": true,
+        "evaluation": {
+          "holdout": {
+            "abstain_accuracy": 1.0,
+            "autoregressive_accuracy": 0.9382978723404255,
+            "direct_accuracy": 0.9297872340425531,
+            "left_summary_accuracy": 1.0,
+            "right_summary_accuracy": 1.0,
+            "teacher_accuracy": 0.9382978723404255
+          },
+          "mutation": {
+            "abstain_accuracy": 1.0,
+            "autoregressive_accuracy": 0.9319148936170213,
+            "direct_accuracy": 0.9,
+            "left_summary_accuracy": 1.0,
+            "right_summary_accuracy": 1.0,
+            "teacher_accuracy": 0.9319148936170213
+          },
+          "validation": {
+            "abstain_accuracy": 1.0,
+            "autoregressive_accuracy": 0.916083916083916,
+            "direct_accuracy": 0.8671328671328671,
+            "left_summary_accuracy": 1.0,
+            "right_summary_accuracy": 1.0,
+            "teacher_accuracy": 0.916083916083916
+          }
+        },
+        "implementation": {
+          "custom_metal_kernels": false,
+          "framework": "mlx",
+          "imported_base_weights": false,
+          "model_implementation": "mlx_lm.models.llama.Model",
+          "random_initialization": true,
+          "standard_primitives": true
+        },
+        "manifest": {
+          "engine_build": "v2.1.8-shareGuardOn-fmtSplit-decisionTruth",
+          "holdout_rows": 470,
+          "holdout_sha256": "5cb3770b01f25f496045cee546dd6b0b4448a8a76da599765acbd5939b8e267d",
+          "language_id": "ergentics_prime_engine_domain_trace_v1",
+          "manifest_sha256": "6965656679ac7c8cf5c8624b15e21cc8f3f5fffc4ac97a56ab8a558d07b44d48",
+          "mutation_rows": 470,
+          "mutation_sha256": "5496a5234d7e4d3e4484261792efa31d392116722235d67009a5c55f53312da9",
+          "train_rows": 1338,
+          "train_sha256": "62eb54a9c2dca2616baa0165fc6a37a062c9cc967cf2370d23bdb11a3dd0ad31",
+          "validation_rows": 429,
+          "validation_sha256": "b97334204ecf857d78474681c5f93b95befa08b0ef021b17c3ac474a37d2fdef"
+        },
+        "manifestFileSHA256": "1a49ef580dd702567c3a66df443cbb6f1e1b10f08f525ce1648d76612388f80d",
+        "manifestPath": "/Users/ergentics/prime-mlx-lab/domain-trace-shadow/prime-domain-trace-manifest.json",
+        "outcome": "ABSTAIN",
+        "profile": {
+          "attention_heads": 4,
+          "expected_parameter_count": 10227968,
+          "feed_forward_dimension": 640,
+          "head_dimension": 64,
+          "layer_count": 8,
+          "model_dimension": 256,
+          "observed_parameter_count": 10227968,
+          "profile_id": "ergentics_prime_poc_10m_v1",
+          "vocab_size": 16384
+        },
+        "reportPath": "/Users/ergentics/prime-mlx-lab/domain-trace-shadow/prime-domain-trace-shadow.json",
+        "reportSHA256": "f25fbe98f4c0afba3fe82a90eb3711837ff8cce3aeefd2eb512ab0a4b37b310f",
+        "seed": 2718,
+        "shapeSchemaSHA256": "81e3dbceb53579bef2b53ea6db3b4484dcd29ab0a239b320851d0ab8db9f9755",
+        "tensorCount": 74,
+        "trainingSteps": 2400,
+        "weightsBytes": 40919832,
+        "weightsPath": "/Users/ergentics/prime-mlx-lab/domain-trace-shadow/prime-domain-trace.safetensors",
+        "weightsSHA256": "f5201fae919d8636300086829943fd38059767ab293147ca8c0c65ce91402067"
+      },
+      {
+        "allF32": true,
+        "evaluation": {
+          "holdout": {
+            "abstain_accuracy": 1.0,
+            "autoregressive_accuracy": 0.9723404255319149,
+            "direct_accuracy": 0.8914893617021277,
+            "left_summary_accuracy": 1.0,
+            "right_summary_accuracy": 1.0,
+            "teacher_accuracy": 0.9723404255319149
+          },
+          "mutation": {
+            "abstain_accuracy": 1.0,
+            "autoregressive_accuracy": 0.9170212765957447,
+            "direct_accuracy": 0.8361702127659575,
+            "left_summary_accuracy": 1.0,
+            "right_summary_accuracy": 1.0,
+            "teacher_accuracy": 0.9170212765957447
+          },
+          "validation": {
+            "abstain_accuracy": 1.0,
+            "autoregressive_accuracy": 0.9603729603729604,
+            "direct_accuracy": 0.8904428904428905,
+            "left_summary_accuracy": 1.0,
+            "right_summary_accuracy": 1.0,
+            "teacher_accuracy": 0.9603729603729604
+          }
+        },
+        "implementation": {
+          "custom_metal_kernels": false,
+          "framework": "mlx",
+          "imported_base_weights": false,
+          "model_implementation": "mlx_lm.models.llama.Model",
+          "random_initialization": true,
+          "standard_primitives": true
+        },
+        "manifest": {
+          "engine_build": "v2.1.8-shareGuardOn-fmtSplit-decisionTruth",
+          "holdout_rows": 470,
+          "holdout_sha256": "5cb3770b01f25f496045cee546dd6b0b4448a8a76da599765acbd5939b8e267d",
+          "language_id": "ergentics_prime_engine_domain_trace_v1",
+          "manifest_sha256": "6965656679ac7c8cf5c8624b15e21cc8f3f5fffc4ac97a56ab8a558d07b44d48",
+          "mutation_rows": 470,
+          "mutation_sha256": "5496a5234d7e4d3e4484261792efa31d392116722235d67009a5c55f53312da9",
+          "train_rows": 1338,
+          "train_sha256": "62eb54a9c2dca2616baa0165fc6a37a062c9cc967cf2370d23bdb11a3dd0ad31",
+          "validation_rows": 429,
+          "validation_sha256": "b97334204ecf857d78474681c5f93b95befa08b0ef021b17c3ac474a37d2fdef"
+        },
+        "manifestFileSHA256": "1a49ef580dd702567c3a66df443cbb6f1e1b10f08f525ce1648d76612388f80d",
+        "manifestPath": "/Users/ergentics/prime-mlx-lab/domain-trace-shadow-seed1618/prime-domain-trace-manifest.json",
+        "outcome": "GROUNDED",
+        "profile": {
+          "attention_heads": 4,
+          "expected_parameter_count": 10227968,
+          "feed_forward_dimension": 640,
+          "head_dimension": 64,
+          "layer_count": 8,
+          "model_dimension": 256,
+          "observed_parameter_count": 10227968,
+          "profile_id": "ergentics_prime_poc_10m_v1",
+          "vocab_size": 16384
+        },
+        "reportPath": "/Users/ergentics/prime-mlx-lab/domain-trace-shadow-seed1618/prime-domain-trace-shadow.json",
+        "reportSHA256": "0296bc8a2470ece5adf147d902aa6cddbecee5af42b28a5bad13de1d879b503c",
+        "seed": 1618,
+        "shapeSchemaSHA256": "81e3dbceb53579bef2b53ea6db3b4484dcd29ab0a239b320851d0ab8db9f9755",
+        "tensorCount": 74,
+        "trainingSteps": 2400,
+        "weightsBytes": 40919832,
+        "weightsPath": "/Users/ergentics/prime-mlx-lab/domain-trace-shadow-seed1618/prime-domain-trace.safetensors",
+        "weightsSHA256": "122af63187129249ef0c85dbac6e6f1bd0c0e67c60f88b387844fd002bd2d0ec"
+      },
+      {
+        "allF32": true,
+        "evaluation": {
+          "holdout": {
+            "abstain_accuracy": 1.0,
+            "autoregressive_accuracy": 0.9957446808510638,
+            "direct_accuracy": 0.9553191489361702,
+            "left_summary_accuracy": 1.0,
+            "right_summary_accuracy": 1.0,
+            "teacher_accuracy": 0.9957446808510638
+          },
+          "mutation": {
+            "abstain_accuracy": 1.0,
+            "autoregressive_accuracy": 0.8893617021276595,
+            "direct_accuracy": 0.7936170212765957,
+            "left_summary_accuracy": 1.0,
+            "right_summary_accuracy": 1.0,
+            "teacher_accuracy": 0.8893617021276595
+          },
+          "validation": {
+            "abstain_accuracy": 1.0,
+            "autoregressive_accuracy": 0.958041958041958,
+            "direct_accuracy": 0.8414918414918415,
+            "left_summary_accuracy": 1.0,
+            "right_summary_accuracy": 1.0,
+            "teacher_accuracy": 0.958041958041958
+          }
+        },
+        "implementation": {
+          "custom_metal_kernels": false,
+          "framework": "mlx",
+          "imported_base_weights": false,
+          "model_implementation": "mlx_lm.models.llama.Model",
+          "random_initialization": true,
+          "standard_primitives": true
+        },
+        "manifest": {
+          "engine_build": "v2.1.8-shareGuardOn-fmtSplit-decisionTruth",
+          "holdout_rows": 470,
+          "holdout_sha256": "5cb3770b01f25f496045cee546dd6b0b4448a8a76da599765acbd5939b8e267d",
+          "language_id": "ergentics_prime_engine_domain_trace_v1",
+          "manifest_sha256": "6965656679ac7c8cf5c8624b15e21cc8f3f5fffc4ac97a56ab8a558d07b44d48",
+          "mutation_rows": 470,
+          "mutation_sha256": "5496a5234d7e4d3e4484261792efa31d392116722235d67009a5c55f53312da9",
+          "train_rows": 1338,
+          "train_sha256": "62eb54a9c2dca2616baa0165fc6a37a062c9cc967cf2370d23bdb11a3dd0ad31",
+          "validation_rows": 429,
+          "validation_sha256": "b97334204ecf857d78474681c5f93b95befa08b0ef021b17c3ac474a37d2fdef"
+        },
+        "manifestFileSHA256": "1a49ef580dd702567c3a66df443cbb6f1e1b10f08f525ce1648d76612388f80d",
+        "manifestPath": "/Users/ergentics/prime-mlx-lab/domain-trace-shadow-seed3141/prime-domain-trace-manifest.json",
+        "outcome": "GROUNDED",
+        "profile": {
+          "attention_heads": 4,
+          "expected_parameter_count": 10227968,
+          "feed_forward_dimension": 640,
+          "head_dimension": 64,
+          "layer_count": 8,
+          "model_dimension": 256,
+          "observed_parameter_count": 10227968,
+          "profile_id": "ergentics_prime_poc_10m_v1",
+          "vocab_size": 16384
+        },
+        "reportPath": "/Users/ergentics/prime-mlx-lab/domain-trace-shadow-seed3141/prime-domain-trace-shadow.json",
+        "reportSHA256": "4c408f786e97407e260f6fa3e50c1d465bf353125f1db78e6d74a788677e534c",
+        "seed": 3141,
+        "shapeSchemaSHA256": "81e3dbceb53579bef2b53ea6db3b4484dcd29ab0a239b320851d0ab8db9f9755",
+        "tensorCount": 74,
+        "trainingSteps": 2400,
+        "weightsBytes": 40919832,
+        "weightsPath": "/Users/ergentics/prime-mlx-lab/domain-trace-shadow-seed3141/prime-domain-trace.safetensors",
+        "weightsSHA256": "7064c514a9a41369951d1ee829ac0f028bb488a0b9551d5e8b1d2433173cd4e1"
+      }
+    ],
+    "selectionCaution": "Seed3141 strongest base heldout trace468/470 but mutation418/470; seed1618 base457/470 and mutation431/470; seed2718 base441/470 and mutation438/470. No single seed dominates all axes.",
+    "status": "Real learned domain-policy trace projection, retained next comparison; not merely Stage7 checkpoint mechanics."
+  },
+  "inputPreparation": {
+    "audit": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-system-comparison-2026-09-08/variable-depth-v1-preparation/input-audit.json",
+    "bindingEvidence": "All 1120 rows in each saved report independently matched codec-derived target and every full recorded input; dynamic recorded predictions removed; both reconstructed static datasets identical. v2 training binding examples excluded.",
+    "caseCount": 80,
+    "inputCases": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-system-comparison-2026-09-08/variable-depth-v1-preparation/Inputs/cases.json",
+    "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-system-comparison-2026-09-08/variable-depth-v1-preparation",
+    "recordedManifestSHA256": "2ed11ee4fd1a879e0364aafabb47fe1941f6debe780e1392f9a2a764fb04ec5d",
+    "referenceOnly": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-system-comparison-2026-09-08/variable-depth-v1-preparation/References/gold.json",
+    "script": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-system-comparison-2026-09-08/prepare-variable-v1.py",
+    "wholeOriginalV1ManifestPresent": false
+  },
+  "largerProfiles": {
+    "native300M1B3B": "Saved profile probes are architecture/performance experiments; inventory records 36step trials and no resumable language checkpoints. Do not treat profile name or large corpus availability as a saved fully trained answering model.",
+    "sourceInventory": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-corpus-integration-review/retained-model-inventory.json",
+    "stage7Mechanics": "Separate real Native300M checkpoint/resume machinery remains relevant infrastructure, but does not replace learned symbolic checkpoint lineage or prove general-language answering.",
+    "stage7Source": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderBSpecificNative300MTrajectoryCheckpointExecution.swift"
+  },
+  "nativeRuntime": {
+    "compiledModules": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Modules",
+    "compiledObject": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLLM.build/Llama.swift.o",
+    "configurationLines": "177-194",
+    "existingCanaryCLIWarning": "Existing canary command trains and saves before reloading. Do not invoke that CLI as an inference-only loader. Root is building a separate inference-only entry point against retained objects.",
+    "lowLevelModel": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/checkouts/mlx-swift-examples/Libraries/MLXLLM/Models/Llama.swift",
+    "lowLevelModelLines": "291-317; configuration341-395",
+    "metalResource": "Retained compiled object linkage needs compatible default.metallib resource. Root already owns the native driver packaging and serial validation.",
+    "method": "Construct same 10M LlamaConfiguration, strict update parameters loaded from safetensors with verify .all; eval model and train(false); input native symbol ID MLXArray directly; sample final-position logits, no text tokenizer or model factory required.",
+    "modelLogitsLines": "216-220",
+    "retainedLinkList": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/PrimeNativeLanguageSwiftCanary.product/Objects.LinkFileList",
+    "source": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/Sources/PrimeNativeMetalSwiftCanary/main.swift",
+    "strictLoaderLines": "615-621"
+  },
+  "olderTwoStepTraceCapability": {
+    "holdoutDirect": {
+      "correct": 2,
+      "total": 32
+    },
+    "holdoutTrace": {
+      "correct": 32,
+      "total": 32
+    },
+    "implementation": "Python MLX, first-party random initialization, same10M architecture; source prime_mlx_native_trace_curriculum.py",
+    "manifestPath": "/Users/ergentics/prime-mlx-lab/native-trace-curriculum/prime-native-trace-manifest.json",
+    "reportPath": "/Users/ergentics/prime-mlx-lab/native-trace-curriculum/prime-native-trace-curriculum.json",
+    "retainedFor": "Original two-step Z8 baseline. Superseded for current selection by stronger Swift-trained variable-depth models, not deleted or reclassified as fake.",
+    "weightsPath": "/Users/ergentics/prime-mlx-lab/native-trace-curriculum/prime-native-trace.safetensors",
+    "weightsSHA256": "fd313073fce8d3b1dc2b306f43457689aa5521c7d4a456e16da270ef30d127ee"
+  },
+  "schemaVersion": "prime-native-readiness-1",
+  "scope": "Retained first-party learned Prime checkpoints and native inference path; no training, downloads, inference, or upstream edits by this audit.",
+  "selectedSwiftVariableDepthCheckpoints": [
+    {
+      "allF32": true,
+      "directory": "/Users/ergentics/prime-mlx-lab/native-variable-depth-seed1618-4000",
+      "durability": {
+        "checkpoint": "prime-native-variable-depth-seed1618.safetensors",
+        "checkpoint_reload_max_logit_delta": 0,
+        "checkpoint_reload_max_weight_delta": 0,
+        "checkpoint_reload_weights_exact": true,
+        "checkpoint_sha256": "4ec25a1a577aee22d70bb44bff2caf7e4b9790322596a13135a69e642e8047bd",
+        "checkpoint_strict_load": true,
+        "checkpoint_weight_tensor_count": 74,
+        "deterministic_replay_max_logit_delta": 0,
+        "repeated_inference_max_logit_delta": 0
+      },
+      "implementation": {
+        "custom_metal_kernels": false,
+        "device_description": "Device(gpu, 0)",
+        "device_type": "gpu",
+        "execution_language": "swift",
+        "framework": "mlx-swift",
+        "imported_base_weights": false,
+        "mlx_swift_examples_version": "2.29.1",
+        "mlx_swift_version": "0.29.1",
+        "model_implementation": "MLXLLM.LlamaModel",
+        "observed_parameter_count": 10227968,
+        "random_initialization": true,
+        "standard_primitives": true
+      },
+      "manifest": {
+        "families_sha256": "58895d30f56d4b50212ab6f56b06fc77feabadb238ffbc4eda8cecb5c5de6073",
+        "holdout_rows": 160,
+        "manifest_sha256": "2ed11ee4fd1a879e0364aafabb47fe1941f6debe780e1392f9a2a764fb04ec5d",
+        "mutation_rows": 640,
+        "train_rows": 1504,
+        "validation_rows": 320
+      },
+      "recordedAggregates": [
+        {
+          "axis": "base",
+          "depth": 3,
+          "direct_accuracy": 0.21875,
+          "full_trace_accuracy": 1,
+          "row_count": 32,
+          "split": "holdout",
+          "stage_accuracy": 1
+        },
+        {
+          "axis": "base",
+          "depth": 4,
+          "direct_accuracy": 0.1875,
+          "full_trace_accuracy": 1,
+          "row_count": 128,
+          "split": "holdout",
+          "stage_accuracy": 1
+        },
+        {
+          "axis": "alphabet_b",
+          "depth": 3,
+          "direct_accuracy": 0.1875,
+          "full_trace_accuracy": 1,
+          "row_count": 32,
+          "split": "mutation",
+          "stage_accuracy": 1
+        },
+        {
+          "axis": "alphabet_b",
+          "depth": 4,
+          "direct_accuracy": 0.1484375,
+          "full_trace_accuracy": 1,
+          "row_count": 128,
+          "split": "mutation",
+          "stage_accuracy": 1
+        },
+        {
+          "axis": "heldout_codebook",
+          "depth": 3,
+          "direct_accuracy": 0.15625,
+          "full_trace_accuracy": 0,
+          "row_count": 32,
+          "split": "mutation",
+          "stage_accuracy": 0.15625
+        },
+        {
+          "axis": "heldout_codebook",
+          "depth": 4,
+          "direct_accuracy": 0.15625,
+          "full_trace_accuracy": 0,
+          "row_count": 128,
+          "split": "mutation",
+          "stage_accuracy": 0.150390625
+        },
+        {
+          "axis": "joint_alphabet_b_codebook",
+          "depth": 3,
+          "direct_accuracy": 0.1875,
+          "full_trace_accuracy": 0,
+          "row_count": 32,
+          "split": "mutation",
+          "stage_accuracy": 0.08333333333333333
+        },
+        {
+          "axis": "joint_alphabet_b_codebook",
+          "depth": 4,
+          "direct_accuracy": 0.171875,
+          "full_trace_accuracy": 0,
+          "row_count": 128,
+          "split": "mutation",
+          "stage_accuracy": 0.103515625
+        },
+        {
+          "axis": "neutral_context",
+          "depth": 3,
+          "direct_accuracy": 0.1875,
+          "full_trace_accuracy": 1,
+          "row_count": 32,
+          "split": "mutation",
+          "stage_accuracy": 1
+        },
+        {
+          "axis": "neutral_context",
+          "depth": 4,
+          "direct_accuracy": 0.1796875,
+          "full_trace_accuracy": 1,
+          "row_count": 128,
+          "split": "mutation",
+          "stage_accuracy": 1
+        },
+        {
+          "axis": "base",
+          "depth": 3,
+          "direct_accuracy": 0.21875,
+          "full_trace_accuracy": 1,
+          "row_count": 32,
+          "split": "validation",
+          "stage_accuracy": 1
+        },
+        {
+          "axis": "base",
+          "depth": 4,
+          "direct_accuracy": 0.140625,
+          "full_trace_accuracy": 1,
+          "row_count": 128,
+          "split": "validation",
+          "stage_accuracy": 1
+        },
+        {
+          "axis": "validation_codebook",
+          "depth": 3,
+          "direct_accuracy": 0.21875,
+          "full_trace_accuracy": 0.0625,
+          "row_count": 32,
+          "split": "validation",
+          "stage_accuracy": 0.23958333333333334
+        },
+        {
+          "axis": "validation_codebook",
+          "depth": 4,
+          "direct_accuracy": 0.1484375,
+          "full_trace_accuracy": 0.109375,
+          "row_count": 128,
+          "split": "validation",
+          "stage_accuracy": 0.40625
+        }
+      ],
+      "reportPath": "/Users/ergentics/prime-mlx-lab/native-variable-depth-seed1618-4000/prime-native-variable-depth-seed1618.json",
+      "reportSHA256": "486fcdd7ee80ebeff19c7aceee8e5986e5a54ad26b4f9ba299d326d5758d3e9e",
+      "shapeSchemaSHA256": "81e3dbceb53579bef2b53ea6db3b4484dcd29ab0a239b320851d0ab8db9f9755",
+      "tensors": 74,
+      "trainingSteps": 4000,
+      "weightsBytes": 40919874,
+      "weightsPath": "/Users/ergentics/prime-mlx-lab/native-variable-depth-seed1618-4000/prime-native-variable-depth-seed1618.safetensors",
+      "weightsSHA256": "4ec25a1a577aee22d70bb44bff2caf7e4b9790322596a13135a69e642e8047bd"
+    },
+    {
+      "allF32": true,
+      "directory": "/Users/ergentics/prime-mlx-lab/native-variable-depth-seed1618-8000-v1",
+      "durability": {
+        "checkpoint": "prime-native-variable-depth-seed1618.safetensors",
+        "checkpoint_reload_max_logit_delta": 0,
+        "checkpoint_reload_max_weight_delta": 0,
+        "checkpoint_reload_weights_exact": true,
+        "checkpoint_sha256": "4baff383398b024661ff48fb7b5d283a3451950ee2702455eb3a3f7c52a54afb",
+        "checkpoint_strict_load": true,
+        "checkpoint_weight_tensor_count": 74,
+        "deterministic_replay_max_logit_delta": 0,
+        "repeated_inference_max_logit_delta": 0
+      },
+      "implementation": {
+        "custom_metal_kernels": false,
+        "device_description": "Device(gpu, 0)",
+        "device_type": "gpu",
+        "execution_language": "swift",
+        "framework": "mlx-swift",
+        "imported_base_weights": false,
+        "mlx_swift_examples_version": "2.29.1",
+        "mlx_swift_version": "0.29.1",
+        "model_implementation": "MLXLLM.LlamaModel",
+        "observed_parameter_count": 10227968,
+        "random_initialization": true,
+        "standard_primitives": true
+      },
+      "manifest": {
+        "families_sha256": "58895d30f56d4b50212ab6f56b06fc77feabadb238ffbc4eda8cecb5c5de6073",
+        "holdout_rows": 160,
+        "manifest_sha256": "2ed11ee4fd1a879e0364aafabb47fe1941f6debe780e1392f9a2a764fb04ec5d",
+        "mutation_rows": 640,
+        "train_rows": 1504,
+        "validation_rows": 320
+      },
+      "recordedAggregates": [
+        {
+          "axis": "base",
+          "depth": 3,
+          "direct_accuracy": 0.40625,
+          "full_trace_accuracy": 1,
+          "row_count": 32,
+          "split": "holdout",
+          "stage_accuracy": 1
+        },
+        {
+          "axis": "base",
+          "depth": 4,
+          "direct_accuracy": 0.15625,
+          "full_trace_accuracy": 1,
+          "row_count": 128,
+          "split": "holdout",
+          "stage_accuracy": 1
+        },
+        {
+          "axis": "alphabet_b",
+          "depth": 3,
+          "direct_accuracy": 0.125,
+          "full_trace_accuracy": 1,
+          "row_count": 32,
+          "split": "mutation",
+          "stage_accuracy": 1
+        },
+        {
+          "axis": "alphabet_b",
+          "depth": 4,
+          "direct_accuracy": 0.171875,
+          "full_trace_accuracy": 1,
+          "row_count": 128,
+          "split": "mutation",
+          "stage_accuracy": 1
+        },
+        {
+          "axis": "heldout_codebook",
+          "depth": 3,
+          "direct_accuracy": 0.3125,
+          "full_trace_accuracy": 0.03125,
+          "row_count": 32,
+          "split": "mutation",
+          "stage_accuracy": 0.3333333333333333
+        },
+        {
+          "axis": "heldout_codebook",
+          "depth": 4,
+          "direct_accuracy": 0.140625,
+          "full_trace_accuracy": 0,
+          "row_count": 128,
+          "split": "mutation",
+          "stage_accuracy": 0.16015625
+        },
+        {
+          "axis": "joint_alphabet_b_codebook",
+          "depth": 3,
+          "direct_accuracy": 0.15625,
+          "full_trace_accuracy": 0,
+          "row_count": 32,
+          "split": "mutation",
+          "stage_accuracy": 0.40625
+        },
+        {
+          "axis": "joint_alphabet_b_codebook",
+          "depth": 4,
+          "direct_accuracy": 0.140625,
+          "full_trace_accuracy": 0,
+          "row_count": 128,
+          "split": "mutation",
+          "stage_accuracy": 0.181640625
+        },
+        {
+          "axis": "neutral_context",
+          "depth": 3,
+          "direct_accuracy": 0.40625,
+          "full_trace_accuracy": 1,
+          "row_count": 32,
+          "split": "mutation",
+          "stage_accuracy": 1
+        },
+        {
+          "axis": "neutral_context",
+          "depth": 4,
+          "direct_accuracy": 0.171875,
+          "full_trace_accuracy": 1,
+          "row_count": 128,
+          "split": "mutation",
+          "stage_accuracy": 1
+        },
+        {
+          "axis": "base",
+          "depth": 3,
+          "direct_accuracy": 0.21875,
+          "full_trace_accuracy": 1,
+          "row_count": 32,
+          "split": "validation",
+          "stage_accuracy": 1
+        },
+        {
+          "axis": "base",
+          "depth": 4,
+          "direct_accuracy": 0.1796875,
+          "full_trace_accuracy": 1,
+          "row_count": 128,
+          "split": "validation",
+          "stage_accuracy": 1
+        },
+        {
+          "axis": "validation_codebook",
+          "depth": 3,
+          "direct_accuracy": 0.25,
+          "full_trace_accuracy": 0,
+          "row_count": 32,
+          "split": "validation",
+          "stage_accuracy": 0.08333333333333333
+        },
+        {
+          "axis": "validation_codebook",
+          "depth": 4,
+          "direct_accuracy": 0.1328125,
+          "full_trace_accuracy": 0.0625,
+          "row_count": 128,
+          "split": "validation",
+          "stage_accuracy": 0.3125
+        }
+      ],
+      "reportPath": "/Users/ergentics/prime-mlx-lab/native-variable-depth-seed1618-8000-v1/prime-native-variable-depth-seed1618.json",
+      "reportSHA256": "bee14082d3c8912411975a2cfa35cad45ff8ffebfb0b38429c23d8ba6dd1ec44",
+      "shapeSchemaSHA256": "81e3dbceb53579bef2b53ea6db3b4484dcd29ab0a239b320851d0ab8db9f9755",
+      "tensors": 74,
+      "trainingSteps": 8000,
+      "weightsBytes": 40919834,
+      "weightsPath": "/Users/ergentics/prime-mlx-lab/native-variable-depth-seed1618-8000-v1/prime-native-variable-depth-seed1618.safetensors",
+      "weightsSHA256": "4baff383398b024661ff48fb7b5d283a3451950ee2702455eb3a3f7c52a54afb"
+    }
+  ],
+  "selection": {
+    "currentComparison": "Two original Swift-trained variable-depth v1 checkpoints, 4000 and 8000 steps, same seed1618 and same saved manifest identity. Compare 80 inputs across base and four mutation axes at depths3/4, both direct and iterative model execution, against older Llama on equal symbol semantics.",
+    "notGlobalTextModelRanking": "No general English prompt-response codec is claimed for this fixed symbolic family.",
+    "why": "These retained Swift models demonstrate 160/160 correct base heldout traces and 160/160 each alphabet/context traces, with real unseen-codebook failures deliberately included. This is stronger saved depth capability than using only the July two-step Python trace checkpoint."
+  },
+  "separateRealR19Checker": {
+    "core": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/Observability/ErgenticsResearch/Sources/ErgenticsShotResearchCore/DisposalShotResearchLattice.swift",
+    "role": "Real retained research hypothesis checker and schema/receipt validation, separate from learned decoder weights and from intended controller authority. Its existence and historical runs remain retained; not renamed as a learned model or discarded with unimplemented Koine design prose.",
+    "source": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/Observability/ErgenticsResearch/Sources/ErgenticsShotHypothesisChecker/main.swift"
+  },
+  "sharedArchitecture": {
+    "architectureNameMeaning": "MLXLLM.LlamaModel is the decoder architecture implementation, not the older Llama checkpoint lineage.",
+    "attentionHeads": 4,
+    "dtype": "F32",
+    "headDimension": 64,
+    "hiddenLayers": 8,
+    "hiddenSize": 256,
+    "importedBaseWeights": false,
+    "intermediateSize": 640,
+    "kvHeads": 4,
+    "maxPositionEmbeddings": 2048,
+    "parameterCount": 10227968,
+    "profile": "ergentics_prime_poc_10m_v1",
+    "rmsNormEps": 1e-05,
+    "ropeTheta": 10000,
+    "tensorCount": 74,
+    "tieWordEmbeddings": true,
+    "vocabularySize": 16384
+  }
+}

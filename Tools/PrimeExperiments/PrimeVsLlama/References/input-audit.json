@@ -1,0 +1,71 @@
+{
+  "all1120RowsPerReportValidated": true,
+  "bindingMethod": "Reconstruct from exact saved schema-v1 native trace inputs and row identifiers, removing each recorded continuation prediction; independently calculate references from the original modulo-8 codec; cross-check both runs produce identical static inputs and references.",
+  "bothReportsStaticInputAndReferencesEqual": true,
+  "checkpoints": [
+    {
+      "allTensorDtypes": [
+        "F32"
+      ],
+      "reportPath": "/Users/ergentics/prime-mlx-lab/native-variable-depth-seed1618-4000/prime-native-variable-depth-seed1618.json",
+      "reportSHA256": "486fcdd7ee80ebeff19c7aceee8e5986e5a54ad26b4f9ba299d326d5758d3e9e",
+      "tensorCount": 74,
+      "trainedInSwift": true,
+      "weightsBytes": 40919874,
+      "weightsPath": "/Users/ergentics/prime-mlx-lab/native-variable-depth-seed1618-4000/prime-native-variable-depth-seed1618.safetensors",
+      "weightsSHA256": "4ec25a1a577aee22d70bb44bff2caf7e4b9790322596a13135a69e642e8047bd"
+    },
+    {
+      "allTensorDtypes": [
+        "F32"
+      ],
+      "reportPath": "/Users/ergentics/prime-mlx-lab/native-variable-depth-seed1618-8000-v1/prime-native-variable-depth-seed1618.json",
+      "reportSHA256": "bee14082d3c8912411975a2cfa35cad45ff8ffebfb0b38429c23d8ba6dd1ec44",
+      "tensorCount": 74,
+      "trainedInSwift": true,
+      "weightsBytes": 40919834,
+      "weightsPath": "/Users/ergentics/prime-mlx-lab/native-variable-depth-seed1618-8000-v1/prime-native-variable-depth-seed1618.safetensors",
+      "weightsSHA256": "4baff383398b024661ff48fb7b5d283a3451950ee2702455eb3a3f7c52a54afb"
+    }
+  ],
+  "continuationSlotsRemovedAcrossBothFullReports": 6272,
+  "currentCodecSource": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/Sources/ErgenticsPrimeRuntime/ErgenticsNativeVariableDepthCanary.swift",
+  "currentCodecSourceSHA256": "6ad60f036260fdd4bd07abf730d8c00d7e4fb1ee325c4fa963377e231720d6bc",
+  "currentSourceGitHEAD": "f7cfa6d59c906b9f2b9d458d592f12b029e227b9",
+  "directInputsSource": "Reconstructed from original v1 first-stage common prefix, native APPLY token 2, original encoded start and alias program, ANSWER token 3; matches original Swift row-construction formula.",
+  "goldSHA256": "a49033a2ce5e8ba9b606a8334d483329936d24439a156e9713cb5cc1fcd74f4a",
+  "historicalPredictionsInModelInputs": false,
+  "inferenceRun": false,
+  "inputSHA256": "a06c946aced5661c03b9785d36e2983edaaadd790fdebac5f1a67e57c463649f",
+  "naturalLanguageFairness": "Llama receives the same value encoding and alias bindings as native inputs; aliases are retained rather than replaced by their resolved semantic operations. Both direct and iterative paths are supplied. Gold is stored only in References.",
+  "noModelFrameworkImports": true,
+  "originalManifestSHA256RecordedByBothReports": "2ed11ee4fd1a879e0364aafabb47fe1941f6debe780e1392f9a2a764fb04ec5d",
+  "originalSourcesModified": false,
+  "originalWholeManifestAvailable": false,
+  "originalWholeManifestSHA256Reproduced": false,
+  "schemaVersion": "prime-variable-depth-v1-input-audit-1",
+  "selectedAxes": [
+    "base",
+    "alphabet_b",
+    "heldout_codebook",
+    "joint_alphabet_b_codebook",
+    "neutral_context"
+  ],
+  "selectedCaseCount": 80,
+  "selectedProgramFamiliesByDepth": {
+    "3": "d3-32-34-32",
+    "4": "d4-32-32-32-33"
+  },
+  "selectedStartsPerAxisDepth": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "sourceScope": "Current source schema is v2. encode/decode, codebook header, row construction and trace materialization formulas were verified against every saved v1 trace. We do not bind v1 weights to a v2 training manifest or its added binding examples.",
+  "targetsInModelInputs": false
+}

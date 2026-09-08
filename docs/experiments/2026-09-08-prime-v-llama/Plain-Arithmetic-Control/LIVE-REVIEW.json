@@ -1,0 +1,284 @@
+{
+  "schema": "prime_llama_plain_arithmetic_independent_review_v1",
+  "recordedAtUTC": "2026-09-08T22:54:18.735069+00:00",
+  "status": "VERIFIED_PLAIN_CONTROL_EXECUTION_WITH_SEPARATE_DESCRIPTIVE_AUDIT",
+  "failures": [],
+  "source": {
+    "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Prime-v-Llama-01/Plain-Arithmetic-Control/Runtime/llama_plain_control.py",
+    "byteCount": 7070,
+    "sha256": "00ab42f605dd548d3de23dec62f82e0771e410d6f1ed48cadffeff13577d6574"
+  },
+  "request": {
+    "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Prime-v-Llama-01/Plain-Arithmetic-Control/Result/request.json",
+    "byteCount": 6782,
+    "sha256": "0eccf2bc43662dcbe1e778f36744a9e6fc938406e4f15c04442673dc25d9af44"
+  },
+  "preparation": {
+    "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Prime-v-Llama-01/Plain-Arithmetic-Control/PREPARATION.json",
+    "byteCount": 849,
+    "sha256": "f8724980054fd8bf8ee537a8f6be38a99d1d18a7d501583409594b454cb362ef"
+  },
+  "rawOutput": {
+    "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Prime-v-Llama-01/Plain-Arithmetic-Control/Result/controller/stdout.bin",
+    "byteCount": 84552,
+    "sha256": "c574d373fce2db442c246e5f0117710dec8b61e67accbbacb095662d6778e73b"
+  },
+  "process": {
+    "receipt": {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Prime-v-Llama-01/Plain-Arithmetic-Control/Result/controller/result.json",
+      "byteCount": 781,
+      "sha256": "02060a0dee2b2a737338f216d82481bb730ab41a989a71c8ec5740fc6b20c79a"
+    },
+    "pid": 21396,
+    "elapsedSeconds": 14.171188000007533,
+    "exitStatus": 0,
+    "exactReapCount": 1,
+    "recordedFinalGroupEmpty": true,
+    "bothStreamsEOFAndHashBound": true,
+    "liveProcessAbsenceResampled": false
+  },
+  "inputs": {
+    "caseCount": 16,
+    "source": "Base canonical input-only cases, value symbols decoded by subtracting16, operation aliases resolved using each actual input header; no scoring references read to construct model requests.",
+    "noGoldInActualRequestsOrQuestions": true,
+    "actualSemanticOperationsTranslatedToWords": true,
+    "independentReferencesComputedAfterRun": true,
+    "controlsAddedAfterOriginalSymbolResults": true
+  },
+  "execution": {
+    "predictionCount": 56,
+    "directPredictionCount": 16,
+    "iterativePredictionCount": 40,
+    "actualPriorPredictionJoins": 24,
+    "all56GeneratedTokenSequencesDecodeExactlyToRawOutput": true,
+    "all56InputTokenSequencesDecodeToExactPromptHashAndQuestion": true,
+    "noOutputReplacement": true,
+    "responseDeadlineCount": 0,
+    "tokenLimitCount": 0,
+    "allEightCurrentModelFilesMatchRuntimeBeforeAndAfterBindings": true,
+    "weightsSHA256": "c9661f6b390552c011bf0e827d61b0339bc3030c6ffbc78afc68d31ecfbdb42c"
+  },
+  "strictResults": {
+    "directCorrectAndSingleInteger": 0,
+    "directSingleIntegerFormatAdmitted": 2,
+    "iterativeExactFullTrace": 3,
+    "iterativeFinalCorrect": 3,
+    "denominator": 16,
+    "unchangedByDescriptiveAudit": true
+  },
+  "postRunDescriptiveDirectAudit": {
+    "method": "Read each raw direct response after execution; report explicit final equations/single integers or the final item of a complete ordered sequence. Do not infer a unique final answer from an incomplete unlabeled sequence. No value is repaired, filled, or fed back into the model.",
+    "correctExplicitWorkedFinalExpressions": 8,
+    "additionalCorrectCompleteOrderedSequence": 1,
+    "incorrectFinalValues": 6,
+    "ambiguousIncompleteSequence": 1,
+    "totalCases": 16,
+    "rows": [
+      {
+        "caseID": "holdout-base-canonical-train-a-d3-32-34-32-s0",
+        "rawOutput": "0 + 1 = 1\n1 - 1 = 0\n0 + 1 = 1",
+        "rawOutputSHA256": "16887b31c57393cc07d20887b57d118b633d9f8340149aea899a37b4052e645d",
+        "strictParsedValue": null,
+        "descriptiveFinalValue": 1,
+        "extractionBasis": "final_worked_expression",
+        "referenceFinalValue": 0,
+        "descriptiveFinalCorrect": false,
+        "note": "Final worked equation states1; it subtracts1 instead of negating1.",
+        "usedForFeedback": false
+      },
+      {
+        "caseID": "holdout-base-canonical-train-a-d3-32-34-32-s1",
+        "rawOutput": "1. 1 + 1 = 2\n2. -2 = 6\n3. 6 + 1 = 7",
+        "rawOutputSHA256": "3c4f76150923639b19f76c3b07efb1d0e5fdf7ab1559b3f2747f496f26c51320",
+        "strictParsedValue": null,
+        "descriptiveFinalValue": 7,
+        "extractionBasis": "final_worked_expression",
+        "referenceFinalValue": 7,
+        "descriptiveFinalCorrect": true,
+        "note": "Final worked equation states7; all three modulo8 states are correct.",
+        "usedForFeedback": false
+      },
+      {
+        "caseID": "holdout-base-canonical-train-a-d3-32-34-32-s2",
+        "rawOutput": "2 + 1 = 3\n3 - 3 = 0\n0 + 1 = 1",
+        "rawOutputSHA256": "0c8d661e06af0303f1833afe89411e19a93462eb871b6da36ec9fb536c31c52c",
+        "strictParsedValue": null,
+        "descriptiveFinalValue": 1,
+        "extractionBasis": "final_worked_expression",
+        "referenceFinalValue": 6,
+        "descriptiveFinalCorrect": false,
+        "note": "Final worked equation states1; it subtracts3 from itself instead of negating3.",
+        "usedForFeedback": false
+      },
+      {
+        "caseID": "holdout-base-canonical-train-a-d3-32-34-32-s3",
+        "rawOutput": "4\n5",
+        "rawOutputSHA256": "8b4e10707dcead989801d60437cd70beb94d9e914329ca259fef45d2b11c7051",
+        "strictParsedValue": null,
+        "descriptiveFinalValue": null,
+        "extractionBasis": "ambiguous_incomplete_unlabeled_sequence",
+        "referenceFinalValue": 5,
+        "descriptiveFinalCorrect": null,
+        "note": "Only two unlabeled lines,4 and5, for three operations. Trailing5 matches the reference, but no unique explicit final claim or complete trace is established.",
+        "usedForFeedback": false
+      },
+      {
+        "caseID": "holdout-base-canonical-train-a-d3-32-34-32-s4",
+        "rawOutput": "4 + 1 = 5\n~5 = 3\n3 + 1 = 4",
+        "rawOutputSHA256": "46ff1c3bb3679b8d20b3af4612318a1cd34975270901a906c028c2b09ee516a4",
+        "strictParsedValue": null,
+        "descriptiveFinalValue": 4,
+        "extractionBasis": "final_worked_expression",
+        "referenceFinalValue": 4,
+        "descriptiveFinalCorrect": true,
+        "note": "Final worked equation states4. Numeric states5,3,4 are correct; the middle tilde notation is nonstandard for arithmetic negation.",
+        "usedForFeedback": false
+      },
+      {
+        "caseID": "holdout-base-canonical-train-a-d3-32-34-32-s5",
+        "rawOutput": "6, 7, 5",
+        "rawOutputSHA256": "6ef87f27ea6fdfd2db4befff00f06439812eee9a51cd82f5e171f5852774d640",
+        "strictParsedValue": null,
+        "descriptiveFinalValue": 5,
+        "extractionBasis": "complete_ordered_sequence",
+        "referenceFinalValue": 3,
+        "descriptiveFinalCorrect": false,
+        "note": "Three comma-separated numbers are naturally an ordered three-step sequence ending5; the expected final value is3.",
+        "usedForFeedback": false
+      },
+      {
+        "caseID": "holdout-base-canonical-train-a-d3-32-34-32-s6",
+        "rawOutput": "6 + 1 = 7\n7 -> -7 = 1\n1 + 1 = 2",
+        "rawOutputSHA256": "10124ca6c83a338297d8e0a91cc9a6cffabe75a09697724938cd607cd4b3f3b9",
+        "strictParsedValue": null,
+        "descriptiveFinalValue": 2,
+        "extractionBasis": "final_worked_expression",
+        "referenceFinalValue": 2,
+        "descriptiveFinalCorrect": true,
+        "note": "Final worked equation states2; all three modulo8 states are correct.",
+        "usedForFeedback": false
+      },
+      {
+        "caseID": "holdout-base-canonical-train-a-d3-32-34-32-s7",
+        "rawOutput": "6",
+        "rawOutputSHA256": "e7f6c011776e8db7cd330b54174fd76f7d0216b612387a5ffcfb81e6f0919683",
+        "strictParsedValue": 6,
+        "descriptiveFinalValue": 6,
+        "extractionBasis": "single_integer",
+        "referenceFinalValue": 1,
+        "descriptiveFinalCorrect": false,
+        "note": "Single integer6 is explicit and wrong; correct final value is1.",
+        "usedForFeedback": false
+      },
+      {
+        "caseID": "holdout-base-canonical-train-a-d4-32-32-32-33-s0",
+        "rawOutput": "0 + 1 = 1\n1 + 1 = 2\n2 + 1 = 3\n3 - 1 = 2",
+        "rawOutputSHA256": "978030c8308b1d4522c615b25b840ae2f8fc507c0228f733008f81613e8df936",
+        "strictParsedValue": null,
+        "descriptiveFinalValue": 2,
+        "extractionBasis": "final_worked_expression",
+        "referenceFinalValue": 2,
+        "descriptiveFinalCorrect": true,
+        "note": "Final worked equation states2; all four states are correct.",
+        "usedForFeedback": false
+      },
+      {
+        "caseID": "holdout-base-canonical-train-a-d4-32-32-32-33-s1",
+        "rawOutput": "1 + 1 = 2\n2 + 1 = 3\n3 + 1 = 4\n4 - 1 = 3",
+        "rawOutputSHA256": "a13bf4eabe056a703e128ec3b0d129e5b090d7229668178f5718fb715d5b9888",
+        "strictParsedValue": null,
+        "descriptiveFinalValue": 3,
+        "extractionBasis": "final_worked_expression",
+        "referenceFinalValue": 3,
+        "descriptiveFinalCorrect": true,
+        "note": "Final worked equation states3; all four states are correct.",
+        "usedForFeedback": false
+      },
+      {
+        "caseID": "holdout-base-canonical-train-a-d4-32-32-32-33-s2",
+        "rawOutput": "2 + 1 = 3\n3 + 1 = 4\n4 + 1 = 5\n5 - 1 = 4",
+        "rawOutputSHA256": "fbd7ef28171159ee7d31cbb78a275609723d1b377756a792cfde67b28d1cc2db",
+        "strictParsedValue": null,
+        "descriptiveFinalValue": 4,
+        "extractionBasis": "final_worked_expression",
+        "referenceFinalValue": 4,
+        "descriptiveFinalCorrect": true,
+        "note": "Final worked equation states4; all four states are correct.",
+        "usedForFeedback": false
+      },
+      {
+        "caseID": "holdout-base-canonical-train-a-d4-32-32-32-33-s3",
+        "rawOutput": "4\n5\n6\n5",
+        "rawOutputSHA256": "7a5a47fb8dbbb25e7bbdbb70c2d7d0ba17e29505ac944caf9204b64bad274b69",
+        "strictParsedValue": null,
+        "descriptiveFinalValue": 5,
+        "extractionBasis": "complete_ordered_sequence",
+        "referenceFinalValue": 5,
+        "descriptiveFinalCorrect": true,
+        "note": "Four bare lines form a complete ordered state sequence4,5,6,5; its last value5 is correct. This is a descriptive sequence reading, not compliance with the single-integer protocol.",
+        "usedForFeedback": false
+      },
+      {
+        "caseID": "holdout-base-canonical-train-a-d4-32-32-32-33-s4",
+        "rawOutput": "4 + 1 = 5\n5 + 1 = 6\n6 + 1 = 7\n7 - 1 = 6",
+        "rawOutputSHA256": "4362fbeda547556f091e3e9a1756d40d4ba40c709c79e99294cf4d968e1cd108",
+        "strictParsedValue": null,
+        "descriptiveFinalValue": 6,
+        "extractionBasis": "final_worked_expression",
+        "referenceFinalValue": 6,
+        "descriptiveFinalCorrect": true,
+        "note": "Final worked equation states6; all four states are correct.",
+        "usedForFeedback": false
+      },
+      {
+        "caseID": "holdout-base-canonical-train-a-d4-32-32-32-33-s5",
+        "rawOutput": "6\n5 + 1 = 6\n6 + 1 = 7\n7 - 1 = 6",
+        "rawOutputSHA256": "3e02d1ea45ab25704cb3d2d33741a5ff559ab42be392770347a7684b12a8e880",
+        "strictParsedValue": null,
+        "descriptiveFinalValue": 6,
+        "extractionBasis": "final_worked_expression",
+        "referenceFinalValue": 7,
+        "descriptiveFinalCorrect": false,
+        "note": "Final worked equation states6, wrong for start5; the response repeats5+1 after its initial6 and omits the required modulo wrap.",
+        "usedForFeedback": false
+      },
+      {
+        "caseID": "holdout-base-canonical-train-a-d4-32-32-32-33-s6",
+        "rawOutput": "6 + 1 = 7\n7 + 1 = 8 \u2261 0 (mod 8)\n0 + 1 = 1\n1 - 1 = 0",
+        "rawOutputSHA256": "6fd020557db340eac0dc4b766ffaf794b2ea3813dd89e0c6914e8981a8362822",
+        "strictParsedValue": null,
+        "descriptiveFinalValue": 0,
+        "extractionBasis": "final_worked_expression",
+        "referenceFinalValue": 0,
+        "descriptiveFinalCorrect": true,
+        "note": "Final worked equation states0; the response explicitly reduces8 to0 and all four states are correct.",
+        "usedForFeedback": false
+      },
+      {
+        "caseID": "holdout-base-canonical-train-a-d4-32-32-32-33-s7",
+        "rawOutput": "6",
+        "rawOutputSHA256": "e7f6c011776e8db7cd330b54174fd76f7d0216b612387a5ffcfb81e6f0919683",
+        "strictParsedValue": 6,
+        "descriptiveFinalValue": 6,
+        "extractionBasis": "single_integer",
+        "referenceFinalValue": 1,
+        "descriptiveFinalCorrect": false,
+        "note": "Single integer6 is explicit and wrong; correct final value is1.",
+        "usedForFeedback": false
+      }
+    ]
+  },
+  "interpretation": "The strict0/16 means zero outputs were both correct and in the requested single-integer format. It does not establish0% mathematical ability: eight responses contain explicit correct final worked expressions and one additional complete correct sequence. This is a post-run descriptive control of two programs, separate from the original80-case coded-symbol score.",
+  "mainLiveReviewPreserved": {
+    "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Prime-v-Llama-01/LIVE-REVIEW.json",
+    "sha256": "2bc9d2dcc218d996b797bd8f2ed102a1e5aa4d66817c8e8462208398e248ff9f"
+  },
+  "actions": {
+    "modelRuns": 0,
+    "builds": 0,
+    "sourceEdits": 0,
+    "networkCalls": 0,
+    "runtimeOutputEdits": 0,
+    "cpuTokenizerDecodeOnly": true
+  }
+}

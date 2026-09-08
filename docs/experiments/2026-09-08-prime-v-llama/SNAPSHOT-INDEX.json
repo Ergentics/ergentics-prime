@@ -1,0 +1,41 @@
+{
+  "snapshots": [
+    {
+      "directory": "../0006-prime-swift-variable-depth-4000",
+      "manifest": {
+        "path": "file-manifest.json",
+        "byteCount": 2893,
+        "sha256": "e0a5ff93b4e0bd1563352e7fb78f3446fad782aa074a62582219678b1d4f47a3"
+      },
+      "fileCount": 17,
+      "byteCount": 75483114
+    },
+    {
+      "directory": "../0007-prime-swift-variable-depth-8000",
+      "manifest": {
+        "path": "file-manifest.json",
+        "byteCount": 2893,
+        "sha256": "cd2ce3ca4075f29cf81f2acdf544ff375aca3ed81c2d6b9d44b6ef43444c43e1"
+      },
+      "fileCount": 17,
+      "byteCount": 75483047
+    },
+    {
+      "directory": ".",
+      "manifest": {
+        "path": "FILE-MANIFEST.json",
+        "byteCount": 307320,
+        "sha256": "f612927d7521c03e1a0ab7af2fda8bd260281e373b2add29a5d5ed84d03d6a82"
+      },
+      "fileCount": 1680,
+      "byteCount": 80781695
+    }
+  ],
+  "scope": "New experiment builds0006/0007 and comparison01. Older sealed builds retain their earlier index bindings.",
+  "excludedUnsealedAdministrativeFiles": [
+    "SNAPSHOT-INDEX.json",
+    "VERIFICATION.json",
+    "SOURCE-INTEGRATION.json",
+    "prime-v-llama-source.bundle"
+  ]
+}
