@@ -1469,7 +1469,9 @@ public enum PrimeNativeDecoderNative300MTrajectoryCheckpointV1 {
             firstMismatchPath: firstMismatch)
     }
 
-    private static func compareComparatorControls(
+    // Scientific branch roles are written by trajectoryComparatorControl;
+    // they are distinct from the directories used to retain each set.
+    static func compareComparatorControls(
         _ left: Data,
         _ right: Data
     ) throws -> (exact: Bool, firstMismatchPath: String?) {
@@ -1485,11 +1487,9 @@ public enum PrimeNativeDecoderNative300MTrajectoryCheckpointV1 {
               Set(leftObject.keys) == Set(required),
               Set(rightObject.keys) == Set(required),
               leftObject["branch_role"] as? String
-                == PrimeNativeDecoderNative300MTrajectoryCheckpointSetRoleV1
-                    .uninterruptedNPlus1Comparator.rawValue,
+                == "uninterrupted_n_plus_1",
               rightObject["branch_role"] as? String
-                == PrimeNativeDecoderNative300MTrajectoryCheckpointSetRoleV1
-                    .resumedNPlus1Comparator.rawValue
+                == "resumed_n_plus_1"
         else {
             throw PrimeNativeDecoderNative300MTrajectoryCheckpointV1Error
                 .streamingComparisonFailed

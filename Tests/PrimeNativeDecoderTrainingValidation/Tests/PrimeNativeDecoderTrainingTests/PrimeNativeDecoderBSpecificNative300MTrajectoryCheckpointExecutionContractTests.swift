@@ -1411,10 +1411,31 @@ final class
             at: repositoryRoot,
             relativePath:
                 "Tests/PrimeNativeDecoderTrainingValidation/Package.swift")
-        XCTAssertEqual(occurrences(of: ".executable(", in: manifestSource), 3)
-        XCTAssertEqual(
-            occurrences(of: ".executableTarget(", in: manifestSource),
-            3)
+        // The retired hosted surface still has exactly three products and
+        // targets. Remove only the explicitly named current-local additions
+        // before checking that historical topology.
+        let currentLocalProduct =
+            "        .executable(name: \"PrimeNativeDecoderCurrentLocal300MExecution\", targets: [\"PrimeNativeDecoderCurrentLocal300MExecution\"]),\n"
+        let currentLocalTarget = try sourceSlice(
+            manifestSource,
+            from: "        .executableTarget(\n            name: \"PrimeNativeDecoderCurrentLocal300MExecution\",",
+            to: "        .executableTarget(\n            name:\n                \"PrimeNativeDecoderBSpecificNative300MTrajectoryCheckpointExecution\",")
+        XCTAssertEqual(occurrences(of: currentLocalProduct, in: manifestSource), 1)
+        XCTAssertEqual(occurrences(of: ".executableTarget(", in: currentLocalTarget), 1)
+        XCTAssertTrue(criticalStaticContractHolds(
+            in: currentLocalTarget,
+            requiredAnchors: [
+                ".product(name: \"PrimeCore\", package: \"ergentics-prime\")",
+                ".product(name: \"PrimeNativeDecoderRuntime\", package: \"ergentics-prime\")",
+                ".product(name: \"PrimeNativeDecoderTraining\", package: \"ergentics-prime\")",
+                "path: \"Sources/PrimeNativeDecoderCurrentLocal300MExecution\"",
+            ]))
+        let historicalManifest = manifestSource
+            .replacingOccurrences(of: currentLocalProduct, with: "")
+            .replacingOccurrences(of: currentLocalTarget, with: "")
+        XCTAssertFalse(historicalManifest.contains("PrimeNativeDecoderCurrentLocal300MExecution"))
+        XCTAssertEqual(occurrences(of: ".executable(", in: historicalManifest), 3)
+        XCTAssertEqual(occurrences(of: ".executableTarget(", in: historicalManifest), 3)
         XCTAssertEqual(occurrences(of: ".testTarget(", in: manifestSource), 1)
         XCTAssertEqual(
             occurrences(
@@ -1835,7 +1856,7 @@ final class
         let descriptorStreamingBlock = try sourceSlice(
             checkpointSource,
             from: "    private static func compareSafetensorsStreaming(",
-            to: "    private static func compareComparatorControls(")
+            to: "    static func compareComparatorControls(")
         let descriptorStreamingAnchors = [
             "withVerifiedArtifactDescriptor(leftArtifact)",
             "withVerifiedArtifactDescriptor(rightArtifact)",
@@ -1866,10 +1887,36 @@ final class
             descriptorStreamingBlock.contains(
                 "containerSHA256 =="))
 
-        let executionSource = try source(
+        let fullExecutionSource = try source(
             at: repositoryRoot,
             relativePath:
                 "Sources/PrimeNativeDecoderTraining/PrimeNativeDecoderBSpecificNative300MTrajectoryCheckpointExecution.swift")
+        let currentLocalMarker = "// MARK: - Current-local, retained, three-process science"
+        XCTAssertEqual(occurrences(of: currentLocalMarker, in: fullExecutionSource), 1)
+        let currentLocalStart = try XCTUnwrap(fullExecutionSource.range(of: currentLocalMarker)?.lowerBound)
+        let executionSource = String(fullExecutionSource[..<currentLocalStart])
+        let currentLocalSource = String(fullExecutionSource[currentLocalStart...])
+        let currentBaseline = try sourceSlice(currentLocalSource,
+            from: "    static func runStage7Baseline(", to: "    static func runStage7Resume(")
+        let currentResume = try sourceSlice(currentLocalSource,
+            from: "    static func runStage7Resume(", to: "    static func retainedArtifactBindings(")
+        let currentVerify = try sourceSlice(currentLocalSource,
+            from: "    static func verifyRetainedStage7(", to: "private func currentLocalReloadSnapshot(")
+        let currentReload = try sourceSlice(currentLocalSource,
+            from: "private func currentLocalReloadSnapshot(", to: "private func currentLocalRequireBaselineControl(")
+        XCTAssertEqual(occurrences(of: "trajectoryRunUninterruptedClosure(", in: currentBaseline), 1)
+        XCTAssertEqual(occurrences(of: "trajectoryRunResumedClosure(", in: currentResume), 1)
+        XCTAssertEqual(occurrences(of: "trajectoryBuildCompleteComparisons(", in: currentResume), 1)
+        XCTAssertEqual(occurrences(of: ".comparePrivateComparatorsStreaming(", in: currentResume), 1)
+        XCTAssertEqual(occurrences(of: ".comparePrivateComparatorsStreaming(", in: currentVerify), 1)
+        XCTAssertEqual(occurrences(of: ".comparePrivateComparatorsStreaming(", in: currentLocalSource), 2)
+        XCTAssertEqual(occurrences(of: "try checkedEval(", in: currentReload), 1)
+        XCTAssertEqual(occurrences(of: "try checkedEval(", in: currentLocalSource), 1)
+        for forbidden in ["TrajectoryLauncherBindings(", "runSupervisor(",
+                          ".cleanupKnownPublishedSets(", ".beginEphemeralRun(",
+                          "PRIME_NATIVE_DECODER_NATIVE300M_TRAJECTORY_CHECKPOINT_EXECUTION_RECEIPT_V1="] {
+            XCTAssertFalse(currentLocalSource.contains(forbidden), forbidden)
+        }
         let executionAnchors = [
             "public static func runSupervisor()",
             "arguments[1] == workerArgument",
@@ -2363,73 +2410,31 @@ final class
             at: repositoryRoot,
             relativePath:
                 ".github/workflows/prime-active-root-quarantine.yml")
-        let trustedMainCompileJob = try sourceSlice(
-            workflowSource,
-            from: "  trusted-main-compile:\n",
-            to: "  trusted-main-stage7:\n")
-        let trustedMainStage7Start = try XCTUnwrap(
-            workflowSource.range(of: "  trusted-main-stage7:\n")?.lowerBound)
-        let trustedMainStage7Job = String(
-            workflowSource[trustedMainStage7Start ..< workflowSource.endIndex])
-        XCTAssertTrue(anchorsAppearInStrictOrder(
-            [
-                "  trusted-main-stage7:\n",
-                "    name: Reviewed main / Stage-7 Native-300M trajectory checkpoint",
-                "    if: github.event_name == 'push' && github.ref == 'refs/heads/main'",
-                "    needs: trusted-main-compile",
-                "    runs-on: macos-26",
-                "    timeout-minutes: 120",
-                "      - name: Record the immutable Stage-7 job budget epoch",
-                "      - name: Check out exact main for Stage-7",
-                "      - name: Fetch the exact Stage-7 private dependency without evaluating Prime",
-                "      - name: Reconstruct exact Stage-7 inputs and invoke the sole launcher",
-                "          xcodebuild \\",
-                "            -target Cmlx \\",
-                "            -configuration Debug \\",
-                "          bash .github/scripts/prime-ci-native-decoder-b-specific-native300m-trajectory-checkpoint-execution.sh",
-            ],
-            in: trustedMainStage7Job))
-        let stage7WorkflowAnchors = [
-            "umask 077",
-            "readonly epoch_file=\"$RUNNER_TEMP/prime-native-decoder-native300m-trajectory-checkpoint-execution-job.epoch\"",
-            "[[ ! -e \"$epoch_file\" && ! -L \"$epoch_file\" ]]",
-            "/bin/date '+%s' > \"$epoch_file\"",
-            "chmod 400 \"$epoch_file\"",
-            "\"$(stat -f %l \"$epoch_file\")\" == \"1\"",
-            "\"$(stat -f %u \"$epoch_file\")\" == \"$(id -u)\"",
-            "\"$(stat -f %Lp \"$epoch_file\")\" == \"400\"",
-            "\"$(stat -f %z \"$epoch_file\")\" == \"11\"",
-            "EXACT_REVISION: ${{ github.sha }}",
-            "PRIME_MLX_REVISION: d37885a278f1c37484a94d0f401a418735e66519",
-            "git -C ergentics-prime fetch --depth=1 --no-tags --no-write-fetch-head origin \"$EXACT_REVISION\"",
-            "https://github.com/Ergentics/ergentics-mlx-swift",
-            "unset GIT_CONFIG_COUNT GIT_CONFIG_KEY_0 GIT_CONFIG_VALUE_0",
-            "readonly numerics_revision=\"0c0290ff6b24942dadb83a929ffaaa1481df04a2\"",
-            "https://github.com/apple/swift-numerics",
-            "readonly metallib_root=\"$RUNNER_TEMP/prime-native-decoder-metallib\"",
-            "[[ \"$metallib_count\" == \"1\" ]]",
-        ]
-        XCTAssertTrue(criticalStaticContractHolds(
-            in: trustedMainStage7Job,
-            requiredAnchors: stage7WorkflowAnchors))
-        XCTAssertEqual(
-            occurrences(of: "      - name:", in: trustedMainStage7Job),
-            4)
-        XCTAssertEqual(
-            occurrences(
-                of:
-                    "bash .github/scripts/prime-ci-native-decoder-b-specific-native300m-trajectory-checkpoint-execution.sh",
-                in: workflowSource),
-            1)
-        XCTAssertFalse(trustedMainCompileJob.contains(
-            "prime-ci-native-decoder-b-specific-native300m-trajectory-checkpoint-execution.sh"))
-        XCTAssertEqual(occurrences(of: "xcodebuild", in: trustedMainStage7Job), 1)
-        XCTAssertEqual(occurrences(of: "swift test", in: trustedMainStage7Job), 0)
-        XCTAssertEqual(occurrences(of: "swift build", in: trustedMainStage7Job), 0)
-        XCTAssertFalse(trustedMainStage7Job.contains("actions/cache"))
-        XCTAssertFalse(trustedMainStage7Job.contains("upload-artifact"))
-        XCTAssertFalse(trustedMainStage7Job.contains("outputs:"))
-        XCTAssertFalse(trustedMainStage7Job.contains("needs.trusted-main-compile"))
+        // The spent hosted Stage-7 job is retired. Its launcher below stays
+        // checked as historical source; the current local process route does
+        // not reactivate or impersonate that hosted execution.
+        let jobsStart = try XCTUnwrap(workflowSource.range(of: "jobs:\n")?.upperBound)
+        let jobLines = workflowSource[jobsStart...].split(separator: "\n").map(String.init).filter {
+            $0.hasPrefix("  ") && !$0.hasPrefix("   ") && $0.hasSuffix(":")
+        }
+        XCTAssertEqual(jobLines, ["  active-root:", "  trusted-main-compile:"])
+        let activeRootJob = try sourceSlice(workflowSource,
+            from: "  active-root:\n", to: "  trusted-main-compile:\n")
+        let trustedMainCompileStart = try XCTUnwrap(workflowSource.range(of: "  trusted-main-compile:\n")?.lowerBound)
+        let trustedMainCompileJob = String(workflowSource[trustedMainCompileStart...])
+        XCTAssertEqual(occurrences(of: "    steps:", in: workflowSource), 2)
+        XCTAssertEqual(occurrences(of: "      - name:", in: activeRootJob), 5)
+        XCTAssertEqual(occurrences(of: "      - name:", in: trustedMainCompileJob), 5)
+        XCTAssertFalse(workflowSource.contains("trusted-main-stage7"))
+        // Historical explanatory echo text still names the script; its
+        // retired command must not be invoked by the current workflow.
+        XCTAssertFalse(workflowSource.contains("bash .github/scripts/prime-ci-native-decoder-b-specific-native300m-trajectory-checkpoint-execution.sh"))
+        XCTAssertFalse(workflowSource.contains("PrimeNativeDecoderCurrentLocal300MExecution"))
+        let retirementGuard = try source(at: repositoryRoot,
+            relativePath: ".github/scripts/prime-ci-active-root-quarantine.sh")
+        XCTAssertTrue(retirementGuard.contains(
+            #"&& "$(grep -Fxc -- '  trusted-main-stage7:' "$workflow_path")" == "0""#))
+        XCTAssertTrue(retirementGuard.contains("hosted quarantine workflow retirement job topology changed"))
 
         let launcherAnchors = [
             "readonly authority_closure_revision=\"300bad298bc9ff6f2752d1409639ff9e99318db6\"",
