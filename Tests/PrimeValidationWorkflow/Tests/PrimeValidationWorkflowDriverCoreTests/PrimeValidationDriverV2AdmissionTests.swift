@@ -8,6 +8,206 @@ import PrimeValidationWorkflowContracts
 import XCTest
 
 final class PrimeValidationDriverV2AdmissionTests: XCTestCase {
+    func testNativeShardParserDerivesSequentialFramingFromSelectionMode() throws {
+        typealias Native = PrimeValidationDriverV2NativeExecutionValidation
+        // Pure intent values keep this boundary regression independent of an
+        // in-progress source reseal; live source admission is not fabricated.
+        let roots = PrimeValidationDriverRootLayoutV2(
+            repositoryRoot: root(path: "/prime/repository", inode: 1),
+            companionRoot: root(path: "/prime/companion", inode: 2),
+            workspaceRoot: root(path: "/prime/workspace", inode: 3, mode: 0o700),
+            evidenceRoot: root(path: "/prime/evidence", inode: 4, mode: 0o700),
+            scratchRelativePath: "root-release-build", cacheRelativePath: "cache",
+            configRelativePath: "config", securityRelativePath: "security", clangModuleCacheRelativePath: "clang-module-cache",
+            homeRelativePath: "home", swiftPMModuleCacheRelativePath: "swiftpm-module-cache",
+            temporaryRelativePath: "temporary", outputRelativePath: "output")
+        let metal = PrimeValidationRequiredMetallibV2(
+            relativePath: "root-release-build/arm64-apple-macosx/release/mlx-swift_Cmlx.bundle/Contents/Resources/default.metallib",
+            content: content("metallib"))
+        let intent = PrimeValidationRunIntentV2(runID: "run-admission", roots: roots,
+            sourceSnapshot: content("source-fixture"), packageLock: content("lock-fixture"),
+            driverExecutable: .init(absolutePath: "/prime/bin/admission-driver", content: content("driver")),
+            swiftExecutable: .init(absolutePath: "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift",
+                content: content("swift-frontend")), companionCommit: PrimeValidationRunIntentV2.requiredCompanionCommit,
+            requiredPinnedMetallib: metal, baseline: .init(),
+            phaseBudgets: PrimeValidationExecutorAdmissionPolicyV2.frozenV1.phaseBudgets,
+            environmentPolicy: .make(roots: roots, pinnedMetallib: metal),
+            optionalSkipPolicySHA256: try PrimeValidationOptionalSkipPolicy.identitySHA256())
+        let f = (intent: intent, toolchain: toolchain(intent: intent))
+        let empty = Data(), predecessor = String(repeating: "b", count: 64)
+        func object<T: Encodable>(_ value: T) throws -> [String: Any] {
+            try XCTUnwrap(JSONSerialization.jsonObject(with: PrimeCanonicalJSON.encode(value)) as? [String: Any])
+        }
+        func decode<T: Decodable>(_ type: T.Type, _ value: [String: Any]) throws -> T {
+            try JSONDecoder().decode(type, from: JSONSerialization.data(withJSONObject: value))
+        }
+        func artifact(_ path: String, _ data: Data) -> PrimeArtifactBinding {
+            .init(relativePath: path, sha256: PrimeSHA256.hexDigest(of: data), byteCount: UInt64(data.count), purpose: .immutableData)
+        }
+        func journal<T: Codable>(_ type: T.Type, _ path: String, _ fields: [String: Any]) throws -> PrimeArtifactBinding {
+            artifact(path, try PrimeCanonicalJSON.encode(decode(type, fields)))
+        }
+        let x = try Data(contentsOf: XCTUnwrap(Bundle.module.url(forResource: "xctest", withExtension: "list")))
+        let s = try Data(contentsOf: XCTUnwrap(Bundle.module.url(forResource: "swift-testing", withExtension: "list")))
+        let inventory = try PrimeValidationInventory.parse(xctestList: x, swiftTestingList: s)
+        let shards = try PrimeValidationShardPlannerV2.plan(inventory: inventory, runID: f.intent.runID)
+        let invocations = try shards.map { try PrimeValidationInvocationFactoryV2.shard(intent: f.intent, shard: $0) }
+        // Pure native-boundary fixture: the full original frozen schedule and
+        // valid toolchain/intent are real value validators. The F artifact
+        // placeholders below are deliberately not an admitted F receipt or a
+        // native capability; validateShard consumes none of those fields.
+        let plan = PrimeValidationExecutionPlanV2(runID: f.intent.runID,
+            intentSHA256: try f.intent.identitySHA256(), buildReceiptSHA256: predecessor,
+            inventoryReceiptSHA256: predecessor, baseline: f.intent.baseline, inventory: inventory,
+            inventorySHA256: try inventory.identitySHA256(), maximumReferenceShardActiveNanoseconds: 1_800_000_000_000,
+            maximumCandidateShardActiveNanoseconds: 1_800_000_000_000, shards: shards, shardInvocations: invocations)
+        let planHash = PrimeSHA256.hexDigest(of: try PrimeCanonicalJSON.encode(plan))
+        let launch = try PrimeValidationSwiftPackageAdmissionLaunchPlanV2.make(intent: f.intent, toolchain: f.toolchain).launches[1]
+        let executable = f.toolchain.swiftPackageExecutable
+        func stream(_ data: Data, _ inode: UInt64) -> [String: Any] {
+            ["reachedEOF": true, "overflowed": false, "workerFinished": true, "descriptorsClosed": true,
+             "readErrorNumber": 0, "writeErrorNumber": 0, "finalizationErrorNumber": 0, "closeErrorNumber": 0,
+             "outputMetadataObserved": true, "outputPermissionMode": 0o444,
+             "outputDeviceID": f.intent.roots.evidenceRoot.deviceID, "outputInode": inode,
+             "totalByteCount": data.count, "capturedByteCount": data.count, "outputByteCount": data.count,
+             "outputSHA256": PrimeSHA256.hexDigest(of: data), "terminalReason": "end_of_file"]
+        }
+        func process(_ invocation: PrimeValidationInvocationV2, stdout: Data, earlier: Bool = false) throws
+            -> PrimeValidationDriverV2BuildProcessObservation {
+            try decode(PrimeValidationDriverV2BuildProcessObservation.self, [
+                "logicalArgumentZero": "swift-test", "physicalArgumentZero": launch.physicalArgumentZero(),
+                "arguments": PrimeValidationDriverV2SwiftPMPhysicalArguments.testabilityPrefix + Array(invocation.arguments.dropFirst()),
+                "orderedEnvironment": launch.orderedCompleteReplacementEnvironment.map { [$0.key, $0.value] },
+                "workingDirectoryAbsolutePath": f.intent.roots.repositoryRoot.absolutePath,
+                "workingDirectoryDeviceID": f.intent.roots.repositoryRoot.deviceID,
+                "workingDirectoryInode": f.intent.roots.repositoryRoot.inode,
+                "executableAbsolutePath": executable.canonicalAbsolutePath, "executableDeviceID": executable.deviceID,
+                "executableInode": executable.inode, "executableByteCount": executable.content.byteCount,
+                "executableSHA256": executable.content.sha256, "mappedImageJoined": true,
+                "exactSuspendedWorkingDirectoryJoin": true, "processIdentifier": earlier ? 100 : 101,
+                "sessionIdentifier": 99, "parentProcessIdentifier": 99, "processGroupIdentifier": earlier ? 100 : 101,
+                "appliedSpawnFlags": 16_526, "spawnReturnCode": 0,
+                "deadlineStartedAtUptimeNanoseconds": 1000, "deadlineExpiresAtUptimeNanoseconds": UInt64(1_800_000_001_000),
+                "spawnReturnedUptimeNanoseconds": earlier ? 1050 : 1400,
+                "resumedAtUptimeNanoseconds": earlier ? 1100 : 1500,
+                "deathObservedUptimeNanoseconds": earlier ? 1200 : 1600,
+                "waitReturnedUptimeNanoseconds": earlier ? 1300 : 1700,
+                "preReapProcessGroupMemberIdentifiers": [earlier ? 100 : 101],
+                "requestedWaitProcessIdentifier": earlier ? 100 : 101, "returnedWaitProcessIdentifier": earlier ? 100 : 101,
+                "exactReapCount": 1, "cleanupInitiated": false, "waitOptions": 0, "rawWaitStatus": 0,
+                "exitStatus": 0, "terminationSignal": 0, "exitedNormally": true, "coreDumped": false,
+                "processGroupEmptyAfterReap": true, "standardOutput": stream(stdout, 201), "standardError": stream(empty, 202)])
+        }
+        let placeholderProcess = try process(invocations[0], stdout: empty)
+        let placeholderChild = try Native.makeChild(invocation: invocations[0], primary: .standardOutput,
+            process: placeholderProcess, intervalStartedAt: 1000, matchedCount: 0,
+            stdout: .init(name: "standard_output", relativePath: invocations[0].standardOutputRelativePath, content: .init(data: empty)),
+            stderr: .init(name: "standard_error", relativePath: invocations[0].standardErrorRelativePath, content: .init(data: empty)), supervisorPID: 99)
+        let tree = try PrimeValidationBundleTreeBindingV2.make(entries: [
+            .init(relativePath: "fixture", kind: .regularFile, mode: 0o444, content: .init(data: Data([1])))])
+        let receipt = PrimeValidationBuildReceiptV2(runID: f.intent.runID, intentSHA256: try f.intent.identitySHA256(),
+            invocation: invocations[0], observedChild: placeholderChild, sourceSnapshotAfterBuild: f.intent.sourceSnapshot,
+            packageLockAfterBuild: f.intent.packageLock, pinnedMetallibAfterBuild: f.intent.requiredPinnedMetallib,
+            testBundle: tree, activeNanoseconds: 1)
+        let zeroMetadata = Dictionary(uniqueKeysWithValues: ["deviceID", "inode", "mode", "ownerUserID", "ownerGroupID",
+            "linkCount", "specialDeviceID", "byteCount", "allocatedBlocks", "blockSize", "flags", "generation",
+            "modificationSeconds", "modificationNanoseconds", "statusChangeSeconds", "statusChangeNanoseconds",
+            "birthSeconds", "birthNanoseconds"].map { ($0, 0) })
+        let artifacts = try decode(PrimeValidationDriverV2BuildArtifactsObservation.self, [
+            "testBundleRelativePath": "fixture", "testBundleMetadata": zeroMetadata,
+            "capturedBundleRelativePath": "fixture", "bundleEntries": [], "metallibRelativePath": "fixture",
+            "metallibByteCount": 0, "metallibSHA256": predecessor, "metallibMetadata": zeroMetadata,
+            "capturedMetallib": object(artifact("fixture", empty)), "artifactRootIdentity": [
+                "deviceID": 0, "inode": 0, "ownerUserID": 0, "ownerGroupID": 0, "actualMode": 0, "linkCount": 0,
+                "modificationSeconds": 0, "modificationNanoseconds": 0, "statusChangeSeconds": 0, "statusChangeNanoseconds": 0],
+            "immutableArtifactBindings": [], "capturedArtifactMetadata": [:], "captureStartedAtUptimeNanoseconds": 0,
+            "captureCompletedAtUptimeNanoseconds": 0, "exclusivePublicationObserved": false,
+            "durableSynchronizationObserved": false, "sourceNamesAndDescriptorsRejoined": false])
+        let pinned = try decode(PrimeValidationDriverV2PinnedBundleStagingObservation.self, [
+            "input": ["files": []], "destinations": [], "stagingStartedAtUptimeNanoseconds": 0,
+            "stagingCompletedAtUptimeNanoseconds": 0, "exclusivePublicationObserved": false, "durableSynchronizationObserved": false])
+        let build = PrimeValidationDriverV2BuildDurableBindingEnvelopeV1(schemaVersion: 1,
+            predecessorRawTerminalSHA256: predecessor, predecessorSupervisorPID: 99, receipt: receipt,
+            toolchain: f.toolchain, process: placeholderProcess, artifacts: artifacts, pinnedBundle: pinned)
+        let schedule = try PrimeValidationDriverV2ClosedShardSchedule.observeFrozenLists(runID: f.intent.runID, xctestData: x, swiftTestingData: s)
+        let planning = try decode(PrimeValidationDriverV2ExecutionPlanObservation.self, [
+            "canonicalIntentData": PrimeCanonicalJSON.encode(f.intent).base64EncodedString(), "declaredExecutionGoScopeData": empty.base64EncodedString(),
+            "planningStartBinding": object(artifact("phase-04-start.json", empty)),
+            "predecessorInventoryBinding": object(artifact("binding.json", empty)),
+            "xctestListBinding": object(artifact("xctest.list", x)), "swiftTestingListBinding": object(artifact("swift-testing.list", s)),
+            "xctestListData": x.base64EncodedString(), "swiftTestingListData": s.base64EncodedString(), "schedule": object(schedule),
+            "expectedOriginalExecutionPlanData": PrimeCanonicalJSON.encode(plan).base64EncodedString(),
+            "sourceSnapshotSHA256": f.intent.sourceSnapshot.sha256, "packageResolvedBinding": object(artifact("Package.resolved", empty)),
+            "planningStartedAtUptimeNanoseconds": 900, "planningExpiresAtUptimeNanoseconds": UInt64(30_000_000_900)])
+        func raw(_ index: Int, _ stdout: Data, earlier: Bool = false) throws -> PrimeValidationDriverV2ShardRawObservation {
+            let shard = shards[index], root = Native.shardRoot(shard), p = try process(invocations[index], stdout: stdout, earlier: earlier)
+            let prestart = try journal(PrimeValidationDriverV2ExecutionPrestartV1.self, root + "/prestart.json", [
+                "schema": "prime_driver_v2_gate_h_shard_prestart_v1", "executionPlanSHA256": planHash,
+                "shardID": shard.shardID, "runID": f.intent.runID, "ordinal": index + 1, "role": "shard",
+                "predecessorSHA256": predecessor, "deadlineStartedAtUptimeNanoseconds": p.deadlineStartedAtUptimeNanoseconds,
+                "deadlineExpiresAtUptimeNanoseconds": p.deadlineExpiresAtUptimeNanoseconds,
+                "executableAbsolutePath": p.executableAbsolutePath, "executableSHA256": p.executableSHA256,
+                "logicalArgumentZero": p.logicalArgumentZero, "physicalArgumentZero": XCTUnwrap(p.physicalArgumentZero),
+                "arguments": p.arguments, "orderedEnvironment": p.orderedEnvironment,
+                "workingDirectoryAbsolutePath": p.workingDirectoryAbsolutePath])
+            let start = try journal(PrimeValidationDriverV2InventoryStartV1.self, root + "/start.json", [
+                "schema": "prime_driver_v2_gate_h_shard_start_v1", "role": "shard", "prestartSHA256": prestart.sha256,
+                "processIdentifier": p.processIdentifier, "sessionIdentifier": p.sessionIdentifier,
+                "processGroupIdentifier": p.processGroupIdentifier, "appliedSpawnFlags": p.appliedSpawnFlags,
+                "spawnReturnedUptimeNanoseconds": p.spawnReturnedUptimeNanoseconds,
+                "mappedExecutablePathTelemetry": p.executableAbsolutePath, "exactSuspendedWorkingDirectoryJoin": true])
+            let terminal = try journal(PrimeValidationDriverV2InventoryTerminalV1.self, root + "/terminal.json", [
+                "schema": "prime_driver_v2_gate_h_shard_terminal_v1", "role": "shard", "startSHA256": start.sha256, "process": object(p)])
+            return try decode(PrimeValidationDriverV2ShardRawObservation.self, ["shard": object(schedule.shards[index]),
+                "executionPlanSHA256": planHash, "process": object(p), "prestartBinding": object(prestart),
+                "startBinding": object(start), "terminalBinding": object(terminal),
+                "standardOutputBinding": object(artifact(root + "/stdout.log", stdout)),
+                "standardErrorBinding": object(artifact(root + "/stderr.log", empty)),
+                "standardOutputData": stdout.base64EncodedString(), "standardErrorData": empty.base64EncodedString()])
+        }
+        func transcript(_ ids: [PrimeValidationTestID], suite: String) -> Data {
+            var lines = ["Test Suite '\(suite)' started at 2026-09-08 00:00:00.000"]
+            for id in ids {
+                let parts = id.rawValue.split(separator: "/", maxSplits: 1)
+                let prefix = "Test Case '-[\(parts[0]) \(parts[1])]'"
+                lines += [prefix + " started.", prefix + " passed (0.001 seconds)."]
+            }
+            lines += ["Test Suite '\(suite)' passed at 2026-09-08 00:00:01.000",
+                      "Executed \(ids.count) tests, with 0 tests skipped and 0 failures (0 unexpected) in 0.001 (0.001) seconds"]
+            return Data((lines.joined(separator: "\n") + "\n").utf8)
+        }
+        for arm in [PrimeValidationComparisonArmV2.reference, .candidate] {
+            let index = try XCTUnwrap(shards.firstIndex { $0.key.arm == arm && $0.key.lane == .sequentialXCTest })
+            XCTAssertGreaterThan(index, 0)
+            let previous = try raw(index - 1, empty, earlier: true)
+            let selected = arm == .candidate, expected = selected ? "Selected tests" : "All tests"
+            XCTAssertEqual(shards[index].selectionMode, selected ? .exactFilter : .allInventory)
+            XCTAssertEqual(invocations[index].arguments.contains("--filter"), selected)
+            let bytes = transcript(shards[index].testIDs, suite: expected)
+            func validate(_ value: PrimeValidationDriverV2ShardRawObservation) throws -> PrimeValidationObservedChildReceiptV2 {
+                try Native.validateShard(value, index: index, intent: f.intent, build: build, plan: plan,
+                    planning: planning, previous: previous, predecessorSHA256: predecessor)
+            }
+            let original = try raw(index, bytes), accepted = try validate(original)
+            XCTAssertEqual(accepted.process.matchedTestCount, shards[index].testIDs.count)
+            XCTAssertEqual(accepted.invocation, invocations[index])
+            // Rebuild all raw/process/journal hashes for alternate frames so
+            // these failures reach the native parser handoff, not a stale hash.
+            for badBytes in [transcript(shards[index].testIDs, suite: selected ? "All tests" : "Selected tests"),
+                             transcript(Array(shards[index].testIDs.dropLast()), suite: expected), bytes + Data([27])] {
+                XCTAssertThrowsError(try validate(raw(index, badBytes)))
+            }
+            var wrongHash = try object(original)
+            wrongHash["standardOutputData"] = (bytes + Data([10])).base64EncodedString()
+            XCTAssertThrowsError(try validate(decode(PrimeValidationDriverV2ShardRawObservation.self, wrongHash)))
+            for (key, value) in [("exactReapCount", 2), ("sessionIdentifier", 98)] {
+                var changed = try object(original), p = try object(original.process)
+                p[key] = value; changed["process"] = p
+                XCTAssertThrowsError(try validate(decode(PrimeValidationDriverV2ShardRawObservation.self, changed)))
+            }
+        }
+    }
+
     func testSealedTopologyMatchesActualSourceClosure() throws {
         let files = try Self.sourceFixtureResult.get().snapshot.files
         let header = PrimeSwiftSourceProvenance.embeddedProvenanceRelativePath

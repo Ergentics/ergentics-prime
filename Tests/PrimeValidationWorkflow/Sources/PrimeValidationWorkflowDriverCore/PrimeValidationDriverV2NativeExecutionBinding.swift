@@ -371,7 +371,7 @@ package enum PrimeValidationDriverV2NativeExecutionValidation {
         else { resultRaw = try bound(raw.resultBinding!, name: "result",
             path: raw.resultBinding!.relativePath, data: raw.resultData!) }
         _ = try PrimeValidationDriverV2ParsedRawResults.parse(lane: shard.key.lane,
-            expectedIDs: shard.testIDs, raw: resultRaw)
+            expectedIDs: shard.testIDs, selectionMode: shard.selectionMode, raw: resultRaw)
         let child = try makeChild(invocation: invocation, primary: primary, process: p,
             intervalStartedAt: intervalStart, matchedCount: shard.testIDs.count,
             stdout: stdout.binding, stderr: stderr.binding, supervisorPID: build.predecessorSupervisorPID,
