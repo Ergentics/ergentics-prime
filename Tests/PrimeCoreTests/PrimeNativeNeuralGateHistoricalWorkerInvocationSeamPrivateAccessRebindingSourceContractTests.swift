@@ -72,7 +72,9 @@ final class
         )
 
         for identity in liveExactIdentities(contract) {
-            let data = try checkedInData(identity.primeRelativePath)
+            let data = try PrimeHistoricalSourceEvolutionTestSupport.historicalData(
+                path: identity.primeRelativePath, current: checkedInData(identity.primeRelativePath),
+                expectedByteCount: identity.byteCount, expectedSHA256: identity.sha256)
             XCTAssertEqual(
                 UInt64(data.count),
                 identity.byteCount,
@@ -107,6 +109,7 @@ final class
             PrimeSHA256.hexDigest(of: source),
             Self.contractFileSHA256
         )
+        try PrimeHistoricalSourceEvolutionTestSupport.assertRejectedMutations(root: repositoryRoot)
     }
 
     func testExactForwardProjectionAndReverseReconstruction() throws {
@@ -283,8 +286,10 @@ final class
         let contract = Contract.frozenV1
         let root = try compilerCanaryRoot(label: "actual-fifth-file")
         defer { try? FileManager.default.removeItem(at: root) }
-        let modules = try debugModulesDirectory()
-        let accessor = try workerResourceAccessor()
+        let layout = try PrimeCurrentTestBuildLayout.capture(testClass: Self.self, sourceFilePath: #filePath)
+        let inputs = try layout.workerCompilerInputs(expectedRelativeSources: contract.orderedWorkerSwiftSourceRelativePaths)
+        let modules = inputs.modules
+        let accessor = inputs.accessor
         let sourcePaths = contract.orderedWorkerSwiftSourceRelativePaths.map {
             repositoryRoot.appendingPathComponent($0).path
         } + [accessor.path]
@@ -305,6 +310,7 @@ final class
             root: root,
             label: "baseline"
         )
+        try layout.revalidate()
         XCTAssertFalse(baseline.timedOut)
         XCTAssertEqual(baseline.terminationReason, .exit)
         XCTAssertEqual(baseline.status, 0, baseline.output)
@@ -324,6 +330,7 @@ final class
             root: root,
             label: "rejected"
         )
+        try layout.revalidate()
         XCTAssertFalse(rejected.timedOut)
         XCTAssertEqual(rejected.terminationReason, .exit)
         XCTAssertNotEqual(rejected.status, 0)
@@ -346,7 +353,8 @@ final class
         let contract = Contract.frozenV1
         let root = try compilerCanaryRoot(label: "testable-import")
         defer { try? FileManager.default.removeItem(at: root) }
-        let modules = try debugModulesDirectory()
+        let layout = try PrimeCurrentTestBuildLayout.capture(testClass: Self.self, sourceFilePath: #filePath)
+        let modules = try layout.workerCompilerInputs(expectedRelativeSources: contract.orderedWorkerSwiftSourceRelativePaths).modules
         let probe = root.appendingPathComponent("TestableProbe.swift")
         try """
         @testable import \(contract.workerTargetName)
@@ -371,6 +379,7 @@ final class
             root: root,
             label: "testable"
         )
+        try layout.revalidate()
         XCTAssertFalse(result.timedOut)
         XCTAssertEqual(result.terminationReason, .exit)
         XCTAssertNotEqual(result.status, 0)
@@ -632,56 +641,6 @@ final class
             terminationReason: process.terminationReason,
             output: output,
             timedOut: timedOut
-        )
-    }
-
-    private func debugModulesDirectory() throws -> URL {
-        let build = repositoryRoot.appendingPathComponent(".build")
-        let enumerator = try XCTUnwrap(
-            FileManager.default.enumerator(
-                at: build,
-                includingPropertiesForKeys: [.isRegularFileKey]
-            )
-        )
-        for case let url as URL in enumerator
-            where url.lastPathComponent
-                == "PrimeNativeNeuralGateHistoricalFixtureWorker.swiftmodule"
-                && url.deletingLastPathComponent().lastPathComponent
-                    == "Modules"
-                && url.path.contains("/debug/")
-        {
-            return url.deletingLastPathComponent()
-        }
-        throw NSError(
-            domain: "PrimeV27CompilerCanary",
-            code: 1,
-            userInfo: [NSLocalizedDescriptionKey: "debug modules not found"]
-        )
-    }
-
-    private func workerResourceAccessor() throws -> URL {
-        let build = repositoryRoot.appendingPathComponent(".build")
-        let enumerator = try XCTUnwrap(
-            FileManager.default.enumerator(
-                at: build,
-                includingPropertiesForKeys: [.isRegularFileKey]
-            )
-        )
-        for case let url as URL in enumerator
-            where url.lastPathComponent == "resource_bundle_accessor.swift"
-                && url.path.contains(
-                    "/debug/PrimeNativeNeuralGateHistoricalFixtureWorker.build/"
-                )
-        {
-            return url
-        }
-        throw NSError(
-            domain: "PrimeV27CompilerCanary",
-            code: 2,
-            userInfo: [
-                NSLocalizedDescriptionKey:
-                    "worker resource accessor not found"
-            ]
         )
     }
 

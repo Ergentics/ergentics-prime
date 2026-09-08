@@ -67,9 +67,20 @@ final class PrimePinnedMLXMetallibTests: XCTestCase {
         throws
     {
         let fixture = try makeFixture()
+        // A real alternate bundle must still reject before publication.
+        // The positive fixture call below proves the fixture itself is valid.
+        let alternateBundle = try PinnedMLXMetallibTestSupport.sourceMetallibURL()
+        XCTAssertThrowsError(
+            try PrimePinnedMLXMetallib.captureSibling(
+                of: fixture.executable,
+                into: fixture.artifactRoot,
+                runtimeRole: .calibration,
+                loaderBundleCandidates: [alternateBundle]
+            )
+        )
         let binding =
             try PrimePinnedMLXMetallib
-                .captureSibling(
+                .captureFixtureSibling(
                     of: fixture.executable,
                     into: fixture.artifactRoot
                 )
@@ -116,7 +127,7 @@ final class PrimePinnedMLXMetallibTests: XCTestCase {
         let infoFixture = try makeFixture()
         let infoBinding =
             try PrimePinnedMLXMetallib
-                .captureSibling(
+                .captureFixtureSibling(
                     of: infoFixture.executable,
                     into: infoFixture.artifactRoot
                 )
@@ -481,7 +492,7 @@ final class PrimePinnedMLXMetallibTests: XCTestCase {
         let calibrationFixture = try makeFixture()
         let calibrationBinding =
             try PrimePinnedMLXMetallib
-                .captureSibling(
+                .captureFixtureSibling(
                     of:
                         calibrationFixture
                         .executable,
@@ -510,7 +521,7 @@ final class PrimePinnedMLXMetallibTests: XCTestCase {
         let restoreFixture = try makeFixture()
         let restoreBinding =
             try PrimePinnedMLXMetallib
-                .captureSibling(
+                .captureFixtureSibling(
                     of: restoreFixture.executable,
                     into:
                         restoreFixture.artifactRoot,
@@ -542,7 +553,7 @@ final class PrimePinnedMLXMetallibTests: XCTestCase {
         let typedRestoreFixture = try makeFixture()
         let typedRestoreBinding =
             try PrimePinnedMLXMetallib
-                .captureSibling(
+                .captureFixtureSibling(
                     of:
                         typedRestoreFixture
                         .executable,
@@ -588,7 +599,7 @@ final class PrimePinnedMLXMetallibTests: XCTestCase {
         )
         let continuationBinding =
             try PrimePinnedMLXMetallib
-                .captureSibling(
+                .captureFixtureSibling(
                     of: continuationFixture.executable,
                     into:
                         continuationFixture.artifactRoot,
@@ -642,7 +653,7 @@ final class PrimePinnedMLXMetallibTests: XCTestCase {
         }
         XCTAssertThrowsError(
             try PrimePinnedMLXMetallib
-                .captureSibling(
+                .captureFixtureSibling(
                     of: fixture.executable,
                     into: fixture.artifactRoot
                 )
@@ -662,7 +673,7 @@ final class PrimePinnedMLXMetallibTests: XCTestCase {
         }
         XCTAssertThrowsError(
             try PrimePinnedMLXMetallib
-                .captureSibling(
+                .captureFixtureSibling(
                     of: infoFixture.executable,
                     into:
                         infoFixture.artifactRoot
@@ -686,7 +697,7 @@ final class PrimePinnedMLXMetallibTests: XCTestCase {
             )
             XCTAssertThrowsError(
                 try PrimePinnedMLXMetallib
-                    .captureSibling(
+                    .captureFixtureSibling(
                         of: fixture.executable,
                         into: fixture.artifactRoot
                     )
@@ -700,7 +711,7 @@ final class PrimePinnedMLXMetallibTests: XCTestCase {
             )
             XCTAssertThrowsError(
                 try PrimePinnedMLXMetallib
-                    .captureSibling(
+                    .captureFixtureSibling(
                         of: fixture.executable,
                         into: fixture.artifactRoot
                     )
@@ -721,7 +732,7 @@ final class PrimePinnedMLXMetallibTests: XCTestCase {
             )
             XCTAssertThrowsError(
                 try PrimePinnedMLXMetallib
-                    .captureSibling(
+                    .captureFixtureSibling(
                         of: fixture.executable,
                         into: fixture.artifactRoot
                     )
@@ -734,7 +745,7 @@ final class PrimePinnedMLXMetallibTests: XCTestCase {
             )
             XCTAssertThrowsError(
                 try PrimePinnedMLXMetallib
-                    .captureSibling(
+                    .captureFixtureSibling(
                         of: fixture.executable,
                         into: fixture.artifactRoot
                     )
@@ -747,7 +758,7 @@ final class PrimePinnedMLXMetallibTests: XCTestCase {
         try addExtendedACL(at: fixture.metallib)
         XCTAssertThrowsError(
             try PrimePinnedMLXMetallib
-                .captureSibling(
+                .captureFixtureSibling(
                     of: fixture.executable,
                     into: fixture.artifactRoot
                 )
@@ -765,7 +776,7 @@ final class PrimePinnedMLXMetallibTests: XCTestCase {
             try Data("extra".utf8).write(to: extra)
             XCTAssertThrowsError(
                 try PrimePinnedMLXMetallib
-                    .captureSibling(
+                    .captureFixtureSibling(
                         of: fixture.executable,
                         into: fixture.artifactRoot
                     )
@@ -788,7 +799,7 @@ final class PrimePinnedMLXMetallibTests: XCTestCase {
             )
             XCTAssertThrowsError(
                 try PrimePinnedMLXMetallib
-                    .captureSibling(
+                    .captureFixtureSibling(
                         of: fixture.executable,
                         into: fixture.artifactRoot
                     ),
@@ -811,7 +822,7 @@ final class PrimePinnedMLXMetallibTests: XCTestCase {
         }
         XCTAssertThrowsError(
             try PrimePinnedMLXMetallib
-                .captureSibling(
+                .captureFixtureSibling(
                     of: fixture.executable,
                     into: fixture.artifactRoot
                 )
@@ -848,7 +859,7 @@ final class PrimePinnedMLXMetallibTests: XCTestCase {
             )
             XCTAssertThrowsError(
                 try PrimePinnedMLXMetallib
-                    .captureSibling(
+                    .captureFixtureSibling(
                         of: fixture.executable,
                         into: fixture.artifactRoot
                     )
@@ -872,7 +883,7 @@ final class PrimePinnedMLXMetallibTests: XCTestCase {
         )
         XCTAssertNoThrow(
             try PrimePinnedMLXMetallib
-                .captureSibling(
+                .captureFixtureSibling(
                     of: equalityFixture.executable,
                     into:
                         equalityFixture.artifactRoot
@@ -886,7 +897,7 @@ final class PrimePinnedMLXMetallibTests: XCTestCase {
         let fixture = try makeFixture()
         let binding =
             try PrimePinnedMLXMetallib
-                .captureSibling(
+                .captureFixtureSibling(
                     of: fixture.executable,
                     into: fixture.artifactRoot
                 )
@@ -1192,5 +1203,20 @@ final class PrimePinnedMLXMetallibTests: XCTestCase {
                 POSIXErrorCode(rawValue: errno)!
             )
         }
+    }
+}
+
+// These are prospective fake-executable fixtures, independent of the XCTest
+// host's actual MLX bundle. Keep all other runtime checks and assertions live.
+private extension PrimePinnedMLXMetallib {
+    static func captureFixtureSibling(
+        of executable: URL,
+        into artifacts: PrimeArtifactRoot,
+        runtimeRole: PrimeMLXRuntimeRole = .calibration
+    ) throws -> PrimePinnedMLXMetallibBinding {
+        try captureSibling(
+            of: executable, into: artifacts, runtimeRole: runtimeRole,
+            loaderBundleCandidates: []
+        )
     }
 }

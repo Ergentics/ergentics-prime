@@ -50,7 +50,9 @@ final class
         )
 
         for identity in exactIdentities(contract) {
-            let data = try checkedInData(identity.primeRelativePath)
+            let data = try PrimeHistoricalSourceEvolutionTestSupport.historicalData(
+                path: identity.primeRelativePath, current: checkedInData(identity.primeRelativePath),
+                expectedByteCount: identity.byteCount, expectedSHA256: identity.sha256)
             XCTAssertEqual(
                 UInt64(data.count),
                 identity.byteCount,

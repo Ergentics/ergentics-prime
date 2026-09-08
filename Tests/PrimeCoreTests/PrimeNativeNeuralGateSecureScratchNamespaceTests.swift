@@ -1028,17 +1028,16 @@ final class PrimeNativeNeuralGateSecureScratchNamespaceTests:
     private func openPackageRoot()
         throws -> Int32
     {
-        let root =
-            URL(
-                fileURLWithPath: #filePath
-            )
-            .deletingLastPathComponent()
-            .deletingLastPathComponent()
-            .deletingLastPathComponent()
-            .standardizedFileURL
+        // Keep the compiler's physical source path. Foundation standardization
+        // can spell /private/tmp as /tmp, which O_NOFOLLOW_ANY must reject.
+        let rootPath = "/" + #filePath.split(separator: "/").dropLast(3).joined(separator: "/")
+        guard try PrimeSecureChildPath.canonicalPath(rootPath) == rootPath else {
+            throw PrimeNativeNeuralGateSecureExternalChildCaptureError
+                .rejected("scratch_test_source_path")
+        }
         let descriptor =
             Darwin.open(
-                root.path,
+                rootPath,
                 O_RDONLY
                     | O_DIRECTORY
                     | O_NOFOLLOW_ANY

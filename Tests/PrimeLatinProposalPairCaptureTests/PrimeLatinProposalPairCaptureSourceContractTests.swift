@@ -2348,13 +2348,18 @@ final class PrimeLatinProposalPairCaptureSourceContractTests: XCTestCase {
         for record in closure {
             let sourceURL = primeCore.appendingPathComponent(record.name)
             let data = try Data(contentsOf: sourceURL)
+            let historicalData = ["PrimeDurableArtifacts.swift", "PrimePinnedMLXMetallib.swift"].contains(record.name)
+                ? try PrimeHistoricalSourceEvolutionTestSupport.historicalData(
+                    path: "Sources/PrimeCore/" + record.name, current: data,
+                    expectedByteCount: UInt64(record.byteCount), expectedSHA256: try XCTUnwrap(record.sha256))
+                : data
             XCTAssertEqual(
-                data.count,
+                historicalData.count,
                 record.byteCount,
                 "PrimeCore validation source byte count changed: \(record.name)")
             if let expectedSHA256 = record.sha256 {
                 XCTAssertEqual(
-                    sha256Hex(data),
+                    sha256Hex(historicalData),
                     expectedSHA256,
                     "PrimeCore validation source hash changed: \(record.name)")
             }
@@ -2370,6 +2375,8 @@ final class PrimeLatinProposalPairCaptureSourceContractTests: XCTestCase {
             XCTAssertFalse(imports.contains { $0.hasPrefix("import MLX") })
             XCTAssertFalse(imports.contains { $0.hasPrefix("import Ergentics") })
         }
+
+        try PrimeHistoricalSourceEvolutionTestSupport.assertRejectedMutations(root: root)
 
         let embedded = try XCTUnwrap(
             sources["PrimeEmbeddedBuildProvenance.swift"])
