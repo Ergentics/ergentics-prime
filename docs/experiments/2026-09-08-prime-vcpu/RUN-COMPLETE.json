@@ -1,0 +1,15 @@
+{
+  "status": "completed",
+  "actualCounts": {
+    "models": 2,
+    "cases": 160,
+    "nativeModelForwards": 720,
+    "guestVMInstances": 160,
+    "controllerProcesses": 20,
+    "guestRunEntries": 880,
+    "guestCommittedPredictions": 720
+  },
+  "modelTrainingPerformed": false,
+  "modelWeightsInGuest": false,
+  "execution": "guest_controls_requests_and_feedback;host_Swift_Metal_inference"
+}

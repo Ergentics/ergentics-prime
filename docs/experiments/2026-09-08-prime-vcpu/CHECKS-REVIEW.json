@@ -1,0 +1,687 @@
+{
+  "status": "PASS",
+  "scope": "Independent receipt/source readback of six actual deterministic bridge fixtures, four expected input/admission rejections and preserved pilot controls. No model or guest was run by this reviewer.",
+  "rawCopyBindings": {
+    "files": 90,
+    "totalBytes": 821499,
+    "allMatchOriginalTaskEvidence": true,
+    "bindings": [
+      {
+        "path": "Mechanics/build.py",
+        "byteCount": 4799,
+        "sha256": "b95b4d3f4709d69f67d68e1c6db152e7432eee051930700b53df2da47e8299d0"
+      },
+      {
+        "path": "Mechanics/build01/Mechanics.o",
+        "byteCount": 12864,
+        "sha256": "9c27507b41723f0d141d4a9b839fbf8b7c69d6b9cf6857e8ed837e7d7608366b"
+      },
+      {
+        "path": "Mechanics/build01/PrimeGuestMechanics",
+        "byteCount": 90096,
+        "sha256": "cd4d2b1f4fd5227258d28b5424853e88926d706ae1c9d1131660f48df05ba171"
+      },
+      {
+        "path": "Mechanics/build01/build-result.json",
+        "byteCount": 8157,
+        "sha256": "cd4f532cbc34cd0bf00206d02873c8b0bcaf1a6f14b7c4ca3affe6192774ff99"
+      },
+      {
+        "path": "Mechanics/build01/commands.json",
+        "byteCount": 3291,
+        "sha256": "11f75ab5d8089ae205bd9ba04eb5cec83eab563da695f91a6b68444ceb0f8271"
+      },
+      {
+        "path": "Mechanics/build01/compile.stderr",
+        "byteCount": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "Mechanics/build01/compile.stdout",
+        "byteCount": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "Mechanics/build01/link.stderr",
+        "byteCount": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "Mechanics/build01/link.stdout",
+        "byteCount": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "Mechanics/live-01/controller/invocation.json",
+        "byteCount": 1036,
+        "sha256": "64fb4e7fa1cefa92f77829b5239c6281783946f66b44f70580951e9012bffa75"
+      },
+      {
+        "path": "Mechanics/live-01/controller/result.json",
+        "byteCount": 777,
+        "sha256": "a4aa0e3981ab6b1e7bd6b39fb7050272251b57777166f679f4cb97e70445c6bd"
+      },
+      {
+        "path": "Mechanics/live-01/controller/stderr.bin",
+        "byteCount": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "Mechanics/live-01/controller/stdout.bin",
+        "byteCount": 12741,
+        "sha256": "ad9dca3ca1019af4c7ee448cf68f4b382a23ae6a917a4251340edce04dca37c3"
+      },
+      {
+        "path": "Mechanics/live-01/outer.stderr",
+        "byteCount": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "Mechanics/live-01/outer.stdout",
+        "byteCount": 619,
+        "sha256": "81b0fc41a82a3311debcdff41c8fe560c025a9404e746add243c6b6ab4ea7243"
+      },
+      {
+        "path": "Mechanics/live-01/signing.json",
+        "byteCount": 795,
+        "sha256": "f2f31430f8429dba9facba28fbd1115ec12d6c60454b89860974d9fec295ae68"
+      },
+      {
+        "path": "Mechanics/live-01/specification.json",
+        "byteCount": 686,
+        "sha256": "37c6d6339c922ff8a4a56c030454b03cfc153c6f918122cce886b72b3271dbe2"
+      },
+      {
+        "path": "Mechanics/main.c",
+        "byteCount": 11969,
+        "sha256": "914f16fe1a1597e9c3db04d751497dd2d7d5af629896960e07d5a14ba98c9af2"
+      },
+      {
+        "path": "Pilots/signed-live-01/controller/invocation.json",
+        "byteCount": 1425,
+        "sha256": "8538bb4f82aa4d0c9c95bae3746e121c82f9cb2f35b55e73698295dad694db1a"
+      },
+      {
+        "path": "Pilots/signed-live-01/controller/result.json",
+        "byteCount": 775,
+        "sha256": "f49f95dc3aab26dd9f37f94e26c493fe9b54af7d106e02f4fafde55d2b81a7c3"
+      },
+      {
+        "path": "Pilots/signed-live-01/controller/stderr.bin",
+        "byteCount": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "Pilots/signed-live-01/controller/stdout.bin",
+        "byteCount": 4197,
+        "sha256": "d64ffcfa2c23dd3b9c70d5b64c204f2a230330acaa8b9fba71b4b9d1b7bbc911"
+      },
+      {
+        "path": "Pilots/signed-live-01/native/admission.json",
+        "byteCount": 510,
+        "sha256": "f8619bd1587015b2df1dfb9e635f60b7a7d19795dbf53f63f87fe675a5cd8a22"
+      },
+      {
+        "path": "Pilots/signed-live-01/native/case-000-guest.json",
+        "byteCount": 4293,
+        "sha256": "71046cbca56c18b4c50f2cec31fe2e6d5dab7d1c5406169f3f7b9374c8aad727"
+      },
+      {
+        "path": "Pilots/signed-live-01/native/case-000-job-00-logits.f32le",
+        "byteCount": 65536,
+        "sha256": "9226bbd9544cd3a487b58ec6d211bde6f6293eebbf3d5ed725645662c511aa31"
+      },
+      {
+        "path": "Pilots/signed-live-01/native/case-000-job-00.json",
+        "byteCount": 471,
+        "sha256": "1d48029d9730ed997d2e0680f5c8f453d1830b9ebd39f0266641ce0479db38f5"
+      },
+      {
+        "path": "Pilots/signed-live-01/native/case-000-job-01-logits.f32le",
+        "byteCount": 65536,
+        "sha256": "a62eaa496cba225f84eb58d665dcc816f972eb27aa1354713af1b65f1f3fad23"
+      },
+      {
+        "path": "Pilots/signed-live-01/native/case-000-job-01.json",
+        "byteCount": 462,
+        "sha256": "4bb047ef42361028525aa9b3182ca438a8d3b235eae41a2d5badcdc15a586b00"
+      },
+      {
+        "path": "Pilots/signed-live-01/native/case-000-job-02-logits.f32le",
+        "byteCount": 65536,
+        "sha256": "fb36a69281af72d4416c7939bb5bcec23e39c7c9d45d71179074bf76cba809fa"
+      },
+      {
+        "path": "Pilots/signed-live-01/native/case-000-job-02.json",
+        "byteCount": 462,
+        "sha256": "b7470b4ee0aaaf746e500a1f5fb840e76286c8be8df929ee8620f050086ce9b5"
+      },
+      {
+        "path": "Pilots/signed-live-01/native/case-000-job-03-logits.f32le",
+        "byteCount": 65536,
+        "sha256": "717162f23ee79d572c6f01acab55848a97a5471107a7b09b8a28f2c090a6c771"
+      },
+      {
+        "path": "Pilots/signed-live-01/native/case-000-job-03.json",
+        "byteCount": 463,
+        "sha256": "7e32af9a68b71d598cb966b778ba80ce1a55fd241e2f7e32871c1a0c5dfeb3a8"
+      },
+      {
+        "path": "Pilots/signed-live-01/native/case-001-guest.json",
+        "byteCount": 5082,
+        "sha256": "1a2be957b899a7a5750867b7e8671967b6e924983efb373af3dfe049cba5ea69"
+      },
+      {
+        "path": "Pilots/signed-live-01/native/case-001-job-00-logits.f32le",
+        "byteCount": 65536,
+        "sha256": "ecb0574399778be70811bf438d4cbd9db40fdc80cca51ba7aa5b829676ae7860"
+      },
+      {
+        "path": "Pilots/signed-live-01/native/case-001-job-00.json",
+        "byteCount": 475,
+        "sha256": "1fd45fa16d15aabd58531022fff66fc36378bed48ba58edf94b4904ed1473b9c"
+      },
+      {
+        "path": "Pilots/signed-live-01/native/case-001-job-01-logits.f32le",
+        "byteCount": 65536,
+        "sha256": "7ae8f577b91664f9a2c475ee94531e45b95efbe246d3f0dfd7d77ad11cf3ea27"
+      },
+      {
+        "path": "Pilots/signed-live-01/native/case-001-job-01.json",
+        "byteCount": 466,
+        "sha256": "7d87745700c7562d155e6702ca926d1fe8dd4f6ea073c9421014efa10b3d84fb"
+      },
+      {
+        "path": "Pilots/signed-live-01/native/case-001-job-02-logits.f32le",
+        "byteCount": 65536,
+        "sha256": "0232b7d6b4c0352ddd75d3786604a09b0e0f3ed098ca095f2d047d9e6e487155"
+      },
+      {
+        "path": "Pilots/signed-live-01/native/case-001-job-02.json",
+        "byteCount": 466,
+        "sha256": "3f8bf89eef7260194b51d5803f2b42b44fb660b2b8898fb6bca05eef59df91f0"
+      },
+      {
+        "path": "Pilots/signed-live-01/native/case-001-job-03-logits.f32le",
+        "byteCount": 65536,
+        "sha256": "f1f7046a2f269ab35e774e3d0e36c97d4853829a50dfea08857034d5d0963e30"
+      },
+      {
+        "path": "Pilots/signed-live-01/native/case-001-job-03.json",
+        "byteCount": 466,
+        "sha256": "0b6f16b90dc90e1c30712e66b883a698f979c32b570a8a07f62ca5b9215734e6"
+      },
+      {
+        "path": "Pilots/signed-live-01/native/case-001-job-04-logits.f32le",
+        "byteCount": 65536,
+        "sha256": "173e6b5d841de2158191abaf864d87945349ca83ef877420a5b171078800e506"
+      },
+      {
+        "path": "Pilots/signed-live-01/native/case-001-job-04.json",
+        "byteCount": 466,
+        "sha256": "869b1cde5737d3eeff18bfbbc880931c3fd8833de73088fbdd0698251c0fa285"
+      },
+      {
+        "path": "Pilots/signed-live-01/native/request.json",
+        "byteCount": 4121,
+        "sha256": "008f55251c9c150276c4b988eb0ce1b7040db554f1e4fa41d9848de9d5978fff"
+      },
+      {
+        "path": "Pilots/signed-live-01/native/result.json",
+        "byteCount": 10744,
+        "sha256": "4085fd3d26bf4b8fac22b60b69c5c7d2f9ebaea449478bcd9d82a3d77f9898ca"
+      },
+      {
+        "path": "Pilots/signed-live-01/request.json",
+        "byteCount": 4121,
+        "sha256": "008f55251c9c150276c4b988eb0ce1b7040db554f1e4fa41d9848de9d5978fff"
+      },
+      {
+        "path": "Pilots/signed-live-01/specification.json",
+        "byteCount": 1046,
+        "sha256": "f77bf33fd0ec8aac14d8798734bade5f0441b0430eb395f4ce7ce94b28dfcb92"
+      },
+      {
+        "path": "Pilots/unsigned-admission-01/controller/invocation.json",
+        "byteCount": 1468,
+        "sha256": "ed26028a6d8a32339a7f39d50fa91f5f6e2bdd6b00fc421aae5372ca25681fa9"
+      },
+      {
+        "path": "Pilots/unsigned-admission-01/controller/result.json",
+        "byteCount": 777,
+        "sha256": "f13291f574a2862b7684687761576bdf36517f9146e4a872607345a0119aad29"
+      },
+      {
+        "path": "Pilots/unsigned-admission-01/controller/stderr.bin",
+        "byteCount": 84,
+        "sha256": "180355ac8c6a2fc26a81ae688a5bbc70a563fc76b8f99552f09178e918986daf"
+      },
+      {
+        "path": "Pilots/unsigned-admission-01/controller/stdout.bin",
+        "byteCount": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "Pilots/unsigned-admission-01/native/admission.json",
+        "byteCount": 485,
+        "sha256": "d12fdd81808aae55b37c4a412e7f628485b74dffea0139aff605a9b4c51f9d8b"
+      },
+      {
+        "path": "Pilots/unsigned-admission-01/native/error.json",
+        "byteCount": 132,
+        "sha256": "0e2aa0a577350d8d0c9595b7590f68bc5cee2dff54f0733f77c55cd22bc76989"
+      },
+      {
+        "path": "Pilots/unsigned-admission-01/native/request.json",
+        "byteCount": 4121,
+        "sha256": "008f55251c9c150276c4b988eb0ce1b7040db554f1e4fa41d9848de9d5978fff"
+      },
+      {
+        "path": "Pilots/unsigned-admission-01/request.json",
+        "byteCount": 4121,
+        "sha256": "008f55251c9c150276c4b988eb0ce1b7040db554f1e4fa41d9848de9d5978fff"
+      },
+      {
+        "path": "Pilots/unsigned-admission-01/specification.json",
+        "byteCount": 1096,
+        "sha256": "4aeee8e79a7d221a00110f3e4b16649e136502160a917ee658471d5e1fb00890"
+      },
+      {
+        "path": "AdmissionChecks/RESULTS.json",
+        "byteCount": 1968,
+        "sha256": "7c86bf75368c8e9067c3e98d9537b15be06549b10a7be13215d6384e188ff382"
+      },
+      {
+        "path": "AdmissionChecks/invalid-feedback-slot/controller/invocation.json",
+        "byteCount": 1461,
+        "sha256": "1ca20506fa946c61e111ff42389c333ac5edbf2bc6cfbf6bf3e9259f5bbb42ee"
+      },
+      {
+        "path": "AdmissionChecks/invalid-feedback-slot/controller/result.json",
+        "byteCount": 778,
+        "sha256": "917586983decdefafd65a0d1c713c0e4dba366eff5dcf5f06292039ecf7e69c8"
+      },
+      {
+        "path": "AdmissionChecks/invalid-feedback-slot/controller/stderr.bin",
+        "byteCount": 80,
+        "sha256": "cb8b221c0dc9b00ce887a289e63cf0d08e1dc295cad1484b7b6689d737859c7b"
+      },
+      {
+        "path": "AdmissionChecks/invalid-feedback-slot/controller/stdout.bin",
+        "byteCount": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "AdmissionChecks/invalid-feedback-slot/native/error.json",
+        "byteCount": 128,
+        "sha256": "2b12fb40d3c41424c13f864a92a9b693059d2768e09418d43dcd013ac970d471"
+      },
+      {
+        "path": "AdmissionChecks/invalid-feedback-slot/request.json",
+        "byteCount": 2038,
+        "sha256": "7ba8ee0612b5e87a181c58ab5cfc397f3dc821a36ef03d5278c1c78f74bfb782"
+      },
+      {
+        "path": "AdmissionChecks/invalid-feedback-slot/specification.json",
+        "byteCount": 1068,
+        "sha256": "db8a76a0c3004aab11410ed0fa7162657773d7b905e63632c5bebafda5305984"
+      },
+      {
+        "path": "AdmissionChecks/missing-entitlement/controller/invocation.json",
+        "byteCount": 1463,
+        "sha256": "315646a9c78d43139b4dd931dd68bcd15668865f03dfa57d9a04d9829b2a3b1c"
+      },
+      {
+        "path": "AdmissionChecks/missing-entitlement/controller/result.json",
+        "byteCount": 777,
+        "sha256": "d667889aacf8bd0741b21ae2cf2958185f2b47d33a56da83aa387a438d7baf33"
+      },
+      {
+        "path": "AdmissionChecks/missing-entitlement/controller/stderr.bin",
+        "byteCount": 84,
+        "sha256": "180355ac8c6a2fc26a81ae688a5bbc70a563fc76b8f99552f09178e918986daf"
+      },
+      {
+        "path": "AdmissionChecks/missing-entitlement/controller/stdout.bin",
+        "byteCount": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "AdmissionChecks/missing-entitlement/native/admission.json",
+        "byteCount": 510,
+        "sha256": "2bc0aeee119ebf001ff6b9efe7f4a0409c18f90d646a3e90912e79922546a3a8"
+      },
+      {
+        "path": "AdmissionChecks/missing-entitlement/native/error.json",
+        "byteCount": 132,
+        "sha256": "2f7095bbdcb77cfef62ad25433630a927f3a684acd0fb617eeb37f695a92f027"
+      },
+      {
+        "path": "AdmissionChecks/missing-entitlement/native/request.json",
+        "byteCount": 2038,
+        "sha256": "0c3be0643eefeff88bf0233069f6708d7afa896fecdace3609289df6c5525b72"
+      },
+      {
+        "path": "AdmissionChecks/missing-entitlement/request.json",
+        "byteCount": 2038,
+        "sha256": "0c3be0643eefeff88bf0233069f6708d7afa896fecdace3609289df6c5525b72"
+      },
+      {
+        "path": "AdmissionChecks/missing-entitlement/specification.json",
+        "byteCount": 1068,
+        "sha256": "917645ccb35e2ac9bb2b1205c44e4514309494e06f5c32b9d9ba58f16323604a"
+      },
+      {
+        "path": "AdmissionChecks/signing.json",
+        "byteCount": 1771,
+        "sha256": "eba975689c5d8405f3d7421ef81b234bd60fa085b9e96342be9fe327a3cfaa12"
+      },
+      {
+        "path": "AdmissionChecks/unexpected-target-key/controller/invocation.json",
+        "byteCount": 1461,
+        "sha256": "e1a3a51513b5e7636eb68ec1c08f2c0065204e25e6f39ce220a5b58cb18ae0b6"
+      },
+      {
+        "path": "AdmissionChecks/unexpected-target-key/controller/result.json",
+        "byteCount": 779,
+        "sha256": "a4e2969591b0e7c1b46afef6fe8c21dd14b9a73a0ebeac2047388dcaac779ed1"
+      },
+      {
+        "path": "AdmissionChecks/unexpected-target-key/controller/stderr.bin",
+        "byteCount": 69,
+        "sha256": "398ba988e8c95b112eeb1c24a224960a0a94779cbbea1e0b22f96749754f097d"
+      },
+      {
+        "path": "AdmissionChecks/unexpected-target-key/controller/stdout.bin",
+        "byteCount": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "AdmissionChecks/unexpected-target-key/native/error.json",
+        "byteCount": 117,
+        "sha256": "f9b27de4f584b3644940e1f2ad954546535f9a58e1600e7de6e32742ce6d4881"
+      },
+      {
+        "path": "AdmissionChecks/unexpected-target-key/request.json",
+        "byteCount": 2069,
+        "sha256": "407146511c1d3b5e9841a00232599fd81a06e20dd2af3012048c7ca676837ae8"
+      },
+      {
+        "path": "AdmissionChecks/unexpected-target-key/specification.json",
+        "byteCount": 1068,
+        "sha256": "cc7c8167ff8227c5e47f674673696855092ccb443e9645bab0c6d84857cea155"
+      },
+      {
+        "path": "AdmissionChecks/wrong-identifier/controller/invocation.json",
+        "byteCount": 1448,
+        "sha256": "49baa01b26c5aae2df977b93f24d2ad69e416cf8db9ad910fcab2497c2024bdf"
+      },
+      {
+        "path": "AdmissionChecks/wrong-identifier/controller/result.json",
+        "byteCount": 776,
+        "sha256": "7450b6f05f605cb43ded940395b57342df89a6dce104d2a152c71ff082c288d1"
+      },
+      {
+        "path": "AdmissionChecks/wrong-identifier/controller/stderr.bin",
+        "byteCount": 84,
+        "sha256": "180355ac8c6a2fc26a81ae688a5bbc70a563fc76b8f99552f09178e918986daf"
+      },
+      {
+        "path": "AdmissionChecks/wrong-identifier/controller/stdout.bin",
+        "byteCount": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "AdmissionChecks/wrong-identifier/native/admission.json",
+        "byteCount": 519,
+        "sha256": "fc74f2558cee8bcdd8a19b185c6bc60bc18545cff6f6a5d553004684703ca85e"
+      },
+      {
+        "path": "AdmissionChecks/wrong-identifier/native/error.json",
+        "byteCount": 132,
+        "sha256": "70c1021094982feb99d311ffb9623f316189f1d34400da506f17e055241221c0"
+      },
+      {
+        "path": "AdmissionChecks/wrong-identifier/native/request.json",
+        "byteCount": 2038,
+        "sha256": "0c3be0643eefeff88bf0233069f6708d7afa896fecdace3609289df6c5525b72"
+      },
+      {
+        "path": "AdmissionChecks/wrong-identifier/request.json",
+        "byteCount": 2038,
+        "sha256": "0c3be0643eefeff88bf0233069f6708d7afa896fecdace3609289df6c5525b72"
+      },
+      {
+        "path": "AdmissionChecks/wrong-identifier/specification.json",
+        "byteCount": 1050,
+        "sha256": "a6c7d93ac1cfb806fdb8560277f32197b5bd18e0cc2a2160853e87cc764a627a"
+      }
+    ]
+  },
+  "mechanics": {
+    "controller": {
+      "pid": 22937,
+      "exitCode": 0,
+      "elapsedSeconds": 10.528249999973923,
+      "exactReapCount": 1,
+      "finalOwnedGroupMembers": [],
+      "streams": {
+        "stdout": {
+          "byteCount": 12741,
+          "sha256": "ad9dca3ca1019af4c7ee448cf68f4b382a23ae6a917a4251340edce04dca37c3"
+        },
+        "stderr": {
+          "byteCount": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    "checks": [
+      {
+        "name": "invalid_zero_job_count",
+        "passed": true,
+        "bridgeStatus": 1,
+        "actualGuestEntries": 0,
+        "actualCallbacks": 0,
+        "actualCallbackNanoseconds": 0,
+        "watchdogFired": 0,
+        "watchdogJoined": "not_created",
+        "cleanupComplete": 1,
+        "semanticInvalid": false,
+        "modelInvoked": false
+      },
+      {
+        "name": "guest_rejects_unassigned_feedback",
+        "passed": true,
+        "bridgeStatus": 7,
+        "actualGuestEntries": 2,
+        "actualCallbacks": 1,
+        "actualCallbackNanoseconds": 42,
+        "watchdogFired": 0,
+        "watchdogJoined": true,
+        "cleanupComplete": 1,
+        "semanticInvalid": false,
+        "modelInvoked": false
+      },
+      {
+        "name": "callback_error_no_resume",
+        "passed": true,
+        "bridgeStatus": 6,
+        "actualGuestEntries": 1,
+        "actualCallbacks": 1,
+        "actualCallbackNanoseconds": 0,
+        "watchdogFired": 0,
+        "watchdogJoined": true,
+        "cleanupComplete": 1,
+        "semanticInvalid": false,
+        "modelInvoked": false
+      },
+      {
+        "name": "final_unassigned_prediction_transport_only",
+        "passed": true,
+        "bridgeStatus": 0,
+        "actualGuestEntries": 2,
+        "actualCallbacks": 1,
+        "actualCallbackNanoseconds": 0,
+        "watchdogFired": 0,
+        "watchdogJoined": true,
+        "cleanupComplete": 1,
+        "semanticInvalid": true,
+        "modelInvoked": false
+      },
+      {
+        "name": "callback_data_mutation_rejected",
+        "passed": true,
+        "bridgeStatus": 5,
+        "actualGuestEntries": 1,
+        "actualCallbacks": 1,
+        "actualCallbackNanoseconds": 0,
+        "watchdogFired": 0,
+        "watchdogJoined": true,
+        "cleanupComplete": 1,
+        "semanticInvalid": false,
+        "modelInvoked": false
+      },
+      {
+        "name": "callback_deadline_no_resume",
+        "passed": true,
+        "bridgeStatus": 8,
+        "actualGuestEntries": 1,
+        "actualCallbacks": 1,
+        "actualCallbackNanoseconds": 10201225875,
+        "watchdogFired": 1,
+        "watchdogJoined": true,
+        "cleanupComplete": 1,
+        "semanticInvalid": false,
+        "modelInvoked": false
+      }
+    ],
+    "actualVMInstances": 5,
+    "actualGuestEntries": 7,
+    "allFiveVMLifecyclesClean": true,
+    "allSixAdmissionsPassedNormalUnchangedPolicy": true,
+    "modelRuns": 0,
+    "sourceBinding": {
+      "byteCount": 11969,
+      "sha256": "914f16fe1a1597e9c3db04d751497dd2d7d5af629896960e07d5a14ba98c9af2"
+    },
+    "signedBinaryBinding": {
+      "byteCount": 90096,
+      "sha256": "cd4d2b1f4fd5227258d28b5424853e88926d706ae1c9d1131660f48df05ba171"
+    }
+  },
+  "inputAndAdmissionChecks": [
+    {
+      "name": "wrong-identifier",
+      "expectedRejectionObserved": true,
+      "controller": {
+        "pid": 22865,
+        "exitCode": 70,
+        "elapsedSeconds": 0.549964000005275,
+        "exactReapCount": 1,
+        "finalOwnedGroupMembers": [],
+        "streams": {
+          "stdout": {
+            "byteCount": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stderr": {
+            "byteCount": 84,
+            "sha256": "180355ac8c6a2fc26a81ae688a5bbc70a563fc76b8f99552f09178e918986daf"
+          }
+        }
+      },
+      "error": {
+        "error": "Prime vCPU inference failed: dedicated helper identity/entitlement admission failed",
+        "processID": 22865,
+        "status": "failed"
+      }
+    },
+    {
+      "name": "missing-entitlement",
+      "expectedRejectionObserved": true,
+      "controller": {
+        "pid": 22868,
+        "exitCode": 70,
+        "elapsedSeconds": 0.4224759999779053,
+        "exactReapCount": 1,
+        "finalOwnedGroupMembers": [],
+        "streams": {
+          "stdout": {
+            "byteCount": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stderr": {
+            "byteCount": 84,
+            "sha256": "180355ac8c6a2fc26a81ae688a5bbc70a563fc76b8f99552f09178e918986daf"
+          }
+        }
+      },
+      "error": {
+        "error": "Prime vCPU inference failed: dedicated helper identity/entitlement admission failed",
+        "processID": 22868,
+        "status": "failed"
+      }
+    },
+    {
+      "name": "invalid-feedback-slot",
+      "expectedRejectionObserved": true,
+      "controller": {
+        "pid": 22871,
+        "exitCode": 70,
+        "elapsedSeconds": 0.36381800001254305,
+        "exactReapCount": 1,
+        "finalOwnedGroupMembers": [],
+        "streams": {
+          "stdout": {
+            "byteCount": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stderr": {
+            "byteCount": 80,
+            "sha256": "cb8b221c0dc9b00ce887a289e63cf0d08e1dc295cad1484b7b6689d737859c7b"
+          }
+        }
+      },
+      "error": {
+        "error": "Prime vCPU inference failed: invalid native job or prior-prediction placeholder",
+        "processID": 22871,
+        "status": "failed"
+      }
+    },
+    {
+      "name": "unexpected-target-key",
+      "expectedRejectionObserved": true,
+      "controller": {
+        "pid": 22874,
+        "exitCode": 70,
+        "elapsedSeconds": 0.009692999999970198,
+        "exactReapCount": 1,
+        "finalOwnedGroupMembers": [],
+        "streams": {
+          "stdout": {
+            "byteCount": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stderr": {
+            "byteCount": 69,
+            "sha256": "398ba988e8c95b112eeb1c24a224960a0a94779cbbea1e0b22f96749754f097d"
+          }
+        }
+      },
+      "error": {
+        "error": "Prime vCPU inference failed: request has missing or unsupported keys",
+        "processID": 22874,
+        "status": "failed"
+      }
+    }
+  ],
+  "unsignedAdHocRejection": "Separately reviewed in work/prime-vcpu-integration-2026-09-08/Pilots/PILOT-REVIEW.json; raw identical copy retained under Checks/Pilots/unsigned-admission-01.",
+  "limits": [
+    "These synthetic callbacks exercise the real bridge, not neural predictions or scientific accuracy. Main720 model predictions remain a separate real-inference run.",
+    "Deadline fixture demonstrates watchdog fired while a10.2s callback ran, then host rejected its late return without guest resume and cleaned up. It does not interrupt a callback that never returns; outer process deadline remains required.",
+    "Wrong identifier and absent entitlement were exercised. Every possible entitlement expansion or OS teardown-failure injection was not exercised.",
+    "Final unassigned value47 intentionally completes transport and remains labeled semanticInvalid; no substitution or repair occurred.",
+    "Guest data mutation check changes one byte through a deliberately violating test callback; it does not demonstrate arbitrary guest compromise resistance."
+  ]
+}

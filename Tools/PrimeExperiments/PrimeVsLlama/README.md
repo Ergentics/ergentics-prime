@@ -11,3 +11,5 @@ The scored run, raw logits/text, model bytes, executable builds0006/0007 and ver
 /Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Prime-v-Llama-01
 
 See the tracked report at `docs/experiments/2026-09-08-prime-v-llama/README.md`. Completed host inference and feedback do not imply guest hypervisor execution, app integration or formal gate authority. Earlier evidence retains its own status.
+
+The live native vCPU integration is now in [VCPU](VCPU/README.md), with actual guest-controlled prediction feedback and verified numerical equivalence. Its source and result records remain in this same Prime project.

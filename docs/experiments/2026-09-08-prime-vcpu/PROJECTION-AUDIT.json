@@ -1,0 +1,467 @@
+{
+  "batchesPerModel": 10,
+  "buildRun": false,
+  "caseCountPerModel": 80,
+  "casesPerBatch": 8,
+  "comparisonPlan": "After actual guest runs, compare each job\u2019s actual input IDs, predicted symbol, and full logits bytes/hash to its matching previous host phase for the same checkpoint and case. Verify live slot came from the guest-observed immediately preceding fresh prediction. Score against References/gold.json separately. Record any missing or differing job without substituting prior results.",
+  "gpuRun": false,
+  "inputContainsGold": false,
+  "inputContainsHistoricalPredictions": false,
+  "jobMapping": {
+    "0": "direct original full input, static; priorPredictionOffset=-1",
+    "1": "first trace stage, static; priorPredictionOffset=-1; does not consume direct output",
+    "2_and_later": "trace continuation: prefix + placeholder0 + suffix; guest replaces placeholder using that model run\u2019s immediately preceding fresh trace prediction"
+  },
+  "jobsPerModel": 360,
+  "livePriorSlotsPerModel": 200,
+  "modelCount": 2,
+  "oldOutputsModified": false,
+  "originalInputsPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Prime-v-Llama-01/Inputs/cases.json",
+  "originalInputsSHA256": "a06c946aced5661c03b9785d36e2983edaaadd790fdebac5f1a67e57c463649f",
+  "predictionPlaceholder": 0,
+  "predictionPlaceholderMustBeReplacedBeforeInference": true,
+  "referenceFilesCopiedSeparately": [
+    {
+      "byteCount": 374575,
+      "copy": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-vcpu-integration-2026-09-08/Comparison/References/original-input-cases.json",
+      "sha256": "a06c946aced5661c03b9785d36e2983edaaadd790fdebac5f1a67e57c463649f",
+      "source": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Prime-v-Llama-01/Inputs/cases.json"
+    },
+    {
+      "byteCount": 24023,
+      "copy": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-vcpu-integration-2026-09-08/Comparison/References/gold.json",
+      "sha256": "a49033a2ce5e8ba9b606a8334d483329936d24439a156e9713cb5cc1fcd74f4a",
+      "source": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Prime-v-Llama-01/References/gold.json"
+    },
+    {
+      "byteCount": 3705,
+      "copy": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-vcpu-integration-2026-09-08/Comparison/References/original-v1-input-audit.json",
+      "sha256": "b308d1c0a8a0251d5585245d15b3adce3e027b4167cb7b65c712d4a88d6a5d90",
+      "source": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-system-comparison-2026-09-08/variable-depth-v1-preparation/input-audit.json"
+    },
+    {
+      "byteCount": 1165,
+      "copy": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-vcpu-integration-2026-09-08/Comparison/References/original-checkpoint-source-receipts.json",
+      "sha256": "010d6e9524880aa512ddd6c0100488d47ee831a633b32624aa545f373cfa6b92",
+      "source": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-system-comparison-2026-09-08/variable-depth-v1-preparation/References/checkpoint-source-receipts.json"
+    }
+  ],
+  "requestSchema": "prime_10m_vcpu_inference_request_v1",
+  "requests": [
+    {
+      "batch": 0,
+      "caseCount": 8,
+      "caseIDs": [
+        "holdout-base-canonical-train-a-d3-32-34-32-s0",
+        "holdout-base-canonical-train-a-d3-32-34-32-s1",
+        "holdout-base-canonical-train-a-d3-32-34-32-s2",
+        "holdout-base-canonical-train-a-d3-32-34-32-s3",
+        "holdout-base-canonical-train-a-d3-32-34-32-s4",
+        "holdout-base-canonical-train-a-d3-32-34-32-s5",
+        "holdout-base-canonical-train-a-d3-32-34-32-s6",
+        "holdout-base-canonical-train-a-d3-32-34-32-s7"
+      ],
+      "jobCount": 32,
+      "livePriorSlots": 16,
+      "model": "0006",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-vcpu-integration-2026-09-08/Comparison/Requests/0006/batch-00.json",
+      "sha256": "a39f0205e7f12c2b2676e4a6e9432e58cc467bd5cb7e5cfb9fc46e8411b139dc"
+    },
+    {
+      "batch": 1,
+      "caseCount": 8,
+      "caseIDs": [
+        "holdout-base-canonical-train-a-d4-32-32-32-33-s0",
+        "holdout-base-canonical-train-a-d4-32-32-32-33-s1",
+        "holdout-base-canonical-train-a-d4-32-32-32-33-s2",
+        "holdout-base-canonical-train-a-d4-32-32-32-33-s3",
+        "holdout-base-canonical-train-a-d4-32-32-32-33-s4",
+        "holdout-base-canonical-train-a-d4-32-32-32-33-s5",
+        "holdout-base-canonical-train-a-d4-32-32-32-33-s6",
+        "holdout-base-canonical-train-a-d4-32-32-32-33-s7"
+      ],
+      "jobCount": 40,
+      "livePriorSlots": 24,
+      "model": "0006",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-vcpu-integration-2026-09-08/Comparison/Requests/0006/batch-01.json",
+      "sha256": "8e9618138a3dc211bb8a680a930616e348f9ccedc4f2a70bdf2a8d43e3c0db87"
+    },
+    {
+      "batch": 2,
+      "caseCount": 8,
+      "caseIDs": [
+        "mutation-alphabet_b-alphabet_b-train-a-d3-32-34-32-s0",
+        "mutation-alphabet_b-alphabet_b-train-a-d3-32-34-32-s1",
+        "mutation-alphabet_b-alphabet_b-train-a-d3-32-34-32-s2",
+        "mutation-alphabet_b-alphabet_b-train-a-d3-32-34-32-s3",
+        "mutation-alphabet_b-alphabet_b-train-a-d3-32-34-32-s4",
+        "mutation-alphabet_b-alphabet_b-train-a-d3-32-34-32-s5",
+        "mutation-alphabet_b-alphabet_b-train-a-d3-32-34-32-s6",
+        "mutation-alphabet_b-alphabet_b-train-a-d3-32-34-32-s7"
+      ],
+      "jobCount": 32,
+      "livePriorSlots": 16,
+      "model": "0006",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-vcpu-integration-2026-09-08/Comparison/Requests/0006/batch-02.json",
+      "sha256": "db4cd1272ec227bb0e0fe975fb9b2247c86639569b56526247b30487a080b69c"
+    },
+    {
+      "batch": 3,
+      "caseCount": 8,
+      "caseIDs": [
+        "mutation-alphabet_b-alphabet_b-train-a-d4-32-32-32-33-s0",
+        "mutation-alphabet_b-alphabet_b-train-a-d4-32-32-32-33-s1",
+        "mutation-alphabet_b-alphabet_b-train-a-d4-32-32-32-33-s2",
+        "mutation-alphabet_b-alphabet_b-train-a-d4-32-32-32-33-s3",
+        "mutation-alphabet_b-alphabet_b-train-a-d4-32-32-32-33-s4",
+        "mutation-alphabet_b-alphabet_b-train-a-d4-32-32-32-33-s5",
+        "mutation-alphabet_b-alphabet_b-train-a-d4-32-32-32-33-s6",
+        "mutation-alphabet_b-alphabet_b-train-a-d4-32-32-32-33-s7"
+      ],
+      "jobCount": 40,
+      "livePriorSlots": 24,
+      "model": "0006",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-vcpu-integration-2026-09-08/Comparison/Requests/0006/batch-03.json",
+      "sha256": "5106d28a48a15704f4619c5b643992d3efe126e4e1a16a1f8a90434f6425e2ff"
+    },
+    {
+      "batch": 4,
+      "caseCount": 8,
+      "caseIDs": [
+        "mutation-heldout_codebook-canonical-holdout-d3-32-34-32-s0",
+        "mutation-heldout_codebook-canonical-holdout-d3-32-34-32-s1",
+        "mutation-heldout_codebook-canonical-holdout-d3-32-34-32-s2",
+        "mutation-heldout_codebook-canonical-holdout-d3-32-34-32-s3",
+        "mutation-heldout_codebook-canonical-holdout-d3-32-34-32-s4",
+        "mutation-heldout_codebook-canonical-holdout-d3-32-34-32-s5",
+        "mutation-heldout_codebook-canonical-holdout-d3-32-34-32-s6",
+        "mutation-heldout_codebook-canonical-holdout-d3-32-34-32-s7"
+      ],
+      "jobCount": 32,
+      "livePriorSlots": 16,
+      "model": "0006",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-vcpu-integration-2026-09-08/Comparison/Requests/0006/batch-04.json",
+      "sha256": "d8e75db847268e465e62280ae4893b15be724805bf48df736efc5368f4374602"
+    },
+    {
+      "batch": 5,
+      "caseCount": 8,
+      "caseIDs": [
+        "mutation-heldout_codebook-canonical-holdout-d4-32-32-32-33-s0",
+        "mutation-heldout_codebook-canonical-holdout-d4-32-32-32-33-s1",
+        "mutation-heldout_codebook-canonical-holdout-d4-32-32-32-33-s2",
+        "mutation-heldout_codebook-canonical-holdout-d4-32-32-32-33-s3",
+        "mutation-heldout_codebook-canonical-holdout-d4-32-32-32-33-s4",
+        "mutation-heldout_codebook-canonical-holdout-d4-32-32-32-33-s5",
+        "mutation-heldout_codebook-canonical-holdout-d4-32-32-32-33-s6",
+        "mutation-heldout_codebook-canonical-holdout-d4-32-32-32-33-s7"
+      ],
+      "jobCount": 40,
+      "livePriorSlots": 24,
+      "model": "0006",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-vcpu-integration-2026-09-08/Comparison/Requests/0006/batch-05.json",
+      "sha256": "1feb5415021972acb3d1a31426519536cf68b087dc3cb88f9a0bfbe566b84a6a"
+    },
+    {
+      "batch": 6,
+      "caseCount": 8,
+      "caseIDs": [
+        "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d3-32-34-32-s0",
+        "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d3-32-34-32-s1",
+        "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d3-32-34-32-s2",
+        "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d3-32-34-32-s3",
+        "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d3-32-34-32-s4",
+        "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d3-32-34-32-s5",
+        "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d3-32-34-32-s6",
+        "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d3-32-34-32-s7"
+      ],
+      "jobCount": 32,
+      "livePriorSlots": 16,
+      "model": "0006",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-vcpu-integration-2026-09-08/Comparison/Requests/0006/batch-06.json",
+      "sha256": "4193cd38a36f378319c8886a9c74150b6963fdf88e1f5b03b549d520cd01d5c9"
+    },
+    {
+      "batch": 7,
+      "caseCount": 8,
+      "caseIDs": [
+        "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d4-32-32-32-33-s0",
+        "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d4-32-32-32-33-s1",
+        "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d4-32-32-32-33-s2",
+        "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d4-32-32-32-33-s3",
+        "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d4-32-32-32-33-s4",
+        "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d4-32-32-32-33-s5",
+        "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d4-32-32-32-33-s6",
+        "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d4-32-32-32-33-s7"
+      ],
+      "jobCount": 40,
+      "livePriorSlots": 24,
+      "model": "0006",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-vcpu-integration-2026-09-08/Comparison/Requests/0006/batch-07.json",
+      "sha256": "e682afd50bb816168a9f4f80ccfa4f3312be3bdb3e152df55bf67d037c34c6c9"
+    },
+    {
+      "batch": 8,
+      "caseCount": 8,
+      "caseIDs": [
+        "mutation-neutral_context-canonical-train-a-d3-32-34-32-s0-context",
+        "mutation-neutral_context-canonical-train-a-d3-32-34-32-s1-context",
+        "mutation-neutral_context-canonical-train-a-d3-32-34-32-s2-context",
+        "mutation-neutral_context-canonical-train-a-d3-32-34-32-s3-context",
+        "mutation-neutral_context-canonical-train-a-d3-32-34-32-s4-context",
+        "mutation-neutral_context-canonical-train-a-d3-32-34-32-s5-context",
+        "mutation-neutral_context-canonical-train-a-d3-32-34-32-s6-context",
+        "mutation-neutral_context-canonical-train-a-d3-32-34-32-s7-context"
+      ],
+      "jobCount": 32,
+      "livePriorSlots": 16,
+      "model": "0006",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-vcpu-integration-2026-09-08/Comparison/Requests/0006/batch-08.json",
+      "sha256": "481e3e9b289dd46bdaab4b8c6ff1e20457d6185eb2f3280375279bda4feb0abd"
+    },
+    {
+      "batch": 9,
+      "caseCount": 8,
+      "caseIDs": [
+        "mutation-neutral_context-canonical-train-a-d4-32-32-32-33-s0-context",
+        "mutation-neutral_context-canonical-train-a-d4-32-32-32-33-s1-context",
+        "mutation-neutral_context-canonical-train-a-d4-32-32-32-33-s2-context",
+        "mutation-neutral_context-canonical-train-a-d4-32-32-32-33-s3-context",
+        "mutation-neutral_context-canonical-train-a-d4-32-32-32-33-s4-context",
+        "mutation-neutral_context-canonical-train-a-d4-32-32-32-33-s5-context",
+        "mutation-neutral_context-canonical-train-a-d4-32-32-32-33-s6-context",
+        "mutation-neutral_context-canonical-train-a-d4-32-32-32-33-s7-context"
+      ],
+      "jobCount": 40,
+      "livePriorSlots": 24,
+      "model": "0006",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-vcpu-integration-2026-09-08/Comparison/Requests/0006/batch-09.json",
+      "sha256": "d665d603be854c3938fe5215135ab9d05cdf8fe7b5992b0c59159ee35015c803"
+    },
+    {
+      "batch": 0,
+      "caseCount": 8,
+      "caseIDs": [
+        "holdout-base-canonical-train-a-d3-32-34-32-s0",
+        "holdout-base-canonical-train-a-d3-32-34-32-s1",
+        "holdout-base-canonical-train-a-d3-32-34-32-s2",
+        "holdout-base-canonical-train-a-d3-32-34-32-s3",
+        "holdout-base-canonical-train-a-d3-32-34-32-s4",
+        "holdout-base-canonical-train-a-d3-32-34-32-s5",
+        "holdout-base-canonical-train-a-d3-32-34-32-s6",
+        "holdout-base-canonical-train-a-d3-32-34-32-s7"
+      ],
+      "jobCount": 32,
+      "livePriorSlots": 16,
+      "model": "0007",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-vcpu-integration-2026-09-08/Comparison/Requests/0007/batch-00.json",
+      "sha256": "406ed4651a308ad9cb6f1f79cdf4168fcdd030491a59311f8fca88bd1f1b4d92"
+    },
+    {
+      "batch": 1,
+      "caseCount": 8,
+      "caseIDs": [
+        "holdout-base-canonical-train-a-d4-32-32-32-33-s0",
+        "holdout-base-canonical-train-a-d4-32-32-32-33-s1",
+        "holdout-base-canonical-train-a-d4-32-32-32-33-s2",
+        "holdout-base-canonical-train-a-d4-32-32-32-33-s3",
+        "holdout-base-canonical-train-a-d4-32-32-32-33-s4",
+        "holdout-base-canonical-train-a-d4-32-32-32-33-s5",
+        "holdout-base-canonical-train-a-d4-32-32-32-33-s6",
+        "holdout-base-canonical-train-a-d4-32-32-32-33-s7"
+      ],
+      "jobCount": 40,
+      "livePriorSlots": 24,
+      "model": "0007",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-vcpu-integration-2026-09-08/Comparison/Requests/0007/batch-01.json",
+      "sha256": "2881e925fa3bc1c423d2eab3d2872c2131f14dfdbf67bc1f54925b4afaa46ea8"
+    },
+    {
+      "batch": 2,
+      "caseCount": 8,
+      "caseIDs": [
+        "mutation-alphabet_b-alphabet_b-train-a-d3-32-34-32-s0",
+        "mutation-alphabet_b-alphabet_b-train-a-d3-32-34-32-s1",
+        "mutation-alphabet_b-alphabet_b-train-a-d3-32-34-32-s2",
+        "mutation-alphabet_b-alphabet_b-train-a-d3-32-34-32-s3",
+        "mutation-alphabet_b-alphabet_b-train-a-d3-32-34-32-s4",
+        "mutation-alphabet_b-alphabet_b-train-a-d3-32-34-32-s5",
+        "mutation-alphabet_b-alphabet_b-train-a-d3-32-34-32-s6",
+        "mutation-alphabet_b-alphabet_b-train-a-d3-32-34-32-s7"
+      ],
+      "jobCount": 32,
+      "livePriorSlots": 16,
+      "model": "0007",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-vcpu-integration-2026-09-08/Comparison/Requests/0007/batch-02.json",
+      "sha256": "3cabd2693c20004f2797a68f46b6dad21fc73820495e223d4f78c08801bf70c1"
+    },
+    {
+      "batch": 3,
+      "caseCount": 8,
+      "caseIDs": [
+        "mutation-alphabet_b-alphabet_b-train-a-d4-32-32-32-33-s0",
+        "mutation-alphabet_b-alphabet_b-train-a-d4-32-32-32-33-s1",
+        "mutation-alphabet_b-alphabet_b-train-a-d4-32-32-32-33-s2",
+        "mutation-alphabet_b-alphabet_b-train-a-d4-32-32-32-33-s3",
+        "mutation-alphabet_b-alphabet_b-train-a-d4-32-32-32-33-s4",
+        "mutation-alphabet_b-alphabet_b-train-a-d4-32-32-32-33-s5",
+        "mutation-alphabet_b-alphabet_b-train-a-d4-32-32-32-33-s6",
+        "mutation-alphabet_b-alphabet_b-train-a-d4-32-32-32-33-s7"
+      ],
+      "jobCount": 40,
+      "livePriorSlots": 24,
+      "model": "0007",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-vcpu-integration-2026-09-08/Comparison/Requests/0007/batch-03.json",
+      "sha256": "02fb411d6110935c8728c8fe780d2bd93d487f17303df2e66e7dd3d837bdab2e"
+    },
+    {
+      "batch": 4,
+      "caseCount": 8,
+      "caseIDs": [
+        "mutation-heldout_codebook-canonical-holdout-d3-32-34-32-s0",
+        "mutation-heldout_codebook-canonical-holdout-d3-32-34-32-s1",
+        "mutation-heldout_codebook-canonical-holdout-d3-32-34-32-s2",
+        "mutation-heldout_codebook-canonical-holdout-d3-32-34-32-s3",
+        "mutation-heldout_codebook-canonical-holdout-d3-32-34-32-s4",
+        "mutation-heldout_codebook-canonical-holdout-d3-32-34-32-s5",
+        "mutation-heldout_codebook-canonical-holdout-d3-32-34-32-s6",
+        "mutation-heldout_codebook-canonical-holdout-d3-32-34-32-s7"
+      ],
+      "jobCount": 32,
+      "livePriorSlots": 16,
+      "model": "0007",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-vcpu-integration-2026-09-08/Comparison/Requests/0007/batch-04.json",
+      "sha256": "df44490dfe2dc00493a6bac8efb9fe10d21e35b8faf554ec587f51405ea698c3"
+    },
+    {
+      "batch": 5,
+      "caseCount": 8,
+      "caseIDs": [
+        "mutation-heldout_codebook-canonical-holdout-d4-32-32-32-33-s0",
+        "mutation-heldout_codebook-canonical-holdout-d4-32-32-32-33-s1",
+        "mutation-heldout_codebook-canonical-holdout-d4-32-32-32-33-s2",
+        "mutation-heldout_codebook-canonical-holdout-d4-32-32-32-33-s3",
+        "mutation-heldout_codebook-canonical-holdout-d4-32-32-32-33-s4",
+        "mutation-heldout_codebook-canonical-holdout-d4-32-32-32-33-s5",
+        "mutation-heldout_codebook-canonical-holdout-d4-32-32-32-33-s6",
+        "mutation-heldout_codebook-canonical-holdout-d4-32-32-32-33-s7"
+      ],
+      "jobCount": 40,
+      "livePriorSlots": 24,
+      "model": "0007",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-vcpu-integration-2026-09-08/Comparison/Requests/0007/batch-05.json",
+      "sha256": "522f2e7cd91c55235b6f7bbc9b5146901d97b54201b33ac7f1fdf5fd94b09149"
+    },
+    {
+      "batch": 6,
+      "caseCount": 8,
+      "caseIDs": [
+        "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d3-32-34-32-s0",
+        "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d3-32-34-32-s1",
+        "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d3-32-34-32-s2",
+        "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d3-32-34-32-s3",
+        "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d3-32-34-32-s4",
+        "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d3-32-34-32-s5",
+        "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d3-32-34-32-s6",
+        "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d3-32-34-32-s7"
+      ],
+      "jobCount": 32,
+      "livePriorSlots": 16,
+      "model": "0007",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-vcpu-integration-2026-09-08/Comparison/Requests/0007/batch-06.json",
+      "sha256": "647ebff1ecef1e10081f17fa0f98678f0d7c012cd7c49a153864367178bbc1d7"
+    },
+    {
+      "batch": 7,
+      "caseCount": 8,
+      "caseIDs": [
+        "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d4-32-32-32-33-s0",
+        "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d4-32-32-32-33-s1",
+        "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d4-32-32-32-33-s2",
+        "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d4-32-32-32-33-s3",
+        "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d4-32-32-32-33-s4",
+        "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d4-32-32-32-33-s5",
+        "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d4-32-32-32-33-s6",
+        "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d4-32-32-32-33-s7"
+      ],
+      "jobCount": 40,
+      "livePriorSlots": 24,
+      "model": "0007",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-vcpu-integration-2026-09-08/Comparison/Requests/0007/batch-07.json",
+      "sha256": "e890783c71aa6184fae22aa507686868c38a3c5b6a3cad6677ae755cf7844936"
+    },
+    {
+      "batch": 8,
+      "caseCount": 8,
+      "caseIDs": [
+        "mutation-neutral_context-canonical-train-a-d3-32-34-32-s0-context",
+        "mutation-neutral_context-canonical-train-a-d3-32-34-32-s1-context",
+        "mutation-neutral_context-canonical-train-a-d3-32-34-32-s2-context",
+        "mutation-neutral_context-canonical-train-a-d3-32-34-32-s3-context",
+        "mutation-neutral_context-canonical-train-a-d3-32-34-32-s4-context",
+        "mutation-neutral_context-canonical-train-a-d3-32-34-32-s5-context",
+        "mutation-neutral_context-canonical-train-a-d3-32-34-32-s6-context",
+        "mutation-neutral_context-canonical-train-a-d3-32-34-32-s7-context"
+      ],
+      "jobCount": 32,
+      "livePriorSlots": 16,
+      "model": "0007",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-vcpu-integration-2026-09-08/Comparison/Requests/0007/batch-08.json",
+      "sha256": "09142688834e574664531aa363f8ed33d84c109ef4e930d1220ce9068ad71479"
+    },
+    {
+      "batch": 9,
+      "caseCount": 8,
+      "caseIDs": [
+        "mutation-neutral_context-canonical-train-a-d4-32-32-32-33-s0-context",
+        "mutation-neutral_context-canonical-train-a-d4-32-32-32-33-s1-context",
+        "mutation-neutral_context-canonical-train-a-d4-32-32-32-33-s2-context",
+        "mutation-neutral_context-canonical-train-a-d4-32-32-32-33-s3-context",
+        "mutation-neutral_context-canonical-train-a-d4-32-32-32-33-s4-context",
+        "mutation-neutral_context-canonical-train-a-d4-32-32-32-33-s5-context",
+        "mutation-neutral_context-canonical-train-a-d4-32-32-32-33-s6-context",
+        "mutation-neutral_context-canonical-train-a-d4-32-32-32-33-s7-context"
+      ],
+      "jobCount": 40,
+      "livePriorSlots": 24,
+      "model": "0007",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-vcpu-integration-2026-09-08/Comparison/Requests/0007/batch-09.json",
+      "sha256": "ee0cc9da0305f680fbfe736e65b1c1493c81d26fd1a7cf1a90aa3527a041b814"
+    }
+  ],
+  "runtimeSchemaExact": {
+    "caseKeys": [
+      "id",
+      "allowedValueMinimum",
+      "jobs"
+    ],
+    "jobKeys": [
+      "inputTokenIDs",
+      "priorPredictionOffset"
+    ],
+    "requestKeys": [
+      "schema",
+      "weightsPath",
+      "weightsSHA256",
+      "cases"
+    ]
+  },
+  "schema": "prime_vcpu_input_projection_audit_v1",
+  "scriptPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-vcpu-integration-2026-09-08/Comparison/prepare-requests.py",
+  "scriptSHA256": "4cada907b3da8b462b6a9050c04aeb707fc2b033814379330393008ef3983b42",
+  "sourceForInputConstruction": "Original input-only case definitions only; no result summaries or gold file parsed during construction.",
+  "weights": [
+    {
+      "byteCount": 40919874,
+      "model": "0006",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0006-prime-swift-variable-depth-4000/Runtime/weights.safetensors",
+      "sha256": "4ec25a1a577aee22d70bb44bff2caf7e4b9790322596a13135a69e642e8047bd"
+    },
+    {
+      "byteCount": 40919834,
+      "model": "0007",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0007-prime-swift-variable-depth-8000/Runtime/weights.safetensors",
+      "sha256": "4baff383398b024661ff48fb7b5d283a3451950ee2702455eb3a3f7c52a54afb"
+    }
+  ]
+}
