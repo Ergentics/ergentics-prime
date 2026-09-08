@@ -1043,7 +1043,11 @@ public enum PrimeNativeDecoderNative300MTrajectoryCheckpointV1 {
             ) { descriptor in
                 try MLX.loadArraysAndMetadata(
                     fileDescriptor: descriptor,
-                    stream: .default)
+                    // Metal has no Load::eval_gpu implementation. Materialize
+                    // descriptor-backed file bytes on the CPU I/O stream, as
+                    // the V2 weight loader does; subsequent Adam/model work
+                    // still uses the caller's unchanged default GPU stream.
+                    stream: .cpu)
             } materialize: { arrays, metadata in
                 try validateLoadedMoments(
                     arrays: arrays,
