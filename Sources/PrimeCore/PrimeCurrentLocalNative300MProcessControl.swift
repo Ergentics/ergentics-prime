@@ -254,6 +254,14 @@ public final class PrimeCurrentLocalNative300MProcessControl {
         return (launch, ticket)
     }
 
+    /// The file-backed drain both writes and reads this held descriptor: its
+    /// finalization hashes the exact retained bytes before closing it.
+    static func createStreamDescriptor(at path: String) throws -> Int32 {
+        let value = open(path, O_RDWR | O_CREAT | O_EXCL | O_NOFOLLOW | O_CLOEXEC, 0o600)
+        guard value >= 0 else { throw Local300MError.rejected("stream_open_\(errno)") }
+        return value
+    }
+
     /// Returns only after exact reap and both persistent drains finish. Every
     /// failure permanently stops the sequence; cleanup gets no success budget.
     public func execute(_ role: PrimeCurrentLocalNative300MRole, inputResult: PrimeArtifactBinding? = nil) throws {
@@ -281,10 +289,7 @@ public final class PrimeCurrentLocalNative300MProcessControl {
         let arguments = ["--worker", role.rawValue, launchPath]
         _ = try output.publishCanonicalExclusively(Prestart(role: role, executable: launch.executableAbsolutePath, arguments: arguments, environment: environment.map { [$0.0, $0.1] }, epoch: epoch, expires: deadline.expiresAtUptimeNanoseconds, launchSHA256: launchSHA256), at: "control/" + role.rawValue + "-prestart.json")
         func stream(_ suffix: String) throws -> Int32 {
-            let path = launch.runRoot + "/control/" + role.rawValue + suffix
-            let value = open(path, O_WRONLY | O_CREAT | O_EXCL | O_NOFOLLOW | O_CLOEXEC, 0o600)
-            guard value >= 0 else { throw Local300MError.rejected("stream_open_\(errno)") }
-            return value
+            try Self.createStreamDescriptor(at: launch.runRoot + "/control/" + role.rawValue + suffix)
         }
         let stdout = try stream("-stdout.log")
         let stderr: Int32

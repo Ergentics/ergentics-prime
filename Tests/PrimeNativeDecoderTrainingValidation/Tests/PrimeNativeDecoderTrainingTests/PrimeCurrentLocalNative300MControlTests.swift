@@ -1,7 +1,8 @@
 import Darwin
+import Dispatch
 import Foundation
 import XCTest
-import PrimeCore
+@testable import PrimeCore
 
 final class PrimeCurrentLocalNative300MControlTests: XCTestCase {
     private func fixture(_ body: (URL, [String: Any]) throws -> Void) throws {
@@ -119,4 +120,62 @@ final class PrimeCurrentLocalNative300MControlTests: XCTestCase {
             XCTAssertFalse(FileManager.default.fileExists(atPath: object["runRoot"] as! String))
         }
     }
+    func testCurrentLocalActualFileDrainRequiresReadWriteDescriptorForFinalHash() throws {
+        guard #available(macOS 26.0, *) else { return }
+        try fixture { root, _ in
+            let bytes = Data("real pipe bytes\nretained progress\n".utf8)
+            func drain(path: URL, output: Int32) throws -> PrimeSecureChildFileBackedDrainSnapshot {
+                var pipes: [Int32] = [-1, -1]
+                guard pipe(&pipes) == 0 else { close(output); throw Local300MError.rejected("fixture_pipe") }
+                let captured = PrimeSecureChildFileBackedBoundedDrain(
+                    inputDescriptor: pipes[0], outputDescriptor: output, maximumByteCount: 4096)
+                let completion = DispatchGroup()
+                captured.start(group: completion)
+                let written = bytes.withUnsafeBytes { Darwin.write(pipes[1], $0.baseAddress, $0.count) }
+                let closed = Darwin.close(pipes[1])
+                XCTAssertEqual(written, bytes.count)
+                XCTAssertEqual(closed, 0)
+                if completion.wait(timeout: .now() + .seconds(5)) != .success {
+                    captured.requestStop()
+                    XCTAssertEqual(completion.wait(timeout: .now() + .seconds(5)), .success)
+                    throw Local300MError.rejected("fixture_drain_timeout")
+                }
+                XCTAssertEqual(try Data(contentsOf: path), bytes)
+                return captured.snapshot()
+            }
+            let fixedPath = root.appendingPathComponent("read-write-stream.log")
+            let fixedFD = try PrimeCurrentLocalNative300MProcessControl.createStreamDescriptor(at: fixedPath.path)
+            XCTAssertEqual(fcntl(fixedFD, F_GETFL) & O_ACCMODE, O_RDWR)
+            let fixed = try drain(path: fixedPath, output: fixedFD)
+            XCTAssertEqual(fixed.terminalReason, .endOfFile)
+            XCTAssertTrue(fixed.reachedEOF && fixed.workerFinished && fixed.descriptorsClosed)
+            XCTAssertFalse(fixed.overflowed)
+            XCTAssertEqual(fixed.totalByteCount, UInt64(bytes.count))
+            XCTAssertEqual(fixed.capturedByteCount, UInt64(bytes.count))
+            XCTAssertEqual(fixed.outputByteCount, UInt64(bytes.count))
+            XCTAssertEqual(fixed.outputSHA256, PrimeSHA256.hexDigest(of: bytes))
+            XCTAssertEqual(fixed.outputPermissionMode, 0o444)
+            XCTAssertTrue(fixed.outputMetadataObserved && fixed.outputDeviceID > 0 && fixed.outputInode > 0)
+            XCTAssertEqual(fixed.readErrorNumber, 0)
+            XCTAssertEqual(fixed.writeErrorNumber, 0)
+            XCTAssertEqual(fixed.finalizationErrorNumber, 0)
+            XCTAssertEqual(fixed.closeErrorNumber, 0)
+
+            // Reproduce the real failed launch's exact wrong access mode.
+            let oldPath = root.appendingPathComponent("write-only-stream.log")
+            let oldFD = open(oldPath.path, O_WRONLY | O_CREAT | O_EXCL | O_NOFOLLOW | O_CLOEXEC, 0o600)
+            guard oldFD >= 0 else { throw Local300MError.rejected("fixture_write_only_open") }
+            let old = try drain(path: oldPath, output: oldFD)
+            XCTAssertEqual(old.terminalReason, .writeOrFinalizationError)
+            XCTAssertFalse(old.reachedEOF)
+            XCTAssertTrue(old.workerFinished && old.descriptorsClosed)
+            XCTAssertEqual(old.totalByteCount, UInt64(bytes.count))
+            XCTAssertEqual(old.capturedByteCount, UInt64(bytes.count))
+            XCTAssertEqual(old.writeErrorNumber, 0)
+            XCTAssertEqual(old.finalizationErrorNumber, EIO)
+            XCTAssertEqual(old.outputByteCount, 0)
+            XCTAssertEqual(old.outputSHA256, "")
+        }
+    }
+
 }
