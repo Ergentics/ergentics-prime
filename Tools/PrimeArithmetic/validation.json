@@ -1,0 +1,237 @@
+{
+  "arithmeticInput": "2 + 2",
+  "inputPreparation": "Expression explicitly extracted from the public question; no natural-language understanding claim.",
+  "checks": [
+    {
+      "name": "add",
+      "expectedExit": 0,
+      "expectedValue": 4,
+      "passed": true,
+      "response": {
+        "checkpointUsed": false,
+        "crossModelBinding": false,
+        "engine": "AlgebraKit.ExprParser + Expr.eval",
+        "expression": "2 + 2",
+        "inputTransform": "none; expression supplied explicitly",
+        "kernelSourceSHA256": "7734702e1a7d77ca513d29ee81952560f5c5fa0af3d39fb8e883ac818ed01134",
+        "kind": "deterministic_expression_evaluation",
+        "learnedTokenizerUsed": false,
+        "numericRepresentation": "Double; no general exact-rational claim",
+        "renderedResult": "4",
+        "schema": "prime_arithmetic_result_v1",
+        "trainingPerformed": false,
+        "value": 4
+      },
+      "error": "",
+      "process": {
+        "started_at_utc": "2026-09-08T20:10:28.553328Z",
+        "elapsed_seconds": 0.3080090000294149,
+        "pid": 11035,
+        "requested_wait_pid": 11035,
+        "returned_wait_pid": 11035,
+        "exact_reap_count": 1,
+        "raw_wait_status": 0,
+        "exit_status": 0,
+        "termination_signal": null,
+        "reason": null,
+        "runner_error": null,
+        "signals": [
+
+        ],
+        "process_group_members_after_reap": [
+
+        ],
+        "streams": {
+          "stdout": {
+            "total_bytes": 496,
+            "eof": true,
+            "captured_bytes": 496,
+            "sha256": "abebd4cfe0d3dd6cfe5bd2ab6c69570ba38a02aaf07fa7fa8e032b7654414959"
+          },
+          "stderr": {
+            "total_bytes": 0,
+            "eof": true,
+            "captured_bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        "passed": true
+      }
+    },
+    {
+      "name": "parentheses",
+      "expectedExit": 0,
+      "expectedValue": 27,
+      "passed": true,
+      "response": {
+        "checkpointUsed": false,
+        "crossModelBinding": false,
+        "engine": "AlgebraKit.ExprParser + Expr.eval",
+        "expression": "3 * (4 + 5)",
+        "inputTransform": "none; expression supplied explicitly",
+        "kernelSourceSHA256": "7734702e1a7d77ca513d29ee81952560f5c5fa0af3d39fb8e883ac818ed01134",
+        "kind": "deterministic_expression_evaluation",
+        "learnedTokenizerUsed": false,
+        "numericRepresentation": "Double; no general exact-rational claim",
+        "renderedResult": "27",
+        "schema": "prime_arithmetic_result_v1",
+        "trainingPerformed": false,
+        "value": 27
+      },
+      "error": "",
+      "process": {
+        "started_at_utc": "2026-09-08T20:10:32.172505Z",
+        "elapsed_seconds": 0.006839999987278134,
+        "pid": 11046,
+        "requested_wait_pid": 11046,
+        "returned_wait_pid": 11046,
+        "exact_reap_count": 1,
+        "raw_wait_status": 0,
+        "exit_status": 0,
+        "termination_signal": null,
+        "reason": null,
+        "runner_error": null,
+        "signals": [
+
+        ],
+        "process_group_members_after_reap": [
+
+        ],
+        "streams": {
+          "stdout": {
+            "total_bytes": 504,
+            "eof": true,
+            "captured_bytes": 504,
+            "sha256": "d9d8daefee7b492dacd07233bb12bb94d142d48779eb4a9c8fc0c75c5e8a5124"
+          },
+          "stderr": {
+            "total_bytes": 0,
+            "eof": true,
+            "captured_bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        "passed": true
+      }
+    },
+    {
+      "name": "prose",
+      "expectedExit": 70,
+      "expectedValue": null,
+      "passed": true,
+      "response": null,
+      "error": "Algebra expression failed: unsupportedInput\n",
+      "process": {
+        "started_at_utc": "2026-09-08T20:10:35.415829Z",
+        "elapsed_seconds": 0.005139000015333295,
+        "pid": 11052,
+        "requested_wait_pid": 11052,
+        "returned_wait_pid": 11052,
+        "exact_reap_count": 1,
+        "raw_wait_status": 17920,
+        "exit_status": 70,
+        "termination_signal": null,
+        "reason": null,
+        "runner_error": null,
+        "signals": [
+
+        ],
+        "process_group_members_after_reap": [
+
+        ],
+        "streams": {
+          "stdout": {
+            "total_bytes": 0,
+            "eof": true,
+            "captured_bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stderr": {
+            "total_bytes": 44,
+            "eof": true,
+            "captured_bytes": 44,
+            "sha256": "8fad5c5323f1429466981c83a22d58bd92b8f29f7ec9132227dbc28d85e4248b"
+          }
+        },
+        "passed": false
+      }
+    },
+    {
+      "name": "zero",
+      "expectedExit": 70,
+      "expectedValue": null,
+      "passed": true,
+      "response": null,
+      "error": "Algebra expression failed: nonFiniteResult\n",
+      "process": {
+        "started_at_utc": "2026-09-08T20:10:38.067383Z",
+        "elapsed_seconds": 0.005510999995749444,
+        "pid": 11058,
+        "requested_wait_pid": 11058,
+        "returned_wait_pid": 11058,
+        "exact_reap_count": 1,
+        "raw_wait_status": 17920,
+        "exit_status": 70,
+        "termination_signal": null,
+        "reason": null,
+        "runner_error": null,
+        "signals": [
+
+        ],
+        "process_group_members_after_reap": [
+
+        ],
+        "streams": {
+          "stdout": {
+            "total_bytes": 0,
+            "eof": true,
+            "captured_bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stderr": {
+            "total_bytes": 43,
+            "eof": true,
+            "captured_bytes": 43,
+            "sha256": "c61ace6cd94d1014c42ba7cce0bd6da6785476d2597c2dab39df2af76cb34147"
+          }
+        },
+        "passed": false
+      }
+    }
+  ],
+  "build": {
+    "started_at_utc": "2026-09-08T20:08:47.317876Z",
+    "elapsed_seconds": 3.853169000009075,
+    "pid": 10948,
+    "requested_wait_pid": 10948,
+    "returned_wait_pid": 10948,
+    "exact_reap_count": 1,
+    "raw_wait_status": 0,
+    "exit_status": 0,
+    "termination_signal": null,
+    "reason": null,
+    "runner_error": null,
+    "signals": [
+
+    ],
+    "process_group_members_after_reap": [
+
+    ],
+    "streams": {
+      "stdout": {
+        "total_bytes": 225,
+        "eof": true,
+        "captured_bytes": 225,
+        "sha256": "5221f741fbafc1df5f5a4d4a5af2c06ea25fb19a4d87a78e3b9ba709363fe3c7"
+      },
+      "stderr": {
+        "total_bytes": 0,
+        "eof": true,
+        "captured_bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "passed": true
+  },
+  "binarySHA256": "3331d72920bfe7eb1d133bcc97f5dab0499cc6f2a2ba97b2faaf121b5c293ad2"
+}

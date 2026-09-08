@@ -1,0 +1,7 @@
+{
+  "sourceRepository": "algebra-app",
+  "sourceCommit": "9bc3fa5710558c1bc4349c7708576c47a69de58b",
+  "sourcePath": "Sources/AlgebraKit/Math.swift",
+  "sha256": "7734702e1a7d77ca513d29ee81952560f5c5fa0af3d39fb8e883ac818ed01134",
+  "policy": "Byte-identical source snapshot; future changes should be refreshed from the algebra-app owner."
+}
