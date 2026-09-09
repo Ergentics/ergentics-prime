@@ -1,0 +1,45 @@
+{
+  "repository": "/Users/ergentics/geometry-app",
+  "revision": "74906b86eeca4e655d31e6912a905ac390215443",
+  "upstreamFiles": [
+    {
+      "path": "/Users/ergentics/geometry-app/Sources/MasteryFieldMetal/MetalFieldEvaluator.swift",
+      "byteCount": 6401,
+      "sha256": "b36c4451c6bd4c1b18a9415af08cc832af83d59505a155e8bee53bc57c8c907c"
+    },
+    {
+      "path": "/Users/ergentics/geometry-app/Sources/MasteryField/MasteryFieldSolver.swift",
+      "byteCount": 22204,
+      "sha256": "3df01283c32ca12f8da04f0662bdda0c5589e45cab97b98a105c2ab2ca495144"
+    },
+    {
+      "path": "/Users/ergentics/geometry-app/Tests/MasteryFieldTests/EngineProposesMetalFieldParityTests.swift",
+      "byteCount": 13416,
+      "sha256": "ef0d32d59a3e9439471beea85c2a0d289b6912f2dc2fef4c178d82132673437b"
+    }
+  ],
+  "originalMetalCopy": {
+    "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/GeometryMetal/Original/MetalFieldEvaluator.swift",
+    "byteCount": 6401,
+    "sha256": "b36c4451c6bd4c1b18a9415af08cc832af83d59505a155e8bee53bc57c8c907c"
+  },
+  "originalCPUFunctions": {
+    "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/GeometryMetal/Original/FieldPotential.functions.swift.txt",
+    "byteCount": 3134,
+    "sha256": "c3f079b0835b9908bca77d48e1b6c8b571bfe1947d345dea76923baecfe3d99d"
+  },
+  "adaptedMetal": {
+    "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/GeometryMetal/MetalFieldEvaluator.swift",
+    "byteCount": 7905,
+    "sha256": "c8d3811c569f4cfb5d225fc2cbbf9e87167dc6915ab01b89d4256a8581fceb3c"
+  },
+  "patch": {
+    "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/GeometryMetal/ADAPTER.patch",
+    "byteCount": 3202,
+    "sha256": "d888bd945257599bfa58d73f895c18cbbd4ec6210c12fcf6fc52f9c281bfeeaa"
+  },
+  "MSLKernelByteIdentical": true,
+  "kernelSourceSHA256": "f5c07df8e0d609d550c585c1e6bedfaa903c27311874bd6e3d03411c9c0eb249",
+  "upstreamChanges": false,
+  "scope": "Standalone host GPU numerical comparison; no model, no HVC, no virtual GPU."
+}

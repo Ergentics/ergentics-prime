@@ -1,0 +1,3356 @@
+{
+  "batchCaseCounts": [
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16
+  ],
+  "batchesPerSeedExecution": 64,
+  "caseCountPerSeedExecution": 1024,
+  "checkpointBindings": [
+    {
+      "implementation": {
+        "custom_metal_kernels": false,
+        "framework": "mlx",
+        "imported_base_weights": false,
+        "model_implementation": "mlx_lm.models.llama.Model",
+        "random_initialization": true,
+        "standard_primitives": true
+      },
+      "originalManifestFileSHA256": "1a49ef580dd702567c3a66df443cbb6f1e1b10f08f525ce1648d76612388f80d",
+      "originalManifestPath": "/Users/ergentics/prime-mlx-lab/domain-trace-shadow-seed1618/prime-domain-trace-manifest.json",
+      "originalManifestRowsCanonicalSHA256": "6965656679ac7c8cf5c8624b15e21cc8f3f5fffc4ac97a56ab8a558d07b44d48",
+      "originalReportPath": "/Users/ergentics/prime-mlx-lab/domain-trace-shadow-seed1618/prime-domain-trace-shadow.json",
+      "originalReportSHA256": "0296bc8a2470ece5adf147d902aa6cddbecee5af42b28a5bad13de1d879b503c",
+      "profile": {
+        "attention_heads": 4,
+        "expected_parameter_count": 10227968,
+        "feed_forward_dimension": 640,
+        "head_dimension": 64,
+        "layer_count": 8,
+        "model_dimension": 256,
+        "observed_parameter_count": 10227968,
+        "profile_id": "ergentics_prime_poc_10m_v1",
+        "vocab_size": 16384
+      },
+      "reportedTrainingSteps": 2400,
+      "seed": 1618,
+      "weightsBytes": 40919832,
+      "weightsPath": "/Users/ergentics/prime-mlx-lab/domain-trace-shadow-seed1618/prime-domain-trace.safetensors",
+      "weightsSHA256": "122af63187129249ef0c85dbac6e6f1bd0c0e67c60f88b387844fd002bd2d0ec"
+    },
+    {
+      "implementation": {
+        "custom_metal_kernels": false,
+        "framework": "mlx",
+        "imported_base_weights": false,
+        "model_implementation": "mlx_lm.models.llama.Model",
+        "random_initialization": true,
+        "standard_primitives": true
+      },
+      "originalManifestFileSHA256": "1a49ef580dd702567c3a66df443cbb6f1e1b10f08f525ce1648d76612388f80d",
+      "originalManifestPath": "/Users/ergentics/prime-mlx-lab/domain-trace-shadow/prime-domain-trace-manifest.json",
+      "originalManifestRowsCanonicalSHA256": "6965656679ac7c8cf5c8624b15e21cc8f3f5fffc4ac97a56ab8a558d07b44d48",
+      "originalReportPath": "/Users/ergentics/prime-mlx-lab/domain-trace-shadow/prime-domain-trace-shadow.json",
+      "originalReportSHA256": "f25fbe98f4c0afba3fe82a90eb3711837ff8cce3aeefd2eb512ab0a4b37b310f",
+      "profile": {
+        "attention_heads": 4,
+        "expected_parameter_count": 10227968,
+        "feed_forward_dimension": 640,
+        "head_dimension": 64,
+        "layer_count": 8,
+        "model_dimension": 256,
+        "observed_parameter_count": 10227968,
+        "profile_id": "ergentics_prime_poc_10m_v1",
+        "vocab_size": 16384
+      },
+      "reportedTrainingSteps": 2400,
+      "seed": 2718,
+      "weightsBytes": 40919832,
+      "weightsPath": "/Users/ergentics/prime-mlx-lab/domain-trace-shadow/prime-domain-trace.safetensors",
+      "weightsSHA256": "f5201fae919d8636300086829943fd38059767ab293147ca8c0c65ce91402067"
+    },
+    {
+      "implementation": {
+        "custom_metal_kernels": false,
+        "framework": "mlx",
+        "imported_base_weights": false,
+        "model_implementation": "mlx_lm.models.llama.Model",
+        "random_initialization": true,
+        "standard_primitives": true
+      },
+      "originalManifestFileSHA256": "1a49ef580dd702567c3a66df443cbb6f1e1b10f08f525ce1648d76612388f80d",
+      "originalManifestPath": "/Users/ergentics/prime-mlx-lab/domain-trace-shadow-seed3141/prime-domain-trace-manifest.json",
+      "originalManifestRowsCanonicalSHA256": "6965656679ac7c8cf5c8624b15e21cc8f3f5fffc4ac97a56ab8a558d07b44d48",
+      "originalReportPath": "/Users/ergentics/prime-mlx-lab/domain-trace-shadow-seed3141/prime-domain-trace-shadow.json",
+      "originalReportSHA256": "4c408f786e97407e260f6fa3e50c1d465bf353125f1db78e6d74a788677e534c",
+      "profile": {
+        "attention_heads": 4,
+        "expected_parameter_count": 10227968,
+        "feed_forward_dimension": 640,
+        "head_dimension": 64,
+        "layer_count": 8,
+        "model_dimension": 256,
+        "observed_parameter_count": 10227968,
+        "profile_id": "ergentics_prime_poc_10m_v1",
+        "vocab_size": 16384
+      },
+      "reportedTrainingSteps": 2400,
+      "seed": 3141,
+      "weightsBytes": 40919832,
+      "weightsPath": "/Users/ergentics/prime-mlx-lab/domain-trace-shadow-seed3141/prime-domain-trace.safetensors",
+      "weightsSHA256": "7064c514a9a41369951d1ee829ac0f028bb488a0b9551d5e8b1d2433173cd4e1"
+    }
+  ],
+  "commonInputsSHA256": "6ff3ce8feaed64e96f6bc2ab62e074c0a596b9973839b148101f1cd598c83074",
+  "contextToggleCounts": {
+    "inserted": 688,
+    "removed": 336
+  },
+  "eligibleBaseRows": 2109,
+  "executions": [
+    "host",
+    "guest"
+  ],
+  "expectedABSTAIN224": {
+    "allJobs": 0,
+    "direct": 0,
+    "interpretation": "Every generated input is valid. A model output of 224 is an unexpected abstention here. The prior main suite emitted 224 only on malformed inputs; this follow-up does not imply a prior valid-input abstention was found.",
+    "traceFinal": 0
+  },
+  "familyCounts": {
+    "I-II": 103,
+    "I-III": 103,
+    "I-IV": 103,
+    "I-V": 103,
+    "II-III": 102,
+    "II-IV": 102,
+    "II-V": 102,
+    "III-IV": 102,
+    "III-V": 102,
+    "IV-V": 102
+  },
+  "feedbackPolicy": "Final input contains two zero placeholders bound to fresh predictions of jobs 1 and 2. Retain every full-vocabulary argmax including 224; no teacher summaries, output clamping or gold-driven early stopping.",
+  "generatorScriptSHA256": "d2f5ff4312c8ec0311adbea466e928d31eb1a4661b19e56102b4c283c4d9cdd9",
+  "goldSHA256": "fa5f0526dc1095289276be1ce9e435d00dee0fbc9938acdcc3120f1a3b8012bc",
+  "gpuRun": false,
+  "hostGuestJobsExactlyIdentical": true,
+  "inputContainsGoldOrHistoricalPredictions": false,
+  "jobsPerCase": 4,
+  "originalSourceSplitCounts": {
+    "holdout": 205,
+    "train": 614,
+    "validation": 205
+  },
+  "originalSourcesModified": false,
+  "overlapInterpretation": "Component matches are counted per generated case and are not mutually exclusive. Ignoring the supported neutral context, every request reuses original semantic inputs. Swapped mutation pairs remain different ordered requests.",
+  "overlapWithOriginalBySplit": {
+    "holdout": {
+      "generatedComponentExactMatches": {
+        "direct_input_ids": 0,
+        "final_prefix_ids": 336,
+        "final_suffix_ids": 1024,
+        "left_input_ids": 177,
+        "right_input_ids": 216
+      },
+      "generatedWholeInputExactMatches": 0,
+      "generatedWholeInputSemanticMatchesIgnoringNeutralContext": 205,
+      "originalRows": 470
+    },
+    "mutation": {
+      "generatedComponentExactMatches": {
+        "direct_input_ids": 0,
+        "final_prefix_ids": 688,
+        "final_suffix_ids": 1024,
+        "left_input_ids": 47,
+        "right_input_ids": 41
+      },
+      "generatedWholeInputExactMatches": 0,
+      "generatedWholeInputSemanticMatchesIgnoringNeutralContext": 0,
+      "originalRows": 470
+    },
+    "train": {
+      "generatedComponentExactMatches": {
+        "direct_input_ids": 0,
+        "final_prefix_ids": 1024,
+        "final_suffix_ids": 1024,
+        "left_input_ids": 1024,
+        "right_input_ids": 1024
+      },
+      "generatedWholeInputExactMatches": 0,
+      "generatedWholeInputSemanticMatchesIgnoringNeutralContext": 614,
+      "originalRows": 1338
+    },
+    "validation": {
+      "generatedComponentExactMatches": {
+        "direct_input_ids": 0,
+        "final_prefix_ids": 336,
+        "final_suffix_ids": 1024,
+        "left_input_ids": 177,
+        "right_input_ids": 168
+      },
+      "generatedWholeInputExactMatches": 0,
+      "generatedWholeInputSemanticMatchesIgnoringNeutralContext": 205,
+      "originalRows": 429
+    }
+  },
+  "projectedJobsAcrossAllRequests": 24576,
+  "projectedJobsPerSeedExecution": 4096,
+  "requestFiles": 384,
+  "requestReceipts": [
+    {
+      "batch": 0,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-000.json",
+      "seed": 1618,
+      "sha256": "1a39520cbb69f6b13a00440dd54cd79e06ad9abba307a283f0227876870ef3a4"
+    },
+    {
+      "batch": 1,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-001.json",
+      "seed": 1618,
+      "sha256": "4ce2e20b4c9471cff747d2dd1dc977968e65b968a301c227b6b38727cf8c73b6"
+    },
+    {
+      "batch": 2,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-002.json",
+      "seed": 1618,
+      "sha256": "d3ff4aa800d14e3dac5dff598d3da2e4ef10b073d3d86c17507ecaa39e4e158e"
+    },
+    {
+      "batch": 3,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-003.json",
+      "seed": 1618,
+      "sha256": "60354d58c41c7a4fd21a52904756460ac2263c14b6c140c72a247fdf8de2f298"
+    },
+    {
+      "batch": 4,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-004.json",
+      "seed": 1618,
+      "sha256": "6093b04b44114312b00445e24840e962781570f2a118f76d169abe07ad6d2e5c"
+    },
+    {
+      "batch": 5,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-005.json",
+      "seed": 1618,
+      "sha256": "707467291480bb6c973f5938233b8a4a19510159fca303d4710778642f46016f"
+    },
+    {
+      "batch": 6,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-006.json",
+      "seed": 1618,
+      "sha256": "e708f345d02d8b4424a4f50cbc9d81975909c8545de40a3d482d23bdd5b56d05"
+    },
+    {
+      "batch": 7,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-007.json",
+      "seed": 1618,
+      "sha256": "92fc1b69af8793af4954d47338b627eac5a5149beaaaf87fa018598592a41ede"
+    },
+    {
+      "batch": 8,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-008.json",
+      "seed": 1618,
+      "sha256": "6fd96c529ab4d9094d5726b7242a3bd8e738938af3bed37b9ddef3c8574dc5cc"
+    },
+    {
+      "batch": 9,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-009.json",
+      "seed": 1618,
+      "sha256": "549811651eb8f59dc3d52fc7ea3f3ff208e9dd1ebe91f094375198a1d9893688"
+    },
+    {
+      "batch": 10,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-010.json",
+      "seed": 1618,
+      "sha256": "4b30dc013adcb15c89b4a924cb8d4a796efc730aec330dbd07a712c25f7c148e"
+    },
+    {
+      "batch": 11,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-011.json",
+      "seed": 1618,
+      "sha256": "38d5d3759b7cf2da84c15e17f4a0a36d0fec872f8582ca4c1b78ea54c7f19c45"
+    },
+    {
+      "batch": 12,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-012.json",
+      "seed": 1618,
+      "sha256": "a1858fb2acb4a7a9c6ab0354ba25fc9f767713148162e26282b56fa7b2d20ab3"
+    },
+    {
+      "batch": 13,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-013.json",
+      "seed": 1618,
+      "sha256": "09e9eb505694dee7dd41d7a593ba1178fe9f3d86f7f9eea4f878b39f9dd60433"
+    },
+    {
+      "batch": 14,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-014.json",
+      "seed": 1618,
+      "sha256": "29c44368c221b5ad465ec3d981bc00e52179326c091ae544bc9137debe2fa162"
+    },
+    {
+      "batch": 15,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-015.json",
+      "seed": 1618,
+      "sha256": "1976fcda33a08dcf317f016c78f1516260abc44064213ce487f169ea169e4724"
+    },
+    {
+      "batch": 16,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-016.json",
+      "seed": 1618,
+      "sha256": "86fb28df6350dda7ae9a030cbf5966443d8c9d5d006bda9c35af80319b62c0d1"
+    },
+    {
+      "batch": 17,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-017.json",
+      "seed": 1618,
+      "sha256": "a9d6468b846b9a8bd40ef3e0904d23aa0103554b4b6f58122c14601cc135a46b"
+    },
+    {
+      "batch": 18,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-018.json",
+      "seed": 1618,
+      "sha256": "6d5e71cea9387e576b2834c0d78998b6d13475d47b19f31ad502ad2a28c58f81"
+    },
+    {
+      "batch": 19,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-019.json",
+      "seed": 1618,
+      "sha256": "22f3e121cc394346fc2f82ddc1d9428662ac3e0490690a01c1c31c9616a85a1e"
+    },
+    {
+      "batch": 20,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-020.json",
+      "seed": 1618,
+      "sha256": "dc0abedda713a48a6d57117bab72315f13446497b0737bdad6788f8780182b04"
+    },
+    {
+      "batch": 21,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-021.json",
+      "seed": 1618,
+      "sha256": "9d3692e103e754736fadd92dbafb3acffc4983b84b0c252f92af18b4ff4fc187"
+    },
+    {
+      "batch": 22,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-022.json",
+      "seed": 1618,
+      "sha256": "170b29381c87ec1e5061159bef890fec203d320d44aba2a261f66fc95c73ec47"
+    },
+    {
+      "batch": 23,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-023.json",
+      "seed": 1618,
+      "sha256": "f9dcd2303ba64e20edec22608ab75d413a1e22c25849bb8d16df219009f3430e"
+    },
+    {
+      "batch": 24,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-024.json",
+      "seed": 1618,
+      "sha256": "c8f5c906009530604d41504ccc55baf82844ff79a49335184c395b9f138f1d53"
+    },
+    {
+      "batch": 25,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-025.json",
+      "seed": 1618,
+      "sha256": "c84ff678fffbb95b5d9a8860e98cadfa58235796e1642fa829e9b9a88715e802"
+    },
+    {
+      "batch": 26,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-026.json",
+      "seed": 1618,
+      "sha256": "ec76b246faee95408fceb7e39aad42a1f4fc89543398afe4c9eb23d77167b921"
+    },
+    {
+      "batch": 27,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-027.json",
+      "seed": 1618,
+      "sha256": "26c8d4e2bbccdffb4b515934aa8c4ede158312421c246d5d8136ac63bda7c3ab"
+    },
+    {
+      "batch": 28,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-028.json",
+      "seed": 1618,
+      "sha256": "a1d471c01bdfe7f746ca9943c33651a4509824ccf17dc2948924e1bab52222f3"
+    },
+    {
+      "batch": 29,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-029.json",
+      "seed": 1618,
+      "sha256": "ed048f394cb7988e1af6b493cb627ff2fdb0d87d52119191eddaa86edcbe96c2"
+    },
+    {
+      "batch": 30,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-030.json",
+      "seed": 1618,
+      "sha256": "590df5cd85419562a9ce8b1d9a25bace797fd55c20ec0e3ff14ffeb0701f0563"
+    },
+    {
+      "batch": 31,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-031.json",
+      "seed": 1618,
+      "sha256": "559c4a1729cf0e6458b45850a805b9c28aa30c1126c8a0be9edd1f842e35d185"
+    },
+    {
+      "batch": 32,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-032.json",
+      "seed": 1618,
+      "sha256": "3ad8e3cb9a83e3d207cf389b01201e92b2a6117989ed17b39943447301f04901"
+    },
+    {
+      "batch": 33,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-033.json",
+      "seed": 1618,
+      "sha256": "1e7037743e6263b4dfaedbaca71f56571275ed3b1711fbe14ace224bf30e4fe7"
+    },
+    {
+      "batch": 34,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-034.json",
+      "seed": 1618,
+      "sha256": "fdddb98b5902faac48d8a015bf7677689ce8a6971cd281d72c16526580be60d5"
+    },
+    {
+      "batch": 35,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-035.json",
+      "seed": 1618,
+      "sha256": "c08c3f6c1e14810849d3419a41db5c860d802ea9bddefa9d852a5fb7b9e9ab63"
+    },
+    {
+      "batch": 36,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-036.json",
+      "seed": 1618,
+      "sha256": "82789f578254e32292a064fb4220367fc9cf13b7a30a2c08e5c7ec464a915171"
+    },
+    {
+      "batch": 37,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-037.json",
+      "seed": 1618,
+      "sha256": "21e3f8299d8bce827713a28e812ab6568978912b5285684dd939d26e309fc9d2"
+    },
+    {
+      "batch": 38,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-038.json",
+      "seed": 1618,
+      "sha256": "c42f7c1388917895f9bd964584235487ef29328d9ee3888c82eaf5c15483e706"
+    },
+    {
+      "batch": 39,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-039.json",
+      "seed": 1618,
+      "sha256": "f10a6e942a195c1e1f6619fa22db6cfc6217812cd82d0b5a7c41b966a1d2b8b6"
+    },
+    {
+      "batch": 40,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-040.json",
+      "seed": 1618,
+      "sha256": "91ca205a48a649c24ca77eeb459036641498840d2a1866a60d0a55c545e094b0"
+    },
+    {
+      "batch": 41,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-041.json",
+      "seed": 1618,
+      "sha256": "e0726e4579f4c6aff5d99acfdf111c2d1a07e9efa61d1e521c03019b10c948c4"
+    },
+    {
+      "batch": 42,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-042.json",
+      "seed": 1618,
+      "sha256": "468769baadb827ae2af6442d9f67357a10dbf64f4ee9c44d189bb0c268b316a5"
+    },
+    {
+      "batch": 43,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-043.json",
+      "seed": 1618,
+      "sha256": "c1be413c96412cbce37bf67fcd6f7d7f7e3e8e6160372315fdef3cf3f164beab"
+    },
+    {
+      "batch": 44,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-044.json",
+      "seed": 1618,
+      "sha256": "d43c3506ab832ffe7d2afbc971213b6d564fda8362546919ff8bd941f13a49fd"
+    },
+    {
+      "batch": 45,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-045.json",
+      "seed": 1618,
+      "sha256": "cc846d0f408a49bd7967b6b7c3e71efc35f310f194a057167ca6f72048cbf6ce"
+    },
+    {
+      "batch": 46,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-046.json",
+      "seed": 1618,
+      "sha256": "3d8395aae1cc1c903520c11d6afed921169950b0d9255a9483a4c377fb9f20f8"
+    },
+    {
+      "batch": 47,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-047.json",
+      "seed": 1618,
+      "sha256": "171e58e95c85771b2994089b607c690b2e1cfa872d05fcdf49c9cb864a9b37ee"
+    },
+    {
+      "batch": 48,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-048.json",
+      "seed": 1618,
+      "sha256": "d6451e5daff444e2b6af52f6b2cef7c517e670eaf057a883a133869c64392989"
+    },
+    {
+      "batch": 49,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-049.json",
+      "seed": 1618,
+      "sha256": "67ecb853ca3e72681568293862a28746ff5449d945702b086038a881f6732ea9"
+    },
+    {
+      "batch": 50,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-050.json",
+      "seed": 1618,
+      "sha256": "40cf3e6a45bf90616041d31aea4898f53fd84898e83a6a6834e2741441b2119b"
+    },
+    {
+      "batch": 51,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-051.json",
+      "seed": 1618,
+      "sha256": "b38d7baea213bad49eecbc2493d0516e0ebbcd8cfa2bfc2994f61b3b37b87f1c"
+    },
+    {
+      "batch": 52,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-052.json",
+      "seed": 1618,
+      "sha256": "225be612304e512640c61f9269861e658ccfe88ffe4292bc9c0af5dc76039e33"
+    },
+    {
+      "batch": 53,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-053.json",
+      "seed": 1618,
+      "sha256": "fe738120f3df75a21a6275eda44eceeeb35c644d6c7392471eee5ea66e7ba0eb"
+    },
+    {
+      "batch": 54,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-054.json",
+      "seed": 1618,
+      "sha256": "bd96407ee0f10267ee64c449b837bc0c5e068dcbae573a9ca3ebb43cd9689d45"
+    },
+    {
+      "batch": 55,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-055.json",
+      "seed": 1618,
+      "sha256": "5efd7400eb8777b3c23c99263b668237f056471805190741879ceff1cdc104a2"
+    },
+    {
+      "batch": 56,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-056.json",
+      "seed": 1618,
+      "sha256": "fe3f2b3e03a30c308f1ebad2af181ae8062f057b95c2c4b923350a6a6f7e0209"
+    },
+    {
+      "batch": 57,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-057.json",
+      "seed": 1618,
+      "sha256": "90c61fd877fb5123531c8b91ec3281bbe6583f97c5bfa9dc18b28d0639c109c3"
+    },
+    {
+      "batch": 58,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-058.json",
+      "seed": 1618,
+      "sha256": "5cb056026518dc0a2da1370c97d587bfe9fed88578e990f806fb49f40b2efcb6"
+    },
+    {
+      "batch": 59,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-059.json",
+      "seed": 1618,
+      "sha256": "b219f5b5836fbf04b17a47d80615e79847acb5a297eba087bc677ef6368756a9"
+    },
+    {
+      "batch": 60,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-060.json",
+      "seed": 1618,
+      "sha256": "0aef1ae4b40b42dabdc2f066f33451284c502c7f2a87fc6cf16a8e6f79a77b20"
+    },
+    {
+      "batch": 61,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-061.json",
+      "seed": 1618,
+      "sha256": "56c519df0ee739fc097d64785bc2ee3e6bf9f6039ad77d962b66f88d55eb1e71"
+    },
+    {
+      "batch": 62,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-062.json",
+      "seed": 1618,
+      "sha256": "fda469578bc1ff46422e8cc11f27ea2a5b900369da0fcd86ed053196af737d12"
+    },
+    {
+      "batch": 63,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/host/batch-063.json",
+      "seed": 1618,
+      "sha256": "d3de045b6c36fe89cdcb1d40045c87b81b139cc42be1f6011127e4a1b10605ef"
+    },
+    {
+      "batch": 0,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-000.json",
+      "seed": 1618,
+      "sha256": "33ab49de5ddbc63b80a6adb18cd6e18ae72c1326638677e4012f7dc0ee409084"
+    },
+    {
+      "batch": 1,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-001.json",
+      "seed": 1618,
+      "sha256": "a5c75be18c7a28c301bce9beefa9c8f35af07408fde361bb8f22013df9da8c63"
+    },
+    {
+      "batch": 2,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-002.json",
+      "seed": 1618,
+      "sha256": "f17100fcee49dc37c2793199df50e30ac75ec46b3d26be5b6d74122948d14ba8"
+    },
+    {
+      "batch": 3,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-003.json",
+      "seed": 1618,
+      "sha256": "4d7ea7f45c8e1990dcf538ac7c7574ab60d32d48e4fb30c7a949534a163c236a"
+    },
+    {
+      "batch": 4,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-004.json",
+      "seed": 1618,
+      "sha256": "aab96d19f03fc90ddece263f6fec01a48daa50bbdbd70edd04ce9dcbdb2e5cd1"
+    },
+    {
+      "batch": 5,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-005.json",
+      "seed": 1618,
+      "sha256": "f9b38f70e3c10d65e78def13836c545a81bfa0348daab4eb567831e79fb77124"
+    },
+    {
+      "batch": 6,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-006.json",
+      "seed": 1618,
+      "sha256": "6264f872f2d2522dd1777c3796346eed851da74afc6073938d7e5fd207d160bb"
+    },
+    {
+      "batch": 7,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-007.json",
+      "seed": 1618,
+      "sha256": "dca7c8b66ff6929eb9a448cf75b2eb081e99167a8c39446f306f6cff899ce291"
+    },
+    {
+      "batch": 8,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-008.json",
+      "seed": 1618,
+      "sha256": "ea62bc108a200bf6d530251e2655aa3f8bb606a378d2c1f918da2da9e85ee509"
+    },
+    {
+      "batch": 9,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-009.json",
+      "seed": 1618,
+      "sha256": "492bd2b8703295d3a8c0efc02044bfdb3037a2d704fcedea7aa80cf88e9d28d2"
+    },
+    {
+      "batch": 10,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-010.json",
+      "seed": 1618,
+      "sha256": "e1d3677b0dfbadd002c3ad32cb3cc9a068b5b9b2d17a215aef1a7e0ad6ac50bd"
+    },
+    {
+      "batch": 11,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-011.json",
+      "seed": 1618,
+      "sha256": "330dc825a11266e8df408b3335ce90f7d379ebbce1e09ba0f49f8f9a7c587794"
+    },
+    {
+      "batch": 12,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-012.json",
+      "seed": 1618,
+      "sha256": "8b1b5550444eaf3b49b27fe15945e0841bb89c53098475c0d37dbdc142563b7a"
+    },
+    {
+      "batch": 13,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-013.json",
+      "seed": 1618,
+      "sha256": "9af1b59d491c26bcf6635894f1b27b19368c8e4350152a6846b056aa08ce6835"
+    },
+    {
+      "batch": 14,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-014.json",
+      "seed": 1618,
+      "sha256": "5ae11f222500725d3dfb913db1cee58bf7986f148ad10a696365110d2e30083e"
+    },
+    {
+      "batch": 15,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-015.json",
+      "seed": 1618,
+      "sha256": "4d1ab982ebdd4af2c72448c544568078e46cc82139b715150e9ab8e12dbf9760"
+    },
+    {
+      "batch": 16,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-016.json",
+      "seed": 1618,
+      "sha256": "e903b3946483585615fc9c3cacc282d9fc49924e78d7e9b6b567433d3b5cb919"
+    },
+    {
+      "batch": 17,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-017.json",
+      "seed": 1618,
+      "sha256": "530d32032818003c0de1e94372cd9fc0bd29052bad732ea8d798df26c3a1b0e1"
+    },
+    {
+      "batch": 18,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-018.json",
+      "seed": 1618,
+      "sha256": "959b3cc43c052c995f14e150288dcf4dab541502029e868fbd56f0e03c9ea2da"
+    },
+    {
+      "batch": 19,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-019.json",
+      "seed": 1618,
+      "sha256": "0826f7efcf65726487afe382499acd816ccccfc6d3e4ac58f89a730ffea9fa96"
+    },
+    {
+      "batch": 20,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-020.json",
+      "seed": 1618,
+      "sha256": "e6be6da540c49e6044c9f2b109956efb9f864a9776bdb57ea8d0e30867d3e39c"
+    },
+    {
+      "batch": 21,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-021.json",
+      "seed": 1618,
+      "sha256": "f66a7bd6aa65ab88a69f44649e18b1b9c4e6fd9157edcfbf1bb59c914abe282a"
+    },
+    {
+      "batch": 22,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-022.json",
+      "seed": 1618,
+      "sha256": "eac910e90fd98a3ad3f3d236cca25b773df9818685def593d128774e6ebe87c1"
+    },
+    {
+      "batch": 23,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-023.json",
+      "seed": 1618,
+      "sha256": "e44078e7c6904c09c8bbbb362c47897adc64c16db75f61bb5a5536f57e2de802"
+    },
+    {
+      "batch": 24,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-024.json",
+      "seed": 1618,
+      "sha256": "aaf368120f175d74d9402172958017cfbecf8a848dbe4c5a82c68b6a0d8f889d"
+    },
+    {
+      "batch": 25,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-025.json",
+      "seed": 1618,
+      "sha256": "e18b3ed67d89736e699fd20bf31dbcaefa56cdc21ec353e59c9651b0a2400307"
+    },
+    {
+      "batch": 26,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-026.json",
+      "seed": 1618,
+      "sha256": "791666551a42fb8e8bff4c27e15557e2e7ac93335585b132119809e14fec7660"
+    },
+    {
+      "batch": 27,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-027.json",
+      "seed": 1618,
+      "sha256": "4e7e21696be44013e91d9f5d289123205823e2e36bc1f7424f8a1d12b21269ff"
+    },
+    {
+      "batch": 28,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-028.json",
+      "seed": 1618,
+      "sha256": "a2dbe597507577df261eb2933297c6151708855f32d7d42dd6d0b6866343db32"
+    },
+    {
+      "batch": 29,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-029.json",
+      "seed": 1618,
+      "sha256": "e3d2b9349f5be143955fd0a0ccb800db4af5cc883e8234a0aeaea230ba3c4424"
+    },
+    {
+      "batch": 30,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-030.json",
+      "seed": 1618,
+      "sha256": "ef24f040eb0656e9b05a2a078085ef18977ce8c2a3b072f86653ce1655c9aba1"
+    },
+    {
+      "batch": 31,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-031.json",
+      "seed": 1618,
+      "sha256": "4f5ab67eebf7750365053ad23e325112ca3563df22cd467040b54408da5dd1c6"
+    },
+    {
+      "batch": 32,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-032.json",
+      "seed": 1618,
+      "sha256": "04ab4e316ba23100949c0db7bd70c6e2d11675063b46a97879609fcb94aaa773"
+    },
+    {
+      "batch": 33,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-033.json",
+      "seed": 1618,
+      "sha256": "e24449e2069278ef846878460c102e305cf905cadef62ae3c64e5e62e30e8f40"
+    },
+    {
+      "batch": 34,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-034.json",
+      "seed": 1618,
+      "sha256": "24436dd43b7690cd5a46ca7702a93ab3a4b454ec36102082e5c7f7da61bf533f"
+    },
+    {
+      "batch": 35,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-035.json",
+      "seed": 1618,
+      "sha256": "33d6751d9ec529976afdb0bc81fac39407d34fdd80340a12c7b0c3733ed89087"
+    },
+    {
+      "batch": 36,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-036.json",
+      "seed": 1618,
+      "sha256": "70542f4441aa642a1588c8df302ab90a173db64752517c94e89ddcf8f0e89256"
+    },
+    {
+      "batch": 37,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-037.json",
+      "seed": 1618,
+      "sha256": "8aba70924a2359a80b10e39f65b734612d1c8eeecda6422ddb67b6107d286cb2"
+    },
+    {
+      "batch": 38,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-038.json",
+      "seed": 1618,
+      "sha256": "e6d36a63475343e6190f5a2f74202ec004ccb7d2d12035f85133aa464cbc8dbc"
+    },
+    {
+      "batch": 39,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-039.json",
+      "seed": 1618,
+      "sha256": "338b7563e960ef00b7d775a64b317e21644d372b4465d70c6a6f378787f5da7b"
+    },
+    {
+      "batch": 40,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-040.json",
+      "seed": 1618,
+      "sha256": "4689e18afcca9b3fec42674d8bf64d760a1da6f1838368151a82f89e53f619ec"
+    },
+    {
+      "batch": 41,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-041.json",
+      "seed": 1618,
+      "sha256": "8664b40093cca83a38d8272df8ede06d2971348613db74fa19cd7ed335cf0740"
+    },
+    {
+      "batch": 42,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-042.json",
+      "seed": 1618,
+      "sha256": "e62e707177624134e9fb4b5a7764ffb374dec43620ec095b86870da2ef307fb4"
+    },
+    {
+      "batch": 43,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-043.json",
+      "seed": 1618,
+      "sha256": "a2652d1e407277554122c7687b020bd2a9d2a0f33caea83031214d5a7c7b77c6"
+    },
+    {
+      "batch": 44,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-044.json",
+      "seed": 1618,
+      "sha256": "eb6759fa9ba03e9d5f0633b4766605244c48fa6851c1b7f126ee7775498fb4d4"
+    },
+    {
+      "batch": 45,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-045.json",
+      "seed": 1618,
+      "sha256": "6da7920417475e40f0873fdf34785c1ba9674dd077137e084442c402a2afbcac"
+    },
+    {
+      "batch": 46,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-046.json",
+      "seed": 1618,
+      "sha256": "f261455ca09a079cf3ce7bb010b78751b7e7ae145eb0db13348cd056fee0de7e"
+    },
+    {
+      "batch": 47,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-047.json",
+      "seed": 1618,
+      "sha256": "285822fd72d75777540825e06a5d7c2f1becd987f8b523804839572ad5b3492f"
+    },
+    {
+      "batch": 48,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-048.json",
+      "seed": 1618,
+      "sha256": "65ed0a288c1a558d350fb1cd52ad5bbe0c3e374c3c72bf3e55480d630ac3508f"
+    },
+    {
+      "batch": 49,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-049.json",
+      "seed": 1618,
+      "sha256": "95f0dc51092348d9e0d8babf2f9366566e0d856f51fdd6c1df6230cf95a97964"
+    },
+    {
+      "batch": 50,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-050.json",
+      "seed": 1618,
+      "sha256": "ec7ea9910f6822f33dff8b71571493f07f9f7e30cf43d9a02b0adf695ebcc52a"
+    },
+    {
+      "batch": 51,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-051.json",
+      "seed": 1618,
+      "sha256": "ea128daa094b380fadd35840ad0042cb78ebea8361b592d08adced161ccba51b"
+    },
+    {
+      "batch": 52,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-052.json",
+      "seed": 1618,
+      "sha256": "ad7c2119c87198a7b8eb798f5a2c5ee72f00504b9756efb62d51b3fd73552e53"
+    },
+    {
+      "batch": 53,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-053.json",
+      "seed": 1618,
+      "sha256": "a285f5e82f631be035a4ad6269f9188cde83cf8aefa64efd5ece64e72beae3cb"
+    },
+    {
+      "batch": 54,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-054.json",
+      "seed": 1618,
+      "sha256": "eeeb60f6aa45b73c55dae70fcfc228b93b799f6ae74b73f86ee1b102fd9034d4"
+    },
+    {
+      "batch": 55,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-055.json",
+      "seed": 1618,
+      "sha256": "27084c842a321173ffea2f498d7cf98eca9d2bc76bc2b75b85a7f2dacc484825"
+    },
+    {
+      "batch": 56,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-056.json",
+      "seed": 1618,
+      "sha256": "3c009fb4e233dbab03406b5ab85da04748b153e540e1c3ef1156e388c5cbf82e"
+    },
+    {
+      "batch": 57,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-057.json",
+      "seed": 1618,
+      "sha256": "48254ce16fd8602b1ea5f267b7eee82733381678e62b5f863eb8afbf381ab6ea"
+    },
+    {
+      "batch": 58,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-058.json",
+      "seed": 1618,
+      "sha256": "97c17ac17fdafed958b6f9704e28cdc2a5cd53c56dab06d5fade85796d19c1ec"
+    },
+    {
+      "batch": 59,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-059.json",
+      "seed": 1618,
+      "sha256": "873f734da5923195d0fa8e08aef05d290b9e69517c7930b17ca63791b5683e48"
+    },
+    {
+      "batch": 60,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-060.json",
+      "seed": 1618,
+      "sha256": "f8dc03d38de4494de08f145264c9761e3eedfa1fed66ae0bac12aeed6252e9da"
+    },
+    {
+      "batch": 61,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-061.json",
+      "seed": 1618,
+      "sha256": "b9d2591c0a692f84e3673db3dba0831460d0258c10a2c269655821347f7bf614"
+    },
+    {
+      "batch": 62,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-062.json",
+      "seed": 1618,
+      "sha256": "44409c994b264f9f3b63e1202555b8bf0cb01d2e3c0fe1bef861fe08e591c32b"
+    },
+    {
+      "batch": 63,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-1618/guest/batch-063.json",
+      "seed": 1618,
+      "sha256": "428baa614e874efc54fbc67002248eb13d9b49d2e42822c00c792f542d7ea78a"
+    },
+    {
+      "batch": 0,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-000.json",
+      "seed": 2718,
+      "sha256": "3602445f621dba5d0300cc17488c22e9d27c18d1247ca7db4e6a634a64416288"
+    },
+    {
+      "batch": 1,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-001.json",
+      "seed": 2718,
+      "sha256": "0fd462a029186c42c5ab5d4728e8f6489aa37fcd5e77b4504b2e5ce4d5f0a0cb"
+    },
+    {
+      "batch": 2,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-002.json",
+      "seed": 2718,
+      "sha256": "e1423a4d8809065317314416598175ade9e8a2eba94aa6df4868b984d7b1d476"
+    },
+    {
+      "batch": 3,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-003.json",
+      "seed": 2718,
+      "sha256": "7bcac76ec80be5abac4fdd2c922b7460796e120b1b4a43a4f1f6b5e21e27bab6"
+    },
+    {
+      "batch": 4,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-004.json",
+      "seed": 2718,
+      "sha256": "896f13bd5ba8195595b77e34420ac8b0d03793d643f002123ac88430bfb8089a"
+    },
+    {
+      "batch": 5,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-005.json",
+      "seed": 2718,
+      "sha256": "076646499171f6818c6e2dcb931310c6ed7f6188fbdc451453b891d7bb58376a"
+    },
+    {
+      "batch": 6,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-006.json",
+      "seed": 2718,
+      "sha256": "5079133884d34c630fec0cfc60a891b1149b9e355cffbd66a4e36e31f57cf7be"
+    },
+    {
+      "batch": 7,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-007.json",
+      "seed": 2718,
+      "sha256": "1d7824d6deafef11bd6110878990fa4d777e54527efaa14c562702c383e395f5"
+    },
+    {
+      "batch": 8,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-008.json",
+      "seed": 2718,
+      "sha256": "c0006cc2ad7959785e7458f3283c79b86311f27b4d099c9e457aaf2df4fbda4b"
+    },
+    {
+      "batch": 9,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-009.json",
+      "seed": 2718,
+      "sha256": "59fd564114a11e68b2b122993b746ecbbafd180e7b3e1a339b3baf3df34bd490"
+    },
+    {
+      "batch": 10,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-010.json",
+      "seed": 2718,
+      "sha256": "f8725d7c14fcb8c7376c9656ae0c54d693b87425a563e93f9ba099ce1005ee0e"
+    },
+    {
+      "batch": 11,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-011.json",
+      "seed": 2718,
+      "sha256": "8e9907562d650c86364129f43ad12a2b4dd0857447d53bf07f57920768bbab50"
+    },
+    {
+      "batch": 12,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-012.json",
+      "seed": 2718,
+      "sha256": "03c9c59338529fa05335a6c33cbf3f33ace05632c3175549d7d09a5efbd66302"
+    },
+    {
+      "batch": 13,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-013.json",
+      "seed": 2718,
+      "sha256": "ebe9a6576f19d499a64c1ce87f4e5d14eb4ce138574b8795d70daf62d5638c55"
+    },
+    {
+      "batch": 14,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-014.json",
+      "seed": 2718,
+      "sha256": "758467d833ddf2d3d51114f6007b9402f9b2f66f85765df69d399c5e95799e43"
+    },
+    {
+      "batch": 15,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-015.json",
+      "seed": 2718,
+      "sha256": "60cfdc14e57761e55bcd55c6874791157d07173948cd68a3ae02d9efbb9bb4c7"
+    },
+    {
+      "batch": 16,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-016.json",
+      "seed": 2718,
+      "sha256": "17255513b1792caaf7605ee0b2410e3cc0469d04a200ce1e34536c8d73e85ee7"
+    },
+    {
+      "batch": 17,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-017.json",
+      "seed": 2718,
+      "sha256": "8b8eac6d1c4efb203985bb0c31105b711886ee3c06fe81a2dd3304fce99829d5"
+    },
+    {
+      "batch": 18,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-018.json",
+      "seed": 2718,
+      "sha256": "8670afe8d677d4468f1dbe0e138ea7124bc9a9bc09d722f96c034f183869c2d0"
+    },
+    {
+      "batch": 19,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-019.json",
+      "seed": 2718,
+      "sha256": "533d67d7c4f577748dc7c84d56c918b57e2d6149121bec8460b5d976dcfcf14c"
+    },
+    {
+      "batch": 20,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-020.json",
+      "seed": 2718,
+      "sha256": "10791cf2c65de33bfccb906c2c689c3f5b9c77a8605419183b488bfae155e721"
+    },
+    {
+      "batch": 21,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-021.json",
+      "seed": 2718,
+      "sha256": "925f6d0cc61005426ffc18cb651e9a64d2a0e70ae69d27027115582da4e6f7eb"
+    },
+    {
+      "batch": 22,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-022.json",
+      "seed": 2718,
+      "sha256": "b208b15e8fc21ee893bac4a7acef39eef51aee2bf5f349a1e3ddf440d14f1fc2"
+    },
+    {
+      "batch": 23,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-023.json",
+      "seed": 2718,
+      "sha256": "2136bcb85c6dfacb93dc771549cf374bdcdec790aa95eee0f8a1a3ba26fe7279"
+    },
+    {
+      "batch": 24,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-024.json",
+      "seed": 2718,
+      "sha256": "4d94c8f502f4f47066bf9d15ab76fa4d3ef8ad0f34b68c461ac1c72856cc978f"
+    },
+    {
+      "batch": 25,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-025.json",
+      "seed": 2718,
+      "sha256": "e3bfecb8d1b6b7b1e40b42e45533bb8077343c7fbc156a250ac03fa8de3f9153"
+    },
+    {
+      "batch": 26,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-026.json",
+      "seed": 2718,
+      "sha256": "cae3aa862b0a0e99a2ab77e77127f750ee42fc86c168a751b29298d306942f7b"
+    },
+    {
+      "batch": 27,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-027.json",
+      "seed": 2718,
+      "sha256": "641694e0ae0a7b752de9c3f8398b868cca7e70424554b4196ff5f91004c06a0f"
+    },
+    {
+      "batch": 28,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-028.json",
+      "seed": 2718,
+      "sha256": "8a1a8bbe668f6e5b1237bf70b6545e72a4e4b16663ed71fecb0c9113618c3499"
+    },
+    {
+      "batch": 29,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-029.json",
+      "seed": 2718,
+      "sha256": "e14e6f8be2dcd2f6b37303c56ae9e44b5301099586b2502c5ef9557b93226c71"
+    },
+    {
+      "batch": 30,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-030.json",
+      "seed": 2718,
+      "sha256": "1dbfcfd992c293eb2a4818cb2fc58b0798cc14c8c44c00296a8703be98509b6f"
+    },
+    {
+      "batch": 31,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-031.json",
+      "seed": 2718,
+      "sha256": "5643cbb0ae4dd2fc1ea90f5907eeab7a4c5763859dceb4d15092863cdefd7692"
+    },
+    {
+      "batch": 32,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-032.json",
+      "seed": 2718,
+      "sha256": "dbca49256038e632c7d7754d9e0f9342981d461b3dc3b390317f64cf665f3420"
+    },
+    {
+      "batch": 33,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-033.json",
+      "seed": 2718,
+      "sha256": "8df939450557ce5dde8f21d0a8c96ef5a0a7d3a8b4cee3b798fe4d74c81a85d2"
+    },
+    {
+      "batch": 34,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-034.json",
+      "seed": 2718,
+      "sha256": "3c4d10c0d42d52f48f66a291a68c54ec72794e00321078df66f5c1b98e8024bb"
+    },
+    {
+      "batch": 35,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-035.json",
+      "seed": 2718,
+      "sha256": "232a9fd92832a16796299ce7df83cd08b31d58c5e292af82fea4d9d67acc02f6"
+    },
+    {
+      "batch": 36,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-036.json",
+      "seed": 2718,
+      "sha256": "e128179c28b78571e1e709b5873559070f4fdf80e28a7324880086a561982e27"
+    },
+    {
+      "batch": 37,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-037.json",
+      "seed": 2718,
+      "sha256": "af8924dcd9374b7dbb71232f39097f8d1743d6448525ac46a5b764b7d5c0effd"
+    },
+    {
+      "batch": 38,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-038.json",
+      "seed": 2718,
+      "sha256": "8c2b5a08ac1533170fa11ef51560dd53a2ea142ddef1612d1170ff4e11ad3a2c"
+    },
+    {
+      "batch": 39,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-039.json",
+      "seed": 2718,
+      "sha256": "6aca0d39708f9bb4676725af907c58443756a0155a5a2eec0e857f37709da3b0"
+    },
+    {
+      "batch": 40,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-040.json",
+      "seed": 2718,
+      "sha256": "0ad82c19b60470ecaee51227142bcddc47b8bc05a7b762ef1cb453901815f401"
+    },
+    {
+      "batch": 41,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-041.json",
+      "seed": 2718,
+      "sha256": "66a3f80b9fb3936325910add636646e8362d9b432d1d73e76d9be3ef52ed60ba"
+    },
+    {
+      "batch": 42,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-042.json",
+      "seed": 2718,
+      "sha256": "00128d9e9eed9f528695146afdce39fbd619fadfb31db825975b8fd7196b122b"
+    },
+    {
+      "batch": 43,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-043.json",
+      "seed": 2718,
+      "sha256": "fd611bb3088a0b9ea2a9755c5a15a87efe8cf007d3387ec1c867528445c0b604"
+    },
+    {
+      "batch": 44,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-044.json",
+      "seed": 2718,
+      "sha256": "5e2fb2040c09660544847ab5ae2c65f2e94347ed053cb5135781d61191cdcdb0"
+    },
+    {
+      "batch": 45,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-045.json",
+      "seed": 2718,
+      "sha256": "817e6ce4ac308df0be4ca10d2c26f354ad1809a064097c75f6e2b0af46fc682d"
+    },
+    {
+      "batch": 46,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-046.json",
+      "seed": 2718,
+      "sha256": "3a9c0c6ca880a673d5e8d03a73a5ce89b6fb9db70d7f3e7a01378efffc38abda"
+    },
+    {
+      "batch": 47,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-047.json",
+      "seed": 2718,
+      "sha256": "fdb20d335171af0cb1c6e1976b53b3d941d744899daa3846a8f2d8c5aa5db3e3"
+    },
+    {
+      "batch": 48,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-048.json",
+      "seed": 2718,
+      "sha256": "19ba215bf3bbb735fe3f4f7789acf77e6275a0c9b77d47620c27ab9f11325901"
+    },
+    {
+      "batch": 49,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-049.json",
+      "seed": 2718,
+      "sha256": "dc9f84a36c1a0067c3c3cd7b01c40caefbe475a28dccd7bc16ae4ce2820f62ef"
+    },
+    {
+      "batch": 50,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-050.json",
+      "seed": 2718,
+      "sha256": "e4307947414cc67a06206669894ea1f28d11a499c02a746193995e6872e577f3"
+    },
+    {
+      "batch": 51,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-051.json",
+      "seed": 2718,
+      "sha256": "fad2e526d4645210f9cd1342559b5cbe4df10921f8211414a48141597323b6eb"
+    },
+    {
+      "batch": 52,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-052.json",
+      "seed": 2718,
+      "sha256": "b4b10e19ebe39c009c4a5bcc80a069b36023ad6864e9221bd0d87259ebf928be"
+    },
+    {
+      "batch": 53,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-053.json",
+      "seed": 2718,
+      "sha256": "e9e8162abf3512cc682472e61e15af8ef80ab3d3cc5bfdafdecf86929e55d161"
+    },
+    {
+      "batch": 54,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-054.json",
+      "seed": 2718,
+      "sha256": "47d41fbc67d58e773e35012cf0db4ae6fed37f7a1dc58b29b1f6d570cf450128"
+    },
+    {
+      "batch": 55,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-055.json",
+      "seed": 2718,
+      "sha256": "30b9aedb37a5d739e4ded5608fc36f1bba1e1ddf39873794f0515b58582ab805"
+    },
+    {
+      "batch": 56,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-056.json",
+      "seed": 2718,
+      "sha256": "c702667e180a8cc56f958ba33a305be84319da0401bc504900d10eb5ed7d33dc"
+    },
+    {
+      "batch": 57,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-057.json",
+      "seed": 2718,
+      "sha256": "ed7eb5354fe20eed51fec0e97e3cce4e3a5484b27d14b9d0fc46d8776fcce3a9"
+    },
+    {
+      "batch": 58,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-058.json",
+      "seed": 2718,
+      "sha256": "d2f40337a1b42ea2b47f561888d031301994ae7b58b1f28787d34fb715645080"
+    },
+    {
+      "batch": 59,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-059.json",
+      "seed": 2718,
+      "sha256": "9927219bc8a0577e38834b59682cba7bb66028d9eb8ad22200b6535e8b1f460b"
+    },
+    {
+      "batch": 60,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-060.json",
+      "seed": 2718,
+      "sha256": "a74b3ece95dcc95622841e6af9d6e3376cd65ea4a4b2a2222135aff326788bf3"
+    },
+    {
+      "batch": 61,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-061.json",
+      "seed": 2718,
+      "sha256": "4551a0f8a1b43e3adf26c23cd07b0edd03779cdd02d4a87ff323ec366b85947d"
+    },
+    {
+      "batch": 62,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-062.json",
+      "seed": 2718,
+      "sha256": "e51ea4dc41079d29800921757fd1a0ae1972e2db262fc43dd4174bcefb912f86"
+    },
+    {
+      "batch": 63,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/host/batch-063.json",
+      "seed": 2718,
+      "sha256": "c1e07c3d48778ed2d1a3de27d54edb544df2960e5dbea722d182c9b30dffb27e"
+    },
+    {
+      "batch": 0,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-000.json",
+      "seed": 2718,
+      "sha256": "bd73ac2d709f223b738d1ea7f0bee5207ca23f2e6a005e163b32d86e3ca7dcd1"
+    },
+    {
+      "batch": 1,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-001.json",
+      "seed": 2718,
+      "sha256": "ef3680b01afd6697d5bf543ea50efbd8ed4606b89629755eb487c0f8c5d18c14"
+    },
+    {
+      "batch": 2,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-002.json",
+      "seed": 2718,
+      "sha256": "a261d39e38a80ff058dd42ab8717f5d035fd8a369444411b33b12fc5698bdd73"
+    },
+    {
+      "batch": 3,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-003.json",
+      "seed": 2718,
+      "sha256": "8b70b753480bc6b8d95a7716cf9869ae404632aea4a801d0ad179661cfb00fb4"
+    },
+    {
+      "batch": 4,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-004.json",
+      "seed": 2718,
+      "sha256": "390d54403b066ef73d9bf39eece3a2ef824f7985d01d9888976ccb89084e4b76"
+    },
+    {
+      "batch": 5,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-005.json",
+      "seed": 2718,
+      "sha256": "dfc4174cc672728391f85e1dc54c91a29e7dd8308f33069bc8926b0faf57f9b9"
+    },
+    {
+      "batch": 6,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-006.json",
+      "seed": 2718,
+      "sha256": "cccda0cece1e64fcddd9c01a1507152f07ee785d077c07200574b4c7fec86d4a"
+    },
+    {
+      "batch": 7,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-007.json",
+      "seed": 2718,
+      "sha256": "04eafae00b16f9545ebfa6294510f689df025b801d53c4d707f49d299c8200bf"
+    },
+    {
+      "batch": 8,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-008.json",
+      "seed": 2718,
+      "sha256": "49421b928da5fe47c5fac51b9493c5fe6aab0b518b87e844049a924707bc3c11"
+    },
+    {
+      "batch": 9,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-009.json",
+      "seed": 2718,
+      "sha256": "1683ea5df5d158b89361b0b99d3f3aeda54517c668bd248b67f2fa8ed782fa46"
+    },
+    {
+      "batch": 10,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-010.json",
+      "seed": 2718,
+      "sha256": "5f75764d7fb03fdcede89c3029772d1bf61ce612873c1fe71f473dba740dea9a"
+    },
+    {
+      "batch": 11,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-011.json",
+      "seed": 2718,
+      "sha256": "4503235133a628a027159fa5169483b9d1593c9ebb8e87da3581334aafdf48ef"
+    },
+    {
+      "batch": 12,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-012.json",
+      "seed": 2718,
+      "sha256": "b5c1499b18b6791a3d0fcb77ed3de4336363299179b816b3d2aad0b6e7fdd5c5"
+    },
+    {
+      "batch": 13,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-013.json",
+      "seed": 2718,
+      "sha256": "b0edca0d36484b5e11ad680247e98b3ab307545826cf84179b9f56827591e06b"
+    },
+    {
+      "batch": 14,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-014.json",
+      "seed": 2718,
+      "sha256": "62c490da55ac1e1aa5c141089552a10c18a1c91e8057fff78fecee41bce71940"
+    },
+    {
+      "batch": 15,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-015.json",
+      "seed": 2718,
+      "sha256": "b22a3dfd105a483c4db91755e4b170eb17604ee0855a2c865a3063b09b0afc9d"
+    },
+    {
+      "batch": 16,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-016.json",
+      "seed": 2718,
+      "sha256": "7aaee68195eabe47462f57749bd4216d23d07e82c385a6adb9739f84b09fc9f2"
+    },
+    {
+      "batch": 17,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-017.json",
+      "seed": 2718,
+      "sha256": "eb2f18c4df29c88cacea19de0916eba2215e56448c4edaf8d710251a3b2f56c0"
+    },
+    {
+      "batch": 18,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-018.json",
+      "seed": 2718,
+      "sha256": "2de123da88846b46db27472c441495b74030dbbf3f5a13364dfa751422ffec07"
+    },
+    {
+      "batch": 19,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-019.json",
+      "seed": 2718,
+      "sha256": "220cc27e23af9fca6646a43413196903b84c427c94a7d7ce06ae5ffb324636a4"
+    },
+    {
+      "batch": 20,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-020.json",
+      "seed": 2718,
+      "sha256": "a47aa5789ea5b72a9221539cc786984dd757b0a80fa60abd498ecf953fd888f5"
+    },
+    {
+      "batch": 21,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-021.json",
+      "seed": 2718,
+      "sha256": "da19b05a609c8b16b9995b100cfe57572970eaf21d34670775c5dddd02794522"
+    },
+    {
+      "batch": 22,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-022.json",
+      "seed": 2718,
+      "sha256": "6008051680b81da12e99e72ae66ca23f9a47ce7c790db5e516183e69f19b2c99"
+    },
+    {
+      "batch": 23,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-023.json",
+      "seed": 2718,
+      "sha256": "5892fc3413f935a1c551d62f1f96ea0583601df956fd8b59a49d948baf06239d"
+    },
+    {
+      "batch": 24,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-024.json",
+      "seed": 2718,
+      "sha256": "12351c571e5d4984aac7d0843f555039c19f0e8bd9cfdc4945416b04b6a479cd"
+    },
+    {
+      "batch": 25,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-025.json",
+      "seed": 2718,
+      "sha256": "1de32113f138469a8b4f8ed5f175326863bb0693ff5cfd630dc1fbea9bf799a8"
+    },
+    {
+      "batch": 26,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-026.json",
+      "seed": 2718,
+      "sha256": "52c4ed320db5c14f3cc242161e1c533b525b3654541a4beeb0bcc1896dbb0a0a"
+    },
+    {
+      "batch": 27,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-027.json",
+      "seed": 2718,
+      "sha256": "0a86f8c284f232a792d90e24d76e84e6399b7e5442c2b2b19f68e26b996a2a28"
+    },
+    {
+      "batch": 28,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-028.json",
+      "seed": 2718,
+      "sha256": "fee5da495f51228c6bd6bdb25b15e4ef2a29ffc87cc18f1a81f9877afaa99777"
+    },
+    {
+      "batch": 29,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-029.json",
+      "seed": 2718,
+      "sha256": "aa54a8b5ad2c1eff355cab6ac2d01ca90802bcafc32e2b70f5e37a4ad714027b"
+    },
+    {
+      "batch": 30,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-030.json",
+      "seed": 2718,
+      "sha256": "a4ec4f64c5e81e7d38cf08b1e879f8856babee713ef4219162b6f8474756bd23"
+    },
+    {
+      "batch": 31,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-031.json",
+      "seed": 2718,
+      "sha256": "dc47a1069a69d6f2661ca29b3c6653831bf2adbbbf9fc2201213cc80709e1233"
+    },
+    {
+      "batch": 32,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-032.json",
+      "seed": 2718,
+      "sha256": "591e6b2174d2faba4f12670a3fb0eebb38ba6882c94d352edcd526e64b790e37"
+    },
+    {
+      "batch": 33,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-033.json",
+      "seed": 2718,
+      "sha256": "9e6e469d59cb3e85e60135e626623d2800f40b730ae1ea750662b6154a8f1f78"
+    },
+    {
+      "batch": 34,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-034.json",
+      "seed": 2718,
+      "sha256": "d118f732f0f7a7a44503e4e60380b717b37eea8842faf34f181e83ab7c2f6875"
+    },
+    {
+      "batch": 35,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-035.json",
+      "seed": 2718,
+      "sha256": "5b37d633fb3d0d201bd7351cb826d5d98422a9f28beeb9c57cf3ea6a2091115d"
+    },
+    {
+      "batch": 36,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-036.json",
+      "seed": 2718,
+      "sha256": "f4bf907c18943d2669f54e1cc8f425f312dc72e245d9817d40951535f7d8c0da"
+    },
+    {
+      "batch": 37,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-037.json",
+      "seed": 2718,
+      "sha256": "4c49cbb9bf8504d3940322fe682a5b04a7d5a9f729419f09f3afe99732280538"
+    },
+    {
+      "batch": 38,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-038.json",
+      "seed": 2718,
+      "sha256": "d25811ebaff4d62e2427dc45beb4f5600f98400ed352a5f6a9527c592c5d0924"
+    },
+    {
+      "batch": 39,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-039.json",
+      "seed": 2718,
+      "sha256": "0fb9c99181bd855f8bdd56b89830d171a58c7b0b36e92aec65e28839eb9c9ca7"
+    },
+    {
+      "batch": 40,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-040.json",
+      "seed": 2718,
+      "sha256": "6de717363667c93bceb5b0a15f11294c473b1114d01d281a0538f79c78fcf318"
+    },
+    {
+      "batch": 41,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-041.json",
+      "seed": 2718,
+      "sha256": "a63dedcf067fcb8cde3193d186627faf788e3b070e70e91dd56fb17d8831af2f"
+    },
+    {
+      "batch": 42,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-042.json",
+      "seed": 2718,
+      "sha256": "c28c24fb9f8cbd90256b56d7516c2598a0b148181f6d5f4f39f1b054b602bead"
+    },
+    {
+      "batch": 43,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-043.json",
+      "seed": 2718,
+      "sha256": "b975d10e0665dd7c8ce68874ef8ef0fe7a8559ebaf169310cfb4ab9c57beacb9"
+    },
+    {
+      "batch": 44,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-044.json",
+      "seed": 2718,
+      "sha256": "75e0eefe4ee6150115c89dc87e16366d4dfb19f8d03b50cb30d04d2a5d5a6d61"
+    },
+    {
+      "batch": 45,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-045.json",
+      "seed": 2718,
+      "sha256": "e34996cfbfee7c642e63d64b4b894ea167652560aab5da2a9685c4c07d0ca3ee"
+    },
+    {
+      "batch": 46,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-046.json",
+      "seed": 2718,
+      "sha256": "db2926055b29ddeb2346621aa96bced0874010cd55eab5ed193cc429f7eeaae2"
+    },
+    {
+      "batch": 47,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-047.json",
+      "seed": 2718,
+      "sha256": "b1600ff4b518775d7cc36579c46f01ad932865658abaa2674d2cfc7300ff9415"
+    },
+    {
+      "batch": 48,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-048.json",
+      "seed": 2718,
+      "sha256": "5f477517e6663f4c7d88130807976593e3d4ef58094ef8b7173b80070e495ef7"
+    },
+    {
+      "batch": 49,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-049.json",
+      "seed": 2718,
+      "sha256": "57b6a2246bf60192688eae3c339703f890935f2a9134f7f83798f1e7be8c3c3a"
+    },
+    {
+      "batch": 50,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-050.json",
+      "seed": 2718,
+      "sha256": "99854e7dd3431f3dd614449a89f9471b658d1db7340fb272da569e2ab0f19a00"
+    },
+    {
+      "batch": 51,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-051.json",
+      "seed": 2718,
+      "sha256": "cb5268e9d335a37627187cab132afa892c5a683251880e53695db56efc9c0e4e"
+    },
+    {
+      "batch": 52,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-052.json",
+      "seed": 2718,
+      "sha256": "0af1058f76ebe267c81b4b731c6d251ede2a3ba78a646f932627d8aec0ffb4f3"
+    },
+    {
+      "batch": 53,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-053.json",
+      "seed": 2718,
+      "sha256": "1d2500106994cff2a1e63196b3125f024890de9a2b7c078723af8b2e3df910c7"
+    },
+    {
+      "batch": 54,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-054.json",
+      "seed": 2718,
+      "sha256": "bafd6b6c0eddd1d5205ef622901dbc70044819469cb4577e72bfe9591555bfa2"
+    },
+    {
+      "batch": 55,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-055.json",
+      "seed": 2718,
+      "sha256": "08b5435db5796ff6b429e36868100afa747b40fb51998f8589c56f2f11944291"
+    },
+    {
+      "batch": 56,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-056.json",
+      "seed": 2718,
+      "sha256": "d1cc401ada845720c46c053ba87b3995f7e6d427fa71901d2ffda47e716c0b63"
+    },
+    {
+      "batch": 57,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-057.json",
+      "seed": 2718,
+      "sha256": "a82fe306f3547eddf0582d7d2bb62cc14082274ed7a787e67ec846d7a3a30cff"
+    },
+    {
+      "batch": 58,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-058.json",
+      "seed": 2718,
+      "sha256": "2c2ae3c000762e6861f74e7dc257f9886716f618b2b908f840babe4a23092009"
+    },
+    {
+      "batch": 59,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-059.json",
+      "seed": 2718,
+      "sha256": "cd14e29eaa6989516e13629c00dfd11abb43c20725ca51cfefa60ffc42fbbdf3"
+    },
+    {
+      "batch": 60,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-060.json",
+      "seed": 2718,
+      "sha256": "c79c571de6193b7a7d204889eb57b047832551dde9088b912478bd9f342fcb5f"
+    },
+    {
+      "batch": 61,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-061.json",
+      "seed": 2718,
+      "sha256": "be34b551a4d4f1b535f7346926dc4680f487636048b6898d5dab75b68c51618d"
+    },
+    {
+      "batch": 62,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-062.json",
+      "seed": 2718,
+      "sha256": "2c3f9f8f6c2a5512dcc306327ad3cd0ec3c06442591c196d7a6a74e595237f9d"
+    },
+    {
+      "batch": 63,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-2718/guest/batch-063.json",
+      "seed": 2718,
+      "sha256": "f897a71622d70af3dd61b7560908f63cd50572bac6e686e01e1a31c7d87a7135"
+    },
+    {
+      "batch": 0,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-000.json",
+      "seed": 3141,
+      "sha256": "61fba8971961770bcba7819424e1e193b36bac1d25b9f290eef52e4e8084dae9"
+    },
+    {
+      "batch": 1,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-001.json",
+      "seed": 3141,
+      "sha256": "b75c055a670a5837c81e1c392d18ddb0a8fb813651fa792b9ad47ee4e67de90a"
+    },
+    {
+      "batch": 2,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-002.json",
+      "seed": 3141,
+      "sha256": "6f3d4ac1b3d650eaa4310e7f11c2e2fd9228c3deca11ff49fe05ae033fab9ccc"
+    },
+    {
+      "batch": 3,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-003.json",
+      "seed": 3141,
+      "sha256": "1a4f10a5f677aac245c4bb68500e4662d16682a5b11cbf04dccfe5c2944826dc"
+    },
+    {
+      "batch": 4,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-004.json",
+      "seed": 3141,
+      "sha256": "6fc84970e853ae1216eb6856b83f38e09be55bf8674fdac12f26592989e8cdab"
+    },
+    {
+      "batch": 5,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-005.json",
+      "seed": 3141,
+      "sha256": "54ee881f20e192a741c5302b198241ff2ca70b9ec71550ba346974524a142360"
+    },
+    {
+      "batch": 6,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-006.json",
+      "seed": 3141,
+      "sha256": "4d8072e533d535a07b5f0c30549a2c3995351166f26a9e01c00ab6eb3beac772"
+    },
+    {
+      "batch": 7,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-007.json",
+      "seed": 3141,
+      "sha256": "f93da858f01176dcf5b96206352f0e5811d5084ab07f7b06fecb1516ef995f3d"
+    },
+    {
+      "batch": 8,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-008.json",
+      "seed": 3141,
+      "sha256": "ad8ba56a81fef7a7d4915f3373f2bfd546f739d6fd4626e9c944d3e194848e96"
+    },
+    {
+      "batch": 9,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-009.json",
+      "seed": 3141,
+      "sha256": "825d3149b11c5e49012c6372aec9e023f0666efbbf81b8d456f7a91f20b19884"
+    },
+    {
+      "batch": 10,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-010.json",
+      "seed": 3141,
+      "sha256": "c74b9421c71eef13183170c8acf82738cf4ba947c12b0c81975823b90dbcbce3"
+    },
+    {
+      "batch": 11,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-011.json",
+      "seed": 3141,
+      "sha256": "7078125737c57f1062b81c6bb3baba2aa19d329b14c92bba7b6941bd248e4e7c"
+    },
+    {
+      "batch": 12,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-012.json",
+      "seed": 3141,
+      "sha256": "2d55d9ee03e6e63ecd3b3b9b45dd87f670a4b4968e635fc4e12955214acefbef"
+    },
+    {
+      "batch": 13,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-013.json",
+      "seed": 3141,
+      "sha256": "794dc17709ae1283a77c856e43735b4aebf8ac06db01ee01b17a1fd131cfac56"
+    },
+    {
+      "batch": 14,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-014.json",
+      "seed": 3141,
+      "sha256": "64d03fe32ae8c59aec3e9e2122314f780d057670d18f48d3bad5163addda9918"
+    },
+    {
+      "batch": 15,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-015.json",
+      "seed": 3141,
+      "sha256": "7ee1bca0072be426aa08736924f3d67cb99134d0ddb34c85ed3267e1ded863ac"
+    },
+    {
+      "batch": 16,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-016.json",
+      "seed": 3141,
+      "sha256": "096da0d3b8a4750585edc32bdca627afcb7d3fc69b7d6957bf5a525aa55e03ab"
+    },
+    {
+      "batch": 17,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-017.json",
+      "seed": 3141,
+      "sha256": "87632f37a44631aeea28c1eddb1b58f86948a5bbbb76dfa806f9a992f411a503"
+    },
+    {
+      "batch": 18,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-018.json",
+      "seed": 3141,
+      "sha256": "f3fcb669d7490c3ac05ecd0a02eefcae6fa7c171de2075436588e0786cc4c7a1"
+    },
+    {
+      "batch": 19,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-019.json",
+      "seed": 3141,
+      "sha256": "5c0e6dd4af8302c01777c063f1ec88931e8f8dc5fe93782c5edfd0c9fd4ccac8"
+    },
+    {
+      "batch": 20,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-020.json",
+      "seed": 3141,
+      "sha256": "16fc0d432eec10d53c10e75ab80323af65c631b04767e94a66b7d1d3c8a61212"
+    },
+    {
+      "batch": 21,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-021.json",
+      "seed": 3141,
+      "sha256": "eefb6a3fb2fa2cb77815f709676c700a8a04687d87f041086b37f0dab52e1e4e"
+    },
+    {
+      "batch": 22,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-022.json",
+      "seed": 3141,
+      "sha256": "3b46bfcfea2279ccc4ae28a46930ba85236a4f87de57332954105a397d3c6782"
+    },
+    {
+      "batch": 23,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-023.json",
+      "seed": 3141,
+      "sha256": "6233e8e5e169e9b70f2221e3bcf080752dd88a83f08bfa9167bb8cc06b3344e3"
+    },
+    {
+      "batch": 24,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-024.json",
+      "seed": 3141,
+      "sha256": "bdc76d17c70b76c18da0f26c184094bed3b75ba30bfc8f2b3c1edb6a1459e5c1"
+    },
+    {
+      "batch": 25,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-025.json",
+      "seed": 3141,
+      "sha256": "c6e816faac385e8e70f2bc27950a586d1b46adfc383b7150cd9a5242704b837e"
+    },
+    {
+      "batch": 26,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-026.json",
+      "seed": 3141,
+      "sha256": "19e67b237f7e9ea3903a99a28ce40c55f52bac3a24a82ffc53cab432f612a147"
+    },
+    {
+      "batch": 27,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-027.json",
+      "seed": 3141,
+      "sha256": "d5b10c87e0c8e91a03651fc4541fa3dceffb07df7b2b14ae85636c12c9a283f2"
+    },
+    {
+      "batch": 28,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-028.json",
+      "seed": 3141,
+      "sha256": "4ec0543c46661398759c157b89a9f3d0bcc8b909298dfff9998131ac73f4ac9e"
+    },
+    {
+      "batch": 29,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-029.json",
+      "seed": 3141,
+      "sha256": "1317e6b3995d3cbd3dc2591dc2b1317e5ccdc7934750693427e5ccc4bd5ac70e"
+    },
+    {
+      "batch": 30,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-030.json",
+      "seed": 3141,
+      "sha256": "c3f10bb78ff9db3abd0bd3f1924aa4a347762db6414dda29534f3c321c36bcd3"
+    },
+    {
+      "batch": 31,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-031.json",
+      "seed": 3141,
+      "sha256": "1550e55d885de9e9294c4338fffe356276b38b178d1c2731ece68d5694360d84"
+    },
+    {
+      "batch": 32,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-032.json",
+      "seed": 3141,
+      "sha256": "6682bc0f82e10ed03c1b994056445ee08752c4e4b0efc5ff6a968a3974d2b27b"
+    },
+    {
+      "batch": 33,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-033.json",
+      "seed": 3141,
+      "sha256": "70eabe3a9cd81c8170809e054f416f3d3b35727a3c550e7c596e8864e0d2538c"
+    },
+    {
+      "batch": 34,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-034.json",
+      "seed": 3141,
+      "sha256": "51cee4e3a975d6ba8448e5d770744cbb2e5a74b4e0dc88b3e8612a3f54e413d6"
+    },
+    {
+      "batch": 35,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-035.json",
+      "seed": 3141,
+      "sha256": "0d9699194f64b31b6c4e0f218d1fdf5b7b85296bc55c7f84f30a4a3b73bed7ca"
+    },
+    {
+      "batch": 36,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-036.json",
+      "seed": 3141,
+      "sha256": "085f5187e35ff23a4300ae78c9c21ea5669aeade5f15d91a287190d9f013f075"
+    },
+    {
+      "batch": 37,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-037.json",
+      "seed": 3141,
+      "sha256": "be3066e97117baa0b683c82dcd4106eb2780f8ea5cf30da84bc885e50cdf1967"
+    },
+    {
+      "batch": 38,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-038.json",
+      "seed": 3141,
+      "sha256": "f26326b9594ea9810cfe6f42d50f5a68266a694e3bddc9c66b61b0693118646b"
+    },
+    {
+      "batch": 39,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-039.json",
+      "seed": 3141,
+      "sha256": "44b72b77312b8a00f6f81f99f7596808bdfdd7712f422f23ac431f1f4b53baa9"
+    },
+    {
+      "batch": 40,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-040.json",
+      "seed": 3141,
+      "sha256": "01bcea552c9b13afc108e31f0e681eec1736a1f23438451196db92395fd6b3bb"
+    },
+    {
+      "batch": 41,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-041.json",
+      "seed": 3141,
+      "sha256": "bec5f035376bca0c7e8fac5e9eaecac87389eca19580df12e5d4f99d20bbb361"
+    },
+    {
+      "batch": 42,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-042.json",
+      "seed": 3141,
+      "sha256": "9924b25ca0520a6a7cee52f8e17a74722859206b4488307f600c7e3bb3d15277"
+    },
+    {
+      "batch": 43,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-043.json",
+      "seed": 3141,
+      "sha256": "89672e94def3530e01352102d6cba6bd8b33fb1cce93b540d1a352decc8f0215"
+    },
+    {
+      "batch": 44,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-044.json",
+      "seed": 3141,
+      "sha256": "98eafb8b626caf44e273b181239259c937eb16875b7f629377cb4c6b741d8a18"
+    },
+    {
+      "batch": 45,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-045.json",
+      "seed": 3141,
+      "sha256": "d4bafffdbdcd23f84c0d1ac5dec008247a0b2f33f4115eabd0b8f9c0ed15d343"
+    },
+    {
+      "batch": 46,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-046.json",
+      "seed": 3141,
+      "sha256": "22c2c1b1df4ad63a5f1e141db6eeff329be4e0d90b24833c3e6ed609561ba498"
+    },
+    {
+      "batch": 47,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-047.json",
+      "seed": 3141,
+      "sha256": "8323ecbfe8814bdd21b7a9291f7105b50bb99b8b6149ccf6d0864216417d62a5"
+    },
+    {
+      "batch": 48,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-048.json",
+      "seed": 3141,
+      "sha256": "0c40fa5acc1655dff167722fbd09b4170e6f82978ef1a332016be0e0ef51959e"
+    },
+    {
+      "batch": 49,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-049.json",
+      "seed": 3141,
+      "sha256": "19161088eaa07c44a556b5bcf96f92015544fc45a80b800f9dcb0a37698732ca"
+    },
+    {
+      "batch": 50,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-050.json",
+      "seed": 3141,
+      "sha256": "d024e02afb02027d418cccb5111aa92cc1b5f2bd837436cbe80d46112430eb27"
+    },
+    {
+      "batch": 51,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-051.json",
+      "seed": 3141,
+      "sha256": "abe526d631036d1dd615733df3bb881865385c7b09a31865b95ecde8b259a50a"
+    },
+    {
+      "batch": 52,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-052.json",
+      "seed": 3141,
+      "sha256": "7613cdc9ac657c7fae9700bc4260600411adac6a42dbe30897676bb8f3c90711"
+    },
+    {
+      "batch": 53,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-053.json",
+      "seed": 3141,
+      "sha256": "8da54ef02ee876c84a16c0fa17a982445dac6e422fecefcd49d50a8def5b625a"
+    },
+    {
+      "batch": 54,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-054.json",
+      "seed": 3141,
+      "sha256": "72bb95891153d4dee5a122d47caed5264d91ff42a4bb4fae012f441c0d7f4a1c"
+    },
+    {
+      "batch": 55,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-055.json",
+      "seed": 3141,
+      "sha256": "3fc3032554dc247066d8743f70b03961f5b89481bc1fae6175fc19ef4148bf61"
+    },
+    {
+      "batch": 56,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-056.json",
+      "seed": 3141,
+      "sha256": "03d22b49a74a552b6c4de10bfe325e9f2d28acb8959f172676af798d14673b38"
+    },
+    {
+      "batch": 57,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-057.json",
+      "seed": 3141,
+      "sha256": "dd84d58d4c70bbd58c1c64de02d48c93a74bc5286404b59ae7750ab68e403e8d"
+    },
+    {
+      "batch": 58,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-058.json",
+      "seed": 3141,
+      "sha256": "faa334a363db93cc915e7a0076242747d75152336f56719f7d29d3d062cdcc1b"
+    },
+    {
+      "batch": 59,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-059.json",
+      "seed": 3141,
+      "sha256": "65a7817d65c5f04a6be2f37a7516b9b9d34af0838ebee91f9fff2ffc8a909441"
+    },
+    {
+      "batch": 60,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-060.json",
+      "seed": 3141,
+      "sha256": "b2867328eb8c39efb5ad5eedaa7a0edb427f6ca378325f63e463fd511c11bcf7"
+    },
+    {
+      "batch": 61,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-061.json",
+      "seed": 3141,
+      "sha256": "2ac1372a0399c86f5d796f1380d6297170694e4b9df05654d19aa7a218e74c06"
+    },
+    {
+      "batch": 62,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-062.json",
+      "seed": 3141,
+      "sha256": "da5518578a2ed9cdf0d596bc139cb757f1a1658a773eb1aba41656fa65353706"
+    },
+    {
+      "batch": 63,
+      "caseCount": 16,
+      "execution": "host",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/host/batch-063.json",
+      "seed": 3141,
+      "sha256": "bacab1f19022e66157f64b3d2baaaa0cedf32541e4779660db92caebfc152ba5"
+    },
+    {
+      "batch": 0,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-000.json",
+      "seed": 3141,
+      "sha256": "96ed36c8a693475e3e8f7db3b1aebf728409f9dcf667d759dd17945166eef343"
+    },
+    {
+      "batch": 1,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-001.json",
+      "seed": 3141,
+      "sha256": "55940063a6412703ef3922038d5566dbe483103968aa192cfaef820086f0bc56"
+    },
+    {
+      "batch": 2,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-002.json",
+      "seed": 3141,
+      "sha256": "bf9889a39dd56e0a2380efa6cbe35b86892ecc8d2fc3f848916f0f4b412dec25"
+    },
+    {
+      "batch": 3,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-003.json",
+      "seed": 3141,
+      "sha256": "fca0daf192e5330b9b8f04e74386be6e029b3b1c19bb57ddbf8f91aa5f936937"
+    },
+    {
+      "batch": 4,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-004.json",
+      "seed": 3141,
+      "sha256": "760f4067e4d3a225104eb79efa1f09fdc307624c539a390cd8f9580f71471ba0"
+    },
+    {
+      "batch": 5,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-005.json",
+      "seed": 3141,
+      "sha256": "d14cae24fea6957d232f12f10955b35ee422953c0d8be9d98cf036ff477d6698"
+    },
+    {
+      "batch": 6,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-006.json",
+      "seed": 3141,
+      "sha256": "e9beb71bf4ce924b2f1bb0db793e44a823434e5765d9569e2ce43b6d6f64b6be"
+    },
+    {
+      "batch": 7,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-007.json",
+      "seed": 3141,
+      "sha256": "af09b177f400541624a476e19f652c0b2529785521b4700809a50735b34d99c3"
+    },
+    {
+      "batch": 8,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-008.json",
+      "seed": 3141,
+      "sha256": "c62ffdc34cfdfbb13e0ca5a28f53cc5f4e9446050bc7fea5173c6375605ecd6c"
+    },
+    {
+      "batch": 9,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-009.json",
+      "seed": 3141,
+      "sha256": "6b76f6468f265b0976fb11fd34c4e5bc51f31ad67cd37ed058251bfffc0154c9"
+    },
+    {
+      "batch": 10,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-010.json",
+      "seed": 3141,
+      "sha256": "e944278561ae5cfdbf2727d33d3c10a390f7d0f2da1130d6fa18a14d5c315d35"
+    },
+    {
+      "batch": 11,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-011.json",
+      "seed": 3141,
+      "sha256": "facf806ae0ddd5cb70a26752806aa7592cc8d8a85bee7eb9ee31f452a04609fa"
+    },
+    {
+      "batch": 12,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-012.json",
+      "seed": 3141,
+      "sha256": "b6274d3c772dc9b1df811171df1ce0e13eed9de9ac7305bbf6095e64a94445d9"
+    },
+    {
+      "batch": 13,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-013.json",
+      "seed": 3141,
+      "sha256": "8a5f6ad5b6395610eb3f55a534cfe8ef1a7a4c25e117e0784618ed6056a32465"
+    },
+    {
+      "batch": 14,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-014.json",
+      "seed": 3141,
+      "sha256": "32b97e9a660fc9d6a30a7e1a2c110cf2907654b4ad3e1933a65627bf0026d7cf"
+    },
+    {
+      "batch": 15,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-015.json",
+      "seed": 3141,
+      "sha256": "a245dd9c41d7eb63347b39b30d4e60d2b90f5272daf199dc35633ddb1f074940"
+    },
+    {
+      "batch": 16,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-016.json",
+      "seed": 3141,
+      "sha256": "32db82789c5904dce97e23ed8073c199340f10c8b18a229754901cf7b5fa98e8"
+    },
+    {
+      "batch": 17,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-017.json",
+      "seed": 3141,
+      "sha256": "0ec38163accce717248d2d306b623ead5856ac68b18ddd9132ba6efad9f8308f"
+    },
+    {
+      "batch": 18,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-018.json",
+      "seed": 3141,
+      "sha256": "ddbc512e07dfa17409cb206d3792426d548bbfe0581102ede9fce634bc26199b"
+    },
+    {
+      "batch": 19,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-019.json",
+      "seed": 3141,
+      "sha256": "0d713d559d9c18e1f43ee3472f1c25b7de8efdb6a9fd3c0af809b611aa0adf06"
+    },
+    {
+      "batch": 20,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-020.json",
+      "seed": 3141,
+      "sha256": "0093ce4861d7b9995b5bc0abe893c3299cd4721805394ebbfb6df9d829343412"
+    },
+    {
+      "batch": 21,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-021.json",
+      "seed": 3141,
+      "sha256": "7cc88c974a6328f3e085e65fb5be1bc89b7b2856c2e273bfc0c67f3409a9006a"
+    },
+    {
+      "batch": 22,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-022.json",
+      "seed": 3141,
+      "sha256": "d2dbb77c45f5f8dea2f13980535aa24b1c6054219090c63dfd027082c44ed815"
+    },
+    {
+      "batch": 23,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-023.json",
+      "seed": 3141,
+      "sha256": "ee22b2015a415760b7d17a733abcb6eb37f703790a5ef28c8dd8bf63aaa58e4d"
+    },
+    {
+      "batch": 24,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-024.json",
+      "seed": 3141,
+      "sha256": "591f616e7dcb6bacd4c3bd12ce102b378438c655bf5113416591ccc9e026eeec"
+    },
+    {
+      "batch": 25,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-025.json",
+      "seed": 3141,
+      "sha256": "5376e458013987f1cad9a9383cfe2c5394b3bd909042d6d63c8a4c6b9a77b785"
+    },
+    {
+      "batch": 26,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-026.json",
+      "seed": 3141,
+      "sha256": "63d8f684001c0c98bd7bc05774e5ac9d0f94a10049e41c3e46c949b4b61b34be"
+    },
+    {
+      "batch": 27,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-027.json",
+      "seed": 3141,
+      "sha256": "a0b2010742f62dc11014af8b453e30262412b4b8000283a616caf28c9390eba1"
+    },
+    {
+      "batch": 28,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-028.json",
+      "seed": 3141,
+      "sha256": "5584603b58e4708c7fccc0bfd6ca9ac0d137ab9f0acea55a15a9c9dd0a7270a5"
+    },
+    {
+      "batch": 29,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-029.json",
+      "seed": 3141,
+      "sha256": "ac69c5eecece9b11ec1445134e2feb9807a6928a2e0b78fbce425ac7c5b54acb"
+    },
+    {
+      "batch": 30,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-030.json",
+      "seed": 3141,
+      "sha256": "af5f484f6e0f5f5ee3f5e63119b14517240c02ba9e3c23deecc521d50aeabc89"
+    },
+    {
+      "batch": 31,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-031.json",
+      "seed": 3141,
+      "sha256": "14a8eb876c4dd23b18d59b15f592d0ea7eb5a9d864bc0d0827ff6ae3e1e564e9"
+    },
+    {
+      "batch": 32,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-032.json",
+      "seed": 3141,
+      "sha256": "ca65d3bf29ac8622d42e5f36f7654eb9f115c609af23aee049e0993c14dc23b5"
+    },
+    {
+      "batch": 33,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-033.json",
+      "seed": 3141,
+      "sha256": "a28abe91091d0956287e65aff122c80c75b1281f14f04f9c7f9d18ce3903eaea"
+    },
+    {
+      "batch": 34,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-034.json",
+      "seed": 3141,
+      "sha256": "d0185fc30bee485f88b52af8683a10adde9497be0998ef77110390b3573e475c"
+    },
+    {
+      "batch": 35,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-035.json",
+      "seed": 3141,
+      "sha256": "fac9d75cc17fd3eea65cf3cd3edef58defafbbda68b319b106d6e3a5288a1eca"
+    },
+    {
+      "batch": 36,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-036.json",
+      "seed": 3141,
+      "sha256": "368e75f0cfaaa447deba764fc72fb571ef8260b13ae4fe3a24603b0a685a8f17"
+    },
+    {
+      "batch": 37,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-037.json",
+      "seed": 3141,
+      "sha256": "e6828aa1c9705cac9b37d17703eadc3a6d386fd4313668a5ea48b3029c3a47d8"
+    },
+    {
+      "batch": 38,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-038.json",
+      "seed": 3141,
+      "sha256": "31de0bb30ed350a9e2999014717e2b7277f88724efcd2a613819d657388610d9"
+    },
+    {
+      "batch": 39,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-039.json",
+      "seed": 3141,
+      "sha256": "bee5be8924c78b03312de70564cf88df8f643d36b91c393d4e55e7e8e1651f5a"
+    },
+    {
+      "batch": 40,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-040.json",
+      "seed": 3141,
+      "sha256": "5fc927125e4d613dd6d744123d98c575c3499a212ff1d73b556277ec59905b2b"
+    },
+    {
+      "batch": 41,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-041.json",
+      "seed": 3141,
+      "sha256": "402201aa11ce9494513a5fa61c6d997940c62f3b57951eaf05e9a8dc24f03c81"
+    },
+    {
+      "batch": 42,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-042.json",
+      "seed": 3141,
+      "sha256": "a5d9fbdc2e8e5116d93c07a79f1bda2f1b47aea1d5b3f46e901a982836784194"
+    },
+    {
+      "batch": 43,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-043.json",
+      "seed": 3141,
+      "sha256": "019822b93769730df3a57e0f530f062d9c7e08eef362bc3df830958148ea3bd0"
+    },
+    {
+      "batch": 44,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-044.json",
+      "seed": 3141,
+      "sha256": "5c0373fd9cc14fa514c0d803dcce682a553e6db8c199d266025d52f6e11843a2"
+    },
+    {
+      "batch": 45,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-045.json",
+      "seed": 3141,
+      "sha256": "921affbb12219ffb6a0d912c71c639622a98d38e593b656fc7fc0a52d40997db"
+    },
+    {
+      "batch": 46,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-046.json",
+      "seed": 3141,
+      "sha256": "74d5d6e0e8e6b55a9c4c6cabbd3d508a84e2b16f0347c02215855da41082a0f7"
+    },
+    {
+      "batch": 47,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-047.json",
+      "seed": 3141,
+      "sha256": "6f034a72d5862253bbf8181b9d8711b3d7834a7d0b25132169afec906de35002"
+    },
+    {
+      "batch": 48,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-048.json",
+      "seed": 3141,
+      "sha256": "cac6ce156351d27987528771dc67410bd759e70a15d6eafab570d57740b6f077"
+    },
+    {
+      "batch": 49,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-049.json",
+      "seed": 3141,
+      "sha256": "12c61d19afd408f7a4d57265270b4b0224921e5f7d8635d7827dba5463566c3f"
+    },
+    {
+      "batch": 50,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-050.json",
+      "seed": 3141,
+      "sha256": "574fcf24576ffb65377fc570c99105bdd4dfd56933411fb5d7755ebb5aee0ae1"
+    },
+    {
+      "batch": 51,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-051.json",
+      "seed": 3141,
+      "sha256": "a780e103f07891fb5fe525f6ac0e330fda09e2b8f0709e2a0381097d8da4db43"
+    },
+    {
+      "batch": 52,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-052.json",
+      "seed": 3141,
+      "sha256": "54800e91ca03bb8b97d65327d1bd42dc4987161fe75d15db260807f31e49f13c"
+    },
+    {
+      "batch": 53,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-053.json",
+      "seed": 3141,
+      "sha256": "8a4dca8530925790633b95b45571f5d6b583b3284c725bfac180a9ccb1e01c4a"
+    },
+    {
+      "batch": 54,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-054.json",
+      "seed": 3141,
+      "sha256": "d449ee573927c77a20e8c9a49807e8073016e65fe0fd5c5859e9605eaf7b65d9"
+    },
+    {
+      "batch": 55,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-055.json",
+      "seed": 3141,
+      "sha256": "290e6ebde22a53a2fbd9afb7732de5f1c918de76434f3c57fa9529fdc0866341"
+    },
+    {
+      "batch": 56,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-056.json",
+      "seed": 3141,
+      "sha256": "e8a8dfc84ce28d633ac06a96830de5d4b3cd8ece1586f8c9997b69eee9cf19d1"
+    },
+    {
+      "batch": 57,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-057.json",
+      "seed": 3141,
+      "sha256": "bf17a3a8a0978d51407c5fb95ba40408dbe842500bdcf46bc064764d94114b4b"
+    },
+    {
+      "batch": 58,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-058.json",
+      "seed": 3141,
+      "sha256": "4e974c48f64a3f6ae8d05aa3acf6a6533c3f4d4b9fa4ede02ab5edf90c94dd87"
+    },
+    {
+      "batch": 59,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-059.json",
+      "seed": 3141,
+      "sha256": "1c320bcb0b9140c78c4b72075cd599cf884750d78c6c734ec11f944023129d19"
+    },
+    {
+      "batch": 60,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-060.json",
+      "seed": 3141,
+      "sha256": "cd0602428ce1c362808d546e358f0c7da4a84c182edb7e6efcb3e069e11d6ade"
+    },
+    {
+      "batch": 61,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-061.json",
+      "seed": 3141,
+      "sha256": "c208e828b876cb171e35e24b100dd5e7400cc12f0d59db8f7a6127148ec1a3fd"
+    },
+    {
+      "batch": 62,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-062.json",
+      "seed": 3141,
+      "sha256": "0033e5dd4a8dd06158f0c9bf30186250eb274b036a6453ec8de8089ea35b8212"
+    },
+    {
+      "batch": 63,
+      "caseCount": 16,
+      "execution": "guest",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Generator/Requests/seed-3141/guest/batch-063.json",
+      "seed": 3141,
+      "sha256": "2087a60a037d6e958d10f732615cbdf62ec58264aac9ee65538a0e53958c57a3"
+    }
+  ],
+  "schema": "prime_domain_neutral_context_generator_audit_v1",
+  "scope": "1024 new exact input-array combinations using 1024 retained semantic requests, including training and validation cases. This is a valid-input neutral-context robustness experiment, not an unseen-task or pure holdout evaluation.",
+  "seeds": [
+    1618,
+    2718,
+    3141
+  ],
+  "selection": "All 2109 valid base rows were eligible. Ten lexicographically sorted domain pairs receive quota 102, with one extra for the first four. Select smallest SHA256 of canonical input-only role arrays, tie-breaking by row ID; no target or prediction selection.",
+  "sourcePolicy": {
+    "engineBuild": "v2.1.8-shareGuardOn-fmtSplit-decisionTruth",
+    "generatorSourceLines": {
+      "contextPlacement": "567-586",
+      "split": "552-565",
+      "validRows": "596-718"
+    },
+    "generatorSourceSHA256": "aa376e72b5aea8c1ef266061eb250d721d66ef1054943fa445986428e44d57ee",
+    "languageID": "ergentics_prime_engine_domain_trace_v1",
+    "originalManifestRowsCanonicalSHA256": "6965656679ac7c8cf5c8624b15e21cc8f3f5fffc4ac97a56ab8a558d07b44d48",
+    "originalManifestSHA256": "1a49ef580dd702567c3a66df443cbb6f1e1b10f08f525ce1648d76612388f80d"
+  },
+  "trainingRun": false,
+  "transformation": "Toggle neutral CONTEXT token 4 at index 1, immediately after BOS 1, in left, right, direct and final-prefix inputs. All other original input symbols, role order and semantic references are preserved."
+}

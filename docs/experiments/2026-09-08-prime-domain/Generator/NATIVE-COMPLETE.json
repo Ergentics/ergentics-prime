@@ -1,0 +1,10 @@
+{
+  "status": "completed",
+  "actualCounts": {
+    "cases": 6144,
+    "forwards": 24576,
+    "guestVMs": 3072,
+    "guestEntries": 15360,
+    "processes": 384
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "pointCount": 200,
+  "nodeCount": 12,
+  "actualMetalDispatches": 1,
+  "controllerPassed": true,
+  "originalGeometrySourcesUnchanged": true,
+  "allSixArraysHashBoundAndFinite": true,
+  "invalidInputsRejected": 14,
+  "maximumPotentialError": 5.362635326910947e-07,
+  "maximumGradientError": 5.100295865645421e-07,
+  "guestRuns": 0,
+  "virtualGPU": false,
+  "modelRuns": 0,
+  "limitation": "One bounded host Metal dispatch; no performance or neural knowledge claim."
+}

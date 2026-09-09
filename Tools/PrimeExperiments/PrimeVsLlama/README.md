@@ -1,15 +1,11 @@
-# Live Prime versus older Llama experiment source
+# Live Prime experiments
 
-Prime inference runs in native Swift on Metal. The older Llama fine-tune runs through its retained Python MLX runtime on Metal. Python schedules input-only cases and scores saved predictions; Ruby supervises bounded worker processes. No scoring target is sent to either model.
+The current completed integration is [Domain](Domain/README.md): native Swift/Metal inference, real ARM vCPU control with two-source prediction feedback, three retained Prime domain-policy checkpoints, a same-input older Llama comparison, a1024-case valid-input generator follow-up, and geometry-app host Metal parity.
 
-`NativeSwift/` retains the actual compiled source, build helper and compile bindings. `Runtime/` contains the serial driver and Llama comparator. `Inputs/` contains the fixed80-case symbolic diagnostic; `References/` is for preparation and post-run scoring. The separate plain-arithmetic comparator is retained under `Plain-Arithmetic-Control/`.
+Runtime0009 and checkpoint builds0010–0012 are durable local artifacts. Raw model outputs are retained; scoring targets never replace predictions. These experiments use the existing Prime project and do not change the installed Provenance app.
 
-From this directory, run `/usr/bin/python3 Runtime/replay.py /absolute/path/to/new-results` to create a fresh offline main-suite run using the original local model paths in RUN-CONFIG.json. This requires the retained builds and Metal access on this Mac. Do not overwrite an old result directory. Native compilation reuses the recorded local SwiftPM objects; no package install or training step is involved.
+Earlier completed experiment source remains in NativeSwift/ and [VCPU](VCPU/README.md). Their corresponding sealed builds and reports preserve original results. The current results, executable and replay entry point are:
 
-The scored run, raw logits/text, model bytes, executable builds0006/0007 and verification commands are saved at:
+/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Prime-Domain-03/README.md
 
-/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Prime-v-Llama-01
-
-See the tracked report at `docs/experiments/2026-09-08-prime-v-llama/README.md`. Completed host inference and feedback do not imply guest hypervisor execution, app integration or formal gate authority. Earlier evidence retains its own status.
-
-The live native vCPU integration is now in [VCPU](VCPU/README.md), with actual guest-controlled prediction feedback and verified numerical equivalence. Its source and result records remain in this same Prime project.
+The code establishes inference and feedback behavior. It does not make the finite domain-policy checkpoint a prose chatbot, move model weights into a guest, or change formal gate authority.

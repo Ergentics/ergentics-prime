@@ -1,0 +1,73 @@
+    public static func V(at p: SIMD2<Double>,
+                          layout: [String: SIMD2<Double>],
+                          weights: [String: Double],
+                          sigma: Double) -> Double {
+        let s2 = 2.0 * sigma * sigma
+        var sum = 0.0
+        for (id, pos) in layout {
+            let w = weights[id] ?? 0
+            let d = p - pos
+            let r2 = d.x * d.x + d.y * d.y
+            sum += w * exp(-r2 / s2)
+        }
+        return -sum
+    }
+
+    public static func gradV(at p: SIMD2<Double>,
+                              layout: [String: SIMD2<Double>],
+                              weights: [String: Double],
+                              sigma: Double) -> SIMD2<Double> {
+        let s2 = sigma * sigma
+        let twoS2 = 2.0 * s2
+        var gx = 0.0
+        var gy = 0.0
+        for (id, pos) in layout {
+            let w = weights[id] ?? 0
+            let d = p - pos
+            let r2 = d.x * d.x + d.y * d.y
+            let g = w * exp(-r2 / twoS2) / s2
+            gx += g * d.x
+            gy += g * d.y
+        }
+        return SIMD2(gx, gy)
+    }
+
+    // MARK: - Log-sum-exp stabilized V (Tier 2 oracle O3 — disjoint numeric axiom)
+
+    /// `V(p) = −exp(LSE({ log(wᵢ) − ‖p−pᵢ‖²/(2σ²) | wᵢ > 0 }))`.
+    /// Derivation: docs/masteryfield-gpu-field.md §4.
+    public static func VLogSumExp(at p: SIMD2<Double>,
+                                   layout: [String: SIMD2<Double>],
+                                   weights: [String: Double],
+                                   sigma: Double) -> Double {
+        let invTwoS2 = 1.0 / (2.0 * sigma * sigma)
+        var logTerms: [Double] = []
+        logTerms.reserveCapacity(layout.count)
+        for (id, pos) in layout {
+            let w = weights[id] ?? 0
+            guard w > 0 else { continue }
+            let d = p - pos
+            let r2 = d.x * d.x + d.y * d.y
+            logTerms.append(log(w) - r2 * invTwoS2)
+        }
+        guard !logTerms.isEmpty else { return 0 }
+        let m = logTerms.max() ?? 0
+        var sumExp = 0.0
+        for z in logTerms { sumExp += exp(z - m) }
+        return -exp(m + log(sumExp))
+    }
+
+    /// Central finite difference on `VLogSumExp` — Tier 2 ∇V oracle O3 (no chain-rule code shared with `gradV`).
+    public static func gradVLogSumExpFD(at p: SIMD2<Double>,
+                                         layout: [String: SIMD2<Double>],
+                                         weights: [String: Double],
+                                         sigma: Double) -> SIMD2<Double> {
+        let scale = max(1.0, max(abs(p.x), abs(p.y)))
+        let h = 1e-5 * scale
+        let vxp = VLogSumExp(at: SIMD2(p.x + h, p.y), layout: layout, weights: weights, sigma: sigma)
+        let vxm = VLogSumExp(at: SIMD2(p.x - h, p.y), layout: layout, weights: weights, sigma: sigma)
+        let vyp = VLogSumExp(at: SIMD2(p.x, p.y + h), layout: layout, weights: weights, sigma: sigma)
+        let vym = VLogSumExp(at: SIMD2(p.x, p.y - h), layout: layout, weights: weights, sigma: sigma)
+        return SIMD2((vxp - vxm) / (2.0 * h), (vyp - vym) / (2.0 * h))
+    }
+

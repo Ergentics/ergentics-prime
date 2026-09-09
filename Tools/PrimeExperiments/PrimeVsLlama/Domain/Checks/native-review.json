@@ -1,0 +1,42 @@
+{
+  "status": "STATIC_REVIEW_NO_MATERIAL_BLOCKER",
+  "scope": "ABI 2 Swift host/guest fan-in and build linkage; no runtime, model or VM execution by reviewer",
+  "files": [
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Native/main.swift",
+      "byteCount": 25969,
+      "sha256": "d0b99c19f29b89586aaae1201fb6524802ea3dc838e3002767ea0f80d05cf5eb"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Native/build.py",
+      "byteCount": 8780,
+      "sha256": "8a96289f2ebe5ad52ab798441258bacb76c1efe0d10f2f3c5d7d2c87db451a01"
+    }
+  ],
+  "findings": [
+    "Closed request keys reject teacher/gold fields; case and job bounds, token IDs, distinct zero-placeholder offsets, and strictly earlier source indices are enforced.",
+    "Host and guest callback paths use actual previously produced full-vocabulary argmax predictions. The guest alone writes guest feedback slots; Swift checks the actual stopped guest input against each named source prediction.",
+    "The model remains evaluation-only original Prime10M geometry with74 F32 tensors and10227968 parameters, verify:.all, finite16384-wide logits and unrestricted lowest-ID argmax. No gold labels or replacement answers enter this source.",
+    "Exact policies are Z8 at16/64 and full vocabulary0..<16384. Host and guest stop before a dependent inference on invalid Z8 feedback; full vocabulary admits224 without assigning task-level success.",
+    "Guest receipts preserve callback failures and actual cleanup before throwing. Top-level completed describes finishing the bounded collection; case stopped_invalid_feedback is retained and is not model success.",
+    "Build validates the ABI 2 source/image/header/object receipt and links retained441 MLXLLM dependency objects plus actual admission. It does not run the model."
+  ],
+  "limits": [
+    "JSONDecoder exact-key checks do not independently reject duplicate JSON member names; root-generated requests use unique keys.",
+    "Swift inference is synchronous and cannot be interrupted by the guest watchdog. The bridge joins its watchdog after callback return; the existing120-second process owner is still required for a stuck callback."
+  ],
+  "checks": {
+    "state": "SOURCES_PREPARED_NOT_COMPILED_OR_EXECUTED",
+    "source": {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Checks/main.c",
+      "byteCount": 13517,
+      "sha256": "67a93a43a6984c5302edc23a72abd708d0490dcdeb2c9dcf00858ae9ef6d359d"
+    },
+    "builder": {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Checks/build.py",
+      "byteCount": 4924,
+      "sha256": "1e9edc9d08b86669dab472f1dd8611e10478b6a07d673819a2e35d0b33ff7d33"
+    },
+    "expectedCases": 6
+  }
+}
