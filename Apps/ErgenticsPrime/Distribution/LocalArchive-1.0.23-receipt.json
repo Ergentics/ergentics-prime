@@ -1,0 +1,373 @@
+{
+  "schemaVersion": 1,
+  "status": "archived-installed-live-verified",
+  "savedAtUTC": "2026-09-09T01:46:23Z",
+  "appVersion": "1.0",
+  "appBuild": "23",
+  "bundleIdentifier": "com.ergentics.provenance",
+  "team": "ZCQ435U8JP",
+  "archive": "/Users/ergentics/Library/Developer/Xcode/Archives/2026-09-08/Ergentics Prime 1.0 (23) Apple Silicon.xcarchive",
+  "savedApp": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Build23/Ergentics Prime.app",
+  "installedApp": "/Applications/Ergentics Prime.app",
+  "installedRunningPIDObserved": 32211,
+  "previousInstalledBuild": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Build23/Previous-installed-Build22.app",
+  "builtAppSourceCommit": "118445b90d1ef2d03a12cc931f9496a23801c8d3",
+  "canonicalPrimeRoot": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging",
+  "canonicalAppPath": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/Apps/ErgenticsPrime",
+  "canonicalSourceCommit": "e4a2cabd055c8ef1e29106a39a63551f591afc8e",
+  "sourceReconciliation": "Runtime and UI source copied unchanged from the built commit. Canonical copy adapts two build asset paths, ignore rules and current README/roadmap; copied binary prerequisites retain original build02 origin. No canonical rebuild is claimed.",
+  "localBuildPrerequisites": "BuildAssets.json paths, original experiment weight collection, copied build02 helpers/library/receipt, legacy Stage7 weight, and companion native build cache. The installed app contains its runtime assets and does not need these source build paths.",
+  "appFiles": [
+    {
+      "relativePath": "Contents/Helpers/PrimeCompute/PrimeGeometryService",
+      "byteCount": 274176,
+      "sha256": "e713267420ed2ad0ae3194163f3c786b19ac966928987d2c8eff2f02c9b79f54"
+    },
+    {
+      "relativePath": "Contents/Helpers/PrimeCompute/PrimeModelService",
+      "byteCount": 29998944,
+      "sha256": "b97b5bfd61f5958a355c340b4d5df9f5d15e61df4c10b162143c2c9eb0c37a9d"
+    },
+    {
+      "relativePath": "Contents/Helpers/PrimeRuntime/ErgenticsPrimeRuntime",
+      "byteCount": 32590224,
+      "sha256": "8384bd7cb6b3f9c3773f863433fdb30bc0371823d0dc3a5d8a1b4942aaeb4a55"
+    },
+    {
+      "relativePath": "Contents/Helpers/PrimeRuntime/mlx-swift_Cmlx.bundle/Contents/Info.plist",
+      "byteCount": 394,
+      "sha256": "39f984d9d0a9fb57ced3e10df0f8985192745e4fb47e01ffce7415c569e7749e"
+    },
+    {
+      "relativePath": "Contents/Helpers/PrimeRuntime/mlx-swift_Cmlx.bundle/Contents/Resources/default.metallib",
+      "byteCount": 3817916,
+      "sha256": "24d4cfcd3ca8b15ead691e46219f35adabbea64c9f8de4eae9bf293fd8d5eb7b"
+    },
+    {
+      "relativePath": "Contents/Helpers/PrimeRuntime/mlx-swift_Cmlx.bundle/Contents/_CodeSignature/CodeDirectory",
+      "byteCount": 206,
+      "sha256": "f571c77fc39776e27d737fe9e278eae069eaa74e6d7a6e04b3d0428b90fb0b44"
+    },
+    {
+      "relativePath": "Contents/Helpers/PrimeRuntime/mlx-swift_Cmlx.bundle/Contents/_CodeSignature/CodeRequirements",
+      "byteCount": 180,
+      "sha256": "709290019301637bac671bf768b5e868f54bcd5d01d4321ae558cd7c3167a9db"
+    },
+    {
+      "relativePath": "Contents/Helpers/PrimeRuntime/mlx-swift_Cmlx.bundle/Contents/_CodeSignature/CodeResources",
+      "byteCount": 2454,
+      "sha256": "e76e2e0aed1d537a3695ffdc43c3fc626a77749114b5cff997fec088edcbaf38"
+    },
+    {
+      "relativePath": "Contents/Helpers/PrimeRuntime/mlx-swift_Cmlx.bundle/Contents/_CodeSignature/CodeSignature",
+      "byteCount": 4784,
+      "sha256": "4d501372a7f645620b685ee930ca22bf5abe1cfc2f6a79f03d4d09747d3af633"
+    },
+    {
+      "relativePath": "Contents/Info.plist",
+      "byteCount": 1889,
+      "sha256": "a8c43fd8d590a5816ee6f4f9a9f40bf5f7a86d851936e75ce17a2f6a3fe04020"
+    },
+    {
+      "relativePath": "Contents/MacOS/Ergentics Provenance",
+      "byteCount": 2759072,
+      "sha256": "92dd113d80465e49eb7f3de3ce72276b78b65e10d9b7a83205d5ba168c29794e"
+    },
+    {
+      "relativePath": "Contents/PkgInfo",
+      "byteCount": 8,
+      "sha256": "82502191c9484b04d685374f9879a0066069c49b8acae7a04b01d38d07e8eca0"
+    },
+    {
+      "relativePath": "Contents/Resources/AppIcon.icns",
+      "byteCount": 92735,
+      "sha256": "ab026ac535e6eccfeddda346f9724aeab07607a69229798da6b5e133b21ae9a5"
+    },
+    {
+      "relativePath": "Contents/Resources/Assets.car",
+      "byteCount": 1298152,
+      "sha256": "52b09f8ea0189e92cd85d10202d799aaa2304c7c7e607eae766f503e2710fbd1"
+    },
+    {
+      "relativePath": "Contents/Resources/ERGENTICS.spdx.json",
+      "byteCount": 241080,
+      "sha256": "5bbc119924eebafe8663eab626c58343fa19b482870deafec2f51fa17c79b44e"
+    },
+    {
+      "relativePath": "Contents/Resources/LICENSE",
+      "byteCount": 579,
+      "sha256": "039cbac208e63a0e6fd453e1de912384d3e9d0f6a2c5fcd2f5b8ec207364bbb8"
+    },
+    {
+      "relativePath": "Contents/Resources/PrimeCompute/mlx.metallib",
+      "byteCount": 2468361,
+      "sha256": "bfbd3e228d4ac2462d8e73910bee6e8a22a9d3c9a131197474a4355a823bc68d"
+    },
+    {
+      "relativePath": "Contents/Resources/PrimeCompute/seed-1618.safetensors",
+      "byteCount": 40919832,
+      "sha256": "122af63187129249ef0c85dbac6e6f1bd0c0e67c60f88b387844fd002bd2d0ec"
+    },
+    {
+      "relativePath": "Contents/Resources/PrimeCompute/seed-2718.safetensors",
+      "byteCount": 40919832,
+      "sha256": "f5201fae919d8636300086829943fd38059767ab293147ca8c0c65ce91402067"
+    },
+    {
+      "relativePath": "Contents/Resources/PrimeCompute/seed-3141.safetensors",
+      "byteCount": 40919832,
+      "sha256": "7064c514a9a41369951d1ee829ac0f028bb488a0b9551d5e8b1d2433173cd4e1"
+    },
+    {
+      "relativePath": "Contents/Resources/PrimeComputeAssets.json",
+      "byteCount": 1488,
+      "sha256": "603694f906dfa7f3dfec6182bdc96f6cc1874f60834e51f6cf127a9c139d09fa"
+    },
+    {
+      "relativePath": "Contents/Resources/PrimeModel/baseline_checkpoint/weights.safetensors",
+      "byteCount": 1084525316,
+      "sha256": "318e2aacc748b117f8043c25af6bf0c395e4f2c16339e38d4c34b67e5f49dacb"
+    },
+    {
+      "relativePath": "Contents/Resources/PrimePromptCheckpoint.json",
+      "byteCount": 139067,
+      "sha256": "e45897d920e4aeb92966dc27bf3db7e24af7e7ce961ab7d5c6e3823f8c801713"
+    },
+    {
+      "relativePath": "Contents/Resources/PrimeRuntimeMetallib.json",
+      "byteCount": 198,
+      "sha256": "37978df77f2251f7951b1d449692a1fb59222be15307d40b43e1a1af69ab38ef"
+    },
+    {
+      "relativePath": "Contents/Resources/PrivacyInfo.xcprivacy",
+      "byteCount": 854,
+      "sha256": "ca7b9e01d281ddd388f7bfd621ec6220175a2f1029a9996525a79d43b1ecda77"
+    },
+    {
+      "relativePath": "Contents/Resources/THIRD_PARTY_NOTICES.md",
+      "byteCount": 29428,
+      "sha256": "e5376deec32a08c50e7fcf462c36854ed5823aa67e769b60d61991b7ea3e8c8a"
+    },
+    {
+      "relativePath": "Contents/_CodeSignature/CodeResources",
+      "byteCount": 7442,
+      "sha256": "cb87bb8aea6a27c9034071d05bceddac89a22da2718949eb9ce626c9e6e6c44e"
+    }
+  ],
+  "archiveFiles": [
+    {
+      "relativePath": "Info.plist",
+      "byteCount": 946,
+      "sha256": "3dd816b740b863671fcabdd2e88301123cdc2e08920ac7a3f7ac8efb6a830988"
+    },
+    {
+      "relativePath": "Products/Applications/Ergentics Provenance.app/Contents/Helpers/PrimeCompute/PrimeGeometryService",
+      "byteCount": 274176,
+      "sha256": "e713267420ed2ad0ae3194163f3c786b19ac966928987d2c8eff2f02c9b79f54"
+    },
+    {
+      "relativePath": "Products/Applications/Ergentics Provenance.app/Contents/Helpers/PrimeCompute/PrimeModelService",
+      "byteCount": 29998944,
+      "sha256": "b97b5bfd61f5958a355c340b4d5df9f5d15e61df4c10b162143c2c9eb0c37a9d"
+    },
+    {
+      "relativePath": "Products/Applications/Ergentics Provenance.app/Contents/Helpers/PrimeRuntime/ErgenticsPrimeRuntime",
+      "byteCount": 32590224,
+      "sha256": "8384bd7cb6b3f9c3773f863433fdb30bc0371823d0dc3a5d8a1b4942aaeb4a55"
+    },
+    {
+      "relativePath": "Products/Applications/Ergentics Provenance.app/Contents/Helpers/PrimeRuntime/mlx-swift_Cmlx.bundle/Contents/Info.plist",
+      "byteCount": 394,
+      "sha256": "39f984d9d0a9fb57ced3e10df0f8985192745e4fb47e01ffce7415c569e7749e"
+    },
+    {
+      "relativePath": "Products/Applications/Ergentics Provenance.app/Contents/Helpers/PrimeRuntime/mlx-swift_Cmlx.bundle/Contents/Resources/default.metallib",
+      "byteCount": 3817916,
+      "sha256": "24d4cfcd3ca8b15ead691e46219f35adabbea64c9f8de4eae9bf293fd8d5eb7b"
+    },
+    {
+      "relativePath": "Products/Applications/Ergentics Provenance.app/Contents/Helpers/PrimeRuntime/mlx-swift_Cmlx.bundle/Contents/_CodeSignature/CodeDirectory",
+      "byteCount": 206,
+      "sha256": "f571c77fc39776e27d737fe9e278eae069eaa74e6d7a6e04b3d0428b90fb0b44"
+    },
+    {
+      "relativePath": "Products/Applications/Ergentics Provenance.app/Contents/Helpers/PrimeRuntime/mlx-swift_Cmlx.bundle/Contents/_CodeSignature/CodeRequirements",
+      "byteCount": 180,
+      "sha256": "709290019301637bac671bf768b5e868f54bcd5d01d4321ae558cd7c3167a9db"
+    },
+    {
+      "relativePath": "Products/Applications/Ergentics Provenance.app/Contents/Helpers/PrimeRuntime/mlx-swift_Cmlx.bundle/Contents/_CodeSignature/CodeResources",
+      "byteCount": 2454,
+      "sha256": "e76e2e0aed1d537a3695ffdc43c3fc626a77749114b5cff997fec088edcbaf38"
+    },
+    {
+      "relativePath": "Products/Applications/Ergentics Provenance.app/Contents/Helpers/PrimeRuntime/mlx-swift_Cmlx.bundle/Contents/_CodeSignature/CodeSignature",
+      "byteCount": 4784,
+      "sha256": "4d501372a7f645620b685ee930ca22bf5abe1cfc2f6a79f03d4d09747d3af633"
+    },
+    {
+      "relativePath": "Products/Applications/Ergentics Provenance.app/Contents/Info.plist",
+      "byteCount": 1889,
+      "sha256": "a8c43fd8d590a5816ee6f4f9a9f40bf5f7a86d851936e75ce17a2f6a3fe04020"
+    },
+    {
+      "relativePath": "Products/Applications/Ergentics Provenance.app/Contents/MacOS/Ergentics Provenance",
+      "byteCount": 2759072,
+      "sha256": "92dd113d80465e49eb7f3de3ce72276b78b65e10d9b7a83205d5ba168c29794e"
+    },
+    {
+      "relativePath": "Products/Applications/Ergentics Provenance.app/Contents/PkgInfo",
+      "byteCount": 8,
+      "sha256": "82502191c9484b04d685374f9879a0066069c49b8acae7a04b01d38d07e8eca0"
+    },
+    {
+      "relativePath": "Products/Applications/Ergentics Provenance.app/Contents/Resources/AppIcon.icns",
+      "byteCount": 92735,
+      "sha256": "ab026ac535e6eccfeddda346f9724aeab07607a69229798da6b5e133b21ae9a5"
+    },
+    {
+      "relativePath": "Products/Applications/Ergentics Provenance.app/Contents/Resources/Assets.car",
+      "byteCount": 1298152,
+      "sha256": "52b09f8ea0189e92cd85d10202d799aaa2304c7c7e607eae766f503e2710fbd1"
+    },
+    {
+      "relativePath": "Products/Applications/Ergentics Provenance.app/Contents/Resources/ERGENTICS.spdx.json",
+      "byteCount": 241080,
+      "sha256": "5bbc119924eebafe8663eab626c58343fa19b482870deafec2f51fa17c79b44e"
+    },
+    {
+      "relativePath": "Products/Applications/Ergentics Provenance.app/Contents/Resources/LICENSE",
+      "byteCount": 579,
+      "sha256": "039cbac208e63a0e6fd453e1de912384d3e9d0f6a2c5fcd2f5b8ec207364bbb8"
+    },
+    {
+      "relativePath": "Products/Applications/Ergentics Provenance.app/Contents/Resources/PrimeCompute/mlx.metallib",
+      "byteCount": 2468361,
+      "sha256": "bfbd3e228d4ac2462d8e73910bee6e8a22a9d3c9a131197474a4355a823bc68d"
+    },
+    {
+      "relativePath": "Products/Applications/Ergentics Provenance.app/Contents/Resources/PrimeCompute/seed-1618.safetensors",
+      "byteCount": 40919832,
+      "sha256": "122af63187129249ef0c85dbac6e6f1bd0c0e67c60f88b387844fd002bd2d0ec"
+    },
+    {
+      "relativePath": "Products/Applications/Ergentics Provenance.app/Contents/Resources/PrimeCompute/seed-2718.safetensors",
+      "byteCount": 40919832,
+      "sha256": "f5201fae919d8636300086829943fd38059767ab293147ca8c0c65ce91402067"
+    },
+    {
+      "relativePath": "Products/Applications/Ergentics Provenance.app/Contents/Resources/PrimeCompute/seed-3141.safetensors",
+      "byteCount": 40919832,
+      "sha256": "7064c514a9a41369951d1ee829ac0f028bb488a0b9551d5e8b1d2433173cd4e1"
+    },
+    {
+      "relativePath": "Products/Applications/Ergentics Provenance.app/Contents/Resources/PrimeComputeAssets.json",
+      "byteCount": 1488,
+      "sha256": "603694f906dfa7f3dfec6182bdc96f6cc1874f60834e51f6cf127a9c139d09fa"
+    },
+    {
+      "relativePath": "Products/Applications/Ergentics Provenance.app/Contents/Resources/PrimeModel/baseline_checkpoint/weights.safetensors",
+      "byteCount": 1084525316,
+      "sha256": "318e2aacc748b117f8043c25af6bf0c395e4f2c16339e38d4c34b67e5f49dacb"
+    },
+    {
+      "relativePath": "Products/Applications/Ergentics Provenance.app/Contents/Resources/PrimePromptCheckpoint.json",
+      "byteCount": 139067,
+      "sha256": "e45897d920e4aeb92966dc27bf3db7e24af7e7ce961ab7d5c6e3823f8c801713"
+    },
+    {
+      "relativePath": "Products/Applications/Ergentics Provenance.app/Contents/Resources/PrimeRuntimeMetallib.json",
+      "byteCount": 198,
+      "sha256": "37978df77f2251f7951b1d449692a1fb59222be15307d40b43e1a1af69ab38ef"
+    },
+    {
+      "relativePath": "Products/Applications/Ergentics Provenance.app/Contents/Resources/PrivacyInfo.xcprivacy",
+      "byteCount": 854,
+      "sha256": "ca7b9e01d281ddd388f7bfd621ec6220175a2f1029a9996525a79d43b1ecda77"
+    },
+    {
+      "relativePath": "Products/Applications/Ergentics Provenance.app/Contents/Resources/THIRD_PARTY_NOTICES.md",
+      "byteCount": 29428,
+      "sha256": "e5376deec32a08c50e7fcf462c36854ed5823aa67e769b60d61991b7ea3e8c8a"
+    },
+    {
+      "relativePath": "Products/Applications/Ergentics Provenance.app/Contents/_CodeSignature/CodeResources",
+      "byteCount": 7442,
+      "sha256": "cb87bb8aea6a27c9034071d05bceddac89a22da2718949eb9ce626c9e6e6c44e"
+    },
+    {
+      "relativePath": "dSYMs/Ergentics Provenance.app.dSYM/Contents/Info.plist",
+      "byteCount": 654,
+      "sha256": "4303bdb5a3fed532723f52cd2a272979ffb5c6d7f7163699c8a99a0eb8e8b5e7"
+    },
+    {
+      "relativePath": "dSYMs/Ergentics Provenance.app.dSYM/Contents/Resources/DWARF/Ergentics Provenance",
+      "byteCount": 13981216,
+      "sha256": "3b9542a63ef53c17c54ba91e47b57dff26bc8b40078e52f34ba671a56a63056a"
+    },
+    {
+      "relativePath": "dSYMs/Ergentics Provenance.app.dSYM/Contents/Resources/Relocations/aarch64/Ergentics Provenance.yml",
+      "byteCount": 375,
+      "sha256": "b0c26ba227736796684141a5be59bf1a731fc54d190b02d6bb8968660cfb230d"
+    },
+    {
+      "relativePath": "dSYMs/ErgenticsPrimeRuntime.dSYM/Contents/Info.plist",
+      "byteCount": 650,
+      "sha256": "18de7148736536f6bf88f893c3e0d9bcadd02b4c13350734dde663221e091b22"
+    },
+    {
+      "relativePath": "dSYMs/ErgenticsPrimeRuntime.dSYM/Contents/Resources/DWARF/ErgenticsPrimeRuntime",
+      "byteCount": 227408328,
+      "sha256": "3d4a34b2db5f2a849711c523339f2bf961ec1434098c76b94d50afc3c7b4a3cf"
+    },
+    {
+      "relativePath": "dSYMs/ErgenticsPrimeRuntime.dSYM/Contents/Resources/Relocations/aarch64/ErgenticsPrimeRuntime.yml",
+      "byteCount": 19194005,
+      "sha256": "fe8c95b9db8a110465ee6b3f1537c5a2771a35eb37d11d9adc16812cfad5cbfb"
+    }
+  ],
+  "tests": {
+    "targetedEnumerated": 26,
+    "firstRunPassed": 22,
+    "firstRunFixtureSkips": 4,
+    "fixtureRerunPassed": 4,
+    "remainingSkipsInSelectedChecks": 0,
+    "fullReleaseSuiteRerun": false,
+    "logs": "Checks/targeted-tests.log and Checks/process-checks-01/REVIEW.json"
+  },
+  "liveArchiveReview": {
+    "byteCount": 17309,
+    "sha256": "1454c33b16219cbfdd1b5b9b4a523bd0d4e423a1586060028c9dcdd6bcb67723"
+  },
+  "liveCounts": {
+    "modelForwards": 48,
+    "hostGuestLogitPairs": 24,
+    "feedbackBindings": 24,
+    "modelVMs": 6,
+    "modelGuestEntries": 30,
+    "geometryDispatches": 4,
+    "geometryPairs": 2,
+    "geometryVMs": 2,
+    "geometryGuestEntries": 4
+  },
+  "signature": "Deep strict verification passed for exact archive, saved copy, and installed copy; installed 27 files/links match saved copy.",
+  "originalVocabulary": {
+    "size": 16384,
+    "type": "retained Prime symbolic domain vocabulary",
+    "seeds": [
+      1618,
+      2718,
+      3141
+    ],
+    "nativeEnglishTokenizerUsed": false
+  },
+  "visualUIVerified": false,
+  "userWillInspectUI": true,
+  "trainingPerformed": false,
+  "dependencyInstallationPerformed": false,
+  "uploadPerformed": false,
+  "modelStages7And8Completed": false,
+  "osSelectionAndIndependentAttestation": "parked",
+  "preservedWork": "Original standalone0013/0014 results, Build22 backup, StartOwner quarantine, and three unrelated Prime untracked files preserved.",
+  "history": "Initial app check was idle before app-delegate callback fix. Initial packaging placed metallib in Helpers, then corrected to Resources. First archive was interrupted to restrict build to arm64. Those logs are retained. Source import whitespace diagnostics belong to byte-preserved existing sources."
+}
