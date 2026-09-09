@@ -1,0 +1,11 @@
+# Dedicated Prime vCPU helper admission
+
+`prime_inference_inspect_admission()` inspects the calling process. Call it before model initialization, creating a VM, or accepting work. Only `status == PRIME_INFERENCE_ADMISSION_ADMITTED` permits execution. All other statuses stop execution and preserve the returned inspection fields in the receipt.
+
+This is a new helper with the real identifier `com.ergentics.prime.vcpu-inference`. It does not identify itself as Provenance, call Provenance's admission function, or modify that app's existing policy. It requires team `ZCQ435U8JP`, an Apple generic signing anchor, a valid signature checked with `kSecCSNoNetworkAccess`, hardened runtime, and exactly one signed entitlement: Boolean `true` for `com.apple.security.hypervisor`. The effective process entitlement must also be Boolean true. Ad-hoc/unsigned or different identities are never admitted; inspection failure also stops execution. Any additional signed entitlement, including a false-valued `get-task-allow`, is rejected.
+
+The helper is an **unsandboxed user-level host process**. Hypervisor entitlement enables the Hypervisor.framework operation; it does not provide App Sandbox containment, put MLX in the guest, establish OS attestation, or authenticate a caller's model request. Request/checkpoint/guest-image bindings, bounded HVC callbacks, process ownership, cancellation, and VM teardown remain the responsibility of the runtime and its controller.
+
+The result reports the observed identifier, team, flags, entitlement counts, signature validation outcome, and effective hypervisor entitlement. It does not read or expose private signing keys. No signing, model execution, guest execution, network call, or permission grant is performed here.
+
+Focused qualification should verify an actual correctly signed helper is admitted; copies signed with a different identifier, missing/false hypervisor entitlement, extra entitlement, no hardened runtime, or ad-hoc identity are not. An unsigned executable may report an inspection error rather than policy rejection; both are non-admission. Admission must be rechecked by the actual executing helper, not inferred from a prior external `codesign` report. Do not re-sign or modify the installed app to perform these checks.

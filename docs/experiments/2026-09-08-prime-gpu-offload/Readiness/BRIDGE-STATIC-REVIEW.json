@@ -1,0 +1,79 @@
+{
+  "status": "STATIC_REVIEW_COMPLETE_NO_LAUNCH_BLOCKER_FOUND",
+  "scope": "Independent source read only. No build, GPU, VM or calibration launch. This report does not establish successful live transport or timing.",
+  "sourceBindings": [
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/GuestCompute/PrimeGuestCompute.h",
+      "bytes": 3903,
+      "sha256": "d2ae546092a1c728697883e663b07cf13eccd67795e8c1e7e9aa19a48760ab97"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/GuestCompute/PrimeGuestCompute.c",
+      "bytes": 20215,
+      "sha256": "5b8db86cea4ccf1dfc10f2c94203f282ed03b5b4a2c4784e80b9f6101d89ab5c"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/GuestCompute/guest.S",
+      "bytes": 1612,
+      "sha256": "bbe37c301c49a92c4c6d6401dfd8054cd22f11fb9b7a06c94381a0fbd8131e6a"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/GuestCompute/build_guest.py",
+      "bytes": 6554,
+      "sha256": "7ae0d5688db3324662dce9be51cc2003fa772739d62c6bcb86415011cbad444b"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/NativeGPU/main.swift",
+      "bytes": 12583,
+      "sha256": "6c9710f44b91b2e46b9286220cc3f97c2485ce179d63979d73481fd94d29f546"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/NativeGPU/MetalFieldEvaluator.swift",
+      "bytes": 8322,
+      "sha256": "ac4df9254d566e22e623b63e864e3cda14f4f4ab50ee8ed785b9a3ba02a7d3bd"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/NativeGPU/CPUReference.swift",
+      "bytes": 3259,
+      "sha256": "dc9aebd3f3ab59f923ebc89a0442515ae761ccedaa34db129c2d9d642bc0d4a7"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/NativeGPU/build.py",
+      "bytes": 3639,
+      "sha256": "c3c859040aeb77a917e2eaf7c7c9e68ece7db94b970af4bbc81b84722c96a89e"
+    }
+  ],
+  "transport": [
+    "Header and C agree: request2384 bytes, reply2408 bytes, fixed request offset64 and reply4096 within16KiB data page. 1..200 points,1..64 nodes and3*points returned values; active scalars finite, reserved/unused slots zero-bit validated.",
+    "Fixed guest image requests HVC0x51, consumes every returned UInt32 F32 payload word and emits HVC0x52 with exact count and checksum. FNV basis and multiplication constant match C and Swift. This is word-wise FNV64, not standard byte-wise FNV-1a or a cryptographic digest.",
+    "C retains caller request before VM allocation, validates all code/data bytes with host guard protections, maps immutable guestRX code and guestRW data, and permits only reply region changes after callback. Host does not write completion/control checksum fields to actual guest memory.",
+    "Request and completion HVC syndromes, whitelisted adjacent PC locations, operating system control registers, operation/count/pointers and checksum registers are validated. Resume selects fixed next-label address. Maximum2 entries.",
+    "Swift callback rejoins exact declared request bytes, performs actual Metal evaluation and copies only packed potential then interleaved gradient values. Result comparison rejoins every returned F32 bit pattern, guest checksum, count and cleanup with actual callback output.",
+    "No input-only expected answer, CPU output or reference value is copied into GPU reply. CPU field calculation runs after measured host/guest call, as an independent tolerance check. Host/guest vectors must match exact bytes."
+  ],
+  "lifecycle": [
+    "All VM create/map/vCPU run/register/destroy/unmap operations occur synchronously on owning caller thread. One process-local gate prevents concurrent bridge instances.",
+    "Watchdog only calls hv_vcpus_exit;10s active deadline checked before/after guest entry and callback. Watchdog condition is signaled and joined before vCPU/VM destruction. Join failure fail-stops process78 instead of returning expired state.",
+    "Cleanup retains backing memory if VM or vCPU ownership is unconfirmed and permanently disables further bridge calls on cleanup failure. All lifecycle status fields begin not-attempted.",
+    "A Metal callback that never returns cannot be interrupted by hv_vcpus_exit. Swift outer120s alarm plus external process ownership are therefore still required; no inference that the10s VM watchdog is a GPU cancellation API."
+  ],
+  "timing": [
+    "One actual Metal device, command queue and compute pipeline are initialized once and shared by direct and guest routes. Initialization has separate wall measurement.",
+    "Two retained200-point warmup GPU evaluations occur before measurements. These are shared GPU warmups, not guest VM warmups. Every measured guest route creates and destroys a fresh VM.",
+    "Three sizes1/32/200 points,12 nodes,8 paired repetitions each. Route order alternates by repetition. All48 measured dispatches plus2 warmups expected exactly50.",
+    "callbackWallNanoseconds brackets MetalFieldEvaluator.evaluate: includes buffer allocation, encoding, commit/wait, readback and finite output validation. Request-to-Double conversion and output serialization/hash are outside that narrower interval.",
+    "totalWallNanoseconds surrounds full host Context.evaluate or whole guest bridge call; it includes callback input/output work. CPU tolerance scoring and artifact persistence occur afterward. guestElapsedNanoseconds includes C request admission, VM setup, callback, guest checksum, watchdog join and teardown.",
+    "GPU timestamp state resets before validation and only finite positive timestamp values are retained. GPU duration emitted only for end>=start; unavailable duration remains JSON null. End==start is permitted as a raw resolution-level observation but cannot justify division-based throughput.",
+    "GPU timestamps use one Metal host-seconds clock domain. Swift and C wall intervals are measured independently; raw origins are not mixed. Full route minus GPU time is aggregate overhead, not isolated vCPU or HVC cost.",
+    "No separate setup/HVC-only timing probes or hardware utilization measurement are present; no such measurement should be claimed."
+  ],
+  "negativeChecks": [
+    "201 points, zero nodes and zero sigma reject before callback/guest entry. NaN reply fixture uses no GPU callback, must return invalid-reply status7 before guest completion and clean up.",
+    "NaN fixture is deliberately synthetic mechanism-only evidence, separate from50 real Metal dispatches. As currently read, NaN is rendered as string in invalid-check JSON; raw invalid reply bit pattern is not separately persisted. Optional raw fixture result binary would close that narrow evidence gap."
+  ],
+  "limits": [
+    "Observed source supports a custom typed guest-controlled Metal offload service. It does not implement Apple ParavirtualizedGraphics PGDevice, a guest OS Metal driver, learned model computation, hardware partitioning or global GPU isolation.",
+    "Finite sigma at bridge layer is not itself proof of safe F32 square/reciprocal; Metal evaluator independently validates those before dispatch and returns callback error if invalid.",
+    "Fixed small diagnostic results cannot establish throughput or general workload acceleration. Signed admission and actual live result validation remain parent-owned."
+  ]
+}

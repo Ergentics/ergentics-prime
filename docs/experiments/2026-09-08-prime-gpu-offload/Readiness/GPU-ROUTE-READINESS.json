@@ -1,0 +1,144 @@
+{
+  "status": "STATIC_READINESS_REVIEW_COMPLETE",
+  "scope": "Read-only source and installed SDK review; no calibration, training, GPU, VM, model, build, install or network execution.",
+  "primeRevision": "ad4ad71c36a77c714e608b943ee3a91e5ade268f",
+  "sourceBindings": [
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/Sources/PrimeGPUCalibration/PrimeGPUCalibrationMain.swift",
+      "bytes": 65602,
+      "sha256": "d4063e74ae25436589872359dd1e35100ed2ce6a632628d8a3439e4b966aab14"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/Sources/PrimeCore/PrimeMetalDeviceLease.swift",
+      "bytes": 16985,
+      "sha256": "edef702776fec36788ebc190d1dc877d13012fda8d1a80ebfdbca32acb998657"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/Sources/PrimeCore/PrimeNativeDecoderReviewedMainMetalExecutionObservation.swift",
+      "bytes": 37500,
+      "sha256": "c94fa198edc1708eab69687fc2baac9fddfd91900bca99f1fe7cb5c4473f1746"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-app-integration/repo/Sources/VMWorkspaceModel.swift",
+      "bytes": 22791,
+      "sha256": "5855486afac31d915b511f15a3d912e32b29c92fcd700b44337404617baaaf0b"
+    },
+    {
+      "path": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Metal.framework/Headers/MTLCommandBuffer.h",
+      "bytes": 19195,
+      "sha256": "a5a1ead36de20b4c1f4dce8193b945fb981e67456ca4a3a1395d167c9df475e7"
+    },
+    {
+      "path": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Metal.framework/Headers/MTLDevice.h",
+      "bytes": 72908,
+      "sha256": "d1ef1bb5bc85faeeec9bc85f49124a453a8cd33b1182b0a71a41ba0dc4ebbb89"
+    },
+    {
+      "path": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Metal.framework/Headers/MTLResource.h",
+      "bytes": 16740,
+      "sha256": "6100bf17139327113e3a0e6782f1cd3f08493eee37432f92afb8c37bd39dca78"
+    },
+    {
+      "path": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/ParavirtualizedGraphics.framework/Headers/PGDevice.h",
+      "bytes": 17462,
+      "sha256": "e4af82aeb6452518073cb9cafef353ebba9d8c6204c196bc681909efa681b618"
+    },
+    {
+      "path": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/ParavirtualizedGraphics.framework/Headers/PGDeviceSpec.h",
+      "bytes": 737,
+      "sha256": "2b0d8e1d6584421ced6f13a03a48a8ceb6e1055a12bf48db7ee44c9d18dd7e2d"
+    },
+    {
+      "path": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Virtualization.framework/Headers/VZVirtioGraphicsDeviceConfiguration.h",
+      "bytes": 943,
+      "sha256": "d6cdd808f1464ff3297aa34d701b3044a2cd66f3981ef413b582189a05507f93"
+    }
+  ],
+  "routes": [
+    {
+      "component": "PrimeGPUCalibration",
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/Sources/PrimeGPUCalibration/PrimeGPUCalibrationMain.swift",
+      "lines": "852\u20131165",
+      "implementedBehavior": "Creates exact3B model from initialization seed, materializes GPU parameters, measures forward/backward/AdamW update on deterministic random inputs and records finite loss/changed weights. It is a bounded training-mechanics allocation probe, not a saved model inference or a guest GPU benchmark.",
+      "measurement": "ContinuousClock starts before model construction and ends after evaluation and finite-logit validation. mechanicsActiveElapsedSeconds includes CPU orchestration, model allocation, evaluation, training, synchronization and validation; not GPU-only duration.",
+      "reuseNow": "Do not invoke. Reuse distinctions between unavailable versus measured observations; retain actual device identity and explicit timing scope."
+    },
+    {
+      "component": "PrimeMetalDeviceLease",
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/Sources/PrimeCore/PrimeMetalDeviceLease.swift",
+      "lines": "52\u201369",
+      "implementedBehavior": "Descriptor-validated, named advisory flock on dedicated parent directory plus leaf file; release preserves lock file.",
+      "limit": "Coordinates cooperating processes that use the same resource root. Does not reserve hardware against window compositor, other apps or a process using another lock path, and does not create a GPU virtual device."
+    },
+    {
+      "component": "Historical hosted paravirtual Metal observation",
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/Sources/PrimeCore/PrimeNativeDecoderReviewedMainMetalExecutionObservation.swift",
+      "lines": "390\u2013450",
+      "implementedBehavior": "Records Aug10 GitHub Actions macos-26-arm64 runner exposing MTLCreateSystemDefaultDevice named Apple Paravirtual device.",
+      "limit": "This is historical observed guest-side device exposure, not a local Prime implementation of AppleParavirtGPU. No PGDevice/Hypervisor VM construction references found in R/Sources."
+    },
+    {
+      "component": "Parked app full OS VM graphics",
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-app-integration/repo/Sources/VMWorkspaceModel.swift",
+      "lines": "347\u2013403",
+      "implementedBehavior": "VZGenericPlatform, EFI disk/optional installer, one VZVirtioGraphics scanout, keyboard/pointer and entropy; network/shares/sockets empty.",
+      "limit": "SDK describes a paravirtualized Virtio graphics display device. Its presence is not proof of a booted guest or guest MLX/Metal compute."
+    },
+    {
+      "component": "Apple ParavirtualizedGraphics",
+      "path": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/ParavirtualizedGraphics.framework/Headers/PGDevice.h",
+      "lines": "42\u2013225, 236\u2013377",
+      "implementedBehavior": "PGDeviceDescriptor selects host MTLDevice and requires guest memory/task mapping, read and interrupt callbacks; PGDevice exposes MMIO/display/suspend/resume/stop. PGDeviceSpec declares PCI BAR MMIO16KiB, MSI and Apple vendor/device IDs.",
+      "limit": "A host Metal HVC callback alone is not this Apple virtual PCI device. No need to construct PGDevice for the narrow typed geometry offload experiment."
+    },
+    {
+      "component": "Current proposed custom route",
+      "implementedBehavior": "Immutable ARM guest sends typed geometry request through HVC; host validates request, executes real Metal compute, returns finite F32 vector result for guest readback.",
+      "name": "custom guest-controlled GPU offload service",
+      "limit": "Not Apple PGDevice, guest-native Metal driver, GPU scheduling isolation, learned model output, automatic model derivation of hardware or guest OS boot."
+    }
+  ],
+  "measurementRequirements": [
+    {
+      "id": "command_completion",
+      "requirement": "Require command-buffer status completed and error nil before accepting output. GPUStartTime is zero before execution; GPUEndTime is zero before completion notification, per installed header lines286\u2013294."
+    },
+    {
+      "id": "timestamp_validity",
+      "requirement": "Preserve both raw GPU timestamps; use finite positive start/end and end>=start. Missing, zero, NaN, infinity or reversed values are unavailable/invalid timing, never substitute host elapsed or invent duration. A zero difference cannot support throughput or speedup division."
+    },
+    {
+      "id": "clock_domains",
+      "requirement": "GPUStartTime/GPUEndTime are host seconds. Use their difference together. Keep ContinuousClock or DispatchTime interval measurements separate; do not subtract a raw mach tick or guest counter from Metal host seconds. Raw sampleTimestamps counters would require explicit timebase calibration."
+    },
+    {
+      "id": "warmup",
+      "requirement": "Record pipeline/device/queue creation separately. Retain cold first dispatch, then explicit equal warmup counts per tested route; exclude only predeclared warmups and preserve them. Both routes should reuse the same compiled kernel/device and inputs. Alternate paired route order or report fixed-order/cache bias."
+    },
+    {
+      "id": "route_boundaries",
+      "requirement": "Report caller total wall, VM creation/map/register setup, guest entry/HVC transition, host callback wall, Metal command execution interval, readback/validation and cleanup as distinct scoped values where measured. Do not label total guest route minus GPU interval as exact vCPU-only overhead."
+    },
+    {
+      "id": "readback",
+      "requirement": "Shared buffers require completed GPU execution before CPU read. If changed to managed/private storage, use appropriate explicit synchronization/copy and include its cost in the declared interval. Validate all returned vector elements and unchanged request/code guards."
+    },
+    {
+      "id": "small_workload",
+      "requirement": "A 200-point/12-node field workload may be overhead dominated. Record point/node counts, repeat counts and individual samples; do not infer GPU utilization, TFLOPS or acceleration for model workloads from this tiny dispatch."
+    },
+    {
+      "id": "contention",
+      "requirement": "Record actual MTLDevice name/registryID/unified memory. Serial bounded own work avoids self-contention but advisory leases do not remove other OS GPU work. Timing variation alone is not a virtualization defect."
+    },
+    {
+      "id": "failure_and_stale_observation",
+      "requirement": "On each evaluation clear prior timing/status/error fields before validation, or attach them only to a successful current command. Invalid input must not inherit a preceding successful dispatch timestamp. CPU formula is an independent comparison, never a silent fallback."
+    },
+    {
+      "id": "quality_scope",
+      "requirement": "GPU/CPU numeric parity validates field computation; host/guest byte parity validates offload transport. Neither changes historical model authority nor trains weights."
+    }
+  ],
+  "newBridgeReview": "Pending stable source from implementation owner; no claim of new route execution."
+}

@@ -1,0 +1,101 @@
+{
+  "schema": "prime_geometry_render_compute_distinction_v1",
+  "repository": "/Users/ergentics/geometry-app",
+  "head": "74906b86eeca4e655d31e6912a905ac390215443",
+  "originalWorkingTreeStatus": [],
+  "finding": "Geometry provides both actual host Metal rasterization and an actual host Metal field-compute implementation. Neither source implements GPU virtualization or guest transport.",
+  "renderer": {
+    "source": "Sources/GeometryRenderMetal/MetalRenderer.swift",
+    "type": "MetalRenderer",
+    "initializationLines": "36-55",
+    "api": "render(solid: Solid3D, camera: Camera, light: DirectionalLight, albedo: RGB, ambient: Double, ks: Double, shininess: Double, width: Int, height: Int) -> Image?",
+    "apiLine": 81,
+    "execution": "MTLRenderPipelineState; runtime-compiled vertex vmain and fragment fmain; fan-triangulated flat-normal solid; RGBA8 color/depth attachments; drawPrimitives(.triangle); command-buffer commit/waitUntilCompleted; texture getBytes readback.",
+    "renderLines": "109-183",
+    "output": "Image(width,height,rgba) containing actual rendered bytes",
+    "cpuFallback": "None in this class. init? returns nil when device/queue/shader/pipeline creation fails. CPU Shading is a reference oracle, not an automatic fallback.",
+    "boundaryForFutureWrapping": [
+      "Bound positive dimensions and allocations. Original render accepts width/height directly.",
+      "Validate finite geometry/camera/light/material inputs.",
+      "Require command-buffer status/error after completion. Original code waits but does not explicitly check status before reading bytes."
+    ]
+  },
+  "compute": {
+    "source": "Sources/MasteryFieldMetal/MetalFieldEvaluator.swift",
+    "type": "MetalFieldEvaluator",
+    "api": "evaluate(points: [SIMD2<Double>], nodes: [GPUNode], sigma: Double) -> Evaluation?",
+    "apiLine": 49,
+    "execution": "MTLComputePipelineState fieldEval, shared input/output buffers, dispatchThreads, commit/waitUntilCompleted. Gaussian-well potential and analytic gradient, float32 GPU execution.",
+    "output": "Evaluation.v and Evaluation.grad converted to Double after Float readback",
+    "bounds": "maxNodeCount64, nonempty arrays, positive finite sigma; wrapper must additionally bound points and validate finite float conversion and completion status."
+  },
+  "renderTests": {
+    "source": "Tests/RenderMetalTests/RenderMetalTests.swift",
+    "tests": [
+      {
+        "name": "testGPUMatchesShadingOracle",
+        "line": 51,
+        "checks": "Three solids, non-sliver front-face centroids, RGB differences <=2/255; at least one face per solid and six total."
+      },
+      {
+        "name": "testGPUMatchesIndependentCosine",
+        "line": 106,
+        "checks": "One central quad pixel against independently constructed cos(40 degrees) Lambertian brightness, <=2/255."
+      },
+      {
+        "name": "testDepthOcclusionShowsFrontFaces",
+        "line": 142,
+        "checks": "Projected cube center is not black clear color; limited sanity check, not exhaustive depth proof."
+      }
+    ],
+    "skipBoundary": "Skips if init? returns nil; non-Metal platform defines one explicit skipped test. Source is present, no fresh test execution claimed."
+  },
+  "history": {
+    "rendererCommit": "94052c1d53843f79bbf5d594061ce73716952ffd",
+    "rendererCommitRecord": "94052c1d53843f79bbf5d594061ce73716952ffd\n2026-06-28T20:44:32-07:00\nRenderKit Phase 2: Metal offscreen renderer (GPU executes the shading oracle)\n\nGeometryRenderMetal: offscreen Metal renderer, runtime-compiled MSL, flat-shaded Lambert+Blinn-Phong in linear space, depth-tested, RGBA8 readback. GeometryKit stays pure: Matrix4 + Camera view/projection matrices, oracle-tested (M1 x/y == project to 1e-9; M2 depth-row near->0/far->1 monotonic \u2014 the engine-map's catch that project() doesn't cover depth). GPU matches headless Shading.swift to the byte: 0/255 (octa,cube), 1/255 (tetra) \u2014 the honesty gate. RenderMetalTests cross-check + independent-costheta tie (tautology guard) + depth-occlusion sanity. RenderBench + RENDER-BENCH.md first real numbers: mean 0.73ms / p50 0.52ms @512^2, p99 7.1ms, thermal nominal. Engine-map caught the projection w/z-row signs and the depth-near decoupling pre-code (harvested). 544 tests green; zero MasteryKit edits; FigureTests untouched.\n\nCo-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>",
+    "macStorageGuardCommit": "90752bc1ddcd99f9b0e165ffd6953d819940aef1"
+  },
+  "primeIntegrationImplication": "The field evaluator is the concrete typed compute operation for the current guest-to-host Metal offload. A rendered-image operation would be a separate renderer API integration. Neither establishes a guest-visible GPU device, virtual GPU driver, arbitrary shader ABI or GPU passthrough.",
+  "sourceBindings": [
+    {
+      "path": "/Users/ergentics/geometry-app/AGENTS.md",
+      "copyPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/UrReview/Source/geometry-app/AGENTS.md",
+      "byteCount": 1783,
+      "sha256": "0b98fa76c5ddabc892c95763498a47854c224dd4e0521a68cf9e479c4f89c06f",
+      "lastPathCommit": "4e23b11cd89450f94160b35841295d94d4c3b20b"
+    },
+    {
+      "path": "/Users/ergentics/geometry-app/Package.swift",
+      "copyPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/UrReview/Source/geometry-app/Package.swift",
+      "byteCount": 7076,
+      "sha256": "6f39a80a387598dabfc60936475737059647c8f11445c9bc62800c75331f03b0",
+      "lastPathCommit": "0a5685d51a0b50e274431c32579497f5da3bb1ab"
+    },
+    {
+      "path": "/Users/ergentics/geometry-app/Sources/GeometryRenderMetal/MetalRenderer.swift",
+      "copyPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/UrReview/Source/geometry-app/Sources/GeometryRenderMetal/MetalRenderer.swift",
+      "byteCount": 11143,
+      "sha256": "009765944d158b956af8ab945e31e4e41983737f927e167d137c7f8dc7574a60",
+      "lastPathCommit": "90752bc1ddcd99f9b0e165ffd6953d819940aef1"
+    },
+    {
+      "path": "/Users/ergentics/geometry-app/Tests/RenderMetalTests/RenderMetalTests.swift",
+      "copyPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/UrReview/Source/geometry-app/Tests/RenderMetalTests/RenderMetalTests.swift",
+      "byteCount": 8445,
+      "sha256": "300b4ece1412ddd0f758cf472c5af0325dbe71940b9dad8f6e7d8d9566fd4de0",
+      "lastPathCommit": "d66465a2ad85eec9a8a00d6c0bf2fb9dff9c872b"
+    },
+    {
+      "path": "/Users/ergentics/geometry-app/Sources/MasteryFieldMetal/MetalFieldEvaluator.swift",
+      "copyPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/UrReview/Source/geometry-app/Sources/MasteryFieldMetal/MetalFieldEvaluator.swift",
+      "byteCount": 6401,
+      "sha256": "b36c4451c6bd4c1b18a9415af08cc832af83d59505a155e8bee53bc57c8c907c",
+      "lastPathCommit": "90752bc1ddcd99f9b0e165ffd6953d819940aef1"
+    }
+  ],
+  "buildsRun": false,
+  "modelsRun": false,
+  "GPUExecuted": false,
+  "originalEdits": false,
+  "networkUsed": false
+}
